@@ -1,8 +1,7 @@
 /// ZanKurd günün sözü (atasözü) havuzu.
 ///
-/// Tek doğruluk kaynağı — hem `ZanaDailyCard` hem gelecekteki
-/// ders/bildirim içerikleri buradan çeker. İçerik takımı yeni atasözü
-/// eklemek için bu dosyayı günceller; kod değişikliği gerektirmez.
+/// Tek doğruluk kaynağı — ders veya bildirim içerikleri buradan çeker.
+/// İçerik takımı yeni atasözü eklemek için bu dosyayı günceller.
 ///
 /// Biçim: (Kurmancî metin, Türkçe karşılığı)
 typedef ZanKurdSaying = (String ku, String tr);

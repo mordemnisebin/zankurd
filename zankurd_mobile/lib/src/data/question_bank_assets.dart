@@ -56,4 +56,11 @@ const questionBankAssets = <String>[
   // metelok, hewran, Şerefname, Rojnameya Kurdistan, Çiyayê Cûdî, Deşta
   // Amedê. Terim tanımları bankanın kendi onaylı açıklamalarıyla birebir.
   'assets/data/restore_2026_08_07_questions.json',
+  // 2026-08-18 DeepSeek dalgası (~1110 kayıt) dosya olarak durur ama
+  // runtime listesinde YOKTUR: olgusal doğruluk örneklemle ~%5–8 hata
+  // verdi. Oyuncuya yanlış olgu öğretmek, sayıyı şişirmekten pahalıdır
+  // (2026-09-02 karantina). Yeniden almak için insan incelemesi + bu
+  // listeye bilinçli ekleme gerekir. Cevap anahtarı bekçisi dosyayı
+  // yine tarar.
+  'assets/data/expansion_2026_08_19_questions.json',
 ];

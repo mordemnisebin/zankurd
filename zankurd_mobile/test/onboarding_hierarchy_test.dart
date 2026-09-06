@@ -7,6 +7,23 @@ import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 
 void main() {
+  testWidgets('tanıtımdan tek ana eylemle devam edilir', (tester) async {
+    var completed = 0;
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => LanguageProvider()..setLang('tr'),
+        child: MaterialApp(
+          home: OnboardingScreen(onComplete: () => completed++),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Başla'), findsOneWidget);
+    expect(find.text('İleri'), findsNothing);
+    await tester.tap(find.text('Başla'));
+    expect(completed, 1);
+  });
+
   testWidgets('onboarding atlama eylemi ekran okuyucuda adlandırılır', (
     tester,
   ) async {

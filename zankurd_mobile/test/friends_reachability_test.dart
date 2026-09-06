@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -51,11 +51,6 @@ Widget _wrap(Widget child) {
     providers: [
       ChangeNotifierProvider<LanguageProvider>(
         create: (_) => LanguageProvider(initialLang: 'tr'),
-      ),
-      // FriendsScreen oyuncu aramayı çocuk moduna göre kapatıyor; sağlayıcı
-      // olmadan açılamıyor.
-      ChangeNotifierProvider<ChildSafetyProvider>(
-        create: (_) => ChildSafetyProvider(),
       ),
     ],
     child: MaterialApp(
@@ -179,6 +174,50 @@ void main() {
     expect(find.byKey(badge), findsOneWidget);
     expect(find.text('2'), findsOneWidget);
   });
+
+  testWidgets(
+    'bekleyen istek rozeti arkadas girisini dokunulabilir semantics olarak sunar',
+    (tester) async {
+      await tester.pumpWidget(
+        _wrap(
+          LeaderboardScreen(
+            repository: _FriendsRepository(
+              pending: [
+                FriendRequest(
+                  id: 'r1',
+                  fromUserId: 'u1',
+                  fromUserName: 'Baran',
+                  toUserId: 'me',
+                  createdAt: DateTime(2026, 7, 30),
+                ),
+                FriendRequest(
+                  id: 'r2',
+                  fromUserId: 'u2',
+                  fromUserName: 'Rojda',
+                  toUserId: 'me',
+                  createdAt: DateTime(2026, 7, 30),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final data = tester
+          .getSemantics(find.byKey(friendsButton))
+          .getSemanticsData();
+      expect(data.flagsCollection.isButton, isTrue);
+      expect(data.label, contains('2 yeni istek'));
+      expect(
+        data.hasAction(SemanticsAction.tap),
+        isTrue,
+        reason:
+            'Etiket mevcut olsa da önceki semantics düğümünde tap action '
+            'yoktu; sıradan görünür UI testi bunu yakalamıyordu.',
+      );
+    },
+  );
 
   testWidgets('dokuzdan çok istek 9+ olarak kısalır', (tester) async {
     await tester.pumpWidget(

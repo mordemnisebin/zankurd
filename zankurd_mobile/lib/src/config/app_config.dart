@@ -1,6 +1,7 @@
 import 'dart:io' show Platform;
 
-import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
+import 'package:flutter/foundation.dart'
+    show kDebugMode, kIsWeb, visibleForTesting;
 
 import 'release_config_validator.dart';
 
@@ -16,6 +17,19 @@ class AppConfig {
   static const _appEnvironment = String.fromEnvironment(
     'APP_ENV',
     defaultValue: 'production',
+  );
+
+  /// Google'ın mobil SDK'sına verilen public client ID'leri.
+  /// Client secret kesinlikle mobil uygulamaya konmaz.
+  static const googleWebClientId = String.fromEnvironment(
+    'GOOGLE_WEB_CLIENT_ID',
+    defaultValue:
+        '419853194959-7s176cj22617ndra8l4bctbuqnvgr8q3.apps.googleusercontent.com',
+  );
+  static const googleIosClientId = String.fromEnvironment(
+    'GOOGLE_IOS_CLIENT_ID',
+    defaultValue:
+        '419853194959-f0sft2254sc155j2rcv323r3ejg5kkqv.apps.googleusercontent.com',
   );
 
   static const _supabaseUrl = String.fromEnvironment('SUPABASE_URL');
@@ -92,7 +106,16 @@ class AppConfig {
     return null;
   }
 
+  /// Testler derleme bayrağı veremediği için (`String.fromEnvironment`
+  /// derleme zamanıdır) satın alınabilirlik kapısını testte açıp
+  /// kapatan düğme. `null` = gerçek derleme değerini kullan.
+  /// Her test sonunda sıfırlanmalıdır (statik durum sızar).
+  @visibleForTesting
+  static bool? debugHasRevenuecatConfig;
+
   static bool get hasRevenuecatConfig {
+    final override = debugHasRevenuecatConfig;
+    if (override != null) return override;
     final platform = _revenueCatPlatform;
     return platform != null &&
         ReleaseConfigValidator.isSafeRevenueCatKey(
@@ -201,6 +224,18 @@ class AppConfig {
   static const privacyPolicyUrl = 'https://www.zankurd.com/privacy.html';
   static const termsOfServiceUrl = 'https://www.zankurd.com/terms.html';
 
+  // ── Abonelik adı (Apple 3.1.2 şartı) ───────────────────────────────────
+  //
+  // Apple, otomatik yenilenen aboneliğin BAŞLIĞININ satın alma ekranında
+  // yazmasını ister ve bu başlığın mağazadaki ürün adıyla eşleşmesini
+  // bekler. App Store Connect'te abonelik grubu "ZanKurd Pro", ürünler
+  // "ZanKurd Pro Monthly" ve "ZanKurd Pro Yearly" adını taşır.
+  //
+  // Bu sabit çevrilmez, çünkü mağaza kaydındaki ad çevrilmiyor: paywall'da
+  // yerelleştirilmiş bir ad göstermek, incelemecinin ekranda gördüğü adla
+  // App Store Connect'teki adı eşleştirememesine yol açar.
+  static const subscriptionDisplayName = 'ZanKurd Pro';
+
   // ── Kötüye kullanım bildirimi (Apple 1.2 / Play UGC şartı) ─────────
   //
   // Kullanıcı üretimi içerik barındıran uygulamalarda iletişim bilgisinin
@@ -221,7 +256,8 @@ class AppConfig {
     queryParameters: {'subject': subject},
   );
 
-  /// Beta geri bildirimini de aynı, takip edilebilir destek kanalına yönlendirir.
+  /// Kullanıcı geri bildirimini de aynı, takip edilebilir destek kanalına
+  /// yönlendirir.
   static Uri feedbackUri({required String subject}) => Uri(
     scheme: 'mailto',
     path: supportEmail,

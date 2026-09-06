@@ -565,6 +565,8 @@ void main() {
     expect(httpClient.requestBodies.single, {
       'p_category_name': 'Ziman',
       'p_seconds_per_question': 20,
+      'p_question_count': 10,
+      'p_entry_fee': 0,
     });
   });
 
@@ -642,33 +644,30 @@ void main() {
     },
   );
 
-  test(
-    'sunucunun "zaten başka odada" reddi RoomJoinFailureReason.'
-    'alreadyInAnotherRoom olarak yükselir',
-    () async {
-      final httpClient = _RoomSessionHttpClient(
-        joinRoomErrorMessage: 'Player is already in another live room',
-      );
-      final repository = _SignedInRoomSessionRepository(
-        SupabaseClient(
-          'https://example.supabase.co',
-          'sb_publishable_test_key',
-          httpClient: httpClient,
-        ),
-      );
+  test('sunucunun "zaten başka odada" reddi RoomJoinFailureReason.'
+      'alreadyInAnotherRoom olarak yükselir', () async {
+    final httpClient = _RoomSessionHttpClient(
+      joinRoomErrorMessage: 'Player is already in another live room',
+    );
+    final repository = _SignedInRoomSessionRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: httpClient,
+      ),
+    );
 
-      await expectLater(
-        repository.joinOnlineRoom('zk abcdef0123'),
-        throwsA(
-          isA<RoomJoinException>().having(
-            (error) => error.reason,
-            'reason',
-            RoomJoinFailureReason.alreadyInAnotherRoom,
-          ),
+    await expectLater(
+      repository.joinOnlineRoom('zk abcdef0123'),
+      throwsA(
+        isA<RoomJoinException>().having(
+          (error) => error.reason,
+          'reason',
+          RoomJoinFailureReason.alreadyInAnotherRoom,
         ),
-      );
-    },
-  );
+      ),
+    );
+  });
 
   test('legacy room code stays joinable during the server cutover', () async {
     final httpClient = _RoomSessionHttpClient();
@@ -1623,10 +1622,22 @@ void main() {
 
     expect(source, contains('_opponentIdentity'));
     expect(source, contains('AvatarIdentity _identityFromPlayer'));
-    expect(source, contains('photoUrl: _opponentIdentity.photoUrl'));
-    expect(source, contains('iconId: _opponentIdentity.iconId'));
-    expect(source, contains('colorHex: _opponentIdentity.colorHex'));
-    expect(source, contains('frameId: _opponentIdentity.frameId'));
+    expect(
+      RegExp(r'photoUrl\s*:\s*_opponentIdentity\.photoUrl').hasMatch(source),
+      isTrue,
+    );
+    expect(
+      RegExp(r'iconId\s*:\s*_opponentIdentity\.iconId').hasMatch(source),
+      isTrue,
+    );
+    expect(
+      RegExp(r'colorHex\s*:\s*_opponentIdentity\.colorHex').hasMatch(source),
+      isTrue,
+    );
+    expect(
+      RegExp(r'frameId\s*:\s*_opponentIdentity\.frameId').hasMatch(source),
+      isTrue,
+    );
   });
 
   test('live scoreboard renders player avatar identity', () {

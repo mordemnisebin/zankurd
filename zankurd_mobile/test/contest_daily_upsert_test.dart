@@ -87,21 +87,18 @@ void main() {
     );
   });
 
-  test(
-    'get_today_contest en son tanımı contests tablosuna yazıyor',
-    () {
-      // Bu, fonksiyon isminin `2026-07-05_contest_system.sql`'de KALDIĞI
-      // ama davranışının `create or replace` ile ileri-yönlü bir göçle
-      // DEĞİŞTİĞİ senaryoyu yakalar: eski dosya asla düzenlenmedi (kural
-      // gereği), yeni dosya en son tanımı taşıyor.
-      final newest = newestDefinitionOf('get_today_contest');
-      expect(
-        newest,
-        contains('insert into public.contests'),
-        reason:
-            'en son tanım hâlâ salt-okunur eski davranışa geri düşmüş '
-            'olabilir; get_today_contest her zaman en son göçten okunmalı',
-      );
-    },
-  );
+  test('get_today_contest en son tanımı contests tablosuna yazıyor', () {
+    // Bu, fonksiyon isminin `2026-07-05_contest_system.sql`'de KALDIĞI
+    // ama davranışının `create or replace` ile ileri-yönlü bir göçle
+    // DEĞİŞTİĞİ senaryoyu yakalar: eski dosya asla düzenlenmedi (kural
+    // gereği), yeni dosya en son tanımı taşıyor.
+    final newest = newestDefinitionOf('get_today_contest');
+    expect(
+      newest,
+      contains('insert into public.contests'),
+      reason:
+          'en son tanım hâlâ salt-okunur eski davranışa geri düşmüş '
+          'olabilir; get_today_contest her zaman en son göçten okunmalı',
+    );
+  });
 }

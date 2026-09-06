@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'percent_format.dart';
 
 import '../widgets/share_result_card.dart';
@@ -15,6 +16,29 @@ import 'error_reporter.dart';
 /// paylaşılır. Görsel üretimi herhangi bir nedenle başarısız olursa,
 /// güvenli biçimde metin paylaşımına düşülür (her platformda çalışır).
 class ResultSharer {
+  static const _shareRewardDateKey = 'zankurd.shareReward.lastDate';
+
+  /// Günlük ilk paylaşım ödülü verilebilir mi?
+  static Future<bool> canClaimDailyShareReward([DateTime? now]) async {
+    final prefs = await SharedPreferences.getInstance();
+    final today = _dateKey(now ?? DateTime.now());
+    final last = prefs.getString(_shareRewardDateKey);
+    return last != today;
+  }
+
+  /// Günlük paylaşım ödülünü işaretler; ödül hak edildiyse true döner.
+  static Future<bool> claimDailyShareReward([DateTime? now]) async {
+    final prefs = await SharedPreferences.getInstance();
+    final today = _dateKey(now ?? DateTime.now());
+    final last = prefs.getString(_shareRewardDateKey);
+    if (last == today) return false;
+    await prefs.setString(_shareRewardDateKey, today);
+    return true;
+  }
+
+  static String _dateKey(DateTime date) =>
+      '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+
   static Future<void> share(
     BuildContext context, {
     required bool isKu,
@@ -23,6 +47,7 @@ class ResultSharer {
     required int totalQuestions,
     required int bestStreak,
     required String category,
+    List<bool> results = const [],
   }) async {
     final accuracy = totalQuestions == 0
         ? 0
@@ -49,6 +74,7 @@ class ResultSharer {
           totalQuestions: totalQuestions,
           bestStreak: bestStreak,
           category: category,
+          results: results,
         ),
       );
     }

@@ -8,9 +8,11 @@ import '../models/answer_record.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class ReviewScreen extends StatefulWidget {
@@ -36,7 +38,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(title: Text(context.t(K.answersTitle))),
+      appBar: zkAppBar(context, title: Text(context.t(K.answersTitle))),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
@@ -65,6 +67,10 @@ class _ReviewScreenState extends State<ReviewScreen> {
                       icon: AppIcons.squareCheck,
                       compact: true,
                     ),
+                    const SizedBox(height: AppSpacing.md),
+                    // Özet başlığı ile doğru/yanlış şeridi arasına tek kilim
+                    // ayracı; "bölüm ayracı" semantiği (2026-08-19).
+                    const KilimDivider(colors: [AppTheme.cyan, AppTheme.gold]),
                     const SizedBox(height: AppSpacing.md),
                     _SummaryStrip(correct: correct, wrong: wrong, empty: empty),
                     const SizedBox(height: 12),
@@ -267,25 +273,34 @@ class _ReviewCard extends StatelessWidget {
                 top: Radius.circular(16),
               ),
             ),
-            child: Row(
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              runSpacing: 8,
               children: [
-                // Başlık şeridinin zemini rengin kendi %14'lük tonu; ham
-                // renk orada okunmuyordu ("DOĞRU" 2.59:1, "YANLIŞ" 3.13:1).
-                Icon(
-                  headerIcon,
-                  color: AppColors.onAccentTint(context, headerColor),
-                  size: 20,
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Başlık şeridinin zemini rengin kendi %14'lük tonu; ham
+                    // renk orada okunmuyordu ("DOĞRU" 2.59:1, "YANLIŞ" 3.13:1).
+                    Icon(
+                      headerIcon,
+                      color: AppColors.onAccentTint(context, headerColor),
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Text(
+                        headerText,
+                        style: TextStyle(
+                          color: AppColors.onAccentTint(context, headerColor),
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  headerText,
-                  style: TextStyle(
-                    color: AppColors.onAccentTint(context, headerColor),
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                const Spacer(),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
@@ -558,6 +573,37 @@ class _FlashcardViewState extends State<_FlashcardView> {
     }
   }
 
+  void _toggleFlip() {
+    setState(() => _isFlipped = !_isFlipped);
+  }
+
+  String _flashcardSemanticLabel(
+    BuildContext context,
+    AnswerRecord record,
+    String explanationText,
+  ) {
+    final isKu = context.isKu;
+    if (!_isFlipped) {
+      return [
+        Tr.forKu(K.flashcardFront, isKu),
+        record.prompt,
+        context.t(K.cevabiGormekIcinDokun),
+      ].join('. ');
+    }
+
+    final label = <String>[
+      Tr.forKu(K.flashcardBack, isKu),
+      context.t(K.dogruCevap),
+      record.correctAnswer,
+    ];
+    if (explanationText.isNotEmpty) {
+      label
+        ..add(context.t(K.aciklama))
+        ..add(explanationText);
+    }
+    return label.join('. ');
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.records.isEmpty) return const SizedBox.shrink();
@@ -571,8 +617,10 @@ class _FlashcardViewState extends State<_FlashcardView> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            runSpacing: 4,
             children: [
               Text(
                 '${_currentIndex + 1} / ${widget.records.length}',
@@ -582,48 +630,67 @@ class _FlashcardViewState extends State<_FlashcardView> {
                   color: AppTheme.textPrimaryColor(context),
                 ),
               ),
-              Text(
-                Tr.forKu(_isFlipped ? K.flashcardBack : K.flashcardFront, isKu),
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppTheme.textSubColor(context),
+              ExcludeSemantics(
+                child: Text(
+                  Tr.forKu(
+                    _isFlipped ? K.flashcardBack : K.flashcardFront,
+                    isKu,
+                  ),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppTheme.textSubColor(context),
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        GestureDetector(
-          onTap: () => setState(() => _isFlipped = !_isFlipped),
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              final rotate = Tween(begin: math.pi, end: 0.0).animate(animation);
-              return AnimatedBuilder(
-                animation: rotate,
-                child: child,
-                builder: (context, child) {
-                  final isUnder = (ValueKey(_isFlipped) != child?.key);
-                  var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
-                  tilt *= isUnder ? -1.0 : 1.0;
-                  final value = isUnder
-                      ? math.min(rotate.value, math.pi / 2)
-                      : rotate.value;
-                  return Transform(
-                    transform: Matrix4.rotationY(value)..setEntry(3, 2, tilt),
-                    alignment: Alignment.center,
-                    child: child,
-                  );
-                },
-              );
-            },
-            child: _isFlipped
-                ? _buildBackCard(context, record, explanationText)
-                : _buildFrontCard(context, record),
+        Semantics(
+          key: const ValueKey('review-flashcard'),
+          container: true,
+          button: true,
+          enabled: true,
+          label: _flashcardSemanticLabel(context, record, explanationText),
+          excludeSemantics: true,
+          onTap: _toggleFlip,
+          child: GestureDetector(
+            onTap: _toggleFlip,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                final rotate = Tween(
+                  begin: math.pi,
+                  end: 0.0,
+                ).animate(animation);
+                return AnimatedBuilder(
+                  animation: rotate,
+                  child: child,
+                  builder: (context, child) {
+                    final isUnder = (ValueKey(_isFlipped) != child?.key);
+                    var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
+                    tilt *= isUnder ? -1.0 : 1.0;
+                    final value = isUnder
+                        ? math.min(rotate.value, math.pi / 2)
+                        : rotate.value;
+                    return Transform(
+                      transform: Matrix4.rotationY(value)..setEntry(3, 2, tilt),
+                      alignment: Alignment.center,
+                      child: child,
+                    );
+                  },
+                );
+              },
+              child: _isFlipped
+                  ? _buildBackCard(context, record, explanationText)
+                  : _buildFrontCard(context, record),
+            ),
           ),
         ),
         const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          spacing: 12,
+          runSpacing: 8,
           children: [
             OutlinedButton.icon(
               onPressed: _currentIndex > 0 ? _prevCard : null,
@@ -697,11 +764,13 @@ class _FlashcardViewState extends State<_FlashcardView> {
             ),
           ),
           const SizedBox(height: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 6,
+            runSpacing: 4,
             children: [
               const Icon(AppIcons.arrowsRotate, size: 14, color: AppTheme.cyan),
-              const SizedBox(width: 6),
               Text(
                 context.t(K.cevabiGormekIcinDokun),
                 style: const TextStyle(
@@ -746,12 +815,14 @@ class _FlashcardViewState extends State<_FlashcardView> {
                 size: 20,
               ),
               const SizedBox(width: 8),
-              Text(
-                context.t(K.dogruCevap),
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.correct,
+              Expanded(
+                child: Text(
+                  context.t(K.dogruCevap),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.correct,
+                  ),
                 ),
               ),
             ],
@@ -786,14 +857,16 @@ class _FlashcardViewState extends State<_FlashcardView> {
                   size: 18,
                 ),
                 const SizedBox(width: 6),
-                Text(
-                  // Aynı kusur: Kurmancî yuvada Türkçe kelime yanına
-                  // ilişiktirilmişti ("Ravahî / Açıklama:").
-                  context.t(K.aciklama),
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.violet,
+                Expanded(
+                  child: Text(
+                    // Aynı kusur: Kurmancî yuvada Türkçe kelime yanına
+                    // ilişiktirilmişti ("Ravahî / Açıklama:").
+                    context.t(K.aciklama),
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.violet,
+                    ),
                   ),
                 ),
               ],

@@ -7,6 +7,8 @@ class MasteryStore {
   MasteryStore._(this._preferences);
 
   static const _keyPrefix = 'zankurd.mastery.';
+  static const _answeredKeyPrefix = 'zankurd.masteryAnswered.';
+  static const _evidenceCorrectKeyPrefix = 'zankurd.masteryEvidenceCorrect.';
   static MasteryStore? _instance;
 
   final SharedPreferences? _preferences;
@@ -31,7 +33,9 @@ class MasteryStore {
     if (prefs == null) return;
     final keys = prefs.getKeys();
     for (final key in keys) {
-      if (key.startsWith(_keyPrefix)) {
+      if (key.startsWith(_keyPrefix) ||
+          key.startsWith(_answeredKeyPrefix) ||
+          key.startsWith(_evidenceCorrectKeyPrefix)) {
         await prefs.remove(key);
       }
     }
@@ -39,6 +43,23 @@ class MasteryStore {
 
   int correctCount(String category) =>
       _preferences?.getInt('$_keyPrefix$category') ?? 0;
+
+  /// Bu kategoride cevaplanmış soru sayısı.
+  ///
+  /// Doğru sayısından özellikle ayrı tutulur: doğru cevaplar ilerleme
+  /// puanını, bu sayaç ise öğrenme sinyalinin ne kadar gözlemlendiğini
+  /// anlatır. Eski kurulumlarda kayıt yoksa sıfır döner; böylece geçmiş
+  /// etkinlik yanlışlıkla doğruluk kanıtı gibi sunulmaz.
+  int answeredCount(String category) =>
+      _preferences?.getInt('$_answeredKeyPrefix$category') ?? 0;
+
+  int? accuracyPercent(String category) {
+    final answered = answeredCount(category);
+    if (answered <= 0) return null;
+    final correct =
+        _preferences?.getInt('$_evidenceCorrectKeyPrefix$category') ?? 0;
+    return ((correct / answered) * 100).round().clamp(0, 100);
+  }
 
   MasteryLevel levelFor(String category) =>
       MasteryLevelDetails.fromCorrectCount(correctCount(category));
@@ -57,5 +78,26 @@ class MasteryStore {
     await _preferences?.setInt('$_keyPrefix$category', newCount);
     final after = MasteryLevelDetails.fromCorrectCount(newCount);
     return after != before && after != MasteryLevel.none ? after : null;
+  }
+
+  /// Cevaplanan soruları öğrenme kanıtı olarak kaydeder.
+  ///
+  /// Doğru sayısı [addCorrect] ile ayrı güncellenir; burada cevap sayısı ve
+  /// bu turun kanıtındaki doğru sayısı ayrı tutulur. Negatif ve boş kayıtlar
+  /// sessizce yok sayılır.
+  Future<void> recordAnswered(
+    String category,
+    int count, {
+    int correct = 0,
+  }) async {
+    if (count <= 0) return;
+    final prefs = _preferences;
+    if (prefs == null) return;
+    final nextAnswered = answeredCount(category) + count;
+    final nextCorrect =
+        (prefs.getInt('$_evidenceCorrectKeyPrefix$category') ?? 0) +
+        correct.clamp(0, count);
+    await prefs.setInt('$_answeredKeyPrefix$category', nextAnswered);
+    await prefs.setInt('$_evidenceCorrectKeyPrefix$category', nextCorrect);
   }
 }

@@ -54,10 +54,10 @@ class PremiumIdentityQueue {
   }
 }
 
-/// Aylık abonelik altyapısı. Kullanıcının aktif `premium` entitlement'ı
-/// varsa reklamsız, detaylı istatistik, sınırsız joker gibi özellikler
-/// açılır. API anahtarı yoksa tüm premium özellikler kapalı kalır ve
-/// uygulama normal akışına devam eder.
+/// Aylık abonelik altyapısı. Aktif `premium` entitlement seri korumasını
+/// ve paywall'da vaat edilen destek/kozmetikleri açar. Reklam SDK'sı
+/// yoktur; joker hakkı bu bayrağa bağlı değildir. API anahtarı yoksa
+/// abonelik kapalı kalır ve uygulama normal akışına devam eder.
 ///
 /// Singleton; [load] çağrısı main() içinde yapılmalıdır.
 class PremiumService extends ChangeNotifier {
@@ -119,6 +119,20 @@ class PremiumService extends ChangeNotifier {
     final fb = PremiumService._();
     fb._initialized = false;
     fb._isPremium = false;
+    return fb;
+  }
+
+  /// Abonesi olan bir oturumu taklit eder.
+  ///
+  /// Üretimde `_isPremium` yalnız RevenueCat'in müşteri bilgisinden gelir ve
+  /// dışarıdan yazılamaz — doğru olan da budur. Ama "abone olana satış
+  /// yüzeyi gösterilmez" kuralını ölçmenin başka yolu yok: o dalı sürmek
+  /// için abonelik durumu true olan bir servis gerekiyor.
+  @visibleForTesting
+  static PremiumService premiumForTesting() {
+    final fb = PremiumService._();
+    fb._initialized = true;
+    fb._isPremium = true;
     return fb;
   }
 

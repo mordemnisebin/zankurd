@@ -67,13 +67,12 @@ void main() {
     // yüklenen kümede GERÇEKTEN bulunduğunu doğrular; bulunmazsa üstteki
     // test boş bir kümede koşup sessizce geçerdi.
     final curated = playable.where((q) => q.id.startsWith('curated_')).toList();
-    // 45 kaydın 38'i oynanabilir. Kalan 7'si `needsReview` ve öyle kalması
-    // DOĞRU: Kurmancî metinleri bozuk ("Fakltîzm", "Kîmoka zîvkirî",
-    // "Bakurê Kûrdistanê"). Proje onları bilerek yayından tutuyor; sayı
-    // burada sabitlenerek o kararın sessizce gevşemesi engelleniyor.
+    // 45 kaydın tamamı oynanabilir: 2026-09-02'de kuyruktaki 7 bozuk
+    // Kurmancî kayıt yeniden yazıldı. Sayı düşerse banka yüklenen kümede
+    // görünmüyor demektir; artarsa sessizce yeni curated id girmiştir.
     expect(
       curated.length,
-      38,
+      45,
       reason:
           'Curated bankadan oynanabilir soru sayısı değişti. Düştüyse banka '
           'yüklenen kümede görünmüyor ve kapsam ölçümü onu atlıyor demektir; '

@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -6,6 +6,7 @@ import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -22,6 +23,27 @@ import 'support/widget_test_helpers.dart';
 /// İki taraf birlikte sabitleniyor. Yalnız birini yazmak kuralı yarım
 /// bırakır: açıklamayı turdan kaldırıp sonuca koymayı unutmak, öğrenme
 /// alanını sessizce boşaltır.
+
+/// Doğru şıkkın KAROSU doğru olarak işaretlenmiş mi?
+///
+/// Tur içi geri bildirim 2026-08-19'dan beri karonun kendisinden gelir:
+/// doğru şık `correctGradient` ile yeşile döner ve tik alır. Altındaki
+/// "Doğru cevap: X" kutusu kaldırıldı — aynı bilgiyi ikinci kez söylüyor
+/// ve kıt olan dikey alanı kaplıyordu (uygulama sahibinin bildirimi).
+bool dogruSikIsaretli(WidgetTester tester, String dogruSik) {
+  final tile = tester.widget<AnimatedContainer>(
+    find
+        .ancestor(
+          of: find.text(dogruSik).first,
+          matching: find.byType(AnimatedContainer),
+        )
+        .first,
+  );
+  final decoration = tile.decoration! as BoxDecoration;
+  return decoration.gradient?.colors.first ==
+      AppTheme.correctGradient.colors.first;
+}
+
 void main() {
   const question = QuizQuestion(
     id: 'lesson-expl-1',
@@ -66,7 +88,9 @@ void main() {
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
     expect(find.text('«av» Türkçede «su» demektir.'), findsNothing);
-    expect(find.text('Doğru cevap'), findsOneWidget);
+    // Geri bildirim KARODAN gelir, ayrı bir kutudan değil.
+    expect(dogruSikIsaretli(tester, 'su'), isTrue);
+    expect(find.text('Doğru cevap'), findsNothing);
   });
 
   testWidgets('doğru cevapta da açıklama metni açılmaz', (tester) async {
@@ -77,7 +101,27 @@ void main() {
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
     expect(find.text('«av» Türkçede «su» demektir.'), findsNothing);
-    expect(find.text('Doğru cevap'), findsOneWidget);
+    expect(dogruSikIsaretli(tester, 'su'), isTrue);
+    expect(find.text('Doğru cevap'), findsNothing);
+  });
+
+  testWidgets('öğrenme modunda açıklama cevap ekranından açılabilir', (
+    tester,
+  ) async {
+    await pumpQuiz(tester, MockZanKurdRepository());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('ekmek'));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+    final explanationAction = find.byKey(
+      const ValueKey('quiz-view-explanation'),
+    );
+    expect(explanationAction, findsOneWidget);
+
+    await tester.tap(explanationAction);
+    await tester.pumpAndSettle();
+    expect(find.text('Açıklama'), findsOneWidget);
+    expect(find.text('«av» Türkçede «su» demektir.'), findsOneWidget);
   });
 
   testWidgets('açıklaması olmayan soruda da doğru cevap gösterilir', (
@@ -107,8 +151,10 @@ void main() {
     await tester.tap(find.text('ekmek'));
     await tester.pumpAndSettle(const Duration(seconds: 2));
 
-    expect(find.text('Doğru cevap'), findsOneWidget);
-    expect(find.text('su'), findsWidgets);
+    // Korunan kural DEĞİŞMEDİ: açıklaması boş bir soruda da oyuncu
+    // doğrusunu görmeli. Yalnız kaynağı değişti — kutu değil, karo.
+    expect(dogruSikIsaretli(tester, 'su'), isTrue);
+    expect(find.text('Doğru cevap'), findsNothing);
   });
 
   testWidgets('sonuç ekranı bütün açıklamaları bir arada gösterir', (
@@ -164,5 +210,95 @@ void main() {
     expect(find.text('Turun açıklamaları'), findsOneWidget);
     expect(find.text('«av» Türkçede «su» demektir.'), findsOneWidget);
     expect(find.text('«nan» Türkçede «ekmek» demektir.'), findsOneWidget);
+  });
+
+  testWidgets('öğrenme sonucu yarış başlığı kullanmaz', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final repository = MockZanKurdRepository();
+
+    await tester.pumpWidget(
+      testShell(
+        child: QuizResultScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          score: 100,
+          correctCount: 1,
+          wrongCount: 0,
+          totalQuestions: 1,
+          bestStreak: 1,
+          coinsAwarded: 0,
+          isLearningExperience: true,
+          answerRecords: const [
+            AnswerRecord(
+              id: 'learning-result-1',
+              category: 'Ziman',
+              prompt: 'Peyva «av» çi ye?',
+              answers: ['su', 'nan'],
+              correctAnswer: 'su',
+              selectedAnswer: 'su',
+              explanation: '«av» su ye.',
+            ),
+          ],
+        ),
+      ),
+    );
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Öğrenme tamamlandı'), findsOneWidget);
+    expect(find.text('Yarış tamamlandı'), findsNothing);
+  });
+
+  testWidgets('kelime sıralamada doğru cevap kutusu KALIR', (tester) async {
+    // Bu testin tamamı bir silme kazasının bekçisidir.
+    //
+    // "Doğru cevap" kutusu 2026-08-19'da kaldırıldı çünkü çoktan seçmelide
+    // karonun söylediğini ikinci kez söylüyordu. Ama kelime sıralamada
+    // karo diye bir şey yok: cevap verilince girdi kilitleniyor ve doğru
+    // dizilim HİÇBİR yerde görünmüyor. Kutu tümden silinseydi o türde
+    // oyuncu yanlış yaptığında doğrusunu hiç öğrenemezdi.
+    //
+    // `needsAnswerRevealFallback` bu ayrımı tutar; bu test onun kelime
+    // sıralama tarafını sabitler.
+    const siralama = QuizQuestion(
+      id: 'lesson-word-order',
+      category: 'Ziman',
+      type: QuestionType.wordOrdering,
+      prompt: 'Peyvan rêz bike.',
+      answers: ['Ez', 'diçim', 'malê'],
+      correctAnswer: 'Ez diçim malê',
+      explanation: '',
+    );
+
+    await pumpQuiz(tester, MockZanKurdRepository(), soru: siralama);
+    await tester.pumpAndSettle();
+
+    // Kelimeleri yanlış sırada gönder.
+    await tester.tap(find.text('malê'));
+    await tester.pump();
+    await tester.tap(find.text('Ez'));
+    await tester.pump();
+    await tester.tap(find.text('diçim'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Kontrol et'));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+
+    expect(
+      find.text('Doğru cevap'),
+      findsOneWidget,
+      reason: 'kelime sıralamada doğru dizilimi açan tek yer bu kutu',
+    );
+    expect(find.text('Ez diçim malê'), findsWidgets);
+  });
+
+  test('yedek kutu yalnız kendi cevabını göstermeyen türde gerekir', () {
+    // Tükenmiş `switch` sayesinde enum'a yeni bir tür eklenirse burası
+    // değil, derleyici uyarır. Bu test yine de yürürlükteki kararı
+    // okunur biçimde yazıya döker.
+    expect(needsAnswerRevealFallback(QuestionType.multipleChoice), isFalse);
+    expect(needsAnswerRevealFallback(QuestionType.trueFalse), isFalse);
+    expect(needsAnswerRevealFallback(QuestionType.visual), isFalse);
+    expect(needsAnswerRevealFallback(QuestionType.fillInBlank), isFalse);
+    expect(needsAnswerRevealFallback(QuestionType.wordOrdering), isTrue);
   });
 }

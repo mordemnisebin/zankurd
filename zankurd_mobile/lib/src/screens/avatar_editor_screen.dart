@@ -17,6 +17,7 @@ import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Avatar/çerçeve/unvan düzenleyici. Kaydet ile repository'ye yazar ve
@@ -117,18 +118,12 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
       final name = await widget.repository.getProfileName();
       final masteryStore = await MasteryStore.load();
       final achievementStore = await AchievementStore.load();
-      final hasGoldFrame = await _safeHasPurchased(
-        'avatar_frame_gold',
-      );
+      final hasGoldFrame = await _safeHasPurchased('avatar_frame_gold');
       // Neon çerçeve 2026-07-31'e kadar mağaza kataloğunda tanımlıydı ama
       // hiçbir yerde açılmıyordu: 600 coin ödeyen oyuncu karşılığında
       // hiçbir şey görmüyordu. Altın çerçevenin birebir aynı deseni.
-      final hasNeonFrame = await _safeHasPurchased(
-        'avatar_frame_neon',
-      );
-      final hasVipBadge = await _safeHasPurchased(
-        'profile_badge_vip',
-      );
+      final hasNeonFrame = await _safeHasPurchased('avatar_frame_neon');
+      final hasVipBadge = await _safeHasPurchased('profile_badge_vip');
 
       final masteryByCategory = {
         for (final cat in widget.repository.categories)
@@ -262,7 +257,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(),
+      appBar: zkAppBar(context),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),

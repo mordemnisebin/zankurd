@@ -138,7 +138,16 @@ class _AppStateScaffold extends StatelessWidget {
         return SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight - 48),
+            // Üstteki sabit bölüm uzadığında kalan yükseklik 48'in altına
+            // inebilir (öğrenme ekranında boş ders listesi + hikâye
+            // kataloğu): negatif alt sınır düzeni çökertir. Sıfıra kelepçele;
+            // panel doğal boyunda çizilir, kaydırma geri kalanı taşır.
+            constraints: BoxConstraints(
+              minHeight: (constraints.maxHeight - 48).clamp(
+                0.0,
+                double.infinity,
+              ),
+            ),
             // Tam ortalama, üstteki sekmelerle panel arasında ~250pt boş
             // bırakıyordu; ekran yarım yüklenmiş gibi duruyordu. Panel
             // üst üçte bire çekildi: içerikle bağı kopmuyor (2026-07-27).

@@ -341,14 +341,11 @@ enum CardType {
   /// Ana CTA / soru kartı: gradient + glow + güçlü shadow.
   primary,
 
-  /// İçerik kartı: surface + border + orta shadow (glass/surface).
+  /// İçerik kartı: surface + border + orta shadow.
   secondary,
 
   /// Bilgi kartı: sadece border + minimal shadow (istatistik, yardımcı).
   info,
-
-  /// Arkasını bulanıklaştıran glassmorphism (buzlu cam) görünümü.
-  glass,
 }
 
 class AppTheme {
@@ -769,8 +766,6 @@ class AppTheme {
             ),
           ],
         );
-      case CardType.glass:
-        return glassDecoration(context, borderRadius: radius);
     }
   }
 
@@ -973,6 +968,24 @@ class AppTheme {
     );
   }
 
+  /// Soru ekranının SAHNE teması — uygulama teması ne olursa olsun koyu.
+  ///
+  /// Uygulamanın geri kalanı bir belge gibi okunur ve kullanıcının açık/
+  /// karanlık tercihine uyar. Soru ekranı ise bir belge değil, bir andır:
+  /// süre işler, seri kırılır, rakip cevap verir. Sinema salonu gibi
+  /// karartmak dikkati soruya toplar ve altın kilim ipliğini tek parlak
+  /// öğe hâline getirir — açık krem zeminde altın kayboluyordu.
+  ///
+  /// Tek noktadan uygulanır: gövde `Theme` ile sarılınca `isLight` ve ona
+  /// dayanan bütün renk yardımcıları (`surfaceColor`, `borderColor`,
+  /// `QuizOptionTile` gradyanları) kendiliğinden koyu değerlere döner.
+  /// Bileşen bileşen renk geçmek gerekmez; geçilseydi ilk eklenen yeni
+  /// şık türü sessizce açık temada kalırdı.
+  ///
+  /// Her karede `dark()` çağırmak `ThemeData` kurulumunu tekrarlar; sabit
+  /// olduğu için bir kez üretilir.
+  static final ThemeData stage = dark();
+
   static ThemeData dark() {
     return ThemeData(
       useMaterial3: true,
@@ -1090,12 +1103,14 @@ class AppTheme {
         style: FilledButton.styleFrom(
           backgroundColor: accent,
           foregroundColor: Colors.white,
-          // Pasif hâl Material'ın gri levhasına düşüyordu: ekranın en
-          // büyük öğesi (kaydet, sonraki, satın al) ölü bir gri blok
-          // oluyor ve arayüz bozuk görünüyordu. Marka renginin soluk tonu
-          // "henüz değil" der, "bozuk" demez (2026-07-27).
-          disabledBackgroundColor: accent.withValues(alpha: 0.12),
-          disabledForegroundColor: accent.withValues(alpha: 0.55),
+          // Pasif hâl aynı turuncunun soluk alpha'sıydı: Kaydet koyu
+          // panelde kayboluyordu (2026-09-03 simülatör). Opak karışım +
+          // açık yazı okunur; «henüz değil» izlenimi kalır.
+          disabledBackgroundColor: Color.alphaBlend(
+            accent.withValues(alpha: 0.55),
+            surfaceHi,
+          ),
+          disabledForegroundColor: const Color(0xFFFFF6ED),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
@@ -1340,12 +1355,11 @@ class AppTheme {
         style: FilledButton.styleFrom(
           backgroundColor: accent,
           foregroundColor: Colors.white,
-          // Pasif hâl Material'ın gri levhasına düşüyordu: ekranın en
-          // büyük öğesi (kaydet, sonraki, satın al) ölü bir gri blok
-          // oluyor ve arayüz bozuk görünüyordu. Marka renginin soluk tonu
-          // "henüz değil" der, "bozuk" demez (2026-07-27).
-          disabledBackgroundColor: accent.withValues(alpha: 0.12),
-          disabledForegroundColor: accent.withValues(alpha: 0.55),
+          disabledBackgroundColor: Color.alphaBlend(
+            accent.withValues(alpha: 0.28),
+            lightSurfaceHi,
+          ),
+          disabledForegroundColor: const Color(0xFF4A2508),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
@@ -1456,35 +1470,6 @@ class AppTheme {
         ),
         behavior: SnackBarBehavior.floating,
       ),
-    );
-  }
-
-  // ============ Glassmorphism Helpers ============
-
-  /// Creates a glassmorphism effect decoration.
-  static BoxDecoration glassDecoration(
-    BuildContext context, {
-    double borderRadius = 16,
-    double opacity = 0.12,
-  }) {
-    final isDark = _isDark(context);
-    return BoxDecoration(
-      color: isDark
-          ? Colors.white.withValues(alpha: opacity)
-          : Colors.white.withValues(alpha: opacity + 0.4),
-      borderRadius: BorderRadius.circular(borderRadius),
-      border: Border.all(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.15)
-            : Colors.white.withValues(alpha: 0.6),
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
-          blurRadius: 24,
-          offset: const Offset(0, 8),
-        ),
-      ],
     );
   }
 

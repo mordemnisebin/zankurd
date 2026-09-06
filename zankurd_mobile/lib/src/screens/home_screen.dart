@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:provider/provider.dart';
 
+import '../config/app_config.dart';
+import '../config/coin_prices.dart';
 import '../data/mistake_store.dart';
+import '../data/learning_goal_store.dart';
 import '../data/streak_store.dart';
 import '../data/xp_store.dart';
 import '../widgets/progress_summary.dart';
+import '../widgets/roj_mascot.dart';
 import '../widgets/streak_panel.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -19,9 +23,16 @@ import '../data/daily_mission_store.dart';
 import '../data/achievement_store.dart';
 import '../models/daily_mission.dart';
 import '../models/quiz_question.dart';
+import '../models/learning_goal.dart';
+import '../services/premium_service.dart';
+import '../services/daily_question_selector.dart';
+import 'paywall_screen.dart';
 import 'quiz_screen.dart';
+import '../data/level_progress_store.dart';
 import 'home/today_task_card.dart';
+import 'home/home_level_path.dart';
 import 'home/home_rows.dart';
+import 'level_screen.dart';
 import '../widgets/app_row_card.dart';
 import '../widgets/mode_card.dart';
 import 'home/daily_missions_card.dart';
@@ -31,6 +42,7 @@ import '../widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/player_identity.dart';
 import '../services/analytics_service.dart';
+import '../widgets/learning_goal_chooser.dart';
 
 /// [MistakeStore.readyIds] içindeki kimlikleri gerçekten açılabilir
 /// (`playableQuestions`) sorularla kesiştirir.
@@ -126,6 +138,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   /// "Kaldığın yer" listesi: en çok ilerlenen üç kategori.
   List<CategoryProgress> _categoryProgress = const [];
+  String _pathCategory = 'Ziman';
+  Set<int> _pathPlayed = const {};
+  LearningGoal? _learningGoal;
+  bool _learningGoalLoaded = false;
   late AnimationController _loadAnimationController;
   String? _displayName;
   int _refreshCounter = 0;
@@ -189,6 +205,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// fırsatı bu dönüştür — bkz. [onOpenLearning] doc yorumu.
   Future<void> _openLearning() async {
     await widget.onOpenLearning?.call();
+    if (mounted) _handleRefreshSignal();
+  }
+
+  Future<void> _openLevelPath() async {
+    if (!mounted) return;
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(LevelScreen(repository: repo, category: _pathCategory)));
     if (mounted) _handleRefreshSignal();
   }
 
@@ -280,6 +304,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _refreshProgress() async {
     try {
       final mastery = await MasteryStore.load();
+      final learningGoalStore = await LearningGoalStore.load();
       final entries =
           [
             for (final category in repo.categories)
@@ -294,12 +319,37 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ? byCorrect
                 : a.category.compareTo(b.category);
           });
+      final started = entries.where((entry) => entry.ratio > 0).toList();
+      final category = recommendedCategoryForGoal(
+        goal: learningGoalStore.goal,
+        categories: repo.categories,
+        startedCategories: [for (final entry in started) entry.category],
+      );
+      final levelStore = await LevelProgressStore.load();
+      final played = {
+        for (var number = 1; number <= 5; number++)
+          if (levelStore.isPlayed(category, null, number)) number,
+      };
       if (mounted) {
-        setState(() => _categoryProgress = entries.take(3).toList());
+        setState(() {
+          _categoryProgress = entries.take(3).toList();
+          _learningGoal = learningGoalStore.goal;
+          _learningGoalLoaded = true;
+          _pathCategory = category;
+          _pathPlayed = played;
+        });
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home mastery load failed');
     }
+  }
+
+  Future<void> _selectLearningGoal(LearningGoal goal) async {
+    final store = await LearningGoalStore.load();
+    await store.save(goal);
+    if (!mounted) return;
+    setState(() => _learningGoal = goal);
+    await _refreshProgress();
   }
 
   Future<void> _bootstrap() async {
@@ -399,6 +449,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ],
           const SizedBox(height: AppSpacing.md),
+          if (!_firstSession &&
+              _learningGoalLoaded &&
+              _learningGoal == null) ...[
+            LearningGoalChooser(
+              key: const ValueKey('home-learning-goal-chooser'),
+              isKu: ku,
+              selected: null,
+              onSelected: _selectLearningGoal,
+            ),
+            const SizedBox(height: AppSpacing.md),
+          ],
           Text(
             context.t(K.homeLearningSection),
             style: AppTypography.heading2.copyWith(
@@ -408,32 +469,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           const SizedBox(height: AppSpacing.xs),
           KeyedSubtree(
             key: const ValueKey('home-learning-path'),
-            // Üç mod artık birbirinin aynı satır değil; her biri kendi
-            // rengini ve amblemini taşıyan bir mod kartı (2026-08-03).
-            child: ModeCard(
-              key: const ValueKey('home-lessons-row'),
-              icon: AppIcons.graduationCap,
-              // Marka turuncusu DEĞİL: o ton birincil CTA'ya ayrılmış ve
-              // hemen üstteki "Başla" düğmesi onu kullanıyor. Mod kartı da
-              // aynı turuncuyu alınca ikisi yarışıyor ve CTA'nın "tek
-              // eylem rengi" olma özelliği kayboluyordu (2026-08-03 görsel
-              // denetimi). Ders yolu bir öğrenme yüzeyi; zümrüt ailesi.
-              accent: const Color(0xFF0E7A57),
-              title: context.t(K.homeLearningPath),
-              subtitle: context.t(K.homeLessonsSub),
-              onTap: _openLearning,
+            child: HomeLevelPath(
+              category: _pathCategory,
+              levels: repo.levelsForCategory(_pathCategory),
+              played: _pathPlayed,
+              isKu: ku,
+              onOpen: _openLevelPath,
+              onBrowse: _openCategories,
             ),
           ),
+          // `ContinueSection` yalnız gerçekten başlanmış kategorileri
+          // listeler; ilerleme yoksa çizilmez. Keşif ikinci kapı değil,
+          // ders yolunun içindeki "Tüm konular"dır.
           const SizedBox(height: AppSpacing.xs),
-          ModeCard(
-            key: const ValueKey('home-topic-picker'),
-            icon: AppIcons.bookOpen,
-            // Altın yalnız ödül/ilerleme için ayrılmış; konu seçimi bir
-            // öğrenme yüzeyi olduğu için safir ailesinden bir ton alır.
-            accent: const Color(0xFF1E4FA6),
-            title: context.t(K.homeTopicPicker),
-            subtitle: context.t(K.categoriesSubtitle),
-            onTap: _openCategories,
+          ContinueSection(
+            isKu: ku,
+            entries: _categoryProgress,
+            onOpenCategory: _openCategory,
           ),
         ],
       ),
@@ -448,6 +500,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             key: const ValueKey('home-play-handoff'),
             child: ModeCard(
               key: const ValueKey('home-duel-row'),
+              compact: true,
+              emphasis: ModeCardEmphasis.secondary,
               icon: AppIcons.bolt,
               // Düello rekabet yüzeyi: madder ailesinden enerjik bir ton.
               accent: const Color(0xFFB31E3B),
@@ -456,25 +510,54 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: () => widget.onOpenPlay?.call(),
             ),
           ),
-          // Dıştaki koşul BİLEREK yok: `ContinueSection` kendi içinde zaten
-          // "ilerleme varsa liste, yoksa keşif daveti" ayrımını yapıyor
-          // (bkz. `home_rows.dart` `_buildDiscovery`). Eskiden bölüm
-          // yalnız `_categoryProgress.any(ratio > 0)` doğruyken
-          // çiziliyordu — ilerleme boşken widget'ın kendi keşif dalı hiç
-          // ÇAĞRILMIYORDU, "Başlayalım" daveti asla görünmüyordu
-          // (2026-08-14 denetimi).
-          const SizedBox(height: AppSpacing.xs),
-          ContinueSection(
-            isKu: ku,
-            entries: _categoryProgress,
-            onOpenCategory: _openCategory,
-            onBrowseCategories: _openCategories,
-          ),
           const SizedBox(height: AppSpacing.md),
           // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
           // görünüm iki aktif görevi ve kalan sayısını gösterir; tüm görevler
           // ekranın altına taşınıp öğrenme yollarını gömmez.
           DailyMissionsCard(isKu: ku, missions: _missions, compact: true),
+
+          // ── Abonelik girişi ────────────────────────────────────────────
+          //
+          // Satın alma ekranının TEK girişi ayarların en altındaydı: profil
+          // sekmesi → Ayarlar → aşağı kaydır → Premium. Para kazandıran tek
+          // yüzey için üç dokunuşluk, hiçbir yerde ilan edilmeyen bir yol.
+          // Coin rozetinin mağazaya taşınmasıyla aynı karar (bkz. başlık
+          // rozetleri): kazanan ya da destek olmak isteyen oyuncu nereye
+          // gideceğini bulabilmeli.
+          //
+          // Kart başlıkta değil GÖVDENİN SONUNDA durur ve birincil eylemle
+          // yarışmaz: ana ekranın ilk sorusu "şimdi ne yapmalıyım?"dır,
+          // cevabı da turuncu "Başla" düğmesidir. Üçüncü bir başlık rozeti
+          // ise dar ekranlarda (320pt) rozet satırını taşırıyordu.
+          //
+          // Zaten abone olana gösterilmez: satın alınmış bir şeyi satmaya
+          // devam etmek, ödemiş kullanıcıya reklam gibi görünür.
+          // Yapılandırma yoksa da gizlenir: ürünsüz paywall ölü sokaktır
+          // (2026-09-05 canlı turu).
+          Consumer<PremiumService>(
+            builder: (context, premium, _) {
+              if (premium.isPremium || !AppConfig.hasRevenuecatConfig) {
+                return const SizedBox.shrink();
+              }
+              return Padding(
+                padding: const EdgeInsets.only(top: AppSpacing.xs),
+                child: AppRowCard(
+                  key: const ValueKey('home-premium-row'),
+                  icon: AppIcons.gem,
+                  // Altın ödül/ilerleme ailesine ayrılmış; abonelik de o
+                  // aileye girer ve paywall'ın kendi vurgusu da altındır.
+                  accent: AppTheme.gold,
+                  // Ad çevrilmez: App Store Connect'teki abonelik adının
+                  // kendisidir (bkz. `AppConfig.subscriptionDisplayName`).
+                  title: AppConfig.subscriptionDisplayName,
+                  subtitle: context.t(K.paywallSubtitle),
+                  onTap: () => Navigator.of(
+                    context,
+                  ).push(AppRoute.to(PaywallScreen(repository: repo))),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
@@ -496,7 +579,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               AppSpacing.lg,
             ),
             sliver: SliverToBoxAdapter(
-              child: isWide
+              child: _firstSession
+                  ? primary
+                  : isWide
                   ? Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -664,18 +749,39 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 },
               ),
               const SizedBox(height: 18),
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: AlignmentDirectional.centerStart,
-                child: Text(
-                  greeting,
-                  maxLines: 1,
-                  style: AppTypography.heading1.copyWith(
-                    color: Colors.white,
-                    fontSize: 23,
-                    fontWeight: FontWeight.w700,
+              // Zana selamlamada.
+              //
+              // Maskot uygulamanın her yerinde vardı ama ana ekranda
+              // yoktu; kullanıcının günde ilk gördüğü ekran kimliksiz
+              // açılıyordu. Ruh hâli seriye bağlı: seri sürüyorsa
+              // kutlar, kırıldıysa gülümser — durumu SÖYLEMEDEN gösterir
+              // ve seri rozeti zaten sayıyı yazıyor.
+              Row(
+                children: [
+                  RojMascot(
+                    key: const ValueKey('home-zana'),
+                    size: 56,
+                    mood: isTest
+                        ? (_streak > 0 ? RojMood.celebrate : RojMood.happy)
+                        : greetingMascotMood(hour: hour, streak: _streak),
                   ),
-                ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        greeting,
+                        maxLines: 1,
+                        style: AppTypography.heading1.copyWith(
+                          color: Colors.white,
+                          fontSize: 23,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 3),
               Text(
@@ -736,7 +842,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         : StreakFreezeState.insufficientCoins;
   }
 
-  static const _streakFreezeCost = 50;
+  // Sunucu RPC'siyle eşitliği bekçili tek kaynak; üç ayrı kopya vardı.
+  static const _streakFreezeCost = CoinPrices.streakFreeze;
 
   /// Bir sonraki kilometre taşı. Sabit eşikler; modelde ayrı bir milestone
   /// kaynağı yok, bu yüzden uydurma bir "maksimum" da tanımlanmaz.
@@ -971,17 +1078,37 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// "Dersê rojane" kartı: karışık kategorili 10 soruluk günlük solo quiz.
+  /// "Dersê rojane" kartı: hedefe göre önceliklendirilmiş günlük solo quiz.
   /// (Kart 10 soru vaat eder; ders ağacına değil gerçek quize gider.)
   Future<void> _startDailyQuiz() async {
     if (_roomActionLoading) return;
     setState(() => _roomActionLoading = true);
     try {
       final firstSession = _firstSession;
-      final questions = await repo.loadDailyQuestions(
-        limit: firstSession ? 5 : 10,
+      // Ana ekran ilk çizildiğinde ilerleme ve hedef yüklemesi hâlâ sürüyor
+      // olabilir. Kullanıcı CTA'ya hemen dokunursa kalıcı hedefi yine de
+      // okuyup bu turun seçiminde kullan.
+      final goal = _learningGoalLoaded
+          ? _learningGoal
+          : (await LearningGoalStore.load()).goal;
+      final questionLimit = firstSession ? 5 : 10;
+      // Hedef seçilmişse, öncelikli kategorilerden seçim yapabilmek için
+      // günlük depodan daha geniş bir aday havuzu isteriz. Quiz yine 5/10
+      // soruda kalır; havuz küçükse saf seçici kalan sorularla doldurur.
+      final candidateLimit = goal == null ? questionLimit : questionLimit * 3;
+      final candidates = await repo.loadDailyQuestions(limit: candidateLimit);
+      final questions = selectDailyQuestionsForGoal(
+        candidates: candidates,
+        goal: goal,
+        limit: questionLimit,
       );
-      if (!mounted || questions.isEmpty) return;
+      if (!mounted) return;
+      if (questions.isEmpty) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.t(K.noQuestionsFound))));
+        return;
+      }
       if (firstSession) {
         AnalyticsService.instance.logActivationStep('first_quiz_started');
       }

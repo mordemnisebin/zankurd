@@ -48,6 +48,7 @@ void main() {
   test('hızlı düello bütün girişlerde aynı Kurmancî terimi kullanır', () {
     expect(Tr.of(K.quickDuel, AppLanguage.ku), 'Pêşbirka bilez');
     expect(Tr.of(K.homeQuickDuel, AppLanguage.ku), 'Pêşbirka bilez');
+    expect(Tr.of(K.playMore, AppLanguage.ku), 'Zêdetir');
   });
 
   test('quiz açıklama seslendirmesi dinleme anlamını korur', () {
@@ -76,6 +77,20 @@ void main() {
     // `hînbûn` biri `fêrbûn` diyordu; bölüm başlığı `Hînbûn` iken büyük
     // harfli hâli `FÊRBÛN` çıkıyordu. İkisi de doğru sözcük, ama tek üründe
     // tek kök olmalı — uygulamanın sloganı da `hîn bibe` diyor.
+    expect(Tr.of(K.homePathTrack, AppLanguage.ku), 'Rêya {category}');
+    expect(Tr.of(K.homePathTrack, AppLanguage.tr), '{category} yolu');
+    expect(
+      Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.ku),
+      'Dersê rojane amade ye. Îro hîn bibe!',
+    );
+    expect(
+      Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.tr),
+      'Günün dersi hazır. Bugün öğrenmeye devam et!',
+    );
+    expect(
+      Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.tr).toLowerCase(),
+      isNot(contains('etkinlik')),
+    );
     expect(Tr.of(K.homeLearningSection, AppLanguage.ku), 'Rêyên hînbûnê');
     expect(Tr.of(K.learningPaths, AppLanguage.ku), 'Rêyên hînbûnê');
     expect(Tr.of(K.secLearning, AppLanguage.ku), 'Hînbûn');
@@ -107,9 +122,9 @@ void main() {
       'Bi hevalan re pêşbirkê bike',
     );
     expect(Tr.of(K.onbCompeteBody, AppLanguage.ku), contains('ode an kûpa'));
-    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('9 kategoriyan'));
+    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('10 kategoriyan'));
     expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('zêr didin'));
-    expect(Tr.of(K.howToPlayBody, AppLanguage.tr), contains('9 kategori'));
+    expect(Tr.of(K.howToPlayBody, AppLanguage.tr), contains('10 kategori'));
   });
 
   test('premium metni yalnız gerçekten verilen faydaları vaat eder', () {

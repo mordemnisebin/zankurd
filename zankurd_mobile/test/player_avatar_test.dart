@@ -80,4 +80,14 @@ void main() {
     );
     expect(find.byKey(const ValueKey('avatar-frame-ring')), findsNothing);
   });
+
+  testWidgets('yer tutucu ad O harfi değil kişi ikonu gösterir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      shell(const PlayerAvatar(radius: 30, displayName: 'Oyuncu')),
+    );
+    expect(find.text('O'), findsNothing);
+    expect(find.byIcon(AppIcons.user), findsOneWidget);
+  });
 }

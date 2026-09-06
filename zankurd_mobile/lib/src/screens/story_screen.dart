@@ -6,6 +6,9 @@ import '../l10n/strings.dart';
 import '../models/mini_guide.dart';
 import '../models/story.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
+import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Metin tabanlı dallanan hikâye oynatıcısı (SES YOK). İlerleme yerelde
@@ -88,8 +91,9 @@ class _StoryScreenState extends State<StoryScreen> {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(ku ? widget.story.titleKu : widget.story.titleTr),
+      appBar: zkAppBar(
+        context,
+        backgroundColor: Colors.transparent,
         actions: [
           if (widget.guide != null)
             IconButton(
@@ -133,6 +137,14 @@ class _StoryScreenState extends State<StoryScreen> {
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.page),
       children: [
+        ScreenIdentityHeader(
+          title: ku ? widget.story.titleKu : widget.story.titleTr,
+          subtitle: context.t(K.storySubtitle),
+          accent: accent,
+          icon: AppIcons.bookOpen,
+          compact: true,
+        ),
+        const SizedBox(height: AppSpacing.md),
         if (_feedbackKu != null || _feedbackTr != null)
           Container(
             margin: const EdgeInsets.only(bottom: AppSpacing.md),
@@ -195,6 +207,11 @@ class _StoryScreenState extends State<StoryScreen> {
             ],
           ),
         ),
+        const SizedBox(height: AppSpacing.md),
+        // Hikâye anlatısı ile seçimler arasına tek kilim ayracı: "bölüm
+        // ayracı" semantiği (triangleRhythm). Motif bilgi taşır — anlatının
+        // bittiği, kararın başladığı yeri işaretler (2026-08-19).
+        const KilimDivider(colors: [AppTheme.playGreen, AppTheme.gold]),
         const SizedBox(height: AppSpacing.lg),
         if (node.isEnding)
           FilledButton.icon(

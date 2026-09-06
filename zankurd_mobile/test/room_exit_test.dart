@@ -451,10 +451,7 @@ void main() {
       // geçici SnackBar'ın hangi anda göründüğü animasyona bağlıdır ve bu
       // testin konusu değil; kalıcı gösterge aşağıda doğrulanıyor.
       expect(repository.questionLoadCalls, 3);
-      expect(
-        find.textContaining('Sorular yüklenemedi'),
-        findsOneWidget,
-      );
+      expect(find.textContaining('Sorular yüklenemedi'), findsOneWidget);
 
       // Sınıra ulaşınca da "Odadan ayrıl" hâlâ çalışır — kullanıcı kilitli
       // kalmaz.

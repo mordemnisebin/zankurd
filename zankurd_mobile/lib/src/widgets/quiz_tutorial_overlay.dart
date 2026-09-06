@@ -14,7 +14,6 @@ class QuizTutorialOverlay extends StatefulWidget {
     required this.child,
     required this.isKu,
     required this.timerKey,
-    required this.answerAreaKey,
     required this.comboKey,
     required this.wildcardKey,
     required this.nextButtonKey,
@@ -30,11 +29,8 @@ class QuizTutorialOverlay extends StatefulWidget {
   /// Dil seçimi: Kürtçe (true) / Türkçe (false).
   final bool isKu;
 
-  /// Dairesel sayaç hedef anahtarı.
+  /// Dairesel sayaç hedef anahtarı. Süresiz derste Zana üst şeridindedir.
   final GlobalKey timerKey;
-
-  /// Cevap şıklarının bulunduğu alan hedef anahtarı.
-  final GlobalKey answerAreaKey;
 
   /// Seri/kombo rozeti hedef anahtarı.
   final GlobalKey comboKey;
@@ -144,7 +140,7 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
                 )
               else
                 CoachMarkStep(
-                  targetKey: widget.answerAreaKey,
+                  targetKey: widget.timerKey,
                   icon: AppIcons.bullseye,
                   titleKu: 'Bersivê hilbijêre',
                   titleTr: 'Cevabı seç',

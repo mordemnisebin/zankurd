@@ -20,50 +20,49 @@ import 'support/widget_test_helpers.dart';
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets(
-    'kapıda girilen ad, hemen ardından açılan ana ekrana geçer',
-    (tester) async {
-      final repository = MockZanKurdRepository();
-      var completed = false;
+  testWidgets('kapıda girilen ad, hemen ardından açılan ana ekrana geçer', (
+    tester,
+  ) async {
+    final repository = MockZanKurdRepository();
+    var completed = false;
 
-      await tester.pumpWidget(
-        testShell(
-          child: ProfileNameGateScreen(
-            repository: repository,
-            onCompleted: () => completed = true,
-          ),
+    await tester.pumpWidget(
+      testShell(
+        child: ProfileNameGateScreen(
+          repository: repository,
+          onCompleted: () => completed = true,
         ),
-      );
-      await tester.pumpAndSettle();
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      await tester.enterText(
-        find.byKey(const ValueKey('player-name-field')),
-        'Rojîn',
-      );
-      await tester.tap(find.text('Oyuna başla'));
-      // `pumpAndSettle` yerine sınırlı bir `pump`: gerçek uygulamada
-      // `onCompleted` AppShell'i yeniden çizip bu ekranı ağaçtan söker,
-      // bu yüzden `_saving` durumu (ve onun döngüsel yükleme animasyonu)
-      // hiç yerleşmeye fırsat bulmaz. Bu izole testte ekran BİLEREK
-      // mount'ta kalıyor (henüz HomeScreen'e geçmedik) — `pumpAndSettle`
-      // o yüzden hiç bitmeyen bir animasyonda sonsuza dek bekler.
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 50));
+    await tester.enterText(
+      find.byKey(const ValueKey('player-name-field')),
+      'Rojîn',
+    );
+    await tester.tap(find.text('Oyuna başla'));
+    // `pumpAndSettle` yerine sınırlı bir `pump`: gerçek uygulamada
+    // `onCompleted` AppShell'i yeniden çizip bu ekranı ağaçtan söker,
+    // bu yüzden `_saving` durumu (ve onun döngüsel yükleme animasyonu)
+    // hiç yerleşmeye fırsat bulmaz. Bu izole testte ekran BİLEREK
+    // mount'ta kalıyor (henüz HomeScreen'e geçmedik) — `pumpAndSettle`
+    // o yüzden hiç bitmeyen bir animasyonda sonsuza dek bekler.
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
 
-      expect(completed, isTrue);
-      // Depo YAZILDI mı — kapının kendi sözleşmesi.
-      expect(await repository.getProfileName(), 'Rojîn');
+    expect(completed, isTrue);
+    // Depo YAZILDI mı — kapının kendi sözleşmesi.
+    expect(await repository.getProfileName(), 'Rojîn');
 
-      // Kapı kapanınca AppShell'in yaptığı şeyin aynısı: HomeScreen AYNI
-      // depo instance'ıyla açılır. Ad hemen görünmeli, "ZanKurd Oyuncusu"
-      // değil.
-      await tester.pumpWidget(
-        testShell(child: HomeScreen(repository: repository)),
-      );
-      await tester.pump(const Duration(seconds: 1));
+    // Kapı kapanınca AppShell'in yaptığı şeyin aynısı: HomeScreen AYNI
+    // depo instance'ıyla açılır. Ad hemen görünmeli, "ZanKurd Oyuncusu"
+    // değil.
+    await tester.pumpWidget(
+      testShell(child: HomeScreen(repository: repository)),
+    );
+    await tester.pump(const Duration(seconds: 1));
 
-      expect(find.textContaining('Rojîn'), findsOneWidget);
-      expect(find.textContaining('ZanKurd Oyuncusu'), findsNothing);
-    },
-  );
+    expect(find.textContaining('Rojîn'), findsOneWidget);
+    expect(find.textContaining('ZanKurd Oyuncusu'), findsNothing);
+  });
 }

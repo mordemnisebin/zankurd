@@ -63,29 +63,11 @@ const _jineolojiSource = QuestionMetadata(
   qualityVersion: 1,
 );
 
-/// Kurmancîsi bozuk olduğu için oyuncuya gösterilmeyen kayıtların kaynağı.
-///
-/// 2026-07-30 dil taraması: bu dosyadaki yedi soruda `prompt` ve `answers`
-/// alanları Kurmancîde var **olmayan** sözcükler taşıyordu — "Fakltîzm",
-/// "Demorkrasîxerbirîna", "Hespê ûrikirî ya leşkerî", "Kîmoka zîvkirî",
-/// "Kom-xwebûn rêxistin", "şûnartî", "kendê". Aynı kayıtların
-/// `explanationKu`/`explanationTr` alanları düzgün yazılmış; yani bir
-/// önceki elden geçirme açıklamaları onarmış, soru ve şıkları atlamış.
-///
-/// Kurmancî öğreten bir uygulamada oyuncuya uydurma sözcüğü **doğru cevap**
-/// diye göstermek, sorunun hiç sorulmamasından kötüdür: oyuncu yanlışı
-/// öğrenir ve öğrendiğinden emin olur. Sorular silinmedi — şıkları gerçek
-/// Kurmancîyle yeniden yazılana dek inceleme kuyruğunda bekliyor.
-/// Geri açmak için: metnini düzelt, `reviewStatus`u `approved` yap.
-const _bozukKurmanciBekliyor = QuestionMetadata(
-  reviewStatus: ReviewStatus.needsReview,
-  dialect: 'Kurmancî',
-  sourceTitle: 'Kurmancî metni yeniden yazılmayı bekliyor (2026-07-30)',
-  sourceReference:
-      'Şıklar ve soru gövdesi Kurmancîde var olmayan sözcükler taşıyor; '
-      'açıklama alanları sağlam. copy_language_test bekçisi bkz.',
-  qualityVersion: 1,
-);
+/// 2026-09-02: 2026-07-30 taramasında kuyruğa alınan yedi Paradigma/Siyaset
+/// kaydı gerçek Kurmancîyle yeniden yazıldı ve kaynaklı `approved` oldu.
+/// Uydurma gövde (`Fakltîzm`, `Kîmoka zîvkirî`, `şûnartî`…) silindi; bekçi
+/// listesi `all_banks_quality_test` içinde duruyor ki aynı sözcükler geri
+/// gelmesin.
 
 /// İlk editoryal dalga: Kurmancî öncelikli, kaynaklı ve bağlamlı sorular.
 /// Eski otomatik havuzdan ayrı tutulur; yeni içerik kalite filtresinden geçmiştir.
@@ -666,7 +648,7 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_paradigma_0001',
     category: 'Paradigma',
-    prompt: 'Peyva "jineolojî" çi dihundirîne?',
+    prompt: 'Peyva "jineolojî" çi tê de ye?',
     answers: [
       'Zanistiya jinê',
       'Zanistiya azadiyê',
@@ -685,7 +667,7 @@ const curatedQuestionBank = <QuizQuestion>[
     explanation:
         'Jineolojî ji "jin" û "lojî" (zanist) pêk tê; zanistiya jinê û rêxistinkirina civaka azad e.',
     difficulty: 1,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _jineolojiSource,
     explanationKu:
         'Jineolojî ji "jin" û "lojî" (zanist) pêk tê; zanistiya jinê û '
         'rêxistinkirina civaka azad e.',
@@ -698,12 +680,12 @@ const curatedQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt: 'Kîjan têgeh bi "konfederalîzm"ê re herî nêzîk e?',
     answers: [
-      'Kom-xwebûn rêxistin',
-      'Bikarhnêrîn',
-      'Hukmêkerek',
+      'Rêxistinên xwe-bi-xwe yên herêmî',
+      'Serfkarî',
+      'Yek serwer',
       'Kolonyalîzm',
     ],
-    correctAnswer: 'Kom-xwebûn rêxistin',
+    correctAnswer: 'Rêxistinên xwe-bi-xwe yên herêmî',
     promptTr: 'Hangi kavram "konfederalizm"e en yakındır?',
     answersTr: [
       'Topluluk özyönetimi örgütlenmesi',
@@ -713,9 +695,9 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Topluluk özyönetimi örgütlenmesi',
     explanation:
-        'Konfederalîzmek modela ku rêxistinên xwe-bixwe yên herêmî yên xwebûn-bixwe li ser wekheviyê tên girêdan e.',
+        'Konfederalîzm modelek e ku rêxistinên herêmî yên xwe-bi-xwe li ser bingeha wekheviyê bi hev ve girê dide.',
     difficulty: 2,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _anfSource,
     explanationKu:
         'Konfederalîzm modelek e ku rêxistinên herêmî yên xwe-bi-xwe li ser '
         'bingeha wekheviyê bi hev ve girê dide.',
@@ -759,23 +741,23 @@ const curatedQuestionBank = <QuizQuestion>[
     prompt: 'Abdullah Öcalan di gotarên xwe de kîjan "-îzm"ê pêşniyar kir?',
     answers: [
       'Konfederalîzma demokratîk',
-      'Fakltîzm',
-      'Fermendîzm',
-      'Medyatîkdemokrasî',
+      'Liberalîzm',
+      'Sosyalîzma dewletê',
+      'Neteweperestî',
     ],
     correctAnswer: 'Konfederalîzma demokratîk',
     promptTr: 'Abdullah Öcalan yazılarında hangi "-izm"i önerdi?',
     answersTr: [
       'Demokratik konfederalizm',
-      'Faklitizm',
-      'Fermendizm',
-      'Medyatik demokrasi',
+      'Liberalizm',
+      'Devlet sosyalizmi',
+      'Milliyetçilik',
     ],
     correctAnswerTr: 'Demokratik konfederalizm',
     explanation:
-        'Di "Demokratik Konfederalîzm" de civak bi şiklê rêxistinên xwe-bixwe têne rêxistinkirin, ne dewletî.',
+        'Di konfederalîzma demokratîk de civak bi rêxistinên xwe-bi-xwe tê organîzekirin, ne bi dewletê.',
     difficulty: 2,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _anfSource,
     explanationKu:
         'Di konfederalîzma demokratîk de civak bi rêxistinên xwe-bi-xwe tê '
         'organîzekirin, ne bi dewletê.',
@@ -786,14 +768,14 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_paradigma_0005',
     category: 'Paradigma',
-    prompt: 'Civaka takekesî li şûna netewe-dewletê çi pêşniyar dike?',
+    prompt: 'Li şûna netewe-dewletê kîjan model tê pêşniyarkirin?',
     answers: [
-      'Birayên xwe rêxistinbranî',
-      'Demokrasîxerbirîna gelemperî',
-      'Hespê ûrikirî ya leşkerî',
-      'Hiqûqa malbatê ya nepenî',
+      'Belavkirina rêxistinî ya biratiyê',
+      'Demokratîkbûna gelemperî',
+      'Pileyên leşkerî',
+      'Hiqûqa malbatê ya veşartî',
     ],
-    correctAnswer: 'Demokrasîxerbirîna gelemperî',
+    correctAnswer: 'Demokratîkbûna gelemperî',
     promptTr: 'Ulus-devlet yerine hangi model önerilir?',
     answersTr: [
       'Kardeşliğin örgütsel dağıtımı',
@@ -803,9 +785,9 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Toplumun geneline yayılan demokratikleşme',
     explanation:
-        'Paradîgma demokratîk a civakî rêxistinên demokratîk û rihevketa gelemperî hene dihundirîne.',
+        'Paradîgmaya civaka demokratîk rêxistinên demokratîk û biryardana gelemperî digire nav xwe.',
     difficulty: 3,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _anfSource,
     explanationKu:
         'Paradîgmaya civaka demokratîk rêxistinên demokratîk û biryardana '
         'gelemperî digire nav xwe.',
@@ -877,14 +859,14 @@ const curatedQuestionBank = <QuizQuestion>[
     id: 'curated_paradigma_0008',
     category: 'Paradigma',
     prompt:
-        'Peyva "pîvana rast" ji bo rêxistinkirina civaka demokratîk çi tê wateyek?',
+        'Peyva "pîvana rast" ji bo rêxistinkirina civaka demokratîk çi wateyê dide?',
     answers: [
-      'Yekserîn û şiklê radestî',
-      'Konsensus û şûnartî',
-      'Hiqûqa serdestê meclîsê',
-      'Girtinên gelemperî yên girtîgehê',
+      'Fermana yekdest û teslîmbûn',
+      'Lihevkirin û biryara herêmî',
+      'Serdestiya serokê meclîsê',
+      'Girtinên giştî',
     ],
-    correctAnswer: 'Konsensus û şûnartî',
+    correctAnswer: 'Lihevkirin û biryara herêmî',
     promptTr: 'Demokratik toplumu örgütlemede "doğru ölçü" ne anlama gelir?',
     answersTr: [
       'Tek elden buyruk ve teslimiyet',
@@ -894,9 +876,9 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Uzlaşı ve yerinden karar',
     explanation:
-        'Biryarên civakî bi şiklê konsensus û şûnartî tên standin, ne bi werdêjin.',
+        'Biryarên civakî bi rêya lihevkirin û gotûbêjê tên girtin, ne bi ferzkirinê.',
     difficulty: 3,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _anfSource,
     explanationKu:
         'Biryarên civakî bi rêya lihevkirin û gotûbêjê tên girtin, ne bi '
         'ferzkirinê.',
@@ -936,14 +918,14 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_paradigma_0010',
     category: 'Paradigma',
-    prompt: 'Sembola jinên Şoreşa Rojavayê aliyê çi li ser kendê ye?',
+    prompt: 'Sembola jinên Şoreşa Rojavayê çi derdixe pêş?',
     answers: [
-      'Saltê rengîn',
+      'Cilê rengîn',
       'Hirça mezin',
-      'Li xebatê rengîn û alîserdestiyê jin',
-      'Kîmoka zîvkirî',
+      'Jinên di xebat û parastinê de',
+      'Zelata zîv',
     ],
-    correctAnswer: 'Li xebatê rengîn û alîserdestiyê jin',
+    correctAnswer: 'Jinên di xebat û parastinê de',
     promptTr: 'Rojava Devrimi\'nde kadınların simgesi neyi öne çıkarır?',
     answersTr: [
       'Renkli bir kumaş',
@@ -953,9 +935,9 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Emekte ve öz savunmada yer alan kadın',
     explanation:
-        'Sembola rengîn a jinên parastina jinê ye, ku azadiyê û bicihbûna civakê destnîşan dike.',
+        'Sembol nîşana parastina jinê ye û azadî û cihgirtina wê ya civakî destnîşan dike.',
     difficulty: 2,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _kongraStarSource,
     explanationKu:
         'Sembol nîşana parastina jinê ye û azadî û cihgirtina wê ya civakî '
         'destnîşan dike.',
@@ -1089,14 +1071,14 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_siyaset_0006',
     category: 'Siyaset',
-    prompt: 'Konfederalîzma demokratîk li kîjan herêmê peydexandî ye?',
+    prompt: 'Konfederalîzma demokratîk li kîjan herêmê hat bicihkirin?',
     answers: [
-      'Rojavayê Bakurûrê Sûrîyê',
-      'Bakurê Kûrdistanê (Tûrkiye)',
+      'Rojava (bakurê Sûriyê)',
+      'Bakurê Kurdistanê (Tirkiye)',
       'Başûrê Kurdistanê (Îraq)',
       'Rojhilatê Kurdistanê (Îran)',
     ],
-    correctAnswer: 'Rojavayê Bakurûrê Sûrîyê',
+    correctAnswer: 'Rojava (bakurê Sûriyê)',
     promptTr: 'Demokratik konfederalizm hangi bölgede uygulandı?',
     answersTr: [
       'Rojava (Kuzey Suriye)',
@@ -1106,9 +1088,9 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Rojava (Kuzey Suriye)',
     explanation:
-        'DMC (Xebûna Demokratîk a Rojava-Bakurûrê Sûrîyê) li Rojava hat ava kirin, paşê bû Konfederalîzma Demokratîk a Sûrîyê Bakûr.',
+        'Rêveberiya xweser a Rojava piştre wek konfederalîzmeke herêmî ya bakurê Sûriyê hat berfirehkirin.',
     difficulty: 2,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _kjarSource,
     explanationKu:
         'Rêveberiya xweser a Rojava piştre wek konfederalîzmeke herêmî ya '
         'bakurê Sûriyê hat berfirehkirin.',

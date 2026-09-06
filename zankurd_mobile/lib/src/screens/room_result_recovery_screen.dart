@@ -235,7 +235,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
           automaticallyImplyLeading: false,
           leading: IconButton(
             onPressed: _leaveRecovery,
-            tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+            tooltip: context.t(K.back),
             icon: const Icon(AppIcons.arrowLeft),
           ),
           title: Text(context.t(K.resultTitle)),

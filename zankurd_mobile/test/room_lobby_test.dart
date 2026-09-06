@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
+import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/widgets/styled_button.dart';
 import 'support/widget_test_helpers.dart';
 
@@ -534,4 +536,59 @@ void main() {
 
     expect(find.text('Tu'), findsOneWidget);
   });
+
+  testWidgets(
+    'oda ekrani kahraman oda kartinda kilim motifi, PlayerAvatar ve bekleyen slotu gosterir',
+    (tester) async {
+      // 4.1 Gorsel Kimlik: Oda kodu Jackbox kahramani olarak one cikarilir,
+      // arkasina kilim borduru konur, oyuncular PlayerAvatar ile render edilir
+      // ve odada 2. oyuncu yokken bekleyen slot cizilir.
+      final repository = MockZanKurdRepository();
+      final singlePlayerRoom = repository.createRoom().copyWith(
+        players: const [
+          Player(name: 'Tu', score: 0, state: 'Hazır', streak: 0),
+        ],
+      );
+      await tester.pumpWidget(
+        testShell(
+          child: RoomScreen(
+            repository: repository,
+            initialRoom: singlePlayerRoom,
+          ),
+        ),
+      );
+      await tester.pump();
+
+      // Oda kodu karti ve kopyalama anahtarlari mevcut
+      expect(find.byKey(const ValueKey('room-code')), findsOneWidget);
+      expect(find.byKey(const ValueKey('room-code-copy')), findsOneWidget);
+
+      // PlayerAvatar ile oyuncu cizimi (tek oyuncu)
+      expect(find.byType(PlayerAvatar), findsOneWidget);
+
+      // 2. oyuncu henüz yokken bekleyen slot görünür.
+      //
+      // Beklenen metinler `strings.dart`tan OKUNUR, elle yazılmaz.
+      // İlk hâlinde '2. Oyuncu' ve 'Bekleniyor' diye tahmin edilmişti;
+      // ikisi de bankada yok — widget `K.waitingOpponent` ve
+      // `K.statPending` kullanıyor (proje kuralı: çeviri tek kaynaktan).
+      // Elle yazılan etiket, çeviri değişince testi sessizce kırar.
+      final slot = find.byKey(const ValueKey('room-waiting-slot'));
+      expect(slot, findsOneWidget);
+      expect(
+        find.descendant(
+          of: slot,
+          matching: find.text(Tr.forKu(K.waitingOpponent, false)),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: slot,
+          matching: find.text(Tr.forKu(K.statPending, false)),
+        ),
+        findsOneWidget,
+      );
+    },
+  );
 }

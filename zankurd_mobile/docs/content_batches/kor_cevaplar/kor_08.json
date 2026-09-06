@@ -1,0 +1,978 @@
+[
+  {
+    "id": "cinema_0022",
+    "cevap": "Senarîst"
+  },
+  {
+    "id": "cinema_0023",
+    "cevap": "Venedîk"
+  },
+  {
+    "id": "cinema_0024",
+    "cevap": "Federico Fellini"
+  },
+  {
+    "id": "cinema_0025",
+    "cevap": "24"
+  },
+  {
+    "id": "cinema_0026",
+    "cevap": "François Truffaut"
+  },
+  {
+    "id": "cinema_0027",
+    "cevap": "Metîn Erksan"
+  },
+  {
+    "id": "cinema_0028",
+    "cevap": "Plana çavê teyr"
+  },
+  {
+    "id": "cinema_0029",
+    "cevap": "Sipîberf û Heft Cûceyan"
+  },
+  {
+    "id": "cinema_0030",
+    "cevap": "Ousmane Sembène"
+  },
+  {
+    "id": "cinema_0031",
+    "cevap": "Berhemhêner"
+  },
+  {
+    "id": "cinema_0032",
+    "cevap": "Danîmarka"
+  },
+  {
+    "id": "cinema_0033",
+    "cevap": "Wong Kar-waî"
+  },
+  {
+    "id": "cinema_0034",
+    "cevap": "Plana danasînê"
+  },
+  {
+    "id": "cinema_0035",
+    "cevap": "Orson Welles"
+  },
+  {
+    "id": "cinema_0036",
+    "cevap": "Semîh Kaplanoglu"
+  },
+  {
+    "id": "cinema_0037",
+    "cevap": "Western"
+  },
+  {
+    "id": "cinema_0038",
+    "cevap": "Cahiers du cinéma"
+  },
+  {
+    "id": "cinema_0039",
+    "cevap": "Koreya Başûr"
+  },
+  {
+    "id": "cinema_0040",
+    "cevap": "Dengê dîegetîk"
+  },
+  {
+    "id": "cinema_0041",
+    "cevap": "Alfred Hitchcock"
+  },
+  {
+    "id": "cinema_0042",
+    "cevap": "Hîner Salêm"
+  },
+  {
+    "id": "cinema_0043",
+    "cevap": "Rêjeya firehî û bilindahiyê"
+  },
+  {
+    "id": "cinema_0044",
+    "cevap": "Lev Kuleşov"
+  },
+  {
+    "id": "cinema_0045",
+    "cevap": "Pîşesaziya fîlman a Îstenbolê"
+  },
+  {
+    "id": "cinema_0046",
+    "cevap": "Montaja paralel"
+  },
+  {
+    "id": "cinema_0047",
+    "cevap": "Wings"
+  },
+  {
+    "id": "cinema_0048",
+    "cevap": "Pedro Almodóvar"
+  },
+  {
+    "id": "cinema_0049",
+    "cevap": "Travelling"
+  },
+  {
+    "id": "cinema_0050",
+    "cevap": "Andrey Tarkovskî"
+  },
+  {
+    "id": "cinema_0051",
+    "cevap": "Fatîh Akin"
+  },
+  {
+    "id": "cinema_0052",
+    "cevap": "MacGuffin"
+  },
+  {
+    "id": "cinema_0053",
+    "cevap": "Abbas Kiarostamî"
+  },
+  {
+    "id": "cinema_0054",
+    "cevap": "Laboratûvara Edison"
+  },
+  {
+    "id": "cinema_0055",
+    "cevap": "Yeşîm Ustaoglu"
+  },
+  {
+    "id": "tech_core_0001",
+    "cevap": "8 bît"
+  },
+  {
+    "id": "tech_core_0002",
+    "cevap": "Pêvajoker (CPU)"
+  },
+  {
+    "id": "tech_core_0003",
+    "cevap": "Bîra RAM"
+  },
+  {
+    "id": "tech_core_0004",
+    "cevap": "Gîgabayt"
+  },
+  {
+    "id": "tech_core_0005",
+    "cevap": "Pergalên xebitandinê"
+  },
+  {
+    "id": "tech_core_0006",
+    "cevap": "12"
+  },
+  {
+    "id": "tech_core_0007",
+    "cevap": "Parçeyên wê yên tevger tune ne"
+  },
+  {
+    "id": "tech_core_0008",
+    "cevap": "8"
+  },
+  {
+    "id": "tech_core_0009",
+    "cevap": "Ji bo gihandina zû ya daneyên pir tên xwestin"
+  },
+  {
+    "id": "tech_core_0010",
+    "cevap": "16"
+  },
+  {
+    "id": "tech_core_0011",
+    "cevap": "Klavye"
+  },
+  {
+    "id": "tech_core_0012",
+    "cevap": "1101"
+  },
+  {
+    "id": "tech_core_0013",
+    "cevap": "Bername û fermanên ku li ser kompîterê dixebitin"
+  },
+  {
+    "id": "tech_core_0014",
+    "cevap": "ROM"
+  },
+  {
+    "id": "tech_core_0015",
+    "cevap": "Hejmara çerxên demjimêrê di çirkeyekê de"
+  },
+  {
+    "id": "tech_core_0016",
+    "cevap": "Cureya naverokê û bernameya ku wê vedike"
+  },
+  {
+    "id": "tech_core_0017",
+    "cevap": "Bikaranîna bîreke sereke ya pir mezintir"
+  },
+  {
+    "id": "tech_core_0018",
+    "cevap": "Firmware (BIOS/UEFI)"
+  },
+  {
+    "id": "tech_core_0019",
+    "cevap": "255"
+  },
+  {
+    "id": "tech_core_0020",
+    "cevap": "Navên malperan vediguherîne navnîşanên IPê"
+  },
+  {
+    "id": "tech_core_0021",
+    "cevap": "Danûstandin bi şîfrekirinê tê parastin"
+  },
+  {
+    "id": "tech_core_0022",
+    "cevap": "Nasnameya hejmarî ya amûrê"
+  },
+  {
+    "id": "tech_core_0023",
+    "cevap": "Ji bo girêdana amûrên nêzîk bi enerjiyeke kêm"
+  },
+  {
+    "id": "tech_core_0024",
+    "cevap": "Çavkanî li ser server nehat dîtin"
+  },
+  {
+    "id": "tech_core_0025",
+    "cevap": "SMTP"
+  },
+  {
+    "id": "tech_core_0026",
+    "cevap": "Ji bo bîranîna rewşa bikarhêner"
+  },
+  {
+    "id": "tech_core_0027",
+    "cevap": "Trafîka navbera tora malê û derve birêve dibe"
+  },
+  {
+    "id": "tech_core_0028",
+    "cevap": "TCP gihandina rêzdar piştrast dike, UDP nake"
+  },
+  {
+    "id": "tech_core_0029",
+    "cevap": "HTML"
+  },
+  {
+    "id": "tech_core_0030",
+    "cevap": "32"
+  },
+  {
+    "id": "tech_core_0031",
+    "cevap": "Navê bikarhêner û navê domainê"
+  },
+  {
+    "id": "tech_core_0032",
+    "cevap": "Wergirên din wê navnîşanê nabînin"
+  },
+  {
+    "id": "tech_core_0033",
+    "cevap": "Dûrtir digihîje lê hêdîtir e"
+  },
+  {
+    "id": "tech_core_0034",
+    "cevap": "Sînyalê ji formekê bo ya din vediguherîne"
+  },
+  {
+    "id": "tech_core_0035",
+    "cevap": "Dema ku dane heta bigihîje derbas dike"
+  },
+  {
+    "id": "tech_core_0036",
+    "cevap": "Daxwazan werdigire û bersivê vedigerîne"
+  },
+  {
+    "id": "tech_core_0037",
+    "cevap": "443"
+  },
+  {
+    "id": "tech_core_0038",
+    "cevap": "Ji bilî şîfreyê belgeyeke duyem dixwaze"
+  },
+  {
+    "id": "tech_core_0039",
+    "cevap": "Bi peyamên sexte ku xwe wek çavkaniyên pêbawer nîşan didin"
+  },
+  {
+    "id": "tech_core_0040",
+    "cevap": "Dirêjahiya zêde û tevliheviya karakteran"
+  },
+  {
+    "id": "tech_core_0041",
+    "cevap": "Ji ber ku agir an dizî nikare her duyan bibe"
+  },
+  {
+    "id": "tech_core_0042",
+    "cevap": "Ji bo girtina qulikên naskirî yên nermalavê"
+  },
+  {
+    "id": "tech_core_0043",
+    "cevap": "Ji bo her hesabê şîfreyeke cuda û xurt hiltîne"
+  },
+  {
+    "id": "tech_core_0044",
+    "cevap": "Kesên din dikarin trafîka neşîfrekirî bibînin"
+  },
+  {
+    "id": "tech_core_0045",
+    "cevap": "Daxwaza lezgîn a tikandina girêdanekê"
+  },
+  {
+    "id": "tech_core_0046",
+    "cevap": "Daneyan bêyî mifteya rast nexwendî dike"
+  },
+  {
+    "id": "tech_core_0047",
+    "cevap": "Pelan şîfre dike û ji bo vekirinê pere dixwaze"
+  },
+  {
+    "id": "tech_core_0048",
+    "cevap": "Mifteya ewlehiyê ya fizîkî"
+  },
+  {
+    "id": "tech_core_0049",
+    "cevap": "Derketina daneyan a li yek malperê hesaban vedike"
+  },
+  {
+    "id": "tech_core_0050",
+    "cevap": "Trafîka têketî û derketî li gorî rêzikan fîltre dike"
+  },
+  {
+    "id": "tech_core_0051",
+    "cevap": "Girêdan şîfrekirî ye"
+  },
+  {
+    "id": "tech_core_0052",
+    "cevap": "Ji ber ku kopiyeke xerabûyî tenê hingê xuya dibe"
+  },
+  {
+    "id": "tech_core_0053",
+    "cevap": "Nedan û bi kanaleke fermî ya naskirî piştrastkirin"
+  },
+  {
+    "id": "tech_core_0054",
+    "cevap": "Nermalava fesadî li ser amûrê tê sazkirin"
+  },
+  {
+    "id": "tech_core_0055",
+    "cevap": "Tenê şander û wergir dikarin peyaman bixwînin"
+  },
+  {
+    "id": "tech_invent_0001",
+    "cevap": "Johannes Gutenberg"
+  },
+  {
+    "id": "tech_invent_0002",
+    "cevap": "Alexander Graham Bell"
+  },
+  {
+    "id": "tech_invent_0003",
+    "cevap": "Bell Labs"
+  },
+  {
+    "id": "tech_invent_0004",
+    "cevap": "Thomas Edison"
+  },
+  {
+    "id": "tech_invent_0005",
+    "cevap": "Louis Daguerre"
+  },
+  {
+    "id": "tech_invent_0006",
+    "cevap": "Mainz"
+  },
+  {
+    "id": "tech_invent_0007",
+    "cevap": "Thomas Edison"
+  },
+  {
+    "id": "tech_invent_0008",
+    "cevap": "Germanyûm"
+  },
+  {
+    "id": "tech_invent_0009",
+    "cevap": "Samuel Morse"
+  },
+  {
+    "id": "tech_invent_0010",
+    "cevap": "Wilhelm Röntgen"
+  },
+  {
+    "id": "tech_invent_0011",
+    "cevap": "Guglielmo Marconi"
+  },
+  {
+    "id": "tech_invent_0012",
+    "cevap": "John Bardeen"
+  },
+  {
+    "id": "tech_invent_0013",
+    "cevap": "Pirtûk"
+  },
+  {
+    "id": "tech_invent_0014",
+    "cevap": "Alessandro Volta"
+  },
+  {
+    "id": "tech_invent_0015",
+    "cevap": "Michael Faraday"
+  },
+  {
+    "id": "tech_invent_0016",
+    "cevap": "James Watt"
+  },
+  {
+    "id": "tech_invent_0017",
+    "cevap": "Enerjiya mekanîkî"
+  },
+  {
+    "id": "tech_invent_0018",
+    "cevap": "Jenerator"
+  },
+  {
+    "id": "tech_invent_0019",
+    "cevap": "V = I × R"
+  },
+  {
+    "id": "tech_invent_0020",
+    "cevap": "Tevgera hewayê"
+  },
+  {
+    "id": "tech_invent_0021",
+    "cevap": "Sîlîkon"
+  },
+  {
+    "id": "tech_invent_0022",
+    "cevap": "Enerjiya potansiyel"
+  },
+  {
+    "id": "tech_invent_0023",
+    "cevap": "Dûrahiya rêwîtiya hêzê"
+  },
+  {
+    "id": "tech_invent_0024",
+    "cevap": "Asta voltajê"
+  },
+  {
+    "id": "tech_invent_0025",
+    "cevap": "Sifir"
+  },
+  {
+    "id": "tech_invent_0026",
+    "cevap": "Voltaj × cereyan"
+  },
+  {
+    "id": "tech_invent_0027",
+    "cevap": "Cereyana ku diherike"
+  },
+  {
+    "id": "tech_invent_0028",
+    "cevap": "Ji bo birîna cereyana zêde"
+  },
+  {
+    "id": "tech_invent_0029",
+    "cevap": "Hilma bin zextê"
+  },
+  {
+    "id": "tech_invent_0030",
+    "cevap": "Enerjiya elektrîkî"
+  },
+  {
+    "id": "tech_invent_0031",
+    "cevap": "Tenê şeklê xwe diguhere"
+  },
+  {
+    "id": "tech_invent_0032",
+    "cevap": "Lez kêm dibe, tork zêde dibe"
+  },
+  {
+    "id": "tech_invent_0033",
+    "cevap": "Aliyê wê bi rêkûpêk diguhere"
+  },
+  {
+    "id": "tech_invent_0034",
+    "cevap": "Amper"
+  },
+  {
+    "id": "tech_invent_0035",
+    "cevap": "Ji ber ku windabûna germî kêm dibe"
+  },
+  {
+    "id": "tech_invent_0036",
+    "cevap": "Enerjiya elektrîkî"
+  },
+  {
+    "id": "tech_invent_0037",
+    "cevap": "Birayên Wright"
+  },
+  {
+    "id": "tech_invent_0038",
+    "cevap": "Sputnik 1"
+  },
+  {
+    "id": "tech_invent_0039",
+    "cevap": "Neil Armstrong"
+  },
+  {
+    "id": "tech_invent_0040",
+    "cevap": "Yuri Gagarin"
+  },
+  {
+    "id": "tech_invent_0041",
+    "cevap": "Bi avêtina gazan ber bi paş"
+  },
+  {
+    "id": "tech_invent_0042",
+    "cevap": "Nêzîkî 36.000 km"
+  },
+  {
+    "id": "tech_invent_0043",
+    "cevap": "Ji ber ku leza wê ya aliyî bi kişandinê re hevseng e"
+  },
+  {
+    "id": "tech_invent_0044",
+    "cevap": "Ji ber cudahiya zextê li ser û bin baskan"
+  },
+  {
+    "id": "tech_invent_0045",
+    "cevap": "Birayên Montgolfier"
+  },
+  {
+    "id": "tech_invent_0046",
+    "cevap": "11,2 km/s"
+  },
+  {
+    "id": "tech_invent_0047",
+    "cevap": "Ji ber ku ba û baran li wir tune ne"
+  },
+  {
+    "id": "tech_invent_0048",
+    "cevap": "Eagle"
+  },
+  {
+    "id": "tech_invent_0049",
+    "cevap": "Saturn V"
+  },
+  {
+    "id": "tech_invent_0050",
+    "cevap": "Nêzîkî 90 deqîqe"
+  },
+  {
+    "id": "tech_invent_0051",
+    "cevap": "100 km"
+  },
+  {
+    "id": "tech_invent_0052",
+    "cevap": "Bi pîvana dema gihîştina sînyalên peykan"
+  },
+  {
+    "id": "tech_invent_0054",
+    "cevap": "Gerstêrkên dêw ên derve"
+  },
+  {
+    "id": "tech_invent_0055",
+    "cevap": "Ji bo ku giraniya vala bê avêtin"
+  },
+  {
+    "id": "ziman_x_0001",
+    "cevap": "Berf"
+  },
+  {
+    "id": "ziman_x_0003",
+    "cevap": "mala min"
+  },
+  {
+    "id": "ziman_x_0004",
+    "cevap": "Siz"
+  },
+  {
+    "id": "ziman_x_0005",
+    "cevap": "31"
+  },
+  {
+    "id": "ziman_x_0006",
+    "cevap": "Hevwate"
+  },
+  {
+    "id": "ziman_x_0007",
+    "cevap": "Yeşil"
+  },
+  {
+    "id": "ziman_x_0008",
+    "cevap": "Min nan xwar"
+  },
+  {
+    "id": "ziman_x_0009",
+    "cevap": "Anne"
+  },
+  {
+    "id": "ziman_x_0010",
+    "cevap": "pirtûkên min"
+  },
+  {
+    "id": "ziman_x_0011",
+    "cevap": "Heft"
+  },
+  {
+    "id": "ziman_x_0012",
+    "cevap": "Du zarava"
+  },
+  {
+    "id": "ziman_x_0013",
+    "cevap": "Ez naçim"
+  },
+  {
+    "id": "ziman_x_0014",
+    "cevap": "Hesp"
+  },
+  {
+    "id": "ziman_x_0015",
+    "cevap": "Du"
+  },
+  {
+    "id": "ziman_x_0016",
+    "cevap": "Êvar"
+  },
+  {
+    "id": "ziman_x_0017",
+    "cevap": "li malê"
+  },
+  {
+    "id": "ziman_x_0018",
+    "cevap": "Kapı"
+  },
+  {
+    "id": "ziman_x_0020",
+    "cevap": "bixwîne"
+  },
+  {
+    "id": "ziman_x_0021",
+    "cevap": "Stêrk"
+  },
+  {
+    "id": "ziman_x_0022",
+    "cevap": "Peyva deynkirî"
+  },
+  {
+    "id": "ziman_x_0023",
+    "cevap": "Nan"
+  },
+  {
+    "id": "ziman_x_0025",
+    "cevap": "te"
+  },
+  {
+    "id": "ziman_x_0026",
+    "cevap": "Siyah"
+  },
+  {
+    "id": "ziman_x_0027",
+    "cevap": "Malbata hindû-ewropî"
+  },
+  {
+    "id": "ziman_x_0028",
+    "cevap": "diçe"
+  },
+  {
+    "id": "ziman_x_0029",
+    "cevap": "Vexwarina spî ya ji heywanan tê girtin"
+  },
+  {
+    "id": "ziman_x_0030",
+    "cevap": "Heşt"
+  },
+  {
+    "id": "ziman_x_0031",
+    "cevap": "Pisîk"
+  },
+  {
+    "id": "ziman_x_0032",
+    "cevap": "di odeyê de"
+  },
+  {
+    "id": "ziman_x_0033",
+    "cevap": "Hawar"
+  },
+  {
+    "id": "ziman_x_0034",
+    "cevap": "zarokan"
+  },
+  {
+    "id": "ziman_x_0035",
+    "cevap": "Çav"
+  },
+  {
+    "id": "ziman_x_0036",
+    "cevap": "Lêker"
+  },
+  {
+    "id": "ziman_x_0037",
+    "cevap": "Dema bê"
+  },
+  {
+    "id": "ziman_x_0039",
+    "cevap": "Ji farisî"
+  },
+  {
+    "id": "ziman_x_0040",
+    "cevap": "Qelem"
+  },
+  {
+    "id": "ziman_x_0041",
+    "cevap": "Dem"
+  },
+  {
+    "id": "ziman_x_0044",
+    "cevap": "Wê name nivîsî"
+  },
+  {
+    "id": "ziman_x_0045",
+    "cevap": "Ap"
+  },
+  {
+    "id": "ziman_x_0046",
+    "cevap": "Ferheng"
+  },
+  {
+    "id": "ziman_x_0047",
+    "cevap": "sêva sor"
+  },
+  {
+    "id": "ziman_x_0048",
+    "cevap": "Sêşem"
+  },
+  {
+    "id": "ziman_x_0049",
+    "cevap": "Hevdeng"
+  },
+  {
+    "id": "ziman_x_0050",
+    "cevap": "Et"
+  },
+  {
+    "id": "ziman_x_0051",
+    "cevap": "ji min re bêje"
+  },
+  {
+    "id": "ziman_x_0052",
+    "cevap": "pirtûka wî"
+  },
+  {
+    "id": "ziman_x_0054",
+    "cevap": "Gur"
+  },
+  {
+    "id": "ziman_x_0055",
+    "cevap": "biçim"
+  },
+  {
+    "id": "ds26_cinema_0001",
+    "cevap": "planê nêzîk (yakın çekim)"
+  },
+  {
+    "id": "ds26_cinema_0002",
+    "cevap": "plana damezrîner (establishing shot)"
+  },
+  {
+    "id": "ds26_cinema_0005",
+    "cevap": "jump cut (qutbûna ji nişkê)"
+  },
+  {
+    "id": "ds26_cinema_0035",
+    "cevap": "mise-en-scène"
+  },
+  {
+    "id": "ds26_cinema_0087",
+    "cevap": "1929"
+  },
+  {
+    "id": "ds26_cinema_0089",
+    "cevap": "Festîvala Cannesê"
+  },
+  {
+    "id": "ds26_cinema_0090",
+    "cevap": "Festîvala Venedîkê"
+  },
+  {
+    "id": "ds26_cinema_0109",
+    "cevap": "Fransa"
+  },
+  {
+    "id": "ds26_cinema_0111",
+    "cevap": "Wings"
+  },
+  {
+    "id": "ds26_cinema_0113",
+    "cevap": "AMPAS"
+  },
+  {
+    "id": "grok26_tech_core_0040",
+    "cevap": "Çavkanî nehat dîtin"
+  },
+  {
+    "id": "grok26_tech_core_0071",
+    "cevap": "10"
+  },
+  {
+    "id": "sf_cin_0001",
+    "cevap": "Ji têkiliya di navbera dîmenan de"
+  },
+  {
+    "id": "sf_cin_0002",
+    "cevap": "Nêzîk û dûr bi hev re zelal dibin"
+  },
+  {
+    "id": "sf_cin_0003",
+    "cevap": "1932"
+  },
+  {
+    "id": "sf_cin_0004",
+    "cevap": "1949"
+  },
+  {
+    "id": "sf_cin_0005",
+    "cevap": "Dr. Jekyll and Mr. Hyde"
+  },
+  {
+    "id": "sf_cin_0006",
+    "cevap": "1934"
+  },
+  {
+    "id": "sf_cin_0007",
+    "cevap": "1936"
+  },
+  {
+    "id": "sf_cin_0008",
+    "cevap": "Li terasa Hotel Excelsior"
+  },
+  {
+    "id": "sf_cin_0009",
+    "cevap": "1895"
+  },
+  {
+    "id": "sf_cin_0010",
+    "cevap": "1895"
+  },
+  {
+    "id": "sf_cin_0011",
+    "cevap": "1980"
+  },
+  {
+    "id": "sf_cin_0012",
+    "cevap": "1999"
+  },
+  {
+    "id": "sf_cin_0013",
+    "cevap": "Jean-Luc Godard"
+  },
+  {
+    "id": "sf_cin_0014",
+    "cevap": "1960"
+  },
+  {
+    "id": "sf_cin_0015",
+    "cevap": "Sergei M. Eisenstein"
+  },
+  {
+    "id": "sf_cin_0016",
+    "cevap": "1925"
+  },
+  {
+    "id": "sf_cin_0017",
+    "cevap": "Fritz Lang"
+  },
+  {
+    "id": "sf_cin_0018",
+    "cevap": "Almanya"
+  },
+  {
+    "id": "sf_cin_0019",
+    "cevap": "F. W. Murnau"
+  },
+  {
+    "id": "sf_cin_0020",
+    "cevap": "1922"
+  },
+  {
+    "id": "sf_cin_0021",
+    "cevap": "Yasujirō Ozu"
+  },
+  {
+    "id": "sf_cin_0022",
+    "cevap": "Japonya"
+  },
+  {
+    "id": "sf_cin_0026",
+    "cevap": "Îtalya"
+  },
+  {
+    "id": "sf_cin_0028",
+    "cevap": "DYA"
+  },
+  {
+    "id": "sf_cin_0029",
+    "cevap": "Robert Wiene"
+  },
+  {
+    "id": "sf_cin_0032",
+    "cevap": "François Truffaut"
+  },
+  {
+    "id": "sf_cin_0033",
+    "cevap": "Fransa"
+  },
+  {
+    "id": "sf_cin_0034",
+    "cevap": "1954"
+  },
+  {
+    "id": "sf_cin_0035",
+    "cevap": "1951"
+  },
+  {
+    "id": "sf_cin_0036",
+    "cevap": "Hirça Zêrîn"
+  },
+  {
+    "id": "sf_cin_0037",
+    "cevap": "Ingmar Bergman"
+  },
+  {
+    "id": "sf_cin_0038",
+    "cevap": "Swêd"
+  },
+  {
+    "id": "sf_cin_0040",
+    "cevap": "1963"
+  },
+  {
+    "id": "sf_cin_0043",
+    "cevap": "Alfred Hitchcock"
+  },
+  {
+    "id": "sf_cin_0044",
+    "cevap": "1958"
+  },
+  {
+    "id": "sf_cin_0045",
+    "cevap": "1927"
+  },
+  {
+    "id": "sf_cin_0047",
+    "cevap": "1929"
+  },
+  {
+    "id": "sf_cin_0048",
+    "cevap": "Andrei Tarkovsky"
+  },
+  {
+    "id": "sf_cin_0049",
+    "cevap": "1975"
+  },
+  {
+    "id": "sf_cin_0050",
+    "cevap": "Wong Kar Wai"
+  },
+  {
+    "id": "sf_cin_0051",
+    "cevap": "2000"
+  }
+]

@@ -1,3 +1,4 @@
+// ignore_for_file: annotate_overrides
 import 'dart:typed_data';
 
 import '../models/avatar_identity.dart';
@@ -12,6 +13,9 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
+import '../models/referral_result.dart';
+
+part 'repository_ports.dart';
 
 /// Seri dondurma tahsilatının sonucu.
 ///
@@ -108,13 +112,14 @@ RoomJoinFailureReason roomJoinFailureReasonForMessage(String message) {
   if (message.contains('already in another live room')) {
     return RoomJoinFailureReason.alreadyInAnotherRoom;
   }
-  if (message.contains('Room not found') || message.contains('already started')) {
+  if (message.contains('Room not found') ||
+      message.contains('already started')) {
     return RoomJoinFailureReason.notFound;
   }
   return RoomJoinFailureReason.unknown;
 }
 
-abstract class ZanKurdRepository {
+abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   List<String> get categories;
   List<QuizQuestion> get questions;
 
@@ -182,6 +187,8 @@ abstract class ZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   });
   Future<GameRoom> joinOnlineRoom(String code);
 
@@ -376,6 +383,9 @@ abstract class ZanKurdRepository {
   /// Arkadaş ekleme isteği gönder.
   Future<bool> addFriend(String friendId, String friendName);
 
+  /// Bu cihazın FCM token'ını sunucuya yazar. Push kuyruğu token'ı buradan okur.
+  Future<void> setFcmToken(String token);
+
   /// Arkadaş isteğini kabul et.
   Future<bool> acceptFriendRequest(String requestId);
 
@@ -521,4 +531,7 @@ abstract class ZanKurdRepository {
     String? explanation,
     int difficulty = 3,
   });
+
+  /// Davet / referans kodunu kullanır ve ödül verir.
+  Future<ReferralResult> redeemReferralCode(String code);
 }

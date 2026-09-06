@@ -10,12 +10,125 @@ import 'support/offline_bank_fixture.dart';
 /// doğru cevap tür uyumsuzluğundan bakar bakmaz belli oluyordu.
 ///
 /// 106 soru düzeltildi. Bu testler kusurun geri dönmesini engeller.
-final _yearLike = RegExp(
-  r'(\b\d{3,4}\b|yüzyıl|sedsal|y\.y\.|M\.Ö|b\.z\.)',
-  caseSensitive: false,
-);
+/// Şıkkın KENDİSİ bir tarih ifadesi mi?
+///
+/// ## Niçin regex değil token
+///
+/// Eski ölçüt `\b\d{3,4}\b|yüzyıl|sedsal|...` idi ve iki yönde de
+/// yanılıyordu.
+///
+/// **Yanlış alarm (24 kayıt).** `\b\d{3,4}\b` içinde sayı GEÇEN her
+/// şıkkı tarih sayıyordu: "Maddeya 140î", "Fîlmê 1917", "443 derece".
+/// Bunlar tarih değil; içinde sayı olan içerik. Doğru cevap uzun bir
+/// betimleme olduğunda tür uyumsuzluğu uyduruluyordu.
+///
+/// **Kaçırma (2 kayıt).** Dart RegExp'inde `\b` ve `\d` ASCII'dir.
+/// `1962an` içindeki `1962`nin ardından ASCII harf geldiği için `\b`
+/// eşleşmiyor ve o şık tarih SAYILMIYORDU; ama `sedsala 16em` içindeki
+/// `16`nın ardından yine ASCII harf var... `î` gelseydi eşleşecekti.
+/// Yani sınıflandırma ekin ASCII olup olmamasına bağlıydı. Bu körlük
+/// `offline_7394` ve `offline_7598`de gerçek kusurları gizliyordu
+/// (2026-08-24'te açıldı ve düzeltildi).
+///
+/// Token yaklaşımı tuzağı tümden atlar: `\b`/`\d`/`\w` hiç kullanılmaz.
+bool _isDateExpression(String value) {
+  const dateWords = {
+    'sal',
+    'sala',
+    'salan',
+    'salên',
+    'salî',
+    'sedsal',
+    'sedsala',
+    'sedsalan',
+    'sedsalên',
+    'yüzyıl',
+    'yüzyılda',
+    'yy',
+    'yy.',
+    'berî',
+    'piştî',
+    'zayîn',
+    'zayînê',
+    'm.ö',
+    'm.ö.',
+    'b.z',
+    'b.z.',
+    'p.z',
+    'p.z.',
+    'y.y',
+    'y.y.',
+  };
+  const connectors = {
+    'û',
+    'de',
+    'di',
+    'ya',
+    'yê',
+    'li',
+    'ji',
+    'bi',
+    'ku',
+    'a',
+    'ê',
+    'the',
+    'of',
+    'in',
+    've',
+    'da',
+    'den',
+    'dan',
+  };
+  // Kurmancî tarih/sıra ekleri. Eki soyunca saf sayı gövdesi kalıyorsa
+  // token bir sayıdır: 1930î, 1962an, 19-20em, 5em, 61ê.
+  const suffixes = ['an', 'yî', 'em', 'yê', 'î', 'ê', 'a', 'y'];
 
-bool _isYearLike(String value) => _yearLike.hasMatch(value);
+  bool isBareNumber(String token) {
+    if (token.isEmpty) return false;
+    var seenDigit = false;
+    for (final rune in token.runes) {
+      final ch = String.fromCharCode(rune);
+      if (ch.codeUnitAt(0) >= 0x30 && ch.codeUnitAt(0) <= 0x39) {
+        seenDigit = true;
+        continue;
+      }
+      if (ch == '.' || ch == '-' || ch == '–' || ch == '/') continue;
+      return false;
+    }
+    return seenDigit;
+  }
+
+  var hasDateSignal = false;
+  for (var raw in value.toLowerCase().split(RegExp(r'\s+'))) {
+    final token = raw.replaceAll(
+      RegExp(r'^[«»"\(\)\[\],;:]+|[«»"\(\)\[\],;:]+$'),
+      '',
+    );
+    if (token.isEmpty) continue;
+    if (connectors.contains(token)) continue;
+    if (dateWords.contains(token)) {
+      hasDateSignal = true;
+      continue;
+    }
+    if (isBareNumber(token)) continue;
+    // Ek soyularak sayı gövdesi kalıyor mu?
+    var suffixed = false;
+    for (final suffix in suffixes) {
+      if (token.length > suffix.length && token.endsWith(suffix)) {
+        final stem = token.substring(0, token.length - suffix.length);
+        if (isBareNumber(stem)) {
+          hasDateSignal = true;
+          suffixed = true;
+          break;
+        }
+      }
+    }
+    if (suffixed) continue;
+    // İçerikli tek bir token yeter: film adı, madde no, betimleme.
+    return false;
+  }
+  return hasDateSignal;
+}
 
 /// Boş kalıp açıklamalar: soruyu açıklamak yerine kendini tekrar ederler.
 final _hollowExplanation = RegExp(
@@ -68,13 +181,27 @@ void main() {
 
   _metaGuardTests(() => offlineQuestionBank);
   test('çeldiriciler doğru cevapla aynı türden olmalı (tarih/tarih-dışı)', () {
+    // Kural BÜTÜN bankalara uygulanır, yalnız offline'a değil.
+    //
+    // 2026-07-24'te yazıldığında banka tek dosyaydı. O tarihten sonra
+    // dokuz dosya daha eklendi ve kural kapsamı sessizce dar kaldı —
+    // yeni bankalarda tür uyumsuz çeldirici eklemek serbestti (A12).
+    final everyBank = loadEveryBankFromJson();
+    // 2026-09-02 karantina: DeepSeek dalgası (~1110 kayıt) runtime
+    // listesinden çıkarıldı, toplam 1887'ye indi. Eşik kör bekçiyi
+    // engelleyecek kadar yüksek, karantinayı delmeyecek kadar düşük.
+    expect(
+      everyBank.length,
+      greaterThan(1000),
+      reason: 'Bekçi kör kalmasın: bankalar yüklenemediyse ihlal 0 çıkar.',
+    );
     final offenders = <String>[];
-    for (final q in offlineQuestionBank) {
+    for (final q in everyBank) {
       if (q.type == QuestionType.trueFalse || q.answers.length < 4) continue;
-      final correctIsYear = _isYearLike(q.correctAnswer);
+      final correctIsYear = _isDateExpression(q.correctAnswer);
       for (final answer in q.answers) {
         if (answer == q.correctAnswer) continue;
-        if (_isYearLike(answer) != correctIsYear) {
+        if (_isDateExpression(answer) != correctIsYear) {
           offenders.add('${q.id}: "$answer" ↔ "${q.correctAnswer}"');
           break;
         }

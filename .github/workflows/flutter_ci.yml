@@ -2,7 +2,7 @@
 #
 # 2026-07-31 denetimine kadar `zankurd_mobile/.github/workflows/` altındaydı.
 # GitHub Actions yalnızca deponun kökündeki `.github/workflows` dizinini okur,
-# dolayısıyla biçim denetimi, `dart analyze`, soru kalitesi kapısı, 1103 test
+# dolayısıyla biçim denetimi, `dart analyze`, soru kalitesi kapısı, testler
 # ve APK derlemesi hiçbir push'ta koşmuyordu — README ise yayın adımı olarak
 # "CI sonucunu doğrulayın" diyordu. Doğrulanacak bir CI yoktu.
 #
@@ -60,8 +60,46 @@ jobs:
     - name: Check question quality regressions
       run: dart run tool/question_quality/question_quality_audit.dart gate
 
+    # Şık sızması taraması (saf Python, mandalı `FINDING_RATCHET = 0`).
+    #
+    # Niçin CI'da: bu araç 2026-08-22'ye kadar bulgu üretiyor ama hüküm
+    # vermiyordu; mandal o gün eklendi, ama mandalı çeken bir koşucu
+    # yoktu. Bulgusunu kimseye söylemeyen bir bekçi, tıpkı deponun
+    # kökünde durmayan bir CI dosyası gibi (bkz. bu dosyanın başlığı),
+    # yalnız varmış gibi görünür.
+    #
+    # Dart kalite kapısından ayrı durur: kapı elle sayılmış bir kaynak
+    # listesine bakar, bu tarama banka listesini
+    # `question_bank_assets.dart` manifestosundan okur — yeni eklenen bir
+    # bankayı kendiliğinden kapsar.
+    - name: Check option-leak scan (Python)
+      run: python3 tool/content_authoring/sik_kalite_taramasi.py
+
     - name: Run unit and widget tests with coverage
       run: flutter test --coverage
+
+    # Ekran turu her ana ekranı gerçek widget ağacıyla açıp PNG'ye basar.
+    #
+    # Niçin CI'da: tur elle çalıştırılan bir araçtı ve kimse çalıştırmayınca
+    # hiçbir şey söylemiyordu. Oysa 2026-08-16'da Kurmancî joker
+    # etiketlerinin kırpıldığını bulan oydu — kusur widget testlerine
+    # görünmüyordu çünkü onlar metnin VARLIĞINI ölçüyor, genişliğini değil.
+    #
+    # Bu adım bir piksel karşılaştırması DEĞİLDİR: Linux koşucusu ile
+    # macOS aynı kareyi birebir çizmez, öyle bir kapı sürekli yanlış alarm
+    # verirdi. Ölçtüğü şey daha temel ve yine de değerli: her ekran
+    # istisnasız açılıyor ve çiziliyor mu. Kareler artefakt olarak
+    # yükleniyor; düzen bozulduğunda insan bakacak bir şey buluyor.
+    - name: Render screen tour
+      run: flutter test tool/screenshots/screen_tour_test.dart
+
+    - name: Upload screen tour
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: screen-tour
+        path: zankurd_mobile/docs/screenshots/tour/
+        retention-days: 14
 
     - name: Upload coverage report
       if: always()
@@ -102,3 +140,24 @@ jobs:
         name: android-debug-apk
         path: zankurd_mobile/build/app/outputs/flutter-apk/app-debug.apk
         retention-days: 14
+
+  # İmzalı IPA insan adımı olarak kalır. Bu iş yalnız derlemenin
+  # kırılmadığını söyler; mağaza yüklemesi yapmaz.
+  build-ios:
+    runs-on: macos-latest
+    needs: analyze-and-test
+    if: github.event_name == 'push'
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.44.7'
+        channel: 'stable'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build iOS (debug, no codesign)
+      run: flutter build ios --debug --no-codesign

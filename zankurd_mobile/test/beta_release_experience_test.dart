@@ -3,11 +3,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/app_config.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'package:zankurd_mobile/src/models/story.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/screens/story_screen.dart';
 import 'package:zankurd_mobile/src/services/analytics_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
+import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
 
@@ -64,7 +68,12 @@ void main() {
     expect(find.textContaining('5 soru'), findsOneWidget);
   });
 
-  testWidgets('settings exposes a direct beta feedback action', (tester) async {
+  // 2026-08-16: metin "Beta geri bildirimi gönder — bu erken sürümde…" idi
+  // ve App Store'a giden üretim sürümünde duruyordu (Kılavuz 2.2 riski).
+  // Özellik aynı; yalnız adı yayına uygun hâle getirildi. Test anahtarı
+  // (`settings-beta-feedback`) dokunulmadan bırakıldı: anahtar kullanıcıya
+  // görünmüyor ve değiştirmek başka bekçileri gereksizce kırardı.
+  testWidgets('settings exposes a direct feedback action', (tester) async {
     await tester.pumpWidget(
       testShell(child: SettingsScreen(repository: freshMockRepository())),
     );
@@ -79,7 +88,12 @@ void main() {
       find.byKey(const ValueKey('settings-beta-feedback')),
       findsOneWidget,
     );
-    expect(find.text('Beta geri bildirimi gönder'), findsOneWidget);
+    expect(find.text('Geri bildirim gönder'), findsOneWidget);
+    expect(
+      find.textContaining('erken sürüm'),
+      findsNothing,
+      reason: 'Üretim sürümü kendini beta ilan etmemeli.',
+    );
   });
 
   testWidgets('home starts the first session with five questions', (
@@ -101,5 +115,47 @@ void main() {
 
     expect(repository.dailyQuestionLimit, 5);
     expect(find.byType(QuizScreen), findsOneWidget);
+  });
+
+  // 2026-09-02: cihaz turunun otomatik karşılığı. Fiziksel telefon
+  // kilidi buradan açılamaz; 390×844 oturum aynı kapıları yürür.
+  testWidgets('telefon turu: ana sayfa, kilim tahta, ayarlar, hikâye', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+
+    freshMockRepository();
+    await tester.pumpWidget(
+      ZanKurdApp(
+        repository: MockZanKurdRepository(),
+        authProvider: FakeAuthProvider(),
+        languageProvider: turkishLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('home-zana')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-daily-task-start')), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('home-daily-task-start')));
+    await tester.pumpAndSettle();
+    expect(find.byType(QuizScreen), findsOneWidget);
+    expect(find.byKey(const ValueKey('quiz-answer-board')), findsOneWidget);
+
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Ayarlar'), findsWidgets);
+    expect(find.byType(KilimDivider), findsOneWidget);
+    expect(find.byType(ScreenIdentityHeader), findsOneWidget);
+
+    await tester.pumpWidget(testShell(child: StoryScreen(story: cayxaneStory)));
+    await tester.pumpAndSettle();
+    expect(find.byType(ScreenIdentityHeader), findsOneWidget);
+    expect(find.byKey(const ValueKey('story-text-ku')), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }

@@ -61,7 +61,7 @@ ile işaretlenmelidir.
   cevabı satın aldıran/pay-to-win ürün yok.
 - [ ] Satın alma başarısız, iptal, tekrar açılış ve geri yükleme durumları
   kullanıcıya anlaşılır görünür.
-- [ ] Beta geri bildirimi satırı doğru e-posta uygulamasını açıyor.
+- [ ] Geri bildirim satırı doğru e-posta uygulamasını açıyor.
 
 ## Son doğrulama
 

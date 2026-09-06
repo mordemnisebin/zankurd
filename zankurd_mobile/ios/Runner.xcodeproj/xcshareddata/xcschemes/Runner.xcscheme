@@ -91,6 +91,9 @@
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <StorekitConfigurationFileReference
+         identifier = "ZankurdRC.storekit">
+      </StorekitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Profile"

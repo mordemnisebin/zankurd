@@ -387,4 +387,29 @@ void main() {
       textScale: 1.6,
     );
   });
+
+  testWidgets('H3 · 390×844 @2.0 answer reachability korunur', (tester) async {
+    await pumpQuizAt(tester, const Size(390, 844), textScale: 2.0);
+
+    final options = find.byType(QuizOptionTile);
+    expect(options, findsNWidgets(4));
+    final last = options.last;
+    final cta = find.byKey(primaryCtaKey);
+    expect(cta, findsOneWidget);
+
+    await tester.ensureVisible(last);
+    await tester.pumpAndSettle();
+
+    final viewport = tester.getRect(find.byType(Scaffold));
+    final lastRect = tester.getRect(last);
+    expect(lastRect.bottom, lessThanOrEqualTo(viewport.bottom));
+
+    final semantics = tester.getSemantics(last);
+    expect(semantics.flagsCollection.isButton, isTrue);
+    await tester.tap(last, warnIfMissed: false);
+    await tester.pump();
+
+    expect(tester.getRect(cta).bottom, lessThanOrEqualTo(viewport.bottom));
+    expect(tester.takeException(), isNull);
+  });
 }

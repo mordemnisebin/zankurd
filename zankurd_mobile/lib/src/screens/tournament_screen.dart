@@ -16,6 +16,7 @@ import '../widgets/app_panel.dart';
 import '../widgets/arena_kit.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import '../widgets/tournament_bracket_widget.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -337,17 +338,16 @@ class _TournamentScreenState extends State<TournamentScreen> {
     // kaydın işi zaten yerel oyunu etkilemediği için kimse fark etmiyordu
     // (2026-08-14 denetimi). Hiçbir eleme turu henüz tamamlanmadığı için
     // doğru karşılık 'lobby'dir.
-    widget.repository.saveTournamentProgress('lobby', 0, 0, const []).catchError((
-      error,
-      stack,
-    ) {
-      ErrorReporter.record(
-        error,
-        stack,
-        reason: 'tournament_save_initial_progress',
-      );
-      return false;
-    });
+    widget.repository
+        .saveTournamentProgress('lobby', 0, 0, const [])
+        .catchError((error, stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'tournament_save_initial_progress',
+          );
+          return false;
+        });
     widget.repository.logAnalyticsEvent('tournament_started', null).catchError((
       error,
       stack,
@@ -471,8 +471,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
         final opponentName = match.playerOneId == _userId
             ? match.playerTwoName
             : match.playerOneName;
-        final roundName =
-            _roundNames(ku, bracket.rounds.length)[bracket.currentRound];
+        final roundName = _roundNames(
+          ku,
+          bracket.rounds.length,
+        )[bracket.currentRound];
         versusBanner = context.t(K.yourMatchVs, {
           'round': roundName,
           'opponent': opponentName,
@@ -518,9 +520,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             // (2026-08-14 denetimi). RPC skoru tek sefer kabul ettiği
             // için "tekrar oyna" güvenlidir.
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(context.t(K.tournamentMatchSubmitFailed)),
-              ),
+              SnackBar(content: Text(context.t(K.tournamentMatchSubmitFailed))),
             );
           } else {
             // Skor 0 olsa bile (bütün sorular yanlış/süre doldu)
@@ -697,7 +697,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(),
+      appBar: zkAppBar(context),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(

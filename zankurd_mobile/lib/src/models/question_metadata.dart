@@ -64,6 +64,16 @@ class QuestionMetadata {
       qualityVersion == 0 &&
       reportCount == 0;
 
+  /// Oyuncuya künye göstermek için en az bir dolu alan gerekir.
+  ///
+  /// İkisi de boşken "kaynak" satırı çizilmez: boş künye, kaynaklı
+  /// görünmekten beterdir (A17).
+  bool get hasCitableSource {
+    final title = sourceTitle?.trim() ?? '';
+    final ref = sourceReference?.trim() ?? '';
+    return title.isNotEmpty || ref.isNotEmpty;
+  }
+
   static int _asInt(Object? v, int fallback) {
     if (v is int) return v;
     if (v is num) return v.toInt();

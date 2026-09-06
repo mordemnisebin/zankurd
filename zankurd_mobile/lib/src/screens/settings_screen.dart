@@ -4,6 +4,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import '../data/placement_store.dart';
+import '../data/learning_goal_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../utils/player_identity.dart';
@@ -12,7 +13,6 @@ import '../utils/app_route.dart';
 import 'level_placement_screen.dart';
 import '../providers/auth_provider.dart';
 import '../providers/analytics_consent_provider.dart';
-import '../providers/child_safety_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../providers/untimed_mode_provider.dart';
 import '../providers/sound_provider.dart';
@@ -22,16 +22,20 @@ import '../services/analytics_service.dart';
 import '../services/premium_service.dart';
 import '../services/tts_service.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../utils/percent_format.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../utils/external_link.dart';
 
 import '../config/app_config.dart';
 import '../models/friend.dart';
+import '../models/learning_goal.dart';
 import '../services/display_name_policy.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/legal_links.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
+import '../widgets/learning_goal_chooser.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'image_credits_screen.dart';
 import 'paywall_screen.dart';
@@ -53,6 +57,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   late final Future<PlacementStore> _placementStoreFuture =
       PlacementStore.load();
+  LearningGoal? _learningGoal;
   final _nameController = TextEditingController();
   bool _deleting = false;
   bool _loadingName = true;
@@ -74,6 +79,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _loadPlayerName();
     _loadNotificationSettings();
     _loadPackageVersion();
+    _loadLearningGoal();
+  }
+
+  Future<void> _loadLearningGoal() async {
+    final store = await LearningGoalStore.load();
+    if (mounted) setState(() => _learningGoal = store.goal);
+  }
+
+  Future<void> _setLearningGoal(LearningGoal goal) async {
+    final store = await LearningGoalStore.load();
+    await store.save(goal);
+    if (mounted) setState(() => _learningGoal = goal);
   }
 
   bool get _isNameDirty {
@@ -134,48 +151,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
   ///
   /// Apple 1.2, UGC barındıran uygulamada iletişim bilgisinin
   /// yayımlanmasını şart koşar ve kullanıcı ona uygulamadan ulaşabilmeli.
-  Future<void> _openAbuseReport() async {
-    final uri = AppConfig.abuseReportUri(
-      subject: context.t(K.abuseMailSubject),
-    );
-    final failed = context.t(K.linkOpenFailed);
-    try {
-      final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-      if (ok || !mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(failed)));
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'abuse report mailto');
-      if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(failed)));
-    }
-  }
+  Future<void> _openAbuseReport() => openExternalUri(
+    context,
+    AppConfig.abuseReportUri(subject: context.t(K.abuseMailSubject)),
+    reason: 'abuse report mailto',
+  );
 
-  Future<void> _openBetaFeedback() async {
-    final uri = AppConfig.feedbackUri(subject: context.t(K.betaMailSubject));
-    final failed = context.t(K.linkOpenFailed);
-    try {
-      final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-      if (ok || !mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(failed)));
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'beta feedback mailto');
-      if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(failed)));
-    }
-  }
+  Future<void> _openBetaFeedback() => openExternalUri(
+    context,
+    AppConfig.feedbackUri(subject: context.t(K.betaMailSubject)),
+    reason: 'beta feedback mailto',
+  );
 
   Future<void> _setAnalyticsConsent(bool enabled) async {
     await context.read<AnalyticsConsentProvider>().setEnabled(enabled);
     if (enabled) {
-      await AnalyticsService.instance.initialize();
+      await AnalyticsService.instance.initialize(enabled: true);
     } else {
       await AnalyticsService.instance.disable();
     }
@@ -190,7 +181,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       // Başlık [ScreenIdentityHeader]'da; AppBar yalnız geri düğmesini
       // taşır. İkisi de başlık yazdığında ekranın tepesinde aynı sözcük
       // iki kez görünüyordu (2026-07-25 canlı denetimi).
-      appBar: AppBar(backgroundColor: Colors.transparent),
+      appBar: zkAppBar(context, backgroundColor: Colors.transparent),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
@@ -210,6 +201,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 compact: true,
               ),
               const SizedBox(height: AppSpacing.sm),
+              // Ayarlar listesini kimlik şeridinden ayırır; duvar kâğıdı değil.
+              const KilimDivider(
+                colors: [AppTheme.culturalBrandBg, AppTheme.gold],
+              ),
+              const SizedBox(height: AppSpacing.md),
               // ============ HESAP / ACCOUNT ============
               ScreenSectionLabel(
                 label: context.t(K.secAccount),
@@ -268,6 +264,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 label: context.t(K.secLearning),
                 accent: AppTheme.playGreen,
               ),
+              AppPanel(
+                key: const ValueKey('settings-learning-goal'),
+                color: AppTheme.surfaceOf(context),
+                child: LearningGoalChooser(
+                  isKu: ku,
+                  selected: _learningGoal,
+                  compact: true,
+                  onSelected: _setLearningGoal,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
               AppPanel(
                 color: AppTheme.surfaceOf(context),
                 child: InkWell(
@@ -409,25 +416,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onChanged: _setAnalyticsConsent,
                         ),
                       ),
-                    ),
-                    Divider(
-                      height: 1,
-                      indent: 56,
-                      color: AppTheme.borderColor(context),
-                    ),
-                    Consumer<ChildSafetyProvider>(
-                      builder: (context, childSafety, _) =>
-                          _SettingsToggleRow(
-                            icon: AppIcons.shield,
-                            color: AppTheme.violet,
-                            title: context.t(K.childSafetyMode),
-                            subtitle: context.t(K.childSafetyModeSub),
-                            trailing: Switch(
-                              key: const ValueKey('child-safety-switch'),
-                              value: childSafety.enabled,
-                              onChanged: _toggleChildSafety,
-                            ),
-                          ),
                     ),
                   ],
                 ),
@@ -681,10 +669,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Başlıksızken kart, bir üstteki "Seslendirme" bölümünün
               // devamı gibi görünüyor ve para kazandıran tek giriş noktası
               // ayarların içinde kayboluyordu (2026-07-25 canlı denetimi).
-              const ScreenSectionLabel(label: 'Premium', accent: AppTheme.gold),
+              //
+              // Abone olmayana + yapılandırma yoksa bölüm gizlenir: ürünsüz
+              // paywall ölü sokaktır (2026-09-05 canlı turu). Abone, durum
+              // satırını her zaman görür.
+              if (context.watch<PremiumService>().isPremium ||
+                  AppConfig.hasRevenuecatConfig) ...[
+                const ScreenSectionLabel(
+                  label: 'Premium',
+                  accent: AppTheme.gold,
+                ),
+              ],
               Consumer<PremiumService>(
                 builder: (context, premium, _) {
                   final isPremium = premium.isPremium;
+                  if (!isPremium && !AppConfig.hasRevenuecatConfig) {
+                    return const SizedBox.shrink();
+                  }
                   return AppPanel(
                     padding: EdgeInsets.zero,
                     child: InkWell(
@@ -1147,47 +1148,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  /// Çocuk modunu değiştirir. Açarken ne değiştiğini açıklayan bir onay
-  /// dialogu gösterir. (Yalnız cihaz tarafı — sunucu koruması yoktur.)
-  ///
-  /// Bu yorum uzun süre yetim kaldı: altındaki gövde hiç yazılmamıştı ve
-  /// `ChildSafetyProvider` hiçbir yerde (ne bu ekranda ne widget ağacında)
-  /// kayıtlı değildi — anahtar yoktu, kapı da çalışmıyordu (2026-08-14
-  /// denetimi). Kapatmak onay istemez; yalnız AÇMAK isteği doğrular.
-  Future<void> _toggleChildSafety(bool enabled) async {
-    if (enabled) {
-      final confirmed = await _confirmChildSafetyEnable();
-      if (confirmed != true || !mounted) return;
-    }
-    if (!mounted) return;
-    await context.read<ChildSafetyProvider>().setEnabled(enabled);
-  }
-
-  Future<bool?> _confirmChildSafetyEnable() {
-    return showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppTheme.surfaceOf(context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          side: BorderSide(color: AppTheme.borderColor(context)),
-        ),
-        title: Text(context.t(K.childSafetyConfirmTitle)),
-        content: Text(context.t(K.childSafetyConfirmBody)),
-        actions: [
-          OutlinedButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(context.t(K.cancel)),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(context.t(K.continueAction)),
-          ),
-        ],
-      ),
-    );
-  }
-
   Future<void> _openPlacement() async {
     await Navigator.of(
       context,
@@ -1648,8 +1608,8 @@ class _ExpandableSection extends StatelessWidget {
 
 /// Ayarlar > Seslendirme (TTS) bölümü. TtsService'i yükler; aç/kapa,
 /// konuşma hızı ve ses seviyesi kontrollerini gösterir. Cihazda Kürtçe
-/// seslendirme desteklenmiyorsa bir bilgi notu gösterir (kontroller yine
-/// çalışır; yedek dil sesi kullanılabilir).
+/// seslendirme desteklenmiyorsa durum açıkça gösterilir ve etkisiz ayarlar
+/// kapatılır.
 class _TtsSettingsSection extends StatefulWidget {
   const _TtsSettingsSection();
 
@@ -1705,6 +1665,7 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
     }
 
     final enabled = tts.isEnabled;
+    final canSpeak = tts.isKurdishAvailable;
     return AppPanel(
       padding: EdgeInsets.zero,
       child: Column(
@@ -1715,11 +1676,13 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
             title: context.t(K.ttsEnable),
             subtitle: context.t(K.ttsEnableSub),
             trailing: Switch(
-              value: enabled,
-              onChanged: (v) async {
-                await tts.setEnabled(v);
-                if (mounted) setState(() {});
-              },
+              value: enabled && canSpeak,
+              onChanged: canSpeak
+                  ? (v) async {
+                      await tts.setEnabled(v);
+                      if (mounted) setState(() {});
+                    }
+                  : null,
             ),
           ),
           if (!tts.isKurdishAvailable)
@@ -1750,7 +1713,7 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
                 ],
               ),
             ),
-          if (enabled) ...[
+          if (enabled && canSpeak) ...[
             Divider(
               height: 1,
               indent: 56,

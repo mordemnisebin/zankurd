@@ -6,21 +6,18 @@ import '../../l10n/lang.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/app_row_card.dart';
 import '../../utils/percent_format.dart';
-import '../../theme/app_icons.dart';
 
 /// "Kaldığın yer" — oyuncunun ilerlediği kategoriler, ilerleme çubuğuyla.
 ///
 /// Hiç ilerleme yokken bölüm, %0'lık kategorileri "Kaldığın yer" başlığı
-/// altında listeliyordu: kullanıcı hiçbir yerde kalmamışken üç satır
-/// "Henüz başlamadın" diyordu (2026-07-25 canlı denetimi). Artık yalnız
-/// gerçekten ilerlenmiş kategoriler "Kaldığın yer" olur; ilerleme yoksa
-/// bölüm bir keşif davetine dönüşür.
+/// altında listeliyordu. Artık yalnız gerçekten ilerlenmiş kategoriler
+/// listelenir; ilerleme yoksa bölüm çizilmez. Keşif, ders yolunun
+/// içindeki "Tüm konular"dır — ikinci bir kapı değildir.
 class ContinueSection extends StatelessWidget {
   const ContinueSection({
     required this.isKu,
     required this.entries,
     this.onOpenCategory,
-    this.onBrowseCategories,
     super.key,
   });
 
@@ -28,13 +25,10 @@ class ContinueSection extends StatelessWidget {
   final List<CategoryProgress> entries;
   final ValueChanged<String>? onOpenCategory;
 
-  /// Tüm kategori listesini açar — ilerleme yokken gösterilen davet.
-  final VoidCallback? onBrowseCategories;
-
   @override
   Widget build(BuildContext context) {
     final started = entries.where((e) => e.ratio > 0).toList();
-    if (started.isEmpty) return _buildDiscovery(context);
+    if (started.isEmpty) return const SizedBox.shrink();
     return Column(
       key: const ValueKey('home-continue-section'),
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,37 +95,6 @@ class ContinueSection extends StatelessWidget {
               ),
             ),
           ),
-      ],
-    );
-  }
-
-  /// Hiç ilerleme yokken: yanlış başlıklı bir "%0" listesi yerine tek bir
-  /// keşif satırı. Kategori listesi ana ekrandan başka türlü görünür
-  /// değildi — bu satır aynı zamanda o gezinme boşluğunu kapatır.
-  Widget _buildDiscovery(BuildContext context) {
-    if (onBrowseCategories == null) return const SizedBox.shrink();
-    return Column(
-      key: const ValueKey('home-discover-section'),
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: AppSpacing.xs, top: 2),
-          child: Text(
-            Tr.forKu(K.start, isKu),
-            style: AppTypography.heading2.copyWith(
-              fontSize: 16,
-              color: AppTheme.textPrimaryColor(context),
-            ),
-          ),
-        ),
-        AppRowCard(
-          key: const ValueKey('home-browse-categories-row'),
-          icon: AppIcons.layerGroup,
-          accent: AppTheme.brand,
-          title: Tr.forKu(K.tumKategoriler, isKu),
-          subtitle: Tr.forKu(K.birKonuSecVe, isKu),
-          onTap: onBrowseCategories,
-        ),
       ],
     );
   }

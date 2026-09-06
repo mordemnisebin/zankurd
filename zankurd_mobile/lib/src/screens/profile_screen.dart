@@ -19,16 +19,19 @@ import '../models/leaderboard_entry.dart';
 import '../models/league_tier.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
+import '../widgets/arena_kit.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/skeleton_loader.dart';
 import '../models/avatar_identity.dart';
 import '../data/badge_service.dart';
 import '../widgets/badge_widget.dart';
 import '../widgets/player_avatar.dart';
+import '../widgets/rolling_count.dart';
 import '../widgets/strength_map_section.dart';
 import '../widgets/weekly_performance_chart.dart';
 import 'avatar_editor_screen.dart';
@@ -319,6 +322,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(height: 8),
         const Align(alignment: Alignment.centerLeft, child: _SyncStatusChip()),
         const SizedBox(height: AppSpacing.cardGap),
+        // Kimlik kartının altına TEK kilim bordürü — ayırıcı. Motif her karta
+        // konmaz; tek şerit "kilim" dilini sessizce taşır, duvar kâğıdına
+        // dönmez (2026-08-19).
+        const KilimDivider(
+          colors: [AppTheme.gold, AppTheme.brand, AppTheme.terracotta],
+        ),
+        const SizedBox(height: AppSpacing.cardGap),
 
         // Stats
         AppPanel(
@@ -370,7 +380,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       _StatTile(
                         label: context.t(K.statRank),
-                        value: _hasServerScore ? '#${_stats!.rank}' : '—',
+                        value: context.t(K.statPending),
+                        count: _hasServerScore ? _stats!.rank : null,
+                        countPrefix: '#',
                         color: AppTheme.gold,
                         icon: AppIcons.chartColumn,
                       ),
@@ -381,13 +393,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         // gösteriliyor, aynı ekranda "0/1000 XP · Ast 1"
                         // yazıyordu — iki rakam birbirini yalanlıyordu
                         // (2026-07-25 canlı denetimi).
-                        value: _hasServerScore ? '${_stats!.totalScore}' : '—',
+                        value: context.t(K.statPending),
+                        count: _hasServerScore ? _stats!.totalScore : null,
                         color: AppTheme.accent,
                         icon: AppIcons.star,
                       ),
                       _StatTile(
                         label: context.t(K.statAnswered),
                         value: '$_answeredTotal',
+                        count: _answeredTotal,
                         color: AppTheme.correct,
                         icon: AppIcons.gamepad,
                       ),

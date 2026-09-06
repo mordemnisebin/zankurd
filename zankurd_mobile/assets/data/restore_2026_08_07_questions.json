@@ -4,18 +4,18 @@
     "category": "Çand",
     "prompt": "Di dawet û şahiyên kurdî de diyariya pereyan a ku ji bo nûzewacan tê dayîn bi kîjan navî tê nasîn?",
     "answers": [
-      "şabaş",
       "metelok",
       "kelaş",
-      "hewran"
+      "hewran",
+      "şabaş"
     ],
     "correctAnswer": "şabaş",
     "promptTr": "Kürt düğün ve şenliklerinde yeni evlilere verilen para hediyesi hangi adla bilinir?",
     "answersTr": [
-      "şabaş",
       "metelok",
       "kelaş",
-      "hewran"
+      "hewran",
+      "şabaş"
     ],
     "correctAnswerTr": "şabaş",
     "explanation": "Şabaş, düğünlerde para hediye etme geleneğidir ve topluluğun yeni aileye desteğini gösterir. Metelok kısa bir atasözü, kelaş örülerek yapılan ayakkabı, hewran ise göçerlerin kara çadırıdır.",
@@ -101,25 +101,25 @@
   {
     "id": "restore_2026_08_07_0004",
     "category": "Çand",
-    "prompt": "Çadira reş a ji hiriya bizinê ya ku koçer di havînê de li zozanan datînin bi kîjan navî tê nasîn?",
+    "prompt": "Çadira reş a ji mûyê bizinan ya ku koçer di havînê de li zozanan datînin bi kîjan navî tê nasîn?",
     "answers": [
-      "hewran",
       "kelaş",
+      "reşmal",
       "şûtik",
       "metelok"
     ],
-    "correctAnswer": "hewran",
+    "correctAnswer": "reşmal",
     "promptTr": "Göçerlerin yazın yaylalarda kurduğu, keçi kılından yapılan kara çadır hangi adla bilinir?",
     "answersTr": [
-      "hewran",
       "kelaş",
+      "reşmal",
       "şûtik",
       "metelok"
     ],
-    "correctAnswerTr": "hewran",
-    "explanation": "Hewran keçi kılından dokunur; sıcakta serin tutar ve yağmuru içeri geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır.",
-    "explanationKu": "Hewran ji hiriya bizinê tê çêkirin; ew di germê de hênik dimîne û baranê nade hundir. Ew perçeyeke bingehîn a çanda koçeriyê ye ku di navbera zozan û germiyanê de digere.",
-    "explanationTr": "Hewran keçi kılından dokunur; sıcakta serin tutar ve yağmuru içeri geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır.",
+    "correctAnswerTr": "reşmal",
+    "explanation": "Reşmal keçi kılından dokunur; sıcakta serin tutar ve yağmuru geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır. \"Hewran\" ise giysidir, çadır değil.",
+    "explanationKu": "Reşmal ji mûyê bizinan tê hûnandin; di germê de hênik dimîne û baranê nade hundir. \"Hewran\" kinc e, ne çadir.",
+    "explanationTr": "Reşmal keçi kılından dokunur; sıcakta serin tutar ve yağmuru geçirmez. Yayla ile germiyan arasında dolaşan göçer kültürünün temel parçasıdır. \"Hewran\" ise giysidir, çadır değil.",
     "type": "multipleChoice",
     "difficulty": 3,
     "metadata": {
@@ -137,17 +137,17 @@
     "prompt": "Hejmara yekem a \"Rojnameya Kurdistan\" (1898) li kîjan bajarî derket?",
     "answers": [
       "Şam",
-      "Qahîre",
       "Stenbol",
-      "Bexda"
+      "Bexda",
+      "Qahîre"
     ],
     "correctAnswer": "Qahîre",
     "promptTr": "\"Rojnameya Kurdistan\"ın ilk sayısı (1898) hangi şehirde çıktı?",
     "answersTr": [
       "Şam",
-      "Kahire",
       "İstanbul",
-      "Bağdat"
+      "Bağdat",
+      "Kahire"
     ],
     "correctAnswerTr": "Kahire",
     "explanation": "Mîqdat Mîdhad Bedirxan'ın çıkardığı Rojnameya Kurdistan 1898'de Kahire'de basıldı ve ilk Kürt gazetesi sayılır. Sonraki sayıları başka şehirlerde de çıktı.",
@@ -170,16 +170,16 @@
     "prompt": "\"Şerefname\", dîroka mîrektiyên kurdan, ji hêla kê ve hatiye nivîsandin?",
     "answers": [
       "Ehmedê Xanî",
-      "Mîqdat Mîdhad Bedirxan",
       "Şerefxanê Bidlîsî",
+      "Mîqdat Mîdhad Bedirxan",
       "Feqiyê Teyran"
     ],
     "correctAnswer": "Şerefxanê Bidlîsî",
     "promptTr": "Kürt mirliklerinin tarihi olan \"Şerefname\"yi kim yazmıştır?",
     "answersTr": [
       "Ehmedê Xanî",
-      "Mîqdat Mîdhad Bedirxan",
       "Şerefxanê Bidlîsî",
+      "Mîqdat Mîdhad Bedirxan",
       "Feqiyê Teyran"
     ],
     "correctAnswerTr": "Şerefxanê Bidlîsî",
@@ -208,7 +208,7 @@
       "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Bakurê Kurdistanê",
-    "promptTr": "Cûdî Dağı Kurdistanê'nin hangi parçasındadır?",
+    "promptTr": "Cûdî Dağı Kürdistan'ın hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
       "Rojava (Batı)",
@@ -235,16 +235,16 @@
     "category": "Cografya",
     "prompt": "Deşta Amedê bi kîjan taybetmendiya axa xwe ji deştên derdorê vediqete?",
     "answers": [
-      "axa bazaltî ya berdar",
       "axa şor a bêber",
+      "axa bazaltî ya berdar",
       "axa qûmî ya hişk",
       "axa çiyayî ya kevirîn"
     ],
     "correctAnswer": "axa bazaltî ya berdar",
     "promptTr": "Amed ovası toprağının hangi özelliğiyle çevresindeki ovalardan ayrılır?",
     "answersTr": [
-      "verimli bazalt toprağı",
       "tuzlu ve çorak toprak",
+      "verimli bazalt toprağı",
       "kuru kumlu toprak",
       "taşlık dağ toprağı"
     ],
@@ -268,18 +268,18 @@
     "category": "Muzîk",
     "prompt": "Amûra lêdanê ya mezin a ku bi du daran tê lêxistin û pir caran bi zurneyê re li derve tê lêxistin çi ye?",
     "answers": [
-      "dahol",
       "bilûr",
       "tembûr",
-      "erbane"
+      "erbane",
+      "dahol"
     ],
     "correctAnswer": "dahol",
     "promptTr": "İki değnekle çalınan ve çoğunlukla zurnayla birlikte açık havada çalınan büyük vurmalı çalgı hangisidir?",
     "answersTr": [
-      "dahol",
       "bilûr",
       "tembûr",
-      "erbane"
+      "erbane",
+      "dahol"
     ],
     "correctAnswerTr": "dahol",
     "explanation": "Dahol yüksek ses çıkarır ve halayın vuruşunu belirler; bu yüzden zurnayla birlikte meydanlarda çalınır. Bilûr üflemeli, tembûr telli, erbane ise el defidir.",
@@ -334,17 +334,17 @@
     "category": "Muzîk",
     "prompt": "Awaza dirêj a dengbêjan a ku bûyerek an çîrokek vedibêje bi kîjan navî tê nasîn?",
     "answers": [
-      "kilam",
       "govend",
       "şabaş",
+      "kilam",
       "metelok"
     ],
     "correctAnswer": "kilam",
     "promptTr": "Dengbêjlerin bir olayı ya da hikâyeyi anlatan uzun ezgisi hangi adla bilinir?",
     "answersTr": [
-      "kilam",
       "govend",
       "şabaş",
+      "kilam",
       "metelok"
     ],
     "correctAnswerTr": "kilam",
@@ -367,16 +367,16 @@
     "category": "Muzîk",
     "prompt": "Cudahiya sereke ya di navbera kilamê û stranên govendê de çi ye?",
     "answers": [
-      "Kilam çîrokê vedibêje, stranên govendê rîtmî ne",
       "Kilam bi zurneyê tê gotin, stranên govendê bêdeng in",
+      "Kilam çîrokê vedibêje, stranên govendê rîtmî ne",
       "Kilam tenê ji hêla jinan ve tê gotin",
       "Kilam tenê di dawetan de tê gotin"
     ],
     "correctAnswer": "Kilam çîrokê vedibêje, stranên govendê rîtmî ne",
     "promptTr": "Kilam ile halay şarkıları arasındaki temel fark nedir?",
     "answersTr": [
-      "Kilam hikâye anlatır, halay şarkıları ritmiktir",
       "Kilam zurnayla söylenir, halay şarkıları sessizdir",
+      "Kilam hikâye anlatır, halay şarkıları ritmiktir",
       "Kilam yalnızca kadınlar tarafından söylenir",
       "Kilam yalnızca düğünlerde söylenir"
     ],
@@ -400,23 +400,23 @@
     "category": "Muzîk",
     "prompt": "Amûra bayê ya şivanan a ji qamîş an dar ku bi dengekî nerm tê lêxistin çi ye?",
     "answers": [
-      "bilûr",
       "dahol",
       "erbane",
+      "bilûr",
       "zurna"
     ],
     "correctAnswer": "bilûr",
     "promptTr": "Kamıştan ya da ağaçtan yapılan, yumuşak sesle çalınan çoban üflemeli çalgısı hangisidir?",
     "answersTr": [
-      "bilûr",
       "dahol",
       "erbane",
+      "bilûr",
       "zurna"
     ],
     "correctAnswerTr": "bilûr",
-    "explanation": "Bilûr, çobanların yaylada çaldığı hafif bir çalgıdır; sesi yumuşaktır ve halay için uygun değildir. Dahol ile erbane vurmalı, zurna ise çok yüksek sesli çalgılardır.",
-    "explanationKu": "Bilûr amûreke sivik e ku şivan li zozanan pê distirên; dengê wê nerm e û ji bo govendê ne guncaw e. Dahol û erbane amûrên lêdanê ne, zurna jî dengekî pir bilind derdixe.",
-    "explanationTr": "Bilûr, çobanların yaylada çaldığı hafif bir çalgıdır; sesi yumuşaktır ve halay için uygun değildir. Dahol ile erbane vurmalı, zurna ise çok yüksek sesli çalgılardır.",
+    "explanation": "Bilûr, çobanların yaylada çaldığı hafif bir çalgıdır; sesi yumuşaktır ve Dahol ile erbane vurmalı, zurna ise çok yüksek sesli çalgılardır.",
+    "explanationKu": "Bilûr amûreke sivik e ku şivan li zozanan pê distirên; dengê wê nerm e û  Dahol û erbane amûrên lêdanê ne, zurna jî dengekî pir bilind derdixe.",
+    "explanationTr": "Bilûr, çobanların yaylada çaldığı hafif bir çalgıdır; sesi yumuşaktır ve Dahol ile erbane vurmalı, zurna ise çok yüksek sesli çalgılardır.",
     "type": "multipleChoice",
     "difficulty": 2,
     "metadata": {
@@ -439,7 +439,7 @@
       "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Bakurê Kurdistanê",
-    "promptTr": "Colemêrg şehri Kurdistanê'nin hangi parçasındadır?",
+    "promptTr": "Colemêrg şehri Kürdistan'ın hangi parçasındadır?",
     "answersTr": [
       "Bakur (Kuzey)",
       "Rojava (Batı)",
@@ -466,17 +466,17 @@
     "category": "Cografya",
     "prompt": "Gola Wanê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
-      "Bakurê Kurdistanê",
       "Rojavayê Kurdistanê",
       "Başûrê Kurdistanê",
+      "Bakurê Kurdistanê",
       "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Bakurê Kurdistanê",
-    "promptTr": "Wan Gölü Kurdistanê'nin hangi parçasındadır?",
+    "promptTr": "Wan Gölü Kürdistan'ın hangi parçasındadır?",
     "answersTr": [
-      "Bakur (Kuzey)",
       "Rojava (Batı)",
       "Başûr (Güney)",
+      "Bakur (Kuzey)",
       "Rojhilat (Doğu)"
     ],
     "correctAnswerTr": "Bakur (Kuzey)",

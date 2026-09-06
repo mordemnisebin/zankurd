@@ -2,15 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../config/app_config.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/premium_service.dart';
+import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/legal_links.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+
+/// Yıllık fiyatın aya düşen karşılığı — Apple 3.1.2'nin "price per unit if
+/// appropriate" maddesi.
+///
+/// Yıllık fiyat tek başına aylıkla kıyaslanamaz: kullanıcı "₺399,99/yıl"ı
+/// görüp bunun "₺39,99/ay"a göre ucuz mu pahalı mı olduğunu ekranda hesap
+/// yapmadan bilemez. Apple bu yüzden birim fiyatı ister.
+///
+/// Sayı, mağazanın kendi fiyat dizesinin BİÇİMİ korunarak yazılır: para
+/// birimi simgesi nerede duruyorsa orada kalır (öne, arkaya ya da boşlukla),
+/// ondalık ayırıcı mağazanın kullandığı ayırıcıdır. Kendi biçimimizi kurmak
+/// (ör. `'₺${x.toStringAsFixed(2)}'`) Türkçe yerelde "₺33.33" gibi yanlış bir
+/// metin üretirdi — hem ayırıcı hem simge yeri yanlış — ve `intl` bu projede
+/// doğrudan bağımlılık değil.
+///
+/// Ekrandan ayrı bir işlev olmasının sebebi ölçülebilirlik: RevenueCat
+/// `StoreProduct` nesnesi testte kurulamadığı için biçimlendirme widget
+/// testinden görünmez; kural burada, saf bir işlevde ölçülür.
+String? monthlyEquivalentPrice(String priceString, double annualPrice) {
+  if (annualPrice <= 0) return null;
+  final first = priceString.indexOf(RegExp(r'\d'));
+  final last = priceString.lastIndexOf(RegExp(r'\d'));
+  if (first < 0 || last < first) return null;
+
+  final separator = priceString.substring(first, last + 1).contains(',')
+      ? ','
+      : '.';
+  final monthly = (annualPrice / 12)
+      .toStringAsFixed(2)
+      .replaceFirst('.', separator);
+  return priceString.replaceRange(first, last + 1, monthly);
+}
 
 /// Premium abonelik satın alma ekranı. RevenueCat üzerinden aylık
 /// abonelikler sunar. Yapılandırma yoksa veya offerings boşsa
@@ -28,6 +64,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   List<Package> _packages = [];
   bool _loading = true;
   bool _offeringsLoadFailed = false;
+  bool _paywallViewLogged = false;
 
   @override
   void initState() {
@@ -36,6 +73,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Future<void> _loadOfferings() async {
+    if (!_paywallViewLogged) {
+      _paywallViewLogged = true;
+      AnalyticsService.instance.logPaywallView();
+    }
     setState(() => _loading = true);
     final premium = context.read<PremiumService>();
     final pkgs = <Package>[];
@@ -62,7 +103,18 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   Future<void> _buy(Package pkg) async {
     final premium = context.read<PremiumService>();
+    final packageId = pkg.identifier;
+    AnalyticsService.instance.logEvent('paywall_purchase_started', {
+      'package_id': packageId,
+    });
     final outcome = await premium.purchasePackage(pkg);
+    AnalyticsService.instance.logPurchaseOutcome(
+      packageId: packageId,
+      outcome: outcome.name,
+    );
+    if (outcome == PurchaseOutcome.success) {
+      AnalyticsService.instance.logPurchaseSuccess(packageId);
+    }
     if (!mounted) return;
     switch (outcome) {
       case PurchaseOutcome.success:
@@ -81,6 +133,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   Future<void> _restore() async {
     final premium = context.read<PremiumService>();
     final outcome = await premium.restorePurchases();
+    AnalyticsService.instance.logRestoreOutcome(outcome.name);
     if (!mounted) return;
     switch (outcome) {
       case RestoreOutcome.restored:
@@ -103,7 +156,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
       // yoktu; giren kullanıcı uygulamayı öldürmeden çıkamıyordu
       // (2026-07-25 canlı denetimi, iOS). Geri düğmesi uygulamanın geri
       // kalanıyla aynı yerde — AppBar'da — durur.
-      appBar: AppBar(
+      appBar: zkAppBar(
+        context,
         backgroundColor: AppTheme.bgOf(context),
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -116,8 +170,15 @@ class _PaywallScreenState extends State<PaywallScreen> {
         child: SafeArea(
           child: Column(
             children: [
+              // Başlık 'Premium' değil, App Store Connect'teki abonelik
+              // adının kendisidir. Apple 3.1.2, otomatik yenilenen
+              // aboneliğin ADININ satın alma ekranında yazmasını ister ve
+              // 'Premium' bir özellik adıdır, ürün adı değil: mağazadaki
+              // ürünler "ZanKurd Pro Monthly/Yearly", grup "ZanKurd Pro".
+              // Bu başlıkla kart başlıkları ("Aylık"/"Yıllık") birleşince
+              // ekranda tam ürün adı okunur.
               ScreenIdentityHeader(
-                title: 'Premium',
+                title: AppConfig.subscriptionDisplayName,
                 subtitle: context.t(K.paywallSubtitle),
                 accent: AppTheme.gold,
                 icon: AppIcons.gem,
@@ -133,6 +194,28 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Premium yüzeyi: kesişen bant motifi. `band` kilim
+                      // dilinde "kutlama ve premium"u taşır; paywall bunu
+                      // kullanan ilk yüzey (2026-08-19).
+                      const SizedBox(
+                        height: 26,
+                        width: double.infinity,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: CustomPaint(
+                                painter: KilimPainter(
+                                  motif: KilimMotif.band,
+                                  color: AppTheme.gold,
+                                  opacity: 0.30,
+                                  count: 8,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
                       // 2026-08-10: `_PaywallHero` kaldırıldı. Ekran aynı
                       // değer önerisini ÜÇ kez söylüyordu — üstteki
                       // `ScreenIdentityHeader` ("Premium / ZanKurd'u
@@ -373,6 +456,16 @@ class _PackageRow extends StatelessWidget {
     return '';
   }
 
+  String? _perMonthEquivalent() {
+    if (package.packageType != PackageType.annual) return null;
+    final monthly = monthlyEquivalentPrice(
+      package.storeProduct.priceString,
+      package.storeProduct.price,
+    );
+    if (monthly == null) return null;
+    return '≈ $monthly${Tr.forKu(K.perMonthSuffix, isKu)}';
+  }
+
   /// Fiyatın yanında gösterilen yenileme dönemi. Apple 3.1.2, fiyatın
   /// hangi dönem için olduğunun paywall'da açıkça yazmasını ister.
   String _pricePeriodSuffix() {
@@ -472,6 +565,15 @@ class _PackageRow extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                   ),
                 ),
+                if (_perMonthEquivalent() case final perMonth?) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    perMonth,
+                    style: AppTypography.caption.copyWith(
+                      color: AppTheme.textSubColor(context),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

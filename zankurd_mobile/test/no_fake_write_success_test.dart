@@ -159,9 +159,7 @@ void main() {
 
       // Yakalanan tür gerçekten PostgrestException olmalı: düz `catch`
       // yeniden fırlatılırsa çevrimdışı kayıt da hata verirdi.
-      final methodStart = repo.indexOf(
-        'Future<bool> _pushAvatarIdentity(',
-      );
+      final methodStart = repo.indexOf('Future<bool> _pushAvatarIdentity(');
       expect(methodStart, greaterThan(-1));
       expect(
         repo.substring(methodStart, at),

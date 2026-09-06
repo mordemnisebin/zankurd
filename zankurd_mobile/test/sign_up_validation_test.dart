@@ -192,7 +192,10 @@ void main() {
     testWidgets('yetkili/destek taklidi eden ad reddedilir', (tester) async {
       await goToStep1(tester);
 
-      await tester.enterText(textFieldByLabel('Kullanıcı adı'), 'ZanKurd Destek');
+      await tester.enterText(
+        textFieldByLabel('Kullanıcı adı'),
+        'ZanKurd Destek',
+      );
       await tapButton(tester, 'İleri');
 
       // `DisplayNameVerdict.reservedName` → `K.nameReserved`.

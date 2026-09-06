@@ -16,6 +16,7 @@ import '../data/placement_store.dart';
 import '../data/story_progress_store.dart';
 import '../data/sync_manager.dart';
 import '../services/premium_service.dart';
+import '../services/native_auth_service.dart';
 import '../utils/error_reporter.dart';
 
 class AccountLocalCleanupException implements Exception {
@@ -41,6 +42,7 @@ class AuthProvider extends ChangeNotifier {
       'zankurd.localProgress.deviceOwnerUserId';
 
   final SupabaseClient? _client;
+  final NativeAuthService _nativeAuth;
   StreamSubscription<AuthState>? _authSub;
 
   User? _currentUser;
@@ -72,7 +74,10 @@ class AuthProvider extends ChangeNotifier {
 
   bool get isGuest => _currentUser?.isAnonymous ?? false;
 
-  AuthProvider(SupabaseClient client) : _client = client {
+  AuthProvider(SupabaseClient client, {NativeAuthService? nativeAuth})
+    : _client = client,
+      _nativeAuth =
+          nativeAuth ?? PlatformNativeAuthService(supabaseClient: client) {
     _currentUser = client.auth.currentUser;
     _syncPremiumIdentity(_currentUser);
     _authSub = client.auth.onAuthStateChange.listen((state) {
@@ -147,8 +152,9 @@ class AuthProvider extends ChangeNotifier {
       _resetLocalProgressIfForeignUser(user);
 
   /// Test/mock constructor — Supabase başlatılmadan kullanım için.
-  AuthProvider.test({bool authenticated = false})
+  AuthProvider.test({bool authenticated = false, NativeAuthService? nativeAuth})
     : _client = null,
+      _nativeAuth = nativeAuth ?? PlatformNativeAuthService(),
       _mockAuthenticated = authenticated;
 
   void _syncPremiumIdentity(User? user) {
@@ -185,6 +191,10 @@ class AuthProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
       return true;
+    } on NativeAuthCancelled {
+      _isLoading = false;
+      notifyListeners();
+      return false;
     } on AuthException catch (e) {
       _errorMessage = _translateError(e);
       _isLoading = false;
@@ -245,10 +255,59 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
-  /// Google ile giriş, Supabase OAuth üzerinden tarayıcı açar.
-  /// Çalışması için Supabase Dashboard'da Google sağlayıcısının
-  /// yapılandırılmış olması gerekir.
+  bool get _useNativeAppleAndGoogle =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+
+  Future<void> _signInWithNativeCredential(
+    SupabaseClient client,
+    NativeAuthCredential credential,
+  ) async {
+    switch (credential.provider) {
+      case NativeAuthProvider.google:
+        await client.auth.signInWithIdToken(
+          provider: OAuthProvider.google,
+          idToken: credential.idToken,
+          accessToken: credential.accessToken,
+        );
+      case NativeAuthProvider.apple:
+        await client.auth.signInWithIdToken(
+          provider: OAuthProvider.apple,
+          idToken: credential.idToken,
+          nonce: credential.nonce,
+        );
+    }
+  }
+
+  Future<void> _linkNativeCredential(
+    SupabaseClient client,
+    NativeAuthCredential credential,
+  ) async {
+    switch (credential.provider) {
+      case NativeAuthProvider.google:
+        await client.auth.linkIdentityWithIdToken(
+          provider: OAuthProvider.google,
+          idToken: credential.idToken,
+          accessToken: credential.accessToken,
+        );
+      case NativeAuthProvider.apple:
+        await client.auth.linkIdentityWithIdToken(
+          provider: OAuthProvider.apple,
+          idToken: credential.idToken,
+          nonce: credential.nonce,
+        );
+    }
+  }
+
+  /// iOS'ta Google hesabını uygulama içindeki native SDK ile alır.
+  /// Web ve diğer platformlarda mevcut Supabase OAuth akışı korunur.
   Future<bool> signInWithGoogle() {
+    if (_useNativeAppleAndGoogle) {
+      return _run((client) async {
+        final credential = await _nativeAuth.signInWithGoogle();
+        if (credential == null) throw const NativeAuthCancelled();
+        await _signInWithNativeCredential(client, credential);
+      });
+    }
     return _run((client) async {
       final launched = await client.auth.signInWithOAuth(
         OAuthProvider.google,
@@ -261,7 +320,8 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
-  /// Apple ile giriş, Supabase OAuth üzerinden.
+  /// iOS'ta Apple hesabını uygulama içindeki native SDK ile alır.
+  /// Web ve diğer platformlarda mevcut Supabase OAuth akışı korunur.
   ///
   /// App Store İnceleme Kılavuzu 4.8: üçüncü taraf bir sosyal giriş
   /// (burada Google) sunan uygulama, Apple platformlarında eşdeğer bir
@@ -272,6 +332,13 @@ class AuthProvider extends ChangeNotifier {
   /// Developer tarafında bir Services ID + Sign in with Apple yetkisinin
   /// tanımlı olması gerekir; bunlar uygulama kodunun dışındadır.
   Future<bool> signInWithApple() {
+    if (_useNativeAppleAndGoogle) {
+      return _run((client) async {
+        final credential = await _nativeAuth.signInWithApple();
+        if (credential == null) throw const NativeAuthCancelled();
+        await _signInWithNativeCredential(client, credential);
+      });
+    }
     return _run((client) async {
       final launched = await client.auth.signInWithOAuth(
         OAuthProvider.apple,
@@ -287,6 +354,13 @@ class AuthProvider extends ChangeNotifier {
   /// Misafir (anonim) hesabı Apple ile bağlar — mevcut oturumu korur.
   /// [linkGoogleAccount] ile aynı gerekçe: misafir ilerlemesi kaybolmasın.
   Future<bool> linkAppleAccount() {
+    if (_useNativeAppleAndGoogle) {
+      return _run((client) async {
+        final credential = await _nativeAuth.signInWithApple();
+        if (credential == null) throw const NativeAuthCancelled();
+        await _linkNativeCredential(client, credential);
+      });
+    }
     return _run((client) async {
       final launched = await client.auth.linkIdentity(
         OAuthProvider.apple,
@@ -345,6 +419,13 @@ class AuthProvider extends ChangeNotifier {
   // Google'a bağlar; local store'lara dokunmaz.
   /// Misafir (anonim) hesabı Google ile bağlar — mevcut oturumu korur.
   Future<bool> linkGoogleAccount() {
+    if (_useNativeAppleAndGoogle) {
+      return _run((client) async {
+        final credential = await _nativeAuth.signInWithGoogle();
+        if (credential == null) throw const NativeAuthCancelled();
+        await _linkNativeCredential(client, credential);
+      });
+    }
     return _run((client) async {
       final launched = await client.auth.linkIdentity(
         OAuthProvider.google,

@@ -6,7 +6,6 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -16,9 +15,6 @@ Widget wrap(Widget child) => MultiProvider(
     ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('tr')),
     ChangeNotifierProvider<PremiumService>(
       create: (_) => PremiumService.fallback(),
-    ),
-    ChangeNotifierProvider<ChildSafetyProvider>(
-      create: (_) => ChildSafetyProvider(),
     ),
   ],
   child: MaterialApp(theme: AppTheme.light(), home: child),

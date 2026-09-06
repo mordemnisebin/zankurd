@@ -11,12 +11,17 @@ import '../models/friend.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/league_tier.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_state.dart';
 import '../widgets/arena_kit.dart';
+import '../widgets/kilim_reveal.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/roj_mascot.dart';
+import '../widgets/rolling_count.dart';
+import '../widgets/zk_back_button.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -169,22 +174,19 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth < 720) {
-          // 2026-08-14 görsel denetimi: podyum + banner içerik olmadığında
-          // (ör. yalnız ilk 3 kişi, kendi sıra satırı da yoksa) `ListView`
-          // içeriği tepede bırakıyor ve ekranın alt yarısı boş krem renginde
-          // kalıyordu — yarım yüklenmiş gibi görünüyordu.
+          // `rest.isEmpty` (yalnız ilk 3 kişi, sıra listesi yok) dalı. Podyum
+          // bu ekranın kahramanıdır; içerik TEPEDE durmalı ve kaydırmadan
+          // görünmelidir. Eskiden `MainAxisAlignment.center` ile dikeyde
+          // ortalanıyordu: kısa içerik (banner + podyum) ekranın ortasına
+          // itiliyor, sekme şeridi ile banner arasında ~350px ölü boşluk
+          // kalıyor ve podyum ilk bakışta kayboluyordu (2026-08-19 görsel
+          // denetimi). Alt yarıda kalan boşluk, kahramanı saklamaktan daha
+          // kabul edilebilirdir.
           //
-          // Yalnız `rest.isEmpty` (sıralama listesi hiç yoksa) dalında
-          // ortalanır — kasıtlı olarak dar tutuldu. `_RankListSurface` /
-          // `_RankRow` bir `Expanded`li satır taşıyor; bu satır bir
-          // `ConstrainedBox(minHeight)` + `crossAxisAlignment.stretch`
-          // zincirinin İÇİNE (SIKI genişlik verilerek) alındığında, uzun ad +
-          // "Sen" etiketi olan satırlarda `Expanded`in payı yanlış
-          // hesaplanıp 33px'e sıkışıyor ve taşıyordu (2x yazı ölçeği
-          // testinde yakalanan, ayrı bir Flutter kısıtı — bkz.
-          // `test/leaderboard_rank_list_test.dart` "uzun ad" testi). Liste
-          // varken bu riske hiç girilmez: `ListView` aynen korunur; boşluk
-          // sorunu zaten yalnız listesiz halde görülüyordu.
+          // Bu dalda neden `ListView` değil `SingleChildScrollView` +
+          // `Column`: `_RankListSurface` / `_RankRow` `Expanded`li satır
+          // taşıyor; sıralama listesi varken bu dala girilmez (bkz.
+          // `test/leaderboard_rank_list_test.dart` "uzun ad" testi).
           if (rest.isEmpty) {
             final minH = math.max(
               0.0,
@@ -201,7 +203,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: minH),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     if (banner != null) ...[
@@ -546,14 +548,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 4, top: 4),
-                    child: IconButton(
+                    child: ZkBackButton(
                       key: const ValueKey('leaderboard-back'),
-                      icon: const Icon(Icons.arrow_back),
                       color: AppTheme.textPrimaryColor(context),
-                      tooltip: MaterialLocalizations.of(
-                        context,
-                      ).backButtonTooltip,
-                      onPressed: () => Navigator.of(context).maybePop(),
                     ),
                   ),
                 ),
@@ -968,6 +965,7 @@ class _HeaderAction extends StatelessWidget {
       child: Semantics(
         button: true,
         label: semanticLabel,
+        onTap: onPressed,
         excludeSemantics: true,
         child: IconButton(
           key: valueKey,
@@ -1166,11 +1164,6 @@ class _PodiumSlot extends StatelessWidget {
     }
   }
 
-  IconData get _medalIcon {
-    if (entry.rank == 1) return AppIcons.trophy;
-    return AppIcons.medal;
-  }
-
   @override
   Widget build(BuildContext context) {
     final color = _colorFor(AppTheme.isLight(context));
@@ -1183,7 +1176,7 @@ class _PodiumSlot extends StatelessWidget {
         ? 42.0
         : 34.0;
 
-    return Column(
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -1193,7 +1186,16 @@ class _PodiumSlot extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(_medalIcon, color: color, size: isCenter ? 30 : 22),
+              // Kazanan rozeti: elmas zemini + kupa/madalya ikonu. `RankMedal`
+              // sıra NUMARASINI basıyordu; kaidedeki `#sıra` ile aynı şeyi iki
+              // kez söylemiş oluyordu (2026-08-19 review). Elmas kimliği taşır,
+              // rakam yalnız kaidede kalır.
+              CategoryEmblem(
+                icon: entry.rank == 1 ? AppIcons.trophy : AppIcons.medal,
+                color: color,
+                size: isCenter ? 36 : 28,
+                onColor: color,
+              ),
               const SizedBox(height: 6),
               Container(
                 padding: const EdgeInsets.all(2.5),
@@ -1267,10 +1269,9 @@ class _PodiumSlot extends StatelessWidget {
                 // (2026-08-04 görsel denetimi).
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: Text(
-                    '${entry.totalScore}',
+                  child: RollingCount(
+                    value: entry.totalScore,
                     maxLines: 1,
-                    softWrap: false,
                     style: TextStyle(
                       color: AppColors.readableAccent(context, color),
                       fontWeight: FontWeight.w800,
@@ -1338,6 +1339,19 @@ class _PodiumSlot extends StatelessWidget {
           ),
         ),
       ],
+    );
+
+    // Birinci basamak kilim dokusuyla açılır — kutlama dili sonuç ekranıyla
+    // aynıdır. Diğer basamaklar sade kalır; kutlama anı yalnız kazanana aittir.
+    if (entry.rank != 1) return content;
+
+    return KilimReveal(
+      active: true,
+      // Sağlayıcı yoksa (izole widget testleri) animasyon sessizce kapanır;
+      // dekoratif katman ağacı eksik diye çökertmemeli.
+      reducedMotion: ReducedMotionProvider.isReducedIn(context),
+      color: kilimRevealColorFor(context, onBrand: false),
+      child: content,
     );
   }
 }

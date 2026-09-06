@@ -77,6 +77,11 @@ void main() {
     // Beş satır da çizilir — kilitli olmak görünmez olmak değildir.
     expect(find.text('Başlangıç'), findsOneWidget);
     expect(find.text('Usta'), findsOneWidget);
+
+    expect(
+      tester.getSemantics(find.text('Başlangıç')).label,
+      'Sıradaki: Başlangıç',
+    );
   });
 
   testWidgets('kilitli düğüme dokunmak nedenini söyler', (tester) async {

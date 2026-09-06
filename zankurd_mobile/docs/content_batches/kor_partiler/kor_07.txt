@@ -1,0 +1,1447 @@
+Aşağıda 239 çoktan seçmeli soru var. Her biri için DOĞRU şıkkı seç.
+
+- Yalnız JSON dizisi döndür, başka hiçbir şey yazma.
+- Biçim: [{"id":"...","cevap":"<şıkkın TAM METNİ>"}]
+- Cevabı şıklardan birinin metnini AYNEN kopyalayarak yaz; harf yazma.
+- Emin değilsen "?" yaz. Tahmin etme — emin olmadığını söylemek,
+  yanlış bir kesinlikten daha değerli.
+
+Sorular Kurmancî. Doğru cevap sana GÖSTERİLMİYOR; bu kasıtlı.
+Gösterilseydi kendi seçimini savunma eğilimi ölçümü değersizleştirirdi.
+
+SORULAR:
+
+[offline_tf_muz_0000]
+S: Rast e an şaş e: Têgeha "kilam" tê vê wateyê: awaza dirêj a dengbêjiyê ya ku çîrokek vedibêje.
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0001]
+S: Rast e an şaş e: Têgeha "kilam" tê vê wateyê: stranên bilez û rîtmîk ên ku dema govendê tên gotin.
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0002]
+S: Têgeha "stranên govendê" wiha tê ravekirin: stranên bilez û rîtmîk ên ku dema govendê tên gotin. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0003]
+S: Têgeha "stranên govendê" wiha tê ravekirin: pergala perdeyan a ku rengê awazê diyar dike. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0004]
+S: Binirxîne: li gorî vê ravekirinê "makam" ev e — pergala perdeyan a ku rengê awazê diyar dike. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0005]
+S: Binirxîne: li gorî vê ravekirinê "makam" ev e — parkirina demê ya ku govend û stran li ser tê avakirin. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0006]
+S: Ev ravekirin ji bo "rîtm" rast e an şaş e: parkirina demê ya ku govend û stran li ser tê avakirin?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0007]
+S: Ev ravekirin ji bo "rîtm" rast e an şaş e: stranbêjiya bi kom a ku deng tê de li hev tên?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0008]
+S: Rast e an şaş e: Têgeha "koro" tê vê wateyê: stranbêjiya bi kom a ku deng tê de li hev tên.
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0009]
+S: Rast e an şaş e: Têgeha "koro" tê vê wateyê: stranbêjî an lêxistina bi tenê, berevajiyê koroyê.
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0010]
+S: Têgeha "solo" wiha tê ravekirin: stranbêjî an lêxistina bi tenê, berevajiyê koroyê. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0011]
+S: Têgeha "solo" wiha tê ravekirin: amûra bayî ya bilinddeng a ku bi dahol re li derve tê lêxistin. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0012]
+S: Binirxîne: li gorî vê ravekirinê "zurna" ev e — amûra bayî ya bilinddeng a ku bi dahol re li derve tê lêxistin. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0013]
+S: Binirxîne: li gorî vê ravekirinê "zurna" ev e — amûra lêdanê ya mezin a ku bi du daran tê lêxistin. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0014]
+S: Ev ravekirin ji bo "dahol" rast e an şaş e: amûra lêdanê ya mezin a ku bi du daran tê lêxistin?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0015]
+S: Ev ravekirin ji bo "dahol" rast e an şaş e: amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0016]
+S: Rast e an şaş e: Têgeha "kemençe" tê vê wateyê: amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin.
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0017]
+S: Rast e an şaş e: Têgeha "kemençe" tê vê wateyê: cihê ku dengbêj lê dicivin û bi dor distirên.
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0018]
+S: Têgeha "dîwana dengbêjan" wiha tê ravekirin: cihê ku dengbêj lê dicivin û bi dor distirên. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0019]
+S: Têgeha "dîwana dengbêjan" wiha tê ravekirin: hunermendê ku bayê rock û caz anî muzîka kurdî. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0020]
+S: Binirxîne: li gorî vê ravekirinê "Ciwan Haco" ev e — hunermendê ku bayê rock û caz anî muzîka kurdî. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0021]
+S: Binirxîne: li gorî vê ravekirinê "Ciwan Haco" ev e — hunermendê ku bi tembûr û dengê xwe kilamên nûjen çêkir. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0022]
+S: Ev ravekirin ji bo "Mihemed Şêxo" rast e an şaş e: hunermendê ku bi tembûr û dengê xwe kilamên nûjen çêkir?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0023]
+S: Ev ravekirin ji bo "Mihemed Şêxo" rast e an şaş e: muzîkjenê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0024]
+S: Rast e an şaş e: Têgeha "Aram Tîgran" tê vê wateyê: muzîkjenê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin.
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0025]
+S: Rast e an şaş e: Têgeha "Aram Tîgran" tê vê wateyê: stranbêjê ku stranên welatparêzî di sirgûnê de belav kir.
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0026]
+S: Têgeha "Şivan Perwer" wiha tê ravekirin: stranbêjê ku stranên welatparêzî di sirgûnê de belav kir. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0027]
+S: Têgeha "Şivan Perwer" wiha tê ravekirin: awazên ku di civînên şevê yên zivistanê de tên gotin. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0028]
+S: Binirxîne: li gorî vê ravekirinê "muzîka şevbêrkê" ev e — awazên ku di civînên şevê yên zivistanê de tên gotin. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_muz_0029]
+S: Binirxîne: li gorî vê ravekirinê "muzîka şevbêrkê" ev e — awaza dirêj a dengbêjiyê ya ku çîrokek vedibêje. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0000]
+S: Rast e an şaş e: Têgeha "dewlet-netewe" tê vê wateyê: modela dewletê ya ku yek ziman û yek nasnameyê ferz dike.
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0001]
+S: Rast e an şaş e: Têgeha "dewlet-netewe" tê vê wateyê: xeta dîrokî ya ku desthilat li dora dewletê kom dike.
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0002]
+S: Têgeha "şaristaniya dewletparêz" wiha tê ravekirin: xeta dîrokî ya ku desthilat li dora dewletê kom dike. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0003]
+S: Têgeha "şaristaniya dewletparêz" wiha tê ravekirin: nêrîna ku pêşketinê tenê bi mezinbûna hilberînê pîvan dike. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0004]
+S: Binirxîne: li gorî vê ravekirinê "pîşesazîparêzî" ev e — nêrîna ku pêşketinê tenê bi mezinbûna hilberînê pîvan dike. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0005]
+S: Binirxîne: li gorî vê ravekirinê "pîşesazîparêzî" ev e — saziyên perwerdehiyê yên ku li ser azadiya jinê xebatê dikin. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0006]
+S: Ev ravekirin ji bo "akademiyên jinan" rast e an şaş e: saziyên perwerdehiyê yên ku li ser azadiya jinê xebatê dikin?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0007]
+S: Ev ravekirin ji bo "akademiyên jinan" rast e an şaş e: xwedîtiya hevpar a ku li ser hewcedariyê ava dibe ne li ser qezencê?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0008]
+S: Rast e an şaş e: Têgeha "milkiyeta komûnal" tê vê wateyê: xwedîtiya hevpar a ku li ser hewcedariyê ava dibe ne li ser qezencê.
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0009]
+S: Rast e an şaş e: Têgeha "milkiyeta komûnal" tê vê wateyê: parvekirina desthilatê di navbera qanûndanîn, rêveberî û dadgehê de.
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0010]
+S: Têgeha "veqetandina hêzan" wiha tê ravekirin: parvekirina desthilatê di navbera qanûndanîn, rêveberî û dadgehê de. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0011]
+S: Têgeha "veqetandina hêzan" wiha tê ravekirin: zanîna ku mirov beşek ji xwezayê ye, ne xwediyê wê. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0012]
+S: Binirxîne: li gorî vê ravekirinê "hişmendiya ekolojîk" ev e — zanîna ku mirov beşek ji xwezayê ye, ne xwediyê wê. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0013]
+S: Binirxîne: li gorî vê ravekirinê "hişmendiya ekolojîk" ev e — yekeya biçûk a xwerêveberiyê ya li tax an gundekî. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0014]
+S: Ev ravekirin ji bo "komîn" rast e an şaş e: yekeya biçûk a xwerêveberiyê ya li tax an gundekî?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0016]
+S: Rast e an şaş e: Têgeha "xwerêveberî" tê vê wateyê: birêvebirina karûbarên hevpar ji aliyê xelkê wê deverê ve.
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0017]
+S: Rast e an şaş e: Têgeha "xwerêveberî" tê vê wateyê: civaka ku tê de çînên jor û jêr ên sabit tune ne.
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0018]
+S: Têgeha "civaka bêhiyerarşî" wiha tê ravekirin: civaka ku tê de çînên jor û jêr ên sabit tune ne. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0019]
+S: Têgeha "civaka bêhiyerarşî" wiha tê ravekirin: pîvana ku azadiya civakê bi azadiya jinê tê nirxandin. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0020]
+S: Binirxîne: li gorî vê ravekirinê "pîvana azadiyê" ev e — pîvana ku azadiya civakê bi azadiya jinê tê nirxandin. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0021]
+S: Binirxîne: li gorî vê ravekirinê "pîvana azadiyê" ev e — rolên ku civak li jin û mêran bar dike, ne yên xwezayî. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0022]
+S: Ev ravekirin ji bo "zayenda civakî" rast e an şaş e: rolên ku civak li jin û mêran bar dike, ne yên xwezayî?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0023]
+S: Ev ravekirin ji bo "zayenda civakî" rast e an şaş e: komek saziyên ku ne dewlet in û ne jî bazar in?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0024]
+S: Rast e an şaş e: Têgeha "civaka sivîl" tê vê wateyê: komek saziyên ku ne dewlet in û ne jî bazar in.
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0025]
+S: Rast e an şaş e: Têgeha "civaka sivîl" tê vê wateyê: kombûna desthilat an sermayeyê di destê hindik kesan de.
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0026]
+S: Têgeha "tekelparêzî" wiha tê ravekirin: kombûna desthilat an sermayeyê di destê hindik kesan de. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0027]
+S: Têgeha "tekelparêzî" wiha tê ravekirin: guhertina pirsgirêkeke rojane bo mijareke biryardanê ya hevpar. Ev rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0028]
+S: Binirxîne: li gorî vê ravekirinê "politîkbûn" ev e — guhertina pirsgirêkeke rojane bo mijareke biryardanê ya hevpar. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tf_par_0029]
+S: Binirxîne: li gorî vê ravekirinê "politîkbûn" ev e — modela dewletê ya ku yek ziman û yek nasnameyê ferz dike. Rast e an şaş e?
+  A) Rast
+  B) Şaş
+
+[offline_tek_0001]
+S: Amûra ku agahiyan li ser kaxizê çap dike bi Kurmancî çi ye?
+  A) Nîşander
+  B) Bilindgo
+  C) Kamera
+  D) Çaper
+
+[offline_tek_0002]
+S: Peyva Kurmancî "bîrge" bi Tirkî çi tê gotin?
+  A) ekran
+  B) bellek
+  C) kablo
+  D) düğme
+
+[offline_tek_0003]
+S: Di komputerê de kîjan beş hesaban dike û fermanan bi rê ve dibe?
+  A) Pêvajoker
+  B) Bîrge
+  C) Ekran
+  D) Bilindgo
+
+[offline_tek_0004]
+S: Peyva Kurmancî "tor" di warê komputerê de bi Tirkî çi ye?
+  A) dosya
+  B) ağ
+  C) klasör
+  D) pencere
+
+[offline_tek_0006]
+S: Girêdana ku danûstandina di navbera geroker û serverê de şîfre dike kîjan e?
+  A) HTTPS
+  B) FTP
+  C) SMTP
+  D) IRC
+
+[offline_tek_0007]
+S: Di bernamesaziyê de "xelek" ji bo çi tê bikaranîn?
+  A) Parastina şîfreyan
+  B) Çapkirina kaxizê
+  C) Girêdana torê
+  D) Dubarekirina heman gavan
+
+[offline_tek_0008]
+S: Di bernamesaziyê de "guhêrbar" çi dike?
+  A) Nirxekê bi navekî ve girê dide
+  B) Hêmana dîtbarî (UI)
+  C) Nîşandana wêne û nivîsan
+  D) Xizmet û daneyan digihîne amûrên din
+
+[offline_tek_0009]
+S: Çima girêdanên bêqablo ji yên bi qablo bêtir hewceyî şîfrekirinê ne?
+  A) Ji ber ku girêdanên bêqablo her tim hêdîtir dixebitin
+  B) Ji ber ku amûrên bêqablo kêmtir enerjiyê xerc dikin
+  C) Ji ber ku sînyal li hewayê belav dibe û herkes dikare bigire
+  D) Ji ber ku qabloyên wan ji yên din kurttir tên çêkirin
+
+[offline_tek_0010]
+S: Di daneparêziyê de "paşvegirtin" çi ye?
+  A) Xizmet û daneyan digihîne amûrên din
+  B) Nîşandana wêne û nivîsan
+  C) Nirxekê bi navekî ve girê dide
+  D) Kopiyeke daneyan a li cihekî din
+
+[offline_tek_0011]
+S: Peyva Kurmancî "pelgeh" bi Tirkî çi tê gotin?
+  A) fare
+  B) klasör
+  C) ekran
+  D) kablo
+
+[offline_tek_0012]
+S: Kîjan amûr enerjiya elektrîkê ya amûrên guhêzbar hildigire?
+  A) Batarya
+  B) Çaper
+  C) Mişk
+  D) Bilindgo
+
+[offline_tek_0013]
+S: Peyva Kurmancî "ekran" ji bo çi tê bikaranîn?
+  A) Tomarkirina deng
+  B) Nîşandana wêne û nivîsan
+  C) Şîfrekirina daneyan
+  D) Çapkirina kaxizê
+
+[offline_tek_0014]
+S: Di torê de "server" çi kar dike?
+  A) Kopiyeke daneyan a li cihekî din
+  B) Nirxekê bi navekî ve girê dide
+  C) Nîşandana wêne û nivîsan
+  D) Xizmet û daneyan digihîne amûrên din
+
+[offline_tek_0015]
+S: Çima şîfreyeke dirêj ji ya kurt bihêztir e?
+  A) Ji ber ku şîfreyên dirêj hêsantir tên bîranîn û parastin
+  B) Ji ber ku hejmara kombînasyonan bi dirêjiyê re bi lez zêde dibe
+  C) Ji ber ku şîfreyên dirêj di bîrê de kêmtir cih digirin
+  D) Ji ber ku şîfreyên dirêj girêdana torê lezdar dikin
+
+[offline_tek_0016]
+S: Bîrgeya demkî (RAM) piştî girtina amûrê naveroka xwe winda dike.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0017]
+S: Girêdana HTTP naveroka di rê de şîfre dike.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0018]
+S: Pelrêça daneyan a li ser înternetê bêyî paşvegirtinê jî her tim ewle ye.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0019]
+S: Peyva Kurmancî ya ku ji bo "mouse" tê bikaranîn "mişk" e.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0020]
+S: Kodên çavkaniyê yên vekirî tenê ji aliyê şirketan ve tên nivîsandin.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0021]
+S: Şîfreya heman ji bo hemû hesaban bikaranîn xetereyê zêde dike.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0022]
+S: Zêdekirina hejmara pêvajokeran her tim bernameyê ewqas qat lez dike.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0023]
+S: Klavye ji bo têketina nivîsê tê bikaranîn.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0024]
+S: Piştrastkirina du gavî tenê bi şîfreyê dixebite.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0025]
+S: Peyva Kurmancî "malper" ji bo "web sitesi" tê bikaranîn.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0026]
+S: Şîfrekirin daneyê bêyî mifteya rast dîsa xwendinbar dihêle.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0027]
+S: Nûvekirinên nermalavê gelek caran valahiyên ewlehiyê digirin.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0028]
+S: Wêneyek bi çareseriya bilind her tim cihê kêmtir digire.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0040]
+S: Di fêrbûna makîneyan de model bi giranî ji çi hîn dibe?
+  A) Ji daneyên perwerdehiyê
+  B) Ji rêzikên ku bernamevan bi destan dinivîse
+  C) Ji zimanê bernamesaziyê
+  D) Ji leza pêvajokerê
+
+[offline_tek_0041]
+S: Di bernamesaziyê de "algorîtma" bi giştî çi ye?
+  A) Zimanek ji bo nivîsandina bernameyan
+  B) Hêmanek dîtbarî ya li ser ekranê
+  C) Rêbazek bi gavên diyarkirî
+  D) Pergalek ji bo hilanîna daneyan
+
+[offline_tek_0042]
+S: Kîjan pergal li gorî tiştên ku te berê temaşe kirine tiştên nû nîşanî te dide?
+  A) Pergala pêşniyaran
+  B) Pergala şîfrekirinê
+  C) Pergala navên malperan
+  D) Pergala paşvegirtinê
+
+[offline_tek_0043]
+S: Heke daneyên perwerdehiyê kêm û çewt bin, encam çi dibe?
+  A) Model xwe bi xwe rast dike
+  B) Model bêyî daneyan jî bê şaşî dixebite
+  C) Model daneyan ji nû ve dinivîse
+  D) Model şaşiyan dubare dike
+
+[offline_tek_0044]
+S: Bernameya ku bi deng fermanan digire û bersiv dide bi Kurmancî çi ye?
+  A) Alîkarê dîjîtal
+  B) Gerokerê malperan
+  C) Nermalava paşvegirtinê
+  D) Pergala xebitandinê
+
+[offline_tek_0045]
+S: Kîjan kar ji bo otomasyonê herî guncaw e?
+  A) Karê ku her car biryareke nû ya mirovî dixwaze
+  B) Karê ku encama wî nayê pîvandin
+  C) Karê ku gavên wî diyar in û naguherin
+  D) Karê ku tenê carekê tê kirin
+
+[offline_tek_0046]
+S: Robotê axaftinê (chatbot) her bersiva xwe ji mirovekî li paş ekranê digire.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0047]
+S: Di fêrbûna makîneyan de model bersivê bi pêşbîniyê çêdike, ne bi bîranîna her pirsê.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0048]
+S: Wêneyên ku model çêdikin, dîmenên rastîn ên kamerayê ne.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0049]
+S: Berî komputerê jî mirovan algorîtma bi kar dianîn.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0050]
+S: Bernameya ku li ser telefonên destan tê barkirin û tê bikaranîn bi Kurmancî çi ye?
+  A) Pelgeh
+  B) Bîrge
+  C) Çaper
+  D) Sepan
+
+[offline_tek_0051]
+S: Peyva Kurmancî "agahdarî" di sepanên mobîl de bi Tirkî çi tê gotin?
+  A) ayar
+  B) bildirim
+  C) izin
+  D) güncelleme
+
+[offline_tek_0052]
+S: Ji bo barkirina sepaneke nû li ser telefonê, çavkaniya herî ewle kîjan e?
+  A) Dukana fermî ya pergalê
+  B) Girêdanek ku di peyamekê de tê şandin
+  C) Malpereke nenas
+  D) Dosyeyek ku ji amûreke din tê
+
+[offline_tek_0053]
+S: Çima hin sepan bêyî girêdana înternetê jî dixebitin?
+  A) Ji ber ku ekrana wan biçûktir e
+  B) Ji ber ku dane li ser amûrê hatine tomarkirin
+  C) Ji ber ku her sepan bêyî serverekê tê nivîsandin
+  D) Ji ber ku ew tenê bi bataryayê dixebitin
+
+[offline_tek_0054]
+S: GPS di amûrên mobîl de bi giştî ji bo çi tê bikaranîn?
+  A) Zêdekirina hêza bataryayê
+  B) Şîfrekirina peyamên nivîskî
+  C) Mezinkirina bîrgeya amûrê
+  D) Diyarkirina cihê amûrê
+
+[offline_tek_0055]
+S: Gava sepanek cara yekem hewceyî mîkrofona amûrê dibe, pergal çi dike?
+  A) Girêdana înternetê digire
+  B) Ji bikarhêner destûrê dixwaze
+  C) Sepanê ji dukanê radike
+  D) Mîkrofonê bêyî ku destûrê bixwaze vedike
+
+[offline_tek_0056]
+S: Heke telefonek winda bibe, kilîta ekranê bêkêr e.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0057]
+S: Bikarhêner dikare agahdariyên sepanekê ji mîhengên amûrê vemirîne.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0058]
+S: Temaşekirina vîdyoyê ji xwendina nivîsê kêmtir daneyên mobîl xerc dike.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0059]
+S: Dema sepanek ji amûrê tê jêbirin, daneyên ku di hundirê sepanê de hatine tomarkirin jî diçin.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0060]
+S: Di bernamesaziyê de kîjan hêman çend fermanan di bin navekî de kom dike û paşê gelek caran tê bikaranîn?
+  A) Guhêrbar
+  B) Şirove
+  C) Fonksiyon
+  D) Koda çavkaniyê
+
+[offline_tek_0061]
+S: Kîjan hêman li gorî rewşê diyar dike ka bername kîjan rê bigire?
+  A) Xelek
+  B) Şert
+  C) Fonksiyon
+  D) Guhêrbara hejmarî
+
+[offline_tek_0062]
+S: Di bernamesaziyê de kîjan têgeh gelek nirxan bi rêzê di bin yek navî de digire?
+  A) Şert
+  B) Fonksiyon
+  C) Lîste
+  D) Xeleka bêdawî
+
+[offline_tek_0063]
+S: Kîjan nermalav koda ku mirov nivîsandiye vediguherîne fermanên ku pêvajoker dimeşîne?
+  A) Berhevkar
+  B) Geroker
+  C) Pergala parastinê
+  D) Rêveberê pelgehan
+
+[offline_tek_0064]
+S: Kîjan nermalav guhertoyên kodê yek bi yek tomar dike û vegera ser rewşa berê hêsan dike?
+  A) Linux
+  B) Firefox
+  C) Git
+  D) Photoshop
+
+[offline_tek_0065]
+S: Çima di projeyeke nermalavê de pirtûkxaneyeke amade tê bikaranîn?
+  A) Ji ber ku pirtûkxane hemû çewtiyên bernameyê bi xwe rast dikin
+  B) Ji ber ku pirtûkxane kodeke ceribandî pêşkêş dike
+  C) Ji ber ku bêyî pirtûkxaneyê tu bername naxebite
+  D) Ji ber ku pirtûkxane cihê dîskê kêm dikin
+
+[offline_tek_0066]
+S: Çewtiyeke tîpê ya piçûk jî dikare bernameyekê ji xebatê bixe.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0067]
+S: Şiroveyên di nav kodê de ji aliyê komputerê ve nayên meşandin.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0068]
+S: Her zimanê bernamesaziyê ji bo her karî bi heman awayî guncaw e.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0069]
+S: Heke hemû ceribandin bi ser bikevin, êdî di kodê de tu çewtî namîne.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0070]
+S: Deng bi gelemperî bi kîjan cureyê dosyayê tê tomarkirin?
+  A) HTML5
+  B) JPG
+  C) MP3
+  D) PDF
+
+[offline_tek_0071]
+S: Mezinahiya dosyayekê bi çi tê pîvandin?
+  A) bi metre û kîlometre
+  B) bi saet û deqîqe
+  C) bi kîlogram û ton
+  D) bi bayt û megabayt
+
+[offline_tek_0072]
+S: Ji ya herî biçûk ber bi ya herî mezin ve, rêza rast kîjan e?
+  A) kîlobayt, bayt, megabayt
+  B) bayt, kîlobayt, megabayt
+  C) megabayt, kîlobayt, bayt
+  D) kîlobayt, megabayt, bayt
+
+[offline_tek_0073]
+S: Bi gelemperî kîjan dosya ji hemûyan bêtir cih digire?
+  A) Dosyayeke nivîsê ya ku çend rêzên kurt digire nav xwe
+  B) Wêneyek ji ekranê
+  C) Dosyayeke dengî ya bi çend deqîqeyan
+  D) Vîdyoyeke bi dirêjahiya deh deqîqeyan
+
+[offline_tek_0074]
+S: Pergala ku agahiyan birêkûpêk hildigire û lêgerînê hêsan dike bi Kurmancî çi ye?
+  A) Pelgeh
+  B) Bilindgo
+  C) Danegeh
+  D) Textê tiliyan
+
+[offline_tek_0076]
+S: Heke paşgirê navê dosyayekê ji .txt bo .mp3 were guhertin, naverok jî dibe deng.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0077]
+S: Dosyayeke PDF li ser amûrên cuda bi heman awayî xuya dike.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0078]
+S: Wêneyên ku bi telefonê tên kişandin dikarin agahiya cihê kişandinê jî di nav xwe de bigirin.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0079]
+S: Her awayê kêmkirina mezinahiya dosyayan bêyî windakirina agahiyan dixebite.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0080]
+S: Bernameya ku pê rûpelên malperan têne vekirin bi Kurmancî çi ye?
+  A) Motora lêgerînê
+  B) Pergala xebitandinê
+  C) Bernameya e-nameyê
+  D) Geroker
+
+[offline_tek_0081]
+S: Peyva Kurmancî "lêgerîn" bi Tirkî çi tê gotin?
+  A) yazma
+  B) arama
+  C) silme
+  D) kaydetme
+
+[offline_tek_0082]
+S: Encamên yekem ên motora lêgerînê her tim çavkaniyên herî pêbawer in.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0083]
+S: E-nameyek ji kesekî nenas bi pêvekekê re hat. Tevgera herî ewle kîjan e?
+  A) Pêvekê veke û bala xwe bide naverokê
+  B) Pêvekê veneke û e-nameyê jê bibe
+  C) E-nameyê ji hevalên xwe re bişîne ku ew jî bibînin
+  D) Bersivê bide û navnîşana xwe ya malê bişîne
+
+[offline_tek_0084]
+S: Mîhengên malbatî yên li ser amûrê dikarin naveroka neguncaw ji zarokan re sînordar bikin.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0085]
+S: Dema tu li malperekê digerî, "cookie" çi dike?
+  A) Girêdana înternetê bileztir û bêqablo dike
+  B) Şîfreyên te yên hesaban diguherîne û nû dike
+  C) Hemû reklaman ji rûpelên malperan radike û paqij dike
+  D) Agahiyên gera te li ser amûrê tomar dike
+
+[offline_tek_0086]
+S: Wêne û nivîsên ku tu li ser înternetê belav dikî, piştî jêbirinê jî dikarin li cihên din bimînin.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0087]
+S: Berî kirînê li ser înternetê, divê mirov pêşî li çi binêre?
+  A) Bihayê herî erzan û dema gihandinê
+  B) Hejmara reklamên li ser rûpela sereke ya dikanê
+  C) Rengê rûpelê û mezinahiya wêneyên hilberê
+  D) Ewlehiya girêdanê û navûdengê dikanê
+
+[offline_tek_0088]
+S: Wêneyê ku bi nûçeyekê re tê belavkirin, bi tena serê xwe îsbat dike ku bûyer wisa qewimiye.
+  A) Rast
+  B) Şaş
+
+[offline_tek_0089]
+S: Kîjan mîheng diyar dikin ka kî dikare agahiyên te yên hesabê bibîne?
+  A) Mîhengên dengê amûrê
+  B) Mîhengên nepenîtiyê
+  C) Mîhengên zimên û herêmê
+  D) Mîhengên ronahiya ekranê
+
+[offline_sin_2001]
+S: Çima "Klamek ji bo Beko" (1992) di dîroka sînemaya kurdî de xwedî cihekî taybet e?
+  A) Ew yekem anîmasyona dirêj a kurdî ye
+  B) Ew yekem fîlmê kurdî ye ku Palmiya Zêrîn wergirt
+  C) Ew yekem fîlmê dirêj ê bi tevahî bi zimanê kurdî ye
+  D) Ew yekem belgefîlmê li ser dengbêjan e
+
+[offline_sin_2002]
+S: Alfred Hitchcock tu carî Oscara derhêneriya herî baş wernegirt.
+  A) Rast
+  B) Şaş
+
+[offline_sin_2003]
+S: Fîlmê "Ji bo Azadiyê" (2019) berhema komîneke sînemayê ye; ev komîn li kîjan herêmê hatiye damezrandin?
+  A) Bakurê Kurdistanê
+  B) Başûrê Kurdistanê
+  C) Rojavayê Kurdistanê
+  D) Rojhilatê Kurdistanê
+
+[offline_sin_2004]
+S: Bûyerên fîlmê "Kilomètre zéro" di kîjan şerî de derbas dibin?
+  A) Şerê Iraq û Kuweytê
+  B) Şerê Navxweyî yê Libnanê
+  C) Şerê Sovyetê û Efxanistanê
+  D) Şerê Îran û Iraqê
+
+[offline_sin_2005]
+S: Belgefîlma "Nanook of the North" piştî Şerê Cîhanê yê Duyem hate kişandin.
+  A) Rast
+  B) Şaş
+
+[offline_sin_2006]
+S: Yilmaz Guney berî ku bibe derhêner, karê wî yê sereke li sînemayê çi bû?
+  A) Wênegirî
+  B) Muzîkjenî
+  C) Lîstikvanî
+  D) Dekorsazî
+
+[offline_sin_2007]
+S: Jano Rosebiani di fîlmê "Jiyan" (2002) de li ser encamên kîjan bûyerê radiweste?
+  A) Rûxandina gundên Kurdistanê
+  B) Êrîşa kîmyayî ya Helebceyê
+  C) Şerê Kendavê
+  D) Serhildana Amedê
+
+[offline_sin_2008]
+S: Di sînemaya klasîk de ji bo tevgereke xwezayî di çirkeyekê de 24 wêne tên nîşandan.
+  A) Rast
+  B) Şaş
+
+[offline_sin_2009]
+S: Karê ku tê de dîmenên kişandî li gorî rêzekê tên birîn û bi hev ve tên girêdan çi ye?
+  A) Senaryo
+  B) Dublaj
+  C) Dekor
+  D) Montaj
+
+[offline_sin_2010]
+S: Kîjan derhênerê îranî di sala 1997'an de Palmiya Zêrîn a Cannesê wergirt?
+  A) Abbas Kiarostami
+  B) Asghar Farhadi
+  C) Jafar Panahi
+  D) Mohsen Makhmalbaf
+
+[offline_sin_2011]
+S: Yekem fîlmê dirêj ê bi deng "Ronahiyên Bajêr" bû.
+  A) Rast
+  B) Şaş
+
+[offline_sin_2012]
+S: Sê fîlmên "Pather Panchali", "Aparajito" û "Apur Sansar" ji kîjan welatî ne?
+  A) Hindistan
+  B) Pakistan
+  C) Bangladeş
+  D) Afxanistan
+
+[offline_sin_2013]
+S: Ousmane Sembène, ku wek bavê sînemaya Afrîkayê tê hesibandin, ji kîjan welatî ye?
+  A) Misir
+  B) Senegal
+  C) Nîjerya
+  D) Afrîkaya Başûr
+
+[offline_sin_2014]
+S: Qedexeya fermî ya çêkirina fîlman nekarî Jafar Panahi rawestîne; wî piştî wê biryarê jî fîlm çêkirin.
+  A) Rast
+  B) Şaş
+
+[offline_sin_2015]
+S: Peyva "paparazzi" ku îro ji bo wênegirên stêrkan tê bikaranîn, ji karakterekî kîjan fîlmî tê?
+  A) La Dolce Vita
+  B) Cinema Paradiso
+  C) Diziyên Bîsikletê
+  D) Roma, Bajarê Vekirî
+
+[offline_sin_2016]
+S: Kîjan derhênerê sovyetî bi planên xwe yên pir dirêj û bi vegotina xwe ya hêdî tê nasîn?
+  A) Sergey Eisenstein
+  B) Dziga Vertov
+  C) Andrey Konchalovski
+  D) Andrey Tarkovski
+
+[offline_sin_2017]
+S: Fîlmê "Zer" (2017) bêyî tu destwerdanê gihîşt salonên sînemayê.
+  A) Rast
+  B) Şaş
+
+[offline_sin_2018]
+S: Belgefîlma "Der Imker" ya Mano Khalil çîroka penaberekî kurd li kîjan welatî vedibêje?
+  A) Almanya
+  B) Swîsre
+  C) Norwec
+  D) Hollanda
+
+[offline_sin_2019]
+S: Du zarokên fîlmê "Bekas" dixwazin biçin Amerîkayê da ku kê bibînin?
+  A) Charlie Chaplin
+  B) Bruce Lee
+  C) Serokê Amerîkayê
+  D) Superman
+
+[offline_sin_2020]
+S: Zarok di fîlmê "Min Dît" de rolên sereke dilîzin û fîlm bi kurmancî hatiye kişandin.
+  A) Rast
+  B) Şaş
+
+[offline_tek_2001]
+S: Panelên li ser banan elektrîkê ji kîjan çavkaniyê çêdikin?
+  A) Ji bayê ku li deştan tê
+  B) Ji germahiya ava kûr
+  C) Ji ronahiya tavê
+  D) Ji tevgera nav erdê
+
+[offline_tek_2002]
+S: Bendav bi herikîna avê elektrîkê çêdike.
+  A) Rast
+  B) Şaş
+
+[offline_tek_2003]
+S: Ji van çavkaniyan kîjan piştî bikaranînê ji nû ve çênabe?
+  A) Komira ku ji bin erdê tê derxistin
+  B) Bayê ku li ser deştên fireh diherike
+  C) Ava çeman û robaran
+  D) Ronahiya tavê ya rojane
+
+[offline_tek_2004]
+S: Trimbêlên elektrîkî li şûna benzînê bi çi dixebitin?
+  A) Bi komira şewitî
+  B) Bi ava germ a motorê
+  C) Bi bataryaya hundirîn
+  D) Bi bayê ku li ser rê diherike
+
+[offline_tek_2005]
+S: Balafir li bilindahiyên mezin difirin, ji ber ku hewaya tenik pêşî li wan kêmtir digire.
+  A) Rast
+  B) Şaş
+
+[offline_tek_2006]
+S: Çima avdana bi dilopan ji ya bi lehiyê kêmtir avê xerc dike?
+  A) Ji ber ku av di boriyan de sartir dibe û kêm dibe
+  B) Ji ber ku av rasterast digihîje kokan
+  C) Ji ber ku dilop ji lehiyê giran in
+  D) Ji ber ku zeviyên biçûk kêmtir av dixwazin
+
+[offline_tek_2007]
+S: Xwarina ku di cihekî sar de tê parastin qet xera nabe.
+  A) Rast
+  B) Şaş
+
+[offline_tek_2008]
+S: Kîjan amûr dihêle ku bijîşk hestiyên şikestî bêyî vekirina laş bibîne?
+  A) Amûra tîrêjên X
+  B) Mîkroskopa ronahiyê
+  C) Pîvana germahiyê
+  D) Amûra guhdarîkirina dil
+
+[offline_tek_2009]
+S: Çima çêkirina dermanekî nû bi salan didome?
+  A) Ji ber ku divê navê wî li her welatekî cuda were qeydkirin û parastin
+  B) Ji ber ku derman tenê di demsala payizê de tên çêkirin
+  C) Ji ber ku her derman ji sed pêkhateyên cuda pêk tê
+  D) Ji ber ku divê ewlehiya wî li ser gelek kesan bê ceribandin
+
+[offline_tek_2010]
+S: Peykên li derdora Erdê bi giranî ji bo çi tên bikaranîn?
+  A) Ji bo veguhastina sînyalan û wêneyan
+  B) Ji bo hilanîna ava vexwarinê
+  C) Ji bo hilberandina komirê li jor
+  D) Ji bo hêdîkirina zivirîna Erdê li dora tavê
+
+[offline_tek_2011]
+S: Li stasyona fezayê hêza kişandina Erdê bi tevahî winda dibe, loma astronot li hewayê diherikin.
+  A) Rast
+  B) Şaş
+
+[offline_tek_2012]
+S: Av di pîvana Celsius de li kîjan pileyê dikele?
+  A) Li pêncî pileyan
+  B) Li bîst pileyan
+  C) Li sed pileyan
+  D) Li dused pileyan
+
+[offline_tek_2013]
+S: Yekîneya "wat" di jiyana rojane de çi dide zanîn?
+  A) Hêza ku amûrek xerc dike
+  B) Giraniya amûrê li ser mêzînê
+  C) Dirêjahiya qabloya amûrê
+  D) Dema ku amûr dixebite
+
+[offline_tek_2014]
+S: Amûrek ku vemirandî ye lê qabloya wê hîn jî girêdayî ye bi tu awayî elektrîkê naxwe.
+  A) Rast
+  B) Şaş
+
+[offline_tek_2015]
+S: Berî îcada motora buxarê, keştî bi giranî bi çi dimeşiyan?
+  A) Bi elektrîka bataryayan
+  B) Bi hêza motorên mazotê
+  C) Bi tîrêjên tavê yên rasterast
+  D) Bi hêza bayê û ya mirovan
+
+[offline_par_2001]
+S: Di nav van armancan de kîjan ne armanca "femînîzmê" ye?
+  A) wekheviya mafên jin û mêran
+  B) bidawîkirina cudakariya ku li ser jinan tê kirin
+  C) parastina serdestiya mêran di nav malbatê de
+  D) beşdariya jinan a di biryarên civakî de
+
+[offline_par_2002]
+S: Kîjan taybetî "demokrasiya nûnertiyê" ji demokrasiya rasterast cuda dike?
+  A) gel rasterast bi referandûmê biryarê dide
+  B) biryar bi destê kesên hilbijartî tên girtin
+  C) biryarên herêmî di civînên gundan de tên girtin
+  D) her kes di civîna giştî de dengê xwe bilind dike
+
+[offline_par_2003]
+S: "Asîmîlasyon" ne tenê bi qedexeyên fermî, bi rêya perwerde û medyayê jî dimeşe. Ev nirxandin durist e?
+  A) Rast
+  B) Şaş
+
+[offline_par_2004]
+S: Çima "mêtingerî" tenê wek dagirkeriya axê nayê pênasekirin?
+  A) ji ber ku ew tenê di destê dewletan de tê meşandin
+  B) ji ber ku ew bi peymanên bazirganiyê ve girêdayî ye
+  C) ji ber ku ew bi razîbûna gelê herêmî pêk tê
+  D) ji ber ku ew çand û zimanê gel jî bindest dike
+
+[offline_par_2005]
+S: Di ramana civakî de "şoreşa neolîtîk" çima wek qonaxeke veguherînê tê dîtin?
+  A) nivîs hat vedîtin û dewletên yekem hatin damezrandin
+  B) mirov dest bi çandiniyê û xwedîkirina ajalan kir
+  C) bajarên mezin ên pîşesaziyê li kêleka çeman ava bûn
+  D) hesin hat helandin û çekên nû derketin
+
+[offline_par_2006]
+S: Hin kes dibêjin "hemwelatî" tenê bi cihê jidayikbûnê tê diyarkirin. Ev îdîa rast e?
+  A) Rast
+  B) Şaş
+
+[offline_par_2007]
+S: Peyva "utopya" yekem car di pirtûka kê de wek navê giravekê derbas bû?
+  A) Thomas More
+  B) Karl Marx
+  C) Jean-Jacques Rousseau
+  D) Aristoteles
+
+[offline_par_2008]
+S: Li gorî hinekan "anarşîzm" hem dewletê hem jî her cûre rêxistinbûna civakî red dike. Ev nirxandin durist e?
+  A) Rast
+  B) Şaş
+
+[offline_par_2009]
+S: Kîjan bingeh di ramana "lîberalîzmê" de cih nagire?
+  A) azadiya kesane li hember dewletê
+  B) aboriya bazara reqabeta azad
+  C) wekheviya hemû kesan li ber qanûnê
+  D) milkiyeta hevpar a amûrên hilberînê
+
+[offline_par_2010]
+S: Gava mirov dadperweriya civakî ji xêrxwaziyê cuda dike, xala herî bingehîn kîjan e?
+  A) ew mafek e ku divê bê dayîn, ne bexşîşek e
+  B) ew tenê ji aliyê dewletê ve tê birêvebirin
+  C) ew li ser dilxwaziya kesên dewlemend ava dibe
+  D) ew tenê di dema krîzên aborî de tê nîqaşkirin
+
+[offline_par_2011]
+S: "Çîna civakî" di nêrîna Marksîst de ne bi dilxwaziya kesan, lê bi cihê wan ê di têkiliyên hilberînê de tê diyarkirin. Ev gotin durist e?
+  A) Rast
+  B) Şaş
+
+[offline_par_2012]
+S: Ziman, dîrok û bîra hevpar hêmanên "nasnameya civakî" ne. Ev gotin durist e?
+  A) Rast
+  B) Şaş
+
+[offline_par_2013]
+S: Li bajarekî çend ziman, çend ol û çend çand bi hev re dijîn; ev rewş bi kîjan têgehê tê binavkirin?
+  A) pirrengî
+  B) yekrengî
+  C) asîmîlasyon
+  D) navendîbûn
+
+[offline_par_2014]
+S: Gundiyên gundekî bi hev re nexweşxaneyeke biçûk ava dikin û lêçûnê parve dikin; ev helwest kîjan nirxa civakî nîşan dide?
+  A) reqabet
+  B) serdestî
+  C) hevgirtin
+  D) bêaliyî
+
+[offline_ede_2001]
+S: Çima Ehmedê Xanî berhema xwe ya mezin ne bi farisî, lê bi kurdî nivîsî?
+  A) Ji ber ku wî bi farisî û erebî nizanibû
+  B) Ji ber ku mîrê Botan wisa ferman kiribû
+  C) Da ku bê zanîn ku kurdî jî zimanê hunerê ye
+  D) Da ku berhem li Stenbolê zûtir bê çapkirin û bêtir bê firotin
+
+[offline_ede_2002]
+S: Dîwan bi kîjan taybetiyê ji destanê cuda dibe?
+  A) Dîwan berhevoka helbestan e, destan vegotinek e
+  B) Dîwan bi qafiye ye, destan bê qafiye ye
+  C) Dîwan bi kurmancî ye, destan bi soranî ye
+  D) Dîwan ji bo mezinan e, destan tenê ji bo zarokan tê gotin
+
+[offline_ede_2003]
+S: Ji van berheman kîjan ne ya Ehmedê Xanî ye?
+  A) Mem û Zîn
+  B) Nûbihara Biçûkan
+  C) Eqîdeya Îmanê
+  D) Şêxê Senan
+
+[offline_ede_2004]
+S: Ji van kovarên kurdî kîjan ya herî kevn e?
+  A) Hawar
+  B) Ronahî
+  C) Nûbihar
+  D) Tîroj
+
+[offline_ede_2005]
+S: Mehmed Uzun di romana "Bîra Qederê" de li ser jiyana Celadet Alî Bedirxan disekine.
+  A) Rast
+  B) Şaş
+
+[offline_ede_2006]
+S: Cudahiya sereke di navbera destana "Memê Alan" û berhema Ehmedê Xanî de çi ye?
+  A) Ya Xanî bi soranî ye, ya din bi kurmancî ye
+  B) Ya Xanî li ser şer e, ya din li ser evînê ye
+  C) Ya Xanî kurt e, ya din pir dirêj e
+  D) Ya Xanî nivîskî ye, ya din devkî ye
+
+[offline_ede_2007]
+S: Erebê Şemo romana xwe ya yekem li Stenbolê weşand.
+  A) Rast
+  B) Şaş
+
+[offline_ede_2008]
+S: Di şevbêrkên zivistanê de kesê ku efsane û bûyerên gelêrî bi devkî digihîne guhdaran, bi çi navî tê nasîn?
+  A) helbestvan
+  B) wergêr
+  C) çîrokbêj
+  D) weşanger
+
+[offline_ede_2009]
+S: Di nav helbestvanên klasîk ên kurd de kîjan nav yê jinekê ye?
+  A) Mestûre Erdelan
+  B) Elî Herîrî
+  C) Mela Huseynê Bateyî
+  D) Feqiyê Teyran
+
+[offline_ede_2010]
+S: Gava nivîskar çîrokê bi devê lehengê sereke vedibêje, ew kîjan awayê vegotinê bi kar tîne?
+  A) vebêjê kesê sêyem
+  B) vebêjê kesê yekem
+  C) vegotina bi nameyan
+  D) vegotina bi diyalogê
+
+[offline_ede_2011]
+S: Feqiyê Teyran û Melayê Cizîrî di heman serdemê de jiyan.
+  A) Rast
+  B) Şaş
+
+[offline_ede_2012]
+S: Kovara "Nûdem" ku li Swêdê derdiket ji aliyê kîjan nivîskarî ve dihat weşandin?
+  A) Hesenê Metê
+  B) Firat Cewerî
+  C) Mehmed Uzun
+  D) Mehmed Emîn Bozarslan
+
+[offline_ede_2013]
+S: Ehmedê Xanî destana Mem û Zînê bi pexşanê nivîsî, ne bi helbestê.
+  A) Rast
+  B) Şaş
+
+[offline_ede_2014]
+S: "Don Kîşot" wek yekem romana nûjen a wêjeya Ewropayê tê hesibandin.
+  A) Rast
+  B) Şaş
+
+[offline_ede_2015]
+S: Kîjan cureyê wêjeya devkî li ser pirseke ku bersiva wê veşartî ye ava dibe?
+  A) mamik
+  B) destan
+  C) pêkenok
+  D) gotina pêşiyan
+
+[offline_muz_2001]
+S: Çima dengbêjê kevneşopî kilamên xwe bêyî amûrên muzîkê dibêje?
+  A) ji ber ku amûr li her herêmê cuda bûn
+  B) ji ber ku kilam tenê bi şev dihatin gotin
+  C) ji ber ku amûr di dawetan de qedexe bûn
+  D) ji ber ku giranî li ser peyv û vegotinê ye
+
+[offline_muz_2002]
+S: Kîjan ji van amûran bi lêdanê deng nade?
+  A) bilûr
+  B) def
+  C) dahol
+  D) erbane
+
+[offline_muz_2003]
+S: Sergovend di govendê de çi dike?
+  A) stranên dawetê ji bo bûk û zava dibêje
+  B) amûrên têlî berî govendê ahengdar dike
+  C) rêzê dibe pêş û destmalê dihejîne
+  D) dahol û zirneyê li hev tîne
+
+[offline_muz_2004]
+S: Radyoya Erîvanê di kîjan salî de ji nû ve dest bi weşana kurdî kir?
+  A) 1938
+  B) 1946
+  C) 1955
+  D) 1965
+
+[offline_muz_2005]
+S: Kîjan taybetmendî lawikî ji kilamên şer cuda dike?
+  A) hejmara amûrên muzîkê
+  B) herêma ku tê de tê gotin
+  C) mijara wî ya evînî û kesane
+  D) dirêjahiya kilamê
+
+[offline_muz_2006]
+S: Berî ku tomarkirina bi kaset û plakê belav bibe, kilamên dengbêjan çawa ji nifşekî derbasî nifşê din dibûn?
+  A) bi arşîvên dibistanên fermî
+  B) bi weşana televîzyonên herêmî
+  C) bi notayên di pirtûkan de
+  D) bi guhdarî û ezberkirinê li dîwanan
+
+[offline_muz_2007]
+S: Şêwaza dengbêjiyê ya Serhedê bi taybetî li dora kîjan deveran geş bûye?
+  A) Silêmanî, Kerkûk û Hewlêr
+  B) Agirî, Qers û Mûş
+  C) Duhok û Amêdî
+  D) Cizîr û Şirnex
+
+[offline_muz_2008]
+S: Helbesta ku paşê bû sirûda neteweyî ya kurdan ji aliyê kîjan helbestvanî ve hatiye nivîsandin?
+  A) Feqiyê Teyran
+  B) Melayê Cizîrî
+  C) Cegerxwîn
+  D) Dildar
+
+[offline_muz_2009]
+S: Ayşe Şan û Meryem Xan di dîroka muzîka kurdî de bi kîjan aliyê xwe dişibin hev?
+  A) herdu jî li Radyoya Erîvanê xebitîn
+  B) herdu jî damezrînerên komeke muzîkê bûn
+  C) herdu jî stranbêjên jin ên pêşeng bûn
+  D) herdu jî muzîkjenên tembûrê bûn
+
+[offline_muz_2010]
+S: Bilûr bi gelemperî ji çi tê çêkirin?
+  A) hesin an sifir
+  B) kevir an şûşe
+  C) çerm an hestî
+  D) qamîş an dar
+
+[offline_muz_2011]
+S: Kilamên dengbêjan bi rîtmeke azad tên gotin, ne bi pîvaneke demê ya diyarkirî.
+  A) Rast
+  B) Şaş
+
+[offline_muz_2012]
+S: Zirne amûreke têlî ye û bi mizrabê tê lêxistin.
+  A) Rast
+  B) Şaş
+
+[offline_muz_2013]
+S: Meryem Xanê di salên 1940î de li Radyoya Bexdayê stranên xwe tomar kirin.
+  A) Rast
+  B) Şaş
+
+[offline_muz_2014]
+S: Hesen Zîrekî stranên xwe bi zaravayê kurmancî gotine.
+  A) Rast
+  B) Şaş
+
+[offline_muz_2015]
+S: Ciwan Haco di stranên xwe de deng û awazên rock û cazê bi kar tîne.
+  A) Rast
+  B) Şaş
+
+[offline_9101]
+S: Motîfên kilimê çawa çêdibin?
+  A) Di dema hûnandinê de, bi têlên rengîn ên li ser tevnê
+  B) Piştî hûnandinê, bi derziyê tên dirûtin
+  C) Bi qalibê darîn li ser kilimê tên çapkirin
+  D) Bi firçe û boyaxê li ser rûyê kilimê tên nexşandin
+
+[offline_9102]
+S: Destan bi kevneşopî çawa digihîje nifşên nû?
+  A) Bi rojnameyên hefteyî yên çapkirî
+  B) Bi lîstikên sehneyê yên bi dekor
+  C) Bi devkî, bi vegotin û gotina bi awaz
+  D) Bi nameyên di navbera bajaran de
+
+[offline_9103]
+S: Di govendê de govendger çawa li hev girêdayî ne?
+  A) Destên hev digirin û rêz an nîvçember çêdikin
+  B) Her kes bi tenê û ji hev dûr dilîze
+  C) Du bi du, rû bi rû li hember hev radiwestin
+  D) Rûniştî, tenê bi destan lê didin
+
+[offline_9104]
+S: Peyva "nav" di rêzimanê de kîjan cureya peyvê nîşan dide?
+  A) Lêker
+  B) Rengdêr
+  C) Hoker
+  D) Navdêr
+
+[offline_9105]
+S: Di avahiya vegotinekê de "destpêk" kîjan beş e?
+  A) Beşa ewil a ku mijar tê danasîn
+  B) Beşa dawî ya ku encam tê girtin
+  C) Beşa navîn a ku bûyer pêş dikeve
+  D) Beşa ku çavkanî tên rêzkirin
+
+[cinema_0001]
+S: Di komeka fîlmekî de kî lîstikvanan bi rê ve dibe û biryara dawî ya hunerî dide?
+  A) Sazkerê dengî
+  B) Derhêner
+  C) Berpirsê kostuman
+  D) Alîkarê ronahiyê
+
+[cinema_0002]
+S: Di 28ê Kanûna Pêşîn a 1895an de li Parîsê yekem pêşandana fîlman a bi bilêt ji aliyê kîjan birayan ve hat lidarxistin?
+  A) Birayên Warner
+  B) Birayên Skladanowsky
+  C) Birayên Pathé
+  D) Birayên Lumière
+
+[cinema_0004]
+S: Ji bo dîmenê ku rûyê lîstikvanî perdeyê tije dike, di zimanê sînemayê de kîjan têgeh tê bikaranîn?
+  A) Plana giştî
+  B) Plana navîn
+  C) Plana dûr
+  D) Plana nêzîk
+
+[cinema_0005]
+S: Nûbûna sereke ya fîlmê 1927an "The Jazz Singer" di dîroka sînemayê de çi bû?
+  A) Diyaloga hevaheng a bi deng
+  B) Karanîna pêşîn a Technicolorê
+  C) Yekem fîlmê sê-alîkî
+  D) Yekem animasyona dirêj
+
+[cinema_0006]
+S: Fîlmê "Yol" ê ku sala 1982yan Palme d'Or wergirt, senaryoya wî ji aliyê kê ve hat nivîsîn?
+  A) Şerîf Gören
+  B) Zekî Ökten
+  C) Yilmaz Güney
+  D) Atif Yilmaz
+
+[cinema_0007]
+S: Kî ji hev-girêdana dîmenên kişandî û rêza dawî ya wan berpirsiyar e?
+  A) Montajkar
+  B) Derhênerê dîmenê
+  C) Berpirsê dekorê
+  D) Nivîskarê senaryoyê
+
+[cinema_0008]
+S: Dîmena navdar a pêpelûkên Odessayê di kîjan fîlmê Sergey Eisenstein ê 1925an de derbas dibe?
+  A) Oktobre
+  B) Grev
+  C) Îvanê Tirsnak
+  D) Keştiya Şer Potemkin
+
+[cinema_0009]
+S: Kîjan derhênerî fîlmê "Kış Uykusu" kişand, ku sala 2014an li Cannesê Palme d'Or wergirt?
+  A) Nurî Bîlge Ceylan
+  B) Zekî Demîrkubuz
+  C) Reha Erdem
+  D) Yeşîm Ustaoglu
+
+[cinema_0010]
+S: Dîmenek ku bêyî qutkirinê bi kişandineke domdar tê tomarkirin, çi tê navandin?
+  A) Montaja paralel
+  B) Plan-sekans
+  C) Fondu
+  D) Qutkirina xwêrû
+
+[cinema_0011]
+S: Fîlmê 1902yan "Le Voyage dans la Lune" ku bi hîleyên dîmenî yên pêşîn navdar e, berhema kê ye?
+  A) Edwin S. Porter
+  B) Louis Feuillade
+  C) Émile Cohl
+  D) Georges Méliès
+
+[cinema_0012]
+S: Navê "Bollywood" ji bo pîşesaziya fîlmên hindî yên kîjan bajarî tê bikaranîn?
+  A) Kolkata
+  B) Mumbai
+  C) Çennaî
+  D) Delhî
+
+[cinema_0013]
+S: Fîlmê ku bûyer û mirovên rastîn bêyî senaryoyeke çîrokî tomar dike, di kîjan cûreyê de ye?
+  A) Belgefîlm
+  B) Zanistî-xeyalî
+  C) Animasyon
+  D) Muzîkal
+
+[cinema_0014]
+S: Fîlmê 1948an "Ladri di biciclette" (Duzê Bîsîkletan) nimûneya kîjan tevgera sînemayê ye?
+  A) Ekspresyonîzma almanî
+  B) Neorealîzma îtalî
+  C) Dogme 95
+  D) Sînemaya Nû ya Almanî
+
+[cinema_0015]
+S: Rêzefîlma Apu bi berhema 1955an "Pather Panchali" dest pê dike; derhênerê wê kî ye?
+  A) Ritwik Ghatak
+  B) Mrinal Sen
+  C) Guru Dutt
+  D) Satyajit Ray
+
+[cinema_0016]
+S: Berî kişandinê plansaziya dîmenan bi rêzeyeke wêneyên xêzkirî tê amadekirin; navê vê amrazê çi ye?
+  A) Sînopsîs
+  B) Storyboard
+  C) Senaryoya teknîkî
+  D) Lîsteya kişandinê
+
+[cinema_0017]
+S: Fîlmê 1920yî "Kabîneya Doktor Caligari" bi dekorên xwar û siyên tûj nûnerê kîjan şêwazê ye?
+  A) Ekspresyonîzma almanî
+  B) Realîzma poetîk
+  C) Sînema-çav
+  D) Film noir a fransî
+
+[cinema_0018]
+S: Fîlmê 2000î "Demê ku Hesp Serxweş Dibin" ku li Cannesê Caméra d'Or wergirt, ji kîjan derhênerî ye?
+  A) Hîner Salêm
+  B) Bahman Ghobadî
+  C) Cafer Panahî
+  D) Mohsen Mexmelbaf
+
+[cinema_0019]
+S: Dengên wek gavan an vekirina derî yên ku piştî kişandinê li stûdyoyê ji nû ve tên çêkirin, çi tên navandin?
+  A) Muzîka fîlmî
+  B) Dublaj
+  C) Dengê rasterast
+  D) Dengên foley
+
+[cinema_0020]
+S: Kîjan lîstikvan û derhêner bi karakterê "Serserê Piçûk" ê dema sînemaya bêdeng tê nasîn?
+  A) Charlie Chaplin
+  B) Buster Keaton
+  C) Harold Lloyd
+  D) Roscoe Arbuckle
+
+[cinema_0021]
+S: Derhênerê swêdî yê fîlmê 1957an "Det sjunde inseglet" (Mohra Heftemîn) kî ye?
+  A) Victor Sjöström
+  B) Bo Widerberg
+  C) Ingmar Bergman
+  D) Jan Troell

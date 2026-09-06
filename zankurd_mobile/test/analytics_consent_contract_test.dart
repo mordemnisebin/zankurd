@@ -75,9 +75,7 @@ void main() {
 
       final result = await repo.logAnalyticsEvent('quiz_complete', null);
       expect(result, isTrue);
-      expect(httpClient.requestedPaths, [
-        '/rest/v1/rpc/log_analytics_event',
-      ]);
+      expect(httpClient.requestedPaths, ['/rest/v1/rpc/log_analytics_event']);
     });
 
     test('setEnabled(false) statik bayrağı da kapatır', () async {
@@ -118,6 +116,13 @@ void main() {
 
     expect(main, contains('if (analyticsConsentProvider.enabled)'));
     expect(settings, contains('analytics-consent-switch'));
-    expect(settings, contains('AnalyticsService.instance.initialize()'));
+    expect(
+      settings,
+      contains('AnalyticsService.instance.initialize(enabled: true)'),
+    );
+    expect(
+      main,
+      contains('AnalyticsService.instance.initialize(enabled: true)'),
+    );
   });
 }

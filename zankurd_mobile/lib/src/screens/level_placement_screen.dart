@@ -8,6 +8,7 @@ import '../models/quiz_question.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../widgets/zk_back_button.dart';
 
 /// Kısa, baskısız seviye belirleme sınavı.
 ///
@@ -85,19 +86,39 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final skipLabel = context.t(K.placementSkip);
+    final textScale = MediaQuery.textScalerOf(context).scale(16) / 16;
+    final useCompactSkip =
+        MediaQuery.sizeOf(context).width < 380 || textScale > 1.05;
     return Scaffold(
-      appBar: AppBar(
+      appBar: zkAppBar(
+        context,
         title: Text(context.t(K.placementTitle)),
         actions: [
           if (_result == null)
-            TextButton(
-              key: const ValueKey('placement-skip'),
-              onPressed: _skip,
-              style: TextButton.styleFrom(
-                foregroundColor: AppTheme.textSubColor(context),
-              ),
-              child: Text(context.t(K.placementSkip)),
-            ),
+            useCompactSkip
+                ? IconButton(
+                    key: const ValueKey('placement-skip-compact'),
+                    onPressed: _skip,
+                    tooltip: skipLabel,
+                    constraints: const BoxConstraints(
+                      minWidth: 44,
+                      minHeight: 44,
+                    ),
+                    icon: Icon(
+                      AppIcons.forward,
+                      color: AppTheme.textSubColor(context),
+                      semanticLabel: skipLabel,
+                    ),
+                  )
+                : TextButton(
+                    key: const ValueKey('placement-skip'),
+                    onPressed: _skip,
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppTheme.textSubColor(context),
+                    ),
+                    child: Text(skipLabel),
+                  ),
         ],
       ),
       body: Container(

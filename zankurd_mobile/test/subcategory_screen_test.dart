@@ -164,38 +164,37 @@ void main() {
   // kullanıcı dokunuyor, hiçbir şey olmuyordu (2026-08-14 denetimi).
   // Düzeltme sahte "buraya dokun" ipucunu kaldırdı; bu bekçi ikonun geri
   // gelmediğini doğrular.
-  testWidgets(
-    'ilerleme ipucu kartı sahte "dokun" oku taşımıyor',
-    (tester) async {
-      await tester.pumpWidget(
-        wrap(
-          SubcategoryScreen(
-            repository: MockZanKurdRepository(),
-            category: 'Ziman',
-          ),
+  testWidgets('ilerleme ipucu kartı sahte "dokun" oku taşımıyor', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(
+        SubcategoryScreen(
+          repository: MockZanKurdRepository(),
+          category: 'Ziman',
         ),
-      );
-      await tester.pumpAndSettle();
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      final hintPanel = find.ancestor(
-        of: find.text('Kolaydan zora doğru ilerle, puan topla.'),
-        matching: find.byType(AppPanel),
-      );
-      expect(hintPanel, findsOneWidget);
+    final hintPanel = find.ancestor(
+      of: find.text('Kolaydan zora doğru ilerle, puan topla.'),
+      matching: find.byType(AppPanel),
+    );
+    expect(hintPanel, findsOneWidget);
 
-      final icons = tester
-          .widgetList<Icon>(
-            find.descendant(of: hintPanel, matching: find.byType(Icon)),
-          )
-          .map((w) => w.icon)
-          .toSet();
-      expect(
-        icons,
-        isNot(contains(AppIcons.chevronRight)),
-        reason:
-            'Kart hiçbir yere gitmiyor; ok ikonu "buraya dokun" derken '
-            'yalan söylüyordu',
-      );
-    },
-  );
+    final icons = tester
+        .widgetList<Icon>(
+          find.descendant(of: hintPanel, matching: find.byType(Icon)),
+        )
+        .map((w) => w.icon)
+        .toSet();
+    expect(
+      icons,
+      isNot(contains(AppIcons.chevronRight)),
+      reason:
+          'Kart hiçbir yere gitmiyor; ok ikonu "buraya dokun" derken '
+          'yalan söylüyordu',
+    );
+  });
 }

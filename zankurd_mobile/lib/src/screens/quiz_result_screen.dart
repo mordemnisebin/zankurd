@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollCacheExtent;
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../config/coin_prices.dart';
 import '../data/achievement_store.dart';
 import '../data/badge_service.dart';
 import '../data/mastery_store.dart';
@@ -22,9 +25,12 @@ import '../models/answer_record.dart';
 import '../models/quiz_question.dart';
 import '../models/player.dart';
 import '../models/room.dart';
-import '../providers/child_safety_provider.dart';
 import '../providers/reduced_motion_provider.dart';
+import '../widgets/kilim_board.dart';
+import '../widgets/zk_back_button.dart';
+import '../widgets/rolling_count.dart';
 import '../widgets/kilim_reveal.dart';
+import '../widgets/learning_outcome_card.dart';
 import '../theme/app_theme.dart';
 import '../utils/percent_format.dart';
 import '../utils/app_route.dart';
@@ -41,6 +47,7 @@ import '../widgets/player_avatar.dart';
 import '../widgets/roj_mascot.dart';
 import 'leaderboard_screen.dart';
 import 'review_screen.dart';
+import 'room_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Seri kararının sonucu.
@@ -78,6 +85,7 @@ class QuizResultScreen extends StatefulWidget {
     this.dailyCapReached = false,
     this.practice = false,
     this.dailyQuiz = false,
+    this.isLearningExperience = false,
     this.contestId,
     this.resultOwnerUserId,
     this.rewardSettlementState,
@@ -117,6 +125,7 @@ class QuizResultScreen extends StatefulWidget {
   final bool rewardQueued;
   final bool practice;
   final bool dailyQuiz;
+  final bool isLearningExperience;
   final String? contestId;
 
   /// Yalnız sunucudan geri kazanılan/tamamlanan online sonuç tesliminde
@@ -146,6 +155,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   List<Player> get opponents => widget.opponents;
   bool get practice => widget.practice;
   bool get dailyQuiz => widget.dailyQuiz;
+  bool get isLearningExperience => widget.isLearningExperience;
 
   int _dailyStreak = 0;
   List<Achievement> _newAchievements = const [];
@@ -154,6 +164,59 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   _StreakOutcome? _pendingStreak;
   bool _showConfetti = false;
   bool _ackAttempted = false;
+  bool _newRoomLoading = false;
+
+  Future<void> _openNewRoom() async {
+    if (_newRoomLoading) return;
+    if (widget.room.entryFee > 0) {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(context.t(K.newRoomAction)),
+          content: Text(
+            context.t(K.newRoomFeeConfirm, {
+              'amount': '${widget.room.entryFee}',
+            }),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: Text(context.t(K.cancel)),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              child: Text(context.t(K.continueAction)),
+            ),
+          ],
+        ),
+      );
+      if (confirmed != true || !mounted) return;
+    }
+
+    setState(() => _newRoomLoading = true);
+    try {
+      final newRoom = await widget.repository.createOnlineRoom(
+        category: widget.room.category,
+        secondsPerQuestion: widget.room.secondsPerQuestion,
+        questionCount: widget.room.questionCount,
+        entryFee: widget.room.entryFee,
+      );
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        AppRoute.to(
+          RoomScreen(repository: widget.repository, initialRoom: newRoom),
+        ),
+      );
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'new room create failed');
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.roomOpenFailed))));
+    } finally {
+      if (mounted) setState(() => _newRoomLoading = false);
+    }
+  }
 
   @override
   void initState() {
@@ -390,7 +453,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
   /// Kırılacak günlük seri için coin karşılığı dondurma teklif eder.
   /// Ödeme yapılıp seri korunursa yeni seri değerini, aksi halde null döner.
-  static const _streakFreezeCost = 50;
+  // Sunucu RPC'siyle eşitliği bekçili tek kaynak; üç ayrı kopya vardı.
+  static const _streakFreezeCost = CoinPrices.streakFreeze;
 
   /// Karar adımı hata verdiyse seri yine de kaydedilmeli.
   ///
@@ -629,7 +693,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // doğru/toplam, yanıt süreleri) burada değerlendirilirler.
     final badgeService = await BadgeService.load();
     await badgeService.evaluateStreakBadges(streak);
-    await badgeService.evaluateQuestionBadges(achievementStore.answeredQuestions);
+    await badgeService.evaluateQuestionBadges(
+      achievementStore.answeredQuestions,
+    );
     await badgeService.evaluatePerfectGame(correctCount, totalQuestions);
     if (totalQuestions > 0) {
       final totalResponseMs = answerRecords.fold<int>(
@@ -643,7 +709,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     final masteryStore = await MasteryStore.load();
     final correctByCategory = <String, int>{};
+    final answeredByCategory = <String, int>{};
     for (final record in answerRecords) {
+      if (!record.isUnanswered) {
+        answeredByCategory[record.category] =
+            (answeredByCategory[record.category] ?? 0) + 1;
+      }
       if (record.isCorrect) {
         correctByCategory[record.category] =
             (correctByCategory[record.category] ?? 0) + 1;
@@ -653,6 +724,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     for (final entry in correctByCategory.entries) {
       final newLevel = await masteryStore.addCorrect(entry.key, entry.value);
       if (newLevel != null) promotions[entry.key] = newLevel;
+    }
+    for (final entry in answeredByCategory.entries) {
+      await masteryStore.recordAnswered(
+        entry.key,
+        entry.value,
+        correct: correctByCategory[entry.key] ?? 0,
+      );
     }
 
     final missionStore = await DailyMissionStore.load();
@@ -705,6 +783,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       totalQuestions: totalQuestions,
       xpEarned: earnedXP,
     );
+    // Huni: ilk 1v1 tamamlama Firebase'de ilk-oluşumla bölümlenir.
+    // Oda kimliği boşsa solo turdur, işaretlenmez.
+    if ((widget.room.id?.trim() ?? '').isNotEmpty) {
+      AnalyticsService.instance.logActivationStep('online_match_completed');
+    }
     if (newAchievements.any(
       (achievement) => achievement.id == AchievementIds.firstGame,
     )) {
@@ -876,6 +959,149 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     );
   }
 
+  static const _resultPrimaryActionStyle = TextStyle(
+    fontFamily: AppTypography.fontFamily,
+    fontWeight: FontWeight.w700,
+    fontSize: 15,
+  );
+
+  /// Primary CTA'nın tek satırda yan eylemlerle birlikte güvenle yaşayıp
+  /// yaşayamayacağını gerçek label genişliğiyle ölçer.
+  ///
+  /// Sabit bir cihaz breakpoint'i yerine mevcut genişlik + text scale
+  /// kullanılır. Dar veya büyük metinli düzende primary üstte tam genişlikte
+  /// kalır; yan eylemler aşağıdaki Wrap'e iner. Böylece ana label küçülmez,
+  /// kesilmez ve ekran okuyucu sırası da primary → secondary olarak korunur.
+  bool _shouldStackResultActions(
+    BuildContext context, {
+    required double availableWidth,
+    required String primaryLabel,
+    required int secondaryCount,
+  }) {
+    if (secondaryCount == 0) return false;
+
+    final painter = TextPainter(
+      text: TextSpan(
+        text: primaryLabel,
+        style: _resultPrimaryActionStyle.copyWith(
+          fontFamily: AppTypography.fontFamily,
+        ),
+      ),
+      textDirection: Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+
+    // Icon + gap + horizontal button padding. Bu chrome mevcut FilledButton
+    // anatomisinin güvenli üst sınırıdır; label'ın sığmadığı durumda
+    // breakpoint tahmini yapmak yerine ölçümü stacked karara dönüştürür.
+    const primaryChrome = 80.0;
+    const sideActionWidth = 76.0;
+    const actionGap = 10.0;
+    final primaryNeeded = painter.width + primaryChrome;
+    final secondaryNeeded = secondaryCount * sideActionWidth + actionGap;
+    return primaryNeeded + secondaryNeeded > availableWidth;
+  }
+
+  Widget _buildResultPrimaryAction({
+    required String key,
+    required String label,
+    required IconData icon,
+    required VoidCallback onPressed,
+  }) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        boxShadow: AppTheme.glowShadow(
+          AppTheme.primaryCtaColor(context),
+          intensity: 0.28,
+        ),
+      ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 54),
+        child: FilledButton.icon(
+          key: ValueKey(key),
+          style: FilledButton.styleFrom(
+            backgroundColor: AppTheme.primaryCtaColor(context),
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 54),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+            ),
+            elevation: 0,
+          ),
+          onPressed: onPressed,
+          icon: Icon(icon, size: 20),
+          label: Text(
+            label,
+            maxLines: 2,
+            softWrap: true,
+            overflow: TextOverflow.visible,
+            textAlign: TextAlign.center,
+            style: _resultPrimaryActionStyle,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResultActions({
+    required String primaryKey,
+    required String primaryLabel,
+    required IconData primaryIcon,
+    required VoidCallback onPrimaryPressed,
+    required List<Widget> secondaryActions,
+  }) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final stack = _shouldStackResultActions(
+          context,
+          availableWidth: constraints.maxWidth,
+          primaryLabel: primaryLabel,
+          secondaryCount: secondaryActions.length,
+        );
+        final primary = _buildResultPrimaryAction(
+          key: primaryKey,
+          label: primaryLabel,
+          icon: primaryIcon,
+          onPressed: onPrimaryPressed,
+        );
+
+        if (stack) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              primary,
+              if (secondaryActions.isNotEmpty) ...[
+                const SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Wrap(
+                    alignment: WrapAlignment.end,
+                    spacing: 10,
+                    runSpacing: 8,
+                    children: secondaryActions,
+                  ),
+                ),
+              ],
+            ],
+          );
+        }
+
+        return Row(
+          children: [
+            Expanded(child: primary),
+            if (secondaryActions.isNotEmpty) ...[
+              const SizedBox(width: 10),
+              ...secondaryActions,
+            ],
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final unanswered = (totalQuestions - correctCount - wrongCount).clamp(
@@ -885,6 +1111,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final wrongRecords = answerRecords
         .where((record) => !record.isCorrect && !record.isUnanswered)
         .toList(growable: false);
+    final learningOutcome = LearningOutcome.fromRecords(answerRecords);
     final accuracy = totalQuestions == 0
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
@@ -907,6 +1134,60 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         context,
       ).push(AppRoute.to(ReviewScreen(records: records, room: room)));
     }
+
+    final primaryResultKey = wrongRecords.isNotEmpty
+        ? 'result-primary-review-mistakes'
+        : 'result-play-again-button';
+    final primaryResultLabel = wrongRecords.isNotEmpty
+        ? context.t(K.reviewMistakes)
+        : nextActionLabel;
+    final primaryResultIcon = wrongRecords.isNotEmpty
+        ? AppIcons.squareCheck
+        : nextActionIcon;
+    final secondaryResultActions = <Widget>[
+      if (isOnlineRoom)
+        _ResultSideAction(
+          key: const ValueKey('result-new-room-button'),
+          icon: AppIcons.circlePlus,
+          label: context.t(K.newRoom),
+          onTap: _newRoomLoading ? null : _openNewRoom,
+        ),
+      if (wrongRecords.isNotEmpty)
+        _ResultSideAction(
+          key: const ValueKey('result-play-again-button'),
+          icon: nextActionIcon,
+          label: nextActionLabel,
+          onTap: completeResultAction,
+        ),
+      _ResultSideAction(
+        key: const ValueKey('result-share-button'),
+        icon: AppIcons.shareNodes,
+        label: context.t(K.share),
+        onTap: () async {
+          await ResultSharer.share(
+            context,
+            isKu: context.isKu,
+            score: score,
+            correctCount: correctCount,
+            totalQuestions: totalQuestions,
+            bestStreak: bestStreak,
+            category: room.category,
+            results: [for (final record in answerRecords) record.isCorrect],
+          );
+          final earned = await ResultSharer.claimDailyShareReward();
+          if (earned && context.mounted) {
+            HapticFeedback.mediumImpact();
+            unawaited(repository.awardSpinCoins());
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(context.t(K.shareRewardEarned)),
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          }
+        },
+      ),
+    ];
 
     final is1v1 = opponents.length == 1;
     bool isWinner = false;
@@ -976,7 +1257,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : AppTheme.wrong.withValues(alpha: 0.55))
         : AppTheme.brand.withValues(alpha: 0.45);
 
-    final headerTitle = is1v1
+    final headerTitle = isLearningExperience
+        ? context.t(K.learningResultTitle)
+        : is1v1
         ? (isWinner
               ? context.t(K.youWon)
               : isDraw
@@ -984,7 +1267,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : context.t(K.youLost))
         : context.t(K.raceFinished);
 
-    final headerIcon = is1v1
+    final headerIcon = isLearningExperience
+        ? AppIcons.bookOpen
+        : is1v1
         ? (isWinner
               ? AppIcons.trophy
               : isDraw
@@ -1010,7 +1295,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 width: 1,
               ),
             ),
-            child: BackButton(
+            child: ZkBackButton(
               onPressed: isOnlineRoom ? completeResultAction : null,
               color: AppTheme.isLight(context)
                   ? AppTheme.lightTextPrimary
@@ -1018,7 +1303,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             ),
           ),
         ),
-        title: Text(context.t(K.resultTitle)),
+        title: Text(
+          context.t(
+            isLearningExperience ? K.learningResultTitle : K.resultTitle,
+          ),
+        ),
       ),
       body: Container(
         color: AppTheme.bgOf(context),
@@ -1026,6 +1315,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           child: Stack(
             children: [
               ListView(
+                // Sonuçtaki açıklamalar, öğrenme özeti ve birincil eylem
+                // tek bir öğrenme yüzeyidir. Kısa ekranlarda da
+                // erişilebilirlik ağacına birlikte girsinler; kayıt sayısı
+                // oda soru sayısıyla sınırlı olduğu için geniş önbellek
+                // güvenlidir.
+                scrollCacheExtent: const ScrollCacheExtent.pixels(2500),
                 padding: const EdgeInsets.fromLTRB(
                   AppSpacing.page,
                   AppSpacing.xs,
@@ -1208,11 +1503,17 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.xxs),
-                                // BIG score number
-                                Text(
-                                  '$score',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                                // BIG score number — sayarak çıkar.
+                                //
+                                // Skor birden beliriyordu; kazanma anının
+                                // tamamı tek karede bitiyor ve geriye
+                                // okunacak bir sayı kalıyordu. Tırmanışı
+                                // izlemek kazanmanın kendisidir (bkz.
+                                // `RollingCount`). Hareket azaltma açıkken
+                                // sayım yapılmaz.
+                                RollingCount(
+                                  key: const ValueKey('result-score-count'),
+                                  value: score,
                                   style: AppTypography.display.copyWith(
                                     color: Colors.white,
                                     fontSize: 72,
@@ -1232,6 +1533,59 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     fontSize: 13,
                                   ),
                                 ),
+                                if (isLearningExperience) ...[
+                                  const SizedBox(height: AppSpacing.xxs),
+                                  Text(
+                                    context.t(K.learningResultHint),
+                                    textAlign: TextAlign.center,
+                                    style: AppTypography.caption.copyWith(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.78,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                                const SizedBox(height: AppSpacing.sm),
+                                // Turda dokunan kilim.
+                                //
+                                // Sonuç ekranı doğru SAYISINI söylüyordu
+                                // ("%70 doğruluk") ama turun kendisini
+                                // göstermiyordu: hangi soruda takıldığı,
+                                // seri mi tutturduğu yoksa dağınık mı
+                                // gittiği tek bakışta okunmuyordu. Şerit
+                                // soru ekranındakiyle AYNI nesnedir; oyuncu
+                                // tur boyunca onun dokunuşunu izler,
+                                // burada bitmiş hâlini görür.
+                                //
+                                // `showCurrent` kapalı: tur bitti, "sıradaki
+                                // soru" vurgusu yalan olurdu.
+                                //
+                                // Renkler hero'ya göre elle verilir; tema
+                                // yüzeyi turuncunun üstünde boş baklavayı
+                                // dolu gibi gösteriyor (bkz. KilimBoard.
+                                // trackColor).
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: AppSpacing.sm,
+                                  ),
+                                  child: KilimBoard(
+                                    key: const ValueKey('result-kilim-board'),
+                                    total: totalQuestions,
+                                    currentIndex: totalQuestions,
+                                    showCurrent: false,
+                                    height: 18,
+                                    trackColor: Colors.white.withValues(
+                                      alpha: 0.16,
+                                    ),
+                                    outlineColor: Colors.white.withValues(
+                                      alpha: 0.30,
+                                    ),
+                                    results: [
+                                      for (final record in answerRecords)
+                                        record.isCorrect,
+                                    ],
+                                  ),
+                                ),
                                 const SizedBox(height: AppSpacing.md),
                                 // Ödül rozetleri.
                                 //
@@ -1239,31 +1593,51 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 // rozet yan yana sığmıyor ve kartın dışına
                                 // taşıyordu. `Wrap` sığmayanı alt satıra alır
                                 // (2026-07-26).
-                                Wrap(
-                                  alignment: WrapAlignment.center,
-                                  spacing: 8,
-                                  runSpacing: 8,
-                                  children: [
-                                    if (coinsAwarded > 0)
-                                      _ResultRewardChip(
-                                        icon: AppIcons.coins,
-                                        label:
-                                            '+$coinsAwarded${context.t(K.coinAbbrev)}',
-                                        color: AppTheme.gold,
-                                      ),
-                                    if (_earnedXP > 0)
-                                      _ResultRewardChip(
-                                        icon: AppIcons.bolt,
-                                        label: '+$_earnedXP XP',
-                                        // Koyu sonuç kartında accent (koyu
-                                        // yeşil) soluk kalıyordu; kazanım
-                                        // hissi için aydınlatılmış yeşil.
-                                        color: Color.alphaBlend(
-                                          Colors.white.withValues(alpha: 0.35),
-                                          AppTheme.accent,
+                                // Ödül rozetleri skor SAYIMI bittikten
+                                // sonra yerine oturur.
+                                //
+                                // Hepsi aynı anda beliriyordu: skor,
+                                // yıldızlar, kilim ve ödüller tek karede
+                                // gelince göz nereye bakacağını
+                                // bilmiyor ve kazanılan şey kaynayıp
+                                // gidiyordu. Ödül bir SONUÇtur; sonucu
+                                // sebebinden önce göstermek anlatıyı
+                                // tersine çevirir.
+                                //
+                                // Gecikme `Interval` ile verilir, ayrı
+                                // bir zamanlayıcıyla değil: `Timer` +
+                                // `setState` ekran erken kapatılırsa
+                                // ölü bir State'e dokunur ve bu ekran
+                                // zaten sonuç yazılırken kapatılabiliyor.
+                                _RewardEntrance(
+                                  child: Wrap(
+                                    alignment: WrapAlignment.center,
+                                    spacing: 8,
+                                    runSpacing: 8,
+                                    children: [
+                                      if (coinsAwarded > 0)
+                                        _ResultRewardChip(
+                                          icon: AppIcons.coins,
+                                          label:
+                                              '+$coinsAwarded${context.t(K.coinAbbrev)}',
+                                          color: AppTheme.gold,
                                         ),
-                                      ),
-                                  ],
+                                      if (_earnedXP > 0)
+                                        _ResultRewardChip(
+                                          icon: AppIcons.bolt,
+                                          label: '+$_earnedXP XP',
+                                          // Koyu sonuç kartında accent (koyu
+                                          // yeşil) soluk kalıyordu; kazanım
+                                          // hissi için aydınlatılmış yeşil.
+                                          color: Color.alphaBlend(
+                                            Colors.white.withValues(
+                                              alpha: 0.35,
+                                            ),
+                                            AppTheme.accent,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
                                 ),
                                 // Günlük tavana varıldıysa SEBEBİ söyle.
                                 //
@@ -1415,6 +1789,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       opponents: opponents,
                     ),
                   ],
+                  if (answerRecords.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    LearningOutcomeCard(
+                      outcome: learningOutcome,
+                      onReview: learningOutcome.reviewRecords.isEmpty
+                          ? null
+                          : () => openReview(learningOutcome.reviewRecords),
+                    ),
+                  ],
                   if (_newAchievements.isNotEmpty) ...[
                     const SizedBox(height: 16),
                     _AchievementUnlocks(achievements: _newAchievements),
@@ -1471,92 +1854,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                   const SizedBox(height: 16),
                   // ── Actions ──────────────────────────────────────────
                   const SizedBox(height: 12),
-                  // Yanlış varsa sıradaki en yararlı iş incelemedir; kusursuz
-                  // sonuçta ana eylem yeni tur olur. Seyrek kullanılan yollar
-                  // kapalı bir grupta tutularak karar yükü azaltılır.
-                  Row(
-                    children: [
-                      Expanded(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(AppRadius.md),
-                            boxShadow: AppTheme.glowShadow(
-                              AppTheme.primaryCtaColor(context),
-                              intensity: 0.28,
-                            ),
-                          ),
-                          child: SizedBox(
-                            height: 54,
-                            child: FilledButton.icon(
-                              key: ValueKey(
-                                wrongRecords.isNotEmpty
-                                    ? 'result-primary-review-mistakes'
-                                    : 'result-play-again-button',
-                              ),
-                              style: FilledButton.styleFrom(
-                                backgroundColor: AppTheme.primaryCtaColor(
-                                  context,
-                                ),
-                                foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    AppRadius.md,
-                                  ),
-                                ),
-                                elevation: 0,
-                              ),
-                              onPressed: wrongRecords.isNotEmpty
-                                  ? () => openReview(wrongRecords)
-                                  : completeResultAction,
-                              icon: Icon(
-                                wrongRecords.isNotEmpty
-                                    ? AppIcons.squareCheck
-                                    : nextActionIcon,
-                                size: 20,
-                              ),
-                              label: Text(
-                                wrongRecords.isNotEmpty
-                                    ? context.t(K.reviewMistakes)
-                                    : nextActionLabel,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      if (wrongRecords.isNotEmpty)
-                        _ResultSideAction(
-                          key: const ValueKey('result-play-again-button'),
-                          icon: nextActionIcon,
-                          label: nextActionLabel,
-                          onTap: completeResultAction,
-                        ),
-                      // Çocuk modu açıkken dışa paylaşım hiç çizilmez —
-                      // sağlayıcı eskiden kayıtlı olmadığı ve hiçbir ekran
-                      // okumadığı için bu kapı hiç çalışmıyordu (2026-08-14
-                      // denetimi).
-                      if (context.watch<ChildSafetyProvider>().allowExternalShare)
-                        _ResultSideAction(
-                          key: const ValueKey('result-share-button'),
-                          icon: AppIcons.shareNodes,
-                          label: context.t(K.share),
-                          onTap: () => ResultSharer.share(
-                            context,
-                            isKu: context.isKu,
-                            score: score,
-                            correctCount: correctCount,
-                            totalQuestions: totalQuestions,
-                            bestStreak: bestStreak,
-                            category: room.category,
-                          ),
-                        ),
-                    ],
+                  _buildResultActions(
+                    primaryKey: primaryResultKey,
+                    primaryLabel: primaryResultLabel,
+                    primaryIcon: primaryResultIcon,
+                    onPrimaryPressed: wrongRecords.isNotEmpty
+                        ? () => openReview(wrongRecords)
+                        : completeResultAction,
+                    secondaryActions: secondaryResultActions,
                   ),
                   const SizedBox(height: 10),
                   Theme(
@@ -2374,6 +2679,45 @@ class _ExplanationEntry extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Ödül rozetlerini skor sayımından SONRA yerine oturtur.
+///
+/// Gecikme ayrı bir zamanlayıcı yerine `Interval` ile verilir: `Timer` +
+/// `setState` ikilisi ekran erken kapatıldığında ölü bir State'e dokunur
+/// ve sonuç ekranı tam da ödüller yazılırken kapatılabiliyor.
+///
+/// Hareket azaltma açıkken giriş animasyonu yapılmaz; rozetler doğrudan
+/// yerinde çizilir. Sağlayıcı yoksa (izole widget testleri) animasyon
+/// sessizce oynar — dekoratif bir davranış, ağacı eksik diye ekranı
+/// çökertmemeli.
+class _RewardEntrance extends StatelessWidget {
+  const _RewardEntrance({required this.child});
+
+  final Widget child;
+
+  /// Skor sayımının tipik süresi kadar beklenir (bkz. `RollingCount`).
+  static const _total = Duration(milliseconds: 1500);
+  static const _start = 0.62;
+
+  @override
+  Widget build(BuildContext context) {
+    final reduced =
+        context.watch<ReducedMotionProvider?>()?.reduceMotion ?? false;
+    if (reduced) return child;
+
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: _total,
+      curve: const Interval(_start, 1, curve: Curves.easeOutBack),
+      builder: (context, value, child) => Opacity(
+        // `easeOutBack` 1'i aşar; opaklık kırpılmazsa assert atar.
+        opacity: value.clamp(0.0, 1.0),
+        child: Transform.scale(scale: value, child: child),
+      ),
+      child: child,
     );
   }
 }

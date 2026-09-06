@@ -310,7 +310,7 @@ class _ProfileHeroCard extends StatelessWidget {
                       const Icon(
                         AppIcons.medal,
                         color: AppTheme.gold,
-                        size: 22,
+                        size: 20,
                       ),
                       const SizedBox(width: AppSpacing.xxs),
                       Flexible(
@@ -320,21 +320,16 @@ class _ProfileHeroCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.bodyLarge.copyWith(
                             color: Colors.white,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                       ),
                       const SizedBox(width: AppSpacing.xs),
-                      Flexible(
-                        child: Text(
-                          '$xpInLevel / $xpNeeded XP',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.end,
-                          style: AppTypography.caption.copyWith(
-                            color: Colors.white.withValues(alpha: 0.74),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                      RewardToken(
+                        kind: RewardKind.xp,
+                        value: '$xpInLevel / $xpNeeded',
+                        compact: true,
+                        onSolid: true,
                       ),
                     ],
                   ),
@@ -444,12 +439,19 @@ class _StatTile extends StatelessWidget {
     required this.value,
     required this.color,
     required this.icon,
+    this.count,
+    this.countPrefix = '',
   });
 
   final String label;
   final String value;
   final Color color;
   final IconData icon;
+
+  /// Sayısal değer; verildiğinde değer `RollingCount` ile sayarak çıkar.
+  /// `value` bu durumda yalnız geri düşüş olarak kalır (ör. "—").
+  final int? count;
+  final String countPrefix;
 
   @override
   Widget build(BuildContext context) {
@@ -467,26 +469,55 @@ class _StatTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: 28,
-              height: 28,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.iconTileBg(context, color),
-                borderRadius: BorderRadius.circular(AppRadius.xs),
-              ),
-              child: Icon(icon, color: color, size: 16),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 28,
+                  height: 28,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.iconTileBg(context, color),
+                    borderRadius: BorderRadius.circular(AppRadius.xs),
+                  ),
+                  child: Icon(icon, color: color, size: 16),
+                ),
+                const SizedBox(width: AppSpacing.xs),
+                Transform.rotate(
+                  angle: 0.785398,
+                  child: Container(
+                    width: 5,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: 0.45),
+                      borderRadius: BorderRadius.circular(1),
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: AppSpacing.xxs),
-            Text(
-              value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppColors.toneOnSurface(context, color),
-                fontSize: 17,
-              ),
-            ),
+            count != null
+                ? RollingCount(
+                    value: count!,
+                    prefix: countPrefix,
+                    maxLines: 1,
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppColors.toneOnSurface(context, color),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  )
+                : Text(
+                    value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppColors.toneOnSurface(context, color),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
             Text(
               label,
               maxLines: 1,
@@ -742,48 +773,23 @@ class _UnifiedRewardsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(AppIcons.medal, color: AppTheme.gold),
-              const SizedBox(width: 8),
-              // Başlık + sayaç + düğme büyük yazıda satırı taşırıyordu;
-              // başlık artık kalan genişliği alır (2026-07-26).
-              Expanded(
-                child: Text(
-                  Tr.forKu(K.basarilar, isKu),
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 17,
-                  ),
-                ),
+          // "Başarılar X/Y" düz bir sayaç çipiydi; dokulu bir ilerleme taşısın.
+          // `MissionProgressCard` ilerlemeyi ödül diliyle çizer; "tümüne bak"
+          // eylemi kartın kendisine bağlanır (2026-08-19).
+          GestureDetector(
+            onTap: () => _showAllSheet(context),
+            child: MissionProgressCard(
+              title: Tr.forKu(K.basarilar, isKu),
+              current: totalUnlocked,
+              target: totalAll,
+              accent: AppTheme.gold,
+              icon: AppIcons.medal,
+              reward: Icon(
+                AppIcons.chevronRight,
+                color: AppTheme.textMutedColor(context),
+                size: 16,
               ),
-              TextButton(
-                onPressed: () => _showAllSheet(context),
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  minimumSize: const Size(44, 44),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '$totalUnlocked/$totalAll',
-                      style: TextStyle(
-                        color: AppTheme.textMutedColor(context),
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    Icon(
-                      AppIcons.chevronRight,
-                      color: AppTheme.textMutedColor(context),
-                      size: 16,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
           const SizedBox(height: 12),
           // Yatay kaydırma: önce başarımlar, sonra rozetler
@@ -824,8 +830,8 @@ class _UnifiedRewardsSection extends StatelessWidget {
                   // rozeti" değil, tanım listesinin ilk N elemanını
                   // gösteriyordu.
                   final badgeIndex = index - achievements.length;
-                  final data =
-                      BadgeService.badgeDefinitions[unlockedBadgeIds[badgeIndex]]!;
+                  final data = BadgeService
+                      .badgeDefinitions[unlockedBadgeIds[badgeIndex]]!;
                   final title = isKu
                       ? (data['titleKu'] ?? '')
                       : (data['titleTr'] ?? '');
@@ -908,6 +914,14 @@ class _MasterySection extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 5),
+          Text(
+            Tr.forKu(K.masteryEvidenceHint, isKu),
+            style: AppTypography.caption.copyWith(
+              color: AppTheme.textMutedColor(context),
+              height: 1.25,
+            ),
+          ),
           const SizedBox(height: 14),
           for (final cat in _categories)
             _MasteryRow(category: cat, store: store, isKu: isKu),
@@ -932,6 +946,8 @@ class _MasteryRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final level = store.levelFor(category);
     final count = store.correctCount(category);
+    final answered = store.answeredCount(category);
+    final accuracy = store.accuracyPercent(category);
     final threshold = store.nextThreshold(category);
     final isMamoste = level == MasteryLevel.mamoste;
     final progress = isMamoste ? 1.0 : (count / threshold).clamp(0.0, 1.0);
@@ -996,7 +1012,7 @@ class _MasteryRow extends StatelessWidget {
                 const SizedBox(height: 2),
                 // Rubik U+2713 taşımıyor; onay işareti metin olarak
                 // yazıldığında sistem yazı tipine düşüyordu.
-                if (isMamoste)
+                if (isMamoste && accuracy == null)
                   Icon(
                     AppIcons.check,
                     size: 10,
@@ -1004,7 +1020,9 @@ class _MasteryRow extends StatelessWidget {
                   )
                 else
                   Text(
-                    '$count/$threshold',
+                    accuracy == null
+                        ? '$count/$threshold · ${Tr.forKu(K.masteryEvidencePending, isKu, {'correct': '$count'})}'
+                        : '$count/$threshold · ${Tr.forKu(K.masteryEvidenceLabel, isKu, {'correct': '$count', 'answered': '$answered', 'accuracy': '$accuracy'})}',
                     style: AppTypography.caption.copyWith(
                       color: AppTheme.textMutedColor(context),
                       fontSize: 10,
@@ -1286,7 +1304,7 @@ class _PedagogicalAnalyticsSectionState
                         ),
                       ),
                       child: Text(
-                        strongestCat,
+                        CategoryNames.localized(strongestCat, isKu),
                         style: AppTypography.bodyMedium.copyWith(
                           color: AppColors.onAccentTint(
                             context,
@@ -1337,7 +1355,7 @@ class _PedagogicalAnalyticsSectionState
                         ),
                       ),
                       child: Text(
-                        weakestCat,
+                        CategoryNames.localized(weakestCat, isKu),
                         style: AppTypography.bodyMedium.copyWith(
                           color: AppColors.readableAccent(
                             context,

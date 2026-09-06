@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.9.1+13
+version: 1.9.2+20
 
 environment:
   sdk: ^3.12.1
@@ -35,6 +35,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   supabase_flutter: ^2.14.1
+  google_sign_in: ^7.2.0
+  sign_in_with_apple: ^8.1.0
+  crypto: ^3.0.7
   flutter_local_notifications: ^22.1.0
   timezone: ^0.11.1
 
@@ -42,25 +45,24 @@ dependencies:
   firebase_core: ^4.12.1
   firebase_crashlytics: ^5.2.6
   firebase_analytics: ^12.4.5
+  firebase_messaging: ^16.0.0
 
   # State management
   provider: ^6.1.0
   shared_preferences: ^2.5.5
 
-  # Ses efektleri (Sprint 1)
+  # Ses efektleri
   audioplayers: ^6.1.0
 
   # Metin-okuma (TTS) — soruları seslendirme
   flutter_tts: ^4.2.3
 
-  # Shimmer skeleton loading (Sprint 1)
-  shimmer: ^3.0.0
+  # Shimmer skeleton loading
+  shimmer: ^4.0.0
 
 
-  # Paylaşım (Sprint 5'te kullanılacak)
   share_plus: ^13.2.1
 
-  # Mağaza değerlendirmesi (Sprint 5'te kullanılacak)
   in_app_review: ^2.0.9
 
   # Dış bağlantılar (gizlilik politikası / kullanım koşulları)
@@ -69,7 +71,6 @@ dependencies:
   # Abonelik / premium yönetimi (RevenueCat)
   purchases_flutter: ^10.6.0
 
-  # Bağlantı durumu (Sprint 6'da kullanılacak)
   connectivity_plus: ^7.3.0
   image_picker: ^1.2.3
   package_info_plus: ^10.2.1

@@ -6,9 +6,12 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/avatar_identity.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
+import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
+import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
 /// Bakiye ve satın alma durumunu deterministik kontrol eden sahte depo.
 class _ShopRepository extends MockZanKurdRepository {
@@ -18,6 +21,7 @@ class _ShopRepository extends MockZanKurdRepository {
   int coins;
   final Set<String> purchased;
   final List<String> spendReasons = [];
+  int hasPurchasedCalls = 0;
 
   @override
   Future<int> loadCoinBalance() async => coins;
@@ -31,22 +35,61 @@ class _ShopRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<bool> hasPurchased(String itemId) async => purchased.contains(itemId);
+  Future<bool> hasPurchased(String itemId) async {
+    hasPurchasedCalls++;
+    return purchased.contains(itemId);
+  }
 }
 
-Widget _shell(Widget child) {
+class _SpinWheelShopRepository extends _ShopRepository {
+  _SpinWheelShopRepository() : super(coins: 0);
+
+  @override
+  Future<bool> canSpinToday() async => true;
+
+  @override
+  Future<int> awardSpinCoins() async {
+    coins += 30;
+    return 30;
+  }
+}
+
+Widget _shell(Widget child, {bool reducedMotion = false}) {
   return MultiProvider(
     providers: [
       ChangeNotifierProvider<LanguageProvider>(
         create: (_) => LanguageProvider()..setLang('tr'),
       ),
       ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
+      ChangeNotifierProvider<ReducedMotionProvider>(
+        create: (_) => ReducedMotionProvider(initialUserReduce: reducedMotion),
+      ),
       ChangeNotifierProvider<PremiumService>(
         create: (_) => PremiumService.fallback(),
       ),
     ],
     child: MaterialApp(theme: AppTheme.dark(), home: child),
   );
+}
+
+Future<void> _spinAndReturn(
+  WidgetTester tester,
+  _SpinWheelShopRepository repository,
+  String entryKey,
+) async {
+  await tester.tap(find.byKey(ValueKey(entryKey)));
+  await tester.pumpAndSettle();
+  await tester.pump();
+  expect(find.text('Günün Çarkı'), findsOneWidget);
+  expect(find.byType(SpinWheelScreen), findsOneWidget);
+  await tester.drag(find.byType(Scrollable), const Offset(0, -500));
+  await tester.pump();
+  await tester.tap(find.text('Çevir!'));
+  await tester.pump();
+  await tester.pump(const Duration(seconds: 5));
+  await tester.pumpAndSettle();
+  await tester.tap(find.byType(ZkBackButton));
+  await tester.pumpAndSettle();
 }
 
 void main() {
@@ -133,22 +176,63 @@ void main() {
   // `_buildEarnCoinCta`ydı. Bakiyesi 0'dan farklı bir oyuncu (ör. burada
   // 500 coin) çarkı bir daha hiç bulamıyordu. AppBar'daki giriş düğmesi
   // bakiyeden bağımsız her zaman görünmeli ve çarka götürmeli.
-  testWidgets(
-    'çark girişi bakiye sıfır olmasa da görünür ve çarka götürür',
-    (tester) async {
-      final repository = _ShopRepository(coins: 500);
-      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
-      await tester.pumpAndSettle();
+  testWidgets('AppBar çarkı sonrası bakiye ve katalog state korunur', (
+    tester,
+  ) async {
+    final repository = _SpinWheelShopRepository();
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: repository), reducedMotion: true),
+    );
+    await tester.pumpAndSettle();
 
-      final entry = find.byKey(const ValueKey('shop-spin-wheel-entry'));
-      expect(entry, findsOneWidget);
+    final initialCatalogReads = repository.hasPurchasedCalls;
+    expect(find.text('0 coin'), findsOneWidget);
+    await _spinAndReturn(tester, repository, 'shop-spin-wheel-entry');
 
-      await tester.tap(entry);
-      await tester.pumpAndSettle();
+    expect(find.text('30 coin'), findsOneWidget);
+    expect(repository.hasPurchasedCalls, initialCatalogReads);
+  });
 
-      expect(find.text('Günün Çarkı'), findsOneWidget);
-    },
-  );
+  testWidgets('bakiye 0 coin kazan CTA çarkı sonrası bakiyeyi yeniler', (
+    tester,
+  ) async {
+    final repository = _SpinWheelShopRepository();
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: repository), reducedMotion: true),
+    );
+    await tester.pumpAndSettle();
+
+    await _spinAndReturn(tester, repository, 'shop-earn-coin-cta');
+    expect(find.text('30 coin'), findsOneWidget);
+  });
+
+  testWidgets('yetersiz bakiye dialogundaki Coin kazan çarkı sonrası yeniler', (
+    tester,
+  ) async {
+    final repository = _SpinWheelShopRepository();
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: repository), reducedMotion: true),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('120c'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('120c'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Coin kazan'));
+    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.drag(find.byType(Scrollable), const Offset(0, -500));
+    await tester.pump();
+    await tester.tap(find.text('Çevir!'));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(ZkBackButton));
+    await tester.pumpAndSettle();
+
+    expect(find.text('30 coin'), findsOneWidget);
+  });
 
   testWidgets('dar kart açıklamayı gizler, ürüne dokununca ayrıntıyı açar', (
     tester,

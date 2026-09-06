@@ -19,6 +19,7 @@ import '../game/speed_score.dart';
 import '../models/room_message.dart';
 import '../utils/error_reporter.dart';
 import '../models/tournament.dart';
+import '../models/referral_result.dart';
 import '../utils/coin_calculator.dart';
 import 'curated_question_bank.dart';
 import 'question_bank_loader.dart';
@@ -313,10 +314,39 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // eleyeceği için tam limitte istemek turu eksik bırakırdı.
     final candidates = store.preferUnseen(pool, limit * 3);
     final clean = QuestionSetPolicy.withoutLeaks(candidates, limit: limit);
-    // Süzgeç limiti dolduramazsa (küçük havuz) elde kalanla devam edilir;
-    // eksik bir tur, kendi cevabını ele veren bir turdan iyidir ama boş
-    // bir tur ikisinden de kötüdür.
-    final selected = clean.isEmpty ? candidates.take(limit).toList() : clean;
+
+    // Süzgeç limiti dolduramazsa elde kalanla devam edilir: eksik bir tur,
+    // kendi cevabını ele veren bir turdan iyidir. Ama "eksik"in de bir
+    // tabanı olmalı.
+    //
+    // ## Kusur
+    //
+    // Eskiden yalnız `clean` BOŞSA yedeğe düşülüyordu. `clean` bir tek soru
+    // döndürdüğünde o tek soru turun tamamı oluyordu: "Dil › Kelime Bilgisi ›
+    // 1. Seviye" kartı "10 soru" yazıyor, oyuncu tek soru cevaplıyor ve
+    // ekranda "Yarış tamamlandı" çıkıyordu (2026-08-16 simülatör taraması).
+    //
+    // Sebep havuzun küçüklüğü değil, süzgeçlerin üst üste binmesi: bir
+    // kelime bilgisi havuzunda soruların neredeyse hepsi çeviri sorusudur,
+    // `_dedupeByTranslationPair` aynı kelime çiftini toplar, ardından
+    // sızıntı süzgeci kalanların birbirini ele verenlerini atar. Otuz
+    // adaydan geriye bir tane kalabiliyor.
+    //
+    // ## Kural
+    //
+    // Sızıntısız sorular her zaman önce gelir; tur onlarla dolmuyorsa
+    // elenmiş adaylarla, o da yetmezse havuzun geri kalanıyla tamamlanır.
+    // Tekrar eden bir soru, tek soruluk bir turdan iyidir.
+    final selected = <QuizQuestion>[...clean];
+    if (selected.length < limit) {
+      final chosen = selected.map((q) => q.id).toSet();
+      for (final source in [candidates, pool]) {
+        for (final question in source) {
+          if (selected.length >= limit) break;
+          if (chosen.add(question.id)) selected.add(question);
+        }
+      }
+    }
     return _withVisualBlend(selected, pool, limit);
   }
 
@@ -375,10 +405,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   }) async {
-    return createRoom(
-      category: category,
-    ).copyWith(secondsPerQuestion: secondsPerQuestion);
+    return createRoom(category: category).copyWith(
+      secondsPerQuestion: secondsPerQuestion,
+      questionCount: questionCount,
+      entryFee: entryFee,
+    );
   }
 
   @override
@@ -1444,6 +1478,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return true;
   }
 
+  String? lastFcmToken;
+
+  @override
+  Future<void> setFcmToken(String token) async {
+    lastFcmToken = token;
+  }
+
   @override
   Future<bool> acceptFriendRequest(String requestId) async {
     return true;
@@ -1615,5 +1656,37 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Mock: her zaman başarılı olarak dön.
     // Canlı ortamda Supabase 'suggested_questions' tablosuna yazılır.
     return true;
+  }
+
+  bool _mockReferralUsed = false;
+
+  @override
+  Future<ReferralResult> redeemReferralCode(String code) async {
+    final clean = code.trim().toUpperCase();
+    if (clean.isEmpty) {
+      return const ReferralResult(
+        status: ReferralStatus.notFound,
+        message: 'Invalid code',
+      );
+    }
+    if (_mockReferralUsed) {
+      return const ReferralResult(
+        status: ReferralStatus.alreadyRedeemed,
+        message: 'Already redeemed',
+      );
+    }
+    if (clean == 'ZK-TEST' || clean == 'ZK-ME') {
+      return const ReferralResult(
+        status: ReferralStatus.ownCode,
+        message: 'Cannot use own code',
+      );
+    }
+    _mockReferralUsed = true;
+    _mockCoins += 100;
+    return const ReferralResult(
+      status: ReferralStatus.success,
+      coinsAwarded: 100,
+      referrerName: 'ZanKurd Heval',
+    );
   }
 }

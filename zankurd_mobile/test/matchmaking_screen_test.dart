@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,8 +14,11 @@ import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/services/matchmaking_metrics.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
+import 'package:zankurd_mobile/src/widgets/kilim_progress_bar.dart';
+import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 
 /// Eşleştirme iptalinin gerçekten çağrıldığını izleyen sahte depo.
 class _TrackingRepository extends MockZanKurdRepository {
@@ -378,6 +382,134 @@ void main() {
     );
   });
 
+  testWidgets('gerçek rakip eşleşmesi bekleme metriğini bir kez kaydeder', (
+    tester,
+  ) async {
+    final elapsedValues = [
+      const Duration(seconds: 1),
+      const Duration(seconds: 5),
+    ];
+    final events = <Map<String, Object>>[];
+    final metrics = MatchmakingMetrics(
+      elapsed: () => elapsedValues.removeAt(0),
+      record: events.add,
+    );
+    final repository = _HiddenAnswerMatchRepository(
+      _RoomQuestionResult.failure,
+    );
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pump();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1501));
+
+    expect(events, [
+      {'outcome': 'human', 'wait_seconds': 4},
+    ]);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+  });
+
+  testWidgets('bot fallbackı bekleme metriğini bot sonucu olarak kaydeder', (
+    tester,
+  ) async {
+    final elapsedValues = [Duration.zero, const Duration(seconds: 20)];
+    final events = <Map<String, Object>>[];
+    final metrics = MatchmakingMetrics(
+      elapsed: () => elapsedValues.removeAt(0),
+      record: events.add,
+    );
+    final repository = _CancellationRaceRepository(
+      cancelResult: const {'status': 'cancelled'},
+    );
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pump(const Duration(seconds: 20));
+    await tester.tap(find.text('Evet'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1501));
+
+    expect(events, [
+      {'outcome': 'bot', 'wait_seconds': 20},
+    ]);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+  });
+
+  testWidgets('timeoutta bot reddi bekleme metriğini iptal olarak kaydeder', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    final elapsedValues = [Duration.zero, const Duration(seconds: 20)];
+    final events = <Map<String, Object>>[];
+    final metrics = MatchmakingMetrics(
+      elapsed: () => elapsedValues.removeAt(0),
+      record: events.add,
+    );
+    final repository = _CancellationRaceRepository(
+      cancelResult: const {'status': 'cancelled'},
+    );
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rastgele eşleşme'));
+    await tester.pump(const Duration(seconds: 20));
+    await tester.tap(find.text('Hayır'));
+    await tester.pumpAndSettle();
+
+    expect(events, [
+      {'outcome': 'cancelled', 'wait_seconds': 20},
+    ]);
+  });
+
+  testWidgets(
+    'kullanıcı iptali bekleme metriğini iptal sonucu olarak kaydeder',
+    (tester) async {
+      tester.view.physicalSize = const Size(480, 1600);
+      tester.view.devicePixelRatio = 1.0;
+      final elapsedValues = [
+        const Duration(seconds: 2),
+        const Duration(seconds: 5),
+      ];
+      final events = <Map<String, Object>>[];
+      final metrics = MatchmakingMetrics(
+        elapsed: () => elapsedValues.removeAt(0),
+        record: events.add,
+      );
+      final repository = _TrackingRepository();
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(
+        _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Rastgele eşleşme'));
+      await tester.pump();
+      await tester.tap(find.text('İptal Et'));
+      await tester.pumpAndSettle();
+
+      expect(events, [
+        {'outcome': 'cancelled', 'wait_seconds': 3},
+      ]);
+    },
+  );
+
   testWidgets('seçim menüsü 1vs1 girişini ve rastgele eşleşmeyi gösterir', (
     tester,
   ) async {
@@ -564,6 +696,57 @@ void main() {
     await tester.pump(const Duration(milliseconds: 1600));
     await tester.pump();
   });
+
+  testWidgets(
+    'gercek eslesme buyuk metinde kimlik ve bilinmeyen seviye okunur kalir',
+    (tester) async {
+      final repository = _HiddenAnswerMatchRepository(
+        _RoomQuestionResult.empty,
+      );
+      addTearDown(tester.view.reset);
+      tester.view.physicalSize = const Size(360, 800);
+      tester.view.devicePixelRatio = 1;
+
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+          child: _shell(MatchmakingScreen(repository: repository)),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Rastgele eşleşme'));
+      await tester.pump();
+      await tester.pump();
+
+      final opponentText = tester.renderObject<RenderParagraph>(
+        find.text('Rojda'),
+      );
+      final levelText = tester.renderObject<RenderParagraph>(
+        find.text('Seviye bilinmiyor'),
+      );
+      expect(
+        opponentText.didExceedMaxLines,
+        isFalse,
+        reason:
+            'Rakip kimliği büyük metinde tek satırlık ellipsis ile '
+            'anlaşılmaz kalmamalı.',
+      );
+      expect(
+        tester.getRect(find.text('Seviye bilinmiyor')).width,
+        greaterThanOrEqualTo(96),
+        reason:
+            'Bilinmeyen seviye rozeti dar bir dikey parçaya '
+            'sıkışmamalı.',
+      );
+      expect(levelText.didExceedMaxLines, isFalse);
+      expect(find.text('Rojda'), findsOneWidget);
+      expect(find.text('Seviye bilinmiyor'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+
+      await tester.pump(const Duration(milliseconds: 1600));
+      await tester.pump();
+    },
+  );
 
   testWidgets(
     'hızlı eşleştirme sahte oda kurmaz, tam sunucu snapshotını kullanır',
@@ -778,6 +961,40 @@ void main() {
     );
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+    'arama ekrani RojMascot ve KilimProgressBar bilesenlerini gosterir',
+    (tester) async {
+      // 4.2 Gorsel Kimlik: Bekleme ekrani olu zaman olmaktan cikarilir;
+      // RojMascot thinking modunda ve KilimProgressBar arama dokusuyla cizilir.
+      final repository = _TrackingRepository();
+      tester.view.physicalSize = const Size(480, 1600);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(
+        _shell(MatchmakingScreen(repository: repository)),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Rastgele eşleşme'));
+      await tester.pump();
+
+      // Arama ekrani aktif
+      expect(
+        find.byKey(const ValueKey('matchmaking-waiting-state')),
+        findsOneWidget,
+      );
+
+      // RojMascot (Zana maskotu) ve KilimProgressBar mevcut
+      expect(find.byType(RojMascot), findsOneWidget);
+      expect(find.byType(KilimProgressBar), findsOneWidget);
+
+      // Ekranı kaldır: temiz unmount
+      await tester.pumpWidget(_shell(const SizedBox()));
+      await tester.pumpAndSettle();
+    },
+  );
 }
 
 /// Ağ tamamen kopmuş oyuncu: ne kuyruğa girebiliyor ne de çıkabiliyor.

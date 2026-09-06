@@ -45,6 +45,51 @@ extension _QuizScreenUI on _QuizScreenState {
                     // ilişkisini korur; uzun içerik yine kaydırılabilir.
                     child: LayoutBuilder(
                       builder: (context, scrollConstraints) {
+                        // Kartın altına başka bir şey düşüyorsa (süre doldu
+                        // uyarısı, rakip bekleme perdesi, geri sayım, canlı
+                        // skor tablosu) kart alanı doldurmaz — yoksa o
+                        // öğeler ekranın dışına taşar ve her soruda
+                        // kaydırma gerekirdi.
+                        // Kartın ALTINA düşen öğelerin yer payı.
+                        //
+                        // Önce bu bir aç/kapa anahtarıydı: altta bir şey
+                        // varsa kart hiç dolmuyordu ve boşluk geri geliyordu
+                        // — süre dolduğunda ekranın alt üçte biri yine
+                        // bomboş kalıyordu (2026-08-16 simülatör taraması).
+                        // Oysa doğrusu doldurmayı kapatmak değil, o öğelere
+                        // pay ayırmak. Pay eksik kalırsa kart kaydırılır;
+                        // fazla kalırsa küçük bir boşluk olur — ikisi de
+                        // ekranın üçte birini boş bırakmaktan iyidir.
+                        var reservedBelowCard = 0.0;
+                        if (selectedAnswer == 'TIMEOUT' && !_suspense) {
+                          reservedBelowCard += 56;
+                        }
+                        if (_isMultiplayer &&
+                            answered &&
+                            _mpPhase == _MultiplayerPhase.waiting) {
+                          reservedBelowCard += 72;
+                        }
+                        if (_isMultiplayer &&
+                            _mpPhase == _MultiplayerPhase.reveal) {
+                          reservedBelowCard += 72;
+                        }
+                        if (widget.is1v1 && screenHeight >= 800) {
+                          reservedBelowCard += 104;
+                        }
+                        // Karta gerçekten kalan yükseklik. Doldurma
+                        // yapılmasa bile sıkışıklık kararı buna bakar.
+                        final availableCardHeight =
+                            scrollConstraints.hasBoundedHeight
+                            ? max(
+                                0.0,
+                                scrollConstraints.maxHeight - AppSpacing.md,
+                              )
+                            : null;
+                        final fillHeight = availableCardHeight == null
+                            ? null
+                            : (availableCardHeight - reservedBelowCard > 0
+                                  ? availableCardHeight - reservedBelowCard
+                                  : null);
                         return SingleChildScrollView(
                           key: const ValueKey('quiz-portrait-scroll'),
                           child: ConstrainedBox(
@@ -73,7 +118,7 @@ extension _QuizScreenUI on _QuizScreenState {
                                       context,
                                       layoutSize: layoutSize,
                                       showExplanation: showExpl,
-                                      timerKey: index == 0
+                                      timerKey: index == 0 && _usesTimer
                                           ? _timerTargetKey
                                           : null,
                                       answerAreaKey: index == 0
@@ -83,6 +128,8 @@ extension _QuizScreenUI on _QuizScreenState {
                                       questionVisualReady: !_questionVisualReady
                                           ? _handleQuestionVisualReady
                                           : null,
+                                      minHeight: fillHeight,
+                                      availableHeight: availableCardHeight,
                                     ),
                                     if (selectedAnswer == 'TIMEOUT' &&
                                         !_suspense)
@@ -162,7 +209,9 @@ extension _QuizScreenUI on _QuizScreenState {
                           context,
                           layoutSize: layoutSize,
                           showExplanation: showExpl,
-                          timerKey: index == 0 ? _timerTargetKey : null,
+                          timerKey: index == 0 && _usesTimer
+                              ? _timerTargetKey
+                              : null,
                           answerAreaKey: index == 0 ? _answerAreaKey : null,
                           correctAnswerKey: _correctAnswerKey,
                           questionVisualReady: !_questionVisualReady
@@ -267,62 +316,76 @@ extension _QuizScreenUI on _QuizScreenState {
   }
 
   Widget _buildProgressBar(BuildContext context) {
-    final total = widget.questions.length;
-    // Uzun setlerde nokta şeridi sıkışır; klasik bara geri dön.
-    if (total > 15) {
-      return TweenAnimationBuilder<double>(
-        tween: Tween(begin: 0, end: (index + 1) / total),
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeOutCubic,
-        builder: (_, value, _) => KilimProgressBar(value: value, height: 8),
-      );
-    }
-    // Yarışma şeridi: her soru bir segment — doğru yeşil, yanlış kırmızı
-    // dolar; aktif soru vurgulu bekler. Renk anlamı tooltip + semantics
-    // ile açıklanır (kırmızı segment "yanlış cevap" demektir).
+    // Tur kaydı artık kilim tahtasıdır: her soru bir baklava, doğru cevap
+    // altın iplik, yanlış cevap motifte bir gedik.
+    //
+    // Eskiden yeşil/kırmızı yuvarlak çubuklardı. Bilgi aynıydı ama iki
+    // kusuru vardı: (1) uygulamanın kilim görsel dili yalnız onboarding ve
+    // sonuç gibi nadiren görülen ekranlarda duruyordu, kullanıcının her
+    // soruda baktığı bu şerit kimliksizdi; (2) yeşil/kırmızı ayrımı renk
+    // körlüğünde ve gri tonlamada kayboluyordu — şerit paylaşılabilir bir
+    // nesneye dönüştüğü için bu artık teorik bir kusur değil.
+    // Uzun set davranışı `KilimBoard` içinde: baklava okunmayacak kadar
+    // daralınca oran şeridine düşer.
     return Semantics(
       label: context.t(K.progressLegend),
       child: Tooltip(
         message: context.t(K.progressLegendShort),
         child: Row(
-          // Bu satır İLERLEME ÇUBUĞU. Anahtarı bir zamanlar
-          // `quiz-wildcard-row`du ve iki test onunla "joker satırı ekranda"
-          // diye iddia ediyordu; ilerleme çubuğu her zaman ekranda olduğu
-          // için o iki iddia hiçbir şey korumuyordu (2026-08-12 denetimi).
-          key: const ValueKey('quiz-progress-bar'),
           children: [
-            for (var i = 0; i < total; i++) ...[
-              Expanded(
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOutCubic,
-                  height: i == index ? 8 : 6,
-                  decoration: BoxDecoration(
-                    color: i < answerRecords.length
-                        ? (answerRecords[i].isCorrect
-                              ? AppTheme.correct
-                              : AppTheme.wrong)
-                        : i == index
-                        ? AppTheme.brand
-                        : AppTheme.surfaceHiColor(context),
-                    borderRadius: BorderRadius.circular(99),
-                    boxShadow: i == index
-                        ? [
-                            BoxShadow(
-                              color: AppTheme.brand.withValues(alpha: 0.45),
-                              blurRadius: 6,
-                            ),
-                          ]
-                        : null,
-                  ),
-                ),
+            _buildZana(),
+            const SizedBox(width: 10),
+            Expanded(
+              child: KilimBoard(
+                // Anahtar KORUNUR. Bir zamanlar `quiz-wildcard-row`du ve iki test
+                // onunla "joker satırı ekranda" diye iddia ediyordu; ilerleme
+                // çubuğu her zaman ekranda olduğu için o iki iddia hiçbir şey
+                // korumuyordu (2026-08-12 denetimi).
+                key: const ValueKey('quiz-progress-bar'),
+                total: widget.questions.length,
+                currentIndex: index,
+                results: [for (final record in answerRecords) record.isCorrect],
               ),
-              if (i != total - 1) const SizedBox(width: 4),
-            ],
+            ),
           ],
         ),
       ),
     );
+  }
+
+  /// Zana, tur boyunca şeridin başında durur ve cevaba tepki verir.
+  ///
+  /// Maskot uygulamada vardı ama onboarding, mağaza ve liderlik gibi
+  /// kullanıcının bir kez uğradığı ekranlara sıkışmıştı; oyunun geçtiği
+  /// yerde hiç görünmüyordu. Bir maskotun işi karşılama ekranını
+  /// süslemek değil, döngünün içinde tepki vermektir — Duolingo'nun
+  /// Duo'su tam olarak bunu yapar.
+  ///
+  /// Gerilim tutuşu (`_suspense`) sırasında ifade DEĞİŞMEZ: sonuç henüz
+  /// açıklanmamışken maskotun sevinmesi ya da üzülmesi cevabı ele verir
+  /// ve gerilimi bozar.
+  Widget _buildZana() {
+    final adjudication = _currentAnswerAdjudication;
+    final mood = (!answered || _suspense || adjudication == null)
+        ? RojMood.thinking
+        : adjudication
+        ? RojMood.celebrate
+        : RojMood.sad;
+    final size = mood == RojMood.thinking ? 44.0 : 56.0;
+    final mascot = AnimatedSwitcher(
+      duration: const Duration(milliseconds: 220),
+      transitionBuilder: (child, animation) =>
+          ScaleTransition(scale: animation, child: child),
+      child: RojMascot(
+        key: ValueKey('quiz-zana-${mood.name}'),
+        size: size,
+        mood: mood,
+      ),
+    );
+    if (!_usesTimer && index == 0) {
+      return KeyedSubtree(key: _timerTargetKey, child: mascot);
+    }
+    return mascot;
   }
 
   Widget _buildQuestionSwitcher(
@@ -333,6 +396,8 @@ extension _QuizScreenUI on _QuizScreenState {
     GlobalKey? answerAreaKey,
     GlobalKey? correctAnswerKey,
     VoidCallback? questionVisualReady,
+    double? minHeight,
+    double? availableHeight,
   }) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 220),
@@ -367,6 +432,8 @@ extension _QuizScreenUI on _QuizScreenState {
           answerAreaKey: answerAreaKey,
           correctAnswerKey: correctAnswerKey,
           questionVisualReady: questionVisualReady,
+          minHeight: minHeight,
+          availableHeight: availableHeight,
         ),
       ),
     );
@@ -558,14 +625,20 @@ extension _QuizScreenUI on _QuizScreenState {
       key: const ValueKey('quiz-wildcard-row'),
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          key: _wildcardKey,
-          children: [
-            for (var i = 0; i < jokers.length; i++) ...[
-              if (i > 0) const SizedBox(width: AppSpacing.xxs),
-              Expanded(child: _buildWildcardButton(jokers[i])),
+        // IntrinsicHeight + stretch: joker etiketi iki satıra sarabildiği
+        // için (Kurmancî'de sarıyor) düğmeler farklı yükseklikte kalıyor ve
+        // bar tırtıklı görünüyordu. Hepsi en uzunun boyuna çekilir.
+        IntrinsicHeight(
+          child: Row(
+            key: _wildcardKey,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var i = 0; i < jokers.length; i++) ...[
+                if (i > 0) const SizedBox(width: AppSpacing.xxs),
+                Expanded(child: _buildWildcardButton(jokers[i])),
+              ],
             ],
-          ],
+          ),
         ),
         // Hiç coini olmayan yeni oyuncuya kilitler "her şey paralı" gibi
         // görünmesin: coinin nereden kazanılacağını tek satırla söyle.
@@ -723,6 +796,54 @@ extension _QuizScreenUI on _QuizScreenState {
     }
   }
 
+  /// Jokerin ücretini sunucuya yazar ve gösterilen bakiyeyi gerçekle eşitler.
+  ///
+  /// Etki ÖNCE uygulanır, ücret sonra yazılır ve bu bilinçli: 50/50'nin
+  /// şıkları gizlemesi için bir ağ gidiş-dönüşü beklemek, sayaç işlerken
+  /// oyunu kilitlerdi ve çevrimdışı turda joker hiç çalışmazdı.
+  ///
+  /// Ama yerel düşüş bir VARSAYIMDIR ve doğrulanması gerekir. `spendCoins`
+  /// sunucu reddettiğinde (fiyat ayrışması, yetersiz sunucu bakiyesi, oturum
+  /// düşmesi) İSTİSNA FIRLATMAZ, yalnız `false` döner — ve bu dönüş hiç
+  /// okunmuyordu, çağrı `catchError` ile ateşlenip unutuluyordu. Sonuç:
+  /// ekranda jetonlar düşmüş görünüyor, sunucuda hiç düşmemiş oluyordu.
+  /// Kullanıcı olmayan bir borcu görüyor ve bir sonraki tazelemeye kadar
+  /// aslında alabileceği şeyleri alamıyordu (2026-08-17).
+  ///
+  /// Reddedilirse gösterilen bakiye sunucudan yeniden okunur — tahmin
+  /// edilmez. Jokerin ETKİSİ geri alınmaz: şıklar zaten gizlenmiştir, onları
+  /// geri getirmek verilmiş bir şeyi elden almak olurdu ve jokeri aynı soruda
+  /// yeniden kullanılabilir kılmak bedava tekrar demektir.
+  ///
+  /// Taşıma hatasında bakiye OLDUĞU GİBİ bırakılır: `loadCoinBalance`
+  /// çevrimdışı hatayı yukarı taşır ve son bilinen bakiye, uçak modunda
+  /// "bakiyen bitti" göstermekten iyidir (bkz. o metodun 2026-08-14 notu).
+  Future<void> _chargeWildcard(WildcardType type) async {
+    bool charged;
+    try {
+      charged = await widget.repository.spendCoins(
+        type.coinCost,
+        type.spendReason,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'spend_coins_${type.name}');
+      charged = false;
+    }
+    if (charged || !mounted) return;
+
+    try {
+      final balance = await widget.repository.loadCoinBalance();
+      if (!mounted) return;
+      setState(() => _coinBalance = balance);
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'wildcard balance resync ${type.name}',
+      );
+    }
+  }
+
   void _useFiftyFifty() {
     final cost = WildcardType.fiftyFifty.coinCost;
     if (!_supportsEliminationWildcards ||
@@ -745,13 +866,7 @@ extension _QuizScreenUI on _QuizScreenState {
               .take(2)
               .toSet();
     });
-    widget.repository.spendCoins(cost, 'wildcard_fifty_fifty').catchError((
-      error,
-      stack,
-    ) {
-      ErrorReporter.record(error, stack, reason: 'spend_coins_fifty_fifty');
-      return false;
-    });
+    unawaited(_chargeWildcard(WildcardType.fiftyFifty));
   }
 
   void _useAudience() {
@@ -770,13 +885,7 @@ extension _QuizScreenUI on _QuizScreenState {
       _wildcard = _wildcard.copyWith(audienceUsed: true);
       _audiencePoll = _buildAudiencePoll();
     });
-    widget.repository.spendCoins(cost, 'wildcard_audience').catchError((
-      error,
-      stack,
-    ) {
-      ErrorReporter.record(error, stack, reason: 'spend_coins_audience');
-      return false;
-    });
+    unawaited(_chargeWildcard(WildcardType.audience));
   }
 
   Map<String, double> _buildAudiencePoll() {
@@ -823,13 +932,7 @@ extension _QuizScreenUI on _QuizScreenState {
       _coinBalance -= cost;
       _wildcard = _wildcard.copyWith(doubleAnswerActivated: true);
     });
-    widget.repository.spendCoins(cost, 'wildcard_double_answer').catchError((
-      error,
-      stack,
-    ) {
-      ErrorReporter.record(error, stack, reason: 'spend_coins_double_answer');
-      return false;
-    });
+    unawaited(_chargeWildcard(WildcardType.doubleAnswer));
   }
 
   void _changeQuestion() {
@@ -908,13 +1011,7 @@ extension _QuizScreenUI on _QuizScreenState {
     _markQuestionSeen();
     _loadFavoriteState();
     _startTimer();
-    widget.repository.spendCoins(cost, 'wildcard_change_question').catchError((
-      error,
-      stack,
-    ) {
-      ErrorReporter.record(error, stack, reason: 'spend_coins_change_question');
-      return false;
-    });
+    unawaited(_chargeWildcard(WildcardType.changeQuestion));
   }
 
   // ─── Soru paneli ─────────────────────────────────────────────────────────
@@ -927,6 +1024,8 @@ extension _QuizScreenUI on _QuizScreenState {
     GlobalKey? answerAreaKey,
     GlobalKey? correctAnswerKey,
     VoidCallback? questionVisualReady,
+    double? minHeight,
+    double? availableHeight,
   }) {
     final promptText = question.promptText;
     // Yerleşim dalını seçen LayoutBuilder'ın gövde ölçüsünü kullan. Tam
@@ -942,7 +1041,44 @@ extension _QuizScreenUI on _QuizScreenState {
       size.width,
       size.height,
     );
-    final isCompact = size.height < 750;
+    // Sıkışıklık kararı KARTA KALAN alandan verilir; ne cihaz ne de gövde
+    // yüksekliğinden.
+    //
+    // Kusur 1: burada `size.height < 750` yazıyordu. 750 pencere yüksekliği
+    // için seçilmiş bir sayıydı, ama ölçü kaynağı sonradan `MediaQuery`den
+    // bu dalın `LayoutBuilder` gövdesine çevrildi (yerleşim dalıyla tipografi
+    // çelişmesin diye) ve eşik olduğu yerde kaldı. Gövde; durum çubuğu,
+    // başlık, ilerleme çubuğu ve alt güvenli alan düşüldükten sonra kalandır
+    // — iPhone 17'de 874 değil ~741. Yani **her iPhone "dar ekran"
+    // sayılıyordu**: şık dolgusu sabit `AppSpacing.xs`e düşüyor, punto küçük
+    // kalıyordu. 2026-07-27'de "uzun ekranda şıklar büyüsün, ekran dolsun"
+    // diye yazılan kademeli dolgu bu yüzden hiçbir telefonda çalışmadı ve
+    // soru ekranındaki boşluk şikâyeti buradan geliyordu.
+    //
+    // Kusur 2: gövde yüksekliği iki modda AYNI, oysa karta kalan alan çok
+    // farklı. Ders modunda kartın altında yalnız "Sonraki" var (~725pt
+    // kalır); yarışma modunda skor başlığı, joker barı ve ipucu satırı da
+    // var (~510pt kalır). Gövdeye bakan tek bir eşik ikisini ayıramaz:
+    // yarışmada şıklar büyüyünce D şıkkı joker barının altında kalıyordu
+    // (2026-08-16 simülatör taraması).
+    //
+    // Doğru ölçü, kartın gerçekten kullanabildiği yükseklik. 600: ders modu
+    // (~725) geniş, yarışma modu (~510) ve iPhone SE dar sayılır.
+    final isCompact = (availableHeight ?? size.height) < 600;
+
+    // Soru metni + şıklar (+ açıklama payı) için kartın İÇİNDE kalan
+    // yükseklik. Şıklar bu bütçeye göre boyutlanır; amaç her sorunun
+    // şıklarıyla birlikte ekrana tam oturması (2026-08-16 kararı).
+    //
+    // Düşülenler: kartın alt/üst iç dolgusu, üstteki kategori/tip/sayaç
+    // satırı ve onun altındaki boşluk. Kategori satırı 34pt'lik rozet
+    // etrafında kurulu; 40 onu çiplerle birlikte kapsayan ölçüdür.
+    final cardPadding = (isCompact ? 8.0 : 16.0) * 2;
+    final headerBlock = 40.0 + (isCompact ? 8.0 : 14.0);
+    final double? contentBudget = minHeight == null
+        ? null
+        : max(0.0, minHeight - cardPadding - headerBlock);
+
     final questionIcon = CategoryVisuals.icon(question.category);
     // Soru paneli kategori renk kimliğini taşır: hafif zemin tonu,
     // renkli kenarlık/parıltı ve kategori gradyanlı ikon rozeti.
@@ -950,7 +1086,22 @@ extension _QuizScreenUI on _QuizScreenState {
     final catColor = catGradient.colors.first;
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(isCompact ? 10 : 16),
+      // Kart, altında kullanılmayan alan kaldığında oraya kadar uzar.
+      //
+      // Kusur: dikey düzende kart doğal boyunda kalıyor, "Sonraki" düğmesi
+      // ekranın dibine sabitleniyordu ve arada kalan boşluk hiçbir şey
+      // göstermiyordu. iPhone 17'de dört şıklı kısa bir soruda ölçülen
+      // boşluk ~287pt — ekranın ÜÇTE BİRİ; cevaptan ve açıklama paneli
+      // açıldıktan sonra bile ~200pt kalıyordu (2026-08-16 simülatör
+      // taraması). Yani boşluk "açıklamaya ayrılmış alan" değildi.
+      //
+      // Kart yukarıdan başlamaya devam eder (ilerleme çubuğu → soru
+      // ilişkisi korunur, düğme başparmak erimindeki yerinde kalır); yalnız
+      // artan alan artık kartın İÇİNE düşer ve şıklar o alana yayılır.
+      constraints: minHeight == null
+          ? null
+          : BoxConstraints(minHeight: minHeight),
+      padding: EdgeInsets.all(isCompact ? 8 : 16),
       decoration: BoxDecoration(
         color: Color.alphaBlend(
           catColor.withValues(alpha: 0.07),
@@ -1055,7 +1206,7 @@ extension _QuizScreenUI on _QuizScreenState {
                     Expanded(
                       child: _QuestionTextAndAnswers(
                         promptText: promptText,
-                        promptFontSize: 20,
+                        promptFontSize: 22,
                         question: question,
                         selectedAnswer: selectedAnswer,
                         adjudicatedCorrect: _currentAnswerAdjudication,
@@ -1069,6 +1220,21 @@ extension _QuizScreenUI on _QuizScreenState {
                         isCompact: isCompact,
                         answerAreaKey: answerAreaKey,
                         correctAnswerKey: correctAnswerKey,
+                        explanationKey: _explanationKey,
+                        contentHeight: contentBudget,
+                        reserveExplanation:
+                            // Pay YALNIZ cevaptan sonra ayrılır. Baştan ayrılsaydı
+                            // cevap verilmeden önce kartın altında açıklama boyunda
+                            // bir boşluk dururdu; hedef ise her iki durumda da
+                            // boşluksuz ve kaydırmasız bir ekran. Şık yükseklikleri
+                            // `AnimatedContainer` ile değiştiği için geçiş sıçrama
+                            // gibi değil, yer açılıyormuş gibi görünür.
+                            // Yedek kutu artık çoğu türde hiç çizilmiyor;
+                            // yerini ayırmak boş bir şerit bırakırdı.
+                            _isLearningExperience &&
+                            answered &&
+                            contentBudget != null &&
+                            needsAnswerRevealFallback(question.type),
                         onAnswer: _answer,
                         onListen: _listenCurrentQuestion,
                         canListen: _ttsCanListen,
@@ -1089,7 +1255,7 @@ extension _QuizScreenUI on _QuizScreenState {
                 ],
                 _QuestionTextAndAnswers(
                   promptText: promptText,
-                  promptFontSize: compactLandscape ? 21 : (isCompact ? 21 : 25),
+                  promptFontSize: compactLandscape ? 24 : (isCompact ? 24 : 28),
                   question: question,
                   selectedAnswer: selectedAnswer,
                   adjudicatedCorrect: _currentAnswerAdjudication,
@@ -1103,6 +1269,21 @@ extension _QuizScreenUI on _QuizScreenState {
                   isCompact: isCompact,
                   answerAreaKey: answerAreaKey,
                   correctAnswerKey: correctAnswerKey,
+                  explanationKey: _explanationKey,
+                  contentHeight: contentBudget,
+                  reserveExplanation:
+                      // Pay YALNIZ cevaptan sonra ayrılır. Baştan ayrılsaydı
+                      // cevap verilmeden önce kartın altında açıklama boyunda
+                      // bir boşluk dururdu; hedef ise her iki durumda da
+                      // boşluksuz ve kaydırmasız bir ekran. Şık yükseklikleri
+                      // `AnimatedContainer` ile değiştiği için geçiş sıçrama
+                      // gibi değil, yer açılıyormuş gibi görünür.
+                      // Yedek kutu artık çoğu türde hiç çizilmiyor;
+                      // yerini ayırmak boş bir şerit bırakırdı.
+                      _isLearningExperience &&
+                      answered &&
+                      contentBudget != null &&
+                      needsAnswerRevealFallback(question.type),
                   onAnswer: _answer,
                   onListen: _listenCurrentQuestion,
                   canListen: _ttsCanListen,
@@ -1111,6 +1292,73 @@ extension _QuizScreenUI on _QuizScreenState {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildOnlineResultGate(BuildContext context) {
+    final loading = _onlineResultPhase == _OnlineResultPhase.loading;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && !loading) {
+          _leaveOnlineResultGate();
+        }
+      },
+      child: Scaffold(
+        appBar: zkAppBar(
+          context,
+          automaticallyImplyLeading: false,
+          title: Text(context.t(K.resultTitle)),
+        ),
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (loading)
+                    const CircularProgressIndicator()
+                  else
+                    Icon(
+                      _onlineResultOwnerChanged
+                          ? AppIcons.shield
+                          : AppIcons.cloud,
+                      size: 42,
+                      color: AppTheme.gold,
+                    ),
+                  const SizedBox(height: AppSpacing.md),
+                  Text(
+                    context.t(
+                      loading
+                          ? K.resultRecoveryLoading
+                          : _onlineResultOwnerChanged
+                          ? K.resultRecoveryOwnerChanged
+                          : K.resultRecoveryFailed,
+                    ),
+                    textAlign: TextAlign.center,
+                    style: AppTypography.bodyLarge,
+                  ),
+                  if (!loading) ...[
+                    const SizedBox(height: AppSpacing.md),
+                    FilledButton.icon(
+                      onPressed: _retryOnlineResultGate,
+                      icon: const Icon(AppIcons.arrowsRotate),
+                      label: Text(context.t(K.retry)),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    TextButton.icon(
+                      onPressed: _leaveOnlineResultGate,
+                      icon: const Icon(AppIcons.house),
+                      label: Text(context.t(K.home)),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

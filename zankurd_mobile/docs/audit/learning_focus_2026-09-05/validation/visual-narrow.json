@@ -1,0 +1,10 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "time": 1788649972547,
+  "trace": "faf45a81b18241f1b6fb8d0736144e2f",
+  "data": {
+    "text": "**Visual Quality Review (320×568) — Result: No concrete issues found**\n\n- **Text overflow/clipping:** None. \"Şevbaş, Rojda!\", the daily lesson card (\"Dersê rojane\", \"5 pirs • nêzîkî 3 deqe\"), and the button \"Dest pê bike →\" all fit within the narrow width.\n- **Bottom navigation:** All four labels (\"Hîn Bibe\", \"Pêşbazî\", \"Rêzbendî\", \"Profil\") render fully without truncation at 320px.\n- **Contrast:** Readable throughout — white text on the orange card and dark green header is clear; the muted \"Ast\" label on the dark card remains legible.\n- **Overlap:** No overlapping elements; the bottom nav does not obscure any visible content.\n- **Primary action:** The main CTA (\"Dest pê bike →\") is fully visible and tappable without scrolling.\n\nThe layout adapts well to the narrow screen.",
+    "tokens": 1507
+  }
+}

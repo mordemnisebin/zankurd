@@ -18,6 +18,18 @@ import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
 
+class _AppleAuthProvider extends AuthProvider {
+  _AppleAuthProvider() : super.test();
+
+  bool appleSignInCalled = false;
+
+  @override
+  Future<bool> signInWithApple() async {
+    appleSignInCalled = true;
+    return true;
+  }
+}
+
 void main() {
   late MockZanKurdRepository repository;
   setUp(() => repository = freshMockRepository());
@@ -66,24 +78,44 @@ void main() {
     expect(find.textContaining('pêşbirkê bike'), findsNothing);
   });
 
-  testWidgets(
-    'iOS giriş ekranı yalnız e-posta ve misafir seçeneklerini sunar',
-    (tester) async {
-      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+  testWidgets('iOS giriş ekranı Google ve Apple seçeneklerini sunar', (
+    tester,
+  ) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
+    await tester.pumpWidget(
+      testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
+    );
+    await tester.pumpAndSettle();
+    debugDefaultTargetPlatformOverride = null;
+
+    expect(find.text('Google ile giriş yap'), findsOneWidget);
+    expect(find.text('Apple ile giriş yap'), findsOneWidget);
+    expect(find.text('Misafir olarak devam et'), findsOneWidget);
+    expect(find.text('Veya e-posta ile'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets(
+    'desteklenen giriş ekranında Apple seçeneği görünür ve akışı başlatır',
+    (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+      final authProvider = _AppleAuthProvider();
       await tester.pumpWidget(
-        testShell(
-          child: const SignInScreen(),
-          authProvider: GateAuthProvider(),
-        ),
+        testShell(child: const SignInScreen(), authProvider: authProvider),
       );
       await tester.pumpAndSettle();
-      debugDefaultTargetPlatformOverride = null;
 
-      expect(find.text('Google ile giriş yap'), findsNothing);
-      expect(find.text('Apple ile giriş yap'), findsNothing);
-      expect(find.text('Misafir olarak devam et'), findsOneWidget);
-      expect(find.text('Veya e-posta ile'), findsOneWidget);
+      final appleButton = find.text('Apple ile giriş yap');
+      expect(appleButton, findsOneWidget);
+
+      await tester.tap(appleButton);
+      await tester.pumpAndSettle();
+
+      debugDefaultTargetPlatformOverride = null;
+      expect(authProvider.appleSignInCalled, isTrue);
       expect(tester.takeException(), isNull);
     },
   );
@@ -394,9 +426,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Sonraki'), findsOneWidget);
+    expect(find.text('Başla'), findsOneWidget);
     expect(
-      tester.getBottomRight(find.text('Sonraki')).dy,
+      tester.getBottomRight(find.text('Başla')).dy,
       lessThanOrEqualTo(390),
     );
     expect(tester.takeException(), isNull);
@@ -412,9 +444,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Sonraki'), findsOneWidget);
+    expect(find.text('Başla'), findsOneWidget);
     expect(
-      tester.getBottomRight(find.text('Sonraki')).dy,
+      tester.getBottomRight(find.text('Başla')).dy,
       lessThanOrEqualTo(844),
     );
     expect(tester.takeException(), isNull);
@@ -442,9 +474,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(AppLogo), findsOneWidget);
-    expect(find.text('Sonraki'), findsOneWidget);
+    expect(find.text('Başla'), findsOneWidget);
     expect(
-      tester.getBottomRight(find.text('Sonraki')).dy,
+      tester.getBottomRight(find.text('Başla')).dy,
       lessThanOrEqualTo(800),
     );
     expect(tester.takeException(), isNull);
@@ -516,7 +548,7 @@ void main() {
     // Ana ekran tek bir soruyu yanıtlar: "şimdi ne yapmalıyım?"
     expect(find.text('Günün dersi'), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
-    expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
 
     // Yarış'a yalnız alt navigasyondan gidilir — ana ekranda kopyası yok.
     await tester.tap(find.byKey(const ValueKey('nav-play')));

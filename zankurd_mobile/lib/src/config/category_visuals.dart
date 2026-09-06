@@ -29,6 +29,11 @@ class CategoryVisuals {
     'Film': 'Sînema',
   };
 
+  /// Tanınan takma adlar. Bekçiler bu listeyi kendi kopyasından değil
+  /// kaynağın kendisinden okur; yoksa yeni bir takma ad eklendiğinde ölçüm
+  /// onu hiç görmez.
+  static Iterable<String> get knownAliases => _aliases.keys;
+
   static String _resolveKey(String category) {
     if (_gradients.containsKey(category)) return category;
     return _aliases[category] ?? category;

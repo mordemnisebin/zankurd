@@ -9,13 +9,20 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
+import 'package:zankurd_mobile/src/models/player.dart';
+import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/models/contest.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
+import 'package:zankurd_mobile/src/screens/learn_home_screen.dart';
+import 'package:zankurd_mobile/src/screens/password_recovery_screen.dart';
+import 'package:zankurd_mobile/src/screens/room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
@@ -49,6 +56,7 @@ import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 
+import 'package:zankurd_mobile/src/widgets/floating_reaction_overlay.dart';
 import '../../test/support/widget_test_helpers.dart';
 
 /// Uygulamanın her ekranını gerçek widget ağacıyla açıp PNG'ye basar.
@@ -91,10 +99,6 @@ final GlobalKey _boundaryKey = GlobalKey();
 /// koşucuda ölçü fontuyla — yani siyah kutu olarak — çiziliyordu
 /// (2026-07-26: oyun merkezi ve sıralama turda böyle görünüyordu).
 /// Uygulamada bir kusur değil, turun kendi kusuruydu.
-Widget _framed(Widget child) => RepaintBoundary(
-  key: _boundaryKey,
-  child: Material(type: MaterialType.transparency, child: child),
-);
 
 /// Görünüm boyutunu ayarlar.
 ///
@@ -143,6 +147,61 @@ String _flutterSdkRoot() {
 
 /// Tur sonucu ekranı için gerçekçi bir örnek: iki doğru bir yanlış, seri,
 /// coin ödülü ve tam açıklama listesi.
+/// Çevrimiçi 1v1 maç sonu galibiyet ekranı — kupa, 1v1 sıralaması ve "Yeni Oda" butonu.
+Widget _result1v1VictoryScreen() {
+  final repository = MockZanKurdRepository();
+  const room = GameRoom(
+    id: 'room-1v1-online',
+    name: '1vs1',
+    code: 'ZK-WINNER01',
+    category: 'Ziman',
+    players: [
+      Player(id: 'user', name: 'Ez', score: 320, state: Player.readyState),
+      Player(id: 'opp', name: 'Hevrik', score: 180, state: Player.readyState),
+    ],
+    status: RoomStatus.finished,
+    questionCount: 5,
+    entryFee: 25,
+  );
+  return QuizResultScreen(
+    repository: repository,
+    room: room,
+    score: 320,
+    correctCount: 4,
+    wrongCount: 1,
+    totalQuestions: 5,
+    bestStreak: 3,
+    coinsAwarded: 50,
+    opponents: const [
+      Player(id: 'opp', name: 'Hevrik', score: 180, state: Player.readyState),
+    ],
+    answerRecords: const [
+      AnswerRecord(
+        id: 'r1',
+        category: 'Ziman',
+        prompt: 'Peyva «av» bi Tirkî çi tê gotin?',
+        answers: ['su', 'ekmek', 'yol', 'dağ'],
+        correctAnswer: 'su',
+        selectedAnswer: 'su',
+        explanation: '«av» Türkçede «su» demektir.',
+        explanationKu: '«av» bi Tirkî dibe «su».',
+        explanationTr: '«av» Türkçede «su» demektir.',
+      ),
+      AnswerRecord(
+        id: 'r2',
+        category: 'Ziman',
+        prompt: 'Peyva «agir» bi Tirkî çi tê gotin?',
+        answers: ['ateş', 'su', 'hava', 'toprak'],
+        correctAnswer: 'ateş',
+        selectedAnswer: 'ateş',
+        explanation: '«agir» Türkçede «ateş» demektir.',
+        explanationKu: '«agir» bi Tirkî dibe «ateş».',
+        explanationTr: '«agir» Türkçede «ateş» demektir.',
+      ),
+    ],
+  );
+}
+
 Widget _resultScreen() {
   final repository = MockZanKurdRepository();
   final room = repository.createRoom();
@@ -195,6 +254,29 @@ Widget _resultScreen() {
   );
 }
 
+/// Turun kabuğu: `testShell` + görüntü sınırı.
+///
+/// Sınır (`RepaintBoundary`) MaterialApp'in DIŞINDA olmak zorunda. Eskiden
+/// `_framed` ile `home`un çevresine konuyordu; o kadraj modal sayfaları
+/// KAÇIRIYOR, çünkü `showModalBottomSheet` çocuğu Navigator overlay'ine
+/// çizer ve overlay `home`un üstünde durur. Oda kurma sheet'i tam olarak
+/// böyle bir sayfa — eski kabuğa boş bir oyun merkezi düşerdi.
+///
+/// Sağlayıcı listesi BURADA TEKRARLANMAZ: `testShell` neyi kuruyorsa tur da
+/// onu görmeli. İlk uygulama listeyi elle kopyalamıştı; kopya, testlerin
+/// gördüğü uygulamayla turun gösterdiği uygulamayı sessizce ayırır — turun
+/// tek işi "uygulama gerçekte neye benziyor" sorusuna cevap vermekken.
+Widget _tourShell({required Widget child, bool dark = false, bool ku = false}) {
+  return RepaintBoundary(
+    key: _boundaryKey,
+    child: testShell(
+      child: Material(type: MaterialType.transparency, child: child),
+      themeProvider: dark ? ThemeProvider(initialMode: ThemeMode.dark) : null,
+      languageProvider: ku ? kurmanciLang() : null,
+    ),
+  );
+}
+
 Future<void> _pump(
   WidgetTester tester,
   Widget child, {
@@ -202,13 +284,7 @@ Future<void> _pump(
   bool ku = false,
 }) async {
   _applyViewport(tester, _size);
-  await tester.pumpWidget(
-    testShell(
-      child: _framed(child),
-      themeProvider: dark ? (ThemeProvider(initialMode: ThemeMode.dark)) : null,
-      languageProvider: ku ? kurmanciLang() : null,
-    ),
-  );
+  await tester.pumpWidget(_tourShell(child: child, dark: dark, ku: ku));
   // pumpAndSettle KULLANILMAZ: yükleme göstergeleri sonsuz animasyondur ve
   // tur boyunca kilitlenmeye yol açar. Sabit süreli pump yeterlidir.
   await tester.pump();
@@ -358,7 +434,15 @@ void main() {
     repository = freshMockRepository();
     SharedPreferences.setMockInitialValues({
       'zankurd.onboarding.seen': true,
+      // Eski GLOBAL anahtar. `AppShell` 2026-08-03'te ad kapısını kullanıcıya
+      // bağladı (`...completed.<userId>`) ve global anahtarı bilerek
+      // okumuyor; tur ise eskisini kurmaya devam ediyordu. Kabuk turda hiç
+      // açılmadığı için fark edilmemişti — `80_app_shell` eklenince kabuk
+      // sekme çubuğu yerine ad kapısını çizdi (2026-08-16). İkisi de
+      // bırakıldı: eskisi kapıyı okuyan başka bir yüzey kalmışsa diye,
+      // yenisi kabuğun gerçekten okuduğu anahtar olduğu için.
       'zankurd.profileName.completed': true,
+      'zankurd.profileName.completed.user': true,
       'zankurd.navTour.seen': true,
       'zankurd.quiz_tutorial.seen': true,
     });
@@ -674,23 +758,29 @@ void main() {
   // Açılış ekranı turda yoktu: 1,8 saniye yaşadığı için ekran görüntüsü
   // almak zor, o yüzden hiç ölçülmemiş. Oysa uygulamayı açan herkesin
   // gördüğü ilk kare orası (2026-07-28).
-  testWidgets('71 açılış', (t) async {
+  //
+  // Numaralar 78/79: eklendiğinde 71/72 verilmişti ve o ikisi kayıtlı
+  // sorular ile görsel künyesinde zaten kullanılıyordu. Aynı öneke sahip
+  // iki test aynı dosyaya yazmıyor ama klasörde `71_favorites.png` ile
+  // `71_splash.png` yan yana duruyor, sıralama bozuluyordu — turu okuyan
+  // kişi hangisinin 71 olduğunu bilemiyordu (2026-08-16).
+  testWidgets('78 açılış', (t) async {
     await _pump(
       t,
       const SplashScreen(next: SizedBox.shrink(), duration: Duration(hours: 1)),
     );
     await t.pump(const Duration(milliseconds: 900));
-    await _shoot(t, '71_splash');
+    await _shoot(t, '78_splash');
   }, tags: ['preview']);
 
-  testWidgets('72 açılış (karanlık)', (t) async {
+  testWidgets('79 açılış (karanlık)', (t) async {
     await _pump(
       t,
       const SplashScreen(next: SizedBox.shrink(), duration: Duration(hours: 1)),
       dark: true,
     );
     await t.pump(const Duration(milliseconds: 900));
-    await _shoot(t, '72_splash_dark');
+    await _shoot(t, '79_splash_dark');
   }, tags: ['preview']);
 
   // Yeni kullanıcının gördüğü ilk üç ekran da turda yoktu: karşılama,
@@ -947,4 +1037,270 @@ void main() {
     );
     await _shoot(t, '16_competition_question');
   }, tags: ['preview']);
+
+  // ── Turun kendi kör noktaları (2026-08-16 taraması) ──
+  //
+  // Turda 76 kare vardı ama dört ekran hiç açılmıyordu ve soru anının en
+  // önemli iki hâli — yanlış cevap ve Kurmancî — hiç basılmıyordu. Yani
+  // "bütün ana ekranlar basılıyor" cümlesi doğru değildi.
+
+  // Sekmeli kabuk: alt gezinme çubuğunu gösteren tek kare. Her ekran tek
+  // tek basılıyordu ama kullanıcının uygulamada sürekli gördüğü çubuk
+  // hiçbirinde yoktu.
+  testWidgets('80 sekmeli kabuk', (t) async {
+    // Sabit monitör şart: gerçek `ConnectivityMonitor` connectivity_plus
+    // eklentisine gider, koşucuda platform tarafı yoktur ve `_pump`un
+    // `runAsync` turunda hiç tamamlanmayan bir Future bırakır — kare
+    // yazıldıktan sonra test 10 dakika asılı kalıp zaman aşımına düşüyordu.
+    // `app_shell_*_test.dart` dosyalarının hepsi aynı monitörü verir.
+    await _pump(
+      t,
+      AppShell(
+        repository: repository,
+        connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+      ),
+    );
+    await _shoot(t, '80_app_shell');
+  }, tags: ['preview']);
+
+  // Öğrenme sekmesinin kökü. `HomeScreen`i sarar ve gezinme argümanlarını
+  // bağlar; kendi başına hiç ölçülmemişti.
+  testWidgets('81 öğrenme kökü', (t) async {
+    await _pump(t, LearnHomeScreen(repository: repository));
+    await _shoot(t, '81_learn_home');
+  }, tags: ['preview']);
+
+  // Parola sıfırlama: e-posta bağlantısıyla açılır, yani tur sırasında
+  // kimsenin uğramadığı bir ekran. Bir kusuru olsa kullanıcı hesabına
+  // giremezken fark edilirdi.
+  testWidgets('82 parola yenileme', (t) async {
+    await _pump(t, const PasswordRecoveryScreen());
+    await _shoot(t, '82_password_recovery');
+  }, tags: ['preview']);
+
+  // Maç bitti ama sonuç teslim edilemedi hâli. Widget testleri bu ekranın
+  // davranışını sıkı ölçüyor (`room_result_recovery_screen_test.dart`),
+  // görünüşünü hiç ölçmüyordu.
+  testWidgets('83 sonuç kurtarma', (t) async {
+    await _pump(
+      t,
+      RoomResultRecoveryScreen(
+        repository: repository,
+        snapshot: _recoverySnapshot(),
+        expectedUserId: 'user',
+      ),
+    );
+    await _shoot(t, '83_room_result_recovery');
+  }, tags: ['preview']);
+
+  // Yanlış cevap anı. Tur yalnız doğru cevabı basıyordu (`15_lesson_answered`
+  // ilk şıkkı seçer ve mock bankada ilk şık doğrudur), yani kırmızı geri
+  // bildirim, seçilen yanlış şıkkın hâli ve açıklama panelinin yanlış
+  // varyantı hiç görülmüyordu.
+  testWidgets('84 ders akışı — yanlış cevap', (t) async {
+    final questions = repository.questions.take(5).toList();
+    await _pump(
+      t,
+      QuizScreen(
+        repository: repository,
+        room: repository.createRoom(),
+        questions: questions,
+        experience: QuizExperience.learning,
+        enableTimer: false,
+      ),
+    );
+    // Doğru şıkkın dışındaki ilk şık: mock bankada `answers.first` doğru
+    // olduğu için `15_lesson_answered` hep yeşil hâli basıyordu.
+    final wrong = questions.first.answers.firstWhere(
+      (a) => a != questions.first.correctAnswer,
+    );
+    await t.tap(find.text(wrong));
+    await t.pump();
+    for (var i = 0; i < 12; i++) {
+      await t.pump(const Duration(milliseconds: 300));
+    }
+    await _shoot(t, '84_lesson_wrong_answer');
+  }, tags: ['preview']);
+
+  // ── Kurmancî ikizleri ──────────────────────────────────────────────
+  //
+  // Ürünün ASIL dili Kurmancî: temiz kurulumda uygulama Kurmancî açılıyor.
+  // Buna karşın tur neredeyse tamamen Türkçe basıyordu ve eklenen İLK
+  // Kurmancî karesi (85) anında bir kırpma kusuru buldu — joker etiketleri
+  // "Alîkariya Be…" diye kesiliyordu. Kurmancî metinler Türkçeden düzenli
+  // olarak uzun; yani kırpma ve taşma önce burada görünür.
+  //
+  // Aşağıdakiler, düzeni en çok zorlayan karelerin Kurmancî ikizleridir.
+  testWidgets('85 yarışma akışı (Kurmancî)', (t) async {
+    await _pump(
+      t,
+      QuizScreen(
+        repository: repository,
+        room: repository.createRoom(),
+        questions: repository.questions.take(5).toList(),
+      ),
+      ku: true,
+    );
+    await _shoot(t, '85_competition_question_ku');
+  }, tags: ['preview']);
+
+  testWidgets('86 ders akışı — cevaplanmış (Kurmancî)', (t) async {
+    final questions = repository.questions.take(5).toList();
+    await _pump(
+      t,
+      QuizScreen(
+        repository: repository,
+        room: repository.createRoom(),
+        questions: questions,
+        experience: QuizExperience.learning,
+        enableTimer: false,
+      ),
+      ku: true,
+    );
+    await t.tap(find.text(questions.first.correctAnswer));
+    await t.pump();
+    for (var i = 0; i < 12; i++) {
+      await t.pump(const Duration(milliseconds: 300));
+    }
+    await _shoot(t, '86_lesson_answered_ku');
+  }, tags: ['preview']);
+
+  testWidgets('87 giriş (Kurmancî)', (t) async {
+    await _pump(t, const SignInScreen(), ku: true);
+    await _shoot(t, '87_sign_in_ku');
+  }, tags: ['preview']);
+
+  testWidgets('88 ad sorma (Kurmancî)', (t) async {
+    await _pump(
+      t,
+      ProfileNameGateScreen(repository: repository, onCompleted: () {}),
+      ku: true,
+    );
+    await _shoot(t, '88_name_gate_ku');
+  }, tags: ['preview']);
+
+  testWidgets('89 ayarlar (Kurmancî, karanlık)', (t) async {
+    await _pump(
+      t,
+      SettingsScreen(repository: repository),
+      ku: true,
+      dark: true,
+    );
+    await _shoot(t, '89_settings_ku_dark');
+  }, tags: ['preview']);
+
+  // ── 2026-08-19 Eklenen Yüzeyler ──────────────────────────────────
+  //
+  // 1. Oda kurma sheet'i (_CustomRoomBottomSheet) — kategori, soru sayısı,
+  //    süre ve jeton bahsi seçimleri. Açık/TR, karanlık ve Kurmancî.
+  testWidgets("90 oda kurma sheet'i", (t) async {
+    await _pump(t, PlayHubScreen(repository: repository));
+    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    await _shoot(t, '90_custom_room_sheet');
+  }, tags: ['preview']);
+
+  testWidgets("91 oda kurma sheet'i (karanlık)", (t) async {
+    await _pump(t, PlayHubScreen(repository: repository), dark: true);
+    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    await _shoot(t, '91_custom_room_sheet_dark');
+  }, tags: ['preview']);
+
+  testWidgets("92 oda kurma sheet'i (Kurmancî)", (t) async {
+    await _pump(t, PlayHubScreen(repository: repository), ku: true);
+    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    await _shoot(t, '92_custom_room_sheet_ku');
+  }, tags: ['preview']);
+
+  // 2. Uçuşan reaksiyon baloncukları — animasyon hâlinde yakalanır.
+  testWidgets('93 uçuşan reaksiyonlar', (t) async {
+    final controller = FloatingReactionController();
+    await _pump(
+      t,
+      FloatingReactionOverlay(
+        controller: controller,
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.createRoom(),
+        ),
+      ),
+    );
+    controller.triggerReaction('👏 Destxweş!', senderName: 'Berfin');
+    controller.triggerReaction('🔥 Agir!', senderName: 'Rojda');
+    controller.triggerReaction('⚡ Lez be!', senderName: 'Baran');
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 500));
+    await _shoot(t, '93_floating_reactions');
+  }, tags: ['preview']);
+
+  // 3. Çevrimiçi 1v1 maç sonu — galibiyet görünümü ve "Yeni Oda" düğmesi.
+  testWidgets('94 1v1 maç sonu (galibiyet)', (t) async {
+    await _pump(t, _result1v1VictoryScreen());
+    // Vakanın DERDİ "Yeni Oda" düğmesi; o düğme sayfanın altında ve ilk
+    // kadrajda görünmüyordu. Ekran görüntüsü, göstermek için var olduğu
+    // şeyi göstermezse tur o vakayı boşuna koşturur.
+    // `ensureVisible` YETMEZ: sonuç ekranı tembel kuran bir listedir ve
+    // eylem satırı henüz İNŞA EDİLMEMİŞTİR — bulucu hiçbir öğe bulamaz.
+    // Önce kaydırıp inşa ettirmek gerekir.
+    final action = find.byKey(const ValueKey('result-new-room-button'));
+    await t.scrollUntilVisible(
+      action,
+      240,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.pump(const Duration(milliseconds: 400));
+    await _shoot(t, '94_result_1v1_win');
+  }, tags: ['preview']);
 }
+
+/// Teslim edilememiş bir 1v1 sonucu — kurtarma ekranının beslendiği veri.
+RoomResultSnapshot _recoverySnapshot() => RoomResultSnapshot(
+  room: const GameRoom(
+    id: 'room-1',
+    name: '1vs1',
+    code: 'ZK-TOUR',
+    category: 'Ziman',
+    players: [
+      Player(id: 'user', name: 'Ez', score: 30, state: Player.readyState),
+      Player(
+        id: 'opponent',
+        name: 'Hevrik',
+        score: 20,
+        state: Player.readyState,
+      ),
+    ],
+    status: RoomStatus.finished,
+    questionCount: 2,
+  ),
+  ownPlayerId: 'user',
+  questionIds: const ['q1', 'q2'],
+  answers: const [
+    ResumedAnswer(
+      questionId: 'q1',
+      questionIndex: 0,
+      selectedOptionKey: 'A',
+      correctOptionKey: 'A',
+      isCorrect: true,
+      pointsAwarded: 30,
+      responseMs: 900,
+    ),
+    ResumedAnswer(
+      questionId: 'q2',
+      questionIndex: 1,
+      selectedOptionKey: 'A',
+      correctOptionKey: 'B',
+      isCorrect: false,
+      pointsAwarded: 0,
+      responseMs: 1200,
+    ),
+  ],
+  winnerId: 'user',
+  endedReason: 'completed',
+  forfeitedBy: null,
+  finishedAt: DateTime.utc(2026, 8, 16),
+);

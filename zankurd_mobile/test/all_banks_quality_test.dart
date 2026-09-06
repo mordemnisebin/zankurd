@@ -61,6 +61,19 @@ void main() {
       ),
       'visual': fromJson('assets/data/visual_2026_08_07_questions.json'),
       'restore': fromJson('assets/data/restore_2026_08_07_questions.json'),
+      // 2026-08-24 (A9): bu banka listede YOKTU. 1110 soru, bankanın
+      // en büyük tek kaynağı, ve kalite bekçilerinin hiçbiri ona
+      // bakmıyordu — sorulan terim şık olabilir, doğru cevap gövdede
+      // yazabilir, şık yinelenebilir, hiçbiri düşmezdi.
+      //
+      // 2026-09-02: oyuncuya yüklenmez (runtime karantina) ama dosya
+      // durduğu sürece kalite taraması kör kalmasın diye burada kalır.
+      'deepseek': fromJson('assets/data/deepseek_2026_08_18_questions.json'),
+      // A9 dersi uygulandı: banka aynı commit'te kalite bekçilerine de
+      // bağlanıyor. Deepseek altı gün bağlanmadan kalmıştı.
+      'expansion0819': fromJson(
+        'assets/data/expansion_2026_08_19_questions.json',
+      ),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -81,29 +94,36 @@ void main() {
     });
   });
 
-  test('runtime yükleyici aynı sıra ve kapsamla on kaynağı birleştiriyor', () {
-    final expected = [
-      ...curatedQuestionBank,
-      ...fromJson('assets/data/sentence_building_questions.json'),
-      ...fromJson('assets/data/fill_in_blank_2026_08_questions.json'),
-      ...fromJson('assets/data/community_questions.json'),
-      ...fromJson('assets/data/editorial_questions.json'),
-      ...fromJson('assets/data/offline_questions.json'),
-      // 2026-08-06 genişletmesi. Sıra `questionBankAssets` ile aynı olmalı:
-      // aynı id birden çok bankada varsa SONRAKİ kazanır.
-      ...fromJson('assets/data/expansion_2026_08_questions.json'),
-      ...fromJson('assets/data/source_first_2026_08_questions.json'),
-      // 2026-08-07: çıkarılan döngüsel kategori sorularının görsellerine
-      // yazılan sorular. Bu liste `questionBankAssets` ile ayrışırsa test
-      // uzunlukta düşer — dosyanın başındaki ders tam olarak budur.
-      ...fromJson('assets/data/visual_2026_08_07_questions.json'),
-      ...fromJson('assets/data/restore_2026_08_07_questions.json'),
-    ];
+  test(
+    'runtime yükleyici aynı sıra ve kapsamla on bir kaynağı birleştiriyor',
+    () {
+      final expected = [
+        ...curatedQuestionBank,
+        ...fromJson('assets/data/sentence_building_questions.json'),
+        ...fromJson('assets/data/fill_in_blank_2026_08_questions.json'),
+        ...fromJson('assets/data/community_questions.json'),
+        ...fromJson('assets/data/editorial_questions.json'),
+        ...fromJson('assets/data/offline_questions.json'),
+        // 2026-08-06 genişletmesi. Sıra `questionBankAssets` ile aynı olmalı:
+        // aynı id birden çok bankada varsa SONRAKİ kazanır.
+        ...fromJson('assets/data/expansion_2026_08_questions.json'),
+        ...fromJson('assets/data/source_first_2026_08_questions.json'),
+        // 2026-08-07: çıkarılan döngüsel kategori sorularının görsellerine
+        // yazılan sorular. Bu liste `questionBankAssets` ile ayrışırsa test
+        // uzunlukta düşer — dosyanın başındaki ders tam olarak budur.
+        ...fromJson('assets/data/visual_2026_08_07_questions.json'),
+        ...fromJson('assets/data/restore_2026_08_07_questions.json'),
+        // 2026-09-02: DeepSeek runtime'da yok; kalite taraması
+        // `banks['deepseek']` üzerinden dosyayı okumaya devam eder.
+        // 2026-08-19 genişletmesi (77 soru; A17 ile oynanabilir).
+        ...fromJson('assets/data/expansion_2026_08_19_questions.json'),
+      ];
 
-    final runtime = QuestionBankLoader.instance.allQuestions;
-    expect(runtime, hasLength(expected.length));
-    expect(runtime.map((q) => q.id), equals(expected.map((q) => q.id)));
-  });
+      final runtime = QuestionBankLoader.instance.allQuestions;
+      expect(runtime, hasLength(expected.length));
+      expect(runtime.map((q) => q.id), equals(expected.map((q) => q.id)));
+    },
+  );
 
   test('hiçbir kaynakta sorulan terim şık olarak durmuyor', () {
     final quoted = RegExp(r'[«\x27"]([^«»\x27"]{2,60})[»\x27"]');
@@ -274,7 +294,28 @@ void main() {
     //
     // Kalan 8, Kurmancî özel ad ya da örnek sözcük taşıyan Türkçe
     // cümlelerdir (Mem û Zîn'i, Xoybûn, yek/du/sê…).
-    const ceiling = 8;
+    //
+    // 2026-08-24 (A9): deepseek bankası bekçilere bağlanınca 6 kayıt
+    // daha düştü ve tavan 8'den 14'e çıktı. **Altısı da aynı yanlış
+    // alarm sınıfı** — tek tek okunarak doğrulandı, körü körüne
+    // yükseltilmedi:
+    //
+    //   ds_dirok_0018     Şerefxanê Bidlîsî, Şerefname
+    //   ds_edebiyat_0127  Mem û Zîn, Ahmedê Xanî
+    //   ds_ziman_1256     gerîn → gerandin, revîn → revandin
+    //   ds_ziman_1266     pirtûk → pirtûkxane, çap → çapxane
+    //   ds_ziman_1269     heval → hevaltî, mirov → mirovatî
+    //   ds_ziman_1280     vî / vê / van, wî / wê / wan
+    //
+    // Hepsi düpedüz Türkçe cümle; içlerindeki Kurmancî sözcükler
+    // ÖRNEKTİR. Ziman kategorisinde bu kaçınılmaz: dilbilgisi eki
+    // anlatan bir açıklama örnek vermeden yazılamaz. Ölçer örnekleri
+    // sayıp cümleyi Kurmancî sanıyor.
+    //
+    // Tavan bir BORÇ sayacıdır, hedef değil. Büyümesi ancak her yeni
+    // kaydın burada gerekçesi yazılarak kabul edilir; gerekçesiz
+    // yükseltme bekçiyi sessizce kapatmaktır.
+    const ceiling = 14;
 
     final offenders = <String>[];
     banks.forEach((name, questions) {
@@ -436,7 +477,7 @@ void main() {
           question.type.name,
           term.trim().toLowerCase(),
           question.correctAnswer.trim().toLowerCase(),
-        ].join(' ');
+        ].join('\u0000');
         groups.putIfAbsent(key, () => []).add(question.id);
       }
     });
@@ -458,7 +499,9 @@ void main() {
   //
   // * `curated_question_bank.dart`ın Paradigma/Siyaset kümesi — "Fakltîzm",
   //   "Demorkrasîxerbirîna", "Kîmoka zîvkirî", "Kom-xwebûn rêxistin". Yedi
-  //   soru inceleme kuyruğuna alındı (bkz. `_bozukKurmanciBekliyor`).
+  //   soru 2026-07-30 kuyruğa alındı; 2026-09-02 gerçek Kurmancîyle
+  //   yeniden yazılıp `approved` oldu. Uydurma sözcük listesi bekçi
+  //   olarak durur.
   // * `offline_questions.json` — "ava bile ne li ser qezencê": `bile` Türkçe
   //   sözcük, Kurmancî fiil `dibe`. Aynı bozuk şık 11 soruda tekrarlanıyordu
   //   ve birinde **doğru cevabın** içindeydi.
@@ -476,6 +519,21 @@ void main() {
       'Medyatîkdemokrasî', 'dihundirîne', 'endamentên', 'rihevketa',
       'rêxistinbranî', 'peydexandî', 'alîserdestiyê', 'Rojê nû',
     ];
+    // Kuralın DİLBİLGİSİ sorularındaki istisnası.
+    //
+    // Bir dilbilgisi sorusu yanlış biçimi bilerek çeldiriciye koyar;
+    // öğretmenin yolu budur. `ds_ziman_1289` "roj" sözcüğünün cinsiyetini
+    // soruyor ve çeldiricilerden biri yanlış izafe ekini gösteriyor
+    // ("rojê nû"), doğru cevap ise doğrusunu öğretiyor ("roja nû").
+    // Kuralın belgesi zaten niyeti söylüyor: "oyuncuya uydurma sözcüğü
+    // DOĞRU CEVAP diye göstermek". Burada tam tersi oluyor.
+    //
+    // Muafiyet id ile veriliyor, sözcüğü listeden çıkararak değil:
+    // "Rojê nû" başka bir kayda kazara girerse yine yakalansın. Liste
+    // genişletilecekse gerekçesi buraya yazılmalı; gerekçesiz muafiyet
+    // bekçiyi sessizce kapatır.
+    const grammarExemptions = <String>{'deepseek/ds_ziman_1289'};
+
     const policy = ContentQualityPolicy();
 
     final offenders = <String>[];
@@ -483,6 +541,7 @@ void main() {
       for (final question in questions) {
         // Kuyrukta bekleyen kayıtlar oyuncuya çıkmaz; kural onlar için değil.
         if (!policy.isEligible(question.metadata)) continue;
+        if (grammarExemptions.contains('$name/${question.id}')) continue;
         final visible = [
           question.prompt,
           ...question.answers,

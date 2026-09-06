@@ -38,11 +38,15 @@ import '../utils/error_reporter.dart';
 import '../utils/question_timer_resume.dart';
 import '../utils/test_environment.dart';
 import '../widgets/app_panel.dart';
-import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
+import '../widgets/floating_reaction_overlay.dart';
+import '../widgets/kilim_board.dart';
+import '../theme/kilim_motifs.dart';
+import '../widgets/roj_mascot.dart';
+import '../widgets/mission_toast.dart';
 import '../widgets/player_avatar.dart';
-import '../widgets/kilim_progress_bar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
+import '../widgets/zk_back_button.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz/quiz_feedback_overlay.dart';
 import 'quiz/quiz_option_tile.dart';
@@ -52,120 +56,11 @@ import 'quiz_result_screen.dart';
 import 'room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
+part 'quiz/quiz_layout_rules.dart';
+part 'quiz/quiz_session_types.dart';
 part 'quiz/quiz_widgets.dart';
+part 'quiz/quiz_dialogs.dart';
 part 'quiz/quiz_screen_ui.dart';
-
-enum QuizExperience { learning, competition }
-
-// ─── Quiz yerleşim dalı seçimi ───────────────────────────────────────────
-//
-// Quiz'in iki yerleşimi var: dikey (stacked) akış ve telefonu yan çevirince
-// devreye giren iki sütunlu "compact landscape" düzeni. İkincisi *yalnız*
-// yüksekliği gerçekten kısıtlı, gerçekten yatay ekranlar için tasarlandı:
-// soru solda, ilerleme ve birincil eylem sağda.
-//
-// Dal eskiden yalnız `constraints.maxWidth >= 700` ile seçiliyordu ve
-// değişkenin adı `landscape` idi — ama yönelim hiç ölçülmüyordu. Bu yüzden
-// 700px'ten geniş her viewport iki sütuna düşüyordu: bütün masaüstü
-// tarayıcılar ve *dikey* tabletler dahil. Orada sağ sütun kısa kalıp tepeye
-// yapıştığı için birincil eylem şıkların üstünde ve uzağında duruyor, ekranın
-// altı boş kalıyordu (2026-07-31 denetimi ZKR-P1-001, 1440×900 ölçümü).
-//
-// Doğru ayrım genişlik değil, **kısa ve yatay** olmaktır:
-//   • Masaüstü tarayıcılar genelde `width > height` olur ama telefon-yatay
-//     değildir — yükseklikleri boldur, dikey akışı rahat taşırlar.
-//   • Dikey tabletlerde zaten `height > width`.
-// Bu yüzden koşul üç şart birden arar; yalnız biri yetmez.
-
-/// Compact landscape dalının aradığı en küçük genişlik.
-const double _compactLandscapeMinWidth = 700.0;
-
-/// Compact landscape dalının kabul ettiği en büyük yükseklik. Telefonlar yan
-/// çevrildiğinde ~375–430px'e iner; masaüstü ve tabletler bunun çok üstünde
-/// kalır ve dikey akışı kullanır.
-const double _compactLandscapeMaxHeight = 600.0;
-
-/// Terminal 1v1 çağrısı sonsuza dek bekleyip geri dönüşü kilitlememeli.
-const Duration _onlineResultRequestTimeout = Duration(seconds: 15);
-
-/// İki sütunlu telefon-yatay düzeni bu viewport için uygun mu?
-///
-/// Beklenmeyen veya sonsuz bir yükseklik kısıtı gelirse güvenli varsayılan
-/// dikey (stacked) akıştır — iki sütunlu düzen dar bir özel durumdur.
-bool _useCompactLandscapeLayout(double width, double height) =>
-    height.isFinite &&
-    width >= _compactLandscapeMinWidth &&
-    width > height &&
-    height <= _compactLandscapeMaxHeight;
-
-/// Bot düellosunda ekranda gösterilecek rakip adını seçer.
-///
-/// `matchmaking_screen.dart` bot rakibi bulunca kullanıcıya "X ile
-/// eşleştin" diye duyurur VE `room.players`e o adı yazar. Ama bu ekran
-/// eskiden o ismi hiç okumuyordu — kendi rastgele adını `BotNames.pool`dan
-/// yeniden çekiyordu. Sonuç: duyurulan isim ile yarış boyunca görünen isim
-/// farklıydı (2026-08-14 denetimi). `roomPlayers`de ikinci oyuncu (index 1,
-/// matchmaking'in kurduğu sabit sıra: [sen, bot]) varsa onun adı kullanılır;
-/// yoksa (ör. bu ekranı doğrudan kuran testler) eski rastgele seçime düşülür.
-String botOpponentDisplayName(
-  List<Player> roomPlayers,
-  List<String> pool,
-  Random random,
-) {
-  if (roomPlayers.length > 1) {
-    final name = roomPlayers[1].name.trim();
-    if (name.isNotEmpty) return name;
-  }
-  return pool[random.nextInt(pool.length)];
-}
-
-/// Multiplayer quiz turlarının ortak faz durumu.
-enum _MultiplayerPhase {
-  /// Oyuncular cevap veriyor.
-  answering,
-
-  /// Cevap verildi, diğer oyuncu bekleniyor.
-  waiting,
-
-  /// İki oyuncu da cevapladı veya süre bitti; doğru cevap gösteriliyor.
-  reveal,
-}
-
-enum _OnlineResultPhase { idle, loading, retryableFailure }
-
-typedef _QuizCoinSettlement = ({
-  int coinsAwarded,
-  bool rewardQueued,
-  bool isDurable,
-  String ownerUserId,
-
-  /// Sıfır jeton, günlük tavana varıldığı İÇİN mi?
-  ///
-  /// Sonuç ekranı bunu ayırt edemezse oyuncuya "+0 jeton" gösterip
-  /// sebebini söylemez; sıfır tek başına belirsizdir.
-  bool dailyCapReached,
-});
-
-class _OpponentAnswer {
-  const _OpponentAnswer({required this.name, required this.answer});
-
-  final String name;
-  final String answer;
-}
-
-class _ResolvedResumeAnswer {
-  const _ResolvedResumeAnswer({
-    required this.answer,
-    required this.questionIndex,
-    required this.selectedAnswer,
-    required this.correctAnswer,
-  });
-
-  final ResumedAnswer answer;
-  final int questionIndex;
-  final String selectedAnswer;
-  final String correctAnswer;
-}
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({
@@ -231,20 +126,24 @@ class _QuizScreenState extends State<QuizScreen>
   ///
   /// Oda, 1v1, günlük tur, bot yarışı ve turnuva her hâlükârda sayaçlı
   /// kalır: orada süre puanın parçasıdır.
-  bool get _isRewardNeutralSolo =>
-      !widget.is1v1 &&
-      !widget.dailyQuiz &&
-      !widget.botRace &&
-      (widget.practice || widget.room.id == null);
+  bool get _isRewardNeutralSolo => isRewardNeutralSoloQuiz(
+    is1v1: widget.is1v1,
+    dailyQuiz: widget.dailyQuiz,
+    botRace: widget.botRace,
+    practice: widget.practice,
+    roomId: widget.room.id,
+  );
 
   /// Kullanıcı tercihi build sırasında okunur; `_untimedPreference`
   /// `didChangeDependencies` içinde tazelenir (sağlayıcı yoksa `false`).
   bool _untimedPreference = false;
 
-  bool get _usesTimer =>
-      widget.enableTimer &&
-      !_isLearningExperience &&
-      !(_untimedPreference && _isRewardNeutralSolo);
+  bool get _usesTimer => quizUsesTimer(
+    enableTimer: widget.enableTimer,
+    isLearning: _isLearningExperience,
+    untimedPreference: _untimedPreference,
+    rewardNeutralSolo: _isRewardNeutralSolo,
+  );
 
   /// Analytics'te "hangi modda oynanıyor" ayrımı için (quiz_start event'i).
   String get _quizModeLabel {
@@ -271,6 +170,8 @@ class _QuizScreenState extends State<QuizScreen>
   late List<Player> livePlayers = widget.room.players;
   StreamSubscription<List<Player>>? _playersSub;
   StreamSubscription<Map<String, dynamic>>? _realtimeSub;
+  final FloatingReactionController _reactionController =
+      FloatingReactionController();
   final Map<String, _OpponentAnswer> _opponentSelectedAnswers = {};
   final Set<String> _answeredPlayerKeys = {};
   Timer? _autoNextTimer;
@@ -403,6 +304,40 @@ class _QuizScreenState extends State<QuizScreen>
     });
   }
 
+  /// Açıklama kutusu belirdikten SONRA onu görünür alana getirir.
+  ///
+  /// [_revealCorrectAnswer] doğru şıkkı yukarı alırken açıklamanın da aynı
+  /// ekranda kalmasını umuyordu (alignment 0.12). Ama o kaydırma, açıklama
+  /// kutusu daha ağaçta yokken çalışıyor: kutu 800 ms'lik denetleyicinin
+  /// bitişinde açılır, üstüne 350 ms'lik boy geçişi biner. Yani kutunun
+  /// yüksekliği hesaba hiç katılmıyordu.
+  ///
+  /// Sonuç: soru metni üç satıra çıktığında (ör. "«görmek» demek için
+  /// Kurmancî'de hangi sözcük kullanılır?") açıklama kutusu sabit "Sonraki"
+  /// düğmesinin ARKASINDA kalıyor, oyuncu yalnız "Doğru cevap" etiketini
+  /// görüyor, cevabın kendisini görmek için kaydırmak zorunda kalıyordu.
+  /// Ders modunun bütün değeri o kutuda olduğu için bu sessiz bir kayıptı
+  /// (2026-08-16 simülatör taraması, iPhone 17).
+  void _revealExplanation() {
+    if (isFlutterTestEnvironment) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final target = _explanationKey.currentContext;
+      if (target == null) return;
+      Scrollable.ensureVisible(
+        target,
+        duration: const Duration(milliseconds: 320),
+        curve: Curves.easeOutCubic,
+        // 1.0: kutunun ALT kenarı görünür alanın altına yaslanır. Kutu
+        // zaten içeriğin en altındadır; hizayı yukarı çekmek soruyu
+        // gereksizce ekran dışına itiyordu.
+        alignment: 1.0,
+        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
+      );
+    });
+  }
+
+  final GlobalKey _explanationKey = GlobalKey();
   final GlobalKey _comboKey = GlobalKey();
   final GlobalKey _wildcardKey = GlobalKey();
   final GlobalKey _nextButtonKey = GlobalKey();
@@ -501,6 +436,7 @@ class _QuizScreenState extends State<QuizScreen>
     _explanationController.addStatusListener((status) {
       if (status == AnimationStatus.completed && mounted) {
         setState(() => _showExplanation = true);
+        _revealExplanation();
       }
     });
     if (_usesTimer) {
@@ -561,6 +497,14 @@ class _QuizScreenState extends State<QuizScreen>
                 id: _myId,
                 legacyName: name,
               );
+              if (payload['type'] == 'reaction') {
+                final text = payload['text'] as String?;
+                final sender = payload['sender_name'] as String? ?? senderName;
+                if (text != null && !isSelf) {
+                  _reactionController.triggerReaction(text, senderName: sender);
+                }
+                return;
+              }
               if (!_usesServerHiddenAnswers &&
                   senderName != null &&
                   !isSelf &&
@@ -1452,43 +1396,9 @@ class _QuizScreenState extends State<QuizScreen>
     try {
       final leave = await showDialog<bool>(
         context: context,
-        builder: (dialogContext) => AlertDialog(
-          backgroundColor: AppTheme.surfaceColor(context),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: BorderSide(color: AppTheme.borderColor(context)),
-          ),
-          // Kopya akışa göre değişir: öğrenme akışında kullanıcı "yarış"
-          // başlatmamıştı, ders başlatmıştı.
-          title: Text(
-            _isLearningExperience
-                ? context.t(K.leaveLessonQ)
-                : context.t(K.leaveRaceQ),
-          ),
-          content: Text(
-            _isMultiplayer
-                ? context.t(K.leaveOnlineMatchBody)
-                : _isLearningExperience
-                ? context.t(K.leaveLessonBody)
-                : context.t(K.leaveRaceBody),
-          ),
-          // Vurgu güvenli eylemdedir. Önceden "Çık" dolgulu birincil buton,
-          // "Devam Et" ise düz metindi: ilerlemeyi silen yıkıcı eylem, göz
-          // en çok oraya gittiği için varsayılan gibi duruyordu
-          // (2026-07-25 canlı denetimi).
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(true),
-              style: TextButton.styleFrom(
-                foregroundColor: Theme.of(dialogContext).colorScheme.error,
-              ),
-              child: Text(context.t(K.leaveAction)),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(context.t(K.continueAction)),
-            ),
-          ],
+        builder: (_) => _QuizExitDialog(
+          isLearning: _isLearningExperience,
+          isMultiplayer: _isMultiplayer,
         ),
       );
       if (leave != true ||
@@ -1588,14 +1498,15 @@ class _QuizScreenState extends State<QuizScreen>
   ///
   /// Sıra: oda kodu (çevrimiçi) → turun adı → kategori → genel "yarış".
   String _roundTitle(BuildContext context) {
-    if (widget.room.id != null) {
-      return '${context.t(K.roomWord)} ${widget.room.code}';
-    }
-    final name = widget.room.name.trim();
-    // Varsayılan oda adı bir tur adı değil, depo sabitidir.
-    if (name.isNotEmpty && name != 'Hevalên Zanînê') return name;
-    if (widget.room.category.isEmpty) return context.t(K.raceWord);
-    return CategoryNames.localized(widget.room.category, context.isKu);
+    return quizRoundTitle(
+      roomId: widget.room.id,
+      roomCode: widget.room.code,
+      roomName: widget.room.name,
+      category: widget.room.category,
+      isKu: context.isKu,
+      roomWord: context.t(K.roomWord),
+      raceWord: context.t(K.raceWord),
+    );
   }
 
   @override
@@ -1605,7 +1516,7 @@ class _QuizScreenState extends State<QuizScreen>
     }
     if (_questions.isEmpty) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: zkAppBar(context),
         body: Container(
           decoration: BoxDecoration(
             gradient: AppTheme.backgroundGradient(context),
@@ -1632,108 +1543,150 @@ class _QuizScreenState extends State<QuizScreen>
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _confirmExit();
       },
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          // Solo/bot oyunda oda kodu anlamsız gürültü; turun adı gösterilir.
-          //
-          // Kategori adı doğrudan yazılıyordu ve günün dersinde yalan
-          // oluyordu: o tur **karışık kategorilidir**, oda ise varsayılan
-          // 'Ziman' ile kurulur. Ekranın tepesinde "Ziman" yazarken ilk
-          // soru "Çand" etiketiyle geliyordu (2026-07-27, canlı gezinti).
-          //
-          // Turun kendi adı varsa (günün dersi, yarışma) o gösterilir;
-          // yoksa kategoriye düşülür.
-          title: Text(_roundTitle(context)),
-          actions: [
-            IconButton(
-              onPressed: _toggleFavorite,
-              tooltip: favoriteActionLabel,
-              icon: Icon(AppIcons.bookmark, semanticLabel: favoriteActionLabel),
-            ),
-            IconButton(
-              onPressed: _reportQuestion,
-              tooltip: context.t(K.reportAction),
-              icon: const Icon(AppIcons.triangleExclamation),
-            ),
-          ],
-        ),
-        body: Column(
-          children: [
-            // Turnuva/versus bandı: rakip adı + tur bilgisi (UI-only).
-            if (widget.versusBannerText != null)
-              SafeArea(
-                bottom: false,
-                child: _VersusBanner(text: widget.versusBannerText!),
-              ),
-            Expanded(
-              child: QuizTutorialOverlay(
-                isKu: _isKu,
-                timerKey: _timerTargetKey,
-                answerAreaKey: _answerAreaKey,
-                comboKey: _comboKey,
-                wildcardKey: _wildcardKey,
-                nextButtonKey: _nextButtonKey,
-                onReady: _handleTutorialReady,
-                timerSeconds: widget.room.secondsPerQuestion,
-                timed: _usesTimer,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: AppTheme.backgroundGradient(context),
+      // Sahne: soru ekranı uygulama temasından bağımsız olarak koyudur.
+      // Gerekçe ve niçin tek noktadan sarıldığı `AppTheme.stage`
+      // belgesinde.
+      child: Theme(
+        data: AppTheme.stage,
+        // `Builder` ŞART. `build`in `context` parametresi bu `Theme`in
+        // ÜSTÜNDEDİR; onunla okunan her tema değeri sahneyi değil
+        // uygulama temasını verir. İlk denemede kart ve şıklar kararmış
+        // ama sayfa zemini krem kalmıştı: gövdedeki
+        // `AppTheme.backgroundGradient(context)` çağrısı dıştaki
+        // context'i kullanıyordu (2026-08-19, simülatörden görüldü).
+        // Builder, altındaki her şeye sahnenin İÇİNDEN bir context verir.
+        child: Builder(
+          builder: (context) => Scaffold(
+            extendBodyBehindAppBar: true,
+            appBar: zkAppBar(
+              context,
+              // Solo/bot oyunda oda kodu anlamsız gürültü; turun adı gösterilir.
+              //
+              // Kategori adı doğrudan yazılıyordu ve günün dersinde yalan
+              // oluyordu: o tur **karışık kategorilidir**, oda ise varsayılan
+              // 'Ziman' ile kurulur. Ekranın tepesinde "Ziman" yazarken ilk
+              // soru "Çand" etiketiyle geliyordu (2026-07-27, canlı gezinti).
+              //
+              // Turun kendi adı varsa (günün dersi, yarışma) o gösterilir;
+              // yoksa kategoriye düşülür.
+              title: Text(_roundTitle(context)),
+              actions: [
+                if (_isMultiplayer)
+                  IconButton(
+                    key: const ValueKey('quiz-reaction-menu-button'),
+                    onPressed: () => _showLiveReactionMenu(context),
+                    tooltip: context.t(K.chat),
+                    icon: const Icon(AppIcons.faceSmile),
                   ),
-                  child: Stack(
-                    children: [
-                      SafeArea(
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            final useCompactLandscapeLayout =
-                                _useCompactLandscapeLayout(
-                                  constraints.maxWidth,
-                                  constraints.maxHeight,
-                                );
-                            if (useCompactLandscapeLayout) {
-                              return _buildCompactLandscapeLayout();
-                            }
-                            return _buildPortraitLayout();
-                          },
-                        ),
-                      ),
-                      // Vinyet yalnız aktif geri sayım baskısında: cevap verildikten
-                      // (veya süre dolduktan) sonra kırmızı parlama sönmeli, yoksa
-                      // açıklama okunurken ekran "alarm" modunda kalıyor (2026-07-05
-                      // görsel QA bulgusu).
-                      if (_usesTimer && !answered)
-                        CriticalVignette(animation: _timerController),
-                      WrongFlash(trigger: _shakeTrigger),
-                      if (_showAnswerBurst)
-                        ConfettiOverlay(
-                          particleCount: 24,
-                          duration: const Duration(milliseconds: 900),
-                          onFinished: () {
-                            setState(() {
-                              _showAnswerBurst = false;
-                            });
-                          },
-                        ),
-                      if (_showConfetti)
-                        ConfettiOverlay(
-                          onFinished: () {
-                            setState(() {
-                              _showConfetti = false;
-                            });
-                          },
-                        ),
-                      if ((_serverReadyWaiting && !answered) ||
-                          (_needsOpponentReadyGate &&
-                              !_opponentClientReady &&
-                              !_questionFlowStarted))
-                        _OpponentWaitingOverlay(isKu: _isKu),
-                    ],
+                IconButton(
+                  onPressed: _toggleFavorite,
+                  tooltip: favoriteActionLabel,
+                  icon: Icon(
+                    AppIcons.bookmark,
+                    semanticLabel: favoriteActionLabel,
                   ),
                 ),
-              ),
+                IconButton(
+                  onPressed: _reportQuestion,
+                  tooltip: context.t(K.reportAction),
+                  icon: const Icon(AppIcons.triangleExclamation),
+                ),
+              ],
             ),
-          ],
+            body: Column(
+              children: [
+                // Turnuva/versus bandı: rakip adı + tur bilgisi (UI-only).
+                if (widget.versusBannerText != null)
+                  SafeArea(
+                    bottom: false,
+                    child: _VersusBanner(text: widget.versusBannerText!),
+                  ),
+                Expanded(
+                  child: QuizTutorialOverlay(
+                    isKu: _isKu,
+                    timerKey: _timerTargetKey,
+                    comboKey: _comboKey,
+                    wildcardKey: _wildcardKey,
+                    nextButtonKey: _nextButtonKey,
+                    onReady: _handleTutorialReady,
+                    timerSeconds: widget.room.secondsPerQuestion,
+                    timed: _usesTimer,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: AppTheme.backgroundGradient(context),
+                      ),
+                      child: Stack(
+                        children: [
+                          SafeArea(
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                final useCompactLandscapeLayout =
+                                    _useCompactLandscapeLayout(
+                                      constraints.maxWidth,
+                                      constraints.maxHeight,
+                                    );
+                                if (useCompactLandscapeLayout) {
+                                  return _buildCompactLandscapeLayout();
+                                }
+                                return _buildPortraitLayout();
+                              },
+                            ),
+                          ),
+                          // Vinyet yalnız aktif geri sayım baskısında: cevap verildikten
+                          // (veya süre dolduktan) sonra kırmızı parlama sönmeli, yoksa
+                          // açıklama okunurken ekran "alarm" modunda kalıyor (2026-07-05
+                          // görsel QA bulgusu).
+                          if (_usesTimer && !answered)
+                            CriticalVignette(animation: _timerController),
+                          WrongFlash(trigger: _shakeTrigger),
+                          if (_showAnswerBurst)
+                            ConfettiOverlay(
+                              particleCount: 24,
+                              duration: const Duration(milliseconds: 900),
+                              onFinished: () {
+                                setState(() {
+                                  _showAnswerBurst = false;
+                                });
+                              },
+                            ),
+                          if (_showConfetti)
+                            ConfettiOverlay(
+                              onFinished: () {
+                                setState(() {
+                                  _showConfetti = false;
+                                });
+                              },
+                            ),
+                          if ((_serverReadyWaiting && !answered) ||
+                              (_needsOpponentReadyGate &&
+                                  !_opponentClientReady &&
+                                  !_questionFlowStarted))
+                            _OpponentWaitingOverlay(isKu: _isKu),
+                          // Canlı çok oyunculu reaksiyon baloncukları.
+                          //
+                          // Baloncuk çizimi burada ELDE yazılmaz: `room_screen`
+                          // gibi `FloatingReactionOverlay`e devredilir. Elde
+                          // yazılan sürüm `_SingleAnimatedReactionBubble`ı
+                          // çağırıyordu; o sınıf `floating_reaction_overlay.dart`
+                          // içinde `_` önekli, yani dosya dışından görünmez —
+                          // kod derlenmiyordu. Tek çizim yolu olması ayrıca
+                          // animasyon süresi/eğrisi iki ekranda ayrışmasın diye.
+                          Positioned.fill(
+                            child: IgnorePointer(
+                              child: FloatingReactionOverlay(
+                                controller: _reactionController,
+                                child: const SizedBox.expand(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -1854,6 +1807,67 @@ class _QuizScreenState extends State<QuizScreen>
         }
       }
     });
+  }
+
+  Future<void> _sendLiveReaction(String text) async {
+    final roomId = widget.room.id;
+    _reactionController.triggerReaction(text, senderName: _myName);
+    if (roomId == null) return;
+    try {
+      await widget.repository.sendRoomBroadcast(roomId, {
+        'type': 'reaction',
+        'text': text,
+        'sender_name': _myName,
+        'sender_id': _myId,
+      });
+    } catch (_) {}
+  }
+
+  void _showLiveReactionMenu(BuildContext context) {
+    final reactions = [
+      (context.t(K.reactionBravo), '👏'),
+      (context.t(K.reactionGoodLuck), '🍀'),
+      (context.t(K.reactionFast), '⚡'),
+      (context.t(K.reactionSmiley), '😊'),
+      (context.t(K.reactionFire), '🔥'),
+    ];
+
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => Container(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        decoration: BoxDecoration(
+          color: AppTheme.bgOf(ctx),
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(AppRadius.card),
+          ),
+        ),
+        child: Wrap(
+          spacing: AppSpacing.xs,
+          runSpacing: AppSpacing.xs,
+          alignment: WrapAlignment.center,
+          children: [
+            for (final r in reactions)
+              ActionChip(
+                key: ValueKey('live-quiz-reaction-${r.$2}'),
+                label: Text(
+                  r.$1,
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryColor(ctx),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                backgroundColor: AppTheme.surfaceColor(ctx),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                  _sendLiveReaction(r.$1);
+                },
+              ),
+          ],
+        ),
+      ),
+    );
   }
 
   /// Rakip cevap vermese bile bekleme fazını sınırlı tutar. Host yaşıyorsa
@@ -2257,21 +2271,7 @@ class _QuizScreenState extends State<QuizScreen>
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppTheme.surfaceColor(context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: AppTheme.borderColor(context)),
-        ),
-        title: Text(context.t(K.matchForfeitedTitle)),
-        content: Text(context.t(bodyKey)),
-        actions: [
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(context.t(K.ok)),
-          ),
-        ],
-      ),
+      builder: (_) => _QuizForfeitDialog(bodyKey: bodyKey),
     );
     if (!mounted) return true;
     if (!_canContinueOnExpectedRoute(expectedOwnerId, expectedRoute)) {
@@ -2783,6 +2783,7 @@ class _QuizScreenState extends State<QuizScreen>
             opponents: _opponents.toList(),
             practice: widget.practice,
             dailyQuiz: widget.dailyQuiz,
+            isLearningExperience: _isLearningExperience,
             contestId: widget.contestId,
           ),
         ),
@@ -3112,72 +3113,6 @@ class _QuizScreenState extends State<QuizScreen>
     };
   }
 
-  Widget _buildOnlineResultGate(BuildContext context) {
-    final loading = _onlineResultPhase == _OnlineResultPhase.loading;
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, _) {
-        if (!didPop && !loading) {
-          _leaveOnlineResultGate();
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(context.t(K.resultTitle)),
-        ),
-        body: SafeArea(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (loading)
-                    const CircularProgressIndicator()
-                  else
-                    Icon(
-                      _onlineResultOwnerChanged
-                          ? AppIcons.shield
-                          : AppIcons.cloud,
-                      size: 42,
-                      color: AppTheme.gold,
-                    ),
-                  const SizedBox(height: AppSpacing.md),
-                  Text(
-                    context.t(
-                      loading
-                          ? K.resultRecoveryLoading
-                          : _onlineResultOwnerChanged
-                          ? K.resultRecoveryOwnerChanged
-                          : K.resultRecoveryFailed,
-                    ),
-                    textAlign: TextAlign.center,
-                    style: AppTypography.bodyLarge,
-                  ),
-                  if (!loading) ...[
-                    const SizedBox(height: AppSpacing.md),
-                    FilledButton.icon(
-                      onPressed: _retryOnlineResultGate,
-                      icon: const Icon(AppIcons.arrowsRotate),
-                      label: Text(context.t(K.retry)),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    TextButton.icon(
-                      onPressed: _leaveOnlineResultGate,
-                      icon: const Icon(AppIcons.house),
-                      label: Text(context.t(K.home)),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Future<void> _answer(String answer) async {
     if (answered) return;
     HapticFeedback.selectionClick();
@@ -3224,7 +3159,7 @@ class _QuizScreenState extends State<QuizScreen>
     });
     final responseMs = _questionStopwatch.elapsedMilliseconds;
     if (!isTimeout && !isFlutterTestEnvironment) {
-      await Future.delayed(const Duration(milliseconds: 400));
+      await Future.delayed(const Duration(milliseconds: 520));
     }
     // Bekleme sırasında soru ilerlediyse (ör. hızlı "Piştre") sonucu
     // yeni soruya uygulama — eski cevabın skor bulaşmasını önler.
@@ -3468,6 +3403,7 @@ class _QuizScreenState extends State<QuizScreen>
                 : (_botRace?.toPlayers() ?? const []),
             practice: widget.practice,
             dailyQuiz: widget.dailyQuiz,
+            isLearningExperience: _isLearningExperience,
             contestId: widget.contestId,
           ),
         ),
@@ -3584,35 +3520,7 @@ class _QuizScreenState extends State<QuizScreen>
     );
     final reason = await showDialog<String>(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          backgroundColor: AppTheme.surfaceColor(context),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: BorderSide(color: AppTheme.borderColor(context)),
-          ),
-          title: Text(context.t(K.reportQuestion)),
-          content: TextField(
-            controller: controller,
-            minLines: 2,
-            maxLines: 4,
-            decoration: InputDecoration(
-              labelText: context.t(K.reasonLabel),
-              border: const OutlineInputBorder(),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(context.t(K.cancel)),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.of(dialogContext).pop(controller.text),
-              child: Text(context.t(K.sendAction)),
-            ),
-          ],
-        );
-      },
+      builder: (_) => _QuizReportDialog(controller: controller),
     );
     controller.dispose();
     if (reason == null) return;

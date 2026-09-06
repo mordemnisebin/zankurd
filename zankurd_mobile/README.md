@@ -2,12 +2,12 @@
 
 ZanKurd, Kurmanci odaklı bir bilgi yarışması uygulamasıdır. Bu klasör Play Store'a gönderilecek ana Flutter uygulamasıdır.
 
-Web prototipi `../zankurd` altında durur; Play Console'a yüklenecek paket bu projeden üretilir.
+Eski Vite prototipi `../docs/archive/web_prototype` altındadır; Play paketi bu klasörden üretilir.
 
 ## Ürün Kapsamı
 
 - Misafir/anonim giriş ve profil adı akışı
-- Kurmanci/Türkçe arayüz geçişi (çift dilli ARB dosyaları)
+- Kurmanci/Türkçe arayüz geçişi (anahtar tabanlı kayıt: `lib/src/l10n/strings.dart`)
 - Aydınlık/Karanlık tema geçişi
 - Kategori ve seviye bazlı quiz
 - Günlük yarışma
@@ -16,9 +16,11 @@ Web prototipi `../zankurd` altında durur; Play Console'a yüklenecek paket bu p
 - Online oda, canlı oyuncu listesi ve liderlik tablosu
 - Rozet & Streak sistemi (30 gün, 500/1000 soru, mükemmel oyun, hız)
 - SM-2 aralıklı tekrar algoritması ile yanlış soru takibi
-- Günlük push hatırlatıcı bildirimleri (saat seçimi ile)
+- Günlük push hatırlatıcı bildirimleri (saat seçimi ile). Sunucu kuyruğu
+  `push_outbox`; Google'a gönderim `tool/send_push_outbox.py` (Firebase
+  servis hesabı gerekir, repoda yok).
 - Anonim kullanım analitikleri (Firebase Analytics)
-- Glassmorphism efektli modern UI bileşenleri
+- Kilim motifli, antrasit/yeşil paletli arayüz
 - Uygulama içinden hesap silme isteği
 - Firebase Crashlytics ile çökme raporlama
 - Offline XP senkronizasyonu
@@ -30,9 +32,9 @@ Detaylı mimari belgeler için [ARCHITECTURE.md](ARCHITECTURE.md) dosyasına bak
 - `lib/main.dart`: Firebase/Crashlytics, Analytics ve Supabase başlangıcı
 - `lib/src/data/`: Repository, SM-2, Streak, Badge, XP ve Sync veri katmanı
 - `lib/src/screens/`: Ana ekran, quiz, liderlik, profil, ayarlar ve oda akışları
-- `lib/src/widgets/`: Ortak panel, badge widget, glass panel, chart bileşenleri
-- `lib/src/theme/`: Material 3 tema, glassmorphism ve renk sistemi
-- `lib/src/l10n/`: Kurmanci/Türkçe çeviri dosyaları (ARB) ve dil yardımcıları
+- `lib/src/widgets/`: Ortak panel, rozet, kilim ve grafik bileşenleri
+- `lib/src/theme/`: Material 3 tema, antrasit/yeşil palet
+- `lib/src/l10n/`: Kurmancî/Türkçe anahtar tabanlı metinler (`strings.dart`, `lang.dart`)
 - `lib/src/services/`: Analitik, bildirim ve rozet servisleri
 - `lib/src/providers/`: Auth, Theme, Language ve Sound state management
 - `supabase/`: Play sürümü için gereken SQL/RPC/policy dosyaları
@@ -66,11 +68,6 @@ flutter run `
 ```powershell
 dart analyze
 flutter test --exclude-tags preview
-
-Pushd widgetbook
-flutter pub get
-dart analyze
-Pop-Location
 ```
 
 Kök analiz ZanKurd uygulama paketinin tamamını doğrular.
@@ -290,22 +287,10 @@ Google Play'de gizlilik politikası için `web/privacy.html` dosyası herkese a�
 
 ## Canlı Backend SQL Sırası
 
-Supabase SQL Editor'de en az şu dosyalar uygulanmış olmalıdır:
+Canlıya uygulanan dosyaların **tek** doğruluk kaynağı
+`supabase/applied.md` dosyasıdır. Tarihsiz kök SQL dosyalarını
+(`public_read_policies.sql`, `online_room_policies.sql` vb.) yeniden
+çalıştırma: sonraki tarihli göçlerin üzerine yazarlar.
 
-1. `supabase/public_read_policies.sql`
-2. `supabase/online_room_policies.sql`
-3. `supabase/online_game_sync.sql`
-4. `supabase/leaderboard_view.sql`
-5. `supabase/submit_answer_function.sql`
-6. `supabase/daily_spin_rpc.sql`
-7. `supabase/quiz_reward_rpc.sql`
-8. `supabase/coin_policies.sql`
-9. `supabase/delete_my_account_rpc.sql`
-10. `supabase/2026-07-29_release_readiness_hardening.sql`
-11. `supabase/2026-07-29_shop_purchase_integrity_fix.sql`
-
-Canlıya uygulanan dosyaların tek doğruluk kaynağı
-`supabase/applied.md` dosyasıdır; tarihsel SQL dosyaları yeni göçlerin
-üzerine yeniden çalıştırılmaz.
-
-Soru bankası temizliği için `supabase/dedupe_and_fix_questions.sql` ayrıca çalıştırılabilir.
+Yeni bir göç uyguladıktan sonra `applied.md` satırını güncelle; bekçi
+testleri dosya içeriğini kilitler, canlı katalog doğrulaması ayrıdır.

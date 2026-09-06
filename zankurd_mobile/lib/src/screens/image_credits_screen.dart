@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
+import '../utils/external_link.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/zk_back_button.dart';
 
 /// Soru fotoğraflarının künyesi.
 ///
@@ -52,7 +52,7 @@ class _ImageCreditsScreenState extends State<ImageCreditsScreen> {
   Widget build(BuildContext context) {
     final credits = _credits;
     return Scaffold(
-      appBar: AppBar(title: Text(context.t(K.imageCredits))),
+      appBar: zkAppBar(context, title: Text(context.t(K.imageCredits))),
       body: Container(
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
@@ -161,9 +161,14 @@ class _CreditTile extends StatelessWidget {
           if (credit.source.isNotEmpty) ...[
             const SizedBox(height: 6),
             InkWell(
-              onTap: () => launchUrl(
-                Uri.parse(credit.source),
-                mode: LaunchMode.externalApplication,
+              // Doğrudan `launchUrl` DEĞİL: dönen değeri okumadan, hiçbir
+              // `try` olmadan çağrılıyordu. Künye bir lisans metnidir; CC
+              // görsellerin atfı çalışan bir kaynak bağlantısı ister ve ölü
+              // bağlantı sessizce hiçbir şey yapıyordu (2026-08-17).
+              onTap: () => openExternalLink(
+                context,
+                credit.source,
+                reason: 'image credit source',
               ),
               child: Text(
                 context.t(K.imageCreditsSource),

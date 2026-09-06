@@ -177,30 +177,24 @@ void main() {
         ),
       );
 
-  test(
-    'loadCoinBalance GERÇEK ağ hatasını yukarı taşır — 3000 coinlik oyuncu '
-    '"0 coin" görmesin',
-    () async {
-      // 2026-08-14 denetimi: eskiden her hata 0'a çevriliyordu; uçak
-      // modundaki bir oyuncu bakiyesini kaybettiğini sanıyordu ve
-      // mağazanın hazır çevrimdışı durumu (`shop_screen.dart`)
-      // tetiklenemiyordu.
-      final repo = networkUnreachableRepo();
-      await expectLater(repo.loadCoinBalance(), throwsA(anything));
-    },
-  );
+  test('loadCoinBalance GERÇEK ağ hatasını yukarı taşır — 3000 coinlik oyuncu '
+      '"0 coin" görmesin', () async {
+    // 2026-08-14 denetimi: eskiden her hata 0'a çevriliyordu; uçak
+    // modundaki bir oyuncu bakiyesini kaybettiğini sanıyordu ve
+    // mağazanın hazır çevrimdışı durumu (`shop_screen.dart`)
+    // tetiklenemiyordu.
+    final repo = networkUnreachableRepo();
+    await expectLater(repo.loadCoinBalance(), throwsA(anything));
+  });
 
-  test(
-    'hasPurchased GERÇEK ağ hatasını yukarı taşır — "satın alınmadı" '
-    'yalanı söylenmez',
-    () async {
-      final repo = networkUnreachableRepo();
-      await expectLater(
-        repo.hasPurchased('avatar_frame_gold'),
-        throwsA(anything),
-      );
-    },
-  );
+  test('hasPurchased GERÇEK ağ hatasını yukarı taşır — "satın alınmadı" '
+      'yalanı söylenmez', () async {
+    final repo = networkUnreachableRepo();
+    await expectLater(
+      repo.hasPurchased('avatar_frame_gold'),
+      throwsA(anything),
+    );
+  });
 
   test(
     'hasPurchased sınıflandırılamayan hatada throw etmez, false döner',

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:zankurd_mobile/src/data/curated_question_bank.dart';
+import 'package:zankurd_mobile/src/data/question_bank_assets.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
@@ -18,6 +19,26 @@ List<QuizQuestion> loadOfflineBankFromJson() {
   return list
       .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
       .toList(growable: false);
+}
+
+/// `questionBankAssets` içindeki BÜTÜN bankaları yükler.
+///
+/// Tek banka yükleyicileri bir kuralı yalnız bir dosyada uygular ve
+/// kuralın kapsamı sessizce dar kalır: çeldirici tür kuralı 2026-07-24'ten
+/// beri yalnız `offline_questions.json`a bakıyordu, oysa o tarihten sonra
+/// bankaya dokuz dosya daha eklendi (2026-08-24, A12).
+List<QuizQuestion> loadEveryBankFromJson() {
+  ensureQuestionBankLoaderInitialized();
+  final all = <QuizQuestion>[];
+  for (final asset in questionBankAssets) {
+    final file = File(asset);
+    if (!file.existsSync()) continue;
+    final list = json.decode(file.readAsStringSync()) as List<dynamic>;
+    all.addAll(
+      list.map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>)),
+    );
+  }
+  return List.unmodifiable(all);
 }
 
 List<QuizQuestion> loadEditorialBankFromJson() {

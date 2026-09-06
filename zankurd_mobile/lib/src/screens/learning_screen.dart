@@ -8,8 +8,6 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/lesson.dart';
-import '../models/mini_guide.dart';
-import '../models/story.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -19,7 +17,9 @@ import 'story_screen.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/story_catalog.dart';
 import '../widgets/todays_review_card.dart';
+import '../widgets/zk_back_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -48,7 +48,9 @@ int learningRecommendedIndex({
   required int placementIndex,
 }) {
   if (completedLessonIds.isEmpty) return placementIndex;
-  return lessons.indexWhere((lesson) => !completedLessonIds.contains(lesson.id));
+  return lessons.indexWhere(
+    (lesson) => !completedLessonIds.contains(lesson.id),
+  );
 }
 
 /// Öğrenme konusunu (`Lesson.category`) soru bankası kategorisine çevirir.
@@ -165,7 +167,14 @@ class _LearningScreenState extends State<LearningScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final unifiedScroll = MediaQuery.textScalerOf(context).scale(14) > 20;
+    final unifiedScroll =
+        MediaQuery.textScalerOf(context).scale(14) > 20 ||
+        MediaQuery.sizeOf(context).width < 380 ||
+        MediaQuery.sizeOf(context).height < 760 ||
+        // Ders listesi kaydırılabilir değilse (henüz yüklenmedi, boş ya
+        // da hata) sabit sütun taşar: hikâye kataloğuyla birlikte üst
+        // bölüm ekrana sığmaz. Liste varken sabit araç düzeni korunur.
+        _currentLessons.isEmpty;
     return Scaffold(
       extendBodyBehindAppBar: true,
       // AppBar başlıksız: ekranın adını `ScreenIdentityHeader` taşıyor.
@@ -175,7 +184,7 @@ class _LearningScreenState extends State<LearningScreen> {
       // ekran turu, 55/56). Kimlik bandı kullanan on ekranın sekizi AppBar
       // başlığını zaten boş bırakıyor; aykırı olan buydu. Oyuncu hangi
       // sekmede olduğunu alt gezinme çubuğundan görüyor.
-      appBar: AppBar(),
+      appBar: zkAppBar(context),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
@@ -232,8 +241,9 @@ class _LearningScreenState extends State<LearningScreen> {
                       isKu: ku,
                     ),
                   ),
-                  // Hikâye modu girişi (metin tabanlı, sessiz). Ünite başında mini
-                  // rehber de buradan açılır.
+                  _buildTopRecommendedLesson(context, ku),
+                  // Metin tabanlı günlük hikâyeler. Her kart kendi yerel
+                  // ilerlemesini gösterir ve dönüşte durumu yeniler.
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
                       AppSpacing.page,
@@ -241,24 +251,15 @@ class _LearningScreenState extends State<LearningScreen> {
                       AppSpacing.page,
                       0,
                     ),
-                    // Dar ekranlarda (360px) ikon+metin taşmasını önlemek için
-                    // tam genişlik: intrinsic genişlik dar viewport'ta sığmıyordu.
                     child: SizedBox(
+                      key: const ValueKey('learning-story-entry'),
                       width: double.infinity,
-                      child: OutlinedButton.icon(
-                        key: const ValueKey('learning-story-entry'),
-                        onPressed: () => Navigator.of(context).push(
+                      child: StoryCatalog(
+                        isKu: ku,
+                        onOpen: (story, guide) => Navigator.of(context).push(
                           AppRoute(
-                            page: StoryScreen(
-                              story: cayxaneStory,
-                              guide: cayxaneGuide,
-                            ),
+                            page: StoryScreen(story: story, guide: guide),
                           ),
-                        ),
-                        icon: const Icon(AppIcons.bookOpenReader, size: 18),
-                        label: Text(
-                          context.t(K.storyTeahouse),
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
@@ -348,6 +349,80 @@ class _LearningScreenState extends State<LearningScreen> {
     );
   }
 
+  int _recommendedLessonIndex(List<Lesson> lessons) {
+    final placementIndex = PlacementScoring.recommendedStartIndex(
+      _placementLevel,
+      lessons.length,
+    );
+    return learningRecommendedIndex(
+      lessons: lessons,
+      completedLessonIds: _completedIds,
+      placementIndex: placementIndex,
+    );
+  }
+
+  String _lessonTitle(Lesson lesson, bool ku) =>
+      ku ? lesson.titleKu : (lesson.titleTr ?? lesson.titleKu);
+
+  String _lessonStateSemanticLabel(
+    BuildContext context,
+    Lesson lesson,
+    bool ku, {
+    required bool completed,
+    required bool current,
+    required bool locked,
+  }) {
+    final state = completed
+        ? context.t(K.dersTamamlandi)
+        : current
+        ? context.t(K.next)
+        : locked
+        ? context.t(K.locked)
+        : '';
+    return '${_lessonTitle(lesson, ku)}. $state';
+  }
+
+  Widget _buildTopRecommendedLesson(BuildContext context, bool ku) {
+    if (_currentLessons.isEmpty) return const SizedBox.shrink();
+
+    final index = _recommendedLessonIndex(_currentLessons);
+    if (index < 0 || index >= _currentLessons.length) {
+      return const SizedBox.shrink();
+    }
+
+    final lesson = _currentLessons[index];
+    final placementContext = _placementLevel != null && _completedIds.isEmpty
+        ? context.t(K.currentLevel, {
+            'name': ku ? _placementLevel!.labelKu : _placementLevel!.labelTr,
+          })
+        : null;
+    final semanticLabels = <String>[
+      context.t(K.recommendedForYou),
+      _lessonTitle(lesson, ku),
+    ];
+    if (placementContext != null) semanticLabels.add(placementContext);
+    final semanticLabel = semanticLabels.join('. ');
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.page,
+        AppSpacing.xs,
+        AppSpacing.page,
+        0,
+      ),
+      child: _LessonCard(
+        lesson: lesson,
+        ku: ku,
+        completed: false,
+        locked: false,
+        recommended: true,
+        supportingLabel: placementContext,
+        semanticLabel: semanticLabel,
+        onTap: () => _openLesson(lesson),
+      ),
+    );
+  }
+
   Widget _buildLessons(BuildContext context, bool ku, {bool embedded = false}) {
     return FutureBuilder<List<Lesson>>(
       future: _lessonsFuture,
@@ -378,16 +453,7 @@ class _LearningScreenState extends State<LearningScreen> {
             onAction: _loadLessons,
           );
         }
-        final placementIndex = PlacementScoring.recommendedStartIndex(
-          _placementLevel,
-          lessons.length,
-        );
-        final firstOpenIndex = learningRecommendedIndex(
-          lessons: lessons,
-          completedLessonIds: _completedIds,
-          placementIndex: placementIndex,
-        );
-        final recommendedIndex = firstOpenIndex;
+        final firstOpenIndex = _recommendedLessonIndex(lessons);
         return ListView.builder(
           shrinkWrap: embedded,
           physics: embedded ? const NeverScrollableScrollPhysics() : null,
@@ -417,25 +483,30 @@ class _LearningScreenState extends State<LearningScreen> {
                 ku: ku,
                 completed: completed,
                 locked: locked,
-                recommended: i == recommendedIndex,
-                onTap: () async {
-                  if (locked) return;
-                  await Navigator.of(context).push(
-                    AppRoute(
-                      page: LessonDetailScreen(
-                        lesson: lessons[i],
-                        repository: widget.repository,
-                      ),
-                    ),
-                  );
-                  _refreshCompleted();
-                },
+                semanticLabel: _lessonStateSemanticLabel(
+                  ctx,
+                  lessons[i],
+                  ku,
+                  completed: completed,
+                  current: current,
+                  locked: locked,
+                ),
+                onTap: locked ? () {} : () => _openLesson(lessons[i]),
               ),
             );
           },
         );
       },
     );
+  }
+
+  Future<void> _openLesson(Lesson lesson) async {
+    await Navigator.of(context).push(
+      AppRoute(
+        page: LessonDetailScreen(lesson: lesson, repository: widget.repository),
+      ),
+    );
+    _refreshCompleted();
   }
 
   Future<void> _openCategoryPractice() async {
@@ -795,6 +866,8 @@ class _LessonCard extends StatelessWidget {
     required this.locked,
     required this.onTap,
     this.recommended = false,
+    this.supportingLabel,
+    this.semanticLabel,
   });
 
   final Lesson lesson;
@@ -806,6 +879,8 @@ class _LessonCard extends StatelessWidget {
   /// Seviye belirlemeye göre önerilen başlangıç düğümü mü. Yalnız görsel bir
   /// işarettir; kilit/tamamlanma durumunu değiştirmez.
   final bool recommended;
+  final String? supportingLabel;
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -828,6 +903,7 @@ class _LessonCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12),
       child: AppPanel(
         onTap: locked ? null : onTap,
+        semanticLabel: semanticLabel,
         key: recommended && !completed
             ? const ValueKey("learning-next-step")
             : null,
@@ -881,6 +957,18 @@ class _LessonCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.caption.copyWith(color: subtitleColor),
                   ),
+                  if (supportingLabel != null) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      supportingLabel!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.caption.copyWith(
+                        color: subtitleColor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                   if (recommended && !completed) ...[
                     const SizedBox(height: 6),
                     Container(
@@ -963,7 +1051,6 @@ class _LessonCard extends StatelessWidget {
       ),
     );
   }
-
 }
 
 /// Sunucunun gönderdiği Material ikon adı (`icon_name`, ör. `numbers`,
@@ -1065,24 +1152,147 @@ class _LearningPathNode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = completed
-        ? AppTheme.playGreen
+    final connectorColor = completed
+        ? AppTheme.gold
         : current
         ? AppTheme.brand
-        : AppTheme.borderColor(context);
+        : AppTheme.borderColor(context).withValues(alpha: 0.35);
+
     return Stack(
       children: [
+        // Dikey dokuma yolu bağlantı çizgisi
         Positioned(
-          left: 27,
+          left: 9,
           top: 0,
           bottom: 0,
-          child: Container(width: 3, color: color.withValues(alpha: 0.45)),
+          child: Container(
+            width: 2.5,
+            decoration: BoxDecoration(
+              color: connectorColor,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
         ),
+        // Baklava düğüm (Kilim diamond node)
+        Positioned(
+          left: 2,
+          top: 22,
+          child: _KilimPathDiamond(
+            completed: completed,
+            current: current,
+            locked: locked,
+          ),
+        ),
+        // Kart içeriği
         Padding(
-          padding: EdgeInsets.only(left: index.isEven ? 0 : AppSpacing.lg),
-          child: Opacity(opacity: locked ? 0.58 : 1, child: child),
+          padding: EdgeInsets.only(
+            left: 26 + (index.isEven ? 0.0 : 8.0),
+            bottom: AppSpacing.xs,
+          ),
+          child: Opacity(opacity: locked ? 0.62 : 1.0, child: child),
         ),
       ],
+    );
+  }
+}
+
+/// Ders yolundaki kültürel kilim baklava düğümü.
+class _KilimPathDiamond extends StatelessWidget {
+  const _KilimPathDiamond({
+    required this.completed,
+    required this.current,
+    required this.locked,
+  });
+
+  final bool completed;
+  final bool current;
+  final bool locked;
+
+  @override
+  Widget build(BuildContext context) {
+    if (completed) {
+      // Tamamlanan: Altın dolgulu baklava düğüm
+      return Transform.rotate(
+        angle: math.pi / 4,
+        child: Container(
+          width: 17,
+          height: 17,
+          decoration: BoxDecoration(
+            color: AppTheme.gold,
+            borderRadius: BorderRadius.circular(3),
+            border: Border.all(color: const Color(0xFFD97706), width: 1.2),
+            boxShadow: [
+              BoxShadow(
+                color: AppTheme.gold.withValues(alpha: 0.35),
+                blurRadius: 4,
+                offset: const Offset(0, 1),
+              ),
+            ],
+          ),
+          child: Transform.rotate(
+            angle: -math.pi / 4,
+            child: const Icon(AppIcons.check, size: 10, color: Colors.white),
+          ),
+        ),
+      );
+    }
+
+    if (current) {
+      // Aktif/Sıradaki: Parlayan marka rengi baklava
+      return Transform.rotate(
+        angle: math.pi / 4,
+        child: Container(
+          width: 17,
+          height: 17,
+          decoration: BoxDecoration(
+            color: AppTheme.brand,
+            borderRadius: BorderRadius.circular(3),
+            border: Border.all(color: Colors.white, width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: AppTheme.brand.withValues(alpha: 0.45),
+                blurRadius: 6,
+                offset: const Offset(0, 1),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Container(
+              width: 4,
+              height: 4,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    // Kilitli: Şeffaf / tema kenarlıklı sessiz baklava
+    return Transform.rotate(
+      angle: math.pi / 4,
+      child: Container(
+        width: 16,
+        height: 16,
+        decoration: BoxDecoration(
+          color: AppTheme.surfaceHiColor(context),
+          borderRadius: BorderRadius.circular(2.5),
+          border: Border.all(
+            color: AppTheme.borderColor(context).withValues(alpha: 0.55),
+            width: 1.2,
+          ),
+        ),
+        child: Transform.rotate(
+          angle: -math.pi / 4,
+          child: Icon(
+            AppIcons.lock,
+            size: 8,
+            color: AppTheme.textMutedColor(context),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -1095,29 +1305,74 @@ class _MasteryGoal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: const ValueKey('learning-mastery-goal'),
-      margin: const EdgeInsets.only(top: AppSpacing.xs),
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppTheme.gold.withValues(alpha: completed ? 0.20 : 0.09),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: AppTheme.gold.withValues(alpha: 0.45)),
-      ),
-      child: Row(
-        children: [
-          const Icon(AppIcons.medal, color: AppTheme.gold),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Text(
-              context.t(K.categoryMasteryGoal),
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppTheme.textPrimaryColor(context),
+    return Stack(
+      children: [
+        Positioned(
+          left: 9,
+          top: 0,
+          bottom: 24,
+          child: Container(
+            width: 2.5,
+            decoration: BoxDecoration(
+              color: AppTheme.gold.withValues(alpha: completed ? 1.0 : 0.4),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+        ),
+        Positioned(
+          left: 2,
+          top: 14,
+          child: Transform.rotate(
+            angle: math.pi / 4,
+            child: Container(
+              width: 17,
+              height: 17,
+              decoration: BoxDecoration(
+                color: completed
+                    ? AppTheme.gold
+                    : AppTheme.surfaceHiColor(context),
+                borderRadius: BorderRadius.circular(3),
+                border: Border.all(color: AppTheme.gold, width: 1.2),
+              ),
+              child: Transform.rotate(
+                angle: -math.pi / 4,
+                child: Icon(
+                  AppIcons.medal,
+                  size: 9,
+                  color: completed ? Colors.white : AppTheme.gold,
+                ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 26),
+          child: Container(
+            key: const ValueKey('learning-mastery-goal'),
+            margin: const EdgeInsets.only(top: AppSpacing.xs),
+            padding: const EdgeInsets.all(AppSpacing.md),
+            decoration: BoxDecoration(
+              color: AppTheme.gold.withValues(alpha: completed ? 0.20 : 0.09),
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              border: Border.all(color: AppTheme.gold.withValues(alpha: 0.45)),
+            ),
+            child: Row(
+              children: [
+                const Icon(AppIcons.medal, color: AppTheme.gold),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: Text(
+                    context.t(K.categoryMasteryGoal),
+                    style: AppTypography.bodyLarge.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -1414,7 +1669,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   Widget build(BuildContext context) {
     final ku = context.isKu;
     return Scaffold(
-      appBar: AppBar(
+      appBar: zkAppBar(
+        context,
         // Ders başlığı arayüz diline uyar; Kurmancî adı yedek kalır.
         title: Text(
           ku

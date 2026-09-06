@@ -1,62 +1,58 @@
-# Büyük medya ve çıktı klasörleri
-görseller/
-Pirs_apk_extracted/
-output/
-*.zip
-
-# Başka bir ajan/araç tarafından proje içine yazılan oturum log'ları
-# (üretim kodu değil; repo dışına taşınması gerekir ama şimdilik yok sayılıyor)
-zankurd_mobile/bash_events/
-zankurd_mobile/conversations/
-
-# Kök seviyedeki oturum ekran görüntüleri (ürün asset'i değil)
-/tour-*.jpeg
-/live-*.jpeg
-/fazA-*.jpeg
-/fazB-*.jpeg
-/pirs_*.jpg
-/zankurd.png
-
-# Mobil ve test araçlarının bağımlılıkları/önbellekleri
-.playwright-mcp/
-.agents/
-.claude/
-.codex/
-.vscode/
-
-# Eğer varsa sanal ortam klasörleri
-venv/
-# Ortam değişkenleri ve gizli dosyalar
-.env
-.env.*
-!.env.example
-# .env.deploy (FTP şifresi içerir) — deploy-to-hostinger.sh yerelde okur.
-.env.deploy
-# Oturum artıkları ve yerel araç dizinleri
-.serena/
-.playwright-cli/
-pirs_dump.xml
-/pirs_*.png
-
-# Repo dışı kalması gereken tasarım inceleme ve audit araçları
-audit/
-design_review/
-phase1-desktop-current.png
-**/test/golden/failures/
-/.worktrees/
-
-.aider*
-
-# macOS klasor metadata cop dosyalari
+# macOS
 .DS_Store
-**/.DS_Store
 
-# Python derleme cache
-__pycache__/
-*.pyc
+# Ajan araçlarının makineye özgü çalışma dosyaları.
+#
+# Bunlar ZanKurd'a ait değil: başka araçların kendi kılavuzları, oturum
+# durumları, beceri kurulumları ve mutlak ev dizini yolları taşıyan
+# ayarları. Depo HERKESE AÇIK; `git add -A` ile süpürülüp yayımlanmasınlar
+# (2026-08-19'da bir kez oldu: `AGENTS.md`e başka bir aracın yerel ayarı
+# ve `/Users/<ad>/...` yolları eklenmişti, push'tan önce temizlendi).
+.cluster/
+.openclaw/
+.openclaw-attachments/
+.agents/
+.mimosa/
+SOUL.md
+IDENTITY.md
+USER.md
+TOOLS.md
+HEARTBEAT.md
 
-# Denetim kanıtları: ekran görüntüleri, build/test logları, ham veri dökümleri.
-# Diskte kalır (raporlar buraya yol verir) ama git'e GİRMEZ — hem 36 MB'lık
-# ikili yığın, hem de logların içinde ortama özgü yollar ve kimlikler var.
-# Yedeği: ~/Documents/ZanKurd-Backups/zankurd-audit-*.tar.gz
+# Yerel araç ayarları
+.claude/settings.local.json
+.claude/launch.json
+
+# Ayrı projeler ve üretilmiş çıktılar.
+#
+# `sky_bird` bu depoda duruyor ama ZanKurd değil ve kendi bağımlılık
+# ağacını taşıyor: `git add -A` 2026-08-19'da 3286 dosya / 734 bin
+# satırın çoğunu buradan süpürdü (sadece `node_modules/lodash` 628
+# dosya). Uzakta hiç bulunmuyordu, push öncesi geri alındı. Ayrı
+# versiyonlanacaksa kendi deposu ve kendi .gitignore'u olmalı.
+sky_bird/
+
+# Başka araçların plan/rapor çıktıları; içlerinde mutlak ev dizini
+# yolları var.
+.superpowers/
+.zcode/
+docs/superpowers/
 audit_artifacts/
+
+# Supabase CLI'nin yerel durum dosyaları.
+#
+# `.temp/pooler-url` tam Postgres bağlantı adresini, `.temp/project-ref`
+# proje kimliğini taşıyor. Depo herkese açık; bunlar makineye özgü CLI
+# durumudur, proje kaynağı değil.
+**/supabase/.temp/
+**/supabase/.branches/
+
+# Üretilmiş değerlendirme çıktısı
+zankurd-proje-degerlendirmesi.html
+
+# Editoryal kuyruk boru hattı çıktıları (yeniden üretilebilir)
+zankurd_mobile/docs/audit/**/editorial_queue.csv
+zankurd_mobile/docs/audit/**/editorial_queue.json
+
+# Yerel pentest/video-koruma raporları (makineye özgü, commit dışı)
+docs/smtanatomi-*.html

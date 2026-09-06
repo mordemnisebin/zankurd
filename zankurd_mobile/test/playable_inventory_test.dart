@@ -27,6 +27,9 @@ import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 /// testler yeşil kalır ve oynanabilir içerik hiç büyümez.
 ///
 /// Bu bekçi farkı görünür kılar ve sabitler.
+///
+/// 2026-08-18: DeepSeek boru hattıyla 1298 iki dilli soru eklendi (bkz. question_bank_assets.dart). Sayaç bilerek güncellendi.
+/// 2026-09-02: aynı banka olgusal hata yüzünden runtime'dan çıkarıldı (1110 kayıt).
 void main() {
   const policy = QuestionContentPolicy();
 
@@ -43,14 +46,33 @@ void main() {
   test('oynanabilir soru sayısı beklenen değerde', () {
     expect(
       loaded.length,
-      2173,
+
+      // 2026-08-19: dış kalite denetimi bankalar arası 199 tekrar
+      // kümesi buldu; her kümeden biri bırakılıp 294 kayıt elendi
+      // (silinenler docs/content_batches/ayiklanan_tekrarlar.json).
+      // Bekçinin işi değişmedi, saydığı banka küçüldü.
+      // 2026-08-24: expansion_2026_08_19 (77 soru) eklendi; o gün
+      // fiziksel arttı, oynanabilir artmadı — kayıtlar `needsReview`
+      // ve çapraz kontrol kuyruğundaydı. A17 (2026-08-26) künye
+      // verdi ve `approved` yaptı: oynanabilir 2914 → 2991. Bu
+      // bekçinin varlık sebebi tam bu ayrım: iki sayı birlikte artınca
+      // içerik gerçekten ulaşıyor.
+      // 2026-09-02: DeepSeek 1110 kayıt runtime'dan çıkarıldı
+      // (olgusal hata ~%5–8). Dosya durur; oyuncuya yüklenmez.
+      1932,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
     );
     expect(
       playable.length,
-      2120,
+      // 3208 -> 2914: tekrar ayıklaması 294 kayıt aldı.
+      // 2914 -> 2991: A17, expansion_2026_08_19'un 77 kaydını
+      // `approved` yaptı; oyuncuya ilk kez ulaşıyorlar.
+      // 2991 -> 3000: 7 curated + Amed + YPJ. 12 sinema kaydı
+      // mevcut bankalarla yakın tekrar olduğu için kuyrukta kaldı.
+      // 3000 -> 1890: DeepSeek karantinası (1110 oynanabilir kayıt).
+      1890,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -73,8 +95,11 @@ void main() {
     }
 
     expect(byReason, {
-      'reviewStatus=${ReviewStatus.needsReview}': 38,
-      'reviewStatus=${ReviewStatus.rejected}': 15,
+      // 37 -> 28: 2026-09-02 yedi curated Kurmancî yeniden yazıldı;
+      // Amed ve YPJ kaynaklanıp onaylandı. 12 sinema kaydı mevcut
+      // bankalarla yakın tekrar; 16 künyesiz topluluk + 14 rejected duruyor.
+      'reviewStatus=${ReviewStatus.needsReview}': 28,
+      'reviewStatus=${ReviewStatus.rejected}': 14,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
 

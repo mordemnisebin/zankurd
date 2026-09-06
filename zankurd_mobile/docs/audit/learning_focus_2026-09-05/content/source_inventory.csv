@@ -1,0 +1,13 @@
+source_id,path,role,parser,physical_records,parsed_records,read,skipped,parse_errors,headers,comments,blank_lines,report_included,gate_included,production_like,expected_records
+community_runtime_bank,assets/data/community_questions.json,runtime_secondary,json,44,44,44,0,0,0,0,0,true,true,true,44
+curated_runtime_bank,lib/src/data/curated_question_bank.dart,runtime_secondary,dart_quiz_question,45,45,45,0,0,0,0,0,true,true,true,45
+deepseek_2026_08_18,assets/data/deepseek_2026_08_18_questions.json,runtime_secondary,json,1110,1110,1110,0,0,0,0,0,true,true,true,1110
+editorial_runtime_bank,assets/data/editorial_questions.json,runtime_secondary,json,276,276,276,0,0,0,0,0,true,true,true,276
+expansion_2026_08_19,assets/data/expansion_2026_08_19_questions.json,runtime_secondary,json,77,77,77,0,0,0,0,0,true,true,true,77
+expansion_2026_08_bank,assets/data/expansion_2026_08_questions.json,runtime_secondary,json,211,211,211,0,0,0,0,0,true,true,true,211
+fill_in_blank_2026_08_runtime_bank,assets/data/fill_in_blank_2026_08_questions.json,runtime_secondary,json,20,20,20,0,0,0,0,0,true,true,true,20
+offline_runtime_bank,assets/data/offline_questions.json,runtime_primary,json,1131,1131,1131,0,0,0,0,0,true,true,true,1131
+restore_2026_08_07_runtime_bank,assets/data/restore_2026_08_07_questions.json,runtime_secondary,json,15,15,15,0,0,0,0,0,true,true,true,15
+sentence_runtime_bank,assets/data/sentence_building_questions.json,runtime_secondary,json,8,8,8,0,0,0,0,0,true,true,true,8
+source_first_runtime_bank,assets/data/source_first_2026_08_questions.json,runtime_secondary,json,85,85,85,0,0,0,0,0,true,true,true,85
+visual_2026_08_07_runtime_bank,assets/data/visual_2026_08_07_questions.json,runtime_secondary,json,20,20,20,0,0,0,0,0,true,true,true,20

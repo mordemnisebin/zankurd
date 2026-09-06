@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../data/zankurd_repository.dart';
+import '../config/feature_flags.dart';
+import '../models/referral_result.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/friend.dart';
-import '../providers/child_safety_provider.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/zk_back_button.dart';
 import 'room_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -159,7 +163,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
     final ku = context.isKu;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(),
+      appBar: zkAppBar(context),
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
@@ -181,6 +185,14 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   icon: AppIcons.peopleGroup,
                 ),
                 const SizedBox(height: AppSpacing.md),
+                // Arkadaş başlığının altına tek kilim ayracı; sosyal bağ
+                // bölümünü içerikten ayırır (2026-08-19).
+                const KilimDivider(colors: [AppTheme.cyan, AppTheme.gold]),
+                const SizedBox(height: AppSpacing.md),
+                if (kReferralRewardsEnabled) ...[
+                  _buildInviteSection(ku),
+                  const SizedBox(height: AppSpacing.md),
+                ],
                 _buildSearchSection(ku),
                 const SizedBox(height: 24),
                 _buildRequestsSection(ku),
@@ -198,40 +210,233 @@ class _FriendsScreenState extends State<FriendsScreen> {
     );
   }
 
-  Widget _buildSearchSection(bool ku) {
-    // `ChildSafetyProvider` eskiden hiçbir ekrandan okunmuyordu — çocuk
-    // modu açılsa da kapansa da davranış aynı kalıyordu, ayarlardaki
-    // anahtar süs düğmesiydi (2026-08-14 denetimi). Bu ekran onun ilk
-    // gerçek kapısı: çocuk modu açıkken oyuncu arama kutusu hiç
-    // gösterilmez.
-    if (!context.watch<ChildSafetyProvider>().allowFriendSearch) {
-      return Column(
+  Widget _buildInviteSection(bool ku) {
+    return AppPanel(
+      key: const ValueKey('friends-invite-panel'),
+      color: AppTheme.surfaceOf(context),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ScreenSectionLabel(
-            label: context.t(K.findFriend),
-            accent: AppTheme.cyan,
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppTheme.gold.withValues(alpha: 0.16),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                ),
+                child: const Icon(
+                  AppIcons.coins,
+                  color: AppTheme.gold,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.t(K.inviteFriends),
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.textPrimaryColor(context),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      context.t(K.inviteSubtitle),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: AppTheme.textMutedColor(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 12),
-          AppPanel(
-            key: const ValueKey('friends-search-blocked'),
-            color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
-            child: Row(
-              children: [
-                const Icon(AppIcons.shield, color: AppTheme.cyan),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    context.t(K.childSafetyFriendSearchBlocked),
-                    style: TextStyle(color: AppTheme.textPrimaryColor(context)),
+          FutureBuilder<String?>(
+            future: widget.repository.getPlayerTag(),
+            builder: (context, snapshot) {
+              final tag = snapshot.data;
+              return Row(
+                children: [
+                  if (tag != null && tag.isNotEmpty) ...[
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        key: const ValueKey('friends-share-code-button'),
+                        onPressed: () {
+                          HapticFeedback.selectionClick();
+                          final text = ku
+                              ? 'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: $tag. Tu jî were: https://zankurd.com'
+                              : "ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: $tag. Sen de katıl: https://zankurd.com";
+                          SharePlus.instance.share(ShareParams(text: text));
+                        },
+                        icon: const Icon(AppIcons.shareNodes, size: 16),
+                        label: Text(
+                          tag,
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppTheme.gold,
+                          side: const BorderSide(
+                            color: AppTheme.gold,
+                            width: 1.2,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      key: const ValueKey('friends-enter-code-button'),
+                      onPressed: () => _showReferralDialog(ku),
+                      icon: const Icon(AppIcons.userPlus, size: 16),
+                      label: Text(context.t(K.enterReferralCode)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.brand,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              );
+            },
           ),
         ],
-      );
-    }
+      ),
+    );
+  }
+
+  void _showReferralDialog(bool ku) {
+    final controller = TextEditingController();
+    bool submitting = false;
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (dialogContext, setDialogState) {
+            return AlertDialog(
+              backgroundColor: AppTheme.surfaceOf(dialogContext),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppRadius.card),
+              ),
+              title: Text(
+                context.t(K.enterReferralCode),
+                style: TextStyle(
+                  color: AppTheme.textPrimaryColor(dialogContext),
+                ),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.t(K.inviteSubtitle),
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppTheme.textMutedColor(dialogContext),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    key: const ValueKey('referral-code-input'),
+                    controller: controller,
+                    textCapitalization: TextCapitalization.characters,
+                    decoration: InputDecoration(
+                      hintText: context.t(K.referralCodeHint),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: submitting
+                      ? null
+                      : () => Navigator.of(dialogContext).pop(),
+                  child: Text(context.t(K.cancel)),
+                ),
+                ElevatedButton(
+                  key: const ValueKey('referral-code-submit'),
+                  onPressed: submitting
+                      ? null
+                      : () async {
+                          final code = controller.text.trim();
+                          if (code.isEmpty) return;
+                          setDialogState(() => submitting = true);
+                          final result = await widget.repository
+                              .redeemReferralCode(code);
+                          if (!dialogContext.mounted) return;
+                          Navigator.of(dialogContext).pop();
+                          if (!mounted) return;
+                          if (result.isSuccess) {
+                            HapticFeedback.mediumImpact();
+                            _showMessage(context.t(K.referralCodeApplied));
+                          } else {
+                            final msg = switch (result.status) {
+                              ReferralStatus.ownCode => context.t(
+                                K.cannotUseOwnCode,
+                              ),
+                              ReferralStatus.alreadyRedeemed => context.t(
+                                K.referralAlreadyUsed,
+                              ),
+                              ReferralStatus.notFound => context.t(
+                                K.invalidReferralCode,
+                              ),
+                              _ => context.t(K.searchFailed),
+                            };
+                            _showMessage(msg);
+                          }
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.brand,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: submitting
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text(context.t(K.referralApplyAction)),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildSearchSection(bool ku) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -614,58 +819,100 @@ class _FriendRequestCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: AppPanel(
         color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
-        child: Row(
-          children: [
-            PlayerAvatar(radius: 24, displayName: request.fromUserName),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final textScale = MediaQuery.textScalerOf(context).scale(1);
+            final stackActions = constraints.maxWidth < 380 || textScale > 1.3;
+
+            if (stackActions) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    request.fromUserName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                    ),
+                  Row(
+                    children: [
+                      _buildAvatar(),
+                      const SizedBox(width: 12),
+                      Expanded(child: _buildRequestText(context)),
+                    ],
                   ),
-                  const SizedBox(height: 3),
-                  Text(
-                    context.t(K.wantsToBeFriend),
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textMutedColor(context),
-                    ),
+                  const SizedBox(height: 10),
+                  Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: _buildActions(context),
                   ),
                 ],
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: AppTheme.wrong.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(AppRadius.badge),
-              ),
-              child: IconButton(
-                onPressed: onReject,
-                tooltip: context.t(K.rejectAction),
-                icon: const Icon(AppIcons.xmark, color: AppTheme.wrong),
-              ),
-            ),
-            const SizedBox(width: 8),
-            FilledButton(
-              onPressed: onAccept,
-              style: FilledButton.styleFrom(
-                backgroundColor: AppTheme.cyan,
-                foregroundColor: Colors.white,
-                elevation: 0,
-              ),
-              child: Text(context.t(K.acceptAction)),
-            ),
-          ],
+              );
+            }
+
+            return Row(
+              children: [
+                _buildAvatar(),
+                const SizedBox(width: 12),
+                Expanded(child: _buildRequestText(context)),
+                _buildActions(context),
+              ],
+            );
+          },
         ),
       ),
+    );
+  }
+
+  Widget _buildAvatar() {
+    return PlayerAvatar(radius: 24, displayName: request.fromUserName);
+  }
+
+  Widget _buildRequestText(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          request.fromUserName,
+          softWrap: true,
+          style: TextStyle(
+            color: AppTheme.textPrimaryColor(context),
+            fontWeight: FontWeight.w700,
+            fontSize: 14,
+          ),
+        ),
+        const SizedBox(height: 3),
+        Text(
+          context.t(K.wantsToBeFriend),
+          softWrap: true,
+          style: AppTypography.caption.copyWith(
+            color: AppTheme.textMutedColor(context),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActions(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: AppTheme.wrong.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(AppRadius.badge),
+          ),
+          child: IconButton(
+            onPressed: onReject,
+            tooltip: context.t(K.rejectAction),
+            icon: const Icon(AppIcons.xmark, color: AppTheme.wrong),
+          ),
+        ),
+        const SizedBox(width: 8),
+        FilledButton(
+          onPressed: onAccept,
+          style: FilledButton.styleFrom(
+            backgroundColor: AppTheme.cyan,
+            foregroundColor: Colors.white,
+            elevation: 0,
+          ),
+          child: Text(context.t(K.acceptAction)),
+        ),
+      ],
     );
   }
 }

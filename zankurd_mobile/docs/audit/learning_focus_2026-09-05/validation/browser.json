@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-09-05T23:46:13.028Z",
+  "mode": "local debug, offline repository",
+  "journey": "onboarding → first 5 questions → result → refreshed home",
+  "screenshots": [
+    "after-onboarding.png",
+    "after-home.png",
+    "after-home-ku-dark.png",
+    "after-home-ku-dark-narrow.png",
+    "after-home-tr-dark-narrow.png",
+    "after-home-tr-dark-wide.png",
+    "after-home-tr-light-wide.png",
+    "after-result.png",
+    "after-result-summary.png",
+    "after-completed-home.png"
+  ],
+  "errors": []
+}

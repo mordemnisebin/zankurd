@@ -38,22 +38,30 @@ void main() {
     expect(sql, isNot(contains('set xp =')));
   });
 
-  test('kullanıcıya XP ve öğrenme ilerlemesinin cihazda kaldığı söylenir', () {
+  test('kullanıcıya sıralama puanının hesaba yazıldığı söylenir', () {
     final listing = File('docs/store_listing.md').readAsStringSync();
     final privacy = File('web/privacy.html').readAsStringSync();
     final signOutTr = Tr.of(K.signOutConfirm, AppLanguage.tr);
     final signOutKu = Tr.of(K.signOutConfirm, AppLanguage.ku);
 
-    expect(listing, contains('XP ve öğrenme'));
-    expect(listing, contains('ilerlemen cihazda saklanır'));
-    expect(listing, isNot(contains('puanların eşitlenir')));
-    expect(listing, contains('XP û'));
+    expect(listing, contains('öğrenme ilerlemen cihazda saklanır'));
+    expect(listing, contains('Sıralama puanın hesabına yazılır'));
+    expect(
+      listing,
+      isNot(contains('XP ve öğrenme ilerlemen cihazda saklanır')),
+    );
     expect(listing, contains('pêşketina hînbûnê li ser amûrê tên parastin'));
+    expect(listing, contains('Xala rêzkirinê li ser'));
     expect(listing, isNot(contains('xalên te tên hevkirin')));
     expect(privacy, contains('Cihazda tutulan öğrenme verileri'));
-    expect(signOutTr, contains('Bu cihazdaki XP'));
-    expect(signOutTr, contains('çevrimiçi hesap verilerin silinmez'));
-    expect(signOutKu, contains('XP'));
+    expect(privacy, contains('Sıralama için kullanılan XP hesabına yazılır'));
+    expect(
+      privacy,
+      isNot(contains('XP ve öğrenme ilerlemen yalnızca cihazında tutulur')),
+    );
+    expect(signOutTr, contains('seviye çubuğu'));
+    expect(signOutTr, contains('sıralama puanı dahil'));
+    expect(signOutKu, contains('xala rêzkirinê'));
     expect(signOutKu, contains('amûr'));
   });
 }

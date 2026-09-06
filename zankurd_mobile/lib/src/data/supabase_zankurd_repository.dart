@@ -16,6 +16,7 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
+import '../models/referral_result.dart';
 import '../providers/analytics_consent_provider.dart';
 import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
@@ -661,6 +662,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   }) async {
     try {
       if (client.auth.currentUser == null) {
@@ -673,6 +676,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         params: {
           'p_category_name': category,
           'p_seconds_per_question': secondsPerQuestion,
+          'p_question_count': questionCount,
+          'p_entry_fee': entryFee,
         },
       );
       final snapshot = _requiredJsonObject(response, 'create_online_room');
@@ -682,10 +687,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final canonicalCategory = _requiredString(snapshot, const [
         'category_name',
       ]);
-      final questionCount = _requiredInt(snapshot, const ['question_count']);
+      final serverQuestionCount = _requiredInt(snapshot, const [
+        'question_count',
+      ]);
       final serverSeconds = _requiredInt(snapshot, const [
         'seconds_per_question',
       ]);
+      final serverEntryFee = snapshot['entry_fee'] != null
+          ? (snapshot['entry_fee'] as num).toInt()
+          : entryFee;
 
       final players = await _loadRoomPlayersById(roomId);
       return GameRoom(
@@ -695,8 +705,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         category: canonicalCategory,
         players: players,
         status: _roomStatusFromValue(snapshot['status'] ?? 'lobby'),
-        questionCount: questionCount,
+        questionCount: serverQuestionCount,
         secondsPerQuestion: serverSeconds,
+        entryFee: serverEntryFee,
         hostId: hostId,
       );
     } catch (error, stack) {
@@ -753,6 +764,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       secondsPerQuestion:
           (room['seconds_per_question'] as int?) ??
           GameRoom.defaultSecondsPerQuestion,
+      entryFee: (room['entry_fee'] as num?)?.toInt() ?? 0,
     );
 
     // Katılan oyuncu `join_room_by_code`un yazdığı gibi HAZIR DEĞİL başlar.
@@ -776,7 +788,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final row = await client
         .from('rooms')
         .select(
-          'id, code, host_id, question_count, seconds_per_question, status, '
+          'id, code, host_id, question_count, seconds_per_question, entry_fee, status, '
           'categories(name)',
         )
         .eq('id', roomId)
@@ -795,6 +807,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       secondsPerQuestion:
           (row['seconds_per_question'] as num?)?.toInt() ??
           GameRoom.defaultSecondsPerQuestion,
+      entryFee: (row['entry_fee'] as num?)?.toInt() ?? 0,
       hostId: row['host_id'] as String?,
     );
   }
@@ -1629,9 +1642,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // (favorite_questions_screen.dart).
       if (unresolvedIds.isNotEmpty) {
         try {
-          final resolved = await _resolveServerFavoriteQuestions(
-            unresolvedIds,
-          );
+          final resolved = await _resolveServerFavoriteQuestions(unresolvedIds);
           byId.addAll(resolved);
         } catch (error, stack) {
           _recordError(
@@ -2506,6 +2517,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<void> setFcmToken(String token) async {
+    try {
+      await client.rpc<void>('set_fcm_token', params: {'p_token': token});
+    } catch (e, s) {
+      _recordError(e, s, reason: 'setFcmToken failed');
+    }
+  }
+
+  @override
   Future<bool> acceptFriendRequest(String requestId) async {
     try {
       final response = await client.rpc<dynamic>(
@@ -2869,7 +2889,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final bracket = await loadRealTournamentBracket();
     if (bracket == null) return _offline.loadTournamentStandings(limit: limit);
     final standings = _standingsFromBracket(bracket);
-    if (standings.isEmpty) return _offline.loadTournamentStandings(limit: limit);
+    if (standings.isEmpty) {
+      return _offline.loadTournamentStandings(limit: limit);
+    }
     return standings.take(limit).toList();
   }
 
@@ -2920,7 +2942,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }
     }
 
-    const statusWeight = {'champion': 0, 'finalist': 1, 'active': 2, 'eliminated': 3};
+    const statusWeight = {
+      'champion': 0,
+      'finalist': 1,
+      'active': 2,
+      'eliminated': 3,
+    };
     final ids = names.keys.toList()
       ..sort((a, b) {
         final byStatus = (statusWeight[status[a]] ?? 2).compareTo(
@@ -3001,6 +3028,48 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     } catch (e, stack) {
       _recordError(e, stack, reason: 'submitSuggestedQuestion failed');
       return false;
+    }
+  }
+
+  @override
+  Future<ReferralResult> redeemReferralCode(String code) async {
+    final clean = code.trim().toUpperCase();
+    if (clean.isEmpty) {
+      return const ReferralResult(
+        status: ReferralStatus.notFound,
+        message: 'Invalid code',
+      );
+    }
+    try {
+      final response = await client.rpc(
+        'redeem_referral_code',
+        params: {'p_code': clean},
+      );
+      if (response is Map<String, dynamic>) {
+        final result = ReferralResult.fromMap(response);
+        if (result.isSuccess) {
+          unawaited(loadCoinBalance());
+        }
+        return result;
+      }
+      return const ReferralResult(
+        status: ReferralStatus.networkError,
+        message: 'Unexpected response format',
+      );
+    } catch (e, stack) {
+      _recordError(e, stack, reason: 'redeemReferralCode failed');
+      final msg = e.toString();
+      if (msg.contains('own_code') || msg.contains('Cannot use own code')) {
+        return const ReferralResult(status: ReferralStatus.ownCode);
+      }
+      if (msg.contains('already_redeemed') || msg.contains('already used')) {
+        return const ReferralResult(status: ReferralStatus.alreadyRedeemed);
+      }
+      if (msg.contains('code_not_found') ||
+          msg.contains('Invalid referral code')) {
+        return const ReferralResult(status: ReferralStatus.notFound);
+      }
+      return const ReferralResult(status: ReferralStatus.networkError);
     }
   }
 }

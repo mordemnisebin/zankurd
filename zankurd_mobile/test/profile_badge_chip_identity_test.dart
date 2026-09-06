@@ -39,7 +39,10 @@ void main() {
       ChangeNotifierProvider(create: (_) => AnalyticsConsentProvider()),
       ChangeNotifierProvider(create: (_) => PremiumService.fallback()),
     ],
-    child: MaterialApp(theme: AppTheme.light(), home: Scaffold(body: child)),
+    child: MaterialApp(
+      theme: AppTheme.light(),
+      home: Scaffold(body: child),
+    ),
   );
 
   testWidgets(
@@ -49,9 +52,8 @@ void main() {
       // sırada. Eski (pozisyonel) kod her zaman ilk sıradaki tanımı
       // gösterirdi — bu senaryo tam da o karışıklığı ortaya çıkarır.
       await SharedPreferences.getInstance().then(
-        (prefs) => prefs.setStringList('zankurd.badges.unlocked', [
-          'speed_demon',
-        ]),
+        (prefs) =>
+            prefs.setStringList('zankurd.badges.unlocked', ['speed_demon']),
       );
       BadgeService.resetInstance();
 

@@ -6,8 +6,10 @@ import '../config/subcategory_config.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/zk_back_button.dart';
 import 'level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -24,11 +26,8 @@ class SubcategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final canonicalCat = CategoryVisuals.canonicalName(category);
-    final rawList =
-        SubcategoryConfig.subcategories[category] ??
-        SubcategoryConfig.subcategories[canonicalCat];
-    final list = (rawList != null && rawList.isNotEmpty)
+    final rawList = SubcategoryConfig.forCategory(category);
+    final list = rawList.isNotEmpty
         ? rawList
         : [
             SubcategoryInfo(
@@ -44,7 +43,8 @@ class SubcategoryScreen extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
+      appBar: zkAppBar(
+        context,
         backgroundColor: Colors.transparent,
         elevation: 0,
         // Geri oku her zaman renkli banner'ın üzerinde durur.
@@ -293,23 +293,16 @@ class _CategoryBanner extends StatelessWidget {
               children: [
                 const Spacer(),
                 // Category icon in small circle
-                Container(
-                  width: 42,
-                  height: 42,
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(bottom: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.28),
-                      width: 1.1,
-                    ),
-                  ),
-                  child: Icon(
-                    _bannerIcon(category),
+                // Kategori ikonu elmas zemininde — kilim amblemi. Düz beyaz
+                // daire "herhangi bir uygulama" ikonu gibiydi; elmas kategori
+                // kimliğini taşır (2026-08-19).
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: CategoryEmblem(
+                    icon: _bannerIcon(category),
                     color: Colors.white,
-                    size: 22,
+                    size: 42,
+                    onColor: Colors.white,
                   ),
                 ),
                 Text(

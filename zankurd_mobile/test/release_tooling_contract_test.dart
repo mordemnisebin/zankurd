@@ -484,6 +484,11 @@ printf '%s\n' rsync >> "$FAKE_COMMAND_LOG"
       source,
       contains('path: zankurd_mobile/build/app/outputs/flutter-apk'),
     );
+    expect(
+      source,
+      contains('flutter build ios --debug --no-codesign'),
+      reason: 'iOS derlemesi yoksa Apple yüzeyi yalnız yerelde kırılır.',
+    );
   });
 
   test('mobile release commands always load explicit public configuration', () {

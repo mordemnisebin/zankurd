@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/mastery_store.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
@@ -35,6 +36,11 @@ void main() {
     ) {
       await tester.pump(const Duration(milliseconds: 50));
     }
+
+    // Cevaplanan soru sayısı artık `RollingCount` ile sayarak çıkıyor; sayım
+    // hedefe ulaşsın diye etiket bulunduktan sonra bir tur daha pompalanır
+    // (2026-08-19).
+    await tester.pump(const Duration(milliseconds: 1200));
 
     expect(find.text('Cevaplanan Soru'), findsOneWidget);
     expect(find.text('2'), findsWidgets);
@@ -104,6 +110,55 @@ void main() {
     expect(find.text('#85'), findsNothing);
     expect(find.text('Altın Lig'), findsNothing);
   });
+
+  testWidgets(
+    'Türkçe detaylı istatistikte güçlü ve zayıf kategori rozetleri yerelleştirilir',
+    (tester) async {
+      MasteryStore.resetInstance();
+      MistakeStore.resetInstance();
+      SharedPreferences.setMockInitialValues({
+        'zankurd.mastery.Ziman': 120,
+        'zankurd.mastery.Çand': 20,
+      });
+
+      final mistakeStore = await MistakeStore.load();
+      await mistakeStore.markMistake(
+        'profile-category-c1',
+        category: 'Cografya',
+      );
+      await mistakeStore.markMistake(
+        'profile-category-c2',
+        category: 'Cografya',
+      );
+      await mistakeStore.markMistake('profile-category-d1', category: 'Dîrok');
+
+      await tester.pumpWidget(
+        testShell(
+          child: Scaffold(
+            body: ProfileScreen(repository: MockZanKurdRepository()),
+          ),
+        ),
+      );
+      for (
+        var i = 0;
+        i < 40 && find.text('Detaylı İstatistik').evaluate().isEmpty;
+        i++
+      ) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+
+      final detailed = find.text('Detaylı İstatistik');
+      await tester.ensureVisible(detailed);
+      await tester.pumpAndSettle();
+      await tester.tap(detailed);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Dil'), findsWidgets);
+      expect(find.text('Coğrafya'), findsWidgets);
+      expect(find.text('Ziman'), findsNothing);
+      expect(find.text('Cografya'), findsNothing);
+    },
+  );
 }
 
 /// Sunucuda kaydı olan ama puanı sıfır olan oyuncu.
