@@ -1,7 +1,7 @@
-# correct_option istemciye açık — tarihî risk kaydı (2026-07-21)
+# correct_option istemciye açıktı — tarihî risk kaydı (2026-07-21)
 
-> **TARİHÎ — kaynak değil.** Canlı durum `applied.md` ve 2026-07-22 /
-> 2026-09-06 göçleridir.
+> **TARİHÎ — güncel kaynak değil.** 2026-07-22 `REVOKE SELECT`.
+> Canlı durum `applied.md` ve 2026-07-22 / 2026-09-06 göçleridir.
 
 ## 2026-07-22 sonrası durum
 
@@ -10,12 +10,12 @@
 kapatıldı. Solo quiz offline bankadan beslenir. Online odalar
 `get_room_questions` RPC'si üzerinden gelir.
 
-## Kalan risk
+## Reveal sözleşmesi (2026-09-06, applied.md ✅)
 
-Reveal RPC `correct_option`'ı yalnız mevcut indeksten önceki sorularda
-veya oda `finished` iken döndürmelidir
-(`2026-09-06_get_room_questions_revealed.sql`). Canlıya basılmadan önce
-eski gövde mevcut sorunun harfini de verebilir.
+`get_room_questions` `correct_option`'ı yalnız mevcut indeksten önceki
+sorularda veya oda `finished` iken döner
+(`2026-09-06_get_room_questions_revealed.sql`). Bu not o göçün yerine
+geçmez.
 
 ## 2026-07-21 notu (o günkü durum)
 
