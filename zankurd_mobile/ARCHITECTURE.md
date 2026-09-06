@@ -5,8 +5,9 @@
 ZanKurd, Kurmancî öncelikli bilgi yarışması ve öğrenme uygulamasıdır.
 Flutter, Supabase, Firebase ve RevenueCat ile çalışır.
 
-**Altın yol:** Öğren (günlük görev) → solo quiz → isteğe 1v1. Turnuva ve
-benzeri modlar Yarış sekmesinde ikinci katmandadır.
+**Altın yol:** Öğren (günlük görev) → solo quiz → isteğe 1v1. Hikâye,
+arkadaşlar, günlük çark, yerleştirme ve turnuva ikinci katmandadır
+(ders yolu, Liderlik, Mağaza, Ayarlar, Yarış → Daha fazla).
 
 Kabuk sekmeleri: Öğren, Yarış, Liderlik, Profil.
 

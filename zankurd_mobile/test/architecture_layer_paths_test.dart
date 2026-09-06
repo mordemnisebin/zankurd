@@ -53,6 +53,74 @@ void main() {
     );
   });
 
+  test(
+    'hikâye, arkadaş, çark, yerleştirme ve turnuva belgede ikinci katmandadır',
+    () {
+      // README bir ara günün etkinliğini turnuvayla aynı "ikinci katman"
+      // cümlesine koyuyordu. PlayHub'da etkinlik kartı her zaman görünür;
+      // turnuva `_moreOpen` arkasındadır. Hikâye LearningScreen, arkadaş
+      // Liderlik, çark Mağaza, yerleştirme Ayarlar üzerindendir — ana yol
+      // değil. Belge sessiz kalınca kapsam şişiyordu.
+      final readme = File('README.md').readAsStringSync();
+      expect(
+        readme,
+        isNot(contains('Turnuva ve günün etkinliği')),
+        reason:
+            'günlük etkinlik PlayHub\'da birincil grupta, ikinci katman değil',
+      );
+
+      for (final entry in {
+        'README.md': readme,
+        'ARCHITECTURE.md': architecture,
+      }.entries) {
+        final doc = entry.value.toLowerCase();
+        expect(doc, contains('ikinci katman'), reason: entry.key);
+        for (final word in [
+          'hikâye',
+          'arkadaş',
+          'çark',
+          'yerleştirme',
+          'turnuva',
+        ]) {
+          expect(doc, contains(word), reason: '${entry.key} $word');
+        }
+      }
+
+      final playHub = File(
+        'lib/src/screens/play_hub_screen.dart',
+      ).readAsStringSync();
+      final moreIdx = playHub.indexOf('if (_moreOpen)');
+      final tourneyIdx = playHub.indexOf("ValueKey('play-hub-tournament')");
+      expect(moreIdx, greaterThanOrEqualTo(0));
+      expect(
+        tourneyIdx,
+        greaterThan(moreIdx),
+        reason: 'turnuva kartı Daha fazla açılınca görünür',
+      );
+
+      expect(
+        File('lib/src/screens/app_shell.dart').readAsStringSync(),
+        contains('LearningScreen('),
+      );
+      expect(
+        File('lib/src/screens/learning_screen.dart').readAsStringSync(),
+        contains('StoryScreen'),
+      );
+      expect(
+        File('lib/src/screens/leaderboard_screen.dart').readAsStringSync(),
+        contains('FriendsScreen'),
+      );
+      expect(
+        File('lib/src/screens/shop_screen.dart').readAsStringSync(),
+        contains('SpinWheelScreen'),
+      );
+      expect(
+        File('lib/src/screens/settings_screen.dart').readAsStringSync(),
+        contains('LevelPlacementScreen'),
+      );
+    },
+  );
+
   test('BadgeService veri katmanında, providers klasöründe değil', () {
     expect(File('lib/src/data/badge_service.dart').existsSync(), isTrue);
     expect(File('lib/src/providers/badge_service.dart').existsSync(), isFalse);

@@ -8,7 +8,6 @@ Eski Vite prototipi `../docs/archive/web_prototype` altındadır; Play paketi bu
 
 - Misafir/anonim giriş ve profil adı akışı
 - Ana yol: günlük görev ve solo quiz; 1v1 isteğe bağlı
-- Turnuva ve günün etkinliği Yarış sekmesinde ikinci katmandadır
 - Kurmanci/Türkçe arayüz geçişi (anahtar tabanlı kayıt: `lib/src/l10n/strings.dart`)
 - Aydınlık/Karanlık tema geçişi
 - Kategori ve seviye bazlı quiz
@@ -26,6 +25,9 @@ Eski Vite prototipi `../docs/archive/web_prototype` altındadır; Play paketi bu
 - Uygulama içinden hesap silme isteği
 - Firebase Crashlytics ile çökme raporlama
 - Offline XP senkronizasyonu
+
+Hikâye (Öğren → ders yolu), arkadaşlar (Liderlik), günlük çark (Mağaza),
+yerleştirme (Ayarlar) ve turnuva (Yarış → Daha fazla) ikinci katmandadır.
 
 ## Mimari
 
