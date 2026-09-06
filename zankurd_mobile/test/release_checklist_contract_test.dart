@@ -46,6 +46,33 @@ void main() {
     );
   });
 
+  // README çıktı klasörünü varmış gibi gösteriyordu. Dizin
+  // `.gitignore` ile dışarıda; 2026-07-15 CSV/rapor silindi.
+  // Kaynak `tool/question_quality/adjudication/` kodudur.
+  test('README does not treat adjudication audit output as checked in', () {
+    final readme = File('README.md').readAsStringSync();
+    final gitignore = File('.gitignore').readAsStringSync();
+    final start = readme.indexOf('adjudication.dart report');
+    expect(start, greaterThanOrEqualTo(0));
+    final section = readme.substring(
+      start,
+      (start + 700).clamp(0, readme.length),
+    );
+
+    expect(gitignore, contains('/docs/audit/question_quality/'));
+    expect(
+      File('tool/question_quality/adjudication/adjudication.dart').existsSync(),
+      isTrue,
+    );
+    expect(
+      section,
+      contains('docs/audit/question_quality/adjudication_2026-07-15/'),
+    );
+    expect(section, contains('.gitignore'));
+    expect(section, contains('repoda yok'));
+    expect(section, contains('tool/question_quality/adjudication/'));
+  });
+
   test('mobile release guide matches the enforced configuration gate', () {
     final guide = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
 

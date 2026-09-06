@@ -180,7 +180,9 @@ doğrulamak için salt-okunur adjudication raporu üretilebilir:
 dart run tool/question_quality/adjudication/adjudication.dart report
 ```
 
-Çıktılar `docs/audit/question_quality/adjudication_2026-07-15/` altına yazılır.
+Komut, çıktıyı yerel `docs/audit/question_quality/adjudication_2026-07-15/`
+altına yazar (`.gitignore`; dizin repoda yok). Tarihî 2026-07-15 CSV ve
+rapor silindi — kaynağa bakın: `tool/question_quality/adjudication/`.
 Tarihî kaynak CSV yoksa rapor boş listeyle biter; komut kaynakları,
 baseline'ı veya source manifesti değiştirmez.
 
