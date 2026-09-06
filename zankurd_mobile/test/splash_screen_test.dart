@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/screens/splash_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
@@ -86,6 +88,32 @@ void main() {
     expect(logo.width, lessThanOrEqualTo(280));
     expect(logo.width, greaterThan(96));
     expect(find.text('SONRAKI'), findsNothing);
+  });
+
+  testWidgets('hareketi azalt açıkken marka zıplamaz', (tester) async {
+    // easeOutBack 0.82→1 ölçek süsüdür. Tercih açıkken onboarding'deki
+    // gibi ilk karede bitmiş değerde durmalı; yoksa ayar, kullanıcının
+    // gördüğü ilk ekranda yok sayılmış olur.
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => ReducedMotionProvider(initialUserReduce: true),
+        child: const MaterialApp(
+          home: SplashScreen(
+            next: SizedBox.shrink(),
+            duration: Duration(hours: 1),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    final scale = tester.widget<ScaleTransition>(
+      find.ancestor(
+        of: find.byType(AppLogo),
+        matching: find.byType(ScaleTransition),
+      ),
+    );
+    expect(scale.scale.value, 1.0);
   });
 
   testWidgets('süre dolunca sonraki ekrana geçer', (tester) async {

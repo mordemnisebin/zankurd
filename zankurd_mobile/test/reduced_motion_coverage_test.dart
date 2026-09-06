@@ -29,6 +29,7 @@ void main() {
     'lib/src/widgets/bouncing_button.dart',
     'lib/src/utils/app_route.dart',
     'lib/src/screens/spin_wheel_screen.dart',
+    'lib/src/screens/splash_screen.dart',
     // Zaten uyanlar — geri gitmesinler diye listede.
     'lib/src/widgets/confetti_overlay.dart',
     'lib/src/widgets/skeleton_loader.dart',
@@ -56,14 +57,15 @@ void main() {
   /// RATCHET: bilinen borç dondurulur, BÜYÜMESİ engellenir.
   ///
   /// Denetimde 12 dosyanın daha animasyon üretip tercihi okumadığı
-  /// bulundu. Hepsini tek turda düzeltmek sorumsuzca olurdu — her biri
-  /// ayrı bir davranış kararı (bir animasyon süs mü, yoksa durum mu
-  /// taşıyor?). Bu yüzden borç sayı olarak dondurulur: yeni bir ihlal
-  /// eklenirse test kırılır, düzeltildikçe sayı DÜŞÜRÜLMELİDİR.
+  /// bulundu. Splash marka zıplaması kapandı; kalan 9. Hepsini tek
+  /// turda düzeltmek sorumsuzca olurdu — her biri ayrı bir davranış
+  /// kararı (bir animasyon süs mü, yoksa durum mu taşıyor?). Bu yüzden
+  /// borç sayı olarak dondurulur: yeni bir ihlal eklenirse test kırılır,
+  /// düzeltildikçe sayı DÜŞÜRÜLMELİDİR.
   ///
   /// Aynı desen depoda zaten var (`*_ratchet_test.dart`).
   test('hareketi azalt borcu büyümüyor', () {
-    const knownDebt = 12;
+    const knownDebt = 9;
 
     /// Sürekli/işlevsel göstergeler: süs değil, durum taşıyorlar.
     const exempt = <String>{

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_logo.dart';
@@ -121,12 +122,18 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _goNext() {
     if (!mounted) return;
+    // Marka ölçeği easeOutBack ile zıplar; geçiş de 450 ms solar. Tercih
+    // açıkken ikisi de atlanır — aksi hâlde kullanıcının gördüğü ilk
+    // ekran ayarı yok saymış olur.
+    final reduce = ReducedMotionProvider.isReducedIn(context);
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 450),
+        transitionDuration: reduce
+            ? Duration.zero
+            : const Duration(milliseconds: 450),
         pageBuilder: (_, _, _) => widget.next,
         transitionsBuilder: (_, animation, _, child) =>
-            FadeTransition(opacity: animation, child: child),
+            reduce ? child : FadeTransition(opacity: animation, child: child),
       ),
     );
   }
@@ -140,6 +147,9 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    if (ReducedMotionProvider.isReducedIn(context)) {
+      _controller.value = 1;
+    }
     return Scaffold(
       // Gradient katmanı üstte; zemin yine de tema rengi olsun ki
       // geçiş anında beyaz flaş olmasın.
