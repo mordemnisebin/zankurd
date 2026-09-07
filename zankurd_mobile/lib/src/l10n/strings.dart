@@ -1180,7 +1180,9 @@ class Tr {
 
     // ── Soru tipi rozetleri ──────────────────────────────────────────
     K.qTypeMultipleChoice: {'ku': 'Hilbijartin', 'tr': 'Şıklı'},
-    K.qTypeTrueFalse: {'ku': 'Rast/Xelet', 'tr': 'Doğru/Yanlış'},
+    // Banka seçenekleri `Rast`/`Şaş` (`question_bank_test`). Rozet "Xelet"
+    // deyince oyuncu aynı yanlışı iki adla görür. `K.wrong` zaten `Şaş`.
+    K.qTypeTrueFalse: {'ku': 'Rast/Şaş', 'tr': 'Doğru/Yanlış'},
     K.qTypeVisual: {'ku': 'Wêneyî', 'tr': 'Görselli'},
     K.qTypeWordOrdering: {'ku': 'Rêzkirin', 'tr': 'Cümle Kurma'},
     K.qTypeFillInBlank: {'ku': 'Tijîkirin', 'tr': 'Boşluk Doldurma'},

@@ -61,7 +61,7 @@ void main() {
       );
 
       expect(question.typeLabelLocalized(false), 'Doğru/Yanlış');
-      expect(question.typeLabelLocalized(true), 'Rast/Xelet');
+      expect(question.typeLabelLocalized(true), 'Rast/Şaş');
     });
 
     test('displayAnswers moves stored first answer for multiple choice', () {

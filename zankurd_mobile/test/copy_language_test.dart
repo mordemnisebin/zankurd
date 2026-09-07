@@ -145,6 +145,23 @@ void main() {
     expect(Tr.of(K.finishAction, AppLanguage.ku), 'Biqedîne');
   });
 
+  test('doğru/yanlış tipi Kurmancîde şaş olarak kalır', () {
+    // Banka seçenekleri `Rast`/`Şaş` der. Tip rozeti "Xelet" deyince
+    // oyuncu aynı yanlışı iki adla görür. `K.wrong` zaten `Şaş`.
+    expect(Tr.of(K.qTypeTrueFalse, AppLanguage.ku), 'Rast/Şaş');
+    expect(Tr.of(K.qTypeTrueFalse, AppLanguage.tr), 'Doğru/Yanlış');
+    expect(Tr.of(K.wrong, AppLanguage.ku), 'Şaş');
+
+    final xelet = RegExp(r'xelet', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        xelet.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde "xelet"; karşılığı "şaş"',
+      );
+    }
+  });
+
   test('günlük seri koruma düğmesi zincîr der, rêz değil', () {
     // Rêz tur içi doğru cevap dizisidir (`K.seri` / `K.seri2`).
     // Günlük seri zincîr'dir; dondurma düğmesi "Rêzê biparêze"
