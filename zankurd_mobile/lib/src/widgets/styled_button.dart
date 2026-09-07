@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 
 class GeometricGradientButton extends StatefulWidget {
@@ -31,6 +32,14 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
     final isPressed = isEnabled && _isPressed;
     final isHovered = isEnabled && _isHovered;
     final disabledColor = AppColors.disabledSurface(context);
+    // Hover 1.01 ölçeği ve 110 ms basış gölgesi süsüdür. Tercih açıkken
+    // birincil CTA (giriş, kayıt, oda kur…) ayarı yok saymış olur —
+    // zıplayan düğme (`BouncingButton`) aynı kapıdan geçiyor.
+    final reduceMotion = ReducedMotionProvider.isReducedIn(context);
+    final animDuration = reduceMotion
+        ? Duration.zero
+        : const Duration(milliseconds: 110);
+    final hoverScale = reduceMotion ? 1.0 : (isHovered ? 1.01 : 1.0);
 
     final shadowColor = isEnabled
         ? AppTheme.primaryGradientStart.withValues(alpha: 0.55)
@@ -75,11 +84,11 @@ class _GeometricGradientButtonState extends State<GeometricGradientButton> {
               ? () => setState(() => _isPressed = false)
               : null,
           child: AnimatedScale(
-            scale: isHovered ? 1.01 : 1.0,
-            duration: const Duration(milliseconds: 110),
+            scale: hoverScale,
+            duration: animDuration,
             curve: Curves.easeOutCubic,
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 110),
+              duration: animDuration,
               curve: Curves.easeOutCubic,
               height: 48,
               margin: EdgeInsets.only(
