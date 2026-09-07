@@ -973,6 +973,10 @@ class Tr {
       'tr': 'Kolaydan zora doğru ilerle, puan topla.',
     },
     K.pPSeviye: {'ku': '{p0}/{p1} ast', 'tr': '{p0}/{p1} seviye'},
+    K.progressLevelsCompleted: {
+      'ku': '{completed} ji {total} astan temam bûn',
+      'tr': '{total} seviyeden {completed} tanesi tamamlandı',
+    },
     K.oncePSeviyeyiTamamla: {
       'ku': 'Pêşî asta {p0} temam bike.',
       'tr': 'Önce {p0} seviyeyi tamamla.',
@@ -3134,6 +3138,7 @@ class K {
       'screen.buSeviyeninSorulariYuklenemedi';
   static const kolaydanZoraDogruIlerle = 'screen.kolaydanZoraDogruIlerle';
   static const pPSeviye = 'screen.pPSeviye';
+  static const progressLevelsCompleted = 'screen.progressLevelsCompleted';
   static const oncePSeviyeyiTamamla = 'screen.oncePSeviyeyiTamamla';
   static const pKilitliOncekiSeviyeyi = 'screen.pKilitliOncekiSeviyeyi';
   static const zorlukUzerindenPYildiz = 'screen.zorlukUzerindenPYildiz';

@@ -85,6 +85,14 @@ void main() {
 
     // Soru birimi satır içi ku/tr değil; defterdeki K.soru (2026-09-07).
     expect(find.text('10 soru'), findsWidgets);
+    // Hero ilerleme cümlesi de defterde; KU/TR sözcük sırası farklı.
+    // bySemanticsLabel üst düğüm birleştirmesi yüzünden bu etiketi yutuyor.
+    final progressLabels = tester
+        .widgetList<Semantics>(find.byType(Semantics))
+        .map((w) => w.properties.label)
+        .whereType<String>()
+        .where((l) => l.contains('seviyeden') && l.contains('tamamlandı'));
+    expect(progressLabels, ['5 seviyeden 0 tanesi tamamlandı']);
   });
 
   testWidgets('kilitli düğüme dokunmak nedenini söyler', (tester) async {

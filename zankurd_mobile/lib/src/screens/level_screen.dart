@@ -255,9 +255,8 @@ class _CategoryHero extends StatelessWidget {
         ),
       );
       if (sub.id.isNotEmpty) {
-        title = isKu
-            ? '${CategoryNames.localized(category, isKu)} · ${sub.nameKu}'
-            : '${CategoryNames.localized(category, isKu)} · ${sub.nameTr}';
+        title =
+            '${CategoryNames.localized(category, isKu)} · ${isKu ? sub.nameKu : sub.nameTr}';
         subtitle = isKu ? sub.descriptionKu : sub.descriptionTr;
       }
     }
@@ -427,9 +426,10 @@ class _HeroProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     final ratio = total <= 0 ? 0.0 : (completed / total).clamp(0.0, 1.0);
     return Semantics(
-      label: isKu
-          ? '$completed ji $total astan temam bûn'
-          : '$total seviyeden $completed tanesi tamamlandı',
+      label: Tr.forKu(K.progressLevelsCompleted, isKu, {
+        'completed': '$completed',
+        'total': '$total',
+      }),
       child: ExcludeSemantics(
         child: Row(
           children: [

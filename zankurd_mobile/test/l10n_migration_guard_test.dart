@@ -82,22 +82,23 @@ void main() {
     /// → 11 (quiz sonuç paylaşım metni `{score}/{correct}/{total}/{percent}`
     ///   ile deftere taşındı)
     /// → 9 (seviye yolundaki `Ast`/`Seviye` ve `pirs`/`soru` birimleri
-    ///   defterdeki `progressLevelLabel` ve `soru` anahtarlarına bağlandı).
+    ///   defterdeki `progressLevelLabel` ve `soru` anahtarlarına bağlandı)
+    /// → 7 (seviye hero'sundaki ekran okuyucu cümlesi yer tutuculu
+    ///   `progressLevelsCompleted` oldu; alt kategori başlığı da alana
+    ///   seçimine indi — satır içi ku/tr dize kalmadı).
     ///
-    /// ## Kalan 9 bilinçli
+    /// ## Kalan 7 bilinçli
     ///
     /// - `strings.dart` (2): göç yolunu anlatan belge yorumunun kendisi.
     /// - `percent_format.dart` (1): yüzde biçiminin TEK kaynağı burasıdır
     ///   ve `percent_and_identity_test` başka hiçbir yerde elle biçim
     ///   yazılmadığını doğrular. Metni deftere taşımak o bekçiyi kör eder.
-    /// - `level_screen` (2), `leaderboard_screen` (3),
-    ///   `quiz_result_screen` (1): bir kısmı dile göre alan seçer,
-    ///   bir kısmı çok satırlı cümledir.
+    /// - `leaderboard_screen` (3), `quiz_result_screen` (1): bir kısmı
+    ///   dile göre alan seçer, bir kısmı çok satırlı cümledir.
     ///   Harita sapınca tavan yine yalan söylerdi — sayı tek başına yetmez.
     const remainingByFile = {
       'lib/src/l10n/strings.dart': 2,
       'lib/src/utils/percent_format.dart': 1,
-      'lib/src/screens/level_screen.dart': 2,
       'lib/src/screens/leaderboard_screen.dart': 3,
       'lib/src/screens/quiz_result_screen.dart': 1,
     };
@@ -214,6 +215,20 @@ void main() {
         }),
         'ZanKurd\'te 120 puan aldım! Doğru: 8/10 (%80). Sen de oyna: Play Store: "ZanKurd"',
       );
+      expect(
+        Tr.of(K.progressLevelsCompleted, AppLanguage.ku, {
+          'completed': '2',
+          'total': '5',
+        }),
+        '2 ji 5 astan temam bûn',
+      );
+      expect(
+        Tr.of(K.progressLevelsCompleted, AppLanguage.tr, {
+          'completed': '2',
+          'total': '5',
+        }),
+        '5 seviyeden 2 tanesi tamamlandı',
+      );
     });
 
     test('yer tutucusuz metin parametreden etkilenmez', () {
@@ -233,6 +248,10 @@ void main() {
         'correct',
         'total',
         'percent',
+      });
+      expect(Tr.placeholdersOf(K.progressLevelsCompleted), {
+        'completed',
+        'total',
       });
       expect(Tr.placeholdersOf(K.settings), isEmpty);
     });
