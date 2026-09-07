@@ -1102,7 +1102,9 @@ class Tr {
     K.dogruCevap: {'ku': 'Bersiva Rast:', 'tr': 'Doğru Cevap:'},
     K.aciklama: {'ku': 'Ravahî:', 'tr': 'Açıklama:'},
     K.yeniKelimeler: {'ku': 'Peyvên nû', 'tr': 'Yeni kelimeler'},
-    K.dilbilgisi: {'ku': 'Not', 'tr': 'Dilbilgisi'},
+    // Mini rehber "Not" diyordu — Türkçe not/grade. Kategori filtresi
+    // ve ana sayfa `Rêziman` der; kültürel not `Nota çandî`.
+    K.dilbilgisi: {'ku': 'Rêziman', 'tr': 'Dilbilgisi'},
     K.ornekler: {'ku': 'Mînak', 'tr': 'Örnekler'},
     K.kulturelNot: {'ku': 'Nota çandî', 'tr': 'Kültürel not'},
     K.derseBasla: {'ku': 'Dest bi dersê bike', 'tr': 'Derse başla'},

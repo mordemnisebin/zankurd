@@ -386,6 +386,24 @@ void main() {
     );
   });
 
+  test('hikâye dilbilgisi başlığı Kurmancîde rêziman olarak kalır', () {
+    // Mini rehber dilbilgisi bölümü "Not" diyordu — Türkçe not/grade.
+    // Aynı ekranın kültürel notu `Nota çandî` der; kategori filtresi
+    // ve ana sayfa alt metni `Rêziman`. `contains('not')` "Nota"yı da
+    // vurur; kelime sınırı şart.
+    expect(Tr.of(K.dilbilgisi, AppLanguage.ku), 'Rêziman');
+    expect(Tr.of(K.dilbilgisi, AppLanguage.tr), 'Dilbilgisi');
+
+    final not = RegExp(r'\bnot\b', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        not.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "not"; karşılığı "rêziman"',
+      );
+    }
+  });
+
   // Aynı Türkçe metnin iki farklı Kurmancî karşılığı olması, oyuncunun aynı
   // şeyi iki ad altında görmesi demektir: "Öğrenme yolları" bir ekranda
   // `Rêyên hînbûnê`, ötekinde `Rêyên fêrbûnê` çıkıyordu (2026-07-30). Aynı
