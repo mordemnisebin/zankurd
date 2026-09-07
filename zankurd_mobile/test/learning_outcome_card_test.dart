@@ -187,7 +187,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Kurteya fêrbûna vê dorê'), findsOneWidget);
+    expect(find.text('Kurteya hînbûna vê dorê'), findsOneWidget);
     expect(find.textContaining('Ji bo nirxandina mijarekê'), findsOneWidget);
     expect(find.text('Bersiva şaş binêre'), findsOneWidget);
   });

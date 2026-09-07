@@ -339,6 +339,28 @@ void main() {
     expect(Tr.of(K.howToPlayBody, AppLanguage.tr), contains('10 kategori'));
   });
 
+  test('öğrenme kökü Kurmancîde hînbûn olarak kalır', () {
+    // Slogan `hîn bibe`, bölüm `Hînbûn`. Sonuç başlığı ve tur özeti
+    // "Fêrbûn" deyince oyuncu aynı öğrenmeyi iki adla görür. İkisi de
+    // doğru sözcük; tek üründe tek kök.
+    expect(Tr.of(K.learningResultTitle, AppLanguage.ku), 'Hînbûn temam bû');
+    expect(Tr.of(K.outcomeTitle, AppLanguage.ku), 'Kurteya hînbûna vê dorê');
+    expect(
+      Tr.of(K.masteryEvidenceHint, AppLanguage.ku),
+      contains('delîla hînbûnê'),
+    );
+    expect(Tr.of(K.secLearning, AppLanguage.ku), 'Hînbûn');
+
+    final ferbun = RegExp(r'fêrbûn', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        ferbun.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde "fêrbûn"; karşılığı "hînbûn"',
+      );
+    }
+  });
+
   test('premium metni yalnız gerçekten verilen faydaları vaat eder', () {
     expect(
       Tr.of(K.paywallSubtitle, AppLanguage.ku),

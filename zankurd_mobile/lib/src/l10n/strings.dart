@@ -514,7 +514,7 @@ class Tr {
     K.youLost: {'ku': 'Te winda kir…', 'tr': 'Kaybettin…'},
     K.raceFinished: {'ku': 'Pêşbirk qediya', 'tr': 'Yarış tamamlandı'},
     K.learningResultTitle: {
-      'ku': 'Fêrbûn temam bû',
+      'ku': 'Hînbûn temam bû',
       'tr': 'Öğrenme tamamlandı',
     },
     K.learningResultHint: {
@@ -1018,7 +1018,7 @@ class Tr {
       'tr': 'Kategori Ustalığı',
     },
     K.masteryEvidenceHint: {
-      'ku': 'Rêjeya pêşketinê bi bersivên rast û delîla fêrbûnê tê dîtin.',
+      'ku': 'Rêjeya pêşketinê bi bersivên rast û delîla hînbûnê tê dîtin.',
       'tr':
           'İlerleme doğru cevaplardan, öğrenme kanıtı ise cevaplanan sorulardan okunur.',
     },
@@ -2055,7 +2055,7 @@ class Tr {
     },
     K.learningGoalCulture: {'ku': 'Çandê nas bikim', 'tr': 'Kültürü keşfetmek'},
     K.outcomeTitle: {
-      'ku': 'Kurteya fêrbûna vê dorê',
+      'ku': 'Kurteya hînbûna vê dorê',
       'tr': 'Bu turdan öğrenme özeti',
     },
     K.outcomeCounts: {
