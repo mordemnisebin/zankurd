@@ -1316,8 +1316,11 @@ class Tr {
     // Kurmancî'de "zêr"in `z`si. Sabit `c` yazıldığında Kurmancî oyuncu
     // fiyat rozetinde anlamsız bir harf görüyordu (2026-08-01).
     K.coinAbbrev: {'ku': 'z', 'tr': 'j'},
+    // Para birimi zaten `Zêr` (`K.coinWord`). Günlük tavan "jetonan"
+    // deyince oyuncu aynı parayı iki adla görür. Türkçe `jeton` kökü
+    // İngilizce `\bcoin\b` taramasını kör eder — turnûva ile aynı sınıf.
     K.soloDailyCapReached: {
-      'ku': 'Sînorê jetonan ê îro tije bû — sibê ji nû ve dest pê dike.',
+      'ku': 'Sînorê zêran ê îro tije bû — sibê ji nû ve dest pê dike.',
       'tr': 'Bugünün jeton sınırına ulaştın — yarın sıfırlanır.',
     },
     K.stopAction: {'ku': 'Rawestîne', 'tr': 'Durdur'},

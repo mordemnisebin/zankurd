@@ -162,6 +162,27 @@ void main() {
     }
   });
 
+  test('para birimi Kurmancîde zêr olarak kalır', () {
+    // Ürün terimi zaten `Zêr` (`K.coinWord`). Günlük tavan "jetonan"
+    // deyince aynı para iki adla duruyordu. Türkçe `jeton` kökü
+    // İngilizce `\bcoin\b` taramasını kör eder — turnûva ile aynı sınıf.
+    expect(Tr.of(K.coinWord, AppLanguage.ku), 'Zêr');
+    expect(Tr.of(K.coinWord, AppLanguage.tr), 'jeton');
+    expect(
+      Tr.of(K.soloDailyCapReached, AppLanguage.ku),
+      contains('zêran'),
+    );
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
+      expect(
+        kurmanci,
+        isNot(contains('jeton')),
+        reason: '$key: Kurmancî metinde Türkçe "jeton"; karşılığı "zêr"',
+      );
+    }
+  });
+
   test('açıklama terimi Kurmancîde şîrove olarak kalır', () {
     // Ürün terimi zaten `Şîrove` (`K.explanationTitle`). İnceleme
     // etiketi "Ravahî" deyince aynı açıklama iki adla duruyordu.

@@ -452,6 +452,7 @@ void main() {
       'eşleş': 'lihevanîn',
       'rapor': 'ragihandin',
       'bulut': 'ewr',
+      'jeton': 'zêr',
     };
 
     final offenders = <String>[];
@@ -654,6 +655,26 @@ void main() {
         bulut.hasMatch(Tr.of(key, AppLanguage.ku)),
         isFalse,
         reason: '$key: Kurmancî metinde Türkçe "bulut"; karşılığı "ewr"',
+      );
+    }
+  });
+
+  test('para birimi Kurmancîde zêr olarak kalır', () {
+    // Birim `Zêr` (`K.coinWord`). Günlük tavan "jetonan" deyince oyuncu
+    // aynı parayı iki adla görür. Türkçe `jeton` kökü İngilizce
+    // `\bcoin\b` taramasını kör eder — turnûva ile aynı sınıf.
+    expect(Tr.of(K.coinWord, AppLanguage.ku), 'Zêr');
+    expect(
+      Tr.of(K.soloDailyCapReached, AppLanguage.ku),
+      'Sînorê zêran ê îro tije bû — sibê ji nû ve dest pê dike.',
+    );
+
+    final jeton = RegExp(r'jeton', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        jeton.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "jeton"; karşılığı "zêr"',
       );
     }
   });
