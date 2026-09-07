@@ -801,6 +801,12 @@ class Tr {
       'ku': 'Koda xwe parve bike, her du alî jî 100 zêr bistînin!',
       'tr': 'Kodunu paylaş, iki taraf da 100 jeton kazansın!',
     },
+    K.inviteShareText: {
+      'ku':
+          'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: {tag}. Tu jî were: https://zankurd.com',
+      'tr':
+          'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: {tag}. Sen de katıl: https://zankurd.com',
+    },
     K.enterReferralCode: {'ku': 'Koda Vexwendinê', 'tr': 'Davet Kodu Gir'},
     K.referralCodeHint: {'ku': 'Mînak: ZK-XXXX', 'tr': 'Örnek: ZK-XXXX'},
     K.referralApplyAction: {'ku': 'Bi kar bîne', 'tr': 'Kullan'},
@@ -3040,6 +3046,7 @@ class K {
   static const acceptAction = 'friends.accept';
   static const inviteFriends = 'friends.inviteFriends';
   static const inviteSubtitle = 'friends.inviteSubtitle';
+  static const inviteShareText = 'friends.inviteShareText';
   static const enterReferralCode = 'friends.enterReferralCode';
   static const referralCodeHint = 'friends.referralCodeHint';
   static const referralApplyAction = 'friends.referralApplyAction';

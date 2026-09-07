@@ -270,9 +270,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
                         key: const ValueKey('friends-share-code-button'),
                         onPressed: () {
                           HapticFeedback.selectionClick();
-                          final text = ku
-                              ? 'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: $tag. Tu jî were: https://zankurd.com'
-                              : "ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: $tag. Sen de katıl: https://zankurd.com";
+                          final text = context.t(K.inviteShareText, {
+                            'tag': tag,
+                          });
                           SharePlus.instance.share(ShareParams(text: text));
                         },
                         icon: const Icon(AppIcons.shareNodes, size: 16),

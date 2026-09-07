@@ -77,25 +77,24 @@ void main() {
     /// → 145 (paywall ekranı tamamen deftere taşındı)
     /// → 141 (avatar çerçeve kazanım etiketleri)
     /// → 13 (32 dosyada toplu göç; 109 yeni anahtar, 20 kullanım defterde
-    ///   zaten var olan anahtarla eşleşti ve yenisi açılmadı).
+    ///   zaten var olan anahtarla eşleşti ve yenisi açılmadı)
+    /// → 12 (arkadaş davet paylaşım metni `{tag}` ile deftere taşındı).
     ///
-    /// ## Kalan 13 bilinçli
+    /// ## Kalan 12 bilinçli
     ///
     /// - `strings.dart` (2): göç yolunu anlatan belge yorumunun kendisi.
     /// - `percent_format.dart` (1): yüzde biçiminin TEK kaynağı burasıdır
     ///   ve `percent_and_identity_test` başka hiçbir yerde elle biçim
     ///   yazılmadığını doğrular. Metni deftere taşımak o bekçiyi kör eder.
-    /// - `level_screen` (4), `leaderboard_screen` (3), `friends_screen` (1),
+    /// - `level_screen` (4), `leaderboard_screen` (3),
     ///   `quiz_result_screen` (1), `result_sharer` (1): bir kısmı dile göre
-    ///   alan seçer; arkadaş daveti ve sonuç paylaşımı hâlâ satır içi.
-    ///   Yorum `room_screen` diyordu, kaynak `friends_screen` — sayı tek
-    ///   başına yetmez, dosya haritası kilitlenir.
+    ///   alan seçer; sonuç paylaşımı hâlâ satır içi. Harita sapınca tavan
+    ///   yine yalan söylerdi — sayı tek başına yetmez.
     const remainingByFile = {
       'lib/src/l10n/strings.dart': 2,
       'lib/src/utils/percent_format.dart': 1,
       'lib/src/screens/level_screen.dart': 4,
       'lib/src/screens/leaderboard_screen.dart': 3,
-      'lib/src/screens/friends_screen.dart': 1,
       'lib/src/screens/quiz_result_screen.dart': 1,
       'lib/src/utils/result_sharer.dart': 1,
     };
@@ -182,6 +181,14 @@ void main() {
         Tr.of(K.dailyReminderAt, AppLanguage.tr, {'time': '19:00'}),
         'Her gün saat 19:00',
       );
+      expect(
+        Tr.of(K.inviteShareText, AppLanguage.ku, {'tag': 'ZK-TEST'}),
+        'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: ZK-TEST. Tu jî were: https://zankurd.com',
+      );
+      expect(
+        Tr.of(K.inviteShareText, AppLanguage.tr, {'tag': 'ZK-TEST'}),
+        'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: ZK-TEST. Sen de katıl: https://zankurd.com',
+      );
     });
 
     test('yer tutucusuz metin parametreden etkilenmez', () {
@@ -195,6 +202,7 @@ void main() {
       expect(Tr.placeholdersOf(K.currentLevel), {'name'});
       expect(Tr.placeholdersOf(K.dailyReminderAt), {'time'});
       expect(Tr.placeholdersOf(K.deleteTypeWord), {'word'});
+      expect(Tr.placeholdersOf(K.inviteShareText), {'tag'});
       expect(Tr.placeholdersOf(K.settings), isEmpty);
     });
 
