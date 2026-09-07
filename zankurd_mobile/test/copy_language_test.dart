@@ -137,6 +137,24 @@ void main() {
     expect(Tr.of(K.listenExplanation, AppLanguage.ku), 'Şîroveyê bibihîze');
   });
 
+  test('açıklama terimi Kurmancîde şîrove olarak kalır', () {
+    // Quiz başlığı `Şîrove` der. İnceleme etiketi "Ravahî" deyince
+    // oyuncu aynı açıklamayı iki adla görür. `contains('şîrove')`
+    // taramasını `ravahî` kör eder — turnûva ile aynı sınıf.
+    expect(Tr.of(K.aciklama, AppLanguage.ku), 'Şîrove:');
+    expect(Tr.of(K.explanationTitle, AppLanguage.ku), 'Şîrove');
+    expect(Tr.of(K.listenExplanation, AppLanguage.ku), 'Şîroveyê bibihîze');
+
+    final ravahi = RegExp(r'ravahî', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        ravahi.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde "ravahî"; karşılığı "şîrove"',
+      );
+    }
+  });
+
   test('quiz soru seslendirmesi dinleme anlamını korur', () {
     expect(Tr.of(K.listenQuestion, AppLanguage.ku), 'Pirsê bibihîze');
   });

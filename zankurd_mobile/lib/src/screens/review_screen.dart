@@ -859,8 +859,8 @@ class _FlashcardViewState extends State<_FlashcardView> {
                 const SizedBox(width: 6),
                 Expanded(
                   child: Text(
-                    // Aynı kusur: Kurmancî yuvada Türkçe kelime yanına
-                    // ilişiktirilmişti ("Ravahî / Açıklama:").
+                    // Ürün terimi şîrove (`K.explanationTitle`); etiket
+                    // "Ravahî" deyince aynı açıklama iki adla durur.
                     context.t(K.aciklama),
                     style: const TextStyle(
                       fontSize: 13,

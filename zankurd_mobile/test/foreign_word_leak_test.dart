@@ -162,6 +162,23 @@ void main() {
     }
   });
 
+  test('açıklama terimi Kurmancîde şîrove olarak kalır', () {
+    // Ürün terimi zaten `Şîrove` (`K.explanationTitle`). İnceleme
+    // etiketi "Ravahî" deyince aynı açıklama iki adla duruyordu.
+    expect(Tr.of(K.aciklama, AppLanguage.ku), 'Şîrove:');
+    expect(Tr.of(K.explanationTitle, AppLanguage.ku), 'Şîrove');
+    expect(Tr.of(K.viewExplanation, AppLanguage.ku), 'Şîrove bibîne');
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
+      expect(
+        kurmanci,
+        isNot(contains('ravahî')),
+        reason: '$key: Kurmancî metinde "ravahî"; karşılığı "şîrove"',
+      );
+    }
+  });
+
   test('kart görünümü İngilizce flashcard taşımaz', () {
     // Özellik adı `K.flashcards` ile zaten yerel; kip tooltip'i
     // "Flashcard modu" deyince aynı ekranda iki dil duruyordu.

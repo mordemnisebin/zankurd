@@ -225,6 +225,7 @@ void main() {
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
     expect(data.label, contains('Bersiv (Pişt)'));
     expect(data.label, contains('Bersiva Rast:'));
+    expect(data.label, contains('Şîrove:'));
     expect(data.label, contains('Ravekirina testê.'));
     semantics.dispose();
   });

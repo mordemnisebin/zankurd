@@ -1107,7 +1107,11 @@ class Tr {
       'tr': 'Cevabı görmek için dokun',
     },
     K.dogruCevap: {'ku': 'Bersiva Rast:', 'tr': 'Doğru Cevap:'},
-    K.aciklama: {'ku': 'Ravahî:', 'tr': 'Açıklama:'},
+    // Quiz başlığı ve dinleme düğmesi `Şîrove` der (`K.explanationTitle`,
+    // `K.listenExplanation`). İnceleme etiketi "Ravahî" deyince oyuncu
+    // aynı açıklamayı iki adla görür. `contains('şîrove')` taramasını
+    // `ravahî` kör eder — turnûva ile aynı sınıf.
+    K.aciklama: {'ku': 'Şîrove:', 'tr': 'Açıklama:'},
     K.yeniKelimeler: {'ku': 'Peyvên nû', 'tr': 'Yeni kelimeler'},
     // Mini rehber "Not" diyordu — Türkçe not/grade. Kategori filtresi
     // ve ana sayfa `Rêziman` der; kültürel not `Nota çandî`.
