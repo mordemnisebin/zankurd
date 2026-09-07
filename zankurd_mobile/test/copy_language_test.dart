@@ -386,6 +386,23 @@ void main() {
     );
   });
 
+  test('kategori serwerî terimi Kurmancîde serwerî olarak kalır', () {
+    // Ders yolu `Armanca serweriya kategoriyê` der. Profil başlığı
+    // "Ustalîya Kategoriyê" deyince oyuncu aynı kavramı iki adla görür.
+    // Türkçe `ustalî` kökü, `contains('ustalık')` taramasını kör eder.
+    expect(Tr.of(K.kategoriUstaligi, AppLanguage.ku), 'Serweriya Kategoriyê');
+    expect(Tr.of(K.categoryMasteryGoal, AppLanguage.ku), contains('serweriya'));
+
+    final ustal = RegExp(r'ustal', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        ustal.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "ustalık"; karşılığı "serwerî"',
+      );
+    }
+  });
+
   test('profil rûyê Kurmancîde rû olarak kalır', () {
     // Düzenleyici başlığı `Rûyê Min` der. Düğme "Avatarê" deyince
     // oyuncu aynı yüzeyi iki adla görür. `Avatarê` çekimi `\bavatar\b`

@@ -1012,7 +1012,7 @@ class Tr {
       'tr': 'Bir yarış tamamla ve ilk başarımı aç.',
     },
     K.kategoriUstaligi: {
-      'ku': 'Ustalîya Kategoriyê',
+      'ku': 'Serweriya Kategoriyê',
       'tr': 'Kategori Ustalığı',
     },
     K.masteryEvidenceHint: {

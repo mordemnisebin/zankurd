@@ -126,6 +126,18 @@ void main() {
       Tr.of(K.categoryMasteryGoal, AppLanguage.tr),
       'Kategori ustalık hedefi',
     );
+    // Profil bölüm başlığı "Ustalîya" deyince aynı kavram iki adla durur.
+    expect(Tr.of(K.kategoriUstaligi, AppLanguage.ku), 'Serweriya Kategoriyê');
+    expect(Tr.of(K.kategoriUstaligi, AppLanguage.tr), 'Kategori Ustalığı');
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
+      expect(
+        kurmanci,
+        isNot(contains('ustal')),
+        reason: '$key: Kurmancî metinde Türkçe "ustalık"; karşılığı "serwerî"',
+      );
+    }
   });
 
   test('kart görünümü İngilizce flashcard taşımaz', () {
