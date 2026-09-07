@@ -117,6 +117,24 @@ void main() {
     });
   }
 
+  test('rozet terimi Kurmancîde rozet olarak kalır', () {
+    // Ürün terimi zaten `Rozet` (`K.rozetler`). Çerçeve koşulu
+    // "nîşan" deyince aynı rozet iki adla duruyordu. `nîşan bide`
+    // göstermek, `nav û nîşan` unvan; kök taraması kör kalır.
+    expect(Tr.of(K.rozetler, AppLanguage.ku), 'Rozet');
+    expect(Tr.of(K.frameReqBronze, AppLanguage.ku), '1 rozet veke');
+    expect(Tr.of(K.frameReqSilver, AppLanguage.ku), '5 rozetan veke');
+
+    final nisanVeke = RegExp(r'nîşan(an)?\s+veke', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        nisanVeke.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde "nîşan" rozet; karşılığı "rozet"',
+      );
+    }
+  });
+
   test('ustalık terimi iki dilde de yerel', () {
     // Bekçi kör kalmasın: düzeltilen örnek gerçekten yerinde durmalı.
     expect(
@@ -168,10 +186,7 @@ void main() {
     // İngilizce `\bcoin\b` taramasını kör eder — turnûva ile aynı sınıf.
     expect(Tr.of(K.coinWord, AppLanguage.ku), 'Zêr');
     expect(Tr.of(K.coinWord, AppLanguage.tr), 'jeton');
-    expect(
-      Tr.of(K.soloDailyCapReached, AppLanguage.ku),
-      contains('zêran'),
-    );
+    expect(Tr.of(K.soloDailyCapReached, AppLanguage.ku), contains('zêran'));
 
     for (final key in Tr.keys) {
       final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();

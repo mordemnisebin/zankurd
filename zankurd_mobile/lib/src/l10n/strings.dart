@@ -1812,8 +1812,10 @@ class Tr {
     },
     // Çerçeve kazanım koşulları. Satır içiydiler; neon eklenince sayı
     // arttığı için tamamı deftere alındı (2026-07-31).
-    K.frameReqBronze: {'ku': '1 nîşan veke', 'tr': '1 rozet aç'},
-    K.frameReqSilver: {'ku': '5 nîşanan veke', 'tr': '5 rozet aç'},
+    // Koleksiyon `Rozet` der. "nîşan veke" aynı rozeti ikinci adla
+    // gösteriyordu; `nîşan bide` göstermek, `nav û nîşan` unvan.
+    K.frameReqBronze: {'ku': '1 rozet veke', 'tr': '1 rozet aç'},
+    K.frameReqSilver: {'ku': '5 rozetan veke', 'tr': '5 rozet aç'},
     K.frameReqGold: {
       'ku': 'Di kategoriyekê de bibe Pispor',
       'tr': 'Bir kategoride Pispor ol',

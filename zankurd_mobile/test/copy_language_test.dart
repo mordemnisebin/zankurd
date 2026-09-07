@@ -193,6 +193,26 @@ void main() {
     expect(Tr.of(K.finishAction, AppLanguage.ku), 'Biqedîne');
   });
 
+  test('rozet terimi Kurmancîde rozet olarak kalır', () {
+    // Koleksiyon `Rozet` der (`K.rozetler`, `K.badgeCollection`).
+    // Çerçeve koşulu "nîşan" deyince oyuncu aynı rozeti iki adla görür.
+    // `nîşan bide` göstermek, `nav û nîşan` unvan; kök taraması kör kalır.
+    expect(Tr.of(K.rozetler, AppLanguage.ku), 'Rozet');
+    expect(Tr.of(K.newBadge, AppLanguage.ku), 'Rozeta Nû');
+    expect(Tr.of(K.badgeCollection, AppLanguage.ku), 'Koleksiyona Rozetan');
+    expect(Tr.of(K.frameReqBronze, AppLanguage.ku), '1 rozet veke');
+    expect(Tr.of(K.frameReqSilver, AppLanguage.ku), '5 rozetan veke');
+
+    final nisanVeke = RegExp(r'nîşan(an)?\s+veke', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        nisanVeke.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde "nîşan" rozet; karşılığı "rozet"',
+      );
+    }
+  });
+
   test('doğru/yanlış tipi Kurmancîde şaş olarak kalır', () {
     // Banka seçenekleri `Rast`/`Şaş` der. Tip rozeti "Xelet" deyince
     // oyuncu aynı yanlışı iki adla görür. `K.wrong` zaten `Şaş`.
