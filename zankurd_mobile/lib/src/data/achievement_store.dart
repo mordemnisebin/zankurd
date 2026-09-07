@@ -80,7 +80,7 @@ class AchievementStore {
     const Achievement(
       id: AchievementIds.sevenDayStreak,
       titleKu: '7 Roj Li Pey Hev',
-      titleTr: '7 Gün Streak',
+      titleTr: '7 Günlük Seri',
       // Günlük seri zincîr'dir; `Seriya` tur içi Rêz ile karışır.
       // 30 günlük rozet (`K.badgeStreak30Desc`) aynı kökü kullanır.
       descriptionKu: 'Zincîra rojane gihand 7 rojan.',

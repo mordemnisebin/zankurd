@@ -122,8 +122,12 @@ void main() {
     );
     expect(sevenDay.descriptionKu, contains('Zincîra rojane'));
     expect(sevenDay.descriptionTr, contains('Günlük serini'));
+    // Defter taraması İngilizce "Streak"i de görmez; TR başlık
+    // "7 Gün Streak" deyince ürün terimi seri dururken İngilizce kalır.
+    expect(sevenDay.titleTr, '7 Günlük Seri');
 
     final seriya = RegExp(r'\bseriya\b', caseSensitive: false);
+    final streakEn = RegExp(r'\bstreak\b', caseSensitive: false);
     for (final achievement in AchievementStore.definitions) {
       expect(
         seriya.hasMatch(achievement.descriptionKu),
@@ -134,6 +138,14 @@ void main() {
         seriya.hasMatch(achievement.titleKu),
         isFalse,
         reason: '${achievement.id}: günlük zincîr için Türkçe seri kökü',
+      );
+      expect(
+        streakEn.hasMatch(achievement.titleKu) ||
+            streakEn.hasMatch(achievement.titleTr) ||
+            streakEn.hasMatch(achievement.descriptionKu) ||
+            streakEn.hasMatch(achievement.descriptionTr),
+        isFalse,
+        reason: '${achievement.id}: günlük zincîr için İngilizce streak',
       );
     }
   });

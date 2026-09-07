@@ -886,10 +886,7 @@ class Tr {
       'tr': '{p0} soru · yaklaşık {p1} dakika',
     },
     K.devamEt: {'ku': 'Bidomîne', 'tr': 'Devam et'},
-    K.gunlukSeriStreak: {
-      'ku': 'Zincîra Pêşketinê (Streak)',
-      'tr': 'Günlük Seri (Streak)',
-    },
+    K.gunlukSeriStreak: {'ku': 'Zincîra Pêşketinê', 'tr': 'Günlük Seri'},
     K.pGundurAraliksizOynuyorsun: {
       'ku': '{p0} roj in ku tu bi rêkûpêk dilîzî!',
       'tr': '{p0} gündür aralıksız oynuyorsun!',
@@ -2624,7 +2621,7 @@ class Tr {
       'ku': 'Kûnye nehatin barkirin.',
       'tr': 'Künyeler yüklenemedi.',
     },
-    K.badgeStreak30Title: {'ku': '30 Roj Li Pey Hev', 'tr': '30 Gün Streak'},
+    K.badgeStreak30Title: {'ku': '30 Roj Li Pey Hev', 'tr': '30 Günlük Seri'},
     K.badgeStreak30Desc: {
       'ku': 'Zincîra rojane gihand 30 rojan.',
       'tr': 'Günlük serini 30 güne taşıdın.',

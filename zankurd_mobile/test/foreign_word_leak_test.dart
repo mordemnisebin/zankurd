@@ -27,9 +27,8 @@ import 'package:zankurd_mobile/src/l10n/strings.dart';
 ///     çelişir.
 ///   * **Yerleşik alıntı** — "quiz" iki dilde de Kurmancî ekleriyle
 ///     çekimleniyor ("Quizê biqedîne", "Quiz-a Kurt"), yani dile
-///     girmiş. "Streak" ise parantez içinde AÇIMLAMA olarak duruyor
-///     ("Zincîra Pêşketinê (Streak)") — kavramı başka uygulamalardan
-///     tanıyan oyuncuya köprü kuruyor, terimin yerini almıyor.
+///     girmiş. "Streak" muaf değildi: parantez içi açımlama ürün
+///     terimini (zincîr / seri) İngilizceyle yeniden adlandırıyordu.
 ///
 /// Listeye ekleme yapmak, o kelimenin niçin çevrilemediğini yazmayı
 /// gerektirir. Yeni bir İngilizce kelime sessizce sızarsa bekçi düşer.
@@ -44,14 +43,12 @@ void main() {
     'ku': {
       'premium', // abonelik kademesinin adı; mağaza sayfasıyla aynı olmalı
       'quiz', // Kurmancî eklerle çekimleniyor: "Quizê biqedîne", "Quiz-a Kurt"
-      'streak', // yalnız parantez içi açımlama: "Zincîra Pêşketinê (Streak)"
       'xp', // birim kısaltması, iki dilde de aynı
       'zankurd', // ürünün kendi adı
     },
     'tr': {
       'premium',
       'quiz',
-      'streak',
       'xp',
       'zankurd',
       // 'bonus' YOK: Türkçe metin çekimli hâlini kullanıyor ("seri
@@ -124,6 +121,14 @@ void main() {
       Tr.of(K.categoryMasteryGoal, AppLanguage.tr),
       'Kategori ustalık hedefi',
     );
+  });
+
+  test('günlük zincîr başlığı İngilizce streak taşımaz', () {
+    // Muafiyet parantez içi "(Streak)"i gizliyordu; başlık zaten
+    // zincîr / seri diyordu, İngilizce köprü terimin yerini alıyordu.
+    expect(Tr.of(K.gunlukSeriStreak, AppLanguage.ku), 'Zincîra Pêşketinê');
+    expect(Tr.of(K.gunlukSeriStreak, AppLanguage.tr), 'Günlük Seri');
+    expect(Tr.of(K.badgeStreak30Title, AppLanguage.tr), '30 Günlük Seri');
   });
 
   test('muafiyet listesi ölü kelime taşımıyor', () {

@@ -68,7 +68,7 @@ void main() {
         reason: 'açılan rozet (speed_demon) şeritte görünmüyor',
       );
       expect(
-        find.text('30 Gün Streak'),
+        find.text('30 Günlük Seri'),
         findsNothing,
         reason:
             'kullanıcı streak_30\'u hiç açmadı ama şerit onu gösteriyor — '
