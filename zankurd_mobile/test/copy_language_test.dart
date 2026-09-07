@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
+import 'package:zankurd_mobile/src/models/daily_mission.dart';
 
 /// Kurmancî terim tutarlılığı.
 ///
@@ -119,6 +120,34 @@ void main() {
         seriya.hasMatch(achievement.titleKu),
         isFalse,
         reason: '${achievement.id}: günlük zincîr için Türkçe seri kökü',
+      );
+    }
+  });
+
+  test('günlük görev keepStreak etiketi zincîr kökünü kullanır', () {
+    // Görev etiketi Tr defterinde değil; `labelKu` kaynakta sabit.
+    // "Seriya xwe biparêze" tur içi Rêz ile karışır. Koruma düğmesi
+    // `Zincîrê biparêze`, isim kapısı `Zincîra xwe biparêze` der.
+    final keep = DailyMission(
+      type: MissionType.keepStreak,
+      target: 1,
+      coinReward: 30,
+    );
+    expect(keep.labelKu, 'Zincîra xwe biparêze');
+    expect(keep.labelTr, 'Serisini koru');
+
+    final seriya = RegExp(r'\bseriya\b', caseSensitive: false);
+    for (final type in MissionType.values) {
+      final mission = DailyMission(
+        type: type,
+        target: 1,
+        coinReward: 1,
+        category: 'Ziman',
+      );
+      expect(
+        seriya.hasMatch(mission.labelKu),
+        isFalse,
+        reason: '${type.name}: günlük zincîr için Türkçe seri kökü',
       );
     }
   });

@@ -56,7 +56,10 @@ class DailyMission {
     MissionType.answerCorrect => '$target bersivên rast bide',
     MissionType.completeQuiz => '$target pêşbirk biqedîne',
     MissionType.useWildcard => '$target joker bikar bîne',
-    MissionType.keepStreak => 'Seriya xwe biparêze',
+    // Günlük seri zincîr'dir; `Seriya` tur içi Rêz ile karışır.
+    // Koruma düğmesi (`K.streakProtectAction`) ve isim kapısı
+    // (`K.nameGateValueStreak`) aynı kökü kullanır.
+    MissionType.keepStreak => 'Zincîra xwe biparêze',
     MissionType.playCategory =>
       'Di ${CategoryNames.localized(category ?? '?', true)} de bilîze',
   };
