@@ -84,6 +84,7 @@ void main() {
     'quiz',
     'streak',
     'xp',
+    'coin',
   ];
 
   for (final language in AppLanguage.values) {

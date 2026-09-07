@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
 
-/// Para biriminin adı Kurmancî'de "zêr", Türkçede "coin"dir — karışmaz.
+/// Para biriminin adı Kurmancî'de "zêr", Türkçede "jeton"dur — karışmaz.
 ///
 /// ## Kusur
 ///
@@ -111,5 +111,26 @@ void main() {
       }
     }
     expect(offenders, isEmpty, reason: offenders.join('\n'));
+  });
+
+  test('Türkçe tarafta çıplak İngilizce "coin" yok', () {
+    // `K.coinWord` Türkçede "jeton"; hesap silme alt metni de "jeton"
+    // der. Hesap silme gövdesi ve misafir çıkış uyarısı hâlâ "coin"
+    // diyordu — aynı para birimi iki adla. `{coins}` yer tutucudur.
+    final offenders = <String>[];
+    for (final key in Tr.keys) {
+      final tr = Tr.of(
+        key,
+        AppLanguage.tr,
+      ).replaceAll(RegExp(r'\{[^}]*\}'), '');
+      if (RegExp(r'\bcoins?\b', caseSensitive: false).hasMatch(tr)) {
+        offenders.add('$key: $tr');
+      }
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'Türkçe metinde para birimi "jeton"dur:\n${offenders.join("\n")}',
+    );
   });
 }

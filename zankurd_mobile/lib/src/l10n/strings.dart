@@ -178,7 +178,7 @@ class Tr {
       'ku':
           'Ev çalakî venagere. Profîl, zêr, pirsên tomarkirî û daneyên kesane yên hesabê te tên jêbirin.',
       'tr':
-          'Bu işlem geri alınamaz. Profil, coin, kaydedilen sorular ve hesabına bağlı kişisel veriler silinir.',
+          'Bu işlem geri alınamaz. Profil, jeton, kaydedilen sorular ve hesabına bağlı kişisel veriler silinir.',
     },
     K.continueAction: {'ku': 'Bidomîne', 'tr': 'Devam Et'},
     K.deleteWord: {'ku': 'JÊ BIBE', 'tr': 'SIL'},
@@ -2243,7 +2243,7 @@ class Tr {
       'ku':
           'Tu wek mêvan têketî yî. Heke derkevî, XP, zêr, rozet û zincîra te bi tevahî winda dibin — vegerandin tune.',
       'tr':
-          'Misafir olarak giriş yaptın. Çıkarsan XP, coin, rozet ve serin kalıcı olarak silinir — geri getirilemez.',
+          'Misafir olarak giriş yaptın. Çıkarsan XP, jeton, rozet ve serin kalıcı olarak silinir — geri getirilemez.',
     },
 
     // ── Oyuncu adı kapısı ─────────────────────────────────────────
