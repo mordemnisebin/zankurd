@@ -477,6 +477,33 @@ void main() {
     }
   });
 
+  test('işletim yüzeyi Kurmancîde pergal olarak kalır', () {
+    // Gövde `Pergal destûra…` der. Satır içi "sîstemê" deyince oyuncu
+    // aynı işletim yüzeyini iki adla görür. Türkçe `sistem` kökü î ile
+    // gizlenir; `contains('sistem')` onu görmez — turnûva ile aynı sınıf.
+    expect(
+      Tr.of(K.notifPermDeniedInline, AppLanguage.ku),
+      'Destûra agahdariyê nehat dayîn; ji mîhengên pergalê veke.',
+    );
+    expect(
+      Tr.of(K.notifPermDeniedBody, AppLanguage.ku),
+      contains('mîhengên pergala amûrê'),
+    );
+    expect(
+      Tr.of(K.notifPermDeniedBody, AppLanguage.ku),
+      contains('Pergal destûra'),
+    );
+
+    final sistem = RegExp(r's[iî]stem', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        sistem.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "sistem"; karşılığı "pergal"',
+      );
+    }
+  });
+
   // Aynı Türkçe metnin iki farklı Kurmancî karşılığı olması, oyuncunun aynı
   // şeyi iki ad altında görmesi demektir: "Öğrenme yolları" bir ekranda
   // `Rêyên hînbûnê`, ötekinde `Rêyên fêrbûnê` çıkıyordu (2026-07-30). Aynı

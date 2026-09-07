@@ -2394,12 +2394,12 @@ class Tr {
     },
     K.premiumBrand: {'ku': 'ZanKurd Premium', 'tr': 'ZanKurd Premium'},
     K.notifPermDeniedInline: {
-      'ku': 'Destûra agahdariyê nehat dayîn; ji mîhengên sîstemê veke.',
+      'ku': 'Destûra agahdariyê nehat dayîn; ji mîhengên pergalê veke.',
       'tr': 'Bildirim izni verilmedi; sistem ayarlarından aç.',
     },
     K.notifPermDeniedBody: {
       'ku':
-          'Pergal destûra agahdariyan nade ZanKurd. Ji kerema xwe ji mîhengên sîstema amûrê ve agahdariyên ZanKurd veke.',
+          'Pergal destûra agahdariyan nade ZanKurd. Ji kerema xwe ji mîhengên pergala amûrê ve agahdariyên ZanKurd veke.',
       'tr':
           'Sistem, ZanKurd için bildirimlere izin vermiyor. Lütfen cihazının sistem ayarlarından ZanKurd bildirimlerini aç.',
     },
