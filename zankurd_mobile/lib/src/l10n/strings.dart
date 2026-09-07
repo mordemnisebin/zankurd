@@ -1740,8 +1740,11 @@ class Tr {
       'ku': 'Ev peyam nayê şandin: gotinên nebaş.',
       'tr': 'Bu mesaj gönderilemez: uygunsuz sözcük içeriyor.',
     },
+    // Oda başlığı `Suhbet` (`K.chat`) der. Bağlantı yasağı "sohbeta"
+    // deyince Türkçe sohbet, ürün teriminin u'sunu o ile gizler —
+    // turnûva ile aynı sınıf. Izafe `suhbeta odeyê` kalır.
     K.chatNoLinks: {
-      'ku': 'Di sohbeta odeyê de girêdan nayên şandin.',
+      'ku': 'Di suhbeta odeyê de girêdan nayên şandin.',
       'tr': 'Oda sohbetinde bağlantı paylaşılamaz.',
     },
     K.chatTooLong: {

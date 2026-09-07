@@ -86,6 +86,7 @@ void main() {
     'xp',
     'coin',
     'flashcard',
+    'chat',
   ];
 
   for (final language in AppLanguage.values) {
@@ -140,6 +141,22 @@ void main() {
     expect(Tr.of(K.gunlukSeriStreak, AppLanguage.ku), 'Zincîra Pêşketinê');
     expect(Tr.of(K.gunlukSeriStreak, AppLanguage.tr), 'Günlük Seri');
     expect(Tr.of(K.badgeStreak30Title, AppLanguage.tr), '30 Günlük Seri');
+  });
+
+  test('oda sohbeti İngilizce chat taşımaz', () {
+    // Ürün terimi zaten `Suhbet` (`K.chat`). Türkçe `sohbeta` çekimi
+    // `\bchat\b` taramasını da kör eder — serverê ile aynı sınıf.
+    expect(Tr.of(K.chat, AppLanguage.ku), 'Suhbet');
+    expect(Tr.of(K.chatNoLinks, AppLanguage.ku), contains('suhbeta'));
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
+      expect(
+        kurmanci,
+        isNot(contains('chat')),
+        reason: '$key: Kurmancî metinde İngilizce "chat"; karşılığı "suhbet"',
+      );
+    }
   });
 
   test('sunucu terimi İngilizce server taşımaz', () {

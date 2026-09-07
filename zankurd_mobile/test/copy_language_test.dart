@@ -386,6 +386,23 @@ void main() {
     );
   });
 
+  test('oda sohbeti Kurmancîde suhbet olarak kalır', () {
+    // Oda başlığı `Suhbet` der. Bağlantı yasağı "sohbeta" deyince
+    // oyuncu aynı yüzeyi iki adla görür. Türkçe o, `Suhbet` taramasını
+    // kör eder — turnûva ile aynı sınıf.
+    expect(Tr.of(K.chat, AppLanguage.ku), 'Suhbet');
+    expect(Tr.of(K.chatNoLinks, AppLanguage.ku), contains('suhbeta'));
+
+    final sohbet = RegExp(r'sohbet', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        sohbet.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "sohbet"; karşılığı "suhbet"',
+      );
+    }
+  });
+
   test('hikâye dilbilgisi başlığı Kurmancîde rêziman olarak kalır', () {
     // Mini rehber dilbilgisi bölümü "Not" diyordu — Türkçe not/grade.
     // Aynı ekranın kültürel notu `Nota çandî` der; kategori filtresi
