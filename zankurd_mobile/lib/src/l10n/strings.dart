@@ -1814,7 +1814,7 @@ class Tr {
       'tr': 'Her 30 saniyede güncellenir',
     },
     K.refreshBoardA11y: {
-      'ku': 'Tabloya pêşderçûnê nû bike',
+      'ku': 'Tabloya pêşengan nû bike',
       'tr': 'Liderlik tablosunu yenile',
     },
     K.refreshAction: {'ku': 'Nû bike', 'tr': 'Yenile'},

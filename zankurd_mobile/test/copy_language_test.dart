@@ -504,6 +504,28 @@ void main() {
     }
   });
 
+  test('liderlik tablosu Kurmancîde pêşeng olarak kalır', () {
+    // Ekran adı `Rêzbendî`, ad kapısı `tabloya pêşengan` der. Yenileme
+    // a11y "pêşderçûnê" deyince oyuncu aynı tabloyu iki adla görür.
+    // `pêşderçûnê` çekimi `contains('pêşeng')` taramasını kör eder —
+    // turnûva ile aynı sınıf. Gizlilik metni bu kökü zaten bırakmıştı.
+    expect(
+      Tr.of(K.refreshBoardA11y, AppLanguage.ku),
+      'Tabloya pêşengan nû bike',
+    );
+    expect(Tr.of(K.nameGateHelp, AppLanguage.ku), contains('tabloya pêşengan'));
+    expect(Tr.of(K.privacyBody, AppLanguage.ku), contains('tabloya pêşengan'));
+
+    final pesdercun = RegExp(r'pêşderçûn', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        pesdercun.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde "pêşderçûn"; karşılığı "pêşeng"',
+      );
+    }
+  });
+
   // Aynı Türkçe metnin iki farklı Kurmancî karşılığı olması, oyuncunun aynı
   // şeyi iki ad altında görmesi demektir: "Öğrenme yolları" bir ekranda
   // `Rêyên hînbûnê`, ötekinde `Rêyên fêrbûnê` çıkıyordu (2026-07-30). Aynı
