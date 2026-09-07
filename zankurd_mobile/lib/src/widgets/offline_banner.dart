@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 
 class OfflineBanner extends StatelessWidget {
@@ -20,8 +21,14 @@ class OfflineBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final foregroundColor = AppColors.onSolid(AppTheme.wrong);
+    // 300 ms boy değişimi süsüdür. Tercih açıkken şerit anında durur;
+    // yoksa kabuktaki her çevrimdışı uyarısı ayarı yok saymış olur —
+    // birincil CTA (`GeometricGradientButton`) aynı kapıdan geçiyor.
+    final animDuration = ReducedMotionProvider.isReducedIn(context)
+        ? Duration.zero
+        : const Duration(milliseconds: 300);
     return AnimatedSize(
-      duration: const Duration(milliseconds: 300),
+      duration: animDuration,
       curve: Curves.easeInOut,
       child: isOffline
           ? Material(
