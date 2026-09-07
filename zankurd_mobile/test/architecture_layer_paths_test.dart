@@ -138,4 +138,51 @@ void main() {
     expect(data, contains('BadgeService'));
     expect(data, contains('lib/src/data/badge_service.dart'));
   });
+
+  test('LearnHomeScreen HomeScreen sarmalayıcısıdır, eş ekran değil', () {
+    // ARCHITECTURE "LearnHomeScreen / HomeScreen — günlük görev…" diye
+    // iki eş ekran yazınca yeni geliştirici ikinci bir ana sayfa arıyor.
+    // Kaynak tek StatelessWidget: AppShell sekme 0 LearnHomeScreen açar,
+    // o da HomeScreen döner (kategori gezinmesi). Belge sarmalayıcıyı
+    // söylemezse sapma sessiz kalır.
+    final learnHome = File(
+      'lib/src/screens/learn_home_screen.dart',
+    ).readAsStringSync();
+    expect(learnHome, contains('class LearnHomeScreen'));
+    expect(learnHome, contains('return HomeScreen('));
+
+    final appShell = File('lib/src/screens/app_shell.dart').readAsStringSync();
+    expect(appShell, contains('LearnHomeScreen('));
+
+    final ui = section(
+      '### 1. UI Katmanı (`lib/src/screens/`)',
+      '### 2. State Management (`lib/src/providers/`)',
+    );
+    expect(
+      ui,
+      contains('sarmala'),
+      reason:
+          'ARCHITECTURE LearnHomeScreen’i HomeScreen ile eş ekran gibi '
+          'yazmamalı; sarmalayıcı olduğunu söylemeli',
+    );
+    expect(ui, contains('LearnHomeScreen'));
+    expect(ui, contains('HomeScreen'));
+
+    final readme = File('README.md').readAsStringSync();
+    expect(
+      readme,
+      contains('LearnHomeScreen'),
+      reason: 'README Öğren kökünün LearnHomeScreen olduğunu söylemeli',
+    );
+    expect(
+      readme,
+      contains('HomeScreen'),
+      reason: 'README sarmalanan ekranı adıyla söylemeli',
+    );
+    expect(
+      readme,
+      contains('sarmala'),
+      reason: 'README LearnHomeScreen’i HomeScreen sarmalayıcısı diye yazmalı',
+    );
+  });
 }

@@ -35,7 +35,8 @@ Detaylı mimari belgeler için [ARCHITECTURE.md](ARCHITECTURE.md) dosyasına bak
 
 - `lib/main.dart`: Firebase/Crashlytics, Analytics ve Supabase başlangıcı
 - `lib/src/data/`: Repository, SM-2, Streak, Badge, XP ve Sync veri katmanı
-- `lib/src/screens/`: Ana ekran, quiz, liderlik, profil, ayarlar ve oda akışları
+- `lib/src/screens/`: Öğren sekmesi `LearnHomeScreen` (`HomeScreen`
+  sarmalayıcısı), quiz, liderlik, profil, ayarlar ve oda akışları
 - `lib/src/widgets/`: Ortak panel, rozet, kilim ve grafik bileşenleri
 - `lib/src/theme/`: Material 3 tema, antrasit/yeşil palet
 - `lib/src/l10n/`: Kurmancî/Türkçe anahtar tabanlı metinler (`strings.dart`, `lang.dart`)

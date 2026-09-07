@@ -17,7 +17,7 @@ Kabuk sekmeleri: Öğren, Yarış, Liderlik, Profil.
 graph TB
     subgraph UI["Kullanıcı Arayüzü"]
         AS[AppShell]
-        LH[LearnHome / HomeScreen]
+        LH[LearnHome wraps HomeScreen]
         PH[PlayHubScreen]
         QS[QuizScreen]
         PS[ProfileScreen]
@@ -88,7 +88,8 @@ graph TB
 ## Katmanlar
 
 ### 1. UI Katmanı (`lib/src/screens/`)
-- **LearnHomeScreen / HomeScreen** — Günlük görev, ders yolu, konu seçimi
+- **LearnHomeScreen** — Öğren sekmesi kökü; `HomeScreen`i sarmalar (kategori
+  gezinmesi). İçerik `HomeScreen`dedir: günlük görev, ders yolu, konu seçimi
 - **PlayHubScreen** — 1v1 (birincil), oda, günlük etkinlik; turnuva ikinci katman
 - **QuizScreen** — Soru-cevap, zamanlayıcı, joker
 - **ProfileScreen** — İstatistik, rozet, XP, hesap
