@@ -41,6 +41,31 @@ void main() {
     }
   });
 
+  test('skor terimi Kurmancîde pûan olarak kalır', () {
+    // Canlı tablo "Skora zindî" derken aynı ekranın birimi `Pûan`
+    // (`K.scoreWord`) idi. Türkçe `skor` + `-a` çekimi İngilizce
+    // `\bscore\b` taramasını da kör eder — `maçê` ile aynı sınıf.
+    expect(Tr.of(K.liveScore, AppLanguage.ku), 'Pûana zindî');
+    expect(Tr.of(K.scoreWord, AppLanguage.ku), 'Pûan');
+    expect(
+      Tr.of(K.tournamentWaitingOpponent, AppLanguage.ku),
+      contains('Pûana te'),
+    );
+    expect(
+      Tr.of(K.tournamentMatchSubmitFailed, AppLanguage.ku),
+      contains('Pûana te'),
+    );
+
+    final skor = RegExp(r'skor', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        skor.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "skor"; karşılığı "pûan"',
+      );
+    }
+  });
+
   test('kupa maçı terimi Kurmancîde pêşbirk olarak kalır', () {
     // Ayrılma metinleri (`K.matchForfeitedTitle`) zaten pêşbirk der.
     // Kupa kartı "pirs/maç", düğme "Maçê Bide Destpêkirin" deyince

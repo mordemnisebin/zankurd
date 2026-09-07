@@ -1271,7 +1271,11 @@ class Tr {
     K.sendAction: {'ku': 'Bişîne', 'tr': 'Gönder'},
     K.reportSent: {'ku': 'Rapor hat şandin.', 'tr': 'Soru raporu gönderildi.'},
     K.reportFailed: {'ku': 'Rapor nehat şandin.', 'tr': 'Rapor gönderilemedi.'},
-    K.liveScore: {'ku': 'Skora zindî', 'tr': 'Canlı skor'},
+    // Quiz birimi zaten `Pûan` (`K.scoreWord`, `K.puan`). Başlık "Skora
+    // zindî" deyince oyuncu aynı değeri iki adla görür. Türkçe `skor` +
+    // `-a` çekimi İngilizce `\bscore\b` taramasını da kör eder — `maçê`
+    // ve `serverê` ile aynı sınıf.
+    K.liveScore: {'ku': 'Pûana zindî', 'tr': 'Canlı skor'},
     K.imageLoadFailed: {
       'ku': 'Wêne nehat barkirin',
       'tr': 'Görsel yüklenemedi',
@@ -1590,7 +1594,7 @@ class Tr {
           'kurulur; en geç 24 saat içinde eldeki oyuncularla başlar.',
     },
     K.tournamentWaitingOpponent: {
-      'ku': 'Skora te hate tomarkirin; em li bersiva hevrikê te dinêrin.',
+      'ku': 'Pûana te hate tomarkirin; em li bersiva hevrikê te dinêrin.',
       'tr': 'Skorun kaydedildi; rakibinin oynamasını bekliyoruz.',
     },
     K.championRewardGranted: {
@@ -1605,7 +1609,7 @@ class Tr {
     // `pêşbirk`'tir; `maça te` aynı cümlede ikinci bir ad açardı.
     K.tournamentMatchSubmitFailed: {
       'ku':
-          'Skora te negihîşt pêşkêşkarê. Tu dikarî ji nû ve biceribînî — '
+          'Pûana te negihîşt pêşkêşkarê. Tu dikarî ji nû ve biceribînî — '
           'pêşbirka te hê nehatiye tomarkirin.',
       'tr':
           'Skorun sunucuya ulaşmadı. Tekrar deneyebilirsin — maçın henüz '
