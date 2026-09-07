@@ -81,7 +81,9 @@ class AchievementStore {
       id: AchievementIds.sevenDayStreak,
       titleKu: '7 Roj Li Pey Hev',
       titleTr: '7 Gün Streak',
-      descriptionKu: 'Seriya rojane gihand 7 rojan.',
+      // Günlük seri zincîr'dir; `Seriya` tur içi Rêz ile karışır.
+      // 30 günlük rozet (`K.badgeStreak30Desc`) aynı kökü kullanır.
+      descriptionKu: 'Zincîra rojane gihand 7 rojan.',
       descriptionTr: 'Günlük serini 7 güne taşıdın.',
       icon: AppIcons.calendarDays,
     ),

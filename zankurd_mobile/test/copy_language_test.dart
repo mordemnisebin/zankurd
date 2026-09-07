@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
 
@@ -93,6 +94,31 @@ void main() {
         seriya.hasMatch(Tr.of(key, AppLanguage.ku)),
         isFalse,
         reason: '$key: günlük zincîr için Türkçe seri kökü',
+      );
+    }
+  });
+
+  test('yerel 7 günlük rozet günlük zincîr kökünü kullanır', () {
+    // 30 günlük rozet defterde `Zincîra rojane` der. 7 günlük yerel
+    // rozet `AchievementStore` içinde durur; defter taraması onu
+    // görmez. "Seriya rojane" tur içi Rêz ile karışır.
+    final sevenDay = AchievementStore.definitions.singleWhere(
+      (a) => a.id == AchievementIds.sevenDayStreak,
+    );
+    expect(sevenDay.descriptionKu, contains('Zincîra rojane'));
+    expect(sevenDay.descriptionTr, contains('Günlük serini'));
+
+    final seriya = RegExp(r'\bseriya\b', caseSensitive: false);
+    for (final achievement in AchievementStore.definitions) {
+      expect(
+        seriya.hasMatch(achievement.descriptionKu),
+        isFalse,
+        reason: '${achievement.id}: günlük zincîr için Türkçe seri kökü',
+      );
+      expect(
+        seriya.hasMatch(achievement.titleKu),
+        isFalse,
+        reason: '${achievement.id}: günlük zincîr için Türkçe seri kökü',
       );
     }
   });
