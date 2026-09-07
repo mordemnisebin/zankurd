@@ -1226,22 +1226,9 @@ class _PedagogicalAnalyticsSectionState
                         Expanded(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(4),
-                            child: TweenAnimationBuilder<double>(
-                              tween: Tween(
-                                begin: 0,
-                                end: (bar.correct + bar.mistakes) / maxBar,
-                              ),
-                              duration: const Duration(milliseconds: 700),
-                              curve: Curves.easeOutCubic,
-                              builder: (context, value, _) =>
-                                  LinearProgressIndicator(
-                                    value: value,
-                                    minHeight: 16,
-                                    backgroundColor: AppTheme.surfaceColor(
-                                      context,
-                                    ),
-                                    color: AppTheme.correct,
-                                  ),
+                            child: _categoryBarFill(
+                              context,
+                              end: (bar.correct + bar.mistakes) / maxBar,
                             ),
                           ),
                         ),
@@ -1405,6 +1392,24 @@ class _CategoryBarData {
 }
 
 // ─── Legend Dot ─────────────────────────────────────────────────────────────
+
+/// Kategori çubuğu dolumu süsüdür. Tercih açıkken ilk karede tam boyda
+/// durur; yoksa profil analiz paneli ayarı yok sayar.
+Widget _categoryBarFill(BuildContext context, {required double end}) {
+  Widget bar(double value) => LinearProgressIndicator(
+    value: value,
+    minHeight: 16,
+    backgroundColor: AppTheme.surfaceColor(context),
+    color: AppTheme.correct,
+  );
+  if (ReducedMotionProvider.isReducedIn(context)) return bar(end);
+  return TweenAnimationBuilder<double>(
+    tween: Tween(begin: 0, end: end),
+    duration: const Duration(milliseconds: 700),
+    curve: Curves.easeOutCubic,
+    builder: (context, value, _) => bar(value),
+  );
+}
 
 class _LegendDot extends StatelessWidget {
   const _LegendDot({required this.color, required this.label});

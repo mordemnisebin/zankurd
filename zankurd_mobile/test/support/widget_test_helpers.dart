@@ -94,6 +94,7 @@ Widget testShell({
   ThemeProvider? themeProvider,
   PremiumService? premiumService,
   RemoteAvailability? remoteAvailability,
+  bool reducedMotion = false,
 }) {
   return MultiProvider(
     providers: [
@@ -108,7 +109,7 @@ Widget testShell({
       ),
       ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
       ChangeNotifierProvider<ReducedMotionProvider>(
-        create: (_) => ReducedMotionProvider(),
+        create: (_) => ReducedMotionProvider(initialUserReduce: reducedMotion),
       ),
       // Süresiz mod: varsayılan kapalı, yani testlerde sayaç davranışı
       // değişmez. Sağlayıcının burada olması gerekiyor çünkü Ayarlar ekranı

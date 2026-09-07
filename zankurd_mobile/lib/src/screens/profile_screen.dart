@@ -18,6 +18,7 @@ import '../models/achievement.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/league_tier.dart';
 import '../providers/auth_provider.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
