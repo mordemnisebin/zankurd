@@ -455,6 +455,28 @@ void main() {
     }
   });
 
+  test('kayıt terimi Kurmancîde tomar olarak kalır', () {
+    // Kaydet düğmesi ve soru kaydı `tomar` der (`K.save`, `K.questionSaved`).
+    // Quiz tostu "qeydkirin" deyince oyuncu aynı eylemi iki adla görür.
+    // Türkçe `kayıt` kökü `qeyd` olarak sızar; `contains('kayıt')` onu
+    // görmez.
+    expect(Tr.of(K.save, AppLanguage.ku), 'Tomar bike');
+    expect(Tr.of(K.questionSaved, AppLanguage.ku), 'Pirs hat tomarkirin.');
+    expect(
+      Tr.of(K.cevabinKaydedildi, AppLanguage.ku),
+      'Bersiva te hat tomarkirin',
+    );
+
+    final qeyd = RegExp(r'qeyd', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        qeyd.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "kayıt"; karşılığı "tomar"',
+      );
+    }
+  });
+
   // Aynı Türkçe metnin iki farklı Kurmancî karşılığı olması, oyuncunun aynı
   // şeyi iki ad altında görmesi demektir: "Öğrenme yolları" bir ekranda
   // `Rêyên hînbûnê`, ötekinde `Rêyên fêrbûnê` çıkıyordu (2026-07-30). Aynı

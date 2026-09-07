@@ -190,6 +190,28 @@ void main() {
     }
   });
 
+  test('kayıt terimi Kurmancîde tomar olarak kalır', () {
+    // Ürün terimi zaten `tomar` (`K.save`, `K.questionSaved`). Quiz tostu
+    // "qeydkirin" deyince oyuncu aynı eylemi iki adla görür. Türkçe
+    // `kayıt` kökü `qeyd` olarak sızar; İngilizce `save` taraması onu
+    // görmez — `sohbeta` ile aynı sınıf.
+    expect(Tr.of(K.save, AppLanguage.ku), 'Tomar bike');
+    expect(Tr.of(K.questionSaved, AppLanguage.ku), 'Pirs hat tomarkirin.');
+    expect(
+      Tr.of(K.cevabinKaydedildi, AppLanguage.ku),
+      'Bersiva te hat tomarkirin',
+    );
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
+      expect(
+        kurmanci,
+        isNot(contains('qeyd')),
+        reason: '$key: Kurmancî metinde Türkçe "kayıt"; karşılığı "tomar"',
+      );
+    }
+  });
+
   test('sunucu terimi İngilizce server taşımaz', () {
     // Ürün terimi zaten `pêşkêşkar` (`K.serverUnreachableTitle`).
     // `serverê` çekimi `\bserver\b` taramasını kör eder — turnûva

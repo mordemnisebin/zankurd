@@ -1068,8 +1068,11 @@ class Tr {
       'ku': 'Asta Te Bilind Bû! Ast Nû: {p0}',
       'tr': 'Tebrikler, seviye atladın! Yeni Seviye: {p0}',
     },
+    // Kaydet düğmesi ve soru kaydı zaten `tomar` der (`K.save`,
+    // `K.questionSaved`). Tost "qeydkirin" deyince oyuncu aynı eylemi
+    // iki adla görür. Türkçe `kayıt` kökü `qeyd` olarak sızar.
     K.cevabinKaydedildi: {
-      'ku': 'Bersiva te hat qeydkirin',
+      'ku': 'Bersiva te hat tomarkirin',
       'tr': 'Cevabın kaydedildi',
     },
     K.digerOyuncuBekleniyor: {
