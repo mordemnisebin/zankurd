@@ -184,7 +184,7 @@ void main() {
                   current: 12,
                   freezeState: StreakFreezeState.available,
                   freezeLabel: 'Amade ye ji bo parastinê',
-                  freezeActionLabel: 'Rêzê biparêze',
+                  freezeActionLabel: 'Zincîrê biparêze',
                   nextMilestone: 30,
                   freezeCost: 50,
                   onFreeze: () {},
@@ -222,6 +222,7 @@ void main() {
       'K.streakFreezeNoCoins',
       'K.streakWeekdays',
       'K.streakDayUnit',
+      'K.streakProtectAction',
     ]) {
       expect(home, contains(key), reason: '$key kullanilmiyor');
     }

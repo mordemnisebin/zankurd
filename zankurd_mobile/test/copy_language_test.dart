@@ -63,6 +63,16 @@ void main() {
     expect(Tr.of(K.finishAction, AppLanguage.ku), 'Biqedîne');
   });
 
+  test('günlük seri koruma düğmesi zincîr der, rêz değil', () {
+    // Rêz tur içi doğru cevap dizisidir (`K.seri` / `K.seri2`).
+    // Günlük seri zincîr'dir; dondurma düğmesi "Rêzê biparêze"
+    // deyince oyuncu iki kavramı aynı sanır. Çekim `zincîrê bidomîne`
+    // ile aynıdır (oblique + emir).
+    expect(Tr.of(K.streakProtectAction, AppLanguage.ku), 'Zincîrê biparêze');
+    expect(Tr.of(K.streakProtectAction, AppLanguage.tr), 'Seriyi koru');
+    expect(Tr.of(K.keepStreakTomorrow, AppLanguage.ku), contains('zincîrê'));
+  });
+
   test('çift cevap ipucu ikinci hakkı doğru açıklar', () {
     expect(
       Tr.of(K.wildcardDoubleHint, AppLanguage.ku),

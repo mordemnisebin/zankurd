@@ -909,7 +909,10 @@ class Tr {
     K.streakFreezeUncertain: {'ku': 'Encam ne diyar e', 'tr': 'Sonuç belirsiz'},
     K.streakFreezeOffline: {'ku': 'Negirêdayî', 'tr': 'Çevrimdışı'},
     K.streakFreezeUnavailable: {'ku': 'Nayê bikaranîn', 'tr': 'Kullanılamıyor'},
-    K.streakProtectAction: {'ku': 'Rêzê biparêze', 'tr': 'Seriyi koru'},
+    // Günlük seri zincîr'dir (`streakBreaking`, `dailyStreakDays`,
+    // dondurma kartı). `Rêz` tur içi doğru cevap dizisidir (`K.seri`).
+    // Düğme "Rêzê biparêze" deyince oyuncu iki kavramı karıştırır.
+    K.streakProtectAction: {'ku': 'Zincîrê biparêze', 'tr': 'Seriyi koru'},
     K.streakDayUnit: {'ku': 'roj', 'tr': 'gün'},
     K.streakWeekdays: {
       'ku': 'Dş,Sş,Çş,Pş,În,Şm,Yş',
