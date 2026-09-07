@@ -1104,7 +1104,11 @@ class Tr {
       'tr': 'Yeni bir seviyeye ulaştın!',
     },
     K.seviyeP: {'ku': 'Ast {p0}', 'tr': 'Seviye {p0}'},
-    K.devamEt2: {'ku': 'Berdawam bike', 'tr': 'Devam Et'},
+    // Sonuç `Bidomîne` der (`K.continueAction`, `K.devamEt`). Seviye
+    // kutusu "Berdawam bike" deyince aynı eylem iki adla durur. Türkçe
+    // `devam` kökü `ber-` ile gizlenir; `contains('bidomîne')` onu
+    // görmez — turnûva ile aynı sınıf. `Berdewam` sıfattır (`K.ongoing`).
+    K.devamEt2: {'ku': 'Bidomîne', 'tr': 'Devam Et'},
     K.cevabiGormekIcinDokun: {
       'ku': 'Ji bo dîtina bersivê bitikîne',
       'tr': 'Cevabı görmek için dokun',

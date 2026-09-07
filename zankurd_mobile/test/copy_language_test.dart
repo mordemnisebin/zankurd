@@ -917,6 +917,26 @@ void main() {
     }
   });
 
+  test('devam düğmesi Kurmancîde bidomîne olarak kalır', () {
+    // Sonuç `Bidomîne` der (`K.continueAction`, `K.devamEt`). Seviye
+    // kutusu "Berdawam bike" deyince oyuncu aynı eylemi iki adla görür.
+    // Türkçe `devam` kökü `ber-` ile gizlenir; `contains('bidomîne')`
+    // taramasını kör eder — turnûva ile aynı sınıf.
+    expect(Tr.of(K.continueAction, AppLanguage.ku), 'Bidomîne');
+    expect(Tr.of(K.devamEt, AppLanguage.ku), 'Bidomîne');
+    expect(Tr.of(K.devamEt2, AppLanguage.ku), 'Bidomîne');
+    expect(Tr.of(K.storyStatusContinue, AppLanguage.ku), 'Bidomîne');
+
+    final berdawam = RegExp(r'berdawam', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        berdawam.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde "berdawam"; karşılığı "bidomîne"',
+      );
+    }
+  });
+
   test('Google/Apple bağlama Türkçe ile kalıbı taşımaz', () {
     // Giriş `Bi Google têkeve` der. Bağlama "Bi Google ve" deyince
     // Türkçe "ile" `ve` olarak sızar. `ji nû ve` doğru Kurmancî

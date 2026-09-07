@@ -301,6 +301,24 @@ void main() {
     }
   });
 
+  test('devam düğmesi Kurmancîde bidomîne olarak kalır', () {
+    // Ürün terimi zaten `Bidomîne` (`K.continueAction`, `K.devamEt`).
+    // Seviye kutusu "Berdawam bike" deyince aynı eylem iki adla
+    // duruyordu. Türkçe `devam` kökü `ber-` ile gizlenir.
+    expect(Tr.of(K.continueAction, AppLanguage.ku), 'Bidomîne');
+    expect(Tr.of(K.devamEt, AppLanguage.ku), 'Bidomîne');
+    expect(Tr.of(K.devamEt2, AppLanguage.ku), 'Bidomîne');
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku);
+      expect(
+        RegExp(r'berdawam', caseSensitive: false).hasMatch(kurmanci),
+        isFalse,
+        reason: '$key: Kurmancî metinde "berdawam"; karşılığı "bidomîne"',
+      );
+    }
+  });
+
   test('Google/Apple bağlama Türkçe ile kalıbı taşımaz', () {
     // Giriş `Bi Google têkeve` der. Bağlama "Bi Google ve" deyince
     // Türkçe "ile" `ve` olarak sızar. `ji nû ve` doğru postposition;
