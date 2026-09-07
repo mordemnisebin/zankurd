@@ -299,6 +299,23 @@ void main() {
     expect(Tr.of(K.badgeStreak30Title, AppLanguage.tr), '30 Günlük Seri');
   });
 
+  test('kupa terimi Kurmancîde kûpa olarak kalır', () {
+    // Ürün terimi zaten `Kûpa` (`K.tournament`). Avatar simgesi
+    // "Kupa" deyince û düşer; `contains('kûpa')` onu görmez — puan
+    // ile aynı sınıf.
+    expect(Tr.of(K.tournament, AppLanguage.ku), 'Kûpa');
+    expect(Tr.of(K.avatarIconKupa, AppLanguage.ku), 'Kûpa');
+
+    final kupaBare = RegExp(r'kupa', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        kupaBare.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde û\'süz "kupa"; karşılığı "kûpa"',
+      );
+    }
+  });
+
   test('çevrimdışı terimi Kurmancîde ne li serhêl olarak kalır', () {
     // Ürün terimi zaten `Ne li serhêl` (`K.offline`). Dondurma çipi
     // "Negirêdayî" deyince aynı durum iki adla duruyordu. 12 harf

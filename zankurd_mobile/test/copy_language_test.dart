@@ -25,7 +25,12 @@ void main() {
       Tr.of(K.untimedSoloSub, AppLanguage.ku),
       'Di tûrên tenê de saet nasekine; ode, 1v1 û kûpa naguhere.',
     );
+    // Avatar simgesi "Kupa" deyince û düşer; `contains('kûpa')` onu
+    // görmez — puan ile aynı sınıf.
+    expect(Tr.of(K.avatarIconKupa, AppLanguage.ku), 'Kûpa');
 
+    // û'süz `kupa` Türkçe yazımdır; `kûpa` bu taramaya düşmez.
+    final kupaBare = RegExp(r'kupa', caseSensitive: false);
     for (final key in Tr.keys) {
       final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
       expect(
@@ -37,6 +42,11 @@ void main() {
         kurmanci,
         isNot(contains('turnûva')),
         reason: '$key: û ile gizlenmiş Türkçe "turnuva"',
+      );
+      expect(
+        kupaBare.hasMatch(kurmanci),
+        isFalse,
+        reason: '$key: Kurmancî metinde û\'süz "kupa"; karşılığı "kûpa"',
       );
     }
   });

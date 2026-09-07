@@ -1755,7 +1755,10 @@ class Tr {
     K.avatarIconDar: {'ku': 'Dar', 'tr': 'Ağaç'},
     K.avatarIconCav: {'ku': 'Çav', 'tr': 'Göz'},
     K.avatarIconBirusk: {'ku': 'Birûsk', 'tr': 'Şimşek'},
-    K.avatarIconKupa: {'ku': 'Kupa', 'tr': 'Kupa'},
+    // Turnuva `Kûpa` der (`K.tournament`). Simge "Kupa" deyince û düşer
+    // ve Türkçe kupa sızar; `contains('kûpa')` bunu görmez — puan ile
+    // aynı sınıf (eksik û).
+    K.avatarIconKupa: {'ku': 'Kûpa', 'tr': 'Kupa'},
     K.avatarColor0: {'ku': 'Sora hinarê', 'tr': 'Nar kırmızısı'}, // #E5533D
     K.avatarColor1: {'ku': 'Zêrê tûncê', 'tr': 'Pirinç altını'}, // #E7B53C
     K.avatarColor2: {
