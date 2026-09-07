@@ -18,13 +18,25 @@ void main() {
     // Türkçe "Turnuva" sözcüğü Kurmancî metne sızmamalı; karşılığı Kûpa.
     expect(Tr.of(K.tournament, AppLanguage.ku), 'Kûpa');
     expect(Tr.of(K.tournament, AppLanguage.tr), 'Turnuva Modu');
+    // Süresiz mod alt metni "turnûva" yazıyordu: û, `contains('turnuva')`
+    // taramasını kör ediyordu. Aynı cümle oda için de Türkçe "oda"
+    // taşıyordu; birim `ode`, kupa `kûpa`.
+    expect(
+      Tr.of(K.untimedSoloSub, AppLanguage.ku),
+      'Di tûrên tenê de saet nasekine; ode, 1v1 û kûpa naguhere.',
+    );
 
     for (final key in Tr.keys) {
-      final kurmanci = Tr.of(key, AppLanguage.ku);
+      final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
       expect(
-        kurmanci.toLowerCase(),
+        kurmanci,
         isNot(contains('turnuva')),
         reason: '$key: Kurmancî metinde Türkçe "turnuva" geçiyor',
+      );
+      expect(
+        kurmanci,
+        isNot(contains('turnûva')),
+        reason: '$key: û ile gizlenmiş Türkçe "turnuva"',
       );
     }
   });
@@ -45,6 +57,16 @@ void main() {
     // çevrildi; oyuncu odayı bir ekranda "ode", hata mesajında "jûr" diye
     // görmesin.
     expect(Tr.of(K.roomCreateFailed, AppLanguage.ku), 'Ode nehat avakirin');
+    expect(Tr.of(K.createRoom, AppLanguage.ku), 'Ode ava bike');
+    // `contains('oda')` "koda"/"moda"yı da vurur; kelime sınırı şart.
+    final oda = RegExp(r'\boda\b', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        oda.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "oda"; karşılığı "ode"',
+      );
+    }
   });
 
   test('hızlı düello bütün girişlerde aynı Kurmancî terimi kullanır', () {

@@ -119,7 +119,9 @@ class Tr {
     K.questionImage: {'ku': 'Wêneya pirsê', 'tr': 'Soru görseli'},
     K.untimedSolo: {'ku': 'Moda bêsînor', 'tr': 'Süresiz mod'},
     K.untimedSoloSub: {
-      'ku': 'Di tûrên tenê de saet nasekine; oda, 1v1 û turnûva naguhere.',
+      // `turnûva` û ile `contains('turnuva')` bekçisini kaçırıyordu;
+      // `oda` da Türkçe — düğme ve hata metni `ode`, kupa `kûpa` der.
+      'ku': 'Di tûrên tenê de saet nasekine; ode, 1v1 û kûpa naguhere.',
       'tr':
           'Tek kişilik turlarda sayaç çalışmaz; oda, 1v1 ve turnuva değişmez.',
     },
@@ -393,7 +395,9 @@ class Tr {
       'ku': 'Odeyeke taybet ava bike an tevlî bibe.',
       'tr': 'Özel oda kur ya da bir odaya katıl.',
     },
-    K.createRoom: {'ku': 'Oda ava bike', 'tr': 'Oda Kur'},
+    // Üst satır `Odeyeke taybet`, hata `Ode nehat avakirin` der;
+    // düğme Türkçe "Oda" deyince aynı ekranda iki ad durur.
+    K.createRoom: {'ku': 'Ode ava bike', 'tr': 'Oda Kur'},
     K.createRoomSub: {
       'ku': 'Hevalên xwe bi kodê vexwîne',
       'tr': 'Arkadaşlarını kodla çağır',
