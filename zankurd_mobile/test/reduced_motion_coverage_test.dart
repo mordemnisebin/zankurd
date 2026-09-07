@@ -35,6 +35,7 @@ void main() {
     'lib/src/widgets/skeleton_loader.dart',
     'lib/src/screens/quiz/quiz_effects.dart',
     'lib/src/widgets/weekly_performance_chart.dart',
+    'lib/src/widgets/kilim_reveal.dart',
   ];
 
   for (final path in mustHonour) {
@@ -58,15 +59,15 @@ void main() {
   /// RATCHET: bilinen borç dondurulur, BÜYÜMESİ engellenir.
   ///
   /// Denetimde 12 dosyanın daha animasyon üretip tercihi okumadığı
-  /// bulundu. Splash marka zıplaması ve haftalık grafik büyümesi
-  /// kapandı; kalan 8. Hepsini tek turda düzeltmek sorumsuzca olurdu
-  /// — her biri ayrı bir davranış kararı (bir animasyon süs mü, yoksa
-  /// durum mu taşıyor?). Bu yüzden borç sayı olarak dondurulur: yeni
-  /// bir ihlal eklenirse test kırılır, düzeltildikçe sayı DÜŞÜRÜLMELİDİR.
+  /// bulundu. Splash, haftalık grafik ve kilim kutlama deseni kapandı;
+  /// kalan 7. Hepsini tek turda düzeltmek sorumsuzca olurdu — her biri
+  /// ayrı bir davranış kararı (bir animasyon süs mü, yoksa durum mu
+  /// taşıyor?). Bu yüzden borç sayı olarak dondurulur: yeni bir ihlal
+  /// eklenirse test kırılır, düzeltildikçe sayı DÜŞÜRÜLMELİDİR.
   ///
   /// Aynı desen depoda zaten var (`*_ratchet_test.dart`).
   test('hareketi azalt borcu büyümüyor', () {
-    const knownDebt = 8;
+    const knownDebt = 7;
 
     /// Sürekli/işlevsel göstergeler: süs değil, durum taşıyorlar.
     const exempt = <String>{

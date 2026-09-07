@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 
 /// Kutlama anlarında sonuç başlığının arkasında açılan kilim dokusu.
@@ -14,7 +15,9 @@ import '../theme/app_theme.dart';
 /// gizlenir ve dokunuşları geçirir; sonucun kendisi metinle okunur.
 ///
 /// Hareket azaltma tercihi açıksa desen animasyonsuz, sabit ve daha soluk
-/// çizilir: kutlama kimliği korunur ama hareket üretilmez.
+/// çizilir: kutlama kimliği korunur ama hareket üretilmez. Tercih hem
+/// [reducedMotion] ile hem sağlayıcıdan okunur — çağıran unutsa da
+/// (onboarding kart dokusu) ayar yok sayılmaz.
 class KilimReveal extends StatefulWidget {
   const KilimReveal({
     required this.child,
@@ -63,10 +66,15 @@ class _KilimRevealState extends State<KilimReveal>
   @override
   void didUpdateWidget(KilimReveal oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.active && !oldWidget.active && !widget.reducedMotion) {
+    if (widget.active && !oldWidget.active && !_isReduced(context)) {
       _controller.forward(from: 0);
     }
   }
+
+  /// Çağıranın bayrağı veya ağaçtaki tercih. Sağlayıcı yoksa
+  /// [ReducedMotionProvider.isReducedIn] sessizce `false` döner.
+  bool _isReduced(BuildContext context) =>
+      widget.reducedMotion || ReducedMotionProvider.isReducedIn(context);
 
   @override
   void dispose() {
@@ -77,6 +85,11 @@ class _KilimRevealState extends State<KilimReveal>
   @override
   Widget build(BuildContext context) {
     if (!widget.active) return widget.child;
+
+    final reduced = _isReduced(context);
+    if (reduced && _controller.value != 1) {
+      _controller.value = 1;
+    }
 
     return Stack(
       fit: StackFit.passthrough,
@@ -99,7 +112,7 @@ class _KilimRevealState extends State<KilimReveal>
                     color: widget.color,
                     // Hareketsiz kipte desen daha soluk: sabit bir doku
                     // olarak kalır, dikkat çekmeye çalışmaz.
-                    maxOpacity: widget.reducedMotion ? 0.04 : 0.055,
+                    maxOpacity: reduced ? 0.04 : 0.055,
                   ),
                 ),
               ),
