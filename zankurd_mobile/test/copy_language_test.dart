@@ -386,6 +386,23 @@ void main() {
     );
   });
 
+  test('profil rûyê Kurmancîde rû olarak kalır', () {
+    // Düzenleyici başlığı `Rûyê Min` der. Düğme "Avatarê" deyince
+    // oyuncu aynı yüzeyi iki adla görür. `Avatarê` çekimi `\bavatar\b`
+    // taramasını kör eder — serverê ile aynı sınıf.
+    expect(Tr.of(K.myAvatar, AppLanguage.ku), 'Rûyê Min');
+    expect(Tr.of(K.editAvatar, AppLanguage.ku), 'Rûyê xwe biguherîne');
+
+    final avatar = RegExp(r'avatar', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        avatar.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde İngilizce "avatar"; karşılığı "rû"',
+      );
+    }
+  });
+
   test('oda sohbeti Kurmancîde suhbet olarak kalır', () {
     // Oda başlığı `Suhbet` der. Bağlantı yasağı "sohbeta" deyince
     // oyuncu aynı yüzeyi iki adla görür. Türkçe o, `Suhbet` taramasını

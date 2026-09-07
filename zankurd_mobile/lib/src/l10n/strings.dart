@@ -2252,7 +2252,10 @@ class Tr {
     K.levelUpTitle: {'ku': 'Asta te bilind bû!', 'tr': 'Seviyen yükseldi!'},
 
     // ── Profil kartı ──────────────────────────────────────────────
-    K.editAvatar: {'ku': 'Avatarê xwe biguherîne', 'tr': 'Avatarı düzenle'},
+    // Düzenleyici başlığı zaten `K.myAvatar` ("Rûyê Min"). Düğme
+    // "Avatarê" deyince oyuncu aynı yüzeyi iki adla görür. `Avatarê`
+    // çekimi `\bavatar\b` taramasını kör eder — serverê ile aynı sınıf.
+    K.editAvatar: {'ku': 'Rûyê xwe biguherîne', 'tr': 'Avatarı düzenle'},
     K.keepProgress: {'ku': 'Rêça xwe bidomîne', 'tr': 'İlerlemeni sürdür'},
     K.playerTagCopied: {
       'ku': 'Koda te hate kopîkirin',

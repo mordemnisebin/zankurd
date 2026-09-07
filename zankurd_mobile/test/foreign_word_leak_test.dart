@@ -51,6 +51,7 @@ void main() {
       'quiz',
       'xp',
       'zankurd',
+      'avatar', // Türkçe ürün adı; Kurmancî karşılığı `rû` (`K.myAvatar`)
       // 'bonus' YOK: Türkçe metin çekimli hâlini kullanıyor ("seri
       // bonusu artırır"), yani çıplak kelime hiç geçmiyor. Muafiyet
       // eklemek kuralı gereksiz yere gevşetirdi.
@@ -87,6 +88,7 @@ void main() {
     'coin',
     'flashcard',
     'chat',
+    'avatar',
   ];
 
   for (final language in AppLanguage.values) {
@@ -155,6 +157,23 @@ void main() {
         kurmanci,
         isNot(contains('chat')),
         reason: '$key: Kurmancî metinde İngilizce "chat"; karşılığı "suhbet"',
+      );
+    }
+  });
+
+  test('profil rûyê İngilizce avatar taşımaz', () {
+    // Ürün terimi zaten `rû` (`K.myAvatar`). Düğme "Avatarê" deyince
+    // oyuncu aynı yüzeyi iki adla görür. `Avatarê` çekimi `\bavatar\b`
+    // taramasını kör eder — serverê ile aynı sınıf.
+    expect(Tr.of(K.myAvatar, AppLanguage.ku), 'Rûyê Min');
+    expect(Tr.of(K.editAvatar, AppLanguage.ku), 'Rûyê xwe biguherîne');
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
+      expect(
+        kurmanci,
+        isNot(contains('avatar')),
+        reason: '$key: Kurmancî metinde İngilizce "avatar"; karşılığı "rû"',
       );
     }
   });
