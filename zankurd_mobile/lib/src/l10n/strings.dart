@@ -832,6 +832,12 @@ class Tr {
       'ku': 'Parvekirina yekem a rojê: +25 zêr hat qezenckirin!',
       'tr': 'Günün ilk paylaşımı: +25 jeton kazanıldı!',
     },
+    K.resultShareText: {
+      'ku':
+          'Min di ZanKurd de {score} pûan girt! Rast: {correct}/{total} ({percent}). Tu jî bilîze: Play Store: "ZanKurd"',
+      'tr':
+          'ZanKurd\'te {score} puan aldım! Doğru: {correct}/{total} ({percent}). Sen de oyna: Play Store: "ZanKurd"',
+    },
 
     // ── Çevrimiçi tur durum satırı ───────────────────────────────────
     K.answeredState: {'ku': 'Bersiv da', 'tr': 'Cevapladı'},
@@ -3057,6 +3063,7 @@ class K {
   static const copyCode = 'common.copyCode';
   static const codeCopied = 'common.codeCopied';
   static const shareRewardEarned = 'quiz.shareRewardEarned';
+  static const resultShareText = 'quiz.resultShareText';
 
   // ── Çevrimiçi tur durum satırı ─────────────────────────────────────
   static const answeredState = 'match.answered';

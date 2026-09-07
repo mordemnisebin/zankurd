@@ -78,25 +78,25 @@ void main() {
     /// → 141 (avatar çerçeve kazanım etiketleri)
     /// → 13 (32 dosyada toplu göç; 109 yeni anahtar, 20 kullanım defterde
     ///   zaten var olan anahtarla eşleşti ve yenisi açılmadı)
-    /// → 12 (arkadaş davet paylaşım metni `{tag}` ile deftere taşındı).
+    /// → 12 (arkadaş davet paylaşım metni `{tag}` ile deftere taşındı)
+    /// → 11 (quiz sonuç paylaşım metni `{score}/{correct}/{total}/{percent}`
+    ///   ile deftere taşındı).
     ///
-    /// ## Kalan 12 bilinçli
+    /// ## Kalan 11 bilinçli
     ///
     /// - `strings.dart` (2): göç yolunu anlatan belge yorumunun kendisi.
     /// - `percent_format.dart` (1): yüzde biçiminin TEK kaynağı burasıdır
     ///   ve `percent_and_identity_test` başka hiçbir yerde elle biçim
     ///   yazılmadığını doğrular. Metni deftere taşımak o bekçiyi kör eder.
     /// - `level_screen` (4), `leaderboard_screen` (3),
-    ///   `quiz_result_screen` (1), `result_sharer` (1): bir kısmı dile göre
-    ///   alan seçer; sonuç paylaşımı hâlâ satır içi. Harita sapınca tavan
-    ///   yine yalan söylerdi — sayı tek başına yetmez.
+    ///   `quiz_result_screen` (1): bir kısmı dile göre alan seçer.
+    ///   Harita sapınca tavan yine yalan söylerdi — sayı tek başına yetmez.
     const remainingByFile = {
       'lib/src/l10n/strings.dart': 2,
       'lib/src/utils/percent_format.dart': 1,
       'lib/src/screens/level_screen.dart': 4,
       'lib/src/screens/leaderboard_screen.dart': 3,
       'lib/src/screens/quiz_result_screen.dart': 1,
-      'lib/src/utils/result_sharer.dart': 1,
     };
 
     test('satır içi iki-dil kullanımı tavanı aşmıyor', () {
@@ -189,6 +189,24 @@ void main() {
         Tr.of(K.inviteShareText, AppLanguage.tr, {'tag': 'ZK-TEST'}),
         'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: ZK-TEST. Sen de katıl: https://zankurd.com',
       );
+      expect(
+        Tr.of(K.resultShareText, AppLanguage.ku, {
+          'score': '120',
+          'correct': '8',
+          'total': '10',
+          'percent': '80%',
+        }),
+        'Min di ZanKurd de 120 pûan girt! Rast: 8/10 (80%). Tu jî bilîze: Play Store: "ZanKurd"',
+      );
+      expect(
+        Tr.of(K.resultShareText, AppLanguage.tr, {
+          'score': '120',
+          'correct': '8',
+          'total': '10',
+          'percent': '%80',
+        }),
+        'ZanKurd\'te 120 puan aldım! Doğru: 8/10 (%80). Sen de oyna: Play Store: "ZanKurd"',
+      );
     });
 
     test('yer tutucusuz metin parametreden etkilenmez', () {
@@ -203,6 +221,12 @@ void main() {
       expect(Tr.placeholdersOf(K.dailyReminderAt), {'time'});
       expect(Tr.placeholdersOf(K.deleteTypeWord), {'word'});
       expect(Tr.placeholdersOf(K.inviteShareText), {'tag'});
+      expect(Tr.placeholdersOf(K.resultShareText), {
+        'score',
+        'correct',
+        'total',
+        'percent',
+      });
       expect(Tr.placeholdersOf(K.settings), isEmpty);
     });
 

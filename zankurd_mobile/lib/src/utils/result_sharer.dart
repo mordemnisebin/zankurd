@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'percent_format.dart';
 
+import '../l10n/strings.dart';
 import '../widgets/share_result_card.dart';
 import 'error_reporter.dart';
+import 'percent_format.dart';
 
 /// Quiz sonucunu markalı bir kart görseli olarak paylaşır.
 ///
@@ -52,15 +53,12 @@ class ResultSharer {
     final accuracy = totalQuestions == 0
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
-    final text = isKu
-        ? 'Min di ZanKurd de $score pûan girt! '
-              'Rast: $correctCount/$totalQuestions '
-              '(${PercentFormat.value(accuracy, isKu: true)}). '
-              'Tu jî bilîze: Play Store: "ZanKurd"'
-        : 'ZanKurd\'te $score puan aldım! '
-              'Doğru: $correctCount/$totalQuestions '
-              '(${PercentFormat.value(accuracy, isKu: false)}). '
-              'Sen de oyna: Play Store: "ZanKurd"';
+    final text = Tr.forKu(K.resultShareText, isKu, {
+      'score': '$score',
+      'correct': '$correctCount',
+      'total': '$totalQuestions',
+      'percent': PercentFormat.value(accuracy, isKu: isKu),
+    });
 
     final overlay = Overlay.maybeOf(context);
     Uint8List? bytes;
