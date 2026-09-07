@@ -920,7 +920,10 @@ class Tr {
     K.streakFreezeApplying: {'ku': 'Tê sepandin', 'tr': 'Uygulanıyor'},
     K.streakFreezeApplied: {'ku': 'Hate parastin', 'tr': 'Korundu'},
     K.streakFreezeUncertain: {'ku': 'Encam ne diyar e', 'tr': 'Sonuç belirsiz'},
-    K.streakFreezeOffline: {'ku': 'Negirêdayî', 'tr': 'Çevrimdışı'},
+    // Durum `Ne li serhêl` der (`K.offline`). Çip "Negirêdayî" deyince
+    // oyuncu aynı çevrimdışıyı iki adla görür. Türkçe metin birebir
+    // "Çevrimdışı"; 12 harf eşiği bu çifti kaçırıyordu.
+    K.streakFreezeOffline: {'ku': 'Ne li serhêl', 'tr': 'Çevrimdışı'},
     K.streakFreezeUnavailable: {'ku': 'Nayê bikaranîn', 'tr': 'Kullanılamıyor'},
     // Günlük seri zincîr'dir (`streakBreaking`, `dailyStreakDays`,
     // dondurma kartı). `Rêz` tur içi doğru cevap dizisidir (`K.seri`).

@@ -299,6 +299,23 @@ void main() {
     expect(Tr.of(K.badgeStreak30Title, AppLanguage.tr), '30 Günlük Seri');
   });
 
+  test('çevrimdışı terimi Kurmancîde ne li serhêl olarak kalır', () {
+    // Ürün terimi zaten `Ne li serhêl` (`K.offline`). Dondurma çipi
+    // "Negirêdayî" deyince aynı durum iki adla duruyordu. 12 harf
+    // eşiği birebir Türkçe "Çevrimdışı" çiftini kaçırıyordu.
+    expect(Tr.of(K.offline, AppLanguage.ku), 'Ne li serhêl');
+    expect(Tr.of(K.streakFreezeOffline, AppLanguage.ku), 'Ne li serhêl');
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku);
+      expect(
+        RegExp(r'negirêdayî', caseSensitive: false).hasMatch(kurmanci),
+        isFalse,
+        reason: '$key: Kurmancî metinde "negirêdayî"; karşılığı "ne li serhêl"',
+      );
+    }
+  });
+
   test('oda sohbeti İngilizce chat taşımaz', () {
     // Ürün terimi zaten `Suhbet` (`K.chat`). Türkçe `sohbeta` çekimi
     // `\bchat\b` taramasını da kör eder — serverê ile aynı sınıf.

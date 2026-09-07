@@ -127,6 +127,25 @@ void main() {
     }
   });
 
+  test('çevrimdışı terimi Kurmancîde ne li serhêl olarak kalır', () {
+    // Durum `Ne li serhêl` der (`K.offline`). Dondurma çipi "Negirêdayî"
+    // deyince oyuncu aynı çevrimdışıyı iki adla görür. Türkçe metin
+    // birebir "Çevrimdışı"; 12 harf eşiği bu çifti kaçırıyordu.
+    expect(Tr.of(K.offline, AppLanguage.ku), 'Ne li serhêl');
+    expect(Tr.of(K.streakFreezeOffline, AppLanguage.ku), 'Ne li serhêl');
+    expect(Tr.of(K.offline, AppLanguage.tr), 'Çevrimdışı');
+    expect(Tr.of(K.streakFreezeOffline, AppLanguage.tr), 'Çevrimdışı');
+
+    final negiredayi = RegExp(r'negirêdayî', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        negiredayi.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde "negirêdayî"; karşılığı "ne li serhêl"',
+      );
+    }
+  });
+
   test('hızlı düello bütün girişlerde aynı Kurmancî terimi kullanır', () {
     expect(Tr.of(K.quickDuel, AppLanguage.ku), 'Pêşbirka bilez');
     expect(Tr.of(K.homeQuickDuel, AppLanguage.ku), 'Pêşbirka bilez');
