@@ -301,6 +301,24 @@ void main() {
     }
   });
 
+  test('Google/Apple bağlama Türkçe ile kalıbı taşımaz', () {
+    // Giriş `Bi Google têkeve` der. Bağlama "Bi Google ve" deyince
+    // Türkçe "ile" `ve` olarak sızar. `ji nû ve` doğru postposition;
+    // marka + ve kalıbı şart.
+    expect(Tr.of(K.linkGoogle, AppLanguage.ku), 'Bi Google Girêde');
+    expect(Tr.of(K.connectingGoogle, AppLanguage.ku), 'Bi Google tê girêdan…');
+    expect(Tr.of(K.connectingApple, AppLanguage.ku), 'Bi Apple tê girêdan…');
+
+    final ileCalque = RegExp(r'bi (google|apple) ve\b', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        ileCalque.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "ile"; karşılığı "bi X"',
+      );
+    }
+  });
+
   test('kart görünümü İngilizce flashcard taşımaz', () {
     // Özellik adı `K.flashcards` ile zaten yerel; kip tooltip'i
     // "Flashcard modu" deyince aynı ekranda iki dil duruyordu.

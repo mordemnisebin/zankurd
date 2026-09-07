@@ -239,7 +239,7 @@ void main() {
       await tester.pumpAndSettle();
       await _openGuestUpgradeDialog(tester, isKu: true);
 
-      await tester.tap(find.text('Bi Google ve Girêde'));
+      await tester.tap(find.text('Bi Google Girêde'));
       await tester.pumpAndSettle();
 
       expect(guestAuth.googleLinkCalled, isTrue);

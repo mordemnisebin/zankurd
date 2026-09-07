@@ -209,7 +209,7 @@ class Tr {
     },
     K.signingIn: {'ku': 'Tê têketin…', 'tr': 'Giriş yapılıyor…'},
     K.connectingApple: {
-      'ku': 'Bi Apple ve tê girêdan…',
+      'ku': 'Bi Apple tê girêdan…',
       'tr': 'Apple ile bağlanılıyor…',
     },
     K.signingInGuest: {
@@ -1983,13 +1983,13 @@ class Tr {
       'tr': 'Parola en az 6 karakter olmalı',
     },
     K.orSeparator: {'ku': 'an jî', 'tr': 'veya'},
-    K.linkGoogle: {'ku': 'Bi Google ve Girêde', 'tr': 'Google ile Bağla'},
+    K.linkGoogle: {'ku': 'Bi Google Girêde', 'tr': 'Google ile Bağla'},
     K.accountSaved: {
       'ku': 'Hesabê te bi serkeftî hat tomarkirin!',
       'tr': 'Hesabın başarıyla kaydedildi!',
     },
     K.connectingGoogle: {
-      'ku': 'Bi Google ve tê girêdan…',
+      'ku': 'Bi Google tê girêdan…',
       'tr': 'Google ile bağlanılıyor…',
     },
     K.signOut: {'ku': 'Derkeve', 'tr': 'Çıkış Yap'},
