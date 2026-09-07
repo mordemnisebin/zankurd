@@ -82,6 +82,9 @@ void main() {
       tester.getSemantics(find.text('Başlangıç')).label,
       'Sıradaki: Başlangıç',
     );
+
+    // Soru birimi satır içi ku/tr değil; defterdeki K.soru (2026-09-07).
+    expect(find.text('10 soru'), findsWidgets);
   });
 
   testWidgets('kilitli düğüme dokunmak nedenini söyler', (tester) async {

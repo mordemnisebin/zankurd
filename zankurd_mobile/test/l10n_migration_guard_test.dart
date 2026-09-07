@@ -80,21 +80,24 @@ void main() {
     ///   zaten var olan anahtarla eşleşti ve yenisi açılmadı)
     /// → 12 (arkadaş davet paylaşım metni `{tag}` ile deftere taşındı)
     /// → 11 (quiz sonuç paylaşım metni `{score}/{correct}/{total}/{percent}`
-    ///   ile deftere taşındı).
+    ///   ile deftere taşındı)
+    /// → 9 (seviye yolundaki `Ast`/`Seviye` ve `pirs`/`soru` birimleri
+    ///   defterdeki `progressLevelLabel` ve `soru` anahtarlarına bağlandı).
     ///
-    /// ## Kalan 11 bilinçli
+    /// ## Kalan 9 bilinçli
     ///
     /// - `strings.dart` (2): göç yolunu anlatan belge yorumunun kendisi.
     /// - `percent_format.dart` (1): yüzde biçiminin TEK kaynağı burasıdır
     ///   ve `percent_and_identity_test` başka hiçbir yerde elle biçim
     ///   yazılmadığını doğrular. Metni deftere taşımak o bekçiyi kör eder.
-    /// - `level_screen` (4), `leaderboard_screen` (3),
-    ///   `quiz_result_screen` (1): bir kısmı dile göre alan seçer.
+    /// - `level_screen` (2), `leaderboard_screen` (3),
+    ///   `quiz_result_screen` (1): bir kısmı dile göre alan seçer,
+    ///   bir kısmı çok satırlı cümledir.
     ///   Harita sapınca tavan yine yalan söylerdi — sayı tek başına yetmez.
     const remainingByFile = {
       'lib/src/l10n/strings.dart': 2,
       'lib/src/utils/percent_format.dart': 1,
-      'lib/src/screens/level_screen.dart': 4,
+      'lib/src/screens/level_screen.dart': 2,
       'lib/src/screens/leaderboard_screen.dart': 3,
       'lib/src/screens/quiz_result_screen.dart': 1,
     };
@@ -163,6 +166,10 @@ void main() {
       // doğru sözcük, ama oyuncu aynı şeyi iki adla görmemeli.
       expect(Tr.of(K.navLearn, AppLanguage.ku), 'Hîn Bibe');
       expect(Tr.of(K.navLearn, AppLanguage.tr), 'Öğren');
+      expect(Tr.of(K.progressLevelLabel, AppLanguage.ku), 'Ast');
+      expect(Tr.of(K.progressLevelLabel, AppLanguage.tr), 'Seviye');
+      expect(Tr.of(K.soru, AppLanguage.ku), 'pirs');
+      expect(Tr.of(K.soru, AppLanguage.tr), 'soru');
     });
 
     test('yer tutucular doldurulur', () {

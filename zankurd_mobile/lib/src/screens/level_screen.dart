@@ -163,7 +163,7 @@ class _LevelScreenState extends State<LevelScreen> {
             // (2026-08-16 simülatör taraması).
             name:
                 '${CategoryNames.localized(level.category, context.isKu)} '
-                '${level.number}. ${context.isKu ? "Ast" : "Seviye"}',
+                '${level.number}. ${context.t(K.progressLevelLabel)}',
             questionCount: questions.length,
           );
       final result = await Navigator.of(context).push(
@@ -821,7 +821,7 @@ class _LevelNodeState extends State<_LevelNode> {
                               ),
                               const SizedBox(width: 6),
                               Text(
-                                '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"}',
+                                '${widget.level.questionCount} ${context.t(K.soru)}',
                                 style: AppTypography.caption.copyWith(
                                   color: AppTheme.textMutedColor(context),
                                   fontSize: 11,
