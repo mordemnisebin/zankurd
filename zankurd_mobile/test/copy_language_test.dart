@@ -807,6 +807,23 @@ void main() {
     );
   });
 
+  test('50/50 yardımcısı Kurmancîde nîv bi nîv olarak kalır', () {
+    // Düğme `Nîv bi Nîv` der (`K.metin`). Nasıl oynanır maddesi
+    // "Joker 50/50" deyince oyuncu aynı yardımcıyı iki adla görür.
+    // Türkçe `joker` kökü `contains('nîv')` taramasını kör eder.
+    expect(Tr.of(K.metin, AppLanguage.ku), 'Nîv bi Nîv');
+    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('Nîv bi Nîv'));
+
+    final jokerFifty = RegExp(r'joker\s*50', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        jokerFifty.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde "Joker 50/50"; karşılığı "Nîv bi Nîv"',
+      );
+    }
+  });
+
   test('göç etmemiş ekranlarda terim sözlüğü korunuyor', () {
     final shell = File('lib/src/screens/app_shell.dart').readAsStringSync();
     final onboarding = File(

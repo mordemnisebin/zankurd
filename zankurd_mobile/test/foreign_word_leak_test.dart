@@ -225,6 +225,24 @@ void main() {
     }
   });
 
+  test('50/50 yardımcısı Kurmancîde nîv bi nîv olarak kalır', () {
+    // Ürün terimi zaten `Nîv bi Nîv` (`K.metin`). Rehber "Joker 50/50"
+    // deyince aynı yardımcı iki adla duruyordu. Türkçe `joker` kökü
+    // İngilizce `\bflashcard\b` sınıfındaki taramayı da kör eder.
+    expect(Tr.of(K.metin, AppLanguage.ku), 'Nîv bi Nîv');
+    expect(Tr.of(K.metin, AppLanguage.tr), '50/50');
+    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('Nîv bi Nîv'));
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku);
+      expect(
+        RegExp(r'joker\s*50', caseSensitive: false).hasMatch(kurmanci),
+        isFalse,
+        reason: '$key: Kurmancî metinde "Joker 50/50"; karşılığı "Nîv bi Nîv"',
+      );
+    }
+  });
+
   test('kart görünümü İngilizce flashcard taşımaz', () {
     // Özellik adı `K.flashcards` ile zaten yerel; kip tooltip'i
     // "Flashcard modu" deyince aynı ekranda iki dil duruyordu.
