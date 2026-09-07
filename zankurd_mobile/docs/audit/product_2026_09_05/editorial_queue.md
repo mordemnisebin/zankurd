@@ -1,3 +1,6 @@
+> **TARİHÎ — kaynak değil.** Bu belge geçmiş bir denetim/plan kaydıdır.
+> Güncel davranış için koda, testlere ve `zankurd_mobile/supabase/applied.md` dosyasına bakın.
+
 # Editoryal soru kuyruğu
 
 Üretim zamanı: `2026-09-04T23:39:47.046532+00:00`

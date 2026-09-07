@@ -1,3 +1,6 @@
+> **TARİHÎ — kaynak değil.** Bu belge geçmiş bir denetim/plan kaydıdır.
+> Güncel davranış için koda, testlere ve `zankurd_mobile/supabase/applied.md` dosyasına bakın.
+
 # Question Quality Summary — 2026-09-05
 
 - Sources: 12

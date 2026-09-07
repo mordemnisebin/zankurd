@@ -1,3 +1,6 @@
+> **TARİHÎ — kaynak değil.** Bu belge geçmiş bir denetim/plan kaydıdır.
+> Güncel davranış için koda, testlere ve `zankurd_mobile/supabase/applied.md` dosyasına bakın.
+
 # ZanKurd öğrenme akışı iyileştirmeleri
 
 Son doğrulama: 6 Eylül 2026.

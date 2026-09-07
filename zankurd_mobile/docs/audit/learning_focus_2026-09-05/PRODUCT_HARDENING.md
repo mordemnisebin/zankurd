@@ -1,3 +1,6 @@
+> **TARİHÎ — kaynak değil.** Bu belge geçmiş bir denetim/plan kaydıdır.
+> Güncel davranış için koda, testlere ve `zankurd_mobile/supabase/applied.md` dosyasına bakın.
+
 # Ürün denetimi uygulama kaydı
 
 Son güncelleme: 6 Eylül 2026.
