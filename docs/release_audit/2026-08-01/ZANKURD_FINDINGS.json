@@ -1,4 +1,5 @@
 {
+  "disclaimer": "TARİHÎ — kaynak değil. Güncel davranış için koda, testlere ve zankurd_mobile/supabase/applied.md dosyasına bakın.",
   "audit": {
     "name": "ZanKurd Release Readiness Audit — Phase 1 (evidence-based, read-only)",
     "date": "2026-08-01",
