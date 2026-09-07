@@ -517,6 +517,7 @@ void main() {
       'bulut': 'ewr',
       'jeton': 'zêr',
       'davet': 'vexwendin',
+      'joker': 'alîkarî',
     };
 
     final offenders = <String>[];
@@ -893,6 +894,25 @@ void main() {
         jokerFifty.hasMatch(Tr.of(key, AppLanguage.ku)),
         isFalse,
         reason: '$key: Kurmancî metinde "Joker 50/50"; karşılığı "Nîv bi Nîv"',
+      );
+    }
+  });
+
+  test('joker yardımcısı Kurmancîde alîkarî olarak kalır', () {
+    // Düğme `Alîkariya Bersivê` der (`K.sikIpucu`). Bitirme ipucu
+    // "jokeran" deyince oyuncu aynı yardımcıyı Türkçe adla görür.
+    // `jokeran` çekimi `joker\s*50` taramasını kör eder — turnûva
+    // ile aynı sınıf.
+    expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkariyan'));
+    expect(Tr.of(K.onbRewardBullet, AppLanguage.ku), contains('alîkarî'));
+    expect(Tr.of(K.sikIpucu, AppLanguage.ku), 'Alîkariya Bersivê');
+
+    final joker = RegExp(r'joker', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        joker.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "joker"; karşılığı "alîkarî"',
       );
     }
   });

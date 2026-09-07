@@ -1346,8 +1346,12 @@ class Tr {
     K.difficultyEasy: {'ku': 'Hêsan', 'tr': 'Kolay'},
     K.waitingOpponent: {'ku': 'Li benda hevrik…', 'tr': 'Rakip bekleniyor…'},
     K.finishAction: {'ku': 'Biqedîne', 'tr': 'Bitir'},
+    // Düğme `Alîkariya Bersivê` der (`K.sikIpucu`). Bitirme ipucu
+    // "jokeran" deyince oyuncu aynı yardımcıyı Türkçe adla görür.
+    // `jokeran` çekimi `joker\s*50` taramasını kör eder — turnûva
+    // ile aynı sınıf.
     K.finishQuizHint: {
-      'ku': 'Quizê biqedîne, zêr qezenc bike û jokeran veke',
+      'ku': 'Quizê biqedîne, zêr qezenc bike û alîkariyan veke',
       'tr': 'Quizi bitir, jeton kazan ve jokerleri aç',
     },
     K.wildcardFiftyHint: {
@@ -2180,8 +2184,10 @@ class Tr {
       'ku': 'Pêşbirka bilez û Çalakiya Rojê ya 10 pirsan',
       'tr': 'Hızlı düello ve 10 soruluk Günün Etkinliği',
     },
+    // Quiz ipucu `alîkariyan` der (`K.finishQuizHint`). Tanıtım
+    // "joker" deyince oyuncu aynı yardımcıyı Türkçe adla görür.
     K.onbRewardBullet: {
-      'ku': 'Xelat, zêr û joker',
+      'ku': 'Xelat, zêr û alîkarî',
       'tr': 'Ödül, jeton ve joker',
     },
     K.onbTagline: {

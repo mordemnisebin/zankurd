@@ -282,6 +282,25 @@ void main() {
     }
   });
 
+  test('joker yardımcısı Kurmancîde alîkarî olarak kalır', () {
+    // Ürün terimi zaten `Alîkariya Bersivê` (`K.sikIpucu`). Bitirme
+    // ipucu "jokeran" deyince aynı yardımcı Türkçe adla duruyordu.
+    // `jokeran` çekimi `joker\s*50` taramasını kör eder — turnûva
+    // ile aynı sınıf.
+    expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkariyan'));
+    expect(Tr.of(K.onbRewardBullet, AppLanguage.ku), 'Xelat, zêr û alîkarî');
+    expect(Tr.of(K.sikIpucu, AppLanguage.ku), 'Alîkariya Bersivê');
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku);
+      expect(
+        RegExp(r'joker', caseSensitive: false).hasMatch(kurmanci),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "joker"; karşılığı "alîkarî"',
+      );
+    }
+  });
+
   test('kart görünümü İngilizce flashcard taşımaz', () {
     // Özellik adı `K.flashcards` ile zaten yerel; kip tooltip'i
     // "Flashcard modu" deyince aynı ekranda iki dil duruyordu.
