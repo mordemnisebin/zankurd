@@ -1594,9 +1594,11 @@ class Tr {
     // 2026-08-14: skor sunucuya yazılamazsa hata yutuluyor, kullanıcı
     // maçının sessizce boşa gittiğini hiçbir yerde görmüyordu. Sunucu
     // skoru tek sefer kabul ettiği için tekrar denemek güvenlidir.
+    // `serverê` çekimi `\bserver\b` taramasını kör eder; ürün terimi
+    // zaten `pêşkêşkar` (`K.serverUnreachableTitle`).
     K.tournamentMatchSubmitFailed: {
       'ku':
-          'Skora te negihîşt serverê. Tu dikarî ji nû ve biceribînî — '
+          'Skora te negihîşt pêşkêşkarê. Tu dikarî ji nû ve biceribînî — '
           'maça te hê nehatiye tomarkirin.',
       'tr':
           'Skorun sunucuya ulaşmadı. Tekrar deneyebilirsin — maçın henüz '
@@ -1831,8 +1833,10 @@ class Tr {
     // 2026-08-14: çevrimiçi oda maçında kaydedilen favoriler doğru cevabı
     // istemciye hiç göndermiyor (hile önlemi) — bu yüzden yerel olarak
     // yeniden puanlanamaz, yalnız gözden geçirilebilir.
+    // Aynı `serverê` sızıntısı: gizli favori cevabı sunucuyu İngilizce
+    // anıyordu; ulaşılamama ekranı `pêşkêşkar` der.
     K.favoriteAnswerHiddenHint: {
-      'ku': 'Bersiv li ser serverê ye — dubare nayê lîstin, tenê tê dîtin.',
+      'ku': 'Bersiv li ser pêşkêşkarê ye — dubare nayê lîstin, tenê tê dîtin.',
       'tr': 'Cevap sunucuda saklı — yeniden oynatılamaz, yalnız görüntülenir.',
     },
     K.noSavedQuestionsHint: {

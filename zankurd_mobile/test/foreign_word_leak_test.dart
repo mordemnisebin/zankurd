@@ -142,6 +142,35 @@ void main() {
     expect(Tr.of(K.badgeStreak30Title, AppLanguage.tr), '30 Günlük Seri');
   });
 
+  test('sunucu terimi İngilizce server taşımaz', () {
+    // Ürün terimi zaten `pêşkêşkar` (`K.serverUnreachableTitle`).
+    // `serverê` çekimi `\bserver\b` taramasını kör eder — turnûva
+    // ile aynı sınıf. Maç gönderilemedi ve gizli favori cevabı
+    // İngilizce kalınca aynı kavram iki adla duruyordu.
+    expect(
+      Tr.of(K.serverUnreachableTitle, AppLanguage.ku),
+      contains('Pêşkêşkar'),
+    );
+    expect(
+      Tr.of(K.tournamentMatchSubmitFailed, AppLanguage.ku),
+      contains('pêşkêşkarê'),
+    );
+    expect(
+      Tr.of(K.favoriteAnswerHiddenHint, AppLanguage.ku),
+      contains('pêşkêşkarê'),
+    );
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
+      expect(
+        kurmanci,
+        isNot(contains('server')),
+        reason:
+            '$key: Kurmancî metinde İngilizce "server"; karşılığı "pêşkêşkar"',
+      );
+    }
+  });
+
   test('muafiyet listesi ölü kelime taşımıyor', () {
     // Muaf sayılan bir kelime hiçbir metinde geçmiyorsa liste ölüdür ve
     // gereksiz yere kuralı gevşetir.
