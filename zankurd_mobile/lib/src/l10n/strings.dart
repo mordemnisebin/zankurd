@@ -376,7 +376,7 @@ class Tr {
     K.roomCodeRequired: {'ku': 'Kod pêwîst e', 'tr': 'Kod zorunlu'},
     K.roomCodeInvalid: {
       'ku':
-          'Kod divê bi ZK- dest pê bike û dû re tam 10 karakter ji 0–9/A–F hebin.',
+          'Kod divê bi ZK- dest pê bike û dû re tam 10 tîp ji 0–9/A–F hebin.',
       'tr':
           'Kod ZK- ile başlamalı ve ardından tam 10 adet 0–9/A–F karakteri bulunmalı.',
     },

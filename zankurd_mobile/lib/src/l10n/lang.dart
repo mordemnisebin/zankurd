@@ -149,7 +149,7 @@ extension LangContext on BuildContext {
       case 'Bu e-posta zaten kullanılıyor.':
         return 'Ev e-peyam jixwe tê bikaranîn.';
       case 'Parola çok zayıf (en az 6 karakter).':
-        return 'Şîfre pir qels e (herî kêm 6 karakter).';
+        return 'Şîfre pir qels e (herî kêm 6 tîp).';
       case 'Geçersiz e-posta adresi.':
         return 'Navnîşana e-peyamê ya nederbasdar.';
       case 'E-posta adresin henüz doğrulanmamış. Gelen kutunu kontrol et.':

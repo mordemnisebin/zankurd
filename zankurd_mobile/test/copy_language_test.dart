@@ -504,6 +504,37 @@ void main() {
     }
   });
 
+  test('harf uzunluğu Kurmancîde tîp olarak kalır', () {
+    // Şifre ipucu `Herî kêm 6 tîp` der. Oda kodu "10 karakter"
+    // deyince oyuncu aynı birimi iki adla görür. Türkçe `karakter`
+    // kökü `contains('tîp')` taramasını kör eder — turnûva ile aynı sınıf.
+    expect(Tr.of(K.passwordHintMin6, AppLanguage.ku), 'Herî kêm 6 tîp');
+    expect(
+      Tr.of(K.roomCodeInvalid, AppLanguage.ku),
+      'Kod divê bi ZK- dest pê bike û dû re tam 10 tîp ji 0–9/A–F hebin.',
+    );
+
+    final karakter = RegExp(r'karakter', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        karakter.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "karakter"; karşılığı "tîp"',
+      );
+    }
+
+    // Auth hataları defterde değil; zayıf şifre "6 karakter" deyince
+    // ipucu `tîp` ile çelişir. Yorum satırları eski yalanı belgelemek
+    // için kökü anabilir.
+    final authLive = File('lib/src/l10n/lang.dart')
+        .readAsStringSync()
+        .split('\n')
+        .where((line) => !line.trimLeft().startsWith('//'))
+        .join('\n');
+    expect(authLive, contains('herî kêm 6 tîp'));
+    expect(authLive, isNot(contains('herî kêm 6 karakter')));
+  });
+
   test('liderlik tablosu Kurmancîde pêşeng olarak kalır', () {
     // Ekran adı `Rêzbendî`, ad kapısı `tabloya pêşengan` der. Yenileme
     // a11y "pêşderçûnê" deyince oyuncu aynı tabloyu iki adla görür.

@@ -228,7 +228,7 @@ void main() {
 
     expect(repository.joinCalls, 0);
     const fullError =
-        'Kod divê bi ZK- dest pê bike û dû re tam 10 karakter '
+        'Kod divê bi ZK- dest pê bike û dû re tam 10 tîp '
         'ji 0–9/A–F hebin.';
     final error = find.text(fullError);
     expect(error, findsOneWidget);
