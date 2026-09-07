@@ -590,7 +590,13 @@ class Tr {
       'tr': 'Kupa, rekabet ve ödül — gerçek oyuncularla',
     },
     K.botDailyCup: {'ku': 'Kûpa · elemeyî', 'tr': 'Eleme kupası'},
-    K.formatSummary: {'ku': '{perMatch} pirs/maç', 'tr': '{perMatch} soru/maç'},
+    // Ayrılma/hükmen bitiş metinleri aynı kavramı `pêşbirk` der.
+    // `maçê` çekimi `\bmatch\b` taramasını kör eder; Türkçe "maç"
+    // kupa kartında ayrı bir ad gibi duruyordu.
+    K.formatSummary: {
+      'ku': '{perMatch} pirs/pêşbirk',
+      'tr': '{perMatch} soru/maç',
+    },
     K.botRaceHint: {
       'ku': 'Şampiyon kûpayê digire!',
       'tr': 'Şampiyon kupayı alır!',
@@ -646,7 +652,7 @@ class Tr {
       'ku': 'Pîroz be! Tu şampiyonê Kûpaya ZanKurdê yî!',
       'tr': 'Tebrikler! ZanKurd Kupası şampiyonusun!',
     },
-    K.yourMatchRound: {'ku': 'Maça Te · {round}', 'tr': 'Maçın · {round}'},
+    K.yourMatchRound: {'ku': 'Pêşbirka Te · {round}', 'tr': 'Maçın · {round}'},
     // 2026-08-14: `resolve_expired_tournament_matches` süresi dolan maçı
     // hükmen kapatır (round_hours, varsayılan 24 saat) ama sunucunun
     // gönderdiği bu tarih hiçbir ekranda görünmüyordu — oyuncu ne zamana
@@ -656,14 +662,14 @@ class Tr {
       'tr': '{time} tarihine kadar oyna, yoksa hükmen kaybedersin',
     },
     K.tournamentMatchDeadlinePassed: {
-      'ku': 'Dema vê maçê derbas bûye',
+      'ku': 'Dema vê pêşbirkê derbas bûye',
       'tr': 'Bu maçın süresi doldu',
     },
     K.yourMatchVs: {
-      'ku': 'Maça Te · {round} · Li dijî {opponent}',
+      'ku': 'Pêşbirka Te · {round} · Li dijî {opponent}',
       'tr': 'Maçın · {round} · Rakip: {opponent}',
     },
-    K.startMatch: {'ku': 'Maçê Bide Destpêkirin', 'tr': 'Maçı Başlat'},
+    K.startMatch: {'ku': 'Pêşbirkê Bide Destpêkirin', 'tr': 'Maçı Başlat'},
     K.unknown: {'ku': 'Nediyar', 'tr': 'Belirsiz'},
 
     // ── Soru öner ekranı ─────────────────────────────────────────────
@@ -1595,11 +1601,12 @@ class Tr {
     // maçının sessizce boşa gittiğini hiçbir yerde görmüyordu. Sunucu
     // skoru tek sefer kabul ettiği için tekrar denemek güvenlidir.
     // `serverê` çekimi `\bserver\b` taramasını kör eder; ürün terimi
-    // zaten `pêşkêşkar` (`K.serverUnreachableTitle`).
+    // zaten `pêşkêşkar` (`K.serverUnreachableTitle`). Karşılaşma da
+    // `pêşbirk`'tir; `maça te` aynı cümlede ikinci bir ad açardı.
     K.tournamentMatchSubmitFailed: {
       'ku':
           'Skora te negihîşt pêşkêşkarê. Tu dikarî ji nû ve biceribînî — '
-          'maça te hê nehatiye tomarkirin.',
+          'pêşbirka te hê nehatiye tomarkirin.',
       'tr':
           'Skorun sunucuya ulaşmadı. Tekrar deneyebilirsin — maçın henüz '
           'kaydedilmedi.',
@@ -2473,7 +2480,10 @@ class Tr {
     },
 
     // ── Turnuva ağacı ─────────────────────────────────────────────
-    K.matchSemantics: {'ku': 'Maça {one} û {two}', 'tr': '{one} ve {two} maçı'},
+    K.matchSemantics: {
+      'ku': 'Pêşbirka {one} û {two}',
+      'tr': '{one} ve {two} maçı',
+    },
     K.matchFinished: {'ku': 'BI DAWÎ BÛ', 'tr': 'BİTTİ'},
     K.unknownPlayer: {'ku': 'Nediyar', 'tr': 'Belirsiz'},
     // ── Görsel künyesi ────────────────────────────────────────────────

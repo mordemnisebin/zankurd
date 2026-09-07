@@ -41,6 +41,29 @@ void main() {
     }
   });
 
+  test('kupa maçı terimi Kurmancîde pêşbirk olarak kalır', () {
+    // Ayrılma metinleri (`K.matchForfeitedTitle`) zaten pêşbirk der.
+    // Kupa kartı "pirs/maç", düğme "Maçê Bide Destpêkirin" deyince
+    // oyuncu aynı karşılaşmayı iki adla görür. `maçê` çekimi İngilizce
+    // `\bmatch\b` taramasını da kör eder — serverê ile aynı sınıf.
+    expect(Tr.of(K.formatSummary, AppLanguage.ku), '{perMatch} pirs/pêşbirk');
+    expect(Tr.of(K.startMatch, AppLanguage.ku), 'Pêşbirkê Bide Destpêkirin');
+    expect(Tr.of(K.matchForfeitedTitle, AppLanguage.ku), contains('Pêşbirk'));
+    expect(
+      Tr.of(K.tournamentMatchSubmitFailed, AppLanguage.ku),
+      contains('pêşbirka te'),
+    );
+
+    final mac = RegExp(r'maç', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        mac.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "maç"; karşılığı "pêşbirk"',
+      );
+    }
+  });
+
   test('arkadaş durumu terimleri kayıt defterinde korunuyor', () {
     // Bu kontroller de `friends_screen.dart` kaynağını grep'liyordu;
     // ekran göç edince (2026-07-25) metin kaynakta kalmadı. Terimler artık
