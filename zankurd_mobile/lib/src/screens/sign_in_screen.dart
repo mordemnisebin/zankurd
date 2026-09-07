@@ -6,6 +6,7 @@ import '../animations/load_animations.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -184,6 +185,12 @@ class _SignInScreenState extends State<SignInScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Kademeli logo/başlık girişi süsüdür. Tercih açıkken onboarding ve
+    // splash gibi ilk karede bitmiş değerde durur; yoksa ayar, kullanıcının
+    // gördüğü ilk form ekranında yok sayılmış olur.
+    if (ReducedMotionProvider.isReducedIn(context)) {
+      _animationController.value = 1;
+    }
     final screenSize = MediaQuery.sizeOf(context);
     final compact = screenSize.height < 900;
     // Kompakt düzen boyut sabitleri — M-8 denetim düzeltmesi.
