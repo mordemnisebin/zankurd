@@ -6,6 +6,16 @@ import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
 
+String _libRelative(String path) {
+  final normalized = path.replaceAll(r'\', '/');
+  const marker = '/lib/';
+  final at = normalized.indexOf(marker);
+  if (at >= 0) {
+    return 'lib/${normalized.substring(at + marker.length)}';
+  }
+  return normalized;
+}
+
 /// Çok dillilik göçünün bekçisi.
 ///
 /// Uygulama metinleri tarihsel olarak çağrı yerinde `ku ? 'a' : 'b'` ya da
@@ -75,12 +85,20 @@ void main() {
     /// - `percent_format.dart` (1): yüzde biçiminin TEK kaynağı burasıdır
     ///   ve `percent_and_identity_test` başka hiçbir yerde elle biçim
     ///   yazılmadığını doğrular. Metni deftere taşımak o bekçiyi kör eder.
-    /// - `level_screen` (4), `leaderboard_screen` (3), `room_screen` (1),
-    ///   `quiz_result_screen` (1), `result_sharer` (1): iki dalı da düz
-    ///   dize OLMAYAN kullanımlar — dallar farklı veri alanları okuyor ya
-    ///   da içlerinde `CategoryNames.localized(...)` gibi çağrılar var.
-    ///   Bunlar çeviri değil, veri seçimidir; deftere taşınacak metin yok.
-    const inlineCeiling = 13;
+    /// - `level_screen` (4), `leaderboard_screen` (3), `friends_screen` (1),
+    ///   `quiz_result_screen` (1), `result_sharer` (1): bir kısmı dile göre
+    ///   alan seçer; arkadaş daveti ve sonuç paylaşımı hâlâ satır içi.
+    ///   Yorum `room_screen` diyordu, kaynak `friends_screen` — sayı tek
+    ///   başına yetmez, dosya haritası kilitlenir.
+    const remainingByFile = {
+      'lib/src/l10n/strings.dart': 2,
+      'lib/src/utils/percent_format.dart': 1,
+      'lib/src/screens/level_screen.dart': 4,
+      'lib/src/screens/leaderboard_screen.dart': 3,
+      'lib/src/screens/friends_screen.dart': 1,
+      'lib/src/screens/quiz_result_screen.dart': 1,
+      'lib/src/utils/result_sharer.dart': 1,
+    };
 
     test('satır içi iki-dil kullanımı tavanı aşmıyor', () {
       final libDir = Directory('lib');
@@ -88,6 +106,7 @@ void main() {
       // hepsini yakalar. Kelime sınırı BİLEREK yok: kusur tam orada
       // saklanıyordu.
       final pattern = RegExp(r"""([Kk]u\s*\?\s*['"])|(\.s\(\s*['"])""");
+      final inlineCeiling = remainingByFile.values.reduce((a, b) => a + b);
 
       var count = 0;
       final perFile = <String, int>{};
@@ -95,7 +114,7 @@ void main() {
         if (entity is! File || !entity.path.endsWith('.dart')) continue;
         final hits = pattern.allMatches(entity.readAsStringSync()).length;
         if (hits > 0) {
-          perFile[entity.path] = hits;
+          perFile[_libRelative(entity.path)] = hits;
           count += hits;
         }
       }
@@ -112,6 +131,13 @@ void main() {
             '(bkz. lib/src/l10n/strings.dart).\n'
             'En yoğun dosyalar: '
             '${worst.take(5).map((e) => "${e.key}: ${e.value}").join(", ")}',
+      );
+      expect(
+        perFile,
+        remainingByFile,
+        reason:
+            'Kalan dosya haritası sapması. Göç ettiysen haritayı düşür; '
+            'yeni dosyaya satır içi metin ekleme.',
       );
     });
 
