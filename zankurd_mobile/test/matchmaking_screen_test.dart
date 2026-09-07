@@ -522,7 +522,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('1vs1 Düello'), findsOneWidget);
+    expect(find.text('Hızlı düello'), findsOneWidget);
     expect(find.text('Rastgele eşleşme'), findsOneWidget);
     final duelCard = tester.widget<Container>(
       find.byKey(const ValueKey('matchmaking-duel-card')),

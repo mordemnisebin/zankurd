@@ -1464,8 +1464,11 @@ class Tr {
     },
     K.no: {'ku': 'Na', 'tr': 'Hayır'},
     K.yes: {'ku': 'Belê', 'tr': 'Evet'},
-    K.duel1v1Short: {'ku': 'Şerê 1vs1', 'tr': '1vs1 Düello'},
-    K.duel1v1: {'ku': 'Şerê 1vs1', 'tr': '1vs1 Düello'},
+    // Hub kartı `Pêşbirka bilez` der (`K.quickDuel`, `K.homeQuickDuel`).
+    // Eşleşme başlığı "Şerê 1vs1" deyince oyuncu aynı 1v1'i iki adla
+    // görür. `şer` doğru Kurmancîdir; tek üründe tek kök.
+    K.duel1v1Short: {'ku': 'Pêşbirka bilez', 'tr': 'Hızlı düello'},
+    K.duel1v1: {'ku': 'Pêşbirka bilez', 'tr': 'Hızlı düello'},
     K.duel1v1Sub: {
       'ku':
           'Bi hevalan re an bi lîstikvanên din re bi awayekî zindî pêşbirkê bike.',
@@ -2163,8 +2166,8 @@ class Tr {
       'tr': '1vs1, oda veya kupa — arkadaşlarınla oyna.',
     },
     K.onbDuelBullet: {
-      'ku': 'Şerê 1vs1 û Çalakiya Rojê ya 10 pirsan',
-      'tr': '1vs1 ve 10 soruluk Günün Etkinliği',
+      'ku': 'Pêşbirka bilez û Çalakiya Rojê ya 10 pirsan',
+      'tr': 'Hızlı düello ve 10 soruluk Günün Etkinliği',
     },
     K.onbRewardBullet: {
       'ku': 'Xelat, zêr û joker',
