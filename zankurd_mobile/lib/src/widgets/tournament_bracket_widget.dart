@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../config/avatar_presets.dart';
 import '../l10n/strings.dart';
 import '../models/tournament.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import 'player_avatar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -333,8 +334,13 @@ class _BracketMatchCard extends StatelessWidget {
       excludeSemantics: true,
       child: GestureDetector(
         onTap: onTap,
+        // 350 ms kenarlık/gölge geçişi süsüdür. Tercih açıkken kart
+        // anında durur; yoksa şemadaki her maç ayarı yok saymış olur —
+        // çevrimdışı şerit (`OfflineBanner`) aynı kapıdan geçiyor.
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 350),
+          duration: ReducedMotionProvider.isReducedIn(context)
+              ? Duration.zero
+              : const Duration(milliseconds: 350),
           curve: Curves.easeInOut,
           width: cardWidth,
           padding: const EdgeInsets.all(6),
