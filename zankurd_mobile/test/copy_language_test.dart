@@ -97,6 +97,20 @@ void main() {
         reason: '$key: günlük zincîr için Türkçe seri kökü',
       );
     }
+
+    // Gövde `K.huhuBugunHicOynamadin` ile zincîr der; Android kanal adı
+    // sistem ayarlarında ayrı durur ve defter taraması onu görmez.
+    // Yorum satırları eski yalanı belgelemek için kökü anabilir.
+    final notificationLive = File('lib/src/services/notification_service.dart')
+        .readAsStringSync()
+        .split('\n')
+        .where((line) => !line.trimLeft().startsWith('//'))
+        .join('\n');
+    expect(notificationLive, contains('zankurd_streak_warning'));
+    expect(notificationLive, contains('ZanKurd Bîranîna Zincîrê'));
+    expect(notificationLive, contains('Bîranîna parastina zincîra rojane'));
+    expect(notificationLive, isNot(contains('Bîranîna Rêzê')));
+    expect(notificationLive, isNot(contains('rêza rojane')));
   });
 
   test('yerel 7 günlük rozet günlük zincîr kökünü kullanır', () {

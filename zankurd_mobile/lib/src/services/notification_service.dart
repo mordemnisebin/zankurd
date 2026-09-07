@@ -377,10 +377,13 @@ class NotificationService {
         scheduledTime = scheduledTime.add(const Duration(days: 1));
       }
 
+      // Günlük seri zincîr'dir; `Rêz` tur içi doğru cevap dizisidir.
+      // Kanal adı Android ayarlarında görünür; gövde zincîr derken
+      // kanal "Bîranîna Rêzê" deyince oyuncu iki kavramı karıştırır.
       const androidDetails = AndroidNotificationDetails(
         'zankurd_streak_warning',
-        'ZanKurd Bîranîna Rêzê',
-        channelDescription: 'Bîranîna parastina rêza rojane',
+        'ZanKurd Bîranîna Zincîrê',
+        channelDescription: 'Bîranîna parastina zincîra rojane',
         importance: Importance.defaultImportance,
         priority: Priority.defaultPriority,
       );
