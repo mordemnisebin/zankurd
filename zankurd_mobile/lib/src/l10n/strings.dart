@@ -622,7 +622,10 @@ class Tr {
       'ku': 'Ev kûpa herêmî ye — xelat nayê dayîn',
       'tr': 'Bu kupa yerel oynandı — ödül verilmez',
     },
-    K.cupFinalScore: {'ku': 'Puana dawî', 'tr': 'Final skoru'},
+    // Quiz birimi `Pûan` (`K.scoreWord`, `K.liveScore`). Kupa kartı
+    // "Puana dawî" deyince û düşer ve Türkçe puan sızar; `contains('skor')`
+    // bunu görmez — turnûva ile ters sınıf (eksik û).
+    K.cupFinalScore: {'ku': 'Pûana dawî', 'tr': 'Final skoru'},
     K.cupEliminatedRound: {
       'ku': 'Tu li {round} derketî',
       'tr': '{round} turunda elendin',

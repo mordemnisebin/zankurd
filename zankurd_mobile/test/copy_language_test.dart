@@ -45,8 +45,11 @@ void main() {
     // Canlı tablo "Skora zindî" derken aynı ekranın birimi `Pûan`
     // (`K.scoreWord`) idi. Türkçe `skor` + `-a` çekimi İngilizce
     // `\bscore\b` taramasını da kör eder — `maçê` ile aynı sınıf.
+    // Kupa kartı "Puana dawî" deyince û düşer; `contains('skor')` onu
+    // görmez.
     expect(Tr.of(K.liveScore, AppLanguage.ku), 'Pûana zindî');
     expect(Tr.of(K.scoreWord, AppLanguage.ku), 'Pûan');
+    expect(Tr.of(K.cupFinalScore, AppLanguage.ku), 'Pûana dawî');
     expect(
       Tr.of(K.tournamentWaitingOpponent, AppLanguage.ku),
       contains('Pûana te'),
@@ -57,11 +60,18 @@ void main() {
     );
 
     final skor = RegExp(r'skor', caseSensitive: false);
+    // û'süz `puan` Türkçe yazımdır; `pûan` bu taramaya düşmez.
+    final puanBare = RegExp(r'puan', caseSensitive: false);
     for (final key in Tr.keys) {
       expect(
         skor.hasMatch(Tr.of(key, AppLanguage.ku)),
         isFalse,
         reason: '$key: Kurmancî metinde Türkçe "skor"; karşılığı "pûan"',
+      );
+      expect(
+        puanBare.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde û\'süz "puan"; karşılığı "pûan"',
       );
     }
   });
