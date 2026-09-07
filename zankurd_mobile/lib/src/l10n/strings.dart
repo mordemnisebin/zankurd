@@ -1050,8 +1050,10 @@ class Tr {
       'tr': '{p0} aktif yanlış soru',
     },
     K.senkronizeEdiliyor: {'ku': 'Tê rêzkirin…', 'tr': 'Senkronize ediliyor…'},
+    // Durum çipi "Bulut" diyordu — Türkçe. Karşılığı `ewr`; parantez
+    // etiketi Türkçe kökü `contains('ewr')` taramasını kör eder.
     K.bulutlaSenkronize: {
-      'ku': 'Tev rêzkirî ye (Bulut)',
+      'ku': 'Tev rêzkirî ye (Ewr)',
       'tr': 'Bulutla senkronize',
     },
     K.pSenkronizeEdilemedi: {

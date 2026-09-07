@@ -368,6 +368,7 @@ void main() {
       'jûr': 'ode',
       'eşleş': 'lihevanîn',
       'rapor': 'ragihandin',
+      'bulut': 'ewr',
     };
 
     final offenders = <String>[];
@@ -556,6 +557,22 @@ void main() {
         .join('\n');
     expect(authLive, contains('herî kêm 6 tîp'));
     expect(authLive, isNot(contains('herî kêm 6 karakter')));
+  });
+
+  test('bulut senkronu Kurmancîde ewr olarak kalır', () {
+    // Profil durumu "Bulut" diyordu — Türkçe. Karşılığı `ewr`.
+    // Parantez etiketi `contains('ewr')` taramasını kör eder.
+    expect(Tr.of(K.bulutlaSenkronize, AppLanguage.ku), 'Tev rêzkirî ye (Ewr)');
+    expect(Tr.of(K.bulutlaSenkronize, AppLanguage.tr), 'Bulutla senkronize');
+
+    final bulut = RegExp(r'bulut', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        bulut.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "bulut"; karşılığı "ewr"',
+      );
+    }
   });
 
   test('liderlik tablosu Kurmancîde pêşeng olarak kalır', () {

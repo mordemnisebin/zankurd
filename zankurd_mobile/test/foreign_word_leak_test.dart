@@ -89,6 +89,7 @@ void main() {
     'flashcard',
     'chat',
     'avatar',
+    'cloud',
   ];
 
   for (final language in AppLanguage.values) {
@@ -136,6 +137,27 @@ void main() {
         kurmanci,
         isNot(contains('ustal')),
         reason: '$key: Kurmancî metinde Türkçe "ustalık"; karşılığı "serwerî"',
+      );
+    }
+  });
+
+  test('bulut senkronu İngilizce cloud taşımaz', () {
+    // Durum çipi Türkçe "Bulut" taşıyordu; karşılığı `ewr`.
+    // İngilizce `cloud` aynı sınıfın diğer yüzü.
+    expect(Tr.of(K.bulutlaSenkronize, AppLanguage.ku), 'Tev rêzkirî ye (Ewr)');
+    expect(Tr.of(K.bulutlaSenkronize, AppLanguage.tr), 'Bulutla senkronize');
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
+      expect(
+        kurmanci,
+        isNot(contains('cloud')),
+        reason: '$key: Kurmancî metinde İngilizce "cloud"; karşılığı "ewr"',
+      );
+      expect(
+        kurmanci,
+        isNot(contains('bulut')),
+        reason: '$key: Kurmancî metinde Türkçe "bulut"; karşılığı "ewr"',
       );
     }
   });
