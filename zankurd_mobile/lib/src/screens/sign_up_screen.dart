@@ -5,6 +5,7 @@ import '../animations/load_animations.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../services/analytics_service.dart';
 import '../services/display_name_policy.dart';
 import '../theme/app_theme.dart';
@@ -147,6 +148,12 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Kademeli adım/başlık girişi süsüdür. Tercih açıkken splash ve giriş
+    // gibi ilk karede bitmiş değerde durur; yoksa ayar, kullanıcının
+    // gördüğü kayıt sihirbazında yok sayılmış olur.
+    if (ReducedMotionProvider.isReducedIn(context)) {
+      _animationController.value = 1;
+    }
     final isDark = !AppTheme.isLight(context);
     final glowColor1 = AppTheme.gold.withValues(alpha: isDark ? 0.08 : 0.05);
     final glowColor2 = isDark
