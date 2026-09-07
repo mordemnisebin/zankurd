@@ -487,6 +487,7 @@ void main() {
       'rapor': 'ragihandin',
       'bulut': 'ewr',
       'jeton': 'zêr',
+      'davet': 'vexwendin',
     };
 
     final offenders = <String>[];
@@ -822,6 +823,30 @@ void main() {
         dikan.hasMatch(Tr.of(key, AppLanguage.ku)),
         isFalse,
         reason: '$key: Kurmancî metinde "dikan"; karşılığı "dukan"',
+      );
+    }
+  });
+
+  test('davet kodu Kurmancîde vexwendin olarak kalır', () {
+    // Etiket `Koda Vexwendinê` der (`K.enterReferralCode`). Misafir
+    // yasağı "davetê" deyince oyuncu aynı kodu iki adla görür. Türkçe
+    // `davet` kökü `contains('vexwend')` taramasını kör eder.
+    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda Vexwendinê');
+    expect(
+      Tr.of(K.referralGuestBlocked, AppLanguage.ku),
+      contains('Koda vexwendinê'),
+    );
+    expect(
+      Tr.of(K.referralAlreadyUsed, AppLanguage.ku),
+      contains('koda vexwendinê'),
+    );
+
+    final davet = RegExp(r'davet', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        davet.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "davet"; karşılığı "vexwendin"',
       );
     }
   });

@@ -2686,9 +2686,12 @@ class Tr {
       'tr':
           'Sıralama puanı sunucuda sınırlanır; yerel seviye çubuğu cihazda kalır.',
     },
+    // Etiket `Koda Vexwendinê` der (`K.enterReferralCode`). Misafir
+    // yasağı "davetê" deyince oyuncu aynı kodu iki adla görür. Türkçe
+    // `davet` kökü `contains('vexwend')` taramasını kör eder.
     K.referralGuestBlocked: {
       'ku':
-          'Kodê davetê tenê ji bo hesabên piştrastkirî ye. Mêvan nikare bikar bîne.',
+          'Koda vexwendinê tenê ji bo hesabên piştrastkirî ye. Mêvan nikare bikar bîne.',
       'tr':
           'Davet kodu yalnız doğrulanmış hesaplar içindir. Misafir kullanamaz.',
     },

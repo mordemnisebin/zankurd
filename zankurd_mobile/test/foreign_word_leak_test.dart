@@ -243,6 +243,27 @@ void main() {
     }
   });
 
+  test('davet kodu Kurmancîde vexwendin olarak kalır', () {
+    // Ürün terimi zaten `Koda Vexwendinê` (`K.enterReferralCode`).
+    // Misafir yasağı "davetê" deyince aynı kod iki adla duruyordu.
+    // Türkçe `davet` kökü `contains('vexwend')` taramasını kör eder.
+    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda Vexwendinê');
+    expect(Tr.of(K.enterReferralCode, AppLanguage.tr), 'Davet Kodu Gir');
+    expect(
+      Tr.of(K.referralGuestBlocked, AppLanguage.ku),
+      contains('Koda vexwendinê'),
+    );
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku);
+      expect(
+        RegExp(r'davet', caseSensitive: false).hasMatch(kurmanci),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "davet"; karşılığı "vexwendin"',
+      );
+    }
+  });
+
   test('50/50 yardımcısı Kurmancîde nîv bi nîv olarak kalır', () {
     // Ürün terimi zaten `Nîv bi Nîv` (`K.metin`). Rehber "Joker 50/50"
     // deyince aynı yardımcı iki adla duruyordu. Türkçe `joker` kökü
