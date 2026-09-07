@@ -85,21 +85,21 @@ void main() {
     ///   defterdeki `progressLevelLabel` ve `soru` anahtarlarına bağlandı)
     /// → 7 (seviye hero'sundaki ekran okuyucu cümlesi yer tutuculu
     ///   `progressLevelsCompleted` oldu; alt kategori başlığı da alana
-    ///   seçimine indi — satır içi ku/tr dize kalmadı).
+    ///   seçimine indi — satır içi ku/tr dize kalmadı)
+    /// → 4 (sıralama satırındaki `zincîr`/`seri` ve `ode`/`oda` birimleri
+    ///   defterdeki `streakUnit` ve `roomUnit` anahtarlarına bağlandı).
     ///
-    /// ## Kalan 7 bilinçli
+    /// ## Kalan 4 bilinçli
     ///
     /// - `strings.dart` (2): göç yolunu anlatan belge yorumunun kendisi.
     /// - `percent_format.dart` (1): yüzde biçiminin TEK kaynağı burasıdır
     ///   ve `percent_and_identity_test` başka hiçbir yerde elle biçim
     ///   yazılmadığını doğrular. Metni deftere taşımak o bekçiyi kör eder.
-    /// - `leaderboard_screen` (3), `quiz_result_screen` (1): bir kısmı
-    ///   dile göre alan seçer, bir kısmı çok satırlı cümledir.
-    ///   Harita sapınca tavan yine yalan söylerdi — sayı tek başına yetmez.
+    /// - `quiz_result_screen` (1): dile göre alan seçer (unvan Ku/Tr),
+    ///   metin çifti değil. Harita sapınca tavan yine yalan söylerdi.
     const remainingByFile = {
       'lib/src/l10n/strings.dart': 2,
       'lib/src/utils/percent_format.dart': 1,
-      'lib/src/screens/leaderboard_screen.dart': 3,
       'lib/src/screens/quiz_result_screen.dart': 1,
     };
 
@@ -171,6 +171,10 @@ void main() {
       expect(Tr.of(K.progressLevelLabel, AppLanguage.tr), 'Seviye');
       expect(Tr.of(K.soru, AppLanguage.ku), 'pirs');
       expect(Tr.of(K.soru, AppLanguage.tr), 'soru');
+      expect(Tr.of(K.streakUnit, AppLanguage.ku), 'zincîr');
+      expect(Tr.of(K.streakUnit, AppLanguage.tr), 'seri');
+      expect(Tr.of(K.roomUnit, AppLanguage.ku), 'ode');
+      expect(Tr.of(K.roomUnit, AppLanguage.tr), 'oda');
     });
 
     test('yer tutucular doldurulur', () {

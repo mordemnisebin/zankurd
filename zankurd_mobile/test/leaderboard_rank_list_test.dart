@@ -101,6 +101,16 @@ void main() {
 
   // ── Liste yüzeyi ────────────────────────────────────────────────────────
 
+  test('satır birimleri satır içi ku/tr değil', () {
+    // 2026-09-07: "zincîr"/"seri" ve "ode"/"oda" satır içi daldı; üçüncü
+    // dilde birim sözcüğü kırılırdı. Defterdeki K.streakUnit / K.roomUnit.
+    final source = File(
+      'lib/src/screens/leaderboard_screen.dart',
+    ).readAsStringSync();
+    expect(source.contains('isKu ? "zincîr"'), isFalse);
+    expect(source.contains('isKu ? "ode"'), isFalse);
+  });
+
   test('satırlar ayrı kart anatomisine geri dönmüyor', () {
     final source = File(
       'lib/src/screens/leaderboard_screen.dart',
@@ -125,6 +135,8 @@ void main() {
     // 12 oyuncunun 3'ü podyumda; kalan 9 satır TEK yüzeyde.
     final rows = find.byKey(const ValueKey('leaderboard-rank-row-4'));
     expect(rows, findsOneWidget);
+    // Görünür birim metni aynı kaldı; yalnız kaynak deftere indi.
+    expect(find.text('10 oda · 5 seri'), findsWidgets);
     // Ayraçlar satırları böler — kartlar değil.
     expect(find.byType(Divider), findsWidgets);
   });

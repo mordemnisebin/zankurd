@@ -1599,9 +1599,9 @@ class _RankRow extends StatelessWidget {
                 const SizedBox(height: 1),
                 Text(
                   entry.showcaseTitle != null
-                      ? '${entry.showcaseTitle} · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}'
-                      : '${entry.roomsPlayed} ${isKu ? "ode" : "oda"}'
-                            ' · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}',
+                      ? '${entry.showcaseTitle} · ${entry.bestStreak} ${context.t(K.streakUnit)}'
+                      : '${entry.roomsPlayed} ${context.t(K.roomUnit)}'
+                            ' · ${entry.bestStreak} ${context.t(K.streakUnit)}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.caption.copyWith(

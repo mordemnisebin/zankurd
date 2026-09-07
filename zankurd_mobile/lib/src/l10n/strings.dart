@@ -1264,6 +1264,10 @@ class Tr {
     },
     K.scoreWord: {'ku': 'Pûan', 'tr': 'Puan'},
     K.streakWord: {'ku': 'Zincîr', 'tr': 'Seri'},
+    // Sıralama satırındaki birimler küçük harf; başlıklı `streakWord` /
+    // `roomWord` ("Zincîr"/"Ode") tooltip ve "Oda ABC" için kalır.
+    K.streakUnit: {'ku': 'zincîr', 'tr': 'seri'},
+    K.roomUnit: {'ku': 'ode', 'tr': 'oda'},
     K.coinWord: {'ku': 'Zêr', 'tr': 'jeton'},
     // Dar rozetlerde para biriminin kısaltması. Türkçede "coin"in `c`si;
     // Kurmancî'de "zêr"in `z`si. Sabit `c` yazıldığında Kurmancî oyuncu
@@ -3263,6 +3267,8 @@ class K {
   static const imageLoadFailed = 'quiz.imageLoadFailed';
   static const scoreWord = 'quiz.score';
   static const streakWord = 'quiz.streak';
+  static const streakUnit = 'leaderboard.streak.unit';
+  static const roomUnit = 'leaderboard.room.unit';
   static const coinWord = 'quiz.coin';
   static const coinAbbrev = 'quiz.coin.abbrev';
 
