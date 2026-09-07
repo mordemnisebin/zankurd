@@ -141,16 +141,32 @@ void main() {
     // Quiz başlığı `Şîrove` der. İnceleme etiketi "Ravahî" deyince
     // oyuncu aynı açıklamayı iki adla görür. `contains('şîrove')`
     // taramasını `ravahî` kör eder — turnûva ile aynı sınıf.
+    // Cümle içi "ravekirin" aynı ürün kavramıdır (açıklama), banka
+    // fiili değil; tanıtım ve rehber etiketten ayrı ad kullanıyordu.
     expect(Tr.of(K.aciklama, AppLanguage.ku), 'Şîrove:');
     expect(Tr.of(K.explanationTitle, AppLanguage.ku), 'Şîrove');
     expect(Tr.of(K.listenExplanation, AppLanguage.ku), 'Şîroveyê bibihîze');
+    expect(
+      Tr.of(K.onbDailyBullet, AppLanguage.ku),
+      'Dersa rojane: bê dem, bi şîroveyê',
+    );
+    expect(
+      Tr.of(K.quizTutorialUntimedBody, AppLanguage.ku),
+      contains('şîrove li dawiya tûrê ne'),
+    );
 
     final ravahi = RegExp(r'ravahî', caseSensitive: false);
+    final ravekirin = RegExp(r'ravekirin', caseSensitive: false);
     for (final key in Tr.keys) {
       expect(
         ravahi.hasMatch(Tr.of(key, AppLanguage.ku)),
         isFalse,
         reason: '$key: Kurmancî metinde "ravahî"; karşılığı "şîrove"',
+      );
+      expect(
+        ravekirin.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde "ravekirin"; ürün terimi "şîrove"',
       );
     }
   });

@@ -165,9 +165,14 @@ void main() {
   test('açıklama terimi Kurmancîde şîrove olarak kalır', () {
     // Ürün terimi zaten `Şîrove` (`K.explanationTitle`). İnceleme
     // etiketi "Ravahî" deyince aynı açıklama iki adla duruyordu.
+    // Tanıtım/rehber "ravekirin" deyince etiket taraması kör kalıyordu.
     expect(Tr.of(K.aciklama, AppLanguage.ku), 'Şîrove:');
     expect(Tr.of(K.explanationTitle, AppLanguage.ku), 'Şîrove');
     expect(Tr.of(K.viewExplanation, AppLanguage.ku), 'Şîrove bibîne');
+    expect(
+      Tr.of(K.onbDailyBullet, AppLanguage.ku),
+      'Dersa rojane: bê dem, bi şîroveyê',
+    );
 
     for (final key in Tr.keys) {
       final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
@@ -175,6 +180,11 @@ void main() {
         kurmanci,
         isNot(contains('ravahî')),
         reason: '$key: Kurmancî metinde "ravahî"; karşılığı "şîrove"',
+      );
+      expect(
+        kurmanci,
+        isNot(contains('ravekirin')),
+        reason: '$key: Kurmancî metinde "ravekirin"; ürün terimi "şîrove"',
       );
     }
   });

@@ -2144,8 +2144,11 @@ class Tr {
       'ku': '{count} kategorî — ziman, dîrok, çand…',
       'tr': '{count} kategori — dil, tarih, kültür…',
     },
+    // Ürün terimi `Şîrove`. Tanıtım maddesi "ravekirinê" deyince
+    // oyuncu aynı açıklamayı iki adla görür; çekim `Şîroveyê
+    // bibihîze` ile aynıdır.
     K.onbDailyBullet: {
-      'ku': 'Dersa rojane: bê dem, bi ravekirinê',
+      'ku': 'Dersa rojane: bê dem, bi şîroveyê',
       'tr': 'Günün dersi: süre yok, açıklamalı',
     },
     K.onbCompeteTitle: {
@@ -2637,9 +2640,11 @@ class Tr {
           '{seconds} saniyede doğru şıkkı seç; her doğru cevap puan kazandırır.',
     },
     K.quizTutorialUntimedTitle: {'ku': 'Bersivê hilbijêre', 'tr': 'Cevabı seç'},
+    // Tur sonu listesi `Şîroveyên turê` der. Rehber "ravekirin"
+    // deyince aynı açıklama iki adla durur.
     K.quizTutorialUntimedBody: {
       'ku':
-          'Li vir demjimêr tune — bi rehetî bifikire û bersiva rast hilbijêre. Piştî bersivê bersiva rast tê nîşandan; ravekirin li dawiya tûrê ne.',
+          'Li vir demjimêr tune — bi rehetî bifikire û bersiva rast hilbijêre. Piştî bersivê bersiva rast tê nîşandan; şîrove li dawiya tûrê ne.',
       'tr':
           'Burada süre yok — acele etmeden düşün ve doğru şıkkı seç. Cevaptan sonra doğru cevap gösterilir; açıklamalar turun sonunda.',
     },
