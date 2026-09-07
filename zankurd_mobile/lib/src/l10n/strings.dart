@@ -2580,7 +2580,7 @@ class Tr {
       'ku':
           'Bersivên rast ên li pey hev rêzê mezin dikin û bonûs tînin. Piştî bersivê vir bitikîne û derbasî pirsa din bibe.',
       'tr':
-          'Peş peşe doğru cevaplar serini büyütür, bonus kazandırır. Cevapladıktan sonra buradan sonraki soruya geç.',
+          'Peş peşe doğru cevaplar serini büyütür, seri bonusu kazandırır. Cevapladıktan sonra buradan sonraki soruya geç.',
     },
     K.ageGateLabel: {
       'ku': 'Ez ji 13 salî mezintir im',
