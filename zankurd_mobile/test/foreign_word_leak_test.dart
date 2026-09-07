@@ -85,6 +85,7 @@ void main() {
     'streak',
     'xp',
     'coin',
+    'flashcard',
   ];
 
   for (final language in AppLanguage.values) {
@@ -122,6 +123,15 @@ void main() {
       Tr.of(K.categoryMasteryGoal, AppLanguage.tr),
       'Kategori ustalık hedefi',
     );
+  });
+
+  test('kart görünümü İngilizce flashcard taşımaz', () {
+    // Özellik adı `K.flashcards` ile zaten yerel; kip tooltip'i
+    // "Flashcard modu" deyince aynı ekranda iki dil duruyordu.
+    expect(Tr.of(K.flashcardMode, AppLanguage.ku), 'Moda kartan');
+    expect(Tr.of(K.flashcardMode, AppLanguage.tr), 'Kart modu');
+    expect(Tr.of(K.flashcards, AppLanguage.ku), 'Kartên Hînbûnê');
+    expect(Tr.of(K.flashcards, AppLanguage.tr), 'Hafıza Kartları');
   });
 
   test('günlük zincîr başlığı İngilizce streak taşımaz', () {

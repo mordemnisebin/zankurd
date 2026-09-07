@@ -481,7 +481,11 @@ class Tr {
     },
     K.quizLoadFail: {'ku': 'Quiz nehate barkirin', 'tr': 'Quiz yüklenemedi'},
     K.translation: {'ku': 'Werger', 'tr': 'Çeviri'},
-    K.flashcardMode: {'ku': 'Moda kartan', 'tr': 'Flashcard modu'},
+    // Aynı görünümün adı zaten `K.flashcards` ("Kartên Hînbûnê" /
+    // "Hafıza Kartları"). Tooltip "Flashcard modu" deyince Türkçe
+    // arayüzde çıplak İngilizce kalıyordu; Kurmancî "Moda kartan" ile
+    // de aynı kavram iki adla duruyordu.
+    K.flashcardMode: {'ku': 'Moda kartan', 'tr': 'Kart modu'},
     K.slidesLoadFail: {
       'ku': 'Slaytên dersê nehatin barkirin',
       'tr': 'Slaytlar yüklenemedi',
