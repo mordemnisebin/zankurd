@@ -225,6 +225,24 @@ void main() {
     }
   });
 
+  test('mağaza terimi Kurmancîde dukan olarak kalır', () {
+    // Ürün terimi zaten `Dukan` (`K.shop`). Çerçeve koşulu "dikanê"
+    // deyince aynı mağaza iki yazımla duruyordu. `i`/`u` farkı
+    // `contains('dukan')` taramasını kör eder — turnûva ile aynı sınıf.
+    expect(Tr.of(K.shop, AppLanguage.ku), 'Dukan');
+    expect(Tr.of(K.shop, AppLanguage.tr), 'Mağaza');
+    expect(Tr.of(K.frameReqNeon, AppLanguage.ku), 'Ji dukanê bikire');
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku);
+      expect(
+        RegExp(r'dikan', caseSensitive: false).hasMatch(kurmanci),
+        isFalse,
+        reason: '$key: Kurmancî metinde "dikan"; karşılığı "dukan"',
+      );
+    }
+  });
+
   test('50/50 yardımcısı Kurmancîde nîv bi nîv olarak kalır', () {
     // Ürün terimi zaten `Nîv bi Nîv` (`K.metin`). Rehber "Joker 50/50"
     // deyince aynı yardımcı iki adla duruyordu. Türkçe `joker` kökü

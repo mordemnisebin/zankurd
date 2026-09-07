@@ -807,6 +807,25 @@ void main() {
     );
   });
 
+  test('mağaza terimi Kurmancîde dukan olarak kalır', () {
+    // Sekme `Dukan` der (`K.shop`). Neon çerçeve "dikanê" deyince
+    // oyuncu aynı mağazayı iki yazımla görür. Ders sözlüğü `dikan`
+    // (dükkân) ayrı kavramdır; UI birimi `dukan`.
+    expect(Tr.of(K.shop, AppLanguage.ku), 'Dukan');
+    expect(Tr.of(K.shopOfflineTitle, AppLanguage.ku), 'Dukan ne li serhêl e');
+    expect(Tr.of(K.magazayaGitSeriKoru, AppLanguage.ku), 'Herin Dukanê');
+    expect(Tr.of(K.frameReqNeon, AppLanguage.ku), 'Ji dukanê bikire');
+
+    final dikan = RegExp(r'dikan', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        dikan.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde "dikan"; karşılığı "dukan"',
+      );
+    }
+  });
+
   test('50/50 yardımcısı Kurmancîde nîv bi nîv olarak kalır', () {
     // Düğme `Nîv bi Nîv` der (`K.metin`). Nasıl oynanır maddesi
     // "Joker 50/50" deyince oyuncu aynı yardımcıyı iki adla görür.

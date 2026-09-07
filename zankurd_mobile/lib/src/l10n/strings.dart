@@ -1824,7 +1824,10 @@ class Tr {
       'ku': 'Di kategoriyekê de bibe Mamoste',
       'tr': 'Bir kategoride Mamoste ol',
     },
-    K.frameReqNeon: {'ku': 'Ji dikanê bikire', 'tr': 'Mağazadan satın al'},
+    // Sekme `Dukan` der (`K.shop`). Koşul "dikanê" deyince oyuncu
+    // aynı mağazayı iki yazımla görür. Ders sözlüğü `dikan` (dükkân)
+    // ayrı kavramdır; UI birimi `dukan`.
+    K.frameReqNeon: {'ku': 'Ji dukanê bikire', 'tr': 'Mağazadan satın al'},
     K.friendRequestsPendingA11y: {
       'ku': 'Heval: {count} daxwazên nû',
       'tr': 'Arkadaşlar: {count} yeni istek',
