@@ -190,6 +190,24 @@ void main() {
     }
   });
 
+  test('bildirim terimi Kurmancîde ragihandin olarak kalır', () {
+    // Ürün terimi zaten `ragihîne` (`K.reportAction`, `K.reportQuestion`).
+    // Quiz tostu "Rapor" deyince oyuncu aynı eylemi iki adla görür.
+    // Türkçe `rapor` kökü İngilizce `\breport\b` taramasını da kör eder.
+    expect(Tr.of(K.reportAction, AppLanguage.ku), 'Ragihîne');
+    expect(Tr.of(K.reportSent, AppLanguage.ku), 'Ragihandin hat şandin.');
+    expect(Tr.of(K.reportFailed, AppLanguage.ku), 'Ragihandin nehat şandin.');
+
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
+      expect(
+        kurmanci,
+        isNot(contains('rapor')),
+        reason: '$key: Kurmancî metinde Türkçe "rapor"; karşılığı "ragihandin"',
+      );
+    }
+  });
+
   test('kayıt terimi Kurmancîde tomar olarak kalır', () {
     // Ürün terimi zaten `tomar` (`K.save`, `K.questionSaved`). Quiz tostu
     // "qeydkirin" deyince oyuncu aynı eylemi iki adla görür. Türkçe

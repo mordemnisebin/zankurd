@@ -367,6 +367,7 @@ void main() {
       'mesaj': 'peyam',
       'jûr': 'ode',
       'eşleş': 'lihevanîn',
+      'rapor': 'ragihandin',
     };
 
     final offenders = <String>[];
@@ -451,6 +452,28 @@ void main() {
         not.hasMatch(Tr.of(key, AppLanguage.ku)),
         isFalse,
         reason: '$key: Kurmancî metinde Türkçe "not"; karşılığı "rêziman"',
+      );
+    }
+  });
+
+  test('bildirim terimi Kurmancîde ragihandin olarak kalır', () {
+    // Düğme `Ragihîne` der (`K.reportAction`, `K.reportQuestion`).
+    // Quiz tostu "Rapor" deyince oyuncu aynı eylemi iki adla görür.
+    // Türkçe `rapor` kökü `contains('ragih')` taramasını kör eder.
+    expect(Tr.of(K.reportAction, AppLanguage.ku), 'Ragihîne');
+    expect(
+      Tr.of(K.reportProfileDone, AppLanguage.ku),
+      'Ragihandin hat şandin.',
+    );
+    expect(Tr.of(K.reportSent, AppLanguage.ku), 'Ragihandin hat şandin.');
+    expect(Tr.of(K.reportFailed, AppLanguage.ku), 'Ragihandin nehat şandin.');
+
+    final rapor = RegExp(r'rapor', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        rapor.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: Kurmancî metinde Türkçe "rapor"; karşılığı "ragihandin"',
       );
     }
   });

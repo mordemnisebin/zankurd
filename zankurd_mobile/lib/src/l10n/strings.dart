@@ -375,8 +375,7 @@ class Tr {
     K.roomCode: {'ku': 'Koda odeyê', 'tr': 'Oda kodu'},
     K.roomCodeRequired: {'ku': 'Kod pêwîst e', 'tr': 'Kod zorunlu'},
     K.roomCodeInvalid: {
-      'ku':
-          'Kod divê bi ZK- dest pê bike û dû re tam 10 tîp ji 0–9/A–F hebin.',
+      'ku': 'Kod divê bi ZK- dest pê bike û dû re tam 10 tîp ji 0–9/A–F hebin.',
       'tr':
           'Kod ZK- ile başlamalı ve ardından tam 10 adet 0–9/A–F karakteri bulunmalı.',
     },
@@ -1274,8 +1273,18 @@ class Tr {
     K.reportQuestion: {'ku': 'Pirsê ragihîne', 'tr': 'Soruyu bildir'},
     K.reasonLabel: {'ku': 'Sedem', 'tr': 'Neden'},
     K.sendAction: {'ku': 'Bişîne', 'tr': 'Gönder'},
-    K.reportSent: {'ku': 'Rapor hat şandin.', 'tr': 'Soru raporu gönderildi.'},
-    K.reportFailed: {'ku': 'Rapor nehat şandin.', 'tr': 'Rapor gönderilemedi.'},
+    // Bildir düğmesi ve profil sonucu zaten `ragihîne` / `ragihandin`
+    // der (`K.reportAction`, `K.reportProfileDone`). Quiz tostu "Rapor"
+    // deyince oyuncu aynı eylemi iki adla görür. Türkçe `rapor` kökü
+    // `contains('ragih')` taramasını kör eder.
+    K.reportSent: {
+      'ku': 'Ragihandin hat şandin.',
+      'tr': 'Soru raporu gönderildi.',
+    },
+    K.reportFailed: {
+      'ku': 'Ragihandin nehat şandin.',
+      'tr': 'Rapor gönderilemedi.',
+    },
     // Quiz birimi zaten `Pûan` (`K.scoreWord`, `K.puan`). Başlık "Skora
     // zindî" deyince oyuncu aynı değeri iki adla görür. Türkçe `skor` +
     // `-a` çekimi İngilizce `\bscore\b` taramasını da kör eder — `maçê`
