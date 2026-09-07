@@ -24,7 +24,7 @@ Eski Vite prototipi `../docs/archive/web_prototype` altındadır; Play paketi bu
 - Kilim motifli, antrasit/yeşil paletli arayüz
 - Uygulama içinden hesap silme isteği
 - Firebase Crashlytics ile çökme raporlama
-- Offline XP senkronizasyonu
+- Çevrimdışı kuyruk quiz ödülünü taşır; XP sahte eşitlemesi yok
 
 Hikâye (Öğren → ders yolu), arkadaşlar (Liderlik), günlük çark (Mağaza),
 yerleştirme (Ayarlar) ve turnuva (Yarış → Daha fazla) ikinci katmandadır.

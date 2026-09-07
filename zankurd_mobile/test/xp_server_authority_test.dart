@@ -64,4 +64,13 @@ void main() {
     expect(signOutKu, contains('xala rêzkirinê'));
     expect(signOutKu, contains('amûr'));
   });
+
+  test('README çevrimdışı XP eşitlemesi vaat etmez', () {
+    // Ürün maddesi "Offline XP senkronizasyonu" diyordu. SyncManager
+    // yalnız quiz coin ödülünü kuyruklar; `queueXP` yüzeyi yok. Mağaza
+    // ve gizlilik metinleri zaten doğruyken README eski yalanı tutuyordu.
+    final readme = File('README.md').readAsStringSync();
+    expect(readme, isNot(contains('Offline XP senkronizasyonu')));
+    expect(readme, contains('XP sahte eşitlemesi yok'));
+  });
 }
