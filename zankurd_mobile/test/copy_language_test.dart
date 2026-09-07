@@ -73,6 +73,30 @@ void main() {
     expect(Tr.of(K.keepStreakTomorrow, AppLanguage.ku), contains('zincîrê'));
   });
 
+  test('günlük zincîr bildirimi seri kökü kullanmaz', () {
+    // `K.seri` / `K.seri2` tur içi doğru cevap dizisidir (Rêz).
+    // Günlük kesilme uyarısı "Seriya te dikare bişkê" deyince oyuncu
+    // combo ile zincîri karıştırır; `K.streakBreaking` zaten
+    // "Zincîra te dişkê!" der.
+    expect(
+      Tr.of(K.huhuBugunHicOynamadin, AppLanguage.ku),
+      contains('Zincîra te dikare bişkê'),
+    );
+    expect(
+      Tr.of(K.badgeStreak30Desc, AppLanguage.ku),
+      contains('Zincîra rojane'),
+    );
+    // `contains('seriya')` "xweseriya"yı da vurur; kelime sınırı şart.
+    final seriya = RegExp(r'\bseriya\b', caseSensitive: false);
+    for (final key in Tr.keys) {
+      expect(
+        seriya.hasMatch(Tr.of(key, AppLanguage.ku)),
+        isFalse,
+        reason: '$key: günlük zincîr için Türkçe seri kökü',
+      );
+    }
+  });
+
   test('çift cevap ipucu ikinci hakkı doğru açıklar', () {
     expect(
       Tr.of(K.wildcardDoubleHint, AppLanguage.ku),

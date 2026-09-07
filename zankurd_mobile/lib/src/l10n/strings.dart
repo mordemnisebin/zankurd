@@ -1115,7 +1115,7 @@ class Tr {
     K.zanaUzgun: {'ku': 'Zana Xemgîn e...', 'tr': 'Zana Üzgün...'},
     K.huhuBugunHicOynamadin: {
       'ku':
-          'Huhu! Te îro qet nelîst! Seriya te dikare bişkê. Zana li benda te ye!',
+          'Huhu! Te îro qet nelîst! Zincîra te dikare bişkê. Zana li benda te ye!',
       'tr': 'Huhu! Bugün hiç oynamadın! Serin kırılabilir. Zana seni bekliyor!',
     },
     K.zanaMutlu: {'ku': 'Zana Kêfxweş e!', 'tr': 'Zana Mutlu!'},
@@ -2626,7 +2626,7 @@ class Tr {
     },
     K.badgeStreak30Title: {'ku': '30 Roj Li Pey Hev', 'tr': '30 Gün Streak'},
     K.badgeStreak30Desc: {
-      'ku': 'Seriya rojane gihand 30 rojan.',
+      'ku': 'Zincîra rojane gihand 30 rojan.',
       'tr': 'Günlük serini 30 güne taşıdın.',
     },
     K.badgeQuestions500Title: {'ku': '500 Pirs', 'tr': '500 Soru'},
