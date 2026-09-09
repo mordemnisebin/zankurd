@@ -982,6 +982,36 @@
    "columns": {}
   },
   {
+   "id": "local_supabase_question_seed",
+   "description": "Deterministic local Supabase question fixture",
+   "path": "supabase/seed.sql",
+   "role": "test_fixture",
+   "parser": "sql_count",
+   "canonicalGroup": "local_test_questions",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1300,
+   "expectedRecordCount": 12,
+   "notes": "Local-only db reset fixture for integration tests; never production input and never included in release quality totals.",
+   "columns": {}
+  },
+  {
+   "id": "suggested_question_license_guard_migration",
+   "description": "Suggested-question licensing policy migration",
+   "path": "supabase/migrations/20260811000000_suggested_question_license_guard.sql",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1300,
+   "expectedRecordCount": null,
+   "notes": "DDL/policy guard for submitted question licensing; contains no playable question bank and must not enter content metrics.",
+   "columns": {}
+  },
+  {
    "id": "lesson_seed_utility",
    "description": "Lesson seed, not quiz question source",
    "path": "supabase/2026-07-06_lesson_seed.sql",

@@ -53,6 +53,26 @@ void main() {
       expect(failures, isEmpty, reason: failures.join('\n'));
     });
 
+    test('local Supabase fixtures stay outside production content metrics', () {
+      final seed = manifest.sources.firstWhere(
+        (source) => source.id == 'local_supabase_question_seed',
+      );
+      final licenseGuard = manifest.sources.firstWhere(
+        (source) => source.id == 'suggested_question_license_guard_migration',
+      );
+
+      expect(seed.role, SourceRole.testFixture);
+      expect(seed.expectedRecordCount, 12);
+      expect(seed.reportIncluded, isFalse);
+      expect(seed.gateIncluded, isFalse);
+      expect(seed.productionLike, isFalse);
+
+      expect(licenseGuard.role, SourceRole.ignoredNonQuestion);
+      expect(licenseGuard.reportIncluded, isFalse);
+      expect(licenseGuard.gateIncluded, isFalse);
+      expect(licenseGuard.productionLike, isFalse);
+    });
+
     test('candidate pool sources never enter the release gate', () {
       final pool = manifest.sources
           .where((source) => source.role == SourceRole.candidatePool)
