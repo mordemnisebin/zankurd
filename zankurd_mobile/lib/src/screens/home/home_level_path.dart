@@ -205,8 +205,8 @@ class HomeLevelPath extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                         horizontal: AppSpacing.sm,
                       ),
-                      minimumSize: const Size(44, 36),
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      minimumSize: const Size(48, 48),
+                      tapTargetSize: MaterialTapTargetSize.padded,
                       foregroundColor: accentOnSurface,
                     ),
                     child: Text(

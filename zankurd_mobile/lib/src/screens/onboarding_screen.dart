@@ -221,7 +221,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         horizontal: 16,
                                         vertical: 8,
                                       ),
-                                      minimumSize: const Size(44, 44),
+                                      minimumSize: const Size(48, 48),
                                       tapTargetSize:
                                           MaterialTapTargetSize.padded,
                                       shape: RoundedRectangleBorder(
@@ -395,6 +395,8 @@ class _OnboardingLanguageToggle extends StatelessWidget {
             onTap: context.langProvider.toggle,
             borderRadius: BorderRadius.circular(AppRadius.pill),
             child: Container(
+              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+              alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
               decoration: BoxDecoration(
                 color: AppTheme.surfaceHiColor(context),

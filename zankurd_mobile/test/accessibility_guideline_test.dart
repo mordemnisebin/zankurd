@@ -197,6 +197,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
 
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
     await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
     handle.dispose();
@@ -235,6 +236,24 @@ void main() {
     await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
     await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
     await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    handle.dispose();
+  });
+
+  testWidgets('mağaza Android dokunma hedefi kılavuzunu karşılar', (
+    tester,
+  ) async {
+    final handle = tester.ensureSemantics();
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(390, 844);
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      testShell(child: ShopScreen(repository: freshMockRepository())),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 700));
+
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
     handle.dispose();
   });
 }

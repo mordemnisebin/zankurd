@@ -78,8 +78,8 @@ class OfflineBanner extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                             child: Container(
                               constraints: const BoxConstraints(
-                                minWidth: 44,
-                                minHeight: 44,
+                                minWidth: 48,
+                                minHeight: 48,
                               ),
                               alignment: Alignment.center,
                               padding: const EdgeInsets.symmetric(

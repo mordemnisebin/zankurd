@@ -138,8 +138,8 @@ void main() {
               final data = tester.getSemantics(action).getSemanticsData();
               expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
               expect(data.label, contains(skipLabel));
-              expect(actionRect.width, greaterThanOrEqualTo(44));
-              expect(actionRect.height, greaterThanOrEqualTo(44));
+              expect(actionRect.width, greaterThanOrEqualTo(48));
+              expect(actionRect.height, greaterThanOrEqualTo(48));
 
               if (isFullLabel) {
                 final textFinder = find.descendant(

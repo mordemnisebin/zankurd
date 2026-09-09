@@ -238,8 +238,8 @@ class _DiacriticRow extends StatelessWidget {
               key: ValueKey('fill-in-blank-diacritic-$letter'),
               onPressed: () => onInsert(letter),
               style: OutlinedButton.styleFrom(
-                // 44pt, dokunma hedefi için en küçük saygılı ölçü.
-                minimumSize: const Size(44, 44),
+                // Android dokunma hedefi alt sınırı: en az 48×48 dp.
+                minimumSize: const Size(48, 48),
                 padding: EdgeInsets.zero,
                 foregroundColor: AppTheme.textPrimaryColor(context),
                 side: BorderSide(color: AppTheme.borderColor(context)),

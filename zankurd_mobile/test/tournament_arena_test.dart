@@ -166,11 +166,11 @@ void main() {
 
   // ── Erişilebilirlik ─────────────────────────────────────────────────────
 
-  testWidgets('ana eylem 44pt dokunma hedefini korur', (tester) async {
+  testWidgets('ana eylem 48dp dokunma hedefini korur', (tester) async {
     await _pump(tester);
     final cta = find.byKey(const ValueKey('tournament-primary-cta'));
     expect(cta, findsOneWidget);
-    expect(tester.getSize(cta).height, greaterThanOrEqualTo(44));
+    expect(tester.getSize(cta).height, greaterThanOrEqualTo(48));
   });
 
   testWidgets('ana eylem ekran okuyucuya düğme olarak duyurulur', (

@@ -275,7 +275,7 @@ class _WordChip extends StatelessWidget {
           // kısıt altında mevcut genişliğin tamamına yayılır ve her kelime
           // tek başına bir satır kaplar (Wrap işlevsiz kalır).
           child: Container(
-            constraints: const BoxConstraints(minHeight: 44),
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.md,
               vertical: AppSpacing.xs,

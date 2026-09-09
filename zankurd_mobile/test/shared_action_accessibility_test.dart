@@ -29,7 +29,7 @@ void main() {
     BadgeService.resetInstance();
   });
 
-  testWidgets('geometric gradient button exposes action and 44px target', (
+  testWidgets('geometric gradient button exposes action and 48px target', (
     tester,
   ) async {
     var pressed = false;
@@ -51,7 +51,7 @@ void main() {
         .getSemanticsData();
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
     expect(data.flagsCollection.isEnabled, ui.Tristate.isTrue);
-    expect(data.rect.height, greaterThanOrEqualTo(44));
+    expect(data.rect.height, greaterThanOrEqualTo(48));
     expect(find.bySemanticsLabel('Devam'), findsOneWidget);
     tester.semantics.tap(find.semantics.byLabel('Devam'));
     expect(pressed, isTrue);
@@ -84,7 +84,7 @@ void main() {
     handle.dispose();
   });
 
-  testWidgets('room chat toggle is a single 44px tappable semantic node', (
+  testWidgets('room chat toggle is a single 48px tappable semantic node', (
     tester,
   ) async {
     final repository = _AccessibilityChatRepository();
@@ -113,8 +113,8 @@ void main() {
     final data = semanticsNode.getSemanticsData();
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
     expect(data.flagsCollection.isEnabled, ui.Tristate.isTrue);
-    expect(data.rect.width, greaterThanOrEqualTo(44));
-    expect(data.rect.height, greaterThanOrEqualTo(44));
+    expect(data.rect.width, greaterThanOrEqualTo(48));
+    expect(data.rect.height, greaterThanOrEqualTo(48));
     expect(find.bySemanticsLabel('Sohbet'), findsOneWidget);
 
     tester.semantics.tap(find.semantics.byLabel('Sohbet'));
@@ -162,8 +162,8 @@ void main() {
     final semanticsNode = tester.getSemantics(finder);
     final semanticsData = semanticsNode.getSemanticsData();
     expect(semanticsData.hasAction(ui.SemanticsAction.longPress), isTrue);
-    expect(semanticsData.rect.width, greaterThanOrEqualTo(44));
-    expect(semanticsData.rect.height, greaterThanOrEqualTo(44));
+    expect(semanticsData.rect.width, greaterThanOrEqualTo(48));
+    expect(semanticsData.rect.height, greaterThanOrEqualTo(48));
     tester.semantics.longPress(find.semantics.byLabel('Heval: Slav heval!'));
     await tester.pumpAndSettle();
     expect(find.text('Mesajı bildir'), findsOneWidget);

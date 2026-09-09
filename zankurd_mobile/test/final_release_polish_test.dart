@@ -74,15 +74,15 @@ void main() {
 
     expect(
       File('lib/src/widgets/styled_input.dart').readAsStringSync(),
-      contains('minWidth: 44'),
+      contains('minWidth: 48'),
     );
     expect(
       File('lib/src/widgets/legal_links.dart').readAsStringSync(),
-      contains('minHeight: 44'),
+      contains('minHeight: 48'),
     );
     expect(
       File('lib/src/widgets/offline_banner.dart').readAsStringSync(),
-      contains('minHeight: 44'),
+      contains('minHeight: 48'),
     );
   });
 }

@@ -299,9 +299,11 @@ void main() {
       );
     }
 
-    // Dokunma alanı en az 44×44 logical pixel.
-    expect(ctaRect.height, greaterThanOrEqualTo(44.0));
-    expect(ctaRect.width, greaterThanOrEqualTo(44.0));
+    // Android dokunma alanı en az 48×48 logical pixel.
+    // Dönüşüm matrisleri nominal 48.0 değeri 47.99999999999997 gibi
+    // temsil edebilir; 1e-9 yalnız kayan nokta gürültüsünü tolere eder.
+    expect(ctaRect.height, greaterThanOrEqualTo(48.0 - 1e-9));
+    expect(ctaRect.width, greaterThanOrEqualTo(48.0 - 1e-9));
 
     expectNoLayoutException(tester, '844×390');
   });

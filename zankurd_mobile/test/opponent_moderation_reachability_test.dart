@@ -124,7 +124,7 @@ void main() {
       expect(find.byKey(const ValueKey('player-block-action')), findsOneWidget);
     });
 
-    testWidgets('dokunma hedefi 44x44 altına düşmüyor', (tester) async {
+    testWidgets('dokunma hedefi 48x48 altına düşmüyor', (tester) async {
       await tester.pumpWidget(
         wrap(
           PlayerModerationButton(
@@ -138,8 +138,8 @@ void main() {
       final size = tester.getSize(
         find.byKey(const ValueKey('player-moderation-button')),
       );
-      expect(size.width, greaterThanOrEqualTo(44));
-      expect(size.height, greaterThanOrEqualTo(44));
+      expect(size.width, greaterThanOrEqualTo(48));
+      expect(size.height, greaterThanOrEqualTo(48));
     });
   });
 

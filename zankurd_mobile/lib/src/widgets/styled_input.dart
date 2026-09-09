@@ -174,9 +174,8 @@ class StyledInputFieldState extends State<StyledInputField> {
                     : [],
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.lg,
-                  vertical: widget.suffixIcon == null ? 14 : 4,
                 ),
                 child: Row(
                   children: [
@@ -218,7 +217,10 @@ class StyledInputFieldState extends State<StyledInputField> {
                               fontSize: 14,
                             ),
                             isDense: true,
-                            contentPadding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(minHeight: 48),
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12,
+                            ),
                           ),
                           cursorColor: hasError
                               ? AppTheme.wrong
@@ -237,8 +239,8 @@ class StyledInputFieldState extends State<StyledInputField> {
                         child: ExcludeSemantics(
                           child: ConstrainedBox(
                             constraints: const BoxConstraints(
-                              minWidth: 44,
-                              minHeight: 44,
+                              minWidth: 48,
+                              minHeight: 48,
                             ),
                             child: GestureDetector(
                               behavior: HitTestBehavior.opaque,

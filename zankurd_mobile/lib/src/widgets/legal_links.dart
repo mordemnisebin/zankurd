@@ -40,7 +40,7 @@ class LegalLinksRow extends StatelessWidget {
       onTap: () => _open(context, url),
       borderRadius: BorderRadius.circular(6),
       child: ConstrainedBox(
-        constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+        constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 6),
           child: Center(widthFactor: 1, child: Text(label, style: style)),

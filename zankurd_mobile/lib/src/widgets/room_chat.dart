@@ -301,8 +301,8 @@ class _RoomChatState extends State<RoomChat> {
                   enabled: widget.onToggle != null,
                   onTap: widget.onToggle,
                   child: SizedBox(
-                    width: 44,
-                    height: 44,
+                    width: 48,
+                    height: 48,
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: widget.onToggle,
@@ -495,6 +495,7 @@ class _MessageBubble extends StatelessWidget {
           Flexible(
             child: Container(
               constraints: BoxConstraints(
+                minHeight: 48,
                 maxWidth: MediaQuery.of(context).size.width * 0.68,
               ),
               padding: const EdgeInsets.fromLTRB(12, 8, 12, 6),

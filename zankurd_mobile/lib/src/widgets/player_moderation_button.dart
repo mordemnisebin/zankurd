@@ -145,7 +145,7 @@ class _PlayerModerationButtonState extends State<PlayerModerationButton> {
       key: const ValueKey('player-moderation-button'),
       onPressed: _busy ? null : _openSheet,
       // Dokunma hedefi erişilebilirlik alt sınırının altına düşmemeli.
-      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+      constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
       padding: EdgeInsets.zero,
       iconSize: widget.compact ? 18 : 20,
       tooltip: context.t(K.reportProfileTitle),
