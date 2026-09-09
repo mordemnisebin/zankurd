@@ -52,16 +52,22 @@ class ScreenIdentityHeader extends StatelessWidget {
                 height: compact ? 44 : 52,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.alphaBlend(
-                    accent.withValues(alpha: 0.55),
-                    Colors.white.withValues(alpha: 0.16),
+                  color: AppColors.iconTileBg(context, accent),
+                  borderRadius: BorderRadius.circular(
+                    compact ? AppRadius.sm : AppRadius.md,
                   ),
                   border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.28),
+                    color: AppColors.readableAccent(
+                      context,
+                      accent,
+                    ).withValues(alpha: 0.22),
                   ),
                 ),
-                child: Icon(icon, color: Colors.white, size: compact ? 22 : 26),
+                child: Icon(
+                  icon,
+                  color: AppColors.onAccentTint(context, accent),
+                  size: compact ? 22 : 26,
+                ),
               ),
               const SizedBox(width: AppSpacing.sm + 2),
               Expanded(
@@ -70,10 +76,8 @@ class ScreenIdentityHeader extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                       style: AppTypography.heading2.copyWith(
-                        color: Colors.white,
+                        color: AppTheme.textPrimaryColor(context),
                         fontSize: compact ? 17 : 18,
                         fontWeight: FontWeight.w800,
                       ),
@@ -81,10 +85,8 @@ class ScreenIdentityHeader extends StatelessWidget {
                     const SizedBox(height: 3),
                     Text(
                       subtitle,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                       style: AppTypography.bodyMedium.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
+                        color: AppTheme.textSubColor(context),
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
                       ),
@@ -100,7 +102,93 @@ class ScreenIdentityHeader extends StatelessWidget {
   }
 }
 
-/// Bölüm başlığı — sol accent çizgisi + uppercase etiket.
+/// Ana içerik içinde tekrar eden bölüm başlığı.
+///
+/// Play ve Learning ekranlarının ayrı ayrı tanımladığı başlıklar aynı
+/// tipografiyi taşıdığı hâlde küçük spacing/fallback farklarıyla ayrışıyordu.
+/// Bu bileşen kart çizmez; yalnız başlık, açıklama ve gerekirse sağ eylemi
+/// aynı sakin ritimde hizalar. Böylece sayfanın gerçek CTA'sıyla yarışmaz.
+class ScreenSectionHeading extends StatelessWidget {
+  const ScreenSectionHeading({
+    required this.title,
+    this.subtitle,
+    this.trailing,
+    this.semanticHeader = true,
+    super.key,
+  });
+
+  final String title;
+  final String? subtitle;
+  final Widget? trailing;
+
+  /// Normal bölüm başlıkları ekran okuyucuda heading olarak duyurulur.
+  /// Başlığın kendisi daha büyük bir düğmenin etiketi olduğunda (ör. Play
+  /// "Daha fazla") iç içe button+heading rolü oluşmaması için kapatılabilir.
+  final bool semanticHeader;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget copy() => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          title,
+          style: AppTypography.heading2.copyWith(
+            color: AppTheme.textPrimaryColor(context),
+          ),
+        ),
+        if (subtitle case final subtitle? when subtitle.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.xxs),
+          Text(
+            subtitle,
+            style: AppTypography.caption.copyWith(
+              color: AppTheme.textSubColor(context),
+            ),
+          ),
+        ],
+      ],
+    );
+
+    return Semantics(
+      header: semanticHeader,
+      container: true,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final textScale = MediaQuery.textScalerOf(context).scale(1);
+          final stackTrailing =
+              trailing != null &&
+              (constraints.maxWidth < 360 || textScale >= 1.5);
+
+          if (stackTrailing) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                copy(),
+                const SizedBox(height: AppSpacing.xs),
+                Align(alignment: Alignment.centerRight, child: trailing!),
+              ],
+            );
+          }
+
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: copy()),
+              if (trailing != null) ...[
+                const SizedBox(width: AppSpacing.sm),
+                trailing!,
+              ],
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// Bölüm etiketi — sol accent çizgisi + uppercase etiket.
 class ScreenSectionLabel extends StatelessWidget {
   const ScreenSectionLabel({
     required this.label,

@@ -71,7 +71,7 @@ class ModeCard extends StatelessWidget {
               end: Alignment.bottomRight,
               colors: [accent, Color.lerp(accent, Colors.black, 0.22)!],
             ),
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(AppRadius.lg),
             boxShadow: [
               BoxShadow(
                 color: accent.withValues(alpha: 0.30),
@@ -87,28 +87,29 @@ class ModeCard extends StatelessWidget {
               ),
               AppTheme.surfaceColor(context),
             ),
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(AppRadius.lg),
             border: Border.all(
               color: accentOnSurface.withValues(
                 alpha: emphasis == ModeCardEmphasis.event ? 0.38 : 0.26,
               ),
             ),
           );
+    final enabled = !busy && onTap != null;
     return Semantics(
       button: true,
-      enabled: !busy,
+      enabled: enabled,
       label: '$title. $subtitle',
-      onTap: busy ? null : onTap,
+      onTap: enabled ? onTap : null,
       child: ExcludeSemantics(
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: busy ? null : onTap,
-            borderRadius: BorderRadius.circular(18),
+            onTap: enabled ? onTap : null,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
             child: Ink(
               decoration: cardDecoration,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(AppRadius.lg),
                 child: Stack(
                   children: [
                     // Tek motif, tabana yaslı. Kartın etrafını desenle
@@ -153,8 +154,6 @@ class ModeCard extends StatelessWidget {
                               children: [
                                 Text(
                                   title,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
                                   style: AppTypography.subtitle.copyWith(
                                     fontSize: compact ? 16 : 18,
                                     fontWeight: FontWeight.w900,
@@ -165,8 +164,6 @@ class ModeCard extends StatelessWidget {
                                 const SizedBox(height: 2),
                                 Text(
                                   subtitle,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
                                   // Ölçekten okunur: elle fontSize yazmak
                                   // `typography_scale_test` oranını
                                   // yükseltiyor ve ölçek dışına kaçışı

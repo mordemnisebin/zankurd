@@ -304,13 +304,13 @@ void main() {
 
   // ── Erişilebilirlik ─────────────────────────────────────────────────────
 
-  testWidgets('bildir düğmesi 44pt dokunma hedefini korur', (tester) async {
+  testWidgets('bildir düğmesi 48dp dokunma hedefini korur', (tester) async {
     await _pump(tester, _Repo(count: 12));
     final button = find.byKey(const ValueKey('leaderboard-report-other-4'));
     expect(button, findsOneWidget);
     final size = tester.getSize(button);
-    expect(size.height, greaterThanOrEqualTo(44));
-    expect(size.width, greaterThanOrEqualTo(44));
+    expect(size.height, greaterThanOrEqualTo(48));
+    expect(size.width, greaterThanOrEqualTo(48));
   });
 
   testWidgets('satır tek semantik düğümde okunur', (tester) async {

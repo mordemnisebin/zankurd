@@ -242,4 +242,21 @@ void main() {
           '_recordError ile raporlanmalı',
     );
   });
+
+  test('PlayHub oda hazırlığı fallback hatalarını sessizce yutmaz', () {
+    final source = File(
+      'lib/src/screens/play_hub_screen.dart',
+    ).readAsStringSync();
+    final catches = _catchBlocks(source);
+
+    _expectEveryCatchReports('lib/src/screens/play_hub_screen.dart', catches);
+    expect(source, isNot(contains('catch (_)')));
+    expect(
+      catches.expand((block) => block.reasons),
+      containsAll({
+        'play_hub_load_matchmaking_categories',
+        'play_hub_load_coin_balance',
+      }),
+    );
+  });
 }

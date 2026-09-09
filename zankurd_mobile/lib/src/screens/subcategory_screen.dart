@@ -229,10 +229,12 @@ class _CategoryBanner extends StatelessWidget {
           // sekiz posteri bilinçli olarak kaldırmıştı.)
           Opacity(
             opacity: 0.28,
-            child: Image.asset(
-              CategoryVisuals.imagePath(category),
-              fit: BoxFit.cover,
-              errorBuilder: (_, _, _) => const SizedBox.shrink(),
+            child: ExcludeSemantics(
+              child: Image.asset(
+                CategoryVisuals.imagePath(category),
+                fit: BoxFit.cover,
+                errorBuilder: (_, _, _) => const SizedBox.shrink(),
+              ),
             ),
           ),
           DecoratedBox(

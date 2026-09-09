@@ -39,6 +39,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
   final List<PlacementItem> _answers = [];
   int _index = 0;
   PlacementResult? _result;
+  bool _inputLocked = false;
 
   @override
   void initState() {
@@ -53,6 +54,8 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
   QuizQuestion get currentQuestionForTest => _questions[_index];
 
   void _answer(QuizQuestion question, String choice) {
+    if (_inputLocked || _result != null) return;
+    _inputLocked = true;
     _answers.add(
       PlacementItem(
         difficulty: question.difficulty,
@@ -61,26 +64,43 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     );
     if (_index + 1 >= _questions.length) {
       _finish();
-    } else {
-      setState(() => _index++);
+      return;
     }
+
+    setState(() => _index++);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _result != null) return;
+      setState(() => _inputLocked = false);
+    });
   }
 
   Future<void> _finish() async {
-    final result = PlacementScoring.evaluate(
-      _answers,
-      totalQuestions: _questions.length,
-    );
-    final store = await PlacementStore.load();
-    await store.saveResult(result.level);
-    if (mounted) setState(() => _result = result);
+    try {
+      final result = PlacementScoring.evaluate(
+        _answers,
+        totalQuestions: _questions.length,
+      );
+      final store = await PlacementStore.load();
+      await store.saveResult(result.level);
+      if (mounted) setState(() => _result = result);
+    } finally {
+      if (mounted && _result == null) {
+        setState(() => _inputLocked = false);
+      }
+    }
   }
 
   Future<void> _skip() async {
-    final store = await PlacementStore.load();
-    await store.markSkipped();
-    widget.onFinished?.call(null);
-    if (mounted) Navigator.of(context).maybePop();
+    if (_inputLocked) return;
+    setState(() => _inputLocked = true);
+    try {
+      final store = await PlacementStore.load();
+      await store.markSkipped();
+      widget.onFinished?.call(null);
+      if (mounted) Navigator.of(context).maybePop();
+    } finally {
+      if (mounted) setState(() => _inputLocked = false);
+    }
   }
 
   @override
@@ -99,11 +119,11 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
             useCompactSkip
                 ? IconButton(
                     key: const ValueKey('placement-skip-compact'),
-                    onPressed: _skip,
+                    onPressed: _inputLocked ? null : _skip,
                     tooltip: skipLabel,
                     constraints: const BoxConstraints(
-                      minWidth: 44,
-                      minHeight: 44,
+                      minWidth: 48,
+                      minHeight: 48,
                     ),
                     icon: Icon(
                       AppIcons.forward,
@@ -113,7 +133,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
                   )
                 : TextButton(
                     key: const ValueKey('placement-skip'),
-                    onPressed: _skip,
+                    onPressed: _inputLocked ? null : _skip,
                     style: TextButton.styleFrom(
                       foregroundColor: AppTheme.textSubColor(context),
                     ),
@@ -253,7 +273,9 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
                         child: _AnswerButton(
                           index: index,
                           label: answer,
-                          onTap: () => _answer(question, answer),
+                          onTap: _inputLocked
+                              ? null
+                              : () => _answer(question, answer),
                         ),
                       ),
                   ],
@@ -368,7 +390,7 @@ class _AnswerButton extends StatelessWidget {
 
   final int index;
   final String label;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

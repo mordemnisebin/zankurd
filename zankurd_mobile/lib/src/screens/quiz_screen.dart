@@ -2779,6 +2779,7 @@ class _QuizScreenState extends State<QuizScreen>
             bestStreak: bestStreak,
             answerRecords: answerRecords,
             coinsAwarded: settlement.coinsAwarded,
+            sourceQuestions: _questions,
             rewardQueued: settlement.rewardQueued,
             opponents: _opponents.toList(),
             practice: widget.practice,
@@ -3396,6 +3397,7 @@ class _QuizScreenState extends State<QuizScreen>
             bestStreak: bestStreak,
             answerRecords: answerRecords,
             coinsAwarded: coinsAwarded,
+            sourceQuestions: _questions,
             rewardQueued: _rewardQueued,
             dailyCapReached: _rewardDailyCapReached,
             opponents: widget.is1v1 && widget.room.id != null

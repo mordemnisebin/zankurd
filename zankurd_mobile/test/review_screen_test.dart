@@ -277,4 +277,29 @@ void main() {
     expect(find.byKey(const ValueKey('review-typed-answer')), findsNothing);
     expect(find.textContaining('TIMEOUT'), findsNothing);
   });
+
+  testWidgets('yanlış cevap varsa tekrar eylemi görünür', (tester) async {
+    const records = [
+      AnswerRecord(
+        id: 'practice-1',
+        category: 'Ziman',
+        prompt: 'Hilbijêre',
+        answers: ['Rast', 'Şaş'],
+        correctAnswer: 'Rast',
+        selectedAnswer: 'Şaş',
+        explanation: '',
+      ),
+    ];
+
+    await tester.pumpWidget(
+      _wrap(const ReviewScreen(records: records, room: _room)),
+    );
+
+    final action = find.byKey(const ValueKey('review-practice-cta'));
+    expect(action, findsOneWidget);
+    expect(
+      find.descendant(of: action, matching: find.text('Tekrara başla')),
+      findsOneWidget,
+    );
+  });
 }

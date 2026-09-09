@@ -9,6 +9,7 @@ import '../data/streak_store.dart';
 import '../data/mistake_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/achievement_store.dart';
+import '../data/badge_service.dart';
 import '../data/mastery_store.dart';
 import '../data/daily_mission_store.dart';
 import '../data/level_progress_store.dart';
@@ -535,6 +536,14 @@ class AuthProvider extends ChangeNotifier {
       AchievementStore.resetInstance();
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'AchievementStore clear failed');
+    }
+
+    try {
+      final badgeService = await BadgeService.load();
+      await badgeService.clear();
+      BadgeService.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'BadgeService clear failed');
     }
 
     try {

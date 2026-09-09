@@ -263,7 +263,17 @@ void main() {
       await tester.pumpAndSettle();
     }
     expect(replay, findsOneWidget);
-    expect(find.byKey(const ValueKey('result-more-options')), findsOneWidget);
+
+    // Sonuç ana eylemi öğrenme özetinin üstüne taşındığı için kapalı
+    // yardımcı yollar artık ListView'un daha aşağısında kalabilir. Test
+    // eski piksel sırasını değil, kullanıcı tarafından erişilebilirliği
+    // doğrulasın.
+    final moreOptions = find.byKey(const ValueKey('result-more-options'));
+    for (var i = 0; i < 8 && moreOptions.evaluate().isEmpty; i++) {
+      await tester.drag(find.byType(ListView).first, const Offset(0, -500));
+      await tester.pumpAndSettle();
+    }
+    expect(moreOptions, findsOneWidget);
     expect(find.byKey(const ValueKey('result-home-button')), findsNothing);
   });
 

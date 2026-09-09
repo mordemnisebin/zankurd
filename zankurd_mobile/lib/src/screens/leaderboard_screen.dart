@@ -21,6 +21,7 @@ import '../widgets/kilim_reveal.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/rolling_count.dart';
+import '../widgets/screen_identity_header.dart';
 import '../widgets/zk_back_button.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
@@ -871,60 +872,34 @@ class _Header extends StatelessWidget {
         AppSpacing.md,
         AppSpacing.xxs,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 4,
-            height: 44,
-            margin: const EdgeInsets.only(right: AppSpacing.sm, top: 2),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
-              color: AppTheme.brand,
+      child: ScreenSectionHeading(
+        title: context.t(K.leaderboardTitle),
+        subtitle: context.t(K.refreshEvery30),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _HeaderAction(
+              valueKey: const ValueKey('leaderboard-friends-button'),
+              icon: AppIcons.userPlus,
+              tooltip: context.t(K.friendsScreen),
+              semanticLabel: pendingRequestCount > 0
+                  ? context.t(K.friendRequestsPendingA11y, {
+                      'count': '$pendingRequestCount',
+                    })
+                  : context.t(K.friendsScreen),
+              onPressed: onOpenFriends,
+              badgeCount: pendingRequestCount,
             ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.t(K.leaderboardTitle),
-                  style: AppTypography.heading1.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xxs),
-                Text(
-                  context.t(K.refreshEvery30),
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+            const SizedBox(width: AppSpacing.xs),
+            _HeaderAction(
+              valueKey: const ValueKey('leaderboard-refresh-button'),
+              icon: AppIcons.arrowsRotate,
+              tooltip: context.t(K.refreshAction),
+              semanticLabel: context.t(K.refreshBoardA11y),
+              onPressed: onRefresh,
             ),
-          ),
-          _HeaderAction(
-            valueKey: const ValueKey('leaderboard-friends-button'),
-            icon: AppIcons.userPlus,
-            tooltip: context.t(K.friendsScreen),
-            semanticLabel: pendingRequestCount > 0
-                ? context.t(K.friendRequestsPendingA11y, {
-                    'count': '$pendingRequestCount',
-                  })
-                : context.t(K.friendsScreen),
-            onPressed: onOpenFriends,
-            badgeCount: pendingRequestCount,
-          ),
-          const SizedBox(width: AppSpacing.xs),
-          _HeaderAction(
-            valueKey: const ValueKey('leaderboard-refresh-button'),
-            icon: AppIcons.arrowsRotate,
-            tooltip: context.t(K.refreshAction),
-            semanticLabel: context.t(K.refreshBoardA11y),
-            onPressed: onRefresh,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -1035,7 +1010,7 @@ class _PeriodTabs extends StatelessWidget {
         AppSpacing.page,
         AppSpacing.xxs,
       ),
-      height: 44,
+      height: 48,
       decoration: BoxDecoration(
         color: AppTheme.surfaceColor(context),
         borderRadius: BorderRadius.circular(AppRadius.md),
@@ -1577,24 +1552,35 @@ class _RankRow extends StatelessWidget {
                 // Ad ve "Sen" etiketi tek satırda; ad esner, etiket esnemez.
                 // Uzun bir kullanıcı adı etiketi ekrandan atmamalı — asıl
                 // bilgi hangi satırın SENİN olduğun.
-                Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        entry.displayName,
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w800,
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    // %200 yazı + 320 px gibi aşırı dar durumda puan/rapor
+                    // hedefleri korunduktan sonra ad sütununa 30 px kadar yer
+                    // kalabiliyor. Satırın birleşik semantics etiketi zaten
+                    // "senin sıran" bilgisini veriyor; renk dolgusu + sol
+                    // şerit de görsel kimliği koruyor. Bu nedenle metin rozeti
+                    // yalnız gerçekten okunabileceği genişlikte çizilir.
+                    final showSelfTag = highlight && constraints.maxWidth >= 72;
+                    return Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            entry.displayName,
+                            style: AppTypography.bodyMedium.copyWith(
+                              color: AppTheme.textPrimaryColor(context),
+                              fontWeight: FontWeight.w800,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    if (highlight) ...[
-                      const SizedBox(width: 6),
-                      _SelfTag(isKu: isKu),
-                    ],
-                  ],
+                        if (showSelfTag) ...[
+                          const SizedBox(width: 6),
+                          _SelfTag(isKu: isKu),
+                        ],
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(height: 1),
                 Text(
@@ -1637,10 +1623,10 @@ class _RankRow extends StatelessWidget {
           // da en çok bakılan satırda kırılıyordu (2026-08-04).
           //
           // Tek başına duran özet kartında rezerve edilmez: hizalanacak
-          // kardeş satır yok ve dar sütunda o 44 pt doğrudan addan çalınıp
+          // kardeş satır yok ve dar sütunda o 48 dp doğrudan addan çalınıp
           // ismi "Oy..." hâline getiriyordu.
           if (onReport == null)
-            if (grouped) const SizedBox(width: 44) else const SizedBox.shrink()
+            if (grouped) const SizedBox(width: 48) else const SizedBox.shrink()
           else
             Semantics(
               button: true,
@@ -1650,9 +1636,8 @@ class _RankRow extends StatelessWidget {
                 onPressed: onReport,
                 icon: const Icon(AppIcons.flag, size: 16),
                 color: AppTheme.textMutedColor(context),
-                // 44pt'lik dokunma hedefi: denetimde 48dp altı hedefler
-                // ayrıca kusur olarak kaydedilmişti.
-                constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                // Android dokunma hedefi: 48 dp altına düşmez.
+                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
                 padding: EdgeInsets.zero,
                 tooltip: Tr.forKu(K.reportProfileTitle, isKu),
               ),

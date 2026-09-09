@@ -33,6 +33,7 @@ import '../data/badge_service.dart';
 import '../widgets/badge_widget.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/rolling_count.dart';
+import '../widgets/screen_identity_header.dart';
 import '../widgets/strength_map_section.dart';
 import '../widgets/weekly_performance_chart.dart';
 import 'avatar_editor_screen.dart';
@@ -193,6 +194,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           room: practiceRoom,
           questions: questions,
           practice: true,
+          enableTimer: false,
+          experience: QuizExperience.learning,
         ),
       ),
     );
@@ -547,29 +550,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         AppSpacing.xxs,
                         AppSpacing.md,
                       ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 4,
-                            height: 32,
-                            margin: const EdgeInsets.only(right: AppSpacing.sm),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(2),
-                              gradient: AppTheme.accentGradient,
-                            ),
-                          ),
-                          // Büyük sistem yazısında başlık satırı taşıyordu.
-                          Expanded(
-                            child: Text(
-                              context.t(K.profileTitle),
-                              style: AppTypography.heading1.copyWith(
-                                color: AppTheme.textPrimaryColor(context),
-                                fontSize: 28,
-                                letterSpacing: -0.5,
-                              ),
-                            ),
-                          ),
-                        ],
+                      child: ScreenSectionHeading(
+                        title: context.t(K.profileTitle),
                       ),
                     ),
                     if (isWide)
@@ -803,10 +785,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _menuRow(
                 leading: const Icon(
                   AppIcons.bookmark,
-                  color: AppTheme.gold,
+                  color: AppTheme.playGreen,
                   size: 20,
                 ),
-                iconColor: AppTheme.gold,
+                iconColor: AppTheme.playGreen,
                 title: context.t(K.savedQuestions),
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(AppRadius.md),
@@ -827,15 +809,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          color: AppTheme.primaryGradientStart,
+                          color: AppTheme.playGreen,
                         ),
                       )
                     : const Icon(
                         AppIcons.graduationCap,
-                        color: AppTheme.primaryGradientStart,
+                        color: AppTheme.playGreen,
                         size: 20,
                       ),
-                iconColor: AppTheme.primaryGradientStart,
+                iconColor: AppTheme.playGreen,
                 title: context.t(K.myMistakes),
                 subtitle: _mistakeCount == 0
                     ? (context.t(K.noMistakes))
@@ -849,10 +831,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _menuRow(
                 leading: const Icon(
                   AppIcons.circlePlus,
-                  color: AppTheme.playCyan,
+                  color: AppTheme.playGreen,
                   size: 20,
                 ),
-                iconColor: AppTheme.playCyan,
+                iconColor: AppTheme.playGreen,
                 title: context.t(K.suggestQuestion),
                 subtitle: context.t(K.suggestQuestionSub),
                 borderRadius: const BorderRadius.vertical(
@@ -878,10 +860,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: _menuRow(
               leading: const Icon(
                 AppIcons.userPlus,
-                color: AppTheme.correct,
+                color: AppTheme.playGreen,
                 size: 20,
               ),
-              iconColor: AppTheme.correct,
+              iconColor: AppTheme.playGreen,
               title: context.t(K.saveAccount),
               subtitle: context.t(K.saveAccountSub),
               borderRadius: BorderRadius.circular(AppRadius.md),
@@ -921,10 +903,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _menuRow(
                 leading: const Icon(
                   AppIcons.gear,
-                  color: AppTheme.secondaryAccent,
+                  color: AppTheme.playGreen,
                   size: 20,
                 ),
-                iconColor: AppTheme.secondaryAccent,
+                iconColor: AppTheme.playGreen,
                 title: context.t(K.settings),
                 onTap: () async {
                   // Ayarlar'da değiştirilen ad geri dönüldüğünde eski

@@ -46,6 +46,31 @@ void main() {
     expect(body, contains('enableTimer: false'));
   });
 
+  test('profil yanlışları da öğrenme pratiği olarak başlatılır', () {
+    final source = File(
+      'lib/src/screens/profile_screen.dart',
+    ).readAsStringSync();
+    final start = source.indexOf('Future<void> _startMistakePractice()');
+    expect(start, greaterThan(-1), reason: '_startMistakePractice bulunamadı');
+    final nextMethod = source.indexOf('\n  Future<void> ', start + 1);
+    final body = source.substring(
+      start,
+      nextMethod == -1 ? source.length : nextMethod,
+    );
+
+    expect(body, contains('practice: true'));
+    expect(
+      body,
+      contains('experience: QuizExperience.learning'),
+      reason: 'Profil yanlışları yarışma deneyimine düşmemeli',
+    );
+    expect(
+      body,
+      contains('enableTimer: false'),
+      reason: 'Yanlış tekrarı süre baskısı olmadan çalışmalı',
+    );
+  });
+
   testWidgets('öğrenme akışında joker çubuğu gösterilmez', (tester) async {
     await tester.pumpWidget(
       testShell(

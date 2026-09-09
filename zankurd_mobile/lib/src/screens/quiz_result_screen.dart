@@ -46,6 +46,7 @@ import '../widgets/confetti_overlay.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/roj_mascot.dart';
 import 'leaderboard_screen.dart';
+import 'quiz_screen.dart';
 import 'review_screen.dart';
 import 'room_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -80,6 +81,7 @@ class QuizResultScreen extends StatefulWidget {
     required this.bestStreak,
     required this.answerRecords,
     required this.coinsAwarded,
+    this.sourceQuestions = const [],
     this.opponents = const [],
     this.rewardQueued = false,
     this.dailyCapReached = false,
@@ -103,6 +105,15 @@ class QuizResultScreen extends StatefulWidget {
   final int bestStreak;
   final List<AnswerRecord> answerRecords;
   final int coinsAwarded;
+
+  /// Turda gerçekten kullanılan soru nesneleri.
+  ///
+  /// Çevrimiçi oda soruları sunucu UUID'si taşıyabilir ve yerel
+  /// [ZanKurdRepository.playableQuestions] bankasında bulunmayabilir. Sonuç
+  /// ekranı Review → Practice döngüsünü ikinci bir ağ çağrısına bağlamamak
+  /// için bu listeyi kaynak olarak taşır. Eski çağrılar boş bırakabilir;
+  /// o durumda yerel oynanabilir banka geriye dönük yedek olarak kullanılır.
+  final List<QuizQuestion> sourceQuestions;
 
   /// Sıfır jeton, günlük tavana varıldığı İÇİN mi?
   ///
@@ -1135,10 +1146,47 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       Navigator.of(context).popUntil((route) => route.isFirst);
     }
 
-    void openReview(List<AnswerRecord> records) {
-      Navigator.of(
-        context,
-      ).push(AppRoute.to(ReviewScreen(records: records, room: room)));
+    Future<void> openReview(List<AnswerRecord> records) async {
+      final sourceById = <String, QuizQuestion>{
+        for (final question in repository.playableQuestions)
+          question.id: question,
+        for (final question in widget.sourceQuestions) question.id: question,
+      };
+      final practiceQuestions = records
+          .map((record) => sourceById[record.id])
+          .whereType<QuizQuestion>()
+          .toList(growable: false);
+      final startPractice = await Navigator.of(context).push<bool>(
+        AppRoute.to(
+          ReviewScreen(
+            records: records,
+            room: room,
+            practiceAvailable: practiceQuestions.isNotEmpty,
+          ),
+        ),
+      );
+      if (startPractice != true ||
+          !context.mounted ||
+          practiceQuestions.isEmpty) {
+        return;
+      }
+
+      final practiceRoom = repository.createRoom().copyWith(
+        name: context.t(K.myMistakes),
+        questionCount: practiceQuestions.length,
+      );
+      await Navigator.of(context).push(
+        AppRoute.to(
+          QuizScreen(
+            repository: repository,
+            room: practiceRoom,
+            questions: practiceQuestions,
+            practice: true,
+            enableTimer: false,
+            experience: QuizExperience.learning,
+          ),
+        ),
+      );
     }
 
     final primaryResultKey = wrongRecords.isNotEmpty
@@ -1795,6 +1843,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                       opponents: opponents,
                     ),
                   ],
+                  const SizedBox(height: 16),
+                  _buildResultActions(
+                    primaryKey: primaryResultKey,
+                    primaryLabel: primaryResultLabel,
+                    primaryIcon: primaryResultIcon,
+                    onPrimaryPressed: wrongRecords.isNotEmpty
+                        ? () => openReview(wrongRecords)
+                        : completeResultAction,
+                    secondaryActions: secondaryResultActions,
+                  ),
                   if (answerRecords.isNotEmpty) ...[
                     const SizedBox(height: 16),
                     LearningOutcomeCard(
@@ -1858,18 +1916,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     ),
                   ],
                   const SizedBox(height: 16),
-                  // ── Actions ──────────────────────────────────────────
-                  const SizedBox(height: 12),
-                  _buildResultActions(
-                    primaryKey: primaryResultKey,
-                    primaryLabel: primaryResultLabel,
-                    primaryIcon: primaryResultIcon,
-                    onPrimaryPressed: wrongRecords.isNotEmpty
-                        ? () => openReview(wrongRecords)
-                        : completeResultAction,
-                    secondaryActions: secondaryResultActions,
-                  ),
-                  const SizedBox(height: 10),
                   Theme(
                     data: Theme.of(context).copyWith(
                       dividerColor: Colors.transparent,

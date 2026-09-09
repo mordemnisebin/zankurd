@@ -5,7 +5,12 @@ import '../models/daily_mission.dart';
 import '../utils/error_reporter.dart';
 
 class DailyMissionStore {
-  DailyMissionStore._(this._prefs, this._missions, this._correctAnswersToday);
+  DailyMissionStore._(
+    this._prefs,
+    this._missions,
+    this._correctAnswersToday,
+    this._loadedDateKey,
+  );
 
   static const _dateKey = 'zankurd.missions.date';
   static const _progressKey = 'zankurd.missions.progress';
@@ -34,6 +39,7 @@ class DailyMissionStore {
 
   final SharedPreferences? _prefs;
   final List<DailyMission> _missions;
+  final String _loadedDateKey;
   int _correctAnswersToday;
 
   List<DailyMission> get missions => List.unmodifiable(_missions);
@@ -50,9 +56,11 @@ class DailyMissionStore {
       '${day.year}-${day.month.toString().padLeft(2, '0')}-'
       '${day.day.toString().padLeft(2, '0')}';
 
-  static Future<DailyMissionStore> load() async {
+  static Future<DailyMissionStore> load({DateTime? now}) async {
+    final today = now ?? DateTime.now();
+    final todayKey = _dateString(today);
     final cached = _instance;
-    if (cached != null) return cached;
+    if (cached != null && cached._loadedDateKey == todayKey) return cached;
 
     SharedPreferences? prefs;
     try {
@@ -65,8 +73,6 @@ class DailyMissionStore {
       );
     }
 
-    final today = DateTime.now();
-    final todayKey = _dateString(today);
     final storedDate = prefs?.getString(_dateKey);
     final missions = MissionDefinitions.forDay(today);
     var answeredToday = 0;
@@ -87,7 +93,12 @@ class DailyMissionStore {
       answeredToday = prefs?.getInt(_answeredKey) ?? 0;
     }
 
-    return _instance = DailyMissionStore._(prefs, missions, answeredToday);
+    return _instance = DailyMissionStore._(
+      prefs,
+      missions,
+      answeredToday,
+      todayKey,
+    );
   }
 
   @visibleForTesting
@@ -104,7 +115,12 @@ class DailyMissionStore {
         reason: 'daily_mission_test_preferences',
       );
     }
-    return _instance = DailyMissionStore._(prefs, missions, 0);
+    return _instance = DailyMissionStore._(
+      prefs,
+      missions,
+      0,
+      _dateString(DateTime.now()),
+    );
   }
 
   static void resetInstance() => _instance = null;
@@ -172,8 +188,7 @@ class DailyMissionStore {
   }
 
   Future<void> _persist() async {
-    final today = _dateString(DateTime.now());
-    await _prefs?.setString(_dateKey, today);
+    await _prefs?.setString(_dateKey, _loadedDateKey);
     await _prefs?.setStringList(
       _progressKey,
       _missions.map((m) => m.progress.toString()).toList(),

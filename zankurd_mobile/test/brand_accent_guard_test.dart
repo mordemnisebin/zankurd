@@ -59,33 +59,42 @@ void main() {
     });
   }
 
-  test('oyun merkezinin dört satırı birbirinden ayrılıyor', () {
-    // Paletin içinde kalmak, hepsini aynı yeşile boyamak demek değil:
-    // dört satır yan yana duruyor ve ayırt edilebilir kalmalı.
+  test('oyun merkezi aksanları kart değil işlev rolü anlatır', () {
+    // 2026-09-10 tasarım grameri: her kartı ayrı renge boyamak ekranı
+    // gökkuşağına çeviriyordu. Ayrım artık renk + ikon + başlık birlikte
+    // yapılır; renk ise semantik rolü taşır: tek ana hero=brand,
+    // sosyal/oda yolları=playGreen, etkinlik/prestij=gold.
     final source = File(
       'lib/src/screens/play_hub_screen.dart',
     ).readAsStringSync();
-    // 2026-08-04: aksanlar `AppTheme.*` sabitlerinden Rengîn palet
-    // literallerine geçti (safir/turkuaz/safran/ametist). Bekçinin
-    // koruduğu kural değişmedi — dört satır ayırt edilebilir kalmalı —
-    // ama yalnız sabit adlarına bakan regex kör kalıyordu: dört satır
-    // ayrıyken bile "1 aksan buldum" diyordu. Artık her iki yazımı da
-    // görür, yani kural gevşemedi, kapsamı düzeldi.
     final accents = RegExp(
-      r'accent: (?:const )?(AppTheme\.[a-zA-Z]+|Color\(0x[0-9A-Fa-f]{8}\))',
+      r'accent: (AppTheme\.[a-zA-Z]+)',
     ).allMatches(source).map((m) => m.group(1)!).toList();
 
     expect(
-      accents.length,
-      greaterThanOrEqualTo(4),
-      reason: 'Bekçi kör kalmasın: satırlar bulunamadıysa kural boşa döner.',
+      accents,
+      containsAll(<String>[
+        'AppTheme.brand',
+        'AppTheme.playGreen',
+        'AppTheme.gold',
+      ]),
+      reason:
+          'Hero, sosyal ve etkinlik rolleri üç ayrı anlamlı aksan taşımalı.',
     );
     expect(
-      accents.toSet().length,
-      accents.length,
-      reason:
-          'İki satır aynı aksanı taşıyor; kullanıcı hangisinin ne olduğunu '
-          'renkten ayırt edemez: $accents',
+      accents.where((accent) => accent == 'AppTheme.brand').length,
+      1,
+      reason: 'Brand/turuncu yalnız ekranın tek hero kimliğinde kalmalı.',
+    );
+    expect(
+      accents.where((accent) => accent == 'AppTheme.playGreen').length,
+      2,
+      reason: 'Oda kurma ve kodla katılma aynı sosyal/navigasyon rolüdür.',
+    );
+    expect(
+      accents.where((accent) => accent == 'AppTheme.gold').length,
+      2,
+      reason: 'Günün etkinliği ve turnuva aynı etkinlik/prestij rolüdür.',
     );
   });
 }

@@ -6,6 +6,7 @@ import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
+import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -14,6 +15,33 @@ import 'support/widget_test_helpers.dart';
 /// çevrimiçi oda sayısıdır ve solo quiz onu artırmaz. Karo artık tüm
 /// modlarda cevaplanan soru sayısını gösterir.
 void main() {
+  testWidgets('profil ortak sakin sayfa başlığı gramerini kullanır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    await tester.pumpWidget(
+      testShell(
+        child: Scaffold(
+          body: ProfileScreen(repository: MockZanKurdRepository()),
+        ),
+      ),
+    );
+    for (
+      var i = 0;
+      i < 40 && find.byType(ScreenSectionHeading).evaluate().isEmpty;
+      i++
+    ) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+
+    expect(find.byType(ScreenSectionHeading), findsOneWidget);
+    final heading = tester.widget<ScreenSectionHeading>(
+      find.byType(ScreenSectionHeading),
+    );
+    expect(heading.title, 'Profil');
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('cevaplanan soru karosu solo oyunda da artar', (tester) async {
     SharedPreferences.setMockInitialValues({});
     final store = await MistakeStore.load();

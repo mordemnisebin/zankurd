@@ -54,6 +54,29 @@ void main() {
     expect(decoration.gradient, isNull);
   });
 
+  testWidgets('dekoratif kategori hero görseli semantics ağacına girmez', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(
+        SubcategoryScreen(
+          repository: MockZanKurdRepository(),
+          category: 'Ziman',
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final heroImage = find.byType(Image);
+    expect(heroImage, findsOneWidget);
+    expect(
+      find.ancestor(of: heroImage, matching: find.byType(ExcludeSemantics)),
+      findsOneWidget,
+      reason:
+          'Dekoratif hero görseli ekran okuyucuya adsız image durağı olmamalı.',
+    );
+  });
+
   testWidgets('kart dokunuşu LevelScreen açar', (tester) async {
     final first = SubcategoryConfig.subcategories['Ziman']!.first;
 

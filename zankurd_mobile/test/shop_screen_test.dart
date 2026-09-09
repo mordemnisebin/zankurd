@@ -41,6 +41,36 @@ class _ShopRepository extends MockZanKurdRepository {
   }
 }
 
+class _FailingEffectShopRepository extends _ShopRepository {
+  _FailingEffectShopRepository() : super(coins: 1000);
+
+  bool failEffect = true;
+  int effectWriteCalls = 0;
+  AvatarIdentity identity = const AvatarIdentity(
+    iconId: 'roj',
+    colorHex: '#E94560',
+  );
+
+  @override
+  Future<bool> spendCoins(int amount, String reason) async {
+    final success = await super.spendCoins(amount, reason);
+    if (success && reason.startsWith('purchase_')) {
+      purchased.add(reason.substring('purchase_'.length));
+    }
+    return success;
+  }
+
+  @override
+  Future<AvatarIdentity> loadAvatarIdentity() async => identity;
+
+  @override
+  Future<void> updateAvatarIdentity(AvatarIdentity next) async {
+    effectWriteCalls += 1;
+    if (failEffect) throw StateError('avatar identity persist failed');
+    identity = next;
+  }
+}
+
 class _SpinWheelShopRepository extends _ShopRepository {
   _SpinWheelShopRepository() : super(coins: 0);
 
@@ -141,6 +171,40 @@ void main() {
     },
   );
 
+  testWidgets(
+    'kozmetik alındıktan sonra kuşanma kaydı bozulursa tekrar coin harcanmaz',
+    (tester) async {
+      final repository = _FailingEffectShopRepository();
+      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Neon Çerçeve'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Satın Al'));
+      await tester.pumpAndSettle();
+
+      expect(repository.spendReasons, ['purchase_avatar_frame_neon']);
+      expect(repository.effectWriteCalls, 1);
+      expect(find.text('Tebrikler!'), findsNothing);
+      expect(find.text('Kaydedilemedi.'), findsOneWidget);
+      expect(find.text('Tekrar'), findsOneWidget);
+
+      repository.failEffect = false;
+      await tester.tap(find.text('Tekrar'));
+      await tester.pumpAndSettle();
+
+      expect(
+        repository.spendReasons,
+        ['purchase_avatar_frame_neon'],
+        reason:
+            'Kuşanma retry satın almayı ve coin harcamasını tekrarlamamalı.',
+      );
+      expect(repository.effectWriteCalls, 2);
+      expect(repository.identity.frameId, 'neon');
+      expect(find.text('Tebrikler!'), findsOneWidget);
+    },
+  );
+
   // 2026-07-31: katalog 13 ürün tanımlıyordu ama yalnız 3'ü yayınlanıyordu;
   // kalan 10'u ölü veriydi ve `_supportedItemIds`e yanlışlıkla eklenirlerse
   // coin alıp hiçbir şey yapmazlardı. Dokuzu tamamen silindi, neon çerçeve
@@ -155,6 +219,44 @@ void main() {
       'avatar_frame_neon',
       'profile_badge_vip',
     });
+  });
+
+  testWidgets('mağaza ürün rengini büyük yüzeylere taşımadan sakin kalır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _ShopRepository(coins: 500);
+
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    final heroFinder = find.byKey(const ValueKey('shop-hero-surface'));
+    expect(heroFinder, findsOneWidget);
+    final hero = tester.widget<Container>(heroFinder);
+    final heroDecoration = hero.decoration! as BoxDecoration;
+    final heroContext = tester.element(heroFinder);
+    expect(heroDecoration.gradient, isNull);
+    expect(heroDecoration.color, AppTheme.surfaceColor(heroContext));
+    expect(heroDecoration.boxShadow ?? const <BoxShadow>[], isEmpty);
+    expect(heroDecoration.border, isNotNull);
+
+    final itemFinder = find.byKey(
+      const ValueKey('shop-item-surface-spin_wheel_extra'),
+    );
+    expect(itemFinder, findsOneWidget);
+    final item = tester.widget<Container>(itemFinder);
+    final itemDecoration = item.decoration! as BoxDecoration;
+    expect(itemDecoration.gradient, isNull);
+    expect(
+      itemDecoration.color,
+      AppTheme.surfaceColor(tester.element(itemFinder)),
+    );
+    expect(
+      find.byKey(const ValueKey('shop-item-accent-stripe-spin_wheel_extra')),
+      findsNothing,
+      reason: 'Ürün rengi tam genişlik dekor şeridine dönüşmemeli.',
+    );
   });
 
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {

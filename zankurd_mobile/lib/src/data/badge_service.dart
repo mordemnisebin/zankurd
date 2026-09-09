@@ -70,6 +70,11 @@ class BadgeService {
   /// Testlerde tekil örneği sıfırlamak için.
   static void resetInstance() => _instance = null;
 
+  Future<void> clear() async {
+    _unlockedBadges.clear();
+    await _preferences?.remove(_storageKey);
+  }
+
   final SharedPreferences? _preferences;
   final Set<String> _unlockedBadges;
 

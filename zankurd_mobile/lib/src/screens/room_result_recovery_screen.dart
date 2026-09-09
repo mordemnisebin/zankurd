@@ -6,6 +6,7 @@ import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../services/quiz_reward_settlement_service.dart';
 import '../services/room_result_presentation.dart';
@@ -41,6 +42,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
   bool _ownerMismatch = false;
   int _attempt = 0;
   RoomResultPresentation? _cachedPresentation;
+  List<QuizQuestion>? _cachedQuestions;
   QuizRewardSettlement? _cachedSettlement;
   Future<QuizRewardSettlement>? _settlementInFlight;
 
@@ -79,17 +81,20 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
 
     try {
       var presentation = _cachedPresentation;
-      if (presentation == null) {
-        final questions = await widget.repository
+      var questions = _cachedQuestions;
+      if (presentation == null || questions == null) {
+        final loadedQuestions = await widget.repository
             .loadRoomQuestions(widget.snapshot.room)
             .timeout(_roomResultRecoveryTimeout);
         if (!mounted || !_canContinue(attempt)) return;
 
+        questions = List<QuizQuestion>.unmodifiable(loadedQuestions);
         presentation = buildRoomResultPresentation(
           widget.snapshot,
           questions,
           isKu: context.isKu,
         );
+        _cachedQuestions = questions;
         _cachedPresentation = presentation;
         if (!_canContinue(attempt)) return;
       }
@@ -133,7 +138,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
         }
       }
       if (!_canContinue(attempt)) return;
-      _openResult(presentation, settlement);
+      _openResult(presentation, settlement, questions);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'room result recovery');
       _showFailure(attempt);
@@ -143,6 +148,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
   void _openResult(
     RoomResultPresentation presentation,
     QuizRewardSettlement settlement,
+    List<QuizQuestion> questions,
   ) {
     unawaited(
       Navigator.of(context).pushReplacement(
@@ -157,6 +163,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
             bestStreak: presentation.bestStreak,
             answerRecords: presentation.answerRecords,
             coinsAwarded: settlement.coinsAwarded,
+            sourceQuestions: questions,
             opponents: presentation.opponents,
             rewardQueued: settlement.state == QuizRewardSettlementState.queued,
             resultOwnerUserId: _expectedUserId,

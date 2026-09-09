@@ -8,6 +8,7 @@ import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 
 /// loadLeaderboard çağrılarını sayan sahte depo.
 class _CountingLeaderboardRepository extends MockZanKurdRepository {
@@ -69,6 +70,23 @@ Widget _shell(Widget child) {
 }
 
 void main() {
+  testWidgets('liderlik ortak sakin başlık gramerini ve eylemleri korur', (
+    tester,
+  ) async {
+    final repository = _CountingLeaderboardRepository();
+    await tester.pumpWidget(_shell(LeaderboardScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ScreenSectionHeading), findsOneWidget);
+    final heading = tester.widget<ScreenSectionHeading>(
+      find.byType(ScreenSectionHeading),
+    );
+    expect(heading.title, 'Liderlik Tablosu');
+    expect(find.byKey(const ValueKey('leaderboard-friends-button')), findsOne);
+    expect(find.byKey(const ValueKey('leaderboard-refresh-button')), findsOne);
+    expect(tester.takeException(), isNull);
+  });
+
   // Regression: AppShell sekmeleri IndexedStack içinde canlı kalır; initState
   // sekme geçişinde yeniden çalışmaz. refreshSignal tetiklenince liderlik
   // tablosu yeniden yüklenmeli, yoksa skor güncellemeleri bayat kalır.

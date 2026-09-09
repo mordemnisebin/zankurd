@@ -74,12 +74,20 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     try {
       final serverCats = await widget.repository.loadMatchmakingCategories();
       if (serverCats.isNotEmpty) availableCategories = serverCats;
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(
+        error,
+        stack,
+        reason: 'play_hub_load_matchmaking_categories',
+      );
+    }
 
     int coinBalance = 0;
     try {
       coinBalance = await widget.repository.loadCoinBalance();
-    } catch (_) {}
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'play_hub_load_coin_balance');
+    }
 
     if (!mounted) return;
 
@@ -279,28 +287,21 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                       },
               ),
               const SizedBox(height: AppSpacing.md),
-              _PlaySectionHeading(
+              ScreenSectionHeading(
                 title: context.t(K.withFriends),
                 subtitle: context.t(K.withFriendsSub),
               ),
               const SizedBox(height: AppSpacing.sm),
-              // Rengîn (2026-08-04): dört satır birbirinin aynı beyaz kartıydı
-              // ve oyun merkezinin tamamı tek yeşil + tek turuncu ile
-              // çiziliyordu. Her mod artık kendi hue ailesini taşır; turuncu
-              // yalnız birincil eylemde kalır.
+              // İkincil oyun yolları ayrı ayrı gökkuşağı tonları taşımaz.
+              // Sosyal/navigasyon yolları ortak yeşil kimliği, etkinlikler
+              // ise ödül/prestij rengi olan altını paylaşır. Böylece renk
+              // "hangi kart?" değil, "hangi rol?" sorusunu yanıtlar.
               ModeCard(
                 key: const ValueKey('play-hub-create-room'),
                 compact: true,
                 emphasis: ModeCardEmphasis.secondary,
                 icon: AppIcons.circlePlus,
-                // Marka paleti dışına çıkan son iki yüzey buydu. `shop_screen`
-                // M24 notu playPink/playPurple'ı 2026-07-23'te "marka dışı"
-                // ilan etmiş, eşleşme ekranı 2026-07-31'de düzeltilmişti; ama
-                // kararın verildiği ekranın *kendisi* atlanmıştı. Oyun
-                // merkezinde dört satır yan yana duruyor, yani sapma en çok
-                // burada görünüyordu: mor ve pembe, turuncu-altın-yeşil
-                // kimliğin yanında yabancı kalıyordu (2026-08-01, iOS canlı).
-                accent: const Color(0xFF1E4FA6), // safir — kurma
+                accent: AppTheme.playGreen,
                 title: context.t(K.createRoom),
                 subtitle: locked
                     ? context.t(K.serverUnreachableTitle)
@@ -318,7 +319,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 compact: true,
                 emphasis: ModeCardEmphasis.secondary,
                 icon: AppIcons.doorOpen,
-                accent: const Color(0xFF04697C), // turkuaz — katılma
+                accent: AppTheme.playGreen,
                 title: context.t(K.joinByCode),
                 subtitle: locked
                     ? context.t(K.serverUnreachableTitle)
@@ -326,7 +327,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 onTap: locked ? null : _showJoinSheet,
               ),
               const SizedBox(height: AppSpacing.md),
-              _PlaySectionHeading(
+              ScreenSectionHeading(
                 title: context.t(K.events),
                 subtitle: context.t(K.eventsSub),
               ),
@@ -336,8 +337,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 compact: true,
                 emphasis: ModeCardEmphasis.event,
                 icon: AppIcons.bolt,
-                // Altın ödül/ekonomiye ayrılmış; günlük etkinlik safran alır.
-                accent: const Color(0xFF9C6300),
+                accent: AppTheme.gold,
                 title: context.t(K.dailyContest),
                 subtitle: locked
                     ? context.t(K.serverUnreachableTitle)
@@ -362,9 +362,10 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: _PlaySectionHeading(
+                          child: ScreenSectionHeading(
                             title: context.t(K.playMore),
                             subtitle: context.t(K.playMoreSub),
+                            semanticHeader: false,
                           ),
                         ),
                         Icon(
@@ -383,7 +384,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                   compact: true,
                   emphasis: ModeCardEmphasis.event,
                   icon: AppIcons.trophy,
-                  accent: const Color(0xFF6A38BE),
+                  accent: AppTheme.gold,
                   title: context.t(K.tournament),
                   subtitle: locked
                       ? context.t(K.serverUnreachableTitle)
@@ -510,7 +511,9 @@ class _QuickDuelHero extends StatelessWidget {
                       child: Text(
                         context.t(K.findOpponent),
                         style: AppTypography.bodyLarge.copyWith(
-                          color: Colors.white,
+                          color: AppColors.onSolid(
+                            AppTheme.primaryCtaColor(context),
+                          ),
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -522,35 +525,6 @@ class _QuickDuelHero extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _PlaySectionHeading extends StatelessWidget {
-  const _PlaySectionHeading({required this.title, required this.subtitle});
-
-  final String title;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: AppTypography.heading2.copyWith(
-            color: AppTheme.textPrimaryColor(context),
-          ),
-        ),
-        const SizedBox(height: AppSpacing.xxs),
-        Text(
-          subtitle,
-          style: AppTypography.caption.copyWith(
-            color: AppTheme.textSubColor(context),
-          ),
-        ),
-      ],
     );
   }
 }

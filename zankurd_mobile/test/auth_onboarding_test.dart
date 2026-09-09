@@ -13,6 +13,7 @@ import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
+import 'package:zankurd_mobile/src/services/analytics_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/main.dart';
@@ -26,6 +27,18 @@ class _AppleAuthProvider extends AuthProvider {
   @override
   Future<bool> signInWithApple() async {
     appleSignInCalled = true;
+    return true;
+  }
+}
+
+class _GoogleAuthProvider extends AuthProvider {
+  _GoogleAuthProvider() : super.test();
+
+  bool googleSignInCalled = false;
+
+  @override
+  Future<bool> signInWithGoogle() async {
+    googleSignInCalled = true;
     return true;
   }
 }
@@ -117,6 +130,67 @@ void main() {
       debugDefaultTargetPlatformOverride = null;
       expect(authProvider.appleSignInCalled, isTrue);
       expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('OAuth tarayıcı açılışı tamamlanmış login olarak ölçülmez', (
+    tester,
+  ) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+    final loginMethods = <String>[];
+    AnalyticsService.instance.debugEventSink = (name, parameters) {
+      if (name == 'login') {
+        loginMethods.add(parameters?['method']?.toString() ?? '');
+      }
+    };
+    addTearDown(() => AnalyticsService.instance.debugEventSink = null);
+
+    // Bu fake, dış OAuth gibi yalnız başlatma başarısını döndürür;
+    // AuthProvider.test() authenticated hâle gelmez.
+    final authProvider = _AppleAuthProvider();
+    await tester.pumpWidget(
+      testShell(child: const SignInScreen(), authProvider: authProvider),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Apple ile giriş yap'));
+    await tester.pumpAndSettle();
+
+    debugDefaultTargetPlatformOverride = null;
+    expect(authProvider.appleSignInCalled, isTrue);
+    expect(authProvider.isAuthenticated, isFalse);
+    expect(loginMethods, isEmpty);
+  });
+
+  testWidgets(
+    'Google OAuth tarayıcı açılışı tamamlanmış login olarak ölçülmez',
+    (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+      final loginMethods = <String>[];
+      AnalyticsService.instance.debugEventSink = (name, parameters) {
+        if (name == 'login') {
+          loginMethods.add(parameters?['method']?.toString() ?? '');
+        }
+      };
+      addTearDown(() => AnalyticsService.instance.debugEventSink = null);
+
+      final authProvider = _GoogleAuthProvider();
+      await tester.pumpWidget(
+        testShell(child: const SignInScreen(), authProvider: authProvider),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Google ile giriş yap'));
+      await tester.pumpAndSettle();
+
+      debugDefaultTargetPlatformOverride = null;
+      expect(authProvider.googleSignInCalled, isTrue);
+      expect(authProvider.isAuthenticated, isFalse);
+      expect(loginMethods, isEmpty);
     },
   );
 

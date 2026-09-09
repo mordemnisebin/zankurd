@@ -16,10 +16,16 @@ import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class ReviewScreen extends StatefulWidget {
-  const ReviewScreen({required this.records, required this.room, super.key});
+  const ReviewScreen({
+    required this.records,
+    required this.room,
+    this.practiceAvailable = true,
+    super.key,
+  });
 
   final List<AnswerRecord> records;
   final GameRoom room;
+  final bool practiceAvailable;
 
   @override
   State<ReviewScreen> createState() => _ReviewScreenState();
@@ -74,7 +80,10 @@ class _ReviewScreenState extends State<ReviewScreen> {
                     const SizedBox(height: AppSpacing.md),
                     _SummaryStrip(correct: correct, wrong: wrong, empty: empty),
                     const SizedBox(height: 12),
-                    // View Mode Toggle Switcher
+                    // View mode is a reading control, so keep it ahead of the
+                    // optional practice CTA. On 320px / 200% text this keeps
+                    // List / Flashcards reachable without sacrificing the
+                    // learning action below it.
                     Center(
                       child: SegmentedButton<bool>(
                         segments: [
@@ -97,6 +106,18 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         },
                       ),
                     ),
+                    if (wrong > 0 && widget.practiceAvailable) ...[
+                      const SizedBox(height: AppSpacing.sm),
+                      SizedBox(
+                        width: double.infinity,
+                        child: FilledButton.icon(
+                          key: const ValueKey('review-practice-cta'),
+                          onPressed: () => Navigator.of(context).pop(true),
+                          icon: const Icon(AppIcons.arrowsRotate, size: 18),
+                          label: Text(context.t(K.tekraraBasla)),
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 16),
                     if (_isFlashcardMode)
                       _FlashcardView(records: widget.records)

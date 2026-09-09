@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show User;
+import 'package:zankurd_mobile/src/data/badge_service.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 
@@ -43,6 +44,7 @@ void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
     XPStore.resetInstance();
+    BadgeService.resetInstance();
   });
 
   test(
@@ -51,6 +53,7 @@ void main() {
       SharedPreferences.setMockInitialValues({
         'zankurd.localProgress.deviceOwnerUserId': 'user-old',
         'zankurd.xp.total': 500,
+        'zankurd.badges.unlocked': <String>['perfect_game'],
       });
       final provider = AuthProvider.test();
 
@@ -59,6 +62,14 @@ void main() {
       XPStore.resetInstance();
       final xp = await XPStore.load();
       expect(xp.totalXP, 0, reason: 'önceki kullanıcının XP\'si devretmemeli');
+
+      BadgeService.resetInstance();
+      final badges = await BadgeService.load();
+      expect(
+        badges.unlockedBadges,
+        isEmpty,
+        reason: 'önceki kullanıcının rozetleri yeni hesaba devretmemeli',
+      );
 
       final prefs = await SharedPreferences.getInstance();
       expect(

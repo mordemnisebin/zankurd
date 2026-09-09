@@ -106,6 +106,7 @@ class QuizOptionTile extends StatelessWidget {
     final wrong =
         (!suspense && selected && !correct && disabled) || firstAttemptWrong;
     final isChecking = selected && (suspense || !disabled);
+    final reducedMotion = ReducedMotionProvider.isReducedIn(context);
 
     final optionColor = AppTheme.answerOptionColors[index % 4];
 
@@ -191,12 +192,12 @@ class QuizOptionTile extends StatelessWidget {
             // semantik metinle zaten taşınıyor; hareket yalnız süstü.
             child: TweenAnimationBuilder<double>(
               key: ValueKey('shake_$wrong'),
-              duration: const Duration(milliseconds: 300),
+              duration: reducedMotion
+                  ? Duration.zero
+                  : const Duration(milliseconds: 300),
               tween: Tween<double>(
                 begin: 0.0,
-                end: (wrong && !ReducedMotionProvider.isReducedIn(context))
-                    ? 1.0
-                    : 0.0,
+                end: (wrong && !reducedMotion) ? 1.0 : 0.0,
               ),
               builder: (context, t, child) {
                 if (!wrong) return child!;
@@ -208,9 +209,14 @@ class QuizOptionTile extends StatelessWidget {
               },
               child: TweenAnimationBuilder<double>(
                 key: ValueKey('bounce_$correct'),
-                duration: const Duration(milliseconds: 400),
+                duration: reducedMotion
+                    ? Duration.zero
+                    : const Duration(milliseconds: 400),
                 curve: Curves.easeOutBack,
-                tween: Tween<double>(begin: correct ? 0.95 : 1.0, end: 1.0),
+                tween: Tween<double>(
+                  begin: correct && !reducedMotion ? 0.95 : 1.0,
+                  end: 1.0,
+                ),
                 builder: (context, scale, child) =>
                     Transform.scale(scale: scale, child: child),
                 child: AnimatedContainer(
@@ -300,15 +306,19 @@ class QuizOptionTile extends StatelessWidget {
                             ),
                           ),
                           AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 250),
-                            transitionBuilder: (child, animation) =>
-                                ScaleTransition(
-                                  scale: animation,
-                                  child: FadeTransition(
-                                    opacity: animation,
-                                    child: child,
-                                  ),
+                            duration: reducedMotion
+                                ? Duration.zero
+                                : const Duration(milliseconds: 250),
+                            transitionBuilder: (child, animation) {
+                              if (reducedMotion) return child;
+                              return ScaleTransition(
+                                scale: animation,
+                                child: FadeTransition(
+                                  opacity: animation,
+                                  child: child,
                                 ),
+                              );
+                            },
                             child: correct
                                 ? const Icon(
                                     AppIcons.circleCheck,

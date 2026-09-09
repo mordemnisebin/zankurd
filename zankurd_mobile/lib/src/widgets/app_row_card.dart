@@ -74,8 +74,6 @@ class AppRowCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                       style: AppTypography.subtitle.copyWith(
                         fontSize: 15,
                         color: AppTheme.textPrimaryColor(context),
@@ -85,8 +83,6 @@ class AppRowCard extends StatelessWidget {
                       const SizedBox(height: 1),
                       Text(
                         subtitle!,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyMedium.copyWith(
                           fontSize: 12.5,
                           color: AppTheme.textSubColor(context),
@@ -124,10 +120,14 @@ class _IconTile extends StatelessWidget {
       height: 34,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: color,
+        color: AppColors.iconTileBg(context, color),
         borderRadius: BorderRadius.circular(AppRadius.badge),
       ),
-      child: Icon(icon, size: 16, color: Colors.white),
+      child: Icon(
+        icon,
+        size: 16,
+        color: AppColors.onAccentTint(context, color),
+      ),
     );
   }
 }

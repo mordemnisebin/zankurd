@@ -16,6 +16,7 @@ import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/mode_card.dart';
+import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 
 Widget _homeShell({required bool isKu, required bool isDark}) {
   return MultiProvider(
@@ -156,12 +157,20 @@ void main() {
             'play-hub-daily-contest',
           ]) {
             expect(find.byKey(ValueKey(key)), findsOneWidget);
+            final card = tester.widget<ModeCard>(find.byKey(ValueKey(key)));
             expect(
-              tester.widget<ModeCard>(find.byKey(ValueKey(key))).emphasis,
+              card.emphasis,
               key == 'play-hub-daily-contest'
                   ? ModeCardEmphasis.event
                   : ModeCardEmphasis.secondary,
               reason: key,
+            );
+            expect(
+              card.accent,
+              key == 'play-hub-daily-contest'
+                  ? AppTheme.gold
+                  : AppTheme.playGreen,
+              reason: '$key semantic accent role',
             );
             final decoration = _modeDecoration(tester, key);
             expect(decoration.gradient, isNull, reason: key);
@@ -181,13 +190,14 @@ void main() {
             find.byKey(const ValueKey('play-hub-tournament')),
             findsOneWidget,
           );
+          final tournamentCard = tester.widget<ModeCard>(
+            find.byKey(const ValueKey('play-hub-tournament')),
+          );
+          expect(tournamentCard.emphasis, ModeCardEmphasis.event);
           expect(
-            tester
-                .widget<ModeCard>(
-                  find.byKey(const ValueKey('play-hub-tournament')),
-                )
-                .emphasis,
-            ModeCardEmphasis.event,
+            tournamentCard.accent,
+            AppTheme.gold,
+            reason: 'Turnuva prestij/ödül rolünü altınla paylaşmalı.',
           );
           final tournamentDecoration = _modeDecoration(
             tester,
@@ -205,10 +215,53 @@ void main() {
     },
   );
 
+  testWidgets('mode card without an action is announced as disabled', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light(),
+        home: const Scaffold(
+          body: ModeCard(
+            icon: Icons.lock_outline,
+            accent: AppTheme.playGreen,
+            title: 'Ode kilitli',
+            subtitle: 'Sunucuya ulaşılamıyor',
+            onTap: null,
+            emphasis: ModeCardEmphasis.secondary,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final data = tester.getSemantics(find.byType(ModeCard)).getSemanticsData();
+    expect(data.flagsCollection.isButton, isTrue);
+    expect(data.flagsCollection.isEnabled, ui.Tristate.isFalse);
+    expect(data.hasAction(ui.SemanticsAction.tap), isFalse);
+  });
+
+  testWidgets('play more keeps button semantics without a nested header role', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(_playShell(isKu: false, isDark: false));
+    await tester.pumpAndSettle();
+
+    final heading = tester.widget<ScreenSectionHeading>(
+      find.descendant(
+        of: find.byKey(const ValueKey('play-hub-more')),
+        matching: find.byType(ScreenSectionHeading),
+      ),
+    );
+    expect(heading.semanticHeader, isFalse);
+  });
+
   testWidgets(
     'busy mode cards keep readable progress contrast and disabled semantics',
     (tester) async {
-      await tester.binding.setSurfaceSize(const Size(390, 300));
+      await tester.binding.setSurfaceSize(const Size(390, 600));
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
       const cases = [
@@ -272,7 +325,7 @@ void main() {
             isFalse,
             reason: '$key tap disabled',
           );
-          expect(tester.getRect(card).height, greaterThanOrEqualTo(44));
+          expect(tester.getRect(card).height, greaterThanOrEqualTo(48));
         }
       }
     },

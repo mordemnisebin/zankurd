@@ -211,6 +211,7 @@ class _ShopScreenState extends State<ShopScreen> {
   String? _purchaseErrorMessage;
   bool _purchaseOffline = false;
   ShopItem? _retryPurchaseItem;
+  ShopItem? _retryPurchaseEffectItem;
   final Set<String> _purchasedItemIds = {};
   List<ShopItem> _dynamicItems = const [];
 
@@ -544,6 +545,7 @@ class _ShopScreenState extends State<ShopScreen> {
     setState(() {
       _purchaseErrorMessage = null;
       _retryPurchaseItem = item;
+      _retryPurchaseEffectItem = null;
       _purchaseOffline = false;
     });
 
@@ -557,8 +559,19 @@ class _ShopScreenState extends State<ShopScreen> {
 
       if (success) {
         _purchaseErrorMessage = null;
-        await _applyPurchaseEffect(item.id);
+        final effectApplied = await _applyPurchaseEffect(item.id);
         if (!mounted) return;
+        if (!effectApplied) {
+          final title = context.isKu ? item.titleKu : item.titleTr;
+          setState(() {
+            _purchaseErrorMessage = context.t(K.purchasedItem, {'item': title});
+            _retryPurchaseItem = null;
+            _retryPurchaseEffectItem = item;
+            _purchaseOffline = false;
+          });
+          return;
+        }
+        _retryPurchaseEffectItem = null;
         HapticFeedback.lightImpact();
         try {
           context.read<SoundProvider>().playCorrect();
@@ -589,7 +602,7 @@ class _ShopScreenState extends State<ShopScreen> {
     }
   }
 
-  Future<void> _applyPurchaseEffect(String itemId) async {
+  Future<bool> _applyPurchaseEffect(String itemId) async {
     // Bu koruma `applyShopPurchaseEffect`in gerçekten bir şey yaptığı
     // ürünlerle senkron kalmalı — 'avatar_frame_neon' burada yoktu ve dal
     // hiç açılmıyordu, yani neon satın alan oyuncu için
@@ -598,20 +611,53 @@ class _ShopScreenState extends State<ShopScreen> {
     if (itemId != 'avatar_frame_gold' &&
         itemId != 'avatar_frame_neon' &&
         itemId != 'profile_badge_vip') {
-      return;
+      return true;
     }
     try {
       final identity = await widget.repository.loadAvatarIdentity();
       await widget.repository.updateAvatarIdentity(
         applyShopPurchaseEffect(itemId, identity),
       );
+      return true;
     } catch (error, stack) {
       ErrorReporter.record(
         error,
         stack,
         reason: 'shop purchase effect failed: $itemId',
       );
+      return false;
     }
+  }
+
+  Future<void> _retryPurchaseEffect(ShopItem item) async {
+    if (_loading) return;
+    setState(() {
+      _loading = true;
+      _purchaseErrorMessage = null;
+      _purchaseOffline = false;
+    });
+
+    final applied = await _applyPurchaseEffect(item.id);
+    if (!mounted) return;
+
+    if (!applied) {
+      final title = context.isKu ? item.titleKu : item.titleTr;
+      setState(() {
+        _loading = false;
+        _purchaseErrorMessage = context.t(K.purchasedItem, {'item': title});
+        _retryPurchaseEffectItem = item;
+      });
+      return;
+    }
+
+    setState(() {
+      _loading = false;
+      _purchaseErrorMessage = null;
+      _retryPurchaseEffectItem = null;
+      _retryPurchaseItem = null;
+    });
+    HapticFeedback.lightImpact();
+    _showPurchaseCelebrationDialog(item);
   }
 
   void _showPurchaseCelebrationDialog(ShopItem item) {
@@ -806,10 +852,16 @@ class _ShopScreenState extends State<ShopScreen> {
                                   : () => _purchase(_retryPurchaseItem!),
                             )
                           : AppErrorState(
-                              title: context.t(K.purchaseErrorTitle),
+                              title: _retryPurchaseEffectItem == null
+                                  ? context.t(K.purchaseErrorTitle)
+                                  : context.t(K.saveFailed),
                               message: _purchaseErrorMessage!,
                               retryLabel: context.t(K.retryShort),
-                              onRetry: _retryPurchaseItem == null
+                              onRetry: _retryPurchaseEffectItem != null
+                                  ? () => _retryPurchaseEffect(
+                                      _retryPurchaseEffectItem!,
+                                    )
+                                  : _retryPurchaseItem == null
                                   ? _loadBalance
                                   : () => _purchase(_retryPurchaseItem!),
                             )
@@ -983,45 +1035,16 @@ class _ShopScreenState extends State<ShopScreen> {
         splashColor: tint.withValues(alpha: 0.15),
         highlightColor: tint.withValues(alpha: 0.07),
         child: Container(
+          key: const ValueKey('shop-hero-surface'),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                AppTheme.surfaceColor(context),
-                tint.withValues(alpha: isPurchased ? 0.05 : 0.10),
-              ],
-            ),
+            color: AppTheme.surfaceColor(context),
             borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(
-              color: tint.withValues(alpha: isPurchased ? 0.18 : 0.28),
-              width: 1.1,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: tint.withValues(alpha: isPurchased ? 0.04 : 0.10),
-                blurRadius: 18,
-                offset: const Offset(0, 8),
-                spreadRadius: -8,
-              ),
-            ],
+            border: Border.all(color: AppTheme.borderColor(context)),
           ),
           child: Padding(
             padding: const EdgeInsets.all(14),
             child: Stack(
               children: [
-                Positioned(
-                  right: -16,
-                  top: -16,
-                  child: Container(
-                    width: 104,
-                    height: 104,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: tint.withValues(alpha: 0.08),
-                    ),
-                  ),
-                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -1033,13 +1056,19 @@ class _ShopScreenState extends State<ShopScreen> {
                           vertical: 5,
                         ),
                         decoration: BoxDecoration(
-                          gradient: AppTheme.accentGradient,
+                          color: AppColors.iconTileBg(context, AppTheme.gold),
                           borderRadius: BorderRadius.circular(AppRadius.pill),
+                          border: Border.all(
+                            color: AppTheme.gold.withValues(alpha: 0.32),
+                          ),
                         ),
                         child: Text(
                           context.t(K.mostWanted),
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: AppColors.onAccentTint(
+                              context,
+                              AppTheme.gold,
+                            ),
                             fontSize: 11,
                             fontWeight: FontWeight.w800,
                             letterSpacing: 0.3,
@@ -1128,7 +1157,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     const SizedBox(height: 14),
                     SizedBox(
                       width: double.infinity,
-                      height: 44,
+                      height: 48,
                       child: isPurchased
                           ? _buildOwnedChip(ku)
                           : _buildBuyButton(item, ku, canAfford),
@@ -1161,10 +1190,11 @@ class _ShopScreenState extends State<ShopScreen> {
         splashColor: tint.withValues(alpha: 0.15),
         highlightColor: tint.withValues(alpha: 0.07),
         child: ClipRRect(
-          // Pirs hizası: kart kenarlığı/gölgesi yok — kimlik yalnız ikon
-          // renginde ve alttaki tam-genişlik renkli çizgide.
+          // Ürün kimliği yalnız ikon karosunda yaşar; büyük kart yüzeyi
+          // tüm katalogda aynı sakin dili korur.
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Container(
+            key: ValueKey('shop-item-surface-${item.id}'),
             // 2026-07-24 canlı denetim: dokuz ürün kartı dokuz ayrı pastel
             // zemin taşıyordu (krem, lavanta, nane, şeftali…) — ızgara
             // birbiriyle yarışan renk lekelerine dönüşüyordu. Zemin tek tip
@@ -1178,38 +1208,14 @@ class _ShopScreenState extends State<ShopScreen> {
                 // Card content
                 Padding(
                   padding: const EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Icon area — sabit yükseklik yerine esnek: dar/kısa
-                      // tile'larda (ör. 390dp genişlikte 2 sütun) taşma
-                      // yaratmadan kalan alanı doldurur.
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: tint.withValues(
-                              alpha: isPurchased ? 0.08 : 0.16,
-                            ),
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                          ),
-                          alignment: Alignment.center,
-                          child: Icon(
-                            item.icon,
-                            // Ürün ikonu kendi renginin tonundan yapılmış
-                            // karonun içinde duruyor; ham renk orada
-                            // altında 2.0:1'e kadar iniyordu — VIP elması
-                            // altın karoda eriyip gidiyordu (2026-07-27).
-                            color: isPurchased
-                                ? tint.withValues(alpha: 0.5)
-                                : AppColors.onAccentTint(context, tint),
-                            size: 32,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      // Title — uzun adlar kesilmesin: 2 satır, ellipsis yok.
-                      Text(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      // 48 dp erişilebilir eylem hedefi kısa grid hücresinde
+                      // ikon + iki satırlık başlıkla dikeyde yarışmamalı.
+                      // Çok kısa hücrede ikon başlığın yanına alınır; normal
+                      // kartta eski büyük ikon alanı korunur.
+                      final compactTile = constraints.maxHeight < 150;
+                      final titleWidget = Text(
                         title,
                         maxLines: 2,
                         overflow: TextOverflow.clip,
@@ -1221,16 +1227,83 @@ class _ShopScreenState extends State<ShopScreen> {
                           fontSize: 14,
                           height: 1.2,
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      // Price + Action
-                      SizedBox(
-                        height: 38,
+                      );
+                      final iconColor = isPurchased
+                          ? tint.withValues(alpha: 0.5)
+                          : AppColors.onAccentTint(context, tint);
+                      final action = SizedBox(
+                        height: 48,
                         child: isPurchased
                             ? _buildOwnedChip(ku)
                             : _buildBuyButton(item, ku, canAfford),
-                      ),
-                    ],
+                      );
+
+                      if (compactTile) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 32,
+                                  height: 32,
+                                  decoration: BoxDecoration(
+                                    color: tint.withValues(
+                                      alpha: isPurchased ? 0.08 : 0.16,
+                                    ),
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadius.sm,
+                                    ),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    item.icon,
+                                    color: iconColor,
+                                    size: 20,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(child: titleWidget),
+                              ],
+                            ),
+                            const Spacer(),
+                            const SizedBox(height: 4),
+                            action,
+                          ],
+                        );
+                      }
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          // Normal kartta ikon alanı kalan yüksekliği alır.
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: tint.withValues(
+                                  alpha: isPurchased ? 0.08 : 0.16,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.sm,
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                              child: Icon(
+                                item.icon,
+                                color: iconColor,
+                                size: 32,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          titleWidget,
+                          const SizedBox(height: 10),
+                          action,
+                        ],
+                      );
+                    },
                   ),
                 ),
                 // Owned overlay indicator
@@ -1258,16 +1331,6 @@ class _ShopScreenState extends State<ShopScreen> {
                       ),
                     ),
                   ),
-                // Pirs imzası: tam-genişlik, kenardan kenara renkli çizgi.
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    height: 4,
-                    color: tint.withValues(alpha: isPurchased ? 0.25 : 0.7),
-                  ),
-                ),
               ],
             ),
           ),

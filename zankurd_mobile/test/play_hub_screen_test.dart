@@ -45,7 +45,12 @@ void main() {
       AppTheme.primaryCtaColor(tester.element(find.text('Rakip bul'))),
     );
     final label = tester.widget<Text>(find.text('Rakip bul'));
-    expect(label.style?.color, Colors.white);
+    expect(
+      label.style?.color,
+      AppColors.onSolid(
+        AppTheme.primaryCtaColor(tester.element(find.text('Rakip bul'))),
+      ),
+    );
   });
 
   testWidgets('oyun merkezi Pirs kapsamındaki ana yolları görünür kılar', (

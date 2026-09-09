@@ -315,6 +315,27 @@ void main() {
     }
   });
 
+  testWidgets('yanlış inceleme ana eylemi öğrenme özetinden önce gelir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+
+    final primary = find.byKey(
+      const ValueKey('result-primary-review-mistakes'),
+    );
+    final outcome = find.byKey(const ValueKey('learning-outcome-card'));
+    expect(primary, findsOneWidget);
+    expect(outcome, findsOneWidget);
+    expect(
+      tester.getTopLeft(primary).dy,
+      lessThan(tester.getTopLeft(outcome).dy),
+    );
+  });
+
   testWidgets(
     'yanlış varsa inceleme ana eylem, diğer yollar kapalı gruptadır',
     (tester) async {

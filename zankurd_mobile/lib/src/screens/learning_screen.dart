@@ -167,14 +167,8 @@ class _LearningScreenState extends State<LearningScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final unifiedScroll =
-        MediaQuery.textScalerOf(context).scale(14) > 20 ||
-        MediaQuery.sizeOf(context).width < 380 ||
-        MediaQuery.sizeOf(context).height < 760 ||
-        // Ders listesi kaydırılabilir değilse (henüz yüklenmedi, boş ya
-        // da hata) sabit sütun taşar: hikâye kataloğuyla birlikte üst
-        // bölüm ekrana sığmaz. Liste varken sabit araç düzeni korunur.
-        _currentLessons.isEmpty;
+    final textNeedsUnifiedScroll =
+        MediaQuery.textScalerOf(context).scale(14) > 20;
     return Scaffold(
       extendBodyBehindAppBar: true,
       // AppBar başlıksız: ekranın adını `ScreenIdentityHeader` taşıyor.
@@ -188,8 +182,22 @@ class _LearningScreenState extends State<LearningScreen> {
       body: Container(
         color: AppTheme.bgOf(context),
         child: SafeArea(
-          child: Builder(
-            builder: (context) {
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              // MediaQuery'nin tam ekran yüksekliğine bakmak yeterli değil:
+              // AppBar + SafeArea sonrası 390×844 bir telefonda gerçek gövde
+              // yüksekliği 788 px kalıyor. Eski 760 px eşiği bu yüzden sabit
+              // sütunu seçiyor ve üst bölüm 43 px taşıyordu (2026-09-08 ekran
+              // turu). Telefonlarda bütün sayfa tek yüzey olarak kayar;
+              // yeterli alanı olan tablet/geniş ekranlarda ders listesi kendi
+              // içinde kaydırılabilir kalır.
+              final unifiedScroll =
+                  textNeedsUnifiedScroll ||
+                  constraints.maxWidth < 600 ||
+                  constraints.maxHeight < 840 ||
+                  // Ders listesi kaydırılabilir değilse (henüz yüklenmedi,
+                  // boş ya da hata) sabit sütun taşabilir.
+                  _currentLessons.isEmpty;
               final content = Column(
                 // `Column`un varsayılanı `center`dır ve bölüm başlıkları
                 // metin genişliğinde daralan `Column`lar olduğu için ekranın
@@ -222,7 +230,7 @@ class _LearningScreenState extends State<LearningScreen> {
                       AppSpacing.page,
                       0,
                     ),
-                    child: _LearningSectionHeading(
+                    child: ScreenSectionHeading(
                       title: context.t(K.todaysGoal),
                       subtitle: context.t(K.todaysGoalSub),
                     ),
@@ -271,7 +279,7 @@ class _LearningScreenState extends State<LearningScreen> {
                       AppSpacing.page,
                       0,
                     ),
-                    child: _LearningSectionHeading(
+                    child: ScreenSectionHeading(
                       title: context.t(K.learningPaths),
                       subtitle: context.t(K.learningPathsSub),
                     ),
@@ -325,7 +333,7 @@ class _LearningScreenState extends State<LearningScreen> {
                       hasLesson: _currentLessons.isNotEmpty,
                       onPractice: _openCategoryPractice,
                       onFlashcards: _openCategoryFlashcards,
-                      onLesson: _openCategoryFlashcards,
+                      onLesson: _openCategoryLesson,
                     ),
                   ),
                   // Kategori ilerleme göstergesi
@@ -520,7 +528,11 @@ class _LearningScreenState extends State<LearningScreen> {
         difficultyMax: 5,
         limit: 10,
       );
-      if (!mounted || questions.isEmpty) return;
+      if (!mounted) return;
+      if (questions.isEmpty) {
+        _showPracticeLoadFailure(context.t(K.noQuestionsFound));
+        return;
+      }
       final room = widget.repository
           .createRoom(category: quizCategory)
           .copyWith(questionCount: questions.length);
@@ -537,16 +549,44 @@ class _LearningScreenState extends State<LearningScreen> {
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'learning_category_practice');
+      if (mounted) {
+        _showPracticeLoadFailure(context.t(K.quizLoadFail));
+      }
     }
   }
 
-  Future<void> _openCategoryFlashcards() async {
+  void _showPracticeLoadFailure(String message) {
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        action: SnackBarAction(
+          label: context.t(K.retryShort),
+          onPressed: _openCategoryPractice,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _openCategoryFlashcards() {
+    return _openCategoryLessonDetail(initialFlashcardMode: true);
+  }
+
+  Future<void> _openCategoryLesson() {
+    return _openCategoryLessonDetail(initialFlashcardMode: false);
+  }
+
+  Future<void> _openCategoryLessonDetail({
+    required bool initialFlashcardMode,
+  }) async {
     if (_currentLessons.isEmpty || !mounted) return;
     await Navigator.of(context).push(
       AppRoute(
         page: LessonDetailScreen(
           lesson: _currentLessons.first,
           repository: widget.repository,
+          initialFlashcardMode: initialFlashcardMode,
         ),
       ),
     );
@@ -768,35 +808,6 @@ class _LearningModeButton extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _LearningSectionHeading extends StatelessWidget {
-  const _LearningSectionHeading({required this.title, required this.subtitle});
-
-  final String title;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: AppTypography.heading2.copyWith(
-            color: AppTheme.textPrimaryColor(context),
-          ),
-        ),
-        const SizedBox(height: AppSpacing.xxs),
-        Text(
-          subtitle,
-          style: AppTypography.caption.copyWith(
-            color: AppTheme.textSubColor(context),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -1382,11 +1393,13 @@ class LessonDetailScreen extends StatefulWidget {
   const LessonDetailScreen({
     required this.lesson,
     required this.repository,
+    this.initialFlashcardMode = false,
     super.key,
   });
 
   final Lesson lesson;
   final ZanKurdRepository repository;
+  final bool initialFlashcardMode;
 
   @override
   State<LessonDetailScreen> createState() => _LessonDetailScreenState();
@@ -1398,7 +1411,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   int _currentSlideIndex = 0;
 
   // Flashcard modu
-  bool _flashcardMode = false;
+  late bool _flashcardMode;
   bool _isFlipped = false;
   bool _miniQuizLoading = false;
   bool _miniQuizEmpty = false;
@@ -1409,6 +1422,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   @override
   void initState() {
     super.initState();
+    _flashcardMode = widget.initialFlashcardMode;
     _loadSlides();
     _flipController = AnimationController(
       vsync: this,

@@ -1252,11 +1252,15 @@ class AppTheme {
     BuildContext context, {
     double radius = cardRadius,
   }) {
+    // Sayfa kimliği artık ikinci bir hero değildir. Büyük marka gradyanı,
+    // hemen altındaki asıl CTA/hero ile yarışıyor ve çok sayıda ekranda
+    // "renkli panel + renkli panel" yığını oluşturuyordu. Kimlik yüzeyi
+    // ortak, sakin bir kart geometrisi taşır; ekrana özgü renk yalnız
+    // ScreenIdentityHeader içindeki küçük amblemde yaşar.
     return BoxDecoration(
-      gradient: identityHeaderGradient,
+      color: surfaceColor(context),
       borderRadius: BorderRadius.circular(radius),
-      border: Border.all(color: Colors.white.withValues(alpha: 0.14)),
-      boxShadow: cardShadow(context),
+      border: Border.all(color: borderColor(context).withValues(alpha: 0.72)),
     );
   }
 

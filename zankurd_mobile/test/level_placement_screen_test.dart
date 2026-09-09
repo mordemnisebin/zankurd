@@ -123,6 +123,36 @@ void main() {
     expect(store.level, PlacementLevel.pesketi);
   });
 
+  testWidgets('aynı şık hızlı çift dokunulunca yalnız bir cevap işlenir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(
+        LevelPlacementScreen(
+          repository: MockZanKurdRepository(),
+          questionCount: 3,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final state = tester.state(find.byType(LevelPlacementScreen)) as dynamic;
+    // ignore: avoid_dynamic_calls
+    final QuizQuestion current = state.currentQuestionForTest;
+    final answer = current.answersFor(isKu: false).first;
+    final target = find.text(answer).last;
+
+    await tester.tap(target);
+    await tester.tap(target);
+    await tester.pump();
+
+    expect(
+      find.textContaining('Soru 2/3'),
+      findsOneWidget,
+      reason: 'İkinci tap aynı soruyu tekrar kaydedip bir soruyu atlamamalı.',
+    );
+  });
+
   testWidgets('360px dar ekranda overflow oluşmaz', (tester) async {
     tester.view.physicalSize = const Size(360, 800);
     tester.view.devicePixelRatio = 1.0;

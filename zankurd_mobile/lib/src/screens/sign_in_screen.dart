@@ -97,7 +97,10 @@ class _SignInScreenState extends State<SignInScreen>
 
     final success = await authProvider.signInWithGoogle();
 
-    if (success) {
+    // Android/web dış OAuth akışında `true`, oturumun tamamlandığını
+    // değil yalnız tarayıcı/redirect akışının başlatıldığını gösterebilir.
+    // Login metriğini ancak AuthProvider gerçekten bir session gördüğünde yaz.
+    if (success && authProvider.isAuthenticated) {
       AnalyticsService.instance.logSignIn('google');
     }
 
@@ -115,7 +118,7 @@ class _SignInScreenState extends State<SignInScreen>
 
     final success = await authProvider.signInWithApple();
 
-    if (success) {
+    if (success && authProvider.isAuthenticated) {
       AnalyticsService.instance.logSignIn('apple');
     }
 
@@ -1113,8 +1116,8 @@ class _GuestSignInLink extends StatelessWidget {
           ),
           style: TextButton.styleFrom(
             foregroundColor: fg,
-            // Dokunma hedefi iOS asgarisinin (44pt) altına inmez.
-            minimumSize: const Size(double.infinity, 46),
+            // Android ve iOS için güvenli ortak dokunma hedefi: en az 48 dp.
+            minimumSize: const Size(double.infinity, 48),
             padding: const EdgeInsets.symmetric(horizontal: 20),
             // `styleFrom(textStyle:)` temanın biçimini değiştirir,
             // birleştirmez; aile yazılmazsa yazı sistem tipine düşer.
@@ -1273,7 +1276,7 @@ class _LanguageChip extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 240),
           curve: Curves.easeInOut,
-          constraints: const BoxConstraints(minHeight: 36, minWidth: 36),
+          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(

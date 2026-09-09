@@ -9,6 +9,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/lesson.dart';
+import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -45,6 +46,38 @@ class _RetryableSlidesRepository extends MockZanKurdRepository {
 class _NoLessonsRepository extends MockZanKurdRepository {
   @override
   Future<List<Lesson>> loadLessonsByCategory(String category) async => const [];
+}
+
+enum _PracticeFailure { none, empty, error }
+
+class _RetryablePracticeRepository extends MockZanKurdRepository {
+  _PracticeFailure failure = _PracticeFailure.none;
+  int loadCalls = 0;
+
+  @override
+  Future<List<QuizQuestion>> loadLevelQuestions({
+    required String category,
+    required int difficultyMin,
+    required int difficultyMax,
+    String? subCategory,
+    int limit = 10,
+  }) async {
+    loadCalls += 1;
+    switch (failure) {
+      case _PracticeFailure.empty:
+        return const [];
+      case _PracticeFailure.error:
+        throw StateError('practice unavailable');
+      case _PracticeFailure.none:
+        return super.loadLevelQuestions(
+          category: category,
+          difficultyMin: difficultyMin,
+          difficultyMax: difficultyMax,
+          subCategory: subCategory,
+          limit: limit,
+        );
+    }
+  }
 }
 
 const _testLesson = Lesson(
@@ -418,6 +451,21 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('390×844 telefonda öğrenme üst bölümü overflow yapmaz', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 3;
+    tester.view.physicalSize = const Size(390 * 3, 844 * 3);
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('seviye kaydı varsa önerilen ilk düğümde SIKIŞMAZ', (
     tester,
   ) async {
@@ -473,6 +521,71 @@ void main() {
       find.byKey(const ValueKey('lesson-recommended-badge')),
       findsOneWidget,
     );
+  });
+
+  testWidgets('Flaş kart doğrudan kart kipinde açılır', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    PlacementStore.resetInstance();
+    addTearDown(PlacementStore.resetInstance);
+
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    final flashcards = find.text('Flaş kart');
+    await tester.ensureVisible(flashcards);
+    await tester.tap(flashcards);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(LessonDetailScreen), findsOneWidget);
+    expect(find.text('Çeviri için dokun'), findsOneWidget);
+  });
+
+  testWidgets('Soru çöz boş havuzda görünür retry sunar', (tester) async {
+    final repository = _RetryablePracticeRepository()
+      ..failure = _PracticeFailure.empty;
+
+    await tester.pumpWidget(wrap(LearningScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    final practice = find.text('Soru çöz');
+    await tester.ensureVisible(practice);
+    await tester.tap(practice);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Soru bulunamadı.'), findsOneWidget);
+    expect(find.text('Tekrar'), findsOneWidget);
+    expect(repository.loadCalls, 1);
+
+    repository.failure = _PracticeFailure.none;
+    await tester.tap(find.text('Tekrar'));
+    await tester.pumpAndSettle();
+
+    expect(repository.loadCalls, 2);
+  });
+
+  testWidgets('Soru çöz yükleme hatasında görünür retry sunar', (tester) async {
+    final repository = _RetryablePracticeRepository()
+      ..failure = _PracticeFailure.error;
+
+    await tester.pumpWidget(wrap(LearningScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    final practice = find.text('Soru çöz');
+    await tester.ensureVisible(practice);
+    await tester.tap(practice);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Quiz yüklenemedi'), findsOneWidget);
+    expect(find.text('Tekrar'), findsOneWidget);
+    expect(repository.loadCalls, 1);
+
+    repository.failure = _PracticeFailure.none;
+    await tester.tap(find.text('Tekrar'));
+    await tester.pumpAndSettle();
+
+    expect(repository.loadCalls, 2);
   });
 
   testWidgets('slayt hatası görünür ve retry yeni repository çağrısı yapar', (
@@ -554,7 +667,11 @@ void main() {
         reason: 'ders yokken düğme erişilebilirlik ağacında da kapalı olmalı',
       );
 
-      await tester.tap(find.text('Dersler'));
+      final lessonsLabel = find.text('Dersler');
+      await tester.ensureVisible(lessonsLabel);
+      await tester.pumpAndSettle();
+      expect(lessonsLabel.hitTestable(), findsOneWidget);
+      await tester.tap(lessonsLabel);
       await tester.pumpAndSettle();
 
       // Kapalı düğmeye dokunmak hiçbir sayfa açmamalı — hâlâ öğrenme

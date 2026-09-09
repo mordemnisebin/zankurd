@@ -132,15 +132,22 @@ void main() {
               final modeLabel = locale == 'ku'
                   ? 'Kartên Hînbûnê'
                   : 'Hafıza Kartları';
-              await tester.ensureVisible(find.text(modeLabel));
-              await tester.tap(find.text(modeLabel));
+              final scrollable = find.byType(Scrollable).first;
+              final mode = find.text(modeLabel);
+              await tester.scrollUntilVisible(
+                mode,
+                160,
+                scrollable: scrollable,
+              );
+              await tester.pumpAndSettle();
+              await tester.tap(mode);
               await tester.pumpAndSettle();
 
               final card = find.byKey(const ValueKey('review-flashcard'));
               await tester.scrollUntilVisible(
                 card,
                 200,
-                scrollable: find.byType(Scrollable).first,
+                scrollable: scrollable,
               );
               await tester.pumpAndSettle();
               if (state == _ReviewState.flashcardBack) {

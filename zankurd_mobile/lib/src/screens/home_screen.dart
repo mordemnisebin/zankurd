@@ -17,6 +17,7 @@ import '../data/question_bank_loader.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../providers/theme_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -1094,6 +1095,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildAnimatedCard(Animation<double> animation, Widget child) {
+    if (ReducedMotionProvider.isReducedIn(context)) return child;
     return ScaleTransition(
       scale: animation,
       child: FadeTransition(opacity: animation, child: child),
