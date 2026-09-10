@@ -189,15 +189,26 @@ void main() {
     });
 
     test('kapı, oturum açıldıktan SONRA ve Home\'dan ÖNCE', () {
-      final signInGate = shell.indexOf('return const SignInScreen();');
-      final recoveryGate = shell.indexOf(
-        'return const PasswordRecoveryScreen();',
+      final signInGate = shell.indexOf('if (!authProvider.isAuthenticated)');
+      final signInScreen = shell.indexOf(
+        'const Expanded(child: SignInScreen())',
+        signInGate,
       );
-      final nameGate = shell.indexOf('ProfileNameGateScreen(');
-      expect(signInGate, greaterThan(-1));
-      expect(recoveryGate, greaterThan(signInGate));
-      expect(
+      final recoveryGate = shell.indexOf(
+        'if (authProvider.needsPasswordRecovery)',
+      );
+      final recoveryScreen = shell.indexOf(
+        'return const PasswordRecoveryScreen();',
         recoveryGate,
+      );
+      final nameGate = shell.indexOf('ProfileNameGateScreen(', recoveryGate);
+
+      expect(signInGate, greaterThan(-1));
+      expect(signInScreen, greaterThan(signInGate));
+      expect(recoveryGate, greaterThan(signInScreen));
+      expect(recoveryScreen, greaterThan(recoveryGate));
+      expect(
+        recoveryScreen,
         lessThan(nameGate),
         reason:
             'Kurtarma, ad kapısından ve Home\'dan önce gelmeli; sonra '
