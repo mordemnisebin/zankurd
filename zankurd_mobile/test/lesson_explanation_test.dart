@@ -247,6 +247,10 @@ void main() {
 
     expect(find.text('Öğrenme tamamlandı'), findsOneWidget);
     expect(find.text('Yarış tamamlandı'), findsNothing);
+    // Öğrenme turunda puan üretilmediği için büyük sayı skor (0/100)
+    // değil, doğru cevap sayısı olmalıdır (2026-09-10 simülatör turu:
+    // 3 doğruya rağmen kocaman "0" görünüyordu).
+    expect(find.text('1/1'), findsOneWidget);
   });
 
   testWidgets('kelime sıralamada doğru cevap kutusu KALIR', (tester) async {

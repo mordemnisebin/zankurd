@@ -1563,9 +1563,21 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 // izlemek kazanmanın kendisidir (bkz.
                                 // `RollingCount`). Hareket azaltma açıkken
                                 // sayım yapılmaz.
+                                //
+                                // Öğrenme turunda puan üretilmez (`score`
+                                // hep 0); büyük sayı "0" yazınca 3 doğru
+                                // yapan kullanıcıya başarısız gibi
+                                // görünüyordu (2026-09-10 simülatör turu).
+                                // Öğrenmede sayı, doğru cevap sayısıdır:
+                                // "3/5".
                                 RollingCount(
                                   key: const ValueKey('result-score-count'),
-                                  value: score,
+                                  value: isLearningExperience
+                                      ? correctCount
+                                      : score,
+                                  suffix: isLearningExperience
+                                      ? '/$totalQuestions'
+                                      : '',
                                   style: AppTypography.display.copyWith(
                                     color: Colors.white,
                                     fontSize: 72,
