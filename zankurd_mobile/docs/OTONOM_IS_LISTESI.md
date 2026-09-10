@@ -454,7 +454,7 @@ betimleme, tür-tutarlı. Çeldiriciler uydurma değil gerçek olaylar (1925 Ame
 cevap — çeldiricinin işi bu. `is_date_expression` her iki kayıtta da artık 0
 ihlal veriyor.
 
-### A18 — [ ] Dokunma hedefi bekçisi 34 ekranın 3'üne bakıyor
+### A18 — [x] Dokunma hedefi bekçisi 34 ekranın 3'üne bakıyor
 
 `meetsGuideline` çağrısı bütün depoda tek dosyada
 (`accessibility_guideline_test.dart`) ve yalnız üç ekranı geziyor: seviye
@@ -533,6 +533,16 @@ hiçbiri genişletme almıyor):
   (Tarama bunu `bilinmiyor` sayıyor: `GestureDetector` kısıttan SONRA
   geliyor, geriye bakan pencere göremiyor. Elle sınıflandırıldı.)
 * `lib/src/screens/quiz/word_ordering_widget.dart:278` — 44, yalnız Android.
+
+**Kapandı (2026-09-09).** Giriş, onboarding, ayarlar, mağaza, moderasyon,
+quiz yardımcıları, yasal bağlantılar, çevrimdışı eylem ve ana ekran
+etkileşimleri 48 dp sözleşmesine çekildi. `accessibility_guideline_test.dart`
+SignIn/Onboarding/Settings/Shop dahil Android dokunma hedefini gerçek widget
+geometrisiyle ölçüyor; `tool/a11y/tap_target_taramasi.py` koşullu dalları
+kaynaktan tamamlıyor. Son kaynak taraması: `acik_kapatma=0`,
+`dokunulabilir=0`; dört `bilinmiyor` girdisi tek tek incelendi ve
+etkileşimsiz rozet/ayraç olduğu doğrulandı. İlgili Flutter a11y paketi
+14/14 geçti; final commit doğrulamasında tam suite 2740/2740 geçti.
 * `lib/src/screens/settings_screen.dart:1395` — 46, yalnız Android.
   46 «neredeyse 48» değildir; eşik keskin.
 
@@ -645,22 +655,36 @@ Bekçi `home_category_entries_distinct_test`: birebir eşitlik yetmiyor
 kelime oranı %50'nin altında olmalı. Kurmancî tarafın Hawar temizliği de
 ayrıca sınanıyor.
 
-## Kalan (2026-08-29)
+## Kalan (2026-09-09)
 
-A listesi kapandı. Ürün yayın kalitesinde; “eksiksiz” değil, çünkü
-aşağıdakiler bilinçli borç veya insan adımı:
+A listesi ve otomatik kalite kapıları kapandı. Kalanlar kanıtsız biçimde
+otomatik “tamam” sayılamayacak insan/production adımları veya bilinçli teknik
+borçtur:
 
-* 37 community kaydı `needsReview` — kuyruk, uydurma onay yok.
-* `quiz_screen.dart` hâlâ büyük; A8 yalnız duruma dokunmayan blokları
-  ayırdı, büyük refactor yapılmadı.
-* Cihaz duman turu ve `docs/release-readiness.md` maddeleri fiziksel
-  cihaz + insan.
-* Kenar ekran cilası (ayarlar, arkadaşlar, hikâye, paywall) çekirdek
-  döngü kadar işlenmedi.
+* 37 community kaydı `needsReview` — kuyruk korunur; kaynak/insan kanıtı olmadan
+  uydurma onay verilmez.
+* `quiz_screen.dart` hâlâ büyük; A8 yalnız duruma dokunmayan blokları ayırdı.
+  Testler yeşilken sırf dosyayı küçültmek için yüksek riskli büyük refactor
+  yapılmaz.
+* Fiziksel Android/iPhone ve gerçek mağaza kabul turu repo kökündeki
+  `../docs/release-readiness.md` listesidir. Otomatik widget/render/a11y testleri
+  bu kontrolün yerini tutmaz.
+* Production'da `20260819000000_gamification_and_custom_rooms.sql` uygulanmıştı;
+  2026-09-09'da hesap sahibi onayıyla yalnız migration-history metadata'sı
+  `supabase migration repair --status applied 20260819000000` ile eşitlendi,
+  SQL yeniden çalıştırılmadı ve local/remote history tekrar eşleşti. Ayrışma
+  yeniden görülürse `supabase db push` veya yeni bir history mutasyonu hesap
+  sahibinin açık onayı olmadan yapılmaz.
+* Bir sonraki mağaza yüklemesinden önce Play Console'daki en yüksek versionCode
+  ve App Store Connect'teki yayımlanmış Marketing Version/build kimliği gerçek
+  mağaza hesabından doğrulanmalıdır. Yerelde imzalı artifact üretmek tek başına
+  yükleme yetkisi veya sürüm kimliği kanıtı değildir.
 
-Kapanan borç: kategori zorluk 4–5 oranı. A7’nin 77 sorusuyla on
-kategorinin onu da ≥ %30. Profilde `RankMedal` yok — 2026-08-19’da
-sıra rakamını iki kez söylediği için bilinçli geri alındı
+Kapanan borçlar: kategori zorluk 4–5 oranı ve önceki “kenar ekran cilası” açığı.
+Ayarlar, arkadaşlar, hikâye, paywall, giriş/onboarding, mağaza dar kartı, büyük
+metin ve tema/dil varyantları artık erişilebilirlik, responsive widget testleri
+ve gerçek render ekran turuyla korunuyor. Profilde `RankMedal` yok —
+2026-08-19’da sıra rakamını iki kez söylediği için bilinçli geri alındı
 (`profile_identity_touch_test`).
 
 ## Koşu günlüğü

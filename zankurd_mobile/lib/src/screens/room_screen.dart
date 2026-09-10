@@ -1918,7 +1918,7 @@ class _PlayerTile extends StatelessWidget {
           // gösteriliyor; bildir/engelle bu ekranda hiç yoktu
           // (2026-08-06 denetimi).
           //
-          // Satırın SONUNA konuyor, ad sütununun içine değil: 44 pt'lik
+          // Satırın SONUNA konuyor, ad sütununun içine değil: 48 dp'lik
           // dokunma hedefi metin sütununu uzatırsa satır yükselir ve
           // lobinin birincil eylemi ("Yarışı Başlat") üç kişilik odada
           // 390x844 ekranda katlamanın altına iniyordu.
