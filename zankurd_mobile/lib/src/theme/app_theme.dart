@@ -492,6 +492,16 @@ class AppTheme {
   // Onboarding 2. slayt: ödül/yarış teması için terracotta tonu.
   static const terracotta = Color(0xFFB86A3E);
 
+  /// Solo sonuç vitrininin kutlama gradyanı.
+  ///
+  /// 2026-09-10: ametist→lacivert uygulamanın en çok görünen anını marka
+  /// paletinden koparıyordu; iki uç da markaya döndü. Yeşil→koyu turuncu
+  /// denemesi (2026-08-03) çamur verdiği için iki uç aynı hue ailesindedir:
+  /// derin mürekkepten Kesk yeşiline. Beyaz metin iki uçta da AA'nın çok
+  /// üstünde; altın yıldızlar yeşil üzerinde net okunur.
+  static const celebrationInk = Color(0xFF0B1512);
+  static const celebrationGreen = culturalBrandBg;
+
   // 1v1 sonuç ekranı — kazanma/kaybetme gradyanının koyu gölge renkleri.
   // `correct`/`wrong`'un karanlık tonu; hardcoded Color literal yerine
   // anlamlı token olarak tanımlandı (quiz_result_screen M-11).

@@ -1240,7 +1240,9 @@ class _LadderStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Son basamak şampiyonluk: altın dolu, diğerleri sakin tonal.
-    final tone = isFinal ? AppTheme.gold : const Color(0xFF6A38BE);
+    // 2026-09-10: ara basamak ametisti yerine terracotta — turnuva
+    // yüzeyi de marka paletinde kalır.
+    final tone = isFinal ? AppTheme.gold : AppTheme.terracotta;
     return Container(
       constraints: const BoxConstraints(minWidth: 34),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),

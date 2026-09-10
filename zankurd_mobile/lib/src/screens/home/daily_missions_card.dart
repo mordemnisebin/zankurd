@@ -225,8 +225,10 @@ class _MissionTile extends StatelessWidget {
   static Color _missionAccent(MissionType type) {
     return switch (type) {
       MissionType.answerCorrect => const Color(0xFF0E7A57), // zümrüt
-      MissionType.completeQuiz => const Color(0xFF1E4FA6), // safir
-      MissionType.useWildcard => const Color(0xFF6A38BE), // ametist
+      // 2026-09-10: safir/ametist yerine marka paletinin sıcak uçları —
+      // görev listesi ana sayfada en çok görünen yüzeylerden biri.
+      MissionType.completeQuiz => AppTheme.playCyan, // sakin teal
+      MissionType.useWildcard => AppTheme.terracotta, // terracotta
       MissionType.keepStreak => const Color(0xFFBC4318), // ateş
       MissionType.playCategory => const Color(0xFF04697C), // turkuaz
     };

@@ -1333,17 +1333,17 @@ class _PodiumSlot extends StatelessWidget {
 
 // ─── Rank Row (4-10) ─────────────────────────────────────────────────────────
 
-/// Oyuncunun kendi satırının vurgu tonu — safir (#1E4FA6).
+/// Oyuncunun kendi satırının vurgu tonu — Kesk yeşili.
 ///
 /// Eskiden marka turuncusuydu. Turuncu bu üründe TEK bir işi olan renktir:
 /// birincil eylem. Sıralamadaki kendi satırın bir eylem değil, bir konum;
 /// turuncuya boyanınca listenin ortasında basılacak bir düğme gibi
-/// duruyordu. Safir dikkati aynı güçte çeker ama "buraya bas" demez
-/// (2026-08-04).
+/// duruyordu. Safir dikkati aynı güçte çekiyordu ama 2026-09-10'da marka
+/// dışı kaldığı için kimlik yeşiline dönüldü; yeşil de "buraya bas" demez.
 ///
 /// Renk tek kanal da değildir: aynı satır ayrıca sol kenarda bir şerit ve
 /// adın yanında "Sen"/"Tu" etiketi taşır.
-const Color _selfRankTone = Color(0xFF1E4FA6);
+const Color _selfRankTone = AppTheme.culturalBrandBg;
 
 /// "Sen"/"Tu" etiketi — vurgunun ÜÇÜNCÜ kanalı (dolgu ve şeritten sonra).
 ///

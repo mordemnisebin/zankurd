@@ -1291,16 +1291,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // Solo sonuç vitrini kimlik anıdır, eylem değil; turuncu yalnız
         // "sonraki adım" butonunda kalır — bu kural korunuyor.
         //
-        // Değişen, iki ucun KARIŞIMI: marka yeşilinden koyu turuncuya inen
-        // gradyan gerçek cihazda kutlama değil çamur veriyordu (yeşil→kahve
-        // geçişi, 2026-08-03 görsel denetimi). Rengîn kutlama yüzeyi
-        // mücevher mantığını kullanır: derin mürekkepten ametiste. İki uç da
-        // beyaz metinle çok yüksek kontrast verir (15.67:1 ve 7.19:1) ve
-        // hiçbiri eylem turuncusuyla yarışmaz.
+        // 2026-09-10: ametist→lacivert gradyan marka paletinden kopuktu;
+        // iki uç markaya döndü (derin mürekkepten Kesk yeşiline). Yeşil→
+        // koyu turuncu denemesi (2026-08-03) çamur verdiği için iki uç
+        // aynı hue ailesindedir; beyaz metin iki uçta da AA üstü.
         : const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF17233B), Color(0xFF6A38BE)],
+            colors: [AppTheme.celebrationInk, AppTheme.celebrationGreen],
           );
 
     final borderColor = is1v1
@@ -1309,7 +1307,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : isDraw
               ? AppTheme.borderColor(context)
               : AppTheme.wrong.withValues(alpha: 0.55))
-        : AppTheme.brand.withValues(alpha: 0.45);
+        : AppTheme.gold.withValues(alpha: 0.5);
 
     final headerTitle = isLearningExperience
         ? context.t(K.learningResultTitle)

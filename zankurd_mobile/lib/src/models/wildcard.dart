@@ -53,7 +53,7 @@ extension WildcardTypeDetails on WildcardType {
     WildcardType.fiftyFifty => AppTheme.gold,
     WildcardType.audience => AppTheme.playCyan,
     WildcardType.doubleAnswer => AppTheme.playGreen,
-    WildcardType.changeQuestion => AppTheme.playPurple,
+    WildcardType.changeQuestion => AppTheme.terracotta,
   };
 }
 

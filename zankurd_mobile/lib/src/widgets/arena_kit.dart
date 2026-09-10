@@ -22,14 +22,18 @@ enum RewardKind { xp, coin, streak, level, rank }
 
 extension RewardKindVisuals on RewardKind {
   Color get color => switch (this) {
-    // XP ilerlemedir: safir.
-    RewardKind.xp => const Color(0xFF1E4FA6),
+    // XP ilerlemedir: Kesk yeşili. 2026-09-10'a kadar safirdi; ana
+    // sayfada en çok görünen iki jeton (XP + seviye) marka dışı
+    // mor/mavi bir çift oluşturuyordu.
+    RewardKind.xp => AppTheme.culturalBrandBg,
     // Coin ekonomidir: altın — ödül/para için ayrılmış tek ton.
     RewardKind.coin => AppTheme.gold,
     // Streak süreklilikdir: madder/ateş.
     RewardKind.streak => const Color(0xFFBC4318),
-    // Level ustalıktır: ametist.
-    RewardKind.level => const Color(0xFF6A38BE),
+    // Level ustalıktır: terracotta. Ametist marka dışıydı ve turuncu
+    // CTA rengiyle karıştırılmaması için daha yumuşak bir sıcak ton
+    // seçildi (2026-09-10).
+    RewardKind.level => AppTheme.terracotta,
     // Rank rekabettir: zümrüt.
     RewardKind.rank => const Color(0xFF0E7A57),
   };
@@ -144,9 +148,11 @@ class ArenaStatusChip extends StatelessWidget {
   final bool onSolid;
 
   (Color, IconData) get _visual => switch (status) {
-    ArenaStatus.upcoming => (const Color(0xFF2A5A8C), Icons.schedule_rounded),
+    // 2026-09-10: soğuk safir/ametist durum tonları marka paletine çekildi
+    // (teal + terracotta); renk hâlâ tek kanal değil, ikonlar duruyor.
+    ArenaStatus.upcoming => (AppTheme.playCyan, Icons.schedule_rounded),
     ArenaStatus.live => (const Color(0xFF0E7A57), Icons.circle),
-    ArenaStatus.joined => (const Color(0xFF6A38BE), Icons.check_circle_rounded),
+    ArenaStatus.joined => (AppTheme.terracotta, Icons.check_circle_rounded),
     ArenaStatus.completed => (const Color(0xFF0E7A57), Icons.flag_rounded),
     ArenaStatus.locked => (const Color(0xFF3A4557), Icons.lock_rounded),
     ArenaStatus.offline => (const Color(0xFF9C6300), Icons.cloud_off_rounded),

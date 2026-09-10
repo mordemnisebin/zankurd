@@ -633,12 +633,12 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF1E4FA6).withValues(alpha: 0.12),
+                    color: AppTheme.terracotta.withValues(alpha: 0.14),
                     borderRadius: BorderRadius.circular(AppRadius.sm),
                   ),
                   child: const Icon(
                     AppIcons.gamepad,
-                    color: Color(0xFF1E4FA6),
+                    color: AppTheme.terracotta,
                     size: 20,
                   ),
                 ),
