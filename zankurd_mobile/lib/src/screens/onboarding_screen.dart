@@ -395,19 +395,31 @@ class _OnboardingLanguageToggle extends StatelessWidget {
             onTap: context.langProvider.toggle,
             borderRadius: BorderRadius.circular(AppRadius.pill),
             child: Container(
+              // `alignment` VERİLMEZ: Stack/Align altındaki gevşek ama
+              // sınırlı kısıtta hizalama, kabı başlık alanının tamamına
+              // yayıyor ve 48dp'lik hap yerine devasa boş bir panel
+              // çiziyordu (2026-09-10; word_ordering_widget.dart aynı
+              // tuzağı belgeliyor). Kısıt 48dp dokunma hedefini korur,
+              // boyutu içerik belirler.
               constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-              alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
               decoration: BoxDecoration(
                 color: AppTheme.surfaceHiColor(context),
                 borderRadius: BorderRadius.circular(AppRadius.pill),
                 border: Border.all(color: AppTheme.borderColor(context)),
               ),
-              child: Text(
-                context.t(K.languageCode),
-                style: AppTypography.caption.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: AppTheme.textPrimaryColor(context),
+              // 48dp alt sınır içeriği aşarsa artan boşluk Padding'de sağa
+              // düşer; Center(widthFactor: 1) etiketi kutunun ortasında
+              // tutar, uzun metinde ise kutu yine içerikle büyür.
+              child: Center(
+                widthFactor: 1,
+                heightFactor: 1,
+                child: Text(
+                  context.t(K.languageCode),
+                  style: AppTypography.caption.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: AppTheme.textPrimaryColor(context),
+                  ),
                 ),
               ),
             ),

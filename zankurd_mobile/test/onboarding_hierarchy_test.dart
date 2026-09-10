@@ -63,6 +63,35 @@ void main() {
     expect(hero.height, lessThan(300));
   });
 
+  testWidgets('onboarding dil düğmesi başlık alanına yayılmaz', (tester) async {
+    // 518784fe (48dp a11y) Container'a hem min kısıt hem `alignment`
+    // ekledi; Stack altında gevşek ama sınırlı kısıtta hizalama, kabı
+    // başlık alanının tamamına yayıyor ve düğme 346x180'lik boş bir
+    // panele dönüşüyordu. Ekran turu bunu görüntüledi ama hiçbir test
+    // boyut ölçmediği için sessiz kaldı (2026-09-10).
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    for (final size in [const Size(390, 844), const Size(1200, 800)]) {
+      await tester.binding.setSurfaceSize(size);
+      await tester.pumpWidget(
+        ChangeNotifierProvider(
+          create: (_) => LanguageProvider()..setLang('tr'),
+          child: MaterialApp(home: OnboardingScreen(onComplete: () {})),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final toggle = tester.getSize(
+        find.byKey(const ValueKey('onboarding-language-toggle')),
+      );
+      expect(toggle.width, lessThanOrEqualTo(72));
+      expect(toggle.height, lessThanOrEqualTo(64));
+
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump();
+    }
+  });
+
   testWidgets('normal yükseklikte onboarding logosu belirgindir', (
     tester,
   ) async {
