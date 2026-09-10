@@ -7,6 +7,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/contest.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
@@ -118,47 +119,59 @@ class _ContestScreenState extends State<ContestScreen> {
       appBar: zkAppBar(context),
       body: Container(
         color: AppTheme.bgOf(context),
-        child: SafeArea(
-          child: FutureBuilder<Contest?>(
-            future: _contestFuture,
-            builder: (ctx, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting &&
-                  !snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: AppTheme.primaryGradientStart,
-                  ),
-                );
-              }
-              if (snapshot.hasError) {
-                return AppErrorState(
-                  title: context.t(K.loadFailedShort),
-                  message: context.t(K.contestLoadFailed),
-                  retryLabel: context.t(K.retryTiny),
-                  onRetry: () => setState(_loadContest),
-                );
-              }
-              final contest = snapshot.data;
-              if (contest == null) {
-                // Dürüst boş durum: isim eşleşmesi (Çalakiya Rojê) + net
-                // "yakında" mesajı + geri yolu. Kullanıcı ölü ekranda
-                // kalmaz (2026-07-19 canlı denetim P1 bulgusu).
-                return AppEmptyState(
-                  icon: AppIcons.champagneGlasses,
-                  title: context.t(K.dailyContest),
-                  message: context.t(K.contestNoneToday),
-                  actionLabel: context.t(K.goHome),
-                  actionIcon: AppIcons.house,
-                  onAction: () => Navigator.of(context).pop(),
-                );
-              }
-              return _ContestContent(
-                contest: contest,
-                starting: _starting,
-                onStart: () => _startQuiz(contest),
-              );
-            },
-          ),
+        child: Stack(
+          children: [
+            // Kısa içerikte alt yarı boş kalıyordu; kenara kimlik dokusu
+            // işlenir (2026-09-10).
+            const Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: KilimBottomEdge(),
+            ),
+            SafeArea(
+              child: FutureBuilder<Contest?>(
+                future: _contestFuture,
+                builder: (ctx, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting &&
+                      !snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: AppTheme.primaryGradientStart,
+                      ),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return AppErrorState(
+                      title: context.t(K.loadFailedShort),
+                      message: context.t(K.contestLoadFailed),
+                      retryLabel: context.t(K.retryTiny),
+                      onRetry: () => setState(_loadContest),
+                    );
+                  }
+                  final contest = snapshot.data;
+                  if (contest == null) {
+                    // Dürüst boş durum: isim eşleşmesi (Çalakiya Rojê) + net
+                    // "yakında" mesajı + geri yolu. Kullanıcı ölü ekranda
+                    // kalmaz (2026-07-19 canlı denetim P1 bulgusu).
+                    return AppEmptyState(
+                      icon: AppIcons.champagneGlasses,
+                      title: context.t(K.dailyContest),
+                      message: context.t(K.contestNoneToday),
+                      actionLabel: context.t(K.goHome),
+                      actionIcon: AppIcons.house,
+                      onAction: () => Navigator.of(context).pop(),
+                    );
+                  }
+                  return _ContestContent(
+                    contest: contest,
+                    starting: _starting,
+                    onStart: () => _startQuiz(contest),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

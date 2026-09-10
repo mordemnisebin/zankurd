@@ -167,104 +167,116 @@ class _PaywallScreenState extends State<PaywallScreen> {
         decoration: BoxDecoration(
           gradient: AppTheme.backgroundGradient(context),
         ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // Başlık 'Premium' değil, App Store Connect'teki abonelik
-              // adının kendisidir. Apple 3.1.2, otomatik yenilenen
-              // aboneliğin ADININ satın alma ekranında yazmasını ister ve
-              // 'Premium' bir özellik adıdır, ürün adı değil: mağazadaki
-              // ürünler "ZanKurd Pro Monthly/Yearly", grup "ZanKurd Pro".
-              // Bu başlıkla kart başlıkları ("Aylık"/"Yıllık") birleşince
-              // ekranda tam ürün adı okunur.
-              ScreenIdentityHeader(
-                title: AppConfig.subscriptionDisplayName,
-                subtitle: context.t(K.paywallSubtitle),
-                accent: AppTheme.gold,
-                icon: AppIcons.gem,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.page,
-                    AppSpacing.md,
-                    AppSpacing.page,
-                    AppSpacing.xl,
+        child: Stack(
+          children: [
+            // Paket listesi boş/kısa kaldığında alt yarı boş duruyordu;
+            // kenara kimlik dokusu işlenir (2026-09-10).
+            const Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: KilimBottomEdge(),
+            ),
+            SafeArea(
+              child: Column(
+                children: [
+                  // Başlık 'Premium' değil, App Store Connect'teki abonelik
+                  // adının kendisidir. Apple 3.1.2, otomatik yenilenen
+                  // aboneliğin ADININ satın alma ekranında yazmasını ister ve
+                  // 'Premium' bir özellik adıdır, ürün adı değil: mağazadaki
+                  // ürünler "ZanKurd Pro Monthly/Yearly", grup "ZanKurd Pro".
+                  // Bu başlıkla kart başlıkları ("Aylık"/"Yıllık") birleşince
+                  // ekranda tam ürün adı okunur.
+                  ScreenIdentityHeader(
+                    title: AppConfig.subscriptionDisplayName,
+                    subtitle: context.t(K.paywallSubtitle),
+                    accent: AppTheme.gold,
+                    icon: AppIcons.gem,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Premium yüzeyi: kesişen bant motifi. `band` kilim
-                      // dilinde "kutlama ve premium"u taşır; paywall bunu
-                      // kullanan ilk yüzey (2026-08-19).
-                      const SizedBox(
-                        height: 26,
-                        width: double.infinity,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: CustomPaint(
-                                painter: KilimPainter(
-                                  motif: KilimMotif.band,
-                                  color: AppTheme.gold,
-                                  opacity: 0.30,
-                                  count: 8,
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.page,
+                        AppSpacing.md,
+                        AppSpacing.page,
+                        AppSpacing.xl,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Premium yüzeyi: kesişen bant motifi. `band` kilim
+                          // dilinde "kutlama ve premium"u taşır; paywall bunu
+                          // kullanan ilk yüzey (2026-08-19).
+                          const SizedBox(
+                            height: 26,
+                            width: double.infinity,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: CustomPaint(
+                                    painter: KilimPainter(
+                                      motif: KilimMotif.band,
+                                      color: AppTheme.gold,
+                                      opacity: 0.30,
+                                      count: 8,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      // 2026-08-10: `_PaywallHero` kaldırıldı. Ekran aynı
-                      // değer önerisini ÜÇ kez söylüyordu — üstteki
-                      // `ScreenIdentityHeader` ("Premium / ZanKurd'u
-                      // destekle, serini koru"), hemen altındaki altın hero
-                      // ("ZanKurd Premium / Otomatik seri koruması ve
-                      // ZanKurd'a destek") ve ardından aynı iki maddeyi
-                      // sayan fayda listesi. İkisinde de aynı elmas ikonu
-                      // vardı.
-                      //
-                      // Tekrarı silmek yalnız görsel bir sadeleştirme değil:
-                      // paketler bir ekran yukarı çıkıyor, yani satın alma
-                      // kararının verildiği yer ilk bakışta görünüyor.
-                      ScreenSectionLabel(
-                        label: context.t(K.paywallFeatures),
-                        accent: AppTheme.gold,
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      _Benefits(isKu: ku),
-                      const SizedBox(height: AppSpacing.lg),
-                      if (_loading)
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 24),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: AppTheme.gold,
+                              ],
                             ),
                           ),
-                        )
-                      else if (_offeringsLoadFailed)
-                        _OfferingsLoadError(onRetry: _loadOfferings)
-                      else if (_packages.isEmpty)
-                        _EmptyOfferings(isKu: ku, onRetry: _loadOfferings)
-                      else
-                        _PackageList(
-                          packages: _packages,
-                          onBuy: _buy,
-                          isKu: ku,
-                          isBusy: context
-                              .watch<PremiumService>()
-                              .purchaseInProgress,
-                        ),
-                      const SizedBox(height: AppSpacing.lg),
-                      _FooterActions(isKu: ku, onRestore: _restore),
-                    ],
+                          const SizedBox(height: AppSpacing.sm),
+                          // 2026-08-10: `_PaywallHero` kaldırıldı. Ekran aynı
+                          // değer önerisini ÜÇ kez söylüyordu — üstteki
+                          // `ScreenIdentityHeader` ("Premium / ZanKurd'u
+                          // destekle, serini koru"), hemen altındaki altın hero
+                          // ("ZanKurd Premium / Otomatik seri koruması ve
+                          // ZanKurd'a destek") ve ardından aynı iki maddeyi
+                          // sayan fayda listesi. İkisinde de aynı elmas ikonu
+                          // vardı.
+                          //
+                          // Tekrarı silmek yalnız görsel bir sadeleştirme değil:
+                          // paketler bir ekran yukarı çıkıyor, yani satın alma
+                          // kararının verildiği yer ilk bakışta görünüyor.
+                          ScreenSectionLabel(
+                            label: context.t(K.paywallFeatures),
+                            accent: AppTheme.gold,
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          _Benefits(isKu: ku),
+                          const SizedBox(height: AppSpacing.lg),
+                          if (_loading)
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 24),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: AppTheme.gold,
+                                ),
+                              ),
+                            )
+                          else if (_offeringsLoadFailed)
+                            _OfferingsLoadError(onRetry: _loadOfferings)
+                          else if (_packages.isEmpty)
+                            _EmptyOfferings(isKu: ku, onRetry: _loadOfferings)
+                          else
+                            _PackageList(
+                              packages: _packages,
+                              onBuy: _buy,
+                              isKu: ku,
+                              isBusy: context
+                                  .watch<PremiumService>()
+                                  .purchaseInProgress,
+                            ),
+                          const SizedBox(height: AppSpacing.lg),
+                          _FooterActions(isKu: ku, onRestore: _restore),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

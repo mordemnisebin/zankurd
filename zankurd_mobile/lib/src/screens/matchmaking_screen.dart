@@ -16,6 +16,7 @@ import '../widgets/player_moderation_button.dart';
 import '../widgets/roj_mascot.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
+import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../services/analytics_service.dart';
@@ -1020,10 +1021,22 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         ),
         body: Container(
           color: AppTheme.bgOf(context),
-          child: SafeArea(
-            child: _searchingStarted
-                ? _buildRadarSearch(status, ku)
-                : _buildSelectionMenu(ku),
+          child: Stack(
+            children: [
+              // Seçim ekranının alt yarısı boş kalıyordu; içerik eklemeden
+              // kenara kimlik dokusu işlenir (2026-09-10).
+              const Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: KilimBottomEdge(),
+              ),
+              SafeArea(
+                child: _searchingStarted
+                    ? _buildRadarSearch(status, ku)
+                    : _buildSelectionMenu(ku),
+              ),
+            ],
           ),
         ),
       ),
