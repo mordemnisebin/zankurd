@@ -174,9 +174,7 @@ class StyledInputFieldState extends State<StyledInputField> {
                     : [],
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.lg,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                 child: Row(
                   children: [
                     // Prefix icon
