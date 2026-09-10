@@ -303,13 +303,61 @@ Future<void> _pump(
   await tester.pump(const Duration(milliseconds: 1600));
 }
 
-/// Yeni kullanıcının gerçekten gördüğü depo.
+/// Ekran turuna özel, deterministik dolu sosyal durum.
 ///
-/// `MockZanKurdRepository` arkadaş, sıralama ve yarışma satırlarıyla dolu
-/// gelir; tur bu yüzden hep "kalabalık" bir uygulamayı gösteriyordu. Oysa
-/// ilk açılışta hiçbiri yok. Ürünün en önemli ölçütü ilk kullanımda
-/// şaşırmamak olduğu için o hâl de basılmalı (2026-07-26).
+/// `MockZanKurdRepository` üretim fallback'inde hayalet kullanıcı üretmemek
+/// için arkadaş ve yarışma liderliğini bilinçli olarak boş döndürür. Tur da
+/// aynı depoyu kullanınca `13_friends` == `33_friends_empty` ve
+/// `11_contest` == `34_contest_empty` birebir aynı PNG oluyordu: iki ayrı
+/// test adı, tek bir görsel durum. Dolu fixture yalnız burada yaşar; ürün
+/// fallback davranışını değiştirmez.
+class _PopulatedStateRepository extends MockZanKurdRepository {
+  @override
+  Future<List<Friend>> loadFriends() async => [
+    Friend(
+      id: 'tour-friend-1',
+      userId: 'user',
+      friendId: 'tour-diyar',
+      friendName: 'Diyar',
+      friendAvatarColor: '#2AA6A1',
+      createdAt: DateTime.utc(2026, 8, 1),
+      totalScore: 2450,
+      level: 12,
+      gamesPlayed: 48,
+      lastActiveAt: DateTime.utc(2026, 9, 9, 4),
+    ),
+    Friend(
+      id: 'tour-friend-2',
+      userId: 'user',
+      friendId: 'tour-berfin',
+      friendName: 'Berfin',
+      friendAvatarColor: '#6F61C0',
+      createdAt: DateTime.utc(2026, 8, 2),
+      totalScore: 1820,
+      level: 9,
+      gamesPlayed: 31,
+      lastActiveAt: DateTime.utc(2026, 9, 9, 3, 50),
+    ),
+  ];
+
+  @override
+  Future<List<FriendRequest>> loadPendingFriendRequests() async => [
+    FriendRequest(
+      id: 'tour-request-1',
+      fromUserId: 'tour-rojin',
+      fromUserName: 'Rojîn',
+      toUserId: 'user',
+      createdAt: DateTime.utc(2026, 9, 8),
+      status: 'pending',
+    ),
+  ];
+}
+
+/// Yeni kullanıcının gerçekten gördüğü boş sosyal durum.
 class _EmptyStateRepository extends MockZanKurdRepository {
+  @override
+  Future<Contest?> loadTodayContest() async => null;
+
   @override
   Future<List<Friend>> loadFriends() async => const [];
 
@@ -396,6 +444,7 @@ void main() {
     const iconFamilies = {
       'FontAwesomeSolid': 'lib/fonts/Font-Awesome-7-Free-Solid-900.otf',
       'FontAwesomeRegular': 'lib/fonts/Font-Awesome-7-Free-Regular-400.otf',
+      'FontAwesomeBrands': 'lib/fonts/Font-Awesome-7-Brands-Regular-400.otf',
     };
     for (final family in iconFamilies.keys) {
       final iconFont = File('$base${iconFamilies[family]}');
@@ -498,7 +547,7 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('13 arkadaşlar', (t) async {
-    await _pump(t, FriendsScreen(repository: repository));
+    await _pump(t, FriendsScreen(repository: _PopulatedStateRepository()));
     await _shoot(t, '13_friends');
   }, tags: ['preview']);
 
@@ -831,7 +880,11 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('46 arkadaşlar (karanlık)', (t) async {
-    await _pump(t, FriendsScreen(repository: repository), dark: true);
+    await _pump(
+      t,
+      FriendsScreen(repository: _PopulatedStateRepository()),
+      dark: true,
+    );
     await _shoot(t, '46_friends_dark');
   }, tags: ['preview']);
 
@@ -859,7 +912,11 @@ void main() {
     await _shoot(t, '50_matchmaking_dark');
   }, tags: ['preview']);
 
-  testWidgets('51 ders akışı (karanlık)', (t) async {
+  // Quiz sahnesi dış uygulama temasından bilinçli olarak bağımsız ve her
+  // zaman koyudur (`QuizScreen` -> `Theme(data: AppTheme.stage)`). Bu kare
+  // uygulama teması koyuyken de sahnenin değişmemesini korur; 14 ile aynı
+  // PNG çıkması burada bir tur körlüğü değil, ürün sözleşmesidir.
+  testWidgets('51 ders akışı (koyu uygulama temasında sabit sahne)', (t) async {
     await _pump(
       t,
       QuizScreen(
@@ -965,7 +1022,11 @@ void main() {
   }, tags: ['preview']);
 
   testWidgets('65 arkadaşlar (Kurmancî)', (t) async {
-    await _pump(t, FriendsScreen(repository: repository), ku: true);
+    await _pump(
+      t,
+      FriendsScreen(repository: _PopulatedStateRepository()),
+      ku: true,
+    );
     await _shoot(t, '65_friends_ku');
   }, tags: ['preview']);
 

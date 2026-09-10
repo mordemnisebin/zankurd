@@ -23,4 +23,13 @@ void main() {
       isNot(contains("icon: const Text(\n                        'G'")),
     );
   });
+
+  test('ekran turu marka ikon fontunu da yükler', () {
+    final source = File(
+      'tool/screenshots/screen_tour_test.dart',
+    ).readAsStringSync();
+
+    expect(source, contains("'FontAwesomeBrands'"));
+    expect(source, contains('Font-Awesome-7-Brands-Regular-400.otf'));
+  });
 }

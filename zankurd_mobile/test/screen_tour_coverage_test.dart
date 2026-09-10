@@ -60,6 +60,49 @@ void main() {
     );
   });
 
+  test('normal sosyal kareler boş durum fixtureından gerçekten ayrıdır', () {
+    // 2026-09-09: `MockZanKurdRepository` arkadaşları ve yarışma
+    // liderliğini güvenlik gereği boş döndürüyor. Tur normal karelerde de
+    // bu depoyu kullanınca `13_friends`/`33_friends_empty` ve
+    // `11_contest`/`34_contest_empty` birebir aynı PNG oluyordu; test adı
+    // farklı olsa da görsel kapsam gerçekte yoktu.
+    expect(
+      tour,
+      contains('Future<Contest?> loadTodayContest() async => null;'),
+      reason:
+          'Yarışmanın boş durumu liderlik listesiyle değil, bugünkü yarışmanın '
+          'olmamasıyla oluşuyor; boş fixture bunu açıkça üretmeli.',
+    );
+    for (final pattern in [
+      r"testWidgets\('11 günün etkinliği'.*?ContestScreen\(repository: repository\).*?_shoot\(t, '11_contest'\)",
+      r"testWidgets\('13 arkadaşlar'.*?FriendsScreen\(repository: _PopulatedStateRepository\(\)\).*?_shoot\(t, '13_friends'\)",
+      r"testWidgets\('33 arkadaşlar \(boş\)'.*?FriendsScreen\(repository: _EmptyStateRepository\(\)\).*?_shoot\(t, '33_friends_empty'\)",
+      r"testWidgets\('34 yarışma \(boş\)'.*?ContestScreen\(repository: _EmptyStateRepository\(\)\).*?_shoot\(t, '34_contest_empty'\)",
+    ]) {
+      expect(
+        RegExp(pattern, dotAll: true).hasMatch(tour),
+        isTrue,
+        reason: 'Dolu ve boş sosyal kareler ayrı fixture kullanmalı: $pattern',
+      );
+    }
+  });
+
+  test('quiz sahnesinin koyu görünümü uygulama temasından bağımsızdır', () {
+    final quiz = File('lib/src/screens/quiz_screen.dart').readAsStringSync();
+    final theme = File('lib/src/theme/app_theme.dart').readAsStringSync();
+
+    expect(quiz, contains('Theme('));
+    expect(quiz, contains('data: AppTheme.stage'));
+    expect(theme, contains('static final ThemeData stage = dark();'));
+    expect(
+      tour,
+      contains("51 ders akışı (koyu uygulama temasında sabit sahne)"),
+      reason:
+          '51 numaralı kare normal açık/koyu ikizi değil; dış tema koyuyken '
+          'sahne temasının değişmeden kaldığını ölçtüğünü açıkça söylemeli.',
+    );
+  });
+
   test('iki kare aynı numarayı taşımaz', () {
     final names = RegExp(
       r"_shoot\(\s*t\s*,\s*'([^']+)'",
