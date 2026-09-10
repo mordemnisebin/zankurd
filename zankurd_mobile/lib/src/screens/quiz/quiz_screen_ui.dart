@@ -585,7 +585,10 @@ extension _QuizScreenUI on _QuizScreenState {
                   ),
                   onPressed: canPressNext ? () => _next() : null,
                   icon: Icon(
-                    _isMultiplayer
+                    // Gerilim tutuşunda ("cevap kontrol ediliyor") kum saati,
+                    // sonuç açıklanınca yerini ok/yıldırıma bırakır: pasif
+                    // düğme "bekleniyor" der, "bozuk" demez.
+                    _isMultiplayer || _suspense
                         ? AppIcons.hourglassStart
                         : isLastQuestion
                         ? AppIcons.flag

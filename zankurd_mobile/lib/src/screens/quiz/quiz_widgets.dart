@@ -1672,6 +1672,10 @@ class _DuelTugBar extends StatelessWidget {
 /// Sahne koyu olduğu için altın iplik açık kremde kayboluyordu; bu yüzden
 /// soru ekranı `AppTheme.stage` ile karartılır. Opaklık 0.10'dayken motif
 /// şıkların aralığında da okunmuyordu (2026-08-29, iPhone 17 Pro).
+///
+/// 2026-09-10: tek büyük elmas halkası şıkların arasından dev bir zeytin
+/// zikzak gibi görünüyordu; doku artık hücre hücre örülür
+/// (`KilimMotif.diamondTiling`). Opaklık testle korunuyor (>= 0.20).
 /// Kenar dolgusu YOK: şık yüksekliği yerleşim bütçesine bağlı, ekstra
 /// çerçeve iki sütuna düşürüp CTA örtüşmesini kırıyordu.
 class _QuizAnswerBoard extends StatelessWidget {
@@ -1690,10 +1694,10 @@ class _QuizAnswerBoard extends StatelessWidget {
             child: IgnorePointer(
               child: CustomPaint(
                 painter: KilimPainter(
-                  motif: KilimMotif.diamond,
+                  motif: KilimMotif.diamondTiling,
                   color: AppTheme.gold,
                   opacity: 0.22,
-                  count: 5,
+                  count: 8,
                 ),
               ),
             ),

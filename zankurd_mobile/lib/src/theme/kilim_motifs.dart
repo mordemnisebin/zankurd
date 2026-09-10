@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'app_theme.dart';
+
 /// Rengîn Editorial Arena'nın kültürel motif dili.
 ///
 /// Kilim bir halı görseli olarak kullanılmaz. Dokumanın DİL BİLGİSİ alınır:
@@ -22,6 +24,13 @@ enum KilimMotif {
 
   /// Elmas/romb — amblem ve rozet zemini.
   diamond,
+
+  /// Küçük, tekrarlı baklava dokusu — geniş zeminlerde kilim örgüsü.
+  /// [diamond] tek ve büyük bir halka çizer; cevap tahtası gibi geniş
+  /// yüzeylerde bu halka şıkların arasından dev bir zikzak gibi görünüyordu
+  /// (2026-09-10). Bu varyant aynı elması hücre hücre dokuyarak motif
+  /// okunurluğunu korur, görsel gürültüyü düşürür.
+  diamondTiling,
 
   /// Kesişen bant — kutlama ve premium.
   band,
@@ -59,6 +68,8 @@ class KilimPainter extends CustomPainter {
         _steps(canvas, size, paint);
       case KilimMotif.diamond:
         _diamonds(canvas, size, paint);
+      case KilimMotif.diamondTiling:
+        _diamondTiling(canvas, size, paint);
       case KilimMotif.band:
         _bands(canvas, size, paint);
     }
@@ -115,6 +126,31 @@ class KilimPainter extends CustomPainter {
     );
   }
 
+  void _diamondTiling(Canvas canvas, Size size, Paint paint) {
+    final cell = size.width / count;
+    final r = cell * 0.40;
+    final stroke = Paint()
+      ..color = paint.color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.4;
+    final rows = (size.height / cell).ceil() + 1;
+    final path = Path();
+    for (var row = 0; row < rows; row++) {
+      final cy = row * cell + cell / 2;
+      final shift = row.isEven ? 0.0 : cell / 2;
+      for (var col = -1; col <= count; col++) {
+        final cx = col * cell + shift + cell / 2;
+        path
+          ..moveTo(cx, cy - r)
+          ..lineTo(cx + r, cy)
+          ..lineTo(cx, cy + r)
+          ..lineTo(cx - r, cy)
+          ..close();
+      }
+    }
+    canvas.drawPath(path, stroke);
+  }
+
   void _bands(Canvas canvas, Size size, Paint paint) {
     final w = size.width / count;
     for (var i = 0; i < count; i += 2) {
@@ -166,6 +202,49 @@ class KilimDivider extends StatelessWidget {
               ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+/// Ekranın alt kenarına işlenen soluk kilim şeridi.
+///
+/// Bazı ekranların içeriği kısa kalıyor ve alt yarı boş duruyordu
+/// (2026-09-10 görsel denetimi). İçerik eklemek ürün vaadi olurdu; bunun
+/// yerine alt kenara yalnızca kimlik dokusu işlenir. Dekoratiftir: ekran
+/// okuyucudan gizlenir, dokunuşları geçirir ve üst kenarında saydamlaşarak
+/// zemine karışır.
+class KilimBottomEdge extends StatelessWidget {
+  const KilimBottomEdge({this.height = 72, this.count = 18, super.key});
+
+  final double height;
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    final isLight = AppTheme.isLight(context);
+    return IgnorePointer(
+      child: ExcludeSemantics(
+        child: ShaderMask(
+          shaderCallback: (rect) => const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.transparent, Colors.white],
+          ).createShader(rect),
+          blendMode: BlendMode.dstIn,
+          child: SizedBox(
+            height: height,
+            width: double.infinity,
+            child: CustomPaint(
+              painter: KilimPainter(
+                motif: KilimMotif.triangleRhythm,
+                color: isLight ? AppTheme.culturalBrandBg : AppTheme.gold,
+                opacity: isLight ? 0.10 : 0.14,
+                count: count,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
