@@ -926,14 +926,26 @@ class _LessonCard extends StatelessWidget {
             Container(
               width: 56,
               constraints: const BoxConstraints(minHeight: 56),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [AppTheme.playGreen, Color(0xFF16A34A)],
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(14)),
-              ),
+              decoration: onGradient
+                  // Önerilen kart marka turuncusuna boyanırken ikon karosu
+                  // zümrüt yeşili kalıyordu: sıcak zeminle soğuk karo
+                  // çakışıyordu (2026-09-10). Turuncu üzerinde karo artık
+                  // sonuç ekranındaki gibi yarı saydam beyaz perde.
+                  ? BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.18),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.35),
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(14)),
+                    )
+                  : const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [AppTheme.playGreen, Color(0xFF16A34A)],
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(14)),
+                    ),
               child: Center(
                 child: Icon(
                   iconForLesson(lesson),
