@@ -69,3 +69,13 @@ When the user asks about Feishu/Lark/飞书 matters, route through Feishu/Lark s
 3. If you find a matching skill that is not installed or enabled, ask the user whether to install/enable and use it before proceeding.
 4. If no matching skill exists, say so briefly and continue with the safest available fallback.
 <!-- /autoclaw:feishu-lark-skill-guidance -->
+
+<!-- autoclaw:zcode-app-context-v1 -->
+<app-context>
+# AutoClaw 桌面端上下文
+
+## 文件与 URL
+- 请将本地网页 URL 以 Markdown 链接形式返回 (例如：[label](http://127.0.0.1:8080))。
+- 文件路径应为绝对路径，或者包含工作区文件夹名称，以便能够相对于工作区解析该路径。
+- 除非另有说明，请将文件引用写成 Markdown 链接 (例如：[name.md](/absolute/path/to/name.md))。
+</app-context>
