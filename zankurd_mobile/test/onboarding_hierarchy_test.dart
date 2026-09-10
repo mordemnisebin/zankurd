@@ -108,7 +108,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(tester.widget<AppLogo>(find.byType(AppLogo)).width, 96);
-      expect(find.byType(RojMascot), findsNothing);
+      // 2026-09-10: hero artık Zana'yı köşede karşılar (eski kural
+      // "onboarding'de maskot görünmez" görsel denetimle değişti).
+      expect(find.byType(RojMascot), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump();

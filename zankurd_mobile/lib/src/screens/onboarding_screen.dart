@@ -8,6 +8,7 @@ import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_logo.dart';
 import '../widgets/kilim_reveal.dart';
+import '../widgets/roj_mascot.dart';
 import '../widgets/styled_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -562,6 +563,20 @@ class _OnboardingPage extends StatelessWidget {
                       iconSize: heroGlyphSize,
                     ),
                   ),
+                  // 2026-09-10 görsel denetimi: hero düz renk + jenerik
+                  // ikondu ve ana sayfadaki Zana ile bağ kurmuyordu.
+                  // Maskot kartın köşesinde karşılar; sonuç ekranındaki
+                  // "köşede Zana" diliyle aynıdır.
+                  Positioned(
+                    right: compact ? 10 : 18,
+                    bottom: compact ? 8 : 14,
+                    child: IgnorePointer(
+                      child: RojMascot(
+                        size: compact ? 52 : 68,
+                        mood: RojMood.happy,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -700,12 +715,13 @@ class _OnboardingIcon extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         // Beyaz plaka + marka renkli glif: stock-icon hissini azaltır,
-        // renkli panel zemininde net ayrışır.
+        // renkli panel zemininde net ayrışır. Çevresindeki ince altın
+        // halka premium vurgudur (2026-09-10).
         color: Colors.white,
         shape: BoxShape.circle,
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.9),
-          width: 1.5,
+          color: AppTheme.gold.withValues(alpha: 0.65),
+          width: 2,
         ),
         boxShadow: [
           BoxShadow(
