@@ -1,8 +1,10 @@
 # Yayın adımları — sıradan şaşma
 
 Bu belge son yayın sırasıdır. Hostinger SSH bağlantısı ve Android upload
-anahtarı hazırdır. Yeni 1v1 Supabase göçü ise önce staging/preview ortamında
-doğrulanmalıdır; mağaza hesabı ve fiziksel cihaz adımları hesap sahibinde kalır.
+anahtarı hazırdır. Supabase tarafında güncel şema staging/preview ortamında
+smoke edilmelidir; production migration-history ayrışması çözülmeden üretim
+şeması değiştirilmez. Mağaza hesabı ve fiziksel cihaz adımları hesap sahibinde
+kalır.
 
 Sırayla git. Her adımın sonunda **"tamam mı?"** satırı var; orası
 tutmuyorsa sonrakine geçme.
@@ -25,17 +27,35 @@ Görmüyorsan bana yaz, yayına başlama.
 
 ---
 
-## 1. Supabase: yeni 1v1 göçünü staging'de doğrula
+## 1. Supabase: staging ve migration-history ön kontrolü
 
-Önce `zankurd_mobile/supabase/applied.md` dosyasına bak. `✅` kaydı olan
-göçleri **yeniden çalıştırma**. Bu sürüm için ayrıca
-`supabase/2026-08-02_multiplayer_session_hardening.sql` gerekir. 2026-08-02
-salt-okunur canlı kontrolde bu dosyanın yeni RPC'leri bulunamadı; dosyanın
-`applied.md` kaydı hâlâ yoksa dosyayı doğrudan üretime gönderme.
+Önce `zankurd_mobile/supabase/applied.md` dosyasına ve tarihli canonical migration
+zincirine bak. `20260802000000_multiplayer_session_hardening.sql` production
+history'de 2026-08-05'ten beri uygulanmış durumdadır; eski
+`supabase/2026-08-02_multiplayer_session_hardening.sql` dosyasını production'a
+**yeniden çalıştırma**.
 
-Önce staging/preview Supabase projesinde dosyanın tamamını tek işlem olarak
-uygula. Ardından git tarafından yok sayılan ayrı bir staging yapılandırması
-hazırla; üretim dosyasını staging turunda kullanma:
+2026-09-09 salt-okunur denetiminde
+`20260819000000_gamification_and_custom_rooms.sql` şemada uygulanmış olmasına
+rağmen remote migration history'de görünmüyordu. Hesap sahibi onayıyla yalnız
+history metadata'sı onarıldı; SQL yeniden çalıştırılmadı ve onarım sonrası
+local/remote eşleşmesi tekrar doğrulandı. Herhangi bir production schema
+adımından önce yalnız history'yi oku:
+
+```bash
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+supabase migration list --linked
+```
+
+Bu ayrışma yeniden oluşursa **`supabase db push` çalıştırma**, 19 Ağustos
+SQL'ini yeniden uygulama ve hesap sahibinin açık onayı olmadan `migration repair`
+çalıştırma. Bu bölümdeki staging smoke production history'yi değiştirmez.
+
+Staging/preview projesi güncel canonical şemayı temsil etmelidir. Staging eskiyse
+onu yalnız staging üzerinde `supabase/migrations/` altındaki tarihli canonical
+zincirle ileri taşı; eski/undated SQL dosyalarını rastgele tekrar oynatma.
+Ardından git tarafından yok sayılan ayrı bir staging yapılandırması hazırla;
+üretim dosyasını staging turunda kullanma:
 
 ```bash
 cd /Users/kocer/Projects/zankurd/zankurd_mobile
@@ -76,7 +96,7 @@ Staging/preview turundan sonra ayrı bir yeni sorguda şu salt-okunur doğrulama
 
 ```sql
 select
-  to_regprocedure('public.create_online_room(text,integer)') is not null
+  to_regprocedure('public.create_online_room(text,integer,integer,integer)') is not null
     as oda_olusturma_hazir,
   to_regprocedure('public.get_my_resumable_room()') is not null
     as oturum_kurtarma_hazir,
@@ -90,11 +110,12 @@ select
     as sonuc_makbuzu_hazir;
 ```
 
-**Tamam mı?** Staging/preview iki istemci turu geçti ve altı değerin altısı da
-`true` ise evet. Bu aşamada üretim SQL Editor'ünü açma ve
-`supabase/applied.md` dosyasını değiştirme. Herhangi biri `false` ise yayına
-devam etme ve göçü körlemesine ikinci kez çalıştırma; önce ilk çalıştırmanın
-hatasını incele.
+**Tamam mı?** Staging/preview iki istemci turu geçti, altı değerin altısı da
+`true` ve `supabase migration list --linked` sonucu ayrıca kaydedildiyse evet.
+Bu aşamada production SQL Editor'ünü açma, `supabase/applied.md` dosyasını
+değiştirme veya history gap'i otomatik onarmaya çalışma. Herhangi bir doğrulama
+beklenenden farklıysa yayına devam etme; önce mevcut şema/history ayrışmasını
+incele.
 
 ---
 
@@ -279,38 +300,40 @@ aynı güvenli retry yolunu kullanması beklenen davranıştır.
 
 Kesim penceresinde sırayı değiştirme:
 
-1. Staging'de doğrulanan
-   `supabase/2026-08-02_multiplayer_session_hardening.sql` dosyasını üretim SQL
-   Editor'ünde bir kez uygula. Hata alırsan dur; körlemesine ikinci kez
-   çalıştırma.
-2. Aynı pencerede
-   `supabase/2026-08-03_streak_freeze_idempotency.sql` dosyasını da bir kez
-   uygula. Bu göç atlanırsa hiçbir şey görünür biçimde kırılmaz — istemci
-   `PGRST202` alıp eski `spend_coins` yoluna düşer ve seri dondurma
-   çalışmaya devam eder. Sessizce kaybolan şey idempotency'dir: cevabı
-   kaybolan bir tahsilat bir daha denenemez hâle gelir ve göçün kapatmak
-   için yazıldığı çift-çekim penceresi açık kalır. Sessiz olduğu için
-   unutulmaya en açık adım budur.
-3. Aynı pencerede 2026-08-06 denetiminin ÜÇ göçünü sırayla bir kez uygula.
-   Üçü de `create or replace` ve yetki işlemlerinden oluşur; şema
-   değiştirmez, veri taşımaz ve yeniden çalıştırılabilir:
+1. Önce migration history'yi yalnızca oku:
 
-   - `supabase/2026-08-06_neon_frame_persistence.sql` — mağazadan 600
-     coine alınan Neon çerçevesi sunucuda saklanamıyordu. Atlanırsa
-     ödeme yapan kullanıcının çerçevesi kaydedilmez ve `neon` seçili
-     kaldığı sürece avatar fotoğrafı/ikonu/rengi de sessizce kaydedilemez
-     olur.
-   - `supabase/2026-08-06_friend_identity_and_resend.sql` — arkadaş
-     istekleri ve listesi herkesi `Player` gösteriyordu; reddedilen bir
-     istek bir daha gönderilemiyor ama gönderene "gönderildi" deniyordu.
-     Atlanırsa arkadaşlık özelliği ürün olarak kullanılamaz kalır.
-   - `supabase/2026-08-06_profile_insert_and_league_authority.sql` —
-     GÜVENLİK. Profil INSERT'inde sütun yetkisi yoktu (istemci kendine
-     `coins/xp/rating` yazabiliyordu) ve `finalize_weekly_league`
-     `authenticated` rolüne açıktı. Bu göç atlanırsa ekonomi ve liderlik
-     açık kalır; **istemci bu göç olmadan dağıtılmamalıdır.**
+```bash
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+supabase migration list --linked
+```
 
-   Hata alırsan dur; körlemesine ikinci kez çalıştırma.
+   `20260801000000`–`20260811000000` satırları local/remote eşleşmelidir.
+   2026-09-09 denetiminde `20260819000000_gamification_and_custom_rooms.sql`
+   önce yalnız local tarafta görünüyordu; hesap sahibi onayıyla yalnız
+   migration-history kaydı eşitlendi ve onarım sonrası local/remote eşleşti.
+   Aynı SQL'in kaynak dosyası `supabase/2026-08-19_gamification_and_custom_rooms.sql`
+   canlıda uygulanmış ve `supabase/applied.md` içinde postflight kanıtıyla kayıtlıdır.
+
+2. Bu history gap çözülmeden **`supabase db push` çalıştırma** ve
+   `2026-08-19_gamification_and_custom_rooms.sql` dosyasını yeniden uygulama.
+   Eski fonksiyon tanımları daha yeni production sözleşmelerini geri yazabilir.
+   Önce canlı şema ile canonical SQL'in beklenen durumunu yeniden doğrula;
+   ardından hesap sahibi açıkça onaylarsa yalnız migration-history kaydını
+   eşitlemek için şu işlem kontrollü olarak değerlendirilir:
+
+```bash
+supabase migration repair --status applied 20260819000000
+```
+
+   Bu komut production migration history'yi değiştirir; salt-okunur denetimin
+   parçası değildir ve açık onay olmadan çalıştırılmaz.
+
+3. `2026-08-02_multiplayer_session_hardening.sql`,
+   `2026-08-03_streak_freeze_idempotency.sql` ve üç adet 2026-08-06 göçü
+   production'da uygulanmış ve `supabase/applied.md` içinde doğrulanmıştır.
+   Bunları yeniden çalıştırma. Aşağıdaki salt-okunur postflight sorgularıyla
+   mevcut production sözleşmesini doğrula; bir sonuç beklenenden farklıysa
+   yayın kesimini durdur ve kök nedeni incele.
 
 4. Yukarıdaki altı alanlı salt-okunur sorguyu yeni bir sorguda üretimde
    çalıştır. Altı değerden biri bile `false` ise istemci dağıtma ve sorunu
@@ -452,8 +475,9 @@ Accounts).
 - **Kullanım koşulları (EULA):** `https://www.zankurd.com/terms.html`
 - **Yaş derecelendirmesi:** anket, hepsine "yok/hiç".
 - **İhracat uyumluluğu:** sormayacak — kodda beyan ettik.
-- **İnceleme notu:** iOS sürümünde giriş e-posta/şifre veya misafir hesabıyla
-  yapılır. Sosyal giriş seçenekleri bu sürümde bilerek sunulmaz.
+- **İnceleme notu:** iOS sürümünde giriş **Apple, Google, e-posta/şifre ve
+  misafir** seçenekleriyle yapılır. Reviewer paketi ve App Store Connect notu
+  gönderilen binary'de gerçekten görünen bu dört yolu aynı biçimde anlatmalı.
 
 ### 5e. Metin ve görseller
 `docs/store_listing.md` içindeki App Store bölümü. Ekran görüntüleri
@@ -493,7 +517,19 @@ Bak:
 
 ## Bir dahaki sürümde
 
-`pubspec.yaml` içindeki `version: 1.9.1+13` satırında **+13**'ü artır
-(Play aynı numarayı iki kez kabul etmez). Sürüm notlarını
-`docs/release_notes_internal.md` en üstüne yeni başlıkla ekle, eskiyi
-silme.
+Önce **Play Console** içindeki en yüksek `versionCode` ve **App Store Connect**
+içindeki son yayımlanmış sürüm/build kimliğini kontrol et. `pubspec.yaml`
+içindeki `version: x.y.z+N` satırında **+N build numarası**, iki mağazaya daha
+önce yüklenmiş bütün build numaralarından büyük olmalı; yalnız yerelde üretilen
+bir artifact'ın numarasına bakarak karar verme.
+
+App Store'da `x.y.z` Marketing Version zaten yayındaysa, yeni bir App Store
+sürümü oluştururken yalnız `+N` artırmak yetmez: ürün değişikliğinin kapsamına
+uygun biçimde `x.y.z` Marketing Version değerini de ileri taşı ve ardından yeni
+build numarasını kullan. Henüz yayımlanmamış aynı App Store sürümünün yeni bir
+aday build'i hazırlanıyorsa marketing sürümü sabit kalabilir, ama build numarası
+yine daha önce yüklenmiş olanların üstünde olmalıdır.
+
+Sürüm veya build değişince `docs/app_review_packet_<version>_build<build>.md`
+paketini yeni binary ile eşleştir ve sürüm notlarını
+`docs/release_notes_internal.md` en üstüne yeni başlıkla ekle; eski kaydı silme.

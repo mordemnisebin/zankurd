@@ -1,6 +1,10 @@
-// Cihazsız uçtan uca akış.
+// Uçtan uca akışlar.
 //
+// CI / cihazsız:
 //   flutter test integration_test/app_flows_test.dart
+//
+// Fiziksel cihaz veya emülatör smoke:
+//   flutter test integration_test/app_flows_test.dart -d <device>
 //
 // Binding `TestWidgetsFlutterBinding` — CI'da emülatör yok. 1v1 ve
 // RevenueCat gerçek cihaz ister; onlar nightly işaretlidir, her push'ta

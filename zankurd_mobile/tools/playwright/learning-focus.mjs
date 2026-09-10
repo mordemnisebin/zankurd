@@ -4,9 +4,12 @@ import {fileURLToPath} from 'node:url';
 import {join} from 'node:path';
 import {chromium} from 'playwright';
 
-// Local debug build with the bundled offline repository.
-const output=fileURLToPath(new URL('../../docs/audit/learning_focus_2026-09-05/',import.meta.url));
+// Local web build with the bundled offline repository. Override the label when
+// the same journey is run against a different build flavor or environment.
+const output=process.env.ZANKURD_AUDIT_DIR??fileURLToPath(new URL('../../docs/audit/learning_focus_2026-09-05/',import.meta.url));
+const auditMode=process.env.ZANKURD_AUDIT_MODE??'local web build, offline repository';
 await mkdir(output,{recursive:true});
+await mkdir(join(output,'validation'),{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const page=await browser.newPage({viewport:{width:390,height:844}});
 const errors=[];
@@ -24,9 +27,17 @@ try {
  await page.goto(process.env.ZANKURD_URL??'http://127.0.0.1:8876');
  await page.getByText('Kurmancî hîn bibe, pêş bikeve.',{exact:true}).waitFor();
  await shot('onboarding');
+ const ageGate=page.getByRole('checkbox',{name:'Ez ji 13 salî mezintir im'});
+ await ageGate.waitFor({state:'visible'});
+ await ageGate.click();
+ await page.waitForFunction(() => document.querySelector('[role="checkbox"][aria-label="Ez ji 13 salî mezintir im"]')?.getAttribute('aria-checked') === 'true');
  await click('Dest pê bike');
- await page.getByRole('textbox').click();
- await page.getByRole('textbox').pressSequentially('Rojda',{delay:80});
+ await click('Wek mêvan bidomîne');
+ await page.getByText('Navê te di lîstikê de çi be?',{exact:true}).waitFor();
+ const nameInput=page.getByRole('textbox');
+ assert.equal(await nameInput.count(),1,'Name gate should expose one textbox');
+ await nameInput.click();
+ await nameInput.pressSequentially('Rojda',{delay:80});
  await page.waitForTimeout(400);
  await click('Dest pê bike');
  await page.getByText('DESTPÊKA BIÇÛK',{exact:true}).waitFor();
@@ -57,7 +68,7 @@ try {
   await click(i===4?'Biqedîne':'Bidomîne');
   await page.waitForTimeout(700);
  }
- await page.getByText('Fêrbûn temam bû',{exact:true}).waitFor();
+ await page.getByText('Hînbûn temam bû',{exact:true}).waitFor();
  await shot('result');
  const resultText=(await body())+' '+(await page.locator('[aria-label]').evaluateAll(es=>es.map(e=>e.getAttribute('aria-label')).join(' ')));
  assert(resultText.includes('5 bersiv'),'Result should summarize all five answers');
@@ -67,7 +78,7 @@ try {
  assert((await body()).includes('Erkên Rojane'),'Support cards should return after completion');
  await shot('completed-home');
  assert.deepEqual(errors,[]);
- const result={checkedAt:new Date().toISOString(),mode:'local debug, offline repository',journey:'onboarding → first 5 questions → result → refreshed home',screenshots,errors};
+ const result={checkedAt:new Date().toISOString(),mode:auditMode,journey:'onboarding → first 5 questions → result → refreshed home',screenshots,errors};
  await writeFile(join(output,'validation/browser.json'),JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result));
 } catch(error) {

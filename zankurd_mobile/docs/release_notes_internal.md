@@ -13,6 +13,92 @@ Yeni sürüm hazırlarken: en üste yeni bir başlık aç, eskiyi silme.
 
 ---
 
+## 1.9.2+20 — 2026-09-10
+
+Bu paket yayın öncesi doğrulama ve release-hygiene turudur. Son yerel doğrulama
+setinde `flutter analyze` temiz geçti; release/checklist/migration sözleşmeleri
+32/32, tam Flutter paketi 2740/2740 test ile `All tests passed!` sonucunu verdi.
+91 ekran/varyantlık görsel tur da eksiksiz geçti.
+
+### Son regresyon düzeltmeleri
+
+- Hesap değişiminde cihazdaki yerel rozetler artık önceki kullanıcıdan yeni
+  kullanıcıya taşınmıyor.
+- Günlük görev deposu gün değişimini singleton sıfırlaması gerektirmeden
+  algılıyor; dünkü görev/sayaç durumu yeni güne yazılamıyor.
+- Seviye belirleme ekranında hızlı çift dokunuşun aynı cevabı iki kez
+  işlemesi ve soru atlatması engellendi.
+- “Hareketi azalt” tercihi doğru cevap geri bildirimi ile ana ekran giriş
+  animasyonunda da uygulanıyor.
+- Sosyal OAuth tarayıcı açılışı gerçek oturum oluşmadan başarılı giriş
+  analitiği sayılmıyor; mağazada kozmetik kuşanma kaydı başarısızsa satın alma
+  başarı kutlaması gösterilmiyor ve retry ikinci kez jeton harcamıyor.
+- Alt kategori hero görseli dekoratif semantics düğümü olmaktan çıkarıldı.
+- Öğrenme ekranındaki “Flaş kart” eylemi artık normal ders görünümüne değil,
+  doğrudan kart kipine açılıyor; “Dersler” normal ders kipinde kalıyor.
+- “Soru çöz” akışı boş soru havuzunda veya yükleme hatasında sessizce
+  kapanmak yerine yerelleştirilmiş uyarı ve “Tekrar” eylemi gösteriyor.
+- Çevrimiçi turdaki sunucu UUID'li sorular sonuç ekranına kaynak soru olarak
+  taşınıyor; yerel bankada bulunmasalar bile Yanlışlar → Tekrar akışı çalışıyor.
+- Playwright smoke turu offline ve sosyal-backend modlarını açıkça ayırıyor;
+  offline turda kilitli hızlı düelloyu tıklamaya çalışmıyor.
+
+### Derleme doğrulaması
+
+- Production istemci yapılandırması değerleri yazdırılmadan web ve mobil için
+  doğrulandı; production web release derlemesi `build/web` altında üretildi.
+- Android release AAB başarıyla üretildi; `jarsigner` sonucu `jar verified`,
+  `bundletool validate` temiz. Manifestte `com.zankurd.app`, versionCode `20`
+  ve versionName `1.9.2` doğrulandı.
+- iPhoneOS Release, `--no-codesign` ile başarıyla derlendi. Üretilen
+  `Runner.app` içinde bundle id `com.zankurd.app`, sürüm `1.9.2`, build `20`
+  doğrulandı; bu tur gerçek App Store imzası/IPA yüklemesi yapmadı.
+- Production backend'e yazma riski yaratmamak için tarayıcı etkileşim smoke'u
+  ayrı, Supabase yapılandırması olmayan güvenli yerel build üzerinde yapıldı.
+  Ana Playwright smoke geçti; learning-focus turu 10 ekran görüntüsüyle
+  `errors: []` verdi.
+
+### Yayın güvenliği
+
+- Production şemasına veya uygulama verisine SQL yeniden uygulanmadı. Yalnız
+  migration-history metadata'sındaki doğrulanmış fark, hesap sahibi onayıyla
+  `supabase migration repair --status applied 20260819000000` kullanılarak
+  eşitlendi; ardından `supabase migration list --linked` ile local/remote
+  geçmişin eşleştiği doğrulandı.
+- `20260819000000_gamification_and_custom_rooms.sql` yeniden çalıştırılmadı.
+  History farkı tekrar görülürse doğrudan `supabase db push` yapılmamalı;
+  önce aynı kontrollü history doğrulama/repair prosedürü yeniden değerlendirilmeli.
+- Playwright onboarding smoke turundaki yaş onayı Flutter web semantiğinde
+  `.check()` yerine `.click()` sonrası `aria-checked=true` beklenerek
+  doğrulanıyor; bu davranış release tooling kontratıyla korunuyor.
+- Güvenli offline smoke sosyal backend beklemiyor. Staging/preview turunda
+  gerçek matchmaking doğrulaması yalnız staging yapılandırmasıyla ve
+  `ZANKURD_EXPECT_SOCIAL=1` ile etkinleştirilmeli; production yapılandırması
+  yerel otomatik smoke için kullanılmamalı.
+
+### Bilinen bloklayıcı olmayan araç zinciri borçları
+
+- `flutter_tts 4.2.5` web WASM dry-run'da JS interop uyumluluk uyarıları
+  üretiyor; mevcut JavaScript web release derlemesi başarıyla tamamlanıyor.
+- Bazı Android eklentileri Built-in Kotlin geçişi, `flutter_tts` ise iOS Swift
+  Package Manager desteği için gelecek Flutter sürümlerine dönük uyarı veriyor.
+  Flutter 3.44.7 ile mevcut Android/iOS release derlemelerini engellemiyorlar.
+- `cached_network_image` için 4.x major sürümü mevcut; bu release-hygiene
+  turuna ilişkisiz API değişikliği taşımamak için yükseltme ayrı tutuldu.
+
+### Bu sürümde kalan manuel kapılar
+
+- Staging/preview istemci yapılandırmasının sağlanması ve iki istemcili sosyal
+  akışın staging backend üzerinde doğrulanması.
+- App Store Connect / Play Console üzerindeki gerçek en yüksek build ve sürüm
+  numarasının gönderimden önce kontrol edilmesi.
+- Fiziksel cihazda gerçek mağaza, satın alma/restore ve iki yönlü production
+  multiplayer smoke turu; App Store için gerçek imzalı IPA/arşiv doğrulaması.
+- Hosting deploy kimlik bilgilerinin (`.env.deploy`) sağlanması ve gerçek
+  deploy'un ayrıca yürütülmesi.
+
+---
+
 ## 1.9.1+13 — 2026-07-27
 
 Bu tur bir denetim turudur: yeni özellik yok, 112 düzeltme var. Ağırlık
