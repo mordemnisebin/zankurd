@@ -829,14 +829,16 @@ class AppTheme {
   /// Rengîn kimliği şıklara renkten değil GEOMETRİDEN gelir: rozet artık
   /// elmas. Karakter kazanıldı, sahte ipucu kazanılmadı.
   ///
-  /// Ton `#545C63` griden mürekkep ailesine çekildi — aynı nötr işlevi
-  /// görür ama paletin geri kalanıyla akraba. Doygunluk 0.20 (< 0.35
-  /// tavanı), hue 217° (doğru/yanlış hue'larından 73°/209° uzak).
+  /// Ton `#545C63` griden önce mürekkep ailesine, 2026-09-10'da sıcak
+  /// antrasite çekildi — aynı nötr işlevi görür ama markanın
+  /// krem/yeşil/turuncu ailesiyle akrabadır. Doygunluk 0.19 (< 0.35
+  /// tavanı), hue ~46°: doğru (144°) ve yanlış (8°) hue'larından 30°'den
+  /// fazla uzak — bekçisi `answer_option_color_semantics_test`.
   static const List<Color> answerOptionColors = [
-    Color(0xFF3A4557),
-    Color(0xFF3A4557),
-    Color(0xFF3A4557),
-    Color(0xFF3A4557),
+    Color(0xFF413C2C),
+    Color(0xFF413C2C),
+    Color(0xFF413C2C),
+    Color(0xFF413C2C),
   ];
 
   static LinearGradient categoryGradient(int index) {
