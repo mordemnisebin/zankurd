@@ -46,6 +46,8 @@ class AppErrorState extends StatelessWidget {
     required this.onRetry,
     super.key = const ValueKey('app-error-state'),
     this.icon = AppIcons.triangleExclamation,
+    this.showMascot = false,
+    this.mascotMood = RojMood.sad,
   });
 
   final IconData icon;
@@ -53,6 +55,11 @@ class AppErrorState extends StatelessWidget {
   final String message;
   final String retryLabel;
   final VoidCallback onRetry;
+
+  /// true ise ikon halkası yerine Roj maskotu gösterilir (hata için
+  /// üzgün varsayılan); küçük ikon rozeti köşede kalır.
+  final bool showMascot;
+  final RojMood mascotMood;
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +70,8 @@ class AppErrorState extends StatelessWidget {
       message: message,
       actionLabel: retryLabel,
       onAction: onRetry,
+      showMascot: showMascot,
+      mascotMood: mascotMood,
     );
   }
 }
@@ -74,12 +83,19 @@ class AppOfflineState extends StatelessWidget {
     required this.retryLabel,
     required this.onRetry,
     super.key = const ValueKey('app-offline-state'),
+    this.showMascot = false,
+    this.mascotMood = RojMood.thinking,
   });
 
   final String title;
   final String message;
   final String retryLabel;
   final VoidCallback onRetry;
+
+  /// true ise ikon halkası yerine Roj maskotu gösterilir (çevrimdışı
+  /// için düşünceli varsayılan); küçük ikon rozeti köşede kalır.
+  final bool showMascot;
+  final RojMood mascotMood;
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +107,8 @@ class AppOfflineState extends StatelessWidget {
       actionLabel: retryLabel,
       onAction: onRetry,
       actionIcon: AppIcons.arrowsRotate,
+      showMascot: showMascot,
+      mascotMood: mascotMood,
     );
   }
 }
@@ -105,11 +123,13 @@ class _AppStateScaffold extends StatelessWidget {
     this.onAction,
     this.actionIcon,
     this.showMascot = false,
+    this.mascotMood = RojMood.thinking,
   });
 
-  /// true ise ikon halkası yerine Zana maskotu (düşünceli) gösterilir;
+  /// true ise ikon halkası yerine Zana maskotu gösterilir;
   /// küçük ikon rozeti köşede kalır (mevcut testler ikonu bulmaya devam eder).
   final bool showMascot;
+  final RojMood mascotMood;
 
   final IconData icon;
   final Color iconColor;
@@ -214,7 +234,7 @@ class _AppStateScaffold extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 if (showMascot) ...[
-                  const RojMascot(size: 100, mood: RojMood.thinking),
+                  RojMascot(size: 100, mood: mascotMood),
                   Positioned(
                     right: -4,
                     bottom: -2,

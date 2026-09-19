@@ -860,6 +860,11 @@ class AppTheme {
     Color(0xFF1E6962),
   ];
 
+  /// Dekoratif teal — CTA için KULLANILMAZ.
+  ///
+  /// Birincil eylemler yalnız [primaryCtaColor] / [brand] kullanır.
+  /// Bu teal yalnız çark segmenti ve turnuva gradyanı gibi dekoratif
+  /// yüzeyler içindir; yeni CTA butonu için referans alınmamalı.
   static const ctaTeal = Color(0xFF288077);
   static const ctaTealDeep = Color(0xFF1E6962);
   static const List<Color> ctaTealGradient = [ctaTeal, ctaTealDeep];

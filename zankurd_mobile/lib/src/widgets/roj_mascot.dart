@@ -44,9 +44,10 @@ class RojMascot extends StatelessWidget {
   final double size;
   final RojMood mood;
 
-  /// Işınların dönüşümlü rengi: altın (kimlik/ödül) + indigo (yeni marka
-  /// rengiyle bağ) — sakin, ritmik iki renkli şerit. Dört rengin dönüşümü
-  /// küçük boyutta gürültü gibi okunduğu için sadeleştirildi.
+  /// Işınların dönüşümlü rengi: altın (kimlik/ödül) + brand/Tîrêj
+  /// turuncusu (birincil eylem) — sakin, ritmik iki renkli şerit. Dört
+  /// rengin dönüşümü küçük boyutta gürültü gibi okunduğu için
+  /// sadeleştirildi.
   static const rayColors = [AppTheme.gold, AppTheme.brand];
 
   @override

@@ -1219,7 +1219,7 @@ class _CupLadder extends StatelessWidget {
           for (var i = 0; i < steps.length; i++) ...[
             if (i > 0)
               Icon(
-                Icons.chevron_right_rounded,
+                AppIcons.chevronRight,
                 size: 16,
                 color: AppTheme.textMutedColor(context),
               ),
@@ -1423,7 +1423,7 @@ class _RoundProgressStrip extends StatelessWidget {
         for (var i = 0; i < rounds.length && i < roundNames.length; i++) ...[
           if (i > 0)
             Icon(
-              Icons.chevron_right_rounded,
+              AppIcons.chevronRight,
               size: 15,
               color: AppTheme.textMutedColor(context),
             ),
@@ -1457,9 +1457,9 @@ class _RoundPill extends StatelessWidget {
     final light = AppTheme.isLight(context);
     // Renk tek kanal değil: her durumun kendi ikonu var.
     final (tone, icon) = switch (state) {
-      _RoundState.done => (const Color(0xFF0E7A57), Icons.check_rounded),
-      _RoundState.active => (AppTheme.gold, Icons.play_arrow_rounded),
-      _RoundState.upcoming => (const Color(0xFF3A4557), Icons.remove_rounded),
+      _RoundState.done => (const Color(0xFF0E7A57), AppIcons.check),
+      _RoundState.active => (AppTheme.gold, AppIcons.play),
+      _RoundState.upcoming => (const Color(0xFF3A4557), AppIcons.clock),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),

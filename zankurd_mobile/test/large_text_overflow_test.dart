@@ -21,6 +21,7 @@ import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -314,5 +315,37 @@ void main() {
 
   testWidgets('dar ekran — giriş', (t) async {
     await expectNoOverflow(t, const SignInScreen(), size: se, textScale: 1.0);
+  });
+
+  testWidgets('şık — üç uzun rakip ismi %200 yazıda alt satıra iner', (
+    t,
+  ) async {
+    // 2026-09: rakip rozetleri sabit `Row` idi; 2-3 uzun isim veya %200
+    // ölçekte yatay taşma çizgileri çıkıyordu. `Wrap` aynı görünümü tek
+    // satırda korur, sığmayınca alt satıra iner. Bu test dar çerçevede
+    // (320px) üç uzun isimle taşma olmadığını sabitler.
+    await expectNoOverflow(
+      t,
+      Scaffold(
+        body: Center(
+          child: SizedBox(
+            width: 320,
+            child: QuizOptionTile(
+              index: 0,
+              answer: 'Bersiva rast a pirsê ev e',
+              selected: false,
+              correct: false,
+              disabled: true,
+              onTap: () {},
+              opponentNamesWhoSelected: const [
+                'Dilbixwînê Mezin',
+                'Rojda Xanimê Dirêj',
+                'Şivanê Çiyayî',
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   });
 }

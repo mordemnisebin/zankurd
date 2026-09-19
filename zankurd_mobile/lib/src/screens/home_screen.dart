@@ -11,7 +11,6 @@ import '../data/learning_goal_store.dart';
 import '../data/streak_store.dart';
 import '../data/xp_store.dart';
 import '../widgets/progress_summary.dart';
-import '../widgets/roj_mascot.dart';
 import '../widgets/streak_panel.dart';
 import '../data/question_bank_loader.dart';
 import '../data/zankurd_repository.dart';
@@ -40,7 +39,6 @@ import 'home/home_level_path.dart';
 import 'home/home_rows.dart';
 import 'level_screen.dart';
 import '../widgets/app_row_card.dart';
-import '../widgets/mode_card.dart';
 import 'home/daily_missions_card.dart';
 import 'shop_screen.dart';
 import '../data/mastery_store.dart';
@@ -532,19 +530,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         children: [
           KeyedSubtree(
             key: const ValueKey('home-play-handoff'),
-            child: ModeCard(
+            child: HomeSupportRow(
               key: const ValueKey('home-duel-row'),
-              compact: true,
-              emphasis: ModeCardEmphasis.secondary,
+              surfaceKey: const ValueKey('home-duel-flat-surface'),
               icon: AppIcons.bolt,
-              // Düello rekabet yüzeyi: madder ailesinden enerjik bir ton.
               accent: const Color(0xFFB31E3B),
               title: context.t(K.homeQuickDuel),
               subtitle: context.t(K.homeQuickDuelSub),
               onTap: () => widget.onOpenPlay?.call(),
             ),
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: AppSpacing.sm),
           // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
           // görünüm iki aktif görevi ve kalan sayısını gösterir; tüm görevler
           // ekranın altına taşınıp öğrenme yollarını gömmez.
@@ -575,11 +571,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               }
               return Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.xs),
-                child: AppRowCard(
+                child: HomeSupportRow(
                   key: const ValueKey('home-premium-row'),
+                  surfaceKey: const ValueKey('home-premium-flat-surface'),
                   icon: AppIcons.gem,
-                  // Altın ödül/ilerleme ailesine ayrılmış; abonelik de o
-                  // aileye girer ve paywall'ın kendi vurgusu da altındır.
                   accent: AppTheme.gold,
                   // Ad çevrilmez: App Store Connect'teki abonelik adının
                   // kendisidir (bkz. `AppConfig.subscriptionDisplayName`).
@@ -639,10 +634,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// Pirs stili tam-genişlik (full-bleed) gradient header.
-  /// Kenarlarda kenar boşluğu yok; altında yuvarlatılmış köşeler.
+  /// Ana sayfanın kompakt hesap başlığı.
+  ///
+  /// Üst alan bir oyun HUD'ı gibi davranmaz; selamlama, hesap kimliği ve
+  /// hızlı ayarlar aynı sakin yüzeyde ikincil önemde tutulur.
   Widget _buildFullBleedHeader(BuildContext context, bool ku) {
-    return SafeArea(bottom: false, child: _buildCompactHeader(context, ku));
+    return SafeArea(
+      bottom: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+        child: _buildCompactHeader(context, ku),
+      ),
+    );
   }
 
   Widget _buildCompactHeader(BuildContext context, bool ku) {
@@ -678,157 +681,98 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       'name': shortName,
     });
 
-    return Container(
+    return Padding(
       key: const ValueKey('home-profile-header'),
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
-      decoration: const BoxDecoration(
-        // Düz renk BİLEREK duruyor. `AppTheme.homeHeaderGradient` bu şerit
-        // için yazılmış ama kullanılmıyor ve 2026-07-31 denetimi bunu
-        // "ölü token" diye bildirdi. Gradyana çevirmek denendi ve
-        // `kulturel_modern_home_test.dart`i kırdı: o testin kuralı
-        // "gradyan 'buraya bas' demektir, ekran başına bir tane" ve ana
-        // ekranın gradyanı zaten "Başla" düğmesinin.
-        //
-        // Yani token ölü değil, kural onu dışarıda bırakıyor. Şeride
-        // derinlik istenirse yol gradyan değil: filigran/doku katmanı.
-        color: AppTheme.culturalBrandBg,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(24),
-          bottomRight: Radius.circular(24),
-        ),
-      ),
-      // 2026-07-24: dekoratif daireler ve 220px'lik yıldız filigranı
-      // kaldırıldı. Başlık şeridinin işi selamlama + iki metrik; arkasındaki
-      // süs metnin kontrastını düşürmekten başka bir şey yapmıyordu.
-      child: Stack(
-        clipBehavior: Clip.none,
+      padding: const EdgeInsets.fromLTRB(2, 8, 2, 2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final metrics = Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Seri sıfırken rozet "🔥 0" yazıyordu: serinin amacı
-                      // motive etmek, oysa ilk gün kullanıcıyı sıfırla
-                      // karşılıyordu (2026-07-25 canlı denetimi). Sayı
-                      // yerine metin koymak ise başlık satırını dar
-                      // ekranlarda taşırıyor; seri başlayana kadar rozet
-                      // yalnız alevi gösterir — özellik görünür kalır,
-                      // sıfır vurgulanmaz.
-                      _buildHeaderBadge(
-                        AppIcons.fire,
-                        AppTheme.brand,
-                        _streak > 0 ? '$_streak' : null,
-                        semanticLabel: context.t(K.dailyStreakDays, {
-                          'days': '$_streak',
-                        }),
-                        onTap: () => _showStreakFreezeBottomSheet(context),
-                      ),
-                      const SizedBox(width: 12),
-                      _buildHeaderBadge(
-                        AppIcons.coins,
-                        AppTheme.gold,
-                        '$_coinBalance',
-                        semanticLabel: context.t(K.shop),
-                        onTap: () async {
-                          await Navigator.of(
-                            context,
-                          ).push(AppRoute.to(ShopScreen(repository: repo)));
-                          if (mounted) await _refreshCoins();
-                        },
-                      ),
-                    ],
-                  );
-                  final controls = Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _buildHeaderQuickControls(context, ku),
-                      const SizedBox(width: 12),
-                      // Avatar harfi ve rengi profil ekranıyla aynı çözümlenmiş
-                      // addan türetilir; ham ad verildiğinde ana ekranda "Z",
-                      // profilde "L" görünüyordu.
-                      PlayerAvatar(
-                        radius: 20,
-                        displayName: PlayerIdentity.resolveName(
-                          currentName,
-                          isKu: ku,
-                        ),
-                        // Renk dilden bağımsız tohumdan: ad yer tutucuysa
-                        // dile göre değişiyordu (2026-08-10).
-                        colorSeed: PlayerIdentity.resolveColorSeed(currentName),
-                      ),
-                    ],
-                  );
-                  if (constraints.maxWidth < 300) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Align(alignment: Alignment.centerLeft, child: metrics),
-                        const SizedBox(height: 12),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: controls,
-                        ),
-                      ],
-                    );
-                  }
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [metrics, controls],
-                  );
-                },
-              ),
-              const SizedBox(height: 18),
-              // Zana selamlamada.
-              //
-              // Maskot uygulamanın her yerinde vardı ama ana ekranda
-              // yoktu; kullanıcının günde ilk gördüğü ekran kimliksiz
-              // açılıyordu. Ruh hâli seriye bağlı: seri sürüyorsa
-              // kutlar, kırıldıysa gülümser — durumu SÖYLEMEDEN gösterir
-              // ve seri rozeti zaten sayıyı yazıyor.
-              Row(
-                children: [
-                  RojMascot(
-                    key: const ValueKey('home-zana'),
-                    size: 56,
-                    mood: isTest
-                        ? (_streak > 0 ? RojMood.celebrate : RojMood.happy)
-                        : greetingMascotMood(hour: hour, streak: _streak),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: AlignmentDirectional.centerStart,
-                      child: Text(
-                        greeting,
-                        maxLines: 1,
-                        style: AppTypography.heading1.copyWith(
-                          color: Colors.white,
-                          fontSize: 23,
-                          fontWeight: FontWeight.w700,
-                        ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      greeting,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.heading2.copyWith(
+                        color: AppTheme.textPrimaryColor(context),
+                        fontSize: 19,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 3),
-              Text(
-                context.t(K.homeMotto),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.white70,
-                  height: 1.4,
+                    const SizedBox(height: 2),
+                    Text(
+                      context.t(K.homeMotto),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        color: AppTheme.textSubColor(context),
+                        height: 1.35,
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              const SizedBox(width: 12),
+              PlayerAvatar(
+                radius: 20,
+                displayName: PlayerIdentity.resolveName(currentName, isKu: ku),
+                colorSeed: PlayerIdentity.resolveColorSeed(currentName),
+              ),
             ],
+          ),
+          const SizedBox(height: 12),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final metrics = Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildHeaderBadge(
+                    AppIcons.fire,
+                    AppTheme.brand,
+                    _streak > 0 ? '$_streak' : null,
+                    semanticLabel: context.t(K.dailyStreakDays, {
+                      'days': '$_streak',
+                    }),
+                    onTap: () => _showStreakFreezeBottomSheet(context),
+                  ),
+                  const SizedBox(width: 8),
+                  _buildHeaderBadge(
+                    AppIcons.coins,
+                    AppTheme.gold,
+                    '$_coinBalance',
+                    semanticLabel:
+                        '${context.t(K.shop)}. $_coinBalance ${context.t(K.coinWord)}',
+                    onTap: () async {
+                      await Navigator.of(
+                        context,
+                      ).push(AppRoute.to(ShopScreen(repository: repo)));
+                      if (mounted) await _refreshCoins();
+                    },
+                  ),
+                ],
+              );
+              final controls = _buildHeaderQuickControls(context, ku);
+              if (constraints.maxWidth < 300) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Align(alignment: Alignment.centerLeft, child: metrics),
+                    const SizedBox(height: 8),
+                    Align(alignment: Alignment.centerRight, child: controls),
+                  ],
+                );
+              }
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [metrics, controls],
+              );
+            },
           ),
         ],
       ),
@@ -978,25 +922,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     String? semanticLabel,
   }) {
     final badge = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.14)),
+        color: AppTheme.surfaceHiColor(context),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppTheme.borderColor(context).withValues(alpha: 0.72),
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: iconColor, size: 18),
+          Icon(icon, color: iconColor, size: 16),
           if (text != null) ...[
-            const SizedBox(width: 6),
+            const SizedBox(width: 5),
             Text(
               text,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: AppTheme.textPrimaryColor(context),
                 fontWeight: FontWeight.w600,
-                fontSize: 14,
+                fontSize: 13,
               ),
             ),
           ],
@@ -1015,18 +961,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Semantics(
       button: true,
       label: semanticLabel,
+      excludeSemantics: true,
+      onTap: onTap,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: badge,
+        excludeFromSemantics: true,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+          child: Center(child: badge),
+        ),
       ),
     );
   }
 
   Widget _buildHeaderQuickControls(BuildContext context, bool ku) {
     final themeProvider = context.watch<ThemeProvider>();
-    const border = Colors.white24;
-    const fill = Colors.white12;
+    final border = AppTheme.borderColor(context).withValues(alpha: 0.72);
+    final fill = AppTheme.surfaceHiColor(context);
+    final foreground = AppTheme.textSubColor(context);
 
     Widget control({
       required Key key,
@@ -1038,15 +991,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         button: true,
         label: tooltip,
         excludeSemantics: true,
+        onTap: onTap,
         child: Tooltip(
           message: tooltip,
           child: InkWell(
             key: key,
             onTap: onTap,
+            excludeFromSemantics: true,
             borderRadius: BorderRadius.circular(12),
             child: Container(
-              width: 40,
-              height: 40,
+              width: 48,
+              height: 48,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: fill,
@@ -1071,8 +1026,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             onTap: context.langProvider.toggle,
             child: Text(
               context.t(K.languageCode),
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: foreground,
                 fontWeight: FontWeight.w800,
                 fontSize: 12,
               ),
@@ -1085,7 +1040,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             onTap: themeProvider.toggleDarkLight,
             child: Icon(
               themeProvider.isDark ? AppIcons.moon : AppIcons.sun,
-              color: Colors.white,
+              color: foreground,
               size: 19,
             ),
           ),

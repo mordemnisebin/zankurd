@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/reduced_motion_provider.dart';
+import '../theme/app_theme.dart';
 
 class ConfettiOverlay extends StatefulWidget {
   const ConfettiOverlay({
@@ -113,15 +114,15 @@ class _ConfettiParticle {
     final vy = sin(angle) * speed;
 
     final size = 6.0 + random.nextDouble() * 8.0;
+    // Marka paleti: altın (ödül) + brand/Tîrêj ailesi + derin yeşil +
+    // krem. Neon accent'ler ödül anını marka dışına taşıyordu.
     final colors = [
-      Colors.redAccent,
-      Colors.blueAccent,
-      Colors.greenAccent,
-      Colors.yellowAccent,
-      Colors.orangeAccent,
-      Colors.purpleAccent,
-      Colors.pinkAccent,
-      Colors.tealAccent,
+      AppTheme.gold,
+      AppTheme.brand,
+      AppTheme.brandLite,
+      AppTheme.brandDeep,
+      AppTheme.culturalBrandBg,
+      AppTheme.lightBg,
     ];
     final color = colors[random.nextInt(colors.length)];
 

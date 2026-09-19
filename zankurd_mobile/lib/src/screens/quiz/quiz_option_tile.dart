@@ -372,14 +372,17 @@ class QuizOptionTile extends StatelessWidget {
                       if (opponentNamesWhoSelected != null &&
                           opponentNamesWhoSelected!.isNotEmpty) ...[
                         const SizedBox(height: 6),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                        // Rakip rozetleri bir zamanlar sabit `Row` idi:
+                        // 2-3 uzun isim veya %200 yazı ölçeğinde yatay
+                        // taşma çizgileri çıkıyordu. `Wrap` aynı görünümü
+                        // tek satırda korur, sığmayınca alt satıra iner.
+                        Wrap(
+                          alignment: WrapAlignment.end,
+                          spacing: AppSpacing.xxs,
+                          runSpacing: 4,
                           children: opponentNamesWhoSelected!
                               .map(
                                 (name) => Container(
-                                  margin: const EdgeInsets.only(
-                                    left: AppSpacing.xxs,
-                                  ),
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: AppSpacing.xxs,
                                     vertical: 2,
@@ -396,11 +399,19 @@ class QuizOptionTile extends StatelessWidget {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(
-                                        name,
-                                        style: AppTypography.caption.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w800,
+                                      // Uzun isim %200 ölçekte rozet
+                                      // genişliğini aşıyordu: `Flexible` +
+                                      // tek satır + elipsis ile rozet satır
+                                      // genişliğine bağlanır.
+                                      Flexible(
+                                        child: Text(
+                                          name,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppTypography.caption.copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w800,
+                                          ),
                                         ),
                                       ),
                                       const SizedBox(width: 4),
