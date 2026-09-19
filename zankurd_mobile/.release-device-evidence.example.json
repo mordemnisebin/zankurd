@@ -1,0 +1,23 @@
+{
+  "version": "1.9.2+20",
+  "source_fingerprint": "RUN_--print-source-fingerprint_AND_REPLACE",
+  "verified_at": "2026-09-13T00:00:00Z",
+  "checks": {
+    "local_backend_1v1_test": {
+      "passed": false,
+      "device": ""
+    },
+    "revenuecat_roundtrip_test": {
+      "passed": false,
+      "device": ""
+    },
+    "notification_real_schedule_test": {
+      "passed": false,
+      "device": ""
+    },
+    "os_level_resilience_test": {
+      "passed": false,
+      "device": ""
+    }
+  }
+}
