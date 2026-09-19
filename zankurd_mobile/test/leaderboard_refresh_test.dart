@@ -118,4 +118,43 @@ void main() {
     expect(repository.loadCalls, greaterThan(initialCalls));
     expect(tester.takeException(), isNull);
   });
+
+  // Regression: IndexedStack gizli sekmeleri dispose etmez; 30sn'lik sayaç
+  // kullanıcı başka sekmedeyken de RPC atıyordu (gereksiz veri/pil/kota).
+  // `isVisible` kapalıyken sayaç atlanır, açıkken (varsayılan) çalışır.
+  testWidgets('gizli sekmede otomatik tazeleme RPC atmaz', (tester) async {
+    final repository = _CountingLeaderboardRepository();
+    await tester.pumpWidget(
+      _shell(LeaderboardScreen(repository: repository, isVisible: () => false)),
+    );
+    await tester.pumpAndSettle();
+    final initialCalls = repository.loadCalls;
+
+    await tester.pump(const Duration(seconds: 31));
+    await tester.pumpAndSettle();
+
+    expect(
+      repository.loadCalls,
+      initialCalls,
+      reason: 'gizli sekme 30sn sayacında RPC atmamalı',
+    );
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('görünür sekmede otomatik tazeleme çalışır', (tester) async {
+    final repository = _CountingLeaderboardRepository();
+    await tester.pumpWidget(_shell(LeaderboardScreen(repository: repository)));
+    await tester.pumpAndSettle();
+    final initialCalls = repository.loadCalls;
+
+    await tester.pump(const Duration(seconds: 31));
+    await tester.pumpAndSettle();
+
+    expect(
+      repository.loadCalls,
+      greaterThan(initialCalls),
+      reason: 'görünür sekmede 30sn tazeleme sürmeli',
+    );
+    expect(tester.takeException(), isNull);
+  });
 }

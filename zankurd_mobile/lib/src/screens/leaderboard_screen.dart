@@ -32,12 +32,19 @@ class LeaderboardScreen extends StatefulWidget {
     required this.repository,
     this.scrollController,
     this.refreshSignal,
+    this.isVisible,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final ScrollController? scrollController;
   final ValueNotifier<int>? refreshSignal;
+
+  /// AppShell sekmesi görünür mü? `IndexedStack` gizli sekmeleri dispose
+  /// etmediği için 30sn'lik otomatik tazeleme, kullanıcı başka sekmedeyken
+  /// bile RPC atıyordu. Kapı kapalıyken sayaç atlanır; null ise eski
+  /// davranış (her zaman tazele) korunur.
+  final bool Function()? isVisible;
 
   @override
   State<LeaderboardScreen> createState() => _LeaderboardScreenState();
@@ -439,7 +446,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   void _startAutoRefresh() {
     _refreshTimer?.cancel();
     _refreshTimer = Timer.periodic(const Duration(seconds: 30), (_) {
-      if (mounted) _loadData();
+      if (!mounted) return;
+      if (!(widget.isVisible?.call() ?? true)) return;
+      _loadData();
     });
   }
 

@@ -547,6 +547,7 @@ class _AppShellState extends State<AppShell>
       2 => LeaderboardScreen(
         repository: widget.repository,
         refreshSignal: _leaderboardRefresh,
+        isVisible: () => _tab == 2,
       ),
       3 => ProfileScreen(
         repository: widget.repository,
@@ -736,8 +737,9 @@ class _AppShellState extends State<AppShell>
 
   Future<void> _loadProfileNameState(String? userId) async {
     setState(() => _checkingProfileName = true);
+    final offlineMode = context.read<AuthProvider>().isOfflineMode;
     final preferences = await SharedPreferences.getInstance();
-    final key = _profileNameCompletionKey(userId);
+    final key = _profileNameCompletionKey(userId, offlineMode: offlineMode);
     final completed = key != null && preferences.getBool(key) == true;
 
     // Bu kapı yalnız oyuncunun adı başarıyla kaydettiğini belirten yerel
@@ -753,8 +755,12 @@ class _AppShellState extends State<AppShell>
   }
 
   Future<void> _completeProfileName() async {
+    final offlineMode = context.read<AuthProvider>().isOfflineMode;
     final preferences = await SharedPreferences.getInstance();
-    final key = _profileNameCompletionKey(widget.repository.currentUserId);
+    final key = _profileNameCompletionKey(
+      widget.repository.currentUserId,
+      offlineMode: offlineMode,
+    );
     if (key != null) await preferences.setBool(key, true);
     if (!mounted) return;
     setState(() {
@@ -763,10 +769,18 @@ class _AppShellState extends State<AppShell>
     });
   }
 
-  String? _profileNameCompletionKey(String? userId) {
+  String? _profileNameCompletionKey(
+    String? userId, {
+    required bool offlineMode,
+  }) {
     final normalized = userId?.trim();
-    if (normalized == null || normalized.isEmpty) return null;
-    return '$_profileNameCompletedKeyPrefix$normalized';
+    if (normalized != null && normalized.isNotEmpty) {
+      return '$_profileNameCompletedKeyPrefix$normalized';
+    }
+    if (offlineMode) {
+      return '${_profileNameCompletedKeyPrefix}offline-local';
+    }
+    return null;
   }
 
   void _scheduleRoomResumeCheck(String userId) {
