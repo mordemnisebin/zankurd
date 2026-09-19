@@ -65,10 +65,12 @@ class PremiumService extends ChangeNotifier {
     Future<bool> Function()? isAnonymous,
     Future<CustomerInfo> Function()? logOut,
     Future<Offerings> Function()? getOfferings,
+    Future<CustomerInfo> Function()? getCustomerInfo,
     void Function(Object, StackTrace, {String? reason})? recordError,
   }) : _isAnonymous = isAnonymous ?? (() => Purchases.isAnonymous),
        _logOut = logOut ?? Purchases.logOut,
        _getOfferings = getOfferings ?? Purchases.getOfferings,
+       _getCustomerInfo = getCustomerInfo ?? Purchases.getCustomerInfo,
        _recordError = recordError ?? ErrorReporter.record;
 
   static const _entitlementId = 'premium';
@@ -87,6 +89,7 @@ class PremiumService extends ChangeNotifier {
   final Future<bool> Function() _isAnonymous;
   final Future<CustomerInfo> Function() _logOut;
   final Future<Offerings> Function() _getOfferings;
+  final Future<CustomerInfo> Function() _getCustomerInfo;
   final void Function(Object, StackTrace, {String? reason}) _recordError;
 
   static PremiumService? get instance => _instance;
@@ -141,6 +144,7 @@ class PremiumService extends ChangeNotifier {
     required Future<bool> Function() isAnonymous,
     required Future<CustomerInfo> Function() logOut,
     Future<Offerings> Function()? fetchOfferings,
+    Future<CustomerInfo> Function()? fetchCustomerInfo,
     void Function(Object, StackTrace, {String? reason})? recordError,
     bool configured = true,
     bool configurationFailed = false,
@@ -149,6 +153,7 @@ class PremiumService extends ChangeNotifier {
       isAnonymous: isAnonymous,
       logOut: logOut,
       getOfferings: fetchOfferings,
+      getCustomerInfo: fetchCustomerInfo,
       recordError: recordError,
     );
     service
@@ -228,6 +233,25 @@ class PremiumService extends ChangeNotifier {
       notifyListeners();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'premium_service warmUp');
+    }
+  }
+
+  /// Entitlement'ı tazeler ve güncel sonucu döndürür. Ücretsiz avantaj
+  /// kapıları (seri dondurma) bellektekine değil BUNA bakar: bayat `true`
+  /// ile bedava avantaj verilmez.
+  ///
+  /// Doğrulama başarısız olursa son bilinen durum korunur ve `false`
+  /// dönülür — güvenli taraf, avantajı reddetmektir.
+  Future<bool> refreshEntitlement() async {
+    if (!_configured) return false;
+    try {
+      final info = await _getCustomerInfo();
+      final fresh = _hasEntitlement(info.entitlements.all);
+      _applyEntitlement(fresh);
+      return fresh;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'premium refresh');
+      return false;
     }
   }
 

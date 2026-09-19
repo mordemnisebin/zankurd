@@ -507,7 +507,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // aynı anahtarı taşır ve sunucu ikinci kez çekmez.
     String idempotencyKey = '',
   }) async {
-    final isPremium = context.read<PremiumService>().isPremium;
+    final premium = context.read<PremiumService>();
     final streakStore = await StreakStore.load();
     final today = DateTime.now();
     final todayKey =
@@ -558,8 +558,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       );
     }
 
-    // Premium: ücretsiz ve otomatik; kullanıcı kararı yok.
-    if (isPremium) {
+    // Premium: ücretsiz ve otomatik; kullanıcı kararı yok. Kapı
+    // bellekteki bayrağa değil taze entitlement'a bakar — bayat `true`
+    // ile bedava dondurma verilmez. Doğrulama başarısızsa ücretli yola
+    // düşülür (güvenli taraf).
+    if (await premium.refreshEntitlement()) {
       await recordStage?.call(QuizResultReceiptStage.freezeApplying);
       await streakStore.addFreeze();
       final streak = await streakStore.freezeAndRecordPlay();
@@ -987,8 +990,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   ///
   /// Sabit bir cihaz breakpoint'i yerine mevcut genişlik + text scale
   /// kullanılır. Dar veya büyük metinli düzende primary üstte tam genişlikte
-  /// kalır; yan eylemler aşağıdaki Wrap'e iner. Böylece ana label küçülmez,
-  /// kesilmez ve ekran okuyucu sırası da primary → secondary olarak korunur.
+  /// kalır; yan eylemler öğrenme özetinden sonraki Wrap'e ertelenir. Böylece
+  /// ana label küçülmez ve sonuç → ana eylem → öğrenme içgörüsü hiyerarşisi
+  /// korunur.
   bool _shouldStackResultActions(
     BuildContext context, {
     required double availableWidth,
@@ -1086,24 +1090,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         );
 
         if (stack) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              primary,
-              if (secondaryActions.isNotEmpty) ...[
-                const SizedBox(height: 10),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Wrap(
-                    alignment: WrapAlignment.end,
-                    spacing: 10,
-                    runSpacing: 8,
-                    children: secondaryActions,
-                  ),
-                ),
-              ],
-            ],
-          );
+          return primary;
         }
 
         return Row(
@@ -1114,6 +1101,36 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               ...secondaryActions,
             ],
           ],
+        );
+      },
+    );
+  }
+
+  Widget _buildDeferredResultActions({
+    required String primaryLabel,
+    required List<Widget> secondaryActions,
+  }) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final stack = _shouldStackResultActions(
+          context,
+          availableWidth: constraints.maxWidth,
+          primaryLabel: primaryLabel,
+          secondaryCount: secondaryActions.length,
+        );
+        if (!stack || secondaryActions.isEmpty) return const SizedBox.shrink();
+
+        return Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Wrap(
+              alignment: WrapAlignment.end,
+              spacing: 10,
+              runSpacing: 8,
+              children: secondaryActions,
+            ),
+          ),
         );
       },
     );
@@ -1189,13 +1206,20 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       );
     }
 
-    final primaryResultKey = wrongRecords.isNotEmpty
+    final learningContinue = isLearningExperience && !isOnlineRoom;
+    final primaryResultKey = learningContinue
+        ? 'result-primary-learning-continue'
+        : wrongRecords.isNotEmpty
         ? 'result-primary-review-mistakes'
         : 'result-play-again-button';
-    final primaryResultLabel = wrongRecords.isNotEmpty
+    final primaryResultLabel = learningContinue
+        ? context.t(K.continueAction)
+        : wrongRecords.isNotEmpty
         ? context.t(K.reviewMistakes)
         : nextActionLabel;
-    final primaryResultIcon = wrongRecords.isNotEmpty
+    final primaryResultIcon = learningContinue
+        ? AppIcons.arrowRight
+        : wrongRecords.isNotEmpty
         ? AppIcons.squareCheck
         : nextActionIcon;
     final secondaryResultActions = <Widget>[
@@ -1206,7 +1230,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           label: context.t(K.newRoom),
           onTap: _newRoomLoading ? null : _openNewRoom,
         ),
-      if (wrongRecords.isNotEmpty)
+      if (wrongRecords.isNotEmpty && !learningContinue)
         _ResultSideAction(
           key: const ValueKey('result-play-again-button'),
           icon: nextActionIcon,
@@ -1858,7 +1882,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     primaryKey: primaryResultKey,
                     primaryLabel: primaryResultLabel,
                     primaryIcon: primaryResultIcon,
-                    onPrimaryPressed: wrongRecords.isNotEmpty
+                    onPrimaryPressed: learningContinue
+                        ? completeResultAction
+                        : wrongRecords.isNotEmpty
                         ? () => openReview(wrongRecords)
                         : completeResultAction,
                     secondaryActions: secondaryResultActions,
@@ -1872,6 +1898,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                           : () => openReview(learningOutcome.reviewRecords),
                     ),
                   ],
+                  _buildDeferredResultActions(
+                    primaryLabel: primaryResultLabel,
+                    secondaryActions: secondaryResultActions,
+                  ),
                   if (_newAchievements.isNotEmpty) ...[
                     const SizedBox(height: 16),
                     _AchievementUnlocks(achievements: _newAchievements),
