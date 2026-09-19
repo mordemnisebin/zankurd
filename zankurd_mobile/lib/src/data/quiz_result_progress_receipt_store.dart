@@ -154,6 +154,20 @@ class QuizResultProgressReceiptStore {
     _cacheUncertain.clear();
   }
 
+  /// Hesap değişiminde bütün kullanıcıların makbuzlarını siler; yoksa
+  /// yabancı kullanıcı önceki turun makbuzunu devralır.
+  static Future<void> clearAll(SharedPreferences preferences) async {
+    final keys = preferences
+        .getKeys()
+        .where((key) => key.startsWith(_keyPrefix))
+        .toList();
+    for (final key in keys) {
+      await preferences.remove(key);
+    }
+    _inFlight.clear();
+    _cacheUncertain.clear();
+  }
+
   static String keyFor({required String userId, required String roomId}) =>
       '$_keyPrefix${userId.trim()}:${roomId.trim()}';
 

@@ -13,7 +13,9 @@ import '../data/badge_service.dart';
 import '../data/mastery_store.dart';
 import '../data/daily_mission_store.dart';
 import '../data/level_progress_store.dart';
+import '../data/learning_goal_store.dart';
 import '../data/placement_store.dart';
+import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/story_progress_store.dart';
 import '../data/sync_manager.dart';
 import '../services/premium_service.dart';
@@ -44,6 +46,7 @@ class AuthProvider extends ChangeNotifier {
 
   final SupabaseClient? _client;
   final NativeAuthService _nativeAuth;
+  final bool _offlineMode;
   StreamSubscription<AuthState>? _authSub;
 
   User? _currentUser;
@@ -75,8 +78,12 @@ class AuthProvider extends ChangeNotifier {
 
   bool get isGuest => _currentUser?.isAnonymous ?? false;
 
+  /// Uzak kimlik servisi başlatılamadığı için yerel misafir modunda mı?
+  bool get isOfflineMode => _offlineMode;
+
   AuthProvider(SupabaseClient client, {NativeAuthService? nativeAuth})
     : _client = client,
+      _offlineMode = false,
       _nativeAuth =
           nativeAuth ?? PlatformNativeAuthService(supabaseClient: client) {
     _currentUser = client.auth.currentUser;
@@ -155,8 +162,19 @@ class AuthProvider extends ChangeNotifier {
   /// Test/mock constructor — Supabase başlatılmadan kullanım için.
   AuthProvider.test({bool authenticated = false, NativeAuthService? nativeAuth})
     : _client = null,
+      _offlineMode = false,
       _nativeAuth = nativeAuth ?? PlatformNativeAuthService(),
       _mockAuthenticated = authenticated;
+
+  /// Üretimde uzak kimlik servisi başlatılamadığında kullanılan mod.
+  ///
+  /// Test kurucusundan farklı olarak hesap tabanlı auth çağrılarını sahte
+  /// başarıya çevirmiyor. Cihaz içi misafir akışı yine çalışabilir; bağlantı
+  /// geri geldiğinde gerçek Supabase oturumu yeni açılışta devreye girer.
+  AuthProvider.offline({NativeAuthService? nativeAuth})
+    : _client = null,
+      _offlineMode = true,
+      _nativeAuth = nativeAuth ?? PlatformNativeAuthService();
 
   void _syncPremiumIdentity(User? user) {
     final premium = PremiumService.instance;
@@ -179,7 +197,14 @@ class AuthProvider extends ChangeNotifier {
 
   Future<bool> _run(Future<void> Function(SupabaseClient auth) body) async {
     final client = _client;
-    if (client == null) return true;
+    if (client == null) {
+      if (!_offlineMode) return true;
+      _isLoading = false;
+      _needsEmailConfirmation = false;
+      _errorMessage = 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.';
+      notifyListeners();
+      return false;
+    }
 
     _isLoading = true;
     _errorMessage = null;
@@ -585,6 +610,25 @@ class AuthProvider extends ChangeNotifier {
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'LevelProgressStore clear failed');
     }
+
+    try {
+      final goalStore = await LearningGoalStore.load();
+      await goalStore.clear();
+      LearningGoalStore.resetInstance();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'LearningGoalStore clear failed');
+    }
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await QuizResultProgressReceiptStore.clearAll(prefs);
+    } catch (e, s) {
+      ErrorReporter.record(
+        e,
+        s,
+        reason: 'QuizResultProgressReceiptStore clear failed',
+      );
+    }
   }
 
   Future<void> signOut({
@@ -621,6 +665,18 @@ class AuthProvider extends ChangeNotifier {
     }
 
     await _clearLocalProgressStores();
+
+    // Hesap silmede cihaz sahipliği de düşer; normal çıkışta anahtar
+    // kalır ve yabancı-kullanıcı denetimi bir sonraki girişte çalışır.
+    if (discardPendingRewards) {
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.remove(_deviceOwnerUserIdKey);
+      } catch (e, s) {
+        ErrorReporter.record(e, s, reason: 'deviceOwner key removal failed');
+        accountCleanupFailed = true;
+      }
+    }
 
     final client = _client;
     if (client == null) {

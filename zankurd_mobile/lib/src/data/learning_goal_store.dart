@@ -31,6 +31,12 @@ class LearningGoalStore {
 
   LearningGoal? get goal => _goal;
 
+  /// Kayıtlı hedefi siler; hesap değişiminde yabancının hedefi devralınmaz.
+  Future<void> clear() async {
+    await _preferences?.remove(_key);
+    _goal = null;
+  }
+
   Future<void> save(LearningGoal goal) async {
     _goal = goal;
     await _preferences?.setString(_key, goal.storageKey);

@@ -2,7 +2,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show User;
 import 'package:zankurd_mobile/src/data/badge_service.dart';
+import 'package:zankurd_mobile/src/data/learning_goal_store.dart';
+import 'package:zankurd_mobile/src/data/quiz_result_progress_receipt_store.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
+import 'package:zankurd_mobile/src/models/learning_goal.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 
 /// Sunucu tarafında bir oturumun yerini BAŞKA bir kullanıcı aldığında
@@ -121,4 +124,46 @@ void main() {
       );
     },
   );
+
+  test('hedef ve makbuz da yabancı kullanıcıya devredilmez', () async {
+    // 2026-09: `_clearLocalProgressStores` 11 store temizliyordu ama
+    // öğrenme hedefi ve tur makbuzu listede yoktu — aynı cihazda
+    // kullanıcı değişince hedef/makbuz sessizce devrediyordu.
+    SharedPreferences.setMockInitialValues({
+      'zankurd.localProgress.deviceOwnerUserId': 'user-old',
+    });
+    final prefs = await SharedPreferences.getInstance();
+
+    final goalStore = await LearningGoalStore.load();
+    await goalStore.save(LearningGoal.learnKurmanci);
+
+    final receipts = QuizResultProgressReceiptStore(prefs);
+    await receipts.write(
+      userId: 'user-old',
+      roomId: 'room-1',
+      receipt: const QuizResultReceipt(
+        stage: QuizResultReceiptStage.pendingUserDecision,
+      ),
+    );
+
+    final provider = AuthProvider.test();
+    await provider.debugResetLocalProgressIfForeignUser(user('user-new'));
+
+    LearningGoalStore.resetInstance();
+    final goal = await LearningGoalStore.load();
+    expect(
+      goal.goal,
+      isNull,
+      reason: 'önceki kullanıcının hedefi yeni hesaba devretmemeli',
+    );
+
+    final reread = await QuizResultProgressReceiptStore(
+      prefs,
+    ).read(userId: 'user-old', roomId: 'room-1');
+    expect(
+      reread,
+      isNull,
+      reason: 'önceki turun makbuzu yeni hesaba devretmemeli',
+    );
+  });
 }
