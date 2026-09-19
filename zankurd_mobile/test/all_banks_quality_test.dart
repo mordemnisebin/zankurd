@@ -366,6 +366,60 @@ void main() {
     );
   });
 
+  test('Kurmancî açıklamada Şirove sarmalı kalmadı', () {
+    // 2026-09: `explanationToKu`nun eski fallback'i eşleşmeyen Türkçe
+    // metni `Şirove: <cümle>` diye sarıyordu. Önek Kurmancî sayıldığı
+    // için hem oyuncuya yanlış etiketli Türkçe gösteriliyor hem de
+    // bir önceki ayna bekçi maskeleniyordu. Fallback artık boş döner;
+    // bu ratchet sarmalın geri dönmesini yasaklar.
+    final offenders = <String>[];
+    banks.forEach((name, questions) {
+      for (final question in questions) {
+        final kurmanci = question.getLocalizedExplanation(true);
+        if (kurmanci.startsWith('Şirove:')) {
+          offenders.add('$name/${question.id}');
+        }
+      }
+    });
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'Sarma fallback geri dönmüş: ${offenders.take(6).join(", ")}',
+    );
+  });
+
+  test('çevrilmemiş Ku açıklaması borcu yok', () {
+    // Fallback boş döndüğü için bazı kayıtlar Ku modunda açıklamasız
+    // kalabilir (Türkçe açıklama var ama Kurmancî karşılığı yok).
+    // 2026-09 düzeltmesi: 3 kalan kayıt (offline_2049/2388/5039) doğrudan
+    // bankaya `explanationKu` yazıldı; override tablosu ve kural motoru
+    // gerisini kapsıyordu. Ürün Kurmancî-önceliklidir: taban sıfırdır,
+    // tek bir yeni çevrilmemiş kayıt testi kırar.
+    const ceiling = 0;
+    var debt = 0;
+    final samples = <String>[];
+    banks.forEach((name, questions) {
+      for (final question in questions) {
+        final tr = question.getLocalizedExplanation(false);
+        if (tr.trim().isEmpty) continue;
+        final ku = question.getLocalizedExplanation(true);
+        if (ku.trim().isEmpty) {
+          debt++;
+          if (samples.length < 6) samples.add('$name/${question.id}');
+        }
+      }
+    });
+    expect(
+      debt,
+      lessThanOrEqualTo(ceiling),
+      reason:
+          'Çevrilmemiş Ku açıklaması borcu arttı ($debt > $ceiling). '
+          'İlk örnekler: ${samples.join(", ")}. TR açıklaması olan her '
+          'kayıt ya kural motoruyla çevrilmeli ya da bankaya elle '
+          '`explanationKu` yazılmalı.',
+    );
+  });
+
   // 2026-07-30: bankanın %42'si on dört soru kalıbından geliyordu ve en sık
   // tek kalıp ("Rast e an şaş e: …") tek başına %15,6'ydı. Sorular bu yüzden
   // "yapay" hissettiriyordu: oyuncu arka arkaya beş soru çözünce beşinin de

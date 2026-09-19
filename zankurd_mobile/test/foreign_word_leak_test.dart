@@ -490,6 +490,63 @@ void main() {
     }
   });
 
+  test('şampiyon ve bronz yerleşik alıntı olarak belgeli', () {
+    // Sözlük kararı (2026-09): `şampiyon` ve `bronz` Kurmancî medyada
+    // yerleşik alıntılardır. Kanıt: Kurmancî ek alırlar (`şampiyonê`,
+    // `şampiyoniyê` — `quiz`→`Quizê` emsali). Arılaştırma kavramı
+    // değiştirirdi (`qehreman` = kahraman, `tunc` = bakır alaşımı).
+    //
+    // Bu test iki şeyi sabitler: kararın dayandığı biçimler yerinde
+    // durmalı, ve YENİ bir TR/FR alıntı gözden kaçmamalı. Aşağıdaki
+    // liste, Kurmancî karşılığı üründe zaten olan kavramların Türkçe
+    // biçimleridir — hiçbiri bugün Ku metinde geçmiyor; biri geçerse
+    // ya karşılığı kullanılmalı ya da buraya gerekçesi yazılmalı.
+    expect(Tr.of(K.botRaceHint, AppLanguage.ku), 'Şampiyon kûpayê digire!');
+    expect(Tr.of(K.champion, AppLanguage.ku), 'Şampiyon!');
+    expect(
+      Tr.of(K.championCongrats, AppLanguage.ku),
+      'Pîroz be! Tu şampiyonê Kûpaya ZanKurdê yî!',
+    );
+    expect(Tr.of(K.bronzLig, AppLanguage.ku), 'Lîga Bronz');
+    expect(Tr.of(K.bronze, AppLanguage.ku), 'Bronz');
+
+    const reviewedLoans = {'şampiyon', 'bronz'};
+    const unreviewedLoanPattern = {
+      'maç': 'pêşbirk',
+      'lig': 'lîg',
+      'final': 'dawî',
+      'puan': 'pûan',
+      'ödül': 'xelat',
+      'seviye': 'ast',
+      'yarış': 'pêşbirk',
+      'turnuva': 'kûpa',
+      'sezon': 'demsal',
+      'madalya': 'medalya',
+      'şampiyonluk': 'şampiyonî',
+      'heyecan': 'kelecan',
+      'macera': 'serpêhatî',
+      'görev': 'erk',
+      'sıralama': 'rêzkirin',
+      'hediye': 'diyarî',
+      'başarı': 'serkeftin',
+    };
+
+    final offenders = <String>[];
+    for (final key in Tr.keys) {
+      final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
+      for (final entry in unreviewedLoanPattern.entries) {
+        if (reviewedLoans.contains(entry.key)) continue;
+        if (kurmanci.contains(entry.key)) {
+          offenders.add(
+            '$key: Kurmancî metinde gözden geçirilmemiş "${entry.key}"; '
+            'karşılığı "${entry.value}" ya da gerekçe gerekli',
+          );
+        }
+      }
+    }
+    expect(offenders, isEmpty, reason: offenders.take(6).join('\n'));
+  });
+
   test('muafiyet listesi ölü kelime taşımıyor', () {
     // Muaf sayılan bir kelime hiçbir metinde geçmiyorsa liste ölüdür ve
     // gereksiz yere kuralı gevşetir.

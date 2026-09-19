@@ -7,19 +7,19 @@
     "prompt": "Amed li kîjan parçeyê Kurdistanê ye?",
     "promptTr": "Amed Kürdistan'ın neresindedir?",
     "answers": [
-      "Rojhilatê Kurdistan",
-      "Bakûrê Kurdistan",
-      "Rojavayê Kurdistan",
-      "Başûrê Kurdistan"
+      "Rojhilatê Kurdistanê",
+      "Bakurê Kurdistanê",
+      "Rojavayê Kurdistanê",
+      "Başûrê Kurdistanê"
     ],
     "answersTr": [
-      "Rojhilatê Kurdistan",
-      "Bakûrê Kurdistan",
-      "Rojavayê Kurdistan",
-      "Başûrê Kurdistan"
+      "Rojhilat (Doğu)",
+      "Bakur (Kuzey)",
+      "Rojava (Batı)",
+      "Başûr (Güney)"
     ],
-    "correctAnswer": "Bakûrê Kurdistan",
-    "correctAnswerTr": "Bakûrê Kurdistan",
+    "correctAnswer": "Bakurê Kurdistanê",
+    "correctAnswerTr": "Bakur (Kuzey)",
     "explanation": "Amed (Diyarbakır) Kürdistan'ın kuzey bölgesindedir ve o bölgenin en büyük şehri sayılır.",
     "explanationKu": "Amed (Diyarbekir) li herêma bakur a Kurdistanê ye û bajarê herî mezin ê wê herêmê tê hesibandin.",
     "explanationTr": "Amed (Diyarbakır) Kürdistan'ın kuzey bölgesindedir ve o bölgenin en büyük şehri sayılır.",

@@ -1165,6 +1165,7 @@
     ],
     "correctAnswer": "Rast",
     "explanation": "\"mal\" yuva/ev, \"xanî\" yapı olarak ev demektir.",
+    "explanationKu": "Peyva \"mal\" wek mala malbatê, \"xanî\" jî wek avahî tên bikaranîn; herdu jî bi Tirkî dikarin \"ev\" bin.",
     "type": "trueFalse",
     "difficulty": 3,
     "promptTr": "\"Mal\" ve \"xanî\" sözcüklerinin ikisi de Türkçede \"ev\" anlamına gelebilir.",
@@ -2497,6 +2498,7 @@
     ],
     "correctAnswer": "Çîrok",
     "explanation": "\"Çîrok\" masal/hikâye demektir; stran ve kilam müzikle, govend ise dansla ilgilidir.",
+    "explanationKu": "\"Çîrok\" ji bo vegotina çîrokan tê gotin; \"stran\" û \"kilam\" bi muzîkê ve girêdayî ne, \"govend\" jî bi reqsê ve girêdayî ye.",
     "type": "multipleChoice",
     "difficulty": 3,
     "promptTr": "Kış geceleri anlatılan o hikâyelere Kurmancîde genel olarak ne denir?",
@@ -4310,6 +4312,7 @@
     ],
     "correctAnswer": "Şaş",
     "explanation": "\"wêne\" = \"resim/fotoğraf\".",
+    "explanationKu": "\"wêne\" tê wateya \"resim/fotoğraf\"ê; ne \"deng\" e.",
     "type": "trueFalse",
     "difficulty": 5,
     "promptTr": "\"wêne\" kelimesinin Türkçe anlamı \"ses\" midir?",
@@ -24506,12 +24509,12 @@
     "explanationKu": "Ew komîn ji sala 2015'an ve dixebite û perwerdehiya sînemayê dide ciwanên herêmê.",
     "promptTr": "\"Ji bo Azadiyê\" (2019) bir sinema komününün yapıtıdır; bu komün hangi bölgede kurulmuştur?",
     "answersTr": [
-      "Bakurê Kurdistanê",
-      "Başûrê Kurdistanê",
-      "Rojavayê Kurdistanê",
-      "Rojhilatê Kurdistanê"
+      "Bakur (Kuzey)",
+      "Başûr (Güney)",
+      "Rojava (Batı)",
+      "Rojhilat (Doğu)"
     ],
-    "correctAnswerTr": "Rojavayê Kurdistanê"
+    "correctAnswerTr": "Rojava (Batı)"
   },
   {
     "id": "offline_sin_2004",
