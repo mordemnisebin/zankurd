@@ -317,6 +317,25 @@ void main() {
     expect(prefs.getString(scopedKey), '[]');
   });
 
+  test('Supabase dışı depoda kuyruk sessizce silinmez', () async {
+    // 2026-09: `_syncOnce` Supabase dışı depoda kuyruğu `clear()` ile
+    // boşaltıyordu — çevrimdışı kazanılmış ödül kurtarılamaz biçimde
+    // yok oluyordu. Kuyruk sahibinindir; depo Supabase'e dönünce aynı
+    // kuyruk senkronize olur.
+    final repository = MockZanKurdRepository();
+    final manager = await SyncManager.initialize(repository);
+
+    await manager.queueQuizReward(
+      score: 100,
+      correctCount: 1,
+      bestStreak: 1,
+      totalQuestions: 1,
+    );
+    await manager.sync();
+
+    expect(manager.pendingCount, 1, reason: 'ödül kuyruktan düştü');
+  });
+
   // 2026-07-25 denetim bulgusu: çıkışta yalnız dispose() çağrılıyor,
   // `_instance` dolu kalıyordu. Sonraki initialize() erken dönüyor ve
   // connectivity dinleyicisi bir daha kurulmuyordu — çevrimdışı XP
@@ -594,7 +613,9 @@ void main() {
     await Future.wait([firstQueued, secondQueued, thirdQueued, syncing]);
     await manager.sync();
 
-    expect(manager.pendingCount, 0);
+    // 2026-09 sözleşmesi: Supabase dışı depoda `sync()` kuyruğu silmez —
+    // üç kayıt da korunur; ölçülen şey çöküşsüzlük, boşalma değil.
+    expect(manager.pendingCount, 3);
   });
 
   test('eşzamanlı sync çağrıları tek tur olarak çalışır', () async {
@@ -609,7 +630,8 @@ void main() {
     );
     await Future.wait([manager.sync(), manager.sync(), manager.sync()]);
 
-    expect(manager.pendingCount, 0);
+    // 2026-09 sözleşmesi: Supabase dışı depoda `sync()` kuyruğu silmez.
+    expect(manager.pendingCount, 1);
   });
 
   test('istemci artık XP senkronizasyon API yüzeyi sunmaz', () {

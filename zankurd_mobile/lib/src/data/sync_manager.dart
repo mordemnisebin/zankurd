@@ -776,8 +776,14 @@ class SyncManager {
     }
     final repo = _repository;
     if (repo is! SupabaseZanKurdRepository) {
-      _queue.clear();
-      await _saveQueue();
+      // Supabase dışı depoda (çevrimdışı açılış, test) kuyruk SESSİZCE
+      // SİLİNMEZ: bekleyen ödül sahibinindir, depo değişince (`initialize`
+      // Supabase ile) aynı kuyruk senkronize olur. Silmek, çevrimdışı
+      // kazanılmış ödülü kurtarılamaz biçimde yok ediyordu (2026-09).
+      developer.log(
+        'Non-Supabase repository; keeping ${_queue.length} queued item(s).',
+        name: 'SyncManager',
+      );
       return;
     }
 
@@ -898,7 +904,7 @@ class SyncManager {
             'Max retries reached for item ($item): $e. Dropping.',
             name: 'SyncManager',
           );
-          _recordExhaustedItem(item);
+          await _recordExhaustedItem(item);
         } else {
           item['retries'] = retries;
           failedItems.add(item);
@@ -917,7 +923,7 @@ class SyncManager {
             'Max retries reached for item ($item): $e. Dropping.',
             name: 'SyncManager',
           );
-          _recordExhaustedItem(item);
+          await _recordExhaustedItem(item);
         } else {
           item['retries'] = retries;
           failedItems.add(item);
@@ -949,9 +955,12 @@ class SyncManager {
   /// kullanıcı bunu asla öğrenemiyordu (2026-08-14 denetimi). Bu liste
   /// [failedCountNotifier] ile UI'a sızar ve [retryFailedItems] ile
   /// kullanıcı elle yeniden deneyebilir.
-  void _recordExhaustedItem(Map<String, dynamic> item) {
+  /// Retry'ları tükenmiş bir ödülü kalıcı "senkronize edilemedi" listesine
+  /// taşır. Kalıcı yazım `await`lenir — `unawaited` bırakılırsa kill
+  /// öncesi kayıt disk yerine yalnız bellekte kalırdı.
+  Future<void> _recordExhaustedItem(Map<String, dynamic> item) async {
     _failedItems.add(item);
-    unawaited(_saveFailedQueue());
+    await _saveFailedQueue();
   }
 
   /// Kalıcı olarak düşürülmüş kayıtları kuyruğa geri koyup yeniden dener.
@@ -971,10 +980,15 @@ class SyncManager {
     unawaited(sync());
   }
 
+  /// Kuyruğu ve kalıcı başarısız listesini birlikte temizler. Gelecekte
+  /// eklenecek bir "temizle" düğmesi yalnız `_queue`yu boşaltırsa
+  /// `_failedItems` sessizce kalırdı — yarım temizlik.
   Future<void> clearQueue() async {
     _queue.clear();
+    _failedItems.clear();
     _notifyNotifiers();
     await _saveQueue();
+    await _saveFailedQueue();
     developer.log('Sync queue cleared.', name: 'SyncManager');
   }
 
