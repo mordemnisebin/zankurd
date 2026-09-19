@@ -145,15 +145,15 @@ extension LangContext on BuildContext {
       case 'Giriş bağlantısı doğrulanamadı. Uygulama yönlendirme ayarlarını kontrol et.':
         return 'Girêdana têketinê nehate piştrastkirin. Saziyên arastekirina sepanê kontrol bike.';
       case 'E-posta veya parola hatalı.':
-        return 'E-peyam an şîfre şaş e.';
+        return 'E-name an şîfre şaş e.';
       case 'Bu e-posta zaten kullanılıyor.':
-        return 'Ev e-peyam jixwe tê bikaranîn.';
+        return 'Ev e-name jixwe tê bikaranîn.';
       case 'Parola çok zayıf (en az 6 karakter).':
         return 'Şîfre pir qels e (herî kêm 6 tîp).';
       case 'Geçersiz e-posta adresi.':
-        return 'Navnîşana e-peyamê ya nederbasdar.';
+        return 'Navnîşana e-nameyê ya nederbasdar.';
       case 'E-posta adresin henüz doğrulanmamış. Gelen kutunu kontrol et.':
-        return 'Navnîşana e-peyama te hîna nehatiye piştrastkirin. Sindoqa xwe ya nameyan kontrol bike.';
+        return 'Navnîşana e-nameya te hîna nehatiye piştrastkirin. Sindoqa xwe ya nameyan kontrol bike.';
       case 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.':
         return 'Pir ceribandin hatin kirin. Hinekî bisekine û dîsa biceribîne.';
       case 'Misafir girişi şu anda kapalı.':

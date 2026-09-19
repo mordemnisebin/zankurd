@@ -569,7 +569,7 @@ class Tr {
     // Kurmancî karşılık "Kûpa"dır; iki dil için aynı metin ("Bot turnuva")
     // yazılmıştı ve Türkçe sözcük Kurmancî arayüze sızıyordu. Terim
     // tutarlılığı testi bunu göç sırasında yakaladı (2026-07-25).
-    K.botTournament: {'ku': 'Kûpa', 'tr': 'Turnuva'},
+    K.botTournament: {'ku': 'Kûpaya herêmî', 'tr': 'Yerel Kupa'},
     K.bracket: {'ku': 'Şemaya Kûpayê', 'tr': 'Turnuva Şeması'},
     K.standings: {'ku': 'Rêzkirin', 'tr': 'Sıralama'},
     K.cupStartsWhenFull: {
@@ -597,6 +597,10 @@ class Tr {
       'tr': '{perMatch} soru/maç',
     },
     K.botRaceHint: {
+      // Sözlük kararı (2026-09): `şampiyon` yerleşik alıntıdır —
+      // Kurmancî ek alır (`şampiyonê`, `şampiyoniyê`), `quiz`→`Quizê`
+      // emsali. Arılaştırma (`qehreman`) kavramı değiştirir; bekçi
+      // `foreign_word_leak_test.dart` kararın yerini bilir.
       'ku': 'Şampiyon kûpayê digire!',
       'tr': 'Şampiyon kupayı alır!',
     },
@@ -862,6 +866,8 @@ class Tr {
     // ── Göç edilen ekran metinleri (2026-07-31) ─────────────────────
     K.altinLig: {'ku': 'Lîga Zêr', 'tr': 'Altın Lig'},
     K.gumusLig: {'ku': 'Lîga Zîv', 'tr': 'Gümüş Lig'},
+    // Sözlük kararı (2026-09): `Bronz` yerleşik alıntıdır. `tunc` bakır
+    // alaşımıdır, yanlış metal olur; `Zîv`/`Zêr` gibi yerli karşılık yok.
     K.bronzLig: {'ku': 'Lîga Bronz', 'tr': 'Bronz Lig'},
     K.metin: {'ku': 'Nîv bi Nîv', 'tr': '50/50'},
     K.sikIpucu: {'ku': 'Alîkariya Bersivê', 'tr': 'Şık İpucu'},
@@ -1165,8 +1171,8 @@ class Tr {
     K.isabet: {'ku': 'Rastî', 'tr': 'İsabet'},
     K.seri2: {'ku': 'Rêz', 'tr': 'Seri'},
     K.senDeOynaPlay: {
-      'ku': 'Tu jî bilîze — li Play Store\\\'ê "ZanKurd"',
-      'tr': 'Sen de oyna — Play Store\\\'da "ZanKurd"',
+      'ku': 'Tu jî bilîze — li Play Store\'ê "ZanKurd"',
+      'tr': 'Sen de oyna — Play Store\'da "ZanKurd"',
     },
     K.bugununHedefi: {'ku': 'Armanca Îro', 'tr': 'Bugünün hedefi'},
     K.gununSozu: {'ku': 'Gotina Rojê', 'tr': 'Günün Sözü'},
@@ -1758,7 +1764,7 @@ class Tr {
     K.avatarIconPen: {'ku': 'Pênûs', 'tr': 'Kalem'},
     K.avatarIconCihan: {'ku': 'Cîhan', 'tr': 'Dünya'},
     K.avatarIconMertal: {'ku': 'Mertal', 'tr': 'Kalkan'},
-    K.avatarIconTac: {'ku': 'Tac', 'tr': 'Madalya'},
+    K.avatarIconTac: {'ku': 'Tac', 'tr': 'Taç'},
     K.avatarIconGul: {'ku': 'Gul', 'tr': 'Fidan'},
     K.avatarIconDar: {'ku': 'Dar', 'tr': 'Ağaç'},
     K.avatarIconCav: {'ku': 'Çav', 'tr': 'Göz'},
@@ -1773,9 +1779,12 @@ class Tr {
       'ku': 'Keska Kurdistanê',
       'tr': 'Kürdistan yeşili',
     }, // #3DA968
-    K.avatarColor3: {'ku': 'Şînahiya deryayê', 'tr': 'Teal'}, // #2E9E93
+    K.avatarColor3: {
+      'ku': 'Şînahiya deryayê',
+      'tr': 'Petrol yeşili',
+    }, // #2E9E93
     K.avatarColor4: {'ku': 'Binefşî', 'tr': 'Erik moru'}, // #6B3A7A
-    K.avatarColor5: {'ku': 'Xwelîreng', 'tr': 'Terracotta'}, // #C67A5C
+    K.avatarColor5: {'ku': 'Xwelîreng', 'tr': 'Kiremit rengi'}, // #C67A5C
     K.avatarColor6: {'ku': 'Şîna deryayê', 'tr': 'Deniz mavisi'}, // #2B4F7E
     K.avatarColor7: {'ku': 'Pembeyê gulê', 'tr': 'Gül pembesi'}, // #D4789E
     // ── Oda sohbeti moderasyonu (Apple 1.2 / Google Play UGC) ────────

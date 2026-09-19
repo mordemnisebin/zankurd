@@ -49,6 +49,48 @@ void main() {
     );
   });
 
+  test('metinlerde sızan ters bölü + kesme yok', () {
+    // 2026-09: `K.senDeOynaPlay` "Play Store\\'ê" yazılmıştı — Dart'ta
+    // `\\` + `\'` ekranda ham `\` + `'` basar. Doğrusu yalnız `\'`.
+    // `\\n` taraması bu sınıfı görmez; bu test `\\'` desenini yakalar.
+    final source = File('lib/src/l10n/strings.dart').readAsStringSync();
+    final offenders = <String>[];
+    for (final line in source.split('\n')) {
+      if (line.trimLeft().startsWith('//')) continue;
+      if (line.contains(r"\\'")) offenders.add(line.trim());
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'sızan kaçış: ${offenders.take(3).join(" | ")}',
+    );
+  });
+
+  test('eski E-peyam formu kalmadı (E-name birliği)', () {
+    // Standart `E-name` (çoğunluk + izafe `e-nameyê/e-nameya`).
+    // `lang.dart` 4 hata mesajında eski `E-peyam` duruyordu.
+    // Not: `peyam` (mesaj) doğru sözcüktür; yasaklı olan yalnız
+    // `e-peyam`/`E-peyam` (e-posta) formudur. Yorum satırları tarama dışıdır.
+    final offenders = <String>[];
+    final pattern = RegExp('[Ee]-peyam');
+    for (final entity in Directory('lib').listSync(recursive: true)) {
+      if (entity is! File || !entity.path.endsWith('.dart')) continue;
+      final lines = entity.readAsLinesSync();
+      for (var i = 0; i < lines.length; i++) {
+        final line = lines[i];
+        if (line.trimLeft().startsWith('//')) continue;
+        if (pattern.hasMatch(line)) {
+          offenders.add('${entity.path}:${i + 1}: ${line.trim()}');
+        }
+      }
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'eski form: ${offenders.take(3).join(" | ")}',
+    );
+  });
+
   group('l10n göç bekçisi', () {
     /// Satır içi kullanım sayısı (`ku ? '...'`, `isKu ? '...'`,
     /// `_isKu ? '...'` ve `context.s('...', '...')` toplamı, `lib/`
