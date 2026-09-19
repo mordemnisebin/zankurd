@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
+import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -76,4 +77,66 @@ void main() {
     expect(find.text('Tekrar dene'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('bağlantı geçişlerinde sosyal kilit canlı güncellenir', (
+    tester,
+  ) async {
+    // 2026-09: `reachable` boot anlık görüntüsüydü; oturum ortasında
+    // bağlantı kopunca sosyal yüzey açık kalıyordu. Boot okuması
+    // snapshot'tır (kilidi ezmez), sonraki GEÇİŞLER yayılır: kopuşta
+    // kilitlenir, dönüşte (ölü depo değilse) açılır.
+    final monitor = _StreamConnectivityMonitor(const [ConnectivityResult.wifi]);
+    addTearDown(monitor.dispose);
+    final availability = RemoteAvailability(reachable: true);
+    final repository = freshMockRepository();
+
+    await tester.pumpWidget(
+      testShell(
+        remoteAvailability: availability,
+        child: AppShell(repository: repository, connectivityMonitor: monitor),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(availability.socialLocked, isFalse);
+
+    monitor.emit(const [ConnectivityResult.none]);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(
+      availability.socialLocked,
+      isTrue,
+      reason: 'bağlantı kopunca sosyal kilit kapanmalı',
+    );
+
+    monitor.emit(const [ConnectivityResult.wifi]);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(
+      availability.socialLocked,
+      isFalse,
+      reason: 'bağlantı dönünce kilit açılmalı (ölü depo değil)',
+    );
+    expect(tester.takeException(), isNull);
+  });
+}
+
+class _StreamConnectivityMonitor implements ConnectivityMonitor {
+  _StreamConnectivityMonitor(this.current);
+
+  List<ConnectivityResult> current;
+  final _controller = StreamController<List<ConnectivityResult>>.broadcast();
+
+  void emit(List<ConnectivityResult> results) {
+    current = results;
+    _controller.add(results);
+  }
+
+  void dispose() => _controller.close();
+
+  @override
+  Stream<List<ConnectivityResult>> get onConnectivityChanged =>
+      _controller.stream;
+
+  @override
+  Future<List<ConnectivityResult>> checkConnectivity() async => current;
 }

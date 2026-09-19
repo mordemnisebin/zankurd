@@ -13,6 +13,7 @@ import '../l10n/strings.dart';
 import '../models/room.dart';
 import '../providers/auth_provider.dart';
 import '../providers/remote_availability.dart';
+import '../data/offline_zankurd_repository.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
@@ -235,12 +236,30 @@ class _AppShellState extends State<AppShell>
   void _applyConnectivityResults(List<ConnectivityResult> results) {
     if (!mounted) return;
     final nextOffline = results.contains(ConnectivityResult.none);
+    // Boot okuması anlık görüntüyü EZMEZ: ilk okuma snapshot'tır —
+    // sunucusuz açılışın kilidi (`reachable: false`) ve çevrimiçi
+    // açılışın kilitsizliği ilk bağlantı raporuyla değişmemeli.
+    // Yalnız sonraki GEÇİŞLER canlı yayılır.
+    final isFirstRead = !_connectivityKnown;
+    final transitioned = !isFirstRead && _isOffline != nextOffline;
     final reconnected = _connectivityKnown && _isOffline && !nextOffline;
     setState(() {
       _isOffline = nextOffline;
       _connectivityKnown = true;
     });
     if (reconnected) _wakeRoomResumeForCurrentUser();
+    if (!transitioned) return;
+    // Bağlantı koptuğunda sosyal kilit dürüstçe kapanır; bağlantı
+    // dönünce kilit yalnız depo ölü değilse açılır. Ölü depo =
+    // çevrimdışı açılışın `Offline` deposu — Mock testlerde canlı
+    // backend yerine geçtiği için kilit sayılmaz.
+    try {
+      context.read<RemoteAvailability>().update(
+        !nextOffline && widget.repository is! OfflineZanKurdRepository,
+      );
+    } on ProviderNotFoundException {
+      // Yalıtık widget testleri — sağlayıcı yok, kilit main() değerinde kalır.
+    }
   }
 
   @override

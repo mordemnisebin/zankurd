@@ -9,9 +9,21 @@ import 'package:provider/provider.dart';
 /// sahte veriyle doluyordu. Bu bayrak o kipi durdurur: sosyal yüzey
 /// kilitlenir, kullanıcıya dürüst bant gösterilir.
 class RemoteAvailability extends ChangeNotifier {
-  RemoteAvailability({required this.reachable});
+  // Açık adlandırılmış parametre korunur (`reachable:`); alan adı
+  // farklı olduğu için initializing formal kullanılamaz.
+  // ignore: prefer_initializing_formals
+  RemoteAvailability({required bool reachable}) : _reachable = reachable;
 
-  final bool reachable;
+  bool _reachable;
+
+  bool get reachable => _reachable;
+
+  /// Canlı güncelleme — değişim yoksa dinleyiciler uyandırılmaz.
+  void update(bool reachable) {
+    if (_reachable == reachable) return;
+    _reachable = reachable;
+    notifyListeners();
+  }
 
   /// Oda, 1v1, liderlik, arkadaş, turnuva bu kipte çalışmaz.
   bool get socialLocked => !reachable;
