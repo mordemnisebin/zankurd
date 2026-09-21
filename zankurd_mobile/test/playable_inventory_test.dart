@@ -59,7 +59,8 @@ void main() {
       // içerik gerçekten ulaşıyor.
       // 2026-09-02: DeepSeek 1110 kayıt runtime'dan çıkarıldı
       // (olgusal hata ~%5–8). Dosya durur; oyuncuya yüklenmez.
-      1932,
+      // 2026-09-21: offline_2556 semantik tekrar olduğu için kaldırıldı.
+      1931,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -72,7 +73,8 @@ void main() {
       // 2991 -> 3000: 7 curated + Amed + YPJ. 12 sinema kaydı
       // mevcut bankalarla yakın tekrar olduğu için kuyrukta kaldı.
       // 3000 -> 1890: DeepSeek karantinası (1110 oynanabilir kayıt).
-      1890,
+      // 1890 -> 1889: offline_2556 semantik tekrar olarak kaldırıldı.
+      1889,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

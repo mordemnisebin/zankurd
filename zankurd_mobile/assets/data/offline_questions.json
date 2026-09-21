@@ -3116,37 +3116,12 @@
     "correctAnswerTr": "köy odaları ve dîwanxane"
   },
   {
-    "id": "offline_2556",
-    "category": "Cografya",
-    "prompt": "Herêma Behdînan bi piranî li kîjan perçeyê Kurdistanê ye?",
-    "answers": [
-      "Başûrê Kurdistanê",
-      "Bakurê Kurdistanê",
-      "Rojavayê Kurdistanê",
-      "Rojhilatê Kurdistanê"
-    ],
-    "correctAnswer": "Başûrê Kurdistanê",
-    "explanation": "Behdînan, Başûr'daki Dihok yöresidir; adını Behdînan mirliğinden alır ve orada Behdînî ağzı konuşulur.",
-    "type": "multipleChoice",
-    "difficulty": 5,
-    "explanationKu": "Behdînan devera Dihokê ya li Başûr e; navê wê ji mîrektiya Behdînan tê û zaravayê behdînî li wir tê axaftin.",
-    "explanationTr": "Behdînan, Başûr'daki Dihok yöresidir; adını Behdînan mirliğinden alır ve orada Behdînî ağzı konuşulur.",
-    "promptTr": "Behdînan bölgesi büyük ölçüde Kürdistan'ın hangi parçasındadır?",
-    "answersTr": [
-      "Başûr (Güney)",
-      "Bakur (Kuzey)",
-      "Rojava (Batı)",
-      "Rojhilat (Doğu)"
-    ],
-    "correctAnswerTr": "Başûr (Güney)"
-  },
-  {
     "id": "offline_2565",
     "category": "Çand",
     "prompt": "Di çanda Kurdî de \"mîr\" tê çi wateyê?",
     "answers": [
-      "Mast/dew",
       "Bey/yönetici",
+      "Mast/dew",
       "Şîn (ağıt)",
       "Özgür eş yaşam"
     ],
@@ -3158,8 +3133,8 @@
     "explanationTr": "\"Mîr\", bey ya da yönetici anlamına gelir; beyliklerin başındaki kişiyi belirtir.",
     "promptTr": "Kürt kültüründe \"mîr\" ne anlama gelir?",
     "answersTr": [
-      "Mast/dew",
       "Bey/yönetici",
+      "Mast/dew",
       "Şîn (ağıt)",
       "Özgür eş yaşam"
     ],
