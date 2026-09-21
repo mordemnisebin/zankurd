@@ -301,12 +301,31 @@ List<AuditIssue> runDuplicateChecks(
         final lengthRatio =
             a.prompt.length / (b.prompt.isEmpty ? 1 : b.prompt.length);
         if (lengthRatio < 0.55 || lengthRatio > 1.8) continue;
-        if (_jaccardSets(tokenSets[a]!, tokenSets[b]!) >= 0.55) {
+        final aFocus = _firstQuotedFocus(a.prompt);
+        final bFocus = _firstQuotedFocus(b.prompt);
+        if (aFocus.isNotEmpty && bFocus.isNotEmpty && aFocus != bFocus) {
+          continue;
+        }
+        if (a.questionType == 'trueFalse' && b.questionType == 'trueFalse') {
+          final aCorrect = normalizeText(a.correctOptionText ?? '');
+          final bCorrect = normalizeText(b.correctOptionText ?? '');
+          if (aCorrect.isNotEmpty &&
+              bCorrect.isNotEmpty &&
+              aCorrect != bCorrect) {
+            continue;
+          }
+        }
+        final similarity = _jaccardSets(tokenSets[a]!, tokenSets[b]!);
+        if (similarity >= 0.55) {
+          final partnerId =
+              a.sourceRecordId ?? a.runtimeId ?? a.canonicalId ?? 'unknown';
           final issue = _duplicateIssue(
             b,
             'near_duplicate_candidate',
             Severity.warning,
-            'Near duplicate candidate.',
+            'Near duplicate candidate; similar to '
+                '${a.sourcePath}:${a.sourceRow} ($partnerId); '
+                'jaccard=${similarity.toStringAsFixed(3)}.',
             confidence: 'medium',
           );
           if (nearFingerprints.add(issue.fingerprint)) {
@@ -347,6 +366,11 @@ Set<String> _tokensFromNormalized(String value) => value
     .split(RegExp(r'[^\p{L}\p{N}]+', unicode: true))
     .where((token) => token.isNotEmpty)
     .toSet();
+
+String _firstQuotedFocus(String prompt) {
+  final match = RegExp(r'"([^"]+)"|“([^”]+)”').firstMatch(prompt);
+  return normalizeText(match?.group(1) ?? match?.group(2) ?? '');
+}
 
 double _jaccardSets(Set<String> a, Set<String> b) {
   if (a.isEmpty || b.isEmpty) return 0;

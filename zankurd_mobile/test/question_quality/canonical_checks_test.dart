@@ -267,6 +267,129 @@ void main() {
     final issues = runDuplicateChecks([a, b]);
     expect(issues.map((i) => i.checkId), contains('near_duplicate_candidate'));
     expect(issues.map((i) => i.checkId), isNot(contains('exact_duplicate')));
+    final near = issues.singleWhere(
+      (issue) => issue.checkId == 'near_duplicate_candidate',
+    );
+    expect(near.message, contains('a.csv:1'));
+    expect(near.message, contains('q1'));
+    expect(near.message, contains('jaccard='));
+  });
+
+  test('opposite-answer true-false contrast is not a near duplicate', () {
+    final falseVariant = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.json',
+      row: 1,
+      id: 'tf1',
+      prompt: 'Rast e an şaş e: Têgeha "Gol" ava sekinî ye?',
+      options: const ['Rast', 'Şaş'],
+      correctIndex: 1,
+      correctText: 'Şaş',
+      questionType: 'trueFalse',
+    );
+    final trueVariant = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.json',
+      row: 2,
+      id: 'tf2',
+      prompt: 'Rast e an şaş e: Têgeha "Hewa" ava sekinî ye?',
+      options: const ['Rast', 'Şaş'],
+      correctIndex: 0,
+      correctText: 'Rast',
+      questionType: 'trueFalse',
+    );
+
+    final issues = runDuplicateChecks([falseVariant, trueVariant]);
+
+    expect(
+      issues.map((issue) => issue.checkId),
+      isNot(contains('near_duplicate_candidate')),
+    );
+  });
+
+  test('same-answer true-false pair remains a near-duplicate candidate', () {
+    final first = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.json',
+      row: 1,
+      id: 'tf1',
+      prompt: 'Rast e an şaş e: Têgeha "Gol" ava sekinî ye?',
+      options: const ['Rast', 'Şaş'],
+      correctIndex: 0,
+      correctText: 'Rast',
+      questionType: 'trueFalse',
+    );
+    final second = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.json',
+      row: 2,
+      id: 'tf2',
+      prompt: 'Rast e an şaş e: Têgeha "Gol" bi rastî ava sekinî ye?',
+      options: const ['Rast', 'Şaş'],
+      correctIndex: 0,
+      correctText: 'Rast',
+      questionType: 'trueFalse',
+    );
+
+    final issues = runDuplicateChecks([first, second]);
+
+    expect(
+      issues.map((issue) => issue.checkId),
+      contains('near_duplicate_candidate'),
+    );
+  });
+
+  test(
+    'different quoted targets are template variants, not near duplicates',
+    () {
+      final first = question(
+        sourceId: 'runtime',
+        sourcePath: 'runtime.json',
+        row: 1,
+        id: 'word1',
+        prompt: 'Peyva Kurmancî "dest" bi Tirkî çi tê wateyê?',
+        correctText: 'el',
+      );
+      final second = question(
+        sourceId: 'runtime',
+        sourcePath: 'runtime.json',
+        row: 2,
+        id: 'word2',
+        prompt: 'Peyva Kurmancî "av" bi Tirkî çi tê wateyê?',
+        correctText: 'su',
+      );
+
+      final issues = runDuplicateChecks([first, second]);
+
+      expect(
+        issues.map((issue) => issue.checkId),
+        isNot(contains('near_duplicate_candidate')),
+      );
+    },
+  );
+
+  test('same quoted target can remain a near-duplicate candidate', () {
+    final first = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.json',
+      row: 1,
+      id: 'word1',
+      prompt: 'Peyva Kurmancî "dest" bi Tirkî çi tê wateyê?',
+    );
+    final second = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.json',
+      row: 2,
+      id: 'word2',
+      prompt: 'Peyva Kurmancî "dest" bi Tirkî çi wateyê dide?',
+    );
+
+    final issues = runDuplicateChecks([first, second]);
+
+    expect(
+      issues.map((issue) => issue.checkId),
+      contains('near_duplicate_candidate'),
+    );
   });
 
   test(
