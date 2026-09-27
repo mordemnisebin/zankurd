@@ -68,7 +68,11 @@ void main() {
       expect(gradient.colors, contains(AppTheme.culturalBrandBg));
       expect(decoration.border, isNull);
 
-      final title = tester.widget<Text>(find.text('Günün dersi'));
+      // `firstSession` burada varsayılan (false) ve done(4) < total(15):
+      // 2026-09-27'den beri bu durumda başlık "Günün dersi" değil "Günlük
+      // hedef" der — ders zaten bitmişken yeniden "ders" görmek "bitirdim,
+      // neden yine ders?" izlenimi veriyordu (bkz. TodayTaskCard.build).
+      final title = tester.widget<Text>(find.text('Günlük hedef'));
       expect(title.style?.color, Colors.white);
 
       final bar = tester.widget<KilimProgressBar>(

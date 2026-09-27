@@ -25,18 +25,35 @@ class TodayTaskCard extends StatelessWidget {
   final bool loading;
   final VoidCallback onStart;
 
-  /// Bugün çözülen soru sayısı (görev ilerlemesi).
+  /// Bugün verilen DOĞRU cevap sayısı — SORU sayısı değil.
+  ///
+  /// Kaynağı `HomeScreen._todayAnswered = store.correctAnswersToday`;
+  /// [total] da soru adedi değil, günlük "answerCorrect" görevinin
+  /// hedefidir. Bu ayrım önemli: günlük hedef dalındaki "kalan" metni
+  /// kalan SORU değil kalan DOĞRU CEVAP sayar (2026-09-27 canlı gezinti —
+  /// bkz. [K.dailyGoalRemainingCorrect]).
   final int done;
   final int total;
   final bool firstSession;
 
   /// Soru başına ~25 saniyelik gerçekçi ortalama üzerinden tahmini süre.
-  int get _minutes => ((total * 25) / 60).ceil().clamp(1, 60);
+  static int _minutesFor(int questions) =>
+      ((questions * 25) / 60).ceil().clamp(1, 60);
 
   @override
   Widget build(BuildContext context) {
     final progress = total <= 0 ? 0.0 : (done / total).clamp(0.0, 1.0);
     final started = done > 0;
+    // İlk ders bitince kart hâlâ "Günün dersi" diyordu; oyuncu az önce bir
+    // ders bitirmişken aynı adı yeniden görünce "bitirdim, neden yine ders?"
+    // diye duruyordu (2026-09-27 canlı gezinti). Gün içinde ilerleme
+    // BAŞLADIKTAN sonra ve hedef tamamlanmadan ÖNCE başlık günlük hedefe
+    // döner. Günün ilk açılışı (0 doğru) "Günün dersi" kalır: henüz hiçbir
+    // şey yapılmamışken "10 doğru cevap daha" demek "daha"yı boşa düşürür.
+    // İlk oturum ("Küçük başlangıç") ve tamamlanmış hedef durumuna kasıtlı
+    // dokunulmaz.
+    final goalInProgress = !firstSession && started && done < total;
+    final remaining = total - done;
     const radius = AppRadius.card;
 
     return Container(
@@ -107,16 +124,23 @@ class TodayTaskCard extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                Tr.forKu(K.gununDersi, isKu),
+                goalInProgress
+                    ? Tr.forKu(K.dailyGoalTitle, isKu)
+                    : Tr.forKu(K.gununDersi, isKu),
                 style: AppTypography.heading2.copyWith(color: Colors.white),
               ),
               const SizedBox(height: 3),
               Text(
-                Tr.forKu(
-                  firstSession ? K.firstSessionSub : K.pSoruYaklasikP,
-                  isKu,
-                  {'p0': '$total', 'p1': '$_minutes'},
-                ),
+                goalInProgress
+                    ? Tr.forKu(K.dailyGoalRemainingCorrect, isKu, {
+                        'n': '$remaining',
+                        'm': '${_minutesFor(remaining)}',
+                      })
+                    : Tr.forKu(
+                        firstSession ? K.firstSessionSub : K.pSoruYaklasikP,
+                        isKu,
+                        {'p0': '$total', 'p1': '${_minutesFor(total)}'},
+                      ),
                 style: AppTypography.bodyMedium.copyWith(
                   color: Colors.white.withValues(alpha: 0.78),
                 ),

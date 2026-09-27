@@ -950,6 +950,20 @@ class Tr {
       'ku': '{p0} pirs · nêzîkî {p1} deqe',
       'tr': '{p0} soru · yaklaşık {p1} dakika',
     },
+    // 2026-09-27 canlı gezinti: ilk ders bitince kart yine "Günün dersi —
+    // 10 soru" diyordu; oyuncu az önce bitirdiği dersin adını görünce
+    // "bitirdim, neden yine ders?" diye duruyordu. İlk oturum dışında ve
+    // hedef tamamlanmadan önce başlık günlük hedefe döner (bkz.
+    // TodayTaskCard._goalInProgress).
+    K.dailyGoalTitle: {'ku': 'Armanca rojane', 'tr': 'Günlük hedef'},
+    // Kalan SORU değil kalan DOĞRU CEVAP sayılır (bkz. home_screen.dart
+    // `_todayAnswered = store.correctAnswersToday`); metin de onu söyler.
+    // Süre ibaresi [K.pSoruYaklasikP] ile aynı kelimelerdir; tek kalıp
+    // olarak durur ki kod çevrilmiş metni "·" işaretinden bölmesin.
+    K.dailyGoalRemainingCorrect: {
+      'ku': '{n} bersivên rast ên din · nêzîkî {m} deqe',
+      'tr': '{n} doğru cevap daha · yaklaşık {m} dakika',
+    },
     K.devamEt: {'ku': 'Bidomîne', 'tr': 'Devam et'},
     K.gunlukSeriStreak: {'ku': 'Zincîra Pêşketinê', 'tr': 'Günlük Seri'},
     K.pGundurAraliksizOynuyorsun: {
@@ -2187,7 +2201,6 @@ class Tr {
     },
     K.language: {'ku': 'Ziman', 'tr': 'Dil'},
     K.languageCode: {'ku': 'KU', 'tr': 'TR'},
-    K.changeLanguage: {'ku': 'Ziman biguherîne', 'tr': 'Dili değiştir'},
     K.dailyLesson: {'ku': 'Dersa rojane', 'tr': 'Günün Dersi'},
     K.learningGoalTitle: {
       'ku': 'Îro tu dixwazî li ser çi bisekinî?',
@@ -2467,26 +2480,6 @@ class Tr {
           'Nav nehat tomar kirin. Dîsa biceribîne, an bi «Paşê bike» derbas bibe û paşê ji profîlê binivîse.',
       'tr':
           'Ad kaydedilemedi. Tekrar dene ya da «Şimdilik geç» ile devam et, adı sonra profilden yazarsın.',
-    },
-    K.nameGateWelcome: {
-      'ku': 'Bi xêr hatî ZanKurdê!',
-      'tr': "ZanKurd'a Hoş Geldin!",
-    },
-    K.nameGateSubtitle: {
-      'ku': 'Hîn bibe, pêş bikeve û bi hevalên xwe re kêf bike.',
-      'tr': 'Öğren, ilerle ve arkadaşlarınla eğlen.',
-    },
-    K.nameGateValueQuests: {
-      'ku': 'Lîstikan biqedîne, xelatan bi dest bixe',
-      'tr': 'Oyunları tamamla, ödül kazan',
-    },
-    K.nameGateValueFriends: {
-      'ku': 'Bi hevalan re pêşbirkê bike',
-      'tr': 'Arkadaşlarınla yarış',
-    },
-    K.nameGateValueStreak: {
-      'ku': 'Zincîra xwe biparêze',
-      'tr': 'Serini koru, her gün devam ettir',
     },
     K.nameGateQuestion: {
       'ku': 'Navê te di lîstikê de çi be?',
@@ -2827,9 +2820,14 @@ class Tr {
       'ku': 'Ez ji 13 salî mezintir im',
       'tr': '13 yaşından büyüğüm',
     },
-    K.ageGateBlocked: {
-      'ku': 'ZanKurd ji bo 13 salî û mezintir e.',
-      'tr': 'ZanKurd 13 yaş ve üzeri içindir.',
+    // 2026-09-27 canlı gezinti: kutu işaretsizken kuralın kendisi ("ZanKurd
+    // 13 yaş ve üzeri içindir.") bir SnackBar'da çıkıyordu — oyuncu ne
+    // yapacağını anlamıyordu ve SnackBar ekranın altındaki "Başla" düğmesini
+    // örtüyordu. Bu metin kutunun yanında satır içi durur ve ne YAPILACAĞINI
+    // söyler; kuralı kutunun kendi etiketi zaten söylüyor.
+    K.ageGateHint: {
+      'ku': 'Ji bo berdewamiyê qutiya "Ez ji 13 salî mezintir im" nîşan bike.',
+      'tr': 'Devam etmek için "13 yaşından büyüğüm" kutusunu işaretle.',
     },
     K.soloXpRankingNote: {
       'ku':
@@ -3437,6 +3435,13 @@ class K {
   static const firstSessionBadge = 'screen.firstSessionBadge';
   static const firstSessionSub = 'screen.firstSessionSub';
   static const pSoruYaklasikP = 'screen.pSoruYaklasikP';
+
+  /// İlk oturum dışında, hedef bitmeden önceki günlük görev kartı başlığı.
+  static const dailyGoalTitle = 'screen.dailyGoalTitle';
+
+  /// "{n} doğru cevap daha · yaklaşık {m} dakika" — kalan miktar SORU
+  /// değil DOĞRU CEVAP sayar; süre de kalan miktardan hesaplanır.
+  static const dailyGoalRemainingCorrect = 'screen.dailyGoalRemainingCorrect';
   static const devamEt = 'screen.devamEt';
   static const gunlukSeriStreak = 'screen.gunlukSeriStreak';
   static const pGundurAraliksizOynuyorsun = 'screen.pGundurAraliksizOynuyorsun';
@@ -3963,7 +3968,6 @@ class K {
   static const homeTopicsSub = 'home.topics.sub';
   static const language = 'common.language';
   static const languageCode = 'common.languageCode';
-  static const changeLanguage = 'common.changeLanguage';
   static const dailyLesson = 'home.dailyLesson';
   static const learningGoalTitle = 'learning.goal.title';
   static const learningGoalTitleCompact = 'learning.goal.title.compact';
@@ -4046,11 +4050,6 @@ class K {
 
   // ── Oyuncu adı kapısı ─────────────────────────────────────────
   static const nameGateSaveFailed = 'nameGate.saveFailed';
-  static const nameGateWelcome = 'nameGate.welcome';
-  static const nameGateSubtitle = 'nameGate.subtitle';
-  static const nameGateValueQuests = 'nameGate.value.quests';
-  static const nameGateValueFriends = 'nameGate.value.friends';
-  static const nameGateValueStreak = 'nameGate.value.streak';
   static const nameGateQuestion = 'nameGate.question';
   static const nameGateHelp = 'nameGate.help';
   static const nameGateHint = 'nameGate.hint';
@@ -4185,7 +4184,9 @@ class K {
   static const quizTutorialNextTitle = 'quiz.tutorial.next.title';
   static const quizTutorialNextBody = 'quiz.tutorial.next.body';
   static const ageGateLabel = 'nameGate.age.label';
-  static const ageGateBlocked = 'nameGate.age.blocked';
+
+  /// Yaş kutusu işaretsiz kalınca kutunun yanında satır içi gösterilir.
+  static const ageGateHint = 'nameGate.age.hint';
   static const soloXpRankingNote = 'result.xp.rankingNote';
   static const referralGuestBlocked = 'friends.referral.guestBlocked';
   static const imageCreditsEmpty = 'credits.images.empty';

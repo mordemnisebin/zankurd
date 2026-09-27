@@ -134,6 +134,13 @@ void main() {
     // başlık alanının tamamına yayıyor ve düğme 346x180'lik boş bir
     // panele dönüşüyordu. Ekran turu bunu görüntüledi ama hiçbir test
     // boyut ölçmediği için sessiz kaldı (2026-09-10).
+    //
+    // 2026-09-27: tek "KU"/"TR" hapı (`onboarding-language-toggle`), giriş
+    // ekranındakiyle aynı iki-parçalı KU|TR seçiciye (`LanguageToggle`)
+    // taşındı — karşı dile nasıl geçileceği artık görünür. Anahtar da her
+    // çip için ayrı (`onboarding-language-ku`/`-tr`); bu test artık HER
+    // çipin küçük ve dokunulabilir kaldığını, eski tek-hap kadar sıkı
+    // sınar.
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     for (final size in [const Size(390, 844), const Size(1200, 800)]) {
@@ -146,20 +153,21 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      final toggle = tester.getSize(
-        find.byKey(const ValueKey('onboarding-language-toggle')),
-      );
-      expect(toggle.width, lessThanOrEqualTo(72));
-      expect(toggle.height, lessThanOrEqualTo(64));
-      expect(
-        tester
-            .getSemantics(
-              find.byKey(const ValueKey('onboarding-language-toggle')),
-            )
-            .getSemanticsData()
-            .hasAction(ui.SemanticsAction.tap),
-        isTrue,
-      );
+      for (final key in const [
+        ValueKey('onboarding-language-ku'),
+        ValueKey('onboarding-language-tr'),
+      ]) {
+        final chip = tester.getSize(find.byKey(key));
+        expect(chip.width, lessThanOrEqualTo(72));
+        expect(chip.height, lessThanOrEqualTo(64));
+        expect(
+          tester
+              .getSemantics(find.byKey(key))
+              .getSemanticsData()
+              .hasAction(ui.SemanticsAction.tap),
+          isTrue,
+        );
+      }
 
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump();

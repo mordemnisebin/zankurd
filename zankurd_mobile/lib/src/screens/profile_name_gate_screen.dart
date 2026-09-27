@@ -116,9 +116,17 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
           return Column(
             children: [
               // 2026-07-23 M23: hero sabit flex (42-45%) alıyordu ama
-              // içeriği (logo+başlık+2-3 satır) çok daha az yer kaplıyor —
-              // alt ~125px'i tamamen boş kalıyordu. Artık içerik kadar yer
-              // kaplıyor, kalan alan forma (Expanded) gidiyor.
+              // içeriği çok daha az yer kaplıyor — alt kısmı boş kalıyordu.
+              // Artık içerik kadar yer kaplıyor, kalan alan forma (Expanded)
+              // gidiyor.
+              //
+              // 2026-09-27 canlı gezinti: bu ekran tanıtım turunun VE giriş
+              // ekranının HEMEN ardından açılıyor; ikisi de zaten "ZanKurd'a
+              // Hoş Geldin" başlığını ve ürünün ne sunduğunu (görev, arkadaş,
+              // seri) anlatmıştı. Burada aynı karşılamayı ve aynı üç maddeyi
+              // üçüncü kez göstermek bilgi vermiyor, yalnız oyalıyordu; asıl
+              // iş tek bir soru ("Oyundaki adın ne olsun?") ve o soru zaten
+              // aşağıdaki kartta. Hero artık yalnız küçük bir marka şeridi.
               ClipRRect(
                 key: const ValueKey('profile-name-gate-hero'),
                 borderRadius: const BorderRadius.only(
@@ -131,72 +139,20 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                   decoration: const BoxDecoration(
                     gradient: AppTheme.identityHeaderGradient,
                   ),
-                  child: Stack(
-                    children: [
-                      SafeArea(
-                        bottom: false,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            AppSpacing.lg,
-                            compact ? AppSpacing.md : AppSpacing.xl,
-                            AppSpacing.lg,
-                            AppSpacing.md,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AppLogo(
-                                width: compact ? 64 : 72,
-                                onBrandSurface: true,
-                              ),
-                              SizedBox(
-                                height: compact ? AppSpacing.sm : AppSpacing.lg,
-                              ),
-                              Text(
-                                context.t(K.nameGateWelcome),
-                                style: AppTypography.heading1.copyWith(
-                                  color: Colors.white,
-                                  fontSize: compact ? 24 : 28,
-                                  height: 1.15,
-                                  letterSpacing: -0.3,
-                                ),
-                              ),
-                              const SizedBox(height: AppSpacing.xxs),
-                              Text(
-                                context.t(K.nameGateSubtitle),
-                                style: AppTypography.bodyMedium.copyWith(
-                                  color: Colors.white.withValues(alpha: 0.78),
-                                  fontSize: compact ? 14 : 15,
-                                  height: 1.4,
-                                ),
-                              ),
-                              SizedBox(
-                                height: compact ? AppSpacing.sm : AppSpacing.md,
-                              ),
-                              _HeroValueRow(
-                                icon: AppIcons.trophy,
-                                color: Colors.white,
-                                text: context.t(K.nameGateValueQuests),
-                              ),
-                              const SizedBox(height: AppSpacing.xxs),
-                              _HeroValueRow(
-                                icon: AppIcons.peopleGroup,
-                                color: Colors.white,
-                                text: context.t(K.nameGateValueFriends),
-                              ),
-                              if (!compact) ...[
-                                const SizedBox(height: AppSpacing.xxs),
-                                _HeroValueRow(
-                                  icon: AppIcons.fire,
-                                  color: Colors.white,
-                                  text: context.t(K.nameGateValueStreak),
-                                ),
-                              ],
-                            ],
-                          ),
+                  child: SafeArea(
+                    bottom: false,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppSpacing.lg,
+                        vertical: compact ? AppSpacing.md : AppSpacing.lg,
+                      ),
+                      child: Center(
+                        child: AppLogo(
+                          width: compact ? 64 : 72,
+                          onBrandSurface: true,
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -207,249 +163,220 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                   ),
                   child: SafeArea(
                     top: false,
-                    // 2026-07-23 M23 devamı: hero sıkılaştırılınca form
-                    // kartının altında da boşluk kaldığı canlı testte
-                    // görüldü — kart kısa kaldığında Expanded alanının
-                    // tamamını doldurmuyordu. Aynı minHeight+Center
-                    // deseniyle kart artık kalan alanda ortalanıyor.
-                    child: LayoutBuilder(
-                      builder: (context, formConstraints) {
-                        return SingleChildScrollView(
-                          padding: const EdgeInsets.fromLTRB(
-                            AppSpacing.page,
-                            AppSpacing.lg,
-                            AppSpacing.page,
-                            AppSpacing.lg,
-                          ),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              minHeight:
-                                  (formConstraints.maxHeight -
-                                          (AppSpacing.lg * 2))
-                                      .clamp(0.0, double.infinity),
+                    // 2026-07-23 M23 devamı: kart kalan alanda ortalanıyordu;
+                    // o zaman hero ekranın üçte birini kaplıyordu.
+                    //
+                    // 2026-09-27: hero yalnız logo şeridine inince ortalanan
+                    // kart ekranın ortasında yüzdü — üstünde ve altında
+                    // ~400px boşluk kaldı, ekran yarım yüklenmiş gibi
+                    // görünüyordu. Kart artık şeridin hemen altında başlar
+                    // (göz logodan soruya iner) ve klavye açılınca yerinden
+                    // zıplamaz.
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.page,
+                        AppSpacing.xl,
+                        AppSpacing.page,
+                        AppSpacing.lg,
+                      ),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 430),
+                          child: Container(
+                            key: const ValueKey('profile-name-gate-card'),
+                            padding: const EdgeInsets.all(AppSpacing.md),
+                            decoration: BoxDecoration(
+                              color: AppTheme.surfaceColor(context).withValues(
+                                alpha: AppTheme.isLight(context) ? 0.92 : 0.55,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                AppRadius.card,
+                              ),
+                              border: Border.all(
+                                color: AppTheme.borderColor(
+                                  context,
+                                ).withValues(alpha: 0.45),
+                              ),
+                              boxShadow: AppTheme.softShadow(context),
                             ),
-                            child: Center(
-                              child: ConstrainedBox(
-                                constraints: const BoxConstraints(
-                                  maxWidth: 430,
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.all(AppSpacing.md),
-                                  decoration: BoxDecoration(
-                                    color: AppTheme.surfaceColor(context)
-                                        .withValues(
-                                          alpha: AppTheme.isLight(context)
-                                              ? 0.92
-                                              : 0.55,
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 4,
+                                        height: 22,
+                                        margin: const EdgeInsets.only(
+                                          right: AppSpacing.sm,
                                         ),
-                                    borderRadius: BorderRadius.circular(
-                                      AppRadius.card,
-                                    ),
-                                    border: Border.all(
-                                      color: AppTheme.borderColor(
-                                        context,
-                                      ).withValues(alpha: 0.45),
-                                    ),
-                                    boxShadow: AppTheme.softShadow(context),
-                                  ),
-                                  child: Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                              width: 4,
-                                              height: 22,
-                                              margin: const EdgeInsets.only(
-                                                right: AppSpacing.sm,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(2),
-                                                gradient: const LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [
-                                                    AppTheme.accent,
-                                                    AppTheme.primaryGradientEnd,
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                context.t(K.nameGateQuestion),
-                                                style: AppTypography.heading2
-                                                    .copyWith(
-                                                      color:
-                                                          AppTheme.textPrimaryColor(
-                                                            context,
-                                                          ),
-                                                    ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: AppSpacing.xs),
-                                        Text(
-                                          context.t(K.nameGateHelp),
-                                          style: AppTypography.bodyMedium
-                                              .copyWith(
-                                                color: AppTheme.textMutedColor(
-                                                  context,
-                                                ),
-                                                height: 1.5,
-                                              ),
-                                        ),
-                                        const SizedBox(height: AppSpacing.lg),
-                                        TextFormField(
-                                          key: const ValueKey(
-                                            'player-name-field',
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            2,
                                           ),
-                                          controller: _controller,
-                                          // Hata yalnız Form.validate() ile
-                                          // güncelleniyordu: geçerli bir ad yazıldıktan
-                                          // sonra da kırmızı kenarlık ve "en az 2
-                                          // karakter" uyarısı ekranda kalıyordu
-                                          // (2026-07-22 canlı UX denetimi).
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          textCapitalization:
-                                              TextCapitalization.words,
-                                          style: AppTypography.bodyLarge
+                                          gradient: const LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              AppTheme.accent,
+                                              AppTheme.primaryGradientEnd,
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          context.t(K.nameGateQuestion),
+                                          style: AppTypography.heading2
                                               .copyWith(
                                                 color:
                                                     AppTheme.textPrimaryColor(
                                                       context,
                                                     ),
-                                                fontWeight: FontWeight.w600,
                                               ),
-                                          decoration: InputDecoration(
-                                            hintText: context.t(K.nameGateHint),
-                                            prefixIcon: Icon(
-                                              AppIcons.user,
-                                              color: AppTheme.textMutedColor(
-                                                context,
-                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: AppSpacing.xs),
+                                  Text(
+                                    context.t(K.nameGateHelp),
+                                    style: AppTypography.bodyMedium.copyWith(
+                                      color: AppTheme.textMutedColor(context),
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                  const SizedBox(height: AppSpacing.lg),
+                                  TextFormField(
+                                    key: const ValueKey('player-name-field'),
+                                    controller: _controller,
+                                    // Hata yalnız Form.validate() ile
+                                    // güncelleniyordu: geçerli bir ad yazıldıktan
+                                    // sonra da kırmızı kenarlık ve "en az 2
+                                    // karakter" uyarısı ekranda kalıyordu
+                                    // (2026-07-22 canlı UX denetimi).
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    style: AppTypography.bodyLarge.copyWith(
+                                      color: AppTheme.textPrimaryColor(context),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    decoration: InputDecoration(
+                                      hintText: context.t(K.nameGateHint),
+                                      prefixIcon: Icon(
+                                        AppIcons.user,
+                                        color: AppTheme.textMutedColor(context),
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      // 2026-08-02: burada YALNIZ
+                                      // uzunluk kontrol ediliyordu.
+                                      // Ad, sohbet mesajından daha
+                                      // görünür bir UGC yüzeyi —
+                                      // liderlikte, odada ve
+                                      // eşleştirmede yabancılara
+                                      // gösteriliyor ve kalıcı.
+                                      final verdict = DisplayNamePolicy.review(
+                                        value ?? '',
+                                      );
+                                      if (verdict ==
+                                          DisplayNameVerdict.allowed) {
+                                        return null;
+                                      }
+                                      return context.t(
+                                        DisplayNamePolicy.messageKeyFor(
+                                          verdict,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  if (_saveError != null) ...[
+                                    const SizedBox(height: AppSpacing.md),
+                                    Container(
+                                      key: const ValueKey(
+                                        'name-gate-save-error',
+                                      ),
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.all(
+                                        AppSpacing.md,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.wrong.withValues(
+                                          alpha: 0.12,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          AppRadius.md,
+                                        ),
+                                        border: Border.all(
+                                          color: AppTheme.wrong.withValues(
+                                            alpha: 0.4,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Icon(
+                                            AppIcons.triangleExclamation,
+                                            size: 20,
+                                            color: AppColors.readableAccent(
+                                              context,
+                                              AppTheme.wrong,
                                             ),
                                           ),
-                                          validator: (value) {
-                                            // 2026-08-02: burada YALNIZ
-                                            // uzunluk kontrol ediliyordu.
-                                            // Ad, sohbet mesajından daha
-                                            // görünür bir UGC yüzeyi —
-                                            // liderlikte, odada ve
-                                            // eşleştirmede yabancılara
-                                            // gösteriliyor ve kalıcı.
-                                            final verdict =
-                                                DisplayNamePolicy.review(
-                                                  value ?? '',
-                                                );
-                                            if (verdict ==
-                                                DisplayNameVerdict.allowed) {
-                                              return null;
-                                            }
-                                            return context.t(
-                                              DisplayNamePolicy.messageKeyFor(
-                                                verdict,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                        if (_saveError != null) ...[
-                                          const SizedBox(height: AppSpacing.md),
-                                          Container(
-                                            key: const ValueKey(
-                                              'name-gate-save-error',
-                                            ),
-                                            width: double.infinity,
-                                            padding: const EdgeInsets.all(
-                                              AppSpacing.md,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: AppTheme.wrong.withValues(
-                                                alpha: 0.12,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                    AppRadius.md,
-                                                  ),
-                                              border: Border.all(
-                                                color: AppTheme.wrong
-                                                    .withValues(alpha: 0.4),
-                                              ),
-                                            ),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Icon(
-                                                  AppIcons.triangleExclamation,
-                                                  size: 20,
-                                                  color:
-                                                      AppColors.readableAccent(
-                                                        context,
-                                                        AppTheme.wrong,
-                                                      ),
-                                                ),
-                                                const SizedBox(width: 10),
-                                                Expanded(
-                                                  child: Text(
-                                                    _saveError!,
-                                                    style: AppTypography
-                                                        .bodyMedium
-                                                        .copyWith(
-                                                          color:
-                                                              AppTheme.textPrimaryColor(
-                                                                context,
-                                                              ),
-                                                          height: 1.45,
+                                          const SizedBox(width: 10),
+                                          Expanded(
+                                            child: Text(
+                                              _saveError!,
+                                              style: AppTypography.bodyMedium
+                                                  .copyWith(
+                                                    color:
+                                                        AppTheme.textPrimaryColor(
+                                                          context,
                                                         ),
+                                                    height: 1.45,
                                                   ),
-                                                ),
-                                              ],
                                             ),
                                           ),
                                         ],
-                                        const SizedBox(height: AppSpacing.lg),
-                                        GeometricGradientButton(
-                                          label: context.t(K.nameGateCta),
-                                          icon: AppIcons.arrowRight,
-                                          isLoading: _saving,
-                                          onPressed: _saving ? null : _save,
-                                        ),
-                                        const SizedBox(height: AppSpacing.xs),
-                                        // 2026-07-23 UX: isim artık zorunlu değil;
-                                        // kullanıcı varsayılan adla geçip sonra
-                                        // profilden değiştirebilir (giriş sürtünmesi ↓).
-                                        TextButton(
-                                          onPressed: _saving
-                                              ? null
-                                              : widget.onCompleted,
-                                          child: Text(
-                                            context.t(K.nameGateSkip),
-                                            style: AppTypography.bodyMedium
-                                                .copyWith(
-                                                  color:
-                                                      AppTheme.textMutedColor(
-                                                        context,
-                                                      ),
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
+                                      ),
+                                    ),
+                                  ],
+                                  const SizedBox(height: AppSpacing.lg),
+                                  GeometricGradientButton(
+                                    label: context.t(K.nameGateCta),
+                                    icon: AppIcons.arrowRight,
+                                    isLoading: _saving,
+                                    onPressed: _saving ? null : _save,
+                                  ),
+                                  const SizedBox(height: AppSpacing.xs),
+                                  // 2026-07-23 UX: isim artık zorunlu değil;
+                                  // kullanıcı varsayılan adla geçip sonra
+                                  // profilden değiştirebilir (giriş sürtünmesi ↓).
+                                  TextButton(
+                                    onPressed: _saving
+                                        ? null
+                                        : widget.onCompleted,
+                                    child: Text(
+                                      context.t(K.nameGateSkip),
+                                      style: AppTypography.bodyMedium.copyWith(
+                                        color: AppTheme.textMutedColor(context),
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -458,47 +385,6 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
           );
         },
       ),
-    );
-  }
-}
-
-class _HeroValueRow extends StatelessWidget {
-  const _HeroValueRow({
-    required this.icon,
-    required this.color,
-    required this.text,
-  });
-
-  final IconData icon;
-  final Color color;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.18),
-            borderRadius: BorderRadius.circular(AppRadius.xs),
-          ),
-          child: Icon(icon, color: color, size: 16),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        Expanded(
-          child: Text(
-            text,
-            style: AppTypography.bodyMedium.copyWith(
-              color: Colors.white.withValues(alpha: 0.88),
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              height: 1.3,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

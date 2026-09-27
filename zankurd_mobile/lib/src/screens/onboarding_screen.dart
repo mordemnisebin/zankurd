@@ -8,6 +8,7 @@ import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_logo.dart';
 import '../widgets/kilim_reveal.dart';
+import '../widgets/language_toggle.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/styled_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -26,6 +27,12 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   final _controller = PageController();
   int _page = 0;
   bool _ageConfirmed = false;
+  // "Başla"ya kutu işaretsizken basılınca eskiden bir SnackBar çıkıyordu:
+  // ne yapılacağını söylemiyordu VE ekranın altındaki "Başla" düğmesini
+  // örtüyordu (2026-09-27 canlı gezinti). Artık kutunun yanında satır içi
+  // gösterilir; yalnız bir başarısız denemeden sonra görünür, kutu
+  // işaretlenince hemen kaybolur.
+  bool _showAgeGateHint = false;
   late final AnimationController _brandController;
   late final Animation<double> _brandScale;
   late final Animation<double> _brandOpacity;
@@ -56,9 +63,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 
   void _completeIfAgeOk() {
     if (!_ageConfirmed) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.t(K.ageGateBlocked))));
+      setState(() => _showAgeGateHint = true);
       return;
     }
     widget.onComplete();
@@ -190,7 +195,14 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const _OnboardingLanguageToggle(),
+                                        const LanguageToggle(
+                                          kuKey: ValueKey(
+                                            'onboarding-language-ku',
+                                          ),
+                                          trKey: ValueKey(
+                                            'onboarding-language-tr',
+                                          ),
+                                        ),
                                         const SizedBox(width: AppSpacing.xs),
                                         Expanded(
                                           child: Align(
@@ -207,26 +219,23 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         ),
                                         child: FittedBox(
                                           fit: BoxFit.scaleDown,
-                                          child: _page == 0
-                                              ? _AnimatedBrandLockup(
-                                                  scale: _brandScale,
-                                                  opacity: _brandOpacity,
-                                                  logoWidth: 44,
-                                                  showTagline: false,
-                                                )
-                                              : Text(
-                                                  'ZanKurd',
-                                                  style: AppTypography.heading2
-                                                      .copyWith(
-                                                        color:
-                                                            AppTheme.textPrimaryColor(
-                                                              context,
-                                                            ),
-                                                        fontWeight:
-                                                            FontWeight.w900,
-                                                        letterSpacing: -0.3,
-                                                      ),
-                                                ),
+                                          // 2026-09-27: 1. sayfada logo,
+                                          // 2.'de düz "ZanKurd" yazısı vardı —
+                                          // aynı sabit yükseklikli kutuda çok
+                                          // daha küçük içerik durunca üstte
+                                          // büyük boşluk kalıyor ve başlık
+                                          // sayfa geçişinde zıplıyormuş gibi
+                                          // görünüyordu (canlı gezinti). Logo
+                                          // artık her sayfada aynı; kontrolör
+                                          // 900ms'de bir kez koşar, geç
+                                          // sayfalarda zaten bitmiş (deger 1)
+                                          // durur, yeniden animasyon oynamaz.
+                                          child: _AnimatedBrandLockup(
+                                            scale: _brandScale,
+                                            opacity: _brandOpacity,
+                                            logoWidth: 44,
+                                            showTagline: false,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -247,28 +256,24 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         // taşırmasın diye gerekirse küçülür.
                                         child: FittedBox(
                                           fit: BoxFit.scaleDown,
-                                          // Dev beyaz logo kartı yalnız 1. slaytta;
-                                          // diğer slaytlarda küçük wordmark yeterli.
-                                          child: _page == 0
-                                              ? _AnimatedBrandLockup(
-                                                  scale: _brandScale,
-                                                  opacity: _brandOpacity,
-                                                  logoWidth: compact ? 48 : 96,
-                                                  showTagline: !wideCompact,
-                                                )
-                                              : Text(
-                                                  'ZanKurd',
-                                                  style: AppTypography.heading2
-                                                      .copyWith(
-                                                        color:
-                                                            AppTheme.textPrimaryColor(
-                                                              context,
-                                                            ),
-                                                        fontWeight:
-                                                            FontWeight.w900,
-                                                        letterSpacing: -0.3,
-                                                      ),
-                                                ),
+                                          // 2026-09-27: 1. sayfada beyaz logo
+                                          // kartı, 2.'de düz "ZanKurd" yazısı
+                                          // vardı. Sabit yükseklikli başlık
+                                          // kutusunda çok daha küçük içerik
+                                          // durunca üstte büyük boşluk kalıyor
+                                          // ve başlık sayfa geçişinde
+                                          // zıplıyormuş gibi görünüyordu
+                                          // (canlı gezinti). Logo kartı artık
+                                          // her sayfada aynı; giriş animasyonu
+                                          // yalnız bir kez (900ms) koşar,
+                                          // sonraki sayfalarda zaten bitmiş
+                                          // durumda (deger 1) görünür.
+                                          child: _AnimatedBrandLockup(
+                                            scale: _brandScale,
+                                            opacity: _brandOpacity,
+                                            logoWidth: compact ? 48 : 96,
+                                            showTagline: !wideCompact,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -284,8 +289,14 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         padding: EdgeInsets.only(
                                           top: compact ? 0 : 2,
                                         ),
-                                        child:
-                                            const _OnboardingLanguageToggle(),
+                                        child: const LanguageToggle(
+                                          kuKey: ValueKey(
+                                            'onboarding-language-ku',
+                                          ),
+                                          trKey: ValueKey(
+                                            'onboarding-language-tr',
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     Align(
@@ -358,23 +369,56 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             ],
                           ),
                         SizedBox(height: compact ? 8 : 10),
-                        Material(
-                          color: Colors.transparent,
-                          child: CheckboxListTile(
-                            key: const ValueKey('onboarding-age-gate'),
-                            value: _ageConfirmed,
-                            onChanged: (value) =>
-                                setState(() => _ageConfirmed = value ?? false),
-                            controlAffinity: ListTileControlAffinity.leading,
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(
-                              context.t(K.ageGateLabel),
-                              style: AppTypography.bodyMedium.copyWith(
-                                color: AppTheme.textPrimaryColor(context),
+                        Container(
+                          // Başarısız bir "Başla" denemesinden sonra kutu
+                          // satırı hata renginde kenarlıkla vurgulanır; aynı
+                          // anda hemen altında ne yapılacağını söyleyen metin
+                          // durur (bkz. [K.ageGateHint]).
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
+                            border: _showAgeGateHint
+                                ? Border.all(color: AppTheme.wrong, width: 1.4)
+                                : null,
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: CheckboxListTile(
+                              key: const ValueKey('onboarding-age-gate'),
+                              value: _ageConfirmed,
+                              onChanged: (value) => setState(() {
+                                _ageConfirmed = value ?? false;
+                                if (_ageConfirmed) _showAgeGateHint = false;
+                              }),
+                              controlAffinity: ListTileControlAffinity.leading,
+                              contentPadding: EdgeInsets.zero,
+                              title: Text(
+                                context.t(K.ageGateLabel),
+                                style: AppTypography.bodyMedium.copyWith(
+                                  color: AppTheme.textPrimaryColor(context),
+                                ),
                               ),
                             ),
                           ),
                         ),
+                        if (_showAgeGateHint) ...[
+                          const SizedBox(height: AppSpacing.xxs),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppSpacing.xs,
+                            ),
+                            child: Text(
+                              context.t(K.ageGateHint),
+                              key: const ValueKey('onboarding-age-gate-hint'),
+                              style: AppTypography.caption.copyWith(
+                                color: AppColors.readableAccent(
+                                  context,
+                                  AppTheme.wrong,
+                                ),
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
                         SizedBox(height: compact ? 8 : 10),
                         ConstrainedBox(
                           constraints: BoxConstraints(maxWidth: buttonMaxWidth),
@@ -444,63 +488,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         bullets: [context.t(K.onbDuelBullet), context.t(K.onbRewardBullet)],
       ),
     ];
-  }
-}
-
-/// Tanıtım turunun KU/TR seçici hapı. Giriş ekranındaki denetimle aynı
-/// davranışı taşır; kullanıcı dili daha ilk ekranda değiştirebilir.
-class _OnboardingLanguageToggle extends StatelessWidget {
-  const _OnboardingLanguageToggle();
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: context.t(K.changeLanguage),
-      excludeSemantics: true,
-      onTap: context.langProvider.toggle,
-      child: Tooltip(
-        message: context.t(K.language),
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            key: const ValueKey('onboarding-language-toggle'),
-            onTap: context.langProvider.toggle,
-            excludeFromSemantics: true,
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            child: Container(
-              // `alignment` VERİLMEZ: Stack/Align altındaki gevşek ama
-              // sınırlı kısıtta hizalama, kabı başlık alanının tamamına
-              // yayıyor ve 48dp'lik hap yerine devasa boş bir panel
-              // çiziyordu (2026-09-10; word_ordering_widget.dart aynı
-              // tuzağı belgeliyor). Kısıt 48dp dokunma hedefini korur,
-              // boyutu içerik belirler.
-              constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-              decoration: BoxDecoration(
-                color: AppTheme.surfaceHiColor(context),
-                borderRadius: BorderRadius.circular(AppRadius.pill),
-                border: Border.all(color: AppTheme.borderColor(context)),
-              ),
-              // 48dp alt sınır içeriği aşarsa artan boşluk Padding'de sağa
-              // düşer; Center(widthFactor: 1) etiketi kutunun ortasında
-              // tutar, uzun metinde ise kutu yine içerikle büyür.
-              child: Center(
-                widthFactor: 1,
-                heightFactor: 1,
-                child: Text(
-                  context.t(K.languageCode),
-                  style: AppTypography.caption.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
 

@@ -11,6 +11,7 @@ import '../services/analytics_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_logo.dart';
+import '../widgets/language_toggle.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/styled_button.dart';
 import '../widgets/styled_input.dart';
@@ -353,7 +354,14 @@ class _SignInScreenState extends State<SignInScreen>
                                           LoadAnimationSequence.logoScaleAnimation(
                                             _animationController,
                                           ),
-                                      child: _LanguageToggle(),
+                                      child: const LanguageToggle(
+                                        kuKey: ValueKey(
+                                          'sign-in-language-chip-KU',
+                                        ),
+                                        trKey: ValueKey(
+                                          'sign-in-language-chip-TR',
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   SizedBox(height: wideGap),
@@ -580,7 +588,10 @@ class _SignInScreenState extends State<SignInScreen>
                             scale: LoadAnimationSequence.logoScaleAnimation(
                               _animationController,
                             ),
-                            child: _LanguageToggle(),
+                            child: const LanguageToggle(
+                              kuKey: ValueKey('sign-in-language-chip-KU'),
+                              trKey: ValueKey('sign-in-language-chip-TR'),
+                            ),
                           ),
                         ),
                         SizedBox(height: topGap),
@@ -1205,104 +1216,6 @@ class _AuthScrollFrame extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _LanguageToggle extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final isKu = context.isKu;
-    return Container(
-      padding: const EdgeInsets.all(3),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context).withValues(alpha: 0.45),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: AppTheme.borderColor(context).withValues(alpha: 0.3),
-          width: 1.2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-            spreadRadius: -2,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _LanguageChip(
-            label: 'KU',
-            active: isKu,
-            onTap: () => context.langProvider.setLang('ku'),
-          ),
-          _LanguageChip(
-            label: 'TR',
-            active: !isKu,
-            onTap: () => context.langProvider.setLang('tr'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _LanguageChip extends StatelessWidget {
-  const _LanguageChip({
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    // Erişilebilirlik ağacında bu iki buton etiketsiz görünüyordu
-    // (yalnız "button"); ekran okuyucu hangi dile geçildiğini
-    // söyleyemiyordu (2026-07-22 canlı UX denetimi).
-    return Semantics(
-      button: true,
-      selected: active,
-      label: label == 'KU' ? 'Kurmancî' : 'Türkçe',
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        child: AnimatedContainer(
-          key: ValueKey('sign-in-language-chip-$label'),
-          duration: const Duration(milliseconds: 240),
-          curve: Curves.easeInOut,
-          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-          decoration: BoxDecoration(
-            gradient: active ? AppTheme.identityHeaderGradient : null,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: active
-                ? [
-                    BoxShadow(
-                      color: AppTheme.culturalBrandBg.withValues(alpha: 0.35),
-                      blurRadius: 8,
-                      offset: const Offset(0, 3),
-                    ),
-                  ]
-                : null,
-          ),
-          child: Text(
-            label,
-            style: AppTypography.bodyMedium.copyWith(
-              color: active ? Colors.white : AppTheme.textMutedColor(context),
-              fontWeight: FontWeight.w800,
-              letterSpacing: 0.5,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

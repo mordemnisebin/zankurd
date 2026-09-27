@@ -408,10 +408,6 @@ void main() {
     expect(Tr.of(K.secLearning, AppLanguage.ku), 'Hînbûn');
     expect(Tr.of(K.secLearningCaps, AppLanguage.ku), 'HÎNBÛN');
     expect(
-      Tr.of(K.nameGateValueQuests, AppLanguage.ku),
-      'Lîstikan biqedîne, xelatan bi dest bixe',
-    );
-    expect(
       Tr.of(K.onbLearnBody, AppLanguage.ku),
       'Bi pirsên kurt peyvên Kurmancî, çand û zanînê hîn bibe.',
     );
@@ -428,10 +424,6 @@ void main() {
     expect(
       Tr.of(K.duel1v1Sub, AppLanguage.ku),
       'Bi hevalan re an bi lîstikvanên din re bi awayekî zindî pêşbirkê bike.',
-    );
-    expect(
-      Tr.of(K.nameGateValueFriends, AppLanguage.ku),
-      'Bi hevalan re pêşbirkê bike',
     );
     // 2026-09-27: kupa tanıtımdan çıktı (turnuva kapalı); rehber kategori
     // sayısını metne yazmıyor (gizlenen kategoriyle sessizce yanlışa
