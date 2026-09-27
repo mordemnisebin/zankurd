@@ -117,7 +117,10 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             SafeArea(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final compact = constraints.maxHeight < 560;
+                  final textScale = MediaQuery.textScalerOf(context).scale(1);
+                  final accessibilityText = textScale >= 2.0;
+                  final compact =
+                      constraints.maxHeight < 560 || accessibilityText;
                   final wide = constraints.maxWidth >= 720;
                   final wideCompact = compact && wide;
                   final horizontalPadding = wide
@@ -133,12 +136,36 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   const double kHeaderCompact = 90.0; // < 560px: mini logo
                   const double kHeaderMedium = 140.0; // 560–719px: normal
                   const double kHeaderFull = 180.0; // ≥ 720px: geniş
-                  final headerHeight = compact
-                      ? kHeaderCompact
-                      : (constraints.maxHeight < 720
-                            ? kHeaderMedium
-                            : kHeaderFull);
+                  final headerHeight = accessibilityText
+                      ? 112.0
+                      : (compact
+                            ? kHeaderCompact
+                            : (constraints.maxHeight < 720
+                                  ? kHeaderMedium
+                                  : kHeaderFull));
                   final buttonMaxWidth = wide ? 520.0 : double.infinity;
+                  final skipButton = TextButton(
+                    onPressed: () => _completeIfAgeOk(),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppTheme.textMutedColor(context),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      minimumSize: const Size(48, 48),
+                      tapTargetSize: MaterialTapTargetSize.padded,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
+                      ),
+                    ),
+                    child: Text(
+                      context.t(K.skip),
+                      style: AppTypography.caption.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.textMutedColor(context),
+                      ),
+                    ),
+                  );
 
                   return Padding(
                     padding: EdgeInsets.fromLTRB(
@@ -151,98 +178,127 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     child: Column(
                       children: [
                         SizedBox(
+                          key: const ValueKey('onboarding-header'),
                           height: headerHeight,
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: wideCompact
-                                    ? Alignment.centerLeft
-                                    : Alignment.topCenter,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: compact ? 0 : 8,
-                                    left: wideCompact ? 4 : 0,
-                                  ),
-                                  // Kısa pencerelerde sabit başlık kutusunu
-                                  // taşırmasın diye gerekirse küçülür.
-                                  child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    // Dev beyaz logo kartı yalnız 1. slaytta;
-                                    // diğer slaytlarda küçük wordmark yeterli.
-                                    child: _page == 0
-                                        ? _AnimatedBrandLockup(
-                                            scale: _brandScale,
-                                            opacity: _brandOpacity,
-                                            logoWidth: compact ? 48 : 96,
-                                            showTagline: !wideCompact,
-                                          )
-                                        : Text(
-                                            'ZanKurd',
-                                            style: AppTypography.heading2
-                                                .copyWith(
-                                                  color:
-                                                      AppTheme.textPrimaryColor(
-                                                        context,
-                                                      ),
-                                                  fontWeight: FontWeight.w900,
-                                                  letterSpacing: -0.3,
-                                                ),
+                          child: accessibilityText
+                              ? Column(
+                                  children: [
+                                    Row(
+                                      key: const ValueKey(
+                                        'onboarding-accessibility-top-controls',
+                                      ),
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const _OnboardingLanguageToggle(),
+                                        const SizedBox(width: AppSpacing.xs),
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.topRight,
+                                            child: skipButton,
                                           ),
-                                  ),
-                                ),
-                              ),
-                              // Dil seçimi ilk ekranda görünür olmalı:
-                              // uygulama doğrudan Kurmancî açılıyor ve
-                              // Türkçe okuyan kullanıcı, tanıtımı hiç
-                              // anlamadan geçmek zorunda kalıyordu; TR
-                              // seçeneği ancak giriş ekranında beliriyordu
-                              // (2026-07-25 canlı denetimi).
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: compact ? 0 : 2,
-                                  ),
-                                  child: const _OnboardingLanguageToggle(),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: compact ? 0 : 2,
-                                  ),
-                                  child: TextButton(
-                                    onPressed: () => _completeIfAgeOk(),
-                                    style: TextButton.styleFrom(
-                                      foregroundColor: AppTheme.textMutedColor(
-                                        context,
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 8,
-                                      ),
-                                      minimumSize: const Size(48, 48),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.padded,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          AppRadius.sm,
+                                        ),
+                                      ],
+                                    ),
+                                    Expanded(
+                                      child: Center(
+                                        key: const ValueKey(
+                                          'onboarding-accessibility-brand',
+                                        ),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: _page == 0
+                                              ? _AnimatedBrandLockup(
+                                                  scale: _brandScale,
+                                                  opacity: _brandOpacity,
+                                                  logoWidth: 44,
+                                                  showTagline: false,
+                                                )
+                                              : Text(
+                                                  'ZanKurd',
+                                                  style: AppTypography.heading2
+                                                      .copyWith(
+                                                        color:
+                                                            AppTheme.textPrimaryColor(
+                                                              context,
+                                                            ),
+                                                        fontWeight:
+                                                            FontWeight.w900,
+                                                        letterSpacing: -0.3,
+                                                      ),
+                                                ),
                                         ),
                                       ),
                                     ),
-                                    child: Text(
-                                      context.t(K.skip),
-                                      style: AppTypography.caption.copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        color: AppTheme.textMutedColor(context),
+                                  ],
+                                )
+                              : Stack(
+                                  children: [
+                                    Align(
+                                      alignment: wideCompact
+                                          ? Alignment.centerLeft
+                                          : Alignment.topCenter,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          top: compact ? 0 : 8,
+                                          left: wideCompact ? 4 : 0,
+                                        ),
+                                        // Kısa pencerelerde sabit başlık kutusunu
+                                        // taşırmasın diye gerekirse küçülür.
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          // Dev beyaz logo kartı yalnız 1. slaytta;
+                                          // diğer slaytlarda küçük wordmark yeterli.
+                                          child: _page == 0
+                                              ? _AnimatedBrandLockup(
+                                                  scale: _brandScale,
+                                                  opacity: _brandOpacity,
+                                                  logoWidth: compact ? 48 : 96,
+                                                  showTagline: !wideCompact,
+                                                )
+                                              : Text(
+                                                  'ZanKurd',
+                                                  style: AppTypography.heading2
+                                                      .copyWith(
+                                                        color:
+                                                            AppTheme.textPrimaryColor(
+                                                              context,
+                                                            ),
+                                                        fontWeight:
+                                                            FontWeight.w900,
+                                                        letterSpacing: -0.3,
+                                                      ),
+                                                ),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                    // Dil seçimi ilk ekranda görünür olmalı:
+                                    // uygulama doğrudan Kurmancî açılıyor ve
+                                    // Türkçe okuyan kullanıcı, tanıtımı hiç
+                                    // anlamadan geçmek zorunda kalıyordu; TR
+                                    // seçeneği ancak giriş ekranında beliriyordu
+                                    // (2026-07-25 canlı denetimi).
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          top: compact ? 0 : 2,
+                                        ),
+                                        child:
+                                            const _OnboardingLanguageToggle(),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          top: compact ? 0 : 2,
+                                        ),
+                                        child: skipButton,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
                         ),
                         Expanded(
                           child: PageView.builder(
@@ -254,6 +310,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                               data: pages[index],
                               compact: compact,
                               wideCompact: wideCompact,
+                              textRoom:
+                                  accessibilityText ||
+                                  (!compact && constraints.maxHeight < 700),
                             ),
                           ),
                         ),
@@ -266,6 +325,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             children: [
                               for (var i = 0; i < pages.length; i++)
                                 AnimatedContainer(
+                                  key: ValueKey('onboarding-page-indicator-$i'),
                                   duration: const Duration(milliseconds: 240),
                                   curve: Curves.easeInOut,
                                   width: i == _page ? 28 : 8,
@@ -275,7 +335,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                   ),
                                   decoration: BoxDecoration(
                                     gradient: i == _page
-                                        ? AppTheme.accentGradient
+                                        ? AppTheme.identityHeaderGradient
                                         : null,
                                     color: i == _page
                                         ? null
@@ -286,8 +346,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                     boxShadow: i == _page
                                         ? [
                                             BoxShadow(
-                                              color: AppTheme
-                                                  .primaryGradientStart
+                                              color: AppTheme.culturalBrandBg
                                                   .withValues(alpha: 0.25),
                                               blurRadius: 8,
                                               offset: const Offset(0, 2),
@@ -372,6 +431,18 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           context.t(K.onbDailyBullet),
         ],
       ),
+      // İlk kez gelen kullanıcı yalnız öğrenme yüzeyini görüyordu; Yarış,
+      // oda, kupa ve ödül döngüsü ancak uygulamaya girdikten sonra ortaya
+      // çıkıyordu. Metinler zaten sözlükte vardı fakat turdan kopuktu.
+      // İkinci kısa sayfa, yeni jargon eklemeden ürünün diğer yarısını
+      // gösterir; görsel kimliği rekabet yüzeyinin madder tonuyla ayrışır.
+      _OnboardingData(
+        icon: AppIcons.bolt,
+        color: const Color(0xFF9D203A),
+        title: context.t(K.onbCompeteTitle),
+        body: context.t(K.onbCompeteBody),
+        bullets: [context.t(K.onbDuelBullet), context.t(K.onbRewardBullet)],
+      ),
     ];
   }
 }
@@ -387,6 +458,7 @@ class _OnboardingLanguageToggle extends StatelessWidget {
       button: true,
       label: context.t(K.changeLanguage),
       excludeSemantics: true,
+      onTap: context.langProvider.toggle,
       child: Tooltip(
         message: context.t(K.language),
         child: Material(
@@ -394,6 +466,7 @@ class _OnboardingLanguageToggle extends StatelessWidget {
           child: InkWell(
             key: const ValueKey('onboarding-language-toggle'),
             onTap: context.langProvider.toggle,
+            excludeFromSemantics: true,
             borderRadius: BorderRadius.circular(AppRadius.pill),
             child: Container(
               // `alignment` VERİLMEZ: Stack/Align altındaki gevşek ama
@@ -497,11 +570,17 @@ class _OnboardingPage extends StatelessWidget {
     required this.data,
     required this.compact,
     required this.wideCompact,
+    required this.textRoom,
   });
 
   final _OnboardingData data;
   final bool compact;
   final bool wideCompact;
+
+  /// Dekoratif hero panelinin küçülüp yerini metne bırakması gereken ekran
+  /// sınıfı: ya sistem metin ölçeği çok büyük ya da ekran kısa. Bkz.
+  /// [_OnboardingPage.build] içindeki 2026-09-25 notu.
+  final bool textRoom;
 
   @override
   Widget build(BuildContext context) {
@@ -510,13 +589,30 @@ class _OnboardingPage extends StatelessWidget {
     final titleSize = compact ? 22.0 : 26.0;
     final bodySize = compact ? 13.0 : 15.0;
 
+    // 2026-09-25 iPhone SE denetimi. İki ayrı kısa ekran yolu vardı ve
+    // ikisinde de madde listesi metin bandının altında kesiliyordu:
+    //
+    // 1) Sistem metin ölçeği XXXL (ölçek 2.0). Simülatörün erişilebilirlik
+    //    ayarı açıkken `compact` zaten true oluyor, ama 13pt gövde metni
+    //    ikiye katlanınca içerik banda sığmıyor; ilk karede yarım madde
+    //    ve sayfa noktalarının arkasına gizlenen ikinci madde görünüyor.
+    // 2) Varsayılan metin ölçeğinde iPhone SE (667pt). `compact` eşiği
+    //    (560) tutmuyor, tam boy başlık + büyük hero kullanılıyor ve
+    //    dekoratif panel metinden ~20pt çalıyor.
+    //
+    // İkisinde de aynı çözüm: dekoratif hero yerini metne verir. Hero yalnız
+    // görsel kimliktir; başlık, gövde ve maddeler içeriktir. 700pt üstünde
+    // veya metin ölçeği normalde hiçbir şey değişmez.
+    final heroFlex = textRoom ? 26 : (compact ? 36 : 38);
+    final textFlex = textRoom ? 74 : (compact ? 64 : 62);
+
     return Column(
       children: [
         Expanded(
           // Görsel kimlik güçlü kalsın; metin ve madde listesi ilk bakışta
           // daha fazla alan bulsun. (Hero yüksekliği bilinçli olarak
           // sınırlıdır — bkz. onboarding_hierarchy_test.)
-          flex: compact ? 36 : 38,
+          flex: heroFlex,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(AppRadius.card),
             child: Container(
@@ -524,23 +620,17 @@ class _OnboardingPage extends StatelessWidget {
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 2),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    data.color,
-                    Color.alphaBlend(
-                      Colors.black.withValues(alpha: 0.16),
-                      data.color,
-                    ),
-                  ],
-                ),
+                // Design 2: onboarding sayfaları ayrı ürünler gibi renk
+                // değiştirmez. Hero yüzeyi her adımda Forest kimliğidir;
+                // sayfanın kendi rengi yalnız ikon ve küçük işaretlerde
+                // kalır.
+                gradient: AppTheme.identityHeaderGradient,
                 borderRadius: BorderRadius.circular(AppRadius.card),
                 border: Border.all(
                   color: Colors.white.withValues(alpha: 0.22),
                   width: 1.2,
                 ),
-                boxShadow: AppTheme.elevatedShadow(data.color),
+                boxShadow: AppTheme.cardShadow(context),
               ),
               child: Stack(
                 children: [
@@ -584,7 +674,7 @@ class _OnboardingPage extends StatelessWidget {
         ),
         SizedBox(height: compact ? AppSpacing.md : AppSpacing.lg),
         Expanded(
-          flex: compact ? 64 : 62,
+          flex: textFlex,
           // Metin bloğu kendi bandının tepesine yapışıyordu: madde
           // listesinden sonra sayfa noktalarına kadar ~350 pt boş kalıyor,
           // uygulamayı ilk açan kişi yarım yüklenmiş bir ekran görüyordu.
@@ -592,6 +682,18 @@ class _OnboardingPage extends StatelessWidget {
           // (büyük yazı, uzun çeviri) kaydırma davranışı korunur.
           // Hero'nun payı değişmedi — yüksekliği `onboarding_hierarchy_test`
           // tarafından bilerek sınırlanmıştır (2026-07-27).
+          //
+          // 2026-09-25 iPhone SE denetimi: buradaki `mainAxisSize: min`
+          // kaldırılınca `Column` kendisine gelen sık yükseklik
+          // kısıtını (`ConstrainedBox` minHeight = bant yüksekliği) tam
+          // boy kabul ediyor, çocukları o yükseklik içine sıkıştırıyor ve
+          // taşan içerik `center` hizasıyla YUKARI itiliyordu. Flutter
+          // negatif taşmayı kaydırmadığı için 1. madde sayfa noktalarının
+          // altında kalıyor, 2. madde hiç görünmüyor ve kullanıcı kaydırmayı
+          // denese bile eksik metin geri gelmiyordu. `min` ile Column
+          // içeriğe göre küçülür: kısa metin ortalanır, taşan metin
+          // aşağıdan kayar. `auth_onboarding_test` bunu SE + %200 yazıda
+          // sözleşme olarak kilitler.
           child: LayoutBuilder(
             builder: (context, textBandConstraints) => SingleChildScrollView(
               child: ConstrainedBox(
@@ -599,6 +701,7 @@ class _OnboardingPage extends StatelessWidget {
                   minHeight: textBandConstraints.maxHeight,
                 ),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
