@@ -9,7 +9,12 @@ class AppColors {
   static Color disabledSurface(BuildContext context) =>
       AppTheme.isLight(context)
       ? const Color(0xFFEDE9E3)
-      : const Color(0xFF282A36);
+      // Koyu ton `#282A36`ydı: maviye çalan bir gri, markanın orman
+      // ailesinde yeri yok. Soru tahtasında pasif "Kontrol bike" yeşil
+      // kartın üstünde mora kaçan bir leke gibi duruyordu (2026-09-27
+      // simülatör turu). Aynı koyulukta, orman ailesinden doygunluğu
+      // düşük bir gri; soluk metinle karşıtlık ~6.3.
+      : const Color(0xFF25302A);
 
   /// İkon zemin tonu (menü/istatistik ikon karoları). Light'ta hafif pastel
   /// kalır; dark'ta alfa yükselir ki koyu zeminde ikon kaybolmasın — ama

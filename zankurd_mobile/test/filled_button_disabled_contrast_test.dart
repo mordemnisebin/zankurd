@@ -7,6 +7,33 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 /// 2026-09-03 simülatör: Ayarlar'daki pasif Kaydet turuncu-on-kahve
 /// neredeyse okunmuyordu. Pasif FilledButton metni zemininden ayrılmalı.
 void main() {
+  testWidgets('koyu temada pasif zemin orman ailesinde kalır, maviye kaçmaz', (
+    tester,
+  ) async {
+    // `#282A36` maviye çalan bir griydi; soru tahtasındaki pasif "Kontrol
+    // bike" yeşil kartta mora kaçan bir leke gibi duruyordu (2026-09-27
+    // simülatör turu).
+    late Color surface;
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.dark(),
+        home: Builder(
+          builder: (context) {
+            surface = AppColors.disabledSurface(context);
+            return const SizedBox.shrink();
+          },
+        ),
+      ),
+    );
+    final hue = HSVColor.fromColor(surface).hue;
+    expect(hue, inInclusiveRange(90, 170), reason: 'ton: $hue ($surface)');
+    expect(
+      _contrastRatio(AppTheme.textMuted, surface),
+      greaterThanOrEqualTo(4.5),
+      reason: 'pasif düğmedeki soluk metin okunmalı',
+    );
+  });
+
   test(
     'koyu temada pasif FilledButton kontrastı WCAG AA metin tabanını geçer',
     () {
