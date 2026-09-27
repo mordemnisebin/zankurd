@@ -340,7 +340,7 @@ const curatedQuestionBank = <QuizQuestion>[
     explanationKu:
         '"Rêxistin" wateya rêkxistinê û rêxistina kes an koman dide.',
     explanationTr:
-        '"Rêxistin", düzenleme ve kişilerin ya da grupların örgütlenmesi'
+        '"Rêxistin", düzenleme ve kişilerin ya da grupların örgütlenmesi '
         'anlamına gelir.',
   ),
   QuizQuestion(
