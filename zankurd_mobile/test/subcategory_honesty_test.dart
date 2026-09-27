@@ -41,6 +41,51 @@ import 'package:zankurd_mobile/src/models/quiz_question.dart';
 ///    gerçek bankanın rastgeleliği karışmasın diye küçük, sabit bir sahte
 ///    banka üzerinde.
 void main() {
+  test('konu çeldiriciden değil, soru metni ve doğru cevaptan gelir', () {
+    // Bir ritim sorusunun çeldiricisinde "stran" geçince soru dengbêjliğe,
+    // bir halay sorusunun çeldiricisi "Destana Memê Alan" olunca destanlara
+    // düşüyordu (2026-09-28). Çeldirici başka bir alt konudan seçilir.
+    const rhythm = QuizQuestion(
+      id: 'rhythm',
+      category: 'Muzîk',
+      prompt: 'Di muzîka kurdî de rîtm bi çi re têkildar e?',
+      answers: ['lêdana rêkûpêk', 'stranên dengbêjan', 'X2', 'X3'],
+      correctAnswer: 'lêdana rêkûpêk',
+      explanation: 'Test açıklaması yeterince uzun olsun diye buraya yazıldı.',
+    );
+    expect(SubcategoryConfig.getSubcategoryId(rhythm), isEmpty);
+
+    const halay = QuizQuestion(
+      id: 'halay',
+      category: 'Çand',
+      prompt: 'Govenda kurdî bi çi tê naskirin?',
+      answers: ['bi hevgirtina destan', 'Destana Memê Alan', 'X2', 'X3'],
+      correctAnswer: 'bi hevgirtina destan',
+      explanation: 'Test açıklaması yeterince uzun olsun diye buraya yazıldı.',
+    );
+    expect(SubcategoryConfig.getSubcategoryId(halay), 'folklor');
+  });
+
+  test('"rê" alt dizesi Yılmaz Güney alt kategorisine çekmez', () {
+    // "berê", "rêz", "rasterast" gibi kelimeler iki harflik "rê" anahtar
+    // kelimesiyle eşleşiyor, çekim tekniği soruları bu alt kategoriye
+    // düşüyordu.
+    const technique = QuizQuestion(
+      id: 'technique',
+      category: 'Sînema',
+      prompt:
+          'Dîmenê ku kamera rasterast ji jor ve dinêre, berê çi dihat '
+          'gotin?',
+      answers: ['dîmena ji jor', 'X1', 'X2', 'X3'],
+      correctAnswer: 'dîmena ji jor',
+      explanation: 'Test açıklaması yeterince uzun olsun diye buraya yazıldı.',
+    );
+    expect(
+      SubcategoryConfig.getSubcategoryId(technique),
+      isNot('yilmaz_guney'),
+    );
+  });
+
   setUp(() {
     SharedPreferences.setMockInitialValues({});
     SeenQuestionStore.resetInstance();

@@ -323,6 +323,10 @@ class SubcategoryConfig {
     'cejn': ['newroz', 'cejn', 'eyd', 'roja', 'kevneşop', 'dawet', 'bûk'],
     'dastangotin': [
       'dastan',
+      // Kurmancîde yaygın biçim "destan"dır. Yalın "destan" kullanılamaz:
+      // "el" (dest) kelimesinin çoğuluyla aynıdır ("bi hevgirtina destan"
+      // = el ele tutuşarak); izafeli "destana ..." yalnız destanı anlatır.
+      'destana',
       'mem û zîn',
       'siyabend',
       'kawa',
@@ -374,6 +378,13 @@ class SubcategoryConfig {
       'feqiyê teyran',
       'elî herîrî',
       'dîwan',
+      // Klasik soruların çoğu bu adları yalnız ÇELDİRİCİDE taşıyordu;
+      // eşleştirme artık çeldiriciye bakmadığı için klasik eserin ve
+      // şairin kendisi anahtar kelimedir.
+      'ehmedê xanî',
+      'mem û zîn',
+      'nûbihar',
+      'melayê bateyî',
     ],
     'roman': ['roman', 'çîroknivîs', 'nivîskar', 'pirtûk', 'kovar', 'weşan'],
     // Cografya
@@ -428,7 +439,22 @@ class SubcategoryConfig {
     'bingehên_teknolojiyê': ['komputer', 'amûra', 'pergal', 'teknolojî'],
     // Sînema
     'filmen_kurdi': ['fîlm', 'derhêner', 'sînema', 'lîstikvan', 'senaryo'],
-    'yilmaz_guney': ['yılmaz güney', 'rê', 'yol', 'sûr', 'dîwar', 'klasîk'],
+    // "rê" çıkarıldı: iki harflik alt dize "berê", "rêz", "rasterast"
+    // gibi yüzlerce kelimede geçiyor ve çekim tekniği sorularını bu alt
+    // kategoriye çekiyordu. Güney'in filmleri özgün adlarıyla aranır.
+    'yilmaz_guney': [
+      'yılmaz güney',
+      'güney',
+      'yol',
+      'sûr',
+      'dîwar',
+      'klasîk',
+      'umut',
+      'sürü',
+      'endişe',
+      'düşman',
+      'duvar',
+    ],
     'festival_belgefilm': ['belgefîlm', 'festîval', 'xelat', 'sînematografî'],
   };
 
@@ -518,9 +544,15 @@ class SubcategoryConfig {
     QuizQuestion question,
     List<SubcategoryInfo> list,
   ) {
+    // Yalnız soru metni ve DOĞRU cevap aranır; çeldiriciler aranmaz.
+    // Çeldirici çoğu zaman başka bir alt konudan seçilir: bir halay
+    // sorusunun çeldiricisi "Destana Memê Alan" olunca soru destanlara,
+    // bir ritim sorusunun çeldiricisinde "stran" geçince dengbêjliğe
+    // düşüyordu (2026-09-28 ölçümü: 150'yi aşkın soru yalnız bir
+    // çeldirici yüzünden bir alt kategoriye yazılmıştı).
     final haystack = [
       question.prompt,
-      ...question.answers,
+      question.correctAnswer,
     ].join(' ').toLowerCase();
 
     SubcategoryInfo? best;

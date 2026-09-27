@@ -193,11 +193,22 @@ void main() {
   }
 
   testWidgets('sinor_duma anlamına uygun konum ikonu alır', (tester) async {
+    // 2026-09-28: eşleştirme artık çeldiricilere bakmıyor; sinor_duma'nın
+    // gerçek bankadaki eşleşmesi eşiğin altına indi ve kart gizlendi. Burada
+    // ölçülen ikon eşlemesi olduğu için kart, yeterli içerik VARMIŞ GİBİ bir
+    // depoyla görünür kılınır.
     await expectCardIcon(
       tester,
       category: 'Cografya',
       id: 'sinor_duma',
       expectedIcon: AppIcons.locationDot,
+      repository: _FixedPlayableRepository(
+        _keywordMatchedQuestions(
+          category: 'Cografya',
+          keyword: 'sînor',
+          count: SubcategoryConfig.kMinSubcategoryQuestions,
+        ),
+      ),
     );
   });
 
