@@ -13,6 +13,55 @@ Yeni sürüm hazırlarken: en üste yeni bir başlık aç, eskiyi silme.
 
 ---
 
+## Sonraki sürüm — taslak (2026-09-27, sürüm numarası verilmedi)
+
+Dal: `tasarim/sade-ilk-deneyim` (uzakta `tasarim-sade-ilk-deneyim`). Yön:
+arkadaşla oda + 1v1 yarışma (TRT Bil Bakalım modeli) VE öğrenme alanı; ilk
+giren kaybolmasın. Sürüm numarası ve derleme yayın anında verilir.
+
+### Oyuncunun göreceği
+
+- Ana ekran: tek birincil eylem (günün dersi), ilk oturumda "3 adımda
+  ZanKurd", iki kapı (Kurmancî öğren / Arkadaşınla yarış), konu ızgarası.
+- Oda daveti: lobide "Arkadaşlarını davet et"; `zankurd.com/join/KOD`
+  bağlantısı uygulama yüklüyse uygulamayı açar (iOS associated domains,
+  Android App Links), değilse web'de odaya katar.
+- Öğren ekranı yol + iki eyleme indi; şıkların arkasındaki kilim dokusu
+  kalktı (okunurluk). Sıralama metni ne yapılacağını söylüyor.
+- Kapsam: turnuva ve haftalık lig bayrakla kapalı; Paradigma, Siyaset,
+  Teknolojî gizli; Kürtlerle bağı olmayan 121 dünya bilgisi sorusu oyundan
+  çıktı (oynanabilir: 1.250 soru, 7 kategori).
+- Arkadaşlık isteği bildirimine dokunmak Arkadaşlar ekranını açar.
+- Sırayla düello (oyun, sonuç, Düellolarım; eşleşmede rakip yoksa teklif):
+  HAZIR ama `kAsyncDuelEnabled` ile KAPALI — sunucu göçü bekliyor.
+
+### Yayın öncesi kapılar (sırayla)
+
+1. Sunucu göçleri (hesap sahibi onayıyla, `supabase/applied.md`):
+   `2026-09-28_hidden_categories_inactive.sql` (tek `update`);
+   düelloyu açmadan önce `2026-09-28_async_duels.sql` +
+   `2026-09-28_async_duels_cron.sql`. Sonra `kAsyncDuelEnabled = true`.
+2. Web: `./release_web.sh`; `docs/HOSTINGER_DEPLOY_CHECKLIST.md` →
+   "Uygulama bağlantıları" doğrulaması (`.well-known` JSON dönmeli).
+3. Apple: `com.zankurd.app` için Associated Domains yeteneği; profil
+   yenilenir.
+4. Play: Play App Signing SHA-256'sı `web/.well-known/assetlinks.json`a
+   eklenir (yalnız yükleme anahtarı var).
+5. Bildirim gönderimi `tool/send_push_outbox.py`nin bu sürümüyle
+   (`data.kind` taşır).
+6. Mağaza metni: `docs/store_listing.md`.
+7. Kurmancî taslakların anadil kontrolü: `home.*`, `room.invite.*`,
+   `duel.async.*` anahtarları ve düello bildirimi metni.
+
+### Doğrulama (2026-09-27, yerel)
+
+`dart analyze` temiz; `flutter test` 3132 test geçti (5 atlandı); ekran
+turu 97/97; cihazsız akışlar 4/4; soru kalitesi kapısı ve dokunma hedefi
+taraması temiz. CI'da Android işi atılacak anahtarla imzalanacak biçimde
+düzeltildi (2026-08-09'dan beri anahtar yokluğundan kırmızıydı).
+
+---
+
 ## 1.9.2+20 — 2026-09-10
 
 Bu paket yayın öncesi doğrulama ve release-hygiene turudur. Son yerel doğrulama
