@@ -1677,17 +1677,16 @@ class _DuelTugBar extends StatelessWidget {
   }
 }
 
-/// Şıkların oturduğu tahta. Kilim şeritte değil burada zemin olur.
+/// Şıkların oturduğu tahta: yalnız yuvarlatılmış bir kırpma yüzeyi.
 ///
-/// Sahne koyu olduğu için altın iplik açık kremde kayboluyordu; bu yüzden
-/// soru ekranı `AppTheme.stage` ile karartılır. Opaklık 0.10'dayken motif
-/// şıkların aralığında da okunmuyordu (2026-08-29, iPhone 17 Pro).
-///
-/// 2026-09-10: tek büyük elmas halkası şıkların arasından dev bir zeytin
-/// zikzak gibi görünüyordu; doku artık hücre hücre örülür
-/// (`KilimMotif.diamondTiling`). Opaklık testle korunuyor (>= 0.20).
-/// Kenar dolgusu YOK: şık yüksekliği yerleşim bütçesine bağlı, ekstra
-/// çerçeve iki sütuna düşürüp CTA örtüşmesini kırıyordu.
+/// 2026-09-10'dan 2026-09-27'ye kadar burada şıkların ARKASINA altın bir
+/// kilim baklava dokusu (%22 opaklık) örülüyordu. Cevaptan sonra seçilmeyen
+/// şıklar soluklaşınca doku onların içinden görünüyor, ekranın en çok
+/// okunması gereken yeri — soru ve şıkları — kalabalıklaştırıyordu. Desenin
+/// daha düşük opaklıkta şık aralığında okunmadığı da ölçülmüştü (0.10,
+/// 2026-08-29); yani ya kalabalık ya görünmez. Kilim kimliği soru
+/// ekranında üstteki ilerleme baklavalarında, sonuç ekranında dokuma
+/// tahtasında yaşıyor. Bekçisi: `quiz_accent_test` (tahtada desen yok).
 class _QuizAnswerBoard extends StatelessWidget {
   const _QuizAnswerBoard({required this.child});
 
@@ -1698,23 +1697,7 @@ class _QuizAnswerBoard extends StatelessWidget {
     return ClipRRect(
       key: const ValueKey('quiz-answer-board'),
       borderRadius: BorderRadius.circular(18),
-      child: Stack(
-        children: [
-          const Positioned.fill(
-            child: IgnorePointer(
-              child: CustomPaint(
-                painter: KilimPainter(
-                  motif: KilimMotif.diamondTiling,
-                  color: AppTheme.gold,
-                  opacity: 0.22,
-                  count: 8,
-                ),
-              ),
-            ),
-          ),
-          child,
-        ],
-      ),
+      child: child,
     );
   }
 }

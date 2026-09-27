@@ -288,7 +288,10 @@ void main() {
     expect(find.text('Doğru cevap'), findsNothing);
   });
 
-  testWidgets('şıklar kilim tahtasına oturur ve Zana yüzdür', (tester) async {
+  // 2026-09-27: şıkların arkasındaki kilim dokusu kalktı — cevaptan sonra
+  // soluklaşan şıkların içinden görünüyor ve okumayı zorlaştırıyordu.
+  // Bekçi yön değiştirdi: tahta var, ama arkasında boya yok.
+  testWidgets('şıklar desensiz tahtaya oturur ve Zana yüzdür', (tester) async {
     SharedPreferences.setMockInitialValues({
       'zankurd.quiz_tutorial.seen': true,
     });
@@ -307,14 +310,20 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('quiz-answer-board')), findsOneWidget);
-    final boardPaint = tester.widget<CustomPaint>(
-      find.descendant(
-        of: find.byKey(const ValueKey('quiz-answer-board')),
-        matching: find.byType(CustomPaint),
-      ),
+    final boardPainters = tester
+        .widgetList<CustomPaint>(
+          find.descendant(
+            of: find.byKey(const ValueKey('quiz-answer-board')),
+            matching: find.byType(CustomPaint),
+          ),
+        )
+        .map((paint) => paint.painter)
+        .whereType<KilimPainter>();
+    expect(
+      boardPainters,
+      isEmpty,
+      reason: 'Şıkların arkasında kilim dokusu okumayı zorlaştırıyordu.',
     );
-    final painter = boardPaint.painter! as KilimPainter;
-    expect(painter.opacity, greaterThanOrEqualTo(0.20));
     final thinking = tester.widget<RojMascot>(
       find.byKey(const ValueKey('quiz-zana-thinking')),
     );
