@@ -10,6 +10,7 @@ import '../widgets/app_logo.dart';
 import '../widgets/kilim_reveal.dart';
 import '../widgets/language_toggle.dart';
 import '../widgets/roj_mascot.dart';
+import '../widgets/stage_backdrop.dart';
 import '../widgets/styled_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -465,6 +466,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         // güçte turuncu kütle vardı ve göz nereye basacağını şaşırıyordu.
         // Hero kimlik rengine (Kesk) alındı; turuncu yalnız butonda kalır.
         color: AppTheme.culturalBrandBg,
+        // 2026-09-27: jenerik mezuniyet şapkası ikonu kategori yelpazesiyle
+        // değiştirildi — bkz. _CategoryFan.
+        art: _HeroArt.categoryFan,
         title: context.t(K.onbLearnTitle),
         body: context.t(K.onbLearnBody),
         bullets: [
@@ -483,6 +487,10 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       _OnboardingData(
         icon: AppIcons.bolt,
         color: const Color(0xFF9D203A),
+        // 2026-09-27: Yarış sekmesindeki yarışma sahnesiyle (StageBackdrop)
+        // aynı görsel dil — merkezî ikon ve Zana korunur, arkaya ışın +
+        // konfeti eklenir.
+        art: _HeroArt.stage,
         title: context.t(K.onbCompeteTitle),
         body: context.t(K.onbCompeteBody),
         bullets: [context.t(K.onbDuelBullet), context.t(K.onbRewardBullet)],
@@ -536,10 +544,25 @@ class _AnimatedBrandLockup extends StatelessWidget {
   }
 }
 
+/// Hero panelinin içeriği — SAYFA NUMARASINA göre değil, sayfanın anlamına
+/// göre seçilir. Sıraya bağlı bir `if (index == 0)` yerine `_OnboardingData`
+/// üstünde alan olması, sayfa sırası ileride değişirse (ör. yeni bir tanıtım
+/// sayfası araya girerse) görsel kararın sessizce yanlış sayfaya
+/// kaymamasını sağlar (2026-09-27).
+enum _HeroArt {
+  /// Sayfa 1: üç kategori görselinin yelpazesi (bkz. [_CategoryFan]).
+  categoryFan,
+
+  /// Sayfa 2: merkezî ikon + Zana korunur, arkaya yarışma sahnesi eklenir
+  /// (bkz. [StageBackdropPainter]).
+  stage,
+}
+
 class _OnboardingData {
   const _OnboardingData({
     required this.icon,
     required this.color,
+    required this.art,
     required this.title,
     required this.body,
     this.bullets = const [],
@@ -547,6 +570,7 @@ class _OnboardingData {
 
   final IconData icon;
   final Color color;
+  final _HeroArt art;
   final String title;
   final String body;
   final List<String> bullets;
@@ -590,8 +614,20 @@ class _OnboardingPage extends StatelessWidget {
     // İkisinde de aynı çözüm: dekoratif hero yerini metne verir. Hero yalnız
     // görsel kimliktir; başlık, gövde ve maddeler içeriktir. 700pt üstünde
     // veya metin ölçeği normalde hiçbir şey değişmez.
-    final heroFlex = textRoom ? 26 : (compact ? 36 : 38);
-    final textFlex = textRoom ? 74 : (compact ? 64 : 62);
+    //
+    // 2026-09-27: normal ekranda (ne kompakt ne textRoom) hero payı 38'den
+    // 44'e çıktı. Metin bandı önceki 62 payla, kısa başlık + iki madde
+    // içeriğinden çok daha büyüktü; `Column` ortalasa da bandın tepesinde
+    // hero ile başlık arasında ~100pt boş kalıyordu (sahibin "hero ile
+    // başlık arası boşluk" bulgusu). Toplam (44+56=100) kompakt/textRoom
+    // ile aynı kaldığı için oranlar arasında geçiş hâlâ yumuşak. Kompakt ve
+    // textRoom değerleri BİLEREK dokunulmadı — onlar zaten metne öncelik
+    // verir ve iPhone SE/%200 yazı sözleşmesini taşır
+    // (`auth_onboarding_test.dart`); hero'nun büyümesi yalnız normal
+    // ekranda gereksiz boşluğu kapatır, yüksekliği yine de < 300pt sınırı
+    // içinde kalır (`onboarding_hierarchy_test.dart`).
+    final heroFlex = textRoom ? 26 : (compact ? 36 : 44);
+    final textFlex = textRoom ? 74 : (compact ? 64 : 56);
 
     return Column(
       children: [
@@ -633,12 +669,49 @@ class _OnboardingPage extends StatelessWidget {
                   const Positioned.fill(
                     child: KilimReveal(child: SizedBox.expand()),
                   ),
-                  Center(
-                    child: _OnboardingIcon(
-                      data: data,
-                      size: heroIconSize,
-                      iconSize: heroGlyphSize,
+                  // 2026-09-27: sahip Yarış sayfasını "sakin bir menü gibi"
+                  // buldu — merkezî ikon + Zana tek başına bir yarışma
+                  // hissi vermiyordu. Yarış sekmesindeki aynı sahne fonu
+                  // (StageBackdropPainter) burada da ışın + parıltı + kenar
+                  // konfetisi ekler; yalnız `art == stage` sayfasında
+                  // (sayfa 2) çizilir, kilim dokusunun hemen üstünde ve
+                  // ikon/Zana'nın altında durur. `focusTop: double.infinity`
+                  // odağı dikey ORTAYA sabitler çünkü ressam bu değeri
+                  // kartın yarı yüksekliğiyle kırpar
+                  // (`math.min(focusTop, size.height * 0.5)` —
+                  // stage_backdrop.dart); sabit bir piksel değeri kart
+                  // boyu değiştikçe (kompakt/geniş) odağı kayık bırakırdı.
+                  if (data.art == _HeroArt.stage)
+                    const Positioned.fill(
+                      child: IgnorePointer(
+                        child: CustomPaint(
+                          painter: StageBackdropPainter(
+                            focusTop: double.infinity,
+                          ),
+                        ),
+                      ),
                     ),
+                  Center(
+                    child: data.art == _HeroArt.categoryFan
+                        // 2026-09-27: sahip hero'yu "renksiz" buldu — tek
+                        // jenerik mezuniyet şapkası ikonu neyin
+                        // öğrenileceğini söylemiyordu. Üç gerçek kategori
+                        // görseli (Ziman ortada, Çand solda, Muzîk sağda)
+                        // aynı hissi ilk ekrandan kurar. Dekoratiftir;
+                        // erişilebilirlik ağacında ayrı düğüm açmasın diye
+                        // (kart zaten başlık/gövde ile aynı bilgiyi verir)
+                        // `ExcludeSemantics` ile sarılır.
+                        ? ExcludeSemantics(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: _CategoryFan(size: heroIconSize * 1.15),
+                            ),
+                          )
+                        : _OnboardingIcon(
+                            data: data,
+                            size: heroIconSize,
+                            iconSize: heroGlyphSize,
+                          ),
                   ),
                   // 2026-09-10 görsel denetimi: hero düz renk + jenerik
                   // ikondu ve ana sayfadaki Zana ile bağ kurmuyordu.
@@ -667,8 +740,11 @@ class _OnboardingPage extends StatelessWidget {
           // uygulamayı ilk açan kişi yarım yüklenmiş bir ekran görüyordu.
           // Kısa içerik artık bandın ortasında durur; uzun içerikte
           // (büyük yazı, uzun çeviri) kaydırma davranışı korunur.
-          // Hero'nun payı değişmedi — yüksekliği `onboarding_hierarchy_test`
-          // tarafından bilerek sınırlanmıştır (2026-07-27).
+          // Hero'nun yüksekliği `onboarding_hierarchy_test` tarafından
+          // bilerek < 300pt sınırlanmıştır (2026-07-27); normal ekranda
+          // payı 2026-09-27'de 38→44 büyüdü (bkz. `heroFlex` yorumu), bu
+          // sınırı değiştirmez, yalnız metin bandını daraltıp tepesindeki
+          // boşluğu azaltır.
           //
           // 2026-09-25 iPhone SE denetimi: buradaki `mainAxisSize: min`
           // kaldırılınca `Column` kendisine gelen sık yükseklik
@@ -823,6 +899,99 @@ class _OnboardingIcon extends StatelessWidget {
       ),
       child: Center(
         child: Icon(data.icon, color: data.color, size: iconSize),
+      ),
+    );
+  }
+}
+
+/// Sayfa 1 hero'sunun görsel çekirdeği: tek jenerik ikon yerine üç gerçek
+/// kategori kartının yelpazesi (Ziman ortada üstte, Çand solda, Muzîk
+/// sağda). Kartlar alt kategori ekranlarındaki AYNI görselleri kullanır
+/// (`CategoryVisuals.imagePath`) — "burada ne öğreneceğim" sorusu ilk
+/// ekrandan, jenerik bir mezuniyet şapkası ikonu yerine gerçek içerikle
+/// yanıtlanır (2026-09-27, sahibin "renksiz" bulgusu).
+class _CategoryFan extends StatelessWidget {
+  const _CategoryFan({required this.size});
+
+  /// Tek bir kartın kenar uzunluğu. Çağıran taraf `heroIconSize * 1.15`
+  /// verir; `heroIconSize` zaten kompakt ekranda küçüldüğü için yelpaze de
+  /// kendiliğinden küçülür — ayrı bir kompakt dal gerekmez.
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final devicePixelRatio = MediaQuery.devicePixelRatioOf(context);
+    return SizedBox(
+      width: size * 2.2,
+      height: size * 1.25,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Yan kartlar ÖNCE çizilir; Ziman son çizildiği için üstte durur
+          // (spec: "Ziman ortada, üstte").
+          _fanCard(context, 'Çand', -1, devicePixelRatio),
+          _fanCard(context, 'Muzîk', 1, devicePixelRatio),
+          _fanCard(context, 'Ziman', 0, devicePixelRatio),
+        ],
+      ),
+    );
+  }
+
+  /// [dir]: yön işareti — orta kart için 0 (kaymaz, dönmez), sol için -1,
+  /// sağ için +1. Ofset ve açı [dir]'e göre ölçeklenir; 0 için ikisi de
+  /// sıfıra düşer, bu yüzden "orta kart düz durur" ayrı bir dal gerektirmez.
+  Widget _fanCard(
+    BuildContext context,
+    String category,
+    int dir,
+    double devicePixelRatio,
+  ) {
+    final dx = dir * size * 0.62;
+    final dy = 6.0 * dir.abs();
+    return Transform.translate(
+      offset: Offset(dx, dy),
+      child: Transform.rotate(
+        angle: dir * 0.17,
+        child: Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: Colors.white, width: 3),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.28),
+                blurRadius: 14,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: Image.asset(
+              CategoryVisuals.imagePath(category),
+              fit: BoxFit.cover,
+              // Kart zaten dekoratif yelpazenin bir parçası (bkz. çağıran
+              // taraftaki `ExcludeSemantics`); tek tek üç görsel ekran
+              // okuyucuya ayrı ayrı duyurulmamalı.
+              excludeFromSemantics: true,
+              cacheWidth: (size * devicePixelRatio).round(),
+              // Asset bir sebeple çözülemezse (ör. henüz eklenmemiş bir
+              // kategori görseli) sessizce boş kalmak yerine o kategorinin
+              // markalı rengi + beyaz glifiyle düşer — jenerik ikon
+              // sayfasına bir adım geri değil, aynı kimlik dilinde kalır.
+              errorBuilder: (context, error, stackTrace) => Container(
+                color: CategoryVisuals.color(category),
+                alignment: Alignment.center,
+                child: Icon(
+                  CategoryVisuals.icon(category),
+                  color: Colors.white,
+                  size: size * 0.45,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

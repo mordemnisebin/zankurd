@@ -876,6 +876,20 @@ void main() {
     await _shoot(t, '73b_onboarding_ku');
   }, tags: ['preview']);
 
+  // İkinci tanıtım sayfası (yarış) 2026-09-27'de sahne fonu kazandı; tur
+  // yalnız ilk sayfayı basıyordu, ikinci sayfa hiç görülmeden gidiyordu.
+  testWidgets('73c karşılama, yarış sayfası', (t) async {
+    await _pump(t, OnboardingScreen(onComplete: () {}));
+    await t.tap(find.text('Sonraki'));
+    // Sayfa geçişi bitince sayfa göstergesi kendi 240 ms'lik animasyonunu
+    // ANCAK bir sonraki karede başlatır; üçüncü kare olmadan görüntü eski
+    // göstergeyi basıyordu.
+    for (var i = 0; i < 3; i++) {
+      await t.pump(const Duration(milliseconds: 600));
+    }
+    await _shoot(t, '73c_onboarding_compete');
+  }, tags: ['preview']);
+
   testWidgets('74 giriş', (t) async {
     await _pump(t, const SignInScreen());
     await _shoot(t, '74_sign_in');
