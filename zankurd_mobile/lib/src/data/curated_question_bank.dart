@@ -295,6 +295,12 @@ const curatedQuestionBank = <QuizQuestion>[
     difficulty: 2,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/newroz.webp',
+    imageAltKu:
+        'Li kolaneke li ber çiyan, jin û mêr bi cilên kurdî û şerîtên zer '
+        'meşaleyan di destan de digirin.',
+    imageAltTr:
+        'Dağların önündeki bir caddede Kürt kıyafetli, sarı kuşaklı kadın '
+        've erkekler ellerinde meşale tutuyor.',
     metadata: _kjarSource,
     explanationKu:
         'Agirê Newrozê di gelek vegotinên kurdan de bi ronahî, hêvî û '
@@ -336,6 +342,12 @@ const curatedQuestionBank = <QuizQuestion>[
     difficulty: 1,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/cat_siyaset.webp',
+    imageAltKu:
+        'Wêneyeke rengîn: kursiyeke axaftinê bi du mîkrofonan, sindoqa '
+        'dengdanê, belgeyek û li jor balonên axaftinê.',
+    imageAltTr:
+        'Renkli bir çizim: iki mikrofonlu kürsü, oy sandığı, bir belge ve '
+        'üstte konuşma balonları.',
     metadata: _kongraStarSource,
     explanationKu:
         '"Rêxistin" wateya rêkxistinê û rêxistina kes an koman dide.',
