@@ -1178,6 +1178,21 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final accuracy = totalQuestions == 0
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
+    // Kusur 1: başlık hep `room.category`yi yazıyordu, ama bu alan odanın
+    // varsayılan/ilk kategorisidir — GERÇEKTEN çözülen soruların kategorisi
+    // değil. "Günün dersi" akışı (`home_screen.dart` `_startDailyQuiz`)
+    // `category`yi hiç güncellemez; sonuç ekranı Müzik+Dil+Coğrafya+Kültür
+    // karışık beş sorudan sonra "Dil · %80 doğruluk" yazıyordu (2026-09-27
+    // simülatör turu). Tek doğru kaynak turda GERÇEKTEN cevaplanan
+    // sorulardır (`learningOutcome.categoryBreakdown`, `answerRecords`ten
+    // türer). Kategori adı yalnız tur TEK kategoriliyse anlamlıdır; birden
+    // çok kategoriye yayılmışsa yerine turun adı yazılır — "günün dersi"
+    // akışında bu zaten `room.name` alanına yazılmış olan "Günün Dersi"
+    // başlığıdır (`K.dailyLesson`).
+    final isMixedCategoryRound = learningOutcome.categoryBreakdown.length > 1;
+    final roundLabel = isMixedCategoryRound
+        ? room.name
+        : CategoryNames.localized(room.category, context.isKu);
 
     final isOnlineRoom = room.id != null;
     final nextActionLabel = context.t(isOnlineRoom ? K.home : K.playAgain);
@@ -1274,7 +1289,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             correctCount: correctCount,
             totalQuestions: totalQuestions,
             bestStreak: bestStreak,
-            category: room.category,
+            // Karışık turda ekrandaki başlıkla aynı: tek bir kategori adı
+            // turu yanlış anlatırdı.
+            category: isMixedCategoryRound ? room.name : room.category,
             results: [for (final record in answerRecords) record.isCorrect],
           );
           final earned = await ResultSharer.claimDailyShareReward();
@@ -1630,7 +1647,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                 const SizedBox(height: AppSpacing.xxs),
                                 // Category & accuracy on one line
                                 Text(
-                                  '${CategoryNames.localized(room.category, context.isKu)} '
+                                  '$roundLabel '
                                   '· ${context.percent(accuracy)} '
                                   '${context.t(K.accuracyLower)}',
                                   maxLines: 1,

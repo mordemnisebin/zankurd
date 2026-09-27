@@ -164,7 +164,7 @@ void main() {
     );
 
     expect(find.text('Bu turdan öğrenme özeti'), findsOneWidget);
-    expect(find.textContaining('Dil: 2 sorunun 2\'si doğru'), findsOneWidget);
+    expect(find.textContaining('Dil: 2 sorudan 2 doğru'), findsOneWidget);
     expect(find.textContaining('Tarih: 2 soruda 2 yanlış'), findsOneWidget);
     expect(find.text('Tarih yanlışlarını gözden geçir'), findsOneWidget);
     expect(find.textContaining('ustalaştın'), findsNothing);

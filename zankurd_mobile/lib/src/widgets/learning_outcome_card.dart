@@ -7,6 +7,12 @@ import '../theme/app_icons.dart';
 import '../theme/app_theme.dart';
 import 'app_panel.dart';
 
+/// Bir kategorinin tur içindeki ham sayımı: kaç soru cevaplandı, kaçı
+/// doğruydu. `LearningOutcome.strongestCategory`/`reviewCategory`nin aksine
+/// hiçbir eşik uygulamaz — "en güçlü/en zayıf" seçilemeyen (çoğunlukla
+/// tek-soruluk) kategoriler için de dürüst bir satır üretebilmek içindir.
+typedef CategoryTally = ({String category, int answered, int correct});
+
 class LearningOutcome {
   const LearningOutcome({
     required this.strongestCategory,
@@ -19,10 +25,15 @@ class LearningOutcome {
     required this.answered,
     required this.correct,
     required this.unanswered,
+    required this.categoryBreakdown,
   });
 
   factory LearningOutcome.fromRecords(List<AnswerRecord> records) {
     final stats = <String, _TopicStats>{};
+    // Kategori sırası İLK GÖRÜLDÜĞÜ sırayla korunur (turun akışını yansıtır);
+    // `Map` anahtar sırası da zaten eklenme sırasıdır ama bunu açıkça ayrı
+    // tutmak `stats`in iç veri yapısı değişse bile sırayı garanti eder.
+    final categoryOrder = <String>[];
     final wrongRecords = <AnswerRecord>[];
     var answered = 0;
     var correct = 0;
@@ -38,6 +49,7 @@ class LearningOutcome {
       if (!record.isCorrect) wrongRecords.add(record);
       final category = record.category.trim();
       if (category.isEmpty) continue;
+      if (!stats.containsKey(category)) categoryOrder.add(category);
       final current = stats[category] ?? const _TopicStats();
       stats[category] = current.add(record.isCorrect);
     }
@@ -86,6 +98,14 @@ class LearningOutcome {
       answered: answered,
       correct: correct,
       unanswered: unanswered,
+      categoryBreakdown: [
+        for (final category in categoryOrder)
+          (
+            category: category,
+            answered: stats[category]!.answered,
+            correct: stats[category]!.correct,
+          ),
+      ],
     );
   }
 
@@ -99,6 +119,14 @@ class LearningOutcome {
   final int answered;
   final int correct;
   final int unanswered;
+
+  /// Turda görülen HER kategori, sırayla (turda ilk cevaplanan kategori
+  /// önce), eşiksiz ham sayımla. `strongestCategory`/`reviewCategory`
+  /// yalnız 2+ cevaplı ve belirgin oranlı TEK bir kategoriyi öne çıkarır;
+  /// bu liste ise "günün dersi" gibi karışık kategorili, kategori başına
+  /// çoğu zaman tek soru düşen turlarda geri kalan kategorilerin de
+  /// gösterilebilmesi içindir (bkz. `LearningOutcomeCard` render notu).
+  final List<CategoryTally> categoryBreakdown;
 }
 
 class _TopicStats {
@@ -135,6 +163,28 @@ class LearningOutcomeCard extends StatelessWidget {
     final reviewName = review == null
         ? null
         : CategoryNames.localized(review, isKu);
+    // Kusur 2: kart yalnız TEK bir "en güçlü" ve TEK bir "tekrar" satırı
+    // basıyordu; "günün dersi" gibi karışık kategorili turlarda (kategori
+    // başına çoğu zaman bir soru düşer) diğer kategoriler sessizce
+    // kayboluyordu — canlı turda Müzik 1/1, Coğrafya 1/1, Kültür 0/1 hiç
+    // görünmüyor, yalnız "Dil: 2 sorunun 2'si doğru" kalıyordu (2026-09-27
+    // simülatör turu). Kesme KASITSIZDI: `answered >= 2` eşiği yalnız
+    // "tek soruyu güç/eksiklik SAYMA" kararını korumak için var (bkz.
+    // `learning_outcome_card_test.dart`daki "tek sorudan konu gücü ya da
+    // konu eksiği çıkarmaz" testi) — kategoriyi TAMAMEN GİZLEME kararı
+    // değil. Düzeltme: spotlight'a giremeyen (ya eşiğin altında ya da
+    // ikinci en iyi/kötü) kategoriler, iddiasız/eşiksiz bir sayımla yine de
+    // listelenir. Tek kategorili turda liste hep boştur (üstteki toplam
+    // satırıyla birebir aynı şeyi tekrar eder), bu yüzden yalnız GERÇEKTEN
+    // karışık turlarda (2+ kategori) gösterilir.
+    final leftoverCategories = outcome.categoryBreakdown.length > 1
+        ? outcome.categoryBreakdown
+              .where(
+                (tally) =>
+                    tally.category != strongest && tally.category != review,
+              )
+              .toList(growable: false)
+        : const <CategoryTally>[];
 
     return AppPanel(
       key: const ValueKey('learning-outcome-card'),
@@ -207,7 +257,28 @@ class LearningOutcomeCard extends StatelessWidget {
                 'wrong': '${outcome.reviewWrong}',
               }),
             ),
-          if (strongestName == null && reviewName == null)
+          if (leftoverCategories.isNotEmpty) ...[
+            if (strongestName != null || reviewName != null)
+              const SizedBox(height: 8),
+            for (final tally in leftoverCategories)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  context.t(K.outcomeCategoryTally, {
+                    'name': CategoryNames.localized(tally.category, isKu),
+                    'answered': '${tally.answered}',
+                    'correct': '${tally.correct}',
+                  }),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppTheme.textSubColor(context),
+                    height: 1.4,
+                  ),
+                ),
+              ),
+          ],
+          if (strongestName == null &&
+              reviewName == null &&
+              leftoverCategories.isEmpty)
             Text(
               context.t(K.outcomeEmpty),
               style: AppTypography.bodyMedium.copyWith(

@@ -55,6 +55,27 @@ bool _useCompactLandscapeLayout(double width, double height) =>
 bool useCompactLandscapeLayoutForTesting(double width, double height) =>
     _useCompactLandscapeLayout(width, height);
 
+// ─── Soru görseli yüksekliği (compact-landscape DIŞI dallar) ────────────
+//
+// Kusur: `_QuestionImage` görseli bu yükseklikte ÇİZERKEN,
+// `_buildQuestionPanel`deki şık bütçesi (`contentBudget`) görsel hiç yokmuş
+// gibi hesaplanıyordu — iki yer aynı sayıyı bilmesi gerekirken yalnız biri
+// biliyordu. Sonuç: kart, görselin kapladığı kadar `minHeight`i aşıyor;
+// dikey düzende D şıkkı kaydırılabilir alanın dışına, görünür ekranın
+// altına düşüyordu (iPhone 17, 402×874, görselli dört şıklı soru — 2026-09-27
+// simülatör turu). Tek doğru kaynak: iki çağrı yeri de BU işlevi kullanır.
+double questionImagePortraitHeight(Size size, {required bool isCompact}) {
+  if (isCompact) {
+    // Dar/sıkışık düzende görsel de küçülür (bkz. `_QuestionImage.forcedHeight`
+    // ile aynı formül: ekranın %19'u, 64–132pt arası).
+    return (size.height * 0.19).clamp(64.0, 132.0);
+  }
+  // Rahat dikey düzende 16/9 çerçeve dar ama uzun görsellerde büyük boş
+  // alan bırakıyordu; yükseklik ekranın %30'u ile sınırlanır (bkz.
+  // `_QuestionImage.portraitHeight` ile aynı formül, 120–260pt arası).
+  return min(size.width * 9 / 16, size.height * 0.30).clamp(120.0, 260.0);
+}
+
 /// Bot düellosunda ekranda gösterilecek rakip adını seçer.
 ///
 /// `matchmaking_screen.dart` bot rakibi bulunca kullanıcıya "X ile

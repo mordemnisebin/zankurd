@@ -2219,13 +2219,22 @@ class Tr {
       'ku':
           '{name}: ji {answered} pirsan {correct} rast. Ev tenê nîşana vê dorê ye.',
       'tr':
-          '{name}: {answered} sorunun {correct}\'si doğru. Bu yalnızca bu turun sinyali.',
+          '{name}: {answered} sorudan {correct} doğru. Bu yalnızca bu turun sinyali.',
     },
     K.outcomeReview: {
       'ku':
           '{name}: di {answered} pirsan de {wrong} şaş. Van bersivan careke din bibîne.',
       'tr':
           '{name}: {answered} soruda {wrong} yanlış. Bu cevaplara yeniden bak.',
+    },
+    // Karışık kategorili turlarda (ör. günün dersi) `outcomeStrong`/
+    // `outcomeReview` spotlight'ına giremeyen kategoriler için iddiasız,
+    // eşiksiz sayım satırı. Kasıtlı olarak "Bu yalnızca bu turun sinyali"
+    // gibi bir uyarı taşımaz: burada bir güç/eksiklik iddiası yok, yalnız
+    // ham sayım var.
+    K.outcomeCategoryTally: {
+      'ku': '{name}: ji {answered} pirsan {correct} rast.',
+      'tr': '{name}: {answered} sorudan {correct} doğru.',
     },
     K.outcomeEmpty: {
       'ku':
@@ -3966,6 +3975,7 @@ class K {
   static const outcomeUnanswered = 'outcome.unanswered';
   static const outcomeStrong = 'outcome.strong';
   static const outcomeReview = 'outcome.review';
+  static const outcomeCategoryTally = 'outcome.category.tally';
   static const outcomeEmpty = 'outcome.empty';
   static const outcomeReviewGeneric = 'outcome.review.generic';
   static const outcomeReviewNamed = 'outcome.review.named';

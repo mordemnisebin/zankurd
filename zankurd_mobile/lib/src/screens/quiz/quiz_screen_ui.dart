@@ -1140,9 +1140,24 @@ extension _QuizScreenUI on _QuizScreenState {
     // etrafında kurulu; 40 onu çiplerle birlikte kapsayan ölçüdür.
     final cardPadding = (isCompact ? 8.0 : 16.0) * 2;
     final headerBlock = 40.0 + (isCompact ? 8.0 : 14.0);
+    // Kusur 3: görselli bir soruda bu bütçe görselin yüksekliğini hiç
+    // düşmüyordu. Görsel kartın İÇİNE, metnin ÜSTÜNE (compact-landscape
+    // dalı hariç — orada görsel metnin YANINDA, ayrı bir sütunda durur ve
+    // dikey bütçeyi paylaşmaz) kendi yüksekliğinde bir kutu olarak
+    // yerleşiyor; ama `_QuestionTextAndAnswers`e verilen `contentHeight`
+    // hâlâ "görsel yokmuş" gibi hesaplanıyordu. Şık yükseklikleri bu şişkin
+    // bütçeye göre boyutlanınca kart gerçek `minHeight`i tam görselin
+    // kapladığı kadar aşıyor, D şıkkı kaydırılabilir alanın dışına, görünür
+    // ekranın altına düşüyordu (iPhone 17, 402×874 — 2026-09-27 simülatör
+    // turu). Görselin ayırdığı payı (kendisi + altındaki boşluk) düşünce
+    // şıklar gerçekten kalan alana göre boyutlanır.
+    final imageReserve = (!compactLandscape && question.hasImage)
+        ? questionImagePortraitHeight(size, isCompact: isCompact) +
+              (isCompact ? 8.0 : 14.0)
+        : 0.0;
     final double? contentBudget = minHeight == null
         ? null
-        : max(0.0, minHeight - cardPadding - headerBlock);
+        : max(0.0, minHeight - cardPadding - headerBlock - imageReserve);
 
     final questionIcon = CategoryVisuals.icon(question.category);
     // Soru paneli kategori renk kimliğini taşır: hafif zemin tonu,

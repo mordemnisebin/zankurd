@@ -217,15 +217,14 @@ class _QuestionImage extends StatelessWidget {
     //
     // Tavan o ölçülen boşluğun içinde kalacak kadar açıldı; `BoxFit.contain`
     // korunduğu için görsel taşmaz, yalnız daha çok yer bulur.
+    // Formül `quiz_layout_rules.dart`taki `questionImagePortraitHeight`te
+    // yaşar — `_buildQuestionPanel` şık bütçesini AYNI sayıyla düşer.
+    // Burada kopyalanırsa (eskiden öyleydi) ikisi ayrışabilir; tam da bu
+    // yüzden D şıkkı ekranın altında kayboluyordu (bkz. o işlevin yorumu).
     final double? forcedHeight = isCompact
-        ? (size.height * 0.19).clamp(64.0, 132.0)
+        ? questionImagePortraitHeight(size, isCompact: true)
         : null;
-    // Portre düzende 16/9 çerçeve dar ama uzun görsellerde büyük boş
-    // alan bırakıyordu; yüksekliği ekranın %30'u ile sınırla.
-    final portraitHeight = min(
-      size.width * 9 / 16,
-      size.height * 0.30,
-    ).clamp(120.0, 260.0);
+    final portraitHeight = questionImagePortraitHeight(size, isCompact: false);
     final label = (alt != null && alt!.trim().isNotEmpty)
         ? alt!.trim()
         : context.t(K.questionImage);
