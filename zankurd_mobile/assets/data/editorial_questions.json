@@ -20,7 +20,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kürtçe Latin alfabesi kaç harften oluşur?",
     "answersTr": [
@@ -84,7 +85,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kürtçe Latin alfabesinde kaç sesli harf (dengdêr) vardır?",
     "answersTr": [
@@ -148,7 +150,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kurmancî'de \"jin\" sözcüğü hangi cinstendir?",
     "answersTr": [
@@ -180,7 +183,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kurmancî'de bükünlü (oblique) durumun çoğul eki hangisidir?",
     "answersTr": [
@@ -308,7 +312,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "animals_1"
     },
     "promptTr": "Kurmancî \"hesp\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
@@ -340,7 +345,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kurmancî'de \"dilgeş\" sözcüğünün eş anlamlısı hangisidir?",
     "answersTr": [
@@ -372,7 +378,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kurmancî'de \"germ\" sözcüğünün zıt anlamlısı hangisidir?",
     "answersTr": [
@@ -436,7 +443,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kurmancî'de \"hatin\" fiilinin ikinci tekil kişi için emir kipi (raweya fermanî) hangisidir?",
     "answersTr": [
@@ -3252,7 +3260,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kurmancî'deki \"deh\" sayısı rakamla kaçtır?",
     "answersTr": [
@@ -3348,7 +3357,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "\"Xwendegeh\" sözcüğü hangi fiil kökünden gelir?",
     "answersTr": [
@@ -3444,7 +3454,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kurmancî'de istek kipi (raweya bilanî) hangi ön ekle kurulur?",
     "answersTr": [
@@ -3476,7 +3487,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kurmancî'de şimdiki zamanın olumsuzluk eki hangisidir?",
     "answersTr": [
@@ -5112,7 +5124,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_3"
     },
     "promptTr": "Kurmancî \"spas\" sözcüğü Türkçede ne demektir?",
     "answersTr": [
@@ -5144,7 +5157,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kurmancî'de \"dirêj\" sözcüğünün zıt anlamlısı hangisidir?",
     "answersTr": [
@@ -5368,7 +5382,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Ferhenga kurdî",
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "productiveRecallEligible": true
     },
     "promptTr": "Kurmancî'de \"westiyayî\" sözcüğünün eş anlamlısı hangisidir?",
     "answersTr": [

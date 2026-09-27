@@ -73,6 +73,7 @@ await page.waitForFunction(
   ageGateLabel,
   { timeout: 15_000 },
 );
+await clickText('Bidomîne');
 await clickText('Dest pê bike');
 await expectText('Bi xêr hatî ZanKurdê');
 await screenshot('02-sign-in');
@@ -136,7 +137,9 @@ if (expectSocialBackend) {
   await expectContains('Pêşbirka bilez');
 } else {
   await expectContains('Pêşkêşkar negihîştbar e');
-  if (await page.getByRole('button', { name: /Pêşbirka bilez/ }).count()) {
+  const quickDuel = page.getByRole('button', { name: /Pêşbirka bilez/ });
+  await quickDuel.waitFor({ state: 'visible', timeout: 15_000 });
+  if (await quickDuel.isEnabled()) {
     throw new Error('Çevrimdışı smoke turunda hızlı düello etkin olmamalı.');
   }
   await screenshot('07-play-hub-offline');

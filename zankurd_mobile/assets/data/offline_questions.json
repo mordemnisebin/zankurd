@@ -279,7 +279,10 @@
       "su",
       "kadın"
     ],
-    "correctAnswerTr": "ekmek"
+    "correctAnswerTr": "ekmek",
+    "metadata": {
+      "learningLessonId": "food_1"
+    }
   },
   {
     "id": "offline_0060",
@@ -326,7 +329,10 @@
       "mal",
       "av"
     ],
-    "correctAnswerTr": "spas"
+    "correctAnswerTr": "spas",
+    "metadata": {
+      "learningLessonId": "everyday_3"
+    }
   },
   {
     "id": "offline_0065",
@@ -4231,7 +4237,10 @@
       "şêr",
       "di-"
     ],
-    "correctAnswerTr": "şêr"
+    "correctAnswerTr": "şêr",
+    "metadata": {
+      "learningLessonId": "animals_2"
+    }
   },
   {
     "id": "offline_5030",
@@ -4368,7 +4377,10 @@
       "hava",
       "okul"
     ],
-    "correctAnswerTr": "gece"
+    "correctAnswerTr": "gece",
+    "metadata": {
+      "learningLessonId": "time_2"
+    }
   },
   {
     "id": "offline_5095",
@@ -4716,7 +4728,10 @@
       "Doğru",
       "Yanlış"
     ],
-    "correctAnswerTr": "Doğru"
+    "correctAnswerTr": "Doğru",
+    "metadata": {
+      "learningLessonId": "animals_1"
+    }
   },
   {
     "id": "offline_5270",
@@ -5573,7 +5588,10 @@
       "gul",
       "dil"
     ],
-    "correctAnswerTr": "îro"
+    "correctAnswerTr": "îro",
+    "metadata": {
+      "learningLessonId": "time_2"
+    }
   },
   {
     "id": "offline_5916",
@@ -15641,7 +15659,10 @@
       "Özür dilerim",
       "Buyurun"
     ],
-    "correctAnswerTr": "Buyurun"
+    "correctAnswerTr": "Buyurun",
+    "metadata": {
+      "learningLessonId": "everyday_3"
+    }
   },
   {
     "id": "offline_curated_30014",

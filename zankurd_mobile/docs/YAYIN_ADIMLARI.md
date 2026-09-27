@@ -19,11 +19,17 @@ inceleme bekleyişi (Apple 1-3 gün, Google 1-7 gün).
 Terminalde proje klasöründe:
 
 ```bash
-cd /Users/kocer/Projects/zankurd/zankurd_mobile && dart analyze && flutter test
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+dart run tool/validate_release_toolchain.dart
+dart analyze
+flutter test
 ```
 
-**Tamam mı?** "All tests passed!" ve "No issues found!" görüyorsan evet.
-Görmüyorsan bana yaz, yayına başlama.
+**Tamam mı?** `Release toolchain geçerli: Flutter 3.44.7.`,
+"All tests passed!" ve "No issues found!" görüyorsan evet. Flutter sürümü
+farklıysa bağımlılıkların Built-in Kotlin / Swift Package Manager geçişi
+tamamlanana kadar o SDK ile release üretme; önce bu kapıyı bilinçli olarak
+güncelle ve tüm release doğrulamalarını yeniden çalıştır.
 
 ---
 
@@ -274,6 +280,49 @@ kesim sırasında ilk kez oluşturulmaya veya symlink yönlendirmesine güvenilm
 kurulmuş AAB, fiziksel iPhone'a kurulmuş production-config release, imzalı App
 Store arşivi ve başarılı SFTP dry-run aynı kaynak kodundan geldiyse evet.
 Bunlardan biri eksikse üretim göçüne geçme.
+
+### 2e. Fiziksel cihaz test kanıtı
+
+CI koşucusu fiziksel cihaz varmış gibi davranmaz. Aday kaynakla aşağıdaki dört
+integration testi gerçek hedeflerde tamamla; ayrıntılı host/guest ısıtma sırası
+`integration_test/README.md` içindedir:
+
+```bash
+flutter test integration_test/local_backend_1v1_test.dart -d <host-cihaz-id> --dart-define-from-file=.env.mobile.local.json --dart-define=ZK_ROLE=host
+flutter test integration_test/local_backend_1v1_test.dart -d <guest-cihaz-id> --dart-define-from-file=.env.mobile.local.json --dart-define=ZK_ROLE=guest --dart-define=ZK_ROOM_CODE=<host-logundaki-kod>
+flutter test integration_test/revenuecat_roundtrip_test.dart -d <ios-cihaz-id> --dart-define-from-file=.env.mobile.local.json
+flutter test integration_test/notification_real_schedule_test.dart -d <ios-cihaz-id>
+flutter test integration_test/os_level_resilience_test.dart -d <android-cihaz-id> --dart-define-from-file=.env.mobile.local.json --dart-define=ZK_PHASE=setup
+adb shell am force-stop com.zankurd.app
+flutter test integration_test/os_level_resilience_test.dart -d <android-cihaz-id> --dart-define-from-file=.env.mobile.local.json --dart-define=ZK_PHASE=resume
+```
+
+1v1 host ve guest koşuları eşzamanlıdır; host logundaki `ZK_ROOM_CODE` guest
+komutuna verilir. `os_level_resilience_test.dart` için setup/resume arasında
+gerçek `force-stop` zorunludur. RevenueCat turunda sandbox/Test Store dışında
+gerçek ücret çekme; mağaza satın alma ekranı ayrıca manuel smoke kapsamında
+kontrol edilir.
+
+Kanıt şablonunu yerel dosyaya kopyala. Cihaz testlerine başlamadan hemen önce
+aday kaynağın parmak izini üretip `source_fingerprint` alanına yaz. `version`
+alanını `pubspec.yaml` ile birebir eşleştir, yalnız gerçekten geçen testleri
+`passed: true` yap ve her testte kullanılan cihazı yaz:
+
+```bash
+cp .release-device-evidence.example.json .release-device-evidence.json
+dart run tool/validate_device_release_evidence.dart --print-source-fingerprint
+dart run tool/validate_device_release_evidence.dart --file=.release-device-evidence.json
+```
+
+`.release-device-evidence.json` git tarafından yok sayılır. Validator dört
+testin tamamını, ISO tarihini, aday sürümü ve release girdilerinin SHA-256
+parmak izini doğrulamadan sıfır çıkış kodu vermez. Cihaz testlerinden sonra
+`lib`, `assets`, `android`, `ios`, `pubspec.yaml`, `pubspec.lock` veya mobil
+release yapılandırması değişirse eski kanıt bilinçli olarak geçersiz olur.
+
+**Tamam mı?** Validator `4/4` geçti ve Android/iPhone production-config smoke
+kurulumları da aynı aday kaynaktan geldiyse evet. Bu kapı eksikse mağaza
+yüklemesine geçme.
 
 ---
 

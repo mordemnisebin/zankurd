@@ -31,6 +31,7 @@ try {
  await ageGate.waitFor({state:'visible'});
  await ageGate.click();
  await page.waitForFunction(() => document.querySelector('[role="checkbox"][aria-label="Ez ji 13 salî mezintir im"]')?.getAttribute('aria-checked') === 'true');
+ await click('Bidomîne');
  await click('Dest pê bike');
  await click('Wek mêvan bidomîne');
  await page.getByText('Navê te di lîstikê de çi be?',{exact:true}).waitFor();

@@ -46,6 +46,7 @@ graph TB
         REPO[ZanKurdRepository]
         SUPA[SupabaseZanKurdRepository]
         MOCK[MockZanKurdRepository]
+        OFFLINE[OfflineZanKurdRepository]
         SM[SyncManager]
     end
 
@@ -75,6 +76,8 @@ graph TB
 
     REPO --> SUPA
     REPO --> MOCK
+    REPO --> OFFLINE
+    OFFLINE --> MOCK
     SUPA --> SB
     SM --> SUPA
 
@@ -116,7 +119,11 @@ graph TB
 - **BadgeService** — `lib/src/data/badge_service.dart`; rozet tanımları `K.*`
 - **ZanKurdRepository** — Soyut repository arayüzü
 - **SupabaseZanKurdRepository** — Supabase bağlantılı gerçek uygulama
-- **MockZanKurdRepository** — Test ve offline ortam için mock
+- **MockZanKurdRepository** — Test/demolar ve paylaşılan yerel içerik davranışı
+- **OfflineZanKurdRepository** — Uzak servis başlatılamadığında üretim deposu.
+  Mock deposunun yerel içeriğini kullanır; uzak kimlik ve sunucu yazımlarında
+  sahte başarı döndürmez. Ders tamamlama, favoriler ve yerel profil adı
+  cihazda saklanır; oda, eşleşme, ekonomi ve sosyal yazımlar kapalıdır.
 - **SyncManager** — Çevrimdışı kuyruk (XP sahte eşitlemesi yok)
 - **XP yazımı** — Cihaz `XPStore` seviye çubuğunu besler; sıralama
   puanı `award_xp_delta` ile `profiles.xp`e yazılır
