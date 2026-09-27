@@ -26,7 +26,6 @@ import '../config/category_visibility.dart';
 import 'mock_zankurd_repository.dart';
 import 'xp_store.dart';
 import 'zankurd_repository.dart';
-import '../services/question_content_policy.dart';
 
 class _ManagedRoomChannel {
   _ManagedRoomChannel(this.channel);
@@ -180,7 +179,6 @@ ResumedPendingAnswer? _requiredPendingAnswer(Map<String, dynamic> json) {
 class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
 
-  static const _contentPolicy = QuestionContentPolicy();
   static const _defaultAvatarColor = '#2E9E93';
 
   final MockZanKurdRepository _offline = MockZanKurdRepository();
@@ -643,10 +641,19 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'get_room_questions',
         params: {'p_room_id': roomId},
       );
+      // Oda soruları SUNUCUNUN sırasıyla birebir kalır; istemci soru ATMAZ.
+      //
+      // Oda akışı sunucunun `current_question_index`iyle ilerler, ekran
+      // `_questions[index]`i gösterir, cevap `p_question_id` ile gider.
+      // İstemci bir soruyu atarsa sonraki bütün sorular bir kayar: oyuncu
+      // ekranda bir soruyu görür, sunucu başkasını bekler. Hepsi atılırsa
+      // (ör. "Rastgele" eşleşme gizli bir kategoriye düştüyse) oyun hiç
+      // başlamaz. Gizli kategori (`category_visibility.dart`) listeleme ve
+      // seçim kararıdır; sunucu bir soruyu odaya koyduysa o soru oynanır.
+      // Seçim süzgecinin yeri sunucudur.
       final roomQuestions = (response as List<dynamic>)
           .whereType<Map<String, dynamic>>()
           .map(QuizQuestion.fromServerRow)
-          .where(_contentPolicy.isPlayableWithHiddenAnswer)
           .toList();
 
       if (roomQuestions.isNotEmpty) return roomQuestions;
