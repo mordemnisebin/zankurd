@@ -190,10 +190,10 @@ void main() {
 
     test('kapı, oturum açıldıktan SONRA ve Home\'dan ÖNCE', () {
       final signInGate = shell.indexOf('if (!authProvider.isAuthenticated)');
-      final signInScreen = shell.indexOf(
-        'const Expanded(child: SignInScreen())',
-        signInGate,
-      );
+      // Giriş ekranı 2026-09-27'den beri çevrimdışı şeridi görünürken
+      // `MediaQuery.removePadding` ile sarılıyor; aranan şey sarmalayıcı
+      // değil, ekranın bu kapının içinde çizilmesi.
+      final signInScreen = shell.indexOf('const SignInScreen()', signInGate);
       final recoveryGate = shell.indexOf(
         'if (authProvider.needsPasswordRecovery)',
       );
