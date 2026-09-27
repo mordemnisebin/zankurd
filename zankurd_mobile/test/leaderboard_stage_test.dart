@@ -130,6 +130,30 @@ const Color _stageGold = Color(0xFFF2C75C);
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
+  testWidgets('başlık eylemleri yaygın telefon eninde başlığın yanında durur', (
+    tester,
+  ) async {
+    // Eylemler başlığın altında kendi satırına iniyordu: `ScreenSectionHeading`
+    // 360'tan dar alanı "dar" sayıyordu ve sayfa boşluklarıyla 390'lık
+    // telefon bile 354'e düşüyordu. 360 genişlikteki telefonlar da dahil
+    // düğmeler başlığın yanında kalmalı.
+    for (final width in [360.0, 390.0]) {
+      await tester.binding.setSurfaceSize(Size(width, 844));
+      await _pump(tester, isKu: false, isDark: false);
+      final title = tester.getRect(find.text('Liderlik Tablosu'));
+      final friends = tester.getRect(
+        find.byKey(const ValueKey('leaderboard-friends-button')),
+      );
+      expect(
+        friends.top,
+        lessThan(title.bottom),
+        reason: '$width: eylemler başlıkla aynı satırda başlamalı',
+      );
+      expect(friends.left, greaterThan(title.right), reason: '$width');
+    }
+    await tester.binding.setSurfaceSize(null);
+  });
+
   testWidgets(
     'podyum HER dilde ve temada aynı sahnede durur: kimlik gradyanı, tek '
     'StageBackdropPainter, beyaz isimler, konfeti içerikle kesişmez',

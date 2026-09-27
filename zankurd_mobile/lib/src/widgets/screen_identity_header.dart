@@ -156,9 +156,14 @@ class ScreenSectionHeading extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final textScale = MediaQuery.textScalerOf(context).scale(1);
+          // Eşik 360'tı: sayfa boşlukları düşülünce 390'lık telefonda bile
+          // başlığa 354 kalıyordu ve sıralama ekranının iki eylemi (arkadaş
+          // ekle, yenile) başlığın altında tek başına bir satıra iniyordu
+          // (2026-09-27 tur görüntüsü). 320'nin üstünde başlık metnine iki
+          // düğmeden sonra da ~200 nokta kalır; büyük yazıda yine alt alta.
           final stackTrailing =
               trailing != null &&
-              (constraints.maxWidth < 360 || textScale >= 1.5);
+              (constraints.maxWidth < 320 || textScale >= 1.5);
 
           if (stackTrailing) {
             return Column(
