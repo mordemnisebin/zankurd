@@ -203,6 +203,23 @@ class _LearningScreenState extends State<LearningScreen> {
                   title: context.t(K.learnKurmanci),
                   subtitle: context.t(K.learnSubtitle),
                 ),
+                // Akıllı tekrar (SM-2) en üstte, ama yalnız gerçekten tekrar
+                // bekliyorsa: vadesi gelmiş soru, yeni dersten daha acildir.
+                // Hiç ders çözmemiş birine "Tekrarlar tamam" yazmak
+                // yapılmamış bir işi bitmiş gösteriyordu (2026-09-27).
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.page,
+                    0,
+                    AppSpacing.page,
+                    0,
+                  ),
+                  child: TodaysReviewCard(
+                    repository: widget.repository,
+                    isKu: ku,
+                    hideWhenEmpty: true,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(
                     AppSpacing.page,
@@ -248,54 +265,34 @@ class _LearningScreenState extends State<LearningScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.page,
-                    AppSpacing.xs,
-                    AppSpacing.page,
-                    0,
-                  ),
-                  child: _LearningModeBar(
-                    isKu: ku,
-                    hasLesson: _currentLessons.isNotEmpty,
-                    onPractice: _openCategoryPractice,
-                    onFlashcards: _openCategoryFlashcards,
-                    onLesson: _openCategoryLesson,
-                  ),
-                ),
                 // Kategori ilerleme göstergesi
                 _buildCategoryProgress(context, ku),
                 // Ana ders yolu ilk ekranda görünür. Yardımcı içerikler
                 // aynı kaydırma yüzeyinde, derslerin ardından gelir.
                 _buildLessons(context, ku, embedded: true),
+                // Konuyu pekiştirmenin iki yolu, derslerin hemen altında
+                // ve adıyla. Eskiden konu çiplerinin altında üç simgeli
+                // bir şerit vardı ("Soru çöz / Flaş kart / Dersler"): sekme
+                // mi düğme mi olduğu belli değildi, "Dersler" yolun kendisini
+                // tekrar ediyordu ve üçü de konunun İLK dersini açıyordu.
                 Padding(
                   padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.page,
-                    AppSpacing.sm,
                     AppSpacing.page,
                     0,
-                  ),
-                  child: ScreenSectionHeading(
-                    title: context.t(K.todaysGoal),
-                    subtitle: context.t(K.todaysGoalSub),
-                  ),
-                ),
-                // Akıllı tekrar (SM-2) ürün yüzü: yalnız hazır tekrar varsa
-                // dokunulabilir kart, yoksa sakin bir tamamlandı durumu.
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
                     AppSpacing.page,
                     AppSpacing.xs,
-                    AppSpacing.page,
-                    0,
                   ),
-                  child: TodaysReviewCard(
-                    repository: widget.repository,
+                  child: _TopicActions(
                     isKu: ku,
+                    enabled: _currentLessons.isNotEmpty,
+                    onPractice: _openCategoryPractice,
+                    onFlashcards: _openCategoryFlashcards,
                   ),
                 ),
                 // Metin tabanlı günlük hikâyeler. Her kart kendi yerel
-                // ilerlemesini gösterir ve dönüşte durumu yeniler.
+                // ilerlemesini gösterir ve dönüşte durumu yeniler. Liste
+                // alt alta: yana kayan şerit ikinci hikâyeyi yarım
+                // gösteriyordu ("Kend…").
                 Padding(
                   padding: const EdgeInsets.fromLTRB(
                     AppSpacing.page,
@@ -308,7 +305,6 @@ class _LearningScreenState extends State<LearningScreen> {
                     width: double.infinity,
                     child: StoryCatalog(
                       isKu: ku,
-                      compact: true,
                       onOpen: (story, guide) => Navigator.of(context).push(
                         AppRoute(
                           page: StoryScreen(story: story, guide: guide),
@@ -478,11 +474,10 @@ class _LearningScreenState extends State<LearningScreen> {
             AppSpacing.page,
             AppSpacing.lg,
           ),
-          itemCount: lessons.length + 1,
+          // Yolun sonundaki "Kategori ustalık hedefi" durağı kalktı: ne
+          // olduğu, neye yaradığı ekranda yazmıyordu (2026-09-27).
+          itemCount: lessons.length,
           itemBuilder: (ctx, i) {
-            if (i == lessons.length) {
-              return _MasteryGoal(completed: firstOpenIndex == -1, ku: ku);
-            }
             final completed = _completedIds.contains(lessons[i].id);
             final current =
                 i == (firstOpenIndex < 0 ? lessons.length : firstOpenIndex);
@@ -584,24 +579,31 @@ class _LearningScreenState extends State<LearningScreen> {
     return _openCategoryLessonDetail(initialFlashcardMode: true);
   }
 
+  /// Oyuncunun sıradaki dersi; hepsi bittiyse konunun son dersi.
+  ///
+  /// Kelime kartları eskiden her zaman konunun İLK dersini açıyordu:
+  /// ikinci derse gelmiş biri kartlarda hep "Selamlaşma"yı görüyordu.
+  Lesson? _recommendedLesson() {
+    if (_currentLessons.isEmpty) return null;
+    final index = _recommendedLessonIndex(_currentLessons);
+    return _currentLessons[index < 0 ? _currentLessons.length - 1 : index];
+  }
+
   Future<void> _openLexicon() {
     return Navigator.of(
       context,
     ).push(AppRoute(page: const LearnerLexiconScreen()));
   }
 
-  Future<void> _openCategoryLesson() {
-    return _openCategoryLessonDetail(initialFlashcardMode: false);
-  }
-
   Future<void> _openCategoryLessonDetail({
     required bool initialFlashcardMode,
   }) async {
-    if (_currentLessons.isEmpty || !mounted) return;
+    final lesson = _recommendedLesson();
+    if (lesson == null || !mounted) return;
     await Navigator.of(context).push(
       AppRoute(
         page: LessonDetailScreen(
-          lesson: _currentLessons.first,
+          lesson: lesson,
           repository: widget.repository,
           initialFlashcardMode: initialFlashcardMode,
         ),
@@ -677,156 +679,110 @@ class _LearningScreenState extends State<LearningScreen> {
   String _categoryLabel(String cat, bool ku) {
     const labels = {
       'everyday': ('Rojane', 'Günlük'),
-      'grammar': ('Gramer', 'Dilbilgisi'),
+      // Ürünün geri kalanı dilbilgisine `Rêziman` diyor (K.dilbilgisi).
+      'grammar': ('Rêziman', 'Dilbilgisi'),
       'culture': ('Çand', 'Kültür'),
       'food': ('Xwarin', 'Yemek'),
       'animals': ('Ajal', 'Hayvanlar'),
       'geography': ('Erdnîgarî', 'Coğrafya'),
       'emotions': ('Hest', 'Duygular'),
-      'time': ('Demjimêr', 'Zaman'),
+      // `Demjimêr` saat demek; konu günleri, ayları ve zaman dilimlerini
+      // kapsıyor ("Roj û Meh", "Serdem û Demjimêr"): `Dem`.
+      'time': ('Dem', 'Zaman'),
     };
     final (kuLabel, trLabel) = labels[cat] ?? (cat, cat);
     return ku ? kuLabel : trLabel;
   }
 }
 
-class _LearningModeBar extends StatelessWidget {
-  const _LearningModeBar({
+/// Konuyu pekiştirmenin iki yolu: o konudan soru çözmek ve kelime kartları.
+///
+/// İkisi de ikincil eylem: turuncu değil, yeşil çerçeveli. Ekranın birincil
+/// eylemi yolun üzerindeki önerilen derstir.
+class _TopicActions extends StatelessWidget {
+  const _TopicActions({
     required this.isKu,
-    required this.hasLesson,
+    required this.enabled,
     required this.onPractice,
     required this.onFlashcards,
-    required this.onLesson,
   });
 
   final bool isKu;
-  final bool hasLesson;
+  final bool enabled;
   final VoidCallback onPractice;
   final VoidCallback onFlashcards;
-  final VoidCallback onLesson;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: const ValueKey('learning-mode-strip'),
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context).withValues(alpha: 0.52),
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: _LearningModeButton(
-              key: const ValueKey('learning-mode-action-practice'),
-              icon: AppIcons.question,
-              label: Tr.forKu(K.soruCoz, isKu),
-              enabled: hasLesson,
-              onTap: onPractice,
-            ),
-          ),
-          _LearningModeDivider(enabled: hasLesson),
-          Expanded(
-            child: _LearningModeButton(
-              key: const ValueKey('learning-mode-action-flashcards'),
-              icon: AppIcons.paintbrush,
-              label: Tr.forKu(K.flasKart, isKu),
-              enabled: hasLesson,
-              onTap: onFlashcards,
-            ),
-          ),
-          _LearningModeDivider(enabled: hasLesson),
-          Expanded(
-            child: _LearningModeButton(
-              key: const ValueKey('learning-mode-action-lesson'),
-              icon: AppIcons.bookOpen,
-              label: Tr.forKu(K.lessons, isKu),
-              enabled: hasLesson,
-              onTap: onLesson,
-            ),
-          ),
-        ],
-      ),
+    final practice = _TopicActionButton(
+      key: const ValueKey('learning-topic-practice'),
+      icon: AppIcons.circleQuestion,
+      label: Tr.forKu(K.soruCoz, isKu),
+      onTap: enabled ? onPractice : null,
+    );
+    final flashcards = _TopicActionButton(
+      key: const ValueKey('learning-topic-flashcards'),
+      icon: AppIcons.layerGroup,
+      label: Tr.forKu(K.flasKart, isKu),
+      onTap: enabled ? onFlashcards : null,
+    );
+    return LayoutBuilder(
+      key: const ValueKey('learning-topic-actions'),
+      builder: (context, constraints) {
+        final largeText = MediaQuery.textScalerOf(context).scale(14) > 18;
+        if (constraints.maxWidth < 320 || largeText) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              practice,
+              const SizedBox(height: AppSpacing.xs),
+              flashcards,
+            ],
+          );
+        }
+        return Row(
+          children: [
+            Expanded(child: practice),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(child: flashcards),
+          ],
+        );
+      },
     );
   }
 }
 
-class _LearningModeDivider extends StatelessWidget {
-  const _LearningModeDivider({required this.enabled});
-
-  final bool enabled;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 1,
-      height: 28,
-      color: AppTheme.borderColor(
-        context,
-      ).withValues(alpha: enabled ? 0.65 : 0.35),
-    );
-  }
-}
-
-class _LearningModeButton extends StatelessWidget {
-  const _LearningModeButton({
+class _TopicActionButton extends StatelessWidget {
+  const _TopicActionButton({
     required this.icon,
     required this.label,
-    required this.enabled,
     required this.onTap,
     super.key,
   });
 
   final IconData icon;
   final String label;
-  final bool enabled;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      enabled: enabled,
-      label: label,
-      onTap: enabled ? onTap : null,
-      excludeSemantics: true,
-      child: InkWell(
-        onTap: enabled ? onTap : null,
-        excludeFromSemantics: true,
-        borderRadius: BorderRadius.circular(AppRadius.xs),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 48),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  color: enabled
-                      ? AppColors.readableAccent(context, AppTheme.playGreen)
-                      : AppTheme.textMutedColor(
-                          context,
-                        ).withValues(alpha: 0.55),
-                  size: 18,
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.caption.copyWith(
-                    color: enabled
-                        ? AppTheme.textPrimaryColor(context)
-                        : AppTheme.textMutedColor(
-                            context,
-                          ).withValues(alpha: 0.55),
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
+    final accent = AppColors.readableAccent(context, AppTheme.playGreen);
+    return SizedBox(
+      height: 48,
+      child: OutlinedButton.icon(
+        onPressed: onTap,
+        icon: Icon(icon, size: 16),
+        label: Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontWeight: FontWeight.w700),
+        ),
+        style: OutlinedButton.styleFrom(
+          foregroundColor: accent,
+          side: BorderSide(color: accent.withValues(alpha: 0.45)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
         ),
       ),
@@ -1357,88 +1313,6 @@ class _LearningPathMarker extends StatelessWidget {
   }
 }
 
-class _MasteryGoal extends StatelessWidget {
-  const _MasteryGoal({required this.completed, required this.ku});
-
-  final bool completed;
-  final bool ku;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          left: 7,
-          top: 0,
-          bottom: 24,
-          child: Container(
-            width: 1.5,
-            decoration: BoxDecoration(
-              color: AppTheme.borderColor(context).withValues(alpha: 0.55),
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-        ),
-        Positioned(
-          left: 0,
-          top: 16,
-          child: Container(
-            width: 15,
-            height: 15,
-            decoration: BoxDecoration(
-              color: completed
-                  ? AppTheme.gold
-                  : AppTheme.surfaceHiColor(context),
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: AppTheme.gold.withValues(alpha: completed ? 1 : 0.65),
-                width: 1.2,
-              ),
-            ),
-            child: Icon(
-              AppIcons.medal,
-              size: 8,
-              color: completed ? Colors.white : AppTheme.gold,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 28),
-          child: Container(
-            key: const ValueKey('learning-mastery-goal'),
-            margin: const EdgeInsets.only(top: AppSpacing.xs),
-            padding: const EdgeInsets.all(AppSpacing.md),
-            decoration: BoxDecoration(
-              color: AppTheme.surfaceColor(context),
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(
-                color: completed
-                    ? AppTheme.gold.withValues(alpha: 0.38)
-                    : AppTheme.borderColor(context),
-              ),
-            ),
-            child: Row(
-              children: [
-                const Icon(AppIcons.medal, color: AppTheme.gold),
-                const SizedBox(width: AppSpacing.sm),
-                Expanded(
-                  child: Text(
-                    context.t(K.categoryMasteryGoal),
-                    style: AppTypography.bodyLarge.copyWith(
-                      color: AppTheme.textPrimaryColor(context),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-/// Ders slaytlarını gösterir ve ilerleme izler.
 class LessonDetailScreen extends StatefulWidget {
   const LessonDetailScreen({
     required this.lesson,

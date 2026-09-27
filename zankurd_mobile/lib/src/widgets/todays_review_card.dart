@@ -22,11 +22,19 @@ class TodaysReviewCard extends StatefulWidget {
     required this.isKu,
     this.onStartReview,
     this.refreshSignal,
+    this.hideWhenEmpty = false,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final bool isKu;
+
+  /// Hazır tekrar yokken hiçbir şey çizme.
+  ///
+  /// Öğrenme ekranı hiç ders çözmemiş birine "Tekrarlar tamam" diyordu —
+  /// yapılmamış bir işin bittiğini söyleyen bir satır. Orada kart yalnız
+  /// gerçekten tekrar bekliyorsa görünür.
+  final bool hideWhenEmpty;
 
   /// Test/özelleştirme için: verilirse quiz açmak yerine bu çağrılır.
   final void Function(List<QuizQuestion> questions)? onStartReview;
@@ -132,6 +140,9 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   @override
   Widget build(BuildContext context) {
     if (_loading) return const SizedBox.shrink();
+    if (_readyCount == 0 && widget.hideWhenEmpty) {
+      return const SizedBox.shrink();
+    }
     final ku = widget.isKu;
     return _readyCount > 0
         ? _buildReady(context, ku)

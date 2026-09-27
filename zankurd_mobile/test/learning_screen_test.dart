@@ -208,36 +208,36 @@ void main() {
     );
   });
 
-  // 2026-07-23 canlı UX denetimi: öğrenme modu butonları ("Dersler" vb.)
-  // ekran okuyucuda çift okunuyordu — dıştaki Semantics(label:) ile
-  // içteki Text(label) birleşiyordu (M28 devamı).
-  testWidgets('öğrenme modu butonu ekran okuyucuda çift okunmaz', (
-    tester,
-  ) async {
+  // 2026-07-23 canlı UX denetimi: öğrenme modu butonları ekran okuyucuda
+  // çift okunuyordu (M28 devamı). 2026-09-27: üç simgeli şerit, derslerin
+  // altında adıyla duran iki düğmeye ("Soru çöz", "Flaş kart") dönüştü;
+  // "Dersler" yolun kendisini tekrar ettiği için kalktı. Bekçi aynı:
+  // her eylem ekran okuyucuda bir kez, dokunulabilir olarak duyurulur.
+  testWidgets('konu eylemleri ekran okuyucuda çift okunmaz', (tester) async {
     final handle = tester.ensureSemantics();
     await tester.pumpWidget(
       wrap(LearningScreen(repository: MockZanKurdRepository())),
     );
     await tester.pumpAndSettle();
 
-    final lessons = find.bySemanticsLabel('Dersler');
-    expect(lessons, findsOneWidget);
     expect(
-      find.byKey(const ValueKey('learning-mode-strip')),
-      findsOneWidget,
-      reason: 'Üç öğrenme modu tek ortak araç şeridinde gruplanmalı.',
-    );
-    expect(
-      find.byKey(const ValueKey('learning-mode-action-lesson')),
+      find.byKey(const ValueKey('learning-topic-actions')),
       findsOneWidget,
     );
-    expect(
-      tester
-          .getSemantics(lessons)
-          .getSemanticsData()
-          .hasAction(ui.SemanticsAction.tap),
-      isTrue,
-    );
+    expect(find.byKey(const ValueKey('learning-mode-strip')), findsNothing);
+    expect(find.bySemanticsLabel('Dersler'), findsNothing);
+    for (final label in ['Soru çöz', 'Flaş kart']) {
+      final action = find.bySemanticsLabel(label);
+      expect(action, findsOneWidget, reason: label);
+      expect(
+        tester
+            .getSemantics(action)
+            .getSemanticsData()
+            .hasAction(ui.SemanticsAction.tap),
+        isTrue,
+        reason: label,
+      );
+    }
     handle.dispose();
   });
 
@@ -282,7 +282,11 @@ void main() {
     );
     expect(find.text('Kurmancî öğren'), findsOneWidget);
     expect(find.text('Öğren'), findsNothing);
-    expect(find.text('Bugünkü hedefin'), findsOneWidget);
+    // "Bugünkü hedefin" bölümü 2026-09-27'de kalktı: hiç ders çözmemiş
+    // birine "Tekrarlar tamam" diyordu. Tekrar kartı artık yalnız vadesi
+    // gelmiş tekrar varken, ekranın en üstünde çizilir.
+    expect(find.text('Bugünkü hedefin'), findsNothing);
+    expect(find.byKey(const ValueKey('todays-review-empty')), findsNothing);
     expect(find.text('Öğrenme yolları'), findsOneWidget);
     expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
     expect(find.text('Sana önerilen'), findsOneWidget);
@@ -596,23 +600,23 @@ void main() {
       find.byKey(const ValueKey('learning-path-node-everyday_2')),
       findsOneWidget,
     );
-    final lessonsList = find.byType(ListView).last;
-    for (
-      var i = 0;
-      i < 5 &&
-          find
-              .byKey(const ValueKey('learning-mastery-goal'))
-              .evaluate()
-              .isEmpty;
-      i++
-    ) {
-      await tester.drag(lessonsList, const Offset(0, -400));
-      await tester.pump();
-    }
-    expect(find.byKey(const ValueKey('learning-mastery-goal')), findsOneWidget);
+    // Yolun sonundaki "Kategori ustalık hedefi" durağı 2026-09-27'de kalktı
+    // (ne olduğu ekranda yazmıyordu). Yolun ardından konu eylemleri gelir.
+    expect(find.byKey(const ValueKey('learning-mastery-goal')), findsNothing);
+    final actions = find.byKey(const ValueKey('learning-topic-actions'));
+    await tester.ensureVisible(actions);
+    expect(
+      tester.getTopLeft(actions).dy,
+      greaterThan(tester.getTopLeft(firstNode).dy),
+      reason: 'Konu eylemleri ders yolunun altında durmalı.',
+    );
   });
 
-  testWidgets('Learning hikâye satırları rotayı gömmeyecek kadar kompakttır', (
+  // Hikâyeler destekleyici içerik; ana öğrenme yolunu ilk ekrandan aşağı
+  // itmemeli. 2026-09-27'de yana kayan şerit (ikinci hikâyeyi yarım
+  // gösteriyordu) alt alta tam listeye döndü; bekçinin kuralı aynı kaldı:
+  // yol önce gelir, hikâyeler ondan sonra.
+  testWidgets('hikâyeler ders yolunu gömmez, yolun altında durur', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -623,17 +627,27 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final firstStory = find.byKey(const ValueKey('story-card-cayxane'));
+    final nextStep = find.byKey(const ValueKey('learning-next-step'));
     final catalog = find.byKey(const ValueKey('story-catalog'));
-    expect(firstStory, findsOneWidget);
-    expect(tester.getSize(firstStory).height, lessThanOrEqualTo(56));
+    expect(nextStep, findsOneWidget);
+    expect(catalog, findsOneWidget);
     expect(
-      tester.getSize(catalog).height,
-      lessThanOrEqualTo(190),
-      reason:
-          'Günlük hikâyeler destekleyici içerik; ana öğrenme yolunu ilk '
-          'ekrandan aşağı itmemeli.',
+      tester.getBottomLeft(nextStep).dy,
+      lessThan(844),
+      reason: 'Önerilen ders ilk ekranda görünmeli.',
     );
+    expect(
+      tester.getTopLeft(catalog).dy,
+      greaterThan(tester.getBottomLeft(nextStep).dy),
+    );
+    // Dört hikâyenin hepsi tam görünür (yarım kart yok).
+    for (final id in ['cayxane', 'xwe-nasandin', 'kirin', 'rê-pirsîn']) {
+      expect(
+        find.byKey(ValueKey('story-card-$id'), skipOffstage: false),
+        findsOneWidget,
+        reason: id,
+      );
+    }
   });
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {
@@ -887,44 +901,67 @@ void main() {
     expect(repository.requestedLessonId, 'everyday_3');
   });
 
+  // 2026-08-14 denetimi: "Dersler" düğmesi `enabled: true` sabitti — ders
+  // yokken açık görünüyor, dokununca sessizce hiçbir şey yapmıyordu.
+  // 2026-09-27: "Dersler" kalktı; aynı kural kalan iki konu eylemine
+  // uygulanır.
   testWidgets(
-    'kategoride ders yokken "Dersler" düğmesi kapalı görünür ve dokunuşta '
-    'hiçbir şey yapmaz',
+    'kategoride ders yokken konu eylemleri kapalıdır ve dokunuşta hiçbir '
+    'şey yapmaz',
     (tester) async {
-      // 2026-08-14 denetimi: `enabled: true` sabitti — diğer iki düğme
-      // (Soru Çöz/Flaş Kart) `hasLesson`e bakarken bu hep AÇIK
-      // görünüyordu. Dokununca `_openCategoryFlashcards`in erken dönüşü
-      // yüzünden sessizce hiçbir şey olmuyordu.
       await tester.pumpWidget(
         wrap(LearningScreen(repository: _NoLessonsRepository())),
       );
       await tester.pumpAndSettle();
 
-      final lessonsButton = find.ancestor(
-        of: find.text('Dersler'),
-        matching: find.byType(Semantics),
-      );
-      final semantics = tester
-          .widgetList<Semantics>(lessonsButton)
-          .firstWhere((s) => s.properties.button == true);
-      expect(
-        semantics.properties.enabled,
-        isFalse,
-        reason: 'ders yokken düğme erişilebilirlik ağacında da kapalı olmalı',
-      );
-
-      final lessonsLabel = find.text('Dersler');
-      await tester.ensureVisible(lessonsLabel);
-      await tester.pumpAndSettle();
-      expect(lessonsLabel.hitTestable(), findsOneWidget);
-      await tester.tap(lessonsLabel);
-      await tester.pumpAndSettle();
-
-      // Kapalı düğmeye dokunmak hiçbir sayfa açmamalı — hâlâ öğrenme
-      // ekranındayız.
-      expect(find.byType(LearningScreen), findsOneWidget);
+      for (final key in [
+        'learning-topic-practice',
+        'learning-topic-flashcards',
+      ]) {
+        final button = find.descendant(
+          of: find.byKey(ValueKey(key)),
+          matching: find.byType(OutlinedButton),
+        );
+        expect(
+          tester.widget<OutlinedButton>(button).onPressed,
+          isNull,
+          reason: '$key ders yokken kapalı olmalı',
+        );
+        await tester.ensureVisible(button);
+        await tester.pumpAndSettle();
+        await tester.tap(button, warnIfMissed: false);
+        await tester.pumpAndSettle();
+        expect(find.byType(LearningScreen), findsOneWidget, reason: key);
+      }
     },
   );
+
+  // 2026-09-27: kelime kartları her zaman konunun İLK dersini açıyordu;
+  // ikinci derse gelmiş biri kartlarda hep "Selamlaşma"yı görüyordu.
+  // Kusur sessizdi: kartlar açılıyordu, yalnız yanlış dersle.
+  testWidgets('kelime kartları sıradaki dersi açar, ilk dersi değil', (
+    tester,
+  ) async {
+    final repository = MockZanKurdRepository();
+    await repository.markLessonCompleted('everyday_1');
+    await tester.pumpWidget(wrap(LearningScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    final flashcards = find.descendant(
+      of: find.byKey(const ValueKey('learning-topic-flashcards')),
+      matching: find.byType(OutlinedButton),
+    );
+    await tester.ensureVisible(flashcards);
+    await tester.pumpAndSettle();
+    await tester.tap(flashcards);
+    await tester.pumpAndSettle();
+
+    final detail = tester.widget<LessonDetailScreen>(
+      find.byType(LessonDetailScreen),
+    );
+    expect(detail.lesson.id, 'everyday_2');
+    expect(detail.initialFlashcardMode, isTrue);
+  });
 
   testWidgets('öğrenme yolu sade işaretleyicilerle kilit durumunu korur', (
     tester,
