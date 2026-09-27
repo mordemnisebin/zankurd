@@ -32,5 +32,7 @@ gövdesine niçinini koy.
 
 `flutter test tool/screenshots/screen_tour_test.dart` bütün ana ekranları
 `docs/screenshots/tour/` altına basar — açık/karanlık tema, Türkçe/Kurmancî
-ve boş durumlar dahil. Emoji ve `CustomPainter` metni test koşucusunda kutu
+ve boş durumlar dahil. `ZANKURD_SCREEN_TOUR_OUT_DIR` çıktıyı başka klasöre
+yönlendirir; `ZANKURD_SCREEN_TOUR_HEIGHT=1800` kaydırılan bir ekranın
+tamamını tek karede basar. Emoji ve `CustomPainter` metni test koşucusunda kutu
 çıkar; o ikisi simülatörden doğrulanır.

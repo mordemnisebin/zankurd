@@ -5,9 +5,12 @@
 ZanKurd, Kurmancî öncelikli bilgi yarışması ve öğrenme uygulamasıdır.
 Flutter, Supabase, Firebase ve RevenueCat ile çalışır.
 
-**Altın yol:** Öğren (günlük görev) → solo quiz → isteğe 1v1. Hikâye,
-arkadaşlar, günlük çark, yerleştirme ve turnuva ikinci katmandadır
-(ders yolu, Liderlik, Mağaza, Ayarlar, Yarış → Daha fazla).
+**Altın yol:** Öğren sekmesi (günün dersi) → solo quiz. Ana ekrandaki iki
+kapı öğrenme alanına (Kurmancî öğren) ve Yarış'a (hızlı düello, davet
+bağlantılı arkadaş odası) açılır. Hikâye, arkadaşlar, günlük çark ve
+yerleştirme ikinci katmandadır (Kurmancî öğren ekranı, Liderlik, Mağaza,
+Ayarlar). Turnuva ve haftalık lig `lib/src/config/feature_flags.dart` ile
+kapalıdır; kitle büyüyünce açılır.
 
 Kabuk sekmeleri: Öğren, Yarış, Liderlik, Profil.
 
@@ -92,8 +95,11 @@ graph TB
 
 ### 1. UI Katmanı (`lib/src/screens/`)
 - **LearnHomeScreen** — Öğren sekmesi kökü; `HomeScreen`i sarmalar (kategori
-  gezinmesi). İçerik `HomeScreen`dedir: günlük görev, ders yolu, konu seçimi
-- **PlayHubScreen** — 1v1 (birincil), oda, günlük etkinlik; turnuva ikinci katman
+  gezinmesi). İçerik `HomeScreen`dedir: günün dersi (tek birincil eylem),
+  ilk oturumda "3 adımda ZanKurd", iki kapı (Kurmancî öğren / Arkadaşınla
+  yarış) ve konu ızgarası (`screens/home/home_sections.dart`)
+- **PlayHubScreen** — hızlı düello (birincil), arkadaş odası (davet
+  bağlantısı), günlük etkinlik; turnuva bayrakla kapalı (`kTournamentEnabled`)
 - **QuizScreen** — Soru-cevap, zamanlayıcı, joker
 - **ProfileScreen** — İstatistik, rozet, XP, hesap
 - **LeaderboardScreen** — Anonim lider tablosu

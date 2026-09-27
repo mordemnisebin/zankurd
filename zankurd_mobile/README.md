@@ -7,7 +7,7 @@ Eski Vite prototipi `../docs/archive/web_prototype` altındadır; Play paketi bu
 ## Ürün Kapsamı
 
 - Misafir/anonim giriş ve profil adı akışı
-- Ana yol: günlük görev ve solo quiz; 1v1 isteğe bağlı
+- Ana yol: günün dersi ve solo quiz; davet bağlantılı arkadaş odası ve 1v1
 - Kurmanci/Türkçe arayüz geçişi (anahtar tabanlı kayıt: `lib/src/l10n/strings.dart`)
 - Aydınlık/Karanlık tema geçişi
 - Kategori ve seviye bazlı quiz
@@ -26,8 +26,10 @@ Eski Vite prototipi `../docs/archive/web_prototype` altındadır; Play paketi bu
 - Firebase Crashlytics ile çökme raporlama
 - Çevrimdışı kuyruk quiz ödülünü taşır; XP sahte eşitlemesi yok
 
-Hikâye (Öğren → ders yolu), arkadaşlar (Liderlik), günlük çark (Mağaza),
-yerleştirme (Ayarlar) ve turnuva (Yarış → Daha fazla) ikinci katmandadır.
+Hikâye (Öğren → Kurmancî öğren), arkadaşlar (Liderlik), günlük çark (Mağaza)
+ve yerleştirme (Ayarlar) ikinci katmandadır. Turnuva ve haftalık lig
+`lib/src/config/feature_flags.dart` ile kapalıdır; Paradigma ve Siyaset
+kategorileri `lib/src/config/category_visibility.dart` ile gizlidir.
 
 ## Mimari
 
