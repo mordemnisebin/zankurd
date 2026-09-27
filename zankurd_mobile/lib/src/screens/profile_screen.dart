@@ -26,6 +26,7 @@ import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/roj_mascot.dart';
 import '../widgets/app_state.dart';
 import '../widgets/arena_kit.dart';
 import '../widgets/loading_overlay.dart';
@@ -357,19 +358,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // şey olup olmadığına bakmalı; karolar zaten sunucu metriği
               // yokken "—" gösteriyor.
               if (_stats == null && _answeredTotal == 0)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                // Boş durum yalnız gri bir cümle ve bir düğmeydi; profilin
+                // en boş anı da en renksiz anıydı (2026-09-28). Zana burada
+                // maskotun belgelediği "boş durum" hâliyle (düşünceli)
+                // karşılar; semantik ağaca düğüm eklemez.
+                Row(
                   children: [
-                    Text(
-                      context.t(K.noOnlineHistory),
-                      style: TextStyle(color: AppTheme.textMutedColor(context)),
+                    const ExcludeSemantics(
+                      child: RojMascot(size: 64, mood: RojMood.thinking),
                     ),
-                    const SizedBox(height: 12),
-                    FilledButton.icon(
-                      key: const ValueKey('profile-stats-start-cta'),
-                      onPressed: _startQuickRace,
-                      icon: const Icon(AppIcons.bolt, size: 18),
-                      label: Text(context.t(K.startToday)),
+                    const SizedBox(width: AppSpacing.md),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            context.t(K.noOnlineHistory),
+                            style: TextStyle(
+                              color: AppTheme.textMutedColor(context),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          FilledButton.icon(
+                            key: const ValueKey('profile-stats-start-cta'),
+                            onPressed: _startQuickRace,
+                            icon: const Icon(AppIcons.bolt, size: 18),
+                            label: Text(context.t(K.startToday)),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 )
