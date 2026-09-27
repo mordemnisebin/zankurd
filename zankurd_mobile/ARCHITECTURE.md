@@ -99,7 +99,13 @@ graph TB
   ilk oturumda "3 adımda ZanKurd", iki kapı (Kurmancî öğren / Arkadaşınla
   yarış) ve konu ızgarası (`screens/home/home_sections.dart`)
 - **PlayHubScreen** — hızlı düello (birincil), arkadaş odası (davet
-  bağlantısı), günlük etkinlik; turnuva bayrakla kapalı (`kTournamentEnabled`)
+  bağlantısı), günlük etkinlik; turnuva bayrakla kapalı (`kTournamentEnabled`);
+  sırayla düello kartı ve "Düellolarım" kutusu bayrakla kapalı (`kAsyncDuelEnabled`)
+- **Sırayla düello** — `screens/async_duel/`: `AsyncDuelPlayScreen` (7 soru,
+  20 sn, joker yok; çıkışta onaylanmamış sorular gönderilir),
+  `AsyncDuelResultScreen` (tamamlandı/bekleniyor/süresi doldu/yarım kaldı;
+  görüldü + XP talebi), `AsyncDuelInboxSection`/`AsyncDuelListScreen` (kabuğun
+  Yarış tazelemesiyle yenilenir)
 - **QuizScreen** — Soru-cevap, zamanlayıcı, joker
 - **ProfileScreen** — İstatistik, rozet, XP, hesap
 - **LeaderboardScreen** — Anonim lider tablosu
@@ -135,6 +141,14 @@ graph TB
   puanı `award_xp_delta` ile `profiles.xp`e yazılır
   (`supabase/2026-09-02_award_xp_delta_write_restore.sql`). 2026-07-29
   göçü tarihsel no-op olarak durur; yeniden çalıştırılmaz.
+- **Sırayla düello verisi** — `models/async_duel.dart`;
+  `ZanKurdRepository.startAsyncDuel/answerAsyncDuel/loadMyAsyncDuels/markAsyncDuelSeen/claimAsyncDuelXp`.
+  Kazanan, XP ve 48 saat kuralı sunucuda (`supabase/2026-09-28_async_duels.sql`,
+  henüz UYGULANMADI; bkz. `supabase/applied.md`)
+- **Davet bağlantısı** — `utils/join_deep_link.dart`: `zankurd.com/join/KOD`;
+  soğuk açılış `onGenerateInitialRoutes`, sıcak açılış `JoinDeepLinkScope`
+  (`didPushRouteInformation`). iOS associated domains + Android App Links;
+  web tarafı `web/.well-known/` (bkz. `docs/HOSTINGER_DEPLOY_CHECKLIST.md`)
 
 ### 5. Yerel Depolar (`lib/src/data/`)
 - **AchievementStore** — Rozet ilerlemesi ve kilit açma durumu

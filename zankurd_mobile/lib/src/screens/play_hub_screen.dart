@@ -321,11 +321,13 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 ModeCard(
                   key: const ValueKey('play-hub-async-duel'),
                   compact: true,
+                  // Ekranın tek birincil eylemi hızlı düello; bu kart onun
+                  // altında ikinci bir koyu blok olunca iki "ana" eylem
+                  // yarışıyordu. İkincil kartta renk yalnız amblemde kalır;
+                  // `brand` hero'ya ayrılmıştır (bkz.
+                  // `test/brand_accent_guard_test.dart`).
+                  emphasis: ModeCardEmphasis.secondary,
                   icon: AppIcons.hourglass,
-                  // `brand` (turuncu) ekranın TEK hero kimliğine ayrılmıştır
-                  // (`_QuickDuelHero`); bu ikinci düello yolu farklı bir
-                  // işlev rolü taşır (eş zamanlı olmayan 1v1), o yüzden
-                  // ayrı bir kimlik rengi (bkz. `test/brand_accent_guard_test.dart`).
                   accent: AppTheme.playCyan,
                   title: context.t(K.asyncDuel),
                   subtitle: locked

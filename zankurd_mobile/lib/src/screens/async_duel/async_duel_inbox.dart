@@ -10,7 +10,6 @@ import '../../theme/app_icons.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/app_route.dart';
 import '../../widgets/app_panel.dart';
-import '../../widgets/screen_identity_header.dart';
 import '../../widgets/zk_back_button.dart';
 import 'async_duel_result_screen.dart';
 
@@ -119,11 +118,27 @@ class _AsyncDuelInboxSectionState extends State<AsyncDuelInboxSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ScreenSectionHeading(
-            title: context.t(K.asyncDuelInbox),
-            trailing: unreadCount > 0
-                ? _UnreadCountBadge(count: unreadCount)
-                : null,
+          // Sayı rozeti başlığın hemen yanında: `ScreenSectionHeading`in
+          // `trailing`i dar ekranda (390 pt'de bile, kenar boşluğu düşünce)
+          // alt satıra iniyor ve küçük bir rozet sahipsiz görünüyordu.
+          Semantics(
+            header: true,
+            child: Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    context.t(K.asyncDuelInbox),
+                    style: AppTypography.heading2.copyWith(
+                      color: AppTheme.textPrimaryColor(context),
+                    ),
+                  ),
+                ),
+                if (unreadCount > 0) ...[
+                  const SizedBox(width: AppSpacing.xs),
+                  _UnreadCountBadge(count: unreadCount),
+                ],
+              ],
+            ),
           ),
           const SizedBox(height: AppSpacing.xs),
           if (items == null && !_failed)
@@ -225,8 +240,18 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final view = AsyncDuelResultView.fromSummary(summary);
-    final opponentName = summary.opponentName ?? context.t(K.asyncDuelOpponent);
     final statusLabel = asyncDuelStatusLabel(context, view);
+    // Rakibi henüz belli olmayan satırda başlık durumun kendisidir
+    // ("Rakip bekleniyor"); "Rakip / Rakip bekleniyor" aynı sözü iki kez
+    // söylüyordu. Alt satır o zaman oyuncunun kendi skorunu verir.
+    final knownOpponent = summary.opponentName;
+    final myCorrect = view.myCorrect;
+    final title = knownOpponent ?? statusLabel;
+    final subtitle = knownOpponent != null
+        ? statusLabel
+        : (myCorrect != null
+              ? '${context.t(K.you)} $myCorrect/${view.total}'
+              : null);
     // Rozet yalnız TAMAMLANMIŞ ve henüz görülmemiş satırda anlamlıdır —
     // "bekleniyor/süresi doldu/yarım kaldı" satırında oyuncunun görmesi
     // gereken yeni bir sonuç yok.
@@ -245,7 +270,7 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: AppSpacing.xs),
       child: Semantics(
         button: true,
-        label: '$opponentName. $statusLabel',
+        label: subtitle == null ? title : '$title. $subtitle',
         onTap: onTap,
         excludeSemantics: true,
         child: AppPanel(
@@ -266,7 +291,7 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          opponentName,
+                          title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.bodyLarge.copyWith(
@@ -274,15 +299,17 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
                             color: AppTheme.textPrimaryColor(context),
                           ),
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          statusLabel,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.caption.copyWith(
-                            color: AppTheme.textSubColor(context),
+                        if (subtitle != null) ...[
+                          const SizedBox(height: 2),
+                          Text(
+                            subtitle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.caption.copyWith(
+                              color: AppTheme.textSubColor(context),
+                            ),
                           ),
-                        ),
+                        ],
                       ],
                     ),
                   ),

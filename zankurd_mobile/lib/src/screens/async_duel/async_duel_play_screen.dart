@@ -447,72 +447,66 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
             ),
           ],
         ),
+        // Tek kaydırılabilir gövde: soru metni + şıklar birlikte kayar. Eski
+        // Column + Expanded(ListView) düzeninde uzun bir soru %200 yazıda
+        // şık listesine yer bırakmıyor, ekran alttan taşıyordu.
         body: SafeArea(
-          child: Padding(
+          child: ListView(
             padding: const EdgeInsets.all(AppSpacing.page),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+            children: [
+              Text(
+                duel.role == AsyncDuelRole.opponent
+                    ? '${context.t(K.you)} · '
+                          '${duel.opponentName ?? context.t(K.asyncDuelOpponent)}'
+                    : context.t(K.asyncDuelSub),
+                style: AppTypography.caption.copyWith(
+                  color: AppTheme.textSubColor(context),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                question.promptText,
+                style: AppTypography.heading2.copyWith(
+                  color: AppTheme.textPrimaryColor(context),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.md),
+              if (_phase == _Phase.error) ...[
                 Text(
-                  duel.role == AsyncDuelRole.opponent
-                      ? '${context.t(K.you)} · '
-                            '${duel.opponentName ?? context.t(K.asyncDuelOpponent)}'
-                      : context.t(K.asyncDuelSub),
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textSubColor(context),
+                  context.t(K.asyncDuelAnswerFailed),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppTheme.wrong,
                   ),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                FilledButton(
+                  onPressed: () => unawaited(_retryPendingAnswer()),
+                  child: Text(context.t(K.retry)),
                 ),
                 const SizedBox(height: AppSpacing.md),
-                Text(
-                  question.promptText,
-                  style: AppTypography.heading2.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                if (_phase == _Phase.error) ...[
-                  Text(
-                    context.t(K.asyncDuelAnswerFailed),
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: AppTheme.wrong,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.xs),
-                  FilledButton(
-                    onPressed: () => unawaited(_retryPendingAnswer()),
-                    child: Text(context.t(K.retry)),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                ],
-                Expanded(
-                  child: ListView(
-                    children: [
-                      for (final (i, answer) in answers.indexed)
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                          child: QuizOptionTile(
-                            key: ValueKey('async-duel-option-$i'),
-                            index: i,
-                            answer: answer,
-                            selected: _selectedAnswer == answer,
-                            correct:
-                                _revealedAnswerText != null &&
-                                answer == _revealedAnswerText,
-                            disabled: disabled,
-                            suspense: suspenseVisual,
-                            optionCount: answers.length,
-                            dimmed:
-                                _revealedAnswerText != null &&
-                                answer != _revealedAnswerText &&
-                                _selectedAnswer != answer,
-                            onTap: () => _handleAnswerTap(answer),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
               ],
-            ),
+              for (final (i, answer) in answers.indexed)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                  child: QuizOptionTile(
+                    key: ValueKey('async-duel-option-$i'),
+                    index: i,
+                    answer: answer,
+                    selected: _selectedAnswer == answer,
+                    correct:
+                        _revealedAnswerText != null &&
+                        answer == _revealedAnswerText,
+                    disabled: disabled,
+                    suspense: suspenseVisual,
+                    optionCount: answers.length,
+                    dimmed:
+                        _revealedAnswerText != null &&
+                        answer != _revealedAnswerText &&
+                        _selectedAnswer != answer,
+                    onTap: () => _handleAnswerTap(answer),
+                  ),
+                ),
+            ],
           ),
         ),
       ),

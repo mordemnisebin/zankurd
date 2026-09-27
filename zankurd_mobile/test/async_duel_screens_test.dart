@@ -561,4 +561,41 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Rakip bekleniyor'), findsNWidgets(2));
   });
+
+  testWidgets('eşit doğruda süreyle kazanılan sonuç nedenini söyler', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    AsyncDuelSummary summary({required int theirs}) => AsyncDuelSummary(
+      duelId: 'd-$theirs',
+      status: AsyncDuelStatus.completed,
+      role: AsyncDuelRole.opponent,
+      opponentName: 'Rojda',
+      myCorrect: 3,
+      opponentCorrect: theirs,
+      outcome: AsyncDuelOutcome.win,
+      createdAt: DateTime.utc(2026, 9, 27),
+      seen: true,
+    );
+
+    for (final (theirs, expected) in [(3, findsOneWidget), (1, findsNothing)]) {
+      await tester.pumpWidget(
+        testShell(
+          child: AsyncDuelResultScreen(
+            key: ValueKey(theirs),
+            repository: freshMockRepository(),
+            view: AsyncDuelResultView.fromSummary(summary(theirs: theirs)),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('async-duel-result-tiebreak')),
+        expected,
+        reason: 'rakip $theirs doğru',
+      );
+    }
+  });
 }

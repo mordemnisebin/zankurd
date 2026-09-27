@@ -11,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
+import 'package:zankurd_mobile/src/models/async_duel.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
@@ -19,6 +20,8 @@ import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/models/contest.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/learn_home_screen.dart';
@@ -1380,6 +1383,213 @@ void main() {
     await t.tap(reveal);
     await t.pump();
     await _shoot(t, '96_lesson_recall');
+  }, tags: ['preview']);
+
+  // ── Sırayla düello ekranları ────────────────────────────────────────
+  testWidgets('97 oyun merkezi — sırayla düello', (t) async {
+    final repo = MockZanKurdRepository();
+    await t.runAsync(() async {
+      // "Rakip bekleniyor" satırı:
+      final a = await repo.startAsyncDuel();
+      for (var i = 0; i < a.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: a.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 1000,
+        );
+      }
+      // "Sonuç hazır" satırı (tamamlanmış, görülmemiş):
+      repo.addPendingAsyncDuelForTesting(
+        opponentName: 'Rojda',
+        opponentCorrect: 3,
+        opponentMs: 60000,
+      );
+      final b = await repo.startAsyncDuel();
+      for (var i = 0; i < b.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: b.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 4000,
+        );
+      }
+    });
+    await _pump(t, PlayHubScreen(repository: repo, asyncDuelEnabled: true));
+    // Kutu tembel kurulan listenin altında: kurulmamış olabilir, bu yüzden
+    // koşulsuz kaydırılır (scrollUntilVisible kurulmayı da bekler).
+    await t.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-async-duel-inbox')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.pump(const Duration(milliseconds: 300));
+    await _shoot(t, '97_play_hub_async_duel');
+  }, tags: ['preview']);
+
+  testWidgets('98 oyun merkezi — sırayla düello (karanlık, Kurmancî)', (
+    t,
+  ) async {
+    final repo = MockZanKurdRepository();
+    await t.runAsync(() async {
+      final a = await repo.startAsyncDuel();
+      for (var i = 0; i < a.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: a.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 1000,
+        );
+      }
+      repo.addPendingAsyncDuelForTesting(
+        opponentName: 'Rojda',
+        opponentCorrect: 3,
+        opponentMs: 60000,
+      );
+      final b = await repo.startAsyncDuel();
+      for (var i = 0; i < b.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: b.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 4000,
+        );
+      }
+    });
+    await _pump(
+      t,
+      PlayHubScreen(repository: repo, asyncDuelEnabled: true),
+      dark: true,
+      ku: true,
+    );
+    // Kutu tembel kurulan listenin altında: kurulmamış olabilir, bu yüzden
+    // koşulsuz kaydırılır (scrollUntilVisible kurulmayı da bekler).
+    await t.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-async-duel-inbox')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.pump(const Duration(milliseconds: 300));
+    await _shoot(t, '98_play_hub_async_duel_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('99 sırayla düello — soru', (t) async {
+    final repo = MockZanKurdRepository();
+    await t.runAsync(() async {
+      await repo.startAsyncDuel();
+    });
+    await _pump(t, AsyncDuelPlayScreen(repository: repo));
+    await _shoot(t, '99_async_duel_question');
+  }, tags: ['preview']);
+
+  testWidgets('100 sırayla düello — açıklandı', (t) async {
+    final repo = MockZanKurdRepository();
+    await t.runAsync(() async {
+      await repo.startAsyncDuel();
+    });
+    await _pump(t, AsyncDuelPlayScreen(repository: repo));
+    await t.tap(find.byKey(const ValueKey('async-duel-option-0')));
+    await t.pump();
+    // Açıklama duraklaması 1200 ms; kare onun İÇİNDE çekilir, yoksa ekran
+    // ikinci soruya geçmiş olur ve renkler görünmez.
+    await t.pump(const Duration(milliseconds: 300));
+    await _shoot(t, '100_async_duel_revealed');
+    // Açıklama duraklamasının zamanlayıcısı kapanmadan test bitmesin.
+    await t.pump(const Duration(seconds: 2));
+  }, tags: ['preview']);
+
+  testWidgets('101 sırayla düello — sonuç (galibiyet)', (t) async {
+    final repo = MockZanKurdRepository();
+    late AsyncDuelSummary completedSummary;
+    await t.runAsync(() async {
+      // Rakip 0 doğru ve çok uzun sürede bitirmiş: eşit doğruda bile kısa
+      // süre kazanır, kare her koşuda galibiyettir.
+      repo.addPendingAsyncDuelForTesting(
+        opponentName: 'Rojda',
+        opponentCorrect: 0,
+        opponentMs: 999999,
+      );
+      final a = await repo.startAsyncDuel();
+      for (var i = 0; i < a.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: a.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 1000,
+        );
+      }
+      final summaries = await repo.loadMyAsyncDuels();
+      completedSummary = summaries.firstWhere((s) => s.outcome != null);
+    });
+    await _pump(
+      t,
+      AsyncDuelResultScreen(
+        repository: repo,
+        view: AsyncDuelResultView.fromSummary(completedSummary),
+      ),
+    );
+    await _shoot(t, '101_async_duel_result_win');
+  }, tags: ['preview']);
+
+  testWidgets('102 sırayla düello — sonuç (rakip bekleniyor)', (t) async {
+    final repo = MockZanKurdRepository();
+    late AsyncDuelSummary waitingSummary;
+    await t.runAsync(() async {
+      final a = await repo.startAsyncDuel();
+      for (var i = 0; i < a.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: a.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 1000,
+        );
+      }
+      final summaries = await repo.loadMyAsyncDuels();
+      waitingSummary = summaries.first;
+    });
+    await _pump(
+      t,
+      AsyncDuelResultScreen(
+        repository: repo,
+        view: AsyncDuelResultView.fromSummary(waitingSummary),
+      ),
+    );
+    await _shoot(t, '102_async_duel_result_waiting');
+  }, tags: ['preview']);
+
+  testWidgets('103 sırayla düello — sonuç (karanlık, Kurmancî)', (t) async {
+    final repo = MockZanKurdRepository();
+    late AsyncDuelSummary completedSummary;
+    await t.runAsync(() async {
+      // Rakip 0 doğru ve çok uzun sürede bitirmiş: eşit doğruda bile kısa
+      // süre kazanır, kare her koşuda galibiyettir.
+      repo.addPendingAsyncDuelForTesting(
+        opponentName: 'Rojda',
+        opponentCorrect: 0,
+        opponentMs: 999999,
+      );
+      final a = await repo.startAsyncDuel();
+      for (var i = 0; i < a.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: a.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 1000,
+        );
+      }
+      final summaries = await repo.loadMyAsyncDuels();
+      completedSummary = summaries.firstWhere((s) => s.outcome != null);
+    });
+    await _pump(
+      t,
+      AsyncDuelResultScreen(
+        repository: repo,
+        view: AsyncDuelResultView.fromSummary(completedSummary),
+      ),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '103_async_duel_result_win_dark_ku');
   }, tags: ['preview']);
 }
 

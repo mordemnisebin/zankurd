@@ -2939,6 +2939,12 @@ class Tr {
     K.asyncDuelKeepPlaying: {'ku': 'Bidomîne', 'tr': 'Devam et'},
     K.asyncDuelNew: {'ku': 'Pêşbirkeke nû', 'tr': 'Yeni düello'},
     K.asyncDuelXp: {'ku': '+{xp} XP', 'tr': '+{xp} XP'},
+    // Doğrular eşitken kazananı toplam süre belirler; "Kazandın · 3–3"
+    // açıklamasız kalınca oyuncu nedenini anlamıyordu.
+    K.asyncDuelTieBreak: {
+      'ku': 'Bersivên rast wekhev in; yê zûtir bersivand bi ser ket.',
+      'tr': 'Doğru sayısı eşit; daha hızlı cevaplayan kazandı.',
+    },
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -4253,4 +4259,7 @@ class K {
 
   /// Sonuç ekranındaki kazanılan XP rozeti; `{xp}` yer tutuculudur.
   static const asyncDuelXp = 'duel.async.xp';
+
+  /// Eşit doğruda süreyle belirlenen sonucun açıklaması.
+  static const asyncDuelTieBreak = 'duel.async.tieBreak';
 }

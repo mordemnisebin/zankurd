@@ -3,7 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
+import 'package:zankurd_mobile/src/models/async_duel.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_inbox.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
@@ -404,5 +408,92 @@ void main() {
         ),
       ),
     );
+  });
+
+  testWidgets('oyun merkezi — sırayla düello (%200 yazı)', (t) async {
+    final repo = MockZanKurdRepository();
+    await t.runAsync(() async {
+      final a = await repo.startAsyncDuel();
+      for (var i = 0; i < a.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: a.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 1000,
+        );
+      }
+      repo.addPendingAsyncDuelForTesting(
+        opponentName: 'Rojda',
+        opponentCorrect: 3,
+        opponentMs: 60000,
+      );
+      final b = await repo.startAsyncDuel();
+      for (var i = 0; i < b.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: b.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 4000,
+        );
+      }
+    });
+    await expectNoOverflow(
+      t,
+      PlayHubScreen(repository: repo, asyncDuelEnabled: true),
+    );
+  });
+
+  testWidgets('sırayla düello — soru (%200 yazı)', (t) async {
+    final repo = MockZanKurdRepository();
+    await t.runAsync(() async {
+      await repo.startAsyncDuel();
+    });
+    await expectNoOverflow(t, AsyncDuelPlayScreen(repository: repo));
+  });
+
+  testWidgets('sırayla düello — sonuç (%200 yazı)', (t) async {
+    final repo = MockZanKurdRepository();
+    late AsyncDuelSummary completedSummary;
+    await t.runAsync(() async {
+      repo.addPendingAsyncDuelForTesting(
+        opponentName: 'Rojda',
+        opponentCorrect: 0,
+        opponentMs: 999999,
+      );
+      final a = await repo.startAsyncDuel();
+      for (var i = 0; i < a.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: a.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 1000,
+        );
+      }
+      final summaries = await repo.loadMyAsyncDuels();
+      completedSummary = summaries.firstWhere((s) => s.outcome != null);
+    });
+    await expectNoOverflow(
+      t,
+      AsyncDuelResultScreen(
+        repository: repo,
+        view: AsyncDuelResultView.fromSummary(completedSummary),
+      ),
+    );
+  });
+
+  testWidgets('sırayla düello listesi (%200 yazı)', (t) async {
+    final repo = MockZanKurdRepository();
+    await t.runAsync(() async {
+      final a = await repo.startAsyncDuel();
+      for (var i = 0; i < a.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: a.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 1000,
+        );
+      }
+    });
+    await expectNoOverflow(t, AsyncDuelListScreen(repository: repo));
   });
 }

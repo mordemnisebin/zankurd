@@ -245,38 +245,50 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
     return Scaffold(
       key: const ValueKey('async-duel-result'),
       appBar: zkAppBar(context, title: Text(context.t(K.asyncDuel))),
+      // İçerik kısa ekranda ortada, düğmeler altta durur; %200 yazıda içerik
+      // uzarsa sayfa kayar. Düğmeler yan yana sığmazsa alt alta iner (Row
+      // %200 yazıda sağdan taşıyordu).
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.page),
-          child: Column(
-            children: [
-              Expanded(child: Center(child: content)),
-              const SizedBox(height: AppSpacing.md),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  OutlinedButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(context.t(K.close)),
-                  ),
-                  if (canStartNew) ...[
-                    const SizedBox(width: AppSpacing.sm),
-                    FilledButton(
-                      key: const ValueKey('async-duel-result-new'),
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          AppRoute.to(
-                            AsyncDuelPlayScreen(repository: widget.repository),
+        child: CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.all(AppSpacing.page),
+              sliver: SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  children: [
+                    Expanded(child: Center(child: content)),
+                    const SizedBox(height: AppSpacing.md),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: AppSpacing.sm,
+                      runSpacing: AppSpacing.sm,
+                      children: [
+                        OutlinedButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: Text(context.t(K.close)),
+                        ),
+                        if (canStartNew)
+                          FilledButton(
+                            key: const ValueKey('async-duel-result-new'),
+                            onPressed: () {
+                              Navigator.of(context).pushReplacement(
+                                AppRoute.to(
+                                  AsyncDuelPlayScreen(
+                                    repository: widget.repository,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Text(context.t(K.asyncDuelNew)),
                           ),
-                        );
-                      },
-                      child: Text(context.t(K.asyncDuelNew)),
+                      ],
                     ),
                   ],
-                ],
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -325,6 +337,19 @@ class _CompletedBody extends StatelessWidget {
             color: AppTheme.textSubColor(context),
           ),
         ),
+        if (outcome != AsyncDuelOutcome.draw &&
+            view.myCorrect != null &&
+            view.myCorrect == view.opponentCorrect) ...[
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            context.t(K.asyncDuelTieBreak),
+            key: const ValueKey('async-duel-result-tiebreak'),
+            textAlign: TextAlign.center,
+            style: AppTypography.caption.copyWith(
+              color: AppTheme.textSubColor(context),
+            ),
+          ),
+        ],
         const SizedBox(height: AppSpacing.md),
         Text(
           context.t(K.asyncDuelXp, {'xp': '$xp'}),
