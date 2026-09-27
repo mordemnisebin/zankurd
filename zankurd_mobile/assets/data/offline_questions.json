@@ -1425,10 +1425,10 @@
     "difficulty": 3,
     "promptTr": "\"Hawar\" dergisini kim çıkardı?",
     "answersTr": [
-      "Rojnameya Nû",
-      "karşılıklı konuşma",
+      "Kamûran Alî Bedirxan",
       "Celadet Alî Bedirxan",
-      "Ehmedê Xanî"
+      "Mela Ehmedê Xasî",
+      "Osman Sebrî"
     ],
     "correctAnswerTr": "Celadet Alî Bedirxan"
   },
@@ -1471,10 +1471,10 @@
     "difficulty": 3,
     "promptTr": "Latin temelli Kurmancî alfabesini kim hazırladı?",
     "answersTr": [
-      "teyran (kuşlar)",
-      "Melayê Cizîrî",
+      "Kamûran Alî Bedirxan",
       "Celadet Alî Bedirxan",
-      "karşılıklı konuşma"
+      "Mela Ehmedê Xasî",
+      "Qedrîcan"
     ],
     "correctAnswerTr": "Celadet Alî Bedirxan"
   },
@@ -9058,12 +9058,12 @@
     "explanationTr": "\"Ronahî dergisi\": Şam'da Latin alfabesiyle çıkarılan edebi dergi.",
     "promptTr": "\"Ronahî\" dergisi neydi?",
     "answersTr": [
-      "klasik Kürt edebiyatında önemli yer tutan şair",
-      "klasik Kürt şiirinin önemli adları olması",
-      "Şam'da Latin alfabesiyle çıkan edebiyat dergisi",
-      "birçok yazarın ülke dışında eser vermesi"
+      "Kahire'de çıkan ilk Kürtçe gazete",
+      "Şam'da Latin alfabesiyle çıkan resimli edebiyat dergisi",
+      "Erivan'da Kiril alfabesiyle basılan dergi",
+      "Bağdat'ta Arapça çıkan bilimsel dergi"
     ],
-    "correctAnswerTr": "Şam'da Latin alfabesiyle çıkan edebiyat dergisi"
+    "correctAnswerTr": "Şam'da Latin alfabesiyle çıkan resimli edebiyat dergisi"
   },
   {
     "id": "offline_9215",
@@ -9257,12 +9257,12 @@
     "difficulty": 1,
     "promptTr": "Edebiyat açısından \"Mem û Zîn\" için doğru ifade hangisidir?",
     "answersTr": [
-      "Kürt klasik edebiyatının en büyük aşk destanı",
-      "Rojhilatê Kurdistan'ın ünlü modern şair ve yazarı",
-      "klasik Kürt şiirinin önemli isimleri olmaları",
-      "Kürt edebiyatının en eski klasik rubai şairi"
+      "Melayê Cizîrî'nin tasavvufi şiirlerinin derlemesi",
+      "Ehmedê Xanî'nin yazdığı klasik aşk mesnevisi",
+      "Ermenistan'da basılan modern Kürtçe roman",
+      "çocuklar için manzum Kürtçe-Arapça sözlük"
     ],
-    "correctAnswerTr": "Kürt klasik edebiyatının en büyük aşk destanı",
+    "correctAnswerTr": "Ehmedê Xanî'nin yazdığı klasik aşk mesnevisi",
     "explanationTr": "\"Mem û Zîn\": Ehmedê Xanî'nin 1695'te yazdığı klasik aşk mesnevisi."
   },
   {
@@ -9358,10 +9358,10 @@
     "explanationTr": "\"Riya Taza gazetesi\": Erivan'da uzun yıllar basılan Kürtçe gazete.",
     "promptTr": "\"Riya Taza\" gazetesi nasıl tanımlanır?",
     "answersTr": [
-      "Şivanê Kurmanca adlı ilk Kürtçe romanın yazarı",
-      "Mem û Zîn",
-      "Hawar dergisini çıkaran edebi ekolün kurucusu",
-      "Erivan'da yıllarca basılan Kürtçe gazete"
+      "İstanbul'da Osmanlıca çıkan Kürtçe gazete",
+      "Şam'da Latin alfabesiyle çıkan edebiyat dergisi",
+      "Erivan'da yıllarca basılan Kürtçe gazete",
+      "Bağdat'ta devlet tarafından yayımlanan gazete"
     ],
     "correctAnswerTr": "Erivan'da yıllarca basılan Kürtçe gazete"
   },
@@ -9531,10 +9531,10 @@
     "explanationTr": "\"Ferhad û Şîrîn\": Kürt sözlü geleneğinde de anlatılan klasik aşk hikayesi.",
     "promptTr": "\"Ferhad û Şîrîn\" edebiyat konusunda neyi ifade eder?",
     "answersTr": [
-      "Ehmedê Xanî'nin başlattığı edebi ve düşünsel ekol",
       "Kürt sözlü geleneğinde de anlatılan klasik aşk hikâyesi",
-      "Şerefname ve Mem û Zîn'i Soranîye çeviren yazar",
-      "Kürt edebiyatının en eski klasik şairlerinden biri"
+      "Kürt mirlikleri üzerine savaş destanı",
+      "sözlü gelenekten yazıya geçirilmiş bir atasözü derlemesi",
+      "Kurmancî'deki ilk tiyatro oyunu"
     ],
     "correctAnswerTr": "Kürt sözlü geleneğinde de anlatılan klasik aşk hikâyesi"
   },
@@ -9556,12 +9556,12 @@
     "explanationTr": "\"Nûbihara Biçukan\": Ehmedê Xanî tarafından yazılan ilk Kürtçe sözlük.",
     "promptTr": "Hangi seçenek \"Nûbihara Biçukan\" terimini doğru açıklar?",
     "answersTr": [
-      "Kürtçenin yazıda, yayında, eğitimde ve dijital üretimde görünürlüğünün artması",
-      "Ehmedê Xanî'nin başlattığı edebi ve düşünsel ekol",
-      "Ehmedê Xanî'nin yazdığı ilk Kürtçe sözlük",
-      "ilk Kürtçe gazete olan Kurdistan'ın yayımlanmasıyla ilgilidir"
+      "Ehmedê Xanî'nin klasik aşk mesnevisi",
+      "çocuklar için manzum Kürtçe-Arapça sözlük",
+      "Melayê Cizîrî'nin tasavvufi şiirlerinin derlemesi",
+      "Memê Alan üzerine halk destanı"
     ],
-    "correctAnswerTr": "Ehmedê Xanî'nin yazdığı ilk Kürtçe sözlük"
+    "correctAnswerTr": "çocuklar için manzum Kürtçe-Arapça sözlük"
   },
   {
     "id": "offline_9612",
@@ -10006,10 +10006,10 @@
     "explanationTr": "\"Dîwana Melayê Cizîrî\": mistik aşk ve felsefe içeren meşhur şiir divanı.",
     "promptTr": "Edebiyat açısından \"Dîwana Melayê Cizîrî\" için doğru ifade hangisidir?",
     "answersTr": [
-      "Colemêrg mîrliğinde yetişen klasik divan şairi",
-      "Rojhilatê Kürdistan'ın ünlü modern şair ve yazarı",
       "mistik aşk ve felsefe içeren ünlü şiir divanı",
-      "Şam'da Latin alfabesiyle çıkan edebiyat dergisi"
+      "Ehmedê Xanî'nin yazdığı aşk mesnevisi",
+      "Botan bölgesinin halk hikâyeleri derlemesi",
+      "çocuklar için manzum Kürtçe-Arapça sözlük"
     ],
     "correctAnswerTr": "mistik aşk ve felsefe içeren ünlü şiir divanı"
   },

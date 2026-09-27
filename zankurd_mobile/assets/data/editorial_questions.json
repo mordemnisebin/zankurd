@@ -1653,9 +1653,9 @@
     "promptTr": "Kürt edebiyatında \"dîwan\" ne anlama gelir?",
     "answersTr": [
       "Kafiyeli beyitlerle kurulan anlatı şiiri biçimi",
+      "Dört dizeli kısa şiir",
       "Bir şairin şiirlerinin derlemesi",
-      "Bir şairin tasavvufi şiirlerinden oluşan kitap",
-      "Kültür ve edebiyat dergileri"
+      "Atasözlerinin derlemesi"
     ],
     "correctAnswerTr": "Bir şairin şiirlerinin derlemesi"
   },
@@ -1776,10 +1776,10 @@
     },
     "promptTr": "Ehmedê Xanî'nin \"Nûbihara Biçûkan\" adlı eseri nedir?",
     "answersTr": [
+      "Mem û Zîn'in aşk mesnevisi",
       "çocuklar için manzum Kürtçe-Arapça sözlük",
-      "klasik eğitim ve şairlerin yetiştirilmesi",
-      "Kürt tiyatrosunun kurucu oyun yazarlarından biri",
-      "divan yazan ilk Kürt kadın tarihçi ve şair"
+      "tasavvufi şiirlerden oluşan bir divan",
+      "Memê Alan üzerine bir halk destanı"
     ],
     "correctAnswerTr": "çocuklar için manzum Kürtçe-Arapça sözlük"
   },
@@ -4092,10 +4092,10 @@
     },
     "promptTr": "Elî Herîrî, Kürt edebiyatında neyle tanınır?",
     "answersTr": [
-      "Dize sonlarındaki seslerin uyumu",
-      "Bir şairin şiirlerinden derleme",
-      "Öncü klasik şairlerden biri olması",
-      "Tasavvufi şiirlerden oluşan divanı"
+      "İlk Kürt romancısı olması",
+      "Hawar dergisinin kurucusu olması",
+      "Kurmancî dilbilgisi üzerine çalışan bir dilbilimci olması",
+      "Öncü klasik şairlerden biri olması"
     ],
     "correctAnswerTr": "Öncü klasik şairlerden biri olması"
   },
@@ -4124,10 +4124,10 @@
     },
     "promptTr": "\"Rewşenbîr\" ve Kürtçe edebiyat dergileri genel olarak hangi rolü oynadı?",
     "answersTr": [
-      "Bir şairin şiirlerinden derleme",
+      "Sözlü halk destanlarının derlenmesi",
+      "Klasik eserlerin Arapçaya çevrilmesi",
       "Kürtçe yazı dilinin geliştirilmesi",
-      "Doğa ve kuşlar üzerine şiirler yazması",
-      "Tasavvufi şiirlerden oluşan divanı"
+      "Okul sözlüklerinin hazırlanması"
     ],
     "correctAnswerTr": "Kürtçe yazı dilinin geliştirilmesi"
   },
@@ -6495,10 +6495,10 @@
     },
     "promptTr": "Kürt klasiklerinde \"mesnevî\" nedir?",
     "answersTr": [
-      "kuşların diliyle yazan ünlü Kürt şair",
+      "tek kafiyeli dört dizelik şiir",
+      "bir şairin şiirlerinin derlemesi",
       "kafiyeli beyitlerle kurulan öyküleyici şiir biçimi",
-      "Latin temelli Kürt alfabesinin yayılması",
-      "Kürtçe gramer kitapları yazan dilbilimci ve yazar"
+      "ölçüsüz ve kafiyesiz özgür şiir"
     ],
     "correctAnswerTr": "kafiyeli beyitlerle kurulan öyküleyici şiir biçimi"
   },
@@ -6587,10 +6587,10 @@
     },
     "promptTr": "\"Zembîlfiroş\" Kürt edebiyatında nedir?",
     "answersTr": [
-      "Tasavvufi şiirlerden oluşan divanı",
-      "Edebî gece toplantıları",
-      "Halk arasında bir aşk destanı",
-      "Mela Ehmedê Xasî"
+      "Mirlikler üzerine bir savaş destanı",
+      "Atasözlerinin bir derlemesi",
+      "Çocuklar için bir eğitim mesnevisi",
+      "Halk arasında bir aşk destanı"
     ],
     "correctAnswerTr": "Halk arasında bir aşk destanı"
   },
