@@ -2126,6 +2126,37 @@ class Tr {
       'ku': 'Her roj çend pirs. Ziman xurt dibe.',
       'tr': 'Her gün birkaç soru. Dil güçlenir.',
     },
+    // ── Ana ekranın bölümleri (2026-09-27 sade ilk deneyim) ──────────
+    K.homeStepsTitle: {'ku': 'ZanKurd di 3 gavan de', 'tr': '3 adımda ZanKurd'},
+    K.homeStep1: {
+      'ku': 'Dersê rojane temam bike: 5 pirs, 3 deqe',
+      'tr': 'Günün dersini tamamla: 5 soru, 3 dakika',
+    },
+    K.homeStep2: {
+      'ku': 'Mijarekê hilbijêre û bi pirsan hîn bibe',
+      'tr': 'Bir konu seç, soru çözerek öğren',
+    },
+    K.homeStep3: {
+      'ku': 'Bi hevalên xwe re pêşbazî bike an hevrikekî bibîne',
+      'tr': 'Arkadaşlarınla yarış ya da rakip bul',
+    },
+    K.homeDoorLearnSub: {
+      'ku': 'Ders, çîrok û ferheng',
+      'tr': 'Ders, hikâye ve sözlük',
+    },
+    K.homeDoorPlayTitle: {
+      'ku': 'Bi hevalan re bilîze',
+      'tr': 'Arkadaşınla yarış',
+    },
+    K.homeDoorPlaySub: {
+      'ku': 'Ode ava bike an hevrikekî bibîne',
+      'tr': 'Oda kur ya da rakip bul',
+    },
+    K.homeTopicsTitle: {'ku': 'Mijar', 'tr': 'Konular'},
+    K.homeTopicsSub: {
+      'ku': 'Mijarekê hilbijêre û bi pirsan hîn bibe',
+      'tr': 'Bir konu seç, soru çözerek öğren',
+    },
     K.language: {'ku': 'Ziman', 'tr': 'Dil'},
     K.languageCode: {'ku': 'KU', 'tr': 'TR'},
     K.changeLanguage: {'ku': 'Ziman biguherîne', 'tr': 'Dili değiştir'},
@@ -3782,6 +3813,22 @@ class K {
   static const homeQuickDuelSub = 'home.quickDuel.sub';
   static const homeGreeting = 'home.greeting';
   static const homeMotto = 'home.motto';
+
+  /// İlk oturumdaki üç adımlık yol gösterici. Yeni gelen, uygulamanın
+  /// iki yüzünü (öğren + yarış) ilk ekranda görür; ilk turdan sonra kalkar.
+  static const homeStepsTitle = 'home.steps.title';
+  static const homeStep1 = 'home.steps.one';
+  static const homeStep2 = 'home.steps.two';
+  static const homeStep3 = 'home.steps.three';
+
+  /// Ana ekranın iki kapısı: öğrenme alanı ve yarış.
+  static const homeDoorLearnSub = 'home.door.learn.sub';
+  static const homeDoorPlayTitle = 'home.door.play.title';
+  static const homeDoorPlaySub = 'home.door.play.sub';
+
+  /// Ana ekrandaki konu ızgarası.
+  static const homeTopicsTitle = 'home.topics.title';
+  static const homeTopicsSub = 'home.topics.sub';
   static const language = 'common.language';
   static const languageCode = 'common.languageCode';
   static const changeLanguage = 'common.changeLanguage';

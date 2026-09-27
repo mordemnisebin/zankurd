@@ -19,7 +19,6 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../providers/sound_provider.dart';
-import '../providers/theme_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/boot_diagnostics.dart';
@@ -33,14 +32,11 @@ import '../models/quiz_question.dart';
 import '../models/learning_goal.dart';
 import '../services/premium_service.dart';
 import '../services/daily_question_selector.dart';
-import '../services/strength_analysis.dart';
 import 'paywall_screen.dart';
 import 'quiz_screen.dart';
-import '../data/level_progress_store.dart';
 import 'home/today_task_card.dart';
-import 'home/home_level_path.dart';
 import 'home/home_rows.dart';
-import 'level_screen.dart';
+import 'home/home_sections.dart';
 import '../widgets/app_row_card.dart';
 import 'home/daily_missions_card.dart';
 import 'shop_screen.dart';
@@ -143,10 +139,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int _todayTarget = 10;
   bool _firstSession = true;
 
-  /// "Kaldığın yer" listesi: en çok ilerlenen üç kategori.
-  List<CategoryProgress> _categoryProgress = const [];
-  String _pathCategory = 'Ziman';
-  Set<int> _pathPlayed = const {};
+  /// Konu ızgarasının verisi: her kategorinin ustalık ilerlemesi ve
+  /// oynanabilir soru sayısı.
+  Map<String, CategoryProgress> _topicProgress = const {};
+  Map<String, int> _topicCounts = const {};
   LearningGoal? _learningGoal;
   bool _learningGoalLoaded = false;
   late AnimationController _loadAnimationController;
@@ -183,6 +179,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // DEĞİŞİMİ tetiklemiyor — kullanıcı başka bir sekmeye gidip dönene
     // kadar bölüm hep boş kalıyordu (2026-08-14 denetimi).
     _refreshProgress();
+    _refreshTopicCounts();
     widget.refreshSignal?.addListener(_handleRefreshSignal);
   }
 
@@ -212,20 +209,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   /// fırsatı bu dönüştür — bkz. [onOpenLearning] doc yorumu.
   Future<void> _openLearning() async {
     await widget.onOpenLearning?.call();
-    if (mounted) _handleRefreshSignal();
-  }
-
-  Future<void> _openLevelPath() async {
-    if (!mounted) return;
-    await Navigator.of(
-      context,
-    ).push(AppRoute.to(LevelScreen(repository: repo, category: _pathCategory)));
-    if (mounted) _handleRefreshSignal();
-  }
-
-  /// Genel kategori listesine gider ve dönüşte ana ekranı tazeler.
-  Future<void> _openCategories() async {
-    await widget.onOpenCategories?.call();
     if (mounted) _handleRefreshSignal();
   }
 
@@ -363,62 +346,44 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     }
   }
 
-  /// Kategori ustalık ilerlemesini okur; en çok ilerlenen üç kategori
-  /// "kaldığın yer" listesinde gösterilir.
+  /// Konu ızgarasının ilerlemesini (ustalık) ve öğrenme hedefini okur.
+  ///
+  /// Izgara bütün konuları sabit sırada gösterir; ilerleme her karonun
+  /// içinde durur. Eskiden en çok ilerlenen üç konu ayrı bir "Kaldığın yer"
+  /// listesine, önerilen konu da ayrı bir seviye yoluna çıkarılıyordu —
+  /// aynı konu ana ekranda iki ayrı yerde görünebiliyordu.
   Future<void> _refreshProgress() async {
     try {
       final mastery = await MasteryStore.load();
       final learningGoalStore = await LearningGoalStore.load();
-      final entries =
-          [
-            for (final category in repo.categories)
-              CategoryProgress(
-                category: category,
-                correct: mastery.correctCount(category),
-                threshold: mastery.nextThreshold(category),
-              ),
-          ]..sort((a, b) {
-            final byCorrect = b.correct.compareTo(a.correct);
-            return byCorrect != 0
-                ? byCorrect
-                : a.category.compareTo(b.category);
-          });
-      final started = entries.where((entry) => entry.ratio > 0).toList();
-      final mistakeStore = await MistakeStore.load();
-      final strength = StrengthAnalysis.analyze(
-        categories: repo.categories,
-        masteryCorrect: {
-          for (final entry in entries) entry.category: entry.correct,
-        },
-        mistakes: mistakeStore.getMistakesCountByCategory(),
-        readyReviews: mistakeStore.getReadyReviewCountByCategory(
-          allowedQuestionIds: {
-            for (final question in repo.playableQuestions) question.id,
-          },
-        ),
-      );
-      final category = recommendedCategoryForGoal(
-        goal: learningGoalStore.goal,
-        categories: repo.categories,
-        startedCategories: [for (final entry in started) entry.category],
-        focusCategory: strength.focusCategory,
-      );
-      final levelStore = await LevelProgressStore.load();
-      final played = {
-        for (var number = 1; number <= 5; number++)
-          if (levelStore.isPlayed(category, null, number)) number,
+      final progress = {
+        for (final category in repo.categories)
+          category: CategoryProgress(
+            category: category,
+            correct: mastery.correctCount(category),
+            threshold: mastery.nextThreshold(category),
+          ),
       };
       if (mounted) {
         setState(() {
-          _categoryProgress = entries.take(3).toList();
+          _topicProgress = progress;
           _learningGoal = learningGoalStore.goal;
           _learningGoalLoaded = true;
-          _pathCategory = category;
-          _pathPlayed = played;
         });
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home mastery load failed');
+    }
+  }
+
+  /// Konu karolarındaki soru sayıları. Süs bilgisidir: gelmezse karo
+  /// yalnız adıyla kalır, ekran beklemez.
+  Future<void> _refreshTopicCounts() async {
+    try {
+      final counts = await repo.loadCategoryQuestionCounts();
+      if (mounted && counts.isNotEmpty) setState(() => _topicCounts = counts);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home topic counts failed');
     }
   }
 
@@ -479,10 +444,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// Ana ekranın gövdesi. 2026-07-24: karo ızgarası kaldırıldı — ekran tek
-  /// bir soruyu yanıtlıyor ("şimdi ne yapmalıyım?"). Sıra: bugünün görevi →
-  /// tekrar → kaldığın yer → günlük görevler. Yarış/Kategoriler kopyaları
-  /// silindi; onlar zaten kendi sekmelerinde yaşıyor.
+  /// Ana ekranın gövdesi (2026-09-27 sade ilk deneyim).
+  ///
+  /// Ekran üç soruyu sırayla yanıtlar:
+  /// 1. "Şimdi ne yapayım?" — günün dersi, tek turuncu düğme.
+  /// 2. "Bu uygulamada ne var?" — iki kapı: Kurmancî öğren ve yarış.
+  /// 3. "Neyi öğrenebilirim?" — bütün konular, ilerlemeleriyle.
+  ///
+  /// Eskiden "Öğrenme yolları" başlığı altında dört ayrı öğrenme kapısı
+  /// vardı ve yarış yalnız ikinci oturumdan sonra sayfanın dibinde
+  /// görünüyordu; yeni gelen hangi kapının ne olduğunu ayırt edemiyordu.
   Widget _buildBody(
     BuildContext context,
     bool ku,
@@ -530,21 +501,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             firstSession: _firstSession,
             onStart: _startDailyQuiz,
           ),
-          const SizedBox(height: AppSpacing.md),
-          // İlerleme özeti günlük görevin ALTINDA durur: turuncu "Başla"
-          // ekranın ilk ve en güçlü eylemi kalmalı. Üstte denendiğinde
-          // CTA'yı aşağı itiyordu (2026-08-04 görsel denetimi).
+          // İlk oturumda seviye çubuğu ("Seviye 1 · 0/1000") yeni gelen için
+          // anlamsız bir sayıdır; yerini uygulamayı üç cümleyle anlatan
+          // yol gösterici alır. İlk turdan sonra ilerleme özeti geri gelir.
           //
-          // Coin burada YOK: başlıkta zaten kalıcı bir coin rozeti ve
-          // mağaza girişi var; ikisini birden çizmek aynı bilgiyi iki kez
-          // göstermekti.
-          ProgressSummary(
-            key: const ValueKey('home-progress-summary'),
-            level: _level,
-            xpInLevel: _xpInLevel,
-            xpNeeded: _xpNeeded,
-            levelLabel: context.t(K.progressLevelLabel),
-          ),
+          // İlerleme özeti günlük görevin ALTINDA durur: turuncu "Başla"
+          // ekranın ilk ve en güçlü eylemi kalmalı. Coin burada YOK:
+          // başlıkta zaten kalıcı bir coin rozeti ve mağaza girişi var.
+          if (_firstSession) ...[
+            const SizedBox(height: AppSpacing.sm),
+            HomeFirstSteps(isKu: ku),
+          ] else ...[
+            const SizedBox(height: AppSpacing.md),
+            ProgressSummary(
+              key: const ValueKey('home-progress-summary'),
+              level: _level,
+              xpInLevel: _xpInLevel,
+              xpNeeded: _xpNeeded,
+              levelLabel: context.t(K.progressLevelLabel),
+            ),
+          ],
           if (_reviewReadyCount > 0) ...[
             const SizedBox(height: AppSpacing.sm),
             AppRowCard(
@@ -572,43 +548,38 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
             const SizedBox(height: AppSpacing.md),
           ],
-          Text(
-            context.t(K.homeLearningSection),
-            style: AppTypography.heading2.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          if (widget.onOpenLearning != null) ...[
-            HomeSupportRow(
-              key: const ValueKey('home-guided-lessons'),
+          HomeDoors(
+            learn: HomeDoorTile(
+              key: const ValueKey('home-door-learn'),
               icon: AppIcons.graduationCap,
               accent: AppTheme.playGreen,
               title: context.t(K.learnKurmanci),
-              subtitle: context.t(K.learnSubtitle),
-              onTap: _openLearning,
+              subtitle: context.t(K.homeDoorLearnSub),
+              onTap: widget.onOpenLearning == null ? null : _openLearning,
             ),
-            const SizedBox(height: AppSpacing.sm),
-          ],
-          KeyedSubtree(
-            key: const ValueKey('home-learning-path'),
-            child: HomeLevelPath(
-              category: _pathCategory,
-              levels: repo.levelsForCategory(_pathCategory),
-              played: _pathPlayed,
-              isKu: ku,
-              onOpen: _openLevelPath,
-              onBrowse: _openCategories,
+            // Yarış kapısı ilk oturumda da görünür: uygulamanın ikinci yüzü
+            // budur ve yeni gelen onu ancak burada görürse arar.
+            play: HomeDoorTile(
+              key: const ValueKey('home-door-play'),
+              icon: AppIcons.gamepad,
+              accent: AppTheme.playRed,
+              title: context.t(K.homeDoorPlayTitle),
+              subtitle: context.t(K.homeDoorPlaySub),
+              onTap: widget.onOpenPlay,
             ),
           ),
-          // `ContinueSection` yalnız gerçekten başlanmış kategorileri
-          // listeler; ilerleme yoksa çizilmez. Keşif ikinci kapı değil,
-          // ders yolunun içindeki "Tüm konular"dır.
+          const SizedBox(height: AppSpacing.lg),
+          HomeSectionHeader(
+            title: context.t(K.homeTopicsTitle),
+            subtitle: context.t(K.homeTopicsSub),
+          ),
           const SizedBox(height: AppSpacing.sm),
-          ContinueSection(
+          HomeTopicGrid(
             isKu: ku,
-            entries: _categoryProgress,
-            onOpenCategory: _openCategory,
+            categories: repo.categories,
+            progress: _topicProgress,
+            questionCounts: _topicCounts,
+            onOpen: _openCategory,
           ),
         ],
       ),
@@ -619,22 +590,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          KeyedSubtree(
-            key: const ValueKey('home-play-handoff'),
-            child: HomeSupportRow(
-              key: const ValueKey('home-duel-row'),
-              surfaceKey: const ValueKey('home-duel-flat-surface'),
-              icon: AppIcons.bolt,
-              accent: const Color(0xFFB31E3B),
-              title: context.t(K.homeQuickDuel),
-              subtitle: context.t(K.homeQuickDuelSub),
-              onTap: () => widget.onOpenPlay?.call(),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
           // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
           // görünüm iki aktif görevi ve kalan sayısını gösterir; tüm görevler
-          // ekranın altına taşınıp öğrenme yollarını gömmez.
+          // ekranın altına taşınıp konuları gömmez.
           DailyMissionsCard(
             isKu: ku,
             missions: _missions,
@@ -828,10 +786,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               final metrics = Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Sayı sıfırken de yazılır: yalnız bir alev simgesi yeni
+                  // gelene hiçbir şey anlatmıyordu; "0" bunun bir sayaç
+                  // olduğunu ve oynadıkça büyüyeceğini gösterir.
                   _buildHeaderBadge(
                     AppIcons.fire,
                     AppTheme.brand,
-                    _streak > 0 ? '$_streak' : null,
+                    '$_streak',
                     semanticLabel: context.t(K.dailyStreakDays, {
                       'days': '$_streak',
                     }),
@@ -1072,7 +1033,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildHeaderQuickControls(BuildContext context, bool ku) {
-    final themeProvider = context.watch<ThemeProvider>();
     final border = AppTheme.borderColor(context).withValues(alpha: 0.72);
     final fill = AppTheme.surfaceHiColor(context);
     final foreground = AppTheme.textSubColor(context);
@@ -1120,6 +1080,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       );
     }
 
+    // Tema düğmesi 2026-09-27'de başlıktan kalktı: açık temada çizilen
+    // güneş simgesi küçük boyda ayar çarkına benziyordu ve yeni gelen onu
+    // "Ayarlar" sanıyordu. Tema Ayarlar ekranında duruyor; başlıkta yalnız
+    // iki dilli oyuncunun sık kullandığı dil düğmesi kaldı.
     return Material(
       type: MaterialType.transparency,
       child: Row(
@@ -1137,18 +1101,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 fontWeight: FontWeight.w800,
                 fontSize: 12,
               ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.xs),
-          control(
-            key: const ValueKey('home-theme-toggle'),
-            tooltip: context.t(K.darkLightMode),
-            onTap: themeProvider.toggleDarkLight,
-            quiet: true,
-            child: Icon(
-              themeProvider.isDark ? AppIcons.moon : AppIcons.sun,
-              color: foreground,
-              size: 19,
             ),
           ),
         ],

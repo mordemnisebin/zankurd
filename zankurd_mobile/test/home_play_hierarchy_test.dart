@@ -12,6 +12,7 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
+import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -36,6 +37,8 @@ Widget _homeShell({required bool isKu, required bool isDark}) {
       home: HomeScreen(
         repository: MockZanKurdRepository(),
         onOpenCategories: () async {},
+        onOpenLearning: () async {},
+        onOpenPlay: () {},
       ),
     ),
   );
@@ -84,6 +87,9 @@ void main() {
     LevelProgressStore.resetInstance();
   });
 
+  // 2026-09-27: ana ekran tek turuncu eylem + iki kapı + konu ızgarası
+  // düzenine geçti. Bekçinin koruduğu kural aynı: ekranda tek bir birincil
+  // (turuncu) eylem vardır, diğer yollar erişilebilir ama sakin kalır.
   testWidgets(
     'Home has one daily hero action and calmer accessible alternative modes',
     (tester) async {
@@ -100,32 +106,38 @@ void main() {
             findsOneWidget,
           );
           _expectActionSemantics(tester, 'home-daily-task-start');
-          expect(
-            find.byKey(const ValueKey('home-lessons-row')),
-            findsOneWidget,
-          );
-          expect(
-            find.byKey(const ValueKey('home-path-node-1')),
-            findsOneWidget,
-          );
-          _expectActionSemantics(tester, 'home-lessons-row');
-          expect(find.byKey(const ValueKey('home-topic-picker')), findsNothing);
-          expect(
-            find.byKey(const ValueKey('home-browse-categories-row')),
-            findsOneWidget,
-          );
-          final homeDuel = find.byKey(const ValueKey('home-duel-row'));
-          expect(homeDuel, findsOneWidget);
-          expect(
-            tester.widget(homeDuel),
-            isNot(isA<ModeCard>()),
-            reason: 'Home düellosu ikinci bir kampanya kartı olmamalı.',
-          );
-          expect(
-            find.byKey(const ValueKey('home-duel-flat-surface')),
-            findsOneWidget,
-          );
-          _expectActionSemantics(tester, 'home-duel-row');
+
+          for (final door in ['home-door-learn', 'home-door-play']) {
+            final finder = find.byKey(ValueKey(door));
+            expect(finder, findsOneWidget, reason: door);
+            _expectActionSemantics(tester, door);
+            final tile = tester.widget<HomeDoorTile>(finder);
+            expect(
+              tile.accent,
+              isNot(AppTheme.brand),
+              reason: 'Turuncu yalnız günün dersi düğmesine ayrılmış: $door',
+            );
+            expect(
+              find.descendant(of: finder, matching: find.byType(ModeCard)),
+              findsNothing,
+              reason: 'Kapı ikinci bir kampanya kartı olmamalı: $door',
+            );
+          }
+
+          expect(find.byKey(const ValueKey('home-topic-grid')), findsOneWidget);
+          final ziman = find.byKey(const ValueKey('home-topic-Ziman'));
+          await tester.ensureVisible(ziman);
+          _expectActionSemantics(tester, 'home-topic-Ziman');
+
+          // Eski dört kapılı düzenin parçaları geri gelmemeli.
+          for (final legacy in [
+            'home-lessons-row',
+            'home-browse-categories-row',
+            'home-continue-section',
+            'home-duel-row',
+          ]) {
+            expect(find.byKey(ValueKey(legacy)), findsNothing, reason: legacy);
+          }
         }
       }
     },

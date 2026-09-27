@@ -81,7 +81,14 @@ import '../../test/support/widget_test_helpers.dart';
 /// üzerinde `integration_test/native_visual_qa_test.dart` ile kanıtlanır.
 /// Aynı native kapı sıralama podyumundaki kupa/madalya ikonlarını da gerçek
 /// platform render'ında yakalar.
-const _size = Size(390, 844);
+/// Tur görüntü boyutu. Yükseklik `ZANKURD_SCREEN_TOUR_HEIGHT` ile
+/// büyütülebilir: kaydırılan bir ekranın tamamını tek karede görmek için
+/// (ör. `ZANKURD_SCREEN_TOUR_HEIGHT=1800`). Varsayılan, iPhone boyu.
+final _size = Size(
+  390,
+  double.tryParse(Platform.environment['ZANKURD_SCREEN_TOUR_HEIGHT'] ?? '') ??
+      844,
+);
 final _outDir =
     Platform.environment['ZANKURD_SCREEN_TOUR_OUT_DIR'] ??
     'docs/screenshots/tour';

@@ -846,13 +846,18 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(HomeScreen), findsOneWidget);
-    // Ana ekran tek bir soruyu yanıtlar: "şimdi ne yapmalıyım?"
+    // Ana ekranın tek birincil eylemi günün dersidir.
     expect(find.text('Günün dersi'), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
 
-    // Yarış'a yalnız alt navigasyondan gidilir — ana ekranda kopyası yok.
-    await tester.tap(find.byKey(const ValueKey('nav-play')));
+    // 2026-09-27: yarış kapısı ilk oturumdan itibaren ana ekrandadır ve
+    // ayrı bir ekran değil, alt menüdeki Yarış sekmesinin kendisini açar —
+    // aynı yere giden iki farklı yüzey oluşmaz.
+    final playDoor = find.byKey(const ValueKey('home-door-play'));
+    await tester.ensureVisible(playDoor);
+    await tester.pumpAndSettle();
+    await tester.tap(playDoor);
     await tester.pumpAndSettle();
     expect(find.byType(PlayHubScreen), findsOneWidget);
   });
@@ -897,14 +902,15 @@ void main() {
       reason: 'Profil/seri araçları kompakt hesap başlığı içinde kalmalı.',
     );
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
-    // "Yarış" artık yalnız alt navigasyonda geçer (ana ekranda kopyası yok).
+    // "Yarış" sekme etiketi tektir; ana ekrandaki yarış kapısı kendi
+    // başlığını ("Arkadaşınla yarış") taşır.
     expect(find.text('Yarış'), findsOneWidget);
     expect(find.text('Profil'), findsOneWidget);
 
-    for (final key in const [
-      ValueKey('home-language-toggle'),
-      ValueKey('home-theme-toggle'),
-    ]) {
+    // Tema düğmesi 2026-09-27'de başlıktan kalktı (güneş simgesi ayar
+    // çarkıyla karışıyordu); tema Ayarlar'da.
+    expect(find.byKey(const ValueKey('home-theme-toggle')), findsNothing);
+    for (final key in const [ValueKey('home-language-toggle')]) {
       final control = find.byKey(key);
       expect(tester.getSize(control).width, greaterThanOrEqualTo(48));
       expect(tester.getSize(control).height, greaterThanOrEqualTo(48));
@@ -1123,10 +1129,7 @@ void main() {
         authProvider: GateAuthProvider(),
         languageProvider: kurmanciLang(),
         child: const MediaQuery(
-          data: MediaQueryData(
-            size: size,
-            textScaler: TextScaler.linear(2),
-          ),
+          data: MediaQueryData(size: size, textScaler: TextScaler.linear(2)),
           child: SignInScreen(),
         ),
       ),
@@ -1154,11 +1157,7 @@ void main() {
     ]) {
       final finder = find.text(label);
       expect(finder, findsOneWidget, reason: label);
-      await tester.scrollUntilVisible(
-        finder,
-        220,
-        scrollable: pageScrollable,
-      );
+      await tester.scrollUntilVisible(finder, 220, scrollable: pageScrollable);
       final rect = tester.getRect(finder);
       expect(rect.top, greaterThanOrEqualTo(scrollRect.top), reason: label);
       expect(rect.bottom, lessThanOrEqualTo(scrollRect.bottom), reason: label);

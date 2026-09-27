@@ -350,41 +350,33 @@ void main() {
     }
     await _shoot(tester, '10_learn_home_tr');
 
-    // Solo quiz girişi: ders yolu → kategoriler → Ziman → Rêziman →
+    // Solo quiz girişi: ana ekranın konu ızgarası → Ziman → Rêziman →
     // seviye 1 (süresiz ders modu: her cevaptan sonra açıklama gelir).
+    // 2026-09-27: ayrı kategori ekranı ana ekrandan açılmıyor; konular
+    // doğrudan ızgarada.
     await _tapIf(tester, find.byKey(const ValueKey('nav-learn')));
-    await _scrollTo(
-      tester,
-      find.byKey(const ValueKey('home-browse-categories-row')),
-    );
+    await _scrollTo(tester, find.byKey(const ValueKey('home-topic-Ziman')));
     if (await _tapIf(
       tester,
-      find.byKey(const ValueKey('home-browse-categories-row')),
-      'browse-categories',
+      find.byKey(const ValueKey('home-topic-Ziman')),
+      'topic-Ziman',
     )) {
-      await _shoot(tester, '11_categories');
+      await _shoot(tester, '12_subcategories');
       if (await _tapIf(
         tester,
-        find.byKey(const ValueKey('category-card-Ziman')),
-        'category-Ziman',
+        find.byKey(const ValueKey('subcategory-card-reziman')),
+        'subcategory-reziman',
       )) {
-        await _shoot(tester, '12_subcategories');
+        await _shoot(tester, '13_level_path');
+        await _scrollTo(tester, find.byKey(const ValueKey('level-node-1')));
         if (await _tapIf(
           tester,
-          find.byKey(const ValueKey('subcategory-card-reziman')),
-          'subcategory-reziman',
+          find.byKey(const ValueKey('level-node-1')),
+          'level-node-1',
         )) {
-          await _shoot(tester, '13_level_path');
-          await _scrollTo(tester, find.byKey(const ValueKey('level-node-1')));
-          if (await _tapIf(
-            tester,
-            find.byKey(const ValueKey('level-node-1')),
-            'level-node-1',
-          )) {
-            // İlk açılış öğreticisi açıksa kapat (temiz karesi için).
-            await _tapTextIf(tester, const ['Derbas bike', 'Geç']);
-            await _shoot(tester, '14_quiz_question');
-          }
+          // İlk açılış öğreticisi açıksa kapat (temiz karesi için).
+          await _tapTextIf(tester, const ['Derbas bike', 'Geç']);
+          await _shoot(tester, '14_quiz_question');
         }
       }
     }

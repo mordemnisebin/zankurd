@@ -13,8 +13,6 @@ import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
-import 'package:zankurd_mobile/src/screens/home/home_level_path.dart';
-import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
@@ -37,6 +35,11 @@ import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 ///    daveti değil).
 /// 5. "Kaldığın yer" satırındaki kategori argümanı yok sayılıp her zaman
 ///    genel kategori listesi açılıyordu.
+///
+/// 2026-09-27: "Kaldığın yer" ve seviye yolu ana ekranın konu ızgarasına
+/// katıldı. 3 ve 5 numaralı bulguların bekçileri ızgaraya taşındı; 4 numara
+/// (bölümün dıştan kapatılması) ızgara her zaman çizildiği için konusuz
+/// kaldı ve yerine "ilerleme yokken de bütün konular görünür" bekçisi geldi.
 Widget _wrap(Widget child, {bool isKu = true}) => MultiProvider(
   providers: [
     ChangeNotifierProvider(
@@ -127,7 +130,7 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
     expect(find.byKey(const ValueKey('home-review-row')), findsNothing);
-    final lessons = find.byKey(const ValueKey('home-guided-lessons'));
+    final lessons = find.byKey(const ValueKey('home-door-learn'));
     expect(lessons, findsOneWidget);
     await tester.ensureVisible(lessons);
     await tester.tap(lessons);
@@ -136,7 +139,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('ilk açılışta sekmeye basmadan "Kaldığın yer" görünür', (
+  testWidgets('ilk açılışta sekmeye basmadan konu ilerlemesi görünür', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({'zankurd.mastery.Ziman': 5});
@@ -148,98 +151,72 @@ void main() {
         ),
       ),
     );
-    // `refreshSignal` hiç tetiklenmedi (widget'a hiç verilmedi) — bölüm
+    // `refreshSignal` hiç tetiklenmedi (widget'a hiç verilmedi) — ilerleme
     // yalnız initState'teki ilk yükten gelebilir.
     await tester.pump(const Duration(seconds: 1));
 
-    expect(find.byKey(const ValueKey('home-continue-section')), findsOneWidget);
-    expect(find.text('Ziman'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('home-topic-Ziman')),
+        matching: find.byType(LinearProgressIndicator),
+      ),
+      findsOneWidget,
+    );
   });
 
-  testWidgets('kanıt yeterliyse ana öğrenme yolu odak kategoriye yönelir', (
+  testWidgets('ilerleme yokken de bütün konular görünür (bölüm boş kalmaz)', (
     tester,
   ) async {
-    SharedPreferences.setMockInitialValues({'zankurd.mastery.Ziman': 5});
     final repo = MockZanKurdRepository();
-    final focusQuestions = repo.playableQuestions
-        .where((question) => question.category == 'Dîrok')
-        .take(3)
-        .toList();
-    expect(focusQuestions, hasLength(3));
-    MistakeStore.resetInstance();
-    final mistakes = await MistakeStore.load();
-    for (final question in focusQuestions) {
-      await mistakes.markMistake(question.id, category: question.category);
-    }
+    await tester.pumpWidget(
+      _wrap(HomeScreen(repository: repo, onOpenCategories: () async {})),
+    );
+    await tester.pump(const Duration(seconds: 1));
 
+    expect(repo.categories, isNotEmpty);
+    for (final category in repo.categories) {
+      expect(
+        find.byKey(ValueKey('home-topic-$category'), skipOffstage: false),
+        findsOneWidget,
+        reason: category,
+      );
+    }
+    expect(find.byType(LinearProgressIndicator), findsNothing);
+  });
+
+  testWidgets('konu karosu dokunulan kategoriyi açar, genel listeyi değil', (
+    tester,
+  ) async {
+    String? openedCategory;
+    var genericOpened = false;
     await tester.pumpWidget(
       _wrap(
-        HomeScreen(repository: repo, onOpenCategories: () async {}),
-        isKu: false,
+        HomeScreen(
+          repository: MockZanKurdRepository(),
+          onOpenCategories: () async {
+            genericOpened = true;
+          },
+          onOpenCategory: (category) async {
+            openedCategory = category;
+          },
+        ),
       ),
     );
     await tester.pump(const Duration(seconds: 1));
 
-    final path = tester.widget<HomeLevelPath>(find.byType(HomeLevelPath));
-    expect(path.category, 'Dîrok');
+    final tile = find.byKey(const ValueKey('home-topic-Ziman'));
+    await tester.ensureVisible(tile);
+    await tester.pumpAndSettle();
+    await tester.tap(tile);
+    await tester.pump();
+
+    expect(openedCategory, 'Ziman');
+    expect(
+      genericOpened,
+      isFalse,
+      reason: 'kategoriye özel geri çağırma varken genel listeye düşülmemeli',
+    );
   });
-
-  testWidgets(
-    'ilerleme yokken ilk açılışta keşif daveti görünür (bölüm boş kalmaz)',
-    (tester) async {
-      await tester.pumpWidget(
-        _wrap(
-          HomeScreen(
-            repository: MockZanKurdRepository(),
-            onOpenCategories: () async {},
-          ),
-        ),
-      );
-      await tester.pump(const Duration(seconds: 1));
-
-      expect(find.byKey(const ValueKey('home-discover-section')), findsNothing);
-      expect(
-        find.byKey(const ValueKey('home-browse-categories-row')),
-        findsOneWidget,
-      );
-      expect(find.byKey(const ValueKey('home-continue-section')), findsNothing);
-    },
-  );
-
-  testWidgets(
-    '"Kaldığın yer" satırı dokunulan kategoriyi açar, genel listeyi değil',
-    (tester) async {
-      SharedPreferences.setMockInitialValues({'zankurd.mastery.Ziman': 5});
-      String? openedCategory;
-      var genericOpened = false;
-      await tester.pumpWidget(
-        _wrap(
-          HomeScreen(
-            repository: MockZanKurdRepository(),
-            onOpenCategories: () async {
-              genericOpened = true;
-            },
-            onOpenCategory: (category) async {
-              openedCategory = category;
-            },
-          ),
-        ),
-      );
-      await tester.pump(const Duration(seconds: 1));
-
-      await tester.ensureVisible(find.text('Ziman'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Ziman'));
-      await tester.pump();
-
-      expect(openedCategory, 'Ziman');
-      expect(
-        genericOpened,
-        isFalse,
-        reason: 'kategoriye özel geri çağırma varken genel listeye düşülmemeli',
-      );
-    },
-  );
 
   testWidgets('öğrenmeden dönünce ana ekran sekmeye basmadan tazelenir', (
     tester,
@@ -251,16 +228,31 @@ void main() {
 
     final repo = _ControllableCoinRepository()..coinBalance = 10;
     await tester.pumpWidget(
-      _wrap(HomeScreen(repository: repo, onOpenCategories: () async {})),
+      _wrap(
+        Builder(
+          builder: (context) => HomeScreen(
+            repository: repo,
+            onOpenCategories: () async {},
+            onOpenCategory: (category) async {
+              await Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => const Scaffold(body: ZkBackButton()),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
     );
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('10'), findsOneWidget);
 
-    await tester.ensureVisible(find.byKey(const ValueKey('home-lessons-row')));
+    final tile = find.byKey(const ValueKey('home-topic-Ziman'));
+    await tester.ensureVisible(tile);
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('home-lessons-row')));
+    await tester.tap(tile);
     await tester.pumpAndSettle();
-    expect(find.byType(LevelScreen), findsOneWidget);
+    expect(find.byType(ZkBackButton), findsOneWidget);
 
     repo.coinBalance = 55;
     await tester.ensureVisible(find.byType(ZkBackButton));

@@ -5,10 +5,10 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/daily_mission.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
 import 'package:zankurd_mobile/src/screens/home/home_rows.dart';
+import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
-import 'package:zankurd_mobile/src/widgets/app_row_card.dart';
 import 'package:zankurd_mobile/src/config/category_visibility.dart';
 import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
@@ -228,73 +228,89 @@ void main() {
     });
   });
 
-  group('Ana ekran "kaldığın yer" bölümü', () {
-    testWidgets('hiç ilerleme yokken sahte "kaldığın yer" listesi çizilmez', (
-      tester,
-    ) async {
-      // Keşif ders yolunun içinden açılır; bu bölüm ikinci kapı olmaz.
+  group('Ana ekran konu ızgarası', () {
+    // "Kaldığın yer" listesi 2026-09-27'de konu ızgarasına katıldı: aynı
+    // konu ana ekranda hem yolda hem listede görünebiliyordu. Bekçinin
+    // korduğu iki davranış ızgaraya taşındı — sahte ilerleme çizilmez ve
+    // ilerleme yalnız gerçekten başlanmış konuda görünür.
+    testWidgets(
+      'başlanmamış konu sahte ilerleme çizmez, soru sayısını gösterir',
+      (tester) async {
+        await tester.pumpWidget(
+          _shell(
+            const Scaffold(
+              body: SizedBox(
+                width: 390,
+                child: HomeTopicGrid(
+                  isKu: false,
+                  categories: ['Dîrok', 'Cografya'],
+                  progress: {
+                    'Dîrok': CategoryProgress(
+                      category: 'Dîrok',
+                      correct: 4,
+                      threshold: 10,
+                    ),
+                    'Cografya': CategoryProgress(
+                      category: 'Cografya',
+                      correct: 0,
+                      threshold: 10,
+                    ),
+                  },
+                  questionCounts: {'Dîrok': 174, 'Cografya': 245},
+                  onOpen: null,
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        final started = find.byKey(const ValueKey('home-topic-Dîrok'));
+        final fresh = find.byKey(const ValueKey('home-topic-Cografya'));
+        expect(
+          find.descendant(
+            of: started,
+            matching: find.byType(LinearProgressIndicator),
+          ),
+          findsOneWidget,
+        );
+        expect(
+          find.descendant(
+            of: fresh,
+            matching: find.byType(LinearProgressIndicator),
+          ),
+          findsNothing,
+          reason: 'Başlanmamış konuda boş bir ilerleme çubuğu çizilmemeli.',
+        );
+        expect(
+          find.descendant(of: fresh, matching: find.text('245 soru')),
+          findsOneWidget,
+        );
+      },
+    );
+
+    testWidgets('karoya dokunmak o konuyu açar', (tester) async {
+      String? opened;
       await tester.pumpWidget(
         _shell(
-          const Scaffold(
-            body: ContinueSection(
-              isKu: false,
-              entries: [
-                CategoryProgress(category: 'Tarih', correct: 0, threshold: 10),
-                CategoryProgress(
-                  category: 'Coğrafya',
-                  correct: 0,
-                  threshold: 10,
-                ),
-              ],
+          Scaffold(
+            body: SizedBox(
+              width: 390,
+              child: HomeTopicGrid(
+                isKu: false,
+                categories: const ['Ziman', 'Muzîk'],
+                progress: const {},
+                questionCounts: const {},
+                onOpen: (category) => opened = category,
+              ),
             ),
           ),
         ),
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Kaldığın yer'), findsNothing);
-      expect(find.text('Tüm kategoriler'), findsNothing);
-      expect(find.byKey(const ValueKey('home-continue-section')), findsNothing);
-    });
-
-    testWidgets('ilerleme varsa yalnız başlanmış kategoriler listelenir', (
-      tester,
-    ) async {
-      await tester.pumpWidget(
-        _shell(
-          const Scaffold(
-            body: ContinueSection(
-              isKu: false,
-              entries: [
-                CategoryProgress(category: 'Tarih', correct: 4, threshold: 10),
-                CategoryProgress(
-                  category: 'Coğrafya',
-                  correct: 0,
-                  threshold: 10,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      expect(find.text('Kaldığın yer'), findsOneWidget);
-      expect(find.text('Tarih'), findsOneWidget);
-      // Başlanmamış kategori "kaldığın yer" listesine girmez.
-      expect(find.text('Coğrafya'), findsNothing);
-      expect(
-        find.descendant(
-          of: find.byKey(const ValueKey('home-continue-section')),
-          matching: find.byType(AppRowCard),
-        ),
-        findsNothing,
-        reason: 'Devam edilen kategoriler ayrı kartlar gibi görünmemeli.',
-      );
-      expect(
-        find.byKey(const ValueKey('home-continue-row-Tarih')),
-        findsOneWidget,
-      );
+      await tester.tap(find.byKey(const ValueKey('home-topic-Muzîk')));
+      expect(opened, 'Muzîk');
     });
   });
 

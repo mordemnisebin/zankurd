@@ -4,6 +4,9 @@ import 'package:zankurd_mobile/src/screens/home_screen.dart';
 
 import 'support/widget_test_helpers.dart';
 
+// Çapa `home-daily-task`: ana ekranın her oturumda çizilen tek öğesi.
+// Önceki çapa ilerleme özetiydi; o artık ilk oturumda yer almıyor
+// (yerini "3 adımda ZanKurd" alıyor, bkz. home_screen.dart).
 void main() {
   testWidgets('hareketi azalt açıkken Home giriş scale/fade katmanı çizilmez', (
     tester,
@@ -20,10 +23,10 @@ void main() {
     );
     await tester.pump();
 
-    expect(find.byKey(const ValueKey('home-progress-summary')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
     expect(
       find.ancestor(
-        of: find.byKey(const ValueKey('home-progress-summary')),
+        of: find.byKey(const ValueKey('home-daily-task')),
         matching: find.byType(ScaleTransition),
       ),
       findsNothing,
@@ -46,7 +49,7 @@ void main() {
 
     expect(
       find.ancestor(
-        of: find.byKey(const ValueKey('home-progress-summary')),
+        of: find.byKey(const ValueKey('home-daily-task')),
         matching: find.byType(ScaleTransition),
       ),
       findsOneWidget,

@@ -14,9 +14,7 @@ import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
-import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
 // Ana sayfa (2026-07-24 yenilemesi): ekran tek bir soruyu yanıtlar — "şimdi
 // ne yapmalıyım?". Karo ızgarası kaldırıldı; sıra bugünün görevi → öğrenme
@@ -64,7 +62,11 @@ void main() {
         find.byKey(const ValueKey('home-daily-task-start')),
         findsOneWidget,
       );
-      expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
+      // İlk oturum: yol gösterici var, görev/ilerleme kalabalığı yok.
+      // Yarış kapısı ise baştan görünür — uygulamanın ikinci yüzü.
+      expect(find.byKey(const ValueKey('home-first-steps')), findsOneWidget);
+      expect(find.byKey(const ValueKey('home-door-play')), findsOneWidget);
+      expect(find.byKey(const ValueKey('home-progress-summary')), findsNothing);
       expect(find.byType(DailyMissionsCard), findsNothing);
       expect(
         find.byKey(const ValueKey('home-learning-goal-chooser')),
@@ -77,7 +79,11 @@ void main() {
       AchievementStore.resetInstance();
       refresh.value++;
       await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
+      expect(find.byKey(const ValueKey('home-first-steps')), findsNothing);
+      expect(
+        find.byKey(const ValueKey('home-progress-summary')),
+        findsOneWidget,
+      );
       expect(find.byType(DailyMissionsCard), findsOneWidget);
     },
   );
@@ -114,20 +120,17 @@ void main() {
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task-start')), findsOneWidget);
 
-    // Design 2.0'da ikincil eylemler kart yığını oluşturmaz; düello ve
-    // benzeri destek hedefleri düz satır olarak ana hero/rota hiyerarşisine
-    // tabi kalır.
-    expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
+    // Hero'nun altında iki kapı (öğren / yarış) ve bütün konuların ızgarası.
+    // Eski dört kapılı "Öğrenme yolları" düzeni geri gelmemeli.
+    expect(find.byKey(const ValueKey('home-door-learn')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-door-play')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-topic-grid')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-topic-picker')), findsNothing);
+    expect(find.byKey(const ValueKey('home-lessons-row')), findsNothing);
+    expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
     expect(
       find.byKey(const ValueKey('home-browse-categories-row')),
-      findsOneWidget,
-    );
-    expect(find.byKey(const ValueKey('home-lessons-row')), findsOneWidget);
-    expect(find.byKey(const ValueKey('home-path-node-1')), findsOneWidget);
-    expect(
-      find.byKey(const ValueKey('home-duel-flat-surface')),
-      findsOneWidget,
+      findsNothing,
     );
     expect(find.byType(DailyMissionsCard), findsOneWidget);
 
@@ -140,18 +143,22 @@ void main() {
     // bulunmadığını iddia etmek gereksiz; silinmiş olması daha güçlü
     // bir garanti ve `dead_widget_guard_test` onu koruyor.
     // `ZanaDailyCard` 2026-09-02'de aynı gerekçeyle silindi.
-    expect(find.bySemanticsLabel('Moda tarî/ronahî'), findsOneWidget);
+    // Tema düğmesi başlıktan kalktı (güneş simgesi ayar çarkıyla
+    // karışıyordu); tema Ayarlar'da. Dil düğmesi yerinde.
+    expect(find.bySemanticsLabel('Moda tarî/ronahî'), findsNothing);
+    expect(find.byKey(const ValueKey('home-language-toggle')), findsOneWidget);
   });
 
-  testWidgets('öğrenme yolları ve yarış geçişi farklı hedeflere gider', (
+  testWidgets('öğren, yarış ve konu kapıları ayrı hedeflere gider', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(390, 1400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    var categories = 0;
+    var learn = 0;
     var play = 0;
+    String? topic;
 
     await tester.pumpWidget(
       _wrap(
@@ -159,8 +166,12 @@ void main() {
           repository: MockZanKurdRepository(),
           displayName: 'Zelal',
           scrollController: ScrollController(),
-          onOpenCategories: () async {
-            categories++;
+          onOpenLearning: () async {
+            learn++;
+          },
+          onOpenCategories: () async {},
+          onOpenCategory: (category) async {
+            topic = category;
           },
           onOpenPlay: () => play++,
         ),
@@ -168,15 +179,17 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
-    await tester.tap(find.byKey(const ValueKey('home-lessons-row')));
+    await tester.tap(find.byKey(const ValueKey('home-door-learn')));
     await tester.pumpAndSettle();
-    expect(find.byType(LevelScreen), findsOneWidget);
-    await tester.tap(find.byType(ZkBackButton));
+    await tester.tap(find.byKey(const ValueKey('home-door-play')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('home-browse-categories-row')));
-    await tester.tap(find.byKey(const ValueKey('home-duel-row')));
+    final ziman = find.byKey(const ValueKey('home-topic-Ziman'));
+    await tester.ensureVisible(ziman);
+    await tester.pumpAndSettle();
+    await tester.tap(ziman);
+    await tester.pumpAndSettle();
 
-    expect((categories, play), (1, 1));
+    expect((learn, play, topic), (1, 1, 'Ziman'));
   });
 
   testWidgets('günün görevi ana sahne hero tasarımını korur', (tester) async {

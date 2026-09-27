@@ -448,6 +448,12 @@ class AppTheme {
   static const playCyan = Color(0xFF2F6F62);
   static const playPurple = Color(0xFF6B5AA6);
 
+  /// Yarışın rengi (Madder). Ana ekranın "Arkadaşınla yarış" kapısı ve
+  /// eski düello satırı aynı tonu satır içi sabitle taşıyordu; tek ad
+  /// altında toplandı. Turuncu CTA'dan (brand) bilerek ayrıdır: yarış kapısı
+  /// bir yöndür, ekranın birincil eylemi değil.
+  static const playRed = Color(0xFFB31E3B);
+
   // ============ Dark Mode Palette — Forest ============
   static const primaryGradientStart = brand;
   static const primaryGradientEnd = brandDeep;

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../config/category_visuals.dart';
-import '../../l10n/lang.dart';
-import '../../l10n/strings.dart';
 import '../../theme/app_icons.dart';
 import '../../theme/app_theme.dart';
-import '../../utils/percent_format.dart';
 
 /// Home üzerindeki ikincil eylemler için düz satır.
 ///
@@ -114,96 +110,6 @@ class HomeSupportRow extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-/// "Kaldığın yer" — oyuncunun ilerlediği kategoriler, ilerleme çubuğuyla.
-///
-/// Hiç ilerleme yokken bölüm çizilmez. Başlanmış kategoriler Home'un ana
-/// rotasının altında düz destek satırlarıdır; ayrı kartlar oluşturmaz.
-class ContinueSection extends StatelessWidget {
-  const ContinueSection({
-    required this.isKu,
-    required this.entries,
-    this.onOpenCategory,
-    super.key,
-  });
-
-  final bool isKu;
-  final List<CategoryProgress> entries;
-  final ValueChanged<String>? onOpenCategory;
-
-  @override
-  Widget build(BuildContext context) {
-    final started = entries.where((e) => e.ratio > 0).toList();
-    if (started.isEmpty) return const SizedBox.shrink();
-    return Column(
-      key: const ValueKey('home-continue-section'),
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: AppSpacing.xs, top: 2),
-          child: Text(
-            Tr.forKu(K.kaldiginYer, isKu),
-            style: AppTypography.heading2.copyWith(
-              fontSize: 16,
-              color: AppTheme.textPrimaryColor(context),
-            ),
-          ),
-        ),
-        for (var i = 0; i < started.length; i++) ...[
-          HomeSupportRow(
-            key: ValueKey('home-continue-row-${started[i].category}'),
-            icon: CategoryVisuals.icon(started[i].category),
-            accent: CategoryVisuals.color(started[i].category),
-            title: CategoryNames.localized(started[i].category, isKu),
-            subtitle: Tr.forKu(K.pPDogru, isKu, {
-              'p0': '${started[i].correct}',
-              'p1': '${started[i].threshold}',
-            }),
-            semanticValue: context.percentRatio(started[i].ratio),
-            onTap: onOpenCategory == null
-                ? null
-                : () => onOpenCategory!(started[i].category),
-            trailing: ExcludeSemantics(
-              child: SizedBox(
-                width: 52,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      context.percentRatio(started[i].ratio),
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(AppRadius.pill),
-                      child: LinearProgressIndicator(
-                        value: started[i].ratio,
-                        minHeight: 4,
-                        backgroundColor: AppTheme.borderColor(context),
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          CategoryVisuals.color(started[i].category),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          if (i != started.length - 1)
-            Divider(
-              height: 1,
-              indent: 46,
-              color: AppTheme.borderColor(context).withValues(alpha: 0.65),
-            ),
-        ],
-      ],
     );
   }
 }

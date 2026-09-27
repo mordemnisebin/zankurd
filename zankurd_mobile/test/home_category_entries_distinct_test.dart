@@ -11,6 +11,12 @@
 ///
 /// İki kart ayrı dosyalardaydı; birim testleri yan yana gelince
 /// ortaya çıkan çift kapıyı görmüyordu.
+///
+/// ## 2026-09-27
+///
+/// Tek kapı artık ana ekranın konu ızgarasıdır: bütün konular doğrudan
+/// görünür, ayrı bir "Tüm konular" bağlantısı ya da seviye yolu yoktur.
+/// Bekçinin kuralı aynı kalır — konulara giden ikinci bir yol çizilmez.
 library;
 
 import 'package:flutter/material.dart';
@@ -26,15 +32,27 @@ import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 void main() {
-  test('keşif metni Hawar alfabesinde', () {
-    final text = Tr.forKu(K.homePathBrowse, true);
-    expect(text.trim(), isNotEmpty);
-    for (final bad in ['ı', 'ğ', 'ö', 'ü', 'İ']) {
-      expect(
-        text.contains(bad),
-        isFalse,
-        reason: 'Hawar dışı «$bad» harfi: "$text"',
-      );
+  test('ana ekran bölüm metinleri Hawar alfabesinde', () {
+    for (final key in [
+      K.homeTopicsTitle,
+      K.homeTopicsSub,
+      K.homeStepsTitle,
+      K.homeStep1,
+      K.homeStep2,
+      K.homeStep3,
+      K.homeDoorLearnSub,
+      K.homeDoorPlayTitle,
+      K.homeDoorPlaySub,
+    ]) {
+      final text = Tr.forKu(key, true);
+      expect(text.trim(), isNotEmpty, reason: key);
+      for (final bad in ['ı', 'ğ', 'ö', 'ü', 'İ']) {
+        expect(
+          text.contains(bad),
+          isFalse,
+          reason: 'Hawar dışı «$bad» harfi ($key): "$text"',
+        );
+      }
     }
   });
 
@@ -67,11 +85,12 @@ void main() {
 
     expect(find.byKey(const ValueKey('home-topic-picker')), findsNothing);
     expect(find.byKey(const ValueKey('home-discover-section')), findsNothing);
+    expect(find.byKey(const ValueKey('home-topic-grid')), findsOneWidget);
     expect(
       find.byKey(const ValueKey('home-browse-categories-row')),
-      findsOneWidget,
+      findsNothing,
     );
-    expect(find.byKey(const ValueKey('home-lessons-row')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-lessons-row')), findsNothing);
     expect(find.byKey(const ValueKey('home-profile-header')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-zana')), findsNothing);
   });
