@@ -840,6 +840,7 @@ class _SignInHeroBanner extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
+        key: const ValueKey('sign-in-hero-banner'),
         width: double.infinity,
         padding: EdgeInsets.all(compact ? AppSpacing.md : AppSpacing.lg),
         decoration: BoxDecoration(
@@ -847,11 +848,7 @@ class _SignInHeroBanner extends StatelessWidget {
           // aynı anda turuncuydu — ekranda üç eşit ağırlıkta turuncu kütle
           // vardı. Banner kimlik rengine (Kesk) alındı; turuncu yalnız
           // birincil eylemde kalır.
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
-          ),
+          gradient: AppTheme.identityHeaderGradient,
           border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
         ),
         child: Stack(
@@ -891,21 +888,20 @@ class _AuthFormPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLight = AppTheme.isLight(context);
+    // 2026-09-25: yüzey iki temada iki ayrı kodla kuruluyordu: açık temada
+    // `lightSurface` + `lightBorder` + kart gölgesi, koyu temada
+    // `Colors.white` karışımları ve **gölge yok**. Sonuç: giriş kartı
+    // koyu temada yapışık ve silik duruyor, açık temada ise yükseltilmiş
+    // bir yüzey gibi görünüyordu. Aynı kavram (yükseltilmiş yüzey) iki
+    // temada aynı olmalı; tek fark renk kaynağı.
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: isLight
-            ? AppTheme.lightSurface
-            : Colors.white.withValues(alpha: 0.04),
+        color: AppTheme.surfaceColor(context),
         borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(
-          color: isLight
-              ? AppTheme.lightBorder
-              : Colors.white.withValues(alpha: 0.1),
-        ),
-        boxShadow: isLight ? AppTheme.cardShadow(context) : null,
+        border: Border.all(color: AppTheme.borderColor(context)),
+        boxShadow: AppTheme.cardShadow(context),
       ),
       child: child,
     );
@@ -1106,8 +1102,6 @@ class _GuestSignInLink extends StatelessWidget {
           icon: Icon(AppIcons.user, size: 17, color: fg.withValues(alpha: 0.8)),
           label: Text(
             context.t(K.continueGuest),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: fg.withValues(alpha: 0.85),
               decoration: TextDecoration.underline,
@@ -1142,6 +1136,7 @@ class _EmailSectionDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // a11y-tap-target: noninteractive — statik bölüm ayıracı.
       constraints: const BoxConstraints(minHeight: 44),
       alignment: Alignment.center,
       child: Row(
@@ -1159,8 +1154,6 @@ class _EmailSectionDivider extends StatelessWidget {
               child: Text(
                 context.t(K.orWithEmail),
                 textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
                 style: AppTypography.caption.copyWith(
                   color: AppTheme.textMutedColor(context),
                 ),
@@ -1187,7 +1180,14 @@ class _AuthScrollFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isWide = constraints.maxWidth > 720;
+        // Tablet/masaüstü yanında kısa landscape telefonlarda da iki sütuna
+        // geç. iPhone SE landscape 667×375 civarında kalır; yalnız 720 px
+        // eşiği kullanılırsa çevrimdışı durum şeridi misafir eylemini ilk
+        // viewport dışına iter. 640 altındaki dar landscape cihazlarda ise
+        // iki sütun sosyal giriş düğmelerini gereğinden fazla sıkıştırır.
+        final isShortLandscapePhone =
+            constraints.maxWidth >= 640 && constraints.maxHeight < 420;
+        final isWide = constraints.maxWidth > 720 || isShortLandscapePhone;
         const edgePadding = 32.0;
         // 2026-07-22 canlı UX denetimi: dikey ortalama + padding düzeltmesi
         // minHeight clamp: klavye açıldığında negatif değer engellenir
@@ -1274,20 +1274,19 @@ class _LanguageChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.lg),
         child: AnimatedContainer(
+          key: ValueKey('sign-in-language-chip-$label'),
           duration: const Duration(milliseconds: 240),
           curve: Curves.easeInOut,
           constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
-            gradient: active ? AppTheme.accentGradient : null,
+            gradient: active ? AppTheme.identityHeaderGradient : null,
             borderRadius: BorderRadius.circular(20),
             boxShadow: active
                 ? [
                     BoxShadow(
-                      color: AppTheme.primaryGradientStart.withValues(
-                        alpha: 0.35,
-                      ),
+                      color: AppTheme.culturalBrandBg.withValues(alpha: 0.35),
                       blurRadius: 8,
                       offset: const Offset(0, 3),
                     ),

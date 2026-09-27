@@ -20,7 +20,21 @@ class OfflineBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foregroundColor = AppColors.onSolid(AppTheme.wrong);
+    // 2026-09-25: şerit `AppTheme.wrong` (doygun kırmızı) doluydu ve tam
+    // genişlikte ekranın tepesine yapışıyordu. Zayıf ağda kullanıcı bu
+    // bandı her ekranda, her saniye görüyor; sonuç "acil" diline dönüşüyor
+    // ve premium kimliği bozuyordu. Çevrimdışı olmak bir HATA değil, bir
+    // DURUM: bilgi ver, panik yaratma.
+    //
+    // Yeni dil: sakin yüzey + okunabilir metin + ikon rengiyle ayrım.
+    // Eylem rengi (mercan) yalnız "Yeniden dene" düğmesinde kalır, yani
+    // AGENTS'teki "mercan yalnız önemli eylemlerde" kuralı da tutuyor.
+    final isDark = !AppTheme.isLight(context);
+    final background = isDark
+        ? AppTheme.wrong.withValues(alpha: 0.16)
+        : AppTheme.wrong.withValues(alpha: 0.10);
+    final borderColor = AppTheme.wrong.withValues(alpha: isDark ? 0.45 : 0.30);
+    final textColor = AppTheme.textPrimaryColor(context);
     // 300 ms boy değişimi süsüdür. Tercih açıkken şerit anında durur;
     // yoksa kabuktaki her çevrimdışı uyarısı ayarı yok saymış olur —
     // birincil CTA (`GeometricGradientButton`) aynı kapıdan geçiyor.
@@ -40,31 +54,22 @@ class OfflineBanner extends StatelessWidget {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  color: AppTheme.wrong,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
+                  color: background,
+                  border: Border(
+                    bottom: BorderSide(color: borderColor, width: 1),
+                  ),
                 ),
                 child: SafeArea(
-                  top: false,
                   bottom: false,
                   child: Row(
                     children: [
-                      Icon(
-                        AppIcons.circleXmark,
-                        color: foregroundColor,
-                        size: 18,
-                      ),
+                      Icon(AppIcons.circleXmark, color: borderColor, size: 18),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Text(
                           label ?? context.t(K.offlineChecking),
                           style: TextStyle(
-                            color: foregroundColor,
+                            color: textColor,
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
                           ),
@@ -86,13 +91,13 @@ class OfflineBanner extends StatelessWidget {
                                 horizontal: 10,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.2),
+                                color: AppTheme.brand.withValues(alpha: 0.12),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(
                                 context.t(K.retry),
-                                style: TextStyle(
-                                  color: foregroundColor,
+                                style: const TextStyle(
+                                  color: AppTheme.brand,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),

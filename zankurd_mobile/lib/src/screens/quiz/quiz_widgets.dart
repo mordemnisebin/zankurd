@@ -338,6 +338,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     this.reserveExplanation = false,
     this.onListen,
     this.canListen = false,
+    this.listeningListenable,
   });
 
   final String promptText;
@@ -389,6 +390,9 @@ class _QuestionTextAndAnswers extends StatelessWidget {
 
   /// TTS cihazda Kürtçe destekliyor mu? False ise buton gizlenir.
   final bool canListen;
+
+  /// Doğrulanmış kayıt veya TTS oynatma durumunu tek kaynaktan izler.
+  final ValueListenable<bool>? listeningListenable;
 
   /// Bir şıkkın alabileceği en büyük ASGARİ yükseklik.
   ///
@@ -453,6 +457,8 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, outer) {
+        final showListen =
+            canListen && onListen != null && listeningListenable != null;
         final promptStyle = AppTypography.heading2.copyWith(
           color: AppTheme.textPrimaryColor(context),
           fontSize: _adaptivePromptSize(promptText, promptFontSize),
@@ -460,8 +466,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
         final promptGap = isCompact ? AppSpacing.sm : AppSpacing.md;
         // Dinleme düğmesi soru metninin yanında durur; ölçüm genişliği
         // ondan arta kalandır.
-        final promptWidth =
-            outer.maxWidth - ((canListen && onListen != null) ? 44.0 : 0.0);
+        final promptWidth = outer.maxWidth - (showListen ? 44.0 : 0.0);
         final promptHeight = _measureTextHeight(
           context,
           promptText,
@@ -486,8 +491,11 @@ class _QuestionTextAndAnswers extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: Text(promptText, style: promptStyle)),
-                if (canListen && onListen != null)
-                  _ListenButton(onTap: onListen!),
+                if (showListen)
+                  _ListenButton(
+                    onTap: onListen!,
+                    listeningListenable: listeningListenable!,
+                  ),
               ],
             ),
             SizedBox(height: promptGap),
@@ -745,6 +753,9 @@ class _LearningExplanationAction extends StatelessWidget {
           showModalBottomSheet<void>(
             context: context,
             showDragHandle: true,
+            // Ku modda engel-kapatma etiketi Türkçe Material varsayılanından
+            // ("Kapat") gelmesin diye açıkça yerelleştirildi (2026-09-25 web turu).
+            barrierLabel: context.t(K.close),
             builder: (sheetContext) => SafeArea(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
@@ -1489,19 +1500,18 @@ class _VersusBanner extends StatelessWidget {
   }
 }
 
-/// Soru metnini seslendiren TTS butonu. Kürtçe TTS cihazda desteklenmiyorsa
-/// gizlenir. `TtsService.speakingNotifier`'ı dinleyerek ikon durumunu günceller
-/// — böylece durum gerçek konuşma durumuyla (başlangıç/bitiş) senkron kalır.
+/// Soru sesini oynatan düğme. Doğrulanmış kayıt veya TTS oynatma durumunu
+/// [listeningListenable] üzerinden izler.
 class _ListenButton extends StatelessWidget {
-  const _ListenButton({required this.onTap});
+  const _ListenButton({required this.onTap, required this.listeningListenable});
 
   final VoidCallback onTap;
+  final ValueListenable<bool> listeningListenable;
 
   @override
   Widget build(BuildContext context) {
-    final notifier = TtsService.instance?.speakingNotifier;
     return ValueListenableBuilder<bool>(
-      valueListenable: notifier ?? ValueNotifier<bool>(false),
+      valueListenable: listeningListenable,
       builder: (context, isListening, _) {
         final actionLabel = isListening
             ? context.t(K.stopAction)

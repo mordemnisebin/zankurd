@@ -9,6 +9,7 @@ import '../config/coin_prices.dart';
 import '../data/mistake_store.dart';
 import '../data/learning_goal_store.dart';
 import '../data/streak_store.dart';
+import '../data/xp_award_publisher.dart';
 import '../data/xp_store.dart';
 import '../widgets/progress_summary.dart';
 import '../widgets/streak_panel.dart';
@@ -17,6 +18,7 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/reduced_motion_provider.dart';
+import '../providers/sound_provider.dart';
 import '../providers/theme_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -31,6 +33,7 @@ import '../models/quiz_question.dart';
 import '../models/learning_goal.dart';
 import '../services/premium_service.dart';
 import '../services/daily_question_selector.dart';
+import '../services/strength_analysis.dart';
 import 'paywall_screen.dart';
 import 'quiz_screen.dart';
 import '../data/level_progress_store.dart';
@@ -303,6 +306,63 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     });
   }
 
+  Future<void> _claimMissionReward(DailyMission mission) async {
+    SoundProvider? soundProvider;
+    try {
+      soundProvider = context.read<SoundProvider?>();
+    } catch (_) {}
+
+    final missionStore = await DailyMissionStore.load();
+    final claimed = await missionStore.claimReward(mission);
+    if (!claimed) return;
+
+    soundProvider?.playWin();
+
+    try {
+      final xpStore = await XPStore.load();
+      await xpStore.addXP(mission.xpReward);
+      await _refreshXpLevel();
+      unawaited(
+        XpAwardPublisher.publish(
+          repository: repo,
+          delta: mission.xpReward,
+        ).then((_) async {
+          if (mounted) await _refreshXpLevel();
+        }),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home_claim_mission_xp');
+    }
+
+    try {
+      final coins = await repo.claimMissionReward(
+        missionKey: mission.missionKey,
+        fallbackReward: mission.coinReward,
+      );
+      if (coins > 0) {
+        final newBalance = await repo.loadCoinBalance();
+        if (mounted) setState(() => _coinBalance = newBalance);
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'home_claim_mission_coins');
+    }
+
+    if (mounted) {
+      setState(() {
+        _missions = List.from(missionStore.missions);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.t(K.missionXpClaimed, {'xp': '${mission.xpReward}'}),
+          ),
+          duration: const Duration(seconds: 2),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+  }
+
   /// Kategori ustalık ilerlemesini okur; en çok ilerlenen üç kategori
   /// "kaldığın yer" listesinde gösterilir.
   Future<void> _refreshProgress() async {
@@ -324,10 +384,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 : a.category.compareTo(b.category);
           });
       final started = entries.where((entry) => entry.ratio > 0).toList();
+      final mistakeStore = await MistakeStore.load();
+      final strength = StrengthAnalysis.analyze(
+        categories: repo.categories,
+        masteryCorrect: {
+          for (final entry in entries) entry.category: entry.correct,
+        },
+        mistakes: mistakeStore.getMistakesCountByCategory(),
+        readyReviews: mistakeStore.getReadyReviewCountByCategory(
+          allowedQuestionIds: {
+            for (final question in repo.playableQuestions) question.id,
+          },
+        ),
+      );
       final category = recommendedCategoryForGoal(
         goal: learningGoalStore.goal,
         categories: repo.categories,
         startedCategories: [for (final entry in started) entry.category],
+        focusCategory: strength.focusCategory,
       );
       final levelStore = await LevelProgressStore.load();
       final played = {
@@ -350,8 +424,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Future<void> _selectLearningGoal(LearningGoal goal) async {
     final store = await LearningGoalStore.load();
-    await store.save(goal);
+    final saved = await store.save(goal);
     if (!mounted) return;
+    if (!saved) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
+      return;
+    }
     setState(() => _learningGoal = goal);
     await _refreshProgress();
   }
@@ -450,7 +530,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             firstSession: _firstSession,
             onStart: _startDailyQuiz,
           ),
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: AppSpacing.md),
           // İlerleme özeti günlük görevin ALTINDA durur: turuncu "Başla"
           // ekranın ilk ve en güçlü eylemi kalmalı. Üstte denendiğinde
           // CTA'yı aşağı itiyordu (2026-08-04 görsel denetimi).
@@ -466,7 +546,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             levelLabel: context.t(K.progressLevelLabel),
           ),
           if (_reviewReadyCount > 0) ...[
-            const SizedBox(height: AppSpacing.xs),
+            const SizedBox(height: AppSpacing.sm),
             AppRowCard(
               key: const ValueKey('home-review-row'),
               icon: AppIcons.arrowsRotate,
@@ -480,7 +560,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: _openLearning,
             ),
           ],
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: AppSpacing.lg),
           if (!_firstSession &&
               _learningGoalLoaded &&
               _learningGoal == null) ...[
@@ -498,7 +578,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               color: AppTheme.textPrimaryColor(context),
             ),
           ),
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: AppSpacing.sm),
+          if (widget.onOpenLearning != null) ...[
+            HomeSupportRow(
+              key: const ValueKey('home-guided-lessons'),
+              icon: AppIcons.graduationCap,
+              accent: AppTheme.playGreen,
+              title: context.t(K.learnKurmanci),
+              subtitle: context.t(K.learnSubtitle),
+              onTap: _openLearning,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+          ],
           KeyedSubtree(
             key: const ValueKey('home-learning-path'),
             child: HomeLevelPath(
@@ -513,7 +604,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // `ContinueSection` yalnız gerçekten başlanmış kategorileri
           // listeler; ilerleme yoksa çizilmez. Keşif ikinci kapı değil,
           // ders yolunun içindeki "Tüm konular"dır.
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: AppSpacing.sm),
           ContinueSection(
             isKu: ku,
             entries: _categoryProgress,
@@ -540,11 +631,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: () => widget.onOpenPlay?.call(),
             ),
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: AppSpacing.md),
           // Ana sayfa günün tek bakışta okunabilen özeti olmalı. Kompakt
           // görünüm iki aktif görevi ve kalan sayısını gösterir; tüm görevler
           // ekranın altına taşınıp öğrenme yollarını gömmez.
-          DailyMissionsCard(isKu: ku, missions: _missions, compact: true),
+          DailyMissionsCard(
+            isKu: ku,
+            missions: _missions,
+            compact: true,
+            onClaimReward: _claimMissionReward,
+          ),
 
           // ── Abonelik girişi ────────────────────────────────────────────
           //
@@ -622,7 +718,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   : Column(
                       children: [
                         primary,
-                        const SizedBox(height: AppSpacing.md),
+                        const SizedBox(height: AppSpacing.lg),
                         secondary,
                       ],
                     ),
@@ -986,6 +1082,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       required String tooltip,
       required Widget child,
       required VoidCallback onTap,
+      // 2026-09-25: dil ve tema düğmeleri de seri/jeton rozetleriyle aynı
+      // dolgu + kenarlık dilini konuşuyordu; başlıkta dört eşit ağırlıklı
+      // hap yanyana duruyor ve hiyerarşi kayboluyordu. Seri ve jeton bir
+      // DURUMdur (dokununca bir şey anlatırlar); dil ve tema birer ARAÇTIR.
+      // Araçlar yüzeysiz kaldı: dokunma alanı 48×48 olarak korunuyor,
+      // yalnız kutu çizgisi ve dolgusu kalktı. İşlev silinmedi.
+      bool quiet = false,
     }) {
       return Semantics(
         button: true,
@@ -1004,9 +1107,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               height: 48,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: fill,
+                color: quiet ? Colors.transparent : fill,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: border),
+                border: quiet
+                    ? Border.all(color: Colors.transparent)
+                    : Border.all(color: border),
               ),
               child: child,
             ),
@@ -1024,6 +1129,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             key: const ValueKey('home-language-toggle'),
             tooltip: context.t(K.language),
             onTap: context.langProvider.toggle,
+            quiet: true,
             child: Text(
               context.t(K.languageCode),
               style: TextStyle(
@@ -1038,6 +1144,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             key: const ValueKey('home-theme-toggle'),
             tooltip: context.t(K.darkLightMode),
             onTap: themeProvider.toggleDarkLight,
+            quiet: true,
             child: Icon(
               themeProvider.isDark ? AppIcons.moon : AppIcons.sun,
               color: foreground,

@@ -667,6 +667,15 @@ class _AppShellState extends State<AppShell>
   Widget _buildBottomNav(BuildContext context, bool ku) {
     final surface = AppTheme.surfaceColor(context);
     final cta = AppTheme.primaryCtaColor(context);
+    // 2026-09-25: seçili sekme göstergesi `cta` (terrakota) %18 idi ve
+    // her iki temada da aynı sayıyı kullanıyordu. Açık temada krem zemin
+    // üstünde bu yumuşak şeftalini veriyor; karanlık temada aynı karışım
+    // koyu yeşil zeminde bulanık kahverengiye dönüşüyordu — seçili sekme
+    // "leke" gibi görünüyordu. Karanlıkta karışım güçlendirilir ve seçili
+    // etiket/simge `readableAccent` ile açıklanır: koyu zeminde terracotta
+    // tek başına düşük kontrast veriyor (2026-09-25 iPhone 17 Pro turu).
+    final isDark = !AppTheme.isLight(context);
+    final selectedInk = isDark ? AppColors.readableAccent(context, cta) : cta;
     return NavigationBarTheme(
       data: NavigationBarThemeData(
         height: 70,
@@ -676,7 +685,9 @@ class _AppShellState extends State<AppShell>
         elevation: 0,
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
-          final color = selected ? cta : AppTheme.textMutedColor(context);
+          final color = selected
+              ? selectedInk
+              : AppTheme.textMutedColor(context);
           return TextStyle(
             fontSize: 11,
             fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
@@ -686,10 +697,23 @@ class _AppShellState extends State<AppShell>
         }),
         iconTheme: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
-          final color = selected ? cta : AppTheme.textMutedColor(context);
+          final color = selected
+              ? selectedInk
+              : AppTheme.textMutedColor(context);
           return IconThemeData(size: selected ? 26 : 23, color: color);
         }),
-        indicatorColor: cta.withValues(alpha: 0.18),
+        // Açık temada karışım 0.18'de kaldı: orada temiz şeftalini
+        // veriyordu ve görsel denetimde iyi duruyordu.
+        //
+        // Karanlıkta marka karışımı işe yaramadı: terrakota, koyu yeşil
+        // zemin üstünde her oranda bulanık kahverengi bir leke üretiyor
+        // (2026-09-25 iPhone 17 Pro turu, üç ayrı oran denendi). Buradaki
+        // gösterge bir "seçili yüzey" işaretidir, renk değil; bu yüzden
+        // karanlıkta nötr bir yükseltme tonu kullanıyoruz ve vurguyu seçili
+        // etiket/simgeye (okunabilir brand tonu) bırakıyoruz.
+        indicatorColor: isDark
+            ? Colors.white.withValues(alpha: 0.10)
+            : cta.withValues(alpha: 0.18),
         indicatorShape: const StadiumBorder(),
         overlayColor: WidgetStateProperty.all(cta.withValues(alpha: 0.08)),
       ),

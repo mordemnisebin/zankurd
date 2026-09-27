@@ -52,8 +52,6 @@ void main() {
   test('solid accents use adaptive foregrounds and tap targets stay large', () {
     final expectedHelpers = <String, String>{
       'lib/src/widgets/mission_toast.dart': 'AppColors.onSolid(AppTheme.gold)',
-      'lib/src/widgets/offline_banner.dart':
-          'AppColors.onSolid(AppTheme.wrong)',
       'lib/src/screens/quiz_result_screen.dart':
           'AppColors.onSolid(AppTheme.gold)',
       'lib/src/screens/quiz/quiz_screen_ui.dart': 'AppColors.onSolid(',
@@ -72,6 +70,31 @@ void main() {
       );
     }
 
+    // `offline_banner.dart` bu listede 2026-09-25'e kadar vardı: şerit
+    // `AppTheme.wrong` ile DOLDURULUYORDU ve bu yüzden beyaz metin
+    // (`onSolid`) kontrast için zorunluydu.
+    //
+    // Artık şerit doygun kırmızı dolgu değil, seyrek bir yüzey + ince
+    // kenarlık kullanıyor; metin tema'nın birincil rengini alıyor. Bu
+    // yüzden kural değişti: dolgu artık kesinlikle yapılmamalı, metin
+    // okunabilir bir renkten gelmeli. Kuralın koruduğu şey (kontrast)
+    // aynı kalıyor, yalnız yasaklanan biçim değişti.
+    final offlineBanner = File(
+      'lib/src/widgets/offline_banner.dart',
+    ).readAsStringSync();
+    expect(
+      offlineBanner,
+      isNot(contains('color: AppTheme.wrong,')),
+      reason:
+          'Çevrimdışı şeridi doygun kırmızıyla doldurma: zayıf ağda her '
+          'ekranda görünen bir durum çığlık atmamalı (2026-09-25).',
+    );
+    expect(
+      offlineBanner,
+      contains('AppTheme.textPrimaryColor(context)'),
+      reason: 'Şerit metni tema birincil rengini kullanmalı.',
+    );
+
     expect(
       File('lib/src/widgets/styled_input.dart').readAsStringSync(),
       contains('minWidth: 48'),
@@ -80,9 +103,6 @@ void main() {
       File('lib/src/widgets/legal_links.dart').readAsStringSync(),
       contains('minHeight: 48'),
     );
-    expect(
-      File('lib/src/widgets/offline_banner.dart').readAsStringSync(),
-      contains('minHeight: 48'),
-    );
+    expect(offlineBanner, contains('minHeight: 48'));
   });
 }
