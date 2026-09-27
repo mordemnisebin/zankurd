@@ -1,4 +1,12 @@
-enum MatchmakingOutcome { cancelled, human, bot }
+enum MatchmakingOutcome {
+  cancelled,
+  human,
+  bot,
+
+  /// Oyuncu 20sn zaman aşımında botu değil sırayla düelloyu seçti — rakip
+  /// aynı anda çevrimiçi değil, kendi zamanında oynayacak.
+  asyncDuel,
+}
 
 class MatchmakingMetrics {
   MatchmakingMetrics({
@@ -20,6 +28,17 @@ class MatchmakingMetrics {
     if (start == null) return;
     _start = null;
     final wait = _elapsed() - start;
-    _record({'outcome': outcome.name, 'wait_seconds': wait.inSeconds});
+    // Analitik dizgesi `.name`den bilerek ayrılır: diğer üç değer tek
+    // sözcük olduğu için `.name` zaten doğru çıktıyı veriyordu, ama
+    // `asyncDuel.name` kayıt defterindeki diğer olay alanlarının
+    // (`matchmaking_wait`, `wait_seconds`...) kullandığı yılan-kılıfına
+    // (snake_case) uymazdı.
+    final outcomeName = switch (outcome) {
+      MatchmakingOutcome.cancelled => 'cancelled',
+      MatchmakingOutcome.human => 'human',
+      MatchmakingOutcome.bot => 'bot',
+      MatchmakingOutcome.asyncDuel => 'async_duel',
+    };
+    _record({'outcome': outcomeName, 'wait_seconds': wait.inSeconds});
   }
 }

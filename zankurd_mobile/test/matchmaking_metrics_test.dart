@@ -24,4 +24,25 @@ void main() {
     MatchmakingMetrics(record: events.add).finish(MatchmakingOutcome.bot);
     expect(events, isEmpty);
   });
+
+  test(
+    'sırayla düello sonucu analitikte snake_case "async_duel" olarak geçer',
+    () {
+      // `.name` kullansaydı 'asyncDuel' (camelCase) yazardı; diğer üç
+      // olay adının (`cancelled`, `human`, `bot`) ve olayın kendi
+      // alanlarının (`wait_seconds`) kullandığı kılıfla uyuşmazdı.
+      var now = Duration.zero;
+      final events = <Map<String, Object>>[];
+      final metrics = MatchmakingMetrics(
+        elapsed: () => now,
+        record: events.add,
+      );
+      metrics.start();
+      now = const Duration(seconds: 20);
+      metrics.finish(MatchmakingOutcome.asyncDuel);
+      expect(events, [
+        {'outcome': 'async_duel', 'wait_seconds': 20},
+      ]);
+    },
+  );
 }

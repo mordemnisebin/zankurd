@@ -25,10 +25,12 @@ import '../services/matchmaking_metrics.dart';
 import '../utils/test_environment.dart';
 import '../widgets/app_state.dart';
 import '../widgets/zk_back_button.dart';
+import 'async_duel/async_duel_play_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../config/bot_names.dart';
 import '../config/category_visuals.dart';
+import '../config/feature_flags.dart';
 
 Player? selectOpponentPlayer(
   Iterable<Player> players, {
@@ -61,11 +63,34 @@ Player? selectOpponentPlayer(
   return null;
 }
 
+/// 20sn'de rakip bulunamayınca oyuncunun `_showBotPrompt` diyaloğunda
+/// verdiği karar.
+enum _NoOpponentChoice {
+  /// Aramadan tamamen vazgeç (eski "Hayır"ın karşılığı).
+  cancel,
+
+  /// Botla hemen oyna (eski "Evet").
+  bot,
+
+  /// Sırayla düello başlat: rakip aynı anda çevrimiçi olmasa da katılır.
+  asyncDuel,
+}
+
 class MatchmakingScreen extends StatefulWidget {
-  const MatchmakingScreen({required this.repository, this.metrics, super.key});
+  const MatchmakingScreen({
+    required this.repository,
+    this.metrics,
+    this.asyncDuelEnabled = kAsyncDuelEnabled,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
   final MatchmakingMetrics? metrics;
+
+  /// Varsayılanı [kAsyncDuelEnabled]; testler ve ekran turu bayrak
+  /// kapalıyken de "sırayla düello" teklifini açabilsin diye parametredir
+  /// (bkz. `PlayHubScreen.asyncDuelEnabled` — aynı desen).
+  final bool asyncDuelEnabled;
 
   @override
   State<MatchmakingScreen> createState() => _MatchmakingScreenState();
@@ -667,13 +692,13 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             }
 
             if (!_isAttemptActive(attempt)) return;
-            // Ask user for bot fallback
+            // Ask user for bot fallback / sırayla düello / cancel
             setState(() => _botPromptOpen = true);
-            final playWithBot = await _showBotPrompt();
+            final choice = await _showBotPrompt();
             if (mounted) setState(() => _botPromptOpen = false);
             if (!_isAttemptActive(attempt)) return;
             if (!mounted) return;
-            if (playWithBot == true) {
+            if (choice == _NoOpponentChoice.bot) {
               // M-3: Bot isimleri merkezi config'den; inline liste kaldırıldı.
               final matchedName =
                   BotNames.pool[Random().nextInt(BotNames.pool.length)];
@@ -692,7 +717,25 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 attempt,
                 opponentLevel: botLevel,
               );
+            } else if (choice == _NoOpponentChoice.asyncDuel) {
+              _matchmakingMetrics.finish(MatchmakingOutcome.asyncDuel);
+              _isCancelled = true;
+              // Sunucu 'Rastgele' kategori adını tanımaz; sırayla düello
+              // ekranı `category == null` olduğunda kendi rastgele
+              // kategori seçimini yapar (bkz. `AsyncDuelPlayScreen`).
+              final category = chosenCategory.toLowerCase() == 'rastgele'
+                  ? null
+                  : chosenCategory;
+              Navigator.of(context).pushReplacement(
+                AppRoute.to(
+                  AsyncDuelPlayScreen(
+                    repository: widget.repository,
+                    category: category,
+                  ),
+                ),
+              );
             } else {
+              // cancel/null: eski "Hayır" dalıyla birebir.
               _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
               _isCancelled = true;
               Navigator.of(context).pop();
@@ -728,8 +771,54 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     }
   }
 
-  Future<bool?> _showBotPrompt() async {
-    return showDialog<bool>(
+  /// 20sn zaman aşımında oyuncuya sunulan üç seçenek.
+  ///
+  /// [asyncDuelEnabled] kapalıyken [asyncDuel] hiç üretilmez — diyalog eski
+  /// iki düğmeli hâlindedir ve `bot`/`cancel` dışında bir değer dönmez.
+  Future<_NoOpponentChoice?> _showBotPrompt() async {
+    if (!widget.asyncDuelEnabled) {
+      // Bayrak kapalıyken diyalog BİREBİR eski hâlidir: aynı iki metin,
+      // aynı iki düğme. Sunucu göçü uygulanana dek (bkz. `kAsyncDuelEnabled`
+      // yorumu) mevcut kullanıcı hiçbir fark görmez.
+      final playWithBot = await showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: Text(
+            context.t(K.searchTimedOut),
+            style: TextStyle(
+              color: AppTheme.textPrimaryColor(context),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Text(
+            context.t(K.playWithBotQ),
+            style: TextStyle(color: AppTheme.textSubColor(context)),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(
+                context.t(K.no),
+                style: const TextStyle(color: AppTheme.wrong),
+              ),
+            ),
+            FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: AppTheme.primaryGradientStart,
+              ),
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(context.t(K.yes)),
+            ),
+          ],
+        ),
+      );
+      return playWithBot == true
+          ? _NoOpponentChoice.bot
+          : _NoOpponentChoice.cancel;
+    }
+
+    return showDialog<_NoOpponentChoice>(
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
@@ -741,23 +830,32 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           ),
         ),
         content: Text(
-          context.t(K.playWithBotQ),
+          context.t(K.asyncDuelOfferBody),
           style: TextStyle(color: AppTheme.textSubColor(context)),
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
+            key: const ValueKey('mm-offer-cancel'),
+            onPressed: () =>
+                Navigator.of(context).pop(_NoOpponentChoice.cancel),
             child: Text(
-              context.t(K.no),
+              context.t(K.cancel),
               style: const TextStyle(color: AppTheme.wrong),
             ),
           ),
+          TextButton(
+            key: const ValueKey('mm-offer-bot'),
+            onPressed: () => Navigator.of(context).pop(_NoOpponentChoice.bot),
+            child: Text(context.t(K.asyncDuelOfferBot)),
+          ),
           FilledButton(
+            key: const ValueKey('mm-offer-async-duel'),
             style: FilledButton.styleFrom(
               backgroundColor: AppTheme.primaryGradientStart,
             ),
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(context.t(K.yes)),
+            onPressed: () =>
+                Navigator.of(context).pop(_NoOpponentChoice.asyncDuel),
+            child: Text(context.t(K.asyncDuel)),
           ),
         ],
       ),

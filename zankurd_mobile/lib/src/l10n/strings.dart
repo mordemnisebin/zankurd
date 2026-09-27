@@ -2885,6 +2885,17 @@ class Tr {
       'ku': 'Tu niha bilîze, hevrikê te paşê',
       'tr': 'Sen şimdi oyna, rakibin sonra',
     },
+    // Eşleşme ekranında 20sn'de rakip bulunamayınca çıkan teklif diyaloğu
+    // (bkz. `MatchmakingScreen._showBotPrompt`).
+    K.asyncDuelOfferBody: {
+      'ku':
+          'Niha hevrikekî serhêl tune. Pêşbirka bi dorê dest pê bike — bila '
+          'hevrikê te paşê bilîze — an jî bi botê bilîze.',
+      'tr':
+          'Şu an çevrimiçi rakip yok. Sırayla düello başlat — rakibin sonra '
+          'oynasın — ya da botla oyna.',
+    },
+    K.asyncDuelOfferBot: {'ku': 'Bi botê bilîze', 'tr': 'Botla oyna'},
     K.asyncDuelInbox: {'ku': 'Pêşbirkên min', 'tr': 'Düellolarım'},
     K.asyncDuelInboxEmpty: {
       'ku': 'Hîn pêşbirka te tune.',
@@ -4193,6 +4204,13 @@ class K {
 
   /// Play Hub kartının alt satırı ("Sen şimdi oyna, rakibin sonra").
   static const asyncDuelSub = 'duel.async.sub';
+
+  /// Eşleşmede 20sn'de rakip bulunamayınca çıkan teklif diyaloğunun gövdesi
+  /// (bkz. `MatchmakingScreen._showBotPrompt`).
+  static const asyncDuelOfferBody = 'duel.async.offerBody';
+
+  /// Aynı teklif diyaloğundaki "botla oyna" düğmesi.
+  static const asyncDuelOfferBot = 'duel.async.offerBot';
 
   /// "Düellolarım" kutusunun ve tam liste ekranının başlığı.
   static const asyncDuelInbox = 'duel.async.inbox';
