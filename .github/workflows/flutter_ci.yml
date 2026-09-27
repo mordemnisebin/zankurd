@@ -43,6 +43,9 @@ jobs:
     - name: Install app dependencies
       run: flutter pub get
 
+    - name: Validate pinned release toolchain
+      run: dart run tool/validate_release_toolchain.dart
+
     - name: Check formatting
       # offline_question_bank.dart üretilmiş bir dosya; kanonik biçimini
       # tool/verify_and_fix_question_bank.py belirliyor, dart format'ınkiyle
@@ -77,6 +80,9 @@ jobs:
     # bankayı kendiliğinden kapsar.
     - name: Check option-leak scan (Python)
       run: python3 tool/content_authoring/sik_kalite_taramasi.py
+
+    - name: Check static tap targets
+      run: python3 tool/a11y/tap_target_taramasi.py
 
     - name: Run unit and widget tests with coverage
       run: flutter test --coverage
@@ -203,6 +209,76 @@ jobs:
         --dart-define=REVENUECAT_API_KEY_ANDROID=test_CI_PUBLIC_BUILD_ONLY_20260913_KEY
         --dart-define=REVENUECAT_API_KEY_IOS=test_CI_PUBLIC_BUILD_ONLY_20260913_KEY
 
+  patrol-ios-smoke:
+    runs-on: macos-latest
+    needs: analyze-and-test
+    if: github.event_name != 'schedule'
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.44.7'
+        channel: 'stable'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Install Patrol CLI
+      run: |
+        dart pub global activate patrol_cli 4.8.0
+        echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+
+    - name: Boot an available iPhone simulator
+      id: simulator
+      run: |
+        DEVICE_ID="$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(x["udid"] for devices in d["devices"].values() for x in devices if x.get("isAvailable") and x["name"].startswith("iPhone")))')"
+        xcrun simctl boot "$DEVICE_ID" 2>/dev/null || true
+        xcrun simctl bootstatus "$DEVICE_ID" -b
+        echo "device_id=$DEVICE_ID" >> "$GITHUB_OUTPUT"
+
+    - name: Run patrol test on real ZanKurd app tree
+      run: patrol test -t patrol_test/smoke_test.dart -d "${{ steps.simulator.outputs.device_id }}"
+
   # Fiziksel cihaz isteyen 1v1, RevenueCat, gerçek bildirim ve OS dayanıklılık
   # testleri CI koşucusunda cihaz varmış gibi işaretlenmez. Bunlar her release
   # adayı için docs/YAYIN_ADIMLARI.md içindeki manuel cihaz kapısından geçer.
+
+
+  native-visual-qa:
+    runs-on: macos-latest
+    needs: patrol-ios-smoke
+    if: github.event_name != 'schedule'
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.44.7'
+        channel: 'stable'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Boot an available iPhone simulator
+      id: native-simulator
+      run: |
+        DEVICE_ID="$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(x["udid"] for devices in d["devices"].values() for x in devices if x.get("isAvailable") and x["name"].startswith("iPhone")))')"
+        xcrun simctl boot "$DEVICE_ID" 2>/dev/null || true
+        xcrun simctl bootstatus "$DEVICE_ID" -b
+        echo "device_id=$DEVICE_ID" >> "$GITHUB_OUTPUT"
+
+    - name: Capture native-only visual evidence
+      run: >-
+        ZANKURD_NATIVE_VISUAL_DEVICE="${{ steps.native-simulator.outputs.device_id }}"
+        ./tool/native_visual_qa.sh
+
+    - name: Upload native visual evidence
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: native-visual-qa
+        path: zankurd_mobile/.tmp/design_qa/native/
+        retention-days: 14
