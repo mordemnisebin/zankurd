@@ -8,7 +8,6 @@ import '../models/quiz_level.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_state.dart';
 import '../widgets/zk_back_button.dart';
-import '../widgets/app_panel.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/percent_format.dart';
@@ -74,7 +73,6 @@ class _LevelScreenState extends State<LevelScreen> {
               _CategoryHero(
                 category: widget.category,
                 subCategory: widget.subCategory,
-                accent: accent,
                 isKu: ku,
                 completedLevels: _playedLevels.length,
                 totalLevels: levels.length,
@@ -105,6 +103,10 @@ class _LevelScreenState extends State<LevelScreen> {
                     disabled: _loading,
                     isKu: ku,
                     playedLevels: _playedLevels,
+                    // 2026-09-27: yol nötr yeşil sabitini bırakıp kategori
+                    // rengini taşıyor (owner "renksiz" buldu); renk sıraya
+                    // değil kategori adına bağlı (bkz. CategoryVisuals).
+                    accent: accent,
                     onOpen: _openLevel,
                   ),
                 },
@@ -197,19 +199,29 @@ class _LevelScreenState extends State<LevelScreen> {
 
 enum _LevelLoadState { ready, empty, error }
 
+/// Seviye ekranının kimlik kartı — kategori sahnesine giren ilk yüzey.
+///
+/// 2026-09-27: sahibi uygulamayı "renksiz" buldu. Ana ekranın konu karoları
+/// zaten `CategoryVisuals.gradient(category)` taşıyor, alt kategori
+/// ekranının banner'ı zaten kategori görselini taşıyor — seviye ekranı bu
+/// zincirde beyaz kartlı, küçük yeşil ikonlu tek halkaydı. Kart artık aynı
+/// dili konuşur: zemin TAMAMEN kategori gradyanı, üstünde beyaz metin.
+///
+/// Filigran bilerek YOK: bu kartta metinsiz bir köşe kalmıyor (alt satır
+/// sağa kadar uzanıyor, ilerleme yüzdesi sağ altta). Kategori tonlarının
+/// en açığı Coğrafya'da beyaz metin zaten 5.0:1'de; üstüne binen %10'luk
+/// beyaz filigran küçük yüzde yazısını AA'nın altına itiyordu.
 class _CategoryHero extends StatelessWidget {
   const _CategoryHero({
     required this.completedLevels,
     required this.totalLevels,
     required this.category,
     this.subCategory,
-    required this.accent,
     required this.isKu,
   });
 
   final String category;
   final String? subCategory;
-  final Color accent;
   final bool isKu;
   final int completedLevels;
   final int totalLevels;
@@ -244,8 +256,14 @@ class _CategoryHero extends StatelessWidget {
         tag: 'category_hero_${category}_$subCategory',
         child: Material(
           type: MaterialType.transparency,
-          child: AppPanel(
-            cardType: CardType.secondary,
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(AppSpacing.md),
+            decoration: BoxDecoration(
+              gradient: CategoryVisuals.gradient(category),
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              boxShadow: AppTheme.cardShadow(context),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -256,15 +274,12 @@ class _CategoryHero extends StatelessWidget {
                       width: 44,
                       height: 44,
                       decoration: BoxDecoration(
-                        color: AppColors.iconTileBg(context, accent),
+                        color: Colors.white.withValues(alpha: 0.18),
                         borderRadius: BorderRadius.circular(AppRadius.sm),
-                        border: Border.all(
-                          color: accent.withValues(alpha: 0.22),
-                        ),
                       ),
                       child: Icon(
                         CategoryVisuals.icon(category),
-                        color: AppColors.readableAccent(context, accent),
+                        color: Colors.white,
                         size: 21,
                       ),
                     ),
@@ -276,7 +291,7 @@ class _CategoryHero extends StatelessWidget {
                           Text(
                             title,
                             style: AppTypography.heading2.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
+                              color: Colors.white,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -285,7 +300,7 @@ class _CategoryHero extends StatelessWidget {
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: AppTypography.bodyMedium.copyWith(
-                              color: AppTheme.textSubColor(context),
+                              color: Colors.white.withValues(alpha: 0.9),
                             ),
                           ),
                         ],
@@ -299,7 +314,6 @@ class _CategoryHero extends StatelessWidget {
                     completed: completedLevels,
                     total: totalLevels,
                     isKu: isKu,
-                    accent: accent,
                   ),
                 ],
               ],
@@ -321,13 +335,11 @@ class _HeroProgress extends StatelessWidget {
     required this.completed,
     required this.total,
     required this.isKu,
-    required this.accent,
   });
 
   final int completed;
   final int total;
   final bool isKu;
-  final Color accent;
 
   @override
   Widget build(BuildContext context) {
@@ -350,16 +362,19 @@ class _HeroProgress extends StatelessWidget {
                       'p1': '$total',
                     }),
                     style: AppTypography.caption.copyWith(
-                      color: AppTheme.textSubColor(context),
+                      color: Colors.white,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
                 Text(
                   PercentFormat.ratio(ratio, isKu: isKu),
+                  // Yüzde, kartın gerçek "sayısı"dır — etikete göre bir
+                  // ağırlık basamağı daha kalın (w800), kimlik rengine değil
+                  // beyaza bağlı: zemin artık kendisi kategori rengi.
                   style: AppTypography.caption.copyWith(
-                    color: AppColors.readableAccent(context, accent),
-                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ],
@@ -370,8 +385,8 @@ class _HeroProgress extends StatelessWidget {
               child: LinearProgressIndicator(
                 value: ratio,
                 minHeight: 5,
-                color: accent,
-                backgroundColor: AppTheme.surfaceHiColor(context),
+                color: Colors.white,
+                backgroundColor: Colors.white.withValues(alpha: 0.25),
               ),
             ),
           ],
@@ -388,6 +403,7 @@ class _LevelPath extends StatelessWidget {
     required this.disabled,
     required this.isKu,
     required this.playedLevels,
+    required this.accent,
     required this.onOpen,
   });
 
@@ -395,6 +411,7 @@ class _LevelPath extends StatelessWidget {
   final bool disabled;
   final bool isKu;
   final Set<int> playedLevels;
+  final Color accent;
   final ValueChanged<QuizLevel> onOpen;
 
   bool _isUnlocked(int number) {
@@ -419,14 +436,53 @@ class _LevelPath extends StatelessWidget {
             level: levels[i],
             disabled: disabled,
             isKu: isKu,
+            accent: accent,
             played: playedLevels.contains(levels[i].number),
             isNext: levels[i].number == _nextNumber,
             locked: !_isUnlocked(levels[i].number),
             onTap: () => onOpen(levels[i]),
           ),
-          if (i != levels.length - 1) const SizedBox(height: AppSpacing.sm),
+          // 2026-09-27: boş SizedBox yerine rota çizgisi — iki basamak
+          // arasında "yol" hissi verir. Yükseklik ESKİSİYLE (sm) BİREBİR
+          // AYNI: büyük yazı/taşma bekçileri toplam sütun yüksekliğine göre
+          // kuruludur, burada tek piksel bile eklenmiyor.
+          if (i != levels.length - 1)
+            _LevelConnector(
+              accent: accent,
+              litAbove: playedLevels.contains(levels[i].number),
+            ),
         ],
       ],
+    );
+  }
+}
+
+/// İki ardışık seviye kartı arasındaki ince rota çizgisi.
+///
+/// Salt süstür, hiçbir veri taşımaz — bu yüzden `ExcludeSemantics` ile
+/// ekran okuyucudan tamamen gizlenir. Rozet sütununun ortasına hizalanır:
+/// kart dolgusu (`AppSpacing.md`) + rozetin yarı genişliği (44/2=22),
+/// kartın sol kenarından. Üstteki basamak oynanmışsa çizgi kategori
+/// rengini taşır (yol "aydınlanmış" görünür); değilse nötr kenarlık tonu.
+class _LevelConnector extends StatelessWidget {
+  const _LevelConnector({required this.accent, required this.litAbove});
+
+  final Color accent;
+  final bool litAbove;
+
+  @override
+  Widget build(BuildContext context) {
+    return ExcludeSemantics(
+      child: Row(
+        children: [
+          const SizedBox(width: AppSpacing.md + 22),
+          Container(
+            width: 2,
+            height: AppSpacing.sm,
+            color: litAbove ? accent : AppTheme.borderColor(context),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -437,6 +493,7 @@ class _LevelNode extends StatelessWidget {
     required this.level,
     required this.disabled,
     required this.isKu,
+    required this.accent,
     required this.played,
     required this.isNext,
     required this.locked,
@@ -446,6 +503,10 @@ class _LevelNode extends StatelessWidget {
   final QuizLevel level;
   final bool disabled;
   final bool isKu;
+  // 2026-09-27: sabit `AppTheme.playGreen` yerine kategori rengi
+  // (`CategoryVisuals.color`) — sahibi uygulamayı "renksiz" buldu; yol artık
+  // hangi kategoride olduğunu badge'inden okunabilir kılıyor.
+  final Color accent;
   final bool played;
   final bool isNext;
   final bool locked;
@@ -468,11 +529,63 @@ class _LevelNode extends StatelessWidget {
   Widget build(BuildContext context) {
     final blocked = disabled || locked;
     final name = LevelNames.localized(level.title, isKu);
-    const accent = AppTheme.playGreen;
     final muted = AppTheme.textMutedColor(context);
-    final indicatorColor = locked
-        ? muted
-        : AppColors.readableAccent(context, accent);
+    final readableAccent = AppColors.readableAccent(context, accent);
+
+    // Kart zemini: sıradaki basamak kategori renginin ince bir harmanını
+    // taşır (karanlıkta daha yüksek alfa — koyu zeminde ton daha çabuk
+    // erir). Diğer durumlar düz yüzeyde kalır.
+    final cardSurface = isNext
+        ? Color.alphaBlend(
+            accent.withValues(alpha: AppTheme.isLight(context) ? 0.08 : 0.16),
+            AppTheme.surfaceColor(context),
+          )
+        : AppTheme.surfaceColor(context);
+    final cardBorderColor = isNext
+        ? accent.withValues(alpha: 0.55)
+        : AppTheme.borderColor(context);
+
+    // Rozet dört ayrı dil konuşur: kilitli (bugünkü gibi nötr), oynanmış
+    // (altın — bu uygulamada altın yalnız KAZANILMIŞ ödül anlamına gelir,
+    // bkz. AppTheme.gold), sıradaki (kategori rengiyle dolu) ve nadiren
+    // "açık ama sırada değil" (düz ilerlemede hemen hiç oluşmaz — bir
+    // sonraki boşluk hep "sıradaki" dalına düşer — yalnız savunma amaçlı).
+    final Color badgeFill;
+    final Color? badgeBorderColor;
+    final Widget badgeContent;
+    if (locked) {
+      badgeFill = AppTheme.surfaceHiColor(context);
+      badgeBorderColor = AppTheme.borderColor(context);
+      badgeContent = Icon(AppIcons.lock, color: muted, size: 18);
+    } else if (played) {
+      badgeFill = AppTheme.gold;
+      badgeBorderColor = null;
+      badgeContent = Icon(
+        AppIcons.check,
+        color: AppColors.onSolid(AppTheme.gold),
+        size: 18,
+      );
+    } else if (isNext) {
+      badgeFill = accent;
+      badgeBorderColor = null;
+      badgeContent = Text(
+        '${level.number}',
+        style: AppTypography.heading2.copyWith(
+          color: AppColors.onSolid(accent),
+          fontWeight: FontWeight.w800,
+        ),
+      );
+    } else {
+      badgeFill = AppTheme.surfaceHiColor(context);
+      badgeBorderColor = accent;
+      badgeContent = Text(
+        '${level.number}',
+        style: AppTypography.heading2.copyWith(
+          color: readableAccent,
+          fontWeight: FontWeight.w800,
+        ),
+      );
+    }
 
     return Semantics(
       button: true,
@@ -497,13 +610,11 @@ class _LevelNode extends StatelessWidget {
               key: ValueKey('level-card-${level.number}'),
               padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
-                color: AppTheme.surfaceColor(context),
+                color: cardSurface,
                 borderRadius: BorderRadius.circular(AppRadius.card),
                 border: Border.all(
-                  color: isNext
-                      ? accent.withValues(alpha: 0.48)
-                      : AppTheme.borderColor(context),
-                  width: isNext ? 1.2 : 1,
+                  color: cardBorderColor,
+                  width: isNext ? 1.4 : 1,
                 ),
                 boxShadow: isNext ? AppTheme.cardShadow(context) : null,
               ),
@@ -514,27 +625,13 @@ class _LevelNode extends StatelessWidget {
                     height: 44,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: AppTheme.surfaceHiColor(context),
+                      color: badgeFill,
                       borderRadius: BorderRadius.circular(AppRadius.sm),
-                      border: Border.all(
-                        color: locked
-                            ? AppTheme.borderColor(context)
-                            : accent.withValues(
-                                alpha: played || isNext ? 0.42 : 0.24,
-                              ),
-                      ),
+                      border: badgeBorderColor == null
+                          ? null
+                          : Border.all(color: badgeBorderColor, width: 1.4),
                     ),
-                    child: locked
-                        ? Icon(AppIcons.lock, color: muted, size: 18)
-                        : played
-                        ? Icon(AppIcons.check, color: indicatorColor, size: 18)
-                        : Text(
-                            '${level.number}',
-                            style: AppTypography.heading2.copyWith(
-                              color: indicatorColor,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
+                    child: badgeContent,
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
@@ -579,7 +676,7 @@ class _LevelNode extends StatelessWidget {
                   if (!locked)
                     Icon(
                       AppIcons.chevronRight,
-                      color: isNext ? indicatorColor : muted,
+                      color: isNext ? readableAccent : muted,
                       size: 18,
                     ),
                 ],

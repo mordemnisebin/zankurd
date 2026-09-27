@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -122,7 +123,14 @@ void main() {
     expect(numberText.style?.fontWeight, FontWeight.w800);
   });
 
-  testWidgets('seviye kartı nötr ortak yüzey dilinde kalır', (tester) async {
+  // 2026-09-27: bu bekçi eskiden "kart HER ZAMAN nötr" bekliyordu — sahibi
+  // seviye ekranını "renksiz" bulduğu için o karar bilerek değişti. Sıradaki
+  // basamak artık kategori renginin ince bir harmanını taşır (bkz.
+  // level_color_identity_test.dart); yalnız gradyansız kaldığını (düz renk,
+  // dolu gradyan değil) ölçmeye devam eder.
+  testWidgets('seviye kartı gradyansız kalır (yalnız harmanlı düz renk)', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       wrap(LevelScreen(repository: MockZanKurdRepository(), category: 'Ziman')),
     );
@@ -132,7 +140,15 @@ void main() {
       find.byKey(const ValueKey('level-card-1')),
     );
     final decoration = card.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.lightSurface);
+    // Seviye 1 taze ilerlemede "sıradaki"dir: zemin `AppTheme.lightSurface`
+    // üstüne kategori renginin (Ziman) %8'lik açık-tema harmanıdır.
+    expect(
+      decoration.color,
+      Color.alphaBlend(
+        CategoryVisuals.color('Ziman').withValues(alpha: 0.08),
+        AppTheme.lightSurface,
+      ),
+    );
     expect(decoration.gradient, isNull);
   });
 
