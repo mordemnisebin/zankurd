@@ -44,13 +44,28 @@ class ProgressSummary extends StatelessWidget {
     final levelTone = RewardKind.level.color;
     final xpTone = RewardKind.xp.color;
 
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.borderColor(context)),
-      ),
+    // XP sayısının etiketin yanına sığması bir genişlik ve metin ölçeği
+    // kararıdır, sabit bir yerleşim değil. 2026-09-25: sıfır ilerlemede
+    // "amblem + etiket", "tam genişlikte boş çubuk" ve "yalnız sayı" üç
+    // ayrı parça hâlinde duruyor, bütünlük bozuk okunuyordu. Sayı etiketin
+    // yanına alındığında iki satıra inen şerit tek bir birim gibi okunuyor.
+    //
+    // Ancak 320px'de %200 yazıda o satır taşıyordu (2026-08-04'te bu yüzden
+    // sayı kendi satırına taşınmıştı). O düzeni geri getirmiyoruz: ölçek
+    // büyük veya ekran dar olduğunda sayı eski yerine, kendi satırına
+    // döner. `progress_summary_test` her iki yolu da kilitler.
+    final textScale = MediaQuery.textScalerOf(context).scale(1);
+    final inlineNumbers = textScale < 1.4;
+
+    final numberToken = RewardToken(
+      kind: RewardKind.xp,
+      value: hasTarget ? '$xpInLevel/$xpNeeded' : '$xpInLevel',
+      compact: true,
+    );
+
+    return Padding(
+      key: const ValueKey('home-progress-strip'),
+      padding: const EdgeInsets.fromLTRB(2, AppSpacing.xs, 2, 0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,34 +107,28 @@ class ProgressSummary extends StatelessWidget {
                   ),
                 ),
               ),
+              if (inlineNumbers) ...[
+                const SizedBox(width: AppSpacing.sm),
+                numberToken,
+              ],
             ],
           ),
-          const SizedBox(height: AppSpacing.xs),
+          SizedBox(height: inlineNumbers ? AppSpacing.sm : AppSpacing.xs),
           ClipRRect(
             borderRadius: BorderRadius.circular(AppRadius.pill),
             child: LinearProgressIndicator(
               value: ratio,
-              minHeight: 8,
+              minHeight: inlineNumbers ? 6 : 8,
               backgroundColor: AppTheme.borderColor(context),
               valueColor: AlwaysStoppedAnimation<Color>(xpTone),
             ),
           ),
-          const SizedBox(height: AppSpacing.xs),
-          // XP sayıyla da yazılır; çubuk tek başına ölçü vermez. Kendi
-          // satırında durur: büyük değerler (987654/1000000) %200 yazıda
-          // amblem ve etiketle aynı satıra sığmıyordu ve sayıyı kısaltmak
-          // yanlış bilgi vermek olurdu.
-          //
           // Hedef bilinmiyorsa yalnız kazanılan XP gösterilir — "12/0"
           // gibi anlamsız bir oran yazılmaz.
-          Align(
-            alignment: Alignment.centerLeft,
-            child: RewardToken(
-              kind: RewardKind.xp,
-              value: hasTarget ? '$xpInLevel/$xpNeeded' : '$xpInLevel',
-              compact: true,
-            ),
-          ),
+          if (!inlineNumbers) ...[
+            const SizedBox(height: AppSpacing.xs),
+            Align(alignment: Alignment.centerLeft, child: numberToken),
+          ],
         ],
       ),
     );

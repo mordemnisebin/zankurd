@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 /// Web masaüstü/tablet geniş ekranlarda içeriği ortalar ve maksimum genişlik
 /// sınırı uygular. Mobil cihazlarda tam ekran davranışı korunur.
 ///
@@ -54,9 +56,14 @@ class ResponsiveWrapper extends StatelessWidget {
             maxWidth: ResponsiveWrapper.maxContentWidth,
           ),
           child: ClipRRect(
+            // 2026-09-25: köşe yarıçapı elle `16` yazılmıştı ve kart
+            // sistemiyle (AppRadius) bağı yoktu; yeni bir yüzey eklenirken
+            // hangi yuvarlaklığın doğru olduğu yine kopyala-yapıştır
+            // belirsizliğine dönüyordu. Tokenla aynı değer, tek doğruluk
+            // kaynağı.
             borderRadius: const BorderRadius.horizontal(
-              left: Radius.circular(16),
-              right: Radius.circular(16),
+              left: Radius.circular(AppRadius.card),
+              right: Radius.circular(AppRadius.card),
             ),
             child: Container(
               decoration: BoxDecoration(
@@ -69,14 +76,11 @@ class ResponsiveWrapper extends StatelessWidget {
                     width: 0.5,
                   ),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.15),
-                    blurRadius: 40,
-                    spreadRadius: -8,
-                    offset: const Offset(0, 0),
-                  ),
-                ],
+                // 2026-09-25: gölge `Colors.black.withValues(alpha: 0.15)`
+                // ve `blurRadius: 40` elle yazılmıştı. Karanlık temada
+                // siyah gölge koyu zeminde görünmez olup yüzey "yapışık"
+                // duruyordu; tema kart gölgesi her iki temada da okunuyor.
+                boxShadow: AppTheme.cardShadow(context),
               ),
               child: child,
             ),

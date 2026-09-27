@@ -31,13 +31,7 @@ int? homePathNextLevel(List<int> numbers, Set<int> played) {
   return null;
 }
 
-Color homePathLevelColor(int number) => switch (number) {
-  1 => AppTheme.correct,
-  2 => AppTheme.playCyan,
-  3 => AppTheme.gold,
-  4 => AppTheme.primaryGradientStart,
-  _ => AppTheme.violet,
-};
+Color homePathLevelColor(int number) => AppTheme.culturalBrandBg;
 
 /// Ana sayfadaki kompakt seviye yolu — LevelScreen haritasının önizlemesi.
 class HomeLevelPath extends StatelessWidget {
@@ -73,9 +67,12 @@ class HomeLevelPath extends StatelessWidget {
       }
       return null;
     }();
-    final accent = CategoryVisuals.color(category);
-    final accentOnSurface = AppColors.readableAccent(context, accent);
-    const radius = 18.0;
+    final categoryAccent = CategoryVisuals.color(category);
+    final categoryAccentOnSurface = AppColors.readableAccent(
+      context,
+      categoryAccent,
+    );
+    const radius = AppRadius.card;
 
     final label = nextTitle == null
         ? Tr.forKu(K.homeLearningPath, isKu)
@@ -83,23 +80,35 @@ class HomeLevelPath extends StatelessWidget {
 
     return Material(
       color: Colors.transparent,
-      child: Ink(
-        decoration: BoxDecoration(
-          color: Color.alphaBlend(
-            accent.withValues(alpha: 0.08),
-            AppTheme.surfaceColor(context),
-          ),
-          borderRadius: BorderRadius.circular(radius),
-          border: Border.all(color: accentOnSurface.withValues(alpha: 0.28)),
+      child: Padding(
+        // 2026-09-25: bu blok sayfa zemininde havada duruyordu; hemen
+        // üstündeki "Kurmancî hîn bibe" satırıyla aynı kalıbı (ikon + iki
+        // satır metin + ok) paylaştığı için ikisi de "hın bibe" girdisi
+        // gibi görünüyor, hangisinin yol olduğu anlaşılmıyordu. Yol bir
+        // nesnedir: düğüm şeridi, kilit/rozet durumu ve "Hemû mijar" eylemi
+        // taşır. Ona yüzey verilerek iki satır birbirinden ayrılıyor ve
+        // bölüm başlığı altındaki hiyerarşi okunuyor.
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.xs,
+          AppSpacing.xs,
+          AppSpacing.xs,
+          0,
         ),
-        child: Padding(
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceColor(context),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(color: AppTheme.borderColor(context)),
+            boxShadow: AppTheme.cardShadow(context),
+          ),
           padding: const EdgeInsets.fromLTRB(
-            AppSpacing.md,
             AppSpacing.sm,
-            AppSpacing.md,
-            AppSpacing.md,
+            AppSpacing.sm,
+            AppSpacing.sm,
+            AppSpacing.xs,
           ),
           child: Column(
+            key: const ValueKey('home-learning-path-route'),
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Semantics(
@@ -118,8 +127,8 @@ class HomeLevelPath extends StatelessWidget {
                           children: [
                             CategoryEmblem(
                               icon: CategoryVisuals.icon(category),
-                              color: accentOnSurface,
-                              onColor: accentOnSurface,
+                              color: categoryAccentOnSurface,
+                              onColor: categoryAccentOnSurface,
                               size: 36,
                             ),
                             const SizedBox(width: AppSpacing.sm),
@@ -135,7 +144,7 @@ class HomeLevelPath extends StatelessWidget {
                                       ),
                                     }),
                                     style: AppTypography.caption.copyWith(
-                                      color: accentOnSurface,
+                                      color: AppTheme.textMutedColor(context),
                                       letterSpacing: 0.3,
                                     ),
                                   ),
@@ -157,7 +166,7 @@ class HomeLevelPath extends StatelessWidget {
                             ),
                             Icon(
                               AppIcons.chevronRight,
-                              color: accentOnSurface,
+                              color: AppTheme.textMutedColor(context),
                               size: 18,
                             ),
                           ],
@@ -170,9 +179,16 @@ class HomeLevelPath extends StatelessWidget {
                                 Expanded(
                                   child: Container(
                                     height: 3,
-                                    margin: const EdgeInsets.only(bottom: 18),
+                                    // 2026-09-25 düzeltmesi: bağlantı çizgisi
+                                    // `bottom: 18` ile aşağı itiliyordu ve
+                                    // 40pt düğümlerin merkezinden ~7pt aşağıda
+                                    // duruyordu — yol hattı kırık görünüyordu.
+                                    // Satır `CrossAxisAlignment.center` olduğu
+                                    // için çizgi kendi hizasında düğüm
+                                    // merkezine gelir; düğüm boyutu değişse de
+                                    // hizalama bozulmaz.
                                     color: played.contains(levels[i - 1].number)
-                                        ? homePathLevelColor(levels[i].number)
+                                        ? AppTheme.culturalBrandBg
                                         : AppTheme.borderColor(context),
                                   ),
                                 ),
@@ -201,19 +217,21 @@ class HomeLevelPath extends StatelessWidget {
                     key: const ValueKey('home-browse-categories-row'),
                     onPressed: onBrowse,
                     style: TextButton.styleFrom(
-                      visualDensity: VisualDensity.compact,
                       padding: const EdgeInsets.symmetric(
                         horizontal: AppSpacing.sm,
                       ),
                       minimumSize: const Size(48, 48),
                       tapTargetSize: MaterialTapTargetSize.padded,
-                      foregroundColor: accentOnSurface,
+                      foregroundColor: AppTheme.culturalBrandBg,
                     ),
                     child: Text(
                       Tr.forKu(K.homePathBrowse, isKu),
                       style: AppTypography.caption.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: accentOnSurface,
+                        color: AppColors.readableAccent(
+                          context,
+                          AppTheme.culturalBrandBg,
+                        ),
                       ),
                     ),
                   ),
@@ -242,18 +260,19 @@ class _HomePathNode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = homePathLevelColor(level.number);
-    final fill = locked
+    const brand = AppTheme.culturalBrandBg;
+    final brandOnSurface = AppColors.readableAccent(context, brand);
+    final fill = played
+        ? brand
+        : locked
         ? AppTheme.surfaceHiColor(context)
-        : played || isNext
-        ? color
-        : AppColors.iconTileBg(context, color);
+        : isNext
+        ? AppColors.iconTileBg(context, brand)
+        : AppTheme.surfaceColor(context);
     final icon = locked
         ? AppIcons.lock
         : played
         ? AppIcons.circleCheck
-        : isNext
-        ? AppIcons.play
         : null;
 
     return Column(
@@ -264,27 +283,28 @@ class _HomePathNode extends StatelessWidget {
           height: 40,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
             color: fill,
+            borderRadius: BorderRadius.circular(AppRadius.sm),
             border: Border.all(
-              color: isNext && !locked ? Colors.white : color,
-              width: isNext && !locked ? 3 : 1.5,
+              color: isNext && !locked
+                  ? brandOnSurface
+                  : AppTheme.borderColor(context),
+              width: isNext && !locked ? 2 : 1,
             ),
-            boxShadow: isNext && !locked
-                ? [
-                    BoxShadow(
-                      color: color.withValues(alpha: 0.35),
-                      blurRadius: 8,
-                      offset: const Offset(0, 3),
-                    ),
-                  ]
-                : null,
           ),
           child: icon == null
-              ? const SizedBox.shrink()
+              ? Text(
+                  '${level.number}',
+                  style: AppTypography.caption.copyWith(
+                    color: isNext
+                        ? brandOnSurface
+                        : AppTheme.textMutedColor(context),
+                    fontWeight: isNext ? FontWeight.w800 : FontWeight.w600,
+                  ),
+                )
               : Icon(
                   icon,
-                  size: isNext ? 16 : 15,
+                  size: 15,
                   color: locked
                       ? AppTheme.textMutedColor(context)
                       : Colors.white,
@@ -295,7 +315,7 @@ class _HomePathNode extends StatelessWidget {
           '${level.number}',
           style: AppTypography.caption.copyWith(
             color: isNext && !locked
-                ? AppColors.readableAccent(context, color)
+                ? brandOnSurface
                 : AppTheme.textMutedColor(context),
             fontWeight: isNext ? FontWeight.w800 : FontWeight.w600,
           ),

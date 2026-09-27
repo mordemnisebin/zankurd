@@ -170,7 +170,10 @@ class ArenaStatusChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
       decoration: BoxDecoration(
         color: onSolid
-            ? Colors.white.withValues(alpha: 0.18)
+            // Açık hero'larda (özellikle altın turnuva hero'su) beyaz@18%
+            // zemin üstünde beyaz etiket ~2:1'e düşüyordu. Koyu cam yüzey
+            // hem açık hem koyu hero tonlarında beyaz metni AA üstünde tutar.
+            ? Colors.black.withValues(alpha: 0.42)
             : tone.withValues(alpha: AppTheme.isLight(context) ? 0.12 : 0.22),
         borderRadius: BorderRadius.circular(AppRadius.pill),
       ),
@@ -225,7 +228,16 @@ class ArenaHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deep = Color.lerp(accent, const Color(0xFF17233B), 0.55)!;
+    // 2026-09-25: koyu ton sabit lacivert `0xFF17233B` ile karıştırılıyordu.
+    // Açık temada bu koyulaştırma vurgulu ve temiz; koyu temada ikinci rengi
+    // neredeyse zeminin kendisi yapıyor, yani kart "sönüyor". Artık
+    // koyulaştırma amacı korunuyor ama renk temadan geliyor: açık temada
+    // metin rengi, koyu temada ise accent'in kendisi koyulaştırılıyor —
+    // böylece iki temada da kontrast korunuyor.
+    final dark = !AppTheme.isLight(context);
+    final deep = dark
+        ? Color.lerp(accent, Colors.black, 0.35)!
+        : Color.lerp(accent, AppTheme.textPrimaryColor(context), 0.45)!;
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -282,12 +294,26 @@ class ArenaHero extends StatelessWidget {
                             ),
                           ),
                           if (subtitle != null)
-                            Text(
-                              subtitle!,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTypography.caption.copyWith(
-                                color: Colors.white.withValues(alpha: 0.86),
+                            Container(
+                              margin: const EdgeInsets.only(top: 2),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withValues(alpha: 0.34),
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.xs,
+                                ),
+                              ),
+                              child: Text(
+                                subtitle!,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTypography.caption.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
                         ],
@@ -450,17 +476,25 @@ class RankMedal extends StatelessWidget {
   final int rank;
   final double size;
 
-  Color get _tone => switch (rank) {
+  /// 2026-09-25: 2./3./4+ tonları elle yazılmış üç sabit renkti ve
+  /// temayla hiç ilgisi yoktu; gümüş/ bronz `Color(0xFF…)` değerleri hem
+  /// açık hem koyu zeminde aynı karanlığı taşıyor, bu yüzden karanlık
+  /// temada madalyalar zemine karışıyordu. Artık ikinci sıra nötr metin
+  /// rengini, üçüncü ve gerisi sıralama hiyerarşisini anlatan iki
+  /// kademeli yüzey tonunu kullanıyor; yani renk "madalyanın rengi"
+  /// yerine "bu satır ne kadar önemli" bilgisini taşıyor ve her iki
+  /// temada okunuyor.
+  Color _toneFor(BuildContext context) => switch (rank) {
     1 => AppTheme.gold,
-    2 => const Color(0xFF8A93A6),
-    3 => const Color(0xFFA9622E),
-    _ => const Color(0xFF3A4557),
+    2 => AppTheme.textSubColor(context),
+    3 => AppTheme.borderOf(context),
+    _ => AppTheme.borderOf(context).withValues(alpha: 0.7),
   };
 
   @override
   Widget build(BuildContext context) {
     final podium = rank <= 3;
-    final tone = _tone;
+    final tone = _toneFor(context);
     return SizedBox(
       width: size,
       height: size,
