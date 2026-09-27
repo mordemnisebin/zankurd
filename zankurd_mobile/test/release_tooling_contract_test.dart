@@ -220,6 +220,25 @@ void main() {
     }
   });
 
+  // CI'daki Android işi yalnız release derleyicisini sınar; Gradle ise
+  // gerçek imza olmadan release'i bilerek durdurur. Atılacak bir anahtar
+  // üretilmeden iş 2026-08-09'dan beri her koşuda kırmızıydı; sürekli
+  // kırmızı bir CI, gerçek kırılmaları görünmez kılar.
+  test('CI Android derlemesi atılacak bir anahtarla imzalanır', () {
+    final workflow = File(
+      '../.github/workflows/flutter_ci.yml',
+    ).readAsStringSync();
+    final keyStep = workflow.indexOf('keytool -genkeypair');
+    final build = workflow.indexOf('flutter build appbundle --release');
+    expect(keyStep, isNonNegative);
+    expect(build, greaterThan(keyStep));
+    expect(workflow, contains(r'$RUNNER_TEMP/ci-throwaway.jks'));
+    expect(workflow, contains('> android/key.properties'));
+    expect(workflow, contains('-validity 1'));
+    // Gerçek yükleme anahtarının yolu ya da adı CI'a asla girmez.
+    expect(workflow, isNot(contains('zankurd-upload')));
+  });
+
   test('SFTP dry-run yazılamayan yedek kökünde aktarımı durdurur', () async {
     final temp = Directory.systemTemp.createTempSync(
       'zankurd-deploy-preflight-',
