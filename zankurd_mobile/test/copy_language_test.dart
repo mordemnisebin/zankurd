@@ -433,10 +433,18 @@ void main() {
       Tr.of(K.nameGateValueFriends, AppLanguage.ku),
       'Bi hevalan re pêşbirkê bike',
     );
-    expect(Tr.of(K.onbCompeteBody, AppLanguage.ku), contains('ode an kûpa'));
-    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('10 kategoriyan'));
+    // 2026-09-27: kupa tanıtımdan çıktı (turnuva kapalı); rehber kategori
+    // sayısını metne yazmıyor (gizlenen kategoriyle sessizce yanlışa
+    // düşüyordu).
+    expect(Tr.of(K.onbCompeteBody, AppLanguage.ku), contains('an ode'));
+    expect(Tr.of(K.onbCompeteBody, AppLanguage.ku), isNot(contains('kûpa')));
+    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('kategoriyekê'));
     expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('zêr didin'));
-    expect(Tr.of(K.howToPlayBody, AppLanguage.tr), contains('10 kategori'));
+    expect(Tr.of(K.howToPlayBody, AppLanguage.tr), contains('bir kategori'));
+    expect(
+      Tr.of(K.howToPlayBody, AppLanguage.tr),
+      isNot(contains('10 kategori')),
+    );
   });
 
   test('öğrenme kökü Kurmancîde hînbûn olarak kalır', () {

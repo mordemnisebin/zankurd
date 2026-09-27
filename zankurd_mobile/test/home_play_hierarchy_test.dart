@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/config/feature_flags.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mastery_store.dart';
@@ -158,12 +159,19 @@ void main() {
             find.byKey(const ValueKey('play-hub-quick-duel')),
             findsOneWidget,
           );
-          expect(find.byKey(const ValueKey('play-hub-more')), findsOneWidget);
-          _expectActionSemantics(tester, 'play-hub-more');
-          expect(
-            find.byKey(const ValueKey('play-hub-tournament')),
-            findsNothing,
-          );
+          // Turnuva `kTournamentEnabled` ile kapalı: ne kendisi ne de onu
+          // açan "Daha fazla" katmanı çizilir. Bayrak açılırsa aşağıdaki
+          // blok turnuva kartının altın/olay rolünü yine denetler.
+          if (!kTournamentEnabled) {
+            expect(find.byKey(const ValueKey('play-hub-more')), findsNothing);
+            expect(
+              find.byKey(const ValueKey('play-hub-tournament')),
+              findsNothing,
+            );
+          } else {
+            expect(find.byKey(const ValueKey('play-hub-more')), findsOneWidget);
+            _expectActionSemantics(tester, 'play-hub-more');
+          }
           for (final key in ['play-hub-create-room', 'play-hub-join-room']) {
             expect(find.byKey(ValueKey(key)), findsOneWidget);
             final decoration = _modeDecoration(tester, key);
@@ -197,6 +205,10 @@ void main() {
             isEmpty,
           );
           _expectActionSemantics(tester, dailyContestKey);
+          if (!kTournamentEnabled) {
+            expect(tester.takeException(), isNull);
+            continue;
+          }
           await tester.ensureVisible(
             find.byKey(const ValueKey('play-hub-more')),
           );
@@ -257,22 +269,25 @@ void main() {
     expect(data.hasAction(ui.SemanticsAction.tap), isFalse);
   });
 
-  testWidgets('play more keeps button semantics without a nested header role', (
-    tester,
-  ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester.pumpWidget(_playShell(isKu: false, isDark: false));
-    await tester.pumpAndSettle();
+  // "Daha fazla" katmanı yalnız turnuva bayrağı açıkken çizilir.
+  testWidgets(
+    'play more keeps button semantics without a nested header role',
+    skip: !kTournamentEnabled,
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(_playShell(isKu: false, isDark: false));
+      await tester.pumpAndSettle();
 
-    final heading = tester.widget<ScreenSectionHeading>(
-      find.descendant(
-        of: find.byKey(const ValueKey('play-hub-more')),
-        matching: find.byType(ScreenSectionHeading),
-      ),
-    );
-    expect(heading.semanticHeader, isFalse);
-  });
+      final heading = tester.widget<ScreenSectionHeading>(
+        find.descendant(
+          of: find.byKey(const ValueKey('play-hub-more')),
+          matching: find.byType(ScreenSectionHeading),
+        ),
+      );
+      expect(heading.semanticHeader, isFalse);
+    },
+  );
 
   testWidgets(
     'busy mode cards keep readable progress contrast and disabled semantics',

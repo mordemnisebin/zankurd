@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/config/category_visibility.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/models/question_metadata.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
@@ -74,7 +75,10 @@ void main() {
       // mevcut bankalarla yakın tekrar olduğu için kuyrukta kaldı.
       // 3000 -> 1890: DeepSeek karantinası (1110 oynanabilir kayıt).
       // 1890 -> 1889: offline_2556 semantik tekrar olarak kaldırıldı.
-      1889,
+      // 1889 -> 1588: 2026-09-27 Paradigma ve Siyaset gizlendi (301
+      // oynanabilir kayıt). Kayıtlar bankada; gerekçe
+      // `category_visibility.dart` başında.
+      1588,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -90,7 +94,11 @@ void main() {
     final byReason = <String, int>{};
     for (final q in blocked) {
       final issues = policy.validate(q);
-      final key = issues.isNotEmpty
+      // Gizli kategori kendi başına bir gerekçedir: o kayıtlar sağlam ve
+      // onaylı olabilir, yalnız bilerek gösterilmez.
+      final key = !isCategoryVisible(q.category)
+          ? 'hiddenCategory=${q.category}'
+          : issues.isNotEmpty
           ? issues.join(',')
           : 'reviewStatus=${q.metadata?.reviewStatus}';
       byReason[key] = (byReason[key] ?? 0) + 1;
@@ -101,7 +109,14 @@ void main() {
       // Amed ve YPJ kaynaklanıp onaylandı. 12 sinema kaydı mevcut
       // bankalarla yakın tekrar; 16 künyesiz topluluk + 14 rejected duruyor.
       'reviewStatus=${ReviewStatus.needsReview}': 28,
-      'reviewStatus=${ReviewStatus.rejected}': 14,
+      // 14 -> 13: reddedilmiş bir kayıt gizlenen kategorilerden birinde;
+      // artık gizli kategori gerekçesiyle sayılıyor.
+      'reviewStatus=${ReviewStatus.rejected}': 13,
+      // 2026-09-27: bilerek gizlenen iki kategori (gerekçe
+      // `category_visibility.dart` başında). Onaylı, reddedilmiş ve
+      // kuyruktaki bütün kayıtları dahil.
+      'hiddenCategory=Siyaset': 152,
+      'hiddenCategory=Paradigma': 150,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
 
@@ -127,9 +142,10 @@ void main() {
           'Kategori ya doldurulmalı ya `hiddenCategoryIds` ile gizlenmeli: '
           '${thin.join(", ")}',
     );
+    // 10 -> 8: 2026-09-27 Paradigma ve Siyaset gizlendi.
     expect(
       byCategory.length,
-      10,
+      8,
       reason: 'Kategori sayısı değişti: ${byCategory.keys.toList()..sort()}',
     );
   });

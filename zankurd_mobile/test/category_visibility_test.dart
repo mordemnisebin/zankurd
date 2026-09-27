@@ -30,15 +30,18 @@ import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 /// bir id eklendiğinde döngüler kendiliğinden dolar ve dışlama yolu
 /// yeniden sınanır.
 void main() {
-  test('gizli liste boş: her kategori oynanabilir', () {
-    // Boş liste bir iddiadır: "yayına hazır olmayan kategori kalmadı."
-    // Yeni bir kategori eklendiğinde bu satır sessizce geçmez — kategoriyi
-    // gizlemek isteyen, hem id'yi listeye hem gerekçeyi kaynak dosyanın
-    // başına yazmak zorunda kalır.
-    expect(hiddenCategoryIds, isEmpty);
+  test('gizli liste bilinçli: yalnız gerekçesi yazılı kategoriler', () {
+    // Liste bir iddiadır. 2026-09-27'den beri iki kategori gizli
+    // (Paradigma, Siyaset — gerekçe `category_visibility.dart` başında).
+    // Listeye yeni bir id sessizce giremez: bu satır kırılır ve gizlemek
+    // isteyen hem id'yi hem gerekçeyi kaynak dosyaya yazmak zorunda kalır.
+    expect(hiddenCategoryIds, {'Paradigma', 'Siyaset'});
+    expect(isCategoryVisible('Paradigma'), isFalse);
+    expect(isCategoryVisible('Siyaset'), isFalse);
     expect(isCategoryVisible('Sînema'), isTrue);
     expect(isCategoryVisible('Teknolojî'), isTrue);
     expect(isCategoryVisible('Ziman'), isTrue);
+    expect(isCategoryVisible('Dîrok'), isTrue);
   });
 
   test('görünür her kategori bir turu taşıyacak kadar dolu', () {

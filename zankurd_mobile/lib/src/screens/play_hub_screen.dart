@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../config/feature_flags.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
@@ -395,63 +396,70 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 busy: _dailyLoading,
                 onTap: locked || _dailyLoading ? null : _openDailyQuiz,
               ),
-              const SizedBox(height: AppSpacing.sm),
-              // Turnuva ilk bakışta yok: benzer uygulamalarda indirme/tekrar
-              // sebebi "şimdi oyna" + günlük dönüş; eleme modu ikinci katman.
-              Semantics(
-                button: true,
-                excludeSemantics: true,
-                label: '${context.t(K.playMore)}. ${context.t(K.playMoreSub)}',
-                onTap: () => setState(() => _moreOpen = !_moreOpen),
-                child: InkWell(
-                  key: const ValueKey('play-hub-more'),
+              // Turnuva kalabalık bir kitle bekliyor; o kitle gelene dek
+              // bayrakla kapalı (bkz. `kTournamentEnabled`).
+              if (kTournamentEnabled) ...[
+                const SizedBox(height: AppSpacing.sm),
+                // Turnuva ilk bakışta yok: benzer uygulamalarda indirme/tekrar
+                // sebebi "şimdi oyna" + günlük dönüş; eleme modu ikinci katman.
+                Semantics(
+                  button: true,
+                  excludeSemantics: true,
+                  label:
+                      '${context.t(K.playMore)}. ${context.t(K.playMoreSub)}',
                   onTap: () => setState(() => _moreOpen = !_moreOpen),
-                  excludeFromSemantics: true,
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: AppSpacing.xs,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: ScreenSectionHeading(
-                            title: context.t(K.playMore),
-                            subtitle: context.t(K.playMoreSub),
-                            semanticHeader: false,
+                  child: InkWell(
+                    key: const ValueKey('play-hub-more'),
+                    onTap: () => setState(() => _moreOpen = !_moreOpen),
+                    excludeFromSemantics: true,
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AppSpacing.xs,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ScreenSectionHeading(
+                              title: context.t(K.playMore),
+                              subtitle: context.t(K.playMoreSub),
+                              semanticHeader: false,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          _moreOpen ? AppIcons.chevronUp : AppIcons.chevronDown,
-                          color: AppTheme.textMutedColor(context),
-                        ),
-                      ],
+                          Icon(
+                            _moreOpen
+                                ? AppIcons.chevronUp
+                                : AppIcons.chevronDown,
+                            color: AppTheme.textMutedColor(context),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              if (_moreOpen) ...[
-                const SizedBox(height: AppSpacing.sm),
-                ModeCard(
-                  key: const ValueKey('play-hub-tournament'),
-                  compact: true,
-                  emphasis: ModeCardEmphasis.event,
-                  icon: AppIcons.trophy,
-                  accent: AppTheme.gold,
-                  title: context.t(K.tournament),
-                  subtitle: locked
-                      ? context.t(K.serverUnreachableTitle)
-                      : context.t(K.tournamentSub),
-                  onTap: locked
-                      ? null
-                      : () {
-                          Navigator.of(context).push(
-                            AppRoute.to(
-                              TournamentScreen(repository: widget.repository),
-                            ),
-                          );
-                        },
-                ),
+                if (_moreOpen) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  ModeCard(
+                    key: const ValueKey('play-hub-tournament'),
+                    compact: true,
+                    emphasis: ModeCardEmphasis.event,
+                    icon: AppIcons.trophy,
+                    accent: AppTheme.gold,
+                    title: context.t(K.tournament),
+                    subtitle: locked
+                        ? context.t(K.serverUnreachableTitle)
+                        : context.t(K.tournamentSub),
+                    onTap: locked
+                        ? null
+                        : () {
+                            Navigator.of(context).push(
+                              AppRoute.to(
+                                TournamentScreen(repository: widget.repository),
+                              ),
+                            );
+                          },
+                  ),
+                ],
               ],
               // Mağaza satırı buradan kaldırıldı: aynı ekrana Yarış
               // sekmesinden, profilden ve kendi rotasından olmak üzere üç

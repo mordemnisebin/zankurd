@@ -67,12 +67,14 @@ void main() {
     // yüklenen kümede GERÇEKTEN bulunduğunu doğrular; bulunmazsa üstteki
     // test boş bir kümede koşup sessizce geçerdi.
     final curated = playable.where((q) => q.id.startsWith('curated_')).toList();
-    // 45 kaydın tamamı oynanabilir: 2026-09-02'de kuyruktaki 7 bozuk
-    // Kurmancî kayıt yeniden yazıldı. Sayı düşerse banka yüklenen kümede
-    // görünmüyor demektir; artarsa sessizce yeni curated id girmiştir.
+    // 45 kaydın tamamı oynanabilirdi: 2026-09-02'de kuyruktaki 7 bozuk
+    // Kurmancî kayıt yeniden yazıldı. 45 -> 12: 2026-09-27 Paradigma ve
+    // Siyaset gizlendi; curated kayıtların 33'ü bu iki kategorideydi.
+    // Sayı düşerse banka yüklenen kümede görünmüyor demektir; artarsa
+    // sessizce yeni curated id girmiştir.
     expect(
       curated.length,
-      45,
+      12,
       reason:
           'Curated bankadan oynanabilir soru sayısı değişti. Düştüyse banka '
           'yüklenen kümede görünmüyor ve kapsam ölçümü onu atlıyor demektir; '
@@ -93,6 +95,8 @@ void main() {
         .map((e) => '${e.key}: ${e.value}')
         .toList();
     expect(thin, isEmpty, reason: 'Türkçe turu dolmayan kategori: $thin');
-    expect(byCategory.length, 10);
+    // 10 -> 8: 2026-09-27 Paradigma ve Siyaset gizlendi
+    // (bkz. `category_visibility.dart`).
+    expect(byCategory.length, 8);
   });
 }

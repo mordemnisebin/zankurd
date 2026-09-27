@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:zankurd_mobile/src/config/feature_flags.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
@@ -83,22 +84,25 @@ void main() {
     semantics.dispose();
   });
 
-  testWidgets('daha fazla eylemi ekran okuyucuda tek kez duyurulur', (
-    tester,
-  ) async {
-    final semantics = tester.ensureSemantics();
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester.pumpWidget(
-      _shell(PlayHubScreen(repository: MockZanKurdRepository())),
-    );
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(const ValueKey('play-hub-more')));
-    await tester.pumpAndSettle();
+  // "Daha fazla" yalnız turnuva bayrağı açıkken çizilir (kTournamentEnabled).
+  testWidgets(
+    'daha fazla eylemi ekran okuyucuda tek kez duyurulur',
+    skip: !kTournamentEnabled,
+    (tester) async {
+      final semantics = tester.ensureSemantics();
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        _shell(PlayHubScreen(repository: MockZanKurdRepository())),
+      );
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.byKey(const ValueKey('play-hub-more')));
+      await tester.pumpAndSettle();
 
-    expect(find.bySemanticsLabel(RegExp(r'^Daha fazla')), findsOneWidget);
-    semantics.dispose();
-  });
+      expect(find.bySemanticsLabel(RegExp(r'^Daha fazla')), findsOneWidget);
+      semantics.dispose();
+    },
+  );
 
   testWidgets('oyun merkezi Pirs kapsamındaki ana yolları görünür kılar', (
     tester,
@@ -127,14 +131,18 @@ void main() {
       find.byKey(const ValueKey('play-hub-daily-contest')),
       findsOneWidget,
     );
-    expect(find.byKey(const ValueKey('play-hub-more')), findsOneWidget);
-    // Turnuva bilinçli olarak kapalı: Kahoot/Duolingo’daki gibi ilk bakışta
-    // tek bir “oyna” ve günlük dönüş. Kapalı çocuk skipOffstage ile yok.
+    // Turnuva kalabalık bir kitle bekliyor; 2026-09-27'den beri bayrakla
+    // kapalı. Kapalıyken onu açan "Daha fazla" katmanı da çizilmez.
     expect(find.byKey(const ValueKey('play-hub-tournament')), findsNothing);
-    await tester.ensureVisible(find.byKey(const ValueKey('play-hub-more')));
-    await tester.tap(find.byKey(const ValueKey('play-hub-more')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('play-hub-tournament')), findsOneWidget);
+    if (kTournamentEnabled) {
+      expect(find.byKey(const ValueKey('play-hub-more')), findsOneWidget);
+      await tester.ensureVisible(find.byKey(const ValueKey('play-hub-more')));
+      await tester.tap(find.byKey(const ValueKey('play-hub-more')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('play-hub-tournament')), findsOneWidget);
+    } else {
+      expect(find.byKey(const ValueKey('play-hub-more')), findsNothing);
+    }
     expect(find.byKey(const ValueKey('play-hub-shop-card')), findsNothing);
     expect(find.text('Turnuva ve sıralama'), findsNothing);
     final quickDuelTop = tester

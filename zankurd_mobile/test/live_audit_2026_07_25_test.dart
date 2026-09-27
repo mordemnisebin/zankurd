@@ -331,7 +331,8 @@ void main() {
         all.where((c) => !hiddenCategoryIds.contains(c)).length,
         reason: 'Görünür sayı, gizleme listesiyle tutarlı olmalı',
       );
-      expect(visible.length, greaterThanOrEqualTo(9));
+      // 2026-09-27: Paradigma ve Siyaset gizlendi (10 -> 8 görünür).
+      expect(visible.length, greaterThanOrEqualTo(8));
     });
   });
 }

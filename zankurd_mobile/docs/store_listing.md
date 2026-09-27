@@ -3,18 +3,24 @@
 App Store ve Google Play için doğrulanmış yayın metinleri.
 
 Karakter sınırları başlıklarda yazılı ve metinler o sınırlara göre
-yazıldı. Sayılar 2026-09-02 durumudur; sürüm değişince güncelle:
+yazıldı. Sayılar 2026-09-27 durumudur; sürüm değişince güncelle:
 
 | Ne | Kaç |
 |---|---|
-| Yayınlanabilir benzersiz soru | 1.890 |
-| Kategori | 10 |
+| Yayınlanabilir benzersiz soru | 1.588 |
+| Kategori | 8 |
 | Kategori başına seviye | 5 |
 | Arayüz dili | Kurmancî, Türkçe |
 
 Sayı vermek iki ucu keskin: doğruysa güven verir, eskiyince yalan olur.
-Bu yüzden metinlerde yalnız "1.800'den fazla soru" gibi aşağı yuvarlanmış
+Bu yüzden metinlerde yalnız "1.500'den fazla soru" gibi aşağı yuvarlanmış
 biçimi kullan — banka büyüdükçe doğru kalır, küçülmedikçe yanlış olmaz.
+
+> 2026-09-27: Paradigma ve Siyaset uygulamada gizlendi (bkz.
+> `lib/src/config/category_visibility.dart`). Oynanabilir soru 1.889 →
+> 1.588, kategori 10 → 8. Mağazadaki canlı metin hâlâ "1.800'den fazla
+> soru, 10 kategori" diyorsa bir sonraki gönderimde bu dosyadaki metinle
+> değiştirilmeli — küçülen banka için eski sayı artık yanlış.
 
 ## Mağaza ekran görüntüleri
 
@@ -67,7 +73,7 @@ ZanKurd — Kurmancî öğren
 ### Kısa açıklama (en fazla 80 karakter)
 
 ```
-Kurmancî öğren, sorularla yarış. 1.800'den fazla soru, 10 kategori.
+Kurmancî öğren, sorularla yarış. 1.500'den fazla soru, 8 kategori.
 ```
 
 (66 karakter)
@@ -77,7 +83,7 @@ Kurmancî öğren, sorularla yarış. 1.800'den fazla soru, 10 kategori.
 ```
 ZanKurd, Kurmancî öğrenmeyi bir yarışmaya çeviren bir bilgi
 uygulamasıdır. Dil, tarih, edebiyat, müzik, coğrafya, kültür ve daha
-fazlası — 1.800'den fazla soru, on kategori.
+fazlası — 1.500'den fazla soru, sekiz kategori.
 
 NASIL İŞLER
 
@@ -89,8 +95,7 @@ NASIL İŞLER
 YARIŞ
 
 • 1v1 düello: rastgele bir rakiple ya da arkadaşınla canlı yarış.
-• Oda kur: kodu paylaş, arkadaşlarınla aynı soruları çöz.
-• Turnuva: gerçek oyuncularla eleme; şampiyon kupayı alır.
+• Oda kur: davet bağlantısını paylaş, arkadaşların tek dokunuşla katılsın.
 • Liderlik tablosu: gün, hafta, ay ve arkadaşlar arası sıralama.
 
 ÖĞREN
@@ -153,10 +158,10 @@ Kurmancî öğren, yarış, ilerle
 ### Tanıtım metni (en fazla 170 karakter — güncellemesi incelemesizdir)
 
 ```
-Yeni: turnuvalar artık gerçek oyuncular arasında. Şampiyon kupayı alır.
+Yeni: sade ana ekran ve tek dokunuşla oda daveti. Arkadaşlarını çağır, birlikte yarışın.
 ```
 
-(71 karakter)
+(88 karakter)
 
 ### Açıklama (en fazla 4000 karakter)
 
@@ -197,7 +202,7 @@ Kurmancî hîn bibe, pêş bikeve.
 ### Danasîna kurt / Kısa açıklama (80)
 
 ```
-Kurmancî hîn bibe, bi pirsan pêşbirkê bike. Zêdetir ji 1.800 pirs, 10 kategorî.
+Kurmancî hîn bibe, bi pirsan pêşbirkê bike. Zêdetir ji 1.500 pirs, 8 kategorî.
 ```
 
 (78 karakter)
@@ -206,7 +211,7 @@ Kurmancî hîn bibe, bi pirsan pêşbirkê bike. Zêdetir ji 1.800 pirs, 10 kate
 
 ```
 ZanKurd sepaneke zanînê ye ku hînbûna kurmancî dike pêşbirk. Ziman,
-dîrok, wêje, muzîk, erdnîgarî, çand û bêtir — zêdetir ji 1.800 pirs, deh
+dîrok, wêje, muzîk, erdnîgarî, çand û bêtir — zêdetir ji 1.500 pirs, heşt
 kategorî.
 
 ÇAWA DIXEBITE
@@ -219,8 +224,7 @@ kategorî.
 PÊŞBIRK
 
 • Duelo 1v1: bi hevrikekî rasthatî an bi hevalê xwe re rasterast.
-• Ode ava bike: kodê parve bike, bi hevalan re heman pirsan bibersivîne.
-• Kûpa: bi lîstikvanên rastî re elemeyî; şampiyon kûpayê digire.
+• Ode ava bike: girêdana vexwendinê parve bike, bila hevalên te bi yek tikandinê tevlî bibin.
 • Tabloya pêşderiyan: roj, hefte, meh û di nav hevalan de.
 
 HÎN BIBE

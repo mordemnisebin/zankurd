@@ -2284,9 +2284,11 @@ class Tr {
       'ku': 'Pêşbirkê bike û bi ser keve',
       'tr': 'Yarış ve kazan',
     },
+    // Kupa (turnuva) 2026-09-27'de bayrakla kapandı; tanıtım yalnız
+    // gerçekten açık olan iki yolu vaat eder.
     K.onbCompeteBody: {
-      'ku': '1vs1, ode an kûpa — bi hevalên xwe re bilîze.',
-      'tr': '1vs1, oda veya kupa — arkadaşlarınla oyna.',
+      'ku': '1vs1 an ode — bi hevalên xwe re bilîze.',
+      'tr': '1vs1 ya da oda — arkadaşlarınla oyna.',
     },
     K.onbDuelBullet: {
       'ku': 'Pêşbirka bilez û Çalakiya Rojê ya 10 pirsan',
@@ -2557,14 +2559,18 @@ class Tr {
       'tr':
           'Sistem, ZanKurd için bildirimlere izin vermiyor. Lütfen cihazının sistem ayarlarından ZanKurd bildirimlerini aç.',
     },
+    // Kategori sayısı metne yazılmaz: 2026-09-27'de iki kategori gizlenince
+    // "10 kategori" sessizce yanlışa düştü. Sayı ekranda görünür listeden
+    // okunur (onboarding bunu `visibleCategories` ile yapıyor).
+    //
     // Düğme `Nîv bi Nîv` der (`K.metin`). Rehber "Joker 50/50" deyince
     // oyuncu aynı yardımcıyı iki adla görür. Türkçe `joker` kökü
     // `contains('nîv')` taramasını kör eder — turnûva ile aynı sınıf.
     K.howToPlayBody: {
       'ku':
-          '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n• Çalakiya Rojê: her roj 10 pirsan bibersivîne û pêşketina xwe bibîne.\n• Odeyek Ava Bike: kodê bide hevalên xwe û bi hev re bilîzin.\n• Kategorî û Ast: ji 10 kategoriyan û 5 astan hilbijêre.\n• Nîv bi Nîv: du bersivên şaş radike.\n• Bersivên rast pûan û zêr didin; rêza rast pûanên zêde dide.',
+          '• Pêşbirka Bilez: tavilê 10 pirsan bibersivîne.\n• Çalakiya Rojê: her roj 10 pirsan bibersivîne û pêşketina xwe bibîne.\n• Odeyek Ava Bike: girêdana vexwendinê bi hevalên xwe re parve bike û bi hev re bilîzin.\n• Kategorî û Ast: kategoriyekê û ji 5 astan yekê hilbijêre.\n• Nîv bi Nîv: du bersivên şaş radike.\n• Bersivên rast pûan û zêr didin; rêza rast pûanên zêde dide.',
       'tr':
-          '• Hızlı düello: hemen 10 soru cevapla.\n• Günün Etkinliği: her gün 10 soruyu cevapla ve ilerlemeni gör.\n• Oda Kur: kodu arkadaşlarına ver, birlikte yarışın.\n• Kategori ve Seviye: 10 kategori, 5 seviye arasından seç.\n• 50/50 jokeri iki yanlış cevabı eler.\n• Doğru cevap puan ve jeton kazandırır; seri bonusu artırır.',
+          '• Hızlı düello: hemen 10 soru cevapla.\n• Günün Etkinliği: her gün 10 soruyu cevapla ve ilerlemeni gör.\n• Oda Kur: davet bağlantısını arkadaşlarınla paylaş, birlikte yarışın.\n• Kategori ve Seviye: bir kategori ve 5 seviyeden birini seç.\n• 50/50 jokeri iki yanlış cevabı eler.\n• Doğru cevap puan ve jeton kazandırır; seri bonusu artırır.',
     },
     K.privacyBody: {
       'ku':

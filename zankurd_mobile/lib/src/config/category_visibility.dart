@@ -26,9 +26,25 @@
 ///
 /// Liste artık boş. Mekanizma yerinde duruyor: bir sonraki hazır olmayan
 /// kategori için id'yi eklemek yeterli.
+///
+/// 2026-09-27: Paradigma ve Siyaset gizlendi. Üç gerekçe:
+///
+/// 1. İçerik bilgi değil öğreti: sorular tek bir siyasi hareketin
+///    kavramlarını "doğru cevap" olarak sunuyor (ör. "Demokratik modernite
+///    neyin karşısına konur? → Kapitalist modernite"). Bilgi yarışmasında
+///    tartışmalı bir görüşün doğru şık olması, o görüşü paylaşmayan Kürt
+///    oyuncuyu (Başûr'dan, dindar, siyasetle ilgisiz öğrenen…) dışarıda
+///    bırakır; uygulamanın hedefi ise bütün Kurmancî konuşanlar.
+/// 2. Uygulamanın ana pazarı Türkiye'de bu çerçevedeki içerik geliştirici
+///    için hukuki risk ve uygulama için erişim engeli riski taşır.
+/// 3. Soruların çoğu bir kavram sözlüğünden kalıpla üretilmiş doğru/yanlış
+///    maddeleri ("Değerlendir: bu açıklamaya göre X şudur — … Doğru mu?").
+///
+/// Sorular bankada duruyor; geri açmak için id'yi bu listeden çıkarmak
+/// yeterli. Kürt siyasi TARİHİ (olaylar, kişiler, tarihler) Dîrok'ta kalır.
 library;
 
-const Set<String> hiddenCategoryIds = <String>{};
+const Set<String> hiddenCategoryIds = <String>{'Paradigma', 'Siyaset'};
 
 /// Kategori listede/quiz seçiminde gösterilebilir mi?
 bool isCategoryVisible(String categoryId) =>
