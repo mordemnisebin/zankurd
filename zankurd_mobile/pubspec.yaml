@@ -105,6 +105,16 @@ dev_dependencies:
   # "hedefi açacak uygulama yok" durumunu simüle etmek için
   # (test/legal_link_open_failure_test.dart).
   url_launcher_platform_interface: ^2.3.2
+  patrol: ^4.10.0
+
+patrol:
+  app_name: ZanKurd
+  test_directory: patrol_test
+  android:
+    package_name: com.zankurd.app
+  ios:
+    bundle_id: com.zankurd.app
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

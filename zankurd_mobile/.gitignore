@@ -100,3 +100,7 @@ release_packages/
 # Sunucudan dışa aktarılan soru dökümü — denetim girdisi, kaynak değil.
 # `supabase/2026-08-01_question_export_for_audit.sql` ile üretilir.
 tool/server_questions_export.csv
+
+# Patrol generated test bundle / local secrets
+**/test_bundle.dart
+.patrol.env
