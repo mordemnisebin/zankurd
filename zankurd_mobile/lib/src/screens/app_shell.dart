@@ -25,7 +25,9 @@ import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
 import 'onboarding_screen.dart';
 import '../services/analytics_service.dart';
+import '../services/push_tap_router.dart';
 import '../services/push_token_sync.dart';
+import 'friends_screen.dart';
 import 'password_recovery_screen.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
@@ -153,6 +155,7 @@ class _AppShellState extends State<AppShell>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     JoinDeepLink.incoming.addListener(_onIncomingJoinLink);
+    PushTapRouter.pending.addListener(_onPushTapTarget);
     _homeScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
@@ -292,6 +295,16 @@ class _AppShellState extends State<AppShell>
 
   @override
   void didPopNext() {
+    // Kabuk yeniden en üstte: arkada (ör. bir maç sürerken) gelen bildirim
+    // hedefi uygulanır. Bir sonraki kareye ertelenir: bu geri çağrı gezgin
+    // geri gitmeyi işlerken (kilitliyken) gelir ve oradan sayfa itmek
+    // onay hatasıyla düşer. Aşağıdaki oda devamı dalı erken dönebildiği
+    // için en başta planlanır.
+    if (_pushTapScheduled) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _consumePushTapTarget(),
+      );
+    }
     // Kabuğun üstüne itilmiş HERHANGİ bir rotadan dönüldü — diyalog ve alt
     // sayfa dâhil. Burada yalnız oda devamı uyandırılır.
     //
@@ -332,6 +345,7 @@ class _AppShellState extends State<AppShell>
     appPageRouteObserver.unsubscribe(_tabRefreshAware);
     WidgetsBinding.instance.removeObserver(this);
     JoinDeepLink.incoming.removeListener(_onIncomingJoinLink);
+    PushTapRouter.pending.removeListener(_onPushTapTarget);
     _connectivitySub?.cancel();
     _homeScrollController.dispose();
     _profileScrollController.dispose();
@@ -432,6 +446,7 @@ class _AppShellState extends State<AppShell>
       _scheduleRoomResumeCheck(resumableUserId);
     }
     _scheduleJoinDeepLink();
+    _schedulePushTapTarget();
 
     // Web'de tarayıcı Geri kök rotayı (AppShell, splash sonrası tek rota)
     // pop edince beyaz boş sayfa oluşuyordu (2026-07-19 canlı denetim P1).
@@ -582,6 +597,61 @@ class _AppShellState extends State<AppShell>
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'join deep link failed');
+    }
+  }
+
+  bool _pushTapScheduled = false;
+
+  /// [JoinDeepLink] ile AYNI desen: kabuk kapıları (onboarding/giriş/isim)
+  /// geçilip bu noktaya ulaşıldığında bir kez planlanır ve bekleyen bildirim
+  /// hedefini bir sonraki karede tüketir.
+  void _schedulePushTapTarget() {
+    if (_pushTapScheduled) return;
+    _pushTapScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _consumePushTapTarget(),
+    );
+  }
+
+  /// Soğuk açılışta (`getInitialMessage`) ya da kabuk henüz hazır değilken
+  /// gelmiş bir dokunuşu tüketir — hedef [PushTapRouter.pending]de bekliyor
+  /// olabilir, dinleyici onu kabuk hazır olmadan önce görüp yok saymış olsa
+  /// bile burada `take()` ile yakalanır.
+  void _consumePushTapTarget() {
+    if (!mounted || !_shellIsTopRoute) return;
+    final target = PushTapRouter.take();
+    if (target == null) return;
+    _applyPushTapTarget(target);
+  }
+
+  /// Uygulama açıkken gelen bildirim dokunuşu (sıcak açılış). Kabuk henüz
+  /// [_schedulePushTapTarget]e ulaşmadıysa hedef kanalda bekler; sonradan
+  /// [_consumePushTapTarget] alır.
+  void _onPushTapTarget() {
+    if (!mounted || !_pushTapScheduled || !_shellIsTopRoute) return;
+    if (PushTapRouter.pending.value == null) return;
+    final target = PushTapRouter.take();
+    if (target == null) return;
+    _applyPushTapTarget(target);
+  }
+
+  /// Kabuğun üstünde bir sayfa ya da diyalog (ör. canlı bir oda maçı) açık
+  /// mı? Açıksa bildirim hedefi BEKLER: arkadaşlar ekranını bir maçın üstüne
+  /// itmek, arkada sayacı işleyen oyunu oyuncunun elinden alırdı. Hedef
+  /// kabuğa dönülünce ([didPopNext]) uygulanır.
+  bool get _shellIsTopRoute => ModalRoute.of(context)?.isCurrent ?? true;
+
+  void _applyPushTapTarget(PushTapTarget target) {
+    switch (target) {
+      case PushTapTarget.playTab:
+        _selectTab(1);
+      case PushTapTarget.friends:
+        _selectTab(2);
+        unawaited(
+          Navigator.of(
+            context,
+          ).push(AppRoute.to(FriendsScreen(repository: widget.repository))),
+        );
     }
   }
 

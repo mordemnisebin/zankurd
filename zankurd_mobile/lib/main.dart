@@ -35,6 +35,7 @@ import 'src/screens/splash_screen.dart';
 import 'src/services/analytics_service.dart';
 import 'src/services/notification_service.dart';
 import 'src/services/premium_service.dart';
+import 'src/services/push_tap_router.dart';
 import 'src/services/push_token_sync.dart';
 import 'src/services/firebase_push_token_source.dart';
 import 'src/theme/app_theme.dart';
@@ -194,6 +195,14 @@ Future<void> main() async {
           }
         },
       );
+      // Bildirime dokununca doğru ekrana yönlendirme yalnız Firebase gerçekten
+      // kurulduysa anlamlıdır (`onMessageOpenedApp`/`getInitialMessage`
+      // Firebase App'e ihtiyaç duyar). Başlatma başarısız olduysa
+      // (`firebaseReady == false`) çağrılmaz; mevcut çevrimdışı/hatasız
+      // açılış akışı bundan etkilenmemeli.
+      if (firebaseReady) {
+        unawaited(PushTapRouter.wireFirebase());
+      }
 
       // Abonelik kimliği, AuthProvider mevcut oturumu eşlemeden önce hazır
       // olmalı; aksi halde ilk açılıştaki kullanıcı eşleşmesi kaçabilir.

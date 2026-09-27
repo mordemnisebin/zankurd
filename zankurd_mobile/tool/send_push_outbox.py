@@ -77,15 +77,20 @@ def main() -> int:
         if not token:
             skipped += 1
             continue
-        payload = {
-            "message": {
-                "token": token,
-                "notification": {
-                    "title": job.get("title") or "ZanKurd",
-                    "body": job.get("body") or "",
-                },
-            }
+        message = {
+            "token": token,
+            "notification": {
+                "title": job.get("title") or "ZanKurd",
+                "body": job.get("body") or "",
+            },
         }
+        # Bildirim türü olmadan istemci dokunuşu hep ana ekrana düşürüyordu:
+        # FCM v1 `data` değerleri dize olmak zorunda, bu yüzden `kind` boş
+        # olmayan bir dize ise aynen taşınır (bkz. lib/src/services/push_tap_router.dart).
+        kind = job.get("kind")
+        if isinstance(kind, str) and kind:
+            message["data"] = {"kind": kind}
+        payload = {"message": message}
         fcm = urllib.request.Request(
             f"https://fcm.googleapis.com/v1/projects/{project}/messages:send",
             data=json.dumps(payload).encode(),
