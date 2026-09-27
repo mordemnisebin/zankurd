@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import '../data/durable_write.dart';
+import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -377,11 +379,6 @@ class _ShopScreenState extends State<ShopScreen> {
       builder: (ctx) {
         final isDark = Theme.of(ctx).brightness == Brightness.dark;
         return AlertDialog(
-          backgroundColor: AppTheme.surfaceColor(ctx),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-            side: BorderSide(color: AppTheme.borderColor(ctx)),
-          ),
           title: Row(
             children: [
               Container(
@@ -549,11 +546,28 @@ class _ShopScreenState extends State<ShopScreen> {
       _purchaseOffline = false;
     });
 
+    final purchaseKey =
+        'purchase_${item.id}_${DateTime.now().microsecondsSinceEpoch}';
     try {
-      final success = await widget.repository.spendCoins(
+      final result = await widget.repository.spendCoinsDurable(
         item.cost,
         'purchase_${item.id}',
+        purchaseKey,
       );
+      if (!result.success && result.retryable) {
+        await SyncManager.maybeInstance?.queueCoinSpend(
+          amount: item.cost,
+          reason: 'purchase_${item.id}',
+          idempotencyKey: purchaseKey,
+        );
+        if (!mounted) return;
+        setState(() {
+          _purchaseErrorMessage = context.t(K.errorOccurred);
+          _retryPurchaseItem = null;
+        });
+        return;
+      }
+      final success = result.success;
 
       if (!mounted) return;
 
@@ -587,6 +601,19 @@ class _ShopScreenState extends State<ShopScreen> {
         HapticFeedback.vibrate();
         setState(() => _purchaseErrorMessage = context.t(K.purchaseFailed));
       }
+    } on RetryableWriteException catch (error, stack) {
+      ErrorReporter.record(error.cause, stack, reason: 'shop_purchase');
+      await SyncManager.maybeInstance?.queueCoinSpend(
+        amount: item.cost,
+        reason: 'purchase_${item.id}',
+        idempotencyKey: purchaseKey,
+      );
+      if (!mounted) return;
+      setState(() {
+        _purchaseErrorMessage = context.t(K.errorOccurred);
+        _retryPurchaseItem = null;
+        _purchaseOffline = isLikelyOfflineError(error.cause);
+      });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'shop_purchase');
       if (!mounted) return;
@@ -908,6 +935,7 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
               borderRadius: BorderRadius.circular(AppRadius.card),
               border: Border.all(color: AppTheme.gold.withValues(alpha: 0.35)),
+              boxShadow: AppTheme.cardShadow(context),
             ),
             child: Row(
               children: [
@@ -1160,7 +1188,7 @@ class _ShopScreenState extends State<ShopScreen> {
                       height: 48,
                       child: isPurchased
                           ? _buildOwnedChip(ku)
-                          : _buildBuyButton(item, ku, canAfford),
+                          : _buildBuyButton(item, ku, canAfford, primary: true),
                     ),
                   ],
                 ),
@@ -1367,14 +1395,21 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   // ── Buy button ──
-  Widget _buildBuyButton(ShopItem item, bool ku, bool canAfford) {
+  Widget _buildBuyButton(
+    ShopItem item,
+    bool ku,
+    bool canAfford, {
+    bool primary = false,
+  }) {
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
         onPressed: _loading ? null : () => _confirmPurchase(item),
         style: FilledButton.styleFrom(
           backgroundColor: canAfford
-              ? AppTheme.primaryCtaColor(context)
+              ? primary
+                    ? AppTheme.primaryCtaColor(context)
+                    : AppTheme.surfaceHiColor(context)
               : AppTheme.surfaceHiColor(context),
           disabledBackgroundColor: AppTheme.surfaceHiColor(context),
           // Yetersiz bakiyede fiyat "muted" griyle yazılıyordu: açık
@@ -1384,8 +1419,13 @@ class _ShopScreenState extends State<ShopScreen> {
           // (2026-07-27, canlı gezinti). Düğme yine pasif görünür ama
           // fiyat okunur (5,6:1).
           foregroundColor: canAfford
-              ? Colors.white
+              ? primary
+                    ? Colors.white
+                    : AppTheme.textPrimaryColor(context)
               : AppTheme.textSubColor(context),
+          side: primary
+              ? BorderSide.none
+              : BorderSide(color: AppTheme.borderColor(context)),
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -1406,7 +1446,11 @@ class _ShopScreenState extends State<ShopScreen> {
         icon: Icon(
           AppIcons.cartShopping,
           size: 15,
-          color: canAfford ? Colors.white : AppTheme.textSubColor(context),
+          color: canAfford
+              ? primary
+                    ? Colors.white
+                    : AppTheme.textPrimaryColor(context)
+              : AppTheme.textSubColor(context),
         ),
         // Görünen etiket kısa ("10c"), ekran okuyucuya söylenen ad tam
         // cümle. `ExcludeSemantics` tek başına kullanıldığında düğmenin

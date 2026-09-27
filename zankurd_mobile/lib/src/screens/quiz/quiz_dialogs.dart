@@ -1,7 +1,12 @@
 part of '../quiz_screen.dart';
 
-// A8 (2026-09-02): duruma dokunmayan diyalog gövdeleri ana dosyadan ayrıldı.
+// A8 (2026-09-02): duruma dokunmayan diyalog göyvdeleri ana dosyadan ayrıldı.
 // Çağrı yerleri aynı; yalnız widget'ın yeri değişti.
+
+// 2026-09-25: Her diyalogda elle yazılan `backgroundColor` + `shape` +
+// `BorderSide` üçlüsü kaldırıldı. Zemin, tipografi, yarıçap ve kenarlık
+// artık `AppTheme._dialogTheme`ten geliyor; ekranlar arasında krom farkı
+// kalmıyor ve bu dosyada üç kopya silindi.
 
 class _QuizExitDialog extends StatelessWidget {
   const _QuizExitDialog({
@@ -15,11 +20,6 @@ class _QuizExitDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppTheme.surfaceColor(context),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: AppTheme.borderColor(context)),
-      ),
       // Kopya akışa göre değişir: öğrenme akışında kullanıcı "yarış"
       // başlatmamıştı, ders başlatmıştı.
       title: Text(
@@ -61,11 +61,6 @@ class _QuizForfeitDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppTheme.surfaceColor(context),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: AppTheme.borderColor(context)),
-      ),
       title: Text(context.t(K.matchForfeitedTitle)),
       content: Text(context.t(bodyKey)),
       actions: [
@@ -86,11 +81,6 @@ class _QuizReportDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppTheme.surfaceColor(context),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: AppTheme.borderColor(context)),
-      ),
       title: Text(context.t(K.reportQuestion)),
       content: TextField(
         controller: controller,

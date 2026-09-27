@@ -425,154 +425,106 @@ class AppTheme {
     );
   }
 
-  // ============ Zanîn paleti (2026-07-24 tasarım yenilemesi) ============
-  // İlke: zemin sakin, kimlik yeşil (Kesk), eylem turuncu (Tîrêj), ödül altın
-  // (Zêr). Aksan rolü 3'e indirildi; kategori tonları `category_visuals.dart`
-  // içinde yaşar ve yalnız ikon karosu + ince şeritte görünür.
+  // ============ ZanKurd Design 2.0 — Forest / Ember / Cream ============
+  // Kaynak: docs/ZANKURD_DESIGN_2.md. Uygulamanın kimliği Forest, ana
+  // eylemi Ember, ödül vurgusu Sun ve okuma yüzeyi Cream ailesinden gelir.
   //
-  // Tîrêj — tek eylem rengi. Eski #F5931E beyaz metinle 2.2:1 veriyordu ve
-  // her CTA'ya karartma perdesi (heroScrim) gerektiriyordu; bu ton beyazla
-  // AA eşiğini kendi başına geçer.
-  static const brand = Color(0xFFC2560E); // Primary CTA/Accent (Tîrêj)
-  static const brandDeep = Color(0xFFA0450A);
+  // Design 2 belgesindeki Ember 600 (#C9530A) beyaz metinle 4.44:1'de
+  // kaldığı için CTA tokenı aynı renk ailesinde çok küçük koyulaştırılmıştır.
+  // #C75209 beyazla 4.52:1 ölçülür ve normal metin için WCAG AA'yı geçer.
+  static const brand = Color(0xFFC75209); // Accessible Ember 600 / Tîrêj
+  static const brandDeep = Color(0xFFA03B0A);
 
   /// Gradyanın açık ucu — yalnız birincil CTA'da kullanılır.
-  static const brandLite = Color(0xFFE2711D);
+  static const brandLite = Color(0xFFE06A16); // Ember 500
 
   // Kesk — marka kimliği (başlık şeritleri, kimlik yüzeyleri).
-  static const culturalBrandBg = Color(0xFF14513A); // Deep Green
+  static const culturalBrandBg = Color(0xFF20533A); // Forest 700
 
-  // Aşağıdaki dört ton geriye dönük ad uyumu için duruyor; artık "oyun modu
-  // rengi" değil, nötrleştirilmiş yardımcı aksanlardır.
-  // Dolu düğme zemini olarak kullanıldığında beyaz etiket yalnız 3.96:1
-  // veriyordu; koyu metin de 4.29'da kalıyordu, yani hiçbir yazı rengi
-  // eşiği geçmiyordu — sorun rengin kendisiydi (2026-07-27). Açıklık
-  // 0.40'tan 0.36'ya çekildi: aynı yeşil, beyazla 4.72:1.
-  static const playGreen = Color(0xFF398156);
-  static const playPink = Color(0xFFA85A7A); // Muted elegant rose
-  static const playCyan = Color(0xFF2F6F62); // Muted elegant teal
-  static const playPurple = Color(0xFF6B5AA6); // Muted elegant purple
+  // Yardımcı/kategori aksanları. Design 2 kategori renklerini korur fakat
+  // doygun blok yerine işaret/rota vurgusu olarak kullanır.
+  static const playGreen = Color(0xFF2F7450); // Forest 600
+  static const playPink = Color(0xFFA85A7A);
+  static const playCyan = Color(0xFF2F6F62);
+  static const playPurple = Color(0xFF6B5AA6);
 
-  // ============ Dark Mode Palette ============
+  // ============ Dark Mode Palette — Forest ============
   static const primaryGradientStart = brand;
   static const primaryGradientEnd = brandDeep;
 
-  // Zêr — yalnız ödül/ilerleme (XP, kredi, 1. sıra). Eski #E7B53C açık
-  // yüzeyde metin olarak okunmuyordu; bu ton her iki temada da çalışır.
-  static const secondaryAccent = Color(0xFFD9A227);
-  static const gold = Color(0xFFD9A227);
+  // Zêr — yalnız ödül/ilerleme (XP, kredi, 1. sıra).
+  static const secondaryAccent = Color(0xFFE9A91B); // Sun 500
+  static const gold = Color(0xFFE9A91B); // Sun 500
 
   static const cyan = playCyan;
 
-  static const bg = Color(0xFF0E1512);
-  static const bgDeep = Color(0xFF0A0F0C);
-  // Kartlar zeminden 1px kenarlıkla ayrılır; yüzey zeminden yalnız bir tık
-  // açık olsun ki gece kullanımında ekran parlamasın (2026-07-24).
-  static const surface = Color(0xFF18211B);
-  static const surfaceHi = Color(0xFF212C24);
+  static const bg = Color(0xFF0A1712); // Forest 950
+  static const bgDeep = Color(0xFF06100C);
+  static const surface = Color(0xFF10251C); // Forest 900
+  static const surfaceHi = Color(0xFF17382A); // Forest 800
   static const darkBg = bg;
 
-  static const textPrimary = Color(0xFFF6F3EC);
-  static const textSub = Color(0xFFA8B0B8);
-  static const textMuted = Color(0xFF8F98A0);
+  static const textPrimary = Color(0xFFFBF7EE); // Cream 50
+  static const textSub = Color(0xFFD5DDD6);
+  static const textMuted = Color(0xFFA6B3AA);
 
-  static const border = Color(0xFF2A362E);
+  static const border = Color(0xFF20533A); // Forest 700
 
   static const accent = primaryGradientStart;
   static const violet = secondaryAccent;
   static const correct = Color(0xFF3DA968);
   static const wrong = Color(0xFFE5533D);
 
-  /// Form doğrulama hatası metni. Material varsayılanı açık temada
-  /// krem zemin üzerinde ~1.8:1 kontrastla okunmuyordu; bu iki ton
-  /// WCAG AA'yı her iki temada da geçer.
-  static const formErrorLight = Color(0xFFB3261E);
-  static const formErrorDark = Color(0xFFFF8A75);
+  /// Form doğrulama hatası metni.
+  static const formErrorLight = Color(0xFFDC2626);
+  static const formErrorDark = Color(0xFFF87171);
 
   // Onboarding 2. slayt: ödül/yarış teması için terracotta tonu.
-  static const terracotta = Color(0xFFB86A3E);
+  static const terracotta = Color(0xFFEA580C);
 
   /// Solo sonuç vitrininin kutlama gradyanı.
-  ///
-  /// 2026-09-10: ametist→lacivert uygulamanın en çok görünen anını marka
-  /// paletinden koparıyordu; iki uç da markaya döndü. Yeşil→koyu turuncu
-  /// denemesi (2026-08-03) çamur verdiği için iki uç aynı hue ailesindedir:
-  /// derin mürekkepten Kesk yeşiline. Beyaz metin iki uçta da AA'nın çok
-  /// üstünde; altın yıldızlar yeşil üzerinde net okunur.
-  static const celebrationInk = Color(0xFF0B1512);
+  static const celebrationInk = Color(0xFF0A1712);
   static const celebrationGreen = culturalBrandBg;
 
   // 1v1 sonuç ekranı — kazanma/kaybetme gradyanının koyu gölge renkleri.
-  // `correct`/`wrong`'un karanlık tonu; hardcoded Color literal yerine
-  // anlamlı token olarak tanımlandı (quiz_result_screen M-11).
-  static const correctDeep = Color(0xFF1B5E20); // Win gradient shadow
+  static const correctDeep = Color(0xFF064E3B); // Win gradient shadow
   static const wrongDeep = Color(0xFF7F1D1D); // Lose gradient shadow
 
   /// 1v1 sonuç başlığının AÇIK ucu — `correct`/`wrong`un okunur hâli.
-  ///
-  /// Gradyanın koyu ucu (`correctDeep` 7.87:1, `wrongDeep` 10.02:1) beyaz
-  /// metni rahat okutuyordu, açık ucu okutmuyordu: `correct` 2.97:1,
-  /// `wrong` 3.73:1. Başlığın içeriği — sonuç adı, skor, doğruluk, yıldız
-  /// sırası — sabit beyazla çiziliyor ve kartın ÜST-SOLUNDA, yani
-  /// gradyanın tam da en açık ucunda duruyor. Açık temada durum daha da
-  /// kötüydü: gradyan `alpha: 0.92` ile kartın beyazına karışıyor.
-  ///
-  /// Ton ve doygunluk korunarak yalnız açıklık düşürüldü (HLS'te L: 0.451
-  /// → 0.353 ve 0.569 → 0.487), böylece yeşil hâlâ "kazandın", kırmızı
-  /// hâlâ "kaybettin" diyor ama yazı okunuyor: ikisi de 4.61:1.
-  ///
-  /// `correct`/`wrong`un kendileri değişmedi — onlar şık vurgusu, ilerleme
-  /// çubuğu ve rozetlerde `onSolid()` ile birlikte kullanılıyor ve orada
-  /// zaten doğru davranıyorlar (2026-08-01).
-  static const correctHeader = Color(0xFF308451);
-  static const wrongHeader = Color(0xFFDB361D);
+  static const correctHeader = Color(0xFF20533A);
+  static const wrongHeader = Color(0xFFDC2626);
 
-  // ============ Light Mode Palette (Variant C) ============
-  static const lightBg = Color(0xFFF7F4EE);
-  static const lightBgDeep = Color(0xFFEFEBE3);
-  static const lightSurface = Color(0xFFFFFFFF);
-  static const lightSurfaceHi = Color(0xFFFBF8F3);
-  static const lightBorder = Color(0xFFE7E0D4);
-  static const lightTextPrimary = Color(0xFF1B201D); // Mürekkep
-  static const lightTextSub = Color(0xFF5C635E);
-  // Açık temada sönük metin rengi. Eski #7C837D sayfa zemininde 3.54:1,
-  // beyaz kartta 3.89:1 veriyordu — ikisi de AA eşiği olan 4.5'in altında
-  // (2026-07-27). Uygulamanın bütün ikincil etiketleri bu rengi kullanıyor:
-  // ipuçları, alt başlıklar, form yardım metinleri, hatta karşılama
-  // ekranındaki "Atla" düğmesi. Yani tek bir sabit, ekranların yarısında
-  // aynı kusuru taşıyordu ve tek tek bakıldığında "tasarım tercihi" gibi
-  // görünüyordu.
-  //
-  // Bir tık koyulaştırıldı: sayfa zemininde 4.70:1, beyaz kartta 5.16:1.
-  // `lightTextSub` (#5C635E) hâlâ belirgin biçimde koyu, yani sönük/ikincil
-  // ayrımı korunuyor. Koyu temanın karşılığı (#8F98A0) zaten 5.6-6.3
-  // veriyordu; orada bir şey değişmedi.
-  static const lightTextMuted = Color(0xFF686F69);
+  // ============ Light Mode Palette — Cream / Ink ============
+  static const lightBg = Color(0xFFFBF7EE); // Cream 50
+  static const lightBgDeep = Color(0xFFF4EBDD); // Cream 100
+  static const lightSurface = Color(0xFFFFFDF8);
+  static const lightSurfaceHi = Color(0xFFFBF7EE);
+  static const lightBorder = Color(0xFFE7ECE6); // Mist
+  static const lightTextPrimary = Color(0xFF171812); // Ink 950
+  static const lightTextSub = Color(0xFF4D554E);
+  static const lightTextMuted = Color(0xFF687169);
 
-  static const pirsOrangeStart = culturalBrandBg; // Cultural Deep Green
+  static const pirsOrangeStart = culturalBrandBg;
   static const pirsOrangeEnd = culturalBrandBg;
 
-  static const answerOptionBg = Color(0xFFF8F9FA);
-  static const answerOptionBorder = Color(0xFFE2E2E8);
+  static const answerOptionBg = lightSurface;
+  static const answerOptionBorder = lightBorder;
 
   // ============ Leaderboard Podium ============
-  static const silver = Color(0xFF9AA6B4);
-  static const silverLight = Color(0xFF5B6B7C);
-  static const bronze = Color(0xFFB66A3A);
-  static const bronzeLight = Color(0xFF8A4E24);
+  static const silver = Color(0xFF94A3B8);
+  static const silverLight = Color(0xFF64748B);
+  static const bronze = Color(0xFFD97706);
+  static const bronzeLight = Color(0xFFB45309);
 
   // ============ Shimmer Skeleton ============
-  // 2026-07-24 canlı denetim: iskelet (shimmer) tonları eski indigo/pembe
-  // paletten kalmıştı — sıcak kâğıt zemin üzerinde lavanta mor bloklar
-  // beliriyordu ve uygulama yüklenirken başka bir uygulama gibi görünüyordu.
-  static const shimmerBaseLight = Color(0xFFEDE7DC);
-  static const shimmerBaseDark = Color(0xFF1E2822);
-  static const shimmerHighlightLight = Color(0xFFF7F3EC);
-  static const shimmerHighlightDark = Color(0xFF283429);
+  static const shimmerBaseLight = Color(0xFFE7ECE6);
+  static const shimmerBaseDark = surfaceHi;
+  static const shimmerHighlightLight = lightBg;
+  static const shimmerHighlightDark = culturalBrandBg;
 
   // ============ Status Indicators ============
-  static const onlineGreen = Color(0xFF4CAF50);
-  static const offlineGrey = Color(0xFF9E9E9E);
+  static const onlineGreen = playGreen;
+  static const offlineGrey = Color(0xFF96A09A);
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -593,7 +545,7 @@ class AppTheme {
   static const identityHeaderGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [culturalBrandBg, Color(0xFF1E6B4C)],
+    colors: [culturalBrandBg, playGreen],
   );
 
   static const darkAuthGradient = LinearGradient(
@@ -622,8 +574,7 @@ class AppTheme {
   }
 
   /// Yalnız gerçek birincil eylemler için tema uyumlu CTA rengi.
-  static Color primaryCtaColor(BuildContext context) =>
-      isLight(context) ? const Color(0xFFD4650A) : brand;
+  static Color primaryCtaColor(BuildContext context) => brand;
 
   // Private helpers for theme checks
   static bool _isLight(BuildContext context) =>
@@ -879,6 +830,7 @@ class AppTheme {
     required Color background,
     required Color title,
     required Color body,
+    required Color border,
   }) {
     return DialogThemeData(
       backgroundColor: background,
@@ -895,8 +847,15 @@ class AppTheme {
         fontSize: 14,
         height: 1.45,
       ),
+      // 2026-09-25: kenarlık ve yarıçap burada tek yerde tanımlanıyor.
+      // Onlarca ekran `AlertDialog`'u `backgroundColor` + `shape` +
+      // `BorderSide` üçlüsüyle elle kuruyordu; aynı sayılar farklı
+      // yardımcılarla (`surfaceOf` / `surfaceColor`) yazıldığı için
+      // ekranlar birbirinden ayrışıyordu. Kenarlık tema sayesinde korunuyor,
+      // tekrar gereksiz.
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
+        side: BorderSide(color: border),
       ),
     );
   }
@@ -1024,9 +983,10 @@ class AppTheme {
         brightness: Brightness.dark,
         primary: accent,
         onPrimary: Colors.white,
-        secondary: violet,
+        secondary: playGreen,
         onSecondary: Colors.white,
-        tertiary: cyan,
+        tertiary: gold,
+        onTertiary: Color(0xFF171812),
         error: wrong,
         onError: Colors.white,
         surface: surface,
@@ -1049,29 +1009,26 @@ class AppTheme {
         // karşılıkları rengin tonunu koruyup açıklığını AA (4,5:1)
         // eşiğini geçene dek zeminden uzaklaştırarak hesaplandı — aynı
         // yöntem `AppColors.onAccentTint` içinde çalışma zamanında da var.
-        surfaceContainerLowest: Color(0xFF0A100D),
+        surfaceContainerLowest: bgDeep,
         surfaceContainerLow: bg,
         surfaceContainer: surface,
         surfaceContainerHigh: surfaceHi,
-        surfaceContainerHighest: Color(0xFF29352C),
+        surfaceContainerHighest: culturalBrandBg,
         onSurfaceVariant: textSub,
         outline: border,
-        outlineVariant: Color(0xFF212B24),
-        primaryContainer: Color(0xFF302819),
-        onPrimaryContainer: Color(0xFFED6911), // 4,59:1
-        secondaryContainer: Color(0xFF33331D),
-        onSecondaryContainer: Color(0xFFD9A227), // 5,61:1
-        tertiaryContainer: Color(0xFF1B2C25),
-        onTertiaryContainer: Color(0xFF439E8B), // 4,54:1
-        errorContainer: Color(0xFF352820),
-        onErrorContainer: Color(0xFFE96B58), // 4,55:1
-        // Yüzeyin kendisi: M3'ün yükseklik tonlaması etkisiz kalır ve
-        // kartlar uygulamanın geri kalanı gibi düz durur. Varsayılan
-        // (primary) olsaydı yükselen her yüzey turuncuya çalardı.
+        outlineVariant: surfaceHi,
+        primaryContainer: Color(0xFF2B160C),
+        onPrimaryContainer: brandLite,
+        secondaryContainer: surfaceHi,
+        onSecondaryContainer: Color(0xFFB9D7C5),
+        tertiaryContainer: Color(0xFF332A13),
+        onTertiaryContainer: gold,
+        errorContainer: Color(0xFF2E1515),
+        onErrorContainer: Color(0xFFF87171),
         surfaceTint: surface,
-        inverseSurface: Color(0xFFE6E9E3),
+        inverseSurface: lightBg,
         onInverseSurface: surface,
-        inversePrimary: Color(0xFFA0450A),
+        inversePrimary: brand,
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -1159,6 +1116,7 @@ class AppTheme {
         background: surfaceHi,
         title: textPrimary,
         body: textSub,
+        border: border,
       ),
       sliderTheme: _sliderTheme(track: border),
       timePickerTheme: _timePickerTheme(
@@ -1302,9 +1260,10 @@ class AppTheme {
         brightness: Brightness.light,
         primary: accent,
         onPrimary: Colors.white,
-        secondary: violet,
+        secondary: playGreen,
         onSecondary: Colors.white,
-        tertiary: cyan,
+        tertiary: gold,
+        onTertiary: lightTextPrimary,
         error: wrong,
         onError: Colors.white,
         surface: lightSurface,
@@ -1312,24 +1271,24 @@ class AppTheme {
         // Karanlık temadaki ile aynı gerekçe — bkz. `dark()`.
         surfaceContainerLowest: lightSurface,
         surfaceContainerLow: lightSurfaceHi,
-        surfaceContainer: lightBg,
-        surfaceContainerHigh: lightBgDeep,
-        surfaceContainerHighest: Color(0xFFE9E4DA),
+        surfaceContainer: lightBgDeep,
+        surfaceContainerHigh: Color(0xFFEEE5D8),
+        surfaceContainerHighest: lightBorder,
         onSurfaceVariant: lightTextSub,
         outline: lightBorder,
-        outlineVariant: Color(0xFFF0EBE1),
-        primaryContainer: Color(0xFFF6E7DD),
-        onPrimaryContainer: Color(0xFFAA4B0C), // 4,67:1
-        secondaryContainer: Color(0xFFFAF2E1),
-        onSecondaryContainer: Color(0xFF8C6819), // 4,59:1
-        tertiaryContainer: Color(0xFFE2EBE9),
-        onTertiaryContainer: Color(0xFF2F6F62), // 4,84:1
-        errorContainer: Color(0xFFFBE7E4),
-        onErrorContainer: Color(0xFFC5311A), // 4,61:1
+        outlineVariant: lightBgDeep,
+        primaryContainer: Color(0xFFF5DDCB),
+        onPrimaryContainer: brandDeep,
+        secondaryContainer: Color(0xFFDCE8E0),
+        onSecondaryContainer: culturalBrandBg,
+        tertiaryContainer: Color(0xFFF8E8B8),
+        onTertiaryContainer: Color(0xFF6B4B00),
+        errorContainer: Color(0xFFFEE2E2),
+        onErrorContainer: Color(0xFFB91C1C), // 4,61:1
         surfaceTint: lightSurface,
-        inverseSurface: Color(0xFF2A332C),
-        onInverseSurface: Color(0xFFF6F3EC),
-        inversePrimary: Color(0xFFED6911),
+        inverseSurface: bg,
+        onInverseSurface: textPrimary,
+        inversePrimary: brandLite,
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -1412,6 +1371,7 @@ class AppTheme {
         background: lightSurface,
         title: lightTextPrimary,
         body: lightTextSub,
+        border: lightBorder,
       ),
       sliderTheme: _sliderTheme(track: const Color(0xFFE9E4DA)),
       timePickerTheme: _timePickerTheme(

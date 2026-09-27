@@ -14,6 +14,7 @@ import '../widgets/kilim_progress_bar.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/player_moderation_button.dart';
 import '../widgets/roj_mascot.dart';
+import '../widgets/screen_identity_header.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../theme/kilim_motifs.dart';
@@ -732,11 +733,6 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        backgroundColor: AppTheme.surfaceColor(context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: AppTheme.borderColor(context)),
-        ),
         title: Text(
           context.t(K.searchTimedOut),
           style: TextStyle(
@@ -1048,69 +1044,12 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     return ListView(
       padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
       children: [
-        Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            // Aynı özellik, tek kimlik.
-            //
-            // Oyun merkezindeki "Hızlı düello" kartı marka yeşiliyle
-            // sunuluyor (play_hub_screen.dart:370), eşleşme ekranının
-            // hero'su ise `playPink` ile — kullanıcı aynı özelliğe iki
-            // ayrı renkten giriyordu. `shop_screen.dart`taki M24 notu
-            // playPink/playCyan/playPurple'ı zaten "marka dışı" diye
-            // işaretlemişti; bu yüzey o kararın dışında kalmıştı
-            // (2026-07-31 denetimi).
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
-            ),
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
-            boxShadow: [
-              BoxShadow(
-                color: AppTheme.culturalBrandBg.withValues(alpha: 0.30),
-                blurRadius: 18,
-                offset: const Offset(0, 8),
-                spreadRadius: -4,
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              Container(
-                width: 64,
-                height: 64,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.18),
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.28),
-                  ),
-                ),
-                child: const Icon(AppIcons.bolt, color: Colors.white, size: 32),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                context.t(K.duel1v1),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 24,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                context.t(K.duel1v1Sub),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.9),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
+        ScreenIdentityHeader(
+          key: const ValueKey('matchmaking-selection-header'),
+          title: context.t(K.duel1v1),
+          subtitle: context.t(K.duel1v1Sub),
+          accent: AppTheme.playGreen,
+          icon: AppIcons.bolt,
         ),
         const SizedBox(height: 20),
         // 1. Random Match Card
@@ -1123,22 +1062,12 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             child: Container(
               key: const ValueKey('matchmaking-duel-card'),
               decoration: BoxDecoration(
-                // Rastgele eşleşme birincil CTA: kırmızı (tehlike anlamı)
-                // yerine oda/mod kimliğiyle tutarlı teal-yeşil gradyan.
-                gradient: const LinearGradient(
-                  colors: [AppTheme.playCyan, Color(0xFF1E6E66)],
-                ),
+                // Design 2: seçim ekranında yalnız tek baskın eylem var;
+                // Play Hub'daki CTA ile aynı Ember tokenını kullanır.
+                color: AppTheme.primaryCtaColor(context),
                 borderRadius: BorderRadius.circular(AppRadius.card),
-                border: Border.all(
-                  color: AppTheme.playCyan.withValues(alpha: 0.7),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppTheme.playCyan.withValues(alpha: 0.18),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+                border: Border.all(color: Colors.white.withValues(alpha: 0.16)),
+                boxShadow: const <BoxShadow>[],
               ),
               padding: const EdgeInsets.all(20),
               child: Row(
@@ -1242,7 +1171,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                   child: Ink(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 14,
-                      vertical: 12,
+                      // 12px ile gerçek semantik hedef 46.8px kalıyordu.
+                      // Birer piksel ek, görünümü değiştirmeden Android'in
+                      // 48px minimum dokunma alanını aşar.
+                      vertical: 13,
                     ),
                     decoration: BoxDecoration(
                       gradient: isSelected

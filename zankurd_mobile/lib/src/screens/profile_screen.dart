@@ -827,27 +827,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       })),
                 onTap: _practiceLoading ? null : _startMistakePractice,
               ),
-              divider,
-              _menuRow(
-                leading: const Icon(
-                  AppIcons.circlePlus,
-                  color: AppTheme.playGreen,
-                  size: 20,
+              if (context.watch<AuthProvider>().canUseRemoteActions) ...[
+                divider,
+                _menuRow(
+                  leading: const Icon(
+                    AppIcons.circlePlus,
+                    color: AppTheme.playGreen,
+                    size: 20,
+                  ),
+                  iconColor: AppTheme.playGreen,
+                  title: context.t(K.suggestQuestion),
+                  subtitle: context.t(K.suggestQuestionSub),
+                  borderRadius: const BorderRadius.vertical(
+                    bottom: Radius.circular(AppRadius.md),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      AppRoute.to(
+                        SuggestQuestionScreen(repository: widget.repository),
+                      ),
+                    );
+                  },
                 ),
-                iconColor: AppTheme.playGreen,
-                title: context.t(K.suggestQuestion),
-                subtitle: context.t(K.suggestQuestionSub),
-                borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(AppRadius.md),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    AppRoute.to(
-                      SuggestQuestionScreen(repository: widget.repository),
-                    ),
-                  );
-                },
-              ),
+              ],
             ],
           ),
         ),
@@ -951,11 +953,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       barrierDismissible: false,
       builder: (dialogContext) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          backgroundColor: AppTheme.surfaceOf(ctx),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: BorderSide(color: AppTheme.borderColor(ctx)),
-          ),
           title: Text(
             context.t(K.saveAccount),
             style: TextStyle(
@@ -1150,11 +1147,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppTheme.surfaceOf(context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: AppTheme.borderColor(context)),
-        ),
         title: Text(context.t(K.signOut)),
         // Misafir hesabında çıkış geri dönüşsüzdür: hesap anonim olduğu
         // için XP, coin, rozet ve seri kalıcı olarak kaybolur. Önceki

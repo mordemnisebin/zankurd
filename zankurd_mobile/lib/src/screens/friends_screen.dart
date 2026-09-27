@@ -281,7 +281,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
                           style: const TextStyle(fontWeight: FontWeight.w700),
                         ),
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: AppTheme.gold,
+                          foregroundColor: AppColors.readableAccent(
+                            context,
+                            AppTheme.gold,
+                          ),
                           side: const BorderSide(
                             color: AppTheme.gold,
                             width: 1.2,
@@ -335,10 +338,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
         return StatefulBuilder(
           builder: (dialogContext, setDialogState) {
             return AlertDialog(
-              backgroundColor: AppTheme.surfaceOf(dialogContext),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadius.card),
-              ),
+              // 2026-09-25: zemin ve yarıçap `AppTheme._dialogTheme`ten
+              // geliyor. Buradaki `AppRadius.card` (14) temanın `md` (16)
+              // değerinden farklıydı; uygulamada 14/16/20 karışık yarıçaplı
+              // üç ayrı diyalog dili oluşmuştu.
               title: Text(
                 context.t(K.enterReferralCode),
                 style: TextStyle(

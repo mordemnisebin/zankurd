@@ -89,8 +89,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _setLearningGoal(LearningGoal goal) async {
     final store = await LearningGoalStore.load();
-    await store.save(goal);
-    if (mounted) setState(() => _learningGoal = goal);
+    final saved = await store.save(goal);
+    if (!mounted) return;
+    if (!saved) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
+      return;
+    }
+    setState(() => _learningGoal = goal);
   }
 
   bool get _isNameDirty {
@@ -164,7 +171,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
   );
 
   Future<void> _setAnalyticsConsent(bool enabled) async {
-    await context.read<AnalyticsConsentProvider>().setEnabled(enabled);
+    final saved = await context.read<AnalyticsConsentProvider>().setEnabled(
+      enabled,
+    );
+    if (!mounted) return;
+    if (!saved) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
+      return;
+    }
     if (enabled) {
       await AnalyticsService.instance.initialize(enabled: true);
     } else {
@@ -353,44 +369,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               AppPanel(
                 padding: EdgeInsets.zero,
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    key: const ValueKey('settings-report-abuse'),
-                    borderRadius: BorderRadius.circular(AppRadius.md),
-                    onTap: _openAbuseReport,
-                    child: _SettingsToggleRow(
-                      icon: AppIcons.triangleExclamation,
-                      color: AppTheme.playGreen,
-                      title: context.t(K.reportAbuse),
-                      trailing: Icon(
-                        AppIcons.chevronRight,
-                        color: AppTheme.textMutedColor(context),
+                child: Column(
+                  children: [
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        key: const ValueKey('settings-report-abuse'),
+                        borderRadius: BorderRadius.circular(AppRadius.md),
+                        onTap: _openAbuseReport,
+                        child: _SettingsToggleRow(
+                          icon: AppIcons.triangleExclamation,
+                          color: AppTheme.playGreen,
+                          title: context.t(K.reportAbuse),
+                          trailing: Icon(
+                            AppIcons.chevronRight,
+                            color: AppTheme.textMutedColor(context),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              AppPanel(
-                padding: EdgeInsets.zero,
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    key: const ValueKey('settings-beta-feedback'),
-                    borderRadius: BorderRadius.circular(AppRadius.md),
-                    onTap: _openBetaFeedback,
-                    child: _SettingsToggleRow(
-                      icon: AppIcons.circleInfo,
-                      color: AppTheme.playCyan,
-                      title: context.t(K.betaFeedback),
-                      subtitle: context.t(K.betaFeedbackSub),
-                      trailing: Icon(
-                        AppIcons.chevronRight,
-                        color: AppTheme.textMutedColor(context),
+                    Divider(
+                      height: 1,
+                      indent: 56,
+                      color: AppTheme.borderColor(context),
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        key: const ValueKey('settings-beta-feedback'),
+                        borderRadius: BorderRadius.circular(AppRadius.md),
+                        onTap: _openBetaFeedback,
+                        child: _SettingsToggleRow(
+                          icon: AppIcons.circleInfo,
+                          color: AppTheme.playCyan,
+                          title: context.t(K.betaFeedback),
+                          subtitle: context.t(K.betaFeedbackSub),
+                          trailing: Icon(
+                            AppIcons.chevronRight,
+                            color: AppTheme.textMutedColor(context),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
               const SizedBox(height: AppSpacing.cardGap),
@@ -827,11 +848,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           width: 44,
                           height: 44,
                           decoration: BoxDecoration(
-                            gradient: AppTheme.accentGradient,
+                            gradient: AppTheme.identityHeaderGradient,
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                             boxShadow: [
                               BoxShadow(
-                                color: AppTheme.accent.withValues(alpha: 0.22),
+                                color: AppTheme.culturalBrandBg.withValues(
+                                  alpha: 0.22,
+                                ),
                                 blurRadius: 18,
                                 offset: const Offset(0, 8),
                                 spreadRadius: -8,
@@ -1116,11 +1139,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppTheme.surfaceOf(context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          side: BorderSide(color: AppTheme.borderColor(context)),
-        ),
         title: Text(context.t(K.notifPermDenied)),
         content: Text(context.t(K.notifPermDeniedBody)),
         actions: [
@@ -1159,11 +1177,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final continueDelete = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppTheme.surfaceOf(context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          side: BorderSide(color: AppTheme.borderColor(context)),
-        ),
         title: Text(context.t(K.deleteConfirmTitle)),
         content: Text(context.t(K.deleteConfirmBody)),
         actions: [
@@ -1239,11 +1252,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
-              backgroundColor: AppTheme.surfaceOf(context),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadius.md),
-                side: BorderSide(color: AppTheme.borderColor(context)),
-              ),
               title: Text(context.t(K.finalConfirm)),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -1383,13 +1391,15 @@ class _LangChip extends StatelessWidget {
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
               decoration: BoxDecoration(
-                gradient: active ? AppTheme.accentGradient : null,
+                gradient: active ? AppTheme.identityHeaderGradient : null,
                 color: active ? null : Colors.transparent,
                 borderRadius: BorderRadius.circular(AppRadius.pill),
                 boxShadow: active
                     ? [
                         BoxShadow(
-                          color: AppTheme.accent.withValues(alpha: 0.24),
+                          color: AppTheme.culturalBrandBg.withValues(
+                            alpha: 0.24,
+                          ),
                           blurRadius: 16,
                           offset: const Offset(0, 6),
                           spreadRadius: -8,
