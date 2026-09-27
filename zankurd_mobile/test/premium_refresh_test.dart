@@ -50,21 +50,24 @@ PremiumService _service({
 /// öncesi hata ile yokluşu tek `false`'a indirgiyordu; sonuç ekranı bunu
 /// "abone değil" okuyup çevrimdışı aboneyi ücretli yola sürüklüyordu.
 void main() {
-  test('taze premium doğrulanınca kesin true döner ve bayrak kurulur', () async {
-    final service = _service(fetch: () async => _info(premiumActive: true));
+  test(
+    'taze premium doğrulanınca kesin true döner ve bayrak kurulur',
+    () async {
+      final service = _service(fetch: () async => _info(premiumActive: true));
 
-    final result = await service.refreshEntitlement();
+      final result = await service.refreshEntitlement();
 
-    expect(
-      result,
-      isA<EntitlementRefreshKnown>().having(
-        (e) => e.isPremium,
-        'isPremium',
-        isTrue,
-      ),
-    );
-    expect(service.isPremium, isTrue);
-  });
+      expect(
+        result,
+        isA<EntitlementRefreshKnown>().having(
+          (e) => e.isPremium,
+          'isPremium',
+          isTrue,
+        ),
+      );
+      expect(service.isPremium, isTrue);
+    },
+  );
 
   test('taze yanıtta entitlement yoksa kesin false döner', () async {
     final service = _service(fetch: () async => _info(premiumActive: false));

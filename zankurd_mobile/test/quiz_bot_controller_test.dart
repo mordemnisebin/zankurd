@@ -21,9 +21,7 @@ class _FixedRng implements Random {
 void main() {
   group('QuizBotController', () {
     test('for1v1 creates exactly one bot with name avoiding collisions', () {
-      final existing = [
-        const Player(name: 'Rojda', score: 0, state: 'Hazır'),
-      ];
+      final existing = [const Player(name: 'Rojda', score: 0, state: 'Hazır')];
 
       final controller = QuizBotController.for1v1(
         existingPlayers: existing,
@@ -47,7 +45,11 @@ void main() {
 
     test('advance triggers answerAll and updates scores', () {
       // _FixedRng(0.0) her zaman doğru cevaplatır
-      final bot = BotOpponent(name: 'Bot1', skill: 0.85, random: _FixedRng(0.0));
+      final bot = BotOpponent(
+        name: 'Bot1',
+        skill: 0.85,
+        random: _FixedRng(0.0),
+      );
       final controller = QuizBotController.fromRace(BotRace([bot]));
 
       expect(controller.bots.first.score, 0);
@@ -55,25 +57,28 @@ void main() {
       expect(controller.bots.first.score, 110);
     });
 
-    test('composePlayers merges human player and bots sorted by score descending', () {
-      final bot1 = BotOpponent(name: 'BotLow', skill: 0.5);
-      bot1.score = 50;
+    test(
+      'composePlayers merges human player and bots sorted by score descending',
+      () {
+        final bot1 = BotOpponent(name: 'BotLow', skill: 0.5);
+        bot1.score = 50;
 
-      final bot2 = BotOpponent(name: 'BotHigh', skill: 0.9);
-      bot2.score = 250;
+        final bot2 = BotOpponent(name: 'BotHigh', skill: 0.9);
+        bot2.score = 250;
 
-      final controller = QuizBotController.fromRace(BotRace([bot1, bot2]));
+        final controller = QuizBotController.fromRace(BotRace([bot1, bot2]));
 
-      const human = Player(name: 'Human', score: 150, state: '—');
-      final leaderboard = controller.composePlayers(humanPlayer: human);
+        const human = Player(name: 'Human', score: 150, state: '—');
+        final leaderboard = controller.composePlayers(humanPlayer: human);
 
-      expect(leaderboard.length, 3);
-      expect(leaderboard[0].name, 'BotHigh');
-      expect(leaderboard[0].score, 250);
-      expect(leaderboard[1].name, 'Human');
-      expect(leaderboard[1].score, 150);
-      expect(leaderboard[2].name, 'BotLow');
-      expect(leaderboard[2].score, 50);
-    });
+        expect(leaderboard.length, 3);
+        expect(leaderboard[0].name, 'BotHigh');
+        expect(leaderboard[0].score, 250);
+        expect(leaderboard[1].name, 'Human');
+        expect(leaderboard[1].score, 150);
+        expect(leaderboard[2].name, 'BotLow');
+        expect(leaderboard[2].score, 50);
+      },
+    );
   });
 }

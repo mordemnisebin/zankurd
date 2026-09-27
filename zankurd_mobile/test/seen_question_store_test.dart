@@ -122,7 +122,10 @@ void main() {
     await store.markSeen(['custom1', 'custom2']);
 
     expect(store.isSeen('custom1'), isTrue);
-    expect(storage.getStringList('zankurd.seenQuestionIds'), ['custom1', 'custom2']);
+    expect(storage.getStringList('zankurd.seenQuestionIds'), [
+      'custom1',
+      'custom2',
+    ]);
 
     SeenQuestionStore.resetInstance();
     final restored = await SeenQuestionStore.load(storage: storage);

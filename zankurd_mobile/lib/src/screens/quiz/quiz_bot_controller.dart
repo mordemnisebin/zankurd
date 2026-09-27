@@ -21,11 +21,7 @@ class QuizBotController {
     Random? random,
   }) {
     final rng = random ?? Random();
-    final botName = botOpponentDisplayName(
-      existingPlayers,
-      BotNames.pool,
-      rng,
-    );
+    final botName = botOpponentDisplayName(existingPlayers, BotNames.pool, rng);
     final botSkill = 0.65 + rng.nextDouble() * 0.25;
     final race = BotRace([
       BotOpponent(name: botName, skill: botSkill, random: rng),
@@ -58,10 +54,8 @@ class QuizBotController {
 
   /// İnsan oyuncu ile botları birleştirir ve skora göre büyükten küçüğe sıralar.
   List<Player> composePlayers({required Player humanPlayer}) {
-    final players = <Player>[
-      humanPlayer,
-      ..._race.toPlayers(),
-    ]..sort((a, b) => b.score.compareTo(a.score));
+    final players = <Player>[humanPlayer, ..._race.toPlayers()]
+      ..sort((a, b) => b.score.compareTo(a.score));
     return players;
   }
 }

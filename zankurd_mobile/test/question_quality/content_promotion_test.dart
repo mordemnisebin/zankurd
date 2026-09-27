@@ -63,14 +63,8 @@ void main() {
 
     expect(result.accepted, isEmpty);
     expect(result.rejectedByReason.keys, contains('missing_difficulty'));
-    expect(
-      result.rejectedByReason.keys,
-      isNot(contains('unverified_source')),
-    );
-    expect(
-      result.rejectedByReason.keys,
-      isNot(contains('missing_source_url')),
-    );
+    expect(result.rejectedByReason.keys, isNot(contains('unverified_source')));
+    expect(result.rejectedByReason.keys, isNot(contains('missing_source_url')));
   });
 
   test('canonical duplicate against active bank is rejected', () {
