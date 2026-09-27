@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -15,6 +16,7 @@ import '../widgets/player_avatar.dart';
 import '../widgets/room_chat.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/join_deep_link.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/floating_reaction_overlay.dart';
 import '../widgets/player_moderation_button.dart';
@@ -581,6 +583,37 @@ class _RoomScreenState extends State<RoomScreen> {
     );
   }
 
+  /// Odayı paylaşım sayfasıyla (WhatsApp, Telegram, SMS…) paylaşır.
+  ///
+  /// Oda kodu `ZK-` + on karakterdir; bir arkadaşa bunu sesli okumak ya da
+  /// elle yazdırmak odayı fiilen kilitliyordu. Kod kopyalama tek yoldu ve
+  /// kopyalanan kodun nereye yapıştırılacağını oyuncu kendisi bulmalıydı.
+  /// Paylaşılan metin `zankurd.com/join/<kod>` bağlantısını taşır: web
+  /// sürümü bu yolu açınca odaya doğrudan katılır (`JoinDeepLink`), yani
+  /// uygulaması olmayan arkadaş da tarayıcıdan gelebilir. Kod metinde
+  /// ayrıca durur ki uygulamadan elle girmek isteyen de katılabilsin.
+  Future<void> _shareRoomInvite(Rect? origin) async {
+    final text = context.t(K.roomInviteShareText, {
+      'link': JoinDeepLink.shareUrl(room.code),
+      'code': room.code,
+    });
+    try {
+      await SharePlus.instance.share(
+        ShareParams(text: text, sharePositionOrigin: origin),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'room invite share failed');
+      // Paylaşım sayfası açılamadıysa davet boşa gitmesin: metin panoya.
+      await Clipboard.setData(ClipboardData(text: text));
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(context.t(K.roomCodeCopied, {'code': room.code})),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
@@ -1038,6 +1071,15 @@ class _RoomScreenState extends State<RoomScreen> {
                                                     ),
                                                   ),
                                                 ),
+                                              ),
+                                              const SizedBox(
+                                                height: AppSpacing.sm,
+                                              ),
+                                              _RoomInviteButton(
+                                                label: context.t(
+                                                  K.roomInviteAction,
+                                                ),
+                                                onShare: _shareRoomInvite,
                                               ),
                                             ],
                                           ),
@@ -1701,6 +1743,51 @@ String _hostName(GameRoom room) {
     if (player.id != null && player.id == room.hostId) return player.name;
   }
   return room.players.isNotEmpty ? room.players.first.name : '—';
+}
+
+/// Oda lobisindeki davet düğmesi (koyu sahne üstünde).
+///
+/// Paylaşım sayfası iPad'de bir çıkış noktası ister; düğmenin kendi
+/// konumu [onShare]'e verilir. Telefonlarda yok sayılır.
+class _RoomInviteButton extends StatelessWidget {
+  const _RoomInviteButton({required this.label, required this.onShare});
+
+  final String label;
+  final Future<void> Function(Rect? origin) onShare;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 48,
+      child: FilledButton.icon(
+        key: const ValueKey('room-invite-share'),
+        onPressed: () {
+          HapticFeedback.selectionClick();
+          final box = context.findRenderObject() as RenderBox?;
+          final origin = box == null || !box.hasSize
+              ? null
+              : box.localToGlobal(Offset.zero) & box.size;
+          onShare(origin);
+        },
+        icon: const Icon(AppIcons.shareNodes, size: 16),
+        label: Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontWeight: FontWeight.w800),
+        ),
+        style: FilledButton.styleFrom(
+          backgroundColor: Colors.white.withValues(alpha: 0.16),
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.sm),
+            side: BorderSide(color: Colors.white.withValues(alpha: 0.28)),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _Pill extends StatelessWidget {

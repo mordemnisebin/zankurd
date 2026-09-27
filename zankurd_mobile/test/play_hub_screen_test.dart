@@ -114,7 +114,10 @@ void main() {
     expect(find.text('Oda Kur'), findsOneWidget);
     expect(find.text('Kodla Katıl'), findsOneWidget);
     expect(find.text('Arkadaşlarınla'), findsOneWidget);
-    expect(find.text('Özel oda kur ya da bir odaya katıl.'), findsOneWidget);
+    expect(
+      find.text('Oda kur, bağlantıyı arkadaşlarınla paylaş.'),
+      findsOneWidget,
+    );
     expect(find.text('Etkinlikler'), findsOneWidget);
     expect(find.text('Her gün yenilenir.'), findsOneWidget);
     expect(find.byKey(const ValueKey('play-hub-quick-duel')), findsOneWidget);

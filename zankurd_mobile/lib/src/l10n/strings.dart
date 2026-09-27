@@ -391,8 +391,8 @@ class Tr {
     },
     K.withFriends: {'ku': 'Bi hevalan re', 'tr': 'Arkadaşlarınla'},
     K.withFriendsSub: {
-      'ku': 'Odeyeke taybet ava bike an tevlî bibe.',
-      'tr': 'Özel oda kur ya da bir odaya katıl.',
+      'ku': 'Ode ava bike û girêdanê bi hevalên xwe re parve bike.',
+      'tr': 'Oda kur, bağlantıyı arkadaşlarınla paylaş.',
     },
     // Üst satır `Odeyeke taybet`, hata `Ode nehat avakirin` der;
     // düğme Türkçe "Oda" deyince aynı ekranda iki ad durur.
@@ -1588,6 +1588,18 @@ class Tr {
     K.privateRoom: {'ku': 'Odeya Taybet', 'tr': 'Özel Oda'},
     K.host: {'ku': 'Mêvandar', 'tr': 'Ev sahibi'},
     K.hostNamed: {'ku': 'Mêvandar: {name}', 'tr': 'Ev sahibi: {name}'},
+    // Oda daveti (2026-09-27). Bağlantı web sürümünde odaya doğrudan
+    // katılır (`JoinDeepLink`); kod, uygulamadan elle girmek isteyen için.
+    K.roomInviteAction: {
+      'ku': 'Hevalan vexwîne',
+      'tr': 'Arkadaşlarını davet et',
+    },
+    K.roomInviteShareText: {
+      'ku':
+          'Were odeya min a ZanKurdê, em bi hev re bilîzin! Bitikîne û tevlî bibe: {link} (Koda odeyê: {code})',
+      'tr':
+          "ZanKurd'daki odama gel, birlikte oynayalım! Dokun ve katıl: {link} (Oda kodu: {code})",
+    },
     K.roomCodeTapCopy: {
       'ku': 'Koda odeyê — bitikîne û kopî bike',
       'tr': 'Oda kodu — dokun, kopyala',
@@ -3573,6 +3585,10 @@ class K {
   static const host = 'room.host';
   static const hostNamed = 'room.hostNamed';
   static const roomCodeTapCopy = 'room.codeTapCopy';
+
+  /// Oda lobisindeki davet düğmesi ve paylaşılan metin.
+  static const roomInviteAction = 'room.invite.action';
+  static const roomInviteShareText = 'room.invite.shareText';
   static const playersWord = 'room.players';
   static const playerListUpdating = 'room.playerListUpdating';
   static const noPlayersYet = 'room.noPlayers';

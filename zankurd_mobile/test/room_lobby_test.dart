@@ -528,9 +528,13 @@ void main() {
     );
     await tester.pump();
 
-    await tester.tap(
-      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
-    );
+    // Üç oyunculu lobide başlat düğmesi ilk ekranın altında kalabilir
+    // (2026-09-27'den beri kod kartının altında davet düğmesi var); oyuncu
+    // gibi önce kaydırıp sonra dokunuyoruz.
+    final start = find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat');
+    await tester.ensureVisible(start);
+    await tester.pump();
+    await tester.tap(start);
     await tester.pumpAndSettle();
 
     final quiz = tester.widget<QuizScreen>(find.byType(QuizScreen));
