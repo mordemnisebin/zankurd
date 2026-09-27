@@ -2,6 +2,26 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+/// `deploy_sftp.sh`in aktarımdan önce varlığını şart koştuğu derleme
+/// çıktıları.
+///
+/// `.well-known` ikilisi 2026-09-27'de eklendi. Davet bağlantısının
+/// (zankurd.com/join/KOD) yüklü uygulamayı açması bu iki dosyaya bağlı: iOS
+/// `apple-app-site-association`, Android `assetlinks.json`. Derleme onları
+/// düşürse ya da aktarım kaçırsa site yine açılır, hiçbir kontrol kızarmaz;
+/// bağlantı yalnız tarayıcıda kalır ve kusur ancak telefonda fark edilir.
+const _requiredWebOutputs = [
+  'index.html',
+  'main.dart.js',
+  'flutter_bootstrap.js',
+  '.htaccess',
+  'privacy.html',
+  'terms.html',
+  'delete-account.html',
+  '.well-known/apple-app-site-association',
+  '.well-known/assetlinks.json',
+];
+
 void main() {
   test('Flutter web viewport is owned by the engine', () {
     final index = File('web/index.html').readAsStringSync();
@@ -184,16 +204,19 @@ void main() {
     expect(source, contains(r'BACKUP_RUN="$REMOTE_BACKUP_REALPATH/'));
     expect(source, isNot(contains('--protect-args')));
     expect(source, isNot(contains('--delete')));
-    for (final output in [
-      'index.html',
-      'main.dart.js',
-      'flutter_bootstrap.js',
-      '.htaccess',
-      'privacy.html',
-      'terms.html',
-      'delete-account.html',
-    ]) {
-      expect(source, contains(output));
+    final requiredLine = source
+        .split('\n')
+        .firstWhere((line) => line.startsWith('for output in '));
+    for (final output in _requiredWebOutputs) {
+      expect(requiredLine, contains(output));
+    }
+  });
+
+  test('uygulama bağlantısı dosyaları web kaynağında duruyor', () {
+    for (final output in _requiredWebOutputs.where(
+      (output) => output.startsWith('.well-known/'),
+    )) {
+      expect(File('web/$output').existsSync(), isTrue, reason: output);
     }
   });
 
@@ -207,16 +230,10 @@ void main() {
       final bin = Directory('${temp.path}/bin')..createSync();
       final localBuild = Directory('${temp.path}/build/web')
         ..createSync(recursive: true);
-      for (final output in [
-        'index.html',
-        'main.dart.js',
-        'flutter_bootstrap.js',
-        '.htaccess',
-        'privacy.html',
-        'terms.html',
-        'delete-account.html',
-      ]) {
-        File('${localBuild.path}/$output').writeAsStringSync(output);
+      for (final output in _requiredWebOutputs) {
+        File('${localBuild.path}/$output')
+          ..parent.createSync(recursive: true)
+          ..writeAsStringSync(output);
       }
 
       final identity = File('${temp.path}/identity')..writeAsStringSync('key');
