@@ -123,12 +123,33 @@ class _RoomScreenState extends State<RoomScreen> {
   int _questionLoadAttempts = 0;
   bool _questionLoadExhausted = false;
 
-  /// Realtime yetersiz kalırsa devreye giren polling fallback.
-  /// Yalnızca lobide en az 2 oyuncu görülünce durur; aksi halde devam eder.
+  /// Realtime birincil kaynak; yoklama sessizliği yakalayan nöbetçidir.
+  ///
+  /// 2026-09-25 düzeltmesi. Buradaki asıl hata "polling'i kapatmak" değil,
+  /// **uçuşta kalan yanıtın** yeniyi ezmesiydi: `loadRoomPlayers` 3 saniye
+  /// önce başlar, o arada realtime yeni listeyi verir, sonra yoklamanın
+  /// ESKİ yanıtı düşer ve oyuncu görünmez. `room_lobby_test` bunu iki
+  /// senaryoda kilitler: "realtime oyuncu listesi bayat kalınca yoklama
+  /// kurtarır" ve "durumu yalnızca durum yoklaması görürse quiz açılır".
+  ///
+  /// Bu yüzden iki kanal da AYNI tek yazma noktasına uyar
+  /// (`_applyPlayerList` / `_applyRoomStatus`); ikisi de generation
+  /// koruması taşır ve yoklama, uçuşu sırasında bir realtime event'i
+  /// düşmüşse yanıtını **ÇÖPE ATAR** (aşağıdaki `_realtimeEventSeq`).
+  /// Yani iki yazıcı değil, bir yazıcı ve gecikmeli bir doğrulayıcı var.
+  ///
+  /// Yoklamayı tamamen kapatmak da doğru değildi: gerçek arıza bağlantının
+  /// KOPMASI değil, bağlı kalıp OLAY GÖNDERMEMESİdir (2026-08-01'de host'un
+  /// katılanı "Li bendê" görmemesi bu yüzdendi).
   Timer? _pollTimer;
   Timer? _statusPollTimer;
   int _pollCount = 0;
   bool _pollThrottled = false;
+
+  /// Realtime'dan gelen her event artar. Yoklama isteği uçarken bu sayaç
+  /// değişmişse dönen anlık görüntü bayattır ve uygulanmaz.
+  int _realtimeEventSeq = 0;
+
   static const _pollInterval = Duration(seconds: 3);
   static const _maxPollsBeforePause = 20; // ~60s, yalnızca >=2 oyuncu varken
 
@@ -172,6 +193,7 @@ class _RoomScreenState extends State<RoomScreen> {
         .listen(
           (p) {
             if (!mounted || generation != _subscriptionGeneration) return;
+            _markRealtimeHealthy();
             _applyPlayerList(p);
           },
           onError: (err, stack) {
@@ -181,7 +203,10 @@ class _RoomScreenState extends State<RoomScreen> {
                 _terminalHandled) {
               return;
             }
+            // Bağlantı koptu: sıradaki yoklama turu zaten sunucuyu
+            // okuyacak, ek bir işlem gerekmiyor.
             _startPolling();
+            _startStatusPolling();
           },
         );
     _statusSub = widget.repository
@@ -194,6 +219,7 @@ class _RoomScreenState extends State<RoomScreen> {
                 _terminalHandled) {
               return;
             }
+            _markRealtimeHealthy();
             if (status == RoomStatus.finished) {
               _handleLobbyFinished();
               return;
@@ -214,7 +240,10 @@ class _RoomScreenState extends State<RoomScreen> {
                 _terminalHandled) {
               return;
             }
+            // Bağlantı koptu: sıradaki yoklama turu zaten sunucuyu
+            // okuyacak, ek bir işlem gerekmiyor.
             _startPolling();
+            _startStatusPolling();
           },
         );
 
@@ -234,6 +263,11 @@ class _RoomScreenState extends State<RoomScreen> {
         }
       });
     }
+  }
+
+  /// Realtime suskunlaştıysa yoklama devralır; taze ise bu tur atlanır.
+  void _markRealtimeHealthy() {
+    _realtimeEventSeq++;
   }
 
   void _applyPlayerList(List<Player> players) {
@@ -291,9 +325,14 @@ class _RoomScreenState extends State<RoomScreen> {
 
   Future<void> _pollPlayersOnce() async {
     if (!mounted || quizOpened) return;
+    // Uçuş başlarken realtime'in olay sayacı. Dönüşte değişmişse bir
+    // event bu isteğin uçuşu sırasında düştü demektir: anlık görüntü
+    // bayattır, çöpe atılır.
+    final seqAtDispatch = _realtimeEventSeq;
     try {
       final players = await widget.repository.loadRoomPlayers(room);
       if (!mounted || _leaving || _terminalHandled || quizOpened) return;
+      if (seqAtDispatch != _realtimeEventSeq) return;
       _applyPlayerList(players);
       if (players.length < 2) {
         _pollCount = 0;
@@ -317,9 +356,15 @@ class _RoomScreenState extends State<RoomScreen> {
 
   Future<void> _pollRoomStatusOnce() async {
     if (!mounted || quizOpened) return;
+    final seqAtDispatch = _realtimeEventSeq;
     try {
       final status = await widget.repository.loadRoomStatus(room);
       if (!mounted || quizOpened || _leaving || _terminalHandled) return;
+      // Durum, geri dönen anlık görüntüden taze olmalı: uçuş sırasında bir
+      // realtime durumu düştüyse bu yanıttaki "active" bilgisi eski bir
+      // turdan kalma olabilir ve quiz'i erken açabilirdi. Sessizce
+      // yoksayıp bir sonraki tura bırakıyoruz (3 saniye).
+      if (seqAtDispatch != _realtimeEventSeq) return;
       if (status == RoomStatus.finished) {
         _handleLobbyFinished();
         return;
@@ -355,6 +400,7 @@ class _RoomScreenState extends State<RoomScreen> {
     _cancelSubscriptionsBestEffort('room_dispose_subscription_cancel_failed');
     _pausePolling();
     _pauseStatusPolling();
+    _reactionController.dispose();
     super.dispose();
   }
 
@@ -428,6 +474,8 @@ class _RoomScreenState extends State<RoomScreen> {
 
   void _resumeLobbyMonitoring() {
     if (!mounted || quizOpened || _terminalHandled) return;
+    // Yeniden abonelikte olay sayacı korunur: uçuşta olan yoklama
+    // istekleri yine geçersiz sayılır.
     _startSubscriptions();
     _startPolling();
     _startStatusPolling();
@@ -595,6 +643,7 @@ class _RoomScreenState extends State<RoomScreen> {
       child: Scaffold(
         body: FloatingReactionOverlay(
           controller: _reactionController,
+          placement: FloatingReactionPlacement.roomHeader,
           child: Container(
             color: AppTheme.bgOf(context),
             child: SafeArea(
