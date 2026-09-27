@@ -37,10 +37,13 @@ giren kaybolmasın. Sürüm numarası ve derleme yayın anında verilir.
 
 ### Yayın öncesi kapılar (sırayla)
 
-1. Sunucu göçleri (hesap sahibi onayıyla, `supabase/applied.md`):
+1. Sunucu göçleri (hesap sahibi onayıyla, `supabase/applied.md`; üçü de
+   2026-09-27'de yerel Supabase'de uçtan uca doğrulandı):
    `2026-09-28_hidden_categories_inactive.sql` (tek `update`);
    düelloyu açmadan önce `2026-09-28_async_duels.sql` +
    `2026-09-28_async_duels_cron.sql`. Sonra `kAsyncDuelEnabled = true`.
+   Ayrıca bekleyen `2026-09-22_xp_and_coin_idempotency.sql` (solo XP ve
+   coin harcamasında çift yazımı önler; istemci onsuz da çalışır).
 2. Web: `./release_web.sh`; `docs/HOSTINGER_DEPLOY_CHECKLIST.md` →
    "Uygulama bağlantıları" doğrulaması (`.well-known` JSON dönmeli).
 3. Apple: `com.zankurd.app` için Associated Domains yeteneği; profil
