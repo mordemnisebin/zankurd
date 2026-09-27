@@ -82,7 +82,16 @@ void main() {
       // 1588 -> 1250: aynı gün içerik denetimi. Teknolojî gizlendi (217)
       // ve dört kategorideki 121 dünya bilgisi sorusu emekliye ayrıldı
       // (`retired_question_ids.dart`: Sînema 97, Cografya 23, Edebiyat 1).
-      1250,
+      // 1250 -> 1150: aynı gün, ikinci bir denetim. `offline_tf_` tanım
+      // takası kalıbındaki 152 "Şaş" sorunun 87'si sorulan terimden farklı
+      // TÜRDEN bir tanım taşıyordu (göl↔dağ, kişi↔çalgı, dergi↔kişi gibi) —
+      // bilgi değil tür ipucu ölçüyordu; Ziman'da ise kalıbın hiç "Rast"
+      // örneği yoktu (10 soru). Hepsi emekliye ayrıldı. Ayrıca
+      // `sf_cin_0053`, `cinema_0036` (Kürt bağı olmayan sinema) ve
+      // `offline_7011` (kopya şık) tek tek emekliye ayrıldı. Toplam -100.
+      // Bkz. `retired_question_ids.dart`'ın "İkinci dalga" belgesi ve
+      // `test/tf_definition_swap_test.dart`.
+      1150,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -125,9 +134,19 @@ void main() {
       'hiddenCategory=Paradigma': 150,
       'hiddenCategory=Teknolojî': 217,
       // 2026-09-27 içerik denetimi: Kürtlerle bağı olmayan dünya bilgisi.
-      'retired=Sînema': 97,
-      'retired=Cografya': 23,
-      'retired=Edebiyat': 1,
+      // 2026-09-27 ikinci denetim: `offline_tf_` tanım takası kalıbında
+      // farklı türden çift (87) + Ziman'da hiç "Rast" örneği olmayan kalıp
+      // (10) + üç ayrı doğrulanmış kayıt (sf_cin_0053, cinema_0036 Kürt bağı
+      // olmayan sinema; offline_7011 kopya şık).
+      // Sînema 97->99 (+2), Cografya 23->53 (+30), Edebiyat 1->10 (+9);
+      // Dîrok, Muzîk, Ziman, Çand ilk kez bu ikinci gerekçeyle giriyor.
+      'retired=Sînema': 99,
+      'retired=Cografya': 53,
+      'retired=Edebiyat': 10,
+      'retired=Dîrok': 17,
+      'retired=Muzîk': 12,
+      'retired=Ziman': 10,
+      'retired=Çand': 20,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
 

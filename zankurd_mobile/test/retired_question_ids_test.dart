@@ -8,6 +8,13 @@
 /// `retired_question_ids.dart` listesine alındı: bankada duruyorlar,
 /// oyuncuya çıkmıyorlar.
 ///
+/// Aynı gün, İKİNCİ ve bağımsız bir kusur daha bulundu: `offline_tf_`
+/// tanım-takası kalıbındaki "Şaş" soruların bir kısmı sorulan terimden
+/// FARKLI TÜRDEN bir tanım taşıyordu (göl↔dağ, kişi↔çalgı gibi) — bilgi
+/// değil tür ipucu ölçüyordu. Bu yüzden liste artık Ziman, Çand, Dîrok ve
+/// Muzîk'ten de kimlik taşıyor; ayrıntı `retired_question_ids.dart`'ın
+/// "İkinci dalga" bölümünde.
+///
 /// ## Niçin sessiz kalırdı
 ///
 /// Liste yalnız kimliklerden oluşuyor. Bir kimlik yazım hatasıyla girerse
@@ -41,16 +48,27 @@ void main() {
     expect(isQuestionRetired('bu-kimlik-yok'), isFalse);
   });
 
-  test('yalnız dünya bilgisi taşıyan kategorilerden kimlik alınır', () {
-    // Denetimde Ziman, Çand ve Dîrok'ta dünya bilgisi sorusu çıkmadı.
-    // Bu kategorilerden bir kimlik listeye girerse ya denetim yanlış
-    // okunmuştur ya da değerli bir Kürt içerikli soru kaybolmaktadır.
+  test('yalnız iki bilinen gerekçenin kategorilerinden kimlik alınır', () {
+    // İlk denetimde (dünya bilgisi) Ziman, Çand ve Dîrok'ta soru çıkmadı;
+    // bu üçü yalnız 2026-09-27'deki İKİNCİ denetimle (tanım takasında
+    // farklı türden çift) listeye girdi — bkz. `retired_question_ids.dart`
+    // dosya başındaki "İkinci dalga" bölümü. Beklenmeyen bir kategori
+    // çıkarsa ya bir kimlik yanlış girilmiştir ya da değerli bir Kürt
+    // içerikli soru sessizce kaybolmaktadır.
     final byId = {
       for (final q in QuestionBankLoader.instance.allQuestions) q.id: q,
     };
     final categories = {
       for (final id in retiredQuestionIds) byId[id]?.category,
     };
-    expect(categories, {'Sînema', 'Cografya', 'Edebiyat'});
+    expect(categories, {
+      'Sînema',
+      'Cografya',
+      'Edebiyat',
+      'Dîrok',
+      'Muzîk',
+      'Ziman',
+      'Çand',
+    });
   });
 }
