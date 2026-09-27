@@ -24,3 +24,12 @@ const kTournamentEnabled = false;
 /// cron) çalışmaya devam ediyor; yalnız arayüz katmanı gizli. Kitle
 /// büyüyünce bu bayrak açılır.
 const kWeeklyLeagueEnabled = false;
+
+/// Sırayla düello (async 1v1) Yarış sekmesinde görünür mü?
+///
+/// 2026-09-27: kapalı başlar. Ekranlar ve veri katmanı hazır, ama sunucu
+/// göçü (`supabase/2026-09-28_async_duels.sql` + `_cron.sql`) canlıya
+/// henüz UYGULANMADI. Göç olmadan kart açılırsa her dokunuş "Düello
+/// başlatılamadı" ile düşer — oyuncu kırık bir özellik görür. Göç
+/// uygulanıp `applied.md`ye işlenince bu bayrak `true` yapılır.
+const kAsyncDuelEnabled = false;

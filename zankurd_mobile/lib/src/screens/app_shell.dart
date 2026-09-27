@@ -114,6 +114,10 @@ class _AppShellState extends State<AppShell>
   );
   final ValueNotifier<int> _leaderboardRefresh = ValueNotifier<int>(0);
   final ValueNotifier<int> _profileRefresh = ValueNotifier<int>(0);
+
+  /// Yarış sekmesinin tazelemesi: "Düellolarım" listesi, sonuç ekranından
+  /// ya da yeni bir düellodan dönünce görülme/rakip durumunu yeniden çeker.
+  final ValueNotifier<int> _playRefresh = ValueNotifier<int>(0);
   bool _checkingOnboarding = true;
   bool _showOnboarding = false;
   bool _checkingProfileName = false;
@@ -333,6 +337,7 @@ class _AppShellState extends State<AppShell>
     _profileScrollController.dispose();
     _homeRefresh.dispose();
     _leaderboardRefresh.dispose();
+    _playRefresh.dispose();
     _profileRefresh.dispose();
     super.dispose();
   }
@@ -594,7 +599,10 @@ class _AppShellState extends State<AppShell>
         },
         onOpenPlay: () => _selectTab(1),
       ),
-      1 => PlayHubScreen(repository: widget.repository),
+      1 => PlayHubScreen(
+        repository: widget.repository,
+        refreshSignal: _playRefresh,
+      ),
       2 => LeaderboardScreen(
         repository: widget.repository,
         refreshSignal: _leaderboardRefresh,
@@ -637,6 +645,7 @@ class _AppShellState extends State<AppShell>
   void _refreshVisibleTab([int? tab]) {
     final i = tab ?? _tab;
     if (i == 0) _homeRefresh.value++;
+    if (i == 1) _playRefresh.value++;
     if (i == 2) _leaderboardRefresh.value++;
     if (i == 3) _profileRefresh.value++;
   }

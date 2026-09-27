@@ -200,7 +200,19 @@ void main() {
 
     // %200 metinde üst hero daha uzun olduğu için ListView bu çocukları
     // ilk karede henüz kurmayabilir; gerçek kullanıcı gibi aşağı kaydır.
-    await tester.drag(find.byType(ListView), const Offset(0, -600));
+    // Sabit bir mesafe değil "görünene dek": hero'nun altına bir kart
+    // (ör. sırayla düello) eklenince sabit -600 oda eylemlerini hiç
+    // kurmuyordu ve test, düzenden değil mesafeden kırılıyordu.
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-join-room')),
+      200,
+      scrollable: find
+          .descendant(
+            of: find.byType(ListView),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
     await tester.pumpAndSettle();
 
     final create = tester.getRect(

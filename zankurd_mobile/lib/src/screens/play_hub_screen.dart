@@ -13,6 +13,8 @@ import '../utils/error_reporter.dart';
 import '../services/analytics_service.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/screen_identity_header.dart';
+import 'async_duel/async_duel_inbox.dart';
+import 'async_duel/async_duel_play_screen.dart';
 import 'contest_screen.dart';
 import '../widgets/mode_card.dart';
 import 'matchmaking_screen.dart';
@@ -21,9 +23,22 @@ import 'tournament_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class PlayHubScreen extends StatefulWidget {
-  const PlayHubScreen({required this.repository, super.key});
+  const PlayHubScreen({
+    required this.repository,
+    this.refreshSignal,
+    this.asyncDuelEnabled = kAsyncDuelEnabled,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
+
+  /// Kabuk, bir sayfa kapanıp Yarış sekmesine dönülünce bunu tetikler;
+  /// "Düellolarım" listesi (sonuç görüldü mü, rakip oynadı mı) tazelenir.
+  final Listenable? refreshSignal;
+
+  /// Varsayılanı [kAsyncDuelEnabled]; testler ve ekran turu kartı bayrak
+  /// kapalıyken de açabilsin diye parametredir.
+  final bool asyncDuelEnabled;
 
   @override
   State<PlayHubScreen> createState() => _PlayHubScreenState();
@@ -33,6 +48,15 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   bool _dailyLoading = false;
   bool _roomActionLoading = false;
   bool _moreOpen = false;
+
+  /// Düello akışından (oyun → sonuç) dönünce "Düellolarım"ı tazeler.
+  /// Kabuğun [PlayHubScreen.refreshSignal]iyle birleştirilir; ekran kabuk
+  /// dışında (testte) kullanıldığında da liste güncel kalır.
+  final ValueNotifier<int> _asyncDuelInboxRefresh = ValueNotifier<int>(0);
+  late final Listenable _asyncDuelInboxSignal = Listenable.merge([
+    widget.refreshSignal,
+    _asyncDuelInboxRefresh,
+  ]);
 
   /// Oda kodu alanının denetleyicisi. Ömrü sayfaya değil EKRANA bağlıdır.
   ///
@@ -49,6 +73,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   @override
   void dispose() {
     _joinCodeController.dispose();
+    _asyncDuelInboxRefresh.dispose();
     super.dispose();
   }
 
@@ -288,6 +313,45 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                         );
                       },
               ),
+              // Sırayla düello (async 1v1): rakibin aynı anda çevrimiçi
+              // olmasını istemez — oyuncu şimdi oynar, rakip kendi
+              // zamanında. Sunucu göçü uygulanana dek bayrakla kapalı.
+              if (widget.asyncDuelEnabled) ...[
+                const SizedBox(height: AppSpacing.sm),
+                ModeCard(
+                  key: const ValueKey('play-hub-async-duel'),
+                  compact: true,
+                  icon: AppIcons.hourglass,
+                  // `brand` (turuncu) ekranın TEK hero kimliğine ayrılmıştır
+                  // (`_QuickDuelHero`); bu ikinci düello yolu farklı bir
+                  // işlev rolü taşır (eş zamanlı olmayan 1v1), o yüzden
+                  // ayrı bir kimlik rengi (bkz. `test/brand_accent_guard_test.dart`).
+                  accent: AppTheme.playCyan,
+                  title: context.t(K.asyncDuel),
+                  subtitle: locked
+                      ? context.t(K.serverUnreachableTitle)
+                      : context.t(K.asyncDuelSub),
+                  onTap: locked
+                      ? null
+                      : () async {
+                          await Navigator.of(context).push(
+                            AppRoute.to(
+                              AsyncDuelPlayScreen(
+                                repository: widget.repository,
+                              ),
+                            ),
+                          );
+                          if (mounted) _asyncDuelInboxRefresh.value++;
+                        },
+                ),
+                if (!locked) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  AsyncDuelInboxSection(
+                    repository: widget.repository,
+                    refreshSignal: _asyncDuelInboxSignal,
+                  ),
+                ],
+              ],
               const SizedBox(height: AppSpacing.lg),
               ScreenSectionHeading(
                 title: context.t(K.withFriends),

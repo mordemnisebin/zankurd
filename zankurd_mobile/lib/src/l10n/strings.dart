@@ -2875,6 +2875,70 @@ class Tr {
     K.levelNavin: {'ku': 'Navîn', 'tr': 'Orta'},
     K.levelPesketi: {'ku': 'Pêşketî', 'tr': 'İleri'},
     K.levelMamoste: {'ku': 'Mamoste', 'tr': 'Usta'},
+
+    // ── Sırayla düello (async 1v1) ────────────────────────────────────
+    // Quizduell modeli: oyuncu sunucunun seçtiği 7 soruyu hemen oynar,
+    // rakip aynı anda çevrimiçi olmak zorunda değildir. Sözleşme
+    // `lib/src/models/async_duel.dart`dadır.
+    K.asyncDuel: {'ku': 'Pêşbirka bi dorê', 'tr': 'Sırayla düello'},
+    K.asyncDuelSub: {
+      'ku': 'Tu niha bilîze, hevrikê te paşê',
+      'tr': 'Sen şimdi oyna, rakibin sonra',
+    },
+    K.asyncDuelInbox: {'ku': 'Pêşbirkên min', 'tr': 'Düellolarım'},
+    K.asyncDuelInboxEmpty: {
+      'ku': 'Hîn pêşbirka te tune.',
+      'tr': 'Henüz düellon yok.',
+    },
+    K.asyncDuelSeeAll: {'ku': 'Hemû', 'tr': 'Tümü'},
+    K.asyncDuelOpponent: {'ku': 'Hevrik', 'tr': 'Rakip'},
+    K.asyncDuelWaiting: {'ku': 'Li benda hevrik', 'tr': 'Rakip bekleniyor'},
+    K.asyncDuelReady: {'ku': 'Encam amade ye', 'tr': 'Sonuç hazır'},
+    K.asyncDuelExpired: {'ku': 'Hevrik derneket', 'tr': 'Rakip çıkmadı'},
+    K.asyncDuelUnfinished: {'ku': 'Nîvco ma', 'tr': 'Yarım kaldı'},
+    K.asyncDuelTurnDone: {'ku': 'Dora te qediya!', 'tr': 'Senin turun bitti!'},
+    K.asyncDuelWaitingBody: {
+      'ku': 'Dema hevrikê te bilîze, encam li vir xuya dibe.',
+      'tr': 'Rakibin oynayınca sonuç burada görünecek.',
+    },
+    K.asyncDuelExpiredBody: {
+      'ku':
+          'Di 48 saetan de hevrik derneket. Tu ji bo bersivên xwe yên rast '
+          'XP distînî.',
+      'tr': '48 saat içinde rakip çıkmadı. Doğru cevapların için XP alırsın.',
+    },
+    K.asyncDuelUnfinishedBody: {
+      'ku': 'Te hemû pirs nebersivandin; ev pêşbirk dê bi dawî bibe.',
+      'tr': 'Soruların hepsini cevaplamadın; bu düello süresi dolunca kapanır.',
+    },
+    K.asyncDuelStartFailed: {
+      'ku': 'Pêşbirk dest pê nekir. Têkiliya xwe kontrol bike.',
+      'tr': 'Düello başlatılamadı. Bağlantını kontrol et.',
+    },
+    K.asyncDuelTooMany: {
+      'ku': 'Pênc pêşbirkên te yên vekirî hene. Pêşî li benda encaman bimîne.',
+      'tr': 'Açık 5 düellon var. Önce sonuçlarını bekle.',
+    },
+    K.asyncDuelLoadFailed: {
+      'ku': 'Pêşbirk nehatin barkirin.',
+      'tr': 'Düellolar yüklenemedi.',
+    },
+    K.asyncDuelAnswerFailed: {
+      'ku': 'Bersiv nehat şandin.',
+      'tr': 'Cevap gönderilemedi.',
+    },
+    K.asyncDuelQuitTitle: {
+      'ku': 'Ji pêşbirkê derkevî?',
+      'tr': 'Düellodan çıkılsın mı?',
+    },
+    K.asyncDuelQuitBody: {
+      'ku': 'Pirsên mayî wek "dem qediya" tên hesibandin.',
+      'tr': 'Kalan sorular "süre doldu" sayılır.',
+    },
+    K.asyncDuelQuit: {'ku': 'Derkeve', 'tr': 'Çık'},
+    K.asyncDuelKeepPlaying: {'ku': 'Bidomîne', 'tr': 'Devam et'},
+    K.asyncDuelNew: {'ku': 'Pêşbirkeke nû', 'tr': 'Yeni düello'},
+    K.asyncDuelXp: {'ku': '+{xp} XP', 'tr': '+{xp} XP'},
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -4116,4 +4180,77 @@ class K {
   static const levelNavin = 'level.navin';
   static const levelPesketi = 'level.pesketi';
   static const levelMamoste = 'level.mamoste';
+
+  // ── Sırayla düello (async 1v1) ────────────────────────────────────
+  /// Play Hub kartı ve sonuç ekranı üst çubuğu: "Sırayla düello".
+  static const asyncDuel = 'duel.async.title';
+
+  /// Play Hub kartının alt satırı ("Sen şimdi oyna, rakibin sonra").
+  static const asyncDuelSub = 'duel.async.sub';
+
+  /// "Düellolarım" kutusunun ve tam liste ekranının başlığı.
+  static const asyncDuelInbox = 'duel.async.inbox';
+
+  /// Kutuda hiç düello yokken gösterilen satır.
+  static const asyncDuelInboxEmpty = 'duel.async.inbox.empty';
+
+  /// Kutudaki satır sayısı sınırı aşılınca çıkan "tam liste" düğmesi.
+  static const asyncDuelSeeAll = 'duel.async.seeAll';
+
+  /// Rakip adı bilinmediğinde yerine geçen etiket.
+  static const asyncDuelOpponent = 'duel.async.opponent';
+
+  /// Ben bitirdim, rakip henüz bitirmedi durumu (satır ve oyun ekranı).
+  static const asyncDuelWaiting = 'duel.async.waiting';
+
+  /// Okunmamış tamamlanmış düello satırındaki rozet metni.
+  static const asyncDuelReady = 'duel.async.ready';
+
+  /// 48 saat doldu, rakip hiç çıkmadı durumu.
+  static const asyncDuelExpired = 'duel.async.expired';
+
+  /// Ben kendi 7 sorumu bitirmedim durumu (`myCorrect == null`).
+  static const asyncDuelUnfinished = 'duel.async.unfinished';
+
+  /// Son soru cevaplandığında, rakip henüz bitirmemişse sonuç başlığı.
+  static const asyncDuelTurnDone = 'duel.async.turnDone';
+
+  /// "Rakip bekleniyor" durumunun açıklama gövdesi.
+  static const asyncDuelWaitingBody = 'duel.async.waiting.body';
+
+  /// "Rakip çıkmadı" durumunun açıklama gövdesi.
+  static const asyncDuelExpiredBody = 'duel.async.expired.body';
+
+  /// "Yarım kaldı" durumunun açıklama gövdesi.
+  static const asyncDuelUnfinishedBody = 'duel.async.unfinished.body';
+
+  /// `startAsyncDuel` genel hatası (bağlantı vb.).
+  static const asyncDuelStartFailed = 'duel.async.startFailed';
+
+  /// `startAsyncDuel`in "Too many open duels" hatası.
+  static const asyncDuelTooMany = 'duel.async.tooMany';
+
+  /// `loadMyAsyncDuels` hatası.
+  static const asyncDuelLoadFailed = 'duel.async.loadFailed';
+
+  /// `answerAsyncDuel` hatası; yanında K.retry düğmesi çıkar.
+  static const asyncDuelAnswerFailed = 'duel.async.answerFailed';
+
+  /// Çıkış onay diyaloğunun başlığı.
+  static const asyncDuelQuitTitle = 'duel.async.quit.title';
+
+  /// Çıkış onay diyaloğunun gövdesi.
+  static const asyncDuelQuitBody = 'duel.async.quit.body';
+
+  /// Çıkışı onaylayan (yıkıcı) düğme.
+  static const asyncDuelQuit = 'duel.async.quit.action';
+
+  /// Çıkışı iptal eden (güvenli) düğme.
+  static const asyncDuelKeepPlaying = 'duel.async.keepPlaying';
+
+  /// Sonuç ekranındaki "yeni düello başlat" düğmesi.
+  static const asyncDuelNew = 'duel.async.new';
+
+  /// Sonuç ekranındaki kazanılan XP rozeti; `{xp}` yer tutuculudur.
+  static const asyncDuelXp = 'duel.async.xp';
 }
