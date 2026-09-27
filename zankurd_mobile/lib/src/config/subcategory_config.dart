@@ -434,26 +434,84 @@ class SubcategoryConfig {
 
   /// Soruyu konusuna göre bir alt kategoriye eşler.
   ///
-  /// Anahtar kelime eşleşmesi bulunamazsa, kategori içinde **dengeli
-  /// dağıtım** için id türevli sabit bir indeks kullanılır. Bu, eski
-  /// davranışın bilinçli olarak korunan tek parçasıdır: konusu belirsiz
-  /// soru da bir yere düşmeli, yoksa alt kategori listesi boş kalır.
+  /// 2026-09-28 içerik dürüstlüğü düzeltmesi: anahtar kelime eşleşmesi
+  /// bulunamazsa artık `id.hashCode % listUzunluğu` ile RASTGELE bir alt
+  /// kategoriye düşürülmüyor. Bu eski davranış "dengeli dağıtım" diye
+  /// yorumlanmıştı ama gerçekte sahte bir konu sözüydü: "Dîroka Kevn"
+  /// filtresi id'nin hash'ine göre bir "Dîroka Nûjen" sorusunu da
+  /// gösterebiliyordu, kullanıcı seçtiği konunun tam tersini okuyordu.
+  /// Ölçüm (oynanabilir banka, 2026-09-28): Dîrok'un 157 sorusunun 48'i
+  /// hiçbir anahtar kelimeyle eşleşmiyor ve böyle rastgele yerleşiyordu.
+  ///
+  /// Eşleşme yoksa boş dize döner: soru hiçbir alt kategoriye ait
+  /// OLMADIĞINI açıkça söyler ve kategori genelindeki soru havuzunda kalır
+  /// (bkz. `MockZanKurdRepository.loadLevelQuestions` — genel sorular alt
+  /// kategori havuzunu tamamlamak için kullanılır, ama hiçbir alt
+  /// kategoriye "ait" gösterilmez).
   static String getSubcategoryId(QuizQuestion question) {
     final list = subcategories[question.category];
     if (list == null || list.isEmpty) return '';
-    final matched = _matchByKeyword(question, list);
-    if (matched != null) return matched.id;
-    return list[question.id.hashCode.abs() % list.length].id;
+    return _matchByKeyword(question, list)?.id ?? '';
   }
 
-  /// Soru için alt kategori etiketini döner.
+  /// Soru için alt kategori etiketini döner; eşleşme yoksa ''.
+  ///
+  /// Rastgele bir başlık uydurmak [getSubcategoryId] ile aynı hataya
+  /// düşer: konusu belirsiz bir soruya "Şexsiyetên Dîrokî" gibi somut bir
+  /// etiket yapıştırmak, o etiketin altına hiç ait olmadığı bir soru
+  /// koymaktır. Boş etiket "bu sorunun belirli bir alt konusu yok" der —
+  /// bu, yanlış bir konu iddiasından daha dürüsttür.
   static String getSubcategoryLabel(QuizQuestion question, bool isKu) {
     final list = subcategories[question.category];
     if (list == null || list.isEmpty) return '';
-    final matched =
-        _matchByKeyword(question, list) ??
-        list[question.id.hashCode.abs() % list.length];
+    final matched = _matchByKeyword(question, list);
+    if (matched == null) return '';
     return isKu ? matched.nameKu : matched.nameTr;
+  }
+
+  /// Bir alt kategorinin oynanabilirlik kartında görünmesi için gereken
+  /// asgari anahtar-kelime-eşleşmeli soru sayısı.
+  ///
+  /// 20 = ilk iki seviyenin (Destpêk + Bingeh, her biri 10 soru) GERÇEK
+  /// eşleşen sorularla doldurulabilmesi için gereken taban. Bunun altında
+  /// kalan bir alt kategori kartı ("10 soru" vaadi) kendi konusundan değil
+  /// komşu alt kategorilerden ya da genel havuzdan doldurulurdu — kart
+  /// somut bir konu vaat eder, o vaadi tutamayan kategori hiç gösterilmez.
+  static const int kMinSubcategoryQuestions = 20;
+
+  /// Bir kategorinin, verilen oynanabilir soru havuzunda GERÇEKTEN yeterli
+  /// içeriği olan alt kategorilerini yapılandırma sırasıyla döner.
+  ///
+  /// "Yeterli" = kategorideki [playable] sorular arasında bu alt kategoriye
+  /// anahtar kelimeyle eşleşen sayı >= [kMinSubcategoryQuestions]. Saf bir
+  /// fonksiyondur (yan etkisi yok); `SubcategoryScreen` onu seviye
+  /// yükleyicisinin kullandığı AYNI havuzla (`playableQuestions`) çağırır —
+  /// ayrı havuz kullanılsaydı ekran bir kart gösterir, seviye yükleyici o
+  /// alt kategoride eşleşen soru bulamazdı.
+  ///
+  /// İçeriği bugün az olan bir alt kategori (ör. Muzîk › Muzîka Nûjen)
+  /// burada gizlenir ama kalıcı biçimde değil: banka büyüyüp eşiği
+  /// aştığında aynı kod aynı alt kategoriyi otomatik gösterir — sorusu
+  /// yetince kendiliğinden görünür. Gizleme listesi elle tutulmaz.
+  static List<SubcategoryInfo> visibleFor(
+    String category,
+    Iterable<QuizQuestion> playable,
+  ) {
+    final list = forCategory(category);
+    if (list.isEmpty) return const [];
+    final canonical = CategoryVisuals.canonicalName(category);
+    final counts = <String, int>{};
+    for (final question in playable) {
+      if (CategoryVisuals.canonicalName(question.category) != canonical) {
+        continue;
+      }
+      final id = getSubcategoryId(question);
+      if (id.isEmpty) continue;
+      counts[id] = (counts[id] ?? 0) + 1;
+    }
+    return list
+        .where((info) => (counts[info.id] ?? 0) >= kMinSubcategoryQuestions)
+        .toList(growable: false);
   }
 
   static SubcategoryInfo? _matchByKeyword(

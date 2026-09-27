@@ -26,7 +26,16 @@ class SubcategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final rawList = SubcategoryConfig.forCategory(category);
+    // Ekranın gördüğü havuz, seviye yükleyicisinin (`loadLevelQuestions`)
+    // kullandığı AYNI havuz olmalı — yoksa ekran bir kart gösterir, seviye
+    // yükleyici o alt kategoride hiç eşleşen soru bulamaz. `playableQuestions`
+    // zaten bu ortak nokta: `MockZanKurdRepository.loadLevelQuestions` da
+    // `SupabaseZanKurdRepository` da (kendi `_offline`ı üzerinden) seviye
+    // sorularını hep bu getter'dan süzer (2026-09-28).
+    final rawList = SubcategoryConfig.visibleFor(
+      category,
+      repository.playableQuestions,
+    );
     final list = rawList.isNotEmpty
         ? rawList
         : [

@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/screens/subcategory_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
+import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -18,6 +19,51 @@ Widget wrap(Widget child) => MultiProvider(
   ],
   child: MaterialApp(theme: AppTheme.light(), home: child),
 );
+
+/// 2026-09-28: `SubcategoryScreen` artık kartları
+/// `SubcategoryConfig.visibleFor` ile süzüyor — bir alt kategori ancak
+/// kategorisinde en az `kMinSubcategoryQuestions` anahtar-kelime-eşleşmeli
+/// GERÇEK soru varsa görünür. 'Siyaset' ve 'Paradigma' kategorileri ise
+/// (bkz. `category_visibility.dart`) tamamen gizli: `playableQuestions`
+/// bu kategorilerden hiçbir soru döndürmez, dolayısıyla 'tevger' ve
+/// 'jineoloji' kartları GERÇEK depoyla asla görünmez — bu, ikonun yanlış
+/// olmasından değil, kategorinin ürün kararıyla kapalı olmasından kaynaklanır.
+///
+/// Bu dosyanın 'tevger'/'jineoloji' testleri ise ikon eşlemesinin
+/// (`_iconForId`) regresyonunu (paylaşılan 'pen' ikonuna geri dönüş)
+/// yakalamak için var — kategori açık olsaydı da aynı ikonu almalı. Bu
+/// yüzden `playableQuestions`ı doğrudan override eden küçük bir sahte depo
+/// kullanılır: kategori gizleme politikasına hiç dokunmadan, yalnızca "bu
+/// alt kategorinin yeterli gerçek içeriği var" senaryosunu kurar.
+class _FixedPlayableRepository extends MockZanKurdRepository {
+  _FixedPlayableRepository(this._fixed);
+
+  final List<QuizQuestion> _fixed;
+
+  @override
+  List<QuizQuestion> get playableQuestions => _fixed;
+}
+
+/// [count] adet, [category] kategorisinde [keyword] anahtar kelimesiyle
+/// eşleşen sentetik soru üretir — `SubcategoryConfig.visibleFor`in eşiğini
+/// (`kMinSubcategoryQuestions`) aşmak için yeterli gerçek eşleşme sağlar.
+List<QuizQuestion> _keywordMatchedQuestions({
+  required String category,
+  required String keyword,
+  required int count,
+}) {
+  return [
+    for (var i = 0; i < count; i++)
+      QuizQuestion(
+        id: '${category}_${keyword}_$i',
+        category: category,
+        prompt: 'Pirsa ceribandinê ya $keyword, hejmar $i.',
+        answers: ['Bersiv $i', 'X1-$i', 'X2-$i', 'X3-$i'],
+        correctAnswer: 'Bersiv $i',
+        explanation: 'Ravekirina ceribandinê ji bo testê têra xwe dirêj e.',
+      ),
+  ];
+}
 
 void main() {
   setUp(() {
@@ -121,11 +167,12 @@ void main() {
     required String category,
     required String id,
     required IconData expectedIcon,
+    MockZanKurdRepository? repository,
   }) async {
     await tester.pumpWidget(
       wrap(
         SubcategoryScreen(
-          repository: MockZanKurdRepository(),
+          repository: repository ?? MockZanKurdRepository(),
           category: category,
         ),
       ),
@@ -164,20 +211,39 @@ void main() {
   });
 
   testWidgets('tevger anlamına uygun bayrak ikonu alır', (tester) async {
+    // 'Siyaset' kategorisi ürün kararıyla tamamen gizli (bkz. yukarıdaki
+    // sınıf yorumu); kart yalnızca yeterli gerçek içerik VARMIŞ GİBİ bir
+    // depoyla görünür hâle gelir. Ölçülen şey ikon eşlemesi, kategori
+    // görünürlüğü değil.
     await expectCardIcon(
       tester,
       category: 'Siyaset',
       id: 'tevger',
       expectedIcon: AppIcons.flag,
+      repository: _FixedPlayableRepository(
+        _keywordMatchedQuestions(
+          category: 'Siyaset',
+          keyword: 'tevger',
+          count: SubcategoryConfig.kMinSubcategoryQuestions,
+        ),
+      ),
     );
   });
 
   testWidgets('jineoloji anlamına uygun venus ikonu alır', (tester) async {
+    // 'Paradigma' kategorisi de tamamen gizli — bkz. yukarıdaki yorum.
     await expectCardIcon(
       tester,
       category: 'Paradigma',
       id: 'jineoloji',
       expectedIcon: AppIcons.venus,
+      repository: _FixedPlayableRepository(
+        _keywordMatchedQuestions(
+          category: 'Paradigma',
+          keyword: 'jineolojî',
+          count: SubcategoryConfig.kMinSubcategoryQuestions,
+        ),
+      ),
     );
   });
 

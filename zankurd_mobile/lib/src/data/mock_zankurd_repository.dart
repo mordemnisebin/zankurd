@@ -367,15 +367,35 @@ class MockZanKurdRepository implements ZanKurdRepository {
       final matched = byCategoryAndDifficulty
           .where((q) => SubcategoryConfig.getSubcategoryId(q) == subCategory)
           .toList();
-      // Alt kategori etiketi gerçek bir alan değil, id hash'inden türetilir;
-      // eşleşen sayı limit'in altında kalırsa aynı kategori+zorluktaki diğer
-      // sorularla tamamla, seviyeyi eksik soruyla bitirme.
+      // 2026-09-28: `getSubcategoryId` artık rastgele bir kovaya düşürmüyor
+      // (bkz. subcategory_config.dart) — eşleşmeyen soru '' (genel) döner.
+      // Eşleşen sayı limit'in altında kalırsa tamamlama sırası da dürüst
+      // olmalı:
+      //   1) ÖNCE genel sorular (aynı kategori+zorluk, hiçbir alt kategoriye
+      //      ait olduğu iddia edilmeyen sorular) — bunlar yanlış bir konu
+      //      etiketi taşımaz, yalnızca "bu turun konusu net değil" demektir.
+      //   2) Genel sorular da yetmezse, ANCAK O ZAMAN başka bir alt
+      //      kategorinin (yanlış konu altında görünecek) sorusuna başvurulur.
+      // Kullanıcı "Dîroka Kevn" seçtiğinde mümkün olduğunca "Dîroka Nûjen"
+      // sorusu görmemeli; hiç genel soru kalmadıysa yine de turu eksik
+      // bırakmak yerine başka alt kategoriden tamamlanır.
       if (matched.length < limit) {
         final matchedIds = matched.map((q) => q.id).toSet();
-        final need = limit - matched.length;
-        final fillers = byCategoryAndDifficulty
+        final remaining = byCategoryAndDifficulty
             .where((q) => !matchedIds.contains(q.id))
-            .take(need * 3);
+            .toList();
+        final general = remaining
+            .where((q) => SubcategoryConfig.getSubcategoryId(q).isEmpty)
+            .toList();
+        final need = limit - matched.length;
+        final fillers = general.length >= need
+            ? general.take(need * 3)
+            : [
+                ...general,
+                ...remaining.where(
+                  (q) => SubcategoryConfig.getSubcategoryId(q).isNotEmpty,
+                ),
+              ].take(need * 3);
         pool = [...matched, ...fillers];
       } else {
         pool = matched;

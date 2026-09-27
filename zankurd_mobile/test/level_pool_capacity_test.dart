@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/config/subcategory_config.dart';
+import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -20,11 +21,19 @@ import 'support/widget_test_helpers.dart';
 ///
 /// ## Neyi ölçer, neyi ölçmez
 ///
-/// Test koşucusunda `QuestionBankLoader` JSON varlıklarını yüklemez; bu yüzden
-/// ölçülen havuz üretimdeki tam banka değil, depodaki küratörlü fixture'dır.
-/// Yani bu bir TABAN güvencesidir: fixture bile seviyeleri dolduramıyorsa
-/// üretim bankası da dolduramaz. Üretim bankasının kendi denetimi
-/// `tool/question_quality/question_quality_audit.dart` kapısındadır.
+/// İlk test (`her kategori × seviye…`) `QuestionBankLoader` JSON
+/// varlıklarını hiç tetiklemez; ölçülen havuz üretimdeki tam banka değil,
+/// depodaki küratörlü fixture'dır. Yani bu bir TABAN güvencesidir: fixture
+/// bile seviyeleri dolduramıyorsa üretim bankası da dolduramaz. Üretim
+/// bankasının kendi denetimi `tool/question_quality/question_quality_audit.dart`
+/// kapısındadır.
+///
+/// İkinci test (`alt kategoriler…`) 2026-09-28'den beri GERÇEK bankayı
+/// yükler (bkz. `subcategory_pool_width_test.dart`, aynı önlem): küçük
+/// fixture'da hiçbir alt kategori `kMinSubcategoryQuestions` eşiğini
+/// aşamaz, yani ekran hiçbirini göstermez — fixture'la ölçüm "kartın
+/// göstermediği bir şeyin seviyesini doldurabiliyor mu" gibi anlamsız bir
+/// soru sorardı.
 ///
 /// ## Kural
 ///
@@ -67,18 +76,30 @@ void main() {
   });
 
   test('alt kategoriler de kendi seviyelerini doldurabiliyor', () async {
+    // 2026-09-28: bu test eskiden `freshMockRepository()`ın küçük curated
+    // fixture'ıyla (~45 soru, 8 kategoriye dağılmış) TÜM yapılandırılmış alt
+    // kategorileri geziyordu. O fixture ile artık hiçbir alt kategori
+    // `kMinSubcategoryQuestions` eşiğini aşamaz (böyle küçük bir bankada
+    // hiçbir konu 20 gerçek eşleşmeye ulaşmaz) — yani kart hiçbirini hiç
+    // GÖSTERMEZ. Ekranın göstermediği bir alt kategorinin seviyesini
+    // doldurup dolduramadığını ölçmek yanlış soruyu sorar; bu yüzden bekçi
+    // artık gerçek bankayı yükler (bkz. subcategory_pool_width_test.dart,
+    // aynı önlem) ve yalnız GÖRÜNÜR alt kategorileri gezer.
+    expect(QuestionBankLoader.instance.allQuestions.length, greaterThan(1000));
     final repository = freshMockRepository();
+    final playable = repository.playableQuestions;
     final shortfalls = <String>[];
 
-    SubcategoryConfig.subcategories.forEach((category, list) {
-      for (final subcategory in list) {
+    for (final category in repository.categories) {
+      final visible = SubcategoryConfig.visibleFor(category, playable);
+      for (final subcategory in visible) {
         // Yalnız ilk seviye ölçülür: en dar bant odur (zorluk 1-2) ve
         // yetersizlik önce orada görünür. Bütün seviyeleri × bütün alt
         // kategorileri gezmek testi gereksizce uzatırdı.
         final level = repository.levelsForCategory(category).first;
         shortfalls.add('$category/${subcategory.id}/${level.questionCount}');
       }
-    });
+    }
 
     // Ölçüm eşzamanlı yapılamadığı için liste yukarıda toplanıp burada
     // sırayla sürülür.

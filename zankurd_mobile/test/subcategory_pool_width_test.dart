@@ -50,8 +50,18 @@ void main() {
       final failures = <String>[];
 
       for (final category in visibleCategories(repository.categories)) {
-        final subcategories = SubcategoryConfig.subcategories[category];
-        if (subcategories == null || subcategories.isEmpty) continue;
+        // 2026-09-28: kart artık YALNIZ `visibleFor` eşiğini geçen alt
+        // kategorileri gösteriyor (bkz. subcategory_config.dart). Kullanıcı
+        // hiç göremeyeceği bir alt kategorinin (ör. Muzîk › Muzîka Nûjen,
+        // 0 gerçek eşleşme) seviyesini burada ölçmek bekçiyi konuyla
+        // ilgisiz bir kusura karşı hiç savunmasız bırakmaz ama yanlış konuyu
+        // ölçer: bu bekçi "kartta yazan sayı doğru mu" sorusunu, kartın
+        // GERÇEKTEN gösterdiği alt kategoriler için sormalı.
+        final subcategories = SubcategoryConfig.visibleFor(
+          category,
+          repository.playableQuestions,
+        );
+        if (subcategories.isEmpty) continue;
 
         for (final level in repository.levelsForCategory(category)) {
           for (final sub in subcategories) {
