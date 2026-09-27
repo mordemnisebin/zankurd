@@ -13,6 +13,7 @@ import '../utils/error_reporter.dart';
 import '../services/analytics_service.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/stage_backdrop.dart';
 import 'async_duel/async_duel_inbox.dart';
 import 'async_duel/async_duel_play_screen.dart';
 import 'contest_screen.dart';
@@ -421,7 +422,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                             key: const ValueKey('play-hub-create-room'),
                             icon: AppIcons.circlePlus,
                             title: createTitle,
-                            semanticSubtitle: createSubtitle,
+                            subtitle: createSubtitle,
                             busy: _roomActionLoading,
                             onTap: _roomActionLoading
                                 ? null
@@ -434,7 +435,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                             key: const ValueKey('play-hub-join-room'),
                             icon: AppIcons.doorOpen,
                             title: joinTitle,
-                            semanticSubtitle: joinSubtitle,
+                            subtitle: joinSubtitle,
                             onTap: _showJoinSheet,
                           ),
                         ),
@@ -539,11 +540,21 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   }
 }
 
+/// Oda kur / kodla katıl kartı (iki sütunlu, geniş ekran düzeni).
+///
+/// 2026-09-27: alt satır (`subtitle`) eskiden yalnız `Semantics.label`
+/// içindeydi — ekran okuyucu duyuyordu ama gören kullanıcı hiç göremiyordu
+/// (parametre adı bunu itiraf ediyordu: `semanticSubtitle`). Sahip ekranı
+/// "renksiz" bulduğunda bu da bir parçasıydı: kart yalnız başlık + ok
+/// gösteriyordu. Alt satır artık GÖRÜNÜR ve ikon karosu dolu yeşil bir
+/// daireye döndü (önce soluk bir tonu vardı) — ikisi de bekçisi
+/// `test/home_play_hierarchy_test.dart`in koruduğu "düz yüzey, gradyan/gölge
+/// yok" kuralını bozmaz; renk yalnız amblemde ve metinde yaşar.
 class _CompactRoomAction extends StatelessWidget {
   const _CompactRoomAction({
     required this.icon,
     required this.title,
-    required this.semanticSubtitle,
+    required this.subtitle,
     required this.onTap,
     this.busy = false,
     super.key,
@@ -551,18 +562,22 @@ class _CompactRoomAction extends StatelessWidget {
 
   final IconData icon;
   final String title;
-  final String semanticSubtitle;
+  final String subtitle;
   final VoidCallback? onTap;
   final bool busy;
 
   @override
   Widget build(BuildContext context) {
     final enabled = !busy && onTap != null;
-    final accent = AppColors.readableAccent(context, AppTheme.playGreen);
+    // Amblem artık DOLU marka yeşili taşıyor; ikon bu zemin üzerinde okunur
+    // beyazdır (`onSolid`). Yükleniyor döndürücüsü ise amblemin İÇİNDE değil
+    // düz kart yüzeyinde durur, o yüzden eski `readableAccent` mantığını
+    // (yüzey üstü okunabilirlik) korur.
+    final spinnerColor = AppColors.readableAccent(context, AppTheme.playGreen);
     return Semantics(
       button: true,
       enabled: enabled,
-      label: '$title. $semanticSubtitle',
+      label: '$title. $subtitle',
       onTap: enabled ? onTap : null,
       child: ExcludeSemantics(
         child: Material(
@@ -577,51 +592,64 @@ class _CompactRoomAction extends StatelessWidget {
                 border: Border.all(color: AppTheme.borderColor(context)),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.sm),
-                child: Row(
+                padding: const EdgeInsets.all(AppSpacing.sm + 2),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 34,
-                      height: 34,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: AppColors.iconTileBg(
-                          context,
-                          AppTheme.playGreen,
+                    Row(
+                      children: [
+                        Container(
+                          width: 44,
+                          height: 44,
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                            color: AppTheme.playGreen,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(icon, color: Colors.white, size: 20),
                         ),
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                      ),
-                      child: Icon(icon, color: accent, size: 18),
+                        const Spacer(),
+                        if (busy)
+                          SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                spinnerColor,
+                              ),
+                            ),
+                          )
+                        else
+                          Icon(
+                            AppIcons.chevronRight,
+                            size: 17,
+                            color: AppTheme.textMutedColor(context),
+                          ),
+                      ],
                     ),
-                    const SizedBox(width: AppSpacing.xs),
-                    Expanded(
-                      child: Text(
-                        title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w800,
-                          height: 1.15,
-                        ),
+                    const SizedBox(height: AppSpacing.sm),
+                    Text(
+                      title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: AppTheme.textPrimaryColor(context),
+                        fontWeight: FontWeight.w800,
+                        fontSize: 15.5,
+                        height: 1.15,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.xxs),
-                    if (busy)
-                      SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(accent),
-                        ),
-                      )
-                    else
-                      Icon(
-                        AppIcons.chevronRight,
-                        size: 17,
-                        color: AppTheme.textMutedColor(context),
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.caption.copyWith(
+                        color: AppTheme.textSubColor(context),
+                        fontSize: 12.5,
                       ),
+                    ),
                   ],
                 ),
               ),
@@ -633,8 +661,17 @@ class _CompactRoomAction extends StatelessWidget {
   }
 }
 
-/// Ekranın tek birincil eylemi. Düz marka yüzeyi, altındaki mod satırlarıyla
-/// aynı ürün ailesinde kalır; promosyon/banner hissi oluşturmaz.
+/// Ekranın tek birincil eylemi — artık düz bir menü satırı değil, bir
+/// YARIŞMA SAHNESİ.
+///
+/// 2026-09-27: sahip oyun merkezini "renksiz" buldu — sakin bir liste gibi
+/// duruyordu ve hiçbir kart "işte oyun burada" demiyordu. Bu kart artık TRT
+/// "Bil Bakalım", Kahoot ve QuizUp gibi yarışma ekranlarındaki sahneyi
+/// taklit eder: ışık hüzmeleri + konfeti (`StageBackdropPainter`) ve bir
+/// karşılaşma satırı (sen · VS · rakip) oyunun ne olduğunu tek
+/// bakışta anlatır. Marka turuncusu (ember) yine de yalnız CTA'da kalır —
+/// sahnenin kendisi kimlik rengini (koyu yeşil/altın) taşır, birincil eylem
+/// rengini üstlenmez (bkz. `test/brand_accent_guard_test.dart`).
 class _QuickDuelHero extends StatelessWidget {
   const _QuickDuelHero({required this.ku, required this.onTap});
 
@@ -670,67 +707,146 @@ class _QuickDuelHero extends StatelessWidget {
           excludeFromSemantics: true,
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Ink(
+            // Düz `culturalBrandBg` zemin sahne hissi vermiyordu — tek bir
+            // yassı yeşil dikdörtgendi. Gradyan üstte kimlik yeşilini
+            // korurken alta doğru `surface`in koyu ucuna iner; bu, ışık
+            // hüzmelerinin (`StageBackdropPainter`) üstünde daha görünür olduğu bir
+            // "derinlik" hissi verir (2026-09-27, sahip talebi).
             decoration: BoxDecoration(
-              color: AppTheme.culturalBrandBg,
+              gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [AppTheme.culturalBrandBg, AppTheme.surface],
+              ),
               borderRadius: BorderRadius.circular(AppRadius.card),
               boxShadow: AppTheme.cardShadow(context),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              child: Stack(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 38,
-                        height: 38,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.12),
-                          borderRadius: BorderRadius.circular(AppRadius.sm),
-                        ),
-                        child: const Icon(
-                          AppIcons.peopleGroup,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.sm),
-                      Expanded(
-                        child: Text(
+                  // Dekoratif sahne deseni İÇERİKTEN ÖNCE çizilir (Stack
+                  // sırası = boyama sırası), yani metnin ALTINDA kalır.
+                  // `IgnorePointer`: sahne yalnız görsel, dokunuşu yutmaz —
+                  // gerçek dokunuş hedefi dıştaki `InkWell`dir.
+                  const Positioned.fill(
+                    child: IgnorePointer(
+                      child: CustomPaint(painter: StageBackdropPainter()),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
                           context.t(K.quickDuel),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
                           style: AppTypography.caption.copyWith(
-                            color: Colors.white.withValues(alpha: 0.84),
+                            color: Colors.white.withValues(alpha: 0.82),
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.8,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.xs),
-                  Text(
-                    enabled
-                        ? context.t(K.quickDuelSub)
-                        : context.t(K.serverUnreachableTitle),
-                    style: AppTypography.heading2.copyWith(color: Colors.white),
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  Container(
-                    key: const ValueKey('play-hub-quick-duel-cta'),
-                    height: 48,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: ctaBackground,
-                      borderRadius: BorderRadius.circular(AppRadius.sm),
-                    ),
-                    child: Text(
-                      context.t(K.findOpponent),
-                      style: AppTypography.bodyLarge.copyWith(
-                        color: AppColors.onSolid(ctaBackground),
-                        fontWeight: FontWeight.w700,
-                      ),
+                        const SizedBox(height: AppSpacing.sm),
+                        // Karşılaşma satırı: "sen · VS · rakip". Rakip
+                        // koltuğu kasıtlı olarak dolu görünmez (soru işareti
+                        // + madder kırmızı) — eşleştirme kimi bulacağını
+                        // henüz bilmiyor, sahte bir yüz göstermez.
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: _DuelSeat(
+                                label: context.t(K.you),
+                                fill: Colors.white.withValues(alpha: 0.14),
+                                icon: AppIcons.user,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Container(
+                              width: 48,
+                              height: 48,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: AppTheme.gold,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white.withValues(alpha: 0.7),
+                                  width: 2,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppTheme.gold.withValues(alpha: 0.4),
+                                    blurRadius: 12,
+                                  ),
+                                ],
+                              ),
+                              child: const Text(
+                                _vsLabel,
+                                style: TextStyle(
+                                  color: AppTheme.lightTextPrimary,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: _DuelSeat(
+                                label: context.t(K.opponentWord),
+                                fill: AppTheme.playRed,
+                                icon: AppIcons.question,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        Text(
+                          enabled
+                              ? context.t(K.quickDuelSub)
+                              : context.t(K.serverUnreachableTitle),
+                          textAlign: TextAlign.center,
+                          style: AppTypography.heading2.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.md),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Container(
+                            key: const ValueKey('play-hub-quick-duel-cta'),
+                            height: 52,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: ctaBackground,
+                              borderRadius: BorderRadius.circular(AppRadius.md),
+                              // Gölge yalnız ETKİNKEN: kapalı düğme zaten
+                              // `disabledSurface` ile pasifleşiyor, üstüne
+                              // parlak bir gölge eklemek "canlı" yalanını
+                              // sürdürür (bkz. yukarıdaki kusur notu).
+                              boxShadow: enabled
+                                  ? [
+                                      BoxShadow(
+                                        color: AppTheme.brand.withValues(
+                                          alpha: 0.35,
+                                        ),
+                                        blurRadius: 14,
+                                        offset: const Offset(0, 6),
+                                      ),
+                                    ]
+                                  : null,
+                            ),
+                            child: Text(
+                              context.t(K.findOpponent),
+                              style: AppTypography.bodyLarge.copyWith(
+                                color: AppColors.onSolid(ctaBackground),
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -739,6 +855,55 @@ class _QuickDuelHero extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+// "VS" iki taraf arası karşılaşmayı anlatan evrensel bir spor kısaltmasıdır;
+// Türkçe ve Kürtçe metinde de olduğu gibi kullanılır, çeviriye ihtiyaç yok.
+const _vsLabel = 'VS';
+
+/// Düello sahnesindeki tek koltuk (oyuncu ya da rakip).
+class _DuelSeat extends StatelessWidget {
+  const _DuelSeat({
+    required this.label,
+    required this.fill,
+    required this.icon,
+  });
+
+  final String label;
+  final Color fill;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 56,
+          height: 56,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: fill,
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.45),
+              width: 2,
+            ),
+          ),
+          child: Icon(icon, color: Colors.white, size: 24),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          style: AppTypography.caption.copyWith(
+            color: Colors.white.withValues(alpha: 0.9),
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
     );
   }
 }

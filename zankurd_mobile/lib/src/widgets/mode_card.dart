@@ -12,9 +12,20 @@ enum ModeCardEmphasis { primary, secondary, event }
 
 /// Ana sayfa ve Oyna merkezindeki ortak mod kartı.
 ///
-/// Birincil mod yalnız marka yeşiliyle öne çıkar. Diğer modlarda kategori
-/// rengi kartı boyamaz; küçük amblemde kalır. Böylece ekran tek bir ürün gibi
-/// görünür, fakat kullanıcı modları hâlâ hızlıca ayırt edebilir.
+/// Birincil mod yalnız marka yeşiliyle öne çıkar; kategori rengi kartın
+/// tamamını boyamaz. Ama 2026-09-27'ye kadar ikincil ve etkinlik modları
+/// TEK bir soluk amblemin dışında hiç renk taşımıyordu — sahip oyun
+/// merkezini bu yüzden "renksiz" buldu. İki değişiklik bunu düzeltir, ikisi
+/// de `home_play_hierarchy_test.dart`daki "düz yüzey: gradyan/gölge yok"
+/// bekçisini bozmadan:
+///  - İkincil ve etkinlik amblemleri artık DOLU aksan rengi taşır (önce
+///    soluk bir tondu), ikon üstünde `AppColors.onSolid` ile okunur kalır.
+///  - Etkinlik kartının YÜZEYİ aksanın hafif bir tonuyla karışır
+///    (`Color.alphaBlend`) — gradyan değil, düz bir renk karışımı; kart hâlâ
+///    listenin geri kalanıyla aynı düz geometriyi paylaşır ama "ödül
+///    bileti" gibi hafifçe ısınır.
+/// Kategori kimliği yine kartı ayrı bir kampanya afişine çevirmez: ikon +
+/// başlık + bu iki rol (ikincil/etkinlik) üzerinden anlatılır.
 class ModeCard extends StatelessWidget {
   const ModeCard({
     required this.icon,
@@ -47,6 +58,7 @@ class ModeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isPrimary = emphasis == ModeCardEmphasis.primary;
+    final isEvent = emphasis == ModeCardEmphasis.event;
     final accentOnSurface = AppColors.readableAccent(context, accent);
     final progressColor = isPrimary ? Colors.white : accentOnSurface;
     final titleColor = isPrimary
@@ -55,15 +67,27 @@ class ModeCard extends StatelessWidget {
     final subtitleColor = isPrimary
         ? Colors.white.withValues(alpha: 0.88)
         : AppTheme.textSubColor(context);
+    // Etkinlik yüzeyi: aksanın hafif bir tonu düz kart zeminine karışır
+    // (gradyan DEĞİL — `home_play_hierarchy_test.dart` bu kartlarda
+    // gradyan/gölge OLMAMASINI bekler). Karanlıkta biraz daha yüksek alfa
+    // kullanılır çünkü koyu zemin aynı oranı daha soluk emiyor; ikisi de
+    // `test/play_hub_stage_test.dart`ta metin kontrastına (≥4.5:1) karşı
+    // ölçülür.
+    final eventSurface = Color.alphaBlend(
+      accent.withValues(alpha: AppTheme.isLight(context) ? 0.16 : 0.20),
+      AppTheme.surfaceColor(context),
+    );
     final cardDecoration = BoxDecoration(
       color: isPrimary
           ? AppTheme.culturalBrandBg
-          : AppTheme.surfaceColor(context),
+          : (isEvent ? eventSurface : AppTheme.surfaceColor(context)),
       borderRadius: BorderRadius.circular(AppRadius.lg),
       border: Border.all(
         color: isPrimary
             ? Colors.white.withValues(alpha: 0.10)
-            : AppTheme.borderColor(context),
+            : (isEvent
+                  ? accent.withValues(alpha: 0.5)
+                  : AppTheme.borderColor(context)),
       ),
       boxShadow: isPrimary ? AppTheme.cardShadow(context) : const <BoxShadow>[],
     );
@@ -95,14 +119,21 @@ class ModeCard extends StatelessWidget {
                       height: compact ? 40 : 44,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
+                        // İkincil ve etkinlik amblemleri DOLU aksan rengi
+                        // taşır (önce soluk bir tondu — `iconTileBg` — ve
+                        // ekranın tek renkli anını CTA'ya bırakıyordu; sahip
+                        // bunu "renksiz" olarak adlandırdı). İkon üstünde
+                        // `onSolid` ile okunur kalır.
                         color: isPrimary
                             ? Colors.white.withValues(alpha: 0.10)
-                            : AppColors.iconTileBg(context, accent),
+                            : accent,
                         borderRadius: BorderRadius.circular(AppRadius.md),
                       ),
                       child: Icon(
                         icon,
-                        color: isPrimary ? Colors.white : accentOnSurface,
+                        color: isPrimary
+                            ? Colors.white
+                            : AppColors.onSolid(accent),
                         size: compact ? 20 : 22,
                       ),
                     ),

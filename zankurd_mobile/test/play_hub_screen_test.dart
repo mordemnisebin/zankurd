@@ -37,8 +37,16 @@ void main() {
       find.descendant(of: hero, matching: find.byType(Ink)).first,
     );
     final heroDecoration = heroInk.decoration as BoxDecoration;
-    expect(heroDecoration.gradient, isNull);
-    expect(heroDecoration.color, AppTheme.culturalBrandBg);
+    // 2026-09-27: sahip oyun merkezini "renksiz" buldu; düz tek renkli
+    // zemin bir sahne gradyanına çevrildi (bkz. `_QuickDuelHero` içindeki
+    // yorum). Eski bekçi düz `color`e bakıyordu — artık gradyan olduğunu ve
+    // uçlarından birinin hâlâ kimlik rengi (`culturalBrandBg`) olduğunu
+    // doğrular; kimlik korunur, yalnız düzlük iddiası düşer.
+    expect(heroDecoration.gradient, isA<LinearGradient>());
+    expect(
+      (heroDecoration.gradient! as LinearGradient).colors,
+      contains(AppTheme.culturalBrandBg),
+    );
 
     final action = tester.widget<Container>(
       find
@@ -178,8 +186,16 @@ void main() {
     );
     expect((create.center.dy - join.center.dy).abs(), lessThan(1));
     expect(join.left, greaterThan(create.right));
-    expect(create.height, lessThanOrEqualTo(110));
-    expect(join.height, lessThanOrEqualTo(110));
+    // 2026-09-27: sahip "renksiz" bulduğu için alt satır (`subtitle`)
+    // eskiden yalnız ekran okuyucuya duyurulan `semanticSubtitle`ken artık
+    // GÖRÜNÜR bir ikinci metin satırı oldu — kart bu yüzden kasıtlı olarak
+    // daha uzun (ölçülen ~158). Eski "110" tavanı düz/tek satırlı eski
+    // görünümü sabitliyordu; asıl davranış (iki kart aynı satırda ve eşit
+    // yükseklikte) yukarıdaki iki `expect` ile zaten korunuyor, tavan yalnız
+    // taşma/aşırı büyüme gibi gerçek bir regresyonu yakalayacak kadar geniş
+    // tutulur.
+    expect(create.height, lessThanOrEqualTo(190));
+    expect(join.height, lessThanOrEqualTo(190));
   });
 
   testWidgets('%200 metinde oda eylemleri güvenli biçimde alt alta döner', (
