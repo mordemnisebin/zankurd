@@ -23,6 +23,7 @@ import '../widgets/player_avatar.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/rolling_count.dart';
 import '../widgets/screen_identity_header.dart';
+import '../widgets/stage_backdrop.dart';
 import '../widgets/zk_back_button.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
@@ -1109,35 +1110,77 @@ class _Podium extends StatelessWidget {
         ),
     ];
 
+    final content = slots.length == 1
+        ? Center(child: slots.first)
+        : Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [for (final slot in slots) Expanded(child: slot)],
+          );
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
         key: const ValueKey('leaderboard-podium'),
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.sm,
-          AppSpacing.md,
-          AppSpacing.sm,
-          AppSpacing.md,
-        ),
         decoration: BoxDecoration(
-          // 2026-07-24: madalya gradyanı ve altın gölge kaldırıldı. Podyum
-          // sıradan bir yüzeydir; sıralamayı taşıyan şey rakam ve isim,
-          // parlaklık değil. Altın yalnız 1. sıranın rakamında kalır.
-          color: AppTheme.surfaceColor(context),
+          // 2026-09-27: sahip uygulamayı "renksiz" buldu (Yarış sekmesi için
+          // sahip talebi, `stage_backdrop.dart`). Podyum 2026-07-24'te
+          // "sıradan bir yüzey" olsun diye BİLEREK düzleştirilmişti; şimdi
+          // tersine, Yarış sekmesindeki hızlı düello kartıyla AYNI sahne
+          // zeminini paylaşır — kutlama anı artık kendi kimlik rengiyle
+          // açılır. `boxShadow` içerik olarak `AppTheme.cardShadow` kalır,
+          // yalnız kenarlık kaldırıldı: gradyan zaten kartı çevreden ayırıyor.
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [AppTheme.culturalBrandBg, AppTheme.surface],
+          ),
           borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(color: AppTheme.borderColor(context)),
           boxShadow: AppTheme.cardShadow(context),
         ),
-        child: slots.length == 1
-            ? Center(child: slots.first)
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [for (final slot in slots) Expanded(child: slot)],
+        child: Stack(
+          children: [
+            // Sahne deseni İÇERİKTEN ÖNCE çizilir (Stack sırası = boyama
+            // sırası) ve `IgnorePointer` ile dokunuşu yutmaz — bkz.
+            // `_QuickDuelHero` (play_hub_screen.dart), aynı desen. Kartın
+            // kendi `padding`i artık BURADA değil, aşağıdaki `Padding`
+            // widget'ında: böylece fon kenardan kenara (köşe yuvarlağına
+            // kadar) dolar, yalnız İÇERİK içeri çekilir.
+            const Positioned.fill(
+              child: IgnorePointer(
+                child: CustomPaint(
+                  painter: StageBackdropPainter(focusTop: _avatarFocusTop),
+                ),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.sm,
+                AppSpacing.md,
+                AppSpacing.sm,
+                AppSpacing.md,
+              ),
+              child: content,
+            ),
+          ],
+        ),
       ),
     );
   }
+
+  /// Sahne odağının (ışın hüzmesi + parıltı) dikey konumu: 1. sıradaki
+  /// avatarın TAM MERKEZİ. Gerçek yerleşimin toplamı — üstteki `Padding`
+  /// (`AppSpacing.md` = 16) + slotun kendi iç dolgusu (8) + amblem
+  /// (`isCenter` amblem boyutu: 36) + aralık (6) + halka yarıçapı (33 =
+  /// [56 avatar çapı + 2×2.5 iç dolgu + 2×2.5 kenarlık] / 2) = 99.
+  static const double _avatarFocusTop = AppSpacing.md + 8 + 36 + 6 + 33;
 }
+
+/// Podyum sahnesindeki vitrin unvanı için okunur altın — düz `AppTheme.gold`
+/// koyu orman zemininde (Forest 700, `culturalBrandBg`) ~4.3:1 ölçülür; 10px
+/// gibi küçük yazı için AA eşiği 4.5'in altında kalırdı. Bu ton aynı altın
+/// kimliği biraz açık tutar; her iki sahne ucunda da (`culturalBrandBg`,
+/// `surface`) ≥4.5:1 — bkz. `test/leaderboard_stage_test.dart` (2026-09-27).
+const Color _stageGold = Color(0xFFF2C75C);
 
 class _PodiumSlot extends StatelessWidget {
   const _PodiumSlot({
@@ -1150,20 +1193,25 @@ class _PodiumSlot extends StatelessWidget {
   final bool isCenter;
   final Color? colorOverride;
 
-  Color _colorFor(bool isLight) {
+  // 2026-09-27: podyum artık HER temada aynı koyu orman sahnesinde duruyor
+  // (bkz. `_Podium.build`), yani madalya rengi de sahneden gelir — açık
+  // temanın soluk `silverLight`/`bronzeLight` çeşitlemesi kaldırıldı; ikisi
+  // de koyu zeminde zaten `silver`/`bronze` kadar okunur (bkz. WCAG bekçisi
+  // `test/leaderboard_stage_test.dart`).
+  Color _colorFor() {
     switch (entry.rank) {
       case 1:
         return AppTheme.gold;
       case 2:
-        return isLight ? AppTheme.silverLight : AppTheme.silver;
+        return AppTheme.silver;
       default:
-        return isLight ? AppTheme.bronzeLight : AppTheme.bronze;
+        return AppTheme.bronze;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final color = _colorFor(AppTheme.isLight(context));
+    final color = _colorFor();
     final avatarR = isCenter ? 28.0 : 22.0;
     final nameFontSz = isCenter ? 13.5 : 12.0;
     final scoreFontSz = isCenter ? 15.5 : 13.5;
@@ -1191,7 +1239,11 @@ class _PodiumSlot extends StatelessWidget {
                 icon: entry.rank == 1 ? AppIcons.trophy : AppIcons.medal,
                 color: color,
                 size: isCenter ? 36 : 28,
-                onColor: color,
+                // Sahnede ikon madalya renginde kalınca kendi %30 madalya tonlu
+                // elmasıyla karışıyordu; gümüş ve bronz ikon koyu yeşilin
+                // üstünde neredeyse kayboluyordu (2026-09-27 tur görüntüsü).
+                // İkon beyaz; madalya rengi elmasta, halkada ve kürsüde.
+                onColor: Colors.white,
               ),
               const SizedBox(height: 6),
               Container(
@@ -1224,7 +1276,12 @@ class _PodiumSlot extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 style: AppTypography.bodyLarge.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
+                  // 2026-09-27: isim artık uygulama temasını değil, altındaki
+                  // koyu sahneyi okur — `AppTheme.textPrimaryColor(context)`
+                  // açık temada ink (koyu) döndürüyordu, sahnenin koyu yeşil
+                  // zemininde neredeyse görünmezdi. Düz beyaz her iki sahne
+                  // ucunda da (culturalBrandBg, surface) ≥4.5:1 verir.
+                  color: Colors.white,
                   fontWeight: FontWeight.w800,
                   fontSize: nameFontSz,
                 ),
@@ -1233,7 +1290,11 @@ class _PodiumSlot extends StatelessWidget {
                 Text(
                   entry.showcaseTitle!,
                   style: AppTypography.caption.copyWith(
-                    color: AppTheme.gold,
+                    // Düz `AppTheme.gold` koyu orman zemininde (Forest 700)
+                    // ~4.3:1 ölçülür — 10px küçük yazı için AA eşiğinin (4.5)
+                    // altında kalırdı. `_stageGold` aynı kimliği biraz açık
+                    // tonda taşır (2026-09-27).
+                    color: _stageGold,
                     fontSize: 10,
                   ),
                   maxLines: 1,
@@ -1246,14 +1307,15 @@ class _PodiumSlot extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      color.withValues(alpha: 0.28),
-                      color.withValues(alpha: 0.12),
-                    ],
-                  ),
+                  // 2026-09-27: eskiden zemin kendi rengiyle tonlanıyordu
+                  // (`color`@0.28→0.12 gradyanı) ve yazı `onAccentTint` ile o
+                  // tonlamaya göre hesaplanıyordu. Sahnede zemin artık HER
+                  // basamakta aynı yarı saydam beyaz — kimliği kenarlık
+                  // taşır, dolgu değil; böylece skor metni de sabit beyaz
+                  // olabilir (aşağıda).
+                  color: Colors.white.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: color.withValues(alpha: 0.4)),
+                  border: Border.all(color: color.withValues(alpha: 0.6)),
                 ),
                 // Puan %200 yazıda "50/00" gibi iki satıra bölünüyordu:
                 // sayı bir sözcük değil, bölününce anlamını kaybediyor ve
@@ -1270,15 +1332,11 @@ class _PodiumSlot extends StatelessWidget {
                     value: entry.totalScore,
                     maxLines: 1,
                     style: TextStyle(
-                      // Puan rozeti düz yüzey değil, kendi renginin %28'e
-                      // kadar tonlandığı bir zemin. `readableAccent` düz
-                      // yüzeyi varsaydığı için altın/bronz skorlar AA'nın
-                      // altında kalıyordu; gerçek tint oranını hesaba kat.
-                      color: AppColors.onAccentTint(
-                        context,
-                        color,
-                        tintAlpha: 0.28,
-                      ),
+                      // Zemin artık sabit beyaz@0.12 (yukarıda) — hangi
+                      // madalya rengi olursa olsun aynı düz beyaz metin
+                      // ≥4.5:1 verir; `onAccentTint`in renge özel hesabına
+                      // artık gerek yok.
+                      color: Colors.white,
                       fontWeight: FontWeight.w800,
                       fontSize: scoreFontSz,
                     ),
@@ -1293,51 +1351,38 @@ class _PodiumSlot extends StatelessWidget {
                 height: pedestalH,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
+                  // 2026-09-27: eski kaide kendi rengini zemine (%55→%28)
+                  // karıştırıp altına alfa-blend bir "ink" hesaplıyordu —
+                  // sahnenin koyu fonu üstünde bu iki uç birbirine çok
+                  // yaklaşıp donuk duruyordu. Kaide artık DOLU madalya
+                  // rengi + üstte hafif beyaz parlaklık: klasik madeni kaide
+                  // hissi (bkz. kontrast bekçisi altta — ink HER iki uçta da
+                  // ölçülür).
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      color.withValues(alpha: 0.55),
-                      color.withValues(alpha: 0.28),
-                    ],
+                    colors: [Color.lerp(color, Colors.white, 0.18)!, color],
                   ),
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(10),
                   ),
-                  border: Border.all(color: color.withValues(alpha: 0.45)),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.25),
+                  ),
                 ),
-                child: Builder(
-                  builder: (context) {
-                    final pedestal = Color.alphaBlend(
-                      color.withValues(alpha: 0.28),
-                      AppTheme.surfaceColor(context),
-                    );
-                    final ink = AppColors.onSolid(pedestal);
-                    return Text(
-                      '#${entry.rank}',
-                      style: AppTypography.heading2.copyWith(
-                        // Kaidenin üstündeki beyaz "#1" altın zeminde 1.36:1
-                        // ölçüldü — okunabilirliğini yalnız altındaki gölgeye
-                        // borçluydu (2026-07-27). Yazı rengi kaidenin gerçek
-                        // rengine göre seçilir; gradyanın açık ucu (%28) en
-                        // kötü durum olduğu için ölçüt odur.
-                        color: ink,
-                        fontWeight: FontWeight.w900,
-                        fontSize: isCenter ? 20 : 16,
-                        // Gölge yalnız beyaz yazıya destekti; koyu yazının
-                        // altında kirli bir hale bırakıyor.
-                        shadows: ink == Colors.white
-                            ? const [
-                                Shadow(
-                                  color: Color(0x66000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 1),
-                                ),
-                              ]
-                            : null,
-                      ),
-                    );
-                  },
+                child: Text(
+                  '#${entry.rank}',
+                  style: AppTypography.heading2.copyWith(
+                    // Kaide artık her zaman DOLU madalya rengi (yukarıda),
+                    // hiçbir zaman koyu sahne zeminiyle karışmıyor — yazı
+                    // rengi de tema/yüzeye göre hesaplanmaz, sabit ink'tir.
+                    // `test/leaderboard_stage_test.dart` ink'i gradyanın İKİ
+                    // ucuna karşı da (açık üst + doygun alt) ölçer; en
+                    // sıkışık çift altın/bronzda bile ≥4.5:1.
+                    color: AppTheme.lightTextPrimary,
+                    fontWeight: FontWeight.w900,
+                    fontSize: isCenter ? 20 : 16,
+                  ),
                 ),
               ),
             ],
@@ -1355,7 +1400,12 @@ class _PodiumSlot extends StatelessWidget {
       // Sağlayıcı yoksa (izole widget testleri) animasyon sessizce kapanır;
       // dekoratif katman ağacı eksik diye çökertmemeli.
       reducedMotion: ReducedMotionProvider.isReducedIn(context),
-      color: kilimRevealColorFor(context, onBrand: false),
+      // 2026-09-27: podyum artık marka yeşilinden (`culturalBrandBg`) koyu
+      // ormana (`surface`) inen SAHNE zemininde açılıyor — `onBrand: false`
+      // eskiden "açık yüzey" varsayıp marka tonunu seçiyordu, bu zeminde
+      // görünmezdi. `kilimRevealColorFor`ın kendi belgesi `onBrand: true`yu
+      // tam bunun için tanımlar: "marka yeşili zeminler için beyaz".
+      color: kilimRevealColorFor(context, onBrand: true),
       child: content,
     );
   }

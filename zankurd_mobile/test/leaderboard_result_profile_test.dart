@@ -131,7 +131,15 @@ void main() {
 
     final nameText = tester.widget<Text>(find.text('Bawer'));
 
-    expect(nameText.style?.color, equals(AppTheme.textPrimary));
+    // 2026-09-27: podyum artık HER temada aynı koyu sahne zemininde durur
+    // (`AppTheme.culturalBrandBg` → `AppTheme.surface`, bkz.
+    // `leaderboard_screen.dart` `_Podium`); isim rengi de artık uygulama
+    // temasından değil o sahneden gelir ve düz `Colors.white`tır —
+    // `AppTheme.textPrimary` (Cream 50, hafif kırık beyaz) eskiden koyu
+    // temanın birincil metin rengiydi, şimdi isim onunla değil sahnenin
+    // rengiyle eşleşmeli. Sahne kontrastını (≥4.5:1, her iki sahne ucunda)
+    // `test/leaderboard_stage_test.dart` ayrıca WCAG ile doğrular.
+    expect(nameText.style?.color, equals(Colors.white));
   });
 
   testWidgets('leaderboard single winner does not stretch across landscape', (
