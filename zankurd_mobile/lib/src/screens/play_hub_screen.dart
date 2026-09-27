@@ -686,13 +686,19 @@ class _QuickDuelHero extends StatelessWidget {
     // şey olmadığı için kullanıcı düğmenin bozuk olduğunu düşünüyordu. Oda
     // aç/katıl kartları aynı durumda alt satırı `K.serverUnreachableTitle`
     // yapıyor (yukarıdaki `createSubtitle`/`joinSubtitle` ile aynı desen);
-    // burada da aynı metin uygulanıyor ve düğmenin kendisi
-    // `AppColors.disabledSurface` ile görsel olarak pasifleşiyor
-    // (`today_task_card.dart`daki `_StartButton` ile aynı desen —
-    // 2026-09-27 simülatör turu).
+    // burada da aynı metin uygulanıyor ve düğmenin kendisi görsel olarak
+    // pasifleşiyor (2026-09-27 simülatör turu).
+    //
+    // Pasif renk `AppColors.disabledSurface` DEĞİL: o açık zeminler içindir
+    // ve koyu sahne üstünde açık gri, dolu bir düğme gibi parlıyordu —
+    // simülatörde düğme pasifken en etkin görünen şeydi. Sahnede pasif
+    // düğme soluk, yarı saydam bir beyazdır.
     final ctaBackground = enabled
         ? AppTheme.primaryCtaColor(context)
-        : AppColors.disabledSurface(context);
+        : Colors.white.withValues(alpha: 0.12);
+    final ctaForeground = enabled
+        ? AppColors.onSolid(ctaBackground)
+        : Colors.white.withValues(alpha: 0.6);
     return Semantics(
       key: const ValueKey('play-hub-quick-duel'),
       button: true,
@@ -840,7 +846,7 @@ class _QuickDuelHero extends StatelessWidget {
                             child: Text(
                               context.t(K.findOpponent),
                               style: AppTypography.bodyLarge.copyWith(
-                                color: AppColors.onSolid(ctaBackground),
+                                color: ctaForeground,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),

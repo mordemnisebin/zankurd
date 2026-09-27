@@ -40,11 +40,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
+import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
+import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
@@ -246,13 +249,12 @@ void main() {
       final cta = tester.widget<Container>(ctaKey);
       final decoration = cta.decoration! as BoxDecoration;
       final ctaContext = tester.element(ctaKey);
-      expect(
-        decoration.color,
-        AppColors.disabledSurface(ctaContext),
-        reason:
-            'Düğme görsel olarak pasif olmalı (bkz. `today_task_card.dart`).',
-      );
+      // Düğme görsel olarak pasif olmalı. Koyu sahnede pasif renk soluk,
+      // yarı saydam beyazdır: açık zeminlerin `AppColors.disabledSurface`i
+      // sahnede dolu bir düğme gibi parlıyordu (2026-09-27 simülatör turu;
+      // ayrıntı play_hub_stage_test).
       expect(decoration.color, isNot(AppTheme.primaryCtaColor(ctaContext)));
+      expect(decoration.color!.a, lessThan(0.3));
 
       final ink = tester.widget<InkWell>(
         find.descendant(of: hero, matching: find.byType(InkWell)).first,
@@ -331,4 +333,51 @@ void main() {
       },
     );
   });
+
+  group('5) Çevrimdışı sıralama "henüz puan yok" demez', () {
+    // 2026-09-27 simülatör turu: sunucuya ulaşılamazken çevrimdışı depo boş
+    // liste döndürüyor, sıralama da "Henüz puan yok, bir yarış başlat"
+    // diyordu. Sunucuda puanı olan oyuncuya bu yanlış: liste boş değil,
+    // okunamadı.
+    Future<void> pumpBoard(WidgetTester tester, {required bool locked}) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        testShell(
+          remoteAvailability: RemoteAvailability(reachable: !locked),
+          child: Scaffold(body: LeaderboardScreen(repository: _EmptyBoard())),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+    }
+
+    testWidgets('kilitliyken "yüklenemedi" ve yeniden dene gösterilir', (
+      tester,
+    ) async {
+      await pumpBoard(tester, locked: true);
+      expect(find.text('Henüz puan yok'), findsNothing);
+      expect(find.text('Yüklenemedi'), findsOneWidget);
+      expect(find.text('Bağlantıyı kontrol edip tekrar dene.'), findsOneWidget);
+    });
+
+    testWidgets('bağlıyken boş liste yine "henüz puan yok" der', (
+      tester,
+    ) async {
+      await pumpBoard(tester, locked: false);
+      expect(find.text('Henüz puan yok'), findsOneWidget);
+      expect(find.text('Yüklenemedi'), findsNothing);
+    });
+  });
+}
+
+class _EmptyBoard extends MockZanKurdRepository {
+  @override
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 20,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async => const [];
+
+  @override
+  Future<LeaderboardEntry?> getPlayerStats() async => null;
 }

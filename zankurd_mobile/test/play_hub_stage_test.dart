@@ -199,10 +199,18 @@ void main() {
         final lockedCta = tester.widget<Container>(ctaKey);
         final lockedDecoration = lockedCta.decoration! as BoxDecoration;
         final lockedCtaContext = tester.element(ctaKey);
+        // 2026-09-27 simülatör turu: `AppColors.disabledSurface` açık
+        // zeminler içindir; koyu sahnede açık gri, dolu bir düğme gibi
+        // parlıyordu. Sahnede pasif düğme soluk, yarı saydam beyazdır.
         expect(
           lockedDecoration.color,
-          AppColors.disabledSurface(lockedCtaContext),
-          reason: 'dark=$isDark: kilitliyken CTA pasif zemine dönmeli',
+          Colors.white.withValues(alpha: 0.12),
+          reason: 'dark=$isDark: kilitliyken CTA sahnede soluklaşmalı',
+        );
+        expect(
+          lockedDecoration.color,
+          isNot(AppColors.disabledSurface(lockedCtaContext)),
+          reason: 'dark=$isDark: açık zemin pasif rengi koyu sahnede parlar',
         );
         expect(
           lockedDecoration.color,

@@ -13,6 +13,7 @@ import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/league_tier.dart';
 import '../providers/reduced_motion_provider.dart';
+import '../providers/remote_availability.dart';
 import '../theme/app_theme.dart';
 import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
@@ -673,6 +674,18 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
           );
         }
         final entries = snap.data ?? stale ?? [];
+        // Sunucuya ulaşılamıyorken boş liste "henüz puan yok" demek
+        // değildir: sıralama yalnız okunamadı. Çevrimdışı depo boş liste
+        // döndürüyor ve ekran, sunucuda puanı olan oyuncuya "Henüz puan
+        // yok, bir yarış başlat" diyordu (2026-09-27 simülatör turu).
+        if (entries.isEmpty && RemoteAvailability.socialLockedIn(context)) {
+          return AppErrorState(
+            title: context.t(K.boardLoadFailed),
+            message: context.t(K.checkConnection),
+            retryLabel: context.t(K.retry),
+            onRetry: _loadData,
+          );
+        }
         if (entries.isEmpty) {
           return AppEmptyState(
             icon: AppIcons.trophy,
