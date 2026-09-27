@@ -49,6 +49,9 @@ class SubcategoryScreen extends StatelessWidget {
         elevation: 0,
         // Geri oku her zaman renkli banner'ın üzerinde durur.
         iconTheme: const IconThemeData(color: Colors.white),
+        // Banner durum çubuğunun altına uzanır; saat ve pil de onun
+        // üstünde açık renkte olmalı (bkz. `AppTheme.overlayOnDarkHeader`).
+        systemOverlayStyle: AppTheme.overlayOnDarkHeader,
         // Başlık banner'da büyük yazılıyor; app bar'da tekrar etmiyoruz.
       ),
       body: Container(

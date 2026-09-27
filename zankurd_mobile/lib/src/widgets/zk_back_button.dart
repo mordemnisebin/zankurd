@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
@@ -37,6 +38,7 @@ PreferredSizeWidget zkAppBar(
   Widget? leading,
   IconThemeData? iconTheme,
   bool? centerTitle,
+  SystemUiOverlayStyle? systemOverlayStyle,
 }) {
   final showDefaultLeading = automaticallyImplyLeading && leading == null;
   return AppBar(
@@ -48,6 +50,7 @@ PreferredSizeWidget zkAppBar(
     scrolledUnderElevation: scrolledUnderElevation,
     iconTheme: iconTheme,
     centerTitle: centerTitle,
+    systemOverlayStyle: systemOverlayStyle,
     automaticallyImplyLeading: showDefaultLeading,
     leading: leading ?? (showDefaultLeading ? const ZkBackButton() : null),
   );

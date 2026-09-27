@@ -554,6 +554,19 @@ class AppTheme {
     colors: [culturalBrandBg, playGreen],
   );
 
+  /// Durum çubuğunun altına koyu bir başlık (orman şeridi, kategori görseli)
+  /// giren ekranların durum çubuğu stili: açık saat ve pil ikonları.
+  ///
+  /// Uygulama kökü stili temadan seçer; açık temada ikonlar koyudur. Ad
+  /// ekranının orman şeridi ve kategori ekranının görsel başlığı ise tam
+  /// durum çubuğunun altına uzanır — koyu yeşil üstünde koyu saat ve pil
+  /// okunmuyordu (2026-09-27 simülatör turu).
+  static const overlayOnDarkHeader = SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarBrightness: Brightness.dark,
+    statusBarIconBrightness: Brightness.light,
+  );
+
   static const darkAuthGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
