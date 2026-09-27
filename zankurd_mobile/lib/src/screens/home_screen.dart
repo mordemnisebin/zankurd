@@ -737,10 +737,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       greeting,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
+                      // 2026-09-27: sahibi ana ekranı renksiz buldu; selamlama
+                      // 19/w700'dü ve başlık gibi değil bir alt satır gibi
+                      // ağırlık taşıyordu. Ekranın gördüğün ilk metni artık
+                      // gerçek bir başlık kadar iddialı.
                       style: AppTypography.heading2.copyWith(
                         color: AppTheme.textPrimaryColor(context),
-                        fontSize: 19,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.3,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -749,7 +754,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 12.5,
+                        fontSize: 13,
                         color: AppTheme.textSubColor(context),
                         height: 1.35,
                       ),
@@ -758,10 +763,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
               ),
               const SizedBox(width: 12),
-              PlayerAvatar(
-                radius: 20,
-                displayName: PlayerIdentity.resolveName(currentName, isKu: ku),
-                colorSeed: PlayerIdentity.resolveColorSeed(currentName),
+              // 2026-09-27: sahibi ana ekranı renksiz buldu; avatar düz bir
+              // daireydi. Altın→turuncu halka iki marka rengini birleştirip
+              // avatarı küçük bir madalyon gibi öne çıkarır — kimliğin ilk
+              // göründüğü nokta artık boş değil.
+              Container(
+                padding: const EdgeInsets.all(2.5),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [AppTheme.gold, AppTheme.brand],
+                  ),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppTheme.bgOf(context),
+                  ),
+                  child: PlayerAvatar(
+                    radius: 20,
+                    displayName: PlayerIdentity.resolveName(
+                      currentName,
+                      isKu: ku,
+                    ),
+                    colorSeed: PlayerIdentity.resolveColorSeed(currentName),
+                  ),
+                ),
               ),
             ],
           ),
@@ -963,14 +991,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     VoidCallback? onTap,
     String? semanticLabel,
   }) {
+    final isLight = AppTheme.isLight(context);
+    // 2026-09-27: sahibi ana ekranı renksiz buldu; rozet nötr bir kart
+    // (aynı kenarlık/dolgu her rozette) taşıyordu, seri ve jeton renginin
+    // hiçbiri rozetin kendisine sızmıyordu. Zemin artık kendi ikon rengiyle
+    // tonlanmış bir hap; her rozet kendi kimliğini taşır.
     final badge = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: AppTheme.borderColor(context).withValues(alpha: 0.72),
+        color: Color.alphaBlend(
+          iconColor.withValues(alpha: isLight ? 0.12 : 0.22),
+          AppTheme.surfaceColor(context),
         ),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: iconColor.withValues(alpha: 0.30)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -983,8 +1017,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w600,
-                fontSize: 13,
+                fontWeight: FontWeight.w800,
+                fontSize: 14,
               ),
             ),
           ],

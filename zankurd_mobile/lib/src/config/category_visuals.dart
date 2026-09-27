@@ -141,4 +141,27 @@ class CategoryVisuals {
     final key = _resolveKey(category);
     return _imagePaths[key] ?? 'assets/question_images/cat_ziman.webp';
   }
+
+  /// Kendi kimlik fotoğrafı olan kategoriler.
+  ///
+  /// `_imagePaths` içinde Sînema ve Teknolojî BAŞKA bir kategorinin
+  /// görselini ödünç alır (Sînema, Çand'ın çay/kilim fotoğrafını gösterir —
+  /// henüz kendi görseli çekilmedi). Bir kimlik karosunda ödünç görsel
+  /// yanlış konuyu anlatır; "modern" görünmek için yanlış bilgi vermek
+  /// takas değildir. O iki kategori bu yüzden fotoğraf yerine kendi
+  /// ikonunu büyük çizer (2026-09-27: sahibi renkli ve modern görünüm
+  /// istedi, ama karo kimliği ödünç görsele feda edilmez).
+  static const Set<String> _ownImageCategories = {
+    'Ziman',
+    'Çand',
+    'Dîrok',
+    'Edebiyat',
+    'Cografya',
+    'Muzîk',
+    'Siyaset',
+    'Paradigma',
+  };
+
+  static bool hasOwnImage(String category) =>
+      _ownImageCategories.contains(_resolveKey(category));
 }

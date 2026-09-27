@@ -199,10 +199,12 @@ class HomeDoorTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLight = AppTheme.isLight(context);
-    final background = Color.alphaBlend(
-      accent.withValues(alpha: isLight ? 0.08 : 0.16),
-      AppTheme.surfaceColor(context),
-    );
+    // 2026-09-27: sahibi ana ekranı renksiz buldu — kapılar soluk %8-16
+    // tonlu bir zemin ve ince kenarlıktan ibaretti, aksan yalnız 40×40'lık
+    // ikon karosunda yaşıyordu. Kapı artık aksanın TAMAMINI dolduran bir
+    // gradyan taşır (Duolingo/Kahoot'un dolu renkli kartları gibi); koyu
+    // uç aksanın kendisinin siyaha %28 kırılmışı, ayrı bir ton değil.
+    final deep = Color.lerp(accent, Colors.black, 0.28)!;
     return Semantics(
       button: true,
       enabled: onTap != null,
@@ -210,76 +212,105 @@ class HomeDoorTile extends StatelessWidget {
       excludeSemantics: true,
       onTap: onTap,
       child: Material(
-        color: background,
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(AppRadius.card),
         child: InkWell(
           onTap: onTap,
           excludeFromSemantics: true,
           borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Container(
-            constraints: const BoxConstraints(minHeight: 128),
-            padding: const EdgeInsets.all(AppSpacing.md),
+          child: Ink(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(
-                color: accent.withValues(alpha: isLight ? 0.22 : 0.34),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [accent, deep],
               ),
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              boxShadow: isLight
+                  ? [
+                      BoxShadow(
+                        color: accent.withValues(alpha: 0.30),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
+                      ),
+                    ]
+                  : null,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: accent,
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                      ),
-                      child: Icon(
-                        icon,
-                        size: 19,
-                        color: AppColors.onSolid(accent),
-                      ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              child: Stack(
+                children: [
+                  // Filigran sağ-alt köşede durur ve alt satırın (uzun
+                  // başlıkta başlığın da) sağ ucuna değer. Gradyan orada
+                  // zaten koyulaşmıştır; %12 beyazla en açık noktada bile
+                  // metin AA'nın üstünde kalır (bekçi:
+                  // home_color_identity_test).
+                  Positioned(
+                    right: -18,
+                    bottom: -22,
+                    child: Icon(
+                      icon,
+                      size: 104,
+                      color: Colors.white.withValues(alpha: 0.12),
                     ),
-                    const Spacer(),
-                    Icon(
-                      AppIcons.arrowRight,
-                      size: 14,
-                      color: AppColors.onAccentTint(
-                        context,
-                        accent,
-                        tintAlpha: isLight ? 0.08 : 0.16,
-                      ),
+                  ),
+                  Container(
+                    constraints: const BoxConstraints(minHeight: 128),
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 40,
+                              height: 40,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.18),
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.sm,
+                                ),
+                              ),
+                              child: Icon(icon, size: 19, color: Colors.white),
+                            ),
+                            const Spacer(),
+                            Icon(
+                              AppIcons.arrowRight,
+                              size: 14,
+                              color: Colors.white.withValues(alpha: 0.9),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        Text(
+                          title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.bodyLarge.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                            height: 1.2,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          subtitle,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.caption.copyWith(
+                            color: Colors.white.withValues(alpha: 0.92),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12.5,
+                            height: 1.3,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppColors.onTintedSurface(context),
-                    fontWeight: FontWeight.w800,
-                    height: 1.2,
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.caption.copyWith(
-                    color: AppColors.onTintedSurface(context, secondary: true),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12.5,
-                    height: 1.3,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -333,6 +364,8 @@ class HomeTopicGrid extends StatelessWidget {
                   progress: progress[category],
                   questionCount: questionCounts[category],
                   onTap: onOpen == null ? null : () => onOpen!(category),
+                  tileWidth: tileWidth,
+                  wide: columns == 1,
                 ),
               ),
           ],
@@ -349,6 +382,8 @@ class _HomeTopicTile extends StatelessWidget {
     required this.progress,
     required this.questionCount,
     required this.onTap,
+    required this.tileWidth,
+    required this.wide,
     super.key,
   });
 
@@ -357,6 +392,15 @@ class _HomeTopicTile extends StatelessWidget {
   final CategoryProgress? progress;
   final int? questionCount;
   final VoidCallback? onTap;
+
+  /// Karonun ekrandaki genişliği: `Image.asset`in `cacheWidth`ı için —
+  /// kararlaştırılmış boyuttan büyük bir bitmap kod çözmek gereksiz bellek
+  /// harcar.
+  final double tileWidth;
+
+  /// Tek sütuna düşen (dar ekran) düzende kart daha geniş bir en/boy oranı
+  /// alır; grid iki sütuna geçince kareye yaklaşır.
+  final bool wide;
 
   @override
   Widget build(BuildContext context) {
@@ -370,6 +414,7 @@ class _HomeTopicTile extends StatelessWidget {
         : count == null
         ? null
         : '$count ${Tr.forKu(K.soru, isKu)}';
+    final light = AppTheme.isLight(context);
 
     return Semantics(
       button: onTap != null,
@@ -377,85 +422,199 @@ class _HomeTopicTile extends StatelessWidget {
       excludeSemantics: true,
       onTap: onTap,
       child: Material(
-        color: AppTheme.surfaceColor(context),
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(AppRadius.card),
         child: InkWell(
           onTap: onTap,
           excludeFromSemantics: true,
           borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Container(
-            constraints: const BoxConstraints(minHeight: 64),
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.sm,
-              vertical: 10,
-            ),
+          child: Ink(
             decoration: BoxDecoration(
+              gradient: CategoryVisuals.gradient(category),
               borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(color: AppTheme.borderColor(context)),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 36,
-                  height: 36,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: AppColors.iconTileBg(context, color),
-                    borderRadius: BorderRadius.circular(AppRadius.badge),
-                  ),
-                  child: Icon(
-                    CategoryVisuals.icon(category),
-                    size: 17,
-                    color: AppColors.readableAccent(context, color),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.5,
-                        ),
+              // 2026-09-27: sahibi ana ekranı renksiz buldu — karo beyaz
+              // zemin + kenarlıktan ibaretti, kategori rengi yalnız 36×36
+              // ikon rozetinde yaşıyordu. Kategori kimliği artık karonun
+              // TAMAMINI kaplar (bkz. `category_color_identity_test`ki
+              // "her ton beyaz metinle AA'yı kendi başına geçer" garantisi).
+              boxShadow: light
+                  ? [
+                      BoxShadow(
+                        color: color.withValues(alpha: 0.28),
+                        blurRadius: 14,
+                        offset: const Offset(0, 6),
                       ),
-                      if (started) ...[
-                        const SizedBox(height: 6),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(AppRadius.pill),
-                          child: LinearProgressIndicator(
-                            value: ratio,
-                            minHeight: 4,
-                            backgroundColor: AppTheme.borderColor(context),
-                            valueColor: AlwaysStoppedAnimation<Color>(color),
-                          ),
-                        ),
-                      ] else if (meta != null) ...[
-                        const SizedBox(height: 2),
+                    ]
+                  : null,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AspectRatio(
+                    // Tek sütunda kart yatayda geniş kalır (21:9, bir
+                    // afiş gibi); iki sütunda kareye yakın (16:11) durur —
+                    // aksi hâlde tek sütunlu dar telefonlarda kart aşırı
+                    // uzun bir dikdörtgene dönüşürdü.
+                    aspectRatio: wide ? 21 / 9 : 16 / 11,
+                    child: CategoryVisuals.hasOwnImage(category)
+                        ? Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Image.asset(
+                                CategoryVisuals.imagePath(category),
+                                fit: BoxFit.cover,
+                                excludeFromSemantics: true,
+                                cacheWidth:
+                                    (tileWidth *
+                                            MediaQuery.devicePixelRatioOf(
+                                              context,
+                                            ))
+                                        .round(),
+                                errorBuilder: (_, _, _) =>
+                                    _TopicIconArt(category: category),
+                              ),
+                              // Fotoğraf etiket bandına erir: görsel ile
+                              // altındaki isim arasında sert bir kenar
+                              // olmasın diye.
+                              Positioned(
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                height: 28,
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        color.withValues(alpha: 0),
+                                        color,
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : _TopicIconArt(category: category),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
                         Text(
-                          meta,
+                          name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTypography.caption.copyWith(
-                            color: AppTheme.textMutedColor(context),
-                            fontWeight: FontWeight.w500,
+                          style: AppTypography.bodyLarge.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 15.5,
                           ),
                         ),
+                        if (started) ...[
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.pill,
+                                  ),
+                                  child: LinearProgressIndicator(
+                                    value: ratio,
+                                    minHeight: 5,
+                                    backgroundColor: Colors.white.withValues(
+                                      alpha: 0.25,
+                                    ),
+                                    valueColor:
+                                        const AlwaysStoppedAnimation<Color>(
+                                          Colors.white,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                context.percentRatio(ratio),
+                                style: AppTypography.caption.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ] else if (meta != null) ...[
+                          const SizedBox(height: 2),
+                          Text(
+                            meta,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.caption.copyWith(
+                              // 2026-09-27: %90 alfa denendi ama Coğrafya
+                              // (#9C6300, beyazla TAM opaklıkta zaten sınırda
+                              // 5.00:1) ve Muzîk (#4C7A17) üstünde 4.39:1 ve
+                              // 4.49:1'e düşüyordu — ikisi de AA eşiğinin
+                              // ALTINDA ve ikisi de bugün ekranda görünen
+                              // gerçek kategoriler. %95 bütün tanımlı
+                              // kategori renklerinde (görünür/gizli fark
+                              // etmeksizin) en az 4.68:1 verir.
+                              color: Colors.white.withValues(alpha: 0.95),
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Kendi fotoğrafı olmayan (ya da yüklenemeyen) kategoriler için karo
+/// içeriği: gradyan zemin görünür kalır, ikon hem ortada hem de dev bir
+/// filigran olarak sağ-altta tekrarlanır.
+class _TopicIconArt extends StatelessWidget {
+  const _TopicIconArt({required this.category});
+
+  final String category;
+
+  @override
+  Widget build(BuildContext context) {
+    final icon = CategoryVisuals.icon(category);
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Positioned(
+          right: -16,
+          bottom: -20,
+          child: Icon(
+            icon,
+            size: 110,
+            color: Colors.white.withValues(alpha: 0.10),
+          ),
+        ),
+        Center(
+          child: Icon(
+            icon,
+            size: 44,
+            color: Colors.white.withValues(alpha: 0.92),
+          ),
+        ),
+      ],
     );
   }
 }
