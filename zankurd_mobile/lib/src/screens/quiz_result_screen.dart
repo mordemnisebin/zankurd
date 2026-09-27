@@ -1019,16 +1019,22 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   ///
   /// Sabit bir cihaz breakpoint'i yerine mevcut genişlik + text scale
   /// kullanılır. Dar veya büyük metinli düzende primary üstte tam genişlikte
-  /// kalır; yan eylemler öğrenme özetinden sonraki Wrap'e ertelenir. Böylece
+  /// kalır; yan eylemler öğrenme özetinden sonraki bloğa ertelenir. Böylece
   /// ana label küçülmez ve sonuç → ana eylem → öğrenme içgörüsü hiyerarşisi
   /// korunur.
+  ///
+  /// 2026-09-27 (Kusur 2 düzeltmesi): yan eylemlerin toplam genişliği artık
+  /// sabit bir tahmin değil, HER etiketin gerçek ölçümüdür
+  /// (`_resultSideActionWidth`). Hap düğmeye geçildiği için genişlik etikete
+  /// göre değişir ("Paylaş" ↔ "Yanlışları incele"); sabit bir sayı bazı
+  /// etiketleri sığmış SANIP kırpardı.
   bool _shouldStackResultActions(
     BuildContext context, {
     required double availableWidth,
     required String primaryLabel,
-    required int secondaryCount,
+    required List<Widget> secondaryActions,
   }) {
-    if (secondaryCount == 0) return false;
+    if (secondaryActions.isEmpty) return false;
 
     final painter = TextPainter(
       text: TextSpan(
@@ -1046,10 +1052,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // anatomisinin güvenli üst sınırıdır; label'ın sığmadığı durumda
     // breakpoint tahmini yapmak yerine ölçümü stacked karara dönüştürür.
     const primaryChrome = 80.0;
-    const sideActionWidth = 76.0;
     const actionGap = 10.0;
     final primaryNeeded = painter.width + primaryChrome;
-    final secondaryNeeded = secondaryCount * sideActionWidth + actionGap;
+    final secondaryNeeded =
+        secondaryActions
+            .whereType<_ResultSideAction>()
+            .map((action) => _resultSideActionWidth(context, action.label))
+            .fold<double>(0, (sum, width) => sum + width) +
+        actionGap;
     return primaryNeeded + secondaryNeeded > availableWidth;
   }
 
@@ -1109,7 +1119,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           context,
           availableWidth: constraints.maxWidth,
           primaryLabel: primaryLabel,
-          secondaryCount: secondaryActions.length,
+          secondaryActions: secondaryActions,
         );
         final primary = _buildResultPrimaryAction(
           key: primaryKey,
@@ -1135,6 +1145,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     );
   }
 
+  /// Ertelenmiş yan eylemler: dar/büyük-yazılı düzende `_buildResultActions`
+  /// yalnız primary'yi bastığı için bu blok öğrenme özetinin ALTINDA aynı
+  /// eylemleri tam genişlikte gösterir.
+  ///
+  /// 2026-09-27 (Kusur 2 düzeltmesi): eskiden burası sabit 76×54 kare
+  /// düğmeleri sağa yaslı bir `Wrap`e diziyordu — dar ekranda bu, kutunun
+  /// içindeki etiketi `FittedBox(scaleDown)` ile ~8px'e küçültüyordu. Artık
+  /// hap düğmeler tam genişliği EŞİT PAYLAŞIR (`Expanded` + `Row`); bir
+  /// etiket kendi payına GERÇEKTEN sığmıyorsa (ölçülmüş genişlikle) ya da
+  /// yazı tipi ölçeği zaten büyükse, yatay sıkıştırma yerine dikey yer açan
+  /// bir `Column`a düşülür — küçültmek yerine büyütmek, yarım/mikroskopik
+  /// etiket göstermekten iyidir.
   Widget _buildDeferredResultActions({
     required String primaryLabel,
     required List<Widget> secondaryActions,
@@ -1145,21 +1167,48 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           context,
           availableWidth: constraints.maxWidth,
           primaryLabel: primaryLabel,
-          secondaryCount: secondaryActions.length,
+          secondaryActions: secondaryActions,
         );
         if (!stack || secondaryActions.isEmpty) return const SizedBox.shrink();
 
+        const gap = 10.0;
+        final labels = [
+          for (final action in secondaryActions)
+            if (action is _ResultSideAction) action.label,
+        ];
+        final shareWidth =
+            (constraints.maxWidth - gap * (labels.length - 1)) / labels.length;
+        // Büyük yazı ölçeğinde etiketler payına sığsa bile satır çok sıkışık
+        // görünür VE bir sonraki elense küçük bir metin değişikliği kolayca
+        // taşırır; bu yüzden ölçek zaten büyükse pay hesabı hiç denenmeden
+        // dikey düzene geçilir.
+        final textScaleIsLarge =
+            MediaQuery.textScalerOf(context).scale(14) > 20;
+        final anyLabelOverflowsShare = labels.any(
+          (label) => _resultSideActionWidth(context, label) > shareWidth,
+        );
+        final useColumn = textScaleIsLarge || anyLabelOverflowsShare;
+
         return Padding(
           padding: const EdgeInsets.only(top: 10),
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Wrap(
-              alignment: WrapAlignment.end,
-              spacing: 10,
-              runSpacing: 8,
-              children: secondaryActions,
-            ),
-          ),
+          child: useColumn
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var i = 0; i < secondaryActions.length; i++) ...[
+                      if (i > 0) const SizedBox(height: gap),
+                      secondaryActions[i],
+                    ],
+                  ],
+                )
+              : Row(
+                  children: [
+                    for (var i = 0; i < secondaryActions.length; i++) ...[
+                      if (i > 0) const SizedBox(width: gap),
+                      Expanded(child: secondaryActions[i]),
+                    ],
+                  ],
+                ),
         );
       },
     );
@@ -1262,8 +1311,25 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final primaryResultIcon = learningContinue
         ? AppIcons.arrowRight
         : nextActionIcon;
+
+    // Kusur 1 (2026-09-27): bu yan eylem ve `LearningOutcomeCard`daki
+    // "Yanlış cevabı gözden geçir" düğmesi AYNI `openReview` çağrısına
+    // gidiyordu — `LearningOutcome.fromRecords`e bakılırsa `reviewCategory`
+    // null iken kartın `reviewRecords`ı zaten TÜM yanlışlardır (bkz. o
+    // fabrika metodundaki `selectedWrong`). Yani kart görünürken
+    // (`answerRecords.isNotEmpty`) ve kart tek bir konuya değil TÜM
+    // yanlışlara işaret ederken (`reviewCategory == null`), bu yan eylem
+    // kartın altında birebir aynı eylemi ikinci kez sunuyordu. `reviewCategory`
+    // doluyken kart yalnız O KONUNUN yanlışlarını gösterir — o zaman ikisi
+    // farklı kapsamdır ("bu konudakiler" ↔ "hepsi") ve yan eylem kalmalı.
+    final learningOutcomeAlreadyOffersAllMistakes =
+        answerRecords.isNotEmpty &&
+        learningOutcome.reviewCategory == null &&
+        learningOutcome.reviewRecords.isNotEmpty;
     final secondaryResultActions = <Widget>[
-      if (wrongRecords.isNotEmpty && !learningContinue)
+      if (wrongRecords.isNotEmpty &&
+          !learningContinue &&
+          !learningOutcomeAlreadyOffersAllMistakes)
         _ResultSideAction(
           key: const ValueKey('result-review-mistakes-button'),
           icon: AppIcons.squareCheck,
@@ -2537,6 +2603,51 @@ class _RaceStandingRow extends StatelessWidget {
   }
 }
 
+/// `_ResultSideAction`ın etiket stili — renksiz taban.
+///
+/// Çizim (`_ResultSideAction.build`) bunun üstüne `color` ekler; genişlik
+/// ölçümü (`_resultSideActionWidth`, `_QuizResultScreenState` içinde) AYNI
+/// stili OLDUĞU GİBİ kullanır. İkisi ayrı stil tanımlarsa ölçülen genişlik
+/// ekrana çizilenden sapar ve satır/sütun kırılma kararı yanlış hesaplanır
+/// (Kusur 2, 2026-09-27 düzeltmesi).
+final TextStyle _resultSideActionLabelStyle = AppTypography.bodyMedium.copyWith(
+  fontFamily: AppTypography.fontFamily,
+  fontWeight: FontWeight.w700,
+  fontSize: 14,
+);
+
+/// `_ResultSideAction` pilinin GERÇEK genişliği: ölçülen etiket + ikon +
+/// ikon-etiket boşluğu + yatay dolgu + kenarlık.
+///
+/// Sabit `sideActionWidth = 76` varsayımının yerini alır (Kusur 2,
+/// 2026-09-27) — o sabit her yan eylemin AYNI genişlikte olduğunu
+/// varsayıyordu; hap düğmede genişlik etikete göre değişir ("Paylaş" ↔
+/// "Yanlışları incele"). Sabit tahmin, uzun bir etiketi aslında
+/// sığmayacakken sığmış SANIYORDU.
+double _resultSideActionWidth(BuildContext context, String label) {
+  final painter = TextPainter(
+    // `test/painter_font_test.dart` her `TextSpan` bloğunun KENDİ İÇİNDE
+    // `fontFamily` yazdığını arar — `_resultSideActionLabelStyle` ailesini
+    // zaten taşısa da, buradaki `.copyWith` OLMADAN bekçi bunu göremez ve
+    // metin sessizce sistem yazı tipine düşebilecek bir kalıp olarak
+    // işaretler. Mevcut `_shouldStackResultActions`teki primary ölçümüyle
+    // AYNI (kasıtlı fazladan) desen.
+    text: TextSpan(
+      text: label,
+      style: _resultSideActionLabelStyle.copyWith(
+        fontFamily: AppTypography.fontFamily,
+      ),
+    ),
+    textDirection: Directionality.of(context),
+    textScaler: MediaQuery.textScalerOf(context),
+    maxLines: 1,
+  )..layout();
+  // İkon(18) + ikon-etiket boşluğu(8) + yatay dolgu(16*2) + kenarlık(1*2):
+  // `_ResultSideAction`ın gerçek buton anatomisi (aşağıdaki `build`e bakın).
+  const chrome = 18.0 + 8.0 + 16.0 * 2 + 1.0 * 2;
+  return painter.width + chrome;
+}
+
 /// Sonuç yan eylemi — ikon + kısa etiket, primary CTA'yı boğmaz.
 class _ResultSideAction extends StatelessWidget {
   const _ResultSideAction({
@@ -2556,49 +2667,53 @@ class _ResultSideAction extends StatelessWidget {
     final color = enabled
         ? AppTheme.textPrimaryColor(context)
         : AppTheme.textMutedColor(context);
+    // Not: burada bilinçli olarak EK bir `Semantics` sarmalayıcı YOK.
+    // `InkWell` zaten dokunulabilir/etkin durumunu ve alttaki `Text`in
+    // etiketini erişilebilirlik ağacına taşıyor; üstüne açık bir
+    // `label`/`button` eklemek (`Text`in KENDİ örtük etiketiyle aynı
+    // metinle) iki açık etiketin birleşmeye çalışmasına ve `flutter test`te
+    // semantics birleştirme hatasına yol açabilirdi. Kusur 2 yalnız GÖRÜNÜR
+    // boyutla ilgiliydi; mevcut semantics davranışı olduğu gibi korunur.
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.sm),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         child: Ink(
-          // 64 piksellik kutuda "Tekrar oyna" iki kenara sıfır dayanıyordu;
-          // etiket kutunun içinde değil, kutunun kenarında duruyordu
-          // (2026-07-30 ekran turu, 68/69). Kurmancî karşılıkları daha da
-          // uzun ("Dîsa bilîze", "Parve bike"). Kutu genişletildi, etikete
-          // iç boşluk verildi; taşarsa kırpmak yerine küçülür — yarım
-          // sözcük göstermek, küçük yazıdan kötüdür.
-          width: 76,
-          height: 54,
+          // Kusur 2 (2026-09-27, tasarım denetimi): kutu 76×54 SABİT bir
+          // kareydi ve etiket `FittedBox(scaleDown)` içindeydi; "Yanlışları
+          // incele" bu kutuda ~8px'e küçülüyordu — okunmuyordu. Hap biçimli
+          // bir düğmeye geçildi: yükseklik sabit (48, dokunma hedefi
+          // tabanının üstünde) ama GENİŞLİK yok — genişlik artık içeriğe
+          // (ikon + etiket) göre kendiliğinden oluşur. Sığmayan etiket artık
+          // küçülmez, `ellipsis` ile kırpılır; bu, WCAG'ın izin verdiği en
+          // küçük okunur boyutu (14px) HER ZAMAN korur. Genişlik kararı
+          // (satır/sütun) `_shouldStackResultActions`teki gerçek ölçümle
+          // ayrılır, yani etiket burada nadiren kırpılır.
+          height: 48,
           decoration: BoxDecoration(
             color: AppTheme.surfaceHiColor(context),
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-            border: Border.all(
-              color: AppTheme.borderColor(context).withValues(alpha: 0.7),
-            ),
+            borderRadius: BorderRadius.circular(AppRadius.md),
+            border: Border.all(color: AppTheme.borderColor(context)),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 20, color: color),
-              const SizedBox(height: 2),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, size: 18, color: color),
+                const SizedBox(width: 8),
+                Flexible(
                   child: Text(
                     label,
                     maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style: AppTypography.caption.copyWith(
-                      color: color,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 10,
-                    ),
+                    overflow: TextOverflow.ellipsis,
+                    style: _resultSideActionLabelStyle.copyWith(color: color),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
