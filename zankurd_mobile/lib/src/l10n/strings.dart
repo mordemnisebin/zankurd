@@ -1115,6 +1115,10 @@ class Tr {
       'ku': '{p0} tomar nehat rêzkirin',
       'tr': '{p0} kayıt senkronize edilemedi',
     },
+    // Sunucuya HİÇ ulaşılamıyorken (kilitli/çevrimdışı misafir) "Bulutla
+    // senkronize" yalan söylüyordu — bulut hiç yok. Bu, o dalın nötr
+    // karşılığı (bkz. `profile_screen.dart` `_SyncStatusChip`).
+    K.deviceOnlyProgress: {'ku': 'Tenê li vê amûrê', 'tr': 'Yalnız bu cihazda'},
     K.seri: {'ku': 'Rêz!', 'tr': 'Seri!'},
     K.sureDolduDogruCevap: {
       'ku': 'Dem qediya! Bersivên rast: {p0}',
@@ -1931,9 +1935,13 @@ class Tr {
       'ku': 'Her 30 çirkeyî nûve dibe',
       'tr': 'Her 30 saniyede güncellenir',
     },
+    // Kusur: öğrenme sorularının sıralamaya saydığını söylüyordu — oysa
+    // yalnız yarış puanı sayılır (boş durum metni bunu doğru söylüyordu:
+    // "Bir yarış başlat; puanların burada görünür."). Kullanıcı soru
+    // çözüp puan görmeyince "bozuk" sanıyordu (2026-09-27 simülatör turu).
     K.leaderboardHowTo: {
-      'ku': 'Pirsan çareser bike, pûanan kom bike, bilind bibe.',
-      'tr': 'Soru çöz, puan topla, sıralamada yüksel.',
+      'ku': 'Di pêşbirkan de pûanan kom bike, bilind bibe.',
+      'tr': 'Yarışlarda puan topla, sıralamada yüksel.',
     },
     K.refreshBoardA11y: {
       'ku': 'Tabloya pêşengan nû bike',
@@ -3481,6 +3489,7 @@ class K {
   static const senkronizeEdiliyor = 'screen.senkronizeEdiliyor';
   static const bulutlaSenkronize = 'screen.bulutlaSenkronize';
   static const pSenkronizeEdilemedi = 'screen.pSenkronizeEdilemedi';
+  static const deviceOnlyProgress = 'screen.deviceOnlyProgress';
   static const seri = 'screen.seri';
   static const sureDolduDogruCevap = 'screen.sureDolduDogruCevap';
   static const tebriklerSeviyeAtladinYeni = 'screen.tebriklerSeviyeAtladinYeni';

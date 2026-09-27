@@ -644,6 +644,18 @@ class _QuickDuelHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final enabled = onTap != null;
+    // Kusur: kilitliyken (sunucuya hiç ulaşılamıyor) `onTap` null oluyor ama
+    // kart tam turuncu ve "canlı" görünmeye devam ediyordu; dokununca hiçbir
+    // şey olmadığı için kullanıcı düğmenin bozuk olduğunu düşünüyordu. Oda
+    // aç/katıl kartları aynı durumda alt satırı `K.serverUnreachableTitle`
+    // yapıyor (yukarıdaki `createSubtitle`/`joinSubtitle` ile aynı desen);
+    // burada da aynı metin uygulanıyor ve düğmenin kendisi
+    // `AppColors.disabledSurface` ile görsel olarak pasifleşiyor
+    // (`today_task_card.dart`daki `_StartButton` ile aynı desen —
+    // 2026-09-27 simülatör turu).
+    final ctaBackground = enabled
+        ? AppTheme.primaryCtaColor(context)
+        : AppColors.disabledSurface(context);
     return Semantics(
       key: const ValueKey('play-hub-quick-duel'),
       button: true,
@@ -699,7 +711,9 @@ class _QuickDuelHero extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
-                    context.t(K.quickDuelSub),
+                    enabled
+                        ? context.t(K.quickDuelSub)
+                        : context.t(K.serverUnreachableTitle),
                     style: AppTypography.heading2.copyWith(color: Colors.white),
                   ),
                   const SizedBox(height: AppSpacing.sm),
@@ -708,15 +722,13 @@ class _QuickDuelHero extends StatelessWidget {
                     height: 48,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: AppTheme.primaryCtaColor(context),
+                      color: ctaBackground,
                       borderRadius: BorderRadius.circular(AppRadius.sm),
                     ),
                     child: Text(
                       context.t(K.findOpponent),
                       style: AppTypography.bodyLarge.copyWith(
-                        color: AppColors.onSolid(
-                          AppTheme.primaryCtaColor(context),
-                        ),
+                        color: AppColors.onSolid(ctaBackground),
                         fontWeight: FontWeight.w700,
                       ),
                     ),

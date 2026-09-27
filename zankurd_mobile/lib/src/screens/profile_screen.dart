@@ -20,6 +20,7 @@ import '../models/leaderboard_entry.dart';
 import '../models/league_tier.dart';
 import '../providers/auth_provider.dart';
 import '../providers/reduced_motion_provider.dart';
+import '../providers/remote_availability.dart';
 import '../theme/app_theme.dart';
 import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
@@ -1201,29 +1202,46 @@ class _SyncStatusChip extends StatelessWidget {
                 // artık `failed`te durur, "senkronize" burada YALAN
                 // söylememeli (2026-08-14 denetimi).
                 final hasFailed = !syncing && failed > 0;
+                // Kusur: sunucuya HİÇ ulaşılamıyorken (çevrimdışı misafir —
+                // `RemoteAvailability.socialLockedIn`) da, bekleyen/başarısız
+                // kayıt olmadığı için `isSynced` true çıkıyor ve çip "Bulutla
+                // senkronize" diyordu. Yalan: bulut yok, kayıt asla oraya
+                // gitmeyecek. Yalnız bu (kilitli + isSynced) dalı ayırıyoruz;
+                // syncing/hasFailed/pending metinleri kilit modunda da doğru
+                // kalıyor, değişmiyor (2026-09-27 simülatör turu).
+                final deviceOnly =
+                    isSynced && RemoteAvailability.socialLockedIn(context);
                 final color = hasFailed
                     ? AppTheme.wrong
-                    : (isSynced ? AppTheme.correct : AppTheme.gold);
+                    : (deviceOnly
+                          ? AppTheme.textSubColor(context)
+                          : (isSynced ? AppTheme.correct : AppTheme.gold));
                 final icon = syncing
                     ? AppIcons.arrowsRotate
                     : (hasFailed
                           ? AppIcons.triangleExclamation
-                          : (isSynced ? AppIcons.circleCheck : AppIcons.cloud));
+                          : (deviceOnly
+                                ? AppIcons.mobileScreen
+                                : (isSynced
+                                      ? AppIcons.circleCheck
+                                      : AppIcons.cloud)));
                 final label = syncing
                     ? (Tr.forKu(K.senkronizeEdiliyor, isKu))
                     : (hasFailed
                           ? Tr.forKu(K.pSenkronizeEdilemedi, isKu, {
                               'p0': '$failed',
                             })
-                          : (isSynced
-                                ? (Tr.forKu(K.bulutlaSenkronize, isKu))
-                                : (isKu
-                                      // "kayd" bankada başka hiçbir yerde
-                                      // geçmiyor; yerleşik sözcük
-                                      // "tomar"dır (bkz. "pirsên
-                                      // tomarkirî" — strings.dart).
-                                      ? '$pending tomar li amûrê ye'
-                                      : '$pending çevrimdışı kaydı')));
+                          : (deviceOnly
+                                ? Tr.forKu(K.deviceOnlyProgress, isKu)
+                                : (isSynced
+                                      ? (Tr.forKu(K.bulutlaSenkronize, isKu))
+                                      : (isKu
+                                            // "kayd" bankada başka hiçbir
+                                            // yerde geçmiyor; yerleşik
+                                            // sözcük "tomar"dır (bkz. "pirsên
+                                            // tomarkirî" — strings.dart).
+                                            ? '$pending tomar li amûrê ye'
+                                            : '$pending çevrimdışı kaydı'))));
 
                 final chip = Container(
                   padding: const EdgeInsets.symmetric(

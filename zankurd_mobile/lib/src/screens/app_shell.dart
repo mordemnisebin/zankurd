@@ -398,7 +398,17 @@ class _AppShellState extends State<AppShell>
         body: Column(
           children: [
             _statusBanner(context),
-            const Expanded(child: SignInScreen()),
+            // Kabuktaki düzeltmenin aynısı: bant görünürken üst güvenli
+            // alanı o karşılar; giriş ekranı onu ikinci kez eklemesin.
+            Expanded(
+              child: _statusBannerVisible(context)
+                  ? MediaQuery.removePadding(
+                      context: context,
+                      removeTop: true,
+                      child: const SignInScreen(),
+                    )
+                  : const SignInScreen(),
+            ),
           ],
         ),
       );
@@ -486,7 +496,7 @@ class _AppShellState extends State<AppShell>
     // içeridekiler sıfır görür; bu yüzden ekranların kendi dolguları iki
     // katına çıkmaz. Alt taraf `bottomNavigationBar`ın işi olduğu için
     // dışarıda bırakıldı.
-    final content = SafeArea(
+    final rawContent = SafeArea(
       bottom: false,
       child: Center(
         child: ConstrainedBox(
@@ -499,6 +509,25 @@ class _AppShellState extends State<AppShell>
         ),
       ),
     );
+
+    // Kusur: bant (`OfflineBanner`) görünürken üst güvenli alanı KENDİSİ
+    // karşılıyor — dekorasyonu (renk/kenarlık) `SafeArea`SINI dıştan sarar,
+    // yani durum çubuğunun ardına kadar uzanır ve okunaklı satırı onun
+    // altına iter (bkz. `offline_banner.dart`). Yukarıdaki `rawContent`
+    // bunu BİLMEDEN aynı boşluğu ikinci kez ekliyordu: bant + durum çubuğu
+    // yüksekliği kadar boş, dokunulmamış bir şerit oluşuyor; `Expanded`
+    // sabit yükseklik verdiği için kaydırılan içerik de altta o kadarlık
+    // kısmı kırpılıyordu (2026-09-27 simülatör turu). `MediaQuery.
+    // removePadding` ile üst boşluğu bu alt ağaçta sıfırlıyoruz; bant
+    // görünmüyorken DOKUNMUYORUZ çünkü o zaman tek karşılayıcı budur.
+    final statusBannerVisible = _statusBannerVisible(context);
+    final content = statusBannerVisible
+        ? MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: rawContent,
+          )
+        : rawContent;
 
     if (isDesktop) {
       return Scaffold(
@@ -540,6 +569,13 @@ class _AppShellState extends State<AppShell>
       );
     }
     return OfflineBanner(isOffline: _isOffline, onRetry: _refreshConnectivity);
+  }
+
+  /// `_statusBanner` ile AYNI koşul: kilit modu (sunucuya hiç ulaşılamıyor)
+  /// ya da yerel ağ kaybı. İkisi ayrışırsa bant görünürlüğüyle üst boşluk
+  /// düzeltmesi de ayrışır — bkz. `_buildScaffold`teki `rawContent` yorumu.
+  bool _statusBannerVisible(BuildContext context) {
+    return RemoteAvailability.socialLockedIn(context) || _isOffline;
   }
 
   bool _joinDeepLinkScheduled = false;
