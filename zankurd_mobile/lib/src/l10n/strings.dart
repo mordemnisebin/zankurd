@@ -1931,6 +1931,10 @@ class Tr {
       'ku': 'Her 30 çirkeyî nûve dibe',
       'tr': 'Her 30 saniyede güncellenir',
     },
+    K.leaderboardHowTo: {
+      'ku': 'Pirsan çareser bike, pûanan kom bike, bilind bibe.',
+      'tr': 'Soru çöz, puan topla, sıralamada yüksel.',
+    },
     K.refreshBoardA11y: {
       'ku': 'Tabloya pêşengan nû bike',
       'tr': 'Liderlik tablosunu yenile',
@@ -2016,10 +2020,14 @@ class Tr {
     // Satır sonu iki kez kaçırılmıştı (`\\n`): ekranda satır atlamak yerine
     // "yok.\\nBir" diye harfi harfine yazılıyordu (2026-07-28). Metin zaten
     // kısa; tek satır olarak akması daha temiz.
+    // Profildeki istatistik kartının boş hâli. Kart yerel ilerlemeyi de
+    // sayıyor; eski metin yalnız "çevrimiçi oyun" ve "oda" diyordu, oysa
+    // ilk ders sorusu çözülünce kart dolar (2026-09-27).
     K.noOnlineHistory: {
       'ku':
-          'Hîn dîroka lîstikê ya serhêl tune. Tevlî odeyekê bibe an yekê ava bike.',
-      'tr': 'Henüz çevrimiçi oyun geçmişin yok. Bir odaya katıl veya oluştur.',
+          'Te hêj tu pirs çareser nekiriye. Gera xwe ya yekem bilîze, statîstîkên te li vir kom dibin.',
+      'tr':
+          'Henüz soru çözmedin. İlk turunu oyna, istatistiklerin burada birikir.',
     },
     K.startToday: {'ku': 'Îro dest pê bike', 'tr': 'Bugün başla'},
     K.secLearningCaps: {'ku': 'HÎNBÛN', 'tr': 'ÖĞRENME'},
@@ -3715,6 +3723,9 @@ class K {
   static const startRaceAction = 'leaderboard.startRace';
   static const leaderboardTitle = 'leaderboard.title';
   static const refreshEvery30 = 'leaderboard.refreshEvery30';
+
+  /// Sıralama başlığının alt yazısı: nasıl yükselinir.
+  static const leaderboardHowTo = 'leaderboard.howTo';
   static const refreshBoardA11y = 'leaderboard.refreshA11y';
   static const refreshAction = 'common.refresh';
   static const questionRemoved = 'favorites.removed';

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/config/feature_flags.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
@@ -99,26 +100,36 @@ const _phone = Size(390, 844);
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets('lig açıklaması büyük yazıda iki satıra açılır', (tester) async {
-    await _pump(tester, _Repo(), size: _phone, textScale: 2.0);
+  // Lig bandı bayrakla kapalıyken çizilmez (kWeeklyLeagueEnabled).
+  testWidgets(
+    'lig açıklaması büyük yazıda iki satıra açılır',
+    skip: !kWeeklyLeagueEnabled,
+    (tester) async {
+      await _pump(tester, _Repo(), size: _phone, textScale: 2.0);
 
-    final subtitle = tester.widget<Text>(
-      find.text('Bu hafta yarış, lige gir!'),
-    );
-    expect(subtitle.maxLines, 2);
-    expect(subtitle.overflow, TextOverflow.ellipsis);
-    expect(tester.takeException(), isNull);
-  });
+      final subtitle = tester.widget<Text>(
+        find.text('Bu hafta yarış, lige gir!'),
+      );
+      expect(subtitle.maxLines, 2);
+      expect(subtitle.overflow, TextOverflow.ellipsis);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
-  testWidgets('lig açıklaması normal yazıda tek satır kalır', (tester) async {
-    await _pump(tester, _Repo(), size: _phone);
+  // Lig bandı bayrakla kapalıyken çizilmez (kWeeklyLeagueEnabled).
+  testWidgets(
+    'lig açıklaması normal yazıda tek satır kalır',
+    skip: !kWeeklyLeagueEnabled,
+    (tester) async {
+      await _pump(tester, _Repo(), size: _phone);
 
-    final subtitle = tester.widget<Text>(
-      find.text('Bu hafta yarış, lige gir!'),
-    );
-    expect(subtitle.maxLines, 1);
-    expect(tester.takeException(), isNull);
-  });
+      final subtitle = tester.widget<Text>(
+        find.text('Bu hafta yarış, lige gir!'),
+      );
+      expect(subtitle.maxLines, 1);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   // ── Liste yüzeyi ────────────────────────────────────────────────────────
 

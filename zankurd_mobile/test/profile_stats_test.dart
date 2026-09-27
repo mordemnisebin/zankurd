@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/config/feature_flags.dart';
 import 'package:zankurd_mobile/src/data/mastery_store.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -102,7 +103,12 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     }
 
-    expect(find.text('Bronz Lig'), findsOneWidget);
+    // Lig rozeti 2026-09-27'den beri bayrakla kapalı; kapalıyken hiçbir
+    // basamak yazılmaz — şişirilmiş bir rozet de yazılamaz.
+    expect(
+      find.text('Bronz Lig'),
+      kWeeklyLeagueEnabled ? findsOneWidget : findsNothing,
+    );
     expect(find.text('Altın Lig'), findsNothing);
     // Rozet ile karo aynı kapıdan geçer: ikisi de boş kalmalı.
     expect(find.text('#1'), findsNothing);

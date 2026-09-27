@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../config/feature_flags.dart';
 import '../data/achievement_store.dart';
 import '../data/mastery_store.dart';
 import '../models/mastery_level.dart';

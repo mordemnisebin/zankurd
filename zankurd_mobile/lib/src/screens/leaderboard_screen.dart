@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../config/feature_flags.dart';
 import '../config/avatar_presets.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -154,7 +155,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       isKu: ku,
       colorOverrides: avatarColorOverrides,
     );
-    final banner = _period == LeaderboardPeriod.weekly
+    // Lig bandı bayrakla kapalı (bkz. `kWeeklyLeagueEnabled`).
+    final banner = kWeeklyLeagueEnabled && _period == LeaderboardPeriod.weekly
         ? _LeagueBanner(myRank: _myRank(entries), isKu: ku)
         : null;
 
@@ -887,7 +889,10 @@ class _Header extends StatelessWidget {
       ),
       child: ScreenSectionHeading(
         title: context.t(K.leaderboardTitle),
-        subtitle: context.t(K.refreshEvery30),
+        // Alt başlık eskiden "Her 30 saniyede güncellenir" diyordu: doğru
+        // ama oyuncuya bir şey anlatmayan bir teknik ayrıntı. Yeni gelen
+        // burada sıralamanın NASIL yükseldiğini okumalı.
+        subtitle: context.t(K.leaderboardHowTo),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

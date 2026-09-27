@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/config/feature_flags.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
@@ -111,15 +112,29 @@ void main() {
     await _pump(tester, _Repo());
     expect(tester.takeException(), isNull);
 
-    final banner = tester.getRect(find.byKey(const ValueKey('league-banner')));
     final podium = tester.getRect(
       find.byKey(const ValueKey('leaderboard-podium')),
     );
-    expect(
-      podium.top - banner.bottom,
-      closeTo(AppSpacing.cardGap, 6),
-      reason: 'podyum banner\'ın altında değil; arada ölü boşluk var',
-    );
+    if (kWeeklyLeagueEnabled) {
+      final banner = tester.getRect(
+        find.byKey(const ValueKey('league-banner')),
+      );
+      expect(
+        podium.top - banner.bottom,
+        closeTo(AppSpacing.cardGap, 6),
+        reason: 'podyum banner\'ın altında değil; arada ölü boşluk var',
+      );
+    } else {
+      // Lig bandı kapalı (kWeeklyLeagueEnabled): podyum, dönem sekmelerinin
+      // altında ilk ekranın üst yarısında durmalı; ortaya itilmemeli.
+      final screenHeight =
+          tester.view.physicalSize.height / tester.view.devicePixelRatio;
+      expect(
+        podium.top,
+        lessThan(screenHeight * 0.45),
+        reason: 'podyum ekranın ortasına itilmiş; arada ölü boşluk var',
+      );
+    }
   });
 
   testWidgets('hareket azaltma açıkken sayım yapılmaz', (tester) async {

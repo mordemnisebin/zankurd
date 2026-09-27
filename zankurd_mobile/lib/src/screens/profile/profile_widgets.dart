@@ -246,54 +246,59 @@ class _ProfileHeroCard extends StatelessWidget {
                             else
                               const SizedBox.shrink(),
 
-                            const SizedBox(height: 8),
-                            Builder(
-                              builder: (context) {
-                                final tier = LeagueTier.forRank(rank);
-                                return Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 5,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.heroScrim(),
-                                    borderRadius: BorderRadius.circular(
-                                      AppRadius.badge,
+                            // Lig rozeti bayrakla kapalı: az oyuncuyla herkes
+                            // "Bronz Lig"de (bkz. `kWeeklyLeagueEnabled`).
+                            if (kWeeklyLeagueEnabled) ...[
+                              const SizedBox(height: 8),
+                              Builder(
+                                builder: (context) {
+                                  final tier = LeagueTier.forRank(rank);
+                                  return Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 5,
                                     ),
-                                    border: Border.all(
-                                      color: Colors.white.withValues(
-                                        alpha: 0.18,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.heroScrim(),
+                                      borderRadius: BorderRadius.circular(
+                                        AppRadius.badge,
                                       ),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        tier.icon,
-                                        color: Colors.white,
-                                        size: 14,
-                                      ),
-                                      const SizedBox(width: 5),
-                                      // Rozet metni büyük yazıda kartın dışına
-                                      // taşıyordu (2026-07-26).
-                                      Flexible(
-                                        child: Text(
-                                          tier.label(ku),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppTypography.caption.copyWith(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 11,
-                                          ),
+                                      border: Border.all(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.18,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          tier.icon,
+                                          color: Colors.white,
+                                          size: 14,
+                                        ),
+                                        const SizedBox(width: 5),
+                                        // Rozet metni büyük yazıda kartın dışına
+                                        // taşıyordu (2026-07-26).
+                                        Flexible(
+                                          child: Text(
+                                            tier.label(ku),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: AppTypography.caption
+                                                .copyWith(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w800,
+                                                  fontSize: 11,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           ],
                         ),
                       ),

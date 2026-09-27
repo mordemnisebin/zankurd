@@ -14,3 +14,13 @@ const kReferralRewardsEnabled = true;
 /// kalabalık bekleyen modlar değil. Kod ve sunucu tarafı yerinde duruyor;
 /// kitle büyüyünce bu bayrak açılır.
 const kTournamentEnabled = false;
+
+/// Haftalık lig (Bronz/Gümüş/Altın) sıralamada ve profilde görünür mü?
+///
+/// 2026-09-27: kapatıldı. Lig, sıralamayı basamaklara bölen bir katman;
+/// oyuncu sayısı az olunca herkes aynı basamakta ("Bronz Lig") kalıyor ve
+/// "Bu hafta yarış, lige gir!" çağrısı yeni gelene ne yapacağını
+/// söylemiyordu. Sunucudaki haftalık lig hesabı (league_weeks, finalize
+/// cron) çalışmaya devam ediyor; yalnız arayüz katmanı gizli. Kitle
+/// büyüyünce bu bayrak açılır.
+const kWeeklyLeagueEnabled = false;
