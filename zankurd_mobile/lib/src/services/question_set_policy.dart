@@ -107,13 +107,31 @@ class QuestionSetPolicy {
     return promptLength + longestOption * 2;
   }
 
-  /// [candidates] listesini okuma yüküne göre hafiften ağıra sıralar.
+  /// Cevabı tanımak yerine ÜRETMEYİ isteyen soru türleri: yazmalı
+  /// (boşluk doldurma) ve kelime sıralama.
+  static bool isProductionTask(QuizQuestion question) =>
+      question.type == QuestionType.fillInBlank ||
+      question.type == QuestionType.wordOrdering;
+
+  /// [candidates] listesini hafiften ağıra sıralar: önce tanıma soruları
+  /// (şıklı, doğru/yanlış, görselli), sonra üretim soruları; her grup kendi
+  /// içinde okuma yüküne göre.
+  ///
+  /// Okuma yükü üretim sorusunu yanlış tartıyordu: yazmalı sorunun "şıkkı"
+  /// yazılacak cevabın kendisidir ve kısadır ("mirovekî"), bu yüzden hafif
+  /// sayılıyordu. "Ziman › Rêziman › Destpêk"in İLK sorusu, "mirov"un
+  /// belirsiz tekil bükümünü klavyeyle yazdıran bir soruydu (2026-09-27
+  /// simülatör turu). Cevabı hatırlayıp yazmak, dört şıktan tanımaktan
+  /// ağırdır; yeni öğrenenin ilk teması tanıma olmalı.
   ///
   /// Kararlılık için eşit yükte olanlar özgün sıralarını korur; böylece
   /// aynı havuz her seferinde aynı turu üretir (test edilebilirlik).
   static List<QuizQuestion> byReadingLoad(List<QuizQuestion> candidates) {
+    int tier(QuizQuestion q) => isProductionTask(q) ? 1 : 0;
     final indexed = candidates.indexed.toList()
       ..sort((a, b) {
+        final byTier = tier(a.$2).compareTo(tier(b.$2));
+        if (byTier != 0) return byTier;
         final byLoad = readingLoad(a.$2).compareTo(readingLoad(b.$2));
         return byLoad != 0 ? byLoad : a.$1.compareTo(b.$1);
       });

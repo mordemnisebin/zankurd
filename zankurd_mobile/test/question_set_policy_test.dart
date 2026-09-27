@@ -169,6 +169,49 @@ void main() {
         QuestionSetPolicy.byReadingLoad([uzun, kisa]).map((q) => q.id),
       );
     });
+
+    test('üretim soruları, yükleri hafif görünse de tanıma sorularından sonra '
+        'gelir', () {
+      // "Destpêk"in ilk sorusu klavyeyle yazdırılan bir büküm sorusuydu:
+      // yazmalı sorunun tek "şıkkı" kısa cevaptır, okuma yükü bu yüzden
+      // düşük çıkıyordu (2026-09-27 simülatör turu).
+      const yazmali = QuizQuestion(
+        id: 'y',
+        category: 'Ziman',
+        prompt: 'Ez ___ dibînim.',
+        answers: ['mirovekî'],
+        correctAnswer: 'mirovekî',
+        explanation: '',
+        type: QuestionType.fillInBlank,
+      );
+      const siralama = QuizQuestion(
+        id: 's',
+        category: 'Ziman',
+        prompt: 'Rêz bike',
+        answers: ['ez', 'tê'],
+        correctAnswer: 'ez tê',
+        explanation: '',
+        type: QuestionType.wordOrdering,
+      );
+      expect(
+        QuestionSetPolicy.readingLoad(yazmali),
+        lessThan(QuestionSetPolicy.readingLoad(uzun)),
+        reason:
+            'kurgu gerçek kusuru yeniden kurmalı: yük tek başına '
+            'yazmalıyı öne alırdı',
+      );
+      expect(
+        QuestionSetPolicy.byReadingLoad([
+          yazmali,
+          siralama,
+          uzun,
+          kisa,
+        ]).map((q) => q.id),
+        // Önce iki tanıma sorusu, sonra iki üretim sorusu; her grup kendi
+        // içinde yine okuma yüküne göre (kısa sıralama, yazmalıdan önce).
+        ['k', 'u', 's', 'y'],
+      );
+    });
   });
 
   group('totolojik açıklama', () {
