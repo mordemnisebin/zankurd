@@ -28,7 +28,10 @@ Eski Vite prototipi `../docs/archive/web_prototype` altındadır; Play paketi bu
 
 Hikâye (Öğren → Kurmancî öğren), arkadaşlar (Liderlik), günlük çark (Mağaza)
 ve yerleştirme (Ayarlar) ikinci katmandadır. Turnuva ve haftalık lig
-`lib/src/config/feature_flags.dart` ile kapalıdır; Paradigma, Siyaset ve
+`lib/src/config/feature_flags.dart` ile kapalıdır. Sırayla düello (sen şimdi
+oyna, rakibin sonra) hazırdır ama sunucu göçü
+`supabase/2026-09-28_async_duels.sql` canlıya uygulanana dek
+`kAsyncDuelEnabled` ile kapalıdır. Paradigma, Siyaset ve
 Teknolojî kategorileri `lib/src/config/category_visibility.dart` ile
 gizlidir. Kürtlerle bağı olmayan dünya bilgisi soruları bankada durur ama
 `lib/src/config/retired_question_ids.dart` ile oyuna çıkmaz.
