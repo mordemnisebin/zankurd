@@ -2797,14 +2797,21 @@ class Tr {
       'tr':
           '{seconds} saniyede doğru şıkkı seç; her doğru cevap puan kazandırır.',
     },
-    K.quizTutorialUntimedTitle: {'ku': 'Bersivê hilbijêre', 'tr': 'Cevabı seç'},
+    // 2026-09-27 simülatör turu: rehber "cevabı seç / doğru şıkkı seç"
+    // diyordu, ama ilk soru yazmalı olabiliyor (seviye turunda ilk soru
+    // klavyeyle yazılan bir büküm sorusuydu). Rehber her soru türünde doğru
+    // olan fiili kullanır: cevabını ver.
+    K.quizTutorialUntimedTitle: {
+      'ku': 'Bersiva xwe bide',
+      'tr': 'Cevabını ver',
+    },
     // Tur sonu listesi `Şîroveyên turê` der. Rehber "ravekirin"
     // deyince aynı açıklama iki adla durur.
     K.quizTutorialUntimedBody: {
       'ku':
-          'Li vir demjimêr tune — bi rehetî bifikire û bersiva rast hilbijêre. Piştî bersivê bersiva rast tê nîşandan; şîrove li dawiya tûrê ne.',
+          'Li vir demjimêr tune — bi rehetî bifikire û bersiva xwe bide. Piştî bersivê bersiva rast tê nîşandan; şîrove li dawiya tûrê ne.',
       'tr':
-          'Burada süre yok — acele etmeden düşün ve doğru şıkkı seç. Cevaptan sonra doğru cevap gösterilir; açıklamalar turun sonunda.',
+          'Burada süre yok — acele etmeden düşün ve cevabını ver. Cevaptan sonra doğru cevap gösterilir; açıklamalar turun sonunda.',
     },
     K.quizTutorialNextTitle: {
       'ku': 'Rêz + Pirsa Din',

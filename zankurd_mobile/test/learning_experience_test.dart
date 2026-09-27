@@ -232,7 +232,7 @@ void main() {
       findsNothing,
     );
     expect(
-      find.descendant(of: overlay, matching: find.text('Cevabı seç')),
+      find.descendant(of: overlay, matching: find.text('Cevabını ver')),
       findsOneWidget,
     );
   });
