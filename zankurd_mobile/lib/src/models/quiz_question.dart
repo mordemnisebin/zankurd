@@ -218,6 +218,7 @@ class QuizQuestion {
     List<String>? acceptedAnswers,
     List<String>? acceptedAnswersTr,
     AnswerLanguage? answerLanguage,
+    QuestionType? type,
   }) {
     return QuizQuestion(
       id: id,
@@ -237,7 +238,7 @@ class QuizQuestion {
       hintKu: hintKu,
       hintTr: hintTr,
       audioUrl: audioUrl,
-      type: type,
+      type: type ?? this.type,
       imageUrl: imageUrl,
       imageAltKu: imageAltKu,
       imageAltTr: imageAltTr,

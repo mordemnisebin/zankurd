@@ -5,7 +5,10 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/daily_mission.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
 import 'package:zankurd_mobile/src/screens/home/home_rows.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/app_panel.dart';
+import 'package:zankurd_mobile/src/widgets/app_row_card.dart';
 import 'package:zankurd_mobile/src/config/category_visibility.dart';
 import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
@@ -91,6 +94,137 @@ void main() {
       expect(find.text('0/3 tamamlandı'), findsOneWidget);
       // Görünmeyen üçüncü görev artık açıkça sayılır.
       expect(find.textContaining('1 görev daha'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(DailyMissionsCard),
+          matching: find.byType(AppPanel),
+        ),
+        findsNothing,
+        reason: 'Home compact görev özeti dış kart kabuğu taşımamalı.',
+      );
+      expect(
+        find.byKey(const ValueKey('home-missions-compact-section')),
+        findsOneWidget,
+      );
+      final firstFlatMission = find.byKey(
+        const ValueKey('home-mission-row-answerCorrect'),
+      );
+      expect(firstFlatMission, findsOneWidget);
+      expect(
+        tester.widget(firstFlatMission),
+        isA<Padding>(),
+        reason: 'Kompakt görev satırları mini kart kabuğu taşımamalı.',
+      );
+    });
+
+    testWidgets(
+      'görev özeti halka ve altın hero yerine sakin ilerleme kullanır',
+      (tester) async {
+        final missions = <DailyMission>[
+          DailyMission(
+            type: MissionType.answerCorrect,
+            target: 10,
+            coinReward: 50,
+            progress: 4,
+          ),
+          DailyMission(
+            type: MissionType.completeQuiz,
+            target: 3,
+            coinReward: 60,
+          ),
+        ];
+
+        await tester.pumpWidget(
+          _shell(
+            Scaffold(
+              body: DailyMissionsCard(
+                isKu: false,
+                missions: missions,
+                compact: false,
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(
+          find.byKey(const ValueKey('daily-missions-overall-progress')),
+          findsOneWidget,
+        );
+        expect(
+          find.descendant(
+            of: find.byType(DailyMissionsCard),
+            matching: find.byType(AppPanel),
+          ),
+          findsOneWidget,
+          reason: 'Tam görev görünümü diğer ekranlarda panel olarak kalmalı.',
+        );
+
+        final headerIcon = tester.widget<Icon>(
+          find.byIcon(AppIcons.circleCheck).first,
+        );
+        expect(
+          headerIcon.color,
+          AppColors.readableAccent(
+            tester.element(find.byIcon(AppIcons.circleCheck).first),
+            AppTheme.culturalBrandBg,
+          ),
+        );
+      },
+    );
+
+    testWidgets('tamamlanan görev nötr yüzeyi ve marka durumunu korur', (
+      tester,
+    ) async {
+      final mission = DailyMission(
+        type: MissionType.answerCorrect,
+        target: 10,
+        coinReward: 50,
+        progress: 10,
+        completed: true,
+      );
+
+      await tester.pumpWidget(
+        _shell(
+          Scaffold(
+            body: DailyMissionsCard(
+              isKu: false,
+              missions: [mission],
+              compact: false,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final labelFinder = find.text('10 doğru cevap ver');
+      final label = tester.widget<Text>(labelFinder);
+      expect(
+        label.style?.color,
+        AppTheme.textMutedColor(tester.element(labelFinder)),
+      );
+
+      final headerIcon = tester.widget<Icon>(
+        find.byIcon(AppIcons.circleCheck).first,
+      );
+      expect(
+        headerIcon.color,
+        AppColors.readableAccent(
+          tester.element(find.byIcon(AppIcons.circleCheck).first),
+          AppTheme.culturalBrandBg,
+        ),
+      );
+
+      final doneIconFinder = find.byIcon(AppIcons.check);
+      final doneIcon = tester.widget<Icon>(doneIconFinder);
+      expect(
+        doneIcon.color,
+        AppColors.readableAccent(
+          tester.element(doneIconFinder),
+          AppTheme.culturalBrandBg,
+        ),
+      );
     });
   });
 
@@ -149,6 +283,18 @@ void main() {
       expect(find.text('Tarih'), findsOneWidget);
       // Başlanmamış kategori "kaldığın yer" listesine girmez.
       expect(find.text('Coğrafya'), findsNothing);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('home-continue-section')),
+          matching: find.byType(AppRowCard),
+        ),
+        findsNothing,
+        reason: 'Devam edilen kategoriler ayrı kartlar gibi görünmemeli.',
+      );
+      expect(
+        find.byKey(const ValueKey('home-continue-row-Tarih')),
+        findsOneWidget,
+      );
     });
   });
 

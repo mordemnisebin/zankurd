@@ -172,17 +172,8 @@ List<AuditIssue> runChecks(
         'Explanation is missing or very short.',
       );
     }
-    final sourceTitleMissing =
-        record.sourceTitle == null || record.sourceTitle!.trim().isEmpty;
-    final sourceUrlMissing =
-        record.sourceUrl == null || record.sourceUrl!.trim().isEmpty;
-    if (sourceTitleMissing && sourceUrlMissing) {
-      add(
-        'missing_source_metadata',
-        Severity.warning,
-        'Source title and URL are both missing.',
-      );
-    }
+    // Kaynak künyesi zorunlu değil. Varsa oyuncuya gösterilir; yoksa
+    // uyarı üretilmez ve soru kaynaksız diye elenmez.
   }
   mark('structural');
   issues.addAll(

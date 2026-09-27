@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 import 'support/widget_test_helpers.dart';
 
@@ -95,6 +96,71 @@ Future<Finder> _scrollToDeleteAction(WidgetTester tester) async {
 void main() {
   late MockZanKurdRepository repository;
   setUp(() => repository = freshMockRepository());
+
+  testWidgets('ayarlar dil seçimi aktif durumda Forest kullanır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('TR'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+
+    final chip = tester.widget<AnimatedContainer>(
+      find
+          .ancestor(
+            of: find.text('TR'),
+            matching: find.byType(AnimatedContainer),
+          )
+          .first,
+    );
+    final decoration = chip.decoration! as BoxDecoration;
+    final gradient = decoration.gradient! as LinearGradient;
+    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+    expect(
+      decoration.boxShadow!.single.color,
+      AppTheme.culturalBrandBg.withValues(alpha: 0.24),
+    );
+  });
+
+  testWidgets('ayarlar hakkında kimlik rozeti Forest kullanır', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('ZK'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+
+    final tile = tester.widget<Container>(
+      find
+          .ancestor(of: find.text('ZK'), matching: find.byType(Container))
+          .first,
+    );
+    final decoration = tile.decoration! as BoxDecoration;
+    final gradient = decoration.gradient! as LinearGradient;
+    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+    expect(
+      decoration.boxShadow!.single.color,
+      AppTheme.culturalBrandBg.withValues(alpha: 0.22),
+    );
+  });
 
   testWidgets('settings does not delete account before final confirmation', (
     tester,

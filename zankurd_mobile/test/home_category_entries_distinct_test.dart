@@ -72,6 +72,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.byKey(const ValueKey('home-lessons-row')), findsOneWidget);
-    expect(find.byKey(const ValueKey('home-zana')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-profile-header')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-zana')), findsNothing);
   });
 }

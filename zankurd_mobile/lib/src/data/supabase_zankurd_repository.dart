@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'durable_write.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/friend.dart';
@@ -479,7 +480,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<String> uploadAvatarPhoto(Uint8List bytes, String contentType) async {
     final user = client.auth.currentUser;
     if (user == null) {
-      return _offline.uploadAvatarPhoto(bytes, contentType);
+      throw StateError('Remote service unavailable.');
     }
     final ext = contentType == 'image/png' ? 'png' : 'jpg';
     final path = '${user.id}/avatar.$ext';
@@ -498,7 +499,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<void> deleteAvatarPhoto() async {
     final user = client.auth.currentUser;
-    if (user == null) return _offline.deleteAvatarPhoto();
+    if (user == null) {
+      throw StateError('Remote service unavailable.');
+    }
     // Uzantı içerik türünden seçiliyor (`uploadAvatarPhoto`), yani aynı
     // kullanıcının geçmişte hem .png hem .jpg nesnesi olabilir. İkisini de
     // kaldırmak gerekir; `remove` var olmayan yolu sorun etmez.
@@ -612,6 +615,19 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       difficultyMin: difficultyMin,
       difficultyMax: difficultyMax,
       subCategory: subCategory,
+      limit: limit,
+    );
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadLearningQuizQuestions({
+    required String category,
+    required String learningLessonId,
+    int limit = 5,
+  }) async {
+    return _offline.loadLearningQuizQuestions(
+      category: category,
+      learningLessonId: learningLessonId,
       limit: limit,
     );
   }
@@ -1936,24 +1952,122 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  static final _lessonUuid = RegExp(
+    r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$',
+  );
+
+  @override
+  bool get xpAwardIsServerTotal => true;
+
+  @override
+  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey) async {
+    final key = idempotencyKey.trim();
+    if (key.isEmpty) {
+      final total = await awardXp(delta);
+      return ServerXpWrite(total: total, retryable: false);
+    }
+    try {
+      final response = await client.rpc<dynamic>(
+        'award_xp_delta_once',
+        params: {'p_delta': delta, 'p_idempotency_key': key},
+      );
+      if (response is int) {
+        return ServerXpWrite(total: response, retryable: true);
+      }
+      if (response is num) {
+        return ServerXpWrite(total: response.toInt(), retryable: true);
+      }
+      throw StateError('award_xp_delta_once returned an unreadable total.');
+    } on PostgrestException catch (error, stack) {
+      if (_isMissingFunction(error)) {
+        final total = await awardXp(delta);
+        return ServerXpWrite(total: total, retryable: false);
+      }
+      _recordError(error, stack, reason: 'award_xp_delta_once failed');
+      throw RetryableWriteException(error);
+    } catch (error, stack) {
+      if (error is RetryableWriteException) rethrow;
+      _recordError(error, stack, reason: 'award_xp_delta_once failed');
+      throw RetryableWriteException(error);
+    }
+  }
+
+  @override
+  Future<DurableCoinSpend> spendCoinsDurable(
+    int amount,
+    String reason,
+    String idempotencyKey,
+  ) async {
+    final key = idempotencyKey.trim();
+    if (key.isEmpty) {
+      return DurableCoinSpend(
+        success: await spendCoins(amount, reason),
+        retryable: false,
+      );
+    }
+    try {
+      final response = await client.rpc(
+        'spend_coins_once',
+        params: {
+          'p_amount': amount,
+          'p_reason': reason,
+          'p_idempotency_key': key,
+        },
+      );
+      return coinSpendFromRpc(response);
+    } on PostgrestException catch (error, stack) {
+      if (_isMissingFunction(error)) {
+        return DurableCoinSpend(
+          success: await spendCoins(amount, reason),
+          retryable: false,
+        );
+      }
+      _recordError(error, stack, reason: 'spend_coins_once failed');
+      throw RetryableWriteException(error);
+    } catch (error, stack) {
+      if (error is RetryableWriteException) rethrow;
+      _recordError(error, stack, reason: 'spend_coins_once failed');
+      throw RetryableWriteException(error);
+    }
+  }
+
+  @override
+  Future<int?> loadServerXp() async {
+    try {
+      final user = client.auth.currentUser;
+      if (user == null) return null;
+      final profile = await client
+          .from('profiles')
+          .select('xp')
+          .eq('id', user.id)
+          .maybeSingle();
+      if (profile == null) return null;
+      return (profile['xp'] as num?)?.toInt() ?? 0;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadServerXp failed');
+      return null;
+    }
+  }
+
   @override
   Future<int> awardXp(int delta) async {
     if (delta <= 0) return 0;
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
-      if (currentUserId?.trim() != user.id) return 0;
+      if (currentUserId?.trim() != user.id) {
+        throw StateError('XP award user changed before the write.');
+      }
       final response = await client.rpc<dynamic>(
         'award_xp_delta',
         params: {'p_delta': delta},
       );
       if (response is int) return response;
       if (response is num) return response.toInt();
-      return 0;
+      throw StateError('award_xp_delta returned an unreadable total.');
     } on PostgrestException catch (error, stack) {
-      // Göç uygulanmamışsa fonksiyon yoktur (42883). Bu bir arıza değil:
-      // XP'nin cihazdaki hâli zaten yazıldı, sunucu tarafı sessizce
-      // beklemeye devam eder.
+      // Göç uygulanmamışsa fonksiyon yoktur (42883). Kuyruk bunu kalıcı
+      // düşürür; 0 dönmek sunucu toplamı sanılıp çubuğu siler.
       _recordError(
         error,
         stack,
@@ -1961,12 +2075,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             ? 'award_xp_delta missing — migration not applied yet'
             : 'award_xp_delta failed',
       );
-      return 0;
+      rethrow;
     } catch (error, stack) {
-      // Ödül yolu OYUNCUYU BEKLETMEZ ve turu düşürmez: sunucuya XP
-      // yazılamaması, tamamlanmış bir turu geçersiz kılmaz.
       _recordError(error, stack, reason: 'award_xp_delta failed');
-      return 0;
+      rethrow;
     }
   }
 
@@ -1977,14 +2089,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
-      if (currentUserId?.trim() != user.id) return 0;
+      if (currentUserId?.trim() != user.id) {
+        throw StateError('Room XP award user changed before the write.');
+      }
       final response = await client.rpc<dynamic>(
         'award_room_xp',
         params: {'p_room_id': id},
       );
       if (response is int) return response;
       if (response is num) return response.toInt();
-      return 0;
+      throw StateError('award_room_xp returned an unreadable total.');
     } on PostgrestException catch (error, stack) {
       _recordError(
         error,
@@ -1993,10 +2107,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             ? 'award_room_xp missing — migration not applied yet'
             : 'award_room_xp failed',
       );
-      return 0;
+      rethrow;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'award_room_xp failed');
-      return 0;
+      rethrow;
     }
   }
 
@@ -2221,32 +2335,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }).toList();
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadLeaderboard RPC failed');
-      // RPC henüz kurulu değilse all-time view'a geri dön
-      try {
-        final rows = await client
-            .from('leaderboard_entries')
-            .select(
-              'player_id, display_name, total_score, best_streak, rooms_played',
-            )
-            .order('total_score', ascending: false)
-            .order('best_streak', ascending: false)
-            .limit(limit);
-        return rows.indexed.map((item) {
-          final index = item.$1;
-          final row = item.$2;
-          return LeaderboardEntry(
-            rank: index + 1,
-            playerId: row['player_id'] as String? ?? '',
-            displayName: row['display_name'] as String? ?? 'Oyuncu',
-            totalScore: row['total_score'] as int? ?? 0,
-            bestStreak: row['best_streak'] as int? ?? 0,
-            roomsPlayed: row['rooms_played'] as int? ?? 0,
-          );
-        }).toList();
-      } catch (error, stack) {
-        _recordError(error, stack, reason: 'loadLeaderboard failed');
-        return const [];
-      }
+      // Eski leaderboard_entries görünümü profiles.xp'ye dayanabilir ve
+      // geçmişte istemci deltasından etkilenmiş olabilir. Yetkili RPC
+      // okunamıyorsa güvenilir olmayan rekabetçi puanı göstermeyiz.
+      return const [];
     }
   }
 
@@ -2508,12 +2600,32 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  Future<String?> _canonicalLessonId(String lessonId) async {
+    final id = lessonId.trim();
+    if (id.isEmpty) return null;
+    if (_lessonUuid.hasMatch(id)) return id;
+    try {
+      final row = await client
+          .from('lessons')
+          .select('id')
+          .eq('slug', id)
+          .maybeSingle();
+      final resolved = row?['id'];
+      if (resolved is String && _lessonUuid.hasMatch(resolved)) return resolved;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'lesson slug lookup failed');
+    }
+    return null;
+  }
+
   @override
   Future<bool> markLessonCompleted(String lessonId) async {
     try {
+      final canonicalId = await _canonicalLessonId(lessonId);
+      if (canonicalId == null) return false;
       await client.rpc(
         'mark_lesson_completed',
-        params: {'p_lesson_id': lessonId},
+        params: {'p_lesson_id': canonicalId},
       );
       return true;
     } catch (e, s) {
@@ -2743,7 +2855,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e, s) {
       _recordError(e, s, reason: 'syncMissionCompletion failed');
-      return _offline.syncMissionCompletion(missionKey, coinReward, xpReward);
+      return false;
     }
   }
 
@@ -2765,7 +2877,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e, s) {
       _recordError(e, s, reason: 'logAnalyticsEvent failed');
-      return _offline.logAnalyticsEvent(eventName, params);
+      return false;
     }
   }
 
@@ -3040,17 +3152,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final response = await client.rpc<dynamic>('claim_tournament_reward');
       return _amountFromRpcResponse(response) ?? 0;
     } catch (e, s) {
-      // Göç uygulanmamışsa (`_isMissingFunction`) benzetime düşmek meşru.
-      // Başka her hatada (ağ, sunucu, 500) sahte depoya düşmek koşulsuz
-      // 500 coin uyduruyordu: kullanıcı gerçek turnuvayı kazanıyor, RPC
-      // geçici bir hatayla düşüyor, ekran "+500 coin" gösteriyor ama
-      // `coin_transactions`ta hiçbir satır yok — bakiyeye hiçbir şey
-      // eklenmiyor. `tournament_screen.dart`ın bu durum için yazılmış
-      // dürüst `unverified` ("ödül henüz doğrulanmadı") durumu, depo
-      // istisnayı yutup pozitif sayı döndürdüğü için hiç devreye
-      // giremiyordu (2026-08-14 denetimi).
+      // Ödül yalnız sunucu tarafından doğrulanabilir. RPC eksik olsa bile
+      // mock depoya düşmek 500 coin uydurur ve ekranın dürüst `unverified`
+      // durumunu atlatır. Eksik fonksiyon ödül verilmedi anlamına gelir.
       if (_isMissingFunction(e)) {
-        return _offline.claimTournamentChampionReward();
+        _recordError(e, s, reason: 'claimTournamentChampionReward missing');
+        return 0;
       }
       _recordError(e, s, reason: 'claimTournamentChampionReward failed');
       rethrow;

@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/strings.dart';
 import '../../theme/app_theme.dart';
-import '../../theme/kilim_motifs.dart';
 import '../../widgets/kilim_progress_bar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Ana ekranın tek birincil eylemi: "bugün şunu yap".
 ///
-/// 2026-07-24: menü ızgarası değil, tek cevap. 2026-08-26: yüzey düz
-/// karttı ve Yarış kahramanının yanında sönük kalıyordu; gradyan + kilim
-/// izi + beyaz CTA aynı ağırlığı öğrenme sekmesine taşır.
+/// 2026-09-18 Design 2.0: günlük görev ana ekranın tek baskın sahnesidir.
+/// Derin yeşil hero öğrenme kimliğini taşır; turuncu yalnız ana CTA'da kalır.
+/// Böylece ekran kart yığınına dönmeden "bugün ne yapmalıyım?"ı yanıtlar.
 class TodayTaskCard extends StatelessWidget {
   const TodayTaskCard({
     required this.isKu,
@@ -38,7 +37,7 @@ class TodayTaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final progress = total <= 0 ? 0.0 : (done / total).clamp(0.0, 1.0);
     final started = done > 0;
-    const radius = 18.0;
+    const radius = AppRadius.card;
 
     return Container(
       key: const ValueKey('home-daily-task'),
@@ -47,107 +46,99 @@ class TodayTaskCard extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppTheme.brandLite, AppTheme.brand],
+          colors: [AppTheme.culturalBrandBg, Color(0xFF063526)],
         ),
         borderRadius: BorderRadius.circular(radius),
-        boxShadow: [
-          BoxShadow(
-            color: AppTheme.brand.withValues(alpha: 0.30),
-            blurRadius: 14,
-            offset: const Offset(0, 6),
-          ),
-        ],
+        boxShadow: AppTheme.cardShadow(context),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(radius),
-        child: Stack(
-          children: [
-            const Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: SizedBox(
-                height: 34,
-                child: CustomPaint(
-                  painter: KilimPainter(
-                    motif: KilimMotif.step,
-                    color: Colors.white,
-                    opacity: 0.10,
-                    count: 9,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: KeyedSubtree(
-                          key: firstSession
-                              ? const ValueKey('home-first-session-badge')
-                              : null,
-                          child: Text(
-                            Tr.forKu(
-                              firstSession
-                                  ? K.firstSessionBadge
-                                  : K.bugununGorevi,
-                              isKu,
-                            ),
-                            style: AppTypography.caption.copyWith(
-                              color: Colors.white.withValues(alpha: 0.88),
-                              letterSpacing: 0.8,
-                            ),
-                          ),
-                        ),
+                  Container(
+                    width: 36,
+                    height: 36,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.16),
                       ),
-                      Text(
-                        '$done/$total',
+                    ),
+                    child: const Icon(
+                      AppIcons.bullseye,
+                      size: 19,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: KeyedSubtree(
+                      key: firstSession
+                          ? const ValueKey('home-first-session-badge')
+                          : null,
+                      child: Text(
+                        Tr.forKu(
+                          firstSession ? K.firstSessionBadge : K.bugununGorevi,
+                          isKu,
+                        ),
                         style: AppTypography.caption.copyWith(
-                          color: Colors.white.withValues(alpha: 0.78),
+                          color: Colors.white.withValues(alpha: 0.82),
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.3,
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.xs),
-                  Text(
-                    Tr.forKu(K.gununDersi, isKu),
-                    style: AppTypography.heading2.copyWith(color: Colors.white),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    Tr.forKu(
-                      firstSession ? K.firstSessionSub : K.pSoruYaklasikP,
-                      isKu,
-                      {'p0': '$total', 'p1': '$_minutes'},
-                    ),
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: Colors.white.withValues(alpha: 0.88),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.sm),
-                  KilimProgressBar(
-                    value: progress,
-                    height: 8,
-                    color: Colors.white,
-                    trackColor: Colors.white.withValues(alpha: 0.22),
-                    borderColor: Colors.white.withValues(alpha: 0.28),
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  _StartButton(
-                    label: started
-                        ? (Tr.forKu(K.devamEt, isKu))
-                        : (Tr.forKu(K.start, isKu)),
-                    loading: loading,
-                    onTap: onStart,
+                  Text(
+                    '$done/$total',
+                    style: AppTypography.caption.copyWith(
+                      color: Colors.white.withValues(alpha: 0.76),
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                Tr.forKu(K.gununDersi, isKu),
+                style: AppTypography.heading2.copyWith(color: Colors.white),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                Tr.forKu(
+                  firstSession ? K.firstSessionSub : K.pSoruYaklasikP,
+                  isKu,
+                  {'p0': '$total', 'p1': '$_minutes'},
+                ),
+                style: AppTypography.bodyMedium.copyWith(
+                  color: Colors.white.withValues(alpha: 0.78),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              KilimProgressBar(
+                value: progress,
+                height: 6,
+                color: Colors.white,
+                trackColor: Colors.white.withValues(alpha: 0.18),
+                borderColor: Colors.white.withValues(alpha: 0.14),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              _StartButton(
+                label: started
+                    ? (Tr.forKu(K.devamEt, isKu))
+                    : (Tr.forKu(K.start, isKu)),
+                loading: loading,
+                onTap: onStart,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -167,44 +158,52 @@ class _StartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const onWhite = AppTheme.brand;
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        key: const ValueKey('home-daily-task-start'),
-        onTap: loading ? null : onTap,
+    final enabled = !loading;
+    return Semantics(
+      key: const ValueKey('home-daily-task-start'),
+      button: true,
+      enabled: enabled,
+      label: label,
+      excludeSemantics: true,
+      onTap: enabled ? onTap : null,
+      child: Material(
+        color: enabled ? AppTheme.brand : AppColors.disabledSurface(context),
         borderRadius: BorderRadius.circular(AppRadius.sm),
-        child: Ink(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-          ),
-          child: Container(
-            height: 46,
-            alignment: Alignment.center,
-            child: loading
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(onWhite),
-                    ),
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        label,
-                        style: AppTypography.bodyLarge.copyWith(
-                          color: onWhite,
-                          fontWeight: FontWeight.w700,
-                        ),
+        child: InkWell(
+          onTap: enabled ? onTap : null,
+          excludeFromSemantics: true,
+          borderRadius: BorderRadius.circular(AppRadius.sm),
+          child: SizedBox(
+            height: 48,
+            child: Center(
+              child: loading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
-                      const SizedBox(width: 6),
-                      const Icon(AppIcons.arrowRight, size: 16, color: onWhite),
-                    ],
-                  ),
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          label,
+                          style: AppTypography.bodyLarge.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        const Icon(
+                          AppIcons.arrowRight,
+                          size: 16,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+            ),
           ),
         ),
       ),

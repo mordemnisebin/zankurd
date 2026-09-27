@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/screens/story_screen.dart';
 import 'package:zankurd_mobile/src/services/analytics_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
+import 'package:zankurd_mobile/src/widgets/app_panel.dart';
 import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
@@ -96,6 +97,32 @@ void main() {
     );
   });
 
+  testWidgets('settings safety actions share one panel', (tester) async {
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: freshMockRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    final report = find.byKey(const ValueKey('settings-report-abuse'));
+    final feedback = find.byKey(const ValueKey('settings-beta-feedback'));
+    await tester.scrollUntilVisible(
+      feedback,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+
+    final reportPanel = find
+        .ancestor(of: report, matching: find.byType(AppPanel))
+        .evaluate()
+        .single;
+    final feedbackPanel = find
+        .ancestor(of: feedback, matching: find.byType(AppPanel))
+        .evaluate()
+        .single;
+
+    expect(reportPanel, same(feedbackPanel));
+  });
+
   testWidgets('home starts the first session with five questions', (
     tester,
   ) async {
@@ -136,7 +163,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('home-zana')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-profile-header')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-zana')), findsNothing);
     expect(find.byKey(const ValueKey('home-daily-task-start')), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('home-daily-task-start')));

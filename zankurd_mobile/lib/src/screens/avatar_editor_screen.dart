@@ -15,6 +15,7 @@ import '../models/mastery_level.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
+import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/screen_identity_header.dart';
 import '../widgets/zk_back_button.dart';
@@ -46,6 +47,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   List<String> _earnedTitles = const [];
   String _displayName = '';
   bool _loading = true;
+  bool _loadFailed = false;
   bool _saving = false;
   bool _uploadingPhoto = false;
 
@@ -112,6 +114,12 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   }
 
   Future<void> _load() async {
+    if (mounted) {
+      setState(() {
+        _loading = true;
+        _loadFailed = false;
+      });
+    }
     try {
       final identity = await widget.repository.loadAvatarIdentity();
       _hadPhotoOnOpen = identity.photoUrl != null;
@@ -156,10 +164,16 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
         _unlocked = frames;
         _earnedTitles = titles;
         _loading = false;
+        _loadFailed = false;
       });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'avatar editor load failed');
-      if (mounted) setState(() => _loading = false);
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _loadFailed = true;
+        });
+      }
     }
   }
 
@@ -269,6 +283,13 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                     color: AppTheme.primaryGradientStart,
                   ),
                 )
+              : _loadFailed
+              ? AppErrorState(
+                  title: context.t(K.loadFailedShort),
+                  message: context.t(K.checkConnection),
+                  retryLabel: context.t(K.retry),
+                  onRetry: _load,
+                )
               : ListView(
                   padding: const EdgeInsets.fromLTRB(
                     AppSpacing.page,
@@ -298,8 +319,10 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                       ),
                     ),
                     const SizedBox(height: 14),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 10,
+                      runSpacing: 8,
                       children: [
                         OutlinedButton.icon(
                           key: const ValueKey('avatar-pick-photo'),
@@ -316,7 +339,6 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                           label: Text(context.t(K.uploadPhoto)),
                         ),
                         if (_identity.photoUrl != null) ...[
-                          const SizedBox(width: 10),
                           TextButton.icon(
                             key: const ValueKey('avatar-remove-photo'),
                             onPressed: () => setState(
@@ -388,6 +410,11 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                                 avatarColorLabelKeys[hex] ?? K.colorWord,
                               ),
                               excludeSemantics: true,
+                              onTap: () => setState(
+                                () => _identity = _identity.copyWith(
+                                  colorHex: hex,
+                                ),
+                              ),
                               child: ClipOval(
                                 child: Material(
                                   color: Colors.transparent,
@@ -398,6 +425,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                                         colorHex: hex,
                                       ),
                                     ),
+                                    excludeFromSemantics: true,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8),
                                       child: Container(
@@ -598,6 +626,7 @@ class _IconCell extends StatelessWidget {
       selected: selected,
       label: semanticLabel,
       excludeSemantics: true,
+      onTap: onTap,
       child: _buildCell(context),
     );
   }
@@ -605,6 +634,7 @@ class _IconCell extends StatelessWidget {
   Widget _buildCell(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      excludeFromSemantics: true,
       borderRadius: BorderRadius.circular(12),
       child: Container(
         decoration: BoxDecoration(

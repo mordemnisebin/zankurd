@@ -1,4 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'checked_preferences_removal.dart';
+import 'local_progress_scope.dart';
 
 import '../services/placement_scoring.dart';
 import '../utils/error_reporter.dart';
@@ -12,8 +14,10 @@ class PlacementStore {
   PlacementStore._(this._preferences, this._level, this._skipped);
 
   static const _version = 'v1';
-  static const _levelKey = 'zankurd.placement.$_version.level';
-  static const _skippedKey = 'zankurd.placement.$_version.skipped';
+  static String get _levelKey =>
+      LocalProgressScope.physical('zankurd.placement.$_version.level');
+  static String get _skippedKey =>
+      LocalProgressScope.physical('zankurd.placement.$_version.skipped');
 
   static PlacementStore? _instance;
 
@@ -70,9 +74,8 @@ class PlacementStore {
 
   /// Test/temizlik: tüm seviye durumunu sıfırlar.
   Future<void> clear() async {
+    await removePersistedPreferenceKeys(_preferences, [_levelKey, _skippedKey]);
     _level = null;
     _skipped = false;
-    await _preferences?.remove(_levelKey);
-    await _preferences?.remove(_skippedKey);
   }
 }

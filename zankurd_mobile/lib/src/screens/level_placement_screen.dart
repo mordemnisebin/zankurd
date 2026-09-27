@@ -197,7 +197,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
                   'total': '${_questions.length}',
                 }),
                 style: AppTypography.caption.copyWith(
-                  color: AppTheme.textMutedColor(context),
+                  color: AppTheme.textSubColor(context),
                   fontWeight: FontWeight.w700,
                 ),
               ),

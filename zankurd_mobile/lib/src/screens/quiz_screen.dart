@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +12,12 @@ import '../config/avatar_presets.dart';
 import '../config/bot_names.dart';
 import '../config/category_visuals.dart';
 import '../data/mistake_store.dart';
+import '../data/durable_write.dart';
 import '../data/sync_manager.dart';
 import '../providers/sound_provider.dart';
 import '../providers/untimed_mode_provider.dart';
 import '../data/daily_mission_store.dart';
+import '../data/xp_award_publisher.dart';
 import '../data/xp_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/zankurd_repository.dart';
@@ -28,8 +31,10 @@ import '../models/wildcard.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/analytics_service.dart';
+import '../services/favorite_mutation_service.dart';
+import '../services/learning_productive_recall.dart';
+import '../services/question_audio_service.dart';
 import '../services/room_result_presentation.dart';
-import '../services/tts_service.dart';
 import 'quiz/fill_in_blank_widget.dart';
 import 'quiz/word_ordering_widget.dart';
 import '../theme/app_theme.dart';
@@ -164,6 +169,7 @@ class _QuizScreenState extends State<QuizScreen>
   String selectedAnswer = '';
   bool favorite = false;
   bool _favoriteTouched = false;
+  bool _localSaveFailureShown = false;
   bool completing = false;
   Set<String> hiddenAnswers = const {};
   final List<AnswerRecord> answerRecords = [];
@@ -245,10 +251,11 @@ class _QuizScreenState extends State<QuizScreen>
   int? _authoritativeRemainingMs;
   DateTime? _authoritativeRemainingCapturedAt;
 
-  // TTS: cihaz Kürtçe TTS desteklemiyorsa canListen false kalır ve
-  // dinleme butonu gizlenir. Konuşma durumu TtsService.speakingNotifier
-  // üzerinden takip edilir (bkz. _ListenButton).
-  bool _ttsCanListen = false;
+  // Soru sesi tek kapıdan seçilir: doğrulanmış insan kaydı varsa o,
+  // yoksa Kurmancî TTS, ikisi de yoksa dinleme eylemi gizlenir.
+  QuestionAudioService? _questionAudioService;
+  bool get _canListenCurrentQuestion =>
+      _questionAudioService?.canPlay(question) ?? false;
 
   // Tutorial açıkken ertelenen multiplayer soru sayacı (bkz. _syncToQuestionIndex).
   bool _timerDeferredForTutorial = false;
@@ -390,8 +397,15 @@ class _QuizScreenState extends State<QuizScreen>
     //
     // Çevirisi olmayan sorular Kurmancî kalır — banka kademeli çevriliyor
     // ve eksik çeviri, boş ekrandan iyidir (bkz. QuizQuestion.localized).
+    final sourceQuestions = _isLearningExperience
+        ? LearningProductiveRecall.orderForLearning(widget.questions)
+        : widget.questions;
     _questions = [
-      for (final question in widget.questions) question.localized(isKu: _isKu),
+      for (final question in sourceQuestions)
+        (_isLearningExperience
+                ? LearningProductiveRecall.transform(question)
+                : question)
+            .localized(isKu: _isKu),
     ];
     _myId = widget.repository.currentUserId;
     _onlineResultOwnerId = widget.repository.currentUserId?.trim() ?? '';
@@ -421,8 +435,7 @@ class _QuizScreenState extends State<QuizScreen>
       mode: _quizModeLabel,
     );
 
-    // Initialize TTS service
-    _initializeTts();
+    _initializeQuestionAudio();
 
     _timerController = AnimationController(
       vsync: this,
@@ -1236,27 +1249,63 @@ class _QuizScreenState extends State<QuizScreen>
   /// Gösterilen soruyu tekrar-önleme deposuna işler.
   void _markQuestionSeen() {
     final id = question.id;
-    SeenQuestionStore.load().then((store) => store.markSeen([id]));
+    _saveLocalProgress(() async {
+      final store = await SeenQuestionStore.load();
+      return store.markSeen([id]);
+    }, reason: 'quiz seen-question save failed');
   }
 
   /// Yanlış cevabı yanlış defterine ekler, doğru cevap kaydı düşürür.
   void _trackMistake(bool correct) {
     final id = question.id;
+    final category = question.category;
     if (widget.practice && correct) {
       // In mistake practice, correct reviews are handled by the rating buttons
       return;
     }
-    MistakeStore.load().then(
-      (store) => correct
+    _saveLocalProgress(() async {
+      final store = await MistakeStore.load();
+      return correct
           ? store.markResolved(id)
-          : store.markMistake(id, category: question.category),
-    );
+          : store.markMistake(id, category: category);
+    }, reason: 'quiz mistake progress save failed');
+  }
+
+  void _saveLocalProgress(
+    Future<bool> Function() save, {
+    required String reason,
+  }) {
+    unawaited(_trySaveLocalProgress(save, reason: reason));
+  }
+
+  Future<bool> _trySaveLocalProgress(
+    Future<bool> Function() save, {
+    required String reason,
+  }) async {
+    var saved = false;
+    try {
+      saved = await save();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: reason);
+    }
+    if (!saved) _showLocalSaveFailure();
+    return saved;
+  }
+
+  void _showLocalSaveFailure() {
+    if (!mounted || _localSaveFailureShown) return;
+    _localSaveFailureShown = true;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(context.t(K.saveFailed))));
   }
 
   Future<void> _submitPracticeRating(int score) async {
     final id = question.id;
-    final store = await MistakeStore.load();
-    await store.markResolvedSM2(id, score);
+    await _trySaveLocalProgress(() async {
+      final store = await MistakeStore.load();
+      return store.markResolvedSM2(id, score);
+    }, reason: 'quiz practice rating save failed');
     await _next();
   }
 
@@ -1279,8 +1328,7 @@ class _QuizScreenState extends State<QuizScreen>
     _visualReadyFallbackTimer?.cancel();
     _timerController.dispose();
     _explanationController.dispose();
-    // TTS: ekrandan çıkınca devam eden seslendirmeyi durdur.
-    TtsService.instance?.stop();
+    _questionAudioService?.dispose();
     super.dispose();
   }
 
@@ -1347,34 +1395,31 @@ class _QuizScreenState extends State<QuizScreen>
     }
   }
 
-  /// TTS servisini başlatır ve cihazda Kürtçe dil desteğinin olup olmadığını
-  /// kontrol eder. Destek yoksa dinleme butonu gizlenir.
-  Future<void> _initializeTts() async {
+  /// Doğrulanmış kayıt → Kurmancî TTS → kullanılamaz sırasındaki tek ses
+  /// katmanını hazırlar. Servis yoksa dinleme eylemi çizilmez.
+  Future<void> _initializeQuestionAudio() async {
     try {
-      final tts = await TtsService.load();
-      if (mounted) {
-        setState(() => _ttsCanListen = tts.isKurdishAvailable);
+      final audio = await QuestionAudioService.load();
+      if (!mounted) {
+        audio.dispose();
+        return;
       }
+      _questionAudioService?.dispose();
+      setState(() => _questionAudioService = audio);
     } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'quiz tts init');
+      ErrorReporter.record(error, stack, reason: 'quiz question audio init');
     }
   }
 
-  /// Mevcut soruyu seslendirir. Zaten konuşuyorsa durdurur.
-  /// Buton yalnızca Kürtçe TTS destekleniyorsa görünür (canListen true ise).
-  /// Buton ikonunun durumu `TtsService.speakingNotifier` üzerinden takip
-  /// edilir; burada yalnızca speak/stop tetiklenir.
+  /// Mevcut sorunun doğrulanmış kaydını veya Kurmancî TTS geri düşüşünü
+  /// oynatır. Ses zaten çalıyorsa aynı eylem durdurur.
   Future<void> _listenCurrentQuestion() async {
-    final tts = TtsService.instance;
-    if (tts == null || !tts.isKurdishAvailable) return;
+    final audio = _questionAudioService;
+    if (audio == null || !audio.canPlay(question)) return;
     try {
-      if (tts.isSpeaking) {
-        await tts.stop();
-        return;
-      }
-      await tts.speak(question.promptText);
+      await audio.toggle(question);
     } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'quiz tts speak');
+      ErrorReporter.record(error, stack, reason: 'quiz question audio play');
     }
   }
 
@@ -1581,10 +1626,7 @@ class _QuizScreenState extends State<QuizScreen>
                 IconButton(
                   onPressed: _toggleFavorite,
                   tooltip: favoriteActionLabel,
-                  icon: Icon(
-                    AppIcons.bookmark,
-                    semanticLabel: favoriteActionLabel,
-                  ),
+                  icon: const Icon(AppIcons.bookmark),
                 ),
                 IconButton(
                   onPressed: _reportQuestion,
@@ -3417,8 +3459,9 @@ class _QuizScreenState extends State<QuizScreen>
 
     _explanationController.stop();
     _explanationController.reset();
-    // TTS: yeni soruya geçince önceki seslendirmeyi durdur.
-    TtsService.instance?.stop();
+    // Yeni soruya geçince önceki ses kaynağını durdur.
+    final questionAudio = _questionAudioService;
+    if (questionAudio != null) unawaited(questionAudio.stop());
     setState(() {
       index += 1;
       selectedAnswer = '';
@@ -3493,9 +3536,10 @@ class _QuizScreenState extends State<QuizScreen>
     _favoriteTouched = true;
     setState(() => favorite = nextFavorite);
     try {
-      final saved = await widget.repository.toggleFavoriteQuestion(
-        question,
-        nextFavorite,
+      final saved = await FavoriteMutationService.setFavorite(
+        repository: widget.repository,
+        question: question,
+        favorite: nextFavorite,
       );
       if (!mounted) return;
       setState(() => favorite = saved);
@@ -3506,8 +3550,7 @@ class _QuizScreenState extends State<QuizScreen>
           ),
         ),
       );
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'toggleFavorite failed');
+    } catch (_) {
       if (!mounted) return;
       setState(() => favorite = !nextFavorite);
       ScaffoldMessenger.of(

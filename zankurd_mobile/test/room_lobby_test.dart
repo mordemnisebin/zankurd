@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -134,9 +135,117 @@ class _StaleStatusPollRecoveryRepository extends MockZanKurdRepository {
   }
 }
 
+class _BroadcastRoomRepository extends MockZanKurdRepository {
+  final StreamController<Map<String, dynamic>> broadcasts =
+      StreamController<Map<String, dynamic>>.broadcast(sync: true);
+
+  @override
+  Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) {
+    return broadcasts.stream;
+  }
+}
+
 void main() {
   late MockZanKurdRepository repository;
   setUp(() => repository = freshMockRepository());
+
+  test('RoomScreen disposes the reaction controller it owns', () {
+    final source = File('lib/src/screens/room_screen.dart').readAsStringSync();
+    final disposeBody = RegExp(
+      r'void dispose\(\) \{(.*?)super\.dispose\(\);',
+      dotAll: true,
+    ).firstMatch(source)?.group(1);
+
+    expect(disposeBody, isNotNull);
+    expect(
+      disposeBody,
+      contains('_reactionController.dispose();'),
+      reason:
+          'RoomScreen creates its reaction controller, so it must release the '
+          'ChangeNotifier when the route is disposed.',
+    );
+  });
+
+  testWidgets('room reaction bubble avoids critical lobby content at 390x844', (
+    tester,
+  ) async {
+    final repository = _BroadcastRoomRepository();
+    addTearDown(repository.broadcasts.close);
+    tester.view.devicePixelRatio = 3.0;
+    tester.view.physicalSize = const Size(390, 844) * 3.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.createRoom().copyWith(
+            id: 'room-reaction-layout',
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    repository.broadcasts.add(const {
+      'type': 'reaction',
+      'text': '👏 Destxweş!',
+      'sender_id': 'remote-user',
+      'sender_name': 'Berfin',
+    });
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    final bubble = find.byWidgetPredicate((widget) {
+      if (widget is! Container) return false;
+      if (widget.padding !=
+          const EdgeInsets.symmetric(horizontal: 14, vertical: 8)) {
+        return false;
+      }
+      final decoration = widget.decoration;
+      return decoration is BoxDecoration &&
+          decoration.borderRadius == BorderRadius.circular(20);
+    });
+    expect(bubble, findsOneWidget);
+
+    final bubbleRect = tester.getRect(bubble);
+    expect(bubbleRect.top, greaterThanOrEqualTo(0));
+    expect(bubbleRect.left, greaterThanOrEqualTo(0));
+    expect(bubbleRect.right, lessThanOrEqualTo(390));
+    expect(bubbleRect.bottom, lessThanOrEqualTo(844));
+
+    final roomLabelRect = tester.getRect(find.text('Özel Oda'));
+    expect(
+      bubbleRect.bottom,
+      lessThanOrEqualTo(roomLabelRect.top - 4),
+      reason:
+          'Room-header reactions must stay in the compact navigation band; '
+          'their height must not depend on a lucky horizontal position.',
+    );
+
+    final protectedRects = <Rect>[
+      tester.getRect(find.byType(IconButton).first),
+      tester.getRect(find.text('Özel Oda')),
+      tester.getRect(find.text('Hevalên Zanînê')),
+      tester.getRect(find.byKey(const ValueKey('room-code-copy'))),
+      tester.getRect(find.byKey(const ValueKey('room-player-tile-1'))),
+      tester.getRect(find.byKey(const ValueKey('room-player-tile-2'))),
+      tester.getRect(find.byType(SwitchListTile)),
+      tester.getRect(
+        find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+      ),
+    ];
+    for (final rect in protectedRects) {
+      expect(
+        bubbleRect.overlaps(rect),
+        isFalse,
+        reason:
+            'Transient reaction must not obscure navigation, room identity, '
+            'players, readiness, or the primary action.',
+      );
+    }
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets('room lobby remains usable in landscape', (tester) async {
     await tester.binding.setSurfaceSize(const Size(844, 390));

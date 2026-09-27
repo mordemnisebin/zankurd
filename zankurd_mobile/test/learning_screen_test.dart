@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -11,8 +10,10 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/lesson.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
+import 'package:zankurd_mobile/src/services/lesson_listening_speaker.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/app_panel.dart';
 import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 
 Widget wrap(Widget child) => MultiProvider(
@@ -29,6 +30,22 @@ Widget wrapKu(Widget child) => MultiProvider(
   child: MaterialApp(theme: AppTheme.light(), home: child),
 );
 
+Widget wrapLargeText(Widget child) => MultiProvider(
+  providers: [
+    ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('tr')),
+  ],
+  child: MaterialApp(
+    theme: AppTheme.light(),
+    builder: (context, appChild) => MediaQuery(
+      data: MediaQuery.of(
+        context,
+      ).copyWith(textScaler: const TextScaler.linear(2)),
+      child: appChild!,
+    ),
+    home: child,
+  ),
+);
+
 class _RetryableSlidesRepository extends MockZanKurdRepository {
   bool fail = true;
   int loadCalls = 0;
@@ -39,6 +56,19 @@ class _RetryableSlidesRepository extends MockZanKurdRepository {
     if (fail) throw StateError('slides unavailable');
     return const [];
   }
+}
+
+class _SourceLessLessonRepository extends MockZanKurdRepository {
+  @override
+  Future<List<LessonSlide>> loadLessonSlides(String lessonId) async => const [
+    LessonSlide(
+      id: 'source-less-slide',
+      lessonId: 'source-less',
+      order: 1,
+      contentKu: 'Naveroka dersê ya ceribandinê.',
+      contentTr: 'Kaynak eşlemesi olmayan test dersi.',
+    ),
+  ];
 }
 
 /// Hiçbir kategoride ders döndürmeyen depo — "kategori boş" durumunu
@@ -80,6 +110,44 @@ class _RetryablePracticeRepository extends MockZanKurdRepository {
   }
 }
 
+class _LessonQuizProbeRepository extends MockZanKurdRepository {
+  String? requestedCategory;
+  String? requestedLessonId;
+
+  @override
+  Future<List<QuizQuestion>> loadLearningQuizQuestions({
+    required String category,
+    required String learningLessonId,
+    int limit = 5,
+  }) async {
+    requestedCategory = category;
+    requestedLessonId = learningLessonId;
+    return const [];
+  }
+}
+
+class _FakeLessonListeningSpeaker implements LessonListeningSpeaker {
+  _FakeLessonListeningSpeaker({this.available = true});
+
+  @override
+  final bool available;
+
+  @override
+  final ValueNotifier<bool> speakingListenable = ValueNotifier(false);
+
+  final List<String> spoken = [];
+
+  @override
+  Future<void> speak(String text) async {
+    spoken.add(text);
+  }
+
+  @override
+  Future<void> stop() async {
+    speakingListenable.value = false;
+  }
+}
+
 const _testLesson = Lesson(
   id: 'lesson-test',
   slug: 'lesson-test',
@@ -117,21 +185,28 @@ class _PlacementRepository extends MockZanKurdRepository {
 }
 
 void main() {
-  test(
-    'öğrenme yolu kartları ikon çipi solid gradient kullanır, glow/boxShadow yok',
-    () {
-      final source = File(
-        'lib/src/screens/learning_screen.dart',
-      ).readAsStringSync();
-      final lessonStart = source.indexOf('class _LessonCard');
-      final detailStart = source.indexOf('class LessonDetailScreen');
-      final lessonSource = source.substring(lessonStart, detailStart);
-      // Solid gradient ikon çipi (tinted alpha yerine)
-      expect(lessonSource, contains('AppTheme.playGreen, Color(0xFF16A34A)'));
-      // İkon beyaz (gradient zemin üzerinde kontrast)
-      expect(lessonSource, contains('color: Colors.white,'));
-    },
-  );
+  testWidgets('öğrenme yolu kart değil doğrudan rota durakları kullanır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    final firstNode = find.byKey(
+      const ValueKey('learning-path-node-everyday_1'),
+    );
+    expect(firstNode, findsOneWidget);
+    expect(
+      find.descendant(of: firstNode, matching: find.byType(AppPanel)),
+      findsNothing,
+      reason: 'Rêya Zanînê üzerindeki dersler ayrı kartlar olmamalı.',
+    );
+    expect(
+      find.byKey(const ValueKey('learning-route-stop-everyday_1')),
+      findsOneWidget,
+    );
+  });
 
   // 2026-07-23 canlı UX denetimi: öğrenme modu butonları ("Dersler" vb.)
   // ekran okuyucuda çift okunuyordu — dıştaki Semantics(label:) ile
@@ -145,11 +220,51 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.bySemanticsLabel('Dersler'), findsOneWidget);
+    final lessons = find.bySemanticsLabel('Dersler');
+    expect(lessons, findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('learning-mode-strip')),
+      findsOneWidget,
+      reason: 'Üç öğrenme modu tek ortak araç şeridinde gruplanmalı.',
+    );
+    expect(
+      find.byKey(const ValueKey('learning-mode-action-lesson')),
+      findsOneWidget,
+    );
+    expect(
+      tester
+          .getSemantics(lessons)
+          .getSemanticsData()
+          .hasAction(ui.SemanticsAction.tap),
+      isTrue,
+    );
     handle.dispose();
   });
 
-  testWidgets('kimlik bandı playGreen ScreenIdentityHeader olur', (
+  testWidgets(
+    'kategori sekmesi 48dp dokunma hedefi ve seçili semantiği taşır',
+    (tester) async {
+      final semantics = tester.ensureSemantics();
+      await tester.pumpWidget(
+        wrap(LearningScreen(repository: MockZanKurdRepository())),
+      );
+      await tester.pumpAndSettle();
+
+      final tab = find.byKey(const ValueKey('learning-tab-everyday'));
+      final ink = find
+          .descendant(of: tab, matching: find.byType(InkWell))
+          .first;
+      expect(tester.getSize(ink).height, greaterThanOrEqualTo(48));
+      final data = tester.getSemantics(tab).getSemanticsData();
+      expect(data.flagsCollection.isButton, isTrue);
+      expect(data.flagsCollection.isSelected, ui.Tristate.isTrue);
+      expect(data.label, 'Günlük');
+      expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+      semantics.dispose();
+    },
+  );
+
+  testWidgets('öğrenme kimliği kart yerine düz sahne başlığıdır', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -157,68 +272,106 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final header = tester.widget<ScreenIdentityHeader>(
-      find.byType(ScreenIdentityHeader),
+    expect(find.byType(ScreenIdentityHeader), findsNothing);
+    final header = find.byKey(const ValueKey('learning-scene-header'));
+    expect(header, findsOneWidget);
+    expect(
+      tester.widget(header),
+      isA<Padding>(),
+      reason: 'Öğrenme başlığı ayrı bir kart yüzeyi oluşturmamalı.',
     );
-    expect(header.accent, AppTheme.playGreen);
-    // 2026-07-30: burada AppBar başlığı olan 'Öğren' aranıyordu. Kimlik
-    // bandı 'Kurmancî öğren' derken AppBar da 'Öğren' diyordu; iki yakın
-    // anlamlı başlık üst üste biniyordu. Kimlik bandı kullanan on ekranın
-    // sekizi AppBar başlığını boş bırakıyor — aykırı olan buydu.
-    expect(header.title, 'Kurmancî öğren');
+    expect(find.text('Kurmancî öğren'), findsOneWidget);
     expect(find.text('Öğren'), findsNothing);
     expect(find.text('Bugünkü hedefin'), findsOneWidget);
     expect(find.text('Öğrenme yolları'), findsOneWidget);
     expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
-    // 2026-07-27: rozette iki etiket yan yana duruyor ve tek cümle gibi
-    // okunuyordu ("Sana önerilen Devam et"). Rozet artık yalnız tavsiyeyi
-    // söyler; "devam et" kartın kendisi ve ucundaki oktur.
     expect(find.text('Sana önerilen'), findsOneWidget);
   });
 
-  testWidgets(
-    'önerilen ders Today\'s Review\'dan sonra Story ve modlardan önce gelir',
-    (tester) async {
-      SharedPreferences.setMockInitialValues({});
-      PlacementStore.resetInstance();
-      addTearDown(PlacementStore.resetInstance);
-      final semantics = tester.ensureSemantics();
+  for (final isKu in [false, true]) {
+    for (final dark in [false, true]) {
+      testWidgets('ilk ders kaydırmadan açılır ku=$isKu dark=$dark', (
+        tester,
+      ) async {
+        SharedPreferences.setMockInitialValues({});
+        PlacementStore.resetInstance();
+        addTearDown(PlacementStore.resetInstance);
+        await tester.binding.setSurfaceSize(const Size(360, 740));
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        await tester.pumpWidget(
+          ChangeNotifierProvider(
+            create: (_) => LanguageProvider(initialLang: isKu ? 'ku' : 'tr'),
+            child: MaterialApp(
+              theme: dark ? AppTheme.dark() : AppTheme.light(),
+              home: LearningScreen(repository: MockZanKurdRepository()),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
 
-      await tester.binding.setSurfaceSize(const Size(390, 844));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-      await tester.pumpWidget(
-        wrap(LearningScreen(repository: MockZanKurdRepository())),
-      );
-      await tester.pumpAndSettle();
+        final nextStep = find.byKey(const ValueKey('learning-next-step'));
+        expect(tester.getRect(nextStep).bottom, lessThanOrEqualTo(740));
+        expect(nextStep.hitTestable(), findsOneWidget);
+        await tester.tap(nextStep);
+        await tester.pumpAndSettle();
+        expect(find.byType(LessonDetailScreen), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      });
+    }
+  }
 
-      final nextStep = find.byKey(const ValueKey('learning-next-step'));
-      final story = find.byKey(const ValueKey('learning-story-entry'));
-      final practice = find.text('Soru çöz');
+  testWidgets('önerilen rota düğümü erişilebilir ve ders detayını açar', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    PlacementStore.resetInstance();
+    addTearDown(PlacementStore.resetInstance);
+    final semantics = tester.ensureSemantics();
 
-      expect(nextStep, findsOneWidget);
-      expect(story, findsOneWidget);
-      expect(find.byKey(const ValueKey('story-catalog')), findsOneWidget);
-      expect(practice, findsOneWidget);
-      expect(
-        tester.getTopLeft(nextStep).dy,
-        lessThan(tester.getTopLeft(story).dy),
-      );
-      expect(
-        tester.getTopLeft(nextStep).dy,
-        lessThan(tester.getTopLeft(practice).dy),
-      );
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
 
-      final semanticsData = tester.getSemantics(nextStep).getSemanticsData();
-      expect(semanticsData.hasAction(ui.SemanticsAction.tap), isTrue);
-      expect(semanticsData.label, contains('Sana önerilen'));
-      expect(semanticsData.label, contains('Selamlaşma'));
-      semantics.dispose();
+    final nextStep = find.byKey(const ValueKey('learning-next-step'));
 
-      await tester.tap(nextStep);
-      await tester.pumpAndSettle();
-      expect(find.byType(LessonDetailScreen), findsOneWidget);
-    },
-  );
+    expect(nextStep, findsOneWidget);
+    expect(find.byKey(const ValueKey('story-catalog')), findsOneWidget);
+
+    final semanticsData = tester.getSemantics(nextStep).getSemanticsData();
+    expect(semanticsData.hasAction(ui.SemanticsAction.tap), isTrue);
+    expect(semanticsData.label, contains('Sana önerilen'));
+    expect(semanticsData.label, contains('Selamlaşma'));
+    semantics.dispose();
+
+    await tester.ensureVisible(nextStep);
+    await tester.pumpAndSettle();
+    await tester.tap(nextStep);
+    await tester.pumpAndSettle();
+    expect(find.byType(LessonDetailScreen), findsOneWidget);
+  });
+
+  testWidgets('önerilen rota düğümü birincil turuncu CTA olarak öne çıkar', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    final nextStep = find.byKey(const ValueKey('learning-next-step'));
+    final material = tester.widget<Material>(
+      find.descendant(of: nextStep, matching: find.byType(Material)).first,
+    );
+    final title = tester.widget<Text>(
+      find.descendant(of: nextStep, matching: find.text('Selamlaşma')),
+    );
+
+    expect(material.color, AppTheme.primaryCtaColor(tester.element(nextStep)));
+    expect(title.style?.color, Colors.white);
+  });
 
   testWidgets('öğrenme yolu durumları Türkçe semantics ile adlandırılır', (
     tester,
@@ -239,7 +392,7 @@ void main() {
       find.bySemanticsLabel('Ders 1. Ders tamamlandı'),
     );
     final current = tester.getSemantics(
-      find.bySemanticsLabel('Ders 2. Sonraki'),
+      find.bySemanticsLabel('Sana önerilen. Ders 2. Sonraki'),
     );
     final locked = tester.getSemantics(
       find.bySemanticsLabel('Ders 3. Kilitli'),
@@ -283,7 +436,9 @@ void main() {
       isNotNull,
     );
     expect(
-      tester.getSemantics(find.bySemanticsLabel('Ders 2. Bidomîne')),
+      tester.getSemantics(
+        find.bySemanticsLabel('Pêşniyara te. Ders 2. Bidomîne'),
+      ),
       isNotNull,
     );
     final locked = tester.getSemantics(find.bySemanticsLabel('Ders 3. Girtî'));
@@ -296,7 +451,7 @@ void main() {
   });
 
   testWidgets(
-    'Navîn placement top öneriyi ve sakin seviye bağlamını gösterir',
+    'Navîn placement öneriyi rota düğümüne ve seviye bağlamına taşır',
     (tester) async {
       SharedPreferences.setMockInitialValues({
         'zankurd.placement.v1.level': 'navin',
@@ -327,12 +482,12 @@ void main() {
           of: find.byKey(const ValueKey('learning-path-node-placement-1')),
           matching: find.byKey(const ValueKey('lesson-recommended-badge')),
         ),
-        findsNothing,
+        findsOneWidget,
       );
     },
   );
 
-  testWidgets('gerçek ilerlemede top öneri placement bağlamını kaldırır', (
+  testWidgets('gerçek ilerlemede rota önerisi placement bağlamını kaldırır', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({
@@ -388,7 +543,9 @@ void main() {
     );
   });
 
-  testWidgets('seçili sekme düz playGreen dolgu taşır', (tester) async {
+  testWidgets('seçili sekme düşük yoğunluklu playGreen kimliği taşır', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       wrap(LearningScreen(repository: MockZanKurdRepository())),
     );
@@ -401,11 +558,11 @@ void main() {
       ),
     );
     final decoration = tab.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.playGreen);
+    expect(decoration.color, AppTheme.playGreen.withValues(alpha: 0.14));
     expect(decoration.gradient, isNull);
   });
 
-  testWidgets('dersler mock repodan listelenir', (tester) async {
+  testWidgets('önerilen ders rota içinde tek kez görünür', (tester) async {
     await tester.pumpWidget(
       wrap(LearningScreen(repository: MockZanKurdRepository())),
     );
@@ -414,11 +571,27 @@ void main() {
     // Arayüz Türkçe: ders adı da Türkçe listelenir. Kurmancî adı
     // ("Silavkirin") yalnız Kurmancî arayüzde görünür — bkz.
     // `test/lesson_title_language_test.dart` (2026-07-27).
-    expect(find.text('Selamlaşma'), findsNWidgets(2));
+    // Önerilen ders ayrı bir üst kart olarak tekrarlanmaz; rota üzerindeki
+    // aktif durak hem dersin kendisini hem öneri işaretini taşır.
+    expect(find.text('Selamlaşma'), findsOneWidget);
+    final firstNode = find.byKey(
+      const ValueKey('learning-path-node-everyday_1'),
+    );
     expect(
-      find.byKey(const ValueKey('learning-path-node-everyday_1')),
+      find.descendant(
+        of: firstNode,
+        matching: find.byKey(const ValueKey('learning-next-step')),
+      ),
       findsOneWidget,
     );
+    expect(
+      find.descendant(
+        of: firstNode,
+        matching: find.byKey(const ValueKey('lesson-recommended-badge')),
+      ),
+      findsOneWidget,
+    );
+    expect(firstNode, findsOneWidget);
     expect(
       find.byKey(const ValueKey('learning-path-node-everyday_2')),
       findsOneWidget,
@@ -437,6 +610,30 @@ void main() {
       await tester.pump();
     }
     expect(find.byKey(const ValueKey('learning-mastery-goal')), findsOneWidget);
+  });
+
+  testWidgets('Learning hikâye satırları rotayı gömmeyecek kadar kompakttır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    final firstStory = find.byKey(const ValueKey('story-card-cayxane'));
+    final catalog = find.byKey(const ValueKey('story-catalog'));
+    expect(firstStory, findsOneWidget);
+    expect(tester.getSize(firstStory).height, lessThanOrEqualTo(56));
+    expect(
+      tester.getSize(catalog).height,
+      lessThanOrEqualTo(190),
+      reason:
+          'Günlük hikâyeler destekleyici içerik; ana öğrenme yolunu ilk '
+          'ekrandan aşağı itmemeli.',
+    );
   });
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {
@@ -463,6 +660,29 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('%200 yazıda önerilen birincil CTA taşmadan erişilebilir kalır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      wrapLargeText(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    final nextStep = find.byKey(const ValueKey('learning-next-step'));
+    expect(nextStep, findsOneWidget);
+    await tester.ensureVisible(nextStep);
+    await tester.pumpAndSettle();
+
+    final rect = tester.getRect(nextStep);
+    expect(rect.left, greaterThanOrEqualTo(0));
+    expect(rect.right, lessThanOrEqualTo(390));
+    expect(rect.height, greaterThanOrEqualTo(48));
     expect(tester.takeException(), isNull);
   });
 
@@ -641,6 +861,32 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('ders mini quiz isteği açık lesson id ile repositoryye gider', (
+    tester,
+  ) async {
+    final repository = _LessonQuizProbeRepository();
+    const lesson = Lesson(
+      id: 'everyday_3',
+      slug: 'everyday-3',
+      titleKu: 'Pratikên Rojane',
+      titleTr: 'Günlük Pratik İfadeler',
+      category: 'everyday',
+    );
+
+    await tester.pumpWidget(
+      wrapKu(LessonDetailScreen(lesson: lesson, repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Pêş'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Quiz-a Kurt'));
+    await tester.pumpAndSettle();
+
+    expect(repository.requestedCategory, 'Ziman');
+    expect(repository.requestedLessonId, 'everyday_3');
+  });
+
   testWidgets(
     'kategoride ders yokken "Dersler" düğmesi kapalı görünür ve dokunuşta '
     'hiçbir şey yapmaz',
@@ -680,30 +926,269 @@ void main() {
     },
   );
 
-  testWidgets(
-    'öğrenme yolu kilim baklava düğümleri ve tamamlananlar için altın dolgu kullanır',
-    (tester) async {
-      // 4.3 Görsel Kimlik: Ders yolu Duolingo yerine kilim baklava motifleriyle
-      // ve tamamlanan dersler altın düğümle çizilir.
-      tester.view.physicalSize = const Size(480, 1600);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.reset);
+  testWidgets('öğrenme yolu sade işaretleyicilerle kilit durumunu korur', (
+    tester,
+  ) async {
+    // Yol artık oyun haritası/baklava motifleri yerine tek, sakin bir
+    // ilerleme rayı kullanır; kilit davranışı görünür kalır.
+    tester.view.physicalSize = const Size(480, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
 
-      final mockRepo = MockZanKurdRepository();
-      await tester.pumpWidget(wrap(LearningScreen(repository: mockRepo)));
+    final mockRepo = MockZanKurdRepository();
+    await tester.pumpWidget(wrap(LearningScreen(repository: mockRepo)));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const ValueKey('learning-path-node-everyday_1')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('learning-path-node-everyday_2')),
+      findsOneWidget,
+    );
+
+    // Kilitli dersler yine açıkça işaretlenir.
+    expect(find.byIcon(AppIcons.lock), findsWidgets);
+  });
+
+  testWidgets('öğrenme ekranından sözlük açılır ve iki dilde arama yapılır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    PlacementStore.resetInstance();
+    addTearDown(PlacementStore.resetInstance);
+
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      wrap(LearningScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    final entry = find.byKey(const ValueKey('learning-lexicon-entry'));
+    expect(entry, findsOneWidget);
+    await tester.ensureVisible(entry);
+    await tester.tap(entry);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Sözlük'), findsOneWidget);
+    final search = find.byKey(const ValueKey('lexicon-search-field'));
+    expect(search, findsOneWidget);
+
+    await tester.enterText(search, 'av');
+    await tester.pump();
+
+    expect(find.byKey(const ValueKey('lexicon-entry-av')), findsOneWidget);
+    expect(find.text('Av'), findsOneWidget);
+    expect(find.text('Su'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('lexicon-entry-av')),
+        matching: find.text('Kaynak: Temel Yemekler'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('lexicon-entry-nan')), findsNothing);
+
+    await tester.enterText(search, 'güney');
+    await tester.pump();
+    expect(
+      find.byKey(const ValueKey('lexicon-entry-basur')),
+      findsOneWidget,
+      reason: 'Türkçe anlam alanı da aranabilmeli.',
+    );
+    expect(find.text('Başûr'), findsOneWidget);
+  });
+
+  testWidgets(
+    'sözlük Kurmancî başlıkla açılır ve arama büyük/küçük harfe duyarsızdır',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({});
+      PlacementStore.resetInstance();
+      addTearDown(PlacementStore.resetInstance);
+
+      await tester.pumpWidget(
+        wrapKu(LearningScreen(repository: MockZanKurdRepository())),
+      );
       await tester.pumpAndSettle();
 
-      expect(
-        find.byKey(const ValueKey('learning-path-node-everyday_1')),
-        findsOneWidget,
-      );
-      expect(
-        find.byKey(const ValueKey('learning-path-node-everyday_2')),
-        findsOneWidget,
-      );
+      final entry = find.byKey(const ValueKey('learning-lexicon-entry'));
+      expect(entry, findsOneWidget);
+      await tester.ensureVisible(entry);
+      await tester.tap(entry);
+      await tester.pumpAndSettle();
 
-      // Baklava kilit düğümü ikonlarının mevcut olduğu kontrolü
-      expect(find.byIcon(AppIcons.lock), findsWidgets);
+      expect(find.text('Ferheng'), findsOneWidget);
+      final search = find.byKey(const ValueKey('lexicon-search-field'));
+      await tester.enterText(search, 'ROJBAŞ');
+      await tester.pump();
+
+      expect(
+        find.byKey(const ValueKey('lexicon-entry-rojbas')),
+        findsOneWidget,
+      );
+      expect(find.text('Rojbaş'), findsOneWidget);
+      expect(find.text('Günaydın / İyi günler'), findsOneWidget);
     },
   );
+
+  testWidgets('kaynaklı ders son slaytta ders-özel hızlı hatırlama gösterir', (
+    tester,
+  ) async {
+    const lesson = Lesson(
+      id: 'everyday_1',
+      slug: 'selamlasma',
+      titleKu: 'Silavkirin',
+      titleTr: 'Selamlaşma',
+      category: 'everyday',
+    );
+    await tester.pumpWidget(
+      wrap(
+        LessonDetailScreen(lesson: lesson, repository: MockZanKurdRepository()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('lesson-recall-card')), findsNothing);
+    await tester.tap(find.text('İleri'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('lesson-recall-card')), findsOneWidget);
+    expect(find.byKey(const ValueKey('lesson-recall-term')), findsOneWidget);
+    expect(find.text('Rojbaş'), findsOneWidget);
+    expect(find.text('Günaydın / İyi günler'), findsNothing);
+
+    await tester.tap(find.byKey(const ValueKey('lesson-recall-reveal')));
+    await tester.pump();
+    expect(find.text('Günaydın / İyi günler'), findsOneWidget);
+    expect(find.byKey(const ValueKey('lesson-recall-reveal')), findsNothing);
+    expect(find.byKey(const ValueKey('lesson-recall-next')), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('lesson-recall-next')));
+    await tester.pump();
+    expect(find.text('Êvarbaş'), findsOneWidget);
+    expect(find.text('Günaydın / İyi günler'), findsNothing);
+  });
+
+  testWidgets('kaynaklı ders güvenli TTS varsa son slaytta dinleme sunar', (
+    tester,
+  ) async {
+    final speaker = _FakeLessonListeningSpeaker();
+    const lesson = Lesson(
+      id: 'everyday_1',
+      slug: 'selamlasma',
+      titleKu: 'Silavkirin',
+      titleTr: 'Selamlaşma',
+      category: 'everyday',
+    );
+    await tester.pumpWidget(
+      wrap(
+        LessonDetailScreen(
+          lesson: lesson,
+          repository: MockZanKurdRepository(),
+          listeningSpeaker: speaker,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('İleri'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('lesson-listening-card')), findsOneWidget);
+    expect(find.text('Rojbaş'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('lesson-listening-card')),
+        matching: find.text('Rojbaş'),
+      ),
+      findsNothing,
+    );
+
+    await tester.tap(find.byKey(const ValueKey('lesson-listening-play')));
+    await tester.pump();
+    expect(speaker.spoken, ['Rojbaş']);
+  });
+
+  testWidgets('Kurmancî TTS yoksa ders dinleme kartı görünmez', (tester) async {
+    const lesson = Lesson(
+      id: 'everyday_1',
+      slug: 'selamlasma',
+      titleKu: 'Silavkirin',
+      titleTr: 'Selamlaşma',
+      category: 'everyday',
+    );
+    await tester.pumpWidget(
+      wrap(
+        LessonDetailScreen(
+          lesson: lesson,
+          repository: MockZanKurdRepository(),
+          listeningSpeaker: _FakeLessonListeningSpeaker(available: false),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('İleri'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('lesson-listening-card')), findsNothing);
+  });
+
+  testWidgets('kaynağı olmayan derste hızlı hatırlama uydurulmaz', (
+    tester,
+  ) async {
+    const lesson = Lesson(
+      id: 'source-less',
+      slug: 'source-less',
+      titleKu: 'Dersa Bê Çavkanî',
+      titleTr: 'Kaynaksız Ders',
+      category: 'test',
+    );
+    await tester.pumpWidget(
+      wrap(
+        LessonDetailScreen(
+          lesson: lesson,
+          repository: _SourceLessLessonRepository(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('lesson-recall-card')), findsNothing);
+  });
+
+  testWidgets('%200 yazıda dar telefonda hızlı hatırlama taşmaz', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(320, 568);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    const lesson = Lesson(
+      id: 'everyday_1',
+      slug: 'selamlasma',
+      titleKu: 'Silavkirin',
+      titleTr: 'Selamlaşma',
+      category: 'everyday',
+    );
+    await tester.pumpWidget(
+      wrapLargeText(
+        LessonDetailScreen(lesson: lesson, repository: MockZanKurdRepository()),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('İleri'));
+    await tester.pumpAndSettle();
+
+    final reveal = find.byKey(const ValueKey('lesson-recall-reveal'));
+    await tester.ensureVisible(reveal);
+    await tester.pumpAndSettle();
+    await tester.tap(reveal);
+    await tester.pump();
+
+    expect(find.byKey(const ValueKey('lesson-recall-answer')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 }

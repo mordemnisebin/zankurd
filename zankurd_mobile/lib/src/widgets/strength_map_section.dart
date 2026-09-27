@@ -75,6 +75,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
         categories: StrengthMapSection._categories,
         masteryCorrect: mastery,
         mistakes: mistakes,
+        readyReviews: mistakeStore.getReadyReviewCountByCategory(),
       );
       if (mounted) {
         setState(() {

@@ -111,19 +111,19 @@ class QuizOptionTile extends StatelessWidget {
     final optionColor = AppTheme.answerOptionColors[index % 4];
 
     // Idle: açık kart + renkli sol kimlik (TRT/Pirs okunurluğu).
-    // Reveal: doğru/yanlış gradyan. Seçim beklerken marka gradyanı.
+    // Reveal: doğru/yanlış gradyan. Seçim beklerken Forest kimliği.
     final isLight = AppTheme.isLight(context);
     final Gradient gradient = correct
         ? AppTheme.correctGradient
         : wrong
         ? AppTheme.wrongGradient
         : isChecking
-        ? AppTheme.accentGradient
+        ? AppTheme.identityHeaderGradient
         : LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
             colors: isLight
-                ? const [Color(0xFFFFFFFF), Color(0xFFF7F4EE)]
+                ? const [Color(0xFFFFFFFF), Color(0xFFF8FAFC)]
                 : [
                     AppTheme.surfaceHiColor(context),
                     AppTheme.surfaceColor(context),
@@ -135,8 +135,8 @@ class QuizOptionTile extends StatelessWidget {
         : wrong
         ? AppTheme.wrong
         : isChecking
-        ? AppTheme.brand
-        : optionColor.withValues(alpha: isLight ? 0.45 : 0.55);
+        ? AppTheme.culturalBrandBg
+        : AppTheme.borderColor(context);
 
     final textColor = correct || wrong || isChecking
         ? Colors.white
@@ -144,11 +144,11 @@ class QuizOptionTile extends StatelessWidget {
 
     // 3D Gölge rengi
     final Color shadowColor = correct
-        ? const Color(0xFF009E6A)
+        ? const Color(0xFF0D5F44)
         : wrong
-        ? const Color(0xFFD61A4C)
+        ? const Color(0xFFB91C1C)
         : isChecking
-        ? AppTheme.brand
+        ? AppTheme.culturalBrandBg
         : AppTheme.borderColor(context);
 
     final isPressed = selected;
@@ -458,51 +458,40 @@ class _OptionBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final letter = String.fromCharCode(65 + (index % 26));
-    final fg = stateActive ? stateColor : (idleColor ?? AppTheme.brand);
-
+    final isLight = AppTheme.isLight(context);
     final idle = !stateActive;
-    final badgeBg = idle ? fg : Colors.white;
-    final badgeFg = idle ? Colors.white : fg;
+    final badgeBg = idle
+        ? (isLight ? const Color(0xFFF1F5F9) : const Color(0xFF1E293B))
+        : stateColor;
+    final badgeFg = idle ? AppTheme.textPrimaryColor(context) : Colors.white;
 
-    // Rozet artık yuvarlatılmış kare değil, elmas: Rengîn geometrisi
-    // kategori ambleminde ve şık indeksinde aynı dili konuşur. Harf
-    // döndürülmez — yalnız zemin döner, yoksa "A" yan yatar.
-    return SizedBox(
-      width: 38,
-      height: 38,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Transform.rotate(
-            angle: 0.7853981633974483, // 45°
-            child: Container(
-              width: 27,
-              height: 27,
-              decoration: BoxDecoration(
-                color: badgeBg,
-                borderRadius: BorderRadius.circular(4),
-                boxShadow: idle
-                    ? [
-                        BoxShadow(
-                          color: fg.withValues(alpha: 0.30),
-                          blurRadius: 7,
-                          offset: const Offset(0, 2),
-                        ),
-                      ]
-                    : null,
-              ),
-            ),
-          ),
-          // Rozette bir zamanlar harfin üstüne 8 px'lik bir şekil ikonu
-          // biniyordu (renk körü ayrımı için). 34 px'lik rozette o boyut bir
-          // işaret değil bir leke: harfin tepesine oturuyor ve "A" bozuk bir
-          // karakter gibi görünüyordu (2026-07-27, canlı gezinti).
-          //
-          // Şekil kaldırıldı; ayrımı harfin kendisi taşıyor. A/B/C/D renkten
-          // bağımsızdır, evrenseldir ve ekran okuyucuya da aynı adla gider —
-          // yani erişilebilirlik kaybı yok, okunaklılık kazancı var.
-          Text(letter, style: AppTypography.heading2.copyWith(color: badgeFg)),
-        ],
+    return Container(
+      width: 36,
+      height: 36,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: badgeBg,
+        borderRadius: BorderRadius.circular(10),
+        border: idle
+            ? Border.all(color: AppTheme.borderColor(context), width: 1.2)
+            : null,
+        boxShadow: stateActive
+            ? [
+                BoxShadow(
+                  color: stateColor.withValues(alpha: 0.30),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ]
+            : null,
+      ),
+      child: Text(
+        letter,
+        style: AppTypography.heading2.copyWith(
+          color: badgeFg,
+          fontSize: 16,
+          fontWeight: FontWeight.w800,
+        ),
       ),
     );
   }

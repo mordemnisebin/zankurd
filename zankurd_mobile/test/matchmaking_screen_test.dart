@@ -524,12 +524,23 @@ void main() {
 
     expect(find.text('Hızlı düello'), findsOneWidget);
     expect(find.text('Rastgele eşleşme'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('matchmaking-selection-header')),
+      findsOneWidget,
+    );
     final duelCard = tester.widget<Container>(
       find.byKey(const ValueKey('matchmaking-duel-card')),
     );
     final decoration = duelCard.decoration! as BoxDecoration;
     expect(decoration.border, isNotNull);
-    expect(decoration.gradient, isNotNull);
+    expect(decoration.gradient, isNull);
+    expect(
+      decoration.color,
+      AppTheme.primaryCtaColor(
+        tester.element(find.byKey(const ValueKey('matchmaking-duel-card'))),
+      ),
+    );
+    expect(decoration.boxShadow, isEmpty);
     expect(tester.takeException(), isNull);
   });
 

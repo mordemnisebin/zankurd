@@ -6,6 +6,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
+import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
@@ -24,6 +25,39 @@ Widget wrap(Widget child) => MultiProvider(
 );
 
 void main() {
+  testWidgets('kontrol edilen şık Forest seçim kimliğini kullanır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(
+        Scaffold(
+          body: QuizOptionTile(
+            index: 0,
+            answer: 'Dersim',
+            selected: true,
+            correct: false,
+            disabled: false,
+            onTap: () {},
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final option = tester.widget<AnimatedContainer>(
+      find
+          .ancestor(
+            of: find.text('Dersim'),
+            matching: find.byType(AnimatedContainer),
+          )
+          .first,
+    );
+    final decoration = option.decoration! as BoxDecoration;
+    final gradient = decoration.gradient! as LinearGradient;
+    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+    expect((decoration.border! as Border).top.color, AppTheme.culturalBrandBg);
+  });
+
   testWidgets('cevaplanmamış şıklar nötr yüzey ve border kullanır', (
     tester,
   ) async {
@@ -67,10 +101,9 @@ void main() {
         AppTheme.surfaceHi,
         AppTheme.surface,
       ]);
-      final optionColor = AppTheme.answerOptionColors[i % 4];
       expect(
         (decoration.border! as Border).top.color,
-        optionColor.withValues(alpha: 0.55),
+        AppTheme.borderColor(tester.element(find.text(answer).first)),
       );
     }
   });

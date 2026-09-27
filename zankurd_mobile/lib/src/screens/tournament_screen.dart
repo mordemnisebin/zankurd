@@ -4,6 +4,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../data/tournament_progress_publisher.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
@@ -338,16 +339,15 @@ class _TournamentScreenState extends State<TournamentScreen> {
     // kaydın işi zaten yerel oyunu etkilemediği için kimse fark etmiyordu
     // (2026-08-14 denetimi). Hiçbir eleme turu henüz tamamlanmadığı için
     // doğru karşılık 'lobby'dir.
-    widget.repository
-        .saveTournamentProgress('lobby', 0, 0, const [])
-        .catchError((error, stack) {
-          ErrorReporter.record(
-            error,
-            stack,
-            reason: 'tournament_save_initial_progress',
-          );
-          return false;
-        });
+    unawaited(
+      TournamentProgressPublisher.publish(
+        repository: widget.repository,
+        stage: 'lobby',
+        userScore: 0,
+        opponentScore: 0,
+        botWinners: const [],
+      ),
+    );
     widget.repository.logAnalyticsEvent('tournament_started', null).catchError((
       error,
       stack,
@@ -653,21 +653,17 @@ class _TournamentScreenState extends State<TournamentScreen> {
     }
 
     final stages = ['quarter', 'semi', 'final', 'won'];
-    widget.repository
-        .saveTournamentProgress(
-          userLost ? 'lost' : stages[roundIndex.clamp(0, stages.length - 1)],
-          userScore,
-          opponentScore,
-          winners.map((w) => w.name).toList(),
-        )
-        .catchError((error, stack) {
-          ErrorReporter.record(
-            error,
-            stack,
-            reason: 'tournament_save_match_progress',
-          );
-          return false;
-        });
+    unawaited(
+      TournamentProgressPublisher.publish(
+        repository: widget.repository,
+        stage: userLost
+            ? 'lost'
+            : stages[roundIndex.clamp(0, stages.length - 1)],
+        userScore: userScore,
+        opponentScore: opponentScore,
+        botWinners: winners.map((winner) => winner.name).toList(),
+      ),
+    );
   }
 
   /// Tur adları SONDAN sayılır: son tur her zaman Final'dir.
@@ -1244,6 +1240,7 @@ class _LadderStep extends StatelessWidget {
     // yüzeyi de marka paletinde kalır.
     final tone = isFinal ? AppTheme.gold : AppTheme.terracotta;
     return Container(
+      // a11y-tap-target: noninteractive — turnuva merdiveni ilerleme rozeti.
       constraints: const BoxConstraints(minWidth: 34),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
       decoration: BoxDecoration(

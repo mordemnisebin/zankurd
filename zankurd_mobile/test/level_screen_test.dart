@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -78,10 +80,11 @@ void main() {
     expect(find.text('Başlangıç'), findsOneWidget);
     expect(find.text('Usta'), findsOneWidget);
 
-    expect(
-      tester.getSemantics(find.text('Başlangıç')).label,
-      'Sıradaki: Başlangıç',
-    );
+    final firstLevelSemantics = tester
+        .getSemantics(find.text('Başlangıç'))
+        .getSemanticsData();
+    expect(firstLevelSemantics.label, 'Sıradaki: Başlangıç');
+    expect(firstLevelSemantics.hasAction(ui.SemanticsAction.tap), isTrue);
 
     // Soru birimi satır içi ku/tr değil; defterdeki K.soru (2026-09-07).
     expect(find.text('10 soru'), findsWidgets);
@@ -107,7 +110,7 @@ void main() {
     expect(find.textContaining('seviyeyi tamamla'), findsOneWidget);
   });
 
-  testWidgets('düğüm numarası heading1 ağırlığı ve yumuşak gölge taşır', (
+  testWidgets('seviye numarası sakin ama belirgin ağırlık taşır', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -116,24 +119,21 @@ void main() {
     await tester.pumpAndSettle();
 
     final numberText = tester.widget<Text>(find.text('1'));
-    // Rubik ailesinde w800 yüzü yok; heading1 bilinçli olarak w900'e
-    // sabitlendi (bkz. app_theme.dart yorum satırı).
-    expect(numberText.style?.fontWeight, FontWeight.w900);
+    expect(numberText.style?.fontWeight, FontWeight.w800);
   });
 
-  testWidgets('etiket chip yüzey renginde kalır', (tester) async {
+  testWidgets('seviye kartı nötr ortak yüzey dilinde kalır', (tester) async {
     await tester.pumpWidget(
       wrap(LevelScreen(repository: MockZanKurdRepository(), category: 'Ziman')),
     );
     await tester.pumpAndSettle();
 
-    final label = find.ancestor(
-      of: find.text('Başlangıç'),
-      matching: find.byType(Container),
+    final card = tester.widget<Container>(
+      find.byKey(const ValueKey('level-card-1')),
     );
-    final decoration =
-        tester.widget<Container>(label.first).decoration as BoxDecoration;
+    final decoration = card.decoration as BoxDecoration;
     expect(decoration.color, AppTheme.lightSurface);
+    expect(decoration.gradient, isNull);
   });
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {

@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
+import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
@@ -60,6 +63,40 @@ QuizResultScreen buildScreen(MockZanKurdRepository repository) {
     totalQuestions: 10,
     bestStreak: 5,
     coinsAwarded: 120,
+    answerRecords: const [
+      AnswerRecord(
+        id: 'q1',
+        category: 'Ziman',
+        prompt: 'Ev gotin çi wateyê dide?',
+        answers: ['A', 'B', 'C', 'D'],
+        correctAnswer: 'A',
+        selectedAnswer: 'A',
+        explanation: 'Rast bersiv A ye.',
+      ),
+      AnswerRecord(
+        id: 'q2',
+        category: 'Ziman',
+        prompt: 'Kîjan bersiv rast e?',
+        answers: ['A', 'B', 'C', 'D'],
+        correctAnswer: 'A',
+        selectedAnswer: 'B',
+        explanation: 'Rast bersiv A ye.',
+      ),
+    ],
+  );
+}
+
+QuizResultScreen buildLearningScreen(MockZanKurdRepository repository) {
+  return QuizResultScreen(
+    repository: repository,
+    room: repository.createRoom(),
+    score: 1840,
+    correctCount: 8,
+    wrongCount: 2,
+    totalQuestions: 10,
+    bestStreak: 5,
+    coinsAwarded: 120,
+    isLearningExperience: true,
     answerRecords: const [
       AnswerRecord(
         id: 'q1',
@@ -153,7 +190,7 @@ const _resultActionVariants = [
   ),
 ];
 
-Future<void> _expectReadablePrimaryReviewAction(
+Future<void> _expectReadablePrimaryNextAction(
   WidgetTester tester,
   _ResultActionVariant variant,
 ) async {
@@ -171,13 +208,13 @@ Future<void> _expectReadablePrimaryReviewAction(
   );
   await tester.pump(const Duration(seconds: 1));
 
-  final action = find.byKey(const ValueKey('result-primary-review-mistakes'));
+  final action = find.byKey(const ValueKey('result-play-again-button'));
   // Özet kartı eylemi katmanın altına itti; önce kaydırıp kur, sonra ölç.
   await tester.scrollUntilVisible(action, 600);
   await tester.pumpAndSettle();
   expect(action, findsOneWidget, reason: variant.name);
 
-  final expectedLabel = Tr.forKu(K.reviewMistakes, variant.language == 'ku');
+  final expectedLabel = Tr.forKu(K.playAgain, variant.language == 'ku');
   final buttonSemantics = tester.getSemantics(action);
   expect(buttonSemantics.flagsCollection.isButton, isTrue);
   expect(buttonSemantics.label, contains(expectedLabel), reason: variant.name);
@@ -205,32 +242,14 @@ Future<void> _expectReadablePrimaryReviewAction(
     reason: variant.name,
   );
   expect(buttonRect.height, greaterThanOrEqualTo(54), reason: variant.name);
-  final replay = find.byKey(const ValueKey('result-play-again-button'));
-  await tester.scrollUntilVisible(replay, 600);
-  await tester.pumpAndSettle();
-  expect(replay, findsOneWidget, reason: variant.name);
-  // İkinci kaydırmadan sonra birincilin karesi bayat; aynı kareden ölç.
-  final freshPrimaryRect = tester.getRect(action);
-  expect(
-    tester.getRect(replay).top,
-    greaterThanOrEqualTo(freshPrimaryRect.bottom),
-    reason:
-        '${variant.name}: narrow result secondary action below primary olmalı',
-  );
   expect(tester.takeException(), isNull, reason: variant.name);
-
-  await tester.scrollUntilVisible(action, 600);
-  await tester.pumpAndSettle();
-  await tester.tap(action);
-  await tester.pumpAndSettle();
-  expect(find.byType(QuizResultScreen), findsNothing, reason: variant.name);
 }
 
 void main() {
   for (final variant in _resultActionVariants) {
     testWidgets(
-      'primary review action readable — ${variant.name}',
-      (tester) => _expectReadablePrimaryReviewAction(tester, variant),
+      'primary next action readable — ${variant.name}',
+      (tester) => _expectReadablePrimaryNextAction(tester, variant),
     );
   }
 
@@ -257,6 +276,47 @@ void main() {
     },
   );
 
+  testWidgets(
+    'öğrenme sonucunda Devam Et ana eylem, yanlış inceleme özette kalır',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        wrapResult(buildLearningScreen(MockZanKurdRepository())),
+      );
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      final primary = find.byKey(
+        const ValueKey('result-primary-learning-continue'),
+      );
+      expect(primary, findsOneWidget);
+      await tester.ensureVisible(primary);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.descendant(of: primary, matching: find.text('Devam Et')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('result-primary-review-mistakes')),
+        findsNothing,
+      );
+      expect(
+        find.byKey(const ValueKey('learning-outcome-review')),
+        findsOneWidget,
+      );
+
+      await tester.tap(primary);
+      await tester.pumpAndSettle();
+      expect(
+        find.byType(ReviewScreen),
+        findsNothing,
+        reason: 'Devam Et yanlışlar ekranını açmamalı.',
+      );
+    },
+  );
+
   testWidgets('wide result keeps primary and secondary actions in one row', (
     tester,
   ) async {
@@ -266,10 +326,10 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
 
     final primary = tester.getRect(
-      find.byKey(const ValueKey('result-primary-review-mistakes')),
+      find.byKey(const ValueKey('result-play-again-button')),
     );
     final secondary = tester.getRect(
-      find.byKey(const ValueKey('result-play-again-button')),
+      find.byKey(const ValueKey('result-review-mistakes-button')),
     );
     expect(secondary.center.dy, inInclusiveRange(primary.top, primary.bottom));
     expect(secondary.left, greaterThan(primary.right));
@@ -315,7 +375,7 @@ void main() {
     }
   });
 
-  testWidgets('yanlış inceleme ana eylemi öğrenme özetinden önce gelir', (
+  testWidgets('sonraki durak ana eylemi öğrenme özetinden önce gelir', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -324,9 +384,7 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    final primary = find.byKey(
-      const ValueKey('result-primary-review-mistakes'),
-    );
+    final primary = find.byKey(const ValueKey('result-play-again-button'));
     final outcome = find.byKey(const ValueKey('learning-outcome-card'));
     expect(primary, findsOneWidget);
     expect(outcome, findsOneWidget);
@@ -336,31 +394,55 @@ void main() {
     );
   });
 
-  testWidgets(
-    'yanlış varsa inceleme ana eylem, diğer yollar kapalı gruptadır',
-    (tester) async {
-      await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
-      await tester.pump(const Duration(seconds: 1));
-      await tester.pumpAndSettle();
+  testWidgets('dar sonuçta öğrenme özeti ikincil eylemlerden önce gelir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
 
-      final primary = find.byKey(
-        const ValueKey('result-primary-review-mistakes'),
-      );
-      await tester.scrollUntilVisible(primary, 600);
-      await tester.pumpAndSettle();
-      expect(primary, findsOneWidget);
-      expect(
-        find.byKey(const ValueKey('result-play-again-button')),
-        findsOneWidget,
-      );
-      expect(find.byKey(const ValueKey('result-more-options')), findsOneWidget);
-      expect(find.byKey(const ValueKey('result-home-button')), findsNothing);
+    final outcome = find.byKey(const ValueKey('learning-outcome-card'));
+    final review = find.byKey(const ValueKey('result-review-mistakes-button'));
+    final share = find.byKey(const ValueKey('result-share-button'));
+    await tester.scrollUntilVisible(review, 300);
+    await tester.pumpAndSettle();
+    expect(outcome, findsOneWidget);
+    expect(review, findsOneWidget);
+    expect(share, findsOneWidget);
+    expect(
+      tester.getBottomLeft(outcome).dy,
+      lessThan(tester.getTopLeft(review).dy),
+    );
+    expect(
+      tester.getBottomLeft(outcome).dy,
+      lessThan(tester.getTopLeft(share).dy),
+    );
+  });
 
-      await tester.tap(find.byKey(const ValueKey('result-more-options')));
-      await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('result-home-button')), findsOneWidget);
-    },
-  );
+  testWidgets('yanlış varsa sonraki durak ana eylem, inceleme ikincil kalır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+
+    final primary = find.byKey(const ValueKey('result-play-again-button'));
+    await tester.scrollUntilVisible(primary, 600);
+    await tester.pumpAndSettle();
+    expect(primary, findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('result-review-mistakes-button')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('result-more-options')), findsOneWidget);
+    expect(find.byKey(const ValueKey('result-home-button')), findsNothing);
+
+    await tester.tap(find.byKey(const ValueKey('result-more-options')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('result-home-button')), findsOneWidget);
+  });
 
   // 2026-07-23 M33: Roj maskotu sonuç ekranında görünsün ve yüksek
   // doğrulukta (8/10 = %80) kutlama modunda olsun.
@@ -378,6 +460,35 @@ void main() {
     );
     final mascot = tester.widget<RojMascot>(find.byType(RojMascot));
     expect(mascot.mood, RojMood.celebrate);
+  });
+
+  testWidgets('skor vitrini kazanılan XPyi seviye yoluna bağlar', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    XPStore.resetInstance();
+    await XPStore.loadForTest(0);
+    addTearDown(XPStore.resetInstance);
+
+    await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+
+    final journey = find.byKey(const ValueKey('result-level-journey-progress'));
+    expect(journey, findsOneWidget);
+    expect(
+      find.descendant(of: journey, matching: find.textContaining('Seviye ')),
+      findsOneWidget,
+    );
+    final progress = tester.widget<LinearProgressIndicator>(
+      find.descendant(
+        of: journey,
+        matching: find.byType(LinearProgressIndicator),
+      ),
+    );
+    expect(progress.value, isNotNull);
+    expect(progress.value!, inInclusiveRange(0.0, 1.0));
+    expect(progress.value!, greaterThan(0));
   });
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {

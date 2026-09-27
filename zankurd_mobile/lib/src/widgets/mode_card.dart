@@ -5,25 +5,16 @@ import '../theme/kilim_motifs.dart';
 
 /// Visual priority for a mode entry.
 ///
-/// A mode can keep its identity without competing with the screen's single
-/// primary action. Primary cards carry the full accent surface; secondary and
-/// event cards use a calm tinted surface with the accent reserved for the
-/// emblem and boundary.
+/// A mode keeps its identity in the emblem, while the card surface follows the
+/// shared ZanKurd hierarchy. This prevents every mode from looking like a
+/// separate campaign tile.
 enum ModeCardEmphasis { primary, secondary, event }
 
-/// Ana sayfadaki büyük oyun/öğrenme modu kartı.
+/// Ana sayfa ve Oyna merkezindeki ortak mod kartı.
 ///
-/// Ana sayfa üç modu (ders yolu, konu seçimi, hızlı düello) birbirinin
-/// aynı `AppRowCard` satırlarıyla gösteriyordu: aynı beyaz zemin, aynı
-/// ikon karesi, aynı chevron. Üç farklı iş yapan üç yüzey, ekranda tek bir
-/// tekrar eden desen olarak okunuyordu ve hiçbiri "buraya bas" demiyordu.
-///
-/// Mod kartı bunun tersini yapar: her mod kendi rengini, kendi amblemini
-/// ve kendi ağırlığını taşır. Renk burada süs değil, ayırt edici bilgidir
-/// — kullanıcı ekrana baktığında üç ayrı şey görmelidir.
-///
-/// [accent] üzerinde beyaz metin kullanıldığı için çağıranın AA'yı geçen
-/// bir ton vermesi gerekir; kart bunu kendi başına düzeltemez.
+/// Birincil mod yalnız marka yeşiliyle öne çıkar. Diğer modlarda kategori
+/// rengi kartı boyamaz; küçük amblemde kalır. Böylece ekran tek bir ürün gibi
+/// görünür, fakat kullanıcı modları hâlâ hızlıca ayırt edebilir.
 class ModeCard extends StatelessWidget {
   const ModeCard({
     required this.icon,
@@ -64,36 +55,18 @@ class ModeCard extends StatelessWidget {
     final subtitleColor = isPrimary
         ? Colors.white.withValues(alpha: 0.88)
         : AppTheme.textSubColor(context);
-    final cardDecoration = isPrimary
-        ? BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [accent, Color.lerp(accent, Colors.black, 0.22)!],
-            ),
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-            boxShadow: [
-              BoxShadow(
-                color: accent.withValues(alpha: 0.30),
-                blurRadius: 14,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          )
-        : BoxDecoration(
-            color: Color.alphaBlend(
-              accent.withValues(
-                alpha: emphasis == ModeCardEmphasis.event ? 0.12 : 0.07,
-              ),
-              AppTheme.surfaceColor(context),
-            ),
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-            border: Border.all(
-              color: accentOnSurface.withValues(
-                alpha: emphasis == ModeCardEmphasis.event ? 0.38 : 0.26,
-              ),
-            ),
-          );
+    final cardDecoration = BoxDecoration(
+      color: isPrimary
+          ? AppTheme.culturalBrandBg
+          : AppTheme.surfaceColor(context),
+      borderRadius: BorderRadius.circular(AppRadius.lg),
+      border: Border.all(
+        color: isPrimary
+            ? Colors.white.withValues(alpha: 0.10)
+            : AppTheme.borderColor(context),
+      ),
+      boxShadow: isPrimary ? AppTheme.cardShadow(context) : const <BoxShadow>[],
+    );
     final enabled = !busy && onTap != null;
     return Semantics(
       button: true,
@@ -108,95 +81,75 @@ class ModeCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.lg),
             child: Ink(
               decoration: cardDecoration,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppRadius.lg),
-                child: Stack(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  AppSpacing.md,
+                  compact ? AppSpacing.sm : AppSpacing.md,
+                  AppSpacing.md,
+                  compact ? AppSpacing.sm : AppSpacing.md,
+                ),
+                child: Row(
                   children: [
-                    // Tek motif, tabana yaslı. Kartın etrafını desenle
-                    // çevirmek kimliği dekora çevirir.
-                    if (isPrimary)
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: SizedBox(
-                          height: compact ? 26 : 34,
-                          child: CustomPaint(
-                            painter: KilimPainter(
-                              motif: motif,
-                              color: Colors.white,
-                              opacity: 0.10,
-                              count: 9,
-                            ),
-                          ),
-                        ),
+                    Container(
+                      width: compact ? 40 : 44,
+                      height: compact ? 40 : 44,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: isPrimary
+                            ? Colors.white.withValues(alpha: 0.10)
+                            : AppColors.iconTileBg(context, accent),
+                        borderRadius: BorderRadius.circular(AppRadius.md),
                       ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        AppSpacing.md,
-                        compact ? AppSpacing.sm : AppSpacing.md,
-                        AppSpacing.md,
-                        compact ? AppSpacing.sm : AppSpacing.md,
+                      child: Icon(
+                        icon,
+                        color: isPrimary ? Colors.white : accentOnSurface,
+                        size: compact ? 20 : 22,
                       ),
-                      child: Row(
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          CategoryEmblem(
-                            icon: icon,
-                            color: isPrimary ? Colors.white : accentOnSurface,
-                            onColor: isPrimary ? Colors.white : accentOnSurface,
-                            size: compact ? 40 : 48,
-                          ),
-                          const SizedBox(width: AppSpacing.sm),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  title,
-                                  style: AppTypography.subtitle.copyWith(
-                                    fontSize: compact ? 16 : 18,
-                                    fontWeight: FontWeight.w900,
-                                    letterSpacing: -0.3,
-                                    color: titleColor,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  subtitle,
-                                  // Ölçekten okunur: elle fontSize yazmak
-                                  // `typography_scale_test` oranını
-                                  // yükseltiyor ve ölçek dışına kaçışı
-                                  // normalleştiriyor.
-                                  style: AppTypography.caption.copyWith(
-                                    color: subtitleColor,
-                                  ),
-                                ),
-                              ],
+                          Text(
+                            title,
+                            style: AppTypography.subtitle.copyWith(
+                              fontSize: compact ? 16 : 17,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: -0.2,
+                              color: titleColor,
                             ),
                           ),
-                          const SizedBox(width: AppSpacing.xs),
-                          if (busy)
-                            SizedBox(
-                              width: 18,
-                              height: 18,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  progressColor,
-                                ),
-                              ),
-                            )
-                          else
-                            Icon(
-                              Icons.chevron_right_rounded,
-                              color: isPrimary
-                                  ? Colors.white.withValues(alpha: 0.9)
-                                  : accentOnSurface,
+                          const SizedBox(height: 2),
+                          Text(
+                            subtitle,
+                            style: AppTypography.caption.copyWith(
+                              color: subtitleColor,
                             ),
+                          ),
                         ],
                       ),
                     ),
+                    const SizedBox(width: AppSpacing.xs),
+                    if (busy)
+                      SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            progressColor,
+                          ),
+                        ),
+                      )
+                    else
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        color: isPrimary
+                            ? Colors.white.withValues(alpha: 0.82)
+                            : AppTheme.textMutedColor(context),
+                      ),
                   ],
                 ),
               ),

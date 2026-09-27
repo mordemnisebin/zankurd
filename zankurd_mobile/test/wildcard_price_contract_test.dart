@@ -51,8 +51,11 @@ void main() {
             .whereType<File>()
             .where((f) => f.path.endsWith('.sql'))
             .where(
-              (f) =>
-                  f.readAsStringSync().contains('function public.spend_coins'),
+              // Benzer adlı spend_coins_once fiyat tablosunu tanımlamaz.
+              (f) => RegExp(
+                r'create\s+or\s+replace\s+function\s+public\.spend_coins\s*\(',
+                caseSensitive: false,
+              ).hasMatch(f.readAsStringSync()),
             )
             .toList()
           ..sort((a, b) => a.path.compareTo(b.path));

@@ -541,12 +541,13 @@ class _ProgressHexagon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
+      key: ValueKey('signup-progress-step-$number'),
       duration: const Duration(milliseconds: 240),
       curve: Curves.easeInOut,
       width: 44,
       height: 44,
       decoration: BoxDecoration(
-        gradient: isActive ? AppTheme.accentGradient : null,
+        gradient: isActive ? AppTheme.identityHeaderGradient : null,
         color: isActive
             ? null
             : AppTheme.surfaceHiColor(context).withValues(alpha: 0.5),
@@ -560,7 +561,7 @@ class _ProgressHexagon extends StatelessWidget {
         boxShadow: isActive
             ? [
                 BoxShadow(
-                  color: AppTheme.primaryGradientStart.withValues(alpha: 0.35),
+                  color: AppTheme.culturalBrandBg.withValues(alpha: 0.35),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -624,17 +625,13 @@ class _SignUpHeroBanner extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Container(
+        key: const ValueKey('sign-up-hero-banner'),
         width: double.infinity,
         padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
-          // Pirs-inspired yeşil→turuncu compact welcome banner.
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppTheme.brand, AppTheme.brandDeep],
-          ),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
-          boxShadow: AppTheme.elevatedShadow(AppTheme.brand),
+          gradient: AppTheme.identityHeaderGradient,
+          border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
+          boxShadow: AppTheme.cardShadow(context),
         ),
         child: Stack(
           children: [

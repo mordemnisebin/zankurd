@@ -1,13 +1,18 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 
 void main() {
-  testWidgets('tanıtımdan tek ana eylemle devam edilir', (tester) async {
+  testWidgets('tanıtım öğrenme ve yarış değerini iki kısa adımda anlatır', (
+    tester,
+  ) async {
     var completed = 0;
     await tester.pumpWidget(
       ChangeNotifierProvider(
@@ -18,8 +23,19 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+
+    expect(find.text('Öğren'), findsOneWidget);
+    expect(find.text('Sonraki'), findsOneWidget);
+    expect(find.text('Başla'), findsNothing);
+    expect(find.text('Yarış ve kazan'), findsNothing);
+
+    await tester.tap(find.text('Sonraki'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Yarış ve kazan'), findsOneWidget);
     expect(find.text('Başla'), findsOneWidget);
-    expect(find.text('İleri'), findsNothing);
+    expect(find.text('Sonraki'), findsNothing);
+
     await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
     await tester.pump();
     await tester.tap(find.text('Başla'));
@@ -63,6 +79,55 @@ void main() {
     expect(hero.height, lessThan(300));
   });
 
+  testWidgets('onboarding her adımda ortak Forest hero kimliğini kullanır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => LanguageProvider()..setLang('tr'),
+        child: MaterialApp(home: OnboardingScreen(onComplete: () {})),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    LinearGradient heroGradient() {
+      final hero = tester.widget<Container>(
+        find.byKey(const ValueKey('onboarding-hero-panel')),
+      );
+      return (hero.decoration! as BoxDecoration).gradient! as LinearGradient;
+    }
+
+    expect(heroGradient().colors, AppTheme.identityHeaderGradient.colors);
+
+    await tester.tap(find.text('Sonraki'));
+    await tester.pumpAndSettle();
+
+    expect(heroGradient().colors, AppTheme.identityHeaderGradient.colors);
+  });
+
+  testWidgets('onboarding seçili adım göstergesi Forest kullanır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => LanguageProvider()..setLang('tr'),
+        child: MaterialApp(home: OnboardingScreen(onComplete: () {})),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final indicator = tester.widget<AnimatedContainer>(
+      find.byKey(const ValueKey('onboarding-page-indicator-0')),
+    );
+    final decoration = indicator.decoration! as BoxDecoration;
+    final gradient = decoration.gradient! as LinearGradient;
+    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+    expect(
+      decoration.boxShadow!.single.color,
+      AppTheme.culturalBrandBg.withValues(alpha: 0.25),
+    );
+  });
+
   testWidgets('onboarding dil düğmesi başlık alanına yayılmaz', (tester) async {
     // 518784fe (48dp a11y) Container'a hem min kısıt hem `alignment`
     // ekledi; Stack altında gevşek ama sınırlı kısıtta hizalama, kabı
@@ -86,6 +151,15 @@ void main() {
       );
       expect(toggle.width, lessThanOrEqualTo(72));
       expect(toggle.height, lessThanOrEqualTo(64));
+      expect(
+        tester
+            .getSemantics(
+              find.byKey(const ValueKey('onboarding-language-toggle')),
+            )
+            .getSemanticsData()
+            .hasAction(ui.SemanticsAction.tap),
+        isTrue,
+      );
 
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump();

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/learning_goal_store.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mastery_store.dart';
+import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
@@ -11,7 +13,9 @@ import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
+import 'package:zankurd_mobile/src/screens/home/home_level_path.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
+import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
@@ -68,7 +72,9 @@ QuizQuestion _q(String id) => QuizQuestion(
 
 void main() {
   setUp(() {
+    LearningGoalStore.resetInstance();
     MasteryStore.resetInstance();
+    MistakeStore.resetInstance();
     LevelProgressStore.resetInstance();
     SharedPreferences.setMockInitialValues({});
   });
@@ -96,6 +102,40 @@ void main() {
     });
   });
 
+  testWidgets('yeni kullanıcı tekrar beklemeden ders kataloğunu açabilir', (
+    tester,
+  ) async {
+    final repo = MockZanKurdRepository();
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      _wrap(
+        Builder(
+          builder: (context) => HomeScreen(
+            repository: repo,
+            onOpenLearning: () async {
+              await Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => LearningScreen(repository: repo),
+                ),
+              );
+            },
+          ),
+        ),
+        isKu: false,
+      ),
+    );
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byKey(const ValueKey('home-review-row')), findsNothing);
+    final lessons = find.byKey(const ValueKey('home-guided-lessons'));
+    expect(lessons, findsOneWidget);
+    await tester.ensureVisible(lessons);
+    await tester.tap(lessons);
+    await tester.pumpAndSettle();
+    expect(find.byType(LearningScreen), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('ilk açılışta sekmeye basmadan "Kaldığın yer" görünür', (
     tester,
   ) async {
@@ -114,6 +154,34 @@ void main() {
 
     expect(find.byKey(const ValueKey('home-continue-section')), findsOneWidget);
     expect(find.text('Ziman'), findsOneWidget);
+  });
+
+  testWidgets('kanıt yeterliyse ana öğrenme yolu odak kategoriye yönelir', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({'zankurd.mastery.Ziman': 5});
+    final repo = MockZanKurdRepository();
+    final focusQuestions = repo.playableQuestions
+        .where((question) => question.category == 'Dîrok')
+        .take(3)
+        .toList();
+    expect(focusQuestions, hasLength(3));
+    MistakeStore.resetInstance();
+    final mistakes = await MistakeStore.load();
+    for (final question in focusQuestions) {
+      await mistakes.markMistake(question.id, category: question.category);
+    }
+
+    await tester.pumpWidget(
+      _wrap(
+        HomeScreen(repository: repo, onOpenCategories: () async {}),
+        isKu: false,
+      ),
+    );
+    await tester.pump(const Duration(seconds: 1));
+
+    final path = tester.widget<HomeLevelPath>(find.byType(HomeLevelPath));
+    expect(path.category, 'Dîrok');
   });
 
   testWidgets(

@@ -252,8 +252,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     final locked = RemoteAvailability.socialLockedIn(context);
-    // 2026-07-24: karo ızgarası + gradyan panel yarışı bitti. Ekranda tek
-    // gradyan var (hızlı düello), diğer modlar eşit ağırlıkta sade satır.
+    // Oyun merkezi tek bir sakin marka yüzeyi ve nötr ikincil satırlardan
+    // oluşur. Mod kimliğini büyük renk blokları veya dekoratif efektler değil,
+    // başlık sırası ve küçük ikon aksanları taşır.
     return ColoredBox(
       color: AppTheme.bgOf(context),
       child: SafeArea(
@@ -273,7 +274,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                 icon: AppIcons.gamepad,
                 compact: true,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: AppSpacing.md),
               _QuickDuelHero(
                 ku: ku,
                 onTap: locked
@@ -286,52 +287,101 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                         );
                       },
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: AppSpacing.lg),
               ScreenSectionHeading(
                 title: context.t(K.withFriends),
                 subtitle: context.t(K.withFriendsSub),
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: AppSpacing.md),
               // İkincil oyun yolları ayrı ayrı gökkuşağı tonları taşımaz.
               // Sosyal/navigasyon yolları ortak yeşil kimliği, etkinlikler
               // ise ödül/prestij rengi olan altını paylaşır. Böylece renk
               // "hangi kart?" değil, "hangi rol?" sorusunu yanıtlar.
-              ModeCard(
-                key: const ValueKey('play-hub-create-room'),
-                compact: true,
-                emphasis: ModeCardEmphasis.secondary,
-                icon: AppIcons.circlePlus,
-                accent: AppTheme.playGreen,
-                title: context.t(K.createRoom),
-                subtitle: locked
-                    ? context.t(K.serverUnreachableTitle)
-                    : context.t(K.createRoomSub),
-                busy: _roomActionLoading,
-                onTap: locked || _roomActionLoading
-                    ? null
-                    : () {
-                        _createOnlineRoom();
-                      },
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final largeText =
+                      MediaQuery.textScalerOf(context).scale(14) > 18;
+                  final stackActions =
+                      constraints.maxWidth < 340 || largeText || locked;
+                  final createTitle = context.t(K.createRoom);
+                  final createSubtitle = locked
+                      ? context.t(K.serverUnreachableTitle)
+                      : context.t(K.createRoomSub);
+                  final joinTitle = context.t(K.joinByCode);
+                  final joinSubtitle = locked
+                      ? context.t(K.serverUnreachableTitle)
+                      : context.t(K.joinByCodeSub);
+                  final createRoom = ModeCard(
+                    key: const ValueKey('play-hub-create-room'),
+                    compact: true,
+                    emphasis: ModeCardEmphasis.secondary,
+                    icon: AppIcons.circlePlus,
+                    accent: AppTheme.playGreen,
+                    title: createTitle,
+                    subtitle: createSubtitle,
+                    busy: _roomActionLoading,
+                    onTap: locked || _roomActionLoading
+                        ? null
+                        : () {
+                            _createOnlineRoom();
+                          },
+                  );
+                  final joinRoom = ModeCard(
+                    key: const ValueKey('play-hub-join-room'),
+                    compact: true,
+                    emphasis: ModeCardEmphasis.secondary,
+                    icon: AppIcons.doorOpen,
+                    accent: AppTheme.playGreen,
+                    title: joinTitle,
+                    subtitle: joinSubtitle,
+                    onTap: locked ? null : _showJoinSheet,
+                  );
+                  if (stackActions) {
+                    return Column(
+                      children: [
+                        createRoom,
+                        const SizedBox(height: AppSpacing.sm),
+                        joinRoom,
+                      ],
+                    );
+                  }
+                  return IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: _CompactRoomAction(
+                            key: const ValueKey('play-hub-create-room'),
+                            icon: AppIcons.circlePlus,
+                            title: createTitle,
+                            semanticSubtitle: createSubtitle,
+                            busy: _roomActionLoading,
+                            onTap: _roomActionLoading
+                                ? null
+                                : _createOnlineRoom,
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
+                        Expanded(
+                          child: _CompactRoomAction(
+                            key: const ValueKey('play-hub-join-room'),
+                            icon: AppIcons.doorOpen,
+                            title: joinTitle,
+                            semanticSubtitle: joinSubtitle,
+                            onTap: _showJoinSheet,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-              const SizedBox(height: AppSpacing.xs),
-              ModeCard(
-                key: const ValueKey('play-hub-join-room'),
-                compact: true,
-                emphasis: ModeCardEmphasis.secondary,
-                icon: AppIcons.doorOpen,
-                accent: AppTheme.playGreen,
-                title: context.t(K.joinByCode),
-                subtitle: locked
-                    ? context.t(K.serverUnreachableTitle)
-                    : context.t(K.joinByCodeSub),
-                onTap: locked ? null : _showJoinSheet,
-              ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: AppSpacing.lg),
               ScreenSectionHeading(
                 title: context.t(K.events),
                 subtitle: context.t(K.eventsSub),
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: AppSpacing.md),
               ModeCard(
                 key: const ValueKey('play-hub-daily-contest'),
                 compact: true,
@@ -350,10 +400,13 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
               // sebebi "şimdi oyna" + günlük dönüş; eleme modu ikinci katman.
               Semantics(
                 button: true,
+                excludeSemantics: true,
                 label: '${context.t(K.playMore)}. ${context.t(K.playMoreSub)}',
+                onTap: () => setState(() => _moreOpen = !_moreOpen),
                 child: InkWell(
                   key: const ValueKey('play-hub-more'),
                   onTap: () => setState(() => _moreOpen = !_moreOpen),
+                  excludeFromSemantics: true,
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -412,7 +465,102 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   }
 }
 
-/// Ekranın tek birincil eylemi — tek gradyan burada.
+class _CompactRoomAction extends StatelessWidget {
+  const _CompactRoomAction({
+    required this.icon,
+    required this.title,
+    required this.semanticSubtitle,
+    required this.onTap,
+    this.busy = false,
+    super.key,
+  });
+
+  final IconData icon;
+  final String title;
+  final String semanticSubtitle;
+  final VoidCallback? onTap;
+  final bool busy;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = !busy && onTap != null;
+    final accent = AppColors.readableAccent(context, AppTheme.playGreen);
+    return Semantics(
+      button: true,
+      enabled: enabled,
+      label: '$title. $semanticSubtitle',
+      onTap: enabled ? onTap : null,
+      child: ExcludeSemantics(
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: enabled ? onTap : null,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            child: Ink(
+              decoration: BoxDecoration(
+                color: AppTheme.surfaceColor(context),
+                borderRadius: BorderRadius.circular(AppRadius.lg),
+                border: Border.all(color: AppTheme.borderColor(context)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.sm),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 34,
+                      height: 34,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColors.iconTileBg(
+                          context,
+                          AppTheme.playGreen,
+                        ),
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
+                      ),
+                      child: Icon(icon, color: accent, size: 18),
+                    ),
+                    const SizedBox(width: AppSpacing.xs),
+                    Expanded(
+                      child: Text(
+                        title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: AppTheme.textPrimaryColor(context),
+                          fontWeight: FontWeight.w800,
+                          height: 1.15,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.xxs),
+                    if (busy)
+                      SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(accent),
+                        ),
+                      )
+                    else
+                      Icon(
+                        AppIcons.chevronRight,
+                        size: 17,
+                        color: AppTheme.textMutedColor(context),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Ekranın tek birincil eylemi. Düz marka yüzeyi, altındaki mod satırlarıyla
+/// aynı ürün ailesinde kalır; promosyon/banner hissi oluşturmaz.
 class _QuickDuelHero extends StatelessWidget {
   const _QuickDuelHero({required this.ku, required this.onTap});
 
@@ -421,107 +569,87 @@ class _QuickDuelHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        key: const ValueKey('play-hub-quick-duel'),
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        child: Ink(
-          decoration: BoxDecoration(
-            // Rengîn (2026-08-04): hero koyu yeşilden koyu yeşile
-            // iniyordu ve hemen üstündeki kimlik başlığıyla birlikte iki
-            // ayrı yeşil panel gibi okunuyordu. Düello bir REKABET
-            // yüzeyidir; madder ailesinden derin mürekkebe geçer ve artık
-            // ekranın en güçlü yeri odur — altındaki mod kartlarından
-            // sönük kalmaz.
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Color(0xFFB31E3B), Color(0xFF17233B)],
+    final enabled = onTap != null;
+    return Semantics(
+      key: const ValueKey('play-hub-quick-duel'),
+      button: true,
+      enabled: enabled,
+      excludeSemantics: true,
+      label: '${context.t(K.quickDuel)}. ${context.t(K.findOpponent)}',
+      onTap: onTap,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          excludeFromSemantics: true,
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          child: Ink(
+            decoration: BoxDecoration(
+              color: AppTheme.culturalBrandBg,
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              boxShadow: AppTheme.cardShadow(context),
             ),
-            borderRadius: BorderRadius.circular(AppRadius.card),
-          ),
-          child: Stack(
-            children: [
-              // Kartın sağındaki düşük opaklıklı ikon, eylemi anlatır ve
-              // paneli boş bir yeşil dikdörtgen olmaktan çıkarır.
-              Positioned(
-                right: -28,
-                top: -34,
-                child: Icon(
-                  AppIcons.bolt,
-                  size: 164,
-                  color: Colors.white.withValues(alpha: 0.055),
-                ),
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 38,
+                        height: 38,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
+                        ),
+                        child: const Icon(
+                          AppIcons.peopleGroup,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      Expanded(
+                        child: Text(
+                          context.t(K.quickDuel),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.caption.copyWith(
+                            color: Colors.white.withValues(alpha: 0.84),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.xs),
+                  Text(
+                    context.t(K.quickDuelSub),
+                    style: AppTypography.heading2.copyWith(color: Colors.white),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  Container(
+                    key: const ValueKey('play-hub-quick-duel-cta'),
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryCtaColor(context),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                    ),
+                    child: Text(
+                      context.t(K.findOpponent),
+                      style: AppTypography.bodyLarge.copyWith(
+                        color: AppColors.onSolid(
+                          AppTheme.primaryCtaColor(context),
+                        ),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 38,
-                          height: 38,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.16),
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                            border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.22),
-                            ),
-                          ),
-                          child: const Icon(
-                            AppIcons.peopleGroup,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.sm),
-                        Expanded(
-                          child: Text(
-                            context.t(K.quickDuel),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.caption.copyWith(
-                              color: Colors.white.withValues(alpha: 0.86),
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      context.t(K.quickDuelSub),
-                      style: AppTypography.heading2.copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    Container(
-                      height: 42,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: AppTheme.primaryCtaColor(context),
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                      ),
-                      child: Text(
-                        context.t(K.findOpponent),
-                        style: AppTypography.bodyLarge.copyWith(
-                          color: AppColors.onSolid(
-                            AppTheme.primaryCtaColor(context),
-                          ),
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

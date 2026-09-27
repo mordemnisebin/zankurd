@@ -51,6 +51,10 @@ bool _useCompactLandscapeLayout(double width, double height) =>
     width > height &&
     height <= _compactLandscapeMaxHeight;
 
+@visibleForTesting
+bool useCompactLandscapeLayoutForTesting(double width, double height) =>
+    _useCompactLandscapeLayout(width, height);
+
 /// Bot düellosunda ekranda gösterilecek rakip adını seçer.
 ///
 /// `matchmaking_screen.dart` bot rakibi bulunca kullanıcıya "X ile

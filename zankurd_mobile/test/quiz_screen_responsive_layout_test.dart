@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'package:zankurd_mobile/src/models/wildcard.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 
@@ -51,6 +53,7 @@ void main() {
     WidgetTester tester,
     Size size, {
     double textScale = 1.0,
+    bool kurmanci = false,
   }) async {
     await tester.binding.setSurfaceSize(size);
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -58,6 +61,7 @@ void main() {
     final repository = freshMockRepository();
     await tester.pumpWidget(
       testShell(
+        languageProvider: kurmanci ? kurmanciLang() : null,
         child: Builder(
           builder: (context) => MediaQuery(
             data: MediaQuery.of(
@@ -413,5 +417,54 @@ void main() {
 
     expect(tester.getRect(cta).bottom, lessThanOrEqualTo(viewport.bottom));
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('H4 · 320×568 @2.0 Kurmancî joker etiketleri kırpılmadan sığar', (
+    tester,
+  ) async {
+    await pumpQuizAt(
+      tester,
+      const Size(320, 568),
+      textScale: 2.0,
+      kurmanci: true,
+    );
+
+    expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
+
+    for (final type in WildcardType.values) {
+      final label = type.label(true);
+      final finder = find.text(label);
+      expect(finder, findsOneWidget, reason: '$label görünür olmalı');
+
+      final paragraph = tester.renderObject<RenderParagraph>(finder);
+
+      expect(
+        paragraph.didExceedMaxLines,
+        isFalse,
+        reason:
+            '$label ayrılan satırlarda ellipsis olmadan okunabilmeli '
+            '(size=${paragraph.size}, constraints=${paragraph.constraints})',
+      );
+    }
+
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('H5 · 844×390 @2.0 compact landscape kullanılabilir kalır', (
+    tester,
+  ) async {
+    await pumpQuizAt(tester, const Size(844, 390), textScale: 2.0);
+
+    expect(find.byKey(compactLandscapeKey), findsOneWidget);
+    expect(find.byType(QuizOptionTile), findsNWidgets(4));
+    await answerFirstQuestion(tester);
+
+    final viewport = tester.getRect(find.byType(Scaffold));
+    final ctaRect = tester.getRect(cta());
+    expect(ctaRect.left, greaterThanOrEqualTo(viewport.left));
+    expect(ctaRect.right, lessThanOrEqualTo(viewport.right));
+    expect(ctaRect.top, greaterThanOrEqualTo(viewport.top));
+    expect(ctaRect.bottom, lessThanOrEqualTo(viewport.bottom));
+    expectNoLayoutException(tester, '844×390 @2.0');
   });
 }

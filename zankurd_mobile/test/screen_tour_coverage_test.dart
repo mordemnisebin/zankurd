@@ -35,6 +35,83 @@ void main() {
     'tool/screenshots/screen_tour_test.dart',
   ).readAsStringSync();
 
+  test(
+    'screen-tour çıktı hedefi kopya test dosyası olmadan değiştirilebilir',
+    () {
+      expect(
+        tour,
+        contains("Platform.environment['ZANKURD_SCREEN_TOUR_OUT_DIR']"),
+        reason:
+            'Geçici QA çıktısı için ana turun kopyasını üretmek yerine çıktı '
+            'klasörü ortam değişkeniyle seçilebilmeli.',
+      );
+      expect(
+        File('tool/screenshots/screen_tour_current_test.dart').existsSync(),
+        isFalse,
+        reason:
+            'Ana turdan yalnız çıktı klasörüyle ayrılan kopya dosya iki ayrı '
+            'kaynağın zamanla birbirinden kopmasına yol açar.',
+      );
+    },
+  );
+
+  test('reaksiyon karesi gerçek RoomScreen reaksiyon yolunu kullanır', () {
+    final reactionCase = RegExp(
+      r"testWidgets\('93 uçuşan reaksiyonlar'.*?_shoot\(t, '93_floating_reactions'\);",
+      dotAll: true,
+    ).firstMatch(tour)?.group(0);
+
+    expect(
+      reactionCase,
+      isNotNull,
+      reason: '93 reaksiyon vakası turdan düşmüş.',
+    );
+    expect(
+      reactionCase,
+      isNot(contains('FloatingReactionOverlay(')),
+      reason:
+          'RoomScreen zaten kendi reaksiyon overlayini taşıyor; dışarıdan ikinci '
+          'overlay eklemek uygulamada olmayan bir yerleşim üretir ve görsel QA\'yı '
+          'yanlış yönlendirir.',
+    );
+    expect(
+      reactionCase,
+      contains('_ReactionStateRepository'),
+      reason:
+          'Reaksiyon karesi, gerçek RoomScreen broadcast yolunu deterministik '
+          'bir test deposuyla tetiklemeli.',
+    );
+    expect(reactionCase, contains('emitReaction('));
+
+    final reactionRepository = RegExp(
+      r'class _ReactionStateRepository.*?class _EmptyStateRepository',
+      dotAll: true,
+    ).firstMatch(tour)?.group(0);
+    expect(reactionRepository, isNotNull);
+    expect(
+      reactionRepository,
+      contains('broadcast(sync: true)'),
+      reason:
+          '93. kare 500 ms animasyon anını ölçüyor; async broadcast olayı '
+          'pump sonrasına sarkarsa kare animasyonun başlangıcını yakalayıp '
+          'gerçek çakışmaları gizler.',
+    );
+  });
+
+  test('screen-tour test kabuğu DEBUG banner çizmez', () {
+    final helpers = File(
+      'test/support/widget_test_helpers.dart',
+    ).readAsStringSync();
+
+    expect(
+      helpers,
+      contains('debugShowCheckedModeBanner: false'),
+      reason:
+          'Screen-tour testShell üzerinden render alıyor; DEBUG banner sağ üstte '
+          'AppBar eylemlerini örter ve görsel QA sonucunu bozar.',
+    );
+  });
+
   test('her ekran turda en az bir kez açılır', () {
     // Alt klasörler (`screens/quiz/`, `screens/home/`, `screens/profile/`)
     // ekran değil, ekranların parçalarıdır; turda kendi başlarına açılmazlar.

@@ -99,6 +99,27 @@ const _phone = Size(390, 844);
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
+  testWidgets('lig açıklaması büyük yazıda iki satıra açılır', (tester) async {
+    await _pump(tester, _Repo(), size: _phone, textScale: 2.0);
+
+    final subtitle = tester.widget<Text>(
+      find.text('Bu hafta yarış, lige gir!'),
+    );
+    expect(subtitle.maxLines, 2);
+    expect(subtitle.overflow, TextOverflow.ellipsis);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('lig açıklaması normal yazıda tek satır kalır', (tester) async {
+    await _pump(tester, _Repo(), size: _phone);
+
+    final subtitle = tester.widget<Text>(
+      find.text('Bu hafta yarış, lige gir!'),
+    );
+    expect(subtitle.maxLines, 1);
+    expect(tester.takeException(), isNull);
+  });
+
   // ── Liste yüzeyi ────────────────────────────────────────────────────────
 
   test('satır birimleri satır içi ku/tr değil', () {

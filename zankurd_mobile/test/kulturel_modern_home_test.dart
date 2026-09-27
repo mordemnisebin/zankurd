@@ -12,7 +12,6 @@ import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
-import 'package:zankurd_mobile/src/widgets/mode_card.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
@@ -104,19 +103,20 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
+    // Üst kimlik alanı artık kart değildir; ekranın kendi sakin başlığıdır.
+    expect(
+      tester.widget(find.byKey(const ValueKey('home-profile-header'))),
+      isA<Padding>(),
+    );
+
     // Tek birincil eylem.
     expect(find.byType(TodayTaskCard), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task-start')), findsOneWidget);
 
-    // Destek satırları tek tip kart bileşenini kullanır.
-    //
-    // Bileşen 2026-08-03'te `AppRowCard`tan `ModeCard`a geçti: üç mod
-    // birbirinin aynı beyaz satırı olmaktan çıkıp kendi rengini ve
-    // amblemini taşıyan kartlara dönüştü. Testin koruduğu şey bileşenin
-    // ADI değil, sözleşmesi — modların TEK ve tutarlı bir bileşenle
-    // gösterilmesi ve eski kalabalık blokların geri gelmemesi. Sözleşme
-    // aynen duruyor, yalnız bileşen değişti.
+    // Design 2.0'da ikincil eylemler kart yığını oluşturmaz; düello ve
+    // benzeri destek hedefleri düz satır olarak ana hero/rota hiyerarşisine
+    // tabi kalır.
     expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-topic-picker')), findsNothing);
     expect(
@@ -125,7 +125,10 @@ void main() {
     );
     expect(find.byKey(const ValueKey('home-lessons-row')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-path-node-1')), findsOneWidget);
-    expect(find.byType(ModeCard), findsWidgets);
+    expect(
+      find.byKey(const ValueKey('home-duel-flat-surface')),
+      findsOneWidget,
+    );
     expect(find.byType(DailyMissionsCard), findsOneWidget);
 
     // Kalabalık eski bloklar yok: karo ızgarası, teaser kartları, kopya
@@ -176,9 +179,7 @@ void main() {
     expect((categories, play), (1, 1));
   });
 
-  testWidgets('ekranda birincil gradyan yalnız günün görevi kartındadır', (
-    tester,
-  ) async {
+  testWidgets('günün görevi ana sahne hero tasarımını korur', (tester) async {
     tester.view.physicalSize = const Size(390, 844);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
@@ -197,22 +198,24 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
-    // Gradyan "buraya bak" demektir. Başlık şeridi bilinçli düz durur
-    // (bkz. home-profile-header). Kart birincil yüzeydir; Başla düğmesi
-    // onun üstünde düz beyazdır — ikinci bir gradyan CTA olmaz.
+    // Design 2.0'da günün görevi ekranın tek baskın sahnesidir. Derin yeşil
+    // hero arka planı hiyerarşiyi taşır; turuncu yalnız ana CTA'da kalır.
     final card = tester.widget<Container>(
       find.byKey(const ValueKey('home-daily-task')),
     );
-    expect((card.decoration! as BoxDecoration).gradient, isNotNull);
+    final cardDecoration = card.decoration! as BoxDecoration;
+    expect(cardDecoration.gradient, isA<LinearGradient>());
+    final gradient = cardDecoration.gradient! as LinearGradient;
+    expect(gradient.colors, contains(AppTheme.culturalBrandBg));
+    expect(cardDecoration.border, isNull);
 
-    final startInk = tester.widget<Ink>(
+    final startMaterial = tester.widget<Material>(
       find.descendant(
         of: find.byKey(const ValueKey('home-daily-task-start')),
-        matching: find.byType(Ink),
+        matching: find.byType(Material),
       ),
     );
-    expect((startInk.decoration! as BoxDecoration).gradient, isNull);
-    expect((startInk.decoration! as BoxDecoration).color, Colors.white);
+    expect(startMaterial.color, AppTheme.brand);
   });
 
   for (final size in <Size>[

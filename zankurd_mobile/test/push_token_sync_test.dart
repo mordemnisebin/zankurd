@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/services/push_token_sync.dart';
@@ -15,6 +17,21 @@ class _NoSessionRepository extends MockZanKurdRepository {
 }
 
 void main() {
+  test('FCM token senkronizasyonu kullanıcıdan bildirim izni istemez', () {
+    final source = File(
+      'lib/src/services/firebase_push_token_source.dart',
+    ).readAsStringSync();
+
+    expect(
+      source,
+      isNot(contains('.requestPermission(')),
+      reason:
+          'AppShell token sync ilk açılışta çalışır; izin yalnız kullanıcının '
+          'bildirim özelliğini açtığı bağlamsal akışta istenmeli.',
+    );
+    expect(source, contains('FirebaseMessaging.instance.getToken()'));
+  });
+
   test('boş token RPC çağırmaz', () async {
     final repo = MockZanKurdRepository();
     await PushTokenSync(

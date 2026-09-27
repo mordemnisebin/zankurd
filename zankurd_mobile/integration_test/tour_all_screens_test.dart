@@ -8,6 +8,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
+import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
@@ -65,9 +66,12 @@ void main() {
     await markScreen('06_profile');
 
     // 7. Ayarlar Ekranı (SettingsScreen)
-    await tester.scrollUntilVisible(find.byIcon(AppIcons.gear), 100);
-    await tester.tap(find.byIcon(AppIcons.gear));
+    final settingsGear = find.byIcon(AppIcons.gear);
+    await tester.ensureVisible(settingsGear);
     await tester.pumpAndSettle();
+    await tester.tap(settingsGear);
+    await tester.pumpAndSettle();
+    expect(find.byType(SettingsScreen), findsOneWidget);
     await markScreen('07_settings');
   });
 

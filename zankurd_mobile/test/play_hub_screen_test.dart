@@ -31,6 +31,14 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
+    final heroInk = tester.widget<Ink>(
+      find.descendant(of: hero, matching: find.byType(Ink)).first,
+    );
+    final heroDecoration = heroInk.decoration as BoxDecoration;
+    expect(heroDecoration.gradient, isNull);
+    expect(heroDecoration.color, AppTheme.culturalBrandBg);
+
     final action = tester.widget<Container>(
       find
           .ancestor(
@@ -51,6 +59,45 @@ void main() {
         AppTheme.primaryCtaColor(tester.element(find.text('Rakip bul'))),
       ),
     );
+  });
+
+  testWidgets('hızlı düello ana eylemi 48dp ve semantik düğmedir', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _shell(PlayHubScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
+    final heroData = tester.getSemantics(hero).getSemanticsData();
+    expect(heroData.flagsCollection.isButton, isTrue);
+    expect(heroData.label, 'Hızlı düello. Rakip bul');
+    final action = find.byKey(const ValueKey('play-hub-quick-duel-cta'));
+    expect(action, findsOneWidget);
+    expect(tester.getSize(action).height, greaterThanOrEqualTo(48));
+    semantics.dispose();
+  });
+
+  testWidgets('daha fazla eylemi ekran okuyucuda tek kez duyurulur', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      _shell(PlayHubScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('play-hub-more')));
+    await tester.pumpAndSettle();
+
+    expect(find.bySemanticsLabel(RegExp(r'^Daha fazla')), findsOneWidget);
+    semantics.dispose();
   });
 
   testWidgets('oyun merkezi Pirs kapsamındaki ana yolları görünür kılar', (
@@ -98,6 +145,60 @@ void main() {
         .dy;
     expect(quickDuelTop, lessThan(roomTop));
     expect(roomTop, lessThan(eventTop));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('oda kur ve kodla katıl normal telefonda aynı satırdadır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _shell(PlayHubScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
+
+    final create = tester.getRect(
+      find.byKey(const ValueKey('play-hub-create-room')),
+    );
+    final join = tester.getRect(
+      find.byKey(const ValueKey('play-hub-join-room')),
+    );
+    expect((create.center.dy - join.center.dy).abs(), lessThan(1));
+    expect(join.left, greaterThan(create.right));
+    expect(create.height, lessThanOrEqualTo(110));
+    expect(join.height, lessThanOrEqualTo(110));
+  });
+
+  testWidgets('%200 metinde oda eylemleri güvenli biçimde alt alta döner', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      _shell(
+        MediaQuery(
+          data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+          child: PlayHubScreen(repository: MockZanKurdRepository()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // %200 metinde üst hero daha uzun olduğu için ListView bu çocukları
+    // ilk karede henüz kurmayabilir; gerçek kullanıcı gibi aşağı kaydır.
+    await tester.drag(find.byType(ListView), const Offset(0, -600));
+    await tester.pumpAndSettle();
+
+    final create = tester.getRect(
+      find.byKey(const ValueKey('play-hub-create-room')),
+    );
+    final join = tester.getRect(
+      find.byKey(const ValueKey('play-hub-join-room')),
+    );
+    expect(join.top, greaterThan(create.bottom));
     expect(tester.takeException(), isNull);
   });
 }

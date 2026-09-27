@@ -56,6 +56,28 @@ void main() {
     );
   });
 
+  testWidgets('offline banner respects top safe area inset', (tester) async {
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => LanguageProvider(initialLang: 'tr'),
+        child: const MaterialApp(
+          home: MediaQuery(
+            data: MediaQueryData(padding: EdgeInsets.only(top: 47)),
+            child: Scaffold(
+              body: OfflineBanner(
+                isOffline: true,
+                label: 'Sunucuya ulaşılamadı',
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final labelTop = tester.getTopLeft(find.text('Sunucuya ulaşılamadı')).dy;
+    expect(labelTop, greaterThanOrEqualTo(47));
+  });
+
   testWidgets('hareketi azalt açıkken şerit boyu animasyonsuz değişir', (
     tester,
   ) async {

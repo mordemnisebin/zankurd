@@ -22,8 +22,10 @@ import '../models/tournament.dart';
 import '../models/referral_result.dart';
 import '../utils/coin_calculator.dart';
 import 'curated_question_bank.dart';
+import 'learning_assessment_bank.dart';
 import 'question_bank_loader.dart';
 import 'seen_question_store.dart';
+import 'durable_write.dart';
 import 'zankurd_repository.dart';
 import '../config/subcategory_config.dart';
 import '../config/category_visibility.dart';
@@ -264,6 +266,33 @@ class MockZanKurdRepository implements ZanKurdRepository {
         ? QuestionSetPolicy.byReadingLoad(pool.isEmpty ? playable : pool)
         : (pool.isEmpty ? playable : pool);
     return _selectFresh(ordered, limit);
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadLearningQuizQuestions({
+    required String category,
+    required String learningLessonId,
+    int limit = 5,
+  }) async {
+    final exact = _playableQuestions
+        .where(
+          (question) =>
+              question.category == category &&
+              question.metadata?.learningLessonId == learningLessonId,
+        )
+        .toList(growable: false);
+
+    if (exact.isNotEmpty) return _selectFresh(exact, limit);
+
+    // Üretim bankasında açık ders etiketi yoksa yalnız aynı dersin yerel,
+    // editoryal sözlük çiftlerinden ölçme sorusu üret. Geniş kategori havuzu
+    // artık fallback değildir; aksi hâlde mini-quiz dersle ilgisiz genel
+    // kategori sorularını "ders sorusu" gibi gösterebiliyordu.
+    return LearningAssessmentBank.questionsFor(
+      lessonId: learningLessonId,
+      category: category,
+      limit: limit,
+    );
   }
 
   @override
@@ -675,10 +704,22 @@ class MockZanKurdRepository implements ZanKurdRepository {
   int awardedXpTotal = 0;
 
   @override
+  bool get xpAwardIsServerTotal => false;
+
+  @override
+  Future<int?> loadServerXp() async => null;
+
+  @override
   Future<int> awardXp(int delta) async {
     if (delta <= 0) return awardedXpTotal;
     awardedXpTotal += delta;
     return awardedXpTotal;
+  }
+
+  @override
+  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey) async {
+    final total = await awardXp(delta);
+    return ServerXpWrite(total: total, retryable: false);
   }
 
   @override
@@ -738,6 +779,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
       outcome: StreakFreezeChargeOutcome.charged,
       idempotent: true,
     );
+  }
+
+  @override
+  Future<DurableCoinSpend> spendCoinsDurable(
+    int amount,
+    String reason,
+    String idempotencyKey,
+  ) async {
+    final success = await spendCoins(amount, reason);
+    return DurableCoinSpend(success: success, retryable: false);
   }
 
   @override
@@ -1429,7 +1480,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'time_1',
         order: 2,
         contentKu:
-            'Mehên serê salê:\n\n• Rêbendan (Ocak), Reşemeh (Şubat), Adar (Mart)\n• Nîsan (Nisan), Gulan (Mayıs), Hezîran (Haziran)',
+            'Mehên serê salê:\n\n• Rêbendan: Ocak, Reşemeh: Şubat, Adar: Mart\n• Nîsan: Nisan, Gulan: Mayıs, Hezîran: Haziran',
         contentTr: 'Yılın ilk 6 ayı.',
       ),
     ],

@@ -114,16 +114,17 @@ void main() {
             find.byKey(const ValueKey('home-browse-categories-row')),
             findsOneWidget,
           );
-          expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
+          final homeDuel = find.byKey(const ValueKey('home-duel-row'));
+          expect(homeDuel, findsOneWidget);
           expect(
-            tester
-                .widget<ModeCard>(find.byKey(const ValueKey('home-duel-row')))
-                .emphasis,
-            ModeCardEmphasis.secondary,
+            tester.widget(homeDuel),
+            isNot(isA<ModeCard>()),
+            reason: 'Home düellosu ikinci bir kampanya kartı olmamalı.',
           );
-          final decoration = _modeDecoration(tester, 'home-duel-row');
-          expect(decoration.gradient, isNull);
-          expect(decoration.boxShadow ?? const <BoxShadow>[], isEmpty);
+          expect(
+            find.byKey(const ValueKey('home-duel-flat-surface')),
+            findsOneWidget,
+          );
           _expectActionSemantics(tester, 'home-duel-row');
         }
       }
@@ -151,27 +152,8 @@ void main() {
             find.byKey(const ValueKey('play-hub-tournament')),
             findsNothing,
           );
-          for (final key in [
-            'play-hub-create-room',
-            'play-hub-join-room',
-            'play-hub-daily-contest',
-          ]) {
+          for (final key in ['play-hub-create-room', 'play-hub-join-room']) {
             expect(find.byKey(ValueKey(key)), findsOneWidget);
-            final card = tester.widget<ModeCard>(find.byKey(ValueKey(key)));
-            expect(
-              card.emphasis,
-              key == 'play-hub-daily-contest'
-                  ? ModeCardEmphasis.event
-                  : ModeCardEmphasis.secondary,
-              reason: key,
-            );
-            expect(
-              card.accent,
-              key == 'play-hub-daily-contest'
-                  ? AppTheme.gold
-                  : AppTheme.playGreen,
-              reason: '$key semantic accent role',
-            );
             final decoration = _modeDecoration(tester, key);
             expect(decoration.gradient, isNull, reason: key);
             expect(
@@ -181,6 +163,28 @@ void main() {
             );
             _expectActionSemantics(tester, key);
           }
+
+          const dailyContestKey = 'play-hub-daily-contest';
+          expect(find.byKey(const ValueKey(dailyContestKey)), findsOneWidget);
+          final dailyContestCard = tester.widget<ModeCard>(
+            find.byKey(const ValueKey(dailyContestKey)),
+          );
+          expect(dailyContestCard.emphasis, ModeCardEmphasis.event);
+          expect(
+            dailyContestCard.accent,
+            AppTheme.gold,
+            reason: '$dailyContestKey semantic accent role',
+          );
+          final dailyContestDecoration = _modeDecoration(
+            tester,
+            dailyContestKey,
+          );
+          expect(dailyContestDecoration.gradient, isNull);
+          expect(
+            dailyContestDecoration.boxShadow ?? const <BoxShadow>[],
+            isEmpty,
+          );
+          _expectActionSemantics(tester, dailyContestKey);
           await tester.ensureVisible(
             find.byKey(const ValueKey('play-hub-more')),
           );

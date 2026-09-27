@@ -9,8 +9,11 @@ class FirebasePushTokenSource implements PushTokenSource {
   @override
   Future<String?> currentToken() async {
     if (kIsWeb) return null;
-    final messaging = FirebaseMessaging.instance;
-    await messaging.requestPermission(alert: true, badge: true, sound: true);
-    return messaging.getToken();
+    // Token senkronizasyonu bir izin isteme yüzeyi değildir. AppShell bunu
+    // ilk açılışta ve her resume'da çağırır; burada requestPermission()
+    // kullanmak onboarding görünmeden iOS sistem diyaloğunu açıyordu.
+    // Kullanıcı izni yalnız NotificationService.setEnabled(true) ile,
+    // "Günlük hatırlatıcı"yı bilinçli olarak açtığı anda istenir.
+    return FirebaseMessaging.instance.getToken();
   }
 }

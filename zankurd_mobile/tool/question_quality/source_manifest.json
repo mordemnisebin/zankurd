@@ -757,6 +757,21 @@
    "columns": {}
   },
   {
+   "id": "learning_assessment_generator",
+   "description": "Lesson-aligned runtime assessment generator",
+   "path": "lib/src/data/learning_assessment_bank.dart",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1000,
+   "expectedRecordCount": null,
+   "notes": "Derived generator only. It creates assessment shapes from LearnerLexicon pairs already authored in lesson content; those pairs and 17/17 lesson alignment are covered by dedicated tests. It is not an independent factual question bank.",
+   "columns": {}
+  },
+  {
    "id": "question_mock_repository",
    "description": "Mock repository logic",
    "path": "lib/src/data/mock_zankurd_repository.dart",

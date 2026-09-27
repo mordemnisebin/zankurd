@@ -203,11 +203,21 @@ class _CategoryBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final topInset = MediaQuery.of(context).padding.top;
+    final textScaler = MediaQuery.textScalerOf(context);
+    // Sabit 160px banner normal yazıda doğru ritmi veriyor; ancak sistem
+    // yazısı büyüdüğünde iki satırlık başlık + açıklama aynı kutuya
+    // sıkışıyordu. Metnin gerçek ölçeklenmiş satır yüksekliği kadar alanı
+    // büyütmek, normal ölçüyü hiç değiştirmeden %200 erişilebilirlik
+    // boyutunda içeriğin kırpılmasını önler.
+    final scaledTextGrowth =
+        (((textScaler.scale(26) - 26) * 2) + ((textScaler.scale(13) - 13) * 2))
+            .clamp(0.0, 96.0)
+            .toDouble();
     final color1 = Colors.white.withValues(alpha: 0.10);
     final color2 = Colors.white.withValues(alpha: 0.04);
 
     return Container(
-      height: 160 + topInset,
+      height: 160 + topInset + scaledTextGrowth,
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: gradient,

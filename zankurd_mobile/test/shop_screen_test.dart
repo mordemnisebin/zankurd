@@ -259,6 +259,46 @@ void main() {
     );
   });
 
+  testWidgets('mağazada yalnız hero satın alma eylemi primary CTA olur', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _ShopRepository(coins: 1000);
+
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    final heroButtonFinder = find.ancestor(
+      of: find.text('720j'),
+      matching: find.byType(FilledButton),
+    );
+    final gridButtonFinder = find.ancestor(
+      of: find.text('120j'),
+      matching: find.byType(FilledButton),
+    );
+    expect(heroButtonFinder, findsOneWidget);
+    expect(gridButtonFinder, findsOneWidget);
+
+    final heroButton = tester.widget<FilledButton>(heroButtonFinder);
+    final gridButton = tester.widget<FilledButton>(gridButtonFinder);
+    final heroPrimary = AppTheme.primaryCtaColor(
+      tester.element(heroButtonFinder),
+    );
+    final gridPrimary = AppTheme.primaryCtaColor(
+      tester.element(gridButtonFinder),
+    );
+
+    expect(
+      heroButton.style?.backgroundColor?.resolve(<WidgetState>{}),
+      heroPrimary,
+    );
+    expect(
+      gridButton.style?.backgroundColor?.resolve(<WidgetState>{}),
+      isNot(gridPrimary),
+    );
+  });
+
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {
     final repository = _ShopRepository(coins: 500);
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));

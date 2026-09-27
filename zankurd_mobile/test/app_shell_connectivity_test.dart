@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
@@ -77,6 +79,41 @@ void main() {
     expect(find.text('Tekrar dene'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+    'çevrimdışı şerit SE landscape girişte misafir eylemini ilk viewportta tutar',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(667, 375));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      SharedPreferences.setMockInitialValues({'zankurd.onboarding.seen': true});
+
+      final repository = freshMockRepository();
+      await tester.pumpWidget(
+        testShell(
+          authProvider: GateAuthProvider(),
+          remoteAvailability: RemoteAvailability(reachable: false),
+          child: AppShell(
+            repository: repository,
+            connectivityMonitor: const _FixedConnectivityMonitor([
+              ConnectivityResult.wifi,
+            ]),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Sunucuya ulaşılamadı'), findsOneWidget);
+      final guestAction = find.text('Misafir olarak devam et');
+      expect(guestAction, findsOneWidget);
+      expect(
+        tester.getBottomRight(guestAction).dy,
+        lessThanOrEqualTo(375),
+        reason:
+            'çevrimdışı şerit misafir eylemini ilk viewport dışına itmemeli',
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   testWidgets('bağlantı geçişlerinde sosyal kilit canlı güncellenir', (
     tester,

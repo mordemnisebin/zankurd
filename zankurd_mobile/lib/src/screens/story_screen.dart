@@ -179,11 +179,17 @@ class _StoryScreenState extends State<StoryScreen> {
             children: [
               Row(
                 children: [
-                  const Icon(AppIcons.bookOpen, size: 16, color: accent),
+                  Icon(
+                    AppIcons.bookOpen,
+                    size: 16,
+                    color: AppColors.readableAccent(context, accent),
+                  ),
                   const SizedBox(width: 6),
                   Text(
                     context.t(K.storyWord),
-                    style: AppTypography.caption.copyWith(color: accent),
+                    style: AppTypography.caption.copyWith(
+                      color: AppColors.readableAccent(context, accent),
+                    ),
                   ),
                 ],
               ),
@@ -374,7 +380,7 @@ class _MiniGuideView extends StatelessWidget {
       child: Text(
         text,
         style: AppTypography.caption.copyWith(
-          color: AppTheme.playGreen,
+          color: AppColors.readableAccent(context, AppTheme.playGreen),
           fontWeight: FontWeight.w800,
           letterSpacing: 0.3,
         ),

@@ -32,6 +32,13 @@ void main() {
     );
     expect(find.text('120/400'), findsOneWidget);
     expect(find.text('4'), findsOneWidget);
+    final strip = find.byKey(const ValueKey('home-progress-strip'));
+    expect(strip, findsOneWidget);
+    expect(
+      tester.widget(strip),
+      isA<Padding>(),
+      reason: 'XP özeti ikinci bir kart kabuğu oluşturmamalı.',
+    );
   });
 
   testWidgets('hedef bilinmiyorsa oran uydurulmaz', (tester) async {

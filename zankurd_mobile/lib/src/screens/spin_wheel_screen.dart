@@ -495,7 +495,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
             width: 72,
             height: 72,
             decoration: BoxDecoration(
-              gradient: AppTheme.accentGradient,
+              gradient: AppTheme.identityHeaderGradient,
               shape: BoxShape.circle,
               border: Border.all(color: Colors.white, width: 3.5),
               boxShadow: [
@@ -505,7 +505,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                   blurRadius: 10,
                 ),
                 BoxShadow(
-                  color: AppTheme.primaryGradientStart.withValues(alpha: 0.45),
+                  color: AppTheme.culturalBrandBg.withValues(alpha: 0.45),
                   offset: const Offset(0, 0),
                   blurRadius: 16,
                 ),

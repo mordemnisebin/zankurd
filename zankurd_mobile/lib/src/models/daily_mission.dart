@@ -18,6 +18,7 @@ class DailyMission {
     this.category,
     this.progress = 0,
     this.completed = false,
+    this.claimed = false,
   });
 
   final MissionType type;
@@ -26,6 +27,7 @@ class DailyMission {
   final String? category;
   int progress;
   bool completed;
+  bool claimed;
 
   /// Günlük görevler çevrimdışı ilerlediği için coin hakkı sunucuda güvenle
   /// doğrulanamaz. Yayın sürümünde görev tamamlaması sabit XP verir.

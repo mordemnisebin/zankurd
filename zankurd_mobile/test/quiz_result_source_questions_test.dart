@@ -55,10 +55,10 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('quiz-next-button')));
       await tester.pumpAndSettle();
 
-      final review = find.byKey(
-        const ValueKey('result-primary-review-mistakes'),
-      );
+      final review = find.byKey(const ValueKey('learning-outcome-review'));
       expect(review, findsOneWidget);
+      await tester.ensureVisible(review);
+      await tester.pumpAndSettle();
       await tester.tap(review);
       await tester.pumpAndSettle();
 

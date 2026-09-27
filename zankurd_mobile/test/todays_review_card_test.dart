@@ -50,6 +50,19 @@ void main() {
     await pump(tester);
     expect(find.byKey(const ValueKey('todays-review-card')), findsOneWidget);
     expect(find.text('3'), findsOneWidget);
+    final statusRow = find.byKey(const ValueKey('todays-review-status-row'));
+    expect(statusRow, findsOneWidget);
+    expect(
+      tester.widget(statusRow),
+      isA<Padding>(),
+      reason: 'Günlük tekrar durumu ayrı bir kart kabuğu oluşturmamalı.',
+    );
+    final titleFinder = find.text('Bugünkü Tekrarlar');
+    final title = tester.widget<Text>(titleFinder);
+    expect(
+      title.style?.color,
+      AppColors.readableAccent(tester.element(titleFinder), AppTheme.playGreen),
+    );
     expect(tester.takeException(), isNull);
   });
 
@@ -61,6 +74,9 @@ void main() {
     await pump(tester);
     expect(find.byKey(const ValueKey('todays-review-empty')), findsOneWidget);
     expect(find.byKey(const ValueKey('todays-review-card')), findsNothing);
+    final statusRow = find.byKey(const ValueKey('todays-review-status-row'));
+    expect(statusRow, findsOneWidget);
+    expect(tester.widget(statusRow), isA<Padding>());
     expect(find.text('Tekrarlar tamam'), findsOneWidget);
     expect(find.text('Bugün tekrar edilecek soru yok'), findsNothing);
     expect(

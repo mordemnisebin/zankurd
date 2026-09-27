@@ -71,6 +71,29 @@ void main() {
     expect(scaffold.backgroundColor, AppTheme.bg);
   });
 
+  testWidgets('koyu temada tam logo kontrast filtresiyle okunaklı kalır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.dark(),
+        home: const SplashScreen(
+          next: SizedBox.shrink(),
+          duration: Duration(hours: 1),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(
+      find.ancestor(
+        of: find.byType(AppLogo),
+        matching: find.byType(ColorFiltered),
+      ),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('logoyu büyük gösterir', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(

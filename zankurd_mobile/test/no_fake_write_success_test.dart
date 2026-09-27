@@ -45,6 +45,8 @@ void main() {
     'acceptFriendRequest failed',
     'rejectFriendRequest failed',
     'saveTournamentProgress failed',
+    'syncMissionCompletion failed',
+    'logAnalyticsEvent failed',
     // 2026-08-14: `_offline.markLessonCompleted` yalnız bellek içi bir
     // kümeye ekliyor (SharedPreferences'a bile yazmıyor). Kullanıcı
     // "Ders tamamlandı" görüp çıkıyor, sunucudan okuyan
@@ -207,5 +209,49 @@ void main() {
       // Başarı yolu yalnız istisna ATILMADIĞINDA çalışır.
       expect(editor, contains('Navigator.of(context).pop(true)'));
     });
+  });
+
+  test('avatar fotoğraf yazımları oturumsuzken mock başarıya düşmez', () {
+    final uploadStart = repo.indexOf('Future<String> uploadAvatarPhoto(');
+    final deleteStart = repo.indexOf('Future<void> deleteAvatarPhoto(');
+    final accountDeleteStart = repo.indexOf('Future<void> deleteMyAccount(');
+
+    expect(uploadStart, greaterThan(-1));
+    expect(deleteStart, greaterThan(uploadStart));
+    expect(accountDeleteStart, greaterThan(deleteStart));
+
+    final uploadMethod = repo.substring(uploadStart, deleteStart);
+    final deleteMethod = repo.substring(deleteStart, accountDeleteStart);
+
+    expect(
+      uploadMethod,
+      isNot(contains('_offline.uploadAvatarPhoto')),
+      reason:
+          'Oturum yokken mock:// URL dönmek fotoğraf gerçekten yüklenmiş gibi görünür.',
+    );
+    expect(
+      deleteMethod,
+      isNot(contains('_offline.deleteAvatarPhoto')),
+      reason:
+          'Oturum yokken mock silme çağrısı uzak nesne silinmiş gibi davranır.',
+    );
+  });
+
+  test('şampiyon ödülü hiçbir hata yolunda mock coin üretmez', () {
+    final start = repo.indexOf(
+      'Future<int> claimTournamentChampionReward() async',
+    );
+    final end = repo.indexOf('Future<bool> submitSuggestedQuestion(', start);
+
+    expect(start, greaterThan(-1));
+    expect(end, greaterThan(start));
+    final method = repo.substring(start, end);
+
+    expect(
+      method,
+      isNot(contains('_offline.claimTournamentChampionReward')),
+      reason:
+          'Eksik RPC veya ağ hatası mock depodan coin uydurmamalı; doğrulanmamış kalmalı.',
+    );
   });
 }

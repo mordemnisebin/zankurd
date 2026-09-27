@@ -41,9 +41,58 @@ void main() {
     expect(bar.value, closeTo(4 / 15, 0.001));
   });
 
-  testWidgets('günün görevi birincil gradyan yüzeydir, düz yedek kart değil', (
+  testWidgets(
+    'günün görevi ana sahne olarak derin yeşil hero ve tek marka CTA kullanır',
+    (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.light(),
+          home: Scaffold(
+            body: TodayTaskCard(
+              isKu: false,
+              loading: false,
+              onStart: () {},
+              done: 4,
+              total: 15,
+            ),
+          ),
+        ),
+      );
+
+      final card = tester.widget<Container>(
+        find.byKey(const ValueKey('home-daily-task')),
+      );
+      final decoration = card.decoration! as BoxDecoration;
+      expect(decoration.gradient, isA<LinearGradient>());
+      final gradient = decoration.gradient! as LinearGradient;
+      expect(gradient.colors, contains(AppTheme.culturalBrandBg));
+      expect(decoration.border, isNull);
+
+      final title = tester.widget<Text>(find.text('Günün dersi'));
+      expect(title.style?.color, Colors.white);
+
+      final bar = tester.widget<KilimProgressBar>(
+        find.byType(KilimProgressBar),
+      );
+      expect(bar.color, Colors.white);
+      expect(bar.trackColor, isNotNull);
+
+      final startMaterial = tester.widget<Material>(
+        find
+            .descendant(
+              of: find.byKey(const ValueKey('home-daily-task-start')),
+              matching: find.byType(Material),
+            )
+            .first,
+      );
+      expect(startMaterial.color, AppTheme.brand);
+    },
+  );
+
+  testWidgets('günün dersi ana eylemi 48dp ve semantik düğmedir', (
     tester,
   ) async {
+    final semantics = tester.ensureSemantics();
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.light(),
@@ -52,39 +101,44 @@ void main() {
             isKu: false,
             loading: false,
             onStart: () {},
-            done: 4,
-            total: 15,
+            done: 0,
+            total: 10,
           ),
         ),
       ),
     );
 
-    final card = tester.widget<Container>(
-      find.byKey(const ValueKey('home-daily-task')),
-    );
-    final decoration = card.decoration! as BoxDecoration;
-    expect(
-      decoration.gradient,
-      isA<LinearGradient>(),
-      reason:
-          'Ana eylem düz yüzeyde kalırsa Yarış kahramanının yanında sönük durur.',
-    );
-    expect(decoration.color, isNull);
+    final action = find.byKey(const ValueKey('home-daily-task-start'));
+    expect(tester.getSize(action).height, greaterThanOrEqualTo(48));
+    final node = tester.getSemantics(action);
+    expect(node.flagsCollection.isButton, isTrue);
+    expect(node.label, contains('Başla'));
+    semantics.dispose();
+  });
 
-    final title = tester.widget<Text>(find.text('Günün dersi'));
-    expect(title.style?.color, Colors.white);
-
-    final bar = tester.widget<KilimProgressBar>(find.byType(KilimProgressBar));
-    expect(bar.color, Colors.white);
-    expect(bar.trackColor, isNotNull);
-
-    final startInk = tester.widget<Ink>(
-      find.descendant(
-        of: find.byKey(const ValueKey('home-daily-task-start')),
-        matching: find.byType(Ink),
+  testWidgets('günün dersi ana eylemi alt semantiği tek düğümde toplar', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light(),
+        home: Scaffold(
+          body: TodayTaskCard(
+            isKu: false,
+            loading: false,
+            onStart: () {},
+            done: 0,
+            total: 10,
+          ),
+        ),
       ),
     );
-    expect((startInk.decoration! as BoxDecoration).color, Colors.white);
+
+    final action = find.byKey(const ValueKey('home-daily-task-start'));
+    final semanticWidget = tester.widget<Semantics>(action);
+    expect(semanticWidget.excludeSemantics, isTrue);
+    semantics.dispose();
   });
 
   testWidgets('ilerleme tahtası DEĞİL çubuk kullanılır', (tester) async {

@@ -8,11 +8,12 @@ import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 Widget _wrap(Widget child) {
   return ChangeNotifierProvider<LanguageProvider>(
     create: (_) => LanguageProvider()..setLang('tr'),
-    child: MaterialApp(home: child),
+    child: MaterialApp(theme: AppTheme.light(), home: child),
   );
 }
 
@@ -132,6 +133,47 @@ void main() {
       expect(find.text('Ziman'), findsNothing);
     },
   );
+
+  testWidgets('flashcard arka yüz aksanları açık temada okunabilir kalır', (
+    tester,
+  ) async {
+    const records = [
+      AnswerRecord(
+        id: 'q1',
+        category: 'Ziman',
+        prompt: 'Hilbijêre',
+        answers: ['Rast', 'Şaş'],
+        correctAnswer: 'Rast',
+        selectedAnswer: 'Şaş',
+        explanation: 'Açıklama metni burada.',
+      ),
+    ];
+
+    await tester.pumpWidget(
+      _wrap(const ReviewScreen(records: records, room: _room)),
+    );
+    await tester.tap(find.text('Hafıza Kartları'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('review-flashcard')));
+    await tester.pumpAndSettle();
+
+    final correctFinder = find.text('Doğru Cevap:');
+    final correct = tester.widget<Text>(correctFinder);
+    expect(
+      correct.style?.color,
+      AppColors.readableAccent(tester.element(correctFinder), AppTheme.correct),
+    );
+
+    final explanationFinder = find.text('Açıklama:');
+    final explanation = tester.widget<Text>(explanationFinder);
+    expect(
+      explanation.style?.color,
+      AppColors.readableAccent(
+        tester.element(explanationFinder),
+        AppTheme.violet,
+      ),
+    );
+  });
 
   testWidgets('flashcard ön ve arka yüzü tek actionable semantics nodeudur', (
     tester,

@@ -156,6 +156,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                   padding: EdgeInsets.zero,
                   child: DropdownButtonFormField<String>(
                     initialValue: _selectedCategory,
+                    isExpanded: true,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.symmetric(
@@ -521,11 +522,13 @@ class _SectionHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(width: AppSpacing.xs),
-        Text(
-          title,
-          style: AppTypography.bodyMedium.copyWith(
-            color: AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.w700,
+        Expanded(
+          child: Text(
+            title,
+            style: AppTypography.bodyMedium.copyWith(
+              color: AppTheme.textPrimaryColor(context),
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
       ],

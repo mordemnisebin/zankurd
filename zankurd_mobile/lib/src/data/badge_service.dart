@@ -1,4 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'checked_preferences_removal.dart';
+import 'local_progress_scope.dart';
 
 import '../l10n/strings.dart';
 import '../utils/error_reporter.dart';
@@ -8,7 +10,8 @@ import '../utils/error_reporter.dart';
 class BadgeService {
   BadgeService._(this._preferences, this._unlockedBadges);
 
-  static const _storageKey = 'zankurd.badges.unlocked';
+  static String get _storageKey =>
+      LocalProgressScope.physical('zankurd.badges.unlocked');
   static BadgeService? _instance;
 
   /// Rozet tanımları: id → {titleKey, descKey, icon}. Metin [Tr] tablosunda.
@@ -71,8 +74,8 @@ class BadgeService {
   static void resetInstance() => _instance = null;
 
   Future<void> clear() async {
+    await removePersistedPreferenceKeys(_preferences, [_storageKey]);
     _unlockedBadges.clear();
-    await _preferences?.remove(_storageKey);
   }
 
   final SharedPreferences? _preferences;

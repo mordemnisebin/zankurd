@@ -22,14 +22,26 @@ String recommendedCategoryForGoal({
   required LearningGoal? goal,
   required List<String> categories,
   required List<String> startedCategories,
+  String? focusCategory,
 }) {
+  final focus = focusCategory;
+  final hasFocus = focus != null && categories.contains(focus);
+
   if (goal == null) {
+    if (hasFocus) return focus;
     if (startedCategories.isNotEmpty) return startedCategories.first;
     return categories.isEmpty ? 'Ziman' : categories.first;
   }
 
   if (goal == LearningGoal.learnKurmanci && categories.contains('Ziman')) {
+    if (hasFocus && focus == 'Ziman') return focus;
     return 'Ziman';
+  }
+
+  if (goal == LearningGoal.discoverCulture &&
+      hasFocus &&
+      _cultureCategories.contains(focus)) {
+    return focus;
   }
 
   for (final category in startedCategories) {

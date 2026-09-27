@@ -1,4 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'checked_preferences_removal.dart';
+import 'local_progress_scope.dart';
 
 import '../models/achievement.dart';
 import '../models/player.dart';
@@ -37,10 +39,14 @@ class AchievementStore {
     'Paradigma',
   ];
 
-  static const _unlockedKey = 'zankurd.achievements.unlocked';
-  static const _answeredKey = 'zankurd.achievements.answeredQuestions';
-  static const _categoriesKey = 'zankurd.achievements.playedCategories';
-  static const _dailyQuizKey = 'zankurd.achievements.dailyQuizCompletions';
+  static String get _unlockedKey =>
+      LocalProgressScope.physical('zankurd.achievements.unlocked');
+  static String get _answeredKey =>
+      LocalProgressScope.physical('zankurd.achievements.answeredQuestions');
+  static String get _categoriesKey =>
+      LocalProgressScope.physical('zankurd.achievements.playedCategories');
+  static String get _dailyQuizKey =>
+      LocalProgressScope.physical('zankurd.achievements.dailyQuizCompletions');
 
   static AchievementStore? _instance;
 
@@ -135,14 +141,16 @@ class AchievementStore {
   static void resetInstance() => _instance = null;
 
   Future<void> clear() async {
+    await removePersistedPreferenceKeys(_preferences, [
+      _unlockedKey,
+      _answeredKey,
+      _categoriesKey,
+      _dailyQuizKey,
+    ]);
     _unlockedIds.clear();
     _answeredQuestions = 0;
     _playedCategories.clear();
     _dailyQuizCompletions = 0;
-    await _preferences?.remove(_unlockedKey);
-    await _preferences?.remove(_answeredKey);
-    await _preferences?.remove(_categoriesKey);
-    await _preferences?.remove(_dailyQuizKey);
   }
 
   final SharedPreferences? _preferences;

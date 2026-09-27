@@ -6,6 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/utils/error_reporter.dart';
+import 'local_progress_scope.dart';
+import 'xp_cache_plan.dart';
+import 'xp_store.dart';
+import '../models/quiz_question.dart';
 import 'zankurd_repository.dart';
 import 'supabase_zankurd_repository.dart';
 
@@ -85,6 +89,34 @@ class SyncManager {
 
   @visibleForTesting
   int get pendingCount => _queue.length;
+
+  bool get hasPendingXpAward =>
+      _queue.any((item) => item['type'] == 'sync_xp') ||
+      _failedItems.any((item) => item['type'] == 'sync_xp');
+
+  bool get hasPendingLessonCompletion => pendingLessonCompletionCount > 0;
+
+  int get pendingLessonCompletionCount =>
+      _queue.where((item) => item['type'] == 'sync_lesson').length;
+
+  bool? queuedFavorite(String questionId) {
+    for (final item in _queue.reversed) {
+      if (item['type'] == 'sync_favorite' && item['questionId'] == questionId) {
+        return item['favorite'] == true;
+      }
+    }
+    return null;
+  }
+
+  String? get queuedTournamentStage {
+    for (final item in _queue.reversed) {
+      if (item['type'] == 'sync_tournament') {
+        final stage = item['stage'];
+        if (stage is String && stage.trim().isNotEmpty) return stage;
+      }
+    }
+    return null;
+  }
 
   @visibleForTesting
   int get failedCount => _failedItems.length;
@@ -729,6 +761,244 @@ class SyncManager {
     unawaited(sync());
   }
 
+  /// Onaylanmayan, sunucuda doğrulanabilir oda XP yazımını kuyruğa alır.
+  /// Solo delta cihazdaki öğrenme ilerlemesidir ve sunucu sıralamasına
+  /// gönderilmez.
+  Future<void> queueXpAward({
+    int? delta,
+    String? roomId,
+    String? idempotencyKey,
+  }) async {
+    final currentUserId = _normalizedUserId(_repository.currentUserId);
+    if (!_acceptingItems ||
+        _ownerUserId == null ||
+        currentUserId != _ownerUserId) {
+      throw StateError(
+        'Sync queue owner does not match the authenticated user.',
+      );
+    }
+    final room = roomId?.trim() ?? '';
+    if (room.isEmpty) return;
+    _queue.add({
+      'queueId': '${DateTime.now().microsecondsSinceEpoch}-${_queueSequence++}',
+      'type': 'sync_xp',
+      'roomId': room,
+      'playerId': _ownerUserId,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'retries': 0,
+    });
+    _notifyNotifiers();
+    await _saveQueue(propagateFailure: true);
+    unawaited(sync());
+  }
+
+  /// Onaylanmayan ders tamamlamayı yeniden dener.
+  ///
+  /// `mark_lesson_completed` aynı ders için idempotenttir. Başarı ekrana
+  /// burada bildirilmez; çağıran sunucu false dediği için hatayı gösterir.
+  Future<void> queueLessonCompletion(String lessonId) async {
+    final currentUserId = _normalizedUserId(_repository.currentUserId);
+    if (!_acceptingItems ||
+        _ownerUserId == null ||
+        currentUserId != _ownerUserId) {
+      throw StateError(
+        'Sync queue owner does not match the authenticated user.',
+      );
+    }
+    final id = lessonId.trim();
+    if (id.isEmpty) return;
+    final alreadyQueued = _queue.any(
+      (item) => item['type'] == 'sync_lesson' && item['lessonId'] == id,
+    );
+    if (alreadyQueued) return;
+    _queue.add({
+      'queueId': '${DateTime.now().microsecondsSinceEpoch}-${_queueSequence++}',
+      'type': 'sync_lesson',
+      'lessonId': id,
+      'playerId': _ownerUserId,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'retries': 0,
+    });
+    _notifyNotifiers();
+    await _saveQueue(propagateFailure: true);
+    unawaited(sync());
+  }
+
+  /// Turnuva kaydında yalnız son aşama durur.
+  ///
+  /// Daha eski aşamayı yeniden yazmak `ON CONFLICT` ile stage'i geri sarar.
+  /// Onay gelmiş kayıt kuyruğu temizler. Onay gelmemiş kayıt eskisinin
+  /// yerine geçer ve başarı diye gösterilmez.
+  Future<void> retainLatestTournamentProgress({
+    required bool acknowledged,
+    required String stage,
+    required int userScore,
+    required int opponentScore,
+    required List<String> botWinners,
+  }) async {
+    final currentUserId = _normalizedUserId(_repository.currentUserId);
+    if (!_acceptingItems ||
+        _ownerUserId == null ||
+        currentUserId != _ownerUserId) {
+      throw StateError(
+        'Sync queue owner does not match the authenticated user.',
+      );
+    }
+    final normalized = stage.trim();
+    if (normalized.isEmpty) return;
+    _queue.removeWhere((item) => item['type'] == 'sync_tournament');
+    if (!acknowledged) {
+      _queue.add({
+        'queueId':
+            '${DateTime.now().microsecondsSinceEpoch}-${_queueSequence++}',
+        'type': 'sync_tournament',
+        'stage': normalized,
+        'userScore': userScore,
+        'opponentScore': opponentScore,
+        'botWinners': botWinners,
+        'playerId': _ownerUserId,
+        'timestamp': DateTime.now().millisecondsSinceEpoch,
+        'retries': 0,
+      });
+    }
+    _notifyNotifiers();
+    await _saveQueue(propagateFailure: true);
+    if (!acknowledged) unawaited(sync());
+  }
+
+  /// Favorinin istenen son durumu. Aynı sorudaki eski istek silinir.
+  ///
+  /// Toggle yeniden oynatılmaz. `true` upsert, `false` silme; ikisi de
+  /// tekrarlanabilir. Dönüş değeri başarı değil, “şimdi favori mi”dir.
+  Future<void> retainFavorite({
+    required String questionId,
+    required bool favorite,
+  }) async {
+    final currentUserId = _normalizedUserId(_repository.currentUserId);
+    if (!_acceptingItems ||
+        _ownerUserId == null ||
+        currentUserId != _ownerUserId) {
+      throw StateError(
+        'Sync queue owner does not match the authenticated user.',
+      );
+    }
+    final id = questionId.trim();
+    if (id.isEmpty) return;
+    _queue.removeWhere(
+      (item) => item['type'] == 'sync_favorite' && item['questionId'] == id,
+    );
+    _queue.add({
+      'queueId': '${DateTime.now().microsecondsSinceEpoch}-${_queueSequence++}',
+      'type': 'sync_favorite',
+      'questionId': id,
+      'favorite': favorite,
+      'playerId': _ownerUserId,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'retries': 0,
+    });
+    _notifyNotifiers();
+    await _saveQueue(propagateFailure: true);
+    unawaited(sync());
+  }
+
+  /// Aynı anahtarlı coin harcaması bir kez kesilir.
+  Future<void> queueCoinSpend({
+    required int amount,
+    required String reason,
+    required String idempotencyKey,
+  }) async {
+    final currentUserId = _normalizedUserId(_repository.currentUserId);
+    if (!_acceptingItems ||
+        _ownerUserId == null ||
+        currentUserId != _ownerUserId) {
+      throw StateError(
+        'Sync queue owner does not match the authenticated user.',
+      );
+    }
+    final key = idempotencyKey.trim();
+    final normalizedReason = reason.trim();
+    if (key.isEmpty || normalizedReason.isEmpty || amount <= 0) return;
+    final alreadyQueued = _queue.any(
+      (item) => item['type'] == 'sync_coin' && item['idempotencyKey'] == key,
+    );
+    if (alreadyQueued) return;
+    _queue.add({
+      'queueId': '${DateTime.now().microsecondsSinceEpoch}-${_queueSequence++}',
+      'type': 'sync_coin',
+      'amount': amount,
+      'reason': normalizedReason,
+      'idempotencyKey': key,
+      'playerId': _ownerUserId,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'retries': 0,
+    });
+    _notifyNotifiers();
+    await _saveQueue(propagateFailure: true);
+    unawaited(sync());
+  }
+
+  /// Aynı kullanıcının çevrimdışı ders sluglarını sunucu kuyruğuna alır.
+  ///
+  /// `device-offline` kovası taşınmaz. Slug çözümlemesi
+  /// [ZanKurdRepository.markLessonCompleted] içindedir.
+  Future<void> queueScopedOfflineLessons() async {
+    final owner = _ownerUserId;
+    final scope = LocalProgressScope.activeUserId;
+    if (owner == null ||
+        scope != owner ||
+        !LocalProgressScope.isHumanOwner(scope)) {
+      return;
+    }
+    final preferences = await SharedPreferences.getInstance();
+    final ids =
+        preferences.getStringList(
+          LocalProgressScope.physicalFor(
+            owner,
+            'zankurd.offline.completedLessonIds',
+          ),
+        ) ??
+        const <String>[];
+    for (final lessonId in ids) {
+      await queueLessonCompletion(lessonId);
+    }
+  }
+
+  Future<void> _forgetOfflineLesson(String? userId, String lessonId) async {
+    if (userId == null || !LocalProgressScope.isHumanOwner(userId)) return;
+    final preferences = await SharedPreferences.getInstance();
+    final key = LocalProgressScope.physicalFor(
+      userId,
+      'zankurd.offline.completedLessonIds',
+    );
+    final ids = preferences.getStringList(key);
+    if (ids == null || !ids.contains(lessonId)) return;
+    final next = [...ids]..remove(lessonId);
+    await preferences.setStringList(key, next);
+  }
+
+  /// Kuyruk boşken çubuğu sunucu toplamıyla barıştırır.
+  ///
+  /// Sunucu daha yüksekse önbellek onu alır. Yerel daha yüksekse cihazdaki
+  /// öğrenme XP'si korunur; fark rekabetçi sunucu XP'sine gönderilmez.
+  Future<void> reconcileXpCache() async {
+    if (!_repository.xpAwardIsServerTotal) return;
+    if (LocalProgressScope.activeUserId != _ownerUserId) return;
+    if (hasPendingXpAward) return;
+    final server = await _repository.loadServerXp();
+    final store = await XPStore.load();
+    final plan = XpCachePlan.decide(
+      local: store.totalXP,
+      server: server,
+      xpPending: false,
+    );
+    switch (plan.step) {
+      case XpCacheStep.keep:
+        return;
+      case XpCacheStep.applyServer:
+        await store.applyServerTotal(plan.amount);
+    }
+  }
+
   Future<void> sync() {
     // Yeniden girişe karşı koruma: iki eşzamanlı tur aynı kaydı iki kez
     // göndermez. İkinci çağıran aynı Future'ı bekler; böylece shutdown,
@@ -867,12 +1137,119 @@ class SyncManager {
             name: 'SyncManager',
           );
         } else if (type == 'sync_xp') {
-          // XP artık yalnızca cihazda tutulur. Eski sürümlerin bıraktığı XP
-          // kayıtlarını sunucuya yazılmış gibi göstermeden kuyruktan düşür.
-          developer.log(
-            'Dropping unsupported legacy XP item; XP is device-local.',
-            name: 'SyncManager',
-          );
+          final roomId = (item['roomId'] as String?)?.trim() ?? '';
+          if (roomId.isEmpty) {
+            developer.log(
+              'Dropping unverified solo XP item.',
+              name: 'SyncManager',
+            );
+          } else {
+            final total = await repo.awardRoomXp(roomId);
+            if (_normalizedUserId(repo.currentUserId) != ownerUserId) {
+              failedItems.addAll(batch.skip(index));
+              break;
+            }
+            if (repo.xpAwardIsServerTotal &&
+                LocalProgressScope.activeUserId == ownerUserId) {
+              final store = await XPStore.load();
+              await store.applyServerTotal(total);
+            }
+          }
+        } else if (type == 'sync_lesson') {
+          final lessonId = (item['lessonId'] as String?)?.trim() ?? '';
+          if (lessonId.isEmpty) {
+            developer.log(
+              'Dropping lesson completion without an id.',
+              name: 'SyncManager',
+            );
+          } else {
+            final acknowledged = await repo.markLessonCompleted(lessonId);
+            if (_normalizedUserId(repo.currentUserId) != ownerUserId) {
+              failedItems.addAll(batch.skip(index));
+              break;
+            }
+            if (!acknowledged) {
+              throw StateError('Lesson completion was not acknowledged.');
+            }
+            await _forgetOfflineLesson(ownerUserId, lessonId);
+          }
+        } else if (type == 'sync_tournament') {
+          final stage = (item['stage'] as String?)?.trim() ?? '';
+          final latest = queuedTournamentStage;
+          if (stage.isEmpty || (latest != null && latest != stage)) {
+            developer.log(
+              'Dropping stale tournament stage $stage.',
+              name: 'SyncManager',
+            );
+          } else {
+            final winners =
+                (item['botWinners'] as List?)
+                    ?.map((winner) => '$winner')
+                    .toList(growable: false) ??
+                const <String>[];
+            final saved = await repo.saveTournamentProgress(
+              stage,
+              (item['userScore'] as num?)?.toInt() ?? 0,
+              (item['opponentScore'] as num?)?.toInt() ?? 0,
+              winners,
+            );
+            if (_normalizedUserId(repo.currentUserId) != ownerUserId) {
+              failedItems.addAll(batch.skip(index));
+              break;
+            }
+            if (queuedTournamentStage != stage) {
+              developer.log(
+                'Tournament stage changed during save.',
+                name: 'SyncManager',
+              );
+            } else if (!saved) {
+              throw StateError('Tournament progress was not acknowledged.');
+            }
+          }
+        } else if (type == 'sync_favorite') {
+          final questionId = (item['questionId'] as String?)?.trim() ?? '';
+          if (questionId.isEmpty) {
+            developer.log(
+              'Dropping favorite without a question id.',
+              name: 'SyncManager',
+            );
+          } else {
+            final desired = item['favorite'] == true;
+            await repo.toggleFavoriteQuestion(
+              QuizQuestion(
+                id: questionId,
+                category: 'Ziman',
+                prompt: questionId,
+                answers: const ['A'],
+                correctAnswer: 'A',
+                explanation: '',
+              ),
+              desired,
+            );
+            if (_normalizedUserId(repo.currentUserId) != ownerUserId) {
+              failedItems.addAll(batch.skip(index));
+              break;
+            }
+          }
+        } else if (type == 'sync_coin') {
+          final key = (item['idempotencyKey'] as String?)?.trim() ?? '';
+          final reason = (item['reason'] as String?)?.trim() ?? '';
+          final amount = (item['amount'] as num?)?.toInt() ?? 0;
+          if (key.isEmpty || reason.isEmpty || amount <= 0) {
+            developer.log(
+              'Dropping coin spend without a key.',
+              name: 'SyncManager',
+            );
+          } else {
+            final result = await repo.spendCoinsDurable(amount, reason, key);
+            if (_normalizedUserId(repo.currentUserId) != ownerUserId) {
+              failedItems.addAll(batch.skip(index));
+              break;
+            }
+            if (!result.success && result.retryable) {
+              throw StateError('Coin spend was not acknowledged.');
+            }
+          }
         }
       } on PostgrestException catch (e, stack) {
         // 42883 = function does not exist → migration henüz uygulanmamış.

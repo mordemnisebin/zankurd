@@ -5,6 +5,8 @@ import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
 import 'package:zankurd_mobile/src/widgets/arena_kit.dart';
 import 'package:zankurd_mobile/src/widgets/rolling_count.dart';
@@ -71,6 +73,25 @@ Future<void> _pumpLoaded(
 }
 
 void main() {
+  testWidgets('profil avatar düzenleme rozeti Forest kimliğini kullanır', (
+    tester,
+  ) async {
+    await _seedMistakes();
+    await _pumpLoaded(tester, _RankedRepo());
+
+    final badge = tester.widget<Container>(
+      find
+          .ancestor(
+            of: find.byIcon(AppIcons.camera),
+            matching: find.byType(Container),
+          )
+          .first,
+    );
+    final decoration = badge.decoration! as BoxDecoration;
+    final gradient = decoration.gradient! as LinearGradient;
+    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+  });
+
   testWidgets('profil kimlik dokunuşlarını taşır', (tester) async {
     await _seedMistakes();
     await _pumpLoaded(tester, _RankedRepo());

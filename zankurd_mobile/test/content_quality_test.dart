@@ -115,6 +115,7 @@ void main() {
         reviewedBy: 'editor-1',
         reviewedAt: '2026-07-12',
         lastContentCheckAt: '2026-07-12',
+        learningLessonId: 'grammar_1',
         qualityVersion: 2,
         reportCount: 4,
       );
@@ -122,6 +123,7 @@ void main() {
       expect(restored.reviewStatus, ReviewStatus.needsReview);
       expect(restored.dialect, 'Behdînî');
       expect(restored.sourceReference, 'sf. 12');
+      expect(restored.learningLessonId, 'grammar_1');
       expect(restored.qualityVersion, 2);
       expect(restored.reportCount, 4);
     });

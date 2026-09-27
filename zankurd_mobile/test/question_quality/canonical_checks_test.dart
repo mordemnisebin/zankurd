@@ -488,38 +488,15 @@ void main() {
     );
   });
 
-  group('missing source metadata semantics', () {
-    List<String> metadataChecks(Map<String, Object?> overrides) {
-      final record = question(
-        sourceId: 'runtime',
-        sourcePath: 'runtime.dart',
-        row: 1,
-        sourceTitle: overrides['title'] as String?,
-        sourceUrl: overrides['url'] as String?,
-      );
-      return runChecks([record])
-          .where((issue) => issue.checkId == 'missing_source_metadata')
-          .map((issue) => issue.checkId)
-          .toList();
-    }
-
-    test('CASE A: title and URL both missing -> warning', () {
-      expect(metadataChecks({'title': null, 'url': null}), hasLength(1));
-    });
-
-    test('CASE B: title missing but URL present -> no warning', () {
-      expect(
-        metadataChecks({'title': null, 'url': 'https://example.test/source'}),
-        isEmpty,
-      );
-    });
-
-    test('CASE C: title present but URL missing -> no warning', () {
-      expect(metadataChecks({'title': 'Kaynak başlığı', 'url': null}), isEmpty);
-    });
-
-    test('CASE D: both whitespace only -> warning', () {
-      expect(metadataChecks({'title': '   ', 'url': '  '}), hasLength(1));
-    });
+  test('kaynak adı ve adresi boş olsa da uyarı çıkmaz', () {
+    final record = question(
+      sourceId: 'runtime',
+      sourcePath: 'runtime.dart',
+      row: 1,
+    );
+    expect(
+      runChecks([record]).map((issue) => issue.checkId),
+      isNot(contains('missing_source_metadata')),
+    );
   });
 }

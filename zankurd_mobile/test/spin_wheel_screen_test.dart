@@ -53,6 +53,27 @@ void main() {
     addTearDown(tester.view.reset);
   }
 
+  testWidgets('çark merkezindeki ZK kimliği Forest kullanır', (tester) async {
+    await useTallPhoneViewport(tester);
+    final repository = _SpinRepository(canSpin: true);
+    await tester.pumpWidget(_shell(SpinWheelScreen(repository: repository)));
+    await tester.pump();
+    await tester.pump();
+
+    final hub = tester.widget<Container>(
+      find
+          .ancestor(of: find.text('ZK'), matching: find.byType(Container))
+          .first,
+    );
+    final decoration = hub.decoration! as BoxDecoration;
+    final gradient = decoration.gradient! as LinearGradient;
+    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+    expect(
+      decoration.boxShadow!.last.color,
+      AppTheme.culturalBrandBg.withValues(alpha: 0.45),
+    );
+  });
+
   testWidgets('çark hakkı varken Çevir butonu aktiftir', (tester) async {
     await useTallPhoneViewport(tester);
     final repository = _SpinRepository(canSpin: true);

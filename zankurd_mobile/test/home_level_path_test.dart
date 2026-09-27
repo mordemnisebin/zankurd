@@ -103,6 +103,12 @@ void main() {
     expect(find.text('Dil yolu'), findsOneWidget);
     expect(find.text('Sıradaki: Temel'), findsOneWidget);
     expect(
+      find.byKey(const ValueKey('home-learning-path-route')),
+      findsOneWidget,
+      reason:
+          'ana öğrenme rotası kart kabuğu yerine kendi sahne kökünü taşımalı',
+    );
+    expect(
       tester
           .getSemantics(find.byKey(const ValueKey('home-lessons-row')))
           .getSemanticsData()
@@ -116,6 +122,67 @@ void main() {
       findsOneWidget,
     );
     expect(find.byIcon(Icons.circle), findsNothing);
-    expect(find.byIcon(AppIcons.play), findsOneWidget);
+    expect(find.byIcon(AppIcons.play), findsNothing);
   });
+
+  testWidgets(
+    'seviye yolu tek marka rengi kullanır ve oyun parıltısı taşımaz',
+    (tester) async {
+      const levels = [
+        QuizLevel(
+          number: 1,
+          title: 'Destpêk',
+          category: 'Ziman',
+          difficultyMin: 1,
+          difficultyMax: 2,
+          questionCount: 10,
+        ),
+        QuizLevel(
+          number: 2,
+          title: 'Bingeh',
+          category: 'Ziman',
+          difficultyMin: 1,
+          difficultyMax: 2,
+          questionCount: 10,
+        ),
+        QuizLevel(
+          number: 3,
+          title: 'Navîn',
+          category: 'Ziman',
+          difficultyMin: 2,
+          difficultyMax: 3,
+          questionCount: 12,
+        ),
+      ];
+
+      await tester.pumpWidget(
+        ChangeNotifierProvider(
+          create: (_) => LanguageProvider()..setLang('tr'),
+          child: MaterialApp(
+            theme: AppTheme.light(),
+            home: Scaffold(
+              body: HomeLevelPath(
+                category: 'Ziman',
+                levels: levels,
+                played: const {1, 2},
+                isKu: false,
+                onOpen: () {},
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(homePathLevelColor(1), AppTheme.culturalBrandBg);
+      expect(homePathLevelColor(2), AppTheme.culturalBrandBg);
+      expect(homePathLevelColor(3), AppTheme.culturalBrandBg);
+
+      final current = tester.widget<Container>(
+        find.byKey(const ValueKey('home-path-node-3')),
+      );
+      final decoration = current.decoration! as BoxDecoration;
+      expect(decoration.boxShadow ?? const <BoxShadow>[], isEmpty);
+      expect(find.byIcon(AppIcons.play), findsNothing);
+    },
+  );
 }

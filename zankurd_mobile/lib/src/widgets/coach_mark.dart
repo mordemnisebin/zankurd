@@ -285,7 +285,7 @@ class _CoachMarkBubble extends StatelessWidget {
                 height: 36,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  gradient: AppTheme.accentGradient,
+                  gradient: AppTheme.identityHeaderGradient,
                   borderRadius: BorderRadius.circular(AppRadius.badge),
                 ),
                 child: Icon(step.icon, color: Colors.white, size: 19),

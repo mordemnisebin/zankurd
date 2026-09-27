@@ -139,7 +139,6 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   }
 
   Widget _buildReady(BuildContext context, bool ku) {
-    final surface = AppTheme.surfaceHiColor(context);
     final semanticLabel = [
       Tr.forKu(K.todaysReviews, ku),
       Tr.forKu(K.todaysReviewsCount, ku, {'count': '$_readyCount'}),
@@ -153,125 +152,92 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
       label: semanticLabel,
       excludeSemantics: true,
       onTap: _startReview,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: _startReview,
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            child: Container(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              decoration: BoxDecoration(
-                color: surface,
-                borderRadius: BorderRadius.circular(AppRadius.card),
-                border: Border.all(
-                  color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-                  width: 1.0,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.04),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Stack(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: _startReview,
+          excludeFromSemantics: true,
+          borderRadius: BorderRadius.circular(AppRadius.sm),
+          child: Padding(
+            key: const ValueKey('todays-review-status-row'),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 2,
+              vertical: AppSpacing.xs,
+            ),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 52),
+              child: Row(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 46,
-                        height: 46,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _accent.withValues(alpha: 0.18),
-                          border: Border.all(
-                            color: _accent.withValues(alpha: 0.4),
-                            width: 1.2,
+                  Container(
+                    width: 32,
+                    height: 32,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppColors.iconTileBg(context, _accent),
+                      borderRadius: BorderRadius.circular(AppRadius.badge),
+                    ),
+                    child: Icon(
+                      AppIcons.arrowsRotate,
+                      color: AppColors.readableAccent(context, _accent),
+                      size: 16,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          Tr.forKu(K.todaysReviews, ku),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.caption.copyWith(
+                            color: AppColors.readableAccent(context, _accent),
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
-                        child: Icon(
-                          AppIcons.arrowsRotate,
-                          color: AppColors.onAccentTint(context, _accent),
-                          size: 24,
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.sm + 2),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  width: 3,
-                                  height: 13,
-                                  decoration: AppTheme.sectionAccent(_accent),
-                                ),
-                                const SizedBox(width: 7),
-                                Flexible(
-                                  child: Text(
-                                    Tr.forKu(K.todaysReviews, ku),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppTypography.caption.copyWith(
-                                      color: _accent,
-                                      fontWeight: FontWeight.w800,
-                                      letterSpacing: 0.4,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              Tr.forKu(K.todaysReviewsCount, ku, {
-                                'count': '$_readyCount',
-                              }),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTypography.bodyLarge.copyWith(
-                                color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w800,
-                                height: 1.2,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              Tr.forKu(K.strengthenMemory, ku),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.textMutedColor(context),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.xs),
-                      Container(
-                        constraints: const BoxConstraints(minWidth: 34),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _accent,
-                          borderRadius: BorderRadius.circular(AppRadius.sm),
-                        ),
-                        child: Text(
-                          '$_readyCount',
-                          textAlign: TextAlign.center,
-                          style: AppTypography.bodyLarge.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900,
+                        const SizedBox(height: 2),
+                        Text(
+                          Tr.forKu(K.todaysReviewsCount, ku, {
+                            'count': '$_readyCount',
+                          }),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: AppTheme.textPrimaryColor(context),
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.xs),
+                  Container(
+                    // a11y-tap-target: noninteractive — 52px InkWell içindeki sayı rozeti.
+                    constraints: const BoxConstraints(minWidth: 30),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.iconTileBg(context, _accent),
+                      borderRadius: BorderRadius.circular(AppRadius.pill),
+                    ),
+                    child: Text(
+                      '$_readyCount',
+                      textAlign: TextAlign.center,
+                      style: AppTypography.caption.copyWith(
+                        color: AppColors.readableAccent(context, _accent),
+                        fontWeight: FontWeight.w900,
                       ),
-                    ],
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Icon(
+                    AppIcons.chevronRight,
+                    size: 16,
+                    color: AppTheme.textMutedColor(context),
                   ),
                 ],
               ),
@@ -289,44 +255,44 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
       key: const ValueKey('todays-review-empty'),
       label: '$title. $detail',
       excludeSemantics: true,
-      child: Container(
+      child: Padding(
+        key: const ValueKey('todays-review-status-row'),
         padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm,
+          horizontal: 2,
           vertical: AppSpacing.xs,
         ),
-        decoration: BoxDecoration(
-          color: _accent.withValues(alpha: 0.07),
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 28,
-              height: 28,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _accent.withValues(alpha: 0.12),
-              ),
-              child: Icon(
-                AppIcons.circleCheck,
-                color: _accent.withValues(alpha: 0.9),
-                size: 17,
-              ),
-            ),
-            const SizedBox(width: AppSpacing.xs),
-            Expanded(
-              child: Text(
-                title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w700,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 48),
+          child: Row(
+            children: [
+              Container(
+                width: 30,
+                height: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppColors.iconTileBg(context, _accent),
+                  borderRadius: BorderRadius.circular(AppRadius.badge),
+                ),
+                child: Icon(
+                  AppIcons.circleCheck,
+                  color: AppColors.readableAccent(context, _accent),
+                  size: 16,
                 ),
               ),
-            ),
-          ],
+              const SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

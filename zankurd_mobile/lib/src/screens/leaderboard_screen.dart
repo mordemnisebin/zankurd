@@ -774,6 +774,7 @@ class _LeagueBanner extends StatelessWidget {
     final tier = LeagueTier.forRank(myRank);
     final color = tier.color;
     final surface = AppTheme.surfaceHiColor(context);
+    final accessibilityText = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
 
     return Container(
       key: const ValueKey('league-banner'),
@@ -824,10 +825,13 @@ class _LeagueBanner extends StatelessWidget {
                   myRank != null
                       ? (Tr.forKu(K.buHaftakiSiranP, isKu, {'p0': '$myRank'}))
                       : (Tr.forKu(K.buHaftaYarisLige, isKu)),
-                  maxLines: 1,
+                  maxLines: accessibilityText ? 2 : 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.caption.copyWith(
-                    color: AppTheme.textMutedColor(context),
+                    // Lig bandının altın tonlu yüzeyi `textMuted` ile
+                    // kontrastı 4.30:1'e düşürüyordu. İkincil hiyerarşiyi
+                    // koruyup AA eşiğini geçen yüzey rengi kullanılır.
+                    color: AppTheme.textSubColor(context),
                   ),
                 ),
               ],
@@ -972,6 +976,7 @@ class _HeaderAction extends StatelessWidget {
           child: Container(
             key: const ValueKey('leaderboard-friends-badge'),
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            // a11y-tap-target: noninteractive — sayı rozeti; hedef üstteki IconButton.
             constraints: const BoxConstraints(minWidth: 18),
             decoration: BoxDecoration(
               color: AppTheme.brand,
@@ -1019,7 +1024,9 @@ class _PeriodTabs extends StatelessWidget {
         AppSpacing.page,
         AppSpacing.xxs,
       ),
-      height: 48,
+      // Dış çerçevenin 1px border'ı TabBar'ın semantik yüksekliğini iki
+      // piksel küçültür. 48px dış kutu Android'de 46px hedef üretiyordu.
+      height: 50,
       decoration: BoxDecoration(
         color: AppTheme.surfaceColor(context),
         borderRadius: BorderRadius.circular(AppRadius.md),
@@ -1114,6 +1121,7 @@ class _Podium extends StatelessWidget {
           color: AppTheme.surfaceColor(context),
           borderRadius: BorderRadius.circular(AppRadius.card),
           border: Border.all(color: AppTheme.borderColor(context)),
+          boxShadow: AppTheme.cardShadow(context),
         ),
         child: slots.length == 1
             ? Center(child: slots.first)
@@ -1257,7 +1265,15 @@ class _PodiumSlot extends StatelessWidget {
                     value: entry.totalScore,
                     maxLines: 1,
                     style: TextStyle(
-                      color: AppColors.readableAccent(context, color),
+                      // Puan rozeti düz yüzey değil, kendi renginin %28'e
+                      // kadar tonlandığı bir zemin. `readableAccent` düz
+                      // yüzeyi varsaydığı için altın/bronz skorlar AA'nın
+                      // altında kalıyordu; gerçek tint oranını hesaba kat.
+                      color: AppColors.onAccentTint(
+                        context,
+                        color,
+                        tintAlpha: 0.28,
+                      ),
                       fontWeight: FontWeight.w800,
                       fontSize: scoreFontSz,
                     ),

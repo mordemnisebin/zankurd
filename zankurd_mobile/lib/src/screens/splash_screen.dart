@@ -235,10 +235,39 @@ class _SplashScreenState extends State<SplashScreen>
                       maxLogo,
                       byHeight,
                     ].reduce((a, b) => a < b ? a : b).clamp(96.0, 280.0);
+                    final logo = AppLogo(width: width);
+                    final adaptiveLogo =
+                        Theme.of(context).brightness == Brightness.dark
+                        ? ColorFiltered(
+                            colorFilter: const ColorFilter.matrix([
+                              1,
+                              0,
+                              0,
+                              0,
+                              56,
+                              0,
+                              1,
+                              0,
+                              0,
+                              56,
+                              0,
+                              0,
+                              1,
+                              0,
+                              56,
+                              0,
+                              0,
+                              0,
+                              1,
+                              0,
+                            ]),
+                            child: logo,
+                          )
+                        : logo;
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        AppLogo(width: width),
+                        adaptiveLogo,
                         const SizedBox(height: 28),
                         const SizedBox(
                           width: 26,

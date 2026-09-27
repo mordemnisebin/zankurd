@@ -76,6 +76,37 @@ void main() {
     expect(find.text('Bir çay, lütfen.'), findsOneWidget);
   });
 
+  testWidgets('hikâye ve rehber aksanları koyu temada okunabilir tona çıkar', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(StoryScreen(story: cayxaneStory, guide: cayxaneGuide)),
+    );
+    await tester.pumpAndSettle();
+
+    final storyLabelFinder = find.text('HİKÂYE');
+    final storyLabel = tester.widget<Text>(storyLabelFinder);
+    expect(
+      storyLabel.style?.color,
+      AppColors.readableAccent(
+        tester.element(storyLabelFinder),
+        AppTheme.playGreen,
+      ),
+    );
+
+    await tester.tap(find.byKey(const ValueKey('story-open-guide')));
+    await tester.pumpAndSettle();
+    final guideLabelFinder = find.text('Kültürel not');
+    final guideLabel = tester.widget<Text>(guideLabelFinder);
+    expect(
+      guideLabel.style?.color,
+      AppColors.readableAccent(
+        tester.element(guideLabelFinder),
+        AppTheme.playGreen,
+      ),
+    );
+  });
+
   testWidgets('tablet boyutunda overflow oluşmaz', (tester) async {
     tester.view.physicalSize = const Size(800, 1200);
     tester.view.devicePixelRatio = 1.0;

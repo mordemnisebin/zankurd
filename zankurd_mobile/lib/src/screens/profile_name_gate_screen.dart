@@ -126,14 +126,10 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                   bottomRight: Radius.circular(AppRadius.card),
                 ),
                 child: Container(
+                  key: const ValueKey('profile-name-gate-hero-surface'),
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    // Pirs-inspired büyük turuncu karşılama header'ı.
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [AppTheme.brand, AppTheme.brandDeep],
-                    ),
+                    gradient: AppTheme.identityHeaderGradient,
                   ),
                   child: Stack(
                     children: [

@@ -1,6 +1,7 @@
 // ignore_for_file: annotate_overrides
 import 'dart:typed_data';
 
+import 'durable_write.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/friend.dart';
@@ -177,6 +178,11 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
     String? subCategory,
     int limit = 10,
   });
+  Future<List<QuizQuestion>> loadLearningQuizQuestions({
+    required String category,
+    required String learningLessonId,
+    int limit = 5,
+  });
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room);
 
   /// Aynı gün içinde herkese aynı soru setini verir (tarih tohumlu seçim).
@@ -256,6 +262,14 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Bakiye yeterli değilse false, başarılıysa true döner.
   Future<bool> spendCoins(int amount, String reason);
 
+  /// Aynı anahtarla ikinci çağrı coin'i yeniden kesmez.
+  /// Fonksiyon yoksa bir kez [spendCoins] yapılır ve yeniden denenmez.
+  Future<DurableCoinSpend> spendCoinsDurable(
+    int amount,
+    String reason,
+    String idempotencyKey,
+  );
+
   /// Seri dondurma ücretini IDEMPOTENT biçimde tahsil eder.
   ///
   /// [idempotencyKey] değişmez olmalıdır (sonuç makbuzunun kimliği). Aynı
@@ -316,10 +330,21 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Miktarı sunucu belirler: RPC çağrı başına 2000, günde 20000 ile
   /// sınırlar. İstemci yalnız bildirir.
   ///
-  /// Bu çağrı oyuncuyu BEKLETMEZ ve hata fırlatmaz: XP'nin cihazdaki hâli
-  /// zaten yazılmıştır, sunucu yazımı en iyi çabadır.
+  /// Dönüş `profiles.xp` toplamıysa true. Mock ve çevrimdışı false döner;
+  /// onların dönüşü seviye çubuğunu ezmez.
+  bool get xpAwardIsServerTotal;
+
+  /// Oturum sahibinin `profiles.xp` değeri. Okunamazsa null; 0 gerçek toplamdır.
+  Future<int?> loadServerXp();
+
+  /// Bu çağrı oyuncuyu BEKLETMEZ. Sunucu yazımı onaylanmazsa fırlatır;
+  /// çağıran deltayı kuyruğa alır. Dönüş, yazım onaylandıysa sunucu toplamıdır.
   Future<int> awardXp(int delta);
   Future<int> awardRoomXp(String roomId);
+
+  /// Aynı anahtarla ikinci çağrı XP'yi yeniden eklemez.
+  /// Fonksiyon yoksa bir kez [awardXp] yapılır ve [ServerXpWrite.retryable] false olur.
+  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey);
 
   /// Oyuncunun görsel kimliğini (avatar/çerçeve/unvan) yükler.
   Future<AvatarIdentity> loadAvatarIdentity();

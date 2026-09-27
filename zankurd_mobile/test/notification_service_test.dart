@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/services/notification_service.dart';
 
@@ -10,6 +12,18 @@ class _FakeTimeZoneResolver implements TimeZoneResolver {
 
   @override
   Future<String?> resolve() async => value;
+}
+
+class _BlockingTimeZoneResolver implements TimeZoneResolver {
+  final Completer<void> entered = Completer<void>();
+  final Completer<void> release = Completer<void>();
+
+  @override
+  Future<String?> resolve() async {
+    if (!entered.isCompleted) entered.complete();
+    await release.future;
+    return 'Europe/Istanbul';
+  }
 }
 
 void main() {
@@ -65,6 +79,48 @@ void main() {
       );
       expect(identical(service1, service2), true);
     });
+
+    test(
+      'eşzamanlı load çağrıları aynı singleton init işini paylaşır',
+      () async {
+        final resolver = _BlockingTimeZoneResolver();
+
+        final firstLoad = NotificationService.load(timeZoneResolver: resolver);
+        await resolver.entered.future;
+        final secondLoad = NotificationService.load(timeZoneResolver: resolver);
+        resolver.release.complete();
+
+        final services = await Future.wait([firstLoad, secondLoad]);
+        expect(identical(services[0], services[1]), isTrue);
+        expect(identical(NotificationService.instance, services[0]), isTrue);
+      },
+    );
+
+    test(
+      'platform bildirim eklentisi testte yokken sessizce devam eder',
+      () async {
+        final originalDebugPrint = debugPrint;
+        final messages = <String>[];
+        debugPrint = (message, {wrapWidth}) {
+          if (message != null) messages.add(message);
+        };
+
+        try {
+          final service = await NotificationService.load(
+            timeZoneResolver: const _FakeTimeZoneResolver('Europe/Berlin'),
+          );
+          await service.setEnabled(true);
+          await service.setEnabled(false);
+        } finally {
+          debugPrint = originalDebugPrint;
+        }
+
+        expect(
+          messages.where((message) => message.startsWith('Failed to ')),
+          isEmpty,
+        );
+      },
+    );
 
     test(
       'yerel saat dilimi cihazdan çözülür, sabit Istanbul zorlaması yoktur',

@@ -55,6 +55,7 @@ void main() {
       'premiumService.warmUp()',
       'AnalyticsService.instance.initialize(enabled: true)',
       'NotificationService.load()',
+      'ErrorReporter.setCollectionEnabled(true)',
     ]) {
       expect(
         mainSource,
@@ -69,6 +70,11 @@ void main() {
       isNot(
         contains('await AnalyticsService.instance.initialize(enabled: true)'),
       ),
+    );
+    expect(
+      mainSource,
+      isNot(contains('await ErrorReporter.setCollectionEnabled(true)')),
+      reason: 'Crashlytics etkinleştirme ilk Flutter karesini bekletmemeli.',
     );
     expect(mainSource, contains('startInBackground'));
   });

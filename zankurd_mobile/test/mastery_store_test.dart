@@ -58,6 +58,14 @@ void main() {
   });
 
   group('MasteryStore', () {
+    test('eşzamanlı load çağrıları aynı singleton örneğini paylaşır', () async {
+      final firstLoad = MasteryStore.load();
+      final secondLoad = MasteryStore.load();
+
+      final stores = await Future.wait([firstLoad, secondLoad]);
+      expect(identical(stores[0], stores[1]), isTrue);
+    });
+
     test('yeni kategoride doğru sayısı 0 başlar', () async {
       final store = await MasteryStore.load();
       expect(store.correctCount('Ziman'), 0);

@@ -61,8 +61,11 @@ Future<void> _pumpResultOnFinishedRoomStack(
   );
   await tester.pump();
   await tester.pump(const Duration(seconds: 1));
+  final primaryActionKey = roomId == null
+      ? 'result-play-again-button'
+      : 'result-primary-home';
   await tester.scrollUntilVisible(
-    find.byKey(const ValueKey('result-play-again-button')),
+    find.byKey(ValueKey(primaryActionKey)),
     500,
     scrollable: find.byType(Scrollable).last,
   );
@@ -78,7 +81,7 @@ void main() {
         roomId: 'online-room-id',
       );
 
-      final action = find.byKey(const ValueKey('result-play-again-button'));
+      final action = find.byKey(const ValueKey('result-primary-home'));
       expect(
         find.descendant(of: action, matching: find.text('Ana Sayfa')),
         findsOneWidget,
@@ -102,7 +105,7 @@ void main() {
       roomId: 'online-room-id',
     );
 
-    final action = find.byKey(const ValueKey('result-play-again-button'));
+    final action = find.byKey(const ValueKey('result-primary-home'));
     expect(
       find.descendant(of: action, matching: find.text('Sereke')),
       findsOneWidget,

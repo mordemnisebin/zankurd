@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print, invalid_use_of_visible_for_testing_member
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
@@ -44,6 +45,7 @@ import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
+import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
@@ -56,7 +58,6 @@ import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 
-import 'package:zankurd_mobile/src/widgets/floating_reaction_overlay.dart';
 import '../../test/support/widget_test_helpers.dart';
 
 /// Uygulamanın her ekranını gerçek widget ağacıyla açıp PNG'ye basar.
@@ -73,17 +74,17 @@ import '../../test/support/widget_test_helpers.dart';
 ///
 /// ## Görüntülerin sınırı
 ///
-/// Test koşucusunda yalnız burada yüklenen yazı tipleri çizilir. İkisi
-/// kaçınılmaz olarak kutu görünür ve **uygulama hatası değildir**:
-///
-/// * emoji (ör. sıralama madalyaları 🥇🥈🥉) — sistem emoji fontu yok;
-/// * `CustomPainter` içinde `TextPainter` ile çizilen metin (ör. çark
-///   dilimlerinin etiketleri) — aile belirtilmediği için varsayılan ölçü
-///   fontuna düşer, widget'lardaki gibi temadan Rubik almaz.
-///
-/// Bu ikisini doğrulamak için simülatör gerekir.
+/// Test koşucusunda yalnız burada yüklenen yazı tipleri çizilir. Özellikle
+/// `CustomPainter` içinde `TextPainter` ile çizilen metin (ör. çark
+/// dilimlerinin etiketleri), widget'lardaki gibi temadan Rubik alamayabilir.
+/// Bu yüzden font/glif doğruluğu widget turundan değil, gerçek iOS Simulator
+/// üzerinde `integration_test/native_visual_qa_test.dart` ile kanıtlanır.
+/// Aynı native kapı sıralama podyumundaki kupa/madalya ikonlarını da gerçek
+/// platform render'ında yakalar.
 const _size = Size(390, 844);
-const _outDir = 'docs/screenshots/tour';
+final _outDir =
+    Platform.environment['ZANKURD_SCREEN_TOUR_OUT_DIR'] ??
+    'docs/screenshots/tour';
 
 /// Yakalama sınırı. Kök render katmanı yerine açık bir RepaintBoundary
 /// kullanılır; kök `debugLayer.toImage()` test koşucusunda kilitlenebiliyor.
@@ -354,6 +355,31 @@ class _PopulatedStateRepository extends MockZanKurdRepository {
 }
 
 /// Yeni kullanıcının gerçekten gördüğü boş sosyal durum.
+class _ReactionStateRepository extends MockZanKurdRepository {
+  final StreamController<Map<String, dynamic>> _broadcasts =
+      StreamController<Map<String, dynamic>>.broadcast(sync: true);
+
+  @override
+  Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) {
+    return _broadcasts.stream;
+  }
+
+  void emitReaction(
+    String text, {
+    required String senderName,
+    required String senderId,
+  }) {
+    _broadcasts.add({
+      'type': 'reaction',
+      'text': text,
+      'sender_name': senderName,
+      'sender_id': senderId,
+    });
+  }
+
+  Future<void> close() => _broadcasts.close();
+}
+
 class _EmptyStateRepository extends MockZanKurdRepository {
   @override
   Future<Contest?> loadTodayContest() async => null;
@@ -1279,21 +1305,35 @@ void main() {
   }, tags: ['preview']);
 
   // 2. Uçuşan reaksiyon baloncukları — animasyon hâlinde yakalanır.
+  // RoomScreen zaten kendi FloatingReactionOverlay'ini taşır. Dışarıdan
+  // ikinci bir overlay sarmak uygulamada olmayan bir geometri üretip oyuncu
+  // satırlarını örten sahte bir QA bulgusuna yol açıyordu. Fixture artık
+  // gerçek broadcast → RoomScreen → iç controller yolunu kullanır.
   testWidgets('93 uçuşan reaksiyonlar', (t) async {
-    final controller = FloatingReactionController();
+    final reactionRepository = _ReactionStateRepository();
+    addTearDown(reactionRepository.close);
+    final reactionRoom = reactionRepository.createRoom().copyWith(
+      id: 'tour-reactions',
+    );
     await _pump(
       t,
-      FloatingReactionOverlay(
-        controller: controller,
-        child: RoomScreen(
-          repository: repository,
-          initialRoom: repository.createRoom(),
-        ),
-      ),
+      RoomScreen(repository: reactionRepository, initialRoom: reactionRoom),
     );
-    controller.triggerReaction('👏 Destxweş!', senderName: 'Berfin');
-    controller.triggerReaction('🔥 Agir!', senderName: 'Rojda');
-    controller.triggerReaction('⚡ Lez be!', senderName: 'Baran');
+    reactionRepository.emitReaction(
+      '👏 Destxweş!',
+      senderName: 'Berfin',
+      senderId: 'tour-berfin',
+    );
+    reactionRepository.emitReaction(
+      '🔥 Agir!',
+      senderName: 'Rojda',
+      senderId: 'tour-rojda',
+    );
+    reactionRepository.emitReaction(
+      '⚡ Lez be!',
+      senderName: 'Baran',
+      senderId: 'tour-baran',
+    );
     await t.pump();
     await t.pump(const Duration(milliseconds: 500));
     await _shoot(t, '93_floating_reactions');
@@ -1316,6 +1356,23 @@ void main() {
     );
     await t.pump(const Duration(milliseconds: 400));
     await _shoot(t, '94_result_1v1_win');
+  }, tags: ['preview']);
+
+  testWidgets('95 öğrenen sözlüğü', (t) async {
+    await _pump(t, const LearnerLexiconScreen());
+    await _shoot(t, '95_learner_lexicon');
+  }, tags: ['preview']);
+
+  testWidgets('96 ders hızlı hatırlama', (t) async {
+    final lesson = (await repository.loadLessonsByCategory('everyday')).first;
+    await _pump(t, LessonDetailScreen(lesson: lesson, repository: repository));
+    await t.tap(find.text('İleri'));
+    await t.pumpAndSettle();
+    final reveal = find.byKey(const ValueKey('lesson-recall-reveal'));
+    await t.ensureVisible(reveal);
+    await t.tap(reveal);
+    await t.pump();
+    await _shoot(t, '96_lesson_recall');
   }, tags: ['preview']);
 }
 

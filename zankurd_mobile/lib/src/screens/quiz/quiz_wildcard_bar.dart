@@ -43,6 +43,7 @@ class _WildcardButtonState extends State<WildcardButton> {
   Widget build(BuildContext context) {
     final baseColor = widget.type.themeColor;
     final canTap = widget.isEnabled;
+    final largeText = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
 
     // Her durum ayrı bir ŞEY söyler; hepsini soluklaştırmak dördünü de
     // "bozuk" gösteriyordu (2026-08-03 görsel denetimi). Coin'i yetmeyen
@@ -190,7 +191,12 @@ class _WildcardButtonState extends State<WildcardButton> {
                     // denenmiş ve reddedilmişti: punto ~8pt'ye düşüyordu.
                     Text(
                       widget.type.label(widget.isKu),
-                      maxLines: 2,
+                      // %150+ sistem yazısında 2×2 joker düzeni devreye
+                      // giriyor. 320px genişlikte en uzun Kurmancî etiket
+                      // 137px sütunda kelime içinden de sarıldığı için dört
+                      // satıra ihtiyaç duyabiliyor. Puntoyu küçültmek yerine
+                      // yalnız erişilebilirlik modunda gerçek metne yer aç.
+                      maxLines: largeText ? 4 : 2,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: AppTypography.caption.copyWith(

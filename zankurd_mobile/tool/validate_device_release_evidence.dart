@@ -11,10 +11,14 @@ const requiredDeviceReleaseChecks = <String>[
   'os_level_resilience_test',
 ];
 
+const requiredReleaseArtifacts = <String>['android', 'ios'];
+const deviceEvidenceMaxAge = Duration(days: 7);
+
 List<String> validateDeviceReleaseEvidence(
   String source, {
   required String expectedVersion,
   required String expectedSourceFingerprint,
+  DateTime? now,
 }) {
   final errors = <String>[];
   Object? decoded;
@@ -44,8 +48,42 @@ List<String> validateDeviceReleaseEvidence(
     );
   }
   final verifiedAt = decoded['verified_at'];
-  if (verifiedAt is! String || DateTime.tryParse(verifiedAt) == null) {
+  final verifiedDate = verifiedAt is String
+      ? DateTime.tryParse(verifiedAt)
+      : null;
+  if (verifiedDate == null) {
     errors.add('verified_at geçerli ISO-8601 tarih/saat olmalı.');
+  } else {
+    final referenceNow = (now ?? DateTime.now()).toUtc();
+    final verifiedUtc = verifiedDate.toUtc();
+    if (verifiedUtc.isAfter(referenceNow.add(const Duration(minutes: 5)))) {
+      errors.add('verified_at gelecekte olamaz.');
+    } else if (referenceNow.difference(verifiedUtc) > deviceEvidenceMaxAge) {
+      errors.add(
+        'Cihaz kanıtı ${deviceEvidenceMaxAge.inDays} günden eski; yeniden doğrula.',
+      );
+    }
+  }
+
+  final artifacts = decoded['artifacts'];
+  if (artifacts is! Map<String, dynamic>) {
+    errors.add('artifacts nesnesi eksik.');
+  } else {
+    for (final platform in requiredReleaseArtifacts) {
+      final artifact = artifacts[platform];
+      if (artifact is! Map<String, dynamic>) {
+        errors.add('$platform release artifact kanıtı eksik.');
+        continue;
+      }
+      final path = artifact['ref'];
+      final hash = artifact['sha256'];
+      if (path is! String || path.trim().isEmpty) {
+        errors.add('$platform artifact ref boş olamaz.');
+      }
+      if (hash is! String || !RegExp(r'^[a-f0-9]{64}$').hasMatch(hash)) {
+        errors.add('$platform artifact sha256 geçersiz.');
+      }
+    }
   }
 
   final checks = decoded['checks'];
@@ -66,6 +104,15 @@ List<String> validateDeviceReleaseEvidence(
     if (device is! String || device.trim().isEmpty) {
       errors.add('$name için cihaz bilgisi boş olamaz.');
     }
+    final evidenceRef = value['evidence_ref'];
+    if (evidenceRef is! String || evidenceRef.trim().isEmpty) {
+      errors.add('$name için evidence_ref boş olamaz.');
+    }
+    final evidenceHash = value['evidence_sha256'];
+    if (evidenceHash is! String ||
+        !RegExp(r'^[a-f0-9]{64}$').hasMatch(evidenceHash)) {
+      errors.add('$name için evidence_sha256 geçersiz.');
+    }
   }
   return errors;
 }
@@ -83,6 +130,8 @@ String computeReleaseSourceFingerprint({Directory? workingDirectory}) {
     'assets',
     'android',
     'ios',
+    'integration_test',
+    'tool/validate_device_release_evidence.dart',
     'pubspec.yaml',
     'pubspec.lock',
   ], workingDirectory: root.path);

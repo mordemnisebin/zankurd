@@ -47,4 +47,52 @@ void main() {
       'Çand',
     );
   });
+
+  test('hedef yoksa yeterli kanıttaki odak kategori yolu yönlendirir', () {
+    expect(
+      recommendedCategoryForGoal(
+        goal: null,
+        categories: categories,
+        startedCategories: const ['Ziman'],
+        focusCategory: 'Dîrok',
+      ),
+      'Dîrok',
+    );
+  });
+
+  test('Kurmancî hedefi kültür odağı tarafından ezilmez', () {
+    expect(
+      recommendedCategoryForGoal(
+        goal: LearningGoal.learnKurmanci,
+        categories: categories,
+        startedCategories: const ['Dîrok'],
+        focusCategory: 'Dîrok',
+      ),
+      'Ziman',
+    );
+  });
+
+  test('kültür hedefi uyumlu zayıf kültür kategorisine odaklanabilir', () {
+    expect(
+      recommendedCategoryForGoal(
+        goal: LearningGoal.discoverCulture,
+        categories: categories,
+        startedCategories: const ['Çand'],
+        focusCategory: 'Dîrok',
+      ),
+      'Dîrok',
+    );
+  });
+
+  test('kültür hedefi Ziman odağını reddedip mevcut kültür yolunu korur', () {
+    expect(
+      recommendedCategoryForGoal(
+        goal: LearningGoal.discoverCulture,
+        categories: categories,
+        startedCategories: const ['Çand'],
+        focusCategory: 'Ziman',
+      ),
+      'Çand',
+    );
+  });
 }

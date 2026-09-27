@@ -2,34 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
-// Zanîn paleti (2026-07-24 tasarım yenilemesi): kimlik Kesk (derin yeşil),
-// eylem Tîrêj (koyu turuncu), ödül Zêr (altın). Aksan rolü 14 renkten 3'e
-// indirildi. Bu test palet değerlerinin token'lara yansıdığını sabitler —
-// regresyonu (eski neon/gradyan enflasyonlu palete dönüş) yakalar.
+// ZanKurd Design 2.0: Forest kimlik, Ember eylem, Sun ödül ve Cream/Ink
+// okuma yüzeyi. CTA'daki Ember 600 tonu, beyaz metinle AA için spec'e en
+// yakın erişilebilir koyu varyanta çekilir; diğer ana tokenlar Design 2
+// belgesindeki değerleri doğrudan taşır.
 void main() {
   test('eylem rengi Tîrêj — beyaz metinle AA geçen koyu turuncu', () {
-    expect(AppTheme.brand, const Color(0xFFC2560E));
-    expect(AppTheme.brandDeep, const Color(0xFFA0450A));
-    expect(AppTheme.brandLite, const Color(0xFFE2711D));
+    expect(AppTheme.brand, const Color(0xFFC75209));
+    expect(AppTheme.brandDeep, const Color(0xFFA03B0A));
+    expect(AppTheme.brandLite, const Color(0xFFE06A16));
   });
 
-  test('kimlik rengi Kesk — derin yeşil', () {
-    expect(AppTheme.culturalBrandBg, const Color(0xFF14513A));
+  test('kimlik rengi Kesk — Design 2 Forest', () {
+    expect(AppTheme.culturalBrandBg, const Color(0xFF20533A));
   });
 
-  test('yardımcı aksanlar nötr bantta', () {
-    // 2026-07-27: #3F8F5F dolu düğme zemini olarak hiçbir yazı rengiyle
-    // AA geçmiyordu (beyaz 3.96:1, koyu metin 4.29:1). Açıklık bir tık
-    // indirildi; renk kimliği aynı yeşil, beyazla 4.72:1.
-    expect(AppTheme.playGreen, const Color(0xFF398156));
+  test('yardımcı aksanlar kontrollü kategori bandında', () {
+    expect(AppTheme.playGreen, const Color(0xFF2F7450));
     expect(AppTheme.playCyan, const Color(0xFF2F6F62));
     expect(AppTheme.playPurple, const Color(0xFF6B5AA6));
     expect(AppTheme.playPink, const Color(0xFFA85A7A));
   });
 
-  test('ödül/ikincil altını Zêr tonu', () {
-    expect(AppTheme.gold, const Color(0xFFD9A227));
-    expect(AppTheme.secondaryAccent, const Color(0xFFD9A227));
+  test('ödül altını Design 2 Sun tonu', () {
+    expect(AppTheme.gold, const Color(0xFFE9A91B));
+    expect(AppTheme.secondaryAccent, const Color(0xFFE9A91B));
   });
 
   test('doğru/yanlış cevap renkleri mockup', () {
@@ -38,19 +35,21 @@ void main() {
   });
 
   test('açık mod zemin sıcak kâğıt tonu', () {
-    expect(AppTheme.lightBg, const Color(0xFFF7F4EE));
-    expect(AppTheme.lightBorder, const Color(0xFFE7E0D4));
-    expect(AppTheme.lightTextPrimary, const Color(0xFF1B201D));
+    expect(AppTheme.lightBg, const Color(0xFFFBF7EE));
+    expect(AppTheme.lightBgDeep, const Color(0xFFF4EBDD));
+    expect(AppTheme.lightBorder, const Color(0xFFE7ECE6));
+    expect(AppTheme.lightTextPrimary, const Color(0xFF171812));
   });
 
-  test('koyu mod zemin gece yeşili — yüzey zeminden bir tık açık', () {
-    expect(AppTheme.bg, const Color(0xFF0E1512));
-    expect(AppTheme.surface, const Color(0xFF18211B));
-    expect(AppTheme.border, const Color(0xFF2A362E));
+  test('koyu mod Design 2 Forest katmanlarını kullanır', () {
+    expect(AppTheme.bg, const Color(0xFF0A1712));
+    expect(AppTheme.surface, const Color(0xFF10251C));
+    expect(AppTheme.surfaceHi, const Color(0xFF17382A));
+    expect(AppTheme.border, const Color(0xFF20533A));
   });
 
   test('koyu mod metin kâğıt tonu', () {
-    expect(AppTheme.textPrimary, const Color(0xFFF6F3EC));
+    expect(AppTheme.textPrimary, const Color(0xFFFBF7EE));
   });
 
   test('sayfa ve AppBar başlıkları rafine w700 hiyerarşisini paylaşır', () {

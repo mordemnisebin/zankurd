@@ -28,6 +28,7 @@ class MissionToast {
                   Text(
                     heading,
                     style: TextStyle(
+                      fontFamily: AppTypography.fontFamily,
                       color: foregroundColor,
                       fontWeight: FontWeight.w800,
                       fontSize: 13,
@@ -36,6 +37,7 @@ class MissionToast {
                   Text(
                     '$label — +${mission.xpReward} XP',
                     style: TextStyle(
+                      fontFamily: AppTypography.fontFamily,
                       color: foregroundColor.withValues(alpha: 0.9),
                       fontSize: 12,
                     ),

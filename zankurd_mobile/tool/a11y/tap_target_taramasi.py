@@ -49,6 +49,8 @@ Kısıt sayısını görmek yetmez, kimin kısıtı olduğu belirler:
 * `dokunulabilir` — `InkWell` / `GestureDetector` / `gestures` sarmalı.
   Bunlarda `tapTargetSize` YOKTUR; hiçbir şey 48'e genişletmez, kısıt ne
   diyorsa hedef odur. Gerçek aday sınıfı budur.
+* `dokunma_hedefi_degil` — hemen yanında `a11y-tap-target: noninteractive`
+  açıklaması bulunan, insan tarafından doğrulanmış dekoratif/statik kısıt.
 * `acik_kapatma`  — `MaterialTapTargetSize.shrinkWrap` ya da
   `minimumSize: Size.zero`. Bunlar Flutter'ın genişletmesini AÇIKÇA
   kapatır; sayı okunmasa bile kusur adayıdır.
@@ -74,7 +76,8 @@ Kullanım:
 
     python3 tool/a11y/tap_target_taramasi.py [--kok lib] [--json]
 
-Çıkış kodu: `dokunulabilir` ya da `acik_kapatma` sınıfında bulgu varsa 1.
+Çıkış kodu: `dokunulabilir`, `acik_kapatma` ya da `bilinmiyor` sınıfında
+bulgu varsa 1.
 """
 import argparse
 import json
@@ -96,6 +99,7 @@ MIN_KISIT = re.compile(r"\bmin(Width|Height)\s*:\s*(\d+(?:\.\d+)?)")
 ACIK_KAPATMA = re.compile(
     r"MaterialTapTargetSize\.shrinkWrap|minimumSize\s*:\s*Size\.zero"
 )
+NONINTERACTIVE = re.compile(r"a11y-tap-target:\s*noninteractive")
 
 # Sıra ÖNEMLİ: en yakın sarmalayan kazanır, bu yüzden geriye doğru
 # okurken ilk eşleşen alınır. `LinearProgressIndicator` listede en başta
@@ -119,6 +123,12 @@ def sarmalayan_bul(satirlar: list[str], indeks: int) -> str:
             if desen.search(satirlar[i]):
                 return ad
     return "bilinmiyor"
+
+
+def noninteractive_isaretli(satirlar: list[str], indeks: int) -> bool:
+    """Kısıtın hemen yanında açık non-interactive açıklaması var mı?"""
+    bas = max(0, indeks - 2)
+    return any(NONINTERACTIVE.search(satirlar[i]) for i in range(bas, indeks + 1))
 
 
 def kilavuz_hukmu(deger: float) -> str:
@@ -145,11 +155,16 @@ def dosyayi_tara(yol: pathlib.Path, kok: pathlib.Path) -> list[dict]:
             hukum = kilavuz_hukmu(deger)
             if hukum == "temiz":
                 continue
+            sinif = (
+                "dokunma_hedefi_degil"
+                if noninteractive_isaretli(satirlar, i)
+                else sarmalayan_bul(satirlar, i)
+            )
             bulgular.append(
                 {
                     "dosya": str(bagil),
                     "satir": i + 1,
-                    "sinif": sarmalayan_bul(satirlar, i),
+                    "sinif": sinif,
                     "eksen": eslesme.group(1),
                     "deger": deger,
                     "kilavuz": hukum,
@@ -172,12 +187,20 @@ def dosyayi_tara(yol: pathlib.Path, kok: pathlib.Path) -> list[dict]:
 
 
 # Rapor sırası: göz gerektirenler önce, ayıklananlar sonra.
-SIRA = ["acik_kapatma", "dokunulabilir", "bilinmiyor", "iconbutton", "ilerleme_cubugu"]
+SIRA = [
+    "acik_kapatma",
+    "dokunulabilir",
+    "bilinmiyor",
+    "dokunma_hedefi_degil",
+    "iconbutton",
+    "ilerleme_cubugu",
+]
 
 BASLIK = {
     "acik_kapatma": "AÇIK KAPATMA — Flutter'ın 48 genişletmesi elle kapatılmış",
     "dokunulabilir": "DOKUNULABİLİR — InkWell/GestureDetector, genişletme YOK",
     "bilinmiyor": "BİLİNMİYOR — sarmalayan bulunamadı, göz gerekir",
+    "dokunma_hedefi_degil": "NON-INTERACTIVE — açık kaynak işaretiyle dokunma hedefi değil",
     "iconbutton": "ICONBUTTON — padded genişletme kurtarıyor olmalı (doğrulanmadı)",
     "ilerleme_cubugu": "İLERLEME ÇUBUĞU — dokunma hedefi değil, ayıklandı",
 }
@@ -216,7 +239,7 @@ def main() -> int:
                 print(f"      {bulgu['kaynak']}")
 
     goz_gerektiren = [
-        b for b in bulgular if b["sinif"] in ("acik_kapatma", "dokunulabilir")
+        b for b in bulgular if b["sinif"] in ("acik_kapatma", "dokunulabilir", "bilinmiyor")
     ]
     if not argumanlar.json:
         print(f"\nGöz gerektiren bulgu: {len(goz_gerektiren)}")

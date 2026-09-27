@@ -30,6 +30,7 @@ void main() {
       expect(source, contains("await ageGate.waitFor({ state: 'visible'"));
       expect(source, contains("aria-checked"));
       expect(source, isNot(contains('ageGate.check()')));
+      expect(source, contains("clickText('Bidomîne')"));
       expect(source, contains("clickText('Dest pê bike')"));
       expect(source, contains("DESTPÊKA BIÇÛK"));
       expect(source, contains("Hemû mijar"));
@@ -40,6 +41,7 @@ void main() {
         source,
         contains("getByRole('button', { name: /Pêşbirka bilez/ })"),
       );
+      expect(source, contains('await quickDuel.isEnabled()'));
       expect(source, isNot(contains("Rojbaş, Rojda!")));
       expect(source, isNot(contains("Pêşbirkê bike û bi ser keve")));
     },
@@ -51,6 +53,7 @@ void main() {
     ).readAsStringSync();
     expect(source, contains("Ez ji 13 salî mezintir im"));
     expect(source, contains("Wek mêvan bidomîne"));
+    expect(source, contains("click('Bidomîne')"));
     expect(source, contains("Hînbûn temam bû"));
     expect(source, contains('ZANKURD_AUDIT_DIR'));
     expect(source, contains('ZANKURD_AUDIT_MODE'));
@@ -75,6 +78,46 @@ void main() {
       expect(doc, isNot(contains('supabase/coin_policies.sql')));
     },
   );
+
+  test(
+    'CI mobil derlemeleri release derleyicisini ve staging kapısını kullanır',
+    () {
+      final workflow = File(
+        '../.github/workflows/flutter_ci.yml',
+      ).readAsStringSync();
+
+      expect(workflow, contains('flutter build appbundle --release'));
+      expect(workflow, contains('flutter build ios --release --no-codesign'));
+      expect(workflow, contains('--dart-define=APP_ENV=staging'));
+      expect(workflow, contains('REVENUECAT_API_KEY_ANDROID=test_'));
+      expect(workflow, contains('REVENUECAT_API_KEY_IOS=test_'));
+      expect(workflow, isNot(contains('flutter build apk --debug')));
+      expect(workflow, isNot(contains('flutter build ios --debug')));
+      expect(workflow, isNot(contains('device-nightly-note:')));
+    },
+  );
+
+  test('yayın rehberi dört cihaz testini kanıt dosyasıyla kapatır', () {
+    final steps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
+
+    for (final testName in [
+      'local_backend_1v1_test.dart',
+      'revenuecat_roundtrip_test.dart',
+      'notification_real_schedule_test.dart',
+      'os_level_resilience_test.dart',
+    ]) {
+      expect(
+        steps,
+        contains(testName),
+        reason: '$testName yayın kapısında yok',
+      );
+    }
+    expect(
+      steps,
+      contains('dart run tool/validate_device_release_evidence.dart'),
+    );
+    expect(steps, contains('.release-device-evidence.json'));
+  });
 
   test('Google Play için bağımsız hesap silme sayfası mevcut', () {
     final page = File('web/delete-account.html');
@@ -616,11 +659,13 @@ printf '%s\n' rsync >> "$FAKE_COMMAND_LOG"
     expect(source, contains('path: zankurd_mobile/coverage/lcov.info'));
     expect(
       source,
-      contains('path: zankurd_mobile/build/app/outputs/flutter-apk'),
+      contains(
+        'path: zankurd_mobile/build/app/outputs/bundle/release/app-release.aab',
+      ),
     );
     expect(
       source,
-      contains('flutter build ios --debug --no-codesign'),
+      contains('flutter build ios --release --no-codesign'),
       reason: 'iOS derlemesi yoksa Apple yüzeyi yalnız yerelde kırılır.',
     );
     expect(

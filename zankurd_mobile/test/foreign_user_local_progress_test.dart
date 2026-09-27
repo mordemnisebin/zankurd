@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show User;
+import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/data/badge_service.dart';
 import 'package:zankurd_mobile/src/data/learning_goal_store.dart';
 import 'package:zankurd_mobile/src/data/quiz_result_progress_receipt_store.dart';
@@ -27,14 +28,11 @@ import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 ///
 /// ## Bekçinin tuttuğu üç şey
 ///
-/// 1. Cihazın son sahibinden FARKLI bir kullanıcı geldiğinde yerel
-///    ilerleme temizlenir.
-/// 2. AYNI kullanıcının normal yeniden girişinde ilerleme SİLİNMEZ —
-///    "hesap değiştiren her oturum açmada sıfırla" değil, "önceki
-///    oturumdan farklı bir kullanıcı geldiğinde sıfırla".
-/// 3. Bu alan uygulamaya SONRADAN eklendiği için, hiç kayıtlı sahip yokken
-///    (var olan bir kullanıcının ilk açılışı) ilerleme silinmez — yalnız
-///    sahip kaydedilir.
+/// 1. Cihazın son sahibinden FARKLI bir kullanıcı kendi alanında 0 görür.
+///    Eski hesabın anahtarı silinmez; o hesap geri dönünce durur.
+/// 2. AYNI kullanıcının normal yeniden girişinde ilerleme SİLİNMEZ.
+/// 3. Kayıtlı insan sahip yokken ilk gerçek kullanıcı genel anahtarı
+///    devralır; ilerleme silinmez.
 void main() {
   User user(String id) => User(
     id: id,
@@ -46,6 +44,7 @@ void main() {
 
   setUp(() {
     SharedPreferences.setMockInitialValues({});
+    LocalProgressScope.debugReset();
     XPStore.resetInstance();
     BadgeService.resetInstance();
   });
@@ -125,6 +124,29 @@ void main() {
     },
   );
 
+  test(
+    'hesap değişince eski kullanıcının XP\'si silinmez ve geri dönünce durur',
+    () async {
+      SharedPreferences.setMockInitialValues({
+        'zankurd.localProgress.deviceOwnerUserId': 'user-old',
+        'zankurd.xp.total': 500,
+      });
+      final provider = AuthProvider.test();
+
+      await provider.debugResetLocalProgressIfForeignUser(user('user-new'));
+      XPStore.resetInstance();
+      expect((await XPStore.load()).totalXP, 0);
+
+      await provider.debugResetLocalProgressIfForeignUser(user('user-old'));
+      XPStore.resetInstance();
+      expect(
+        (await XPStore.load()).totalXP,
+        500,
+        reason: 'eski hesabın XP\'si kendi alanında durmalı',
+      );
+    },
+  );
+
   test('hedef ve makbuz da yabancı kullanıcıya devredilmez', () async {
     // 2026-09: `_clearLocalProgressStores` 11 store temizliyordu ama
     // öğrenme hedefi ve tur makbuzu listede yoktu — aynı cihazda
@@ -161,9 +183,68 @@ void main() {
       prefs,
     ).read(userId: 'user-old', roomId: 'room-1');
     expect(
-      reread,
+      reread?.stage,
+      QuizResultReceiptStage.pendingUserDecision,
+      reason: 'eski hesabın makbuzu diskte kalmalı',
+    );
+    final foreignRead = await QuizResultProgressReceiptStore(
+      prefs,
+    ).read(userId: 'user-new', roomId: 'room-1');
+    expect(
+      foreignRead,
       isNull,
       reason: 'önceki turun makbuzu yeni hesaba devretmemeli',
+    );
+  });
+
+  test(
+    'taşınma bittiyse sahipsiz çevrimdışı yazım genel anahtara dönmez',
+    () async {
+      SharedPreferences.setMockInitialValues({
+        LocalProgressScope.migratedKey: 'user-old',
+      });
+      final prefs = await SharedPreferences.getInstance();
+
+      await LocalProgressScope.activateOffline(prefs);
+
+      expect(LocalProgressScope.activeUserId, LocalProgressScope.offlineUserId);
+      expect(
+        LocalProgressScope.physical('zankurd.xp.total'),
+        LocalProgressScope.physicalFor(
+          LocalProgressScope.offlineUserId,
+          'zankurd.xp.total',
+        ),
+      );
+    },
+  );
+
+  test('çıkış yalnız aktif kullanıcının XP anahtarını siler', () async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(
+      LocalProgressScope.physicalFor('user-a', 'zankurd.xp.total'),
+      40,
+    );
+    await prefs.setInt(
+      LocalProgressScope.physicalFor('user-b', 'zankurd.xp.total'),
+      70,
+    );
+    LocalProgressScope.bind('user-a');
+    final provider = AuthProvider.test();
+
+    await provider.signOut();
+
+    expect(
+      prefs.getInt(
+        LocalProgressScope.physicalFor('user-a', 'zankurd.xp.total'),
+      ),
+      isNull,
+    );
+    expect(
+      prefs.getInt(
+        LocalProgressScope.physicalFor('user-b', 'zankurd.xp.total'),
+      ),
+      70,
     );
   });
 }

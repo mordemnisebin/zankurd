@@ -8,6 +8,8 @@ extension _QuizScreenUI on _QuizScreenState {
     final showExpl = _isLearningExperience && _showExplanation;
 
     final screenHeight = MediaQuery.sizeOf(context).height;
+    final largeText = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
+    final compactLargeText = largeText && screenHeight < 600;
 
     // Düzen üç bölgeye ayrılır: sabit üst (skor/ilerleme), kaydırılabilir
     // orta (soru + şıklar) ve sabit alt aksiyon barı. Böylece "Sonraki"
@@ -21,11 +23,11 @@ extension _QuizScreenUI on _QuizScreenState {
         return Padding(
           // M-7: raw literal → adlandırılmış sabit. 6px, AppSpacing.xxs(4) ile
           // xs(8) arasında; quiz-özel değer olduğu için ayrı sabite alındı.
-          padding: const EdgeInsets.fromLTRB(
+          padding: EdgeInsets.fromLTRB(
             AppSpacing.sm,
             6.0,
             AppSpacing.sm,
-            AppSpacing.xs,
+            compactLargeText ? AppSpacing.xxs : AppSpacing.xs,
           ),
           child: Center(
             child: SizedBox(
@@ -161,7 +163,11 @@ extension _QuizScreenUI on _QuizScreenState {
                       },
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  // %150+ metinde jokerler daha yüksek erişilebilirlik
+                  // düzenine geçiyor. Bu 6px yalnız görsel ayraçtı; 320x568
+                  // @%200 kombinasyonunda sabit alt barla birlikte Column'u
+                  // 2.8px taşırıyordu. Büyük yazıda gerçek içeriğe bırak.
+                  SizedBox(height: largeText ? 0 : 6),
                   _buildActionControls(),
                 ],
               ),
@@ -624,25 +630,57 @@ extension _QuizScreenUI on _QuizScreenState {
       if (_supportsDoubleAnswer) WildcardType.doubleAnswer,
       if (_isSoloMode) WildcardType.changeQuestion,
     ];
+    final textScale = MediaQuery.textScalerOf(context).scale(1);
+
+    Widget standardRow() => IntrinsicHeight(
+      child: Row(
+        key: _wildcardKey,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var i = 0; i < jokers.length; i++) ...[
+            if (i > 0) const SizedBox(width: AppSpacing.xxs),
+            Expanded(child: _buildWildcardButton(jokers[i])),
+          ],
+        ],
+      ),
+    );
+
+    Widget largeTextGrid() => Column(
+      key: _wildcardKey,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (var start = 0; start < jokers.length; start += 2) ...[
+          if (start > 0) const SizedBox(height: AppSpacing.xxs),
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(child: _buildWildcardButton(jokers[start])),
+                if (start + 1 < jokers.length) ...[
+                  const SizedBox(width: AppSpacing.xxs),
+                  Expanded(child: _buildWildcardButton(jokers[start + 1])),
+                ] else ...[
+                  const SizedBox(width: AppSpacing.xxs),
+                  const Expanded(child: SizedBox.shrink()),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ],
+    );
+
     return Column(
       key: const ValueKey('quiz-wildcard-row'),
       mainAxisSize: MainAxisSize.min,
       children: [
-        // IntrinsicHeight + stretch: joker etiketi iki satıra sarabildiği
-        // için (Kurmancî'de sarıyor) düğmeler farklı yükseklikte kalıyor ve
-        // bar tırtıklı görünüyordu. Hepsi en uzunun boyuna çekilir.
-        IntrinsicHeight(
-          child: Row(
-            key: _wildcardKey,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (var i = 0; i < jokers.length; i++) ...[
-                if (i > 0) const SizedBox(width: AppSpacing.xxs),
-                Expanded(child: _buildWildcardButton(jokers[i])),
-              ],
-            ],
-          ),
-        ),
+        // Normal ölçekte dört joker tek satırda kalır. %150+ sistem yazısı
+        // seçildiğinde dört dar sütun Kurmancî etiketleri ellipsis'e
+        // zorluyordu; burada yalnız erişilebilirlik ölçeğinde 2×2'ye geçip
+        // puntoyu küçültmeden gerçek metne yer açıyoruz. Her satır yine
+        // IntrinsicHeight ile eşitlenir, dolayısıyla eski "tırtıklı bar"
+        // kusuru geri dönmez.
+        if (textScale >= 1.5) largeTextGrid() else standardRow(),
         // Hiç coini olmayan yeni oyuncuya kilitler "her şey paralı" gibi
         // görünmesin: coinin nereden kazanılacağını tek satırla söyle.
         if (_coinBalance == 0 && index == 0)
@@ -778,6 +816,9 @@ extension _QuizScreenUI on _QuizScreenState {
     final xpStore = await XPStore.load();
     final missionXP = completed.xpReward;
     final leveledUp = await xpStore.addXP(missionXP);
+    unawaited(
+      XpAwardPublisher.publish(repository: widget.repository, delta: missionXP),
+    );
 
     if (!mounted) return;
     MissionToast.show(context, completed);
@@ -824,10 +865,31 @@ extension _QuizScreenUI on _QuizScreenState {
   Future<void> _chargeWildcard(WildcardType type) async {
     bool charged;
     try {
-      charged = await widget.repository.spendCoins(
+      final result = await widget.repository.spendCoinsDurable(
         type.coinCost,
         type.spendReason,
+        'wildcard:${question.id}:${type.name}',
       );
+      if (!result.success && result.retryable) {
+        await SyncManager.maybeInstance?.queueCoinSpend(
+          amount: type.coinCost,
+          reason: type.spendReason,
+          idempotencyKey: 'wildcard:${question.id}:${type.name}',
+        );
+      }
+      charged = result.success || result.retryable;
+    } on RetryableWriteException catch (error, stack) {
+      ErrorReporter.record(
+        error.cause,
+        stack,
+        reason: 'spend_coins_${type.name}',
+      );
+      await SyncManager.maybeInstance?.queueCoinSpend(
+        amount: type.coinCost,
+        reason: type.spendReason,
+        idempotencyKey: 'wildcard:${question.id}:${type.name}',
+      );
+      charged = true;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'spend_coins_${type.name}');
       charged = false;
@@ -1240,7 +1302,9 @@ extension _QuizScreenUI on _QuizScreenState {
                             needsAnswerRevealFallback(question.type),
                         onAnswer: _answer,
                         onListen: _listenCurrentQuestion,
-                        canListen: _ttsCanListen,
+                        canListen: _canListenCurrentQuestion,
+                        listeningListenable:
+                            _questionAudioService?.playingListenable,
                       ),
                     ),
                   ],
@@ -1289,7 +1353,8 @@ extension _QuizScreenUI on _QuizScreenState {
                       needsAnswerRevealFallback(question.type),
                   onAnswer: _answer,
                   onListen: _listenCurrentQuestion,
-                  canListen: _ttsCanListen,
+                  canListen: _canListenCurrentQuestion,
+                  listeningListenable: _questionAudioService?.playingListenable,
                 ),
               ],
             ],

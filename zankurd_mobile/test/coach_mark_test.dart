@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/coach_mark.dart';
 
 void main() {
@@ -24,6 +25,42 @@ void main() {
       ),
     );
   }
+
+  testWidgets('tutorial bilgi rozeti Forest kimliğini kullanır', (
+    tester,
+  ) async {
+    final key = GlobalKey();
+
+    await tester.pumpWidget(
+      wrapTarget(
+        key,
+        overlayChild: CoachMarkOverlay(
+          steps: [
+            CoachMarkStep(
+              targetKey: key,
+              icon: Icons.home_rounded,
+              title: 'Ana Sayfa',
+              description: 'Açıklama tr',
+            ),
+          ],
+          onFinished: () {},
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final badge = tester.widget<Container>(
+      find
+          .ancestor(
+            of: find.byIcon(Icons.home_rounded),
+            matching: find.byType(Container),
+          )
+          .first,
+    );
+    final decoration = badge.decoration! as BoxDecoration;
+    final gradient = decoration.gradient! as LinearGradient;
+    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+  });
 
   testWidgets('ilk adim baslik ve aciklamayi gosterir', (tester) async {
     final key = GlobalKey();

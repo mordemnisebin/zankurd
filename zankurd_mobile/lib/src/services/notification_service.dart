@@ -43,6 +43,7 @@ class NotificationService {
   static const _nextFireKey = 'zankurd.notifications.nextFireAt';
 
   static NotificationService? _instance;
+  static Future<NotificationService>? _loading;
 
   /// Kurulu değilse null. Bildirimler bir iyileştirmedir; servis
   /// yüklenmemişse (web, test, yapılandırmasız derleme) çağıran taraf
@@ -57,6 +58,22 @@ class NotificationService {
   }) async {
     final cached = _instance;
     if (cached != null) return cached;
+    final inFlight = _loading;
+    if (inFlight != null) return inFlight;
+
+    final loading = _loadFresh(timeZoneResolver);
+    _loading = loading;
+    try {
+      final service = await loading;
+      return _instance ??= service;
+    } finally {
+      if (identical(_loading, loading)) _loading = null;
+    }
+  }
+
+  static Future<NotificationService> _loadFresh(
+    TimeZoneResolver timeZoneResolver,
+  ) async {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -75,12 +92,13 @@ class NotificationService {
     if (service.enabled) {
       await service._scheduleDaily();
     }
-    return _instance = service;
+    return service;
   }
 
   /// Testlerde tekil örneği sıfırlamak için.
   static void resetInstance() {
     _instance = null;
+    _loading = null;
   }
 
   final SharedPreferences? _preferences;
@@ -155,7 +173,6 @@ class NotificationService {
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService init');
-      debugPrint('Failed to initialize local notifications: $e');
     }
   }
 
@@ -175,7 +192,6 @@ class NotificationService {
           ?.requestPermissions(alert: true, badge: true, sound: true);
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService');
-      debugPrint('Failed to request notifications permission: $e');
     }
   }
 
@@ -202,7 +218,6 @@ class NotificationService {
       }
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService check');
-      debugPrint('Failed to check notification permission: $e');
     }
     return true;
   }
@@ -273,7 +288,6 @@ class NotificationService {
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService schedule');
-      debugPrint('Failed to schedule local notification: $e');
     }
   }
 
@@ -284,7 +298,6 @@ class NotificationService {
       await _localNotificationsPlugin.cancelAll();
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService cancel');
-      debugPrint('Failed to cancel notifications: $e');
     }
   }
 
@@ -326,7 +339,6 @@ class NotificationService {
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService friend request');
-      debugPrint('Failed to show friend request notification: $e');
     }
   }
 
@@ -404,7 +416,6 @@ class NotificationService {
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService streak');
-      debugPrint('Failed to schedule streak warning: $e');
     }
   }
 
@@ -437,7 +448,6 @@ class NotificationService {
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService friend accepted');
-      debugPrint('Failed to show friend accepted notification: $e');
     }
   }
 }

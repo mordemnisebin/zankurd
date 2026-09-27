@@ -830,19 +830,19 @@ class _FlashcardViewState extends State<_FlashcardView> {
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 AppIcons.circleCheck,
-                color: AppTheme.correct,
+                color: AppColors.readableAccent(context, AppTheme.correct),
                 size: 20,
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   context.t(K.dogruCevap),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: AppTheme.correct,
+                    color: AppColors.readableAccent(context, AppTheme.correct),
                   ),
                 ),
               ),
@@ -872,9 +872,9 @@ class _FlashcardViewState extends State<_FlashcardView> {
             const SizedBox(height: 16),
             Row(
               children: [
-                const Icon(
+                Icon(
                   AppIcons.lightbulb,
-                  color: AppTheme.violet,
+                  color: AppColors.readableAccent(context, AppTheme.violet),
                   size: 18,
                 ),
                 const SizedBox(width: 6),
@@ -883,10 +883,10 @@ class _FlashcardViewState extends State<_FlashcardView> {
                     // Ürün terimi şîrove (`K.explanationTitle`); etiket
                     // "Ravahî" deyince aynı açıklama iki adla durur.
                     context.t(K.aciklama),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.violet,
+                      color: AppColors.readableAccent(context, AppTheme.violet),
                     ),
                   ),
                 ),

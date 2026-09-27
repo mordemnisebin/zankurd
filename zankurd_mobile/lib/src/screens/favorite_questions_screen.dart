@@ -5,9 +5,9 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/quiz_question.dart';
+import '../services/favorite_mutation_service.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
-import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/screen_identity_header.dart';
@@ -51,12 +51,15 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
   /// yok (2026-08-17).
   ///
   /// Aynı işi yapan `quiz_screen._toggleFavorite` bunu zaten doğru yapıyordu;
-  /// ayrışan yalnız bu ekrandı.
+  /// iki ekran artık aynı dayanıklılık servisini kullanır.
   Future<void> _removeFavorite(QuizQuestion question) async {
     try {
-      await widget.repository.toggleFavoriteQuestion(question, false);
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'remove favorite failed');
+      await FavoriteMutationService.setFavorite(
+        repository: widget.repository,
+        question: question,
+        favorite: false,
+      );
+    } catch (_) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.t(K.questionRemoveFailed))),

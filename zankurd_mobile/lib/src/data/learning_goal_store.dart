@@ -1,4 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'checked_preferences_removal.dart';
+import 'local_progress_scope.dart';
 
 import '../models/learning_goal.dart';
 import '../utils/error_reporter.dart';
@@ -6,7 +8,8 @@ import '../utils/error_reporter.dart';
 class LearningGoalStore {
   LearningGoalStore._(this._preferences, this._goal);
 
-  static const _key = 'zankurd.learning_goal.v1';
+  static String get _key =>
+      LocalProgressScope.physical('zankurd.learning_goal.v1');
   static LearningGoalStore? _instance;
 
   final SharedPreferences? _preferences;
@@ -33,12 +36,27 @@ class LearningGoalStore {
 
   /// Kayıtlı hedefi siler; hesap değişiminde yabancının hedefi devralınmaz.
   Future<void> clear() async {
-    await _preferences?.remove(_key);
+    await removePersistedPreferenceKeys(_preferences, [_key]);
     _goal = null;
   }
 
-  Future<void> save(LearningGoal goal) async {
-    _goal = goal;
-    await _preferences?.setString(_key, goal.storageKey);
+  Future<bool> save(LearningGoal goal) async {
+    final preferences = _preferences;
+    if (preferences == null) return false;
+    try {
+      final saved = await preferences.setString(_key, goal.storageKey);
+      if (!saved) {
+        await preferences.reload();
+        return false;
+      }
+      _goal = goal;
+      return true;
+    } catch (error, stack) {
+      try {
+        await preferences.reload();
+      } catch (_) {}
+      ErrorReporter.record(error, stack, reason: 'learning_goal_save');
+      return false;
+    }
   }
 }

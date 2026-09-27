@@ -167,7 +167,7 @@ class _ProfileHeroCard extends StatelessWidget {
                                 child: Container(
                                   padding: const EdgeInsets.all(6),
                                   decoration: BoxDecoration(
-                                    gradient: AppTheme.accentGradient,
+                                    gradient: AppTheme.identityHeaderGradient,
                                     shape: BoxShape.circle,
                                     border: Border.all(
                                       color: Colors.white.withValues(

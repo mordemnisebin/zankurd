@@ -3,22 +3,32 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
+import 'package:zankurd_mobile/src/models/room.dart';
+import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
+import 'package:zankurd_mobile/src/screens/learn_home_screen.dart';
+import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
+import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
+import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
+import 'package:zankurd_mobile/src/screens/password_recovery_screen.dart';
 import 'package:zankurd_mobile/src/screens/paywall_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
+import 'package:zankurd_mobile/src/screens/room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
+import 'package:zankurd_mobile/src/screens/subcategory_screen.dart';
+import 'package:zankurd_mobile/src/screens/suggest_question_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
@@ -294,6 +304,53 @@ void main() {
       Scaffold(body: CategoriesTab(repository: repository)),
     );
   });
+
+  // JEV 2026-09-23 denetimi: ekran turunda bulunan ancak %200 yazı
+  // ratchet'inde hiç açılmayan yüzeyler. Her birini hem büyük yazıda hem
+  // de iPhone SE genişliğinde kuruyoruz; iki eksen ayrı tutuluyor ki bir
+  // kırılma olduğunda sebebi doğrudan görülsün.
+  Map<String, Widget Function()> extendedLargeTextScreens() => {
+    'öğren ana sayfası': () => LearnHomeScreen(repository: repository),
+    'seviye listesi': () =>
+        LevelScreen(repository: repository, category: 'Ziman'),
+    'alt kategori': () =>
+        SubcategoryScreen(repository: repository, category: 'Ziman'),
+    'soru öner': () => SuggestQuestionScreen(repository: repository),
+    'parola kurtarma': () => const PasswordRecoveryScreen(),
+    'öğrenci sözlüğü': () => const LearnerLexiconScreen(),
+    'avatar düzenleyici': () => AvatarEditorScreen(repository: repository),
+    'onboarding': () => OnboardingScreen(onComplete: () {}),
+    'oda sonuç kurtarma': () {
+      final room = repository.createRoom();
+      return RoomResultRecoveryScreen(
+        repository: repository,
+        snapshot: RoomResultSnapshot(
+          room: room,
+          ownPlayerId: 'user',
+          questionIds: const [],
+          answers: const [],
+          winnerId: null,
+          endedReason: 'completed',
+          forfeitedBy: null,
+          finishedAt: DateTime.utc(2026, 9, 23),
+        ),
+        // Bu vaka sahiplik uyuşmazlığı hata yüzeyini deterministik açar;
+        // ağ/ödül settlement'ı çalıştırmadan recovery ekranının gerçek
+        // büyük-yazı düzenini ölçer.
+        expectedUserId: 'different-user',
+      );
+    },
+  };
+
+  for (final entry in extendedLargeTextScreens().entries) {
+    testWidgets('${entry.key} — %200 yazı', (t) async {
+      await expectNoOverflow(t, entry.value());
+    });
+
+    testWidgets('dar ekran — ${entry.key}', (t) async {
+      await expectNoOverflow(t, entry.value(), size: se, textScale: 1.0);
+    });
+  }
 
   testWidgets('dar ekran — oda', (t) async {
     await expectNoOverflow(

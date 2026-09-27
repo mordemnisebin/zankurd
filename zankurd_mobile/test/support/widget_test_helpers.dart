@@ -129,6 +129,7 @@ Widget testShell({
     ],
     child: Consumer<ThemeProvider>(
       builder: (context, theme, _) => MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         themeMode: theme.mode,
