@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'firebase_options.dart';
+import 'src/utils/join_deep_link.dart';
 import 'src/config/app_config.dart';
 import 'src/data/offline_zankurd_repository.dart';
 import 'src/data/question_bank_loader.dart';
@@ -413,72 +414,125 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider<PremiumService>.value(value: premiumService),
       ],
       child: Consumer2<ThemeProvider, ReducedMotionProvider>(
-        builder: (context, themeProvider, reducedMotion, _) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'ZanKurd',
-          theme: AppTheme.light(),
-          darkTheme: AppTheme.dark(),
-          themeMode: themeProvider.mode,
-          themeAnimationDuration: reducedMotion.reduceMotion
-              ? Duration.zero
-              : const Duration(milliseconds: 600),
-          themeAnimationCurve: Curves.easeInOutCubic,
-          locale: const Locale('tr'),
-          supportedLocales: AppMaterialLocales.supported,
-          localizationsDelegates: AppMaterialLocales.delegates,
-          navigatorObservers: [appRouteObserver, appPageRouteObserver],
-          home:
-              home ??
-              SplashScreen(
-                // Marka penceresi AppShell'in yerel kapı bayraklarını okumadan
-                // önce tercih deposunu ısıtır. Profil adı ağdan arka planda
-                // yüklendiği için splash hazır oluşunu asla geciktirmez.
-                readiness: _warmUpShell(),
-                next: AppShell(
-                  repository: repository,
-                  pushTokenSync: PushTokenSync(
-                    source: kIsWeb
-                        ? const NoopPushTokenSource()
-                        : const FirebasePushTokenSource(),
-                    repository: repository,
+        // Davet bağlantısını `WidgetsApp`in kendi rota gözlemcisinden ÖNCE
+        // yakalar (bkz. JoinDeepLinkScope): kapsam MaterialApp'in üstünde
+        // olmalı ki gözlemcisi daha önce kaydolsun.
+        builder: (context, themeProvider, reducedMotion, _) => JoinDeepLinkScope(
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'ZanKurd',
+            theme: AppTheme.light(),
+            darkTheme: AppTheme.dark(),
+            themeMode: themeProvider.mode,
+            themeAnimationDuration: reducedMotion.reduceMotion
+                ? Duration.zero
+                : const Duration(milliseconds: 600),
+            themeAnimationCurve: Curves.easeInOutCubic,
+            locale: const Locale('tr'),
+            supportedLocales: AppMaterialLocales.supported,
+            localizationsDelegates: AppMaterialLocales.delegates,
+            navigatorObservers: [appRouteObserver, appPageRouteObserver],
+            // `home:` yerine `routes` + `onGenerateInitialRoutes` — bkz.
+            // `_buildInitialRoutes` üstündeki belge. `routes` yalnız "/" için
+            // tek satırlık bir tablo: `home` alanının Flutter içindeki ikinci
+            // görevini (Navigator'ın "bir rota kaynağım var" saymasını, bkz.
+            // `WidgetsApp._usesNavigator`) devralır; asıl gösterimi hâlâ
+            // `_home()` üretir.
+            routes: {Navigator.defaultRouteName: (context) => _home()},
+            onGenerateInitialRoutes: _buildInitialRoutes,
+            builder: (context, child) {
+              // Sistemin "Hareketi Azalt" tercihi 2026-07-31'e kadar HİÇ
+              // okunmuyordu. `ReducedMotionProvider`ın sınıf belgesi
+              // "kullanıcı tercihi VEYA sistem tercihi" diyor ve
+              // `reduceMotion` getter'ı `_userReduce || _systemReduce`
+              // döndürüyordu — ama `setSystemReduce`i çağıran tek satır
+              // yoktu, yani ikinci koşul hep false kalıyordu. iOS/Android
+              // erişilebilirlik ayarından hareketi kapatan kullanıcı,
+              // uygulamada ayrıca aynı anahtarı bulup açmak zorundaydı.
+              //
+              // `build` içinde okunuyor: sistem tercihi çalışırken
+              // değişebilir ve MediaQuery zaten yeniden çizim tetikler.
+              final disableAnimations = MediaQuery.disableAnimationsOf(context);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                reducedMotionProvider.setSystemReduce(disableAnimations);
+              });
+              return MediaQuery.withClampedTextScaling(
+                minScaleFactor: 0.85,
+                maxScaleFactor: 2.0,
+                // Durum çubuğu ikonları hiçbir yerde ayarlanmamıştı; açık
+                // temada beyaz saat/pil krem zemin üzerine düşüyor ve
+                // okunmuyordu (2026-07-25 canlı denetimi, iOS). Ekranların
+                // çoğu AppBar kullanmadığı için stil uygulama kökünde,
+                // etkin parlaklığa göre verilir.
+                child: AnnotatedRegion<SystemUiOverlayStyle>(
+                  value: _overlayStyleFor(context),
+                  child: ResponsiveWrapper(
+                    child: child ?? const SizedBox.shrink(),
                   ),
                 ),
-              ),
-          builder: (context, child) {
-            // Sistemin "Hareketi Azalt" tercihi 2026-07-31'e kadar HİÇ
-            // okunmuyordu. `ReducedMotionProvider`ın sınıf belgesi
-            // "kullanıcı tercihi VEYA sistem tercihi" diyor ve
-            // `reduceMotion` getter'ı `_userReduce || _systemReduce`
-            // döndürüyordu — ama `setSystemReduce`i çağıran tek satır
-            // yoktu, yani ikinci koşul hep false kalıyordu. iOS/Android
-            // erişilebilirlik ayarından hareketi kapatan kullanıcı,
-            // uygulamada ayrıca aynı anahtarı bulup açmak zorundaydı.
-            //
-            // `build` içinde okunuyor: sistem tercihi çalışırken
-            // değişebilir ve MediaQuery zaten yeniden çizim tetikler.
-            final disableAnimations = MediaQuery.disableAnimationsOf(context);
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              reducedMotionProvider.setSystemReduce(disableAnimations);
-            });
-            return MediaQuery.withClampedTextScaling(
-              minScaleFactor: 0.85,
-              maxScaleFactor: 2.0,
-              // Durum çubuğu ikonları hiçbir yerde ayarlanmamıştı; açık
-              // temada beyaz saat/pil krem zemin üzerine düşüyor ve
-              // okunmuyordu (2026-07-25 canlı denetimi, iOS). Ekranların
-              // çoğu AppBar kullanmadığı için stil uygulama kökünde,
-              // etkin parlaklığa göre verilir.
-              child: AnnotatedRegion<SystemUiOverlayStyle>(
-                value: _overlayStyleFor(context),
-                child: ResponsiveWrapper(
-                  child: child ?? const SizedBox.shrink(),
-                ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
+  }
+
+  /// Açılış ekranı: `home` verilmemişse marka penceresi + [AppShell].
+  Widget _home() {
+    return home ??
+        SplashScreen(
+          // Marka penceresi AppShell'in yerel kapı bayraklarını okumadan
+          // önce tercih deposunu ısıtır. Profil adı ağdan arka planda
+          // yüklendiği için splash hazır oluşunu asla geciktirmez.
+          readiness: _warmUpShell(),
+          next: AppShell(
+            repository: repository,
+            pushTokenSync: PushTokenSync(
+              source: kIsWeb
+                  ? const NoopPushTokenSource()
+                  : const FirebasePushTokenSource(),
+              repository: repository,
+            ),
+          ),
+        );
+  }
+
+  /// İlk rotayı `initialRouteName`i YOK SAYARAK her zaman [_home] ile üretir.
+  ///
+  /// ## Kusur
+  ///
+  /// Flutter 3.8+'ta mobil deep linking varsayılan AÇIK: soğuk açılışta
+  /// `defaultRouteName` platformdan `/join/KOD` gibi evrensel bir bağlantı
+  /// yolu taşıyabilir. `MaterialApp` bu callback verilmediğinde
+  /// `Navigator.defaultGenerateInitialRoutes`u kullanır — o da yolu `/`,
+  /// `/join`, `/join/KOD` parçalarına bölüp HER biri için `onGenerateRoute`
+  /// çağırır. Bu uygulamanın `/join` ve `/join/KOD` için bir rota üreticisi
+  /// olmadığından ("routes" tablosu yalnız "/" içerir, bkz. `build()`),
+  /// parçalama son parçada başarısız olur ve Flutter bunu
+  /// `FlutterError.reportError` ile bildirip sessizce `/`e düşer.
+  ///
+  /// ## Niçin sessiz kalırdı
+  ///
+  /// Düşüş her zaman doğru ekrana (ana sayfa) vardığı için kullanıcı hiçbir
+  /// şey fark etmiyordu; hata yalnız konsolu izleyen ya da
+  /// `tester.takeException()` çağıran biri tarafından görülürdü. Soğuk
+  /// açılış deep link'i bu değişiklikten önce hiç test edilmiyordu — bkz.
+  /// `test/app_shell_join_deep_link_test.dart` ("soğuk açılış" grubu).
+  ///
+  /// Bu metot yol parçalama/onGenerateRoute deneme mekanizmasını hiç
+  /// çalıştırmaz: yol ne olursa olsun (bilinen, bilinmeyen, `/join/...`)
+  /// uygulama her zaman `home` ile ve hatasız açılır.
+  /// `JoinDeepLink.consumeInitialRoute()` `defaultRouteName`'i PLATFORMDAN
+  /// doğrudan okur — bu metottan bağımsız çalışmaya devam eder, yani deep
+  /// link kodu burada kaybolmaz (bkz. `AppShell._consumeJoinDeepLink`).
+  List<Route<dynamic>> _buildInitialRoutes(String initialRouteName) {
+    return [
+      MaterialPageRoute<void>(
+        settings: const RouteSettings(name: Navigator.defaultRouteName),
+        builder: (context) => _home(),
+      ),
+    ];
   }
 
   /// Etkin temanın parlaklığına göre durum çubuğu stili. Açık temada koyu

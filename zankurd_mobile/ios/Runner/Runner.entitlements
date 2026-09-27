@@ -9,5 +9,14 @@
 	<!-- FCM/APNs: Info.plist remote-notification tek başına yetmez; imza entitlement ister. -->
 	<key>aps-environment</key>
 	<string>development</string>
+	<!-- Oda daveti evrensel bağlantısı: apple-app-site-association iki
+	     domain için de web/.well-known altında sunuluyor. Debug derlemesi
+	     de zincire dahil: TestFlight öncesi cihaz testinde evrensel
+	     bağlantının çalıştığı doğrulanabilsin diye. -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:www.zankurd.com</string>
+		<string>applinks:zankurd.com</string>
+	</array>
 </dict>
 </plist>

@@ -9,5 +9,12 @@
 	<!-- Store/TestFlight: development entitlement App Store push'unu düşürür. -->
 	<key>aps-environment</key>
 	<string>production</string>
+	<!-- Oda daveti evrensel bağlantısı: apple-app-site-association iki
+	     domain için de web/.well-known altında sunuluyor. -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:www.zankurd.com</string>
+		<string>applinks:zankurd.com</string>
+	</array>
 </dict>
 </plist>

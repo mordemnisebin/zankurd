@@ -148,6 +148,7 @@ class _AppShellState extends State<AppShell>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    JoinDeepLink.incoming.addListener(_onIncomingJoinLink);
     _homeScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
@@ -326,6 +327,7 @@ class _AppShellState extends State<AppShell>
     appRouteObserver.unsubscribe(this);
     appPageRouteObserver.unsubscribe(_tabRefreshAware);
     WidgetsBinding.instance.removeObserver(this);
+    JoinDeepLink.incoming.removeListener(_onIncomingJoinLink);
     _connectivitySub?.cancel();
     _homeScrollController.dispose();
     _profileScrollController.dispose();
@@ -533,8 +535,38 @@ class _AppShellState extends State<AppShell>
   Future<void> _consumeJoinDeepLink() async {
     if (!mounted) return;
     if (RemoteAvailability.socialLockedIn(context)) return;
-    final code = JoinDeepLink.consumeInitialRoute();
+    final code =
+        JoinDeepLink.consumeInitialRoute() ?? JoinDeepLink.takeIncoming();
     if (code == null) return;
+    await _joinOnlineRoomAndOpen(code);
+  }
+
+  /// Uygulama açıkken gelen davet (sıcak açılış). Bağlantıyı
+  /// `MaterialApp`in üstündeki [JoinDeepLinkScope] yakalar ve
+  /// [JoinDeepLink.incoming] kanalına koyar; kabuk buradan tüketir.
+  ///
+  /// Kabuk henüz ana arayüze ulaşmadıysa (açılış, giriş, isim kapısı) kod
+  /// kanalda bekler; ana arayüz kurulunca [_consumeJoinDeepLink] alır.
+  /// Sosyal yüzeyler kilitliyken (sunucuya erişilemiyor) davet yok sayılır —
+  /// soğuk açılıştaki sözleşmeyle aynı.
+  void _onIncomingJoinLink() {
+    if (!mounted || !_joinDeepLinkScheduled) return;
+    if (JoinDeepLink.incoming.value == null) return;
+    if (RemoteAvailability.socialLockedIn(context)) {
+      JoinDeepLink.takeIncoming();
+      return;
+    }
+    final code = JoinDeepLink.takeIncoming();
+    if (code == null) return;
+    unawaited(_joinOnlineRoomAndOpen(code));
+  }
+
+  /// [code] ile oda katılımını dener, başarılıysa [RoomScreen] açar.
+  ///
+  /// Soğuk açılış (`_consumeJoinDeepLink`) ve sıcak açılış
+  /// (`didPushRouteInformation`) aynı katılma gövdesini paylaşır; ikisinin
+  /// farkı yalnız KODUN NEREDEN geldiğidir.
+  Future<void> _joinOnlineRoomAndOpen(String code) async {
     try {
       final room = await widget.repository.joinOnlineRoom(code);
       if (!mounted) return;

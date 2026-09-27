@@ -31,6 +31,16 @@
   <FilesMatch "\.mjs$">
     Header set Content-Type "text/javascript"
   </FilesMatch>
+  # iOS evrensel bağlantı doğrulaması: apple-app-site-association
+  # uzantısız bir dosya; mod_mime'ın uzantıya bakan AddType'ı onu
+  # yakalamaz. Bazı ara katmanlar uzantısız dosyayı
+  # application/octet-stream'e düşürüyor; bu satır belirsizliği kaldırır.
+  # DİKKAT: .htaccess'te yorum yalnız '#' ile yazılır. HTML tarzı yorum
+  # Apache'yi "Invalid command" ile düşürüp bütün siteyi 500 hatasına
+  # sokar.
+  <FilesMatch "^apple-app-site-association$">
+    Header set Content-Type "application/json"
+  </FilesMatch>
 </IfModule>
 
 # --- SPA fallback (refresh / deep link) ---
