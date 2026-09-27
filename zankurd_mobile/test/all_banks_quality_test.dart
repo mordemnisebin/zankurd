@@ -95,7 +95,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla on bir kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla on iki kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -117,6 +117,8 @@ void main() {
         // `banks['deepseek']` üzerinden dosyayı okumaya devam eder.
         // 2026-08-19 genişletmesi (77 soru; A17 ile oynanabilir).
         ...fromJson('assets/data/expansion_2026_08_19_questions.json'),
+        // 2026-09-28: gizlenen yedi alt kategoriyi açan 144 kaynaklı soru.
+        ...fromJson('assets/data/expansion_2026_09_28_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;

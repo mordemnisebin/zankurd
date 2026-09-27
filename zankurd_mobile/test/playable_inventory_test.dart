@@ -62,7 +62,10 @@ void main() {
       // 2026-09-02: DeepSeek 1110 kayıt runtime'dan çıkarıldı
       // (olgusal hata ~%5–8). Dosya durur; oyuncuya yüklenmez.
       // 2026-09-21: offline_2556 semantik tekrar olduğu için kaldırıldı.
-      1931,
+      // 2026-09-28: expansion_2026_09_28 (144 soru) eklendi. Fiziksel ve
+      // oynanabilir BİRLİKTE +144: kayıtlar kaynaklı ve `reviewStatus`
+      // taşımıyor, yani kuyrukta beklemiyor, oyuncuya ulaşıyor.
+      2075,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -91,7 +94,10 @@ void main() {
       // `offline_7011` (kopya şık) tek tek emekliye ayrıldı. Toplam -100.
       // Bkz. `retired_question_ids.dart`'ın "İkinci dalga" belgesi ve
       // `test/tf_definition_swap_test.dart`.
-      1150,
+      // 1150 -> 1294: 2026-09-28 expansion_2026_09_28. Alt kategoriler
+      // dürüstleşince 20 sorunun altında kalıp gizlenen yedi alt kategori
+      // için 144 kaynaklı soru; hepsi oynanabilir.
+      1294,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

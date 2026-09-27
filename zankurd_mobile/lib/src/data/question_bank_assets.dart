@@ -61,6 +61,18 @@ const questionBankAssets = <String>[
   // verdi. Oyuncuya yanlış olgu öğretmek, sayıyı şişirmekten pahalıdır
   // (2026-09-02 karantina). Yeniden almak için insan incelemesi + bu
   // listeye bilinçli ekleme gerekir. Cevap anahtarı bekçisi dosyayı
-  // yine tarar.
+  // yine tarar. Bu dalgadan ayrıca incelenip künyelenen 77 soru ise
+  // aşağıdaki dosyada, oyuncuya açık.
   'assets/data/expansion_2026_08_19_questions.json',
+  // 2026-09-28: alt kategoriler yalnız gerçekten o konudaki soruları
+  // gösterince yedisi 20 sorunun altında kalıp gizlendi (Rastnivîsîn,
+  // Dastangotin, Tiştonek, Sînor û Dûmahî, Muzîka Nûjen, Yılmaz Güney û
+  // Klasîk, Belgefîlm û Festîval). 144 soru onları açmak için yazıldı:
+  // her olgu açılmış bir kaynaktan alıntıyla (URL `sourceReference`da),
+  // her soru olgu, dil ve soru zanaatı gözüyle üç ayrı ajanca
+  // doğrulandı, onarıldı ve son bir denetimden geçti. DeepSeek
+  // dalgasının dersi (kaynaksız üretim ~%5–8 olgu hatası) burada kaynak
+  // şartıyla karşılandı; Kurmancî metinler yine de ana dili Kurmancî olan
+  // bir editörün okumasını bekliyor.
+  'assets/data/expansion_2026_09_28_questions.json',
 ];

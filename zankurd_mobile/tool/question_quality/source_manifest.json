@@ -2474,6 +2474,35 @@
     "reviewedAt": "metadata.reviewedAt",
     "locale": "ku-kmr"
    }
+  },
+  {
+   "id": "expansion_2026_09_28",
+   "description": "2026-09-28: gizlenen yedi alt kategoriyi açan 144 kaynaklı soru",
+   "path": "assets/data/expansion_2026_09_28_questions.json",
+   "role": "runtime_secondary",
+   "parser": "json",
+   "canonicalGroup": "runtime_questions",
+   "reportIncluded": true,
+   "gateIncluded": true,
+   "productionLike": true,
+   "precedence": 985,
+   "expectedRecordCount": 144,
+   "notes": "Rastnivîsîn 13, Dastangotin 24, Tiştonek 28, Sînor û Dûmahî 8, Muzîka Nûjen 22, Yılmaz Güney û Klasîk 25, Belgefîlm û Festîval 24. Her olgu açılmış bir kaynaktan alıntıyla (metadata.sourceReference); olgu, dil ve soru zanaatı doğrulayıcılarından, onarımdan ve son denetimden geçti. Kurmancî metin ana dil editörü okumasını bekliyor.",
+   "columns": {
+    "id": "id",
+    "category": "category",
+    "prompt": "prompt",
+    "options": "answers",
+    "correct": "correctAnswer",
+    "explanation": "explanationKu",
+    "difficulty": "difficulty",
+    "type": "type",
+    "dialect": "metadata.dialect",
+    "sourceTitle": "metadata.sourceTitle",
+    "sourceUrl": "metadata.sourceReference",
+    "reviewedAt": "metadata.reviewedAt",
+    "locale": "ku-kmr"
+   }
   }
  ]
 }

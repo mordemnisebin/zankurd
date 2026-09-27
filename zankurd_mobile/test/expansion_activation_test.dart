@@ -67,7 +67,9 @@ void main() {
       // 2026-09-02: DeepSeek runtime karantinası, 3042 → 1932.
       // 2026-09-21: offline_2556, approved editorial Behdînan kaydının
       // semantik tekrarı olduğu için kaldırıldı.
-      1931,
+      // 2026-09-28: expansion_2026_09_28 (144 kaynaklı soru) eklendi;
+      // gizlenen yedi alt kategoriyi açmak için. 1931 → 2075.
+      2075,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '
