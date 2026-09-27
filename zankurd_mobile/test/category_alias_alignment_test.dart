@@ -117,7 +117,8 @@ void main() {
     final categories = MockZanKurdRepository().playableQuestions
         .map((q) => q.category)
         .toSet();
-    expect(categories.length, greaterThanOrEqualTo(8));
+    // 2026-09-27: Paradigma, Siyaset ve Teknolojî gizlendi (10 -> 7).
+    expect(categories.length, greaterThanOrEqualTo(7));
 
     final missing = categories
         .where((c) => SubcategoryConfig.forCategory(c).isEmpty)

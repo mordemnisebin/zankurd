@@ -95,8 +95,8 @@ void main() {
         .map((e) => '${e.key}: ${e.value}')
         .toList();
     expect(thin, isEmpty, reason: 'Türkçe turu dolmayan kategori: $thin');
-    // 10 -> 8: 2026-09-27 Paradigma ve Siyaset gizlendi
-    // (bkz. `category_visibility.dart`).
-    expect(byCategory.length, 8);
+    // 10 -> 8: 2026-09-27 Paradigma ve Siyaset gizlendi; 8 -> 7: aynı gün
+    // Teknolojî (bkz. `category_visibility.dart`).
+    expect(byCategory.length, 7);
   });
 }

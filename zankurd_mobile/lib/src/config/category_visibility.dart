@@ -42,9 +42,21 @@
 ///
 /// Sorular bankada duruyor; geri açmak için id'yi bu listeden çıkarmak
 /// yeterli. Kürt siyasi TARİHİ (olaylar, kişiler, tarihler) Dîrok'ta kalır.
+///
+/// 2026-09-27 (aynı gün, içerik denetiminden sonra): Teknolojî gizlendi.
+/// 217 sorunun 198'i Kürtlerle bağı olmayan genel bilgi (RAM, DNS, Saturn V,
+/// Daguerre). Kalan 19 soru Kurmancî teknoloji terimi öğretiyor (mişk, pel,
+/// malper) ama bir tur için gereken 40 soruya yetmiyor. O 19 soru ileride
+/// öğrenme alanında bir "teknoloji terimleri" dersine taşınabilir. Diğer
+/// kategorilerdeki genel sorular tek tek `retired_question_ids.dart` ile
+/// oyundan çıkarıldı.
 library;
 
-const Set<String> hiddenCategoryIds = <String>{'Paradigma', 'Siyaset'};
+const Set<String> hiddenCategoryIds = <String>{
+  'Paradigma',
+  'Siyaset',
+  'Teknolojî',
+};
 
 /// Kategori listede/quiz seçiminde gösterilebilir mi?
 bool isCategoryVisible(String categoryId) =>

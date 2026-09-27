@@ -7,18 +7,20 @@ yazıldı. Sayılar 2026-09-27 durumudur; sürüm değişince güncelle:
 
 | Ne | Kaç |
 |---|---|
-| Yayınlanabilir benzersiz soru | 1.588 |
-| Kategori | 8 |
+| Yayınlanabilir benzersiz soru | 1.250 |
+| Kategori | 7 |
 | Kategori başına seviye | 5 |
 | Arayüz dili | Kurmancî, Türkçe |
 
 Sayı vermek iki ucu keskin: doğruysa güven verir, eskiyince yalan olur.
-Bu yüzden metinlerde yalnız "1.500'den fazla soru" gibi aşağı yuvarlanmış
+Bu yüzden metinlerde yalnız "1.200'den fazla soru" gibi aşağı yuvarlanmış
 biçimi kullan — banka büyüdükçe doğru kalır, küçülmedikçe yanlış olmaz.
 
-> 2026-09-27: Paradigma ve Siyaset uygulamada gizlendi (bkz.
-> `lib/src/config/category_visibility.dart`). Oynanabilir soru 1.889 →
-> 1.588, kategori 10 → 8. Mağazadaki canlı metin hâlâ "1.800'den fazla
+> 2026-09-27: Paradigma, Siyaset ve Teknolojî uygulamada gizlendi; dört
+> kategorideki 121 dünya bilgisi sorusu emekliye ayrıldı (bkz.
+> `lib/src/config/category_visibility.dart`,
+> `lib/src/config/retired_question_ids.dart`). Oynanabilir soru 1.889 →
+> 1.250, kategori 10 → 7. Mağazadaki canlı metin hâlâ "1.800'den fazla
 > soru, 10 kategori" diyorsa bir sonraki gönderimde bu dosyadaki metinle
 > değiştirilmeli — küçülen banka için eski sayı artık yanlış.
 
@@ -73,7 +75,7 @@ ZanKurd — Kurmancî öğren
 ### Kısa açıklama (en fazla 80 karakter)
 
 ```
-Kurmancî öğren, sorularla yarış. 1.500'den fazla soru, 8 kategori.
+Kurmancî öğren, sorularla yarış. 1.200'den fazla soru, 7 kategori.
 ```
 
 (66 karakter)
@@ -83,7 +85,7 @@ Kurmancî öğren, sorularla yarış. 1.500'den fazla soru, 8 kategori.
 ```
 ZanKurd, Kurmancî öğrenmeyi bir yarışmaya çeviren bir bilgi
 uygulamasıdır. Dil, tarih, edebiyat, müzik, coğrafya, kültür ve daha
-fazlası — 1.500'den fazla soru, sekiz kategori.
+fazlası — 1.200'den fazla soru, yedi kategori.
 
 NASIL İŞLER
 
@@ -202,7 +204,7 @@ Kurmancî hîn bibe, pêş bikeve.
 ### Danasîna kurt / Kısa açıklama (80)
 
 ```
-Kurmancî hîn bibe, bi pirsan pêşbirkê bike. Zêdetir ji 1.500 pirs, 8 kategorî.
+Kurmancî hîn bibe, bi pirsan pêşbirkê bike. Zêdetir ji 1.200 pirs, 7 kategorî.
 ```
 
 (78 karakter)
@@ -211,7 +213,7 @@ Kurmancî hîn bibe, bi pirsan pêşbirkê bike. Zêdetir ji 1.500 pirs, 8 kateg
 
 ```
 ZanKurd sepaneke zanînê ye ku hînbûna kurmancî dike pêşbirk. Ziman,
-dîrok, wêje, muzîk, erdnîgarî, çand û bêtir — zêdetir ji 1.500 pirs, heşt
+dîrok, wêje, muzîk, erdnîgarî, çand û bêtir — zêdetir ji 1.200 pirs, heft
 kategorî.
 
 ÇAWA DIXEBITE

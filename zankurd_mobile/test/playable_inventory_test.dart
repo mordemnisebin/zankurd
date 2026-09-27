@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/category_visibility.dart';
+import 'package:zankurd_mobile/src/config/retired_question_ids.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/models/question_metadata.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
@@ -78,7 +79,10 @@ void main() {
       // 1889 -> 1588: 2026-09-27 Paradigma ve Siyaset gizlendi (301
       // oynanabilir kayıt). Kayıtlar bankada; gerekçe
       // `category_visibility.dart` başında.
-      1588,
+      // 1588 -> 1250: aynı gün içerik denetimi. Teknolojî gizlendi (217)
+      // ve dört kategorideki 121 dünya bilgisi sorusu emekliye ayrıldı
+      // (`retired_question_ids.dart`: Sînema 97, Cografya 23, Edebiyat 1).
+      1250,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -98,6 +102,8 @@ void main() {
       // onaylı olabilir, yalnız bilerek gösterilmez.
       final key = !isCategoryVisible(q.category)
           ? 'hiddenCategory=${q.category}'
+          : isQuestionRetired(q.id)
+          ? 'retired=${q.category}'
           : issues.isNotEmpty
           ? issues.join(',')
           : 'reviewStatus=${q.metadata?.reviewStatus}';
@@ -117,6 +123,11 @@ void main() {
       // kuyruktaki bütün kayıtları dahil.
       'hiddenCategory=Siyaset': 152,
       'hiddenCategory=Paradigma': 150,
+      'hiddenCategory=Teknolojî': 217,
+      // 2026-09-27 içerik denetimi: Kürtlerle bağı olmayan dünya bilgisi.
+      'retired=Sînema': 97,
+      'retired=Cografya': 23,
+      'retired=Edebiyat': 1,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
 
@@ -143,9 +154,10 @@ void main() {
           '${thin.join(", ")}',
     );
     // 10 -> 8: 2026-09-27 Paradigma ve Siyaset gizlendi.
+    // 8 -> 7: aynı gün Teknolojî de gizlendi.
     expect(
       byCategory.length,
-      8,
+      7,
       reason: 'Kategori sayısı değişti: ${byCategory.keys.toList()..sort()}',
     );
   });

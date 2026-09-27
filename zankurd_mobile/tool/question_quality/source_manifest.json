@@ -952,6 +952,21 @@
    "columns": {}
   },
   {
+   "id": "retired_question_ids",
+   "description": "Retired general-knowledge question id list (2026-09-27 content audit)",
+   "path": "lib/src/config/retired_question_ids.dart",
+   "role": "ignored_non_question",
+   "parser": "none",
+   "canonicalGroup": "none",
+   "reportIncluded": false,
+   "gateIncluded": false,
+   "productionLike": false,
+   "precedence": 1000,
+   "expectedRecordCount": null,
+   "notes": "Id exclusion list consumed by QuestionContentPolicy; holds no question data",
+   "columns": {}
+  },
+  {
    "id": "quiz_result_progress_receipt_store",
    "description": "Delivered-result progress receipt store",
    "path": "lib/src/data/quiz_result_progress_receipt_store.dart",

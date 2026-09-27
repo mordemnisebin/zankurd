@@ -35,11 +35,13 @@ void main() {
     // (Paradigma, Siyaset — gerekçe `category_visibility.dart` başında).
     // Listeye yeni bir id sessizce giremez: bu satır kırılır ve gizlemek
     // isteyen hem id'yi hem gerekçeyi kaynak dosyaya yazmak zorunda kalır.
-    expect(hiddenCategoryIds, {'Paradigma', 'Siyaset'});
+    // 2026-09-27 (içerik denetiminden sonra): Teknolojî de gizlendi —
+    // 217 sorunun 198'i Kürtlerle bağı olmayan genel bilgi.
+    expect(hiddenCategoryIds, {'Paradigma', 'Siyaset', 'Teknolojî'});
     expect(isCategoryVisible('Paradigma'), isFalse);
     expect(isCategoryVisible('Siyaset'), isFalse);
+    expect(isCategoryVisible('Teknolojî'), isFalse);
     expect(isCategoryVisible('Sînema'), isTrue);
-    expect(isCategoryVisible('Teknolojî'), isTrue);
     expect(isCategoryVisible('Ziman'), isTrue);
     expect(isCategoryVisible('Dîrok'), isTrue);
   });
@@ -81,8 +83,14 @@ void main() {
   });
 
   test('visibleCategories sırayı korur', () {
-    final input = ['Ziman', 'Teknolojî', 'Çand', 'Sînema'];
+    final input = ['Ziman', 'Dîrok', 'Çand', 'Sînema'];
     expect(visibleCategories(input), input);
+    // Gizli olan araya girse de kalanların sırası bozulmaz.
+    expect(visibleCategories(['Ziman', 'Teknolojî', 'Çand', 'Sînema']), [
+      'Ziman',
+      'Çand',
+      'Sînema',
+    ]);
   });
 
   test(
