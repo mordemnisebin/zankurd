@@ -22,6 +22,7 @@ import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/lesson_listening_card.dart';
 import '../widgets/lesson_recall_card.dart';
+import '../widgets/roj_mascot.dart';
 import '../widgets/screen_identity_header.dart';
 import '../widgets/story_catalog.dart';
 import '../widgets/todays_review_card.dart';
@@ -697,8 +698,12 @@ class _LearningScreenState extends State<LearningScreen> {
 
 /// Konuyu pekiştirmenin iki yolu: o konudan soru çözmek ve kelime kartları.
 ///
-/// İkisi de ikincil eylem: turuncu değil, yeşil çerçeveli. Ekranın birincil
-/// eylemi yolun üzerindeki önerilen derstir.
+/// Ekranın birincil eylemi hâlâ yolun üzerindeki önerilen derstir. Ama
+/// 2026-09-27'den önce ikisi de aynı soluk çerçeveli (outlined) yeşildi —
+/// sahip ekranı renksiz buldu ve "Soru çöz" ile "Flaş kart" göz açısıyla
+/// ayırt edilemiyordu. Artık ikisi de DOLU ve birbirinden ayrışır: pratik
+/// yolun rengiyle (playGreen) aynı ailede, kartlar kendi tonal altın
+/// kimliğinde — turuncu (asıl CTA rengi) yine hiçbirine verilmez.
 class _TopicActions extends StatelessWidget {
   const _TopicActions({
     required this.isKu,
@@ -718,12 +723,14 @@ class _TopicActions extends StatelessWidget {
       key: const ValueKey('learning-topic-practice'),
       icon: AppIcons.circleQuestion,
       label: Tr.forKu(K.soruCoz, isKu),
+      tone: _TopicActionTone.practice,
       onTap: enabled ? onPractice : null,
     );
     final flashcards = _TopicActionButton(
       key: const ValueKey('learning-topic-flashcards'),
       icon: AppIcons.layerGroup,
       label: Tr.forKu(K.flasKart, isKu),
+      tone: _TopicActionTone.flashcards,
       onTap: enabled ? onFlashcards : null,
     );
     return LayoutBuilder(
@@ -752,24 +759,62 @@ class _TopicActions extends StatelessWidget {
   }
 }
 
+/// Konu eylemi kimliği: "Soru çöz" dolu playGreen, "Flaş kart" tonal altın.
+///
+/// 2026-09-03'te "Kaydet" turuncu-on-kahve pasif hâlde okunmuyordu; aynı
+/// kusurun burada tekrarı iki farklı şeyle önlenir — pasif hâl her iki
+/// tonda da aynı nötr `AppColors.disabledSurface` + soluk metne düşer (bkz.
+/// `fill_in_blank_widget.dart`daki aynı desen), etkin hâl ise tona göre
+/// ayrışır ki iki düğme birbirinin klonu görünmesin.
+enum _TopicActionTone { practice, flashcards }
+
 class _TopicActionButton extends StatelessWidget {
   const _TopicActionButton({
     required this.icon,
     required this.label,
     required this.onTap,
+    required this.tone,
     super.key,
   });
 
   final IconData icon;
   final String label;
   final VoidCallback? onTap;
+  final _TopicActionTone tone;
 
   @override
   Widget build(BuildContext context) {
-    final accent = AppColors.readableAccent(context, AppTheme.playGreen);
+    final isLight = AppTheme.isLight(context);
+    final disabled = onTap == null;
+    final Color background;
+    final Color foreground;
+    BorderSide? side;
+    switch (tone) {
+      case _TopicActionTone.practice:
+        background = AppTheme.playGreen;
+        foreground = Colors.white;
+      case _TopicActionTone.flashcards:
+        // Düz altın zemin ne beyaz ne ink metni AA eşiğinin üstünde tutar
+        // (altın orta tonlu bir aksan); bunun yerine yüzeyle harmanlanmış
+        // TONAL bir altın kullanılır — ink/cream metin bu tonda okunur
+        // (bkz. `learning_color_identity_test.dart` kontrast bekçisi).
+        // Karanlık temada oran biraz yüksek: koyu yüzeyde aynı %22 daha az
+        // fark ediyor.
+        background = Color.alphaBlend(
+          AppTheme.gold.withValues(alpha: isLight ? 0.22 : 0.26),
+          AppTheme.surfaceColor(context),
+        );
+        foreground = AppTheme.textPrimaryColor(context);
+        // Pasifken çerçeve de kalkar: altın halka + soluk metin "etkin ama
+        // gri" gibi karışık bir izlenim veriyordu.
+        side = disabled
+            ? null
+            : BorderSide(color: AppTheme.gold.withValues(alpha: 0.55));
+    }
+
     return SizedBox(
       height: 48,
-      child: OutlinedButton.icon(
+      child: FilledButton.icon(
         onPressed: onTap,
         icon: Icon(icon, size: 16),
         label: Text(
@@ -778,9 +823,12 @@ class _TopicActionButton extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontWeight: FontWeight.w700),
         ),
-        style: OutlinedButton.styleFrom(
-          foregroundColor: accent,
-          side: BorderSide(color: accent.withValues(alpha: 0.45)),
+        style: FilledButton.styleFrom(
+          backgroundColor: background,
+          foregroundColor: foreground,
+          disabledBackgroundColor: AppColors.disabledSurface(context),
+          disabledForegroundColor: AppTheme.textMutedColor(context),
+          side: side,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
@@ -798,6 +846,13 @@ class _LearningSceneHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 2026-09-27: sahip ekranı "renksiz" buldu — başlık soluk bir ikon
+    // karosu + düz metindi, uygulamanın geri kalanındaki orman kimlik
+    // bandından (bkz. `AppTheme.identityHeaderGradient`; ayarlar/oturum
+    // ekranları zaten onu taşıyor) kopuktu. Anahtar yine en dıştaki
+    // widget'ta kalır — yatay sayfa boşluğunu veren bu `Padding` — ki
+    // `learning_screen_test.dart` içindeki yapısal bekçiler bozulmasın;
+    // içine artık düz bir Row yerine gradyanlı bir kimlik kartı girer.
     return Padding(
       key: const ValueKey('learning-scene-header'),
       padding: const EdgeInsets.fromLTRB(
@@ -806,51 +861,69 @@ class _LearningSceneHeader extends StatelessWidget {
         AppSpacing.page,
         AppSpacing.xs,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 42,
-            height: 42,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.iconTileBg(context, AppTheme.playGreen),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: AppTheme.identityHeaderGradient,
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          boxShadow: AppTheme.cardShadow(context),
+        ),
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 42,
+              height: 42,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.16),
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+              ),
+              child: const Icon(
+                AppIcons.graduationCap,
+                size: 20,
+                color: Colors.white,
+              ),
             ),
-            child: Icon(
-              AppIcons.graduationCap,
-              size: 20,
-              color: AppColors.readableAccent(context, AppTheme.playGreen),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.heading2.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // İki satır: maskot başlığa ayrılan eni daralttı ve
+                  // Kurmancî başlık tek satırda "Kurmancî hîn bi…" diye
+                  // kesiliyordu (2026-09-27 tur görüntüsü). Başlık küçültülüp
+                  // sığdırılmaz; gerekirse alt satıra iner.
+                  Text(
+                    title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.heading2.copyWith(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w800,
+                      height: 1.15,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  subtitle,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textSubColor(context),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: Colors.white.withValues(alpha: 0.88),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.sm),
+            // Zana yalnız dekoratif eşlik eder; başlığın kendi semantics'i
+            // zaten title+subtitle'ı taşıyor — maskot ikinci bir "resim"
+            // düğümü olarak duyurulmasın.
+            const ExcludeSemantics(child: RojMascot(size: 48)),
+          ],
+        ),
       ),
     );
   }
@@ -887,25 +960,28 @@ class _CategoryTab extends StatelessWidget {
               vertical: largeText ? 0 : 8,
             ),
             decoration: BoxDecoration(
+              // 2026-09-27: seçili sekme eskiden playGreen'in yalnız %14'ü
+              // kadar soluk bir zemindi (bkz. `AppColors.iconTileBg`) — sahip
+              // ekranı renksiz buldu. Artık DOLU: yolun üzerindeki birincil
+              // adımla (bkz. `_LessonCard.isPrimary`) aynı doygun yeşili
+              // taşır, çerçevesizdir; seçili olmayanlar kendi yüzey rengiyle
+              // ve ince bir kenarlıkla ayrışır.
               color: isSelected
-                  ? AppColors.iconTileBg(context, AppTheme.playGreen)
-                  : Colors.transparent,
+                  ? AppTheme.playGreen
+                  : AppTheme.surfaceColor(context),
               borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(
-                color: isSelected
-                    ? AppTheme.playGreen.withValues(alpha: 0.48)
-                    : AppTheme.borderColor(context).withValues(alpha: 0.5),
-                width: 1,
-              ),
+              border: isSelected
+                  ? null
+                  : Border.all(color: AppTheme.borderColor(context), width: 1),
             ),
             child: Center(
               child: Text(
                 label,
                 style: AppTypography.caption.copyWith(
                   color: isSelected
-                      ? AppColors.readableAccent(context, AppTheme.playGreen)
+                      ? Colors.white
                       : AppTheme.textPrimaryColor(context),
-                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                  fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                 ),
               ),
             ),

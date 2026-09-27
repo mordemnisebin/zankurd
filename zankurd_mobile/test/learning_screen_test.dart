@@ -264,33 +264,44 @@ void main() {
     },
   );
 
-  testWidgets('öğrenme kimliği kart yerine düz sahne başlığıdır', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      wrap(LearningScreen(repository: MockZanKurdRepository())),
-    );
-    await tester.pumpAndSettle();
+  // 2026-09-27: sahip ekranı renksiz buldu; başlık artık BİLEREK orman
+  // gradyanlı bir kimlik kartıdır (renk/kontrast bekçisi:
+  // learning_color_identity_test.dart). Eski bekçi "hiçbir kart yüzeyi
+  // olmamalı" derdi — o karar burada tersine döndü, isim ve gerekçe
+  // buna göre güncellendi. Kalan gerçek yapısal bekçi: ekranın kendi sahne
+  // başlığı vardır, ortak `ScreenIdentityHeader` bileşeni KULLANILMAZ; anahtar
+  // yine en dıştaki widget'ta (yatay sayfa boşluğunu taşıyan `Padding`) durur.
+  testWidgets(
+    'öğrenme kimliği kendi sahne başlığını kullanır, ortak ScreenIdentityHeader değil',
+    (tester) async {
+      await tester.pumpWidget(
+        wrap(LearningScreen(repository: MockZanKurdRepository())),
+      );
+      await tester.pumpAndSettle();
 
-    expect(find.byType(ScreenIdentityHeader), findsNothing);
-    final header = find.byKey(const ValueKey('learning-scene-header'));
-    expect(header, findsOneWidget);
-    expect(
-      tester.widget(header),
-      isA<Padding>(),
-      reason: 'Öğrenme başlığı ayrı bir kart yüzeyi oluşturmamalı.',
-    );
-    expect(find.text('Kurmancî öğren'), findsOneWidget);
-    expect(find.text('Öğren'), findsNothing);
-    // "Bugünkü hedefin" bölümü 2026-09-27'de kalktı: hiç ders çözmemiş
-    // birine "Tekrarlar tamam" diyordu. Tekrar kartı artık yalnız vadesi
-    // gelmiş tekrar varken, ekranın en üstünde çizilir.
-    expect(find.text('Bugünkü hedefin'), findsNothing);
-    expect(find.byKey(const ValueKey('todays-review-empty')), findsNothing);
-    expect(find.text('Öğrenme yolları'), findsOneWidget);
-    expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
-    expect(find.text('Sana önerilen'), findsOneWidget);
-  });
+      expect(find.byType(ScreenIdentityHeader), findsNothing);
+      final header = find.byKey(const ValueKey('learning-scene-header'));
+      expect(header, findsOneWidget);
+      expect(
+        tester.widget(header),
+        isA<Padding>(),
+        reason:
+            'Anahtar en dıştaki widgette kalmalı: yatay sayfa boşluğunu '
+            'taşıyan Padding, artık içinde orman gradyanlı kimlik kartı '
+            'barındırıyor.',
+      );
+      expect(find.text('Kurmancî öğren'), findsOneWidget);
+      expect(find.text('Öğren'), findsNothing);
+      // "Bugünkü hedefin" bölümü 2026-09-27'de kalktı: hiç ders çözmemiş
+      // birine "Tekrarlar tamam" diyordu. Tekrar kartı artık yalnız vadesi
+      // gelmiş tekrar varken, ekranın en üstünde çizilir.
+      expect(find.text('Bugünkü hedefin'), findsNothing);
+      expect(find.byKey(const ValueKey('todays-review-empty')), findsNothing);
+      expect(find.text('Öğrenme yolları'), findsOneWidget);
+      expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
+      expect(find.text('Sana önerilen'), findsOneWidget);
+    },
+  );
 
   for (final isKu in [false, true]) {
     for (final dark in [false, true]) {
@@ -547,7 +558,11 @@ void main() {
     );
   });
 
-  testWidgets('seçili sekme düşük yoğunluklu playGreen kimliği taşır', (
+  // 2026-09-27: seçili sekme eskiden playGreen'in yalnız %14'ü kadar soluk
+  // bir zemindi — sahip ekranı renksiz buldu. Artık DOLU: zemin tam
+  // playGreen, çerçevesiz, etiket beyaz/w800. Bekçi buna göre güncellendi;
+  // ayrıntılı kontrast ölçümü learning_color_identity_test.dart'ta.
+  testWidgets('seçili sekme dolu playGreen kimliği taşır, çerçevesiz', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -562,8 +577,22 @@ void main() {
       ),
     );
     final decoration = tab.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.playGreen.withValues(alpha: 0.14));
+    expect(decoration.color, AppTheme.playGreen);
     expect(decoration.gradient, isNull);
+    expect(
+      decoration.border,
+      isNull,
+      reason: 'Seçili sekme artık çerçevesiz dolu bir zemin taşır.',
+    );
+
+    final label = tester.widget<Text>(
+      find.descendant(
+        of: find.byKey(const ValueKey('learning-tab-everyday')),
+        matching: find.text('Günlük'),
+      ),
+    );
+    expect(label.style?.color, Colors.white);
+    expect(label.style?.fontWeight, FontWeight.w800);
   });
 
   testWidgets('önerilen ders rota içinde tek kez görünür', (tester) async {
@@ -904,7 +933,10 @@ void main() {
   // 2026-08-14 denetimi: "Dersler" düğmesi `enabled: true` sabitti — ders
   // yokken açık görünüyor, dokununca sessizce hiçbir şey yapmıyordu.
   // 2026-09-27: "Dersler" kalktı; aynı kural kalan iki konu eylemine
-  // uygulanır.
+  // uygulanır. Aynı tarihte düğmeler outlined'dan dolu `FilledButton`'a
+  // geçti (renksiz bulunan ekran kimliği düzeltmesi) — bekçinin aradığı
+  // widget tipi buna göre güncellendi, davranış (onPressed null → dokunuş
+  // hiçbir şey yapmaz) aynı kaldı.
   testWidgets(
     'kategoride ders yokken konu eylemleri kapalıdır ve dokunuşta hiçbir '
     'şey yapmaz',
@@ -920,10 +952,10 @@ void main() {
       ]) {
         final button = find.descendant(
           of: find.byKey(ValueKey(key)),
-          matching: find.byType(OutlinedButton),
+          matching: find.byType(FilledButton),
         );
         expect(
-          tester.widget<OutlinedButton>(button).onPressed,
+          tester.widget<FilledButton>(button).onPressed,
           isNull,
           reason: '$key ders yokken kapalı olmalı',
         );
@@ -938,7 +970,8 @@ void main() {
 
   // 2026-09-27: kelime kartları her zaman konunun İLK dersini açıyordu;
   // ikinci derse gelmiş biri kartlarda hep "Selamlaşma"yı görüyordu.
-  // Kusur sessizdi: kartlar açılıyordu, yalnız yanlış dersle.
+  // Kusur sessizdi: kartlar açılıyordu, yalnız yanlış dersle. Aynı tarihte
+  // düğme outlined'dan dolu `FilledButton`'a geçti; bekçi buna göre bulur.
   testWidgets('kelime kartları sıradaki dersi açar, ilk dersi değil', (
     tester,
   ) async {
@@ -949,7 +982,7 @@ void main() {
 
     final flashcards = find.descendant(
       of: find.byKey(const ValueKey('learning-topic-flashcards')),
-      matching: find.byType(OutlinedButton),
+      matching: find.byType(FilledButton),
     );
     await tester.ensureVisible(flashcards);
     await tester.pumpAndSettle();
