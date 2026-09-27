@@ -11,7 +11,6 @@ import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
-import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
@@ -162,7 +161,6 @@ void main() {
       'giriş': const SignInScreen(),
       'ana sayfa': Scaffold(body: HomeScreen(repository: repository)),
       'oyun merkezi': PlayHubScreen(repository: repository),
-      'kategoriler': Scaffold(body: CategoriesTab(repository: repository)),
       'öğrenme': LearningScreen(repository: repository),
       'profil': Scaffold(body: ProfileScreen(repository: repository)),
       'ayarlar': SettingsScreen(repository: repository),

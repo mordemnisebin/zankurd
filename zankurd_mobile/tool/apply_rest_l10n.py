@@ -17,15 +17,6 @@ EDITS = {
  "import 'src/l10n/lang.dart';\nimport 'src/l10n/strings.dart';"),
 ],
 
-'lib/src/screens/categories_tab.dart': [
-("""                            ku ? 'Kategorî' : 'Kategoriler',""",
- """                            context.t(K.categories),"""),
-("""                            ku
-                                ? 'Kategoriyekê hilbijêre û dest pê bike'
-                                : 'Bir kategori seç ve başla',""",
- """                            context.t(K.categoriesSubtitle),"""),
-],
-
 'lib/src/screens/home_screen.dart': [
 ("""              title: ku ? 'Dema dubarekirinê' : 'Tekrar zamanı',
               subtitle: ku

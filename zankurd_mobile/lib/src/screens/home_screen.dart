@@ -74,7 +74,6 @@ class HomeScreen extends StatefulWidget {
     this.refreshSignal,
     this.onOpenLearning,
     this.onOpenPlay,
-    this.onOpenCategories,
     this.onOpenCategory,
     super.key,
   });
@@ -84,11 +83,10 @@ class HomeScreen extends StatefulWidget {
   final ScrollController? scrollController;
 
   /// Ana Sayfa sekmesi yeniden seçildiğinde tetiklenir; coin bakiyesi ve
-  /// görevler tazelenir. Bu, ana ekranın KENDİ push'larından (Öğren/
-  /// Kategoriler) bağımsız bir ikinci tazeleme yoludur: örn. Yarış
-  /// sekmesinde oynanan bir maçtan sonra Öğren'e dönmek de burayı tetikler
-  /// (bkz. [onOpenLearning]/[onOpenCategories] — onlar yalnız KENDİ
-  /// push'larının dönüşünü kapsar).
+  /// görevler tazelenir. Bu, ana ekranın KENDİ push'larından (Öğren)
+  /// bağımsız bir ikinci tazeleme yoludur: örn. Yarış sekmesinde oynanan
+  /// bir maçtan sonra Öğren'e dönmek de burayı tetikler (bkz.
+  /// [onOpenLearning] — o yalnız KENDİ push'ının dönüşünü kapsar).
   final Listenable? refreshSignal;
 
   /// Öğrenme akışına geçiş. Dönüşü (Future) BEKLENİR: eskiden `VoidCallback`
@@ -104,18 +102,11 @@ class HomeScreen extends StatefulWidget {
   /// bunun yerine Bilîze sekmesine geçiş yapan kısa bir teaser gösterilir.
   final VoidCallback? onOpenPlay;
 
-  /// Kategorî akışına geçiş (Faz 3: kategoriler ayrı sekme değil, Fêr Bibe
-  /// sekmesi içinden açılır). [onOpenLearning] ile aynı sebeple dönüş
-  /// beklenir.
-  final Future<void> Function()? onOpenCategories;
-
-  /// Belirli bir kategoriyi doğrudan açar ("Kaldığın yer" satırları).
+  /// Konu ızgarasında dokunulan kategoriyi doğrudan açar.
   ///
-  /// Verilmezse [onOpenCategories] genel listeye düşer. Eskiden "Kaldığın
-  /// yer" satırındaki kategori argümanı `(_) => onOpenCategories?.call()`
-  /// ile YOK SAYILIYORDU — kullanıcı "Tarîx %40" satırına dokununca genel
-  /// kategori listesine düşüyordu, doğrudan Tarîx'e değil (2026-08-14
-  /// denetimi).
+  /// Verilmezse dokunuş bir şey yapmaz. 2026-09-27'ye kadar genel kategori
+  /// listesine (`CategoriesTab`) düşen bir geri çağırma daha vardı; ızgara
+  /// her kategoriyi doğrudan açtığı için o liste kaldırıldı.
   final Future<void> Function(String category)? onOpenCategory;
 
   @override
@@ -212,15 +203,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     if (mounted) _handleRefreshSignal();
   }
 
-  /// Belirli bir kategoriyi açar (varsa [HomeScreen.onOpenCategory]
-  /// aracılığıyla, yoksa genel listeye düşer) ve dönüşte tazeler.
+  /// Belirli bir kategoriyi açar ve dönüşte tazeler.
   Future<void> _openCategory(String category) async {
-    final specific = widget.onOpenCategory;
-    if (specific != null) {
-      await specific(category);
-    } else {
-      await widget.onOpenCategories?.call();
-    }
+    await widget.onOpenCategory?.call(category);
     if (mounted) _handleRefreshSignal();
   }
 

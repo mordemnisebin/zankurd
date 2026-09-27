@@ -103,7 +103,6 @@ void main() {
           displayName: 'Zelal',
           scrollController: ScrollController(),
           onOpenPlay: () {},
-          onOpenCategories: () async {},
         ),
       ),
     );
@@ -169,7 +168,6 @@ void main() {
           onOpenLearning: () async {
             learn++;
           },
-          onOpenCategories: () async {},
           onOpenCategory: (category) async {
             topic = category;
           },
@@ -205,7 +203,6 @@ void main() {
           displayName: 'Zelal',
           scrollController: ScrollController(),
           onOpenPlay: () {},
-          onOpenCategories: () async {},
         ),
       ),
     );
@@ -252,7 +249,6 @@ void main() {
               displayName: 'Zelal',
               scrollController: ScrollController(),
               onOpenPlay: () {},
-              onOpenCategories: () async {},
             ),
           ),
         );

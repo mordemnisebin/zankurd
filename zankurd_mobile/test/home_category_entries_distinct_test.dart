@@ -74,10 +74,7 @@ void main() {
         ],
         child: MaterialApp(
           theme: AppTheme.light(),
-          home: HomeScreen(
-            repository: MockZanKurdRepository(),
-            onOpenCategories: () async {},
-          ),
+          home: HomeScreen(repository: MockZanKurdRepository()),
         ),
       ),
     );

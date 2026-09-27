@@ -19,10 +19,10 @@ import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
 /// 2026-08-14 denetimi: Ana ekranın (`home_screen.dart`) dört bulgusu.
 ///
-/// 1. `onOpenLearning`/`onOpenCategories` eskiden `VoidCallback` idi ve
-///    push'un dönüşü hiç izlenmiyordu — Fêr Bibe sekmesi içinde push/pop
-///    ile kalan bir oyuncu ders bitirip döndüğünde ekran YALNIZ sekmeye
-///    tekrar basılırsa (bir sekme değişimi tetiklenirse) tazeleniyordu.
+/// 1. `onOpenLearning` eskiden `VoidCallback` idi ve push'un dönüşü hiç
+///    izlenmiyordu — Fêr Bibe sekmesi içinde push/pop ile kalan bir oyuncu
+///    ders bitirip döndüğünde ekran YALNIZ sekmeye tekrar basılırsa (bir
+///    sekme değişimi tetiklenirse) tazeleniyordu.
 /// 2. "Tekrar zamanı" satırı `MistakeStore.readyCount`u ham gösteriyordu;
 ///    o sayı artık bankada bulunmayan (karantina/sunucu UUID'li) kimlikleri
 ///    de sayıyordu.
@@ -144,12 +144,7 @@ void main() {
   ) async {
     SharedPreferences.setMockInitialValues({'zankurd.mastery.Ziman': 5});
     await tester.pumpWidget(
-      _wrap(
-        HomeScreen(
-          repository: MockZanKurdRepository(),
-          onOpenCategories: () async {},
-        ),
-      ),
+      _wrap(HomeScreen(repository: MockZanKurdRepository())),
     );
     // `refreshSignal` hiç tetiklenmedi (widget'a hiç verilmedi) — ilerleme
     // yalnız initState'teki ilk yükten gelebilir.
@@ -168,9 +163,7 @@ void main() {
     tester,
   ) async {
     final repo = MockZanKurdRepository();
-    await tester.pumpWidget(
-      _wrap(HomeScreen(repository: repo, onOpenCategories: () async {})),
-    );
+    await tester.pumpWidget(_wrap(HomeScreen(repository: repo)));
     await tester.pump(const Duration(seconds: 1));
 
     expect(repo.categories, isNotEmpty);
@@ -184,18 +177,12 @@ void main() {
     expect(find.byType(LinearProgressIndicator), findsNothing);
   });
 
-  testWidgets('konu karosu dokunulan kategoriyi açar, genel listeyi değil', (
-    tester,
-  ) async {
+  testWidgets('konu karosu dokunulan kategoriyi açar', (tester) async {
     String? openedCategory;
-    var genericOpened = false;
     await tester.pumpWidget(
       _wrap(
         HomeScreen(
           repository: MockZanKurdRepository(),
-          onOpenCategories: () async {
-            genericOpened = true;
-          },
           onOpenCategory: (category) async {
             openedCategory = category;
           },
@@ -211,11 +198,6 @@ void main() {
     await tester.pump();
 
     expect(openedCategory, 'Ziman');
-    expect(
-      genericOpened,
-      isFalse,
-      reason: 'kategoriye özel geri çağırma varken genel listeye düşülmemeli',
-    );
   });
 
   testWidgets('öğrenmeden dönünce ana ekran sekmeye basmadan tazelenir', (
@@ -232,7 +214,6 @@ void main() {
         Builder(
           builder: (context) => HomeScreen(
             repository: repo,
-            onOpenCategories: () async {},
             onOpenCategory: (category) async {
               await Navigator.of(context).push(
                 MaterialPageRoute<void>(

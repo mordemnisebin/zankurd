@@ -37,7 +37,6 @@ Widget _homeShell({required bool isKu, required bool isDark}) {
       theme: isDark ? AppTheme.dark() : AppTheme.light(),
       home: HomeScreen(
         repository: MockZanKurdRepository(),
-        onOpenCategories: () async {},
         onOpenLearning: () async {},
         onOpenPlay: () {},
       ),

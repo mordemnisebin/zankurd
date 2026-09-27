@@ -13,13 +13,7 @@ void main() {
   ) async {
     final repository = freshMockRepository();
     await tester.pumpWidget(
-      testShell(
-        reducedMotion: true,
-        child: HomeScreen(
-          repository: repository,
-          onOpenCategories: () async {},
-        ),
-      ),
+      testShell(reducedMotion: true, child: HomeScreen(repository: repository)),
     );
     await tester.pump();
 
@@ -39,10 +33,7 @@ void main() {
     await tester.pumpWidget(
       testShell(
         reducedMotion: false,
-        child: HomeScreen(
-          repository: repository,
-          onOpenCategories: () async {},
-        ),
+        child: HomeScreen(repository: repository),
       ),
     );
     await tester.pump();

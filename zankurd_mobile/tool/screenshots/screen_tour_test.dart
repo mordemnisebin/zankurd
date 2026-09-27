@@ -45,7 +45,6 @@ import 'package:zankurd_mobile/src/screens/splash_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
-import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
@@ -616,11 +615,6 @@ void main() {
     await _shoot(t, '35_avatar_editor');
   }, tags: ['preview']);
 
-  testWidgets('36 kategoriler', (t) async {
-    await _pump(t, Scaffold(body: CategoriesTab(repository: repository)));
-    await _shoot(t, '36_categories');
-  }, tags: ['preview']);
-
   testWidgets('37 alt kategoriler', (t) async {
     await _pump(
       t,
@@ -967,15 +961,6 @@ void main() {
     await _shoot(t, '51_lesson_dark');
   }, tags: ['preview']);
 
-  testWidgets('52 kategoriler (karanlık)', (t) async {
-    await _pump(
-      t,
-      Scaffold(body: CategoriesTab(repository: repository)),
-      dark: true,
-    );
-    await _shoot(t, '52_categories_dark');
-  }, tags: ['preview']);
-
   testWidgets('53 seviyeler (karanlık)', (t) async {
     await _pump(
       t,
@@ -1027,15 +1012,6 @@ void main() {
       ku: true,
     );
     await _shoot(t, '60_levels_ku');
-  }, tags: ['preview']);
-
-  testWidgets('61 kategoriler (Kurmancî)', (t) async {
-    await _pump(
-      t,
-      Scaffold(body: CategoriesTab(repository: repository)),
-      ku: true,
-    );
-    await _shoot(t, '61_categories_ku');
   }, tags: ['preview']);
 
   testWidgets('62 oda (Kurmancî)', (t) async {

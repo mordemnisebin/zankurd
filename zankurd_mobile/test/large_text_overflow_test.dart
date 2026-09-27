@@ -9,7 +9,6 @@ import 'package:zankurd_mobile/src/screens/async_duel/async_duel_inbox.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
-import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
@@ -299,13 +298,6 @@ void main() {
     await expectNoOverflow(
       t,
       ProfileNameGateScreen(repository: repository, onCompleted: () {}),
-    );
-  });
-
-  testWidgets('kategoriler', (t) async {
-    await expectNoOverflow(
-      t,
-      Scaffold(body: CategoriesTab(repository: repository)),
     );
   });
 
