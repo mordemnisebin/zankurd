@@ -187,6 +187,16 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(find.byKey(const ValueKey('tournament-waiting')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('tournament-primary-cta')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(
+      find.text('Yerel Kupa'),
+      findsOneWidget,
+      reason:
+          'Bot benzetimi gerçek oyuncu turnuvası gibi görünmemeli; yerel '
+          'olduğu şema ekranında açıkça yazılmalı.',
+    );
   });
 
   testWidgets('ikinci turdaki oyuncunun maçı doğru turda aranır', (
@@ -302,7 +312,7 @@ void main() {
     // (2026-08-14 denetimi).
     // Geniş ekranda iki sütunlu düzen aynı metni iki kez çizebilir
     // (bkz. bu dosyadaki diğer testlerdeki `findsWidgets` deseni).
-    expect(find.textContaining('Final skoru: 900'), findsWidgets);
+    expect(find.textContaining('Final puanı: 900'), findsWidgets);
   });
 
   testWidgets(

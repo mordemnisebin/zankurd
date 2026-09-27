@@ -160,8 +160,14 @@ extension LangContext on BuildContext {
         return 'Têketina mêvanan niha girtî ye.';
       case 'Bir hata oluştu. Lütfen tekrar deneyin.':
         return 'Çewtiyek rû da. Ji kerema xwe dîsa biceribîne.';
+      // 2026-09-25 denetimi: bilinmeyen hata mesajı olduğu gibi Türkçe
+      // geri veriliyordu, yani Kurmancî modda Türkçe sızıntısı
+      // garantîydi. Supabase yeni bir mesaj eklediğinde Kurmancî kullanıcı
+      // İngilizce/Türkçe ham metni görüyordu. Artık hiçbir eşleşme
+      // bulunamazsa genel bir Kurmancî cümle dönüyor; ayrıntı gerekirse
+      // çağıran ayrıca loglar.
       default:
-        return turkishMessage;
+        return 'Çewtiyek nediyar çêbû. Ji kerema xwe dîsa biceribîne.';
     }
   }
 }

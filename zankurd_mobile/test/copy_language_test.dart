@@ -17,7 +17,10 @@ void main() {
   test('turnuva terimi Kurmancî\'de "Kûpa" olarak kalır', () {
     // Türkçe "Turnuva" sözcüğü Kurmancî metne sızmamalı; karşılığı Kûpa.
     expect(Tr.of(K.tournament, AppLanguage.ku), 'Kûpa');
-    expect(Tr.of(K.tournament, AppLanguage.tr), 'Turnuva Modu');
+    // 2026-09-25: Türkçe tarafta gereksiz "Modu" kelimesi kaldırıldı;
+    // düğme ve başlık zaten bağlamı veriyor ("Turnuva Modu" ile
+    // "Turnuva" aynı yerde yan yana görünüyordu).
+    expect(Tr.of(K.tournament, AppLanguage.tr), 'Turnuva');
     // Süresiz mod alt metni "turnûva" yazıyordu: û, `contains('turnuva')`
     // taramasını kör ediyordu. Aynı cümle oda için de Türkçe "oda"
     // taşıyordu; birim `ode`, kupa `kûpa`.

@@ -411,7 +411,7 @@ class Tr {
     K.eventsSub: {'ku': 'Her roj nû dibe.', 'tr': 'Her gün yenilenir.'},
     K.dailyContest: {'ku': 'Çalakiya Rojê', 'tr': 'Günün Etkinliği'},
     K.tenQuestions: {'ku': '10 pirs', 'tr': '10 soru'},
-    K.tournament: {'ku': 'Kûpa', 'tr': 'Turnuva Modu'},
+    K.tournament: {'ku': 'Kûpa', 'tr': 'Turnuva'},
     // Kontenjan sunucu tarafında ayarlanır (`tournaments.size`); metne sayı
     // yazmak onu ilk değişiklikte yalan yapar — nitekim 8'den 4'e
     // düşürüldüğünde bu satır eskimişti (2026-07-27).
@@ -453,6 +453,26 @@ class Tr {
     K.learningPathsSub: {
       'ku': 'Mijarek hilbijêre û gav bi gav pêşve here.',
       'tr': 'Bir konu seç ve adım adım ilerle.',
+    },
+    K.lexiconTitle: {'ku': 'Ferheng', 'tr': 'Sözlük'},
+    K.lexiconSubtitle: {
+      'ku': 'Peyv û gotinên dersan bi Kurmancî an Tirkî bigere.',
+      'tr': 'Derslerdeki kelime ve ifadeleri Kurmancî veya Türkçe ara.',
+    },
+    K.lexiconSearchHint: {
+      'ku': 'Bi Kurmancî an Tirkî bigere…',
+      'tr': 'Kurmancî veya Türkçe ara…',
+    },
+    K.lexiconCount: {
+      'ku': '{count} peyv û gotin',
+      'tr': '{count} kelime ve ifade',
+    },
+    K.lexiconSource: {'ku': 'Çavkanî', 'tr': 'Kaynak'},
+    K.lexiconCategory: {'ku': 'Mijar', 'tr': 'Konu'},
+    K.lexiconEmptyTitle: {'ku': 'Encam tune', 'tr': 'Sonuç yok'},
+    K.lexiconEmptyBody: {
+      'ku': 'Bi peyveke din an wateya wê dîsa bigere.',
+      'tr': 'Başka bir kelime veya anlamla tekrar ara.',
     },
     K.loadFailedShort: {'ku': 'Barnebû', 'tr': 'Yüklenemedi'},
     K.lessonsLoadFail: {
@@ -496,6 +516,23 @@ class Tr {
     K.noSlides: {'ku': 'Slayt tune', 'tr': 'Slayt yok'},
     K.finish: {'ku': 'Biqedîne', 'tr': 'Tamamla'},
     K.miniQuiz: {'ku': 'Quiz-a Kurt', 'tr': 'Mini Quiz'},
+    K.lessonRecallTitle: {'ku': 'Bîranîna bilez', 'tr': 'Hızlı hatırlama'},
+    K.lessonRecallHint: {
+      'ku': 'Wateya vê peyv an îfadeyê bifikire, paşê bersivê nîşan bide.',
+      'tr': 'Bu kelime veya ifadenin anlamını düşün, sonra yanıtı göster.',
+    },
+    K.lessonRecallReveal: {'ku': 'Bersivê nîşan bide', 'tr': 'Yanıtı göster'},
+    K.lessonRecallNext: {'ku': 'Ya din', 'tr': 'Sonraki'},
+    K.lessonListeningTitle: {'ku': 'Guhdarî', 'tr': 'Dinleme'},
+    K.lessonListeningHint: {
+      'ku': 'Deng bibihîze û wateya rast hilbijêre.',
+      'tr': 'Sesi dinle ve doğru anlamı seç.',
+    },
+    K.lessonListeningPlay: {'ku': 'Bibihîze', 'tr': 'Dinle'},
+    K.lessonListeningReplay: {'ku': 'Dîsa bibihîze', 'tr': 'Tekrar dinle'},
+    K.lessonListeningPlaying: {'ku': 'Tê bihîstin…', 'tr': 'Dinleniyor…'},
+    K.lessonListeningCorrect: {'ku': 'Rast e', 'tr': 'Doğru'},
+    K.lessonListeningWrong: {'ku': 'Ne rast e', 'tr': 'Yanlış'},
 
     // ── Sonuç ekranı ─────────────────────────────────────────────────
     K.streakBreaking: {'ku': 'Zincîra te dişkê!', 'tr': 'Serin kırılıyor!'},
@@ -629,7 +666,7 @@ class Tr {
     // Quiz birimi `Pûan` (`K.scoreWord`, `K.liveScore`). Kupa kartı
     // "Puana dawî" deyince û düşer ve Türkçe puan sızar; `contains('skor')`
     // bunu görmez — turnûva ile ters sınıf (eksik û).
-    K.cupFinalScore: {'ku': 'Pûana dawî', 'tr': 'Final skoru'},
+    K.cupFinalScore: {'ku': 'Pûana dawî', 'tr': 'Final puanı'},
     K.cupEliminatedRound: {
       'ku': 'Tu li {round} derketî',
       'tr': '{round} turunda elendin',
@@ -897,6 +934,12 @@ class Tr {
       'tr': 'Bir konu seç ve başla',
     },
     K.bugununGorevi: {'ku': 'ERKÊ ÎRO', 'tr': 'BUGÜNÜN GÖREVİ'},
+    K.missionClaimAction: {'ku': 'Werbigire', 'tr': 'Ödülü Al'},
+    K.missionClaimed: {'ku': 'Hate stendin', 'tr': 'Alındı'},
+    K.missionXpClaimed: {
+      'ku': '+{xp} XP hate stendin!',
+      'tr': '+{xp} XP kazanıldı!',
+    },
     K.firstSessionBadge: {'ku': 'DESTPÊKA BIÇÛK', 'tr': 'KÜÇÜK BAŞLANGIÇ'},
     K.firstSessionSub: {
       'ku': '{p0} pirs · nêzîkî {p1} deqe',
@@ -1089,10 +1132,19 @@ class Tr {
       'tr': 'Cevabın kaydedildi',
     },
     K.digerOyuncuBekleniyor: {
-      'ku': 'Li benda hevrik tê bendewarî...',
+      // 2026-09-25 düzeltmesi: "tê bendewarî" eklentiyle bozuktu ve
+      // hemen aşağıdaki `rakipBekleniyor` cümlesiyle aynı şeyi
+      // söylüyordu. Artık "hevrik tê bêwîrkir" (rakip bekleniyor).
+      'ku': 'Li banda hevrik tê bêwîrkir...',
       'tr': 'Diğer oyuncu bekleniyor...',
     },
-    K.sonrakiSoruPS: {'ku': 'Pirsa nû: {p0}s', 'tr': 'Sonraki soru: {p0}s'},
+    K.sonrakiSoruPS: {
+      // 2026-09-25 düzeltmesi: `{p0}s` kısaltması Türkçe saniye
+      // kısaltmasıydı; Kurmancî metinde Türkçe harf kalıyordu.
+      // `K.secondsShortUnit` zaten "çirke" diyor, o kullanılmalı.
+      'ku': 'Pirsa nû: {p0} çirke',
+      'tr': 'Sonraki soru: {p0}sn',
+    },
     K.rakipBekleniyor: {
       'ku': 'Li benda hevrikê ye...',
       'tr': 'Rakip bekleniyor...',
@@ -1313,7 +1365,7 @@ class Tr {
     // zindî" deyince oyuncu aynı değeri iki adla görür. Türkçe `skor` +
     // `-a` çekimi İngilizce `\bscore\b` taramasını da kör eder — `maçê`
     // ve `serverê` ile aynı sınıf.
-    K.liveScore: {'ku': 'Pûana zindî', 'tr': 'Canlı skor'},
+    K.liveScore: {'ku': 'Pûana zindî', 'tr': 'Canlı puan'},
     K.imageLoadFailed: {
       'ku': 'Wêne nehat barkirin',
       'tr': 'Görsel yüklenemedi',
@@ -2615,7 +2667,7 @@ class Tr {
       'tr':
           'Bu yeni oda için hesabınızdan {amount} jeton kesilecektir. Devam etmek istiyor musunuz?',
     },
-    K.rematch: {'ku': 'Dîsa Bilîze (Rovanj)', 'tr': 'Rövanş İste'},
+    K.rematch: {'ku': 'Dîsa bilîze', 'tr': 'Rövanş İste'},
     K.rematchWaiting: {
       'ku': 'Li benda bersiva hevrikê ye…',
       'tr': 'Rakibin cevabı bekleniyor…',
@@ -2992,6 +3044,14 @@ class K {
   static const storySubtitle = 'story.subtitle';
   static const learningPaths = 'learn.paths';
   static const learningPathsSub = 'learn.paths.sub';
+  static const lexiconTitle = 'learn.lexicon.title';
+  static const lexiconSubtitle = 'learn.lexicon.subtitle';
+  static const lexiconSearchHint = 'learn.lexicon.searchHint';
+  static const lexiconCount = 'learn.lexicon.count';
+  static const lexiconSource = 'learn.lexicon.source';
+  static const lexiconCategory = 'learn.lexicon.category';
+  static const lexiconEmptyTitle = 'learn.lexicon.emptyTitle';
+  static const lexiconEmptyBody = 'learn.lexicon.emptyBody';
   static const loadFailedShort = 'common.loadFailed.short';
   static const lessonsLoadFail = 'learn.lessons.loadFail';
   static const retryShort = 'common.retry.short';
@@ -3008,6 +3068,17 @@ class K {
   static const noSlides = 'learn.noSlides';
   static const finish = 'common.finish';
   static const miniQuiz = 'learn.miniQuiz';
+  static const lessonRecallTitle = 'learn.lessonRecall.title';
+  static const lessonRecallHint = 'learn.lessonRecall.hint';
+  static const lessonRecallReveal = 'learn.lessonRecall.reveal';
+  static const lessonRecallNext = 'learn.lessonRecall.next';
+  static const lessonListeningTitle = 'learn.lessonListening.title';
+  static const lessonListeningHint = 'learn.lessonListening.hint';
+  static const lessonListeningPlay = 'learn.lessonListening.play';
+  static const lessonListeningReplay = 'learn.lessonListening.replay';
+  static const lessonListeningPlaying = 'learn.lessonListening.playing';
+  static const lessonListeningCorrect = 'learn.lessonListening.correct';
+  static const lessonListeningWrong = 'learn.lessonListening.wrong';
 
   // ── Sonuç ekranı ───────────────────────────────────────────────────
   static const streakBreaking = 'result.streak.breaking';
@@ -3204,6 +3275,9 @@ class K {
   static const tumKategoriler = 'screen.tumKategoriler';
   static const birKonuSecVe = 'screen.birKonuSecVe';
   static const bugununGorevi = 'screen.bugununGorevi';
+  static const missionClaimAction = 'home.mission.claimAction';
+  static const missionClaimed = 'home.mission.claimed';
+  static const missionXpClaimed = 'home.mission.xpClaimed';
   static const gununDersi = 'screen.gununDersi';
   static const firstSessionBadge = 'screen.firstSessionBadge';
   static const firstSessionSub = 'screen.firstSessionSub';

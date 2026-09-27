@@ -406,10 +406,10 @@ class _PackageList extends StatelessWidget {
     // İlk paketin yıllık/yıllık olduğunu kontrol et; öne çıkar.
     final ordered = [...packages];
     ordered.sort((a, b) {
-      // monthly < annual < weekly gibi listeyi tipik sıraya koy
+      // annual < monthly < diğer: en iyi değer önce, featured yıllıkta.
       int weight(Package p) {
-        if (p.packageType == PackageType.monthly) return 1;
-        if (p.packageType == PackageType.annual) return 2;
+        if (p.packageType == PackageType.annual) return 1;
+        if (p.packageType == PackageType.monthly) return 2;
         return 3;
       }
 
@@ -423,7 +423,7 @@ class _PackageList extends StatelessWidget {
             child: _PackageRow(
               package: ordered[i],
               isKu: isKu,
-              featured: ordered[i].packageType == PackageType.monthly,
+              featured: ordered[i].packageType == PackageType.annual,
               isBusy: isBusy,
               onBuy: () => onBuy(ordered[i]),
             ),
@@ -668,6 +668,12 @@ class _EmptyOfferings extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm),
           TextButton.icon(
             onPressed: onRetry,
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.readableAccent(
+                context,
+                AppTheme.brandDeep,
+              ),
+            ),
             icon: const Icon(AppIcons.arrowsRotate),
             label: Text(Tr.forKu(K.retry, isKu)),
           ),
@@ -715,6 +721,12 @@ class _OfferingsLoadError extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm),
           TextButton.icon(
             onPressed: onRetry,
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.readableAccent(
+                context,
+                AppTheme.brandDeep,
+              ),
+            ),
             icon: const Icon(AppIcons.arrowsRotate),
             label: Text(context.t(K.retry)),
           ),
