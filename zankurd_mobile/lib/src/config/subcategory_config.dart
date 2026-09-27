@@ -442,9 +442,16 @@ class SubcategoryConfig {
     // "rê" çıkarıldı: iki harflik alt dize "berê", "rêz", "rasterast"
     // gibi yüzlerce kelimede geçiyor ve çekim tekniği sorularını bu alt
     // kategoriye çekiyordu. Güney'in filmleri özgün adlarıyla aranır.
+    //
+    // Ad iki yazımla aranır. Kurmancî alfabede ı ve ü yoktur; banka Kurmancî
+    // cümlede adı "Yilmaz Guney" diye yazar (2026-09-28'de beş soru). Liste
+    // yalnız Türkçe yazımı tanıdığı için bu beş soru Güney hakkında olduğu
+    // hâlde "Kürt filmleri"ne ya da genel havuza düşüyordu.
     'yilmaz_guney': [
       'yılmaz güney',
+      'yilmaz guney',
       'güney',
+      'guney',
       'yol',
       'sûr',
       'dîwar',

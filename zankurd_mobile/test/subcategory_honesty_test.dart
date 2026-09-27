@@ -86,6 +86,21 @@ void main() {
     );
   });
 
+  test('Kurmancî yazımla "Yilmaz Guney" de kendi alt kategorisine düşer', () {
+    // Kurmancî alfabede ı ve ü yok; banka Kurmancî cümlede adı "Yilmaz
+    // Guney" yazıyor. Anahtar kelimeler yalnız Türkçe yazımı tanırken bu
+    // soru (edit_sinema_0006'nın kalıbı) genel havuza düşüyordu.
+    const grave = QuizQuestion(
+      id: 'grave',
+      category: 'Sînema',
+      prompt: 'Gora Yilmaz Guney li kîjan bajarî ye?',
+      answers: ['Parîs', 'X1', 'X2', 'X3'],
+      correctAnswer: 'Parîs',
+      explanation: 'Test açıklaması yeterince uzun olsun diye buraya yazıldı.',
+    );
+    expect(SubcategoryConfig.getSubcategoryId(grave), 'yilmaz_guney');
+  });
+
   setUp(() {
     SharedPreferences.setMockInitialValues({});
     SeenQuestionStore.resetInstance();
