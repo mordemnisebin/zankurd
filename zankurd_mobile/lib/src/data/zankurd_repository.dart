@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'durable_write.dart';
+import '../models/async_duel.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/friend.dart';
@@ -197,6 +198,39 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
     int entryFee = 0,
   });
   Future<GameRoom> joinOnlineRoom(String code);
+
+  // ─── Sırayla düello (async 1v1) ──────────────────────────────────────
+  //
+  // Rakibin aynı anda çevrimiçi olması gerekmeyen 1v1: oyuncu sunucunun
+  // seçtiği 7 soruyu hemen oynar; bekleyen açık bir düello varsa onun
+  // rakibi olur (sonuç anında kesinleşir), yoksa yeni bir düello açar
+  // (sonuç rakip bitirince kesinleşir). Sözleşme
+  // `lib/src/models/async_duel.dart`dadır; doğru cevap oda maçlarıyla
+  // aynı şekilde `answer_async_duel` cevaplanana kadar gizlidir.
+
+  /// Bekleyen açık bir düelloya katılır (rakip=ben) ya da yenisini açar.
+  /// [category] `categories.name` iledir; `null` ise herhangi bir kategori.
+  Future<AsyncDuelStart> startAsyncDuel({String? category});
+
+  /// Tek bir soruyu cevaplar. Aynı [questionIndex] ikinci kez
+  /// gönderilemez — sunucu ilk cevabı kilitler.
+  Future<AsyncDuelAnswer> answerAsyncDuel({
+    required String duelId,
+    required int questionIndex,
+    required String choice,
+    required int responseMs,
+  });
+
+  /// Son 30 gündeki düellolarımın özetini (yeniden eskiye) yükler.
+  /// Sunucuya ulaşılamazsa fırlatır; boş liste "hiç düellon yok" demektir.
+  Future<List<AsyncDuelSummary>> loadMyAsyncDuels();
+
+  /// Bir düello sonucunu "görüldü" işaretler ("Sonuç hazır" rozeti buna göre iner).
+  Future<void> markAsyncDuelSeen(String duelId);
+
+  /// Bitmiş (ya da süresi dolmuş) bir düellonun XP'sini talep eder;
+  /// idempotenttir — ikinci çağrı yeniden XP eklemez.
+  Future<int> claimAsyncDuelXp(String duelId);
 
   /// Sunucudaki odanın tek ve yetkili snapshot'ını oyuncularıyla yükler.
   ///

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/async_duel.dart';
 import '../models/contest.dart';
 import '../models/player.dart';
 import '../models/quiz_question.dart';
@@ -66,6 +67,36 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
 
   @override
   Future<GameRoom> joinOnlineRoom(String code) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<AsyncDuelStart> startAsyncDuel({String? category}) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<AsyncDuelAnswer> answerAsyncDuel({
+    required String duelId,
+    required int questionIndex,
+    required String choice,
+    required int responseMs,
+  }) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<List<AsyncDuelSummary>> loadMyAsyncDuels() async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<void> markAsyncDuelSeen(String duelId) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<int> claimAsyncDuelXp(String duelId) async {
     throw StateError('Remote service unavailable.');
   }
 

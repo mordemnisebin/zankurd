@@ -29,6 +29,31 @@ QuestionType questionTypeFromStorage(Object? raw) {
   };
 }
 
+/// [QuizQuestion.fromServerRow]da bilinmeyen bir `question_type` gelirse
+/// (şema kayması, eksik alan) turu tamamen düşürmek yerine en yaygın türe
+/// geriler — oda akışındaki `_questionTypeFromRow` ile aynı tolerans.
+QuestionType _questionTypeFromServerRow(Map<String, dynamic> row) {
+  try {
+    return questionTypeFromStorage(row['question_type']);
+  } on ArgumentError {
+    return QuestionType.multipleChoice;
+  }
+}
+
+/// Sunucu satırındaki `correct_option` ('A'..'D') şık metnine çevrilir.
+/// Alan yoksa ya da boşsa (cevap henüz gizliyse) boş döner —
+/// [QuizQuestion.hasHiddenAnswer] bunu okur.
+String _revealedServerCorrectAnswer(
+  Map<String, dynamic> row,
+  List<String> answers,
+) {
+  final opt = (row['correct_option'] as String?)?.trim().toUpperCase();
+  if (opt == null || opt.isEmpty) return '';
+  const letters = ['A', 'B', 'C', 'D'];
+  final index = letters.indexOf(opt);
+  return index >= 0 && index < answers.length ? answers[index] : '';
+}
+
 class QuizQuestion {
   const QuizQuestion({
     required this.id,
@@ -495,6 +520,42 @@ class QuizQuestion {
       metadata: json['metadata'] == null
           ? null
           : QuestionMetadata.fromJson(json['metadata'] as Map<String, dynamic>),
+    );
+  }
+
+  /// Sunucudan gelen oda/düello soru satırını `QuizQuestion`'a çevirir.
+  ///
+  /// Oda maçı (`get_room_questions`) ve sırayla düello (`start_async_duel`)
+  /// istemciye AYNI satır biçimini gönderir: `option_a`..`option_d`,
+  /// `question_type`, `image_url`, `difficulty`, `category_name` ve —
+  /// yalnız daha önce cevaplanmış bir soruda — `correct_option`. Doğru
+  /// cevap satırda yoksa (ya da boşsa) [correctAnswer] boş kalır
+  /// ([hasHiddenAnswer]); hile önlemi sunucuda kalır, istemci yalnız bu
+  /// gizliliği taşır.
+  ///
+  /// 2026-09 (sırayla düello): dönüşüm eskiden yalnız
+  /// `SupabaseZanKurdRepository._roomQuestionFromRow` içindeydi. Düello
+  /// modeli aynı satır biçimini okuduğu için mantık BURAYA taşındı ki iki
+  /// yer birbirinden sessizce sapmasın; oda kodu artık bu factory'ye
+  /// devrediyor.
+  factory QuizQuestion.fromServerRow(Map<String, dynamic> row) {
+    final answers = <String>[
+      row['option_a'] as String? ?? '',
+      row['option_b'] as String? ?? '',
+      row['option_c'] as String? ?? '',
+      row['option_d'] as String? ?? '',
+    ].where((answer) => answer.trim().isNotEmpty && answer != '-').toList();
+
+    return QuizQuestion(
+      id: row['id'] as String,
+      category: row['category_name'] as String? ?? 'Ziman',
+      prompt: row['prompt'] as String,
+      answers: answers,
+      correctAnswer: _revealedServerCorrectAnswer(row, answers),
+      explanation: '',
+      type: _questionTypeFromServerRow(row),
+      imageUrl: row['image_url'] as String?,
+      difficulty: row['difficulty'] as int? ?? 2,
     );
   }
 

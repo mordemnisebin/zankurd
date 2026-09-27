@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'durable_write.dart';
+import '../models/async_duel.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/friend.dart';
@@ -644,7 +645,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       );
       final roomQuestions = (response as List<dynamic>)
           .whereType<Map<String, dynamic>>()
-          .map(_roomQuestionFromRow)
+          .map(QuizQuestion.fromServerRow)
           .where(_contentPolicy.isPlayableWithHiddenAnswer)
           .toList();
 
@@ -1703,7 +1704,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
     return {
       for (final row in rows)
-        row['id'] as String: _roomQuestionFromRow({
+        row['id'] as String: QuizQuestion.fromServerRow({
           ...row,
           'category_name': categoryNames[row['category_id']] ?? 'Ziman',
         }),
@@ -2118,18 +2119,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     ErrorReporter.record(error, stack, reason: reason);
   }
 
-  String _revealedCorrectAnswer(
-    Map<String, dynamic> row,
-    List<String> answers,
-  ) {
-    final opt = (row['correct_option'] as String?)?.trim().toUpperCase();
-    if (opt == null || opt.isEmpty) return '';
-    const letters = ['A', 'B', 'C', 'D'];
-    final index = letters.indexOf(opt);
-    if (index >= 0 && index < answers.length) return answers[index];
-    return '';
-  }
-
   Future<List<Map<String, dynamic>>> _fetchPublicProfiles(
     List<String> ids,
   ) async {
@@ -2376,35 +2365,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         showcaseTitle: profile?['showcase_title'] as String?,
       );
     }).toList();
-  }
-
-  QuizQuestion _roomQuestionFromRow(Map<String, dynamic> row) {
-    final answers = <String>[
-      row['option_a'] as String? ?? '',
-      row['option_b'] as String? ?? '',
-      row['option_c'] as String? ?? '',
-      row['option_d'] as String? ?? '',
-    ].where((answer) => answer.trim().isNotEmpty && answer != '-').toList();
-
-    return QuizQuestion(
-      id: row['id'] as String,
-      category: row['category_name'] as String? ?? 'Ziman',
-      prompt: row['prompt'] as String,
-      answers: answers,
-      correctAnswer: _revealedCorrectAnswer(row, answers),
-      explanation: '',
-      type: _questionTypeFromRow(row),
-      imageUrl: row['image_url'] as String?,
-      difficulty: row['difficulty'] as int? ?? 2,
-    );
-  }
-
-  QuestionType _questionTypeFromRow(Map<String, dynamic> row) {
-    try {
-      return questionTypeFromStorage(row['question_type']);
-    } on ArgumentError {
-      return QuestionType.multipleChoice;
-    }
   }
 
   @override
@@ -3238,6 +3198,106 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         return const ReferralResult(status: ReferralStatus.notFound);
       }
       return const ReferralResult(status: ReferralStatus.networkError);
+    }
+  }
+
+  // ─── Sırayla düello (async 1v1) ──────────────────────────────────────
+  //
+  // Rakibin aynı anda çevrimiçi olmasını gerektirmeyen 1v1: oyuncu 7 soruyu
+  // hemen oynar, rakip (varsa açık bir düello alarak, yoksa sonradan
+  // katılarak) kendi zamanında oynar. Sözleşme `sirayla_duello_tasarim.md`de
+  // sabittir; burası yalnız RPC çağrısı + JSON ayrıştırmadır, iş kuralları
+  // (kazanan, XP, süre) sunucudadır.
+
+  @override
+  Future<AsyncDuelStart> startAsyncDuel({String? category}) async {
+    try {
+      if (client.auth.currentUser == null) {
+        await signInAnonymously();
+      }
+      await ensureProfile();
+      final response = await client.rpc(
+        'start_async_duel',
+        params: {'p_category': category},
+      );
+      return AsyncDuelStart.fromJson(
+        _requiredJsonObject(response, 'start_async_duel'),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'startAsyncDuel failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AsyncDuelAnswer> answerAsyncDuel({
+    required String duelId,
+    required int questionIndex,
+    required String choice,
+    required int responseMs,
+  }) async {
+    try {
+      final response = await client.rpc(
+        'answer_async_duel',
+        params: {
+          'p_duel_id': duelId,
+          'p_question_index': questionIndex,
+          'p_choice': choice,
+          'p_response_ms': responseMs,
+        },
+      );
+      return AsyncDuelAnswer.fromJson(
+        _requiredJsonObject(response, 'answer_async_duel'),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'answerAsyncDuel failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<AsyncDuelSummary>> loadMyAsyncDuels() async {
+    try {
+      final response = await client.rpc<List<dynamic>>('list_my_async_duels');
+      return response
+          .map(
+            (row) => AsyncDuelSummary.fromJson(
+              Map<String, dynamic>.from(row as Map),
+            ),
+          )
+          .toList();
+    } catch (error, stack) {
+      // Boş listeye düşülmez: "hiç düellon yok" demek, rakibini bekleyen ya
+      // da sonucu hazır bir düelloyu oyuncudan gizlemek olurdu. Ekran hatayı
+      // "yeniden dene" olarak gösterir.
+      _recordError(error, stack, reason: 'loadMyAsyncDuels failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> markAsyncDuelSeen(String duelId) async {
+    try {
+      await client.rpc('mark_async_duel_seen', params: {'p_duel_id': duelId});
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'markAsyncDuelSeen failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<int> claimAsyncDuelXp(String duelId) async {
+    try {
+      final response = await client.rpc<dynamic>(
+        'claim_async_duel_xp',
+        params: {'p_duel_id': duelId},
+      );
+      if (response is int) return response;
+      if (response is num) return response.toInt();
+      throw StateError('claim_async_duel_xp returned an unreadable total.');
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'claimAsyncDuelXp failed');
+      rethrow;
     }
   }
 }

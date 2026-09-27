@@ -61,6 +61,19 @@ abstract interface class LivePlayPort {
     int entryFee = 0,
   });
   Future<GameRoom> joinOnlineRoom(String code);
+
+  // ─── Sırayla düello (async 1v1) — bkz. `ZanKurdRepository` doc'u ──────
+  Future<AsyncDuelStart> startAsyncDuel({String? category});
+  Future<AsyncDuelAnswer> answerAsyncDuel({
+    required String duelId,
+    required int questionIndex,
+    required String choice,
+    required int responseMs,
+  });
+  Future<List<AsyncDuelSummary>> loadMyAsyncDuels();
+  Future<void> markAsyncDuelSeen(String duelId);
+  Future<int> claimAsyncDuelXp(String duelId);
+
   Future<GameRoom> loadRoomSnapshot(String roomId);
   Future<RoomResumeSnapshot?> loadMyResumableRoom();
   Future<RoomResultSnapshot?> loadMyPendingRoomResult();
