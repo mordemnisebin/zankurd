@@ -27,6 +27,7 @@ library;
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/config/category_visibility.dart';
 
 const _tables = ['async_duels', 'async_duel_answers', 'async_duel_results'];
 
@@ -333,6 +334,45 @@ void main() {
       final body = functionBody('start_async_duel');
       expect(body, contains('from public.async_duel_results r'));
       expect(body, contains('r.player_id = d.creator_id'));
+    });
+
+    // İstemci düello sorusunu atlayamaz (index kayar); oda akışındaki
+    // `isPlayableWithHiddenAnswer` süzgeci burada sunucudadır. Gizli
+    // kategori listesi iki yerde yaşar — biri değişip öteki unutulursa
+    // uygulamada gizlenen Siyaset/Paradigma soruları düelloda çıkardı.
+    test(
+      'gizli kategoriler istemcidekiyle birebir aynı ve düelloya girmez',
+      () {
+        final body = functionBody('start_async_duel');
+        final match = RegExp(r'c\.name not in \(([^)]*)\)').firstMatch(body);
+        expect(match, isNotNull, reason: 'gizli kategori süzgeci yok');
+        final names = RegExp(
+          r"'([^']+)'",
+        ).allMatches(match!.group(1)!).map((m) => m.group(1)!).toSet();
+        expect(names, hiddenCategoryIds);
+        expect(
+          body,
+          contains('join public.categories c on c.id = q.category_id'),
+        );
+        expect(body, contains('and c.is_active = true'));
+      },
+    );
+
+    test('yalnız şıkları eksiksiz, doğru şıkkı geçerli metin soruları', () {
+      final body = functionBody('start_async_duel');
+      expect(body, isNot(contains("= 'visual'")));
+      expect(
+        body,
+        contains(
+          "coalesce(q.question_type, 'multiple_choice') = 'multiple_choice'",
+        ),
+      );
+      expect(body, contains("q.question_type = 'true_false'"));
+      expect(body, contains("q.correct_option in ('A', 'B', 'C', 'D')"));
+      expect(body, contains("q.correct_option in ('A', 'B')"));
+      for (final option in ['a', 'b', 'c', 'd']) {
+        expect(body, contains("btrim(coalesce(q.option_$option, ''))"));
+      }
     });
   });
 }

@@ -205,12 +205,48 @@ begin
     -- `rnd` bir kez hesaplanır (SELECT listesinde); ORDER BY onu yeniden
     -- ÇAĞIRMAZ, aynı değeri kullanır — seçilen 7 soru ile array_agg'in
     -- verdiği sıra böylece birebir aynı kalır (index 0..6 bu sırayla).
+    --
+    -- Düello sorusu istemcide ATLANAMAZ: 7 soru iki oyuncuya aynı sırayla
+    -- gider, cevaplar index'le eşleşir. Oda akışında istemci oynanamaz bir
+    -- soruyu listeden düşürebiliyor (QuestionContentPolicy
+    -- .isPlayableWithHiddenAnswer); düelloda düşürse index kayardı. Aynı
+    -- süzgeç bu yüzden burada, seçimden ÖNCE uygulanır:
+    --   * gizli kategoriler: lib/src/config/category_visibility.dart
+    --     `hiddenCategoryIds` ile birebir aynı liste (bekçi:
+    --     test/async_duel_sql_contract_test.dart);
+    --   * yalnız metin soruları: görsel soruda 20 saniyelik sayaç görsel
+    --     yüklenirken işler, yavaş bağlantıdaki oyuncu haksız yere kaybeder;
+    --   * şıkları eksiksiz sorular: istemci boş şıkkı listeden çıkarır,
+    --     aradaki bir boşluk A-D harf eşlemesini kaydırırdı;
+    --   * doğru şıkkı geçerli sorular: answer_async_duel correct_option'ı
+    --     cevapla ham karşılaştırır; 'a' ya da NULL taşıyan soru kimseye
+    --     doğru yazdırmazdı.
     select array_agg(picked.id order by picked.rnd) into v_question_ids
     from (
       select q.id, random() as rnd
       from public.questions q
+      join public.categories c on c.id = q.category_id
       where q.is_approved = true
+        and c.is_active = true
+        and c.name not in ('Paradigma', 'Siyaset', 'Teknolojî')
         and (v_category_id is null or q.category_id = v_category_id)
+        and btrim(coalesce(q.prompt, '')) <> ''
+        and btrim(coalesce(q.option_a, '')) not in ('', '-')
+        and btrim(coalesce(q.option_b, '')) not in ('', '-')
+        and (
+          (
+            coalesce(q.question_type, 'multiple_choice') = 'multiple_choice'
+            and btrim(coalesce(q.option_c, '')) not in ('', '-')
+            and btrim(coalesce(q.option_d, '')) not in ('', '-')
+            and q.correct_option in ('A', 'B', 'C', 'D')
+          )
+          or (
+            q.question_type = 'true_false'
+            and btrim(coalesce(q.option_c, '')) in ('', '-')
+            and btrim(coalesce(q.option_d, '')) in ('', '-')
+            and q.correct_option in ('A', 'B')
+          )
+        )
       order by rnd
       limit 7
     ) picked;
