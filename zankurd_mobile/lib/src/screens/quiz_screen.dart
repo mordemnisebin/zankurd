@@ -46,7 +46,6 @@ import '../widgets/app_panel.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/floating_reaction_overlay.dart';
 import '../widgets/kilim_board.dart';
-import '../theme/kilim_motifs.dart';
 import '../widgets/roj_mascot.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/player_avatar.dart';
