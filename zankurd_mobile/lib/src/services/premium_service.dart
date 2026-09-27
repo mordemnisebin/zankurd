@@ -23,6 +23,32 @@ enum PurchaseOutcome {
 
 enum RestoreOutcome { restored, nothingFound, failed }
 
+/// `refreshEntitlement` sonucunun üç ayrı hâli.
+///
+/// `bool` yetmiyordu: "abone değil" ile "doğrulama yapılamadı" aynı `false`
+/// dönüyordu. Çağıran (sonuç ekranı) bunu "abone değil" okuyup ücretli yola
+/// düşüyor, yani çevrimdışı bir abonenin serisi bedava korunmuyordu
+/// (2026-09-25 denetimi). Bilinmeyen ayrı bir hâl olarak modellendi.
+sealed class EntitlementRefreshResult {
+  const EntitlementRefreshResult();
+}
+
+/// Sunucudan taze cevap geldi ve abonelik durumu kesin.
+final class EntitlementRefreshKnown extends EntitlementRefreshResult {
+  const EntitlementRefreshKnown(this.isPremium);
+
+  final bool isPremium;
+}
+
+/// Doğrulama yapılamadı (ağ yok, RevenueCat hata verdi, yapılandırma eksik).
+///
+/// Bu hâlde bellekteki son bilinen durum geçerlidir; çağıran avantajı ne
+/// reddetmeli ne de ücretli yola düşürmeli, kullanıcıya da "abonelik
+/// kalktı" dememeli.
+final class EntitlementRefreshUnknown extends EntitlementRefreshResult {
+  const EntitlementRefreshUnknown();
+}
+
 /// Teklif isteğinin sonucunu, başarılı boş liste ile yükleme hatasını
 /// birbirine karıştırmadan Paywall'a iletir.
 sealed class OfferingsFetchResult {
@@ -228,7 +254,7 @@ class PremiumService extends ChangeNotifier {
   Future<void> warmUp() async {
     if (!_configured) return;
     try {
-      final info = await Purchases.getCustomerInfo();
+      final info = await _getCustomerInfo();
       _isPremium = _hasEntitlement(info.entitlements.all);
       notifyListeners();
     } catch (error, stack) {
@@ -240,18 +266,20 @@ class PremiumService extends ChangeNotifier {
   /// kapıları (seri dondurma) bellektekine değil BUNA bakar: bayat `true`
   /// ile bedava avantaj verilmez.
   ///
-  /// Doğrulama başarısız olursa son bilinen durum korunur ve `false`
-  /// dönülür — güvenli taraf, avantajı reddetmektir.
-  Future<bool> refreshEntitlement() async {
-    if (!_configured) return false;
+  /// Doğrulama başarısız olursa [EntitlementRefreshUnknown] döner. Bu
+  /// hâlde "abone değil" denmez: son bilinen durum geçerlidir ve çağıran
+  /// ücretli yola düşmemelidir. 2026-09-25 öncesi bu yol `false` dönüyor ve
+  /// çevrimdışı aboneyi ücretli karara sürüklüyordu.
+  Future<EntitlementRefreshResult> refreshEntitlement() async {
+    if (!_configured) return const EntitlementRefreshUnknown();
     try {
       final info = await _getCustomerInfo();
       final fresh = _hasEntitlement(info.entitlements.all);
       _applyEntitlement(fresh);
-      return fresh;
+      return EntitlementRefreshKnown(fresh);
     } catch (error, stack) {
       _recordError(error, stack, reason: 'premium refresh');
-      return false;
+      return const EntitlementRefreshUnknown();
     }
   }
 

@@ -14,6 +14,7 @@ import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
 import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/streak_store.dart';
+import '../data/xp_award_publisher.dart';
 import '../data/zankurd_repository.dart';
 import '../utils/error_reporter.dart';
 import '../l10n/lang.dart';
@@ -172,6 +173,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   List<Achievement> _newAchievements = const [];
   Map<String, MasteryLevel> _promotions = const {};
   int _earnedXP = 0;
+  int _currentLevel = 1;
+  int _xpInCurrentLevel = 0;
+  int _xpNeededForNextLevel = 1;
+  double _levelProgress = 0;
+  bool _levelJourneyReady = false;
   _StreakOutcome? _pendingStreak;
   bool _showConfetti = false;
   bool _ackAttempted = false;
@@ -560,14 +566,30 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
     // Premium: ücretsiz ve otomatik; kullanıcı kararı yok. Kapı
     // bellekteki bayrağa değil taze entitlement'a bakar — bayat `true`
-    // ile bedava dondurma verilmez. Doğrulama başarısızsa ücretli yola
-    // düşülür (güvenli taraf).
-    if (await premium.refreshEntitlement()) {
-      await recordStage?.call(QuizResultReceiptStage.freezeApplying);
-      await streakStore.addFreeze();
-      final streak = await streakStore.freezeAndRecordPlay();
-      await recordStage?.call(QuizResultReceiptStage.freezeApplied);
-      return _StreakOutcome(streak: streak, isNewDay: isNewDay);
+    // ile bedava dondurma verilmez.
+    //
+    // Doğrulama BAŞARISIZ olursa bu satır artık yanlışlıkla ücretli yola
+    // düşmez: 2026-09-25 öncesi `false` dönüyor, çevrimdışı bir abone
+    // "abone değil" sanılıp coin'e gidiyordu. Üç hâl ayrıldı: kesin cevap
+    // ve bilinmeyen. Bilinmeyende kullanıcıdan karar istenir, çünkü
+    // "abonelik kalktı" demek de doğru olmaz.
+    final refresh = await premium.refreshEntitlement();
+    if (refresh is EntitlementRefreshKnown) {
+      if (refresh.isPremium) {
+        await recordStage?.call(QuizResultReceiptStage.freezeApplying);
+        await streakStore.addFreeze();
+        final streak = await streakStore.freezeAndRecordPlay();
+        await recordStage?.call(QuizResultReceiptStage.freezeApplied);
+        return _StreakOutcome(streak: streak, isNewDay: isNewDay);
+      }
+    } else {
+      // Son bilinen durum bellekte duruyor; ölümcül bir hata değil, bu
+      // yüzden kayıt aşaması ilerletilmez ve tekrar denene bilir kalınır.
+      ErrorReporter.record(
+        StateError('premium entitlement could not be verified'),
+        StackTrace.current,
+        reason: 'streak_freeze_entitlement_unknown',
+      );
     }
 
     // Karar bekleniyor. Bu aşamada hiçbir yan etki yoktur, bu yüzden
@@ -776,11 +798,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // ve sonucu ekranın akışını durdurmamalı. Miktarı sunucu sınırlar.
     // Oda turunda XP sunucu skorundan yazılır; istemci delta göndermez.
     final roomId = widget.room.id?.trim() ?? '';
-    if (roomId.isNotEmpty) {
-      unawaited(repository.awardRoomXp(roomId));
-    } else {
-      unawaited(repository.awardXp(earnedXP));
-    }
+    unawaited(
+      XpAwardPublisher.publish(
+        repository: repository,
+        delta: earnedXP,
+        roomId: roomId.isEmpty ? null : roomId,
+      ),
+    );
 
     // Doğru anda (yeterli quiz + iyi skor) bir kez mağaza değerlendirmesi iste.
     final accuracyPercent = totalQuestions == 0
@@ -823,6 +847,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         _newAchievements = newAchievements;
         _promotions = promotions;
         _earnedXP = earnedXP;
+        _currentLevel = xpStore.currentLevel;
+        _xpInCurrentLevel = xpStore.xpInCurrentLevel;
+        _xpNeededForNextLevel = xpStore.xpNeededForNextLevel;
+        _levelProgress = xpStore.levelProgress;
+        _levelJourneyReady = true;
         _showConfetti = promotions.isNotEmpty;
       });
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1209,33 +1238,29 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final learningContinue = isLearningExperience && !isOnlineRoom;
     final primaryResultKey = learningContinue
         ? 'result-primary-learning-continue'
-        : wrongRecords.isNotEmpty
-        ? 'result-primary-review-mistakes'
+        : isOnlineRoom
+        ? 'result-primary-home'
         : 'result-play-again-button';
     final primaryResultLabel = learningContinue
         ? context.t(K.continueAction)
-        : wrongRecords.isNotEmpty
-        ? context.t(K.reviewMistakes)
         : nextActionLabel;
     final primaryResultIcon = learningContinue
         ? AppIcons.arrowRight
-        : wrongRecords.isNotEmpty
-        ? AppIcons.squareCheck
         : nextActionIcon;
     final secondaryResultActions = <Widget>[
+      if (wrongRecords.isNotEmpty && !learningContinue)
+        _ResultSideAction(
+          key: const ValueKey('result-review-mistakes-button'),
+          icon: AppIcons.squareCheck,
+          label: context.t(K.reviewMistakes),
+          onTap: () => openReview(wrongRecords),
+        ),
       if (isOnlineRoom)
         _ResultSideAction(
           key: const ValueKey('result-new-room-button'),
           icon: AppIcons.circlePlus,
           label: context.t(K.newRoom),
           onTap: _newRoomLoading ? null : _openNewRoom,
-        ),
-      if (wrongRecords.isNotEmpty && !learningContinue)
-        _ResultSideAction(
-          key: const ValueKey('result-play-again-button'),
-          icon: nextActionIcon,
-          label: nextActionLabel,
-          onTap: completeResultAction,
         ),
       _ResultSideAction(
         key: const ValueKey('result-share-button'),
@@ -1441,13 +1466,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                             color: borderColor.withValues(alpha: 0.35),
                             width: 1.0,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.08),
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
+                          boxShadow: AppTheme.cardShadow(context),
                         ),
                         padding: const EdgeInsets.fromLTRB(
                           AppSpacing.lg,
@@ -1727,6 +1746,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                                     ],
                                   ),
                                 ),
+                                if (_levelJourneyReady) ...[
+                                  const SizedBox(height: AppSpacing.sm),
+                                  _ResultLevelJourneyProgress(
+                                    level: _currentLevel,
+                                    xpInLevel: _xpInCurrentLevel,
+                                    xpNeeded: _xpNeededForNextLevel,
+                                    progress: _levelProgress,
+                                  ),
+                                ],
                                 // Günlük tavana varıldıysa SEBEBİ söyle.
                                 //
                                 // Jeton rozeti yalnız miktar sıfırdan
@@ -1882,11 +1910,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                     primaryKey: primaryResultKey,
                     primaryLabel: primaryResultLabel,
                     primaryIcon: primaryResultIcon,
-                    onPrimaryPressed: learningContinue
-                        ? completeResultAction
-                        : wrongRecords.isNotEmpty
-                        ? () => openReview(wrongRecords)
-                        : completeResultAction,
+                    onPrimaryPressed: completeResultAction,
                     secondaryActions: secondaryResultActions,
                   ),
                   if (answerRecords.isNotEmpty) ...[
@@ -2560,6 +2584,79 @@ class _ResultSideAction extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ResultLevelJourneyProgress extends StatelessWidget {
+  const _ResultLevelJourneyProgress({
+    required this.level,
+    required this.xpInLevel,
+    required this.xpNeeded,
+    required this.progress,
+  });
+
+  final int level;
+  final int xpInLevel;
+  final int xpNeeded;
+  final double progress;
+
+  @override
+  Widget build(BuildContext context) {
+    final levelLabel = context.t(K.seviyeP, {'p0': '$level'});
+    return Container(
+      key: const ValueKey('result-level-journey-progress'),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: AppColors.heroScrim(0.24),
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.14)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.xxs,
+            children: [
+              Text(
+                levelLabel,
+                style: AppTypography.caption.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              Text(
+                '$xpInLevel / $xpNeeded XP',
+                style: AppTypography.caption.copyWith(
+                  color: Colors.white.withValues(alpha: 0.78),
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 7),
+          Semantics(
+            label: levelLabel,
+            value: PercentFormat.ratio(progress, isKu: context.isKu),
+            child: ExcludeSemantics(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                child: LinearProgressIndicator(
+                  value: progress.clamp(0.0, 1.0),
+                  minHeight: 7,
+                  backgroundColor: Colors.white.withValues(alpha: 0.14),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    AppTheme.gold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

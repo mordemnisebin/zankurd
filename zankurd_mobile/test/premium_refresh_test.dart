@@ -45,24 +45,44 @@ PremiumService _service({
 ///
 /// Seri dondurma `isPremium` bayrağına göre ücretsiz veriliyordu; bayrak
 /// bayat `true` kalırsa (expiry listener kaçarsa) bedava avantaj sızardı.
-/// `refreshEntitlement` doğrulamayı çağrı anında yapar; başarısızlıkta
-/// son bilinen durum korunur ve `false` dönülür (güvenli taraf).
+/// `refreshEntitlement` doğrulamayı çağrı anında yapar ve sonucu üç ayrı
+/// hâlde döner: kesin cevap, kesin "abone değil" ve bilinmiyen. 2026-09-25
+/// öncesi hata ile yokluşu tek `false`'a indirgiyordu; sonuç ekranı bunu
+/// "abone değil" okuyup çevrimdışı aboneyi ücretli yola sürüklüyordu.
 void main() {
-  test('taze premium doğrulanınca true döner ve bayrak kurulur', () async {
+  test('taze premium doğrulanınca kesin true döner ve bayrak kurulur', () async {
     final service = _service(fetch: () async => _info(premiumActive: true));
 
-    expect(await service.refreshEntitlement(), isTrue);
+    final result = await service.refreshEntitlement();
+
+    expect(
+      result,
+      isA<EntitlementRefreshKnown>().having(
+        (e) => e.isPremium,
+        'isPremium',
+        isTrue,
+      ),
+    );
     expect(service.isPremium, isTrue);
   });
 
-  test('taze yanıtta entitlement yoksa false döner', () async {
+  test('taze yanıtta entitlement yoksa kesin false döner', () async {
     final service = _service(fetch: () async => _info(premiumActive: false));
 
-    expect(await service.refreshEntitlement(), isFalse);
+    final result = await service.refreshEntitlement();
+
+    expect(
+      result,
+      isA<EntitlementRefreshKnown>().having(
+        (e) => e.isPremium,
+        'isPremium',
+        isFalse,
+      ),
+    );
     expect(service.isPremium, isFalse);
   });
 
-  test('doğrulama hatasında son durum korunur ve false dönülür', () async {
+  test('doğrulama hatasında "abone değil" denmez, bilinmiyor döner', () async {
     final reported = <Object>[];
     final service = _service(
       fetch: () async => throw Exception('network down'),
@@ -70,7 +90,9 @@ void main() {
           reported.add(e),
     );
 
-    expect(await service.refreshEntitlement(), isFalse);
+    final result = await service.refreshEntitlement();
+
+    expect(result, isA<EntitlementRefreshUnknown>());
     expect(service.isPremium, isFalse);
     expect(reported, hasLength(1));
   });
@@ -85,7 +107,9 @@ void main() {
       configured: false,
     );
 
-    expect(await service.refreshEntitlement(), isFalse);
+    final result = await service.refreshEntitlement();
+
+    expect(result, isA<EntitlementRefreshUnknown>());
     expect(calls, 0);
   });
 }
