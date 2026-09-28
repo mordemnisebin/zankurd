@@ -422,19 +422,28 @@ void main() {
     // ekranların *görünüşünü* değerlendirmek olduğu için bu, aracı işe
     // yaramaz kılıyordu — 13 ekran görüntüsünün hepsi okunmuyordu
     // (2026-07-26 denetimi).
-    const faces = {
-      'assets/fonts/Rubik-Regular.ttf': FontWeight.normal,
-      'assets/fonts/Rubik-Medium.ttf': FontWeight.w500,
-      'assets/fonts/Rubik-Bold.ttf': FontWeight.w700,
-      'assets/fonts/Rubik-Black.ttf': FontWeight.w900,
+    // Şahnê: metin ailesi Onest, başlık ailesi Bricolage Grotesque.
+    const families = {
+      'Onest': [
+        'assets/fonts/Onest-Regular.ttf',
+        'assets/fonts/Onest-Medium.ttf',
+        'assets/fonts/Onest-SemiBold.ttf',
+        'assets/fonts/Onest-Bold.ttf',
+      ],
+      'BricolageGrotesque': [
+        'assets/fonts/BricolageGrotesque-Bold.ttf',
+        'assets/fonts/BricolageGrotesque-ExtraBold.ttf',
+      ],
     };
-    final loader = FontLoader('Rubik');
-    for (final path in faces.keys) {
-      loader.addFont(
-        File(path).readAsBytes().then((bytes) => ByteData.view(bytes.buffer)),
-      );
+    for (final family in families.entries) {
+      final loader = FontLoader(family.key);
+      for (final path in family.value) {
+        loader.addFont(
+          File(path).readAsBytes().then((b) => ByteData.view(b.buffer)),
+        );
+      }
+      await loader.load();
     }
-    await loader.load();
 
     // Material'in kendi ikonları (ör. `ExpansionTile`in ok işareti) ayrı
     // bir aileden gelir ve o da yüklenmezse kare çizilir; turda profil
@@ -462,40 +471,54 @@ void main() {
     final packageConfig =
         jsonDecode(File('.dart_tool/package_config.json').readAsStringSync())
             as Map<String, dynamic>;
-    final entry = (packageConfig['packages'] as List)
-        .cast<Map<String, dynamic>>()
-        .firstWhere((p) => p['name'] == 'font_awesome_flutter');
-    // `rootUri` sonunda eğik çizgi yok; doğrudan birleştirmek
-    // ".../font_awesome_flutter-11.0.0lib/fonts/..." gibi var olmayan bir
-    // yol üretiyordu ve uyarı sessizce geçilip ikonlar kare kalıyordu.
-    final root = Uri.parse(entry['rootUri'] as String).toFilePath();
-    final base = root.endsWith(Platform.pathSeparator)
-        ? root
-        : '$root${Platform.pathSeparator}';
-    // Solid VE Regular birlikte yüklenir. Yalnız Solid yüklenirken Regular
-    // ailesindeki ikonlar (ör. çark ekranındaki "hakkın hazır" onay
-    // işareti) kare çiziliyordu ve turda uygulama hatası gibi görünüyordu
+    String packageRoot(String name) {
+      final entry = (packageConfig['packages'] as List)
+          .cast<Map<String, dynamic>>()
+          .firstWhere((p) => p['name'] == name);
+      // `rootUri` sonunda eğik çizgi yok; doğrudan birleştirmek
+      // ".../font_awesome_flutter-11.0.0lib/fonts/..." gibi var olmayan bir
+      // yol üretiyordu ve uyarı sessizce geçilip ikonlar kare kalıyordu.
+      final root = Uri.parse(entry['rootUri'] as String).toFilePath();
+      return root.endsWith(Platform.pathSeparator)
+          ? root
+          : '$root${Platform.pathSeparator}';
+    }
+
+    // paket -> {aile -> paket içi yazı tipi dosyası}
+    //
+    // Lucide: `AppIcons` ikonlarının neredeyse hepsi (Şahnê çizgi ailesi).
+    // Font Awesome: yalnız dolu puan yıldızı (`AppIcons.starSolid`, Lucide'da
+    // dolgu yok) ve Google markası. Solid VE Regular birlikte yüklenir;
+    // yalnız Solid yüklenirken Regular ailesindeki ikonlar kare çiziliyordu
     // (2026-07-26).
-    const iconFamilies = {
-      'FontAwesomeSolid': 'lib/fonts/Font-Awesome-7-Free-Solid-900.otf',
-      'FontAwesomeRegular': 'lib/fonts/Font-Awesome-7-Free-Regular-400.otf',
-      'FontAwesomeBrands': 'lib/fonts/Font-Awesome-7-Brands-Regular-400.otf',
+    const iconFonts = {
+      'lucide_icons_flutter': {'Lucide': 'assets/lucide.ttf'},
+      'font_awesome_flutter': {
+        'FontAwesomeSolid': 'lib/fonts/Font-Awesome-7-Free-Solid-900.otf',
+        'FontAwesomeRegular': 'lib/fonts/Font-Awesome-7-Free-Regular-400.otf',
+        'FontAwesomeBrands': 'lib/fonts/Font-Awesome-7-Brands-Regular-400.otf',
+      },
     };
-    for (final family in iconFamilies.keys) {
-      final iconFont = File('$base${iconFamilies[family]}');
-      if (!iconFont.existsSync()) {
-        print('UYARI: $family bulunamadı — o ikonlar kare çizilecek');
-        continue;
+    for (final package in iconFonts.keys) {
+      final base = packageRoot(package);
+      final families = iconFonts[package]!;
+      for (final family in families.keys) {
+        final iconFont = File('$base${families[family]}');
+        if (!iconFont.existsSync()) {
+          print(
+            'UYARI: $package/$family bulunamadı — o ikonlar kare çizilecek',
+          );
+          continue;
+        }
+        // Aile adı paket önekiyle kaydedilmeli: `IconData` içindeki
+        // `fontPackage` alanı, Flutter'ın çözdüğü aileyi
+        // `packages/<paket>/<aile>` biçimine çevirir. Öneksiz kayıt sessizce
+        // eşleşmez ve ikonlar yine kare çizilir.
+        final iconLoader = FontLoader(
+          'packages/$package/$family',
+        )..addFont(iconFont.readAsBytes().then((b) => ByteData.view(b.buffer)));
+        await iconLoader.load();
       }
-      // Aile adı paket önekiyle kaydedilmeli: `IconData` içindeki
-      // `fontPackage` alanı, Flutter'ın çözdüğü aileyi
-      // `packages/<paket>/<aile>` biçimine çevirir. Öneksiz kayıt sessizce
-      // eşleşmez ve ikonlar yine kare çizilir.
-      final iconLoader = FontLoader('packages/font_awesome_flutter/$family')
-        ..addFont(
-          iconFont.readAsBytes().then((bytes) => ByteData.view(bytes.buffer)),
-        );
-      await iconLoader.load();
     }
   });
 

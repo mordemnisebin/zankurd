@@ -64,16 +64,26 @@ Widget withDeviceInsets(
 /// aileyi ölçü fontuna düşürür. Metin genişliği/yüksekliği ölçen her test
 /// bunu `setUpAll` içinde çağırmalıdır.
 Future<void> loadAppFonts() async {
-  final loader = FontLoader('Rubik');
-  for (final path in const [
-    'assets/fonts/Rubik-Regular.ttf',
-    'assets/fonts/Rubik-Medium.ttf',
-    'assets/fonts/Rubik-Bold.ttf',
-    'assets/fonts/Rubik-Black.ttf',
-  ]) {
-    loader.addFont(
-      File(path).readAsBytes().then((bytes) => ByteData.view(bytes.buffer)),
-    );
+  // Şahnê: metin ailesi Onest, başlık ailesi Bricolage Grotesque.
+  const families = {
+    'Onest': [
+      'assets/fonts/Onest-Regular.ttf',
+      'assets/fonts/Onest-Medium.ttf',
+      'assets/fonts/Onest-SemiBold.ttf',
+      'assets/fonts/Onest-Bold.ttf',
+    ],
+    'BricolageGrotesque': [
+      'assets/fonts/BricolageGrotesque-Bold.ttf',
+      'assets/fonts/BricolageGrotesque-ExtraBold.ttf',
+    ],
+  };
+  for (final entry in families.entries) {
+    final loader = FontLoader(entry.key);
+    for (final path in entry.value) {
+      loader.addFont(
+        File(path).readAsBytes().then((bytes) => ByteData.view(bytes.buffer)),
+      );
+    }
+    await loader.load();
   }
-  await loader.load();
 }

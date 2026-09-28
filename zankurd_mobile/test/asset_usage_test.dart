@@ -58,11 +58,11 @@ void main() {
       final name = file.uri.pathSegments.last;
       // Belgeler pakete girse de ölü varlık değildir.
       if (name == 'README.md' || name.startsWith('.')) continue;
-      // Lisans metni koddan çağrılmaz ama kaldırılamaz: Rubik SIL Open
-      // Font License altında dağıtılır ve lisans, yazı tipiyle birlikte
-      // bulundurulmayı şart koşar. "Kullanılmıyor" değil, "yasal olarak
-      // orada durmak zorunda".
-      if (name == 'OFL.txt') continue;
+      // Lisans metni koddan çağrılmaz ama kaldırılamaz: Onest ve Bricolage
+      // Grotesque SIL Open Font License altında dağıtılır ve lisans, yazı
+      // tipiyle birlikte bulundurulmayı şart koşar. "Kullanılmıyor" değil,
+      // "yasal olarak orada durmak zorunda".
+      if (name.startsWith('OFL') && name.endsWith('.txt')) continue;
       // Soru bankalarının kendisi `assets/data/` altında; onlara atıf
       // yükleyici üzerinden dolaylıdır.
       if (file.path.contains('assets/data/')) continue;

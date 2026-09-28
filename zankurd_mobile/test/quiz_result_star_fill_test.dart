@@ -14,8 +14,8 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 /// ## Kusur
 ///
 /// Kazanılan ve kazanılmayan yıldız aynı KONTUR glifiyle çiziliyordu:
-/// `AppIcons.star` FontAwesome **Regular** ailesinden geliyor ve iki
-/// durumu yalnız renk ayırıyordu. Mor kutlama zemininde altın bir kontur
+/// `AppIcons.star` KONTUR bir aileden (o gün FontAwesome Regular)
+/// geliyordu ve iki durumu yalnız renk ayırıyordu. Mor kutlama zemininde altın bir kontur
 /// "boş yıldız" gibi okunuyor; 5/5 doğru bir tur üç boş yıldızla
 /// kutlanıyordu. Turun en güçlü ödül anında ekran "hiçbir şey kazanmadın"
 /// diyordu (2026-08-12 simülatör turu, iPhone SE).
@@ -125,14 +125,17 @@ void main() {
   });
 
   test('dolu ve boş yıldız gerçekten AYRI glifler', () {
-    // İkisi aynı kod noktasını paylaşır; ayrımı font AİLESİ yapar. Biri
-    // ötekine eşitlenirse ekran yine tek biçime döner ve üstteki üç test
-    // de sessizce anlamsızlaşır.
-    expect(AppIcons.starSolid.codePoint, AppIcons.star.codePoint);
+    // Şahnê'de kontur yıldız Lucide'dır; Lucide yazı tipinde dolgu yok, dolu
+    // yıldız bu yüzden Font Awesome Solid'de kalır (bkz.
+    // tool/generate_lucide_app_icons.py). Ayrımı font AİLESİ taşır. Biri
+    // ötekine eşitlenirse — ör. iki ad da Lucide'a çekilirse — ekran yine tek
+    // biçime döner ve üstteki üç test de sessizce anlamsızlaşır.
     expect(
       AppIcons.starSolid.fontFamily,
       isNot(AppIcons.star.fontFamily),
-      reason: 'Dolu yıldız Solid, kontur yıldız Regular ailesinden gelmeli.',
+      reason:
+          'Dolu yıldız Font Awesome Solid, kontur yıldız Lucide ailesinden '
+          'gelmeli; ikisi aynı aileye düşerse doluluk ayrımı kaybolur.',
     );
   });
 }

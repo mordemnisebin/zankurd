@@ -20,7 +20,9 @@ double _contrast(Color first, Color second) {
 void main() {
   test('light and dark themes keep one card geometry language', () {
     for (final theme in [AppTheme.light(), AppTheme.dark()]) {
-      final shape = theme.cardTheme.shape! as RoundedRectangleBorder;
+      // Şahnê (2026-09-29): köşe yuvarlak değil kesik (45° pah); kartlar
+      // iki temada da aynı L pahını taşır.
+      final shape = theme.cardTheme.shape! as BeveledRectangleBorder;
 
       expect(shape.borderRadius, BorderRadius.circular(AppRadius.card));
       expect(theme.cardTheme.elevation, 0);

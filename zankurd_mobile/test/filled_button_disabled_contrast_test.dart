@@ -7,12 +7,12 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 /// 2026-09-03 simülatör: Ayarlar'daki pasif Kaydet turuncu-on-kahve
 /// neredeyse okunmuyordu. Pasif FilledButton metni zemininden ayrılmalı.
 void main() {
-  testWidgets('koyu temada pasif zemin orman ailesinde kalır, maviye kaçmaz', (
+  testWidgets('koyu temada pasif zemin gece (çivit) ailesinde kalır', (
     tester,
   ) async {
-    // `#282A36` maviye çalan bir griydi; soru tahtasındaki pasif "Kontrol
-    // bike" yeşil kartta mora kaçan bir leke gibi duruyordu (2026-09-27
-    // simülatör turu).
+    // Pasif zemin paletin kendi ailesinden olmalı: `#282A36` orman yeşili
+    // paletinde mora kaçan bir leke gibi duruyordu (2026-09-27). Şahnê'de
+    // (2026-09-29) palet çivit gecedir; pasif öğe Perde (s1) tonudur.
     late Color surface;
     await tester.pumpWidget(
       MaterialApp(
@@ -26,7 +26,7 @@ void main() {
       ),
     );
     final hue = HSVColor.fromColor(surface).hue;
-    expect(hue, inInclusiveRange(90, 170), reason: 'ton: $hue ($surface)');
+    expect(hue, inInclusiveRange(220, 245), reason: 'ton: $hue ($surface)');
     expect(
       _contrastRatio(AppTheme.textMuted, surface),
       greaterThanOrEqualTo(4.5),

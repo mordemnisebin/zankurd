@@ -30,10 +30,14 @@ class _LiveScoreboard extends StatelessWidget {
             children: [
               const Icon(AppIcons.chartColumn, color: AppTheme.gold),
               const SizedBox(width: AppSpacing.xs),
-              Text(
-                context.t(K.liveScore),
-                style: AppTypography.heading2.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
+              Expanded(
+                child: Text(
+                  context.t(K.liveScore),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.heading2.copyWith(
+                    color: AppTheme.textPrimaryColor(context),
+                  ),
                 ),
               ),
             ],

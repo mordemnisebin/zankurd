@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 /// Tipografi ölçeğinin bekçisi.
 ///
@@ -66,40 +67,46 @@ void main() {
 
   test('ölçek gerçekten tanımlı ve tutarlı', () {
     // Ölçek kendisi bozulursa göç etmenin anlamı kalmaz.
-    final steps = <String, double>{
+    //
+    // Şahnê (2026-09-29): beş boyut, her birinin tek satır yüksekliği
+    // (64/64 · 28/32 · 22/28 · 16/24 · 14/20). Eski yedi ad bu beş boyuta
+    // eşlendi; iki ad aynı boyuta düşebilir (display = heading1), ama hiçbir
+    // ad ölçeğin dışında bir boyut taşıyamaz.
+    final scale = [
+      SahneType.screen,
+      SahneType.title,
+      SahneType.headline,
+      SahneType.body,
+      SahneType.caption,
+    ].map((s) => s.fontSize!).toList();
+    for (var i = 1; i < scale.length; i++) {
+      expect(scale[i], lessThan(scale[i - 1]), reason: 'basamaklar: $scale');
+    }
+
+    final legacy = <String, double>{
       'display': AppTypography.display.fontSize!,
       'heading1': AppTypography.heading1.fontSize!,
       'heading2': AppTypography.heading2.fontSize!,
+      'subtitle': AppTypography.subtitle.fontSize!,
       'bodyLarge': AppTypography.bodyLarge.fontSize!,
       'bodyMedium': AppTypography.bodyMedium.fontSize!,
       'caption': AppTypography.caption.fontSize!,
+      'quizQuestion': AppTypography.quizQuestion.fontSize!,
+      'quizAnswer': AppTypography.quizAnswer.fontSize!,
     };
-
-    // Basamaklar büyükten küçüğe kesin azalmalı; eşit iki basamak
-    // ölçeğin bir adımını anlamsız kılar.
-    final ordered = steps.values.toList();
-    for (var i = 1; i < ordered.length; i++) {
-      expect(
-        ordered[i],
-        lessThan(ordered[i - 1]),
-        reason: 'Ölçek basamakları kesin azalmalı: $steps',
-      );
+    for (final entry in legacy.entries) {
+      expect(scale, contains(entry.value), reason: '${entry.key} ölçek dışı');
     }
 
-    // Her basamak okunabilir alt sınırın üstünde.
-    for (final entry in steps.entries) {
-      expect(
-        entry.value,
-        greaterThanOrEqualTo(11),
-        reason: '${entry.key} 11 px altında — %200 ölçekte bile küçük kalır.',
-      );
-    }
+    // Her basamak okunabilir alt sınırın üstünde; açıklama bile 14.
+    expect(scale.last, greaterThanOrEqualTo(14));
   });
 
   test('yazı tipi ailesi tek yerden geliyor', () {
     // `CustomPainter` içinde çizilen metin temadan aile almaz; aile
     // yazılmazsa sistem varsayılanına düşer ve tek ekranda iki font
     // görünür (2026-07-26 kusuru).
-    expect(AppTypography.fontFamily, 'Rubik');
+    expect(AppTypography.fontFamily, SahneType.text);
+    expect(AppTheme.dark().textTheme.bodyMedium?.fontFamily, SahneType.text);
   });
 }

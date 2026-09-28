@@ -82,6 +82,9 @@ dependencies:
   # Ağ görseli önbellekleme
   cached_network_image: ^3.4.1
 
+  # Şahnê tasarım sistemi çizgi ikon ailesi (AppIcons bunun üzerinden çizer)
+  lucide_icons_flutter: ^3.1.20
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -134,16 +137,25 @@ flutter:
     - assets/sounds/
     - assets/data/
 
+  # Şahnê yazı tipleri (OFL; lisans metinleri assets/fonts/OFL-*.txt).
+  # Değişken dosyalardan sabit kalınlıklar üretildi: FontWeight doğrudan
+  # çalışsın, her TextStyle'a FontVariation yazmak gerekmesin.
   fonts:
-    - family: Rubik
+    - family: BricolageGrotesque
       fonts:
-        - asset: assets/fonts/Rubik-Regular.ttf
-        - asset: assets/fonts/Rubik-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Rubik-Bold.ttf
+        - asset: assets/fonts/BricolageGrotesque-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Rubik-Black.ttf
-          weight: 900
+        - asset: assets/fonts/BricolageGrotesque-ExtraBold.ttf
+          weight: 800
+    - family: Onest
+      fonts:
+        - asset: assets/fonts/Onest-Regular.ttf
+        - asset: assets/fonts/Onest-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Onest-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Onest-Bold.ttf
+          weight: 700
 
   # To add assets to your application, add an assets section, like this:
   # assets:

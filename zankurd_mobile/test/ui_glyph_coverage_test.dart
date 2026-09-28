@@ -64,7 +64,11 @@ void main() {
   }
 
   test('arayüz dizgelerinde yazı tipinin taşımadığı karakter yok', () {
-    final covered = fontCodePoints('assets/fonts/Rubik-Regular.ttf');
+    // Bir dizge iki aileden biriyle çizilebilir (başlık Bricolage, metin
+    // Onest); ikisinin de taşıdığı karakterler güvenlidir.
+    final covered = fontCodePoints(
+      'assets/fonts/Onest-Regular.ttf',
+    ).intersection(fontCodePoints('assets/fonts/BricolageGrotesque-Bold.ttf'));
     // Kurmancî ve Türkçe harfler zaten fontta; kontrol asıl simgeleri
     // hedefler. ASCII altı (boşluk, satır sonu) ve tipografik noktalama
     // için hızlı geçiş yapılır.

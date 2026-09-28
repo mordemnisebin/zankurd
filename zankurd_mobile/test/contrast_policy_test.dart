@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 /// 2026-07-22 canlı UX denetimi (P1-A): renkli zeminlerin üzerine aynı renk
 /// ailesinden metin konması beş ayrı ekranda tekrar ediyordu — profil
@@ -33,21 +34,25 @@ Color _flatten(Color foreground, Color background) {
 
 void main() {
   group('renkli zemin üzerinde okunabilirlik', () {
-    test('eylem turuncusu beyaz metinle tek başına AA geçer', () {
+    test('eylem turuncusu kendi metin rengiyle tek başına AA geçer', () {
       // 2026-07-24: eski #F5931E beyazla yalnız ~2.2:1 veriyordu ve her CTA
-      // karartma perdesine muhtaçtı. Tîrêj (#C2560E) perdesiz geçer — palet
-      // düzeltildiği için yama gereksizleşti. Gradyanın her iki ucu da geçmeli.
+      // karartma perdesine muhtaçtı. Şahnê (2026-09-29): Agir açık bir
+      // kayısıdır ve üstündeki metin KOYU'dur (`onAct`); perdesiz 8:1 üstü.
+      // Beyaz metin Agir üstünde okunmaz — bilerek kullanılmaz.
+      const t = SahneTokens.night;
       for (final background in [
         AppTheme.brand,
         AppTheme.brandDeep,
         AppTheme.primaryGradientStart,
       ]) {
         expect(
-          contrastRatio(Colors.white, background),
+          contrastRatio(t.onAct, background),
           greaterThanOrEqualTo(4.5),
           reason: 'zemin $background',
         );
       }
+      expect(contrastRatio(Colors.white, AppTheme.brand), lessThan(3));
+      expect(AppColors.onSolid(AppTheme.brand), isNot(Colors.white));
     });
 
     test('heroScrim eklenince beyaz metin AA eşiğini geçer', () {

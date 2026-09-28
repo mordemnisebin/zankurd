@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'sahne.dart';
+
 class AppColors {
   const AppColors._();
 
@@ -8,13 +10,14 @@ class AppColors {
 
   static Color disabledSurface(BuildContext context) =>
       AppTheme.isLight(context)
-      ? const Color(0xFFEDE9E3)
+      ? const Color(0xFFEEF1F8)
       // Koyu ton `#282A36`ydı: maviye çalan bir gri, markanın orman
       // ailesinde yeri yok. Soru tahtasında pasif "Kontrol bike" yeşil
       // kartın üstünde mora kaçan bir leke gibi duruyordu (2026-09-27
       // simülatör turu). Aynı koyulukta, orman ailesinden doygunluğu
       // düşük bir gri; soluk metinle karşıtlık ~6.3.
-      : const Color(0xFF25302A);
+      // Şahnê: pasif öğe Perde (s1) + üçüncül metin; opaklıkla değil.
+      : SahneTokens.night.s1;
 
   /// İkon zemin tonu (menü/istatistik ikon karoları). Light'ta hafif pastel
   /// kalır; dark'ta alfa yükselir ki koyu zeminde ikon kaybolmasın — ama
@@ -59,7 +62,7 @@ class AppColors {
   /// beyaz) zeminden daha uzaksa o seçilir. Çarkın rakamları zaten bu
   /// mantıkla çiziliyordu; burada da aynısı yapılır.
   static Color onSolid(Color background) {
-    const ink = Color(0xFF1A1D1B);
+    const ink = Color(0xFF1B0C02);
     return _contrast(Colors.white, background) >= _contrast(ink, background)
         ? Colors.white
         : ink;
@@ -132,7 +135,7 @@ class AppColors {
     if (AppTheme.isLight(context)) {
       return secondary ? AppTheme.lightTextSub : AppTheme.lightTextPrimary;
     }
-    return secondary ? const Color(0xFFC9D0D6) : AppTheme.textPrimary;
+    return secondary ? SahneTokens.night.tx2 : AppTheme.textPrimary;
   }
 
   /// Marka turuncusu gibi orta tonlu gradyanların üzerinde beyaz metnin AA
@@ -146,135 +149,91 @@ class AppColors {
 class AppTypography {
   const AppTypography._();
 
-  /// Uygulamanın yazı tipi ailesi.
+  /// Metin ailesi (Onest). Başlık ailesi [SahneType.display].
   ///
   /// Widget'lar bunu temadan alır; `CustomPainter` içinde `TextPainter` ile
   /// çizilen metin **almaz** ve aile yazılmazsa sistem varsayılanına düşer.
   /// Tek bir ekranda iki ayrı yazı tipi görünmesin diye o çağrı yerleri
   /// buradan besleniyor (2026-07-26: çark rakamları ve haftalık grafik
   /// etiketleri böyleydi).
-  static const fontFamily = 'Rubik';
+  static const fontFamily = SahneType.text;
 
-  static const TextStyle display = TextStyle(
-    fontWeight: FontWeight.w800,
-    fontSize: 32,
-    height: 1.15,
-    letterSpacing: -0.8,
-  );
+  // 2026-09-29 Şahnê: eski yedi stil (32/24/18/17/16/15/12) beş boyutlu
+  // ölçeğe eşlendi (64 · 28 · 22 · 16 · 14). Adlar, taşınmamış ekranlar da
+  // aynı ölçeği alsın diye korunuyor.
+  static const TextStyle display = SahneType.title;
+  static const TextStyle heading1 = SahneType.title;
+  static const TextStyle heading2 = SahneType.headline;
+  static const TextStyle subtitle = SahneType.bodyStrong;
+  static const TextStyle bodyLarge = SahneType.body;
+  static const TextStyle bodyMedium = SahneType.body;
+  static const TextStyle caption = SahneType.caption;
 
-  static const TextStyle heading1 = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 24,
-    height: 1.2,
-    letterSpacing: -0.5,
-  );
-
-  static const TextStyle heading2 = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 18,
-    height: 1.25,
-    letterSpacing: -0.3,
-  );
-
-  // Alt başlık — heading2 ile bodyLarge arasında organik geçiş.
-  static const TextStyle subtitle = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontSize: 17,
-    height: 1.35,
-    letterSpacing: -0.1,
-  );
-
-  static const TextStyle bodyLarge = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 16,
-    height: 1.45,
-  );
-
-  // Slightly bigger for readability (14 → 15)
-  static const TextStyle bodyMedium = TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 15,
-    height: 1.5,
-  );
-
-  static const TextStyle caption = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontSize: 12,
-    height: 1.35,
-    letterSpacing: 0.2,
-  );
-
+  /// Kategori adı: çizimin ALTINDA durur (Şahnê mücevher karo), çizimin
+  /// üstüne yazılmaz; bu yüzden gölge yok.
   static const categoryTitle = TextStyle(
     color: Colors.white,
+    fontFamily: SahneType.display,
     fontWeight: FontWeight.w800,
-    fontSize: 20,
-    height: 1.05,
-    letterSpacing: 0,
-    shadows: [
-      Shadow(color: Color(0x99000000), blurRadius: 10, offset: Offset(0, 2)),
-    ],
+    fontSize: 16,
+    height: 24 / 16,
   );
 
   static const categoryMeta = TextStyle(
     color: Colors.white,
-    fontSize: 12,
-    height: 1.2,
-    fontWeight: FontWeight.w700,
-    letterSpacing: 0,
+    fontFamily: SahneType.text,
+    fontSize: 14,
+    height: 20 / 14,
+    fontWeight: FontWeight.w500,
   );
 
-  // Quiz-specific text styles
-  // Soru metni en belirgin metin olmalı — subtitle + bold
-  static const TextStyle quizQuestion = TextStyle(
-    fontWeight: FontWeight.w700,
-    fontSize: 18,
-    height: 1.4,
-  );
+  /// Soru metni. Şahnê: 28'de 4 satırı aşan soru 22'ye iner; bu taban
+  /// değer, uyarlama soru ekranında yapılır.
+  static const TextStyle quizQuestion = SahneType.headline;
 
-  static const TextStyle quizAnswer = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 16,
-    height: 1.4,
-  );
+  static const TextStyle quizAnswer = SahneType.bodyStrong;
 }
 
 class AppSpacing {
   const AppSpacing._();
 
-  static const double xxs = 4;
-  static const double xs = 8;
-  static const double sm = 12;
-  static const double md = 16;
-  static const double lg = 24;
-  static const double xl = 32;
+  // Şahnê: bütün aralıklar 4'ün katı (bkz. [SahneSpace]).
+  static const double xxs = SahneSpace.x1;
+  static const double xs = SahneSpace.x2;
+  static const double sm = SahneSpace.x3;
+  static const double md = SahneSpace.x4;
+  static const double lg = SahneSpace.x6;
+  static const double xl = SahneSpace.x8;
   static const double xxl = 48;
 
-  static const double page = 20;
-  static const double section = 28;
-  static const double cardGap = 14;
-  static const double gridGap = 16;
+  static const double page = SahneSpace.page;
+  static const double section = SahneSpace.sectionTop;
+  static const double cardGap = SahneSpace.cardGap;
+  static const double gridGap = SahneSpace.x4;
 
   // Quiz-specific spacing
-  static const double quizQuestionGap = 20;
-  static const double quizOptionGap = 12;
-  static const double quizSectionGap = 32;
+  static const double quizQuestionGap = SahneSpace.x5;
+  static const double quizOptionGap = SahneSpace.x3;
+  static const double quizSectionGap = SahneSpace.x8;
 }
 
+/// Köşe değerleri. Şahnê'de köşe yuvarlak değil, kesiktir (45° pah); pah
+/// boyları S 4 · M 8 · L 12 ([SahneShape]). `BorderRadius.circular` ile
+/// kullanılan eski adlar aynı üç değere indirildi ki taşınmamış bir ekran
+/// da ölçeğin dışına çıkmasın.
 class AppRadius {
   const AppRadius._();
 
-  static const double xs = 8;
-  static const double sm = 12;
-  static const double md = 16;
-  static const double lg = 20;
-  static const double xl = 28;
+  static const double xs = SahneShape.sValue;
+  static const double sm = SahneShape.mValue;
+  static const double md = SahneShape.lValue;
+  static const double lg = SahneShape.lValue;
+  static const double xl = SahneShape.lValue;
   static const double pill = 99;
 
-  // Slightly rounder (16 → 14)
-  static const double card = 14;
+  static const double card = SahneShape.lValue;
 
-  // Kucuk rozet/cip/etiket kosesi (onceki sabit borderRadius: 10 degeri).
-  static const double badge = 10;
+  static const double badge = SahneShape.sValue;
 }
 
 class AppGradients {
@@ -437,83 +396,107 @@ class AppTheme {
   // Design 2 belgesindeki Ember 600 (#C9530A) beyaz metinle 4.44:1'de
   // kaldığı için CTA tokenı aynı renk ailesinde çok küçük koyulaştırılmıştır.
   // #C75209 beyazla 4.52:1 ölçülür ve normal metin için WCAG AA'yı geçer.
-  static const brand = Color(0xFFC75209); // Accessible Ember 600 / Tîrêj
-  static const brandDeep = Color(0xFFA03B0A);
+  static const brand = Color(
+    0xFFFF8A3D,
+  ); // Agir — tek birincil eylem (Şahnê). Üstünde koyu metin.
+  static const brandDeep = Color(0xFFE86F24); // Agir basılı / gradyan ucu.
 
   /// Gradyanın açık ucu — yalnız birincil CTA'da kullanılır.
-  static const brandLite = Color(0xFFE06A16); // Ember 500
+  static const brandLite = Color(0xFFFF9A57); // Agir metin bağlantısı (gece).
 
   // Kesk — marka kimliği (başlık şeritleri, kimlik yüzeyleri).
-  static const culturalBrandBg = Color(0xFF20533A); // Forest 700
+  static const culturalBrandBg = Color(
+    0xFF1A2352,
+  ); // Sahne kartı üstü (gece kimliği; eski orman yeşili).
 
   // Yardımcı/kategori aksanları. Design 2 kategori renklerini korur fakat
   // doygun blok yerine işaret/rota vurgusu olarak kullanır.
-  static const playGreen = Color(0xFF2F7450); // Forest 600
-  static const playPink = Color(0xFFA85A7A);
-  static const playCyan = Color(0xFF2F6F62);
-  static const playPurple = Color(0xFF6B5AA6);
+  static const playGreen = Color(
+    0xFF0E7453,
+  ); // Zimrût dolgu tonu (beyaz metinle 5.77).
+  static const playPink = Color(
+    0xFFC4265A,
+  ); // Palet dışıydı; Boyax tonuna indirildi.
+  static const playCyan = Color(
+    0xFF0E7453,
+  ); // Palet dışıydı; Zimrût dolgusuna indirildi.
+  static const playPurple = Color(
+    0xFF29336F,
+  ); // Palet dışıydı (profil moru); Ray tonuna indirildi.
 
   /// Yarışın rengi (Madder). Ana ekranın "Arkadaşınla yarış" kapısı ve
   /// eski düello satırı aynı tonu satır içi sabitle taşıyordu; tek ad
   /// altında toplandı. Turuncu CTA'dan (brand) bilerek ayrıdır: yarış kapısı
   /// bir yöndür, ekranın birincil eylemi değil.
-  static const playRed = Color(0xFFB31E3B);
+  static const playRed = Color(0xFFC4265A); // Boyax — yarış (lal kök boyası).
 
   // ============ Dark Mode Palette — Forest ============
   static const primaryGradientStart = brand;
   static const primaryGradientEnd = brandDeep;
 
   // Zêr — yalnız ödül/ilerleme (XP, kredi, 1. sıra).
-  static const secondaryAccent = Color(0xFFE9A91B); // Sun 500
-  static const gold = Color(0xFFE9A91B); // Sun 500
+  static const secondaryAccent = Color(0xFFF5C24C); // Zêr — ödül ve ışık.
+  static const gold = Color(0xFFF5C24C); // Zêr — ödül ve ışık.
 
   static const cyan = playCyan;
 
-  static const bg = Color(0xFF0A1712); // Forest 950
-  static const bgDeep = Color(0xFF06100C);
-  static const surface = Color(0xFF10251C); // Forest 900
-  static const surfaceHi = Color(0xFF17382A); // Forest 800
+  static const bg = Color(0xFF0A0F2E); // Şev — gece zemini.
+  static const bgDeep = Color(0xFF070B22); // Şev koyu.
+  static const surface = Color(0xFF131A42); // Perde — gece yüzeyi.
+  static const surfaceHi = Color(0xFF1C2455); // Kulis — yükseltilmiş yüzey.
   static const darkBg = bg;
 
-  static const textPrimary = Color(0xFFFBF7EE); // Cream 50
-  static const textSub = Color(0xFFD5DDD6);
-  static const textMuted = Color(0xFFA6B3AA);
+  static const textPrimary = Color(0xFFF6F3EC); // Gece birincil metin.
+  static const textSub = Color(0xFFBCC3E4); // Gece ikincil metin.
+  static const textMuted = Color(0xFF959DC9); // Gece üçüncül metin (AA geçer).
 
-  static const border = Color(0xFF20533A); // Forest 700
+  static const border = Color(
+    0xFF2D3259,
+  ); // Gece ayırıcı çizgi (tx2 %14 harmanı).
 
   static const accent = primaryGradientStart;
   static const violet = secondaryAccent;
-  static const correct = Color(0xFF3DA968);
-  static const wrong = Color(0xFFE5533D);
+  static const correct = Color(0xFF1DB482); // Rast/Zimrût işaret rengi.
+  static const wrong = Color(
+    0xFFFF7466,
+  ); // Şaş — yanlış (kendi tonu, yarıştan ayrı).
 
   /// Form doğrulama hatası metni.
-  static const formErrorLight = Color(0xFFDC2626);
-  static const formErrorDark = Color(0xFFF87171);
+  static const formErrorLight = Color(0xFFB42318); // Gündüz hata metni.
+  static const formErrorDark = Color(0xFFFF7466); // Gece hata metni.
 
   // Onboarding 2. slayt: ödül/yarış teması için terracotta tonu.
-  static const terracotta = Color(0xFFEA580C);
+  static const terracotta = Color(0xFFC4265A); // Tanıtım yarış slaytı: Boyax.
 
   /// Solo sonuç vitrininin kutlama gradyanı.
-  static const celebrationInk = Color(0xFF0A1712);
+  static const celebrationInk = Color(0xFF0A0F2E); // Kutlama zemini: Şev.
   static const celebrationGreen = culturalBrandBg;
 
   // 1v1 sonuç ekranı — kazanma/kaybetme gradyanının koyu gölge renkleri.
-  static const correctDeep = Color(0xFF064E3B); // Win gradient shadow
-  static const wrongDeep = Color(0xFF7F1D1D); // Lose gradient shadow
+  static const correctDeep = Color(0xFF0B4637); // Kazanma gölgesi: Zimrût tonu.
+  static const wrongDeep = Color(0xFF45160F); // Kaybetme gölgesi: Şaş tonu.
 
   /// 1v1 sonuç başlığının AÇIK ucu — `correct`/`wrong`un okunur hâli.
-  static const correctHeader = Color(0xFF20533A);
-  static const wrongHeader = Color(0xFFDC2626);
+  static const correctHeader = Color(
+    0xFF0E7453,
+  ); // Kazanma başlığı: Rast dolgusu.
+  static const wrongHeader = Color(
+    0xFF6B1F1A,
+  ); // Kaybetme başlığı: Şaş dolgusu.
 
   // ============ Light Mode Palette — Cream / Ink ============
-  static const lightBg = Color(0xFFFBF7EE); // Cream 50
-  static const lightBgDeep = Color(0xFFF4EBDD); // Cream 100
-  static const lightSurface = Color(0xFFFFFDF8);
-  static const lightSurfaceHi = Color(0xFFFBF7EE);
-  static const lightBorder = Color(0xFFE7ECE6); // Mist
-  static const lightTextPrimary = Color(0xFF171812); // Ink 950
-  static const lightTextSub = Color(0xFF4D554E);
-  static const lightTextMuted = Color(0xFF687169);
+  static const lightBg = Color(
+    0xFFE9EDF6,
+  ); // Gündüz zemini (soğuk; krem değil).
+  static const lightBgDeep = Color(0xFFDDE3F0); // Gündüz zemin koyu.
+  static const lightSurface = Color(0xFFFFFFFF); // Gündüz yüzeyi.
+  static const lightSurfaceHi = Color(0xFFEEF1F8); // Gündüz yükseltilmiş yüzey.
+  static const lightBorder = Color(0xFFD3D9E8); // Gündüz kenar.
+  static const lightTextPrimary = Color(0xFF0E1433); // Gündüz birincil metin.
+  static const lightTextSub = Color(0xFF454E79); // Gündüz ikincil metin.
+  static const lightTextMuted = Color(
+    0xFF566090,
+  ); // Gündüz üçüncül metin (AA geçer).
 
   static const pirsOrangeStart = culturalBrandBg;
   static const pirsOrangeEnd = culturalBrandBg;
@@ -522,20 +505,20 @@ class AppTheme {
   static const answerOptionBorder = lightBorder;
 
   // ============ Leaderboard Podium ============
-  static const silver = Color(0xFF94A3B8);
-  static const silverLight = Color(0xFF64748B);
-  static const bronze = Color(0xFFD97706);
-  static const bronzeLight = Color(0xFFB45309);
+  static const silver = Color(0xFFC9D0EA); // Madalya: gümüş.
+  static const silverLight = Color(0xFF5D6694); // Gümüş (gündüz metni).
+  static const bronze = Color(0xFFD9925F); // Madalya: bronz.
+  static const bronzeLight = Color(0xFF9A5A2A); // Bronz (gündüz metni).
 
   // ============ Shimmer Skeleton ============
-  static const shimmerBaseLight = Color(0xFFE7ECE6);
+  static const shimmerBaseLight = Color(0xFFDDE3F0); // İskelet yükleyici.
   static const shimmerBaseDark = surfaceHi;
   static const shimmerHighlightLight = lightBg;
   static const shimmerHighlightDark = culturalBrandBg;
 
   // ============ Status Indicators ============
   static const onlineGreen = playGreen;
-  static const offlineGrey = Color(0xFF96A09A);
+  static const offlineGrey = Color(0xFF959DC9); // Çevrimdışı: üçüncül metin.
 
   // Compat aliases for screens not yet migrated
   static const page = bg;
@@ -648,7 +631,7 @@ class AppTheme {
   static const goldGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [gold, Color(0xFFC7A22A)], // Softer gold gradient
+    colors: [gold, Color(0xFFE0A82E)],
   );
 
   // Quiz şık kartlarının cevap durumları. Bu iki gradyanın ÜZERİNE beyaz metin
@@ -668,10 +651,14 @@ class AppTheme {
   //
   // `correct`/`wrong` sabitlerinin KENDİLERİ değiştirilmedi: onlar kenarlık,
   // ikon ve açık zemin üstü metin için kullanılıyor ve kendi testleri var.
-  static const correctGradientStart = Color(0xFF308452); // beyazla 4.62:1
-  static const correctGradientEnd = Color(0xFF266A42); // beyazla 6.52:1
-  static const wrongGradientStart = Color(0xFFDB361D); // beyazla 4.61:1
-  static const wrongGradientEnd = Color(0xFFB02C18); // beyazla 6.52:1
+  static const correctGradientStart = Color(
+    0xFF0E7453,
+  ); // Rast dolgusu; beyazla 5.77:1.
+  static const correctGradientEnd = Color(0xFF0B6146); // Rast dolgusu koyu ucu.
+  static const wrongGradientStart = Color(
+    0xFF6B1F1A,
+  ); // Şaş dolgusu; beyazla ~11:1.
+  static const wrongGradientEnd = Color(0xFF5A1813); // Şaş dolgusu koyu ucu.
 
   static const correctGradient = LinearGradient(
     begin: Alignment.topLeft,
@@ -809,11 +796,15 @@ class AppTheme {
   /// krem/yeşil/turuncu ailesiyle akrabadır. Doygunluk 0.19 (< 0.35
   /// tavanı), hue ~46°: doğru (144°) ve yanlış (8°) hue'larından 30°'den
   /// fazla uzak — bekçisi `answer_option_color_semantics_test`.
+  ///
+  /// 2026-09-29 Şahnê: harf karosu Ray (s3) tonudur — sahne her zaman
+  /// gece olduğu için gece değeri. Ton ~231°: doğru (Rast, ~160°) ve yanlış
+  /// (Şaş, ~5°) tonlarından uzak; dördü yine aynı.
   static const List<Color> answerOptionColors = [
-    Color(0xFF413C2C),
-    Color(0xFF413C2C),
-    Color(0xFF413C2C),
-    Color(0xFF413C2C),
+    Color(0xFF29336F),
+    Color(0xFF29336F),
+    Color(0xFF29336F),
+    Color(0xFF29336F),
   ];
 
   static LinearGradient categoryGradient(int index) {
@@ -826,13 +817,14 @@ class AppTheme {
   }
 
   // Decorative gradients for QuickPlayGrid tiles (Muted tones)
+  // Şahnê: düello = yarış sahnesi degradesi; turnuva = gece sahnesi.
   static const List<Color> duelGradient = [
-    Color(0xFFB54C6F), // Muted rose
-    Color(0xFF9E3C5B),
+    SahneStageColors.race1,
+    SahneStageColors.race2,
   ];
   static const List<Color> tournamentGradient = [
-    Color(0xFF288077), // Muted teal
-    Color(0xFF1E6962),
+    SahneStageColors.top,
+    SahneStageColors.bottom,
   ];
 
   /// Dekoratif teal — CTA için KULLANILMAZ.
@@ -840,133 +832,10 @@ class AppTheme {
   /// Birincil eylemler yalnız [primaryCtaColor] / [brand] kullanır.
   /// Bu teal yalnız çark segmenti ve turnuva gradyanı gibi dekoratif
   /// yüzeyler içindir; yeni CTA butonu için referans alınmamalı.
-  static const ctaTeal = Color(0xFF288077);
-  static const ctaTealDeep = Color(0xFF1E6962);
+  static const ctaTeal = Color(0xFF1C2455); // Dekoratif teal kalktı; Kulis.
+  static const ctaTealDeep = Color(0xFF131A42); // Dekoratif teal kalktı; Perde.
   static const List<Color> ctaTealGradient = [ctaTeal, ctaTealDeep];
   static const List<Color> ctaBrandGradient = [brand, brandDeep];
-
-  /// Diyalog. Uygulamadaki 11 diyalog şeklini tek tek veriyordu (altısı
-  /// düz `16`, dördü `AppRadius.md`, biri `AppRadius.lg`), seri-dondurma
-  /// diyaloğu ise hiç vermiyor ve Material varsayılanına — 28px, kenarlıksız
-  /// — düşüyordu. Aynı uygulamada iki ayrı diyalog dili oluyordu
-  /// (2026-07-31 denetimi). Karar artık temada tek yerde.
-  static DialogThemeData _dialogTheme({
-    required Color background,
-    required Color title,
-    required Color body,
-    required Color border,
-  }) {
-    return DialogThemeData(
-      backgroundColor: background,
-      surfaceTintColor: background,
-      titleTextStyle: TextStyle(
-        color: title,
-        fontFamily: AppTypography.fontFamily,
-        fontWeight: FontWeight.w800,
-        fontSize: 18,
-      ),
-      contentTextStyle: TextStyle(
-        color: body,
-        fontFamily: AppTypography.fontFamily,
-        fontSize: 14,
-        height: 1.45,
-      ),
-      // 2026-09-25: kenarlık ve yarıçap burada tek yerde tanımlanıyor.
-      // Onlarca ekran `AlertDialog`'u `backgroundColor` + `shape` +
-      // `BorderSide` üçlüsüyle elle kuruyordu; aynı sayılar farklı
-      // yardımcılarla (`surfaceOf` / `surfaceColor`) yazıldığı için
-      // ekranlar birbirinden ayrışıyordu. Kenarlık tema sayesinde korunuyor,
-      // tekrar gereksiz.
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: border),
-      ),
-    );
-  }
-
-  /// Kaydırıcı. `inactiveTrackColor` verilmediğinde M3 varsayılanı
-  /// `surfaceContainerHighest`tir; şema eksikken bu `surface`e düşüyor ve
-  /// pasif ray, üstünde durduğu kartla birebir aynı renk oluyordu —
-  /// kullanıcı sesin ya da hızın nereye kadar gidebileceğini göremiyordu
-  /// (Ayarlar → seslendirme, soru öner → zorluk; 2026-07-31 denetimi).
-  ///
-  /// Şema artık tam olsa da ray burada AÇIKÇA veriliyor: tek tek çağrı
-  /// yerlerini yamamak yerine tek yerde karar veriliyor, sonradan
-  /// eklenecek kaydırıcılar da aynı tuzağa düşmüyor.
-  static SliderThemeData _sliderTheme({required Color track}) {
-    return SliderThemeData(
-      activeTrackColor: accent,
-      inactiveTrackColor: track,
-      thumbColor: accent,
-      overlayColor: accent.withValues(alpha: 0.12),
-      trackHeight: 4,
-    );
-  }
-
-  /// Bildirim saati seçici. Temasızken uygulamanın ortasında bir anda
-  /// başka bir uygulamadan gelmiş gibi duruyordu: kadran diski zeminle
-  /// aynı renk (görünmüyor), seçili kutu tam doygun marka turuncusu,
-  /// alan kenarlığı ise metin rengi kadar sert.
-  static TimePickerThemeData _timePickerTheme({
-    required Color background,
-    required Color dial,
-    required Color idleField,
-    required Color idleText,
-    required Color selectedField,
-    required Color selectedText,
-    required Color outline,
-  }) {
-    return TimePickerThemeData(
-      backgroundColor: background,
-      dialBackgroundColor: dial,
-      dialHandColor: accent,
-      hourMinuteColor: WidgetStateColor.resolveWith(
-        (s) => s.contains(WidgetState.selected) ? selectedField : idleField,
-      ),
-      hourMinuteTextColor: WidgetStateColor.resolveWith(
-        (s) => s.contains(WidgetState.selected) ? selectedText : idleText,
-      ),
-      dayPeriodColor: WidgetStateColor.resolveWith(
-        (s) => s.contains(WidgetState.selected)
-            ? selectedField
-            : Colors.transparent,
-      ),
-      dayPeriodTextColor: WidgetStateColor.resolveWith(
-        (s) => s.contains(WidgetState.selected) ? selectedText : idleText,
-      ),
-      dayPeriodBorderSide: BorderSide(color: outline),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-      ),
-    );
-  }
-
-  /// Bölünmüş düğme (Gözden Geçir → Liste / Flaşkart). Stilsizken seçili
-  /// segmentin zemini `secondaryContainer`a, o da eksik şemada altına
-  /// düşüyordu: beyaz metin altın zeminde 2,30:1 — AA eşiğinin yarısı.
-  static SegmentedButtonThemeData _segmentedButtonTheme({
-    required Color selectedBg,
-    required Color selectedFg,
-    required Color idleFg,
-    required Color outline,
-  }) {
-    return SegmentedButtonThemeData(
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.selected)
-              ? selectedBg
-              : Colors.transparent,
-        ),
-        foregroundColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.selected) ? selectedFg : idleFg,
-        ),
-        iconColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.selected) ? selectedFg : idleFg,
-        ),
-        side: WidgetStatePropertyAll(BorderSide(color: outline)),
-      ),
-    );
-  }
 
   /// Soru ekranının SAHNE teması — uygulama teması ne olursa olsun koyu.
   ///
@@ -986,241 +855,362 @@ class AppTheme {
   /// olduğu için bir kez üretilir.
   static final ThemeData stage = dark();
 
-  static ThemeData dark() {
+  static ThemeData dark() => _build(SahneTokens.night, Brightness.dark);
+
+  /// İki tema da aynı yapıcıdan, yalnız belirteçleri farklı kurulur.
+  ///
+  /// 2026-09-29 Şahnê: `dark()` ve `light()` 250'şer satırlık iki ayrı
+  /// kopyaydı ve zamanla ayrışmıştı (ör. başlık kalınlığı birinde 700,
+  /// ötekinde 800). Tek yapıcı bu ayrışmayı imkânsız kılar.
+  static ThemeData _build(SahneTokens t, Brightness brightness) {
+    final isDark = brightness == Brightness.dark;
+    const buttonSize = Size(64, 52);
+    final textTheme = TextTheme(
+      displayLarge: SahneType.screen.copyWith(color: t.tx),
+      displayMedium: SahneType.title.copyWith(color: t.tx),
+      displaySmall: SahneType.title.copyWith(color: t.tx),
+      headlineLarge: SahneType.title.copyWith(color: t.tx),
+      headlineMedium: SahneType.title.copyWith(color: t.tx),
+      headlineSmall: SahneType.headline.copyWith(color: t.tx),
+      titleLarge: SahneType.headline.copyWith(color: t.tx),
+      titleMedium: SahneType.bodyStrong.copyWith(color: t.tx),
+      titleSmall: SahneType.bodyStrong.copyWith(color: t.tx),
+      bodyLarge: SahneType.body.copyWith(color: t.tx2),
+      bodyMedium: SahneType.body.copyWith(color: t.tx2),
+      bodySmall: SahneType.caption.copyWith(color: t.tx3),
+      labelLarge: SahneType.button.copyWith(color: t.tx),
+      labelMedium: SahneType.caption.copyWith(color: t.tx2),
+      labelSmall: SahneType.caption.copyWith(color: t.tx3),
+    );
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
-      fontFamily: 'Rubik',
-      scaffoldBackgroundColor: darkBg,
-      cardTheme: const CardThemeData(
-        color: surface,
+      brightness: brightness,
+      fontFamily: SahneType.text,
+      scaffoldBackgroundColor: t.bg,
+      canvasColor: t.bg,
+      extensions: [t],
+      textTheme: textTheme,
+      iconTheme: IconThemeData(color: t.tx, size: 24),
+      // Klavye odağı görünürlüğü (WCAG 2.4.7).
+      focusColor: t.tx.withValues(alpha: 0.24),
+      splashFactory: InkSparkle.splashFactory,
+      cardTheme: CardThemeData(
+        color: t.s1,
         elevation: 0,
         margin: EdgeInsets.zero,
         surfaceTintColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(AppRadius.card)),
-        ),
+        shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       ),
-      // Klavye odağı görünürlüğü (WCAG 2.4.7): belirgin marka rengi vurgusu.
-      focusColor: accent.withValues(alpha: 0.35),
-      colorScheme: const ColorScheme(
-        brightness: Brightness.dark,
-        primary: accent,
-        onPrimary: Colors.white,
-        secondary: playGreen,
+      colorScheme: ColorScheme(
+        brightness: brightness,
+        primary: t.act,
+        onPrimary: t.onAct,
+        secondary: t.learnBar,
         onSecondary: Colors.white,
-        tertiary: gold,
-        onTertiary: Color(0xFF171812),
-        error: wrong,
-        onError: Colors.white,
-        surface: surface,
-        onSurface: textPrimary,
-        // ── Aşağıdaki roller 2026-07-31'e kadar TANIMSIZDI ────────────
-        //
-        // Şema yalnız 10 rolle kuruluyordu; gerisi Flutter'ın getter
-        // fallback'lerine düşüyordu (color_scheme.dart): surfaceContainer*
-        // → surface, primaryContainer → primary, outline → onSurface.
-        // Yani "container" tonları üstünde durdukları yüzeyle BİREBİR AYNI
-        // renk oluyor, "outline" ise metin rengi kadar sert çıkıyordu.
-        //
-        // Üç görünür kusur bunun doğrudan sonucuydu: Ayarlar'daki
-        // kaydırıcının pasif rayı kartla aynı renkti (nereye kadar
-        // gittiği görünmüyordu), bildirim saati seçicisinin kadran diski
-        // zeminde kayboluyordu, ve Gözden Geçir'deki SegmentedButton
-        // seçili sekmesinde beyaz metin altın zeminde 2,30:1 kalıyordu.
-        //
-        // Container tonları aksanın yüzey üzerine %14 harmanıdır; "on"
-        // karşılıkları rengin tonunu koruyup açıklığını AA (4,5:1)
-        // eşiğini geçene dek zeminden uzaklaştırarak hesaplandı — aynı
-        // yöntem `AppColors.onAccentTint` içinde çalışma zamanında da var.
-        surfaceContainerLowest: bgDeep,
-        surfaceContainerLow: bg,
-        surfaceContainer: surface,
-        surfaceContainerHigh: surfaceHi,
-        surfaceContainerHighest: culturalBrandBg,
-        onSurfaceVariant: textSub,
-        outline: border,
-        outlineVariant: surfaceHi,
-        primaryContainer: Color(0xFF2B160C),
-        onPrimaryContainer: brandLite,
-        secondaryContainer: surfaceHi,
-        onSecondaryContainer: Color(0xFFB9D7C5),
-        tertiaryContainer: Color(0xFF332A13),
-        onTertiaryContainer: gold,
-        errorContainer: Color(0xFF2E1515),
-        onErrorContainer: Color(0xFFF87171),
-        surfaceTint: surface,
-        inverseSurface: lightBg,
-        onInverseSurface: surface,
-        inversePrimary: brand,
+        tertiary: t.gold,
+        onTertiary: const Color(0xFF1B0C02),
+        error: t.errTx,
+        onError: isDark ? const Color(0xFF2A0806) : Colors.white,
+        surface: t.s1,
+        onSurface: t.tx,
+        // Container tonları eksik kalırsa Flutter onları `surface`e düşürür
+        // (2026-07-31 denetimi); hepsi açıkça verilir.
+        surfaceContainerLowest: t.bg,
+        surfaceContainerLow: t.bg,
+        surfaceContainer: t.s1,
+        surfaceContainerHigh: t.s2,
+        surfaceContainerHighest: t.s3,
+        onSurfaceVariant: t.tx2,
+        outline: t.s3,
+        outlineVariant: t.s2,
+        primaryContainer: t.s2,
+        onPrimaryContainer: t.actTx,
+        secondaryContainer: t.learnTint,
+        onSecondaryContainer: t.learnTx,
+        tertiaryContainer: t.goldTint,
+        onTertiaryContainer: t.goldTx,
+        errorContainer: t.errTint,
+        onErrorContainer: t.errTx,
+        // Yükseklik tonlaması yüzeyi renklendirmez: tint = yüzeyin kendisi.
+        surfaceTint: t.s1,
+        inverseSurface: isDark ? SahneTokens.day.s1 : SahneTokens.night.s1,
+        onInverseSurface: isDark ? SahneTokens.day.tx : SahneTokens.night.tx,
+        inversePrimary: t.act,
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
-        foregroundColor: textPrimary,
-        titleTextStyle: TextStyle(
-          color: textPrimary,
-          fontFamily: 'Rubik',
-          fontWeight: FontWeight.w700,
-          fontSize: 20,
-          letterSpacing: -0.2,
-        ),
-        iconTheme: IconThemeData(color: textPrimary),
-        // AppBar, kendi `systemOverlayStyle`ını uygulama kökündeki
-        // AnnotatedRegion'ın üzerine yazar. Belirtilmezse Material bunu
-        // AppBar zemininden türetir; zemin saydam olduğu için yanlış
-        // parlaklık seçilip saat/pil okunmaz hale geliyordu (2026-07-25
-        // canlı denetimi). Değer temayla birlikte açıkça sabitlenir.
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarBrightness: Brightness.dark,
-          statusBarIconBrightness: Brightness.light,
-        ),
+        foregroundColor: t.tx,
+        centerTitle: false,
+        titleTextStyle: SahneType.headline.copyWith(color: t.tx),
+        iconTheme: IconThemeData(color: t.tx),
+        // AppBar kendi `systemOverlayStyle`ını kökteki AnnotatedRegion'ın
+        // üstüne yazar; saydam zeminden türetilen varsayılan yanlış
+        // parlaklığı seçiyordu (2026-07-25). Temayla birlikte sabitlenir.
+        systemOverlayStyle: isDark
+            ? const SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarBrightness: Brightness.dark,
+                statusBarIconBrightness: Brightness.light,
+              )
+            : const SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarBrightness: Brightness.light,
+                statusBarIconBrightness: Brightness.dark,
+              ),
       ),
+      // Alt gezinme: seçili sekme her yerde TEK görünümdedir (Ray plaketi +
+      // birincil metin). Maketin ilk hâlinde her sekme kendi rol rengini
+      // alıyordu; dört ayrı seçili görünüm karşılaştırmada kusur sayıldı.
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: surface,
-        indicatorColor: accent.withValues(alpha: 0.18),
+        backgroundColor: t.nav,
+        surfaceTintColor: Colors.transparent,
+        indicatorColor: t.s3,
+        indicatorShape: SahneShape.m,
         elevation: 0,
-        height: 68,
+        height: 64,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         iconTheme: WidgetStateProperty.resolveWith(
           (s) => IconThemeData(
-            color: s.contains(WidgetState.selected) ? accent : textMuted,
+            color: s.contains(WidgetState.selected) ? t.tx : t.tx3,
           ),
         ),
         labelTextStyle: WidgetStateProperty.resolveWith(
-          (s) => TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: s.contains(WidgetState.selected) ? accent : textMuted,
+          (s) => SahneType.caption.copyWith(
+            color: s.contains(WidgetState.selected) ? t.tx : t.tx3,
+            fontWeight: s.contains(WidgetState.selected)
+                ? FontWeight.w700
+                : FontWeight.w500,
           ),
         ),
       ),
+      // Birincil düğme: Agir dolgu, koyu metin, 52 boy, M pah. Ekranda tek.
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          backgroundColor: accent,
-          foregroundColor: Colors.white,
-          // Pasif hâl aynı turuncunun soluk alpha'sıydı: Kaydet koyu
-          // panelde kayboluyordu (2026-09-03 simülatör). Opak karışım +
-          // açık yazı okunur; «henüz değil» izlenimi kalır.
-          disabledBackgroundColor: Color.alphaBlend(
-            accent.withValues(alpha: 0.55),
-            surfaceHi,
-          ),
-          disabledForegroundColor: const Color(0xFFFFF6ED),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+          backgroundColor: t.act,
+          foregroundColor: t.onAct,
+          // Pasif: opaklık değil Perde + üçüncül metin (saveLayer açmaz).
+          disabledBackgroundColor: t.s1,
+          disabledForegroundColor: t.tx3,
+          minimumSize: buttonSize,
+          textStyle: SahneType.button,
+          shape: SahneShape.m,
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         ),
       ),
+      // İkincil düğme: Kulis tonu, kenarsız.
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: textPrimary,
-          side: const BorderSide(color: border),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+          backgroundColor: t.s2,
+          foregroundColor: t.tx,
+          disabledBackgroundColor: t.s1,
+          disabledForegroundColor: t.tx3,
+          side: BorderSide(color: t.edge),
+          minimumSize: buttonSize,
+          textStyle: SahneType.button,
+          shape: SahneShape.m,
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         ),
       ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: t.s2,
+          foregroundColor: t.tx,
+          elevation: 0,
+          minimumSize: buttonSize,
+          textStyle: SahneType.button,
+          shape: SahneShape.m,
+        ),
+      ),
+      // Metin düğmesi: Agir metni, 44 dokunma alanı.
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: t.actTx,
+          minimumSize: const Size(44, 44),
+          textStyle: SahneType.button,
+          shape: SahneShape.m,
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(
+          foregroundColor: t.tx,
+          minimumSize: const Size(44, 44),
+          shape: SahneShape.m,
+        ),
+      ),
+      chipTheme: ChipThemeData(
+        backgroundColor: t.s2,
+        selectedColor: t.s3,
+        disabledColor: t.s1,
+        labelStyle: SahneType.caption.copyWith(color: t.tx),
+        secondaryLabelStyle: SahneType.caption.copyWith(color: t.tx),
+        side: BorderSide(color: t.edge),
+        shape: SahneShape.m,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+      ),
+      // Anahtar: açıkken Zimrût (öğrenme ayarları çoğunlukta); Agir değil,
+      // çünkü Agir yalnız birincil eylemin dolgusudur.
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.selected) ? accent : textMuted,
+          (s) => s.contains(WidgetState.selected) ? Colors.white : t.tx3,
         ),
         trackColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? t.learnBar : t.s3,
+        ),
+        trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateProperty.resolveWith(
           (s) => s.contains(WidgetState.selected)
-              ? accent.withValues(alpha: 0.4)
-              : border,
+              ? t.learnBar
+              : Colors.transparent,
+        ),
+        checkColor: const WidgetStatePropertyAll(Colors.white),
+        side: BorderSide(color: t.tx3, width: SahneRing.r2),
+        shape: SahneShape.s,
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? t.learnBar : t.tx3,
         ),
       ),
-      dividerTheme: const DividerThemeData(color: border, thickness: 1),
-      dialogTheme: _dialogTheme(
-        background: surfaceHi,
-        title: textPrimary,
-        body: textSub,
-        border: border,
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: t.learnBar,
+        linearTrackColor: t.s3,
+        circularTrackColor: t.s3,
       ),
-      sliderTheme: _sliderTheme(track: border),
-      timePickerTheme: _timePickerTheme(
-        background: surface,
-        dial: surfaceHi,
-        idleField: surfaceHi,
-        idleText: textPrimary,
-        selectedField: const Color(0xFF302819),
-        selectedText: const Color(0xFFED6911),
-        outline: border,
+      dividerTheme: DividerThemeData(color: t.line, thickness: 1, space: 1),
+      dialogTheme: DialogThemeData(
+        backgroundColor: t.s1,
+        surfaceTintColor: t.s1,
+        titleTextStyle: SahneType.headline.copyWith(color: t.tx),
+        contentTextStyle: SahneType.body.copyWith(color: t.tx2),
+        // 2026-09-25: kenar ve şekil tek yerde; Şahnê'de L pah.
+        shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       ),
-      segmentedButtonTheme: _segmentedButtonTheme(
-        selectedBg: accent,
-        selectedFg: Colors.white,
-        idleFg: textSub,
-        outline: border,
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: t.s1,
+        surfaceTintColor: t.s1,
+        modalBackgroundColor: t.s1,
+        shape: const BeveledRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(SahneShape.lValue),
+          ),
+        ),
+        dragHandleColor: t.s3,
+      ),
+      popupMenuTheme: PopupMenuThemeData(
+        color: t.s2,
+        surfaceTintColor: t.s2,
+        textStyle: SahneType.body.copyWith(color: t.tx),
+        shape: SahneShape.m,
+      ),
+      tooltipTheme: TooltipThemeData(
+        decoration: ShapeDecoration(color: t.s3, shape: SahneShape.s),
+        textStyle: SahneType.caption.copyWith(color: t.tx),
+      ),
+      listTileTheme: ListTileThemeData(
+        iconColor: t.tx2,
+        textColor: t.tx,
+        titleTextStyle: SahneType.bodyStrong.copyWith(color: t.tx),
+        subtitleTextStyle: SahneType.caption.copyWith(color: t.tx2),
+        minVerticalPadding: 8,
+      ),
+      // Kaydırıcı: pasif ray kartla aynı renkte olmasın (2026-07-31).
+      sliderTheme: SliderThemeData(
+        activeTrackColor: t.learnBar,
+        inactiveTrackColor: t.s3,
+        thumbColor: t.learnBar,
+        overlayColor: t.learnBar.withValues(alpha: 0.12),
+        trackHeight: 4,
+      ),
+      timePickerTheme: TimePickerThemeData(
+        backgroundColor: t.s1,
+        dialBackgroundColor: t.s2,
+        dialHandColor: t.learnBar,
+        hourMinuteColor: WidgetStateColor.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? t.s3 : t.s2,
+        ),
+        hourMinuteTextColor: WidgetStateColor.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? t.tx : t.tx2,
+        ),
+        dayPeriodColor: WidgetStateColor.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? t.s3 : Colors.transparent,
+        ),
+        dayPeriodTextColor: WidgetStateColor.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? t.tx : t.tx2,
+        ),
+        dayPeriodBorderSide: BorderSide(color: t.s3),
+        shape: SahneShape.l,
+      ),
+      // Bölünmüş düğme: seçili segment Ray + birincil metin.
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith(
+            (s) => s.contains(WidgetState.selected) ? t.s3 : t.s1,
+          ),
+          foregroundColor: WidgetStateProperty.resolveWith(
+            (s) => s.contains(WidgetState.selected) ? t.tx : t.tx2,
+          ),
+          iconColor: WidgetStateProperty.resolveWith(
+            (s) => s.contains(WidgetState.selected) ? t.tx : t.tx2,
+          ),
+          side: WidgetStatePropertyAll(BorderSide(color: t.s3)),
+          shape: const WidgetStatePropertyAll(SahneShape.m),
+          textStyle: const WidgetStatePropertyAll(SahneType.caption),
+        ),
+      ),
+      tabBarTheme: TabBarThemeData(
+        labelColor: t.tx,
+        unselectedLabelColor: t.tx3,
+        labelStyle: SahneType.bodyStrong,
+        unselectedLabelStyle: SahneType.body,
+        indicatorColor: t.learnBar,
+        dividerColor: t.line,
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: surfaceHi,
+        fillColor: t.s2,
+        hintStyle: SahneType.body.copyWith(color: t.tx3),
+        labelStyle: SahneType.body.copyWith(color: t.tx2),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: const BorderSide(color: border),
+          borderRadius: BorderRadius.circular(SahneShape.mValue),
+          borderSide: BorderSide(color: t.edge),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: const BorderSide(color: border),
+          borderRadius: BorderRadius.circular(SahneShape.mValue),
+          borderSide: BorderSide(color: t.edge),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: const BorderSide(color: accent, width: 2),
+          borderRadius: BorderRadius.circular(SahneShape.mValue),
+          borderSide: BorderSide(color: t.tx, width: SahneRing.r2),
         ),
-        hintStyle: const TextStyle(color: textMuted),
-        // Doğrulama hatası varsayılan Material stiliyle çiziliyordu ve
-        // krem/koyu yüzeyler üzerinde neredeyse okunmuyordu (2026-07-25
-        // canlı denetimi). Renk ve kalınlık açıkça sabitlenir.
-        errorStyle: const TextStyle(
-          color: formErrorDark,
+        // Doğrulama hatası krem/koyu yüzeyde okunmuyordu (2026-07-25).
+        errorStyle: SahneType.caption.copyWith(
+          color: t.errTx,
           fontWeight: FontWeight.w600,
-          fontSize: 12,
-          height: 1.3,
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: const BorderSide(color: formErrorDark, width: 1.5),
+          borderRadius: BorderRadius.circular(SahneShape.mValue),
+          borderSide: BorderSide(color: t.errTx, width: 1.5),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: const BorderSide(color: formErrorDark, width: 2),
+          borderRadius: BorderRadius.circular(SahneShape.mValue),
+          borderSide: BorderSide(color: t.errTx, width: SahneRing.r2),
         ),
-      ),
-      textTheme: const TextTheme(
-        headlineSmall: TextStyle(
-          fontWeight: FontWeight.w700,
-          color: textPrimary,
-          letterSpacing: -0.3,
-          height: 1.2,
-        ),
-        titleLarge: TextStyle(
-          fontWeight: FontWeight.w700,
-          color: textPrimary,
-          letterSpacing: -0.2,
-          height: 1.25,
-        ),
-        titleMedium: TextStyle(
-          fontWeight: FontWeight.w700,
-          color: textPrimary,
-          height: 1.3,
-        ),
-        bodyLarge: TextStyle(color: textSub, height: 1.45),
-        bodyMedium: TextStyle(color: textSub, height: 1.5),
-        bodySmall: TextStyle(color: textMuted, height: 1.35),
-        labelLarge: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 0.2),
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: surfaceHi,
-        contentTextStyle: const TextStyle(color: textPrimary),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.badge),
+        backgroundColor: isDark ? t.s3 : SahneTokens.night.s1,
+        contentTextStyle: SahneType.body.copyWith(
+          color: isDark ? t.tx : SahneTokens.night.tx,
         ),
+        actionTextColor: SahneTokens.night.actTx,
+        shape: SahneShape.m,
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -1263,220 +1253,7 @@ class AppTheme {
     );
   }
 
-  static ThemeData light() {
-    return ThemeData(
-      useMaterial3: true,
-      brightness: Brightness.light,
-      fontFamily: 'Rubik',
-      scaffoldBackgroundColor: lightBg,
-      cardTheme: const CardThemeData(
-        color: lightSurface,
-        elevation: 0,
-        margin: EdgeInsets.zero,
-        surfaceTintColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(AppRadius.card)),
-        ),
-      ),
-      // Klavye odağı görünürlüğü (WCAG 2.4.7): belirgin marka rengi vurgusu.
-      focusColor: accent.withValues(alpha: 0.30),
-      colorScheme: const ColorScheme(
-        brightness: Brightness.light,
-        primary: accent,
-        onPrimary: Colors.white,
-        secondary: playGreen,
-        onSecondary: Colors.white,
-        tertiary: gold,
-        onTertiary: lightTextPrimary,
-        error: wrong,
-        onError: Colors.white,
-        surface: lightSurface,
-        onSurface: lightTextPrimary,
-        // Karanlık temadaki ile aynı gerekçe — bkz. `dark()`.
-        surfaceContainerLowest: lightSurface,
-        surfaceContainerLow: lightSurfaceHi,
-        surfaceContainer: lightBgDeep,
-        surfaceContainerHigh: Color(0xFFEEE5D8),
-        surfaceContainerHighest: lightBorder,
-        onSurfaceVariant: lightTextSub,
-        outline: lightBorder,
-        outlineVariant: lightBgDeep,
-        primaryContainer: Color(0xFFF5DDCB),
-        onPrimaryContainer: brandDeep,
-        secondaryContainer: Color(0xFFDCE8E0),
-        onSecondaryContainer: culturalBrandBg,
-        tertiaryContainer: Color(0xFFF8E8B8),
-        onTertiaryContainer: Color(0xFF6B4B00),
-        errorContainer: Color(0xFFFEE2E2),
-        onErrorContainer: Color(0xFFB91C1C), // 4,61:1
-        surfaceTint: lightSurface,
-        inverseSurface: bg,
-        onInverseSurface: textPrimary,
-        inversePrimary: brandLite,
-      ),
-      appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        foregroundColor: lightTextPrimary,
-        titleTextStyle: TextStyle(
-          color: lightTextPrimary,
-          fontFamily: 'Rubik',
-          fontWeight: FontWeight.w700,
-          fontSize: 20,
-          letterSpacing: -0.2,
-        ),
-        iconTheme: IconThemeData(color: lightTextPrimary),
-        // Bkz. koyu temadaki aynı alan: saydam AppBar zemininden türetilen
-        // varsayılan, açık temada beyaz ikon seçip krem zeminde saati
-        // görünmez kılıyordu.
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarBrightness: Brightness.light,
-          statusBarIconBrightness: Brightness.dark,
-        ),
-      ),
-      navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: lightSurface,
-        indicatorColor: accent.withValues(alpha: 0.18),
-        elevation: 0,
-        height: 68,
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        iconTheme: WidgetStateProperty.resolveWith(
-          (s) => IconThemeData(
-            color: s.contains(WidgetState.selected) ? accent : lightTextMuted,
-          ),
-        ),
-        labelTextStyle: WidgetStateProperty.resolveWith(
-          (s) => TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: s.contains(WidgetState.selected) ? accent : lightTextMuted,
-          ),
-        ),
-      ),
-      filledButtonTheme: FilledButtonThemeData(
-        style: FilledButton.styleFrom(
-          backgroundColor: accent,
-          foregroundColor: Colors.white,
-          disabledBackgroundColor: Color.alphaBlend(
-            accent.withValues(alpha: 0.28),
-            lightSurfaceHi,
-          ),
-          disabledForegroundColor: const Color(0xFF4A2508),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-        ),
-      ),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: lightTextPrimary,
-          side: const BorderSide(color: lightBorder),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-        ),
-      ),
-      switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.selected) ? accent : lightTextMuted,
-        ),
-        trackColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.selected)
-              ? accent.withValues(alpha: 0.4)
-              : lightBorder,
-        ),
-      ),
-      dividerTheme: const DividerThemeData(color: lightBorder, thickness: 1),
-      dialogTheme: _dialogTheme(
-        background: lightSurface,
-        title: lightTextPrimary,
-        body: lightTextSub,
-        border: lightBorder,
-      ),
-      sliderTheme: _sliderTheme(track: const Color(0xFFE9E4DA)),
-      timePickerTheme: _timePickerTheme(
-        background: lightSurface,
-        dial: lightBgDeep,
-        idleField: lightSurfaceHi,
-        idleText: lightTextPrimary,
-        selectedField: const Color(0xFFF6E7DD),
-        selectedText: const Color(0xFFAA4B0C),
-        outline: lightBorder,
-      ),
-      segmentedButtonTheme: _segmentedButtonTheme(
-        selectedBg: accent,
-        selectedFg: Colors.white,
-        idleFg: lightTextSub,
-        outline: lightBorder,
-      ),
-      inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: lightSurfaceHi,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: const BorderSide(color: lightBorder),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: const BorderSide(color: lightBorder),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: const BorderSide(color: accent, width: 2),
-        ),
-        hintStyle: const TextStyle(color: lightTextMuted),
-        errorStyle: const TextStyle(
-          color: formErrorLight,
-          fontWeight: FontWeight.w600,
-          fontSize: 12,
-          height: 1.3,
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: const BorderSide(color: formErrorLight, width: 1.5),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: const BorderSide(color: formErrorLight, width: 2),
-        ),
-      ),
-      textTheme: const TextTheme(
-        headlineSmall: TextStyle(
-          fontWeight: FontWeight.w800,
-          color: lightTextPrimary,
-          letterSpacing: -0.3,
-          height: 1.2,
-        ),
-        titleLarge: TextStyle(
-          fontWeight: FontWeight.w700,
-          color: lightTextPrimary,
-          letterSpacing: -0.2,
-          height: 1.25,
-        ),
-        titleMedium: TextStyle(
-          fontWeight: FontWeight.w700,
-          color: lightTextPrimary,
-          height: 1.3,
-        ),
-        bodyLarge: TextStyle(color: lightTextSub, height: 1.45),
-        bodyMedium: TextStyle(color: lightTextSub, height: 1.5),
-        bodySmall: TextStyle(color: lightTextMuted, height: 1.35),
-        labelLarge: TextStyle(fontWeight: FontWeight.w500, letterSpacing: 0.2),
-      ),
-      snackBarTheme: SnackBarThemeData(
-        backgroundColor: lightSurface,
-        contentTextStyle: const TextStyle(color: lightTextPrimary),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.badge),
-        ),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
+  static ThemeData light() => _build(SahneTokens.day, Brightness.light);
 
   /// Gradient for shimmer effect.
   // Removed static const shimmerGradient – replaced by shimmerGradient(context, animValue) method below.
@@ -1487,14 +1264,14 @@ class AppTheme {
   static const badgeGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF1E5F47), Color(0xFF2C6B54)],
+    colors: [SahneStageColors.top, SahneStageColors.bottom],
   );
 
   /// Streak indicator gradient.
   static const streakGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFFE76F51), Color(0xFFE9C46A)],
+    colors: [Color(0xFFF5C24C), Color(0xFFE0A82E)],
   );
 
   // ============ Premium Design Helpers ============
