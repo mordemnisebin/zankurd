@@ -71,12 +71,14 @@ void main() {
     expect(scaffold.backgroundColor, AppTheme.bg);
   });
 
-  // 2026-09-29 Şahnê: koyu temada tam logonun (yazılı) koyu harfleri
-  // zeminde kayboluyordu ve bir renk süzgeciyle açılıyordu. Açılış artık
-  // logo İŞARETİNİ plakada gösterir (gecede Kulis, gündüzde Perde + kenar);
-  // kontrastı süzgeç değil plaka taşır. Korunan şey: işaret koyu zeminde
-  // doğrudan durmaz.
-  testWidgets('koyu temada logo işareti plakada okunaklı kalır', (
+  // 2026-09-30 logo (L4 soru balonu): eski logonun dağları koyu zeminde
+  // kaybolduğu için işaret bir plakada (gecede Kulis, gündüzde Perde)
+  // duruyordu ve bu test `onBrandSurface`i sabitliyordu. Yeni işaret tek
+  // renkli ve doygun; plaka kutu içinde kutu yaratıyor ve kuyruğu
+  // sıkıştırıyordu, kalktı. Korunan şey artık tersi: işaret koyu zeminde
+  // plakasız, şeffaf `zankurd_icon.webp` olarak doğrudan durur ve adı
+  // Flutter yazısı taşır.
+  testWidgets('koyu temada logo işareti plakasız, doğrudan çizilir', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -90,8 +92,21 @@ void main() {
     );
     await tester.pump();
 
-    final logo = tester.widget<AppLogo>(find.byType(AppLogo));
-    expect(logo.onBrandSurface, isTrue);
+    final logo = find.byType(AppLogo);
+    expect(logo, findsOneWidget);
+    expect(
+      find.descendant(of: logo, matching: find.byType(DecoratedBox)),
+      findsNothing,
+      reason: 'Logo plakasız durur; plaka geri gelirse kutu içinde kutu olur.',
+    );
+    final image = tester.widget<Image>(
+      find.descendant(of: logo, matching: find.byType(Image)),
+    );
+    final provider = image.image;
+    final assetName = provider is ResizeImage
+        ? (provider.imageProvider as AssetImage).assetName
+        : (provider as AssetImage).assetName;
+    expect(assetName, 'assets/zankurd_icon.webp');
     expect(find.text('ZanKurd'), findsOneWidget);
   });
 

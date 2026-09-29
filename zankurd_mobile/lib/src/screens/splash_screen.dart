@@ -214,7 +214,7 @@ class _SplashScreenState extends State<SplashScreen>
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        AppLogo(width: width, onBrandSurface: true),
+                        AppLogo(width: width),
                         const SizedBox(height: SahneSpace.x5),
                         Text(
                           'ZanKurd',

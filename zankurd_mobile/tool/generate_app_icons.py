@@ -1,36 +1,58 @@
 #!/usr/bin/env python3
-"""Uygulama simgesini ve açılış görselini gerçek logodan üretir.
+"""Uygulama simgesini, açılış görselini ve uygulama içi logoyu üretir.
 
-2026-07-27: uygulama simgesi lacivert bir kare üzerinde kırmızı yuvarlak
-ve beyaz "ZK" harfleriydi — Flutter şablonundan kalma bir yer tutucu.
-Ürünün logosuyla hiçbir ilgisi yoktu. Kullanıcının telefonunda uygulamayı
-**açmadan** gördüğü tek şey budur.
+Kaynak: L4 "soru balonu" işareti (turuncu konuşma balonu, içinde pahlı Z
+oyuğu). Geometri aşağıda düz sayılarla yazılıdır (1024 kare, y aşağı);
+tasarım klasöründeki `kimlik/logo/uret.py` aynı sayıları üretir. Görüntü
+PIL ile 4 kat büyük çizilip küçültülür — ek kütüphane (cairo, chrome)
+gerekmez. Çalıştır: `python3 tool/generate_app_icons.py` (zankurd_mobile/).
 
-Kaynak: `android/.../splash_logo.png` içindeki çok renkli logo (kırmızı Z,
-yeşil dağ tabanı, sarı güneş, kitap). Beyaz zemin şeffaflaştırılır ve
-amblem, "ZANKURD" yazısından ayrılır — küçük boyutlarda yazı okunmaz,
-simgede yalnız amblem durur.
+2026-09-30: logo değişti. Eski logo (kırmızı Z, güneş, dağ, kitap) yapay
+zekâ üretimi bir resim gibi duruyordu ve 24 px'te okunmuyordu: dağ, ışın
+ve alev birbirine karışıp bir leke çıkıyordu. Yeni işaret tek renk, tek
+parça bir silüettir; 24 px'te bile balon + Z okunur. Eski dosyalar repo
+dışında yedeklidir (`kimlik/logo/eski/`). Bu betik o resmi işleyen eski
+araçların (`recolor_logo.py`, `make_logo_transparent.py`) yerini de aldı.
 
-Açılış görseli de aynı şeffaf amblemden üretilir. Eskisi beyaz zemini
-gömülü bir bitmap'ti: karanlık temada koyu arka planın ortasında beyaz
-bir kare olarak çıkıyordu.
+Kural (2026-07-27, değişmedi): **simge dosyalarında alfa olmaz** — App
+Store alfa kanallı simgeyi reddeder; bu yüzden işaret düz bir zemine (gece
+lacivert, `SahneTokens.night.bg`) bindirilir. Açılış görselleri ve
+uygulama içi logo ise şeffaftır: açık ve karanlık zeminde de doğru durur.
 
-Simge dosyalarında alfa **olmaz** — App Store alfa kanallı simgeyi
-reddeder; bu yüzden amblem düz bir zemine bindirilir.
+Üretilenler: iOS AppIcon + LaunchImage, Android mipmap (+ uyarlanabilir
+ön plan), bildirim silueti, splash_logo, web simgeleri, `assets/zankurd_icon.webp`
+(işaret) ve `assets/zankurd.webp` (işaret + "ZanKurd" yatay kilidi).
+
+Uygulama içinde yazı Flutter `Text` ile kalır (net, ölçeklenir, dile göre
+değişebilir); kilit görseli yalnız dışarıya dönük kullanım içindir ve
+yazısını Bricolage Grotesque ExtraBold'dan alır.
 """
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "android/app/src/main/res/drawable/splash_logo.png"
+FONT = ROOT / "assets/fonts/BricolageGrotesque-ExtraBold.ttf"
 
-# Simge zemini: logonun tasarlandığı beyaz. Amblemin sarı güneş ışınları
-# krem zeminde soluyor; beyaz en yüksek ayrımı verir.
-ICON_BG = (255, 255, 255, 255)
+NIGHT = (10, 15, 46)      # #0A0F2E — SahneTokens.night.bg
+AGIR = (255, 138, 61)     # #FF8A3D — işaret
+CREAM = (246, 243, 236)   # #F6F3EC — kilit yazısı (gece zemini)
 
-# Amblemin simge içindeki oranı. iOS köşeleri yuvarlattığı için kenarda
-# nefes payı bırakılır.
+# ---- L4 geometrisi (1024 kare) -------------------------------------------
+# Balon: 8 köşeli, sol altta kuyruk. Z: oyuk (evenodd). 2026-09-30: Z ~%12
+# incelip küçüldü; balon kenarından boşluk arttı (24 px'te kapanmasın).
+BUBBLE = [(242, 142), (782, 142), (912, 272), (912, 612), (782, 742),
+          (252, 742), (112, 882), (112, 272)]
+Z_HOLE = [(374, 319), (401, 292), (623, 292), (650, 319), (650, 371),
+          (481, 513), (650, 513), (650, 565), (623, 592), (401, 592),
+          (374, 565), (374, 513), (543, 371), (374, 371)]
+MARK_BOX = (112, 142, 912, 882)  # işaretin sıkı sınırı
+BODY_CENTER_Y = 442              # balon gövdesinin ortası (kuyruk hariç)
+
+SS = 4  # süper örnekleme
+
+# Simge içinde işaretin en uzun kenarının payı. iOS köşeleri yuvarlattığı
+# için kenarda nefes payı bırakılır.
 ICON_INSET = 0.16
 
 IOS_ICONS = {
@@ -38,8 +60,11 @@ IOS_ICONS = {
     "Icon-App-20x20@3x.png": 60, "Icon-App-29x29@1x.png": 29,
     "Icon-App-29x29@2x.png": 58, "Icon-App-29x29@3x.png": 87,
     "Icon-App-40x40@1x.png": 40, "Icon-App-40x40@2x.png": 80,
-    "Icon-App-40x40@3x.png": 120, "Icon-App-60x60@2x.png": 120,
-    "Icon-App-60x60@3x.png": 180, "Icon-App-76x76@1x.png": 76,
+    "Icon-App-40x40@3x.png": 120, "Icon-App-50x50@1x.png": 50,
+    "Icon-App-50x50@2x.png": 100, "Icon-App-57x57@1x.png": 57,
+    "Icon-App-57x57@2x.png": 114, "Icon-App-60x60@2x.png": 120,
+    "Icon-App-60x60@3x.png": 180, "Icon-App-72x72@1x.png": 72,
+    "Icon-App-72x72@2x.png": 144, "Icon-App-76x76@1x.png": 76,
     "Icon-App-76x76@2x.png": 152, "Icon-App-83.5x83.5@2x.png": 167,
     "Icon-App-1024x1024@1x.png": 1024,
 }
@@ -50,10 +75,7 @@ ANDROID_ICONS = {
 }
 
 # Bildirim ikonu ölçüleri (dp -> px). Android bildirim küçük ikonunu
-# **siluete** çevirir: rengi atar, yalnız alfayı kullanır. Tam renkli
-# başlatıcı simgesi verilirse (ve o simgenin zemini beyazsa) bildirimde
-# düz beyaz bir kare çıkar. Bu yüzden ayrı, saydam zeminli beyaz bir
-# amblem üretilir (2026-07-27).
+# **siluete** çevirir: rengi atar, yalnız alfayı kullanır (2026-07-27).
 NOTIFICATION_ICONS = {
     "drawable-mdpi": 24, "drawable-hdpi": 36, "drawable-xhdpi": 48,
     "drawable-xxhdpi": 72, "drawable-xxxhdpi": 96,
@@ -62,7 +84,6 @@ NOTIFICATION_ICONS = {
 LAUNCH_IMAGES = {"LaunchImage.png": 180, "LaunchImage@2x.png": 360,
                  "LaunchImage@3x.png": 540}
 
-# Web sürümünün sekme ve yükleme simgeleri de aynı yer tutucudandı.
 WEB_ICONS = {
     "web/favicon.png": 32,
     "web/icons/Icon-192.png": 192,
@@ -72,136 +93,131 @@ WEB_ICONS = {
 }
 
 
-def transparent_logo() -> Image.Image:
-    """Beyaz zemini şeffaflaştırılmış tam logo (amblem + yazı)."""
-    src = Image.open(SOURCE).convert("RGBA")
-    out = Image.new("RGBA", src.size)
-    sp, op = src.load(), out.load()
-    width, height = src.size
-    for y in range(height):
-        for x in range(width):
-            r, g, b, a = sp[x, y]
-            level = min(r, g, b)
-            if level >= 250:
-                op[x, y] = (r, g, b, 0)
-            elif level >= 200:
-                # Kenar yumuşatması: beyaza yaklaştıkça saydamlaşır. Sert
-                # eşik kullanılsa amblemin kenarı testere dişi olurdu.
-                op[x, y] = (r, g, b, int((250 - level) / 50 * 255))
-            else:
-                op[x, y] = (r, g, b, a)
+def mark_mask(height: int) -> Image.Image:
+    """İşaretin alfa maskesi (sıkı kesim), verilen yüksekliğe göre; balon
+    dolu, Z oyuk."""
+    x0, y0, x1, y1 = MARK_BOX
+    k = height * SS / (y1 - y0)
+    w, h = round((x1 - x0) * k), round((y1 - y0) * k)
+    mask = Image.new("L", (w, h), 0)
+    draw = ImageDraw.Draw(mask)
+    draw.polygon([((x - x0) * k, (y - y0) * k) for x, y in BUBBLE], fill=255)
+    draw.polygon([((x - x0) * k, (y - y0) * k) for x, y in Z_HOLE], fill=0)
+    return mask.resize((round(w / SS), round(h / SS)), Image.LANCZOS)
+
+
+def mark(height: int, color=AGIR) -> Image.Image:
+    """Şeffaf zeminli renkli işaret (sıkı kesim)."""
+    mask = mark_mask(height)
+    out = Image.new("RGBA", mask.size, color + (255,))
+    out.putalpha(mask)
     return out
 
 
-def emblem_only(logo: Image.Image) -> Image.Image:
-    """Yazısız amblem. Yazı ile amblem arasındaki boş satır bandı sınırdır."""
-    width, height = logo.size
-    px = logo.load()
-    filled = [
-        sum(1 for x in range(0, width, 2) if px[x, y][3] > 8)
-        for y in range(height)
-    ]
-    top = next(i for i, c in enumerate(filled) if c > 2)
-    gap = next(
-        y for y in range(top + height // 4, height) if filled[y] <= 1
-    )
-    return logo.crop((0, top, width, gap)).crop(
-        logo.crop((0, top, width, gap)).getbbox()
-    )
-
-
-def square(image: Image.Image, size: int, background) -> Image.Image:
-    canvas = Image.new("RGBA", (size, size), background)
-    inner = int(size * (1 - 2 * ICON_INSET))
-    scale = min(inner / image.width, inner / image.height)
-    resized = image.resize(
-        (max(1, int(image.width * scale)), max(1, int(image.height * scale))),
+def fit(image: Image.Image, box: int) -> Image.Image:
+    """En uzun kenarı [box] olacak biçimde yeniden boyutlar."""
+    scale = box / max(image.size)
+    return image.resize(
+        (max(1, round(image.width * scale)), max(1, round(image.height * scale))),
         Image.LANCZOS,
     )
+
+
+def rendered(box: int, color=AGIR) -> Image.Image:
+    """En uzun kenarı [box] piksel olan işaret (keskin: doğrudan o boyda çizilir)."""
+    x0, y0, x1, y1 = MARK_BOX
+    height = box if (y1 - y0) >= (x1 - x0) else round(box * (y1 - y0) / (x1 - x0))
+    return mark(height, color)
+
+
+def on_canvas(image: Image.Image, size: int, background) -> Image.Image:
+    canvas = Image.new("RGBA", (size, size), background)
     canvas.alpha_composite(
-        resized,
-        ((size - resized.width) // 2, (size - resized.height) // 2),
+        image, ((size - image.width) // 2, (size - image.height) // 2)
     )
     return canvas
 
 
+def icon(size: int) -> Image.Image:
+    """Alfasız kare simge: gece zemini + işaret."""
+    box = round(size * (1 - 2 * ICON_INSET))
+    return on_canvas(rendered(box), size, NIGHT + (255,)).convert("RGB")
+
+
+def lockup(height: int = 1024, ink=CREAM) -> Image.Image:
+    """İşaret + "ZanKurd" yatay kilidi, şeffaf. Yazı işaretin gövdesiyle
+    ortalanır; taban çizgisi Z'nin altındadır."""
+    unit = height / (MARK_BOX[3] - MARK_BOX[1])           # 1 tasarım birimi
+    m = mark(height)
+    cap = 0.38 * height                                    # büyük harf boyu
+    px = cap / 0.660                                       # em (cap = 660/1000)
+    font = ImageFont.truetype(str(FONT), round(px * SS))
+    track = -0.006 * px
+    gap = 0.20 * height
+    text_w = sum(font.getlength(c) / SS + track for c in "ZanKurd") - track
+    body_c = (BODY_CENTER_Y - MARK_BOX[1]) * unit          # gövde ortası (y)
+    baseline = body_c + cap / 2
+    width = round(m.width + gap + text_w)
+    layer = Image.new("L", (width * SS, height * SS), 0)
+    draw = ImageDraw.Draw(layer)
+    x = (m.width + gap) * SS
+    for c in "ZanKurd":
+        draw.text((x, baseline * SS), c, font=font, fill=255, anchor="ls")
+        x += font.getlength(c) + track * SS
+    text = Image.new("RGBA", (width, height), ink + (255,))
+    text.putalpha(layer.resize((width, height), Image.LANCZOS))
+    out = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    out.alpha_composite(m, (0, 0))
+    out.alpha_composite(text)
+    return out.crop(out.getbbox())
+
+
 def main() -> None:
-    logo = transparent_logo()
-    emblem = emblem_only(logo)
+    res = ROOT / "android/app/src/main/res"
 
     ios_dir = ROOT / "ios/Runner/Assets.xcassets/AppIcon.appiconset"
     for name, size in IOS_ICONS.items():
-        # Alfa kanalı yok: App Store reddeder.
-        square(emblem, size, ICON_BG).convert("RGB").save(ios_dir / name)
+        icon(size).save(ios_dir / name)
 
     for folder, size in ANDROID_ICONS.items():
-        target = ROOT / "android/app/src/main/res" / folder / "ic_launcher.png"
-        square(emblem, size, ICON_BG).convert("RGB").save(target)
+        icon(size).save(res / folder / "ic_launcher.png")
 
-    # Açılış görseli şeffaf kalır: açık ve karanlık zeminde de doğru durur.
+    # Android 8+ uyarlanabilir simge: ön plan (işaret) ile zemin ayrı
+    # katmandır (`zk_icon_bg` = gece zemini), cihazın maskesi uygulanır.
+    # 108 birimlik tuvalin yalnız ortadaki 72 birimi her maskede görünür;
+    # işaret bunun içinde kalır. Android 13 tema simgesi (monochrome) aynı
+    # ön planın alfasını kullanır: balon + Z oyuğu tek renkte de okunur.
+    for folder, size in ANDROID_ICONS.items():
+        canvas_size = round(size / 48 * 108)
+        box = round(canvas_size * 72 / 108 * 0.84)
+        on_canvas(rendered(box), canvas_size, (0, 0, 0, 0)).save(
+            res / folder / "ic_launcher_fg.png"
+        )
+
+    # Bildirim silueti: aynı işaret, düz beyaz.
+    for folder, size in NOTIFICATION_ICONS.items():
+        target = res / folder
+        target.mkdir(parents=True, exist_ok=True)
+        box = round(size * 0.9)
+        on_canvas(rendered(box, (255, 255, 255)), size, (0, 0, 0, 0)).save(
+            target / "ic_stat_zankurd.png"
+        )
+
+    # Açılış görselleri şeffaf kalır (yalnız işaret).
     launch_dir = ROOT / "ios/Runner/Assets.xcassets/LaunchImage.imageset"
     for name, size in LAUNCH_IMAGES.items():
-        scale = size / max(logo.width, logo.height)
-        logo.resize(
-            (int(logo.width * scale), int(logo.height * scale)), Image.LANCZOS
-        ).save(launch_dir / name)
-
-    android_splash = ROOT / "android/app/src/main/res/drawable/splash_logo.png"
-    scale = 512 / max(logo.width, logo.height)
-    logo.resize(
-        (int(logo.width * scale), int(logo.height * scale)), Image.LANCZOS
-    ).save(android_splash)
-
-    # Android 8+ uyarlanabilir simge.
-    # Manifest yalnız eski PNG'yi gösteriyordu; modern Android onu kendi
-    # maskesiyle kırpıp küçültür ve simge sistem içinde bir kutu gibi
-    # durur. Uyarlanabilir simgede ön plan ile zemin ayrı katmandır ve
-    # cihazın maskesi (daire, squircle) doğru uygulanır.
-    #
-    # Ön plan güvenli alanda kalmalı: 108 birimlik tuvalin yalnız ortadaki
-    # 72 birimi her maskede görünür. Amblem bu orana göre yerleştirilir.
-    foreground_scale = 72 / 108
-    for folder, size in ANDROID_ICONS.items():
-        canvas_size = int(size / 48 * 108)
-        canvas = Image.new("RGBA", (canvas_size, canvas_size), (0, 0, 0, 0))
-        inner = int(canvas_size * foreground_scale * 0.86)
-        scale = min(inner / emblem.width, inner / emblem.height)
-        resized = emblem.resize(
-            (int(emblem.width * scale), int(emblem.height * scale)),
-            Image.LANCZOS,
-        )
-        canvas.alpha_composite(
-            resized,
-            ((canvas_size - resized.width) // 2,
-             (canvas_size - resized.height) // 2),
-        )
-        canvas.save(
-            ROOT / "android/app/src/main/res" / folder / "ic_launcher_fg.png"
-        )
-
-    # Bildirim ikonu: amblemin alfası, rengi düz beyaz.
-    for folder, size in NOTIFICATION_ICONS.items():
-        scale = min(size / emblem.width, size / emblem.height)
-        resized = emblem.resize(
-            (max(1, int(emblem.width * scale)), max(1, int(emblem.height * scale))),
-            Image.LANCZOS,
-        )
-        silhouette = Image.new("RGBA", (size, size), (255, 255, 255, 0))
-        white = Image.new("RGBA", resized.size, (255, 255, 255, 255))
-        white.putalpha(resized.getchannel("A"))
-        silhouette.alpha_composite(
-            white,
-            ((size - white.width) // 2, (size - white.height) // 2),
-        )
-        target = ROOT / "android/app/src/main/res" / folder
-        target.mkdir(parents=True, exist_ok=True)
-        silhouette.save(target / "ic_stat_zankurd.png")
+        rendered(size).save(launch_dir / name)
+    rendered(512).save(res / "drawable/splash_logo.png")
 
     for relative, size in WEB_ICONS.items():
-        # Maskable simgeler kırpılabilir: içeriden daha fazla pay bırakılır.
-        square(emblem, size, ICON_BG).convert("RGB").save(ROOT / relative)
+        icon(size).save(ROOT / relative)
 
-    print("simgeler ve açılış görselleri üretildi")
+    # Uygulama içi logo: işaret (1024 yüksek) ve yatay kilit. Bilerek WebP
+    # kayıpsız: keskin kenarlı düz renk, kayıplı sıkıştırmada halelenir.
+    rendered(1024).save(ROOT / "assets/zankurd_icon.webp", lossless=True)
+    lockup(512).save(ROOT / "assets/zankurd.webp", lossless=True)
+
+    print("simgeler, açılış görselleri ve uygulama içi logo üretildi")
 
 
 if __name__ == "__main__":

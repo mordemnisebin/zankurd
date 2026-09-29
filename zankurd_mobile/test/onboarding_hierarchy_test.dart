@@ -196,11 +196,10 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // 2026-09-29 Şahnê: logo işareti plakada (64 + plaka payı); maskot
-      // yok ("maskot: Yok", spec_sahne.json).
+      // 2026-09-30 logo: işaret plakasız (`onBrandSurface` kalktı, bkz.
+      // splash_screen_test); maskot yok ("maskot: Yok", spec_sahne.json).
       final logo = tester.widget<AppLogo>(find.byType(AppLogo));
       expect(logo.width, 64);
-      expect(logo.onBrandSurface, isTrue);
       expect(find.byType(RojMascot), findsNothing);
 
       await tester.pumpWidget(const SizedBox.shrink());

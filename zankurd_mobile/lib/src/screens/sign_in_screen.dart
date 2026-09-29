@@ -211,7 +211,7 @@ class _SignInScreenState extends State<SignInScreen>
         compact: dense,
         logo: ScaleTransition(
           scale: LoadAnimationSequence.logoScaleAnimation(_animationController),
-          child: AppLogo(width: dense ? 56 : 72, onBrandSurface: true),
+          child: AppLogo(width: dense ? 56 : 72),
         ),
       ),
     );

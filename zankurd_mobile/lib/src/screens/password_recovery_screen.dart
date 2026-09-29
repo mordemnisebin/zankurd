@@ -110,9 +110,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            const Center(
-                              child: AppLogo(width: 72, onBrandSurface: true),
-                            ),
+                            const Center(child: AppLogo(width: 72)),
                             const SizedBox(height: SahneSpace.x4),
                             Semantics(
                               header: true,

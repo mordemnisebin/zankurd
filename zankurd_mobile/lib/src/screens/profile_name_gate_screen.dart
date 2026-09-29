@@ -342,12 +342,7 @@ class _NameGateHero extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Center(
-                            child: AppLogo(
-                              width: compact ? 56 : 72,
-                              onBrandSurface: true,
-                            ),
-                          ),
+                          Center(child: AppLogo(width: compact ? 56 : 72)),
                           SizedBox(
                             height: compact ? SahneSpace.x3 : SahneSpace.x4,
                           ),
