@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -218,10 +219,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
 
     repository.fail = false;
-    await tester.tap(find.text('Tekrar'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pump();
 
     expect(repository.loadCalls, 2);
@@ -242,7 +243,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
-    expect(find.text('Bu kategori için soru bulunamadı'), findsOneWidget);
+    expect(find.text('Bu konu için soru bulunamadı'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

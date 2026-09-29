@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -92,7 +93,7 @@ void main() {
       // Açılamayan tek kayıt sayılmadığı için satır 0'a düşer ve "hiç
       // yanlışın yok" durumunu gösterir — "Tekrar Edilecek/Toplam"
       // biçimi yalnız gerçekten launchable bir kayıt varken görünür.
-      expect(find.text('Hiç yanlışın yok — aferin!'), findsOneWidget);
+      expect(find.text('Hiç yanlışın yok, aferin!'), findsOneWidget);
 
       await tester.ensureVisible(find.text('Yanlışlarım'));
       await tester.pumpAndSettle();
@@ -102,7 +103,7 @@ void main() {
       // Toplam zaten 0 göründüğü için doğru mesaj "önce oyna"dır, yanlış
       // olan "hepsi bekliyor" değil.
       expect(
-        find.text('Tekrar edilecek yanlış yok. Önce bir yarış oyna!'),
+        find.text('Tekrar edilecek yanlış yok. Önce bir yarış oyna.'),
         findsOneWidget,
       );
     },

@@ -1,8 +1,9 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-/// "Günün Etkinliği" hep boştu çünkü hiçbir kod yolu `contests`e satır
+/// "Günün soruları" hep boştu çünkü hiçbir kod yolu `contests`e satır
 /// yazmıyordu.
 ///
 /// ## Kusur

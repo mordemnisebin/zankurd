@@ -783,7 +783,7 @@ class _ShopScreenState extends State<ShopScreen> {
             ? AppEmptyState(
                 icon: AppIcons.bagShopping,
                 title: context.t(K.shopEmpty),
-                message: context.t(K.shopSubtitle),
+                message: context.t(K.checkConnection),
                 actionLabel: context.t(K.retryShort),
                 onAction: _loadBalance,
               )

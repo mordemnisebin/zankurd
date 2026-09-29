@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
@@ -97,12 +98,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
+    expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
     expect(find.text('Misafir olarak devam et'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('giriş ekranı resmî ZanKurd sloganını kullanır', (tester) async {
+  testWidgets('giriş ekranı slogan satırı göstermez (2026-09-29 doğallık: '
+      '"Kurmancî hîn bibe, pêş bikeve." kaldırıldı)', (tester) async {
     await tester.pumpWidget(
       testShell(
         child: const SignInScreen(),
@@ -112,7 +114,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsOneWidget);
+    expect(find.text('Bi xêr hatî ZanKurdê'), findsOneWidget);
+    expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsNothing);
     expect(find.textContaining('pêşbirkê bike'), findsNothing);
   });
 
@@ -475,7 +478,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Renkli welcome banner başlığı iki temada da beyaz kalır.
-      final title = tester.widget<Text>(find.text('ZanKurd\'a Hoş Geldin'));
+      final title = tester.widget<Text>(find.text('ZanKurd\'a hoş geldin'));
       expect(title.style?.color?.computeLuminance(), greaterThan(0.75));
 
       // Form etiketi temayla birlikte renk değiştirir; sabit beyaz olmamalı.
@@ -591,8 +594,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
-    expect(find.text('Günün Etkinliği'), findsNothing);
+    expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
+    expect(find.text('Günün soruları'), findsNothing);
   });
 
   testWidgets('first launch shows onboarding before auth screen', (
@@ -623,7 +626,7 @@ void main() {
     await tester.tap(find.text('Atla'));
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
+    expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
     expect(tester.takeException(), isNull);
     final preferences = await SharedPreferences.getInstance();
     expect(preferences.getBool('zankurd.onboarding.seen'), isTrue);
@@ -779,7 +782,9 @@ void main() {
     // 2026-09-25 SE düzeltmesi). Sözleşme widget tipi değil davranış:
     // günlük ders maddesi kaydırarak görünür hale gelmeli.
     final pageScroll = find.byType(SingleChildScrollView);
-    final dailyBullet = find.text('Dersa rojane: bê dem, bi şîroveyê');
+    final dailyBullet = find.text(
+      'Di dersa rojê de dem tune, her pirs şîroveya xwe heye.',
+    );
     final pageScrollable = find.descendant(
       of: pageScroll,
       matching: find.byType(Scrollable),
@@ -798,7 +803,24 @@ void main() {
     final dailyRect = tester.getRect(dailyBullet);
     expect(afterScrollY, lessThan(beforeScrollY));
     expect(dailyRect.top, greaterThanOrEqualTo(scrollRect.top));
-    expect(dailyRect.bottom, lessThanOrEqualTo(scrollRect.bottom));
+    // 2026-09-29 doğallık: madde metni "Di dersa rojê de dem tune, her pirs
+    // şîroveya xwe heye." uzadı; 2x ölçekte 288 px yüksekliğinde, SE'nin
+    // 219 px'lik kaydırma alanından büyük. Sözleşme "madde bir bakışta
+    // tamamen sığar" değil "madde kaydırarak TAMAMEN okunabilir" olarak
+    // sıkı tutuldu: alt kenarı görünür alana getirene dek kaydırılır.
+    final position = tester.state<ScrollableState>(pageScrollable).position;
+    final overflow = dailyRect.bottom - scrollRect.bottom;
+    if (overflow > 0) {
+      expect(
+        position.maxScrollExtent - position.pixels,
+        greaterThanOrEqualTo(overflow),
+        reason: 'madde alt kenarı kaydırılarak görünür olabilmeli',
+      );
+      position.jumpTo(position.pixels + overflow);
+      await tester.pumpAndSettle();
+    }
+    final settledRect = tester.getRect(dailyBullet);
+    expect(settledRect.bottom, lessThanOrEqualTo(scrollRect.bottom));
     expect(tester.takeException(), isNull);
   });
 
@@ -932,7 +954,7 @@ void main() {
     // "ZanKurd", profil ekranında "Lîstikvanê ZanKurd" oluyordu — aynı
     // oturumda iki kimlik. Artık her iki ekran da [PlayerIdentity] üzerinden
     // tek bir yedeğe düşer.
-    expect(find.text('Hoş geldin, Oyuncu!'), findsOneWidget);
+    expect(find.text('Hoş geldin!'), findsOneWidget);
     expect(find.text('Seviye 5'), findsNothing);
     expect(find.byIcon(Icons.diamond), findsNothing);
     expect(

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +52,7 @@ void main() {
     );
 
     expect(
-      find.text('İnternet bağlantısı yok — Kontrol ediliyor…'),
+      find.text('İnternet bağlantısı yok. Kontrol ediliyor…'),
       findsNothing,
     );
   });

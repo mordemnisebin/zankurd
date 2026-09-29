@@ -500,12 +500,6 @@ class _SignInHeroBanner extends StatelessWidget {
                   style: SahneType.title.copyWith(color: t.tx),
                 ),
               ),
-              const SizedBox(height: SahneSpace.x1),
-              Text(
-                context.t(K.welcomeSubtitle),
-                textAlign: TextAlign.center,
-                style: SahneType.body.copyWith(color: t.tx2),
-              ),
             ],
           );
         },

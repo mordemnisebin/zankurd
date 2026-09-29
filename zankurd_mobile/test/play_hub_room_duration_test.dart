@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -55,7 +56,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('custom-room-cat-Dîrok')));
       await tester.pump();
 
-      final openButton = find.text('Odayı Aç');
+      final openButton = find.text('Odayı aç');
       await tester.ensureVisible(openButton);
       await tester.pump();
       await tester.tap(openButton);
@@ -74,7 +75,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Oda Kur'));
+      await tester.tap(find.text('Oda kur'));
       await tester.pumpAndSettle();
 
       // Süre seçimi (20 sn varsayılan; 30 sn seçelim)
@@ -92,7 +93,7 @@ void main() {
       // `ensureVisible` olmadan `tap` sessizce boşa düşüyordu — istisna
       // yok, çağrı da yok. Aradaki `pump` şart: bu depoda bir kez
       // kaydırma tamamlanmadan dokunulup eski konuma vurulmuştu.
-      final openButton = find.text('Odayı Aç');
+      final openButton = find.text('Odayı aç');
       await tester.ensureVisible(openButton);
       await tester.pump();
       await tester.tap(openButton);
@@ -112,7 +113,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Oda Kur'));
+    await tester.tap(find.text('Oda kur'));
     await tester.pumpAndSettle();
 
     for (final seconds in GameRoom.allowedDurations) {

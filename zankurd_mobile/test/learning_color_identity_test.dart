@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 ///
 /// Ekranın başlığı soluk bir ikon karosu + düz metindi; konu sekmeleri
 /// yeşilin yalnız %14'ü kadar soluk bir zemin taşıyordu; "Soru çöz" ve
-/// "Flaş kart" ikisi de aynı soluk çerçeveli yeşildi. Sahip ekranı "renksiz"
+/// "Kelime kartları" ikisi de aynı soluk çerçeveli yeşildi. Sahip ekranı "renksiz"
 /// buldu (2026-09-27).
 ///
 /// ## Niçin sessiz kalırdı
@@ -26,14 +27,14 @@ import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 /// boşluğu kapatır: renk ve kontrast doğrudan çalışan koddan okunur.
 ///
 /// 2026-09-29 Şahnê: renk artık rol taşır. Eski bekçiler orman gradyanlı
-/// başlık kartını, dolu yeşil sekmeyi ve altın harmanlı "Flaş kart"ı
+/// başlık kartını, dolu yeşil sekmeyi ve altın harmanlı "Kelime kartları"ı
 /// ölçüyordu; üçü de Şahnê'de kalktı (B iskeleti başlık kartı taşımaz, palet
 /// dışı renk yok, Agir yalnız TEK birincil eylemde). Ölçülen kurallar:
 ///
 /// * sayfa adı B çubuğunda, birincil metin renginde; maskot yok;
 /// * seçili konu çipi öğrenme rolünü (Zimrût tonu + Zimrût metni) taşır,
 ///   seçili olmayan ikincil metinde kalır;
-/// * "Soru çöz" / "Flaş kart" ikincildir (Kulis), Agir değildir;
+/// * "Soru çöz" / "Kelime kartları" ikincildir (Kulis), Agir değildir;
 /// * etkin dersin sahne kartında TEK Agir düğme vardır, metni koyu `onAct`;
 /// * bu çiftlerin hepsi iki temada WCAG AA (4.5:1) geçer.
 void main() {

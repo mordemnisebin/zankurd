@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
@@ -110,11 +111,11 @@ Future<void> _spinAndReturn(
   await tester.tap(find.byKey(ValueKey(entryKey)));
   await tester.pumpAndSettle();
   await tester.pump();
-  expect(find.text('Günün Çarkı'), findsOneWidget);
+  expect(find.text('Günün çarkı'), findsOneWidget);
   expect(find.byType(SpinWheelScreen), findsOneWidget);
   await tester.drag(find.byType(Scrollable), const Offset(0, -500));
   await tester.pump();
-  await tester.tap(find.text('Çevir!'));
+  await tester.tap(find.text('Çevir'));
   await tester.pump();
   await tester.pump(const Duration(seconds: 5));
   await tester.pumpAndSettle();
@@ -166,7 +167,7 @@ void main() {
 
       await tester.tap(find.text('Neon Çerçeve'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Satın Al'));
+      await tester.tap(find.text('Satın al'));
       await tester.pumpAndSettle();
 
       expect((await repository.loadAvatarIdentity()).frameId, 'neon');
@@ -182,17 +183,17 @@ void main() {
 
       await tester.tap(find.text('Neon Çerçeve'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Satın Al'));
+      await tester.tap(find.text('Satın al'));
       await tester.pumpAndSettle();
 
       expect(repository.spendReasons, ['purchase_avatar_frame_neon']);
       expect(repository.effectWriteCalls, 1);
       expect(find.text('Tebrikler!'), findsNothing);
       expect(find.text('Kaydedilemedi.'), findsOneWidget);
-      expect(find.text('Tekrar'), findsOneWidget);
+      expect(find.text('Tekrar dene'), findsOneWidget);
 
       repository.failEffect = false;
-      await tester.tap(find.text('Tekrar'));
+      await tester.tap(find.text('Tekrar dene'));
       await tester.pumpAndSettle();
 
       expect(
@@ -379,7 +380,7 @@ void main() {
     await tester.pump();
     await tester.drag(find.byType(Scrollable), const Offset(0, -500));
     await tester.pump();
-    await tester.tap(find.text('Çevir!'));
+    await tester.tap(find.text('Çevir'));
     await tester.pump();
     await tester.pump(const Duration(seconds: 5));
     await tester.pumpAndSettle();
@@ -406,7 +407,7 @@ void main() {
     await tester.tap(find.text('Ekstra Çevirme'));
     await tester.pumpAndSettle();
     expect(find.text(description), findsOneWidget);
-    expect(find.text('Satın Al'), findsOneWidget);
+    expect(find.text('Satın al'), findsOneWidget);
   });
 
   testWidgets('satın alma eylemleri düz ve gölgesizdir', (tester) async {
@@ -438,11 +439,11 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('120j'));
     await tester.pumpAndSettle();
-    // Dalga 5: yetersiz bakiyede onay dialogunda 'Satın Al' gri disabled
+    // Dalga 5: yetersiz bakiyede onay dialogunda 'Satın al' gri disabled
     // olur ve 'Coin kazan' ikincil butonu görünür; harcama yapılmaz.
     final buyButton = tester.widget<FilledButton>(
       find.ancestor(
-        of: find.text('Satın Al'),
+        of: find.text('Satın al'),
         matching: find.byType(FilledButton),
       ),
     );
@@ -463,8 +464,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('120j'));
     await tester.pumpAndSettle();
-    // Confirm dialog: tap "Satın Al"
-    await tester.tap(find.text('Satın Al'));
+    // Confirm dialog: tap "Satın al"
+    await tester.tap(find.text('Satın al'));
     await tester.pumpAndSettle();
 
     expect(repository.spendReasons, ['purchase_spin_wheel_extra']);
@@ -516,11 +517,11 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('120j'));
     await tester.pumpAndSettle();
-    // Confirm dialog: tap "Satın Al"
-    await tester.tap(find.text('Satın Al'));
+    // Confirm dialog: tap "Satın al"
+    await tester.tap(find.text('Satın al'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Satın alma başarısız oldu.'), findsOneWidget);
+    expect(find.text('Satın alınamadı. Tekrar dene.'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -600,10 +601,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
 
     repository.fail = false;
-    await tester.tap(find.text('Tekrar'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pumpAndSettle();
 
     expect(repository.loadCalls, 2);
@@ -625,7 +626,7 @@ void main() {
       find.text('Mağaza verileri için internet bağlantısı gerekiyor.'),
       findsOneWidget,
     );
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

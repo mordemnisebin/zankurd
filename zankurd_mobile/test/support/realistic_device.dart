@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 /// Widget testlerini gerçek bir telefona benzeten yardımcılar.
 /// Ayrıntılı gerekçe aşağıdaki belge yorumundadır.
 library;
@@ -25,7 +26,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// 2. **Ölçü fontu gerçek metrikleri taşımaz.** Her harfi kare olan bu fontta
 ///    11pt bir harf 11px yer kaplar; Rubik'te ~6px. Kırpma, taşma ve
 ///    "sığıyor mu" testleri ölçü fontuyla koştuğunda anlamsız sonuç verir —
-///    Türkçe "Soru Değiştir" bile kırpılmış sayılır.
+///    Türkçe "Soru değiştir" bile kırpılmış sayılır.
 ///
 /// ## Kullanım
 ///

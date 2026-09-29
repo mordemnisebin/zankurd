@@ -178,11 +178,7 @@ class _LearningScreenState extends State<LearningScreen> {
     // katlı bir başlık. Maket (4 · Öğrenme yolu): çubuk → konu rayı → yol.
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(
-        context,
-        title: Text(context.t(K.learnKurmanci)),
-        subtitle: Text(context.t(K.learnSubtitle)),
-      ),
+      appBar: zkAppBar(context, title: Text(context.t(K.learnKurmanci))),
       body: SafeArea(
         top: false,
         // Kısa bir sayfa: hepsi bir kerede kurulur (tembel liste, sözlük
@@ -262,12 +258,8 @@ class _LearningScreenState extends State<LearningScreen> {
                       icon: AppIcons.magnifyingGlass,
                       role: SahneRole.learn,
                       title: context.t(K.lexiconTitle),
-                      subtitle: context.t(K.lexiconSubtitle),
                       chevron: true,
                       onTap: _openLexicon,
-                      semanticLabel:
-                          '${context.t(K.lexiconTitle)}. '
-                          '${context.t(K.lexiconSubtitle)}',
                     ),
                   ],
                 ),

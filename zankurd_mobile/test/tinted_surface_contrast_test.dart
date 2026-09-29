@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -85,7 +86,7 @@ void main() {
 
   test('dolu düğmenin etiketi zemine göre seçilir', () {
     // 2026-07-27: dolu düğmelerde yazı rengi sabit beyazdı. Beyaz koyu
-    // aksanlarda doğru, açık aksanlarda değil — "Flaş kart" altın zeminde
+    // aksanlarda doğru, açık aksanlarda değil — "Kelime kartları" altın zeminde
     // 2.30:1, "Dersler" orta yeşilde 3.96:1 ölçüldü. Etiket zeminde
     // eriyordu ve tasarım kararı gibi görünüyordu.
     for (final (name, background) in [

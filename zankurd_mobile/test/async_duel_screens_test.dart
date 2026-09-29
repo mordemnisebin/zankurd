@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 /// Sırayla düello (async 1v1) EKRANLARI.
 ///
 /// ## Kusur
@@ -205,7 +206,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byKey(const ValueKey('async-duel-result')), findsOneWidget);
-      expect(find.text('Senin turun bitti!'), findsOneWidget);
+      expect(find.text('Senin turun bitti.'), findsOneWidget);
     },
   );
 
@@ -514,7 +515,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Senin turun bitti!'), findsOneWidget);
+    expect(find.text('Senin turun bitti.'), findsOneWidget);
     expect(find.byKey(const ValueKey('async-duel-result-score')), findsNothing);
     expect(find.textContaining('/7'), findsNothing);
   });

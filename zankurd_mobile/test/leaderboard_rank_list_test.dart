@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-29 Şahnê: sıra satırları tek liste grubunda (`SahneListGroup`),
 // sıra no rakamla (madalya rozeti yok); "Sen" rozeti yerele duyarlı büyük
 // harfle "SEN" yazar. Geniş düzen eşiği ekran enine göre ölçülür.
@@ -111,7 +112,7 @@ void main() {
       await _pump(tester, _Repo(), size: _phone, textScale: 2.0);
 
       final subtitle = tester.widget<Text>(
-        find.text('Bu hafta yarış, lige gir!'),
+        find.text('Bu hafta yarış, lige gir.'),
       );
       expect(subtitle.maxLines, 2);
       expect(subtitle.overflow, TextOverflow.ellipsis);
@@ -127,7 +128,7 @@ void main() {
       await _pump(tester, _Repo(), size: _phone);
 
       final subtitle = tester.widget<Text>(
-        find.text('Bu hafta yarış, lige gir!'),
+        find.text('Bu hafta yarış, lige gir.'),
       );
       expect(subtitle.maxLines, 1);
       expect(tester.takeException(), isNull);

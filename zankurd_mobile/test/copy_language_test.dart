@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -26,7 +27,7 @@ void main() {
     // taşıyordu; birim `ode`, kupa `kûpa`.
     expect(
       Tr.of(K.untimedSoloSub, AppLanguage.ku),
-      'Di tûrên tenê de saet nasekine; ode, 1v1 û kûpa naguhere.',
+      'Dema tu bi tenê dilîzî dem nayê jimartin. Di ode, rû bi rû û kûpayê de dem heye.',
     );
     // Avatar simgesi "Kupa" deyince û düşer; `contains('kûpa')` onu
     // görmez — puan ile aynı sınıf.
@@ -95,7 +96,7 @@ void main() {
     // oyuncu aynı karşılaşmayı iki adla görür. `maçê` çekimi İngilizce
     // `\bmatch\b` taramasını da kör eder — serverê ile aynı sınıf.
     expect(Tr.of(K.formatSummary, AppLanguage.ku), '{perMatch} pirs/pêşbirk');
-    expect(Tr.of(K.startMatch, AppLanguage.ku), 'Pêşbirkê Bide Destpêkirin');
+    expect(Tr.of(K.startMatch, AppLanguage.ku), 'Pêşbirkê bide destpêkirin');
     expect(Tr.of(K.matchForfeitedTitle, AppLanguage.ku), contains('Pêşbirk'));
     expect(
       Tr.of(K.tournamentMatchSubmitFailed, AppLanguage.ku),
@@ -194,7 +195,7 @@ void main() {
     expect(Tr.of(K.listenExplanation, AppLanguage.ku), 'Şîroveyê bibihîze');
     expect(
       Tr.of(K.onbDailyBullet, AppLanguage.ku),
-      'Dersa rojane: bê dem, bi şîroveyê',
+      'Di dersa rojê de dem tune, her pirs şîroveya xwe heye.',
     );
     expect(
       Tr.of(K.quizTutorialUntimedBody, AppLanguage.ku),
@@ -230,8 +231,8 @@ void main() {
     // Çerçeve koşulu "nîşan" deyince oyuncu aynı rozeti iki adla görür.
     // `nîşan bide` göstermek, `nav û nîşan` unvan; kök taraması kör kalır.
     expect(Tr.of(K.rozetler, AppLanguage.ku), 'Rozet');
-    expect(Tr.of(K.newBadge, AppLanguage.ku), 'Rozeta Nû');
-    expect(Tr.of(K.badgeCollection, AppLanguage.ku), 'Koleksiyona Rozetan');
+    expect(Tr.of(K.newBadge, AppLanguage.ku), 'Rozeta nû');
+    expect(Tr.of(K.badgeCollection, AppLanguage.ku), 'Koleksiyona rozetan');
     expect(Tr.of(K.frameReqBronze, AppLanguage.ku), '1 rozet veke');
     expect(Tr.of(K.frameReqSilver, AppLanguage.ku), '5 rozetan veke');
 
@@ -276,7 +277,7 @@ void main() {
     // `K.seri` / `K.seri2` tur içi doğru cevap dizisidir (Rêz).
     // Günlük kesilme uyarısı "Seriya te dikare bişkê" deyince oyuncu
     // combo ile zincîri karıştırır; `K.streakBreaking` zaten
-    // "Zincîra te dişkê!" der.
+    // "Zincîra te dişkê." der.
     expect(
       Tr.of(K.huhuBugunHicOynamadin, AppLanguage.ku),
       contains('Zincîra te dikare bişkê'),
@@ -378,8 +379,7 @@ void main() {
   test('çift cevap ipucu ikinci hakkı doğru açıklar', () {
     expect(
       Tr.of(K.wildcardDoubleHint, AppLanguage.ku),
-      'Du derfetên bersivdanê: heke bersiva yekem şaş be, '
-      'derfetek din heye.',
+      'Heke bersiva yekem şaş be, derfetek din heye.',
     );
   });
 
@@ -393,11 +393,11 @@ void main() {
     expect(Tr.of(K.homePathTrack, AppLanguage.tr), '{category} yolu');
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.ku),
-      'Dersê rojane amade ye. Îro hîn bibe!',
+      'Dersa rojê amade ye. Îro hîn bibe.',
     );
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.tr),
-      'Günün dersi hazır. Bugün öğrenmeye devam et!',
+      'Günün dersi hazır. Bugün öğrenmeye devam et.',
     );
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.tr).toLowerCase(),
@@ -409,30 +409,26 @@ void main() {
     expect(Tr.of(K.secLearningCaps, AppLanguage.ku), 'HÎNBÛN');
     expect(
       Tr.of(K.onbLearnBody, AppLanguage.ku),
-      'Bi pirsên kurt peyvên Kurmancî, çand û zanînê hîn bibe.',
+      'Bi pirsên kurt peyvan hîn bibe, çandê nas bike.',
     );
     // 2026-07-30: bu satır "Bi lîstikvanên rastî re pêşbirkê bike — şampiyon
     // kûpayê digire!" diyordu. "Gerçek oyuncular" ifadesi turnuva kartında üç
     // kez geçiyordu: kimlik bandı alt metni, biçim satırı ve bu slogan. Bilgi
     // bir kez söylenir; slogan yalnız kendi taşıdığı bilgiyi bıraktı.
-    expect(Tr.of(K.botRaceHint, AppLanguage.ku), 'Şampiyon kûpayê digire!');
+    expect(Tr.of(K.botRaceHint, AppLanguage.ku), 'Şampiyon kûpayê digire.');
     expect(
       Tr.of(K.tournamentSub, AppLanguage.ku),
       contains('lîstikvanên rastî'),
       reason: 'Bilgi bir yerde durmalı — kimlik bandında.',
-    );
-    expect(
-      Tr.of(K.duel1v1Sub, AppLanguage.ku),
-      'Bi hevalan re an bi lîstikvanên din re bi awayekî zindî pêşbirkê bike.',
     );
     // 2026-09-27: kupa tanıtımdan çıktı (turnuva kapalı); rehber kategori
     // sayısını metne yazmıyor (gizlenen kategoriyle sessizce yanlışa
     // düşüyordu).
     expect(Tr.of(K.onbCompeteBody, AppLanguage.ku), contains('an ode'));
     expect(Tr.of(K.onbCompeteBody, AppLanguage.ku), isNot(contains('kûpa')));
-    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('kategoriyekê'));
+    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('mijarekê'));
     expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('zêr didin'));
-    expect(Tr.of(K.howToPlayBody, AppLanguage.tr), contains('bir kategori'));
+    expect(Tr.of(K.howToPlayBody, AppLanguage.tr), contains('bir konu'));
     expect(
       Tr.of(K.howToPlayBody, AppLanguage.tr),
       isNot(contains('10 kategori')),
@@ -444,11 +440,7 @@ void main() {
     // "Fêrbûn" deyince oyuncu aynı öğrenmeyi iki adla görür. İkisi de
     // doğru sözcük; tek üründe tek kök.
     expect(Tr.of(K.learningResultTitle, AppLanguage.ku), 'Hînbûn temam bû');
-    expect(Tr.of(K.outcomeTitle, AppLanguage.ku), 'Kurteya hînbûna vê dorê');
-    expect(
-      Tr.of(K.masteryEvidenceHint, AppLanguage.ku),
-      contains('delîla hînbûnê'),
-    );
+    expect(Tr.of(K.outcomeTitle, AppLanguage.ku), 'Te li ku zehmetî kişand?');
     expect(Tr.of(K.secLearning, AppLanguage.ku), 'Hînbûn');
 
     final ferbun = RegExp(r'fêrbûn', caseSensitive: false);
@@ -470,7 +462,7 @@ void main() {
       Tr.of(K.paywallSubtitle, AppLanguage.tr),
       "ZanKurd'u destekle, serini koru",
     );
-    expect(Tr.of(K.paywallFeatures, AppLanguage.ku), 'Taybetmendiyên Premium');
+    expect(Tr.of(K.paywallFeatures, AppLanguage.ku), 'Taybetmendiyên premium');
   });
 
   test('gizlilik özeti saklanan verileri ve uygulama içi silmeyi açıklar', () {
@@ -478,8 +470,8 @@ void main() {
     expect(turkish, contains('oyun ve eşleştirme'));
     expect(turkish, contains('oda mesajları'));
     expect(turkish, contains('soru önerileri'));
-    expect(turkish, contains('Ayarlar > Hesap > Hesabımı Sil'));
-    expect(turkish, contains('liderlik tablosunda'));
+    expect(turkish, contains('Ayarlar > Hesap > Hesabımı sil'));
+    expect(turkish, contains('sıralamada'));
     expect(turkish, contains('arkadaş araması ve isteklerinde'));
     expect(turkish, contains('çevrimiçi odalarda'));
     expect(turkish, isNot(contains('@')));
@@ -492,9 +484,9 @@ void main() {
     // ayarlar ekranının Kurmancî adı `Mîheng` (K.settings). Hesabını silmek
     // isteyen oyuncu var olmayan bir menü arıyordu — yasal metnin tarif
     // ettiği yol uygulamada bulunmuyordu.
-    expect(kurmanci, contains('Mîheng > Hesab > Hesabê Min Jê Bibe'));
+    expect(kurmanci, contains('Mîheng > Hesab > Hesabê min jê bibe'));
     expect(kurmanci, contains(Tr.of(K.settings, AppLanguage.ku)));
-    expect(kurmanci, contains('tabloya pêşengan'));
+    expect(kurmanci, contains('rêzbendiyê'));
     expect(kurmanci, contains('lêgerîna hevalan'));
     expect(kurmanci, contains('odeyên serhêl'));
     expect(kurmanci, isNot(contains('@')));
@@ -544,7 +536,7 @@ void main() {
     // Ders yolu `Armanca serweriya kategoriyê` der. Profil başlığı
     // "Ustalîya Kategoriyê" deyince oyuncu aynı kavramı iki adla görür.
     // Türkçe `ustalî` kökü, `contains('ustalık')` taramasını kör eder.
-    expect(Tr.of(K.kategoriUstaligi, AppLanguage.ku), 'Serweriya Kategoriyê');
+    expect(Tr.of(K.kategoriUstaligi, AppLanguage.ku), 'Serweriya mijarê');
     expect(Tr.of(K.categoryMasteryGoal, AppLanguage.ku), contains('serweriya'));
 
     final ustal = RegExp(r'ustal', caseSensitive: false);
@@ -561,7 +553,7 @@ void main() {
     // Düzenleyici başlığı `Rûyê Min` der. Düğme "Avatarê" deyince
     // oyuncu aynı yüzeyi iki adla görür. `Avatarê` çekimi `\bavatar\b`
     // taramasını kör eder — serverê ile aynı sınıf.
-    expect(Tr.of(K.myAvatar, AppLanguage.ku), 'Rûyê Min');
+    expect(Tr.of(K.myAvatar, AppLanguage.ku), 'Rûyê min');
     expect(Tr.of(K.editAvatar, AppLanguage.ku), 'Rûyê xwe biguherîne');
 
     final avatar = RegExp(r'avatar', caseSensitive: false);
@@ -687,7 +679,7 @@ void main() {
     expect(Tr.of(K.passwordHintMin6, AppLanguage.ku), 'Herî kêm 6 tîp');
     expect(
       Tr.of(K.roomCodeInvalid, AppLanguage.ku),
-      'Kod divê bi ZK- dest pê bike û dû re tam 10 tîp ji 0–9/A–F hebin.',
+      'Kodê kontrol bike. Mînak: ZK-ABCDEF0123',
     );
 
     final karakter = RegExp(r'karakter', caseSensitive: false);
@@ -714,8 +706,11 @@ void main() {
   test('bulut senkronu Kurmancîde ewr olarak kalır', () {
     // Profil durumu "Bulut" diyordu — Türkçe. Karşılığı `ewr`.
     // Parantez etiketi `contains('ewr')` taramasını kör eder.
-    expect(Tr.of(K.bulutlaSenkronize, AppLanguage.ku), 'Tev rêzkirî ye (Ewr)');
-    expect(Tr.of(K.bulutlaSenkronize, AppLanguage.tr), 'Bulutla senkronize');
+    expect(
+      Tr.of(K.bulutlaSenkronize, AppLanguage.ku),
+      'Pêşketina te tomarkirî ye',
+    );
+    expect(Tr.of(K.bulutlaSenkronize, AppLanguage.tr), 'İlerlemen kayıtlı');
 
     final bulut = RegExp(r'bulut', caseSensitive: false);
     for (final key in Tr.keys) {
@@ -734,7 +729,7 @@ void main() {
     expect(Tr.of(K.coinWord, AppLanguage.ku), 'Zêr');
     expect(
       Tr.of(K.soloDailyCapReached, AppLanguage.ku),
-      'Sînorê zêran ê îro tije bû — sibê ji nû ve dest pê dike.',
+      'Sînorê zêran ê îro tije bû. Sibê ji nû ve dest pê dike.',
     );
 
     final jeton = RegExp(r'jeton', caseSensitive: false);
@@ -747,17 +742,14 @@ void main() {
     }
   });
 
-  test('liderlik tablosu Kurmancîde pêşeng olarak kalır', () {
-    // Ekran adı `Rêzbendî`, ad kapısı `tabloya pêşengan` der. Yenileme
+  test('sıralama Kurmancîde rêzbendî olarak kalır', () {
+    // Ekran adı `Rêzbendî`, ad kapısı `rêzbendiyê` der (2026-09-29 doğallık: `tabloya pêşengan` sözlükte yasak). Yenileme
     // a11y "pêşderçûnê" deyince oyuncu aynı tabloyu iki adla görür.
     // `pêşderçûnê` çekimi `contains('pêşeng')` taramasını kör eder —
     // turnûva ile aynı sınıf. Gizlilik metni bu kökü zaten bırakmıştı.
-    expect(
-      Tr.of(K.refreshBoardA11y, AppLanguage.ku),
-      'Tabloya pêşengan nû bike',
-    );
-    expect(Tr.of(K.nameGateHelp, AppLanguage.ku), contains('tabloya pêşengan'));
-    expect(Tr.of(K.privacyBody, AppLanguage.ku), contains('tabloya pêşengan'));
+    expect(Tr.of(K.refreshBoardA11y, AppLanguage.ku), 'Rêzbendiyê nû bike');
+    expect(Tr.of(K.nameGateHelp, AppLanguage.ku), contains('rêzbendiyê'));
+    expect(Tr.of(K.privacyBody, AppLanguage.ku), contains('rêzbendiyê'));
 
     final pesdercun = RegExp(r'pêşderçûn', caseSensitive: false);
     for (final key in Tr.keys) {
@@ -847,7 +839,7 @@ void main() {
     // (dükkân) ayrı kavramdır; UI birimi `dukan`.
     expect(Tr.of(K.shop, AppLanguage.ku), 'Dukan');
     expect(Tr.of(K.shopOfflineTitle, AppLanguage.ku), 'Dukan ne li serhêl e');
-    expect(Tr.of(K.magazayaGitSeriKoru, AppLanguage.ku), 'Herin Dukanê');
+    expect(Tr.of(K.magazayaGitSeriKoru, AppLanguage.ku), 'Here dukanê');
     expect(Tr.of(K.frameReqNeon, AppLanguage.ku), 'Ji dukanê bikire');
 
     final dikan = RegExp(r'dikan', caseSensitive: false);
@@ -864,7 +856,7 @@ void main() {
     // Etiket `Koda Vexwendinê` der (`K.enterReferralCode`). Misafir
     // yasağı "davetê" deyince oyuncu aynı kodu iki adla görür. Türkçe
     // `davet` kökü `contains('vexwend')` taramasını kör eder.
-    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda Vexwendinê');
+    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda vexwendinê');
     expect(
       Tr.of(K.referralGuestBlocked, AppLanguage.ku),
       contains('Koda vexwendinê'),
@@ -888,15 +880,15 @@ void main() {
     // Düğme `Nîv bi Nîv` der (`K.metin`). Nasıl oynanır maddesi
     // "Joker 50/50" deyince oyuncu aynı yardımcıyı iki adla görür.
     // Türkçe `joker` kökü `contains('nîv')` taramasını kör eder.
-    expect(Tr.of(K.metin, AppLanguage.ku), 'Nîv bi Nîv');
-    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('Nîv bi Nîv'));
+    expect(Tr.of(K.metin, AppLanguage.ku), 'Nîv bi nîv');
+    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('Nîv bi nîv'));
 
     final jokerFifty = RegExp(r'joker\s*50', caseSensitive: false);
     for (final key in Tr.keys) {
       expect(
         jokerFifty.hasMatch(Tr.of(key, AppLanguage.ku)),
         isFalse,
-        reason: '$key: Kurmancî metinde "Joker 50/50"; karşılığı "Nîv bi Nîv"',
+        reason: '$key: Kurmancî metinde "Joker 50/50"; karşılığı "Nîv bi nîv"',
       );
     }
   });
@@ -907,8 +899,8 @@ void main() {
     // `jokeran` çekimi `joker\s*50` taramasını kör eder — turnûva
     // ile aynı sınıf.
     expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkariyan'));
-    expect(Tr.of(K.onbRewardBullet, AppLanguage.ku), contains('alîkarî'));
-    expect(Tr.of(K.sikIpucu, AppLanguage.ku), 'Alîkariya Bersivê');
+    expect(Tr.of(K.onbRewardBullet, AppLanguage.ku), contains('alîkariyê'));
+    expect(Tr.of(K.sikIpucu, AppLanguage.ku), 'Alîkariya bersivê');
 
     final joker = RegExp(r'joker', caseSensitive: false);
     for (final key in Tr.keys) {
@@ -945,7 +937,7 @@ void main() {
     // Türkçe "ile" `ve` olarak sızar. `ji nû ve` doğru Kurmancî
     // postposition'dır; kök taraması onu vurur. Marka + ve şart.
     expect(Tr.of(K.signInGoogle, AppLanguage.ku), 'Bi Google têkeve');
-    expect(Tr.of(K.linkGoogle, AppLanguage.ku), 'Bi Google Girêde');
+    expect(Tr.of(K.linkGoogle, AppLanguage.ku), 'Bi Google girêde');
     expect(Tr.of(K.connectingGoogle, AppLanguage.ku), 'Bi Google tê girêdan…');
     expect(Tr.of(K.connectingApple, AppLanguage.ku), 'Bi Apple tê girêdan…');
 

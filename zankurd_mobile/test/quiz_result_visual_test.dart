@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -297,7 +298,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.descendant(of: primary, matching: find.text('Devam Et')),
+        find.descendant(of: primary, matching: find.text('Devam et')),
         findsOneWidget,
       );
       expect(

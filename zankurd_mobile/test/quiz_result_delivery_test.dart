@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -141,7 +142,7 @@ void main() {
       expect(find.byType(QuizResultScreen), findsOneWidget);
       if (state == QuizRewardSettlementState.queued) {
         expect(
-          find.text('Bağlantı yok — ödülün kaydedildi, bağlanınca verilecek.'),
+          find.text('Bağlantı yok. Ödülün kaydedildi, bağlanınca verilecek.'),
           findsOneWidget,
         );
       } else {

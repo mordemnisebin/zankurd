@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -128,7 +129,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Arkadaş yok'), findsOneWidget);
-    expect(find.text('Bir hata oluştu'), findsNothing);
+    expect(find.text('Bir şey ters gitti'), findsNothing);
   });
 
   testWidgets('bekleyen istek yokken rozet çizilmez', (tester) async {

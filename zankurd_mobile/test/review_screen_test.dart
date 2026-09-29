@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -137,7 +138,7 @@ void main() {
         _wrap(const ReviewScreen(records: records, room: _room)),
       );
 
-      await tester.tap(find.text('Hafıza Kartları'));
+      await tester.tap(find.text('Kelime kartları'));
       await tester.pumpAndSettle();
 
       // 2026-09-29 doğallık: kategori rozeti (`SahneBadge`) artık cümle
@@ -149,7 +150,7 @@ void main() {
     },
   );
 
-  // 2026-09-29 Şahnê: arka yüz gece sahne kartıdır; "Doğru Cevap:" durum
+  // 2026-09-29 Şahnê: arka yüz gece sahne kartıdır; "Doğru cevap:" durum
   // rengi Rast metni (✓ ikonuyla), "Açıklama:" öğrenme rolünün metni.
   // Eskiden eski yeşilin / morun "okunur" tonları ölçülüyordu; mor palet
   // dışıdır ve kalktı.
@@ -171,12 +172,12 @@ void main() {
     await tester.pumpWidget(
       _wrap(const ReviewScreen(records: records, room: _room)),
     );
-    await tester.tap(find.text('Hafıza Kartları'));
+    await tester.tap(find.text('Kelime kartları'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('review-flashcard')));
     await tester.pumpAndSettle();
 
-    final correct = tester.widget<Text>(find.text('Doğru Cevap:'));
+    final correct = tester.widget<Text>(find.text('Doğru cevap:'));
     expect(correct.style?.color, SahneTokens.night.okTx);
 
     final explanation = tester.widget<Text>(find.text('Açıklama:'));
@@ -202,18 +203,18 @@ void main() {
     await tester.pumpWidget(
       _wrap(const ReviewScreen(records: records, room: _room)),
     );
-    await tester.tap(find.text('Hafıza Kartları'));
+    await tester.tap(find.text('Kelime kartları'));
     await tester.pumpAndSettle();
 
     final card = find.byKey(const ValueKey('review-flashcard'));
     var data = tester.getSemantics(card).getSemanticsData();
     expect(data.flagsCollection.isButton, isTrue);
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
-    expect(data.label, contains('Soru (Ön Yüz)'));
+    expect(data.label, contains('Soru (ön yüz)'));
     expect(data.label, contains('Hilbijêre'));
     expect(data.label, contains('Cevabı görmek için dokun'));
     expect(data.label, isNot(contains('Doğru Cevap')));
-    expect(find.bySemanticsLabel('Soru (Ön Yüz)'), findsNothing);
+    expect(find.bySemanticsLabel('Soru (ön yüz)'), findsNothing);
 
     await tester.tap(card);
     await tester.pumpAndSettle();
@@ -221,13 +222,13 @@ void main() {
     data = tester.getSemantics(card).getSemanticsData();
     expect(data.flagsCollection.isButton, isTrue);
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
-    expect(data.label, contains('Cevap (Arka Yüz)'));
-    expect(data.label, contains('Doğru Cevap:'));
+    expect(data.label, contains('Cevap (arka yüz)'));
+    expect(data.label, contains('Doğru cevap:'));
     expect(data.label, contains('Rast'));
     expect(data.label, contains('Açıklama:'));
     expect(data.label, contains('Açıklama metni burada.'));
     expect(data.label, isNot(contains('Cevabı görmek için dokun')));
-    expect(find.bySemanticsLabel('Cevap (Arka Yüz)'), findsNothing);
+    expect(find.bySemanticsLabel('Cevap (arka yüz)'), findsNothing);
     semantics.dispose();
   });
 
@@ -259,12 +260,12 @@ void main() {
         ),
       ),
     );
-    await tester.tap(find.text('Kartên Hînbûnê'));
+    await tester.tap(find.text('Kartên peyvan'));
     await tester.pumpAndSettle();
 
     final card = find.byKey(const ValueKey('review-flashcard'));
     var data = tester.getSemantics(card).getSemanticsData();
-    expect(data.label, contains('Pirs (Rû)'));
+    expect(data.label, contains('Pirs (rû)'));
     expect(data.label, contains('Ji bo dîtina bersivê bitikîne'));
 
     await tester.tap(card);
@@ -273,8 +274,8 @@ void main() {
     data = tester.getSemantics(card).getSemanticsData();
     expect(data.flagsCollection.isButton, isTrue);
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
-    expect(data.label, contains('Bersiv (Pişt)'));
-    expect(data.label, contains('Bersiva Rast:'));
+    expect(data.label, contains('Bersiv (pişt)'));
+    expect(data.label, contains('Bersiva rast:'));
     expect(data.label, contains('Şîrove:'));
     expect(data.label, contains('Ravekirina testê.'));
     semantics.dispose();

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 /// Liderlik podyumunun SAHNE bekçisi.
 ///
 /// ## Kusur
@@ -118,7 +119,7 @@ void main() {
     for (final width in [320.0, 360.0, 390.0]) {
       await tester.binding.setSurfaceSize(Size(width, 844));
       await _pump(tester, isKu: false, isDark: false);
-      final title = tester.getRect(find.text('Liderlik Tablosu'));
+      final title = tester.getRect(find.text('Sıralama'));
       for (final key in [
         'leaderboard-friends-button',
         'leaderboard-refresh-button',

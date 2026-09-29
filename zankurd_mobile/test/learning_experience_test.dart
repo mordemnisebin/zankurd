@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ import 'package:zankurd_mobile/src/widgets/coach_mark.dart';
 import 'support/widget_test_helpers.dart';
 
 /// 2026-07-25 canlı denetimi: ana ekranın tek birincil eylemi olan
-/// "Günün Dersi", `experience` verilmediği için varsayılan `competition`
+/// "Günün dersi", `experience` verilmediği için varsayılan `competition`
 /// modunda açılıyordu. Sonuçları: yanlış cevaptan sonra açıklama paneli hiç
 /// render edilmiyor, çıkış diyalogu dersi "yarış" diye adlandırıyor ve
 /// analytics tüm ders oturumlarını solo quiz olarak raporluyordu.
@@ -83,7 +84,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Nîv bi Nîv'), findsNothing);
+    expect(find.text('Nîv bi nîv'), findsNothing);
     expect(find.text('50/50'), findsNothing);
   });
 
@@ -231,7 +232,7 @@ void main() {
     expect(overlay, findsOneWidget);
     // Sayaç çizilmediği için ilk adım sayacı hedefleyemez.
     expect(
-      find.descendant(of: overlay, matching: find.text('Süre + Cevap')),
+      find.descendant(of: overlay, matching: find.text('Süre ve cevap')),
       findsNothing,
     );
     expect(

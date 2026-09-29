@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 /// 2026-07-22 canlı UX denetimi (P1-A): renkli zeminlerin üzerine aynı renk
 /// ailesinden metin konması beş ayrı ekranda tekrar ediyordu — profil
-/// "Bronz Lig" rozeti, sonuç ekranı yıldız + istatistik etiketleri, çark
+/// "Bronz lig" rozeti, sonuç ekranı yıldız + istatistik etiketleri, çark
 /// kutlama bandı, turnuva çipi, kategori kartı alt metni.
 ///
 /// Bu testler düzeltmelerin ardındaki renk kararlarını sabitler.

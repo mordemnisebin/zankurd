@@ -502,10 +502,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       scroll = SahneTabPage(
         controller: widget.scrollController,
         title: context.t(K.leaderboardTitle),
-        // Alt başlık eskiden "Her 30 saniyede güncellenir" diyordu: doğru
-        // ama oyuncuya bir şey anlatmayan bir teknik ayrıntı. Yeni gelen
-        // burada sıralamanın NASIL yükseldiğini okumalı.
-        subtitle: context.t(K.leaderboardHowTo),
         stats: [actions],
         children: top,
       );

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -803,7 +804,7 @@ void main() {
       await tester.pump();
 
       expect(find.text('Tekrar dene'), findsOneWidget);
-      expect(find.text('Ana Sayfa'), findsOneWidget);
+      expect(find.text('Ana sayfa'), findsOneWidget);
       expect(find.byType(QuizResultScreen), findsNothing);
 
       if (stalledStage == 'finish') {
@@ -894,7 +895,7 @@ void main() {
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
-    expect(find.text('Ana Sayfa'), findsOneWidget);
+    expect(find.text('Ana sayfa'), findsOneWidget);
 
     teamRepository
       ..userId = 'me-id'
@@ -1009,7 +1010,7 @@ void main() {
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
-    expect(find.text('Ana Sayfa'), findsOneWidget);
+    expect(find.text('Ana sayfa'), findsOneWidget);
 
     teamRepository.userId = 'me-id';
     await tester.tap(find.text('Tekrar dene'));
@@ -1380,7 +1381,7 @@ void main() {
     final overlay = find.byType(CoachMarkOverlay);
     expect(overlay, findsOneWidget);
     expect(
-      find.descendant(of: overlay, matching: find.text('Süre + Cevap')),
+      find.descendant(of: overlay, matching: find.text('Süre ve cevap')),
       findsOneWidget,
     );
     expect(
@@ -1394,7 +1395,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.descendant(of: overlay, matching: find.text('Seri + Sonraki Soru')),
+      find.descendant(
+        of: overlay,
+        matching: find.text('Üst üste doğru ve sonraki soru'),
+      ),
       findsOneWidget,
     );
     expect(
@@ -1407,7 +1411,10 @@ void main() {
       find.byKey(const ValueKey('quiz-wildcard-row')),
     );
     final tooltip = tester.getRect(
-      find.descendant(of: overlay, matching: find.text('Seri + Sonraki Soru')),
+      find.descendant(
+        of: overlay,
+        matching: find.text('Üst üste doğru ve sonraki soru'),
+      ),
     );
     expect(target.top, greaterThanOrEqualTo(0));
     expect(target.bottom, lessThanOrEqualTo(640));

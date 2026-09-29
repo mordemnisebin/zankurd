@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -27,12 +28,12 @@ void main() {
     expect(find.text('Öğren'), findsOneWidget);
     expect(find.text('Sonraki'), findsOneWidget);
     expect(find.text('Başla'), findsNothing);
-    expect(find.text('Yarış ve kazan'), findsNothing);
+    expect(find.text('Arkadaşlarınla yarış'), findsNothing);
 
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Yarış ve kazan'), findsOneWidget);
+    expect(find.text('Arkadaşlarınla yarış'), findsOneWidget);
     expect(find.text('Başla'), findsOneWidget);
     expect(find.text('Sonraki'), findsNothing);
 
@@ -218,6 +219,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsOneWidget);
+    // 2026-09-29 doğallık: slogan satırı kaldırıldı.
+    expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsNothing);
   });
 }

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +48,7 @@ Widget _shell(Widget child) {
 
 void main() {
   // Lig 2026-09-27'den beri bayrakla kapalı (kWeeklyLeagueEnabled): az
-  // oyuncuyla herkes "Bronz Lig"de kalıyordu. Bayrak açılınca bu test yine
+  // oyuncuyla herkes "Bronz lig"de kalıyordu. Bayrak açılınca bu test yine
   // koşar; kapalıyken ikinci test bandın hiç çizilmediğini denetler.
   testWidgets(
     'haftalık görünümde lig bandı görünür',
@@ -63,7 +64,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byKey(const ValueKey('league-banner')), findsOneWidget);
-      expect(find.text('Bronz Lig'), findsOneWidget);
+      expect(find.text('Bronz lig'), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );
@@ -82,7 +83,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byKey(const ValueKey('league-banner')), findsNothing);
-      expect(find.text('Bronz Lig'), findsNothing);
+      expect(find.text('Bronz lig'), findsNothing);
       expect(tester.takeException(), isNull);
     },
   );

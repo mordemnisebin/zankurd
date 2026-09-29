@@ -203,13 +203,6 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                         color: SahneTokens.of(context).tx,
                       ),
                     ),
-                    const SizedBox(height: SahneSpace.x2),
-                    Text(
-                      context.t(K.joinRoomBody),
-                      style: SahneType.body.copyWith(
-                        color: SahneTokens.of(context).tx2,
-                      ),
-                    ),
                     const SizedBox(height: SahneSpace.x4),
                     TextFormField(
                       key: const ValueKey('play-hub-join-room-code-field'),
@@ -348,7 +341,6 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
     return SahneTabPage(
       title: context.t(K.playTitle),
-      subtitle: context.t(K.playSubtitle),
       stats: [
         TabStatChips(
           repository: widget.repository,

@@ -624,16 +624,10 @@ class _MasterySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _SubHeading(Tr.forKu(K.kategoriUstaligi, isKu)),
-        const SizedBox(height: SahneSpace.x1),
-        Text(
-          Tr.forKu(K.masteryEvidenceHint, isKu),
-          style: SahneType.caption.copyWith(color: t.tx2),
-        ),
         const SizedBox(height: SahneSpace.x3),
         for (final cat in _categories)
           _MasteryRow(category: cat, store: store, isKu: isKu),

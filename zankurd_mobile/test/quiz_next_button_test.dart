@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
@@ -110,7 +111,7 @@ void main() {
 
       // İpucu görünür, Piştre kilitli (answered değil) ama ekran takılı değil:
       // kalan şıklar hâlâ seçilebilir.
-      expect(find.text('Çift cevap: bir cevap daha ver'), findsOneWidget);
+      expect(find.text('Bir cevap daha ver'), findsOneWidget);
       expect(nextButtonCallback(tester), isNull);
 
       // İkinci deneme: doğru şık → reveal → Piştre aktif

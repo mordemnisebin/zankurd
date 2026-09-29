@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -195,9 +196,9 @@ void main() {
     await tester.pumpAndSettle();
 
     await _scrollToDeleteAction(tester);
-    expect(find.text('Hesap İşlemleri'), findsOneWidget);
+    expect(find.text('Hesap işlemleri'), findsOneWidget);
     expect(find.text('Bu alandaki işlemler geri alınamaz.'), findsOneWidget);
-    expect(find.text('Hesabımı Sil'), findsOneWidget);
+    expect(find.text('Hesabımı sil'), findsOneWidget);
   });
 
   testWidgets('settings shows the package version in light and dark themes', (
@@ -284,14 +285,14 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam Et'));
+    await tester.tap(find.text('Devam et'));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
       'SIL',
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.tap(find.text('Kalıcı olarak sil'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
@@ -320,14 +321,14 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam Et'));
+    await tester.tap(find.text('Devam et'));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
       'SIL',
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.tap(find.text('Kalıcı olarak sil'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
@@ -356,14 +357,14 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam Et'));
+    await tester.tap(find.text('Devam et'));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
       'SIL',
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.tap(find.text('Kalıcı olarak sil'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
@@ -375,7 +376,7 @@ void main() {
     // başlık düzeltmesi) metin, listeyle birlikte kaydırılıp ağaçtan
     // düşebiliyor. Asıl iddia gezinme: ekran hâlâ yerinde mi?
     expect(find.byType(SettingsScreen), findsOneWidget);
-    expect(find.text('Hesap silinemedi. Lütfen tekrar dene.'), findsOneWidget);
+    expect(find.text('Hesap silinemedi. Tekrar dene.'), findsOneWidget);
   });
 
   testWidgets('account cleanup continues if settings unmounts after deletion', (
@@ -409,14 +410,14 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam Et'));
+    await tester.tap(find.text('Devam et'));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
       'SIL',
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.tap(find.text('Kalıcı olarak sil'));
     await tester.pump();
     await repository.deleteStarted.future;
 

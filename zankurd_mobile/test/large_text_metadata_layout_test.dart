@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -101,7 +102,7 @@ void main() {
             );
 
             final categoryLabel = locale == 'ku' ? 'Teknolojî' : 'Teknoloji';
-            final typeLabel = locale == 'ku' ? 'Tijîkirin' : 'Boşluk Doldurma';
+            final typeLabel = locale == 'ku' ? 'Tijîkirin' : 'Boşluk doldurma';
             for (final label in [categoryLabel, typeLabel]) {
               final badge = find.text(label);
               expect(badge, findsOneWidget, reason: '$label badge missing');
@@ -228,7 +229,7 @@ void main() {
       ui.Tristate.isTrue,
     );
 
-    final openRoom = find.text('Odayı Aç');
+    final openRoom = find.text('Odayı aç');
     await tester.ensureVisible(openRoom);
     await tester.pump();
     await tester.tap(openRoom);

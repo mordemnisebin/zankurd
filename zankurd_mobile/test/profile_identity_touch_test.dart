@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,7 @@ import 'support/widget_test_helpers.dart';
 /// 2026-08-19 review: hero rozetine `RankMedal` de eklenmişti ama o madalya
 /// sıra NUMARASINI basıp aşağıdaki "Sıra" karosuyla aynı şeyi iki kez
 /// söylüyor, tonu da lig etiketiyle çelişiyordu (sıra 3 → bronz madalya +
-/// "Altın Lig"). Hero artık yalnız lig etiketi + tier ikonu gösterir; sıra
+/// "Altın lig"). Hero artık yalnız lig etiketi + tier ikonu gösterir; sıra
 /// rakamı tek yerde (Sıra karosu) kalır.
 ///
 /// 2026-09-29 Şahnê: yeşil kahraman kart, kilim bordürü ve

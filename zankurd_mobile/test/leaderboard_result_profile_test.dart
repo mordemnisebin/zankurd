@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -91,7 +92,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Liderlik Tablosu'), findsOneWidget);
+    expect(find.text('Sıralama'), findsOneWidget);
     expect(find.byIcon(AppIcons.arrowsRotate), findsOneWidget);
   });
 
@@ -207,11 +208,13 @@ void main() {
 
     // Profil > 'Topluluk ve Ligler' kaldırıldı (Rêz sekmesiyle mükerrerdi,
     // 2026-07-18 Faz 9). Ana yol artık doğrudan alt nav'daki Liderlik sekmesi
-    // (KU'da 'Rêz', TR'de 'Liderlik').
-    await tester.tap(find.text('Liderlik'));
+    // (KU'da 'Rêz', TR'de 'Sıralama').
+    await tester.tap(find.text('Sıralama'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Liderlik Tablosu'), findsOneWidget);
+    // 2026-09-29 doğallık: sekme etiketi ve sayfa başlığı aynı sözcük
+    // (sözlük: Sıralama); biri alt çubukta, biri sayfa başında.
+    expect(find.text('Sıralama'), findsNWidgets(2));
     expect(find.text('Rojda'), findsWidgets);
   });
 
@@ -330,13 +333,13 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(
-      find.text('Rakiplerle Karşılaştırma'),
+      find.text('Rakiplerle karşılaştır'),
       120,
       scrollable: find.byType(Scrollable).last,
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Rakiplerle Karşılaştırma'), findsOneWidget);
+    expect(find.text('Rakiplerle karşılaştır'), findsOneWidget);
     expect(find.text('Sen'), findsOneWidget);
     expect(find.text('Rojda'), findsOneWidget);
     expect(find.text('Baran'), findsOneWidget);
@@ -363,13 +366,13 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(
-      find.text('Yeni Rozet'),
+      find.text('Yeni rozet'),
       120,
       scrollable: find.byType(Scrollable).last,
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Yeni Rozet'), findsOneWidget);
+    expect(find.text('Yeni rozet'), findsOneWidget);
     expect(find.text('İlk Oyun'), findsOneWidget);
     expect(find.text('10 Doğru Üst Üste'), findsOneWidget);
   });
@@ -459,7 +462,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     }
 
-    expect(find.text('Kaydedilen Sorular'), findsOneWidget);
+    expect(find.text('Kaydedilen sorular'), findsOneWidget);
     expect(find.text('Yanlışlarım'), findsOneWidget);
     // 2026-09-29 Şahnê: bölüm başlığı tek biçemdir (`SahneSectionHeader`,
     // Manşet 22) — büyük harf etiketi değil.
@@ -475,11 +478,11 @@ void main() {
     // Arkadaşlar ekranı donduruldu; menüde görünmez.
     expect(find.text('Arkadaşlarım'), findsNothing);
     await tester.scrollUntilVisible(
-      find.text('Çıkış Yap'),
+      find.text('Çıkış yap'),
       200,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('Çıkış Yap'), findsOneWidget);
+    expect(find.text('Çıkış yap'), findsOneWidget);
     expect(find.text('Ayarlar'), findsOneWidget);
   });
 
@@ -587,11 +590,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
-    expect(find.text('Yarışa Başla'), findsOneWidget);
+    expect(find.text('Yarışa başla'), findsOneWidget);
 
-    await tester.ensureVisible(find.text('Yarışa Başla'));
+    await tester.ensureVisible(find.text('Yarışa başla'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Yarışa Başla'));
+    await tester.tap(find.text('Yarışa başla'));
     await tester.pumpAndSettle();
 
     expect(find.byType(QuizScreen), findsOneWidget);

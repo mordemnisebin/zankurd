@@ -112,7 +112,6 @@ class _ContestScreenState extends State<ContestScreen> {
     final t = SahneTokens.of(context);
     return SahnePushedPage(
       title: context.t(K.dailyEvent),
-      subtitle: context.t(K.dailyEventSub),
       backLabel: context.t(K.back),
       slivers: [
         FutureBuilder<Contest?>(

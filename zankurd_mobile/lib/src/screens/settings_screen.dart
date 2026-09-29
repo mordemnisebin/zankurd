@@ -200,11 +200,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // Bölümler tek biçimli [SahneSectionHeader]; satırlar liste grubu.
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(
-        context,
-        title: Text(context.t(K.settings)),
-        subtitle: Text(context.t(K.settingsSubtitle)),
-      ),
+      appBar: zkAppBar(context, title: Text(context.t(K.settings))),
       body: SafeArea(
         top: false,
         child: ListView(
@@ -582,12 +578,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: SahneType.body.copyWith(color: t.tx2),
                   ),
                   const SizedBox(height: SahneSpace.x3),
-                  _InlineNotice(
-                    icon: AppIcons.circleInfo,
-                    text: context.t(K.localChangesNote),
-                    inset: false,
-                  ),
-                  const SizedBox(height: SahneSpace.x2),
                   // Yasal bağlantılar (mağaza şartı)
                   const LegalLinksRow(),
                   // Soru fotoğrafları CC BY lisanslıdır; atıf yasal
@@ -902,30 +892,23 @@ class _InlineNotice extends StatelessWidget {
     required this.icon,
     required this.text,
     this.error = false,
-    this.inset = true,
   });
 
   final IconData icon;
   final String text;
   final bool error;
 
-  /// Satırın metin hizasından başlasın mı (grup içinde) yoksa kartın
-  /// kenarından mı.
-  final bool inset;
-
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final color = error ? t.errTx : t.tx2;
     return Padding(
-      padding: inset
-          ? const EdgeInsetsDirectional.fromSTEB(
-              _rowTextInset,
-              0,
-              SahneSpace.x4,
-              SahneSpace.x3,
-            )
-          : EdgeInsets.zero,
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        _rowTextInset,
+        0,
+        SahneSpace.x4,
+        SahneSpace.x3,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

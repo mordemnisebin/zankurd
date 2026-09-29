@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -460,7 +461,7 @@ void main() {
       expect(find.text('Pirs 1'), findsNothing);
       expect(find.text('420 pts'), findsOneWidget);
       expect(find.text('x3'), findsOneWidget);
-      expect(find.text('Rakip bekleniyor...'), findsNothing);
+      expect(find.text('Rakip bekleniyor…'), findsNothing);
 
       final timer = tester.widget<QuizTimerWidget>(
         find.byKey(const ValueKey('quiz-circular-timer')),
@@ -502,7 +503,7 @@ void main() {
       find.byKey(const ValueKey('quiz-circular-timer')),
     );
     expect(timer.animation.isAnimating, isFalse);
-    expect(find.text('Rakip bekleniyor...'), findsNothing);
+    expect(find.text('Rakip bekleniyor…'), findsNothing);
   });
 
   testWidgets('resume TIMEOUT kaydını cevaplanmış olarak ve doğruyla korur', (
@@ -625,10 +626,7 @@ void main() {
 
     expect(repository.leaveCalls, 1);
     expect(find.byType(QuizScreen), findsOneWidget);
-    expect(
-      find.text('Odadan ayrılamadın. Lütfen tekrar dene.'),
-      findsOneWidget,
-    );
+    expect(find.text('Odadan ayrılamadın. Tekrar dene.'), findsOneWidget);
 
     await tester.binding.handlePopRoute();
     await tester.pump();
@@ -943,8 +941,8 @@ void main() {
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await _pumpFrames(tester, 8);
 
-    expect(find.text('Ana Sayfa'), findsOneWidget);
-    await tester.tap(find.text('Ana Sayfa'));
+    expect(find.text('Ana sayfa'), findsOneWidget);
+    await tester.tap(find.text('Ana sayfa'));
     await _pumpFrames(tester, 5);
 
     expect(find.byType(QuizScreen), findsNothing);
@@ -992,7 +990,7 @@ void main() {
     await tester.tap(find.text('Tamam'));
     await _pumpFrames(tester, 5);
 
-    expect(find.text('Ana Sayfa'), findsOneWidget);
+    expect(find.text('Ana sayfa'), findsOneWidget);
     expect(find.byType(QuizResultScreen), findsNothing);
 
     repository.userId = 'me';
@@ -1088,8 +1086,8 @@ void main() {
     expect(repository.awardCalls, 0);
     expect(repository.ackCalls, 0);
 
-    expect(find.text('Ana Sayfa'), findsOneWidget);
-    await tester.tap(find.text('Ana Sayfa'));
+    expect(find.text('Ana sayfa'), findsOneWidget);
+    await tester.tap(find.text('Ana sayfa'));
     await _pumpFrames(tester, 6);
     expect(find.byType(QuizScreen), findsNothing);
     expect(find.byKey(const ValueKey('open-resumed-quiz')), findsOneWidget);
@@ -1116,7 +1114,7 @@ void main() {
     repository.userId = 'other';
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await _pumpFrames(tester, 4);
-    expect(find.text('Ana Sayfa'), findsOneWidget);
+    expect(find.text('Ana sayfa'), findsOneWidget);
 
     repository
       ..userId = 'me'
@@ -1155,8 +1153,8 @@ void main() {
     expect(repository.awardCalls, 0);
     expect(repository.ackCalls, 0);
 
-    expect(find.text('Ana Sayfa'), findsOneWidget);
-    await tester.tap(find.text('Ana Sayfa'));
+    expect(find.text('Ana sayfa'), findsOneWidget);
+    await tester.tap(find.text('Ana sayfa'));
     await _pumpFrames(tester, 6);
     expect(find.byType(QuizScreen), findsNothing);
     expect(find.byKey(const ValueKey('open-resumed-quiz')), findsOneWidget);
@@ -1179,7 +1177,7 @@ void main() {
     repository.userId = 'other';
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await _pumpFrames(tester, 6);
-    expect(find.text('Ana Sayfa'), findsOneWidget);
+    expect(find.text('Ana sayfa'), findsOneWidget);
 
     await tester.binding.handlePopRoute();
     await _pumpFrames(tester, 6);
@@ -1209,7 +1207,7 @@ void main() {
     );
     await _pumpFrames(tester, 6);
 
-    expect(find.text('Ana Sayfa'), findsOneWidget);
+    expect(find.text('Ana sayfa'), findsOneWidget);
     expect(find.byType(QuizResultScreen), findsNothing);
     expect(repository.resultCalls, 0);
   });
@@ -1434,7 +1432,7 @@ void main() {
     await _pumpFrames(tester, 5);
     expect(find.text('Yarıştan çıkılsın mı?'), findsOneWidget);
 
-    await tester.tap(find.text('Devam Et'));
+    await tester.tap(find.text('Devam et'));
     await _pumpFrames(tester, 10);
 
     expect(repository.leaveCalls, 0);

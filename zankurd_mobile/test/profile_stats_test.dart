@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,7 +60,7 @@ void main() {
     await tester.pump();
     for (
       var i = 0;
-      i < 40 && find.text('Cevaplanan Soru').evaluate().isEmpty;
+      i < 40 && find.text('Cevaplanan soru').evaluate().isEmpty;
       i++
     ) {
       await tester.pump(const Duration(milliseconds: 50));
@@ -70,13 +71,13 @@ void main() {
     // (2026-08-19).
     await tester.pump(const Duration(milliseconds: 1200));
 
-    expect(find.text('Cevaplanan Soru'), findsOneWidget);
+    expect(find.text('Cevaplanan soru'), findsOneWidget);
     expect(find.text('2'), findsWidgets);
     expect(find.text('Oyun'), findsNothing);
   });
 
   testWidgets('hiç oynamamış oyuncuya lig rozeti şişirilmez', (tester) async {
-    // 2026-07-26 denetimi: profilde rozet "Altın Lig" derken hemen altındaki
+    // 2026-07-26 denetimi: profilde rozet "Altın lig" derken hemen altındaki
     // karo "Sıralama —" diyordu. İki gösterge aynı ekranda birbirini
     // yalanlıyordu; sebep farklı kapılardı — rozet sunucudan gelen
     // `roomsPlayed`e, karo yerel cevaplanan soru sayısına bakıyordu.
@@ -105,10 +106,10 @@ void main() {
     // Lig rozeti 2026-09-27'den beri bayrakla kapalı; kapalıyken hiçbir
     // basamak yazılmaz — şişirilmiş bir rozet de yazılamaz.
     expect(
-      find.text('Bronz Lig'),
+      find.text('Bronz lig'),
       kWeeklyLeagueEnabled ? findsOneWidget : findsNothing,
     );
-    expect(find.text('Altın Lig'), findsNothing);
+    expect(find.text('Altın lig'), findsNothing);
     // Rozet ile karo aynı kapıdan geçer: ikisi de boş kalmalı.
     expect(find.text('#1'), findsNothing);
   });
@@ -141,7 +142,7 @@ void main() {
     }
 
     expect(find.text('#85'), findsNothing);
-    expect(find.text('Altın Lig'), findsNothing);
+    expect(find.text('Altın lig'), findsNothing);
   });
 
   testWidgets(
@@ -174,13 +175,13 @@ void main() {
       );
       for (
         var i = 0;
-        i < 40 && find.text('Detaylı İstatistik').evaluate().isEmpty;
+        i < 40 && find.text('Ayrıntılı istatistik').evaluate().isEmpty;
         i++
       ) {
         await tester.pump(const Duration(milliseconds: 50));
       }
 
-      final detailed = find.text('Detaylı İstatistik');
+      final detailed = find.text('Ayrıntılı istatistik');
       await tester.ensureVisible(detailed);
       await tester.pumpAndSettle();
       await tester.tap(detailed);

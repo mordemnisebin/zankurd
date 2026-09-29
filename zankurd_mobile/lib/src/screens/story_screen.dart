@@ -95,7 +95,6 @@ class _StoryScreenState extends State<StoryScreen> {
       appBar: zkAppBar(
         context,
         title: Text(ku ? widget.story.titleKu : widget.story.titleTr),
-        subtitle: Text(context.t(K.storySubtitle)),
         actions: [
           if (widget.guide != null)
             SahneIconButton(

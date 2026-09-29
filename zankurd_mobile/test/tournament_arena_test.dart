@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -117,7 +118,7 @@ void main() {
     // Kupası" ilk 300 pikselde iki kez yazıyordu — 2026-07-30'da
     // kapatılmış bir kusur, hero'ya geçerken geri geldi (2026-08-04).
     await _pump(tester);
-    expect(find.text('ZanKurd Kupası'), findsOneWidget);
+    expect(find.text('ZanKurd Turnuvası'), findsOneWidget);
   });
 
   // ── Dayanıklılık ────────────────────────────────────────────────────────
@@ -178,7 +179,7 @@ void main() {
   ) async {
     final handle = tester.ensureSemantics();
     await _pump(tester);
-    expect(find.bySemanticsLabel('Turnuvaya Katıl'), findsOneWidget);
+    expect(find.bySemanticsLabel('Turnuvaya katıl'), findsOneWidget);
     handle.dispose();
   });
 }

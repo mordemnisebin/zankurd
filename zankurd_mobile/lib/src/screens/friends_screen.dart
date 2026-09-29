@@ -165,7 +165,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
     // listede birden çok "Kabul" / "Odaya çağır" olabilir), hepsi ikincil.
     return SahnePushedPage(
       title: context.t(K.myFriends),
-      subtitle: context.t(K.myFriendsSub),
       backLabel: context.t(K.back),
       // Tek parça kolon (tembel liste değil): istek ve arkadaş satırları
       // büyük yazıda ilk ekranın altına düşse de kurulur; ekran okuyucu ve
@@ -469,7 +468,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   // ve olmayacak. Kodu olmayan eski profillerde satır hiç
                   // yazılmaz — uydurulmuş bir kod göstermektense yok saymak
                   // dürüst (2026-07-28).
-                  subtitle: player.formattedTag ?? context.t(K.requestFromHere),
+                  subtitle: player.formattedTag,
                   subtitleStrong: player.formattedTag != null,
                   trailing: _sentRequests.contains(player.id)
                       ? _SentMark(label: context.t(K.requestSent))

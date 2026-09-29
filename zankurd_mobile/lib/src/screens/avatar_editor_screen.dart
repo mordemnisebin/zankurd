@@ -275,11 +275,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
     // birincil eylem: Kaydet.
     return Scaffold(
       backgroundColor: t.bg,
-      appBar: zkAppBar(
-        context,
-        title: Text(context.t(K.myAvatar)),
-        subtitle: Text(context.t(K.myAvatarSub)),
-      ),
+      appBar: zkAppBar(context, title: Text(context.t(K.myAvatar))),
       body: SafeArea(
         top: false,
         child: _loading
