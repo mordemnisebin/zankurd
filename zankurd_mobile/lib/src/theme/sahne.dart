@@ -42,6 +42,8 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     required this.act,
     required this.onAct,
     required this.actTx,
+    required this.actShadow,
+    required this.actShadowBlur,
     required this.race,
     required this.raceTx,
     required this.raceTint,
@@ -52,9 +54,12 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     required this.gold,
     required this.goldTx,
     required this.goldTint,
+    required this.goldDeep,
+    required this.onGold,
     required this.okFill,
     required this.okTx,
     required this.okTint,
+    required this.onOk,
     required this.errFill,
     required this.errTx,
     required this.errTint,
@@ -100,6 +105,12 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Agir'in metin bağlantısı hâli (düz zeminde okunur).
   final Color actTx;
 
+  /// Eylem gölgesinin rengi ve bulanıklığı — ekrandaki TEK bulanık gölge,
+  /// yalnız birincil düğmede (`0 8 24 -8`; gündüzde `0 8 20 -8`, koyu
+  /// turuncu). Rengi Agir'den türetilemez: gündüzde ayrı bir tondur.
+  final Color actShadow;
+  final double actShadowBlur;
+
   /// Boyax — yarış kimliği.
   final Color race;
   final Color raceTx;
@@ -118,10 +129,20 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   final Color goldTx;
   final Color goldTint;
 
+  /// Jeton glifinin iç halkası ve damgası (koyu altın). İki temada aynı.
+  final Color goldDeep;
+
+  /// Zêr dolgusu üstündeki glif ve metin (ustalık yıldızı, Sen avatarı).
+  final Color onGold;
+
   /// Rast — doğru durumu.
   final Color okFill;
   final Color okTx;
   final Color okTint;
+
+  /// Rast dolgusu ([okTx] ile dolan elmas) üstündeki ✓. Gecede koyu,
+  /// gündüzde — dolgu koyu zümrüte döndüğü için — beyaz.
+  final Color onOk;
 
   /// Şaş — yanlış durumu.
   final Color errFill;
@@ -145,6 +166,9 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     act: Color(0xFFFF8A3D),
     onAct: Color(0xFF1B0C02),
     actTx: Color(0xFFFF9A57),
+    // rgba(255,138,61,.7)
+    actShadow: Color(0xB3FF8A3D),
+    actShadowBlur: 24,
     race: Color(0xFFC4265A),
     raceTx: Color(0xFFFF86AE),
     raceTint: Color(0xFF4A1233),
@@ -155,9 +179,12 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     gold: Color(0xFFF5C24C),
     goldTx: Color(0xFFF5C24C),
     goldTint: Color(0xFF3A3218),
+    goldDeep: Color(0xFFB07D12),
+    onGold: Color(0xFF1E1400),
     okFill: Color(0xFF0E7453),
     okTx: Color(0xFF52DBA5),
     okTint: Color(0xFF0B4637),
+    onOk: Color(0xFF03140D),
     errFill: Color(0xFF6B1F1A),
     errTx: Color(0xFFFF7466),
     errTint: Color(0xFF45160F),
@@ -179,6 +206,9 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     onAct: Color(0xFF1B0C02),
     // #A84300 Kulis (s2) üstünde 4.499:1 kalıyordu; bir ton koyulaştı.
     actTx: Color(0xFF9E3F00),
+    // rgba(214,98,20,.6)
+    actShadow: Color(0x99D66214),
+    actShadowBlur: 20,
     race: Color(0xFFC4265A),
     raceTx: Color(0xFFA8134A),
     raceTint: Color(0xFFFBE1EA),
@@ -189,9 +219,12 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     gold: Color(0xFFF5C24C),
     goldTx: Color(0xFF8A5A00),
     goldTint: Color(0xFFFBF0D2),
+    goldDeep: Color(0xFFB07D12),
+    onGold: Color(0xFF1E1400),
     okFill: Color(0xFF0E7453),
     okTx: Color(0xFF08784F),
     okTint: Color(0xFFD8F3E8),
+    onOk: Color(0xFFFFFFFF),
     errFill: Color(0xFF6B1F1A),
     errTx: Color(0xFFB42318),
     errTint: Color(0xFFFDE4E1),
@@ -227,6 +260,8 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
       act: l(act, other.act),
       onAct: l(onAct, other.onAct),
       actTx: l(actTx, other.actTx),
+      actShadow: l(actShadow, other.actShadow),
+      actShadowBlur: actShadowBlur + (other.actShadowBlur - actShadowBlur) * t,
       race: l(race, other.race),
       raceTx: l(raceTx, other.raceTx),
       raceTint: l(raceTint, other.raceTint),
@@ -237,9 +272,12 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
       gold: l(gold, other.gold),
       goldTx: l(goldTx, other.goldTx),
       goldTint: l(goldTint, other.goldTint),
+      goldDeep: l(goldDeep, other.goldDeep),
+      onGold: l(onGold, other.onGold),
       okFill: l(okFill, other.okFill),
       okTx: l(okTx, other.okTx),
       okTint: l(okTint, other.okTint),
+      onOk: l(onOk, other.onOk),
       errFill: l(errFill, other.errFill),
       errTx: l(errTx, other.errTx),
       errTint: l(errTint, other.errTint),
@@ -278,6 +316,19 @@ class SahneStageColors {
   static const art1 = Color(0xFF3F74EE);
   static const art2 = Color(0xFF1D43B0);
   static const art3 = Color(0xFF0F2468);
+
+  /// Sayacın boş izi: rgba(149,157,201,.36).
+  static const timerTrack = Color(0x5C959DC9);
+
+  /// Yarış sahnesinin yumuşak metni (düello meta satırı, VS rakibi).
+  static const raceSoft = Color(0xFFFFC9DA);
+
+  /// Oyun sahnesinin alttan ışıması: rgba(62,90,210,.22).
+  static const underglow = Color(0x383E5AD2);
+
+  /// Sahne zemini çiziminin opaklığı (%14). `Image.color` + `modulate` ile
+  /// uygulanır; `Opacity` katmanı (saveLayer) açılmaz.
+  static const backdropTint = Color(0x24FFFFFF);
 }
 
 /// Aralık ölçeği. Bütün boşluklar 4'ün katıdır; sayfa kenarı 16.
@@ -448,6 +499,17 @@ class SahneType {
   static const TextStyle caption = TextStyle(
     fontFamily: text,
     fontWeight: FontWeight.w500,
+    fontSize: 14,
+    height: 20 / 14,
+    leadingDistribution: TextLeadingDistribution.even,
+  );
+
+  /// 14/20 kalın — çip, metin bağlantısı, seçim rayı, durum rozeti, joker
+  /// fiyatı. Açıklama boyutunun 700 çeşidi (maketteki `--t-cap-b`); yeni
+  /// bir boyut değil.
+  static const TextStyle captionStrong = TextStyle(
+    fontFamily: text,
+    fontWeight: FontWeight.w700,
     fontSize: 14,
     height: 20 / 14,
     leadingDistribution: TextLeadingDistribution.even,
