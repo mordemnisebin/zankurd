@@ -51,6 +51,11 @@ void main() {
     // yüzden ortak payda kullanılır. Bu, ileride `offline_tf_` altına
     // farklı türden bir soru eklenirse bekçinin sessizce yanlış kümeyi
     // ölçmesini engeller.
+    // 2026-09-29 doğallık: dört kılıftan ikisi ("Binirxîne: …", "Ev
+    // ravekirin ji bo …") bankada zaten var olan "Rast e an şaş e: Têgeha
+    // "X" tê vê wateyê: …" biçimine indirildi; "… wiha tê ravekirin … Ev
+    // rast e an şaş e?" şablon çeşitlilik bekçisi (önek payı ≤ %20) yüzünden
+    // kaldı. Ortak payda hâlâ geçerli, süzgeç bilerek aynı bırakıldı.
     final offPattern = playableTf
         .where((q) => !q.prompt.toLowerCase().contains('rast e an şaş e'))
         .map((q) => q.id)

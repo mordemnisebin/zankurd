@@ -170,7 +170,21 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('home-daily-task-start')));
     await tester.pumpAndSettle();
     expect(find.byType(QuizScreen), findsOneWidget);
-    expect(find.byKey(const ValueKey('quiz-answer-board')), findsOneWidget);
+    // 2026-09-29 doğallık: günlük set gün tohumuyla karışır; ilk soru
+    // boşluk doldurma ya da kelime dizme çıkabilir (oynanabilir kümenin
+    // ~%2'si) ve o iki tipte şık tahtası bilerek yoktur. Bekçi cevap
+    // alanının çizildiğini ölçer, hangi tipin geldiğini değil — yoksa
+    // sonucu takvime ve soru havuzunun boyuna bağlı kalırdı.
+    expect(
+      find.byWidgetPredicate((widget) {
+        final key = widget.key;
+        return key is ValueKey<String> &&
+            (key.value == 'quiz-answer-board' ||
+                key.value.startsWith('fill-in-blank-') ||
+                key.value.startsWith('word-ordering-'));
+      }),
+      findsWidgets,
+    );
 
     await tester.pumpWidget(
       testShell(child: SettingsScreen(repository: MockZanKurdRepository())),

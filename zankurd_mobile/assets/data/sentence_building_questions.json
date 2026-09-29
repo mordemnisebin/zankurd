@@ -9,9 +9,9 @@
       "malê"
     ],
     "correctAnswer": "ez diçim malê",
-    "explanation": "Kurmancî'de basit şimdiki zaman: özne + fiil + yer. \"Ez diçim malê\" = \"Ben eve gidiyorum.\"",
+    "explanation": "Kurmancîde basit şimdiki zaman: özne + fiil + yer. \"Ez diçim malê\" = \"Ben eve gidiyorum.\"",
     "explanationKu": "Di dema niha de: kirde + lêker + cih. \"Ez diçim malê.\"",
-    "explanationTr": "Kurmancî'de basit şimdiki zaman: özne + fiil + yer. \"Ez diçim malê\" = \"Ben eve gidiyorum.\"",
+    "explanationTr": "Kurmancîde basit şimdiki zaman: özne + fiil + yer. \"Ez diçim malê\" = \"Ben eve gidiyorum.\"",
     "hintKu": "Bi kirdeyê dest pê bike: \"Ez\".",
     "hintTr": "Özneyle başla: \"Ez\".",
     "type": "wordOrdering",
@@ -37,9 +37,9 @@
       "dixwe"
     ],
     "correctAnswer": "ew nan dixwe",
-    "explanation": "Kurmancî'de nesne fiilden önce gelir: özne + nesne + fiil.",
+    "explanation": "Kurmancîde nesne fiilden önce gelir: özne + nesne + fiil.",
     "explanationKu": "Di kurmancî de bireser berî lêkerê tê: kirde + bireser + lêker.",
-    "explanationTr": "Kurmancî'de nesne fiilden önce gelir: özne + nesne + fiil.",
+    "explanationTr": "Kurmancîde nesne fiilden önce gelir: özne + nesne + fiil.",
     "hintKu": "Lêker li dawiyê dimîne.",
     "hintTr": "Fiil sonda kalır.",
     "type": "wordOrdering",
