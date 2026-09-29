@@ -26,17 +26,24 @@ const List<String> _kProfileAnalysisCategories = [
   'Teknolojî',
 ];
 
-/// Profil kimliği: elmas avatar (dokununca düzenleme) + ad + oyuncu kodu
+/// Profil kimliği: avatar (dokununca düzenleme) + ad + oyuncu kodu
 /// + vitrin unvanı. Kahraman kart değil — sayfanın kendi zemininde durur;
 /// seviye ayrı bir yüzey kartındadır.
 ///
 /// 2026-09-29 Şahnê: eski yeşil degrade kart, süs daireleri, yuvarlak
 /// avatar halkası ve degrade kamera rozeti kalktı. Kamera rozeti Kulis
-/// tonunda küçük bir elmas; avatarın kendisi `PlayerAvatar` (elmas).
+/// tonunda küçük bir karo.
+///
+/// 2026-09-29 doğallık (K5, K10): kamera rozeti elmastı; elmas yalnız soru
+/// ilerlemesi ve ders sayacında kalır, rozet küçük pahlı kare. Oyuncu henüz
+/// ad seçmediyse ([hasOwnName] `false`) ad satırı çizilmez: yer tutucu
+/// "Oyuncu" başlık gibi duruyor ve oyuncuya adını bilmeyen bir sistem
+/// gibi görünüyordu (ana sayfanın selamıyla aynı karar).
 class _ProfileHeroCard extends StatelessWidget {
   const _ProfileHeroCard({
     required this.ku,
     required this.displayName,
+    required this.hasOwnName,
     required this.avatarIdentity,
     required this.showcaseTitle,
     required this.playerTag,
@@ -45,7 +52,12 @@ class _ProfileHeroCard extends StatelessWidget {
   });
 
   final bool ku;
+
+  /// Avatarın baş harfi ve renk tohumu için çözülmüş ad (yer tutucu dahil).
   final String displayName;
+
+  /// Oyuncunun kendi seçtiği bir ad var mı; yoksa ad satırı çizilmez.
+  final bool hasOwnName;
   final AvatarIdentity avatarIdentity;
   final String? showcaseTitle;
 
@@ -97,9 +109,10 @@ class _ProfileHeroCard extends StatelessWidget {
                       child: DecoratedBox(
                         decoration: ShapeDecoration(
                           color: t.s2,
-                          shape: SahneShape.diamond(
-                            28,
-                            side: BorderSide(color: t.bg, width: SahneRing.r2),
+                          shape: SahneShape.withSide(
+                            SahneShape.forSize(28),
+                            t.bg,
+                            width: SahneRing.r2,
                           ),
                         ),
                         child: Icon(AppIcons.camera, size: 12, color: t.tx),
@@ -116,15 +129,16 @@ class _ProfileHeroCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: AlignmentDirectional.centerStart,
-                child: Text(
-                  displayName,
-                  maxLines: 1,
-                  style: SahneType.headline.copyWith(color: t.tx),
+              if (hasOwnName)
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    displayName,
+                    maxLines: 1,
+                    style: SahneType.headline.copyWith(color: t.tx),
+                  ),
                 ),
-              ),
               if (playerTag != null)
                 _PlayerTagChip(tag: playerTag!, ku: ku)
               else
@@ -357,11 +371,17 @@ class _UnifiedRewardsSection extends StatelessWidget {
   const _UnifiedRewardsSection({
     required this.achievements,
     required this.badgeUnlocked,
+    required this.showProgress,
     required this.isKu,
   });
 
   final List<Achievement> achievements;
   final Set<String> badgeUnlocked;
+
+  /// "X/Y" ilerleme çubuğu. İlk turdan önce `false`: "0/13" ve boş çubuk
+  /// yeni gelene yalnız eksiğini sayıyordu (2026-09-29 doğallık, K6); kart
+  /// o zaman yalnız ilk başarının nasıl açılacağını söyler.
+  final bool showProgress;
   final bool isKu;
 
   void _showAllSheet(BuildContext context) {
@@ -510,13 +530,15 @@ class _UnifiedRewardsSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // İlerleme ödüldür: Zêr çubuk, sağda "X/Y".
-              SahneProgressBar(
-                value: totalAll == 0 ? 0 : totalUnlocked / totalAll,
-                tone: SahneProgressTone.gold,
-                trailing: '$totalUnlocked/$totalAll',
-                semanticLabel: Tr.forKu(K.basarilar, isKu),
-              ),
-              const SizedBox(height: SahneSpace.x3),
+              if (showProgress) ...[
+                SahneProgressBar(
+                  value: totalAll == 0 ? 0 : totalUnlocked / totalAll,
+                  tone: SahneProgressTone.gold,
+                  trailing: '$totalUnlocked/$totalAll',
+                  semanticLabel: Tr.forKu(K.basarilar, isKu),
+                ),
+                const SizedBox(height: SahneSpace.x3),
+              ],
               if (achievements.isEmpty && badgeUnlocked.isEmpty)
                 Text(
                   Tr.forKu(K.birYarisTamamlaVe, isKu),

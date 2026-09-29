@@ -1,4 +1,7 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+// 2026-09-29 doğallık (K9): podyum kalktı; ilk üç de listede. Geniş ekran
+// iki sütun değil, okunur genişlikte (≤ 640) ortalanan tek liste; kendi
+// satırın listede bir kez "Sen" ile işaretlenir, ikinci özet yok.
 // 2026-09-29 Şahnê: sıra satırları tek liste grubunda (`SahneListGroup`),
 // sıra no rakamla (madalya rozeti yok); "Sen" rozeti yerele duyarlı büyük
 // harfle "SEN" yazar. Geniş düzen eşiği ekran enine göre ölçülür.
@@ -161,7 +164,7 @@ void main() {
 
   testWidgets('sıralama satırları tek yüzeyde toplanır', (tester) async {
     await _pump(tester, _Repo(count: 12));
-    // 12 oyuncunun 3'ü podyumda; kalan 9 satır TEK yüzeyde.
+    // 12 oyuncunun hepsi TEK yüzeyde (ilk üç dahil).
     final rows = find.byKey(const ValueKey('leaderboard-rank-row-4'));
     expect(rows, findsOneWidget);
     // Görünür birim metni aynı kaldı; yalnız kaynak deftere indi.
@@ -291,44 +294,48 @@ void main() {
 
   // ── iPad iki sütun ──────────────────────────────────────────────────────
 
-  testWidgets('iPad dikeyde iki sütun kullanılır', (tester) async {
+  testWidgets('iPad dikeyde liste okunur genişlikte ortalanır', (tester) async {
     // iPad mini dikey: 744 pt.
     await _pump(tester, _Repo(count: 12), size: const Size(744, 1133));
+    final wide = find.byKey(const ValueKey('leaderboard-wide-list'));
     expect(
-      find.byKey(const ValueKey('leaderboard-wide-list')),
+      wide,
       findsOneWidget,
       reason: 'tablet telefon düzenini gerdirmemeli',
     );
+    expect(tester.getSize(wide).width, lessThanOrEqualTo(640));
   });
 
-  testWidgets('iPad yatayda iki sütun kullanılır', (tester) async {
+  testWidgets('iPad yatayda liste okunur genişlikte ortalanır', (tester) async {
     await _pump(tester, _Repo(count: 12), size: const Size(1194, 834));
-    expect(find.byKey(const ValueKey('leaderboard-wide-list')), findsOneWidget);
+    final wide = find.byKey(const ValueKey('leaderboard-wide-list'));
+    expect(wide, findsOneWidget);
+    final rect = tester.getRect(wide);
+    expect(rect.width, lessThanOrEqualTo(640));
+    expect(rect.center.dx, closeTo(1194 / 2, 1));
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('geniş ekranda kendi sıra özeti bağlam sütununda', (
+  testWidgets('geniş ekranda kendi satırı listede bir kez işaretlenir', (
     tester,
   ) async {
-    // Sağdaki uzun listenin ortasındaki kendi satırın sola da özetlenir;
-    // sol sütun podyumdan sonra bomboş kalıyordu.
+    // Eski iki sütunlu düzen, listenin ortasındaki kendi satırını sol
+    // sütunda ikinci kez özetliyordu; tek listede buna gerek yok.
     await _pump(
       tester,
       _Repo(count: 12, selfIndex: 5),
       size: const Size(744, 1133),
     );
-    expect(find.text('Sen'), findsNWidgets(2));
+    expect(find.text('Sen'), findsOneWidget);
   });
 
-  testWidgets('podyumdaki oyuncuya ikinci özet çizilmez', (tester) async {
-    // Kimliği zaten en büyük öğede duruyor; ikinci bir özet aynı şeyi iki
-    // kez söylerdi.
+  testWidgets('birinci sıradaki oyuncu da listede işaretlenir', (tester) async {
     await _pump(
       tester,
       _Repo(count: 12, selfIndex: 0),
       size: const Size(744, 1133),
     );
-    expect(find.text('Sen'), findsNothing);
+    expect(find.text('Sen'), findsOneWidget);
   });
 
   testWidgets('telefonda tek sütun korunur', (tester) async {

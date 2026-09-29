@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık (K9): podyum yerine sıra listesi (`leaderboard-rank-list`).
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-29 Şahnê: sekme sayfası `ScreenSectionHeading` değil A
 // iskeletidir (`SahneTabPage`); başlık oradan okunur.
@@ -108,7 +109,8 @@ void main() {
     expect(find.byKey(const ValueKey('leaderboard-refresh-button')), findsOne);
     expect(find.byTooltip('Yenile'), findsOneWidget);
     expect(find.bySemanticsLabel('Sıralamayı yenile'), findsOneWidget);
-    expect(find.byKey(const ValueKey('leaderboard-podium')), findsOne);
+    // 2026-09-29 doğallık (K9): podyum yok; bütün sıralama tek liste.
+    expect(find.byKey(const ValueKey('leaderboard-rank-list')), findsOne);
     expect(
       find.byKey(const ValueKey('leaderboard-rank-row-4')),
       findsOneWidget,

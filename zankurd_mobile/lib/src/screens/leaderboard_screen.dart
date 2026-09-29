@@ -15,7 +15,6 @@ import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
-import '../widgets/rolling_count.dart';
 import '../widgets/sahne/sahne.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
@@ -107,120 +106,71 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     }
   }
 
-  /// Liderlik gövdesi: dar ekranda tek sütun, geniş ekranda iki sütun.
+  /// Liderlik gövdesi: (varsa lig bandı) + sıralı liste.
   ///
-  /// iPad'de telefon düzeni yukarıdan aşağı gerilmiş hâlde çiziliyordu:
-  /// podyum ekranın üçte birini kaplıyor, sıralama listesi katlamanın
-  /// altında kalıyordu. 720 eşiği `onboarding_screen.dart`taki eşikle
-  /// aynıdır; telefon düzeni hiçbir biçimde değişmez (2026-08-04).
+  /// 2026-09-29 doğallık (K9): podyum kalktı. İlk üç büyük elmas avatar,
+  /// madalya halkası, birincide taç ve altın haleyle kaidelere diziliyordu;
+  /// üç kişilik bir haftada ekranın tamamı buydu ve "kutlama" hiçbir şey
+  /// kazanılmadan çiziliyordu. Artık bütün sıralama tek liste: ilk üç
+  /// yalnız sıra rakamının renginden ayrılır ([_RankRow]), oyuncunun kendi
+  /// satırı listede "Sen" rozetiyle, listede değilse altta sabit.
   ///
-  /// 2026-09-29 Şahnê: gövde artık kendi kaydırıcısını taşımaz; sayfanın
-  /// (A iskeleti) içinde marka satırı ve başlıkla birlikte kayar. Podyum
-  /// sahne kartı değil, sayfanın kendi zemininde durur (maket): elmas
-  /// avatarlar madalya halkasıyla, birincide altın hale ve taç.
+  /// Geniş ekranda (iPad) liste okunur bir genişlikte (≤ 640) ortalanır;
+  /// eskiden sol sütun podyumu, sağ sütun listeyi taşıyordu. 720 eşiği
+  /// `onboarding_screen.dart`taki eşikle aynıdır (2026-08-04).
   Widget _buildBody(
     List<LeaderboardEntry> entries,
     Map<String, Color> avatarColorOverrides,
     bool ku,
   ) {
     final uid = widget.repository.currentUserId;
-    final rest = entries.skip(3).toList();
 
-    List<Widget> rankRows() => [
-      for (final e in rest)
-        _RankRow(
-          entry: e,
-          isKu: ku,
-          grouped: true,
-          highlight: uid != null && e.playerId == uid,
-          colorOverride: avatarColorOverrides[e.playerId],
-          // Kişi kendini bildiremez. Liste eskiden kendi satırında da
-          // bildir düğmesi çiziyordu, çünkü satırın kime ait olduğu
-          // sorulmuyordu (2026-08-04).
-          onReport: e.playerId == uid ? null : () => _reportProfile(e),
-        ),
-    ];
-
-    final podium = _Podium(
-      entries: entries.take(3).toList(),
-      isKu: ku,
-      colorOverrides: avatarColorOverrides,
+    final list = KeyedSubtree(
+      key: const ValueKey('leaderboard-rank-list'),
+      child: _RankListSurface(
+        rows: [
+          for (final e in entries)
+            _RankRow(
+              entry: e,
+              isKu: ku,
+              grouped: true,
+              highlight: uid != null && e.playerId == uid,
+              colorOverride: avatarColorOverrides[e.playerId],
+              // Kişi kendini bildiremez. Liste eskiden kendi satırında da
+              // bildir düğmesi çiziyordu, çünkü satırın kime ait olduğu
+              // sorulmuyordu (2026-08-04).
+              onReport: e.playerId == uid ? null : () => _reportProfile(e),
+            ),
+        ],
+      ),
     );
     // Lig bandı bayrakla kapalı (bkz. `kWeeklyLeagueEnabled`).
     final banner = kWeeklyLeagueEnabled && _period == LeaderboardPeriod.weekly
         ? _LeagueBanner(myRank: _myRank(entries), isKu: ku)
         : null;
 
-    // Geniş ekranda sol sütun podyumdan sonra boş kalıyordu; oyuncunun
-    // kendi satırı ise sağdaki uzun listenin ortasında bir yerdeydi.
-    // Bağlam sütununa kendi sıra özeti konur — AMA yalnız oyuncu gerçekten
-    // sıralanmışsa ve podyumda DEĞİLSE.
-    final selfIndex = uid == null
-        ? -1
-        : entries.indexWhere((e) => e.playerId == uid);
-    final selfSummary = (_myRank(entries) != null && selfIndex >= 3)
-        ? _RankRow(
-            entry: entries[selfIndex],
-            isKu: ku,
-            highlight: true,
-            colorOverride: avatarColorOverrides[entries[selfIndex].playerId],
-          )
-        : null;
+    final column = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (banner != null) ...[
+          banner,
+          const SizedBox(height: SahneSpace.cardGap),
+        ],
+        list,
+      ],
+    );
 
     return LayoutBuilder(
       builder: (context, constraints) {
         // Eşik ekran enidir; gövde sayfa kenarı (2 × 16) kadar daha dardır.
-        if (constraints.maxWidth + 2 * SahneSpace.page < 720) {
-          // Podyum bu ekranın kahramanıdır; içerik TEPEDE durur (2026-08-19
-          // görsel denetimi: dikeyde ortalanınca ilk bakışta kayboluyordu).
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (banner != null) ...[
-                banner,
-                const SizedBox(height: SahneSpace.cardGap),
-              ],
-              podium,
-              if (rest.isNotEmpty) ...[
-                const SizedBox(height: SahneSpace.cardGap),
-                _RankListSurface(rows: rankRows()),
-              ],
-            ],
-          );
-        }
-        // Geniş ekran: sol sütun bağlam (lig bandı + podyum), sağ sütun
-        // sıralama.
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 5,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (banner != null) ...[
-                    banner,
-                    const SizedBox(height: SahneSpace.cardGap),
-                  ],
-                  podium,
-                  if (selfSummary != null) ...[
-                    const SizedBox(height: SahneSpace.cardGap),
-                    selfSummary,
-                  ],
-                ],
-              ),
-            ),
-            const SizedBox(width: SahneSpace.cardGap),
-            Expanded(
-              flex: 6,
-              child: rest.isEmpty
-                  ? const SizedBox.shrink()
-                  : KeyedSubtree(
-                      key: const ValueKey('leaderboard-wide-list'),
-                      child: _RankListSurface(rows: rankRows()),
-                    ),
-            ),
-          ],
+        if (constraints.maxWidth + 2 * SahneSpace.page < 720) return column;
+        return Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            key: const ValueKey('leaderboard-wide-list'),
+            constraints: const BoxConstraints(maxWidth: 640),
+            child: column,
+          ),
         );
       },
     );
@@ -934,258 +884,7 @@ class _PeriodRail extends StatelessWidget {
   }
 }
 
-// ─── Podium (top 3) ──────────────────────────────────────────────────────────
-
-/// Kürsü: 2. sol, 1. orta (daha büyük, altın hale ve taç), 3. sağ.
-///
-/// 2026-09-29 Şahnê: podyum artık bir sahne kartı değil, sayfanın kendi
-/// zemininde durur (maket). Elmas avatarlar madalya renginde Halka 3
-/// taşır (altın / gümüş / bronz); birincinin arkasında altın hale
-/// (gradyan, bulanıklık yok), üstünde taç glifi. Kaideler Kulis tonunda,
-/// üst kenarları madalya renginde; sıra numarası kaidede. Eski ışık
-/// hüzmesi + konfeti ressamı, kilim açılışı, madalya amblemleri ve dolu
-/// renkli kaideler kalktı.
-class _Podium extends StatelessWidget {
-  const _Podium({
-    required this.entries,
-    required this.isKu,
-    this.colorOverrides = const {},
-  });
-
-  final List<LeaderboardEntry> entries;
-  final bool isKu;
-  final Map<String, Color> colorOverrides;
-
-  @override
-  Widget build(BuildContext context) {
-    final first = entries.isNotEmpty ? entries[0] : null;
-    final second = entries.length > 1 ? entries[1] : null;
-    final third = entries.length > 2 ? entries[2] : null;
-
-    // Yerleşim: 2. sol, 1. orta (daha büyük), 3. sağ
-    final slots = [
-      if (second != null)
-        _PodiumSlot(
-          entry: second,
-          isCenter: false,
-          colorOverride: colorOverrides[second.playerId],
-        ),
-      if (first != null)
-        _PodiumSlot(
-          entry: first,
-          isCenter: true,
-          colorOverride: colorOverrides[first.playerId],
-        ),
-      if (third != null)
-        _PodiumSlot(
-          entry: third,
-          isCenter: false,
-          colorOverride: colorOverrides[third.playerId],
-        ),
-    ];
-
-    final content = slots.length == 1
-        ? Center(child: slots.first)
-        : Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              for (var i = 0; i < slots.length; i++) ...[
-                if (i > 0) const SizedBox(width: SahneSpace.x2),
-                Expanded(child: slots[i]),
-              ],
-            ],
-          );
-
-    return KeyedSubtree(
-      key: const ValueKey('leaderboard-podium'),
-      child: content,
-    );
-  }
-}
-
-class _PodiumSlot extends StatelessWidget {
-  const _PodiumSlot({
-    required this.entry,
-    required this.isCenter,
-    this.colorOverride,
-  });
-
-  final LeaderboardEntry entry;
-  final bool isCenter;
-  final Color? colorOverride;
-
-  /// Madalya rengi: halka ve kaidenin üst kenarı.
-  Color _medal(SahneTokens t) => switch (entry.rank) {
-    1 => t.gold,
-    2 => SahneStageColors.silver,
-    _ => SahneStageColors.bronze,
-  };
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final medal = _medal(t);
-    final first = entry.rank == 1;
-    final avatar = isCenter ? 64.0 : 48.0;
-    final pedestalH = isCenter
-        ? 80.0
-        : entry.rank == 2
-        ? 56.0
-        : 44.0;
-
-    // Avatar + madalya halkası (içe çizilen Halka 3). Birincide arkada
-    // 116'lık altın hale.
-    final ring = SizedBox.square(
-      dimension: avatar,
-      child: Stack(
-        children: [
-          PlayerAvatar(
-            radius: avatar / 2,
-            photoUrl: entry.avatarUrl,
-            iconId: entry.avatarIcon,
-            colorHex: entry.avatarColor,
-            frameId: entry.avatarFrame,
-            displayName: entry.displayName,
-            colorOverride: colorOverride,
-          ),
-          Positioned.fill(
-            child: IgnorePointer(
-              child: DecoratedBox(
-                decoration: ShapeDecoration(
-                  shape: SahneShape.diamond(
-                    avatar,
-                    side: BorderSide(
-                      color: medal,
-                      width: SahneRing.r3,
-                      strokeAlign: BorderSide.strokeAlignInside,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-
-    final avatarBlock = first
-        ? SizedBox(
-            width: 116,
-            height: avatar + 28,
-            child: Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.bottomCenter,
-              children: [
-                Positioned(
-                  bottom: avatar / 2 - 58,
-                  child: IgnorePointer(
-                    child: SizedBox.square(
-                      dimension: 116,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: RadialGradient(
-                            colors: [
-                              SahneStageColors.haloGold,
-                              SahneStageColors.haloGold.withValues(alpha: 0),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const Positioned(
-                  top: 0,
-                  child: SahneGlyph(SahneGlyphKind.crown, size: 24),
-                ),
-                ring,
-              ],
-            ),
-          )
-        : ring;
-
-    // Tek kazanan (ya da geniş sütun) basamağı ekran boyu gerilmesin:
-    // basamak en çok 180 genişlikte kalır.
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 180),
-      child: Column(
-        key: ValueKey('podium-slot-${entry.rank}'),
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          avatarBlock,
-          const SizedBox(height: SahneSpace.x2),
-          Text(
-            entry.displayName,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: SahneType.bodyStrong.copyWith(color: t.tx),
-          ),
-          if (entry.showcaseTitle != null)
-            Text(
-              entry.showcaseTitle!,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: SahneType.caption.copyWith(color: t.tx2),
-            ),
-          // Puan %200 yazıda "50/00" gibi iki satıra bölünüyordu: sayı bir
-          // sözcük değil. `FittedBox` YALNIZ sayıya uygulanır ve yalnız
-          // gerekince küçültür (2026-08-04 görsel denetimi).
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: RollingCount(
-              value: entry.totalScore,
-              maxLines: 1,
-              style: SahneType.captionStrong.copyWith(
-                color: t.goldTx,
-                fontFeatures: const [FontFeature.tabularFigures()],
-              ),
-            ),
-          ),
-          const SizedBox(height: SahneSpace.x2),
-          // Kaide: Perde tonu, üstte madalya renginde 3 px şerit, sıra no
-          // (birincide koyu altın). Şerit pahın içinde kalır (M pahla
-          // kırpılır). Birincinin kaidesi Kulis'e çıkmaz: gündüzde Kulis
-          // üstünde koyu altın 4.4:1'e düşüyordu.
-          ClipPath(
-            clipper: const ShapeBorderClipper(shape: SahneShape.m),
-            child: SizedBox(
-              width: double.infinity,
-              height: pedestalH,
-              child: ColoredBox(
-                color: t.s1,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: SahneRing.r3,
-                      width: double.infinity,
-                      child: ColoredBox(color: medal),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          '${entry.rank}',
-                          style: SahneType.headline.copyWith(
-                            color: first ? t.goldTx : t.tx2,
-                            fontFeatures: const [FontFeature.tabularFigures()],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ─── Rank Row (4-10) ─────────────────────────────────────────────────────────
+// ─── Sıra satırı ────────────────────────────────────────────────────────────
 
 /// Sıralama satırlarını tek bir yüzeyde toplar: liste grubu, satırlar
 /// arası avatar hizasından başlayan 1 px ayırıcı.
@@ -1239,6 +938,22 @@ class _RankRow extends StatelessWidget {
   /// GÖRÜNÜR bir düğmedir. Kendi satırında null'dır — kişi kendini
   /// bildiremez.
   final VoidCallback? onReport;
+
+  /// Sıra rakamının rengi — ilk üçü listede ayıran TEK işaret.
+  ///
+  /// 2026-09-29 doğallık (K9): podyum, taç ve madalya halkası yok; birinci
+  /// koyu altın, ikinci ve üçüncü birincil metin, gerisi ikincil metin.
+  /// Rakam her zaman yazılıdır: sıra yalnız renkle anlatılmaz. Gümüş ve
+  /// bronz metin için temaya duyarlı bir Şahnê belirteci yok (sahne
+  /// madalyaları gündüz zemininde 4.5:1'i tutmuyor), bu yüzden ikisi aynı.
+  Color _rankColor(SahneTokens t) {
+    if (highlight) return t.goldTx;
+    return switch (entry.rank) {
+      1 => t.goldTx,
+      2 || 3 => t.tx,
+      _ => t.tx2,
+    };
+  }
 
   String get _meta => entry.showcaseTitle != null
       ? '${entry.showcaseTitle} · ${entry.bestStreak} ${Tr.forKu(K.streakUnit, isKu)}'
@@ -1319,7 +1034,7 @@ class _RankRow extends StatelessWidget {
                     '${entry.rank}',
                     maxLines: 1,
                     style: SahneType.bodyStrong.copyWith(
-                      color: highlight ? t.goldTx : t.tx2,
+                      color: _rankColor(t),
                       fontFeatures: const [FontFeature.tabularFigures()],
                     ),
                   ),
@@ -1427,9 +1142,12 @@ class _RankRow extends StatelessWidget {
 
 // ─── Friend Rank Row (Arkadaşlar tab) ─────────────────────────────────────────
 
-/// Arkadaş sıralaması satırı (liste grubunun içinde): seviye karesi, elmas
-/// avatar + çevrimiçi noktası, ad + durum sözü, puan. Durum yalnız renkle
+/// Arkadaş sıralaması satırı (liste grubunun içinde): seviye karesi,
+/// avatar + çevrimiçi işareti, ad + durum sözü, puan. Durum yalnız renkle
 /// verilmez: "Çevrimiçi" / "Çevrimdışı" yazar.
+///
+/// 2026-09-29 doğallık (K5): çevrimiçi işareti küçük elmastı; elmas yalnız
+/// soru ilerlemesi ve ders sayacında kalır, işaret küçük pahlı kare.
 class _FriendRankRow extends StatelessWidget {
   const _FriendRankRow({required this.friend, required this.isKu});
 
@@ -1483,9 +1201,10 @@ class _FriendRankRow extends StatelessWidget {
                       child: DecoratedBox(
                         decoration: ShapeDecoration(
                           color: online ? t.learnTx : t.tx3,
-                          shape: SahneShape.diamond(
-                            12,
-                            side: BorderSide(color: t.s1, width: SahneRing.r2),
+                          shape: SahneShape.withSide(
+                            SahneShape.forSize(12),
+                            t.s1,
+                            width: SahneRing.r2,
                           ),
                         ),
                       ),

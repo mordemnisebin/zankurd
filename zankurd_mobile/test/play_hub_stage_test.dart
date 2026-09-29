@@ -22,6 +22,14 @@
 /// liste satırıdır: yarış rolü + "BUGÜN" rozeti (ton + söz, dolu kırmızı
 /// değil). Bu dosya sahneyi, görünür alt satırları ve okunabilirliği
 /// (WCAG ≥ 4.5:1) birlikte sabitler.
+///
+/// ## 2026-09-29 doğallık:
+///
+/// VS amblemi kalktı (K5): yerine somut bilgi satırı ("10 soru · ~2
+/// dakika"). Üst etiket büyük harf değil, kalın açıklama (K8). Oda
+/// eylemleri yan yana iki ikincil düğme; iki alt satır yerine bölümün tek
+/// açıklama satırı (K7) — kilitliyken o satır sunucu durumunu söyler.
+/// Günün etkinliğinin "Bugün" rozeti kalktı: satırın adıyla aynı sözdü.
 library;
 
 import 'dart:ui' as ui;
@@ -63,7 +71,7 @@ double _contrast(Color a, Color b) {
 
 void main() {
   testWidgets(
-    'sahne: düello kartı, VS amblemi ve üst etiket her dilde ve temada durur',
+    'sahne: düello kartı, bilgi satırı ve üst etiket her dilde ve temada durur',
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -82,14 +90,24 @@ void main() {
           expect(card.role, SahneRole.race, reason: why);
           expect(
             find.descendant(of: hero, matching: find.byType(SahneVsEmblem)),
-            findsOneWidget,
+            findsNothing,
             reason: why,
           );
-          // Üst etiket yerele duyarlı büyük harf: Türkçede "HIZLI DÜELLO".
           expect(
             find.descendant(
               of: hero,
-              matching: find.text(isKu ? 'PÊŞBIRKA BILEZ' : 'HIZLI DÜELLO'),
+              matching: find.text(
+                isKu ? '10 pirs · ~2 deqe' : '10 soru · ~2 dakika',
+              ),
+            ),
+            findsOneWidget,
+            reason: why,
+          );
+          // Üst etiket cümle düzeninde (büyük harf yalnız soru künyesinde).
+          expect(
+            find.descendant(
+              of: hero,
+              matching: find.text(isKu ? 'Pêşbirka bilez' : 'Hızlı düello'),
             ),
             findsOneWidget,
             reason: why,
@@ -151,7 +169,7 @@ void main() {
     },
   );
 
-  testWidgets('oda satırlarının alt satırı görünür (TR ve Kurmancî)', (
+  testWidgets('oda eylemlerinin açıklaması görünür (TR, Kurmancî, kilitli)', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -161,19 +179,20 @@ void main() {
       await tester.pumpWidget(_shell(isKu: isKu, isDark: false));
       await tester.pumpAndSettle();
 
-      final createSub = isKu
+      final note = isKu
           ? 'Hevalên xwe bi kodê vexwîne'
           : 'Arkadaşlarını kodla çağır';
-      final joinSub = isKu
-          ? 'Koda odeyê, mînak: ZK-ABCDEF0123'
-          : 'Oda kodu, örnek: ZK-ABCDEF0123';
-
-      expect(find.text(createSub), findsOneWidget, reason: 'ku=$isKu');
-      expect(find.text(joinSub), findsOneWidget, reason: 'ku=$isKu');
+      expect(find.text(note), findsOneWidget, reason: 'ku=$isKu');
     }
+
+    // Kilitliyken açıklama satırı dürüst: sunucuya ulaşılamıyor.
+    await tester.pumpWidget(_shell(isKu: false, isDark: false, locked: true));
+    await tester.pumpAndSettle();
+    expect(find.text('Arkadaşlarını kodla çağır'), findsNothing);
+    expect(find.text('Sunucuya ulaşılamadı'), findsWidgets);
   });
 
-  testWidgets('günün etkinliği yarış rolü + "BUGÜN" rozeti taşır', (
+  testWidgets('günün etkinliği yarış rolünde; adını tekrarlayan rozet yok', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -185,12 +204,12 @@ void main() {
 
       final key = find.byKey(const ValueKey('play-hub-daily-contest'));
       expect(tester.widget<SahneListRow>(key).role, SahneRole.race);
-      final badge = tester.widget<SahneBadge>(
+      expect(
         find.descendant(of: key, matching: find.byType(SahneBadge)),
+        findsNothing,
+        reason: 'dark=$isDark',
       );
-      expect(badge.tone, SahneBadgeTone.race, reason: 'dark=$isDark');
-      // 2026-09-29 doğallık: rozet artık cümle düzeninde (K8, `SahneBadge` captionStrong); bu bekçi eskiden büyük harfi bekliyordu.
-      expect(find.text('Bugün'), findsOneWidget, reason: 'dark=$isDark');
+      expect(find.text('Bugün'), findsNothing, reason: 'dark=$isDark');
     }
   });
 

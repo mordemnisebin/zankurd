@@ -6,12 +6,17 @@ import '../../widgets/sahne/sahne.dart';
 /// Ana ekranın tek birincil eylemi: "bugün şunu yap".
 ///
 /// 2026-09-29 Şahnê: günlük görev bir **sahne kartıdır** (gece degradesi,
-/// Zimrût köşe radyali, üstte kilim göz şeridi; gündüz temasında da gece).
-/// Maketteki "Günün dersi" kartının yapısı: üst etiket + manşet + açıklama
-/// solda, ders elması ("2/5") sağda, altında tam genişlik TEK birincil
-/// düğme (Agir, koyu metin). Eski hâl koyu yeşil elle yazılmış bir
-/// degrade, şafak dağı ressamı, maskot ve beyaz yazılı turuncu düğmeydi;
-/// hepsi kalktı. İlerleme kilim çubuğu yerine ders elmasıyla okunur.
+/// Zimrût köşe radyali; gündüz temasında da gece). Maketteki "Günün dersi"
+/// kartının yapısı: üst etiket + manşet + açıklama solda, ders elması
+/// ("2/5") sağda, altında tam genişlik TEK birincil düğme (Agir, koyu
+/// metin). Eski hâl koyu yeşil elle yazılmış bir degrade, şafak dağı
+/// ressamı, maskot ve beyaz yazılı turuncu düğmeydi; hepsi kalktı.
+/// İlerleme kilim çubuğu yerine ders elmasıyla okunur.
+///
+/// 2026-09-29 doğallık (K8): üst etiket büyük harf + harf aralığıyla
+/// ("BUGÜNÜN GÖREVİ") bağırıyordu; artık kalın açıklama, cümle düzeni
+/// ("Bugünün görevi"). Büyük harf yalnız soru sahnesinin künyesinde kalır.
+/// Kilim şeridi de yok (K4: `SahneStageCard` varsayılanı kapalı).
 ///
 /// Kart `SahneStageCard.lesson` ile aynı yerleşimi kurar ama düğmeyi kendisi
 /// çizer: ekran okuyucu düğümü (`home-daily-task-start`) ve yükleniyor
@@ -93,8 +98,8 @@ class TodayTaskCard extends StatelessWidget {
                       ? const ValueKey('home-first-session-badge')
                       : null,
                   child: Text(
-                    sahneUpper(context, eyebrow),
-                    style: SahneType.eyebrow.copyWith(color: t.learnTx),
+                    sentenceCaseLabel(eyebrow, isKu: isKu),
+                    style: SahneType.captionStrong.copyWith(color: t.learnTx),
                   ),
                 ),
                 const SizedBox(height: SahneSpace.x1),
@@ -184,4 +189,25 @@ class _StartButton extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Büyük harfle saklanmış bir etiketi cümle düzenine çevirir: ilk harf
+/// kalır, gerisi yerele duyarlı küçülür ("BUGÜNÜN GÖREVİ" → "Bugünün
+/// görevi", "İLK DERS" → "İlk ders", "ERKÊ ÎRO" → "Erkê îro").
+///
+/// 2026-09-29 doğallık (K8): `K.bugununGorevi` ve `K.firstSessionBadge`
+/// dizge defterinde hâlâ büyük harfle duruyor (eskiden yalnız üst etiket
+/// biçemiyle çizildikleri için). Defter cümle düzenine geçince bu çağrı
+/// hiçbir şey değiştirmez (işlem kendi çıktısında sabittir). Etiketlerde
+/// özel ad yok; özel adlı bir dizgeye uygulanmamalı.
+///
+/// `toLowerCase()` yerele duyarsızdır: Türkçede "I" → "ı", "İ" → "i"
+/// önceden çevrilir; Kurmancîde noktasız ı yoktur, varsayılan doğrudur.
+@visibleForTesting
+String sentenceCaseLabel(String text, {required bool isKu}) {
+  if (text.isEmpty) return text;
+  final first = text.substring(0, 1);
+  var rest = text.substring(1);
+  if (!isKu) rest = rest.replaceAll('I', 'ı').replaceAll('İ', 'i');
+  return first + rest.toLowerCase();
 }

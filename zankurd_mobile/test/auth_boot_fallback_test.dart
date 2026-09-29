@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık (K7): "Oda kur" liste satırı değil ikincil düğme.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -116,10 +117,12 @@ void main() {
 
     final createRoom = find.byKey(const ValueKey('play-hub-create-room'));
     if (createRoom.evaluate().isNotEmpty) {
-      // 2026-09-29 Şahnê: oda kartı artık liste satırıdır (`SahneListRow`);
-      // kural aynı: sunucu yokken dokunulamaz.
-      final card = tester.widget<SahneListRow>(createRoom);
-      expect(card.onTap, isNull);
+      // 2026-09-29 doğallık (K7): "Oda kur" artık ikincil düğmedir
+      // (`SahneButton`); kural aynı: sunucu yokken dokunulamaz.
+      final button = tester.widget<SahneButton>(
+        find.descendant(of: createRoom, matching: find.byType(SahneButton)),
+      );
+      expect(button.onPressed, isNull);
     }
   });
 }

@@ -357,25 +357,56 @@ class _LearningScreenState extends State<LearningScreen> {
             .length;
         // Yolun sonundaki "Kategori ustalık hedefi" durağı kalktı: ne
         // olduğu, neye yaradığı ekranda yazmıyordu (2026-09-27).
+        //
+        // 2026-09-29 doğallık (K5, K7): dersler solda elmas düğümlü bir yol
+        // çizgisine dizilmiş ayrı kartlardı; her kartın başında bir ikon
+        // karosu vardı. Elmas yalnız soru ilerlemesi ve ders sayacında
+        // kalır, kilitli ders tek işaret (kilit) taşır. Artık etkin ders
+        // sahne kartı, öteki dersler onun önünde ve arkasında ikonsuz
+        // satırlardan oluşan liste grupları; satırın sağında ilerleme
+        // (✓ tamamlandı, kilit) durur, satırın tamamı dokunulur.
+        final blocks = <Widget>[];
+        var run = <Widget>[];
+        void closeRun() {
+          if (run.isEmpty) return;
+          blocks.add(SahneListGroup(children: run));
+          run = <Widget>[];
+        }
+
+        for (var i = 0; i < lessons.length; i++) {
+          final stop = _pathStop(
+            ctx,
+            ku,
+            lessons: lessons,
+            index: i,
+            firstOpenIndex: firstOpenIndex,
+            completedCount: completedCount,
+          );
+          if (stop.current) {
+            closeRun();
+            blocks.add(stop.widget);
+          } else {
+            run.add(stop.widget);
+          }
+        }
+        closeRun();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            for (var i = 0; i < lessons.length; i++)
-              _pathStop(
-                ctx,
-                ku,
-                lessons: lessons,
-                index: i,
-                firstOpenIndex: firstOpenIndex,
-                completedCount: completedCount,
-              ),
+            for (var i = 0; i < blocks.length; i++) ...[
+              if (i > 0) const SizedBox(height: SahneSpace.cardGap),
+              blocks[i],
+            ],
           ],
         );
       },
     );
   }
 
-  Widget _pathStop(
+  /// Yolun bir durağı: etkin ders sahne kartı ([current]), ötekiler liste
+  /// satırı. Anahtarlar (`learning-path-node-…`, `learning-route-stop-…`)
+  /// ekranın test sözleşmesidir.
+  ({Widget widget, bool current}) _pathStop(
     BuildContext context,
     bool ku, {
     required List<Lesson> lessons,
@@ -416,18 +447,14 @@ class _LearningScreenState extends State<LearningScreen> {
         onTap: locked ? null : () => _openLesson(lesson),
       );
     }
-    return _LearningPathNode(
-      key: ValueKey('learning-path-node-${lesson.id}'),
-      state: completed
-          ? SahnePathNodeState.done
-          : current
-          ? SahnePathNodeState.inProgress
-          : SahnePathNodeState.locked,
-      first: index == 0,
-      last: index == lessons.length - 1,
-      child: KeyedSubtree(
-        key: ValueKey('learning-route-stop-${lesson.id}'),
-        child: card,
+    return (
+      current: current,
+      widget: KeyedSubtree(
+        key: ValueKey('learning-path-node-${lesson.id}'),
+        child: KeyedSubtree(
+          key: ValueKey('learning-route-stop-${lesson.id}'),
+          child: card,
+        ),
       ),
     );
   }
@@ -603,12 +630,17 @@ class _TopicActions extends StatelessWidget {
             ],
           );
         }
-        return Row(
-          children: [
-            Expanded(child: practice),
-            const SizedBox(width: SahneSpace.x3),
-            Expanded(child: flashcards),
-          ],
+        // İki düğme aynı boyda: Kurmancîde "Pirsan bibersivîne" iki satıra
+        // inerken yanındaki tek satırlık düğme kısa kalıyordu.
+        return IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: practice),
+              const SizedBox(width: SahneSpace.x3),
+              Expanded(child: flashcards),
+            ],
+          ),
         );
       },
     );
@@ -690,10 +722,14 @@ class _CurrentLessonCard extends StatelessWidget {
   }
 }
 
-/// Yolun öteki durakları — yüzey kartı: 44'lük ders ikonu karosu + ad
-/// (+ varsa açıklama) + sağda durum. Tamamlanan ders yeniden açılabilir
-/// (chevron); kilitli ders ikincil metinde, kilit ikonuyla ve
-/// dokunulamaz. Durum soldaki yol elmasında da (✓ / çizgi) görünür.
+/// Yolun öteki durakları — ikonsuz liste satırı: ders adı (+ varsa
+/// açıklama), sağda ilerleme. Tamamlanan ders yeniden açılabilir (✓,
+/// satırın tamamı dokunulur); kilitli ders ikincil metinde, kilit ikonuyla
+/// ve dokunulamaz. Durum ekran okuyucuya satırın kendi sözüyle okunur.
+///
+/// 2026-09-29 doğallık (K7): satırın başındaki 44'lük ders ikonu karosu ve
+/// sağdaki ok kalktı; ikon çoğu derste aynı konu ikonuydu (Günlük: hep
+/// konuşma balonu) ve satırı şablon bir menüye çeviriyordu.
 class _LessonRow extends StatelessWidget {
   const _LessonRow({
     required this.lesson,
@@ -716,72 +752,17 @@ class _LessonRow extends StatelessWidget {
     final t = SahneTokens.of(context);
     final locked = onTap == null;
     final description = lesson.descriptionKu?.trim();
-    final large = MediaQuery.textScalerOf(context).scale(16) >= 24;
-    return Semantics(
-      button: !locked,
+    return SahneListRow.plain(
+      title: title,
+      subtitle: description == null || description.isEmpty ? null : description,
       enabled: !locked,
-      label: semanticLabel,
       onTap: onTap,
-      excludeSemantics: true,
-      child: SahneSurfaceCard(
-        onTap: onTap,
-        padding: const EdgeInsetsDirectional.fromSTEB(
-          SahneSpace.x3,
-          SahneSpace.x3,
-          SahneSpace.x4,
-          SahneSpace.x3,
-        ),
-        child: Row(
-          children: [
-            // Büyük yazı ölçeğinde (≥ 1.5) ikon karosu çizilmez: ders adı
-            // dar sütunda harf harf bölünüyordu ("Nasandi / n"). Durum
-            // yol elmasında ve sağdaki ikonda kalır.
-            if (!large) ...[
-              DecoratedBox(
-                decoration: ShapeDecoration(
-                  color: locked ? t.s2 : t.learnTint,
-                  shape: SahneShape.m,
-                ),
-                child: SizedBox.square(
-                  dimension: 44,
-                  child: Icon(
-                    iconForLesson(lesson),
-                    size: 24,
-                    color: locked ? t.tx2 : t.learnTx,
-                  ),
-                ),
-              ),
-              const SizedBox(width: SahneSpace.x3),
-            ],
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: SahneType.bodyStrong.copyWith(
-                      color: locked ? t.tx2 : t.tx,
-                    ),
-                  ),
-                  if (description != null && description.isNotEmpty)
-                    Text(
-                      description,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: SahneType.caption.copyWith(color: t.tx2),
-                    ),
-                ],
-              ),
-            ),
-            const SizedBox(width: SahneSpace.x2),
-            Icon(
-              locked ? AppIcons.lock : AppIcons.chevronRight,
-              size: 20,
-              color: t.tx3,
-            ),
-          ],
-        ),
-      ),
+      semanticLabel: semanticLabel,
+      trailing: locked
+          ? Icon(AppIcons.lock, size: 20, color: t.tx3)
+          : completed
+          ? Icon(AppIcons.check, size: 20, color: t.learnTx)
+          : null,
     );
   }
 }
@@ -865,97 +846,6 @@ IconData iconForLesson(Lesson lesson) {
   // `everyday_2` → `everyday`
   final family = lesson.slug.replaceFirst(RegExp(r'_\d+$'), '');
   return _lessonMockSlugIconMap[family] ?? AppIcons.graduationCap;
-}
-
-/// Öğrenme yolunun bir durağı: solda 24'lük yol elması ([SahnePathNode])
-/// ve durakları birbirine bağlayan ince yol çizgisi (Ray), sağda kart.
-///
-/// Elmas kartın dikey ortasındadır; çizgi ilk durakta elmastan başlar,
-/// son durakta elmasta biter. Kilitli elmasın içi zemin rengidir: çizgi
-/// arkasından geçmez. Durum kartın kendi sözünde okunur; elmas ekran
-/// okuyucuya ayrıca duyurulmaz.
-class _LearningPathNode extends StatelessWidget {
-  const _LearningPathNode({
-    required this.state,
-    required this.first,
-    required this.last,
-    required this.child,
-    super.key,
-  });
-
-  final SahnePathNodeState state;
-  final bool first;
-  final bool last;
-  final Widget child;
-
-  static const double _rail = 24;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final gap = last ? 0.0 : SahneSpace.cardGap;
-    Widget segment(bool visible) => Expanded(
-      child: visible
-          ? Center(
-              child: SizedBox(
-                width: 1.5,
-                height: double.infinity,
-                child: ColoredBox(color: t.s3),
-              ),
-            )
-          : const SizedBox.shrink(),
-    );
-    return Stack(
-      children: [
-        // Yol çizgisi: aradaki boşluk dahil bütün yüksekliği kaplar.
-        PositionedDirectional(
-          start: 0,
-          top: 0,
-          bottom: 0,
-          width: _rail,
-          child: ExcludeSemantics(
-            child: Column(
-              children: [
-                segment(!first),
-                // Elmasın merkezi kartın dikey ortasında: alt yarıda
-                // boşluk (gap) de çizgiye dahildir.
-                segment(!last),
-                if (gap > 0)
-                  SizedBox(
-                    height: gap,
-                    child: Center(
-                      child: SizedBox(
-                        width: 1.5,
-                        height: double.infinity,
-                        child: ColoredBox(color: t.s3),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-        PositionedDirectional(
-          start: 0,
-          top: 0,
-          bottom: gap,
-          width: _rail,
-          child: ExcludeSemantics(
-            child: Center(
-              child: SahnePathNode(state: state, semanticLabel: ''),
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsetsDirectional.only(
-            start: _rail + SahneSpace.x2,
-            bottom: gap,
-          ),
-          child: child,
-        ),
-      ],
-    );
-  }
 }
 
 class LessonDetailScreen extends StatefulWidget {

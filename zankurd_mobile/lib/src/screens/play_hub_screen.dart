@@ -284,37 +284,38 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
     // 2026-09-29 Şahnê A iskeleti: marka satırı → "Yarış" → alt başlık →
     // tek birincil eylem (hızlı düello sahne kartı) → iki adlandırılmış
-    // liste grubu. Ekran eskiden eşit ağırlıkta satırlardan oluşan bir
+    // bölüm. Ekran eskiden eşit ağırlıkta satırlardan oluşan bir
     // menü gibi duruyordu; yeni kullanıcı hangisinin "asıl oyun" olduğunu
     // seçemiyordu (2026-07-25 canlı denetimi). Renk rol taşır: yarış
-    // kimliği Boyax (sahne kartı degradesi ve satırların ikon karosu),
-    // turuncu yalnız "Rakip bul".
-    final createRoom = SahneListRow.icon(
+    // kimliği Boyax (sahne kartı degradesi ve etkinlik satırlarının ikon
+    // karosu), turuncu yalnız "Rakip bul".
+    // 2026-09-29 doğallık (K7): "Oda kur" ve "Kodla katıl" iki satırlık
+    // bir liste grubuydu; her satırın başında ikon karosu, altında ikinci
+    // bir açıklama, sonunda ok — iki düğmelik bir iş için şablon bir menü.
+    // Artık bölüm başlığının altında tek açıklama satırı ve yan yana iki
+    // ikincil düğme. Kodun biçimi katılma sayfasındaki alan ve doğrulama
+    // mesajında yazılı; kilitliyken açıklama satırı sunucu durumunu söyler.
+    final createRoom = KeyedSubtree(
       key: const ValueKey('play-hub-create-room'),
-      icon: AppIcons.peopleGroup,
-      role: SahneRole.race,
-      title: context.t(K.createRoom),
-      subtitle: locked ? unreachable : context.t(K.createRoomSub),
-      trailing: _roomActionLoading ? const _RowSpinner() : null,
-      chevron: !locked && !_roomActionLoading,
-      enabled: !locked,
-      onTap: locked || _roomActionLoading ? null : _createOnlineRoom,
-      semanticLabel:
-          '${context.t(K.createRoom)}. '
-          '${locked ? unreachable : context.t(K.createRoomSub)}',
+      child: SahneButton.secondary(
+        icon: AppIcons.peopleGroup,
+        label: context.t(K.createRoom),
+        // Anahtarın kendi ekran okuyucu düğümü olsun (düğme + dokunma).
+        semanticLabel: context.t(K.createRoom),
+        loading: _roomActionLoading,
+        expand: true,
+        onPressed: locked ? null : _createOnlineRoom,
+      ),
     );
-    final joinRoom = SahneListRow.icon(
+    final joinRoom = KeyedSubtree(
       key: const ValueKey('play-hub-join-room'),
-      icon: AppIcons.hashtag,
-      role: SahneRole.race,
-      title: context.t(K.joinByCode),
-      subtitle: locked ? unreachable : context.t(K.joinByCodeSub),
-      chevron: !locked,
-      enabled: !locked,
-      onTap: locked ? null : _showJoinSheet,
-      semanticLabel:
-          '${context.t(K.joinByCode)}. '
-          '${locked ? unreachable : context.t(K.joinByCodeSub)}',
+      child: SahneButton.secondary(
+        icon: AppIcons.hashtag,
+        label: context.t(K.joinByCode),
+        semanticLabel: context.t(K.joinByCode),
+        expand: true,
+        onPressed: locked ? null : _showJoinSheet,
+      ),
     );
 
     final dailyContest = SahneListRow.icon(
@@ -323,14 +324,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       role: SahneRole.race,
       title: context.t(K.dailyContest),
       subtitle: locked ? unreachable : context.t(K.tenQuestions),
-      trailing: _dailyLoading
-          ? const _RowSpinner()
-          : locked
-          ? null
-          : SahneBadge(
-              label: context.t(K.contestToday),
-              tone: SahneBadgeTone.race,
-            ),
+      // 2026-09-29 doğallık (K7): sağdaki "Bugün" rozeti kalktı; satırın
+      // adı zaten "Günün soruları", rozet aynı sözü ikinci kez söylüyordu.
+      trailing: _dailyLoading ? const _RowSpinner() : null,
       chevron: !locked && !_dailyLoading,
       enabled: !locked,
       onTap: locked || _dailyLoading ? null : _openDailyQuiz,
@@ -400,7 +396,11 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
           ],
         ],
         SahneSectionHeader(title: context.t(K.withFriends)),
-        SahneListGroup(children: [createRoom, joinRoom]),
+        _RoomActions(
+          note: locked ? unreachable : context.t(K.createRoomSub),
+          createRoom: createRoom,
+          joinRoom: joinRoom,
+        ),
         SahneSectionHeader(title: context.t(K.events)),
         SahneListGroup(
           children: [
@@ -466,6 +466,59 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
   }
 }
 
+/// Arkadaşlarla oynamanın iki yolu: tek açıklama satırı + yan yana iki
+/// ikincil düğme. Sığmazlarsa (dar ekran, büyük yazı) alt alta dizilir;
+/// "Kodla katıl" Kurmancîde ("Bi kodê tevlî bibe") yarım genişliğe iki
+/// satırdan fazla düşmesin diye eşik yazı ölçeğine de bakar.
+class _RoomActions extends StatelessWidget {
+  const _RoomActions({
+    required this.note,
+    required this.createRoom,
+    required this.joinRoom,
+  });
+
+  final String note;
+  final Widget createRoom;
+  final Widget joinRoom;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(note, style: SahneType.caption.copyWith(color: t.tx2)),
+        const SizedBox(height: SahneSpace.x3),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final largeText = MediaQuery.textScalerOf(context).scale(16) > 20;
+            if (constraints.maxWidth < 320 || largeText) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  createRoom,
+                  const SizedBox(height: SahneSpace.x2),
+                  joinRoom,
+                ],
+              );
+            }
+            return IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(child: createRoom),
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(child: joinRoom),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+}
+
 /// Satır sağındaki yükleniyor göstergesi (oda kuruluyor, etkinlik açılıyor).
 class _RowSpinner extends StatelessWidget {
   const _RowSpinner();
@@ -484,13 +537,17 @@ class _RowSpinner extends StatelessWidget {
 
 /// Ekranın tek birincil eylemi — bir YARIŞMA SAHNESİ.
 ///
-/// 2026-09-29 Şahnê: düello sahne kartı (Boyax sahne degradesi, üstte kilim
-/// göz şeridi, gündüzde de gece). Solda üst etiket "HIZLI DÜELLO", manşet
-/// ve süre; sağda VS amblemi (oyuncu elması altın halka, rakip elması "?" —
-/// eşleştirme kimi bulacağını henüz bilmiyor, sahte bir yüz göstermez);
-/// altında tam genişlik TEK birincil düğme "Rakip bul" (Agir, koyu metin).
-/// Eski ışık hüzmesi + konfeti ressamı, yeşil degrade ve beyaz daireler
-/// kalktı.
+/// 2026-09-29 Şahnê: düello sahne kartı (Boyax sahne degradesi, gündüzde de
+/// gece). Üstte "Hızlı düello" etiketi, manşet ve bilgi satırı; altında tam
+/// genişlik TEK birincil düğme "Rakip bul" (Agir, koyu metin). Eski ışık
+/// hüzmesi + konfeti ressamı, yeşil degrade ve beyaz daireler kalktı.
+///
+/// 2026-09-29 doğallık (K5, K8): sağdaki VS amblemi (oyuncu elması + "vs" +
+/// "?" elması) kalktı. Hiçbir şey söylemeyen bir süstü ve elması üçüncü bir
+/// anlama çekiyordu; yerine oyuncunun karar verirken bakacağı somut bilgi
+/// geldi: kaç soru, ne kadar sürer ("10 soru · ~2 dakika"). Rakibin
+/// seviyesi manşette ("Seviyene yakın rakip"). Üst etiket büyük harf
+/// değil, kalın açıklama.
 ///
 /// Kart `SahneStageCard.duel` ile aynı yerleşimi kurar ama düğmeyi kendisi
 /// çizer: `play-hub-quick-duel-cta` anahtarı ve kartın tek ekran okuyucu
@@ -507,12 +564,14 @@ class _QuickDuelHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final enabled = onTap != null;
-    // Manşet ve süre maketteki gibi iki satır; ayrı dizgelerdir
-    // ([K.quickDuelHeadline], [K.quickDuelDuration]).
     final title = enabled
         ? context.t(K.quickDuelHeadline)
         : context.t(K.serverUnreachableTitle);
-    final meta = enabled ? context.t(K.quickDuelDuration) : null;
+    // Eşleşme odası 10 soruyla kurulur (`MatchmakingScreen`, `limit: 10`).
+    // Soru sayısı ve süre ayrı dizgelerdir; ayraç çeviriye girmez.
+    final meta = enabled
+        ? '${context.t(K.tenQuestions)} · ${context.t(K.quickDuelDuration)}'
+        : null;
 
     return Semantics(
       key: const ValueKey('play-hub-quick-duel'),
@@ -527,13 +586,12 @@ class _QuickDuelHero extends StatelessWidget {
         child: Builder(
           builder: (context) {
             final t = SahneTokens.of(context);
-            final texts = Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  sahneUpper(context, context.t(K.quickDuel)),
-                  style: SahneType.eyebrow.copyWith(
+                  context.t(K.quickDuel),
+                  style: SahneType.captionStrong.copyWith(
                     color: SahneStageColors.raceSoft,
                   ),
                 ),
@@ -541,57 +599,14 @@ class _QuickDuelHero extends StatelessWidget {
                 Text(title, style: SahneType.headline.copyWith(color: t.tx)),
                 if (meta != null) ...[
                   const SizedBox(height: SahneSpace.x1),
-                  Row(
-                    children: [
-                      const Icon(
-                        AppIcons.clock,
-                        size: 16,
-                        color: SahneStageColors.raceSoft,
-                      ),
-                      const SizedBox(width: SahneSpace.x1),
-                      Flexible(
-                        child: Text(
-                          meta,
-                          style: SahneType.caption.copyWith(
-                            color: SahneStageColors.raceSoft,
-                          ),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    meta,
+                    key: const ValueKey('play-hub-quick-duel-meta'),
+                    style: SahneType.caption.copyWith(
+                      color: SahneStageColors.raceSoft,
+                    ),
                   ),
                 ],
-              ],
-            );
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Metne en az altı manşet harfi kalmıyorsa (büyük yazı, dar
-                // ekran) amblem metnin altına iner.
-                LayoutBuilder(
-                  builder: (context, c) {
-                    final room = c.maxWidth - 104 - SahneSpace.x3;
-                    final wide =
-                        room >= MediaQuery.textScalerOf(context).scale(22) * 6;
-                    if (wide) {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(child: texts),
-                          const SizedBox(width: SahneSpace.x3),
-                          const SahneVsEmblem(),
-                        ],
-                      );
-                    }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        texts,
-                        const SizedBox(height: SahneSpace.x3),
-                        const SahneVsEmblem(),
-                      ],
-                    );
-                  },
-                ),
                 const SizedBox(height: SahneSpace.x4),
                 KeyedSubtree(
                   key: const ValueKey('play-hub-quick-duel-cta'),

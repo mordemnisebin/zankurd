@@ -149,13 +149,19 @@ class HomeDoorTile extends StatelessWidget {
 /// "Tüm konular" bağlantısı, ayrı kategori ekranı ve yalnız başlanmış
 /// konuları listeleyen "Kaldığın yer". Izgara üçünü tek yerde toplar.
 ///
-/// 2026-09-29 Şahnê: karo [SahneJewelTile] (kare, L pah, gölgesiz; çizimi
-/// olmayan kategori kobalt radyal + ikon). Maketteki kayan raf yerine
+/// 2026-09-29 Şahnê: karo [SahneJewelTile] (kare, L pah, gölgesiz). Maketteki kayan raf yerine
 /// ızgara: dört sütun (4 + 3), 330 px içeriğin altında üç sütun — 320 px'te de
 /// her karo tam görünür, yatay kaydırma gerekmez. Adın altında öteki
 /// dildeki ad durur; başlanmış konunun ilerlemesi karonun altında ince bir
 /// Zimrût çubuktur (yüzdeyi ekran okuyucu okur), başlanmamışın soru sayısı
 /// üçüncül metinle yazılır.
+///
+/// 2026-09-29 doğallık (K1): karolarda kategori çizimi yok. Yedi karonun
+/// beşi aynı üretilmiş görsel dilini (kilim çerçeve, parlak nesne yığını)
+/// taşıyordu; yan yana dizilince ekranın ilk bakışta "yapay zekâ yapmış"
+/// dediği yer burasıydı. Her karo artık çizimsiz: kategorinin kendi renk
+/// ailesinden düz zemin ([CategoryVisuals.tone]) + kendi çizgi ikonu. Konu
+/// renkle ve adla ayrılır; çizimler yalnız alt kategori kahramanında kalır.
 class HomeTopicGrid extends StatelessWidget {
   const HomeTopicGrid({
     required this.isKu,
@@ -225,8 +231,7 @@ class _HomeTopicTile extends StatelessWidget {
   final int? questionCount;
   final VoidCallback? onTap;
 
-  /// Karonun kenarı; `ResizeImage` ile görsel bu boyutta çözülür —
-  /// kararlaştırılmış boyuttan büyük bir bitmap gereksiz bellek harcar.
+  /// Karonun kenarı.
   final double size;
 
   @override
@@ -241,21 +246,12 @@ class _HomeTopicTile extends StatelessWidget {
         : count == null
         ? null
         : '$count ${Tr.forKu(K.soru, isKu)}';
-    final dpr = MediaQuery.devicePixelRatioOf(context);
-    final image = CategoryVisuals.hasOwnImage(category)
-        ? ResizeImage(
-            AssetImage(CategoryVisuals.imagePath(category)),
-            width: (size * dpr).round(),
-            allowUpscaling: false,
-          )
-        : null;
-
     final t = SahneTokens.of(context);
     return SahneJewelTile(
       name: name,
       otherName: other == name ? null : other,
-      image: image,
       icon: CategoryVisuals.icon(category),
+      tone: CategoryVisuals.tone(category),
       onTap: onTap,
       size: size,
       metaLabel: meta,

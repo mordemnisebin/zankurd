@@ -149,7 +149,10 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
 
   // 2026-09-29 Şahnê: öğrenme rolünün satırı — 36'lık M karo (Zimrût tonu
   // + Zimrût metni ikon), üst satır kalın açıklama Zimrût metni, alt satır
-  // Gövde 700; sayı Zimrût tonlu S rozet (tablo rakamı); chevron üçüncül.
+  // Gövde 700; chevron üçüncül.
+  //
+  // 2026-09-29 doğallık (K7): sağda sayıyı ikinci kez yazan Zimrût rozeti
+  // vardı ("3 soru tekrara hazır" + "3"). Sayı yalnız cümlede kalır.
   Widget _tile(SahneTokens t, IconData icon) => DecoratedBox(
     decoration: ShapeDecoration(color: t.learnTint, shape: SahneShape.m),
     child: SizedBox.square(
@@ -213,39 +216,6 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
                     ),
                   ),
                   const SizedBox(width: SahneSpace.x2),
-                  DecoratedBox(
-                    // a11y-tap-target: noninteractive — 52px InkWell içindeki sayı rozeti.
-                    decoration: ShapeDecoration(
-                      color: t.learnTint,
-                      shape: SahneShape.s,
-                    ),
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        minWidth: 28,
-                        minHeight: 24,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: SahneSpace.x2,
-                        ),
-                        child: Center(
-                          widthFactor: 1,
-                          heightFactor: 1,
-                          child: Text(
-                            '$_readyCount',
-                            textAlign: TextAlign.center,
-                            style: SahneType.captionStrong.copyWith(
-                              color: t.learnTx,
-                              fontFeatures: const [
-                                FontFeature.tabularFigures(),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: SahneSpace.x1),
                   Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
                 ],
               ),

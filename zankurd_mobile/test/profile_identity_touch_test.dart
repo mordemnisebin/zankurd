@@ -35,6 +35,11 @@ import 'support/widget_test_helpers.dart';
 /// `MissionProgressCard` kalktı. Kimlik sayfa zemininde elmas avatar + ad
 /// + kod; başarılar Zêr ilerleme çubuklu yüzey kartı; kamera rozeti Kulis
 /// tonlu küçük elmas. Bekçiler yeni dile göre güncellendi.
+///
+/// 2026-09-29 doğallık (K5, K6): kamera rozeti elmas değil küçük pahlı kare
+/// (elmas yalnız soru ilerlemesi ve ders sayacında). Seviye kartı ilk
+/// turdan önce gizli; oynamış oyuncuda görünür (boş hâli
+/// `profile_empty_stats_test`te).
 class _RankedRepo extends MockZanKurdRepository {
   @override
   Future<LeaderboardEntry?> getPlayerStats() async => const LeaderboardEntry(
@@ -79,7 +84,9 @@ Future<void> _pumpLoaded(
 }
 
 void main() {
-  testWidgets('profil avatar düzenleme rozeti Kulis elmasıdır', (tester) async {
+  testWidgets('profil avatar düzenleme rozeti Kulis tonlu pahlı karedir', (
+    tester,
+  ) async {
     await _seedMistakes();
     await _pumpLoaded(tester, _RankedRepo());
 
@@ -95,6 +102,12 @@ void main() {
     final t = SahneTokens.of(tester.element(find.byIcon(AppIcons.camera)));
     expect(decoration.color, t.s2);
     expect(decoration.shape, isA<BeveledRectangleBorder>());
+    // Elmas `SahneShape.diamond(28)` pahı kenarın yarısıdır (14); pahlı
+    // kare boyuna uygun S pahı taşır.
+    expect(
+      (decoration.shape as BeveledRectangleBorder).borderRadius,
+      SahneShape.forSize(28).borderRadius,
+    );
     expect(find.byKey(const ValueKey('profile-avatar-edit')), findsOneWidget);
   });
 
@@ -112,6 +125,8 @@ void main() {
       find.descendant(of: rewards, matching: find.byType(SahneProgressBar)),
     );
     expect(bar.tone, SahneProgressTone.gold);
+    // Oynamış oyuncuda seviye kartı görünür.
+    expect(find.byKey(const ValueKey('profile-level-card')), findsOneWidget);
     // Sayısal istatistikler RollingCount ile sayar.
     expect(find.byType(RollingCount), findsWidgets);
     // Sıra NUMARASI kimlikte madalya olarak çizilmez; rakam yalnız Sıra

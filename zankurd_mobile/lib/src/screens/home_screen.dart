@@ -659,11 +659,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   /// Marka satırının sağı: seri, jeton (stat çipleri) ve dil düğmesi.
   ///
-  /// Sayı sıfırken de yazılır: yalnız bir alev yeni gelene hiçbir şey
-  /// anlatmıyordu; "0 gün" bunun bir sayaç olduğunu ve oynadıkça
-  /// büyüyeceğini gösterir. Jeton çipi mağazaya götürür: mağazaya tek giriş
-  /// profil ekranının içindeydi, coin kazanan oyuncu onu nerede
-  /// harcayacağını bulamıyordu (2026-07-27 denetimi).
+  /// Jeton çipi mağazaya götürür: mağazaya tek giriş profil ekranının
+  /// içindeydi, coin kazanan oyuncu onu nerede harcayacağını bulamıyordu
+  /// (2026-07-27 denetimi).
+  ///
+  /// 2026-09-29 doğallık (K6): sayı sıfırken çip çizilmez. İlk açılışta
+  /// üst çubukta "0 gün" ve "0" duruyordu; sıfır sayaç bilgi değil, boş bir
+  /// kalıptır ve yeni gelene "henüz hiçbir şeyin yok" der. Seri ilk günde,
+  /// jeton ilk ödülde belirir; mağaza profilden her zaman açılır.
   Widget _buildHeaderControls(BuildContext context, bool ku) {
     return Wrap(
       key: const ValueKey('home-profile-header'),
@@ -673,24 +676,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       children: [
         // Dokunulabilir stat çipleri: görsel 36, dokunma kutusu 48 (bileşen
         // verir).
-        SahneStatChip(
-          leading: const SahneGlyph(SahneGlyphKind.flame),
-          label: '$_streak ${context.t(K.streakDayUnit)}',
-          semanticLabel: context.t(K.dailyStreakDays, {'days': '$_streak'}),
-          onTap: () => _showStreakFreezeBottomSheet(context),
-        ),
-        SahneStatChip(
-          leading: const SahneGlyph(SahneGlyphKind.coin),
-          label: '$_coinBalance',
-          semanticLabel:
-              '${context.t(K.shop)}. $_coinBalance ${context.t(K.coinWord)}',
-          onTap: () async {
-            await Navigator.of(
-              context,
-            ).push(AppRoute.to(ShopScreen(repository: repo)));
-            if (mounted) await _refreshCoins();
-          },
-        ),
+        if (_streak > 0)
+          SahneStatChip(
+            leading: const SahneGlyph(SahneGlyphKind.flame),
+            label: '$_streak ${context.t(K.streakDayUnit)}',
+            semanticLabel: context.t(K.dailyStreakDays, {'days': '$_streak'}),
+            onTap: () => _showStreakFreezeBottomSheet(context),
+          ),
+        if (_coinBalance > 0)
+          SahneStatChip(
+            leading: const SahneGlyph(SahneGlyphKind.coin),
+            label: '$_coinBalance',
+            semanticLabel:
+                '${context.t(K.shop)}. $_coinBalance ${context.t(K.coinWord)}',
+            onTap: () async {
+              await Navigator.of(
+                context,
+              ).push(AppRoute.to(ShopScreen(repository: repo)));
+              if (mounted) await _refreshCoins();
+            },
+          ),
         _buildLanguageToggle(context),
       ],
     );

@@ -1,4 +1,6 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+// 2026-09-29 doğallık (K7): sayıyı ikinci kez yazan rozet kalktı; sayı
+// bekçileri artık sayıyı taşıyan tek yere, cümleye bakar.
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -51,7 +53,7 @@ void main() {
     });
     await pump(tester);
     expect(find.byKey(const ValueKey('todays-review-card')), findsOneWidget);
-    expect(find.text('3'), findsOneWidget);
+    expect(find.text('3 soru tekrara hazır'), findsOneWidget);
     final statusRow = find.byKey(const ValueKey('todays-review-status-row'));
     expect(statusRow, findsOneWidget);
     expect(
@@ -210,13 +212,13 @@ void main() {
       });
       await pump(tester);
       expect(
-        find.text('3'),
+        find.text('3 soru tekrara hazır'),
         findsNothing,
         reason:
             'Rozet açılamayacak soruları sayarsa kullanıcıya olmayan bir iş '
             'vaat eder',
       );
-      expect(find.text('1'), findsOneWidget);
+      expect(find.text('1 soru tekrara hazır'), findsOneWidget);
     });
 
     testWidgets('yalnız UUID varsa kart sahte rozet göstermez', (tester) async {
@@ -244,7 +246,7 @@ void main() {
       List<QuizQuestion>? started;
       await pump(tester, onStart: (q) => started = q);
 
-      expect(find.text('2'), findsOneWidget);
+      expect(find.text('2 soru tekrara hazır'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('todays-review-card')));
       await tester.pumpAndSettle();
 

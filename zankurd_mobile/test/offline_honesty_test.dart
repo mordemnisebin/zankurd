@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık (K5): düello kartında VS amblemi yerine "10 soru · ~2 dakika".
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-29 Şahnê: "Rakip bul" `SahneButton.primary`dir (kilitliyken
 // `onPressed: null`); ilk içerik ölçümü marka satırının logosundan yapılır;
@@ -281,15 +282,16 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Manşet ve süre maketteki gibi iki satır ("Seviyene yakın rakip",
-      // "~2 dakika").
+      // Manşet ve bilgi satırı iki satır ("Seviyene yakın rakip",
+      // "10 soru · ~2 dakika"). 2026-09-29 doğallık (K5): VS amblemi kalktı,
+      // bilgi satırı soru sayısını da söyler.
       final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
       expect(
         find.descendant(of: hero, matching: find.text('Seviyene yakın rakip')),
         findsOneWidget,
       );
       expect(
-        find.descendant(of: hero, matching: find.text('~2 dakika')),
+        find.descendant(of: hero, matching: find.text('10 soru · ~2 dakika')),
         findsOneWidget,
       );
       expect(

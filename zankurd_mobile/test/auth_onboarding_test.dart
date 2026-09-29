@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık (K6): sıfır bakiyede ana sayfada jeton çipi yok.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
@@ -992,21 +993,14 @@ void main() {
         isTrue,
       );
     }
+    // 2026-09-29 doğallık (K6): yeni oyuncunun bakiyesi 0; sıfır sayaç
+    // çizilmez, ekran okuyucuya da "0 jeton" duyurulmaz. Bakiyesi olan
+    // oyuncuda çipin miktarı söyleyip mağazayı açtığını
+    // `home_shop_entry_test` ölçer.
     final storeBadge = find.bySemanticsLabel(
       RegExp(r'^Mağaza.*\d+.*jeton$', caseSensitive: false),
     );
-    expect(
-      storeBadge,
-      findsOneWidget,
-      reason: 'Bakiye görünüyorsa ekran okuyucu da miktarı duymalı.',
-    );
-    expect(
-      tester
-          .getSemantics(storeBadge)
-          .getSemanticsData()
-          .hasAction(ui.SemanticsAction.tap),
-      isTrue,
-    );
+    expect(storeBadge, findsNothing);
 
     // 2026-09-29 Şahnê: alt gezinmenin görünüşü tümüyle temadandır
     // (`navigationBarTheme`: 64 yükseklik, `nav` zemini, seçili sekme Ray
