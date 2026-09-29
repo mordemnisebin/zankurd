@@ -4,35 +4,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 /// Seviye ekranının renk kimliği bekçisi.
 ///
 /// ## Kusur
 ///
-/// Ana ekranın konu karoları `CategoryVisuals.gradient(category)` taşıyor,
-/// alt kategori ekranının banner'ı kendi kategori görselini taşıyor — ama
-/// alt kategoriden sonra açılan seviye ekranı hâlâ düz beyaz kart + sabit
-/// `AppTheme.playGreen` ikonuydu. Kullanıcı "Dîrok"a girip madder tonunu
-/// görüyor, alt kategoriyi seçip aynı tonu görüyor, seviyeye girince birden
-/// HER kategoride aynı yeşili gördüğü nötr bir listeye düşüyordu — zincirin
-/// son halkası kimliğini kaybediyordu. Sahibi uygulamayı "renksiz" buldu
-/// (2026-09-27).
+/// Alt kategoriden sonra açılan seviye ekranı düz beyaz kart + sabit yeşil
+/// ikondu; zincirin son halkası kimliğini kaybediyordu. Sahibi uygulamayı
+/// "renksiz" buldu (2026-09-27).
 ///
 /// ## Niçin sessiz kalırdı
 ///
 /// `level_screen_test.dart` anahtarları, kilit mantığını, semantics'i ve
-/// davranışı doğruluyordu — hiçbiri RENGİ ölçmüyordu. Kart beyaz da olsa,
-/// rozet gökkuşağı da olsa aynı testler yeşil kalırdı. Bu dosya üç şeyi
-/// ölçer: rengin gerçekten kategori adına bağlı olduğunu (sabit yeşile
-/// değil), kazanılmış (altın) / sıradaki (kategori rengi) / kilitli (nötr)
-/// ayrımının karışmadığını, ve beyaz/aksan metnin her kategori tonunda
-/// okunur kaldığını (WCAG AA).
+/// davranışı doğruluyordu — hiçbiri RENGİ ölçmüyordu.
+///
+/// 2026-09-29 Şahnê: 2026-09-27 çözümü (kategori degradeli kimlik kartı,
+/// kategori renkli rozet) palet dışı renk kullanıyordu ve kalktı. Renk artık
+/// ROL taşır ve kategori adından bağımsızdır; kimliği sahne kartı ve rol
+/// renkleri verir. Bu dosya üç şeyi ölçer: kazanılmış (Zêr tonu + yıldız) /
+/// sıradaki (sahne kartı + Zimrût tonu + tek Agir düğme) / kilitli (Kulis +
+/// kilit) ayrımının karışmadığını, bunun her kategoride aynı kaldığını ve
+/// renk çiftlerinin iki temada WCAG AA geçtiğini.
 void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({});
@@ -49,39 +47,33 @@ void main() {
     ),
   );
 
-  // Hero'nun gradyanlı zemini: tek `Container` olarak beklenir, dıştaki
-  // gölge kutusu bilerek `DecoratedBox` (gradyansız) olduğu için karışmaz.
-  Finder heroGradientContainer() => find.byWidgetPredicate((widget) {
-    if (widget is! Container) return false;
-    final decoration = widget.decoration;
-    return decoration is BoxDecoration && decoration.gradient != null;
-  });
-
-  // Bir seviye kartının rozeti: kartın anahtarlı `Container`ının İÇİNDEKİ
-  // İLK `Container` — Row'un ilk çocuğu (bkz. subcategory_screen_test.dart
-  // aynı `.first` deseni).
-  BoxDecoration badgeDecoration(WidgetTester tester, int levelNumber) {
-    final badge = tester.widget<Container>(
+  // Bir seviye kartının rozeti: kartın içindeki İLK `DecoratedBox`
+  // (satırın ilk çocuğu, 44'lük M karo).
+  Color badgeColor(WidgetTester tester, int levelNumber) {
+    final badge = tester.widget<DecoratedBox>(
       find
           .descendant(
             of: find.byKey(ValueKey('level-card-$levelNumber')),
-            matching: find.byType(Container),
+            matching: find.byWidgetPredicate(
+              (w) =>
+                  w is DecoratedBox &&
+                  w.decoration is ShapeDecoration &&
+                  (w.decoration as ShapeDecoration).shape == SahneShape.m,
+            ),
           )
           .first,
     );
-    return badge.decoration as BoxDecoration;
+    return (badge.decoration as ShapeDecoration).color!;
   }
 
-  // Ölçülen iki kategori de playGreen'den FARKLI bir tondadır — testler bu
-  // yüzden "kategori rengi" ile "eski sabit yeşil"i karıştırırsa yakalar.
   const categories = ['Ziman', 'Dîrok'];
 
   for (final category in categories) {
     for (final dark in [false, true]) {
       final combo = 'kategori=$category dark=$dark';
-      final accent = CategoryVisuals.color(category);
+      final t = dark ? SahneTokens.night : SahneTokens.day;
 
-      testWidgets('hero gradyanı kategoriye bağlı, başlık beyaz ($combo)', (
+      testWidgets('çubukta kategori adı; elle yazılmış degrade yok ($combo)', (
         tester,
       ) async {
         await tester.pumpWidget(
@@ -95,25 +87,28 @@ void main() {
         );
         await tester.pumpAndSettle();
 
-        final gradientFinder = heroGradientContainer();
-        expect(gradientFinder, findsOneWidget, reason: combo);
-        final decoration =
-            tester.widget<Container>(gradientFinder).decoration
-                as BoxDecoration;
+        final title = CategoryNames.localized(category, false);
+        final inBar = find.descendant(
+          of: find.byType(AppBar),
+          matching: find.text(title),
+        );
+        expect(inBar, findsOneWidget, reason: combo);
         expect(
-          (decoration.gradient! as LinearGradient).colors,
-          CategoryVisuals.gradient(category).colors,
+          DefaultTextStyle.of(tester.element(inBar)).style.color,
+          t.tx,
           reason: combo,
         );
-
-        final title = CategoryNames.localized(category, false);
-        final titleText = tester.widget<Text>(find.text(title));
-        expect(titleText.style?.color, Colors.white, reason: combo);
+        final gradients = find.byWidgetPredicate((widget) {
+          if (widget is! Container) return false;
+          final decoration = widget.decoration;
+          return decoration is BoxDecoration && decoration.gradient != null;
+        });
+        expect(gradients, findsNothing, reason: combo);
       });
 
       testWidgets(
-        'taze ilerlemede seviye 1 sıradaki rozeti kategori rengiyle dolu, '
-        'kilitli rozetler ne aksanla ne altınla dolu ($combo)',
+        'taze ilerlemede seviye 1 sahne kartında Zimrût rozetli, kilitliler '
+        'Kulis ($combo)',
         (tester) async {
           await tester.pumpWidget(
             wrap(
@@ -126,30 +121,27 @@ void main() {
           );
           await tester.pumpAndSettle();
 
-          final badge1 = badgeDecoration(tester, 1);
-          expect(badge1.color, accent, reason: combo);
-          // Eski sabit `AppTheme.playGreen` ile karışmadığını doğrudan
-          // ölçer; iki seçilen kategori de o tondan farklıdır.
-          expect(badge1.color, isNot(AppTheme.playGreen), reason: combo);
-
+          expect(
+            tester.widget(find.byKey(const ValueKey('level-card-1'))),
+            isA<SahneStageCard>(),
+            reason: combo,
+          );
+          // Sahne kartı her temada gece çizilir.
+          expect(
+            badgeColor(tester, 1),
+            SahneTokens.night.learnTint,
+            reason: combo,
+          );
           for (final locked in [2, 3, 4, 5]) {
-            final badge = badgeDecoration(tester, locked);
-            expect(badge.color, isNot(accent), reason: '$combo seviye $locked');
-            expect(
-              badge.color,
-              isNot(AppTheme.gold),
-              reason: '$combo seviye $locked',
-            );
+            expect(badgeColor(tester, locked), t.s2, reason: '$combo $locked');
           }
         },
       );
 
       testWidgets(
-        'seviye 1 oynanınca rozeti altına döner, seviye 2 sıradaki olur '
+        'seviye 1 oynanınca rozeti Zêr tonu + yıldız olur, seviye 2 sıradaki '
         '($combo)',
         (tester) async {
-          // Bekçi önce STORE'u okur (bkz. görev talimatı): aynı tekil
-          // örneği ekranın kendi `_loadProgress`i de okuyacak.
           final store = await LevelProgressStore.load();
           await store.markPlayed(category, null, 1);
 
@@ -164,20 +156,23 @@ void main() {
           );
           await tester.pumpAndSettle();
 
-          final badge1 = badgeDecoration(tester, 1);
-          expect(badge1.color, AppTheme.gold, reason: combo);
+          expect(badgeColor(tester, 1), t.goldTint, reason: combo);
+          final star = tester.widget<SahneGlyph>(
+            find.descendant(
+              of: find.byKey(const ValueKey('level-card-1')),
+              matching: find.byType(SahneGlyph),
+            ),
+          );
+          expect(star.kind, SahneGlyphKind.star, reason: combo);
+          expect(star.filled, isTrue, reason: combo);
 
-          final badge2 = badgeDecoration(tester, 2);
-          expect(badge2.color, accent, reason: combo);
-
+          expect(
+            tester.widget(find.byKey(const ValueKey('level-card-2'))),
+            isA<SahneStageCard>(),
+            reason: combo,
+          );
           for (final locked in [3, 4, 5]) {
-            final badge = badgeDecoration(tester, locked);
-            expect(badge.color, isNot(accent), reason: '$combo seviye $locked');
-            expect(
-              badge.color,
-              isNot(AppTheme.gold),
-              reason: '$combo seviye $locked',
-            );
+            expect(badgeColor(tester, locked), t.s2, reason: '$combo $locked');
           }
         },
       );
@@ -217,36 +212,32 @@ void main() {
     return (hi + 0.05) / (lo + 0.05);
   }
 
-  test('her tanımlı kategorinin gradyan İKİ UCUNDA da beyaz metin WCAG AA '
-      '(4.5:1) geçer', () {
-    // `colorDefinedCategories` üzerinden GİZLİ kategoriler de (Paradigma,
-    // Siyaset, Teknolojî) dahil taranır: biri yeniden görünür yapılırsa
-    // bekçi onu da görsün.
-    for (final category in CategoryVisuals.colorDefinedCategories) {
-      for (final stop in CategoryVisuals.gradientColors(category)) {
+  test('seviye ekranının renk çiftleri iki temada WCAG AA (4.5:1) geçer', () {
+    for (final (theme, t) in [
+      ('gündüz', SahneTokens.day),
+      ('gece', SahneTokens.night),
+    ]) {
+      for (final (name, fg, bg) in [
+        ('satır adı / Perde', t.tx, t.s1),
+        ('kilitli satır adı / Perde', t.tx2, t.s1),
+        ('soru sayısı / Perde', t.tx2, t.s1),
+        ('kilitli rozet ikonu / Kulis', t.tx2, t.s2),
+        ('açık rozet numarası / Kulis', t.tx, t.s2),
+        ('birincil düğme: onAct / Agir', t.onAct, t.act),
+      ]) {
         expect(
-          contrast(Colors.white, stop),
+          contrast(fg, bg),
           greaterThanOrEqualTo(4.5),
-          reason: '$category → $stop',
+          reason: '$theme $name',
         );
       }
     }
-  });
-
-  test('her kategori aksanının onSolid metni WCAG AA (4.5:1) geçer', () {
-    for (final category in CategoryVisuals.colorDefinedCategories) {
-      final accent = CategoryVisuals.color(category);
-      final onSolid = AppColors.onSolid(accent);
-      expect(
-        contrast(onSolid, accent),
-        greaterThanOrEqualTo(4.5),
-        reason: category,
-      );
+    // Sahne kartı her temada gece: sıradaki seviyenin numarası ve adı.
+    const n = SahneTokens.night;
+    expect(contrast(n.learnTx, n.learnTint), greaterThanOrEqualTo(4.5));
+    for (final bg in [SahneStageColors.top, SahneStageColors.bottom]) {
+      expect(contrast(n.tx, bg), greaterThanOrEqualTo(4.5));
+      expect(contrast(n.tx2, bg), greaterThanOrEqualTo(4.5));
     }
-  });
-
-  test('altının (AppTheme.gold) onSolid metni WCAG AA (4.5:1) geçer', () {
-    final onSolid = AppColors.onSolid(AppTheme.gold);
-    expect(contrast(onSolid, AppTheme.gold), greaterThanOrEqualTo(4.5));
   });
 }

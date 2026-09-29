@@ -8,6 +8,7 @@ import 'package:zankurd_mobile/src/models/mini_guide.dart';
 import 'package:zankurd_mobile/src/models/story.dart';
 import 'package:zankurd_mobile/src/screens/story_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -76,7 +77,11 @@ void main() {
     expect(find.text('Bir çay, lütfen.'), findsOneWidget);
   });
 
-  testWidgets('hikâye ve rehber aksanları koyu temada okunabilir tona çıkar', (
+  // 2026-09-29 Şahnê: eskiden eski yeşilin "okunur" tonunu ölçüyordu. Renk
+  // artık rol taşır: hikâye etiketi ve rehber bölüm etiketleri öğrenme
+  // rolünün metin rengindedir (`learnTx`); anlatı sahne kartında olduğu için
+  // hikâye etiketi her temada gecenin `learnTx`idir.
+  testWidgets('hikâye ve rehber etiketleri öğrenme rolünün okunur metninde', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -84,27 +89,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final storyLabelFinder = find.text('HİKÂYE');
-    final storyLabel = tester.widget<Text>(storyLabelFinder);
-    expect(
-      storyLabel.style?.color,
-      AppColors.readableAccent(
-        tester.element(storyLabelFinder),
-        AppTheme.playGreen,
-      ),
-    );
+    final storyLabel = tester.widget<Text>(find.text('HİKÂYE'));
+    expect(storyLabel.style?.color, SahneTokens.night.learnTx);
 
     await tester.tap(find.byKey(const ValueKey('story-open-guide')));
     await tester.pumpAndSettle();
-    final guideLabelFinder = find.text('Kültürel not');
-    final guideLabel = tester.widget<Text>(guideLabelFinder);
-    expect(
-      guideLabel.style?.color,
-      AppColors.readableAccent(
-        tester.element(guideLabelFinder),
-        AppTheme.playGreen,
-      ),
-    );
+    final guideLabel = tester.widget<Text>(find.text('Kültürel not'));
+    expect(guideLabel.style?.color, SahneTokens.night.learnTx);
   });
 
   testWidgets('tablet boyutunda overflow oluşmaz', (tester) async {

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -12,6 +11,7 @@ import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -123,34 +123,47 @@ void main() {
     expect(numberText.style?.fontWeight, FontWeight.w800);
   });
 
-  // 2026-09-27: bu bekçi eskiden "kart HER ZAMAN nötr" bekliyordu — sahibi
-  // seviye ekranını "renksiz" bulduğu için o karar bilerek değişti. Sıradaki
-  // basamak artık kategori renginin ince bir harmanını taşır (bkz.
-  // level_color_identity_test.dart); yalnız gradyansız kaldığını (düz renk,
-  // dolu gradyan değil) ölçmeye devam eder.
-  testWidgets('seviye kartı gradyansız kalır (yalnız harmanlı düz renk)', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      wrap(LevelScreen(repository: MockZanKurdRepository(), category: 'Ziman')),
-    );
-    await tester.pumpAndSettle();
+  // 2026-09-27: bu bekçi eskiden "kart HER ZAMAN nötr" bekliyordu; sonra
+  // sıradaki basamak kategori renginin harmanını taşıdı. 2026-09-29 Şahnê:
+  // kategori renkleri palet dışıdır; sıradaki seviye artık sahne kartıdır
+  // (gece, öğrenme rolü, TEK birincil düğme), ötekiler yüzey kartı. Bekçi
+  // kart türünü ve ekranda elle yazılmış degrade kalmadığını ölçer.
+  testWidgets(
+    'sıradaki seviye sahne kartı, ötekiler yüzey kartı; degrade yok',
+    (tester) async {
+      await tester.pumpWidget(
+        wrap(
+          LevelScreen(repository: MockZanKurdRepository(), category: 'Ziman'),
+        ),
+      );
+      await tester.pumpAndSettle();
 
-    final card = tester.widget<Container>(
-      find.byKey(const ValueKey('level-card-1')),
-    );
-    final decoration = card.decoration as BoxDecoration;
-    // Seviye 1 taze ilerlemede "sıradaki"dir: zemin `AppTheme.lightSurface`
-    // üstüne kategori renginin (Ziman) %8'lik açık-tema harmanıdır.
-    expect(
-      decoration.color,
-      Color.alphaBlend(
-        CategoryVisuals.color('Ziman').withValues(alpha: 0.08),
-        AppTheme.lightSurface,
-      ),
-    );
-    expect(decoration.gradient, isNull);
-  });
+      expect(
+        tester.widget(find.byKey(const ValueKey('level-card-1'))),
+        isA<SahneStageCard>(),
+      );
+      for (final n in [2, 3, 4, 5]) {
+        expect(
+          tester.widget(find.byKey(ValueKey('level-card-$n'))),
+          isA<SahneSurfaceCard>(),
+          reason: 'seviye $n',
+        );
+      }
+      final gradients = find.byWidgetPredicate((widget) {
+        if (widget is! Container) return false;
+        final decoration = widget.decoration;
+        return decoration is BoxDecoration && decoration.gradient != null;
+      });
+      expect(gradients, findsNothing);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('level-card-1')),
+          matching: find.byType(FilledButton),
+        ),
+        findsOneWidget,
+      );
+    },
+  );
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {
     await tester.binding.setSurfaceSize(const Size(360, 740));

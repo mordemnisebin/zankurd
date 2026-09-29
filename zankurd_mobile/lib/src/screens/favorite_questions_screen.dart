@@ -6,12 +6,11 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/quiz_question.dart';
 import '../services/favorite_mutation_service.dart';
-import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
-import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
-import '../widgets/screen_identity_header.dart';
+import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
+import 'learning_screen.dart' show BarIconAction;
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -75,115 +74,85 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    // 2026-09-29 Şahnê: B iskeleti. "Kaydedilenler" ve sayı çubukta; eski
+    // altın kimlik bandı kalktı. Yenile, çubuğun sağında 44'lük plaka
+    // (dokunma alanı 48). Tek birincil eylem "Kaydedilen Soruları Oyna".
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      backgroundColor: t.bg,
       appBar: zkAppBar(
         context,
+        title: Text(context.t(K.savedShort)),
+        subtitle: FutureBuilder<List<QuizQuestion>>(
+          future: _favoritesFuture,
+          builder: (context, snapshot) {
+            final count = snapshot.data?.length ?? 0;
+            return Text(
+              count > 0
+                  ? context.t(K.questionsReplay, {'count': '$count'})
+                  : context.t(K.yourFavorites),
+            );
+          },
+        ),
         actions: [
-          IconButton(
+          BarIconAction(
+            icon: AppIcons.arrowsRotate,
+            label: context.t(K.refreshAction),
             onPressed: _reload,
-            tooltip: context.t(K.refreshAction),
-            icon: const Icon(AppIcons.arrowsRotate),
           ),
         ],
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
-        child: SafeArea(
-          child: FutureBuilder<List<QuizQuestion>>(
-            future: _favoritesFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: AppTheme.primaryGradientStart,
-                  ),
-                );
-              }
+      body: SafeArea(
+        top: false,
+        child: FutureBuilder<List<QuizQuestion>>(
+          future: _favoritesFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return Center(child: CircularProgressIndicator(color: t.learnTx));
+            }
 
-              if (snapshot.hasError) {
-                return AppErrorState(
-                  title: context.t(K.favoritesLoadFailed),
-                  message: context.t(K.checkConnection),
-                  retryLabel: context.t(K.retry),
-                  onRetry: _reload,
-                );
-              }
-
-              final questions = snapshot.data ?? const <QuizQuestion>[];
-              if (questions.isEmpty) {
-                // AppEmptyState LayoutBuilder ile maxHeight ister — ListView'da
-                // unbounded olur; Column + Expanded kullan.
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.page,
-                    AppSpacing.xs,
-                    AppSpacing.page,
-                    AppSpacing.lg,
-                  ),
-                  child: Column(
-                    children: [
-                      ScreenIdentityHeader(
-                        title: context.t(K.savedShort),
-                        subtitle: context.t(K.yourFavorites),
-                        accent: AppTheme.gold,
-                        icon: AppIcons.bookmark,
-                        compact: true,
-                      ),
-                      const SizedBox(height: AppSpacing.md),
-                      const Expanded(child: _EmptyFavorites()),
-                    ],
-                  ),
-                );
-              }
-
-              return ListView.builder(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.xs,
-                  AppSpacing.page,
-                  AppSpacing.lg,
-                ),
-                itemCount: questions.length + 2,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: AppSpacing.md),
-                      child: ScreenIdentityHeader(
-                        title: context.t(K.savedShort),
-                        subtitle: context.t(K.questionsReplay, {
-                          'count': '${questions.length}',
-                        }),
-                        accent: AppTheme.gold,
-                        icon: AppIcons.bookmark,
-                        compact: true,
-                      ),
-                    );
-                  }
-                  if (index == 1) {
-                    return _buildPlayAllButton(context, questions);
-                  }
-                  final question = questions[index - 2];
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: _FavoriteQuestionTile(
-                      question: question,
-                      // Çevrimiçi oda maçında kaydedilen favoriler doğru
-                      // cevabı taşımaz (hile önlemi); yerel yeniden
-                      // puanlama imkansız — oynatma kapatılır, yalnız
-                      // görüntülenebilir (2026-08-14 denetimi).
-                      onPlay: question.hasHiddenAnswer
-                          ? null
-                          : () => _playFrom(index - 2, questions),
-                      onRemove: () => _removeFavorite(question),
-                    ),
-                  );
-                },
+            if (snapshot.hasError) {
+              return AppErrorState(
+                title: context.t(K.favoritesLoadFailed),
+                message: context.t(K.checkConnection),
+                retryLabel: context.t(K.retry),
+                onRetry: _reload,
               );
-            },
-          ),
+            }
+
+            final questions = snapshot.data ?? const <QuizQuestion>[];
+            if (questions.isEmpty) return const _EmptyFavorites();
+
+            return ListView.builder(
+              padding: const EdgeInsets.fromLTRB(
+                SahneSpace.page,
+                SahneSpace.x2,
+                SahneSpace.page,
+                SahneSpace.x6,
+              ),
+              itemCount: questions.length + 1,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return _buildPlayAllButton(context, questions);
+                }
+                final question = questions[index - 1];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                  child: _FavoriteQuestionTile(
+                    question: question,
+                    // Çevrimiçi oda maçında kaydedilen favoriler doğru
+                    // cevabı taşımaz (hile önlemi); yerel yeniden puanlama
+                    // imkansız — oynatma kapatılır, yalnız görüntülenebilir
+                    // (2026-08-14 denetimi).
+                    onPlay: question.hasHiddenAnswer
+                        ? null
+                        : () => _playFrom(index - 1, questions),
+                    onRemove: () => _removeFavorite(question),
+                  ),
+                );
+              },
+            );
+          },
         ),
       ),
     );
@@ -229,30 +198,13 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
         .where((question) => !question.hasHiddenAnswer)
         .toList();
     if (playable.isEmpty) return const SizedBox.shrink();
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: AppTheme.goldGradient,
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.18),
-      ),
-      child: ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          // Altın gradyan üstünde sabit beyaz 2.40:1 veriyordu; en büyük
-          // düğmenin etiketi ekrandaki en okunmaz yazıydı (2026-07-27).
-          // Renk zemine göre seçilir — gradyanın açık ucu en kötü durum.
-          foregroundColor: AppColors.onSolid(
-            AppTheme.goldGradient.colors.first,
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.md),
-          ),
-          elevation: 0,
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: SahneSpace.x4),
+      child: SahneButton.primary(
+        icon: AppIcons.circlePlay,
+        arrow: false,
+        label: context.t(K.playSavedQuestions),
+        expand: true,
         onPressed: () {
           final room = widget.repository
               .createRoom(category: 'Tomarkirî')
@@ -270,16 +222,18 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
             ),
           );
         },
-        icon: const Icon(AppIcons.circlePlay, size: 22),
-        label: Text(
-          context.t(K.playSavedQuestions),
-          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-        ),
       ),
     );
   }
 }
 
+/// Kayıtlı soru: yüzey kartı — solda sorunun KATEGORİ ikonu (öğrenme
+/// tonlu karo), ortada kategori · soru tipi, (varsa) "cevap gizli" ipucu ve
+/// soru; sağda "Kaldır" (48) ve oynat / yalnız görüntüle ikonu.
+///
+/// Solda yer imi değil kategori durur: önce burada da bir yer imi kutusu
+/// vardı; sağda yer imi düğmesi, üstte kimlik bandında yine yer imi — aynı
+/// simge tek ekranda dört kez (2026-07-30 ekran turu, 71).
 class _FavoriteQuestionTile extends StatelessWidget {
   const _FavoriteQuestionTile({
     required this.question,
@@ -295,125 +249,90 @@ class _FavoriteQuestionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      padding: EdgeInsets.zero,
-      child: InkWell(
-        onTap: onPlay,
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Row(
-            children: [
-              // Solda sorunun **kategori** simgesi durur, yer imi değil.
-              //
-              // Önce burada da altın bir yer imi kutusu vardı; sağda yer imi
-              // aç/kapa düğmesi, üstte kimlik bandında yine yer imi — aynı
-              // simge tek ekranda dört kez (2026-07-30 ekran turu, 71).
-              // Zaten kaydedilmiş soruların listesinde "kaydedilmiş" bilgisi
-              // yeni bir şey söylemiyor; kategori söylüyor.
-              Container(
-                width: 46,
-                height: 46,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: CategoryVisuals.gradientColors(question.category),
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
+    final t = SahneTokens.of(context);
+    final large = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    return SahneSurfaceCard(
+      onTap: onPlay,
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        SahneSpace.x3,
+        SahneSpace.x3,
+        SahneSpace.x1,
+        SahneSpace.x3,
+      ),
+      child: Row(
+        children: [
+          // Büyük yazı ölçeğinde (≥ 1.5) kategori karosu çizilmez: meta
+          // satırı dar sütunda harf harf bölünüyordu ("Paradîgm / a").
+          if (!large) ...[
+            DecoratedBox(
+              decoration: ShapeDecoration(
+                color: t.learnTint,
+                shape: SahneShape.m,
+              ),
+              child: SizedBox.square(
+                dimension: 44,
                 child: Icon(
                   CategoryVisuals.icon(question.category),
-                  color: AppColors.onSolid(
-                    CategoryVisuals.color(question.category),
-                  ),
+                  size: 24,
+                  color: t.learnTx,
                 ),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            const SizedBox(width: SahneSpace.x3),
+          ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Wrap(
+                  spacing: SahneSpace.x1,
+                  runSpacing: 0,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
-                      children: [
-                        _TinyBadge(
-                          label: CategoryNames.localized(
-                            question.category,
-                            context.isKu,
-                          ),
-                        ),
-                        _TinyBadge(
-                          label: question.typeLabelLocalized(context.isKu),
-                        ),
-                      ],
-                    ),
-                    if (question.hasHiddenAnswer) ...[
-                      const SizedBox(height: 6),
-                      Text(
-                        context.t(K.favoriteAnswerHiddenHint),
-                        key: const ValueKey('favorite-answer-hidden-hint'),
-                        style: TextStyle(
-                          color: AppTheme.textMutedColor(context),
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                    const SizedBox(height: 8),
                     Text(
-                      question.promptText,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w800,
-                      ),
+                      CategoryNames.localized(question.category, context.isKu),
+                      style: SahneType.captionStrong.copyWith(color: t.learnTx),
+                    ),
+                    Text(
+                      '·',
+                      style: SahneType.captionStrong.copyWith(color: t.tx3),
+                    ),
+                    Text(
+                      question.typeLabelLocalized(context.isKu),
+                      style: SahneType.captionStrong.copyWith(color: t.tx3),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 4),
-              IconButton(
-                onPressed: onRemove,
-                tooltip: context.t(K.removeAction),
-                icon: Icon(
-                  AppIcons.bookmark,
-                  color: AppTheme.textMutedColor(context),
+                if (question.hasHiddenAnswer)
+                  Text(
+                    context.t(K.favoriteAnswerHiddenHint),
+                    key: const ValueKey('favorite-answer-hidden-hint'),
+                    style: SahneType.caption.copyWith(color: t.tx2),
+                  ),
+                const SizedBox(height: SahneSpace.x1),
+                Text(
+                  question.promptText,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: SahneType.bodyStrong.copyWith(color: t.tx),
                 ),
-              ),
-              if (onPlay != null)
-                const Icon(AppIcons.play, color: AppTheme.primaryGradientStart)
-              else
-                Icon(AppIcons.eye, color: AppTheme.textMutedColor(context)),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TinyBadge extends StatelessWidget {
-  const _TinyBadge({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context),
-        borderRadius: BorderRadius.circular(7),
-        border: Border.all(color: AppTheme.borderColor(context)),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          color: AppTheme.textSubColor(context),
-          fontSize: 11,
-          fontWeight: FontWeight.w800,
-        ),
+          IconButton(
+            onPressed: onRemove,
+            tooltip: context.t(K.removeAction),
+            icon: Icon(AppIcons.bookmark, color: t.tx2, size: 22),
+          ),
+          ExcludeSemantics(
+            child: Icon(
+              onPlay != null ? AppIcons.play : AppIcons.eye,
+              color: onPlay != null ? t.learnTx : t.tx3,
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: SahneSpace.x2),
+        ],
       ),
     );
   }
