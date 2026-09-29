@@ -24,8 +24,12 @@ import 'support/widget_test_helpers.dart';
 /// (kim kaç puanla kaçıncı) büyük süslerin arasına dağıtıyordu.
 ///
 /// Karar: bütün sıralama tek liste. İlk üç yalnız sıra rakamının renginden
-/// ayrılır (birinci koyu altın, ikinci ve üçüncü birincil metin, gerisi
-/// ikincil metin); taç, hale, madalya halkası ve kaide yok.
+/// ayrılır (birinci altın, ikinci gümüş, üçüncü bronz, gerisi ikincil
+/// metin); taç, hale, madalya halkası ve kaide yok.
+///
+/// 2026-09-29 doğallık: ikinci ve üçüncü eskiden birincil metinle aynıydı
+/// (temaya duyarlı gümüş/bronz metin belirteci yoktu); `SahneTokens`
+/// `silverTx`/`bronzeTx` kazandı, beklenti ona göre güncellendi.
 ///
 /// ## Niçin sessiz kalırdı
 ///
@@ -34,11 +38,12 @@ import 'support/widget_test_helpers.dart';
 /// podyumun sekme şeridine yakınlığı. Kutlamanın geri gelmesini hiçbir test
 /// yakalamazdı; bu dosya yokluğunu ve sıra rakamlarının ayrımını ölçer.
 class _Repo extends MockZanKurdRepository {
-  _Repo({this.count = 3});
+  _Repo({this.count = 3, this.names = _defaultNames});
 
   final int count;
+  final List<String> names;
 
-  static const _names = ['Rojda', 'Baran', 'Dilan', 'Zelal', 'Hêvî'];
+  static const _defaultNames = ['Rojda', 'Baran', 'Dilan', 'Zelal', 'Hêvî'];
 
   @override
   Future<List<LeaderboardEntry>> loadLeaderboard({
@@ -49,7 +54,7 @@ class _Repo extends MockZanKurdRepository {
     (i) => LeaderboardEntry(
       rank: i + 1,
       playerId: 'p$i',
-      displayName: _names[i % _names.length],
+      displayName: names[i % names.length],
       totalScore: 8420 - i * 900,
       bestStreak: 11 - i,
       roomsPlayed: 14 - i,
@@ -122,12 +127,38 @@ void main() {
         tester.element(find.byKey(const ValueKey('leaderboard-rank-list'))),
       );
       expect(_rankDigitColor(tester, 1), t.goldTx);
-      expect(_rankDigitColor(tester, 2), t.tx);
-      expect(_rankDigitColor(tester, 3), t.tx);
+      expect(_rankDigitColor(tester, 2), t.silverTx);
+      expect(_rankDigitColor(tester, 3), t.bronzeTx);
       expect(_rankDigitColor(tester, 4), t.tx2);
       expect(_rankDigitColor(tester, 5), t.tx2);
     });
   }
+
+  // 2026-09-29 doğallık: satır sunucunun yer tutucu adını ham basıyordu
+  // ("ZanKurd Oyu…" diye kesilerek). Öteki ekranlar gibi
+  // `PlayerIdentity.resolveName` ile dile göre "Oyuncu" olur; ekran okuyucu
+  // da aynı adı duyar.
+  testWidgets('yer tutucu ad satırda ham basılmaz', (tester) async {
+    final semantics = tester.ensureSemantics();
+    await _pump(
+      tester,
+      _Repo(names: const ['Rojda', 'ZanKurd Oyuncusu', 'Dilan']),
+    );
+    final row = find.byKey(const ValueKey('leaderboard-rank-row-2'));
+    expect(
+      find.descendant(of: row, matching: find.text('ZanKurd Oyuncusu')),
+      findsNothing,
+    );
+    expect(
+      find.descendant(of: row, matching: find.text('Oyuncu')),
+      findsOneWidget,
+    );
+    expect(
+      tester.getSemantics(row).label,
+      allOf(contains('Oyuncu'), isNot(contains('ZanKurd Oyuncusu'))),
+    );
+    semantics.dispose();
+  });
 
   testWidgets('liste dönem şeridinin hemen altında başlar', (tester) async {
     // Yalnız birkaç kişi varken içerik dikeyde ortalanıp ekranın ortasına

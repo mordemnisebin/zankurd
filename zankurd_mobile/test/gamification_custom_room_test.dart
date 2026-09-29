@@ -201,6 +201,9 @@ void main() {
     test(
       'Localization keys for gamification and custom rooms are present in both languages',
       () {
+        // 2026-09-29 doğallık: entryFeeRequired, comboMultiplier,
+        // streakFire, opponentAnswered ve yourTurnFast kodda kullanılmadığı
+        // için defterden silindi; listeden çıktılar.
         final keysToCheck = [
           K.customRoomTitle,
           K.selectCategory,
@@ -208,14 +211,9 @@ void main() {
           K.entryFeeLabel,
           K.freeEntry,
           K.insufficientCoins,
-          K.entryFeeRequired,
           K.newRoom,
           K.newRoomAction,
           K.newRoomFeeConfirm,
-          K.comboMultiplier,
-          K.streakFire,
-          K.opponentAnswered,
-          K.yourTurnFast,
           K.reactionBravo,
           K.reactionGoodLuck,
           K.reactionFast,

@@ -280,7 +280,7 @@ class SahneStageCard extends StatelessWidget {
           // iner (ders kartıyla aynı kural).
           LayoutBuilder(
             builder: (context, c) {
-              final room = c.maxWidth - 104 - SahneSpace.x3;
+              final room = c.maxWidth - SahneVsEmblem.width - SahneSpace.x3;
               final wide =
                   emblem == null ||
                   room >= MediaQuery.textScalerOf(context).scale(22) * 6;
@@ -353,56 +353,64 @@ class SahneStageCard extends StatelessWidget {
 
 /// VS amblemi — düello kartının sağ yuvası (maketteki `.sh-vs`).
 ///
-/// Bileşik, yeni ilkel değil: iki 48'lik avatar (pahlı kare, K5). Oyuncu sol üstte
-/// (birincil metin dolgu + Halka 3 altın + kişi ikonu), rakip sağ altta
-/// (yarış koyusu dolgu + Halka 2 yumuşak lal + "?" ya da baş harf);
-/// ortada Etiket biçeminde "VS". 104 × 80; dekoratif.
+/// Bileşik, yeni ilkel değil: iki 40'lık avatar (pahlı kare, K5) YAN YANA,
+/// aralarında Etiket biçeminde "VS". Oyuncu solda (birincil metin dolgu +
+/// Halka 3 altın + kişi ikonu), rakip sağda (yarış koyusu dolgu + Halka 2
+/// yumuşak lal + "?" ya da baş harf). 104 × 40; dekoratif.
+///
+/// 2026-09-29 doğallık: avatarlar elmasken çapraz dizilişte "VS" iki
+/// elmasın boş köşelerine otururdu; avatarlar pahlı kare olunca o köşeler
+/// doldu ve "VS" iki karonun arasına sıkışıp üstlerine biniyordu. Yan yana
+/// dizilişte harfler kendi 24'lük yuvasındadır; büyük yazı ölçeğinde
+/// küçülür, taşmaz.
 class SahneVsEmblem extends StatelessWidget {
   const SahneVsEmblem({super.key, this.opponentInitial = '?'});
 
   final String opponentInitial;
+
+  /// Amblemin genişliği (düello kartı yerleşimi bununla ölçer).
+  static const double width = 104;
+  static const double _avatar = 40;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     return ExcludeSemantics(
       child: SizedBox(
-        width: 104,
-        height: 80,
-        child: Stack(
+        width: width,
+        height: _avatar,
+        child: Row(
           children: [
-            PositionedDirectional(
-              start: 0,
-              top: 0,
-              child: SahneAvatar(
-                size: 48,
-                icon: AppIcons.user,
-                color: t.tx,
-                foreground: SahneStageColors.race2,
-                ring: t.gold,
-                ringWidth: SahneRing.r3,
-              ),
+            SahneAvatar(
+              size: _avatar,
+              icon: AppIcons.user,
+              color: t.tx,
+              foreground: SahneStageColors.race2,
+              ring: t.gold,
+              ringWidth: SahneRing.r3,
             ),
-            PositionedDirectional(
-              end: 0,
-              bottom: 0,
-              child: SahneAvatar(
-                size: 48,
-                initial: opponentInitial,
-                color: SahneStageColors.race3,
-                foreground: SahneStageColors.raceSoft,
-                ring: SahneStageColors.raceSoft,
-                ringWidth: SahneRing.r2,
-              ),
-            ),
-            Center(
-              child: Text(
-                'VS',
-                style: SahneType.eyebrow.copyWith(
-                  color: t.tx,
-                  letterSpacing: 14 * 0.06,
+            Expanded(
+              child: Center(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    'VS',
+                    maxLines: 1,
+                    style: SahneType.eyebrow.copyWith(
+                      color: t.tx,
+                      letterSpacing: 14 * 0.06,
+                    ),
+                  ),
                 ),
               ),
+            ),
+            SahneAvatar(
+              size: _avatar,
+              initial: opponentInitial,
+              color: SahneStageColors.race3,
+              foreground: SahneStageColors.raceSoft,
+              ring: SahneStageColors.raceSoft,
+              ringWidth: SahneRing.r2,
             ),
           ],
         ),

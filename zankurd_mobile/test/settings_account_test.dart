@@ -432,12 +432,24 @@ void main() {
     expect(authProvider.discardedRewardsOwnerId, 'user');
   });
 
-  testWidgets('Kurmancî arayüzde oyuncu adı yer tutucusu çevrilir', (
+  // 2026-09-29 doğallık: bu iki bekçi çevrilmiş yer tutucuyu ("Lîstikvan",
+  // "Oyuncu") kutunun DEĞERİ olarak sabitliyordu. Adını hiç seçmemiş oyuncu
+  // "Oyuncu" adlı biri gibi görünüyordu ve yazmadan önce kutuyu silmesi
+  // gerekiyordu. Şimdi kutu boştur, dile göre ipucu (`K.playerNameHint`)
+  // görünür. Asıl kusur (Kurmancî arayüzde Türkçe ham yer tutucu) hâlâ
+  // bekçide: `ZanKurd Oyuncusu` hiçbir biçimde görünmez.
+  String fieldText(WidgetTester tester) => tester
+      .widget<TextField>(
+        find.byKey(const ValueKey('settings-player-name-field')),
+      )
+      .controller!
+      .text;
+
+  testWidgets('Kurmancî arayüzde yer tutucu ad kutuya yazılmaz', (
     tester,
   ) async {
     // Depo, gerçek bir seçim olmayan `ZanKurd Oyuncusu` yer tutucusunu
-    // döndürür. Diğer ekranlar bunu `PlayerIdentity` üzerinden dile
-    // çevirir; ayarlar ekranı ham değeri kutuya yazıyor ve Kurmancî
+    // döndürür. Ayarlar ekranı ham değeri kutuya yazıyor ve Kurmancî
     // arayüzde oyuncu kendi adını Türkçe görüyordu (2026-07-26).
     await tester.pumpWidget(
       testShell(
@@ -449,18 +461,19 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('ZanKurd Oyuncusu'), findsNothing);
-    expect(find.text('Lîstikvan'), findsOneWidget);
+    expect(fieldText(tester), isEmpty);
+    expect(find.text('Navê xwe binivîse…'), findsOneWidget);
   });
 
-  testWidgets('Türkçe arayüzde yer tutucu Türkçe karşılığını alır', (
-    tester,
-  ) async {
+  testWidgets('Türkçe arayüzde kutu boş, ipucu Türkçe', (tester) async {
     await tester.pumpWidget(
       testShell(child: SettingsScreen(repository: MockZanKurdRepository())),
     );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('Oyuncu'), findsOneWidget);
+    expect(find.text('ZanKurd Oyuncusu'), findsNothing);
+    expect(fieldText(tester), isEmpty);
+    expect(find.text('Oyundaki adını gir…'), findsOneWidget);
   });
 }

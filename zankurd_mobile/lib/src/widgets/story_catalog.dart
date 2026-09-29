@@ -100,10 +100,9 @@ class _StoryCatalogState extends State<StoryCatalog> {
             ),
           )
         else
-          // Liste grubu (Perde, L pah, gündüzde 1 px kenar); satırlar arası
-          // ayırıcı ikon hizasından başlar.
+          // Liste grubu (Perde, L pah, gündüzde 1 px kenar); satırlar ikonsuz,
+          // ayırıcı metin hizasından (16) başlar.
           SahneListGroup(
-            dividerIndent: SahneSpace.x3 + 36 + SahneSpace.x3,
             children: [
               for (final story in everydayStories)
                 _StoryCatalogCard(
@@ -145,9 +144,12 @@ class _StoryCatalogCard extends StatelessWidget {
         : nodeId == null
         ? Tr.forKu(K.storyStatusStart, isKu)
         : Tr.forKu(K.storyStatusContinue, isKu);
-    // 2026-09-29 Şahnê: liste satırı dili — 36'lık M karo (Zimrût tonu +
-    // Zimrût metni ikon), başlık Gövde 700, öteki dildeki ad Açıklama;
-    // durum kalın açıklama Zimrût metni, chevron üçüncül.
+    // 2026-09-29 doğallık (K7): başlık Gövde 700, öteki dildeki ad
+    // Açıklama; sağda YALNIZ ilerleme — bitti ise ✓, yarım ise "Devam et"
+    // (kalın açıklama, Zimrût metni), başlanmamışsa hiçbir şey. Eskiden her
+    // satırda aynı kitap ikonu karosu ve "Başla ›" vardı: dört satırda dört
+    // kez aynı süs ve aynı söz, satırın tamamı zaten dokunulur. Ekran
+    // okuyucu durumu yine duyar (etiketteki "Başla").
     final t = SahneTokens.of(context);
     return Semantics(
       button: true,
@@ -161,26 +163,11 @@ class _StoryCatalogCard extends StatelessWidget {
           constraints: BoxConstraints(minHeight: compact ? 48 : 52),
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: SahneSpace.x3,
+              horizontal: compact ? SahneSpace.x3 : SahneSpace.x4,
               vertical: compact ? SahneSpace.x1 : SahneSpace.x2,
             ),
             child: Row(
               children: [
-                DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: t.learnTint,
-                    shape: SahneShape.m,
-                  ),
-                  child: SizedBox.square(
-                    dimension: 36,
-                    child: Icon(
-                      AppIcons.bookOpenReader,
-                      size: 20,
-                      color: t.learnTx,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: SahneSpace.x3),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,13 +187,16 @@ class _StoryCatalogCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: SahneSpace.x2),
-                Text(
-                  status,
-                  style: SahneType.captionStrong.copyWith(color: t.learnTx),
-                ),
-                const SizedBox(width: SahneSpace.x1),
-                Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
+                if (completed) ...[
+                  const SizedBox(width: SahneSpace.x2),
+                  Icon(AppIcons.check, size: 20, color: t.learnTx),
+                ] else if (nodeId != null) ...[
+                  const SizedBox(width: SahneSpace.x2),
+                  Text(
+                    status,
+                    style: SahneType.captionStrong.copyWith(color: t.learnTx),
+                  ),
+                ],
               ],
             ),
           ),

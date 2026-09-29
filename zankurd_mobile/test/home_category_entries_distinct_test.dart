@@ -33,9 +33,10 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 void main() {
   test('ana ekran bölüm metinleri Hawar alfabesinde', () {
+    // 2026-09-29 doğallık: `K.homeTopicsSub` kodda kullanılmadığı için
+    // defterden silindi; listeden çıktı.
     for (final key in [
       K.homeTopicsTitle,
-      K.homeTopicsSub,
       K.homeStepsTitle,
       K.homeStep1,
       K.homeStep2,

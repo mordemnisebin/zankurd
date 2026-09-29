@@ -1069,9 +1069,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final status = ku
-        ? (_statusTextKu ?? 'Tê gerîn...')
-        : (_statusTextTr ?? 'Aranıyor...');
+    final status =
+        (ku ? _statusTextKu : _statusTextTr) ?? context.t(K.searchingShort);
 
     return PopScope(
       // İptal bir kez başarısız olduysa sistem geri hareketi de serbest

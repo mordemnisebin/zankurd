@@ -56,6 +56,8 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     required this.goldTint,
     required this.goldDeep,
     required this.onGold,
+    required this.silverTx,
+    required this.bronzeTx,
     required this.okFill,
     required this.okTx,
     required this.okTint,
@@ -135,6 +137,13 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
   /// Zêr dolgusu üstündeki glif ve metin (ustalık yıldızı, Sen avatarı).
   final Color onGold;
 
+  /// Gümüş ve bronz METİN (sıralamada 2. ve 3. sıra rakamı). Sahne
+  /// madalyaları ([SahneStageColors.silver], [SahneStageColors.bronze])
+  /// gündüz zemininde 4.5:1'i tutmadığı için gündüzde koyulaşır. Perde
+  /// (`s1`) ve zemin (`bg`) üstünde iki temada ≥ 4.5:1.
+  final Color silverTx;
+  final Color bronzeTx;
+
   /// Rast — doğru durumu.
   final Color okFill;
   final Color okTx;
@@ -181,6 +190,10 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     goldTint: Color(0xFF3A3218),
     goldDeep: Color(0xFFB07D12),
     onGold: Color(0xFF1E1400),
+    // Gümüş, ikincil metinden (4. sıra ve sonrası) parlaklığıyla ayrılsın
+    // diye sahne madalyasından bir ton açık; bronz sahne madalyasının aynısı.
+    silverTx: Color(0xFFDDE2F2),
+    bronzeTx: SahneStageColors.bronze,
     okFill: Color(0xFF0E7453),
     okTx: Color(0xFF52DBA5),
     okTint: Color(0xFF0B4637),
@@ -221,6 +234,9 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
     goldTint: Color(0xFFFBF0D2),
     goldDeep: Color(0xFFB07D12),
     onGold: Color(0xFF1E1400),
+    // Perde üstünde 5.6:1 ve 6.1:1; zeminde 4.8:1 ve 5.2:1.
+    silverTx: Color(0xFF5F6878),
+    bronzeTx: Color(0xFF8F5427),
     okFill: Color(0xFF0E7453),
     okTx: Color(0xFF08784F),
     okTint: Color(0xFFD8F3E8),
@@ -274,6 +290,8 @@ class SahneTokens extends ThemeExtension<SahneTokens> {
       goldTint: l(goldTint, other.goldTint),
       goldDeep: l(goldDeep, other.goldDeep),
       onGold: l(onGold, other.onGold),
+      silverTx: l(silverTx, other.silverTx),
+      bronzeTx: l(bronzeTx, other.bronzeTx),
       okFill: l(okFill, other.okFill),
       okTx: l(okTx, other.okTx),
       okTint: l(okTint, other.okTint),

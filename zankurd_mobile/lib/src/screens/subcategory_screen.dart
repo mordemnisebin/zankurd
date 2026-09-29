@@ -79,8 +79,8 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
         : [
             SubcategoryInfo(
               id: 'gisti',
-              nameKu: 'Hemû Pirs',
-              nameTr: 'Tüm Sorular',
+              nameKu: Tr.of(K.allQuestionsSubcategory, AppLanguage.ku),
+              nameTr: Tr.of(K.allQuestionsSubcategory, AppLanguage.tr),
               descriptionKu: 'Têkelpêkel pirsên $category',
               descriptionTr: '$category kategorisindeki tüm sorular',
             ),

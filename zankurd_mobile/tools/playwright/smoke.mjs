@@ -56,7 +56,8 @@ await page.waitForFunction(
   () => document.querySelectorAll('flutter-view').length > 0,
   { timeout: 30_000 },
 );
-await expectText('Kurmancî hîn bibe, pêş bikeve.');
+// Slogan (onbTagline) kalktı; ilk sayfanın gövde cümlesi (onbLearnBody).
+await expectText('Bi pirsên kurt peyvan hîn bibe, çandê nas bike.');
 await screenshot('01-onboarding');
 
 const ageGateLabel = 'Ez ji 13 salî mezintir im';
@@ -86,7 +87,7 @@ if ((await nameInput.count()) !== 1) {
 }
 await nameInput.fill('Rojda');
 await clickText('Dest pê bike');
-await expectText('DERSA YEKEM');
+await expectText('Dersa yekem');
 await screenshot('03-first-session-home');
 
 // Yeni kullanıcıda önce kısa 5 soruluk başlangıç tamamlanır. Destek kartları
@@ -106,17 +107,14 @@ for (let i = 0; i < 5; i++) {
 await expectText('Hînbûn temam bû');
 await screenshot('04-first-result');
 await clickText('Vegere');
-await expectText('ERKÊ ÎRO');
+await expectText('Erkê îro');
 await screenshot('05-home');
 
-// Kategori keşfi gerçek rotayı açmalı ve yayın dışı kategori sızmamalı.
-await clickText('Hemû mijar');
-await expectText('Kategorî');
+// Konular ana sayfadaki "Mijar" ızgarasındadır (ayrı "Hemû mijar" /
+// "Kategorî" ekranı kalktı); yayın dışı konu sızmamalı.
+await expectText('Mijar');
 await expectContains('Sînema');
-await screenshot('06-categories');
-await page.mouse.click(52, 72);
-await page.waitForTimeout(900);
-await expectText('ERKÊ ÎRO');
+await screenshot('06-topics');
 
 // Flutter web NavigationBar hedefleri canvas/semantik birleşiminde metin
 // seçicisi sunmuyor. Sabit mobil viewport'ta hedefe dokunup açılan ekranın

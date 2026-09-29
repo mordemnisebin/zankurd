@@ -98,7 +98,7 @@ class TodayTaskCard extends StatelessWidget {
                       ? const ValueKey('home-first-session-badge')
                       : null,
                   child: Text(
-                    sentenceCaseLabel(eyebrow, isKu: isKu),
+                    eyebrow,
                     style: SahneType.captionStrong.copyWith(color: t.learnTx),
                   ),
                 ),
@@ -189,25 +189,4 @@ class _StartButton extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Büyük harfle saklanmış bir etiketi cümle düzenine çevirir: ilk harf
-/// kalır, gerisi yerele duyarlı küçülür ("BUGÜNÜN GÖREVİ" → "Bugünün
-/// görevi", "İLK DERS" → "İlk ders", "ERKÊ ÎRO" → "Erkê îro").
-///
-/// 2026-09-29 doğallık (K8): `K.bugununGorevi` ve `K.firstSessionBadge`
-/// dizge defterinde hâlâ büyük harfle duruyor (eskiden yalnız üst etiket
-/// biçemiyle çizildikleri için). Defter cümle düzenine geçince bu çağrı
-/// hiçbir şey değiştirmez (işlem kendi çıktısında sabittir). Etiketlerde
-/// özel ad yok; özel adlı bir dizgeye uygulanmamalı.
-///
-/// `toLowerCase()` yerele duyarsızdır: Türkçede "I" → "ı", "İ" → "i"
-/// önceden çevrilir; Kurmancîde noktasız ı yoktur, varsayılan doğrudur.
-@visibleForTesting
-String sentenceCaseLabel(String text, {required bool isKu}) {
-  if (text.isEmpty) return text;
-  final first = text.substring(0, 1);
-  var rest = text.substring(1);
-  if (!isKu) rest = rest.replaceAll('I', 'ı').replaceAll('İ', 'i');
-  return first + rest.toLowerCase();
 }

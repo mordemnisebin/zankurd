@@ -53,8 +53,15 @@ void main() {
       expect(source, isNot(contains('ageGate.check()')));
       expect(source, contains("clickText('Bidomîne')"));
       expect(source, contains("clickText('Dest pê bike')"));
-      expect(source, contains("DERSA YEKEM"));
-      expect(source, contains("Hemû mijar"));
+      // 2026-09-29 doğallık: ilk ders etiketi cümle düzeninde ("Dersa
+      // yekem"); "Hemû mijar" düğmesi ve "Kategorî" ekranı uygulamada çoktan
+      // yoktu (konular ana sayfadaki "Mijar" ızgarasında), smoke onları
+      // bekleyip ilk adımda takılıyordu. Beklenti ekrandaki metne çevrildi.
+      expect(source, contains("expectText('Dersa yekem')"));
+      expect(source, isNot(contains("DERSA YEKEM")));
+      expect(source, contains("expectText('Mijar')"));
+      expect(source, isNot(contains("clickText('Hemû mijar')")));
+      expect(source, isNot(contains("expectText('Kategorî')")));
       expect(source, contains('ZANKURD_EXPECT_SOCIAL'));
       expect(source, contains('expectSocialBackend'));
       expect(source, contains("Pêşkêşkar negihîştbar e"));

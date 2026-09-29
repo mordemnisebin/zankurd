@@ -626,8 +626,8 @@ class SahneBottomDock extends StatelessWidget {
 /// katmanı yok) → dar ışık huzmesi ([beam]; `Path` + `LinearGradient`) →
 /// üst satır [kapat 44 | ortada [center] (sayaç ya da bağlam) | [score]]
 /// → isteğe bağlı elmas dizisi ([progress]) → içerik ([body]) → alt perde
-/// ([dock]: zemine kararan 24 px degrade, altında tek birincil eylem ya
-/// da joker dizisi).
+/// ([dock]: tek birincil eylem ya da joker dizisi; gövde perdenin altında
+/// devam ediyorsa üst kenarında 1 px ayırıcı çizgi, bkz. [_DockEdge]).
 ///
 /// Kapat düğmesi görselde 44, dokunmada 48 ([SahneIconButton]); anahtarı
 /// [closeKey]. Alt perde gövdenin DIŞINDA, `Scaffold`un alt yuvasındadır
@@ -864,28 +864,11 @@ class SahneStageScaffold extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            Positioned.fill(child: body),
-                            if (dockWidget != null)
-                              Positioned(
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
-                                height: SahneSpace.x6,
-                                child: IgnorePointer(
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                          t.bg.withValues(alpha: 0),
-                                          t.bg,
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                            Positioned.fill(
+                              child: dockWidget == null
+                                  ? body
+                                  : _DockEdge(color: t.line, child: body),
+                            ),
                           ],
                         ),
                       ),
@@ -897,6 +880,80 @@ class SahneStageScaffold extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Alt perdenin üst kenarı: gövde perdenin altında DEVAM EDİYORSA 1 px
+/// ayırıcı çizgi ([SahneTokens.line]), içerik bittiyse hiçbir şey.
+///
+/// 2026-09-29 doğallık (K10): eskiden burada hep açık, zemine kararan 24 px
+/// degrade vardı. İçerik bitmiş olsa bile gövdenin son 24 px'ini örtüyor,
+/// sonuç ekranında öğrenme kartının yazısını ortasından eritiyordu (bir
+/// çizim hatası gibi okunuyordu). Çizgi yazıyı örtmez; yalnız gövdenin en
+/// dıştaki dikey kaydırıcısı sonuna varmamışken görünür ve "aşağıda devamı
+/// var" der. Perde yine `Scaffold`un alt yuvasında (SnackBar üstünde açılır).
+class _DockEdge extends StatefulWidget {
+  const _DockEdge({required this.color, required this.child});
+
+  final Color color;
+  final Widget child;
+
+  @override
+  State<_DockEdge> createState() => _DockEdgeState();
+}
+
+class _DockEdgeState extends State<_DockEdge> {
+  final _more = ValueNotifier<bool>(false);
+
+  bool _track(ScrollMetrics metrics, int depth) {
+    // Yalnız gövdenin en dıştaki dikey kaydırıcısı: yatay şeritler ve iç
+    // içe listeler çizgiyi oynatmaz. Listenin alt boşluğu (çoğunda 16–24)
+    // "devamı" sayılmaz: perdenin altında yalnız boşluk kalmışsa çizgi
+    // gürültüdür (tur karesi 69, tam boy).
+    if (depth == 0 && metrics.axis == Axis.vertical) {
+      _more.value = metrics.extentAfter > SahneSpace.x6;
+    }
+    return false;
+  }
+
+  @override
+  void dispose() {
+    _more.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: NotificationListener<ScrollMetricsNotification>(
+            onNotification: (n) => _track(n.metrics, n.depth),
+            child: NotificationListener<ScrollNotification>(
+              onNotification: (n) => _track(n.metrics, n.depth),
+              child: widget.child,
+            ),
+          ),
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 1,
+          child: IgnorePointer(
+            child: ValueListenableBuilder<bool>(
+              valueListenable: _more,
+              builder: (context, more, _) => more
+                  ? ColoredBox(
+                      key: const ValueKey('sahne-stage-dock-edge'),
+                      color: widget.color,
+                    )
+                  : const SizedBox.shrink(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
