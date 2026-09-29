@@ -97,7 +97,12 @@ void main() {
       // 1150 -> 1294: 2026-09-28 expansion_2026_09_28. Alt kategoriler
       // dürüstleşince 20 sorunun altında kalıp gizlenen yedi alt kategori
       // için 144 kaynaklı soru; hepsi oynanabilir.
-      1294,
+      // 1294 -> 1204: 2026-09-29 doğallık: şablon izi denetimi 90 soruyu
+      // emekliye ayırdı (sözlük D/Y 26, boş önerme 1, tür sızıntılı sözlük
+      // çoktan seçmelisi 55, bozuk tanım 2, kopya çeldirici/ikinci kılıf 3,
+      // Kürt bağsız sinema 3). Bkz. `retired_question_ids.dart`'ın
+      // "Üçüncü dalga" belgesi. Fiziksel sayı değişmedi.
+      1204,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -146,13 +151,16 @@ void main() {
       // olmayan sinema; offline_7011 kopya şık).
       // Sînema 97->99 (+2), Cografya 23->53 (+30), Edebiyat 1->10 (+9);
       // Dîrok, Muzîk, Ziman, Çand ilk kez bu ikinci gerekçeyle giriyor.
-      'retired=Sînema': 99,
-      'retired=Cografya': 53,
-      'retired=Edebiyat': 10,
-      'retired=Dîrok': 17,
-      'retired=Muzîk': 12,
-      'retired=Ziman': 10,
-      'retired=Çand': 20,
+      // 2026-09-29 doğallık (üçüncü dalga, şablon izi, 90 kayıt):
+      // Sînema 99->102, Cografya 53->67, Edebiyat 10->16, Dîrok 17->36,
+      // Muzîk 12->22, Ziman 10->36, Çand 20->32.
+      'retired=Sînema': 102,
+      'retired=Cografya': 67,
+      'retired=Edebiyat': 16,
+      'retired=Dîrok': 36,
+      'retired=Muzîk': 22,
+      'retired=Ziman': 36,
+      'retired=Çand': 32,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
 

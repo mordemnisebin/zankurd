@@ -120,7 +120,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî'de isim, sıfata ya da başka bir isme neyle bağlanır?",
+    "promptTr": "Kurmancîde isim, sıfata ya da başka bir isme neyle bağlanır?",
     "answersTr": [
       "Edat (daçek)",
       "Zamir (cînav)",
@@ -142,9 +142,9 @@
       "Herdu jî"
     ],
     "correctAnswer": "Mê",
-    "explanation": "Kurmancî'de her isim bir cinsiyet alır; \"jin\" dişildir, bu yüzden izafesi \"-a\" olur: \"jina baş\".",
+    "explanation": "Kurmancîde her isim bir cinsiyet alır; \"jin\" dişildir, bu yüzden izafesi \"-a\" olur: \"jina baş\".",
     "explanationKu": "Di Kurmancî de her navdêr zayendek digire; \"jin\" mê ye, loma veqetandeka wê \"-a\" ye: \"jina baş\".",
-    "explanationTr": "Kurmancî'de her isim bir cinsiyet alır; \"jin\" dişildir, bu yüzden izafesi \"-a\" olur: \"jina baş\".",
+    "explanationTr": "Kurmancîde her isim bir cinsiyet alır; \"jin\" dişildir, bu yüzden izafesi \"-a\" olur: \"jina baş\".",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -153,7 +153,7 @@
       "qualityVersion": 2,
       "productiveRecallEligible": true
     },
-    "promptTr": "Kurmancî'de \"jin\" sözcüğü hangi cinstendir?",
+    "promptTr": "Kurmancîde \"jin\" sözcüğü hangi cinstendir?",
     "answersTr": [
       "Eril",
       "Dişil",
@@ -186,7 +186,7 @@
       "qualityVersion": 2,
       "productiveRecallEligible": true
     },
-    "promptTr": "Kurmancî'de bükünlü (oblique) durumun çoğul eki hangisidir?",
+    "promptTr": "Kurmancîde bükünlü (oblique) durumun çoğul eki hangisidir?",
     "answersTr": [
       "-an",
       "-ek",
@@ -250,7 +250,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî'de \"ergatîf\" ne demektir?",
+    "promptTr": "Kurmancîde \"ergatîf\" ne demektir?",
     "answersTr": [
       "Şimdiki zamanda fiilin özneyle uyum göstermesi",
       "Geçmiş zamanda geçişli fiillerde öznenin büküme girmesi",
@@ -296,7 +296,7 @@
     "difficulty": 1,
     "id": "edit_ziman_0011",
     "category": "Ziman",
-    "prompt": "Peyva Kurmancî \"hesp\" bi Tirkî çi tê wateyê?",
+    "prompt": "Peyva \"hesp\" bi Tirkî çi ye?",
     "answers": [
       "köpek",
       "at",
@@ -315,7 +315,7 @@
       "qualityVersion": 2,
       "learningLessonId": "animals_1"
     },
-    "promptTr": "Kurmancî \"hesp\" sözcüğü Türkçede ne demektir?",
+    "promptTr": "\"hesp\" Türkçede ne demektir?",
     "answersTr": [
       "köpek",
       "at",
@@ -348,7 +348,7 @@
       "qualityVersion": 2,
       "productiveRecallEligible": true
     },
-    "promptTr": "Kurmancî'de \"dilgeş\" sözcüğünün eş anlamlısı hangisidir?",
+    "promptTr": "Kurmancîde \"dilgeş\" sözcüğünün eş anlamlısı hangisidir?",
     "answersTr": [
       "Xemgîn",
       "Şa",
@@ -381,7 +381,7 @@
       "qualityVersion": 2,
       "productiveRecallEligible": true
     },
-    "promptTr": "Kurmancî'de \"germ\" sözcüğünün zıt anlamlısı hangisidir?",
+    "promptTr": "Kurmancîde \"germ\" sözcüğünün zıt anlamlısı hangisidir?",
     "answersTr": [
       "Sar",
       "Nerm",
@@ -413,7 +413,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî'de \"daçek\" (edat) nedir?",
+    "promptTr": "Kurmancîde \"daçek\" (edat) nedir?",
     "answersTr": [
       "eylemin çok uzak bir geçmişte olduğunu gösteren fiil yapısı",
       "İsimlerin ilişkisini belirten \"di, bi, ji, li\" gibi sözcükler",
@@ -446,7 +446,7 @@
       "qualityVersion": 2,
       "productiveRecallEligible": true
     },
-    "promptTr": "Kurmancî'de \"hatin\" fiilinin ikinci tekil kişi için emir kipi (raweya fermanî) hangisidir?",
+    "promptTr": "Kurmancîde \"hatin\" fiilinin ikinci tekil kişi için emir kipi (raweya fermanî) hangisidir?",
     "answersTr": [
       "Were",
       "Hat",
@@ -476,7 +476,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Doğru mu yanlış mı: Kurmancî'de \"Q\" harfi vardır.",
+    "promptTr": "Doğru mu yanlış mı: Kurmancîde \"Q\" harfi vardır.",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -538,7 +538,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî'de \"min\" ile \"ez\" arasındaki fark nedir?",
+    "promptTr": "Kurmancîde \"min\" ile \"ez\" arasındaki fark nedir?",
     "answersTr": [
       "İkisi de aynıdır",
       "\"Ez\" yalın durum, \"min\" bükünlü durumdur",
@@ -2548,7 +2548,7 @@
     "difficulty": 1,
     "id": "edit_muzik_0012",
     "category": "Muzîk",
-    "prompt": "Peyva \"stran\" bi Tirkî çi tê wateyê?",
+    "prompt": "Peyva \"stran\" bi Tirkî çi ye?",
     "answers": [
       "dans",
       "saz",
@@ -2566,7 +2566,7 @@
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     },
-    "promptTr": "\"Stran\" sözcüğü Türkçede ne demektir?",
+    "promptTr": "\"stran\" Türkçede ne demektir?",
     "answersTr": [
       "dans",
       "saz",
@@ -3212,7 +3212,7 @@
     "difficulty": 1,
     "id": "edit_ziman_0021",
     "category": "Ziman",
-    "prompt": "Peyva Kurmancî \"dar\" bi Tirkî çi tê wateyê?",
+    "prompt": "Peyva \"dar\" bi Tirkî çi ye?",
     "answers": [
       "taş",
       "yol",
@@ -3230,7 +3230,7 @@
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî \"dar\" sözcüğü Türkçede ne demektir?",
+    "promptTr": "\"dar\" Türkçede ne demektir?",
     "answersTr": [
       "taş",
       "yol",
@@ -3263,7 +3263,7 @@
       "qualityVersion": 2,
       "productiveRecallEligible": true
     },
-    "promptTr": "Kurmancî'deki \"deh\" sayısı rakamla kaçtır?",
+    "promptTr": "Kurmancîdeki \"deh\" sayısı rakamla kaçtır?",
     "answersTr": [
       "7",
       "12",
@@ -3295,7 +3295,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî'de \"-ek\" eki neyi gösterir?",
+    "promptTr": "Kurmancîde \"-ek\" eki neyi gösterir?",
     "answersTr": [
       "belirsizliği (yek/bir)",
       "kişi zamirlerini",
@@ -3424,7 +3424,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî'de \"tu\" ile \"hûn\" arasındaki fark nedir?",
+    "promptTr": "Kurmancîde \"tu\" ile \"hûn\" arasındaki fark nedir?",
     "answersTr": [
       "\"Tu\" tekil, \"hûn\" çoğul/saygı biçimidir",
       "İkisi de çoğuldur",
@@ -3457,7 +3457,7 @@
       "qualityVersion": 2,
       "productiveRecallEligible": true
     },
-    "promptTr": "Kurmancî'de istek kipi (raweya bilanî) hangi ön ekle kurulur?",
+    "promptTr": "Kurmancîde istek kipi (raweya bilanî) hangi ön ekle kurulur?",
     "answersTr": [
       "di-",
       "na-",
@@ -3490,7 +3490,7 @@
       "qualityVersion": 2,
       "productiveRecallEligible": true
     },
-    "promptTr": "Kurmancî'de şimdiki zamanın olumsuzluk eki hangisidir?",
+    "promptTr": "Kurmancîde şimdiki zamanın olumsuzluk eki hangisidir?",
     "answersTr": [
       "ne-",
       "na-",
@@ -3510,9 +3510,9 @@
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Evet, Kurmancî'de her isim eril ya da dişildir ve bu izafeyi belirler.",
+    "explanation": "Evet, Kurmancîde her isim eril ya da dişildir ve bu izafeyi belirler.",
     "explanationKu": "Erê, her navdêreke kurmancî nêr an mê ye û ev yek veqetandekê diyar dike.",
-    "explanationTr": "Evet, Kurmancî'de her isim eril ya da dişildir ve bu izafeyi belirler.",
+    "explanationTr": "Evet, Kurmancîde her isim eril ya da dişildir ve bu izafeyi belirler.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3520,7 +3520,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Doğru mu yanlış mı: Kurmancî'de isimler cinsiyet taşır (eril ve dişil).",
+    "promptTr": "Doğru mu yanlış mı: Kurmancîde isimler cinsiyet taşır (eril ve dişil).",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -4388,7 +4388,7 @@
     "difficulty": 2,
     "id": "edit_cografya_0020",
     "category": "Cografya",
-    "prompt": "Peyva \"gund\" bi Tirkî çi tê wateyê?",
+    "prompt": "Peyva \"gund\" bi Tirkî çi ye?",
     "answers": [
       "şehir",
       "dağ",
@@ -4406,7 +4406,7 @@
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
     },
-    "promptTr": "\"Gund\" kelimesi Türkçede ne anlama gelir?",
+    "promptTr": "\"gund\" Türkçede ne demektir?",
     "answersTr": [
       "şehir",
       "dağ",
@@ -4640,7 +4640,7 @@
     "difficulty": 2,
     "id": "edit_muzik_0018",
     "category": "Muzîk",
-    "prompt": "Peyva \"deng\" bi Tirkî çi tê wateyê?",
+    "prompt": "Peyva \"deng\" bi Tirkî çi ye?",
     "answers": [
       "söz",
       "ses",
@@ -4658,7 +4658,7 @@
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
     },
-    "promptTr": "\"Deng\" sözcüğü Türkçede ne demektir?",
+    "promptTr": "\"deng\" Türkçede ne demektir?",
     "answersTr": [
       "söz",
       "ses",
@@ -5076,7 +5076,7 @@
     "difficulty": 1,
     "id": "edit_ziman_0036",
     "category": "Ziman",
-    "prompt": "Peyva Kurmancî \"dest\" bi Tirkî çi tê wateyê?",
+    "prompt": "Peyva \"dest\" bi Tirkî çi ye?",
     "answers": [
       "el",
       "ayak",
@@ -5094,7 +5094,7 @@
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî \"dest\" sözcüğü Türkçede ne demektir?",
+    "promptTr": "\"dest\" Türkçede ne demektir?",
     "answersTr": [
       "el",
       "ayak",
@@ -5108,7 +5108,7 @@
     "difficulty": 2,
     "id": "edit_ziman_0038",
     "category": "Ziman",
-    "prompt": "Peyva Kurmancî \"spas\" bi Tirkî çi tê wateyê?",
+    "prompt": "Peyva \"spas\" bi Tirkî çi ye?",
     "answers": [
       "merhaba",
       "hoşça kal",
@@ -5127,7 +5127,7 @@
       "qualityVersion": 2,
       "learningLessonId": "everyday_3"
     },
-    "promptTr": "Kurmancî \"spas\" sözcüğü Türkçede ne demektir?",
+    "promptTr": "\"spas\" Türkçede ne demektir?",
     "answersTr": [
       "merhaba",
       "hoşça kal",
@@ -5160,7 +5160,7 @@
       "qualityVersion": 2,
       "productiveRecallEligible": true
     },
-    "promptTr": "Kurmancî'de \"dirêj\" sözcüğünün zıt anlamlısı hangisidir?",
+    "promptTr": "Kurmancîde \"dirêj\" sözcüğünün zıt anlamlısı hangisidir?",
     "answersTr": [
       "Kurt",
       "Fireh",
@@ -5192,7 +5192,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî'de \"ez dixwazim\" hangi zamanın cümlesidir?",
+    "promptTr": "Kurmancîde \"ez dixwazim\" hangi zamanın cümlesidir?",
     "answersTr": [
       "Geçmiş zaman",
       "Şimdiki zaman",
@@ -5224,7 +5224,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî'de \"dergehvan\" gibi sözcüklerdeki \"-van\" eki neyi gösterir?",
+    "promptTr": "Kurmancîde \"dergehvan\" gibi sözcüklerdeki \"-van\" eki neyi gösterir?",
     "answersTr": [
       "Bir işi yapan kişiyi",
       "bükünlü zamirleri",
@@ -5256,7 +5256,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî'de \"were\" ve \"biçe\" hangi kipi gösterir?",
+    "promptTr": "Kurmancîde \"were\" ve \"biçe\" hangi kipi gösterir?",
     "answersTr": [
       "İstek kipi",
       "Emir kipi",
@@ -5288,7 +5288,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî'de \"min got\" ile \"ez gotim\" — hangisi doğrudur?",
+    "promptTr": "Kurmancîde \"min got\" ile \"ez gotim\" — hangisi doğrudur?",
     "answersTr": [
       "\"Ez gotim\" doğrudur",
       "İkisi de doğrudur",
@@ -5320,7 +5320,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Kurmancî'de izafedeki \"-ê\" ile \"-a\" arasındaki fark nedir?",
+    "promptTr": "Kurmancîde izafedeki \"-ê\" ile \"-a\" arasındaki fark nedir?",
     "answersTr": [
       "Sayı: \"-ê\" tekil, \"-a\" çoğul",
       "Cinsiyet: \"-ê\" eril, \"-a\" dişil",
@@ -5334,7 +5334,7 @@
     "difficulty": 2,
     "id": "edit_ziman_0045",
     "category": "Ziman",
-    "prompt": "Peyva \"hevîr\" bi Tirkî çi tê wateyê?",
+    "prompt": "Peyva \"hevîr\" bi Tirkî çi ye?",
     "answers": [
       "hamur",
       "peynir",
@@ -5352,7 +5352,7 @@
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
     },
-    "promptTr": "\"Hevîr\" sözcüğü Türkçede ne demektir?",
+    "promptTr": "\"hevîr\" Türkçede ne demektir?",
     "answersTr": [
       "hamur",
       "peynir",
@@ -5385,7 +5385,7 @@
       "qualityVersion": 2,
       "productiveRecallEligible": true
     },
-    "promptTr": "Kurmancî'de \"westiyayî\" sözcüğünün eş anlamlısı hangisidir?",
+    "promptTr": "Kurmancîde \"westiyayî\" sözcüğünün eş anlamlısı hangisidir?",
     "answersTr": [
       "Kêfxweş",
       "Betilî",
@@ -5415,7 +5415,7 @@
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
       "qualityVersion": 2
     },
-    "promptTr": "Doğru mu yanlış mı: Kurmancî'de sıfat (rengdêr) isimden sonra gelir.",
+    "promptTr": "Doğru mu yanlış mı: Kurmancîde sıfat (rengdêr) isimden sonra gelir.",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -6283,7 +6283,7 @@
     "difficulty": 2,
     "id": "edit_dirok_0038",
     "category": "Dîrok",
-    "prompt": "Peyva \"dîrok\" bi Tirkî çi tê wateyê?",
+    "prompt": "Peyva \"dîrok\" bi Tirkî çi ye?",
     "answers": [
       "coğrafya",
       "edebiyat",
@@ -6301,7 +6301,7 @@
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
     },
-    "promptTr": "\"Dîrok\" sözcüğü Türkçede ne anlama gelir?",
+    "promptTr": "\"dîrok\" Türkçede ne demektir?",
     "answersTr": [
       "coğrafya",
       "edebiyat",
@@ -7011,7 +7011,7 @@
     "difficulty": 2,
     "id": "edit_cografya_0036",
     "category": "Cografya",
-    "prompt": "Peyva \"behr\" bi Tirkî çi tê wateyê?",
+    "prompt": "Peyva \"behr\" bi Tirkî çi ye?",
     "answers": [
       "göl",
       "nehir",
@@ -7029,7 +7029,7 @@
       "sourceReference": "Zana Farqînî, Ferhenga Kurdî-Tirkî (2004); Michael L. Chyet, Kurdish-English Dictionary (Yale, 2003)",
       "qualityVersion": 2
     },
-    "promptTr": "\"Behr\" kelimesi Türkçede ne anlama gelir?",
+    "promptTr": "\"behr\" Türkçede ne demektir?",
     "answersTr": [
       "göl",
       "nehir",
@@ -7423,7 +7423,7 @@
     "difficulty": 2,
     "id": "edit_muzik_0032",
     "category": "Muzîk",
-    "prompt": "Peyva \"govend\" bi Tirkî çi tê wateyê?",
+    "prompt": "Peyva \"govend\" bi Tirkî çi ye?",
     "answers": [
       "şarkı",
       "saz",
@@ -7441,7 +7441,7 @@
       "sourceReference": "Mehmet Uzun, Dengbêj Üslubu Hakkında; Estelle Amy de la Bretèque, Paroles mélodisées (2013)",
       "qualityVersion": 2
     },
-    "promptTr": "\"Govend\" sözcüğü Türkçede ne demektir?",
+    "promptTr": "\"govend\" Türkçede ne demektir?",
     "answersTr": [
       "şarkı",
       "saz",

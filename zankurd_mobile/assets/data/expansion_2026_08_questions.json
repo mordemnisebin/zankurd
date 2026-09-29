@@ -6090,7 +6090,7 @@
   {
     "id": "ziman_x_0018",
     "category": "Ziman",
-    "prompt": "Peyva \"derî\" bi tirkî çi ye?",
+    "prompt": "Peyva \"derî\" bi Tirkî çi ye?",
     "answers": [
       "Kapı",
       "Pencere",
@@ -6098,7 +6098,7 @@
       "Çatı"
     ],
     "correctAnswer": "Kapı",
-    "promptTr": "\"Derî\" kelimesinin Türkçesi nedir?",
+    "promptTr": "\"derî\" Türkçede ne demektir?",
     "answersTr": [
       "Kapı",
       "Pencere",
@@ -6158,7 +6158,7 @@
   {
     "id": "ziman_x_0021",
     "category": "Ziman",
-    "prompt": "Bi kurmancî ji \"yıldız\"ê re çi tê gotin?",
+    "prompt": "\"yıldız\" bi Kurmancî çi ye?",
     "answers": [
       "Heyv",
       "Stêrk",
@@ -6166,7 +6166,7 @@
       "Ewr"
     ],
     "correctAnswer": "Stêrk",
-    "promptTr": "\"Yıldız\" için Kurmancîde ne denir?",
+    "promptTr": "\"yıldız\" Kurmancîde nasıl denir?",
     "answersTr": [
       "Heyv",
       "Stêrk",
@@ -6990,11 +6990,11 @@
       "Alıntı kelime"
     ],
     "correctAnswerTr": "Eş seslilik",
-    "explanation": "Yazılışı ve okunuşu aynı, anlamı farklı sözcükler eş seslidir. Eş anlamlılıkta ise sözcük farklı, anlam aynıdır; ikisi ters kavramlardır.",
+    "explanation": "Yazılışı ve okunuşu aynı, anlamı farklı sözcükler eş seslidir. Eş anlamlılıkta ise sözcük farklı, anlam aynıdır; ikisi farklı kavramlardır.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Yazılışı ve okunuşu aynı, anlamı farklı sözcükler eş seslidir. Eş anlamlılıkta ise sözcük farklı, anlam aynıdır; ikisi ters kavramlardır.",
-    "explanationKu": "Peyvên ku nivîsîn û xwendina wan wek hev e lê wateya wan cuda ye, hevdeng in. Di hevwateyê de peyv cuda ye lê wate wek hev e; ev herdu têgeh li dijî hev in.",
+    "explanationTr": "Yazılışı ve okunuşu aynı, anlamı farklı sözcükler eş seslidir. Eş anlamlılıkta ise sözcük farklı, anlam aynıdır; ikisi farklı kavramlardır.",
+    "explanationKu": "Peyvên ku nivîsîn û xwendina wan wek hev e lê wateya wan cuda ye, hevdeng in. Di hevwateyê de peyv cuda ye lê wate wek hev e; ev herdu têgeh cuda ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",

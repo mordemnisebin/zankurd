@@ -55,6 +55,9 @@ void main() {
     // dosya başındaki "İkinci dalga" bölümü. Beklenmeyen bir kategori
     // çıkarsa ya bir kimlik yanlış girilmiştir ya da değerli bir Kürt
     // içerikli soru sessizce kaybolmaktadır.
+    // 2026-09-29 doğallık: üçüncü dalga (şablon izi, bkz. aynı dosyanın
+    // "Üçüncü dalga" belgesi) yalnız bu yedi kategoriden id ekledi; küme
+    // bilerek aynı kaldı.
     final byId = {
       for (final q in QuestionBankLoader.instance.allQuestions) q.id: q,
     };

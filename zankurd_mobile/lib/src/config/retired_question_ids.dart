@@ -63,6 +63,35 @@
 /// çözülemez).
 ///
 /// Oranın bekçisi: `test/tf_definition_swap_test.dart`.
+///
+/// ## Üçüncü dalga (2026-09-29, şablon izi — üsttekilerden bağımsız kusur)
+///
+/// Oynanabilir kümenin kalıp denetimi, sözlükten ve tanım listesinden
+/// otomatik üretilmiş soruların bir kısmının bilgi değil kalıp ölçtüğünü
+/// gösterdi. Yeni içerik yazılmadı; yalnız şu beş sınıf emekliye ayrıldı:
+///
+/// * Sözlük doğru/yanlış (26, Ziman): kelime ile Türkçe anlam rastgele
+///   eşleştirilmiş; bu ailenin %81'inde cevap "Şaş" — kalıbı tanıyan oyuncu
+///   hep "Şaş" diyerek kazanıyordu. Aynı aileden `offline_5268` ("pisîk" =
+///   "kedi", Rast, örnek cümleli) bilerek KALDI: eşleştirmesi doğru ve
+///   `animals_1` dersinin etiketli sorusu; çıkarsa ders mini testi 3'ten
+///   2'ye iniyordu.
+/// * Boş önerme (1): `offline_0755` ("Av … têgehan e") yanlışlanamaz; soru
+///   bir şey sormuyor.
+/// * Tür sızıntılı sözlük çoktan seçmelisi (55): doğru şık bir kişi/yer/eser
+///   iken çeldiriciler başka türden ya da yarım cümle parçası; doğru cevap
+///   türünden bulunuyor. (Sınırda kalan `offline_0748`, `offline_ede_2008`,
+///   `ex28_festival_belgefilm_020`, `edit_edebiyat_0028` bilerek KALDI.)
+/// * Tanımı bozuk / iki doğru şık (2): `offline_6626`, `offline_0543`.
+/// * Çeldiricisi başka sorulardan kopyalanmış "çima" soruları
+///   (`offline_2305`, `offline_2276`) ve aynı olgunun ikinci kılıfı
+///   (`offline_7483`; ilk kılıf `offline_7334` zaten üstteki sınıfta).
+///
+/// Ayrıca ilk dalganın kuralına aykırı kalmış üç Kürt bağsız sinema
+/// sorusu: `cinema_0009` ("Kış Uykusu"), `cinema_0027` ("Susuz Yaz"),
+/// `cinema_0051` ("Gegen die Wand"). Üçü de Türkiye ya da Almanya
+/// sinemasının genel bilgisi; ne film, ne yönetmen, ne konu Kürtlerle
+/// bağlı. Emsal: ikinci dalgada aynı gerekçeyle çıkan `cinema_0036`.
 library;
 
 const Set<String> retiredQuestionIds = <String>{
@@ -318,6 +347,124 @@ const Set<String> retiredQuestionIds = <String>{
   'sf_cin_0053', // Kiarostami "Close-up": Kürt bağı olmayan sinema
   'cinema_0036', // Kaplanoğlu "Bal": Kürt bağı olmayan sinema
   'offline_7011', // kopya şık: B ve C aynı önermenin iki söylenişi
+  // ---------------------------------------------------------------------
+  // Üçüncü dalga (2026-09-29): şablon izi denetimi — bkz. dosya başındaki
+  // "Üçüncü dalga" belgesi. Sınıfa, sınıf içinde kategoriye göre.
+  // ---------------------------------------------------------------------
+
+  // Ziman (26) — sözlük D/Y rastgele eşleştirme (%81 Şaş; offline_5268 kaldı)
+  'offline_0014',
+  'offline_5035',
+  'offline_5039',
+  'offline_5099',
+  'offline_5158',
+  'offline_5168',
+  'offline_5174',
+  'offline_5204',
+  'offline_5208',
+  'offline_5307',
+  'offline_5314',
+  'offline_5364',
+  'offline_5433',
+  'offline_5475',
+  'offline_5499',
+  'offline_5591',
+  'offline_5593',
+  'offline_5631',
+  'offline_5632',
+  'offline_5675',
+  'offline_5676',
+  'offline_5722',
+  'offline_5733',
+  'offline_5834',
+  'offline_5848',
+  'offline_5941',
+
+  // Cografya (1) — boş önerme
+  'offline_0755',
+
+  // Cografya (13) — tür sızıntılı / parça cümle çeldiricili sözlük çoktan seçmelisi
+  'offline_8108',
+  'offline_8220',
+  'offline_8263',
+  'offline_8356',
+  'offline_8561',
+  'offline_8585',
+  'offline_8833',
+  'offline_8916',
+  'offline_8965',
+  'offline_9008',
+  'offline_9036',
+  'offline_9096',
+  'offline_curated_20776',
+
+  // Dîrok (17) — tür sızıntılı / parça cümle çeldiricili sözlük çoktan seçmelisi
+  'offline_0534',
+  'offline_2458',
+  'offline_2727',
+  'offline_7015',
+  'offline_7053',
+  'offline_7242',
+  'offline_7257',
+  'offline_7334',
+  'offline_7335',
+  'offline_7394',
+  'offline_7644',
+  'offline_7668',
+  'offline_curated_20551',
+  'offline_curated_20576',
+  'offline_curated_20650',
+  'offline_curated_20676',
+  'offline_curated_20726',
+
+  // Edebiyat (6) — tür sızıntılı / parça cümle çeldiricili sözlük çoktan seçmelisi
+  'offline_10104',
+  'offline_2248',
+  'offline_9749',
+  'offline_9936',
+  'offline_9942',
+  'offline_curated_20351',
+
+  // Muzîk (10) — tür sızıntılı / parça cümle çeldiricili sözlük çoktan seçmelisi
+  'offline_10333',
+  'offline_10344',
+  'offline_10615',
+  'offline_10827',
+  'offline_11013',
+  'offline_11107',
+  'offline_11143',
+  'offline_11154',
+  'offline_11366',
+  'offline_11420',
+
+  // Çand (9) — tür sızıntılı / parça cümle çeldiricili sözlük çoktan seçmelisi
+  'offline_6182',
+  'offline_6530',
+  'offline_6560',
+  'offline_6581',
+  'offline_6610',
+  'offline_6722',
+  'offline_6823',
+  'offline_6971',
+  'offline_curated_21126',
+
+  // Dîrok (1) — tanımı bozuk / iki doğru şık
+  'offline_0543',
+
+  // Çand (1) — tanımı bozuk / iki doğru şık
+  'offline_6626',
+
+  // Dîrok (1) — çeldiricisi başka sorulardan ya da aynı olgunun ikinci kılıfı
+  'offline_7483',
+
+  // Çand (2) — çeldiricisi başka sorulardan ya da aynı olgunun ikinci kılıfı
+  'offline_2305',
+  'offline_2276',
+
+  // Sînema (3) — Kürt bağı olmayan sinema
+  'cinema_0009', // "Kış Uykusu" (Ceylan)
+  'cinema_0027', // "Susuz Yaz" (Erksan)
+  'cinema_0051', // "Gegen die Wand" (Akın)
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?
