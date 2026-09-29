@@ -140,9 +140,10 @@ void main() {
       await tester.tap(find.text('Hafıza Kartları'));
       await tester.pumpAndSettle();
 
-      // 2026-09-29 Şahnê: kategori rozeti (`SahneBadge`) Etiket
-      // biçemindedir — yerele duyarlı büyük harf ("Dil" → "DİL").
-      expect(find.text('DİL'), findsOneWidget);
+      // 2026-09-29 doğallık: kategori rozeti (`SahneBadge`) artık cümle
+      // düzeninde (K8); bu bekçi eskiden büyük harfi ("DİL") bekliyordu.
+      // Korunan şey değişmedi: Türkçe turda çevrilmiş ad görünür.
+      expect(find.text('Dil'), findsOneWidget);
       expect(find.text('Ziman'), findsNothing);
       expect(find.text('ZIMAN'), findsNothing);
     },

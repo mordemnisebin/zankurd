@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
@@ -100,6 +101,24 @@ void main() {
 
     // Her basamak okunabilir alt sınırın üstünde; açıklama bile 14.
     expect(scale.last, greaterThanOrEqualTo(14));
+  });
+
+  // 2026-09-29 doğallık (K8): ağırlık hiyerarşisi. 800 yalnız sekme
+  // başlığında (title), soru metninde (title) ve skorda (screen). Her başlık
+  // ve düğme 800 olunca sayfada hiyerarşi kalmıyordu. Karar bölüm başlığı
+  // için 20/700 diyordu; 20 beş boyutlu ölçeğin dışında kaldığı için boyut
+  // değil ağırlık düştü: bölüm/kart başlığı Manşet 22/700. Ölçek beş boyut
+  // kalır (yukarıdaki bekçi).
+  test('ağırlık hiyerarşisi: 800 yalnız başlık, soru ve skorda', () {
+    expect(SahneType.screen.fontWeight, FontWeight.w800);
+    expect(SahneType.title.fontWeight, FontWeight.w800);
+    expect(SahneType.headline.fontWeight, FontWeight.w700);
+    expect(SahneType.headline.fontSize, 22);
+    expect(SahneType.button.fontWeight, FontWeight.w700);
+    expect(SahneType.captionStrong.fontWeight, FontWeight.w700);
+    // Büyük harfli künye yalnız soru ekranının üst satırı içindir; bileşen
+    // olarak kalır.
+    expect(SahneType.eyebrow.fontSize, SahneType.caption.fontSize);
   });
 
   test('yazı tipi ailesi tek yerden geliyor', () {

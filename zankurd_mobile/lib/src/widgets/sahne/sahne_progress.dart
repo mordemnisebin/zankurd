@@ -289,15 +289,15 @@ class SahneLessonDiamond extends StatelessWidget {
 /// Sayaç — oyun sahnesinin ortasındaki elmas (maketteki `.sh-timer`).
 ///
 /// 60 px elmas, zemin rengiyle dolu; 4 px iz TEPE köşeden saat yönünde
-/// tükenir (`PathMetric.extractPath`). Arkada 116 px altın hale (gradyan,
-/// bulanıklık yok). Son [hotSeconds] saniyede iz, sayı ve hale Boyax'a
-/// döner ve elmas 600 ms'lik nabızla 1 → 1.06 atar; hareketi azaltta
-/// yalnız renk değişir.
+/// tükenir (`PathMetric.extractPath`). Son [hotSeconds] saniyede iz ve
+/// sayı Boyax'a döner, arkada 116 px Boyax hale belirir (gradyan,
+/// bulanıklık yok) ve elmas 600 ms'lik nabızla 1 → 1.06 atar; hareketi
+/// azaltta yalnız renk değişir.
 ///
-/// [light] (kategori ışığı, [SahneCategoryLight]) verilirse hale sahnenin
-/// huzmesiyle aynı ışığı taşır (altın halenin yoğunluğunda); iz ve sayı
-/// yine Zêr kalır — ışık dolgu ya da metin rengi değildir. Gerilim eşiğinde
-/// hale her zaman Boyax'tır.
+/// 2026-09-29 doğallık (K9): hale YALNIZ son saniyelerde. Eskiden sakin
+/// sayaç da sürekli altın (ya da kategori ışığında) bir hale taşıyordu;
+/// her an parlayan öğe gerilim anını söyleyemiyordu. [light] geriye uyum
+/// için kalır; sakin sayaçta hale olmadığından artık bir şey boyamaz.
 class SahneTimerDiamond extends StatefulWidget {
   const SahneTimerDiamond({
     super.key,
@@ -308,16 +308,13 @@ class SahneTimerDiamond extends StatefulWidget {
     this.light,
   });
 
-  /// Kategori ışığı: halenin rengi (yalnız ışık).
+  /// Kategori ışığı. Geriye uyum: sakin sayaçta hale yok, eşikte hale
+  /// her zaman Boyax — bu alan artık görünüşü değiştirmez.
   final Color? light;
 
-  /// Halenin rengi: eşikte yarış halesi, değilse kategori ışığı ya da
-  /// altın hale.
-  static Color haloColor({required bool hot, Color? light}) {
-    if (hot) return SahneStageColors.haloRace;
-    if (light == null) return SahneStageColors.haloGold;
-    return light.withValues(alpha: SahneStageColors.haloGold.a);
-  }
+  /// Halenin rengi: eşikte yarış halesi, değilse `null` (hale yok).
+  static Color? haloColor({required bool hot, Color? light}) =>
+      hot ? SahneStageColors.haloRace : null;
 
   final int secondsLeft;
 

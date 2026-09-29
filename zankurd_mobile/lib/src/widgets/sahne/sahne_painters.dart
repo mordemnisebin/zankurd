@@ -364,110 +364,46 @@ class SahneStagePainter extends CustomPainter {
       old.race != race || old.glow != glow;
 }
 
-/// Çizimsiz kategori karosu (Sinema ve çizimi olmayan her kategori):
-/// kobalt radyal zemin + kilim şerit çerçeve + kemer + zemin bandı.
-/// 128 ızgarada çizilir, karonun boyuna ölçeklenir. Renkler temadan
-/// bağımsızdır (çizimin yerini tutar).
+/// Çizimsiz kategori karosu: kategorinin renk ailesinden düz zemin + ince
+/// bir pah yüzeyi (sağ üst köşe).
+///
+/// 2026-09-29 doğallık (K1): eski ressam her çizimsiz kategoriye aynı kobalt
+/// radyali, kilim şerit çerçeveyi, noktalı kemeri ve üç baklavayı
+/// çiziyordu — süs yığını, "üretilmiş görsel" izinin kendisi. Artık düz
+/// zemin ([SahneCategoryTone.ground]) ve karonun pah diliyle aynı açıda
+/// tek bir yüzey ([SahneCategoryTone.detail], %28); degrade, çerçeve ve
+/// kilim yok. Bütün kategoriler için kullanılır: ana sayfa ızgarası,
+/// liste küçüğü, görseli yüklenemeyen karo. Renkler temadan bağımsızdır
+/// (karo kimlik taşır, sahne gibi).
 class SahneNoArtPainter extends CustomPainter {
-  const SahneNoArtPainter({required this.gold, required this.dot});
+  const SahneNoArtPainter({this.tone = SahneCategoryTone.fallback});
 
-  /// Şerit baklavaları ve kemer noktaları (Zêr).
-  final Color gold;
+  final SahneCategoryTone tone;
 
-  /// Şerit içi küçük baklavalar (Boyax).
-  final Color dot;
+  /// Pah yüzeyinin karonun kısa kenarına oranı.
+  static const double facet = 0.34;
+
+  /// Pah yüzeyinin örtücülüğü.
+  static const double facetAlpha = 0.28;
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (size.isEmpty) return;
     final box = Offset.zero & size;
-    final s = size.shortestSide / 128;
-    // Zemin: radial-gradient(70% 60% at 50% 46%, art1, art2 %55, art3).
-    canvas.drawRect(box, Paint()..color = SahneStageColors.art3);
-    paintEllipseGlow(
-      canvas,
-      box,
-      center: Offset(size.width * 0.5, size.height * 0.46),
-      radiusX: size.width * 0.7,
-      radiusY: size.height * 0.6,
-      colors: const [
-        SahneStageColors.art1,
-        SahneStageColors.art2,
-        SahneStageColors.art3,
-      ],
-      stops: const [0, 0.55, 1],
-    );
-
-    canvas.save();
-    canvas.scale(s);
-    // Çerçeve kenarı.
+    canvas.drawRect(box, Paint()..color = tone.ground);
+    final f = size.shortestSide * facet;
     canvas.drawPath(
       Path()
-        ..fillType = PathFillType.evenOdd
-        ..addRect(const Rect.fromLTWH(0, 0, 128, 128))
-        ..addRect(const Rect.fromLTRB(11, 11, 117, 117)),
-      Paint()..color = SahneStageColors.art3,
+        ..moveTo(size.width - f, 0)
+        ..lineTo(size.width, 0)
+        ..lineTo(size.width, f)
+        ..close(),
+      Paint()..color = tone.detail.withValues(alpha: facetAlpha),
     );
-    final band = Path();
-    final dots = Path();
-    void dia(Path p, double cx, double cy, double r) {
-      p
-        ..moveTo(cx, cy - r)
-        ..lineTo(cx + r, cy)
-        ..lineTo(cx, cy + r)
-        ..lineTo(cx - r, cy)
-        ..close();
-    }
-
-    for (var i = 0.0; i < 128; i += 11) {
-      final c = i + 5.5;
-      dia(band, c, 5.5, 4);
-      dia(band, c, 122.5, 4);
-      dia(band, 5.5, c + 4, 4);
-      dia(band, 122.5, c + 4, 4);
-      dia(dots, c, 5.5, 1.5);
-      dia(dots, c, 122.5, 1.5);
-    }
-    canvas.drawPath(band, Paint()..color = gold);
-    canvas.drawPath(dots, Paint()..color = dot);
-
-    // Kemer dolgusu, ışık dairesi, noktalı kemer çizgisi.
-    final arch = Path()
-      ..moveTo(26, 110)
-      ..lineTo(26, 62)
-      ..arcToPoint(const Offset(102, 62), radius: const Radius.circular(38))
-      ..lineTo(102, 110);
-    canvas.drawPath(
-      Path.from(arch)..close(),
-      Paint()..color = SahneStageColors.art3.withValues(alpha: 0.55),
-    );
-    canvas.drawCircle(
-      const Offset(64, 62),
-      34,
-      Paint()..color = SahneStageColors.art1.withValues(alpha: 0.75),
-    );
-    final dotPaint = Paint()..color = gold.withValues(alpha: 0.9);
-    for (final metric in arch.computeMetrics()) {
-      for (var d = 0.5; d < metric.length; d += 6) {
-        final t = metric.getTangentForOffset(d);
-        if (t != null) canvas.drawCircle(t.position, 1, dotPaint);
-      }
-    }
-    // Zemin bandı ve üç baklava.
-    canvas.drawRect(
-      const Rect.fromLTRB(11, 104, 117, 117),
-      Paint()..color = SahneStageColors.art3,
-    );
-    final ground = Path();
-    for (final cx in const [40.0, 64.0, 88.0]) {
-      dia(ground, cx, 112, 4);
-    }
-    canvas.drawPath(ground, Paint()..color = gold);
-    canvas.restore();
   }
 
   @override
-  bool shouldRepaint(SahneNoArtPainter old) =>
-      old.gold != gold || old.dot != dot;
+  bool shouldRepaint(SahneNoArtPainter old) => old.tone != tone;
 }
 
 /// Oyun sahnesinin ışık huzmesi: tepede dar, aşağıda geniş yamuk
@@ -577,6 +513,10 @@ class SahneRidgePainter extends CustomPainter {
 /// Sonuç kahramanının arkası: sonuç ışınları + dağ sırtı ufku (solo ve
 /// düello sonucu).
 ///
+/// 2026-09-29 doğallık (K9): ışınlar ([rays]) varsayılan KAPALI. Parıltı
+/// yalnız kazanılmış anda: çağıran ekran 3 yıldız / galibiyette açar
+/// (`rays: true`). Her sonuçta dönen güneş ışını kutlamayı ucuzlatıyordu.
+///
 /// Işınlar maketteki `.sh-rays`: `repeating-conic-gradient(ray 0–5°,
 /// şeffaf 5–15°)` üstüne `radial-gradient(closest-side, şeffaf %16, bg
 /// %74)` örtü. Flutter karşılığı `SweepGradient(tileMode: repeated)` + bg
@@ -592,7 +532,7 @@ class SahneRidgePainter extends CustomPainter {
 /// kalır, ufuk çizgisinde kesilir — üstüne Perde tonu %40.
 class SahneResultBackdropPainter extends CustomPainter {
   const SahneResultBackdropPainter({
-    required this.rays,
+    this.rays = false,
     required this.raysCenterY,
     required this.bg,
     required this.ridge,

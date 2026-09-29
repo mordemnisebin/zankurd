@@ -196,8 +196,9 @@ void main() {
     // özet çizer, yani "Sen" iki kez görünür ve bu test yanlış yerde
     // kırılırdı.
     await _pump(tester, _Repo(count: 12, selfIndex: 5), size: _phone);
+    // 2026-09-29 doğallık: rozet artık cümle düzeninde (K8, `SahneBadge` captionStrong); bu bekçi eskiden büyük harfi bekliyordu.
     expect(
-      find.text('SEN'),
+      find.text('Sen'),
       findsOneWidget,
       reason: 'kendi satırı yalnız renkle değil, metinle de işaretlenmeli',
     );
@@ -284,7 +285,7 @@ void main() {
       mode: ThemeMode.dark,
     );
     expect(tester.takeException(), isNull);
-    expect(find.text('SEN'), findsOneWidget);
+    expect(find.text('Sen'), findsOneWidget);
   });
 
   // ── iPad iki sütun ──────────────────────────────────────────────────────
@@ -315,7 +316,7 @@ void main() {
       _Repo(count: 12, selfIndex: 5),
       size: const Size(744, 1133),
     );
-    expect(find.text('SEN'), findsNWidgets(2));
+    expect(find.text('Sen'), findsNWidgets(2));
   });
 
   testWidgets('podyumdaki oyuncuya ikinci özet çizilmez', (tester) async {
@@ -326,7 +327,7 @@ void main() {
       _Repo(count: 12, selfIndex: 0),
       size: const Size(744, 1133),
     );
-    expect(find.text('SEN'), findsNothing);
+    expect(find.text('Sen'), findsNothing);
   });
 
   testWidgets('telefonda tek sütun korunur', (tester) async {

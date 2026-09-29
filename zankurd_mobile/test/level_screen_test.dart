@@ -119,8 +119,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    // 2026-09-29 doğallık (K8): Manşet artık 700; 800 yalnız sekme başlığı,
+    // soru metni ve skorda. Bu bekçi eskiden 800 bekliyordu; korunan şey
+    // (sakin ama belirgin: ince değil) 700 ile de sağlanır.
     final numberText = tester.widget<Text>(find.text('1'));
-    expect(numberText.style?.fontWeight, FontWeight.w800);
+    expect(numberText.style?.fontWeight, FontWeight.w700);
   });
 
   // 2026-09-27: bu bekçi eskiden "kart HER ZAMAN nötr" bekliyordu; sonra

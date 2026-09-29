@@ -7,8 +7,10 @@
 ///   kural 72 ayrı `isDark` dalıyla taklit ediliyordu ve her yeni kartta
 ///   unutuluyordu; burada kart kendi içini `AppTheme.stage` ile sarar ve
 ///   test, gündüzde içerideki metnin gece renginde olduğunu ölçer.
-/// * Çizimsiz kategori (Sinema) görsel yokken de — ya da görsel
-///   yüklenemezse — boş kutu değil kobalt + kilim çerçeve çizer.
+/// * Çizimsiz kategori görsel yokken de — ya da görsel yüklenemezse — boş
+///   kutu değil kategorinin düz tonunu çizer (2026-09-29 doğallık, K1:
+///   kobalt radyal + kilim çerçeve + kemer süs yığınıydı).
+/// * Kilim şeridi yalnız `kilim: true` ile (K4).
 /// * Liste grubunun ayırıcısı ikon hizasından başlar (satır türüne göre).
 /// * 320 px @2.0'da hiçbiri taşmaz.
 library;
@@ -79,12 +81,20 @@ void main() {
       final ctx = tester.element(find.text('Selamlaşma'));
       expect(SahneTokens.of(ctx), SahneTokens.night);
 
-      // Kilim şeridi her kartta; dekoratif, ekran okuyucuya görünmez.
-      expect(find.byType(SahneKilimStrip), findsNWidgets(5));
+      // 2026-09-29 doğallık: bu bekçi eskiden kilim şeridini HER kartta ve
+      // üst etiketi büyük harfle bekliyordu. K4: şerit isteğe bağlı,
+      // varsayılan kapalı (yalnız onboarding, zafer sonucu, giriş açar).
+      // K8: üst etiket ve rozet açıklama kalını, cümle düzeni; büyük harf
+      // yalnız soru ekranının künyesinde.
+      expect(find.byType(SahneKilimStrip), findsNothing);
       expect(find.bySemanticsLabel('2/5'), findsOneWidget);
-      // Üst etiket yerele duyarlı büyür (Türkçe i → İ).
-      expect(find.text('HIZLI DÜELLO'), findsOneWidget);
-      expect(find.text('SANA ÖNERİLEN'), findsOneWidget);
+      expect(find.text('Hızlı düello'), findsOneWidget);
+      expect(find.text('HIZLI DÜELLO'), findsNothing);
+      expect(find.text('Sana önerilen'), findsOneWidget);
+      expect(
+        tester.widget<Text>(find.text('Hızlı düello')).style?.fontWeight,
+        FontWeight.w700,
+      );
       semantics.dispose();
     });
 
@@ -189,6 +199,47 @@ void main() {
       ),
       findsOneWidget,
     );
+  });
+
+  testWidgets('kilim şeridi yalnız istenince çizilir (K4)', (tester) async {
+    await pumpSahne(
+      tester,
+      const Column(
+        children: [
+          SahneStageCard(kilim: true, child: Text('Zafer')),
+          SahneStageCard.mini(title: 'Günün dersi', kilim: true),
+          SahneStageCard(child: Text('Sade')),
+        ],
+      ),
+      dark: true,
+      textScale: 1,
+    );
+    expect(find.byType(SahneKilimStrip), findsNWidgets(2));
+  });
+
+  testWidgets('çizimsiz karo kategorinin düz tonunu taşır (K1)', (
+    tester,
+  ) async {
+    await pumpSahne(
+      tester,
+      const SahneJewelTile(
+        name: 'Ziman',
+        icon: AppIcons.language,
+        tone: SahneCategoryTone.ziman,
+      ),
+      dark: false,
+      textScale: 1,
+    );
+    final painter =
+        tester
+                .widget<CustomPaint>(
+                  find.byWidgetPredicate(
+                    (w) => w is CustomPaint && w.painter is SahneNoArtPainter,
+                  ),
+                )
+                .painter!
+            as SahneNoArtPainter;
+    expect(painter.tone, SahneCategoryTone.ziman);
   });
 
   testWidgets('liste grubu ayırıcısı satır türünün öncül hizasından başlar', (

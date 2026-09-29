@@ -6,7 +6,9 @@ import 'sahne_foundation.dart';
 
 /// Bölüm başlığı — TEK stil (maketteki `.sh-sec`).
 ///
-/// Manşet 22/28 solda; isteğe bağlı sağda metin düğmesi (ör. "Tümü" +
+/// Manşet 22/28, 700 solda (2026-09-29 doğallık, K8: 800 yalnız sekme
+/// başlığı, soru metni ve skorda; kararın 20'si beş boyutlu ölçeğin dışında
+/// kaldığı için ağırlıkla çözüldü); isteğe bağlı sağda metin düğmesi (ör. "Tümü" +
 /// chevron, Agir metni, 44 dokunma). Üstü 24, altı 12. Sol çubuk, renkli
 /// büyük harf, ikon YOK — başka bölüm başlığı biçimi yazılmaz. Ekran
 /// okuyucuya başlık olarak duyurulur.

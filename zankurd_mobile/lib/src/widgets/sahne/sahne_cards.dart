@@ -16,8 +16,9 @@ enum _StageKind { plain, lesson, duel, mini }
 /// `.sh-stage`).
 ///
 /// Gece degradesi (`SahneStageColors.top → bottom`) + sol üstten rol
-/// radyali; yarış rolünde Boyax sahne degradesi (race1 → race3). Üst
-/// kenarda rol renkli kilim göz şeridi (8 px, %55). L pah. Gündüz
+/// radyali; yarış rolünde Boyax sahne degradesi (race1 → race3). L pah.
+/// Üst kenardaki rol renkli kilim göz şeridi (8 px, %55) İSTEĞE BAĞLIDIR
+/// ([kilim], varsayılan kapalı). Gündüz
 /// temasında da GECE çizilir: içerik `AppTheme.stage` ile sarılır, altındaki
 /// her bileşen gece belirteçlerini alır.
 ///
@@ -26,12 +27,21 @@ enum _StageKind { plain, lesson, duel, mini }
 /// * [SahneStageCard.duel] — yarış degradesi; solda metin, sağda VS amblemi
 ///   yuvası ([emblem], ör. [SahneVsEmblem]); altında birincil düğme.
 /// * [SahneStageCard.mini] — etiket + manşet + açıklama, 4 aralık.
-/// * Varsayılan kurucu — yalnız zemin + şerit; içerik serbest.
+/// * Varsayılan kurucu — yalnız zemin (+ isteğe bağlı şerit); içerik
+///   serbest.
+///
+/// 2026-09-29 doğallık (K4): kilim şeridi her sahne kartında olunca bir
+/// kimlik değil şablon izi oluyordu. Şerit yalnız anlamlı yerlerde açılır
+/// (onboarding, zafer sonucu, giriş): `kilim: true`.
+///
+/// Üst etiket ([eyebrow]) açıklama kalınında ve cümle düzenindedir (K8);
+/// büyük harf yalnız soru ekranının künyesinde kalır.
 class SahneStageCard extends StatelessWidget {
   const SahneStageCard({
     super.key,
     required Widget this.child,
     this.role = SahneRole.learn,
+    this.kilim = false,
     this.padding = const EdgeInsets.fromLTRB(
       SahneSpace.x4,
       SahneSpace.x5,
@@ -66,6 +76,7 @@ class SahneStageCard extends StatelessWidget {
     this.actionKey,
     this.loading = false,
     this.semanticLabel,
+    this.kilim = false,
   }) : _kind = _StageKind.lesson,
        role = SahneRole.learn,
        child = null,
@@ -90,6 +101,7 @@ class SahneStageCard extends StatelessWidget {
     this.actionKey,
     this.loading = false,
     this.semanticLabel,
+    this.kilim = false,
   }) : _kind = _StageKind.duel,
        role = SahneRole.race,
        child = null,
@@ -109,6 +121,7 @@ class SahneStageCard extends StatelessWidget {
     this.eyebrow,
     this.meta,
     this.role = SahneRole.learn,
+    this.kilim = false,
   }) : _kind = _StageKind.mini,
        child = null,
        tag = null,
@@ -133,10 +146,13 @@ class SahneStageCard extends StatelessWidget {
   final Widget? child;
   final EdgeInsets padding;
 
-  /// Üst etiket (büyük harfe yerele duyarlı çevrilir), rol metni renginde.
+  /// Üst kenarda rol renkli kilim şeridi; varsayılan kapalı (K4).
+  final bool kilim;
+
+  /// Üst etiket: açıklama kalını, cümle düzeni, rol metni renginde.
   final String? eyebrow;
 
-  /// Üst etiket yerine rozet (ör. `SahneBadge`: "SANA ÖNERİLEN").
+  /// Üst etiket yerine rozet (ör. `SahneBadge`: "Sana önerilen").
   final Widget? tag;
   final String? title;
   final String? meta;
@@ -182,8 +198,8 @@ class SahneStageCard extends StatelessWidget {
         if (tag != null) ...[tag!, SizedBox(height: gap)],
         if (tag == null && eyebrow != null) ...[
           Text(
-            sahneUpper(context, eyebrow!),
-            style: SahneType.eyebrow.copyWith(color: eyebrowColor),
+            eyebrow!,
+            style: SahneType.captionStrong.copyWith(color: eyebrowColor),
           ),
           SizedBox(height: gap),
         ],
@@ -303,19 +319,21 @@ class SahneStageCard extends StatelessWidget {
           race: race,
           glow: race ? null : t.roleGlow(role),
         ),
-        child: Stack(
-          children: [
-            Padding(padding: padding, child: content),
-            PositionedDirectional(
-              top: 0,
-              start: 0,
-              end: 0,
-              child: SahneKilimStrip(
-                color: t.roleText(role).withValues(alpha: 0.55),
-              ),
-            ),
-          ],
-        ),
+        child: kilim
+            ? Stack(
+                children: [
+                  Padding(padding: padding, child: content),
+                  PositionedDirectional(
+                    top: 0,
+                    start: 0,
+                    end: 0,
+                    child: SahneKilimStrip(
+                      color: t.roleText(role).withValues(alpha: 0.55),
+                    ),
+                  ),
+                ],
+              )
+            : Padding(padding: padding, child: content),
       ),
     );
     final label = semanticLabel;
@@ -335,7 +353,7 @@ class SahneStageCard extends StatelessWidget {
 
 /// VS amblemi — düello kartının sağ yuvası (maketteki `.sh-vs`).
 ///
-/// Bileşik, yeni ilkel değil: iki 48'lik elmas avatar. Oyuncu sol üstte
+/// Bileşik, yeni ilkel değil: iki 48'lik avatar (pahlı kare, K5). Oyuncu sol üstte
 /// (birincil metin dolgu + Halka 3 altın + kişi ikonu), rakip sağ altta
 /// (yarış koyusu dolgu + Halka 2 yumuşak lal + "?" ya da baş harf);
 /// ortada Etiket biçeminde "VS". 104 × 80; dekoratif.
@@ -356,7 +374,7 @@ class SahneVsEmblem extends StatelessWidget {
             PositionedDirectional(
               start: 0,
               top: 0,
-              child: SahneDiamondAvatar(
+              child: SahneAvatar(
                 size: 48,
                 icon: AppIcons.user,
                 color: t.tx,
@@ -368,7 +386,7 @@ class SahneVsEmblem extends StatelessWidget {
             PositionedDirectional(
               end: 0,
               bottom: 0,
-              child: SahneDiamondAvatar(
+              child: SahneAvatar(
                 size: 48,
                 initial: opponentInitial,
                 color: SahneStageColors.race3,
@@ -441,9 +459,9 @@ class SahneSurfaceCard extends StatelessWidget {
 ///
 /// * Çizimli — [image] verilir; kaş nötr (`rim`, Halka 1).
 /// * Ustalık — [mastered]: kaş altın + sağ üstte elmas yıldız rozeti.
-/// * Çizimsiz — [image] `null` (Sinema ve çizimi olmayan her kategori) ya
-///   da görsel yüklenemezse: kobalt radyal + kilim şerit çerçeve + kemer +
-///   48'lik Lucide ikonu ([icon]).
+/// * Çizimsiz — [image] `null` ya da görsel yüklenemezse: kategorinin
+///   düz tonu ([tone], [SahneNoArtPainter]) + 48'lik çizgi ikon ([icon]).
+///   Kategori tonu `CategoryVisuals.tone(kategori)` ile verilir.
 ///
 /// Altında ad (Gövde 700) ve öteki dildeki ad (Açıklama, ikincil metin),
 /// en altta isteğe bağlı meta yuvası ([meta]: ilerleme çubuğu, "245 soru").
@@ -464,7 +482,11 @@ class SahneJewelTile extends StatelessWidget {
     this.size = 128,
     this.meta,
     this.metaLabel,
+    this.tone = SahneCategoryTone.fallback,
   });
+
+  /// Çizimsiz çeşidin zemini (kategori tonu).
+  final SahneCategoryTone tone;
 
   /// Adların altındaki yuva (ör. ilerleme çubuğu ya da soru sayısı).
   final Widget? meta;
@@ -495,10 +517,8 @@ class SahneJewelTile extends StatelessWidget {
     );
 
     Widget noArt() => CustomPaint(
-      painter: SahneNoArtPainter(gold: t.gold, dot: t.race),
-      child: Align(
-        // Maket: ikon merkezin 4 px altında (kemerin ışık dairesinde).
-        alignment: const Alignment(0, 8 / 128),
+      painter: SahneNoArtPainter(tone: tone),
+      child: Center(
         child: Icon(icon, size: 48 * size / 128, color: SahneTokens.night.tx),
       ),
     );
@@ -520,7 +540,7 @@ class SahneJewelTile extends StatelessWidget {
           Positioned.fill(
             child: ClipPath(
               clipper: const ShapeBorderClipper(shape: SahneShape.l),
-              child: ColoredBox(color: SahneStageColors.art2, child: art),
+              child: ColoredBox(color: tone.ground, child: art),
             ),
           ),
           // Kaş: içe çizilen Halka 1 (nötr ya da altın).
@@ -586,8 +606,9 @@ class SahneJewelTile extends StatelessWidget {
   }
 }
 
-/// Ustalık rozeti: 28'lik Zêr elmas, zemin renginde 2 px kontur, içinde
-/// 12'lik koyu yıldız.
+/// Ustalık rozeti: 28'lik Zêr pahlı kare (S), zemin renginde 2 px kontur,
+/// içinde 12'lik koyu yıldız. 2026-09-29 doğallık (K5): elmas yalnız soru
+/// ilerlemesi ve ders sayacında kalır.
 class _MasterBadge extends StatelessWidget {
   const _MasterBadge({required this.tokens});
 
@@ -600,9 +621,10 @@ class _MasterBadge extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: tokens.gold,
-          shape: SahneShape.diamond(
-            28,
-            side: BorderSide(color: tokens.bg, width: SahneRing.r2),
+          shape: SahneShape.withSide(
+            SahneShape.s,
+            tokens.bg,
+            width: SahneRing.r2,
           ),
         ),
         child: Center(

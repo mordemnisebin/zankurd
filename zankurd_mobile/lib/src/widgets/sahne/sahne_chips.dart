@@ -288,11 +288,15 @@ class SahneRailChip extends StatelessWidget {
 /// Rozetin tonu.
 enum SahneBadgeTone { race, learn, gold, soon }
 
-/// Rol rozeti — "BUGÜN", "SANA ÖNERİLEN", "YAKINDA" (maketteki `.sh-tag`).
+/// Rol rozeti — "Bugün", "Sana önerilen", "Yakında" (maketteki `.sh-tag`).
 ///
-/// 24, S pah, ton zemin + rol metni; Etiket biçemi (büyük harf, yerele
-/// duyarlı — Türkçede i → İ). Dolu kırmızı rozet YOK: dikkat rengi değil,
-/// rol rengi taşır. Metin kesilmez; sığmazsa sarar.
+/// 24, S pah, ton zemin + rol metni; açıklama kalını ([SahneType.captionStrong]),
+/// metin verildiği gibi (cümle düzeni). Dolu kırmızı rozet YOK: dikkat rengi
+/// değil, rol rengi taşır. Metin kesilmez; sığmazsa sarar.
+///
+/// 2026-09-29 doğallık (K8): rozet eskiden büyük harf + harf aralığıyla
+/// (Etiket biçemi) yazılıyordu. Her rozet bağırınca şablon izi bırakıyordu;
+/// büyük harf yalnız soru ekranının künyesinde kalır.
 class SahneBadge extends StatelessWidget {
   const SahneBadge({
     super.key,
@@ -325,11 +329,8 @@ class SahneBadge extends StatelessWidget {
               widthFactor: 1,
               heightFactor: 1,
               child: Text(
-                sahneUpper(context, label),
-                style: SahneType.eyebrow.copyWith(
-                  color: fg,
-                  letterSpacing: 14 * 0.06,
-                ),
+                label,
+                style: SahneType.captionStrong.copyWith(color: fg),
               ),
             ),
           ),

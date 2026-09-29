@@ -4,12 +4,14 @@ import '../theme/app_icons.dart';
 import 'roj_mascot.dart';
 import 'sahne/sahne.dart';
 
-/// Boş durum: logo işareti plakası + başlık + açıklama + isteğe bağlı eylem.
+/// Boş durum: 32'lik bağlamsal çizgi ikon + başlık + açıklama + isteğe
+/// bağlı TEK eylem.
 ///
-/// 2026-09-29 Şahnê: maskot ve renkli gradyan panel kaldırıldı ("boş
-/// durumda logo işareti", `spec_sahne.json`). [icon] plakanın köşesindeki
-/// küçük durum karosunda kalır: boş, hata ve çevrimdışı yalnız başlıkla
-/// değil şekille de ayrışır.
+/// 2026-09-29 doğallık (K3): eskiden logo işareti plakası + köşesinde durum
+/// karosu vardı. Her boş listede aynı logonun belirmesi şablon izi
+/// bırakıyordu ve plakadaki logo kenarı kırıntılıydı. Artık yalnız
+/// bağlamı söyleyen ikon ([icon], üçüncül metin rengi); boş, hata ve
+/// çevrimdışı yine şekille (ikonla) ve başlıkla ayrışır.
 class AppEmptyState extends StatelessWidget {
   const AppEmptyState({
     required this.icon,
@@ -37,16 +39,12 @@ class AppEmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return _AppStateScaffold(
       icon: icon,
-      tone: _StateTone.neutral,
       title: title,
       message: message,
       actionLabel: actionLabel,
       onAction: onAction,
       actionIcon: actionIcon,
       primaryAction: primaryAction,
-      // Boş durumlarda eskiden maskot eşlik ederdi; yerinde artık logo
-      // işareti durur (aynı bileşen, [RojMascot]).
-      showMascot: true,
     );
   }
 }
@@ -70,9 +68,8 @@ class AppErrorState extends StatelessWidget {
   final String retryLabel;
   final VoidCallback onRetry;
 
-  /// Geriye uyum; Şahnê'de maskot yok, plaka her zaman logo işaretidir
-  /// (`true` iken [RojMascot] bileşeniyle, değilken [BrandMarkPlate] ile —
-  /// ikisi aynı görünür).
+  /// Geriye uyum; yok sayılır. Durumlarda maskot ya da logo plakası yok
+  /// (2026-09-29 doğallık, K3): yalnız bağlamsal ikon.
   final bool showMascot;
   final RojMood mascotMood;
 
@@ -83,14 +80,12 @@ class AppErrorState extends StatelessWidget {
   Widget build(BuildContext context) {
     return _AppStateScaffold(
       icon: icon,
-      tone: _StateTone.error,
       title: title,
       message: message,
       actionLabel: retryLabel,
       onAction: onRetry,
       actionIcon: AppIcons.arrowsRotate,
       primaryAction: primaryAction,
-      showMascot: showMascot,
     );
   }
 }
@@ -112,9 +107,8 @@ class AppOfflineState extends StatelessWidget {
   final String retryLabel;
   final VoidCallback onRetry;
 
-  /// Geriye uyum; Şahnê'de maskot yok, plaka her zaman logo işaretidir
-  /// (`true` iken [RojMascot] bileşeniyle, değilken [BrandMarkPlate] ile —
-  /// ikisi aynı görünür).
+  /// Geriye uyum; yok sayılır. Durumlarda maskot ya da logo plakası yok
+  /// (2026-09-29 doğallık, K3): yalnız bağlamsal ikon.
   final bool showMascot;
   final RojMood mascotMood;
 
@@ -125,42 +119,37 @@ class AppOfflineState extends StatelessWidget {
   Widget build(BuildContext context) {
     return _AppStateScaffold(
       icon: AppIcons.cloud,
-      tone: _StateTone.neutral,
       title: title,
       message: message,
       actionLabel: retryLabel,
       onAction: onRetry,
       actionIcon: AppIcons.arrowsRotate,
       primaryAction: primaryAction,
-      showMascot: showMascot,
     );
   }
 }
 
-enum _StateTone { neutral, error }
-
 class _AppStateScaffold extends StatelessWidget {
   const _AppStateScaffold({
     required this.icon,
-    required this.tone,
     required this.title,
     required this.message,
     required this.primaryAction,
-    required this.showMascot,
     this.actionLabel,
     this.onAction,
     this.actionIcon,
   });
 
   final IconData icon;
-  final _StateTone tone;
   final String title;
   final String message;
   final String? actionLabel;
   final VoidCallback? onAction;
   final IconData? actionIcon;
   final bool primaryAction;
-  final bool showMascot;
+
+  /// Durum ikonunun kenarı.
+  static const double iconSize = 32;
 
   @override
   Widget build(BuildContext context) {
@@ -211,48 +200,14 @@ class _AppStateScaffold extends StatelessWidget {
   Widget _panel(BuildContext context) {
     final t = SahneTokens.of(context);
     final actionLabel = this.actionLabel;
-    final (badgeBg, badgeFg) = switch (tone) {
-      _StateTone.error => (t.errTint, t.errTx),
-      _StateTone.neutral => (t.s2, t.tx2),
-    };
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Logo plakası + köşede durum karosu (dekoratif; başlık okunur).
+        // Bağlamsal çizgi ikon (dekoratif; başlık okunur). Hata da aynı
+        // üçüncül renktedir: durum ikonun şekli ve başlıkla söylenir, kırmızı
+        // bir alarm plakasıyla değil.
         ExcludeSemantics(
-          child: SizedBox.square(
-            dimension: 76,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  child: showMascot
-                      ? const RojMascot(size: 64)
-                      : const BrandMarkPlate(),
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: badgeBg,
-                      shape: SahneShape.withSide(
-                        SahneShape.s,
-                        t.bg,
-                        width: SahneRing.r2,
-                      ),
-                    ),
-                    child: SizedBox.square(
-                      dimension: 28,
-                      child: Icon(icon, size: 16, color: badgeFg),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          child: Icon(icon, size: iconSize, color: t.tx3),
         ),
         const SizedBox(height: SahneSpace.x4),
         Semantics(

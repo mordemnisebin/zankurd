@@ -95,7 +95,7 @@ void main() {
     expect(find.text('ZanKurd'), findsOneWidget);
   });
 
-  testWidgets('logoyu büyük gösterir', (tester) async {
+  testWidgets('logoyu ölçülü gösterir', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: SplashScreen(
@@ -106,11 +106,16 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 50));
 
-    // Logo mümkün olan en büyük boyutu alır ama ekrana sığar (2026-07-24:
-    // sabit 280px dar/alçak ekranda 17px taşırıyordu).
+    // Logo ekrana sığar (2026-07-24: sabit 280px dar/alçak ekranda 17px
+    // taşırıyordu).
+    //
+    // 2026-09-29 doğallık: bu bekçi eskiden logonun 96'dan BÜYÜK olmasını
+    // bekliyordu. K3: açılışta logo ~%40 küçüldü (128 → 76); ekranı
+    // dolduran logo marka anını değil logoyu öne çıkarıyordu. Alt sınır
+    // (58) logonun simge olarak okunur kalmasını korur.
     final logo = tester.widget<AppLogo>(find.byType(AppLogo));
-    expect(logo.width, lessThanOrEqualTo(280));
-    expect(logo.width, greaterThan(96));
+    expect(logo.width, lessThanOrEqualTo(76));
+    expect(logo.width, greaterThanOrEqualTo(58));
     expect(find.text('SONRAKI'), findsNothing);
   });
 

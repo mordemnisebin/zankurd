@@ -107,9 +107,10 @@ void main() {
           .first,
     );
     expect(group.color, SahneTokens.day.s1);
-    // Rozetler: "5 seviye" ve "Yarış" (Etiket biçemi: büyük harf).
+    // Rozet: "5 seviye". 2026-09-29 doğallık: rozet cümle düzeninde (K8);
+    // bu bekçi eskiden büyük harfi ("5 SEVİYE") bekliyordu.
     expect(
-      find.descendant(of: find.byKey(cardKey), matching: find.text('5 SEVİYE')),
+      find.descendant(of: find.byKey(cardKey), matching: find.text('5 seviye')),
       findsOneWidget,
     );
   });
