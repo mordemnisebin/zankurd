@@ -4,7 +4,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
-import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -112,7 +112,10 @@ void main() {
     );
   });
 
-  testWidgets('çevrimiçi AppBar geri bitmiş oda rotasını temizler', (
+  // 2026-09-29 Şahnê: sonuç C iskeletine (oyun sahnesi) taşındı; AppBar'ın
+  // geri düğmesinin yerini sahnenin üst satırındaki kapat (✕) aldı. Korunan
+  // davranış aynı: çevrimiçi turda kapatmak bitmiş oda rotasını temizler.
+  testWidgets('çevrimiçi sahne kapatma bitmiş oda rotasını temizler', (
     tester,
   ) async {
     await _pumpResultOnFinishedRoomStack(
@@ -121,7 +124,7 @@ void main() {
       roomId: 'online-room-id',
     );
 
-    await tester.tap(find.byType(ZkBackButton));
+    await tester.tap(find.byType(SahneIconButton));
     await tester.pumpAndSettle();
 
     expect(find.text(_rootMarker), findsOneWidget);

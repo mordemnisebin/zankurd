@@ -7,9 +7,9 @@ import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
 import '../../theme/app_icons.dart';
-import '../../theme/app_theme.dart';
 import '../../utils/app_route.dart';
-import '../../widgets/app_panel.dart';
+import '../../widgets/app_state.dart';
+import '../../widgets/sahne/sahne.dart';
 import '../../widgets/zk_back_button.dart';
 import 'async_duel_result_screen.dart';
 
@@ -113,89 +113,104 @@ class _AsyncDuelInboxSectionState extends State<AsyncDuelInboxSection> {
     final all = items ?? const <AsyncDuelSummary>[];
     final unreadCount = all.where((s) => s.outcome != null && !s.seen).length;
 
+    // 2026-09-29 Şahnê: tek bölüm başlığı (`SahneSectionHeader`), satırlar
+    // liste grubunda (`SahneListRow`, Boyax yarış karosu). Okunmamış sayı
+    // dolu turuncu kutu değil, yarış tonunda rol rozeti: dolu kırmızı/
+    // turuncu rozet yok, Agir yalnız birincil eylemdir.
     return KeyedSubtree(
       key: const ValueKey('play-hub-async-duel-inbox'),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Sayı rozeti başlığın hemen yanında: `ScreenSectionHeading`in
-          // `trailing`i dar ekranda (390 pt'de bile, kenar boşluğu düşünce)
-          // alt satıra iniyor ve küçük bir rozet sahipsiz görünüyordu.
-          Semantics(
-            header: true,
-            child: Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    context.t(K.asyncDuelInbox),
-                    style: AppTypography.heading2.copyWith(
-                      color: AppTheme.textPrimaryColor(context),
-                    ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: SahneSectionHeader(title: context.t(K.asyncDuelInbox)),
+              ),
+              if (unreadCount > 0)
+                Padding(
+                  // Başlık satırının (üstü 24, satır 28) ortasına hizalı.
+                  padding: const EdgeInsets.only(
+                    top: SahneSpace.sectionTop + 2,
+                    left: SahneSpace.x2,
                   ),
+                  child: _UnreadCountBadge(count: unreadCount),
                 ),
-                if (unreadCount > 0) ...[
-                  const SizedBox(width: AppSpacing.xs),
-                  _UnreadCountBadge(count: unreadCount),
-                ],
-              ],
-            ),
+            ],
           ),
-          const SizedBox(height: AppSpacing.xs),
           if (items == null && !_failed)
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
-              child: SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(strokeWidth: 2),
+              padding: EdgeInsets.symmetric(vertical: SahneSpace.x3),
+              child: Center(
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
               ),
             )
           else if (items == null)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      context.t(K.asyncDuelLoadFailed),
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppTheme.textSubColor(context),
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: _reload,
-                    child: Text(context.t(K.retry)),
-                  ),
-                ],
+            _InboxNotice(
+              text: context.t(K.asyncDuelLoadFailed),
+              action: SahneButton.text(
+                label: context.t(K.retry),
+                arrow: false,
+                onPressed: _reload,
               ),
             )
           else if (all.isEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-              child: Text(
-                context.t(K.asyncDuelInboxEmpty),
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppTheme.textSubColor(context),
-                ),
-              ),
-            )
+            _InboxNotice(text: context.t(K.asyncDuelInboxEmpty))
           else ...[
-            for (final summary in all.take(widget.maxRows))
-              _AsyncDuelSummaryRow(
-                key: ValueKey('async-duel-row-${summary.duelId}'),
-                summary: summary,
-                onTap: () => _openResult(summary),
-              ),
+            SahneListGroup(
+              children: [
+                for (final summary in all.take(widget.maxRows))
+                  _AsyncDuelSummaryRow(
+                    key: ValueKey('async-duel-row-${summary.duelId}'),
+                    summary: summary,
+                    onTap: () => _openResult(summary),
+                  ),
+              ],
+            ),
             if (all.length > widget.maxRows)
               Align(
                 alignment: AlignmentDirectional.centerEnd,
-                child: TextButton(
+                child: SahneButton.text(
+                  label: context.t(K.asyncDuelSeeAll),
                   onPressed: _openSeeAll,
-                  child: Text(context.t(K.asyncDuelSeeAll)),
                 ),
               ),
           ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Boş ya da yüklenemedi durumu: sakin bir yüzey kartı, ikincil metin ve
+/// isteğe bağlı metin bağlantısı (tekrar dene).
+class _InboxNotice extends StatelessWidget {
+  const _InboxNotice({required this.text, this.action});
+
+  final String text;
+  final Widget? action;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return SahneSurfaceCard(
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        SahneSpace.x4,
+        SahneSpace.x3,
+        SahneSpace.x2,
+        SahneSpace.x3,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(text, style: SahneType.body.copyWith(color: t.tx2)),
+          ),
+          ?action,
         ],
       ),
     );
@@ -209,24 +224,16 @@ class _UnreadCountBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: AppTheme.brand,
-        borderRadius: BorderRadius.circular(AppRadius.xs),
-      ),
-      child: Text(
-        '$count',
-        style: AppTypography.caption.copyWith(
-          color: Colors.white,
-          fontWeight: FontWeight.w800,
-        ),
-      ),
-    );
+    return SahneBadge(label: '$count', tone: SahneBadgeTone.race);
   }
 }
 
 /// Bir düello özetinin satırı — kutuda ve tam listede ortak.
+///
+/// Standart liste satırı: Boyax yarış karosu (tamamlanmışta kupa, bekleyende
+/// kum saati, yarım/süresi dolmuşta saat), başlık rakip adı ya da durum,
+/// alt satır durum ya da oyuncunun skoru; sağda "Sonuç hazır" rozeti ya da
+/// chevron.
 class _AsyncDuelSummaryRow extends StatelessWidget {
   const _AsyncDuelSummaryRow({
     required this.summary,
@@ -257,94 +264,33 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
     // gereken yeni bir sonuç yok.
     final showReadyChip =
         view.kind == AsyncDuelResultKind.completed && !summary.seen;
+    final readyLabel = context.t(K.asyncDuelReady);
+    final icon = switch (view.kind) {
+      AsyncDuelResultKind.completed => AppIcons.trophy,
+      AsyncDuelResultKind.waiting => AppIcons.hourglass,
+      AsyncDuelResultKind.expired ||
+      AsyncDuelResultKind.unfinished => AppIcons.clock,
+    };
 
-    // `AppPanel`in kendi `onTap`i, dokunma alanını ayrı bir Stack
-    // katmanıyla (görünmez bir üst `InkWell`) üstlenir — bu, rozetin
-    // kendi `Container`ına dokunan bir testin "hedeflenen widget'a hiç
-    // değmedi" uyarısı almasına yol açıyordu (dokunma yine de doğru
-    // çalışıyordu, ama uyarı yanlış bir kusur izlenimi veriyordu).
-    // `favorite_questions_screen.dart`daki gibi `InkWell`i doğrudan
-    // panelin ÇOCUĞU yapmak aynı satırı tek, düz bir ağaçla tıklanabilir
-    // kılar.
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-      child: Semantics(
-        button: true,
-        label: subtitle == null ? title : '$title. $subtitle',
-        onTap: onTap,
-        excludeSemantics: true,
-        child: AppPanel(
-          padding: EdgeInsets.zero,
-          child: InkWell(
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(AppTheme.panelRadius),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.sm,
-                vertical: AppSpacing.xs,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.bodyLarge.copyWith(
-                            fontWeight: FontWeight.w800,
-                            color: AppTheme.textPrimaryColor(context),
-                          ),
-                        ),
-                        if (subtitle != null) ...[
-                          const SizedBox(height: 2),
-                          Text(
-                            subtitle,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.caption.copyWith(
-                              color: AppTheme.textSubColor(context),
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.xs),
-                  if (showReadyChip)
-                    Container(
-                      key: const ValueKey('async-duel-ready-badge'),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.brand.withValues(alpha: 0.14),
-                        borderRadius: BorderRadius.circular(AppRadius.xs),
-                      ),
-                      child: Text(
-                        context.t(K.asyncDuelReady),
-                        style: AppTypography.caption.copyWith(
-                          color: AppTheme.brand,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    )
-                  else
-                    Icon(
-                      AppIcons.chevronRight,
-                      size: 16,
-                      color: AppTheme.textMutedColor(context),
-                    ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return SahneListRow.icon(
+      icon: icon,
+      role: SahneRole.race,
+      title: title,
+      subtitle: subtitle,
+      semanticLabel: [
+        title,
+        ?subtitle,
+        if (showReadyChip) readyLabel,
+      ].join('. '),
+      chevron: !showReadyChip,
+      trailing: showReadyChip
+          ? SahneBadge(
+              key: const ValueKey('async-duel-ready-badge'),
+              label: readyLabel,
+              tone: SahneBadgeTone.race,
+            )
+          : null,
+      onTap: onTap,
     );
   }
 }
@@ -388,7 +334,10 @@ class _AsyncDuelListScreenState extends State<AsyncDuelListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // B iskeleti: `zkAppBar` çubuğu (48'lik geri + Manşet başlık); sayfa
+    // adı içerikte tekrarlanmaz.
     return Scaffold(
+      backgroundColor: SahneTokens.of(context).bg,
       appBar: zkAppBar(context, title: Text(context.t(K.asyncDuelInbox))),
       body: SafeArea(
         child: FutureBuilder<List<AsyncDuelSummary>>(
@@ -398,33 +347,40 @@ class _AsyncDuelListScreenState extends State<AsyncDuelListScreen> {
               return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
-              return Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(context.t(K.asyncDuelLoadFailed)),
-                    const SizedBox(height: AppSpacing.sm),
-                    TextButton(
-                      onPressed: _reload,
-                      child: Text(context.t(K.retry)),
-                    ),
-                  ],
-                ),
+              return AppErrorState(
+                icon: AppIcons.cloud,
+                title: context.t(K.asyncDuelInbox),
+                message: context.t(K.asyncDuelLoadFailed),
+                retryLabel: context.t(K.retry),
+                onRetry: _reload,
               );
             }
             final all = snapshot.data ?? const <AsyncDuelSummary>[];
             if (all.isEmpty) {
-              return Center(child: Text(context.t(K.asyncDuelInboxEmpty)));
+              return AppEmptyState(
+                icon: AppIcons.hourglass,
+                title: context.t(K.asyncDuelInbox),
+                message: context.t(K.asyncDuelInboxEmpty),
+              );
             }
             return ListView(
-              padding: const EdgeInsets.all(AppSpacing.page),
+              padding: const EdgeInsets.fromLTRB(
+                SahneSpace.page,
+                SahneSpace.x2,
+                SahneSpace.page,
+                SahneSpace.x6,
+              ),
               children: [
-                for (final summary in all)
-                  _AsyncDuelSummaryRow(
-                    key: ValueKey('async-duel-row-${summary.duelId}'),
-                    summary: summary,
-                    onTap: () => _openResult(summary),
-                  ),
+                SahneListGroup(
+                  children: [
+                    for (final summary in all)
+                      _AsyncDuelSummaryRow(
+                        key: ValueKey('async-duel-row-${summary.duelId}'),
+                        summary: summary,
+                        onTap: () => _openResult(summary),
+                      ),
+                  ],
+                ),
               ],
             );
           },

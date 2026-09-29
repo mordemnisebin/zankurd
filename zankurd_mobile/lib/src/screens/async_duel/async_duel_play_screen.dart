@@ -8,12 +8,12 @@ import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
 import '../../models/quiz_question.dart';
 import '../../theme/app_icons.dart';
-import '../../theme/app_theme.dart';
 import '../../utils/app_route.dart';
 import '../../utils/error_reporter.dart';
+import '../../widgets/sahne/sahne.dart';
+import '../../config/category_visuals.dart';
 import '../quiz/quiz_option_tile.dart';
 import '../quiz/quiz_timer_controller.dart';
-import '../quiz/quiz_timer_widget.dart';
 import 'async_duel_result_screen.dart';
 
 /// Tek bir sorunun yaşam döngüsündeki adım.
@@ -67,6 +67,11 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   /// soru burada DEĞİLDİR: çıkışta o soru yeniden gönderilir; aksi hâlde
   /// düello 6/7'de sonsuza dek yarım kalırdı.
   final Set<int> _confirmedIndices = {};
+
+  /// Elmas dizisinin hücreleri: sunucunun söylediği doğru/yanlış. Sonucu
+  /// bilinmeyen (yanıtı ağda kaybolan) soru bekleyen çizgi kalır —
+  /// bilinmeyeni doğru ya da yanlış diye göstermek yalan olurdu.
+  List<SahneDiamondState?> _results = const [];
 
   /// Havadaki cevap isteği (açıklama duraklaması dahil). Çıkış onu bekler ki
   /// aynı soru iki kez gönderilmesin.
@@ -130,6 +135,10 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       if (!mounted) return;
       setState(() {
         _duel = start;
+        _results = List<SahneDiamondState?>.filled(
+          start.questions.length,
+          null,
+        );
         _loading = false;
         _index = 0;
         _phase = _Phase.idle;
@@ -235,6 +244,11 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   Future<void> _handleAnswerResponse(AsyncDuelAnswer response) async {
     setState(() {
       _phase = _Phase.revealed;
+      if (_index < _results.length) {
+        _results[_index] = response.correct
+            ? SahneDiamondState.correct
+            : SahneDiamondState.wrong;
+      }
       _revealedAnswerText = _currentQuestion.answerForOptionKey(
         response.correctOption,
       );
@@ -377,19 +391,18 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     }
   }
 
+  /// 2026-09-29 Şahnê: C iskeleti (oyun sahnesi, her temada gece) — soru
+  /// ekranıyla aynı dil: kapat | ortada sayaç elması | altında 7'li elmas
+  /// dizisi; sahne zemininde sorunun kategori çizimi (%14) ve ışık huzmesi.
   @override
   Widget build(BuildContext context) {
     if (_loading) {
       // Kapatma düğmesi şart: `AppRoute` iOS'ta kaydırarak geri gitmeyi
       // sunmuyor; bağlantı yavaşken oyuncu bu ekranda mahsur kalırdı.
-      return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            key: const ValueKey('async-duel-loading-close'),
-            icon: const Icon(AppIcons.xmark),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ),
+      return SahneStageScaffold(
+        closeLabel: context.t(K.close),
+        onClose: () => Navigator.of(context).pop(),
+        center: Text(context.t(K.asyncDuel)),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
@@ -410,6 +423,8 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
     final suspenseVisual =
         _phase == _Phase.submitting || _phase == _Phase.error;
     final disabled = _phase != _Phase.idle || _exitInFlight;
+    final progressLabel = '${_index + 1}/$total';
+    final category = question.category;
 
     return PopScope(
       key: const ValueKey('async-duel-play'),
@@ -417,99 +432,175 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) unawaited(_confirmExit());
       },
-      child: Scaffold(
-        appBar: AppBar(
-          leading: _exitInFlight
-              ? const Padding(
-                  padding: EdgeInsets.all(AppSpacing.md),
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-              : IconButton(
-                  key: const ValueKey('async-duel-quit'),
-                  icon: const Icon(AppIcons.xmark),
-                  onPressed: () => unawaited(_confirmExit()),
-                ),
-          centerTitle: true,
-          title: Text(
-            '${_index + 1}/$total',
-            key: const ValueKey('async-duel-progress'),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: AppSpacing.md),
-              child: Center(
-                child: QuizTimerWidget(
-                  animation: _timerController.animation,
-                  maxSeconds: _questionSeconds,
-                  isPaused: disabled,
-                ),
+      child: SahneStageScaffold(
+        closeLabel: context.t(K.close),
+        onClose: () => unawaited(_confirmExit()),
+        backdrop: CategoryVisuals.hasOwnImage(category)
+            ? AssetImage(CategoryVisuals.imagePath(category))
+            : null,
+        // Çıkış gönderilirken sayaç yerine bekleme göstergesi: kalan
+        // sorular sunucuya TIMEOUT olarak gidiyor.
+        center: _exitInFlight
+            ? const SizedBox.square(
+                dimension: 24,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : AnimatedBuilder(
+                animation: _timerController.animation,
+                builder: (context, _) {
+                  final fraction = _timerController.animation.value;
+                  final seconds = (fraction * _questionSeconds).ceil();
+                  return SahneTimerDiamond(
+                    secondsLeft: seconds,
+                    fraction: fraction,
+                    // Cevap gönderildikten sonra sayaç durur; gerilim
+                    // nabzı da durur.
+                    hotSeconds: disabled ? -1 : 5,
+                    semanticLabel: '$seconds ${context.t(K.secondsShortUnit)}',
+                  );
+                },
               ),
-            ),
-          ],
+        progress: Padding(
+          padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+          child: SahneDiamondRow(
+            states: [
+              for (var i = 0; i < total; i++)
+                i < _results.length
+                    ? _results[i] ?? SahneDiamondState.pending
+                    : SahneDiamondState.pending,
+            ],
+            currentIndex: _index,
+            semanticLabel: progressLabel,
+          ),
         ),
+        // Cevap gönderilemediyse alt perdede TEK birincil: tekrar dene.
+        dock: _phase == _Phase.error
+            ? SahneButton.primary(
+                label: context.t(K.retry),
+                icon: AppIcons.arrowsRotate,
+                arrow: false,
+                expand: true,
+                onPressed: () => unawaited(_retryPendingAnswer()),
+              )
+            : null,
         // Tek kaydırılabilir gövde: soru metni + şıklar birlikte kayar. Eski
         // Column + Expanded(ListView) düzeninde uzun bir soru %200 yazıda
         // şık listesine yer bırakmıyor, ekran alttan taşıyordu.
-        body: SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.all(AppSpacing.page),
-            children: [
-              Text(
-                duel.role == AsyncDuelRole.opponent
-                    ? '${context.t(K.you)} · '
-                          '${duel.opponentName ?? context.t(K.asyncDuelOpponent)}'
-                    : context.t(K.asyncDuelSub),
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textSubColor(context),
-                ),
+        body: Builder(
+          builder: (context) {
+            final t = SahneTokens.of(context);
+            return ListView(
+              padding: const EdgeInsets.fromLTRB(
+                SahneSpace.page,
+                SahneSpace.x2,
+                SahneSpace.page,
+                SahneSpace.x6,
               ),
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                question.promptText,
-                style: AppTypography.heading2.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
+              children: [
+                Wrap(
+                  spacing: SahneSpace.x2,
+                  runSpacing: SahneSpace.x1,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      progressLabel,
+                      key: const ValueKey('async-duel-progress'),
+                      style: SahneType.eyebrow.copyWith(
+                        color: t.raceTx,
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                    Text(
+                      duel.role == AsyncDuelRole.opponent
+                          ? '${context.t(K.you)} · '
+                                '${duel.opponentName ?? context.t(K.asyncDuelOpponent)}'
+                          : context.t(K.asyncDuelSub),
+                      style: SahneType.caption.copyWith(color: t.tx2),
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: AppSpacing.md),
-              if (_phase == _Phase.error) ...[
-                Text(
-                  context.t(K.asyncDuelAnswerFailed),
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.wrong,
+                const SizedBox(height: SahneSpace.x2),
+                _QuestionText(text: question.promptText),
+                const SizedBox(height: SahneSpace.x4),
+                if (_phase == _Phase.error) ...[
+                  Row(
+                    children: [
+                      Icon(
+                        AppIcons.triangleExclamation,
+                        size: 20,
+                        color: t.errTx,
+                      ),
+                      const SizedBox(width: SahneSpace.x2),
+                      Expanded(
+                        child: Text(
+                          context.t(K.asyncDuelAnswerFailed),
+                          style: SahneType.bodyStrong.copyWith(color: t.errTx),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                FilledButton(
-                  onPressed: () => unawaited(_retryPendingAnswer()),
-                  child: Text(context.t(K.retry)),
-                ),
-                const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SahneSpace.x3),
+                ],
+                for (final (i, answer) in answers.indexed)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+                    child: QuizOptionTile(
+                      key: ValueKey('async-duel-option-$i'),
+                      index: i,
+                      answer: answer,
+                      selected: _selectedAnswer == answer,
+                      correct:
+                          _revealedAnswerText != null &&
+                          answer == _revealedAnswerText,
+                      disabled: disabled,
+                      suspense: suspenseVisual,
+                      optionCount: answers.length,
+                      dimmed:
+                          _revealedAnswerText != null &&
+                          answer != _revealedAnswerText &&
+                          _selectedAnswer != answer,
+                      onTap: () => _handleAnswerTap(answer),
+                    ),
+                  ),
               ],
-              for (final (i, answer) in answers.indexed)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                  child: QuizOptionTile(
-                    key: ValueKey('async-duel-option-$i'),
-                    index: i,
-                    answer: answer,
-                    selected: _selectedAnswer == answer,
-                    correct:
-                        _revealedAnswerText != null &&
-                        answer == _revealedAnswerText,
-                    disabled: disabled,
-                    suspense: suspenseVisual,
-                    optionCount: answers.length,
-                    dimmed:
-                        _revealedAnswerText != null &&
-                        answer != _revealedAnswerText &&
-                        _selectedAnswer != answer,
-                    onTap: () => _handleAnswerTap(answer),
-                  ),
-                ),
-            ],
-          ),
+            );
+          },
         ),
       ),
+    );
+  }
+}
+
+/// Soru metni: Başlık 28/32; 28'de dört satırı aşarsa Manşet 22/28'e iner.
+/// Karar karakter sayısıyla değil, gerçek ölçümle (`TextPainter`) verilir.
+class _QuestionText extends StatelessWidget {
+  const _QuestionText({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final painter = TextPainter(
+          text: TextSpan(
+            text: text,
+            style: SahneType.title.copyWith(fontFamily: SahneType.display),
+          ),
+          textDirection: Directionality.of(context),
+          textScaler: MediaQuery.textScalerOf(context),
+          maxLines: 4,
+        )..layout(maxWidth: constraints.maxWidth);
+        final style = painter.didExceedMaxLines
+            ? SahneType.headline
+            : SahneType.title;
+        painter.dispose();
+        return Semantics(
+          header: true,
+          child: Text(text, style: style.copyWith(color: t.tx)),
+        );
+      },
     );
   }
 }
@@ -522,42 +613,62 @@ class _StartErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.page),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.t(
-                    tooMany ? K.asyncDuelTooMany : K.asyncDuelStartFailed,
-                  ),
-                  textAlign: TextAlign.center,
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    OutlinedButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text(context.t(K.close)),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    FilledButton(
-                      onPressed: onRetry,
-                      child: Text(context.t(K.retry)),
-                    ),
-                  ],
-                ),
-              ],
+    return SahneStageScaffold(
+      closeLabel: context.t(K.close),
+      onClose: () => Navigator.of(context).pop(),
+      center: Text(context.t(K.asyncDuel)),
+      beam: false,
+      dock: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: SahneButton.secondary(
+              label: context.t(K.close),
+              onPressed: () => Navigator.of(context).pop(),
+              expand: true,
             ),
           ),
-        ),
+          const SizedBox(width: SahneSpace.x3),
+          Expanded(
+            flex: 3,
+            child: SahneButton.primary(
+              label: context.t(K.retry),
+              icon: AppIcons.arrowsRotate,
+              arrow: false,
+              onPressed: onRetry,
+              expand: true,
+            ),
+          ),
+        ],
+      ),
+      body: Builder(
+        builder: (context) {
+          final t = SahneTokens.of(context);
+          return Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(SahneSpace.page),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SahneDiamondAvatar(
+                    size: 72,
+                    icon: tooMany ? AppIcons.hourglass : AppIcons.cloud,
+                    color: t.s2,
+                    foreground: t.tx2,
+                  ),
+                  const SizedBox(height: SahneSpace.x4),
+                  Text(
+                    context.t(
+                      tooMany ? K.asyncDuelTooMany : K.asyncDuelStartFailed,
+                    ),
+                    textAlign: TextAlign.center,
+                    style: SahneType.headline.copyWith(color: t.tx),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
