@@ -5,14 +5,12 @@ import '../data/level_progress_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/quiz_level.dart';
-import '../theme/app_theme.dart';
 import '../widgets/app_state.dart';
+import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
-import '../utils/percent_format.dart';
 import 'quiz_screen.dart';
-import '../config/category_visuals.dart';
 import '../config/subcategory_config.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -58,61 +56,63 @@ class _LevelScreenState extends State<LevelScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final t = SahneTokens.of(context);
     final levels = widget.repository.levelsForCategory(widget.category);
-    final accent = CategoryVisuals.color(widget.category);
+    final heading = _LevelHeading.of(widget.category, widget.subCategory, ku);
 
+    // 2026-09-29 Şahnê: B iskeleti. Ad (alt kategori ya da kategori) ve
+    // bağlamı çubukta; eski kategori degradeli kimlik kartı kalktı. İçerik:
+    // ilerleme kartı → seviye yolu (yol elmasları + satırlar; sıradaki
+    // seviye sahne kartında, ekranın TEK birincil eylemiyle).
     return Scaffold(
-      appBar: zkAppBar(context),
-      body: Container(
-        color: AppTheme.bgOf(context),
-        child: SafeArea(
-          top: false,
-          child: ListView(
-            padding: const EdgeInsets.only(top: AppSpacing.xs),
-            children: [
-              _CategoryHero(
-                category: widget.category,
-                subCategory: widget.subCategory,
-                isKu: ku,
-                completedLevels: _playedLevels.length,
-                totalLevels: levels.length,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.lg,
-                  AppSpacing.page,
-                  AppSpacing.xl,
-                ),
-                child: switch (_loadState) {
-                  _LevelLoadState.error => AppErrorState(
-                    title: context.t(K.loadFailedShort),
-                    message: context.t(K.buSeviyeninSorulariYuklenemedi),
-                    retryLabel: context.t(K.retryShort),
-                    onRetry: _retrySelectedLevel,
-                  ),
-                  _LevelLoadState.empty => AppEmptyState(
-                    icon: AppIcons.bookOpen,
-                    title: context.t(K.noQuestionsForCategory),
-                    message: context.t(K.buSeviyeninSorulariYuklenemedi),
-                    actionLabel: context.t(K.retryShort),
-                    onAction: _retrySelectedLevel,
-                  ),
-                  _LevelLoadState.ready => _LevelPath(
-                    levels: levels,
-                    disabled: _loading,
-                    isKu: ku,
-                    playedLevels: _playedLevels,
-                    // 2026-09-27: yol nötr yeşil sabitini bırakıp kategori
-                    // rengini taşıyor (owner "renksiz" buldu); renk sıraya
-                    // değil kategori adına bağlı (bkz. CategoryVisuals).
-                    accent: accent,
-                    onOpen: _openLevel,
-                  ),
-                },
-              ),
-            ],
+      backgroundColor: t.bg,
+      appBar: zkAppBar(
+        context,
+        title: Text(heading.title),
+        subtitle: Text(heading.subtitle),
+      ),
+      body: SafeArea(
+        top: false,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(
+            SahneSpace.page,
+            SahneSpace.x2,
+            SahneSpace.page,
+            SahneSpace.x6,
           ),
+          children: [
+            if (levels.isNotEmpty) ...[
+              _LevelProgressCard(
+                description: heading.description,
+                completed: _playedLevels.length,
+                total: levels.length,
+                isKu: ku,
+              ),
+              const SizedBox(height: SahneSpace.x4),
+            ],
+            switch (_loadState) {
+              _LevelLoadState.error => AppErrorState(
+                title: context.t(K.loadFailedShort),
+                message: context.t(K.buSeviyeninSorulariYuklenemedi),
+                retryLabel: context.t(K.retryShort),
+                onRetry: _retrySelectedLevel,
+              ),
+              _LevelLoadState.empty => AppEmptyState(
+                icon: AppIcons.bookOpen,
+                title: context.t(K.noQuestionsForCategory),
+                message: context.t(K.buSeviyeninSorulariYuklenemedi),
+                actionLabel: context.t(K.retryShort),
+                onAction: _retrySelectedLevel,
+              ),
+              _LevelLoadState.ready => _LevelPath(
+                levels: levels,
+                disabled: _loading,
+                isKu: ku,
+                playedLevels: _playedLevels,
+                onOpen: _openLevel,
+              ),
+            },
+          ],
         ),
       ),
     );
@@ -199,211 +199,96 @@ class _LevelScreenState extends State<LevelScreen> {
 
 enum _LevelLoadState { ready, empty, error }
 
-/// Seviye ekranının kimlik kartı — kategori sahnesine giren ilk yüzey.
+/// Çubuğun adı ve alt satırı, ilerleme kartının açıklaması.
 ///
-/// 2026-09-27: sahibi uygulamayı "renksiz" buldu. Ana ekranın konu karoları
-/// zaten `CategoryVisuals.gradient(category)` taşıyor, alt kategori
-/// ekranının banner'ı zaten kategori görselini taşıyor — seviye ekranı bu
-/// zincirde beyaz kartlı, küçük yeşil ikonlu tek halkaydı. Kart artık aynı
-/// dili konuşur: zemin TAMAMEN kategori gradyanı, üstünde beyaz metin.
-///
-/// Filigran bilerek YOK: bu kartta metinsiz bir köşe kalmıyor (alt satır
-/// sağa kadar uzanıyor, ilerleme yüzdesi sağ altta). Kategori tonlarının
-/// en açığı Coğrafya'da beyaz metin zaten 5.0:1'de; üstüne binen %10'luk
-/// beyaz filigran küçük yüzde yazısını AA'nın altına itiyordu.
-class _CategoryHero extends StatelessWidget {
-  const _CategoryHero({
-    required this.completedLevels,
-    required this.totalLevels,
-    required this.category,
-    this.subCategory,
-    required this.isKu,
-  });
+/// Alt kategoriyle açılınca ad alt kategorinin adıdır, alt satır kategori
+/// adı ve açıklama alt kategorinin açıklamasıdır; yalnız kategoriyle
+/// açılınca ad kategori adı, alt satır "Kolaydan zora doğru ilerle".
+/// Kategori KİMLİĞİ hiçbir zaman gösterilmez (`CategoryNames.localized`).
+class _LevelHeading {
+  const _LevelHeading(this.title, this.subtitle, this.description);
 
-  final String category;
-  final String? subCategory;
-  final bool isKu;
-  final int completedLevels;
-  final int totalLevels;
+  final String title;
+  final String subtitle;
+  final String? description;
 
-  @override
-  Widget build(BuildContext context) {
-    String title = CategoryNames.localized(category, isKu);
-    String subtitle = Tr.forKu(K.kolaydanZoraDogruIlerle, isKu);
-
+  factory _LevelHeading.of(String category, String? subCategory, bool isKu) {
+    final categoryName = CategoryNames.localized(category, isKu);
     if (subCategory != null) {
       final list = SubcategoryConfig.forCategory(category);
-      final sub = list.firstWhere(
-        (element) => element.id == subCategory,
-        orElse: () => const SubcategoryInfo(
-          id: '',
-          nameKu: '',
-          nameTr: '',
-          descriptionKu: '',
-          descriptionTr: '',
-        ),
-      );
-      if (sub.id.isNotEmpty) {
-        title =
-            '${CategoryNames.localized(category, isKu)} · ${isKu ? sub.nameKu : sub.nameTr}';
-        subtitle = isKu ? sub.descriptionKu : sub.descriptionTr;
+      for (final sub in list) {
+        if (sub.id == subCategory) {
+          return _LevelHeading(
+            isKu ? sub.nameKu : sub.nameTr,
+            categoryName,
+            isKu ? sub.descriptionKu : sub.descriptionTr,
+          );
+        }
       }
     }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.page),
-      child: Hero(
-        tag: 'category_hero_${category}_$subCategory',
-        child: Material(
-          type: MaterialType.transparency,
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(AppSpacing.md),
-            decoration: BoxDecoration(
-              gradient: CategoryVisuals.gradient(category),
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              boxShadow: AppTheme.cardShadow(context),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 44,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.18),
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                      ),
-                      child: Icon(
-                        CategoryVisuals.icon(category),
-                        color: Colors.white,
-                        size: 21,
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            title,
-                            style: AppTypography.heading2.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            subtitle,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.bodyMedium.copyWith(
-                              color: Colors.white.withValues(alpha: 0.9),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                if (totalLevels > 0) ...[
-                  const SizedBox(height: AppSpacing.md),
-                  _HeroProgress(
-                    completed: completedLevels,
-                    total: totalLevels,
-                    isKu: isKu,
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ),
-      ),
+    return _LevelHeading(
+      categoryName,
+      Tr.forKu(K.kolaydanZoraDogruIlerle, isKu),
+      null,
     );
   }
 }
 
-/// Hero içindeki ince ilerleme şeridi: "2/5 seviye tamam".
-///
-/// Başlık şeridinin boş kalan alanı süs yerine gerçek bir durum bilgisiyle
-/// doldurulur; kullanıcı bu alt kategoride nerede olduğunu haritaya
-/// bakmadan görür.
-class _HeroProgress extends StatelessWidget {
-  const _HeroProgress({
+/// İlerleme kartı (yüzey kartı): varsa alt kategorinin açıklaması, altında
+/// öğrenme tonlu ilerleme çubuğu ve "2/5 seviye". Ekran okuyucu tek bir
+/// cümle duyar: "5 seviyeden 2 tanesi tamamlandı".
+class _LevelProgressCard extends StatelessWidget {
+  const _LevelProgressCard({
+    required this.description,
     required this.completed,
     required this.total,
     required this.isKu,
   });
 
+  final String? description;
   final int completed;
   final int total;
   final bool isKu;
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final ratio = total <= 0 ? 0.0 : (completed / total).clamp(0.0, 1.0);
-    return Semantics(
-      label: Tr.forKu(K.progressLevelsCompleted, isKu, {
-        'completed': '$completed',
-        'total': '$total',
-      }),
-      child: ExcludeSemantics(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    Tr.forKu(K.pPSeviye, isKu, {
-                      'p0': '$completed',
-                      'p1': '$total',
-                    }),
-                    style: AppTypography.caption.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                Text(
-                  PercentFormat.ratio(ratio, isKu: isKu),
-                  // Yüzde, kartın gerçek "sayısı"dır — etikete göre bir
-                  // ağırlık basamağı daha kalın (w800), kimlik rengine değil
-                  // beyaza bağlı: zemin artık kendisi kategori rengi.
-                  style: AppTypography.caption.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.xs),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadius.pill),
-              child: LinearProgressIndicator(
-                value: ratio,
-                minHeight: 5,
-                color: Colors.white,
-                backgroundColor: Colors.white.withValues(alpha: 0.25),
-              ),
-            ),
+    final text = description?.trim();
+    return SahneSurfaceCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (text != null && text.isNotEmpty) ...[
+            Text(text, style: SahneType.body.copyWith(color: t.tx2)),
+            const SizedBox(height: SahneSpace.x3),
           ],
-        ),
+          SahneProgressBar(
+            value: ratio,
+            trailing: Tr.forKu(K.pPSeviye, isKu, {
+              'p0': '$completed',
+              'p1': '$total',
+            }),
+            semanticLabel: Tr.forKu(K.progressLevelsCompleted, isKu, {
+              'completed': '$completed',
+              'total': '$total',
+            }),
+          ),
+        ],
       ),
     );
   }
 }
 
-/// Seviyeleri sakin, tek sütunlu bir eğitim ilerleme listesinde gösterir.
+/// Seviye yolu: her seviye bir durak — solda yol elması (bitti / sıradaki
+/// / kilitli) ve durakları bağlayan ince yol çizgisi, sağda kart. Sıradaki
+/// seviye sahne kartıdır (tek birincil düğme); ötekiler yüzey kartı.
 class _LevelPath extends StatelessWidget {
   const _LevelPath({
     required this.levels,
     required this.disabled,
     required this.isKu,
     required this.playedLevels,
-    required this.accent,
     required this.onOpen,
   });
 
@@ -411,7 +296,6 @@ class _LevelPath extends StatelessWidget {
   final bool disabled;
   final bool isKu;
   final Set<int> playedLevels;
-  final Color accent;
   final ValueChanged<QuizLevel> onOpen;
 
   bool _isUnlocked(int number) {
@@ -428,61 +312,100 @@ class _LevelPath extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final next = _nextNumber;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (var i = 0; i < levels.length; i++) ...[
-          _LevelNode(
-            key: ValueKey('level-node-${levels[i].number}'),
-            level: levels[i],
-            disabled: disabled,
-            isKu: isKu,
-            accent: accent,
-            played: playedLevels.contains(levels[i].number),
-            isNext: levels[i].number == _nextNumber,
-            locked: !_isUnlocked(levels[i].number),
-            onTap: () => onOpen(levels[i]),
-          ),
-          // 2026-09-27: boş SizedBox yerine rota çizgisi — iki basamak
-          // arasında "yol" hissi verir. Yükseklik ESKİSİYLE (sm) BİREBİR
-          // AYNI: büyük yazı/taşma bekçileri toplam sütun yüksekliğine göre
-          // kuruludur, burada tek piksel bile eklenmiyor.
-          if (i != levels.length - 1)
-            _LevelConnector(
-              accent: accent,
-              litAbove: playedLevels.contains(levels[i].number),
+        for (var i = 0; i < levels.length; i++)
+          _PathStop(
+            first: i == 0,
+            last: i == levels.length - 1,
+            state: playedLevels.contains(levels[i].number)
+                ? SahnePathNodeState.done
+                : _isUnlocked(levels[i].number)
+                ? SahnePathNodeState.inProgress
+                : SahnePathNodeState.locked,
+            child: _LevelNode(
+              key: ValueKey('level-node-${levels[i].number}'),
+              level: levels[i],
+              disabled: disabled,
+              isKu: isKu,
+              played: playedLevels.contains(levels[i].number),
+              isNext: levels[i].number == next,
+              locked: !_isUnlocked(levels[i].number),
+              onTap: () => onOpen(levels[i]),
             ),
-        ],
+          ),
       ],
     );
   }
 }
 
-/// İki ardışık seviye kartı arasındaki ince rota çizgisi.
-///
-/// Salt süstür, hiçbir veri taşımaz — bu yüzden `ExcludeSemantics` ile
-/// ekran okuyucudan tamamen gizlenir. Rozet sütununun ortasına hizalanır:
-/// kart dolgusu (`AppSpacing.md`) + rozetin yarı genişliği (44/2=22),
-/// kartın sol kenarından. Üstteki basamak oynanmışsa çizgi kategori
-/// rengini taşır (yol "aydınlanmış" görünür); değilse nötr kenarlık tonu.
-class _LevelConnector extends StatelessWidget {
-  const _LevelConnector({required this.accent, required this.litAbove});
+/// Yolun bir durağı: 24'lük yol elması + yol çizgisi (Ray) + kart. Elmas
+/// kartın dikey ortasında; çizgi ilk durakta elmastan başlar, son durakta
+/// elmasta biter. Elmas ekran okuyucuya duyurulmaz: durum kartın sözünde.
+class _PathStop extends StatelessWidget {
+  const _PathStop({
+    required this.state,
+    required this.first,
+    required this.last,
+    required this.child,
+  });
 
-  final Color accent;
-  final bool litAbove;
+  final SahnePathNodeState state;
+  final bool first;
+  final bool last;
+  final Widget child;
+
+  static const double _rail = 24;
 
   @override
   Widget build(BuildContext context) {
-    return ExcludeSemantics(
-      child: Row(
-        children: [
-          const SizedBox(width: AppSpacing.md + 22),
-          Container(
-            width: 2,
-            height: AppSpacing.sm,
-            color: litAbove ? accent : AppTheme.borderColor(context),
-          ),
-        ],
+    final t = SahneTokens.of(context);
+    final gap = last ? 0.0 : SahneSpace.cardGap;
+    Widget line() => Center(
+      child: SizedBox(
+        width: 1.5,
+        height: double.infinity,
+        child: ColoredBox(color: t.s3),
       ),
+    );
+    return Stack(
+      children: [
+        PositionedDirectional(
+          start: 0,
+          top: 0,
+          bottom: 0,
+          width: _rail,
+          child: ExcludeSemantics(
+            child: Column(
+              children: [
+                Expanded(child: first ? const SizedBox.shrink() : line()),
+                Expanded(child: last ? const SizedBox.shrink() : line()),
+                if (gap > 0) SizedBox(height: gap, child: line()),
+              ],
+            ),
+          ),
+        ),
+        PositionedDirectional(
+          start: 0,
+          top: 0,
+          bottom: gap,
+          width: _rail,
+          child: ExcludeSemantics(
+            child: Center(
+              child: SahnePathNode(state: state, semanticLabel: ''),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsetsDirectional.only(
+            start: _rail + SahneSpace.x2,
+            bottom: gap,
+          ),
+          child: child,
+        ),
+      ],
     );
   }
 }
@@ -493,7 +416,6 @@ class _LevelNode extends StatelessWidget {
     required this.level,
     required this.disabled,
     required this.isKu,
-    required this.accent,
     required this.played,
     required this.isNext,
     required this.locked,
@@ -503,10 +425,6 @@ class _LevelNode extends StatelessWidget {
   final QuizLevel level;
   final bool disabled;
   final bool isKu;
-  // 2026-09-27: sabit `AppTheme.playGreen` yerine kategori rengi
-  // (`CategoryVisuals.color`) — sahibi uygulamayı "renksiz" buldu; yol artık
-  // hangi kategoride olduğunu badge'inden okunabilir kılıyor.
-  final Color accent;
   final bool played;
   final bool isNext;
   final bool locked;
@@ -529,179 +447,209 @@ class _LevelNode extends StatelessWidget {
   Widget build(BuildContext context) {
     final blocked = disabled || locked;
     final name = LevelNames.localized(level.title, isKu);
-    final muted = AppTheme.textMutedColor(context);
-    final readableAccent = AppColors.readableAccent(context, accent);
+    final label = locked
+        ? context.t(K.pKilitliOncekiSeviyeyi, {'p0': name})
+        : isNext
+        ? context.t(K.homePathNext, {'name': name})
+        : name;
+    final VoidCallback? tap = disabled
+        ? null
+        : locked
+        ? () => _explainLock(context)
+        : onTap;
 
-    // Kart zemini: sıradaki basamak kategori renginin ince bir harmanını
-    // taşır (karanlıkta daha yüksek alfa — koyu zeminde ton daha çabuk
-    // erir). Diğer durumlar düz yüzeyde kalır.
-    final cardSurface = isNext
-        ? Color.alphaBlend(
-            accent.withValues(alpha: AppTheme.isLight(context) ? 0.08 : 0.16),
-            AppTheme.surfaceColor(context),
-          )
-        : AppTheme.surfaceColor(context);
-    final cardBorderColor = isNext
-        ? accent.withValues(alpha: 0.55)
-        : AppTheme.borderColor(context);
-
-    // Rozet dört ayrı dil konuşur: kilitli (bugünkü gibi nötr), oynanmış
-    // (altın — bu uygulamada altın yalnız KAZANILMIŞ ödül anlamına gelir,
-    // bkz. AppTheme.gold), sıradaki (kategori rengiyle dolu) ve nadiren
-    // "açık ama sırada değil" (düz ilerlemede hemen hiç oluşmaz — bir
-    // sonraki boşluk hep "sıradaki" dalına düşer — yalnız savunma amaçlı).
-    final Color badgeFill;
-    final Color? badgeBorderColor;
-    final Widget badgeContent;
-    if (locked) {
-      badgeFill = AppTheme.surfaceHiColor(context);
-      badgeBorderColor = AppTheme.borderColor(context);
-      badgeContent = Icon(AppIcons.lock, color: muted, size: 18);
-    } else if (played) {
-      badgeFill = AppTheme.gold;
-      badgeBorderColor = null;
-      badgeContent = Icon(
-        AppIcons.check,
-        color: AppColors.onSolid(AppTheme.gold),
-        size: 18,
-      );
-    } else if (isNext) {
-      badgeFill = accent;
-      badgeBorderColor = null;
-      badgeContent = Text(
-        '${level.number}',
-        style: AppTypography.heading2.copyWith(
-          color: AppColors.onSolid(accent),
-          fontWeight: FontWeight.w800,
-        ),
-      );
-    } else {
-      badgeFill = AppTheme.surfaceHiColor(context);
-      badgeBorderColor = accent;
-      badgeContent = Text(
-        '${level.number}',
-        style: AppTypography.heading2.copyWith(
-          color: readableAccent,
-          fontWeight: FontWeight.w800,
+    if (isNext && !locked) {
+      // Sıradaki seviye: sahne kartı (gece, öğrenme rolü) + TEK birincil
+      // düğme. Kartın her yeri dokunulabilir; düğme aynı işi yapar.
+      return Semantics(
+        container: true,
+        button: true,
+        enabled: !blocked,
+        onTap: blocked ? null : onTap,
+        label: label,
+        excludeSemantics: true,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: tap,
+          child: SahneStageCard(
+            key: ValueKey('level-card-${level.number}'),
+            child: Builder(
+              builder: (context) => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _LevelRowContent(
+                    level: level,
+                    name: name,
+                    badge: _LevelBadge.next,
+                    headline: true,
+                  ),
+                  const SizedBox(height: SahneSpace.x4),
+                  SahneButton.primary(
+                    label: context.t(K.start),
+                    onPressed: disabled ? null : onTap,
+                    expand: true,
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       );
     }
 
     return Semantics(
+      container: true,
       button: true,
       enabled: !blocked,
       onTap: blocked ? null : onTap,
-      label: locked
-          ? context.t(K.pKilitliOncekiSeviyeyi, {'p0': name})
-          : isNext
-          ? context.t(K.homePathNext, {'name': name})
-          : name,
-      child: ExcludeSemantics(
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: disabled
-                ? null
-                : locked
-                ? () => _explainLock(context)
-                : onTap,
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            child: Container(
-              key: ValueKey('level-card-${level.number}'),
-              padding: const EdgeInsets.all(AppSpacing.md),
-              decoration: BoxDecoration(
-                color: cardSurface,
-                borderRadius: BorderRadius.circular(AppRadius.card),
-                border: Border.all(
-                  color: cardBorderColor,
-                  width: isNext ? 1.4 : 1,
-                ),
-                boxShadow: isNext ? AppTheme.cardShadow(context) : null,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 44,
-                    height: 44,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: badgeFill,
-                      borderRadius: BorderRadius.circular(AppRadius.sm),
-                      border: badgeBorderColor == null
-                          ? null
-                          : Border.all(color: badgeBorderColor, width: 1.4),
-                    ),
-                    child: badgeContent,
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.bodyMedium.copyWith(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          children: [
-                            _DifficultyStars(
-                              filled: level.difficultyMax.clamp(1, 5),
-                              color: locked ? muted : accent,
-                            ),
-                            const SizedBox(width: AppSpacing.xs),
-                            Expanded(
-                              child: Text(
-                                '${level.questionCount} ${context.t(K.soru)}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTypography.caption.copyWith(
-                                  color: muted,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.xs),
-                  if (!locked)
-                    Icon(
-                      AppIcons.chevronRight,
-                      color: isNext ? readableAccent : muted,
-                      size: 18,
-                    ),
-                ],
-              ),
-            ),
-          ),
+      label: label,
+      excludeSemantics: true,
+      child: SahneSurfaceCard(
+        key: ValueKey('level-card-${level.number}'),
+        onTap: tap,
+        padding: const EdgeInsetsDirectional.fromSTEB(
+          SahneSpace.x3,
+          SahneSpace.x3,
+          SahneSpace.x4,
+          SahneSpace.x3,
+        ),
+        child: _LevelRowContent(
+          level: level,
+          name: name,
+          badge: locked
+              ? _LevelBadge.locked
+              : played
+              ? _LevelBadge.played
+              : _LevelBadge.open,
+          trailing: locked ? null : AppIcons.chevronRight,
         ),
       ),
     );
   }
 }
 
-/// Zorluğu metin yerine 5'li yıldız dizisiyle gösterir.
+/// Seviye rozeti (44'lük M karo) dört dil konuşur: kilitli (Kulis + kilit;
+/// ikon ikincil metinde — üçüncül metin Kulis üstünde 4.49:1 kalıyor),
+/// oynanmış (Zêr tonu + yıldız glifi — altın bu uygulamada yalnız
+/// KAZANILMIŞ ödül demektir), sıradaki (Zimrût tonu + numara) ve nadiren
+/// "açık ama sırada değil" (Kulis + numara; düz ilerlemede hemen hiç
+/// oluşmaz).
+enum _LevelBadge { locked, played, next, open }
+
+class _LevelRowContent extends StatelessWidget {
+  const _LevelRowContent({
+    required this.level,
+    required this.name,
+    required this.badge,
+    this.headline = false,
+    this.trailing,
+  });
+
+  final QuizLevel level;
+  final String name;
+  final _LevelBadge badge;
+
+  /// Sahne kartında ad Manşet 22; satırda Gövde 700.
+  final bool headline;
+  final IconData? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final locked = badge == _LevelBadge.locked;
+    final number = Text(
+      '${level.number}',
+      style: SahneType.headline.copyWith(
+        color: badge == _LevelBadge.next ? t.learnTx : t.tx,
+        fontFeatures: const [FontFeature.tabularFigures()],
+      ),
+    );
+    final (Color tile, Widget mark) = switch (badge) {
+      _LevelBadge.locked => (t.s2, Icon(AppIcons.lock, color: t.tx2, size: 20)),
+      _LevelBadge.played => (
+        t.goldTint,
+        const SahneGlyph(SahneGlyphKind.star, size: 24),
+      ),
+      _LevelBadge.next => (t.learnTint, number),
+      _LevelBadge.open => (t.s2, number),
+    };
+    final badgeTile = DecoratedBox(
+      decoration: ShapeDecoration(color: tile, shape: SahneShape.m),
+      child: SizedBox.square(dimension: 44, child: Center(child: mark)),
+    );
+    final texts = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          name,
+          style: (headline ? SahneType.headline : SahneType.bodyStrong)
+              .copyWith(color: locked ? t.tx2 : t.tx),
+        ),
+        const SizedBox(height: SahneSpace.x1),
+        Row(
+          children: [
+            _DifficultyBars(
+              filled: level.difficultyMax.clamp(1, 5),
+              color: locked ? t.tx3 : t.learnTx,
+            ),
+            const SizedBox(width: SahneSpace.x2),
+            Flexible(
+              child: Text(
+                '${level.questionCount} ${context.t(K.soru)}',
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+    // Büyük yazı ölçeğinde (≥ 1.5) rozet metnin üstüne çıkar: ad dar bir
+    // sütunda harf harf bölünmesin ("Destpê / k").
+    final large = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    return Row(
+      children: [
+        if (large)
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                badgeTile,
+                const SizedBox(height: SahneSpace.x2),
+                texts,
+              ],
+            ),
+          )
+        else ...[
+          badgeTile,
+          const SizedBox(width: SahneSpace.x3),
+          Expanded(child: texts),
+        ],
+        if (trailing != null) ...[
+          const SizedBox(width: SahneSpace.x2),
+          Icon(trailing, size: 20, color: t.tx3),
+        ],
+      ],
+    );
+  }
+}
+
+/// Zorluğu yükselen 5 çubukla gösterir.
 ///
-/// 2026-07-23 canlı UX denetimi M16: yıldızlar "ilerleme" ile
-/// karıştırılabiliyordu (asıl ilerleme rozeti ayrı bir tik işaretiyle
-/// gösteriliyor). Tooltip + Semantics ile "zorluk" anlamı netleştirildi.
-class _DifficultyStars extends StatelessWidget {
-  const _DifficultyStars({required this.filled, required this.color});
+/// Zorluk eskiden yıldızla gösteriliyordu. Yıldız, quiz uygulamalarında
+/// neredeyse her yerde *kazanılmış başarıyı* anlatır; hiç oynamamış oyuncu
+/// seviye kartında "2/5 dolu yıldız" görünce bunu kendi skoru sanıyordu
+/// (2026-07-25 canlı denetimi). Şahnê'de de yıldız glifi ödüldür (oynanmış
+/// seviyenin rozeti); zorluk yıldız olmaz. Tooltip + Semantics "zorluk"
+/// anlamını taşır (2026-07-23 M16).
+class _DifficultyBars extends StatelessWidget {
+  const _DifficultyBars({required this.filled, required this.color});
 
   final int filled;
   final Color color;
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final isKu = context.isKu;
     final label = Tr.forKu(K.zorlukUzerindenPYildiz, isKu, {'p0': '$filled'});
     return Tooltip(
@@ -709,29 +657,17 @@ class _DifficultyStars extends StatelessWidget {
       child: Semantics(
         label: label,
         child: ExcludeSemantics(
-          // Zorluk yıldızla gösteriliyordu. Yıldız, quiz uygulamalarında
-          // neredeyse her yerde *kazanılmış başarıyı* anlatır; hiç
-          // oynamamış oyuncu seviye kartında "2/5 dolu yıldız" görünce
-          // bunu kendi skoru sanıyordu (2026-07-25 canlı denetimi).
-          // Yükselen çubuklar zorluğu tek anlama gelecek biçimde anlatır.
           child: Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               for (var i = 1; i <= 5; i++)
                 Padding(
-                  padding: const EdgeInsets.only(right: 2),
-                  child: Container(
+                  padding: const EdgeInsetsDirectional.only(end: 2),
+                  child: SizedBox(
                     width: 3,
                     height: 4.0 + i * 2,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(1.5),
-                      color: i <= filled
-                          ? color
-                          : AppTheme.textMutedColor(
-                              context,
-                            ).withValues(alpha: 0.35),
-                    ),
+                    child: ColoredBox(color: i <= filled ? color : t.s3),
                   ),
                 ),
             ],

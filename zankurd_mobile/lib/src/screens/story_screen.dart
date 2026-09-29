@@ -5,10 +5,9 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/mini_guide.dart';
 import '../models/story.dart';
-import '../theme/app_theme.dart';
-import '../theme/kilim_motifs.dart';
-import '../widgets/screen_identity_header.dart';
+import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
+import 'learning_screen.dart' show BarIconAction;
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Metin tabanlı dallanan hikâye oynatıcısı (SES YOK). İlerleme yerelde
@@ -75,14 +74,12 @@ class _StoryScreenState extends State<StoryScreen> {
   void _openGuide() {
     final guide = widget.guide;
     if (guide == null) return;
+    final t = SahneTokens.of(context);
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AppTheme.surfaceOf(context),
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        side: BorderSide(color: AppTheme.borderColor(context)),
-      ),
+      backgroundColor: t.s1,
+      shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       builder: (ctx) => _MiniGuideView(guide: guide, isKu: context.isKu),
     );
   }
@@ -90,212 +87,187 @@ class _StoryScreenState extends State<StoryScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final t = SahneTokens.of(context);
+    // 2026-09-29 Şahnê: B iskeleti. Hikâyenin adı ve "Yolunu seç" çubukta;
+    // içerikteki eski kimlik bandı kalktı. Rehber ve yeniden başlat çubuğun
+    // sağında 44'lük plakalardır (dokunma alanı 48).
     return Scaffold(
+      backgroundColor: t.bg,
       appBar: zkAppBar(
         context,
-        backgroundColor: Colors.transparent,
+        title: Text(ku ? widget.story.titleKu : widget.story.titleTr),
+        subtitle: Text(context.t(K.storySubtitle)),
         actions: [
           if (widget.guide != null)
-            IconButton(
+            BarIconAction(
               key: const ValueKey('story-open-guide'),
-              tooltip: context.t(K.guide),
-              icon: const Icon(AppIcons.bookOpen),
+              icon: AppIcons.bookOpen,
+              label: context.t(K.guide),
               onPressed: _openGuide,
             ),
-          IconButton(
+          BarIconAction(
             key: const ValueKey('story-restart'),
-            tooltip: context.t(K.restart),
-            icon: const Icon(AppIcons.arrowsRotate),
+            icon: AppIcons.arrowsRotate,
+            label: context.t(K.restart),
             onPressed: _restart,
           ),
         ],
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
-        child: SafeArea(
-          child: _loading || _node == null
-              ? const Center(child: CircularProgressIndicator())
-              : _buildNode(context, ku, _node!),
-        ),
+      body: SafeArea(
+        top: false,
+        child: _loading || _node == null
+            ? Center(child: CircularProgressIndicator(color: t.learnTx))
+            : _buildNode(context, ku, _node!),
       ),
     );
   }
 
   Widget _buildNode(BuildContext context, bool ku, StoryNode node) {
-    // Ekran bir zamanlar düz metin + çerçeveli iki kutudan ibaretti:
-    // uygulamanın geri kalanı kartlı ve renkliyken hikâye ekranı
-    // yarım kalmış bir taslak gibi duruyor, alt yarısı da bomboş
-    // kalıyordu (2026-07-27, canlı gezinti).
-    //
-    // Anlatı artık kendi kartında, seçenekler ise quiz şıklarıyla aynı
-    // dili konuşuyor: yüzey, kenarlık ve yön oku. Renk hikâyenin
-    // kimliğinden (yeşil) gelir, quizin doğru/yanlış renkleriyle
-    // karışmaz.
-    const accent = AppTheme.playGreen;
+    final t = SahneTokens.of(context);
+    final feedback = ku ? _feedbackKu : _feedbackTr;
     return ListView(
-      padding: const EdgeInsets.all(AppSpacing.page),
+      padding: const EdgeInsets.fromLTRB(
+        SahneSpace.page,
+        SahneSpace.x2,
+        SahneSpace.page,
+        SahneSpace.x6,
+      ),
       children: [
-        ScreenIdentityHeader(
-          title: ku ? widget.story.titleKu : widget.story.titleTr,
-          subtitle: context.t(K.storySubtitle),
-          accent: accent,
-          icon: AppIcons.bookOpen,
-          compact: true,
-        ),
-        const SizedBox(height: AppSpacing.md),
-        if (_feedbackKu != null || _feedbackTr != null)
-          Container(
-            margin: const EdgeInsets.only(bottom: AppSpacing.md),
-            padding: const EdgeInsets.all(AppSpacing.sm),
-            decoration: BoxDecoration(
-              color: AppTheme.playGreen.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-              border: Border.all(
-                color: AppTheme.playGreen.withValues(alpha: 0.3),
-              ),
-            ),
-            child: Text(
-              ku ? (_feedbackKu ?? '') : (_feedbackTr ?? ''),
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.textPrimaryColor(context),
-              ),
+        // Önceki seçimin karşılığı: yüzey kartında, öğrenme tonlu ikonla.
+        if (feedback != null && feedback.isNotEmpty) ...[
+          SahneSurfaceCard(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: t.learnTint,
+                    shape: SahneShape.m,
+                  ),
+                  child: SizedBox.square(
+                    dimension: 36,
+                    child: Icon(AppIcons.comment, size: 20, color: t.learnTx),
+                  ),
+                ),
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(
+                  child: Text(
+                    feedback,
+                    style: SahneType.body.copyWith(color: t.tx),
+                  ),
+                ),
+              ],
             ),
           ),
-        Container(
+          const SizedBox(height: SahneSpace.cardGap),
+        ],
+        // Anlatı: sahne kartı (gece, öğrenme rolü). Kurmancî cümle Manşet,
+        // çevirisi altında ikincil metinde.
+        SizedBox(
           width: double.infinity,
-          padding: const EdgeInsets.all(AppSpacing.md),
-          decoration: BoxDecoration(
-            color: Color.alphaBlend(
-              accent.withValues(alpha: 0.07),
-              AppTheme.surfaceHiColor(context),
-            ),
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(color: accent.withValues(alpha: 0.28)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    AppIcons.bookOpen,
-                    size: 16,
-                    color: AppColors.readableAccent(context, accent),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    context.t(K.storyWord),
-                    style: AppTypography.caption.copyWith(
-                      color: AppColors.readableAccent(context, accent),
+          child: SahneStageCard(
+            child: Builder(
+              builder: (context) {
+                final s = SahneTokens.of(context);
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      sahneUpper(context, context.t(K.storyWord)),
+                      style: SahneType.eyebrow.copyWith(color: s.learnTx),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                node.textKu,
-                key: const ValueKey('story-text-ku'),
-                style: AppTypography.heading2.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                  height: 1.35,
+                    const SizedBox(height: SahneSpace.x2),
+                    Text(
+                      node.textKu,
+                      key: const ValueKey('story-text-ku'),
+                      style: SahneType.headline.copyWith(color: s.tx),
+                    ),
+                    const SizedBox(height: SahneSpace.x2),
+                    Text(
+                      node.textTr,
+                      style: SahneType.body.copyWith(color: s.tx2),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+        const SizedBox(height: SahneSpace.x4),
+        if (node.isEnding)
+          SahneButton.primary(
+            key: const ValueKey('story-ending-restart'),
+            onPressed: _restart,
+            icon: AppIcons.arrowRotateLeft,
+            arrow: false,
+            label: context.t(K.playAgain),
+            expand: true,
+          )
+        else
+          // Seçenekler tek liste grubunda: Kurmancî cümle önde, çevirisi
+          // altında. Gövde her zaman Kurmancî cümleyi üstte gösterir; şık da
+          // aynı biçimi alır — Türkçe arayüzde öğrenci Kurmancî okuyup
+          // Türkçe seçiyordu, alıştırmanın üretim kısmı yoktu (2026-07-27).
+          SahneListGroup(
+            children: [
+              for (final choice in node.choices)
+                _StoryChoiceRow(choice: choice, onTap: () => _choose(choice)),
+            ],
+          ),
+      ],
+    );
+  }
+}
+
+/// Hikâye seçeneği: liste grubunda bir satır — Kurmancî cümle (Gövde 700),
+/// çevirisi (Açıklama, ikincil) ve chevron. En az 64; metin sarar.
+class _StoryChoiceRow extends StatelessWidget {
+  const _StoryChoiceRow({required this.choice, required this.onTap});
+
+  final StoryChoice choice;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return InkWell(
+      onTap: onTap,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 64),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+            SahneSpace.x4,
+            SahneSpace.x3,
+            SahneSpace.x3,
+            SahneSpace.x3,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      choice.labelKu,
+                      key: ValueKey('story-choice-ku-${choice.nextNodeId}'),
+                      style: SahneType.bodyStrong.copyWith(color: t.tx),
+                    ),
+                    Text(
+                      choice.labelTr,
+                      style: SahneType.caption.copyWith(color: t.tx2),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 8),
-              Text(
-                node.textTr,
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppTheme.textMutedColor(context),
-                  height: 1.3,
-                ),
+              const SizedBox(width: SahneSpace.x2),
+              ExcludeSemantics(
+                child: Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
               ),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.md),
-        // Hikâye anlatısı ile seçimler arasına tek kilim ayracı: "bölüm
-        // ayracı" semantiği (triangleRhythm). Motif bilgi taşır — anlatının
-        // bittiği, kararın başladığı yeri işaretler (2026-08-19).
-        const KilimDivider(colors: [AppTheme.playGreen, AppTheme.gold]),
-        const SizedBox(height: AppSpacing.lg),
-        if (node.isEnding)
-          FilledButton.icon(
-            key: const ValueKey('story-ending-restart'),
-            onPressed: _restart,
-            icon: const Icon(AppIcons.arrowRotateLeft),
-            label: Text(context.t(K.playAgain)),
-          )
-        else
-          for (final choice in node.choices)
-            Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-              child: Material(
-                color: AppTheme.surfaceColor(context),
-                borderRadius: BorderRadius.circular(AppRadius.md),
-                child: InkWell(
-                  onTap: () => _choose(choice),
-                  borderRadius: BorderRadius.circular(AppRadius.md),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md,
-                      vertical: AppSpacing.md,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppRadius.md),
-                      border: Border.all(
-                        color: accent.withValues(alpha: 0.35),
-                        width: 1.4,
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        // Gövde her zaman Kurmancî cümleyi üstte, çevirisini
-                        // altta gösterir; şıklar ise yalnız arayüz dilini
-                        // gösteriyordu. Türkçe arayüzde öğrenci Kurmancî
-                        // bir cümle okuyup Türkçe şıklardan seçiyordu —
-                        // yani alıştırmanın Kurmancî üretim kısmı hiç
-                        // yoktu (2026-07-27). Şık da gövdeyle aynı biçimi
-                        // alır: Kurmancî önde, çeviri altında.
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                choice.labelKu,
-                                key: ValueKey(
-                                  'story-choice-ku-${choice.nextNodeId}',
-                                ),
-                                style: AppTypography.bodyLarge.copyWith(
-                                  color: AppTheme.textPrimaryColor(context),
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                choice.labelTr,
-                                style: AppTypography.caption.copyWith(
-                                  color: AppTheme.textMutedColor(context),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.sm),
-                        const Icon(
-                          AppIcons.chevronRight,
-                          size: 18,
-                          color: accent,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-      ],
+      ),
     );
   }
 }
@@ -308,65 +280,47 @@ class _MiniGuideView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final item = SahneType.body.copyWith(color: t.tx);
+    final note = SahneType.body.copyWith(color: t.tx2);
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        AppSpacing.md,
-        AppSpacing.md,
-        AppSpacing.md,
-        MediaQuery.viewInsetsOf(context).bottom + AppSpacing.md,
+        SahneSpace.page,
+        SahneSpace.x5,
+        SahneSpace.page,
+        MediaQuery.viewInsetsOf(context).bottom + SahneSpace.x4,
       ),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              isKu ? guide.titleKu : guide.titleTr,
-              style: AppTypography.heading1.copyWith(
-                color: AppTheme.textPrimaryColor(context),
+            Semantics(
+              header: true,
+              child: Text(
+                isKu ? guide.titleKu : guide.titleTr,
+                style: SahneType.headline.copyWith(color: t.tx),
               ),
             ),
-            const SizedBox(height: AppSpacing.md),
+            const SizedBox(height: SahneSpace.x4),
             _label(context, Tr.forKu(K.yeniKelimeler, isKu)),
             for (final w in guide.newWords)
-              Text(
-                '• ${w.ku} — ${w.tr}',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                ),
-              ),
-            const SizedBox(height: AppSpacing.sm),
+              Text('• ${w.ku} — ${w.tr}', style: item),
+            const SizedBox(height: SahneSpace.x3),
             _label(context, Tr.forKu(K.dilbilgisi, isKu)),
-            Text(
-              isKu ? guide.grammarKu : guide.grammarTr,
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.textMutedColor(context),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
+            Text(isKu ? guide.grammarKu : guide.grammarTr, style: note),
+            const SizedBox(height: SahneSpace.x3),
             _label(context, Tr.forKu(K.ornekler, isKu)),
             for (final e in guide.examples)
-              Text(
-                '• ${e.ku} — ${e.tr}',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                ),
-              ),
-            const SizedBox(height: AppSpacing.sm),
+              Text('• ${e.ku} — ${e.tr}', style: item),
+            const SizedBox(height: SahneSpace.x3),
             _label(context, Tr.forKu(K.kulturelNot, isKu)),
-            Text(
-              isKu ? guide.cultureKu : guide.cultureTr,
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.textMutedColor(context),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: () => Navigator.of(context).maybePop(),
-                child: Text(Tr.forKu(K.derseBasla, isKu)),
-              ),
+            Text(isKu ? guide.cultureKu : guide.cultureTr, style: note),
+            const SizedBox(height: SahneSpace.x5),
+            SahneButton.primary(
+              onPressed: () => Navigator.of(context).maybePop(),
+              label: Tr.forKu(K.derseBasla, isKu),
+              expand: true,
             ),
           ],
         ),
@@ -374,16 +328,14 @@ class _MiniGuideView extends StatelessWidget {
     );
   }
 
+  /// Rehber bölüm etiketi: kalın açıklama, öğrenme metni rengi.
   Widget _label(BuildContext context, String text) {
+    final t = SahneTokens.of(context);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+      padding: const EdgeInsets.only(bottom: SahneSpace.x1),
       child: Text(
         text,
-        style: AppTypography.caption.copyWith(
-          color: AppColors.readableAccent(context, AppTheme.playGreen),
-          fontWeight: FontWeight.w800,
-          letterSpacing: 0.3,
-        ),
+        style: SahneType.captionStrong.copyWith(color: t.learnTx),
       ),
     );
   }

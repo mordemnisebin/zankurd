@@ -9,6 +9,7 @@ import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 Widget _wrap(Widget child) {
   return ChangeNotifierProvider<LanguageProvider>(
@@ -99,8 +100,18 @@ void main() {
     );
 
     expect(find.text('Hilbijêre'), findsOneWidget);
+    // Doğru şık ✓ taşır. ✗ iki yerdedir: seçilen yanlış şıkta ve
+    // 2026-09-29 Şahnê'den beri kartın durum rozetinde ("YANLIŞ" — durum
+    // hiçbir zaman yalnız renkle verilmez, `SahneStatusBadge`).
     expect(find.byIcon(AppIcons.check), findsOneWidget);
-    expect(find.byIcon(AppIcons.xmark), findsOneWidget);
+    expect(find.byIcon(AppIcons.xmark), findsNWidgets(2));
+    expect(
+      find.descendant(
+        of: find.byType(SahneStatusBadge),
+        matching: find.byIcon(AppIcons.xmark),
+      ),
+      findsOneWidget,
+    );
     expect(find.text('Açıklama metni burada.'), findsOneWidget);
   });
 
@@ -129,12 +140,19 @@ void main() {
       await tester.tap(find.text('Hafıza Kartları'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Dil'), findsOneWidget);
+      // 2026-09-29 Şahnê: kategori rozeti (`SahneBadge`) Etiket
+      // biçemindedir — yerele duyarlı büyük harf ("Dil" → "DİL").
+      expect(find.text('DİL'), findsOneWidget);
       expect(find.text('Ziman'), findsNothing);
+      expect(find.text('ZIMAN'), findsNothing);
     },
   );
 
-  testWidgets('flashcard arka yüz aksanları açık temada okunabilir kalır', (
+  // 2026-09-29 Şahnê: arka yüz gece sahne kartıdır; "Doğru Cevap:" durum
+  // rengi Rast metni (✓ ikonuyla), "Açıklama:" öğrenme rolünün metni.
+  // Eskiden eski yeşilin / morun "okunur" tonları ölçülüyordu; mor palet
+  // dışıdır ve kalktı.
+  testWidgets('flashcard arka yüz etiketleri gece sahnesinde okunur tonda', (
     tester,
   ) async {
     const records = [
@@ -157,22 +175,11 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('review-flashcard')));
     await tester.pumpAndSettle();
 
-    final correctFinder = find.text('Doğru Cevap:');
-    final correct = tester.widget<Text>(correctFinder);
-    expect(
-      correct.style?.color,
-      AppColors.readableAccent(tester.element(correctFinder), AppTheme.correct),
-    );
+    final correct = tester.widget<Text>(find.text('Doğru Cevap:'));
+    expect(correct.style?.color, SahneTokens.night.okTx);
 
-    final explanationFinder = find.text('Açıklama:');
-    final explanation = tester.widget<Text>(explanationFinder);
-    expect(
-      explanation.style?.color,
-      AppColors.readableAccent(
-        tester.element(explanationFinder),
-        AppTheme.violet,
-      ),
-    );
+    final explanation = tester.widget<Text>(find.text('Açıklama:'));
+    expect(explanation.style?.color, SahneTokens.night.learnTx);
   });
 
   testWidgets('flashcard ön ve arka yüzü tek actionable semantics nodeudur', (

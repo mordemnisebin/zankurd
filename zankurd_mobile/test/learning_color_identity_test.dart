@@ -8,30 +8,34 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
-/// Öğrenme ekranının renk kimliği: orman gradyanlı başlık kartı, dolu
-/// playGreen sekme/eylem ve tonal altın "Flaş kart".
+/// Öğrenme ekranının renk kimliği.
 ///
 /// ## Kusur
 ///
 /// Ekranın başlığı soluk bir ikon karosu + düz metindi; konu sekmeleri
-/// `AppTheme.playGreen`in yalnız %14'ü kadar soluk bir zemin taşıyordu;
-/// "Soru çöz" ve "Flaş kart" ikisi de aynı soluk çerçeveli (outlined)
-/// yeşildi. Uygulamanın geri kalanı (ayarlar, oturum açma, kayıt ekranları)
-/// `AppTheme.identityHeaderGradient` ile orman kimliğini taşırken öğrenme
-/// ekranı — Kurmancî öğrenmenin asıl kapısı — ondan tamamen kopuktu. Sahip
-/// ekranı "renksiz" buldu (2026-09-27).
+/// yeşilin yalnız %14'ü kadar soluk bir zemin taşıyordu; "Soru çöz" ve
+/// "Flaş kart" ikisi de aynı soluk çerçeveli yeşildi. Sahip ekranı "renksiz"
+/// buldu (2026-09-27).
 ///
 /// ## Niçin sessiz kalırdı
 ///
-/// Hiçbir bekçi rengi ÖLÇMÜYORDU. `test/learning_screen_test.dart`deki eski
-/// bekçiler tam tersini doğruluyordu: başlığın "ayrı bir kart yüzeyi
-/// oluşturmaması" ve seçili sekmenin "düşük yoğunluklu" (soluk) kalması
-/// birer geçen testti — yani soluk renk kasıtlı bir tasarım kararı gibi
-/// korunuyordu. Widget ağacı, anahtarlar, semantics ve dokunma hedefleri
-/// hep doğruydu; eksik olan tek şey renkti ve onu doğrulayan hiçbir ölçüm
-/// yoktu. Bu dosya o boşluğu kapatır: gradyan, dolu renk ve kontrast
-/// doğrudan çalışan koddan okunur (sabit bir beklenti tekrarı değil).
+/// Hiçbir bekçi rengi ÖLÇMÜYORDU: widget ağacı, anahtarlar, semantics ve
+/// dokunma hedefleri hep doğruydu; eksik olan tek şey renkti. Bu dosya o
+/// boşluğu kapatır: renk ve kontrast doğrudan çalışan koddan okunur.
+///
+/// 2026-09-29 Şahnê: renk artık rol taşır. Eski bekçiler orman gradyanlı
+/// başlık kartını, dolu yeşil sekmeyi ve altın harmanlı "Flaş kart"ı
+/// ölçüyordu; üçü de Şahnê'de kalktı (B iskeleti başlık kartı taşımaz, palet
+/// dışı renk yok, Agir yalnız TEK birincil eylemde). Ölçülen kurallar:
+///
+/// * sayfa adı B çubuğunda, birincil metin renginde; maskot yok;
+/// * seçili konu çipi öğrenme rolünü (Zimrût tonu + Zimrût metni) taşır,
+///   seçili olmayan ikincil metinde kalır;
+/// * "Soru çöz" / "Flaş kart" ikincildir (Kulis), Agir değildir;
+/// * etkin dersin sahne kartında TEK Agir düğme vardır, metni koyu `onAct`;
+/// * bu çiftlerin hepsi iki temada WCAG AA (4.5:1) geçer.
 void main() {
   Widget pump({required bool isKu, required bool dark}) {
     return MultiProvider(
@@ -47,142 +51,101 @@ void main() {
     );
   }
 
+  Color materialColorIn(WidgetTester tester, Finder button) => tester
+      .widget<Material>(
+        find.descendant(of: button, matching: find.byType(Material)).first,
+      )
+      .color!;
+
   for (final isKu in [false, true]) {
     for (final dark in [false, true]) {
       final combo = 'ku=$isKu dark=$dark';
+      final t = dark ? SahneTokens.night : SahneTokens.day;
 
       testWidgets(
-        'kimlik başlığı orman gradyanı ve beyaz başlık taşır ($combo)',
+        'sayfa adı B çubuğunda, başlık kartı ve maskot yok ($combo)',
         (tester) async {
           await tester.pumpWidget(pump(isKu: isKu, dark: dark));
           await tester.pumpAndSettle();
 
-          final header = find.byKey(const ValueKey('learning-scene-header'));
-          expect(header, findsOneWidget);
-
-          // Kartın kendisi: gradyanlı `Container` — ikon karosu da bir
-          // `Container` olduğu için tip yerine "gradyanı olan" ile ayırt
-          // edilir (sıralamaya bağımlı olmasın diye).
-          final gradientCard = find.descendant(
-            of: header,
-            matching: find.byWidgetPredicate((widget) {
-              if (widget is! Container) return false;
-              final decoration = widget.decoration;
-              return decoration is BoxDecoration && decoration.gradient != null;
-            }),
-          );
-          expect(gradientCard, findsOneWidget);
-          final decoration =
-              tester.widget<Container>(gradientCard).decoration
-                  as BoxDecoration;
-          expect(decoration.gradient, AppTheme.identityHeaderGradient);
-
-          // Zana tek başına eşlik eder, ikinci bir semantics düğümü açmaz.
-          expect(find.byType(RojMascot), findsOneWidget);
-          expect(
-            find.ancestor(
-              of: find.byType(RojMascot),
-              matching: find.byType(ExcludeSemantics),
-            ),
-            findsOneWidget,
-          );
-
+          expect(find.byType(RojMascot), findsNothing, reason: combo);
           final titleText = isKu ? 'Kurmancî hîn bibe' : 'Kurmancî öğren';
-          final title = tester.widget<Text>(
-            find.descendant(of: header, matching: find.text(titleText)),
+          final title = find.descendant(
+            of: find.byType(AppBar),
+            matching: find.text(titleText),
           );
-          expect(title.style?.color, Colors.white);
+          expect(title, findsOneWidget, reason: combo);
+          expect(
+            DefaultTextStyle.of(tester.element(title)).style.color,
+            t.tx,
+            reason: combo,
+          );
         },
       );
 
-      testWidgets(
-        'seçili sekme dolu playGreen, seçili olmayan değil ($combo)',
-        (tester) async {
-          await tester.pumpWidget(pump(isKu: isKu, dark: dark));
-          await tester.pumpAndSettle();
+      testWidgets('seçili konu çipi öğrenme rolünde, öteki değil ($combo)', (
+        tester,
+      ) async {
+        await tester.pumpWidget(pump(isKu: isKu, dark: dark));
+        await tester.pumpAndSettle();
 
-          // Varsayılan seçili kategori 'everyday'dir (bkz.
-          // `_kLearningCategoryIds.first` learning_screen.dart).
-          final selected = tester.widget<AnimatedContainer>(
-            find.descendant(
-              of: find.byKey(const ValueKey('learning-tab-everyday')),
-              matching: find.byType(AnimatedContainer),
-            ),
-          );
-          final selectedDecoration = selected.decoration as BoxDecoration;
-          expect(selectedDecoration.color, AppTheme.playGreen);
+        // Varsayılan seçili kategori 'everyday'dir (bkz.
+        // `_kLearningCategoryIds.first` learning_screen.dart).
+        final selectedText = tester.widget<Text>(
+          find.descendant(
+            of: find.byKey(const ValueKey('learning-tab-everyday')),
+            matching: find.text(isKu ? 'Rojane' : 'Günlük'),
+          ),
+        );
+        expect(selectedText.style?.color, t.learnTx, reason: combo);
+        expect(
+          materialColorIn(
+            tester,
+            find.byKey(const ValueKey('learning-tab-everyday')),
+          ),
+          t.learnTint,
+          reason: combo,
+        );
 
-          final selectedLabel = isKu ? 'Rojane' : 'Günlük';
-          final selectedText = tester.widget<Text>(
-            find.descendant(
-              of: find.byKey(const ValueKey('learning-tab-everyday')),
-              matching: find.text(selectedLabel),
-            ),
-          );
-          expect(selectedText.style?.color, Colors.white);
+        final unselectedText = tester.widget<Text>(
+          find.descendant(
+            of: find.byKey(const ValueKey('learning-tab-grammar')),
+            matching: find.text(isKu ? 'Rêziman' : 'Dilbilgisi'),
+          ),
+        );
+        expect(unselectedText.style?.color, t.tx2, reason: combo);
+        expect(
+          materialColorIn(
+            tester,
+            find.byKey(const ValueKey('learning-tab-grammar')),
+          ),
+          isNot(t.learnTint),
+          reason: combo,
+        );
+      });
 
-          final unselected = tester.widget<AnimatedContainer>(
-            find.descendant(
-              of: find.byKey(const ValueKey('learning-tab-grammar')),
-              matching: find.byType(AnimatedContainer),
-            ),
-          );
-          final unselectedDecoration = unselected.decoration as BoxDecoration;
-          expect(unselectedDecoration.color, isNot(AppTheme.playGreen));
-        },
-      );
+      testWidgets('konu eylemleri ikincil (Kulis), Agir tek birincilde '
+          '($combo)', (tester) async {
+        await tester.pumpWidget(pump(isKu: isKu, dark: dark));
+        await tester.pumpAndSettle();
 
-      testWidgets(
-        'Soru çöz playGreen dolu, Flaş kart altın harmanlı zemin taşır ($combo)',
-        (tester) async {
-          await tester.pumpWidget(pump(isKu: isKu, dark: dark));
-          await tester.pumpAndSettle();
-          final context = tester.element(find.byType(LearningScreen));
+        for (final key in [
+          'learning-topic-practice',
+          'learning-topic-flashcards',
+        ]) {
+          final button = find.descendant(
+            of: find.byKey(ValueKey(key)),
+            matching: find.byType(FilledButton),
+          );
+          expect(materialColorIn(tester, button), t.s2, reason: '$combo $key');
+        }
 
-          final practice = tester.widget<FilledButton>(
-            find.descendant(
-              of: find.byKey(const ValueKey('learning-topic-practice')),
-              matching: find.byType(FilledButton),
-            ),
-          );
-          expect(
-            practice.style?.backgroundColor?.resolve(<WidgetState>{}),
-            AppTheme.playGreen,
-          );
-          expect(
-            practice.style?.foregroundColor?.resolve(<WidgetState>{}),
-            Colors.white,
-          );
-
-          final flashcards = tester.widget<FilledButton>(
-            find.descendant(
-              of: find.byKey(const ValueKey('learning-topic-flashcards')),
-              matching: find.byType(FilledButton),
-            ),
-          );
-          final plainSurface = AppTheme.surfaceColor(context);
-          final flashcardsBg = flashcards.style?.backgroundColor?.resolve(
-            <WidgetState>{},
-          );
-          // "Flaş kart" düz yüzey rengiyle karışmamalı — aksi hâlde
-          // ikinci eylem birincil eylemden ayrışmaz (eski soluk hâlin
-          // hatası buydu).
-          expect(flashcardsBg, isNot(plainSurface));
-          expect(
-            flashcardsBg,
-            Color.alphaBlend(
-              AppTheme.gold.withValues(
-                alpha: AppTheme.isLight(context) ? 0.22 : 0.26,
-              ),
-              plainSurface,
-            ),
-          );
-          expect(
-            flashcards.style?.foregroundColor?.resolve(<WidgetState>{}),
-            AppTheme.textPrimaryColor(context),
-          );
-        },
-      );
+        final primary = find.descendant(
+          of: find.byKey(const ValueKey('learning-next-step')),
+          matching: find.byType(FilledButton),
+        );
+        expect(materialColorIn(tester, primary), t.act, reason: combo);
+      });
     }
   }
 
@@ -206,44 +169,33 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  test('beyaz metin gradyanın iki ucunda (culturalBrandBg, playGreen) WCAG AA '
-      '(4.5:1) geçer', () {
-    for (final (name, background) in [
-      ('culturalBrandBg (gradyan başı)', AppTheme.culturalBrandBg),
-      (
-        'playGreen (gradyan sonu, seçili sekme, Soru çöz zemini)',
-        AppTheme.playGreen,
-      ),
+  test('öğrenme ekranının renk çiftleri iki temada WCAG AA (4.5:1) geçer', () {
+    for (final (theme, t) in [
+      ('gündüz', SahneTokens.day),
+      ('gece', SahneTokens.night),
     ]) {
-      expect(
-        _contrast(Colors.white, background),
-        greaterThanOrEqualTo(4.5),
-        reason: '$name üzerinde beyaz metin okunmuyor',
-      );
+      for (final (name, fg, bg) in [
+        ('seçili çip: Zimrût metni / Zimrût tonu', t.learnTx, t.learnTint),
+        ('seçili olmayan çip: ikincil metin / Perde', t.tx2, t.s1),
+        ('ikincil düğme: birincil metin / Kulis', t.tx, t.s2),
+        ('yol satırı: birincil metin / Perde', t.tx, t.s1),
+        ('kilitli satır: ikincil metin / Perde', t.tx2, t.s1),
+        ('birincil düğme: onAct / Agir', t.onAct, t.act),
+      ]) {
+        expect(
+          _contrast(fg, bg),
+          greaterThanOrEqualTo(4.5),
+          reason: '$theme — $name',
+        );
+      }
     }
-  });
-
-  test('Flaş kart altın harmanlı zemininde ink/cream metin açık ve karanlık '
-      'temada WCAG AA (4.5:1) geçer', () {
-    final lightBg = Color.alphaBlend(
-      AppTheme.gold.withValues(alpha: 0.22),
-      AppTheme.lightSurface,
-    );
-    expect(
-      _contrast(AppTheme.lightTextPrimary, lightBg),
-      greaterThanOrEqualTo(4.5),
-      reason: 'açık temada Flaş kart etiketi okunmuyor',
-    );
-
-    final darkBg = Color.alphaBlend(
-      AppTheme.gold.withValues(alpha: 0.26),
-      AppTheme.surface,
-    );
-    expect(
-      _contrast(AppTheme.textPrimary, darkBg),
-      greaterThanOrEqualTo(4.5),
-      reason: 'karanlık temada Flaş kart etiketi okunmuyor',
-    );
+    // Sahne kartı her temada gece çizilir.
+    const n = SahneTokens.night;
+    for (final bg in [SahneStageColors.top, SahneStageColors.bottom]) {
+      expect(_contrast(n.tx, bg), greaterThanOrEqualTo(4.5));
+      expect(_contrast(n.tx2, bg), greaterThanOrEqualTo(4.5));
+    }
+    expect(_contrast(n.learnTx, n.learnTint), greaterThanOrEqualTo(4.5));
   });
 }
 

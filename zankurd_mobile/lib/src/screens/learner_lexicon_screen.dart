@@ -4,8 +4,8 @@ import '../data/learner_lexicon.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_icons.dart';
-import '../theme/app_theme.dart';
 import '../widgets/app_state.dart';
+import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 
 class LearnerLexiconScreen extends StatefulWidget {
@@ -21,62 +21,57 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
   @override
   Widget build(BuildContext context) {
     final isKu = context.isKu;
+    final t = SahneTokens.of(context);
     final results = LearnerLexicon.search(_query);
 
+    // 2026-09-29 Şahnê: B iskeleti. Sayfa adı çubukta; arama
+    // alanı temanın Kulis tonlu alanıdır (ayrı renk/köşe yazılmaz); her
+    // kayıt bir yüzey kartı (L pah): terim Manşet, anlam Gövde, kaynak ve
+    // konu açıklama satırında.
     return Scaffold(
+      backgroundColor: t.bg,
       appBar: zkAppBar(context, title: Text(context.t(K.lexiconTitle))),
       body: SafeArea(
+        top: false,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(
-                AppSpacing.page,
-                AppSpacing.md,
-                AppSpacing.page,
-                AppSpacing.sm,
+                SahneSpace.page,
+                SahneSpace.x2,
+                SahneSpace.page,
+                SahneSpace.x3,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  // Açıklama bir cümle: çubuğun tek satırlık alt satırına
+                  // sığmıyor, aramanın üstünde durur.
                   Text(
                     context.t(K.lexiconSubtitle),
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: AppTheme.textSubColor(context),
-                    ),
+                    style: SahneType.body.copyWith(color: t.tx2),
                   ),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: SahneSpace.x3),
                   TextField(
                     key: const ValueKey('lexicon-search-field'),
                     textInputAction: TextInputAction.search,
                     onChanged: (value) => setState(() => _query = value),
+                    style: SahneType.body.copyWith(color: t.tx),
                     decoration: InputDecoration(
                       hintText: context.t(K.lexiconSearchHint),
-                      prefixIcon: const Icon(AppIcons.magnifyingGlass),
-                      filled: true,
-                      fillColor: AppTheme.surfaceColor(context),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.md),
-                        borderSide: BorderSide(
-                          color: AppTheme.borderColor(context),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.md),
-                        borderSide: BorderSide(
-                          color: AppTheme.borderColor(context),
-                        ),
+                      prefixIcon: Icon(
+                        AppIcons.magnifyingGlass,
+                        size: 20,
+                        color: t.tx2,
                       ),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SahneSpace.x3),
                   Text(
                     context.t(K.lexiconCount, {'count': '${results.length}'}),
                     key: const ValueKey('lexicon-result-count'),
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textMutedColor(context),
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: SahneType.captionStrong.copyWith(color: t.tx2),
                   ),
                 ],
               ),
@@ -92,18 +87,14 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
                   : ListView.separated(
                       key: const ValueKey('lexicon-results-list'),
                       padding: const EdgeInsets.fromLTRB(
-                        AppSpacing.page,
+                        SahneSpace.page,
                         0,
-                        AppSpacing.page,
-                        AppSpacing.xl,
+                        SahneSpace.page,
+                        SahneSpace.x6,
                       ),
                       itemCount: results.length,
-                      separatorBuilder: (_, _) => Divider(
-                        height: 1,
-                        color: AppTheme.borderColor(
-                          context,
-                        ).withValues(alpha: 0.55),
-                      ),
+                      separatorBuilder: (_, _) =>
+                          const SizedBox(height: SahneSpace.x2),
                       itemBuilder: (context, index) {
                         final entry = results[index];
                         final source = LearnerLexicon.sourceFor(entry);
@@ -124,47 +115,39 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
                               '${entry.termKu}. ${entry.meaningTr}. '
                               '$sourceText. $categoryText.',
                           child: ExcludeSemantics(
-                            child: Padding(
+                            child: SahneSurfaceCard(
                               key: ValueKey('lexicon-entry-${entry.id}'),
-                              padding: const EdgeInsets.symmetric(
-                                vertical: AppSpacing.md,
-                              ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     entry.termKu,
-                                    style: AppTypography.heading2.copyWith(
-                                      color: AppTheme.textPrimaryColor(context),
+                                    style: SahneType.headline.copyWith(
+                                      color: t.tx,
                                     ),
                                   ),
-                                  const SizedBox(height: 4),
+                                  const SizedBox(height: SahneSpace.x1),
                                   Text(
                                     entry.meaningTr,
-                                    style: AppTypography.bodyLarge.copyWith(
-                                      color: AppTheme.textSubColor(context),
+                                    style: SahneType.body.copyWith(
+                                      color: t.tx2,
                                     ),
                                   ),
-                                  const SizedBox(height: AppSpacing.xs),
+                                  const SizedBox(height: SahneSpace.x2),
                                   Wrap(
-                                    spacing: AppSpacing.sm,
-                                    runSpacing: 4,
+                                    spacing: SahneSpace.x3,
+                                    runSpacing: SahneSpace.x1,
                                     children: [
                                       Text(
                                         sourceText,
-                                        style: AppTypography.caption.copyWith(
-                                          color: AppTheme.textMutedColor(
-                                            context,
-                                          ),
-                                          fontWeight: FontWeight.w600,
+                                        style: SahneType.captionStrong.copyWith(
+                                          color: t.learnTx,
                                         ),
                                       ),
                                       Text(
                                         categoryText,
-                                        style: AppTypography.caption.copyWith(
-                                          color: AppTheme.textMutedColor(
-                                            context,
-                                          ),
+                                        style: SahneType.caption.copyWith(
+                                          color: t.tx3,
                                         ),
                                       ),
                                     ],

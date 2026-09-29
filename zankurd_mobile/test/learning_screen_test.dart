@@ -14,6 +14,7 @@ import 'package:zankurd_mobile/src/services/lesson_listening_speaker.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 
 Widget wrap(Widget child) => MultiProvider(
@@ -250,11 +251,11 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // 2026-09-29 Şahnê: çip görselde 44 (`SahneRailChip`), dokunma
+      // alanı 48'lik saydam kutu; ölçülen şey dokunma kutusudur (anahtar
+      // onda), görsel çipin kendi InkWell'i değil.
       final tab = find.byKey(const ValueKey('learning-tab-everyday'));
-      final ink = find
-          .descendant(of: tab, matching: find.byType(InkWell))
-          .first;
-      expect(tester.getSize(ink).height, greaterThanOrEqualTo(48));
+      expect(tester.getSize(tab).height, greaterThanOrEqualTo(48));
       final data = tester.getSemantics(tab).getSemanticsData();
       expect(data.flagsCollection.isButton, isTrue);
       expect(data.flagsCollection.isSelected, ui.Tristate.isTrue);
@@ -264,15 +265,13 @@ void main() {
     },
   );
 
-  // 2026-09-27: sahip ekranı renksiz buldu; başlık artık BİLEREK orman
-  // gradyanlı bir kimlik kartıdır (renk/kontrast bekçisi:
-  // learning_color_identity_test.dart). Eski bekçi "hiçbir kart yüzeyi
-  // olmamalı" derdi — o karar burada tersine döndü, isim ve gerekçe
-  // buna göre güncellendi. Kalan gerçek yapısal bekçi: ekranın kendi sahne
-  // başlığı vardır, ortak `ScreenIdentityHeader` bileşeni KULLANILMAZ; anahtar
-  // yine en dıştaki widget'ta (yatay sayfa boşluğunu taşıyan `Padding`) durur.
+  // 2026-09-29 Şahnê: B iskeleti. Sayfa adı ve alt satırı çubukta durur;
+  // içerikte başlık kartı (eski orman gradyanlı kimlik kartı) ve ayrı
+  // "Öğrenme yolları" bölüm başlığı yoktur — maket: çubuk → konu rayı →
+  // yol. Bekçi aynı kuralı korur: ad bir kez yazılır, ortak
+  // `ScreenIdentityHeader` kullanılmaz.
   testWidgets(
-    'öğrenme kimliği kendi sahne başlığını kullanır, ortak ScreenIdentityHeader değil',
+    'öğrenme sayfası adını B çubuğunda bir kez taşır, başlık kartı yok',
     (tester) async {
       await tester.pumpWidget(
         wrap(LearningScreen(repository: MockZanKurdRepository())),
@@ -280,26 +279,32 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(ScreenIdentityHeader), findsNothing);
-      final header = find.byKey(const ValueKey('learning-scene-header'));
-      expect(header, findsOneWidget);
-      expect(
-        tester.widget(header),
-        isA<Padding>(),
-        reason:
-            'Anahtar en dıştaki widgette kalmalı: yatay sayfa boşluğunu '
-            'taşıyan Padding, artık içinde orman gradyanlı kimlik kartı '
-            'barındırıyor.',
-      );
+      expect(find.byKey(const ValueKey('learning-scene-header')), findsNothing);
       expect(find.text('Kurmancî öğren'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(AppBar),
+          matching: find.text('Kurmancî öğren'),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: find.byType(AppBar),
+          matching: find.text('Ders ders, konu konu ilerle'),
+        ),
+        findsOneWidget,
+      );
       expect(find.text('Öğren'), findsNothing);
       // "Bugünkü hedefin" bölümü 2026-09-27'de kalktı: hiç ders çözmemiş
       // birine "Tekrarlar tamam" diyordu. Tekrar kartı artık yalnız vadesi
       // gelmiş tekrar varken, ekranın en üstünde çizilir.
       expect(find.text('Bugünkü hedefin'), findsNothing);
       expect(find.byKey(const ValueKey('todays-review-empty')), findsNothing);
-      expect(find.text('Öğrenme yolları'), findsOneWidget);
+      expect(find.text('Öğrenme yolları'), findsNothing);
       expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
-      expect(find.text('Sana önerilen'), findsOneWidget);
+      // Rozet Etiket biçemindedir: yerele duyarlı büyük harf.
+      expect(find.text('SANA ÖNERİLEN'), findsOneWidget);
     },
   );
 
@@ -368,7 +373,11 @@ void main() {
     expect(find.byType(LessonDetailScreen), findsOneWidget);
   });
 
-  testWidgets('önerilen rota düğümü birincil turuncu CTA olarak öne çıkar', (
+  // 2026-09-29 Şahnê: etkin ders artık turuncu dolu bir satır değil, gece
+  // sahne kartıdır (`SahneStageCard.lesson`); Agir (turuncu) yalnız kartın
+  // içindeki TEK birincil düğmededir ve üstündeki metin koyu `onAct`tır.
+  // Ekranda başka Agir dolgu yoktur.
+  testWidgets('önerilen ders sahne kartında tek birincil Agir düğme taşır', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -377,15 +386,40 @@ void main() {
     await tester.pumpAndSettle();
 
     final nextStep = find.byKey(const ValueKey('learning-next-step'));
-    final material = tester.widget<Material>(
-      find.descendant(of: nextStep, matching: find.byType(Material)).first,
+    expect(
+      find.descendant(of: nextStep, matching: find.byType(SahneStageCard)),
+      findsOneWidget,
     );
     final title = tester.widget<Text>(
       find.descendant(of: nextStep, matching: find.text('Selamlaşma')),
     );
+    // Sahne kartı gündüz temasında da gece çizilir.
+    expect(title.style?.color, SahneTokens.night.tx);
 
-    expect(material.color, AppTheme.primaryCtaColor(tester.element(nextStep)));
-    expect(title.style?.color, Colors.white);
+    final primary = find.descendant(
+      of: nextStep,
+      matching: find.byType(FilledButton),
+    );
+    expect(primary, findsOneWidget);
+    final fill = tester.widget<Material>(
+      find.descendant(of: primary, matching: find.byType(Material)).first,
+    );
+    expect(fill.color, SahneTokens.night.act);
+    final label = tester.widget<RichText>(
+      find.descendant(of: primary, matching: find.byType(RichText)).first,
+    );
+    expect(label.text.style?.color, SahneTokens.night.onAct);
+
+    // Tek birincil: yoldaki kartın dışında Agir dolgulu düğme yok.
+    final agirButtons = tester
+        .widgetList<Material>(
+          find.descendant(
+            of: find.byType(FilledButton),
+            matching: find.byType(Material),
+          ),
+        )
+        .where((m) => m.color == SahneTokens.day.act);
+    expect(agirButtons.length, 1);
   });
 
   testWidgets('öğrenme yolu durumları Türkçe semantics ile adlandırılır', (
@@ -529,40 +563,33 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Mevcut seviyen: Orta'), findsNothing);
-    expect(find.text('Sana önerilen'), findsOneWidget);
+    expect(find.text('SANA ÖNERİLEN'), findsOneWidget);
   });
 
-  // Bu test AppBar başlığının yazı tipini ölçüyordu; başlık kaldırılınca
-  // hedefsiz kaldı. Niyeti hâlâ geçerli — bir ekranda iki ayrı yazı tipi
-  // görünmemeli (bkz. 2026-07-26: boyayıcı metinler sistem yazı tipine
-  // düşüyordu). Ölçüm ekranın adını taşıyan yere, kimlik bandına taşındı.
+  // Niyet: bir ekranda sistem yazı tipine düşen metin olmamalı (bkz.
+  // 2026-07-26: boyayıcı metinler sistem yazı tipine düşüyordu).
+  // 2026-09-29 Şahnê: yazı iki ailedir — başlıklar Bricolage Grotesque
+  // (`SahneType.display`), metin Onest (`SahneType.text`). Eski bekçi
+  // Rubik'i ve "başlık stili aileyi yazmaz" kuralını ölçüyordu; Şahnê'de
+  // aile belirteçte yazılıdır. Ölçülen: çubuktaki sayfa adı başlık
+  // ailesiyle, gövde metni metin ailesiyle çizilir.
   testWidgets('öğrenme başlığı ürünün yazı tipini korur', (tester) async {
     await tester.pumpWidget(
       wrap(LearningScreen(repository: MockZanKurdRepository())),
     );
     await tester.pumpAndSettle();
 
-    // Aile başlığın kendi stilinde yazılı değil; temadan gelir. Eski test
-    // AppBar'ın `titleTextStyle` içine **açıkça** yazdığı aileyi ölçüyordu,
-    // o başlık kalkınca ölçtüğü şey de kalmadı. Burada asıl mekanizma
-    // ölçülür: tema Rubik'i besler ve başlık stili onu geçersiz kılmaz.
-    final context = tester.element(find.text('Kurmancî öğren'));
-    expect(
-      Theme.of(context).textTheme.bodyMedium?.fontFamily,
-      AppTypography.fontFamily,
-    );
-    expect(
-      AppTypography.heading2.fontFamily,
-      isNull,
-      reason: 'Başlık stili aileyi yazarsa tema değişimi ona ulaşmaz.',
-    );
+    final title = tester.element(find.text('Kurmancî öğren'));
+    expect(DefaultTextStyle.of(title).style.fontFamily, SahneType.display);
+    expect(Theme.of(title).textTheme.bodyMedium?.fontFamily, SahneType.text);
   });
 
-  // 2026-09-27: seçili sekme eskiden playGreen'in yalnız %14'ü kadar soluk
-  // bir zemindi — sahip ekranı renksiz buldu. Artık DOLU: zemin tam
-  // playGreen, çerçevesiz, etiket beyaz/w800. Bekçi buna göre güncellendi;
-  // ayrıntılı kontrast ölçümü learning_color_identity_test.dart'ta.
-  testWidgets('seçili sekme dolu playGreen kimliği taşır, çerçevesiz', (
+  // 2026-09-27: seçili sekme soluk bir zemindi, sahip ekranı renksiz buldu.
+  // 2026-09-29 Şahnê: konu rayı `SahneRail` + `SahneRailChip`; seçili çip
+  // öğrenme rolünü taşır (Zimrût tonu + Halka 2 + Zimrût metni), seçili
+  // olmayan ikincil metinde kalır. Kontrast ölçümü
+  // learning_color_identity_test.dart'ta.
+  testWidgets('seçili konu çipi öğrenme rolünü taşır, ötekiler taşımaz', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -570,20 +597,15 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final tab = tester.widget<AnimatedContainer>(
+    SahneRailChip chip(String key) => tester.widget<SahneRailChip>(
       find.descendant(
-        of: find.byKey(const ValueKey('learning-tab-everyday')),
-        matching: find.byType(AnimatedContainer),
+        of: find.byKey(ValueKey(key)),
+        matching: find.byType(SahneRailChip),
       ),
     );
-    final decoration = tab.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.playGreen);
-    expect(decoration.gradient, isNull);
-    expect(
-      decoration.border,
-      isNull,
-      reason: 'Seçili sekme artık çerçevesiz dolu bir zemin taşır.',
-    );
+    expect(chip('learning-tab-everyday').selected, isTrue);
+    expect(chip('learning-tab-everyday').role, SahneRole.learn);
+    expect(chip('learning-tab-grammar').selected, isFalse);
 
     final label = tester.widget<Text>(
       find.descendant(
@@ -591,8 +613,14 @@ void main() {
         matching: find.text('Günlük'),
       ),
     );
-    expect(label.style?.color, Colors.white);
-    expect(label.style?.fontWeight, FontWeight.w800);
+    expect(label.style?.color, SahneTokens.day.learnTx);
+    final other = tester.widget<Text>(
+      find.descendant(
+        of: find.byKey(const ValueKey('learning-tab-grammar')),
+        matching: find.text('Dilbilgisi'),
+      ),
+    );
+    expect(other.style?.color, SahneTokens.day.tx2);
   });
 
   testWidgets('önerilen ders rota içinde tek kez görünür', (tester) async {
@@ -898,9 +926,15 @@ void main() {
     await tester.tap(find.text('Pêş'));
     await tester.pumpAndSettle();
 
-    final miniQuizLabel = tester.widget<Text>(find.text('Quiz-a Kurt'));
-    expect(miniQuizLabel.maxLines, 1);
-    expect(miniQuizLabel.softWrap, isFalse);
+    // 2026-09-29 Şahnê: "Mini Quiz" dar ekranda tam genişlik ikincil
+    // düğmedir; etiket küçültülmeden (FittedBox yok) tek satıra sığar.
+    // Ölçülen şey sonuçtur: çizilen etiket tek satır yüksekliğinde.
+    final miniQuizLabel = find.text('Quiz-a Kurt');
+    expect(miniQuizLabel, findsOneWidget);
+    expect(
+      tester.getSize(miniQuizLabel).height,
+      lessThanOrEqualTo(SahneType.button.fontSize! * SahneType.button.height!),
+    );
     expect(tester.takeException(), isNull);
   });
 

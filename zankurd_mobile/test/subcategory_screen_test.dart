@@ -11,6 +11,7 @@ import 'package:zankurd_mobile/src/screens/subcategory_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
 Widget wrap(Widget child) => MultiProvider(
@@ -71,7 +72,12 @@ void main() {
     LevelProgressStore.resetInstance();
   });
 
-  testWidgets('kartlar açık yüzeyde tint border ile listelenir', (
+  // 2026-09-29 Şahnê: alt kategoriler eskiden kategori renkli kenarlı ve
+  // gölgeli tek tek kartlardı. Artık tek bir liste grubunda
+  // (`SahneListGroup`, Perde yüzeyi) standart satırlardır: öğrenme rolünün
+  // ikon karosu, ad, açıklama, rozetler. Bekçi yüzeyin açık temada Perde
+  // (beyaz) kaldığını ve satırın öğrenme rolünü taşıdığını ölçer.
+  testWidgets('alt kategoriler açık yüzeyli liste grubunda satır olur', (
     tester,
   ) async {
     final first = SubcategoryConfig.subcategories['Ziman']!.first;
@@ -90,14 +96,22 @@ void main() {
     expect(find.byKey(cardKey), findsOneWidget);
     expect(find.text(first.nameTr), findsOneWidget);
 
-    final card = tester.widget<Container>(
+    final row = tester.widget<SahneListRow>(find.byKey(cardKey));
+    expect(row.role, SahneRole.learn);
+    final group = tester.widget<Material>(
       find
-          .descendant(of: find.byKey(cardKey), matching: find.byType(Container))
+          .descendant(
+            of: find.byType(SahneListGroup),
+            matching: find.byType(Material),
+          )
           .first,
     );
-    final decoration = card.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.lightSurface);
-    expect(decoration.gradient, isNull);
+    expect(group.color, SahneTokens.day.s1);
+    // Rozetler: "5 seviye" ve "Yarış" (Etiket biçemi: büyük harf).
+    expect(
+      find.descendant(of: find.byKey(cardKey), matching: find.text('5 SEVİYE')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('dekoratif kategori hero görseli semantics ağacına girmez', (
