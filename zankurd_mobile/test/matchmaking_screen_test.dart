@@ -529,19 +529,27 @@ void main() {
       find.byKey(const ValueKey('matchmaking-selection-header')),
       findsOneWidget,
     );
+    // 2026-09-29 doğallık (K7): kartın tamamı Agir dolguydu; artık kart
+    // ikincil yüzeydir ve turuncu yalnız sağdaki ok karosundadır. Bekçi
+    // hâlâ "tek baskın eylem düz yüzeydir" der: degrade ve gölge yok,
+    // Agir tek bir öğede.
     final duelCard = tester.widget<Container>(
       find.byKey(const ValueKey('matchmaking-duel-card')),
     );
     final decoration = duelCard.decoration! as BoxDecoration;
-    expect(decoration.border, isNotNull);
     expect(decoration.gradient, isNull);
-    expect(
-      decoration.color,
-      AppTheme.primaryCtaColor(
-        tester.element(find.byKey(const ValueKey('matchmaking-duel-card'))),
-      ),
+    final cardContext = tester.element(
+      find.byKey(const ValueKey('matchmaking-duel-card')),
     );
+    expect(decoration.color, isNot(AppTheme.primaryCtaColor(cardContext)));
     expect(decoration.boxShadow, isEmpty);
+    final go = tester.widget<DecoratedBox>(
+      find.byKey(const ValueKey('matchmaking-duel-card-go')),
+    );
+    expect(
+      (go.decoration as ShapeDecoration).color,
+      AppTheme.primaryCtaColor(cardContext),
+    );
     expect(tester.takeException(), isNull);
   });
 

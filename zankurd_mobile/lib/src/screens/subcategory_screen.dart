@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/strings.dart';
 import '../config/category_visuals.dart';
 import '../config/subcategory_config.dart';
+import '../data/level_progress_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../theme/app_theme.dart';
@@ -13,7 +14,7 @@ import '../widgets/zk_back_button.dart';
 import 'level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
-class SubcategoryScreen extends StatelessWidget {
+class SubcategoryScreen extends StatefulWidget {
   const SubcategoryScreen({
     required this.repository,
     required this.category,
@@ -22,6 +23,43 @@ class SubcategoryScreen extends StatelessWidget {
 
   final ZanKurdRepository repository;
   final String category;
+
+  @override
+  State<SubcategoryScreen> createState() => _SubcategoryScreenState();
+}
+
+class _SubcategoryScreenState extends State<SubcategoryScreen> {
+  ZanKurdRepository get repository => widget.repository;
+  String get category => widget.category;
+
+  /// Alt kategori kimliği → oynanmış seviye sayısı (seviye yolunun kendi
+  /// deposundan, [LevelScreen] ile aynı kaynak).
+  Map<String, int> _played = const {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProgress();
+  }
+
+  Future<void> _loadProgress() async {
+    final store = await LevelProgressStore.load();
+    if (!mounted) return;
+    final total = repository.levelsForCategory(category).length;
+    final ids = [
+      ...?SubcategoryConfig.subcategories[category]?.map((s) => s.id),
+      'gisti',
+    ];
+    setState(() {
+      _played = {
+        for (final id in ids)
+          id: [
+            for (var n = 1; n <= total; n++)
+              if (store.isPlayed(category, id, n)) n,
+          ].length,
+      };
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +86,6 @@ class SubcategoryScreen extends StatelessWidget {
             ),
           ];
     final t = SahneTokens.of(context);
-    const night = SahneTokens.night;
 
     // 2026-09-29 Şahnê: B iskeleti + kategori başlığı. Kategori çizimi bu
     // ekranda başlığın zeminidir (maket kuralı: çizim yalnız karo, kategori
@@ -56,22 +93,28 @@ class SubcategoryScreen extends StatelessWidget {
     // (geri + ad + alt satır) onun üstünde gece metinleriyle yazılır ve
     // durum çubuğu açık ikon ister. Eski palet dışı kategori degradesi,
     // parlama daireleri ve bulanık gölge kalktı.
+    //
+    // 2026-09-29 doğallık (K1): çubuk gece TEMASIYLA kurulur. Eskiden gece
+    // rengi yalnız metnin biçemine yazılıyordu; `zkAppBar` başlığı temanın
+    // metin rengiyle yeniden çizdiği için gündüzde ad çizimin üstünde
+    // lacivert kalıyor, geri plakası beyaz bir kutu oluyordu (okunmuyordu).
+    PreferredSizeWidget bar(BuildContext barContext) => zkAppBar(
+      barContext,
+      backgroundColor: Colors.transparent,
+      // Çubuk gece başlığının üstünde: saat ve pil açık renkte olmalı
+      // (bkz. `AppTheme.overlayOnDarkHeader`).
+      systemOverlayStyle: AppTheme.overlayOnDarkHeader,
+      title: Text(CategoryNames.localized(category, ku)),
+      subtitle: Text(Tr.forKu(K.birAltAlanSecerek, ku)),
+    );
     return Scaffold(
       backgroundColor: t.bg,
       extendBodyBehindAppBar: true,
-      appBar: zkAppBar(
-        context,
-        backgroundColor: Colors.transparent,
-        // Çubuk gece başlığının üstünde: saat ve pil açık renkte olmalı
-        // (bkz. `AppTheme.overlayOnDarkHeader`).
-        systemOverlayStyle: AppTheme.overlayOnDarkHeader,
-        title: Text(
-          CategoryNames.localized(category, ku),
-          style: SahneType.headline.copyWith(color: night.tx),
-        ),
-        subtitle: Text(
-          Tr.forKu(K.birAltAlanSecerek, ku),
-          style: SahneType.caption.copyWith(color: night.tx2),
+      appBar: PreferredSize(
+        preferredSize: bar(context).preferredSize,
+        child: Theme(
+          data: AppTheme.stage,
+          child: Builder(builder: bar),
         ),
       ),
       body: SafeArea(
@@ -106,29 +149,39 @@ class SubcategoryScreen extends StatelessWidget {
   }
 
   /// Alt kategori satırı: Zimrût tonlu ikon karosu + ad + açıklama; sağda
-  /// "5 SEVİYE" rozeti ve chevron.
+  /// ilerleme ("2/5", yalnız oynanmış seviye varsa) ve chevron.
+  ///
+  /// 2026-09-29 doğallık (K7): sağda her satırda aynı "5 seviye" rozeti
+  /// vardı. Aynı sayı her satırda tekrarlanınca bilgi değil şablon oluyordu
+  /// (listenin altındaki "1 → 5" kartı bunu zaten söyler). Rozet kalktı;
+  /// yerine yalnız o alt kategorideki gerçek ilerleme durur. Hiç
+  /// oynanmamışsa sıfır sayaç gösterilmez (K6).
   Widget _subcategoryRow(BuildContext context, SubcategoryInfo sub, bool ku) {
+    final played = _played[sub.id] ?? 0;
+    final total = repository.levelsForCategory(category).length;
     return SahneListRow.icon(
       key: ValueKey('subcategory-card-${sub.id}'),
       icon: _iconForSubcategory(sub.id),
       role: SahneRole.learn,
       title: ku ? sub.nameKu : sub.nameTr,
       subtitle: ku ? sub.descriptionKu : sub.descriptionTr,
-      // Tek rozet: "5 SEVİYE". Eski "Yarış" çipi kalktı — her satırda
-      // aynı Boyax rozeti adı sıkıştırıyordu; çubuğun alt satırı
-      // ("…yarışmaya başla") bunu zaten söylüyor.
-      trailing: SahneBadge(label: Tr.forKu(K.seviye, ku)),
+      trailing: played > 0 && total > 0
+          ? SahneRowValue.meta('$played/$total')
+          : null,
       chevron: true,
       onTap: () {
-        Navigator.of(context).push(
-          AppRoute.to(
-            LevelScreen(
-              repository: repository,
-              category: category,
-              subCategory: sub.id,
-            ),
-          ),
-        );
+        Navigator.of(context)
+            .push(
+              AppRoute.to(
+                LevelScreen(
+                  repository: repository,
+                  category: category,
+                  subCategory: sub.id,
+                ),
+              ),
+            )
+            // Seviye yolundan dönünce ilerleme sayısı tazelenir.
+            .then((_) => _loadProgress());
       },
     );
   }
@@ -200,9 +253,17 @@ class _SubcategoryProgressHint extends StatelessWidget {
   }
 }
 
-/// Kategori başlığı: kategori çizimi, üstünde gece perdesi (üstte koyu —
-/// çubuk metni AA okunsun —, altta çizim görünür), altında kilim göz
-/// şeridi. Yüksekliği durum çubuğu + çubuk (64) + çizim bandı.
+/// Kategori başlığı: kategorinin KENDİ çizimi, üstünde gece perdesi;
+/// çizimi yoksa kategorinin düz tonu.
+///
+/// 2026-09-29 doğallık (K1): çizim yalnız kendi çizimi olan kategoride
+/// (`CategoryVisuals.ownImagePath`). Ziman, Siyaset, Paradigma ve ödünç
+/// görselli kategoriler çizim bandı almaz: başlık yalnız çubuk boyundadır
+/// ve kategorinin düz tonunu taşır (boş bir renk bandı süs olurdu). Perde
+/// her iki temada gecedir ve bandın dibinde de kalır (%45): çizim gündüzde
+/// tam parlaklığıyla açık kalıyor, başlığın altında bağıran bir afiş
+/// oluyordu. Alt kenardaki kilim göz şeridi kalktı (K4: şerit yalnız
+/// onboarding, zafer ve girişte).
 class _CategoryHeader extends StatelessWidget {
   const _CategoryHeader({required this.category});
 
@@ -215,6 +276,14 @@ class _CategoryHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     const night = SahneTokens.night;
     final topInset = MediaQuery.paddingOf(context).top;
+    final image = CategoryVisuals.ownImagePath(category);
+    final tone = CategoryVisuals.tone(category);
+    if (image == null) {
+      return SizedBox(
+        height: topInset + 64,
+        child: ColoredBox(color: tone.ground),
+      );
+    }
     return SizedBox(
       height: topInset + 64 + _band,
       child: Stack(
@@ -223,15 +292,14 @@ class _CategoryHeader extends StatelessWidget {
           ColoredBox(color: night.bg),
           ExcludeSemantics(
             child: Image.asset(
-              CategoryVisuals.imagePath(category),
+              image,
               fit: BoxFit.cover,
               alignment: const Alignment(0, -0.2),
-              errorBuilder: (_, _, _) => const SizedBox.shrink(),
+              errorBuilder: (_, _, _) => ColoredBox(color: tone.ground),
             ),
           ),
-          // Degrade perde (grup notu: "gerekirse degrade perde"): çubuk
-          // bölgesinde gece zemininin %80'i — beyaz çizimin üstünde bile
-          // gece metni AA geçer —, alt uçta %8'i.
+          // Gece perdesi: çubuk bölgesinde %80 — beyaz çizimin üstünde bile
+          // gece metni AA geçer —, bandın dibinde %45.
           DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -240,18 +308,10 @@ class _CategoryHeader extends StatelessWidget {
                 colors: [
                   night.bg.withValues(alpha: 0.8),
                   night.bg.withValues(alpha: 0.8),
-                  night.bg.withValues(alpha: 0.08),
+                  night.bg.withValues(alpha: 0.45),
                 ],
                 stops: [0, (topInset + 64) / (topInset + 64 + _band), 1],
               ),
-            ),
-          ),
-          PositionedDirectional(
-            start: 0,
-            end: 0,
-            bottom: 0,
-            child: SahneKilimStrip(
-              color: night.learnTx.withValues(alpha: 0.55),
             ),
           ),
         ],

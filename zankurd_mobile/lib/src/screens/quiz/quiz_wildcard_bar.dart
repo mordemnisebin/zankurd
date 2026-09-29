@@ -22,8 +22,12 @@ import '../../widgets/sahne/sahne.dart';
 /// (Çift Cevap) seçili hâldedir (Zêr halka + ✓). Durumun SÖZÜ ekran
 /// okuyucuya gider ("Çift Cevap • Etkin", "… • Yetersiz bakiye").
 ///
-/// Fiyat defterdeki kısaltmayla da duyurulur (`K.coinAbbrev`, ör. "20j");
-/// ekranda kısaltma yerine jeton glifi durur.
+/// Ekranda fiyat sayı + jeton glifidir. Ekran okuyucu fiyatı para
+/// biriminin tam adıyla duyurur (`K.coinWord`, ör. "20 jeton").
+///
+/// 2026-09-29 doğallık: duyuru defterdeki kısaltmayla ("20j") yapılıyordu;
+/// "yirmi j" diye okunan bir harf bilgi değildir. Kısaltma hiçbir yerde
+/// gösterilmez.
 class WildcardButton extends StatelessWidget {
   const WildcardButton({
     required this.type,
@@ -67,7 +71,7 @@ class WildcardButton extends StatelessWidget {
       WildcardType.doubleAnswer => context.t(K.wildcardDoubleHint),
       WildcardType.changeQuestion => context.t(K.wildcardChangeHint),
     };
-    final price = '${type.coinCost}${context.t(K.coinAbbrev)}';
+    final price = '${type.coinCost} ${context.t(K.coinWord)}';
     final displayLabel = stateLabel == null
         ? '$typeLabel • $price'
         : '$typeLabel • $stateLabel';

@@ -1119,9 +1119,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               onAction: _loadCategoriesOnly,
             );
     } else {
-      // Kategori satırı: 36'lık kaşsız küçük resim (kendi çizimi olan
-      // kategoride) ya da yarış tonlu ikon karosu; alt satırda öteki
-      // dildeki ad. Tam kategori çizimi (mücevher karo) burada yok:
+      // Kategori satırı: 36'lık çizimsiz küçük (kategori tonu + ikon); alt
+      // satırda öteki dildeki ad. Tam kategori çizimi (mücevher karo) burada yok:
       // eşleşme bir kategori vitrini değil, hızlı bir seçim listesi.
       categories = SahneListGroup(
         children: [
@@ -1160,13 +1159,13 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     final title = CategoryNames.localized(category, ku);
     final other = CategoryNames.localized(category, !ku);
     final subtitle = other == title ? null : other;
-    // Çizimi olmayan kategori (Sinema) aynı 36'lık hizada çizimsiz
-    // karonun küçüğünü alır (bileşenin geri düşüşü).
+    // 2026-09-29 doğallık (K1): liste satırında çizim yok. 36'lık küçükte
+    // üretilmiş çizim seçilemeyen bir renk lekesiydi; her kategori
+    // çizimsiz karonun küçüğünü alır (kendi tonu + kendi ikonu).
     return SahneListRow.thumb(
-      image: CategoryVisuals.hasOwnImage(category)
-          ? AssetImage(CategoryVisuals.imagePath(category))
-          : null,
+      image: null,
       icon: CategoryVisuals.icon(category),
+      tone: CategoryVisuals.tone(category),
       title: title,
       subtitle: subtitle,
       chevron: true,
@@ -1295,7 +1294,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           // da kullanıcının engelleyerek bir daha görmek istemediği şey.
           opponentAvatar = _RingedAvatar(
             ring: t.tx3,
-            child: SahneDiamondAvatar(
+            child: SahneAvatar(
               size: 64,
               icon: AppIcons.circleXmark,
               color: t.s3,
@@ -1320,7 +1319,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             animate: !reduce,
             child: const _RingedAvatar(
               ring: SahneStageColors.raceSoft,
-              child: SahneDiamondAvatar(
+              child: SahneAvatar(
                 size: 64,
                 icon: AppIcons.question,
                 color: SahneStageColors.race3,
@@ -1553,10 +1552,13 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
 
 /// Rastgele eşleşme — seçim ekranının TEK birincil eylemi.
 ///
-/// Agir dolgu, koyu metin (`onAct`), düz (degrade ve gölge yok), L pah.
-/// Eski kart turuncu üstüne beyaz yazıyordu (2,35:1). Kart kendi dolgusunu
-/// taşıyan bir `Container`dır (bekçi: `matchmaking_screen_test` — tek
-/// baskın eylem düz Agir yüzeydir); pah şekli kırpıcıyla verilir.
+/// 2026-09-29 doğallık (K7): kartın tamamı Agir (turuncu) dolguydu; ekranın
+/// üst yarısı tek bir turuncu blok olunca eylem değil afiş gibi okunuyordu.
+/// Kart artık ikincil yüzeydir (Perde `s1`, düz, gölgesiz, kenarlıksız, L
+/// pah); turuncu
+/// yalnız sağdaki ok karosunda kalır — ekranda tek turuncu öğe. Kartın
+/// tamamı yine dokunulur. Kart kendi dolgusunu taşıyan bir `Container`dır
+/// (bekçi: `matchmaking_screen_test`); pah şekli kırpıcıyla verilir.
 class _RandomMatchCard extends StatelessWidget {
   const _RandomMatchCard({required this.onTap});
 
@@ -1575,23 +1577,25 @@ class _RandomMatchCard extends StatelessWidget {
             onTap: onTap,
             child: Container(
               key: const ValueKey('matchmaking-duel-card'),
+              // Kenarlık yok: dikdörtgen kenarlık pah kırpıcısında köşeleri
+              // kesik bir çerçeve bırakıyordu.
               decoration: BoxDecoration(
-                color: AppTheme.primaryCtaColor(context),
-                // Kenar dolguyla aynı renkte: kart düz bir Agir yüzeydir.
-                border: Border.all(color: t.act),
+                color: t.s1,
                 boxShadow: const <BoxShadow>[],
               ),
               padding: const EdgeInsets.all(SahneSpace.x4),
               child: Row(
                 children: [
                   DecoratedBox(
+                    // İkon karosu nötr (Kulis): kartın tek renkli öğesi
+                    // sağdaki Agir ok karosudur.
                     decoration: ShapeDecoration(
-                      color: t.onAct.withValues(alpha: 0.12),
+                      color: t.s2,
                       shape: SahneShape.m,
                     ),
                     child: SizedBox.square(
                       dimension: 44,
-                      child: Icon(AppIcons.shuffle, color: t.onAct, size: 24),
+                      child: Icon(AppIcons.shuffle, color: t.tx2, size: 24),
                     ),
                   ),
                   const SizedBox(width: SahneSpace.x3),
@@ -1601,17 +1605,31 @@ class _RandomMatchCard extends StatelessWidget {
                       children: [
                         Text(
                           context.t(K.randomMatch),
-                          style: SahneType.button.copyWith(color: t.onAct),
+                          style: SahneType.button.copyWith(color: t.tx),
                         ),
                         Text(
                           context.t(K.randomMatchSub),
-                          style: SahneType.caption.copyWith(color: t.onAct),
+                          style: SahneType.caption.copyWith(color: t.tx2),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: SahneSpace.x2),
-                  Icon(AppIcons.arrowRight, color: t.onAct, size: 20),
+                  const SizedBox(width: SahneSpace.x3),
+                  DecoratedBox(
+                    key: const ValueKey('matchmaking-duel-card-go'),
+                    decoration: ShapeDecoration(
+                      color: AppTheme.primaryCtaColor(context),
+                      shape: SahneShape.m,
+                    ),
+                    child: SizedBox.square(
+                      dimension: 44,
+                      child: Icon(
+                        AppIcons.arrowRight,
+                        color: t.onAct,
+                        size: 20,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -1649,7 +1667,11 @@ class _VersusSide extends StatelessWidget {
   }
 }
 
-/// 80'lik elmas yuva: içte 64'lük avatar, dışta Halka 3.
+/// 80'lik pahlı kare yuva: içte 64'lük avatar, dışta Halka 3.
+///
+/// 2026-09-29 doğallık (K5): yuva ve arama halkaları elmastı; avatar pahlı
+/// kare olunca elmas halka kareyi çevreleyen ikinci bir şekil oluyordu.
+/// Elmas yalnız soru ilerlemesi ve ders sayacında kalır.
 class _RingedAvatar extends StatelessWidget {
   const _RingedAvatar({required this.ring, required this.child});
 
@@ -1662,13 +1684,10 @@ class _RingedAvatar extends StatelessWidget {
       dimension: 80,
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          shape: SahneShape.diamond(
-            80,
-            side: BorderSide(
-              color: ring,
-              width: SahneRing.r3,
-              strokeAlign: BorderSide.strokeAlignInside,
-            ),
+          shape: SahneShape.withSide(
+            SahneShape.forSize(80),
+            ring,
+            width: SahneRing.r3,
           ),
         ),
         child: Center(child: child),
@@ -1677,7 +1696,7 @@ class _RingedAvatar extends StatelessWidget {
   }
 }
 
-/// Aranırken rakip yuvasının etrafında atan elmas halkalar.
+/// Aranırken rakip yuvasının etrafında atan pahlı kare halkalar.
 ///
 /// Denetleyici hareketi azalt açıkken hiç başlamaz (bkz. `initState`);
 /// [animate] `false` iken halkalar sabit ve sönük durur.
@@ -1714,15 +1733,11 @@ class _SearchPulse extends StatelessWidget {
                         dimension: base + 8 * v,
                         child: DecoratedBox(
                           decoration: ShapeDecoration(
-                            shape: SahneShape.diamond(
-                              base + 8 * v,
-                              side: BorderSide(
-                                color: SahneStageColors.raceSoft.withValues(
-                                  alpha:
-                                      (base == 96 ? 0.32 : 0.16) *
-                                      (1 - 0.5 * v),
-                                ),
-                                width: SahneRing.r1,
+                            shape: SahneShape.withSide(
+                              SahneShape.forSize(base + 8 * v),
+                              SahneStageColors.raceSoft.withValues(
+                                alpha:
+                                    (base == 96 ? 0.32 : 0.16) * (1 - 0.5 * v),
                               ),
                             ),
                           ),

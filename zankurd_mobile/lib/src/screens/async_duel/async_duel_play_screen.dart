@@ -11,7 +11,6 @@ import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/error_reporter.dart';
 import '../../widgets/sahne/sahne.dart';
-import '../../config/category_visuals.dart';
 import '../quiz/quiz_option_tile.dart';
 import '../quiz/quiz_timer_controller.dart';
 import 'async_duel_result_screen.dart';
@@ -425,7 +424,6 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         _phase == _Phase.submitting || _phase == _Phase.error;
     final disabled = _phase != _Phase.idle || _exitInFlight;
     final progressLabel = '${_index + 1}/$total';
-    final category = question.category;
 
     return PopScope(
       key: const ValueKey('async-duel-play'),
@@ -437,9 +435,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         closeKey: const ValueKey('async-duel-quit'),
         closeLabel: context.t(K.close),
         onClose: () => unawaited(_confirmExit()),
-        backdrop: CategoryVisuals.hasOwnImage(category)
-            ? AssetImage(CategoryVisuals.imagePath(category))
-            : null,
+        // 2026-09-29 doğallık (K2): soru arkasındaki hayalet kategori
+        // çizimi kalktı (bkz. quiz_screen `_stageLight`).
+        //
         // Çıkış gönderilirken sayaç yerine bekleme göstergesi: kalan
         // sorular sunucuya TIMEOUT olarak gidiyor.
         center: _exitInFlight
@@ -652,7 +650,7 @@ class _StartErrorView extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SahneDiamondAvatar(
+                  SahneAvatar(
                     size: 72,
                     icon: tooMany ? AppIcons.hourglass : AppIcons.cloud,
                     color: t.s2,

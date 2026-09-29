@@ -187,6 +187,9 @@ void main() {
   // Semantics'i (level başlığı) alt node'ları tek bir okunan metinde
   // birleştiriyor — asıl doğrulanması gereken _DifficultyStars'ın kendi
   // label'ı verip vermediği.
+  // 2026-09-29 doğallık (K5): kilitli seviyede zorluk çubuğu çizilmez (tek
+  // işaret: kilit). Yeni oyuncuda yalnız 1. seviye açık; bekçi açık
+  // satırlardaki çubuğun etiketini ölçer, sayı 5'ten 1'e iner.
   testWidgets('zorluk yıldızları "Zorluk" tooltip ve semantics etiketi taşır', (
     tester,
   ) async {
@@ -196,14 +199,14 @@ void main() {
     await tester.pumpAndSettle();
 
     final tooltips = tester.widgetList<Tooltip>(find.byType(Tooltip));
-    expect(tooltips.where((t) => t.message == 'Zorluk').length, 5);
+    expect(tooltips.where((t) => t.message == 'Zorluk').length, 1);
 
     final difficultyLabels = tester
         .widgetList<Semantics>(find.byType(Semantics))
         .map((w) => w.properties.label)
         .whereType<String>()
         .where((l) => RegExp(r'^Zorluk: 5 üzerinden \d yıldız$').hasMatch(l));
-    expect(difficultyLabels.length, 5);
+    expect(difficultyLabels.length, 1);
   });
 
   testWidgets('seviye sorusu hatası görünür ve aynı seviye tekrar denenir', (

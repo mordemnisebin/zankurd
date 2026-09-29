@@ -49,9 +49,14 @@ class ShareResultCard extends StatelessWidget {
 
     // 2026-09-29 Şahnê: gece sahne kartı zemini (degrade + L pah yok —
     // paylaşılan görüntü dikdörtgendir), marka anı logo işareti plakası +
-    // "ZanKurd", puan Ekran 64 Zêr (tablo rakamı), altında kilim göz şeridi
-    // (Şahnê'de sonuç puanının altı motifin iki yerinden biridir), tur
-    // şeridi, istatistikler Manşet + Açıklama, kategori Kulis çipi.
+    // "ZanKurd", puan Ekran 64 Zêr (tablo rakamı), tur şeridi,
+    // istatistikler Manşet + Açıklama, kategori Kulis çipi.
+    //
+    // 2026-09-29 doğallık (K4, K8): puanın altındaki kilim göz şeridi
+    // kalktı — hemen altındaki tur şeridi (KilimBoard) zaten kilimdir; iki
+    // kilim üst üste süs tekrarıydı. Puanın künyesi büyük harfli `K.puan`
+    // ("PUAN") değil, cümle düzenindeki `K.scoreWord` ("Puan"): büyük harf
+    // yalnız soru künyesinde.
     return SizedBox(
       width: 360,
       child: CustomPaint(
@@ -93,12 +98,10 @@ class ShareResultCard extends StatelessWidget {
               ),
               const SizedBox(height: SahneSpace.x1),
               Text(
-                SahneType.upperFor(Tr.forKu(K.puan, isKu), isKu: isKu),
+                Tr.forKu(K.scoreWord, isKu),
                 textAlign: TextAlign.center,
-                style: SahneType.eyebrow.copyWith(color: t.tx2),
+                style: SahneType.captionStrong.copyWith(color: t.tx2),
               ),
-              const SizedBox(height: SahneSpace.x3),
-              SahneKilimStrip(color: t.gold.withValues(alpha: 0.55)),
               const SizedBox(height: SahneSpace.x5),
 
               // Dokunan kilim.

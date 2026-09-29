@@ -14,6 +14,11 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 // sırası artık üst etikette ("KÜLTÜR • SORU 1/12", Etiket biçemi, yerele
 // duyarlı BÜYÜK HARF); bekçiler "SORU n/m" arar. Davranış (baskısızlık,
 // çift dokunuş kilidi, kayıt) değişmedi.
+//
+// 2026-09-29 doğallık (K2): görselli soru artık görselini quiz'deki resim
+// kartıyla gösterir. Test yüzeyi 800×600; görsel şıkları katın altına
+// iter. Kullanıcı kaydırır; bekçiler de dokunmadan önce şıkkı görünür
+// kılar (`ensureVisible`). Davranış aynı.
 
 Widget wrap(Widget child, {Size size = const Size(390, 844)}) => MultiProvider(
   providers: [
@@ -113,7 +118,10 @@ void main() {
         // soru `correctAnswerTr`yi çiziyor, ham `correctAnswer` (Kurmancî)
         // değil (content genişlemesinin getirdiği kapsama, 2026-08-15
         // birleştirmesi).
-        await tester.tap(find.text(current.correctAnswerFor(isKu: false)).last);
+        final option = find.text(current.correctAnswerFor(isKu: false)).last;
+        await tester.ensureVisible(option);
+        await tester.pumpAndSettle();
+        await tester.tap(option);
       }
       await tester.pumpAndSettle();
     }
@@ -146,6 +154,8 @@ void main() {
     final QuizQuestion current = state.currentQuestionForTest;
     final answer = current.answersFor(isKu: false).first;
     final target = find.text(answer).last;
+    await tester.ensureVisible(target);
+    await tester.pumpAndSettle();
 
     await tester.tap(target);
     await tester.tap(target);

@@ -922,10 +922,31 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // çok kategoriye yayılmışsa yerine turun adı yazılır — "günün dersi"
     // akışında bu zaten `room.name` alanına yazılmış olan "Günün Dersi"
     // başlığıdır (`K.dailyLesson`).
+    //
+    // 2026-09-29 doğallık: karışık turda `room.name` doğrudan yazılıyordu;
+    // yerel/solo odanın varsayılan adı Kurmancî "Hevalên Zanînê" olduğu için
+    // Türkçe sonuç ekranının tepesinde çevrilmemiş bir yer tutucu
+    // duruyordu. Ad, soru ekranının başlığıyla AYNI kuraldan geçer
+    // (`quizRoundTitle`): turun kendi adı. Adı yoksa bağlamda yalnız soru
+    // sayısı durur — genel "Yarış" sözü hemen altındaki "Yarış tamamlandı"
+    // başlığını tekrarlardı.
     final isMixedCategoryRound = learningOutcome.categoryBreakdown.length > 1;
-    final roundLabel = isMixedCategoryRound
-        ? room.name
-        : CategoryNames.localized(room.category, context.isKu);
+    final raceWord = context.t(K.raceWord);
+    final String? roundLabel;
+    if (isMixedCategoryRound) {
+      final title = quizRoundTitle(
+        roomId: null,
+        roomCode: '',
+        roomName: room.name,
+        category: '',
+        isKu: context.isKu,
+        roomWord: context.t(K.roomWord),
+        raceWord: raceWord,
+      );
+      roundLabel = title == raceWord ? null : title;
+    } else {
+      roundLabel = CategoryNames.localized(room.category, context.isKu);
+    }
 
     final isOnlineRoom = room.id != null;
     final nextActionLabel = context.t(isOnlineRoom ? K.home : K.playAgain);
@@ -1092,11 +1113,19 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         : context.t(K.raceFinished);
 
     // Kutlama (sonuç ışınları) yalnız kutlanacak bir sonuç varken çizilir:
-    // 1v1'de galibiyet, solo turda en az yarısı doğru. Kaybedilen turda
-    // kutlama ışığı açmak sonucu yanlış okur.
-    final celebrate = is1v1
-        ? isWinner
-        : (totalQuestions > 0 && correctCount * 2 >= totalQuestions);
+    // 1v1'de galibiyet, solo turda üç yıldız. Kaybedilen turda kutlama
+    // ışığı açmak sonucu yanlış okur.
+    //
+    // 2026-09-29 doğallık (K9): solo eşiği "en az yarısı doğru"ydu; 3/5'lik
+    // sıradan bir tur da güneş ışınlarıyla açılıyordu ve parıltı her
+    // sonuçta olunca hiçbir şeyi kutlamıyordu. Işın yalnız üç yıldızda
+    // (%80+) — yıldızların saydığı eşikle aynı.
+    final starsEarned = accuracy >= 80
+        ? 3
+        : accuracy >= 50
+        ? 2
+        : 1;
+    final celebrate = is1v1 ? isWinner : starsEarned == 3;
 
     final accuracyText =
         '${context.percent(accuracy)} ${context.t(K.accuracyLower)}';
@@ -1137,11 +1166,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final children = <Widget>[
       _ResultHero(
         key: const ValueKey('result-score-header'),
-        starsEarned: accuracy >= 80
-            ? 3
-            : accuracy >= 50
-            ? 2
-            : 1,
+        starsEarned: starsEarned,
         duel: duelOutcome,
         title: headerTitle,
         // Öğrenme turunda puan üretilmez (`score` hep 0); büyük sayı "0"
@@ -1160,7 +1185,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         const SizedBox(height: SahneSpace.x3),
         _RewardCard(
           coins: coinsAwarded,
-          coinLabel: '+$coinsAwarded${context.t(K.coinAbbrev)}',
+          coinLabel: '+$coinsAwarded',
           coinSemanticLabel: '+$coinsAwarded ${context.t(K.coinWord)}',
           xp: _earnedXP,
           journeyReady: _levelJourneyReady,
@@ -1241,8 +1266,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       // Orta yuva bağlamdır: "Yarış tamamlandı" zaten içerikte başlık,
       // ekran adı ("Sonuç") tekrarlanmaz.
       center: Text(
-        '$roundLabel • '
-        '${context.t(K.questionCount, {'count': '$totalQuestions'})}',
+        [
+          ?roundLabel,
+          context.t(K.questionCount, {'count': '$totalQuestions'}),
+        ].join(' • '),
       ),
       dock: Center(
         child: ConstrainedBox(
@@ -1317,9 +1344,9 @@ enum _DuelOutcome { win, draw, loss }
 ///
 /// Kart DEĞİL: doğrudan sahnenin üstünde durur. Yukarıdan aşağı: üç puan
 /// yıldızı (ortadaki büyük) ya da 1v1'de sonuç amblemi → Başlık 28 →
-/// puan Ekran 64 Zêr → "puan • %67 doğruluk" Açıklama → altın kilim göz
-/// şeridi (160). Arkada sonuç ışınları (yalnız kutlanacak sonuçta) ve
-/// alçak bir dağ sırtı ufku.
+/// puan Ekran 64 Zêr → "puan • %67 doğruluk" Açıklama → (yalnız zaferde)
+/// kilim göz şeridi (160). Arkada sonuç ışınları (yalnız kutlanacak
+/// sonuçta) ve alçak bir dağ sırtı ufku.
 class _ResultHero extends StatelessWidget {
   const _ResultHero({
     required this.starsEarned,
@@ -1385,16 +1412,22 @@ class _ResultHero extends StatelessWidget {
           textAlign: TextAlign.center,
           style: SahneType.caption.copyWith(color: t.tx2),
         ),
-        const SizedBox(height: SahneSpace.x2),
-        // Kilim göz şeridi yalnız sonuç puanının altında ve sahne kartının
-        // üst kenarında yaşar (spec `illustrationIconRule.desen`); rengi
-        // rolü izler: solo ödül altını, 1v1 yarış lalı.
-        SizedBox(
-          width: 160,
-          child: SahneKilimStrip(
-            color: (duel == null ? t.gold : t.raceTx).withValues(alpha: 0.7),
+        // Kilim göz şeridi yalnız ZAFERDE (üç yıldız / galibiyet) puanın
+        // altında durur; rengi rolü izler: solo ödül altını, 1v1 yarış lalı.
+        //
+        // 2026-09-29 doğallık (K4): şerit her sonucun altındaydı; kaybedilen
+        // ya da sıradan bir turda da aynı süs olunca bir kimlik değil
+        // şablon izi oluyordu. Şerit, ışınlarla aynı anda — kazanılmış
+        // anda — açılır.
+        if (celebrate) ...[
+          const SizedBox(height: SahneSpace.x2),
+          SizedBox(
+            width: 160,
+            child: SahneKilimStrip(
+              color: (duel == null ? t.gold : t.raceTx).withValues(alpha: 0.7),
+            ),
           ),
-        ),
+        ],
         for (final notice in notices) ...[
           const SizedBox(height: SahneSpace.x2),
           notice,
@@ -1780,11 +1813,12 @@ class _CategoryLearnings extends StatelessWidget {
       ],
     );
     final semantic = '$name, $fraction, $statusLabel';
+    // 2026-09-29 doğallık (K1): liste satırında çizim yok; kategori kendi
+    // tonu + ikonuyla çizimsiz küçüğe düşer (bkz. matchmaking `_categoryRow`).
     return SahneListRow.thumb(
-      image: CategoryVisuals.hasOwnImage(tally.category)
-          ? AssetImage(CategoryVisuals.imagePath(tally.category))
-          : null,
+      image: null,
       icon: CategoryVisuals.icon(tally.category),
+      tone: CategoryVisuals.tone(tally.category),
       title: name,
       trailing: trailing,
       semanticLabel: semantic,
@@ -2219,9 +2253,14 @@ class _MoreOptions extends StatelessWidget {
   }
 }
 
-/// Seviye atlama penceresi — sahne dilinde: Perde yüzey, L pah, üst
-/// kenarda altın kilim şeridi, Zêr taç, "Seviye N" Zêr plakası ve tek
-/// birincil "Devam Et". Gündüz temasında da gece çizilir.
+/// Seviye atlama penceresi — sahne dilinde: Perde yüzey, L pah, Zêr taç,
+/// "Seviye atladın!", "Seviye N" Zêr plakası ve tek birincil "Devam Et".
+/// Gündüz temasında da gece çizilir.
+///
+/// 2026-09-29 doğallık (K10, K4): başlığın altında aynı şeyi ikinci kez
+/// söyleyen bir satır vardı ("Seviye atladın!" → "Yeni bir seviyeye
+/// ulaştın!"); söz tekrarı kalktı, yeni seviye plakada okunur. Üst kenardaki
+/// kilim şeridi de kalktı: taç ve altın plaka anı zaten taşıyor.
 class _LevelUpDialog extends StatelessWidget {
   const _LevelUpDialog({required this.level, required this.onContinue});
 
@@ -2241,70 +2280,54 @@ class _LevelUpDialog extends StatelessWidget {
             shape: SahneShape.l,
             clipBehavior: Clip.antiAlias,
             insetPadding: const EdgeInsets.symmetric(horizontal: SahneSpace.x6),
-            child: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    SahneSpace.x6,
-                    SahneSpace.x8,
-                    SahneSpace.x6,
-                    SahneSpace.x6,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                SahneSpace.x6,
+                SahneSpace.x8,
+                SahneSpace.x6,
+                SahneSpace.x6,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SahneGlyph(SahneGlyphKind.crown, size: 56),
+                  const SizedBox(height: SahneSpace.x4),
+                  Semantics(
+                    header: true,
+                    child: Text(
+                      context.t(K.levelUpTitle),
+                      textAlign: TextAlign.center,
+                      style: SahneType.headline.copyWith(color: t.goldTx),
+                    ),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SahneGlyph(SahneGlyphKind.crown, size: 56),
-                      const SizedBox(height: SahneSpace.x4),
-                      Semantics(
-                        header: true,
-                        child: Text(
-                          context.t(K.levelUpTitle),
-                          textAlign: TextAlign.center,
-                          style: SahneType.headline.copyWith(color: t.goldTx),
-                        ),
+                  const SizedBox(height: SahneSpace.x5),
+                  DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: t.gold,
+                      shape: SahneShape.m,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: SahneSpace.x5,
+                        vertical: SahneSpace.x2,
                       ),
-                      const SizedBox(height: SahneSpace.x2),
-                      Text(
-                        context.t(K.yeniBirSeviyeyeUlastin),
+                      child: Text(
+                        context.t(K.seviyeP, {'p0': '$level'}),
                         textAlign: TextAlign.center,
-                        style: SahneType.body.copyWith(color: t.tx2),
+                        // Zêr dolgunun üstündeki metin Zêr'in kendi
+                        // "üstü" belirtecidir (koyu mürekkep).
+                        style: SahneType.headline.copyWith(color: t.onGold),
                       ),
-                      const SizedBox(height: SahneSpace.x5),
-                      DecoratedBox(
-                        decoration: ShapeDecoration(
-                          color: t.gold,
-                          shape: SahneShape.m,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: SahneSpace.x5,
-                            vertical: SahneSpace.x2,
-                          ),
-                          child: Text(
-                            context.t(K.seviyeP, {'p0': '$level'}),
-                            textAlign: TextAlign.center,
-                            // Zêr dolgunun üstündeki metin Zêr'in kendi
-                            // "üstü" belirtecidir (koyu mürekkep).
-                            style: SahneType.headline.copyWith(color: t.onGold),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: SahneSpace.x6),
-                      SahneButton.primary(
-                        label: context.t(K.devamEt2),
-                        expand: true,
-                        onPressed: onContinue,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-                PositionedDirectional(
-                  top: 0,
-                  start: 0,
-                  end: 0,
-                  child: SahneKilimStrip(color: t.gold.withValues(alpha: 0.55)),
-                ),
-              ],
+                  const SizedBox(height: SahneSpace.x6),
+                  SahneButton.primary(
+                    label: context.t(K.devamEt2),
+                    expand: true,
+                    onPressed: onContinue,
+                  ),
+                ],
+              ),
             ),
           );
         },
