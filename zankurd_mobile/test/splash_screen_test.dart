@@ -71,7 +71,12 @@ void main() {
     expect(scaffold.backgroundColor, AppTheme.bg);
   });
 
-  testWidgets('koyu temada tam logo kontrast filtresiyle okunaklı kalır', (
+  // 2026-09-29 Şahnê: koyu temada tam logonun (yazılı) koyu harfleri
+  // zeminde kayboluyordu ve bir renk süzgeciyle açılıyordu. Açılış artık
+  // logo İŞARETİNİ plakada gösterir (gecede Kulis, gündüzde Perde + kenar);
+  // kontrastı süzgeç değil plaka taşır. Korunan şey: işaret koyu zeminde
+  // doğrudan durmaz.
+  testWidgets('koyu temada logo işareti plakada okunaklı kalır', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -85,13 +90,9 @@ void main() {
     );
     await tester.pump();
 
-    expect(
-      find.ancestor(
-        of: find.byType(AppLogo),
-        matching: find.byType(ColorFiltered),
-      ),
-      findsOneWidget,
-    );
+    final logo = tester.widget<AppLogo>(find.byType(AppLogo));
+    expect(logo.onBrandSurface, isTrue);
+    expect(find.text('ZanKurd'), findsOneWidget);
   });
 
   testWidgets('logoyu büyük gösterir', (tester) async {

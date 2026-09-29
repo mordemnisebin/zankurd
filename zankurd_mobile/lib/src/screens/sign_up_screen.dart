@@ -8,9 +8,8 @@ import '../providers/auth_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../services/analytics_service.dart';
 import '../services/display_name_policy.dart';
-import '../theme/app_theme.dart';
 import '../widgets/loading_overlay.dart';
-import '../widgets/styled_button.dart';
+import '../widgets/sahne/sahne.dart';
 import '../widgets/styled_input.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -154,193 +153,125 @@ class _SignUpScreenState extends State<SignUpScreen>
     if (ReducedMotionProvider.isReducedIn(context)) {
       _animationController.value = 1;
     }
-    final isDark = !AppTheme.isLight(context);
-    final glowColor1 = AppTheme.gold.withValues(alpha: isDark ? 0.08 : 0.05);
-    final glowColor2 = isDark
-        ? AppTheme.secondaryAccent.withValues(alpha: 0.12)
-        : AppTheme.borderOf(context).withValues(alpha: 0.06);
+    final t = SahneTokens.of(context);
+    final slide = LoadAnimationSequence.titleSlideAnimation(
+      _animationController,
+    );
 
-    final keyboardOpen = MediaQuery.viewInsetsOf(context).bottom > 0;
-
+    // 2026-09-29 Şahnê: giriş ekranıyla aynı marka anı — gece sahne
+    // kartında 28'lik başlık ve adımın açıklaması; üstünde elmas adım
+    // göstergesi. Form tek yüzey kartında; "İleri / Hesap oluştur" ekranın
+    // tek birincil eylemi, "Geri" ikincil.
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(decoration: BoxDecoration(color: AppTheme.bgOf(context))),
-          // Soft Glow 1: Sağ Üst
-          Positioned(
-            top: -120,
-            right: -120,
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 250),
-              opacity: keyboardOpen ? 0.0 : 1.0,
-              child: Container(
-                width: 320,
-                height: 320,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [glowColor1, glowColor1.withValues(alpha: 0)],
+      backgroundColor: t.bg,
+      body: SafeArea(
+        child: _AuthScrollFrame(
+          child: Consumer<AuthProvider>(
+            builder: (context, authProvider, _) {
+              final loading = authProvider.isLoading;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ScaleTransition(
+                    scale: LoadAnimationSequence.logoScaleAnimation(
+                      _animationController,
+                    ),
+                    child: _ProgressIndicator(currentStep: _currentStep),
                   ),
-                ),
-              ),
-            ),
-          ),
-          // Soft Glow 2: Sol Alt
-          Positioned(
-            bottom: -140,
-            left: -140,
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 250),
-              opacity: keyboardOpen ? 0.0 : 1.0,
-              child: Container(
-                width: 360,
-                height: 360,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [glowColor2, glowColor2.withValues(alpha: 0)],
+                  const SizedBox(height: SahneSpace.x4),
+                  FadeTransition(
+                    opacity: LoadAnimationSequence.titleFadeAnimation(
+                      _animationController,
+                    ),
+                    child: AnimatedBuilder(
+                      animation: slide,
+                      builder: (context, child) => Transform.translate(
+                        offset: Offset(0, slide.value),
+                        child: child,
+                      ),
+                      child: _SignUpHeroBanner(
+                        subtitle: _getStepSubtitle(context),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          ),
-          // Main content
-          SafeArea(
-            child: _AuthScrollFrame(
-              child: Consumer<AuthProvider>(
-                builder: (context, authProvider, _) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SizedBox(height: AppSpacing.md),
-                      ScaleTransition(
-                        scale: LoadAnimationSequence.logoScaleAnimation(
-                          _animationController,
+                  const SizedBox(height: SahneSpace.x4),
+                  SahneSurfaceCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        FadeTransition(
+                          opacity:
+                              LoadAnimationSequence.formField1FadeAnimation(
+                                _animationController,
+                              ),
+                          child: _buildStepContent(context),
                         ),
-                        child: _ProgressIndicator(currentStep: _currentStep),
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
-                      FadeTransition(
-                        opacity: LoadAnimationSequence.titleFadeAnimation(
-                          _animationController,
-                        ),
-                        child: Transform.translate(
-                          offset: Offset(
-                            0,
-                            LoadAnimationSequence.titleSlideAnimation(
-                              _animationController,
-                            ).value,
-                          ),
-                          child: _SignUpHeroBanner(
-                            subtitle: _getStepSubtitle(context),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
-                      _AuthFormPanel(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                        const SizedBox(height: SahneSpace.x6),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            FadeTransition(
-                              opacity:
-                                  LoadAnimationSequence.formField1FadeAnimation(
-                                    _animationController,
-                                  ),
-                              child: _buildStepContent(context),
+                            // İlk adımda da geri çıkış olmalı: sihirbazın
+                            // hiçbir adımında app bar/geri yoktu, tek
+                            // çıkış alttaki metin bağlantısıydı
+                            // (2026-07-22 canlı UX denetimi).
+                            Expanded(
+                              child: SahneButton.secondary(
+                                key: const ValueKey('signup-back-button'),
+                                label: context.t(K.backStep),
+                                expand: true,
+                                onPressed: loading
+                                    ? null
+                                    : (_currentStep > 0
+                                          ? _previousStep
+                                          : () => Navigator.of(
+                                              context,
+                                            ).maybePop()),
+                              ),
                             ),
-                            const SizedBox(height: AppSpacing.lg),
-                            Row(
-                              children: [
-                                // İlk adımda da geri çıkış olmalı: sihirbazın
-                                // hiçbir adımında app bar/geri yoktu, tek
-                                // çıkış alttaki metin bağlantısıydı
-                                // (2026-07-22 canlı UX denetimi).
-                                Expanded(
-                                  child: OutlinedButton(
-                                    key: const ValueKey('signup-back-button'),
-                                    onPressed: authProvider.isLoading
-                                        ? null
-                                        : (_currentStep > 0
-                                              ? _previousStep
-                                              : () => Navigator.of(
-                                                  context,
-                                                ).maybePop()),
-                                    style: OutlinedButton.styleFrom(
-                                      minimumSize: const Size(
-                                        double.infinity,
-                                        48,
-                                      ),
-                                      side: BorderSide(
-                                        color: AppTheme.borderColor(
-                                          context,
-                                        ).withValues(alpha: 0.8),
-                                        width: 1.2,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          AppRadius.lg,
-                                        ),
-                                      ),
-                                    ),
-                                    child: Text(context.t(K.backStep)),
-                                  ),
-                                ),
-                                const SizedBox(width: AppSpacing.sm),
-                                Expanded(
-                                  child: GeometricGradientButton(
-                                    label: _currentStep == 2
-                                        ? context.t(K.createAccount)
-                                        : context.t(K.nextStep),
-                                    icon: _currentStep == 2
-                                        ? AppIcons.circleCheck
-                                        : AppIcons.arrowRight,
-                                    isLoading: authProvider.isLoading,
-                                    onPressed: authProvider.isLoading
-                                        ? null
-                                        : (_currentStep == 2
-                                              ? () => _signUp(authProvider)
-                                              : _nextStep),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: AppSpacing.lg),
-                            Wrap(
-                              alignment: WrapAlignment.center,
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                Text(
-                                  context.t(K.haveAccountPrefix),
-                                  style: AppTypography.bodyMedium.copyWith(
-                                    color: AppTheme.textSubColor(context),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () => Navigator.of(context).pop(),
-                                  borderRadius: BorderRadius.circular(
-                                    AppRadius.badge,
-                                  ),
-                                  child: Text(
-                                    context.t(K.signIn),
-                                    style: AppTypography.bodyMedium.copyWith(
-                                      color: AppTheme.primaryGradientStart,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            const SizedBox(width: SahneSpace.x3),
+                            Expanded(
+                              child: SahneButton.primary(
+                                label: _currentStep == 2
+                                    ? context.t(K.createAccount)
+                                    : context.t(K.nextStep),
+                                icon: _currentStep == 2
+                                    ? AppIcons.circleCheck
+                                    : null,
+                                arrow: _currentStep != 2,
+                                expand: true,
+                                onPressed: loading
+                                    ? null
+                                    : (_currentStep == 2
+                                          ? () => _signUp(authProvider)
+                                          : _nextStep),
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.xl),
-                    ],
-                  );
-                },
-              ),
-            ),
+                        const SizedBox(height: SahneSpace.x4),
+                        Wrap(
+                          alignment: WrapAlignment.center,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: SahneSpace.x1,
+                          children: [
+                            Text(
+                              context.t(K.haveAccountPrefix),
+                              style: SahneType.body.copyWith(color: t.tx2),
+                            ),
+                            _TextAction(
+                              label: context.t(K.signIn),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
-        ],
+        ),
       ),
     );
   }
@@ -512,6 +443,10 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 }
 
+/// Kayıt adımları: üç elmas. Geçilen ve etkin adım öğrenme tonunda
+/// (Zimrût tonu + Halka 2 Zimrût metni, rakam Zimrût metni), gelecek adım
+/// Kulis tonunda ikincil rakamla. Durum yalnız renkle değil, halkayla da
+/// ayrışır; ekran okuyucu "Adım n" sırasını rakamdan okur.
 class _ProgressIndicator extends StatelessWidget {
   final int currentStep;
 
@@ -522,58 +457,53 @@ class _ProgressIndicator extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _ProgressHexagon(number: 1, isActive: currentStep >= 0),
-        const SizedBox(width: AppSpacing.xs),
-        _ProgressHexagon(number: 2, isActive: currentStep >= 1),
-        const SizedBox(width: AppSpacing.xs),
-        _ProgressHexagon(number: 3, isActive: currentStep >= 2),
+        _ProgressDiamond(number: 1, isActive: currentStep >= 0),
+        const SizedBox(width: SahneSpace.x3),
+        _ProgressDiamond(number: 2, isActive: currentStep >= 1),
+        const SizedBox(width: SahneSpace.x3),
+        _ProgressDiamond(number: 3, isActive: currentStep >= 2),
       ],
     );
   }
 }
 
-class _ProgressHexagon extends StatelessWidget {
+class _ProgressDiamond extends StatelessWidget {
   final int number;
   final bool isActive;
 
-  const _ProgressHexagon({required this.number, required this.isActive});
+  const _ProgressDiamond({required this.number, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    const size = 44.0;
     return AnimatedContainer(
       key: ValueKey('signup-progress-step-$number'),
-      duration: const Duration(milliseconds: 240),
+      duration: sahneMotionReduced(context)
+          ? Duration.zero
+          : SahneMotion.answerReveal,
       curve: Curves.easeInOut,
-      width: 44,
-      height: 44,
-      decoration: BoxDecoration(
-        gradient: isActive ? AppTheme.identityHeaderGradient : null,
-        color: isActive
-            ? null
-            : AppTheme.surfaceHiColor(context).withValues(alpha: 0.5),
-        border: Border.all(
-          color: isActive
-              ? Colors.white.withValues(alpha: 0.15)
-              : AppTheme.borderColor(context).withValues(alpha: 0.6),
-          width: 1.2,
+      width: size,
+      height: size,
+      decoration: ShapeDecoration(
+        color: isActive ? t.learnTint : t.s2,
+        shape: SahneShape.diamond(
+          size,
+          side: isActive
+              ? BorderSide(
+                  color: t.learnTx,
+                  width: SahneRing.r2,
+                  strokeAlign: BorderSide.strokeAlignInside,
+                )
+              : BorderSide.none,
         ),
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: isActive
-            ? [
-                BoxShadow(
-                  color: AppTheme.culturalBrandBg.withValues(alpha: 0.35),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ]
-            : null,
       ),
       child: Center(
         child: Text(
           '$number',
-          style: AppTypography.bodyLarge.copyWith(
-            color: isActive ? Colors.white : AppTheme.textMutedColor(context),
-            fontWeight: FontWeight.w800,
+          style: SahneType.button.copyWith(
+            color: isActive ? t.learnTx : t.tx2,
+            fontFeatures: const [FontFeature.tabularFigures()],
           ),
         ),
       ),
@@ -589,24 +519,16 @@ class _ReviewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: AppTypography.caption.copyWith(
-            color: AppTheme.textSubColor(context),
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(width: AppSpacing.xs),
+        Text(label, style: SahneType.captionStrong.copyWith(color: t.tx2)),
+        const SizedBox(width: SahneSpace.x2),
         Expanded(
           child: Text(
             value,
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w500,
-            ),
+            style: SahneType.body.copyWith(color: t.tx),
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -615,6 +537,7 @@ class _ReviewItem extends StatelessWidget {
   }
 }
 
+/// Marka anı: gece sahne kartı içinde 28'lik başlık + adımın açıklaması.
 class _SignUpHeroBanner extends StatelessWidget {
   const _SignUpHeroBanner({required this.subtitle});
 
@@ -622,70 +545,38 @@ class _SignUpHeroBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppRadius.card),
-      child: Container(
-        key: const ValueKey('sign-up-hero-banner'),
-        width: double.infinity,
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          gradient: AppTheme.identityHeaderGradient,
-          border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
-          boxShadow: AppTheme.cardShadow(context),
-        ),
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Text(
+    return SahneStageCard(
+      key: const ValueKey('sign-up-hero-banner'),
+      padding: const EdgeInsets.fromLTRB(
+        SahneSpace.x4,
+        SahneSpace.x6,
+        SahneSpace.x4,
+        SahneSpace.x5,
+      ),
+      child: Builder(
+        builder: (context) {
+          final t = SahneTokens.of(context);
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Semantics(
+                header: true,
+                child: Text(
                   context.t(K.createYourAccount),
-                  style: AppTypography.heading1.copyWith(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
+                  style: SahneType.title.copyWith(color: t.tx),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: AppSpacing.xs),
-                Text(
-                  subtitle,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: Colors.white.withValues(alpha: 0.78),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+              const SizedBox(height: SahneSpace.x1),
+              Text(
+                subtitle,
+                style: SahneType.body.copyWith(color: t.tx2),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          );
+        },
       ),
-    );
-  }
-}
-
-class _AuthFormPanel extends StatelessWidget {
-  const _AuthFormPanel({required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final isLight = AppTheme.isLight(context);
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: isLight
-            ? AppTheme.lightSurface
-            : Colors.white.withValues(alpha: 0.04),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(
-          color: isLight
-              ? AppTheme.lightBorder
-              : Colors.white.withValues(alpha: 0.1),
-        ),
-        boxShadow: isLight ? AppTheme.cardShadow(context) : null,
-      ),
-      child: child,
     );
   }
 }
@@ -699,23 +590,65 @@ class _AuthScrollFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        const edgePadding = 32.0;
-        // 2026-07-22 canlı UX denetimi: dikey ortalama + padding düzeltmesi
-        // minHeight clamp: klavye açıldığında negatif değer engellenir
+        // Sayfa kenarı 16; dikeyde 24. İçerik ortalanır; klavye açılınca
+        // negatif yükseklik oluşmasın diye alt sınır sıfırda kırpılır.
+        const padding = EdgeInsets.symmetric(
+          horizontal: SahneSpace.page,
+          vertical: SahneSpace.x6,
+        );
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(edgePadding),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: 420,
-              minHeight: (constraints.maxHeight - (edgePadding * 2)).clamp(
-                0.0,
-                double.infinity,
+          padding: padding,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 440,
+                minHeight: (constraints.maxHeight - padding.vertical).clamp(
+                  0.0,
+                  double.infinity,
+                ),
               ),
+              child: Center(child: child),
             ),
-            child: Center(child: child),
           ),
         );
       },
+    );
+  }
+}
+
+/// Metin bağlantısı ([SahneButton.text]) — 48'lik dokunma kutusunda.
+///
+/// Bileşen görselde 44'tür; uygulamanın erişilebilirlik kılavuzu testi
+/// (Android) 48'in altını reddeder. [ZkBackButton] gibi: ekran okuyucu tek
+/// bir 48'lik düğme görür, görsel boyut değişmez.
+class _TextAction extends StatelessWidget {
+  const _TextAction({required this.label, required this.onPressed});
+
+  final String label;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: onPressed != null,
+      label: label,
+      onTap: onPressed,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onPressed,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            widthFactor: 1,
+            heightFactor: 1,
+            child: SahneButton.text(label: label, onPressed: onPressed),
+          ),
+        ),
+      ),
     );
   }
 }

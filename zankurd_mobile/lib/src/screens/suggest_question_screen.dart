@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
-import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
-import '../widgets/app_panel.dart';
+import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -101,322 +100,193 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final t = SahneTokens.of(context);
     final categories = widget.repository.categories;
 
     if (_submitted) {
       return _buildSuccessView(context);
     }
 
+    // 2026-09-29 Şahnê: B iskeleti — sayfa adı çubukta, gövdede tekrar
+    // edilmez. Alanlar üç yüzey kartında toplanır (girdiler Perde kartının
+    // içinde Kulis tonunda durur); renkli ikon karolu alan başlıkları
+    // yerine girdi alanlarının etiket dili. Tek birincil eylem: Gönder.
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      // Başlık gövdedeki kimlik bloğunda zaten var ("ZanKurd'a soru öner");
-      // AppBar'da tekrarı ekranın tepesinde iki başlık gösteriyordu.
-      appBar: zkAppBar(context),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
-        child: SafeArea(
-          child: Form(
-            key: _formKey,
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.page,
-                AppSpacing.xs,
-                AppSpacing.page,
-                AppSpacing.lg,
+      backgroundColor: t.bg,
+      appBar: zkAppBar(context, title: Text(context.t(K.suggestTitle))),
+      body: SafeArea(
+        top: false,
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(
+              SahneSpace.page,
+              SahneSpace.x2,
+              SahneSpace.page,
+              SahneSpace.x8,
+            ),
+            children: [
+              Text(
+                context.t(K.suggestIntro),
+                style: SahneType.body.copyWith(color: t.tx2),
               ),
-              children: [
-                // Başlık
-                Text(
-                  context.t(K.suggestHeader),
-                  style: AppTypography.heading1.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontSize: 24,
-                    letterSpacing: -0.5,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  context.t(K.suggestIntro),
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-
-                // Kategori seçimi
-                _SectionHeader(
-                  icon: AppIcons.tableCells,
-                  color: AppTheme.playCyan,
-                  title: context.t(K.categoryLabel),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                AppPanel(
-                  padding: EdgeInsets.zero,
-                  child: DropdownButtonFormField<String>(
-                    initialValue: _selectedCategory,
-                    isExpanded: true,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: AppSpacing.md,
-                        vertical: AppSpacing.sm,
-                      ),
+              const SizedBox(height: SahneSpace.x4),
+              SahneSurfaceCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _FieldLabel(context.t(K.categoryLabel)),
+                    DropdownButtonFormField<String>(
+                      initialValue: _selectedCategory,
+                      isExpanded: true,
+                      hint: Text(context.t(K.categoryPick)),
+                      items: categories.map((cat) {
+                        return DropdownMenuItem(
+                          value: cat,
+                          child: Text(CategoryNames.localized(cat, ku)),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() => _selectedCategory = value);
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return context.t(K.categoryRequired);
+                        }
+                        return null;
+                      },
                     ),
-                    hint: Text(context.t(K.categoryPick)),
-                    items: categories.map((cat) {
-                      return DropdownMenuItem(
-                        value: cat,
-                        child: Text(CategoryNames.localized(cat, ku)),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() => _selectedCategory = value);
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return context.t(K.categoryRequired);
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.cardGap),
-
-                // Soru metni
-                _SectionHeader(
-                  icon: AppIcons.circleQuestion,
-                  color: AppTheme.brand,
-                  title: context.t(K.questionKurmanci),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                TextFormField(
-                  controller: _promptController,
-                  maxLines: 3,
-                  decoration: InputDecoration(
-                    hintText: context.t(K.questionHint),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return context.t(K.questionEmpty);
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: AppSpacing.cardGap),
-
-                // Cevaplar
-                _SectionHeader(
-                  icon: AppIcons.listCheck,
-                  color: AppTheme.correct,
-                  title: context.t(K.answersLabel),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                _AnswerField(
-                  controller: _optionAController,
-                  label: 'A',
-                  color: AppTheme.answerOptionColors[0],
-                  isCorrect: _correctOption == 'A',
-                  ku: ku,
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                _AnswerField(
-                  controller: _optionBController,
-                  label: 'B',
-                  color: AppTheme.answerOptionColors[1],
-                  isCorrect: _correctOption == 'B',
-                  ku: ku,
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                _AnswerField(
-                  controller: _optionCController,
-                  label: 'C',
-                  color: AppTheme.answerOptionColors[2],
-                  isCorrect: _correctOption == 'C',
-                  ku: ku,
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                _AnswerField(
-                  controller: _optionDController,
-                  label: 'D',
-                  color: AppTheme.answerOptionColors[3],
-                  isCorrect: _correctOption == 'D',
-                  ku: ku,
-                ),
-                const SizedBox(height: AppSpacing.cardGap),
-
-                // Doğru cevap seçici
-                _SectionHeader(
-                  icon: AppIcons.circleCheck,
-                  color: AppTheme.gold,
-                  title: context.t(K.pickCorrectAnswer),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                AppPanel(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: ['A', 'B', 'C', 'D'].map((letter) {
-                      final selected = _correctOption == letter;
-                      // Seçili daire `answerOptionColors`tan renk alıyordu;
-                      // o dizi quizde bilerek nötr griye çekilmiştir, çünkü
-                      // orada renk cevabı ele verir. Burada durum tersi:
-                      // yazar **doğru cevabı beyan ediyor**, sızıntı yok.
-                      // Nötr gri seçili hâli pasif gösteriyordu; doğru renk
-                      // "doğru" yeşilidir (2026-07-27).
-                      const color = AppTheme.correct;
-                      return GestureDetector(
-                        onTap: () => setState(() => _correctOption = letter),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 180),
-                          width: 60,
-                          height: 60,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: selected
-                                ? color.withValues(alpha: 0.18)
-                                : Colors.transparent,
-                            border: Border.all(
-                              color: selected
-                                  ? color
-                                  : AppTheme.borderColor(context),
-                              width: selected ? 2.5 : 1.5,
-                            ),
-                            boxShadow: selected
-                                ? [
-                                    BoxShadow(
-                                      color: color.withValues(alpha: 0.3),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ]
-                                : null,
-                          ),
-                          child: Text(
-                            letter,
-                            style: AppTypography.heading2.copyWith(
-                              // Seçili dairede harf, kendi renginin %18'lik
-                              // zeminine yazılıyordu: 3.71:1 (2026-07-27).
-                              color: selected
-                                  ? AppColors.onAccentTint(
-                                      context,
-                                      color,
-                                      tintAlpha: 0.18,
-                                    )
-                                  : AppTheme.textMutedColor(context),
-                              fontSize: 22,
-                            ),
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.cardGap),
-
-                // Açıklama (isteğe bağlı)
-                _SectionHeader(
-                  icon: AppIcons.lightbulb,
-                  color: AppTheme.violet,
-                  title: context.t(K.explanationOptional),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                TextFormField(
-                  controller: _explanationController,
-                  maxLines: 3,
-                  decoration: InputDecoration(
-                    hintText: context.t(K.explanationHint),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.cardGap),
-
-                // Zorluk seviyesi
-                _SectionHeader(
-                  icon: AppIcons.gaugeHigh,
-                  color: AppTheme.brand,
-                  title: context.t(K.difficultyWithValue, {
-                    'level': '$_difficulty',
-                  }),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                AppPanel(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.md,
-                    vertical: AppSpacing.sm,
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        '1',
-                        style: AppTypography.caption.copyWith(
-                          color: AppTheme.correct,
-                          fontWeight: FontWeight.w700,
-                        ),
+                    const SizedBox(height: SahneSpace.x4),
+                    _FieldLabel(context.t(K.questionKurmanci)),
+                    TextFormField(
+                      controller: _promptController,
+                      maxLines: 3,
+                      style: SahneType.body.copyWith(color: t.tx),
+                      decoration: InputDecoration(
+                        hintText: context.t(K.questionHint),
                       ),
-                      Expanded(
-                        child: Semantics(
-                          label: context.t(K.difficultyLabel),
-                          value: '$_difficulty / 5',
-                          slider: true,
-                          child: Slider(
-                            value: _difficulty.toDouble(),
-                            min: 1,
-                            max: 5,
-                            divisions: 4,
-                            activeColor: AppTheme.brand,
-                            label: '$_difficulty',
-                            onChanged: (value) {
-                              setState(() => _difficulty = value.round());
-                            },
-                          ),
-                        ),
-                      ),
-                      Text(
-                        '5',
-                        style: AppTypography.caption.copyWith(
-                          color: AppTheme.wrong,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return context.t(K.questionEmpty);
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
+              SahneSectionHeader(title: context.t(K.answersLabel)),
+              SahneSurfaceCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (final (i, letter) in const [
+                      'A',
+                      'B',
+                      'C',
+                      'D',
+                    ].indexed) ...[
+                      if (i > 0) const SizedBox(height: SahneSpace.x2),
+                      _AnswerField(
+                        controller: [
+                          _optionAController,
+                          _optionBController,
+                          _optionCController,
+                          _optionDController,
+                        ][i],
+                        label: letter,
+                        isCorrect: _correctOption == letter,
                       ),
                     ],
-                  ),
+                  ],
                 ),
-                const SizedBox(height: AppSpacing.lg),
+              ),
+              const SizedBox(height: SahneSpace.x4),
+              _FieldLabel(context.t(K.pickCorrectAnswer)),
+              // Yazar doğru cevabı BEYAN ediyor (quizdeki gibi cevabı
+              // ele veren bir renk değil): seçim rayının sığan
+              // çeşidi, seçili harf öğrenme tonunda ve ekran
+              // okuyucuda "seçili". 48: dokunma kılavuzu. Ray kartın
+              // DIŞINDA durur: seçili olmayan çip Perde (`s1`) tonundadır ve
+              // Perde kartın içinde görünmez oluyordu.
+              SizedBox(
+                height: 48,
+                child: SahneRail.fit(
+                  children: [
+                    for (final letter in const ['A', 'B', 'C', 'D'])
+                      SahneRailChip(
+                        label: letter,
+                        selected: _correctOption == letter,
+                        onTap: () => setState(() => _correctOption = letter),
+                      ),
+                  ],
+                ),
+              ),
 
-                // Gönder butonu
-                SizedBox(
-                  width: double.infinity,
-                  height: 52,
-                  child: FilledButton.icon(
-                    onPressed: _submitting ? null : _submit,
-                    icon: _submitting
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
+              const SizedBox(height: SahneSpace.cardGap),
+              SahneSurfaceCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _FieldLabel(context.t(K.explanationOptional)),
+                    TextFormField(
+                      controller: _explanationController,
+                      maxLines: 3,
+                      style: SahneType.body.copyWith(color: t.tx),
+                      decoration: InputDecoration(
+                        hintText: context.t(K.explanationHint),
+                      ),
+                    ),
+                    const SizedBox(height: SahneSpace.x4),
+                    _FieldLabel(
+                      context.t(K.difficultyWithValue, {
+                        'level': '$_difficulty',
+                      }),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '1',
+                          style: SahneType.captionStrong.copyWith(color: t.tx2),
+                        ),
+                        Expanded(
+                          child: Semantics(
+                            label: context.t(K.difficultyLabel),
+                            value: '$_difficulty / 5',
+                            slider: true,
+                            child: Slider(
+                              value: _difficulty.toDouble(),
+                              min: 1,
+                              max: 5,
+                              divisions: 4,
+                              label: '$_difficulty',
+                              onChanged: (value) {
+                                setState(() => _difficulty = value.round());
+                              },
                             ),
-                          )
-                        : const Icon(AppIcons.paperPlane),
-                    label: Text(
-                      context.t(K.submitQuestion),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16,
-                      ),
+                          ),
+                        ),
+                        Text(
+                          '5',
+                          style: SahneType.captionStrong.copyWith(color: t.tx2),
+                        ),
+                      ],
                     ),
-                    style: FilledButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                    ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(height: SahneSpace.x6),
+
+              // Gönder: ekranın tek birincil eylemi.
+              SahneButton.primary(
+                label: context.t(K.submitQuestion),
+                icon: AppIcons.paperPlane,
+                arrow: false,
+                expand: true,
+                onPressed: _submitting ? null : _submit,
+              ),
+            ],
           ),
         ),
       ),
@@ -424,64 +294,56 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
   }
 
   Widget _buildSuccessView(BuildContext context) {
+    final t = SahneTokens.of(context);
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      backgroundColor: t.bg,
       appBar: zkAppBar(context, title: Text(context.t(K.suggestTitle))),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
-        child: SafeArea(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.page),
-              child: AppPanel(
-                padding: const EdgeInsets.all(AppSpacing.xl),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: AppTheme.correctGradient,
-                        boxShadow: AppTheme.elevatedShadow(AppTheme.correct),
+      body: SafeArea(
+        top: false,
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(SahneSpace.page),
+            child: SahneSurfaceCard(
+              padding: const EdgeInsets.all(SahneSpace.x6),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Başarı bir durumdur: Rast tonlu elmas + ✓ + söz.
+                  ExcludeSemantics(
+                    child: DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: t.okTint,
+                        shape: SahneShape.diamond(88),
                       ),
-                      child: const Icon(
-                        AppIcons.check,
-                        color: Colors.white,
-                        size: 44,
+                      child: SizedBox.square(
+                        dimension: 88,
+                        child: Icon(AppIcons.check, size: 40, color: t.okTx),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.lg),
-                    Text(
+                  ),
+                  const SizedBox(height: SahneSpace.x5),
+                  Semantics(
+                    header: true,
+                    child: Text(
                       context.t(K.thanksForSuggestion),
                       textAlign: TextAlign.center,
-                      style: AppTypography.heading1.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontSize: 22,
-                      ),
+                      style: SahneType.headline.copyWith(color: t.tx),
                     ),
-                    const SizedBox(height: AppSpacing.sm),
-                    Text(
-                      context.t(K.suggestionReceived),
-                      textAlign: TextAlign.center,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppTheme.textSubColor(context),
-                        height: 1.5,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: Text(context.t(K.goBack)),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: SahneSpace.x2),
+                  Text(
+                    context.t(K.suggestionReceived),
+                    textAlign: TextAlign.center,
+                    style: SahneType.body.copyWith(color: t.tx2),
+                  ),
+                  const SizedBox(height: SahneSpace.x6),
+                  SahneButton.primary(
+                    label: context.t(K.goBack),
+                    arrow: false,
+                    expand: true,
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
               ),
             ),
           ),
@@ -491,115 +353,77 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
   }
 }
 
-/// Bölüm başlığı yardımcı widget'ı.
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.icon,
-    required this.color,
-    required this.title,
-  });
+/// Girdi alanının etiketi — [StyledInputField] ile aynı dil: kalın
+/// açıklama, ikincil metin, altında 8.
+class _FieldLabel extends StatelessWidget {
+  const _FieldLabel(this.text);
 
-  final IconData icon;
-  final Color color;
-  final String title;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 32,
-          height: 32,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.14),
-            borderRadius: BorderRadius.circular(AppRadius.xs),
-          ),
-          child: Icon(
-            icon,
-            color: AppColors.onAccentTint(context, color),
-            size: 18,
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: SahneSpace.x2),
+      child: Text(
+        text,
+        style: SahneType.captionStrong.copyWith(
+          color: SahneTokens.of(context).tx2,
         ),
-        const SizedBox(width: AppSpacing.xs),
-        Expanded(
-          child: Text(
-            title,
-            style: AppTypography.bodyMedium.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
 
 /// Tek bir cevap alanı (A/B/C/D).
+///
+/// Şık harfi renksizdir (Ray karosu, birincil metin — quizdeki şık dili).
+/// Yazarın doğru diye beyan ettiği şık Rast tonunu ve ✓ işaretini alır:
+/// durum hiçbir zaman yalnız renkle verilmez.
 class _AnswerField extends StatelessWidget {
   const _AnswerField({
     required this.controller,
     required this.label,
-    required this.color,
     required this.isCorrect,
-    required this.ku,
   });
 
   final TextEditingController controller;
   final String label;
-  final Color color;
   final bool isCorrect;
-  final bool ku;
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     return TextFormField(
       controller: controller,
+      style: SahneType.body.copyWith(color: t.tx),
       decoration: InputDecoration(
         hintText: '$label) ${context.t(K.answerLabel)}',
-        prefixIcon: Container(
-          width: 40,
-          height: 40,
-          margin: const EdgeInsets.all(6),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: isCorrect
-                ? AppTheme.correct.withValues(alpha: 0.18)
-                : color.withValues(alpha: 0.14),
-            borderRadius: BorderRadius.circular(AppRadius.xs),
-            border: isCorrect
-                ? Border.all(
-                    color: AppTheme.correct.withValues(alpha: 0.5),
-                    width: 1.5,
-                  )
-                : null,
+        prefixIcon: Padding(
+          padding: const EdgeInsetsDirectional.only(
+            start: SahneSpace.x2,
+            end: SahneSpace.x2,
           ),
-          child: Text(
-            label,
-            style: AppTypography.bodyLarge.copyWith(
-              // Harf, kendi renginin %14'lük karosunun içine yazılıyordu:
-              // koyu temada 1.93:1 — B, C ve D harfleri neredeyse
-              // görünmüyordu, yalnız seçili olan okunuyordu (2026-07-27).
-              // Şık renkleri bilerek nötrdür; `onAccentTint` yalnız
-              // açıklığı kaydırır, nötrlüğü bozmaz.
-              color: AppColors.onAccentTint(
-                context,
-                isCorrect ? AppTheme.correct : color,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: isCorrect ? t.okTint : t.s3,
+              shape: SahneShape.m,
+            ),
+            child: SizedBox.square(
+              dimension: 36,
+              child: Center(
+                child: Text(
+                  label,
+                  style: SahneType.button.copyWith(
+                    color: isCorrect ? t.okTx : t.tx,
+                  ),
+                ),
               ),
-              fontWeight: FontWeight.w800,
             ),
           ),
         ),
+        prefixIconConstraints: const BoxConstraints(minWidth: 52),
         suffixIcon: isCorrect
-            ? Padding(
-                padding: const EdgeInsets.all(14),
-                child: Icon(
-                  AppIcons.circleCheck,
-                  color: AppColors.readableAccent(context, AppTheme.correct),
-                  size: 22,
-                ),
-              )
+            ? Icon(AppIcons.circleCheck, color: t.okTx, size: 22)
             : null,
       ),
       validator: (value) {

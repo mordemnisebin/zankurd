@@ -8,11 +8,9 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/premium_service.dart';
 import '../services/analytics_service.dart';
-import '../theme/app_theme.dart';
-import '../theme/kilim_motifs.dart';
-import '../widgets/app_panel.dart';
+import '../widgets/branded_loader.dart';
 import '../widgets/legal_links.dart';
-import '../widgets/screen_identity_header.dart';
+import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -149,133 +147,66 @@ class _PaywallScreenState extends State<PaywallScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final t = SahneTokens.of(context);
     return Scaffold(
-      backgroundColor: AppTheme.bgOf(context),
+      backgroundColor: t.bg,
       // Bu ekranın hiçbir çıkış yolu yoktu: AppBar'ı, kapat düğmesi ve
       // (AppRoute bir PageRouteBuilder olduğu için) kaydırarak-geri hareketi
       // yoktu; giren kullanıcı uygulamayı öldürmeden çıkamıyordu
       // (2026-07-25 canlı denetimi, iOS). Geri düğmesi uygulamanın geri
       // kalanıyla aynı yerde — AppBar'da — durur.
+      //
+      // Başlık 'Premium' değil, App Store Connect'teki abonelik adının
+      // kendisidir. Apple 3.1.2, otomatik yenilenen aboneliğin ADININ satın
+      // alma ekranında yazmasını ister ve 'Premium' bir özellik adıdır,
+      // ürün adı değil: mağazadaki ürünler "ZanKurd Pro Monthly/Yearly",
+      // grup "ZanKurd Pro". Bu başlıkla kart başlıkları ("Aylık"/"Yıllık")
+      // birleşince ekranda tam ürün adı okunur.
+      //
+      // 2026-09-29 Şahnê: B iskeleti — ad ve alt başlık çubukta. Eski
+      // kimlik kartı, kilim bant şeridi ve alttaki üçgen desen kalktı.
       appBar: zkAppBar(
         context,
-        backgroundColor: AppTheme.bgOf(context),
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
+        title: const Text(AppConfig.subscriptionDisplayName),
+        subtitle: Text(context.t(K.paywallSubtitle)),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
-        child: Stack(
+      body: SafeArea(
+        top: false,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(
+            SahneSpace.page,
+            0,
+            SahneSpace.page,
+            SahneSpace.x8,
+          ),
           children: [
-            // Paket listesi boş/kısa kaldığında alt yarı boş duruyordu;
-            // kenara kimlik dokusu işlenir (2026-09-10).
-            const Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: KilimBottomEdge(),
-            ),
-            SafeArea(
-              child: Column(
-                children: [
-                  // Başlık 'Premium' değil, App Store Connect'teki abonelik
-                  // adının kendisidir. Apple 3.1.2, otomatik yenilenen
-                  // aboneliğin ADININ satın alma ekranında yazmasını ister ve
-                  // 'Premium' bir özellik adıdır, ürün adı değil: mağazadaki
-                  // ürünler "ZanKurd Pro Monthly/Yearly", grup "ZanKurd Pro".
-                  // Bu başlıkla kart başlıkları ("Aylık"/"Yıllık") birleşince
-                  // ekranda tam ürün adı okunur.
-                  ScreenIdentityHeader(
-                    title: AppConfig.subscriptionDisplayName,
-                    subtitle: context.t(K.paywallSubtitle),
-                    accent: AppTheme.gold,
-                    icon: AppIcons.gem,
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(
-                        AppSpacing.page,
-                        AppSpacing.md,
-                        AppSpacing.page,
-                        AppSpacing.xl,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Premium yüzeyi: kesişen bant motifi. `band` kilim
-                          // dilinde "kutlama ve premium"u taşır; paywall bunu
-                          // kullanan ilk yüzey (2026-08-19).
-                          const SizedBox(
-                            height: 26,
-                            width: double.infinity,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: CustomPaint(
-                                    painter: KilimPainter(
-                                      motif: KilimMotif.band,
-                                      color: AppTheme.gold,
-                                      opacity: 0.30,
-                                      count: 8,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: AppSpacing.sm),
-                          // 2026-08-10: `_PaywallHero` kaldırıldı. Ekran aynı
-                          // değer önerisini ÜÇ kez söylüyordu — üstteki
-                          // `ScreenIdentityHeader` ("Premium / ZanKurd'u
-                          // destekle, serini koru"), hemen altındaki altın hero
-                          // ("ZanKurd Premium / Otomatik seri koruması ve
-                          // ZanKurd'a destek") ve ardından aynı iki maddeyi
-                          // sayan fayda listesi. İkisinde de aynı elmas ikonu
-                          // vardı.
-                          //
-                          // Tekrarı silmek yalnız görsel bir sadeleştirme değil:
-                          // paketler bir ekran yukarı çıkıyor, yani satın alma
-                          // kararının verildiği yer ilk bakışta görünüyor.
-                          ScreenSectionLabel(
-                            label: context.t(K.paywallFeatures),
-                            accent: AppTheme.gold,
-                          ),
-                          const SizedBox(height: AppSpacing.sm),
-                          _Benefits(isKu: ku),
-                          const SizedBox(height: AppSpacing.lg),
-                          if (_loading)
-                            const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 24),
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  color: AppTheme.gold,
-                                ),
-                              ),
-                            )
-                          else if (_offeringsLoadFailed)
-                            _OfferingsLoadError(onRetry: _loadOfferings)
-                          else if (_packages.isEmpty)
-                            _EmptyOfferings(isKu: ku, onRetry: _loadOfferings)
-                          else
-                            _PackageList(
-                              packages: _packages,
-                              onBuy: _buy,
-                              isKu: ku,
-                              isBusy: context
-                                  .watch<PremiumService>()
-                                  .purchaseInProgress,
-                            ),
-                          const SizedBox(height: AppSpacing.lg),
-                          _FooterActions(isKu: ku, onRestore: _restore),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+            // 2026-08-10: `_PaywallHero` kaldırıldı. Ekran aynı değer
+            // önerisini ÜÇ kez söylüyordu — üstteki kimlik başlığı, hemen
+            // altındaki altın hero ve ardından aynı iki maddeyi sayan fayda
+            // listesi. Tekrarı silmek yalnız görsel bir sadeleştirme değil:
+            // paketler bir ekran yukarı çıkıyor, yani satın alma kararının
+            // verildiği yer ilk bakışta görünüyor.
+            SahneSectionHeader(title: context.t(K.paywallFeatures)),
+            _Benefits(isKu: ku),
+            const SizedBox(height: SahneSpace.x6),
+            if (_loading)
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: SahneSpace.x6),
+                child: BrandedLoaderCenter(),
+              )
+            else if (_offeringsLoadFailed)
+              _OfferingsLoadError(onRetry: _loadOfferings)
+            else if (_packages.isEmpty)
+              _EmptyOfferings(isKu: ku, onRetry: _loadOfferings)
+            else
+              _PackageList(
+                packages: _packages,
+                onBuy: _buy,
+                isKu: ku,
+                isBusy: context.watch<PremiumService>().purchaseInProgress,
               ),
-            ),
+            const SizedBox(height: SahneSpace.x6),
+            _FooterActions(isKu: ku, onRestore: _restore),
           ],
         ),
       ),
@@ -283,107 +214,28 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 }
 
+/// Premium'un iki faydası — liste grubu. Seri koruması ödül ailesidir
+/// (Zêr), destek nötr.
 class _Benefits extends StatelessWidget {
   const _Benefits({required this.isKu});
   final bool isKu;
 
   @override
   Widget build(BuildContext context) {
-    final benefits = <_Benefit>[
-      _Benefit(
-        icon: AppIcons.shield,
-        title: Tr.forKu(K.paywallPerkStreak, isKu),
-        description: Tr.forKu(K.paywallPerkStreakBody, isKu),
-        color: AppTheme.brand,
-      ),
-      _Benefit(
-        icon: AppIcons.heart,
-        title: Tr.forKu(K.paywallPerkSupport, isKu),
-        description: Tr.forKu(K.paywallPerkSupportBody, isKu),
-        color: AppTheme.gold,
-      ),
-    ];
-    return Column(
+    return SahneListGroup(
       children: [
-        for (final b in benefits)
-          Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-            child: _BenefitRow(benefit: b),
-          ),
+        SahneListRow.icon(
+          icon: AppIcons.shield,
+          role: SahneRole.gold,
+          title: Tr.forKu(K.paywallPerkStreak, isKu),
+          subtitle: Tr.forKu(K.paywallPerkStreakBody, isKu),
+        ),
+        SahneListRow.icon(
+          icon: AppIcons.heart,
+          title: Tr.forKu(K.paywallPerkSupport, isKu),
+          subtitle: Tr.forKu(K.paywallPerkSupportBody, isKu),
+        ),
       ],
-    );
-  }
-}
-
-class _Benefit {
-  _Benefit({
-    required this.icon,
-    required this.title,
-    required this.description,
-    required this.color,
-  });
-  final IconData icon;
-  final String title;
-  final String description;
-  final Color color;
-}
-
-class _BenefitRow extends StatelessWidget {
-  const _BenefitRow({required this.benefit});
-  final _Benefit benefit;
-
-  @override
-  Widget build(BuildContext context) {
-    final accentColor = benefit.color;
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: accentColor.withValues(alpha: 0.28)),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: accentColor.withValues(alpha: 0.16),
-              borderRadius: BorderRadius.circular(AppRadius.badge),
-            ),
-            child: Icon(
-              benefit.icon,
-              color: AppColors.onAccentTint(context, accentColor),
-              size: 18,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  benefit.title,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  benefit.description,
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textSubColor(context),
-                    height: 1.35,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -415,19 +267,25 @@ class _PackageList extends StatelessWidget {
 
       return weight(a).compareTo(weight(b));
     });
+    // Ekranda tek birincil eylem: öne çıkan (yıllık) paketin düğmesi. Yıllık
+    // yoksa ilk paket birincil olur; ötekiler ikincil.
+    final primaryIndex = ordered.indexWhere(
+      (p) => p.packageType == PackageType.annual,
+    );
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (var i = 0; i < ordered.length; i++)
-          Padding(
-            padding: EdgeInsets.only(top: i == 0 ? 0 : AppSpacing.xs),
-            child: _PackageRow(
-              package: ordered[i],
-              isKu: isKu,
-              featured: ordered[i].packageType == PackageType.annual,
-              isBusy: isBusy,
-              onBuy: () => onBuy(ordered[i]),
-            ),
+        for (var i = 0; i < ordered.length; i++) ...[
+          if (i > 0) const SizedBox(height: SahneSpace.cardGap),
+          _PackageRow(
+            package: ordered[i],
+            isKu: isKu,
+            featured: ordered[i].packageType == PackageType.annual,
+            primary: i == (primaryIndex < 0 ? 0 : primaryIndex),
+            isBusy: isBusy,
+            onBuy: () => onBuy(ordered[i]),
           ),
+        ],
       ],
     );
   }
@@ -438,6 +296,7 @@ class _PackageRow extends StatelessWidget {
     required this.package,
     required this.isKu,
     required this.featured,
+    required this.primary,
     required this.onBuy,
     required this.isBusy,
   });
@@ -445,6 +304,7 @@ class _PackageRow extends StatelessWidget {
   final Package package;
   final bool isKu;
   final bool featured;
+  final bool primary;
   final bool isBusy;
   final VoidCallback onBuy;
 
@@ -491,131 +351,114 @@ class _PackageRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final price = package.storeProduct.price;
     final priceString = package.storeProduct.priceString;
-    final accentColor = featured ? AppTheme.gold : null;
-    final buttonBackground = featured
-        ? AppTheme.gold
-        : AppTheme.primaryGradientStart;
-    final buttonForeground = AppColors.onSolid(buttonBackground);
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(
-          color:
-              accentColor?.withValues(alpha: 0.45) ??
-              AppTheme.borderColor(context),
-          width: featured ? 1.5 : 1,
-        ),
-        boxShadow: featured
-            ? [
-                BoxShadow(
-                  color: AppTheme.gold.withValues(alpha: 0.18),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ]
-            : null,
-      ),
-      child: Row(
+    final label = Tr.forKu(K.buyAction, isKu);
+    final onPressed = isBusy ? null : onBuy;
+    // Paket bir yüzey kartıdır; öne çıkan paket "POPÜLER" Zêr rozetiyle
+    // ayrılır (altın kenar ve bulanık gölge yok).
+    return SahneSurfaceCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      _packageTitle(),
-                      style: AppTypography.heading2.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                      ),
-                    ),
-                    if (featured) ...[
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppTheme.gold.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          Tr.forKu(K.popularBadge, isKu),
-                          style: const TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 0.5,
-                            color: AppTheme.gold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-                if (_packageSubtitle().isNotEmpty) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    _packageSubtitle(),
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textSubColor(context),
-                    ),
-                  ),
-                ],
-                const SizedBox(height: 6),
-                Text(
-                  price > 0
-                      ? '$priceString${_pricePeriodSuffix()}'
-                      : Tr.forKu(K.priceComing, isKu),
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppTheme.gold,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                if (_perMonthEquivalent() case final perMonth?) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    perMonth,
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textSubColor(context),
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: buttonBackground,
-              foregroundColor: buttonForeground,
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadius.badge),
+          Wrap(
+            spacing: SahneSpace.x2,
+            runSpacing: SahneSpace.x1,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                _packageTitle(),
+                style: SahneType.headline.copyWith(color: t.tx),
               ),
-              disabledBackgroundColor: AppColors.disabledSurface(context),
-            ),
-            onPressed: isBusy ? null : onBuy,
-            child: isBusy
-                ? SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: buttonForeground,
-                    ),
-                  )
-                : Text(
-                    Tr.forKu(K.buyAction, isKu),
-                    style: const TextStyle(fontWeight: FontWeight.w700),
-                  ),
+              if (featured)
+                SahneBadge(
+                  label: Tr.forKu(K.popularBadge, isKu),
+                  tone: SahneBadgeTone.gold,
+                ),
+            ],
           ),
+          if (_packageSubtitle().isNotEmpty)
+            Text(
+              _packageSubtitle(),
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+          const SizedBox(height: SahneSpace.x2),
+          Text(
+            price > 0
+                ? '$priceString${_pricePeriodSuffix()}'
+                : Tr.forKu(K.priceComing, isKu),
+            style: SahneType.bodyStrong.copyWith(
+              color: t.tx,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+          if (_perMonthEquivalent() case final perMonth?)
+            Text(perMonth, style: SahneType.caption.copyWith(color: t.tx2)),
+          const SizedBox(height: SahneSpace.x4),
+          primary
+              ? SahneButton.primary(
+                  label: label,
+                  expand: true,
+                  onPressed: onPressed,
+                )
+              : SahneButton.secondary(
+                  label: label,
+                  expand: true,
+                  onPressed: onPressed,
+                ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Bilgi kartı: ikon + başlık + açıklama + yeniden deneme bağlantısı.
+/// [error] durumunda ikon Şaş metninde (durum ikon ve sözle birlikte).
+class _NoticeCard extends StatelessWidget {
+  const _NoticeCard({
+    required this.icon,
+    required this.title,
+    required this.body,
+    required this.retryLabel,
+    required this.onRetry,
+    this.error = false,
+  });
+
+  final IconData icon;
+  final String title;
+  final String body;
+  final String retryLabel;
+  final VoidCallback onRetry;
+  final bool error;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return SahneSurfaceCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Icon(icon, size: 20, color: error ? t.errTx : t.tx2),
+              ),
+              const SizedBox(width: SahneSpace.x2),
+              Expanded(
+                child: Text(
+                  title,
+                  style: SahneType.bodyStrong.copyWith(color: t.tx),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: SahneSpace.x1),
+          Text(body, style: SahneType.caption.copyWith(color: t.tx2)),
+          const SizedBox(height: SahneSpace.x1),
+          _TextAction(label: retryLabel, onPressed: onRetry),
         ],
       ),
     );
@@ -637,48 +480,12 @@ class _EmptyOfferings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(AppIcons.circleInfo, color: AppTheme.gold),
-              const SizedBox(width: AppSpacing.xs),
-              Expanded(
-                child: Text(
-                  Tr.forKu(K.paywallPackagesInactive, isKu),
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            Tr.forKu(K.paywallPackagesInactiveBody, isKu),
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textSubColor(context),
-              height: 1.4,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          TextButton.icon(
-            onPressed: onRetry,
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.readableAccent(
-                context,
-                AppTheme.brandDeep,
-              ),
-            ),
-            icon: const Icon(AppIcons.arrowsRotate),
-            label: Text(Tr.forKu(K.retry, isKu)),
-          ),
-        ],
-      ),
+    return _NoticeCard(
+      icon: AppIcons.circleInfo,
+      title: Tr.forKu(K.paywallPackagesInactive, isKu),
+      body: Tr.forKu(K.paywallPackagesInactiveBody, isKu),
+      retryLabel: Tr.forKu(K.retry, isKu),
+      onRetry: onRetry,
     );
   }
 }
@@ -690,48 +497,13 @@ class _OfferingsLoadError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(AppIcons.triangleExclamation, color: AppTheme.wrong),
-              const SizedBox(width: AppSpacing.xs),
-              Expanded(
-                child: Text(
-                  context.t(K.genericErrorTitle),
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            context.t(K.genericErrorBody),
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textSubColor(context),
-              height: 1.4,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          TextButton.icon(
-            onPressed: onRetry,
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.readableAccent(
-                context,
-                AppTheme.brandDeep,
-              ),
-            ),
-            icon: const Icon(AppIcons.arrowsRotate),
-            label: Text(context.t(K.retry)),
-          ),
-        ],
-      ),
+    return _NoticeCard(
+      icon: AppIcons.triangleExclamation,
+      title: context.t(K.genericErrorTitle),
+      body: context.t(K.genericErrorBody),
+      retryLabel: context.t(K.retry),
+      onRetry: onRetry,
+      error: true,
     );
   }
 }
@@ -743,34 +515,79 @@ class _FooterActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextButton(
-          onPressed: onRestore,
-          child: Text(
-            Tr.forKu(K.restorePurchases, isKu),
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textSubColor(context),
-            ),
+        Center(
+          child: _TextAction(
+            label: Tr.forKu(K.restorePurchases, isKu),
+            arrow: false,
+            onPressed: onRestore,
           ),
         ),
-        const SizedBox(height: AppSpacing.xs),
+        const SizedBox(height: SahneSpace.x2),
         // Apple App Store Review 3.1.2 ve Google Play abonelik politikası,
         // otomatik yenileme koşullarının satın alma ekranının KENDİSİNDE
         // yazmasını ister: yenileme, ücretlendirme anı ve iptal yolu.
         Text(
           Tr.forKu(K.paywallRenewalTerms, isKu),
-          style: AppTypography.caption.copyWith(
-            color: AppTheme.textMutedColor(context),
-            height: 1.4,
-          ),
+          style: SahneType.caption.copyWith(color: t.tx3),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SahneSpace.x2),
         // Yasal bağlantılar — abonelikli uygulamalarda Apple zorunlu tutar.
         const Center(child: LegalLinksRow(alignment: MainAxisAlignment.center)),
       ],
+    );
+  }
+}
+
+/// Metin bağlantısı ([SahneButton.text]) — 48'lik dokunma kutusunda.
+///
+/// Bileşen görselde 44'tür; uygulamanın erişilebilirlik kılavuzu testi
+/// (Android) 48'in altını reddeder. [ZkBackButton] gibi: ekran okuyucu tek
+/// bir 48'lik düğme görür, görsel boyut değişmez.
+class _TextAction extends StatelessWidget {
+  const _TextAction({
+    required this.label,
+    required this.onPressed,
+    this.arrow = true,
+  });
+
+  final String label;
+  final VoidCallback? onPressed;
+
+  /// Chevron (›) yalnız bir yere götüren bağlantıda; vazgeç / geç gibi
+  /// kaçış bağlantılarında yok.
+  final bool arrow;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: onPressed != null,
+      label: label,
+      onTap: onPressed,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onPressed,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            widthFactor: 1,
+            heightFactor: 1,
+            child: SahneButton.text(
+              label: label,
+              arrow: arrow,
+              onPressed: onPressed,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

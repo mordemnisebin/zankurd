@@ -7,7 +7,8 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 import 'support/widget_test_helpers.dart';
 
@@ -97,7 +98,12 @@ void main() {
   late MockZanKurdRepository repository;
   setUp(() => repository = freshMockRepository());
 
-  testWidgets('ayarlar dil seçimi aktif durumda Forest kullanır', (
+  // 2026-09-29 Şahnê: bu iki bekçi eski görünüşü (Forest degrade + gölge)
+  // sabitliyordu. Dil seçici artık ortak `LanguageToggle`dır (seçim rayının
+  // sığan çeşidi); "ZK" degrade karosu logo işareti plakasına döndü.
+  // Korunan şey: etkin dil görünür biçimde VE ekran okuyucuda seçili;
+  // hakkında kartı marka işaretini ve sürümü birlikte taşır.
+  testWidgets('ayarlar dil seçimi etkin dili seçili çiple gösterir', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
@@ -115,24 +121,19 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final chip = tester.widget<AnimatedContainer>(
-      find
-          .ancestor(
-            of: find.text('TR'),
-            matching: find.byType(AnimatedContainer),
-          )
-          .first,
+    SahneRailChip chip(String key) => tester.widget<SahneRailChip>(
+      find.descendant(
+        of: find.byKey(ValueKey(key)),
+        matching: find.byType(SahneRailChip),
+      ),
     );
-    final decoration = chip.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
-    expect(
-      decoration.boxShadow!.single.color,
-      AppTheme.culturalBrandBg.withValues(alpha: 0.24),
-    );
+    expect(chip('settings-language-tr').selected, isTrue);
+    expect(chip('settings-language-ku').selected, isFalse);
   });
 
-  testWidgets('ayarlar hakkında kimlik rozeti Forest kullanır', (tester) async {
+  testWidgets('ayarlar hakkında kartı marka işaretini ve sürümü taşır', (
+    tester,
+  ) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -142,23 +143,20 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(
-      find.text('ZK'),
+      find.byType(BrandMarkPlate),
       300,
       scrollable: find.byType(Scrollable).first,
     );
     await tester.pumpAndSettle();
 
-    final tile = tester.widget<Container>(
-      find
-          .ancestor(of: find.text('ZK'), matching: find.byType(Container))
-          .first,
-    );
-    final decoration = tile.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+    expect(find.byType(BrandMarkPlate), findsOneWidget);
+    expect(find.text('ZK'), findsNothing);
+    final plate = tester.getRect(find.byType(BrandMarkPlate));
+    final brand = tester.getRect(find.text('ZanKurd'));
     expect(
-      decoration.boxShadow!.single.color,
-      AppTheme.culturalBrandBg.withValues(alpha: 0.22),
+      (plate.center.dy - brand.center.dy).abs(),
+      lessThan(plate.height),
+      reason: 'marka adı plakanın yanında durmalı',
     );
   });
 

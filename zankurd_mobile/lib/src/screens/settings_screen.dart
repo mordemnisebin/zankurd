@@ -21,8 +21,6 @@ import '../services/notification_service.dart';
 import '../services/analytics_service.dart';
 import '../services/premium_service.dart';
 import '../services/tts_service.dart';
-import '../theme/app_theme.dart';
-import '../theme/kilim_motifs.dart';
 import '../utils/percent_format.dart';
 import '../utils/external_link.dart';
 
@@ -33,7 +31,10 @@ import '../services/display_name_policy.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_panel.dart';
 import '../widgets/legal_links.dart';
-import '../widgets/screen_identity_header.dart';
+import '../widgets/branded_loader.dart';
+import '../widgets/language_toggle.dart';
+import '../widgets/roj_mascot.dart';
+import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 import '../widgets/learning_goal_chooser.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -191,377 +192,248 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final t = SahneTokens.of(context);
 
+    // 2026-09-29 Şahnê: B iskeleti. Sayfa adı ve alt başlığı çubukta
+    // (`zkAppBar`); eski "ikon karosu + başlık" kimlik kartı ve kilim
+    // ayırıcı kalktı — ekranın tepesinde aynı söz iki kez görünmüyor.
+    // Bölümler tek biçimli [SahneSectionHeader]; satırlar liste grubu.
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      // Başlık [ScreenIdentityHeader]'da; AppBar yalnız geri düğmesini
-      // taşır. İkisi de başlık yazdığında ekranın tepesinde aynı sözcük
-      // iki kez görünüyordu (2026-07-25 canlı denetimi).
-      appBar: zkAppBar(context, backgroundColor: Colors.transparent),
-      body: Container(
-        color: AppTheme.bgOf(context),
-        child: SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.page,
-              AppSpacing.xs,
-              AppSpacing.page,
-              AppSpacing.lg,
+      backgroundColor: t.bg,
+      appBar: zkAppBar(
+        context,
+        title: Text(context.t(K.settings)),
+        subtitle: Text(context.t(K.settingsSubtitle)),
+      ),
+      body: SafeArea(
+        top: false,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(
+            SahneSpace.page,
+            0,
+            SahneSpace.page,
+            SahneSpace.x8,
+          ),
+          children: [
+            // ============ HESAP / ACCOUNT ============
+            SahneSectionHeader(title: context.t(K.secAccount)),
+            SahneSurfaceCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    context.t(K.playerName),
+                    style: SahneType.captionStrong.copyWith(color: t.tx2),
+                  ),
+                  const SizedBox(height: SahneSpace.x2),
+                  TextField(
+                    key: const ValueKey('settings-player-name-field'),
+                    controller: _nameController,
+                    enabled: !_loadingName && !_savingName,
+                    style: SahneType.body.copyWith(color: t.tx),
+                    decoration: InputDecoration(
+                      hintText: context.t(K.playerNameHint),
+                      prefixIcon: const Icon(AppIcons.idBadge, size: 20),
+                    ),
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (_) => _savePlayerName(),
+                  ),
+                  const SizedBox(height: SahneSpace.x3),
+                  // Ayarlarda ekranın tek bir ana eylemi yok: ad kaydetmek
+                  // bir alanın onayıdır, birincil (Agir) değil ikincil.
+                  SahneButton.secondary(
+                    label: Tr.forKu(K.save, ku),
+                    icon: AppIcons.floppyDisk,
+                    expand: true,
+                    onPressed: _loadingName || _savingName || !_isNameDirty
+                        ? null
+                        : _savePlayerName,
+                  ),
+                ],
+              ),
             ),
-            children: [
-              ScreenIdentityHeader(
-                title: context.t(K.settings),
-                subtitle: context.t(K.settingsSubtitle),
-                accent: AppTheme.culturalBrandBg,
-                icon: AppIcons.gear,
-                compact: true,
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              // Ayarlar listesini kimlik şeridinden ayırır; duvar kâğıdı değil.
-              const KilimDivider(
-                colors: [AppTheme.culturalBrandBg, AppTheme.gold],
-              ),
-              const SizedBox(height: AppSpacing.md),
-              // ============ HESAP / ACCOUNT ============
-              ScreenSectionLabel(
-                label: context.t(K.secAccount),
-                accent: AppTheme.violet,
-              ),
-              AppPanel(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _SettingsIconTitle(
-                      icon: AppIcons.idBadge,
-                      color: AppTheme.primaryGradientStart,
-                      title: context.t(K.playerName),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    TextField(
-                      key: const ValueKey('settings-player-name-field'),
-                      controller: _nameController,
-                      enabled: !_loadingName && !_savingName,
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryColor(context),
-                      ),
-                      decoration: InputDecoration(
-                        hintText: context.t(K.playerNameHint),
-                      ),
-                      textInputAction: TextInputAction.done,
-                      onSubmitted: (_) => _savePlayerName(),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton.icon(
-                        onPressed: _loadingName || _savingName || !_isNameDirty
-                            ? null
-                            : _savePlayerName,
-                        icon: _savingName
-                            ? const SizedBox(
-                                width: 16,
-                                height: 16,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : const Icon(AppIcons.floppyDisk),
-                        label: Text(Tr.forKu(K.save, ku)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: AppSpacing.cardGap),
 
-              // ============ ÖĞRENME / LEARNING ============
-              ScreenSectionLabel(
-                label: context.t(K.secLearning),
-                accent: AppTheme.playGreen,
+            // ============ ÖĞRENME / LEARNING ============
+            SahneSectionHeader(title: context.t(K.secLearning)),
+            SahneSurfaceCard(
+              key: const ValueKey('settings-learning-goal'),
+              child: LearningGoalChooser(
+                isKu: ku,
+                selected: _learningGoal,
+                compact: true,
+                onSelected: _setLearningGoal,
               ),
-              AppPanel(
-                key: const ValueKey('settings-learning-goal'),
-                color: AppTheme.surfaceOf(context),
-                child: LearningGoalChooser(
-                  isKu: ku,
-                  selected: _learningGoal,
-                  compact: true,
-                  onSelected: _setLearningGoal,
+            ),
+            const SizedBox(height: SahneSpace.cardGap),
+            SahneListGroup(
+              children: [
+                FutureBuilder<PlacementStore>(
+                  future: _placementStoreFuture,
+                  builder: (context, snap) {
+                    final level = snap.data?.level;
+                    final String sub;
+                    if (level == null) {
+                      sub = context.t(K.retakePlacementSub);
+                    } else {
+                      final name = ku ? level.labelKu : level.labelTr;
+                      sub = context.t(K.currentLevel, {'name': name});
+                    }
+                    return SahneListRow.icon(
+                      key: const ValueKey('retake-placement-action'),
+                      icon: AppIcons.squareCheck,
+                      role: SahneRole.learn,
+                      title: context.t(K.retakePlacement),
+                      subtitle: sub,
+                      chevron: true,
+                      onTap: _openPlacement,
+                    );
+                  },
                 ),
+              ],
+            ),
+
+            // ============ GÜVENLİK / SAFETY ============
+            //
+            // Apple 1.2 dördüncü şart: UGC barındıran uygulamada
+            // iletişim bilgisi YAYIMLANMIŞ olmalı. Oda sohbeti
+            // 2026-07-31'de moderasyonuyla geri geldi; bu satır
+            // kullanıcının taciz bildirimini nereye yapacağını söyler.
+            // Web sayfasında durması yetmez — uygulamadan ulaşılmalı.
+            SahneSectionHeader(title: context.t(K.secSafety)),
+            // İki eylem TEK bir yüzeyde durur (bkz.
+            // `beta_release_experience_test`: ortak `AppPanel` atası).
+            // `AppPanel` Şahnê'de yüzey kartıdır; satırlar liste grubunun
+            // diliyle, aralarında ikon hizasından başlayan ayırıcıyla.
+            AppPanel(
+              padding: EdgeInsets.zero,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SahneListRow.icon(
+                    key: const ValueKey('settings-report-abuse'),
+                    icon: AppIcons.triangleExclamation,
+                    title: context.t(K.reportAbuse),
+                    chevron: true,
+                    onTap: _openAbuseReport,
+                  ),
+                  const _RowDivider(),
+                  SahneListRow.icon(
+                    key: const ValueKey('settings-beta-feedback'),
+                    icon: AppIcons.circleInfo,
+                    title: context.t(K.betaFeedback),
+                    subtitle: context.t(K.betaFeedbackSub),
+                    chevron: true,
+                    onTap: _openBetaFeedback,
+                  ),
+                ],
               ),
-              const SizedBox(height: AppSpacing.xs),
-              AppPanel(
-                color: AppTheme.surfaceOf(context),
-                child: InkWell(
-                  key: const ValueKey('retake-placement-action'),
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                  onTap: _openPlacement,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          AppIcons.squareCheck,
-                          color: AppTheme.playGreen,
-                          size: 22,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                context.t(K.retakePlacement),
-                                style: TextStyle(
-                                  color: AppTheme.textPrimaryColor(context),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              const SizedBox(height: 3),
-                              FutureBuilder<PlacementStore>(
-                                future: _placementStoreFuture,
-                                builder: (context, snap) {
-                                  final level = snap.data?.level;
-                                  final String sub;
-                                  if (level == null) {
-                                    sub = context.t(K.retakePlacementSub);
-                                  } else {
-                                    final name = ku
-                                        ? level.labelKu
-                                        : level.labelTr;
-                                    sub = context.t(K.currentLevel, {
-                                      'name': name,
-                                    });
-                                  }
-                                  return Text(
-                                    sub,
-                                    style: AppTypography.caption.copyWith(
-                                      color: AppTheme.textMutedColor(context),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        Icon(
-                          AppIcons.chevronRight,
-                          color: AppTheme.textMutedColor(context),
-                        ),
-                      ],
+            ),
+
+            // ============ GİZLİLİK / PRIVACY ============
+            SahneSectionHeader(title: context.t(K.secPrivacy)),
+            SahneListGroup(
+              dividerIndent: _rowTextInset,
+              children: [
+                Consumer<AnalyticsConsentProvider>(
+                  builder: (context, consent, _) => SahneListRow.icon(
+                    icon: AppIcons.shieldHalved,
+                    title: context.t(K.analyticsConsent),
+                    subtitle: context.t(K.analyticsConsentSub),
+                    trailing: Switch(
+                      key: const ValueKey('analytics-consent-switch'),
+                      value: consent.enabled,
+                      onChanged: _setAnalyticsConsent,
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.cardGap),
+              ],
+            ),
 
-              // ============ GÜVENLİK / SAFETY ============
-              //
-              // Apple 1.2 dördüncü şart: UGC barındıran uygulamada
-              // iletişim bilgisi YAYIMLANMIŞ olmalı. Oda sohbeti
-              // 2026-07-31'de moderasyonuyla geri geldi; bu satır
-              // kullanıcının taciz bildirimini nereye yapacağını söyler.
-              // Web sayfasında durması yetmez — uygulamadan ulaşılmalı.
-              ScreenSectionLabel(
-                label: context.t(K.secSafety),
-                accent: AppTheme.playGreen,
-              ),
-              AppPanel(
-                padding: EdgeInsets.zero,
-                child: Column(
-                  children: [
-                    Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        key: const ValueKey('settings-report-abuse'),
-                        borderRadius: BorderRadius.circular(AppRadius.md),
-                        onTap: _openAbuseReport,
-                        child: _SettingsToggleRow(
-                          icon: AppIcons.triangleExclamation,
-                          color: AppTheme.playGreen,
-                          title: context.t(K.reportAbuse),
-                          trailing: Icon(
-                            AppIcons.chevronRight,
-                            color: AppTheme.textMutedColor(context),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      height: 1,
-                      indent: 56,
-                      color: AppTheme.borderColor(context),
-                    ),
-                    Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        key: const ValueKey('settings-beta-feedback'),
-                        borderRadius: BorderRadius.circular(AppRadius.md),
-                        onTap: _openBetaFeedback,
-                        child: _SettingsToggleRow(
-                          icon: AppIcons.circleInfo,
-                          color: AppTheme.playCyan,
-                          title: context.t(K.betaFeedback),
-                          subtitle: context.t(K.betaFeedbackSub),
-                          trailing: Icon(
-                            AppIcons.chevronRight,
-                            color: AppTheme.textMutedColor(context),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+            // ============ GÖRÜNÜM / APPEARANCE ============
+            SahneSectionHeader(title: context.t(K.secAppearance)),
+            SahneListGroup(
+              dividerIndent: _rowTextInset,
+              children: [
+                SahneListRow.icon(
+                  icon: AppIcons.language,
+                  title: context.t(K.appLanguage),
+                  trailing: const LanguageToggle(
+                    kuKey: ValueKey('settings-language-ku'),
+                    trKey: ValueKey('settings-language-tr'),
+                  ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.cardGap),
-
-              // ============ GİZLİLİK / PRIVACY ============
-              ScreenSectionLabel(
-                label: context.t(K.secPrivacy),
-                accent: AppTheme.violet,
-              ),
-              AppPanel(
-                padding: EdgeInsets.zero,
-                child: Column(
-                  children: [
-                    Consumer<AnalyticsConsentProvider>(
-                      builder: (context, consent, _) => _SettingsToggleRow(
-                        icon: AppIcons.shieldHalved,
-                        color: AppTheme.violet,
-                        title: context.t(K.analyticsConsent),
-                        subtitle: context.t(K.analyticsConsentSub),
-                        trailing: Switch(
-                          key: const ValueKey('analytics-consent-switch'),
-                          value: consent.enabled,
-                          onChanged: _setAnalyticsConsent,
-                        ),
-                      ),
+                Consumer<ThemeProvider>(
+                  builder: (context, themeProvider, _) => SahneListRow.icon(
+                    icon: themeProvider.isDark ? AppIcons.moon : AppIcons.sun,
+                    title: context.t(K.darkLightMode),
+                    trailing: Switch(
+                      value: themeProvider.isDark,
+                      onChanged: (_) {
+                        themeProvider.toggleDarkLight();
+                      },
                     ),
-                  ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.cardGap),
-
-              // ============ GÖRÜNÜM / APPEARANCE ============
-              ScreenSectionLabel(
-                label: context.t(K.secAppearance),
-                accent: AppTheme.violet,
-              ),
-              AppPanel(
-                padding: EdgeInsets.zero,
-                child: Column(
-                  children: [
-                    _SettingsToggleRow(
-                      icon: AppIcons.language,
-                      color: AppTheme.violet,
-                      title: context.t(K.appLanguage),
-                      trailing: _LangSwitch(),
+                Consumer<ReducedMotionProvider>(
+                  builder: (context, motion, _) => SahneListRow.icon(
+                    icon: AppIcons.clapperboard,
+                    title: context.t(K.reduceMotion),
+                    trailing: Switch(
+                      key: const ValueKey('reduce-motion-switch'),
+                      value: motion.userReduce,
+                      onChanged: (v) => motion.setUserReduce(v),
                     ),
-                    Divider(
-                      height: 1,
-                      indent: 56,
-                      color: AppTheme.borderColor(context),
-                    ),
-                    Consumer<ThemeProvider>(
-                      builder: (context, themeProvider, _) =>
-                          _SettingsToggleRow(
-                            icon: themeProvider.isDark
-                                ? AppIcons.moon
-                                : AppIcons.sun,
-                            color: AppTheme.violet,
-                            title: context.t(K.darkLightMode),
-                            trailing: Switch(
-                              value: themeProvider.isDark,
-                              onChanged: (_) {
-                                themeProvider.toggleDarkLight();
-                              },
-                            ),
-                          ),
-                    ),
-                    Divider(
-                      height: 1,
-                      indent: 56,
-                      color: AppTheme.borderColor(context),
-                    ),
-                    Consumer<ReducedMotionProvider>(
-                      builder: (context, motion, _) => _SettingsToggleRow(
-                        icon: AppIcons.clapperboard,
-                        color: AppTheme.violet,
-                        title: context.t(K.reduceMotion),
-                        trailing: Switch(
-                          key: const ValueKey('reduce-motion-switch'),
-                          value: motion.userReduce,
-                          onChanged: (v) => motion.setUserReduce(v),
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      height: 1,
-                      indent: 56,
-                      color: AppTheme.borderColor(context),
-                    ),
-                    // WCAG 2.2.1: zaman sınırı olan içerikte sınırı kapatma
-                    // yolu bulunmalı. Öğrenme ve tekrar akışları zaten
-                    // sayaçsızdı; kategori ve alıştırma turunda kapatmanın
-                    // hiçbir yolu yoktu.
-                    Consumer<UntimedModeProvider>(
-                      builder: (context, untimed, _) => _SettingsToggleRow(
-                        icon: AppIcons.stopwatch,
-                        color: AppTheme.violet,
-                        title: context.t(K.untimedSolo),
-                        subtitle: context.t(K.untimedSoloSub),
-                        trailing: Switch(
-                          key: const ValueKey('untimed-solo-switch'),
-                          value: untimed.enabled,
-                          onChanged: (v) => untimed.setEnabled(v),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.cardGap),
+                // WCAG 2.2.1: zaman sınırı olan içerikte sınırı kapatma
+                // yolu bulunmalı. Öğrenme ve tekrar akışları zaten
+                // sayaçsızdı; kategori ve alıştırma turunda kapatmanın
+                // hiçbir yolu yoktu.
+                Consumer<UntimedModeProvider>(
+                  builder: (context, untimed, _) => SahneListRow.icon(
+                    icon: AppIcons.stopwatch,
+                    title: context.t(K.untimedSolo),
+                    subtitle: context.t(K.untimedSoloSub),
+                    trailing: Switch(
+                      key: const ValueKey('untimed-solo-switch'),
+                      value: untimed.enabled,
+                      onChanged: (v) => untimed.setEnabled(v),
+                    ),
+                  ),
+                ),
+              ],
+            ),
 
-              // ============ SES & BİLDİRİM / SOUND & NOTIFICATIONS ============
-              ScreenSectionLabel(
-                label: context.t(K.secSoundNotif),
-                accent: AppTheme.violet,
-              ),
-              AppPanel(
-                padding: EdgeInsets.zero,
-                child: Column(
+            // ============ SES & BİLDİRİM / SOUND & NOTIFICATIONS ============
+            SahneSectionHeader(title: context.t(K.secSoundNotif)),
+            SahneListGroup(
+              dividerIndent: _rowTextInset,
+              children: [
+                // Ses efektleri web'de HİÇ çalmıyor: `SoundProvider._play`
+                // ikinci satırında `if (kIsWeb) return;` diyor. Anahtar
+                // yine de koşulsuz gösteriliyordu, yani web kullanıcısı
+                // hiçbir şey yapmayan bir kontrolü açıp kapatıyordu
+                // (2026-07-31 denetimi). Ölü kontrol, bozuk kontroldür.
+                if (!kIsWeb)
+                  Consumer<SoundProvider>(
+                    builder: (context, sound, _) => SahneListRow.icon(
+                      icon: sound.enabled
+                          ? AppIcons.volumeHigh
+                          : AppIcons.volumeXmark,
+                      title: context.t(K.soundEffects),
+                      trailing: Switch(
+                        value: sound.enabled,
+                        onChanged: (_) => sound.toggle(),
+                      ),
+                    ),
+                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Ses efektleri web'de HİÇ çalmıyor: `SoundProvider._play`
-                    // ikinci satırında `if (kIsWeb) return;` diyor. Anahtar
-                    // yine de koşulsuz gösteriliyordu, yani web kullanıcısı
-                    // hiçbir şey yapmayan bir kontrolü açıp kapatıyordu
-                    // (2026-07-31 denetimi). Ölü kontrol, bozuk kontroldür.
-                    if (!kIsWeb) ...[
-                      Consumer<SoundProvider>(
-                        builder: (context, sound, _) => _SettingsToggleRow(
-                          icon: sound.enabled
-                              ? AppIcons.volumeHigh
-                              : AppIcons.volumeXmark,
-                          color: AppTheme.primaryGradientStart,
-                          title: context.t(K.soundEffects),
-                          trailing: Switch(
-                            value: sound.enabled,
-                            onChanged: (_) => sound.toggle(),
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        height: 1,
-                        indent: 56,
-                        color: AppTheme.borderColor(context),
-                      ),
-                    ],
-                    _SettingsToggleRow(
+                    SahneListRow.icon(
                       icon: _notificationsEnabled
                           ? AppIcons.bell
                           : AppIcons.bellSlash,
-                      color: AppTheme.violet,
                       title: context.t(K.dailyReminder),
                       subtitle: context.t(K.dailyReminderAt, {
                         'time': _notificationTime,
@@ -572,522 +444,193 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                     if (_notificationsEnabled && _systemPermissionDenied)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          AppSpacing.md,
-                          0,
-                          AppSpacing.md,
-                          AppSpacing.md,
-                        ),
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(AppSpacing.sm),
-                          decoration: BoxDecoration(
-                            color: AppTheme.wrong.withValues(alpha: 0.08),
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                            border: Border.all(
-                              color: AppTheme.wrong.withValues(alpha: 0.28),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                AppIcons.bellSlash,
-                                color: AppColors.onAccentTint(
-                                  context,
-                                  AppTheme.wrong,
-                                ),
-                                size: 20,
-                              ),
-                              const SizedBox(width: AppSpacing.sm),
-                              Expanded(
-                                child: Text(
-                                  context.t(K.notifPermDeniedInline),
-                                  style: AppTypography.caption.copyWith(
-                                    color: AppTheme.wrong,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      _InlineNotice(
+                        icon: AppIcons.bellSlash,
+                        text: context.t(K.notifPermDeniedInline),
+                        error: true,
                       ),
-                    if (_notificationsEnabled) ...[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          AppSpacing.md,
-                          0,
-                          AppSpacing.md,
-                          AppSpacing.md,
-                        ),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(AppRadius.sm),
-                          onTap: _pickNotificationTime,
-                          child: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.sm,
-                              vertical: AppSpacing.xs,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppTheme.surfaceHiColor(context),
-                              borderRadius: BorderRadius.circular(AppRadius.sm),
-                              border: Border.all(
-                                color: AppTheme.borderColor(context),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  AppIcons.clock,
-                                  color: AppTheme.violet,
-                                  size: 18,
-                                ),
-                                const SizedBox(width: AppSpacing.xs),
-                                Text(
-                                  context.t(K.changeTime, {
-                                    'time': _notificationTime,
-                                  }),
-                                  style: AppTypography.bodyMedium.copyWith(
-                                    color: AppTheme.textPrimaryColor(context),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
                   ],
                 ),
-              ),
-              const SizedBox(height: AppSpacing.cardGap),
+                if (_notificationsEnabled)
+                  SahneListRow.icon(
+                    icon: AppIcons.clock,
+                    title: context.t(K.changeTime, {'time': _notificationTime}),
+                    chevron: true,
+                    onTap: _pickNotificationTime,
+                  ),
+              ],
+            ),
 
-              // ============ SESLENDİRME (TTS) ============
-              ScreenSectionLabel(
-                label: context.t(K.secTts),
-                accent: AppTheme.primaryGradientStart,
-              ),
-              const _TtsSettingsSection(),
-              const SizedBox(height: AppSpacing.cardGap),
+            // ============ SESLENDİRME (TTS) ============
+            SahneSectionHeader(title: context.t(K.secTts)),
+            const _TtsSettingsSection(),
 
-              // ============ ENGELLENENLER ============
-              // 2026-08-02 denetimi: `unblockPlayer` depoda vardı ama TEK
-              // bir çağıranı bile yoktu — kullanıcı birini engelledikten
-              // sonra kararını geri alamıyordu. Engelleme, geri alınabilir
-              // olmadıkça bir moderasyon aracı değil tek yönlü bir kapıdır.
-              ScreenSectionLabel(
-                label: context.t(K.secBlocked),
-                accent: AppTheme.wrong,
-              ),
-              _BlockedUsersSection(repository: widget.repository),
-              const SizedBox(height: AppSpacing.cardGap),
+            // ============ ENGELLENENLER ============
+            // 2026-08-02 denetimi: `unblockPlayer` depoda vardı ama TEK
+            // bir çağıranı bile yoktu — kullanıcı birini engelledikten
+            // sonra kararını geri alamıyordu. Engelleme, geri alınabilir
+            // olmadıkça bir moderasyon aracı değil tek yönlü bir kapıdır.
+            SahneSectionHeader(title: context.t(K.secBlocked)),
+            _BlockedUsersSection(repository: widget.repository),
 
-              // ============ PREMIUM ABONELİK ============
-              // Diğer her blok gibi premium de kendi bölüm başlığını taşır.
-              // Başlıksızken kart, bir üstteki "Seslendirme" bölümünün
-              // devamı gibi görünüyor ve para kazandıran tek giriş noktası
-              // ayarların içinde kayboluyordu (2026-07-25 canlı denetimi).
-              //
-              // Abone olmayana + yapılandırma yoksa bölüm gizlenir: ürünsüz
-              // paywall ölü sokaktır (2026-09-05 canlı turu). Abone, durum
-              // satırını her zaman görür.
-              if (context.watch<PremiumService>().isPremium ||
-                  AppConfig.hasRevenuecatConfig) ...[
-                const ScreenSectionLabel(
-                  label: 'Premium',
-                  accent: AppTheme.gold,
+            // ============ PREMIUM ABONELİK ============
+            // Diğer her blok gibi premium de kendi bölüm başlığını taşır.
+            // Başlıksızken kart, bir üstteki "Seslendirme" bölümünün
+            // devamı gibi görünüyor ve para kazandıran tek giriş noktası
+            // ayarların içinde kayboluyordu (2026-07-25 canlı denetimi).
+            //
+            // Abone olmayana + yapılandırma yoksa bölüm gizlenir: ürünsüz
+            // paywall ölü sokaktır (2026-09-05 canlı turu). Abone, durum
+            // satırını her zaman görür.
+            Consumer<PremiumService>(
+              builder: (context, premium, _) {
+                final isPremium = premium.isPremium;
+                if (!isPremium && !AppConfig.hasRevenuecatConfig) {
+                  return const SizedBox.shrink();
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SahneSectionHeader(title: 'Premium'),
+                    SahneListGroup(
+                      children: [
+                        SahneListRow.icon(
+                          icon: AppIcons.gem,
+                          role: SahneRole.gold,
+                          title: isPremium
+                              ? context.t(K.premiumBrand)
+                              : context.t(K.premiumCta),
+                          subtitle: isPremium
+                              ? context.t(K.premiumActive)
+                              : context.t(K.premiumPerks),
+                          trailing: SahneBadge(
+                            label: isPremium
+                                ? context.t(K.premiumBadgeOn)
+                                : context.t(K.premiumBadgeOff),
+                            tone: isPremium
+                                ? SahneBadgeTone.gold
+                                : SahneBadgeTone.soon,
+                          ),
+                          chevron: true,
+                          onTap: () => Navigator.of(context).push(
+                            AppRoute.to(
+                              PaywallScreen(repository: widget.repository),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
+
+            // ============ HAKKINDA / ABOUT ============
+            SahneSectionHeader(title: context.t(K.secAbout)),
+            SahneListGroup(
+              dividerIndent: _rowTextInset,
+              children: [
+                _ExpandableRow(
+                  icon: AppIcons.circleQuestion,
+                  title: context.t(K.howToPlay),
+                  body: context.t(K.howToPlayBody),
+                ),
+                _ExpandableRow(
+                  icon: AppIcons.shieldHalved,
+                  title: context.t(K.privacy),
+                  body: context.t(K.privacyBody),
                 ),
               ],
-              Consumer<PremiumService>(
-                builder: (context, premium, _) {
-                  final isPremium = premium.isPremium;
-                  if (!isPremium && !AppConfig.hasRevenuecatConfig) {
-                    return const SizedBox.shrink();
-                  }
-                  return AppPanel(
-                    padding: EdgeInsets.zero,
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).push(
-                        AppRoute.to(
-                          PaywallScreen(repository: widget.repository),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.md,
-                          vertical: AppSpacing.sm,
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: AppTheme.gold.withValues(alpha: 0.16),
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.sm,
-                                ),
-                                border: Border.all(
-                                  color: AppTheme.gold.withValues(
-                                    alpha: isPremium ? 0.5 : 0.3,
-                                  ),
-                                ),
-                              ),
-                              child: Icon(
-                                AppIcons.gem,
-                                color: AppColors.onAccentTint(
-                                  context,
-                                  AppTheme.gold,
-                                ),
-                                size: 22,
-                              ),
-                            ),
-                            const SizedBox(width: AppSpacing.sm),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    isPremium
-                                        ? context.t(K.premiumBrand)
-                                        : context.t(K.premiumCta),
-                                    style: AppTypography.bodyLarge.copyWith(
-                                      color: AppTheme.textPrimaryColor(context),
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    isPremium
-                                        ? (context.t(K.premiumActive))
-                                        : (context.t(K.premiumPerks)),
-                                    style: AppTypography.caption.copyWith(
-                                      color: AppTheme.textSubColor(context),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: AppSpacing.xs),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: isPremium
-                                    ? AppTheme.gold.withValues(alpha: 0.2)
-                                    : AppTheme.primaryGradientStart.withValues(
-                                        alpha: 0.16,
-                                      ),
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.lg,
-                                ),
-                              ),
-                              child: Text(
-                                isPremium
-                                    ? (context.t(K.premiumBadgeOn))
-                                    : (context.t(K.premiumBadgeOff)),
-                                style: TextStyle(
-                                  color: AppColors.readableAccent(
-                                    context,
-                                    isPremium
-                                        ? AppTheme.gold
-                                        : AppTheme.primaryGradientStart,
-                                  ),
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 11,
-                                  letterSpacing: 0.6,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: AppSpacing.cardGap),
-
-              // ============ HAKKINDA / ABOUT ============
-              ScreenSectionLabel(
-                label: context.t(K.secAbout),
-                accent: AppTheme.violet,
-              ),
-              // How to play
-              _ExpandableSection(
-                icon: AppIcons.circleQuestion,
-                iconColor: AppTheme.correct,
-                title: context.t(K.howToPlay),
-                body: context.t(K.howToPlayBody),
-              ),
-              const SizedBox(height: AppSpacing.cardGap),
-
-              // Privacy
-              _ExpandableSection(
-                icon: AppIcons.shieldHalved,
-                iconColor: AppTheme.violet,
-                title: context.t(K.privacy),
-                body: context.t(K.privacyBody),
-              ),
-              const SizedBox(height: AppSpacing.cardGap),
-
-              // About (includes version)
-              AppPanel(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 44,
-                          height: 44,
-                          decoration: BoxDecoration(
-                            gradient: AppTheme.identityHeaderGradient,
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppTheme.culturalBrandBg.withValues(
-                                  alpha: 0.22,
-                                ),
-                                blurRadius: 18,
-                                offset: const Offset(0, 8),
-                                spreadRadius: -8,
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Text(
-                              'ZK',
-                              style: AppTypography.heading2.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Column(
+            ),
+            const SizedBox(height: SahneSpace.cardGap),
+            // Sürüm, hakkında metni ve yasal bağlantılar tek bir yüzey
+            // kartında; marka logo plakasıyla (eski "ZK" degrade karosu
+            // kalktı).
+            SahneSurfaceCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const BrandMarkPlate(size: 44),
+                      const SizedBox(width: SahneSpace.x3),
+                      Expanded(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'ZanKurd',
-                              style: AppTypography.bodyLarge.copyWith(
-                                color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w700,
-                                fontSize: 17,
-                              ),
+                              style: SahneType.bodyStrong.copyWith(color: t.tx),
                             ),
                             Text(
                               '${context.t(K.version)} $_versionLabel',
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.textMutedColor(context),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      context.t(K.aboutBody),
-                      style: TextStyle(
-                        color: AppTheme.textSubColor(context),
-                        height: 1.45,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.surfaceHiColor(context),
-                        borderRadius: BorderRadius.circular(AppRadius.card),
-                        border: Border.all(
-                          color: AppTheme.borderColor(
-                            context,
-                          ).withValues(alpha: 0.8),
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 34,
-                            height: 34,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: AppTheme.accent.withValues(alpha: 0.12),
-                              borderRadius: BorderRadius.circular(
-                                AppRadius.badge,
-                              ),
-                            ),
-                            child: Icon(
-                              AppIcons.star,
-                              color: AppColors.onAccentTint(
-                                context,
-                                AppTheme.accent,
-                              ),
-                              size: 18,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              context.t(K.localChangesNote),
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.textSubColor(context),
-                                fontWeight: FontWeight.w600,
-                                height: 1.35,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    // Yasal bağlantılar (mağaza şartı)
-                    const LegalLinksRow(),
-                    const SizedBox(height: 10),
-                    // Soru fotoğrafları CC BY lisanslıdır; atıf yasal
-                    // yükümlülüktür (bkz. image_credits_screen.dart).
-                    Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: InkWell(
-                        key: const ValueKey('settings-image-credits'),
-                        onTap: () => Navigator.of(
-                          context,
-                        ).push(AppRoute.to(const ImageCreditsScreen())),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Text(
-                            context.t(K.imageCredits),
-                            style: AppTypography.caption.copyWith(
-                              color: AppTheme.brand,
-                              fontWeight: FontWeight.w700,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              // Hesap silme en yıkıcı eylem olmasına rağmen ayarların
-              // en üstünde, ikinci kartta duruyordu. Yeni kullanıcı
-              // için yanlış öncelik — en alta taşındı
-              // (2026-07-22 canlı UX denetimi).
-              const SizedBox(height: AppSpacing.cardGap),
-              // Hesap Silme (kırmızı/uyarı stili ile ayrı görselleştirme, Hesap grubunun altında)
-              AppPanel(
-                color: AppTheme.surfaceOf(context).withValues(alpha: 0.92),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          AppIcons.triangleExclamation,
-                          color: AppTheme.wrong,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          context.t(K.secDanger),
-                          style: AppTypography.bodyLarge.copyWith(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      context.t(K.dangerNote),
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    InkWell(
-                      key: const ValueKey('delete-account-action'),
-                      borderRadius: BorderRadius.circular(AppRadius.sm),
-                      onTap: _deleting ? null : _confirmDeleteAccount,
-                      child: Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              AppTheme.wrong.withValues(alpha: 0.12),
-                              AppTheme.wrong.withValues(alpha: 0.05),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(AppRadius.card),
-                          border: Border.all(
-                            color: AppTheme.wrong.withValues(alpha: 0.22),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            _deleting
-                                ? const SizedBox(
-                                    width: 22,
-                                    height: 22,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: AppTheme.wrong,
-                                    ),
-                                  )
-                                : const Icon(
-                                    AppIcons.trashCan,
-                                    color: AppTheme.wrong,
-                                    size: 22,
-                                  ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    context.t(K.deleteAccount),
-                                    style: const TextStyle(
-                                      color: AppTheme.wrong,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 3),
-                                  Text(
-                                    context.t(K.deleteAccountSub),
-                                    style: AppTypography.caption.copyWith(
-                                      color: AppTheme.textMutedColor(context),
-                                    ),
-                                  ),
+                              style: SahneType.caption.copyWith(
+                                color: t.tx2,
+                                fontFeatures: const [
+                                  FontFeature.tabularFigures(),
                                 ],
                               ),
                             ),
-                            Icon(
-                              AppIcons.chevronRight,
-                              color: AppTheme.textMutedColor(context),
-                            ),
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                  const SizedBox(height: SahneSpace.x3),
+                  Text(
+                    context.t(K.aboutBody),
+                    style: SahneType.body.copyWith(color: t.tx2),
+                  ),
+                  const SizedBox(height: SahneSpace.x3),
+                  _InlineNotice(
+                    icon: AppIcons.circleInfo,
+                    text: context.t(K.localChangesNote),
+                    inset: false,
+                  ),
+                  const SizedBox(height: SahneSpace.x2),
+                  // Yasal bağlantılar (mağaza şartı)
+                  const LegalLinksRow(),
+                  // Soru fotoğrafları CC BY lisanslıdır; atıf yasal
+                  // yükümlülüktür (bkz. image_credits_screen.dart).
+                  _TextAction(
+                    key: const ValueKey('settings-image-credits'),
+                    label: context.t(K.imageCredits),
+                    onPressed: () => Navigator.of(
+                      context,
+                    ).push(AppRoute.to(const ImageCreditsScreen())),
+                  ),
+                ],
               ),
-              const SizedBox(height: AppSpacing.cardGap),
-            ],
-          ),
+            ),
+
+            // Hesap silme en yıkıcı eylem olmasına rağmen ayarların
+            // en üstünde, ikinci kartta duruyordu. Yeni kullanıcı
+            // için yanlış öncelik — en alta taşındı
+            // (2026-07-22 canlı UX denetimi).
+            SahneSectionHeader(title: context.t(K.secDanger)),
+            Padding(
+              padding: const EdgeInsets.only(bottom: SahneSpace.x3),
+              child: Text(
+                context.t(K.dangerNote),
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+            ),
+            SahneListGroup(
+              children: [
+                SahneListRow.icon(
+                  key: const ValueKey('delete-account-action'),
+                  icon: AppIcons.trashCan,
+                  title: context.t(K.deleteAccount),
+                  subtitle: context.t(K.deleteAccountSub),
+                  trailing: _deleting
+                      ? const BrandedLoader(size: 20, strokeWidth: 2)
+                      : null,
+                  chevron: !_deleting,
+                  onTap: _deleting ? null : _confirmDeleteAccount,
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -1328,30 +871,75 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 }
 
-class _LangSwitch extends StatelessWidget {
+/// Liste satırında metnin başladığı hiza: 12 + 44'lük ikon karosu + 12.
+/// Satır olmayan çocukların (Consumer, Column) grup ayırıcısı da buradan
+/// başlar; [SahneListRow.dividerIndent] ile aynı değer.
+const double _rowTextInset = SahneSpace.x3 + 44 + SahneSpace.x3;
+
+/// Liste grubunun ayırıcısı — grubun kendisi yerine `AppPanel` kullanılan
+/// tek yerde (güvenlik bölümü) elle konur.
+class _RowDivider extends StatelessWidget {
+  const _RowDivider();
+
   @override
   Widget build(BuildContext context) {
-    final isKu = context.isKu;
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context),
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(color: AppTheme.borderColor(context)),
-        boxShadow: AppTheme.cardShadow(context),
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(start: _rowTextInset),
+      child: ExcludeSemantics(
+        child: SizedBox(
+          height: 1,
+          child: ColoredBox(color: SahneTokens.of(context).line),
+        ),
       ),
+    );
+  }
+}
+
+/// Satırın altındaki kısa not: ikon + açıklama. [error] Şaş metniyle
+/// (durum hiçbir zaman yalnız renkle verilmez: ikon ve söz birlikte).
+class _InlineNotice extends StatelessWidget {
+  const _InlineNotice({
+    required this.icon,
+    required this.text,
+    this.error = false,
+    this.inset = true,
+  });
+
+  final IconData icon;
+  final String text;
+  final bool error;
+
+  /// Satırın metin hizasından başlasın mı (grup içinde) yoksa kartın
+  /// kenarından mı.
+  final bool inset;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final color = error ? t.errTx : t.tx2;
+    return Padding(
+      padding: inset
+          ? const EdgeInsetsDirectional.fromSTEB(
+              _rowTextInset,
+              0,
+              SahneSpace.x4,
+              SahneSpace.x3,
+            )
+          : EdgeInsets.zero,
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _LangChip(
-            label: 'KU',
-            active: isKu,
-            onTap: () => context.langProvider.setLang('ku'),
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: Icon(icon, size: 16, color: color),
           ),
-          _LangChip(
-            label: 'TR',
-            active: !isKu,
-            onTap: () => context.langProvider.setLang('tr'),
+          const SizedBox(width: SahneSpace.x2),
+          Expanded(
+            child: Text(
+              text,
+              style: (error ? SahneType.captionStrong : SahneType.caption)
+                  .copyWith(color: color),
+            ),
           ),
         ],
       ),
@@ -1359,258 +947,111 @@ class _LangSwitch extends StatelessWidget {
   }
 }
 
-class _LangChip extends StatelessWidget {
-  const _LangChip({
+/// Metin bağlantısı ([SahneButton.text]) — 48'lik dokunma kutusunda.
+///
+/// Bileşen görselde 44'tür; uygulamanın erişilebilirlik kılavuzu testi
+/// (Android) 48'in altını reddeder. [ZkBackButton] gibi: ekran okuyucu tek
+/// bir 48'lik düğme görür, görsel boyut değişmez.
+class _TextAction extends StatelessWidget {
+  const _TextAction({
     required this.label,
-    required this.active,
-    required this.onTap,
+    required this.onPressed,
+    this.arrow = true,
+    super.key,
   });
 
   final String label;
-  final bool active;
-  final VoidCallback onTap;
+  final VoidCallback? onPressed;
 
-  @override
-  Widget build(BuildContext context) {
-    final accessibleLabel = label == 'KU' ? 'Kurmancî' : 'Türkçe';
-    return Semantics(
-      button: true,
-      selected: active,
-      label: accessibleLabel,
-      excludeSemantics: true,
-      child: Tooltip(
-        message: accessibleLabel,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
-              constraints: const BoxConstraints(minHeight: 48, minWidth: 56),
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-              decoration: BoxDecoration(
-                gradient: active ? AppTheme.identityHeaderGradient : null,
-                color: active ? null : Colors.transparent,
-                borderRadius: BorderRadius.circular(AppRadius.pill),
-                boxShadow: active
-                    ? [
-                        BoxShadow(
-                          color: AppTheme.culturalBrandBg.withValues(
-                            alpha: 0.24,
-                          ),
-                          blurRadius: 16,
-                          offset: const Offset(0, 6),
-                          spreadRadius: -8,
-                        ),
-                      ]
-                    : null,
-              ),
-              child: Text(
-                label,
-                style: AppTypography.bodyMedium.copyWith(
-                  color: active
-                      ? Colors.white
-                      : AppTheme.textMutedColor(context),
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SettingsIconTitle extends StatelessWidget {
-  const _SettingsIconTitle({
-    required this.icon,
-    required this.color,
-    required this.title,
-  });
-
-  final IconData icon;
-  final Color color;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 34,
-          height: 34,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.14),
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-          ),
-          child: ExcludeSemantics(
-            child: Icon(
-              icon,
-              color: AppColors.onAccentTint(context, color),
-              size: 18,
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        Expanded(
-          child: Text(
-            title,
-            style: AppTypography.bodyLarge.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _SettingsToggleRow extends StatelessWidget {
-  const _SettingsToggleRow({
-    required this.icon,
-    required this.color,
-    required this.title,
-    required this.trailing,
-    this.subtitle,
-  });
-
-  final IconData icon;
-  final Color color;
-  final String title;
-  final String? subtitle;
-  final Widget trailing;
+  /// Chevron (›) yalnız bir yere götüren bağlantıda; vazgeç / geç gibi
+  /// kaçış bağlantılarında yok.
+  final bool arrow;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       container: true,
-      label: title,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: 14,
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 38,
-              height: 38,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.14),
-                borderRadius: BorderRadius.circular(AppRadius.sm),
-                border: Border.all(color: color.withValues(alpha: 0.14)),
-              ),
-              child: ExcludeSemantics(
-                child: Icon(
-                  icon,
-                  color: AppColors.onAccentTint(context, color),
-                  size: 18,
-                ),
-              ),
+      button: true,
+      enabled: onPressed != null,
+      label: label,
+      onTap: onPressed,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onPressed,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            widthFactor: 1,
+            heightFactor: 1,
+            child: SahneButton.text(
+              label: label,
+              arrow: arrow,
+              onPressed: onPressed,
             ),
-            const SizedBox(width: AppSpacing.sm),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: AppTypography.bodyLarge.copyWith(
-                      color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  if (subtitle != null) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      subtitle!,
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                        fontWeight: FontWeight.w600,
-                        height: 1.3,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            trailing,
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-class _ExpandableSection extends StatelessWidget {
-  const _ExpandableSection({
+/// Açılır bilgi satırı ("Nasıl oynanır", "Gizlilik"): liste satırı +
+/// altında gövde metni. Açılış hareketi azaltta anında olur.
+class _ExpandableRow extends StatefulWidget {
+  const _ExpandableRow({
     required this.icon,
-    required this.iconColor,
     required this.title,
     required this.body,
   });
 
   final IconData icon;
-  final Color iconColor;
   final String title;
   final String body;
 
   @override
+  State<_ExpandableRow> createState() => _ExpandableRowState();
+}
+
+class _ExpandableRowState extends State<_ExpandableRow> {
+  bool _open = false;
+
+  @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      padding: EdgeInsets.zero,
-      child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: Material(
-          color: Colors.transparent,
-          child: ExpansionTile(
-            leading: Container(
-              width: 34,
-              height: 34,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: iconColor.withValues(alpha: 0.14),
-                borderRadius: BorderRadius.circular(AppRadius.sm),
-              ),
+    final t = SahneTokens.of(context);
+    return AnimatedSize(
+      duration: sahneMotionReduced(context) ? Duration.zero : SahneMotion.fade,
+      alignment: Alignment.topCenter,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SahneListRow.icon(
+            icon: widget.icon,
+            title: widget.title,
+            trailing: ExcludeSemantics(
               child: Icon(
-                icon,
-                color: AppColors.onAccentTint(context, iconColor),
-                size: 18,
+                _open ? AppIcons.chevronUp : AppIcons.chevronDown,
+                size: 20,
+                color: t.tx3,
               ),
             ),
-            iconColor: AppTheme.textSubColor(context),
-            collapsedIconColor: AppTheme.textMutedColor(context),
-            title: Text(
-              title,
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppTheme.textPrimaryColor(context),
-              ),
-            ),
-            childrenPadding: const EdgeInsets.fromLTRB(
-              AppSpacing.page,
-              0,
-              AppSpacing.page,
-              AppSpacing.md,
-            ),
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  body,
-                  style: TextStyle(
-                    color: AppTheme.textSubColor(context),
-                    height: 1.55,
-                  ),
-                ),
-              ),
-            ],
+            onTap: () => setState(() => _open = !_open),
           ),
-        ),
+          if (_open)
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                _rowTextInset,
+                0,
+                SahneSpace.x4,
+                SahneSpace.x4,
+              ),
+              child: Text(
+                widget.body,
+                style: SahneType.body.copyWith(color: t.tx2),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -1663,103 +1104,74 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
       return const SizedBox(height: 0);
     }
 
+    final t = SahneTokens.of(context);
     if (tts == null) {
-      return AppPanel(
+      return SahneSurfaceCard(
         child: Text(
           context.t(K.ttsUnavailable),
-          style: AppTypography.caption.copyWith(
-            color: AppTheme.textMutedColor(context),
-          ),
+          style: SahneType.caption.copyWith(color: t.tx2),
         ),
       );
     }
 
     final enabled = tts.isEnabled;
     final canSpeak = tts.isKurdishAvailable;
-    return AppPanel(
-      padding: EdgeInsets.zero,
-      child: Column(
-        children: [
-          _SettingsToggleRow(
-            icon: enabled ? AppIcons.volumeHigh : AppIcons.volumeXmark,
-            color: AppTheme.primaryGradientStart,
-            title: context.t(K.ttsEnable),
-            subtitle: context.t(K.ttsEnableSub),
-            trailing: Switch(
-              value: enabled && canSpeak,
-              onChanged: canSpeak
-                  ? (v) async {
-                      await tts.setEnabled(v);
-                      if (mounted) setState(() {});
-                    }
-                  : null,
-            ),
-          ),
-          if (!tts.isKurdishAvailable)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.md,
-                0,
-                AppSpacing.md,
-                AppSpacing.sm,
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    AppIcons.circleInfo,
-                    size: 16,
-                    color: AppTheme.textMutedColor(context),
-                  ),
-                  const SizedBox(width: AppSpacing.xs),
-                  Expanded(
-                    child: Text(
-                      context.t(K.ttsKurdishLimited),
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                        height: 1.3,
-                      ),
-                    ),
-                  ),
-                ],
+    return SahneListGroup(
+      dividerIndent: _rowTextInset,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SahneListRow.icon(
+              icon: enabled ? AppIcons.volumeHigh : AppIcons.volumeXmark,
+              title: context.t(K.ttsEnable),
+              subtitle: context.t(K.ttsEnableSub),
+              trailing: Switch(
+                value: enabled && canSpeak,
+                onChanged: canSpeak
+                    ? (v) async {
+                        await tts.setEnabled(v);
+                        if (mounted) setState(() {});
+                      }
+                    : null,
               ),
             ),
-          if (enabled && canSpeak) ...[
-            Divider(
-              height: 1,
-              indent: 56,
-              color: AppTheme.borderColor(context),
-            ),
-            _TtsSlider(
-              label: context.t(K.ttsRate),
-              icon: AppIcons.bolt,
-              value: tts.rate,
-              onChanged: (v) async {
-                await tts.setRate(v);
-                if (mounted) setState(() {});
-              },
-            ),
-            Divider(
-              height: 1,
-              indent: 56,
-              color: AppTheme.borderColor(context),
-            ),
-            _TtsSlider(
-              label: context.t(K.ttsVolume),
-              icon: AppIcons.volumeHigh,
-              value: tts.volume,
-              onChanged: (v) async {
-                await tts.setVolume(v);
-                if (mounted) setState(() {});
-              },
-            ),
+            if (!tts.isKurdishAvailable)
+              _InlineNotice(
+                icon: AppIcons.circleInfo,
+                text: context.t(K.ttsKurdishLimited),
+              ),
           ],
+        ),
+        if (enabled && canSpeak) ...[
+          _TtsSlider(
+            label: context.t(K.ttsRate),
+            icon: AppIcons.bolt,
+            value: tts.rate,
+            onChanged: (v) async {
+              await tts.setRate(v);
+              if (mounted) setState(() {});
+            },
+          ),
+          _TtsSlider(
+            label: context.t(K.ttsVolume),
+            icon: AppIcons.volumeHigh,
+            value: tts.volume,
+            onChanged: (v) async {
+              await tts.setVolume(v);
+              if (mounted) setState(() {});
+            },
+          ),
         ],
-      ),
+      ],
     );
   }
 }
 
-/// TTS hız/ses seviyesi için 0–1 aralığında etiketleli kaydırıcı satırı.
+/// TTS hız/ses seviyesi için 0–1 aralığında etiketli kaydırıcı satırı.
+///
+/// Liste satırının geometrisi: 44'lük nötr ikon karosu, 12 aralık, başlık
+/// (Gövde 700) ve sağda değer; kaydırıcı başlığın altında.
 class _TtsSlider extends StatelessWidget {
   const _TtsSlider({
     required this.label,
@@ -1775,33 +1187,26 @@ class _TtsSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.md,
-        AppSpacing.sm,
-        AppSpacing.md,
-        AppSpacing.sm,
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        SahneSpace.x3,
+        SahneSpace.x2,
+        SahneSpace.x4,
+        SahneSpace.x1,
       ),
       child: Row(
         children: [
-          Container(
-            width: 38,
-            height: 38,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppTheme.primaryGradientStart.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-            ),
-            child: Icon(
-              icon,
-              color: AppColors.onAccentTint(
-                context,
-                AppTheme.primaryGradientStart,
+          ExcludeSemantics(
+            child: DecoratedBox(
+              decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
+              child: SizedBox.square(
+                dimension: 44,
+                child: Icon(icon, size: 24, color: t.tx),
               ),
-              size: 18,
             ),
           ),
-          const SizedBox(width: AppSpacing.sm),
+          const SizedBox(width: SahneSpace.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1811,32 +1216,21 @@ class _TtsSlider extends StatelessWidget {
                     Expanded(
                       child: Text(
                         label,
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
                       ),
                     ),
                     // Sınıf belgesi "etiketleli kaydırıcı" diyordu ama
                     // ekranda yalnız ad vardı: kullanıcı hızın ya da sesin
                     // hangi değerde olduğunu göremiyordu (2026-07-25
                     // denetimi). Yüzde, kaydırıcının kendisiyle aynı
-                    // satırda ve sabit genişlikte durur ki değer
-                    // değişirken etiket zıplamasın.
-                    SizedBox(
-                      width: 44,
-                      child: Text(
-                        context.percentRatio(value.clamp(0.0, 1.0)),
-                        textAlign: TextAlign.end,
-                        style: AppTypography.caption.copyWith(
-                          color: AppTheme.textMutedColor(context),
-                          fontWeight: FontWeight.w700,
-                          fontFeatures: const [
-                            // Tabular rakam: %9 → %10 geçişinde genişlik
-                            // değişmesin.
-                            FontFeature.tabularFigures(),
-                          ],
-                        ),
+                    // satırda durur; tablo rakamı değer değişirken etiketi
+                    // zıplatmaz.
+                    Text(
+                      context.percentRatio(value.clamp(0.0, 1.0)),
+                      textAlign: TextAlign.end,
+                      style: SahneType.captionStrong.copyWith(
+                        color: t.tx2,
+                        fontFeatures: const [FontFeature.tabularFigures()],
                       ),
                     ),
                   ],
@@ -1903,90 +1297,82 @@ class _BlockedUsersSectionState extends State<_BlockedUsersSection> {
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      child: FutureBuilder<List<PlayerSearchResult>>(
-        future: _future,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Padding(
-              padding: EdgeInsets.all(AppSpacing.md),
-              child: Center(
-                child: SizedBox(
-                  width: 18,
-                  height: 18,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
-              ),
-            );
-          }
-          if (snapshot.hasError) {
-            // `loadBlockedPlayers` artık okunamayan listeyi yutup boş
-            // dönmüyor (rethrow) — burada da yutup "kimseyi engellemedin"
-            // gösterirsek aynı sessiz kırılma boş durum kılığına girer.
-            // Gerçekten engellenmiş biri kalıcı kaybolmuş gibi görünürdü,
-            // engeli kaldırma yolu da onunla birlikte kaybolurdu
-            // (2026-08-14 denetimi).
-            return Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.t(K.blockedLoadFailed),
-                    key: const ValueKey('blocked-error'),
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: AppTheme.textPrimaryColor(context),
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  TextButton(
-                    onPressed: _retry,
-                    child: Text(context.t(K.retry)),
-                  ),
-                ],
-              ),
-            );
-          }
-          final blocked = snapshot.data ?? const <PlayerSearchResult>[];
-          if (blocked.isEmpty) {
-            return Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Text(
-                context.t(K.blockedEmpty),
-                key: const ValueKey('blocked-empty'),
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textMutedColor(context),
-                ),
-              ),
-            );
-          }
-          return Column(
-            children: [
-              for (final player in blocked)
-                ListTile(
-                  key: ValueKey('blocked-row-${player.id}'),
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(
-                    player.displayName,
-                    style: AppTypography.bodyMedium.copyWith(
-                      color: AppTheme.textPrimaryColor(context),
-                    ),
-                  ),
-                  subtitle: player.formattedTag == null
-                      ? null
-                      : Text(player.formattedTag!),
-                  trailing: TextButton(
-                    key: ValueKey('unblock-${player.id}'),
-                    onPressed: _working.contains(player.id)
-                        ? null
-                        : () => _unblock(player),
-                    child: Text(context.t(K.unblockAction)),
-                  ),
-                ),
-            ],
+    final t = SahneTokens.of(context);
+    return FutureBuilder<List<PlayerSearchResult>>(
+      future: _future,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const SahneSurfaceCard(
+            child: Center(child: BrandedLoader(size: 20, strokeWidth: 2)),
           );
-        },
-      ),
+        }
+        if (snapshot.hasError) {
+          // `loadBlockedPlayers` artık okunamayan listeyi yutup boş
+          // dönmüyor (rethrow) — burada da yutup "kimseyi engellemedin"
+          // gösterirsek aynı sessiz kırılma boş durum kılığına girer.
+          // Gerçekten engellenmiş biri kalıcı kaybolmuş gibi görünürdü,
+          // engeli kaldırma yolu da onunla birlikte kaybolurdu
+          // (2026-08-14 denetimi).
+          return SahneSurfaceCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Icon(
+                        AppIcons.triangleExclamation,
+                        size: 20,
+                        color: t.errTx,
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x2),
+                    Expanded(
+                      child: Text(
+                        context.t(K.blockedLoadFailed),
+                        key: const ValueKey('blocked-error'),
+                        style: SahneType.body.copyWith(color: t.tx),
+                      ),
+                    ),
+                  ],
+                ),
+                _TextAction(label: context.t(K.retry), onPressed: _retry),
+              ],
+            ),
+          );
+        }
+        final blocked = snapshot.data ?? const <PlayerSearchResult>[];
+        if (blocked.isEmpty) {
+          return SahneSurfaceCard(
+            child: Text(
+              context.t(K.blockedEmpty),
+              key: const ValueKey('blocked-empty'),
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+          );
+        }
+        return SahneListGroup(
+          children: [
+            for (final player in blocked)
+              SahneListRow.icon(
+                key: ValueKey('blocked-row-${player.id}'),
+                icon: AppIcons.user,
+                title: player.displayName,
+                subtitle: player.formattedTag,
+                trailing: _TextAction(
+                  key: ValueKey('unblock-${player.id}'),
+                  label: context.t(K.unblockAction),
+                  arrow: false,
+                  onPressed: _working.contains(player.id)
+                      ? null
+                      : () => _unblock(player),
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 }
