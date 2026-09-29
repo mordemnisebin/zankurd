@@ -1,3 +1,5 @@
+// 2026-09-29 doğallık (K7): oda eylemleri ikincil düğme, günün etkinliğinde
+// adını tekrarlayan rozet yok.
 // 2026-09-29 Şahnê: ana ekranın kapıları ve oyun merkezinin öteki yolları
 // `ModeCard`/degrade kart değil, liste satırıdır (`SahneListRow`); bekçi
 // "tek birincil (turuncu) eylem, öteki yollar sakin ve erişilebilir"
@@ -174,12 +176,26 @@ void main() {
           }
           // 2026-09-29 Şahnê: öteki yollar liste satırıdır (liste grubunda);
           // degrade, gölge ve dolgulu düğme taşımazlar. Günün etkinliği
-          // yarış rolünde ve "BUGÜN" rozeti taşır; turnuva ödül (Zêr) rolü.
-          for (final key in [
-            'play-hub-create-room',
-            'play-hub-join-room',
-            'play-hub-daily-contest',
-          ]) {
+          // yarış rolünde; turnuva ödül (Zêr) rolü.
+          //
+          // 2026-09-29 doğallık (K7): "Oda kur" ve "Kodla katıl" yan yana iki
+          // İKİNCİL düğmedir (Kulis tonu, Agir değil); günün etkinliğinin
+          // "Bugün" rozeti kalktı (satırın adı zaten "Günün soruları").
+          for (final key in ['play-hub-create-room', 'play-hub-join-room']) {
+            final finder = find.byKey(ValueKey(key));
+            expect(finder, findsOneWidget, reason: key);
+            final button = tester.widget<FilledButton>(
+              find.descendant(of: finder, matching: find.byType(FilledButton)),
+            );
+            final t = SahneTokens.of(tester.element(finder));
+            expect(
+              button.style?.backgroundColor?.resolve(<WidgetState>{}),
+              t.s2,
+              reason: '$key ikincil (Kulis) olmalı, Agir değil',
+            );
+            _expectActionSemantics(tester, key);
+          }
+          for (final key in ['play-hub-daily-contest']) {
             final finder = find.byKey(ValueKey(key));
             expect(finder, findsOneWidget);
             expect(tester.widget(finder), isA<SahneListRow>(), reason: key);
@@ -204,7 +220,7 @@ void main() {
               of: find.byKey(const ValueKey('play-hub-daily-contest')),
               matching: find.byType(SahneBadge),
             ),
-            findsOneWidget,
+            findsNothing,
           );
           if (!kTournamentEnabled) {
             expect(tester.takeException(), isNull);

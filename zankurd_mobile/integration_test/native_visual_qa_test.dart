@@ -73,14 +73,23 @@ void main() {
       ),
     );
     await tester.pump();
-    // Podyumdaki RollingCount en fazla 1100 ms sürer. Kanıt görüntüsü
-    // animasyonun son karesini değil, yetkili son puanı göstermeli.
+    // Veri yüklenip liste çizilsin; kanıt görüntüsü son hâli göstermeli.
     await tester.pump(const Duration(milliseconds: 1300));
     await tester.pump(const Duration(milliseconds: 100));
-    expect(find.byKey(const ValueKey('leaderboard-podium')), findsOneWidget);
-    expect(find.byKey(const ValueKey('podium-slot-1')), findsOneWidget);
-    expect(find.byKey(const ValueKey('podium-slot-2')), findsOneWidget);
-    expect(find.byKey(const ValueKey('podium-slot-3')), findsOneWidget);
+    // 2026-09-29 doğallık (K9): podyum kalktı; ilk üç de sıra satırıdır.
+    expect(find.byKey(const ValueKey('leaderboard-rank-list')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('leaderboard-rank-row-1')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('leaderboard-rank-row-2')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('leaderboard-rank-row-3')),
+      findsOneWidget,
+    );
     await capture('native_leaderboard');
 
     await tester.pumpWidget(

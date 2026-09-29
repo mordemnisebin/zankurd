@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık (K9): podyum basamakları yerine sıra satırları.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -96,9 +97,7 @@ void main() {
     expect(find.byIcon(AppIcons.arrowsRotate), findsOneWidget);
   });
 
-  testWidgets('leaderboard podium renders polished ranked slots', (
-    tester,
-  ) async {
+  testWidgets('leaderboard lists the top three as ranked rows', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -107,21 +106,19 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('podium-slot-1')), findsOneWidget);
-    expect(find.byKey(const ValueKey('podium-slot-2')), findsOneWidget);
-    expect(find.byKey(const ValueKey('podium-slot-3')), findsOneWidget);
-    // 2026-09-29 Şahnê: sıra numarası kaidenin içinde "#" öneksiz yazılır
-    // (Manşet 22; birincide koyu altın). Her basamak kendi sırasını taşır.
+    // 2026-09-29 doğallık (K9): podyum kalktı; ilk üç de sıra satırıdır ve
+    // sırasını satırın başında rakamla yazar.
     for (final rank in [1, 2, 3]) {
       expect(
         find.descendant(
-          of: find.byKey(ValueKey('podium-slot-$rank')),
+          of: find.byKey(ValueKey('leaderboard-rank-row-$rank')),
           matching: find.text('$rank'),
         ),
         findsOneWidget,
-        reason: 'podium-slot-$rank',
+        reason: 'leaderboard-rank-row-$rank',
       );
     }
+    expect(find.byKey(const ValueKey('leaderboard-podium')), findsNothing);
   });
 
   testWidgets('leaderboard podium text stays readable on dark panel', (
@@ -154,6 +151,8 @@ void main() {
     // 2026-09-29 Şahnê: sahnenin birincil metni gece belirtecidir
     // (`SahneTokens.night.tx`, kırık beyaz); düz `Colors.white` palet dışı.
     // Koyu temada podyum gece zemininde durur; kontrast ≥ 4.5.
+    // 2026-09-29 doğallık (K9): podyum kalktı; ad artık sıra satırında,
+    // yine birincil metin.
     expect(nameText.style?.color, equals(SahneTokens.night.tx));
     final l1 = SahneTokens.night.tx.computeLuminance();
     final l2 = SahneTokens.night.bg.computeLuminance();
@@ -173,10 +172,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final slotRect = tester.getRect(
-      find.byKey(const ValueKey('podium-slot-1')),
+    // 2026-09-29 doğallık (K9): podyum basamağı yerine sıra satırı; yatay
+    // telefonda (844 < 720 eşiği değil, ama ekran eni 844) liste okunur
+    // genişlikte kalır — tek satır ekran boyu gerilmez.
+    final rowRect = tester.getRect(
+      find.byKey(const ValueKey('leaderboard-rank-row-1')),
     );
-    expect(slotRect.width, lessThan(260));
+    expect(rowRect.width, lessThanOrEqualTo(640));
   });
 
   testWidgets('profile screen remains usable in landscape', (tester) async {

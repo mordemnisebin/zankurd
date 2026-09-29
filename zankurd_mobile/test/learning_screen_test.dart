@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık (K5, K7): ders yolunda elmas düğüm ve ikon karosu yok.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
@@ -1056,6 +1057,20 @@ void main() {
 
     // Kilitli dersler yine açıkça işaretlenir.
     expect(find.byIcon(AppIcons.lock), findsWidgets);
+
+    // 2026-09-29 doğallık (K5, K7): yolun elmas düğümleri ve her dersin
+    // ikon karosu kalktı; kilitli ders tek işaret (kilit) taşır, öteki
+    // dersler ikonsuz liste satırıdır.
+    expect(find.byType(SahnePathNode), findsNothing);
+    final locked = find.byKey(const ValueKey('learning-route-stop-everyday_2'));
+    expect(
+      find.descendant(of: locked, matching: find.byIcon(AppIcons.lock)),
+      findsOneWidget,
+    );
+    expect(
+      find.ancestor(of: locked, matching: find.byType(SahneListGroup)),
+      findsOneWidget,
+    );
   });
 
   testWidgets('öğrenme ekranından sözlük açılır ve iki dilde arama yapılır', (

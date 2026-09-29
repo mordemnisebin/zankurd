@@ -23,7 +23,6 @@ import '../providers/reduced_motion_provider.dart';
 import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
-import '../widgets/roj_mascot.dart';
 import '../widgets/app_state.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/skeleton_loader.dart';
@@ -291,6 +290,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool get _hasServerScore =>
       _answeredTotal > 0 && (_stats?.totalScore ?? 0) > 0;
 
+  /// Oyuncu en az bir tur oynadı mı (ya da bir şey kazandı mı)?
+  ///
+  /// 2026-09-29 doğallık (K6): ilk turdan önce seviye kartı ("Seviye 1 ·
+  /// 0/1000" + boş çubuk) ve başarı çubuğu ("0/13" + boş çubuk) yeni
+  /// gelene iki ayrı boş sayaç gösteriyordu. İkisi de bu kapıyla gizlenir;
+  /// ana sayfa aynı nedenle ilk oturumda ilerleme özetini göstermez.
+  /// XP ya da açılmış başarı varsa (ör. başka cihazdan) kapı açıktır.
+  bool get _hasPlayed =>
+      _answeredTotal > 0 ||
+      _level > 1 ||
+      _xpInLevel > 0 ||
+      _achievements.isNotEmpty ||
+      _badgeUnlocked.isNotEmpty;
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
@@ -298,12 +311,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final isWide = width > 720;
 
     // 2026-09-29 Şahnê A iskeleti: marka satırı → "Profil" → kimlik
-    // (elmas avatar + ad + kod) → seviye kartı → bölümler (tek bölüm
+    // (avatar + ad + kod) → seviye kartı → bölümler (tek bölüm
     // başlığı + liste grupları). Eski yeşil degrade kahraman kart, süs
     // daireleri, kilim bordürü ve büyük harfli gri bölüm etiketleri kalktı.
     final identity = _ProfileHeroCard(
       ku: ku,
       displayName: _displayName(ku),
+      hasOwnName: !PlayerIdentity.isPlaceholderDisplayName(_currentName),
       avatarIdentity: _avatarIdentity,
       showcaseTitle: _avatarIdentity.showcaseTitle,
       playerTag: _playerTag,
@@ -324,16 +338,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           alignment: AlignmentDirectional.centerStart,
           child: _SyncStatusChip(),
         ),
-        const SizedBox(height: SahneSpace.cardGap),
         // Seviye kartı: seviye karosu + XP çipi + Zêr ilerleme çubuğu.
-        SahneSurfaceCard(
-          child: ProgressSummary(
-            level: _level,
-            xpInLevel: _xpInLevel,
-            xpNeeded: _xpNeeded,
-            levelLabel: context.t(K.progressLevelLabel),
+        // İlk turdan önce yok ([_hasPlayed]).
+        if (_hasPlayed) ...[
+          const SizedBox(height: SahneSpace.cardGap),
+          SahneSurfaceCard(
+            key: const ValueKey('profile-level-card'),
+            child: ProgressSummary(
+              level: _level,
+              xpInLevel: _xpInLevel,
+              xpNeeded: _xpNeeded,
+              levelLabel: context.t(K.progressLevelLabel),
+            ),
           ),
-        ),
+        ],
         SahneSectionHeader(title: context.t(K.myStats)),
         // Sunucu satırı yoksa yerel ilerleme de gizleniyordu: çevrimdışı
         // 2 soru cevaplamış oyuncu kendi cevapladığı soru sayısını
@@ -341,8 +359,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         // gösterilecek bir şey olup olmadığına bakar; karolar sunucu
         // metriği yokken "—" gösterir.
         if (_stats == null && _answeredTotal == 0)
-          // Boş durum: logo plakası + tek cümle + ekranın tek birincil
-          // eylemi. Plaka semantik ağaca düğüm eklemez.
+          // Boş durum: bağlamsal çizgi ikon + tek cümle + ekranın tek
+          // birincil eylemi. İkon semantik ağaca düğüm eklemez.
+          //
+          // 2026-09-29 doğallık (K3): burada 64'lük maskot/logo plakası
+          // duruyordu; boş durumların ortak dili gibi 32'lik üçüncül bir
+          // çizgi ikon (istatistik sütunu) oldu. Logo marka satırının işi.
           SahneSurfaceCard(
             child: Builder(
               builder: (context) {
@@ -364,8 +386,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 );
-                const plate = ExcludeSemantics(
-                  child: RojMascot(size: 64, mood: RojMood.thinking),
+                final plate = ExcludeSemantics(
+                  child: Icon(AppIcons.chartColumn, size: 32, color: t.tx3),
                 );
                 // Büyük yazıda metin dar sütunda harf harf bölünmesin:
                 // plaka üste, metin ve düğme tam genişliğe.
@@ -509,6 +531,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _UnifiedRewardsSection(
           achievements: _achievements,
           badgeUnlocked: _badgeUnlocked,
+          showProgress: _hasPlayed,
           isKu: ku,
         ),
         // Navigasyon kısayolları — iki adlandırılmış liste grubu

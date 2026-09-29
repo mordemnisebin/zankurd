@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık (K9): native kanıt podyum değil sıra listesini arar.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -16,7 +17,8 @@ void main() {
     expect(script, contains('CAPTURE_SCREENSHOT'));
     expect(script, contains('native_leaderboard'));
     expect(script, contains('native_spin_wheel'));
-    expect(nativeTest, contains('leaderboard-podium'));
+    // 2026-09-29 doğallık (K9): podyum kalktı; kanıt sıra listesini arar.
+    expect(nativeTest, contains('leaderboard-rank-list'));
     expect(nativeTest, contains('native_spin_wheel'));
     expect(designQa, contains('native_visual_qa.sh'));
     expect(workflow, contains('native-visual-qa:'));

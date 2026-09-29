@@ -17,7 +17,7 @@ import 'sahne/sahne.dart';
 ///
 /// 2026-09-29 Şahnê: hepsi Şahnê bileşenlerinin dilinde — ödül jetonu stat
 /// çipi, durum çipi rol rozeti, arena başlığı sahne kartı, görev kartı
-/// yüzey kartı + ilerleme çubuğu, madalya elmas. Renk rol taşır; ödül
+/// yüzey kartı + ilerleme çubuğu, madalya karosu. Renk rol taşır; ödül
 /// her zaman Zêr'dir ve türler GLİF ŞEKLİYLE ayrışır (jeton, şimşek,
 /// alev, yıldız, taç), renkle değil.
 
@@ -456,12 +456,15 @@ class MissionProgressCard extends StatelessWidget {
   }
 }
 
-/// Sıralama madalyası — ilk üç için elmas, gerisi için sade numara.
+/// Sıralama madalyası — ilk üç için madalya karosu, gerisi için sade numara.
 ///
-/// 2026-09-29 Şahnê: podyum elması (madalya rengi dolgu: altın, gümüş,
-/// bronz) içinde koyu tablo rakamı; dördüncüden sonra yalnız ikincil
-/// metin rengi rakam. Sıra hiçbir zaman yalnız renkle anlatılmaz: rakam
-/// her zaman yazılıdır.
+/// 2026-09-29 Şahnê: madalya rengi dolgu (altın, gümüş, bronz) içinde koyu
+/// tablo rakamı; dördüncüden sonra yalnız ikincil metin rengi rakam. Sıra
+/// hiçbir zaman yalnız renkle anlatılmaz: rakam her zaman yazılıdır.
+///
+/// 2026-09-29 doğallık (K5): madalya elmastı; elmas yalnız soru ilerlemesi
+/// ve ders sayacında kalır. Madalya boyuna uygun pahlı kare
+/// ([SahneShape.forSize]); rakam için iç alan da genişledi.
 class RankMedal extends StatelessWidget {
   const RankMedal({required this.rank, this.size = 40, super.key});
 
@@ -497,11 +500,11 @@ class RankMedal extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: fill,
-          shape: SahneShape.diamond(size),
+          shape: SahneShape.forSize(size),
         ),
         child: Center(
           child: SizedBox.square(
-            dimension: size * 0.5,
+            dimension: size * 0.6,
             child: FittedBox(fit: BoxFit.scaleDown, child: number),
           ),
         ),

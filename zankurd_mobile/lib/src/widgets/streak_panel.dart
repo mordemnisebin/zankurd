@@ -116,7 +116,7 @@ class StreakPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 2026-09-29 Şahnê: yüzey kartı (Perde, L pah, gündüzde 1 px kenar);
-    // seri jetonu alev glifli stat çipi; hafta elmas dizisi; kilometre taşı
+    // seri jetonu alev glifli stat çipi; hafta gün karoları; kilometre taşı
     // Zêr ilerleme çubuğu ("5/7" sağda); koruma ikincil düğme (Kulis).
     final t = SahneTokens.of(context);
     final labels = dayLabels;
@@ -217,9 +217,13 @@ class _DayMark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    // Şahnê elmas dili: tamamlanan gün Zêr dolu + ✓ (seri ödüldür), bugün
-    // Zêr tonu + Halka 2, kaçırılan Ray + ✗, gelecek yalnız çizgi, dondurulan
+    // Gün karosu: tamamlanan gün Zêr dolu + ✓ (seri ödüldür), bugün Zêr
+    // tonu + Halka 2, kaçırılan Ray + ✗, gelecek yalnız çizgi, dondurulan
     // Kulis + kalkan. Durum yalnız renkle verilmez: her birinin ikonu ayrı.
+    //
+    // 2026-09-29 doğallık (K5): günler elmastı. Elmas yalnız soru
+    // ilerlemesi ve ders sayacında kalır; gün, boyuna uygun pahlı kare
+    // ([SahneShape.forSize], 32 → M).
     final (Color bg, Color fg, IconData icon, Color? ring) = switch (state) {
       StreakDayState.completed => (t.gold, t.onGold, AppIcons.check, null),
       StreakDayState.today => (
@@ -246,16 +250,13 @@ class _DayMark extends StatelessWidget {
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: bg,
-                  shape: SahneShape.diamond(
-                    32,
-                    side: ring == null
-                        ? null
-                        : BorderSide(
-                            color: ring,
-                            width: SahneRing.r2,
-                            strokeAlign: BorderSide.strokeAlignInside,
-                          ),
-                  ),
+                  shape: ring == null
+                      ? SahneShape.forSize(32)
+                      : SahneShape.withSide(
+                          SahneShape.forSize(32),
+                          ring,
+                          width: SahneRing.r2,
+                        ),
                 ),
                 child: Icon(icon, size: 14, color: fg),
               ),

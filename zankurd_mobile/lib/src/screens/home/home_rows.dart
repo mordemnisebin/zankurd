@@ -84,6 +84,9 @@ class CategoryProgress {
 ///
 /// Okuma başarısızsa çip görünmez (uydurma "0" yazılmaz); sayılar süstür,
 /// sekmenin kendisi onlara bağlı değil.
+///
+/// 2026-09-29 doğallık (K6): sayı sıfırken de çip görünmez — ana sayfanın
+/// başlığıyla aynı kural. "0 gün" ve "0" bilgi taşımayan kalıptı.
 class TabStatChips extends StatefulWidget {
   const TabStatChips({required this.repository, this.refreshSignal, super.key});
 
@@ -153,8 +156,8 @@ class _TabStatChipsState extends State<TabStatChips> {
       runSpacing: SahneSpace.x1,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        if (streak != null) streakStatChip(context, streak),
-        if (coins != null) coinStatChip(context, coins),
+        if (streak != null && streak > 0) streakStatChip(context, streak),
+        if (coins != null && coins > 0) coinStatChip(context, coins),
       ],
     );
   }

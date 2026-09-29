@@ -6,19 +6,23 @@ import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
-/// Podyum puanı büyük yazıda okunur kalır.
+/// Sıralama puanı büyük yazıda okunur kalır.
 ///
 /// %200 yazıda puan "50/00" gibi iki satıra bölünüyordu. Sayı bir sözcük
 /// değildir: bölününce anlamını kaybeder ve birinciyle üçüncüyü
-/// karşılaştırmak imkânsızlaşır — podyumun tek işi tam da o karşılaştırma
-/// (2026-08-04 görsel denetimi).
+/// karşılaştırmak imkânsızlaşır (2026-08-04 görsel denetimi).
 ///
 /// Çözüm değeri kısaltmak ya da erişilebilirlik ölçeğini kapatmak DEĞİL:
 /// yalnız sayıya `BoxFit.scaleDown` uygulanır, yani sığdığı sürece
 /// kullanıcının seçtiği boyutta çizilir.
+///
+/// 2026-09-29 doğallık (K9): podyum kalktı, ilk üç de liste satırıdır. Bu
+/// dosyanın önceki adı `leaderboard_podium_score_test`; bekçi aynı sözü
+/// artık her sıra satırının puanı için tutar.
 class _Repo extends MockZanKurdRepository {
   _Repo({this.count = 3, this.score = 5000});
 
@@ -69,27 +73,28 @@ Future<void> _pump(
       ),
     ),
   );
-  // Veri asenkron yüklenir; önce future çözülsün, sonra puan artık
-  // `RollingCount` ile saydığı için (tavan 1100ms) ve birinci basamak
-  // `KilimReveal` ile açıldığı için (1100ms) animasyonlar tamamlansın.
   await tester.pump();
-  await tester.pump(const Duration(milliseconds: 1300));
-  await tester.pump(const Duration(milliseconds: 100));
+  await tester.pump(const Duration(milliseconds: 600));
 }
 
-/// Podyum puanının çizildiği metin düğümü — tek satırda mı kaldı?
+/// Puan metni tek satırda mı kaldı?
 ///
-/// Puan artık `RollingCount` ile sayarak çıkıyor; bu bileşen tek satırı
-/// `maxLines: 1` ile garanti eder (eski düz `Text` gibi `softWrap: false`
-/// taşımaz — `maxLines: 1` zaten sarmayı kapatır). Bu yüzden bekçi
-/// `softWrap` yerine `maxLines`e bakar (2026-08-19).
+/// Puan `FittedBox(scaleDown)` içindedir: metin sınırsız genişlikte dizilir
+/// (sarmaz), yalnız gerekirse küçülerek sığar. Bekçi çizilen metnin
+/// yüksekliğine bakar: iki satıra bölünen puan bir satırlık yükseklikten
+/// uzun olur.
 void _expectSingleLineScores(WidgetTester tester, String score) {
   final finder = find.text(score);
   expect(finder, findsWidgets, reason: 'puan $score hiç çizilmedi');
-  for (final widget in tester.widgetList<Text>(finder)) {
+  final scale = MediaQuery.textScalerOf(tester.element(finder.first));
+  final oneLine =
+      scale.scale(SahneType.bodyStrong.fontSize!) *
+      SahneType.bodyStrong.height!;
+  for (final element in finder.evaluate()) {
+    final height = (element.renderObject! as RenderBox).size.height;
     expect(
-      widget.maxLines,
-      1,
+      height,
+      lessThan(oneLine * 1.5),
       reason: 'puan birden çok satıra bölünürse sayı anlamını kaybeder',
     );
   }
@@ -102,7 +107,7 @@ const _ipad = Size(834, 1194);
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets('%200 yazıda podyum puanı tek satırda kalır', (tester) async {
+  testWidgets('%200 yazıda sıra puanı tek satırda kalır', (tester) async {
     await _pump(tester, size: _narrow);
     expect(tester.takeException(), isNull);
     _expectSingleLineScores(tester, '5000');
@@ -117,13 +122,13 @@ void main() {
   }
 
   for (final count in const [1, 2, 3]) {
-    testWidgets('$count oyuncuyla podyum puanı bozulmaz', (tester) async {
+    testWidgets('$count oyuncuyla sıra puanı bozulmaz', (tester) async {
       await _pump(tester, size: _phone, count: count);
       expect(tester.takeException(), isNull);
       _expectSingleLineScores(tester, '5000');
-      // Sahte oyuncu eklenmedi: yalnız var olan slotlar çizilir.
+      // Sahte oyuncu eklenmedi: yalnız var olan satırlar çizilir.
       expect(
-        find.byKey(const ValueKey('podium-slot-3')),
+        find.byKey(const ValueKey('leaderboard-rank-row-3')),
         count >= 3 ? findsOneWidget : findsNothing,
       );
     });

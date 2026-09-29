@@ -1,4 +1,7 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+// 2026-09-29 doğallık (K5, K7): düello kartında VS amblemi yok (yerine
+// "10 soru · ~2 dakika"); "Oda kur" ve "Kodla katıl" liste grubu değil yan
+// yana iki ikincil düğme. Bekçiler yeni düzeni ve TEK Agir kuralını sorar.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -44,9 +47,25 @@ void main() {
     expect(card.role, SahneRole.race);
     expect(
       find.descendant(of: hero, matching: find.byType(SahneVsEmblem)),
+      findsNothing,
+    );
+    expect(
+      find.descendant(of: hero, matching: find.text('10 soru · ~2 dakika')),
       findsOneWidget,
     );
-    expect(find.byType(FilledButton), findsOneWidget);
+    // Tek Agir düğme kartta; ekrandaki öteki dolgulu düğmeler (oda
+    // eylemleri) ikincildir: Kulis tonu.
+    expect(
+      find.descendant(of: hero, matching: find.byType(FilledButton)),
+      findsOneWidget,
+    );
+    final night = SahneTokens.of(tester.element(hero));
+    final outside = find.byWidgetPredicate(
+      (w) =>
+          w is FilledButton &&
+          w.style?.backgroundColor?.resolve(<WidgetState>{}) == night.s2,
+    );
+    expect(outside, findsNWidgets(2));
     final ctx = tester.element(find.text('Rakip bul'));
     final label = tester.widget<Text>(find.text('Rakip bul'));
     expect(
@@ -150,12 +169,12 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('oda kur ve kodla katıl tek liste grubunda alt alta', (
+  testWidgets('oda kur ve kodla katıl yan yana iki ikincil düğme', (
     tester,
   ) async {
-    // 2026-09-29 Şahnê: iki yan yana kart yerine maketteki liste grubu
-    // (iki satır, ikon hizasından ayırıcı). Satırlar ≥ 64 ve Kurmancîde
-    // uzayan metinle sarar.
+    // 2026-09-29 doğallık (K7): iki satırlık liste grubu (ikon karosu +
+    // alt satır + ok) yerine tek açıklama satırı ve yan yana iki ikincil
+    // düğme; ikisi de ≥ 48 dokunma hedefi ve aynı yükseklikte.
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -168,16 +187,15 @@ void main() {
     final joinFinder = find.byKey(const ValueKey('play-hub-join-room'));
     final create = tester.getRect(createFinder);
     final join = tester.getRect(joinFinder);
-    expect(join.top, greaterThanOrEqualTo(create.bottom));
-    expect(create.height, greaterThanOrEqualTo(64));
+    expect(create.top, join.top);
+    expect(join.left, greaterThan(create.right));
+    expect(create.height, greaterThanOrEqualTo(48));
+    expect(create.height, join.height);
     expect(
       find.ancestor(of: createFinder, matching: find.byType(SahneListGroup)),
-      findsOneWidget,
+      findsNothing,
     );
-    expect(
-      find.ancestor(of: joinFinder, matching: find.byType(SahneListGroup)),
-      findsOneWidget,
-    );
+    expect(find.text('Arkadaşlarını kodla çağır'), findsOneWidget);
   });
 
   testWidgets('%200 metinde oda eylemleri güvenli biçimde alt alta döner', (

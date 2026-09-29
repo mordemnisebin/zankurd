@@ -22,6 +22,13 @@
 /// kenarları madalya renginde. Işık hüzmesi + konfeti ressamı
 /// (`StageBackdropPainter`), yeşil degrade ve beyaz isimler kalktı. Bu dosya
 /// yeni sahneyi ve okunabilirliğini (WCAG ≥ 4.5:1, iki temada) sabitler.
+///
+/// ## 2026-09-29 doğallık:
+///
+/// Podyum, taç, hale ve madalya halkaları kalktı (K9): bütün sıralama tek
+/// liste, ilk üç yalnız sıra rakamının renginden ayrılır. Bekçi artık
+/// listenin her dilde ve temada sade kaldığını (taç yok, degrade/Ink yok,
+/// adlar birincil metin) ve rakam renklerinin okunabilirliğini ölçer.
 library;
 
 import 'package:flutter/material.dart';
@@ -36,7 +43,7 @@ import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
-/// `leaderboard_podium_celebration_test.dart` ile AYNI 3 kişi.
+/// `leaderboard_top_three_test.dart` ile aynı adlar.
 class _Repo extends MockZanKurdRepository {
   @override
   Future<List<LeaderboardEntry>> loadLeaderboard({
@@ -135,8 +142,8 @@ void main() {
   });
 
   testWidgets(
-    'podyum HER dilde ve temada aynı dilde: sahne ressamı yok, taç yalnız '
-    'birincide, isimler birincil metin',
+    'sıralama HER dilde ve temada sade liste: taç yok, degrade yok, adlar '
+    'birincil metin',
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -147,26 +154,28 @@ void main() {
           final why = 'ku=$isKu dark=$isDark';
           expect(tester.takeException(), isNull, reason: why);
 
-          final podium = find.byKey(const ValueKey('leaderboard-podium'));
-          expect(podium, findsOneWidget, reason: why);
-          final t = SahneTokens.of(tester.element(podium));
-
-          // Hüzme/konfeti ressamı yok; podyumda Ink ya da degrade kart yok.
           expect(
-            find.descendant(of: podium, matching: find.byType(Ink)),
+            find.byKey(const ValueKey('leaderboard-podium')),
+            findsNothing,
+            reason: why,
+          );
+          final list = find.byKey(const ValueKey('leaderboard-rank-list'));
+          expect(list, findsOneWidget, reason: why);
+          final t = SahneTokens.of(tester.element(list));
+
+          expect(
+            find.descendant(of: list, matching: find.byType(Ink)),
             findsNothing,
             reason: why,
           );
           final crowns = tester
-              .widgetList<SahneGlyph>(
-                find.descendant(of: podium, matching: find.byType(SahneGlyph)),
-              )
+              .widgetList<SahneGlyph>(find.byType(SahneGlyph))
               .where((g) => g.kind == SahneGlyphKind.crown);
-          expect(crowns, hasLength(1), reason: why);
+          expect(crowns, isEmpty, reason: why);
 
           for (final name in ['Rojda', 'Baran', 'Dilan']) {
             final nameText = tester.widget<Text>(
-              find.descendant(of: podium, matching: find.text(name)),
+              find.descendant(of: list, matching: find.text(name)),
             );
             expect(nameText.style?.color, t.tx, reason: '$why: $name');
           }
@@ -175,13 +184,12 @@ void main() {
     },
   );
 
-  test('WCAG: podyum metinleri iki temada da ≥ 4.5:1', () {
+  test('WCAG: sıra rakamları ve adlar iki temada da ≥ 4.5:1', () {
     for (final t in [SahneTokens.night, SahneTokens.day]) {
-      // İsim ve puan sayfa zemininde.
-      expect(_contrast(t.tx, t.bg), greaterThanOrEqualTo(4.5));
-      expect(_contrast(t.goldTx, t.bg), greaterThanOrEqualTo(4.5));
-      // Kaide Perde: birincide koyu altın, ötekilerde ikincil metin.
+      // Satırlar liste grubunun Perde yüzeyinde: birinci koyu altın,
+      // ikinci ve üçüncü birincil metin, gerisi ikincil metin.
       expect(_contrast(t.goldTx, t.s1), greaterThanOrEqualTo(4.5));
+      expect(_contrast(t.tx, t.s1), greaterThanOrEqualTo(4.5));
       expect(_contrast(t.tx2, t.s1), greaterThanOrEqualTo(4.5));
     }
   });

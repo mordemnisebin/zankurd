@@ -19,6 +19,11 @@
 /// kobalt radyal + kendi ikonu). Günün dersi kartında maskot yok (logo
 /// işareti marka satırında). Bu dosya bu kimliğin GERÇEKTEN orada olduğunu
 /// ölçer.
+///
+/// 2026-09-29 doğallık: konu karoları artık çizimsiz (K1). Bu bekçi eskiden
+/// kendi çizimi olan kategorinin o çizimi gösterdiğini sabitliyordu; şimdi
+/// her karonun çizimsiz olduğunu, kendi ikonunu ve kendi kategori tonunu
+/// taşıdığını ölçer.
 library;
 
 import 'package:flutter/material.dart';
@@ -100,8 +105,7 @@ void main() {
   });
 
   testWidgets(
-    'her görünür kategori mücevher karodur; kendi çizimi olanlar o çizimi, '
-    'olmayanlar kendi ikonunu gösterir',
+    'her görünür kategori çizimsiz mücevher karodur: kendi ikonu, kendi tonu',
     (tester) async {
       await _pumpHome(tester);
       final repo = freshMockRepository();
@@ -116,28 +120,18 @@ void main() {
         expect(tile.name, CategoryNames.localized(category, false));
         expect(tile.otherName, CategoryNames.localized(category, true));
 
-        if (CategoryVisuals.hasOwnImage(category)) {
-          var provider = tile.image;
-          if (provider is ResizeImage) provider = provider.imageProvider;
-          expect(provider, isA<AssetImage>(), reason: category);
-          expect(
-            (provider! as AssetImage).assetName,
-            CategoryVisuals.imagePath(category),
-            reason: '$category görseli category_visuals ile eşleşmeli',
-          );
-        } else {
-          // Sînema, Çand'ın çay/kilim fotoğrafını ÖDÜNÇ alırdı; kimlik
-          // karosunda bu yanlış konuyu anlatır. Çizimsiz karo + kendi ikonu.
-          expect(tile.image, isNull, reason: category);
-          expect(
-            find.descendant(
-              of: finder,
-              matching: find.byIcon(CategoryVisuals.icon(category)),
-            ),
-            findsOneWidget,
-            reason: '$category yerine kendi ikonunu çizmeli',
-          );
-        }
+        // Üretilmiş kategori çizimleri ızgarada yok; konu adı, ikonu ve
+        // kendi renk ailesiyle ayrılır.
+        expect(tile.image, isNull, reason: category);
+        expect(tile.tone, CategoryVisuals.tone(category), reason: category);
+        expect(
+          find.descendant(
+            of: finder,
+            matching: find.byIcon(CategoryVisuals.icon(category)),
+          ),
+          findsOneWidget,
+          reason: '$category yerine kendi ikonunu çizmeli',
+        );
       }
     },
   );
