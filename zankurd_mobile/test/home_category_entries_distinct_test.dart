@@ -35,12 +35,10 @@ void main() {
   test('ana ekran bölüm metinleri Hawar alfabesinde', () {
     // 2026-09-29 doğallık: `K.homeTopicsSub` kodda kullanılmadığı için
     // defterden silindi; listeden çıktı.
+    // 2026-09-30 doğallık: "3 adımda ZanKurd" kartının anahtarları
+    // (homeStepsTitle, homeStep1-3) kart kalkınca defterden silindi.
     for (final key in [
       K.homeTopicsTitle,
-      K.homeStepsTitle,
-      K.homeStep1,
-      K.homeStep2,
-      K.homeStep3,
       K.homeDoorLearnSub,
       K.homeDoorPlayTitle,
       K.homeDoorPlaySub,

@@ -66,9 +66,16 @@ void main() {
         find.byKey(const ValueKey('home-daily-task-start')),
         findsOneWidget,
       );
-      // İlk oturum: yol gösterici var, görev/ilerleme kalabalığı yok.
+      // İlk oturum: görev/ilerleme kalabalığı yok.
       // Yarış kapısı ise baştan görünür — uygulamanın ikinci yüzü.
-      expect(find.byKey(const ValueKey('home-first-steps')), findsOneWidget);
+      //
+      // 2026-09-30 doğallık: "3 adımda ZanKurd" yol göstericisi kalktı. 1.
+      // adımı hemen üstteki Günün dersini kelimesi kelimesine tekrarlıyor,
+      // 2.-3. adım sekme çubuğunun zaten gösterdiğini anlatıyordu; kullanım
+      // kılavuzu gibi duran kart "şablondan üretilmiş" izlenimi veriyordu.
+      // Bekçi: ilk oturumda da, sonrasında da geri gelmez.
+      expect(find.byKey(const ValueKey('home-first-steps')), findsNothing);
+      expect(find.text('3 adımda ZanKurd'), findsNothing);
       expect(find.byKey(const ValueKey('home-door-play')), findsOneWidget);
       expect(find.byKey(const ValueKey('home-progress-summary')), findsNothing);
       expect(find.byType(DailyMissionsCard), findsNothing);

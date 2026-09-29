@@ -1912,19 +1912,6 @@ class Tr {
     K.homeGreetEvening: {'ku': 'Êvarbaş', 'tr': 'İyi akşamlar'},
     K.homeGreetNight: {'ku': 'Şevbaş', 'tr': 'İyi geceler'},
     // ── Ana ekranın bölümleri (2026-09-27 sade ilk deneyim) ──────────
-    K.homeStepsTitle: {'ku': 'ZanKurd di 3 gavan de', 'tr': '3 adımda ZanKurd'},
-    K.homeStep1: {
-      'ku': 'Dersa rojê temam bike: 5 pirs, 3 deqe',
-      'tr': 'Günün dersini tamamla: 5 soru, 3 dakika',
-    },
-    K.homeStep2: {
-      'ku': 'Mijarekê hilbijêre û bi pirsan hîn bibe',
-      'tr': 'Bir konu seç, soru çözerek öğren',
-    },
-    K.homeStep3: {
-      'ku': 'Bi hevalên xwe re pêşbirkê bike an hevrikekî bibîne',
-      'tr': 'Arkadaşlarınla yarış ya da rakip bul',
-    },
     K.homeDoorLearnSub: {
       'ku': 'Ders, çîrok û ferheng',
       'tr': 'Ders, hikâye ve sözlük',
@@ -3583,13 +3570,6 @@ class K {
   static const homeGreetDay = 'home.greeting.day';
   static const homeGreetMorning = 'home.greeting.morning';
   static const homeGreetingAnon = 'home.greeting.anon';
-
-  /// İlk oturumdaki üç adımlık yol gösterici. Yeni gelen, uygulamanın
-  /// iki yüzünü (öğren + yarış) ilk ekranda görür; ilk turdan sonra kalkar.
-  static const homeStepsTitle = 'home.steps.title';
-  static const homeStep1 = 'home.steps.one';
-  static const homeStep2 = 'home.steps.two';
-  static const homeStep3 = 'home.steps.three';
 
   /// Ana ekranın iki kapısı: öğrenme alanı ve yarış.
   static const homeDoorLearnSub = 'home.door.learn.sub';
