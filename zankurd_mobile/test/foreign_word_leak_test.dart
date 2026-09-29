@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
@@ -26,7 +27,7 @@ import 'package:zankurd_mobile/src/l10n/strings.dart';
 ///     Türkçede de aynen kullanılıyor; çevrilirse mağaza sayfasıyla
 ///     çelişir.
 ///   * **Yerleşik alıntı** — "quiz" iki dilde de Kurmancî ekleriyle
-///     çekimleniyor ("Quizê biqedîne", "Quiz-a Kurt"), yani dile
+///     çekimleniyor ("Quizê biqedîne", "Azmûna kurt"), yani dile
 ///     girmiş. "Streak" muaf değildi: parantez içi açımlama ürün
 ///     terimini (zincîr / seri) İngilizceyle yeniden adlandırıyordu.
 ///
@@ -42,7 +43,7 @@ void main() {
   const allowedByLanguage = <String, Set<String>>{
     'ku': {
       'premium', // abonelik kademesinin adı; mağaza sayfasıyla aynı olmalı
-      'quiz', // Kurmancî eklerle çekimleniyor: "Quizê biqedîne", "Quiz-a Kurt"
+      'quiz', // Kurmancî eklerle çekimleniyor: "Quizê biqedîne", "Azmûna kurt"
       'xp', // birim kısaltması, iki dilde de aynı
       'zankurd', // ürünün kendi adı
     },
@@ -139,15 +140,12 @@ void main() {
     // Bekçi kör kalmasın: düzeltilen örnek gerçekten yerinde durmalı.
     expect(
       Tr.of(K.categoryMasteryGoal, AppLanguage.ku),
-      'Armanca serweriya kategoriyê',
+      'Armanca serweriya mijarê',
     );
-    expect(
-      Tr.of(K.categoryMasteryGoal, AppLanguage.tr),
-      'Kategori ustalık hedefi',
-    );
+    expect(Tr.of(K.categoryMasteryGoal, AppLanguage.tr), 'Konu ustalık hedefi');
     // Profil bölüm başlığı "Ustalîya" deyince aynı kavram iki adla durur.
-    expect(Tr.of(K.kategoriUstaligi, AppLanguage.ku), 'Serweriya Kategoriyê');
-    expect(Tr.of(K.kategoriUstaligi, AppLanguage.tr), 'Kategori Ustalığı');
+    expect(Tr.of(K.kategoriUstaligi, AppLanguage.ku), 'Serweriya mijarê');
+    expect(Tr.of(K.kategoriUstaligi, AppLanguage.tr), 'Konu ustalığı');
 
     for (final key in Tr.keys) {
       final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
@@ -162,8 +160,11 @@ void main() {
   test('bulut senkronu İngilizce cloud taşımaz', () {
     // Durum çipi Türkçe "Bulut" taşıyordu; karşılığı `ewr`.
     // İngilizce `cloud` aynı sınıfın diğer yüzü.
-    expect(Tr.of(K.bulutlaSenkronize, AppLanguage.ku), 'Tev rêzkirî ye (Ewr)');
-    expect(Tr.of(K.bulutlaSenkronize, AppLanguage.tr), 'Bulutla senkronize');
+    expect(
+      Tr.of(K.bulutlaSenkronize, AppLanguage.ku),
+      'Pêşketina te tomarkirî ye',
+    );
+    expect(Tr.of(K.bulutlaSenkronize, AppLanguage.tr), 'İlerlemen kayıtlı');
 
     for (final key in Tr.keys) {
       final kurmanci = Tr.of(key, AppLanguage.ku).toLowerCase();
@@ -207,7 +208,7 @@ void main() {
     expect(Tr.of(K.viewExplanation, AppLanguage.ku), 'Şîrove bibîne');
     expect(
       Tr.of(K.onbDailyBullet, AppLanguage.ku),
-      'Dersa rojane: bê dem, bi şîroveyê',
+      'Di dersa rojê de dem tune, her pirs şîroveya xwe heye.',
     );
 
     for (final key in Tr.keys) {
@@ -247,8 +248,8 @@ void main() {
     // Ürün terimi zaten `Koda Vexwendinê` (`K.enterReferralCode`).
     // Misafir yasağı "davetê" deyince aynı kod iki adla duruyordu.
     // Türkçe `davet` kökü `contains('vexwend')` taramasını kör eder.
-    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda Vexwendinê');
-    expect(Tr.of(K.enterReferralCode, AppLanguage.tr), 'Davet Kodu Gir');
+    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda vexwendinê');
+    expect(Tr.of(K.enterReferralCode, AppLanguage.tr), 'Davet kodu gir');
     expect(
       Tr.of(K.referralGuestBlocked, AppLanguage.ku),
       contains('Koda vexwendinê'),
@@ -268,16 +269,16 @@ void main() {
     // Ürün terimi zaten `Nîv bi Nîv` (`K.metin`). Rehber "Joker 50/50"
     // deyince aynı yardımcı iki adla duruyordu. Türkçe `joker` kökü
     // İngilizce `\bflashcard\b` sınıfındaki taramayı da kör eder.
-    expect(Tr.of(K.metin, AppLanguage.ku), 'Nîv bi Nîv');
+    expect(Tr.of(K.metin, AppLanguage.ku), 'Nîv bi nîv');
     expect(Tr.of(K.metin, AppLanguage.tr), '50/50');
-    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('Nîv bi Nîv'));
+    expect(Tr.of(K.howToPlayBody, AppLanguage.ku), contains('Nîv bi nîv'));
 
     for (final key in Tr.keys) {
       final kurmanci = Tr.of(key, AppLanguage.ku);
       expect(
         RegExp(r'joker\s*50', caseSensitive: false).hasMatch(kurmanci),
         isFalse,
-        reason: '$key: Kurmancî metinde "Joker 50/50"; karşılığı "Nîv bi Nîv"',
+        reason: '$key: Kurmancî metinde "Joker 50/50"; karşılığı "Nîv bi nîv"',
       );
     }
   });
@@ -288,8 +289,11 @@ void main() {
     // `jokeran` çekimi `joker\s*50` taramasını kör eder — turnûva
     // ile aynı sınıf.
     expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkariyan'));
-    expect(Tr.of(K.onbRewardBullet, AppLanguage.ku), 'Xelat, zêr û alîkarî');
-    expect(Tr.of(K.sikIpucu, AppLanguage.ku), 'Alîkariya Bersivê');
+    expect(
+      Tr.of(K.onbRewardBullet, AppLanguage.ku),
+      'Bi bersivên rast zêr qezenc bike, di pirsên zor de alîkariyê bi kar bîne.',
+    );
+    expect(Tr.of(K.sikIpucu, AppLanguage.ku), 'Alîkariya bersivê');
 
     for (final key in Tr.keys) {
       final kurmanci = Tr.of(key, AppLanguage.ku);
@@ -323,7 +327,7 @@ void main() {
     // Giriş `Bi Google têkeve` der. Bağlama "Bi Google ve" deyince
     // Türkçe "ile" `ve` olarak sızar. `ji nû ve` doğru postposition;
     // marka + ve kalıbı şart.
-    expect(Tr.of(K.linkGoogle, AppLanguage.ku), 'Bi Google Girêde');
+    expect(Tr.of(K.linkGoogle, AppLanguage.ku), 'Bi Google girêde');
     expect(Tr.of(K.connectingGoogle, AppLanguage.ku), 'Bi Google tê girêdan…');
     expect(Tr.of(K.connectingApple, AppLanguage.ku), 'Bi Apple tê girêdan…');
 
@@ -340,18 +344,18 @@ void main() {
   test('kart görünümü İngilizce flashcard taşımaz', () {
     // Özellik adı `K.flashcards` ile zaten yerel; kip tooltip'i
     // "Flashcard modu" deyince aynı ekranda iki dil duruyordu.
-    expect(Tr.of(K.flashcardMode, AppLanguage.ku), 'Moda kartan');
-    expect(Tr.of(K.flashcardMode, AppLanguage.tr), 'Kart modu');
-    expect(Tr.of(K.flashcards, AppLanguage.ku), 'Kartên Hînbûnê');
-    expect(Tr.of(K.flashcards, AppLanguage.tr), 'Hafıza Kartları');
+    expect(Tr.of(K.flashcardMode, AppLanguage.ku), 'Kartên peyvan');
+    expect(Tr.of(K.flashcardMode, AppLanguage.tr), 'Kelime kartları');
+    expect(Tr.of(K.flashcards, AppLanguage.ku), 'Kartên peyvan');
+    expect(Tr.of(K.flashcards, AppLanguage.tr), 'Kelime kartları');
   });
 
   test('günlük zincîr başlığı İngilizce streak taşımaz', () {
     // Muafiyet parantez içi "(Streak)"i gizliyordu; başlık zaten
     // zincîr / seri diyordu, İngilizce köprü terimin yerini alıyordu.
-    expect(Tr.of(K.gunlukSeriStreak, AppLanguage.ku), 'Zincîra Pêşketinê');
-    expect(Tr.of(K.gunlukSeriStreak, AppLanguage.tr), 'Günlük Seri');
-    expect(Tr.of(K.badgeStreak30Title, AppLanguage.tr), '30 Günlük Seri');
+    expect(Tr.of(K.gunlukSeriStreak, AppLanguage.ku), 'Zincîra pêşketinê');
+    expect(Tr.of(K.gunlukSeriStreak, AppLanguage.tr), 'Günlük seri');
+    expect(Tr.of(K.badgeStreak30Title, AppLanguage.tr), '30 günlük seri');
   });
 
   test('kupa terimi Kurmancîde kûpa olarak kalır', () {
@@ -408,7 +412,7 @@ void main() {
     // Ürün terimi zaten `rû` (`K.myAvatar`). Düğme "Avatarê" deyince
     // oyuncu aynı yüzeyi iki adla görür. `Avatarê` çekimi `\bavatar\b`
     // taramasını kör eder — serverê ile aynı sınıf.
-    expect(Tr.of(K.myAvatar, AppLanguage.ku), 'Rûyê Min');
+    expect(Tr.of(K.myAvatar, AppLanguage.ku), 'Rûyê min');
     expect(Tr.of(K.editAvatar, AppLanguage.ku), 'Rûyê xwe biguherîne');
 
     for (final key in Tr.keys) {
@@ -501,13 +505,13 @@ void main() {
     // liste, Kurmancî karşılığı üründe zaten olan kavramların Türkçe
     // biçimleridir — hiçbiri bugün Ku metinde geçmiyor; biri geçerse
     // ya karşılığı kullanılmalı ya da buraya gerekçesi yazılmalı.
-    expect(Tr.of(K.botRaceHint, AppLanguage.ku), 'Şampiyon kûpayê digire!');
+    expect(Tr.of(K.botRaceHint, AppLanguage.ku), 'Şampiyon kûpayê digire.');
     expect(Tr.of(K.champion, AppLanguage.ku), 'Şampiyon!');
     expect(
       Tr.of(K.championCongrats, AppLanguage.ku),
       'Pîroz be! Tu şampiyonê Kûpaya ZanKurdê yî!',
     );
-    expect(Tr.of(K.bronzLig, AppLanguage.ku), 'Lîga Bronz');
+    expect(Tr.of(K.bronzLig, AppLanguage.ku), 'Lîga bronz');
     expect(Tr.of(K.bronze, AppLanguage.ku), 'Bronz');
 
     const reviewedLoans = {'şampiyon', 'bronz'};

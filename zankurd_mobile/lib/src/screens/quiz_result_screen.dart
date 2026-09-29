@@ -1153,7 +1153,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         caption: isLearningExperience
             ? accuracyText
             : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
-        hint: isLearningExperience ? context.t(K.learningResultHint) : null,
         celebrate: celebrate,
         notices: notices,
       ),
@@ -1329,7 +1328,6 @@ class _ResultHero extends StatelessWidget {
     required this.value,
     required this.suffix,
     required this.caption,
-    required this.hint,
     required this.celebrate,
     required this.notices,
     super.key,
@@ -1341,7 +1339,6 @@ class _ResultHero extends StatelessWidget {
   final int value;
   final String suffix;
   final String caption;
-  final String? hint;
   final bool celebrate;
   final List<Widget> notices;
 
@@ -1388,14 +1385,6 @@ class _ResultHero extends StatelessWidget {
           textAlign: TextAlign.center,
           style: SahneType.caption.copyWith(color: t.tx2),
         ),
-        if (hint != null) ...[
-          const SizedBox(height: SahneSpace.x1),
-          Text(
-            hint!,
-            textAlign: TextAlign.center,
-            style: SahneType.caption.copyWith(color: t.tx2),
-          ),
-        ],
         const SizedBox(height: SahneSpace.x2),
         // Kilim göz şeridi yalnız sonuç puanının altında ve sahne kartının
         // üst kenarında yaşar (spec `illustrationIconRule.desen`); rengi

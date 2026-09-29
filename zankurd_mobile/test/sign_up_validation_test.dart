@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-07-22 canlı UX denetimi: inline doğrulama testleri
 //
 // sign_up_screen.dart doğrulama hatalarını SnackBar olarak değil, alanın
@@ -71,7 +72,7 @@ void main() {
 
       // Geçerli parola gir (doğrulama sadece e-postada kalsın)
       await tester.enterText(textFieldByLabel('Parola'), '123456');
-      await tester.enterText(textFieldByLabel('Parolayı Onayla'), '123456');
+      await tester.enterText(textFieldByLabel('Parolayı onayla'), '123456');
 
       // Geçersiz e-posta
       await tester.enterText(textFieldByLabel('E-posta adresi'), 'gecersiz');
@@ -88,7 +89,7 @@ void main() {
 
       await tester.enterText(textFieldByLabel('E-posta adresi'), 'a@b.com');
       await tester.enterText(textFieldByLabel('Parola'), 'abc');
-      await tester.enterText(textFieldByLabel('Parolayı Onayla'), 'abc');
+      await tester.enterText(textFieldByLabel('Parolayı onayla'), 'abc');
 
       await tapButton(tester, 'İleri');
 
@@ -103,7 +104,7 @@ void main() {
 
       await tester.enterText(textFieldByLabel('E-posta adresi'), 'a@b.com');
       await tester.enterText(textFieldByLabel('Parola'), '123456');
-      await tester.enterText(textFieldByLabel('Parolayı Onayla'), '654321');
+      await tester.enterText(textFieldByLabel('Parolayı onayla'), '654321');
 
       await tapButton(tester, 'İleri');
 
@@ -126,7 +127,7 @@ void main() {
 
       await tester.enterText(textFieldByLabel('E-posta adresi'), 'a@b.com');
       await tester.enterText(textFieldByLabel('Parola'), '123456');
-      await tester.enterText(textFieldByLabel('Parolayı Onayla'), '123456');
+      await tester.enterText(textFieldByLabel('Parolayı onayla'), '123456');
 
       await tapButton(tester, 'İleri');
     }
@@ -173,7 +174,7 @@ void main() {
 
       await tester.enterText(textFieldByLabel('E-posta adresi'), 'a@b.com');
       await tester.enterText(textFieldByLabel('Parola'), '123456');
-      await tester.enterText(textFieldByLabel('Parolayı Onayla'), '123456');
+      await tester.enterText(textFieldByLabel('Parolayı onayla'), '123456');
 
       await tapButton(tester, 'İleri');
     }

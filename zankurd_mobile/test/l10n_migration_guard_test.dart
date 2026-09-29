@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -207,7 +208,7 @@ void main() {
       // kökle yazılıyordu: gezinme etiketi `fêr`, geri kalan her yer
       // `hîn` (uygulamanın sloganı da 'Kurmancî hîn bibe'). İkisi de
       // doğru sözcük, ama oyuncu aynı şeyi iki adla görmemeli.
-      expect(Tr.of(K.navLearn, AppLanguage.ku), 'Hîn Bibe');
+      expect(Tr.of(K.navLearn, AppLanguage.ku), 'Hîn bibe');
       expect(Tr.of(K.navLearn, AppLanguage.tr), 'Öğren');
       expect(Tr.of(K.progressLevelLabel, AppLanguage.ku), 'Ast');
       expect(Tr.of(K.progressLevelLabel, AppLanguage.tr), 'Seviye');
@@ -250,7 +251,7 @@ void main() {
           'total': '10',
           'percent': '80%',
         }),
-        'Min di ZanKurd de 120 pûan girt! Rast: 8/10 (80%). Tu jî bilîze: Play Store: "ZanKurd"',
+        'Min di ZanKurd de 120 pûan girt! Rast: 8/10 (80%). Tu jî bilîze, li Play Store\'ê "ZanKurd".',
       );
       expect(
         Tr.of(K.resultShareText, AppLanguage.tr, {
@@ -259,7 +260,7 @@ void main() {
           'total': '10',
           'percent': '%80',
         }),
-        'ZanKurd\'te 120 puan aldım! Doğru: 8/10 (%80). Sen de oyna: Play Store: "ZanKurd"',
+        'ZanKurd\'te 120 puan aldım! Doğru: 8/10 (%80). Sen de oyna, Play Store\'da "ZanKurd".',
       );
       expect(
         Tr.of(K.progressLevelsCompleted, AppLanguage.ku, {

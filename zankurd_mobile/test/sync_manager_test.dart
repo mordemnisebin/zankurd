@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -1246,7 +1247,7 @@ void main() {
   /// `catch` dalında da yalnız `ErrorReporter.record` ile loglanıp
   /// `_queue`ya geri eklenmeden düşüyordu. `_queue` boşaldığı için
   /// `pendingCountNotifier` hemen 0'a iniyor, profil ekranındaki
-  /// `_SyncStatusChip` de "Bulutla senkronize" yazıyordu — oysa
+  /// `_SyncStatusChip` de "İlerlemen kayıtlı" yazıyordu — oysa
   /// `awardQuizCoins` RPC'si sunucuda HİÇ çalışmamıştı. Kullanıcı tur
   /// sonunda "kazandığı" coin'in aslında hiç hesabına geçmediğini asla
   /// öğrenemiyordu (2026-08-14 denetimi).

@@ -46,13 +46,6 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Açıklama bir cümle: çubuğun tek satırlık alt satırına
-                  // sığmıyor, aramanın üstünde durur.
-                  Text(
-                    context.t(K.lexiconSubtitle),
-                    style: SahneType.body.copyWith(color: t.tx2),
-                  ),
-                  const SizedBox(height: SahneSpace.x3),
                   TextField(
                     key: const ValueKey('lexicon-search-field'),
                     textInputAction: TextInputAction.search,

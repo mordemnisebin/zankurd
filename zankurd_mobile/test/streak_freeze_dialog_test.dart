@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -77,7 +78,7 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    expect(find.text('Serin kırılıyor!'), findsOneWidget);
+    expect(find.text('Serin kırılıyor.'), findsOneWidget);
 
     await tester.tap(find.text('Koru (50)'));
     await tester.pumpAndSettle();
@@ -134,6 +135,6 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    expect(find.text('Serin kırılıyor!'), findsNothing);
+    expect(find.text('Serin kırılıyor.'), findsNothing);
   });
 }

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -76,7 +77,7 @@ void main() {
   test('paywall Kurmancî eylem ve durum metinleri doğaldır', () {
     expect(Tr.of(K.paywallPerkSupport, AppLanguage.ku), 'Piştgiriya ZanKurdê');
     expect(Tr.of(K.cancelAnytime, AppLanguage.ku), 'Her gav dikarî betal bikî');
-    expect(Tr.of(K.popularBadge, AppLanguage.ku), 'NAVDAR');
+    expect(Tr.of(K.popularBadge, AppLanguage.ku), 'Ya herî zêde tê kirîn');
     expect(Tr.of(K.buyAction, AppLanguage.ku), 'Bikire');
     expect(
       Tr.of(K.paywallPackagesInactive, AppLanguage.ku),

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +89,7 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    expect(find.text('Çevir!'), findsOneWidget);
+    expect(find.text('Çevir'), findsOneWidget);
     final button = tester.widget<FilledButton>(find.byType(FilledButton));
     expect(button.onPressed, isNotNull);
     expect(tester.takeException(), isNull);
@@ -103,7 +104,7 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    expect(find.text('Yarın tekrar gel!'), findsOneWidget);
+    expect(find.text('Yarın tekrar gel.'), findsOneWidget);
     expect(find.textContaining('Yeni çevirme hakkı'), findsOneWidget);
     final button = tester.widget<FilledButton>(find.byType(FilledButton));
     expect(button.onPressed, isNull);
@@ -119,7 +120,7 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    await tester.tap(find.text('Çevir!'));
+    await tester.tap(find.text('Çevir'));
     await tester.pump();
     // Animasyon sürerken ikinci hızlı dokunuş çift ödül vermemeli.
     await tester.pump(const Duration(milliseconds: 100));
@@ -130,7 +131,7 @@ void main() {
 
     expect(repository.awardCalls, 1);
     expect(find.textContaining('+50 jeton kazandın'), findsOneWidget);
-    expect(find.text('Yarın tekrar gel!'), findsOneWidget);
+    expect(find.text('Yarın tekrar gel.'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -146,12 +147,12 @@ void main() {
       await tester.pump();
       await tester.pump();
 
-      await tester.tap(find.text('Çevir!'));
+      await tester.tap(find.text('Çevir'));
       await tester.pump();
       await tester.pump();
 
       expect(find.text('Bugün zaten çevirdin.'), findsOneWidget);
-      expect(find.text('Yarın tekrar gel!'), findsOneWidget);
+      expect(find.text('Yarın tekrar gel.'), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );
@@ -183,7 +184,7 @@ void main() {
       find.text('Çark durumunu görmek için internet bağlantısı gerekiyor.'),
       findsOneWidget,
     );
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -223,7 +224,7 @@ void main() {
       await tester.pump();
       await tester.pump();
 
-      expect(find.text('Yarın tekrar gel!'), findsOneWidget);
+      expect(find.text('Yarın tekrar gel.'), findsOneWidget);
 
       final navigator = tester.state<NavigatorState>(find.byType(Navigator));
       navigator.push(MaterialPageRoute<void>(builder: (_) => const SizedBox()));
@@ -236,7 +237,7 @@ void main() {
       navigator.pop();
       await tester.pumpAndSettle();
 
-      expect(find.text('Çevir!'), findsOneWidget);
+      expect(find.text('Çevir'), findsOneWidget);
       final button = tester.widget<FilledButton>(find.byType(FilledButton));
       expect(button.onPressed, isNotNull);
       expect(tester.takeException(), isNull);
@@ -252,14 +253,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
 
     repository.fail = false;
-    await tester.tap(find.text('Tekrar'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pumpAndSettle();
 
     expect(repository.statusCalls, 2);
-    expect(find.text('Çevir!'), findsOneWidget);
+    expect(find.text('Çevir'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

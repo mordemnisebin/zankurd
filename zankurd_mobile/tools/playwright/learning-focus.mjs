@@ -41,8 +41,8 @@ try {
  await nameInput.pressSequentially('Rojda',{delay:80});
  await page.waitForTimeout(400);
  await click('Dest pê bike');
- await page.getByText('DESTPÊKA BIÇÛK',{exact:true}).waitFor();
- assert(!(await body()).includes('Erkên Rojane'),'New user should see a focused home');
+ await page.getByText('DERSA YEKEM',{exact:true}).waitFor();
+ assert(!(await body()).includes('Erkên rojane'),'New user should see a focused home');
  await shot('home');
  await click('Moda tarî/ronahî');await shot('home-ku-dark');
  await page.setViewportSize({width:320,height:568});await shot('home-ku-dark-narrow');
@@ -76,7 +76,7 @@ try {
  await page.mouse.move(190,630);await page.mouse.wheel(0,500);await shot('result-summary');
  await click('Vegere');
  await page.getByText('ERKÊ ÎRO',{exact:true}).waitFor();
- assert((await body()).includes('Erkên Rojane'),'Support cards should return after completion');
+ assert((await body()).includes('Erkên rojane'),'Support cards should return after completion');
  await shot('completed-home');
  assert.deepEqual(errors,[]);
  const result={checkedAt:new Date().toISOString(),mode:auditMode,journey:'onboarding → first 5 questions → result → refreshed home',screenshots,errors};

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -52,7 +53,7 @@ class _RejectingSubmitRepository extends MockZanKurdRepository {
 /// 2026-09-29 Şahnê: joker düğmesi adını ekranda yazmaz (ikon + jeton +
 /// fiyat); ad ekran okuyucu sözünde ve uzun basış ipucundadır. Joker bu
 /// yüzden metinle değil ipucuyla bulunur; davranış aynı.
-final _doubleAnswerJoker = find.byTooltip('Çift Cevap');
+final _doubleAnswerJoker = find.byTooltip('Çift cevap');
 
 void main() {
   testWidgets('yazılı soruda yalnız işe yarayan jokerler gösterilir', (
@@ -282,13 +283,13 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('fill-in-blank-submit')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Çift cevap: bir cevap daha ver'), findsOneWidget);
+    expect(find.text('Bir cevap daha ver'), findsOneWidget);
     final liveRegion = tester.widget<Semantics>(
       find.byWidgetPredicate(
         (widget) =>
             widget is Semantics &&
             widget.properties.liveRegion == true &&
-            widget.properties.label == 'Çift cevap: bir cevap daha ver',
+            widget.properties.label == 'Bir cevap daha ver',
       ),
     );
     expect(liveRegion.excludeSemantics, isTrue);

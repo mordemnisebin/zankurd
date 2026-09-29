@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -63,12 +64,12 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Hız Canavarı'),
+        find.text('Hız canavarı'),
         findsOneWidget,
         reason: 'açılan rozet (speed_demon) şeritte görünmüyor',
       );
       expect(
-        find.text('30 Günlük Seri'),
+        find.text('30 günlük seri'),
         findsNothing,
         reason:
             'kullanıcı streak_30\'u hiç açmadı ama şerit onu gösteriyor — '

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,13 +42,13 @@ Future<void> _openAnalytics(
   );
   for (
     var i = 0;
-    i < 40 && find.text('Detaylı İstatistik').evaluate().isEmpty;
+    i < 40 && find.text('Ayrıntılı istatistik').evaluate().isEmpty;
     i++
   ) {
     await tester.pump(const Duration(milliseconds: 50));
   }
 
-  final detailed = find.text('Detaylı İstatistik');
+  final detailed = find.text('Ayrıntılı istatistik');
   await tester.ensureVisible(detailed);
   await tester.pumpAndSettle();
   await tester.tap(detailed);
@@ -60,7 +61,7 @@ void main() {
   ) async {
     await _openAnalytics(tester, reducedMotion: true);
 
-    expect(find.text('Kategorilere göre performans'), findsOneWidget);
+    expect(find.text('Konulara göre performans'), findsOneWidget);
     expect(_categoryBars(), findsNWidgets(2));
     expect(
       find.ancestor(
@@ -77,7 +78,7 @@ void main() {
   testWidgets('tercih kapalıyken kategori çubukları büyür', (tester) async {
     await _openAnalytics(tester, reducedMotion: false);
 
-    expect(find.text('Kategorilere göre performans'), findsOneWidget);
+    expect(find.text('Konulara göre performans'), findsOneWidget);
     expect(
       find.ancestor(
         of: _categoryBars(),

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -107,12 +108,12 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Oda Kur'), findsOneWidget);
-    expect(find.text('Kodla Katıl'), findsOneWidget);
+    expect(find.text('Oda kur'), findsOneWidget);
+    expect(find.text('Kodla katıl'), findsOneWidget);
     // 2026-09-29 Şahnê: bölümler tek bölüm başlığıyla (`SahneSectionHeader`)
     // açılır; başlık altı açıklama satırı yok (maket).
     expect(find.text('Arkadaşlarınla'), findsOneWidget);
-    expect(find.text('Etkinlikler'), findsOneWidget);
+    expect(find.text('Her gün'), findsOneWidget);
     expect(find.byType(SahneSectionHeader), findsNWidgets(2));
     expect(find.byKey(const ValueKey('play-hub-quick-duel')), findsOneWidget);
     expect(find.byKey(const ValueKey('play-hub-create-room')), findsOneWidget);

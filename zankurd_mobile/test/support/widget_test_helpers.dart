@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -191,7 +192,7 @@ MockZanKurdRepository freshMockRepository() {
   // Tekil örneği olan HER store sıfırlanır. Bu liste bir zamanlar dörttü ve
   // eksikliği sessizdi: `LevelProgressStore` testler arasında yaşadığı için
   // XP birikiyordu. Dördüncü testte oyuncu seviye atlıyor, sonuç ekranının
-  // üstüne "Seviyen yükseldi!" kutlama ROTASI biniyordu — sistem geri o
+  // üstüne "Seviye atladın!" kutlama ROTASI biniyordu — sistem geri o
   // rotayı kapatıyor, oda rotası hiç temizlenmiyordu. Test tek başına
   // koşunca geçiyor, dosya sırasıyla koşunca düşüyordu; kusur sorunun
   // içinde değil, önceki testin artığındaydı (2026-08-19).

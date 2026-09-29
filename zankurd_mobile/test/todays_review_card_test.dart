@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ void main() {
       isA<Padding>(),
       reason: 'Günlük tekrar durumu ayrı bir kart kabuğu oluşturmamalı.',
     );
-    final titleFinder = find.text('Bugünkü Tekrarlar');
+    final titleFinder = find.text('Bugünkü tekrarlar');
     final title = tester.widget<Text>(titleFinder);
     // 2026-09-29 Şahnê: öğrenme rolünün okunur metni belirteçten gelir
     // (`learnTx`, AA ölçülmüş); eski `readableAccent(playGreen)` hesabı
@@ -137,7 +138,7 @@ void main() {
     expect(data.flagsCollection.isButton, isTrue);
     expect(data.flagsCollection.isEnabled, ui.Tristate.isTrue);
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
-    expect(data.label, contains('Bugünkü Tekrarlar'));
+    expect(data.label, contains('Bugünkü tekrarlar'));
     expect(data.label, contains('2 soru tekrara hazır'));
     expect(data.label, contains('Hafızanı pekiştir'));
     semantics.dispose();
@@ -172,7 +173,7 @@ void main() {
         .getSemanticsData();
     expect(data.flagsCollection.isButton, isTrue);
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
-    expect(data.label, contains('Dubarekirinên Îro'));
+    expect(data.label, contains('Dubarekirinên îro'));
     expect(data.label, contains('1 pirs ji bo dubarekirinê amade ne'));
     expect(data.label, contains('Bîranîna xwe xurt bike'));
     semantics.dispose();

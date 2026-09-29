@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-29 Şahnê: "Rakip bul" `SahneButton.primary`dir (kilitliyken
 // `onPressed: null`); ilk içerik ölçümü marka satırının logosundan yapılır;
 // düello manşeti ve süresi iki ayrı satırdır.
@@ -23,9 +24,9 @@
 /// 3. `PlayHubScreen`teki `_QuickDuelHero`: kilitliyken (`onTap == null`)
 ///    tam turuncu ve etkin görünmeye devam ediyordu; dokununca hiçbir şey
 ///    olmuyordu ama kullanıcı bunu göremiyordu.
-/// 4. `K.leaderboardHowTo`: öğrenme sorularının sıralamaya saydığını
-///    söylüyordu — oysa yalnız yarış puanı sayılır (boş durum metni zaten
-///    doğrusunu söylüyordu: "Bir yarış başlat; puanların burada görünür.").
+/// 4. `K.leaderboardHowTo` (2026-09-29 doğallık: alt başlık kaldırıldı, bu
+///    madde ve testi de onunla gitti): öğrenme sorularının sıralamaya
+///    saydığını söylüyordu; boş durum metni doğrusunu söylüyor.
 ///
 /// ## Niçin sessiz kalırdı
 ///
@@ -48,8 +49,6 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
-import 'package:zankurd_mobile/src/l10n/lang.dart';
-import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
@@ -155,7 +154,7 @@ void main() {
     );
   });
 
-  group('2) Yalan "Bulutla senkronize"', () {
+  group('2) Yalan "İlerlemen kayıtlı"', () {
     setUp(() async {
       // İki testin de "bekleyen/başarısız kayıt yok" (isSynced) tabanından
       // başladığından emin ol; statik `ValueNotifier`lar süreç genelindedir.
@@ -163,7 +162,7 @@ void main() {
     });
 
     testWidgets(
-      'kilitliyken çip "Yalnız bu cihazda" der; "Bulutla senkronize" YOK',
+      'kilitliyken çip "Yalnız bu cihazda" der; "İlerlemen kayıtlı" YOK',
       (tester) async {
         SharedPreferences.setMockInitialValues({});
         await tester.pumpWidget(
@@ -188,7 +187,7 @@ void main() {
           reason: 'Sunucuya hiç ulaşılamıyorken çip nötr/dürüst olmalı.',
         );
         expect(
-          find.text('Bulutla senkronize'),
+          find.text('İlerlemen kayıtlı'),
           findsNothing,
           reason: 'Bulut hiç yokken "bulutla senkronize" YALAN söyler.',
         );
@@ -196,7 +195,7 @@ void main() {
       },
     );
 
-    testWidgets('erişilebilirken eski davranış korunur: "Bulutla senkronize"', (
+    testWidgets('erişilebilirken eski davranış korunur: "İlerlemen kayıtlı"', (
       tester,
     ) async {
       SharedPreferences.setMockInitialValues({});
@@ -210,13 +209,13 @@ void main() {
       );
       for (
         var i = 0;
-        i < 40 && find.text('Bulutla senkronize').evaluate().isEmpty;
+        i < 40 && find.text('İlerlemen kayıtlı').evaluate().isEmpty;
         i++
       ) {
         await tester.pump(const Duration(milliseconds: 50));
       }
 
-      expect(find.text('Bulutla senkronize'), findsOneWidget);
+      expect(find.text('İlerlemen kayıtlı'), findsOneWidget);
       expect(find.text('Yalnız bu cihazda'), findsNothing);
       expect(tester.takeException(), isNull);
     });
@@ -309,32 +308,6 @@ void main() {
       expect(data.hasAction(SemanticsAction.tap), isTrue);
       expect(tester.takeException(), isNull);
     });
-  });
-
-  group('4) Yanıltıcı Liderlik alt başlığı', () {
-    test(
-      'K.leaderboardHowTo artık yalnız yarışların puan verdiğini söyler',
-      () {
-        expect(
-          Tr.of(K.leaderboardHowTo, AppLanguage.tr),
-          'Yarışlarda puan topla, sıralamada yüksel.',
-        );
-        expect(
-          Tr.of(K.leaderboardHowTo, AppLanguage.ku),
-          'Di pêşbirkan de pûanan kom bike, bilind bibe.',
-        );
-        // Öğrenme soruları sıralamaya saymadığı hâlde "soru çöz" diye vaat
-        // eden eski dile bir daha izin verilmez.
-        expect(
-          Tr.of(K.leaderboardHowTo, AppLanguage.tr),
-          isNot(contains('Soru çöz')),
-        );
-        expect(
-          Tr.of(K.leaderboardHowTo, AppLanguage.ku),
-          isNot(contains('Pirsan çareser bike')),
-        );
-      },
-    );
   });
 
   group('5) Çevrimdışı sıralama "henüz puan yok" demez', () {

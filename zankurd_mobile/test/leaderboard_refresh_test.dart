@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-09-29 Şahnê: sekme sayfası `ScreenSectionHeading` değil A
 // iskeletidir (`SahneTabPage`); başlık oradan okunur.
 import 'package:flutter/material.dart';
@@ -82,7 +83,7 @@ void main() {
     // 2026-09-29 Şahnê: sekme sayfası A iskeletidir (`SahneTabPage`).
     expect(find.byType(SahneTabPage), findsOneWidget);
     final page = tester.widget<SahneTabPage>(find.byType(SahneTabPage));
-    expect(page.title, 'Liderlik Tablosu');
+    expect(page.title, 'Sıralama');
     expect(find.byKey(const ValueKey('leaderboard-friends-button')), findsOne);
     expect(find.byKey(const ValueKey('leaderboard-refresh-button')), findsOne);
     expect(tester.takeException(), isNull);
@@ -106,7 +107,7 @@ void main() {
     expect(initialCalls, greaterThanOrEqualTo(1));
     expect(find.byKey(const ValueKey('leaderboard-refresh-button')), findsOne);
     expect(find.byTooltip('Yenile'), findsOneWidget);
-    expect(find.bySemanticsLabel('Liderlik tablosunu yenile'), findsOneWidget);
+    expect(find.bySemanticsLabel('Sıralamayı yenile'), findsOneWidget);
     expect(find.byKey(const ValueKey('leaderboard-podium')), findsOne);
     expect(
       find.byKey(const ValueKey('leaderboard-rank-row-4')),

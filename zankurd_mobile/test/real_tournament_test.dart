@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -191,7 +192,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
     expect(
-      find.text('Yerel Kupa'),
+      find.text('Yerel turnuva'),
       findsOneWidget,
       reason:
           'Bot benzetimi gerçek oyuncu turnuvası gibi görünmemeli; yerel '

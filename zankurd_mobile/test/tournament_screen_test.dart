@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -72,12 +73,12 @@ void main() {
       // "4 soru/maç · gerçek oyuncular" satırı vardı; kartta beş meta
       // satırı üst üste yığılıyordu ve "gerçek oyuncular" üç kez
       // geçiyordu.
-      expect(find.textContaining('Eleme kupası'), findsOneWidget);
+      expect(find.textContaining('Eleme turnuvası'), findsOneWidget);
       expect(find.textContaining('4 soru/maç'), findsOneWidget);
       expect(find.textContaining('bot'), findsNothing);
       expect(find.textContaining('Cumartesi'), findsNothing);
       expect(find.text('Kontenjan dolunca başlar'), findsOneWidget);
-      expect(find.text('Turnuvaya Katıl'), findsOneWidget);
+      expect(find.text('Turnuvaya katıl'), findsOneWidget);
       final startButton = tester.widget(
         find.byKey(const ValueKey('tournament-primary-cta')),
       );
@@ -101,9 +102,9 @@ void main() {
 
       // 16 oyunculu kupada ilk tur "Son 16"dır.
       expect(find.text('Son 16'), findsAtLeast(1));
-      expect(find.text('Maçı Başlat'), findsOneWidget);
+      expect(find.text('Maçı başlat'), findsOneWidget);
       // Bölüm başlığı standart stilde (all-caps patlaması kaldırıldı).
-      expect(find.text('Turnuva Şeması'), findsOneWidget);
+      expect(find.text('Turnuva şeması'), findsOneWidget);
     });
   });
 }

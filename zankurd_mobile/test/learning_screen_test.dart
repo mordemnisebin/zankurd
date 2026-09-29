@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -211,7 +212,7 @@ void main() {
 
   // 2026-07-23 canlı UX denetimi: öğrenme modu butonları ekran okuyucuda
   // çift okunuyordu (M28 devamı). 2026-09-27: üç simgeli şerit, derslerin
-  // altında adıyla duran iki düğmeye ("Soru çöz", "Flaş kart") dönüştü;
+  // altında adıyla duran iki düğmeye ("Soru çöz", "Kelime kartları") dönüştü;
   // "Dersler" yolun kendisini tekrar ettiği için kalktı. Bekçi aynı:
   // her eylem ekran okuyucuda bir kez, dokunulabilir olarak duyurulur.
   testWidgets('konu eylemleri ekran okuyucuda çift okunmaz', (tester) async {
@@ -227,7 +228,7 @@ void main() {
     );
     expect(find.byKey(const ValueKey('learning-mode-strip')), findsNothing);
     expect(find.bySemanticsLabel('Dersler'), findsNothing);
-    for (final label in ['Soru çöz', 'Flaş kart']) {
+    for (final label in ['Soru çöz', 'Kelime kartları']) {
       final action = find.bySemanticsLabel(label);
       expect(action, findsOneWidget, reason: label);
       expect(
@@ -288,12 +289,14 @@ void main() {
         ),
         findsOneWidget,
       );
+      // 2026-09-29 doğallık: çubuğun alt satırı ("Ders ders, konu konu
+      // ilerle") kaldırıldı; çubuk yalnız sayfanın adını taşır.
       expect(
         find.descendant(
           of: find.byType(AppBar),
           matching: find.text('Ders ders, konu konu ilerle'),
         ),
-        findsOneWidget,
+        findsNothing,
       );
       expect(find.text('Öğren'), findsNothing);
       // "Bugünkü hedefin" bölümü 2026-09-27'de kalktı: hiç ders çözmemiş
@@ -304,7 +307,7 @@ void main() {
       expect(find.text('Öğrenme yolları'), findsNothing);
       expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
       // Rozet Etiket biçemindedir: yerele duyarlı büyük harf.
-      expect(find.text('SANA ÖNERİLEN'), findsOneWidget);
+      expect(find.text('SIRADAKİ DERS'), findsOneWidget);
     },
   );
 
@@ -362,7 +365,7 @@ void main() {
 
     final semanticsData = tester.getSemantics(nextStep).getSemanticsData();
     expect(semanticsData.hasAction(ui.SemanticsAction.tap), isTrue);
-    expect(semanticsData.label, contains('Sana önerilen'));
+    expect(semanticsData.label, contains('Sıradaki ders'));
     expect(semanticsData.label, contains('Selamlaşma'));
     semantics.dispose();
 
@@ -441,7 +444,7 @@ void main() {
       find.bySemanticsLabel('Ders 1. Ders tamamlandı'),
     );
     final current = tester.getSemantics(
-      find.bySemanticsLabel('Sana önerilen. Ders 2. Sonraki'),
+      find.bySemanticsLabel('Sıradaki ders. Ders 2. Sonraki'),
     );
     final locked = tester.getSemantics(
       find.bySemanticsLabel('Ders 3. Kilitli'),
@@ -485,9 +488,7 @@ void main() {
       isNotNull,
     );
     expect(
-      tester.getSemantics(
-        find.bySemanticsLabel('Pêşniyara te. Ders 2. Bidomîne'),
-      ),
+      tester.getSemantics(find.bySemanticsLabel('Dersa din. Ders 2. Bidomîne')),
       isNotNull,
     );
     final locked = tester.getSemantics(find.bySemanticsLabel('Ders 3. Girtî'));
@@ -563,7 +564,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Mevcut seviyen: Orta'), findsNothing);
-    expect(find.text('SANA ÖNERİLEN'), findsOneWidget);
+    expect(find.text('SIRADAKİ DERS'), findsOneWidget);
   });
 
   // Niyet: bir ekranda sistem yazı tipine düşen metin olmamalı (bkz.
@@ -657,7 +658,7 @@ void main() {
       find.byKey(const ValueKey('learning-path-node-everyday_2')),
       findsOneWidget,
     );
-    // Yolun sonundaki "Kategori ustalık hedefi" durağı 2026-09-27'de kalktı
+    // Yolun sonundaki "Konu ustalık hedefi" durağı 2026-09-27'de kalktı
     // (ne olduğu ekranda yazmıyordu). Yolun ardından konu eylemleri gelir.
     expect(find.byKey(const ValueKey('learning-mastery-goal')), findsNothing);
     final actions = find.byKey(const ValueKey('learning-topic-actions'));
@@ -824,7 +825,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final flashcards = find.text('Flaş kart');
+    final flashcards = find.text('Kelime kartları');
     await tester.ensureVisible(flashcards);
     await tester.tap(flashcards);
     await tester.pumpAndSettle();
@@ -846,11 +847,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Soru bulunamadı.'), findsOneWidget);
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
     expect(repository.loadCalls, 1);
 
     repository.failure = _PracticeFailure.none;
-    await tester.tap(find.text('Tekrar'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pumpAndSettle();
 
     expect(repository.loadCalls, 2);
@@ -869,11 +870,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Quiz yüklenemedi'), findsOneWidget);
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
     expect(repository.loadCalls, 1);
 
     repository.failure = _PracticeFailure.none;
-    await tester.tap(find.text('Tekrar'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pumpAndSettle();
 
     expect(repository.loadCalls, 2);
@@ -889,10 +890,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
 
     repository.fail = false;
-    await tester.tap(find.text('Tekrar'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pumpAndSettle();
 
     expect(repository.loadCalls, 2);
@@ -926,10 +927,10 @@ void main() {
     await tester.tap(find.text('Pêş'));
     await tester.pumpAndSettle();
 
-    // 2026-09-29 Şahnê: "Mini Quiz" dar ekranda tam genişlik ikincil
+    // 2026-09-29 Şahnê: "Kısa test" dar ekranda tam genişlik ikincil
     // düğmedir; etiket küçültülmeden (FittedBox yok) tek satıra sığar.
     // Ölçülen şey sonuçtur: çizilen etiket tek satır yüksekliğinde.
-    final miniQuizLabel = find.text('Quiz-a Kurt');
+    final miniQuizLabel = find.text('Azmûna kurt');
     expect(miniQuizLabel, findsOneWidget);
     expect(
       tester.getSize(miniQuizLabel).height,
@@ -957,7 +958,7 @@ void main() {
 
     await tester.tap(find.text('Pêş'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Quiz-a Kurt'));
+    await tester.tap(find.text('Azmûna kurt'));
     await tester.pumpAndSettle();
 
     expect(repository.requestedCategory, 'Ziman');

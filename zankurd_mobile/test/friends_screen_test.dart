@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -271,7 +272,7 @@ void main() {
         await tester.tap(find.text('Ara'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Arama başarısız oldu.'), findsOneWidget);
+        expect(find.text('Arayamadık, tekrar dene.'), findsOneWidget);
         expect(find.text('Oyuncu bulunamadı'), findsNothing);
       },
     );

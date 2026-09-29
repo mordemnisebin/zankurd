@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// `shop_screen.dart`taki M24 notuyla "marka dışı" ilan edildi: ZanKurd'ün
 /// kimliği turuncu · altın · koyu yeşil. Mağaza o gün düzeltildi, eşleşme
 /// ekranının hero'su 2026-07-31'de düzeltildi — ama kararın yazıldığı
-/// ekranların *kendisi* atlandı. Oyun merkezinde "Oda Kur" moru, "Turnuva
+/// ekranların *kendisi* atlandı. Oyun merkezinde "Oda kur" moru, "Turnuva
 /// Modu" pembeyi taşımaya devam etti; ana ekranda tekrar satırı, ayarlar
 /// başlığı ve soru öneri ekranı da öyle.
 ///

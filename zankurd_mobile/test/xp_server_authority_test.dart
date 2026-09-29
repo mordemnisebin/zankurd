@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -61,7 +62,7 @@ void main() {
     );
     expect(signOutTr, contains('seviye çubuğu'));
     expect(signOutTr, contains('sıralama puanı dahil'));
-    expect(signOutKu, contains('xala rêzkirinê'));
+    expect(signOutKu, contains('pûana rêzbendiyê'));
     expect(signOutKu, contains('amûr'));
   });
 

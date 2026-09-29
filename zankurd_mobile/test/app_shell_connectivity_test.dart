@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -73,7 +74,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.text('İnternet bağlantısı yok — Kontrol ediliyor…'),
+      find.text('İnternet bağlantısı yok. Kontrol ediliyor…'),
       findsOneWidget,
     );
     expect(find.text('Tekrar dene'), findsOneWidget);

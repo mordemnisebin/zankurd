@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 /// İlk kez giren oyuncu ilk birkaç dakikada kaybolmasın: simülatörde canlı
 /// gezintinin bulduğu beş belirsizlik noktası.
 ///
@@ -11,7 +12,7 @@
 /// 2. Yaş kutusu işaretsizken "Başla"ya basınca çıkan SnackBar ne
 ///    yapılacağını söylemiyordu VE tam "Başla" düğmesinin üstüne oturuyordu.
 /// 3. Ad ekranı, tanıtım turunun VE giriş ekranının zaten anlattığı
-///    "ZanKurd'a Hoş Geldin" karşılamasını ve aynı üç özelliği ÜÇÜNCÜ kez
+///    "ZanKurd'a hoş geldin" karşılamasını ve aynı üç özelliği ÜÇÜNCÜ kez
 ///    tekrarlıyordu; asıl soru ("Oyundaki adın ne olsun?") bu gürültünün
 ///    altında kalıyordu.
 /// 4. İlk ders bitince günlük görev kartı hâlâ "Günün dersi" diyordu;

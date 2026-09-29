@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 import 'dart:io';
 
@@ -208,7 +209,7 @@ void main() {
     expect(bubbleRect.right, lessThanOrEqualTo(390));
     expect(bubbleRect.bottom, lessThanOrEqualTo(844));
 
-    final roomLabelRect = tester.getRect(find.text('Özel Oda'));
+    final roomLabelRect = tester.getRect(find.text('Özel oda'));
     expect(
       bubbleRect.bottom,
       lessThanOrEqualTo(roomLabelRect.top - 4),
@@ -221,14 +222,14 @@ void main() {
       // 2026-09-29 Şahnê: "odadan ayrıl" artık Şahnê ikon düğmesidir
       // (`SahneIconButton`, 48 dokunma); ipucuyla bulunur.
       tester.getRect(find.byTooltip('Odadan ayrıl')),
-      tester.getRect(find.text('Özel Oda')),
+      tester.getRect(find.text('Özel oda')),
       tester.getRect(find.text('Hevalên Zanînê')),
       tester.getRect(find.byKey(const ValueKey('room-code-copy'))),
       tester.getRect(find.byKey(const ValueKey('room-player-tile-1'))),
       tester.getRect(find.byKey(const ValueKey('room-player-tile-2'))),
       tester.getRect(find.byType(SwitchListTile)),
       tester.getRect(
-        find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+        find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
       ),
     ];
     for (final rect in protectedRects) {
@@ -257,17 +258,17 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Özel Oda'), findsOneWidget);
+    expect(find.text('Özel oda'), findsOneWidget);
     expect(find.text('Oyuncular'), findsOneWidget);
 
     await tester.scrollUntilVisible(
-      find.text('Yarışı Başlat'),
+      find.text('Yarışı başlat'),
       120,
       scrollable: find.byType(Scrollable).last,
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Yarışı Başlat'), findsOneWidget);
+    expect(find.text('Yarışı başlat'), findsOneWidget);
   });
 
   testWidgets('wide room lobby centers content within 680 px', (tester) async {
@@ -380,7 +381,7 @@ void main() {
     );
 
     final startButton = tester.widget<GeometricGradientButton>(
-      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+      find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
     );
     expect(startButton.onPressed, isNull);
   });
@@ -414,7 +415,7 @@ void main() {
     );
 
     final startButton = tester.widget<GeometricGradientButton>(
-      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+      find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
     );
     expect(startButton.onPressed, isNotNull);
   });
@@ -443,7 +444,7 @@ void main() {
     await tester.pump();
 
     final startButton = tester.widget<GeometricGradientButton>(
-      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+      find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
     );
     expect(startButton.onPressed, isNull);
     expect(find.byType(QuizScreen), findsNothing);
@@ -479,7 +480,7 @@ void main() {
     await tester.pump();
 
     await tester.tap(
-      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+      find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
     );
     await tester.pumpAndSettle();
 
@@ -527,7 +528,7 @@ void main() {
     // Üç oyunculu lobide başlat düğmesi ilk ekranın altında kalabilir
     // (2026-09-27'den beri kod kartının altında davet düğmesi var); oyuncu
     // gibi önce kaydırıp sonra dokunuyoruz.
-    final start = find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat');
+    final start = find.widgetWithText(GeometricGradientButton, 'Yarışı başlat');
     await tester.ensureVisible(start);
     await tester.pump();
     await tester.tap(start);
@@ -557,7 +558,7 @@ void main() {
 
       expect(find.text('Misafir'), findsNothing);
       final disabledButton = tester.widget<GeometricGradientButton>(
-        find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+        find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
       );
       expect(disabledButton.onPressed, isNull);
 
@@ -568,7 +569,7 @@ void main() {
       expect(find.text('Misafir'), findsOneWidget);
 
       final enabledButton = tester.widget<GeometricGradientButton>(
-        find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+        find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
       );
       expect(enabledButton.onPressed, isNotNull);
       expect(find.byType(QuizScreen), findsNothing);

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/models/wildcard.dart';
@@ -11,7 +12,7 @@ import 'support/widget_test_helpers.dart';
 /// ## Kusur
 ///
 /// Etiket `maxLines: 1` idi ve 390px genişlikte dört jokere bölünen barda her
-/// düğmeye ~80px düşüyor. Türkçe etiketler ("Şık İpucu", "Soru Değiştir")
+/// düğmeye ~80px düşüyor. Türkçe etiketler ("Şık ipucu", "Soru değiştir")
 /// sığıyordu; Kurmancî olanlar sığmıyordu ve oyuncu "Alîkariya Be…" ile
 /// "Pirsê Biguhe…" görüyordu — yani jokerin ne yaptığını okuyamıyordu.
 ///
@@ -34,7 +35,7 @@ void main() {
   // Gerçek yazı tipi ŞART. `flutter test` pubspec'teki aileleri
   // kendiliğinden yüklemez ve bilinmeyen aileyi, her harfi kare olan ölçü
   // fontuna düşürür — orada 11pt bir harf 11px yer kaplar, Rubik'te ~6px.
-  // Ölçü fontuyla koşan bir kırpma testi Türkçe "Soru Değiştir"i bile
+  // Ölçü fontuyla koşan bir kırpma testi Türkçe "Soru değiştir"i bile
   // kırpılmış sayar, yani hiçbir şey ölçmez. (bkz. support/realistic_device)
   setUpAll(loadAppFonts);
 

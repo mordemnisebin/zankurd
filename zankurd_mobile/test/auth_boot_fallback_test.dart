@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -77,10 +78,10 @@ void main() {
       await tester.pump(const Duration(milliseconds: 400));
 
       expect(find.byType(SignInScreen), findsOneWidget);
-      expect(find.text('Giriş Yap'), findsWidgets);
+      expect(find.text('Giriş yap'), findsWidgets);
       expect(find.textContaining('Sunucuya ulaşılamadı'), findsOneWidget);
       expect(
-        find.text('İnternet bağlantısı yok — Kontrol ediliyor…'),
+        find.text('İnternet bağlantısı yok. Kontrol ediliyor…'),
         findsNothing,
         reason: 'Bu bant OfflineBanner değildir; cihaz online kabul edilir',
       );

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -501,7 +502,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Rastgele eşleşme'));
       await tester.pump();
-      await tester.tap(find.text('İptal Et'));
+      await tester.tap(find.text('Vazgeç'));
       await tester.pumpAndSettle();
 
       expect(events, [
@@ -580,7 +581,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Rastgele eşleşme'));
     await tester.pump();
-    await tester.tap(find.text('İptal Et'));
+    await tester.tap(find.text('Vazgeç'));
     await tester.pump();
 
     await tester.pump(const Duration(milliseconds: 9999));
@@ -626,11 +627,14 @@ void main() {
     await tester.tap(find.text('Rastgele eşleşme'));
     await tester.pump();
     final firstJoin = repository.latestJoin;
-    await tester.tap(find.text('İptal Et'));
+    await tester.tap(find.text('Vazgeç'));
     await tester.pump(const Duration(seconds: 10));
     await tester.pump();
 
-    final retryVisibleAtDeadline = find.text('Tekrar').evaluate().isNotEmpty;
+    final retryVisibleAtDeadline = find
+        .text('Tekrar dene')
+        .evaluate()
+        .isNotEmpty;
     if (!retryVisibleAtDeadline) {
       firstJoin.complete(const {'status': 'waiting'});
       await tester.pump();
@@ -641,7 +645,7 @@ void main() {
       return;
     }
 
-    await tester.tap(find.text('Tekrar'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pump();
     expect(repository.joinCalls, 2);
 
@@ -799,7 +803,7 @@ void main() {
     expect(repository.snapshotCalls, 1);
     expect(repository.createRoomCalls, 0);
     expect(find.byType(QuizScreen), findsNothing);
-    expect(find.text('Eşleştirme başarısız oldu.'), findsOneWidget);
+    expect(find.text('Eşleşme olmadı, tekrar dene.'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -848,7 +852,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Rastgele eşleşme'));
     await tester.pump();
-    await tester.tap(find.text('İptal Et'));
+    await tester.tap(find.text('Vazgeç'));
     await tester.pump();
 
     expect(repository.snapshotCalls, 0);
@@ -867,7 +871,7 @@ void main() {
     await _startImmediateMatch(tester, repository);
 
     expect(find.text('Başlamak üzere...'), findsNothing);
-    expect(find.text('İptal Et'), findsOneWidget);
+    expect(find.text('Vazgeç'), findsOneWidget);
     expect(find.text('Oyun başlatılamadı. Tekrar dene.'), findsOneWidget);
   });
 
@@ -882,11 +886,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
 
     repository.fail = false;
-    await tester.ensureVisible(find.text('Tekrar'));
-    await tester.tap(find.text('Tekrar'));
+    await tester.ensureVisible(find.text('Tekrar dene'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pumpAndSettle();
 
     expect(repository.loadCalls, 2);
@@ -919,15 +923,15 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
-    expect(find.text('Kategoriler bulunamadı.'), findsOneWidget);
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Konular bulunamadı.'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
   // Çevrimdışı oyuncu eşleştirme ekranında hapsolmamalı.
   //
   // Ekrandan çıkan HER yol — sistem geri hareketi, AppBar geri düğmesi,
-  // bekleme durumundaki "İptal Et", hata durumundaki "İptal" — tek bir
+  // bekleme durumundaki "Vazgeç", hata durumundaki "Vazgeç" — tek bir
   // `_handleCancelAndPop` çağrısına bağlı ve arama başladıktan sonra
   // `canPop` false. İptal RPC'si de başarısız olduğunda geriye hiçbir çıkış
   // kalmıyordu: "Tekrar" yalnız aynı ağ hatasını tekrarlıyor, iOS'ta
@@ -957,13 +961,13 @@ void main() {
 
     // İlk iptal: hata görünür, oyuncu hâlâ ekranda — hayalet kuyruğa karşı
     // kasıtlı koruma.
-    await tester.tap(find.text('İptal Et'));
+    await tester.tap(find.text('Vazgeç'));
     await tester.pumpAndSettle();
     expect(find.byType(MatchmakingScreen), findsOneWidget);
     expect(repository.cancelCalls, greaterThanOrEqualTo(1));
 
     // İkinci iptal: çıkış garanti.
-    await tester.tap(find.text('İptal Et'));
+    await tester.tap(find.text('Vazgeç'));
     await tester.pumpAndSettle();
     expect(
       find.byType(MatchmakingScreen),

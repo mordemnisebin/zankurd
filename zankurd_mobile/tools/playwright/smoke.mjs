@@ -86,7 +86,7 @@ if ((await nameInput.count()) !== 1) {
 }
 await nameInput.fill('Rojda');
 await clickText('Dest pê bike');
-await expectText('DESTPÊKA BIÇÛK');
+await expectText('DERSA YEKEM');
 await screenshot('03-first-session-home');
 
 // Yeni kullanıcıda önce kısa 5 soruluk başlangıç tamamlanır. Destek kartları

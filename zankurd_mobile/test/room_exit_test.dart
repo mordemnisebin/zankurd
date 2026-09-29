@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -211,10 +212,7 @@ void main() {
 
     expect(repository.leaveCalls, 1);
     expect(find.byType(RoomScreen), findsOneWidget);
-    expect(
-      find.text('Odadan ayrılamadın. Lütfen tekrar dene.'),
-      findsOneWidget,
-    );
+    expect(find.text('Odadan ayrılamadın. Tekrar dene.'), findsOneWidget);
     expect(repository.playerSubscriptionCount, 2);
     expect(repository.statusSubscriptionCount, 2);
     expect(find.byTooltip('Odadan ayrıl'), findsOneWidget);
@@ -264,10 +262,7 @@ void main() {
       reason: 'Asılı çağrı ekranı süresiz spinner hâlinde bırakmamalı',
     );
     expect(find.byType(RoomScreen), findsOneWidget);
-    expect(
-      find.text('Odadan ayrılamadın. Lütfen tekrar dene.'),
-      findsOneWidget,
-    );
+    expect(find.text('Odadan ayrılamadın. Tekrar dene.'), findsOneWidget);
     // Oyuncu yeniden deneyebilmeli: lobi izleme de geri gelmiş olmalı.
     expect(find.byTooltip('Odadan ayrıl'), findsOneWidget);
   });

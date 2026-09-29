@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -53,7 +54,7 @@ void main() {
     // Oda kurucusu artık soru başına süreyi seçtiği bir sheet görür.
     // Sheet kaydırılabilir; onay düğmesi görünür alanın altında kalıyor.
     // `ensureVisible` olmadan `tap` sessizce boşa düşer.
-    final openButton = find.text('Odayı Aç');
+    final openButton = find.text('Odayı aç');
     expect(openButton, findsOneWidget);
     await tester.ensureVisible(openButton);
     await tester.pump();
@@ -61,11 +62,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Hevalên Zanînê'), findsOneWidget);
-    expect(find.text('Yarışı Başlat'), findsOneWidget);
+    expect(find.text('Yarışı başlat'), findsOneWidget);
 
-    await tester.ensureVisible(find.text('Yarışı Başlat'));
+    await tester.ensureVisible(find.text('Yarışı başlat'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Yarışı Başlat'));
+    await tester.tap(find.text('Yarışı başlat'));
     await tester.pumpAndSettle();
 
     expect(find.byType(QuizScreen), findsOneWidget);
@@ -88,16 +89,16 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Günün Etkinliği'));
+    await tester.ensureVisible(find.text('Günün soruları'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Günün Etkinliği'));
+    await tester.tap(find.text('Günün soruları'));
     await tester.pumpAndSettle();
 
     // Mock her gün etkinlik döner → etkinlik lobisi; oradan quiz başlar.
     expect(find.byType(ContestScreen), findsOneWidget);
-    expect(find.text('Etkinliğe başla'), findsOneWidget);
+    expect(find.text('Başla'), findsOneWidget);
 
-    await tester.tap(find.text('Etkinliğe başla'));
+    await tester.tap(find.text('Başla'));
     await tester.pumpAndSettle();
 
     expect(find.byType(QuizScreen), findsOneWidget);
@@ -177,7 +178,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Odaya Katıl'), findsOneWidget);
+    expect(find.text('Odaya katıl'), findsOneWidget);
     expect(find.text('Oda kodu'), findsOneWidget);
     expect(find.text('Katıl'), findsOneWidget);
     expect(

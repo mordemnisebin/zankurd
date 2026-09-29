@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -65,7 +66,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Oda kurucusu artık soru başına süreyi seçtiği bir sheet görür.
-      await tester.tap(find.text('Odayı Aç'));
+      await tester.tap(find.text('Odayı aç'));
       await tester.pumpAndSettle();
 
       expect(find.byType(RoomScreen), findsNothing);
@@ -115,7 +116,7 @@ void main() {
     // yalnız `RoomJoinException(notFound)` bu metni üretir; tanınmayan
     // hatalar jenerik "katılamadın" metnine düşer (2026-08-14 denetimi,
     // bkz. `joinRoomErrorKey` ve `test/room_join_error_mapping_test.dart`).
-    expect(find.text('Odaya katılamadın. Lütfen tekrar dene.'), findsOneWidget);
+    expect(find.text('Odaya katılamadın. Tekrar dene.'), findsOneWidget);
   });
 
   testWidgets('empty room code is validated locally before online join', (
@@ -175,12 +176,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.joinCalls, 0);
-    expect(
-      find.text(
-        'Kod ZK- ile başlamalı ve ardından tam 10 adet 0–9/A–F karakteri bulunmalı.',
-      ),
-      findsOneWidget,
-    );
+    expect(find.text('Kodu kontrol et. Örnek: ZK-ABCDEF0123'), findsOneWidget);
     expect(find.byType(RoomScreen), findsNothing);
   });
 
@@ -227,9 +223,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.joinCalls, 0);
-    const fullError =
-        'Kod divê bi ZK- dest pê bike û dû re tam 10 tîp '
-        'ji 0–9/A–F hebin.';
+    const fullError = 'Kodê kontrol bike. Mînak: ZK-ABCDEF0123';
     final error = find.text(fullError);
     expect(error, findsOneWidget);
     await tester.ensureVisible(error);

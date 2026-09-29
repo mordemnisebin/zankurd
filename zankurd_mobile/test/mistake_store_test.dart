@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/local_data_storage.dart';
@@ -171,7 +172,7 @@ void main() {
   //
   // Normal quizde doğru cevaplanan soruların neredeyse tamamı o dala
   // düşer, yani doğru cevap sayacı diske hiç yazılmıyordu. Profildeki
-  // "Cevaplanan Soru", "Doğruluk" ve haftalık grafik uygulama yeniden
+  // "Cevaplanan soru", "Doğruluk" ve haftalık grafik uygulama yeniden
   // açıldığında yalnız yanlışları hatırlıyordu.
   //
   // Kusur sessizdi çünkü aynı oturumda her şey doğru görünüyor; yalnız
@@ -215,7 +216,7 @@ void main() {
   // `totalWrong`/`accuracyPercent` bu map'in TAMAMI üzerinden toplandığı
   // ve profilde "tüm zamanların toplamı" olarak gösterildiği için, eski
   // günler her hafta sessizce düşüyor ve kullanıcı aylarca oynasa bile
-  // "Cevaplanan Soru" karosu yalnız son 7 günü gösteriyordu. Bekçi, 7
+  // "Cevaplanan soru" karosu yalnız son 7 günü gösteriyordu. Bekçi, 7
   // günden eski bir günün diskten yüklendikten sonra bile toplamlara
   // dahil kaldığını doğrular.
   test('7 günden eski günler tüm-zamanlar toplamından silinmez', () async {

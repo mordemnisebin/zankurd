@@ -165,7 +165,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         scale: _brandScale,
                                         opacity: _brandOpacity,
                                         logoWidth: 40,
-                                        showTagline: false,
                                       ),
                                     ),
                                   ),
@@ -192,7 +191,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                         scale: _brandScale,
                                         opacity: _brandOpacity,
                                         logoWidth: compact ? 40 : 64,
-                                        showTagline: !wideCompact,
                                       ),
                                     ),
                                   ),
@@ -388,17 +386,14 @@ class _AnimatedBrandLockup extends StatelessWidget {
     required this.scale,
     required this.opacity,
     this.logoWidth = 64,
-    this.showTagline = true,
   });
 
   final Animation<double> scale;
   final Animation<double> opacity;
   final double logoWidth;
-  final bool showTagline;
 
   @override
   Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
     return FadeTransition(
       opacity: opacity,
       child: ScaleTransition(
@@ -410,16 +405,6 @@ class _AnimatedBrandLockup extends StatelessWidget {
             // Logo işareti plakada (gecede Kulis, gündüzde Perde + kenar):
             // dağlar koyu zeminde kaybolmaz.
             AppLogo(width: logoWidth, onBrandSurface: true),
-            if (showTagline) ...[
-              const SizedBox(height: SahneSpace.x2),
-              Text(
-                context.t(K.onbTagline),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: SahneType.captionStrong.copyWith(color: t.tx2),
-              ),
-            ],
           ],
         ),
       ),

@@ -968,12 +968,6 @@ class _RoomScreenState extends State<RoomScreen> {
                                             color: t.tx,
                                           ),
                                         ),
-                                        subtitle: Text(
-                                          context.t(K.readyStateNote),
-                                          style: SahneType.caption.copyWith(
-                                            color: t.tx2,
-                                          ),
-                                        ),
                                         contentPadding: EdgeInsets.zero,
                                       ),
                                       for (final notice in notices) ...[

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
@@ -42,7 +43,7 @@ void main() {
             CoachMarkStep(
               targetKey: key,
               icon: Icons.home_rounded,
-              title: 'Ana Sayfa',
+              title: 'Ana sayfa',
               description: 'Açıklama tr',
             ),
           ],
@@ -81,7 +82,7 @@ void main() {
             CoachMarkStep(
               targetKey: key,
               icon: Icons.home_rounded,
-              title: 'Ana Sayfa',
+              title: 'Ana sayfa',
               description: 'Açıklama tr',
             ),
           ],
@@ -91,7 +92,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Ana Sayfa'), findsOneWidget);
+    expect(find.text('Ana sayfa'), findsOneWidget);
     expect(find.text('Açıklama tr'), findsOneWidget);
     expect(find.text('1/1'), findsOneWidget);
     expect(finished, isFalse);
@@ -109,7 +110,7 @@ void main() {
             CoachMarkStep(
               targetKey: key,
               icon: Icons.home_rounded,
-              title: 'Sereke',
+              title: 'Rûpela sereke',
               description: 'a',
             ),
           ],

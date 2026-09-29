@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -52,7 +53,7 @@ void main() {
       expect(source, isNot(contains('ageGate.check()')));
       expect(source, contains("clickText('Bidomîne')"));
       expect(source, contains("clickText('Dest pê bike')"));
-      expect(source, contains("DESTPÊKA BIÇÛK"));
+      expect(source, contains("DERSA YEKEM"));
       expect(source, contains("Hemû mijar"));
       expect(source, contains('ZANKURD_EXPECT_SOCIAL'));
       expect(source, contains('expectSocialBackend'));
@@ -63,7 +64,7 @@ void main() {
       );
       expect(source, contains('await quickDuel.isEnabled()'));
       expect(source, isNot(contains("Rojbaş, Rojda!")));
-      expect(source, isNot(contains("Pêşbirkê bike û bi ser keve")));
+      expect(source, isNot(contains("Bi hevalên xwe re pêşbirkê bike")));
     },
   );
 

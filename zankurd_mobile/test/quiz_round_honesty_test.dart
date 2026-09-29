@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 /// Sonuç ve soru ekranı turu DÜRÜST anlatır mı: gerçekte hangi
 /// kategorilerin çözüldüğü, hangi kategoride ne kadar doğru yapıldığı ve
 /// dördüncü şıkkın cevaplamadan ÖNCE gerçekten görünüp görünmediği.
@@ -13,7 +14,7 @@
 ///    varsayılan/ilk kategorisidir — GERÇEKTEN çözülen soruların kategorisi
 ///    değil (`home_screen.dart` `_startDailyQuiz`, `room.category`yi hiç
 ///    güncellemeden `repo.createRoom()`ın varsayılanını taşır).
-/// 2. Aynı ekranın "Bu turdan öğrenme özeti" kutusu yalnız "Dil: 2 sorunun
+/// 2. Aynı ekranın "Nerelerde zorlandın?" kutusu yalnız "Dil: 2 sorunun
 ///    2'si doğru" satırını gösterdi; Müzik 1/1, Coğrafya 1/1, Kültür 0/1
 ///    hiç yazılmadı. `LearningOutcome`, kategori başına yalnız TEK "en
 ///    güçlü" ve TEK "tekrar" satırı seçiyordu; ikisinin eşiği de
@@ -87,7 +88,7 @@ void main() {
         final repository = MockZanKurdRepository();
         final room = repository
             .createRoom(category: 'Ziman')
-            .copyWith(name: 'Günün Dersi');
+            .copyWith(name: 'Günün dersi');
 
         await tester.pumpWidget(
           testShell(
@@ -107,7 +108,7 @@ void main() {
         await tester.pump(const Duration(seconds: 1));
 
         // 2026-09-29 Şahnê: turun adı sahnenin üst satırındaki bağlamda
-        // ("Günün Dersi • 5 soru") yazılır; doğruluk puanın altındadır.
+        // ("Günün dersi • 5 soru") yazılır; doğruluk puanın altındadır.
         // Korunan kural aynı: karışık turda kategori adı değil TURUN ADI.
         expect(
           find.text('Dil • 5 soru'),
@@ -116,7 +117,7 @@ void main() {
               'Karışık turda hâlâ TEK kategoriymiş gibi "Dil" yazıyor '
               '(room.category odanın varsayılanıdır, turun içeriği değil).',
         );
-        expect(find.text('Günün Dersi • 5 soru'), findsOneWidget);
+        expect(find.text('Günün dersi • 5 soru'), findsOneWidget);
       },
     );
 
@@ -199,7 +200,7 @@ void main() {
           ),
         );
 
-        expect(find.text('Bu turdan öğrenme özeti'), findsOneWidget);
+        expect(find.text('Nerelerde zorlandın?'), findsOneWidget);
         // Spotlight: en güçlü kategori (2+ cevap, %75+ doğru) eskisi gibi
         // öne çıkar.
         expect(find.textContaining("Dil: 2 sorudan 2 doğru"), findsOneWidget);

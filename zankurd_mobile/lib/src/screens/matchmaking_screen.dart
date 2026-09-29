@@ -1113,7 +1113,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           : AppEmptyState(
               icon: AppIcons.layerGroup,
               title: context.t(K.categoriesNotFound),
-              message: context.t(K.categoriesSubtitle),
+              message: context.t(K.checkConnection),
               actionLabel: context.t(K.retryShort),
               primaryAction: false,
               onAction: _loadCategoriesOnly,
@@ -1135,7 +1135,6 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       // eski kimlik başlığının anahtarı çubuğu taşıyan sayfadadır.
       key: const ValueKey('matchmaking-selection-header'),
       title: context.t(K.duel1v1),
-      subtitle: context.t(K.duel1v1Sub),
       backLabel: context.t(K.back),
       slivers: [
         SliverPadding(

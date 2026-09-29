@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -163,7 +164,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Bu turdan öğrenme özeti'), findsOneWidget);
+    expect(find.text('Nerelerde zorlandın?'), findsOneWidget);
     expect(find.textContaining('Dil: 2 sorudan 2 doğru'), findsOneWidget);
     expect(find.textContaining('Tarih: 2 soruda 2 yanlış'), findsOneWidget);
     expect(find.text('Tarih yanlışlarını gözden geçir'), findsOneWidget);
@@ -187,7 +188,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Kurteya hînbûna vê dorê'), findsOneWidget);
+    expect(find.text('Te li ku zehmetî kişand?'), findsOneWidget);
     expect(find.textContaining('Ji bo nirxandina mijarekê'), findsOneWidget);
     expect(find.text('Bersiva şaş binêre'), findsOneWidget);
   });

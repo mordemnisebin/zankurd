@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -130,8 +131,8 @@ void main() {
               }
             } else {
               final modeLabel = locale == 'ku'
-                  ? 'Kartên Hînbûnê'
-                  : 'Hafıza Kartları';
+                  ? 'Kartên peyvan'
+                  : 'Kelime kartları';
               final scrollable = find.byType(Scrollable).first;
               final mode = find.text(modeLabel);
               await tester.scrollUntilVisible(

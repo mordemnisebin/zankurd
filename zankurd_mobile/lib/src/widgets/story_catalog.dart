@@ -71,11 +71,6 @@ class _StoryCatalogState extends State<StoryCatalog> {
             style: SahneType.headline.copyWith(color: t.tx),
           ),
         ),
-        const SizedBox(height: SahneSpace.x1),
-        Text(
-          Tr.forKu(K.storyCatalogSub, widget.isKu),
-          style: SahneType.caption.copyWith(color: t.tx2),
-        ),
         const SizedBox(height: SahneSpace.x3),
         if (widget.compact)
           SizedBox(

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -83,7 +84,7 @@ void main() {
 
       final action = find.byKey(const ValueKey('result-primary-home'));
       expect(
-        find.descendant(of: action, matching: find.text('Ana Sayfa')),
+        find.descendant(of: action, matching: find.text('Ana sayfa')),
         findsOneWidget,
       );
 
@@ -107,7 +108,7 @@ void main() {
 
     final action = find.byKey(const ValueKey('result-primary-home'));
     expect(
-      find.descendant(of: action, matching: find.text('Sereke')),
+      find.descendant(of: action, matching: find.text('Rûpela sereke')),
       findsOneWidget,
     );
   });

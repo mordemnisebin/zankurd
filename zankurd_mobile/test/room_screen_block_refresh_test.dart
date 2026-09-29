@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -44,7 +45,7 @@ void main() {
     expect(find.text('Berfin'), findsOneWidget);
 
     // 2026-09-29 Şahnê: lobi uzadı (sahne kartı kahraman + alt perdede
-    // sabit "Yarışı Başlat"); varsayılan 800×600 test yüzeyinde ikinci
+    // sabit "Yarışı başlat"); varsayılan 800×600 test yüzeyinde ikinci
     // oyuncunun satırı katlamanın altında kalıyor. Kullanıcı gibi önce
     // kaydırılır — bekçinin konusu (engellenen satırın anında kaybolması)
     // değişmedi.

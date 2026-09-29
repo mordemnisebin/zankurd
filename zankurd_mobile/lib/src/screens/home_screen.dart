@@ -623,45 +623,38 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return SahneTabPage(
       controller: widget.scrollController,
       title: _greeting(context, ku),
-      subtitle: context.t(K.homeMotto),
       stats: [_buildHeaderControls(context, ku)],
       children: [content],
     );
   }
 
-  /// "Hoş geldin, Oyuncu!" — günün saatine göre selam + kısa ad.
+  /// Selam: adı olan oyuncuya günün saatine göre "İyi akşamlar, Zelal!",
+  /// adı olmayana yalnız "Hoş geldin!". Ad yoksa "Oyuncu" demek, oyuncuya
+  /// kendi adını bilmeyen bir sistem gibi görünüyordu.
   String _greeting(BuildContext context, bool ku) {
-    final isTest = isFlutterTestEnvironment;
-    final hour = DateTime.now().hour;
-    final String greetingKu;
-    final String greetingTr;
-    if (isTest) {
-      greetingKu = 'Silav';
-      greetingTr = 'Hoş geldin';
-    } else {
-      if (hour >= 5 && hour < 12) {
-        greetingKu = 'Rojbaş';
-        greetingTr = 'Günaydın';
-      } else if (hour >= 12 && hour < 17) {
-        greetingKu = 'Rojbaş';
-        greetingTr = 'İyi Günler';
-      } else if (hour >= 17 && hour < 22) {
-        greetingKu = 'Êvarbaş';
-        greetingTr = 'İyi Akşamlar';
-      } else {
-        greetingKu = 'Şevbaş';
-        greetingTr = 'İyi Geceler';
-      }
-    }
     final currentName = _displayName ?? widget.displayName;
+    if (PlayerIdentity.isPlaceholderDisplayName(currentName)) {
+      return context.t(K.homeGreetingAnon);
+    }
+    final hour = DateTime.now().hour;
+    final String greeting;
+    if (isFlutterTestEnvironment) {
+      // Testte saat sabit değil; selam sabit kalsın.
+      greeting = context.t(K.homeGreetDay);
+    } else if (hour >= 5 && hour < 12) {
+      greeting = context.t(K.homeGreetMorning);
+    } else if (hour >= 12 && hour < 17) {
+      greeting = context.t(K.homeGreetDay);
+    } else if (hour >= 17 && hour < 22) {
+      greeting = context.t(K.homeGreetEvening);
+    } else {
+      greeting = context.t(K.homeGreetNight);
+    }
     // Ad çözümlemesi profil ekranıyla aynı kaynaktan gelir; aksi halde
     // "ZanKurd" (ana ekran) ile "Lîstikvanê ZanKurd" (profil) gibi iki
     // ayrı kimlik oluşuyordu.
     final shortName = PlayerIdentity.resolveShortName(currentName, isKu: ku);
-    return context.t(K.homeGreeting, {
-      'greeting': ku ? greetingKu : greetingTr,
-      'name': shortName,
-    });
+    return context.t(K.homeGreeting, {'greeting': greeting, 'name': shortName});
   }
 
   /// Marka satırının sağı: seri, jeton (stat çipleri) ve dil düğmesi.

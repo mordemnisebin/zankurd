@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -46,7 +47,7 @@ void main() {
     await pumpResult(tester, coinsAwarded: 0, rewardQueued: true);
 
     expect(
-      find.text('Bağlantı yok — ödülün kaydedildi, bağlanınca verilecek.'),
+      find.text('Bağlantı yok. Ödülün kaydedildi, bağlanınca verilecek.'),
       findsOneWidget,
     );
   });
@@ -56,7 +57,7 @@ void main() {
     await pumpResult(tester, coinsAwarded: 40, rewardQueued: false);
 
     expect(
-      find.text('Bağlantı yok — ödülün kaydedildi, bağlanınca verilecek.'),
+      find.text('Bağlantı yok. Ödülün kaydedildi, bağlanınca verilecek.'),
       findsNothing,
     );
   });
