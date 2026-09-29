@@ -359,19 +359,24 @@ const Map<SahneTopicMark, List<String>> sahneKilimGrids = {
 /// konunun tonudur ([SahneCategoryTone.ground]); 9x9 motif `deep` alan
 /// üstünde `detail` ve `ground` hücreleriyle örülür.
 ///
-/// Yerleşim taslağın (402x160 bant, 18 px hücre) oranlarını korur:
-/// motifin merkezi sağ kenardan [centerInset] hücre içeridedir, dolayısıyla
-/// desenin dış kenarı bandın dışına taşar ve kırpılır. Uygulamada bantta
-/// başlık da durduğu için hücre biraz küçüktür ([heightCells]) ve desenin
-/// görünen genişliği [reservedWidth]'i aşmaz: başlık çubuğu o kadar yer
-/// bırakır, yani metin desenin üstüne binmez. [topInset] durum çubuğu
-/// payıdır: desen onun altında kalır (saat ve pil düz zemin üstünde okunur).
+/// 2026-09-30 bant: desen bandın TAM yüksekliğindedir (üst kenardan, durum
+/// çubuğunun arkasından, alt kenara): hücre boyu bant yüksekliğinin 1/9'u,
+/// tam sayı piksele yuvarlanır (kenarlar keskin kalsın). Bandı çizen ekran
+/// yüksekliği 9'un katına yükseltir, böylece yuvarlama payı kalmaz ve desen
+/// iki kenara da tam değer. Eskiden desen bandın ortasında küçük bir blok
+/// olarak duruyor, altında büyük bir boşluk kalıyordu.
+///
+/// Yatayda merkez sağ kenardan [centerInset] hücre içeridedir (taslak: 402
+/// px bant, 18 px hücre, 78 px), yani desenin dış kenarı bandın dışına taşar
+/// ve kırpılır. Görünen genişlik [reservedWidth]'i aşmaz: çubuk o kadar yer
+/// bırakır ve metin desenin üstüne binmez. Hücre büyüdüğünde (büyük yazıda
+/// bant uzar) desen sola değil sağa doğru daha çok kırpılır, yani daha az
+/// sütun görünür.
 class SahneKilimBandPainter extends CustomPainter {
   const SahneKilimBandPainter({
     required this.mark,
     required this.tone,
     required this.reservedWidth,
-    this.topInset = 0,
   });
 
   final SahneTopicMark mark;
@@ -379,25 +384,42 @@ class SahneKilimBandPainter extends CustomPainter {
 
   /// Desenin görünen genişliğinin üst sınırı (px); çubuk bu kadar yer bırakır.
   final double reservedWidth;
-  final double topInset;
-
-  /// Desenin yüksekliği, kullanılabilir bant yüksekliğinin 1/[heightCells]
-  /// katı hücreyle dokunur (9 hücre + kenar boşluğu).
-  static const double heightCells = 9.8;
 
   /// Merkezin sağ kenara uzaklığı (hücre); taslakta 78 / 18.
   static const double centerInset = 78 / 18;
 
   static const int _cells = 9;
 
-  /// Desenin bandın içinde kalan hücre sayısı.
+  /// Desenin bandın içinde kalan hücre sayısı (kırpma öncesi).
   static const double visibleCells = centerInset + _cells / 2;
 
-  /// Verilen bant için hücre boyu.
-  static double cellFor(Size size, double topInset, double reservedWidth) {
-    final byHeight = (size.height - topInset) / heightCells;
-    final byWidth = reservedWidth / visibleCells;
-    return byHeight < byWidth ? byHeight : byWidth;
+  /// Bandı 9'un katına yükseltir: hücre tam sayı piksel olur ve desen iki
+  /// kenara tam değer.
+  static double snapHeight(double height) =>
+      (height / _cells).ceilToDouble() * _cells;
+
+  /// [height] yüksekliğindeki bant için hücre boyu: yüksekliğin 1/9'u, tam
+  /// sayı piksele yuvarlanmış (en az 1).
+  static double cellFor(double height) {
+    final c = (height / _cells).roundToDouble();
+    return c < 1 ? 1 : c;
+  }
+
+  /// Desenin bant koordinatlarındaki kırpılmamış dikdörtgeni: yükseklik
+  /// 9 hücre, üstü bandın üstü ([height] 9'un katıysa alt kenarı bandın alt
+  /// kenarı). Sol kenarı hiçbir zaman `genişlik - reservedWidth`in soluna
+  /// geçmez.
+  static Rect patternRect(Size size, double reservedWidth) {
+    final c = cellFor(size.height);
+    final left = (size.width - visibleCells * c) > (size.width - reservedWidth)
+        ? (size.width - visibleCells * c)
+        : (size.width - reservedWidth);
+    return Rect.fromLTWH(
+      left.roundToDouble(),
+      ((size.height - _cells * c) / 2).roundToDouble(),
+      _cells * c,
+      _cells * c,
+    );
   }
 
   @override
@@ -408,9 +430,10 @@ class SahneKilimBandPainter extends CustomPainter {
     canvas.drawRect(Offset.zero & size, Paint()..color = tone.ground);
     final grid = sahneKilimGrids[mark]!;
     final n = grid.length;
-    final c = cellFor(size, topInset, reservedWidth);
-    final x0 = size.width - centerInset * c - n / 2 * c;
-    final y0 = topInset + (size.height - topInset - n * c) / 2;
+    final c = cellFor(size.height);
+    final rect = patternRect(size, reservedWidth);
+    final x0 = rect.left;
+    final y0 = rect.top;
     canvas.drawRect(
       Rect.fromLTWH(x0, y0, n * c, n * c),
       Paint()..color = tone.deep,
@@ -446,6 +469,5 @@ class SahneKilimBandPainter extends CustomPainter {
   bool shouldRepaint(SahneKilimBandPainter old) =>
       old.mark != mark ||
       old.tone != tone ||
-      old.reservedWidth != reservedWidth ||
-      old.topInset != topInset;
+      old.reservedWidth != reservedWidth;
 }

@@ -256,7 +256,6 @@ void main() {
             mark: entry.key,
             tone: tone,
             reservedWidth: reserved,
-            topInset: 64,
           ),
           size,
         );
@@ -276,9 +275,14 @@ void main() {
           if (p != _rgba(tone.ground)) edge++;
         }
         expect(edge, greaterThan(0), reason: 'sağ kenarda desen görünmeli');
-        // Durum çubuğu payı düz zemin.
-        for (var x = 0; x < raster.width; x++) {
-          expect(raster.at(x, 10), _rgba(tone.ground), reason: 'üst pay');
+        // 2026-09-30 bant: desen bandın tam yüksekliğindedir; üst ve alt
+        // kenar satırında (durum çubuğunun arkası dahil) desen pikseli var.
+        for (final y in [0, raster.height - 1]) {
+          var ink = 0;
+          for (var x = 0; x < raster.width; x++) {
+            if (raster.at(x, y) != _rgba(tone.ground)) ink++;
+          }
+          expect(ink, greaterThan(0), reason: 'y=$y satırında desen yok');
         }
       });
     }
@@ -306,15 +310,33 @@ void main() {
     test('görünen genişlik ayrılan yeri aşmaz', () {
       for (final reserved in [84.0, 132.0]) {
         for (final size in const [
-          Size(320, 216),
+          Size(320, 108),
+          Size(390, 108),
           Size(390, 216),
-          Size(390, 400),
+          Size(320, 279),
         ]) {
-          final visible =
-              SahneKilimBandPainter.cellFor(size, 64, reserved) *
-              SahneKilimBandPainter.visibleCells;
-          expect(visible, lessThanOrEqualTo(reserved + 0.001));
+          final visible = SahneKilimBandPainter.patternRect(
+            size,
+            reserved,
+          ).intersect(Offset.zero & size);
+          expect(visible.width, lessThanOrEqualTo(reserved + 0.001));
         }
+      }
+    });
+
+    // 2026-09-30 bant: hücre bant yüksekliğinin 1/9'u, tam sayı piksel;
+    // 9'un katı yükseklikte desen bandın üst ve alt kenarına tam değer.
+    test('hücre tam sayı ve desen 9 katı yükseklikte kenardan kenara', () {
+      for (final raw in [100.0, 108.0, 131.5, 216.0, 279.0]) {
+        final h = SahneKilimBandPainter.snapHeight(raw);
+        expect(h % 9, 0);
+        expect(h, greaterThanOrEqualTo(raw));
+        expect(h - raw, lessThan(9));
+        final c = SahneKilimBandPainter.cellFor(h);
+        expect(c, c.roundToDouble());
+        final rect = SahneKilimBandPainter.patternRect(Size(390, h), 132);
+        expect(rect.top, 0, reason: 'h=$h');
+        expect(rect.bottom, h, reason: 'h=$h');
       }
     });
   });

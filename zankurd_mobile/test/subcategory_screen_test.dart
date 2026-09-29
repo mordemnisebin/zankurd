@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/config/subcategory_config.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/subcategory_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -14,6 +15,8 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+
+import 'support/realistic_device.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -67,7 +70,22 @@ List<QuizQuestion> _keywordMatchedQuestions({
   ];
 }
 
+/// Ekranı gerçek bir telefon gibi kurar: [width] mantıksal piksel, üstte
+/// 59 px durum çubuğu payı. (`setSurfaceSize` yerleşimi daraltır ama
+/// `MediaQuery`yi 800 px bırakır; çubuğun ölçümü ve desen yuvaları yanlış
+/// genişlikten hesaplanırdı.)
+void _phone(WidgetTester tester, double width) {
+  tester.view
+    ..devicePixelRatio = 1
+    ..physicalSize = Size(width, 800)
+    ..padding = const FakeViewPadding(top: 59)
+    ..viewPadding = const FakeViewPadding(top: 59);
+  addTearDown(tester.view.reset);
+}
+
 void main() {
+  setUpAll(loadAppFonts);
+
   setUp(() {
     SharedPreferences.setMockInitialValues({});
     LevelProgressStore.resetInstance();
@@ -206,8 +224,9 @@ void main() {
     testWidgets('$category başlığı 320 px ve %200 yazıda taşmaz', (
       tester,
     ) async {
-      await tester.binding.setSurfaceSize(const Size(320, 640));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
+      // 2026-09-30 bant: `setSurfaceSize` MediaQuery'yi 800 px bırakıyordu;
+      // gerçek 320 px görünümü kurulur (bkz. [_phone]).
+      _phone(tester, 320);
       await tester.pumpWidget(
         MultiProvider(
           providers: [
@@ -245,6 +264,90 @@ void main() {
         reason: category,
       );
     });
+  }
+
+  // 2026-09-30 bant: bant eskiden çubuğun altına 88 px boş bant ekliyordu,
+  // desen köşede küçük bir blok kalıyordu. Kusur sessizdi: yükseklik ve desen
+  // konumu hiçbir testte ölçülmüyordu, taşma da yoktu, yalnız dengesiz
+  // görünüyordu. Bekçi: desen bandın üst ve alt kenarına değer (tam
+  // yükseklik), hücre tam sayı pikseldir, desen başlığın ve alt satırın
+  // sınır kutusuyla kesişmez, alt satırın altında 16-24 px boşluk kalır;
+  // 320 px ve %200 yazıda da (bant uzar, hücre yeniden hesaplanır).
+  for (final scale in [1.0, 2.0]) {
+    for (final width in [320.0, 390.0]) {
+      for (final category in CategoryVisuals.markedCategories) {
+        testWidgets('$category bandı: desen tam yükseklikte, metinle çakışmaz '
+            '(${width.round()} px, x$scale)', (tester) async {
+          _phone(tester, width);
+          await tester.pumpWidget(
+            MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (_) => LanguageProvider()..setLang('tr'),
+                ),
+              ],
+              child: MaterialApp(
+                theme: AppTheme.light(),
+                builder: (context, child) => MediaQuery(
+                  data: MediaQuery.of(
+                    context,
+                  ).copyWith(textScaler: TextScaler.linear(scale)),
+                  child: child!,
+                ),
+                home: SubcategoryScreen(
+                  repository: MockZanKurdRepository(),
+                  category: category,
+                ),
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          expect(tester.takeException(), isNull, reason: category);
+
+          final bandFinder = find.byKey(
+            const ValueKey('subcategory-kilim-band'),
+          );
+          final band = tester.getRect(bandFinder);
+          final painter =
+              tester.widget<CustomPaint>(bandFinder).painter!
+                  as SahneKilimBandPainter;
+          final cell = SahneKilimBandPainter.cellFor(band.height);
+          expect(cell, cell.roundToDouble(), reason: 'hücre tam sayı');
+          expect(band.height % 9, 0, reason: 'yükseklik 9 katı');
+          expect(cell * 9, band.height, reason: 'hücre = yükseklik / 9');
+
+          final pattern = SahneKilimBandPainter.patternRect(
+            band.size,
+            painter.reservedWidth,
+          ).shift(band.topLeft);
+          expect(pattern.top, band.top, reason: 'desen bandın üstüne değer');
+          expect(pattern.bottom, band.bottom, reason: 'altına değer');
+          final visible = pattern.intersect(band);
+          expect(visible.width, greaterThan(0), reason: 'desen görünür');
+
+          final title = tester.getRect(
+            find.text(CategoryNames.localized(category, false)),
+          );
+          final subtitle = tester.getRect(
+            find.text(Tr.of(K.birAltAlanSecerek, AppLanguage.tr)),
+          );
+          expect(
+            visible.overlaps(title),
+            isFalse,
+            reason: 'desen başlıkla çakışıyor: $visible / $title',
+          );
+          expect(
+            visible.overlaps(subtitle),
+            isFalse,
+            reason: 'desen alt satırla çakışıyor: $visible / $subtitle',
+          );
+          // Bant içeriğe oturur: alt satırın altında boş blok kalmaz.
+          final gap = band.bottom - subtitle.bottom;
+          expect(gap, greaterThanOrEqualTo(16), reason: 'alt boşluk $gap');
+          expect(gap, lessThanOrEqualTo(24), reason: 'alt boşluk $gap');
+        });
+      }
+    }
   }
 
   testWidgets('kart dokunuşu LevelScreen açar', (tester) async {
