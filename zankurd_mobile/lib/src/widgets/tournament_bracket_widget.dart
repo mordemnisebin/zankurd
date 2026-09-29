@@ -4,9 +4,9 @@ import '../config/avatar_presets.dart';
 import '../l10n/strings.dart';
 import '../models/tournament.dart';
 import '../providers/reduced_motion_provider.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_icons.dart';
 import 'player_avatar.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'sahne/sahne.dart';
 
 /// Visual single-elimination tournament bracket with connecting lines,
 /// player avatars, scores, and winner highlighting.
@@ -60,7 +60,7 @@ class TournamentBracketWidget extends StatelessWidget {
             // Yatay kaydırılabilir bracket
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+              padding: const EdgeInsets.symmetric(vertical: SahneSpace.x3),
               child: SizedBox(
                 height: minBracketHeight,
                 child: Row(
@@ -103,12 +103,8 @@ class TournamentBracketWidget extends StatelessWidget {
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                       colors: [
-                        Theme.of(
-                          context,
-                        ).scaffoldBackgroundColor.withValues(alpha: 0.0),
-                        Theme.of(
-                          context,
-                        ).scaffoldBackgroundColor.withValues(alpha: 0.85),
+                        SahneTokens.of(context).bg.withValues(alpha: 0),
+                        SahneTokens.of(context).bg,
                       ],
                     ),
                   ),
@@ -157,33 +153,30 @@ class _RoundColumn extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Round header
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-            decoration: BoxDecoration(
-              color: isActive
-                  ? AppTheme.accent.withValues(alpha: 0.2)
+          // Round header — 2026-09-29 Şahnê: S pahlı rozet; süren tur Zêr
+          // tonu, biten tur Kulis, gelecek tur yalnız üçüncül metin.
+          Builder(
+            builder: (context) {
+              final t = SahneTokens.of(context);
+              final (bg, fg) = isActive
+                  ? (t.goldTint, t.goldTx)
                   : isCompleted
-                  ? AppTheme.gold.withValues(alpha: 0.15)
-                  : Colors.transparent,
-              borderRadius: BorderRadius.circular(AppRadius.pill),
-              border: isActive
-                  ? Border.all(color: AppTheme.accent.withValues(alpha: 0.5))
-                  : isCompleted
-                  ? Border.all(color: AppTheme.gold.withValues(alpha: 0.4))
-                  : null,
-            ),
-            child: Text(
-              roundName,
-              style: AppTypography.caption.copyWith(
-                color: isActive
-                    ? AppTheme.accent
-                    : isCompleted
-                    ? AppTheme.gold
-                    : AppTheme.textMutedColor(context),
-                fontWeight: FontWeight.w800,
-              ),
-            ),
+                  ? (t.s2, t.tx2)
+                  : (Colors.transparent, t.tx3);
+              return DecoratedBox(
+                decoration: ShapeDecoration(color: bg, shape: SahneShape.s),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: SahneSpace.x2,
+                    vertical: SahneSpace.x1,
+                  ),
+                  child: Text(
+                    roundName,
+                    style: SahneType.captionStrong.copyWith(color: fg),
+                  ),
+                ),
+              );
+            },
           ),
           // Match cards below header — scrollable to handle varying content
           Expanded(
@@ -239,7 +232,7 @@ class _ConnectorColumn extends StatelessWidget {
         painter: _ConnectorPainter(
           roundIndex: roundIndex,
           roundCount: roundCount,
-          color: AppTheme.borderColor(context),
+          color: SahneTokens.of(context).line,
         ),
       ),
     );
@@ -260,7 +253,7 @@ class _ConnectorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = color.withValues(alpha: 0.5)
+      ..color = color
       ..strokeWidth = 1.5
       ..style = PaintingStyle.stroke;
 
@@ -319,6 +312,7 @@ class _BracketMatchCard extends StatelessWidget {
     final isUserMatch =
         match.playerOneId == userId || match.playerTwoId == userId;
 
+    final t = SahneTokens.of(context);
     final p1Won = isCompleted && match.winnerId == match.playerOneId;
     final p2Won = isCompleted && match.winnerId == match.playerTwoId;
 
@@ -343,29 +337,17 @@ class _BracketMatchCard extends StatelessWidget {
               : const Duration(milliseconds: 350),
           curve: Curves.easeInOut,
           width: cardWidth,
-          padding: const EdgeInsets.all(6),
-          decoration: BoxDecoration(
-            color: isUserMatch
-                ? AppTheme.accent.withValues(alpha: 0.08)
-                : AppTheme.surfaceColor(context),
-            borderRadius: BorderRadius.circular(AppRadius.xs),
-            border: Border.all(
-              color: isUserMatch
-                  ? AppTheme.accent.withValues(alpha: 0.5)
-                  : isCompleted
-                  ? AppTheme.gold.withValues(alpha: 0.4)
-                  : AppTheme.borderColor(context).withValues(alpha: 0.6),
-              width: isUserMatch ? 1.5 : 0.8,
+          padding: const EdgeInsets.all(SahneSpace.x1),
+          // 2026-09-29 Şahnê: maç kartı yüzeydir (Perde, M pah); kullanıcının
+          // maçı Halka 2 Zêr ("Sen" altındır), biten maç gündüz kenarı.
+          // Bulanık gölge yok.
+          decoration: ShapeDecoration(
+            color: t.s1,
+            shape: SahneShape.withSide(
+              SahneShape.m,
+              isUserMatch ? t.goldTx : t.edge,
+              width: isUserMatch ? SahneRing.r2 : 1,
             ),
-            boxShadow: isCompleted
-                ? [
-                    BoxShadow(
-                      color: AppTheme.gold.withValues(alpha: 0.12),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ]
-                : null,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -379,8 +361,8 @@ class _BracketMatchCard extends StatelessWidget {
                 isCompleted: isCompleted,
                 ku: ku,
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 2),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: SahneSpace.x1),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -393,47 +375,41 @@ class _BracketMatchCard extends StatelessWidget {
                     // Skor kısaltılamaz (kısaltılmış skor yanlış bilgi),
                     // o yüzden çip esner ve metin gerekince küçülür.
                     Flexible(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 1,
+                      child: DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: isCompleted ? t.goldTint : t.s2,
+                          shape: SahneShape.s,
                         ),
-                        decoration: BoxDecoration(
-                          color: isCompleted
-                              ? AppTheme.gold.withValues(alpha: 0.15)
-                              : AppTheme.accent.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        // Maç bittiyse SKORLAR burada durur.
-                        //
-                        // Skor eskiden hiçbir yerde görünmüyordu: oyuncu
-                        // satırındaki dal yalnız maç tamamlanmamışken
-                        // çalışıyordu ve skor ancak tamamlandıktan sonra
-                        // oluşuyor. Skoru oyuncu satırına koymayı denedik;
-                        // dar kartta adı yiyordu ("R…", "Şi…") ve ad
-                        // oyuncunun kimliğidir. Ortadaki çip zaten iki
-                        // satırın arasında ve tam da sonucun yeri
-                        // (2026-08-04).
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            isCompleted
-                                ? '${match.playerOneScore} – ${match.playerTwoScore}'
-                                : hasPlayers
-                                ? 'VS'
-                                : '—',
-                            maxLines: 1,
-                            softWrap: false,
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w900,
-                              color: isCompleted
-                                  ? AppColors.readableAccent(
-                                      context,
-                                      AppTheme.gold,
-                                    )
-                                  : AppTheme.accent.withValues(alpha: 0.7),
-                              letterSpacing: 0.5,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: SahneSpace.x2,
+                          ),
+                          // Maç bittiyse SKORLAR burada durur.
+                          //
+                          // Skor eskiden hiçbir yerde görünmüyordu: oyuncu
+                          // satırındaki dal yalnız maç tamamlanmamışken
+                          // çalışıyordu ve skor ancak tamamlandıktan sonra
+                          // oluşuyor. Skoru oyuncu satırına koymayı denedik;
+                          // dar kartta adı yiyordu ("R…", "Şi…") ve ad
+                          // oyuncunun kimliğidir. Ortadaki çip zaten iki
+                          // satırın arasında ve tam da sonucun yeri
+                          // (2026-08-04).
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              isCompleted
+                                  ? '${match.playerOneScore} – ${match.playerTwoScore}'
+                                  : hasPlayers
+                                  ? 'VS'
+                                  : '—',
+                              maxLines: 1,
+                              softWrap: false,
+                              style: SahneType.captionStrong.copyWith(
+                                color: isCompleted ? t.goldTx : t.tx2,
+                                fontFeatures: const [
+                                  FontFeature.tabularFigures(),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -486,89 +462,68 @@ class _PlayerSlot extends StatelessWidget {
     final isDimmed = isCompleted && !isWinner;
     final hasPlayer = name.isNotEmpty && name != 'TBD';
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-      decoration: BoxDecoration(
-        color: isWinner
-            ? AppTheme.gold.withValues(alpha: 0.18)
-            : isUser
-            ? AppTheme.accent.withValues(alpha: 0.06)
-            : null,
-        borderRadius: BorderRadius.circular(6),
-        border: isWinner
-            ? Border.all(
-                color: AppTheme.gold.withValues(alpha: 0.5),
-                width: 1.2,
-              )
-            : null,
+    // 2026-09-29 Şahnê: kazanan satırı Zêr tonu + Halka 1 altın, adı Zêr
+    // metni + kupa; kaybeden üçüncül metin, üstü çizili + ✗ (yalnız renkle
+    // değil). Kullanıcının adı kalın. Avatar elmas.
+    final t = SahneTokens.of(context);
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: isWinner ? t.goldTint : Colors.transparent,
+        shape: isWinner
+            ? SahneShape.withSide(SahneShape.s, t.gold, width: SahneRing.r1)
+            : SahneShape.s,
       ),
-      child: Row(
-        children: [
-          // Player avatar
-          if (hasPlayer)
-            PlayerAvatar(
-              radius: 12,
-              displayName: displayName,
-              iconId: _playerIconId(playerId),
-              colorHex: _playerColorHex(playerId),
-            )
-          else
-            Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppTheme.textMutedColor(context).withValues(alpha: 0.2),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: SahneSpace.x1,
+          vertical: SahneSpace.x1,
+        ),
+        child: Row(
+          children: [
+            // Player avatar
+            if (hasPlayer)
+              PlayerAvatar(
+                radius: 12,
+                displayName: displayName,
+                iconId: _playerIconId(playerId),
+                colorHex: _playerColorHex(playerId),
+              )
+            else
+              SahneDiamondAvatar(
+                size: 24,
+                icon: AppIcons.user,
+                foreground: t.tx3,
               ),
-              child: Icon(
-                AppIcons.user,
-                size: 14,
-                color: AppTheme.textMutedColor(context),
-              ),
-            ),
-          const SizedBox(width: 6),
-          // Player name
-          Expanded(
-            child: Text(
-              displayName,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: isUser ? FontWeight.w800 : FontWeight.w600,
-                // Ham altın, kartın altın tonlu zemininde karanlık temada
-                // kayboluyordu: kazananın adı hiç görünmüyordu
-                // (2026-08-04).
-                color: isWinner
-                    ? AppColors.readableAccent(context, AppTheme.gold)
-                    : isDimmed
-                    ? AppTheme.textMutedColor(context)
-                    : isUser
-                    ? AppTheme.accent
-                    : AppTheme.textPrimaryColor(context),
-                decoration: isDimmed ? TextDecoration.lineThrough : null,
+            const SizedBox(width: SahneSpace.x2),
+            // Player name
+            Expanded(
+              child: Text(
+                displayName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: (isUser ? SahneType.captionStrong : SahneType.caption)
+                    .copyWith(
+                      // Ham altın, kartın altın tonlu zemininde karanlık
+                      // temada kayboluyordu: kazananın adı hiç görünmüyordu
+                      // (2026-08-04). Şahnê: Zêr metni (`goldTx`).
+                      color: isWinner
+                          ? t.goldTx
+                          : isDimmed
+                          ? t.tx3
+                          : t.tx,
+                      decoration: isDimmed ? TextDecoration.lineThrough : null,
+                      decorationColor: t.tx3,
+                    ),
               ),
             ),
-          ),
-          // Maç bittiyse SKOR da yazılır.
-          //
-          // Skor eskiden yalnız `else if (score > 0)` dalındaydı, yani maç
-          // tamamlanmamışken. Ama skor ancak tamamlandıktan sonra oluşur:
-          // kazanan kupayı, kaybeden çarpıyı alıyor ve o dal hiçbir zaman
-          // çalışmıyordu. Sonuç olarak maçın kaç-kaç bittiği uygulamanın
-          // HİÇBİR yerinde görünmüyordu — turnuvanın tek somut çıktısı
-          // kayıptı (2026-08-04).
-          // Kazanan/kaybeden yalnız renkle anlatılmaz: kupa ya da çarpı
-          // ikonu ve kaybedende üstü çizili ad ikinci ve üçüncü kanaldır.
-          if (isWinner)
-            const Icon(AppIcons.trophy, size: 14, color: AppTheme.gold)
-          else if (isCompleted && hasPlayer)
-            Icon(
-              AppIcons.circleXmark,
-              size: 12,
-              color: AppTheme.textMutedColor(context).withValues(alpha: 0.6),
-            ),
-        ],
+            // Maç bittiyse kazanan kupayı, kaybeden çarpıyı alır: kazanan/
+            // kaybeden yalnız renkle anlatılmaz (2026-08-04).
+            if (isWinner)
+              Icon(AppIcons.trophy, size: 16, color: t.goldTx)
+            else if (isCompleted && hasPlayer)
+              Icon(AppIcons.circleXmark, size: 16, color: t.tx3),
+          ],
+        ),
       ),
     );
   }

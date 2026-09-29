@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
+import 'sahne/sahne.dart';
 
 /// Turun dokuma kaydı: her soru bir baklava, doğru cevap altın iplik.
 ///
@@ -77,6 +77,7 @@ class KilimBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     return Semantics(
       label: _semanticsLabel(context),
       child: SizedBox(
@@ -88,8 +89,13 @@ class KilimBoard extends StatelessWidget {
             total: total,
             currentIndex: showCurrent ? currentIndex : -1,
             results: results,
-            trackColor: trackColor ?? AppTheme.surfaceHiColor(context),
-            outlineColor: outlineColor ?? AppTheme.borderColor(context),
+            // 2026-09-29 Şahnê: dokunmamış göz Ray (`s3`), kontur ayırıcı
+            // tonu; doğru Zêr dolu, yanlış Zêr kontur (gedik), sıradaki
+            // göz Halka 2 Zêr — Agir yalnız birincil eylemin dolgusudur.
+            trackColor: trackColor ?? t.s3,
+            outlineColor: outlineColor ?? t.line,
+            gold: t.gold,
+            goldEdge: t.goldTx,
           ),
         ),
       ),
@@ -111,6 +117,8 @@ class _KilimBoardPainter extends CustomPainter {
     required this.results,
     required this.trackColor,
     required this.outlineColor,
+    required this.gold,
+    required this.goldEdge,
   });
 
   final int total;
@@ -118,6 +126,10 @@ class _KilimBoardPainter extends CustomPainter {
   final List<bool> results;
   final Color trackColor;
   final Color outlineColor;
+
+  /// Zêr dolgusu ve konturu (gündüzde koyu altın, açık zeminde dağılmasın).
+  final Color gold;
+  final Color goldEdge;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -165,7 +177,7 @@ class _KilimBoardPainter extends CustomPainter {
 
       if (i < results.length) {
         if (results[i]) {
-          canvas.drawPath(diamond, Paint()..color = AppTheme.gold);
+          canvas.drawPath(diamond, Paint()..color = gold);
         } else {
           // Boş baklava: motifte bırakılan gedik. Çerçeve altının soluk
           // tonundadır ki gedik "eksik iplik" gibi okunsun, ayrı bir
@@ -173,13 +185,22 @@ class _KilimBoardPainter extends CustomPainter {
           canvas.drawPath(
             diamond,
             Paint()
-              ..color = AppTheme.gold.withValues(alpha: 0.42)
+              ..color = goldEdge.withValues(alpha: 0.7)
               ..style = PaintingStyle.stroke
               ..strokeWidth = 1.6,
           );
         }
       } else if (i == currentIndex) {
-        canvas.drawPath(diamond, Paint()..color = AppTheme.brand);
+        // Sıradaki göz: iz tonunda, Halka 2 Zêr (elmas dizisindeki "şimdiki"
+        // halkasıyla aynı dil).
+        canvas.drawPath(diamond, Paint()..color = trackColor);
+        canvas.drawPath(
+          diamond,
+          Paint()
+            ..color = gold
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2,
+        );
       } else {
         // Dokunmamış baklava: tezgâhta henüz örülmemiş göz.
         //
@@ -189,18 +210,11 @@ class _KilimBoardPainter extends CustomPainter {
         // Zeminden ayrılması için bir tık aydınlatılır ve konturu
         // belirgin bırakılır — bu, şeridin taşıdığı ikinci bilgidir
         // (ne kadar yol kaldı) ve süslemesi değil.
+        canvas.drawPath(diamond, Paint()..color = trackColor);
         canvas.drawPath(
           diamond,
           Paint()
-            ..color = Color.alphaBlend(
-              Colors.white.withValues(alpha: 0.07),
-              trackColor,
-            ),
-        );
-        canvas.drawPath(
-          diamond,
-          Paint()
-            ..color = outlineColor.withValues(alpha: 0.55)
+            ..color = outlineColor
             ..style = PaintingStyle.stroke
             ..strokeWidth = 1,
         );
@@ -209,29 +223,24 @@ class _KilimBoardPainter extends CustomPainter {
   }
 
   /// Uzun setlerde motif okunmaz; oranı taşıyan dolu şeride düşülür.
+  ///
+  /// Şahnê ilerleme çubuğu dili: S pah, iz Ray, dolgu Zêr.
   void _paintCompact(Canvas canvas, Size size) {
-    final radius = Radius.circular(size.height / 2);
-    final track = RRect.fromRectAndRadius(Offset.zero & size, radius);
-    canvas.drawRRect(track, Paint()..color = trackColor);
+    Path bar(double width) =>
+        SahneShape.s.getOuterPath(Offset.zero & Size(width, size.height));
+    canvas.drawPath(bar(size.width), Paint()..color = trackColor);
 
     final answered = results.length / total;
     if (answered <= 0) return;
     final correct = results.where((result) => result).length / total;
 
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Offset.zero & Size(size.width * answered, size.height),
-        radius,
-      ),
-      Paint()..color = AppTheme.gold.withValues(alpha: 0.35),
+    canvas.drawPath(
+      bar(size.width * answered),
+      Paint()..color = gold.withValues(alpha: 0.35),
     );
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Offset.zero & Size(size.width * correct, size.height),
-        radius,
-      ),
-      Paint()..color = AppTheme.gold,
-    );
+    if (correct > 0) {
+      canvas.drawPath(bar(size.width * correct), Paint()..color = gold);
+    }
   }
 
   @override
@@ -239,5 +248,7 @@ class _KilimBoardPainter extends CustomPainter {
       oldDelegate.total != total ||
       oldDelegate.currentIndex != currentIndex ||
       oldDelegate.results.length != results.length ||
-      oldDelegate.trackColor != trackColor;
+      oldDelegate.trackColor != trackColor ||
+      oldDelegate.outlineColor != outlineColor ||
+      oldDelegate.gold != gold;
 }

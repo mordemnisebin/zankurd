@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne_progress.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/progress_summary.dart';
 
@@ -57,9 +58,9 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.text('12'), findsOneWidget);
     expect(find.text('12/0'), findsNothing);
-    final bar = tester.widget<LinearProgressIndicator>(
-      find.byType(LinearProgressIndicator),
-    );
+    // 2026-09-29 Şahnê: çubuk `SahneProgressBar` (eskiden
+    // `LinearProgressIndicator`); korunan şey oranın kendisi.
+    final bar = tester.widget<SahneProgressBar>(find.byType(SahneProgressBar));
     expect(bar.value, 0.0);
   });
 
@@ -74,9 +75,9 @@ void main() {
         ),
       ),
     );
-    final bar = tester.widget<LinearProgressIndicator>(
-      find.byType(LinearProgressIndicator),
-    );
+    // 2026-09-29 Şahnê: çubuk `SahneProgressBar` (eskiden
+    // `LinearProgressIndicator`); korunan şey oranın kendisi.
+    final bar = tester.widget<SahneProgressBar>(find.byType(SahneProgressBar));
     expect(bar.value, 1.0);
   });
 

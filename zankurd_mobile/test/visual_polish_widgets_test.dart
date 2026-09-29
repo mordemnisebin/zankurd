@@ -3,6 +3,7 @@ import 'dart:ui' show SemanticsAction;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
 import 'package:zankurd_mobile/src/widgets/app_row_card.dart';
@@ -109,7 +110,11 @@ void main() {
   });
 
   testWidgets(
-    'identity header uses a quiet tonal surface instead of a hero gradient',
+    // 2026-09-29 Şahnê: sayfa adı bir başlık kartında tekrarlanmaz — başlık
+    // bloğunun kart zemini yok. Bekçi eskiden "sakin ton yüzey + kenar"
+    // istiyordu; şimdi korunan şey: gradyan/gölge yok, zemin yok, yalnız
+    // küçük ikon karosu rolün tonunu taşır, metinler belirteç renklerinde.
+    'identity header is a plain title block: no card, no gradient',
     (tester) async {
       for (final theme in [AppTheme.light(), AppTheme.dark()]) {
         await tester.pumpWidget(
@@ -128,31 +133,30 @@ void main() {
         await tester.pumpAndSettle();
 
         final header = find.byType(ScreenIdentityHeader);
-        final decoration =
-            tester
-                    .widget<DecoratedBox>(
-                      find
-                          .descendant(
-                            of: header,
-                            matching: find.byType(DecoratedBox),
-                          )
-                          .first,
-                    )
-                    .decoration
-                as BoxDecoration;
         final context = tester.element(header);
-
-        expect(decoration.gradient, isNull);
-        expect(decoration.color, AppTheme.surfaceColor(context));
-        expect(decoration.boxShadow ?? const <BoxShadow>[], isEmpty);
-        expect(decoration.border, isNotNull);
+        final t = SahneTokens.of(context);
+        final boxes = tester
+            .widgetList<DecoratedBox>(
+              find.descendant(of: header, matching: find.byType(DecoratedBox)),
+            )
+            .toList();
+        // Tek süs: 44'lük ikon karosu (Zimrût tonu, M pah). Başlık kartı yok.
+        expect(boxes, hasLength(1));
+        final tile = boxes.single.decoration as ShapeDecoration;
+        expect(tile.gradient, isNull);
+        expect(tile.shadows ?? const <BoxShadow>[], isEmpty);
+        expect(tile.color, t.learnTint);
+        expect(
+          tester.getSize(find.byWidget(boxes.single)).height,
+          lessThan(tester.getSize(header).height + 1),
+        );
 
         final title = tester.widget<Text>(find.text('Kurmancî hîn bibe'));
         final subtitle = tester.widget<Text>(
           find.text('Riya xwe bi aramî û bi gavên zelal bidomîne.'),
         );
-        expect(title.style?.color, AppTheme.textPrimaryColor(context));
-        expect(subtitle.style?.color, AppTheme.textSubColor(context));
+        expect(title.style?.color, t.tx);
+        expect(subtitle.style?.color, t.tx2);
       }
     },
   );

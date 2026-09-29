@@ -2,7 +2,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../l10n/strings.dart';
 import '../providers/reduced_motion_provider.dart';
-import '../theme/app_theme.dart';
+import '../theme/sahne.dart';
+import 'sahne/sahne_foundation.dart';
 import '../utils/error_reporter.dart';
 
 class WeeklyPerformanceChart extends StatelessWidget {
@@ -17,8 +18,12 @@ class WeeklyPerformanceChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor = AppTheme.textPrimaryColor(context);
-    final mutedTextColor = AppTheme.textMutedColor(context);
+    // 2026-09-29 Şahnê: doğru Rast metni (`okTx`), yanlış Şaş metni
+    // (`errTx`) — iki temada da zemine karşı okunan durum tonları; çubuklar
+    // S pahlı; eksen yazısı Açıklama (Onest), üçüncül metin; ızgara `line`.
+    final t = SahneTokens.of(context);
+    final textColor = t.tx;
+    final mutedTextColor = t.tx3;
 
     // Find the max total answers in a single day to scale the chart
     int maxVal = 5; // Default minimum scale
@@ -29,7 +34,7 @@ class WeeklyPerformanceChart extends StatelessWidget {
       }
     });
 
-    final gridLineColor = AppTheme.borderColor(context).withValues(alpha: 0.5);
+    final gridLineColor = t.line;
     Widget chart(double progress) => SizedBox(
       height: 160,
       width: double.infinity,
@@ -41,15 +46,18 @@ class WeeklyPerformanceChart extends StatelessWidget {
           isKu: isKu,
           gridLineColor: gridLineColor,
           labelColor: mutedTextColor,
-          correctColor: AppTheme.correct,
-          wrongColor: AppTheme.wrong,
+          correctColor: t.okTx,
+          wrongColor: t.errTx,
         ),
       ),
     );
 
     // Çubuk büyümesi süsüdür. Tercih açıkken ilk karede tam boyda
     // durur; yoksa profilin en hareketli yüzeyi ayarı yok sayar.
-    final chartArea = ReducedMotionProvider.isReducedIn(context)
+    final reduceMotion =
+        ReducedMotionProvider.isReducedIn(context) ||
+        sahneMotionReduced(context);
+    final chartArea = reduceMotion
         ? chart(1.0)
         : TweenAnimationBuilder<double>(
             tween: Tween<double>(begin: 0.0, end: 1.0),
@@ -66,19 +74,19 @@ class WeeklyPerformanceChart extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             _LegendItem(
-              color: AppTheme.correct,
+              color: t.okTx,
               label: Tr.forKu(K.correct, isKu),
               textColor: textColor,
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: SahneSpace.x4),
             _LegendItem(
-              color: AppTheme.wrong,
+              color: t.errTx,
               label: Tr.forKu(K.wrong, isKu),
               textColor: textColor,
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: SahneSpace.x4),
         chartArea,
       ],
     );
@@ -100,23 +108,14 @@ class _LegendItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(3),
+        SizedBox.square(
+          dimension: 12,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(color: color, shape: SahneShape.s),
           ),
         ),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: TextStyle(
-            color: textColor,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        const SizedBox(width: SahneSpace.x2),
+        Text(label, style: SahneType.caption.copyWith(color: textColor)),
       ],
     );
   }
@@ -173,14 +172,13 @@ class _ChartPainter extends CustomPainter {
       final labelVal = (maxVal * (i / gridCount)).round();
       textPainter.text = TextSpan(
         text: '$labelVal',
-        style: TextStyle(
-          // Boyayıcı temayı görmez; aile yazılmazsa eksen etiketleri sistem
-          // yazı tipiyle çizilir ve grafik ekranın geri kalanına yabancı
-          // görünür (2026-07-26).
-          fontFamily: AppTypography.fontFamily,
+        // Boyayıcı temayı görmez; aile yazılmazsa eksen etiketleri sistem
+        // yazı tipiyle çizilir ve grafik ekranın geri kalanına yabancı
+        // görünür (2026-07-26). Biçem SahneType'tan.
+        style: SahneType.caption.copyWith(
+          fontFamily: SahneType.text,
           color: labelColor,
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
+          fontFeatures: const [FontFeature.tabularFigures()],
         ),
       );
       textPainter.layout();
@@ -207,41 +205,51 @@ class _ChartPainter extends CustomPainter {
       final double wrongHeight = (wrongCount / maxVal) * chartHeight * progress;
 
       // Draw Correct part (Bottom part)
-      if (correctHeight > 0) {
-        final rect = RRect.fromRectAndCorners(
-          Rect.fromLTWH(
-            x,
-            chartHeight - correctHeight,
-            barWidth,
-            correctHeight,
+      // Şahnê S pahı (yarıçap değil): yığılan iki parçanın birleştiği
+      // kenar düz kalır.
+      Path bar(Rect rect, {required bool top, required bool bottom}) {
+        const bevel = Radius.circular(SahneShape.sValue);
+        return BeveledRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: top ? bevel : Radius.zero,
+            topRight: top ? bevel : Radius.zero,
+            bottomLeft: bottom ? bevel : Radius.zero,
+            bottomRight: bottom ? bevel : Radius.zero,
           ),
-          topLeft: wrongHeight == 0 ? const Radius.circular(4) : Radius.zero,
-          topRight: wrongHeight == 0 ? const Radius.circular(4) : Radius.zero,
-          bottomLeft: const Radius.circular(4),
-          bottomRight: const Radius.circular(4),
+        ).getOuterPath(rect);
+      }
+
+      if (correctHeight > 0) {
+        canvas.drawPath(
+          bar(
+            Rect.fromLTWH(
+              x,
+              chartHeight - correctHeight,
+              barWidth,
+              correctHeight,
+            ),
+            top: wrongHeight == 0,
+            bottom: true,
+          ),
+          Paint()..color = correctColor,
         );
-        canvas.drawRRect(rect, Paint()..color = correctColor);
       }
 
       // Draw Wrong part (Top part, stacked on top of correct part)
       if (wrongHeight > 0) {
-        final rect = RRect.fromRectAndCorners(
-          Rect.fromLTWH(
-            x,
-            chartHeight - correctHeight - wrongHeight,
-            barWidth,
-            wrongHeight,
+        canvas.drawPath(
+          bar(
+            Rect.fromLTWH(
+              x,
+              chartHeight - correctHeight - wrongHeight,
+              barWidth,
+              wrongHeight,
+            ),
+            top: true,
+            bottom: correctHeight == 0,
           ),
-          topLeft: const Radius.circular(4),
-          topRight: const Radius.circular(4),
-          bottomLeft: correctHeight == 0
-              ? const Radius.circular(4)
-              : Radius.zero,
-          bottomRight: correctHeight == 0
-              ? const Radius.circular(4)
-              : Radius.zero,
+          Paint()..color = wrongColor,
         );
-        canvas.drawRRect(rect, Paint()..color = wrongColor);
       }
 
       // Draw X Label (Weekday)
@@ -255,20 +263,19 @@ class _ChartPainter extends CustomPainter {
       final weekdayLabel = _getWeekdayAbbreviation(weekday, isKu);
       textPainter.text = TextSpan(
         text: weekdayLabel,
-        style: TextStyle(
-          // Boyayıcı temayı görmez; aile yazılmazsa eksen etiketleri sistem
-          // yazı tipiyle çizilir ve grafik ekranın geri kalanına yabancı
-          // görünür (2026-07-26).
-          fontFamily: AppTypography.fontFamily,
+        // Boyayıcı temayı görmez; aile yazılmazsa eksen etiketleri sistem
+        // yazı tipiyle çizilir ve grafik ekranın geri kalanına yabancı
+        // görünür (2026-07-26). Biçem SahneType'tan.
+        style: SahneType.caption.copyWith(
+          fontFamily: SahneType.text,
           color: labelColor,
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
+          fontFeatures: const [FontFeature.tabularFigures()],
         ),
       );
       textPainter.layout();
       textPainter.paint(
         canvas,
-        Offset(x + (barWidth - textPainter.width) / 2, chartHeight + 6),
+        Offset(x + (barWidth - textPainter.width) / 2, chartHeight + 4),
       );
     }
   }

@@ -1,14 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 
-// Zana'nın 12 ışını altın + indigo dönüşümüyle çizilir — sakin, ritmik
-// iki renkli bir şerit (4 rengin kaotik dönüşümü küçük boyutta gürültü
-// gibi okunduğu için sadeleştirildi). Geometri/ifade değişmez.
+// 2026-09-29 Şahnê: güneş maskotu kaldırıldı ("maskot: Yok … boş durumda
+// logo işareti"). Işın rengi bekçisi eski maskotun görünüşünü sabitliyordu;
+// yerine plakanın logo işaretini çizdiği ve dekoratif kaldığı korunur.
 void main() {
-  test('ışın rengi deseni sakin iki renkli dönüşüm (altın/indigo)', () {
-    expect(RojMascot.rayColors, [AppTheme.gold, AppTheme.brand]);
+  testWidgets('maskot yerine logo işareti plakası çizilir, dekoratiftir', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await tester.pumpWidget(
+      const MaterialApp(home: Center(child: RojMascot())),
+    );
+    // İşaret bir `Image` değil, süs katmanıdır (`DecorationImage`).
+    expect(find.byType(Image), findsNothing);
+    final plate = tester.widget<DecoratedBox>(
+      find.descendant(
+        of: find.byType(RojMascot),
+        matching: find.byWidgetPredicate(
+          (w) =>
+              w is DecoratedBox &&
+              w.decoration is BoxDecoration &&
+              (w.decoration as BoxDecoration).image != null,
+        ),
+      ),
+    );
+    final image = (plate.decoration as BoxDecoration).image!.image;
+    expect((image as AssetImage).assetName, 'assets/zankurd_icon.webp');
+    expect(
+      find.byType(CustomPaint).evaluate().where((e) {
+        final w = e.widget as CustomPaint;
+        return w.painter != null &&
+            w.painter.runtimeType.toString().contains('Roj');
+      }),
+      isEmpty,
+    );
+    expect(
+      find.descendant(
+        of: find.byType(RojMascot),
+        matching: find.byType(ExcludeSemantics),
+      ),
+      findsWidgets,
+    );
+    semantics.dispose();
   });
 
   testWidgets('RojMascot tüm ruh hâllerinde hatasız çizilir', (tester) async {

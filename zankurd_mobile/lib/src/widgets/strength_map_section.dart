@@ -5,9 +5,9 @@ import '../data/mistake_store.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/strength_analysis.dart';
-import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../theme/app_icons.dart';
+import 'sahne/sahne.dart';
 
 /// Profildeki "Güçlü ve Geliştirilecek Alanlar" bölümü.
 ///
@@ -95,86 +95,78 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
     final ku = widget.isKu;
     final result = _result!;
 
-    return Container(
+    // 2026-09-29 Şahnê: yüzey kartı (Perde, L pah, gündüzde 1 px kenar);
+    // başlık Gövde 700 + öğrenme rolünün ikonu; grup etiketleri kalın
+    // açıklama (güçlü: Zêr kupa, geliştirilecek: ikincil metin bayrak —
+    // Agir yalnız birincil eylemin dolgusudur); satırda Rast ✓ ya da bayrak.
+    final t = SahneTokens.of(context);
+    return DecoratedBox(
       key: const ValueKey('strength-map-section'),
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(
-          color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-        ),
+      decoration: ShapeDecoration(
+        color: t.s1,
+        shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                AppIcons.chartLine,
-                color: AppTheme.playGreen,
-                size: 18,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  Tr.forKu(K.strengthMapTitle, ku),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
+      child: Padding(
+        padding: const EdgeInsets.all(SahneSpace.x4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(AppIcons.chartLine, color: t.learnTx, size: 20),
+                const SizedBox(width: SahneSpace.x2),
+                Expanded(
+                  child: Text(
+                    Tr.forKu(K.strengthMapTitle, ku),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.bodyStrong.copyWith(color: t.tx),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          if (result.insufficientData)
-            _buildHint(context, ku)
-          else ...[
-            if (result.strengths.isNotEmpty) ...[
-              _buildGroupLabel(
-                context,
-                Tr.forKu(K.strengthStrong, ku),
-                AppIcons.trophy,
-                AppTheme.gold,
-              ),
-              for (final i in result.strengths.take(3))
-                _buildRow(context, ku, i, InsightTone.strength),
-              const SizedBox(height: AppSpacing.sm),
-            ],
-            if (result.improvements.isNotEmpty) ...[
-              _buildGroupLabel(
-                context,
-                Tr.forKu(K.strengthToImprove, ku),
-                AppIcons.arrowTrendUp,
-                AppTheme.brand,
-              ),
-              for (final i in result.improvements.take(3))
-                _buildRow(context, ku, i, InsightTone.improve),
+              ],
+            ),
+            const SizedBox(height: SahneSpace.x3),
+            if (result.insufficientData)
+              _buildHint(context, ku)
+            else ...[
+              if (result.strengths.isNotEmpty) ...[
+                _buildGroupLabel(
+                  context,
+                  Tr.forKu(K.strengthStrong, ku),
+                  AppIcons.trophy,
+                  t.goldTx,
+                ),
+                for (final i in result.strengths.take(3))
+                  _buildRow(context, ku, i, InsightTone.strength),
+                const SizedBox(height: SahneSpace.x3),
+              ],
+              if (result.improvements.isNotEmpty) ...[
+                _buildGroupLabel(
+                  context,
+                  Tr.forKu(K.strengthToImprove, ku),
+                  AppIcons.arrowTrendUp,
+                  t.tx2,
+                ),
+                for (final i in result.improvements.take(3))
+                  _buildRow(context, ku, i, InsightTone.improve),
+              ],
             ],
           ],
-        ],
+        ),
       ),
     );
   }
 
   Widget _buildHint(BuildContext context, bool ku) {
+    final t = SahneTokens.of(context);
     return Row(
       children: [
-        Icon(
-          AppIcons.circleInfo,
-          size: 18,
-          color: AppTheme.textMutedColor(context),
-        ),
-        const SizedBox(width: 8),
+        Icon(AppIcons.circleInfo, size: 20, color: t.tx3),
+        const SizedBox(width: SahneSpace.x2),
         Expanded(
           child: Text(
             Tr.forKu(K.strengthEmpty, ku),
-            style: AppTypography.bodyMedium.copyWith(
-              color: AppTheme.textMutedColor(context),
-            ),
+            style: SahneType.body.copyWith(color: t.tx2),
           ),
         ),
       ],
@@ -188,17 +180,15 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
     Color tint,
   ) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
+      padding: const EdgeInsets.only(bottom: SahneSpace.x1),
       child: Row(
         children: [
-          Icon(icon, size: 15, color: tint),
-          const SizedBox(width: 6),
-          Text(
-            label,
-            style: AppTypography.caption.copyWith(
-              color: tint,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 0.3,
+          Icon(icon, size: 16, color: tint),
+          const SizedBox(width: SahneSpace.x2),
+          Flexible(
+            child: Text(
+              label,
+              style: SahneType.captionStrong.copyWith(color: tint),
             ),
           ),
         ],
@@ -212,11 +202,12 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
     CategoryInsight insight,
     InsightTone tone,
   ) {
+    final t = SahneTokens.of(context);
     final name = CategoryNames.localized(insight.category, ku);
     final isStrength = tone == InsightTone.strength;
     // Renk + ikon + metin birlikte anlam taşır.
     final icon = isStrength ? AppIcons.circleCheck : AppIcons.flag;
-    final tint = isStrength ? AppTheme.playGreen : AppTheme.brand;
+    final tint = isStrength ? t.okTx : t.tx2;
     final String action;
     if (isStrength) {
       action = Tr.forKu(K.strengthKeepForm, ku);
@@ -227,20 +218,17 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: SahneSpace.x1),
       child: Row(
         children: [
           Icon(icon, size: 16, color: tint),
-          const SizedBox(width: 8),
+          const SizedBox(width: SahneSpace.x2),
           Expanded(
             child: Text(
               name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w600,
-              ),
+              style: SahneType.bodyStrong.copyWith(color: t.tx),
             ),
           ),
           Flexible(
@@ -249,9 +237,7 @@ class _StrengthMapSectionState extends State<StrengthMapSection> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.right,
-              style: AppTypography.caption.copyWith(
-                color: AppTheme.textMutedColor(context),
-              ),
+              style: SahneType.caption.copyWith(color: t.tx2),
             ),
           ),
         ],

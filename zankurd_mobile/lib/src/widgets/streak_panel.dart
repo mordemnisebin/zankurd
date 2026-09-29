@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_icons.dart';
 import 'arena_kit.dart';
+import 'branded_loader.dart';
+import 'sahne/sahne.dart';
 
 /// Bir günün streak açısından durumu.
 ///
@@ -113,164 +115,124 @@ class StreakPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 2026-09-29 Şahnê: yüzey kartı (Perde, L pah, gündüzde 1 px kenar);
+    // seri jetonu alev glifli stat çipi; hafta elmas dizisi; kilometre taşı
+    // Zêr ilerleme çubuğu ("5/7" sağda); koruma ikincil düğme (Kulis).
+    final t = SahneTokens.of(context);
     final labels = dayLabels;
     final chipStatus = _statusFor(freezeState);
-    final fire = RewardKind.streak.color;
 
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppTheme.borderColor(context)),
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: t.s1,
+        shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              RewardToken(
-                kind: RewardKind.streak,
-                value: '$current',
-                label: dayUnitLabel,
-              ),
-              const SizedBox(width: AppSpacing.xs),
-              // Esnek olmalı: uzun Kurmancî durum etiketi %200 yazıda
-              // satırı 356 piksel taşırıyordu. `Spacer` esnemeyen bir
-              // çipin yanında hiçbir şeyi kurtaramaz.
-              Flexible(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: ArenaStatusChip(
-                    status: chipStatus,
-                    label: freezeLabel,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          // Haftalık ritim: her gün renk + şekil/ikon taşır.
-          //
-          // Yedi işaret 200% yazıda dar telefona sığmıyordu; satır yatay
-          // kaydırılabilir. Günleri kırpmak ya da küçültmek ritmi
-          // okunmaz hâle getirirdi — asıl bilgi tam da o dizidir.
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                for (var i = 0; i < days.length && i < labels.length; i++)
-                  Padding(
-                    padding: EdgeInsets.only(
-                      right: i == days.length - 1 ? 0 : 10,
-                    ),
-                    child: _DayMark(
-                      state: days[i],
-                      label: labels[i],
-                      accent: fire,
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          if (nextMilestone != null && nextMilestone! > current) ...[
-            const SizedBox(height: AppSpacing.sm),
+      child: Padding(
+        padding: const EdgeInsets.all(SahneSpace.x4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
             Row(
               children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(AppRadius.pill),
-                    child: LinearProgressIndicator(
-                      value: (current / nextMilestone!).clamp(0.0, 1.0),
-                      minHeight: 7,
-                      backgroundColor: AppTheme.borderColor(context),
-                      valueColor: AlwaysStoppedAnimation<Color>(fire),
-                    ),
-                  ),
+                RewardToken(
+                  kind: RewardKind.streak,
+                  value: '$current',
+                  label: dayUnitLabel,
                 ),
-                const SizedBox(width: AppSpacing.xs),
-                // Hedef sayıyla da yazılır; çubuk tek başına ölçü vermez.
-                Text(
-                  '$current/${nextMilestone!}',
-                  style: AppTypography.caption.copyWith(
-                    fontWeight: FontWeight.w900,
-                    color: AppTheme.textSubColor(context),
+                const SizedBox(width: SahneSpace.x2),
+                // Esnek olmalı: uzun Kurmancî durum etiketi %200 yazıda
+                // satırı 356 piksel taşırıyordu. `Spacer` esnemeyen bir
+                // çipin yanında hiçbir şeyi kurtaramaz.
+                Flexible(
+                  child: Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: ArenaStatusChip(
+                      status: chipStatus,
+                      label: freezeLabel,
+                    ),
                   ),
                 ),
               ],
             ),
-          ],
-          if (freezeState == StreakFreezeState.available &&
-              onFreeze != null &&
-              freezeActionLabel != null) ...[
-            const SizedBox(height: AppSpacing.sm),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton.icon(
+            const SizedBox(height: SahneSpace.x3),
+            // Haftalık ritim: her gün renk + şekil/ikon taşır.
+            //
+            // Yedi işaret 200% yazıda dar telefona sığmıyordu; satır yatay
+            // kaydırılabilir. Günleri kırpmak ya da küçültmek ritmi
+            // okunmaz hâle getirirdi — asıl bilgi tam da o dizidir.
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  for (var i = 0; i < days.length && i < labels.length; i++)
+                    Padding(
+                      padding: EdgeInsetsDirectional.only(
+                        end: i == days.length - 1 ? 0 : SahneSpace.x2,
+                      ),
+                      child: _DayMark(state: days[i], label: labels[i]),
+                    ),
+                ],
+              ),
+            ),
+            if (nextMilestone != null && nextMilestone! > current) ...[
+              const SizedBox(height: SahneSpace.x3),
+              // Hedef sayıyla da yazılır; çubuk tek başına ölçü vermez.
+              SahneProgressBar(
+                value: (current / nextMilestone!).clamp(0.0, 1.0),
+                tone: SahneProgressTone.gold,
+                trailing: '$current/${nextMilestone!}',
+              ),
+            ],
+            if (freezeState == StreakFreezeState.available &&
+                onFreeze != null &&
+                freezeActionLabel != null) ...[
+              const SizedBox(height: SahneSpace.x3),
+              SahneButton.secondary(
+                label: freezeCost == null
+                    ? freezeActionLabel!
+                    : '${freezeActionLabel!} · $freezeCost',
+                icon: AppIcons.shield,
+                expand: true,
                 onPressed: onFreeze,
-                icon: const Icon(Icons.ac_unit_rounded, size: 18),
-                label: Text(
-                  freezeCost == null
-                      ? freezeActionLabel!
-                      : '${freezeActionLabel!} · $freezeCost',
-                ),
               ),
-            ),
+            ],
+            if (freezeState == StreakFreezeState.applying) ...[
+              const SizedBox(height: SahneSpace.x3),
+              const Center(child: BrandedLoader(size: 20, strokeWidth: 2)),
+            ],
           ],
-          if (freezeState == StreakFreezeState.applying) ...[
-            const SizedBox(height: AppSpacing.sm),
-            const Center(
-              child: SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              ),
-            ),
-          ],
-        ],
+        ),
       ),
     );
   }
 }
 
 class _DayMark extends StatelessWidget {
-  const _DayMark({
-    required this.state,
-    required this.label,
-    required this.accent,
-  });
+  const _DayMark({required this.state, required this.label});
 
   final StreakDayState state;
   final String label;
-  final Color accent;
 
   @override
   Widget build(BuildContext context) {
-    final (bg, fg, icon) = switch (state) {
-      StreakDayState.completed => (accent, Colors.white, Icons.check_rounded),
+    final t = SahneTokens.of(context);
+    // Şahnê elmas dili: tamamlanan gün Zêr dolu + ✓ (seri ödüldür), bugün
+    // Zêr tonu + Halka 2, kaçırılan Ray + ✗, gelecek yalnız çizgi, dondurulan
+    // Kulis + kalkan. Durum yalnız renkle verilmez: her birinin ikonu ayrı.
+    final (Color bg, Color fg, IconData icon, Color? ring) = switch (state) {
+      StreakDayState.completed => (t.gold, t.onGold, AppIcons.check, null),
       StreakDayState.today => (
-        accent.withValues(alpha: 0.18),
-        AppColors.readableAccent(context, accent),
-        Icons.today_rounded,
+        t.goldTint,
+        t.goldTx,
+        AppIcons.calendarDays,
+        t.goldTx,
       ),
-      StreakDayState.missed => (
-        AppTheme.borderColor(context),
-        AppTheme.textMutedColor(context),
-        Icons.close_rounded,
-      ),
-      StreakDayState.upcoming => (
-        Colors.transparent,
-        AppTheme.textMutedColor(context),
-        Icons.remove_rounded,
-      ),
+      StreakDayState.missed => (t.s3, t.tx2, AppIcons.xmark, null),
+      StreakDayState.upcoming => (t.s1, t.tx3, AppIcons.clock, t.s3),
       // Dondurulmuş gün: seri korunmuş ama oynanmamış. Tamamlanmışla aynı
       // görünmemeli, kaçırılmışla da.
-      StreakDayState.frozen => (
-        const Color(0xFF04697C),
-        Colors.white,
-        Icons.ac_unit_rounded,
-      ),
+      StreakDayState.frozen => (t.s2, t.tx, AppIcons.shield, null),
     };
 
     return Semantics(
@@ -279,25 +241,27 @@ class _DayMark extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                color: bg,
-                shape: BoxShape.circle,
-                border: state == StreakDayState.upcoming
-                    ? Border.all(color: AppTheme.borderColor(context))
-                    : null,
+            SizedBox.square(
+              dimension: 32,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: bg,
+                  shape: SahneShape.diamond(
+                    32,
+                    side: ring == null
+                        ? null
+                        : BorderSide(
+                            color: ring,
+                            width: SahneRing.r2,
+                            strokeAlign: BorderSide.strokeAlignInside,
+                          ),
+                  ),
+                ),
+                child: Icon(icon, size: 14, color: fg),
               ),
-              child: Icon(icon, size: 15, color: fg),
             ),
-            const SizedBox(height: 3),
-            Text(
-              label,
-              style: AppTypography.caption.copyWith(
-                color: AppTheme.textMutedColor(context),
-              ),
-            ),
+            const SizedBox(height: SahneSpace.x1),
+            Text(label, style: SahneType.caption.copyWith(color: t.tx2)),
           ],
         ),
       ),

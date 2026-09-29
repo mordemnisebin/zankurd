@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
+import '../theme/app_icons.dart';
 import 'roj_mascot.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'sahne/sahne.dart';
 
+/// Boş durum: logo işareti plakası + başlık + açıklama + isteğe bağlı eylem.
+///
+/// 2026-09-29 Şahnê: maskot ve renkli gradyan panel kaldırıldı ("boş
+/// durumda logo işareti", `spec_sahne.json`). [icon] plakanın köşesindeki
+/// küçük durum karosunda kalır: boş, hata ve çevrimdışı yalnız başlıkla
+/// değil şekille de ayrışır.
 class AppEmptyState extends StatelessWidget {
   const AppEmptyState({
     required this.icon,
@@ -13,6 +19,7 @@ class AppEmptyState extends StatelessWidget {
     this.actionLabel,
     this.onAction,
     this.actionIcon,
+    this.primaryAction = true,
   });
 
   final IconData icon;
@@ -22,17 +29,23 @@ class AppEmptyState extends StatelessWidget {
   final VoidCallback? onAction;
   final IconData? actionIcon;
 
+  /// Eylem ekranın tek birincil eylemi mi (Agir)? `false`: ikincil (Kulis),
+  /// ekranda başka bir birincil eylem varken.
+  final bool primaryAction;
+
   @override
   Widget build(BuildContext context) {
     return _AppStateScaffold(
       icon: icon,
-      iconColor: AppTheme.primaryGradientStart,
+      tone: _StateTone.neutral,
       title: title,
       message: message,
       actionLabel: actionLabel,
       onAction: onAction,
       actionIcon: actionIcon,
-      // Boş durumlarda Zana düşünceli hâliyle eşlik eder.
+      primaryAction: primaryAction,
+      // Boş durumlarda eskiden maskot eşlik ederdi; yerinde artık logo
+      // işareti durur (aynı bileşen, [RojMascot]).
       showMascot: true,
     );
   }
@@ -48,6 +61,7 @@ class AppErrorState extends StatelessWidget {
     this.icon = AppIcons.triangleExclamation,
     this.showMascot = false,
     this.mascotMood = RojMood.sad,
+    this.primaryAction = true,
   });
 
   final IconData icon;
@@ -56,22 +70,27 @@ class AppErrorState extends StatelessWidget {
   final String retryLabel;
   final VoidCallback onRetry;
 
-  /// true ise ikon halkası yerine Roj maskotu gösterilir (hata için
-  /// üzgün varsayılan); küçük ikon rozeti köşede kalır.
+  /// Geriye uyum; Şahnê'de maskot yok, plaka her zaman logo işaretidir
+  /// (`true` iken [RojMascot] bileşeniyle, değilken [BrandMarkPlate] ile —
+  /// ikisi aynı görünür).
   final bool showMascot;
   final RojMood mascotMood;
+
+  /// Bkz. [AppEmptyState.primaryAction].
+  final bool primaryAction;
 
   @override
   Widget build(BuildContext context) {
     return _AppStateScaffold(
       icon: icon,
-      iconColor: AppTheme.wrong,
+      tone: _StateTone.error,
       title: title,
       message: message,
       actionLabel: retryLabel,
       onAction: onRetry,
+      actionIcon: AppIcons.arrowsRotate,
+      primaryAction: primaryAction,
       showMascot: showMascot,
-      mascotMood: mascotMood,
     );
   }
 }
@@ -85,6 +104,7 @@ class AppOfflineState extends StatelessWidget {
     super.key = const ValueKey('app-offline-state'),
     this.showMascot = false,
     this.mascotMood = RojMood.thinking,
+    this.primaryAction = true,
   });
 
   final String title;
@@ -92,56 +112,58 @@ class AppOfflineState extends StatelessWidget {
   final String retryLabel;
   final VoidCallback onRetry;
 
-  /// true ise ikon halkası yerine Roj maskotu gösterilir (çevrimdışı
-  /// için düşünceli varsayılan); küçük ikon rozeti köşede kalır.
+  /// Geriye uyum; Şahnê'de maskot yok, plaka her zaman logo işaretidir
+  /// (`true` iken [RojMascot] bileşeniyle, değilken [BrandMarkPlate] ile —
+  /// ikisi aynı görünür).
   final bool showMascot;
   final RojMood mascotMood;
+
+  /// Bkz. [AppEmptyState.primaryAction].
+  final bool primaryAction;
 
   @override
   Widget build(BuildContext context) {
     return _AppStateScaffold(
       icon: AppIcons.cloud,
-      iconColor: AppTheme.secondaryAccent,
+      tone: _StateTone.neutral,
       title: title,
       message: message,
       actionLabel: retryLabel,
       onAction: onRetry,
       actionIcon: AppIcons.arrowsRotate,
+      primaryAction: primaryAction,
       showMascot: showMascot,
-      mascotMood: mascotMood,
     );
   }
 }
 
+enum _StateTone { neutral, error }
+
 class _AppStateScaffold extends StatelessWidget {
   const _AppStateScaffold({
     required this.icon,
-    required this.iconColor,
+    required this.tone,
     required this.title,
     required this.message,
+    required this.primaryAction,
+    required this.showMascot,
     this.actionLabel,
     this.onAction,
     this.actionIcon,
-    this.showMascot = false,
-    this.mascotMood = RojMood.thinking,
   });
 
-  /// true ise ikon halkası yerine Zana maskotu gösterilir;
-  /// küçük ikon rozeti köşede kalır (mevcut testler ikonu bulmaya devam eder).
-  final bool showMascot;
-  final RojMood mascotMood;
-
   final IconData icon;
-  final Color iconColor;
+  final _StateTone tone;
   final String title;
   final String message;
   final String? actionLabel;
   final VoidCallback? onAction;
   final IconData? actionIcon;
+  final bool primaryAction;
+  final bool showMascot;
 
   @override
   Widget build(BuildContext context) {
-    final actionLabel = this.actionLabel;
     return LayoutBuilder(
       builder: (context, constraints) {
         // Yükseklik sınırsızsa (kaydırılan bir listenin içindeyiz)
@@ -151,12 +173,12 @@ class _AppStateScaffold extends StatelessWidget {
         // yoksa her yeni kullanım aynı tuzağa düşer.
         if (!constraints.hasBoundedHeight) {
           return Padding(
-            padding: const EdgeInsets.all(24),
-            child: Center(child: _panel(context, actionLabel)),
+            padding: const EdgeInsets.all(SahneSpace.x6),
+            child: Center(child: _panel(context)),
           );
         }
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(SahneSpace.x6),
           child: ConstrainedBox(
             // Üstteki sabit bölüm uzadığında kalan yükseklik 48'in altına
             // inebilir (öğrenme ekranında boş ders listesi + hikâye
@@ -173,7 +195,7 @@ class _AppStateScaffold extends StatelessWidget {
             // üst üçte bire çekildi: içerikle bağı kopmuyor (2026-07-27).
             child: Align(
               alignment: const Alignment(0, -0.45),
-              child: _panel(context, actionLabel),
+              child: _panel(context),
             ),
           ),
         );
@@ -181,158 +203,90 @@ class _AppStateScaffold extends StatelessWidget {
     );
   }
 
-  /// Boş/hata panelinin gövdesi.
+  /// Boş/hata bloğunun gövdesi.
   ///
   /// İki dal da bunu kullanır: sınırlı yükseklikte kaydırılabilir bir
   /// kapsayıcının, sınırsızda düz bir dolgunun içinde. Gövdeyi tek yerde
   /// tutmak, iki dalın zamanla ayrışmasını engeller.
-  Widget _panel(BuildContext context, String? actionLabel) {
-    // Panel bir zamanlar düz beyaz bir kutuydu: krem zeminde beyaz kart,
-    // gri metin, soluk çerçeveli düğme. Boş ekranlarda **ekranın tamamı**
-    // bu kutudan ibaret olduğu için uygulama orada cansız görünüyordu
-    // (2026-07-27, canlı gezinti). Panel artık ekranın vurgu rengini
-    // taşıyor: yumuşak bir gradyan, ikonun arkasında renk halkası ve
-    // dolgulu bir eylem düğmesi.
-    final tint = iconColor;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 26),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color.alphaBlend(
-              tint.withValues(alpha: 0.10),
-              AppTheme.surfaceColor(context),
-            ),
-            Color.alphaBlend(
-              tint.withValues(alpha: 0.02),
-              AppTheme.surfaceColor(context),
-            ),
-          ],
-        ),
-        border: Border.all(color: tint.withValues(alpha: 0.22)),
-        boxShadow: [
-          BoxShadow(
-            color: tint.withValues(alpha: 0.10),
-            blurRadius: 24,
-            offset: const Offset(0, 10),
-            spreadRadius: -8,
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            width: showMascot ? 104 : 84,
-            height: showMascot ? 104 : 84,
+  Widget _panel(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final actionLabel = this.actionLabel;
+    final (badgeBg, badgeFg) = switch (tone) {
+      _StateTone.error => (t.errTint, t.errTx),
+      _StateTone.neutral => (t.s2, t.tx2),
+    };
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Logo plakası + köşede durum karosu (dekoratif; başlık okunur).
+        ExcludeSemantics(
+          child: SizedBox.square(
+            dimension: 76,
             child: Stack(
-              alignment: Alignment.center,
               clipBehavior: Clip.none,
               children: [
-                if (showMascot) ...[
-                  RojMascot(size: 100, mood: mascotMood),
-                  Positioned(
-                    right: -4,
-                    bottom: -2,
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: AppTheme.surfaceHiColor(context),
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: iconColor.withValues(alpha: 0.35),
-                        ),
-                      ),
-                      child: Icon(icon, color: iconColor, size: 16),
-                    ),
-                  ),
-                ] else ...[
-                  Container(
-                    width: 84,
-                    height: 84,
-                    decoration: BoxDecoration(
-                      color: iconColor.withValues(alpha: 0.06),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: iconColor.withValues(alpha: 0.14),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: iconColor.withValues(alpha: 0.24),
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  child: showMascot
+                      ? const RojMascot(size: 64)
+                      : const BrandMarkPlate(),
+                ),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: badgeBg,
+                      shape: SahneShape.withSide(
+                        SahneShape.s,
+                        t.bg,
+                        width: SahneRing.r2,
                       ),
                     ),
-                    child: Icon(icon, color: iconColor, size: 32),
+                    child: SizedBox.square(
+                      dimension: 28,
+                      child: Icon(icon, size: 16, color: badgeFg),
+                    ),
                   ),
-                ],
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 14),
-          Text(
+        ),
+        const SizedBox(height: SahneSpace.x4),
+        Semantics(
+          header: true,
+          child: Text(
             title,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w700,
-              fontSize: 18,
-            ),
+            style: SahneType.headline.copyWith(color: t.tx),
           ),
-          const SizedBox(height: 8),
-          Text(
-            message,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppTheme.textMutedColor(context),
-              height: 1.4,
-            ),
-          ),
-          if (actionLabel != null && onAction != null) ...[
-            const SizedBox(height: 20),
-            // Boş ekranda tek eylem budur; çerçeveli düğme onu ikincil
-            // gösteriyordu. Dolgulu düğme hem çağrıyı hem rengi taşır.
-            FilledButton.icon(
-              onPressed: onAction,
-              style: FilledButton.styleFrom(
-                backgroundColor: tint,
-                // Sabit beyaz DEĞİL: yazı rengi zemine bağlıdır. Bu düğme
-                // uygulamadaki her yükleme hatasının tek eylemidir
-                // ("Tekrar dene") ve `AppErrorState` onu `AppTheme.wrong`
-                // (#E5533D) ile çağırıyor — beyaz üzerinde ölçülen kontrast
-                // 3,73:1, AA eşiği 4,5:1. 14px/w800 olduğu için "büyük
-                // metin" istisnasına da girmiyordu (2026-07-31 denetimi).
-                //
-                // Proje tam bu kusur için `AppColors.onSolid`u yazmıştı;
-                // bu dosya yalnızca bekçinin listesinde yoktu.
-                foregroundColor: AppColors.onSolid(tint),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 22,
-                  vertical: 14,
+        ),
+        const SizedBox(height: SahneSpace.x2),
+        Text(
+          message,
+          textAlign: TextAlign.center,
+          style: SahneType.body.copyWith(color: t.tx2),
+        ),
+        if (actionLabel != null && onAction != null) ...[
+          const SizedBox(height: SahneSpace.x6),
+          // Agir üstünde metin her zaman koyu (`onAct`): Şahnê düğmesi bunu
+          // temadan alır. Eski düğme hata rengine beyaz yazıyordu (3,73:1).
+          primaryAction
+              ? SahneButton.primary(
+                  label: actionLabel,
+                  onPressed: onAction,
+                  icon: actionIcon,
+                  arrow: false,
+                )
+              : SahneButton.secondary(
+                  label: actionLabel,
+                  onPressed: onAction,
+                  icon: actionIcon,
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                ),
-                textStyle: const TextStyle(
-                  fontFamily: AppTypography.fontFamily,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 14,
-                ),
-              ),
-              icon: Icon(actionIcon ?? AppIcons.arrowsRotate, size: 16),
-              label: Text(actionLabel),
-            ),
-          ],
         ],
-      ),
+      ],
     );
   }
 }

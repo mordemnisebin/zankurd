@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +39,46 @@ extension SahneRoleTokens on SahneTokens {
     SahneRole.gold => gold.withValues(alpha: 0.2),
     SahneRole.neutral => tx3.withValues(alpha: 0.12),
   };
+}
+
+/// Eski bir aksan renginin Şahnê rolü.
+///
+/// Ortak bileşenlerin eski API'leri renk parametresi alıyordu (`accent`,
+/// `color`: `AppTheme.playGreen`, `AppTheme.gold` …). Şahnê'de renk yalnız
+/// rol taşır; bu yüzden gelen renk olduğu gibi boyanmaz, tonuna göre bir
+/// role çevrilir ve rolün belirteçleri kullanılır. Ekranlar Şahnê'ye
+/// taşınınca rol doğrudan verilir.
+///
+/// * yeşil / camgöbeği → öğrenme (Zimrût)
+/// * lal / pembe / kırmızı → yarış (Boyax)
+/// * turuncu / altın / amber → ödül (Zêr); Agir bir rol değildir
+/// * mavi, mor ve doygunluğu düşük (gri, lacivert yüzey) → nötr
+SahneRole sahneRoleFor(Color color) {
+  final hsl = HSLColor.fromColor(color);
+  if (color.a == 0 || hsl.saturation < 0.25 || hsl.lightness < 0.12) {
+    return SahneRole.neutral;
+  }
+  final h = hsl.hue;
+  if (h >= 70 && h < 190) return SahneRole.learn;
+  if (h >= 15 && h < 70) return SahneRole.gold;
+  if (h >= 300 || h < 15) return SahneRole.race;
+  return SahneRole.neutral;
+}
+
+/// Metnin iki uçtan (gecenin açık metni, gündüzün koyu metni) hangisiyle
+/// renkli bir dolguda AA okunduğunu seçer. Kullanıcının seçtiği avatar
+/// rengi gibi belirteç olmayan dolgular için; belirteç dolgularının kendi
+/// `on…` rengi vardır (Agir → `onAct`, Zêr → `onGold`).
+Color sahneOnFill(Color fill) {
+  double contrast(Color a, Color b) {
+    final l1 = a.computeLuminance();
+    final l2 = b.computeLuminance();
+    return (math.max(l1, l2) + 0.05) / (math.min(l1, l2) + 0.05);
+  }
+
+  final light = SahneTokens.night.tx;
+  final dark = SahneTokens.day.tx;
+  return contrast(light, fill) >= contrast(dark, fill) ? light : dark;
 }
 
 /// Etkin dil Kurmancî mi? Büyük harf ([SahneType.upperFor]) için.

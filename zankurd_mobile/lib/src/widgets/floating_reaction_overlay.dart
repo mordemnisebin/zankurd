@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import '../providers/reduced_motion_provider.dart';
-import '../theme/app_theme.dart';
+import 'sahne/sahne.dart';
 
 /// Reaksiyon balonunun ekran üzerindeki hareket bölgesi.
 enum FloatingReactionPlacement {
@@ -66,6 +66,10 @@ class FloatingReactionOverlay extends StatefulWidget {
   final Widget child;
   final FloatingReactionController? controller;
   final FloatingReactionPlacement placement;
+
+  /// Görünen her tepki balonunun anahtarı (testler ve yerleşim bekçileri
+  /// balonu görünüşünden değil bununla bulur).
+  static const bubbleKey = ValueKey('floating-reaction-bubble');
 
   @override
   State<FloatingReactionOverlay> createState() =>
@@ -247,7 +251,9 @@ class _SingleAnimatedReactionBubbleState
 
   @override
   Widget build(BuildContext context) {
-    final reduceMotion = ReducedMotionProvider.isReducedIn(context);
+    final reduceMotion =
+        ReducedMotionProvider.isReducedIn(context) ||
+        sahneMotionReduced(context);
     if (reduceMotion) {
       WidgetsBinding.instance.addPostFrameCallback((_) => widget.onComplete());
       return const SizedBox.shrink();
@@ -259,6 +265,8 @@ class _SingleAnimatedReactionBubbleState
     final startX = screenWidth * widget.bubble.startXRatio;
     final inRoomHeader =
         widget.placement == FloatingReactionPlacement.roomHeader;
+    final t = SahneTokens.of(context);
+    final hasSender = widget.bubble.senderName?.trim().isNotEmpty ?? false;
 
     return AnimatedBuilder(
       animation: _animController,
@@ -286,82 +294,63 @@ class _SingleAnimatedReactionBubbleState
                       ? _roomHeaderBubbleWidth
                       : double.infinity,
                 ),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppTheme.culturalBrandBg.withValues(alpha: 0.92),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: AppTheme.gold.withValues(alpha: 0.6),
-                      width: 1.5,
+                // 2026-09-29 Şahnê: Kulis (`s2`) plaka, M pah, Halka 1 Zêr
+                // kaş; bulanık gölge yok. Gönderen kalın açıklama Zêr metni,
+                // tepki Gövde 700 birincil metin.
+                child: DecoratedBox(
+                  key: FloatingReactionOverlay.bubbleKey,
+                  decoration: ShapeDecoration(
+                    color: t.s2,
+                    shape: SahneShape.withSide(
+                      SahneShape.m,
+                      t.gold,
+                      width: SahneRing.r1,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.35),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
                   ),
-                  child: inRoomHeader
-                      ? Text.rich(
-                          TextSpan(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: SahneSpace.x3,
+                      vertical: SahneSpace.x2,
+                    ),
+                    child: inRoomHeader
+                        ? Text.rich(
+                            TextSpan(
+                              children: [
+                                if (hasSender) ...[
+                                  TextSpan(
+                                    text: widget.bubble.senderName!,
+                                    style: SahneType.captionStrong.copyWith(
+                                      color: t.goldTx,
+                                    ),
+                                  ),
+                                  const TextSpan(text: ' · '),
+                                ],
+                                TextSpan(text: widget.bubble.text),
+                              ],
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: SahneType.bodyStrong.copyWith(color: t.tx),
+                          )
+                        : Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              if (widget.bubble.senderName != null &&
-                                  widget.bubble.senderName!
-                                      .trim()
-                                      .isNotEmpty) ...[
-                                TextSpan(
-                                  text: widget.bubble.senderName!,
-                                  style: const TextStyle(
-                                    color: AppTheme.gold,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w700,
+                              if (hasSender)
+                                Text(
+                                  widget.bubble.senderName!,
+                                  style: SahneType.captionStrong.copyWith(
+                                    color: t.goldTx,
                                   ),
                                 ),
-                                const TextSpan(text: ' · '),
-                              ],
-                              TextSpan(text: widget.bubble.text),
-                            ],
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        )
-                      : Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (widget.bubble.senderName != null &&
-                                widget.bubble.senderName!
-                                    .trim()
-                                    .isNotEmpty) ...[
                               Text(
-                                widget.bubble.senderName!,
-                                style: const TextStyle(
-                                  color: AppTheme.gold,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
+                                widget.bubble.text,
+                                style: SahneType.bodyStrong.copyWith(
+                                  color: t.tx,
                                 ),
                               ),
-                              const SizedBox(height: 2),
                             ],
-                            Text(
-                              widget.bubble.text,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                  ),
                 ),
               ),
             ),

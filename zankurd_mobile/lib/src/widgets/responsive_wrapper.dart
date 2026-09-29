@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
+import '../theme/sahne.dart';
 
 /// Web masaüstü/tablet geniş ekranlarda içeriği ortalar ve maksimum genişlik
 /// sınırı uygular. Mobil cihazlarda tam ekran davranışı korunur.
@@ -26,9 +26,8 @@ class ResponsiveWrapper extends StatelessWidget {
   /// İNCELER ve iPad ekran görüntüsü ister; "yalnız telefonda iyi görünsün"
   /// seçeneği yoktu.
   ///
-  /// 820, bu sarmalayıcının görsel dilinin gerektirdiği ölçüdür: kenarlık,
-  /// gölge ve yuvarlatılmış köşelerle ortalanmış tek sütun — yani masaüstünde
-  /// "telefon çerçevesi" görünümü. 1200 pt o çerçeve için fazla geniş olduğu
+  /// 820, bu sarmalayıcının görsel dilinin gerektirdiği ölçüdür: ortalanmış
+  /// tek sütun — yani masaüstünde "telefon çerçevesi" görünümü. 1200 pt o çerçeve için fazla geniş olduğu
   /// gibi, tek sütunluk okuma ölçüsünü de aşıyordu.
   ///
   /// [AppShell]'in 768 px'lik masaüstü gezinme eşiği bundan küçük olduğu
@@ -48,42 +47,23 @@ class ResponsiveWrapper extends StatelessWidget {
     }
 
     // Tablet/masaüstü: içeriği ortala ve geniş ekran taşmasını sınırla.
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
+    //
+    // 2026-09-29 Şahnê: dış alan sayfa zemini (`bg`); sütun yanlarda 1 px
+    // ayırıcı (`line`) ile ayrılır. Yuvarlak köşe ve bulanık gölge yok —
+    // Şahnê'de şekil pahtır ve tek bulanık gölge birincil düğmededir.
+    final t = SahneTokens.of(context);
+    return ColoredBox(
+      color: t.bg,
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(
             maxWidth: ResponsiveWrapper.maxContentWidth,
           ),
-          child: ClipRRect(
-            // 2026-09-25: köşe yarıçapı elle `16` yazılmıştı ve kart
-            // sistemiyle (AppRadius) bağı yoktu; yeni bir yüzey eklenirken
-            // hangi yuvarlaklığın doğru olduğu yine kopyala-yapıştır
-            // belirsizliğine dönüyordu. Tokenla aynı değer, tek doğruluk
-            // kaynağı.
-            borderRadius: const BorderRadius.horizontal(
-              left: Radius.circular(AppRadius.card),
-              right: Radius.circular(AppRadius.card),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              border: Border.symmetric(vertical: BorderSide(color: t.line)),
             ),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.symmetric(
-                  vertical: BorderSide.none,
-                  horizontal: BorderSide(
-                    color: Theme.of(
-                      context,
-                    ).dividerColor.withValues(alpha: 0.3),
-                    width: 0.5,
-                  ),
-                ),
-                // 2026-09-25: gölge `Colors.black.withValues(alpha: 0.15)`
-                // ve `blurRadius: 40` elle yazılmıştı. Karanlık temada
-                // siyah gölge koyu zeminde görünmez olup yüzey "yapışık"
-                // duruyordu; tema kart gölgesi her iki temada da okunuyor.
-                boxShadow: AppTheme.cardShadow(context),
-              ),
-              child: child,
-            ),
+            child: child,
           ),
         ),
       ),

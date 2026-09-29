@@ -1,10 +1,10 @@
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/reduced_motion_provider.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_icons.dart';
+import 'sahne/sahne.dart';
 
 class OfflineBanner extends StatelessWidget {
   const OfflineBanner({
@@ -20,25 +20,20 @@ class OfflineBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 2026-09-25: şerit `AppTheme.wrong` (doygun kırmızı) doluydu ve tam
-    // genişlikte ekranın tepesine yapışıyordu. Zayıf ağda kullanıcı bu
-    // bandı her ekranda, her saniye görüyor; sonuç "acil" diline dönüşüyor
-    // ve premium kimliği bozuyordu. Çevrimdışı olmak bir HATA değil, bir
-    // DURUM: bilgi ver, panik yaratma.
+    // 2026-09-25: şerit doygun kırmızı doluydu ve tam genişlikte ekranın
+    // tepesine yapışıyordu. Çevrimdışı olmak bir HATA değil, bir DURUM:
+    // bilgi ver, panik yaratma.
     //
-    // Yeni dil: sakin yüzey + okunabilir metin + ikon rengiyle ayrım.
-    // Eylem rengi (mercan) yalnız "Yeniden dene" düğmesinde kalır, yani
-    // AGENTS'teki "mercan yalnız önemli eylemlerde" kuralı da tutuyor.
-    final isDark = !AppTheme.isLight(context);
-    final background = isDark
-        ? AppTheme.wrong.withValues(alpha: 0.16)
-        : AppTheme.wrong.withValues(alpha: 0.10);
-    final borderColor = AppTheme.wrong.withValues(alpha: isDark ? 0.45 : 0.30);
-    final textColor = AppTheme.textPrimaryColor(context);
+    // 2026-09-29 Şahnê: ince bilgi şeridi — Kulis (`s2`) tonu + altta 1 px
+    // ayırıcı (`line`), ikincil metin renginde bulut ikonu, birincil metin.
+    // Durum yalnız renkle verilmez: ikon ve söz birlikte. "Yeniden dene"
+    // bir metin bağlantısıdır (Agir metni, `actTx`); dolgu değil — ekranın
+    // birincil eylemiyle yarışmaz.
+    final t = SahneTokens.of(context);
     // 300 ms boy değişimi süsüdür. Tercih açıkken şerit anında durur;
-    // yoksa kabuktaki her çevrimdışı uyarısı ayarı yok saymış olur —
-    // birincil CTA (`GeometricGradientButton`) aynı kapıdan geçiyor.
-    final animDuration = ReducedMotionProvider.isReducedIn(context)
+    // yoksa kabuktaki her çevrimdışı uyarısı ayarı yok saymış olur.
+    final reduceMotion = ReducedMotionProvider.isReducedIn(context);
+    final animDuration = reduceMotion
         ? Duration.zero
         : const Duration(milliseconds: 300);
     return AnimatedSize(
@@ -46,66 +41,57 @@ class OfflineBanner extends StatelessWidget {
       curve: Curves.easeInOut,
       child: isOffline
           ? Material(
-              color: Colors.transparent,
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
+              color: t.s2,
+              child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: background,
-                  border: Border(
-                    bottom: BorderSide(color: borderColor, width: 1),
-                  ),
+                  border: Border(bottom: BorderSide(color: t.line)),
                 ),
                 child: SafeArea(
                   bottom: false,
-                  child: Row(
-                    children: [
-                      Icon(AppIcons.circleXmark, color: borderColor, size: 18),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          label ?? context.t(K.offlineChecking),
-                          style: TextStyle(
-                            color: textColor,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: SahneSpace.page,
+                      vertical: SahneSpace.x1,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(AppIcons.cloud, color: t.tx2, size: 20),
+                        const SizedBox(width: SahneSpace.x3),
+                        Expanded(
+                          child: Text(
+                            label ?? context.t(K.offlineChecking),
+                            style: SahneType.captionStrong.copyWith(
+                              color: t.tx,
+                            ),
                           ),
                         ),
-                      ),
-                      if (onRetry != null)
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
+                        if (onRetry != null)
+                          InkWell(
                             onTap: onRetry,
-                            borderRadius: BorderRadius.circular(12),
-                            child: Container(
+                            customBorder: SahneShape.m,
+                            child: ConstrainedBox(
                               constraints: const BoxConstraints(
                                 minWidth: 48,
                                 minHeight: 48,
                               ),
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppTheme.brand.withValues(alpha: 0.12),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Text(
-                                context.t(K.retry),
-                                style: const TextStyle(
-                                  color: AppTheme.brand,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: SahneSpace.x2,
+                                ),
+                                child: Center(
+                                  widthFactor: 1,
+                                  child: Text(
+                                    context.t(K.retry),
+                                    style: SahneType.captionStrong.copyWith(
+                                      color: t.actTx,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

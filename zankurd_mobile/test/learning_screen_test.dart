@@ -1136,6 +1136,12 @@ void main() {
     expect(find.byKey(const ValueKey('lesson-recall-reveal')), findsNothing);
     expect(find.byKey(const ValueKey('lesson-recall-next')), findsOneWidget);
 
+    // 2026-09-29 Şahnê: düğmeler 52 boyda; açılan anlam "Sonraki"yi alt
+    // gezinme çubuğunun altına itebiliyor — kullanıcı gibi önce kaydır.
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('lesson-recall-next')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('lesson-recall-next')));
     await tester.pump();
     expect(find.text('Êvarbaş'), findsOneWidget);

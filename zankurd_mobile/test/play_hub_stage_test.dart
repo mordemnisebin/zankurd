@@ -32,6 +32,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/providers/remote_availability.dart';
@@ -269,23 +270,27 @@ void main() {
         final card = tester.widget<ModeCard>(key);
         expect(card.emphasis, ModeCardEmphasis.event, reason: 'dark=$isDark');
 
+        // 2026-09-29 Şahnê: yüzey pahlıdır (`ShapeDecoration`); etkinlik
+        // kartı Zêr rolünün ton zeminidir (`goldTint`), amblemi dolu Zêr
+        // karo + koyu ikon (`onGold`).
         final ink = tester.widget<Ink>(
           find.descendant(of: key, matching: find.byType(Ink)).first,
         );
-        final decoration = ink.decoration! as BoxDecoration;
-        final plainSurface = AppTheme.surfaceColor(tester.element(key));
+        final decoration = ink.decoration! as ShapeDecoration;
+        final t = SahneTokens.of(tester.element(key));
         expect(
           decoration.color,
-          isNot(plainSurface),
+          isNot(t.s1),
           reason:
               'dark=$isDark: etkinlik yüzeyi düz kart rengiyle aynı '
               'olmamalı — altın tonu karışmalı',
         );
+        expect(decoration.color, t.goldTint, reason: 'dark=$isDark');
         // Renk katılır ama gradyan/gölge eklenmez — bekçisi
         // `home_play_hierarchy_test.dart`.
         expect(decoration.gradient, isNull, reason: 'dark=$isDark');
         expect(
-          decoration.boxShadow ?? const <BoxShadow>[],
+          decoration.shadows ?? const <BoxShadow>[],
           isEmpty,
           reason: 'dark=$isDark',
         );
@@ -293,10 +298,10 @@ void main() {
         final iconTile = tester.widget<Container>(
           find.descendant(of: key, matching: find.byType(Container)).first,
         );
-        final iconDecoration = iconTile.decoration! as BoxDecoration;
+        final iconDecoration = iconTile.decoration! as ShapeDecoration;
         expect(
           iconDecoration.color,
-          AppTheme.gold,
+          t.gold,
           reason: 'dark=$isDark: amblem dolu altın olmalı',
         );
       }

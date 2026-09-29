@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -59,9 +60,12 @@ void main() {
     );
     final titleFinder = find.text('Bugünkü Tekrarlar');
     final title = tester.widget<Text>(titleFinder);
+    // 2026-09-29 Şahnê: öğrenme rolünün okunur metni belirteçten gelir
+    // (`learnTx`, AA ölçülmüş); eski `readableAccent(playGreen)` hesabı
+    // yerine.
     expect(
       title.style?.color,
-      AppColors.readableAccent(tester.element(titleFinder), AppTheme.playGreen),
+      SahneTokens.of(tester.element(titleFinder)).learnTx,
     );
     expect(tester.takeException(), isNull);
   });

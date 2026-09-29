@@ -59,7 +59,16 @@ class RollingCount extends StatelessWidget {
     // dekoratif bir davranış, ağacı eksik diye ekranı çökertmemeli —
     // `KilimReveal` ile aynı ilke.
     final reduced =
-        context.watch<ReducedMotionProvider?>()?.reduceMotion ?? false;
+        (context.watch<ReducedMotionProvider?>()?.reduceMotion ?? false) ||
+        (MediaQuery.maybeDisableAnimationsOf(context) ?? false);
+    // 2026-09-29 Şahnê: sayı tablo rakamıyla çizilir. Orantılı rakamda her
+    // karede genişlik değişiyor ve sayı sayarken yatayda titriyordu.
+    final style = this.style.copyWith(
+      fontFeatures: [
+        ...?this.style.fontFeatures,
+        const FontFeature.tabularFigures(),
+      ],
+    );
     if (reduced) {
       return Text(
         '$prefix$value$suffix',

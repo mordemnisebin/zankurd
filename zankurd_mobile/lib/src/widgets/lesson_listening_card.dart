@@ -8,8 +8,8 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/lesson_listening_speaker.dart';
 import '../theme/app_icons.dart';
-import '../theme/app_theme.dart';
 import 'app_panel.dart';
+import 'sahne/sahne.dart';
 
 class LessonListeningCard extends StatefulWidget {
   const LessonListeningCard({
@@ -85,82 +85,69 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
     }
 
     final entry = _entry;
+    final t = SahneTokens.of(context);
+    // 2026-09-29 Şahnê: yüzey kartı; başlık satırı öğrenme rolünün ikonu +
+    // Gövde 700 + sayaç (kalın açıklama, tablo rakamı); dinle düğmesi ve
+    // şıklar ikincil düğme (Kulis); geri bildirim Rast/Şaş metni.
     return AppPanel(
       key: const ValueKey('lesson-listening-card'),
-      cardType: CardType.secondary,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(
-                AppIcons.volumeHigh,
-                size: 18,
-                color: AppTheme.playCyan,
-              ),
-              const SizedBox(width: 8),
+              Icon(AppIcons.volumeHigh, size: 20, color: t.learnTx),
+              const SizedBox(width: SahneSpace.x2),
               Expanded(
                 child: Text(
                   context.t(K.lessonListeningTitle),
-                  style: AppTypography.bodyLarge.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
+                  style: SahneType.bodyStrong.copyWith(color: t.tx),
                 ),
               ),
               Text(
                 '${_index + 1}/${widget.entries.length}',
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textMutedColor(context),
-                  fontWeight: FontWeight.w700,
+                style: SahneType.captionStrong.copyWith(
+                  color: t.tx3,
+                  fontFeatures: const [FontFeature.tabularFigures()],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: SahneSpace.x2),
           Text(
             context.t(K.lessonListeningHint),
-            style: AppTypography.bodyMedium.copyWith(
-              color: AppTheme.textSubColor(context),
-            ),
+            style: SahneType.body.copyWith(color: t.tx2),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: SahneSpace.x3),
           ValueListenableBuilder<bool>(
             valueListenable: widget.speaker.speakingListenable,
-            builder: (context, speaking, _) => FilledButton.tonalIcon(
+            builder: (context, speaking, _) => SahneButton.secondary(
               key: const ValueKey('lesson-listening-play'),
               onPressed: _play,
-              icon: Icon(
-                speaking ? AppIcons.volumeHigh : AppIcons.play,
-                size: 16,
-              ),
-              label: Text(
-                context.t(
-                  speaking
-                      ? K.lessonListeningPlaying
-                      : _hasPlayed
-                      ? K.lessonListeningReplay
-                      : K.lessonListeningPlay,
-                ),
+              icon: speaking ? AppIcons.volumeHigh : AppIcons.play,
+              label: context.t(
+                speaking
+                    ? K.lessonListeningPlaying
+                    : _hasPlayed
+                    ? K.lessonListeningReplay
+                    : K.lessonListeningPlay,
               ),
             ),
           ),
           if (_hasPlayed) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: SahneSpace.x3),
             for (final option in _options) ...[
-              SizedBox(
-                width: double.infinity,
-                child: OutlinedButton(
-                  key: ValueKey('lesson-listening-option-${option.id}'),
-                  onPressed: _answered ? null : () => _answer(option.meaningTr),
-                  child: Text(option.meaningTr),
-                ),
+              SahneButton.secondary(
+                key: ValueKey('lesson-listening-option-${option.id}'),
+                onPressed: _answered ? null : () => _answer(option.meaningTr),
+                label: option.meaningTr,
+                expand: true,
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: SahneSpace.x2),
             ],
           ],
           if (_answered) ...[
-            const SizedBox(height: 4),
+            const SizedBox(height: SahneSpace.x1),
             Semantics(
               liveRegion: true,
               child: Text(
@@ -168,35 +155,30 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
                     ? context.t(K.lessonListeningCorrect)
                     : context.t(K.lessonListeningWrong),
                 key: const ValueKey('lesson-listening-feedback'),
-                style: AppTypography.bodyMedium.copyWith(
-                  color: _correct ? AppTheme.playGreen : AppTheme.wrong,
-                  fontWeight: FontWeight.w800,
+                style: SahneType.bodyStrong.copyWith(
+                  color: _correct ? t.okTx : t.errTx,
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: SahneSpace.x2),
             Text(
               entry.termKu,
               key: const ValueKey('lesson-listening-term'),
-              style: AppTypography.heading2.copyWith(
-                color: AppTheme.textPrimaryColor(context),
-              ),
+              style: SahneType.headline.copyWith(color: t.tx),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: SahneSpace.x1),
             Text(
               entry.meaningTr,
               key: const ValueKey('lesson-listening-answer'),
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppTheme.textSubColor(context),
-                fontWeight: FontWeight.w700,
-              ),
+              style: SahneType.bodyStrong.copyWith(color: t.tx2),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: SahneSpace.x3),
             if (widget.entries.length > 1)
-              OutlinedButton(
+              SahneButton.secondary(
                 key: const ValueKey('lesson-listening-next'),
                 onPressed: _next,
-                child: Text(context.t(K.lessonRecallNext)),
+                label: context.t(K.lessonRecallNext),
+                arrow: true,
               ),
           ],
         ],

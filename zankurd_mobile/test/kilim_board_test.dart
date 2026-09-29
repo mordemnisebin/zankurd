@@ -79,8 +79,14 @@ void main() {
       ),
     );
 
-    // Sıkışık kip yuvarlatılmış dikdörtgen çizer, baklava yolu çizmez.
-    expect(find.byType(KilimBoard), paints..rrect());
+    // Sıkışık kip tek parça bir şerit çizer, baklava yolu çizmez.
+    // 2026-09-29 Şahnê: şerit yuvarlak dikdörtgen değil S pahlı bir yoldur;
+    // bekçi şeridin iki ucu da kapsayan TEK bir yol olduğunu doğrular
+    // (baklavalar hiçbir zaman iki ucu birden kapsamaz).
+    expect(
+      find.byType(KilimBoard),
+      paints..path(includes: const [Offset(6, 11), Offset(294, 11)]),
+    );
   });
 
   testWidgets('ekran okuyucuya doğru sayısını söyler', (tester) async {

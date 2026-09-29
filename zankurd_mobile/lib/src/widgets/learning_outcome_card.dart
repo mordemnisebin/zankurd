@@ -4,8 +4,8 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/answer_record.dart';
 import '../theme/app_icons.dart';
-import '../theme/app_theme.dart';
 import 'app_panel.dart';
+import 'sahne/sahne.dart';
 
 /// Bir kategorinin tur içindeki ham sayımı: kaç soru cevaplandı, kaçı
 /// doğruydu. `LearningOutcome.strongestCategory`/`reviewCategory`nin aksine
@@ -186,59 +186,52 @@ class LearningOutcomeCard extends StatelessWidget {
               .toList(growable: false)
         : const <CategoryTally>[];
 
+    // 2026-09-29 Şahnê: öğrenme notu dili — öğrenme tonu kart (`learnTint`,
+    // L pah) + Zimrût ampul; sayım Gövde 700, satırlar Gövde ikincil metin;
+    // güçlü konu Rast ✓, tekrar konusu Zêr hedef. Gözden geçirme ikincil
+    // düğme (Kulis): sonuç ekranının birincil eylemi "Devam et"tir.
+    final t = SahneTokens.of(context);
     return AppPanel(
       key: const ValueKey('learning-outcome-card'),
-      cardType: CardType.info,
-      color: AppColors.iconTileBg(context, AppTheme.cyan),
+      color: t.learn,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                AppIcons.lightbulb,
-                color: AppColors.readableAccent(context, AppTheme.cyan),
-              ),
-              const SizedBox(width: 10),
+              Icon(AppIcons.lightbulb, size: 20, color: t.learnTx),
+              const SizedBox(width: SahneSpace.x2),
               Expanded(
                 child: Text(
                   context.t(K.outcomeTitle),
-                  style: AppTypography.subtitle.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: SahneType.bodyStrong.copyWith(color: t.tx),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: SahneSpace.x3),
           Text(
             context.t(K.outcomeCounts, {
               'answered': '${outcome.answered}',
               'correct': '${outcome.correct}',
               'wrong': '${outcome.answered - outcome.correct}',
             }),
-            style: AppTypography.bodyMedium.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w700,
-            ),
+            style: SahneType.bodyStrong.copyWith(color: t.tx),
           ),
           if (outcome.unanswered > 0) ...[
-            const SizedBox(height: 4),
+            const SizedBox(height: SahneSpace.x1),
             Text(
               context.t(K.outcomeUnanswered, {
                 'count': '${outcome.unanswered}',
               }),
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.textSubColor(context),
-              ),
+              style: SahneType.body.copyWith(color: t.tx2),
             ),
           ],
-          const SizedBox(height: 8),
+          const SizedBox(height: SahneSpace.x2),
           if (strongestName != null)
             _OutcomeLine(
               icon: AppIcons.circleCheck,
-              color: AppTheme.correct,
+              color: t.okTx,
               text: context.t(K.outcomeStrong, {
                 'name': strongestName,
                 'answered': '${outcome.strongestAnswered}',
@@ -246,11 +239,11 @@ class LearningOutcomeCard extends StatelessWidget {
               }),
             ),
           if (strongestName != null && reviewName != null)
-            const SizedBox(height: 8),
+            const SizedBox(height: SahneSpace.x2),
           if (reviewName != null)
             _OutcomeLine(
               icon: AppIcons.bullseye,
-              color: AppTheme.gold,
+              color: t.goldTx,
               text: context.t(K.outcomeReview, {
                 'name': reviewName,
                 'answered': '${outcome.reviewAnswered}',
@@ -259,20 +252,17 @@ class LearningOutcomeCard extends StatelessWidget {
             ),
           if (leftoverCategories.isNotEmpty) ...[
             if (strongestName != null || reviewName != null)
-              const SizedBox(height: 8),
+              const SizedBox(height: SahneSpace.x2),
             for (final tally in leftoverCategories)
               Padding(
-                padding: const EdgeInsets.only(bottom: 4),
+                padding: const EdgeInsets.only(bottom: SahneSpace.x1),
                 child: Text(
                   context.t(K.outcomeCategoryTally, {
                     'name': CategoryNames.localized(tally.category, isKu),
                     'answered': '${tally.answered}',
                     'correct': '${tally.correct}',
                   }),
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textSubColor(context),
-                    height: 1.4,
-                  ),
+                  style: SahneType.body.copyWith(color: t.tx2),
                 ),
               ),
           ],
@@ -281,25 +271,18 @@ class LearningOutcomeCard extends StatelessWidget {
               leftoverCategories.isEmpty)
             Text(
               context.t(K.outcomeEmpty),
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.textSubColor(context),
-                height: 1.4,
-              ),
+              style: SahneType.body.copyWith(color: t.tx2),
             ),
           if (outcome.reviewRecords.isNotEmpty) ...[
-            const SizedBox(height: 14),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                key: const ValueKey('learning-outcome-review'),
-                onPressed: onReview,
-                icon: const Icon(AppIcons.bookOpen, size: 18),
-                label: Text(
-                  reviewName == null
-                      ? context.t(K.outcomeReviewGeneric)
-                      : context.t(K.outcomeReviewNamed, {'name': reviewName}),
-                ),
-              ),
+            const SizedBox(height: SahneSpace.x4),
+            SahneButton.secondary(
+              key: const ValueKey('learning-outcome-review'),
+              onPressed: onReview,
+              icon: AppIcons.bookOpen,
+              expand: true,
+              label: reviewName == null
+                  ? context.t(K.outcomeReviewGeneric)
+                  : context.t(K.outcomeReviewNamed, {'name': reviewName}),
             ),
           ],
         ],
@@ -323,18 +306,16 @@ class _OutcomeLine extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Padding(
-        padding: const EdgeInsets.only(top: 2),
-        child: Icon(icon, size: 17, color: color),
+      // İkon ilk satırın 24'lük yüksekliğinde ortalanır.
+      SizedBox(
+        height: 24,
+        child: Center(child: Icon(icon, size: 20, color: color)),
       ),
-      const SizedBox(width: 8),
+      const SizedBox(width: SahneSpace.x2),
       Expanded(
         child: Text(
           text,
-          style: AppTypography.bodyMedium.copyWith(
-            color: AppTheme.textSubColor(context),
-            height: 1.4,
-          ),
+          style: SahneType.body.copyWith(color: SahneTokens.of(context).tx2),
         ),
       ),
     ],

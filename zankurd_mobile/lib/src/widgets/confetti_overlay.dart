@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/reduced_motion_provider.dart';
-import '../theme/app_theme.dart';
+import 'sahne/sahne.dart';
 
 class ConfettiOverlay extends StatefulWidget {
   const ConfettiOverlay({
@@ -57,7 +57,9 @@ class _ConfettiOverlayState extends State<ConfettiOverlay>
   Widget build(BuildContext context) {
     // Erişilebilirlik tercihi: hareketleri azalt modunda konfeti bypass edilir
     // ve onFinished hemen çağrılır — böylece kapanma/ileri akış bozulmaz.
-    final reduceMotion = context.watch<ReducedMotionProvider>().reduceMotion;
+    final reduceMotion =
+        context.watch<ReducedMotionProvider>().reduceMotion ||
+        (MediaQuery.maybeDisableAnimationsOf(context) ?? false);
     if (reduceMotion) {
       // onFinished'i build sonrası microtask'te çağır; setState tetikleyebilir.
       WidgetsBinding.instance.addPostFrameCallback((_) => widget.onFinished());
@@ -101,7 +103,7 @@ class _ConfettiParticle {
   final Color color;
   final double rotation;
   final double rotationSpeed;
-  final int shape; // 0: circle, 1: square, 2: triangle
+  final int shape; // 0: elmas (kilim gözü), 1: kare, 2: üçgen
 
   factory _ConfettiParticle.random() {
     final random = Random();
@@ -114,16 +116,12 @@ class _ConfettiParticle {
     final vy = sin(angle) * speed;
 
     final size = 6.0 + random.nextDouble() * 8.0;
-    // Marka paleti: altın (ödül) + brand/Tîrêj ailesi + derin yeşil +
-    // krem. Neon accent'ler ödül anını marka dışına taşıyordu.
-    final colors = [
-      AppTheme.gold,
-      AppTheme.brand,
-      AppTheme.brandLite,
-      AppTheme.brandDeep,
-      AppTheme.culturalBrandBg,
-      AppTheme.lightBg,
-    ];
+    // 2026-09-29 Şahnê: renkler rol paletinden — Zêr (ödül, iki kez: kutlama
+    // ışığın anıdır), Zimrût, Boyax ve Agir. Rol renkleri iki temada da
+    // aynıdır; parçacıklar bağlamsız kurulduğu için gece belirteçlerinden
+    // okunur.
+    const t = SahneTokens.night;
+    final colors = [t.gold, t.gold, t.learn, t.race, t.act];
     final color = colors[random.nextInt(colors.length)];
 
     final rotation = random.nextDouble() * 2 * pi;
@@ -175,7 +173,16 @@ class _ConfettiPainter extends CustomPainter {
       canvas.rotate(currentRotation);
 
       if (p.shape == 0) {
-        canvas.drawCircle(Offset.zero, p.size / 2, paint);
+        final h = p.size / 2;
+        canvas.drawPath(
+          Path()
+            ..moveTo(0, -h)
+            ..lineTo(h, 0)
+            ..lineTo(0, h)
+            ..lineTo(-h, 0)
+            ..close(),
+          paint,
+        );
       } else if (p.shape == 1) {
         canvas.drawRect(
           Rect.fromCenter(center: Offset.zero, width: p.size, height: p.size),

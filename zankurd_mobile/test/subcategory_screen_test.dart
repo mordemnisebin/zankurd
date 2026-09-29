@@ -276,6 +276,13 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    // 2026-09-29 Şahnê: B çubuğu 64 (56'ydı); ipucu kartı tembel listenin
+    // önbellek sınırının dışına düştü. Kullanıcı gibi kaydırarak bulunur.
+    await tester.scrollUntilVisible(
+      find.text('Kolaydan zora doğru ilerle, puan topla.'),
+      120,
+      scrollable: find.byType(Scrollable).last,
+    );
 
     final hintPanel = find.ancestor(
       of: find.text('Kolaydan zora doğru ilerle, puan topla.'),

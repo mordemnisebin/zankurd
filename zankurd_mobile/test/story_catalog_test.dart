@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/story_progress_store.dart';
 import 'package:zankurd_mobile/src/models/story.dart';
@@ -82,6 +83,9 @@ void main() {
     expect(find.text('Başla'), findsNWidgets(2));
   });
 
+  // 2026-09-29 Şahnê: aksan rengi hesaplanmıyor, belirteçten geliyor —
+  // durum sözü öğrenme rolünün okunur metni (`learnTx`), chevron üçüncül
+  // metin (`tx3`; liste satırı dili). İkisi de iki temada AA geçer.
   testWidgets('koyu temada hikâye aksanları okunabilir tona uyarlanır', (
     tester,
   ) async {
@@ -97,15 +101,12 @@ void main() {
 
     final statusFinder = find.text('Başla').first;
     final status = tester.widget<Text>(statusFinder);
-    final expected = AppColors.readableAccent(
-      tester.element(statusFinder),
-      AppTheme.playGreen,
-    );
-    expect(status.style?.color, expected);
+    final t = SahneTokens.of(tester.element(statusFinder));
+    expect(status.style?.color, t.learnTx);
 
     final chevronFinder = find.byIcon(AppIcons.chevronRight).first;
     final chevron = tester.widget<Icon>(chevronFinder);
-    expect(chevron.color, expected);
+    expect(chevron.color, t.tx3);
   });
 
   testWidgets('kompakt hikâyeler kart değil sahne şeridi olarak çizilir', (

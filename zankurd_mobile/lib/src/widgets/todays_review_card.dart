@@ -5,10 +5,10 @@ import '../data/mistake_store.dart';
 import '../data/zankurd_repository.dart';
 import '../models/quiz_question.dart';
 import '../screens/quiz_screen.dart';
-import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../theme/app_icons.dart';
+import 'sahne/sahne.dart';
 
 /// "Bugünkü Tekrarlar" kartı — SM-2 aralıklı tekrar sisteminin ürün yüzü.
 ///
@@ -49,8 +49,6 @@ class TodaysReviewCard extends StatefulWidget {
 class _TodaysReviewCardState extends State<TodaysReviewCard> {
   int _readyCount = 0;
   bool _loading = true;
-
-  static const _accent = AppTheme.playGreen;
 
   @override
   void initState() {
@@ -149,7 +147,19 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
         : _buildEmpty(context, ku);
   }
 
+  // 2026-09-29 Şahnê: öğrenme rolünün satırı — 36'lık M karo (Zimrût tonu
+  // + Zimrût metni ikon), üst satır kalın açıklama Zimrût metni, alt satır
+  // Gövde 700; sayı Zimrût tonlu S rozet (tablo rakamı); chevron üçüncül.
+  Widget _tile(SahneTokens t, IconData icon) => DecoratedBox(
+    decoration: ShapeDecoration(color: t.learnTint, shape: SahneShape.m),
+    child: SizedBox.square(
+      dimension: 36,
+      child: Icon(icon, color: t.learnTx, size: 20),
+    ),
+  );
+
   Widget _buildReady(BuildContext context, bool ku) {
+    final t = SahneTokens.of(context);
     final semanticLabel = [
       Tr.forKu(K.todaysReviews, ku),
       Tr.forKu(K.todaysReviewsCount, ku, {'count': '$_readyCount'}),
@@ -164,36 +174,20 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
       excludeSemantics: true,
       onTap: _startReview,
       child: Material(
-        color: Colors.transparent,
+        type: MaterialType.transparency,
         child: InkWell(
           onTap: _startReview,
           excludeFromSemantics: true,
-          borderRadius: BorderRadius.circular(AppRadius.sm),
+          customBorder: SahneShape.m,
           child: Padding(
             key: const ValueKey('todays-review-status-row'),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 2,
-              vertical: AppSpacing.xs,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: SahneSpace.x2),
             child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: 52),
               child: Row(
                 children: [
-                  Container(
-                    width: 32,
-                    height: 32,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppColors.iconTileBg(context, _accent),
-                      borderRadius: BorderRadius.circular(AppRadius.badge),
-                    ),
-                    child: Icon(
-                      AppIcons.arrowsRotate,
-                      color: AppColors.readableAccent(context, _accent),
-                      size: 16,
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
+                  _tile(t, AppIcons.arrowsRotate),
+                  const SizedBox(width: SahneSpace.x3),
                   Expanded(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -203,53 +197,56 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
                           Tr.forKu(K.todaysReviews, ku),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTypography.caption.copyWith(
-                            color: AppColors.readableAccent(context, _accent),
-                            fontWeight: FontWeight.w800,
+                          style: SahneType.captionStrong.copyWith(
+                            color: t.learnTx,
                           ),
                         ),
-                        const SizedBox(height: 2),
                         Text(
                           Tr.forKu(K.todaysReviewsCount, ku, {
                             'count': '$_readyCount',
                           }),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTypography.bodyMedium.copyWith(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: SahneType.bodyStrong.copyWith(color: t.tx),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.xs),
-                  Container(
+                  const SizedBox(width: SahneSpace.x2),
+                  DecoratedBox(
                     // a11y-tap-target: noninteractive — 52px InkWell içindeki sayı rozeti.
-                    constraints: const BoxConstraints(minWidth: 30),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 5,
+                    decoration: ShapeDecoration(
+                      color: t.learnTint,
+                      shape: SahneShape.s,
                     ),
-                    decoration: BoxDecoration(
-                      color: AppColors.iconTileBg(context, _accent),
-                      borderRadius: BorderRadius.circular(AppRadius.pill),
-                    ),
-                    child: Text(
-                      '$_readyCount',
-                      textAlign: TextAlign.center,
-                      style: AppTypography.caption.copyWith(
-                        color: AppColors.readableAccent(context, _accent),
-                        fontWeight: FontWeight.w900,
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minWidth: 28,
+                        minHeight: 24,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: SahneSpace.x2,
+                        ),
+                        child: Center(
+                          widthFactor: 1,
+                          heightFactor: 1,
+                          child: Text(
+                            '$_readyCount',
+                            textAlign: TextAlign.center,
+                            style: SahneType.captionStrong.copyWith(
+                              color: t.learnTx,
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 4),
-                  Icon(
-                    AppIcons.chevronRight,
-                    size: 16,
-                    color: AppTheme.textMutedColor(context),
-                  ),
+                  const SizedBox(width: SahneSpace.x1),
+                  Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
                 ],
               ),
             ),
@@ -260,6 +257,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   }
 
   Widget _buildEmpty(BuildContext context, bool ku) {
+    final t = SahneTokens.of(context);
     final title = Tr.forKu(K.reviewsDone, ku);
     final detail = Tr.forKu(K.noReviewsToday, ku);
     return Semantics(
@@ -268,38 +266,19 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
       excludeSemantics: true,
       child: Padding(
         key: const ValueKey('todays-review-status-row'),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 2,
-          vertical: AppSpacing.xs,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: SahneSpace.x2),
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 48),
           child: Row(
             children: [
-              Container(
-                width: 30,
-                height: 30,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.iconTileBg(context, _accent),
-                  borderRadius: BorderRadius.circular(AppRadius.badge),
-                ),
-                child: Icon(
-                  AppIcons.circleCheck,
-                  color: AppColors.readableAccent(context, _accent),
-                  size: 16,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.xs),
+              _tile(t, AppIcons.circleCheck),
+              const SizedBox(width: SahneSpace.x3),
               Expanded(
                 child: Text(
                   title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: SahneType.bodyStrong.copyWith(color: t.tx),
                 ),
               ),
             ],

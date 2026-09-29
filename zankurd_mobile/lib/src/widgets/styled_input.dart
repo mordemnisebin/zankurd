@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
+
+import 'sahne/sahne.dart';
 
 /// Stil uygulanmış giriş alanı.
 ///
 /// `validator` + `autovalidateMode` ile Form olmadan da inline hata
 /// gösterebilir.  Form ile birlikte kullanıldığında `GlobalKey` üzerinden
 /// `validate()` çağrısı yapılabilir (2026-07-22 canlı UX denetimi: inline doğrulama).
+///
+/// 2026-09-29 Şahnê: temanın girdi alanı görünüşü (Kulis, M pah, odakta
+/// Halka 2); yazı SahneType'tan, renk belirteçlerden.
 class StyledInputField extends StatefulWidget {
   final String label;
   final TextEditingController controller;
@@ -132,19 +136,39 @@ class StyledInputFieldState extends State<StyledInputField> {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final textStyle =
-        widget.inputTextStyle ?? Theme.of(context).textTheme.bodyLarge;
+        widget.inputTextStyle ?? SahneType.body.copyWith(color: t.tx);
     final hasError = _errorText != null;
 
     return ValueListenableBuilder<bool>(
       valueListenable: _isFocused,
       builder: (context, isFocused, _) {
-        final borderColor = hasError
-            ? AppTheme.wrong
+        // Şahnê girdi alanı (temanın `inputDecorationTheme`iyle aynı dil):
+        // Kulis zemin (alan genelde bir Perde kartının içinde durur), M pah;
+        // dinlenirken gündüzde 1 px kenar, odakta
+        // Halka 2 birincil metin, hatada Halka 2 Şaş metni. Gölge yok.
+        final side = hasError
+            ? BorderSide(
+                color: t.errTx,
+                width: SahneRing.r2,
+                strokeAlign: BorderSide.strokeAlignInside,
+              )
             : isFocused
-            ? AppColors.focus
-            : AppTheme.borderColor(context).withValues(alpha: 0.5);
-        final borderWidth = (hasError || isFocused) ? 1.5 : 1.0;
+            ? BorderSide(
+                color: t.tx,
+                width: SahneRing.r2,
+                strokeAlign: BorderSide.strokeAlignInside,
+              )
+            : BorderSide(
+                color: t.edge,
+                strokeAlign: BorderSide.strokeAlignInside,
+              );
+        final iconColor = hasError
+            ? t.errTx
+            : isFocused
+            ? t.tx
+            : t.tx3;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,42 +177,31 @@ class StyledInputFieldState extends State<StyledInputField> {
             // Label
             if (widget.label.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                padding: const EdgeInsets.only(bottom: SahneSpace.x2),
                 child: Text(
                   widget.label,
                   style:
                       widget.labelStyle ??
-                      Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                      SahneType.captionStrong.copyWith(color: t.tx2),
                 ),
               ),
             // Input field
-            Container(
-              decoration: BoxDecoration(
-                color: AppTheme.surfaceColor(context),
-                borderRadius: BorderRadius.circular(AppRadius.md),
-                border: Border.all(color: borderColor, width: borderWidth),
-                boxShadow: (hasError || isFocused)
-                    ? AppShadows.focusRing(borderColor)
-                    : [],
+            DecoratedBox(
+              decoration: ShapeDecoration(
+                color: t.s2,
+                shape: BeveledRectangleBorder(
+                  borderRadius: SahneShape.m.borderRadius,
+                  side: side,
+                ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+                padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x4),
                 child: Row(
                   children: [
                     // Prefix icon
                     if (widget.prefixIcon != null) ...[
-                      Icon(
-                        widget.prefixIcon,
-                        size: 18,
-                        color: hasError
-                            ? AppTheme.wrong
-                            : isFocused
-                            ? AppColors.focus
-                            : AppTheme.textMutedColor(context),
-                      ),
-                      const SizedBox(width: AppSpacing.md),
+                      Icon(widget.prefixIcon, size: 20, color: iconColor),
+                      const SizedBox(width: SahneSpace.x3),
                     ],
                     // Text field
                     Expanded(
@@ -210,25 +223,20 @@ class StyledInputFieldState extends State<StyledInputField> {
                             focusedErrorBorder: InputBorder.none,
                             filled: false,
                             hintText: widget.hintText ?? '',
-                            hintStyle: TextStyle(
-                              color: AppTheme.textMutedColor(context),
-                              fontSize: 14,
-                            ),
+                            hintStyle: SahneType.body.copyWith(color: t.tx3),
                             isDense: true,
-                            constraints: const BoxConstraints(minHeight: 48),
+                            constraints: const BoxConstraints(minHeight: 52),
                             contentPadding: const EdgeInsets.symmetric(
-                              vertical: 12,
+                              vertical: SahneSpace.x3,
                             ),
                           ),
-                          cursorColor: hasError
-                              ? AppTheme.wrong
-                              : AppColors.focus,
+                          cursorColor: hasError ? t.errTx : t.tx,
                         ),
                       ),
                     ),
                     // Suffix icon
                     if (widget.suffixIcon != null) ...[
-                      const SizedBox(width: AppSpacing.md),
+                      const SizedBox(width: SahneSpace.x2),
                       Semantics(
                         label: widget.suffixSemanticLabel,
                         button: widget.onSuffixIconPressed != null,
@@ -245,12 +253,8 @@ class StyledInputFieldState extends State<StyledInputField> {
                               onTap: widget.onSuffixIconPressed,
                               child: Icon(
                                 widget.suffixIcon,
-                                size: 18,
-                                color: hasError
-                                    ? AppTheme.wrong
-                                    : isFocused
-                                    ? AppColors.focus
-                                    : AppTheme.textMutedColor(context),
+                                size: 20,
+                                color: iconColor,
                               ),
                             ),
                           ),
@@ -264,16 +268,15 @@ class StyledInputFieldState extends State<StyledInputField> {
             // Error text
             if (hasError)
               Padding(
-                padding: const EdgeInsets.only(top: 4, left: 4),
+                padding: const EdgeInsets.only(
+                  top: SahneSpace.x1,
+                  left: SahneSpace.x1,
+                ),
                 child: Text(
                   _errorText!,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: AppTheme.wrong,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: SahneType.caption.copyWith(color: t.errTx),
                 ),
               ),
           ],

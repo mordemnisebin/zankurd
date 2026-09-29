@@ -7,10 +7,10 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/room_message.dart';
 import '../services/chat_moderation_policy.dart';
-import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
+import '../theme/app_icons.dart';
 import 'player_avatar.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'sahne/sahne.dart';
 
 /// Oda sohbet paneli. [RoomScreen] altında daraltılabilir alt panel olarak
 /// gösterilir. Supabase Realtime üzerinden canlı mesajlaşmayı destekler.
@@ -240,217 +240,171 @@ class _RoomChatState extends State<RoomChat> {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     if (!widget.visible) return const SizedBox.shrink();
-    return Container(
-      height: 260,
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(AppRadius.card),
-          topRight: Radius.circular(AppRadius.card),
-        ),
-        border: Border(
-          top: BorderSide(
-            color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-            width: 0.5,
-          ),
-        ),
+    // 2026-09-29 Şahnê: alt panel Perde (`s1`), üst köşeler L pah, üstte
+    // 1 px ayırıcı; başlık ve giriş şeridi Kulis (`s2`). Balonlar M pah:
+    // kendi mesajın Zêr tonu ("Sen" altındır), ötekiler Kulis. Giriş alanı
+    // temanın girdi alanıdır; gönder ikonu Agir metni (bağlantı rengi).
+    final t = SahneTokens.of(context);
+    const topBevel = BeveledRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(SahneShape.lValue),
+        topRight: Radius.circular(SahneShape.lValue),
       ),
-      child: Column(
-        children: [
-          // Sohbet başlığı
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md,
-              vertical: AppSpacing.xs,
-            ),
-            decoration: BoxDecoration(
-              color: AppTheme.surfaceHiColor(context),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(AppRadius.card),
-                topRight: Radius.circular(AppRadius.card),
-              ),
-            ),
-            child: Row(
-              children: [
-                ExcludeSemantics(
+    );
+    return SizedBox(
+      height: 260,
+      child: ClipPath(
+        clipper: const ShapeBorderClipper(shape: topBevel),
+        child: ColoredBox(
+          color: t.s1,
+          child: Column(
+            children: [
+              // Sohbet başlığı
+              ColoredBox(
+                color: t.s2,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: SahneSpace.x4,
+                  ),
                   child: Row(
                     children: [
-                      Icon(
-                        AppIcons.comment,
-                        size: 18,
-                        color: AppTheme.textSubColor(context),
+                      ExcludeSemantics(
+                        child: Row(
+                          children: [
+                            Icon(AppIcons.comment, size: 20, color: t.tx2),
+                            const SizedBox(width: SahneSpace.x2),
+                            Text(
+                              context.t(K.chat),
+                              style: SahneType.captionStrong.copyWith(
+                                color: t.tx,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(width: AppSpacing.xs),
-                      Text(
-                        context.t(K.chat),
-                        style: TextStyle(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w800,
-                          fontSize: 13,
+                      const Spacer(),
+                      Semantics(
+                        container: true,
+                        button: true,
+                        label: context.t(K.chat),
+                        enabled: widget.onToggle != null,
+                        onTap: widget.onToggle,
+                        child: SizedBox(
+                          width: 48,
+                          height: 48,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: widget.onToggle,
+                            child: Center(
+                              child: Icon(
+                                AppIcons.chevronDown,
+                                size: 20,
+                                color: t.tx3,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const Spacer(),
-                Semantics(
-                  container: true,
-                  button: true,
-                  label: context.t(K.chat),
-                  enabled: widget.onToggle != null,
-                  onTap: widget.onToggle,
-                  child: SizedBox(
-                    width: 48,
-                    height: 48,
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: widget.onToggle,
-                      child: Center(
-                        child: Icon(
-                          AppIcons.chevronDown,
-                          size: 22,
-                          color: AppTheme.textMutedColor(context),
+              ),
+              // Mesaj listesi
+              Expanded(
+                child: _visibleMessages.isEmpty
+                    ? Center(
+                        child: Text(
+                          context.t(K.chatEmpty),
+                          style: SahneType.caption.copyWith(color: t.tx2),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Mesaj listesi
-          Expanded(
-            child: _visibleMessages.isEmpty
-                ? Center(
-                    child: Text(
-                      context.t(K.chatEmpty),
-                      style: TextStyle(
-                        color: AppTheme.textMutedColor(context),
-                        fontSize: 12,
-                      ),
-                    ),
-                  )
-                : ListView.builder(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.sm,
-                      AppSpacing.xs,
-                      AppSpacing.sm,
-                      AppSpacing.xs,
-                    ),
-                    itemCount: _visibleMessages.length,
-                    itemBuilder: (ctx, idx) {
-                      final msg = _visibleMessages[idx];
-                      final isMine = msg.senderId == widget.currentUserId;
-                      // Uzun basış: bildir / engelle. Apple 1.2 ikisinin de
-                      // uygulamada bulunmasını şart koşuyor. Kendi mesajın
-                      // için menü açılmaz.
-                      return Semantics(
-                        container: true,
-                        button: !isMine,
-                        enabled: !isMine,
-                        label: '${msg.senderName}: ${msg.text}',
-                        onLongPress: isMine
-                            ? null
-                            : () => _showModerationSheet(msg),
-                        child: ExcludeSemantics(
-                          child: GestureDetector(
-                            key: ValueKey('chat-message-${msg.id}'),
+                      )
+                    : ListView.builder(
+                        controller: _scrollController,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: SahneSpace.x3,
+                          vertical: SahneSpace.x2,
+                        ),
+                        itemCount: _visibleMessages.length,
+                        itemBuilder: (ctx, idx) {
+                          final msg = _visibleMessages[idx];
+                          final isMine = msg.senderId == widget.currentUserId;
+                          // Uzun basış: bildir / engelle. Apple 1.2 ikisinin
+                          // de uygulamada bulunmasını şart koşuyor. Kendi
+                          // mesajın için menü açılmaz.
+                          return Semantics(
+                            container: true,
+                            button: !isMine,
+                            enabled: !isMine,
+                            label: '${msg.senderName}: ${msg.text}',
                             onLongPress: isMine
                                 ? null
                                 : () => _showModerationSheet(msg),
-                            child: _MessageBubble(
-                              message: msg,
-                              isMine: isMine,
-                              ku: ku,
+                            child: ExcludeSemantics(
+                              child: GestureDetector(
+                                key: ValueKey('chat-message-${msg.id}'),
+                                onLongPress: isMine
+                                    ? null
+                                    : () => _showModerationSheet(msg),
+                                child: _MessageBubble(
+                                  message: msg,
+                                  isMine: isMine,
+                                  ku: ku,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
+                          );
+                        },
+                      ),
+              ),
+              // Giriş alanı
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: t.s2,
+                  border: Border(top: BorderSide(color: t.line)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    SahneSpace.x3,
+                    SahneSpace.x2,
+                    SahneSpace.x1,
+                    SahneSpace.x3,
                   ),
-          ),
-          // Giriş alanı
-          Container(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.sm,
-              AppSpacing.xxs,
-              AppSpacing.sm,
-              AppSpacing.sm + 4,
-            ),
-            decoration: BoxDecoration(
-              color: AppTheme.surfaceHiColor(context),
-              border: Border(
-                top: BorderSide(
-                  color: AppTheme.borderColor(context).withValues(alpha: 0.3),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _messageController,
+                          textInputAction: TextInputAction.send,
+                          onSubmitted: (_) => _sendMessage(),
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            hintText: context.t(K.chatHint),
+                            isDense: true,
+                          ),
+                          style: SahneType.body.copyWith(color: t.tx),
+                        ),
+                      ),
+                      const SizedBox(width: SahneSpace.x1),
+                      IconButton(
+                        onPressed: _sending ? null : _sendMessage,
+                        icon: _sending
+                            ? SizedBox.square(
+                                dimension: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: t.tx3,
+                                ),
+                              )
+                            : Icon(AppIcons.paperPlane, color: t.actTx),
+                        tooltip: context.t(K.sendAction),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    textInputAction: TextInputAction.send,
-                    onSubmitted: (_) => _sendMessage(),
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                      hintText: context.t(K.chatHint),
-                      isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 10,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          color: AppTheme.borderColor(context),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          color: AppTheme.borderColor(
-                            context,
-                          ).withValues(alpha: 0.4),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: const BorderSide(
-                          color: AppTheme.primaryGradientStart,
-                        ),
-                      ),
-                    ),
-                    style: TextStyle(
-                      color: AppTheme.textPrimaryColor(context),
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 6),
-                IconButton(
-                  onPressed: _sending ? null : _sendMessage,
-                  icon: _sending
-                      ? const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: AppTheme.primaryGradientStart,
-                          ),
-                        )
-                      : const Icon(
-                          AppIcons.paperPlane,
-                          color: AppTheme.primaryGradientStart,
-                        ),
-                  tooltip: context.t(K.sendAction),
-                ),
-              ],
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -476,8 +430,9 @@ class _MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: SahneSpace.x2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: isMine
@@ -490,7 +445,7 @@ class _MessageBubble extends StatelessWidget {
               colorHex: message.senderAvatarColor,
               displayName: message.senderName,
             ),
-            const SizedBox(width: 6),
+            const SizedBox(width: SahneSpace.x2),
           ],
           Flexible(
             child: Container(
@@ -498,22 +453,13 @@ class _MessageBubble extends StatelessWidget {
                 minHeight: 48,
                 maxWidth: MediaQuery.of(context).size.width * 0.68,
               ),
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 6),
-              decoration: BoxDecoration(
-                color: isMine
-                    ? AppTheme.primaryGradientStart.withValues(alpha: 0.12)
-                    : AppTheme.surfaceHiColor(context),
-                borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(14),
-                  topRight: const Radius.circular(14),
-                  bottomLeft: Radius.circular(isMine ? 14 : 4),
-                  bottomRight: Radius.circular(isMine ? 4 : 14),
-                ),
-                border: Border.all(
-                  color: isMine
-                      ? AppTheme.primaryGradientStart.withValues(alpha: 0.22)
-                      : AppTheme.borderColor(context).withValues(alpha: 0.3),
-                ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: SahneSpace.x3,
+                vertical: SahneSpace.x2,
+              ),
+              decoration: ShapeDecoration(
+                color: isMine ? t.goldTint : t.s2,
+                shape: SahneShape.m,
               ),
               child: Column(
                 crossAxisAlignment: isMine
@@ -521,32 +467,21 @@ class _MessageBubble extends StatelessWidget {
                     : CrossAxisAlignment.start,
                 children: [
                   if (!isMine)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
-                      child: Text(
-                        message.senderName,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: AppTheme.textSubColor(context),
-                          fontWeight: FontWeight.w700,
-                          fontSize: 11,
-                        ),
-                      ),
+                    Text(
+                      message.senderName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SahneType.captionStrong.copyWith(color: t.tx2),
                     ),
                   Text(
                     message.text,
-                    style: TextStyle(
-                      color: AppTheme.textPrimaryColor(context),
-                      fontSize: 13,
-                    ),
+                    style: SahneType.body.copyWith(color: t.tx),
                   ),
-                  const SizedBox(height: 3),
                   Text(
                     _formatTime(message.createdAt),
-                    style: TextStyle(
-                      color: AppTheme.textMutedColor(context),
-                      fontSize: 10,
+                    style: SahneType.caption.copyWith(
+                      color: t.tx3,
+                      fontFeatures: const [FontFeature.tabularFigures()],
                     ),
                   ),
                 ],
@@ -554,7 +489,7 @@ class _MessageBubble extends StatelessWidget {
             ),
           ),
           if (isMine) ...[
-            const SizedBox(width: 6),
+            const SizedBox(width: SahneSpace.x2),
             PlayerAvatar(
               radius: 14,
               colorHex: message.senderAvatarColor,

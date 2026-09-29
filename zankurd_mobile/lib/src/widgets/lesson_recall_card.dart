@@ -4,8 +4,8 @@ import '../data/learner_lexicon.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_icons.dart';
-import '../theme/app_theme.dart';
 import 'app_panel.dart';
+import 'sahne/sahne.dart';
 
 class LessonRecallCard extends StatefulWidget {
   const LessonRecallCard({required this.entries, super.key});
@@ -38,85 +38,72 @@ class _LessonRecallCardState extends State<LessonRecallCard> {
     if (widget.entries.isEmpty) return const SizedBox.shrink();
 
     final entry = widget.entries[_index];
+    final t = SahneTokens.of(context);
+    // 2026-09-29 Şahnê: yüzey kartı; öğrenme rolünün ikonu, Gövde 700
+    // başlık, sayaç tablo rakamı; terim Manşet; düğmeler ikincil (Kulis).
     return AppPanel(
       key: const ValueKey('lesson-recall-card'),
-      cardType: CardType.secondary,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(AppIcons.brain, size: 18, color: AppTheme.playGreen),
-              const SizedBox(width: 8),
+              Icon(AppIcons.brain, size: 20, color: t.learnTx),
+              const SizedBox(width: SahneSpace.x2),
               Expanded(
                 child: Text(
                   context.t(K.lessonRecallTitle),
-                  style: AppTypography.bodyLarge.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
+                  style: SahneType.bodyStrong.copyWith(color: t.tx),
                 ),
               ),
               Text(
                 '${_index + 1}/${widget.entries.length}',
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textMutedColor(context),
-                  fontWeight: FontWeight.w700,
+                style: SahneType.captionStrong.copyWith(
+                  color: t.tx3,
+                  fontFeatures: const [FontFeature.tabularFigures()],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: SahneSpace.x2),
           Text(
             context.t(K.lessonRecallHint),
-            style: AppTypography.bodyMedium.copyWith(
-              color: AppTheme.textSubColor(context),
-            ),
+            style: SahneType.body.copyWith(color: t.tx2),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: SahneSpace.x4),
           Text(
             entry.termKu,
             key: const ValueKey('lesson-recall-term'),
-            style: AppTypography.heading2.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-            ),
+            style: SahneType.headline.copyWith(color: t.tx),
           ),
           if (_revealed) ...[
-            const SizedBox(height: 10),
+            const SizedBox(height: SahneSpace.x2),
             Semantics(
               liveRegion: true,
               child: Text(
                 entry.meaningTr,
                 key: const ValueKey('lesson-recall-answer'),
-                style: AppTypography.bodyLarge.copyWith(
-                  color: AppTheme.textSubColor(context),
-                  fontWeight: FontWeight.w700,
-                ),
+                style: SahneType.bodyStrong.copyWith(color: t.tx2),
               ),
             ),
           ],
-          const SizedBox(height: 14),
-          Row(
-            children: [
-              if (!_revealed)
-                Expanded(
-                  child: FilledButton.tonalIcon(
-                    key: const ValueKey('lesson-recall-reveal'),
-                    onPressed: _reveal,
-                    icon: const Icon(AppIcons.eye, size: 16),
-                    label: Text(context.t(K.lessonRecallReveal)),
-                  ),
-                )
-              else if (widget.entries.length > 1)
-                Expanded(
-                  child: OutlinedButton(
-                    key: const ValueKey('lesson-recall-next'),
-                    onPressed: _next,
-                    child: Text(context.t(K.lessonRecallNext)),
-                  ),
-                ),
-            ],
-          ),
+          const SizedBox(height: SahneSpace.x4),
+          if (!_revealed)
+            SahneButton.secondary(
+              key: const ValueKey('lesson-recall-reveal'),
+              onPressed: _reveal,
+              icon: AppIcons.eye,
+              label: context.t(K.lessonRecallReveal),
+              expand: true,
+            )
+          else if (widget.entries.length > 1)
+            SahneButton.secondary(
+              key: const ValueKey('lesson-recall-next'),
+              onPressed: _next,
+              label: context.t(K.lessonRecallNext),
+              arrow: true,
+              expand: true,
+            ),
         ],
       ),
     );

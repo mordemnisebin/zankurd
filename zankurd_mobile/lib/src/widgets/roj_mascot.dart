@@ -1,26 +1,23 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
+import 'sahne/sahne.dart';
 
-/// Zana'nın ruh hâlleri: ekran bağlamına göre ifade değişir.
+/// Eski maskotun ruh hâlleri.
+///
+/// 2026-09-29 Şahnê: güneş maskotu kaldırıldı ("maskot: Yok … boş durumda
+/// logo işareti", `spec_sahne.json`). Enum, çağıranlar kırılmasın diye
+/// kalır; [RojMascot] artık onu yok sayar.
 enum RojMood {
   /// Gülümseyen varsayılan hâl (onboarding, karşılama).
   happy,
 
-  /// Kutlama: kapalı mutlu gözler + açık gülümseme (rozet, şampiyonluk).
+  /// Kutlama (rozet, şampiyonluk).
   celebrate,
 
-  /// Düşünceli: boş durumlar için sempatik "hmm" ifadesi.
+  /// Düşünceli: boş durumlar.
   thinking,
 
   /// Üzgün: yanlış cevap anı.
-  ///
-  /// Kasıtlı olarak HAFİF tutulur — kaşları çatılmaz, gözler kısılmaz.
-  /// Yanlış cevap zaten cezalandırılıyor (seri kırılır, puan gelmez);
-  /// maskotun da suçlaması öğrenme uygulamasında bırakma sebebidir.
-  /// Zana burada üzülür, azarlamaz.
   sad,
 }
 
@@ -31,9 +28,12 @@ RojMood greetingMascotMood({required int hour, required int streak}) {
   return RojMood.happy;
 }
 
-/// Zana — uygulamanın maskotu. Dış varlık/asset kullanmaz: imza motifi olan
-/// roj'dan (güneş) türetilmiş, kilim dilinde üçgen ışınlı geometrik bir
-/// karakterdir; tamamen CustomPaint ile çizilir.
+/// Marka işareti plakası — eski "Zana" maskotunun yerinde.
+///
+/// 2026-09-29 Şahnê: güneş maskotu kaldırıldı. API (boyut, ruh hâli,
+/// `roj-mascot` anahtarı) çağıranlar kırılmasın diye kalır; bileşen artık
+/// logo işaretini M pahlı bir plakada çizer ([BrandMarkPlate]). [mood] yok
+/// sayılır. Dekoratiftir: ekran okuyucuya hiçbir şey söylemez.
 class RojMascot extends StatelessWidget {
   const RojMascot({
     this.size = 96,
@@ -42,175 +42,55 @@ class RojMascot extends StatelessWidget {
   });
 
   final double size;
+
+  /// Yok sayılır (bkz. sınıf belgesi).
   final RojMood mood;
 
-  /// Işınların dönüşümlü rengi: altın (kimlik/ödül) + brand/Tîrêj
-  /// turuncusu (birincil eylem) — sakin, ritmik iki renkli şerit. Dört
-  /// rengin dönüşümü küçük boyutta gürültü gibi okunduğu için
-  /// sadeleştirildi.
-  static const rayColors = [AppTheme.gold, AppTheme.brand];
+  @override
+  Widget build(BuildContext context) => BrandMarkPlate(size: size);
+}
+
+/// Logo işareti plakası: M pahlı plaka içinde `assets/zankurd_icon.webp`.
+///
+/// Gecede Kulis (`s2`), gündüzde Perde (`s1`, beyaz) + 1 px kenar — dağlar
+/// koyu zeminde kaybolmasın (A iskeletinin marka satırıyla aynı kural).
+/// Dekoratiftir. [RojMascot] ve boş/hata durumları bunu çizer.
+class BrandMarkPlate extends StatelessWidget {
+  const BrandMarkPlate({super.key, this.size = 64});
+
+  final double size;
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      size: Size.square(size),
-      painter: _RojMascotPainter(mood: mood),
+    final t = SahneTokens.of(context);
+    final day = Theme.of(context).brightness == Brightness.light;
+    final mark = size * 0.72;
+    return ExcludeSemantics(
+      child: SizedBox.square(
+        dimension: size,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: day ? t.s1 : t.s2,
+            shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
+          ),
+          // İşaret bir `Image` bileşeni değil, süs katmanıdır
+          // (`DecorationImage`): görsel sayan ve semantik arayan bekçiler
+          // (ör. tanıtımın "tam üç kategori görseli") onu içerik saymaz.
+          child: Center(
+            child: SizedBox.square(
+              dimension: mark,
+              child: const DecoratedBox(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/zankurd_icon.webp'),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
-}
-
-class _RojMascotPainter extends CustomPainter {
-  _RojMascotPainter({required this.mood});
-
-  final RojMood mood;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final faceR = size.width * 0.30;
-
-    // Kilim dilinde 12 üçgen ışın — altın/indigo dönüşümüyle sakin bir
-    // şerit (bkz. RojMascot.rayColors).
-    for (var i = 0; i < 12; i++) {
-      final rayPaint = Paint()
-        ..color = RojMascot.rayColors[i % RojMascot.rayColors.length];
-      final angle = i * math.pi / 6;
-      final dir = Offset(math.cos(angle), math.sin(angle));
-      final normal = Offset(-dir.dy, dir.dx);
-      final base = center + dir * (faceR + size.width * 0.02);
-      final tip = center + dir * (faceR + size.width * 0.16);
-      final path = Path()
-        ..moveTo(
-          base.dx + normal.dx * size.width * 0.045,
-          base.dy + normal.dy * size.width * 0.045,
-        )
-        ..lineTo(tip.dx, tip.dy)
-        ..lineTo(
-          base.dx - normal.dx * size.width * 0.045,
-          base.dy - normal.dy * size.width * 0.045,
-        )
-        ..close();
-      canvas.drawPath(path, rayPaint);
-    }
-
-    // Yüz: altın gradyanlı disk + ince beyaz kontur.
-    final facePaint = Paint()
-      ..shader = RadialGradient(
-        center: const Alignment(-0.3, -0.4),
-        colors: [AppTheme.gold.withValues(alpha: 0.8), AppTheme.gold],
-      ).createShader(Rect.fromCircle(center: center, radius: faceR));
-    canvas.drawCircle(center, faceR, facePaint);
-    canvas.drawCircle(
-      center,
-      faceR,
-      Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = size.width * 0.02
-        ..color = Colors.white.withValues(alpha: 0.8),
-    );
-
-    final ink = Paint()
-      ..color = AppTheme.brandDeep
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.035
-      ..strokeCap = StrokeCap.round;
-    final eyeY = center.dy - faceR * 0.18;
-    final eyeDx = faceR * 0.38;
-
-    // Gözler.
-    switch (mood) {
-      case RojMood.celebrate:
-        // Kapalı mutlu gözler: ^ ^
-        for (final sign in [-1, 1]) {
-          final ex = center.dx + sign * eyeDx;
-          canvas.drawArc(
-            Rect.fromCircle(center: Offset(ex, eyeY), radius: faceR * 0.18),
-            math.pi,
-            math.pi,
-            false,
-            ink,
-          );
-        }
-      case RojMood.happy:
-      case RojMood.thinking:
-      case RojMood.sad:
-        final dot = Paint()..color = AppTheme.brandDeep;
-        canvas.drawCircle(Offset(center.dx - eyeDx, eyeY), faceR * 0.09, dot);
-        canvas.drawCircle(Offset(center.dx + eyeDx, eyeY), faceR * 0.09, dot);
-    }
-
-    // Ağız.
-    final mouthY = center.dy + faceR * 0.28;
-    switch (mood) {
-      case RojMood.celebrate:
-        // Açık gülümseme.
-        canvas.drawArc(
-          Rect.fromCenter(
-            center: Offset(center.dx, mouthY),
-            width: faceR * 0.8,
-            height: faceR * 0.6,
-          ),
-          0,
-          math.pi,
-          false,
-          ink,
-        );
-      case RojMood.happy:
-        canvas.drawArc(
-          Rect.fromCenter(
-            center: Offset(center.dx, mouthY - faceR * 0.08),
-            width: faceR * 0.6,
-            height: faceR * 0.45,
-          ),
-          math.pi * 0.15,
-          math.pi * 0.7,
-          false,
-          ink,
-        );
-      case RojMood.thinking:
-        // Hafif yana kaymış düz "hmm" ağzı.
-        canvas.drawLine(
-          Offset(center.dx - faceR * 0.22, mouthY),
-          Offset(center.dx + faceR * 0.10, mouthY - faceR * 0.06),
-          ink,
-        );
-      case RojMood.sad:
-        // Ters yay: elipsin ÜST yarısı (pi..2pi) aşağı bakan bir ağız
-        // verir. Yay merkezi ağız çizgisinin biraz altına konur, yoksa
-        // çene hizasında yüzen bir çizgi gibi duruyor.
-        canvas.drawArc(
-          Rect.fromCenter(
-            center: Offset(center.dx, mouthY + faceR * 0.14),
-            width: faceR * 0.62,
-            height: faceR * 0.45,
-          ),
-          math.pi * 1.15,
-          math.pi * 0.7,
-          false,
-          ink,
-        );
-    }
-
-    // Yanaklar: iki küçük sıcak nokta. Düşünen ve üzgün hâlde
-    // bırakılır — neşeli yanaklar üzgün ağızla çelişip ifadeyi
-    // okunmaz kılıyor.
-    if (mood != RojMood.thinking && mood != RojMood.sad) {
-      final cheek = Paint()
-        ..color = AppTheme.pirsOrangeStart.withValues(alpha: 0.55);
-      canvas.drawCircle(
-        Offset(center.dx - faceR * 0.58, center.dy + faceR * 0.12),
-        faceR * 0.10,
-        cheek,
-      );
-      canvas.drawCircle(
-        Offset(center.dx + faceR * 0.58, center.dy + faceR * 0.12),
-        faceR * 0.10,
-        cheek,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _RojMascotPainter oldDelegate) =>
-      oldDelegate.mood != mood;
 }

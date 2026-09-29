@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/strings.dart';
-import '../theme/app_theme.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../theme/app_icons.dart';
+import 'sahne/sahne.dart';
 
 /// Rozet görsel widget'ı — profil ekranında ve sonuç ekranında kullanılır.
 class BadgeWidget extends StatelessWidget {
@@ -43,108 +43,91 @@ class BadgeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOutCubic,
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-      decoration: BoxDecoration(
-        color: isUnlocked
-            ? AppTheme.surfaceHiColor(context)
-            : AppTheme.surfaceColor(context).withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: isUnlocked
-              ? AppTheme.gold.withValues(alpha: 0.5)
-              : AppTheme.borderColor(context).withValues(alpha: 0.6),
+    // 2026-09-29 Şahnê: rozet karosu yüzey kartıdır (Perde, L pah).
+    // Kazanılmış rozet: altın kaş (Halka 1) + Zêr dolgulu M karo, koyu ikon
+    // (`onGold`) ve "kazanıldı" Rast tonu + ✓. Kilitli: gündüz kenarı, Ray
+    // karo, üçüncül ikon ve kilit. Durum yalnız renkle verilmez (✓ / kilit).
+    // Bulanık gölge ve gradyan yok.
+    final t = SahneTokens.of(context);
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: t.s1,
+        shape: SahneShape.withSide(
+          SahneShape.l,
+          isUnlocked ? t.gold : t.edge,
+          width: isUnlocked ? SahneRing.r1 : 1,
         ),
-        boxShadow: isUnlocked
-            ? [
-                BoxShadow(
-                  color: AppTheme.gold.withValues(alpha: 0.15),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ]
-            : null,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Rozet ikonu
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 400),
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: isUnlocked ? AppTheme.goldGradient : null,
-              color: isUnlocked ? null : AppTheme.borderColor(context),
-            ),
-            child: Icon(
-              _icon,
-              color: isUnlocked
-                  ? Colors.white
-                  : AppTheme.textMutedColor(context),
-              size: 20,
-            ),
-          ),
-          const SizedBox(height: 6),
-
-          // Rozet başlığı
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              color: isUnlocked
-                  ? AppTheme.textPrimaryColor(context)
-                  : AppTheme.textMutedColor(context),
-            ),
-          ),
-          const SizedBox(height: 4),
-
-          // Rozet durumu
-          if (isUnlocked)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-              decoration: BoxDecoration(
-                color: AppTheme.correct.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              // Onay işareti metin değil ikon: Rubik'te U+2713 yok, o
-              // karakter sistem yazı tipine düşüyor ve rozetin yanında
-              // apayrı bir tipte çiziliyordu (2026-07-26).
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    AppIcons.check,
-                    size: 9,
-                    color: AppColors.onAccentTint(context, AppTheme.correct),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: SahneSpace.x1,
+          vertical: SahneSpace.x2,
+        ),
+        // Dar ızgara hücresinde büyük yazı taşmasın: içerik küçülerek sığar.
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: SizedBox(
+            width: 104,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: isUnlocked ? t.gold : t.s3,
+                    shape: SahneShape.m,
                   ),
-                  const SizedBox(width: 3),
-                  Text(
-                    Tr.forKu(K.kazanildi, isKu),
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.onAccentTint(context, AppTheme.correct),
+                  child: SizedBox.square(
+                    dimension: 40,
+                    child: Icon(
+                      _icon,
+                      color: isUnlocked ? t.onGold : t.tx3,
+                      size: 20,
                     ),
                   ),
-                ],
-              ),
-            )
-          else
-            Icon(
-              AppIcons.lock,
-              size: 12,
-              color: AppTheme.textMutedColor(context),
+                ),
+                const SizedBox(height: SahneSpace.x2),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: SahneType.captionStrong.copyWith(
+                    color: isUnlocked ? t.tx : t.tx2,
+                  ),
+                ),
+                const SizedBox(height: SahneSpace.x1),
+                if (isUnlocked)
+                  DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: t.okTint,
+                      shape: SahneShape.s,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: SahneSpace.x1,
+                      ),
+                      // Onay işareti metin değil ikon: U+2713 yazı tipinde
+                      // yok, sistem yazı tipine düşüyordu (2026-07-26).
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(AppIcons.check, size: 12, color: t.okTx),
+                          const SizedBox(width: SahneSpace.x1),
+                          Text(
+                            Tr.forKu(K.kazanildi, isKu),
+                            style: SahneType.caption.copyWith(color: t.okTx),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Icon(AppIcons.lock, size: 16, color: t.tx3),
+              ],
             ),
-        ],
+          ),
+        ),
       ),
     );
   }

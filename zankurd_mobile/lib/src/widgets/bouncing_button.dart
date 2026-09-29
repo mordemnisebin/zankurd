@@ -73,7 +73,10 @@ class _BouncingButtonState extends State<BouncingButton>
     // her yerinde kullanılıyor, dolayısıyla tercihi yok saymak onu
     // fiilen işlevsiz bırakıyordu (2026-08-02 denetimi). Dokunma geri
     // bildirimi haptic ile korunur.
-    if (ReducedMotionProvider.isReducedIn(context)) {
+    final reduceMotion =
+        ReducedMotionProvider.isReducedIn(context) ||
+        (MediaQuery.maybeDisableAnimationsOf(context) ?? false);
+    if (reduceMotion) {
       return GestureDetector(
         onTap: widget.onPressed == null
             ? null

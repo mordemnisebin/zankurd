@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'sahne/sahne.dart';
+
 /// ZanKurd marka logosu.
 ///
 /// 2026-07-21: logo saydam arka planlı (tool/make_logo_transparent.py) —
@@ -14,6 +16,7 @@ import 'package:flutter/material.dart';
 /// bildirimi — "kötü duruyor"). Yanındaki başlık metni zaten marka
 /// adını yazılı olarak veriyor, simge tekrar yazmaya gerek bırakmıyor.
 /// [onCard]/[cardRadius]/[cardPadding] API geriye-uyum için korunuyor.
+/// 2026-09-29 Şahnê: [onBrandSurface] logo plakası çizer (bkz. build).
 class AppLogo extends StatelessWidget {
   const AppLogo({
     this.width = 160,
@@ -54,21 +57,17 @@ class AppLogo extends StatelessWidget {
       isAntiAlias: true,
     );
     if (!onBrandSurface) return image;
-    final pad = width * 0.14;
-    return Container(
-      padding: EdgeInsets.all(pad),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white.withValues(alpha: 0.92),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.12),
-            blurRadius: 14,
-            offset: const Offset(0, 4),
-          ),
-        ],
+    // 2026-09-29 Şahnê: doygun zemin üstünde beyaz daire + gölge yerine
+    // logo plakası — gecede Kulis, gündüzde Perde + 1 px kenar (marka
+    // satırı ve paylaşım kartıyla aynı dil). Bulanık gölge yok.
+    final t = SahneTokens.of(context);
+    final day = Theme.of(context).brightness == Brightness.light;
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: day ? t.s1 : t.s2,
+        shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       ),
-      child: image,
+      child: Padding(padding: EdgeInsets.all(width * 0.14), child: image),
     );
   }
 }

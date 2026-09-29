@@ -5,7 +5,7 @@ import '../l10n/strings.dart';
 import '../models/mini_guide.dart';
 import '../models/story.dart';
 import '../theme/app_icons.dart';
-import '../theme/app_theme.dart';
+import 'sahne/sahne.dart';
 
 typedef StoryOpenCallback = Future<void> Function(Story story, MiniGuide guide);
 
@@ -55,6 +55,7 @@ class _StoryCatalogState extends State<StoryCatalog> {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final textScale = MediaQuery.textScalerOf(context).scale(1);
     final compactRailHeight = (56.0 * textScale).clamp(56.0, 72.0).toDouble();
 
@@ -62,27 +63,27 @@ class _StoryCatalogState extends State<StoryCatalog> {
       key: const ValueKey('story-catalog'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          Tr.forKu(K.storyCatalogTitle, widget.isKu),
-          style: AppTypography.heading2.copyWith(
-            color: AppTheme.textPrimaryColor(context),
+        // 2026-09-29 Şahnê: bölüm başlığı dili — Manşet 22 + Açıklama.
+        Semantics(
+          header: true,
+          child: Text(
+            Tr.forKu(K.storyCatalogTitle, widget.isKu),
+            style: SahneType.headline.copyWith(color: t.tx),
           ),
         ),
-        const SizedBox(height: AppSpacing.xs),
+        const SizedBox(height: SahneSpace.x1),
         Text(
           Tr.forKu(K.storyCatalogSub, widget.isKu),
-          style: AppTypography.caption.copyWith(
-            color: AppTheme.textMutedColor(context),
-          ),
+          style: SahneType.caption.copyWith(color: t.tx2),
         ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SahneSpace.x3),
         if (widget.compact)
           SizedBox(
             height: compactRailHeight,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: everydayStories.length,
-              separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.xs),
+              separatorBuilder: (_, _) => const SizedBox(width: SahneSpace.x2),
               itemBuilder: (context, index) {
                 final story = everydayStories[index];
                 return SizedBox(
@@ -104,40 +105,21 @@ class _StoryCatalogState extends State<StoryCatalog> {
             ),
           )
         else
-          Material(
-            color: AppTheme.surfaceColor(context),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              side: BorderSide(color: AppTheme.borderColor(context)),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: [
-                for (
-                  var index = 0;
-                  index < everydayStories.length;
-                  index++
-                ) ...[
-                  _StoryCatalogCard(
-                    key: ValueKey('story-card-${everydayStories[index].id}'),
-                    story: everydayStories[index],
-                    nodeId: _progress[everydayStories[index].id],
-                    isKu: widget.isKu,
-                    compact: false,
-                    onTap: () => _open(everydayStories[index]),
-                  ),
-                  if (index != everydayStories.length - 1)
-                    Divider(
-                      height: 1,
-                      thickness: 1,
-                      indent: 64,
-                      color: AppTheme.borderColor(
-                        context,
-                      ).withValues(alpha: 0.7),
-                    ),
-                ],
-              ],
-            ),
+          // Liste grubu (Perde, L pah, gündüzde 1 px kenar); satırlar arası
+          // ayırıcı ikon hizasından başlar.
+          SahneListGroup(
+            dividerIndent: SahneSpace.x3 + 36 + SahneSpace.x3,
+            children: [
+              for (final story in everydayStories)
+                _StoryCatalogCard(
+                  key: ValueKey('story-card-${story.id}'),
+                  story: story,
+                  nodeId: _progress[story.id],
+                  isKu: widget.isKu,
+                  compact: false,
+                  onTap: () => _open(story),
+                ),
+            ],
           ),
       ],
     );
@@ -168,6 +150,10 @@ class _StoryCatalogCard extends StatelessWidget {
         : nodeId == null
         ? Tr.forKu(K.storyStatusStart, isKu)
         : Tr.forKu(K.storyStatusContinue, isKu);
+    // 2026-09-29 Şahnê: liste satırı dili — 36'lık M karo (Zimrût tonu +
+    // Zimrût metni ikon), başlık Gövde 700, öteki dildeki ad Açıklama;
+    // durum kalın açıklama Zimrût metni, chevron üçüncül.
+    final t = SahneTokens.of(context);
     return Semantics(
       button: true,
       excludeSemantics: true,
@@ -176,73 +162,58 @@ class _StoryCatalogCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         excludeFromSemantics: true,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm,
-            vertical: compact ? AppSpacing.xs : AppSpacing.sm,
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: compact ? 32 : 36,
-                height: compact ? 32 : 36,
-                decoration: BoxDecoration(
-                  color: AppTheme.playGreen.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                ),
-                child: Icon(
-                  AppIcons.bookOpenReader,
-                  size: compact ? 15 : 17,
-                  color: AppColors.onAccentTint(
-                    context,
-                    AppTheme.playGreen,
-                    tintAlpha: 0.1,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: compact ? 48 : 52),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: SahneSpace.x3,
+              vertical: compact ? SahneSpace.x1 : SahneSpace.x2,
+            ),
+            child: Row(
+              children: [
+                DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: t.learnTint,
+                    shape: SahneShape.m,
+                  ),
+                  child: SizedBox.square(
+                    dimension: 36,
+                    child: Icon(
+                      AppIcons.bookOpenReader,
+                      size: 20,
+                      color: t.learnTx,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.sm),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      isKu ? story.titleKu : story.titleTr,
-                      maxLines: compact ? 1 : null,
-                      overflow: compact ? TextOverflow.ellipsis : null,
-                      style:
-                          (compact
-                                  ? AppTypography.bodyMedium
-                                  : AppTypography.bodyLarge)
-                              .copyWith(
-                                color: AppTheme.textPrimaryColor(context),
-                                fontWeight: FontWeight.w700,
-                              ),
-                    ),
-                    if (!compact)
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
                       Text(
-                        isKu ? story.titleTr : story.titleKu,
-                        style: AppTypography.caption.copyWith(
-                          color: AppTheme.textMutedColor(context),
-                        ),
+                        isKu ? story.titleKu : story.titleTr,
+                        maxLines: compact ? 1 : null,
+                        overflow: compact ? TextOverflow.ellipsis : null,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
                       ),
-                  ],
+                      if (!compact)
+                        Text(
+                          isKu ? story.titleTr : story.titleKu,
+                          style: SahneType.caption.copyWith(color: t.tx2),
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.xs),
-              Text(
-                status,
-                style: AppTypography.caption.copyWith(
-                  color: AppColors.readableAccent(context, AppTheme.playGreen),
-                  fontWeight: FontWeight.w700,
+                const SizedBox(width: SahneSpace.x2),
+                Text(
+                  status,
+                  style: SahneType.captionStrong.copyWith(color: t.learnTx),
                 ),
-              ),
-              const SizedBox(width: 4),
-              Icon(
-                AppIcons.chevronRight,
-                size: 16,
-                color: AppColors.readableAccent(context, AppTheme.playGreen),
-              ),
-            ],
+                const SizedBox(width: SahneSpace.x1),
+                Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
+              ],
+            ),
           ),
         ),
       ),

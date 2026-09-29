@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/widgets/coach_mark.dart';
 
 void main() {
@@ -26,7 +26,10 @@ void main() {
     );
   }
 
-  testWidgets('tutorial bilgi rozeti Forest kimliğini kullanır', (
+  // 2026-09-29 Şahnê: rozet eskiden Forest kimlik gradyanını taşıyordu;
+  // Şahnê'de gradyanlı karo yok. Rozet Zêr rolünün ton karosudur (M pah),
+  // ikon rolün metin rengi — bekçi artık bunu sabitler.
+  testWidgets('tutorial bilgi rozeti Zêr rolünün ton karosunu kullanır', (
     tester,
   ) async {
     final key = GlobalKey();
@@ -49,17 +52,21 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final badge = tester.widget<Container>(
+    final badge = tester.widget<DecoratedBox>(
       find
           .ancestor(
             of: find.byIcon(Icons.home_rounded),
-            matching: find.byType(Container),
+            matching: find.byType(DecoratedBox),
           )
           .first,
     );
-    final decoration = badge.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+    final t = SahneTokens.of(tester.element(find.byIcon(Icons.home_rounded)));
+    final decoration = badge.decoration as ShapeDecoration;
+    expect(decoration.gradient, isNull);
+    expect(decoration.color, t.goldTint);
+    expect(decoration.shape, SahneShape.m);
+    final icon = tester.widget<Icon>(find.byIcon(Icons.home_rounded));
+    expect(icon.color, t.goldTx);
   });
 
   testWidgets('ilk adim baslik ve aciklamayi gosterir', (tester) async {

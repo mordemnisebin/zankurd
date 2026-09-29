@@ -50,8 +50,12 @@ void main() {
   });
 
   test('solid accents use adaptive foregrounds and tap targets stay large', () {
+    // 2026-09-29 Şahnê: iki ortak bileşen listeden çıktı, korudukları şey
+    // kalıyor. Görev bildirimi artık altın DOLGU değil (Kulis zemin +
+    // birincil metin; `mission_toast_typography_test` metni ölçer). Boş/hata
+    // panelinin eylemi `SahneButton`dır: Agir üstünde metin temadan `onAct`
+    // gelir (koyu, 8:1); ham renkle düğme boyamaz.
     final expectedHelpers = <String, String>{
-      'lib/src/widgets/mission_toast.dart': 'AppColors.onSolid(AppTheme.gold)',
       'lib/src/screens/quiz_result_screen.dart':
           'AppColors.onSolid(AppTheme.gold)',
       'lib/src/screens/quiz/quiz_screen_ui.dart': 'AppColors.onSolid(',
@@ -60,8 +64,14 @@ void main() {
       // metin kullanıyordu: `AppErrorState` onu `AppTheme.wrong` ile
       // çağırdığında kontrast 3,73:1 kalıyordu. Bu düğme uygulamadaki her
       // yükleme hatasının tek eylemi (2026-07-31 denetimi).
-      'lib/src/widgets/app_state.dart': 'AppColors.onSolid(',
+      'lib/src/widgets/app_state.dart': 'SahneButton.primary(',
     };
+    final toast = File('lib/src/widgets/mission_toast.dart').readAsStringSync();
+    expect(
+      toast,
+      isNot(contains('backgroundColor: AppTheme.gold')),
+      reason: 'görev bildirimi altın dolguyla içeriğin üstüne binmemeli',
+    );
     for (final entry in expectedHelpers.entries) {
       expect(
         File(entry.key).readAsStringSync(),
@@ -89,9 +99,10 @@ void main() {
           'Çevrimdışı şeridi doygun kırmızıyla doldurma: zayıf ağda her '
           'ekranda görünen bir durum çığlık atmamalı (2026-09-25).',
     );
+    // 2026-09-29 Şahnê: birincil metin belirteçten gelir (`t.tx`).
     expect(
       offlineBanner,
-      contains('AppTheme.textPrimaryColor(context)'),
+      contains('color: t.tx'),
       reason: 'Şerit metni tema birincil rengini kullanmalı.',
     );
 

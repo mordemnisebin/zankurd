@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_icons.dart';
 import '../theme/app_theme.dart';
 import '../theme/kilim_motifs.dart';
+import 'sahne/sahne.dart';
 
 /// Visual priority for a mode entry.
 ///
@@ -58,40 +60,47 @@ class ModeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isPrimary = emphasis == ModeCardEmphasis.primary;
+    if (isPrimary) {
+      // Birincil mod bir sahne kartıdır: iki temada da gece. İçindeki her
+      // renk gece belirteçlerinden gelir.
+      return SahneStage(
+        stage: AppTheme.stage,
+        child: Builder(builder: (context) => _card(context, stage: true)),
+      );
+    }
+    return _card(context, stage: false);
+  }
+
+  Widget _card(BuildContext context, {required bool stage}) {
+    final t = SahneTokens.of(context);
     final isEvent = emphasis == ModeCardEmphasis.event;
-    final accentOnSurface = AppColors.readableAccent(context, accent);
-    final progressColor = isPrimary ? Colors.white : accentOnSurface;
-    final titleColor = isPrimary
-        ? Colors.white
-        : AppTheme.textPrimaryColor(context);
-    final subtitleColor = isPrimary
-        ? Colors.white.withValues(alpha: 0.88)
-        : AppTheme.textSubColor(context);
-    // Etkinlik yüzeyi: aksanın hafif bir tonu düz kart zeminine karışır
-    // (gradyan DEĞİL — `home_play_hierarchy_test.dart` bu kartlarda
-    // gradyan/gölge OLMAMASINI bekler). Karanlıkta biraz daha yüksek alfa
-    // kullanılır çünkü koyu zemin aynı oranı daha soluk emiyor; ikisi de
-    // `test/play_hub_stage_test.dart`ta metin kontrastına (≥4.5:1) karşı
-    // ölçülür.
-    final eventSurface = Color.alphaBlend(
-      accent.withValues(alpha: AppTheme.isLight(context) ? 0.16 : 0.20),
-      AppTheme.surfaceColor(context),
+    final role = sahneRoleFor(accent);
+    // 2026-09-29 Şahnê:
+    //  - birincil: gece sahne zemini (L pah) — yüzeylerden ayrılır ama
+    //    Agir'i taşımaz; Agir ekranın birincil düğmesidir.
+    //  - ikincil: yüzey kartı (Perde, gündüzde 1 px kenar), amblem rolün
+    //    ton karosu + rol metni ikon.
+    //  - etkinlik: rolün ton zemini (ör. Zêr — "ödül bileti" gibi ısınır),
+    //    amblem dolu rol rengi + koyu ikon.
+    // Gradyan ve bulanık gölge yok (`home_play_hierarchy_test.dart`).
+    final surface = stage
+        ? SahneStageColors.top
+        : isEvent
+        ? t.roleTint(role)
+        : t.s1;
+    final shape = SahneShape.withSide(
+      SahneShape.l,
+      stage ? SahneStageColors.top : t.edge,
+      width: 1,
     );
-    final cardDecoration = BoxDecoration(
-      color: isPrimary
-          ? AppTheme.culturalBrandBg
-          : (isEvent ? eventSurface : AppTheme.surfaceColor(context)),
-      borderRadius: BorderRadius.circular(AppRadius.lg),
-      border: Border.all(
-        color: isPrimary
-            ? Colors.white.withValues(alpha: 0.10)
-            : (isEvent
-                  ? accent.withValues(alpha: 0.5)
-                  : AppTheme.borderColor(context)),
-      ),
-      boxShadow: isPrimary ? AppTheme.cardShadow(context) : const <BoxShadow>[],
-    );
+    final (tileBg, tileFg) = isEvent
+        ? (
+            role == SahneRole.gold ? t.gold : t.roleText(role),
+            role == SahneRole.gold ? t.onGold : t.bg,
+          )
+        : (t.roleTint(role), t.roleText(role));
     final enabled = !busy && onTap != null;
+    final tile = compact ? 40.0 : 44.0;
     return Semantics(
       button: true,
       enabled: enabled,
@@ -99,45 +108,32 @@ class ModeCard extends StatelessWidget {
       onTap: enabled ? onTap : null,
       child: ExcludeSemantics(
         child: Material(
-          color: Colors.transparent,
+          type: MaterialType.transparency,
           child: InkWell(
             onTap: enabled ? onTap : null,
-            borderRadius: BorderRadius.circular(AppRadius.lg),
+            customBorder: shape,
             child: Ink(
-              decoration: cardDecoration,
+              decoration: ShapeDecoration(color: surface, shape: shape),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
-                  AppSpacing.md,
-                  compact ? AppSpacing.sm : AppSpacing.md,
-                  AppSpacing.md,
-                  compact ? AppSpacing.sm : AppSpacing.md,
+                  SahneSpace.x4,
+                  compact ? SahneSpace.x3 : SahneSpace.x4,
+                  SahneSpace.x4,
+                  compact ? SahneSpace.x3 : SahneSpace.x4,
                 ),
                 child: Row(
                   children: [
                     Container(
-                      width: compact ? 40 : 44,
-                      height: compact ? 40 : 44,
+                      width: tile,
+                      height: tile,
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        // İkincil ve etkinlik amblemleri DOLU aksan rengi
-                        // taşır (önce soluk bir tondu — `iconTileBg` — ve
-                        // ekranın tek renkli anını CTA'ya bırakıyordu; sahip
-                        // bunu "renksiz" olarak adlandırdı). İkon üstünde
-                        // `onSolid` ile okunur kalır.
-                        color: isPrimary
-                            ? Colors.white.withValues(alpha: 0.10)
-                            : accent,
-                        borderRadius: BorderRadius.circular(AppRadius.md),
+                      decoration: ShapeDecoration(
+                        color: tileBg,
+                        shape: SahneShape.m,
                       ),
-                      child: Icon(
-                        icon,
-                        color: isPrimary
-                            ? Colors.white
-                            : AppColors.onSolid(accent),
-                        size: compact ? 20 : 22,
-                      ),
+                      child: Icon(icon, color: tileFg, size: compact ? 20 : 24),
                     ),
-                    const SizedBox(width: AppSpacing.sm),
+                    const SizedBox(width: SahneSpace.x3),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,42 +141,26 @@ class ModeCard extends StatelessWidget {
                         children: [
                           Text(
                             title,
-                            style: AppTypography.subtitle.copyWith(
-                              fontSize: compact ? 16 : 17,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: -0.2,
-                              color: titleColor,
-                            ),
+                            style: SahneType.bodyStrong.copyWith(color: t.tx),
                           ),
-                          const SizedBox(height: 2),
                           Text(
                             subtitle,
-                            style: AppTypography.caption.copyWith(
-                              color: subtitleColor,
-                            ),
+                            style: SahneType.caption.copyWith(color: t.tx2),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.xs),
+                    const SizedBox(width: SahneSpace.x2),
                     if (busy)
-                      SizedBox(
-                        width: 18,
-                        height: 18,
+                      SizedBox.square(
+                        dimension: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            progressColor,
-                          ),
+                          valueColor: AlwaysStoppedAnimation<Color>(t.goldTx),
                         ),
                       )
                     else
-                      Icon(
-                        Icons.chevron_right_rounded,
-                        color: isPrimary
-                            ? Colors.white.withValues(alpha: 0.82)
-                            : AppTheme.textMutedColor(context),
-                      ),
+                      Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
                   ],
                 ),
               ),

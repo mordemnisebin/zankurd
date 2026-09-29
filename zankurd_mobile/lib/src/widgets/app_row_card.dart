@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../theme/app_icons.dart';
+import 'sahne/sahne.dart';
 
 /// Tek tip satır kartı — ana ekrandaki ikincil eylemlerin tamamı bunu
 /// kullanır. 2026-07-24: 11 ayrı kart bileşeni yerine tek bir gövde;
-/// kategori/aksan rengi yalnız 34px ikon karosunda görünür, kartın zeminini
+/// kategori/aksan rengi yalnız ikon karosunda görünür, kartın zeminini
 /// asla doldurmaz.
 class AppRowCard extends StatelessWidget {
   const AppRowCard({
@@ -49,24 +49,40 @@ class AppRowCard extends StatelessWidget {
     );
   }
 
+  /// 2026-09-29 Şahnê: liste satırının standart çeşidi ([SahneListRow.icon]
+  /// görünüşü) kendi yüzey kartında — Perde, L pah, gündüzde 1 px kenar;
+  /// en az 64; 44'lük M ikon karosu (aksanın rolünün tonu + rol metni
+  /// ikon); başlık Gövde 700, alt satır Açıklama; sağda [trailing] ya da
+  /// üçüncül chevron. Metin sarar, satır uzar.
   Widget _buildBody(BuildContext context) {
-    return Material(
-      color: AppTheme.surfaceColor(context),
-      borderRadius: BorderRadius.circular(AppTheme.panelRadius),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppTheme.panelRadius),
-        child: Container(
-          padding: const EdgeInsets.all(AppSpacing.sm),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppTheme.panelRadius),
-            border: Border.all(color: AppTheme.borderColor(context)),
+    final t = SahneTokens.of(context);
+    final role = sahneRoleFor(accent);
+    return SahneTappable(
+      shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
+      color: t.s1,
+      onTap: onTap,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 64),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+            SahneSpace.x3,
+            SahneSpace.x2,
+            SahneSpace.x4,
+            SahneSpace.x2,
           ),
           child: Row(
             children: [
-              _IconTile(icon: icon, color: accent),
-              const SizedBox(width: AppSpacing.sm),
+              DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: t.roleTint(role),
+                  shape: SahneShape.m,
+                ),
+                child: SizedBox.square(
+                  dimension: 44,
+                  child: Icon(icon, size: 24, color: t.roleText(role)),
+                ),
+              ),
+              const SizedBox(width: SahneSpace.x3),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,59 +90,21 @@ class AppRowCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: AppTypography.subtitle.copyWith(
-                        fontSize: 15,
-                        color: AppTheme.textPrimaryColor(context),
-                      ),
+                      style: SahneType.bodyStrong.copyWith(color: t.tx),
                     ),
-                    if (subtitle != null) ...[
-                      const SizedBox(height: 1),
+                    if (subtitle != null)
                       Text(
                         subtitle!,
-                        style: AppTypography.bodyMedium.copyWith(
-                          fontSize: 12.5,
-                          color: AppTheme.textSubColor(context),
-                        ),
+                        style: SahneType.caption.copyWith(color: t.tx2),
                       ),
-                    ],
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.xs),
-              trailing ??
-                  Icon(
-                    AppIcons.chevronRight,
-                    size: 14,
-                    color: AppTheme.textMutedColor(context),
-                  ),
+              const SizedBox(width: SahneSpace.x2),
+              trailing ?? Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _IconTile extends StatelessWidget {
-  const _IconTile({required this.icon, required this.color});
-
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 34,
-      height: 34,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.iconTileBg(context, color),
-        borderRadius: BorderRadius.circular(AppRadius.badge),
-      ),
-      child: Icon(
-        icon,
-        size: 16,
-        color: AppColors.onAccentTint(context, color),
       ),
     );
   }

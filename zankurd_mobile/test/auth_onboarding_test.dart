@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne_chips.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -110,7 +111,12 @@ void main() {
     expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
   });
 
-  testWidgets('giriş dil seçimi aktif durumda Forest kullanır', (tester) async {
+  // 2026-09-29 Şahnê: dil seçici seçim rayının sığan çeşididir; seçili çip
+  // eskiden Forest gradyanı + gölge taşıyordu. Korunan şey: etkin dil
+  // görünür biçimde (ton + Halka 2) ve ekran okuyucuda seçili.
+  testWidgets('giriş dil seçimi aktif dili seçili çiple gösterir', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       testShell(
         child: const SignInScreen(),
@@ -122,13 +128,25 @@ void main() {
 
     final chipFinder = find.byKey(const ValueKey('sign-in-language-chip-KU'));
     expect(chipFinder, findsOneWidget);
-    final chip = tester.widget<AnimatedContainer>(chipFinder);
-    final decoration = chip.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+    final chip = tester.widget<SahneRailChip>(
+      find.descendant(of: chipFinder, matching: find.byType(SahneRailChip)),
+    );
+    expect(chip.selected, isTrue);
+    final other = tester.widget<SahneRailChip>(
+      find.descendant(
+        of: find.byKey(const ValueKey('sign-in-language-chip-TR')),
+        matching: find.byType(SahneRailChip),
+      ),
+    );
+    expect(other.selected, isFalse);
     expect(
-      decoration.boxShadow!.single.color,
-      AppTheme.culturalBrandBg.withValues(alpha: 0.35),
+      tester
+          .getSemantics(chipFinder)
+          .getSemanticsData()
+          .flagsCollection
+          .isSelected
+          .toString(),
+      'Tristate.isTrue',
     );
   });
 

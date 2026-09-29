@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
+import '../theme/sahne.dart';
 
 /// Yarışma sahnesi fonu: altın ışın hüzmeleri, odakta bir parıltı ve
 /// kenarlarda konfeti.
@@ -62,7 +62,9 @@ class StageBackdropPainter extends CustomPainter {
       math.min(focusTop, size.height * 0.5),
     );
 
-    final rayPaint = Paint()..color = AppTheme.gold.withValues(alpha: 0.07);
+    // 2026-09-29 Şahnê: ışınlar ve hale paletten — sonuç ışını
+    // (`SahneStageColors.ray`) ve altın hale (`haloGold`).
+    final rayPaint = Paint()..color = SahneStageColors.ray;
     const spread = _raySpreadDegrees * math.pi / 180;
     final length = math.max(size.width, size.height);
     for (var i = 0; i < rayCount; i++) {
@@ -85,8 +87,8 @@ class StageBackdropPainter extends CustomPainter {
       Paint()
         ..shader = RadialGradient(
           colors: [
-            AppTheme.gold.withValues(alpha: 0.30),
-            AppTheme.gold.withValues(alpha: 0),
+            SahneStageColors.haloGold,
+            SahneStageColors.haloGold.withValues(alpha: 0),
           ],
         ).createShader(Rect.fromCircle(center: focus, radius: glowRadius)),
     );
@@ -146,17 +148,25 @@ class _ConfettiPiece {
 // düello") 16. pikselde başlar ve Kurmancîde neredeyse kart genişliğindedir.
 // Kenar şeritleri koltuk satırının hizasındadır; koltuklar ve etiketleri
 // sütunlarının ortasında durduğu için şeride uzanmaz.
-const _pieces = <_ConfettiPiece>[
-  _ConfettiPiece(0.12, 8, 5, Colors.white, 0.62, diamond: true),
-  _ConfettiPiece(0.24, 5, 5, AppTheme.gold, 0.70),
-  _ConfettiPiece(0.76, 7, 5, AppTheme.brand, 0.62, diamond: true),
-  _ConfettiPiece(0.88, 5, 5, Colors.white, 0.60),
-  _ConfettiPiece(0.05, 52, 7, AppTheme.gold, 0.75),
-  _ConfettiPiece(0.09, 70, 6, AppTheme.brand, 0.65, diamond: true),
-  _ConfettiPiece(0.04, 88, 5, Colors.white, 0.60),
-  _ConfettiPiece(0.08, 106, 6, AppTheme.playRed, 0.70, diamond: true),
-  _ConfettiPiece(0.95, 50, 7, AppTheme.gold, 0.70, diamond: true),
-  _ConfettiPiece(0.91, 68, 6, AppTheme.playRed, 0.60),
-  _ConfettiPiece(0.96, 86, 6, Colors.white, 0.58, diamond: true),
-  _ConfettiPiece(0.92, 104, 5, AppTheme.brand, 0.68),
+// Renkler rol paletinden: gecenin krem metni, Zêr, Boyax'ın yumuşak tonu ve
+// Boyax. Agir yalnız birincil eylemin dolgusudur; süste kullanılmaz.
+// Sahne her zaman gecedir: gece belirteçleri.
+final _cream = SahneTokens.night.tx;
+final _gold = SahneTokens.night.gold;
+final _race = SahneTokens.night.race;
+const _raceSoft = SahneStageColors.raceSoft;
+
+final _pieces = <_ConfettiPiece>[
+  _ConfettiPiece(0.12, 8, 5, _cream, 0.62, diamond: true),
+  _ConfettiPiece(0.24, 5, 5, _gold, 0.70),
+  const _ConfettiPiece(0.76, 7, 5, _raceSoft, 0.62, diamond: true),
+  _ConfettiPiece(0.88, 5, 5, _cream, 0.60),
+  _ConfettiPiece(0.05, 52, 7, _gold, 0.75),
+  const _ConfettiPiece(0.09, 70, 6, _raceSoft, 0.65, diamond: true),
+  _ConfettiPiece(0.04, 88, 5, _cream, 0.60),
+  _ConfettiPiece(0.08, 106, 6, _race, 0.70, diamond: true),
+  _ConfettiPiece(0.95, 50, 7, _gold, 0.70, diamond: true),
+  _ConfettiPiece(0.91, 68, 6, _race, 0.60),
+  _ConfettiPiece(0.96, 86, 6, _cream, 0.58, diamond: true),
+  const _ConfettiPiece(0.92, 104, 5, _raceSoft, 0.68),
 ];

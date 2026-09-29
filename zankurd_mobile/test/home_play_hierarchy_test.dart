@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/config/feature_flags.dart';
@@ -59,13 +60,23 @@ Widget _playShell({required bool isKu, required bool isDark}) {
   );
 }
 
-BoxDecoration _modeDecoration(WidgetTester tester, String key) {
+// 2026-09-29 Şahnê: `ModeCard` yüzeyi pahlı olduğu için `ShapeDecoration`dır
+// (ekranın kendi kartları hâlâ `BoxDecoration`); bekçinin sorduğu şey
+// ikisinde de aynı: gradyan ve gölge yok.
+({Gradient? gradient, List<BoxShadow>? boxShadow}) _modeDecoration(
+  WidgetTester tester,
+  String key,
+) {
   final ink = tester.widget<Ink>(
     find
         .descendant(of: find.byKey(ValueKey(key)), matching: find.byType(Ink))
         .first,
   );
-  return ink.decoration! as BoxDecoration;
+  return switch (ink.decoration!) {
+    final ShapeDecoration d => (gradient: d.gradient, boxShadow: d.shadows),
+    final BoxDecoration d => (gradient: d.gradient, boxShadow: d.boxShadow),
+    _ => throw StateError('beklenmeyen süs: ${ink.decoration}'),
+  };
 }
 
 void _expectActionSemantics(WidgetTester tester, String key) {
@@ -333,15 +344,18 @@ void main() {
           );
           expect(spinner, findsOneWidget, reason: '$key spinner');
 
+          // 2026-09-29 Şahnê: halka her kartta Zêr metni (`goldTx`) —
+          // bulunduğu yüzeyin belirteçlerinden (birincil kart gece sahnesi)
+          // okunur; AA'sı belirteç tablosunda ölçülüdür. Eski bekçi aksanın
+          // hesaplanmış tonunu sabitliyordu.
           final indicator = tester.widget<CircularProgressIndicator>(spinner);
           final spinnerColor = indicator.valueColor!.value;
-          final expectedColor = item.emphasis == ModeCardEmphasis.primary
-              ? Colors.white
-              : AppColors.readableAccent(tester.element(card), item.accent);
-          expect(spinnerColor, expectedColor, reason: '$key color');
-          if (item.emphasis != ModeCardEmphasis.primary) {
-            expect(spinnerColor, isNot(Colors.white), reason: '$key color');
-          }
+          expect(
+            spinnerColor,
+            SahneTokens.of(tester.element(spinner)).goldTx,
+            reason: '$key color',
+          );
+          expect(spinnerColor, isNot(Colors.white), reason: '$key color');
 
           final data = tester.getSemantics(card).getSemanticsData();
           expect(data.flagsCollection.isButton, isTrue, reason: '$key role');

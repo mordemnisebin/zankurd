@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/floating_reaction_overlay.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
@@ -196,16 +197,9 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    final bubble = find.byWidgetPredicate((widget) {
-      if (widget is! Container) return false;
-      if (widget.padding !=
-          const EdgeInsets.symmetric(horizontal: 14, vertical: 8)) {
-        return false;
-      }
-      final decoration = widget.decoration;
-      return decoration is BoxDecoration &&
-          decoration.borderRadius == BorderRadius.circular(20);
-    });
+    final bubble = // 2026-09-29 Şahnê: balon eskiden görünüşüyle (14/8 dolgu, 20
+        // yarıçap) bulunuyordu; pahlı Şahnê balonu anahtarıyla bulunur.
+        find.byKey(FloatingReactionOverlay.bubbleKey);
     expect(bubble, findsOneWidget);
 
     final bubbleRect = tester.getRect(bubble);

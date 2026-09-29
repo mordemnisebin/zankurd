@@ -104,16 +104,10 @@ void main() {
         controller.triggerReaction('⚡ Lez be!', senderName: 'Baran');
         await tester.pump();
 
-        final visibleBubbles = find.byWidgetPredicate((widget) {
-          if (widget is! Container) return false;
-          if (widget.padding !=
-              const EdgeInsets.symmetric(horizontal: 14, vertical: 8)) {
-            return false;
-          }
-          final decoration = widget.decoration;
-          return decoration is BoxDecoration &&
-              decoration.borderRadius == BorderRadius.circular(20);
-        });
+        final visibleBubbles = // 2026-09-29 Şahnê: balon görünüşüyle değil anahtarıyla bulunur.
+        find.byKey(
+          FloatingReactionOverlay.bubbleKey,
+        );
 
         expect(controller.activeBubbles, hasLength(3));
         expect(
