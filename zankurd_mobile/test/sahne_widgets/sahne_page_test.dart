@@ -184,5 +184,71 @@ void main() {
       await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
       semantics.dispose();
     });
+
+    // 2026-09-29 Şahnê (soru grubu aşısı): kategori ışığı ve dağ sırtı.
+    // Işık yalnız huzmeyi boyar (yoğunluk varsayılanla aynı, %12); sırt
+    // gövdenin dibinde (alt perdenin üstünde), Perde'nin %40'ı. İkisi de
+    // istenmezse sahne eskisi gibi çizilir — öteki C ekranları etkilenmez.
+    testWidgets('$name: C kategori ışığı huzmeyi boyar, sırt ufukta durur', (
+      tester,
+    ) async {
+      await pumpSahne(
+        tester,
+        const SahneStageScaffold(
+          onClose: noop,
+          light: SahneCategoryLight.ziman,
+          ridge: true,
+          body: SahneStageBody(children: [Text('Pirs')]),
+        ),
+        dark: dark,
+        page: true,
+      );
+      expect(tester.takeException(), isNull);
+
+      final beam = tester.widget<CustomPaint>(
+        find.byKey(const ValueKey('sahne-stage-beam')),
+      );
+      final painter = beam.painter! as SahneBeamPainter;
+      expect(painter.light, SahneCategoryLight.ziman);
+      expect(painter.color.a, closeTo(SahneStageColors.beam.a, 0.001));
+      expect(painter.color.r, closeTo(SahneCategoryLight.ziman.r, 0.001));
+
+      final ridge = find.byKey(const ValueKey('sahne-stage-ridge'));
+      expect(ridge, findsOneWidget);
+      final rect = tester.getRect(ridge);
+      // Alt perde yokken gövde ekranın dibine iner; sırt da oradadır.
+      expect(rect.bottom, kNarrow.height);
+      expect(rect.height, SahneStageScaffold.ridgeHeight);
+      expect(rect.width, kNarrow.width);
+      final ridgePainter =
+          tester.widget<CustomPaint>(ridge).painter! as SahneRidgePainter;
+      expect(ridgePainter.color, SahneTokens.night.s1.withValues(alpha: 0.4));
+    });
+
+    testWidgets('$name: C ışık ve sırt istenmezse varsayılan sahne', (
+      tester,
+    ) async {
+      await pumpSahne(
+        tester,
+        const SahneStageScaffold(
+          onClose: noop,
+          body: SahneStageBody(children: [Text('Pirs')]),
+        ),
+        dark: dark,
+        page: true,
+      );
+      final beam = tester.widget<CustomPaint>(
+        find.byKey(const ValueKey('sahne-stage-beam')),
+      );
+      expect((beam.painter! as SahneBeamPainter).color, SahneStageColors.beam);
+      expect(find.byKey(const ValueKey('sahne-stage-ridge')), findsNothing);
+    });
   }
+
+  test('kategori ışığı bilinmeyen kategoride varsayılan huzmeye düşer', () {
+    expect(SahneCategoryLight.of('Ziman'), SahneCategoryLight.ziman);
+    expect(SahneCategoryLight.of('Sînema'), SahneCategoryLight.sinema);
+    expect(SahneCategoryLight.of('Siyaset'), isNull);
+    expect(SahneCategoryLight.beamOf(null), SahneStageColors.beam);
+  });
 }

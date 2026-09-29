@@ -42,15 +42,12 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/question_timer_resume.dart';
 import '../utils/test_environment.dart';
-import '../widgets/app_panel.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/floating_reaction_overlay.dart';
-import '../widgets/kilim_board.dart';
-import '../widgets/roj_mascot.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
-import '../widgets/zk_back_button.dart';
+import '../widgets/sahne/sahne.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz/quiz_feedback_overlay.dart';
 import 'quiz/quiz_option_tile.dart';
@@ -1559,18 +1556,19 @@ class _QuizScreenState extends State<QuizScreen>
       return _buildOnlineResultGate(context);
     }
     if (_questions.isEmpty) {
-      return Scaffold(
-        appBar: zkAppBar(context),
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: AppTheme.backgroundGradient(context),
-          ),
-          child: Center(
+      return SahneStageScaffold(
+        closeLabel: context.t(K.close),
+        center: Semantics(header: true, child: Text(_roundTitle(context))),
+        body: Builder(
+          builder: (context) => Center(
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(SahneSpace.x6),
               child: Text(
                 context.t(K.questionsLoadFailed),
                 textAlign: TextAlign.center,
+                style: SahneType.body.copyWith(
+                  color: SahneTokens.of(context).tx,
+                ),
               ),
             ),
           ),
@@ -1579,159 +1577,126 @@ class _QuizScreenState extends State<QuizScreen>
     }
 
     final hasProgress = index > 0 || answered;
-    final favoriteActionLabel = favorite
-        ? context.t(K.removeAction)
-        : context.t(K.save);
     return PopScope(
       canPop: !_isMultiplayer && !hasProgress && !_exitInFlight,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _confirmExit();
       },
-      // Sahne: soru ekranı uygulama temasından bağımsız olarak koyudur.
-      // Gerekçe ve niçin tek noktadan sarıldığı `AppTheme.stage`
-      // belgesinde.
+      // Sahne: soru ekranı uygulama temasından bağımsız olarak GECEDİR
+      // (Şahnê C iskeleti, `SahneStageScaffold`). Öğretici katman da
+      // sahnenin içinde çizilsin diye tema en dışta bir kez daha verilir.
       child: Theme(
         data: AppTheme.stage,
         // `Builder` ŞART. `build`in `context` parametresi bu `Theme`in
         // ÜSTÜNDEDİR; onunla okunan her tema değeri sahneyi değil
-        // uygulama temasını verir. İlk denemede kart ve şıklar kararmış
-        // ama sayfa zemini krem kalmıştı: gövdedeki
-        // `AppTheme.backgroundGradient(context)` çağrısı dıştaki
-        // context'i kullanıyordu (2026-08-19, simülatörden görüldü).
-        // Builder, altındaki her şeye sahnenin İÇİNDEN bir context verir.
+        // uygulama temasını verir (2026-08-19, simülatörden görüldü).
         child: Builder(
-          builder: (context) => Scaffold(
-            extendBodyBehindAppBar: true,
-            appBar: zkAppBar(
-              context,
-              // Solo/bot oyunda oda kodu anlamsız gürültü; turun adı gösterilir.
-              //
-              // Kategori adı doğrudan yazılıyordu ve günün dersinde yalan
-              // oluyordu: o tur **karışık kategorilidir**, oda ise varsayılan
-              // 'Ziman' ile kurulur. Ekranın tepesinde "Ziman" yazarken ilk
-              // soru "Çand" etiketiyle geliyordu (2026-07-27, canlı gezinti).
-              //
-              // Turun kendi adı varsa (günün dersi, yarışma) o gösterilir;
-              // yoksa kategoriye düşülür.
-              title: Text(_roundTitle(context)),
-              actions: [
-                if (_isMultiplayer)
-                  IconButton(
-                    key: const ValueKey('quiz-reaction-menu-button'),
-                    onPressed: () => _showLiveReactionMenu(context),
-                    tooltip: context.t(K.chat),
-                    icon: const Icon(AppIcons.faceSmile),
-                  ),
-                IconButton(
-                  onPressed: _toggleFavorite,
-                  tooltip: favoriteActionLabel,
-                  icon: const Icon(AppIcons.bookmark),
-                ),
-                IconButton(
-                  onPressed: _reportQuestion,
-                  tooltip: context.t(K.reportAction),
-                  icon: const Icon(AppIcons.triangleExclamation),
-                ),
-              ],
-            ),
-            body: Column(
-              children: [
-                // Turnuva/versus bandı: rakip adı + tur bilgisi (UI-only).
-                if (widget.versusBannerText != null)
-                  SafeArea(
-                    bottom: false,
-                    child: _VersusBanner(text: widget.versusBannerText!),
-                  ),
-                Expanded(
-                  child: QuizTutorialOverlay(
-                    isKu: _isKu,
-                    timerKey: _timerTargetKey,
-                    comboKey: _comboKey,
-                    wildcardKey: _wildcardKey,
-                    nextButtonKey: _nextButtonKey,
-                    onReady: _handleTutorialReady,
-                    timerSeconds: widget.room.secondsPerQuestion,
-                    timed: _usesTimer,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: AppTheme.backgroundGradient(context),
+          builder: (context) => LayoutBuilder(
+            builder: (context, constraints) {
+              // Yerleşim dalı TEK ölçüden seçilir: sahnenin tamamı. Hem
+              // alt perdenin (dikeyde var, yatayda yok) hem de soru
+              // panelinin tipografi/görsel kararı aynı `layoutSize`ı okur;
+              // ikisi ayrı ölçülerden karar verirse ekranda iki eylem
+              // barı ya da hiç eylem barı kalabilirdi.
+              final layoutSize = constraints.biggest;
+              final landscape = _useCompactLandscapeLayout(
+                layoutSize.width,
+                layoutSize.height,
+              );
+              return QuizTutorialOverlay(
+                isKu: _isKu,
+                timerKey: _timerTargetKey,
+                comboKey: _comboKey,
+                wildcardKey: _wildcardKey,
+                nextButtonKey: _nextButtonKey,
+                onReady: _handleTutorialReady,
+                timerSeconds: widget.room.secondsPerQuestion,
+                timed: _usesTimer,
+                child: SahneStageScaffold(
+                  closeLabel: context.t(K.close),
+                  backdrop: _stageBackdrop,
+                  light: _stageLight,
+                  ridge: true,
+                  center: _buildStageCenter(context),
+                  score: _buildScoreChip(context),
+                  progress: _buildStageProgress(context),
+                  dock: landscape ? null : _buildDock(context),
+                  body: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: landscape
+                            ? _buildCompactLandscapeLayout(layoutSize)
+                            : _buildPortraitLayout(layoutSize),
                       ),
-                      child: Stack(
-                        children: [
-                          SafeArea(
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                final useCompactLandscapeLayout =
-                                    _useCompactLandscapeLayout(
-                                      constraints.maxWidth,
-                                      constraints.maxHeight,
-                                    );
-                                if (useCompactLandscapeLayout) {
-                                  return _buildCompactLandscapeLayout();
-                                }
-                                return _buildPortraitLayout();
-                              },
-                            ),
+                      // Vinyet yalnız aktif geri sayım baskısında: cevap
+                      // verildikten (veya süre dolduktan) sonra sönmeli,
+                      // yoksa açıklama okunurken ekran "alarm" modunda
+                      // kalıyor (2026-07-05 görsel QA bulgusu).
+                      if (_usesTimer && !answered)
+                        CriticalVignette(animation: _timerController),
+                      WrongFlash(trigger: _shakeTrigger),
+                      if (_showAnswerBurst)
+                        ConfettiOverlay(
+                          particleCount: 24,
+                          duration: const Duration(milliseconds: 900),
+                          onFinished: () {
+                            setState(() {
+                              _showAnswerBurst = false;
+                            });
+                          },
+                        ),
+                      if (_showConfetti)
+                        ConfettiOverlay(
+                          onFinished: () {
+                            setState(() {
+                              _showConfetti = false;
+                            });
+                          },
+                        ),
+                      if ((_serverReadyWaiting && !answered) ||
+                          (_needsOpponentReadyGate &&
+                              !_opponentClientReady &&
+                              !_questionFlowStarted))
+                        _OpponentWaitingOverlay(isKu: _isKu),
+                      // Canlı çok oyunculu reaksiyon baloncukları.
+                      //
+                      // Baloncuk çizimi burada ELDE yazılmaz: `room_screen`
+                      // gibi `FloatingReactionOverlay`e devredilir (tek
+                      // çizim yolu; animasyon süresi/eğrisi iki ekranda
+                      // ayrışmasın diye).
+                      Positioned.fill(
+                        child: IgnorePointer(
+                          child: FloatingReactionOverlay(
+                            controller: _reactionController,
+                            child: const SizedBox.expand(),
                           ),
-                          // Vinyet yalnız aktif geri sayım baskısında: cevap verildikten
-                          // (veya süre dolduktan) sonra kırmızı parlama sönmeli, yoksa
-                          // açıklama okunurken ekran "alarm" modunda kalıyor (2026-07-05
-                          // görsel QA bulgusu).
-                          if (_usesTimer && !answered)
-                            CriticalVignette(animation: _timerController),
-                          WrongFlash(trigger: _shakeTrigger),
-                          if (_showAnswerBurst)
-                            ConfettiOverlay(
-                              particleCount: 24,
-                              duration: const Duration(milliseconds: 900),
-                              onFinished: () {
-                                setState(() {
-                                  _showAnswerBurst = false;
-                                });
-                              },
-                            ),
-                          if (_showConfetti)
-                            ConfettiOverlay(
-                              onFinished: () {
-                                setState(() {
-                                  _showConfetti = false;
-                                });
-                              },
-                            ),
-                          if ((_serverReadyWaiting && !answered) ||
-                              (_needsOpponentReadyGate &&
-                                  !_opponentClientReady &&
-                                  !_questionFlowStarted))
-                            _OpponentWaitingOverlay(isKu: _isKu),
-                          // Canlı çok oyunculu reaksiyon baloncukları.
-                          //
-                          // Baloncuk çizimi burada ELDE yazılmaz: `room_screen`
-                          // gibi `FloatingReactionOverlay`e devredilir. Elde
-                          // yazılan sürüm `_SingleAnimatedReactionBubble`ı
-                          // çağırıyordu; o sınıf `floating_reaction_overlay.dart`
-                          // içinde `_` önekli, yani dosya dışından görünmez —
-                          // kod derlenmiyordu. Tek çizim yolu olması ayrıca
-                          // animasyon süresi/eğrisi iki ekranda ayrışmasın diye.
-                          Positioned.fill(
-                            child: IgnorePointer(
-                              child: FloatingReactionOverlay(
-                                controller: _reactionController,
-                                child: const SizedBox.expand(),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),
     );
   }
+
+  /// Sahne zemini: kategorinin KENDİ çizimi, %14 (bileşen uygular).
+  ///
+  /// Ödünç görsel kullanan kategoriler (Sînema, Teknolojî) zemin almaz:
+  /// başka bir konunun çizimi sahnede yanlış bilgi verir
+  /// (`CategoryVisuals.hasOwnImage`). O zaman yalnız huzme ve ufuk kalır.
+  ImageProvider? get _stageBackdrop {
+    final category = question.category;
+    if (!CategoryVisuals.hasOwnImage(category)) return null;
+    return AssetImage(CategoryVisuals.imagePath(category));
+  }
+
+  /// Kategorinin ışığı: huzme bu renkle yanar (yalnız ışık, dolgu değil).
+  Color? get _stageLight =>
+      SahneCategoryLight.of(CategoryVisuals.canonicalName(question.category));
 
   // ─── Portrait layout: sabit header, kaydırılabilir orta, sabit alt bar ──
 
@@ -1876,36 +1841,40 @@ class _QuizScreenState extends State<QuizScreen>
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (ctx) => Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: AppTheme.bgOf(ctx),
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(AppRadius.card),
-          ),
-        ),
-        child: Wrap(
-          spacing: AppSpacing.xs,
-          runSpacing: AppSpacing.xs,
-          alignment: WrapAlignment.center,
-          children: [
-            for (final r in reactions)
-              ActionChip(
-                key: ValueKey('live-quiz-reaction-${r.$2}'),
-                label: Text(
-                  r.$1,
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(ctx),
-                    fontWeight: FontWeight.w700,
+      // Sahnenin içinden açılır: sayfa gündüz temasında olsa da gece.
+      builder: (ctx) => Theme(
+        data: AppTheme.stage,
+        child: Builder(
+          builder: (ctx) {
+            final t = SahneTokens.of(ctx);
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(SahneSpace.page),
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(color: t.s1, shape: SahneShape.l),
+                  child: Padding(
+                    padding: const EdgeInsets.all(SahneSpace.x4),
+                    child: Wrap(
+                      spacing: SahneSpace.x2,
+                      runSpacing: SahneSpace.x2,
+                      alignment: WrapAlignment.center,
+                      children: [
+                        for (final r in reactions)
+                          SahneButton.secondary(
+                            key: ValueKey('live-quiz-reaction-${r.$2}'),
+                            label: r.$1,
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                              _sendLiveReaction(r.$1);
+                            },
+                          ),
+                      ],
+                    ),
                   ),
                 ),
-                backgroundColor: AppTheme.surfaceColor(ctx),
-                onPressed: () {
-                  Navigator.of(ctx).pop();
-                  _sendLiveReaction(r.$1);
-                },
               ),
-          ],
+            );
+          },
         ),
       ),
     );

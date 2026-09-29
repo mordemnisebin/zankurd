@@ -10,6 +10,18 @@ import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
+
+import 'support/realistic_device.dart';
+
+// 2026-09-29 Şahnê: sınav C iskeletine (`SahneStageScaffold`) taşındı;
+// AppBar yok. Üst satır: kapat | ekranın adı | "Şimdilik geç". Bekçi aynı
+// sözleşmeyi yeni yerinde ölçer: başlık ve eylem ekranın içinde ve ÜST
+// SATIRDA (ilerleme çubuğunun üstünde) kalır, eylemin dokunma kutusu 48,
+// tam etiket kırpılmaz. Kırpma ölçüsü GERÇEK yazı tipiyle yapılır
+// (`loadAppFonts`): test koşucusunun kare ölçü fontu her harfi 14 px sayar
+// ve üst satırın sağ yuvasına (en çok yarım genişlik) sığan "Şimdilik geç"i
+// kırpılmış gösterirdi.
 
 Widget _wrap({
   required bool isKu,
@@ -43,6 +55,7 @@ void _expectInside(Rect inner, Rect outer, {required String reason}) {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(loadAppFonts);
 
   setUp(() {
     SharedPreferences.setMockInitialValues({});
@@ -64,7 +77,7 @@ void main() {
             await tester.pumpAndSettle();
 
             expect(tester.takeException(), isNull);
-            expect(find.byType(AppBar), findsOneWidget);
+            expect(find.byType(SahneStageScaffold), findsOneWidget);
             expect(
               find.text(isKu ? 'Asta xwe diyar bike' : 'Seviyeni belirle'),
               findsOneWidget,
@@ -122,12 +135,16 @@ void main() {
               );
 
               expect(tester.takeException(), isNull);
-              expect(find.byType(AppBar), findsOneWidget);
+              expect(find.byType(SahneStageScaffold), findsOneWidget);
               expect(title, findsOneWidget);
               expect(action, findsOneWidget);
 
               final viewport = Offset.zero & size;
-              final appBarRect = tester.getRect(find.byType(AppBar));
+              // Üst satır: ekranın tepesinden ilerleme çubuğuna kadar.
+              final progressTop = tester
+                  .getRect(find.byType(SahneProgressBar))
+                  .top;
+              final appBarRect = Rect.fromLTRB(0, 0, size.width, progressTop);
               final titleRect = tester.getRect(title);
               final actionRect = tester.getRect(action);
               _expectInside(titleRect, viewport, reason: 'title viewport');

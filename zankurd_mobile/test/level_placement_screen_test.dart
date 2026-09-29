@@ -10,6 +10,11 @@ import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/services/placement_scoring.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
+// 2026-09-29 Şahnê: sınav soru ekranıyla aynı C iskeletine taşındı. Soru
+// sırası artık üst etikette ("KÜLTÜR • SORU 1/12", Etiket biçemi, yerele
+// duyarlı BÜYÜK HARF); bekçiler "SORU n/m" arar. Davranış (baskısızlık,
+// çift dokunuş kilidi, kayıt) değişmedi.
+
 Widget wrap(Widget child, {Size size = const Size(390, 844)}) => MultiProvider(
   providers: [
     ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('tr')),
@@ -33,7 +38,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Soru 1/'), findsOneWidget);
+    expect(find.textContaining('SORU 1/'), findsOneWidget);
     expect(find.text('Şimdilik geç'), findsOneWidget);
     // Baskı öğeleri yok: sayaç/skor/coin metni beklenmiyor.
     expect(find.textContaining('Coin'), findsNothing);
@@ -147,7 +152,7 @@ void main() {
     await tester.pump();
 
     expect(
-      find.textContaining('Soru 2/3'),
+      find.textContaining('SORU 2/3'),
       findsOneWidget,
       reason: 'İkinci tap aynı soruyu tekrar kaydedip bir soruyu atlamamalı.',
     );

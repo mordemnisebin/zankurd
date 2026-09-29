@@ -10,8 +10,24 @@ import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
-import 'package:zankurd_mobile/src/widgets/kilim_board.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
+
+/// Soru ekranının renk ve yüzey kuralları.
+///
+/// 2026-09-29 Şahnê: bekçiler eski görünüşü (Forest seçim gradyanı, şık
+/// kimlik rengi kenarlığı, turuncu marka dolgusu, kilim tahtası, 3D gölge,
+/// Zana yüzü) sabitliyordu; soru ekranı Şahnê C iskeletine taşınınca
+/// yeni kurallara çevrildi. Korunan KURALLAR aynı:
+///
+/// * cevaptan önce şıkta RENK YOK (seçim yalnız halka alır) — renk cevabı
+///   ele verirdi;
+/// * açıklanınca doğru Rast, seçilen yanlış Şaş (+ ✓/✗; durum yalnız
+///   renkle verilmez);
+/// * tek birincil eylem Agir dolgudur; cevaptan önce yarışmada onun yerini
+///   jokerler alır;
+/// * ilerleme turun KAYDINI tutar (kaçıncı soru, hangileri doğru);
+/// * şık yüzeyi gölgesiz; şıkların arkasında desen yok; maskot yok.
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -25,7 +41,34 @@ Widget wrap(Widget child) => MultiProvider(
 );
 
 void main() {
-  testWidgets('kontrol edilen şık Forest seçim kimliğini kullanır', (
+  SahneTokens tokensAt(WidgetTester tester, String text) =>
+      SahneTokens.of(tester.element(find.text(text).first));
+
+  AnimatedContainer barOf(WidgetTester tester, String answer) =>
+      tester.widget<AnimatedContainer>(
+        find
+            .ancestor(
+              of: find.text(answer).first,
+              matching: find.byType(AnimatedContainer),
+            )
+            .first,
+      );
+
+  /// Şık çubuğunun içe çizilen halkası (ön plan kenarı).
+  BorderSide ringOf(WidgetTester tester, String answer) {
+    final box = tester
+        .widgetList<DecoratedBox>(
+          find.ancestor(
+            of: find.text(answer).first,
+            matching: find.byType(DecoratedBox),
+          ),
+        )
+        .firstWhere((d) => d.position == DecorationPosition.foreground);
+    final shape = (box.decoration as ShapeDecoration).shape;
+    return (shape as BeveledRectangleBorder).side;
+  }
+
+  testWidgets('kontrol edilen şık renksiz kalır, yalnız halka alır', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -44,21 +87,16 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final option = tester.widget<AnimatedContainer>(
-      find
-          .ancestor(
-            of: find.text('Dersim'),
-            matching: find.byType(AnimatedContainer),
-          )
-          .first,
-    );
-    final decoration = option.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
-    expect((decoration.border! as Border).top.color, AppTheme.culturalBrandBg);
+    final t = tokensAt(tester, 'Dersim');
+    final decoration = barOf(tester, 'Dersim').decoration! as BoxDecoration;
+    expect(decoration.color, t.s2);
+    expect(decoration.gradient, isNull, reason: 'cevaptan önce renk yok');
+    final ring = ringOf(tester, 'Dersim');
+    expect(ring.color, t.tx);
+    expect(ring.width, SahneRing.r2);
   });
 
-  testWidgets('cevaplanmamış şıklar nötr yüzey ve border kullanır', (
+  testWidgets('cevaplanmamış şıklar aynı nötr yüzeyi ve renksiz harfi taşır', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({
@@ -78,37 +116,29 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    for (var i = 0; i < question.displayAnswers.length; i++) {
-      final answer = question.displayAnswers[i];
-      final option = tester.widget<AnimatedContainer>(
+    // Sahne her zaman gece: gündüz temasında da gece belirteçleri.
+    const t = SahneTokens.night;
+    for (final answer in question.displayAnswers) {
+      final decoration = barOf(tester, answer).decoration! as BoxDecoration;
+      expect(decoration.color, t.s2);
+      expect(decoration.gradient, isNull);
+      expect(ringOf(tester, answer).color, Colors.transparent);
+    }
+    // Harf karoları (A/B/C/D) hepsi aynı Ray tonunda: harfe göre renk yok.
+    for (final letter in ['A', 'B', 'C', 'D']) {
+      final tile = tester.widget<AnimatedContainer>(
         find
             .ancestor(
-              of: find.text(answer).first,
+              of: find.text(letter).first,
               matching: find.byType(AnimatedContainer),
             )
             .first,
       );
-      final decoration = option.decoration! as BoxDecoration;
-      // Sahne idle: KOYU kart + şık kimlik rengi kenarlık.
-      //
-      // Bu beklenti 2026-08-19'da açık tema değerlerinden (#FFFFFF/#F7F4EE,
-      // alfa 0.45) çevrildi. Soru ekranı artık uygulama temasından bağımsız
-      // olarak `AppTheme.stage` ile koyudur; gerekçe o sabitin belgesinde.
-      // Test SİLİNMEDİ çünkü koruduğu şey renk değeri değil kuraldır:
-      // cevaplanmamış şık nötr yüzey taşır ve yalnız kenarlığından kimlik
-      // alır. Kural sahne altında da geçerli, yalnız değerleri değişti.
-      expect(decoration.gradient!.colors, const [
-        AppTheme.surfaceHi,
-        AppTheme.surface,
-      ]);
-      expect(
-        (decoration.border! as Border).top.color,
-        AppTheme.borderColor(tester.element(find.text(answer).first)),
-      );
+      expect((tile.decoration! as ShapeDecoration).color, t.s3);
     }
   });
 
-  testWidgets('cevap sonrası doğru yeşil ve yanlış kırmızı kalır', (
+  testWidgets('açıklanınca doğru Rast, seçilen yanlış Şaş ve ✓/✗ alır', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({
@@ -137,93 +167,26 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    BoxDecoration decorationFor(String answer) {
-      final option = tester.widget<AnimatedContainer>(
-        find
-            .ancestor(
-              of: find.text(answer).first,
-              matching: find.byType(AnimatedContainer),
-            )
-            .first,
-      );
-      return option.decoration! as BoxDecoration;
-    }
-
-    expect(
-      decorationFor(question.correctAnswer).gradient!.colors,
-      AppTheme.correctGradient.colors,
-    );
-    expect(
-      decorationFor(wrongAnswer).gradient!.colors,
-      AppTheme.wrongGradient.colors,
-    );
+    const t = SahneTokens.night;
+    final right =
+        barOf(tester, question.correctAnswer).decoration! as BoxDecoration;
+    final wrong = barOf(tester, wrongAnswer).decoration! as BoxDecoration;
+    // Tarama bitti: dolgu çubuğun tamamında.
+    expect(right.gradient!.colors.first, t.okFill);
+    expect(right.gradient!.stops![1], 1.0);
+    expect(wrong.gradient!.colors.first, t.errFill);
+    expect(ringOf(tester, question.correctAnswer).color, t.okTx);
+    expect(ringOf(tester, wrongAnswer).color, t.errTx);
+    expect(find.byKey(const ValueKey('correct_icon')), findsOneWidget);
+    expect(find.byKey(const ValueKey('wrong_icon')), findsOneWidget);
   });
 
-  testWidgets('Sonraki CTA brand dolgu taşır', (tester) async {
-    final repository = MockZanKurdRepository();
-    await tester.pumpWidget(
-      wrap(
-        QuizScreen(
-          repository: repository,
-          room: repository.createRoom(),
-          questions: [repository.questions.first],
-          enableTimer: false,
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    final button = tester.widget<FilledButton>(
-      find.byKey(const ValueKey('quiz-next-button')),
-    );
-    expect(button.style?.backgroundColor?.resolve({}), AppTheme.brand);
-  });
-
-  // Eski adı: "aktif soru segmenti brand bekler". Şerit 2026-08-19'da
-  // yuvarlak hap segmentlerinden kilim tahtasına (`KilimBoard`) geçti;
-  // hap arayan iddia artık boşa düşerdi. Korunan kural aynı: şerit turun
-  // KAYDINI tutar — kaçıncı sorudayız ve hangileri doğruydu. Kaydın
-  // doğruluğu bileşenin aldığı değerlerden okunur; boyanan pikselden
-  // değil, çünkü piksel testte platform yazı tipine/ölçeğine bağlıdır.
-  testWidgets('kilim tahtası turun kaydını taşır', (tester) async {
-    final repository = MockZanKurdRepository();
-    final questions = repository.questions.take(3).toList();
-    await tester.pumpWidget(
-      wrap(
-        QuizScreen(
-          repository: repository,
-          room: repository.createRoom(),
-          questions: questions,
-          enableTimer: false,
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    KilimBoard board() => tester.widget<KilimBoard>(
-      find.byKey(const ValueKey('quiz-progress-bar')),
-    );
-
-    expect(board().total, questions.length);
-    expect(board().currentIndex, 0);
-    expect(board().results, isEmpty, reason: 'tur başında hiçbir iplik yok');
-
-    await tester.tap(
-      find
-          .ancestor(
-            of: find.text(questions.first.correctAnswer),
-            matching: find.byType(InkWell),
-          )
-          .first,
-    );
-    await tester.pumpAndSettle();
-
-    expect(board().results, [
-      true,
-    ], reason: 'doğru cevap tahtaya altın baklava olarak dokunur');
-  });
-
-  testWidgets('şık kartı katı 3D gölge taşımaz', (tester) async {
+  testWidgets('cevaptan önce jokerler, cevaptan sonra tek Agir "Sonraki"', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.quiz_tutorial.seen': true,
+    });
     final repository = MockZanKurdRepository();
     final question = repository.questions.first;
     await tester.pumpWidget(
@@ -238,20 +201,88 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final firstAnswer = question.displayAnswers.first;
-    final option = tester.widget<AnimatedContainer>(
+    const next = ValueKey('quiz-next-button');
+    expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
+    expect(find.byKey(next), findsNothing);
+
+    await tester.tap(find.text(question.correctAnswer).first);
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsNothing);
+    expect(tester.widget<SahneButton>(find.byKey(next)).onPressed, isNotNull);
+    final fill = tester.widget<Material>(
+      find.descendant(of: find.byKey(next), matching: find.byType(Material)),
+    );
+    expect(fill.color, SahneTokens.night.act);
+  });
+
+  // Eski adı: "kilim tahtası turun kaydını taşır". Şerit 2026-09-29'da
+  // kilim tahtasından Şahnê'nin elmas dizisine geçti. Korunan kural aynı:
+  // şerit turun KAYDINI tutar — kaçıncı sorudayız ve hangileri doğruydu.
+  // Kayıt bileşenin aldığı değerlerden okunur, boyanan pikselden değil.
+  testWidgets('elmas dizisi turun kaydını taşır', (tester) async {
+    final repository = MockZanKurdRepository();
+    final questions = repository.questions.take(3).toList();
+    await tester.pumpWidget(
+      wrap(
+        QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: questions,
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    SahneDiamondRow row() => tester.widget<SahneDiamondRow>(
+      find.byKey(const ValueKey('quiz-progress-bar')),
+    );
+
+    expect(row().states, hasLength(questions.length));
+    expect(row().currentIndex, 0);
+    expect(
+      row().states,
+      everyElement(SahneDiamondState.pending),
+      reason: 'tur başında hiçbir soru cevaplanmadı',
+    );
+
+    await tester.tap(
       find
           .ancestor(
-            of: find.text(firstAnswer).first,
-            matching: find.byType(AnimatedContainer),
+            of: find.text(questions.first.correctAnswer),
+            matching: find.byType(InkWell),
           )
           .first,
     );
-    final deco = option.decoration as BoxDecoration;
-    expect(deco.boxShadow, isNotNull);
-    for (final shadow in deco.boxShadow!) {
-      expect(shadow.blurRadius, greaterThan(0));
-    }
+    await tester.pumpAndSettle();
+
+    expect(
+      row().states.first,
+      SahneDiamondState.correct,
+      reason: 'doğru cevap dizide dolu elmas + ✓ olur',
+    );
+  });
+
+  testWidgets('şık çubuğu gölgesizdir', (tester) async {
+    final repository = MockZanKurdRepository();
+    final question = repository.questions.first;
+    await tester.pumpWidget(
+      wrap(
+        QuizScreen(
+          repository: repository,
+          room: repository.createRoom(),
+          questions: [question],
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final deco =
+        barOf(tester, question.displayAnswers.first).decoration!
+            as BoxDecoration;
+    expect(deco.boxShadow, isNull, reason: 'Şahnê: tek gölge birincil düğmede');
   });
 
   testWidgets('cevap sonrası açıklama Zana sesiyle sunulur', (tester) async {
@@ -290,8 +321,11 @@ void main() {
 
   // 2026-09-27: şıkların arkasındaki kilim dokusu kalktı — cevaptan sonra
   // soluklaşan şıkların içinden görünüyor ve okumayı zorlaştırıyordu.
-  // Bekçi yön değiştirdi: tahta var, ama arkasında boya yok.
-  testWidgets('şıklar desensiz tahtaya oturur ve Zana yüzdür', (tester) async {
+  // 2026-09-29 Şahnê: maskot da kalktı (boş durumda logo işareti var);
+  // soru sahnesinde Zana yüzü yok.
+  testWidgets('şıklar desensiz tahtaya oturur, sahnede maskot yok', (
+    tester,
+  ) async {
     SharedPreferences.setMockInitialValues({
       'zankurd.quiz_tutorial.seen': true,
     });
@@ -324,19 +358,10 @@ void main() {
       isEmpty,
       reason: 'Şıkların arkasında kilim dokusu okumayı zorlaştırıyordu.',
     );
-    final thinking = tester.widget<RojMascot>(
-      find.byKey(const ValueKey('quiz-zana-thinking')),
-    );
-    expect(thinking.size, 44);
-    expect(thinking.mood, RojMood.thinking);
+    expect(find.byType(RojMascot), findsNothing);
 
     await tester.tap(find.text(question.correctAnswer));
     await tester.pumpAndSettle();
-
-    final celebrate = tester.widget<RojMascot>(
-      find.byKey(const ValueKey('quiz-zana-celebrate')),
-    );
-    expect(celebrate.size, 56);
-    expect(celebrate.mood, RojMood.celebrate);
+    expect(find.byType(RojMascot), findsNothing);
   });
 }

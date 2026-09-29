@@ -331,6 +331,53 @@ class SahneStageColors {
   static const backdropTint = Color(0x24FFFFFF);
 }
 
+/// Kategori ışığı — oyun sahnesinin ışık huzmesini kategoriye göre boyar.
+///
+/// ## Niçin var
+///
+/// Soru sahnesi her kategoride aynı beyazımsı huzmeyi taşıyordu; kategori
+/// yalnız %14'lük sahne zemininde (çizim) seziliyordu ve çizimi olmayan
+/// kategoride hiç seçilmiyordu. Huzme sahnenin en parlak öğesi: rengi
+/// kategoriyi tek bakışta söyler.
+///
+/// ## Kural
+///
+/// Bu renkler YALNIZ ışıktır (huzme, hale). Dolgu, metin, kenar ya da
+/// ikon rengi değildir; rol renklerinin (Agir, Boyax, Zimrût, Zêr) ve durum
+/// renklerinin (Rast, Şaş) yerini almaz. Işık her zaman varsayılan huzmenin
+/// yoğunluğunda (%12) çizilir. Tabloda olmayan kategori varsayılan huzmeye
+/// ([SahneStageColors.beam]) düşer.
+class SahneCategoryLight {
+  const SahneCategoryLight._();
+
+  static const ziman = Color(0xFF26B8C4);
+  static const cand = Color(0xFFEA6A4F);
+  static const dirok = Color(0xFFD4A15A);
+  static const edebiyat = Color(0xFFE46E90);
+  static const cografya = Color(0xFF3DB26A);
+  static const muzik = Color(0xFFF08A3C);
+  static const sinema = Color(0xFFA98BF0);
+
+  /// Kanonik kategori kimliği → ışık (bkz. `CategoryVisuals.canonicalName`).
+  static const Map<String, Color> byCategory = {
+    'Ziman': ziman,
+    'Çand': cand,
+    'Dîrok': dirok,
+    'Edebiyat': edebiyat,
+    'Cografya': cografya,
+    'Muzîk': muzik,
+    'Sînema': sinema,
+  };
+
+  /// Kanonik kategori kimliğinin ışığı; bilinmeyen kategori `null`.
+  static Color? of(String canonicalCategory) => byCategory[canonicalCategory];
+
+  /// Işığın huzme rengi: varsayılan huzmeyle aynı yoğunluk (%12).
+  static Color beamOf(Color? light) => light == null
+      ? SahneStageColors.beam
+      : light.withValues(alpha: SahneStageColors.beam.a);
+}
+
 /// Aralık ölçeği. Bütün boşluklar 4'ün katıdır; sayfa kenarı 16.
 class SahneSpace {
   const SahneSpace._();

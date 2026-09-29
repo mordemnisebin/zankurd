@@ -473,8 +473,16 @@ class SahneNoArtPainter extends CustomPainter {
 /// Oyun sahnesinin ışık huzmesi: tepede dar, aşağıda geniş yamuk
 /// (`polygon(43% 0, 57% 0, 82% 100%, 18% 100%)`), `beam → şeffaf`
 /// doğrusal degrade. `saveLayer` yok.
+///
+/// [light] verilirse huzme kategorinin ışığını taşır ([SahneCategoryLight];
+/// yoğunluk varsayılan huzmeyle aynı, %12). `null` → varsayılan huzme.
 class SahneBeamPainter extends CustomPainter {
-  const SahneBeamPainter();
+  const SahneBeamPainter({this.light});
+
+  final Color? light;
+
+  /// Çizilen huzme rengi (tepe).
+  Color get color => SahneCategoryLight.beamOf(light);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -486,22 +494,78 @@ class SahneBeamPainter extends CustomPainter {
       ..lineTo(w * 0.82, h)
       ..lineTo(w * 0.18, h)
       ..close();
+    final beam = color;
     canvas.drawPath(
       path,
       Paint()
         ..shader = LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            SahneStageColors.beam,
-            SahneStageColors.beam.withValues(alpha: 0),
-          ],
+          colors: [beam, beam.withValues(alpha: 0)],
         ).createShader(Offset.zero & size),
     );
   }
 
   @override
-  bool shouldRepaint(SahneBeamPainter oldDelegate) => false;
+  bool shouldRepaint(SahneBeamPainter oldDelegate) =>
+      oldDelegate.light != light;
+}
+
+/// Sahne zemininin ufku: logodaki dağlardan türeyen alçak bir dağ sırtı
+/// silueti (ortada yüksek tepe, yanlarda alçalan sırtlar).
+///
+/// Dekoratiftir ve neredeyse fısıltıdır: [color] genelde Perde'nin (`s1`)
+/// %40'ı. Kutunun altına oturur, kutuyu yatayda doldurur; yükseklik
+/// kutudan gelir (alçak tutulur, bkz. [SahneStageScaffold.ridge]).
+/// Degrade, bulanıklık ve `saveLayer` yok — tek dolu yol.
+class SahneRidgePainter extends CustomPainter {
+  const SahneRidgePainter(this.color);
+
+  final Color color;
+
+  /// Sırt çizgisi, 0–1 ızgarasında (x soldan, y tepeden). Ortadaki tepe
+  /// logodaki büyük dağ, sağ ve soldaki kırıklı sırtlar yan tepelerdir.
+  static const List<Offset> ridgeLine = [
+    Offset(0.00, 0.70),
+    Offset(0.05, 0.58),
+    Offset(0.09, 0.64),
+    Offset(0.15, 0.44),
+    Offset(0.19, 0.52),
+    Offset(0.24, 0.40),
+    Offset(0.30, 0.62),
+    Offset(0.36, 0.48),
+    Offset(0.40, 0.54),
+    Offset(0.46, 0.22),
+    Offset(0.50, 0.00),
+    Offset(0.53, 0.14),
+    Offset(0.56, 0.10),
+    Offset(0.61, 0.36),
+    Offset(0.66, 0.28),
+    Offset(0.71, 0.50),
+    Offset(0.76, 0.42),
+    Offset(0.82, 0.60),
+    Offset(0.87, 0.46),
+    Offset(0.92, 0.58),
+    Offset(0.96, 0.52),
+    Offset(1.00, 0.66),
+  ];
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.isEmpty) return;
+    final path = Path()..moveTo(0, size.height);
+    for (final p in ridgeLine) {
+      path.lineTo(p.dx * size.width, p.dy * size.height);
+    }
+    path
+      ..lineTo(size.width, size.height)
+      ..close();
+    canvas.drawPath(path, Paint()..color = color);
+  }
+
+  @override
+  bool shouldRepaint(SahneRidgePainter oldDelegate) =>
+      oldDelegate.color != color;
 }
 
 /// Oyun sahnesinin alttan ışıması:

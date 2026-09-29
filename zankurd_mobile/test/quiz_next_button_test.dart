@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'package:zankurd_mobile/src/models/wildcard.dart';
+import 'package:zankurd_mobile/src/screens/quiz/quiz_wildcard_bar.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
 /// P0 regression (2026-07-19 canlı denetim): reveal sonrası "Piştre"
 /// her koşulda sonraki soruya ilerlemeli; çift cevap ara durumu
 /// reveal ile karıştırılmamalı.
+///
+/// 2026-09-29 Şahnê: "Sonraki" artık `SahneButton.primary`; yarışmada
+/// cevaptan ÖNCE alt perdede onun yerine jokerler durur. Kilit kuralı
+/// aynı: cevap açıklanmadan ilerleme düğmesi ya hiç yoktur ya da pasiftir.
+/// Joker adları ekranda yazmadığı için Çift Cevap türüyle bulunur.
 void main() {
   const q1 = QuizQuestion(
     id: 'p0-q1',
@@ -56,11 +64,12 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  /// İlerleme düğmesinin eylemi; düğme hiç yoksa (cevaptan önce jokerler)
+  /// `null` — ikisi de "ilerlenemez" demektir.
   VoidCallback? nextButtonCallback(WidgetTester tester) {
-    final button = tester.widget<FilledButton>(
-      find.byKey(const ValueKey('quiz-next-button')),
-    );
-    return button.onPressed;
+    final finder = find.byKey(const ValueKey('quiz-next-button'));
+    if (finder.evaluate().isEmpty) return null;
+    return tester.widget<SahneButton>(finder).onPressed;
   }
 
   testWidgets('reveal sonrası Piştre sonraki soruya ilerler', (tester) async {
@@ -85,9 +94,13 @@ void main() {
     (tester) async {
       await pumpQuiz(tester);
 
-      // Çift Cevap jokerini etkinleştir (testShell varsayılan dili TR)
-      // Dalga 5: joker butonu etiketi "ad · fiyat" tek satırında birleşti.
-      await tester.tap(find.textContaining('Çift Cevap'));
+      // Çift Cevap jokerini etkinleştir. Şahnê jokeri adını ekranda yazmaz
+      // (ikon + fiyat); tür üzerinden bulunur.
+      await tester.tap(
+        find.byWidgetPredicate(
+          (w) => w is WildcardButton && w.type == WildcardType.doubleAnswer,
+        ),
+      );
       await tester.pumpAndSettle();
 
       // İlk deneme: yanlış şık

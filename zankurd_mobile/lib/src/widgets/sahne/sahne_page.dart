@@ -363,6 +363,16 @@ class SahnePushedPage extends StatelessWidget {
 /// → isteğe bağlı elmas dizisi ([progress]) → içerik ([body]) → alt perde
 /// ([dock]: zemine kararan 24 px degrade, altında tek birincil eylem ya
 /// da joker dizisi).
+///
+/// İki isteğe bağlı katman (soru sahnesi için):
+///
+/// * [light] — kategori ışığı ([SahneCategoryLight]): huzme bu renkle
+///   çizilir. `null` → varsayılan huzme.
+/// * [ridge] — sahnenin ufku: logodaki dağlardan alçak bir dağ sırtı
+///   silueti (Perde'nin %40'ı, [SahneRidgePainter]). Gövdenin DİBİNE,
+///   alt perdenin hemen üstüne oturur: alttan ışımanın önünde siluet olarak
+///   okunur ve içeriğin altında kalan boş sahneye bir zemin çizgisi verir.
+///   İçerik uzunsa sırtın önünden kayar (sırt hep arkadadır).
 class SahneStageScaffold extends StatelessWidget {
   const SahneStageScaffold({
     super.key,
@@ -375,6 +385,8 @@ class SahneStageScaffold extends StatelessWidget {
     this.dock,
     this.backdrop,
     this.beam = true,
+    this.light,
+    this.ridge = false,
   });
 
   final Widget body;
@@ -388,6 +400,18 @@ class SahneStageScaffold extends StatelessWidget {
   final Widget? dock;
   final ImageProvider? backdrop;
   final bool beam;
+
+  /// Kategori ışığı: huzmenin rengi (yalnız ışık; dolgu değil).
+  final Color? light;
+
+  /// Gövdenin dibinde (alt perdenin üstünde) dağ sırtı ufku.
+  final bool ridge;
+
+  /// Sahne zemini bölgesinin yüksekliği (kategori çizimi bunun içinde).
+  static const double backdropHeight = 320;
+
+  /// Dağ sırtının yüksekliği: alçak kalır, çizimi örtmez.
+  static const double ridgeHeight = 56;
 
   /// Bağlam metni ("Karışık • 3 soru") için orta yuva biçemi.
   static TextStyle contextStyle(BuildContext context) =>
@@ -457,7 +481,7 @@ class SahneStageScaffold extends StatelessWidget {
                 left: 0,
                 right: 0,
                 top: 0,
-                height: 320,
+                height: backdropHeight,
                 child: IgnorePointer(
                   child: ExcludeSemantics(
                     child: Stack(
@@ -487,7 +511,7 @@ class SahneStageScaffold extends StatelessWidget {
                 ),
               ),
             if (beam)
-              const Positioned(
+              Positioned(
                 top: 0,
                 left: 0,
                 right: 0,
@@ -497,7 +521,10 @@ class SahneStageScaffold extends StatelessWidget {
                     child: SizedBox(
                       width: 360,
                       height: 440,
-                      child: CustomPaint(painter: SahneBeamPainter()),
+                      child: CustomPaint(
+                        key: const ValueKey('sahne-stage-beam'),
+                        painter: SahneBeamPainter(light: light),
+                      ),
                     ),
                   ),
                 ),
@@ -518,6 +545,21 @@ class SahneStageScaffold extends StatelessWidget {
                   Expanded(
                     child: Stack(
                       children: [
+                        if (ridge)
+                          Positioned(
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            height: ridgeHeight,
+                            child: IgnorePointer(
+                              child: CustomPaint(
+                                key: const ValueKey('sahne-stage-ridge'),
+                                painter: SahneRidgePainter(
+                                  t.s1.withValues(alpha: 0.4),
+                                ),
+                              ),
+                            ),
+                          ),
                         Positioned.fill(child: body),
                         if (dock != null)
                           Positioned(
