@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/sahne.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne_topic_marks.dart';
 
 /// Kategori bazlı görsel kaynak (ikon + arka plan görseli + renk) için tek
 /// doğruluk kaynağı.
@@ -106,6 +107,27 @@ class CategoryVisuals {
     // Sînema için henüz ayrı görsel yok; kültür görseli geçici kaynaktır.
     'Sînema': 'assets/question_images/cat_cand.webp',
   };
+
+  /// Konunun görsel dili: ana sayfa karosundaki K3 silüeti ve alt konu
+  /// bandındaki K1 kilim motifi TEK yerden eşlenir (2026-09-30 kimlik).
+  ///
+  /// Yedi ana konunun işareti var; Siyaset, Paradigma, Teknolojî ve
+  /// bilinmeyen kategori `null` döner ve çağıran eski ikon + ton hâline
+  /// düşer (silüet uydurulmaz).
+  static const Map<String, SahneTopicMark> _marks = {
+    'Ziman': SahneTopicMark.ziman,
+    'Çand': SahneTopicMark.cand,
+    'Dîrok': SahneTopicMark.dirok,
+    'Edebiyat': SahneTopicMark.edebiyat,
+    'Cografya': SahneTopicMark.cografya,
+    'Muzîk': SahneTopicMark.muzik,
+    'Sînema': SahneTopicMark.sinema,
+  };
+
+  /// İşareti (silüet + motif) olan kategoriler, kanonik kimlikle.
+  static Iterable<String> get markedCategories => _marks.keys;
+
+  static SahneTopicMark? mark(String category) => _marks[_resolveKey(category)];
 
   static IconData icon(String category) {
     final key = _resolveKey(category);

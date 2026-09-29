@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/config/subcategory_config.dart';
 import 'package:zankurd_mobile/src/data/level_progress_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -152,9 +153,9 @@ void main() {
     expect(find.text('2/5'), findsOneWidget);
   });
 
-  // 2026-09-29 doğallık (K1): Ziman'ın çizimi kalktı (çizimsiz ton + ikon);
-  // bekçi kendi çizimi olan bir kategoriyle (Çand) ölçer. Ziman'da başlıkta
-  // hiç resim olmamalı.
+  // 2026-09-29 doğallık (K1): Ziman'ın çizimi kalktı (çizimsiz ton + ikon).
+  // 2026-09-30 kimlik: başlıkta artık hiçbir kategori resim çizmez, hepsi
+  // kilim bandı kurar; Ziman'da başlıkta hiç resim olmamalı.
   testWidgets('çizimi kalkan kategori başlıkta resim çizmez', (tester) async {
     await tester.pumpWidget(
       wrap(
@@ -168,7 +169,11 @@ void main() {
     expect(find.byType(Image), findsNothing);
   });
 
-  testWidgets('dekoratif kategori hero görseli semantics ağacına girmez', (
+  // 2026-09-30 kimlik: başlık artık fotoğraf benzeri çizimle (Çand'ın hero
+  // görseli) değil, K1 kilim deseniyle kurulur. Eski bekçi "hero görseli
+  // semantics ağacına girmez" diyordu; görsel kalktı, kural kilim bandına
+  // taşındı: dekoratif bant ekran okuyucuya adsız durak olmamalı.
+  testWidgets('kilim bandı dekoratiftir: resim yok, semantics ağacına girmez', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -181,15 +186,66 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final heroImage = find.byType(Image);
-    expect(heroImage, findsOneWidget);
+    expect(find.byType(Image), findsNothing);
+    final band = find.byKey(const ValueKey('subcategory-kilim-band'));
+    expect(band, findsOneWidget);
     expect(
-      find.ancestor(of: heroImage, matching: find.byType(ExcludeSemantics)),
+      find.ancestor(of: band, matching: find.byType(ExcludeSemantics)),
       findsOneWidget,
-      reason:
-          'Dekoratif hero görseli ekran okuyucuya adsız image durağı olmamalı.',
     );
+    final painter =
+        tester.widget<CustomPaint>(band).painter! as SahneKilimBandPainter;
+    expect(painter.mark, SahneTopicMark.cand);
+    expect(painter.tone, SahneCategoryTone.cand);
   });
+
+  // 2026-09-30 kimlik: yedi konunun HEPSİ (eskiden çizimi olanlar ve
+  // olmayanlar iki ayrı dilde konuşuyordu) kendi motifini taşır; motifsiz
+  // konu düz tonda kalır ve çökmez. 320 px, %200 yazıda taşma yok.
+  for (final category in [...CategoryVisuals.markedCategories, 'Siyaset']) {
+    testWidgets('$category başlığı 320 px ve %200 yazıda taşmaz', (
+      tester,
+    ) async {
+      await tester.binding.setSurfaceSize(const Size(320, 640));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) => LanguageProvider()..setLang('ku'),
+            ),
+          ],
+          child: MaterialApp(
+            theme: AppTheme.light(),
+            builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: const TextScaler.linear(2)),
+              child: child!,
+            ),
+            home: SubcategoryScreen(
+              repository: _FixedPlayableRepository(
+                _keywordMatchedQuestions(
+                  category: category,
+                  keyword: 'x',
+                  count: 3,
+                ),
+              ),
+              category: category,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull, reason: category);
+      final band = find.byKey(const ValueKey('subcategory-kilim-band'));
+      expect(
+        band,
+        CategoryVisuals.mark(category) == null ? findsNothing : findsOneWidget,
+        reason: category,
+      );
+    });
+  }
 
   testWidgets('kart dokunuşu LevelScreen açar', (tester) async {
     final first = SubcategoryConfig.subcategories['Ziman']!.first;

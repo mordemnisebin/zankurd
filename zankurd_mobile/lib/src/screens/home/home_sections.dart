@@ -85,6 +85,11 @@ class HomeDoorTile extends StatelessWidget {
 /// dediği yer burasıydı. Her karo artık çizimsiz: kategorinin kendi renk
 /// ailesinden düz zemin ([CategoryVisuals.tone]) + kendi çizgi ikonu. Konu
 /// renkle ve adla ayrılır; çizimler yalnız alt kategori kahramanında kalır.
+///
+/// 2026-09-30 kimlik: ikonun yerini konunun K3 silüeti aldı (Ziman
+/// konuşma balonunda Ê, Çand çaydanlık, Dîrok kale, Wêje açık defter,
+/// Erdnîgarî çiya ve nehir, Muzîk tembûr, Sînema film şeridi); silüeti
+/// olmayan konu eski ikonda kalır ([CategoryVisuals.mark] `null`).
 class HomeTopicGrid extends StatelessWidget {
   const HomeTopicGrid({
     required this.isKu,
@@ -174,6 +179,7 @@ class _HomeTopicTile extends StatelessWidget {
       name: name,
       otherName: other == name ? null : other,
       icon: CategoryVisuals.icon(category),
+      mark: CategoryVisuals.mark(category),
       tone: CategoryVisuals.tone(category),
       onTap: onTap,
       size: size,
