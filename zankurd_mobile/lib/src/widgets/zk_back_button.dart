@@ -83,11 +83,17 @@ PreferredSizeWidget zkAppBar(
     context,
     title: titleText?.data,
     subtitle: subtitle is Text ? subtitle.data : null,
+    subtitleMaxLines: subtitle is Text ? subtitle.maxLines : null,
     hasSubtitle: subtitle != null,
     hasLeading: hasLeading,
     actionCount: actions?.length ?? 0,
   );
-  final Widget? heading = shownTitle == null
+  // 2026-09-30 bant: `AppBar` başlığı yazı ölçeğini 1,34'te kırpar; çubuk
+  // yüksekliği ise gerçek ölçekle ölçülür ([_barHeight]). %200'de çubuk
+  // çizilenden çok daha uzun kalır, altında boş blok oluşurdu. Başlık ve alt
+  // satır gerçek ölçekle çizilir, ölçüm ve çizim aynı kalır.
+  final scaler = MediaQuery.textScalerOf(context);
+  final Widget? plainHeading = shownTitle == null
       ? null
       : Semantics(
           header: true,
@@ -104,6 +110,14 @@ PreferredSizeWidget zkAppBar(
                     ),
                   ],
                 ),
+        );
+  final Widget? heading = plainHeading == null
+      ? null
+      : Builder(
+          builder: (inner) => MediaQuery(
+            data: MediaQuery.of(inner).copyWith(textScaler: scaler),
+            child: plainHeading,
+          ),
         );
   return AppBar(
     key: key,
@@ -141,11 +155,14 @@ PreferredSizeWidget zkAppBar(
 }
 
 /// B çubuğunun yüksekliği: en az 64; büyük yazıda başlığın (ve alt
-/// satırın) ölçülen yüksekliği + 16. Başlık metin değilse tek satır sayılır.
+/// satırın) ölçülen yüksekliği + 16. 2026-09-30 bant: alt satır `maxLines`
+/// ile kısıtlıysa ölçüm de o kadar satırı sayar (eskiden sınırsız ölçülür,
+/// çizilen iki satırın altında boş bir blok kalırdı). Başlık metin değilse tek satır sayılır.
 double _barHeight(
   BuildContext context, {
   required String? title,
   required String? subtitle,
+  int? subtitleMaxLines,
   required bool hasSubtitle,
   required bool hasLeading,
   required int actionCount,
@@ -162,7 +179,7 @@ double _barHeight(
         actionCount * sahneTapTarget -
         SahneSpace.page,
   );
-  double measure(String? text, TextStyle style) {
+  double measure(String? text, TextStyle style, {int? maxLines}) {
     if (text == null) return scaler.scale(style.fontSize!) * style.height!;
     final merged = DefaultTextStyle.of(context).style.merge(style);
     final painter = TextPainter(
@@ -172,6 +189,7 @@ double _barHeight(
       ),
       textDirection: direction,
       textScaler: sahneUnbrokenScaler(context, text, style, room, scaler),
+      maxLines: maxLines,
     )..layout(maxWidth: room);
     final h = painter.height;
     painter.dispose();
@@ -179,6 +197,8 @@ double _barHeight(
   }
 
   var h = measure(title, SahneType.headline);
-  if (hasSubtitle) h += measure(subtitle, SahneType.caption);
+  if (hasSubtitle) {
+    h += measure(subtitle, SahneType.caption, maxLines: subtitleMaxLines);
+  }
   return math.max(64, h + SahneSpace.x4);
 }

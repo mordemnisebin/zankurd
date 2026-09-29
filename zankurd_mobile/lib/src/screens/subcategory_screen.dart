@@ -98,7 +98,10 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
     // rengi yalnız metnin biçemine yazılıyordu; `zkAppBar` başlığı temanın
     // metin rengiyle yeniden çizdiği için gündüzde ad çizimin üstünde
     // lacivert kalıyor, geri plakası beyaz bir kutu oluyordu (okunmuyordu).
-    final slots = _kilimSlots(MediaQuery.sizeOf(context).width);
+    final slots = _kilimSlots(
+      MediaQuery.sizeOf(context).width,
+      MediaQuery.textScalerOf(context).scale(10) / 10,
+    );
     PreferredSizeWidget bar(BuildContext barContext) => zkAppBar(
       barContext,
       backgroundColor: Colors.transparent,
@@ -133,7 +136,14 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _CategoryHeader(category: category, slots: slots),
+            _CategoryHeader(
+              category: category,
+              slots: slots,
+              // Durum çubuğu payı Scaffold'un DIŞINDAN okunur: gövdenin
+              // içinde `padding.top` çubuğun yüksekliğini de içerir.
+              topInset: MediaQuery.paddingOf(context).top,
+              barHeight: bar(context).preferredSize.height,
+            ),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(
@@ -266,8 +276,13 @@ class _SubcategoryProgressHint extends StatelessWidget {
 
 /// Kilim desenine ayrılan yuva sayısı: 360 px ve üstünde üç (desen 132 px'e
 /// kadar), daha dar ekranda iki (84 px) — 320 px'te başlık ve alt satır
-/// yeterli genişlik bulur.
-int _kilimSlots(double width) => width >= 360 ? 3 : 2;
+/// yeterli genişlik bulur. Büyük yazıda (x1,3 ve üstü) bir yuva eksilir: alt
+/// satır en çok iki satırdır ve dar metin alanında ("Bir alt alan seçe...")
+/// yarım kalırdı; desen o zaman daha az sütun gösterir.
+int _kilimSlots(double width, double textScale) {
+  final base = width >= 360 ? 3 : 2;
+  return textScale > 1.3 ? base - 1 : base;
+}
 
 /// [slots] yuvanın desene bıraktığı genişlik: yuvalar eksi 12 px nefes.
 double _kilimReserved(int slots) => slots * sahneTapTarget - SahneSpace.x3;
@@ -282,42 +297,63 @@ double _kilimReserved(int slots) => slots * sahneTapTarget - SahneSpace.x3;
 /// K1'i seçti: yedi konunun hepsi (çizimi olanlar dahil) kendi dokuma
 /// motifini taşır; çizim bu ekrandan çekildi. Motif her temada aynı çizilir
 /// (bant kimlik taşır, gece değerleriyle): çubuktaki gece metni tonun koyu
-/// zemininde okunur, desen bandın sağ yarısındadır ve başlığın altına
-/// girmez (bkz. `SahneKilimBandPainter.reservedWidth`). Motifi olmayan
-/// konu (Siyaset, Paradigma, Teknolojî) eski çubuk boyunda düz tonda kalır.
-/// Alt kenardaki kilim göz şeridi 2026-09-29'da kalktı (K4: şerit yalnız
-/// onboarding, zafer ve girişte).
+/// zemininde okunur, desen bandın sağındadır ve başlığın altına girmez (bkz.
+/// `SahneKilimBandPainter.reservedWidth`). Alt kenardaki kilim göz şeridi
+/// 2026-09-29'da kalktı (K4: şerit yalnız onboarding, zafer ve girişte).
+///
+/// 2026-09-30 bant: bant eskiden çubuğun altına 88 px'lik boş bir bant
+/// ekliyordu (uzun, alt yarısı boş, desen köşede küçük bir blok). Şimdi
+/// yükseklik içeriğe oturur: durum çubuğu payı + çubuk (geri düğmesi, ad,
+/// en çok iki satır alt yazı; büyük yazıda çubuğun kendisi uzar) + alt
+/// kenarda [_bottomGap]; sonuç 9'un katına yükseltilir (alt kenarda 16-24
+/// px boşluk kalır) ki desenin tam sayı hücresi bandın tepesinden dibine
+/// yetsin. Motifi olmayan konu (Siyaset, Paradigma, Teknolojî) aynı
+/// yükseklikte düz tonda kalır.
 class _CategoryHeader extends StatelessWidget {
-  const _CategoryHeader({required this.category, required this.slots});
+  const _CategoryHeader({
+    required this.category,
+    required this.slots,
+    required this.topInset,
+    required this.barHeight,
+  });
 
   final String category;
 
   /// Desene ayrılan 48'lik yuva sayısı ([_kilimSlots]).
   final int slots;
 
-  /// Çubuğun altında kilim bandının açık kaldığı bant.
-  static const double _band = 88;
+  /// Durum çubuğu payı (bandın üstünde, çubuğun arkasında kalır).
+  final double topInset;
+
+  /// Çubuğun (durum çubuğu payı hariç) yüksekliği: metne göre ölçülür.
+  final double barHeight;
+
+  /// Çubuğun altında bırakılan boşluk (çubuğun kendi 8 px iç payına ek).
+  static const double _bottomGap = SahneSpace.x2;
+
+  /// Bant yüksekliği: pay + çubuk + boşluk, 9'un katına yükseltilmiş.
+  static double heightFor(double topInset, double barHeight) =>
+      SahneKilimBandPainter.snapHeight(topInset + barHeight + _bottomGap);
 
   @override
   Widget build(BuildContext context) {
-    final topInset = MediaQuery.paddingOf(context).top;
+    final height = heightFor(topInset, barHeight);
     final mark = CategoryVisuals.mark(category);
     final tone = CategoryVisuals.tone(category);
     if (mark == null) {
       return SizedBox(
-        height: topInset + 64,
+        height: height,
         child: ColoredBox(color: tone.ground),
       );
     }
     return SizedBox(
-      height: topInset + 64 + _band,
+      height: height,
       child: ExcludeSemantics(
         child: CustomPaint(
           key: const ValueKey('subcategory-kilim-band'),
           painter: SahneKilimBandPainter(
             mark: mark,
             tone: tone,
-            topInset: topInset,
             reservedWidth: _kilimReserved(slots),
           ),
         ),
