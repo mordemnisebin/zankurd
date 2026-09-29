@@ -235,7 +235,8 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
   /// kapat + ortada bağlam ("Sırayla düello"); içerik ortada bir sonuç
   /// kahramanı; alt perdede ikincil "Kapat" + TEK birincil "Yeni düello".
   /// Kazanma Zêr taç + altın başlık; kaybetme ve beraberlik nötr; yarış
-  /// kimliği Boyax (VS amblemi, kilim şeridi). Rast/Şaş ailesi kullanılmaz.
+  /// kimliği Boyax (VS amblemi; zaferde kilim şeridi). Rast/Şaş ailesi
+  /// kullanılmaz.
   @override
   Widget build(BuildContext context) {
     final view = widget.view;
@@ -367,7 +368,7 @@ class _ResultDock extends StatelessWidget {
 }
 
 /// Sonuç kahramanının ortak iskeleti: amblem → Başlık 28 → isteğe bağlı
-/// büyük sayı / skor satırı → açıklama → kilim şeridi → XP çipi.
+/// büyük sayı / skor satırı → açıklama → (zaferde) kilim şeridi → XP çipi.
 class _DuelHero extends StatelessWidget {
   const _DuelHero({
     required this.emblem,
@@ -403,7 +404,8 @@ class _DuelHero extends StatelessWidget {
   }
 }
 
-/// Durum amblemi: 72'lik Kulis elması, içinde ikincil metin ikon.
+/// Durum amblemi: 72'lik Kulis pahlı karesi, içinde ikincil metin ikon.
+/// 2026-09-29 doğallık (K5): eskiden elmastı (avatarla aynı bileşen).
 class _StateDiamond extends StatelessWidget {
   const _StateDiamond({required this.icon});
 
@@ -412,12 +414,7 @@ class _StateDiamond extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return SahneDiamondAvatar(
-      size: 72,
-      icon: icon,
-      color: t.s2,
-      foreground: t.tx2,
-    );
+    return SahneAvatar(size: 72, icon: icon, color: t.s2, foreground: t.tx2);
   }
 }
 
@@ -437,7 +434,11 @@ class _XpChip extends StatelessWidget {
   }
 }
 
-/// Yarış kimliğinin kilim göz şeridi (Boyax, %70).
+/// Yarış kimliğinin kilim göz şeridi (Boyax, %70) — yalnız galibiyette.
+///
+/// 2026-09-29 doğallık (K4): şerit bekleyen, süresi dolan, kaybedilen ve
+/// berabere biten düelloda da skorun altındaydı. Her durumda aynı süs bir
+/// şablon izi oluyordu; şerit, sonuç ışınlarıyla aynı anda (zaferde) açılır.
 class _RaceStrip extends StatelessWidget {
   const _RaceStrip();
 
@@ -519,8 +520,7 @@ class _CompletedBody extends StatelessWidget {
             style: SahneType.caption.copyWith(color: t.tx2),
           ),
         ],
-        const SizedBox(height: SahneSpace.x3),
-        const _RaceStrip(),
+        if (win) ...[const SizedBox(height: SahneSpace.x3), const _RaceStrip()],
         const SizedBox(height: SahneSpace.x4),
         _XpChip(xp: xp),
       ],
@@ -552,8 +552,6 @@ class _WaitingBody extends StatelessWidget {
           textAlign: TextAlign.center,
           style: SahneType.body.copyWith(color: t.tx2),
         ),
-        const SizedBox(height: SahneSpace.x3),
-        const _RaceStrip(),
       ],
     );
   }
@@ -578,8 +576,6 @@ class _ExpiredBody extends StatelessWidget {
           textAlign: TextAlign.center,
           style: SahneType.body.copyWith(color: t.tx2),
         ),
-        const SizedBox(height: SahneSpace.x3),
-        const _RaceStrip(),
         const SizedBox(height: SahneSpace.x4),
         _XpChip(xp: xp),
       ],

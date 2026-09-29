@@ -1538,12 +1538,17 @@ class _QuizScreenState extends State<QuizScreen>
   /// Başlıkta görünecek tur adı.
   ///
   /// Sıra: oda kodu (çevrimiçi) → turun adı → kategori → genel "yarış".
+  /// 2026-09-29 doğallık (K2): kategori yedeği ODANIN değil ŞU ANKİ
+  /// SORUNUN kategorisidir. Oda kategorisi "Dil" iken karışık turun ilk
+  /// sorusu Siyaset olunca üst başlık "Dil", gövde künyesi "SİYASET • SORU
+  /// 1/5" diyordu: aynı ekranda iki ayrı konu adı. Başlık ve künye artık tek
+  /// kaynaktan (sorunun kategorisi) okur.
   String _roundTitle(BuildContext context) {
     return quizRoundTitle(
       roomId: widget.room.id,
       roomCode: widget.room.code,
       roomName: widget.room.name,
-      category: widget.room.category,
+      category: _questions.isEmpty ? widget.room.category : question.category,
       isKu: context.isKu,
       roomWord: context.t(K.roomWord),
       raceWord: context.t(K.raceWord),
@@ -1615,7 +1620,6 @@ class _QuizScreenState extends State<QuizScreen>
                 child: SahneStageScaffold(
                   closeKey: const ValueKey('quiz-close'),
                   closeLabel: context.t(K.close),
-                  backdrop: _stageBackdrop,
                   light: _stageLight,
                   ridge: true,
                   center: _buildStageCenter(context),
@@ -1684,18 +1688,13 @@ class _QuizScreenState extends State<QuizScreen>
     );
   }
 
-  /// Sahne zemini: kategorinin KENDİ çizimi, %14 (bileşen uygular).
-  ///
-  /// Ödünç görsel kullanan kategoriler (Sînema, Teknolojî) zemin almaz:
-  /// başka bir konunun çizimi sahnede yanlış bilgi verir
-  /// (`CategoryVisuals.hasOwnImage`). O zaman yalnız huzme ve ufuk kalır.
-  ImageProvider? get _stageBackdrop {
-    final category = question.category;
-    if (!CategoryVisuals.hasOwnImage(category)) return null;
-    return AssetImage(CategoryVisuals.imagePath(category));
-  }
-
   /// Kategorinin ışığı: huzme bu renkle yanar (yalnız ışık, dolgu değil).
+  ///
+  /// 2026-09-29 doğallık (K2): sahnenin arkasında kategori çizimi %14
+  /// saydamlıkla duruyordu; soru metninin ardında belli belirsiz bir hayalet
+  /// resim okumayı bulandırıyor ve üretilmiş görsel izini en çok taşıyan
+  /// yerdi. Zemin artık yalnız huzme ve ufuk; konu, huzmenin rengi ve
+  /// künyedeki ikonla söylenir.
   Color? get _stageLight =>
       SahneCategoryLight.of(CategoryVisuals.canonicalName(question.category));
 

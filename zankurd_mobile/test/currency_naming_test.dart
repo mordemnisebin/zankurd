@@ -53,11 +53,33 @@ void main() {
     expect(Tr.of(K.coinAbbrev, AppLanguage.ku), 'z');
     expect(Tr.of(K.coinAbbrev, AppLanguage.tr), 'j');
 
-    const screens = [
-      'lib/src/screens/shop_screen.dart',
+    // 2026-09-29 doğallık: sonuç ekranının jeton çipi ve joker düğmesi
+    // artık kısaltma göstermez — ekranda sayı + jeton glifi durur, ekran
+    // okuyucu para biriminin tam adını (`K.coinWord`) duyurur. Bu iki
+    // dosya kısaltmayı HİÇ taşımamalı; sabit son ek (`c`, `j`) de yok.
+    const glyphScreens = [
       'lib/src/screens/quiz_result_screen.dart',
       'lib/src/screens/quiz/quiz_wildcard_bar.dart',
     ];
+    for (final path in glyphScreens) {
+      final code = File(path)
+          .readAsStringSync()
+          .split('\n')
+          .where((line) => !line.trimLeft().startsWith('//'))
+          .join('\n');
+      expect(
+        code,
+        isNot(contains('K.coinAbbrev')),
+        reason: '\$path fiyatı glifle göstermeli, kısaltmayla değil.',
+      );
+      expect(
+        RegExp(r"\}[cj]'").hasMatch(code),
+        isFalse,
+        reason: '\$path içinde sabit para son eki kalmış.',
+      );
+    }
+
+    const screens = ['lib/src/screens/shop_screen.dart'];
     for (final path in screens) {
       final code = File(path)
           .readAsStringSync()

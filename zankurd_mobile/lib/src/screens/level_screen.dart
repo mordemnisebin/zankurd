@@ -280,9 +280,14 @@ class _LevelProgressCard extends StatelessWidget {
   }
 }
 
-/// Seviye yolu: her seviye bir durak — solda yol elması (bitti / sıradaki
-/// / kilitli) ve durakları bağlayan ince yol çizgisi, sağda kart. Sıradaki
-/// seviye sahne kartıdır (tek birincil düğme); ötekiler yüzey kartı.
+/// Seviye yolu: seviyeler sırayla alt alta kart. Sıradaki seviye sahne
+/// kartıdır (tek birincil düğme); ötekiler yüzey kartı.
+///
+/// 2026-09-29 doğallık (K5): solda her kartın yanında bir yol elması
+/// (bitti / sıradaki / kilitli) ve onları bağlayan yol çizgisi vardı. Kartın
+/// rozeti aynı durumu zaten söylüyordu (yıldız / numara / kilit); elmas
+/// ikinci bir işaretti ve elmas yalnız soru ilerlemesi ile ders sayacında
+/// kalır. Sıra, kartların sırasıyla okunur.
 class _LevelPath extends StatelessWidget {
   const _LevelPath({
     required this.levels,
@@ -317,14 +322,10 @@ class _LevelPath extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (var i = 0; i < levels.length; i++)
-          _PathStop(
-            first: i == 0,
-            last: i == levels.length - 1,
-            state: playedLevels.contains(levels[i].number)
-                ? SahnePathNodeState.done
-                : _isUnlocked(levels[i].number)
-                ? SahnePathNodeState.inProgress
-                : SahnePathNodeState.locked,
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: i == levels.length - 1 ? 0 : SahneSpace.cardGap,
+            ),
             child: _LevelNode(
               key: ValueKey('level-node-${levels[i].number}'),
               level: levels[i],
@@ -336,75 +337,6 @@ class _LevelPath extends StatelessWidget {
               onTap: () => onOpen(levels[i]),
             ),
           ),
-      ],
-    );
-  }
-}
-
-/// Yolun bir durağı: 24'lük yol elması + yol çizgisi (Ray) + kart. Elmas
-/// kartın dikey ortasında; çizgi ilk durakta elmastan başlar, son durakta
-/// elmasta biter. Elmas ekran okuyucuya duyurulmaz: durum kartın sözünde.
-class _PathStop extends StatelessWidget {
-  const _PathStop({
-    required this.state,
-    required this.first,
-    required this.last,
-    required this.child,
-  });
-
-  final SahnePathNodeState state;
-  final bool first;
-  final bool last;
-  final Widget child;
-
-  static const double _rail = 24;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final gap = last ? 0.0 : SahneSpace.cardGap;
-    Widget line() => Center(
-      child: SizedBox(
-        width: 1.5,
-        height: double.infinity,
-        child: ColoredBox(color: t.s3),
-      ),
-    );
-    return Stack(
-      children: [
-        PositionedDirectional(
-          start: 0,
-          top: 0,
-          bottom: 0,
-          width: _rail,
-          child: ExcludeSemantics(
-            child: Column(
-              children: [
-                Expanded(child: first ? const SizedBox.shrink() : line()),
-                Expanded(child: last ? const SizedBox.shrink() : line()),
-                if (gap > 0) SizedBox(height: gap, child: line()),
-              ],
-            ),
-          ),
-        ),
-        PositionedDirectional(
-          start: 0,
-          top: 0,
-          bottom: gap,
-          width: _rail,
-          child: ExcludeSemantics(
-            child: Center(
-              child: SahnePathNode(state: state, semanticLabel: ''),
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsetsDirectional.only(
-            start: _rail + SahneSpace.x2,
-            bottom: gap,
-          ),
-          child: child,
-        ),
       ],
     );
   }
@@ -588,11 +520,16 @@ class _LevelRowContent extends StatelessWidget {
         const SizedBox(height: SahneSpace.x1),
         Row(
           children: [
-            _DifficultyBars(
-              filled: level.difficultyMax.clamp(1, 5),
-              color: locked ? t.tx3 : t.learnTx,
-            ),
-            const SizedBox(width: SahneSpace.x2),
+            // 2026-09-29 doğallık (K5): kilitli seviye tek işaretle (kilit)
+            // söylenir; sönük zorluk çubukları ikinci bir "kapalı" işareti
+            // ve her satırda tekrar eden bir sinyal simgesiydi.
+            if (!locked) ...[
+              _DifficultyBars(
+                filled: level.difficultyMax.clamp(1, 5),
+                color: t.learnTx,
+              ),
+              const SizedBox(width: SahneSpace.x2),
+            ],
             Flexible(
               child: Text(
                 '${level.questionCount} ${context.t(K.soru)}',

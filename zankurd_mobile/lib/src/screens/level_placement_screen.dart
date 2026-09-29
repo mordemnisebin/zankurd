@@ -10,6 +10,7 @@ import '../services/placement_scoring.dart';
 import '../theme/app_icons.dart';
 import '../widgets/sahne/sahne.dart';
 import 'quiz/quiz_option_tile.dart';
+import 'quiz_screen.dart' show QuizQuestionImage;
 
 /// Kısa, baskısız seviye belirleme sınavı.
 ///
@@ -128,10 +129,8 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
 
     return SahneStageScaffold(
       closeLabel: context.t(K.close),
-      backdrop:
-          question != null && CategoryVisuals.hasOwnImage(question.category)
-          ? AssetImage(CategoryVisuals.imagePath(question.category))
-          : null,
+      // 2026-09-29 doğallık (K2): soru arkasındaki hayalet kategori çizimi
+      // kalktı; yalnız huzme ve ufuk kalır (bkz. quiz_screen `_stageLight`).
       light: question == null
           ? null
           : SahneCategoryLight.of(
@@ -239,6 +238,14 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
                 ],
               ),
               const SizedBox(height: SahneSpace.x2),
+              if (question.hasImage) ...[
+                QuizQuestionImage(
+                  key: const ValueKey('placement-question-image'),
+                  url: question.imageUrl!,
+                  alt: question.imageAltFor(isKu: context.isKu),
+                ),
+                const SizedBox(height: SahneSpace.x3),
+              ],
               QuizQuestionPrompt(question.prompt),
               const SizedBox(height: SahneSpace.x4),
               for (final (index, answer) in question.displayAnswers.indexed)
@@ -282,17 +289,16 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Seviye rozeti: 88'lik elmas, rolün ton zemini + rol ikonu.
+              // Seviye rozeti: 88'lik pahlı kare, rolün ton zemini + rol
+              // ikonu. 2026-09-29 doğallık (K5): eskiden elmastı; elmas
+              // yalnız soru ilerlemesi ve ders sayacında kalır.
               DecoratedBox(
                 decoration: ShapeDecoration(
                   color: t.roleTint(role),
-                  shape: SahneShape.diamond(
-                    88,
-                    side: BorderSide(
-                      color: t.roleText(role),
-                      width: SahneRing.r2,
-                      strokeAlign: BorderSide.strokeAlignInside,
-                    ),
+                  shape: SahneShape.withSide(
+                    SahneShape.forSize(88),
+                    t.roleText(role),
+                    width: SahneRing.r2,
                   ),
                 ),
                 child: SizedBox.square(
@@ -301,9 +307,11 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
                 ),
               ),
               const SizedBox(height: SahneSpace.x5),
+              // K8: büyük harfli künye yalnız soru satırında; burada cümle
+              // düzeni.
               Text(
-                sahneUpper(context, context.t(K.placementYourLevel)),
-                style: SahneType.eyebrow.copyWith(color: t.tx2),
+                context.t(K.placementYourLevel),
+                style: SahneType.captionStrong.copyWith(color: t.tx2),
               ),
               const SizedBox(height: SahneSpace.x1),
               Text(

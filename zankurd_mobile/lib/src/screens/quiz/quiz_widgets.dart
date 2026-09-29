@@ -135,6 +135,24 @@ class _LiveScoreRow extends StatelessWidget {
 
 // ─── Soru görseli ────────────────────────────────────────────────────────────
 
+/// Soru görseli kartı, quiz kütüphanesinin dışından kullanılabilen yüzü.
+///
+/// 2026-09-29 doğallık (K2): seviye sınavı görselli soruyu ("Görselde
+/// Newroz ateşi görünüyor…") görselsiz soruyordu; görsel yalnız sahnenin
+/// arkasında %14'lük hayalet kategori çizimi olarak duruyordu ve sorunun
+/// sözünü ettiği şey ekranda yoktu. Sınav artık quiz ekranıyla AYNI kartı
+/// çizer: aynı yükseklik formülü, aynı pah, aynı alt metin ve aynı hata
+/// yüzeyi. İkinci bir görsel kartı yazılmaz.
+class QuizQuestionImage extends StatelessWidget {
+  const QuizQuestionImage({super.key, required this.url, this.alt});
+
+  final String url;
+  final String? alt;
+
+  @override
+  Widget build(BuildContext context) => _QuestionImage(url: url, alt: alt);
+}
+
 class _QuestionImage extends StatelessWidget {
   const _QuestionImage({
     required this.url,

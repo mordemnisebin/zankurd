@@ -107,12 +107,65 @@ void main() {
           .first,
     );
     expect(group.color, SahneTokens.day.s1);
-    // Rozet: "5 seviye". 2026-09-29 doğallık: rozet cümle düzeninde (K8);
-    // bu bekçi eskiden büyük harfi ("5 SEVİYE") bekliyordu.
+    // 2026-09-29 doğallık (K7): her satırda aynı "5 seviye" rozeti vardı;
+    // kalktı. Hiç oynanmamış alt kategoride sağda sayaç yok (sıfır sayaç
+    // gösterilmez), yalnız chevron.
     expect(
       find.descendant(of: find.byKey(cardKey), matching: find.text('5 seviye')),
+      findsNothing,
+    );
+    expect(
+      find.descendant(of: find.byKey(cardKey), matching: find.text('0/5')),
+      findsNothing,
+    );
+  });
+
+  // 2026-09-29 doğallık (K7): rozetin yerini gerçek ilerleme aldı. Seviye
+  // yolunun kendi deposu (LevelProgressStore) o alt kategoride iki seviyeyi
+  // oynanmış sayıyorsa satır "2/5" der; öteki satırlar sessiz kalır.
+  testWidgets('oynanmış seviyesi olan alt kategori ilerlemesini gösterir', (
+    tester,
+  ) async {
+    final subs = SubcategoryConfig.subcategories['Ziman']!;
+    final first = subs.first;
+    final store = await LevelProgressStore.load();
+    await store.markPlayed('Ziman', first.id, 1);
+    await store.markPlayed('Ziman', first.id, 2);
+
+    await tester.pumpWidget(
+      wrap(
+        SubcategoryScreen(
+          repository: MockZanKurdRepository(),
+          category: 'Ziman',
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.descendant(
+        of: find.byKey(ValueKey('subcategory-card-${first.id}')),
+        matching: find.text('2/5'),
+      ),
       findsOneWidget,
     );
+    expect(find.text('2/5'), findsOneWidget);
+  });
+
+  // 2026-09-29 doğallık (K1): Ziman'ın çizimi kalktı (çizimsiz ton + ikon);
+  // bekçi kendi çizimi olan bir kategoriyle (Çand) ölçer. Ziman'da başlıkta
+  // hiç resim olmamalı.
+  testWidgets('çizimi kalkan kategori başlıkta resim çizmez', (tester) async {
+    await tester.pumpWidget(
+      wrap(
+        SubcategoryScreen(
+          repository: MockZanKurdRepository(),
+          category: 'Ziman',
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(Image), findsNothing);
   });
 
   testWidgets('dekoratif kategori hero görseli semantics ağacına girmez', (
@@ -122,7 +175,7 @@ void main() {
       wrap(
         SubcategoryScreen(
           repository: MockZanKurdRepository(),
-          category: 'Ziman',
+          category: 'Çand',
         ),
       ),
     );
