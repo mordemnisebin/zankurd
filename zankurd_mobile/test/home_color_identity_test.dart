@@ -24,6 +24,11 @@
 /// kendi çizimi olan kategorinin o çizimi gösterdiğini sabitliyordu; şimdi
 /// her karonun çizimsiz olduğunu, kendi ikonunu ve kendi kategori tonunu
 /// taşıdığını ölçer.
+///
+/// 2026-09-30 kimlik: karolarda ikonun yerini konunun K3 silüeti aldı
+/// (`CategoryVisuals.mark`); silüeti olmayan konu eski ikonda kalır. Bekçi
+/// "ikon çizilir" beklentisini "silüet çizilir, silüetsizde ikon çizilir"e
+/// çevirdi.
 library;
 
 import 'package:flutter/material.dart';
@@ -124,14 +129,27 @@ void main() {
         // kendi renk ailesiyle ayrılır.
         expect(tile.image, isNull, reason: category);
         expect(tile.tone, CategoryVisuals.tone(category), reason: category);
-        expect(
-          find.descendant(
-            of: finder,
-            matching: find.byIcon(CategoryVisuals.icon(category)),
+        // 2026-09-30 kimlik: silüeti olan konu ikon yerine K3 silüetini
+        // çizer; silüetsiz konu (Siyaset, Paradigma, Teknolojî) ikonda kalır.
+        final mark = CategoryVisuals.mark(category);
+        expect(tile.mark, mark, reason: category);
+        final glyphs = find.descendant(
+          of: finder,
+          matching: find.byWidgetPredicate(
+            (w) => w is CustomPaint && w.painter is SahneCategoryGlyphPainter,
           ),
-          findsOneWidget,
-          reason: '$category yerine kendi ikonunu çizmeli',
         );
+        final icon = find.descendant(
+          of: finder,
+          matching: find.byIcon(CategoryVisuals.icon(category)),
+        );
+        if (mark == null) {
+          expect(glyphs, findsNothing, reason: category);
+          expect(icon, findsOneWidget, reason: '$category ikonda kalmalı');
+        } else {
+          expect(glyphs, findsOneWidget, reason: '$category silüeti çizmeli');
+          expect(icon, findsNothing, reason: '$category ikon çizmemeli');
+        }
       }
     },
   );

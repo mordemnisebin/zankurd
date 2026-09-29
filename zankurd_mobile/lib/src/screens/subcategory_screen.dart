@@ -98,6 +98,7 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
     // rengi yalnız metnin biçemine yazılıyordu; `zkAppBar` başlığı temanın
     // metin rengiyle yeniden çizdiği için gündüzde ad çizimin üstünde
     // lacivert kalıyor, geri plakası beyaz bir kutu oluyordu (okunmuyordu).
+    final slots = _kilimSlots(MediaQuery.sizeOf(context).width);
     PreferredSizeWidget bar(BuildContext barContext) => zkAppBar(
       barContext,
       backgroundColor: Colors.transparent,
@@ -105,7 +106,17 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
       // (bkz. `AppTheme.overlayOnDarkHeader`).
       systemOverlayStyle: AppTheme.overlayOnDarkHeader,
       title: Text(CategoryNames.localized(category, ku)),
-      subtitle: Text(Tr.forKu(K.birAltAlanSecerek, ku)),
+      subtitle: Text(Tr.forKu(K.birAltAlanSecerek, ku), maxLines: 2),
+      // Kilim deseni sağ kenardadır: çubuk onun genişliği kadar yer bırakır
+      // ([_kilimSlots] x 48 boş yuva), metin desenin altına girmez. Alt satır
+      // sarılır (tek satırda kesilirse cümle yarım kalırdı). Motifsiz konuda
+      // yuva açılmaz.
+      actions: CategoryVisuals.mark(category) == null
+          ? null
+          : [
+              for (var i = 0; i < slots; i++)
+                const SizedBox(width: sahneTapTarget),
+            ],
     );
     return Scaffold(
       backgroundColor: t.bg,
@@ -122,7 +133,7 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _CategoryHeader(category: category),
+            _CategoryHeader(category: category, slots: slots),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(
@@ -253,32 +264,46 @@ class _SubcategoryProgressHint extends StatelessWidget {
   }
 }
 
-/// Kategori başlığı: kategorinin KENDİ çizimi, üstünde gece perdesi;
-/// çizimi yoksa kategorinin düz tonu.
+/// Kilim desenine ayrılan yuva sayısı: 360 px ve üstünde üç (desen 132 px'e
+/// kadar), daha dar ekranda iki (84 px) — 320 px'te başlık ve alt satır
+/// yeterli genişlik bulur.
+int _kilimSlots(double width) => width >= 360 ? 3 : 2;
+
+/// [slots] yuvanın desene bıraktığı genişlik: yuvalar eksi 12 px nefes.
+double _kilimReserved(int slots) => slots * sahneTapTarget - SahneSpace.x3;
+
+/// Kategori başlığı: kategorinin düz tonu ([SahneCategoryTone.ground]) ve
+/// sağ kenardan taşan K1 kilim deseni ([SahneKilimBandPainter]).
 ///
-/// 2026-09-29 doğallık (K1): çizim yalnız kendi çizimi olan kategoride
-/// (`CategoryVisuals.ownImagePath`). Ziman, Siyaset, Paradigma ve ödünç
-/// görselli kategoriler çizim bandı almaz: başlık yalnız çubuk boyundadır
-/// ve kategorinin düz tonunu taşır (boş bir renk bandı süs olurdu). Perde
-/// her iki temada gecedir ve bandın dibinde de kalır (%45): çizim gündüzde
-/// tam parlaklığıyla açık kalıyor, başlığın altında bağıran bir afiş
-/// oluyordu. Alt kenardaki kilim göz şeridi kalktı (K4: şerit yalnız
+/// 2026-09-30 kimlik: başlık eskiden kategorinin fotoğraf benzeri çiziminin
+/// (`CategoryVisuals.ownImagePath`) üstüne gece perdesi çekilerek kuruluyordu;
+/// çizimi olmayan kategoriler (Ziman, Sînema) yalnız düz bir renk çubuğu
+/// alıyordu, yani yedi konudan ikisi başka bir dilde konuşuyordu. Kullanıcı
+/// K1'i seçti: yedi konunun hepsi (çizimi olanlar dahil) kendi dokuma
+/// motifini taşır; çizim bu ekrandan çekildi. Motif her temada aynı çizilir
+/// (bant kimlik taşır, gece değerleriyle): çubuktaki gece metni tonun koyu
+/// zemininde okunur, desen bandın sağ yarısındadır ve başlığın altına
+/// girmez (bkz. `SahneKilimBandPainter.reservedWidth`). Motifi olmayan
+/// konu (Siyaset, Paradigma, Teknolojî) eski çubuk boyunda düz tonda kalır.
+/// Alt kenardaki kilim göz şeridi 2026-09-29'da kalktı (K4: şerit yalnız
 /// onboarding, zafer ve girişte).
 class _CategoryHeader extends StatelessWidget {
-  const _CategoryHeader({required this.category});
+  const _CategoryHeader({required this.category, required this.slots});
 
   final String category;
 
-  /// Çubuğun altında çizimin açık kaldığı bant.
+  /// Desene ayrılan 48'lik yuva sayısı ([_kilimSlots]).
+  final int slots;
+
+  /// Çubuğun altında kilim bandının açık kaldığı bant.
   static const double _band = 88;
 
   @override
   Widget build(BuildContext context) {
-    const night = SahneTokens.night;
     final topInset = MediaQuery.paddingOf(context).top;
-    final image = CategoryVisuals.ownImagePath(category);
+    final mark = CategoryVisuals.mark(category);
     final tone = CategoryVisuals.tone(category);
-    if (image == null) {
+    if (mark == null) {
       return SizedBox(
         height: topInset + 64,
         child: ColoredBox(color: tone.ground),
@@ -286,35 +311,16 @@ class _CategoryHeader extends StatelessWidget {
     }
     return SizedBox(
       height: topInset + 64 + _band,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          ColoredBox(color: night.bg),
-          ExcludeSemantics(
-            child: Image.asset(
-              image,
-              fit: BoxFit.cover,
-              alignment: const Alignment(0, -0.2),
-              errorBuilder: (_, _, _) => ColoredBox(color: tone.ground),
-            ),
+      child: ExcludeSemantics(
+        child: CustomPaint(
+          key: const ValueKey('subcategory-kilim-band'),
+          painter: SahneKilimBandPainter(
+            mark: mark,
+            tone: tone,
+            topInset: topInset,
+            reservedWidth: _kilimReserved(slots),
           ),
-          // Gece perdesi: çubuk bölgesinde %80 — beyaz çizimin üstünde bile
-          // gece metni AA geçer —, bandın dibinde %45.
-          DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  night.bg.withValues(alpha: 0.8),
-                  night.bg.withValues(alpha: 0.8),
-                  night.bg.withValues(alpha: 0.45),
-                ],
-                stops: [0, (topInset + 64) / (topInset + 64 + _band), 1],
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

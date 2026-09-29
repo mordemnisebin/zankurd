@@ -9,6 +9,7 @@ import 'sahne_glyphs.dart';
 import 'sahne_list_row.dart';
 import 'sahne_painters.dart';
 import 'sahne_progress.dart';
+import 'sahne_topic_marks.dart';
 
 enum _StageKind { plain, lesson, duel, mini }
 
@@ -469,7 +470,9 @@ class SahneSurfaceCard extends StatelessWidget {
 /// * Ustalık — [mastered]: kaş altın + sağ üstte elmas yıldız rozeti.
 /// * Çizimsiz — [image] `null` ya da görsel yüklenemezse: kategorinin
 ///   düz tonu ([tone], [SahneNoArtPainter]) + 48'lik çizgi ikon ([icon]).
-///   Kategori tonu `CategoryVisuals.tone(kategori)` ile verilir.
+///   Kategori tonu `CategoryVisuals.tone(kategori)` ile verilir. [mark]
+///   verilirse ikon yerine konunun K3 silüeti çizilir
+///   ([SahneCategoryGlyphPainter]; pah yüzeyi olmadan, düz zemin).
 ///
 /// Altında ad (Gövde 700) ve öteki dildeki ad (Açıklama, ikincil metin),
 /// en altta isteğe bağlı meta yuvası ([meta]: ilerleme çubuğu, "245 soru").
@@ -491,10 +494,15 @@ class SahneJewelTile extends StatelessWidget {
     this.meta,
     this.metaLabel,
     this.tone = SahneCategoryTone.fallback,
+    this.mark,
   });
 
   /// Çizimsiz çeşidin zemini (kategori tonu).
   final SahneCategoryTone tone;
+
+  /// Çizimsiz çeşidin silüeti (K3, 2026-09-30 kimlik). `null` ise [icon]
+  /// çizilir: silüeti olmayan konu eski ikon + ton hâlinde kalır.
+  final SahneTopicMark? mark;
 
   /// Adların altındaki yuva (ör. ilerleme çubuğu ya da soru sayısı).
   final Widget? meta;
@@ -524,12 +532,20 @@ class SahneJewelTile extends StatelessWidget {
       width: SahneRing.r1,
     );
 
-    Widget noArt() => CustomPaint(
-      painter: SahneNoArtPainter(tone: tone),
-      child: Center(
-        child: Icon(icon, size: 48 * size / 128, color: SahneTokens.night.tx),
-      ),
-    );
+    Widget noArt() => mark != null
+        ? CustomPaint(
+            painter: SahneCategoryGlyphPainter(mark: mark!, tone: tone),
+          )
+        : CustomPaint(
+            painter: SahneNoArtPainter(tone: tone),
+            child: Center(
+              child: Icon(
+                icon,
+                size: 48 * size / 128,
+                color: SahneTokens.night.tx,
+              ),
+            ),
+          );
 
     final art = image == null
         ? noArt()
