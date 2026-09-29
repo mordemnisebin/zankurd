@@ -274,10 +274,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       final name = ku ? level.labelKu : level.labelTr;
                       sub = context.t(K.currentLevel, {'name': name});
                     }
-                    return SahneListRow.icon(
+                    return SahneListRow.plain(
                       key: const ValueKey('retake-placement-action'),
-                      icon: AppIcons.squareCheck,
-                      role: SahneRole.learn,
                       title: context.t(K.retakePlacement),
                       subtitle: sub,
                       chevron: true,
@@ -305,17 +303,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SahneListRow.icon(
+                  SahneListRow.plain(
                     key: const ValueKey('settings-report-abuse'),
-                    icon: AppIcons.triangleExclamation,
                     title: context.t(K.reportAbuse),
                     chevron: true,
                     onTap: _openAbuseReport,
                   ),
                   const _RowDivider(),
-                  SahneListRow.icon(
+                  SahneListRow.plain(
                     key: const ValueKey('settings-beta-feedback'),
-                    icon: AppIcons.circleInfo,
                     title: context.t(K.betaFeedback),
                     subtitle: context.t(K.betaFeedbackSub),
                     chevron: true,
@@ -331,8 +327,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               dividerIndent: _rowTextInset,
               children: [
                 Consumer<AnalyticsConsentProvider>(
-                  builder: (context, consent, _) => SahneListRow.icon(
-                    icon: AppIcons.shieldHalved,
+                  builder: (context, consent, _) => SahneListRow.plain(
                     title: context.t(K.analyticsConsent),
                     subtitle: context.t(K.analyticsConsentSub),
                     trailing: Switch(
@@ -350,8 +345,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SahneListGroup(
               dividerIndent: _rowTextInset,
               children: [
-                SahneListRow.icon(
-                  icon: AppIcons.language,
+                SahneListRow.plain(
                   title: context.t(K.appLanguage),
                   trailing: const LanguageToggle(
                     kuKey: ValueKey('settings-language-ku'),
@@ -359,8 +353,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 Consumer<ThemeProvider>(
-                  builder: (context, themeProvider, _) => SahneListRow.icon(
-                    icon: themeProvider.isDark ? AppIcons.moon : AppIcons.sun,
+                  builder: (context, themeProvider, _) => SahneListRow.plain(
                     title: context.t(K.darkLightMode),
                     trailing: Switch(
                       value: themeProvider.isDark,
@@ -371,8 +364,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 Consumer<ReducedMotionProvider>(
-                  builder: (context, motion, _) => SahneListRow.icon(
-                    icon: AppIcons.clapperboard,
+                  builder: (context, motion, _) => SahneListRow.plain(
                     title: context.t(K.reduceMotion),
                     trailing: Switch(
                       key: const ValueKey('reduce-motion-switch'),
@@ -386,8 +378,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // sayaçsızdı; kategori ve alıştırma turunda kapatmanın
                 // hiçbir yolu yoktu.
                 Consumer<UntimedModeProvider>(
-                  builder: (context, untimed, _) => SahneListRow.icon(
-                    icon: AppIcons.stopwatch,
+                  builder: (context, untimed, _) => SahneListRow.plain(
                     title: context.t(K.untimedSolo),
                     subtitle: context.t(K.untimedSoloSub),
                     trailing: Switch(
@@ -412,10 +403,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // (2026-07-31 denetimi). Ölü kontrol, bozuk kontroldür.
                 if (!kIsWeb)
                   Consumer<SoundProvider>(
-                    builder: (context, sound, _) => SahneListRow.icon(
-                      icon: sound.enabled
-                          ? AppIcons.volumeHigh
-                          : AppIcons.volumeXmark,
+                    builder: (context, sound, _) => SahneListRow.plain(
                       title: context.t(K.soundEffects),
                       trailing: Switch(
                         value: sound.enabled,
@@ -426,10 +414,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SahneListRow.icon(
-                      icon: _notificationsEnabled
-                          ? AppIcons.bell
-                          : AppIcons.bellSlash,
+                    SahneListRow.plain(
                       title: context.t(K.dailyReminder),
                       subtitle: context.t(K.dailyReminderAt, {
                         'time': _notificationTime,
@@ -448,8 +433,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
                 if (_notificationsEnabled)
-                  SahneListRow.icon(
-                    icon: AppIcons.clock,
+                  SahneListRow.plain(
                     title: context.t(K.changeTime, {'time': _notificationTime}),
                     chevron: true,
                     onTap: _pickNotificationTime,
@@ -527,12 +511,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               dividerIndent: _rowTextInset,
               children: [
                 _ExpandableRow(
-                  icon: AppIcons.circleQuestion,
                   title: context.t(K.howToPlay),
                   body: context.t(K.howToPlayBody),
                 ),
                 _ExpandableRow(
-                  icon: AppIcons.shieldHalved,
                   title: context.t(K.privacy),
                   body: context.t(K.privacyBody),
                 ),
@@ -607,9 +589,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             SahneListGroup(
               children: [
-                SahneListRow.icon(
+                SahneListRow.plain(
                   key: const ValueKey('delete-account-action'),
-                  icon: AppIcons.trashCan,
+                  destructive: true,
                   title: context.t(K.deleteAccount),
                   subtitle: context.t(K.deleteAccountSub),
                   trailing: _deleting
@@ -861,10 +843,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 }
 
-/// Liste satırında metnin başladığı hiza: 12 + 44'lük ikon karosu + 12.
-/// Satır olmayan çocukların (Consumer, Column) grup ayırıcısı da buradan
-/// başlar; [SahneListRow.dividerIndent] ile aynı değer.
-const double _rowTextInset = SahneSpace.x3 + 44 + SahneSpace.x3;
+/// Liste satırında metnin başladığı hiza. Satır olmayan çocukların
+/// (Consumer, Column) grup ayırıcısı da buradan başlar;
+/// [SahneListRow.dividerIndent] ile aynı değer.
+///
+/// 2026-09-29 doğallık (K7): ayar satırları ikonsuzdur
+/// ([SahneListRow.plain]); metin satırın kenarından (16) başlar. Eskiden
+/// her satırın başında metni tekrarlayan bir ikon karosu vardı (dil
+/// satırında dil ikonu, bildirimde zil, hareketi azalt'ta film şeridi…):
+/// on dört karo alt alta, hiçbiri satırın söylemediği bir şey söylemiyordu.
+/// Yalnız Premium satırı ikonunu korur: orada ikon bir ürünün kimliğidir.
+const double _rowTextInset = SahneSpace.x4;
 
 /// Liste grubunun ayırıcısı — grubun kendisi yerine `AppPanel` kullanılan
 /// tek yerde (güvenlik bölümü) elle konur.
@@ -933,13 +922,8 @@ class _InlineNotice extends StatelessWidget {
 /// Açılır bilgi satırı ("Nasıl oynanır", "Gizlilik"): liste satırı +
 /// altında gövde metni. Açılış hareketi azaltta anında olur.
 class _ExpandableRow extends StatefulWidget {
-  const _ExpandableRow({
-    required this.icon,
-    required this.title,
-    required this.body,
-  });
+  const _ExpandableRow({required this.title, required this.body});
 
-  final IconData icon;
   final String title;
   final String body;
 
@@ -959,8 +943,7 @@ class _ExpandableRowState extends State<_ExpandableRow> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SahneListRow.icon(
-            icon: widget.icon,
+          SahneListRow.plain(
             title: widget.title,
             trailing: ExcludeSemantics(
               child: Icon(
@@ -1055,8 +1038,7 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SahneListRow.icon(
-              icon: enabled ? AppIcons.volumeHigh : AppIcons.volumeXmark,
+            SahneListRow.plain(
               title: context.t(K.ttsEnable),
               subtitle: context.t(K.ttsEnableSub),
               trailing: Switch(
@@ -1079,7 +1061,6 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
         if (enabled && canSpeak) ...[
           _TtsSlider(
             label: context.t(K.ttsRate),
-            icon: AppIcons.bolt,
             value: tts.rate,
             onChanged: (v) async {
               await tts.setRate(v);
@@ -1088,7 +1069,6 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
           ),
           _TtsSlider(
             label: context.t(K.ttsVolume),
-            icon: AppIcons.volumeHigh,
             value: tts.volume,
             onChanged: (v) async {
               await tts.setVolume(v);
@@ -1103,18 +1083,17 @@ class _TtsSettingsSectionState extends State<_TtsSettingsSection> {
 
 /// TTS hız/ses seviyesi için 0–1 aralığında etiketli kaydırıcı satırı.
 ///
-/// Liste satırının geometrisi: 44'lük nötr ikon karosu, 12 aralık, başlık
-/// (Gövde 700) ve sağda değer; kaydırıcı başlığın altında.
+/// Liste satırının geometrisi: başlık (Gövde 700) satırın kenarından (16)
+/// başlar, sağda değer; kaydırıcı başlığın altında. 2026-09-29 doğallık:
+/// ikonsuz, üstündeki ayar satırlarıyla aynı hizada (bkz. [_rowTextInset]).
 class _TtsSlider extends StatelessWidget {
   const _TtsSlider({
     required this.label,
-    required this.icon,
     required this.value,
     required this.onChanged,
   });
 
   final String label;
-  final IconData icon;
   final double value;
   final ValueChanged<double> onChanged;
 
@@ -1123,23 +1102,13 @@ class _TtsSlider extends StatelessWidget {
     final t = SahneTokens.of(context);
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(
-        SahneSpace.x3,
+        _rowTextInset,
         SahneSpace.x2,
         SahneSpace.x4,
         SahneSpace.x1,
       ),
       child: Row(
         children: [
-          ExcludeSemantics(
-            child: DecoratedBox(
-              decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
-              child: SizedBox.square(
-                dimension: 44,
-                child: Icon(icon, size: 24, color: t.tx),
-              ),
-            ),
-          ),
-          const SizedBox(width: SahneSpace.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1289,9 +1258,8 @@ class _BlockedUsersSectionState extends State<_BlockedUsersSection> {
         return SahneListGroup(
           children: [
             for (final player in blocked)
-              SahneListRow.icon(
+              SahneListRow.plain(
                 key: ValueKey('blocked-row-${player.id}'),
-                icon: AppIcons.user,
                 title: player.displayName,
                 subtitle: player.formattedTag,
                 trailing: SahneButton.text(

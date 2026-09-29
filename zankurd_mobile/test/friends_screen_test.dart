@@ -162,6 +162,23 @@ void main() {
       expect(find.text('Oyna'), findsNothing);
     });
 
+    // 2026-09-29 doğallık (K10): sunucu kimliği olmayan depo sabit "DEMO"
+    // kodunu döndürüyordu ve ekran onu paylaşılabilir bir davet kodu
+    // düğmesi olarak çiziyordu — kimsenin kullanamayacağı bir kod.
+    testWidgets('sunucu kodu yokken sahte davet kodu paylaşılmaz', (
+      tester,
+    ) async {
+      expect(await repository.getPlayerTag(), isNull);
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      expect(find.text('DEMO'), findsNothing);
+      expect(
+        find.byKey(const ValueKey('friends-share-code-button')),
+        findsNothing,
+      );
+    });
+
     testWidgets(
       'bekleyen istek karti buyuk metinde kimlik ve eylemleri korur',
       (tester) async {

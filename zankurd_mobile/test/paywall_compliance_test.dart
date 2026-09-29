@@ -212,6 +212,14 @@ void main() {
     );
     // Hata dalı değil: teknik hata başlığı gösterilmemeli.
     expect(find.text(Tr.of(K.genericErrorTitle, AppLanguage.tr)), findsNothing);
+    // 2026-09-29 doğallık (K10): satın alınacak paket yokken yenileme
+    // koşulları ve "geri yükle" görünmez — olmayan bir aboneliğin
+    // koşullarını saymak ekranın asıl sözünü bastırıyordu.
+    expect(
+      find.text(Tr.of(K.paywallRenewalTerms, AppLanguage.tr)),
+      findsNothing,
+    );
+    expect(find.text(Tr.of(K.restorePurchases, AppLanguage.tr)), findsNothing);
 
     // Kullanıcı çıkışsız kalmamalı: durum oturum içinde tazelenebilmeli.
     final retry = find.text(Tr.of(K.retry, AppLanguage.tr));

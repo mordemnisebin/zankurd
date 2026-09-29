@@ -713,8 +713,10 @@ class _FriendRow extends StatelessWidget {
     final online = friend.isOnline;
     return _PersonRow(
       key: ValueKey('friend-row-${friend.friendName}'),
-      // Çevrimiçi durumu yalnız renkle verilmez: elmasın köşesindeki küçük
-      // elmas dolu (çevrimiçi) ya da boş (çevrimdışı) ve alt satırda söz.
+      // Çevrimiçi durumu yalnız renkle verilmez: avatarın köşesindeki küçük
+      // nokta dolu (çevrimiçi) ya da boş (çevrimdışı) ve alt satırda söz.
+      // 2026-09-29 doğallık: nokta elmastı; elmas yalnız soru ilerlemesi ve
+      // ders sayacı anlamını taşır (K5). Durum noktası yuvarlaktır.
       avatar: SizedBox.square(
         dimension: 40,
         child: Stack(
@@ -730,15 +732,14 @@ class _FriendRow extends StatelessWidget {
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: online ? t.okTx : t.s1,
-                  shape: SahneShape.diamond(
-                    14,
+                  shape: CircleBorder(
                     side: BorderSide(
                       color: online ? t.s1 : t.tx3,
                       width: SahneRing.r2,
                     ),
                   ),
                 ),
-                child: const SizedBox.square(dimension: 14),
+                child: const SizedBox.square(dimension: 12),
               ),
             ),
           ],

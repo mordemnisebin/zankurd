@@ -15,6 +15,11 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 /// gösteriyor: tercih açıkken ilk form ekranı splash/girişteki gibi
 /// ayarı yok saymış olur. Ölçek süsüdür, durum taşımaz — bitmiş değerde
 /// durmalı.
+///
+/// 2026-09-29 doğallık: adım göstergesi artık kendi ölçek geçişiyle üstte
+/// duran üç elmas değil, kahraman kartının içindeki "1/3" metnidir ve
+/// kartla birlikte solarak girer. Bekçi aynı kuralı o geçişte ölçer:
+/// hareketi azalt açıkken gösterge ilk karede tam görünür.
 Widget _shell({required bool reducedMotion}) {
   return MultiProvider(
     providers: [
@@ -31,13 +36,15 @@ Widget _shell({required bool reducedMotion}) {
 
 double _stepScale(WidgetTester tester) {
   return tester
-      .widget<ScaleTransition>(
-        find.ancestor(
-          of: find.text('1'),
-          matching: find.byType(ScaleTransition),
-        ),
+      .widget<FadeTransition>(
+        find
+            .ancestor(
+              of: find.byKey(const ValueKey('signup-progress')),
+              matching: find.byType(FadeTransition),
+            )
+            .first,
       )
-      .scale
+      .opacity
       .value;
 }
 

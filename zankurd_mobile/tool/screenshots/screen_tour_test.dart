@@ -190,7 +190,7 @@ Widget _result1v1VictoryScreen() {
     category: 'Ziman',
     players: [
       Player(id: 'user', name: 'Ez', score: 320, state: Player.readyState),
-      Player(id: 'opp', name: 'Hevrik', score: 180, state: Player.readyState),
+      Player(id: 'opp', name: 'Rojda', score: 180, state: Player.readyState),
     ],
     status: RoomStatus.finished,
     questionCount: 5,
@@ -206,7 +206,7 @@ Widget _result1v1VictoryScreen() {
     bestStreak: 3,
     coinsAwarded: 50,
     opponents: const [
-      Player(id: 'opp', name: 'Hevrik', score: 180, state: Player.readyState),
+      Player(id: 'opp', name: 'Rojda', score: 180, state: Player.readyState),
     ],
     answerRecords: const [
       AnswerRecord(
@@ -236,7 +236,7 @@ Widget _result1v1VictoryScreen() {
 }
 
 Widget _resultScreen() {
-  final repository = MockZanKurdRepository();
+  final repository = _TourRepository();
   final room = repository.createRoom();
   return QuizResultScreen(
     repository: repository,
@@ -285,6 +285,129 @@ Widget _resultScreen() {
       ),
     ],
   );
+}
+
+/// Turun TEK HİKÂYESİ (2026-09-29 doğallık).
+///
+/// Tur eskiden her karede başka bir dünya çiziyordu: oyun merkezinde
+/// Rojda'ya "Kaybettin 2–3" derken aynı düellonun sonuç ekranı "Sen 2 – 0
+/// Rojda, Kazandın!" diyordu; oda lobisinde "Sen" ile "Heval" otururken
+/// tepkiler odada olmayan Rojda ve Baran'dan geliyordu; oda kodu her karede
+/// başka rastgele bir koddu; sıralamada oyuncunun kendi satırı hiç yoktu;
+/// davet kodu düğmesinde "DEMO" yazıyordu. Kareler tek tek doğruydu ama
+/// yan yana konunca uydurma olduğu belli oluyordu.
+///
+/// Hikâye: oyuncu yeni ve adsız (ad kapısı ve boş durumlar öyle görünsün
+/// diye), davet kodu [_tourPlayerTag]. Odası "Hevalên Zanînê", kodu
+/// [_tourRoomCode], odada Berfin var. Rakibi Rojda: sırayla düelloyu 5–3
+/// kazandı ([_seedRojdaDuel]), 1v1 odada da onu yendi. Oda yarışından
+/// [_tourRaceScore] puan aldı; haftalık sıralamada o puanla kendi satırını
+/// görür. Arkadaşları Diyar ve Berfin, isteği bekleyen Rojîn. Sıralamanın
+/// başı Rojda, Baran, Dilan.
+const _tourPlayerTag = '4F7K';
+const _tourRoomCode = 'ZK-7A41C29E0B';
+
+/// Oda yarışının puanı: `68_result` karesi ve sıralamadaki kendi satır.
+const _tourRaceScore = 240;
+
+class _TourRepository extends TestMockZanKurdRepository {
+  @override
+  Future<String?> getPlayerTag() async => _tourPlayerTag;
+
+  @override
+  GameRoom createRoom({String category = 'Ziman'}) {
+    final room = super.createRoom(category: category);
+    return room.copyWith(
+      code: _tourRoomCode,
+      players: [
+        room.players.first,
+        const Player(
+          id: 'tour-berfin',
+          name: 'Berfin',
+          score: 0,
+          state: Player.readyState,
+        ),
+      ],
+    );
+  }
+
+  @override
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 10,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async {
+    final top = await super.loadLeaderboard(limit: limit, period: period);
+    return [
+      ...top,
+      const LeaderboardEntry(
+        rank: 4,
+        playerId: 'tour-diyar',
+        displayName: 'Diyar',
+        totalScore: 2450,
+        bestStreak: 6,
+        roomsPlayed: 9,
+      ),
+      const LeaderboardEntry(
+        rank: 5,
+        playerId: 'tour-berfin',
+        displayName: 'Berfin',
+        totalScore: 1820,
+        bestStreak: 5,
+        roomsPlayed: 7,
+      ),
+      const LeaderboardEntry(
+        rank: 6,
+        playerId: 'tour-rojin',
+        displayName: 'Rojîn',
+        totalScore: 610,
+        bestStreak: 3,
+        roomsPlayed: 3,
+      ),
+      const LeaderboardEntry(
+        rank: 7,
+        playerId: 'user',
+        displayName: 'ZanKurd Oyuncusu',
+        totalScore: _tourRaceScore,
+        bestStreak: 2,
+        roomsPlayed: 1,
+      ),
+    ];
+  }
+}
+
+/// Rojda ile oynanan sırayla düello: Rojda 3 doğruyla bitirmiş, oyuncu
+/// ilk beş soruyu doğru, son ikisini yanlış cevaplar — 5–3 galibiyet.
+/// Seçim sabit bir harf ("A") değil, bankadaki doğru cevaptan hesaplanır:
+/// düellonun soruları her koşuda başka olsa da skor aynı kalır.
+Future<void> _seedRojdaDuel(MockZanKurdRepository repo) async {
+  repo.addPendingAsyncDuelForTesting(
+    opponentName: 'Rojda',
+    opponentCorrect: 3,
+    opponentMs: 90000,
+  );
+  await _playAsyncDuel(repo, correctCount: 5);
+}
+
+/// Açılan (ya da bekleyen rakiple eşleşen) düelloyu oynar: ilk
+/// [correctCount] soru doğru, kalanlar yanlış.
+Future<void> _playAsyncDuel(
+  MockZanKurdRepository repo, {
+  required int correctCount,
+}) async {
+  const letters = ['A', 'B', 'C', 'D'];
+  final start = await repo.startAsyncDuel();
+  final bank = {for (final q in repo.playableQuestions) q.id: q};
+  for (var i = 0; i < start.questions.length; i++) {
+    final shown = start.questions[i];
+    final correct = shown.answers.indexOf(bank[shown.id]!.correctAnswer);
+    final index = i < correctCount ? correct : (correct + 1) % 4;
+    await repo.answerAsyncDuel(
+      duelId: start.duelId,
+      questionIndex: i,
+      choice: letters[index],
+      responseMs: 6000,
+    );
+  }
 }
 
 /// Turun kabuğu: `testShell` + görüntü sınırı.
@@ -346,7 +469,7 @@ Future<void> _pump(
 /// `11_contest` == `34_contest_empty` birebir aynı PNG oluyordu: iki ayrı
 /// test adı, tek bir görsel durum. Dolu fixture yalnız burada yaşar; ürün
 /// fallback davranışını değiştirmez.
-class _PopulatedStateRepository extends MockZanKurdRepository {
+class _PopulatedStateRepository extends _TourRepository {
   @override
   Future<List<Friend>> loadFriends() async => [
     Friend(
@@ -389,7 +512,7 @@ class _PopulatedStateRepository extends MockZanKurdRepository {
 }
 
 /// Yeni kullanıcının gerçekten gördüğü boş sosyal durum.
-class _ReactionStateRepository extends MockZanKurdRepository {
+class _ReactionStateRepository extends _TourRepository {
   final StreamController<Map<String, dynamic>> _broadcasts =
       StreamController<Map<String, dynamic>>.broadcast(sync: true);
 
@@ -563,7 +686,10 @@ void main() {
           ),
         );
 
-    repository = freshMockRepository();
+    // `freshMockRepository` depoları sıfırlar; tur kendi hikâyesinin
+    // deposunu kullanır (bkz. [_TourRepository]).
+    freshMockRepository();
+    repository = _TourRepository();
     SharedPreferences.setMockInitialValues({
       'zankurd.onboarding.seen': true,
       // Eski GLOBAL anahtar. `AppShell` 2026-08-03'te ad kapısını kullanıcıya
@@ -1372,15 +1498,12 @@ void main() {
       senderName: 'Berfin',
       senderId: 'tour-berfin',
     );
+    // Tepkiyi yalnız odadaki oyuncu gönderir (bkz. [_TourRepository]):
+    // eskiden odada olmayan Rojda ve Baran da tepki atıyordu.
     reactionRepository.emitReaction(
       '🔥 Agir!',
-      senderName: 'Rojda',
-      senderId: 'tour-rojda',
-    );
-    reactionRepository.emitReaction(
-      '⚡ Lez be!',
-      senderName: 'Baran',
-      senderId: 'tour-baran',
+      senderName: 'Berfin',
+      senderId: 'tour-berfin',
     );
     await t.pump();
     await t.pump(const Duration(milliseconds: 500));
@@ -1427,31 +1550,11 @@ void main() {
   testWidgets('97 oyun merkezi — sırayla düello', (t) async {
     final repo = MockZanKurdRepository();
     await t.runAsync(() async {
-      // "Rakip bekleniyor" satırı:
-      final a = await repo.startAsyncDuel();
-      for (var i = 0; i < a.questions.length; i++) {
-        await repo.answerAsyncDuel(
-          duelId: a.duelId,
-          questionIndex: i,
-          choice: 'A',
-          responseMs: 1000,
-        );
-      }
-      // "Sonuç hazır" satırı (tamamlanmış, görülmemiş):
-      repo.addPendingAsyncDuelForTesting(
-        opponentName: 'Rojda',
-        opponentCorrect: 3,
-        opponentMs: 60000,
-      );
-      final b = await repo.startAsyncDuel();
-      for (var i = 0; i < b.questions.length; i++) {
-        await repo.answerAsyncDuel(
-          duelId: b.duelId,
-          questionIndex: i,
-          choice: 'A',
-          responseMs: 4000,
-        );
-      }
+      // "Rakip bekleniyor" satırı: oyuncunun açtığı, 5/7 bitirdiği düello.
+      await _playAsyncDuel(repo, correctCount: 5);
+      // "Sonuç hazır" satırı (tamamlanmış, görülmemiş): Rojda'ya karşı 5–3,
+      // `101`/`103` karelerindeki düellonun ta kendisi.
+      await _seedRojdaDuel(repo);
     });
     await _pump(t, PlayHubScreen(repository: repo, asyncDuelEnabled: true));
     // Kutu tembel kurulan listenin altında: kurulmamış olabilir, bu yüzden
@@ -1470,29 +1573,8 @@ void main() {
   ) async {
     final repo = MockZanKurdRepository();
     await t.runAsync(() async {
-      final a = await repo.startAsyncDuel();
-      for (var i = 0; i < a.questions.length; i++) {
-        await repo.answerAsyncDuel(
-          duelId: a.duelId,
-          questionIndex: i,
-          choice: 'A',
-          responseMs: 1000,
-        );
-      }
-      repo.addPendingAsyncDuelForTesting(
-        opponentName: 'Rojda',
-        opponentCorrect: 3,
-        opponentMs: 60000,
-      );
-      final b = await repo.startAsyncDuel();
-      for (var i = 0; i < b.questions.length; i++) {
-        await repo.answerAsyncDuel(
-          duelId: b.duelId,
-          questionIndex: i,
-          choice: 'A',
-          responseMs: 4000,
-        );
-      }
+      await _playAsyncDuel(repo, correctCount: 5);
+      await _seedRojdaDuel(repo);
     });
     await _pump(
       t,
@@ -1540,22 +1622,8 @@ void main() {
     final repo = MockZanKurdRepository();
     late AsyncDuelSummary completedSummary;
     await t.runAsync(() async {
-      // Rakip 0 doğru ve çok uzun sürede bitirmiş: eşit doğruda bile kısa
-      // süre kazanır, kare her koşuda galibiyettir.
-      repo.addPendingAsyncDuelForTesting(
-        opponentName: 'Rojda',
-        opponentCorrect: 0,
-        opponentMs: 999999,
-      );
-      final a = await repo.startAsyncDuel();
-      for (var i = 0; i < a.questions.length; i++) {
-        await repo.answerAsyncDuel(
-          duelId: a.duelId,
-          questionIndex: i,
-          choice: 'A',
-          responseMs: 1000,
-        );
-      }
+      // Oyun merkezindeki "Sonuç hazır" satırıyla aynı düello: 5–3.
+      await _seedRojdaDuel(repo);
       final summaries = await repo.loadMyAsyncDuels();
       completedSummary = summaries.firstWhere((s) => s.outcome != null);
     });
@@ -1573,15 +1641,8 @@ void main() {
     final repo = MockZanKurdRepository();
     late AsyncDuelSummary waitingSummary;
     await t.runAsync(() async {
-      final a = await repo.startAsyncDuel();
-      for (var i = 0; i < a.questions.length; i++) {
-        await repo.answerAsyncDuel(
-          duelId: a.duelId,
-          questionIndex: i,
-          choice: 'A',
-          responseMs: 1000,
-        );
-      }
+      // Oyun merkezindeki "Rakip bekleniyor" satırıyla aynı düello: 5/7.
+      await _playAsyncDuel(repo, correctCount: 5);
       final summaries = await repo.loadMyAsyncDuels();
       waitingSummary = summaries.first;
     });
@@ -1599,22 +1660,8 @@ void main() {
     final repo = MockZanKurdRepository();
     late AsyncDuelSummary completedSummary;
     await t.runAsync(() async {
-      // Rakip 0 doğru ve çok uzun sürede bitirmiş: eşit doğruda bile kısa
-      // süre kazanır, kare her koşuda galibiyettir.
-      repo.addPendingAsyncDuelForTesting(
-        opponentName: 'Rojda',
-        opponentCorrect: 0,
-        opponentMs: 999999,
-      );
-      final a = await repo.startAsyncDuel();
-      for (var i = 0; i < a.questions.length; i++) {
-        await repo.answerAsyncDuel(
-          duelId: a.duelId,
-          questionIndex: i,
-          choice: 'A',
-          responseMs: 1000,
-        );
-      }
+      // Oyun merkezindeki "Sonuç hazır" satırıyla aynı düello: 5–3.
+      await _seedRojdaDuel(repo);
       final summaries = await repo.loadMyAsyncDuels();
       completedSummary = summaries.firstWhere((s) => s.outcome != null);
     });
@@ -1642,7 +1689,7 @@ RoomResultSnapshot _recoverySnapshot() => RoomResultSnapshot(
       Player(id: 'user', name: 'Ez', score: 30, state: Player.readyState),
       Player(
         id: 'opponent',
-        name: 'Hevrik',
+        name: 'Rojda',
         score: 20,
         state: Player.readyState,
       ),

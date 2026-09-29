@@ -227,10 +227,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<String?> getPlayerTag() async {
-    // Çevrimdışı depoda sabit bir kod: ekranın kodu nasıl gösterdiği
-    // testlerde ve turda görünür olsun, ama gerçek bir kodmuş gibi
-    // davranmasın.
-    return 'DEMO';
+    // 2026-09-29 doğallık (K10): burada sabit 'DEMO' dönüyordu ve arkadaş
+    // ekranı onu paylaşılabilir bir davet kodu düğmesi olarak ("DEMO")
+    // çiziyordu; profil de "ZK-DEMO" yazıyordu. Kimsenin kullanamayacağı
+    // bir kod, gerçek bir kod gibi sunuluyordu. Sunucu kimliği olmayan
+    // depo kod üretmez (`OfflineZanKurdRepository` gibi): düğme görünmez,
+    // "Davet kodu gir" kalır. Kodun nasıl göründüğünü ekran turu kendi
+    // hikâyesiyle gösterir (`tool/screenshots/screen_tour_test.dart`).
+    return null;
   }
 
   @override

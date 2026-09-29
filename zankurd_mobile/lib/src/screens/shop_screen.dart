@@ -17,6 +17,7 @@ import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../widgets/app_state.dart';
 import '../widgets/branded_loader.dart';
+import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 import 'spin_wheel_screen.dart';
@@ -145,11 +146,18 @@ class ShopItem {
   //      gelir kaybı değil, erişilebilirlik kazancıdır.
   //
   // Yeni tempo: ilk satın alma 3,0 gün; katalog 17,7 gün.
+  //
+  // 2026-09-29 doğallık: ürün adları cümle düzeninde ("Altın çerçeve",
+  // "Altın Çerçeve" değil). Her sözcüğü büyük harfle başlatmak Türkçe ve
+  // Kurmancîde doğal değil; İngilizce arayüz kalıbıydı. DİKKAT: uzak
+  // `shop_items` tablosunun `title_ku/title_tr` sütunları hâlâ eski
+  // yazımı taşıyor (`supabase/2026-07-23_shop_items_sync.sql`); canlı
+  // katalog okunduğunda o adlar görünür — veri göçü ayrıca gerekir.
   static const List<ShopItem> catalog = [
     ShopItem(
       id: 'spin_wheel_extra',
-      titleKu: 'Zivirîna Zêde',
-      titleTr: 'Ekstra Çevirme',
+      titleKu: 'Zivirîna zêde',
+      titleTr: 'Ekstra çevirme',
       descKu: 'Ji bo çerxa rojane mafekî zivirînê yê nû dide.',
       descTr: 'Bugün çarkı tekrar çevirmek için ekstra hak verir.',
       cost: 120,
@@ -158,8 +166,8 @@ class ShopItem {
     ),
     ShopItem(
       id: 'avatar_frame_gold',
-      titleKu: 'Çarçoveya Zêrîn',
-      titleTr: 'Altın Çerçeve',
+      titleKu: 'Çarçoveya zêrîn',
+      titleTr: 'Altın çerçeve',
       descKu: 'Ji bo avatarê te çarçoveyeke zêrîn a taybet.',
       descTr: 'Avatarın için özel altın çerçeve.',
       cost: 480,
@@ -168,8 +176,8 @@ class ShopItem {
     ),
     ShopItem(
       id: 'avatar_frame_neon',
-      titleKu: 'Çarçoveya Neon',
-      titleTr: 'Neon Çerçeve',
+      titleKu: 'Çarçoveya neon',
+      titleTr: 'Neon çerçeve',
       descKu: 'Avatarê te bi rengên neon ên geş dibiriqe.',
       descTr: 'Avatarın neon renklerle parıldasın.',
       cost: 350,
@@ -179,7 +187,7 @@ class ShopItem {
     ShopItem(
       id: 'profile_badge_vip',
       titleKu: 'Rozeta VIP',
-      titleTr: 'VIP Rozeti',
+      titleTr: 'VIP rozeti',
       descKu: 'Profîla te de rozeteke taybet a VIP xuya dibe.',
       descTr: 'Profilinde özel VIP rozeti görünsün.',
       cost: 720,
@@ -218,6 +226,12 @@ class _ShopScreenState extends State<ShopScreen> {
   final Set<String> _purchasedItemIds = {};
   List<ShopItem> _dynamicItems = const [];
 
+  /// Çerçeve ürünlerinin önizlemesi için oyuncunun kendi avatarı ve adı.
+  /// Yüklenemezse `null` kalır ve karo ürün ikonuna düşer; mağaza bu
+  /// yüzden hata durumuna geçmez.
+  AvatarIdentity? _avatar;
+  String? _profileName;
+
   // Sunucuda ürün kaydı bulunması tek başına yayına hazır olduğu anlamına
   // gelmez. Coin düşürüp etkisi olmayan taslak ürünler burada görünmez.
   // Bir ürün bu kümede YOKSA vitrinde görünmez. 2026-07-31'e kadar katalog
@@ -249,6 +263,33 @@ class _ShopScreenState extends State<ShopScreen> {
     'profile_badge_vip',
   };
   static const Set<String> _repeatableItemIds = {'spin_wheel_extra'};
+
+  static bool _isFrameItem(String id) => id.startsWith('avatar_frame_');
+
+  /// Ürün önizleme karosu. Çerçeve ürünlerinde karoda boş bir yıldız ya da
+  /// sihirli değnek değil, oyuncunun KENDİ avatarı o çerçeveyle durur:
+  /// satın alınan şeyin neye benzeyeceğini gösterir (2026-09-29 doğallık,
+  /// GORSEL_KARARLAR K10). Avatar yüklenemediyse ürün ikonuna düşer.
+  Widget _preview(ShopItem item, {required double size, bool dim = false}) {
+    final avatar = _avatar;
+    if (avatar == null || !_isFrameItem(item.id)) {
+      return _PreviewTile(icon: item.icon, size: size, dim: dim);
+    }
+    final framed = applyShopPurchaseEffect(item.id, avatar);
+    return _PreviewTile(
+      icon: item.icon,
+      size: size,
+      dim: dim,
+      child: PlayerAvatar(
+        radius: (size * 0.34).roundToDouble(),
+        photoUrl: framed.photoUrl,
+        iconId: framed.iconId,
+        colorHex: framed.colorHex,
+        frameId: framed.frameId,
+        displayName: _profileName,
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -329,8 +370,25 @@ class _ShopScreenState extends State<ShopScreen> {
         }
       }
 
+      AvatarIdentity? avatar;
+      String? profileName;
+      if (dynamicItems.any((item) => _isFrameItem(item.id))) {
+        try {
+          avatar = await widget.repository.loadAvatarIdentity();
+          profileName = await widget.repository.getProfileName();
+        } catch (error, stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'shop frame preview avatar load failed',
+          );
+        }
+      }
+
       if (mounted) {
         setState(() {
+          _avatar = avatar;
+          _profileName = profileName;
           _coinBalance = balance;
           _dynamicItems = dynamicItems;
           _purchasedItemIds.clear();
@@ -383,7 +441,7 @@ class _ShopScreenState extends State<ShopScreen> {
         return AlertDialog(
           title: Row(
             children: [
-              _PreviewTile(icon: item.icon, size: 44),
+              _preview(item, size: 44),
               const SizedBox(width: SahneSpace.x3),
               Expanded(
                 child: Text(
@@ -930,7 +988,7 @@ class _ShopScreenState extends State<ShopScreen> {
       title = math.max(title, measure(name, SahneType.bodyStrong, inner));
       final label = _purchasedItemIds.contains(item.id)
           ? context.t(K.ownedLabel)
-          : '${item.cost}${context.t(K.coinAbbrev)}';
+          : '${item.cost}';
       // Düğme: 12 + ikon (20) + 8 yan boşlukla etiket; dikeyde 12 + 12.
       final labelHeight = measure(
         label,
@@ -951,6 +1009,11 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   // ── Öne çıkan ürün: aynı yüzey kartının tam genişlik hâli ──
+  //
+  // 2026-09-29 doğallık: kartın üstündeki "En çok alınan" rozeti kalktı
+  // (K10). Satış verisi yok; rozet her kurulumda en pahalı ürüne yapışan
+  // uydurma bir iddiaydı. Kart yalnız katalogun en pahalı ürününü geniş
+  // gösterir.
   Widget _buildHeroCard(ShopItem item, bool ku) {
     final t = SahneTokens.of(context);
     final title = ku ? item.titleKu : item.titleTr;
@@ -963,17 +1026,9 @@ class _ShopScreenState extends State<ShopScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: SahneBadge(
-              label: context.t(K.mostWanted),
-              tone: SahneBadgeTone.gold,
-            ),
-          ),
-          const SizedBox(height: SahneSpace.x3),
           Row(
             children: [
-              _PreviewTile(icon: item.icon, size: 72, dim: isPurchased),
+              _preview(item, size: 72, dim: isPurchased),
               const SizedBox(width: SahneSpace.x4),
               Expanded(
                 child: Column(
@@ -1020,7 +1075,7 @@ class _ShopScreenState extends State<ShopScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _PreviewTile(icon: item.icon, size: 72, dim: isPurchased),
+          _preview(item, size: 72, dim: isPurchased),
           const SizedBox(height: SahneSpace.x3),
           Text(
             title,
@@ -1052,10 +1107,13 @@ class _ShopScreenState extends State<ShopScreen> {
   // kartlarınınki ikincil (Kulis). Fiyatın solunda Şahnê jeton glifi
   // durur — Lucide ikonu değil (ödül glifleri `SahneGlyph`).
   Widget _buildBuyButton(ShopItem item, bool ku, {bool primary = false}) {
-    // Görünen etiket kısa ("120j"), ekran okuyucuya söylenen ad tam
-    // cümle (bkz. `test/button_semantics_test.dart`): düğme yalnız
-    // "düğme" diye okunursa neyi satın alacağı söylenmez.
-    final label = '${item.cost}${context.t(K.coinAbbrev)}';
+    // Görünen etiket yalnız sayı; birimi soldaki jeton glifi söyler.
+    // 2026-09-29 doğallık: "720j" kısaltması kalktı (K10) — glifin
+    // yanında "j" ikinci kez aynı şeyi söylüyordu ve Kurmancîde "720z"
+    // okunmuyordu. Ekran okuyucuya söylenen ad tam cümle (bkz.
+    // `test/button_semantics_test.dart`): düğme yalnız "düğme" diye
+    // okunursa neyi satın alacağı söylenmez.
+    final label = '${item.cost}';
     final semanticLabel = context.t(K.buyItemForCoins, {
       'item': ku ? item.titleKu : item.titleTr,
       'coins': '${item.cost}',
@@ -1094,11 +1152,16 @@ class _PreviewTile extends StatelessWidget {
     required this.icon,
     required this.size,
     this.dim = false,
+    this.child,
   });
 
   final IconData icon;
   final double size;
   final bool dim;
+
+  /// Verilirse ikon yerine karonun ortasında durur (çerçeve ürününde
+  /// oyuncunun avatarı).
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -1112,7 +1175,9 @@ class _PreviewTile extends StatelessWidget {
         child: SizedBox(
           width: size,
           height: size,
-          child: Icon(icon, size: size * 0.45, color: dim ? t.tx3 : t.goldTx),
+          child: child != null
+              ? Center(child: child)
+              : Icon(icon, size: size * 0.45, color: dim ? t.tx3 : t.goldTx),
         ),
       ),
     );

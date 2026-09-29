@@ -205,8 +205,18 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 isKu: ku,
                 isBusy: context.watch<PremiumService>().purchaseInProgress,
               ),
-            const SizedBox(height: SahneSpace.x6),
-            _FooterActions(isKu: ku, onRestore: _restore),
+            // 2026-09-29 doğallık (K10): yenileme koşulları, hukuk
+            // bağlantıları ve "Satın alımları geri yükle" yalnız satın
+            // alınabilir bir paket varken görünür. Paket yokken ekran
+            // olmayan bir aboneliğin koşullarını sayıyor ve geri yüklenecek
+            // bir şeyi olmayan kullanıcıya düğme gösteriyordu; kalıp metin
+            // kalabalığı ekranın asıl söylediğini ("paketler henüz aktif
+            // değil") bastırıyordu. Apple 3.1.2'nin istediği yer satın alma
+            // anıdır: paket çizildiği anda hepsi yeniden görünür.
+            if (!_loading && _packages.isNotEmpty) ...[
+              const SizedBox(height: SahneSpace.x6),
+              _FooterActions(isKu: ku, onRestore: _restore),
+            ],
           ],
         ),
       ),

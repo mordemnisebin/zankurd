@@ -53,13 +53,14 @@ void main() {
     expect(Tr.of(K.coinAbbrev, AppLanguage.ku), 'z');
     expect(Tr.of(K.coinAbbrev, AppLanguage.tr), 'j');
 
-    // 2026-09-29 doğallık: sonuç ekranının jeton çipi ve joker düğmesi
-    // artık kısaltma göstermez — ekranda sayı + jeton glifi durur, ekran
-    // okuyucu para biriminin tam adını (`K.coinWord`) duyurur. Bu iki
-    // dosya kısaltmayı HİÇ taşımamalı; sabit son ek (`c`, `j`) de yok.
+    // 2026-09-29 doğallık: üç ekran da artık kısaltma göstermez; fiyat
+    // sayı + jeton glifi ("720", "720j" değil), ekran okuyucu para
+    // biriminin tam adını (`K.coinWord`) duyurur. Bu dosyalar kısaltmayı
+    // HİÇ taşımamalı; sabit son ek (`c`, `j`) de yok.
     const glyphScreens = [
       'lib/src/screens/quiz_result_screen.dart',
       'lib/src/screens/quiz/quiz_wildcard_bar.dart',
+      'lib/src/screens/shop_screen.dart',
     ];
     for (final path in glyphScreens) {
       final code = File(path)
@@ -76,25 +77,6 @@ void main() {
         RegExp(r"\}[cj]'").hasMatch(code),
         isFalse,
         reason: '\$path içinde sabit para son eki kalmış.',
-      );
-    }
-
-    const screens = ['lib/src/screens/shop_screen.dart'];
-    for (final path in screens) {
-      final code = File(path)
-          .readAsStringSync()
-          .split('\n')
-          .where((line) => !line.trimLeft().startsWith('//'))
-          .join('\n');
-      expect(
-        code,
-        contains('K.coinAbbrev'),
-        reason: '\$path kısaltmayı defterden okumalı.',
-      );
-      expect(
-        RegExp(r"\}c'").hasMatch(code),
-        isFalse,
-        reason: '\$path içinde sabit `c` son eki kalmış.',
       );
     }
   });
