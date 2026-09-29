@@ -5,9 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 void main() {
   testWidgets('tanıtım öğrenme ve yarış değerini iki kısa adımda anlatır', (
@@ -79,7 +79,12 @@ void main() {
     expect(hero.height, lessThan(300));
   });
 
-  testWidgets('onboarding her adımda ortak Forest hero kimliğini kullanır', (
+  // 2026-09-29 Şahnê: bu iki bekçi Forest degradesini (hero ve seçili adım
+  // göstergesi) sabitliyordu. Slaytlar artık sahne kartıdır ve rolünü
+  // taşır; gösterge elmaslardan oluşur. Korunan şey: her adım ortak bir
+  // sahne kimliği taşır (renk kararsızca sayfadan sayfaya değişmez, rol
+  // değişir) ve etkin adım göstergede şekille (büyük elmas) ayrışır.
+  testWidgets('onboarding her adımda sahne kartı kimliğini kullanır', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -90,22 +95,19 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    LinearGradient heroGradient() {
-      final hero = tester.widget<Container>(
-        find.byKey(const ValueKey('onboarding-hero-panel')),
-      );
-      return (hero.decoration! as BoxDecoration).gradient! as LinearGradient;
-    }
+    SahneStageCard hero() => tester.widget<SahneStageCard>(
+      find.byKey(const ValueKey('onboarding-hero-panel')),
+    );
 
-    expect(heroGradient().colors, AppTheme.identityHeaderGradient.colors);
+    expect(hero().role, SahneRole.learn);
 
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
 
-    expect(heroGradient().colors, AppTheme.identityHeaderGradient.colors);
+    expect(hero().role, SahneRole.race);
   });
 
-  testWidgets('onboarding seçili adım göstergesi Forest kullanır', (
+  testWidgets('onboarding seçili adım göstergesi büyük elmasla ayrışır', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -116,16 +118,17 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final indicator = tester.widget<AnimatedContainer>(
-      find.byKey(const ValueKey('onboarding-page-indicator-0')),
+    Size dot(int i) => tester.getSize(
+      find.descendant(
+        of: find.byKey(ValueKey('onboarding-page-indicator-$i')),
+        matching: find.byType(AnimatedContainer),
+      ),
     );
-    final decoration = indicator.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
-    expect(
-      decoration.boxShadow!.single.color,
-      AppTheme.culturalBrandBg.withValues(alpha: 0.25),
-    );
+    expect(dot(0).width, greaterThan(dot(1).width));
+
+    await tester.tap(find.text('Sonraki'));
+    await tester.pumpAndSettle();
+    expect(dot(1).width, greaterThan(dot(0).width));
   });
 
   testWidgets('onboarding dil düğmesi başlık alanına yayılmaz', (tester) async {
@@ -189,10 +192,12 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(tester.widget<AppLogo>(find.byType(AppLogo)).width, 96);
-      // 2026-09-10: hero artık Zana'yı köşede karşılar (eski kural
-      // "onboarding'de maskot görünmez" görsel denetimle değişti).
-      expect(find.byType(RojMascot), findsOneWidget);
+      // 2026-09-29 Şahnê: logo işareti plakada (64 + plaka payı); maskot
+      // yok ("maskot: Yok", spec_sahne.json).
+      final logo = tester.widget<AppLogo>(find.byType(AppLogo));
+      expect(logo.width, 64);
+      expect(logo.onBrandSurface, isTrue);
+      expect(find.byType(RojMascot), findsNothing);
 
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump();

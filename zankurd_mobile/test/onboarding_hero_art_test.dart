@@ -1,6 +1,13 @@
 /// Onboarding hero SANATININ bekçisi: sayfa 1 kategori yelpazesi
-/// (`_CategoryFan`), sayfa 2 yarışma sahnesi (`StageBackdropPainter`) ve
-/// hero/başlık arası boşluk.
+/// (`_CategoryFan`), sayfa 2 yarışma sahnesi ve hero/başlık arası boşluk.
+///
+/// 2026-09-29 Şahnê: iki slayt da sahne kartıdır (`SahneStageCard`): sayfa
+/// 1 öğrenme (Zimrût), sayfa 2 yarış (Boyax sahne degradesi). Sayfa 2'nin
+/// eski konfeti fonu (`StageBackdropPainter`) + beyaz dairede şimşek +
+/// köşede maskot yerine düello amblemi (`SahneVsEmblem`) durur; maskot
+/// Şahnê'de yok. Grup 2 artık rolü ve amblemi sınar; korunan şey aynı:
+/// yarış slaytı öğrenme slaytından görsel olarak ayrışır ve bir yarışma
+/// sahnesi gibi görünür.
 ///
 /// ## Kusur
 ///
@@ -34,7 +41,7 @@ import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
-import 'package:zankurd_mobile/src/widgets/stage_backdrop.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 /// Tek başına `OnboardingScreen`i (yalnız dil sağlayıcısıyla) çizer —
 /// `onboarding_hierarchy_test.dart` ile aynı hafif kurulum.
@@ -129,62 +136,38 @@ void main() {
     });
   });
 
-  group('2) Sayfa 2: yarışma sahnesi (StageBackdropPainter)', () {
-    testWidgets(
-      'hero StageBackdropPainter çizer; konfeti merkez ikonla ve Zana ile kesişmez',
-      (tester) async {
-        await tester.binding.setSurfaceSize(const Size(390, 844));
-        addTearDown(() => tester.binding.setSurfaceSize(null));
+  group('2) Sayfa 2: yarışma sahnesi (Boyax sahne kartı)', () {
+    testWidgets('öğrenme slaytı Zimrût, yarış slaytı Boyax sahnesi taşır', (
+      tester,
+    ) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
 
-        await _pumpOnboarding(tester);
-        await tester.tap(find.text('Sonraki'));
-        await tester.pumpAndSettle();
+      await _pumpOnboarding(tester);
+      expect(tester.widget<SahneStageCard>(hero).role, SahneRole.learn);
+      expect(
+        find.descendant(of: hero, matching: find.byType(SahneVsEmblem)),
+        findsNothing,
+      );
 
-        final stage = find.descendant(
-          of: hero,
-          matching: find.byWidgetPredicate(
-            (widget) =>
-                widget is CustomPaint && widget.painter is StageBackdropPainter,
-          ),
-        );
-        expect(
-          stage,
-          findsOneWidget,
-          reason:
-              'Yarış sekmesindeki aynı sahne fonu 2. onboarding sayfasında '
-              'da çizilmeli (bkz. StageBackdropPainter).',
-        );
+      await tester.tap(find.text('Sonraki'));
+      await tester.pumpAndSettle();
 
-        final stageBox = tester.getRect(stage);
-        final confetti = StageBackdropPainter.confettiRects(
-          stageBox.size,
-        ).map((rect) => rect.shift(stageBox.topLeft)).toList();
-
-        final icon = find.descendant(of: hero, matching: find.byType(Icon));
-        expect(icon, findsOneWidget);
-        final iconRect = tester.getRect(icon);
-
-        final mascot = find.descendant(
-          of: hero,
-          matching: find.byType(RojMascot),
-        );
-        expect(mascot, findsOneWidget);
-        final mascotRect = tester.getRect(mascot);
-
-        for (final piece in confetti) {
-          expect(
-            piece.overlaps(iconRect),
-            isFalse,
-            reason: 'konfeti $piece merkez ikonla ($iconRect) kesişiyor',
-          );
-          expect(
-            piece.overlaps(mascotRect),
-            isFalse,
-            reason: 'konfeti $piece Zana ($mascotRect) ile kesişiyor',
-          );
-        }
-      },
-    );
+      expect(tester.widget<SahneStageCard>(hero).role, SahneRole.race);
+      expect(
+        find.descendant(of: hero, matching: find.byType(SahneVsEmblem)),
+        findsOneWidget,
+        reason: 'yarış slaytı düello amblemiyle bir yarışma sahnesi kurar',
+      );
+      expect(
+        find.descendant(of: hero, matching: find.byType(Image)),
+        findsNothing,
+        reason:
+            'kategori çizimleri yalnız öğrenme slaytında (aynı ekranda '
+            'aynı çizim iki kez görünmez)',
+      );
+      expect(find.byType(RojMascot), findsNothing, reason: 'maskot yok');
+    });
   });
 
   group('3) Hero ile başlık arasındaki boşluk', () {
@@ -203,7 +186,7 @@ void main() {
           titleTop - heroBottom,
           lessThanOrEqualTo(64),
           reason:
-              'heroFlex normal ekranda 38→44 büyüdü ki metin bandı '
+              'hero payı normal ekranda 38→44 büyüdü ki metin bandı '
               'daralsın ve başlık hero\'ya daha yakın otursun.',
         );
       },

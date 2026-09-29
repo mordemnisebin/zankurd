@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -34,6 +34,10 @@ import 'support/widget_test_helpers.dart';
 /// zeminde beyaz. Bekçi varyantın adını değil ölçülebilir sonucunu bağlar —
 /// gövde/zemin en az 3:1 (WCAG 1.4.11, metin olmayan arayüz bileşeni),
 /// yazı/gövde en az 4.5:1.
+///
+/// 2026-09-29 Şahnê: giriş kartı artık yüzey kartıdır (Perde, `s1`); düğme
+/// uygulamanın M pahlı şeklini `ShapeDecoration` ile taşır. Ölçülen şey
+/// aynı: gövde kartın gerçek zemininden 3:1 ayrılır, yazı gövdede 4.5:1.
 double _relativeLuminance(Color c) => c.computeLuminance();
 
 double _contrast(Color a, Color b) {
@@ -42,17 +46,6 @@ double _contrast(Color a, Color b) {
   final hi = math.max(l1, l2);
   final lo = math.min(l1, l2);
   return (hi + 0.05) / (lo + 0.05);
-}
-
-/// Yarı saydam bir rengi zemine harmanlayıp gerçekte görünen rengi verir.
-Color _flatten(Color foreground, Color background) {
-  final a = foreground.a;
-  return Color.from(
-    alpha: 1,
-    red: foreground.r * a + background.r * (1 - a),
-    green: foreground.g * a + background.g * (1 - a),
-    blue: foreground.b * a + background.b * (1 - a),
-  );
 }
 
 /// Apple düğmesinin gövde rengini çizen kutuyu bulur.
@@ -65,7 +58,7 @@ Color _appleButtonSurface(WidgetTester tester) {
         )
         .first,
   );
-  final decoration = container.decoration as BoxDecoration;
+  final decoration = container.decoration! as ShapeDecoration;
   return decoration.color!;
 }
 
@@ -90,12 +83,8 @@ void main() {
       await tester.pumpAndSettle();
 
       final context = tester.element(find.byType(SignInScreen));
-      final page = AppTheme.bgOf(context);
-      // Kart, sayfa zemininin üstünde ince bir perde; düğme ikisinin
-      // birleşiminin üstüne düşüyor. Perdeyi harmanlayıp gerçek zemini alırız.
-      final panel = AppTheme.isLight(context)
-          ? AppTheme.lightSurface
-          : _flatten(Colors.white.withValues(alpha: 0.04), page);
+      // Düğme giriş kartının (Perde) üstünde durur.
+      final panel = SahneTokens.of(context).s1;
 
       final surface = _appleButtonSurface(tester);
       expect(

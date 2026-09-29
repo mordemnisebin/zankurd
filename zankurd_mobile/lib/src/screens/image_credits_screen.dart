@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_icons.dart';
 import '../utils/error_reporter.dart';
 import '../utils/external_link.dart';
-import '../widgets/app_panel.dart';
+import '../widgets/branded_loader.dart';
+import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 
 /// Soru fotoğraflarının künyesi.
@@ -69,48 +70,64 @@ class _ImageCreditsScreenState extends State<ImageCreditsScreen> {
   @override
   Widget build(BuildContext context) {
     final credits = _credits;
+    final t = SahneTokens.of(context);
+    // 2026-09-29 Şahnê: B iskeleti (başlık çubukta); künye tek bir liste
+    // grubunda, her eser bir satır. Hata durumu Şaş metni + ikonla.
     return Scaffold(
+      backgroundColor: t.bg,
       appBar: zkAppBar(context, title: Text(context.t(K.imageCredits))),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
-        child: SafeArea(
-          child: credits == null
-              ? const Center(child: CircularProgressIndicator())
-              : ListView(
-                  padding: const EdgeInsets.all(AppSpacing.page),
-                  children: [
-                    Text(
-                      context.t(K.imageCreditsIntro),
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppTheme.textMutedColor(context),
-                        height: 1.5,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    if (_loadError != null)
-                      Text(
-                        context.t(K.imageCreditsFailed),
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppTheme.wrong,
-                        ),
-                      )
-                    else if (credits.isEmpty)
-                      Text(
-                        context.t(K.imageCreditsEmpty),
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppTheme.textMutedColor(context),
-                        ),
-                      )
-                    else
-                      for (final credit in credits) ...[
-                        _CreditTile(credit: credit),
-                        const SizedBox(height: AppSpacing.xs),
-                      ],
-                  ],
+      body: SafeArea(
+        top: false,
+        child: credits == null
+            ? const BrandedLoaderCenter()
+            : ListView(
+                padding: const EdgeInsets.fromLTRB(
+                  SahneSpace.page,
+                  SahneSpace.x2,
+                  SahneSpace.page,
+                  SahneSpace.x8,
                 ),
-        ),
+                children: [
+                  Text(
+                    context.t(K.imageCreditsIntro),
+                    style: SahneType.body.copyWith(color: t.tx2),
+                  ),
+                  const SizedBox(height: SahneSpace.x4),
+                  if (_loadError != null)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 2),
+                          child: Icon(
+                            AppIcons.triangleExclamation,
+                            size: 20,
+                            color: t.errTx,
+                          ),
+                        ),
+                        const SizedBox(width: SahneSpace.x2),
+                        Expanded(
+                          child: Text(
+                            context.t(K.imageCreditsFailed),
+                            style: SahneType.body.copyWith(color: t.errTx),
+                          ),
+                        ),
+                      ],
+                    )
+                  else if (credits.isEmpty)
+                    Text(
+                      context.t(K.imageCreditsEmpty),
+                      style: SahneType.body.copyWith(color: t.tx2),
+                    )
+                  else
+                    SahneListGroup(
+                      children: [
+                        for (final credit in credits)
+                          _CreditTile(credit: credit),
+                      ],
+                    ),
+                ],
+              ),
       ),
     );
   }
@@ -173,47 +190,79 @@ class _CreditTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
+    final t = SahneTokens.of(context);
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        SahneSpace.x4,
+        SahneSpace.x3,
+        SahneSpace.x4,
+        SahneSpace.x1,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             credit.displayTitle,
-            style: AppTypography.bodyLarge.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w700,
-            ),
+            style: SahneType.bodyStrong.copyWith(color: t.tx),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: SahneSpace.x1),
           Text(
             '${credit.artist} · ${credit.license}',
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textMutedColor(context),
-            ),
+            style: SahneType.caption.copyWith(color: t.tx2),
           ),
-          if (credit.source.isNotEmpty) ...[
-            const SizedBox(height: 6),
-            InkWell(
-              // Doğrudan `launchUrl` DEĞİL: dönen değeri okumadan, hiçbir
-              // `try` olmadan çağrılıyordu. Künye bir lisans metnidir; CC
-              // görsellerin atfı çalışan bir kaynak bağlantısı ister ve ölü
-              // bağlantı sessizce hiçbir şey yapıyordu (2026-08-17).
-              onTap: () => openExternalLink(
+          if (credit.source.isNotEmpty)
+            // Doğrudan `launchUrl` DEĞİL: dönen değeri okumadan, hiçbir
+            // `try` olmadan çağrılıyordu. Künye bir lisans metnidir; CC
+            // görsellerin atfı çalışan bir kaynak bağlantısı ister ve ölü
+            // bağlantı sessizce hiçbir şey yapıyordu (2026-08-17).
+            _TextAction(
+              label: context.t(K.imageCreditsSource),
+              onPressed: () => openExternalLink(
                 context,
                 credit.source,
                 reason: 'image credit source',
               ),
-              child: Text(
-                context.t(K.imageCreditsSource),
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.brand,
-                  fontWeight: FontWeight.w700,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ),
-          ],
+            )
+          else
+            const SizedBox(height: SahneSpace.x2),
         ],
+      ),
+    );
+  }
+}
+
+/// Metin bağlantısı ([SahneButton.text]) — 48'lik dokunma kutusunda.
+///
+/// Bileşen görselde 44'tür; uygulamanın erişilebilirlik kılavuzu testi
+/// (Android) 48'in altını reddeder. [ZkBackButton] gibi: ekran okuyucu tek
+/// bir 48'lik düğme görür, görsel boyut değişmez.
+class _TextAction extends StatelessWidget {
+  const _TextAction({required this.label, required this.onPressed});
+
+  final String label;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: onPressed != null,
+      label: label,
+      onTap: onPressed,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onPressed,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            widthFactor: 1,
+            heightFactor: 1,
+            child: SahneButton.text(label: label, onPressed: onPressed),
+          ),
+        ),
       ),
     );
   }
