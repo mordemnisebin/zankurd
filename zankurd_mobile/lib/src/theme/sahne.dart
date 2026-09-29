@@ -378,6 +378,128 @@ class SahneCategoryLight {
       : light.withValues(alpha: SahneStageColors.beam.a);
 }
 
+/// Kategori tonu — çizimsiz kategori karosunun düz zemini ve ince ayrıntısı.
+///
+/// ## Niçin var
+///
+/// 2026-09-29 doğallık (K1): kategori çizimleri uygulamanın en belirgin
+/// "üretilmiş görsel" iziydi. Ana sayfa karosu çizimsiz olur: kategorinin
+/// renk ailesinden düz bir zemin, üstünde ince bir pah yüzeyi, ad ve küçük
+/// ikon. Kategori renkleri eskiden `CategoryVisuals` içinde Şahnê'den
+/// bağımsız bir tabloydu ("Rengîn Editorial", 2026-08-03); artık tek kaynak
+/// burasıdır ve `CategoryVisuals.color`/`gradientColors` buradan okur.
+///
+/// ## Kural
+///
+/// * [ground] — düz zemin. Kategori ışığının ([SahneCategoryLight]) tonunda,
+///   koyu ve kısık doygunlukta; gece birincil metni (`tx`) üstünde ≥ 6.9:1.
+///   Karo her iki temada da bu zemindir (sahne gibi, kimlik taşır).
+/// * [deep] — aynı tonun bir basamak koyusu (eski gradyanın koyu ucu).
+/// * [detail] — ince ayrıntının rengi: ışık tablosundaki kategori ışığı.
+///   Yalnız çizgi/yüzey ayrıntısında, düşük örtücülükte; metin değil.
+///
+/// Işık tablosunda olmayan üç gizli kategori (Siyaset, Paradigma,
+/// Teknolojî) tonlarını kalan boşluklardan alır (zeytin, erik, çelik mavi).
+@immutable
+class SahneCategoryTone {
+  const SahneCategoryTone({
+    required this.ground,
+    required this.deep,
+    required this.detail,
+  });
+
+  final Color ground;
+  final Color deep;
+  final Color detail;
+
+  static const ziman = SahneCategoryTone(
+    ground: Color(0xFF22595E),
+    deep: Color(0xFF1A4447),
+    detail: SahneCategoryLight.ziman,
+  );
+  static const cand = SahneCategoryTone(
+    ground: Color(0xFF5E2C22),
+    deep: Color(0xFF47221A),
+    detail: SahneCategoryLight.cand,
+  );
+  static const dirok = SahneCategoryTone(
+    ground: Color(0xFF5E4522),
+    deep: Color(0xFF47341A),
+    detail: SahneCategoryLight.dirok,
+  );
+  static const edebiyat = SahneCategoryTone(
+    ground: Color(0xFF5E2233),
+    deep: Color(0xFF471A27),
+    detail: SahneCategoryLight.edebiyat,
+  );
+  static const cografya = SahneCategoryTone(
+    ground: Color(0xFF255A3A),
+    deep: Color(0xFF1C452C),
+    detail: SahneCategoryLight.cografya,
+  );
+  static const muzik = SahneCategoryTone(
+    ground: Color(0xFF6B3A18),
+    deep: Color(0xFF502B12),
+    detail: SahneCategoryLight.muzik,
+  );
+  static const sinema = SahneCategoryTone(
+    ground: Color(0xFF34225E),
+    deep: Color(0xFF271A47),
+    detail: SahneCategoryLight.sinema,
+  );
+  static const teknoloji = SahneCategoryTone(
+    ground: Color(0xFF22395E),
+    deep: Color(0xFF1A2C47),
+    detail: Color(0xFF4F8EF0),
+  );
+  static const paradigma = SahneCategoryTone(
+    ground: Color(0xFF54225E),
+    deep: Color(0xFF401A47),
+    detail: Color(0xFFD07FE0),
+  );
+  static const siyaset = SahneCategoryTone(
+    ground: Color(0xFF575528),
+    deep: Color(0xFF42401E),
+    detail: Color(0xFFB8B24A),
+  );
+
+  /// Tabloda olmayan kategori: sahne kartının gece tonu, ayrıntı üçüncül
+  /// metin.
+  static const fallback = SahneCategoryTone(
+    ground: SahneStageColors.top,
+    deep: SahneStageColors.bottom,
+    detail: Color(0xFF959DC9),
+  );
+
+  /// Kanonik kategori kimliği → ton (bkz. `CategoryVisuals.canonicalName`).
+  static const Map<String, SahneCategoryTone> byCategory = {
+    'Ziman': ziman,
+    'Çand': cand,
+    'Dîrok': dirok,
+    'Edebiyat': edebiyat,
+    'Cografya': cografya,
+    'Muzîk': muzik,
+    'Sînema': sinema,
+    'Teknolojî': teknoloji,
+    'Paradigma': paradigma,
+    'Siyaset': siyaset,
+  };
+
+  /// Kanonik kategori kimliğinin tonu; bilinmeyen kategori [fallback].
+  static SahneCategoryTone of(String canonicalCategory) =>
+      byCategory[canonicalCategory] ?? fallback;
+
+  @override
+  bool operator ==(Object other) =>
+      other is SahneCategoryTone &&
+      other.ground == ground &&
+      other.deep == deep &&
+      other.detail == detail;
+
+  @override
+  int get hashCode => Object.hash(ground, deep, detail);
+}
+
 /// Aralık ölçeği. Bütün boşluklar 4'ün katıdır; sayfa kenarı 16.
 class SahneSpace {
   const SahneSpace._();
@@ -409,9 +531,19 @@ class SahneSpace {
 /// * S (4) — yüksekliği ≤ 28 öğe: rozet, durum karesi, ilerleme çubuğu.
 /// * M (8) — 32–56 öğe: çip, düğme, şık, ikon karosu, gezinme plaketi.
 /// * L (12) — kart ve karo.
-/// * Elmas — avatar, ilerleme elması, sayaç, yol düğümü.
+/// * Elmas — YALNIZ iki anlamda: soru ilerlemesi (elmas dizisi, sayaç) ve
+///   ders sayacı (ders elması). 2026-09-29 doğallık (K5): avatar pahlı kare
+///   oldu ([forSize]); elmas her yerde olunca hiçbir şey anlatmıyordu.
 class SahneShape {
   const SahneShape._();
+
+  /// Öğenin boyuna uygun pahlı kare: ≤ 28 → S, ≤ 56 → M, üstü → L.
+  /// Avatar ve avatar renk örnekleri bunu kullanır.
+  static BeveledRectangleBorder forSize(double size) {
+    if (size <= 28) return s;
+    if (size <= 56) return m;
+    return l;
+  }
 
   static const double sValue = 4;
   static const double mValue = 8;
@@ -507,9 +639,15 @@ class SahneType {
   );
 
   /// 22/28 — bölüm ve kart başlığı, açılan sayfa başlığı, sayaç.
+  ///
+  /// 700 (2026-09-29 doğallık, K8): 800 yalnız sekme başlığında ([title]),
+  /// soru metninde ve skorda ([screen]) kalır. Her başlık 800 olunca sayfada
+  /// hiyerarşi kalmıyor, her şey aynı sesle bağırıyordu. Bölüm başlığı
+  /// kararda 20/700 yazıyordu; 20 beş boyutlu ölçeğin (64/28/22/16/14)
+  /// dışında olduğu için boyut değil ağırlık düşürüldü: 22/700.
   static const TextStyle headline = TextStyle(
     fontFamily: display,
-    fontWeight: FontWeight.w800,
+    fontWeight: FontWeight.w700,
     fontSize: 22,
     height: 28 / 22,
     leadingDistribution: TextLeadingDistribution.even,
@@ -533,10 +671,11 @@ class SahneType {
     leadingDistribution: TextLeadingDistribution.even,
   );
 
-  /// 16/24 — düğme etiketi (başlık ailesi, 800).
+  /// 16/24 — düğme etiketi (başlık ailesi, 700; K8 — 800 yalnız sekme
+  /// başlığı, soru metni ve skorda).
   static const TextStyle button = TextStyle(
     fontFamily: display,
-    fontWeight: FontWeight.w800,
+    fontWeight: FontWeight.w700,
     fontSize: 16,
     height: 24 / 16,
     leadingDistribution: TextLeadingDistribution.even,
@@ -562,8 +701,14 @@ class SahneType {
     leadingDistribution: TextLeadingDistribution.even,
   );
 
-  /// 14/20 — üst etiket ve rozet: başlık ailesi, BÜYÜK HARF, +%8 aralık.
-  /// Metin [upperFor] ile büyütülür; `toUpperCase()` yerele duyarsızdır.
+  /// 14/20 — soru ekranının üst satırı ("KONU • SORU n/N"): başlık ailesi,
+  /// BÜYÜK HARF, +%8 aralık. Metin [upperFor] ile büyütülür;
+  /// `toUpperCase()` yerele duyarsızdır.
+  ///
+  /// 2026-09-29 doğallık (K8): rozet, çip ve kart üst etiketleri artık bunu
+  /// kullanmaz ([captionStrong], cümle düzeni). Her etiketin büyük harf +
+  /// harf aralığıyla bağırması şablon izi bırakıyordu; büyük harf tek bir
+  /// yerde, soru sahnesinin künyesinde kalır.
   static const TextStyle eyebrow = TextStyle(
     fontFamily: display,
     fontWeight: FontWeight.w800,

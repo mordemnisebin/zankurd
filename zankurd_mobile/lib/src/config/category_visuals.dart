@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 /// Kategori bazlı görsel kaynak (ikon + arka plan görseli + renk) için tek
 /// doğruluk kaynağı.
@@ -35,66 +36,40 @@ class CategoryVisuals {
   static Iterable<String> get knownAliases => _aliases.keys;
 
   static String _resolveKey(String category) {
-    if (_gradients.containsKey(category)) return category;
+    if (SahneCategoryTone.byCategory.containsKey(category)) return category;
     return _aliases[category] ?? category;
   }
 
   /// Kategori adını canonical (ana) kategori kimliğine eşler.
   static String canonicalName(String category) => _resolveKey(category);
 
-  /// Kategori → renk çifti. **Rengîn Editorial Arena** (2026-08-03).
+  /// Kategori renkleri artık YALNIZ Şahnê'den gelir ([SahneCategoryTone]).
   ///
-  /// Önceki set bilerek düşük kromaya çekilmişti ve kartın yalnız küçük bir
-  /// köşesini boyuyordu. Sonuç, gerçek cihazda pastel bir yıkamaydı: on
-  /// kategori yan yana durduğunda hiçbiri kimlik taşımıyor, ekran renkli
-  /// değil soluk görünüyordu. Renk artık kartın TAMAMINI dolduruyor, bu
-  /// yüzden doygunluk geri getirildi.
-  ///
-  /// Altı ana hue ailesi (zümrüt, ametist, madder, safir, safran, turkuaz)
-  /// ve bunların ton varyantları kullanılır — on bağımsız rastgele renk
-  /// değil. Her ton beyaz metinle WCAG AA'yı KENDİ BAŞINA geçer (ölçülen
-  /// aralık 5.00:1 – 8.08:1), çünkü kategori adı artık dolu renk zeminin
-  /// üstünde duruyor ve okunurluk rengin kendisine bağlı.
-  ///
-  /// İkinci ton yalnız derinlik içindir; gradyanın koyu ucu olarak birinci
-  /// tonun ~%18 karartılmışıdır, ayrı bir hue değildir.
-  static const Map<String, List<Color>> _gradients = {
-    // ── Zümrüt ailesi ──
-    'Ziman': [Color(0xFF0E7A57), Color(0xFF0A5C41)],
-    'Muzîk': [Color(0xFF4C7A17), Color(0xFF3A5D11)],
-    // ── Ametist ailesi ──
-    'Çand': [Color(0xFF6A38BE), Color(0xFF522B92)],
-    'Sînema': [Color(0xFF8B2A60), Color(0xFF6B204A)],
-    // ── Madder ailesi ──
-    'Dîrok': [Color(0xFFB31E3B), Color(0xFF8B172E)],
-    'Siyaset': [Color(0xFFBC4318), Color(0xFF933412)],
-    // ── Safir ailesi ──
-    'Edebiyat': [Color(0xFF1E4FA6), Color(0xFF173D80)],
-    'Paradigma': [Color(0xFF2A5A8C), Color(0xFF20456C)],
-    // ── Safran / turkuaz ──
-    'Cografya': [Color(0xFF9C6300), Color(0xFF784C00)],
-    'Teknolojî': [Color(0xFF04697C), Color(0xFF03505F)],
-  };
+  /// 2026-09-29 doğallık (K1): burada Şahnê'den bağımsız bir renk tablosu
+  /// vardı ("Rengîn Editorial Arena", 2026-08-03: altı hue ailesi, doygun
+  /// dolgu). Şahnê'ye geçişte kategori renkleri palet dışı kalmıştı; iki
+  /// tablo yan yana durdukça aynı kategori iki renk taşıyabilirdi. Tek
+  /// kaynak `theme/sahne.dart`; bu sınıf yalnız adı kanonik kimliğe çevirir.
+  /// Tanımlı kategoriler — yeni bir kategori [SahneCategoryTone.byCategory]
+  /// tablosuna eklenir; eklenmezse sahne gecesi tonuna düşer.
+  static Iterable<String> get colorDefinedCategories =>
+      SahneCategoryTone.byCategory.keys;
 
-  static const List<Color> _fallbackGradient = [
-    Color(0xFF0E7A57),
-    Color(0xFF0A5C41),
-  ];
+  /// Kategorinin Şahnê tonu: çizimsiz karonun zemini ve ayrıntısı.
+  static SahneCategoryTone tone(String category) =>
+      SahneCategoryTone.of(_resolveKey(category));
 
-  /// Rengi açıkça tanımlanmış kategoriler. Yeni bir kategori eklenirse
-  /// burada da tanımlanmalı; aksi halde fallback renge düşer.
-  static Iterable<String> get colorDefinedCategories => _gradients.keys;
-
-  /// Kategorinin gradyan renk çifti (adına göre, sıradan bağımsız).
+  /// Kategorinin renk çifti: düz zemin ve bir basamak koyusu (adına göre,
+  /// sıradan bağımsız).
   static List<Color> gradientColors(String category) {
-    final key = _resolveKey(category);
-    return _gradients[key] ?? _fallbackGradient;
+    final t = tone(category);
+    return [t.ground, t.deep];
   }
 
-  /// Kategorinin baskın rengi — ikon tonu, kenarlık ve vurgu için.
-  static Color color(String category) => gradientColors(category).first;
+  /// Kategorinin baskın rengi (düz zemin).
+  static Color color(String category) => tone(category).ground;
 
-  /// Kategorinin gradyanı; kart ve panel zeminlerinde kullanılır.
+  /// Kategorinin zemin gradyanı (zemin → koyusu).
   static LinearGradient gradient(String category) => LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -151,17 +126,29 @@ class CategoryVisuals {
   /// takas değildir. O iki kategori bu yüzden fotoğraf yerine kendi
   /// ikonunu büyük çizer (2026-09-27: sahibi renkli ve modern görünüm
   /// istedi, ama karo kimliği ödünç görsele feda edilmez).
+  ///
+  /// 2026-09-29 doğallık (K1): Ziman, Siyaset ve Paradigma da çıktı. Üç
+  /// çizim üretilmiş görsel izini en çok taşıyanlardı (soyut, konudan
+  /// kopuk); o kategoriler çizimsiz karoya ([SahneCategoryTone] zemini +
+  /// kendi ikonu) düşer. `cat_ziman`, `cat_siyaset`, `cat_paradigma` hiçbir
+  /// yerde çizilmez.
   static const Set<String> _ownImageCategories = {
-    'Ziman',
     'Çand',
     'Dîrok',
     'Edebiyat',
     'Cografya',
     'Muzîk',
-    'Siyaset',
-    'Paradigma',
   };
 
   static bool hasOwnImage(String category) =>
       _ownImageCategories.contains(_resolveKey(category));
+
+  /// Kategorinin KENDİ çizimi; yoksa `null` (çizimsiz karo ya da düz ton).
+  ///
+  /// [imagePath] her kategoriye bir yol döndürür (ödünç ya da kaldırılmış
+  /// çizim dahil); çizimi yalnız bu yolla almak, K1'de çıkarılan
+  /// çizimlerin (`cat_ziman`, `cat_siyaset`, `cat_paradigma`) bir ekranda
+  /// yeniden belirmesini önler.
+  static String? ownImagePath(String category) =>
+      hasOwnImage(category) ? imagePath(category) : null;
 }

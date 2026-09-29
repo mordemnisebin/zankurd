@@ -165,15 +165,27 @@ void main() {
     expect(taps, 1);
   });
 
-  testWidgets('rozet Türkçede i → İ büyütür', (tester) async {
+  // 2026-09-29 doğallık: bu bekçi eskiden rozetin büyük harfe (Türkçe
+  // i → İ) çevrildiğini ölçüyordu. K8: rozet açıklama kalını, cümle düzeni;
+  // büyük harf + harf aralığı yalnız soru ekranının künyesinde. Yerele
+  // duyarlı büyütme `SahneType.upperFor` bekçisinde korunur.
+  testWidgets('rozet metni verildiği gibi, açıklama kalını', (tester) async {
     await pumpSahne(
       tester,
       const SahneBadge(label: 'En iyi'),
       dark: false,
       textScale: 1,
     );
-    expect(find.text('EN İYİ'), findsOneWidget);
-    expect(find.text('EN IYI'), findsNothing);
+    final text = tester.widget<Text>(find.text('En iyi'));
+    expect(text.style?.fontSize, SahneType.captionStrong.fontSize);
+    expect(text.style?.fontWeight, FontWeight.w700);
+    expect(text.style?.letterSpacing ?? 0, 0);
+    expect(find.text('EN İYİ'), findsNothing);
+  });
+
+  test('yerele duyarlı büyük harf: Türkçede i → İ', () {
+    expect(SahneType.upperFor('En iyi', isKu: false), 'EN İYİ');
+    expect(SahneType.upperFor('Pirs', isKu: true), 'PIRS');
   });
 
   testWidgets('bölüm başlığı: üstü 24, altı 12 görünür boşluk', (tester) async {

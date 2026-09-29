@@ -5,14 +5,22 @@ import '../../theme/sahne.dart';
 import 'sahne_foundation.dart';
 import 'sahne_painters.dart';
 
-/// Elmas avatar — sıra satırı, podyum, VS amblemi (maketteki `.sh-lav`,
-/// `.sh-pav`, `.sh-vs-a/b`).
+/// Eski ad. 2026-09-29 doğallık (K5): avatar elmas değil pahlı kare;
+/// çağıranlar kırılmasın diye ad [SahneAvatar]a yönlenir.
+typedef SahneDiamondAvatar = SahneAvatar;
+
+/// Avatar — sıra satırı, VS amblemi (maketteki `.sh-lav`, `.sh-vs-a/b`).
 ///
-/// Elmas maske içinde baş harf (düğme biçemi) ya da ikon; madalya ya da
-/// seçim rengi [ring] ile içe çizilir (Halka 1/2/3). Dekoratiftir: satırın
-/// kendisi adı okur.
-class SahneDiamondAvatar extends StatelessWidget {
-  const SahneDiamondAvatar({
+/// Boyuna uygun pahlı kare ([SahneShape.forSize]: 36 → M) içinde baş harf
+/// (düğme biçemi) ya da ikon; madalya ya da seçim rengi [ring] ile içe
+/// çizilir (Halka 1/2/3). Dekoratiftir: satırın kendisi adı okur.
+///
+/// 2026-09-29 doğallık (K5): eskiden elmastı. Elmas avatarda, ilerlemede,
+/// sayaçta, yol düğümünde ve rozette aynı anda olunca tek bir anlam
+/// taşımıyordu; elmas yalnız soru ilerlemesi ve ders sayacında kalır. Kare
+/// iç alanı elmasınkinden geniş olduğu için harf ve ikon biraz büyüdü.
+class SahneAvatar extends StatelessWidget {
+  const SahneAvatar({
     super.key,
     this.initial,
     this.icon,
@@ -50,22 +58,19 @@ class SahneDiamondAvatar extends StatelessWidget {
         child: DecoratedBox(
           decoration: ShapeDecoration(
             color: color ?? t.s3,
-            shape: SahneShape.diamond(
-              size,
-              side: ringColor == null
-                  ? null
-                  : BorderSide(
-                      color: ringColor,
-                      width: ringWidth,
-                      strokeAlign: BorderSide.strokeAlignInside,
-                    ),
-            ),
+            shape: ringColor == null
+                ? SahneShape.forSize(size)
+                : SahneShape.withSide(
+                    SahneShape.forSize(size),
+                    ringColor,
+                    width: ringWidth,
+                  ),
           ),
           child: Center(
             child: icon != null
-                ? Icon(icon, size: size * 0.44, color: fg)
+                ? Icon(icon, size: size * 0.5, color: fg)
                 : SizedBox.square(
-                    dimension: size * 0.5,
+                    dimension: size * 0.6,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
@@ -115,22 +120,26 @@ class SahneRowValue extends StatelessWidget {
   }
 }
 
-enum _RowKind { standard, info, rank, me, custom }
+enum _RowKind { standard, info, rank, me, custom, plain }
 
 /// Liste satırı — maketteki "5 · Liste satırı" (`.sh-row`).
 ///
 /// * [SahneListRow.icon] — standart, ≥ 64: 44'lük ikon karosu (rol tonu
 ///   zemin + rol metni ikon, M pah).
 /// * [SahneListRow.thumb] — bilgi, ≥ 52: 36'lık küçük resim (M pah, kaşsız).
-/// * [SahneListRow.rank] — sıra, ≥ 56: sıra no + 36'lık elmas avatar.
+/// * [SahneListRow.plain] — ikonsuz, ≥ 56: öncül yok, metin satırın
+///   kenarından başlar; sağda yalnız ok ([chevron]) YA DA değer
+///   ([trailing]). Ayarlar gibi ikonun metni tekrarladığı listeler için
+///   (2026-09-29 doğallık, K7: her satırın başında ikon karosu şablon izi).
+/// * [SahneListRow.rank] — sıra, ≥ 56: sıra no + 36'lık avatar.
 /// * [SahneListRow.me] — "Sen": Zêr tonu degrade + Halka 1 altın, L pah;
 ///   grubun DIŞINDA tek başına durur.
 /// * [SahneListRow.leading] — serbest öncül (ör. `PlayerAvatar`); ≥ 64,
 ///   ayırıcı öncülün genişliğinden ([leadingWidth]) hizalanır.
 ///
-/// Sıra ve "Sen" satırında elmas avatarın yerine oyuncunun kendi avatarı
+/// Sıra ve "Sen" satırında avatarın yerine oyuncunun kendi avatarı
 /// verilebilir ([avatar], 36'lık yuva). Bilgi satırında resim yoksa
-/// ([image] `null`) çizimsiz kategori karosunun 36'lık küçüğü çizilir —
+/// ([image] `null`) çizimsiz kategori karosunun 36'lık küçüğü ([tone]) çizilir —
 /// satırlar aynı hizada kalır. [destructive] (ör. "Hesabı sil"): başlık ve
 /// ikon Şaş metni, ikon karosu Şaş tonu; satır yine dolu kırmızı değildir.
 ///
@@ -154,6 +163,7 @@ class SahneListRow extends StatelessWidget {
     this.semanticLabel,
     this.destructive = false,
   }) : _kind = _RowKind.standard,
+       tone = SahneCategoryTone.fallback,
        image = null,
        rank = null,
        initial = null,
@@ -172,6 +182,7 @@ class SahneListRow extends StatelessWidget {
     this.chevron = false,
     this.onTap,
     this.semanticLabel,
+    this.tone = SahneCategoryTone.fallback,
   }) : _kind = _RowKind.info,
        role = SahneRole.neutral,
        enabled = true,
@@ -197,6 +208,7 @@ class SahneListRow extends StatelessWidget {
     this.semanticLabel,
     this.destructive = false,
   }) : _kind = _RowKind.custom,
+       tone = SahneCategoryTone.fallback,
        leadingWidget = leading,
        icon = null,
        image = null,
@@ -204,6 +216,33 @@ class SahneListRow extends StatelessWidget {
        rank = null,
        initial = null,
        avatar = null;
+
+  /// İkonsuz satır: öncül yok, metin satırın kenarından (16) başlar.
+  /// Satırın tamamı dokunulur; sağda ok ya da değer, ikisi birden değil.
+  const SahneListRow.plain({
+    super.key,
+    required this.title,
+    this.subtitle,
+    this.trailing,
+    this.chevron = false,
+    this.onTap,
+    this.enabled = true,
+    this.semanticLabel,
+    this.destructive = false,
+  }) : assert(
+         trailing == null || !chevron,
+         'İkonsuz satırın sağında ok YA DA değer durur, ikisi birden değil.',
+       ),
+       _kind = _RowKind.plain,
+       tone = SahneCategoryTone.fallback,
+       icon = null,
+       image = null,
+       role = SahneRole.neutral,
+       rank = null,
+       initial = null,
+       avatar = null,
+       leadingWidget = null,
+       leadingWidth = 0;
 
   const SahneListRow.rank({
     super.key,
@@ -217,6 +256,7 @@ class SahneListRow extends StatelessWidget {
     this.onTap,
     this.semanticLabel,
   }) : _kind = _RowKind.rank,
+       tone = SahneCategoryTone.fallback,
        image = null,
        role = SahneRole.gold,
        chevron = false,
@@ -236,6 +276,7 @@ class SahneListRow extends StatelessWidget {
     this.onTap,
     this.semanticLabel,
   }) : _kind = _RowKind.me,
+       tone = SahneCategoryTone.fallback,
        image = null,
        initial = null,
        role = SahneRole.gold,
@@ -264,7 +305,10 @@ class SahneListRow extends StatelessWidget {
   /// Yıkıcı eylem satırı (Şaş metni).
   final bool destructive;
 
-  /// Sıra/"Sen" satırında elmas avatarın yerine (36'lık yuva).
+  /// Bilgi satırının çizimsiz küçüğünün kategori tonu.
+  final SahneCategoryTone tone;
+
+  /// Sıra/"Sen" satırında avatarın yerine (36'lık yuva).
   final Widget? avatar;
 
   /// [SahneListRow.leading] öncülü.
@@ -280,12 +324,13 @@ class SahneListRow extends StatelessWidget {
     _RowKind.info => SahneSpace.x3 + 36 + SahneSpace.x3,
     _RowKind.rank || _RowKind.me => SahneSpace.x3 + 24 + SahneSpace.x3,
     _RowKind.custom => SahneSpace.x3 + leadingWidth + SahneSpace.x3,
+    _RowKind.plain => SahneSpace.x4,
   };
 
   double get _minHeight => switch (_kind) {
     _RowKind.standard || _RowKind.me || _RowKind.custom => 64,
     _RowKind.info => 52,
-    _RowKind.rank => 56,
+    _RowKind.rank || _RowKind.plain => 56,
   };
 
   @override
@@ -293,11 +338,11 @@ class SahneListRow extends StatelessWidget {
     final t = SahneTokens.of(context);
     final isMe = _kind == _RowKind.me;
 
-    // Çizimsiz kategori küçüğü: karonun kobalt radyali + ikon, 36.
+    // Çizimsiz kategori küçüğü: kategorinin düz tonu + ikon, 36.
     Widget noArt() => SizedBox.square(
       dimension: 36,
       child: CustomPaint(
-        painter: SahneNoArtPainter(gold: t.gold, dot: t.race),
+        painter: SahneNoArtPainter(tone: tone),
         child: Center(
           child: Icon(
             icon ?? AppIcons.clapperboard,
@@ -331,6 +376,8 @@ class SahneListRow extends StatelessWidget {
         );
       case _RowKind.custom:
         leading = leadingWidget;
+      case _RowKind.plain:
+        leading = null;
       case _RowKind.info:
         final img = image;
         leading = ClipPath(
@@ -338,7 +385,7 @@ class SahneListRow extends StatelessWidget {
           child: img == null
               ? noArt()
               : DecoratedBox(
-                  decoration: const BoxDecoration(color: SahneStageColors.art2),
+                  decoration: BoxDecoration(color: tone.ground),
                   child: Image(
                     image: img,
                     width: 36,
@@ -371,7 +418,7 @@ class SahneListRow extends StatelessWidget {
             ),
             const SizedBox(width: SahneSpace.x3),
             avatar == null
-                ? SahneDiamondAvatar(
+                ? SahneAvatar(
                     initial: initial,
                     icon: isMe ? icon : (initial == null ? icon : null),
                     color: isMe ? t.gold : t.s3,
@@ -417,16 +464,19 @@ class SahneListRow extends StatelessWidget {
     final row = ConstrainedBox(
       constraints: BoxConstraints(minHeight: _minHeight),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(
-          SahneSpace.x3,
+        padding: EdgeInsetsDirectional.fromSTEB(
+          // İkonsuz satırda metin kartın iç kenarından (16) başlar.
+          leading == null ? SahneSpace.x4 : SahneSpace.x3,
           SahneSpace.x2,
           SahneSpace.x4,
           SahneSpace.x2,
         ),
         child: Row(
           children: [
-            if (leading != null) ExcludeSemantics(child: leading),
-            const SizedBox(width: SahneSpace.x3),
+            if (leading != null) ...[
+              ExcludeSemantics(child: leading),
+              const SizedBox(width: SahneSpace.x3),
+            ],
             Expanded(
               child: stacked && trail != null
                   ? Column(

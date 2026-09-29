@@ -304,7 +304,8 @@ void main() {
       expect(find.text('Öğrenme yolları'), findsNothing);
       expect(find.byKey(const ValueKey('learning-next-step')), findsOneWidget);
       // Rozet Etiket biçemindedir: yerele duyarlı büyük harf.
-      expect(find.text('SANA ÖNERİLEN'), findsOneWidget);
+      // 2026-09-29 doğallık: rozet artık cümle düzeninde (K8, `SahneBadge` captionStrong); bu bekçi eskiden büyük harfi bekliyordu.
+      expect(find.text('Sana önerilen'), findsOneWidget);
     },
   );
 
@@ -563,7 +564,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Mevcut seviyen: Orta'), findsNothing);
-    expect(find.text('SANA ÖNERİLEN'), findsOneWidget);
+    expect(find.text('Sana önerilen'), findsOneWidget);
   });
 
   // Niyet: bir ekranda sistem yazı tipine düşen metin olmamalı (bkz.

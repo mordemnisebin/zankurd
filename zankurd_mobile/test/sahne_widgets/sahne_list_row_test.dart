@@ -157,4 +157,68 @@ void main() {
     expect(shape.side.color, SahneTokens.night.gold);
     expect(shape.side.width, SahneRing.r1);
   });
+
+  // 2026-09-29 doğallık (K7): ayarlar ve eşleşme listelerinde ikon karosu
+  // metni tekrarlıyordu (her satırın başında aynı boy kare: şablon izi).
+  // İkonsuz satır öncül için boşluk bırakmaz; metin kenardan (16) başlar,
+  // satırın tamamı dokunulur, ayırıcı da metnin hizasından başlar.
+  testWidgets('ikonsuz satır: boşluksuz başlar, tamamı dokunulur', (
+    tester,
+  ) async {
+    var taps = 0;
+    await pumpSahne(
+      tester,
+      SahneListGroup(
+        children: [
+          SahneListRow.plain(
+            key: const Key('a'),
+            title: 'Ziman',
+            trailing: const SahneRowValue.meta('Kurmancî'),
+            onTap: () => taps++,
+          ),
+          SahneListRow.plain(
+            key: const Key('b'),
+            title: 'Agahdarî',
+            chevron: true,
+            onTap: () => taps++,
+          ),
+        ],
+      ),
+      dark: false,
+      textScale: 1,
+    );
+    expect(tester.takeException(), isNull);
+    final row = tester.getRect(find.byKey(const Key('a')));
+    final title = tester.getRect(find.text('Ziman'));
+    expect(title.left - row.left, SahneSpace.x4);
+    expect(tester.getSize(find.byKey(const Key('a'))).height, 56);
+    expect(
+      (tester.widget(find.byKey(const Key('b'))) as SahneListRow).dividerIndent,
+      SahneSpace.x4,
+    );
+    // Satırın sağ ucuna (değerin dışına) dokunmak da sayılır.
+    await tester.tapAt(Offset(row.left + row.width * 0.6, row.center.dy));
+    await tester.tapAt(tester.getCenter(find.byKey(const Key('b'))));
+    expect(taps, 2);
+  });
+
+  testWidgets('sıra avatarı pahlı kare (K5), eski ad hâlâ derlenir', (
+    tester,
+  ) async {
+    await pumpSahne(
+      tester,
+      const SahneDiamondAvatar(initial: 'R'),
+      dark: true,
+      textScale: 1,
+    );
+    final box = tester.widget<DecoratedBox>(
+      find.descendant(
+        of: find.byType(SahneAvatar),
+        matching: find.byType(DecoratedBox),
+      ),
+    );
+    final shape =
+        (box.decoration as ShapeDecoration).shape as BeveledRectangleBorder;
+    expect(shape.borderRadius, SahneShape.m.borderRadius);
+  });
 }

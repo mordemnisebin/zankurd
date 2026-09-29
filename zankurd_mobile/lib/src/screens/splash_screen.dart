@@ -194,6 +194,11 @@ class _SplashScreenState extends State<SplashScreen>
           //
           // Logo kullanılabilir alana göre küçülür; dar/alçak ekranda
           // (ör. 375x812 web, yatay mod) sütun taşmaz (2026-07-24).
+          //
+          // 2026-09-29 doğallık (K3): logo ~%40 küçüldü (128 → 76). Ekranı
+          // dolduran logo plakası marka anını değil logoyu öne çıkarıyordu;
+          // büyük boyda kenar kırıntısı da seçiliyordu. Adı "ZanKurd"
+          // yazısı taşır.
           Center(
             child: FadeTransition(
               opacity: _fade,
@@ -202,10 +207,10 @@ class _SplashScreenState extends State<SplashScreen>
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     final width = [
-                      128.0,
-                      constraints.maxWidth * 0.4,
-                      (constraints.maxHeight - 160) / 1.3,
-                    ].reduce((a, b) => a < b ? a : b).clamp(97.0, 128.0);
+                      76.0,
+                      constraints.maxWidth * 0.24,
+                      (constraints.maxHeight - 160) / 1.3 * 0.6,
+                    ].reduce((a, b) => a < b ? a : b).clamp(58.0, 76.0);
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [

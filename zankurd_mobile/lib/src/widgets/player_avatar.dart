@@ -13,9 +13,15 @@ import 'sahne/sahne.dart';
 /// Fotoğraf yüklenemezse otomatik olarak ikon/harf katmanına düşer.
 /// [frameId] doluysa kazanılmış çerçeve halkası çizilir.
 ///
-/// 2026-09-29 Şahnê: elmas avatar dili ([SahneDiamondAvatar]). Kutu
-/// `radius * 2` karedir (çağıranların yerleşimi değişmez); fotoğraf elmas
-/// maskeyle kırpılır, yoksa seçilen renkte elmas + ikon ya da baş harf.
+/// 2026-09-29 Şahnê: avatar dili [SahneAvatar] ile ortak. Kutu `radius * 2`
+/// karedir (çağıranların yerleşimi değişmez); fotoğraf boyuna uygun pahlı
+/// kareyle ([SahneShape.forSize]) kırpılır, yoksa seçilen renkte pahlı kare
+/// + ikon ya da baş harf.
+///
+/// 2026-09-29 doğallık (K5): avatar eskiden elmastı. Elmas aynı anda
+/// avatar, ilerleme, sayaç, rozet ve yol düğümüydü; hiçbir şey anlatmıyordu
+/// ve fotoğrafın yarısını kesiyordu. Elmas yalnız soru ilerlemesi ve ders
+/// sayacında kalır.
 /// Ön plan rengi dolguya göre karşıtlıkla seçilir ([sahneOnFill]); sabit
 /// beyaz değil. Kazanılmış çerçeve Halka 3 olarak içe çizilir (madalya
 /// dili); çerçevesiz avatarda nötr kaş (Halka 1). Bulanık gölge yok.
@@ -72,7 +78,7 @@ class PlayerAvatar extends StatelessWidget {
     final size = radius * 2;
 
     final core = ClipPath(
-      clipper: ShapeBorderClipper(shape: SahneShape.diamond(size)),
+      clipper: ShapeBorderClipper(shape: SahneShape.forSize(size)),
       child: SizedBox.square(dimension: size, child: _buildCore(context, bg)),
     );
 
@@ -87,13 +93,10 @@ class PlayerAvatar extends StatelessWidget {
           IgnorePointer(
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                shape: SahneShape.diamond(
-                  size,
-                  side: BorderSide(
-                    color: ring,
-                    width: frame == null ? SahneRing.r1 : SahneRing.r3,
-                    strokeAlign: BorderSide.strokeAlignInside,
-                  ),
+                shape: SahneShape.withSide(
+                  SahneShape.forSize(size),
+                  ring,
+                  width: frame == null ? SahneRing.r1 : SahneRing.r3,
                 ),
               ),
             ),
@@ -134,11 +137,11 @@ class PlayerAvatar extends StatelessWidget {
     return ColoredBox(
       color: bg,
       child: Center(
-        // Elmasın iç karesi kenarın yarısıdır: ikon ve harf oraya sığar.
+        // Pahlı karenin iç alanı geniştir: ikon kenarın yarısı, harf %60'ı.
         child: icon != null
-            ? Icon(icon, color: fg, size: size * 0.44)
+            ? Icon(icon, color: fg, size: size * 0.5)
             : SizedBox.square(
-                dimension: size * 0.5,
+                dimension: size * 0.6,
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(

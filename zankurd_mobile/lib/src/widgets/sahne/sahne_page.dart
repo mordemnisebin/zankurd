@@ -112,8 +112,8 @@ class SahneIconButton extends StatelessWidget {
 
 /// A · Sekme ana sayfası (Öğren, Yarış, Sıralama, Profil).
 ///
-/// Maketteki yapı: durum çubuğu → 44'lük marka satırı [logo işareti Kulis
-/// plakasında + "ZanKurd" | stat çipleri] → Başlık 28/32 (tam genişlik, en
+/// Maketteki yapı: durum çubuğu → 44'lük marka satırı ["ZanKurd" yazısı |
+/// stat çipleri] → Başlık 28/32 (tam genişlik, en
 /// çok 2 satır) → isteğe bağlı alt başlık (Gövde, ikincil) → 16 → içerik.
 /// Başlık kartı yok, spot yok. Alt gezinme bu sayfanın değil, kabuğun
 /// (`AppShell`) işidir.
@@ -160,10 +160,7 @@ class SahneTabPage extends StatelessWidget {
               gap: SahneSpace.x3,
               runSpacing: SahneSpace.x1,
               children: [
-                _BrandMark(
-                  name: brandName,
-                  day: brightness == Brightness.light,
-                ),
+                _BrandMark(name: brandName),
                 if (stats.isNotEmpty)
                   Wrap(
                     alignment: WrapAlignment.end,
@@ -397,13 +394,16 @@ class _RenderBrandRow extends RenderBox
       defaultPaint(context, offset);
 }
 
-/// Marka: 32'lik logo plakası (gecede Kulis, gündüzde beyaz + 1 px kenar;
-/// dağlar kaybolmasın) + "ZanKurd" (düğme biçemi).
+/// Marka: yalnız "ZanKurd" yazısı (düğme biçemi, birincil metin).
+///
+/// 2026-09-29 doğallık (K3): eskiden 32'lik plakada 24'lük logo işareti de
+/// vardı. O boyda güneş, dağ, kitap ve Z birbirine karışıyor, plakanın
+/// kenarı kırıntılı görünüyordu; her sekmede tekrar eden plaka da süstü.
+/// Marka satırı sade yazıdır; logo açılışta ve tanıtımda kalır.
 class _BrandMark extends StatelessWidget {
-  const _BrandMark({required this.name, required this.day});
+  const _BrandMark({required this.name});
 
   final String name;
-  final bool day;
 
   @override
   Widget build(BuildContext context) {
@@ -411,31 +411,14 @@ class _BrandMark extends StatelessWidget {
     return Semantics(
       label: name,
       excludeSemantics: true,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          DecoratedBox(
-            decoration: ShapeDecoration(
-              color: day ? t.s1 : t.s2,
-              shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
-            ),
-            child: SizedBox.square(
-              dimension: 32,
-              child: Center(
-                child: Image.asset(
-                  'assets/zankurd_icon.webp',
-                  width: 24,
-                  height: 24,
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, _, _) =>
-                      const SizedBox.square(dimension: 24),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: SahneSpace.x2),
-          Text(name, style: SahneType.button.copyWith(color: t.tx)),
-        ],
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 32),
+        child: Align(
+          alignment: AlignmentDirectional.centerStart,
+          widthFactor: 1,
+          heightFactor: 1,
+          child: Text(name, style: SahneType.button.copyWith(color: t.tx)),
+        ),
       ),
     );
   }

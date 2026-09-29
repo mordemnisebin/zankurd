@@ -651,19 +651,22 @@ void main() {
     });
   });
 
-  test('sayaç halesi kategori ışığını altın yoğunluğunda taşır', () {
-    final halo = SahneTimerDiamond.haloColor(
-      hot: false,
-      light: SahneCategoryLight.ziman,
+  // 2026-09-29 doğallık: bu bekçi eskiden sakin sayacın halesinin kategori
+  // ışığını altın yoğunluğunda taşıdığını ölçüyordu. K9 kararıyla sayaç
+  // halesi yalnız son saniyelerde (gerilim eşiği) belirir; sakin sayaçta
+  // hale yoktur, kategori ışığı verilse bile. Her an parlayan öğe gerilim
+  // anını söyleyemiyordu.
+  test('sayaç halesi yalnız gerilim eşiğinde, her zaman Boyax', () {
+    expect(
+      SahneTimerDiamond.haloColor(hot: false, light: SahneCategoryLight.ziman),
+      isNull,
     );
-    expect(halo.a, closeTo(SahneStageColors.haloGold.a, 0.001));
-    expect(halo.withValues(alpha: 1), SahneCategoryLight.ziman);
+    expect(SahneTimerDiamond.haloColor(hot: false), isNull);
     expect(
       SahneTimerDiamond.haloColor(hot: true, light: SahneCategoryLight.ziman),
       SahneStageColors.haloRace,
       reason: 'gerilimde hale her zaman Boyax',
     );
-    expect(SahneTimerDiamond.haloColor(hot: false), SahneStageColors.haloGold);
   });
 
   test('sonuç sırtı soru sahnesinin sırtıyla aynı siluet', () {

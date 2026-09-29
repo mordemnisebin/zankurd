@@ -220,7 +220,9 @@ void main() {
       final t = dark ? SahneTokens.night : SahneTokens.day;
       final calm = await pumpAt(17);
       expect(calm.trail, t.gold);
-      expect(calm.halo, SahneStageColors.haloGold);
+      // 2026-09-29 doğallık (K9): sakin sayaçta hale yok (eskiden altın
+      // hale bekleniyordu); hale yalnız son saniyelerde, Boyax.
+      expect(calm.halo, isNull);
       final hot = await pumpAt(5);
       expect(hot.trail, t.raceTx);
       expect(hot.halo, SahneStageColors.haloRace);

@@ -189,7 +189,8 @@ void main() {
         find.descendant(of: key, matching: find.byType(SahneBadge)),
       );
       expect(badge.tone, SahneBadgeTone.race, reason: 'dark=$isDark');
-      expect(find.text('BUGÜN'), findsOneWidget, reason: 'dark=$isDark');
+      // 2026-09-29 doğallık: rozet artık cümle düzeninde (K8, `SahneBadge` captionStrong); bu bekçi eskiden büyük harfi bekliyordu.
+      expect(find.text('Bugün'), findsOneWidget, reason: 'dark=$isDark');
     }
   });
 
