@@ -359,8 +359,9 @@ const Map<SahneTopicMark, List<String>> sahneKilimGrids = {
 /// konunun tonudur ([SahneCategoryTone.ground]); 9x9 motif `deep` alan
 /// üstünde `detail` ve `ground` hücreleriyle örülür.
 ///
-/// 2026-09-30 bant: desen bandın TAM yüksekliğindedir (üst kenardan, durum
-/// çubuğunun arkasından, alt kenara): hücre boyu bant yüksekliğinin 1/9'u,
+/// 2026-09-30 bant: desen bandın TAM yüksekliğindedir (üst kenardan alt
+/// kenara; ekran durum çubuğu payını bu ressamın DIŞINDA düz tonla boyar,
+/// desen saat ve pil simgelerinin arkasına girmez): hücre boyu bant yüksekliğinin 1/9'u,
 /// tam sayı piksele yuvarlanır (kenarlar keskin kalsın). Bandı çizen ekran
 /// yüksekliği 9'un katına yükseltir, böylece yuvarlama payı kalmaz ve desen
 /// iki kenara da tam değer. Eskiden desen bandın ortasında küçük bir blok

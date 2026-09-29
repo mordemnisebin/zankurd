@@ -322,7 +322,11 @@ class _CategoryHeader extends StatelessWidget {
   /// Desene ayrılan 48'lik yuva sayısı ([_kilimSlots]).
   final int slots;
 
-  /// Durum çubuğu payı (bandın üstünde, çubuğun arkasında kalır).
+  /// Durum çubuğu payı: düz tonla boyanır, desen bu payın ALTINDA başlar.
+  /// 2026-09-30 simülatör: desen durum çubuğunun arkasına uzanınca açık
+  /// motif hücreleri (Sînema lilası, Çand mercanı) saat, sinyal ve pil
+  /// simgelerini okunmaz yapıyordu; test koşucusu payı 0 aldığı için tur
+  /// karelerinde görünmüyordu.
   final double topInset;
 
   /// Çubuğun (durum çubuğu payı hariç) yüksekliği: metne göre ölçülür.
@@ -331,31 +335,34 @@ class _CategoryHeader extends StatelessWidget {
   /// Çubuğun altında bırakılan boşluk (çubuğun kendi 8 px iç payına ek).
   static const double _bottomGap = SahneSpace.x2;
 
-  /// Bant yüksekliği: pay + çubuk + boşluk, 9'un katına yükseltilmiş.
-  static double heightFor(double topInset, double barHeight) =>
-      SahneKilimBandPainter.snapHeight(topInset + barHeight + _bottomGap);
+  /// Desenli kısmın yüksekliği: çubuk + boşluk, 9'un katına yükseltilmiş
+  /// (durum çubuğu payı hariç; o pay desensiz düz tondur).
+  static double heightFor(double barHeight) =>
+      SahneKilimBandPainter.snapHeight(barHeight + _bottomGap);
 
   @override
   Widget build(BuildContext context) {
-    final height = heightFor(topInset, barHeight);
+    final height = heightFor(barHeight);
     final mark = CategoryVisuals.mark(category);
     final tone = CategoryVisuals.tone(category);
-    if (mark == null) {
-      return SizedBox(
-        height: height,
-        child: ColoredBox(color: tone.ground),
-      );
-    }
-    return SizedBox(
-      height: height,
-      child: ExcludeSemantics(
-        child: CustomPaint(
-          key: const ValueKey('subcategory-kilim-band'),
-          painter: SahneKilimBandPainter(
-            mark: mark,
-            tone: tone,
-            reservedWidth: _kilimReserved(slots),
-          ),
+    return ColoredBox(
+      color: tone.ground,
+      child: Padding(
+        padding: EdgeInsets.only(top: topInset),
+        child: SizedBox(
+          height: height,
+          child: mark == null
+              ? null
+              : ExcludeSemantics(
+                  child: CustomPaint(
+                    key: const ValueKey('subcategory-kilim-band'),
+                    painter: SahneKilimBandPainter(
+                      mark: mark,
+                      tone: tone,
+                      reservedWidth: _kilimReserved(slots),
+                    ),
+                  ),
+                ),
         ),
       ),
     );

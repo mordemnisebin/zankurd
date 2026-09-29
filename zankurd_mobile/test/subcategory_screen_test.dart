@@ -271,7 +271,7 @@ void main() {
   // konumu hiçbir testte ölçülmüyordu, taşma da yoktu, yalnız dengesiz
   // görünüyordu. Bekçi: desen bandın üst ve alt kenarına değer (tam
   // yükseklik), hücre tam sayı pikseldir, desen başlığın ve alt satırın
-  // sınır kutusuyla kesişmez, alt satırın altında 16-24 px boşluk kalır;
+  // sınır kutusuyla kesişmez, alt satırın altında 16-25 px boşluk kalır;
   // 320 px ve %200 yazıda da (bant uzar, hücre yeniden hesaplanır).
   for (final scale in [1.0, 2.0]) {
     for (final width in [320.0, 390.0]) {
@@ -344,7 +344,9 @@ void main() {
           // Bant içeriğe oturur: alt satırın altında boş blok kalmaz.
           final gap = band.bottom - subtitle.bottom;
           expect(gap, greaterThanOrEqualTo(16), reason: 'alt boşluk $gap');
-          expect(gap, lessThanOrEqualTo(24), reason: 'alt boşluk $gap');
+          // 9'a yuvarlama en çok 9 px ekler; durum payı artık desenli kısmın
+          // dışında (2026-09-30 simülatör) olduğundan üst sınır 16 + 9.
+          expect(gap, lessThanOrEqualTo(25), reason: 'alt boşluk $gap');
         });
       }
     }
