@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../l10n/lang.dart';
+import '../../l10n/strings.dart';
 import '../../providers/reduced_motion_provider.dart';
 import '../../theme/sahne.dart';
 
@@ -91,6 +92,27 @@ bool sahneIsKu(BuildContext context) {
     return Provider.of<LanguageProvider>(context).isKu;
   } on ProviderNotFoundException {
     return false;
+  }
+}
+
+/// Geri ve kapat düğmelerinin varsayılan sözü: uygulamanın dilinden
+/// ([K.back], [K.close]). Material yereli Kurmancî bilmediği için
+/// "Back"/"Close" okuyordu (bkz. `ZkBackButton`). Dil sağlayıcısı yoksa
+/// (galeri, çıplak test) Material yereline düşer.
+String sahneBackLabel(BuildContext context) =>
+    _appLabel(context, K.back) ??
+    MaterialLocalizations.of(context).backButtonTooltip;
+
+String sahneCloseLabel(BuildContext context) =>
+    _appLabel(context, K.close) ??
+    MaterialLocalizations.of(context).closeButtonTooltip;
+
+String? _appLabel(BuildContext context, String key) {
+  try {
+    final isKu = Provider.of<LanguageProvider>(context).isKu;
+    return Tr.forKu(key, isKu);
+  } on ProviderNotFoundException {
+    return null;
   }
 }
 
@@ -182,4 +204,118 @@ class SahneTappable extends StatelessWidget {
             ),
     );
   }
+}
+
+/// Dokunma kutusunun kenarı: Android erişilebilirlik kılavuzu
+/// (`androidTapTargetGuideline`) 48'in altını reddeder.
+///
+/// Şahnê'nin görsel ölçüleri (44'lük ikon düğmesi, 44'lük metin düğmesi,
+/// 36'lık stat çipi) değişmez; dokunulabilen her bileşen görselini bu
+/// kenarda saydam bir kutunun ortasına koyar. 2026-09-29 birleştirmesine
+/// kadar her ekran bu kutuyu kendisi yazıyordu (`BarIconAction`,
+/// `_TextAction`, `_QuizToolButton` …); artık bileşenin işidir.
+const double sahneTapTarget = 48;
+
+/// Sarar ama bir SÖZÜ harf harf bölmez.
+///
+/// Dar bir sütunda (320 px) büyük yazı ölçeğinde (%200) "Arkadaşlar" gibi
+/// tek bir söz satıra sığmayınca Flutter onu harflerinden böler
+/// ("Arkadaşla / r"). Bu metin en uzun sözünü ölçer; o söz sığmıyorsa yazı
+/// ölçeği yalnız o söz sığacak kadar küçülür. Sözler arasından sarmak her
+/// zaman serbesttir; küçülme yalnız sığmayan en uzun söz içindir, metnin
+/// geri kalanı kullanıcının seçtiği ölçüde kalır ve kesilmez.
+class SahneUnbrokenText extends StatelessWidget {
+  const SahneUnbrokenText(
+    this.text, {
+    super.key,
+    required this.style,
+    this.textAlign,
+    this.maxLines,
+    this.overflow,
+  });
+
+  final String text;
+  final TextStyle style;
+  final TextAlign? textAlign;
+  final int? maxLines;
+  final TextOverflow? overflow;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final scaler = MediaQuery.textScalerOf(context);
+        final effective = constraints.hasBoundedWidth
+            ? sahneUnbrokenScaler(
+                context,
+                text,
+                style,
+                constraints.maxWidth,
+                scaler,
+              )
+            : scaler;
+        return Text(
+          text,
+          style: style,
+          textAlign: textAlign,
+          maxLines: maxLines,
+          overflow: overflow,
+          textScaler: effective,
+        );
+      },
+    );
+  }
+}
+
+/// [text]in en uzun sözü [maxWidth]e sığacak yazı ölçeği: sığıyorsa
+/// [scaler] olduğu gibi döner.
+TextScaler sahneUnbrokenScaler(
+  BuildContext context,
+  String text,
+  TextStyle style,
+  double maxWidth,
+  TextScaler scaler,
+) {
+  if (maxWidth <= 0 || text.isEmpty) return scaler;
+  final merged = DefaultTextStyle.of(context).style.merge(style);
+  final direction = Directionality.maybeOf(context) ?? TextDirection.ltr;
+  var widest = 0.0;
+  for (final word in text.split(RegExp(r'\s+'))) {
+    if (word.isEmpty) continue;
+    final painter = TextPainter(
+      // Aile açıkça yazılır: ölçüm, çizimle aynı yazı tipinden yapılmalı.
+      text: TextSpan(
+        text: word,
+        style: merged.copyWith(fontFamily: merged.fontFamily ?? SahneType.text),
+      ),
+      textDirection: direction,
+      textScaler: scaler,
+      maxLines: 1,
+    )..layout();
+    widest = math.max(widest, painter.width);
+    painter.dispose();
+  }
+  if (widest <= maxWidth) return scaler;
+  final size = merged.fontSize ?? 14;
+  final current = scaler.scale(size) / size;
+  // Kenardan bir tık pay: ölçüm ile çizim arasındaki yuvarlama sözü yine
+  // bölmesin.
+  return TextScaler.linear(current * (maxWidth / widest) * 0.98);
+}
+
+/// Perde (`s1`) yüzeyinin içi mi?
+///
+/// Yüzey kartı ve liste grubu içeriğini bununla sarar. Kendi zemini Perde
+/// olan bir öğe (seçili olmayan seçim rayı çipi) Perde kartın İÇİNDE
+/// görünmez oluyordu (2026-09-29, hesap ve öneri ekranları); böyle bir öğe
+/// kartın içindeyse bir basamak yükselir (Kulis, `s2`).
+class SahneOnSurface extends InheritedWidget {
+  const SahneOnSurface({super.key, required super.child});
+
+  /// Öğe Perde yüzeyinin içinde mi?
+  static bool of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<SahneOnSurface>() != null;
+
+  @override
+  bool updateShouldNotify(SahneOnSurface oldWidget) => false;
 }

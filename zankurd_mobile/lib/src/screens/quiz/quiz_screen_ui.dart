@@ -209,6 +209,7 @@ extension _QuizScreenUI on _QuizScreenState {
           // çipiyle (örn. 30 sn) çelişiyordu.
           maxSeconds: widget.room.secondsPerQuestion,
           isPaused: answered,
+          light: _stageLight,
         ),
       );
     }
@@ -342,20 +343,23 @@ extension _QuizScreenUI on _QuizScreenState {
           ),
         ),
         if (_isMultiplayer)
-          _QuizToolButton(
+          SahneIconButton(
             key: const ValueKey('quiz-reaction-menu-button'),
             icon: AppIcons.faceSmile,
-            label: context.t(K.chat),
+            semanticLabel: context.t(K.chat),
             onPressed: () => _showLiveReactionMenu(context),
           ),
-        _QuizToolButton(
+        // Kaydedilmiş soru dolu (Zêr) hâlde durur: "Kaldır" sözü tek
+        // başına durumu göstermiyordu.
+        SahneIconButton(
           icon: AppIcons.bookmark,
-          label: favoriteActionLabel,
+          semanticLabel: favoriteActionLabel,
+          selected: favorite,
           onPressed: _toggleFavorite,
         ),
-        _QuizToolButton(
+        SahneIconButton(
           icon: AppIcons.triangleExclamation,
-          label: context.t(K.reportAction),
+          semanticLabel: context.t(K.reportAction),
           onPressed: _reportQuestion,
         ),
       ],

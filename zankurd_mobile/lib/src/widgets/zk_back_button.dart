@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,9 +19,9 @@ import 'sahne/sahne.dart';
 /// yok sayılır (ikon rengi belirteçten gelir).
 ///
 /// Görsel 44, dokunma alanı 48: erişilebilirlik kılavuzu testi
-/// (`androidTapTargetGuideline`) 48'in altını reddeder. Stat çipindeki
-/// gibi plaka 48'lik saydam bir dokunma kutusunun ortasında durur; ekran
-/// okuyucu tek bir 48'lik düğme görür.
+/// (`androidTapTargetGuideline`) 48'in altını reddeder. 48'lik kutuyu
+/// artık bileşenin kendisi verir ([SahneIconButton]); ekran okuyucu tek bir
+/// 48'lik düğme görür.
 class ZkBackButton extends StatelessWidget {
   const ZkBackButton({super.key, this.onPressed, this.color});
 
@@ -27,39 +29,21 @@ class ZkBackButton extends StatelessWidget {
   final Color? color;
 
   /// Dokunma kutusunun kenarı.
-  static const double tapTarget = 48;
+  static const double tapTarget = sahneTapTarget;
 
   @override
   Widget build(BuildContext context) {
-    final label = context.t(K.back);
-    final onTap = onPressed ?? () => Navigator.maybePop(context);
-    return Semantics(
-      container: true,
-      button: true,
-      label: label,
-      onTap: onTap,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: SizedBox.square(
-          dimension: tapTarget,
-          child: Center(
-            child: SahneIconButton(
-              icon: AppIcons.arrowLeft,
-              semanticLabel: label,
-              onPressed: onTap,
-            ),
-          ),
-        ),
-      ),
+    return SahneIconButton(
+      icon: AppIcons.arrowLeft,
+      semanticLabel: context.t(K.back),
+      onPressed: onPressed ?? () => Navigator.maybePop(context),
     );
   }
 }
 
 /// Varsayılan geri düğmesinin dokunma kutusunun sayfa kenarından boşluğu:
 /// plakanın (44) görsel kenarı 16'ya oturur.
-const double _backInset = SahneSpace.page - (ZkBackButton.tapTarget - 44) / 2;
+const double _backInset = SahneSpace.page - SahneIconButton.inset;
 
 /// Geri tuşu [K.back] tooltip'i taşıyan AppBar.
 ///
@@ -85,17 +69,35 @@ PreferredSizeWidget zkAppBar(
   final t = SahneTokens.of(context);
   final showDefaultLeading = automaticallyImplyLeading && leading == null;
   final hasLeading = leading != null || showDefaultLeading;
-  final Widget? heading = title == null
+  // Başlık metinse sözleri bölünmeden sarar ([SahneUnbrokenText]) ve çubuk
+  // büyük yazıda başlığın gerçek yüksekliği kadar uzar (eskiden sabit 64'tü:
+  // %200'de başlık ve alt satır kesiliyordu).
+  final titleText = title is Text && title.data != null ? title : null;
+  final Widget? shownTitle = titleText == null
+      ? title
+      : SahneUnbrokenText(
+          titleText.data!,
+          style: SahneType.headline.copyWith(color: t.tx),
+        );
+  final toolbarHeight = _barHeight(
+    context,
+    title: titleText?.data,
+    subtitle: subtitle is Text ? subtitle.data : null,
+    hasSubtitle: subtitle != null,
+    hasLeading: hasLeading,
+    actionCount: actions?.length ?? 0,
+  );
+  final Widget? heading = shownTitle == null
       ? null
       : Semantics(
           header: true,
           child: subtitle == null
-              ? title
+              ? shownTitle
               : Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    title,
+                    shownTitle,
                     DefaultTextStyle.merge(
                       style: SahneType.caption.copyWith(color: t.tx2),
                       child: subtitle,
@@ -105,7 +107,7 @@ PreferredSizeWidget zkAppBar(
         );
   return AppBar(
     key: key,
-    toolbarHeight: 64,
+    toolbarHeight: toolbarHeight,
     title: heading,
     titleSpacing: hasLeading ? SahneSpace.x3 : SahneSpace.page,
     titleTextStyle: SahneType.headline.copyWith(color: t.tx),
@@ -136,4 +138,47 @@ PreferredSizeWidget zkAppBar(
               )
             : null),
   );
+}
+
+/// B çubuğunun yüksekliği: en az 64; büyük yazıda başlığın (ve alt
+/// satırın) ölçülen yüksekliği + 16. Başlık metin değilse tek satır sayılır.
+double _barHeight(
+  BuildContext context, {
+  required String? title,
+  required String? subtitle,
+  required bool hasSubtitle,
+  required bool hasLeading,
+  required int actionCount,
+}) {
+  final scaler = MediaQuery.textScalerOf(context);
+  final direction = Directionality.maybeOf(context) ?? TextDirection.ltr;
+  final width = MediaQuery.sizeOf(context).width;
+  final lead = hasLeading ? _backInset + ZkBackButton.tapTarget : 0.0;
+  final room = math.max(
+    48.0,
+    width -
+        lead -
+        (hasLeading ? SahneSpace.x3 : SahneSpace.page) -
+        actionCount * sahneTapTarget -
+        SahneSpace.page,
+  );
+  double measure(String? text, TextStyle style) {
+    if (text == null) return scaler.scale(style.fontSize!) * style.height!;
+    final merged = DefaultTextStyle.of(context).style.merge(style);
+    final painter = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: merged.copyWith(fontFamily: merged.fontFamily ?? SahneType.text),
+      ),
+      textDirection: direction,
+      textScaler: sahneUnbrokenScaler(context, text, style, room, scaler),
+    )..layout(maxWidth: room);
+    final h = painter.height;
+    painter.dispose();
+    return h;
+  }
+
+  var h = measure(title, SahneType.headline);
+  if (hasSubtitle) h += measure(subtitle, SahneType.caption);
+  return math.max(64, h + SahneSpace.x4);
 }

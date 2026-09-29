@@ -55,11 +55,16 @@ void main() {
     // birincil metin; `mission_toast_typography_test` metni ölçer). Boş/hata
     // panelinin eylemi `SahneButton`dır: Agir üstünde metin temadan `onAct`
     // gelir (koyu, 8:1); ham renkle düğme boyamaz.
+    //
+    // 2026-09-29 Şahnê (ekranlar): dolgu üstündeki metin artık ekranda
+    // `AppColors.onSolid(...)` ile hesaplanmaz; her dolgunun kendi "üstü"
+    // belirteci vardır. Agir dolgu yalnız `SahneButton.primary`dir (metin
+    // temadan `onAct`, koyu); Zêr dolgu üstünde `t.onGold`. Kural aynı:
+    // dolu yüzeyde metin sabit beyaz değil, dolguya göre okunur renk.
     final expectedHelpers = <String, String>{
-      'lib/src/screens/quiz_result_screen.dart':
-          'AppColors.onSolid(AppTheme.gold)',
-      'lib/src/screens/quiz/quiz_screen_ui.dart': 'AppColors.onSolid(',
-      'lib/src/screens/paywall_screen.dart': 'AppColors.onSolid(',
+      'lib/src/screens/quiz_result_screen.dart': 'color: t.onGold',
+      'lib/src/screens/quiz/quiz_screen_ui.dart': 'SahneButton.primary(',
+      'lib/src/screens/paywall_screen.dart': 'SahneButton.primary(',
       // Boş/hata panelinin eylem düğmesi bu listede yoktu ve sabit beyaz
       // metin kullanıyordu: `AppErrorState` onu `AppTheme.wrong` ile
       // çağırdığında kontrast 3,73:1 kalıyordu. Bu düğme uygulamadaki her

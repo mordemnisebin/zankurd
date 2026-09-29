@@ -17,7 +17,6 @@ import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/rolling_count.dart';
 import '../widgets/sahne/sahne.dart';
-import '../widgets/zk_back_button.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -489,25 +488,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
 
     final Widget scroll;
     if (canPop) {
-      scroll = SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            _PushedBar(title: context.t(K.leaderboardTitle), actions: actions),
-            Expanded(
-              child: ListView(
-                controller: widget.scrollController,
-                padding: const EdgeInsets.fromLTRB(
-                  SahneSpace.page,
-                  SahneSpace.x2,
-                  SahneSpace.page,
-                  SahneSpace.x6,
-                ),
-                children: top,
-              ),
-            ),
-          ],
-        ),
+      // Sonuç ekranından açılan liderlik: B iskeleti. Geri düğmesinin
+      // sabit anahtarı (`leaderboard-back`) bileşene verilir.
+      scroll = SahnePushedPage(
+        title: context.t(K.leaderboardTitle),
+        backKey: const ValueKey('leaderboard-back'),
+        backLabel: context.t(K.back),
+        controller: widget.scrollController,
+        actions: [actions],
+        children: top,
       );
     } else {
       scroll = SahneTabPage(
@@ -700,49 +689,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   }
 }
 
-/// B iskeletinin çubuğu (sonuç ekranından açılan liderlik): 44'lük pahlı
-/// geri düğmesi (48 dokunma) + Manşet 22 başlık + sağda eylemler.
-/// `SahnePushedPage` ile aynı ölçüler; ayrı yazıldı çünkü geri düğmesinin
-/// sabit test anahtarı (`leaderboard-back`) bileşende verilemiyor.
-class _PushedBar extends StatelessWidget {
-  const _PushedBar({required this.title, required this.actions});
-
-  final String title;
-  final Widget actions;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 64),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(
-          SahneSpace.page - (ZkBackButton.tapTarget - 44) / 2,
-          SahneSpace.x2,
-          SahneSpace.page,
-          SahneSpace.x2,
-        ),
-        child: Row(
-          children: [
-            const ZkBackButton(key: ValueKey('leaderboard-back')),
-            const SizedBox(width: SahneSpace.x2 + 2),
-            Expanded(
-              child: Semantics(
-                header: true,
-                child: Text(
-                  title,
-                  style: SahneType.headline.copyWith(color: t.tx),
-                ),
-              ),
-            ),
-            actions,
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 // ─── Sabitlenen kendi sıran ─────────────────────────────────────────────────
 
 /// Liderlik listesinin altına sabitlenen "senin sıran" şeridi. Listeden
@@ -916,32 +862,12 @@ class _HeaderAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final button = Semantics(
+    final button = SahneIconButton(
       key: valueKey,
-      container: true,
-      button: true,
-      label: semanticLabel,
-      onTap: onPressed,
-      excludeSemantics: true,
-      child: Tooltip(
-        message: tooltip,
-        excludeFromSemantics: true,
-        child: SizedBox.square(
-          dimension: 48,
-          child: Center(
-            child: SahneTappable(
-              shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
-              color: t.s1,
-              onTap: onPressed,
-              child: SizedBox.square(
-                dimension: 44,
-                child: Icon(icon, size: 24, color: t.tx),
-              ),
-            ),
-          ),
-        ),
-      ),
+      icon: icon,
+      semanticLabel: semanticLabel,
+      tooltip: tooltip,
+      onPressed: onPressed,
     );
 
     if (badgeCount <= 0) return button;

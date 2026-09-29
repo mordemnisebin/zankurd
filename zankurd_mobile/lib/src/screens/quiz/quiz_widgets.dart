@@ -1245,48 +1245,6 @@ class _QuizAnswerBoard extends StatelessWidget {
   }
 }
 
-/// Sorunun araç düğmesi (kaydet, bildir, sohbet): Şahnê 44'lük ikon
-/// düğmesi, 48'lik dokunma kutusunda (Android kılavuzu 48'in altını
-/// reddeder; görsel boyut 44 kalır — `ZkBackButton` ile aynı kalıp:
-/// dış Semantics 48'lik kutuyu duyurur, içteki düğmenin sözü dışlanır).
-class _QuizToolButton extends StatelessWidget {
-  const _QuizToolButton({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.onPressed,
-  });
-
-  final IconData icon;
-  final String label;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      label: label,
-      onTap: onPressed,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onPressed,
-        child: SizedBox.square(
-          dimension: 48,
-          child: Center(
-            child: SahneIconButton(
-              icon: icon,
-              semanticLabel: label,
-              onPressed: onPressed,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 /// Joker dizisinin üstündeki jeton satırı: Zêr jeton glifi + bakiye, ve
 /// bakiye sıfırken jetonun nereden kazanılacağı.
 ///

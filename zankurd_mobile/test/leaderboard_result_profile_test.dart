@@ -21,6 +21,7 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 class _EmptyFavoritesRepository extends MockZanKurdRepository {
   @override
@@ -108,9 +109,18 @@ void main() {
     expect(find.byKey(const ValueKey('podium-slot-1')), findsOneWidget);
     expect(find.byKey(const ValueKey('podium-slot-2')), findsOneWidget);
     expect(find.byKey(const ValueKey('podium-slot-3')), findsOneWidget);
-    expect(find.text('#1'), findsOneWidget);
-    expect(find.text('#2'), findsOneWidget);
-    expect(find.text('#3'), findsOneWidget);
+    // 2026-09-29 Şahnê: sıra numarası kaidenin içinde "#" öneksiz yazılır
+    // (Manşet 22; birincide koyu altın). Her basamak kendi sırasını taşır.
+    for (final rank in [1, 2, 3]) {
+      expect(
+        find.descendant(
+          of: find.byKey(ValueKey('podium-slot-$rank')),
+          matching: find.text('$rank'),
+        ),
+        findsOneWidget,
+        reason: 'podium-slot-$rank',
+      );
+    }
   });
 
   testWidgets('leaderboard podium text stays readable on dark panel', (
@@ -139,7 +149,14 @@ void main() {
     // temanın birincil metin rengiydi, şimdi isim onunla değil sahnenin
     // rengiyle eşleşmeli. Sahne kontrastını (≥4.5:1, her iki sahne ucunda)
     // `test/leaderboard_stage_test.dart` ayrıca WCAG ile doğrular.
-    expect(nameText.style?.color, equals(Colors.white));
+    //
+    // 2026-09-29 Şahnê: sahnenin birincil metni gece belirtecidir
+    // (`SahneTokens.night.tx`, kırık beyaz); düz `Colors.white` palet dışı.
+    // Koyu temada podyum gece zemininde durur; kontrast ≥ 4.5.
+    expect(nameText.style?.color, equals(SahneTokens.night.tx));
+    final l1 = SahneTokens.night.tx.computeLuminance();
+    final l2 = SahneTokens.night.bg.computeLuminance();
+    expect((l1 + 0.05) / (l2 + 0.05), greaterThanOrEqualTo(4.5));
   });
 
   testWidgets('leaderboard single winner does not stretch across landscape', (
@@ -259,8 +276,11 @@ void main() {
     await answerQuestion(questions[1], last: false);
     await answerQuestion(questions[2], last: true);
 
-    expect(find.text('Sonuç'), findsOneWidget);
-    expect(find.text('YARIŞ TAMAMLANDI'), findsOneWidget);
+    // 2026-09-29 Şahnê: sonuç ekranı kendi adını ("Sonuç") tekrarlamaz;
+    // başlık "Yarış tamamlandı" Manşet biçemindedir (büyük harf etiketi
+    // değil).
+    expect(find.text('Sonuç'), findsNothing);
+    expect(find.text('Yarış tamamlandı'), findsOneWidget);
     expect(find.text('Doğru'), findsOneWidget);
     expect(find.text('Yanlış'), findsOneWidget);
 
@@ -441,8 +461,10 @@ void main() {
 
     expect(find.text('Kaydedilen Sorular'), findsOneWidget);
     expect(find.text('Yanlışlarım'), findsOneWidget);
-    expect(find.text('ÖĞRENME'), findsOneWidget);
-    expect(find.text('HESAP'), findsOneWidget);
+    // 2026-09-29 Şahnê: bölüm başlığı tek biçemdir (`SahneSectionHeader`,
+    // Manşet 22) — büyük harf etiketi değil.
+    expect(find.text('Öğrenme'), findsOneWidget);
+    expect(find.text('Hesap'), findsOneWidget);
 
     await tester.scrollUntilVisible(
       find.text('Mağaza'),

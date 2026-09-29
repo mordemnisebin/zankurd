@@ -91,9 +91,32 @@ final _size = Size(
   double.tryParse(Platform.environment['ZANKURD_SCREEN_TOUR_HEIGHT'] ?? '') ??
       844,
 );
-final _outDir =
+final _baseOutDir =
     Platform.environment['ZANKURD_SCREEN_TOUR_OUT_DIR'] ??
     'docs/screenshots/tour';
+
+/// Turun teması. `ZANKURD_SCREEN_TOUR_THEME=light|dark` bütün kareleri o
+/// temada basar ve çıktıyı `<çıktı>/<tema>/` altına yazar (kare adları
+/// değişmez; `_dark` adlı bir kare `light/` altında gündüz çizilmiştir).
+/// Değişken yoksa her kare kendi tanımındaki temadadır: `_dark` kareleri
+/// gece, ötekiler GÜNDÜZ.
+///
+/// 2026-09-29: Şahnê'de varsayılan tema gecedir (`ThemeProvider`). Tur
+/// eskiden gündüz karelerinde sağlayıcıyı boş bırakıyordu; kareler adı
+/// "gündüz" olduğu hâlde gece çiziliyordu. Gündüz kareleri artık açıkça
+/// gündüz kurulur.
+final ThemeMode? _forcedTheme =
+    switch (Platform.environment['ZANKURD_SCREEN_TOUR_THEME']) {
+      'light' => ThemeMode.light,
+      'dark' => ThemeMode.dark,
+      _ => null,
+    };
+
+final _outDir = switch (_forcedTheme) {
+  ThemeMode.light => '$_baseOutDir/light',
+  ThemeMode.dark => '$_baseOutDir/dark',
+  _ => _baseOutDir,
+};
 
 /// Yakalama sınırı. Kök render katmanı yerine açık bir RepaintBoundary
 /// kullanılır; kök `debugLayer.toImage()` test koşucusunda kilitlenebiliyor.
@@ -281,7 +304,9 @@ Widget _tourShell({required Widget child, bool dark = false, bool ku = false}) {
     key: _boundaryKey,
     child: testShell(
       child: Material(type: MaterialType.transparency, child: child),
-      themeProvider: dark ? ThemeProvider(initialMode: ThemeMode.dark) : null,
+      themeProvider: ThemeProvider(
+        initialMode: _forcedTheme ?? (dark ? ThemeMode.dark : ThemeMode.light),
+      ),
       languageProvider: ku ? kurmanciLang() : null,
     ),
   );

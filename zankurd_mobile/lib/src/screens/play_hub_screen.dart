@@ -174,96 +174,108 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         // Klavye ve erişilebilir yazı ölçeği aynı anda açıkken içerik sabit
         // bir Column'a sığmayabilir. Sheet'i kaydırılabilir tutarak alanı ya
         // da doğrulama mesajını erişilemez bırakma.
-        return SingleChildScrollView(
+        //
+        // Klavye payı kaydırma alanının DIŞINDADIR: içeride (dolgu olarak)
+        // durunca görünüm alanı klavyenin arkasına uzanıyordu ve kaydırma
+        // doğrulama mesajını klavyenin altına bırakıyordu (320 px,
+        // Kurmancî, 2026-09-29).
+        return Padding(
           padding: EdgeInsets.only(
-            left: SahneSpace.page,
-            right: SahneSpace.page,
-            bottom: MediaQuery.viewInsetsOf(sheetCtx).bottom + SahneSpace.page,
+            bottom: MediaQuery.viewInsetsOf(sheetCtx).bottom,
           ),
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          child: AppPanel(
-            child: Form(
-              key: formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.t(K.joinRoomTitle),
-                    style: SahneType.headline.copyWith(
-                      color: SahneTokens.of(context).tx,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.only(
+              left: SahneSpace.page,
+              right: SahneSpace.page,
+              bottom: SahneSpace.page,
+            ),
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            child: AppPanel(
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.t(K.joinRoomTitle),
+                      style: SahneType.headline.copyWith(
+                        color: SahneTokens.of(context).tx,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: SahneSpace.x2),
-                  Text(
-                    context.t(K.joinRoomBody),
-                    style: SahneType.body.copyWith(
-                      color: SahneTokens.of(context).tx2,
+                    const SizedBox(height: SahneSpace.x2),
+                    Text(
+                      context.t(K.joinRoomBody),
+                      style: SahneType.body.copyWith(
+                        color: SahneTokens.of(context).tx2,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: SahneSpace.x4),
-                  TextFormField(
-                    key: const ValueKey('play-hub-join-room-code-field'),
-                    controller: controller,
-                    textCapitalization: TextCapitalization.characters,
-                    // Yazarken kanonik biçime çeker: kullanıcı yalnız soneki
-                    // yazsa da alanda `ZK-ABCDEF0123` görünür, yani gönderilen
-                    // kodun doğru olduğunu göndermeden önce görür.
-                    inputFormatters: const [_RoomCodeInputFormatter()],
-                    style: inputTextStyle,
-                    errorBuilder: (_, errorText) =>
-                        Text(errorText, overflow: TextOverflow.visible),
-                    decoration: InputDecoration(
-                      labelText: context.t(K.roomCode),
-                      prefixIcon: const Icon(AppIcons.doorOpen),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return context.t(K.roomCodeRequired);
-                      }
-                      if (!isSupportedRoomCode(value)) {
-                        return context.t(K.roomCodeInvalid);
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: SahneSpace.x4),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton.icon(
-                      onPressed: () async {
-                        if (!formKey.currentState!.validate()) return;
-                        try {
-                          final room = await widget.repository.joinOnlineRoom(
-                            normalizeRoomCode(controller.text),
-                          );
-                          if (!sheetCtx.mounted) return;
-                          AnalyticsService.instance.logActivationStep(
-                            'room_joined',
-                          );
-                          Navigator.of(sheetCtx).pop();
-                          if (mounted) _openRoom(room);
-                        } catch (error, stack) {
-                          ErrorReporter.record(
-                            error,
-                            stack,
-                            reason: 'play hub join room failed',
-                          );
-                          if (!sheetCtx.mounted) return;
-                          Navigator.of(sheetCtx).pop();
-                          if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(context.t(joinRoomErrorKey(error))),
-                            ),
-                          );
+                    const SizedBox(height: SahneSpace.x4),
+                    TextFormField(
+                      key: const ValueKey('play-hub-join-room-code-field'),
+                      controller: controller,
+                      textCapitalization: TextCapitalization.characters,
+                      // Yazarken kanonik biçime çeker: kullanıcı yalnız soneki
+                      // yazsa da alanda `ZK-ABCDEF0123` görünür, yani gönderilen
+                      // kodun doğru olduğunu göndermeden önce görür.
+                      inputFormatters: const [_RoomCodeInputFormatter()],
+                      style: inputTextStyle,
+                      errorBuilder: (_, errorText) =>
+                          Text(errorText, overflow: TextOverflow.visible),
+                      decoration: InputDecoration(
+                        labelText: context.t(K.roomCode),
+                        prefixIcon: const Icon(AppIcons.doorOpen),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return context.t(K.roomCodeRequired);
                         }
+                        if (!isSupportedRoomCode(value)) {
+                          return context.t(K.roomCodeInvalid);
+                        }
+                        return null;
                       },
-                      icon: const Icon(AppIcons.rightToBracket),
-                      label: Text(context.t(K.joinAction)),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: SahneSpace.x4),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.icon(
+                        onPressed: () async {
+                          if (!formKey.currentState!.validate()) return;
+                          try {
+                            final room = await widget.repository.joinOnlineRoom(
+                              normalizeRoomCode(controller.text),
+                            );
+                            if (!sheetCtx.mounted) return;
+                            AnalyticsService.instance.logActivationStep(
+                              'room_joined',
+                            );
+                            Navigator.of(sheetCtx).pop();
+                            if (mounted) _openRoom(room);
+                          } catch (error, stack) {
+                            ErrorReporter.record(
+                              error,
+                              stack,
+                              reason: 'play hub join room failed',
+                            );
+                            if (!sheetCtx.mounted) return;
+                            Navigator.of(sheetCtx).pop();
+                            if (!mounted) return;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  context.t(joinRoomErrorKey(error)),
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        icon: const Icon(AppIcons.rightToBracket),
+                        label: Text(context.t(K.joinAction)),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -503,16 +515,12 @@ class _QuickDuelHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final enabled = onTap != null;
-    // "Seviyene yakın rakip · ~2 dakika": manşet ve süre maketteki gibi iki
-    // satıra ayrılır. Ayraç yoksa (çeviri değişirse) tamamı manşettir.
-    final sub = context.t(K.quickDuelSub);
-    final cut = sub.lastIndexOf(' · ');
-    final title = !enabled
-        ? context.t(K.serverUnreachableTitle)
-        : cut < 0
-        ? sub
-        : sub.substring(0, cut);
-    final meta = !enabled || cut < 0 ? null : sub.substring(cut + 3);
+    // Manşet ve süre maketteki gibi iki satır; ayrı dizgelerdir
+    // ([K.quickDuelHeadline], [K.quickDuelDuration]).
+    final title = enabled
+        ? context.t(K.quickDuelHeadline)
+        : context.t(K.serverUnreachableTitle);
+    final meta = enabled ? context.t(K.quickDuelDuration) : null;
 
     return Semantics(
       key: const ValueKey('play-hub-quick-duel'),

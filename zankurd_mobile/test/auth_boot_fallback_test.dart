@@ -7,7 +7,7 @@ import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
-import 'package:zankurd_mobile/src/widgets/mode_card.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -115,7 +115,9 @@ void main() {
 
     final createRoom = find.byKey(const ValueKey('play-hub-create-room'));
     if (createRoom.evaluate().isNotEmpty) {
-      final card = tester.widget<ModeCard>(createRoom);
+      // 2026-09-29 Şahnê: oda kartı artık liste satırıdır (`SahneListRow`);
+      // kural aynı: sunucu yokken dokunulamaz.
+      final card = tester.widget<SahneListRow>(createRoom);
       expect(card.onTap, isNull);
     }
   });

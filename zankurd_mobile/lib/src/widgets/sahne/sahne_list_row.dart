@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../theme/app_icons.dart';
 import '../../theme/sahne.dart';
 import 'sahne_foundation.dart';
+import 'sahne_painters.dart';
 
 /// Elmas avatar — sıra satırı, podyum, VS amblemi (maketteki `.sh-lav`,
 /// `.sh-pav`, `.sh-vs-a/b`).
@@ -114,7 +115,7 @@ class SahneRowValue extends StatelessWidget {
   }
 }
 
-enum _RowKind { standard, info, rank, me }
+enum _RowKind { standard, info, rank, me, custom }
 
 /// Liste satırı — maketteki "5 · Liste satırı" (`.sh-row`).
 ///
@@ -124,6 +125,14 @@ enum _RowKind { standard, info, rank, me }
 /// * [SahneListRow.rank] — sıra, ≥ 56: sıra no + 36'lık elmas avatar.
 /// * [SahneListRow.me] — "Sen": Zêr tonu degrade + Halka 1 altın, L pah;
 ///   grubun DIŞINDA tek başına durur.
+/// * [SahneListRow.leading] — serbest öncül (ör. `PlayerAvatar`); ≥ 64,
+///   ayırıcı öncülün genişliğinden ([leadingWidth]) hizalanır.
+///
+/// Sıra ve "Sen" satırında elmas avatarın yerine oyuncunun kendi avatarı
+/// verilebilir ([avatar], 36'lık yuva). Bilgi satırında resim yoksa
+/// ([image] `null`) çizimsiz kategori karosunun 36'lık küçüğü çizilir —
+/// satırlar aynı hizada kalır. [destructive] (ör. "Hesabı sil"): başlık ve
+/// ikon Şaş metni, ikon karosu Şaş tonu; satır yine dolu kırmızı değildir.
 ///
 /// Başlık Gövde 700, alt satır Açıklama (ikincil metin); sağda [trailing]
 /// (rozet, değer) ve isteğe bağlı chevron. Yükseklik en az değerdir, sabit
@@ -143,26 +152,58 @@ class SahneListRow extends StatelessWidget {
     this.onTap,
     this.enabled = true,
     this.semanticLabel,
+    this.destructive = false,
   }) : _kind = _RowKind.standard,
        image = null,
        rank = null,
-       initial = null;
+       initial = null,
+       avatar = null,
+       leadingWidget = null,
+       leadingWidth = 44;
 
+  /// Bilgi satırı; [image] `null` ise [icon]lu çizimsiz kategori küçüğü.
   const SahneListRow.thumb({
     super.key,
-    required ImageProvider this.image,
+    required this.image,
     required this.title,
+    this.icon = AppIcons.clapperboard,
     this.subtitle,
     this.trailing,
     this.chevron = false,
     this.onTap,
     this.semanticLabel,
   }) : _kind = _RowKind.info,
-       icon = null,
        role = SahneRole.neutral,
        enabled = true,
        rank = null,
-       initial = null;
+       initial = null,
+       avatar = null,
+       destructive = false,
+       leadingWidget = null,
+       leadingWidth = 36;
+
+  /// Serbest öncüllü satır (ör. `PlayerAvatar`): [leadingWidth] ayırıcı
+  /// hizası içindir (öncülün genişliği).
+  const SahneListRow.leading({
+    super.key,
+    required Widget leading,
+    required this.title,
+    this.leadingWidth = 44,
+    this.subtitle,
+    this.trailing,
+    this.chevron = false,
+    this.onTap,
+    this.enabled = true,
+    this.semanticLabel,
+    this.destructive = false,
+  }) : _kind = _RowKind.custom,
+       leadingWidget = leading,
+       icon = null,
+       image = null,
+       role = SahneRole.neutral,
+       rank = null,
+       initial = null,
+       avatar = null;
 
   const SahneListRow.rank({
     super.key,
@@ -170,6 +211,7 @@ class SahneListRow extends StatelessWidget {
     required this.title,
     this.initial,
     this.icon,
+    this.avatar,
     this.subtitle,
     this.trailing,
     this.onTap,
@@ -178,7 +220,10 @@ class SahneListRow extends StatelessWidget {
        image = null,
        role = SahneRole.gold,
        chevron = false,
-       enabled = true;
+       enabled = true,
+       destructive = false,
+       leadingWidget = null,
+       leadingWidth = 36;
 
   const SahneListRow.me({
     super.key,
@@ -186,6 +231,7 @@ class SahneListRow extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.icon = AppIcons.user,
+    this.avatar,
     this.trailing,
     this.onTap,
     this.semanticLabel,
@@ -194,7 +240,10 @@ class SahneListRow extends StatelessWidget {
        initial = null,
        role = SahneRole.gold,
        chevron = false,
-       enabled = true;
+       enabled = true,
+       destructive = false,
+       leadingWidget = null,
+       leadingWidth = 36;
 
   final _RowKind _kind;
   final IconData? icon;
@@ -212,16 +261,29 @@ class SahneListRow extends StatelessWidget {
   /// Varsayılan: başlık + alt satır.
   final String? semanticLabel;
 
+  /// Yıkıcı eylem satırı (Şaş metni).
+  final bool destructive;
+
+  /// Sıra/"Sen" satırında elmas avatarın yerine (36'lık yuva).
+  final Widget? avatar;
+
+  /// [SahneListRow.leading] öncülü.
+  final Widget? leadingWidget;
+
+  /// Öncülün genişliği (ayırıcı hizası).
+  final double leadingWidth;
+
   /// Grup ayırıcısının sol boşluğu: standart ve bilgi satırında metnin,
   /// sıra satırında avatarın hizası (12 + öncül + 12).
   double get dividerIndent => switch (_kind) {
     _RowKind.standard => SahneSpace.x3 + 44 + SahneSpace.x3,
     _RowKind.info => SahneSpace.x3 + 36 + SahneSpace.x3,
     _RowKind.rank || _RowKind.me => SahneSpace.x3 + 24 + SahneSpace.x3,
+    _RowKind.custom => SahneSpace.x3 + leadingWidth + SahneSpace.x3,
   };
 
   double get _minHeight => switch (_kind) {
-    _RowKind.standard || _RowKind.me => 64,
+    _RowKind.standard || _RowKind.me || _RowKind.custom => 64,
     _RowKind.info => 52,
     _RowKind.rank => 56,
   };
@@ -231,12 +293,27 @@ class SahneListRow extends StatelessWidget {
     final t = SahneTokens.of(context);
     final isMe = _kind == _RowKind.me;
 
+    // Çizimsiz kategori küçüğü: karonun kobalt radyali + ikon, 36.
+    Widget noArt() => SizedBox.square(
+      dimension: 36,
+      child: CustomPaint(
+        painter: SahneNoArtPainter(gold: t.gold, dot: t.race),
+        child: Center(
+          child: Icon(
+            icon ?? AppIcons.clapperboard,
+            size: 18,
+            color: SahneTokens.night.tx,
+          ),
+        ),
+      ),
+    );
+
     Widget? leading;
     switch (_kind) {
       case _RowKind.standard:
         leading = DecoratedBox(
           decoration: ShapeDecoration(
-            color: t.roleTint(role),
+            color: destructive ? t.errTint : t.roleTint(role),
             shape: SahneShape.m,
           ),
           child: SizedBox.square(
@@ -244,24 +321,33 @@ class SahneListRow extends StatelessWidget {
             child: Icon(
               icon,
               size: 24,
-              color: enabled ? t.roleText(role) : t.tx3,
+              color: !enabled
+                  ? t.tx3
+                  : destructive
+                  ? t.errTx
+                  : t.roleText(role),
             ),
           ),
         );
+      case _RowKind.custom:
+        leading = leadingWidget;
       case _RowKind.info:
+        final img = image;
         leading = ClipPath(
           clipper: const ShapeBorderClipper(shape: SahneShape.m),
-          child: DecoratedBox(
-            decoration: const BoxDecoration(color: SahneStageColors.art2),
-            child: Image(
-              image: image!,
-              width: 36,
-              height: 36,
-              fit: BoxFit.cover,
-              excludeFromSemantics: true,
-              errorBuilder: (_, _, _) => const SizedBox.square(dimension: 36),
-            ),
-          ),
+          child: img == null
+              ? noArt()
+              : DecoratedBox(
+                  decoration: const BoxDecoration(color: SahneStageColors.art2),
+                  child: Image(
+                    image: img,
+                    width: 36,
+                    height: 36,
+                    fit: BoxFit.cover,
+                    excludeFromSemantics: true,
+                    errorBuilder: (_, _, _) => noArt(),
+                  ),
+                ),
         );
       case _RowKind.rank:
       case _RowKind.me:
@@ -284,12 +370,14 @@ class SahneListRow extends StatelessWidget {
               ),
             ),
             const SizedBox(width: SahneSpace.x3),
-            SahneDiamondAvatar(
-              initial: initial,
-              icon: isMe ? icon : (initial == null ? icon : null),
-              color: isMe ? t.gold : t.s3,
-              foreground: isMe ? t.onGold : t.tx,
-            ),
+            avatar == null
+                ? SahneDiamondAvatar(
+                    initial: initial,
+                    icon: isMe ? icon : (initial == null ? icon : null),
+                    color: isMe ? t.gold : t.s3,
+                    foreground: isMe ? t.onGold : t.tx,
+                  )
+                : SizedBox.square(dimension: 36, child: Center(child: avatar)),
           ],
         );
     }
@@ -300,7 +388,13 @@ class SahneListRow extends StatelessWidget {
       children: [
         Text(
           title,
-          style: SahneType.bodyStrong.copyWith(color: enabled ? t.tx : t.tx2),
+          style: SahneType.bodyStrong.copyWith(
+            color: !enabled
+                ? t.tx2
+                : destructive
+                ? t.errTx
+                : t.tx,
+          ),
         ),
         if (subtitle != null)
           Text(subtitle!, style: SahneType.caption.copyWith(color: t.tx2)),
@@ -331,7 +425,7 @@ class SahneListRow extends StatelessWidget {
         ),
         child: Row(
           children: [
-            ExcludeSemantics(child: leading),
+            if (leading != null) ExcludeSemantics(child: leading),
             const SizedBox(width: SahneSpace.x3),
             Expanded(
               child: stacked && trail != null
@@ -426,26 +520,31 @@ class SahneListGroup extends StatelessWidget {
       color: t.s1,
       shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       clipBehavior: Clip.antiAlias,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (var i = 0; i < children.length; i++) ...[
-            if (i > 0)
-              Padding(
-                padding: EdgeInsetsDirectional.only(
-                  start: switch (children[i]) {
-                    final SahneListRow row => row.dividerIndent,
-                    _ => dividerIndent,
-                  },
+      child: SahneOnSurface(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = 0; i < children.length; i++) ...[
+              if (i > 0)
+                Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    start: switch (children[i]) {
+                      final SahneListRow row => row.dividerIndent,
+                      _ => dividerIndent,
+                    },
+                  ),
+                  child: ExcludeSemantics(
+                    child: SizedBox(
+                      height: 1,
+                      child: ColoredBox(color: t.line),
+                    ),
+                  ),
                 ),
-                child: ExcludeSemantics(
-                  child: SizedBox(height: 1, child: ColoredBox(color: t.line)),
-                ),
-              ),
-            children[i],
+              children[i],
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

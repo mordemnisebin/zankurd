@@ -366,6 +366,9 @@ class Tr {
     // Kurmancî arayüzde de aynen "sn" basıyordu; contestSeconds'daki
     // ('çirke/pirs') gibi Kurmancî tam kelimeyi kullanır (2026-08-14 denetimi).
     K.secondsShortUnit: {'ku': 'çirke', 'tr': 'sn'},
+    // Sayaç elmasının ekran okuyucu sözü ("17 saniye kaldı"); kısaltma
+    // ("17 sn") sesli okumada anlamsızdı.
+    K.timerSecondsLeft: {'ku': '{n} çirke mane', 'tr': '{n} saniye kaldı'},
     K.openRoom: {'ku': 'Odeyê Veke', 'tr': 'Odayı Aç'},
     K.joinRoomTitle: {'ku': 'Tevlî Odeyê Bibe', 'tr': 'Odaya Katıl'},
     K.joinRoomBody: {
@@ -429,6 +432,14 @@ class Tr {
       'ku': 'Hevrikekî di asta te de · ~2 deqe',
       'tr': 'Seviyene yakın rakip · ~2 dakika',
     },
+    // Düello sahne kartının manşeti ve süre satırı ayrı dizgelerdir:
+    // eskiden `quickDuelSub` " · " ayracından bölünüyordu (çeviri ayracı
+    // değiştirirse kart tek satıra düşerdi).
+    K.quickDuelHeadline: {
+      'ku': 'Hevrikekî di asta te de',
+      'tr': 'Seviyene yakın rakip',
+    },
+    K.quickDuelDuration: {'ku': '~2 deqe', 'tr': '~2 dakika'},
     K.findOpponent: {'ku': 'Hevrik bibîne', 'tr': 'Rakip bul'},
     K.roomOpenFailed: {
       'ku': 'Ode nehate vekirin. Têkiliya xwe kontrol bike.',
@@ -1105,6 +1116,12 @@ class Tr {
       'ku': 'Performansa li gor kategoriyan',
       'tr': 'Kategorilere göre performans',
     },
+    // Sonuç ekranındaki kategori listesinin bölüm başlığı: "performans"
+    // bir karne dili; liste turdan ne öğrenildiğini gösterir.
+    K.resultLearnedTitle: {
+      'ku': 'Tiştên ku di vê gerê de hîn bûyî',
+      'tr': 'Bu turdan öğrendiklerin',
+    },
     K.enGucluOldugunKategori: {
       'ku': 'Kategoriya te ya herî bihêz:',
       'tr': 'En güçlü olduğun kategori:',
@@ -1323,6 +1340,8 @@ class Tr {
     },
     K.raceWord: {'ku': 'Pêşbirk', 'tr': 'Yarış'},
     K.roomWord: {'ku': 'Ode', 'tr': 'Oda'},
+    // Oda ekranının (B iskeleti) çubuk başlığı.
+    K.roomLobbyTitle: {'ku': 'Lobiya odeyê', 'tr': 'Oda lobisi'},
     K.reportAction: {'ku': 'Ragihîne', 'tr': 'Bildir'},
     // 2026-08-02: avatar/ad da yabancılara gösterilen bir UGC yüzeyi;
     // bildirmenin hiçbir yolu yoktu (Apple 1.2).
@@ -3165,6 +3184,7 @@ class K {
   static const secondsPerQuestion = 'play.secondsPerQuestion';
   static const secondsPerQuestionNote = 'play.secondsPerQuestion.note';
   static const secondsShortUnit = 'play.secondsPerQuestion.shortUnit';
+  static const timerSecondsLeft = 'quiz.timer.secondsLeft';
   static const openRoom = 'play.openRoom';
   static const joinRoomTitle = 'play.joinRoom.title';
   static const joinRoomBody = 'play.joinRoom.body';
@@ -3191,6 +3211,8 @@ class K {
   static const playMoreSub = 'play.more.sub';
   static const quickDuel = 'play.quickDuel';
   static const quickDuelSub = 'play.quickDuel.sub';
+  static const quickDuelHeadline = 'play.quickDuel.headline';
+  static const quickDuelDuration = 'play.quickDuel.duration';
   static const findOpponent = 'play.findOpponent';
   static const roomOpenFailed = 'play.roomOpenFailed';
 
@@ -3503,6 +3525,7 @@ class K {
   static const baslangic = 'screen.baslangic';
   static const performansAnalizi = 'screen.performansAnalizi';
   static const kategorilereGorePerformans = 'screen.kategorilereGorePerformans';
+  static const resultLearnedTitle = 'result.learnedTitle';
   static const enGucluOldugunKategori = 'screen.enGucluOldugunKategori';
   static const pDogruCevap = 'screen.pDogruCevap';
   static const gelistirilmesiGerekenAlan = 'screen.gelistirilmesiGerekenAlan';
@@ -3591,6 +3614,7 @@ class K {
   static const questionsLoadFailed = 'quiz.questionsLoadFailed';
   static const raceWord = 'quiz.race';
   static const roomWord = 'quiz.room';
+  static const roomLobbyTitle = 'room.lobbyTitle';
   static const reportAction = 'quiz.report';
   static const reportProfileTitle = 'report.profileTitle';
   static const reportProfileBodyP = 'report.profileBody';

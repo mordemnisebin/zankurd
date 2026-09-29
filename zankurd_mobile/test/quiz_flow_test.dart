@@ -244,10 +244,15 @@ void main() {
       find.byKey(const ValueKey('quiz-question-icon-badge')),
       findsOneWidget,
     );
+    // 2026-09-29 Şahnê: sorunun arkasındaki hayalet ikon kalktı; kategori
+    // kimliği sahne zemininde (%14 çizim), huzmenin kategori ışığında ve
+    // ufuktaki dağ sırtındadır.
     expect(
       find.byKey(const ValueKey('quiz-question-ghost-icon')),
-      findsOneWidget,
+      findsNothing,
     );
+    expect(find.byKey(const ValueKey('sahne-stage-beam')), findsOneWidget);
+    expect(find.byKey(const ValueKey('sahne-stage-ridge')), findsOneWidget);
   });
 
   testWidgets('online room answer broadcasts readiness outside 1vs1', (
@@ -1251,8 +1256,12 @@ void main() {
     // Aksiyon barı sabit: joker satırı ve "Piştre" scroll gerektirmeden
     // ekranda olmalı. Geri sayım işlerken kullanıcı devam butonunu aramak
     // zorunda kalmasın (2026-07-22 UX denetimi, P0-1).
-    final nextButton = find.byKey(const ValueKey('quiz-next-button'));
-    final beforeScroll = tester.getRect(nextButton);
+    //
+    // 2026-09-29 Şahnê: alt perdede cevaptan ÖNCE joker dizisi, cevaptan
+    // SONRA tek birincil "Sonraki" durur (aynı yer). Kural iki hâlde de
+    // denetlenir: perde kaydırmadan ekranda ve kaydırma onu oynatmaz.
+    final dock = find.byKey(const ValueKey('quiz-wildcard-row'));
+    final beforeScroll = tester.getRect(dock);
     expect(beforeScroll.bottom, lessThanOrEqualTo(640));
     expect(beforeScroll.top, greaterThanOrEqualTo(0));
 
@@ -1265,8 +1274,21 @@ void main() {
     await tester.drag(scrollable, const Offset(0, -300));
     await tester.pumpAndSettle();
 
-    final afterScroll = tester.getRect(nextButton);
+    final afterScroll = tester.getRect(dock);
     expect(afterScroll, equals(beforeScroll));
+
+    final answer = find.text('Sözlü kültürü aktarmak');
+    await tester.ensureVisible(answer);
+    await tester.pumpAndSettle();
+    await tester.tap(answer);
+    await tester.pumpAndSettle();
+    final nextButton = find.byKey(const ValueKey('quiz-next-button'));
+    final nextRect = tester.getRect(nextButton);
+    expect(nextRect.bottom, lessThanOrEqualTo(640));
+    expect(nextRect.top, greaterThanOrEqualTo(0));
+    await tester.drag(scrollable, const Offset(0, 300));
+    await tester.pumpAndSettle();
+    expect(tester.getRect(nextButton), equals(nextRect));
     expect(tester.takeException(), isNull);
   });
 
@@ -1315,24 +1337,21 @@ void main() {
       reason: 'Kısa içerik ne üste yapışmalı ne ekran ortasına itilmelidir.',
     );
 
-    // Burada eskiden `gapBelow > gapAbove` bekleniyordu: "kalan esnek boşluk
-    // içeriğin altında kalmalı". O kural tam olarak şikâyet edilen kusuru
-    // ŞART KOŞUYORDU — iPhone 17'de soru kartı ile "Sonraki" düğmesi
-    // arasında ~287pt, yani ekranın üçte biri kadar bir ölü bant kalıyordu;
-    // cevap verilip açıklama paneli açıldıktan sonra bile ~200pt duruyordu
-    // (2026-08-16 simülatör taraması).
+    // Burada eskiden `gapBelow > gapAbove` bekleniyordu; 2026-08-16'da
+    // yerine "kart kalan alanı doldurur" (`gapBelow <= 1`) kondu: soru
+    // kartı ile "Sonraki" arasında ölü bir bant kalıyordu.
     //
-    // Yeni kural: kart, altında kullanılmayan alan kaldığında oraya kadar
-    // uzar (`_buildQuestionPanel`in `minHeight`i). Yani içerik yukarıdan
-    // başlamaya devam eder ama ALTINDA ölü bant bırakmaz; artan alan kartın
-    // içine düşer ve cevaptan sonra açıklama panelinin yeri olur.
-    expect(
-      gapBelow,
-      lessThanOrEqualTo(1.0),
-      reason:
-          'Soru kartı ile alt eylem barı arasında ölü boşluk kalmamalı; '
-          'kart kalan alanı doldurur.',
+    // 2026-09-29 Şahnê: soruda kart YOK — soru ve şıklar sahnenin üstünde
+    // doğal boylarında durur; altta kalan boşluk "ölü bant" değil sahnenin
+    // kendisidir (ufuktaki dağ sırtı oraya oturur). Korunan kural: kısa
+    // içerik ortaya itilmez (yukarıdaki üst boşluk) ve alt perde ekranın
+    // dibinde sabittir.
+    expect(gapBelow, greaterThanOrEqualTo(0));
+    expect(find.byKey(const ValueKey('sahne-stage-ridge')), findsOneWidget);
+    final dock = tester.getRect(
+      find.byKey(const ValueKey('quiz-wildcard-row')),
     );
+    expect(dock.top, greaterThanOrEqualTo(scrollArea.bottom - 1));
   });
 
   testWidgets('quiz tutorial keeps its second target and tooltip on screen', (
@@ -1382,8 +1401,10 @@ void main() {
       find.descendant(of: overlay, matching: find.text('2/2')),
       findsOneWidget,
     );
+    // 2026-09-29 Şahnê: ikinci adımın hedefi alt perdedir; cevaptan önce
+    // orada joker dizisi durur, "Sonraki" cevaptan sonra aynı yere gelir.
     final target = tester.getRect(
-      find.byKey(const ValueKey('quiz-next-button')),
+      find.byKey(const ValueKey('quiz-wildcard-row')),
     );
     final tooltip = tester.getRect(
       find.descendant(of: overlay, matching: find.text('Seri + Sonraki Soru')),
@@ -1460,9 +1481,18 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    // 2026-09-29 Şahnê: cevaptan önce eylem yerinde joker dizisi, cevaptan
+    // sonra "Sonraki" durur; ikisi de yatayda ekranda kalmalı.
+    final jokers = find.byKey(const ValueKey('quiz-wildcard-row'));
+    expect(jokers, findsOneWidget);
+    expect(tester.getRect(jokers).bottom, lessThanOrEqualTo(390));
+    final answer = find.text('Müzik');
+    await tester.ensureVisible(answer);
+    await tester.pumpAndSettle();
+    await tester.tap(answer);
+    await tester.pumpAndSettle();
     final nextButton = find.byKey(const ValueKey('quiz-next-button'));
     final nextRect = tester.getRect(nextButton);
-    expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
     expect(nextRect.top, greaterThanOrEqualTo(0));
     expect(nextRect.bottom, lessThanOrEqualTo(390));
     expect(tester.takeException(), isNull);

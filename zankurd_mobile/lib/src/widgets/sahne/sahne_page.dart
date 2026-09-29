@@ -1,4 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 import '../../theme/app_icons.dart';
@@ -21,40 +24,85 @@ SystemUiOverlayStyle _overlayFor(Brightness brightness) =>
         statusBarIconBrightness: Brightness.dark,
       );
 
-/// 44'lük ikon düğmesi — geri ve kapat (maketteki `.sh-ibtn`).
+/// 44'lük ikon düğmesi — geri, kapat ve çubuk eylemleri (maketteki
+/// `.sh-ibtn`).
 ///
 /// M pah, Perde (`s1`) + gündüzde 1 px kenar, birincil metin ikonu.
+///
+/// Görsel 44, dokunma alanı 48 ([sahneTapTarget]): plaka 48'lik saydam bir
+/// kutunun ortasında durur, ekran okuyucu tek bir 48'lik düğme görür.
+/// Bileşenin kendi yerleşim boyu 48'dir; sayfa kenarına hizalarken plakanın
+/// görsel kenarı için [inset] kadar içeri alınır.
+///
+/// [selected] verilirse düğme bir aç/kapa düğmesidir (ör. "kaydet"): `true`
+/// iken dolu hâl — Zêr tonu + Halka 1 altın + altın ikon ([selectedIcon]
+/// verilirse o) — ve ekran okuyucu seçili durumunu duyar. `null` → düz
+/// düğme. Pasif (`onPressed: null`): üçüncül ikon.
 class SahneIconButton extends StatelessWidget {
   const SahneIconButton({
     super.key,
     required this.icon,
     required this.semanticLabel,
     required this.onPressed,
+    this.selected,
+    this.selectedIcon,
+    this.tooltip,
   });
 
   final IconData icon;
   final String semanticLabel;
+
+  /// Uzun basış ipucu; varsayılan [semanticLabel].
+  final String? tooltip;
   final VoidCallback? onPressed;
+
+  /// Aç/kapa durumu; `null` → aç/kapa değil.
+  final bool? selected;
+  final IconData? selectedIcon;
+
+  /// Görsel plakanın kenarı.
+  static const double visualSize = 44;
+
+  /// Dokunma kutusunun görsel plakadan taşan payı (her yanda 2).
+  static const double inset = (sahneTapTarget - visualSize) / 2;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    final enabled = onPressed != null;
+    final on = selected ?? false;
+    final plate = SahneTappable(
+      shape: on
+          ? SahneShape.withSide(SahneShape.m, t.goldTx, width: SahneRing.r1)
+          : SahneShape.withSide(SahneShape.m, t.edge, width: 1),
+      color: on ? t.goldTint : t.s1,
+      onTap: onPressed,
+      child: SizedBox.square(
+        dimension: visualSize,
+        child: Icon(
+          on ? (selectedIcon ?? icon) : icon,
+          size: 24,
+          color: on ? t.goldTx : (enabled ? t.tx : t.tx3),
+        ),
+      ),
+    );
     return Semantics(
       container: true,
       button: true,
+      enabled: enabled,
+      selected: selected,
       label: semanticLabel,
       onTap: onPressed,
       excludeSemantics: true,
       child: Tooltip(
-        message: semanticLabel,
+        message: tooltip ?? semanticLabel,
         excludeFromSemantics: true,
-        child: SahneTappable(
-          shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
-          color: t.s1,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: onPressed,
           child: SizedBox.square(
-            dimension: 44,
-            child: Icon(icon, size: 24, color: t.tx),
+            dimension: sahneTapTarget,
+            child: Center(child: plate),
           ),
         ),
       ),
@@ -70,7 +118,9 @@ class SahneIconButton extends StatelessWidget {
 /// Başlık kartı yok, spot yok. Alt gezinme bu sayfanın değil, kabuğun
 /// (`AppShell`) işidir.
 ///
-/// Marka satırı büyük yazıda sığmazsa çipler alt satıra iner (taşmaz).
+/// Marka satırı büyük yazıda sığmazsa çipler alt satıra iner (taşmaz) ve
+/// orada da SAĞA yaslı kalır: marka solda, stat çipleri sağda — tek satırda
+/// da iki satırda da aynı taraf. Başlık satır sınırı olmadan sarar.
 /// İçerik [children] (sayfa kenarı 16 verilir) ve ardından [slivers]
 /// (kenarsız; ör. kenara taşan raf) olarak kayar.
 class SahneTabPage extends StatelessWidget {
@@ -106,11 +156,9 @@ class SahneTabPage extends StatelessWidget {
         children: [
           ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 44),
-            child: Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              crossAxisAlignment: WrapCrossAlignment.center,
+            child: _BrandRow(
+              gap: SahneSpace.x3,
               runSpacing: SahneSpace.x1,
-              spacing: SahneSpace.x3,
               children: [
                 _BrandMark(
                   name: brandName,
@@ -118,6 +166,7 @@ class SahneTabPage extends StatelessWidget {
                 ),
                 if (stats.isNotEmpty)
                   Wrap(
+                    alignment: WrapAlignment.end,
                     spacing: SahneSpace.x2,
                     runSpacing: SahneSpace.x1,
                     crossAxisAlignment: WrapCrossAlignment.center,
@@ -129,10 +178,10 @@ class SahneTabPage extends StatelessWidget {
           const SizedBox(height: SahneSpace.x1),
           Semantics(
             header: true,
-            child: Text(
+            // Büyük yazıda başlık sarar, kesilmez; tek bir uzun söz dar
+            // ekranda harf harf bölünmez (bkz. [SahneUnbrokenText]).
+            child: SahneUnbrokenText(
               title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
               style: SahneType.title.copyWith(
                 color: t.tx,
                 letterSpacing: -0.28,
@@ -175,6 +224,177 @@ class SahneTabPage extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Marka satırının yerleşimi: [children]'ın ilki (marka) solda, ikincisi
+/// (stat çipleri) sağda. İkisi yan yana sığmıyorsa ikincisi alt satıra
+/// iner ve orada da sağa yaslanır (`Wrap` alt satırı sola yaslıyordu).
+class _BrandRow extends MultiChildRenderObjectWidget {
+  const _BrandRow({
+    required super.children,
+    required this.gap,
+    required this.runSpacing,
+  });
+
+  final double gap;
+  final double runSpacing;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _RenderBrandRow(gap, runSpacing, Directionality.of(context));
+
+  @override
+  void updateRenderObject(BuildContext context, _RenderBrandRow renderObject) {
+    renderObject
+      ..gap = gap
+      ..runSpacing = runSpacing
+      ..textDirection = Directionality.of(context);
+  }
+}
+
+class _BrandRowParentData extends ContainerBoxParentData<RenderBox> {}
+
+class _RenderBrandRow extends RenderBox
+    with
+        ContainerRenderObjectMixin<RenderBox, _BrandRowParentData>,
+        RenderBoxContainerDefaultsMixin<RenderBox, _BrandRowParentData> {
+  _RenderBrandRow(this._gap, this._runSpacing, this._textDirection);
+
+  double _gap;
+  set gap(double v) {
+    if (v == _gap) return;
+    _gap = v;
+    markNeedsLayout();
+  }
+
+  double _runSpacing;
+  set runSpacing(double v) {
+    if (v == _runSpacing) return;
+    _runSpacing = v;
+    markNeedsLayout();
+  }
+
+  TextDirection _textDirection;
+  set textDirection(TextDirection v) {
+    if (v == _textDirection) return;
+    _textDirection = v;
+    markNeedsLayout();
+  }
+
+  @override
+  void setupParentData(RenderBox child) {
+    if (child.parentData is! _BrandRowParentData) {
+      child.parentData = _BrandRowParentData();
+    }
+  }
+
+  List<RenderBox> get _kids {
+    final out = <RenderBox>[];
+    var child = firstChild;
+    while (child != null) {
+      out.add(child);
+      child = childAfter(child);
+    }
+    return out;
+  }
+
+  @override
+  double computeMinIntrinsicWidth(double height) => _kids.fold(
+    0,
+    (m, c) => math.max(m, c.getMinIntrinsicWidth(double.infinity)),
+  );
+
+  @override
+  double computeMaxIntrinsicWidth(double height) {
+    final kids = _kids;
+    var w = 0.0;
+    for (var i = 0; i < kids.length; i++) {
+      if (i > 0) w += _gap;
+      w += kids[i].getMaxIntrinsicWidth(double.infinity);
+    }
+    return w;
+  }
+
+  @override
+  Size computeDryLayout(BoxConstraints constraints) =>
+      _layout(constraints, dry: true);
+
+  @override
+  void performLayout() {
+    size = _layout(constraints, dry: false);
+  }
+
+  Size _layout(BoxConstraints constraints, {required bool dry}) {
+    final kids = _kids;
+    final maxW = constraints.maxWidth;
+    final loose = BoxConstraints(maxWidth: maxW);
+    final sizes = [
+      for (final k in kids)
+        dry
+            ? k.getDryLayout(loose)
+            : (k..layout(loose, parentUsesSize: true)).size,
+    ];
+    if (kids.isEmpty) return constraints.smallest;
+    final rtl = _textDirection == TextDirection.rtl;
+    double startX(Size s) => rtl ? maxW - s.width : 0;
+    double endX(Size s) => rtl ? 0 : maxW - s.width;
+    final lead = sizes.first;
+    if (kids.length == 1) {
+      if (!dry) {
+        (kids.first.parentData! as _BrandRowParentData).offset = Offset(
+          startX(lead),
+          0,
+        );
+      }
+      return constraints.constrain(Size(maxW, lead.height));
+    }
+    final trail = sizes[1];
+    final oneRow = lead.width + _gap + trail.width <= maxW;
+    final double height;
+    if (oneRow) {
+      height = math.max(
+        constraints.minHeight,
+        math.max(lead.height, trail.height),
+      );
+      if (!dry) {
+        (kids[0].parentData! as _BrandRowParentData).offset = Offset(
+          startX(lead),
+          (height - lead.height) / 2,
+        );
+        (kids[1].parentData! as _BrandRowParentData).offset = Offset(
+          endX(trail),
+          (height - trail.height) / 2,
+        );
+      }
+    } else {
+      // İki satırda marka satırı markanın kendi boyundadır (en az 44
+      // değil): çipler markanın hemen altına iner, üstte boş bant kalmaz.
+      final top = lead.height;
+      height = math.max(
+        constraints.minHeight,
+        top + _runSpacing + trail.height,
+      );
+      if (!dry) {
+        (kids[0].parentData! as _BrandRowParentData).offset = Offset(
+          startX(lead),
+          (top - lead.height) / 2,
+        );
+        (kids[1].parentData! as _BrandRowParentData).offset = Offset(
+          endX(trail),
+          top + _runSpacing,
+        );
+      }
+    }
+    return constraints.constrain(Size(maxW, height));
+  }
+
+  @override
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) =>
+      defaultHitTestChildren(result, position: position);
+
+  @override
+  void paint(PaintingContext context, Offset offset) =>
+      defaultPaint(context, offset);
 }
 
 /// Marka: 32'lik logo plakası (gecede Kulis, gündüzde beyaz + 1 px kenar;
@@ -224,9 +444,15 @@ class _BrandMark extends StatelessWidget {
 /// B · Açılan sayfa (öğrenme yolu, kategori, mağaza, ayarlar, oda …).
 ///
 /// Maketteki yapı: durum çubuğu → en az 64'lük çubuk [44'lük M pahlı geri
-/// düğmesi | Manşet 22 başlık + Açıklama alt satır] → içerik. Sayfa adı
-/// içerikte tekrar edilmez; alt gezinme yok. Durum çubuğu biçemi temaya
-/// uyar. Geri düğmesinin sözü verilmezse Material yerelinden gelir.
+/// düğmesi (48 dokunma) | Manşet 22 başlık + Açıklama alt satır] → içerik.
+/// Sayfa adı içerikte tekrar edilmez; alt gezinme yok. Durum çubuğu biçemi
+/// temaya uyar. Geri düğmesinin sözü verilmezse uygulamanın dilinden gelir
+/// ([sahneBackLabel]).
+///
+/// Çubuk büyük yazıda uzar: başlık sarar, tek bir uzun söz harf harf
+/// bölünmez ([SahneUnbrokenText]). [bottom] (tek birincil eylem) gövdenin
+/// DIŞINDA, `Scaffold`un alt yuvasındadır: SnackBar onun üstünde açılır,
+/// düğmeyi örtmez; klavye açılınca klavyenin üstüne çıkar.
 class SahnePushedPage extends StatelessWidget {
   const SahnePushedPage({
     super.key,
@@ -234,6 +460,7 @@ class SahnePushedPage extends StatelessWidget {
     this.subtitle,
     this.onBack,
     this.backLabel,
+    this.backKey,
     this.actions = const [],
     this.children = const [],
     this.slivers = const [],
@@ -248,7 +475,10 @@ class SahnePushedPage extends StatelessWidget {
   final VoidCallback? onBack;
   final String? backLabel;
 
-  /// Çubuğun sağındaki 44'lük düğmeler (isteğe bağlı).
+  /// Geri düğmesinin anahtarı (testler ve sabit ekran sözleşmeleri için).
+  final Key? backKey;
+
+  /// Çubuğun sağındaki düğmeler (genelde [SahneIconButton]; 48 dokunma).
   final List<Widget> actions;
   final List<Widget> children;
   final List<Widget> slivers;
@@ -260,23 +490,27 @@ class SahnePushedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final back =
-        backLabel ?? MaterialLocalizations.of(context).backButtonTooltip;
+    final back = backLabel ?? sahneBackLabel(context);
     final bar = ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 64),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: SahneSpace.page,
-          vertical: SahneSpace.x2,
+        // Geri plakasının görsel kenarı sayfa kenarına (16) oturur; 48'lik
+        // dokunma kutusu 2 px dışarı taşar.
+        padding: const EdgeInsetsDirectional.fromSTEB(
+          SahneSpace.page - SahneIconButton.inset,
+          SahneSpace.x2,
+          SahneSpace.page - SahneIconButton.inset,
+          SahneSpace.x2,
         ),
         child: Row(
           children: [
             SahneIconButton(
+              key: backKey,
               icon: AppIcons.arrowLeft,
               semanticLabel: back,
               onPressed: onBack ?? () => Navigator.maybePop(context),
             ),
-            const SizedBox(width: SahneSpace.x3),
+            const SizedBox(width: SahneSpace.x3 - SahneIconButton.inset),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,7 +518,7 @@ class SahnePushedPage extends StatelessWidget {
                 children: [
                   Semantics(
                     header: true,
-                    child: Text(
+                    child: SahneUnbrokenText(
                       title,
                       style: SahneType.headline.copyWith(color: t.tx),
                     ),
@@ -298,7 +532,7 @@ class SahnePushedPage extends StatelessWidget {
               ),
             ),
             for (final a in actions) ...[
-              const SizedBox(width: SahneSpace.x2),
+              const SizedBox(width: SahneSpace.x1),
               a,
             ],
           ],
@@ -335,17 +569,65 @@ class SahnePushedPage extends StatelessWidget {
                   ],
                 ),
               ),
-              if (bottom != null)
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    SahneSpace.page,
-                    SahneSpace.x2,
-                    SahneSpace.page,
-                    SahneSpace.x3,
-                  ),
-                  child: bottom,
-                ),
             ],
+          ),
+        ),
+        bottomNavigationBar: bottom == null
+            ? null
+            : SahneBottomDock(
+                color: t.bg,
+                padding: const EdgeInsets.fromLTRB(
+                  SahneSpace.page,
+                  SahneSpace.x2,
+                  SahneSpace.page,
+                  SahneSpace.x3,
+                ),
+                child: bottom!,
+              ),
+      ),
+    );
+  }
+}
+
+/// Sayfanın alt yuvası (`Scaffold.bottomNavigationBar`): tek birincil
+/// eylem ya da joker dizisi.
+///
+/// Gövdenin dışındadır: `Scaffold` SnackBar'ı bu yuvanın ÜSTÜNDE açar
+/// (gövdenin içindeyken SnackBar birincil düğmeyi örtüyordu). Klavye
+/// açılınca yuva klavyenin üstüne çıkar (yuvanın altına klavye boyu kadar
+/// boşluk eklenir; gövde de o kadar kısalır). Alt güvenli alanı kendisi
+/// verir.
+class SahneBottomDock extends StatelessWidget {
+  const SahneBottomDock({
+    super.key,
+    required this.child,
+    required this.color,
+    required this.padding,
+  });
+
+  final Widget child;
+  final Color color;
+  final EdgeInsets padding;
+
+  @override
+  Widget build(BuildContext context) {
+    final keyboard = MediaQuery.viewInsetsOf(context).bottom;
+    return ColoredBox(
+      color: color,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: keyboard),
+        child: SafeArea(
+          top: false,
+          child: Padding(
+            padding: padding,
+            // Yuva içeriği sınırsız yükseklik alır (gövdedeki `Column`da
+            // olduğu gibi): `Center` gibi genişleyen bir çocuk bütün ekranı
+            // kaplamasın.
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [child],
+            ),
           ),
         ),
       ),
@@ -364,6 +646,12 @@ class SahnePushedPage extends StatelessWidget {
 /// ([dock]: zemine kararan 24 px degrade, altında tek birincil eylem ya
 /// da joker dizisi).
 ///
+/// Kapat düğmesi görselde 44, dokunmada 48 ([SahneIconButton]); anahtarı
+/// [closeKey]. Alt perde gövdenin DIŞINDA, `Scaffold`un alt yuvasındadır
+/// ([SahneBottomDock]): SnackBar onun üstünde açılır, klavye açılınca
+/// perde klavyenin üstüne çıkar. Sahne zemini (ışıma, huzme) perdenin
+/// arkasına kadar uzanır (`extendBody`).
+///
 /// İki isteğe bağlı katman (soru sahnesi için):
 ///
 /// * [light] — kategori ışığı ([SahneCategoryLight]): huzme bu renkle
@@ -379,6 +667,7 @@ class SahneStageScaffold extends StatelessWidget {
     required this.body,
     this.onClose,
     this.closeLabel,
+    this.closeKey,
     this.center,
     this.score,
     this.progress,
@@ -394,6 +683,9 @@ class SahneStageScaffold extends StatelessWidget {
   /// Varsayılan: `Navigator.maybePop`.
   final VoidCallback? onClose;
   final String? closeLabel;
+
+  /// Kapat düğmesinin anahtarı.
+  final Key? closeKey;
   final Widget? center;
   final Widget? score;
   final Widget? progress;
@@ -427,20 +719,26 @@ class SahneStageScaffold extends StatelessWidget {
 
   Widget _build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final close =
-        closeLabel ?? MaterialLocalizations.of(context).closeButtonTooltip;
+    final close = closeLabel ?? sahneCloseLabel(context);
     final safeBottom = MediaQuery.paddingOf(context).bottom;
+    final dockWidget = dock;
 
     final topBar = ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 68),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+        // Kapat plakasının görsel kenarı sayfa kenarına (16) oturur; 48'lik
+        // dokunma kutusu 2 px dışarı taşar. Sağ öğe yine 16'ya hizalanır
+        // (bkz. [_GameBarLayout.trailingInset]).
+        padding: const EdgeInsets.symmetric(
+          horizontal: SahneSpace.page - SahneIconButton.inset,
+        ),
         child: CustomMultiChildLayout(
           delegate: _GameBarLayout(),
           children: [
             LayoutId(
               id: _GameBarSlot.leading,
               child: SahneIconButton(
+                key: closeKey,
                 icon: AppIcons.xmark,
                 semanticLabel: close,
                 onPressed: onClose ?? () => Navigator.maybePop(context),
@@ -469,6 +767,19 @@ class SahneStageScaffold extends StatelessWidget {
       value: _overlayFor(Brightness.dark),
       child: Scaffold(
         backgroundColor: t.bg,
+        extendBody: dockWidget != null,
+        bottomNavigationBar: dockWidget == null
+            ? null
+            : SahneBottomDock(
+                color: t.bg,
+                padding: EdgeInsets.fromLTRB(
+                  SahneSpace.page,
+                  SahneSpace.x2,
+                  SahneSpace.page,
+                  safeBottom > 0 ? SahneSpace.x3 : SahneSpace.x4,
+                ),
+                child: dockWidget,
+              ),
         body: Stack(
           children: [
             const Positioned.fill(
@@ -531,73 +842,73 @@ class SahneStageScaffold extends StatelessWidget {
               ),
             SafeArea(
               bottom: false,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  topBar,
-                  if (progress != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: SahneSpace.page,
-                      ),
-                      child: Center(child: progress),
-                    ),
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        if (ridge)
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            height: ridgeHeight,
-                            child: IgnorePointer(
-                              child: CustomPaint(
-                                key: const ValueKey('sahne-stage-ridge'),
-                                painter: SahneRidgePainter(
-                                  t.s1.withValues(alpha: 0.4),
-                                ),
-                              ),
-                            ),
+              child: Builder(
+                // `extendBody`: gövde alt perdenin arkasına uzanır; içerik
+                // perdenin üstünde biter (perdenin boyu gövdenin alt
+                // boşluğundadır).
+                builder: (context) => Padding(
+                  padding: EdgeInsets.only(
+                    bottom: dockWidget == null
+                        ? 0
+                        : MediaQuery.paddingOf(context).bottom,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      topBar,
+                      if (progress != null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: SahneSpace.page,
                           ),
-                        Positioned.fill(child: body),
-                        if (dock != null)
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            height: SahneSpace.x6,
-                            child: IgnorePointer(
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [t.bg.withValues(alpha: 0), t.bg],
+                          child: Center(child: progress),
+                        ),
+                      Expanded(
+                        child: Stack(
+                          children: [
+                            if (ridge)
+                              Positioned(
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                height: ridgeHeight,
+                                child: IgnorePointer(
+                                  child: CustomPaint(
+                                    key: const ValueKey('sahne-stage-ridge'),
+                                    painter: SahneRidgePainter(
+                                      t.s1.withValues(alpha: 0.4),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  if (dock != null)
-                    ColoredBox(
-                      color: t.bg,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(
-                          SahneSpace.page,
-                          SahneSpace.x2,
-                          SahneSpace.page,
-                          safeBottom > 0
-                              ? safeBottom + SahneSpace.x3
-                              : SahneSpace.x4,
+                            Positioned.fill(child: body),
+                            if (dockWidget != null)
+                              Positioned(
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                height: SahneSpace.x6,
+                                child: IgnorePointer(
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          t.bg.withValues(alpha: 0),
+                                          t.bg,
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                        child: dock,
                       ),
-                    ),
-                ],
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
@@ -637,6 +948,10 @@ enum _GameBarSlot { leading, center, trailing }
 class _GameBarLayout extends MultiChildLayoutDelegate {
   static const double _height = 68;
 
+  /// Satır, kapat düğmesinin 48'lik dokunma kutusu için sayfa kenarından
+  /// 2 px taşar; sağ öğe (skor) yine sayfa kenarına (16) oturur.
+  static const double trailingInset = SahneIconButton.inset;
+
   @override
   Size getSize(BoxConstraints constraints) => Size(
     constraints.maxWidth,
@@ -662,10 +977,10 @@ class _GameBarLayout extends MultiChildLayoutDelegate {
     }
     if (hasChild(_GameBarSlot.trailing)) {
       final s = layoutChild(_GameBarSlot.trailing, loose);
-      tw = s.width;
+      tw = s.width + trailingInset;
       positionChild(
         _GameBarSlot.trailing,
-        Offset(w - s.width, (size.height - s.height) / 2),
+        Offset(w - s.width - trailingInset, (size.height - s.height) / 2),
       );
     }
     if (hasChild(_GameBarSlot.center)) {

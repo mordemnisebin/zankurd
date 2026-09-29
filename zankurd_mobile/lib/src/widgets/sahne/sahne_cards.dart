@@ -48,7 +48,10 @@ class SahneStageCard extends StatelessWidget {
        actionLabel = null,
        onAction = null,
        emblem = null,
-       metaIcon = null;
+       metaIcon = null,
+       actionKey = null,
+       loading = false,
+       semanticLabel = null;
 
   const SahneStageCard.lesson({
     super.key,
@@ -60,6 +63,9 @@ class SahneStageCard extends StatelessWidget {
     this.eyebrow,
     this.tag,
     this.meta,
+    this.actionKey,
+    this.loading = false,
+    this.semanticLabel,
   }) : _kind = _StageKind.lesson,
        role = SahneRole.learn,
        child = null,
@@ -81,6 +87,9 @@ class SahneStageCard extends StatelessWidget {
     this.meta,
     this.metaIcon = AppIcons.clock,
     this.emblem,
+    this.actionKey,
+    this.loading = false,
+    this.semanticLabel,
   }) : _kind = _StageKind.duel,
        role = SahneRole.race,
        child = null,
@@ -109,6 +118,9 @@ class SahneStageCard extends StatelessWidget {
        onAction = null,
        emblem = null,
        metaIcon = null,
+       actionKey = null,
+       loading = false,
+       semanticLabel = null,
        padding = const EdgeInsets.fromLTRB(
          SahneSpace.x4,
          SahneSpace.x5,
@@ -138,6 +150,16 @@ class SahneStageCard extends StatelessWidget {
 
   /// Düello: VS amblemi yuvası.
   final Widget? emblem;
+
+  /// Birincil düğmenin anahtarı (içteki `FilledButton`).
+  final Key? actionKey;
+
+  /// Birincil düğme yükleniyor (görünüş korunur, dokunuş yok sayılır).
+  final bool loading;
+
+  /// Verilirse kart TEK bir ekran okuyucu düğümüdür: bu söz + düğmenin
+  /// eylemi (ör. "Hızlı düello. Rakip bul"); iç metinler ayrı okunmaz.
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -190,8 +212,10 @@ class SahneStageCard extends StatelessWidget {
     );
 
     Widget action() => SahneButton.primary(
+      buttonKey: actionKey,
       label: actionLabel!,
       onPressed: onAction,
+      loading: loading,
       expand: true,
     );
 
@@ -236,15 +260,35 @@ class SahneStageCard extends StatelessWidget {
       _StageKind.duel => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: texts(gap: SahneSpace.x1)),
-              if (emblem != null) ...[
-                const SizedBox(width: SahneSpace.x3),
-                emblem!,
-              ],
-            ],
+          // Metne en az altı manşet harfi kalmıyorsa amblem metnin altına
+          // iner (ders kartıyla aynı kural).
+          LayoutBuilder(
+            builder: (context, c) {
+              final room = c.maxWidth - 104 - SahneSpace.x3;
+              final wide =
+                  emblem == null ||
+                  room >= MediaQuery.textScalerOf(context).scale(22) * 6;
+              if (wide) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: texts(gap: SahneSpace.x1)),
+                    if (emblem != null) ...[
+                      const SizedBox(width: SahneSpace.x3),
+                      emblem!,
+                    ],
+                  ],
+                );
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  texts(gap: SahneSpace.x1),
+                  const SizedBox(height: SahneSpace.x3),
+                  emblem!,
+                ],
+              );
+            },
           ),
           const SizedBox(height: SahneSpace.x4),
           action(),
@@ -252,7 +296,7 @@ class SahneStageCard extends StatelessWidget {
       ),
     };
 
-    return ClipPath(
+    final card = ClipPath(
       clipper: const ShapeBorderClipper(shape: SahneShape.l),
       child: CustomPaint(
         painter: SahneStagePainter(
@@ -273,6 +317,18 @@ class SahneStageCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+    final label = semanticLabel;
+    if (label == null) return card;
+    final enabled = onAction != null && !loading;
+    return Semantics(
+      container: true,
+      button: onAction != null,
+      enabled: enabled,
+      label: actionLabel == null ? label : '$label. $actionLabel',
+      onTap: enabled ? onAction : null,
+      excludeSemantics: true,
+      child: card,
     );
   }
 }
@@ -364,7 +420,9 @@ class SahneSurfaceCard extends StatelessWidget {
       shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       color: t.s1,
       onTap: onTap,
-      child: Padding(padding: padding, child: child),
+      child: SahneOnSurface(
+        child: Padding(padding: padding, child: child),
+      ),
     );
     if (semanticLabel == null && onTap == null) return card;
     return Semantics(
@@ -387,9 +445,12 @@ class SahneSurfaceCard extends StatelessWidget {
 ///   da görsel yüklenemezse: kobalt radyal + kilim şerit çerçeve + kemer +
 ///   48'lik Lucide ikonu ([icon]).
 ///
-/// Altında ad (Gövde 700) ve öteki dildeki ad (Açıklama, ikincil metin).
-/// Dokunulabilir: dalga pah şekline uyar; ekran okuyucu "ad, öteki ad" ve
-/// ustalık sözünü okur.
+/// Altında ad (Gövde 700) ve öteki dildeki ad (Açıklama, ikincil metin),
+/// en altta isteğe bağlı meta yuvası ([meta]: ilerleme çubuğu, "245 soru").
+/// Dokunma alanı karonun TAMAMIDIR — ad ve meta da dahil (eskiden yalnız
+/// kare dokunuluyordu, ada dokunan oyuncu boşa basıyordu). Dalga pah
+/// şekline uyar; ekran okuyucu "ad, öteki ad, meta" ve ustalık sözünü
+/// okur ([metaLabel]).
 class SahneJewelTile extends StatelessWidget {
   const SahneJewelTile({
     super.key,
@@ -401,7 +462,15 @@ class SahneJewelTile extends StatelessWidget {
     this.masteredLabel,
     this.onTap,
     this.size = 128,
+    this.meta,
+    this.metaLabel,
   });
+
+  /// Adların altındaki yuva (ör. ilerleme çubuğu ya da soru sayısı).
+  final Widget? meta;
+
+  /// Meta yuvasının ekran okuyucu sözü (ör. "%40").
+  final String? metaLabel;
 
   final String name;
   final String? otherName;
@@ -479,6 +548,7 @@ class SahneJewelTile extends StatelessWidget {
     final label = [
       name,
       ?otherName,
+      ?metaLabel,
       if (mastered && masteredLabel != null) masteredLabel!,
     ].join(', ');
 
@@ -488,18 +558,28 @@ class SahneJewelTile extends StatelessWidget {
       label: label,
       onTap: onTap,
       excludeSemantics: true,
-      child: SizedBox(
-        width: size,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            jewel,
-            const SizedBox(height: SahneSpace.x3),
-            Text(name, style: SahneType.bodyStrong.copyWith(color: t.tx)),
-            if (otherName != null)
-              Text(otherName!, style: SahneType.caption.copyWith(color: t.tx2)),
-          ],
+      child: GestureDetector(
+        // Ad ve meta da dokunma alanında: karonun altındaki metne basmak
+        // da konuyu açar.
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: SizedBox(
+          width: size,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              jewel,
+              const SizedBox(height: SahneSpace.x3),
+              Text(name, style: SahneType.bodyStrong.copyWith(color: t.tx)),
+              if (otherName != null)
+                Text(
+                  otherName!,
+                  style: SahneType.caption.copyWith(color: t.tx2),
+                ),
+              ?meta,
+            ],
+          ),
         ),
       ),
     );

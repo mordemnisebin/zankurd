@@ -12,7 +12,6 @@ import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/error_reporter.dart';
 import '../../widgets/sahne/sahne.dart';
-import '../quiz_result_screen.dart' show ResultBackdropPainter;
 import 'async_duel_play_screen.dart';
 
 /// Sonuç ekranının dört bitiş durumu.
@@ -297,7 +296,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
                         child: IgnorePointer(
                           child: ExcludeSemantics(
                             child: CustomPaint(
-                              painter: ResultBackdropPainter(
+                              painter: SahneResultBackdropPainter(
                                 rays: celebrate,
                                 raysCenterY: 60,
                                 bg: SahneTokens.night.bg,

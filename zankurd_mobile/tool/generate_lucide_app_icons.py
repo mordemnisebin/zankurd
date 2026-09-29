@@ -174,6 +174,7 @@ MAPPING = {
     "stopwatch": "timer",
     "store": "store",
     "sun": "sun",
+    "swords": "swords",  # Yarış sekmesi (düello)
     "tableCells": "layout-grid",
     "trashCan": "trash-2",
     "tree": "tree-pine",

@@ -32,6 +32,7 @@ import '../models/room.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../widgets/rolling_count.dart';
 import '../widgets/learning_outcome_card.dart';
+import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
@@ -1185,13 +1186,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ),
       if (answerRecords.isNotEmpty) ...[
         if (breakdown.isNotEmpty) ...[
-          SahneSectionHeader(title: context.t(K.kategorilereGorePerformans)),
+          SahneSectionHeader(title: context.t(K.resultLearnedTitle)),
           _CategoryLearnings(breakdown: breakdown),
           const SizedBox(height: SahneSpace.cardGap),
         ] else
           const SizedBox(height: SahneSpace.sectionTop),
         LearningOutcomeCard(
           outcome: learningOutcome,
+          // Kategori listesi gösteriliyorsa sayımlar orada: kart yalnız
+          // yorumu taşır.
+          showCounts: breakdown.isEmpty,
           onReview: learningOutcome.reviewRecords.isEmpty
               ? null
               : () => openReview(learningOutcome.reviewRecords),
@@ -1416,7 +1420,7 @@ class _ResultHero extends StatelessWidget {
           child: IgnorePointer(
             child: ExcludeSemantics(
               child: CustomPaint(
-                painter: ResultBackdropPainter(
+                painter: SahneResultBackdropPainter(
                   rays: celebrate,
                   raysCenterY: _raysCenterY,
                   bg: t.bg,
@@ -1436,111 +1440,6 @@ class _ResultHero extends StatelessWidget {
       ],
     );
   }
-}
-
-/// Kahramanın arkası: sonuç ışınları + dağ sırtı ufku.
-///
-/// Işınlar maketteki `.sh-rays`: `repeating-conic-gradient(ray 0–5°,
-/// şeffaf 5–15°)` üstüne `radial-gradient(closest-side, şeffaf %16, bg
-/// %74)` örtü. Flutter karşılığı `SweepGradient(tileMode: repeated)` + bg
-/// renginde `RadialGradient`; maske, bulanıklık ve `saveLayer` yok (spec
-/// `shadows[3]`). 600'lük daireye kırpılır: köşelerdeki bg karesi
-/// sahnenin alttan ışımasını örtmesin.
-///
-/// Dağ sırtı: logodaki dağlardan alçak bir silüet, Perde (`s1`) tonunda
-/// %40; ışınları ufuk çizgisinde keser — puan bir ufkun üstünde durur.
-///
-/// NOT (birleştirme): Soru grubu aynı sırtı `SahneStageScaffold` ressamlarına
-/// ekliyor. Bu yerel ressam, ortak ressam gelene kadar sonuç ekranının
-/// kendi kopyasıdır; birleştirmede ortaklaştırılmalı. Sırayla düello sonucu
-/// da bunu kullandığı için (şimdilik) açık bir sınıftır; birleştirmede
-/// `widgets/sahne/sahne_painters.dart`e taşınmalı.
-class ResultBackdropPainter extends CustomPainter {
-  const ResultBackdropPainter({
-    required this.rays,
-    required this.raysCenterY,
-    required this.bg,
-    required this.ridge,
-  });
-
-  final bool rays;
-  final double raysCenterY;
-  final Color bg;
-  final Color ridge;
-
-  static const double _raysRadius = 300;
-  static const double _rayDegrees = 5;
-  static const double _rayPeriodDegrees = 15;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (rays) {
-      final center = Offset(size.width / 2, raysCenterY);
-      final rect = Rect.fromCircle(center: center, radius: _raysRadius);
-      canvas.save();
-      canvas.clipPath(Path()..addOval(rect));
-      const period = _rayPeriodDegrees * math.pi / 180;
-      const on = _rayDegrees / _rayPeriodDegrees;
-      canvas.drawRect(
-        rect,
-        Paint()
-          ..shader = const SweepGradient(
-            endAngle: period,
-            tileMode: TileMode.repeated,
-            colors: [
-              SahneStageColors.ray,
-              SahneStageColors.ray,
-              Colors.transparent,
-              Colors.transparent,
-            ],
-            stops: [0, on, on, 1],
-          ).createShader(rect),
-      );
-      canvas.drawRect(
-        rect,
-        Paint()
-          ..shader = RadialGradient(
-            colors: [bg.withValues(alpha: 0), bg],
-            stops: const [0.16, 0.74],
-          ).createShader(rect),
-      );
-      canvas.restore();
-    }
-
-    // Dağ sırtı: kahramanın alt kenarına oturur, sayfa kenarına taşar.
-    const bleed = SahneSpace.page;
-    final base = size.height;
-    final w = size.width + 2 * bleed;
-    const h = 64.0;
-    double x(double f) => -bleed + w * f;
-    final ridgePath = Path()
-      // Taban kahramanın 12 altına iner: ödül kartına kadar ışın sızmaz.
-      ..moveTo(x(0), base + SahneSpace.x3)
-      ..lineTo(x(0), base - h * 0.30)
-      ..lineTo(x(0.10), base - h * 0.46)
-      ..lineTo(x(0.18), base - h * 0.34)
-      ..lineTo(x(0.31), base - h * 0.72)
-      ..lineTo(x(0.40), base - h * 0.52)
-      ..lineTo(x(0.50), base - h)
-      ..lineTo(x(0.61), base - h * 0.58)
-      ..lineTo(x(0.70), base - h * 0.78)
-      ..lineTo(x(0.83), base - h * 0.38)
-      ..lineTo(x(0.92), base - h * 0.50)
-      ..lineTo(x(1), base - h * 0.26)
-      ..lineTo(x(1), base + SahneSpace.x3)
-      ..close();
-    // Önce zemin rengiyle doldurulur: ışınlar dağların ARKASINDA kalır
-    // (ufuk çizgisinde kesilir); üstüne Perde tonu %40.
-    canvas.drawPath(ridgePath, Paint()..color = bg);
-    canvas.drawPath(ridgePath, Paint()..color = ridge.withValues(alpha: 0.4));
-  }
-
-  @override
-  bool shouldRepaint(ResultBackdropPainter old) =>
-      old.rays != rays ||
-      old.raysCenterY != raysCenterY ||
-      old.bg != bg ||
-      old.ridge != ridge;
 }
 
 /// Kahramanın üç puan yıldızı: 32 · 44 · 32, alta hizalı, 8 aralık.
@@ -1892,17 +1791,11 @@ class _CategoryLearnings extends StatelessWidget {
       ],
     );
     final semantic = '$name, $fraction, $statusLabel';
-    if (CategoryVisuals.hasOwnImage(tally.category)) {
-      return SahneListRow.thumb(
-        image: AssetImage(CategoryVisuals.imagePath(tally.category)),
-        title: name,
-        trailing: trailing,
-        semanticLabel: semantic,
-      );
-    }
-    return SahneListRow.icon(
+    return SahneListRow.thumb(
+      image: CategoryVisuals.hasOwnImage(tally.category)
+          ? AssetImage(CategoryVisuals.imagePath(tally.category))
+          : null,
       icon: CategoryVisuals.icon(tally.category),
-      role: SahneRole.learn,
       title: name,
       trailing: trailing,
       semanticLabel: semantic,
@@ -2090,6 +1983,16 @@ class _DockAction extends StatelessWidget {
   }
 }
 
+/// Satırın 36'lık avatar yuvası: oyuncunun seçtiği kimlik.
+Widget _avatarOf(Player player) => PlayerAvatar(
+  radius: 18,
+  photoUrl: player.avatarUrl,
+  iconId: player.avatarIcon,
+  colorHex: player.avatarColor,
+  frameId: player.avatarFrame,
+  displayName: player.name,
+);
+
 /// Bot yarışında rakiplerle karşılaştırma: bölüm başlığı + özet +
 /// sıralama. "Sen" satırı grubun dışında tek başına durur (maketteki
 /// Sıralama); rakipler liste grubunda, sıra numarası ve elmas avatarla.
@@ -2150,6 +2053,7 @@ class _RaceStandings extends StatelessWidget {
           SahneListRow.me(
             rank: i + 1,
             title: player.name,
+            avatar: userIdentity == null ? null : _avatarOf(player),
             subtitle: streakLine,
             trailing: SahneRowValue('${player.score}'),
           ),
@@ -2162,6 +2066,9 @@ class _RaceStandings extends StatelessWidget {
             title: player.name,
             initial: name.isEmpty ? null : name.characters.first.toUpperCase(),
             icon: AppIcons.user,
+            // Oyuncunun kendi kimliği (fotoğraf, ikon, renk, çerçeve)
+            // satırın 36'lık avatar yuvasında.
+            avatar: _avatarOf(player),
             subtitle: streakLine,
             trailing: SahneRowValue('${player.score}'),
           ),
@@ -2387,11 +2294,9 @@ class _LevelUpDialog extends StatelessWidget {
                           child: Text(
                             context.t(K.seviyeP, {'p0': '$level'}),
                             textAlign: TextAlign.center,
-                            // Zêr dolgunun üstündeki metin uyarlanır:
-                            // hangi uç zeminden uzaksa o (burada koyu mürekkep).
-                            style: SahneType.headline.copyWith(
-                              color: AppColors.onSolid(AppTheme.gold),
-                            ),
+                            // Zêr dolgunun üstündeki metin Zêr'in kendi
+                            // "üstü" belirtecidir (koyu mürekkep).
+                            style: SahneType.headline.copyWith(color: t.onGold),
                           ),
                         ),
                       ),

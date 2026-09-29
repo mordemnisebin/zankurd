@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../theme/sahne.dart';
 import 'sahne_buttons.dart';
+import 'sahne_foundation.dart';
 
 /// Bölüm başlığı — TEK stil (maketteki `.sh-sec`).
 ///
@@ -10,9 +11,9 @@ import 'sahne_buttons.dart';
 /// büyük harf, ikon YOK — başka bölüm başlığı biçimi yazılmaz. Ekran
 /// okuyucuya başlık olarak duyurulur.
 ///
-/// Metin düğmesi 44 yüksekliğindedir ama başlık satırı görsel olarak
+/// Metin düğmesinin dokunma alanı 48'dir ama başlık satırı görsel olarak
 /// 28'dir: maketteki `margin: -8px 0` gibi, düğme varken dış boşluk her
-/// iki yanda 8 azalır, böylece başlıkla içerik arası yine 24 / 12 görünür.
+/// iki yanda azalır, böylece başlıkla içerik arası yine 24 / 12 görünür.
 class SahneSectionHeader extends StatelessWidget {
   const SahneSectionHeader({
     super.key,
@@ -33,7 +34,7 @@ class SahneSectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final hasAction = actionLabel != null;
-    const trim = (44 - 28) / 2;
+    const trim = (sahneTapTarget - 28) / 2;
     return Padding(
       padding: EdgeInsets.only(
         top: SahneSpace.sectionTop - (hasAction ? trim : 0),
@@ -43,7 +44,12 @@ class SahneSectionHeader extends StatelessWidget {
         builder: (context, constraints) {
           final heading = Semantics(
             header: true,
-            child: Text(title, style: SahneType.headline.copyWith(color: t.tx)),
+            // Uzun tek söz (Kurmancî, %200) dar sütunda harf harf
+            // bölünmez.
+            child: SahneUnbrokenText(
+              title,
+              style: SahneType.headline.copyWith(color: t.tx),
+            ),
           );
           // Büyük yazı ölçeğinde bağlantı başlığın altına iner; başlık
           // dar sütunda harf harf bölünmez.

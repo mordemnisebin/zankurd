@@ -49,6 +49,11 @@ class _RejectingSubmitRepository extends MockZanKurdRepository {
   }
 }
 
+/// 2026-09-29 Şahnê: joker düğmesi adını ekranda yazmaz (ikon + jeton +
+/// fiyat); ad ekran okuyucu sözünde ve uzun basış ipucundadır. Joker bu
+/// yüzden metinle değil ipucuyla bulunur; davranış aynı.
+final _doubleAnswerJoker = find.byTooltip('Çift Cevap');
+
 void main() {
   testWidgets('yazılı soruda yalnız işe yarayan jokerler gösterilir', (
     tester,
@@ -230,7 +235,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.textContaining('Çift Cevap'));
+    await tester.tap(_doubleAnswerJoker);
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('fill-in-blank-input')),
@@ -267,7 +272,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.textContaining('Çift Cevap'));
+    await tester.tap(_doubleAnswerJoker);
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('fill-in-blank-input')),
@@ -312,7 +317,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.textContaining('Çift Cevap'));
+    await tester.tap(_doubleAnswerJoker);
     await tester.pumpAndSettle();
     final input = find.byKey(const ValueKey('fill-in-blank-input'));
     await tester.enterText(input, 'yanlış');

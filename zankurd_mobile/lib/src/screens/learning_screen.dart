@@ -623,12 +623,8 @@ class _TopicActions extends StatelessWidget {
   }
 }
 
-/// Konu rayının çipi: görsel 44 ([SahneRailChip]), dokunma alanı 48.
-///
-/// Erişilebilirlik kılavuzu (`androidTapTargetGuideline`) 48'in altını
-/// reddeder; çip 48'lik saydam bir dokunma kutusunun ortasında durur ve
-/// ekran okuyucu tek bir "seçili / seçili değil" düğmesi görür (bkz.
-/// `ZkBackButton` aynı desen).
+/// Konu rayının çipi: görsel 44, dokunma alanı 48 ([SahneRailChip]);
+/// ekran okuyucu tek bir "seçili / seçili değil" düğmesi görür.
 class _CategoryTab extends StatelessWidget {
   const _CategoryTab({
     required this.label,
@@ -642,31 +638,8 @@ class _CategoryTab extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      selected: isSelected,
-      label: label,
-      onTap: onTap,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 48),
-          child: Center(
-            widthFactor: 1,
-            child: SahneRailChip(
-              label: label,
-              selected: isSelected,
-              onTap: onTap,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) =>
+      SahneRailChip(label: label, selected: isSelected, onTap: onTap);
 }
 
 /// Yolun etkin durağı — sahne kartı (maketteki `SahneStageCard.lesson`):
@@ -1327,9 +1300,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
               : (widget.lesson.titleTr ?? widget.lesson.titleKu),
         ),
         actions: [
-          BarIconAction(
+          SahneIconButton(
             icon: _flashcardMode ? AppIcons.clone : AppIcons.layerGroup,
-            label: context.t(K.flashcardMode),
+            semanticLabel: context.t(K.flashcardMode),
             onPressed: _toggleFlashcard,
           ),
         ],
@@ -1596,51 +1569,6 @@ class _SlideImage extends StatelessWidget {
                 errorWidget: (context, _, _) =>
                     placeholder(Icon(AppIcons.image, color: t.tx3, size: 32)),
               ),
-      ),
-    );
-  }
-}
-
-/// Çubuk eylemi (ör. kart kipi): görsel 44'lük [SahneIconButton], dokunma
-/// alanı 48 (erişilebilirlik kılavuzu 48'in altını reddeder; bkz.
-/// `ZkBackButton`). Ekran okuyucu tek bir adlı düğme görür.
-///
-/// Hikâye ve favoriler ekranı da kullanır: bileşen kütüphanesinde 48'lik
-/// dokunma kutulu çubuk düğmesi henüz yok.
-class BarIconAction extends StatelessWidget {
-  const BarIconAction({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.onPressed,
-  });
-
-  final IconData icon;
-  final String label;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      enabled: onPressed != null,
-      label: label,
-      onTap: onPressed,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onPressed,
-        child: SizedBox.square(
-          dimension: 48,
-          child: Center(
-            child: SahneIconButton(
-              icon: icon,
-              semanticLabel: label,
-              onPressed: onPressed,
-            ),
-          ),
-        ),
       ),
     );
   }

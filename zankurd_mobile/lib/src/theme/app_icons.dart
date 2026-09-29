@@ -820,6 +820,13 @@ class AppIcons {
     fontPackage: 'lucide_icons_flutter',
   );
 
+  /// Lucide `swords`.
+  static const IconData swords = IconData(
+    0xe2b4,
+    fontFamily: 'Lucide',
+    fontPackage: 'lucide_icons_flutter',
+  );
+
   /// Lucide `layout-grid`.
   static const IconData tableCells = IconData(
     0xe0ff,

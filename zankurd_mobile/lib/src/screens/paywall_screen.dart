@@ -458,7 +458,7 @@ class _NoticeCard extends StatelessWidget {
           const SizedBox(height: SahneSpace.x1),
           Text(body, style: SahneType.caption.copyWith(color: t.tx2)),
           const SizedBox(height: SahneSpace.x1),
-          _TextAction(label: retryLabel, onPressed: onRetry),
+          SahneButton.text(label: retryLabel, onPressed: onRetry),
         ],
       ),
     );
@@ -520,7 +520,7 @@ class _FooterActions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Center(
-          child: _TextAction(
+          child: SahneButton.text(
             label: Tr.forKu(K.restorePurchases, isKu),
             arrow: false,
             onPressed: onRestore,
@@ -539,55 +539,6 @@ class _FooterActions extends StatelessWidget {
         // Yasal bağlantılar — abonelikli uygulamalarda Apple zorunlu tutar.
         const Center(child: LegalLinksRow(alignment: MainAxisAlignment.center)),
       ],
-    );
-  }
-}
-
-/// Metin bağlantısı ([SahneButton.text]) — 48'lik dokunma kutusunda.
-///
-/// Bileşen görselde 44'tür; uygulamanın erişilebilirlik kılavuzu testi
-/// (Android) 48'in altını reddeder. [ZkBackButton] gibi: ekran okuyucu tek
-/// bir 48'lik düğme görür, görsel boyut değişmez.
-class _TextAction extends StatelessWidget {
-  const _TextAction({
-    required this.label,
-    required this.onPressed,
-    this.arrow = true,
-  });
-
-  final String label;
-  final VoidCallback? onPressed;
-
-  /// Chevron (›) yalnız bir yere götüren bağlantıda; vazgeç / geç gibi
-  /// kaçış bağlantılarında yok.
-  final bool arrow;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      enabled: onPressed != null,
-      label: label,
-      onTap: onPressed,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onPressed,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
-          child: Align(
-            alignment: AlignmentDirectional.centerStart,
-            widthFactor: 1,
-            heightFactor: 1,
-            child: SahneButton.text(
-              label: label,
-              arrow: arrow,
-              onPressed: onPressed,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

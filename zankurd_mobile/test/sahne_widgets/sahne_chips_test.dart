@@ -2,10 +2,11 @@
 ///
 /// ## Neyi korur
 ///
-/// * Stat çipi GÖRSEL olarak 36'dır ama dokunulabilirse 44'lük alan alır
+/// * Stat çipi GÖRSEL olarak 36'dır ama dokunulabilirse 48'lik alan alır
 ///   (spec `touchTargets`). Eski çipler 32'lik görseli dokunma alanı
 ///   sanıyordu; parmak kenara düşünce mağazaya gidilmiyordu.
-/// * Seçim rayı çipi 44; seçili durumu ekran okuyucuya söylenir.
+/// * Seçim rayı çipi görselde 44, dokunmada 48; seçili durumu ekran
+///   okuyucuya söylenir.
 /// * Rozet büyük harfi yerele duyarlıdır (Türkçe "i" → "İ"); dolu kırmızı
 ///   rozet yok, ton + rol metni.
 /// * Durum rozeti sözü de okur: durum hiçbir zaman yalnız renkle verilmez.
@@ -129,7 +130,7 @@ void main() {
     });
   }
 
-  testWidgets('stat çipi: görsel 36, dokunulabilirse alan 44', (tester) async {
+  testWidgets('stat çipi: görsel 36, dokunulabilirse alan 48', (tester) async {
     var taps = 0;
     await pumpSahne(
       tester,
@@ -151,7 +152,7 @@ void main() {
       dark: true,
       textScale: 1,
     );
-    expect(tester.getSize(find.byKey(const Key('coin'))).height, 44);
+    expect(tester.getSize(find.byKey(const Key('coin'))).height, 48);
     expect(tester.getSize(find.byKey(const Key('streak'))).height, 36);
     final visual = find.descendant(
       of: find.byKey(const Key('coin')),

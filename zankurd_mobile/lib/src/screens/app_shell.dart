@@ -763,10 +763,10 @@ class _AppShellState extends State<AppShell>
   /// Sekme simgeleri (Lucide). Öğren kitap, Sıralama kupa (maket).
   ///
   /// 2026-09-29 Şahnê: Öğren sekmesi ev yerine açık kitap taşır — sekmenin
-  /// işi "ana sayfa" değil öğrenmedir. Yarış sekmesinin maketteki simgesi
-  /// Lucide `swords`; `AppIcons`ta henüz yok, o gelene dek oyun kolu kalır.
+  /// işi "ana sayfa" değil öğrenmedir. Yarış sekmesi maketteki gibi
+  /// çapraz kılıç (Lucide `swords`): sekme oyun değil karşılaşmadır.
   static const _learnIcon = AppIcons.bookOpen;
-  static const _playIcon = AppIcons.gamepad;
+  static const _playIcon = AppIcons.swords;
   static const _leaderboardIcon = AppIcons.trophy;
   static const _profileIcon = AppIcons.user;
 

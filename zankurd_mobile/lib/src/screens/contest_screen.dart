@@ -214,6 +214,7 @@ class _ContestContent extends StatelessWidget {
           status: ArenaStatus.live,
           label: context.t(K.contestToday),
           onSolid: true,
+          role: SahneRole.race,
         ),
       ],
       action: GeometricGradientButton(

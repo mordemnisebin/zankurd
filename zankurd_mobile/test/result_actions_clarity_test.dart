@@ -25,6 +25,12 @@
 /// test.dart`). Kusur 2 hiçbir testte etiketin GERÇEK piksel boyutunu ya da
 /// `FittedBox` varlığını ölçmüyordu; testler yalnız düğmenin var olduğunu
 /// (`findsOneWidget`) doğruluyordu, okunabilirliğini değil.
+///
+/// 2026-09-29 Şahnê: sonuç ekranında kategori listesi ("Bu turdan
+/// öğrendiklerin") öğrenme kartının ve yan eylemlerin ÜSTÜNE geldi; ikisi
+/// artık ilk ekranın altında, kaydırınca görünür. Bulucular bu yüzden
+/// ekran dışını da arar (`skipOffstage: false`) ve düğmeye kaydırır; korunan
+/// kurallar (tek inceleme yolu, okunur etiket, ≥ 48 yükseklik) aynıdır.
 library;
 
 import 'package:flutter/material.dart';
@@ -138,13 +144,19 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.byKey(const ValueKey('result-review-mistakes-button')),
+        find.byKey(
+          const ValueKey('result-review-mistakes-button'),
+          skipOffstage: false,
+        ),
         findsNothing,
         reason:
             'reviewCategory null iken kart zaten TÜM yanlışları açıyor; '
             'yan düğme birebir aynı eylemi ikinci kez sunardı (Kusur 1).',
       );
-      final cardReview = find.byKey(const ValueKey('learning-outcome-review'));
+      final cardReview = find.byKey(
+        const ValueKey('learning-outcome-review'),
+        skipOffstage: false,
+      );
       expect(cardReview, findsOneWidget);
 
       await tester.ensureVisible(cardReview);
@@ -170,14 +182,20 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.byKey(const ValueKey('result-review-mistakes-button')),
+      find.byKey(
+        const ValueKey('result-review-mistakes-button'),
+        skipOffstage: false,
+      ),
       findsOneWidget,
       reason:
           'reviewCategory doluyken kart yalnız O KONUYU açar; yan düğme hâlâ '
           'HEPSİNİ açan tek yoldur — burada iki düğme farklıdır, ikisi kalmalı.',
     );
     expect(
-      find.byKey(const ValueKey('learning-outcome-review')),
+      find.byKey(
+        const ValueKey('learning-outcome-review'),
+        skipOffstage: false,
+      ),
       findsOneWidget,
     );
   });
@@ -197,7 +215,7 @@ void main() {
         'result-share-button',
       ];
       for (final keyName in sideActionKeys) {
-        final button = find.byKey(ValueKey(keyName));
+        final button = find.byKey(ValueKey(keyName), skipOffstage: false);
         expect(button, findsOneWidget, reason: keyName);
         await tester.ensureVisible(button);
         await tester.pumpAndSettle();
@@ -210,16 +228,23 @@ void main() {
               'küçültüyordu; hap düğmede FittedBox hiç olmamalı.',
         );
 
-        final label = tester.widget<Text>(
-          find.descendant(of: button, matching: find.byType(Text)),
+        // 2026-09-29 Şahnê: düğme etiketi biçemini düğmenin temasından
+        // (`DefaultTextStyle`) alır; ölçülen, etiketin ETKİN boyutudur.
+        final labelFinder = find.descendant(
+          of: button,
+          matching: find.byType(Text),
         );
+        final label = tester.widget<Text>(labelFinder);
+        final effective = DefaultTextStyle.of(
+          tester.element(labelFinder),
+        ).style.merge(label.style);
         expect(
-          label.style?.fontSize,
+          effective.fontSize,
           isNotNull,
           reason: '$keyName: etiket stili fontSize taşımalı',
         );
         expect(
-          label.style!.fontSize!,
+          effective.fontSize!,
           greaterThanOrEqualTo(13),
           reason: '$keyName: Kusur 2 — küçülen etiket okunmuyordu',
         );

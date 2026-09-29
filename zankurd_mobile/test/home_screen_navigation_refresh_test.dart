@@ -133,6 +133,10 @@ void main() {
     final lessons = find.byKey(const ValueKey('home-door-learn'));
     expect(lessons, findsOneWidget);
     await tester.ensureVisible(lessons);
+    // 2026-09-29 Şahnê: ana sayfa uzadı (ızgara, sahne kartı); kapı karosu
+    // ilk ekranın altında. `ensureVisible` kaydırmayı başlatır, dokunuştan
+    // önce bir kare çizilmeli.
+    await tester.pumpAndSettle();
     await tester.tap(lessons);
     await tester.pumpAndSettle();
     expect(find.byType(LearningScreen), findsOneWidget);

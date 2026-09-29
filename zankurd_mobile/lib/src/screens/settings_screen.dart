@@ -592,7 +592,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   const LegalLinksRow(),
                   // Soru fotoğrafları CC BY lisanslıdır; atıf yasal
                   // yükümlülüktür (bkz. image_credits_screen.dart).
-                  _TextAction(
+                  SahneButton.text(
                     key: const ValueKey('settings-image-credits'),
                     label: context.t(K.imageCredits),
                     onPressed: () => Navigator.of(
@@ -947,56 +947,6 @@ class _InlineNotice extends StatelessWidget {
   }
 }
 
-/// Metin bağlantısı ([SahneButton.text]) — 48'lik dokunma kutusunda.
-///
-/// Bileşen görselde 44'tür; uygulamanın erişilebilirlik kılavuzu testi
-/// (Android) 48'in altını reddeder. [ZkBackButton] gibi: ekran okuyucu tek
-/// bir 48'lik düğme görür, görsel boyut değişmez.
-class _TextAction extends StatelessWidget {
-  const _TextAction({
-    required this.label,
-    required this.onPressed,
-    this.arrow = true,
-    super.key,
-  });
-
-  final String label;
-  final VoidCallback? onPressed;
-
-  /// Chevron (›) yalnız bir yere götüren bağlantıda; vazgeç / geç gibi
-  /// kaçış bağlantılarında yok.
-  final bool arrow;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      enabled: onPressed != null,
-      label: label,
-      onTap: onPressed,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onPressed,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
-          child: Align(
-            alignment: AlignmentDirectional.centerStart,
-            widthFactor: 1,
-            heightFactor: 1,
-            child: SahneButton.text(
-              label: label,
-              arrow: arrow,
-              onPressed: onPressed,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 /// Açılır bilgi satırı ("Nasıl oynanır", "Gizlilik"): liste satırı +
 /// altında gövde metni. Açılış hareketi azaltta anında olur.
 class _ExpandableRow extends StatefulWidget {
@@ -1338,7 +1288,7 @@ class _BlockedUsersSectionState extends State<_BlockedUsersSection> {
                     ),
                   ],
                 ),
-                _TextAction(label: context.t(K.retry), onPressed: _retry),
+                SahneButton.text(label: context.t(K.retry), onPressed: _retry),
               ],
             ),
           );
@@ -1361,7 +1311,7 @@ class _BlockedUsersSectionState extends State<_BlockedUsersSection> {
                 icon: AppIcons.user,
                 title: player.displayName,
                 subtitle: player.formattedTag,
-                trailing: _TextAction(
+                trailing: SahneButton.text(
                   key: ValueKey('unblock-${player.id}'),
                   label: context.t(K.unblockAction),
                   arrow: false,

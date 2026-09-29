@@ -176,13 +176,22 @@ void main() {
       testShell(child: SettingsScreen(repository: MockZanKurdRepository())),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Ayarlar'), findsWidgets);
-    expect(find.byType(KilimDivider), findsOneWidget);
-    expect(find.byType(ScreenIdentityHeader), findsOneWidget);
+    // 2026-09-29 Şahnê: B iskeleti — sayfanın adı YALNIZ çubuktadır,
+    // içerikte kimlik bandı (`ScreenIdentityHeader`) ve büyük kilim ayracı
+    // (`KilimDivider`) kalktı; kilim yalnız göz şerididir. Korunan kural:
+    // sayfa adı bir kez, başlık olarak duyurulur.
+    expect(find.text('Ayarlar'), findsOneWidget);
+    expect(
+      tester.getSemantics(find.text('Ayarlar')).flagsCollection.isHeader,
+      isTrue,
+    );
+    expect(find.byType(KilimDivider), findsNothing);
+    expect(find.byType(ScreenIdentityHeader), findsNothing);
 
     await tester.pumpWidget(testShell(child: StoryScreen(story: cayxaneStory)));
     await tester.pumpAndSettle();
-    expect(find.byType(ScreenIdentityHeader), findsOneWidget);
+    expect(find.byType(ScreenIdentityHeader), findsNothing);
+    expect(find.text(cayxaneStory.titleTr), findsOneWidget);
     expect(find.byKey(const ValueKey('story-text-ku')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

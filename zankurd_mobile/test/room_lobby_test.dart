@@ -218,7 +218,9 @@ void main() {
     );
 
     final protectedRects = <Rect>[
-      tester.getRect(find.byType(IconButton).first),
+      // 2026-09-29 Şahnê: "odadan ayrıl" artık Şahnê ikon düğmesidir
+      // (`SahneIconButton`, 48 dokunma); ipucuyla bulunur.
+      tester.getRect(find.byTooltip('Odadan ayrıl')),
       tester.getRect(find.text('Özel Oda')),
       tester.getRect(find.text('Hevalên Zanînê')),
       tester.getRect(find.byKey(const ValueKey('room-code-copy'))),

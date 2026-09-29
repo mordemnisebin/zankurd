@@ -149,12 +149,18 @@ class ArenaStatusChip extends StatelessWidget {
     required this.status,
     required this.label,
     this.onSolid = false,
+    this.role,
     super.key,
   });
 
   final ArenaStatus status;
   final String label;
   final bool onSolid;
+
+  /// Kartın rolü. Yarış kartında ([SahneRole.race]) "canlı/bugün" durumu
+  /// Boyax tonunu alır: lal sahnede yeşil bir rozet rol dilini bozuyordu
+  /// (yarışma "Bugün", 2026-09-29).
+  final SahneRole? role;
 
   IconData get _icon => switch (status) {
     ArenaStatus.upcoming => AppIcons.clock,
@@ -170,7 +176,10 @@ class ArenaStatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final (bg, fg) = switch (status) {
-      ArenaStatus.live => (t.learnTint, t.learnTx),
+      ArenaStatus.live =>
+        role == SahneRole.race
+            ? (t.raceTint, t.raceTx)
+            : (t.learnTint, t.learnTx),
       ArenaStatus.joined => (t.goldTint, t.goldTx),
       ArenaStatus.completed => (t.okTint, t.okTx),
       ArenaStatus.offline => (t.goldTint, t.goldTx),
@@ -276,25 +285,23 @@ class ArenaHero extends StatelessWidget {
                     ),
                     const SizedBox(width: SahneSpace.x3),
                     Expanded(
-                      flex: 3,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          // Başlık kesilmez: uzun Kurmancî kupa adı iki
+                          // satırda "…" ile bitiyordu. Sarar; tek uzun söz
+                          // harf harf bölünmez.
                           Semantics(
                             header: true,
-                            child: Text(
+                            child: SahneUnbrokenText(
                               title,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
                               style: SahneType.headline.copyWith(color: t.tx),
                             ),
                           ),
                           if (subtitle != null)
                             Text(
                               subtitle!,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
                               style: SahneType.caption.copyWith(
                                 color: race ? SahneStageColors.raceSoft : t.tx2,
                               ),
@@ -302,20 +309,19 @@ class ArenaHero extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // Durum çipi ESNEK olmalı: esnemeyen bir çocuk olarak
-                    // verildiğinde satır taşıyordu (turnuva, 2026-08-04).
-                    if (status != null) ...[
-                      const SizedBox(width: SahneSpace.x2),
-                      Flexible(flex: 2, child: status!),
-                    ],
                   ],
                 ),
-                if (tokens.isNotEmpty) ...[
+                // Durum çipi başlığın yanında değil, ödül jetonlarıyla aynı
+                // satırda ve ORTA hizada durur: başlığın yanında başlığı
+                // daraltıp kesiyordu, jetonlarla (36) ayrı satırda 28'lik
+                // çip hizasız kalıyordu. Wrap sarar, satır taşmaz.
+                if (status != null || tokens.isNotEmpty) ...[
                   const SizedBox(height: SahneSpace.x3),
                   Wrap(
                     spacing: SahneSpace.x2,
                     runSpacing: SahneSpace.x2,
-                    children: tokens,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [?status, ...tokens],
                   ),
                 ],
                 if (action != null) ...[

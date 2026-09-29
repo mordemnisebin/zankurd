@@ -27,6 +27,7 @@ class QuizTimerWidget extends StatelessWidget {
     required this.animation,
     required this.maxSeconds,
     required this.isPaused,
+    this.light,
     super.key,
   });
 
@@ -34,10 +35,12 @@ class QuizTimerWidget extends StatelessWidget {
   final int maxSeconds;
   final bool isPaused;
 
+  /// Kategori ışığı: sayacın halesi sahnenin huzmesiyle aynı ışığı taşır.
+  final Color? light;
+
   @override
   Widget build(BuildContext context) {
     final reduceMotion = ReducedMotionProvider.isReducedIn(context);
-    final unit = context.t(K.secondsShortUnit);
     return AnimatedBuilder(
       animation: animation,
       builder: (context, _) {
@@ -51,7 +54,8 @@ class QuizTimerWidget extends StatelessWidget {
           fraction: fraction,
           // Cevaptan sonra gerilim eşiği kapanır (bkz. sınıf belgesi).
           hotSeconds: isPaused ? -1 : 5,
-          semanticLabel: '$seconds $unit',
+          light: light,
+          semanticLabel: context.t(K.timerSecondsLeft, {'n': '$seconds'}),
         );
       },
     );

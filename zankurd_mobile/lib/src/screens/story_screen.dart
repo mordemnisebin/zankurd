@@ -7,7 +7,6 @@ import '../models/mini_guide.dart';
 import '../models/story.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
-import 'learning_screen.dart' show BarIconAction;
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Metin tabanlı dallanan hikâye oynatıcısı (SES YOK). İlerleme yerelde
@@ -99,16 +98,16 @@ class _StoryScreenState extends State<StoryScreen> {
         subtitle: Text(context.t(K.storySubtitle)),
         actions: [
           if (widget.guide != null)
-            BarIconAction(
+            SahneIconButton(
               key: const ValueKey('story-open-guide'),
               icon: AppIcons.bookOpen,
-              label: context.t(K.guide),
+              semanticLabel: context.t(K.guide),
               onPressed: _openGuide,
             ),
-          BarIconAction(
+          SahneIconButton(
             key: const ValueKey('story-restart'),
             icon: AppIcons.arrowsRotate,
-            label: context.t(K.restart),
+            semanticLabel: context.t(K.restart),
             onPressed: _restart,
           ),
         ],

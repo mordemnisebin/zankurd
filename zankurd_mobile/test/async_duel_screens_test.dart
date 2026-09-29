@@ -43,7 +43,7 @@ import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_inbox.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
-import 'package:zankurd_mobile/src/widgets/mode_card.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -168,7 +168,9 @@ void main() {
 
       final cardFinder = find.byKey(const ValueKey('play-hub-async-duel'));
       expect(cardFinder, findsOneWidget);
-      final card = tester.widget<ModeCard>(cardFinder);
+      // 2026-09-29 Şahnê: kart artık liste satırıdır (`SahneListRow`);
+      // kural aynı: kilitliyken dokunulamaz ve nedenini söyler.
+      final card = tester.widget<SahneListRow>(cardFinder);
       expect(card.onTap, isNull, reason: 'kilitliyken kart dokunulamaz olmalı');
       expect(card.subtitle, 'Sunucuya ulaşılamadı');
       expect(

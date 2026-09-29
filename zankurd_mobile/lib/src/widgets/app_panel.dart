@@ -102,7 +102,9 @@ class AppPanel extends StatelessWidget {
       shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       color: _fill(context, t),
       onTap: onTap,
-      child: Padding(padding: padding, child: child),
+      child: SahneOnSurface(
+        child: Padding(padding: padding, child: child),
+      ),
     );
   }
 

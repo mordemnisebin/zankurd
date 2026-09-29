@@ -550,22 +550,119 @@ class SahneRidgePainter extends CustomPainter {
     Offset(1.00, 0.66),
   ];
 
+  /// Sırt silueti [box] içinde: sırt çizgisi kutunun tepesinden, taban
+  /// kutunun altından [floor] kadar aşağıda kapanır.
+  static Path ridgePath(Rect box, {double floor = 0}) {
+    final base = box.bottom + floor;
+    final path = Path()..moveTo(box.left, base);
+    for (final p in ridgeLine) {
+      path.lineTo(box.left + p.dx * box.width, box.top + p.dy * box.height);
+    }
+    return path
+      ..lineTo(box.right, base)
+      ..close();
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     if (size.isEmpty) return;
-    final path = Path()..moveTo(0, size.height);
-    for (final p in ridgeLine) {
-      path.lineTo(p.dx * size.width, p.dy * size.height);
-    }
-    path
-      ..lineTo(size.width, size.height)
-      ..close();
-    canvas.drawPath(path, Paint()..color = color);
+    canvas.drawPath(ridgePath(Offset.zero & size), Paint()..color = color);
   }
 
   @override
   bool shouldRepaint(SahneRidgePainter oldDelegate) =>
       oldDelegate.color != color;
+}
+
+/// Sonuç kahramanının arkası: sonuç ışınları + dağ sırtı ufku (solo ve
+/// düello sonucu).
+///
+/// Işınlar maketteki `.sh-rays`: `repeating-conic-gradient(ray 0–5°,
+/// şeffaf 5–15°)` üstüne `radial-gradient(closest-side, şeffaf %16, bg
+/// %74)` örtü. Flutter karşılığı `SweepGradient(tileMode: repeated)` + bg
+/// renginde `RadialGradient`; maske, bulanıklık ve `saveLayer` yok (spec
+/// `shadows[3]`). 600'lük daireye kırpılır: köşelerdeki bg karesi
+/// sahnenin alttan ışımasını örtmesin.
+///
+/// Dağ sırtı soru sahnesinin ufkuyla AYNI siluettir
+/// ([SahneRidgePainter.ridgeLine]; 2026-09-29 birleştirmesine kadar sonuç
+/// ekranı kendi 11 noktalı kopyasını çiziyordu). 64 yükseklik, sayfa
+/// kenarına taşar, tabanı kahramanın 12 altına iner (ödül kartına ışın
+/// sızmaz). Önce zemin rengiyle doldurulur — ışınlar dağların ARKASINDA
+/// kalır, ufuk çizgisinde kesilir — üstüne Perde tonu %40.
+class SahneResultBackdropPainter extends CustomPainter {
+  const SahneResultBackdropPainter({
+    required this.rays,
+    required this.raysCenterY,
+    required this.bg,
+    required this.ridge,
+  });
+
+  final bool rays;
+  final double raysCenterY;
+  final Color bg;
+  final Color ridge;
+
+  static const double _raysRadius = 300;
+  static const double _rayDegrees = 5;
+  static const double _rayPeriodDegrees = 15;
+
+  /// Sırtın yüksekliği.
+  static const double ridgeHeight = 64;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (rays) {
+      final center = Offset(size.width / 2, raysCenterY);
+      final rect = Rect.fromCircle(center: center, radius: _raysRadius);
+      canvas.save();
+      canvas.clipPath(Path()..addOval(rect));
+      const period = _rayPeriodDegrees * math.pi / 180;
+      const on = _rayDegrees / _rayPeriodDegrees;
+      canvas.drawRect(
+        rect,
+        Paint()
+          ..shader = const SweepGradient(
+            endAngle: period,
+            tileMode: TileMode.repeated,
+            colors: [
+              SahneStageColors.ray,
+              SahneStageColors.ray,
+              Colors.transparent,
+              Colors.transparent,
+            ],
+            stops: [0, on, on, 1],
+          ).createShader(rect),
+      );
+      canvas.drawRect(
+        rect,
+        Paint()
+          ..shader = RadialGradient(
+            colors: [bg.withValues(alpha: 0), bg],
+            stops: const [0.16, 0.74],
+          ).createShader(rect),
+      );
+      canvas.restore();
+    }
+
+    const bleed = SahneSpace.page;
+    final box = Rect.fromLTWH(
+      -bleed,
+      size.height - ridgeHeight,
+      size.width + 2 * bleed,
+      ridgeHeight,
+    );
+    final path = SahneRidgePainter.ridgePath(box, floor: SahneSpace.x3);
+    canvas.drawPath(path, Paint()..color = bg);
+    canvas.drawPath(path, Paint()..color = ridge.withValues(alpha: 0.4));
+  }
+
+  @override
+  bool shouldRepaint(SahneResultBackdropPainter old) =>
+      old.rays != rays ||
+      old.raysCenterY != raysCenterY ||
+      old.bg != bg ||
+      old.ridge != ridge;
 }
 
 /// Oyun sahnesinin alttan ışıması:

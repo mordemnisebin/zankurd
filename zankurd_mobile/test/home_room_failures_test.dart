@@ -237,8 +237,15 @@ void main() {
     final errorText = tester.widget<Text>(error);
     expect(errorText.maxLines, isNull);
     expect(errorText.overflow, TextOverflow.visible);
+    // 2026-09-29: `FakeViewPadding` FİZİKSEL piksellerdir; klavyenin
+    // mantıksal yüksekliği 220 / devicePixelRatio'dur (test görünümünde 3 →
+    // ~73). Eskiden 220 doğrudan mantıksal sayılıyordu; hata metni gerçek
+    // klavye çizgisinin üstündeyken "altında" sayılıyordu. Korunan kural
+    // aynı: mesajın tamamı klavyenin ÜSTÜNDE görünür. Sayfanın kaydırma alanı
+    // artık klavyenin üstünde biter (klavye payı kaydırmanın dışında).
+    final keyboardTop = 568 - 220 / tester.view.devicePixelRatio;
     expect(tester.getRect(error).top, greaterThanOrEqualTo(0));
-    expect(tester.getRect(error).bottom, lessThanOrEqualTo(568 - 220));
+    expect(tester.getRect(error).bottom, lessThanOrEqualTo(keyboardTop));
     final sheetScrollable = find.descendant(
       of: find.byType(SingleChildScrollView),
       matching: find.byWidgetPredicate(

@@ -258,7 +258,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                               context.t(K.haveAccountPrefix),
                               style: SahneType.body.copyWith(color: t.tx2),
                             ),
-                            _TextAction(
+                            SahneButton.text(
                               label: context.t(K.signIn),
                               onPressed: () => Navigator.of(context).pop(),
                             ),
@@ -612,43 +612,6 @@ class _AuthScrollFrame extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-/// Metin bağlantısı ([SahneButton.text]) — 48'lik dokunma kutusunda.
-///
-/// Bileşen görselde 44'tür; uygulamanın erişilebilirlik kılavuzu testi
-/// (Android) 48'in altını reddeder. [ZkBackButton] gibi: ekran okuyucu tek
-/// bir 48'lik düğme görür, görsel boyut değişmez.
-class _TextAction extends StatelessWidget {
-  const _TextAction({required this.label, required this.onPressed});
-
-  final String label;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      enabled: onPressed != null,
-      label: label,
-      onTap: onPressed,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onPressed,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
-          child: Align(
-            alignment: AlignmentDirectional.centerStart,
-            widthFactor: 1,
-            heightFactor: 1,
-            child: SahneButton.text(label: label, onPressed: onPressed),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -399,15 +399,10 @@ class _UnifiedRewardsSection extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox.square(
-                        dimension: 48,
-                        child: Center(
-                          child: SahneIconButton(
-                            icon: AppIcons.xmark,
-                            semanticLabel: Tr.forKu(K.close, isKu),
-                            onPressed: () => Navigator.pop(ctx),
-                          ),
-                        ),
+                      SahneIconButton(
+                        icon: AppIcons.xmark,
+                        semanticLabel: Tr.forKu(K.close, isKu),
+                        onPressed: () => Navigator.pop(ctx),
                       ),
                     ],
                   ),

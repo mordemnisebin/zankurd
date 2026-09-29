@@ -16,9 +16,11 @@ import '../../widgets/sahne/sahne.dart';
 /// ("Alîkariya Be…", 2026-08-16) artık olamaz — kırpılacak görünür etiket
 /// yoktur; ad Semantics'te bütündür (bkz. `wildcard_label_truncation_test`).
 ///
-/// Kullanılamayan joker (kullanıldı, cevap verildi, jeton yetmiyor) Şahnê
-/// pasif hâlidir: Perde + üçüncül ikon, fiyat gizli, opaklık yok. Durumun
-/// SÖZÜ ekran okuyucuya gider ("Çift Cevap • Etkin", "… • Yetersiz bakiye").
+/// Kullanılamayan joker (kullanıldı, cevap verildi) Şahnê pasif hâlidir:
+/// Perde + üçüncül ikon, fiyat gizli, opaklık yok. Jeton yetmeyen joker de
+/// pasiftir ama fiyatı üçüncül metinle GÖRÜNÜR; bu soruda açılmış joker
+/// (Çift Cevap) seçili hâldedir (Zêr halka + ✓). Durumun SÖZÜ ekran
+/// okuyucuya gider ("Çift Cevap • Etkin", "… • Yetersiz bakiye").
 ///
 /// Fiyat defterdeki kısaltmayla da duyurulur (`K.coinAbbrev`, ör. "20j");
 /// ekranda kısaltma yerine jeton glifi durur.
@@ -86,6 +88,11 @@ class WildcardButton extends StatelessWidget {
         label: typeLabel,
         price: type.coinCost,
         semanticLabel: displayLabel,
+        // Bu soruda açılmış joker (Çift Cevap) seçili hâlde durur; jeton
+        // yetmeyen joker pasif ama fiyatını gösterir (neden alınamadığı
+        // görünsün).
+        selected: isActive,
+        unaffordable: cantAfford,
         onPressed: canTap ? onTap : null,
       ),
     );

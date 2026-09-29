@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zankurd_mobile/src/widgets/sahne/sahne_chips.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -18,7 +18,6 @@ import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
 import 'package:zankurd_mobile/src/services/analytics_service.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
@@ -45,6 +44,28 @@ class _GoogleAuthProvider extends AuthProvider {
     googleSignInCalled = true;
     return true;
   }
+}
+
+/// 2026-09-29 Şahnê: giriş, kayıt ve oyuncu adı kahramanları ortak kimliği
+/// eski Forest gradyanıyla değil Şahnê sahne zeminiyle taşır: gece
+/// degradesi + Zimrût (öğrenme) köşe radyali ([SahneStagePainter]). Korunan
+/// kural aynı: üç giriş yüzeyi AYNI kimliği paylaşır.
+void _expectLearnStageIdentity(WidgetTester tester, Finder hero) {
+  expect(hero, findsOneWidget);
+  final painters = tester
+      .widgetList<CustomPaint>(
+        find.descendant(
+          of: hero,
+          matching: find.byType(CustomPaint),
+          matchRoot: true,
+        ),
+      )
+      .map((p) => p.painter)
+      .whereType<SahneStagePainter>()
+      .toList();
+  expect(painters, isNotEmpty, reason: 'kahraman sahne zemini taşımalı');
+  expect(painters.first.race, isFalse);
+  expect(painters.first.glow, SahneTokens.night.roleGlow(SahneRole.learn));
 }
 
 void main() {
@@ -103,12 +124,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final heroFinder = find.byKey(const ValueKey('sign-in-hero-banner'));
-    expect(heroFinder, findsOneWidget);
-    final hero = tester.widget<Container>(heroFinder);
-    final decoration = hero.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+    _expectLearnStageIdentity(
+      tester,
+      find.byKey(const ValueKey('sign-in-hero-banner')),
+    );
   });
 
   // 2026-09-29 Şahnê: dil seçici seçim rayının sığan çeşididir; seçili çip
@@ -158,12 +177,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final heroFinder = find.byKey(const ValueKey('sign-up-hero-banner'));
-    expect(heroFinder, findsOneWidget);
-    final hero = tester.widget<Container>(heroFinder);
-    final decoration = hero.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+    _expectLearnStageIdentity(
+      tester,
+      find.byKey(const ValueKey('sign-up-hero-banner')),
+    );
   });
 
   testWidgets('kayıt ilerleme göstergesi aktif adımda Forest kullanır', (
@@ -176,14 +193,20 @@ void main() {
 
     final stepFinder = find.byKey(const ValueKey('signup-progress-step-1'));
     expect(stepFinder, findsOneWidget);
+    // 2026-09-29 Şahnê: aktif adım Forest gradyanı + gölge değil, öğrenme
+    // rolüdür: Zimrût tonu + Halka 2 Zimrût metni (elmas); pasif adım
+    // Kulis. Gölge yok. Korunan kural: aktif adım öğrenme kimliğini taşır
+    // ve pasiften ayrılır.
     final step = tester.widget<AnimatedContainer>(stepFinder);
-    final decoration = step.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
-    expect(
-      decoration.boxShadow!.single.color,
-      AppTheme.culturalBrandBg.withValues(alpha: 0.35),
+    final decoration = step.decoration! as ShapeDecoration;
+    final t = SahneTokens.of(tester.element(stepFinder));
+    expect(decoration.color, t.learnTint);
+    expect((decoration.shape as BeveledRectangleBorder).side.color, t.learnTx);
+    expect(decoration.shadows ?? const <BoxShadow>[], isEmpty);
+    final inactive = tester.widget<AnimatedContainer>(
+      find.byKey(const ValueKey('signup-progress-step-2')),
     );
+    expect((inactive.decoration! as ShapeDecoration).color, t.s2);
   });
 
   testWidgets('oyuncu adı hero alanı ortak Forest kimliğini kullanır', (
@@ -199,14 +222,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final heroFinder = find.byKey(
-      const ValueKey('profile-name-gate-hero-surface'),
+    _expectLearnStageIdentity(
+      tester,
+      find.byKey(const ValueKey('profile-name-gate-hero-surface')),
     );
-    expect(heroFinder, findsOneWidget);
-    final hero = tester.widget<Container>(heroFinder);
-    final decoration = hero.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
   });
 
   testWidgets('iOS giriş ekranı Google ve Apple seçeneklerini sunar', (
@@ -666,16 +685,23 @@ void main() {
     );
     expect(tester.takeException(), isNull);
 
-    // Açık tema varsayılan sözleşmesi (Pirs hizası).
-    expect(
-      Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+    // 2026-09-29 Şahnê: varsayılan tema GECE (Şahnê "Gece sahnesi";
+    // `ThemeProvider` varsayılanı `ThemeMode.dark`). Eski "açık tema
+    // varsayılan" (Pirs hizası) sözleşmesi kalktı. Korunan kural: tanıtım
+    // yüzeyi düz sayfa zeminidir (degrade değil) ve temanın `bg`sidir.
+    final onboardingTheme = Theme.of(
+      tester.element(find.byType(OnboardingScreen)),
     );
+    expect(onboardingTheme.brightness, Brightness.dark);
     final surface = tester.widget<Container>(
       find.byKey(const ValueKey('onboarding-surface')),
     );
     final decoration = surface.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.lightBg);
+    expect(decoration.gradient, isNull);
+    expect(
+      decoration.color,
+      SahneTokens.of(tester.element(find.byType(OnboardingScreen))).bg,
+    );
   });
 
   testWidgets('iPhone SE accessibility XXXL onboarding stays in viewport', (
@@ -802,9 +828,10 @@ void main() {
       lessThanOrEqualTo(800),
     );
     expect(tester.takeException(), isNull);
+    // 2026-09-29 Şahnê: varsayılan tema gece (bkz. telefon testi).
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
   });
 
@@ -959,29 +986,28 @@ void main() {
       isTrue,
     );
 
-    final navTheme = tester.widget<NavigationBarTheme>(
-      find.byType(NavigationBarTheme),
-    );
-    expect(navTheme.data.height, 70);
-    expect(navTheme.data.backgroundColor, AppTheme.lightSurface);
-    expect(
-      navTheme.data.indicatorColor,
-      AppTheme.brand.withValues(alpha: 0.18),
-    );
+    // 2026-09-29 Şahnê: alt gezinmenin görünüşü tümüyle temadandır
+    // (`navigationBarTheme`: 64 yükseklik, `nav` zemini, seçili sekme Ray
+    // plaketi). Turuncu gösterge kalktı: Agir ekranın tek birincil eylemidir,
+    // gezinme değil. Korunan kural: seçili gösterge sekmeyle değişmez.
+    final navContext = tester.element(find.byType(NavigationBar));
+    final t = SahneTokens.of(navContext);
+    final navTheme = Theme.of(navContext).navigationBarTheme;
+    expect(navTheme.height, 64);
+    expect(navTheme.backgroundColor, t.nav);
+    expect(navTheme.indicatorColor, t.s3);
+    expect(navTheme.indicatorColor, isNot(t.act));
 
     // Alt nav'daki "Yarış" — lobi kartıyla karışmasın.
-    await tester.tap(find.text('Yarış').last);
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
     expect(find.byType(PlayHubScreen), findsOneWidget);
 
-    // Bottom nav seçili rengi sekmeyle değişmez; sabit brand kalır.
-    final navThemeAfter = tester.widget<NavigationBarTheme>(
-      find.byType(NavigationBarTheme),
-    );
-    expect(
-      navThemeAfter.data.indicatorColor,
-      AppTheme.brand.withValues(alpha: 0.18),
-    );
+    // Bottom nav seçili rengi sekmeyle değişmez.
+    final navThemeAfter = Theme.of(
+      tester.element(find.byType(NavigationBar)),
+    ).navigationBarTheme;
+    expect(navThemeAfter.indicatorColor, t.s3);
     semantics.dispose();
   });
 
@@ -1002,31 +1028,36 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Açık tema varsayılan sözleşmesi (Pirs hizası: parlak ilk izlenim).
+    // 2026-09-29 Şahnê: varsayılan tema GECE (eski "açık tema varsayılan"
+    // Pirs hizası kalktı). Korunan kural: tema düğmesi görünen sayfa
+    // zeminini değiştirir; zemin düz renktir (2026-07-24: gradyan zemin
+    // kartların 1 px kenarlığını yutuyordu).
+    Color homeBg() {
+      final page = tester.widget<Material>(
+        find
+            .descendant(
+              of: find.byType(HomeScreen),
+              matching: find.byType(Material),
+            )
+            .first,
+      );
+      return page.color!;
+    }
+
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
-    final home = tester.widget<Container>(
-      find
-          .descendant(
-            of: find.byType(HomeScreen),
-            matching: find.byType(Container),
-          )
-          .first,
-    );
-    // 2026-07-24: sayfa zemini düz renk. Gradyan zemin, üstündeki kartların
-    // 1px kenarlığını yutup hiyerarşiyi bulanıklaştırıyordu.
-    expect(home.color, AppTheme.lightBg);
-    expect(home.decoration, isNull);
+    expect(homeBg(), SahneTokens.night.bg);
 
     theme.toggleDarkLight();
     await tester.pumpAndSettle();
 
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
+    expect(homeBg(), SahneTokens.day.bg);
   });
 
   testWidgets('auth requires player name before home', (tester) async {

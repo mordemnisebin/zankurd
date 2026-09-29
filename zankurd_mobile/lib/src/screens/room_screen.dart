@@ -805,7 +805,7 @@ class _RoomScreenState extends State<RoomScreen> {
             child: Column(
               children: [
                 _RoomBar(
-                  title: context.t(K.roomWord),
+                  title: context.t(K.roomLobbyTitle),
                   leaveLabel: context.t(K.leaveRoom),
                   onLeave: _leaving ? null : _leaveRoom,
                 ),
@@ -1186,30 +1186,23 @@ class _RoomBar extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 64),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(
-          SahneSpace.page - 2,
+          SahneSpace.page - SahneIconButton.inset,
           SahneSpace.x2,
           SahneSpace.page,
           SahneSpace.x2,
         ),
         child: Row(
           children: [
-            IconButton(
+            SahneIconButton(
+              icon: AppIcons.arrowLeft,
+              semanticLabel: leaveLabel,
               onPressed: onLeave,
-              tooltip: leaveLabel,
-              style: IconButton.styleFrom(
-                backgroundColor: t.s1,
-                foregroundColor: t.tx,
-                fixedSize: const Size.square(44),
-                minimumSize: const Size.square(44),
-                shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
-              ),
-              icon: const Icon(AppIcons.arrowLeft, size: 24),
             ),
-            const SizedBox(width: SahneSpace.x3 - 2),
+            const SizedBox(width: SahneSpace.x3 - SahneIconButton.inset),
             Expanded(
               child: Semantics(
                 header: true,
-                child: Text(
+                child: SahneUnbrokenText(
                   title,
                   style: SahneType.headline.copyWith(color: t.tx),
                 ),
@@ -1817,7 +1810,7 @@ class _WaitingPlayerTile extends StatelessWidget {
   }
 }
 
-/// Hızlı tepki çipi: [SahneRailChip] görseli (44) + 48'lik dokunma kutusu.
+/// Hızlı tepki çipi: [SahneRailChip] (görsel 44, dokunma 48).
 class _ReactionChip extends StatelessWidget {
   const _ReactionChip({super.key, required this.label, required this.onTap});
 
@@ -1825,31 +1818,12 @@ class _ReactionChip extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      label: label,
-      onTap: onTap,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 48),
-          child: Center(
-            widthFactor: 1,
-            child: SahneRailChip(
-              label: label,
-              selected: false,
-              role: SahneRole.race,
-              onTap: onTap,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => SahneRailChip(
+    label: label,
+    selected: false,
+    role: SahneRole.race,
+    onTap: onTap,
+  );
 }
 
 /// Sohbet panelini açıp kapatan satır.

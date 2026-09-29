@@ -400,6 +400,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       // Kapatma düğmesi şart: `AppRoute` iOS'ta kaydırarak geri gitmeyi
       // sunmuyor; bağlantı yavaşken oyuncu bu ekranda mahsur kalırdı.
       return SahneStageScaffold(
+        closeKey: const ValueKey('async-duel-loading-close'),
         closeLabel: context.t(K.close),
         onClose: () => Navigator.of(context).pop(),
         center: Text(context.t(K.asyncDuel)),
@@ -433,6 +434,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         if (!didPop) unawaited(_confirmExit());
       },
       child: SahneStageScaffold(
+        closeKey: const ValueKey('async-duel-quit'),
         closeLabel: context.t(K.close),
         onClose: () => unawaited(_confirmExit()),
         backdrop: CategoryVisuals.hasOwnImage(category)

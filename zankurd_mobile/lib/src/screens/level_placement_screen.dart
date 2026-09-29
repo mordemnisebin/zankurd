@@ -344,8 +344,7 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
 }
 
 /// "Şimdilik geç" — üst satırın sağında metin bağlantısı (Agir metni +
-/// chevron). Dokunma kutusu 48 yüksekliktedir; görsel metin bağlantısı
-/// kalır. Dış Semantics 48'lik kutuyu duyurur (Android kılavuzu).
+/// chevron). Görsel 44, dokunma kutusu 48 — bileşen verir.
 class _SkipTextButton extends StatelessWidget {
   const _SkipTextButton({
     super.key,
@@ -357,32 +356,21 @@ class _SkipTextButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      enabled: onPressed != null,
-      label: label,
-      onTap: onPressed,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
+  Widget build(BuildContext context) =>
+      // Anahtarın düğümü (`placement-skip`) tek bir adlı düğmedir.
+      Semantics(
+        container: true,
+        button: true,
+        enabled: onPressed != null,
+        label: label,
         onTap: onPressed,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
-          child: Center(
-            widthFactor: 1,
-            child: SahneButton.text(label: label, onPressed: onPressed),
-          ),
-        ),
-      ),
-    );
-  }
+        excludeSemantics: true,
+        child: SahneButton.text(label: label, onPressed: onPressed),
+      );
 }
 
 /// Dar ekranda ya da büyük yazıda "Şimdilik geç": ileri ikonu, 44'lük
-/// Şahnê ikon düğmesi 48'lik dokunma kutusunda; söz Semantics'te ve
-/// ipucunda.
+/// Şahnê ikon düğmesi (dokunma 48); söz Semantics'te ve ipucunda.
 class _SkipIconButton extends StatelessWidget {
   const _SkipIconButton({
     super.key,
@@ -394,28 +382,9 @@ class _SkipIconButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      enabled: onPressed != null,
-      label: label,
-      onTap: onPressed,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onPressed,
-        child: SizedBox.square(
-          dimension: 48,
-          child: Center(
-            child: SahneIconButton(
-              icon: AppIcons.forward,
-              semanticLabel: label,
-              onPressed: onPressed,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => SahneIconButton(
+    icon: AppIcons.forward,
+    semanticLabel: label,
+    onPressed: onPressed,
+  );
 }

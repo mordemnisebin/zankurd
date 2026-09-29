@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -32,7 +32,13 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
 
-    await tester.tap(find.byIcon(AppIcons.coins));
+    // 2026-09-29 Şahnê: jeton rozeti Lucide ikonu değil Şahnê jeton glifidir
+    // (`SahneGlyph` coin, stat çipinde); kural aynı: rozet mağazayı açar.
+    await tester.tap(
+      find.byWidgetPredicate(
+        (w) => w is SahneGlyph && w.kind == SahneGlyphKind.coin,
+      ),
+    );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 600));
 

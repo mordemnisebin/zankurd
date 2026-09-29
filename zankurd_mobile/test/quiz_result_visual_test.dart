@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,7 +14,7 @@ import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -317,7 +319,12 @@ void main() {
     },
   );
 
-  testWidgets('wide result keeps primary and secondary actions in one row', (
+  // 2026-09-29 Şahnê: birincil eylem sahnenin alt perdesinde TEK başına
+  // durur; ikincil "yanlışları incele" gövdede, onun üstündedir. Eskiden
+  // geniş ekranda ikisi aynı satırdaydı — o yerleşim kalktı. Korunan kural:
+  // geniş ekranda iki eylem de ilk bakışta görünür ve birincil ikincilin
+  // altında (baş parmağa yakın) kalır.
+  testWidgets('wide result keeps primary and secondary actions visible', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(1440, 900));
@@ -328,53 +335,47 @@ void main() {
     final primary = tester.getRect(
       find.byKey(const ValueKey('result-play-again-button')),
     );
-    final secondary = tester.getRect(
-      find.byKey(const ValueKey('result-review-mistakes-button')),
+    final secondaryFinder = find.byKey(
+      const ValueKey('result-review-mistakes-button'),
+      skipOffstage: false,
     );
-    expect(secondary.center.dy, inInclusiveRange(primary.top, primary.bottom));
-    expect(secondary.left, greaterThan(primary.right));
+    await tester.ensureVisible(secondaryFinder);
+    await tester.pump();
+    final secondary = tester.getRect(secondaryFinder);
+    expect(primary.bottom, lessThanOrEqualTo(900));
+    expect(secondary.bottom, lessThanOrEqualTo(primary.top));
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('light solo vitrin kimlik yeşili gradyan taşır', (tester) async {
+  // 2026-09-29 Şahnê: sonuç bir oyun sahnesidir — gündüz temasında da GECE
+  // (C iskeleti); vitrinin kendi gradyanı (`Container.decoration`) kalktı.
+  // Korunan kural aynı: vitrin eylem turuncusunu kullanmaz ve üstündeki
+  // metin perdesiz AA okunur.
+  testWidgets('light solo vitrin gündüzde de gece sahnesi taşır', (
+    tester,
+  ) async {
     await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    final header = tester.widget<Container>(
-      find.byKey(const ValueKey('result-score-header')),
-    );
-    final decoration = header.decoration as BoxDecoration;
-    final gradient = decoration.gradient as LinearGradient;
-    // 2026-07-24: solo vitrin kimlik anıdır — turuncu yalnız eylem
-    // butonunda kalır, beyaz metin perdesiz AA geçmeli.
-    //
-    // 2026-08-03: iki güvence de aynen duruyor; sabitlenen ŞEY değişti.
-    // Test `culturalBrandBg`i tek tek eşitliyordu, yani kimliğin hangi
-    // renk olduğunu dondurmuştu. Oysa korunması gereken kural "yeşil
-    // olsun" değil, "eylem rengi OLMASIN ve beyazı perdesiz okutsun".
-    // Marka yeşilinden koyu turuncuya inen eski gradyan gerçek cihazda
-    // kutlama değil çamur veriyordu; Rengîn kutlama yüzeyi derin
-    // mürekkepten ametiste geçer. Kural test edilir, sabit edilmez.
-    expect(gradient.colors, hasLength(2));
-    for (final color in gradient.colors) {
-      final luminance = color.computeLuminance();
-      expect(
-        1.05 / (luminance + 0.05),
-        greaterThanOrEqualTo(4.5),
-        reason: 'beyaz metin perdesiz okunmalı: $color',
-      );
-      // Kimlik yüzeyi eylem rengini kullanamaz.
-      expect(
-        color,
-        isNot(AppTheme.brand),
-        reason: 'vitrin eylem turuncusunu kullanmamalı',
-      );
-      expect(color, isNot(AppTheme.brandDeep));
-      expect(color, isNot(AppTheme.brandLite));
+    final header = find.byKey(const ValueKey('result-score-header'));
+    expect(header, findsOneWidget);
+    final t = SahneTokens.of(tester.element(header));
+    expect(t, same(SahneTokens.night), reason: 'sonuç gündüzde de gece');
+    double contrast(Color a, Color b) {
+      final la = a.computeLuminance();
+      final lb = b.computeLuminance();
+      return (math.max(la, lb) + 0.05) / (math.min(la, lb) + 0.05);
     }
+
+    expect(contrast(t.tx, t.bg), greaterThanOrEqualTo(4.5));
+    expect(t.bg, isNot(t.act), reason: 'vitrin eylem turuncusunu kullanmaz');
   });
 
+  // 2026-09-29 Şahnê: birincil eylem alt perdede sabittir — gövdedeki
+  // öğrenme özetinden "önce" okunmak için yukarıda durması gerekmez; hiç
+  // kaydırmadan ekranda olması yeter. Özet gövdede, perdenin arkasından
+  // kayar.
   testWidgets('sonraki durak ana eylemi öğrenme özetinden önce gelir', (
     tester,
   ) async {
@@ -385,12 +386,19 @@ void main() {
     await tester.pumpAndSettle();
 
     final primary = find.byKey(const ValueKey('result-play-again-button'));
-    final outcome = find.byKey(const ValueKey('learning-outcome-card'));
+    final outcome = find.byKey(
+      const ValueKey('learning-outcome-card'),
+      skipOffstage: false,
+    );
     expect(primary, findsOneWidget);
     expect(outcome, findsOneWidget);
+    expect(tester.getRect(primary).bottom, lessThanOrEqualTo(844));
+    await tester.ensureVisible(outcome);
+    await tester.pumpAndSettle();
     expect(
-      tester.getTopLeft(primary).dy,
-      lessThan(tester.getTopLeft(outcome).dy),
+      tester.getRect(primary).bottom,
+      lessThanOrEqualTo(844),
+      reason: 'özet okunurken de birincil eylem ekranda kalır',
     );
   });
 
@@ -428,25 +436,32 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
+    // 2026-09-29 Şahnê: birincil alt perdede hep görünür; ikincil eylemler
+    // gövdede, kaydırınca görünür (eskiden aynı satırdaydılar).
     final primary = find.byKey(const ValueKey('result-play-again-button'));
-    await tester.scrollUntilVisible(primary, 600);
-    await tester.pumpAndSettle();
     expect(primary, findsOneWidget);
-    expect(
-      find.byKey(const ValueKey('result-review-mistakes-button')),
-      findsOneWidget,
-    );
-    expect(find.byKey(const ValueKey('result-more-options')), findsOneWidget);
+    final review = find.byKey(const ValueKey('result-review-mistakes-button'));
+    await tester.scrollUntilVisible(review, 300);
+    await tester.pumpAndSettle();
+    expect(review, findsOneWidget);
+    final more = find.byKey(const ValueKey('result-more-options'));
+    await tester.scrollUntilVisible(more, 300);
+    await tester.pumpAndSettle();
+    expect(more, findsOneWidget);
     expect(find.byKey(const ValueKey('result-home-button')), findsNothing);
 
-    await tester.tap(find.byKey(const ValueKey('result-more-options')));
+    await tester.tap(more);
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('result-home-button')), findsOneWidget);
   });
 
   // 2026-07-23 M33: Roj maskotu sonuç ekranında görünsün ve yüksek
   // doğrulukta (8/10 = %80) kutlama modunda olsun.
-  testWidgets('skor başlığında Roj maskotu kutlama modunda görünür', (
+  //
+  // 2026-09-29 Şahnê: maskot yok. Kutlama artık puanın arkasındaki sonuç
+  // ışınlarıdır ([SahneResultBackdropPainter.rays]); yüksek doğrulukta
+  // ışınlar yanar.
+  testWidgets('skor başlığı yüksek doğrulukta kutlama ışınlarını yakar', (
     tester,
   ) async {
     await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
@@ -458,8 +473,12 @@ void main() {
       findsOneWidget,
       reason: 'M33 eklerken mevcut skor başlığı bozulmamalı',
     );
-    final mascot = tester.widget<RojMascot>(find.byType(RojMascot));
-    expect(mascot.mood, RojMood.celebrate);
+    final backdrops = tester
+        .widgetList<CustomPaint>(find.byType(CustomPaint))
+        .map((p) => p.painter)
+        .whereType<SahneResultBackdropPainter>();
+    expect(backdrops, hasLength(1));
+    expect(backdrops.single.rays, isTrue);
   });
 
   testWidgets('skor vitrini kazanılan XPyi seviye yoluna bağlar', (
@@ -480,15 +499,13 @@ void main() {
       find.descendant(of: journey, matching: find.textContaining('Seviye ')),
       findsOneWidget,
     );
-    final progress = tester.widget<LinearProgressIndicator>(
-      find.descendant(
-        of: journey,
-        matching: find.byType(LinearProgressIndicator),
-      ),
+    // 2026-09-29 Şahnê: seviye yolu Şahnê ilerleme çubuğudur
+    // (`SahneProgressBar`, Zêr tonu).
+    final progress = tester.widget<SahneProgressBar>(
+      find.descendant(of: journey, matching: find.byType(SahneProgressBar)),
     );
-    expect(progress.value, isNotNull);
-    expect(progress.value!, inInclusiveRange(0.0, 1.0));
-    expect(progress.value!, greaterThan(0));
+    expect(progress.value, inInclusiveRange(0.0, 1.0));
+    expect(progress.value, greaterThan(0));
   });
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {

@@ -250,56 +250,42 @@ class _HomeTopicTile extends StatelessWidget {
           )
         : null;
 
-    return Semantics(
-      container: true,
-      button: onTap != null,
-      label: meta == null ? name : '$name, $meta',
+    final t = SahneTokens.of(context);
+    return SahneJewelTile(
+      name: name,
+      otherName: other == name ? null : other,
+      image: image,
+      icon: CategoryVisuals.icon(category),
       onTap: onTap,
-      excludeSemantics: true,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SahneJewelTile(
-            name: name,
-            otherName: other == name ? null : other,
-            image: image,
-            icon: CategoryVisuals.icon(category),
-            onTap: onTap,
-            size: size,
-          ),
-          // Başlanmamış konu sahte ilerleme çizmez; varsa soru sayısını
-          // söyler (2026-07-25 denetimi). Ekran okuyucu bunu karonun
-          // sözünde zaten duyar.
-          if (!started && meta != null)
-            ExcludeSemantics(
-              child: Text(
-                meta,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: SahneType.caption.copyWith(
-                  color: SahneTokens.of(context).tx3,
+      size: size,
+      metaLabel: meta,
+      meta: started
+          ? Padding(
+              padding: const EdgeInsets.only(top: SahneSpace.x2),
+              // `SahneProgressBar` ile aynı ölçü ve renk (8 px, S pah, iz
+              // Ray, dolgu Zimrût). `LinearProgressIndicator` üstüne kurulu
+              // çünkü ortak `home_screen_navigation_refresh_test`
+              // ilerlemenin karoda bu tiple çizildiğini arıyor.
+              child: ClipPath(
+                clipper: const ShapeBorderClipper(shape: SahneShape.s),
+                child: LinearProgressIndicator(
+                  value: ratio,
+                  minHeight: 8,
+                  color: t.learnBar,
+                  backgroundColor: t.s3,
                 ),
               ),
+            )
+          // Başlanmamış konu sahte ilerleme çizmez; varsa soru sayısını
+          // söyler (2026-07-25 denetimi).
+          : meta == null
+          ? null
+          : Text(
+              meta,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: SahneType.caption.copyWith(color: t.tx3),
             ),
-          if (started) ...[
-            const SizedBox(height: SahneSpace.x2),
-            // `SahneProgressBar` ile aynı ölçü ve renk (8 px, S pah, iz Ray,
-            // dolgu Zimrût). `LinearProgressIndicator` üstüne kurulu çünkü
-            // ortak `home_screen_navigation_refresh_test` ilerlemenin karoda
-            // bu tiple çizildiğini arıyor; görünüş Şahnê'dir.
-            ClipPath(
-              clipper: const ShapeBorderClipper(shape: SahneShape.s),
-              child: LinearProgressIndicator(
-                value: ratio,
-                minHeight: 8,
-                color: SahneTokens.of(context).learnBar,
-                backgroundColor: SahneTokens.of(context).s3,
-              ),
-            ),
-          ],
-        ],
-      ),
     );
   }
 }

@@ -1613,6 +1613,7 @@ class _QuizScreenState extends State<QuizScreen>
                 timerSeconds: widget.room.secondsPerQuestion,
                 timed: _usesTimer,
                 child: SahneStageScaffold(
+                  closeKey: const ValueKey('quiz-close'),
                   closeLabel: context.t(K.close),
                   backdrop: _stageBackdrop,
                   light: _stageLight,

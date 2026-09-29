@@ -993,7 +993,9 @@ class _ShopScreenState extends State<ShopScreen> {
             ],
           ),
           const SizedBox(height: SahneSpace.x4),
-          isPurchased ? _buildOwnedChip() : _buildBuyButton(item, ku),
+          isPurchased
+              ? _buildOwnedChip()
+              : _buildBuyButton(item, ku, primary: true),
         ],
       ),
     );
@@ -1044,20 +1046,38 @@ class _ShopScreenState extends State<ShopScreen> {
     );
   }
 
-  // ── Satın al: ikincil (ekranda birincil eylem yok; karar diyalogda) ──
-  Widget _buildBuyButton(ShopItem item, bool ku) {
+  // ── Satın al ──
+  //
+  // Öne çıkan ürünün düğmesi ekranın TEK birincil eylemidir (Agir); ızgara
+  // kartlarınınki ikincil (Kulis). Fiyatın solunda Şahnê jeton glifi
+  // durur — Lucide ikonu değil (ödül glifleri `SahneGlyph`).
+  Widget _buildBuyButton(ShopItem item, bool ku, {bool primary = false}) {
     // Görünen etiket kısa ("120j"), ekran okuyucuya söylenen ad tam
     // cümle (bkz. `test/button_semantics_test.dart`): düğme yalnız
     // "düğme" diye okunursa neyi satın alacağı söylenmez.
+    final label = '${item.cost}${context.t(K.coinAbbrev)}';
+    final semanticLabel = context.t(K.buyItemForCoins, {
+      'item': ku ? item.titleKu : item.titleTr,
+      'coins': '${item.cost}',
+    });
+    final onPressed = _loading ? null : () => _confirmPurchase(item);
+    const glyph = SahneGlyph(SahneGlyphKind.coin, size: 20);
+    if (primary) {
+      return SahneButton.primary(
+        label: label,
+        leading: glyph,
+        arrow: false,
+        expand: true,
+        semanticLabel: semanticLabel,
+        onPressed: onPressed,
+      );
+    }
     return SahneButton.secondary(
-      label: '${item.cost}${context.t(K.coinAbbrev)}',
-      icon: AppIcons.coins,
+      label: label,
+      leading: glyph,
       expand: true,
-      semanticLabel: context.t(K.buyItemForCoins, {
-        'item': ku ? item.titleKu : item.titleTr,
-        'coins': '${item.cost}',
-      }),
-      onPressed: _loading ? null : () => _confirmPurchase(item),
+      semanticLabel: semanticLabel,
+      onPressed: onPressed,
     );
   }
 }

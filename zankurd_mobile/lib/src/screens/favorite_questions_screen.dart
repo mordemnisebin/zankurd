@@ -10,7 +10,6 @@ import '../utils/app_route.dart';
 import '../widgets/app_state.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
-import 'learning_screen.dart' show BarIconAction;
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -95,9 +94,9 @@ class _FavoriteQuestionsScreenState extends State<FavoriteQuestionsScreen> {
           },
         ),
         actions: [
-          BarIconAction(
+          SahneIconButton(
             icon: AppIcons.arrowsRotate,
-            label: context.t(K.refreshAction),
+            semanticLabel: context.t(K.refreshAction),
             onPressed: _reload,
           ),
         ],

@@ -1161,18 +1161,13 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     final title = CategoryNames.localized(category, ku);
     final other = CategoryNames.localized(category, !ku);
     final subtitle = other == title ? null : other;
-    if (CategoryVisuals.hasOwnImage(category)) {
-      return SahneListRow.thumb(
-        image: AssetImage(CategoryVisuals.imagePath(category)),
-        title: title,
-        subtitle: subtitle,
-        chevron: true,
-        onTap: onTap,
-      );
-    }
-    return SahneListRow.icon(
+    // Çizimi olmayan kategori (Sinema) aynı 36'lık hizada çizimsiz
+    // karonun küçüğünü alır (bileşenin geri düşüşü).
+    return SahneListRow.thumb(
+      image: CategoryVisuals.hasOwnImage(category)
+          ? AssetImage(CategoryVisuals.imagePath(category))
+          : null,
       icon: CategoryVisuals.icon(category),
-      role: SahneRole.race,
       title: title,
       subtitle: subtitle,
       chevron: true,

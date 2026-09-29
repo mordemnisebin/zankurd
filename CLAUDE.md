@@ -34,5 +34,7 @@ gövdesine niçinini koy.
 `docs/screenshots/tour/` altına basar — açık/karanlık tema, Türkçe/Kurmancî
 ve boş durumlar dahil. `ZANKURD_SCREEN_TOUR_OUT_DIR` çıktıyı başka klasöre
 yönlendirir; `ZANKURD_SCREEN_TOUR_HEIGHT=1800` kaydırılan bir ekranın
-tamamını tek karede basar. Emoji ve `CustomPainter` metni test koşucusunda kutu
+tamamını tek karede basar; `ZANKURD_SCREEN_TOUR_THEME=light|dark` bütün
+kareleri tek temada `<çıktı>/<tema>/` altına basar (yoksa `_dark` kareleri
+gece, ötekiler gündüz). Emoji ve `CustomPainter` metni test koşucusunda kutu
 çıkar; o ikisi simülatörden doğrulanır.

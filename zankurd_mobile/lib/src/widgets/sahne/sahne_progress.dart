@@ -293,6 +293,11 @@ class SahneLessonDiamond extends StatelessWidget {
 /// bulanıklık yok). Son [hotSeconds] saniyede iz, sayı ve hale Boyax'a
 /// döner ve elmas 600 ms'lik nabızla 1 → 1.06 atar; hareketi azaltta
 /// yalnız renk değişir.
+///
+/// [light] (kategori ışığı, [SahneCategoryLight]) verilirse hale sahnenin
+/// huzmesiyle aynı ışığı taşır (altın halenin yoğunluğunda); iz ve sayı
+/// yine Zêr kalır — ışık dolgu ya da metin rengi değildir. Gerilim eşiğinde
+/// hale her zaman Boyax'tır.
 class SahneTimerDiamond extends StatefulWidget {
   const SahneTimerDiamond({
     super.key,
@@ -300,7 +305,19 @@ class SahneTimerDiamond extends StatefulWidget {
     required this.fraction,
     required this.semanticLabel,
     this.hotSeconds = 5,
+    this.light,
   });
+
+  /// Kategori ışığı: halenin rengi (yalnız ışık).
+  final Color? light;
+
+  /// Halenin rengi: eşikte yarış halesi, değilse kategori ışığı ya da
+  /// altın hale.
+  static Color haloColor({required bool hot, Color? light}) {
+    if (hot) return SahneStageColors.haloRace;
+    if (light == null) return SahneStageColors.haloGold;
+    return light.withValues(alpha: SahneStageColors.haloGold.a);
+  }
 
   final int secondsLeft;
 
@@ -381,7 +398,7 @@ class _SahneTimerDiamondState extends State<SahneTimerDiamond>
               trail: color,
               fraction: widget.fraction,
               fromTop: false,
-              halo: hot ? SahneStageColors.haloRace : SahneStageColors.haloGold,
+              halo: SahneTimerDiamond.haloColor(hot: hot, light: widget.light),
             ),
             child: _DiamondLabel(
               text: '${widget.secondsLeft}',

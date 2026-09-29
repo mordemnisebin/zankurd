@@ -146,11 +146,20 @@ class LearningOutcomeCard extends StatelessWidget {
   const LearningOutcomeCard({
     required this.outcome,
     required this.onReview,
+    this.showCounts = true,
     super.key,
   });
 
   final LearningOutcome outcome;
   final VoidCallback? onReview;
+
+  /// `false`: toplam sayım satırı ve kategori başına ham sayımlar gizlenir.
+  ///
+  /// Sonuç ekranı aynı sayımları zaten gösteriyor (istatistik karoları ve
+  /// kategori listesi); kart orada yalnız yorumu ("en güçlü", "tekrar et")
+  /// ve gözden geçirme eylemini taşır. Aynı sayının üç kez okunması
+  /// (2026-09-29 sonuç grubu) gürültüydü.
+  final bool showCounts;
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +186,8 @@ class LearningOutcomeCard extends StatelessWidget {
     // listelenir. Tek kategorili turda liste hep boştur (üstteki toplam
     // satırıyla birebir aynı şeyi tekrar eder), bu yüzden yalnız GERÇEKTEN
     // karışık turlarda (2+ kategori) gösterilir.
-    final leftoverCategories = outcome.categoryBreakdown.length > 1
+    final leftoverCategories =
+        showCounts && outcome.categoryBreakdown.length > 1
         ? outcome.categoryBreakdown
               .where(
                 (tally) =>
@@ -209,16 +219,18 @@ class LearningOutcomeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: SahneSpace.x3),
-          Text(
-            context.t(K.outcomeCounts, {
-              'answered': '${outcome.answered}',
-              'correct': '${outcome.correct}',
-              'wrong': '${outcome.answered - outcome.correct}',
-            }),
-            style: SahneType.bodyStrong.copyWith(color: t.tx),
-          ),
-          if (outcome.unanswered > 0) ...[
+          if (showCounts) ...[
+            const SizedBox(height: SahneSpace.x3),
+            Text(
+              context.t(K.outcomeCounts, {
+                'answered': '${outcome.answered}',
+                'correct': '${outcome.correct}',
+                'wrong': '${outcome.answered - outcome.correct}',
+              }),
+              style: SahneType.bodyStrong.copyWith(color: t.tx),
+            ),
+          ],
+          if (showCounts && outcome.unanswered > 0) ...[
             const SizedBox(height: SahneSpace.x1),
             Text(
               context.t(K.outcomeUnanswered, {

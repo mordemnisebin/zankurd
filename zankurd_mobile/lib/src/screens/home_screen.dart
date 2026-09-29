@@ -678,58 +678,28 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       runSpacing: SahneSpace.x1,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        _statTap(
-          label: context.t(K.dailyStreakDays, {'days': '$_streak'}),
+        // Dokunulabilir stat çipleri: görsel 36, dokunma kutusu 48 (bileşen
+        // verir).
+        SahneStatChip(
+          leading: const SahneGlyph(SahneGlyphKind.flame),
+          label: '$_streak ${context.t(K.streakDayUnit)}',
+          semanticLabel: context.t(K.dailyStreakDays, {'days': '$_streak'}),
           onTap: () => _showStreakFreezeBottomSheet(context),
-          chip: SahneStatChip(
-            leading: const SahneGlyph(SahneGlyphKind.flame),
-            label: '$_streak ${context.t(K.streakDayUnit)}',
-            semanticLabel: context.t(K.dailyStreakDays, {'days': '$_streak'}),
-          ),
         ),
-        _statTap(
-          label: '${context.t(K.shop)}. $_coinBalance ${context.t(K.coinWord)}',
+        SahneStatChip(
+          leading: const SahneGlyph(SahneGlyphKind.coin),
+          label: '$_coinBalance',
+          semanticLabel:
+              '${context.t(K.shop)}. $_coinBalance ${context.t(K.coinWord)}',
           onTap: () async {
             await Navigator.of(
               context,
             ).push(AppRoute.to(ShopScreen(repository: repo)));
             if (mounted) await _refreshCoins();
           },
-          chip: SahneStatChip(
-            leading: const SahneGlyph(SahneGlyphKind.coin),
-            label: '$_coinBalance',
-          ),
         ),
         _buildLanguageToggle(context),
       ],
-    );
-  }
-
-  /// Dokunulabilir stat çipi: görsel 36'lık çip, dokunma kutusu 48.
-  ///
-  /// `SahneStatChip`in kendi dokunma alanı 44'tür; uygulamanın
-  /// `accessibility_guideline_test`i (Android kılavuzu) 48'in altını
-  /// reddediyor. Çip burada yalnız GÖSTERİR; düğüm, söz ve dokunuş 48'lik
-  /// kutudadır (`ZkBackButton` ile aynı desen, 2026-09-29 ek kararı).
-  Widget _statTap({
-    required String label,
-    required VoidCallback onTap,
-    required Widget chip,
-  }) {
-    return Semantics(
-      container: true,
-      button: true,
-      label: label,
-      onTap: onTap,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
-          child: Center(widthFactor: 1, child: chip),
-        ),
-      ),
     );
   }
 

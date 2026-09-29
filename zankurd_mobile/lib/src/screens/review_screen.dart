@@ -121,9 +121,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
   }
 }
 
-/// Görünüm rayının çipi: görsel 44 ([SahneRailChip], sığan rayda eşit
-/// genişlik), dokunma alanı 48 — erişilebilirlik kılavuzu 48'in altını
-/// reddeder. Ekran okuyucu tek bir seçili/seçili değil düğmesi duyar.
+/// Görünüm rayının çipi: [SahneRailChip] (sığan rayda eşit genişlik;
+/// görsel 44, dokunma 48). Ekran okuyucu seçili durumunu duyar.
 class _ViewModeChip extends StatelessWidget {
   const _ViewModeChip({
     required this.label,
@@ -136,31 +135,8 @@ class _ViewModeChip extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      selected: selected,
-      label: label,
-      onTap: onTap,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 48),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2),
-            child: SahneRailChip(
-              label: label,
-              selected: selected,
-              onTap: onTap,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) =>
+      SahneRailChip(label: label, selected: selected, onTap: onTap);
 }
 
 /// Üç sayaç karosu (yüzey kartı): doğru ✓ (Rast), yanlış ✗ (Şaş), boş
@@ -259,45 +235,6 @@ class _SummaryTile extends StatelessWidget {
   }
 }
 
-/// Boş bırakılan sorunun durum rozeti: [SahneStatusBadge] ile aynı ölçü
-/// (32, M pah, 16'lık ikon + kalın açıklama), ama Rast/Şaş değil nötr —
-/// Kulis tonu + kum saati + ikincil metin. Bileşende "boş" durumu yok.
-class _BlankBadge extends StatelessWidget {
-  const _BlankBadge({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return DecoratedBox(
-      decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: 32),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.only(
-            start: SahneSpace.x2,
-            end: SahneSpace.x3,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(AppIcons.hourglass, size: 16, color: t.tx2),
-              const SizedBox(width: SahneSpace.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  style: SahneType.captionStrong.copyWith(color: t.tx2),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _ReviewCard extends StatelessWidget {
   const _ReviewCard({required this.record, required this.index});
 
@@ -335,7 +272,7 @@ class _ReviewCard extends StatelessWidget {
           );
 
     final Widget status = isUnanswered
-        ? _BlankBadge(label: context.t(K.blankBadge))
+        ? SahneStatusBadge.blank(label: context.t(K.blankBadge))
         : SahneStatusBadge(
             correct: isCorrect,
             label: context.t(isCorrect ? K.correctBadge : K.wrongBadge),

@@ -9,8 +9,9 @@ import 'sahne_foundation.dart';
 ///
 /// Görsel 36 (M pah, Kulis tonu, sol 8 / sağ 12 boşluk, glif 20 + kalın
 /// açıklama, tablo rakamı). [gold] ödül çeşidi: Zêr tonu + koyu altın
-/// metin. Dokunulabilirse ([onTap], ör. jeton → mağaza) dokunma alanı 44
-/// yüksekliğe genişler; görsel 36 kalır. Ekran okuyucu [semanticLabel]'ı
+/// metin. Dokunulabilirse ([onTap], ör. jeton → mağaza) dokunma alanı 48
+/// ([sahneTapTarget]) yüksekliğe ve en az 48 genişliğe genişler; görsel 36
+/// kalır. Ekran okuyucu [semanticLabel]'ı
 /// (ör. "120 jeton") okur.
 class SahneStatChip extends StatelessWidget {
   const SahneStatChip({
@@ -74,7 +75,10 @@ class SahneStatChip extends StatelessWidget {
               behavior: HitTestBehavior.opaque,
               onTap: onTap,
               child: ConstrainedBox(
-                constraints: const BoxConstraints(minHeight: 44, minWidth: 44),
+                constraints: const BoxConstraints(
+                  minHeight: sahneTapTarget,
+                  minWidth: sahneTapTarget,
+                ),
                 child: Center(widthFactor: 1, child: visual),
               ),
             ),
@@ -88,7 +92,12 @@ class SahneStatChip extends StatelessWidget {
 /// 16'lık kenarını kendisi verir. Sağ kenardaki 32 px solma
 /// kaydırılabilirliği söyler ([fadeColor] zemin rengi; varsayılan `bg`).
 /// [SahneRail.fit]: sığan çeşit — çipler eşit genişlikte, solma yok
-/// (ör. Sıralama dönemleri); sayfa boşluğunun İÇİNE konur.
+/// (ör. Sıralama dönemleri); sayfa boşluğunun İÇİNE konur. Büyük yazıda
+/// (≥ %150) sığan ray iki sütuna geçer: dört çip tek satırda o kadar
+/// küçülüyordu ki "Arkadaş" okunmuyordu.
+///
+/// Çiplerin 48'lik dokunma kutusu görselden her yanda 2 taşar; ray bu payı
+/// aralıktan düşer, çipler arasında görsel boşluk yine 8'dir.
 class SahneRail extends StatelessWidget {
   const SahneRail({super.key, required this.children, this.fadeColor})
     : fit = false;
@@ -101,6 +110,9 @@ class SahneRail extends StatelessWidget {
   final bool fit;
   final Color? fadeColor;
 
+  /// Çiplerin arası: görsel 8, eksi iki dokunma payı.
+  static const double _gap = SahneSpace.x2 - 2 * SahneRailChip.inset;
+
   /// Çip sığan rayın içinde mi?
   static bool isFitted(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<_FitRailScope>() != null;
@@ -108,17 +120,37 @@ class SahneRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (fit) {
-      return _FitRailScope(
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              for (var i = 0; i < children.length; i++) ...[
-                if (i > 0) const SizedBox(width: SahneSpace.x2),
-                Expanded(child: children[i]),
-              ],
+      Widget row(List<Widget> items) => IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = 0; i < items.length; i++) ...[
+              if (i > 0) const SizedBox(width: _gap),
+              Expanded(child: items[i]),
             ],
-          ),
+          ],
+        ),
+      );
+      final large = MediaQuery.textScalerOf(context).scale(14) >= 21;
+      if (!large || children.length < 3) {
+        return _FitRailScope(child: row(children));
+      }
+      return _FitRailScope(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = 0; i < children.length; i += 2) ...[
+              if (i > 0) const SizedBox(height: _gap),
+              row([
+                children[i],
+                if (i + 1 < children.length)
+                  children[i + 1]
+                else
+                  const SizedBox.shrink(),
+              ]),
+            ],
+          ],
         ),
       );
     }
@@ -127,11 +159,13 @@ class SahneRail extends StatelessWidget {
       children: [
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.page - SahneRailChip.inset,
+          ),
           child: Row(
             children: [
               for (var i = 0; i < children.length; i++) ...[
-                if (i > 0) const SizedBox(width: SahneSpace.x2),
+                if (i > 0) const SizedBox(width: _gap),
                 children[i],
               ],
             ],
@@ -168,9 +202,12 @@ class _FitRailScope extends InheritedWidget {
 
 /// Seçim rayı çipi (maketteki `.sh-seg-it`).
 ///
-/// 44 yükseklik, M pah, Perde + kenar, ikincil metin. Seçili: rolün tonu
-/// + Halka 2 rol metni rengiyle, metin rol rengi. Ekran okuyucu seçili
-/// durumunu okur. Metin sığmazsa sarar, çip uzar.
+/// Görsel 44, dokunma alanı 48 (her yanda [inset] kadar saydam pay); M pah,
+/// Perde + kenar, ikincil metin. Perde bir kartın İÇİNDE ([SahneOnSurface])
+/// seçili olmayan çip bir basamak yükselir (Kulis): Perde üstünde Perde
+/// görünmüyordu. Seçili: rolün tonu + Halka 2 rol metni rengiyle, metin
+/// rol rengi. Ekran okuyucu seçili durumunu okur. Metin sığmazsa sarar,
+/// çip uzar.
 class SahneRailChip extends StatelessWidget {
   const SahneRailChip({
     super.key,
@@ -185,10 +222,14 @@ class SahneRailChip extends StatelessWidget {
   final VoidCallback? onTap;
   final SahneRole role;
 
+  /// Dokunma kutusunun görselden her yandaki payı.
+  static const double inset = (sahneTapTarget - 44) / 2;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final fitted = SahneRail.isFitted(context);
+    final onSurface = SahneOnSurface.of(context);
     final text = Text(
       label,
       textAlign: TextAlign.center,
@@ -211,24 +252,31 @@ class SahneRailChip extends StatelessWidget {
       label: label,
       onTap: onTap,
       excludeSemantics: true,
-      child: SahneTappable(
-        shape: shape,
-        color: selected ? t.roleTint(role) : t.s1,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 44, minWidth: 44),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: fitted ? SahneSpace.x2 : SahneSpace.x4,
-              vertical: SahneSpace.x1,
-            ),
-            child: Center(
-              widthFactor: 1,
-              child: fitted
-                  // Sığan rayda genişlik sabittir: söz bölünmesin diye
-                  // tek satırda küçülerek sığar (kesilmez).
-                  ? FittedBox(fit: BoxFit.scaleDown, child: text)
-                  : text,
+        child: Padding(
+          padding: const EdgeInsets.all(inset),
+          child: SahneTappable(
+            shape: shape,
+            color: selected ? t.roleTint(role) : (onSurface ? t.s2 : t.s1),
+            onTap: onTap,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 44, minWidth: 44),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: fitted ? SahneSpace.x2 : SahneSpace.x4,
+                  vertical: SahneSpace.x1,
+                ),
+                child: Center(
+                  widthFactor: 1,
+                  child: fitted
+                      // Sığan rayda genişlik sabittir: söz bölünmesin diye
+                      // tek satırda küçülerek sığar (kesilmez).
+                      ? FittedBox(fit: BoxFit.scaleDown, child: text)
+                      : text,
+                ),
+              ),
             ),
           ),
         ),
@@ -297,35 +345,44 @@ class SahneBadge extends StatelessWidget {
 /// zaman yalnız renkle verilmez: şekil (✓/✗) ve söz her zaman birliktedir.
 /// [SahneStatusBadge.square]: sözsüz 28'lik durum karesi (S pah; sonuç
 /// listesi) — söz yine ekran okuyucuya gider.
+///
+/// [SahneStatusBadge.blank]: nötr "boş" durumu (cevapsız bırakılan soru) —
+/// Rast da Şaş da değil: Kulis tonu + kum saati + ikincil metin. Aynı ölçü.
 class SahneStatusBadge extends StatelessWidget {
   const SahneStatusBadge({
     super.key,
-    required this.correct,
+    required bool this.correct,
     required this.label,
   }) : square = false;
 
   const SahneStatusBadge.square({
     super.key,
-    required this.correct,
+    required bool this.correct,
     required this.label,
   }) : square = true;
 
-  final bool correct;
+  const SahneStatusBadge.blank({
+    super.key,
+    required this.label,
+    this.square = false,
+  }) : correct = null;
 
-  /// Söz ("Doğru" / "Yanlış"); karede yalnız ekran okuyucuya.
+  /// `null` → nötr "boş".
+  final bool? correct;
+
+  /// Söz ("Doğru" / "Yanlış" / "Boş"); karede yalnız ekran okuyucuya.
   final String label;
   final bool square;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final bg = correct ? t.okTint : t.errTint;
-    final fg = correct ? t.okTx : t.errTx;
-    final icon = Icon(
-      correct ? AppIcons.check : AppIcons.xmark,
-      size: 16,
-      color: fg,
-    );
+    final (bg, fg, glyph) = switch (correct) {
+      true => (t.okTint, t.okTx, AppIcons.check),
+      false => (t.errTint, t.errTx, AppIcons.xmark),
+      null => (t.s2, t.tx2, AppIcons.hourglass),
+    };
+    final icon = Icon(glyph, size: 16, color: fg);
     final Widget body;
     if (square) {
       body = DecoratedBox(

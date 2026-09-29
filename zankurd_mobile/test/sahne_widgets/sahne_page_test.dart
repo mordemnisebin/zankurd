@@ -5,8 +5,11 @@
 /// * Üç iskelet, üç başlık: 2026-09-28 ölçümünde sekiz ekranda altı ayrı
 ///   başlık biçimi vardı. Başlık metni başlık olarak duyurulur.
 /// * A: marka satırı büyük yazıda sığmazsa çipler alt satıra iner;
-///   320 px @2.0'da taşma yok, başlık en çok 2 satır.
-/// * B: geri düğmesi 44 × 44, sözü var.
+///   320 px @2.0'da taşma yok. 2026-09-29: başlık satır sınırı olmadan
+///   sarar (eskiden 2 satırda "…" ile kesiliyordu) ve sözü harf harf
+///   bölünmez.
+/// * B: geri düğmesi görselde 44 × 44, dokunmada 48 × 48 (2026-09-29:
+///   Android kılavuzu), sözü var.
 /// * C: gündüz temasında da GECE; orta yuva (sayaç) yan öğeler farklı
 ///   genişlikte olsa da tam ortada durur.
 library;
@@ -58,7 +61,8 @@ void main() {
       );
       expect(tester.takeException(), isNull);
       final title = tester.widget<Text>(find.text('Bi xêr hatî, Lîstikvan!'));
-      expect(title.maxLines, 2);
+      expect(title.maxLines, isNull, reason: 'başlık kesilmez, sarar');
+      expect(title.overflow, isNot(TextOverflow.ellipsis));
       expect(
         tester
             .getSemantics(find.text('Bi xêr hatî, Lîstikvan!'))
@@ -107,10 +111,17 @@ void main() {
       );
       expect(tester.takeException(), isNull);
       final button = find.byType(SahneIconButton);
-      expect(tester.getSize(button), const Size(44, 44));
+      expect(tester.getSize(button), const Size(48, 48));
+      expect(
+        tester.getSize(
+          find.descendant(of: button, matching: find.byType(SahneTappable)),
+        ),
+        const Size(44, 44),
+      );
       expect(find.bySemanticsLabel('Vegere'), findsOneWidget);
       await tester.tap(button);
       expect(back, 1);
+      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
       await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
       await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
       semantics.dispose();
@@ -180,7 +191,24 @@ void main() {
 
       expect(find.bySemanticsLabel('Bigire'), findsOneWidget);
       expect(find.bySemanticsLabel('4 çirke mane'), findsOneWidget);
-      expect(tester.getSize(find.byType(SahneIconButton)), const Size(44, 44));
+      final close = find.byType(SahneIconButton);
+      expect(tester.getSize(close), const Size(48, 48));
+      expect(
+        tester.getSize(
+          find.descendant(of: close, matching: find.byType(SahneTappable)),
+        ),
+        const Size(44, 44),
+      );
+      // Kapat plakasının görsel kenarı sayfa kenarına (16) oturur.
+      expect(
+        tester
+            .getTopLeft(
+              find.descendant(of: close, matching: find.byType(SahneTappable)),
+            )
+            .dx,
+        16,
+      );
+      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
       await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
       semantics.dispose();
     });

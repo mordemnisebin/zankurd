@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -11,7 +12,6 @@ import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 
 /// Bakiye ve satın alma durumunu deterministik kontrol eden sahte depo.
 class _ShopRepository extends MockZanKurdRepository {
@@ -118,7 +118,9 @@ Future<void> _spinAndReturn(
   await tester.pump();
   await tester.pump(const Duration(seconds: 5));
   await tester.pumpAndSettle();
-  await tester.tap(find.byType(ZkBackButton));
+  // 2026-09-29 Şahnê: çark sayfası B iskeletidir; geri düğmesi bileşenin
+  // 44'lük plakası, sözü uygulamanın dilinden ('Geri').
+  await tester.tap(find.byTooltip('Geri'));
   await tester.pumpAndSettle();
 }
 
@@ -231,26 +233,37 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    final heroFinder = find.byKey(const ValueKey('shop-hero-surface'));
-    expect(heroFinder, findsOneWidget);
-    final hero = tester.widget<Container>(heroFinder);
-    final heroDecoration = hero.decoration! as BoxDecoration;
-    final heroContext = tester.element(heroFinder);
-    expect(heroDecoration.gradient, isNull);
-    expect(heroDecoration.color, AppTheme.surfaceColor(heroContext));
-    expect(heroDecoration.boxShadow ?? const <BoxShadow>[], isEmpty);
-    expect(heroDecoration.border, isNotNull);
+    // 2026-09-29 Şahnê: öne çıkan ürün ve ızgara kartları aynı yüzey
+    // kartıdır (`SahneSurfaceCard`: Perde dolgu, L pah, gündüzde 1 px
+    // kenar, gölgesiz, degradesiz). Kural aynı: ürün rengi büyük yüzeye
+    // taşınmaz, kartlar sakin kalır.
+    void expectCalmSurface(Finder card) {
+      expect(card, findsOneWidget);
+      expect(tester.widget(card), isA<SahneSurfaceCard>());
+      final material = tester.widget<Material>(
+        find.descendant(of: card, matching: find.byType(Material)).first,
+      );
+      final t = SahneTokens.of(tester.element(card));
+      expect(material.color, t.s1);
+      expect(material.elevation, 0);
+      final shape = material.shape! as BeveledRectangleBorder;
+      expect(shape.side.color, t.edge);
+      expect(
+        find
+            .descendant(of: card, matching: find.byType(DecoratedBox))
+            .evaluate()
+            .where((e) {
+              final d = (e.widget as DecoratedBox).decoration;
+              return d is BoxDecoration &&
+                  (d.gradient != null || (d.boxShadow?.isNotEmpty ?? false));
+            }),
+        isEmpty,
+      );
+    }
 
-    final itemFinder = find.byKey(
-      const ValueKey('shop-item-surface-spin_wheel_extra'),
-    );
-    expect(itemFinder, findsOneWidget);
-    final item = tester.widget<Container>(itemFinder);
-    final itemDecoration = item.decoration! as BoxDecoration;
-    expect(itemDecoration.gradient, isNull);
-    expect(
-      itemDecoration.color,
-      AppTheme.surfaceColor(tester.element(itemFinder)),
+    expectCalmSurface(find.byKey(const ValueKey('shop-hero-surface')));
+    expectCalmSurface(
+      find.byKey(const ValueKey('shop-item-surface-spin_wheel_extra')),
     );
     expect(
       find.byKey(const ValueKey('shop-item-accent-stripe-spin_wheel_extra')),
@@ -280,8 +293,6 @@ void main() {
     expect(heroButtonFinder, findsOneWidget);
     expect(gridButtonFinder, findsOneWidget);
 
-    final heroButton = tester.widget<FilledButton>(heroButtonFinder);
-    final gridButton = tester.widget<FilledButton>(gridButtonFinder);
     final heroPrimary = AppTheme.primaryCtaColor(
       tester.element(heroButtonFinder),
     );
@@ -289,14 +300,16 @@ void main() {
       tester.element(gridButtonFinder),
     );
 
-    expect(
-      heroButton.style?.backgroundColor?.resolve(<WidgetState>{}),
-      heroPrimary,
-    );
-    expect(
-      gridButton.style?.backgroundColor?.resolve(<WidgetState>{}),
-      isNot(gridPrimary),
-    );
+    // 2026-09-29 Şahnê: birincil düğme dolgusunu temadan alır (düğmenin
+    // kendi `style`ında değil); ölçülen, çizilen ETKİN dolgudur.
+    Color? fill(Finder button) => tester
+        .widget<Material>(
+          find.descendant(of: button, matching: find.byType(Material)).first,
+        )
+        .color;
+
+    expect(fill(heroButtonFinder), heroPrimary);
+    expect(fill(gridButtonFinder), isNot(gridPrimary));
   });
 
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {
@@ -370,7 +383,9 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(seconds: 5));
     await tester.pumpAndSettle();
-    await tester.tap(find.byType(ZkBackButton));
+    // 2026-09-29 Şahnê: çark sayfası B iskeletidir; geri düğmesi bileşenin
+    // 44'lük plakası, sözü uygulamanın dilinden ('Geri').
+    await tester.tap(find.byTooltip('Geri'));
     await tester.pumpAndSettle();
 
     expect(find.text('30 jeton'), findsOneWidget);

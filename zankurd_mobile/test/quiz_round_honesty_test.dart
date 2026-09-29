@@ -106,14 +106,17 @@ void main() {
         );
         await tester.pump(const Duration(seconds: 1));
 
+        // 2026-09-29 Şahnê: turun adı sahnenin üst satırındaki bağlamda
+        // ("Günün Dersi • 5 soru") yazılır; doğruluk puanın altındadır.
+        // Korunan kural aynı: karışık turda kategori adı değil TURUN ADI.
         expect(
-          find.text('Dil · %80 doğruluk'),
+          find.text('Dil • 5 soru'),
           findsNothing,
           reason:
               'Karışık turda hâlâ TEK kategoriymiş gibi "Dil" yazıyor '
               '(room.category odanın varsayılanıdır, turun içeriği değil).',
         );
-        expect(find.text('Günün Dersi · %80 doğruluk'), findsOneWidget);
+        expect(find.text('Günün Dersi • 5 soru'), findsOneWidget);
       },
     );
 
@@ -146,7 +149,8 @@ void main() {
       );
       await tester.pump(const Duration(seconds: 1));
 
-      expect(find.text('Dil · %80 doğruluk'), findsOneWidget);
+      // 2026-09-29 Şahnê: bağlam sahnenin üst satırında (bkz. yukarı).
+      expect(find.text('Dil • 5 soru'), findsOneWidget);
     });
   });
 
