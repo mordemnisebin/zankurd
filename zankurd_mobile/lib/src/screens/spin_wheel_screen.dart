@@ -10,14 +10,12 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/sound_provider.dart';
 import '../providers/reduced_motion_provider.dart';
-import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
-import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/confetti_overlay.dart';
-import '../widgets/zk_back_button.dart';
+import '../widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class SpinWheelScreen extends StatefulWidget {
@@ -248,9 +246,14 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
       _showConfetti = true;
     });
 
-    // Prize-reveal scale animasyonu
-    _prizeAnimController.reset();
-    await _prizeAnimController.forward();
+    // Prize-reveal scale animasyonu. Hareketi azalt açıkken ödül kartı
+    // sıçramadan, doğrudan yerinde görünür.
+    if (sahneMotionReduced(context)) {
+      _prizeAnimController.value = 1;
+    } else {
+      _prizeAnimController.reset();
+      await _prizeAnimController.forward();
+    }
 
     // Ödül kartı tamamen açıldıktan sonra sesi çal
     if (!mounted) return;
@@ -272,176 +275,150 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final t = SahneTokens.of(context);
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: zkAppBar(context, title: Text(context.t(K.wheelTitle))),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
-        child: Stack(
-          children: [
-            SafeArea(
-              child: _loading
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: AppTheme.primaryGradientStart,
-                      ),
-                    )
-                  : _statusError
-                  ? _statusOffline
-                        ? AppOfflineState(
-                            title: context.t(K.wheelOfflineTitle),
-                            message: context.t(K.wheelOfflineBody),
-                            retryLabel: context.t(K.retryShort),
-                            onRetry: _checkSpin,
-                          )
-                        : AppErrorState(
-                            title: context.t(K.loadFailedShort),
-                            message: context.t(K.wheelStatusFailed),
-                            retryLabel: context.t(K.retryShort),
-                            onRetry: _checkSpin,
-                          )
-                  : ListView(
-                      padding: const EdgeInsets.fromLTRB(
-                        AppSpacing.page,
-                        AppSpacing.xs,
-                        AppSpacing.page,
-                        AppSpacing.lg,
-                      ),
-                      children: [
-                        // ── Header card ──
-                        _buildHeaderCard(context, ku, isDark),
-                        const SizedBox(height: AppSpacing.lg),
-                        // ── Wheel ──
-                        _buildWheelSection(),
-                        const SizedBox(height: AppSpacing.lg),
-                        // ── Prize reveal ──
-                        if (_wonAmount != null)
-                          _buildPrizeReveal(context, ku, _wonAmount!),
-                        if (_spinErrorMessage != null)
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: AppSpacing.md,
-                            ),
-                            child: _spinErrorOffline
-                                ? AppOfflineState(
-                                    title: context.t(K.wheelOfflineTitle),
-                                    message: context.t(K.wheelOfflineBody),
-                                    retryLabel: context.t(K.retryShort),
-                                    onRetry: _retrySpinStatus
-                                        ? _checkSpin
-                                        : _spin,
-                                  )
-                                : AppErrorState(
-                                    title: context.t(K.loadFailedShort),
-                                    message: _spinErrorMessage!,
-                                    retryLabel: context.t(K.retryShort),
-                                    onRetry: _retrySpinStatus
-                                        ? _checkSpin
-                                        : _spin,
-                                  ),
-                          ),
-                        // ── Günlük hak durumu (her durumda görünür) ──
-                        _buildSpinStatusChip(context, ku),
-                        const SizedBox(height: AppSpacing.sm),
-                        // ── Spin button ──
-                        _buildSpinButton(context, ku),
-                        // ── Countdown ──
-                        if (!_canSpin && !_spinning) ...[
-                          const SizedBox(height: AppSpacing.md),
-                          _buildCountdownCard(context, ku, isDark),
-                        ],
-                        const SizedBox(height: 10),
-                        Text(
-                          context.t(K.wheelRewardNote),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppTheme.textMutedColor(context),
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-            ),
-            if (_wonAmount != null && _showConfetti)
-              ConfettiOverlay(
-                onFinished: () {
-                  if (!mounted) return;
-                  setState(() {
-                    _showConfetti = false;
-                  });
-                },
+    // 2026-09-29 Şahnê: B iskeleti. Çark bir ödül sahnesidir: Zêr rolünde
+    // sahne kartı (iki temada da gece) içinde durur; "Çevir!" alt perdede
+    // ekranın TEK birincil eylemidir. Dilimler palet rollerinden gelir
+    // (Zêr, Zimrût, Boyax, Ray) — Agir yalnız eylemin rengidir, dilim
+    // dolgusu olmaz. Eski yeşil gradyan başlık kartı, altın hâleler ve
+    // bulanık gölgeler kalktı.
+    final Widget body;
+    if (_loading) {
+      body = SliverFillRemaining(
+        child: Center(child: CircularProgressIndicator(color: t.goldTx)),
+      );
+    } else if (_statusError) {
+      body = SliverFillRemaining(
+        child: _statusOffline
+            ? AppOfflineState(
+                title: context.t(K.wheelOfflineTitle),
+                message: context.t(K.wheelOfflineBody),
+                retryLabel: context.t(K.retryShort),
+                onRetry: _checkSpin,
+              )
+            : AppErrorState(
+                title: context.t(K.loadFailedShort),
+                message: context.t(K.wheelStatusFailed),
+                retryLabel: context.t(K.retryShort),
+                onRetry: _checkSpin,
               ),
-          ],
+      );
+    } else {
+      body = SliverPadding(
+        padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+        sliver: SliverToBoxAdapter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildWheelStage(context, ku),
+              // ── Ödül ──
+              if (_wonAmount != null) ...[
+                const SizedBox(height: SahneSpace.cardGap),
+                _buildPrizeReveal(context, ku, _wonAmount!),
+              ],
+              if (_spinErrorMessage != null) ...[
+                const SizedBox(height: SahneSpace.cardGap),
+                // Alt perdedeki "Çevir!" ekranın birincil eylemi; buradaki
+                // yeniden deneme ikincildir (iki Agir düğme olmaz).
+                _spinErrorOffline
+                    ? AppOfflineState(
+                        title: context.t(K.wheelOfflineTitle),
+                        message: context.t(K.wheelOfflineBody),
+                        retryLabel: context.t(K.retryShort),
+                        primaryAction: false,
+                        onRetry: _retrySpinStatus ? _checkSpin : _spin,
+                      )
+                    : AppErrorState(
+                        title: context.t(K.loadFailedShort),
+                        message: _spinErrorMessage!,
+                        retryLabel: context.t(K.retryShort),
+                        primaryAction: false,
+                        onRetry: _retrySpinStatus ? _checkSpin : _spin,
+                      ),
+              ],
+              // ── Geri sayım ──
+              if (!_canSpin && !_spinning) ...[
+                const SizedBox(height: SahneSpace.cardGap),
+                _buildCountdownCard(context, ku),
+              ],
+              const SizedBox(height: SahneSpace.x4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SahneGlyph(SahneGlyphKind.coin, size: 16),
+                  const SizedBox(width: SahneSpace.x2),
+                  Flexible(
+                    child: Text(
+                      context.t(K.wheelRewardNote),
+                      textAlign: TextAlign.center,
+                      style: SahneType.caption.copyWith(color: t.tx2),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
+      );
+    }
+
+    final showDock = !_loading && !_statusError;
+    return Stack(
+      children: [
+        SahnePushedPage(
+          title: context.t(K.wheelTitle),
+          backLabel: context.t(K.back),
+          slivers: [body],
+          bottom: showDock ? _buildSpinButton(context, ku) : null,
+        ),
+        if (_wonAmount != null && _showConfetti)
+          ConfettiOverlay(
+            onFinished: () {
+              if (!mounted) return;
+              setState(() {
+                _showConfetti = false;
+              });
+            },
+          ),
+      ],
     );
   }
 
   // ────────────────────────────────────────────
-  //  Header card
+  //  Çark sahnesi: başlık, çark, günlük hak durumu
   // ────────────────────────────────────────────
-  Widget _buildHeaderCard(BuildContext context, bool ku, bool isDark) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppRadius.card),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(
-          vertical: AppSpacing.lg + 4,
-          horizontal: AppSpacing.lg,
-        ),
-        decoration: BoxDecoration(
-          // Sarı/gold gradyan üzerinde beyaz metin kontrastı zayıftı;
-          // her iki temada da koyu zemin + gold vurgu kullanılır.
-          //
-          // Gradyan eskiden `brandDeep` (kahve-turuncu) ile koyu yeşili
-          // karıştırıyordu ve ortada çamurlu bir ton bırakıyordu — Night
-          // Jewel'in açıkça dışladığı yeşil-kahve geçişi. Artık TEK hue
-          // ailesinde kalır: koyu yeşilden daha koyu mürekkep yeşiline
-          // (2026-08-04 görsel denetimi).
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF17503A), Color(0xFF0E3326)],
-          ),
-          border: Border.all(
-            color: AppTheme.gold.withValues(alpha: isDark ? 0.30 : 0.45),
-          ),
-          boxShadow: AppTheme.glowShadow(AppTheme.gold, intensity: 0.15),
-        ),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white.withValues(alpha: 0.12),
+  Widget _buildWheelStage(BuildContext context, bool ku) {
+    return SahneStageCard(
+      role: SahneRole.gold,
+      child: Builder(
+        builder: (context) {
+          // Sahne kartının içi gece belirteçleridir.
+          final t = SahneTokens.of(context);
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Semantics(
+                header: true,
+                child: Text(
+                  context.t(K.wheelOncePerDay),
+                  textAlign: TextAlign.center,
+                  style: SahneType.headline.copyWith(color: t.tx),
+                ),
               ),
-              child: Icon(
-                AppIcons.dice,
-                color: AppTheme.gold.withValues(alpha: 0.95),
-                size: 34,
+              const SizedBox(height: SahneSpace.x1),
+              Text(
+                context.t(K.wheelSub),
+                textAlign: TextAlign.center,
+                style: SahneType.caption.copyWith(color: t.tx2),
               ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              context.t(K.wheelOncePerDay),
-              textAlign: TextAlign.center,
-              style: AppTypography.heading2.copyWith(color: Colors.white),
-            ),
-            const SizedBox(height: AppSpacing.xxs),
-            Text(
-              context.t(K.wheelSub),
-              textAlign: TextAlign.center,
-              style: AppTypography.bodyMedium.copyWith(
-                color: Colors.white.withValues(alpha: 0.8),
-              ),
-            ),
-          ],
-        ),
+              const SizedBox(height: SahneSpace.x4),
+              _buildWheelSection(),
+              const SizedBox(height: SahneSpace.x4),
+              Center(child: _buildSpinStatusChip(context, ku)),
+            ],
+          );
+        },
       ),
     );
   }
@@ -450,89 +427,76 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   //  Wheel section
   // ────────────────────────────────────────────
   Widget _buildWheelSection() {
-    return SizedBox(
-      height: 340,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Outer glow ring
-          Positioned.fill(
-            child: Center(
-              child: Container(
-                width: 316,
-                height: 316,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppTheme.gold.withValues(alpha: 0.18),
-                      blurRadius: 36,
-                      spreadRadius: 4,
-                    ),
-                  ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final t = SahneTokens.of(context);
+        final size = math.min(constraints.maxWidth, 300.0);
+        return Center(
+          child: SizedBox.square(
+            dimension: size,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // Çark
+                AnimatedBuilder(
+                  animation: _spinController,
+                  builder: (context, _) {
+                    return Transform.rotate(
+                      angle: _rotation.value,
+                      child: CustomPaint(
+                        size: Size.square(size),
+                        painter: _WheelPainter(
+                          rewards: SpinWheelScreen.rewards,
+                          angle: _rotation.value,
+                          tokens: t,
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ),
-            ),
-          ),
-          // Wheel
-          AnimatedBuilder(
-            animation: _spinController,
-            builder: (context, _) {
-              return Transform.rotate(
-                angle: _rotation.value,
-                child: CustomPaint(
-                  size: const Size(300, 300),
-                  painter: _WheelPainter(
-                    rewards: SpinWheelScreen.rewards,
-                    angle: _rotation.value,
+                // Ortada ZK amblemi: elmas, Halka 3 altın.
+                DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: t.s1,
+                    shape: SahneShape.diamond(
+                      68,
+                      side: BorderSide(
+                        color: t.gold,
+                        width: SahneRing.r3,
+                        strokeAlign: BorderSide.strokeAlignInside,
+                      ),
+                    ),
+                  ),
+                  child: SizedBox.square(
+                    dimension: 68,
+                    child: Center(
+                      child: Text(
+                        'ZK',
+                        style: SahneType.button.copyWith(
+                          color: t.gold,
+                          height: 1,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              );
-            },
-          ),
-          // Center hub
-          Container(
-            width: 72,
-            height: 72,
-            decoration: BoxDecoration(
-              gradient: AppTheme.identityHeaderGradient,
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white, width: 3.5),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.45),
-                  offset: const Offset(0, 6),
-                  blurRadius: 10,
-                ),
-                BoxShadow(
-                  color: AppTheme.culturalBrandBg.withValues(alpha: 0.45),
-                  offset: const Offset(0, 0),
-                  blurRadius: 16,
+                // İşaretçi (üstte) — dilimin ortasını gösteren altın elmas uç.
+                Positioned(
+                  top: 0,
+                  child: CustomPaint(
+                    size: const Size(32, 40),
+                    painter: _PointerPainter(
+                      fill: t.gold,
+                      edge: t.goldDeep,
+                      rim: t.bg,
+                    ),
+                  ),
                 ),
               ],
             ),
-            child: const Center(
-              child: Text(
-                'ZK',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 19,
-                  letterSpacing: -0.5,
-                ),
-              ),
-            ),
           ),
-          // Pointer (top arrow) — belirgin merkez gösterge üçgeni
-          Positioned(
-            top: 0,
-            child: CustomPaint(
-              size: const Size(44, 40),
-              painter: _PointerPainter(),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -540,6 +504,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   //  Prize reveal (scale-in animation)
   // ────────────────────────────────────────────
   Widget _buildPrizeReveal(BuildContext context, bool ku, int amount) {
+    final t = SahneTokens.of(context);
     return Semantics(
       liveRegion: true,
       label: context.t(K.wheelWonAmount, {'amount': '$amount'}),
@@ -547,53 +512,36 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
         scale: _prizeScale,
         child: FadeTransition(
           opacity: _prizeOpacity,
-          child: AppPanel(
-            gradient: AppTheme.goldGradient,
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
-            child: Row(
-              children: [
-                // Altın gradyan üzerinde beyaz metin okunmuyordu (~1.9:1);
-                // ödülün duyurulduğu an görünmez haldeydi (2026-07-22 UX
-                // denetimi). Altın zeminde doğru ön plan koyu mürekkeptir.
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppTheme.bg.withValues(alpha: 0.18),
-                  ),
-                  child: const Icon(
-                    AppIcons.champagneGlasses,
-                    color: AppTheme.bg,
-                    size: 26,
-                  ),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        context.t(K.congrats),
-                        style: const TextStyle(
-                          color: AppTheme.bg,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 16,
+          // Ödül kartı: Zêr tonu yüzey + Halka 1 altın kaş; jeton glifi
+          // ödülün türünü şekille söyler.
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: t.goldTint,
+              shape: SahneShape.withSide(SahneShape.l, t.gold),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(SahneSpace.x4),
+              child: Row(
+                children: [
+                  const SahneGlyph(SahneGlyphKind.coin, size: 40),
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          context.t(K.congrats),
+                          style: SahneType.headline.copyWith(color: t.tx),
                         ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        context.t(K.wheelWonPlus, {'amount': '$amount'}),
-                        style: TextStyle(
-                          color: AppTheme.bg.withValues(alpha: 0.95),
-                          fontWeight: FontWeight.w800,
-                          fontSize: 16,
+                        Text(
+                          context.t(K.wheelWonPlus, {'amount': '$amount'}),
+                          style: SahneType.bodyStrong.copyWith(color: t.goldTx),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -605,191 +553,107 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   //  Günlük hak durumu çipi
   // ────────────────────────────────────────────
   Widget _buildSpinStatusChip(BuildContext context, bool ku) {
+    final t = SahneTokens.of(context);
     final hasRight = _canSpin;
     final label = hasRight
         ? (context.t(K.wheelReady))
         : (context.t(K.wheelUsed, {
             'time': _formatDuration(_timeUntilNextSpin),
           }));
+    // Durum yalnız renkle verilmez: ✓ (hak var) ya da kilit (hak bitti).
+    final (bg, fg, icon) = hasRight
+        ? (t.okTint, t.okTx, AppIcons.circleCheck)
+        : (t.goldTint, t.goldTx, AppIcons.lock);
     return Semantics(
       label: label,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-        decoration: BoxDecoration(
-          color: (hasRight ? AppTheme.correct : AppTheme.gold).withValues(
-            alpha: 0.12,
-          ),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-          border: Border.all(
-            color: (hasRight ? AppTheme.correct : AppTheme.gold).withValues(
-              alpha: 0.35,
+      excludeSemantics: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(color: bg, shape: SahneShape.m),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 32),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.only(
+              start: SahneSpace.x2,
+              end: SahneSpace.x3,
+              top: SahneSpace.x1,
+              bottom: SahneSpace.x1,
             ),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              hasRight ? AppIcons.circleCheck : AppIcons.lock,
-              size: 16,
-              color: hasRight ? AppTheme.correct : AppTheme.gold,
-            ),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                label,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppTheme.textSubColor(context),
-                  fontSize: 12.5,
-                  fontWeight: FontWeight.w700,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, size: 16, color: fg),
+                const SizedBox(width: SahneSpace.x2),
+                Flexible(
+                  child: Text(
+                    label,
+                    textAlign: TextAlign.center,
+                    style: SahneType.captionStrong.copyWith(color: fg),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 
   // ────────────────────────────────────────────
-  //  Spin button
+  //  Spin button (alt perde, tek birincil)
   // ────────────────────────────────────────────
   Widget _buildSpinButton(BuildContext context, bool ku) {
     final enabled = _canSpin && !_spinning;
-
-    return SizedBox(
-      height: 56,
-      child: Stack(
-        children: [
-          // Düğmenin arkasındaki hâle.
-          //
-          // Genişliği 220 px sabitti, düğme ise satır boyunca uzuyor: hâle
-          // düğmenin altından taşıp kenarlarda ayrı bir sarı şerit olarak
-          // görünüyor, üstteki durum rozetinin altına giriyordu. Yoğunluk da
-          // ekranın "yumuşak" dilini bozacak kadar yüksekti (2026-07-26).
-          // Hâle artık düğmenin biçimini izler ve yalnız onu aydınlatır.
-          if (enabled)
-            Positioned.fill(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppRadius.pill),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppTheme.accent.withValues(alpha: 0.30),
-                        blurRadius: 24,
-                        spreadRadius: 1,
-                      ),
-                      BoxShadow(
-                        color: AppTheme.gold.withValues(alpha: 0.18),
-                        blurRadius: 40,
-                        spreadRadius: 2,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          // Button
-          SizedBox(
-            width: double.infinity,
-            height: 56,
-            child: FilledButton.icon(
-              onPressed: enabled ? _spin : null,
-              style: FilledButton.styleFrom(
-                backgroundColor: enabled ? AppTheme.accent : null,
-                disabledBackgroundColor: AppTheme.surfaceHiColor(context),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                ),
-                // Material yükseltisi bu boyutta sert, siyah bir halka
-                // çiziyor ve düğmeyi kalın bir çerçeveyle sarılmış gibi
-                // gösteriyordu; ekranın yumuşak diline aykırıydı. Kaldırma
-                // hissini yukarıdaki hâle veriyor (2026-07-26).
-                elevation: 0,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 28,
-                  vertical: 14,
-                ),
-              ),
-              icon: _spinning
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2.5,
-                        color: Colors.white,
-                      ),
-                    )
-                  : Icon(enabled ? AppIcons.dice : AppIcons.lock, size: 22),
-              label: Text(
-                _spinning
-                    ? (context.t(K.wheelSpinning))
-                    : enabled
-                    ? (context.t(K.wheelSpin))
-                    : (context.t(K.wheelComeTomorrow)),
-                style: AppTypography.bodyLarge.copyWith(
-                  color: enabled
-                      ? Colors.white
-                      : AppTheme.textMutedColor(context),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+    // Pasif hâl opaklık değil: Perde + üçüncül metin (bileşenin işi).
+    return SahneButton.primary(
+      label: _spinning
+          ? (context.t(K.wheelSpinning))
+          : enabled
+          ? (context.t(K.wheelSpin))
+          : (context.t(K.wheelComeTomorrow)),
+      icon: enabled || _spinning ? AppIcons.dice : AppIcons.lock,
+      arrow: false,
+      expand: true,
+      onPressed: enabled ? _spin : null,
     );
   }
 
   // ────────────────────────────────────────────
   //  Countdown card
   // ────────────────────────────────────────────
-  Widget _buildCountdownCard(BuildContext context, bool ku, bool isDark) {
+  Widget _buildCountdownCard(BuildContext context, bool ku) {
+    final t = SahneTokens.of(context);
     final formatted = _formatDuration(_timeUntilNextSpin);
     final parts = formatted.split(':');
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
-      decoration: AppTheme.premiumCard(
-        context,
-        glowColor: AppTheme.secondaryAccent,
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: isDark
-              ? [AppTheme.surfaceHi.withValues(alpha: 0.9), AppTheme.surface]
-              : [AppTheme.lightSurfaceHi, AppTheme.lightSurface],
-        ),
-      ),
+    return SahneSurfaceCard(
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(AppIcons.clock, color: AppTheme.gold, size: 18),
-              const SizedBox(width: 8),
-              Text(
-                context.t(K.wheelNextSpinIn),
-                style: TextStyle(
-                  color: AppTheme.textSubColor(context),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 13,
+              Icon(AppIcons.clock, color: t.goldTx, size: 20),
+              const SizedBox(width: SahneSpace.x2),
+              Flexible(
+                child: Text(
+                  context.t(K.wheelNextSpinIn),
+                  style: SahneType.captionStrong.copyWith(color: t.tx2),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _countdownUnit(parts[0], context.t(K.hours), context),
-              _countdownSeparator(),
-              _countdownUnit(parts[1], context.t(K.minutes), context),
-              _countdownSeparator(),
-              _countdownUnit(parts[2], context.t(K.seconds), context),
-            ],
+          const SizedBox(height: SahneSpace.x3),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _countdownUnit(parts[0], context.t(K.hours), context),
+                _countdownSeparator(context),
+                _countdownUnit(parts[1], context.t(K.minutes), context),
+                _countdownSeparator(context),
+                _countdownUnit(parts[2], context.t(K.seconds), context),
+              ],
+            ),
           ),
         ],
       ),
@@ -797,54 +661,45 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   }
 
   Widget _countdownUnit(String value, String label, BuildContext context) {
+    final t = SahneTokens.of(context);
     return SizedBox(
-      width: 64,
+      width: 72,
       child: Column(
         children: [
-          Container(
-            width: 52,
-            height: 44,
-            decoration: BoxDecoration(
-              color: AppTheme.accent.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-              border: Border.all(
-                color: AppTheme.accent.withValues(alpha: 0.25),
-              ),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              value,
-              style: TextStyle(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w800,
-                fontSize: 20,
-                fontFeatures: const [FontFeature.tabularFigures()],
+          DecoratedBox(
+            decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
+            child: SizedBox(
+              width: 60,
+              height: 48,
+              child: Center(
+                child: Text(
+                  value,
+                  style: SahneType.headline.copyWith(
+                    color: t.tx,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: SahneSpace.x1),
           Text(
             label,
-            style: TextStyle(
-              color: AppTheme.textMutedColor(context),
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-            ),
+            maxLines: 1,
+            style: SahneType.caption.copyWith(color: t.tx2),
           ),
         ],
       ),
     );
   }
 
-  Widget _countdownSeparator() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 2),
+  Widget _countdownSeparator(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: SahneSpace.x6),
       child: Text(
         ':',
-        style: TextStyle(
-          color: AppTheme.gold,
-          fontWeight: FontWeight.w800,
-          fontSize: 22,
+        style: SahneType.headline.copyWith(
+          color: SahneTokens.of(context).goldTx,
         ),
       ),
     );
@@ -854,121 +709,89 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
 // ═══════════════════════════════════════════════
 //  Wheel segment painter
 // ═══════════════════════════════════════════════
+/// Çarkın ressamı.
+///
+/// 2026-09-29 Şahnê: dilimler dört rol renginden dönüşümlü — Zêr, Zimrût,
+/// Boyax, Ray (`s3`). Agir yok: turuncu yalnız birincil eylemin rengidir.
+/// Rakam rengi dilime göre karşıtlıkla seçilir ([sahneOnFill]); rakamın
+/// altında gölge yok. Dış kasnak Kulis (`s2`), üstünde 16 altın ışık (yanan
+/// Zêr, sönen koyu altın) — bulanık hâle (`MaskFilter`) yok.
 class _WheelPainter extends CustomPainter {
-  _WheelPainter({required this.rewards, required this.angle});
+  _WheelPainter({
+    required this.rewards,
+    required this.angle,
+    required this.tokens,
+  });
 
   final List<int> rewards;
   final double angle;
-
-  // Marka paletinin 4 tonu: yeşil / hardal / teal / koyu yeşil — eski
-  // 8-renkli gökkuşağı yerine sakin, tutarlı kimlik. 8 dilim bu 4 tonu
-  // dönüşümlü kullanır.
-  static const _segmentColors = [
-    AppTheme.brand,
-    AppTheme.secondaryAccent,
-    AppTheme.playCyan,
-    AppTheme.playGreen,
-  ];
-
-  static const _segmentDarkColors = [
-    AppTheme.brandDeep,
-    AppTheme.gold,
-    AppTheme.ctaTealDeep,
-    AppTheme.culturalBrandBg,
-  ];
+  final SahneTokens tokens;
 
   @override
   void paint(Canvas canvas, Size size) {
+    final t = tokens;
     final center = Offset(size.width / 2, size.height / 2);
     final outerRadius = size.width / 2;
-    final innerRadius = outerRadius - 14; // space for border ring
+    const rimWidth = 16.0;
+    final innerRadius = outerRadius - rimWidth;
     final segment = 2 * math.pi / rewards.length;
+    final segmentColors = [t.gold, t.learn, t.race, t.s3];
+
+    // Dış kasnak.
+    canvas.drawCircle(center, outerRadius, Paint()..color = t.s2);
 
     for (var i = 0; i < rewards.length; i++) {
       final startAngle = i * segment;
-      final sweep = segment;
-
-      // Segment fill with gradient
-      final rect = Rect.fromCircle(center: center, radius: innerRadius);
-      final lightColor = _segmentColors[i % _segmentColors.length];
-      final darkColor = _segmentDarkColors[i % _segmentDarkColors.length];
-
-      final gradient = SweepGradient(
-        center: Alignment.center,
-        startAngle: 0,
-        endAngle: math.pi * 2,
-        colors: [lightColor, darkColor, lightColor, darkColor],
-        stops: const [0.0, 0.48, 0.52, 1.0],
-      );
-
-      final paint = Paint()
-        ..shader = gradient.createShader(
-          rect,
-          textDirection: TextDirection.ltr,
-        );
+      final fill = segmentColors[i % segmentColors.length];
 
       canvas.drawArc(
         Rect.fromCircle(center: center, radius: innerRadius),
         startAngle,
-        sweep,
+        segment,
         true,
-        paint,
+        Paint()..color = fill,
       );
 
-      // Thin separator line between segments
+      // Dilimler arası ince ayırıcı (zemin tonu).
       final sepPaint = Paint()
-        ..color = Colors.white.withValues(alpha: 0.25)
+        ..color = t.bg.withValues(alpha: 0.55)
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 1.5;
-      final sepX = center.dx + math.cos(startAngle) * innerRadius;
-      final sepY = center.dy + math.sin(startAngle) * innerRadius;
-      canvas.drawLine(center, Offset(sepX, sepY), sepPaint);
+        ..strokeWidth = 2;
+      canvas.drawLine(
+        center,
+        Offset(
+          center.dx + math.cos(startAngle) * innerRadius,
+          center.dy + math.sin(startAngle) * innerRadius,
+        ),
+        sepPaint,
+      );
 
-      // Reward text
-      // 2026-07-22 canlı UX denetimi: çark metin düzeltmesi
-      // Çark Transform.rotate ile döndürülüyor; metinleri dik tutmak için
-      // her metin çiziminde counter-rotation uygulanır.
-      final textAngle = startAngle + sweep / 2;
-      final textRadius = innerRadius * 0.66;
-      final textCenterX = center.dx + math.cos(textAngle) * textRadius;
-      final textCenterY = center.dy + math.sin(textAngle) * textRadius;
-
-      // Sarı/altın dilimlerde beyaz metin kontrastı zayıftı (~1.9:1);
-      // koyu metin ile AA uyumlu (~4.5:1) kontrast sağlanır.
-      final isGoldSegment = (i % _segmentColors.length) == 1;
-      final textColor = isGoldSegment ? AppTheme.bg : Colors.white;
-
+      // Ödül rakamı. Çark `Transform.rotate` ile dönüyor; rakamlar dik
+      // kalsın diye her çizimde karşı döndürme uygulanır (2026-07-22).
+      final textAngle = startAngle + segment / 2;
+      final textRadius = innerRadius * 0.68;
+      final textCenter = Offset(
+        center.dx + math.cos(textAngle) * textRadius,
+        center.dy + math.sin(textAngle) * textRadius,
+      );
       final textPainter = TextPainter(
         text: TextSpan(
           text: '${rewards[i]}',
-          style: TextStyle(
-            // `CustomPainter` içindeki metin temayı görmez: aile yazılmazsa
-            // sistem varsayılanına düşer ve çarkın rakamları uygulamanın
-            // geri kalanından başka bir yazı tipiyle çizilir (2026-07-26).
-            fontFamily: AppTypography.fontFamily,
-            color: textColor,
-            fontWeight: FontWeight.w800,
-            fontSize: 17,
-            // Gölge beyaz rakamı koyu dilimden ayırmak için; koyu rakamın
-            // altında ise kendi rengini bulandırıp okunurluğu düşürüyordu
-            // — altın dilimlerdeki 20 ve 25 lekeli görünüyordu
-            // (2026-07-27). Gölge de yazı rengi gibi zemine bağlı.
-            shadows: [
-              Shadow(
-                color: (textColor == Colors.white ? Colors.black : Colors.white)
-                    .withValues(alpha: 0.6),
-                blurRadius: 6,
-                offset: const Offset(0, 2),
-              ),
-            ],
+          // `CustomPainter` içindeki metin temayı görmez: aile ve boyut
+          // belirteçten açıkça verilir (2026-07-26).
+          style: SahneType.headline.copyWith(
+            fontFamily: SahneType.display,
+            color: sahneOnFill(fill),
+            height: 1,
+            fontFeatures: const [FontFeature.tabularFigures()],
           ),
         ),
         textDirection: TextDirection.ltr,
       )..layout();
 
       canvas.save();
-      canvas.translate(textCenterX, textCenterY); // metin merkezine taşı
-      canvas.rotate(-angle); // çark açısını geri al (counter-rotation)
+      canvas.translate(textCenter.dx, textCenter.dy);
+      canvas.rotate(-angle);
       textPainter.paint(
         canvas,
         Offset(-textPainter.width / 2, -textPainter.height / 2),
@@ -976,100 +799,85 @@ class _WheelPainter extends CustomPainter {
       canvas.restore();
     }
 
-    // Outer border ring
+    // İç kenar: dilimleri kasnaktan ayıran ince zemin çizgisi.
     canvas.drawCircle(
       center,
       innerRadius,
       Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 3.5
-        ..color = Colors.white.withValues(alpha: 0.9),
+        ..strokeWidth = 2
+        ..color = t.bg,
     );
 
-    // ── LED chasing lights ──
+    // ── Kasnak ışıkları ──
     const ledCount = 16;
-    final ledRadius = outerRadius + 6.0;
-
+    final ledRadius = outerRadius - rimWidth / 2;
     for (var i = 0; i < ledCount; i++) {
-      final currentLedAngle = i * (2 * math.pi / ledCount);
+      final a = i * (2 * math.pi / ledCount);
       final ledCenter = Offset(
-        center.dx + math.cos(currentLedAngle) * ledRadius,
-        center.dy + math.sin(currentLedAngle) * ledRadius,
+        center.dx + math.cos(a) * ledRadius,
+        center.dy + math.sin(a) * ledRadius,
       );
-
-      final intensity = math.sin(i * (2 * math.pi / ledCount) * 2 - angle * 5);
-      final isLit = intensity > 0.0;
-
-      if (isLit) {
-        // Glow halo
-        final glowPaint = Paint()
-          ..color = AppTheme.gold.withValues(alpha: 0.5)
-          ..style = PaintingStyle.fill
-          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5);
-        canvas.drawCircle(ledCenter, 6.5, glowPaint);
-      }
-
-      final ledPaint = Paint()
-        ..color = isLit ? AppTheme.gold : AppTheme.gold.withValues(alpha: 0.25)
-        ..style = PaintingStyle.fill;
-      canvas.drawCircle(ledCenter, 3.5, ledPaint);
+      final isLit = math.sin(a * 2 - angle * 5) > 0.0;
+      canvas.drawCircle(
+        ledCenter,
+        3,
+        Paint()..color = isLit ? t.gold : t.goldDeep.withValues(alpha: 0.6),
+      );
     }
   }
 
   @override
   bool shouldRepaint(covariant _WheelPainter oldDelegate) =>
-      angle != oldDelegate.angle;
+      angle != oldDelegate.angle || tokens != oldDelegate.tokens;
 }
 
 // ═══════════════════════════════════════════════
-//  Pointer / arrow painter
+//  Pointer painter
 // ═══════════════════════════════════════════════
+/// İşaretçi: aşağı bakan altın uç (koyu altın kontur, zemin tonu dış
+/// çizgi). Gölge yok.
 class _PointerPainter extends CustomPainter {
+  const _PointerPainter({
+    required this.fill,
+    required this.edge,
+    required this.rim,
+  });
+
+  final Color fill;
+  final Color edge;
+  final Color rim;
+
   @override
   void paint(Canvas canvas, Size size) {
-    // Shadow
-    final shadowPath = Path()
-      ..moveTo(4, 0)
-      ..lineTo(size.width - 4, 0)
-      ..lineTo(size.width / 2, size.height + 4)
-      ..close();
-    canvas.drawPath(
-      shadowPath,
-      Paint()
-        ..color = Colors.black.withValues(alpha: 0.4)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6),
-    );
-
-    // Body with gradient
     final path = Path()
-      ..moveTo(2, 0)
-      ..lineTo(size.width - 2, 0)
+      ..moveTo(size.width / 2, 0)
+      ..lineTo(size.width - 2, size.height * 0.35)
       ..lineTo(size.width / 2, size.height)
+      ..lineTo(2, size.height * 0.35)
       ..close();
-
-    const gradient = LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [AppTheme.gold, AppTheme.secondaryAccent],
-    );
     canvas.drawPath(
       path,
       Paint()
-        ..shader = gradient.createShader(
-          Rect.fromLTWH(0, 0, size.width, size.height),
-        ),
-    );
-
-    // White border
-    canvas.drawPath(
-      path,
-      Paint()
-        ..color = Colors.white.withValues(alpha: 0.95)
+        ..color = rim
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.6,
+        ..strokeWidth = 5
+        ..strokeJoin = StrokeJoin.round,
+    );
+    canvas.drawPath(path, Paint()..color = fill);
+    canvas.drawPath(
+      path,
+      Paint()
+        ..color = edge
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..strokeJoin = StrokeJoin.round,
     );
   }
 
   @override
-  bool shouldRepaint(covariant _PointerPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _PointerPainter oldDelegate) =>
+      fill != oldDelegate.fill ||
+      edge != oldDelegate.edge ||
+      rim != oldDelegate.rim;
 }

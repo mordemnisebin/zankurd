@@ -6,15 +6,12 @@ import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/contest.dart';
-import '../theme/app_theme.dart';
-import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
 import '../widgets/arena_kit.dart';
-import '../widgets/screen_identity_header.dart';
+import '../widgets/sahne/sahne.dart';
 import '../widgets/styled_button.dart';
-import '../widgets/zk_back_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -108,72 +105,68 @@ class _ContestScreenState extends State<ContestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      // AppBar başlıksız: ekranın adını `ScreenIdentityHeader` taşıyor.
-      // Burada başlık da verilince "Günün Etkinliği" ilk 300 pikselde iki
-      // kez yazıyordu (2026-07-30 ekran turu, 11/24/31/34). Kimlik başlığı
-      // kullanan on ekranın sekizi AppBar başlığını zaten boş bırakıyor;
-      // aykırı olan buydu. (`review_screen` iki *farklı* başlık gösterir —
-      // "Cevaplar" ve "Özet" — orada tekrar yok.)
-      appBar: zkAppBar(context),
-      body: Container(
-        color: AppTheme.bgOf(context),
-        child: Stack(
-          children: [
-            // Kısa içerikte alt yarı boş kalıyordu; kenara kimlik dokusu
-            // işlenir (2026-09-10).
-            const Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: KilimBottomEdge(),
-            ),
-            SafeArea(
-              child: FutureBuilder<Contest?>(
-                future: _contestFuture,
-                builder: (ctx, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting &&
-                      !snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: AppTheme.primaryGradientStart,
-                      ),
-                    );
-                  }
-                  if (snapshot.hasError) {
-                    return AppErrorState(
-                      title: context.t(K.loadFailedShort),
-                      message: context.t(K.contestLoadFailed),
-                      retryLabel: context.t(K.retryTiny),
-                      onRetry: () => setState(_loadContest),
-                    );
-                  }
-                  final contest = snapshot.data;
-                  if (contest == null) {
-                    // Dürüst boş durum: isim eşleşmesi (Çalakiya Rojê) + net
-                    // "yakında" mesajı + geri yolu. Kullanıcı ölü ekranda
-                    // kalmaz (2026-07-19 canlı denetim P1 bulgusu).
-                    return AppEmptyState(
-                      icon: AppIcons.champagneGlasses,
-                      title: context.t(K.dailyContest),
-                      message: context.t(K.contestNoneToday),
-                      actionLabel: context.t(K.goHome),
-                      actionIcon: AppIcons.house,
-                      onAction: () => Navigator.of(context).pop(),
-                    );
-                  }
-                  return _ContestContent(
-                    contest: contest,
-                    starting: _starting,
-                    onStart: () => _startQuiz(contest),
-                  );
-                },
+    // 2026-09-29 Şahnê: B iskeleti. Ekranın adı ("Günün Etkinliği") ve alt
+    // satırı artık çubukta; içerikte kimlik başlığı tekrar edilmez. Eski
+    // alt kenardaki üçgen kilim deseni kalktı (desen yalnız sahne kartının
+    // üst şeridi). Sayfa adı oyun merkezindeki girişle aynı kalır.
+    final t = SahneTokens.of(context);
+    return SahnePushedPage(
+      title: context.t(K.dailyEvent),
+      subtitle: context.t(K.dailyEventSub),
+      backLabel: context.t(K.back),
+      slivers: [
+        FutureBuilder<Contest?>(
+          future: _contestFuture,
+          builder: (ctx, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting &&
+                !snapshot.hasData) {
+              return SliverFillRemaining(
+                child: Center(
+                  child: CircularProgressIndicator(color: t.raceTx),
+                ),
+              );
+            }
+            if (snapshot.hasError) {
+              return SliverFillRemaining(
+                child: AppErrorState(
+                  title: context.t(K.loadFailedShort),
+                  message: context.t(K.contestLoadFailed),
+                  retryLabel: context.t(K.retryTiny),
+                  onRetry: () => setState(_loadContest),
+                ),
+              );
+            }
+            final contest = snapshot.data;
+            if (contest == null) {
+              // Dürüst boş durum: net "yakında" mesajı + geri yolu.
+              // Kullanıcı ölü ekranda kalmaz (2026-07-19 canlı denetim P1
+              // bulgusu). Ekranın adı (Çalakiya Rojê) çubukta durur; boş
+              // durumun başlığı onu tekrar etmez, bugünün etkinliğinin
+              // kendisini ("Günün 10 Sorusu") anar.
+              return SliverFillRemaining(
+                child: AppEmptyState(
+                  icon: AppIcons.champagneGlasses,
+                  title: context.t(K.dailyEventCardTitle),
+                  message: context.t(K.contestNoneToday),
+                  actionLabel: context.t(K.goHome),
+                  actionIcon: AppIcons.house,
+                  onAction: () => Navigator.of(context).pop(),
+                ),
+              );
+            }
+            return SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+              sliver: SliverToBoxAdapter(
+                child: _ContestContent(
+                  contest: contest,
+                  starting: _starting,
+                  onStart: () => _startQuiz(contest),
+                ),
               ),
-            ),
-          ],
+            );
+          },
         ),
-      ),
+      ],
     );
   }
 }
@@ -206,12 +199,15 @@ class _ContestContent extends StatelessWidget {
     //
     // Bu turda görsel sistem değişti, iddia değil: aynı dürüst içerik
     // arena diliyle çizilir.
+    //
+    // 2026-09-29 Şahnê: kahraman yarış rolünde bir sahne kartıdır (Boyax
+    // sahne degradesi + lal kilim şeridi); "Etkinliğe başla" ekranın TEK
+    // birincil eylemidir. Eski turkuaz ton palet dışıydı — etkinlik bir
+    // yarış biçimidir, rengi Boyax'tır.
     final hero = ArenaHero(
       title: context.t(K.dailyEventCardTitle),
       subtitle: context.t(K.dailyEventCardBody),
-      // Turkuaz: turnuvanın altınından ayrı bir aile üyesi. Yarışma
-      // bugüne ait, doğrudan ve hızlı; kupanın tören rengini taşımamalı.
-      accent: _contestTone,
+      accent: SahneTokens.of(context).race,
       icon: AppIcons.champagneGlasses,
       tokens: [
         ArenaStatusChip(
@@ -228,23 +224,13 @@ class _ContestContent extends StatelessWidget {
       ),
     );
 
-    final quickInfo = _ContestPanel(
-      title: context.t(K.contestQuickInfo),
-      icon: AppIcons.bolt,
-      child: _ContestQuickStrip(contest: contest, ku: ku),
-    );
-
-    // Kimlik başlığı KALIR. Turnuvada kaldırılmıştı çünkü hero aynı
-    // başlığı taşıyordu; burada hero "Günün 10 Sorusu" der, kimlik bandı
-    // ekranın adını ("Günün Etkinliği") — ikisi farklı, tekrar yok.
-    // Ekranın adı oyun merkezindeki girişle eşleşmeli, yoksa kullanıcı
-    // hangi ekrana geldiğini doğrulayamaz.
-    final header = ScreenIdentityHeader(
-      title: context.t(K.dailyEvent),
-      subtitle: context.t(K.dailyEventSub),
-      accent: _contestTone,
-      icon: AppIcons.champagneGlasses,
-      compact: true,
+    final quickInfo = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SahneSectionHeader(title: context.t(K.contestQuickInfo)),
+        _ContestQuickStrip(contest: contest, ku: ku),
+      ],
     );
 
     return LayoutBuilder(
@@ -252,71 +238,46 @@ class _ContestContent extends StatelessWidget {
         // Geniş ekranda gerçek iki sütun: solda bugünün etkinliği ve
         // başlama eylemi, sağda kısa bilgi.
         if (constraints.maxWidth >= 720) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.page,
-              AppSpacing.xs,
-              AppSpacing.page,
-              AppSpacing.lg,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                header,
-                const SizedBox(height: AppSpacing.md),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(flex: 6, child: hero),
+              const SizedBox(width: SahneSpace.cardGap),
+              Expanded(
+                flex: 5,
+                child: Column(
+                  key: const ValueKey('contest-wide-column'),
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  // Bölüm başlığının 24'lük üst boşluğu kahramanın üst
+                  // kenarıyla hizalanmasın diye geri alınır.
                   children: [
-                    Expanded(flex: 6, child: hero),
-                    const SizedBox(width: AppSpacing.cardGap),
-                    Expanded(
-                      flex: 5,
-                      child: Column(
-                        key: const ValueKey('contest-wide-column'),
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [quickInfo],
-                      ),
+                    Transform.translate(
+                      offset: const Offset(0, -SahneSpace.sectionTop),
+                      child: quickInfo,
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         }
-        return ListView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.page,
-            AppSpacing.xs,
-            AppSpacing.page,
-            AppSpacing.lg,
-          ),
-          children: [
-            header,
-            const SizedBox(height: AppSpacing.md),
-            hero,
-            const SizedBox(height: AppSpacing.cardGap),
-            quickInfo,
-          ],
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [hero, quickInfo],
         );
       },
     );
   }
 }
 
-/// Yarışmanın ton rengi — turkuaz (#04697C).
+/// Etkinliği tek bakışta anlatan kısa bilgi çipleri.
 ///
-/// Turnuva altın taşır (tören, uzun soluklu kupa). Yarışma bugüne ait,
-/// doğrudan ve hızlı bir etkinlik; aynı rengi taşısaydı turnuvanın rengi
-/// değiştirilmiş bir kopyası gibi okunurdu. Altın bu ekranda yalnız ödül
-/// jetonlarında kalır — yani ekonomiyi anlatan yerde.
-const Color _contestTone = Color(0xFF04697C);
-
-/// Etkinliği tek bakışta anlatan kısa bilgi şeridi.
+/// Yalnız GERÇEKLEŞEN değerler: kaç soru sorulacağı ve soru başına kaç
+/// saniye verileceği. Temanın zorluk aralığı ve kategorisi BİLEREK yok —
+/// sorular o temadan seçilmiyor (bkz. `_ContestContent` notu).
 ///
-/// Yalnız GERÇEKLEŞEN değerler: kaç soru sorulacağı, soru başına kaç
-/// saniye verileceği ve soruların karışık havuzdan geldiği. Temanın
-/// zorluk aralığı ve kategorisi BİLEREK yok — sorular o temadan
-/// seçilmiyor (bkz. `_ContestContent` notu).
+/// 2026-09-29 Şahnê: stat çipi ([SahneStatChip]) — Kulis tonu, M pah,
+/// solda 20'lik ikon, kalın açıklama. Çipler sarar; %200 yazıda da taşmaz.
 class _ContestQuickStrip extends StatelessWidget {
   const _ContestQuickStrip({required this.contest, required this.ku});
 
@@ -325,6 +286,7 @@ class _ContestQuickStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     // Sayı ve birimi AYNI metin düğümünde durur.
     //
     // Ayrı `Text`lere bölmek görsel olarak daha düzenliydi ama "10 soru"
@@ -341,106 +303,16 @@ class _ContestQuickStrip extends StatelessWidget {
       ),
     ];
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          for (var i = 0; i < items.length; i++)
-            Padding(
-              padding: EdgeInsets.only(
-                right: i == items.length - 1 ? 0 : AppSpacing.sm,
-              ),
-              child: _ContestStat(icon: items[i].$1, text: items[i].$2),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Sayı + etiketten oluşan küçük bilgi bloğu.
-class _ContestStat extends StatelessWidget {
-  const _ContestStat({required this.icon, required this.text});
-
-  final IconData icon;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 9),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context),
-        borderRadius: BorderRadius.circular(AppRadius.badge),
-        border: Border.all(color: AppTheme.borderColor(context)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 15, color: AppTheme.textSubColor(context)),
-          const SizedBox(width: 7),
-          Text(
-            text,
-            maxLines: 1,
-            style: AppTypography.bodyMedium.copyWith(
-              fontWeight: FontWeight.w800,
-              color: AppTheme.textPrimaryColor(context),
-            ),
+    return Wrap(
+      spacing: SahneSpace.x2,
+      runSpacing: SahneSpace.x2,
+      children: [
+        for (final item in items)
+          SahneStatChip(
+            leading: Icon(item.$1, size: 20, color: t.raceTx),
+            label: item.$2,
           ),
-        ],
-      ),
+      ],
     );
   }
 }
-
-/// Başlıklı sakin panel — arena ailesinin nötr yüzeyi.
-class _ContestPanel extends StatelessWidget {
-  const _ContestPanel({
-    required this.title,
-    required this.icon,
-    required this.child,
-  });
-
-  final String title;
-  final IconData icon;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppTheme.borderColor(context)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              Icon(icon, size: 15, color: AppTheme.textSubColor(context)),
-              const SizedBox(width: 6),
-              Flexible(
-                child: Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.caption.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: AppTheme.textSubColor(context),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          child,
-        ],
-      ),
-    );
-  }
-}
-
-/// Eski gövde — kaldırıldı.

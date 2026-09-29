@@ -43,6 +43,15 @@ void main() {
 
     expect(find.text('Berfin'), findsOneWidget);
 
+    // 2026-09-29 Şahnê: lobi uzadı (sahne kartı kahraman + alt perdede
+    // sabit "Yarışı Başlat"); varsayılan 800×600 test yüzeyinde ikinci
+    // oyuncunun satırı katlamanın altında kalıyor. Kullanıcı gibi önce
+    // kaydırılır — bekçinin konusu (engellenen satırın anında kaybolması)
+    // değişmedi.
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('player-moderation-button')),
+    );
+    await tester.pump();
     await tester.tap(find.byKey(const ValueKey('player-moderation-button')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('player-block-action')));

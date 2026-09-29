@@ -6,9 +6,17 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
+/// Turnuva lobisi ve şema geçişi.
+///
+/// 2026-09-29 Şahnê: ana eylem artık ortak birincil düğmedir
+/// ([SahneButton.primary]: Agir dolgu, koyu metin, rengi temadan). Bekçi
+/// eskiden düğmenin `style.backgroundColor`ında `AppTheme.brand`
+/// arıyordu — bu, turuncu üstüne beyaz yazan eski elle boyanmış düğmenin
+/// görünüşüydü. Şimdi düğmenin birincil bileşen olduğu ve etkin olduğu
+/// sınanır; rengin kendisi bileşenin ve temanın işidir.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -70,10 +78,11 @@ void main() {
       expect(find.textContaining('Cumartesi'), findsNothing);
       expect(find.text('Kontenjan dolunca başlar'), findsOneWidget);
       expect(find.text('Turnuvaya Katıl'), findsOneWidget);
-      final startButton = tester.widget<FilledButton>(
+      final startButton = tester.widget(
         find.byKey(const ValueKey('tournament-primary-cta')),
       );
-      expect(startButton.style?.backgroundColor?.resolve({}), AppTheme.brand);
+      expect(startButton, isA<SahneButton>());
+      expect((startButton as SahneButton).onPressed, isNotNull);
       expect(find.byIcon(AppIcons.trophy), findsAtLeast(1));
     });
 
