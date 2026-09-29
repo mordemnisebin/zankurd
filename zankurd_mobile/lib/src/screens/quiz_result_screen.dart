@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show ScrollCacheExtent;
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../config/category_visuals.dart';
 import '../config/coin_prices.dart';
 import '../data/achievement_store.dart';
 import '../data/badge_service.dart';
@@ -23,29 +25,24 @@ import '../services/premium_service.dart';
 import '../services/quiz_reward_settlement_service.dart';
 import '../models/achievement.dart';
 import '../models/answer_record.dart';
+import '../models/daily_mission.dart';
 import '../models/quiz_question.dart';
 import '../models/player.dart';
 import '../models/room.dart';
 import '../providers/reduced_motion_provider.dart';
-import '../widgets/kilim_board.dart';
-import '../widgets/zk_back_button.dart';
 import '../widgets/rolling_count.dart';
-import '../widgets/kilim_reveal.dart';
 import '../widgets/learning_outcome_card.dart';
+import '../widgets/sahne/sahne.dart';
 import '../theme/app_theme.dart';
-import '../utils/percent_format.dart';
 import '../utils/app_route.dart';
-import '../widgets/app_panel.dart';
+import '../utils/percent_format.dart';
 import '../data/daily_mission_store.dart';
 import '../data/xp_store.dart';
 import '../services/analytics_service.dart';
 import '../services/notification_service.dart';
 import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
-import '../widgets/mission_toast.dart';
 import '../widgets/confetti_overlay.dart';
-import '../widgets/player_avatar.dart';
-import '../widgets/roj_mascot.dart';
 import 'leaderboard_screen.dart';
 import 'quiz_screen.dart';
 import 'review_screen.dart';
@@ -178,6 +175,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   int _xpNeededForNextLevel = 1;
   double _levelProgress = 0;
   bool _levelJourneyReady = false;
+  List<DailyMission> _completedMissions = const [];
   _StreakOutcome? _pendingStreak;
   bool _showConfetti = false;
   bool _ackAttempted = false;
@@ -853,12 +851,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         _levelProgress = xpStore.levelProgress;
         _levelJourneyReady = true;
         _showConfetti = promotions.isNotEmpty;
+        // 2026-09-29 Şahnê: tamamlanan görevler yüzen bildirim olarak
+        // değil, turun kazanımları arasında satır olarak görünür. Sonuç
+        // ekranında birincil eylem alt perdededir; yüzen bildirim tam onun
+        // üstüne binip "Tekrar oyna"yı üç saniye örtüyordu (tur karesi
+        // 68, 2026-09-29).
+        _completedMissions = completedMissions;
       });
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
-        for (final mission in completedMissions) {
-          MissionToast.show(context, mission);
-        }
         if (leveledUp) {
           _showLevelUpDialog(context, xpStore.currentLevel);
         }
@@ -876,339 +877,21 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         return const SizedBox.shrink();
       },
       transitionBuilder: (context, anim1, anim2, child) {
+        final dialog = _LevelUpDialog(
+          level: newLevel,
+          onContinue: () => Navigator.of(
+            context,
+          ).pop({'score': score, 'correct': correctCount}),
+        );
+        // Hareketi azalt açıkken pencere yaylanmadan, yalnız belirerek
+        // gelir.
+        if (sahneMotionReduced(context)) {
+          return FadeTransition(opacity: anim1, child: dialog);
+        }
         final curve = CurvedAnimation(parent: anim1, curve: Curves.easeOutBack);
         return ScaleTransition(
           scale: curve,
-          child: FadeTransition(
-            opacity: anim1,
-            child: Dialog(
-              backgroundColor: Colors.transparent,
-              insetPadding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      AppTheme.surfaceHiColor(context),
-                      AppTheme.surfaceColor(context),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: AppTheme.gold, width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppTheme.gold.withValues(alpha: 0.3),
-                      blurRadius: 20,
-                      spreadRadius: 5,
-                    ),
-                  ],
-                ),
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: AppTheme.gold.withValues(alpha: 0.15),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        AppIcons.medal,
-                        color: AppColors.onAccentTint(context, AppTheme.gold),
-                        size: 50,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      context.t(K.levelUpTitle),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        color: AppTheme.gold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      context.t(K.yeniBirSeviyeyeUlastin),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: AppTheme.textSubColor(context),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.gold,
-                        borderRadius: BorderRadius.circular(AppRadius.md),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppTheme.gold.withValues(alpha: 0.3),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Text(
-                        context.t(K.seviyeP, {'p0': '$newLevel'}),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.onSolid(AppTheme.gold),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 48,
-                      child: FilledButton(
-                        style: FilledButton.styleFrom(
-                          backgroundColor: AppTheme.gold,
-                          foregroundColor: AppColors.onSolid(AppTheme.gold),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                          ),
-                          elevation: 0,
-                        ),
-                        onPressed: () => Navigator.of(
-                          context,
-                        ).pop({'score': score, 'correct': correctCount}),
-                        child: Text(
-                          context.t(K.devamEt2),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  static const _resultPrimaryActionStyle = TextStyle(
-    fontFamily: AppTypography.fontFamily,
-    fontWeight: FontWeight.w700,
-    fontSize: 15,
-  );
-
-  /// Primary CTA'nın tek satırda yan eylemlerle birlikte güvenle yaşayıp
-  /// yaşayamayacağını gerçek label genişliğiyle ölçer.
-  ///
-  /// Sabit bir cihaz breakpoint'i yerine mevcut genişlik + text scale
-  /// kullanılır. Dar veya büyük metinli düzende primary üstte tam genişlikte
-  /// kalır; yan eylemler öğrenme özetinden sonraki bloğa ertelenir. Böylece
-  /// ana label küçülmez ve sonuç → ana eylem → öğrenme içgörüsü hiyerarşisi
-  /// korunur.
-  ///
-  /// 2026-09-27 (Kusur 2 düzeltmesi): yan eylemlerin toplam genişliği artık
-  /// sabit bir tahmin değil, HER etiketin gerçek ölçümüdür
-  /// (`_resultSideActionWidth`). Hap düğmeye geçildiği için genişlik etikete
-  /// göre değişir ("Paylaş" ↔ "Yanlışları incele"); sabit bir sayı bazı
-  /// etiketleri sığmış SANIP kırpardı.
-  bool _shouldStackResultActions(
-    BuildContext context, {
-    required double availableWidth,
-    required String primaryLabel,
-    required List<Widget> secondaryActions,
-  }) {
-    if (secondaryActions.isEmpty) return false;
-
-    final painter = TextPainter(
-      text: TextSpan(
-        text: primaryLabel,
-        style: _resultPrimaryActionStyle.copyWith(
-          fontFamily: AppTypography.fontFamily,
-        ),
-      ),
-      textDirection: Directionality.of(context),
-      textScaler: MediaQuery.textScalerOf(context),
-      maxLines: 1,
-    )..layout();
-
-    // Icon + gap + horizontal button padding. Bu chrome mevcut FilledButton
-    // anatomisinin güvenli üst sınırıdır; label'ın sığmadığı durumda
-    // breakpoint tahmini yapmak yerine ölçümü stacked karara dönüştürür.
-    const primaryChrome = 80.0;
-    const actionGap = 10.0;
-    final primaryNeeded = painter.width + primaryChrome;
-    final secondaryNeeded =
-        secondaryActions
-            .whereType<_ResultSideAction>()
-            .map((action) => _resultSideActionWidth(context, action.label))
-            .fold<double>(0, (sum, width) => sum + width) +
-        actionGap;
-    return primaryNeeded + secondaryNeeded > availableWidth;
-  }
-
-  Widget _buildResultPrimaryAction({
-    required String key,
-    required String label,
-    required IconData icon,
-    required VoidCallback onPressed,
-  }) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        boxShadow: AppTheme.glowShadow(
-          AppTheme.primaryCtaColor(context),
-          intensity: 0.28,
-        ),
-      ),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: 54),
-        child: FilledButton.icon(
-          key: ValueKey(key),
-          style: FilledButton.styleFrom(
-            backgroundColor: AppTheme.primaryCtaColor(context),
-            foregroundColor: Colors.white,
-            minimumSize: const Size(0, 54),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-            ),
-            elevation: 0,
-          ),
-          onPressed: onPressed,
-          icon: Icon(icon, size: 20),
-          label: Text(
-            label,
-            maxLines: 2,
-            softWrap: true,
-            overflow: TextOverflow.visible,
-            textAlign: TextAlign.center,
-            style: _resultPrimaryActionStyle,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildResultActions({
-    required String primaryKey,
-    required String primaryLabel,
-    required IconData primaryIcon,
-    required VoidCallback onPrimaryPressed,
-    required List<Widget> secondaryActions,
-  }) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final stack = _shouldStackResultActions(
-          context,
-          availableWidth: constraints.maxWidth,
-          primaryLabel: primaryLabel,
-          secondaryActions: secondaryActions,
-        );
-        final primary = _buildResultPrimaryAction(
-          key: primaryKey,
-          label: primaryLabel,
-          icon: primaryIcon,
-          onPressed: onPrimaryPressed,
-        );
-
-        if (stack) {
-          return primary;
-        }
-
-        return Row(
-          children: [
-            Expanded(child: primary),
-            if (secondaryActions.isNotEmpty) ...[
-              const SizedBox(width: 10),
-              ...secondaryActions,
-            ],
-          ],
-        );
-      },
-    );
-  }
-
-  /// Ertelenmiş yan eylemler: dar/büyük-yazılı düzende `_buildResultActions`
-  /// yalnız primary'yi bastığı için bu blok öğrenme özetinin ALTINDA aynı
-  /// eylemleri tam genişlikte gösterir.
-  ///
-  /// 2026-09-27 (Kusur 2 düzeltmesi): eskiden burası sabit 76×54 kare
-  /// düğmeleri sağa yaslı bir `Wrap`e diziyordu — dar ekranda bu, kutunun
-  /// içindeki etiketi `FittedBox(scaleDown)` ile ~8px'e küçültüyordu. Artık
-  /// hap düğmeler tam genişliği EŞİT PAYLAŞIR (`Expanded` + `Row`); bir
-  /// etiket kendi payına GERÇEKTEN sığmıyorsa (ölçülmüş genişlikle) ya da
-  /// yazı tipi ölçeği zaten büyükse, yatay sıkıştırma yerine dikey yer açan
-  /// bir `Column`a düşülür — küçültmek yerine büyütmek, yarım/mikroskopik
-  /// etiket göstermekten iyidir.
-  Widget _buildDeferredResultActions({
-    required String primaryLabel,
-    required List<Widget> secondaryActions,
-  }) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final stack = _shouldStackResultActions(
-          context,
-          availableWidth: constraints.maxWidth,
-          primaryLabel: primaryLabel,
-          secondaryActions: secondaryActions,
-        );
-        if (!stack || secondaryActions.isEmpty) return const SizedBox.shrink();
-
-        const gap = 10.0;
-        final labels = [
-          for (final action in secondaryActions)
-            if (action is _ResultSideAction) action.label,
-        ];
-        final shareWidth =
-            (constraints.maxWidth - gap * (labels.length - 1)) / labels.length;
-        // Büyük yazı ölçeğinde etiketler payına sığsa bile satır çok sıkışık
-        // görünür VE bir sonraki elense küçük bir metin değişikliği kolayca
-        // taşırır; bu yüzden ölçek zaten büyükse pay hesabı hiç denenmeden
-        // dikey düzene geçilir.
-        final textScaleIsLarge =
-            MediaQuery.textScalerOf(context).scale(14) > 20;
-        final anyLabelOverflowsShare = labels.any(
-          (label) => _resultSideActionWidth(context, label) > shareWidth,
-        );
-        final useColumn = textScaleIsLarge || anyLabelOverflowsShare;
-
-        return Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: useColumn
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (var i = 0; i < secondaryActions.length; i++) ...[
-                      if (i > 0) const SizedBox(height: gap),
-                      secondaryActions[i],
-                    ],
-                  ],
-                )
-              : Row(
-                  children: [
-                    for (var i = 0; i < secondaryActions.length; i++) ...[
-                      if (i > 0) const SizedBox(width: gap),
-                      Expanded(child: secondaryActions[i]),
-                    ],
-                  ],
-                ),
+          child: FadeTransition(opacity: anim1, child: dialog),
         );
       },
     );
@@ -1299,6 +982,32 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       );
     }
 
+    Future<void> shareResult() async {
+      await ResultSharer.share(
+        context,
+        isKu: context.isKu,
+        score: score,
+        correctCount: correctCount,
+        totalQuestions: totalQuestions,
+        bestStreak: bestStreak,
+        // Karışık turda ekrandaki başlıkla aynı: tek bir kategori adı
+        // turu yanlış anlatırdı.
+        category: isMixedCategoryRound ? room.name : room.category,
+        results: [for (final record in answerRecords) record.isCorrect],
+      );
+      final earned = await ResultSharer.claimDailyShareReward();
+      if (earned && context.mounted) {
+        HapticFeedback.mediumImpact();
+        unawaited(repository.awardSpinCoins());
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(context.t(K.shareRewardEarned)),
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+    }
+
     final learningContinue = isLearningExperience && !isOnlineRoom;
     final primaryResultKey = learningContinue
         ? 'result-primary-learning-continue'
@@ -1308,9 +1017,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final primaryResultLabel = learningContinue
         ? context.t(K.continueAction)
         : nextActionLabel;
-    final primaryResultIcon = learningContinue
-        ? AppIcons.arrowRight
-        : nextActionIcon;
 
     // Kusur 1 (2026-09-27): bu yan eylem ve `LearningOutcomeCard`daki
     // "Yanlış cevabı gözden geçir" düğmesi AYNI `openReview` çağrısına
@@ -1326,53 +1032,27 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         answerRecords.isNotEmpty &&
         learningOutcome.reviewCategory == null &&
         learningOutcome.reviewRecords.isNotEmpty;
-    final secondaryResultActions = <Widget>[
+    // 2026-09-29 Şahnê: "Paylaş" alt perdede birincil eylemin yanında durur
+    // (maketteki `.sh-dock--2`). Geri kalan yan eylemler öğrenme özetinin
+    // ALTINDA, ikincil düğme olarak kalır — öğrenme içgörüsü onlardan önce
+    // okunur.
+    final secondaryResultActions = <_ResultAction>[
       if (wrongRecords.isNotEmpty &&
           !learningContinue &&
           !learningOutcomeAlreadyOffersAllMistakes)
-        _ResultSideAction(
+        _ResultAction(
           key: const ValueKey('result-review-mistakes-button'),
           icon: AppIcons.squareCheck,
           label: context.t(K.reviewMistakes),
           onTap: () => openReview(wrongRecords),
         ),
       if (isOnlineRoom)
-        _ResultSideAction(
+        _ResultAction(
           key: const ValueKey('result-new-room-button'),
           icon: AppIcons.circlePlus,
           label: context.t(K.newRoom),
           onTap: _newRoomLoading ? null : _openNewRoom,
         ),
-      _ResultSideAction(
-        key: const ValueKey('result-share-button'),
-        icon: AppIcons.shareNodes,
-        label: context.t(K.share),
-        onTap: () async {
-          await ResultSharer.share(
-            context,
-            isKu: context.isKu,
-            score: score,
-            correctCount: correctCount,
-            totalQuestions: totalQuestions,
-            bestStreak: bestStreak,
-            // Karışık turda ekrandaki başlıkla aynı: tek bir kategori adı
-            // turu yanlış anlatırdı.
-            category: isMixedCategoryRound ? room.name : room.category,
-            results: [for (final record in answerRecords) record.isCorrect],
-          );
-          final earned = await ResultSharer.claimDailyShareReward();
-          if (earned && context.mounted) {
-            HapticFeedback.mediumImpact();
-            unawaited(repository.awardSpinCoins());
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(context.t(K.shareRewardEarned)),
-                duration: const Duration(seconds: 3),
-              ),
-            );
-          }
-        },
-      ),
     ];
 
     final is1v1 = opponents.length == 1;
@@ -1387,59 +1067,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       }
     }
 
-    // 1v1 sonuç gradyanları: AppTheme.correctDeep / wrongDeep token'ları
-    // kullanılır (M-11 — hardcoded Color literal → adlandırılmış sabit).
-    final headerGradient = is1v1
-        ? (isWinner
-              ? const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [AppTheme.correctHeader, AppTheme.correctDeep],
-                )
-              : isDraw
-              // Berabere gradyanı bir zamanlar `surfaceHiColor` /
-              // `surfaceColor` idi — temaya göre değişen yüzey tonları.
-              // Açık temada ikisi de neredeyse beyaz, üstündeki başlık ve
-              // skor ise sabit `Colors.white`: kart okunmuyordu. Kazanan
-              // ve kaybeden hâlleri tema-bağımsız KOYU tonlar aldığı için
-              // (correct/correctDeep, wrong/wrongDeep) kusur yalnız
-              // beraberede doğuyordu, yani ancak iki oyuncu aynı skorla
-              // bitirdiğinde. 2026-08-01'de canlı 0-0 biten oda maçında
-              // görüldü.
-              //
-              // Berabere ne zafer ne yenilgi: yeşil ve kırmızının yanına
-              // nötr, tema-bağımsız bir koyu ton konuyor. Beyaz metin
-              // ikisinde de 12:1'in üstünde.
-              ? const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [AppTheme.surfaceHi, AppTheme.surface],
-                )
-              : const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [AppTheme.wrongHeader, AppTheme.wrongDeep],
-                ))
-        // Solo sonuç vitrini kimlik anıdır, eylem değil; turuncu yalnız
-        // "sonraki adım" butonunda kalır — bu kural korunuyor.
-        //
-        // 2026-09-10: ametist→lacivert gradyan marka paletinden kopuktu;
-        // iki uç markaya döndü (derin mürekkepten Kesk yeşiline). Yeşil→
-        // koyu turuncu denemesi (2026-08-03) çamur verdiği için iki uç
-        // aynı hue ailesindedir; beyaz metin iki uçta da AA üstü.
-        : const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppTheme.celebrationInk, AppTheme.celebrationGreen],
-          );
-
-    final borderColor = is1v1
-        ? (isWinner
-              ? AppTheme.correct.withValues(alpha: 0.55)
-              : isDraw
-              ? AppTheme.borderColor(context)
-              : AppTheme.wrong.withValues(alpha: 0.55))
-        : AppTheme.gold.withValues(alpha: 0.5);
+    // 2026-09-29 Şahnê: 1v1 sonucu Rast/Şaş (durum) ailesiyle boyanmaz —
+    // kazanmak bir "doğru cevap" değildir. Kazanma Zêr taç + altın başlık,
+    // beraberlik ve kaybetme nötr; yarış kimliği Boyax kilim şeridindedir.
+    // Eski yeşil/kırmızı başlık gradyanları kalktı (bkz.
+    // `quiz_result_header_contrast_test.dart`).
+    final duelOutcome = !is1v1
+        ? null
+        : isWinner
+        ? _DuelOutcome.win
+        : isDraw
+        ? _DuelOutcome.draw
+        : _DuelOutcome.loss;
 
     final headerTitle = isLearningExperience
         ? context.t(K.learningResultTitle)
@@ -1451,741 +1090,207 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : context.t(K.youLost))
         : context.t(K.raceFinished);
 
-    final headerIcon = isLearningExperience
-        ? AppIcons.bookOpen
-        : is1v1
-        ? (isWinner
-              ? AppIcons.trophy
-              : isDraw
-              ? AppIcons.scaleBalanced
-              : AppIcons.faceFrown)
-        : AppIcons.flag;
+    // Kutlama (sonuç ışınları) yalnız kutlanacak bir sonuç varken çizilir:
+    // 1v1'de galibiyet, solo turda en az yarısı doğru. Kaybedilen turda
+    // kutlama ışığı açmak sonucu yanlış okur.
+    final celebrate = is1v1
+        ? isWinner
+        : (totalQuestions > 0 && correctCount * 2 >= totalQuestions);
 
-    final scaffold = Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppTheme.isLight(context)
-                  ? AppTheme.lightTextPrimary.withValues(alpha: 0.06)
-                  : Colors.white.withValues(alpha: 0.08),
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: AppTheme.isLight(context)
-                    ? AppTheme.lightTextPrimary.withValues(alpha: 0.10)
-                    : Colors.white.withValues(alpha: 0.15),
-                width: 1,
-              ),
-            ),
-            child: ZkBackButton(
-              onPressed: isOnlineRoom ? completeResultAction : null,
-              color: AppTheme.isLight(context)
-                  ? AppTheme.lightTextPrimary
-                  : Colors.white,
-            ),
-          ),
+    final accuracyText =
+        '${context.percent(accuracy)} ${context.t(K.accuracyLower)}';
+    final notices = <Widget>[
+      // Günlük tavana varıldıysa SEBEBİ söyle.
+      //
+      // Jeton rozeti yalnız miktar sıfırdan büyükken çiziliyor, dolayısıyla
+      // tavana varan tur ekranda hiçbir iz bırakmıyordu: oyuncu "+0" bile
+      // görmüyor, yalnız hiçbir şey görmüyordu. Sıfır tek başına
+      // belirsizdir — tavan da sıfır verir, arıza da. Sebebi yazmak,
+      // sessizliği bilgiye çevirir (2026-08-12 denetimi).
+      if (widget.dailyCapReached && coinsAwarded <= 0)
+        _HeroNotice(
+          key: const ValueKey('result-daily-cap-notice'),
+          icon: AppIcons.coins,
+          text: context.t(K.soloDailyCapReached),
         ),
-        title: Text(
-          context.t(
-            isLearningExperience ? K.learningResultTitle : K.resultTitle,
+      // Ödül kuyrukta bekliyorsa bunu söyle. Rozet yalnız miktar sıfırdan
+      // büyükse çizildiği için çevrimdışı turda ekranda hiçbir iz kalmıyor
+      // ve oyuncu turu boşuna oynadığını sanıyordu (2026-07-26).
+      if (widget.rewardSettlementState == QuizRewardSettlementState.queued ||
+          (widget.rewardSettlementState == null &&
+              widget.rewardQueued &&
+              coinsAwarded <= 0))
+        _HeroNotice(icon: AppIcons.cloud, text: context.t(K.rewardPending)),
+      if (widget.rewardSettlementState == QuizRewardSettlementState.unresolved)
+        _HeroNotice(icon: AppIcons.cloud, text: context.t(K.rewardUnresolved)),
+    ];
+
+    final hasRewards = coinsAwarded > 0 || _earnedXP > 0 || _levelJourneyReady;
+    final breakdown = learningOutcome.categoryBreakdown;
+    final hasGains =
+        _newAchievements.isNotEmpty ||
+        _promotions.isNotEmpty ||
+        _completedMissions.isNotEmpty ||
+        _dailyStreak > 0;
+
+    final children = <Widget>[
+      _ResultHero(
+        key: const ValueKey('result-score-header'),
+        starsEarned: accuracy >= 80
+            ? 3
+            : accuracy >= 50
+            ? 2
+            : 1,
+        duel: duelOutcome,
+        title: headerTitle,
+        // Öğrenme turunda puan üretilmez (`score` hep 0); büyük sayı "0"
+        // yazınca 3 doğru yapan kullanıcıya başarısız gibi görünüyordu
+        // (2026-09-10 simülatör turu). Öğrenmede sayı, doğru cevap
+        // sayısıdır: "3/5".
+        value: isLearningExperience ? correctCount : score,
+        suffix: isLearningExperience ? '/$totalQuestions' : '',
+        caption: isLearningExperience
+            ? accuracyText
+            : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
+        hint: isLearningExperience ? context.t(K.learningResultHint) : null,
+        celebrate: celebrate,
+        notices: notices,
+      ),
+      if (hasRewards) ...[
+        const SizedBox(height: SahneSpace.x3),
+        _RewardCard(
+          coins: coinsAwarded,
+          coinLabel: '+$coinsAwarded${context.t(K.coinAbbrev)}',
+          coinSemanticLabel: '+$coinsAwarded ${context.t(K.coinWord)}',
+          xp: _earnedXP,
+          journeyReady: _levelJourneyReady,
+          level: _currentLevel,
+          xpInLevel: _xpInCurrentLevel,
+          xpNeeded: _xpNeededForNextLevel,
+          progress: _levelProgress,
+        ),
+      ],
+      const SizedBox(height: SahneSpace.x2),
+      _StatTiles(
+        correct: correctCount,
+        wrong: wrongCount,
+        unanswered: unanswered,
+        streak: bestStreak,
+      ),
+      if (opponents.isNotEmpty)
+        _RaceStandings(
+          userScore: score,
+          userIdentity: room.players.isNotEmpty ? room.players.first : null,
+          opponents: opponents,
+        ),
+      if (answerRecords.isNotEmpty) ...[
+        if (breakdown.isNotEmpty) ...[
+          SahneSectionHeader(title: context.t(K.kategorilereGorePerformans)),
+          _CategoryLearnings(breakdown: breakdown),
+          const SizedBox(height: SahneSpace.cardGap),
+        ] else
+          const SizedBox(height: SahneSpace.sectionTop),
+        LearningOutcomeCard(
+          outcome: learningOutcome,
+          onReview: learningOutcome.reviewRecords.isEmpty
+              ? null
+              : () => openReview(learningOutcome.reviewRecords),
+        ),
+      ],
+      if (secondaryResultActions.isNotEmpty) ...[
+        const SizedBox(height: SahneSpace.cardGap),
+        _SecondaryActions(actions: secondaryResultActions),
+      ],
+      if (hasGains)
+        _RoundGains(
+          achievements: _newAchievements,
+          promotions: _promotions,
+          missions: _completedMissions,
+          dailyStreak: _dailyStreak,
+        ),
+      // Turun bütün açıklamaları en sonda, bir arada.
+      //
+      // Eskiden her şıkkın altında tek tek açılıyordu; şık işaretlenir
+      // işaretlenmez paragraf beliriyor ve turun ritmi kesiliyordu
+      // (uygulama sahibinin tekrarlanan geri bildirimi, 2026-07-26).
+      // Birincil eylem alt perdede her an görünür: "Tekrar oyna" uzun bir
+      // okuma listesinin arkasında kalmaz.
+      _AllExplanationsCard(records: answerRecords),
+      const SizedBox(height: SahneSpace.sectionTop),
+      _MoreOptions(
+        onHome: () => Navigator.of(context).popUntil((route) => route.isFirst),
+        onLeaderboard: () {
+          Navigator.of(
+            context,
+          ).push(AppRoute.to(LeaderboardScreen(repository: repository)));
+        },
+        onRate: () => ReviewService.openStoreListing(),
+      ),
+    ];
+
+    final scaffold = SahneStageScaffold(
+      // Çevrimiçi turda kapatmak da ana eylem gibi ilk rotaya döner; solo
+      // turda yalnız sonuç rotası kapanır (`PopScope` aşağıda).
+      onClose: isOnlineRoom ? completeResultAction : null,
+      closeLabel: context.t(K.close),
+      // Sonuçta dar huzme yerine sonuç ışınları (kahramanın arkasında).
+      beam: false,
+      // Orta yuva bağlamdır: "Yarış tamamlandı" zaten içerikte başlık,
+      // ekran adı ("Sonuç") tekrarlanmaz.
+      center: Text(
+        '$roundLabel • '
+        '${context.t(K.questionCount, {'count': '$totalQuestions'})}',
+      ),
+      dock: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: _maxContentWidth),
+          child: _ResultDock(
+            primaryKey: primaryResultKey,
+            primaryLabel: primaryResultLabel,
+            primaryIcon: learningContinue ? null : nextActionIcon,
+            onPrimary: completeResultAction,
+            shareLabel: context.t(K.share),
+            onShare: shareResult,
           ),
         ),
       ),
-      body: Container(
-        color: AppTheme.bgOf(context),
-        child: SafeArea(
-          child: Stack(
-            children: [
-              ListView(
-                // Sonuçtaki açıklamalar, öğrenme özeti ve birincil eylem
-                // tek bir öğrenme yüzeyidir. Kısa ekranlarda da
-                // erişilebilirlik ağacına birlikte girsinler; kayıt sayısı
-                // oda soru sayısıyla sınırlı olduğu için geniş önbellek
-                // güvenlidir.
-                scrollCacheExtent: const ScrollCacheExtent.pixels(2500),
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.xs,
-                  AppSpacing.page,
-                  AppSpacing.lg,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final side = math.max(
+            SahneSpace.page,
+            (constraints.maxWidth - _maxContentWidth) / 2,
+          );
+          // Işınlar kahramanın dışına taşar; üst satırın (kapat, bağlam)
+          // üstüne boyanmasın diye gövde kırpılır.
+          return ClipRect(
+            child: Stack(
+              children: [
+                ListView(
+                  // Sonuçtaki açıklamalar, öğrenme özeti ve yan eylemler tek
+                  // bir öğrenme yüzeyidir. Kısa ekranlarda da erişilebilirlik
+                  // ağacına birlikte girsinler; kayıt sayısı oda soru
+                  // sayısıyla sınırlı olduğu için geniş önbellek güvenlidir.
+                  scrollCacheExtent: const ScrollCacheExtent.pixels(2500),
+                  padding: EdgeInsets.fromLTRB(
+                    side,
+                    SahneSpace.x2,
+                    side,
+                    SahneSpace.x6,
+                  ),
+                  children: children,
                 ),
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(AppRadius.card),
-                    // Kutlama katmanı: kilim dokusu başlığın arkasında
-                    // merkezden dışa açılır.
-                    //
-                    // Tek kutlama kanalı konfetiydi; konfeti her uygulamada
-                    // aynıdır ve ZanKurd'a ait bir şey söylemez (2026-07-25
-                    // görsel denetimi). Marka dili zaten kilim motifine
-                    // dayanıyor — kutlama da aynı dili konuşur.
-                    //
-                    // Yalnız kutlanacak bir sonuç varken çizilir: 1v1'de
-                    // galibiyet, solo turda en az yarısı doğru. Kaybedilen
-                    // turda kutlama deseni açmak, sonucu yanlış okur.
-                    child: KilimReveal(
-                      active: is1v1
-                          ? isWinner
-                          : (totalQuestions > 0 &&
-                                correctCount * 2 >= totalQuestions),
-                      // Sağlayıcı yoksa (ör. bu ekranı izole eden widget
-                      // testleri) kutlama sessizce animasyonsuz çizilir.
-                      // Dekoratif bir katman, barındırıldığı ağaç eksik
-                      // diye ekranı çökertmemeli.
-                      reducedMotion:
-                          context
-                              .watch<ReducedMotionProvider?>()
-                              ?.reduceMotion ??
-                          false,
-                      color: kilimRevealColorFor(context, onBrand: !isDraw),
-                      child: Container(
-                        key: const ValueKey('result-score-header'),
-                        decoration: BoxDecoration(
-                          gradient: headerGradient,
-                          borderRadius: BorderRadius.circular(AppRadius.card),
-                          border: Border.all(
-                            color: borderColor.withValues(alpha: 0.35),
-                            width: 1.0,
-                          ),
-                          boxShadow: AppTheme.cardShadow(context),
-                        ),
-                        padding: const EdgeInsets.fromLTRB(
-                          AppSpacing.lg,
-                          AppSpacing.lg,
-                          AppSpacing.lg,
-                          AppSpacing.md,
-                        ),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Positioned(
-                              right: -8,
-                              top: -38,
-                              child: IgnorePointer(
-                                child: Icon(
-                                  headerIcon,
-                                  size: 130,
-                                  color: Colors.white.withValues(alpha: 0.06),
-                                ),
-                              ),
-                            ),
-                            // 2026-07-23 M33: Roj maskotu sonuç ekranında hiç
-                            // yoktu — marka kimliği en duygusal andan
-                            // (skoru görme) eksikti. Skora göre ruh hâli
-                            // değişir; yoğun bilgi sütununu bozmasın diye
-                            // sol üst köşede küçük bir rozet olarak durur.
-                            Positioned(
-                              left: 0,
-                              top: 0,
-                              child: IgnorePointer(
-                                child: Opacity(
-                                  opacity: 0.85,
-                                  child: RojMascot(
-                                    size: 36,
-                                    mood: accuracy >= 80
-                                        ? RojMood.celebrate
-                                        : accuracy >= 40
-                                        ? RojMood.happy
-                                        : RojMood.thinking,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                // Header row: icon + title
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 32,
-                                      height: 32,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white.withValues(
-                                          alpha: 0.14,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                          AppRadius.xs,
-                                        ),
-                                        border: Border.all(
-                                          color: Colors.white.withValues(
-                                            alpha: 0.22,
-                                          ),
-                                        ),
-                                      ),
-                                      child: Icon(
-                                        headerIcon,
-                                        color: Colors.white,
-                                        size: 16,
-                                      ),
-                                    ),
-                                    const SizedBox(width: AppSpacing.xs),
-                                    Expanded(
-                                      child: Text(
-                                        context.upper(headerTitle),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: AppTypography.caption.copyWith(
-                                          color: Colors.white.withValues(
-                                            alpha: 0.82,
-                                          ),
-                                          letterSpacing: 1.4,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: AppSpacing.sm),
-                                // Mockup 8: doğruluk kademesine göre 3 yıldız
-                                // (bu boşluk daha önce boştu, net yükseklik
-                                // artışı yok — ~450px doğrulanmış).
-                                // Yıldızlar turuncu hero üzerinde duruyor:
-                                // altın (#E7B53C) turuncuda ~1.3:1, boş yıldız
-                                // beyaz@0.18 ile görünmez haldeydi — skorun en
-                                // özet göstergesi okunmuyordu (2026-07-22 UX
-                                // denetimi). Koyu yarı saydam bir hap zemin
-                                // hem doluyu hem boşu ayrıştırıyor.
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.heroScrim(),
-                                    borderRadius: BorderRadius.circular(
-                                      AppRadius.pill,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      for (var i = 0; i < 3; i++)
-                                        _ScoreStar(
-                                          // Doluluk, rengin yanında ikinci
-                                          // ve daha güçlü bir işarettir:
-                                          // renk körü bir oyuncu için tek
-                                          // ayırt edici olan da odur.
-                                          earned:
-                                              i <
-                                              (accuracy >= 80
-                                                  ? 3
-                                                  : accuracy >= 50
-                                                  ? 2
-                                                  : 1),
-                                          size: i == 1 ? 30 : 22,
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: AppSpacing.xxs),
-                                // BIG score number — sayarak çıkar.
-                                //
-                                // Skor birden beliriyordu; kazanma anının
-                                // tamamı tek karede bitiyor ve geriye
-                                // okunacak bir sayı kalıyordu. Tırmanışı
-                                // izlemek kazanmanın kendisidir (bkz.
-                                // `RollingCount`). Hareket azaltma açıkken
-                                // sayım yapılmaz.
-                                //
-                                // Öğrenme turunda puan üretilmez (`score`
-                                // hep 0); büyük sayı "0" yazınca 3 doğru
-                                // yapan kullanıcıya başarısız gibi
-                                // görünüyordu (2026-09-10 simülatör turu).
-                                // Öğrenmede sayı, doğru cevap sayısıdır:
-                                // "3/5".
-                                RollingCount(
-                                  key: const ValueKey('result-score-count'),
-                                  value: isLearningExperience
-                                      ? correctCount
-                                      : score,
-                                  suffix: isLearningExperience
-                                      ? '/$totalQuestions'
-                                      : '',
-                                  style: AppTypography.display.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 72,
-                                    height: 0.95,
-                                  ),
-                                ),
-                                const SizedBox(height: AppSpacing.xxs),
-                                // Category & accuracy on one line
-                                Text(
-                                  '$roundLabel '
-                                  '· ${context.percent(accuracy)} '
-                                  '${context.t(K.accuracyLower)}',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTypography.bodyMedium.copyWith(
-                                    color: Colors.white.withValues(alpha: 0.72),
-                                    fontSize: 13,
-                                  ),
-                                ),
-                                if (isLearningExperience) ...[
-                                  const SizedBox(height: AppSpacing.xxs),
-                                  Text(
-                                    context.t(K.learningResultHint),
-                                    textAlign: TextAlign.center,
-                                    style: AppTypography.caption.copyWith(
-                                      color: Colors.white.withValues(
-                                        alpha: 0.78,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                                const SizedBox(height: AppSpacing.sm),
-                                // Turda dokunan kilim.
-                                //
-                                // Sonuç ekranı doğru SAYISINI söylüyordu
-                                // ("%70 doğruluk") ama turun kendisini
-                                // göstermiyordu: hangi soruda takıldığı,
-                                // seri mi tutturduğu yoksa dağınık mı
-                                // gittiği tek bakışta okunmuyordu. Şerit
-                                // soru ekranındakiyle AYNI nesnedir; oyuncu
-                                // tur boyunca onun dokunuşunu izler,
-                                // burada bitmiş hâlini görür.
-                                //
-                                // `showCurrent` kapalı: tur bitti, "sıradaki
-                                // soru" vurgusu yalan olurdu.
-                                //
-                                // Renkler hero'ya göre elle verilir; tema
-                                // yüzeyi turuncunun üstünde boş baklavayı
-                                // dolu gibi gösteriyor (bkz. KilimBoard.
-                                // trackColor).
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: AppSpacing.sm,
-                                  ),
-                                  child: KilimBoard(
-                                    key: const ValueKey('result-kilim-board'),
-                                    total: totalQuestions,
-                                    currentIndex: totalQuestions,
-                                    showCurrent: false,
-                                    height: 18,
-                                    trackColor: Colors.white.withValues(
-                                      alpha: 0.16,
-                                    ),
-                                    outlineColor: Colors.white.withValues(
-                                      alpha: 0.30,
-                                    ),
-                                    results: [
-                                      for (final record in answerRecords)
-                                        record.isCorrect,
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: AppSpacing.md),
-                                // Ödül rozetleri.
-                                //
-                                // `Row` idi: sistem yazısı büyütüldüğünde iki
-                                // rozet yan yana sığmıyor ve kartın dışına
-                                // taşıyordu. `Wrap` sığmayanı alt satıra alır
-                                // (2026-07-26).
-                                // Ödül rozetleri skor SAYIMI bittikten
-                                // sonra yerine oturur.
-                                //
-                                // Hepsi aynı anda beliriyordu: skor,
-                                // yıldızlar, kilim ve ödüller tek karede
-                                // gelince göz nereye bakacağını
-                                // bilmiyor ve kazanılan şey kaynayıp
-                                // gidiyordu. Ödül bir SONUÇtur; sonucu
-                                // sebebinden önce göstermek anlatıyı
-                                // tersine çevirir.
-                                //
-                                // Gecikme `Interval` ile verilir, ayrı
-                                // bir zamanlayıcıyla değil: `Timer` +
-                                // `setState` ekran erken kapatılırsa
-                                // ölü bir State'e dokunur ve bu ekran
-                                // zaten sonuç yazılırken kapatılabiliyor.
-                                _RewardEntrance(
-                                  child: Wrap(
-                                    alignment: WrapAlignment.center,
-                                    spacing: 8,
-                                    runSpacing: 8,
-                                    children: [
-                                      if (coinsAwarded > 0)
-                                        _ResultRewardChip(
-                                          icon: AppIcons.coins,
-                                          label:
-                                              '+$coinsAwarded${context.t(K.coinAbbrev)}',
-                                          color: AppTheme.gold,
-                                        ),
-                                      if (_earnedXP > 0)
-                                        _ResultRewardChip(
-                                          icon: AppIcons.bolt,
-                                          label: '+$_earnedXP XP',
-                                          // Koyu sonuç kartında accent (koyu
-                                          // yeşil) soluk kalıyordu; kazanım
-                                          // hissi için aydınlatılmış yeşil.
-                                          color: Color.alphaBlend(
-                                            Colors.white.withValues(
-                                              alpha: 0.35,
-                                            ),
-                                            AppTheme.accent,
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                if (_levelJourneyReady) ...[
-                                  const SizedBox(height: AppSpacing.sm),
-                                  _ResultLevelJourneyProgress(
-                                    level: _currentLevel,
-                                    xpInLevel: _xpInCurrentLevel,
-                                    xpNeeded: _xpNeededForNextLevel,
-                                    progress: _levelProgress,
-                                  ),
-                                ],
-                                // Günlük tavana varıldıysa SEBEBİ söyle.
-                                //
-                                // Jeton rozeti yalnız miktar sıfırdan
-                                // büyükken çiziliyor, dolayısıyla tavana
-                                // varan tur ekranda hiçbir iz bırakmıyordu:
-                                // oyuncu "+0" bile görmüyor, yalnız hiçbir
-                                // şey görmüyordu. Sıfır tek başına
-                                // belirsizdir — tavan da sıfır verir, arıza
-                                // da. Sebebi yazmak, sessizliği bilgiye
-                                // çevirir (2026-08-12 denetimi).
-                                if (widget.dailyCapReached &&
-                                    coinsAwarded <= 0) ...[
-                                  const SizedBox(height: AppSpacing.sm),
-                                  Row(
-                                    key: const ValueKey(
-                                      'result-daily-cap-notice',
-                                    ),
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        AppIcons.coins,
-                                        size: 14,
-                                        color: Colors.white70,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Flexible(
-                                        child: Text(
-                                          context.t(K.soloDailyCapReached),
-                                          textAlign: TextAlign.center,
-                                          style: AppTypography.caption.copyWith(
-                                            color: Colors.white70,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                                // Ödül kuyrukta bekliyorsa bunu söyle.
-                                // Rozet yalnız miktar sıfırdan büyükse
-                                // çizildiği için çevrimdışı turda ekranda
-                                // hiçbir iz kalmıyor ve oyuncu turu boşuna
-                                // oynadığını sanıyordu (2026-07-26).
-                                if (widget.rewardSettlementState ==
-                                        QuizRewardSettlementState.queued ||
-                                    (widget.rewardSettlementState == null &&
-                                        widget.rewardQueued &&
-                                        coinsAwarded <= 0)) ...[
-                                  const SizedBox(height: AppSpacing.sm),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        AppIcons.cloud,
-                                        size: 14,
-                                        color: Colors.white70,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Flexible(
-                                        child: Text(
-                                          context.t(K.rewardPending),
-                                          textAlign: TextAlign.center,
-                                          style: AppTypography.caption.copyWith(
-                                            color: Colors.white70,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                                if (widget.rewardSettlementState ==
-                                    QuizRewardSettlementState.unresolved) ...[
-                                  const SizedBox(height: AppSpacing.sm),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        AppIcons.cloud,
-                                        size: 14,
-                                        color: Colors.white70,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Flexible(
-                                        child: Text(
-                                          context.t(K.rewardUnresolved),
-                                          textAlign: TextAlign.center,
-                                          style: AppTypography.caption.copyWith(
-                                            color: Colors.white70,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                                const SizedBox(height: AppSpacing.md),
-                                Divider(
-                                  color: Colors.white.withValues(alpha: 0.15),
-                                  height: 1,
-                                ),
-                                const SizedBox(height: AppSpacing.sm),
-                                // Compact stats row: ✅ 17  ❌ 3  ⏱ 0  🔥 12
-                                Wrap(
-                                  alignment: WrapAlignment.center,
-                                  spacing: AppSpacing.sm,
-                                  runSpacing: AppSpacing.xs,
-                                  children: [
-                                    _StatPill(
-                                      icon: AppIcons.circleCheck,
-                                      value: '$correctCount',
-                                      label: context.t(K.correct),
-                                      color: AppTheme.correct,
-                                    ),
-                                    _StatPill(
-                                      icon: AppIcons.circleXmark,
-                                      value: '$wrongCount',
-                                      label: context.t(K.wrong),
-                                      color: AppTheme.wrong,
-                                    ),
-                                    if (unanswered > 0)
-                                      _StatPill(
-                                        icon: AppIcons.hourglass,
-                                        value: '$unanswered',
-                                        label: context.t(K.blank),
-                                        color: AppTheme.textMutedColor(context),
-                                      ),
-                                    if (bestStreak > 0)
-                                      _StatPill(
-                                        icon: AppIcons.fire,
-                                        value: '$bestStreak',
-                                        label: context.t(K.streakLabel),
-                                        color: AppTheme.gold,
-                                      ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                if (_showConfetti)
+                  ConfettiOverlay(
+                    onFinished: () {
+                      setState(() {
+                        _showConfetti = false;
+                      });
+                    },
                   ),
-                  if (opponents.isNotEmpty) ...[
-                    const SizedBox(height: 16),
-                    _RaceStandings(
-                      userScore: score,
-                      userIdentity: room.players.isNotEmpty
-                          ? room.players.first
-                          : null,
-                      opponents: opponents,
-                    ),
-                  ],
-                  const SizedBox(height: 16),
-                  _buildResultActions(
-                    primaryKey: primaryResultKey,
-                    primaryLabel: primaryResultLabel,
-                    primaryIcon: primaryResultIcon,
-                    onPrimaryPressed: completeResultAction,
-                    secondaryActions: secondaryResultActions,
-                  ),
-                  if (answerRecords.isNotEmpty) ...[
-                    const SizedBox(height: 16),
-                    LearningOutcomeCard(
-                      outcome: learningOutcome,
-                      onReview: learningOutcome.reviewRecords.isEmpty
-                          ? null
-                          : () => openReview(learningOutcome.reviewRecords),
-                    ),
-                  ],
-                  _buildDeferredResultActions(
-                    primaryLabel: primaryResultLabel,
-                    secondaryActions: secondaryResultActions,
-                  ),
-                  if (_newAchievements.isNotEmpty) ...[
-                    const SizedBox(height: 16),
-                    _AchievementUnlocks(achievements: _newAchievements),
-                  ],
-                  if (_promotions.isNotEmpty) ...[
-                    const SizedBox(height: 16),
-                    _MasteryPromotions(promotions: _promotions),
-                  ],
-                  if (_dailyStreak > 0) ...[
-                    const SizedBox(height: 16),
-                    AppPanel(
-                      cardType: CardType.secondary,
-                      color: AppTheme.surfaceHiColor(context),
-                      child: Row(
-                        children: [
-                          Icon(
-                            AppIcons.fire,
-                            color: AppColors.readableAccent(
-                              context,
-                              AppTheme.accent,
-                            ),
-                            size: 30,
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  context.t(K.dailyStreakDays, {
-                                    'days': '$_dailyStreak',
-                                  }),
-                                  style: TextStyle(
-                                    color: AppTheme.textPrimaryColor(context),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  context.t(K.keepStreakTomorrow),
-                                  style: TextStyle(
-                                    color: AppTheme.textMutedColor(context),
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: 16),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      dividerColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: ExpansionTile(
-                        key: const ValueKey('result-more-options'),
-                        tilePadding: const EdgeInsets.symmetric(horizontal: 8),
-                        childrenPadding: const EdgeInsets.only(bottom: 4),
-                        dense: true,
-                        visualDensity: VisualDensity.compact,
-                        title: Text(
-                          context.t(K.moreOptions),
-                          textAlign: TextAlign.center,
-                          style: AppTypography.caption.copyWith(
-                            color: AppTheme.textSubColor(context),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        children: [
-                          Wrap(
-                            alignment: WrapAlignment.center,
-                            spacing: 4,
-                            runSpacing: 4,
-                            children: [
-                              TextButton(
-                                key: const ValueKey('result-home-button'),
-                                style: TextButton.styleFrom(
-                                  visualDensity: VisualDensity.compact,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 6,
-                                  ),
-                                ),
-                                onPressed: () => Navigator.of(
-                                  context,
-                                ).popUntil((route) => route.isFirst),
-                                child: Text(
-                                  context.t(K.home),
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: AppTheme.textSubColor(context),
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  visualDensity: VisualDensity.compact,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    AppRoute.to(
-                                      LeaderboardScreen(repository: repository),
-                                    ),
-                                  );
-                                },
-                                child: Text(
-                                  context.t(K.leaderboardLink),
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: AppTheme.textMutedColor(context),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              // Değerlendir: öne çıkan CTA değil, soluk link — her
-                              // sonuç ekranında birincil aksiyonla yarışmasın.
-                              TextButton(
-                                key: const ValueKey('result-rate-button'),
-                                style: TextButton.styleFrom(
-                                  visualDensity: VisualDensity.compact,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                ),
-                                onPressed: () =>
-                                    ReviewService.openStoreListing(),
-                                child: Text(
-                                  context.t(K.rate),
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: AppTheme.textMutedColor(context),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // Turun bütün açıklamaları en sonda, bir arada.
-                  //
-                  // Eskiden her şıkkın altında tek tek açılıyordu; şık
-                  // işaretlenir işaretlenmez paragraf beliriyor ve turun
-                  // ritmi kesiliyordu (uygulama sahibinin tekrarlanan geri
-                  // bildirimi, 2026-07-26). Kart birincil butonların
-                  // *altında* durur: "Tekrar oyna" uzun bir okuma listesinin
-                  // arkasında kalmamalı.
-                  const SizedBox(height: 20),
-                  _AllExplanationsCard(records: answerRecords),
-                ],
-              ),
-              if (_showConfetti)
-                ConfettiOverlay(
-                  onFinished: () {
-                    setState(() {
-                      _showConfetti = false;
-                    });
-                  },
-                ),
-            ],
-          ),
-        ),
+              ],
+            ),
+          );
+        },
       ),
     );
 
@@ -2199,6 +1304,795 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   }
 }
 
+/// Geniş ekranda (tablet, masaüstü) içerik ve alt perde bu genişlikte
+/// ortalanır; satırlar ekran boyunca uzayıp okunmaz hâle gelmez.
+const double _maxContentWidth = 560;
+
+enum _DuelOutcome { win, draw, loss }
+
+/// Sonuç kahramanı — maketteki "5 · Sonuç" (`.sh-res`).
+///
+/// Kart DEĞİL: doğrudan sahnenin üstünde durur. Yukarıdan aşağı: üç puan
+/// yıldızı (ortadaki büyük) ya da 1v1'de sonuç amblemi → Başlık 28 →
+/// puan Ekran 64 Zêr → "puan • %67 doğruluk" Açıklama → altın kilim göz
+/// şeridi (160). Arkada sonuç ışınları (yalnız kutlanacak sonuçta) ve
+/// alçak bir dağ sırtı ufku.
+class _ResultHero extends StatelessWidget {
+  const _ResultHero({
+    required this.starsEarned,
+    required this.duel,
+    required this.title,
+    required this.value,
+    required this.suffix,
+    required this.caption,
+    required this.hint,
+    required this.celebrate,
+    required this.notices,
+    super.key,
+  });
+
+  final int starsEarned;
+  final _DuelOutcome? duel;
+  final String title;
+  final int value;
+  final String suffix;
+  final String caption;
+  final String? hint;
+  final bool celebrate;
+  final List<Widget> notices;
+
+  /// Işınların merkezi: kahramanın tepesinden puan sayısının ortasına.
+  static const double _raysCenterY = 104;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final duel = this.duel;
+    final emblem = duel == null
+        ? _ScoreStars(earned: starsEarned)
+        : _DuelEmblem(outcome: duel);
+    final content = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(height: 44, child: emblem),
+        const SizedBox(height: SahneSpace.x1),
+        Semantics(
+          header: true,
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: SahneType.title.copyWith(
+              color: duel == _DuelOutcome.win ? t.goldTx : t.tx,
+            ),
+          ),
+        ),
+        // Puan sayarak çıkar: tırmanışı izlemek kazanmanın kendisidir (bkz.
+        // `RollingCount`). Hareket azaltma açıkken sayım yapılmaz.
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: RollingCount(
+            key: const ValueKey('result-score-count'),
+            value: value,
+            suffix: suffix,
+            style: SahneType.screen.copyWith(color: t.gold),
+          ),
+        ),
+        const SizedBox(height: SahneSpace.x1),
+        Text(
+          caption,
+          textAlign: TextAlign.center,
+          style: SahneType.caption.copyWith(color: t.tx2),
+        ),
+        if (hint != null) ...[
+          const SizedBox(height: SahneSpace.x1),
+          Text(
+            hint!,
+            textAlign: TextAlign.center,
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+        ],
+        const SizedBox(height: SahneSpace.x2),
+        // Kilim göz şeridi yalnız sonuç puanının altında ve sahne kartının
+        // üst kenarında yaşar (spec `illustrationIconRule.desen`); rengi
+        // rolü izler: solo ödül altını, 1v1 yarış lalı.
+        SizedBox(
+          width: 160,
+          child: SahneKilimStrip(
+            color: (duel == null ? t.gold : t.raceTx).withValues(alpha: 0.7),
+          ),
+        ),
+        for (final notice in notices) ...[
+          const SizedBox(height: SahneSpace.x2),
+          notice,
+        ],
+      ],
+    );
+
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Positioned.fill(
+          child: IgnorePointer(
+            child: ExcludeSemantics(
+              child: CustomPaint(
+                painter: ResultBackdropPainter(
+                  rays: celebrate,
+                  raysCenterY: _raysCenterY,
+                  bg: t.bg,
+                  ridge: t.s1,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            top: SahneSpace.x2,
+            bottom: SahneSpace.x4,
+          ),
+          child: SizedBox(width: double.infinity, child: content),
+        ),
+      ],
+    );
+  }
+}
+
+/// Kahramanın arkası: sonuç ışınları + dağ sırtı ufku.
+///
+/// Işınlar maketteki `.sh-rays`: `repeating-conic-gradient(ray 0–5°,
+/// şeffaf 5–15°)` üstüne `radial-gradient(closest-side, şeffaf %16, bg
+/// %74)` örtü. Flutter karşılığı `SweepGradient(tileMode: repeated)` + bg
+/// renginde `RadialGradient`; maske, bulanıklık ve `saveLayer` yok (spec
+/// `shadows[3]`). 600'lük daireye kırpılır: köşelerdeki bg karesi
+/// sahnenin alttan ışımasını örtmesin.
+///
+/// Dağ sırtı: logodaki dağlardan alçak bir silüet, Perde (`s1`) tonunda
+/// %40; ışınları ufuk çizgisinde keser — puan bir ufkun üstünde durur.
+///
+/// NOT (birleştirme): Soru grubu aynı sırtı `SahneStageScaffold` ressamlarına
+/// ekliyor. Bu yerel ressam, ortak ressam gelene kadar sonuç ekranının
+/// kendi kopyasıdır; birleştirmede ortaklaştırılmalı. Sırayla düello sonucu
+/// da bunu kullandığı için (şimdilik) açık bir sınıftır; birleştirmede
+/// `widgets/sahne/sahne_painters.dart`e taşınmalı.
+class ResultBackdropPainter extends CustomPainter {
+  const ResultBackdropPainter({
+    required this.rays,
+    required this.raysCenterY,
+    required this.bg,
+    required this.ridge,
+  });
+
+  final bool rays;
+  final double raysCenterY;
+  final Color bg;
+  final Color ridge;
+
+  static const double _raysRadius = 300;
+  static const double _rayDegrees = 5;
+  static const double _rayPeriodDegrees = 15;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (rays) {
+      final center = Offset(size.width / 2, raysCenterY);
+      final rect = Rect.fromCircle(center: center, radius: _raysRadius);
+      canvas.save();
+      canvas.clipPath(Path()..addOval(rect));
+      const period = _rayPeriodDegrees * math.pi / 180;
+      const on = _rayDegrees / _rayPeriodDegrees;
+      canvas.drawRect(
+        rect,
+        Paint()
+          ..shader = const SweepGradient(
+            endAngle: period,
+            tileMode: TileMode.repeated,
+            colors: [
+              SahneStageColors.ray,
+              SahneStageColors.ray,
+              Colors.transparent,
+              Colors.transparent,
+            ],
+            stops: [0, on, on, 1],
+          ).createShader(rect),
+      );
+      canvas.drawRect(
+        rect,
+        Paint()
+          ..shader = RadialGradient(
+            colors: [bg.withValues(alpha: 0), bg],
+            stops: const [0.16, 0.74],
+          ).createShader(rect),
+      );
+      canvas.restore();
+    }
+
+    // Dağ sırtı: kahramanın alt kenarına oturur, sayfa kenarına taşar.
+    const bleed = SahneSpace.page;
+    final base = size.height;
+    final w = size.width + 2 * bleed;
+    const h = 64.0;
+    double x(double f) => -bleed + w * f;
+    final ridgePath = Path()
+      // Taban kahramanın 12 altına iner: ödül kartına kadar ışın sızmaz.
+      ..moveTo(x(0), base + SahneSpace.x3)
+      ..lineTo(x(0), base - h * 0.30)
+      ..lineTo(x(0.10), base - h * 0.46)
+      ..lineTo(x(0.18), base - h * 0.34)
+      ..lineTo(x(0.31), base - h * 0.72)
+      ..lineTo(x(0.40), base - h * 0.52)
+      ..lineTo(x(0.50), base - h)
+      ..lineTo(x(0.61), base - h * 0.58)
+      ..lineTo(x(0.70), base - h * 0.78)
+      ..lineTo(x(0.83), base - h * 0.38)
+      ..lineTo(x(0.92), base - h * 0.50)
+      ..lineTo(x(1), base - h * 0.26)
+      ..lineTo(x(1), base + SahneSpace.x3)
+      ..close();
+    // Önce zemin rengiyle doldurulur: ışınlar dağların ARKASINDA kalır
+    // (ufuk çizgisinde kesilir); üstüne Perde tonu %40.
+    canvas.drawPath(ridgePath, Paint()..color = bg);
+    canvas.drawPath(ridgePath, Paint()..color = ridge.withValues(alpha: 0.4));
+  }
+
+  @override
+  bool shouldRepaint(ResultBackdropPainter old) =>
+      old.rays != rays ||
+      old.raysCenterY != raysCenterY ||
+      old.bg != bg ||
+      old.ridge != ridge;
+}
+
+/// Kahramanın üç puan yıldızı: 32 · 44 · 32, alta hizalı, 8 aralık.
+///
+/// ## Kusur (tarih)
+///
+/// Kazanılan ve kazanılmayan yıldız bir zamanlar aynı KONTUR glifiyle
+/// çiziliyordu; ikisini yalnız renk ayırıyordu ve 5/5 doğru bir tur üç boş
+/// yıldızla kutlanıyordu (2026-08-12 simülatör turu). Şahnê'de kazanılan
+/// yıldız DOLU Zêr glif, kazanılmayan Ray (`s3`) tonunda — ayrımı renk
+/// değil doluluk taşır (bkz. `quiz_result_star_fill_test.dart`).
+class _ScoreStars extends StatelessWidget {
+  const _ScoreStars({required this.earned});
+
+  final int earned;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        for (var i = 0; i < 3; i++) ...[
+          if (i > 0) const SizedBox(width: SahneSpace.x2),
+          SahneGlyph(
+            SahneGlyphKind.star,
+            size: i == 1 ? 44 : 32,
+            filled: i < earned,
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// 1v1 sonuç amblemi: kazanınca Zêr taç; berabere ve kaybedince nötr ikon
+/// (ikincil metin). Rast/Şaş ailesi kullanılmaz.
+class _DuelEmblem extends StatelessWidget {
+  const _DuelEmblem({required this.outcome});
+
+  final _DuelOutcome outcome;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return switch (outcome) {
+      _DuelOutcome.win => const SahneGlyph(SahneGlyphKind.crown, size: 44),
+      _DuelOutcome.draw => ExcludeSemantics(
+        child: Icon(AppIcons.scaleBalanced, size: 36, color: t.tx2),
+      ),
+      _DuelOutcome.loss => ExcludeSemantics(
+        child: Icon(AppIcons.flag, size: 36, color: t.tx2),
+      ),
+    };
+  }
+}
+
+/// Kahramanın altındaki bilgi satırı (günlük tavan, bekleyen ödül).
+class _HeroNotice extends StatelessWidget {
+  const _HeroNotice({required this.icon, required this.text, super.key});
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 20,
+          child: Center(child: Icon(icon, size: 16, color: t.tx2)),
+        ),
+        const SizedBox(width: SahneSpace.x2),
+        Flexible(
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Ödül kartı — maketteki `.sh-rew`: yüzey kartı; üstte Zêr ödül çipleri
+/// (+jeton, +XP), altında seviye satırı ve Zêr ilerleme çubuğu.
+class _RewardCard extends StatelessWidget {
+  const _RewardCard({
+    required this.coins,
+    required this.coinLabel,
+    required this.coinSemanticLabel,
+    required this.xp,
+    required this.journeyReady,
+    required this.level,
+    required this.xpInLevel,
+    required this.xpNeeded,
+    required this.progress,
+  });
+
+  final int coins;
+  final String coinLabel;
+  final String coinSemanticLabel;
+  final int xp;
+  final bool journeyReady;
+  final int level;
+  final int xpInLevel;
+  final int xpNeeded;
+  final double progress;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final hasChips = coins > 0 || xp > 0;
+    final levelLabel = context.t(K.seviyeP, {'p0': '$level'});
+    return SahneSurfaceCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (hasChips)
+            // Ödül çipleri skor SAYIMI bittikten sonra yerine oturur: ödül
+            // bir SONUÇtur, sebebinden önce gösterilmez (bkz.
+            // `_RewardEntrance`).
+            _RewardEntrance(
+              child: Wrap(
+                spacing: SahneSpace.x2,
+                runSpacing: SahneSpace.x2,
+                children: [
+                  if (coins > 0)
+                    SahneStatChip(
+                      gold: true,
+                      leading: const SahneGlyph(SahneGlyphKind.coin),
+                      label: coinLabel,
+                      semanticLabel: coinSemanticLabel,
+                    ),
+                  if (xp > 0)
+                    SahneStatChip(
+                      gold: true,
+                      leading: const SahneGlyph(SahneGlyphKind.bolt),
+                      label: '+$xp XP',
+                    ),
+                ],
+              ),
+            ),
+          if (journeyReady) ...[
+            if (hasChips) const SizedBox(height: SahneSpace.x3),
+            KeyedSubtree(
+              key: const ValueKey('result-level-journey-progress'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: SahneSpace.x3,
+                    children: [
+                      Text(
+                        levelLabel,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
+                      ),
+                      Text(
+                        '$xpInLevel / $xpNeeded XP',
+                        style: SahneType.caption.copyWith(
+                          color: t.tx2,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: SahneSpace.x2),
+                  SahneProgressBar(
+                    value: progress,
+                    tone: SahneProgressTone.gold,
+                    semanticLabel: levelLabel,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// İstatistik karoları — maketteki `.sh-stats`: doğru ✓ / yanlış ✗ /
+/// (boş ⧗) / seri alev; en az 56 yüksek, L pah yüzey. Durum hiçbir zaman
+/// yalnız renkle verilmez: ikon şekli ve söz birlikte.
+///
+/// Karolar eşit genişlikte yan yana durur; dar ekranda ya da büyük yazıda
+/// bir karo 96'dan darsa ikişerli satıra iner (sayı ve söz harf harf
+/// bölünmez).
+class _StatTiles extends StatelessWidget {
+  const _StatTiles({
+    required this.correct,
+    required this.wrong,
+    required this.unanswered,
+    required this.streak,
+  });
+
+  final int correct;
+  final int wrong;
+  final int unanswered;
+  final int streak;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final tiles = <Widget>[
+      _StatTile(
+        leading: Icon(AppIcons.check, size: 20, color: t.okTx),
+        value: '$correct',
+        label: context.t(K.correct),
+      ),
+      _StatTile(
+        leading: Icon(AppIcons.xmark, size: 20, color: t.errTx),
+        value: '$wrong',
+        label: context.t(K.wrong),
+      ),
+      if (unanswered > 0)
+        _StatTile(
+          leading: Icon(AppIcons.hourglass, size: 20, color: t.tx2),
+          value: '$unanswered',
+          label: context.t(K.blank),
+        ),
+      if (streak > 0)
+        _StatTile(
+          leading: const SahneGlyph(SahneGlyphKind.flame),
+          value: '$streak',
+          label: context.t(K.streakLabel),
+        ),
+    ];
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const gap = SahneSpace.x2;
+        final minTile = MediaQuery.textScalerOf(context).scale(96);
+        var perRow = tiles.length;
+        while (perRow > 1 &&
+            (constraints.maxWidth - gap * (perRow - 1)) / perRow < minTile) {
+          perRow = perRow > 2 ? 2 : 1;
+        }
+        final width = (constraints.maxWidth - gap * (perRow - 1)) / perRow;
+        return Wrap(
+          spacing: gap,
+          runSpacing: gap,
+          children: [
+            for (final tile in tiles) SizedBox(width: width, child: tile),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _StatTile extends StatelessWidget {
+  const _StatTile({
+    required this.leading,
+    required this.value,
+    required this.label,
+  });
+
+  final Widget leading;
+  final String value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      container: true,
+      label: '$value $label',
+      excludeSemantics: true,
+      child: SahneSurfaceCard(
+        padding: const EdgeInsets.symmetric(
+          horizontal: SahneSpace.x3,
+          vertical: SahneSpace.x2,
+        ),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 40),
+          child: Row(
+            children: [
+              SizedBox.square(dimension: 20, child: leading),
+              const SizedBox(width: SahneSpace.x2),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      value,
+                      style: SahneType.bodyStrong.copyWith(
+                        color: t.tx,
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                    Text(
+                      label,
+                      style: SahneType.caption.copyWith(color: t.tx2),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// "Kategorilere göre performans" — turda görülen her kategori bir liste
+/// satırı: 36'lık küçük resim (çizimi olmayan kategoride Zimrût ikon
+/// karosu), "doğru/cevaplanan" değeri ve durum karesi (✓ yarısı ya da
+/// fazlası doğru, ✗ değilse). Söz ekran okuyucuya gider.
+class _CategoryLearnings extends StatelessWidget {
+  const _CategoryLearnings({required this.breakdown});
+
+  final List<CategoryTally> breakdown;
+
+  @override
+  Widget build(BuildContext context) {
+    final isKu = context.isKu;
+    return SahneListGroup(
+      children: [
+        for (final tally in breakdown)
+          _categoryRow(
+            context,
+            tally,
+            CategoryNames.localized(tally.category, isKu),
+          ),
+      ],
+    );
+  }
+
+  Widget _categoryRow(BuildContext context, CategoryTally tally, String name) {
+    final ok = tally.correct * 2 >= tally.answered;
+    final statusLabel = context.t(ok ? K.correct : K.wrong);
+    final fraction = '${tally.correct}/${tally.answered}';
+    final trailing = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SahneRowValue(fraction),
+        const SizedBox(width: SahneSpace.x3),
+        SahneStatusBadge.square(correct: ok, label: statusLabel),
+      ],
+    );
+    final semantic = '$name, $fraction, $statusLabel';
+    if (CategoryVisuals.hasOwnImage(tally.category)) {
+      return SahneListRow.thumb(
+        image: AssetImage(CategoryVisuals.imagePath(tally.category)),
+        title: name,
+        trailing: trailing,
+        semanticLabel: semantic,
+      );
+    }
+    return SahneListRow.icon(
+      icon: CategoryVisuals.icon(tally.category),
+      role: SahneRole.learn,
+      title: name,
+      trailing: trailing,
+      semanticLabel: semantic,
+    );
+  }
+}
+
+/// Öğrenme özetinin altındaki ikincil eylemler (yanlışları incele, yeni
+/// oda). İkincil düğme (Kulis): turun birincil eylemi alt perdededir.
+class _ResultAction {
+  const _ResultAction({
+    required this.key,
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  final Key key;
+  final IconData icon;
+  final String label;
+  final VoidCallback? onTap;
+}
+
+/// İkincil eylemleri eşit genişlikte yan yana dizer; bir etiket kendi
+/// payına sığmıyorsa ya da yazı büyükse alt alta iner — küçültmek yerine
+/// büyütmek (Kusur 2, 2026-09-27: kare kutuda etiket ~8px'e küçülüyordu).
+class _SecondaryActions extends StatelessWidget {
+  const _SecondaryActions({required this.actions});
+
+  final List<_ResultAction> actions;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget button(_ResultAction action) => SahneButton.secondary(
+      key: action.key,
+      icon: action.icon,
+      label: action.label,
+      onPressed: action.onTap,
+      expand: true,
+    );
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const gap = SahneSpace.x3;
+        final share =
+            (constraints.maxWidth - gap * (actions.length - 1)) /
+            actions.length;
+        final scaler = MediaQuery.textScalerOf(context);
+        final tooNarrow = actions.any((action) {
+          final painter = TextPainter(
+            text: TextSpan(
+              text: action.label,
+              style: SahneType.button.copyWith(fontFamily: SahneType.display),
+            ),
+            textDirection: Directionality.of(context),
+            textScaler: scaler,
+            maxLines: 1,
+          )..layout();
+          // İkon 20 + aralık 8 + yan boşluk 12 × 2.
+          return painter.width + 20 + 8 + 24 > share;
+        });
+        if (actions.length == 1 || !(tooNarrow || scaler.scale(16) >= 24)) {
+          return Row(
+            children: [
+              for (var i = 0; i < actions.length; i++) ...[
+                if (i > 0) const SizedBox(width: gap),
+                Expanded(child: button(actions[i])),
+              ],
+            ],
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = 0; i < actions.length; i++) ...[
+              if (i > 0) const SizedBox(height: SahneSpace.x2),
+              button(actions[i]),
+            ],
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// Alt perde — maketteki `.sh-dock--2`: solda ikincil "Paylaş", sağda TEK
+/// birincil ("Tekrar oyna" / "Ana Sayfa" / öğrenmede "Devam Et"). Büyük
+/// yazıda alt alta iner, birincil üstte.
+class _ResultDock extends StatelessWidget {
+  const _ResultDock({
+    required this.primaryKey,
+    required this.primaryLabel,
+    required this.primaryIcon,
+    required this.onPrimary,
+    required this.shareLabel,
+    required this.onShare,
+  });
+
+  final String primaryKey;
+  final String primaryLabel;
+
+  /// `null` → ikon yok, sağda ok (öğrenmede "Devam Et →").
+  final IconData? primaryIcon;
+  final VoidCallback onPrimary;
+  final String shareLabel;
+  final VoidCallback onShare;
+
+  @override
+  Widget build(BuildContext context) {
+    final primary = _DockAction(
+      key: ValueKey(primaryKey),
+      label: primaryLabel,
+      onTap: onPrimary,
+      child: SahneButton.primary(
+        label: primaryLabel,
+        icon: primaryIcon,
+        arrow: primaryIcon == null,
+        expand: true,
+        onPressed: onPrimary,
+      ),
+    );
+    final share = _DockAction(
+      key: const ValueKey('result-share-button'),
+      label: shareLabel,
+      onTap: onShare,
+      child: SahneButton.secondary(
+        label: shareLabel,
+        icon: AppIcons.shareNodes,
+        expand: true,
+        onPressed: onShare,
+      ),
+    );
+    if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [primary, share],
+      );
+    }
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(flex: 2, child: share),
+          const SizedBox(width: SahneSpace.x3),
+          Expanded(flex: 3, child: primary),
+        ],
+      ),
+    );
+  }
+}
+
+/// Alt perde düğmesinin dokunma kutusu: görsel 52, dokunma ve ekran
+/// okuyucu alanı en az 56 (sonuç eyleminin 54'lük tabanı,
+/// `quiz_result_visual_test`). Ekran okuyucu tek bir düğme okur.
+class _DockAction extends StatelessWidget {
+  const _DockAction({
+    required this.label,
+    required this.onTap,
+    required this.child,
+    super.key,
+  });
+
+  final String label;
+  final VoidCallback onTap;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: true,
+      label: label,
+      onTap: onTap,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 56),
+          child: Center(child: child),
+        ),
+      ),
+    );
+  }
+}
+
+/// Bot yarışında rakiplerle karşılaştırma: bölüm başlığı + özet +
+/// sıralama. "Sen" satırı grubun dışında tek başına durur (maketteki
+/// Sıralama); rakipler liste grubunda, sıra numarası ve elmas avatarla.
 class _RaceStandings extends StatelessWidget {
   const _RaceStandings({
     required this.userScore,
@@ -2212,6 +2106,7 @@ class _RaceStandings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     // Repository katmanı yerel oyuncu için sabit 'Tu' adı üretir (i18n
     // katmanı değil); bu widget "sen" etiketini burada, gösterim anında
     // yerelleştirir — userIdentity'nin ham adı görmezden gelinir.
@@ -2222,7 +2117,6 @@ class _RaceStandings extends StatelessWidget {
     final userRank =
         standings.indexWhere((player) => player.state == 'Player') + 1;
     final leader = standings.first;
-    final title = context.t(K.compareRivals);
     final summary = leader.state == 'Player'
         ? context.t(K.finishedAtRank, {'rank': '$userRank'})
         : context.t(K.leaderFinishedFirst, {
@@ -2230,626 +2124,302 @@ class _RaceStandings extends StatelessWidget {
             'rank': '$userRank',
           });
 
-    return AppPanel(
-      color: AppTheme.surfaceHiColor(context),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(AppIcons.peopleGroup, color: AppTheme.accent),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ],
+    // Ardışık rakipler tek grupta; "Sen" satırı iki grubun arasında.
+    final blocks = <Widget>[];
+    var pending = <Widget>[];
+    void flush() {
+      if (pending.isEmpty) return;
+      if (blocks.isNotEmpty) {
+        blocks.add(const SizedBox(height: SahneSpace.x2));
+      }
+      blocks.add(SahneListGroup(children: pending));
+      pending = <Widget>[];
+    }
+
+    for (var i = 0; i < standings.length; i++) {
+      final player = standings[i];
+      final streakLine = player.streak > 0
+          ? '${context.t(K.streakLabel)} ${player.streak}'
+          : null;
+      if (player.state == 'Player') {
+        flush();
+        if (blocks.isNotEmpty) {
+          blocks.add(const SizedBox(height: SahneSpace.x2));
+        }
+        blocks.add(
+          SahneListRow.me(
+            rank: i + 1,
+            title: player.name,
+            subtitle: streakLine,
+            trailing: SahneRowValue('${player.score}'),
           ),
-          const SizedBox(height: 6),
-          // Sabit `textMuted` karanlık tema rengi; açık temada okunmuyordu.
-          Text(
-            summary,
-            style: TextStyle(color: AppTheme.textMutedColor(context)),
+        );
+      } else {
+        final name = player.name.trim();
+        pending.add(
+          SahneListRow.rank(
+            rank: i + 1,
+            title: player.name,
+            initial: name.isEmpty ? null : name.characters.first.toUpperCase(),
+            icon: AppIcons.user,
+            subtitle: streakLine,
+            trailing: SahneRowValue('${player.score}'),
           ),
-          const SizedBox(height: 12),
-          for (var i = 0; i < standings.length; i++)
-            _RaceStandingRow(rank: i + 1, player: standings[i]),
-        ],
-      ),
-    );
-  }
-}
+        );
+      }
+    }
+    flush();
 
-class _AchievementUnlocks extends StatelessWidget {
-  const _AchievementUnlocks({required this.achievements});
-
-  final List<Achievement> achievements;
-
-  @override
-  Widget build(BuildContext context) {
-    // Sonuç kartından görsel olarak daha zayıf: tam gold gradyan blok yerine
-    // sade yüzey + ince gold sınır; rozet bilgisi ikincil kalır.
-    return AppPanel(
-      color: AppTheme.surfaceHiColor(context),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 30,
-                height: 30,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppTheme.gold.withValues(alpha: 0.14),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: AppTheme.gold.withValues(alpha: 0.35),
-                  ),
-                ),
-                child: Icon(
-                  AppIcons.medal,
-                  color: AppColors.onAccentTint(context, AppTheme.gold),
-                  size: 17,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  context.t(K.newBadge),
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          for (final achievement in achievements)
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Row(
-                children: [
-                  Container(
-                    width: 34,
-                    height: 34,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppTheme.gold.withValues(alpha: 0.10),
-                      borderRadius: BorderRadius.circular(AppRadius.badge),
-                    ),
-                    child: Icon(
-                      achievement.icon,
-                      color: AppColors.onAccentTint(context, AppTheme.gold),
-                      size: 19,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          achievement.title(context.isKu),
-                          style: TextStyle(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Text(
-                          achievement.description(context.isKu),
-                          style: TextStyle(
-                            color: AppTheme.textMutedColor(context),
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _MasteryPromotions extends StatelessWidget {
-  const _MasteryPromotions({required this.promotions});
-
-  final Map<String, MasteryLevel> promotions;
-
-  @override
-  Widget build(BuildContext context) {
-    final ku = context.isKu;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final entry in promotions.entries)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: AppPanel(
-              color: entry.value.badgeColor.withValues(alpha: 0.12),
-              child: Row(
-                children: [
-                  Container(
-                    width: 44,
-                    height: 44,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: entry.value.badgeColor.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(AppRadius.sm),
-                    ),
-                    child: Icon(
-                      entry.value.icon,
-                      color: AppColors.onAccentTint(
-                        context,
-                        entry.value.badgeColor,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          // Anahtar tabanlı kayda taşınmadı ve taşınmamalı:
-                          // iki dal yalnız *metin* değil, iki farklı veri
-                          // araması yapıyor — `CategoryNames.localized`
-                          // farklı argümanla, unvan da farklı alandan
-                          // (`titleKu` / `titleTr`) okunuyor. Bu bir çeviri
-                          // değil, dile göre kaynak seçimidir; kayıt defteri
-                          // bunu ifade edemez.
-                          ku
-                              ? '${CategoryNames.localized(entry.key, true)} — ${entry.value.titleKu}!'
-                              : '${CategoryNames.localized(entry.key, false)} — ${entry.value.titleTr}!',
-                          style: TextStyle(
-                            color: entry.value.badgeColor,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          context.t(K.newTitleEarned),
-                          style: TextStyle(
-                            color: AppTheme.textMutedColor(context),
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+        SahneSectionHeader(title: context.t(K.compareRivals)),
+        Text(summary, style: SahneType.body.copyWith(color: t.tx2)),
+        const SizedBox(height: SahneSpace.x3),
+        ...blocks,
       ],
     );
   }
 }
 
-/// Sonuç kahramanındaki üç puan yıldızından biri.
-///
-/// ## Kusur
-///
-/// Kazanılan ve kazanılmayan yıldız aynı KONTUR glifiyle çiziliyordu
-/// (`AppIcons.star` → FontAwesome **Regular**); ikisini yalnız renk
-/// ayırıyordu. Mor kahraman zemininde altın bir kontur "boş yıldız" gibi
-/// okunuyor ve 5/5 doğru bir tur üç boş yıldızla kutlanıyordu — turun en
-/// güçlü ödül anı, hiçbir şey kazanılmamış gibi görünüyordu (2026-08-12
-/// simülatör turu, iPhone SE).
-///
-/// Sessizdi çünkü mantık doğruydu: %80 üstü zaten 3 yıldız hesaplıyordu.
-/// Kusur hesapta değil, o hesabı taşıyan glifteydi ve hiçbir test bir
-/// ikonun dolu mu boş mu çizildiğine bakmıyordu.
-class _ScoreStar extends StatelessWidget {
-  const _ScoreStar({required this.earned, required this.size});
-
-  final bool earned;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Icon(
-      earned ? AppIcons.starSolid : AppIcons.star,
-      size: size,
-      color: earned ? AppTheme.gold : Colors.white.withValues(alpha: 0.32),
-    );
-  }
-}
-
-class _ResultRewardChip extends StatelessWidget {
-  const _ResultRewardChip({
-    required this.icon,
-    required this.label,
-    required this.color,
+/// Turun kazanımları: yeni rozetler, ustalık unvanları, tamamlanan günlük
+/// görevler ve günlük seri —
+/// Zêr ikon karolu tek liste grubu. Rozet varsa başlığı "Yeni Rozet".
+class _RoundGains extends StatelessWidget {
+  const _RoundGains({
+    required this.achievements,
+    required this.promotions,
+    required this.missions,
+    required this.dailyStreak,
   });
 
-  final IconData icon;
-  final String label;
-  final Color color;
+  final List<Achievement> achievements;
+  final Map<String, MasteryLevel> promotions;
+  final List<DailyMission> missions;
+  final int dailyStreak;
 
   @override
   Widget build(BuildContext context) {
-    // Çip hero gradyanının üzerinde durur, kendi %20'lik tonuyla değil:
-    // zemin yeşilden turuncuya kayarken rengin kendisi yazı olarak
-    // "+30c" için 2.77:1, "+100 XP" için 2.44:1 veriyordu (2026-07-27).
-    //
-    // Yanındaki `_StatPill` bu sorunu 2026-07-22'de çözmüştü — koyu perde
-    // + beyaz metin, ölçümde 10:1'in üstünde. Ödül çipi o çözümü
-    // kullanmıyordu; şimdi kullanıyor. Renk kimliği ikonda ve kenarlıkta
-    // yaşamayı sürdürür.
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: AppColors.heroScrim(),
-        borderRadius: BorderRadius.circular(99),
-        border: Border.all(color: color.withValues(alpha: 0.55)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: 14),
-          const SizedBox(width: 4),
-          Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-              fontSize: 12,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _RaceStandingRow extends StatelessWidget {
-  const _RaceStandingRow({required this.rank, required this.player});
-
-  final int rank;
-  final Player player;
-
-  @override
-  Widget build(BuildContext context) {
-    final isUser = player.state == 'Player';
-    final color = isUser ? AppTheme.accent : AppTheme.gold;
-
-    return Container(
-      margin: const EdgeInsets.only(top: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: BoxDecoration(
-        color: isUser
-            ? AppTheme.accent.withValues(alpha: 0.12)
-            : AppTheme.bgOf(context).withValues(alpha: 0.35),
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(
-          color: isUser
-              ? AppTheme.accent.withValues(alpha: 0.45)
-              : AppTheme.borderColor(context).withValues(alpha: 0.5),
-          width: 1.2,
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 32,
-            height: 32,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.16),
-              borderRadius: BorderRadius.circular(AppRadius.badge),
-            ),
-            child: Text(
-              '$rank',
-              style: TextStyle(
-                color: AppColors.onAccentTint(context, color),
-                fontWeight: FontWeight.w800,
+    final ku = context.isKu;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (achievements.isNotEmpty)
+          SahneSectionHeader(title: context.t(K.newBadge))
+        else
+          const SizedBox(height: SahneSpace.sectionTop),
+        SahneListGroup(
+          children: [
+            for (final achievement in achievements)
+              SahneListRow.icon(
+                icon: achievement.icon,
+                role: SahneRole.gold,
+                title: achievement.title(context.isKu),
+                subtitle: achievement.description(context.isKu),
               ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          PlayerAvatar(
-            radius: 15,
-            photoUrl: player.avatarUrl,
-            iconId: player.avatarIcon,
-            colorHex: player.avatarColor,
-            frameId: player.avatarFrame,
-            displayName: player.name,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              player.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w800,
+            for (final entry in promotions.entries)
+              SahneListRow.icon(
+                icon: entry.value.icon,
+                role: SahneRole.gold,
+                // Anahtar tabanlı kayda taşınmadı ve taşınmamalı: iki dal
+                // yalnız *metin* değil, iki farklı veri araması yapıyor —
+                // `CategoryNames.localized` farklı argümanla, unvan da
+                // farklı alandan (`titleKu` / `titleTr`) okunuyor. Bu bir
+                // çeviri değil, dile göre kaynak seçimidir; kayıt defteri
+                // bunu ifade edemez.
+                title: ku
+                    ? '${CategoryNames.localized(entry.key, true)} — ${entry.value.titleKu}!'
+                    : '${CategoryNames.localized(entry.key, false)} — ${entry.value.titleTr}!',
+                subtitle: context.t(K.newTitleEarned),
               ),
-            ),
-          ),
-          if (player.streak > 0) ...[
-            const Icon(AppIcons.fire, color: AppTheme.gold, size: 18),
-            const SizedBox(width: 4),
-            Text(
-              '${player.streak}',
-              style: const TextStyle(
-                color: AppTheme.gold,
-                fontWeight: FontWeight.w800,
+            for (final mission in missions)
+              SahneListRow.icon(
+                icon: AppIcons.listCheck,
+                role: SahneRole.gold,
+                title: context.t(K.gorevTamamlandi),
+                subtitle:
+                    '${context.isKu ? mission.labelKu : mission.labelTr}'
+                    ' — +${mission.xpReward} XP',
               ),
-            ),
-            const SizedBox(width: 12),
+            if (dailyStreak > 0)
+              SahneListRow.icon(
+                icon: AppIcons.fire,
+                role: SahneRole.gold,
+                title: context.t(K.dailyStreakDays, {'days': '$dailyStreak'}),
+                subtitle: context.t(K.keepStreakTomorrow),
+              ),
           ],
-          Text(
-            '${player.score}',
-            style: TextStyle(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// `_ResultSideAction`ın etiket stili — renksiz taban.
-///
-/// Çizim (`_ResultSideAction.build`) bunun üstüne `color` ekler; genişlik
-/// ölçümü (`_resultSideActionWidth`, `_QuizResultScreenState` içinde) AYNI
-/// stili OLDUĞU GİBİ kullanır. İkisi ayrı stil tanımlarsa ölçülen genişlik
-/// ekrana çizilenden sapar ve satır/sütun kırılma kararı yanlış hesaplanır
-/// (Kusur 2, 2026-09-27 düzeltmesi).
-final TextStyle _resultSideActionLabelStyle = AppTypography.bodyMedium.copyWith(
-  fontFamily: AppTypography.fontFamily,
-  fontWeight: FontWeight.w700,
-  fontSize: 14,
-);
-
-/// `_ResultSideAction` pilinin GERÇEK genişliği: ölçülen etiket + ikon +
-/// ikon-etiket boşluğu + yatay dolgu + kenarlık.
-///
-/// Sabit `sideActionWidth = 76` varsayımının yerini alır (Kusur 2,
-/// 2026-09-27) — o sabit her yan eylemin AYNI genişlikte olduğunu
-/// varsayıyordu; hap düğmede genişlik etikete göre değişir ("Paylaş" ↔
-/// "Yanlışları incele"). Sabit tahmin, uzun bir etiketi aslında
-/// sığmayacakken sığmış SANIYORDU.
-double _resultSideActionWidth(BuildContext context, String label) {
-  final painter = TextPainter(
-    // `test/painter_font_test.dart` her `TextSpan` bloğunun KENDİ İÇİNDE
-    // `fontFamily` yazdığını arar — `_resultSideActionLabelStyle` ailesini
-    // zaten taşısa da, buradaki `.copyWith` OLMADAN bekçi bunu göremez ve
-    // metin sessizce sistem yazı tipine düşebilecek bir kalıp olarak
-    // işaretler. Mevcut `_shouldStackResultActions`teki primary ölçümüyle
-    // AYNI (kasıtlı fazladan) desen.
-    text: TextSpan(
-      text: label,
-      style: _resultSideActionLabelStyle.copyWith(
-        fontFamily: AppTypography.fontFamily,
-      ),
-    ),
-    textDirection: Directionality.of(context),
-    textScaler: MediaQuery.textScalerOf(context),
-    maxLines: 1,
-  )..layout();
-  // İkon(18) + ikon-etiket boşluğu(8) + yatay dolgu(16*2) + kenarlık(1*2):
-  // `_ResultSideAction`ın gerçek buton anatomisi (aşağıdaki `build`e bakın).
-  const chrome = 18.0 + 8.0 + 16.0 * 2 + 1.0 * 2;
-  return painter.width + chrome;
-}
-
-/// Sonuç yan eylemi — ikon + kısa etiket, primary CTA'yı boğmaz.
-class _ResultSideAction extends StatelessWidget {
-  const _ResultSideAction({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-    super.key,
-  });
-
-  final IconData icon;
-  final String label;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final enabled = onTap != null;
-    final color = enabled
-        ? AppTheme.textPrimaryColor(context)
-        : AppTheme.textMutedColor(context);
-    // Not: burada bilinçli olarak EK bir `Semantics` sarmalayıcı YOK.
-    // `InkWell` zaten dokunulabilir/etkin durumunu ve alttaki `Text`in
-    // etiketini erişilebilirlik ağacına taşıyor; üstüne açık bir
-    // `label`/`button` eklemek (`Text`in KENDİ örtük etiketiyle aynı
-    // metinle) iki açık etiketin birleşmeye çalışmasına ve `flutter test`te
-    // semantics birleştirme hatasına yol açabilirdi. Kusur 2 yalnız GÖRÜNÜR
-    // boyutla ilgiliydi; mevcut semantics davranışı olduğu gibi korunur.
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        child: Ink(
-          // Kusur 2 (2026-09-27, tasarım denetimi): kutu 76×54 SABİT bir
-          // kareydi ve etiket `FittedBox(scaleDown)` içindeydi; "Yanlışları
-          // incele" bu kutuda ~8px'e küçülüyordu — okunmuyordu. Hap biçimli
-          // bir düğmeye geçildi: yükseklik sabit (48, dokunma hedefi
-          // tabanının üstünde) ama GENİŞLİK yok — genişlik artık içeriğe
-          // (ikon + etiket) göre kendiliğinden oluşur. Sığmayan etiket artık
-          // küçülmez, `ellipsis` ile kırpılır; bu, WCAG'ın izin verdiği en
-          // küçük okunur boyutu (14px) HER ZAMAN korur. Genişlik kararı
-          // (satır/sütun) `_shouldStackResultActions`teki gerçek ölçümle
-          // ayrılır, yani etiket burada nadiren kırpılır.
-          height: 48,
-          decoration: BoxDecoration(
-            color: AppTheme.surfaceHiColor(context),
-            borderRadius: BorderRadius.circular(AppRadius.md),
-            border: Border.all(color: AppTheme.borderColor(context)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, size: 18, color: color),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: _resultSideActionLabelStyle.copyWith(color: color),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ),
-      ),
+      ],
     );
   }
 }
 
-class _ResultLevelJourneyProgress extends StatelessWidget {
-  const _ResultLevelJourneyProgress({
-    required this.level,
-    required this.xpInLevel,
-    required this.xpNeeded,
-    required this.progress,
+/// "Diğer seçenekler": seyrek çıkış yolları (ana sayfa, sıralama,
+/// değerlendir) kapalı bir açılır satırda; metin bağlantısı olarak durur,
+/// birincil eylemle yarışmaz.
+class _MoreOptions extends StatelessWidget {
+  const _MoreOptions({
+    required this.onHome,
+    required this.onLeaderboard,
+    required this.onRate,
   });
 
-  final int level;
-  final int xpInLevel;
-  final int xpNeeded;
-  final double progress;
+  final VoidCallback onHome;
+  final VoidCallback onLeaderboard;
+  final VoidCallback onRate;
 
   @override
   Widget build(BuildContext context) {
-    final levelLabel = context.t(K.seviyeP, {'p0': '$level'});
-    return Container(
-      key: const ValueKey('result-level-journey-progress'),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColors.heroScrim(0.24),
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.14)),
+    final t = SahneTokens.of(context);
+    return Theme(
+      data: Theme.of(context).copyWith(
+        dividerColor: Colors.transparent,
+        splashColor: Colors.transparent,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: ExpansionTile(
+        key: const ValueKey('result-more-options'),
+        shape: SahneShape.m,
+        collapsedShape: SahneShape.m,
+        iconColor: t.tx2,
+        collapsedIconColor: t.tx2,
+        tilePadding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
+        childrenPadding: const EdgeInsets.only(bottom: SahneSpace.x1),
+        title: Text(
+          context.t(K.moreOptions),
+          textAlign: TextAlign.center,
+          style: SahneType.captionStrong.copyWith(color: t.tx2),
+        ),
         children: [
           Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.xxs,
+            alignment: WrapAlignment.center,
+            spacing: SahneSpace.x3,
+            runSpacing: SahneSpace.x1,
             children: [
-              Text(
-                levelLabel,
-                style: AppTypography.caption.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
-                ),
+              SahneButton.text(
+                key: const ValueKey('result-home-button'),
+                label: context.t(K.home),
+                arrow: false,
+                onPressed: onHome,
               ),
-              Text(
-                '$xpInLevel / $xpNeeded XP',
-                style: AppTypography.caption.copyWith(
-                  color: Colors.white.withValues(alpha: 0.78),
-                  fontWeight: FontWeight.w700,
-                ),
+              SahneButton.text(
+                label: context.t(K.leaderboardLink),
+                arrow: false,
+                onPressed: onLeaderboard,
+              ),
+              // Değerlendir: öne çıkan CTA değil, sakin bir bağlantı — her
+              // sonuç ekranında birincil aksiyonla yarışmasın.
+              SahneButton.text(
+                key: const ValueKey('result-rate-button'),
+                label: context.t(K.rate),
+                arrow: false,
+                onPressed: onRate,
               ),
             ],
           ),
-          const SizedBox(height: 7),
-          Semantics(
-            label: levelLabel,
-            value: PercentFormat.ratio(progress, isKu: context.isKu),
-            child: ExcludeSemantics(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppRadius.pill),
-                child: LinearProgressIndicator(
-                  value: progress.clamp(0.0, 1.0),
-                  minHeight: 7,
-                  backgroundColor: Colors.white.withValues(alpha: 0.14),
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                    AppTheme.gold,
-                  ),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
   }
 }
 
-/// Compact inline stat: icon + value + label, used in the score hero.
-class _StatPill extends StatelessWidget {
-  const _StatPill({
-    required this.icon,
-    required this.value,
-    required this.label,
-    required this.color,
-  });
+/// Seviye atlama penceresi — sahne dilinde: Perde yüzey, L pah, üst
+/// kenarda altın kilim şeridi, Zêr taç, "Seviye N" Zêr plakası ve tek
+/// birincil "Devam Et". Gündüz temasında da gece çizilir.
+class _LevelUpDialog extends StatelessWidget {
+  const _LevelUpDialog({required this.level, required this.onContinue});
 
-  final IconData icon;
-  final String value;
-  final String label;
-  final Color color;
+  final int level;
+  final VoidCallback onContinue;
 
   @override
   Widget build(BuildContext context) {
-    // Pill turuncu hero gradyanının üzerinde durur; yüzey metin renkleri
-    // (textPrimary/textMuted) burada okunmuyordu — "Doğru/Yanlış/Seri"
-    // etiketleri turuncu üstü turuncuya düşüyordu (~1.8:1, 2026-07-22 UX
-    // denetimi). Beyaz metin tek başına da yetmez (turuncuda ~2.2:1), bu
-    // yüzden koyu yarı saydam bir zemin eklendi.
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: AppColors.heroScrim(),
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 16, color: color),
-          const SizedBox(width: 4),
-          Text(
-            value,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w800,
-              fontSize: 15,
+    return SahneStage(
+      stage: AppTheme.stage,
+      child: Builder(
+        builder: (context) {
+          final t = SahneTokens.of(context);
+          return Dialog(
+            backgroundColor: t.s1,
+            elevation: 0,
+            shape: SahneShape.l,
+            clipBehavior: Clip.antiAlias,
+            insetPadding: const EdgeInsets.symmetric(horizontal: SahneSpace.x6),
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    SahneSpace.x6,
+                    SahneSpace.x8,
+                    SahneSpace.x6,
+                    SahneSpace.x6,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SahneGlyph(SahneGlyphKind.crown, size: 56),
+                      const SizedBox(height: SahneSpace.x4),
+                      Semantics(
+                        header: true,
+                        child: Text(
+                          context.t(K.levelUpTitle),
+                          textAlign: TextAlign.center,
+                          style: SahneType.headline.copyWith(color: t.goldTx),
+                        ),
+                      ),
+                      const SizedBox(height: SahneSpace.x2),
+                      Text(
+                        context.t(K.yeniBirSeviyeyeUlastin),
+                        textAlign: TextAlign.center,
+                        style: SahneType.body.copyWith(color: t.tx2),
+                      ),
+                      const SizedBox(height: SahneSpace.x5),
+                      DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: t.gold,
+                          shape: SahneShape.m,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: SahneSpace.x5,
+                            vertical: SahneSpace.x2,
+                          ),
+                          child: Text(
+                            context.t(K.seviyeP, {'p0': '$level'}),
+                            textAlign: TextAlign.center,
+                            // Zêr dolgunun üstündeki metin uyarlanır:
+                            // hangi uç zeminden uzaksa o (burada koyu mürekkep).
+                            style: SahneType.headline.copyWith(
+                              color: AppColors.onSolid(AppTheme.gold),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: SahneSpace.x6),
+                      SahneButton.primary(
+                        label: context.t(K.devamEt2),
+                        expand: true,
+                        onPressed: onContinue,
+                      ),
+                    ],
+                  ),
+                ),
+                PositionedDirectional(
+                  top: 0,
+                  start: 0,
+                  end: 0,
+                  child: SahneKilimStrip(color: t.gold.withValues(alpha: 0.55)),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(width: 3),
-          Text(
-            label,
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.92),
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
 }
 
-/// Turun bütün açıklamalarını tek kartta toplayan bölüm.
+/// Turun bütün açıklamalarını tek bölümde toplar.
 ///
 /// Açıklama eskiden cevaptan hemen sonra sorunun altında açılıyordu.
 /// Uygulama sahibi bunu birkaç kez sorun olarak bildirdi: şık işaretlenir
@@ -2860,6 +2430,10 @@ class _StatPill extends StatelessWidget {
 /// Boş ya da şablon açıklamalar hiç listelenmez — `getLocalizedExplanation`
 /// onlar için boş döner ve boş bir satır göstermek, açıklama olmamasından
 /// kötüdür.
+///
+/// 2026-09-29 Şahnê: bölüm başlığı (`SahneSectionHeader`) + ipucu + liste
+/// grubu; her satırın solunda durum karesi (✓ / ✗ / boş için ⧗). Eski sol
+/// renk çubuğu kalktı — durum renkle değil şekil ve sözle verilir.
 class _AllExplanationsCard extends StatelessWidget {
   const _AllExplanationsCard({required this.records});
 
@@ -2895,51 +2469,29 @@ class _AllExplanationsCard extends StatelessWidget {
     }
     if (entries.isEmpty) return const SizedBox.shrink();
 
-    return AppPanel(
+    final t = SahneTokens.of(context);
+    return Column(
       key: const ValueKey('result-all-explanations'),
-      cardType: CardType.secondary,
-      color: AppTheme.surfaceHiColor(context),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(AppIcons.bookOpen, color: AppTheme.correct, size: 22),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  context.t(K.allExplanations),
-                  style: AppTypography.heading2.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
-                ),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SahneSectionHeader(title: context.t(K.allExplanations)),
+        Text(
+          context.t(K.allExplanationsHint),
+          style: SahneType.caption.copyWith(color: t.tx2),
+        ),
+        const SizedBox(height: SahneSpace.x3),
+        SahneListGroup(
+          dividerIndent: SahneSpace.x3 + 28 + SahneSpace.x3,
+          children: [
+            for (final entry in entries)
+              _ExplanationEntry(
+                index: entry.index,
+                record: entry.record,
+                explanation: entry.explanation,
               ),
-              Text(
-                '${entries.length}',
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textMutedColor(context),
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Text(
-            context.t(K.allExplanationsHint),
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textMutedColor(context),
-            ),
-          ),
-          for (final entry in entries) ...[
-            const SizedBox(height: 14),
-            _ExplanationEntry(
-              index: entry.index,
-              record: entry.record,
-              explanation: entry.explanation,
-            ),
           ],
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -2957,45 +2509,56 @@ class _ExplanationEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Doğru/yanlış ayrımı renkle verilir: oyuncu hangi soruda takıldığını
-    // listeyi okumadan bulabilsin.
-    final tone = record.isUnanswered
-        ? AppTheme.gold
-        : (record.isCorrect ? AppTheme.correct : AppTheme.wrong);
+    final t = SahneTokens.of(context);
+    // Durum şekille ve sözle: oyuncu hangi soruda takıldığını listeyi
+    // okumadan bulabilsin.
+    final Widget status = record.isUnanswered
+        ? Semantics(
+            label: context.t(K.blank),
+            excludeSemantics: true,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(color: t.s2, shape: SahneShape.s),
+              child: SizedBox.square(
+                dimension: 28,
+                child: Icon(AppIcons.hourglass, size: 16, color: t.tx2),
+              ),
+            ),
+          )
+        : SahneStatusBadge.square(
+            correct: record.isCorrect,
+            label: context.t(record.isCorrect ? K.correct : K.wrong),
+          );
 
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context).withValues(alpha: 0.6),
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-        border: Border(left: BorderSide(color: tone, width: 3)),
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        SahneSpace.x3,
+        SahneSpace.x3,
+        SahneSpace.x4,
+        SahneSpace.x3,
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '$index. ${record.prompt}',
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: AppTypography.bodyMedium.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            '${context.t(K.correctAnswerLabel)}: ${record.correctAnswer}',
-            style: AppTypography.caption.copyWith(
-              color: tone,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            explanation,
-            style: AppTypography.bodyMedium.copyWith(
-              color: AppTheme.textSubColor(context),
-              height: 1.45,
+          status,
+          const SizedBox(width: SahneSpace.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$index. ${record.prompt}',
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: SahneType.bodyStrong.copyWith(color: t.tx),
+                ),
+                const SizedBox(height: SahneSpace.x1),
+                Text(
+                  '${context.t(K.correctAnswerLabel)}: ${record.correctAnswer}',
+                  style: SahneType.captionStrong.copyWith(color: t.okTx),
+                ),
+                const SizedBox(height: SahneSpace.x1),
+                Text(explanation, style: SahneType.body.copyWith(color: t.tx2)),
+              ],
             ),
           ),
         ],
@@ -3004,13 +2567,13 @@ class _ExplanationEntry extends StatelessWidget {
   }
 }
 
-/// Ödül rozetlerini skor sayımından SONRA yerine oturtur.
+/// Ödül çiplerini skor sayımından SONRA yerine oturtur.
 ///
 /// Gecikme ayrı bir zamanlayıcı yerine `Interval` ile verilir: `Timer` +
 /// `setState` ikilisi ekran erken kapatıldığında ölü bir State'e dokunur
 /// ve sonuç ekranı tam da ödüller yazılırken kapatılabiliyor.
 ///
-/// Hareket azaltma açıkken giriş animasyonu yapılmaz; rozetler doğrudan
+/// Hareket azaltma açıkken giriş animasyonu yapılmaz; çipler doğrudan
 /// yerinde çizilir. Sağlayıcı yoksa (izole widget testleri) animasyon
 /// sessizce oynar — dekoratif bir davranış, ağacı eksik diye ekranı
 /// çökertmemeli.
@@ -3036,7 +2599,11 @@ class _RewardEntrance extends StatelessWidget {
       builder: (context, value, child) => Opacity(
         // `easeOutBack` 1'i aşar; opaklık kırpılmazsa assert atar.
         opacity: value.clamp(0.0, 1.0),
-        child: Transform.scale(scale: value, child: child),
+        child: Transform.scale(
+          scale: value,
+          alignment: AlignmentDirectional.centerStart,
+          child: child,
+        ),
       ),
       child: child,
     );

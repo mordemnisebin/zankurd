@@ -6,8 +6,8 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 /// Puan yıldızının DOLULUKLA konuştuğunun bekçisi.
 ///
@@ -26,6 +26,11 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 ///
 /// Doluluk aynı zamanda renkten BAĞIMSIZ ikinci bir işarettir; renk körü
 /// bir oyuncu için tek ayırt edici odur.
+///
+/// 2026-09-29 Şahnê: yıldızlar artık ikon yazı tipinden değil, Şahnê'nin
+/// özel ödül glifinden (`SahneGlyph(star)`) çizilir: kazanılan DOLU Zêr,
+/// kazanılmayan Ray tonunda. Bekçi aynı kuralı glifin `filled` alanından
+/// okur; eski "iki ayrı yazı tipi ailesi" testi glif setine taşındı.
 void main() {
   Widget wrap(Widget child) => MultiProvider(
     providers: [
@@ -71,15 +76,16 @@ void main() {
 
   /// Kahramandaki üç puan yıldızını doluluklarıyla döndürür.
   List<bool> starFills(WidgetTester tester) {
-    final icons = tester
-        .widgetList<Icon>(find.byType(Icon))
-        .where(
-          (icon) =>
-              icon.icon == AppIcons.star || icon.icon == AppIcons.starSolid,
+    final glyphs = tester
+        .widgetList<SahneGlyph>(
+          find.descendant(
+            of: find.byKey(const ValueKey('result-score-header')),
+            matching: find.byType(SahneGlyph),
+          ),
         )
-        .where((icon) => icon.size == 22 || icon.size == 30)
+        .where((glyph) => glyph.kind == SahneGlyphKind.star)
         .toList();
-    return icons.map((icon) => icon.icon == AppIcons.starSolid).toList();
+    return glyphs.map((glyph) => glyph.filled).toList();
   }
 
   testWidgets('kusursuz tur üç yıldızı da DOLU gösteriyor', (tester) async {
@@ -124,18 +130,37 @@ void main() {
     expect(starFills(tester), [true, false, false]);
   });
 
-  test('dolu ve boş yıldız gerçekten AYRI glifler', () {
-    // Şahnê'de kontur yıldız Lucide'dır; Lucide yazı tipinde dolgu yok, dolu
-    // yıldız bu yüzden Font Awesome Solid'de kalır (bkz.
-    // tool/generate_lucide_app_icons.py). Ayrımı font AİLESİ taşır. Biri
-    // ötekine eşitlenirse — ör. iki ad da Lucide'a çekilirse — ekran yine tek
-    // biçime döner ve üstteki üç test de sessizce anlamsızlaşır.
-    expect(
-      AppIcons.starSolid.fontFamily,
-      isNot(AppIcons.star.fontFamily),
-      reason:
-          'Dolu yıldız Font Awesome Solid, kontur yıldız Lucide ailesinden '
-          'gelmeli; ikisi aynı aileye düşerse doluluk ayrımı kaybolur.',
+  testWidgets('dolu ve boş yıldız gerçekten AYRI çizilir', (tester) async {
+    // Doluluk ayrımı `filled` bayrağından ressama gerçekten ulaşmalı: iki
+    // hâl aynı dolgu rengine düşerse ekran yine tek biçime döner ve üstteki
+    // üç test sessizce anlamsızlaşır.
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.dark(),
+        home: const Row(
+          children: [
+            SahneGlyph(SahneGlyphKind.star, key: ValueKey('on')),
+            SahneGlyph(
+              SahneGlyphKind.star,
+              filled: false,
+              key: ValueKey('off'),
+            ),
+          ],
+        ),
+      ),
     );
+    SahneGlyphPainter painterOf(String key) =>
+        tester
+                .widget<CustomPaint>(
+                  find.descendant(
+                    of: find.byKey(ValueKey(key)),
+                    matching: find.byType(CustomPaint),
+                  ),
+                )
+                .painter!
+            as SahneGlyphPainter;
+    expect(painterOf('on').fill, SahneTokens.night.gold);
+    expect(painterOf('off').fill, SahneTokens.night.s3);
+    expect(painterOf('on').fill, isNot(painterOf('off').fill));
   });
 }

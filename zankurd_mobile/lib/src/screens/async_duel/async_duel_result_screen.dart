@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -8,10 +9,10 @@ import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
 import '../../theme/app_icons.dart';
-import '../../theme/app_theme.dart';
 import '../../utils/app_route.dart';
 import '../../utils/error_reporter.dart';
-import '../../widgets/zk_back_button.dart';
+import '../../widgets/sahne/sahne.dart';
+import '../quiz_result_screen.dart' show ResultBackdropPainter;
 import 'async_duel_play_screen.dart';
 
 /// Sonuç ekranının dört bitiş durumu.
@@ -231,6 +232,11 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
     }
   }
 
+  /// 2026-09-29 Şahnê: C iskeleti (oyun sahnesi, her temada gece). Üstte
+  /// kapat + ortada bağlam ("Sırayla düello"); içerik ortada bir sonuç
+  /// kahramanı; alt perdede ikincil "Kapat" + TEK birincil "Yeni düello".
+  /// Kazanma Zêr taç + altın başlık; kaybetme ve beraberlik nötr; yarış
+  /// kimliği Boyax (VS amblemi, kilim şeridi). Rast/Şaş ailesi kullanılmaz.
   @override
   Widget build(BuildContext context) {
     final view = widget.view;
@@ -241,55 +247,207 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
       AsyncDuelResultKind.unfinished => _UnfinishedBody(view: view),
     };
     final canStartNew = view.kind != AsyncDuelResultKind.unfinished;
+    final celebrate =
+        view.kind == AsyncDuelResultKind.completed &&
+        view.outcome == AsyncDuelOutcome.win;
 
-    return Scaffold(
+    return SahneStageScaffold(
       key: const ValueKey('async-duel-result'),
-      appBar: zkAppBar(context, title: Text(context.t(K.asyncDuel))),
-      // İçerik kısa ekranda ortada, düğmeler altta durur; %200 yazıda içerik
-      // uzarsa sayfa kayar. Düğmeler yan yana sığmazsa alt alta iner (Row
-      // %200 yazıda sağdan taşıyordu).
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.all(AppSpacing.page),
-              sliver: SliverFillRemaining(
-                hasScrollBody: false,
-                child: Column(
-                  children: [
-                    Expanded(child: Center(child: content)),
-                    const SizedBox(height: AppSpacing.md),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      spacing: AppSpacing.sm,
-                      runSpacing: AppSpacing.sm,
-                      children: [
-                        OutlinedButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: Text(context.t(K.close)),
-                        ),
-                        if (canStartNew)
-                          FilledButton(
-                            key: const ValueKey('async-duel-result-new'),
-                            onPressed: () {
-                              Navigator.of(context).pushReplacement(
-                                AppRoute.to(
-                                  AsyncDuelPlayScreen(
-                                    repository: widget.repository,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Text(context.t(K.asyncDuelNew)),
+      closeLabel: context.t(K.close),
+      beam: false,
+      center: Text(context.t(K.asyncDuel)),
+      dock: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 560),
+          child: _ResultDock(
+            onClose: () => Navigator.of(context).pop(),
+            onNew: canStartNew
+                ? () {
+                    Navigator.of(context).pushReplacement(
+                      AppRoute.to(
+                        AsyncDuelPlayScreen(repository: widget.repository),
+                      ),
+                    );
+                  }
+                : null,
+          ),
+        ),
+      ),
+      // İçerik kısa ekranda ortada durur; %200 yazıda uzarsa sayfa kayar.
+      // Işınlar kahramanın dışına taşar; kısa içerikte kaydırma alanı
+      // kırpmadığı için üst satırın üstüne boyanmasın diye gövde kırpılır.
+      body: LayoutBuilder(
+        builder: (context, constraints) => ClipRect(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.page,
+              vertical: SahneSpace.x4,
+            ),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: math.max(0, constraints.maxHeight - SahneSpace.x8),
+              ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 560),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned.fill(
+                        child: IgnorePointer(
+                          child: ExcludeSemantics(
+                            child: CustomPaint(
+                              painter: ResultBackdropPainter(
+                                rays: celebrate,
+                                raysCenterY: 60,
+                                bg: SahneTokens.night.bg,
+                                ridge: SahneTokens.night.s1,
+                              ),
+                            ),
                           ),
-                      ],
-                    ),
-                  ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: SahneSpace.x6),
+                        child: SizedBox(width: double.infinity, child: content),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+/// Alt perde: ikincil "Kapat" + birincil "Yeni düello"; yarım kalan
+/// düelloda yalnız "Kapat". Büyük yazıda alt alta iner, birincil üstte.
+class _ResultDock extends StatelessWidget {
+  const _ResultDock({required this.onClose, required this.onNew});
+
+  final VoidCallback onClose;
+  final VoidCallback? onNew;
+
+  @override
+  Widget build(BuildContext context) {
+    final close = SahneButton.secondary(
+      label: context.t(K.close),
+      onPressed: onClose,
+      expand: true,
+    );
+    final onNew = this.onNew;
+    if (onNew == null) return close;
+    final create = SahneButton.primary(
+      key: const ValueKey('async-duel-result-new'),
+      label: context.t(K.asyncDuelNew),
+      onPressed: onNew,
+      expand: true,
+    );
+    if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          create,
+          const SizedBox(height: SahneSpace.x2),
+          close,
+        ],
+      );
+    }
+    return Row(
+      children: [
+        Expanded(flex: 2, child: close),
+        const SizedBox(width: SahneSpace.x3),
+        Expanded(flex: 3, child: create),
+      ],
+    );
+  }
+}
+
+/// Sonuç kahramanının ortak iskeleti: amblem → Başlık 28 → isteğe bağlı
+/// büyük sayı / skor satırı → açıklama → kilim şeridi → XP çipi.
+class _DuelHero extends StatelessWidget {
+  const _DuelHero({
+    required this.emblem,
+    required this.title,
+    this.titleColor,
+    this.children = const [],
+  });
+
+  final Widget emblem;
+  final String title;
+  final Color? titleColor;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        emblem,
+        const SizedBox(height: SahneSpace.x4),
+        Semantics(
+          header: true,
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: SahneType.title.copyWith(color: titleColor ?? t.tx),
+          ),
+        ),
+        ...children,
+      ],
+    );
+  }
+}
+
+/// Durum amblemi: 72'lik Kulis elması, içinde ikincil metin ikon.
+class _StateDiamond extends StatelessWidget {
+  const _StateDiamond({required this.icon});
+
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return SahneDiamondAvatar(
+      size: 72,
+      icon: icon,
+      color: t.s2,
+      foreground: t.tx2,
+    );
+  }
+}
+
+/// Zêr XP çipi (ödül rolü).
+class _XpChip extends StatelessWidget {
+  const _XpChip({required this.xp});
+
+  final int xp;
+
+  @override
+  Widget build(BuildContext context) {
+    return SahneStatChip(
+      gold: true,
+      leading: const SahneGlyph(SahneGlyphKind.bolt),
+      label: context.t(K.asyncDuelXp, {'xp': '$xp'}),
+    );
+  }
+}
+
+/// Yarış kimliğinin kilim göz şeridi (Boyax, %70).
+class _RaceStrip extends StatelessWidget {
+  const _RaceStrip();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 160,
+      child: SahneKilimStrip(
+        color: SahneTokens.of(context).raceTx.withValues(alpha: 0.7),
       ),
     );
   }
@@ -302,59 +460,70 @@ class _CompletedBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final outcome = view.outcome ?? AsyncDuelOutcome.draw;
     final title = switch (outcome) {
       AsyncDuelOutcome.win => context.t(K.youWon),
       AsyncDuelOutcome.loss => context.t(K.youLost),
       AsyncDuelOutcome.draw => context.t(K.draw),
     };
-    final icon = switch (outcome) {
-      AsyncDuelOutcome.win => AppIcons.trophy,
-      AsyncDuelOutcome.loss => AppIcons.faceFrown,
-      AsyncDuelOutcome.draw => AppIcons.scaleBalanced,
-    };
     final opponentName = view.opponentName ?? context.t(K.asyncDuelOpponent);
+    final initial = opponentName.trim().isEmpty
+        ? '?'
+        : opponentName.trim().characters.first.toUpperCase();
     final xp = _completedXp(view);
+    final win = outcome == AsyncDuelOutcome.win;
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, size: 56, color: AppTheme.brand),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: AppTypography.heading1.copyWith(
-            color: AppTheme.textPrimaryColor(context),
+    return _DuelHero(
+      emblem: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 44,
+            child: win
+                ? const SahneGlyph(SahneGlyphKind.crown, size: 44)
+                : ExcludeSemantics(
+                    child: Icon(
+                      outcome == AsyncDuelOutcome.draw
+                          ? AppIcons.scaleBalanced
+                          : AppIcons.flag,
+                      size: 36,
+                      color: t.tx2,
+                    ),
+                  ),
           ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SahneSpace.x3),
+          SahneVsEmblem(opponentInitial: initial),
+        ],
+      ),
+      title: title,
+      titleColor: win ? t.goldTx : null,
+      children: [
+        const SizedBox(height: SahneSpace.x2),
         Text(
           '${context.t(K.you)} ${view.myCorrect} – ${view.opponentCorrect} '
           '$opponentName',
           textAlign: TextAlign.center,
-          style: AppTypography.bodyLarge.copyWith(
-            color: AppTheme.textSubColor(context),
+          style: SahneType.headline.copyWith(
+            color: t.tx,
+            fontFeatures: const [FontFeature.tabularFigures()],
           ),
         ),
         if (outcome != AsyncDuelOutcome.draw &&
             view.myCorrect != null &&
             view.myCorrect == view.opponentCorrect) ...[
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: SahneSpace.x1),
           Text(
             context.t(K.asyncDuelTieBreak),
             key: const ValueKey('async-duel-result-tiebreak'),
             textAlign: TextAlign.center,
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textSubColor(context),
-            ),
+            style: SahneType.caption.copyWith(color: t.tx2),
           ),
         ],
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          context.t(K.asyncDuelXp, {'xp': '$xp'}),
-          style: AppTypography.heading2.copyWith(color: AppTheme.gold),
-        ),
+        const SizedBox(height: SahneSpace.x3),
+        const _RaceStrip(),
+        const SizedBox(height: SahneSpace.x4),
+        _XpChip(xp: xp),
       ],
     );
   }
@@ -367,36 +536,25 @@ class _WaitingBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    final t = SahneTokens.of(context);
+    return _DuelHero(
+      emblem: const _StateDiamond(icon: AppIcons.hourglass),
+      title: context.t(K.asyncDuelTurnDone),
       children: [
-        const Icon(AppIcons.hourglass, size: 56, color: AppTheme.brand),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          context.t(K.asyncDuelTurnDone),
-          textAlign: TextAlign.center,
-          style: AppTypography.heading1.copyWith(
-            color: AppTheme.textPrimaryColor(context),
-          ),
-        ),
-        if (view.myCorrect case final myCorrect?) ...[
-          const SizedBox(height: AppSpacing.sm),
+        if (view.myCorrect case final myCorrect?)
           Text(
             '$myCorrect/${view.total}',
             key: const ValueKey('async-duel-result-score'),
-            style: AppTypography.heading2.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-            ),
+            style: SahneType.screen.copyWith(color: t.gold),
           ),
-        ],
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SahneSpace.x2),
         Text(
           context.t(K.asyncDuelWaitingBody),
           textAlign: TextAlign.center,
-          style: AppTypography.bodyMedium.copyWith(
-            color: AppTheme.textSubColor(context),
-          ),
+          style: SahneType.body.copyWith(color: t.tx2),
         ),
+        const SizedBox(height: SahneSpace.x3),
+        const _RaceStrip(),
       ],
     );
   }
@@ -409,32 +567,22 @@ class _ExpiredBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final xp = _expiredXp(view);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return _DuelHero(
+      emblem: const _StateDiamond(icon: AppIcons.clock),
+      title: context.t(K.asyncDuelExpired),
       children: [
-        Icon(AppIcons.clock, size: 56, color: AppTheme.textMutedColor(context)),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          context.t(K.asyncDuelExpired),
-          textAlign: TextAlign.center,
-          style: AppTypography.heading1.copyWith(
-            color: AppTheme.textPrimaryColor(context),
-          ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SahneSpace.x2),
         Text(
           context.t(K.asyncDuelExpiredBody),
           textAlign: TextAlign.center,
-          style: AppTypography.bodyMedium.copyWith(
-            color: AppTheme.textSubColor(context),
-          ),
+          style: SahneType.body.copyWith(color: t.tx2),
         ),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          context.t(K.asyncDuelXp, {'xp': '$xp'}),
-          style: AppTypography.heading2.copyWith(color: AppTheme.gold),
-        ),
+        const SizedBox(height: SahneSpace.x3),
+        const _RaceStrip(),
+        const SizedBox(height: SahneSpace.x4),
+        _XpChip(xp: xp),
       ],
     );
   }
@@ -447,29 +595,16 @@ class _UnfinishedBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    final t = SahneTokens.of(context);
+    return _DuelHero(
+      emblem: const _StateDiamond(icon: AppIcons.triangleExclamation),
+      title: context.t(K.asyncDuelUnfinished),
       children: [
-        Icon(
-          AppIcons.triangleExclamation,
-          size: 56,
-          color: AppTheme.textMutedColor(context),
-        ),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          context.t(K.asyncDuelUnfinished),
-          textAlign: TextAlign.center,
-          style: AppTypography.heading1.copyWith(
-            color: AppTheme.textPrimaryColor(context),
-          ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
+        const SizedBox(height: SahneSpace.x2),
         Text(
           context.t(K.asyncDuelUnfinishedBody),
           textAlign: TextAlign.center,
-          style: AppTypography.bodyMedium.copyWith(
-            color: AppTheme.textSubColor(context),
-          ),
+          style: SahneType.body.copyWith(color: t.tx2),
         ),
       ],
     );
