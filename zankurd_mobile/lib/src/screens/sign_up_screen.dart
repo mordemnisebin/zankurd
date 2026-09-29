@@ -159,9 +159,10 @@ class _SignUpScreenState extends State<SignUpScreen>
     );
 
     // 2026-09-29 Şahnê: giriş ekranıyla aynı marka anı — gece sahne
-    // kartında 28'lik başlık ve adımın açıklaması; üstünde elmas adım
-    // göstergesi. Form tek yüzey kartında; "İleri / Hesap oluştur" ekranın
-    // tek birincil eylemi, "Geri" ikincil.
+    // kartında 28'lik başlık ve adımın açıklaması. Form tek yüzey kartında;
+    // "İleri / Hesap oluştur" ekranın tek birincil eylemi, "Geri" ikincil.
+    // 2026-09-29 doğallık: adım göstergesi kartın içinde "1/3" metni
+    // (bkz. [_ProgressIndicator]).
     return Scaffold(
       backgroundColor: t.bg,
       body: SafeArea(
@@ -172,13 +173,6 @@ class _SignUpScreenState extends State<SignUpScreen>
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ScaleTransition(
-                    scale: LoadAnimationSequence.logoScaleAnimation(
-                      _animationController,
-                    ),
-                    child: _ProgressIndicator(currentStep: _currentStep),
-                  ),
-                  const SizedBox(height: SahneSpace.x4),
                   FadeTransition(
                     opacity: LoadAnimationSequence.titleFadeAnimation(
                       _animationController,
@@ -190,6 +184,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                         child: child,
                       ),
                       child: _SignUpHeroBanner(
+                        step: _currentStep,
                         subtitle: _getStepSubtitle(context),
                       ),
                     ),
@@ -443,69 +438,44 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 }
 
-/// Kayıt adımları: üç elmas. Geçilen ve etkin adım öğrenme tonunda
-/// (Zimrût tonu + Halka 2 Zimrût metni, rakam Zimrût metni), gelecek adım
-/// Kulis tonunda ikincil rakamla. Durum yalnız renkle değil, halkayla da
-/// ayrışır; ekran okuyucu "Adım n" sırasını rakamdan okur.
+/// Kayıt adımı: "1/3" metni. Etkin adımın rakamı öğrenme metni renginde,
+/// toplam ikincil metinde; ekran okuyucu "1/3" okur.
+///
+/// 2026-09-29 doğallık: eskiden üç büyük numaralı elmastı. Elmas
+/// uygulamada yalnız soru ilerlemesi ve ders sayacı anlamını taşır
+/// (GORSEL_KARARLAR K5); üç adımlık bir form için üç 44'lük rozet de
+/// ekranın en göz alıcı öğesiydi. Durum rakamla söylenir.
 class _ProgressIndicator extends StatelessWidget {
   final int currentStep;
 
   const _ProgressIndicator({required this.currentStep});
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _ProgressDiamond(number: 1, isActive: currentStep >= 0),
-        const SizedBox(width: SahneSpace.x3),
-        _ProgressDiamond(number: 2, isActive: currentStep >= 1),
-        const SizedBox(width: SahneSpace.x3),
-        _ProgressDiamond(number: 3, isActive: currentStep >= 2),
-      ],
-    );
-  }
-}
-
-class _ProgressDiamond extends StatelessWidget {
-  final int number;
-  final bool isActive;
-
-  const _ProgressDiamond({required this.number, required this.isActive});
+  static const _total = 3;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    const size = 44.0;
-    return AnimatedContainer(
-      key: ValueKey('signup-progress-step-$number'),
-      duration: sahneMotionReduced(context)
-          ? Duration.zero
-          : SahneMotion.answerReveal,
-      curve: Curves.easeInOut,
-      width: size,
-      height: size,
-      decoration: ShapeDecoration(
-        color: isActive ? t.learnTint : t.s2,
-        shape: SahneShape.diamond(
-          size,
-          side: isActive
-              ? BorderSide(
-                  color: t.learnTx,
-                  width: SahneRing.r2,
-                  strokeAlign: BorderSide.strokeAlignInside,
-                )
-              : BorderSide.none,
-        ),
-      ),
-      child: Center(
-        child: Text(
-          '$number',
-          style: SahneType.button.copyWith(
-            color: isActive ? t.learnTx : t.tx2,
-            fontFeatures: const [FontFeature.tabularFigures()],
+    const figures = [FontFeature.tabularFigures()];
+    return Text.rich(
+      key: const ValueKey('signup-progress'),
+      textAlign: TextAlign.center,
+      TextSpan(
+        children: [
+          TextSpan(
+            text: '${currentStep + 1}',
+            style: SahneType.captionStrong.copyWith(
+              color: t.learnTx,
+              fontFeatures: figures,
+            ),
           ),
-        ),
+          TextSpan(
+            text: '/$_total',
+            style: SahneType.captionStrong.copyWith(
+              color: t.tx2,
+              fontFeatures: figures,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -539,8 +509,10 @@ class _ReviewItem extends StatelessWidget {
 
 /// Marka anı: gece sahne kartı içinde 28'lik başlık + adımın açıklaması.
 class _SignUpHeroBanner extends StatelessWidget {
-  const _SignUpHeroBanner({required this.subtitle});
+  const _SignUpHeroBanner({required this.step, required this.subtitle});
 
+  /// Etkin adımın sırası (0'dan).
+  final int step;
   final String subtitle;
 
   @override
@@ -559,6 +531,8 @@ class _SignUpHeroBanner extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              _ProgressIndicator(currentStep: step),
+              const SizedBox(height: SahneSpace.x2),
               Semantics(
                 header: true,
                 child: Text(

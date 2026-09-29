@@ -541,9 +541,13 @@ class _IconCell extends StatelessWidget {
   }
 }
 
-/// Renk örneği — avatarla aynı elmas biçim; seçili olan Halka 2 + ✓ ile
-/// (seçim yalnız renkle verilmez). Kullanıcının seçtiği renk bir belirteç
-/// değil, veridir; ✓ rengi dolguya göre okunur tondan seçilir.
+/// Renk örneği — avatarla aynı biçim, küçük pahlı kare; seçili olan
+/// Halka 2 + ✓ ile (seçim yalnız renkle verilmez). Kullanıcının seçtiği
+/// renk bir belirteç değil, veridir; ✓ rengi dolguya göre okunur tondan
+/// seçilir.
+///
+/// 2026-09-29 doğallık (K5): örnekler elmastı. Avatar pahlı kareye döndü;
+/// elmas yalnız soru ilerlemesi ve ders sayacı anlamını taşır.
 class _ColorSwatch extends StatelessWidget {
   const _ColorSwatch({
     required this.color,
@@ -568,31 +572,26 @@ class _ColorSwatch extends StatelessWidget {
       excludeSemantics: true,
       onTap: onTap,
       child: SizedBox.square(
-        // 48: dokunma kılavuzu; elmas 36.
+        // 48: dokunma kılavuzu; örnek 36.
         dimension: 52,
         child: Material(
           type: MaterialType.transparency,
           child: InkWell(
-            customBorder: SahneShape.diamond(52),
+            customBorder: SahneShape.forSize(52),
             onTap: onTap,
             excludeFromSemantics: true,
             child: Center(
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: color,
-                  shape: SahneShape.diamond(
-                    40,
-                    side: selected
-                        ? BorderSide(
-                            color: t.tx,
-                            width: SahneRing.r2,
-                            strokeAlign: BorderSide.strokeAlignOutside,
-                          )
-                        : BorderSide.none,
+                  shape: SahneShape.withSide(
+                    SahneShape.forSize(36),
+                    selected ? t.tx : Colors.transparent,
+                    width: SahneRing.r2,
                   ),
                 ),
                 child: SizedBox.square(
-                  dimension: 40,
+                  dimension: 36,
                   child: selected
                       ? Icon(
                           AppIcons.check,
@@ -611,7 +610,8 @@ class _ColorSwatch extends StatelessWidget {
 }
 
 /// Çerçeve önizlemesi: 44'lük Kulis karonun içinde çerçeve renginde
-/// halkalı elmas (avatar biçimi). Kilitliyse ortasında kilit.
+/// halkalı pahlı kare (avatar biçimi; 2026-09-29 doğallık: elmas değil,
+/// K5). Kilitliyse ortasında kilit.
 class _FrameSwatch extends StatelessWidget {
   const _FrameSwatch({required this.color, required this.locked});
 
@@ -628,13 +628,10 @@ class _FrameSwatch extends StatelessWidget {
         child: Center(
           child: DecoratedBox(
             decoration: ShapeDecoration(
-              shape: SahneShape.diamond(
-                28,
-                side: BorderSide(
-                  color: color,
-                  width: SahneRing.r3,
-                  strokeAlign: BorderSide.strokeAlignInside,
-                ),
+              shape: SahneShape.withSide(
+                SahneShape.forSize(28),
+                color,
+                width: SahneRing.r3,
               ),
             ),
             child: SizedBox.square(

@@ -194,22 +194,22 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final stepFinder = find.byKey(const ValueKey('signup-progress-step-1'));
-    expect(stepFinder, findsOneWidget);
     // 2026-09-29 Şahnê: aktif adım Forest gradyanı + gölge değil, öğrenme
-    // rolüdür: Zimrût tonu + Halka 2 Zimrût metni (elmas); pasif adım
-    // Kulis. Gölge yok. Korunan kural: aktif adım öğrenme kimliğini taşır
-    // ve pasiften ayrılır.
-    final step = tester.widget<AnimatedContainer>(stepFinder);
-    final decoration = step.decoration! as ShapeDecoration;
+    // rolüdür. Korunan kural: aktif adım öğrenme kimliğini taşır ve
+    // toplamdan ayrılır.
+    // 2026-09-29 doğallık: üç numaralı elmas yerine "1/3" metni (K5:
+    // elmas yalnız soru ilerlemesi ve ders sayacı). Bu bekçi elmasın
+    // dolgusunu ve halkasını sabitliyordu; artık etkin adımın rakamı
+    // öğrenme metni renginde, toplam ikincil metinde.
+    final stepFinder = find.byKey(const ValueKey('signup-progress'));
+    expect(stepFinder, findsOneWidget);
+    final text = tester.widget<Text>(stepFinder);
+    expect(text.textSpan!.toPlainText(), '1/3');
+    final spans = (text.textSpan! as TextSpan).children!.cast<TextSpan>();
     final t = SahneTokens.of(tester.element(stepFinder));
-    expect(decoration.color, t.learnTint);
-    expect((decoration.shape as BeveledRectangleBorder).side.color, t.learnTx);
-    expect(decoration.shadows ?? const <BoxShadow>[], isEmpty);
-    final inactive = tester.widget<AnimatedContainer>(
-      find.byKey(const ValueKey('signup-progress-step-2')),
-    );
-    expect((inactive.decoration! as ShapeDecoration).color, t.s2);
+    expect(spans.first.style!.color, t.learnTx);
+    expect(spans.last.style!.color, t.tx2);
+    expect(find.byKey(const ValueKey('signup-progress-step-1')), findsNothing);
   });
 
   testWidgets('oyuncu adı hero alanı ortak Forest kimliğini kullanır', (
@@ -808,6 +808,13 @@ void main() {
     // 219 px'lik kaydırma alanından büyük. Sözleşme "madde bir bakışta
     // tamamen sığar" değil "madde kaydırarak TAMAMEN okunabilir" olarak
     // sıkı tutuldu: alt kenarı görünür alana getirene dek kaydırılır.
+    // 2026-09-29 doğallık (G3): onboarding yeniden kurulunca "tamamen
+    // sığar" geri getirilmeye çalışıldı, olmadı. XXXL'de kahraman zaten
+    // sıfırdır; metin bandını daraltan sabit parçalar: başlık (112: dil
+    // seçici 80 + logo 32), yaş kutusu (208: test yazı tipinde dört satır)
+    // ve düğme. Bant 227 px kalıyor, madde 288 px. 61 px'lik açık ancak
+    // yaş onayını ya da logoyu başlıktan çıkararak kapanır; ikisi de
+    // erişilebilirlik ve yasal bekçilerinin sabitlediği öğeler.
     final position = tester.state<ScrollableState>(pageScrollable).position;
     final overflow = dailyRect.bottom - scrollRect.bottom;
     if (overflow > 0) {

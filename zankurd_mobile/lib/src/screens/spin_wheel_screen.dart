@@ -342,21 +342,6 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                 const SizedBox(height: SahneSpace.cardGap),
                 _buildCountdownCard(context, ku),
               ],
-              const SizedBox(height: SahneSpace.x4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SahneGlyph(SahneGlyphKind.coin, size: 16),
-                  const SizedBox(width: SahneSpace.x2),
-                  Flexible(
-                    child: Text(
-                      context.t(K.wheelRewardNote),
-                      textAlign: TextAlign.center,
-                      style: SahneType.caption.copyWith(color: t.tx2),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),
@@ -386,8 +371,17 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   }
 
   // ────────────────────────────────────────────
-  //  Çark sahnesi: başlık, çark, günlük hak durumu
+  //  Çark sahnesi: başlık, tek satır, çark
   // ────────────────────────────────────────────
+  //
+  // 2026-09-29 doğallık (K10): ekran aynı şeyi dört kez söylüyordu —
+  // "Her gün bir kez çevir." başlığı, "Jeton kazan ve serini sürdür" alt
+  // satırı, "Bugünkü hakkın hazır" çipi ve kartın altında "Ödül doğrudan
+  // jetonlarına eklenir." notu. Kalan: başlık + ödülün nereye gittiğini
+  // söyleyen tek satır + alttaki düğme. Hakkın durumu düğmenin kendisidir
+  // ("Çevir" / "Yarın tekrar gel."); hak bitince geri sayım kartı çıkar.
+  // "Serini sürdür" sözü ayrıca bir karşılık taşımıyordu: çark ekranı
+  // seriye dokunmaz, yalnız jeton verir.
   Widget _buildWheelStage(BuildContext context, bool ku) {
     return SahneStageCard(
       role: SahneRole.gold,
@@ -408,14 +402,12 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
               ),
               const SizedBox(height: SahneSpace.x1),
               Text(
-                context.t(K.wheelSub),
+                context.t(K.wheelRewardNote),
                 textAlign: TextAlign.center,
                 style: SahneType.caption.copyWith(color: t.tx2),
               ),
               const SizedBox(height: SahneSpace.x4),
               _buildWheelSection(),
-              const SizedBox(height: SahneSpace.x4),
-              Center(child: _buildSpinStatusChip(context, ku)),
             ],
           );
         },
@@ -454,12 +446,14 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                     );
                   },
                 ),
-                // Ortada ZK amblemi: elmas, Halka 3 altın.
+                // Ortada ZK göbeği: yuvarlak, Halka 3 altın. 2026-09-29
+                // doğallık: göbek elmastı; elmas yalnız soru ilerlemesi ve
+                // ders sayacı anlamını taşır (K5). Çarkın göbeği çarkın
+                // kendisi gibi yuvarlaktır.
                 DecoratedBox(
                   decoration: ShapeDecoration(
                     color: t.s1,
-                    shape: SahneShape.diamond(
-                      68,
+                    shape: CircleBorder(
                       side: BorderSide(
                         color: t.gold,
                         width: SahneRing.r3,
@@ -468,7 +462,7 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                     ),
                   ),
                   child: SizedBox.square(
-                    dimension: 68,
+                    dimension: 60,
                     child: Center(
                       child: Text(
                         'ZK',
@@ -542,55 +536,6 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
                   ),
                 ],
               ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ────────────────────────────────────────────
-  //  Günlük hak durumu çipi
-  // ────────────────────────────────────────────
-  Widget _buildSpinStatusChip(BuildContext context, bool ku) {
-    final t = SahneTokens.of(context);
-    final hasRight = _canSpin;
-    final label = hasRight
-        ? (context.t(K.wheelReady))
-        : (context.t(K.wheelUsed, {
-            'time': _formatDuration(_timeUntilNextSpin),
-          }));
-    // Durum yalnız renkle verilmez: ✓ (hak var) ya da kilit (hak bitti).
-    final (bg, fg, icon) = hasRight
-        ? (t.okTint, t.okTx, AppIcons.circleCheck)
-        : (t.goldTint, t.goldTx, AppIcons.lock);
-    return Semantics(
-      label: label,
-      excludeSemantics: true,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(color: bg, shape: SahneShape.m),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 32),
-          child: Padding(
-            padding: const EdgeInsetsDirectional.only(
-              start: SahneSpace.x2,
-              end: SahneSpace.x3,
-              top: SahneSpace.x1,
-              bottom: SahneSpace.x1,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(icon, size: 16, color: fg),
-                const SizedBox(width: SahneSpace.x2),
-                Flexible(
-                  child: Text(
-                    label,
-                    textAlign: TextAlign.center,
-                    style: SahneType.captionStrong.copyWith(color: fg),
-                  ),
-                ),
-              ],
             ),
           ),
         ),

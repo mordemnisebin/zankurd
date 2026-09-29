@@ -1,4 +1,7 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+// 2026-09-29 doğallık (G3): fiyat etiketi "120j" değil "120" (birimi jeton
+// glifi söyler, K10); ürün adları cümle düzeninde ("Neon çerçeve"). Bu
+// beklentiler yalnız eski yazımı sabitliyordu; davranış aynı.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
@@ -13,6 +16,7 @@ import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 
 /// Bakiye ve satın alma durumunu deterministik kontrol eden sahte depo.
 class _ShopRepository extends MockZanKurdRepository {
@@ -165,7 +169,7 @@ void main() {
       await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Neon Çerçeve'));
+      await tester.tap(find.text('Neon çerçeve'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Satın al'));
       await tester.pumpAndSettle();
@@ -181,7 +185,7 @@ void main() {
       await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Neon Çerçeve'));
+      await tester.tap(find.text('Neon çerçeve'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Satın al'));
       await tester.pumpAndSettle();
@@ -284,11 +288,11 @@ void main() {
     await tester.pumpAndSettle();
 
     final heroButtonFinder = find.ancestor(
-      of: find.text('720j'),
+      of: find.text('720'),
       matching: find.byType(FilledButton),
     );
     final gridButtonFinder = find.ancestor(
-      of: find.text('120j'),
+      of: find.text('120'),
       matching: find.byType(FilledButton),
     );
     expect(heroButtonFinder, findsOneWidget);
@@ -319,13 +323,62 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('500 jeton'), findsOneWidget);
-    expect(find.text('Ekstra Çevirme'), findsOneWidget);
-    expect(find.text('Altın Çerçeve'), findsOneWidget);
-    expect(find.text('VIP Rozeti'), findsOneWidget);
+    expect(find.text('Ekstra çevirme'), findsOneWidget);
+    expect(find.text('Altın çerçeve'), findsOneWidget);
+    expect(find.text('VIP rozeti'), findsOneWidget);
     expect(find.text('Joker Paketi'), findsNothing);
     expect(find.text('Ekstra Can'), findsNothing);
     expect(find.text('Premium Renkler'), findsNothing);
     expect(tester.takeException(), isNull);
+  });
+
+  // 2026-09-29 doğallık (K10): "En çok alınan" rozeti satış verisi
+  // olmadan her kurulumda en pahalı ürüne yapışıyordu — uydurma bir iddia.
+  // Veri gelene dek hiçbir üründe görünmez.
+  testWidgets('mağaza satış verisi olmadan "en çok alınan" demez', (
+    tester,
+  ) async {
+    final repository = _ShopRepository(coins: 500);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.text('En çok alınan'), findsNothing);
+    expect(find.byType(SahneBadge), findsNothing);
+  });
+
+  // 2026-09-29 doğallık (K10): çerçeve ürününün karosunda boş bir yıldız
+  // duruyordu; oyuncu neyi satın alacağını görmüyordu. Karo artık
+  // oyuncunun kendi avatarını o çerçeveyle gösterir.
+  testWidgets('çerçeve ürünü oyuncunun avatarını o çerçeveyle gösterir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _ShopRepository(coins: 500);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    for (final id in ['avatar_frame_gold', 'avatar_frame_neon']) {
+      final card = find.byKey(ValueKey('shop-item-surface-$id'));
+      expect(card, findsOneWidget);
+      final avatar = find.descendant(
+        of: card,
+        matching: find.byType(PlayerAvatar),
+      );
+      expect(avatar, findsOneWidget, reason: '$id karosu avatar göstermeli');
+      expect(
+        tester.widget<PlayerAvatar>(avatar).frameId,
+        applyShopPurchaseEffect(id, const AvatarIdentity()).frameId,
+      );
+    }
+    // Çerçeve olmayan ürün ikonunda kalır.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('shop-item-surface-spin_wheel_extra')),
+        matching: find.byType(PlayerAvatar),
+      ),
+      findsNothing,
+    );
   });
 
   // 2026-08-14 denetimi: çarka giden TEK yol, bakiye TAM 0 iken görünen
@@ -371,9 +424,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120j'));
+    await tester.ensureVisible(find.text('120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120j'));
+    await tester.tap(find.text('120'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Jeton kazan'));
     await tester.pumpAndSettle();
@@ -403,8 +456,8 @@ void main() {
 
     const description = 'Bugün çarkı tekrar çevirmek için ekstra hak verir.';
     expect(find.text(description), findsNothing);
-    await tester.ensureVisible(find.text('Ekstra Çevirme'));
-    await tester.tap(find.text('Ekstra Çevirme'));
+    await tester.ensureVisible(find.text('Ekstra çevirme'));
+    await tester.tap(find.text('Ekstra çevirme'));
     await tester.pumpAndSettle();
     expect(find.text(description), findsOneWidget);
     expect(find.text('Satın al'), findsOneWidget);
@@ -415,10 +468,10 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120j'));
+    await tester.ensureVisible(find.text('120'));
     await tester.pumpAndSettle();
     final button = tester.widget<FilledButton>(
-      find.ancestor(of: find.text('120j'), matching: find.byType(FilledButton)),
+      find.ancestor(of: find.text('120'), matching: find.byType(FilledButton)),
     );
     expect(button.style?.elevation?.resolve(<WidgetState>{}), 0);
     expect(
@@ -434,10 +487,10 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    // Ekstra çark 120j — bakiye 50c ile alınamamalı.
-    await tester.ensureVisible(find.text('120j'));
+    // Ekstra çark 120 jeton — bakiye 50c ile alınamamalı.
+    await tester.ensureVisible(find.text('120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120j'));
+    await tester.tap(find.text('120'));
     await tester.pumpAndSettle();
     // Dalga 5: yetersiz bakiyede onay dialogunda 'Satın al' gri disabled
     // olur ve 'Coin kazan' ikincil butonu görünür; harcama yapılmaz.
@@ -460,9 +513,9 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120j'));
+    await tester.ensureVisible(find.text('120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120j'));
+    await tester.tap(find.text('120'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın al"
     await tester.tap(find.text('Satın al'));
@@ -488,7 +541,7 @@ void main() {
     expect(find.text('Sende'), findsOneWidget);
 
     // Purchased items cannot be re-purchased — no buy button shown
-    expect(find.text('480j'), findsNothing);
+    expect(find.text('480'), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
@@ -502,7 +555,7 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.text('120j'), findsOneWidget);
+    expect(find.text('120'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -513,9 +566,9 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120j'));
+    await tester.ensureVisible(find.text('120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120j'));
+    await tester.tap(find.text('120'));
     await tester.pumpAndSettle();
     // Confirm dialog: tap "Satın al"
     await tester.tap(find.text('Satın al'));

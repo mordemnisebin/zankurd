@@ -1241,6 +1241,9 @@ class _RoomHero extends StatelessWidget {
             children: [
               // Etiket büyük harfe ÇEVRİLMEZ: "Özel Oda" oda kimliğinin
               // parçası olarak okunur (rozet değil, tür adı).
+              // 2026-09-29 doğallık (K10): etiketteki yıldız kalktı. Kartta
+              // iki yıldız vardı (bu etiket ve "Ev sahibi" çipi); yıldız
+              // yalnız ev sahibini işaretler, tür adı süs taşımaz.
               DecoratedBox(
                 decoration: ShapeDecoration(
                   color: t.goldTint,
@@ -1251,20 +1254,9 @@ class _RoomHero extends StatelessWidget {
                     horizontal: SahneSpace.x2,
                     vertical: 2,
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SahneGlyph(SahneGlyphKind.star, size: 14),
-                      const SizedBox(width: SahneSpace.x1),
-                      Flexible(
-                        child: Text(
-                          context.t(K.privateRoom),
-                          style: SahneType.captionStrong.copyWith(
-                            color: t.goldTx,
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: Text(
+                    context.t(K.privateRoom),
+                    style: SahneType.captionStrong.copyWith(color: t.goldTx),
                   ),
                 ),
               ),

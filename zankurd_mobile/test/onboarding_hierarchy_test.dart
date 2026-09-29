@@ -85,6 +85,9 @@ void main() {
   // taşır; gösterge elmaslardan oluşur. Korunan şey: her adım ortak bir
   // sahne kimliği taşır (renk kararsızca sayfadan sayfaya değişmez, rol
   // değişir) ve etkin adım göstergede şekille (büyük elmas) ayrışır.
+  // 2026-09-29 doğallık: gösterge elmas değil çubuk (K5: elmas yalnız soru
+  // ilerlemesi ve ders sayacı). Korunan kural aynı: etkin adım renkten
+  // bağımsız olarak şekille — uzun çubukla — ayrışır.
   testWidgets('onboarding her adımda sahne kartı kimliğini kullanır', (
     tester,
   ) async {
@@ -108,7 +111,7 @@ void main() {
     expect(hero().role, SahneRole.race);
   });
 
-  testWidgets('onboarding seçili adım göstergesi büyük elmasla ayrışır', (
+  testWidgets('onboarding seçili adım göstergesi uzun çubukla ayrışır', (
     tester,
   ) async {
     await tester.pumpWidget(

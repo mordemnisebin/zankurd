@@ -50,11 +50,13 @@ void main() {
     // kısaltması ve Kurmancî ekranda anlamsız bir harf. Üç ekran aynı
     // sabiti taşıyordu: mağaza kartı, sonuç ekranı coin rozeti ve joker
     // çubuğu.
+    // 2026-09-29 doğallık (G3): mağaza fiyatı artık kısaltma taşımaz —
+    // sayı + jeton glifi ("720", "720j" değil; K10). Mağaza listeden
+    // çıktı; mağazanın para birimini sabit yazmadığını üstteki test korur.
     expect(Tr.of(K.coinAbbrev, AppLanguage.ku), 'z');
     expect(Tr.of(K.coinAbbrev, AppLanguage.tr), 'j');
 
     const screens = [
-      'lib/src/screens/shop_screen.dart',
       'lib/src/screens/quiz_result_screen.dart',
       'lib/src/screens/quiz/quiz_wildcard_bar.dart',
     ];

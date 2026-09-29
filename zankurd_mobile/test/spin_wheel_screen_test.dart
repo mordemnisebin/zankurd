@@ -60,7 +60,10 @@ void main() {
   // taşıdığını sınıyordu — eski görünüşün kendisi. Şahnê'de göbek ZK
   // amblemidir: gece sahnesinde altın Halka 3'lü elmas, gölgesiz. Palet
   // dışı yeşil ve bulanık gölge geri gelmesin diye yeni biçim sabitlenir.
-  testWidgets('çark merkezindeki ZK amblemi altın halkalı elmastır', (
+  // 2026-09-29 doğallık: göbek elmas değil yuvarlak (K5: elmas yalnız soru
+  // ilerlemesi ve ders sayacı). Korunan kural aynı: altın Halka 3, gölge
+  // ve degrade yok.
+  testWidgets('çark merkezindeki ZK göbeği altın halkalı ve yuvarlaktır', (
     tester,
   ) async {
     await useTallPhoneViewport(tester);
@@ -75,7 +78,7 @@ void main() {
           .first,
     );
     final decoration = hub.decoration as ShapeDecoration;
-    final shape = decoration.shape as BeveledRectangleBorder;
+    final shape = decoration.shape as CircleBorder;
     expect(shape.side.width, SahneRing.r3);
     expect(shape.side.color, SahneTokens.night.gold);
     expect(decoration.shadows, isNull);
