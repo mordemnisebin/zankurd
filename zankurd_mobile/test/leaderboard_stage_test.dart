@@ -2,48 +2,40 @@
 ///
 /// ## Kusur
 ///
-/// Podyum sıradan bir yüzey kartıydı: düz `AppTheme.surfaceColor` zemin,
-/// ince bir kenarlık; madalyalar açık temada SOLUK varyantlarına düşüyordu
-/// (`silverLight`, `bronzeLight`). Kutlamanın etrafında (kazananın
-/// `KilimReveal` ile açılması, puanın `RollingCount` ile sayması) hiçbir
-/// "sahne" yoktu — Yarış sekmesi aynı sorunu `StageBackdropPainter` ile
-/// çözdü (bkz. `stage_backdrop.dart`, `_QuickDuelHero`), ama podyum hâlâ
-/// eski, belge gibi yüzeyindeydi (sahibin 2026-09-27 bulgusu: uygulama
-/// renksiz duruyor; podyum da aynı sahnede durmalı).
+/// Podyum sıradan bir yüzey kartıydı: düz zemin, ince bir kenarlık;
+/// madalyalar açık temada SOLUK varyantlarına düşüyordu. Kutlamanın
+/// etrafında hiçbir "sahne" yoktu (sahibin 2026-09-27 bulgusu: uygulama
+/// renksiz duruyor).
 ///
 /// ## Niçin sessiz kalırdı
 ///
-/// Var olan bekçiler yalnız DAVRANIŞA bakıyordu: puanın tek satırda kalması
-/// (`leaderboard_podium_score_test.dart`), kutlama widget'larının VAR OLMASI
-/// (`leaderboard_podium_celebration_test.dart` — `CategoryEmblem`,
-/// `KilimReveal`, `RollingCount`), anahtarların doğru yerde durması
-/// (`leaderboard_result_profile_test.dart`). Hiçbiri RENGİ ya da
-/// okunabilirliği ölçmüyordu: podyumun düz mü sahne mi olduğu, isim
-/// metninin hangi renkte çizildiği, kaidenin/vitrin unvanının kontrastı
-/// hiçbir yerde denetlenmiyordu — görsel dil testin değil simülatörün
-/// konusu sanılıyordu (`play_hub_stage_test.dart`ın kendi başlığındaki
-/// itirafla aynı kusur). Bu dosya sahneyi (`StageBackdropPainter`, tek
-/// çizici, beyaz isimler, konfetinin içerikle kesişmemesi) VE
-/// okunabilirliğini (WCAG ≥ 4.5:1) birlikte sabitler.
+/// Var olan bekçiler yalnız DAVRANIŞA bakıyordu (puanın tek satırda
+/// kalması, kutlama widget'larının VAR OLMASI). Hiçbiri RENGİ ya da
+/// okunabilirliği ölçmüyordu.
+///
+/// ## 2026-09-29 Şahnê:
+///
+/// Podyum artık bir sahne kartı değil, sayfanın kendi zemininde durur
+/// (maket): elmas avatarlar madalya renginde Halka 3 taşır, birincinin
+/// üstünde taç ve arkasında altın hale; kaideler Kulis/Perde tonunda, üst
+/// kenarları madalya renginde. Işık hüzmesi + konfeti ressamı
+/// (`StageBackdropPainter`), yeşil degrade ve beyaz isimler kalktı. Bu dosya
+/// yeni sahneyi ve okunabilirliğini (WCAG ≥ 4.5:1, iki temada) sabitler.
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
-import 'package:zankurd_mobile/src/widgets/stage_backdrop.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
-/// `leaderboard_podium_celebration_test.dart` ile AYNI 3 kişi: isimler sabit
-/// olduğu için testte "isim metni" doğrudan `find.text(...)` ile aranabilir.
+/// `leaderboard_podium_celebration_test.dart` ile AYNI 3 kişi.
 class _Repo extends MockZanKurdRepository {
   @override
   Future<List<LeaderboardEntry>> loadLeaderboard({
@@ -80,10 +72,8 @@ class _Repo extends MockZanKurdRepository {
   Future<LeaderboardEntry?> getPlayerStats() async => null;
 }
 
-/// `play_hub_stage_test.dart` ile aynı iskele: dil/tema kombinasyonu
-/// değişince `testShell`in `create:` ile kurulan sağlayıcıları (dil)
-/// GÜNCELLENMEZ, yalnız YENİDEN KURULUR — her kombinasyon ayrı bir
-/// `ValueKey` ile ağacın şeklini değiştirip sıfırdan kurulmasını sağlar.
+/// Dil/tema kombinasyonu değişince sağlayıcılar yeniden kurulsun diye her
+/// kombinasyon ayrı bir `ValueKey` taşır.
 Widget _shell({required bool isKu, required bool isDark}) {
   return KeyedSubtree(
     key: ValueKey('leaderboard-stage-$isKu-$isDark'),
@@ -104,16 +94,11 @@ Future<void> _pump(
 }) async {
   await tester.pumpWidget(_shell(isKu: isKu, isDark: isDark));
   await tester.pump();
-  // Puan `RollingCount` ile sayar (tavan 1100ms), birinci basamak
-  // `KilimReveal` ile açılır (1100ms) — `leaderboard_podium_celebration_
-  // test.dart` ile aynı bekleme.
+  // Puan `RollingCount` ile sayar (tavan 1100ms).
   await tester.pump(const Duration(milliseconds: 1300));
   await tester.pump(const Duration(milliseconds: 100));
 }
 
-/// WCAG göreli kontrast oranı — `AppColors._contrast` ile aynı formül; o
-/// yardımcı private olduğu için burada yinelenir (`play_hub_stage_test.dart`
-/// aynı yinelemeyi yapar).
 double _contrast(Color a, Color b) {
   final l1 = a.computeLuminance();
   final l2 = b.computeLuminance();
@@ -122,41 +107,35 @@ double _contrast(Color a, Color b) {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-/// `leaderboard_screen.dart`daki private `_stageGold` ile AYNI değer —
-/// başka bir dosyadan içe aktarılamadığı için (Dart görünürlüğü dosya
-/// bazlıdır) burada yinelenir.
-const Color _stageGold = Color(0xFFF2C75C);
-
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets('başlık eylemleri yaygın telefon eninde başlığın yanında durur', (
+  testWidgets('başlık eylemleri marka satırında, ekranın içinde durur', (
     tester,
   ) async {
-    // Eylemler başlığın altında kendi satırına iniyordu: `ScreenSectionHeading`
-    // 360'tan dar alanı "dar" sayıyordu ve sayfa boşluklarıyla 390'lık
-    // telefon bile 354'e düşüyordu. 360 genişlikteki telefonlar da dahil
-    // düğmeler başlığın yanında kalmalı.
-    for (final width in [360.0, 390.0]) {
+    // A iskeleti: başlık tam genişliktir; eylemler (arkadaşlar, yenile)
+    // marka satırının sağındadır — başlığın ÜSTÜNDE, ekran dışına taşmadan.
+    for (final width in [320.0, 360.0, 390.0]) {
       await tester.binding.setSurfaceSize(Size(width, 844));
       await _pump(tester, isKu: false, isDark: false);
       final title = tester.getRect(find.text('Liderlik Tablosu'));
-      final friends = tester.getRect(
-        find.byKey(const ValueKey('leaderboard-friends-button')),
-      );
-      expect(
-        friends.top,
-        lessThan(title.bottom),
-        reason: '$width: eylemler başlıkla aynı satırda başlamalı',
-      );
-      expect(friends.left, greaterThan(title.right), reason: '$width');
+      for (final key in [
+        'leaderboard-friends-button',
+        'leaderboard-refresh-button',
+      ]) {
+        final rect = tester.getRect(find.byKey(ValueKey(key)));
+        expect(rect.bottom, lessThanOrEqualTo(title.top), reason: '$width');
+        expect(rect.right, lessThanOrEqualTo(width), reason: '$width');
+        expect(rect.height, greaterThanOrEqualTo(48), reason: '$width');
+      }
+      expect(tester.takeException(), isNull);
     }
     await tester.binding.setSurfaceSize(null);
   });
 
   testWidgets(
-    'podyum HER dilde ve temada aynı sahnede durur: kimlik gradyanı, tek '
-    'StageBackdropPainter, beyaz isimler, konfeti içerikle kesişmez',
+    'podyum HER dilde ve temada aynı dilde: sahne ressamı yok, taç yalnız '
+    'birincide, isimler birincil metin',
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -164,138 +143,45 @@ void main() {
       for (final isKu in [false, true]) {
         for (final isDark in [false, true]) {
           await _pump(tester, isKu: isKu, isDark: isDark);
-          expect(
-            tester.takeException(),
-            isNull,
-            reason: 'ku=$isKu dark=$isDark',
-          );
+          final why = 'ku=$isKu dark=$isDark';
+          expect(tester.takeException(), isNull, reason: why);
 
           final podium = find.byKey(const ValueKey('leaderboard-podium'));
-          expect(podium, findsOneWidget, reason: 'ku=$isKu dark=$isDark');
+          expect(podium, findsOneWidget, reason: why);
+          final t = SahneTokens.of(tester.element(podium));
 
-          // Podyum artık düz bir yüzey değil: kimlik yeşilinden koyu ormana
-          // inen sahne gradyanı — HER temada aynı (tema podyumu etkilemez).
-          final container = tester.widget<Container>(podium);
-          final decoration = container.decoration! as BoxDecoration;
-          final gradient = decoration.gradient! as LinearGradient;
+          // Hüzme/konfeti ressamı yok; podyumda Ink ya da degrade kart yok.
           expect(
-            gradient.colors,
-            contains(AppTheme.culturalBrandBg),
-            reason: 'ku=$isKu dark=$isDark: podyum kimlik yeşiliyle açılmalı',
+            find.descendant(of: podium, matching: find.byType(Ink)),
+            findsNothing,
+            reason: why,
           );
-          expect(
-            gradient.colors,
-            contains(AppTheme.surface),
-            reason: 'ku=$isKu dark=$isDark: podyum koyu ormana inmeli',
-          );
-
-          // Sahne deseni TEK bir çizici: diğer CustomPaint'ler (madalya
-          // amblemindeki elmas deseni, kazananın KilimReveal'i) farklı
-          // painter türleri taşır, bu yüzden predikat yalnız birini bulur.
-          final stage = find.descendant(
-            of: podium,
-            matching: find.byWidgetPredicate(
-              (widget) =>
-                  widget is CustomPaint &&
-                  widget.painter is StageBackdropPainter,
-            ),
-          );
-          expect(
-            stage,
-            findsOneWidget,
-            reason: 'ku=$isKu dark=$isDark: podyum TEK bir sahne fonu çizmeli',
-          );
+          final crowns = tester
+              .widgetList<SahneGlyph>(
+                find.descendant(of: podium, matching: find.byType(SahneGlyph)),
+              )
+              .where((g) => g.kind == SahneGlyphKind.crown);
+          expect(crowns, hasLength(1), reason: why);
 
           for (final name in ['Rojda', 'Baran', 'Dilan']) {
             final nameText = tester.widget<Text>(
               find.descendant(of: podium, matching: find.text(name)),
             );
-            expect(
-              nameText.style?.color,
-              Colors.white,
-              reason: 'ku=$isKu dark=$isDark: $name beyaz olmalı',
-            );
-          }
-
-          // Konfeti hiçbir metnin, ikonun ya da avatarın üstüne düşmez —
-          // aynı teknik `play_hub_stage_test.dart`da: sahnenin gerçek
-          // kutusunu al, sabit konfeti dikdörtgenlerini ona göre kaydır,
-          // içerikle çakışmadığını doğrula.
-          final stageBox = tester.getRect(stage);
-          final confetti = StageBackdropPainter.confettiRects(
-            stageBox.size,
-          ).map((rect) => rect.shift(stageBox.topLeft)).toList();
-          final content = [
-            ...find
-                .descendant(of: podium, matching: find.byType(Text))
-                .evaluate(),
-            ...find
-                .descendant(of: podium, matching: find.byType(Icon))
-                .evaluate(),
-            ...find
-                .descendant(of: podium, matching: find.byType(PlayerAvatar))
-                .evaluate(),
-          ].map((element) => tester.getRect(find.byWidget(element.widget)));
-          for (final rect in content) {
-            for (final piece in confetti) {
-              expect(
-                rect.overlaps(piece),
-                isFalse,
-                reason:
-                    'ku=$isKu dark=$isDark: konfeti $piece, içerik $rect '
-                    'ile kesişiyor.',
-              );
-            }
+            expect(nameText.style?.color, t.tx, reason: '$why: $name');
           }
         }
       }
     },
   );
 
-  test(
-    'WCAG kontrastı: sahne beyazı, vitrin altını ve kaide ink\'i ≥ 4.5:1',
-    () {
-      // İsim metni: sahne gradyanının İKİ ucunda da okunmalı.
-      expect(
-        _contrast(Colors.white, AppTheme.culturalBrandBg),
-        greaterThanOrEqualTo(4.5),
-        reason: 'beyaz isim, sahnenin kimlik (üst) ucunda okunmalı',
-      );
-      expect(
-        _contrast(Colors.white, AppTheme.surface),
-        greaterThanOrEqualTo(4.5),
-        reason: 'beyaz isim, sahnenin koyu (alt) ucunda okunmalı',
-      );
-
-      // Vitrin unvanı: `_stageGold`, düz `AppTheme.gold`un aksine küçük
-      // (10px) yazı için de sahnenin İKİ ucunda AA'yı geçmeli.
-      expect(
-        _contrast(_stageGold, AppTheme.culturalBrandBg),
-        greaterThanOrEqualTo(4.5),
-        reason: 'vitrin unvanının altın tonu, sahnenin kimlik ucunda okunmalı',
-      );
-      expect(
-        _contrast(_stageGold, AppTheme.surface),
-        greaterThanOrEqualTo(4.5),
-        reason: 'vitrin unvanının altın tonu, sahnenin koyu ucunda okunmalı',
-      );
-
-      // Kaide: ink (`AppTheme.lightTextPrimary`) HER üç madalyada da
-      // gradyanın İKİ ucuna (açık üst = %18 beyaza yaklaştırılmış, doygun
-      // alt = düz madalya rengi) karşı ≥4.5:1 olmalı.
-      for (final color in [AppTheme.gold, AppTheme.silver, AppTheme.bronze]) {
-        final top = Color.lerp(color, Colors.white, 0.18)!;
-        expect(
-          _contrast(AppTheme.lightTextPrimary, top),
-          greaterThanOrEqualTo(4.5),
-          reason: 'ink, kaide gradyanının açık (üst) ucunda okunmalı: $color',
-        );
-        expect(
-          _contrast(AppTheme.lightTextPrimary, color),
-          greaterThanOrEqualTo(4.5),
-          reason: 'ink, kaide gradyanının doygun (alt) ucunda okunmalı: $color',
-        );
-      }
-    },
-  );
+  test('WCAG: podyum metinleri iki temada da ≥ 4.5:1', () {
+    for (final t in [SahneTokens.night, SahneTokens.day]) {
+      // İsim ve puan sayfa zemininde.
+      expect(_contrast(t.tx, t.bg), greaterThanOrEqualTo(4.5));
+      expect(_contrast(t.goldTx, t.bg), greaterThanOrEqualTo(4.5));
+      // Kaide Perde: birincide koyu altın, ötekilerde ikincil metin.
+      expect(_contrast(t.goldTx, t.s1), greaterThanOrEqualTo(4.5));
+      expect(_contrast(t.tx2, t.s1), greaterThanOrEqualTo(4.5));
+    }
+  });
 }

@@ -1,3 +1,6 @@
+// 2026-09-29 Şahnê: "Rakip bul" `SahneButton.primary`dir (kilitliyken
+// `onPressed: null`); ilk içerik ölçümü marka satırının logosundan yapılır;
+// düello manşeti ve süresi iki ayrı satırdır.
 /// "Çevrimdışı / sunucuya ulaşılamıyor" durumunda kabuğun dürüstlüğü:
 /// yerleşim ikiye katlanmasın, metin yalan söylemesin, pasif düğme etkin
 /// görünmesin.
@@ -36,7 +39,9 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart' show SemanticsAction;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -50,7 +55,6 @@ import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/offline_banner.dart';
 
 import 'support/realistic_device.dart';
@@ -83,9 +87,12 @@ void main() {
         final bannerBottom = tester
             .getBottomLeft(find.byType(OfflineBanner))
             .dy;
-        final contentTop = tester
-            .getTopLeft(find.byKey(const ValueKey('home-profile-header')))
-            .dy;
+        // 2026-09-29 Şahnê: ekranın ilk içeriği A iskeletinin marka
+        // satırıdır; ölçüm onun logo işaretinden ("ZanKurd") yapılır. Eski
+        // anahtar (`home-profile-header`) artık marka satırının SAĞINDAKİ
+        // çiplerdedir ve dar telefonda (375) çipler ikinci satıra inebilir —
+        // bu bir boşluk değil, tasarımın kendi sarması.
+        final contentTop = tester.getTopLeft(find.text('ZanKurd').first).dy;
         final gap = contentTop - bannerBottom;
 
         expect(
@@ -238,32 +245,26 @@ void main() {
             'Oda kartlarıyla aynı desen: kilitliyken alt satır dürüst olmalı.',
       );
       expect(
-        find.descendant(
-          of: hero,
-          matching: find.text('Seviyene yakın rakip · ~2 dakika'),
-        ),
+        find.descendant(of: hero, matching: find.text('Seviyene yakın rakip')),
         findsNothing,
       );
 
-      final ctaKey = find.byKey(const ValueKey('play-hub-quick-duel-cta'));
-      final cta = tester.widget<Container>(ctaKey);
-      final decoration = cta.decoration! as BoxDecoration;
-      final ctaContext = tester.element(ctaKey);
-      // Düğme görsel olarak pasif olmalı. Koyu sahnede pasif renk soluk,
-      // yarı saydam beyazdır: açık zeminlerin `AppColors.disabledSurface`i
-      // sahnede dolu bir düğme gibi parlıyordu (2026-09-27 simülatör turu;
-      // ayrıntı play_hub_stage_test).
-      expect(decoration.color, isNot(AppTheme.primaryCtaColor(ctaContext)));
-      expect(decoration.color!.a, lessThan(0.3));
-
-      final ink = tester.widget<InkWell>(
-        find.descendant(of: hero, matching: find.byType(InkWell)).first,
+      // 2026-09-29 Şahnê: düğme `SahneButton.primary`; kilitliyken
+      // `onPressed: null` — bileşenin pasif hâli (Perde + üçüncül metin,
+      // gölgesiz), turuncu değil. Kartın ekran okuyucu düğümü de kapalı.
+      final button = tester.widget<SahneButton>(
+        find.descendant(
+          of: find.byKey(const ValueKey('play-hub-quick-duel-cta')),
+          matching: find.byType(SahneButton),
+        ),
       );
       expect(
-        ink.onTap,
+        button.onPressed,
         isNull,
         reason: 'Dokununca hiçbir şey olmamalı; buton gerçekten kapalı.',
       );
+      final data = tester.getSemantics(hero).getSemanticsData();
+      expect(data.hasAction(SemanticsAction.tap), isFalse);
       expect(tester.takeException(), isNull);
     });
 
@@ -281,12 +282,15 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // Manşet ve süre maketteki gibi iki satır ("Seviyene yakın rakip",
+      // "~2 dakika").
       final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
       expect(
-        find.descendant(
-          of: hero,
-          matching: find.text('Seviyene yakın rakip · ~2 dakika'),
-        ),
+        find.descendant(of: hero, matching: find.text('Seviyene yakın rakip')),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(of: hero, matching: find.text('~2 dakika')),
         findsOneWidget,
       );
       expect(
@@ -294,16 +298,15 @@ void main() {
         findsNothing,
       );
 
-      final ctaKey = find.byKey(const ValueKey('play-hub-quick-duel-cta'));
-      final cta = tester.widget<Container>(ctaKey);
-      final decoration = cta.decoration! as BoxDecoration;
-      final ctaContext = tester.element(ctaKey);
-      expect(decoration.color, AppTheme.primaryCtaColor(ctaContext));
-
-      final ink = tester.widget<InkWell>(
-        find.descendant(of: hero, matching: find.byType(InkWell)).first,
+      final button = tester.widget<SahneButton>(
+        find.descendant(
+          of: find.byKey(const ValueKey('play-hub-quick-duel-cta')),
+          matching: find.byType(SahneButton),
+        ),
       );
-      expect(ink.onTap, isNotNull);
+      expect(button.onPressed, isNotNull);
+      final data = tester.getSemantics(hero).getSemanticsData();
+      expect(data.hasAction(SemanticsAction.tap), isTrue);
       expect(tester.takeException(), isNull);
     });
   });

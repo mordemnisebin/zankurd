@@ -9,8 +9,8 @@ import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
 import 'package:zankurd_mobile/src/widgets/kilim_reveal.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/widgets/rolling_count.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -31,6 +31,12 @@ import 'support/widget_test_helpers.dart';
 /// sıra NUMARASINI basıp kaidedeki `#sıra` ile aynı şeyi iki kez söylüyordu.
 /// Rozet `CategoryEmblem`e çevrildi — elmas kimliği taşır, rakam yalnız
 /// kaidede kalır.
+///
+/// 2026-09-29 Şahnê: kutlama dili Şahnê'ye taşındı. Madalya artık elmas
+/// avatarın Halka 3'üdür (altın / gümüş / bronz), birincinin üstünde taç
+/// glifi ve arkasında altın hale durur; `CategoryEmblem` madalyaları ve
+/// büyük kilim açılışı (`KilimReveal`) kalktı — kilim motifi yalnız kilim
+/// göz şeridinde yaşar. Puan yine `RollingCount` ile sayar.
 class _Repo extends MockZanKurdRepository {
   @override
   Future<List<LeaderboardEntry>> loadLeaderboard({
@@ -84,19 +90,40 @@ Future<void> _pump(WidgetTester tester, MockZanKurdRepository repo) async {
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  testWidgets('podyum madalyaları CategoryEmblem ile çizilir', (tester) async {
+  testWidgets('birinci taç glifi taşır; madalyalar halka olarak çizilir', (
+    tester,
+  ) async {
     await _pump(tester, _Repo());
     expect(tester.takeException(), isNull);
-    // Üç basamak da aynı rozet dilini kullanır; sıra rakamı basan bir
-    // madalya çizilmez (rakam kaidede `#sıra` olarak tek yerdedir).
-    expect(find.byType(CategoryEmblem), findsNWidgets(3));
+    final crowns = tester
+        .widgetList<SahneGlyph>(find.byType(SahneGlyph))
+        .where((g) => g.kind == SahneGlyphKind.crown);
+    expect(crowns, hasLength(1), reason: 'taç yalnız birincinin');
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('podium-slot-1')),
+        matching: find.byType(SahneGlyph),
+      ),
+      findsOneWidget,
+    );
+    // Sıra rakamı yalnız kaidede: her basamakta tek bir rakam metni.
+    for (final rank in [1, 2, 3]) {
+      expect(
+        find.descendant(
+          of: find.byKey(ValueKey('podium-slot-$rank')),
+          matching: find.text('$rank'),
+        ),
+        findsOneWidget,
+      );
+    }
   });
 
-  testWidgets('birinci basamak KilimReveal ile açılır', (tester) async {
+  testWidgets('büyük kilim açılışı yok (kilim yalnız göz şeridinde)', (
+    tester,
+  ) async {
     await _pump(tester, _Repo());
     expect(tester.takeException(), isNull);
-    // Kutlama yalnız kazananın basamağında; ikinci/üçüncü sade kalır.
-    expect(find.byType(KilimReveal), findsOneWidget);
+    expect(find.byType(KilimReveal), findsNothing);
   });
 
   testWidgets('podyum puanları RollingCount ile sayar', (tester) async {
@@ -137,17 +164,16 @@ void main() {
     }
   });
 
-  testWidgets('hareket azaltma açıkken sayım yapılmaz', (tester) async {
-    // RollingCount/KilimReveal kendi hareket-azaltma bekçilerine sahiptir
-    // (bkz. reward_feel_test, kilim_reveal_test). Burada yalnız bağlantının
-    // doğru kurulduğu doğrulanır: kaynak, KilimReveal'e sağlayıcıdan
-    // `isReducedIn` değerini geçer.
+  testWidgets('podyumda ekrana ait animasyon denetleyicisi yok', (
+    tester,
+  ) async {
+    // Sayım `RollingCount`un kendi hareket-azaltma bekçisine tabidir (bkz.
+    // reward_feel_test). Ekran kendi animasyonunu kurmaz; kurarsa
+    // `reduced_motion_coverage_test` gibi o da tercihi okumalıdır.
     final source = File(
       'lib/src/screens/leaderboard_screen.dart',
     ).readAsStringSync();
-    expect(
-      source,
-      contains('reducedMotion: ReducedMotionProvider.isReducedIn(context)'),
-    );
+    expect(source, isNot(contains('AnimationController')));
+    expect(source, isNot(contains('TweenAnimationBuilder')));
   });
 }

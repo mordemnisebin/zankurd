@@ -14,7 +14,7 @@ import '../models/room.dart';
 import '../providers/auth_provider.dart';
 import '../providers/remote_availability.dart';
 import '../data/offline_zankurd_repository.dart';
-import '../theme/app_theme.dart';
+import '../widgets/sahne/sahne.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/join_deep_link.dart';
@@ -538,7 +538,11 @@ class _AppShellState extends State<AppShell>
               child: Row(
                 children: [
                   _buildNavRail(context, ku),
-                  const VerticalDivider(thickness: 1, width: 1),
+                  VerticalDivider(
+                    thickness: 1,
+                    width: 1,
+                    color: SahneTokens.of(context).line,
+                  ),
                   Expanded(child: content),
                 ],
               ),
@@ -756,171 +760,118 @@ class _AppShellState extends State<AppShell>
     if (i == 3) _profileRefresh.value++;
   }
 
+  /// Sekme simgeleri (Lucide). Öğren kitap, Sıralama kupa (maket).
+  ///
+  /// 2026-09-29 Şahnê: Öğren sekmesi ev yerine açık kitap taşır — sekmenin
+  /// işi "ana sayfa" değil öğrenmedir. Yarış sekmesinin maketteki simgesi
+  /// Lucide `swords`; `AppIcons`ta henüz yok, o gelene dek oyun kolu kalır.
+  static const _learnIcon = AppIcons.bookOpen;
+  static const _playIcon = AppIcons.gamepad;
+  static const _leaderboardIcon = AppIcons.trophy;
+  static const _profileIcon = AppIcons.user;
+
+  /// Geniş ekran rayı: alt gezinmeyle aynı Şahnê dili — seçili sekme Ray
+  /// (`s3`) plaketi + birincil metin; seçili olmayan üçüncül metin. Turuncu
+  /// yok: turuncu ekranın tek birincil eylemidir, gezinme değil.
   Widget _buildNavRail(BuildContext context, bool ku) {
+    final t = SahneTokens.of(context);
     return NavigationRail(
       selectedIndex: _tab,
       onDestinationSelected: _selectTab,
       labelType: NavigationRailLabelType.all,
-      selectedLabelTextStyle: const TextStyle(
-        fontSize: 12,
+      backgroundColor: t.nav,
+      selectedLabelTextStyle: SahneType.caption.copyWith(
+        color: t.tx,
         fontWeight: FontWeight.w700,
-        color: AppTheme.brand,
       ),
-      unselectedLabelTextStyle: TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        color: AppTheme.textMutedColor(context),
-      ),
-      selectedIconTheme: const IconThemeData(color: AppTheme.brand, size: 28),
-      unselectedIconTheme: IconThemeData(
-        color: AppTheme.textMutedColor(context),
-        size: 24,
-      ),
-      indicatorColor: AppTheme.brand.withValues(alpha: 0.15),
+      unselectedLabelTextStyle: SahneType.caption.copyWith(color: t.tx3),
+      selectedIconTheme: IconThemeData(color: t.tx, size: 24),
+      unselectedIconTheme: IconThemeData(color: t.tx3, size: 24),
+      indicatorColor: t.s3,
+      indicatorShape: SahneShape.m,
       destinations: [
         NavigationRailDestination(
-          icon: const Icon(AppIcons.house),
+          icon: const Icon(_learnIcon),
           selectedIcon: KeyedSubtree(
             key: _homeNavKey,
-            child: const Icon(AppIcons.house),
+            child: const Icon(_learnIcon),
           ),
           label: Text(context.t(K.navLearn)),
         ),
         NavigationRailDestination(
-          icon: KeyedSubtree(
-            key: _playNavKey,
-            child: const Icon(AppIcons.gamepad),
-          ),
-          selectedIcon: const Icon(AppIcons.gamepad),
+          icon: KeyedSubtree(key: _playNavKey, child: const Icon(_playIcon)),
+          selectedIcon: const Icon(_playIcon),
           label: Text(context.t(K.navPlay)),
         ),
         NavigationRailDestination(
-          icon: const Icon(AppIcons.trophy),
-          selectedIcon: const Icon(AppIcons.trophy),
+          icon: const Icon(_leaderboardIcon),
+          selectedIcon: const Icon(_leaderboardIcon),
           label: Text(context.t(K.navLeaderboard)),
         ),
         NavigationRailDestination(
           icon: KeyedSubtree(
             key: _profileNavKey,
-            child: const Icon(AppIcons.user),
+            child: const Icon(_profileIcon),
           ),
-          selectedIcon: const Icon(AppIcons.user),
+          selectedIcon: const Icon(_profileIcon),
           label: Text(context.t(K.navProfile)),
         ),
       ],
     );
   }
 
+  /// Alt gezinme (A iskeletinin tabanı: 64 + güvenli alan).
+  ///
+  /// 2026-09-29 Şahnê: görünüş tümüyle temadan gelir
+  /// (`navigationBarTheme`: Şev zemini, seçili sekme Ray plaketi M pah +
+  /// birincil metin, seçili olmayan üçüncül metin). Eskiden burada ikinci
+  /// bir tema kuruluyordu — terrakota gösterge, stadyum biçimi, bulanık
+  /// gölge — ve seçili sekme açık/koyu temada iki ayrı görünüşe
+  /// bürünüyordu. Artık her yerde TEK görünüş; üstte yalnız 1 px çizgi.
   Widget _buildBottomNav(BuildContext context, bool ku) {
-    final surface = AppTheme.surfaceColor(context);
-    final cta = AppTheme.primaryCtaColor(context);
-    // 2026-09-25: seçili sekme göstergesi `cta` (terrakota) %18 idi ve
-    // her iki temada da aynı sayıyı kullanıyordu. Açık temada krem zemin
-    // üstünde bu yumuşak şeftalini veriyor; karanlık temada aynı karışım
-    // koyu yeşil zeminde bulanık kahverengiye dönüşüyordu — seçili sekme
-    // "leke" gibi görünüyordu. Karanlıkta karışım güçlendirilir ve seçili
-    // etiket/simge `readableAccent` ile açıklanır: koyu zeminde terracotta
-    // tek başına düşük kontrast veriyor (2026-09-25 iPhone 17 Pro turu).
-    final isDark = !AppTheme.isLight(context);
-    final selectedInk = isDark ? AppColors.readableAccent(context, cta) : cta;
-    return NavigationBarTheme(
-      data: NavigationBarThemeData(
-        height: 70,
-        backgroundColor: surface,
-        surfaceTintColor: Colors.transparent,
-        shadowColor: Colors.black.withValues(alpha: 0.10),
-        elevation: 0,
-        labelTextStyle: WidgetStateProperty.resolveWith((states) {
-          final selected = states.contains(WidgetState.selected);
-          final color = selected
-              ? selectedInk
-              : AppTheme.textMutedColor(context);
-          return TextStyle(
-            fontSize: 11,
-            fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
-            letterSpacing: 0.15,
-            color: color,
-          );
-        }),
-        iconTheme: WidgetStateProperty.resolveWith((states) {
-          final selected = states.contains(WidgetState.selected);
-          final color = selected
-              ? selectedInk
-              : AppTheme.textMutedColor(context);
-          return IconThemeData(size: selected ? 26 : 23, color: color);
-        }),
-        // Açık temada karışım 0.18'de kaldı: orada temiz şeftalini
-        // veriyordu ve görsel denetimde iyi duruyordu.
-        //
-        // Karanlıkta marka karışımı işe yaramadı: terrakota, koyu yeşil
-        // zemin üstünde her oranda bulanık kahverengi bir leke üretiyor
-        // (2026-09-25 iPhone 17 Pro turu, üç ayrı oran denendi). Buradaki
-        // gösterge bir "seçili yüzey" işaretidir, renk değil; bu yüzden
-        // karanlıkta nötr bir yükseltme tonu kullanıyoruz ve vurguyu seçili
-        // etiket/simgeye (okunabilir brand tonu) bırakıyoruz.
-        indicatorColor: isDark
-            ? Colors.white.withValues(alpha: 0.10)
-            : cta.withValues(alpha: 0.18),
-        indicatorShape: const StadiumBorder(),
-        overlayColor: WidgetStateProperty.all(cta.withValues(alpha: 0.08)),
+    final t = SahneTokens.of(context);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: t.nav,
+        border: Border(top: BorderSide(color: t.line)),
       ),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: surface,
-          border: Border(
-            top: BorderSide(
-              color: AppTheme.borderColor(context).withValues(alpha: 0.55),
+      child: NavigationBar(
+        selectedIndex: _tab,
+        onDestinationSelected: _selectTab,
+        // Sekme hedefleri dile bağımlı metinle değil, sabit anahtarla
+        // bulunur — etiketler ("Yarış") ekran içeriğinde de geçebiliyor.
+        destinations: [
+          NavigationDestination(
+            key: const ValueKey('nav-learn'),
+            icon: const Icon(_learnIcon),
+            selectedIcon: KeyedSubtree(
+              key: _homeNavKey,
+              child: const Icon(_learnIcon),
             ),
+            label: context.t(K.navLearn),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
-              offset: const Offset(0, -6),
-              blurRadius: 18,
+          NavigationDestination(
+            key: const ValueKey('nav-play'),
+            icon: KeyedSubtree(key: _playNavKey, child: const Icon(_playIcon)),
+            selectedIcon: const Icon(_playIcon),
+            label: context.t(K.navPlay),
+          ),
+          NavigationDestination(
+            key: const ValueKey('nav-leaderboard'),
+            icon: const Icon(_leaderboardIcon),
+            selectedIcon: const Icon(_leaderboardIcon),
+            label: context.t(K.navLeaderboard),
+          ),
+          NavigationDestination(
+            key: const ValueKey('nav-profile'),
+            icon: KeyedSubtree(
+              key: _profileNavKey,
+              child: const Icon(_profileIcon),
             ),
-          ],
-        ),
-        child: NavigationBar(
-          selectedIndex: _tab,
-          onDestinationSelected: _selectTab,
-          // Sekme hedefleri dile bağımlı metinle değil, sabit anahtarla
-          // bulunur — etiketler ("Yarış") ekran içeriğinde de geçebiliyor.
-          destinations: [
-            NavigationDestination(
-              key: const ValueKey('nav-learn'),
-              icon: const Icon(AppIcons.house),
-              selectedIcon: KeyedSubtree(
-                key: _homeNavKey,
-                child: const Icon(AppIcons.house),
-              ),
-              label: context.t(K.navLearn),
-            ),
-            NavigationDestination(
-              key: const ValueKey('nav-play'),
-              icon: KeyedSubtree(
-                key: _playNavKey,
-                child: const Icon(AppIcons.gamepad),
-              ),
-              selectedIcon: const Icon(AppIcons.gamepad),
-              label: context.t(K.navPlay),
-            ),
-            NavigationDestination(
-              key: const ValueKey('nav-leaderboard'),
-              icon: const Icon(AppIcons.trophy),
-              selectedIcon: const Icon(AppIcons.trophy),
-              label: context.t(K.navLeaderboard),
-            ),
-            NavigationDestination(
-              key: const ValueKey('nav-profile'),
-              icon: KeyedSubtree(
-                key: _profileNavKey,
-                child: const Icon(AppIcons.user),
-              ),
-              selectedIcon: const Icon(AppIcons.user),
-              label: context.t(K.navProfile),
-            ),
-          ],
-        ),
+            selectedIcon: const Icon(_profileIcon),
+            label: context.t(K.navProfile),
+          ),
+        ],
       ),
     );
   }
