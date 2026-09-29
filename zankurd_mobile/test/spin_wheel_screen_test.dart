@@ -8,6 +8,7 @@ import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 /// Çark durumunu deterministik kontrol eden sahte depo.
 class _SpinRepository extends MockZanKurdRepository {
@@ -53,25 +54,31 @@ void main() {
     addTearDown(tester.view.reset);
   }
 
-  testWidgets('çark merkezindeki ZK kimliği Forest kullanır', (tester) async {
+  // 2026-09-29 Şahnê: bekçi eskiden merkez göbeğin `Container` +
+  // `identityHeaderGradient` (orman yeşili degrade) + bulanık gölge
+  // taşıdığını sınıyordu — eski görünüşün kendisi. Şahnê'de göbek ZK
+  // amblemidir: gece sahnesinde altın Halka 3'lü elmas, gölgesiz. Palet
+  // dışı yeşil ve bulanık gölge geri gelmesin diye yeni biçim sabitlenir.
+  testWidgets('çark merkezindeki ZK amblemi altın halkalı elmastır', (
+    tester,
+  ) async {
     await useTallPhoneViewport(tester);
     final repository = _SpinRepository(canSpin: true);
     await tester.pumpWidget(_shell(SpinWheelScreen(repository: repository)));
     await tester.pump();
     await tester.pump();
 
-    final hub = tester.widget<Container>(
+    final hub = tester.widget<DecoratedBox>(
       find
-          .ancestor(of: find.text('ZK'), matching: find.byType(Container))
+          .ancestor(of: find.text('ZK'), matching: find.byType(DecoratedBox))
           .first,
     );
-    final decoration = hub.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
-    expect(
-      decoration.boxShadow!.last.color,
-      AppTheme.culturalBrandBg.withValues(alpha: 0.45),
-    );
+    final decoration = hub.decoration as ShapeDecoration;
+    final shape = decoration.shape as BeveledRectangleBorder;
+    expect(shape.side.width, SahneRing.r3);
+    expect(shape.side.color, SahneTokens.night.gold);
+    expect(decoration.shadows, isNull);
+    expect(decoration.gradient, isNull);
   });
 
   testWidgets('çark hakkı varken Çevir butonu aktiftir', (tester) async {

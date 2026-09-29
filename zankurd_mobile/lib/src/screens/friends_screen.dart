@@ -8,15 +8,11 @@ import '../models/referral_result.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/friend.dart';
-import '../theme/app_theme.dart';
-import '../theme/kilim_motifs.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
-import '../widgets/app_panel.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
-import '../widgets/screen_identity_header.dart';
-import '../widgets/zk_back_button.dart';
+import '../widgets/sahne/sahne.dart';
 import 'room_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -161,166 +157,148 @@ class _FriendsScreenState extends State<FriendsScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: zkAppBar(context),
-      body: Container(
-        color: AppTheme.bgOf(context),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.page,
-              AppSpacing.sm,
-              AppSpacing.page,
-              AppSpacing.lg,
-            ),
+    // 2026-09-29 Şahnê: B iskeleti. Sayfa adı ve alt satırı çubukta; eski
+    // kimlik başlığı ve altındaki kilim ayracı kalktı. Bölümler tek bölüm
+    // başlığıyla ([SahneSectionHeader]) ayrılır; arkadaşlar ve istekler
+    // liste grubunda ([SahneListGroup]) durur. Ekranda Agir dolgulu bir
+    // düğme yok: buradaki eylemlerin hiçbiri tek birincil değil (bir
+    // listede birden çok "Kabul" / "Odaya çağır" olabilir), hepsi ikincil.
+    return SahnePushedPage(
+      title: context.t(K.myFriends),
+      subtitle: context.t(K.myFriendsSub),
+      backLabel: context.t(K.back),
+      // Tek parça kolon (tembel liste değil): istek ve arkadaş satırları
+      // büyük yazıda ilk ekranın altına düşse de kurulur; ekran okuyucu ve
+      // "sonraki öğe" gezinmesi hepsini görür. Liste kısa (istekler +
+      // arkadaşlar), tembel kurmanın kazancı yok.
+      slivers: [
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+          sliver: SliverToBoxAdapter(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Sosyal bağ — camgöbeği kimlik (Xwendin/bağlantı ailesi).
-                ScreenIdentityHeader(
-                  title: context.t(K.myFriends),
-                  subtitle: context.t(K.myFriendsSub),
-                  accent: AppTheme.cyan,
-                  icon: AppIcons.peopleGroup,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                // Arkadaş başlığının altına tek kilim ayracı; sosyal bağ
-                // bölümünü içerikten ayırır (2026-08-19).
-                const KilimDivider(colors: [AppTheme.cyan, AppTheme.gold]),
-                const SizedBox(height: AppSpacing.md),
-                if (kReferralRewardsEnabled) ...[
-                  _buildInviteSection(ku),
-                  const SizedBox(height: AppSpacing.md),
-                ],
+                if (kReferralRewardsEnabled) _buildInviteSection(ku),
                 _buildSearchSection(ku),
-                const SizedBox(height: 24),
                 _buildRequestsSection(ku),
-                ScreenSectionLabel(
-                  label: context.t(K.myFriends),
-                  accent: AppTheme.cyan,
-                ),
-                const SizedBox(height: 12),
+                SahneSectionHeader(title: context.t(K.friendsScreen)),
                 _buildFriendsSection(ku),
               ],
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 
   Widget _buildInviteSection(bool ku) {
-    return AppPanel(
+    final t = SahneTokens.of(context);
+    // Davet ödülü bir Zêr (ödül) konusudur: jeton glifi ton karoda; iki
+    // eylem de ikincil (Kulis) — ekranın birincili değiller.
+    return SahneSurfaceCard(
       key: const ValueKey('friends-invite-panel'),
-      color: AppTheme.surfaceOf(context),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: AppTheme.gold.withValues(alpha: 0.16),
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
+          Builder(
+            builder: (context) {
+              final tile = DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: t.goldTint,
+                  shape: SahneShape.m,
                 ),
-                child: const Icon(
-                  AppIcons.coins,
-                  color: AppTheme.gold,
-                  size: 20,
+                child: const SizedBox.square(
+                  dimension: 44,
+                  child: Center(
+                    child: SahneGlyph(SahneGlyphKind.coin, size: 24),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
+              );
+              final texts = Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.t(K.inviteFriends),
+                    style: SahneType.bodyStrong.copyWith(color: t.tx),
+                  ),
+                  Text(
+                    context.t(K.inviteSubtitle),
+                    style: SahneType.caption.copyWith(color: t.tx2),
+                  ),
+                ],
+              );
+              // Büyük yazıda jeton karosu metnin üstüne çıkar: başlık dar
+              // sütunda hece hece bölünmesin.
+              if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
+                return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      context.t(K.inviteFriends),
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        color: AppTheme.textPrimaryColor(context),
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      context.t(K.inviteSubtitle),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppTheme.textMutedColor(context),
-                      ),
-                    ),
+                    tile,
+                    const SizedBox(height: SahneSpace.x3),
+                    texts,
                   ],
-                ),
-              ),
-            ],
+                );
+              }
+              return Row(
+                children: [
+                  tile,
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(child: texts),
+                ],
+              );
+            },
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: SahneSpace.x4),
           FutureBuilder<String?>(
             future: widget.repository.getPlayerTag(),
             builder: (context, snapshot) {
               final tag = snapshot.data;
-              return Row(
-                children: [
-                  if (tag != null && tag.isNotEmpty) ...[
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        key: const ValueKey('friends-share-code-button'),
-                        onPressed: () {
-                          HapticFeedback.selectionClick();
-                          final text = context.t(K.inviteShareText, {
-                            'tag': tag,
-                          });
-                          SharePlus.instance.share(ShareParams(text: text));
-                        },
-                        icon: const Icon(AppIcons.shareNodes, size: 16),
-                        label: Text(
-                          tag,
-                          style: const TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.readableAccent(
-                            context,
-                            AppTheme.gold,
-                          ),
-                          side: const BorderSide(
-                            color: AppTheme.gold,
-                            width: 1.2,
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                  ],
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      key: const ValueKey('friends-enter-code-button'),
-                      onPressed: () => _showReferralDialog(ku),
-                      icon: const Icon(AppIcons.userPlus, size: 16),
-                      label: Text(context.t(K.enterReferralCode)),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.brand,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(AppRadius.sm),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              final share = tag != null && tag.isNotEmpty
+                  ? SahneButton.secondary(
+                      key: const ValueKey('friends-share-code-button'),
+                      label: tag,
+                      icon: AppIcons.shareNodes,
+                      expand: true,
+                      onPressed: () {
+                        HapticFeedback.selectionClick();
+                        final text = context.t(K.inviteShareText, {'tag': tag});
+                        SharePlus.instance.share(ShareParams(text: text));
+                      },
+                    )
+                  : null;
+              final enter = SahneButton.secondary(
+                key: const ValueKey('friends-enter-code-button'),
+                label: context.t(K.enterReferralCode),
+                icon: AppIcons.userPlus,
+                expand: true,
+                onPressed: () => _showReferralDialog(ku),
+              );
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  // Büyük yazıda iki düğme yan yana sığmıyorsa alt alta
+                  // iner; etiket harf harf bölünmez.
+                  final stack =
+                      MediaQuery.textScalerOf(context).scale(16) >= 24 ||
+                      constraints.maxWidth < 300;
+                  if (share == null) return enter;
+                  if (stack) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        share,
+                        const SizedBox(height: SahneSpace.x2),
+                        enter,
+                      ],
+                    );
+                  }
+                  return Row(
+                    children: [
+                      Expanded(child: share),
+                      const SizedBox(width: SahneSpace.x2),
+                      Expanded(child: enter),
+                    ],
+                  );
+                },
               );
             },
           ),
@@ -344,8 +322,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
               // üç ayrı diyalog dili oluşmuştu.
               title: Text(
                 context.t(K.enterReferralCode),
-                style: TextStyle(
-                  color: AppTheme.textPrimaryColor(dialogContext),
+                style: SahneType.headline.copyWith(
+                  color: SahneTokens.of(dialogContext).tx,
                 ),
               ),
               content: Column(
@@ -354,25 +332,18 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 children: [
                   Text(
                     context.t(K.inviteSubtitle),
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: AppTheme.textMutedColor(dialogContext),
+                    style: SahneType.caption.copyWith(
+                      color: SahneTokens.of(dialogContext).tx2,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: SahneSpace.x3),
                   TextField(
                     key: const ValueKey('referral-code-input'),
                     controller: controller,
                     textCapitalization: TextCapitalization.characters,
+                    // Girdi görünüşü temadan (Kulis, M pah, odakta Halka 2).
                     decoration: InputDecoration(
                       hintText: context.t(K.referralCodeHint),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 10,
-                      ),
                     ),
                   ),
                 ],
@@ -384,8 +355,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                       : () => Navigator.of(dialogContext).pop(),
                   child: Text(context.t(K.cancel)),
                 ),
-                ElevatedButton(
+                // Diyaloğun tek birincil eylemi: Agir, koyu metin. Eski
+                // düğme turuncu üstüne beyaz yazıyordu (2,35:1).
+                SahneButton.primary(
                   key: const ValueKey('referral-code-submit'),
+                  label: context.t(K.referralApplyAction),
+                  arrow: false,
                   onPressed: submitting
                       ? null
                       : () async {
@@ -419,20 +394,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
                             _showMessage(msg);
                           }
                         },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppTheme.brand,
-                    foregroundColor: Colors.white,
-                  ),
-                  child: submitting
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : Text(context.t(K.referralApplyAction)),
                 ),
               ],
             );
@@ -443,149 +404,81 @@ class _FriendsScreenState extends State<FriendsScreen> {
   }
 
   Widget _buildSearchSection(bool ku) {
+    final t = SahneTokens.of(context);
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ScreenSectionLabel(
-          label: context.t(K.findFriend),
-          accent: AppTheme.cyan,
-        ),
-        const SizedBox(height: 12),
-        Container(
+        SahneSectionHeader(title: context.t(K.findFriend)),
+        // Tema girdisi (Kulis, M pah) + ikincil "Ara". Büyük yazıda düğme
+        // girdinin altına iner; girdi daralıp ipucunu kaybetmez.
+        KeyedSubtree(
           key: const ValueKey('friends-search-panel'),
-          padding: const EdgeInsets.all(AppSpacing.xs),
-          decoration: AppTheme.teaserCardDecoration(
-            context,
-            accent: AppTheme.cyan,
-            radius: AppRadius.card,
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _searchController,
-                  textInputAction: TextInputAction.search,
-                  onSubmitted: (_) => _search(),
-                  decoration: InputDecoration(
-                    hintText: context.t(K.searchByNameOrTag),
-                    prefixIcon: const Icon(AppIcons.magnifyingGlass),
-                    isDense: true,
-                  ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final field = TextField(
+                controller: _searchController,
+                textInputAction: TextInputAction.search,
+                onSubmitted: (_) => _search(),
+                decoration: InputDecoration(
+                  hintText: context.t(K.searchByNameOrTag),
+                  prefixIcon: Icon(AppIcons.magnifyingGlass, color: t.tx2),
                 ),
-              ),
-              const SizedBox(width: 8),
-              FilledButton(
+              );
+              final button = SahneButton.secondary(
+                label: context.t(K.searchAction),
+                icon: _searching ? AppIcons.hourglass : null,
                 onPressed: _searching ? null : _search,
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppTheme.cyan,
-                  foregroundColor: Colors.white,
-                  elevation: 0,
-                ),
-                child: _searching
-                    ? const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: AppTheme.primaryGradientStart,
-                        ),
-                      )
-                    : Text(context.t(K.searchAction)),
-              ),
-            ],
+              );
+              final stack =
+                  MediaQuery.textScalerOf(context).scale(16) >= 24 ||
+                  constraints.maxWidth < 280;
+              if (stack) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    field,
+                    const SizedBox(height: SahneSpace.x2),
+                    button,
+                  ],
+                );
+              }
+              return Row(
+                children: [
+                  Expanded(child: field),
+                  const SizedBox(width: SahneSpace.x2),
+                  button,
+                ],
+              );
+            },
           ),
         ),
         if (_searchResults.isNotEmpty) ...[
-          const SizedBox(height: 12),
-          ..._searchResults.map(
-            (player) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: AppPanel(
-                color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
-                child: Row(
-                  children: [
-                    PlayerAvatar(
-                      radius: 22,
-                      colorHex: player.avatarColor,
-                      displayName: player.displayName,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            player.displayName,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const SizedBox(height: 3),
-                          // Kod, iki aynı adı ayıran tek şey: adlar
-                          // benzersiz değil ve olmayacak. Kodu olmayan
-                          // eski profillerde satır hiç yazılmaz —
-                          // uydurulmuş bir kod göstermektense yok saymak
-                          // dürüst (2026-07-28).
-                          if (player.formattedTag != null)
-                            Text(
-                              player.formattedTag!,
-                              style: AppTypography.caption.copyWith(
-                                color: AppColors.onAccentTint(
-                                  context,
-                                  AppTheme.cyan,
-                                ),
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 0.6,
-                              ),
-                            )
-                          else
-                            Text(
-                              context.t(K.requestFromHere),
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.textMutedColor(context),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    _sentRequests.contains(player.id)
-                        ? Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppTheme.correct.withValues(alpha: 0.10),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: AppTheme.correct.withValues(alpha: 0.20),
-                              ),
-                            ),
-                            child: Icon(
-                              AppIcons.circleCheck,
-                              color: AppTheme.correct.withValues(alpha: 0.9),
-                            ),
-                          )
-                        : FilledButton.tonal(
-                            onPressed: () => _sendRequest(player),
-                            style: FilledButton.styleFrom(
-                              backgroundColor: AppTheme.cyan.withValues(
-                                alpha: 0.14,
-                              ),
-                              foregroundColor: AppColors.onAccentTint(
-                                context,
-                                AppTheme.cyan,
-                              ),
-                            ),
-                            child: Text(context.t(K.addAction)),
-                          ),
-                  ],
+          const SizedBox(height: SahneSpace.x3),
+          SahneListGroup(
+            dividerIndent: _PersonRow.dividerIndent,
+            children: [
+              for (final player in _searchResults)
+                _PersonRow(
+                  avatar: PlayerAvatar(
+                    radius: 18,
+                    colorHex: player.avatarColor,
+                    displayName: player.displayName,
+                  ),
+                  title: player.displayName,
+                  // Kod, iki aynı adı ayıran tek şey: adlar benzersiz değil
+                  // ve olmayacak. Kodu olmayan eski profillerde satır hiç
+                  // yazılmaz — uydurulmuş bir kod göstermektense yok saymak
+                  // dürüst (2026-07-28).
+                  subtitle: player.formattedTag ?? context.t(K.requestFromHere),
+                  subtitleStrong: player.formattedTag != null,
+                  trailing: _sentRequests.contains(player.id)
+                      ? _SentMark(label: context.t(K.requestSent))
+                      : SahneButton.secondary(
+                          label: context.t(K.addAction),
+                          onPressed: () => _sendRequest(player),
+                        ),
                 ),
-              ),
-            ),
+            ],
           ),
         ],
       ],
@@ -598,11 +491,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
       builder: (ctx, snap) {
         if (snap.hasError) {
           return Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.only(top: SahneSpace.sectionTop),
             child: AppErrorState(
               title: context.t(K.requestsLoadFail),
               message: context.t(K.requestsLoadFailDot),
               retryLabel: context.t(K.retry),
+              primaryAction: false,
               onRetry: () => setState(() {
                 _requestsFuture = widget.repository.loadPendingFriendRequests();
               }),
@@ -614,22 +508,20 @@ class _FriendsScreenState extends State<FriendsScreen> {
         }
         final requests = snap.data!;
         return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ScreenSectionLabel(
-              label: context.t(K.pendingRequests),
-              accent: AppTheme.cyan,
+            SahneSectionHeader(title: context.t(K.pendingRequests)),
+            SahneListGroup(
+              dividerIndent: _PersonRow.dividerIndent,
+              children: [
+                for (final req in requests)
+                  _FriendRequestRow(
+                    request: req,
+                    onAccept: () => _acceptRequest(req.id),
+                    onReject: () => _rejectRequest(req.id),
+                  ),
+              ],
             ),
-            const SizedBox(height: 12),
-            ...requests.map(
-              (req) => _FriendRequestCard(
-                request: req,
-                onAccept: () => _acceptRequest(req.id),
-                onReject: () => _rejectRequest(req.id),
-                ku: ku,
-              ),
-            ),
-            const SizedBox(height: 24),
           ],
         );
       },
@@ -641,9 +533,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
       future: _friendsFuture,
       builder: (ctx, snap) {
         if (snap.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppTheme.primaryGradientStart,
+          return Padding(
+            padding: const EdgeInsets.all(SahneSpace.x6),
+            child: Center(
+              child: CircularProgressIndicator(
+                color: SahneTokens.of(context).raceTx,
+              ),
             ),
           );
         }
@@ -652,6 +547,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
             title: context.t(K.loadFailedShort),
             message: context.t(K.friendsLoadFail),
             retryLabel: context.t(K.retryShort),
+            primaryAction: false,
             onRetry: () => setState(_loadFriends),
           );
         }
@@ -663,262 +559,282 @@ class _FriendsScreenState extends State<FriendsScreen> {
             message: context.t(K.noFriendsHint),
           );
         }
-        return Column(
-          children: friends
-              .map(
-                (friend) => _FriendCard(
-                  friend: friend,
-                  ku: ku,
-                  onPlay: () => _playWithFriend(friend),
-                  busy: _roomLoading,
-                ),
-              )
-              .toList(),
+        return SahneListGroup(
+          dividerIndent: _PersonRow.dividerIndent,
+          children: [
+            for (final friend in friends)
+              _FriendRow(
+                friend: friend,
+                onPlay: () => _playWithFriend(friend),
+                busy: _roomLoading,
+              ),
+          ],
         );
       },
     );
   }
 }
 
-class _FriendCard extends StatelessWidget {
-  const _FriendCard({
-    required this.friend,
-    required this.ku,
-    required this.onPlay,
-    required this.busy,
+/// Kişi satırı — [SahneListRow]'un ölçüleriyle, öncülü oyuncu avatarı.
+///
+/// `SahneListRow` öncül olarak yalnız ikon karosu, küçük resim ya da baş
+/// harf alır; oyuncunun YÜKLEDİĞİ fotoğrafı ve seçtiği rengi taşıyan
+/// [PlayerAvatar] için yuvası yok. Satır aynı ölçüleri kullanır: en az 64,
+/// 12/8/16/8 iç boşluk, 36'lık elmas, 12 aralık, başlık Gövde 700, alt
+/// satır Açıklama. Büyük yazıda sağdaki eylem metnin altına iner (başlık
+/// dar sütunda harf harf bölünmez).
+class _PersonRow extends StatelessWidget {
+  const _PersonRow({
+    super.key,
+    required this.avatar,
+    required this.title,
+    this.subtitle,
+    this.subtitleColor,
+    this.subtitleStrong = false,
+    this.trailing,
+    this.stackTrailing,
   });
 
-  final Friend friend;
-  final bool ku;
-  final VoidCallback onPlay;
-  final bool busy;
+  /// Grup ayırıcısının sol boşluğu: metnin hizası (12 + 36 + 12).
+  static const double dividerIndent = SahneSpace.x3 + 36 + SahneSpace.x3;
+
+  final Widget avatar;
+  final String title;
+  final String? subtitle;
+  final Color? subtitleColor;
+  final bool subtitleStrong;
+  final Widget? trailing;
+
+  /// `null`: yalnız büyük yazıda alta iner.
+  final bool? stackTrailing;
 
   @override
   Widget build(BuildContext context) {
-    final online = friend.isOnline;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: AppPanel(
-        key: ValueKey('friend-row-${friend.friendName}'),
-        color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
-        child: Row(
-          children: [
-            // Avatar with online dot
-            SizedBox(
-              width: 60,
-              height: 60,
-              child: Stack(
+    final t = SahneTokens.of(context);
+    final text = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          title,
+          softWrap: true,
+          style: SahneType.bodyStrong.copyWith(color: t.tx),
+        ),
+        if (subtitle != null)
+          Text(
+            subtitle!,
+            style:
+                (subtitleStrong ? SahneType.captionStrong : SahneType.caption)
+                    .copyWith(color: subtitleColor ?? t.tx2),
+          ),
+      ],
+    );
+    final stacked =
+        stackTrailing ?? MediaQuery.textScalerOf(context).scale(16) >= 24;
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 64),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(
+          SahneSpace.x3,
+          SahneSpace.x2,
+          SahneSpace.x4,
+          SahneSpace.x2,
+        ),
+        child: stacked && trailing != null
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  PlayerAvatar(
-                    radius: 28,
-                    colorHex: friend.friendAvatarColor,
-                    displayName: friend.friendName,
+                  Row(
+                    children: [
+                      avatar,
+                      const SizedBox(width: SahneSpace.x3),
+                      Expanded(child: text),
+                    ],
                   ),
-                  Positioned(
-                    bottom: 2,
-                    right: 2,
-                    child: Container(
-                      width: 14,
-                      height: 14,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: online
-                            ? AppTheme.onlineGreen
-                            : AppTheme.offlineGrey,
-                        border: Border.all(
-                          color: AppTheme.surfaceColor(context),
-                          width: 2,
-                        ),
-                      ),
-                    ),
+                  const SizedBox(height: SahneSpace.x2),
+                  Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: trailing,
                   ),
                 ],
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              )
+            : Row(
                 children: [
-                  Text(
-                    friend.friendName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: AppTheme.textPrimaryColor(context),
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    online ? (context.t(K.online)) : (context.t(K.offline)),
-                    style: TextStyle(
-                      color: online
-                          ? AppTheme.correct
-                          : AppTheme.textMutedColor(context),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  avatar,
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(child: text),
+                  if (trailing != null) ...[
+                    const SizedBox(width: SahneSpace.x2),
+                    trailing!,
+                  ],
                 ],
               ),
-            ),
-            // Düğme "Oyna" diyordu ama oyun başlatmıyor: bir oda kurup
-            // kodunu arkadaşla paylaşmanı istiyor. Çevrimdışı bir arkadaşta
-            // bile aynı sözü veriyordu. Ad, yapılan işi anlatır — yeni
-            // kullanıcının şaşırmaması ilk ölçüt (2026-07-26).
-            // Düğme büyük yazıda satırı taşırıyordu; genişliği sınırlanıp
-            // etiketi kısalabilir hâle getirildi (2026-07-26).
-            Flexible(
-              child: FilledButton.tonal(
-                key: ValueKey('friend-action-${friend.friendName}'),
-                onPressed: busy ? null : onPlay,
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppTheme.cyan.withValues(alpha: 0.14),
-                  // Ham aksan, kendi tonlu zemininde boğuluyordu: koyu
-                  // temada ölçümde 2.49:1 — etiket sönük çıkıyor ve düğme
-                  // kapalıymış gibi okunuyordu (2026-07-27).
-                  foregroundColor: AppColors.onAccentTint(
-                    context,
-                    AppTheme.cyan,
-                  ),
-                ),
-                child: busy
-                    // Oda kurulurken düğme sessizce ölüydü: ikinci dokunuş
-                    // `_roomLoading` kontrolüne takılıp hiçbir iz bırakmıyordu.
-                    ? const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : Text(
-                        context.t(K.inviteToRoom),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-              ),
-            ),
-          ],
+      ),
+    );
+  }
+}
+
+/// İstek gönderildi işareti: Rast tonu kare + ✓ (söz ekran okuyucuya).
+class _SentMark extends StatelessWidget {
+  const _SentMark({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      label: label,
+      excludeSemantics: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(color: t.okTint, shape: SahneShape.m),
+        child: SizedBox.square(
+          dimension: 44,
+          child: Icon(AppIcons.circleCheck, size: 20, color: t.okTx),
         ),
       ),
     );
   }
 }
 
-class _FriendRequestCard extends StatelessWidget {
-  const _FriendRequestCard({
+class _FriendRow extends StatelessWidget {
+  const _FriendRow({
+    required this.friend,
+    required this.onPlay,
+    required this.busy,
+  });
+
+  final Friend friend;
+  final VoidCallback onPlay;
+  final bool busy;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final online = friend.isOnline;
+    return _PersonRow(
+      key: ValueKey('friend-row-${friend.friendName}'),
+      // Çevrimiçi durumu yalnız renkle verilmez: elmasın köşesindeki küçük
+      // elmas dolu (çevrimiçi) ya da boş (çevrimdışı) ve alt satırda söz.
+      avatar: SizedBox.square(
+        dimension: 40,
+        child: Stack(
+          children: [
+            PlayerAvatar(
+              radius: 18,
+              colorHex: friend.friendAvatarColor,
+              displayName: friend.friendName,
+            ),
+            PositionedDirectional(
+              end: 0,
+              bottom: 0,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: online ? t.okTx : t.s1,
+                  shape: SahneShape.diamond(
+                    14,
+                    side: BorderSide(
+                      color: online ? t.s1 : t.tx3,
+                      width: SahneRing.r2,
+                    ),
+                  ),
+                ),
+                child: const SizedBox.square(dimension: 14),
+              ),
+            ),
+          ],
+        ),
+      ),
+      title: friend.friendName,
+      subtitle: online ? context.t(K.online) : context.t(K.offline),
+      subtitleColor: online ? t.okTx : t.tx2,
+      subtitleStrong: online,
+      // Düğme "Oyna" diyordu ama oyun başlatmıyor: bir oda kurup kodunu
+      // arkadaşla paylaşmanı istiyor. Ad, yapılan işi anlatır — yeni
+      // kullanıcının şaşırmaması ilk ölçüt (2026-07-26). Oda kurulurken
+      // düğme pasifleşir (eskiden ikinci dokunuş sessizce yutuluyordu).
+      trailing: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 180),
+        child: SahneButton.secondary(
+          key: ValueKey('friend-action-${friend.friendName}'),
+          label: context.t(K.inviteToRoom),
+          icon: busy ? AppIcons.hourglass : null,
+          onPressed: busy ? null : onPlay,
+        ),
+      ),
+    );
+  }
+}
+
+class _FriendRequestRow extends StatelessWidget {
+  const _FriendRequestRow({
     required this.request,
     required this.onAccept,
     required this.onReject,
-    required this.ku,
   });
 
   final FriendRequest request;
   final VoidCallback onAccept;
   final VoidCallback onReject;
-  final bool ku;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: AppPanel(
-        color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final textScale = MediaQuery.textScalerOf(context).scale(1);
-            final stackActions = constraints.maxWidth < 380 || textScale > 1.3;
-
-            if (stackActions) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      _buildAvatar(),
-                      const SizedBox(width: 12),
-                      Expanded(child: _buildRequestText(context)),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: _buildActions(context),
-                  ),
-                ],
-              );
-            }
-
-            return Row(
-              children: [
-                _buildAvatar(),
-                const SizedBox(width: 12),
-                Expanded(child: _buildRequestText(context)),
-                _buildActions(context),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAvatar() {
-    return PlayerAvatar(radius: 24, displayName: request.fromUserName);
-  }
-
-  Widget _buildRequestText(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          request.fromUserName,
-          softWrap: true,
-          style: TextStyle(
-            color: AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.w700,
-            fontSize: 14,
-          ),
-        ),
-        const SizedBox(height: 3),
-        Text(
-          context.t(K.wantsToBeFriend),
-          softWrap: true,
-          style: AppTypography.caption.copyWith(
-            color: AppTheme.textMutedColor(context),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildActions(BuildContext context) {
-    return Row(
+    final t = SahneTokens.of(context);
+    final actions = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          decoration: BoxDecoration(
-            color: AppTheme.wrong.withValues(alpha: 0.08),
-            borderRadius: BorderRadius.circular(AppRadius.badge),
-          ),
-          child: IconButton(
-            onPressed: onReject,
-            tooltip: context.t(K.rejectAction),
-            icon: const Icon(AppIcons.xmark, color: AppTheme.wrong),
+        // Reddet: Kulis karo + ✗, 48'lik dokunma kutusu (görsel 44). Şaş
+        // (yanlış) tonu bir cevap durumudur, bir eylemin rengi değil.
+        Tooltip(
+          message: context.t(K.rejectAction),
+          excludeFromSemantics: true,
+          child: Semantics(
+            button: true,
+            label: context.t(K.rejectAction),
+            onTap: onReject,
+            excludeSemantics: true,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: onReject,
+              child: SizedBox.square(
+                dimension: 48,
+                child: Center(
+                  child: SahneTappable(
+                    shape: SahneShape.m,
+                    color: t.s2,
+                    onTap: onReject,
+                    child: SizedBox.square(
+                      dimension: 44,
+                      child: Icon(AppIcons.xmark, size: 20, color: t.tx2),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
-        const SizedBox(width: 8),
-        FilledButton(
+        const SizedBox(width: SahneSpace.x2),
+        // Kabul ikincil: bir listede birden çok istek olabilir; ekranın tek
+        // birincil eylemi değil.
+        SahneButton.secondary(
+          label: context.t(K.acceptAction),
+          icon: AppIcons.check,
           onPressed: onAccept,
-          style: FilledButton.styleFrom(
-            backgroundColor: AppTheme.cyan,
-            foregroundColor: Colors.white,
-            elevation: 0,
-          ),
-          child: Text(context.t(K.acceptAction)),
         ),
       ],
+    );
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final textScale = MediaQuery.textScalerOf(context).scale(1);
+        final stackActions = constraints.maxWidth < 380 || textScale > 1.3;
+        return _PersonRow(
+          avatar: PlayerAvatar(radius: 18, displayName: request.fromUserName),
+          title: request.fromUserName,
+          subtitle: context.t(K.wantsToBeFriend),
+          trailing: actions,
+          stackTrailing: stackActions,
+        );
+      },
     );
   }
 }
