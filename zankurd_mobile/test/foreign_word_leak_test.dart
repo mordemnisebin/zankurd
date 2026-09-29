@@ -138,11 +138,8 @@ void main() {
 
   test('ustalık terimi iki dilde de yerel', () {
     // Bekçi kör kalmasın: düzeltilen örnek gerçekten yerinde durmalı.
-    expect(
-      Tr.of(K.categoryMasteryGoal, AppLanguage.ku),
-      'Armanca serweriya mijarê',
-    );
-    expect(Tr.of(K.categoryMasteryGoal, AppLanguage.tr), 'Konu ustalık hedefi');
+    // (2026-09-29 doğallık: `K.categoryMasteryGoal` kodda kullanılmadığı
+    // için defterden silindi; örnek yalnız profil başlığında kalır.)
     // Profil bölüm başlığı "Ustalîya" deyince aynı kavram iki adla durur.
     expect(Tr.of(K.kategoriUstaligi, AppLanguage.ku), 'Serweriya mijarê');
     expect(Tr.of(K.kategoriUstaligi, AppLanguage.tr), 'Konu ustalığı');

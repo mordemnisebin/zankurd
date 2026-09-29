@@ -13,6 +13,7 @@ import '../models/leaderboard_period.dart';
 import '../models/league_tier.dart';
 import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
+import '../utils/player_identity.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
@@ -281,7 +282,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         title: Text(dialogContext.t(K.reportProfileTitle)),
         content: Text(
           Tr.forKu(K.reportProfileBodyP, dialogContext.isKu, {
-            'p0': entry.displayName,
+            'p0': PlayerIdentity.resolveName(
+              entry.displayName,
+              isKu: dialogContext.isKu,
+            ),
           }),
         ),
         actions: [
@@ -942,18 +946,23 @@ class _RankRow extends StatelessWidget {
   /// Sıra rakamının rengi — ilk üçü listede ayıran TEK işaret.
   ///
   /// 2026-09-29 doğallık (K9): podyum, taç ve madalya halkası yok; birinci
-  /// koyu altın, ikinci ve üçüncü birincil metin, gerisi ikincil metin.
-  /// Rakam her zaman yazılıdır: sıra yalnız renkle anlatılmaz. Gümüş ve
-  /// bronz metin için temaya duyarlı bir Şahnê belirteci yok (sahne
-  /// madalyaları gündüz zemininde 4.5:1'i tutmuyor), bu yüzden ikisi aynı.
+  /// altın, ikinci gümüş, üçüncü bronz ([SahneTokens.silverTx],
+  /// [SahneTokens.bronzeTx]; iki temada AA), gerisi ikincil metin. Rakam
+  /// her zaman yazılıdır: sıra yalnız renkle anlatılmaz.
   Color _rankColor(SahneTokens t) {
     if (highlight) return t.goldTx;
     return switch (entry.rank) {
       1 => t.goldTx,
-      2 || 3 => t.tx,
+      2 => t.silverTx,
+      3 => t.bronzeTx,
       _ => t.tx2,
     };
   }
+
+  /// Görünen ad: sunucunun yer tutucu adı ("ZanKurd Oyuncusu") ham
+  /// basılmaz, dile göre "Oyuncu" / "Lîstikvan" olur (satırda "ZanKurd
+  /// Oyu…" diye kesiliyordu). Avatar rengi ham addan türer (değişmez).
+  String get _name => PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
 
   String get _meta => entry.showcaseTitle != null
       ? '${entry.showcaseTitle} · ${entry.bestStreak} ${Tr.forKu(K.streakUnit, isKu)}'
@@ -968,12 +977,12 @@ class _RankRow extends StatelessWidget {
     final label = highlight
         ? (Tr.forKu(K.seninSiranPP, isKu, {
             'p0': '${entry.rank}',
-            'p1': entry.displayName,
+            'p1': _name,
             'p2': '${entry.totalScore}',
           }))
         : (Tr.forKu(K.pPPPuan, isKu, {
             'p0': '${entry.rank}',
-            'p1': entry.displayName,
+            'p1': _name,
             'p2': '${entry.totalScore}',
           }));
 
@@ -981,7 +990,7 @@ class _RankRow extends StatelessWidget {
       return SahneListRow.me(
         key: const ValueKey('leaderboard-my-rank-row'),
         rank: entry.rank,
-        title: entry.displayName,
+        title: _name,
         subtitle: _meta,
         // "Sen" rozeti vurgunun sözlü kanalı: altın ton ve halka tek
         // başına renk körü oyuncuya yetmez.
@@ -1069,7 +1078,7 @@ class _RankRow extends StatelessWidget {
                           children: [
                             Flexible(
                               child: Text(
-                                entry.displayName,
+                                _name,
                                 style: SahneType.bodyStrong.copyWith(
                                   color: t.tx,
                                 ),
@@ -1219,7 +1228,7 @@ class _FriendRankRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    friend.friendName,
+                    PlayerIdentity.resolveName(friend.friendName, isKu: isKu),
                     style: SahneType.bodyStrong.copyWith(color: t.tx),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

@@ -134,7 +134,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       // tutucusunu döndürür. Diğer ekranlar bunu `PlayerIdentity` üzerinden
       // dile çevirir; ayarlar ekranı ham değeri kutuya yazıyordu ve
       // Kurmancî arayüzde oyuncu adını Türkçe görüyordu (2026-07-26).
-      final name = PlayerIdentity.resolveName(raw, isKu: context.isKu);
+      //
+      // 2026-09-29 doğallık: çözülen yedek ("Oyuncu") kutuya DEĞER olarak
+      // yazılıyordu; oyuncu adı hiç seçmemişken "Oyuncu" adlı biri gibi
+      // görünüyordu ve kutuyu önce silmesi gerekiyordu. Yer tutucuda kutu
+      // boş kalır, `K.playerNameHint` ipucu olarak görünür.
+      final name = PlayerIdentity.isPlaceholderDisplayName(raw)
+          ? ''
+          : PlayerIdentity.resolveName(raw, isKu: context.isKu);
       setState(() {
         _currentName = name;
         _nameController.text = name;

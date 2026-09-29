@@ -186,9 +186,16 @@ void main() {
 
   test('WCAG: sıra rakamları ve adlar iki temada da ≥ 4.5:1', () {
     for (final t in [SahneTokens.night, SahneTokens.day]) {
-      // Satırlar liste grubunun Perde yüzeyinde: birinci koyu altın,
-      // ikinci ve üçüncü birincil metin, gerisi ikincil metin.
+      // Satırlar liste grubunun Perde yüzeyinde: birinci altın, ikinci
+      // gümüş, üçüncü bronz, gerisi ikincil metin. Gümüş ve bronz zeminde
+      // de (Sen satırı ve boş alan) AA tutar.
       expect(_contrast(t.goldTx, t.s1), greaterThanOrEqualTo(4.5));
+      for (final medal in [t.silverTx, t.bronzeTx]) {
+        expect(_contrast(medal, t.s1), greaterThanOrEqualTo(4.5));
+        expect(_contrast(medal, t.bg), greaterThanOrEqualTo(4.5));
+      }
+      // Gümüş, 4. sıra ve sonrasının ikincil metninden ayırt edilmeli.
+      expect(t.silverTx, isNot(t.tx2));
       expect(_contrast(t.tx, t.s1), greaterThanOrEqualTo(4.5));
       expect(_contrast(t.tx2, t.s1), greaterThanOrEqualTo(4.5));
     }

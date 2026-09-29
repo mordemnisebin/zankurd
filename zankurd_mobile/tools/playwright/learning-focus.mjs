@@ -25,7 +25,7 @@ const shot=async name=>{
 };
 try {
  await page.goto(process.env.ZANKURD_URL??'http://127.0.0.1:8876');
- await page.getByText('Kurmancî hîn bibe, pêş bikeve.',{exact:true}).waitFor();
+ await page.getByText('Bi pirsên kurt peyvan hîn bibe, çandê nas bike.',{exact:true}).waitFor();
  await shot('onboarding');
  const ageGate=page.getByRole('checkbox',{name:'Ez ji 13 salî mezintir im'});
  await ageGate.waitFor({state:'visible'});
@@ -41,7 +41,7 @@ try {
  await nameInput.pressSequentially('Rojda',{delay:80});
  await page.waitForTimeout(400);
  await click('Dest pê bike');
- await page.getByText('DERSA YEKEM',{exact:true}).waitFor();
+ await page.getByText('Dersa yekem',{exact:true}).waitFor();
  assert(!(await body()).includes('Erkên rojane'),'New user should see a focused home');
  await shot('home');
  await click('Moda tarî/ronahî');await shot('home-ku-dark');
@@ -75,7 +75,7 @@ try {
  assert(resultText.includes('5 bersiv'),'Result should summarize all five answers');
  await page.mouse.move(190,630);await page.mouse.wheel(0,500);await shot('result-summary');
  await click('Vegere');
- await page.getByText('ERKÊ ÎRO',{exact:true}).waitFor();
+ await page.getByText('Erkê îro',{exact:true}).waitFor();
  assert((await body()).includes('Erkên rojane'),'Support cards should return after completion');
  await shot('completed-home');
  assert.deepEqual(errors,[]);

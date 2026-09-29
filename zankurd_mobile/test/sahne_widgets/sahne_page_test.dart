@@ -273,6 +273,46 @@ void main() {
     });
   }
 
+  // 2026-09-29 doğallık (K10): alt perdenin üstünde hep açık, zemine
+  // kararan 24 px'lik bir degrade vardı. İçerik bitmiş olsa da gövdenin son
+  // 24 px'ini örtüyor, sonuç ekranında öğrenme kartının yazısını ortasından
+  // eritiyordu (tur kareleri 68–70). Şimdi degrade yok; gövde perdenin
+  // altında DEVAM EDİYORSA 1 px ayırıcı çizgi var, sona varınca kalkar.
+  for (final MapEntry(key: name, value: dark) in kThemes.entries) {
+    testWidgets('$name: C alt perde kenarı yalnız devamı varken çizgi', (
+      tester,
+    ) async {
+      Widget stage(int lines) => SahneStageScaffold(
+        onClose: noop,
+        body: SahneStageBody(
+          children: [for (var i = 0; i < lines; i++) Text('Rêz $i')],
+        ),
+        dock: const SahneButton.primary(label: 'Bidomîne', onPressed: noop),
+      );
+      const edge = ValueKey('sahne-stage-dock-edge');
+
+      await pumpSahne(tester, stage(40), dark: dark, page: true);
+      await tester.pump();
+      expect(tester.takeException(), isNull);
+      expect(find.byKey(edge), findsOneWidget, reason: 'devamı var');
+      expect(tester.getSize(find.byKey(edge)).height, 1);
+      final gradients = tester
+          .widgetList<DecoratedBox>(find.byType(DecoratedBox))
+          .map((b) => b.decoration)
+          .whereType<BoxDecoration>()
+          .where((d) => d.gradient != null);
+      expect(gradients, isEmpty, reason: 'perde degradesi kalktı');
+
+      await tester.drag(find.byType(Scrollable).first, const Offset(0, -5000));
+      await tester.pumpAndSettle();
+      expect(find.byKey(edge), findsNothing, reason: 'sona varıldı');
+
+      await pumpSahne(tester, stage(1), dark: dark, page: true);
+      await tester.pump();
+      expect(find.byKey(edge), findsNothing, reason: 'kısa içerik');
+    });
+  }
+
   test('kategori ışığı bilinmeyen kategoride varsayılan huzmeye düşer', () {
     expect(SahneCategoryLight.of('Ziman'), SahneCategoryLight.ziman);
     expect(SahneCategoryLight.of('Sînema'), SahneCategoryLight.sinema);

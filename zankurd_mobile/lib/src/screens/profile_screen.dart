@@ -1030,12 +1030,9 @@ class _SyncStatusChip extends StatelessWidget {
                                 ? Tr.forKu(K.deviceOnlyProgress, isKu)
                                 : (isSynced
                                       ? (Tr.forKu(K.bulutlaSenkronize, isKu))
-                                      : (isKu
-                                            // "kayd" bankada başka hiçbir
-                                            // yerde geçmiyor; yerleşik
-                                            // sözcük "tomar"dır.
-                                            ? '$pending tomar li amûrê ye'
-                                            : '$pending çevrimdışı kaydı'))));
+                                      : Tr.forKu(K.pendingOnDeviceP, isKu, {
+                                          'p0': '$pending',
+                                        }))));
 
                 final chip = DecoratedBox(
                   decoration: ShapeDecoration(color: bg, shape: SahneShape.s),

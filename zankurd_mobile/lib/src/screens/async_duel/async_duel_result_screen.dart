@@ -468,34 +468,25 @@ class _CompletedBody extends StatelessWidget {
       AsyncDuelOutcome.draw => context.t(K.draw),
     };
     final opponentName = view.opponentName ?? context.t(K.asyncDuelOpponent);
-    final initial = opponentName.trim().isEmpty
-        ? '?'
-        : opponentName.trim().characters.first.toUpperCase();
     final xp = _completedXp(view);
     final win = outcome == AsyncDuelOutcome.win;
 
+    // 2026-09-29 doğallık: sonuçta iki amblem üst üsteydi (taç/bayrak/terazi
+    // + iki avatarlı VS amblemi). Avatarlar yalnız "sen" ve rakibin baş
+    // harfiydi; aynı bilgi hemen altındaki skor satırında ("Sen 2 – 0
+    // Rojda") yazılı. Tek amblem kalır: sonucun kendisi, bekleyen ve süresi
+    // dolan düellodaki durum amblemiyle aynı yuvada.
     return _DuelHero(
-      emblem: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: 44,
-            child: win
-                ? const SahneGlyph(SahneGlyphKind.crown, size: 44)
-                : ExcludeSemantics(
-                    child: Icon(
-                      outcome == AsyncDuelOutcome.draw
-                          ? AppIcons.scaleBalanced
-                          : AppIcons.flag,
-                      size: 36,
-                      color: t.tx2,
-                    ),
-                  ),
-          ),
-          const SizedBox(height: SahneSpace.x3),
-          SahneVsEmblem(opponentInitial: initial),
-        ],
-      ),
+      emblem: switch (outcome) {
+        AsyncDuelOutcome.win => const SizedBox.square(
+          dimension: 72,
+          child: Center(child: SahneGlyph(SahneGlyphKind.crown, size: 56)),
+        ),
+        AsyncDuelOutcome.loss => const _StateDiamond(icon: AppIcons.flag),
+        AsyncDuelOutcome.draw => const _StateDiamond(
+          icon: AppIcons.scaleBalanced,
+        ),
+      },
       title: title,
       titleColor: win ? t.goldTx : null,
       children: [

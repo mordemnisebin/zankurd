@@ -162,7 +162,6 @@ void main() {
 
   test('hızlı düello bütün girişlerde aynı Kurmancî terimi kullanır', () {
     expect(Tr.of(K.quickDuel, AppLanguage.ku), 'Pêşbirka bilez');
-    expect(Tr.of(K.homeQuickDuel, AppLanguage.ku), 'Pêşbirka bilez');
     expect(Tr.of(K.playMore, AppLanguage.ku), 'Zêdetir');
     // Bekçi yalnız hub kartlarını görüyordu. Eşleşme başlığı ve tanıtım
     // maddesi "Şerê 1vs1" deyince aynı 1v1 iki adla duruyordu.
@@ -180,10 +179,12 @@ void main() {
     }
   });
 
-  test('quiz açıklama seslendirmesi dinleme anlamını korur', () {
-    expect(Tr.of(K.listenExplanation, AppLanguage.ku), 'Şîroveyê bibihîze');
-  });
-
+  // 2026-09-29 doğallık: `K.listenExplanation`, `K.homeQuickDuel`,
+  // `K.badgeCollection`, `K.homePathTrack`, `K.homeLearningSection`,
+  // `K.learningPaths`, `K.secLearningCaps`, `K.categoryMasteryGoal` ve
+  // `K.magazayaGitSeriKoru` kodda hiçbir yerde kullanılmıyordu; defterden
+  // silindiler (METIN_DENETIMI: kullanılmayan anahtarlar silinir). Yalnız
+  // onları sabitleyen beklentiler kalktı; terim taramaları yerinde.
   test('açıklama terimi Kurmancîde şîrove olarak kalır', () {
     // Quiz başlığı `Şîrove` der. İnceleme etiketi "Ravahî" deyince
     // oyuncu aynı açıklamayı iki adla görür. `contains('şîrove')`
@@ -192,7 +193,6 @@ void main() {
     // fiili değil; tanıtım ve rehber etiketten ayrı ad kullanıyordu.
     expect(Tr.of(K.aciklama, AppLanguage.ku), 'Şîrove:');
     expect(Tr.of(K.explanationTitle, AppLanguage.ku), 'Şîrove');
-    expect(Tr.of(K.listenExplanation, AppLanguage.ku), 'Şîroveyê bibihîze');
     expect(
       Tr.of(K.onbDailyBullet, AppLanguage.ku),
       'Di dersa rojê de dem tune, her pirs şîroveya xwe heye.',
@@ -227,12 +227,11 @@ void main() {
   });
 
   test('rozet terimi Kurmancîde rozet olarak kalır', () {
-    // Koleksiyon `Rozet` der (`K.rozetler`, `K.badgeCollection`).
+    // Koleksiyon `Rozet` der (`K.rozetler`).
     // Çerçeve koşulu "nîşan" deyince oyuncu aynı rozeti iki adla görür.
     // `nîşan bide` göstermek, `nav û nîşan` unvan; kök taraması kör kalır.
     expect(Tr.of(K.rozetler, AppLanguage.ku), 'Rozet');
     expect(Tr.of(K.newBadge, AppLanguage.ku), 'Rozeta nû');
-    expect(Tr.of(K.badgeCollection, AppLanguage.ku), 'Koleksiyona rozetan');
     expect(Tr.of(K.frameReqBronze, AppLanguage.ku), '1 rozet veke');
     expect(Tr.of(K.frameReqSilver, AppLanguage.ku), '5 rozetan veke');
 
@@ -389,8 +388,6 @@ void main() {
     // `hînbûn` biri `fêrbûn` diyordu; bölüm başlığı `Hînbûn` iken büyük
     // harfli hâli `FÊRBÛN` çıkıyordu. İkisi de doğru sözcük, ama tek üründe
     // tek kök olmalı — uygulamanın sloganı da `hîn bibe` diyor.
-    expect(Tr.of(K.homePathTrack, AppLanguage.ku), 'Rêya {category}');
-    expect(Tr.of(K.homePathTrack, AppLanguage.tr), '{category} yolu');
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.ku),
       'Dersa rojê amade ye. Îro hîn bibe.',
@@ -403,10 +400,7 @@ void main() {
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.tr).toLowerCase(),
       isNot(contains('etkinlik')),
     );
-    expect(Tr.of(K.homeLearningSection, AppLanguage.ku), 'Rêyên hînbûnê');
-    expect(Tr.of(K.learningPaths, AppLanguage.ku), 'Rêyên hînbûnê');
     expect(Tr.of(K.secLearning, AppLanguage.ku), 'Hînbûn');
-    expect(Tr.of(K.secLearningCaps, AppLanguage.ku), 'HÎNBÛN');
     expect(
       Tr.of(K.onbLearnBody, AppLanguage.ku),
       'Bi pirsên kurt peyvan hîn bibe, çandê nas bike.',
@@ -537,7 +531,6 @@ void main() {
     // "Ustalîya Kategoriyê" deyince oyuncu aynı kavramı iki adla görür.
     // Türkçe `ustalî` kökü, `contains('ustalık')` taramasını kör eder.
     expect(Tr.of(K.kategoriUstaligi, AppLanguage.ku), 'Serweriya mijarê');
-    expect(Tr.of(K.categoryMasteryGoal, AppLanguage.ku), contains('serweriya'));
 
     final ustal = RegExp(r'ustal', caseSensitive: false);
     for (final key in Tr.keys) {
@@ -839,7 +832,6 @@ void main() {
     // (dükkân) ayrı kavramdır; UI birimi `dukan`.
     expect(Tr.of(K.shop, AppLanguage.ku), 'Dukan');
     expect(Tr.of(K.shopOfflineTitle, AppLanguage.ku), 'Dukan ne li serhêl e');
-    expect(Tr.of(K.magazayaGitSeriKoru, AppLanguage.ku), 'Here dukanê');
     expect(Tr.of(K.frameReqNeon, AppLanguage.ku), 'Ji dukanê bikire');
 
     final dikan = RegExp(r'dikan', caseSensitive: false);

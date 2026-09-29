@@ -8,6 +8,10 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/story_catalog.dart';
 
+// 2026-09-29 doğallık (K7): satırlardaki kitap ikonu karosu, "Başla" durum
+// sözü ve chevron kalktı; sağda yalnız ilerleme (bitti ✓, yarım "Devam et").
+// "Başla"yı ve chevron rengini sabitleyen beklentiler buna göre değişti;
+// ekran okuyucu etiketi ("…. Başla") aynı kalır.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -16,7 +20,7 @@ void main() {
     StoryProgressStore.resetInstance();
   });
 
-  testWidgets('katalog dört hikâyeyi ve başlanmamış durumunu gösterir', (
+  testWidgets('katalog dört hikâyeyi gösterir; başlanmamışta söz ve ok yok', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -33,7 +37,9 @@ void main() {
     for (final story in everydayStories) {
       expect(find.byKey(ValueKey('story-card-${story.id}')), findsOneWidget);
     }
-    expect(find.text('Başla'), findsNWidgets(4));
+    expect(find.text('Başla'), findsNothing);
+    expect(find.byIcon(AppIcons.chevronRight), findsNothing);
+    expect(find.byIcon(AppIcons.bookOpenReader), findsNothing);
   });
 
   testWidgets('hikâye kartı ekran okuyucuda tek kez duyurulur', (tester) async {
@@ -79,16 +85,26 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Devam et'), findsOneWidget);
-    expect(find.text('Tamamlandı'), findsOneWidget);
-    expect(find.text('Başla'), findsNWidgets(2));
+    // Biten hikâye ✓ ile işaretlenir; söz ekran okuyucu etiketinde kalır.
+    expect(find.text('Tamamlandı'), findsNothing);
+    final done = find.byKey(const ValueKey('story-card-xwe-nasandin'));
+    expect(
+      find.descendant(of: done, matching: find.byIcon(AppIcons.check)),
+      findsOneWidget,
+    );
+    expect(tester.getSemantics(done).label, endsWith('. Tamamlandı'));
+    expect(find.text('Başla'), findsNothing);
   });
 
   // 2026-09-29 Şahnê: aksan rengi hesaplanmıyor, belirteçten geliyor —
-  // durum sözü öğrenme rolünün okunur metni (`learnTx`), chevron üçüncül
-  // metin (`tx3`; liste satırı dili). İkisi de iki temada AA geçer.
+  // ilerleme sözü ve ✓ öğrenme rolünün okunur metni (`learnTx`); iki
+  // temada AA geçer.
   testWidgets('koyu temada hikâye aksanları okunabilir tona uyarlanır', (
     tester,
   ) async {
+    final store = await StoryProgressStore.load();
+    await store.saveNode('cayxane', 'tea');
+    await store.saveNode('xwe-nasandin', 'end_friend');
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.dark(),
@@ -99,14 +115,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final statusFinder = find.text('Başla').first;
+    final statusFinder = find.text('Devam et');
     final status = tester.widget<Text>(statusFinder);
     final t = SahneTokens.of(tester.element(statusFinder));
     expect(status.style?.color, t.learnTx);
 
-    final chevronFinder = find.byIcon(AppIcons.chevronRight).first;
-    final chevron = tester.widget<Icon>(chevronFinder);
-    expect(chevron.color, t.tx3);
+    final check = tester.widget<Icon>(find.byIcon(AppIcons.check));
+    expect(check.color, t.learnTx);
   });
 
   testWidgets('kompakt hikâyeler kart değil sahne şeridi olarak çizilir', (

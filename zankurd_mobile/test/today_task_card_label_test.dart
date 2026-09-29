@@ -10,9 +10,11 @@
 /// ## Niçin sessiz kalırdı
 ///
 /// Kartın testleri anahtara ve sayıya bakıyordu, etiketin biçimine değil.
-/// Dizge defterinde etiketler hâlâ büyük harfle durduğu için ekran onları
-/// cümle düzenine çevirir ([sentenceCaseLabel]); defter değişirse çevirme
-/// hiçbir şey yapmaz — bu dosya iki durumu da sabitler.
+///
+/// 2026-09-29 doğallık: etiketler dizge defterinde de cümle düzenine geçti
+/// (`K.bugununGorevi`, `K.firstSessionBadge`); ekrandaki çevirici
+/// (`sentenceCaseLabel`) gereksiz kaldı ve silindi, onun birim testi de.
+/// Ekrandaki sonuç aşağıdaki kart testleriyle korunur.
 library;
 
 import 'package:flutter/material.dart';
@@ -43,18 +45,6 @@ Future<void> _pump(
 }
 
 void main() {
-  test('büyük harfli etiket yerele duyarlı cümle düzenine iner', () {
-    expect(sentenceCaseLabel('BUGÜNÜN GÖREVİ', isKu: false), 'Bugünün görevi');
-    expect(sentenceCaseLabel('İLK DERS', isKu: false), 'İlk ders');
-    expect(sentenceCaseLabel('ERKÊ ÎRO', isKu: true), 'Erkê îro');
-    expect(sentenceCaseLabel('DERSA YEKEM', isKu: true), 'Dersa yekem');
-    // Kurmancîde noktasız ı yok: "I" → "i".
-    expect(sentenceCaseLabel('BIXWÎNE', isKu: true), 'Bixwîne');
-    // Zaten cümle düzenindeyse değişmez.
-    expect(sentenceCaseLabel('Bugünün görevi', isKu: false), 'Bugünün görevi');
-    expect(sentenceCaseLabel('', isKu: false), '');
-  });
-
   for (final (isKu, firstSession, label) in const [
     (false, true, 'İlk ders'),
     (false, false, 'Bugünün görevi'),

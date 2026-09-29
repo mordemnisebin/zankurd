@@ -601,4 +601,49 @@ void main() {
       );
     }
   });
+
+  // 2026-09-29 doğallık: tamamlanan düellonun sonucunda iki amblem üst
+  // üsteydi — taç/bayrak/terazi ve altında iki avatarlı VS amblemi. Kare
+  // avatarlarda "VS" iki karonun arasına sıkışıp üstlerine biniyordu;
+  // avatarların taşıdığı bilgi (sen ve rakibin baş harfi) zaten skor
+  // satırında yazılı. Tek amblem kalır: sonucun kendisi.
+  testWidgets('düello sonucunda tek amblem: sonuç, VS yok', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    for (final outcome in AsyncDuelOutcome.values) {
+      await tester.pumpWidget(
+        testShell(
+          child: AsyncDuelResultScreen(
+            key: ValueKey(outcome),
+            repository: freshMockRepository(),
+            view: AsyncDuelResultView.fromSummary(
+              AsyncDuelSummary(
+                duelId: 'd-${outcome.name}',
+                status: AsyncDuelStatus.completed,
+                role: AsyncDuelRole.opponent,
+                opponentName: 'Rojda',
+                myCorrect: 2,
+                opponentCorrect: 0,
+                outcome: outcome,
+                createdAt: DateTime.utc(2026, 9, 27),
+                seen: true,
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byType(SahneVsEmblem), findsNothing, reason: '$outcome');
+      final crowns = tester
+          .widgetList<SahneGlyph>(find.byType(SahneGlyph))
+          .where((g) => g.kind == SahneGlyphKind.crown);
+      expect(
+        crowns.length,
+        outcome == AsyncDuelOutcome.win ? 1 : 0,
+        reason: '$outcome',
+      );
+      expect(find.textContaining('Rojda'), findsWidgets, reason: '$outcome');
+    }
+  });
 }

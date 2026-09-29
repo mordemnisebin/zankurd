@@ -50,8 +50,10 @@ void main() {
     // kısaltması ve Kurmancî ekranda anlamsız bir harf. Üç ekran aynı
     // sabiti taşıyordu: mağaza kartı, sonuç ekranı coin rozeti ve joker
     // çubuğu.
-    expect(Tr.of(K.coinAbbrev, AppLanguage.ku), 'z');
-    expect(Tr.of(K.coinAbbrev, AppLanguage.tr), 'j');
+    //
+    // 2026-09-29 doğallık: kısaltma artık hiçbir ekranda yok (terim
+    // sözlüğü: "j"/"z" kısaltması yasak); `K.coinAbbrev` defterden silindi.
+    expect(Tr.keys, isNot(contains('quiz.coin.abbrev')));
 
     // 2026-09-29 doğallık: üç ekran da artık kısaltma göstermez; fiyat
     // sayı + jeton glifi ("720", "720j" değil), ekran okuyucu para

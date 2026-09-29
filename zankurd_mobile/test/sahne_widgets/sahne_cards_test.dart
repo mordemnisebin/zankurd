@@ -269,4 +269,41 @@ void main() {
     // Standart satır: 12 + 44 + 12; sıra satırı: 12 + 24 + 12.
     expect(lefts, [68, 48]);
   });
+
+  // 2026-09-29 doğallık: avatarlar elmastan pahlı kareye dönünce çapraz
+  // dizilişte "VS" iki karonun arasına sıkışıp üstlerine biniyordu (tur
+  // karesi 101). Yan yana dizilişte harfler kendi yuvasındadır.
+  for (final MapEntry(key: name, value: dark) in kThemes.entries) {
+    testWidgets('$name: VS amblemi harfleri avatarların üstüne binmez', (
+      tester,
+    ) async {
+      for (final scale in [1.0, 2.0]) {
+        await pumpSahne(
+          tester,
+          const Center(child: SahneVsEmblem(opponentInitial: 'R')),
+          dark: dark,
+          textScale: scale,
+        );
+        expect(tester.takeException(), isNull, reason: 'ölçek $scale');
+        final emblem = find.byType(SahneVsEmblem);
+        expect(tester.getSize(emblem).width, SahneVsEmblem.width);
+        final vs = tester.getRect(
+          find.descendant(of: emblem, matching: find.text('VS')),
+        );
+        final avatars = find.descendant(
+          of: emblem,
+          matching: find.byType(SahneAvatar),
+        );
+        expect(avatars, findsNWidgets(2));
+        for (var i = 0; i < 2; i++) {
+          final rect = tester.getRect(avatars.at(i));
+          expect(
+            rect.overlaps(vs),
+            isFalse,
+            reason: 'ölçek $scale: "VS" $vs, avatar $rect',
+          );
+        }
+      }
+    });
+  }
 }
