@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../../theme/app_icons.dart';
 import '../../theme/app_theme.dart';
 import '../../theme/sahne.dart';
+import '../brand_mark.dart';
 import 'sahne_foundation.dart';
 import 'sahne_painters.dart';
 
@@ -394,12 +395,16 @@ class _RenderBrandRow extends RenderBox
       defaultPaint(context, offset);
 }
 
-/// Marka: yalnız "ZanKurd" yazısı (düğme biçemi, birincil metin).
+/// Marka: solda logo işareti, yanında "ZanKurd" yazısı (düğme biçemi,
+/// birincil metin).
 ///
 /// 2026-09-29 doğallık (K3): eskiden 32'lik plakada 24'lük logo işareti de
 /// vardı. O boyda güneş, dağ, kitap ve Z birbirine karışıyor, plakanın
-/// kenarı kırıntılı görünüyordu; her sekmede tekrar eden plaka da süstü.
-/// Marka satırı sade yazıdır; logo açılışta ve tanıtımda kalır.
+/// kenarı kırıntılı görünüyordu; satır yazıya indirilmişti.
+/// 2026-09-30: logo değişti (L4 soru balonu, tek renkli iki çokgen). Yeni
+/// işaret 22 px'te de okunur ve plaka gerekmez: turuncu balon her iki
+/// zeminde kendi başına ayrışır. İşaret [BrandMark] ile yol olarak çizilir
+/// (asset yok, her ölçekte keskin); yazı Flutter `Text` olarak kalır.
 class _BrandMark extends StatelessWidget {
   const _BrandMark({required this.name});
 
@@ -417,7 +422,14 @@ class _BrandMark extends StatelessWidget {
           alignment: AlignmentDirectional.centerStart,
           widthFactor: 1,
           heightFactor: 1,
-          child: Text(name, style: SahneType.button.copyWith(color: t.tx)),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              BrandMark(color: t.act, height: 22),
+              const SizedBox(width: SahneSpace.x2),
+              Text(name, style: SahneType.button.copyWith(color: t.tx)),
+            ],
+          ),
         ),
       ),
     );

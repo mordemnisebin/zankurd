@@ -6,10 +6,15 @@
   ise krem (#F7F4EE) / karanlıkta neredeyse siyah (#0E1512). Açılışta beyaz
   bir kare çakıp sonra tema rengine geçiyordu. Karanlık temada bu çakma
   göze vuruyordu.
+
+  2026-09-30: yeni logoyla (turuncu soru balonu) zeminler Şahnê'nin kendi
+  zeminlerine çekildi: gündüz #E9EDF6, gece #0A0F2E (`SahneTokens.day/night`
+  `.bg`). Krem/yeşilimsi eski zeminler eski logonun beyaz ve kırmızı
+  paletine göreydi; Flutter ilk kareyi çizince zemin renk atlıyordu.
 -->
 <resources>
-    <color name="zk_splash_bg">#F7F4EE</color>
-    <color name="zk_splash_bg_dark">#0E1512</color>
-    <!-- Uyarlanabilir simgenin zemini: logonun tasarlandığı beyaz. -->
-    <color name="zk_icon_bg">#FFFFFF</color>
+    <color name="zk_splash_bg">#E9EDF6</color>
+    <color name="zk_splash_bg_dark">#0A0F2E</color>
+    <!-- Uyarlanabilir simgenin zemini: gece lacivert (iOS simgesiyle aynı). -->
+    <color name="zk_icon_bg">#0A0F2E</color>
 </resources>

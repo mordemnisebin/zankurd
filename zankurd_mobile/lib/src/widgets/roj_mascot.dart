@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'brand_mark.dart';
 import 'sahne/sahne.dart';
 
 /// Eski maskotun ruh hâlleri.
@@ -28,12 +29,12 @@ RojMood greetingMascotMood({required int hour, required int streak}) {
   return RojMood.happy;
 }
 
-/// Marka işareti plakası — eski "Zana" maskotunun yerinde.
+/// Marka işareti — eski "Zana" maskotunun yerinde.
 ///
 /// 2026-09-29 Şahnê: güneş maskotu kaldırıldı. API (boyut, ruh hâli,
 /// `roj-mascot` anahtarı) çağıranlar kırılmasın diye kalır; bileşen artık
-/// logo işaretini M pahlı bir plakada çizer ([BrandMarkPlate]). [mood] yok
-/// sayılır. Dekoratiftir: ekran okuyucuya hiçbir şey söylemez.
+/// logo işaretini çizer ([BrandMarkPlate]). [mood] yok sayılır. Dekoratiftir:
+/// ekran okuyucuya hiçbir şey söylemez.
 class RojMascot extends StatelessWidget {
   const RojMascot({
     this.size = 96,
@@ -50,11 +51,15 @@ class RojMascot extends StatelessWidget {
   Widget build(BuildContext context) => BrandMarkPlate(size: size);
 }
 
-/// Logo işareti plakası: M pahlı plaka içinde `assets/zankurd_icon.webp`.
+/// Logo işareti: [size] genişliğinde L4 soru balonu, [size] kareye ortalı.
 ///
-/// Gecede Kulis (`s2`), gündüzde Perde (`s1`, beyaz) + 1 px kenar — dağlar
-/// koyu zeminde kaybolmasın (A iskeletinin marka satırıyla aynı kural).
-/// Dekoratiftir. [RojMascot] ve boş/hata durumları bunu çizer.
+/// 2026-09-30: adı "plaka" olarak kaldı (çağıranlar kırılmasın) ama plaka
+/// yok. Eskiden M pahlı bir plakada, Kulis/Perde üzerinde duruyordu: eski
+/// logonun dağları koyu zeminde kaybolduğu için. Yeni işaret tek renkli ve
+/// doygun (turuncu balon, içinde oyuk Z); plaka logonun etrafında kutu
+/// içinde kutu yaratıyor ve kuyruğu sıkıştırıyordu. İşaret [BrandMark]
+/// ile yol olarak çizilir, her boyutta keskindir. Dekoratiftir.
+/// [RojMascot] ve boş/hata durumları bunu çizer.
 class BrandMarkPlate extends StatelessWidget {
   const BrandMarkPlate({super.key, this.size = 64});
 
@@ -63,32 +68,11 @@ class BrandMarkPlate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final day = Theme.of(context).brightness == Brightness.light;
-    final mark = size * 0.72;
     return ExcludeSemantics(
       child: SizedBox.square(
         dimension: size,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: day ? t.s1 : t.s2,
-            shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
-          ),
-          // İşaret bir `Image` bileşeni değil, süs katmanıdır
-          // (`DecorationImage`): görsel sayan ve semantik arayan bekçiler
-          // (ör. tanıtımın "tam üç kategori görseli") onu içerik saymaz.
-          child: Center(
-            child: SizedBox.square(
-              dimension: mark,
-              child: const DecoratedBox(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/zankurd_icon.webp'),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ),
-          ),
+        child: Center(
+          child: BrandMark(color: t.act, height: size / BrandMark.aspect),
         ),
       ),
     );

@@ -412,7 +412,7 @@ class _AnimatedBrandLockup extends StatelessWidget {
           children: [
             // Logo işareti plakada (gecede Kulis, gündüzde Perde + kenar):
             // dağlar koyu zeminde kaybolmaz.
-            AppLogo(width: logoWidth, onBrandSurface: true),
+            AppLogo(width: logoWidth),
           ],
         ),
       ),
