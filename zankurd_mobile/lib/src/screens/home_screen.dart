@@ -469,16 +469,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             onStart: _startDailyQuiz,
           ),
           // İlk oturumda seviye çubuğu ("Seviye 1 · 0/1000") yeni gelen için
-          // anlamsız bir sayıdır; yerini uygulamayı üç cümleyle anlatan
-          // yol gösterici alır. İlk turdan sonra ilerleme özeti geri gelir.
+          // anlamsız bir sayıdır; yerine bir şey konmaz. 2026-09-30 doğallık:
+          // buraya konan "3 adımda ZanKurd" kartı hemen üstteki Günün dersini
+          // kelimesi kelimesine tekrarlıyordu, gerisini de sekme çubuğu zaten
+          // gösteriyor. İlk turdan sonra ilerleme özeti geri gelir.
           //
           // İlerleme özeti günlük görevin ALTINDA durur: turuncu "Başla"
           // ekranın ilk ve en güçlü eylemi kalmalı. Coin burada YOK:
           // marka satırında zaten kalıcı bir jeton çipi ve mağaza girişi var.
-          const SizedBox(height: SahneSpace.cardGap),
-          if (_firstSession)
-            HomeFirstSteps(isKu: ku)
-          else
+          if (!_firstSession) ...[
+            const SizedBox(height: SahneSpace.cardGap),
             SahneSurfaceCard(
               child: ProgressSummary(
                 key: const ValueKey('home-progress-summary'),
@@ -488,6 +488,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 levelLabel: context.t(K.progressLevelLabel),
               ),
             ),
+          ],
           if (_reviewReadyCount > 0) ...[
             const SizedBox(height: SahneSpace.cardGap),
             // Altın yalnız ödül/ilerleme sayılarına ayrılmış; tekrar

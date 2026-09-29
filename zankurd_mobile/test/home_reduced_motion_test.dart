@@ -6,7 +6,7 @@ import 'support/widget_test_helpers.dart';
 
 // Çapa `home-daily-task`: ana ekranın her oturumda çizilen tek öğesi.
 // Önceki çapa ilerleme özetiydi; o artık ilk oturumda yer almıyor
-// (yerini "3 adımda ZanKurd" alıyor, bkz. home_screen.dart).
+// (2026-09-30 doğallık: yerine geçen "3 adımda ZanKurd" kartı da kalktı).
 void main() {
   testWidgets('hareketi azalt açıkken Home giriş scale/fade katmanı çizilmez', (
     tester,
