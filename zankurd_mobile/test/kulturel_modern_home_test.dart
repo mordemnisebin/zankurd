@@ -1,3 +1,6 @@
+// 2026-09-29 Şahnê: başlık A iskeletinin marka satırıdır (`SahneTabPage`),
+// günün görevi gece sahne kartı; kapılar konu ızgarasının altında tek liste
+// grubunda (dokunmadan önce görünür olana dek kaydırılır).
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
@@ -5,6 +8,7 @@ import 'support/widget_test_helpers.dart' show freshMockRepository;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
@@ -108,10 +112,15 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
-    // Üst kimlik alanı artık kart değildir; ekranın kendi sakin başlığıdır.
+    // Üst kimlik alanı kart değildir: 2026-09-29 Şahnê'den beri A iskeletinin
+    // marka satırıdır (`SahneTabPage`); seri, jeton ve dil onun sağında.
+    expect(find.byType(SahneTabPage), findsOneWidget);
     expect(
-      tester.widget(find.byKey(const ValueKey('home-profile-header'))),
-      isA<Padding>(),
+      find.descendant(
+        of: find.byType(SahneTabPage),
+        matching: find.byKey(const ValueKey('home-profile-header')),
+      ),
+      findsOneWidget,
     );
 
     // Tek birincil eylem.
@@ -177,10 +186,14 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
-    await tester.tap(find.byKey(const ValueKey('home-door-learn')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('home-door-play')));
-    await tester.pumpAndSettle();
+    // 2026-09-29 Şahnê: kapılar konu ızgarasının ALTINDA bir liste grubu;
+    // uzun ilk oturum ekranında görünür olana dek kaydırılır.
+    for (final door in ['home-door-learn', 'home-door-play']) {
+      await tester.ensureVisible(find.byKey(ValueKey(door)));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(ValueKey(door)));
+      await tester.pumpAndSettle();
+    }
     final ziman = find.byKey(const ValueKey('home-topic-Ziman'));
     await tester.ensureVisible(ziman);
     await tester.pumpAndSettle();
@@ -208,24 +221,24 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
-    // Design 2.0'da günün görevi ekranın tek baskın sahnesidir. Derin yeşil
-    // hero arka planı hiyerarşiyi taşır; turuncu yalnız ana CTA'da kalır.
-    final card = tester.widget<Container>(
-      find.byKey(const ValueKey('home-daily-task')),
+    // 2026-09-29 Şahnê: günün görevi ekranın tek baskın sahnesidir — gece
+    // sahne kartı (degrade ve kilim şeridi bileşende); turuncu yalnız ana
+    // düğmede ve o düğme ekrandaki TEK Agir dolgudur.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('home-daily-task')),
+        matching: find.byType(SahneStageCard),
+      ),
+      findsOneWidget,
     );
-    final cardDecoration = card.decoration! as BoxDecoration;
-    expect(cardDecoration.gradient, isA<LinearGradient>());
-    final gradient = cardDecoration.gradient! as LinearGradient;
-    expect(gradient.colors, contains(AppTheme.culturalBrandBg));
-    expect(cardDecoration.border, isNull);
-
-    final startMaterial = tester.widget<Material>(
+    expect(
       find.descendant(
         of: find.byKey(const ValueKey('home-daily-task-start')),
-        matching: find.byType(Material),
+        matching: find.byType(SahneButton),
       ),
+      findsOneWidget,
     );
-    expect(startMaterial.color, AppTheme.brand);
+    expect(find.byType(FilledButton), findsOneWidget);
   });
 
   for (final size in <Size>[

@@ -1,3 +1,6 @@
+// 2026-09-29 Şahnê: sıra satırları tek liste grubunda (`SahneListGroup`),
+// sıra no rakamla (madalya rozeti yok); "Sen" rozeti yerele duyarlı büyük
+// harfle "SEN" yazar. Geniş düzen eşiği ekran enine göre ölçülür.
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,7 +12,7 @@ import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
-import 'package:zankurd_mobile/src/widgets/arena_kit.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -147,19 +150,12 @@ void main() {
     final source = File(
       'lib/src/screens/leaderboard_screen.dart',
     ).readAsStringSync();
-    // Gruplu satır kendi dış boşluğunu ve kabuğunu taşımaz.
+    // Gruplu satır kendi dış boşluğunu ve kabuğunu taşımaz: 2026-09-29
+    // Şahnê'den beri satırlar tek bir liste grubunun (`SahneListGroup`)
+    // çocuklarıdır; kabuğu grup verir.
     expect(source, contains('_RankListSurface'));
     expect(source, contains('grouped: true'));
-    expect(
-      source,
-      contains('margin: grouped'),
-      reason: 'gruplu satır kendi dış margin’ini almamalı',
-    );
-    expect(
-      source,
-      contains('border: grouped'),
-      reason: 'gruplu satır kendi kenarlığını almamalı',
-    );
+    expect(source, contains('return SahneListGroup('));
   });
 
   testWidgets('sıralama satırları tek yüzeyde toplanır', (tester) async {
@@ -169,16 +165,25 @@ void main() {
     expect(rows, findsOneWidget);
     // Görünür birim metni aynı kaldı; yalnız kaynak deftere indi.
     expect(find.text('10 oda · 5 seri'), findsWidgets);
-    // Ayraçlar satırları böler — kartlar değil.
-    expect(find.byType(Divider), findsWidgets);
+    // Satırlar tek liste grubunun içindedir — ayrı kartlar değil.
+    expect(
+      find.ancestor(of: rows, matching: find.byType(SahneListGroup)),
+      findsOneWidget,
+    );
   });
 
-  testWidgets('liste sıralarında RankMedal kullanılır', (tester) async {
+  testWidgets('liste sırası satırın başında tablo rakamıyla yazılır', (
+    tester,
+  ) async {
+    // 2026-09-29 Şahnê: madalya rozeti (`RankMedal`) yerine maketteki sıra
+    // satırı: 24'lük sütunda sıra no, ardından elmas avatar.
     await _pump(tester, _Repo(count: 12));
     expect(
-      find.byType(RankMedal),
-      findsWidgets,
-      reason: 'sıra işareti ortak arena bileşeninden gelmeli',
+      find.descendant(
+        of: find.byKey(const ValueKey('leaderboard-rank-row-4')),
+        matching: find.text('4'),
+      ),
+      findsOneWidget,
     );
   });
 
@@ -192,7 +197,7 @@ void main() {
     // kırılırdı.
     await _pump(tester, _Repo(count: 12, selfIndex: 5), size: _phone);
     expect(
-      find.text('Sen'),
+      find.text('SEN'),
       findsOneWidget,
       reason: 'kendi satırı yalnız renkle değil, metinle de işaretlenmeli',
     );
@@ -279,7 +284,7 @@ void main() {
       mode: ThemeMode.dark,
     );
     expect(tester.takeException(), isNull);
-    expect(find.text('Sen'), findsOneWidget);
+    expect(find.text('SEN'), findsOneWidget);
   });
 
   // ── iPad iki sütun ──────────────────────────────────────────────────────
@@ -310,7 +315,7 @@ void main() {
       _Repo(count: 12, selfIndex: 5),
       size: const Size(744, 1133),
     );
-    expect(find.text('Sen'), findsNWidgets(2));
+    expect(find.text('SEN'), findsNWidgets(2));
   });
 
   testWidgets('podyumdaki oyuncuya ikinci özet çizilmez', (tester) async {
@@ -321,7 +326,7 @@ void main() {
       _Repo(count: 12, selfIndex: 0),
       size: const Size(744, 1133),
     );
-    expect(find.text('Sen'), findsNothing);
+    expect(find.text('SEN'), findsNothing);
   });
 
   testWidgets('telefonda tek sütun korunur', (tester) async {

@@ -5,16 +5,20 @@
 /// bulunan düz bir çubuk ve isimsiz bir selamlamayla açılıyordu
 /// (2026-08-19). Bu testler o iki dokunuşun sessizce geri alınmasını
 /// engeller.
+///
+/// 2026-09-29 Şahnê: kilim çubuk ve maskot kalktı; kimlik artık gece sahne
+/// kartı (üstte kilim göz şeridi) ve ders elmasıyla taşınır. Bekçiler bu
+/// yeni dile göre güncellendi.
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/kilim_progress_bar.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 void main() {
-  testWidgets('günün görevi kilim ilerleme dilini kullanır', (tester) async {
+  testWidgets('günün görevi ilerlemeyi ders elmasıyla okutur', (tester) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: AppTheme.light(),
@@ -30,19 +34,21 @@ void main() {
       ),
     );
 
-    expect(find.byType(KilimProgressBar), findsOne);
+    final diamond = tester.widget<SahneLessonDiamond>(
+      find.byType(SahneLessonDiamond),
+    );
+    expect(diamond.done, 4);
+    expect(diamond.total, 15);
+    expect(find.text('4/15'), findsOneWidget);
     expect(
       find.byType(LinearProgressIndicator),
       findsNothing,
       reason: 'düz çubuğa geri dönüş kimliği yeniden siler',
     );
-
-    final bar = tester.widget<KilimProgressBar>(find.byType(KilimProgressBar));
-    expect(bar.value, closeTo(4 / 15, 0.001));
   });
 
   testWidgets(
-    'günün görevi ana sahne olarak derin yeşil hero ve tek marka CTA kullanır',
+    'günün görevi gece sahne kartıdır; tek birincil düğme Agir + koyu metin',
     (tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -59,37 +65,35 @@ void main() {
         ),
       );
 
-      final card = tester.widget<Container>(
-        find.byKey(const ValueKey('home-daily-task')),
+      final card = find.byKey(const ValueKey('home-daily-task'));
+      expect(
+        find.descendant(of: card, matching: find.byType(SahneStageCard)),
+        findsOneWidget,
       );
-      final decoration = card.decoration! as BoxDecoration;
-      expect(decoration.gradient, isA<LinearGradient>());
-      final gradient = decoration.gradient! as LinearGradient;
-      expect(gradient.colors, contains(AppTheme.culturalBrandBg));
-      expect(decoration.border, isNull);
 
       // `firstSession` burada varsayılan (false) ve done(4) < total(15):
       // 2026-09-27'den beri bu durumda başlık "Günün dersi" değil "Günlük
-      // hedef" der — ders zaten bitmişken yeniden "ders" görmek "bitirdim,
-      // neden yine ders?" izlenimi veriyordu (bkz. TodayTaskCard.build).
+      // hedef" der (bkz. TodayTaskCard.build). Sahne kartı gündüz temasında
+      // da gecedir: başlık gecenin birincil metni.
       final title = tester.widget<Text>(find.text('Günlük hedef'));
-      expect(title.style?.color, Colors.white);
+      expect(title.style?.color, SahneTokens.night.tx);
 
-      final bar = tester.widget<KilimProgressBar>(
-        find.byType(KilimProgressBar),
+      final start = find.byKey(const ValueKey('home-daily-task-start'));
+      expect(
+        find.descendant(of: start, matching: find.byType(SahneButton)),
+        findsOneWidget,
       );
-      expect(bar.color, Colors.white);
-      expect(bar.trackColor, isNotNull);
-
-      final startMaterial = tester.widget<Material>(
-        find
-            .descendant(
-              of: find.byKey(const ValueKey('home-daily-task-start')),
-              matching: find.byType(Material),
-            )
-            .first,
+      final label = tester.widget<Text>(
+        find.descendant(of: start, matching: find.text('Devam et')),
       );
-      expect(startMaterial.color, AppTheme.brand);
+      final ctx = tester.element(
+        find.descendant(of: start, matching: find.text('Devam et')),
+      );
+      // Agir üstünde metin HER ZAMAN koyu `onAct` (2026-09-29 ek karar).
+      expect(
+        DefaultTextStyle.of(ctx).style.merge(label.style).color,
+        SahneTokens.night.onAct,
+      );
     },
   );
 

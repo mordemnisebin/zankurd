@@ -26,6 +26,13 @@ const List<String> _kProfileAnalysisCategories = [
   'Teknolojî',
 ];
 
+/// Profil kimliği: elmas avatar (dokununca düzenleme) + ad + oyuncu kodu
+/// + vitrin unvanı. Kahraman kart değil — sayfanın kendi zemininde durur;
+/// seviye ayrı bir yüzey kartındadır.
+///
+/// 2026-09-29 Şahnê: eski yeşil degrade kart, süs daireleri, yuvarlak
+/// avatar halkası ve degrade kamera rozeti kalktı. Kamera rozeti Kulis
+/// tonunda küçük bir elmas; avatarın kendisi `PlayerAvatar` (elmas).
 class _ProfileHeroCard extends StatelessWidget {
   const _ProfileHeroCard({
     required this.ku,
@@ -33,11 +40,7 @@ class _ProfileHeroCard extends StatelessWidget {
     required this.avatarIdentity,
     required this.showcaseTitle,
     required this.playerTag,
-    required this.level,
-    required this.xpInLevel,
-    required this.xpNeeded,
     required this.rank,
-    required this.levelProgress,
     required this.onEditAvatar,
   });
 
@@ -52,322 +55,110 @@ class _ProfileHeroCard extends StatelessWidget {
   /// bu kod. Oyuncunun onu paylaşabilmesi için kendi profilinde görmesi
   /// gerekiyor. Dokununca panoya kopyalanır (2026-07-28).
   final String? playerTag;
-  final int level;
-  final int xpInLevel;
-  final int xpNeeded;
   final int? rank;
-  final double levelProgress;
   final VoidCallback onEditAvatar;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppRadius.card),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF163D2D), Color(0xFF1E4B38), Color(0xFF275742)],
-          ),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.10)),
-          boxShadow: [
-            BoxShadow(
-              color: AppTheme.culturalBrandBg.withValues(alpha: 0.32),
-              blurRadius: 28,
-              offset: const Offset(0, 14),
-              spreadRadius: -10,
-            ),
-          ],
-        ),
-        // Süs daireleri kartın iç boşluğunun içine kapatılmıştı: `padding`
-        // Stack'in dışında olduğu için taşan daireler kartın yuvarlak
-        // köşesine değil, iç dikdörtgenin düz kenarına kırpılıyordu ve
-        // kartın üstünde köşeli bir blok gibi duruyordu (2026-07-27).
-        // Daireler artık kartın kendi kenarına kadar uzanır; boşluk yalnız
-        // içeriğe uygulanır.
-        child: Stack(
-          children: [
-            Positioned(
-              right: -24,
-              top: -28,
-              child: Container(
-                width: 140,
-                height: 140,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.06),
-                ),
-              ),
-            ),
-            Positioned(
-              left: -18,
-              bottom: -36,
-              child: Container(
-                width: 112,
-                height: 112,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppTheme.brand.withValues(alpha: 0.10),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    final t = SahneTokens.of(context);
+    return Row(
+      children: [
+        // Ekran okuyucuda etiketsiz bir düğme olarak görünüyordu
+        // (2026-07-25 denetimi).
+        Semantics(
+          button: true,
+          label: Tr.forKu(K.editAvatar, ku),
+          excludeSemantics: true,
+          onTap: onEditAvatar,
+          child: GestureDetector(
+            key: const ValueKey('profile-avatar-edit'),
+            behavior: HitTestBehavior.opaque,
+            onTap: onEditAvatar,
+            child: SizedBox.square(
+              dimension: 80,
+              child: Stack(
                 children: [
-                  Row(
-                    children: [
-                      // Ekran okuyucuda etiketsiz bir düğme olarak görünüyordu
-                      // (2026-07-25 denetimi).
-                      Semantics(
-                        button: true,
-                        label: Tr.forKu(K.editAvatar, ku),
-                        child: InkWell(
-                          key: const ValueKey('profile-avatar-edit'),
-                          customBorder: const CircleBorder(),
-                          onTap: onEditAvatar,
-                          child: Stack(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.white.withValues(alpha: 0.88),
-                                    width: 2.5,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(
-                                        alpha: 0.16,
-                                      ),
-                                      blurRadius: 14,
-                                      offset: const Offset(0, 6),
-                                      spreadRadius: -4,
-                                    ),
-                                  ],
-                                ),
-                                child: PlayerAvatar(
-                                  radius: 34,
-                                  photoUrl: avatarIdentity.photoUrl,
-                                  iconId: avatarIdentity.iconId,
-                                  colorHex: avatarIdentity.colorHex,
-                                  frameId: avatarIdentity.frameId,
-                                  displayName: displayName,
-                                  colorSeed: PlayerIdentity.resolveColorSeed(
-                                    displayName,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                right: 0,
-                                bottom: 0,
-                                child: Container(
-                                  padding: const EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    gradient: AppTheme.identityHeaderGradient,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Colors.white.withValues(
-                                        alpha: 0.92,
-                                      ),
-                                      width: 2,
-                                    ),
-                                  ),
-                                  child: const Icon(
-                                    AppIcons.camera,
-                                    size: 12,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
+                  Center(
+                    child: PlayerAvatar(
+                      radius: 36,
+                      photoUrl: avatarIdentity.photoUrl,
+                      iconId: avatarIdentity.iconId,
+                      colorHex: avatarIdentity.colorHex,
+                      frameId: avatarIdentity.frameId,
+                      displayName: displayName,
+                      colorSeed: PlayerIdentity.resolveColorSeed(displayName),
+                    ),
+                  ),
+                  PositionedDirectional(
+                    end: 0,
+                    bottom: 0,
+                    child: SizedBox.square(
+                      dimension: 28,
+                      child: DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: t.s2,
+                          shape: SahneShape.diamond(
+                            28,
+                            side: BorderSide(color: t.bg, width: SahneRing.r2),
                           ),
                         ),
+                        child: Icon(AppIcons.camera, size: 12, color: t.tx),
                       ),
-                      const SizedBox(width: AppSpacing.md),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                displayName,
-                                maxLines: 1,
-                                style: AppTypography.heading2.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            if (playerTag != null)
-                              _PlayerTagChip(tag: playerTag!, ku: ku)
-                            else
-                              Text(
-                                Tr.forKu(K.keepProgress, ku),
-                                style: AppTypography.caption.copyWith(
-                                  color: Colors.white.withValues(alpha: 0.74),
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            if (showcaseTitle != null)
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: AppSpacing.xs,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: AppSpacing.sm,
-                                  vertical: 5,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.12),
-                                  borderRadius: BorderRadius.circular(
-                                    AppRadius.pill,
-                                  ),
-                                  border: Border.all(
-                                    color: Colors.white.withValues(alpha: 0.16),
-                                  ),
-                                ),
-                                child: Text(
-                                  showcaseTitle!,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTypography.caption.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              )
-                            else
-                              const SizedBox.shrink(),
-
-                            // Lig rozeti bayrakla kapalı: az oyuncuyla herkes
-                            // "Bronz Lig"de (bkz. `kWeeklyLeagueEnabled`).
-                            if (kWeeklyLeagueEnabled) ...[
-                              const SizedBox(height: 8),
-                              Builder(
-                                builder: (context) {
-                                  final tier = LeagueTier.forRank(rank);
-                                  return Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 5,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.heroScrim(),
-                                      borderRadius: BorderRadius.circular(
-                                        AppRadius.badge,
-                                      ),
-                                      border: Border.all(
-                                        color: Colors.white.withValues(
-                                          alpha: 0.18,
-                                        ),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          tier.icon,
-                                          color: Colors.white,
-                                          size: 14,
-                                        ),
-                                        const SizedBox(width: 5),
-                                        // Rozet metni büyük yazıda kartın dışına
-                                        // taşıyordu (2026-07-26).
-                                        Flexible(
-                                          child: Text(
-                                            tier.label(ku),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTypography.caption
-                                                .copyWith(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w800,
-                                                  fontSize: 11,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  Divider(
-                    color: Colors.white.withValues(alpha: 0.18),
-                    height: 1,
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  Row(
-                    children: [
-                      const Icon(
-                        AppIcons.medal,
-                        color: AppTheme.gold,
-                        size: 20,
-                      ),
-                      const SizedBox(width: AppSpacing.xxs),
-                      Flexible(
-                        child: Text(
-                          Tr.forKu(K.levelWithNumber, ku, {'level': '$level'}),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.bodyLarge.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.xs),
-                      RewardToken(
-                        kind: RewardKind.xp,
-                        value: '$xpInLevel / $xpNeeded',
-                        compact: true,
-                        onSolid: true,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.xs),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(AppRadius.xs),
-                    child: Stack(
-                      children: [
-                        Container(
-                          height: 9,
-                          color: Colors.white.withValues(alpha: 0.18),
-                        ),
-                        FractionallySizedBox(
-                          widthFactor: levelProgress.clamp(0.0, 1.0),
-                          child: Container(
-                            height: 9,
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFFFFC85C), Color(0xFFF29D31)],
-                              ),
-                              borderRadius: BorderRadius.circular(AppRadius.xs),
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
+          ),
         ),
-      ),
+        const SizedBox(width: SahneSpace.x4),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  displayName,
+                  maxLines: 1,
+                  style: SahneType.headline.copyWith(color: t.tx),
+                ),
+              ),
+              if (playerTag != null)
+                _PlayerTagChip(tag: playerTag!, ku: ku)
+              else
+                Text(
+                  Tr.forKu(K.keepProgress, ku),
+                  style: SahneType.caption.copyWith(color: t.tx2),
+                ),
+              if (showcaseTitle != null) ...[
+                const SizedBox(height: SahneSpace.x1),
+                Text(
+                  showcaseTitle!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: SahneType.captionStrong.copyWith(color: t.goldTx),
+                ),
+              ],
+              // Lig rozeti bayrakla kapalı: az oyuncuyla herkes "Bronz
+              // Lig"de (bkz. `kWeeklyLeagueEnabled`).
+              if (kWeeklyLeagueEnabled) ...[
+                const SizedBox(height: SahneSpace.x2),
+                Builder(
+                  builder: (context) {
+                    final tier = LeagueTier.forRank(rank);
+                    return SahneBadge(
+                      label: tier.label(ku),
+                      tone: SahneBadgeTone.gold,
+                    );
+                  },
+                ),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -376,7 +167,7 @@ class _ProfileHeroCard extends StatelessWidget {
 ///
 /// Kod paylaşmak içindir — arkadaşın onu arama kutusuna yazınca seni tek
 /// ve kesin sonuç olarak bulur. Bu yüzden okunması değil **kopyalanması**
-/// asıl iş; dokunma hedefi bütün çipi kapsar.
+/// asıl iş; dokunma hedefi bütün satırı kapsar (en az 44).
 class _PlayerTagChip extends StatelessWidget {
   const _PlayerTagChip({required this.tag, required this.ku});
 
@@ -385,13 +176,15 @@ class _PlayerTagChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final label = 'ZK-$tag';
     return Semantics(
       button: true,
       label: Tr.forKu(K.playerTagSemantics, ku, {'tag': label}),
       excludeSemantics: true,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(AppRadius.badge),
+      child: SahneTappable(
+        shape: SahneShape.m,
+        color: Colors.transparent,
         onTap: () async {
           await Clipboard.setData(ClipboardData(text: label));
           if (!context.mounted) return;
@@ -404,32 +197,28 @@ class _PlayerTagChip extends StatelessWidget {
               ),
             );
         },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 44),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // %200 yazı ölçeğinde çip hero'yu taşırıyordu; kod
+              // %200 yazı ölçeğinde kod satırı taşırıyordu; kod
               // kısaltılamaz (elle yazılabilmeli) ama küçültülebilir.
               Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  style: AppTypography.caption.copyWith(
-                    // Hero zemini doygun yeşil; beyaz burada AA geçiyor ve
-                    // kodun okunması kritik (elle de yazılabilmeli).
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.8,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    style: SahneType.captionStrong.copyWith(
+                      color: t.tx2,
+                      letterSpacing: 0.8,
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(width: 6),
-              Icon(
-                AppIcons.copy,
-                size: 13,
-                color: Colors.white.withValues(alpha: 0.8),
-              ),
+              const SizedBox(width: SahneSpace.x2),
+              Icon(AppIcons.copy, size: 16, color: t.tx2),
             ],
           ),
         ),
@@ -438,11 +227,70 @@ class _PlayerTagChip extends StatelessWidget {
   }
 }
 
+/// Detaylı analiz içindeki alt başlık (bölüm başlığı değil: kart içi).
+class _SubHeading extends StatelessWidget {
+  const _SubHeading(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      header: true,
+      child: Text(
+        text,
+        style: SahneType.bodyStrong.copyWith(color: SahneTokens.of(context).tx),
+      ),
+    );
+  }
+}
+
+/// İstatistik karoları: dar ekranda 2 × 2, genişte 4 sütun. Satırdaki
+/// karolar eşit yükseklikte (büyük yazıda uzayan karo komşusunu da uzatır).
+class _StatGrid extends StatelessWidget {
+  const _StatGrid({required this.tiles});
+
+  final List<Widget> tiles;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final columns = constraints.maxWidth > 600 ? 4 : 2;
+        final rows = <Widget>[];
+        for (var i = 0; i < tiles.length; i += columns) {
+          if (i > 0) rows.add(const SizedBox(height: SahneSpace.x3));
+          rows.add(
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (var j = i; j < i + columns; j++) ...[
+                    if (j > i) const SizedBox(width: SahneSpace.x3),
+                    Expanded(
+                      child: j < tiles.length
+                          ? tiles[j]
+                          : const SizedBox.shrink(),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          );
+        }
+        return Column(children: rows);
+      },
+    );
+  }
+}
+
+/// İstatistik karosu: yüzey kartı; rol tonlu ikon karosu, Manşet 22 değer
+/// (tablo rakamı, sayarak çıkar), altında açıklama.
 class _StatTile extends StatelessWidget {
   const _StatTile({
     required this.label,
     required this.value,
-    required this.color,
+    required this.role,
     required this.icon,
     this.count,
     this.countPrefix = '',
@@ -450,7 +298,7 @@ class _StatTile extends StatelessWidget {
 
   final String label;
   final String value;
-  final Color color;
+  final SahneRole role;
   final IconData icon;
 
   /// Sayısal değer; verildiğinde değer `RollingCount` ile sayarak çıkar.
@@ -460,80 +308,43 @@ class _StatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      decoration: AppTheme.statCard(context, color),
-      // Grid hücresi dar/kısa olduğunda (childAspectRatio) içerik taşıyordu.
-      // FittedBox(scaleDown) içeriği hücreye sığdırır; normal boyutta görünüm
-      // değişmez (scaleDown yalnız küçültür, büyütmez).
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        alignment: Alignment.centerLeft,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 28,
-                  height: 28,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: AppColors.iconTileBg(context, color),
-                    borderRadius: BorderRadius.circular(AppRadius.xs),
-                  ),
-                  child: Icon(icon, color: color, size: 16),
-                ),
-                const SizedBox(width: AppSpacing.xs),
-                Transform.rotate(
-                  angle: 0.785398,
-                  child: Container(
-                    width: 5,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: color.withValues(alpha: 0.45),
-                      borderRadius: BorderRadius.circular(1),
-                    ),
-                  ),
-                ),
-              ],
+    final t = SahneTokens.of(context);
+    final valueStyle = SahneType.headline.copyWith(
+      color: t.tx,
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
+    return SahneSurfaceCard(
+      padding: const EdgeInsets.all(SahneSpace.x3),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          DecoratedBox(
+            decoration: ShapeDecoration(
+              color: t.roleTint(role),
+              shape: SahneShape.m,
             ),
-            const SizedBox(height: AppSpacing.xxs),
-            count != null
+            child: SizedBox.square(
+              dimension: 36,
+              child: Icon(icon, color: t.roleText(role), size: 20),
+            ),
+          ),
+          const SizedBox(height: SahneSpace.x2),
+          // Değer tek satırda kalır; dar karoda küçülerek sığar.
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: AlignmentDirectional.centerStart,
+            child: count != null
                 ? RollingCount(
                     value: count!,
                     prefix: countPrefix,
                     maxLines: 1,
-                    style: AppTypography.bodyLarge.copyWith(
-                      color: AppColors.toneOnSurface(context, color),
-                      fontSize: 17,
-                      fontWeight: FontWeight.w900,
-                    ),
+                    style: valueStyle,
                   )
-                : Text(
-                    value,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTypography.bodyLarge.copyWith(
-                      color: AppColors.toneOnSurface(context, color),
-                      fontSize: 17,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-            Text(
-              label,
-              maxLines: 1,
-              style: AppTypography.caption.copyWith(
-                color: AppTheme.textMutedColor(context),
-                fontWeight: FontWeight.w600,
-                fontSize: 11,
-              ),
-            ),
-          ],
-        ),
+                : Text(value, maxLines: 1, style: valueStyle),
+          ),
+          Text(label, style: SahneType.caption.copyWith(color: t.tx2)),
+        ],
       ),
     );
   }
@@ -541,7 +352,7 @@ class _StatTile extends StatelessWidget {
 
 // 2026-07-22 canlı UX denetimi: rozet bölümleri birleştirme
 // AchievementStore ve BadgeService'den gelen rozetleri tek başlık + tek sayaç
-// altında birleştiren widget.
+// altında birleştiren bölüm.
 class _UnifiedRewardsSection extends StatelessWidget {
   const _UnifiedRewardsSection({
     required this.achievements,
@@ -559,178 +370,84 @@ class _UnifiedRewardsSection extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
       builder: (ctx) {
         return DraggableScrollableSheet(
           initialChildSize: 0.75,
           minChildSize: 0.5,
           maxChildSize: 0.95,
+          expand: false,
           builder: (ctx, scrollCtrl) {
-            return Container(
-              decoration: BoxDecoration(
-                color: AppTheme.surfaceColor(context),
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(20),
-                ),
+            final t = SahneTokens.of(ctx);
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(
+                SahneSpace.page,
+                SahneSpace.x2,
+                SahneSpace.x2,
+                SahneSpace.page,
               ),
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    width: 40,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: AppTheme.borderColor(
-                        context,
-                      ).withValues(alpha: 0.5),
-                      borderRadius: BorderRadius.circular(AppRadius.badge),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
                   Row(
                     children: [
-                      const Icon(AppIcons.medal, color: AppTheme.gold),
-                      const SizedBox(width: 8),
                       Expanded(
-                        child: Text(
-                          Tr.forKu(K.tumBasarilar, isKu),
-                          style: AppTypography.heading2.copyWith(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontSize: 20,
+                        child: Semantics(
+                          header: true,
+                          child: Text(
+                            Tr.forKu(K.tumBasarilar, isKu),
+                            style: SahneType.headline.copyWith(color: t.tx),
                           ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () => Navigator.pop(ctx),
-                        tooltip: Tr.forKu(K.close, isKu),
-                        icon: const Icon(AppIcons.xmark),
+                      SizedBox.square(
+                        dimension: 48,
+                        child: Center(
+                          child: SahneIconButton(
+                            icon: AppIcons.xmark,
+                            semanticLabel: Tr.forKu(K.close, isKu),
+                            onPressed: () => Navigator.pop(ctx),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: SahneSpace.x3),
                   Expanded(
                     child: ListView(
                       controller: scrollCtrl,
+                      padding: const EdgeInsets.only(right: SahneSpace.x2),
                       children: [
                         // --- Başarılar bölümü ---
                         if (achDefs.isNotEmpty) ...[
-                          Text(
-                            Tr.forKu(K.basarilar, isKu),
-                            style: AppTypography.bodyLarge.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w700,
-                              fontSize: 15,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
-                                  childAspectRatio: 2.8,
-                                ),
-                            itemCount: achDefs.length,
-                            itemBuilder: (c, i) {
-                              final def = achDefs[i];
-                              final unlocked = achievements.any(
-                                (a) => a.id == def.id,
-                              );
-                              final color = unlocked
-                                  ? AppTheme.gold
-                                  : AppTheme.textMutedColor(context);
-                              return Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 8,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: unlocked
-                                      ? AppTheme.gold.withValues(alpha: 0.08)
-                                      : AppTheme.surfaceHiColor(
-                                          context,
-                                        ).withValues(alpha: 0.5),
-                                  borderRadius: BorderRadius.circular(
-                                    AppRadius.sm,
-                                  ),
-                                  border: Border.all(
-                                    color: unlocked
-                                        ? AppTheme.gold.withValues(alpha: 0.25)
-                                        : AppTheme.borderColor(context),
+                          _SubHeading(Tr.forKu(K.basarilar, isKu)),
+                          const SizedBox(height: SahneSpace.x2),
+                          SahneListGroup(
+                            children: [
+                              for (final def in achDefs)
+                                _AchievementRow(
+                                  icon: def.icon,
+                                  title: def.title(isKu),
+                                  description: def.description(isKu),
+                                  unlocked: achievements.any(
+                                    (a) => a.id == def.id,
                                   ),
                                 ),
-                                child: Row(
-                                  children: [
-                                    Icon(def.icon, color: color, size: 20),
-                                    const SizedBox(width: 8),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            def.title(isKu),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTypography.caption.copyWith(
-                                              color: unlocked
-                                                  ? AppTheme.textPrimaryColor(
-                                                      context,
-                                                    )
-                                                  : AppTheme.textMutedColor(
-                                                      context,
-                                                    ),
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 2),
-                                          Text(
-                                            def.description(isKu),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTypography.caption
-                                                .copyWith(
-                                                  color:
-                                                      AppTheme.textMutedColor(
-                                                        context,
-                                                      ),
-                                                  fontSize: 10,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
+                            ],
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: SahneSpace.x6),
                         ],
                         // --- Rozetler bölümü ---
                         if (badgeDefs.isNotEmpty) ...[
-                          Text(
-                            Tr.forKu(K.rozetler, isKu),
-                            style: AppTypography.bodyLarge.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w700,
-                              fontSize: 15,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
+                          _SubHeading(Tr.forKu(K.rozetler, isKu)),
+                          const SizedBox(height: SahneSpace.x2),
                           GridView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: SahneSpace.x2,
+                                  crossAxisSpacing: SahneSpace.x2,
                                   childAspectRatio: 0.76,
                                 ),
                             itemCount: badgeDefs.length,
@@ -770,6 +487,7 @@ class _UnifiedRewardsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final totalAch = AchievementStore.definitions.length;
     final totalBadge = BadgeService.badgeDefinitions.length;
     final totalUnlocked = achievements.length + badgeUnlocked.length;
@@ -780,113 +498,123 @@ class _UnifiedRewardsSection extends StatelessWidget {
         .where(badgeUnlocked.contains)
         .toList();
 
-    return AppPanel(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // "Başarılar X/Y" düz bir sayaç çipiydi; dokulu bir ilerleme taşısın.
-          // `MissionProgressCard` ilerlemeyi ödül diliyle çizer; "tümüne bak"
-          // eylemi kartın kendisine bağlanır (2026-08-19).
-          GestureDetector(
-            onTap: () => _showAllSheet(context),
-            child: MissionProgressCard(
-              title: Tr.forKu(K.basarilar, isKu),
-              current: totalUnlocked,
-              target: totalAll,
-              accent: AppTheme.gold,
-              icon: AppIcons.medal,
-              reward: Icon(
-                AppIcons.chevronRight,
-                color: AppTheme.textMutedColor(context),
-                size: 16,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // "Tümü" bütün başarı ve rozet tanımlarını açar.
+        SahneSectionHeader(
+          title: Tr.forKu(K.basarilar, isKu),
+          actionLabel: Tr.forKu(K.allFilter, isKu),
+          actionSemanticLabel: Tr.forKu(K.tumBasarilar, isKu),
+          onAction: () => _showAllSheet(context),
+        ),
+        SahneSurfaceCard(
+          key: const ValueKey('profile-rewards-card'),
+          onTap: () => _showAllSheet(context),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // İlerleme ödüldür: Zêr çubuk, sağda "X/Y".
+              SahneProgressBar(
+                value: totalAll == 0 ? 0 : totalUnlocked / totalAll,
+                tone: SahneProgressTone.gold,
+                trailing: '$totalUnlocked/$totalAll',
+                semanticLabel: Tr.forKu(K.basarilar, isKu),
               ),
-            ),
+              const SizedBox(height: SahneSpace.x3),
+              if (achievements.isEmpty && badgeUnlocked.isEmpty)
+                Text(
+                  Tr.forKu(K.birYarisTamamlaVe, isKu),
+                  style: SahneType.caption.copyWith(color: t.tx2),
+                )
+              else
+                // Önce başarımlar, sonra rozetler; sarar (kaydırma yok).
+                Wrap(
+                  spacing: SahneSpace.x2,
+                  runSpacing: SahneSpace.x2,
+                  children: [
+                    for (final a in achievements)
+                      _RewardChip(icon: a.icon, title: a.title(isKu)),
+                    // ESKİ KUSUR (2026-08-14 denetimi): dizin doğrudan
+                    // bütün rozet tanımlarına uygulanıyordu; şerit "açılan
+                    // rozeti" değil, tanım listesinin ilk N elemanını
+                    // gösteriyordu. Kaynak kullanıcının açtığı kümedir.
+                    for (final id in unlockedBadgeIds)
+                      _RewardChip(
+                        icon: AppIcons.star,
+                        title: BadgeService.titleFor(id, isKu),
+                      ),
+                  ],
+                ),
+            ],
           ),
-          const SizedBox(height: 12),
-          // Yatay kaydırma: önce başarımlar, sonra rozetler
-          if (achievements.isEmpty && badgeUnlocked.isEmpty)
-            Text(
-              Tr.forKu(K.birYarisTamamlaVe, isKu),
-              // Sabit `textMuted` karanlık temanın rengidir; açık temada
-              // bu metin krem zemin üzerinde ~2,6:1 kontrastla çıkıyordu.
-              // Bağlama duyarlı getter iki temada da doğru rengi verir
-              // (2026-07-26).
-              style: TextStyle(color: AppTheme.textMutedColor(context)),
-            )
-          else
-            SizedBox(
-              height: 38,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: achievements.length + badgeUnlocked.length,
-                itemBuilder: (context, index) {
-                  if (index < achievements.length) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: _AchievementChip(
-                        achievement: achievements[index],
-                        isKu: isKu,
-                      ),
-                    );
-                  }
-                  // Badge chip
-                  //
-                  // ESKİ KUSUR (2026-08-14 denetimi): dizin doğrudan
-                  // `BadgeService.badgeDefinitions.entries`e (TÜM beş
-                  // rozetin sabit tanım sırasına) uygulanıyordu —
-                  // `badgeUnlocked`e (kullanıcının GERÇEKTEN açtığı
-                  // kümeye) hiç bakmıyordu. Kullanıcı yalnız
-                  // `speed_demon`ı açmışsa bile ilk sırada duran
-                  // `streak_30`ın tanımı gösteriliyordu; şerit "açılan
-                  // rozeti" değil, tanım listesinin ilk N elemanını
-                  // gösteriyordu.
-                  final badgeIndex = index - achievements.length;
-                  final title = BadgeService.titleFor(
-                    unlockedBadgeIds[badgeIndex],
-                    isKu,
-                  );
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.accent.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                        border: Border.all(
-                          color: AppTheme.accent.withValues(alpha: 0.24),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            AppIcons.star,
-                            color: AppColors.onAccentTint(
-                              context,
-                              AppTheme.accent,
-                            ),
-                            size: 18,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            title,
-                            style: AppTypography.caption.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+        ),
+      ],
+    );
+  }
+}
+
+/// Kazanılmış başarı / rozet çipi: Zêr tonu, M pah, ikon + ad.
+class _RewardChip extends StatelessWidget {
+  const _RewardChip({required this.icon, required this.title});
+
+  final IconData icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return DecoratedBox(
+      decoration: ShapeDecoration(color: t.goldTint, shape: SahneShape.m),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 36),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.only(
+            start: SahneSpace.x2,
+            end: SahneSpace.x3,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: t.goldTx, size: 16),
+              const SizedBox(width: SahneSpace.x2),
+              Flexible(
+                child: Text(
+                  title,
+                  style: SahneType.captionStrong.copyWith(color: t.tx),
+                ),
               ),
-            ),
-        ],
+            ],
+          ),
+        ),
       ),
+    );
+  }
+}
+
+/// "Tüm başarılar" sayfasındaki satır: kazanılmışsa Zêr ikon karosu,
+/// değilse nötr ve ikincil metin.
+class _AchievementRow extends StatelessWidget {
+  const _AchievementRow({
+    required this.icon,
+    required this.title,
+    required this.description,
+    required this.unlocked,
+  });
+
+  final IconData icon;
+  final String title;
+  final String description;
+  final bool unlocked;
+
+  @override
+  Widget build(BuildContext context) {
+    return SahneListRow.icon(
+      icon: icon,
+      role: unlocked ? SahneRole.gold : SahneRole.neutral,
+      title: title,
+      subtitle: description,
+      enabled: unlocked,
     );
   }
 }
@@ -901,46 +629,26 @@ class _MasterySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(AppIcons.medal, color: AppTheme.violet),
-              const SizedBox(width: 8),
-              // Dar (iki sütunlu masaüstü) panelde başlık taşmasın.
-              Expanded(
-                child: Text(
-                  Tr.forKu(K.kategoriUstaligi, isKu),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 17,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          Text(
-            Tr.forKu(K.masteryEvidenceHint, isKu),
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textMutedColor(context),
-              height: 1.25,
-            ),
-          ),
-          const SizedBox(height: 14),
-          for (final cat in _categories)
-            _MasteryRow(category: cat, store: store, isKu: isKu),
-        ],
-      ),
+    final t = SahneTokens.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SubHeading(Tr.forKu(K.kategoriUstaligi, isKu)),
+        const SizedBox(height: SahneSpace.x1),
+        Text(
+          Tr.forKu(K.masteryEvidenceHint, isKu),
+          style: SahneType.caption.copyWith(color: t.tx2),
+        ),
+        const SizedBox(height: SahneSpace.x3),
+        for (final cat in _categories)
+          _MasteryRow(category: cat, store: store, isKu: isKu),
+      ],
     );
   }
 }
 
+/// Ustalık satırı: kategori adı + seviye rozeti (Zêr; başlangıçta nötr),
+/// altında Zimrût ilerleme çubuğu ve kanıt metni.
 class _MasteryRow extends StatelessWidget {
   const _MasteryRow({
     required this.category,
@@ -954,6 +662,7 @@ class _MasteryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final level = store.levelFor(category);
     final count = store.correctCount(category);
     final answered = store.answeredCount(category);
@@ -961,123 +670,49 @@ class _MasteryRow extends StatelessWidget {
     final threshold = store.nextThreshold(category);
     final isMamoste = level == MasteryLevel.mamoste;
     final progress = isMamoste ? 1.0 : (count / threshold).clamp(0.0, 1.0);
-    final badgeColor = level == MasteryLevel.none
-        ? AppTheme.textMuted
-        : level.badgeColor;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
+      padding: const EdgeInsets.only(bottom: SahneSpace.x3),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
-            width: 76,
-            child: Text(
-              CategoryNames.localized(category, isKu),
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w700,
-                fontSize: 13,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          const SizedBox(width: 8),
-          // Rozet çipi dar panelde satırı taşırmasın diye esner.
-          Flexible(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-              decoration: BoxDecoration(
-                color: badgeColor.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: badgeColor.withValues(alpha: 0.3)),
-              ),
-              child: Text(
-                level == MasteryLevel.none
-                    ? (Tr.forKu(K.baslangic, isKu))
-                    : (isKu ? level.titleKu : level.titleTr),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.caption.copyWith(
-                  color: AppColors.onAccentTint(context, badgeColor),
-                  fontSize: 10,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  CategoryNames.localized(category, isKu),
+                  style: SahneType.captionStrong.copyWith(color: t.tx),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: LinearProgressIndicator(
-                    value: progress,
-                    backgroundColor: AppTheme.borderColor(context),
-                    valueColor: AlwaysStoppedAnimation<Color>(badgeColor),
-                    minHeight: 6,
-                  ),
+              const SizedBox(width: SahneSpace.x2),
+              Flexible(
+                child: SahneBadge(
+                  label: level == MasteryLevel.none
+                      ? (Tr.forKu(K.baslangic, isKu))
+                      : (isKu ? level.titleKu : level.titleTr),
+                  tone: level == MasteryLevel.none
+                      ? SahneBadgeTone.soon
+                      : SahneBadgeTone.gold,
                 ),
-                const SizedBox(height: 2),
-                // Rubik U+2713 taşımıyor; onay işareti metin olarak
-                // yazıldığında sistem yazı tipine düşüyordu.
-                if (isMamoste && accuracy == null)
-                  Icon(
-                    AppIcons.check,
-                    size: 10,
-                    color: AppTheme.textMutedColor(context),
-                  )
-                else
-                  Text(
-                    accuracy == null
-                        ? '$count/$threshold · ${Tr.forKu(K.masteryEvidencePending, isKu, {'correct': '$count'})}'
-                        : '$count/$threshold · ${Tr.forKu(K.masteryEvidenceLabel, isKu, {'correct': '$count', 'answered': '$answered', 'accuracy': '$accuracy'})}',
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textMutedColor(context),
-                      fontSize: 10,
-                    ),
-                  ),
-              ],
+              ),
+            ],
+          ),
+          const SizedBox(height: SahneSpace.x1),
+          SahneProgressBar(value: progress),
+          const SizedBox(height: SahneSpace.x1),
+          // Rubik U+2713 taşımıyor; onay işareti metin olarak
+          // yazıldığında sistem yazı tipine düşüyordu.
+          if (isMamoste && accuracy == null)
+            Icon(AppIcons.check, size: 16, color: t.okTx)
+          else
+            Text(
+              accuracy == null
+                  ? '$count/$threshold · ${Tr.forKu(K.masteryEvidencePending, isKu, {'correct': '$count'})}'
+                  : '$count/$threshold · ${Tr.forKu(K.masteryEvidenceLabel, isKu, {'correct': '$count', 'answered': '$answered', 'accuracy': '$accuracy'})}',
+              style: SahneType.caption.copyWith(color: t.tx2),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _AchievementChip extends StatelessWidget {
-  const _AchievementChip({required this.achievement, required this.isKu});
-
-  final Achievement achievement;
-  final bool isKu;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      decoration: BoxDecoration(
-        color: AppTheme.gold.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-        border: Border.all(color: AppTheme.gold.withValues(alpha: 0.24)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            achievement.icon,
-            color: AppColors.onAccentTint(context, AppTheme.gold),
-            size: 18,
-          ),
-          const SizedBox(width: 6),
-          Text(
-            achievement.title(isKu),
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w800,
-            ),
-          ),
         ],
       ),
     );
@@ -1174,213 +809,153 @@ class _PedagogicalAnalyticsSectionState
                   .map((e) => e.correct + e.mistakes)
                   .reduce((a, b) => a > b ? a : b);
 
-        return AppPanel(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Icon(AppIcons.chartLine, color: AppTheme.accent),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      Tr.forKu(K.performansAnalizi, isKu),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.bodyLarge.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w700,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 14),
+        final t = SahneTokens.of(context);
+        Widget pill(String text, Color bg, Color fg) => DecoratedBox(
+          decoration: ShapeDecoration(color: bg, shape: SahneShape.s),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: SahneSpace.x2,
+              vertical: SahneSpace.x1,
+            ),
+            child: Text(
+              text,
+              style: SahneType.captionStrong.copyWith(color: fg),
+            ),
+          ),
+        );
 
-              // 📊 Category performance bars
-              if (categoryBars.isNotEmpty) ...[
-                Text(
-                  Tr.forKu(K.kategorilereGorePerformans, isKu),
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                for (final bar in categoryBars) ...[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 72,
-                          child: Text(
-                            isKu
-                                ? CategoryNames.localized(bar.category, true)
-                                : CategoryNames.localized(bar.category, false),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.caption.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: _categoryBarFill(
-                              context,
-                              end: (bar.correct + bar.mistakes) / maxBar,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        SizedBox(
-                          width: 40,
-                          child: Text(
-                            '${bar.correct}',
-                            textAlign: TextAlign.right,
-                            style: AppTypography.caption.copyWith(
-                              color: AppTheme.correct,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-                // Legend
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _SubHeading(Tr.forKu(K.performansAnalizi, isKu)),
+            const SizedBox(height: SahneSpace.x3),
+
+            // Kategori performans çubukları
+            if (categoryBars.isNotEmpty) ...[
+              Text(
+                Tr.forKu(K.kategorilereGorePerformans, isKu),
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+              const SizedBox(height: SahneSpace.x2),
+              for (final bar in categoryBars) ...[
                 Padding(
-                  padding: const EdgeInsets.only(top: 4),
+                  padding: const EdgeInsets.only(bottom: SahneSpace.x2),
                   child: Row(
                     children: [
-                      _LegendDot(
-                        color: AppTheme.correct,
-                        label: Tr.forKu(K.correct, isKu),
+                      SizedBox(
+                        width: 80,
+                        child: Text(
+                          CategoryNames.localized(bar.category, isKu),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: SahneType.caption.copyWith(color: t.tx),
+                        ),
                       ),
-                      const SizedBox(width: 16),
-                      _LegendDot(
-                        color: AppTheme.wrong,
-                        label: Tr.forKu(K.wrong, isKu),
+                      const SizedBox(width: SahneSpace.x2),
+                      Expanded(
+                        child: ClipPath(
+                          clipper: const ShapeBorderClipper(
+                            shape: SahneShape.s,
+                          ),
+                          child: _categoryBarFill(
+                            context,
+                            end: (bar.correct + bar.mistakes) / maxBar,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: SahneSpace.x2),
+                      SizedBox(
+                        width: 40,
+                        child: Text(
+                          '${bar.correct}',
+                          textAlign: TextAlign.right,
+                          style: SahneType.captionStrong.copyWith(
+                            color: t.okTx,
+                            fontFeatures: const [FontFeature.tabularFigures()],
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-                if (strongestCat != null || weakestCat != null)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Divider(),
-                  ),
               ],
-
-              if (strongestCat != null) ...[
-                Text(
-                  Tr.forKu(K.enGucluOldugunKategori, isKu),
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                    fontSize: 13,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Row(
+              // Lejant: durum rengi tek başına değil, sözle birlikte.
+              Padding(
+                padding: const EdgeInsets.only(top: SahneSpace.x1),
+                child: Wrap(
+                  spacing: SahneSpace.x4,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.correct.withValues(alpha: 0.16),
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(
-                          color: AppTheme.correct.withValues(alpha: 0.5),
-                        ),
-                      ),
-                      child: Text(
-                        CategoryNames.localized(strongestCat, isKu),
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppColors.onAccentTint(
-                            context,
-                            AppTheme.correct,
-                          ),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        Tr.forKu(K.pDogruCevap, isKu, {'p0': '$maxCorrect'}),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+                    _LegendDot(color: t.okTx, label: Tr.forKu(K.correct, isKu)),
+                    _LegendDot(color: t.errTx, label: Tr.forKu(K.wrong, isKu)),
                   ],
                 ),
-              ],
-              if (strongestCat != null && weakestCat != null)
-                const SizedBox(height: 14),
-              if (weakestCat != null) ...[
-                Text(
-                  Tr.forKu(K.gelistirilmesiGerekenAlan, isKu),
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                    fontSize: 13,
+              ),
+              if (strongestCat != null || weakestCat != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: SahneSpace.x3),
+                  child: SizedBox(
+                    height: 1,
+                    width: double.infinity,
+                    child: ColoredBox(color: t.line),
                   ),
                 ),
-                const SizedBox(height: 6),
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.brand.withValues(alpha: 0.16),
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(
-                          color: AppTheme.brand.withValues(alpha: 0.5),
-                        ),
-                      ),
-                      child: Text(
-                        CategoryNames.localized(weakestCat, isKu),
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppColors.readableAccent(
-                            context,
-                            AppTheme.brand,
-                          ),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        Tr.forKu(K.pAktifYanlisSoru, isKu, {
-                          'p0': '$maxMistakes',
-                        }),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
             ],
-          ),
+
+            if (strongestCat != null) ...[
+              Text(
+                Tr.forKu(K.enGucluOldugunKategori, isKu),
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+              const SizedBox(height: SahneSpace.x1),
+              Row(
+                children: [
+                  pill(
+                    CategoryNames.localized(strongestCat, isKu),
+                    t.learnTint,
+                    t.learnTx,
+                  ),
+                  const SizedBox(width: SahneSpace.x2),
+                  Expanded(
+                    child: Text(
+                      Tr.forKu(K.pDogruCevap, isKu, {'p0': '$maxCorrect'}),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SahneType.caption.copyWith(color: t.tx),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+            if (strongestCat != null && weakestCat != null)
+              const SizedBox(height: SahneSpace.x3),
+            if (weakestCat != null) ...[
+              Text(
+                Tr.forKu(K.gelistirilmesiGerekenAlan, isKu),
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+              const SizedBox(height: SahneSpace.x1),
+              Row(
+                children: [
+                  pill(
+                    CategoryNames.localized(weakestCat, isKu),
+                    t.goldTint,
+                    t.goldTx,
+                  ),
+                  const SizedBox(width: SahneSpace.x2),
+                  Expanded(
+                    child: Text(
+                      Tr.forKu(K.pAktifYanlisSoru, isKu, {
+                        'p0': '$maxMistakes',
+                      }),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SahneType.caption.copyWith(color: t.tx),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ],
         );
       },
     );
@@ -1399,13 +974,15 @@ class _CategoryBarData {
 // ─── Legend Dot ─────────────────────────────────────────────────────────────
 
 /// Kategori çubuğu dolumu süsüdür. Tercih açıkken ilk karede tam boyda
-/// durur; yoksa profil analiz paneli ayarı yok sayar.
+/// durur; yoksa profil analiz paneli ayarı yok sayar. Çubuk bir grafik
+/// sütunudur (16 px), ilerleme çubuğu değil; iz Ray, dolgu Rast tonu.
 Widget _categoryBarFill(BuildContext context, {required double end}) {
+  final t = SahneTokens.of(context);
   Widget bar(double value) => LinearProgressIndicator(
     value: value,
     minHeight: 16,
-    backgroundColor: AppTheme.surfaceColor(context),
-    color: AppTheme.correct,
+    backgroundColor: t.s3,
+    color: t.okFill,
   );
   if (ReducedMotionProvider.isReducedIn(context)) return bar(end);
   return TweenAnimationBuilder<double>(
@@ -1426,22 +1003,16 @@ class _LegendDot extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(2),
+        SizedBox.square(
+          dimension: 8,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(color: color, shape: SahneShape.s),
           ),
         ),
-        const SizedBox(width: 4),
+        const SizedBox(width: SahneSpace.x1),
         Text(
           label,
-          style: AppTypography.caption.copyWith(
-            color: AppTheme.textMutedColor(context),
-            fontSize: 10,
-            fontWeight: FontWeight.w600,
-          ),
+          style: SahneType.caption.copyWith(color: SahneTokens.of(context).tx2),
         ),
       ],
     );

@@ -1,3 +1,5 @@
+// 2026-09-29 Şahnê: sekme sayfası `ScreenSectionHeading` değil A
+// iskeletidir (`SahneTabPage`); başlık oradan okunur.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +10,7 @@ import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 /// loadLeaderboard çağrılarını sayan sahte depo.
 class _CountingLeaderboardRepository extends MockZanKurdRepository {
@@ -77,11 +79,10 @@ void main() {
     await tester.pumpWidget(_shell(LeaderboardScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.byType(ScreenSectionHeading), findsOneWidget);
-    final heading = tester.widget<ScreenSectionHeading>(
-      find.byType(ScreenSectionHeading),
-    );
-    expect(heading.title, 'Liderlik Tablosu');
+    // 2026-09-29 Şahnê: sekme sayfası A iskeletidir (`SahneTabPage`).
+    expect(find.byType(SahneTabPage), findsOneWidget);
+    final page = tester.widget<SahneTabPage>(find.byType(SahneTabPage));
+    expect(page.title, 'Liderlik Tablosu');
     expect(find.byKey(const ValueKey('leaderboard-friends-button')), findsOne);
     expect(find.byKey(const ValueKey('leaderboard-refresh-button')), findsOne);
     expect(tester.takeException(), isNull);

@@ -7,6 +7,7 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 Widget _shell(Widget child) {
   return MultiProvider(
@@ -21,9 +22,12 @@ Widget _shell(Widget child) {
 }
 
 void main() {
-  testWidgets('hızlı düello yeşil kimlik içinde turuncu ana eylem kullanır', (
+  testWidgets('hızlı düello yarış sahne kartında tek Agir eylem taşır', (
     tester,
   ) async {
+    // 2026-09-29 Şahnê: hero bir düello sahne kartıdır (Boyax sahne
+    // degradesi bileşende); turuncu yalnız "Rakip bul" düğmesinde ve o
+    // ekrandaki TEK birincil düğmedir. Agir üstünde metin koyu `onAct`.
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -33,40 +37,20 @@ void main() {
     await tester.pumpAndSettle();
 
     final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
-    final heroInk = tester.widget<Ink>(
-      find.descendant(of: hero, matching: find.byType(Ink)).first,
+    final card = tester.widget<SahneStageCard>(
+      find.descendant(of: hero, matching: find.byType(SahneStageCard)),
     );
-    final heroDecoration = heroInk.decoration as BoxDecoration;
-    // 2026-09-27: sahip oyun merkezini "renksiz" buldu; düz tek renkli
-    // zemin bir sahne gradyanına çevrildi (bkz. `_QuickDuelHero` içindeki
-    // yorum). Eski bekçi düz `color`e bakıyordu — artık gradyan olduğunu ve
-    // uçlarından birinin hâlâ kimlik rengi (`culturalBrandBg`) olduğunu
-    // doğrular; kimlik korunur, yalnız düzlük iddiası düşer.
-    expect(heroDecoration.gradient, isA<LinearGradient>());
+    expect(card.role, SahneRole.race);
     expect(
-      (heroDecoration.gradient! as LinearGradient).colors,
-      contains(AppTheme.culturalBrandBg),
+      find.descendant(of: hero, matching: find.byType(SahneVsEmblem)),
+      findsOneWidget,
     );
-
-    final action = tester.widget<Container>(
-      find
-          .ancestor(
-            of: find.text('Rakip bul'),
-            matching: find.byType(Container),
-          )
-          .first,
-    );
-    final decoration = action.decoration as BoxDecoration;
-    expect(
-      decoration.color,
-      AppTheme.primaryCtaColor(tester.element(find.text('Rakip bul'))),
-    );
+    expect(find.byType(FilledButton), findsOneWidget);
+    final ctx = tester.element(find.text('Rakip bul'));
     final label = tester.widget<Text>(find.text('Rakip bul'));
     expect(
-      label.style?.color,
-      AppColors.onSolid(
-        AppTheme.primaryCtaColor(tester.element(find.text('Rakip bul'))),
-      ),
+      DefaultTextStyle.of(ctx).style.merge(label.style).color,
+      SahneTokens.night.onAct,
     );
   });
 
@@ -125,13 +109,11 @@ void main() {
 
     expect(find.text('Oda Kur'), findsOneWidget);
     expect(find.text('Kodla Katıl'), findsOneWidget);
+    // 2026-09-29 Şahnê: bölümler tek bölüm başlığıyla (`SahneSectionHeader`)
+    // açılır; başlık altı açıklama satırı yok (maket).
     expect(find.text('Arkadaşlarınla'), findsOneWidget);
-    expect(
-      find.text('Oda kur, bağlantıyı arkadaşlarınla paylaş.'),
-      findsOneWidget,
-    );
     expect(find.text('Etkinlikler'), findsOneWidget);
-    expect(find.text('Her gün yenilenir.'), findsOneWidget);
+    expect(find.byType(SahneSectionHeader), findsNWidgets(2));
     expect(find.byKey(const ValueKey('play-hub-quick-duel')), findsOneWidget);
     expect(find.byKey(const ValueKey('play-hub-create-room')), findsOneWidget);
     expect(find.byKey(const ValueKey('play-hub-join-room')), findsOneWidget);
@@ -167,9 +149,12 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('oda kur ve kodla katıl normal telefonda aynı satırdadır', (
+  testWidgets('oda kur ve kodla katıl tek liste grubunda alt alta', (
     tester,
   ) async {
+    // 2026-09-29 Şahnê: iki yan yana kart yerine maketteki liste grubu
+    // (iki satır, ikon hizasından ayırıcı). Satırlar ≥ 64 ve Kurmancîde
+    // uzayan metinle sarar.
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -178,24 +163,20 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final create = tester.getRect(
-      find.byKey(const ValueKey('play-hub-create-room')),
+    final createFinder = find.byKey(const ValueKey('play-hub-create-room'));
+    final joinFinder = find.byKey(const ValueKey('play-hub-join-room'));
+    final create = tester.getRect(createFinder);
+    final join = tester.getRect(joinFinder);
+    expect(join.top, greaterThanOrEqualTo(create.bottom));
+    expect(create.height, greaterThanOrEqualTo(64));
+    expect(
+      find.ancestor(of: createFinder, matching: find.byType(SahneListGroup)),
+      findsOneWidget,
     );
-    final join = tester.getRect(
-      find.byKey(const ValueKey('play-hub-join-room')),
+    expect(
+      find.ancestor(of: joinFinder, matching: find.byType(SahneListGroup)),
+      findsOneWidget,
     );
-    expect((create.center.dy - join.center.dy).abs(), lessThan(1));
-    expect(join.left, greaterThan(create.right));
-    // 2026-09-27: sahip "renksiz" bulduğu için alt satır (`subtitle`)
-    // eskiden yalnız ekran okuyucuya duyurulan `semanticSubtitle`ken artık
-    // GÖRÜNÜR bir ikinci metin satırı oldu — kart bu yüzden kasıtlı olarak
-    // daha uzun (ölçülen ~158). Eski "110" tavanı düz/tek satırlı eski
-    // görünümü sabitliyordu; asıl davranış (iki kart aynı satırda ve eşit
-    // yükseklikte) yukarıdaki iki `expect` ile zaten korunuyor, tavan yalnız
-    // taşma/aşırı büyüme gibi gerçek bir regresyonu yakalayacak kadar geniş
-    // tutulur.
-    expect(create.height, lessThanOrEqualTo(190));
-    expect(join.height, lessThanOrEqualTo(190));
   });
 
   testWidgets('%200 metinde oda eylemleri güvenli biçimde alt alta döner', (
@@ -224,7 +205,7 @@ void main() {
       200,
       scrollable: find
           .descendant(
-            of: find.byType(ListView),
+            of: find.byType(SahneTabPage),
             matching: find.byType(Scrollable),
           )
           .first,

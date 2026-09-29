@@ -6,7 +6,7 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
 import 'package:zankurd_mobile/src/widgets/arena_kit.dart';
 import 'package:zankurd_mobile/src/widgets/rolling_count.dart';
@@ -29,6 +29,11 @@ import 'support/widget_test_helpers.dart';
 /// söylüyor, tonu da lig etiketiyle çelişiyordu (sıra 3 → bronz madalya +
 /// "Altın Lig"). Hero artık yalnız lig etiketi + tier ikonu gösterir; sıra
 /// rakamı tek yerde (Sıra karosu) kalır.
+///
+/// 2026-09-29 Şahnê: yeşil kahraman kart, kilim bordürü ve
+/// `MissionProgressCard` kalktı. Kimlik sayfa zemininde elmas avatar + ad
+/// + kod; başarılar Zêr ilerleme çubuklu yüzey kartı; kamera rozeti Kulis
+/// tonlu küçük elmas. Bekçiler yeni dile göre güncellendi.
 class _RankedRepo extends MockZanKurdRepository {
   @override
   Future<LeaderboardEntry?> getPlayerStats() async => const LeaderboardEntry(
@@ -65,7 +70,7 @@ Future<void> _pumpLoaded(
     ),
   );
   await tester.pump();
-  final loaded = find.byType(MissionProgressCard);
+  final loaded = find.byKey(const ValueKey('profile-rewards-card'));
   for (var i = 0; i < 40 && loaded.evaluate().isEmpty; i++) {
     await tester.pump(const Duration(milliseconds: 50));
   }
@@ -73,23 +78,23 @@ Future<void> _pumpLoaded(
 }
 
 void main() {
-  testWidgets('profil avatar düzenleme rozeti Forest kimliğini kullanır', (
-    tester,
-  ) async {
+  testWidgets('profil avatar düzenleme rozeti Kulis elmasıdır', (tester) async {
     await _seedMistakes();
     await _pumpLoaded(tester, _RankedRepo());
 
-    final badge = tester.widget<Container>(
+    final badge = tester.widget<DecoratedBox>(
       find
           .ancestor(
             of: find.byIcon(AppIcons.camera),
-            matching: find.byType(Container),
+            matching: find.byType(DecoratedBox),
           )
           .first,
     );
-    final decoration = badge.decoration! as BoxDecoration;
-    final gradient = decoration.gradient! as LinearGradient;
-    expect(gradient.colors, AppTheme.identityHeaderGradient.colors);
+    final decoration = badge.decoration as ShapeDecoration;
+    final t = SahneTokens.of(tester.element(find.byIcon(AppIcons.camera)));
+    expect(decoration.color, t.s2);
+    expect(decoration.shape, isA<BeveledRectangleBorder>());
+    expect(find.byKey(const ValueKey('profile-avatar-edit')), findsOneWidget);
   });
 
   testWidgets('profil kimlik dokunuşlarını taşır', (tester) async {
@@ -97,14 +102,19 @@ void main() {
     await _pumpLoaded(tester, _RankedRepo());
     expect(tester.takeException(), isNull);
 
-    // Kimlik kartının altında TEK kilim bordürü (ayırıcı).
-    expect(find.byType(KilimDivider), findsOneWidget);
-    // "Başarılar X/Y" artık dokulu ilerleme kartı.
-    expect(find.byType(MissionProgressCard), findsOneWidget);
+    // Büyük kilim bordürü yok: kilim yalnız göz şeridinde yaşar.
+    expect(find.byType(KilimDivider), findsNothing);
+    // "Başarılar X/Y" Zêr ilerleme çubuklu yüzey kartı.
+    final rewards = find.byKey(const ValueKey('profile-rewards-card'));
+    expect(rewards, findsOneWidget);
+    final bar = tester.widget<SahneProgressBar>(
+      find.descendant(of: rewards, matching: find.byType(SahneProgressBar)),
+    );
+    expect(bar.tone, SahneProgressTone.gold);
     // Sayısal istatistikler RollingCount ile sayar.
     expect(find.byType(RollingCount), findsWidgets);
-    // Sıra NUMARASI hero'da madalya olarak çizilmez; rakam yalnız Sıra
-    // karosunda kalır (hero'ya `RankMedal` geri eklenirse bu kırılır).
+    // Sıra NUMARASI kimlikte madalya olarak çizilmez; rakam yalnız Sıra
+    // karosunda kalır.
     expect(find.byType(RankMedal), findsNothing);
   });
 }

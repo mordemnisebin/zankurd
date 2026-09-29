@@ -12,10 +12,13 @@ import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 // Profil menüsü renkleri ekran kimliğiyle yarışmamalı. İkon karoları yalnız
-// üç semantik role bağlı kalır: öğrenme/hesap=yeşil, prestij/mağaza=altın,
-// yıkıcı eylem=kırmızı.
+// üç semantik role bağlı kalır.
+// 2026-09-29 Şahnê: roller öğrenme (Zimrût), ödül/mağaza (Zêr) ve nötr
+// (ayarlar, çıkış); eski "yıkıcı eylem=kırmızı" kalktı — Şaş bir durum
+// rengidir ve çıkışın geri dönüşsüzlüğünü onay diyaloğu söyler.
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
@@ -37,43 +40,38 @@ void main() {
     final source = File(
       'lib/src/screens/profile_screen.dart',
     ).readAsStringSync();
-
-    expect(source, isNot(contains('iconColor: AppTheme.playCyan')));
-    expect(source, isNot(contains('iconColor: AppTheme.primaryGradientStart')));
-    expect(source, isNot(contains('iconColor: AppTheme.secondaryAccent')));
-    expect(source, isNot(contains('iconColor: AppTheme.correct')));
+    // 2026-09-29 Şahnê: satırlar `SahneListRow.icon`dur ve renk yalnız
+    // ROL taşır (öğrenme Zimrût, mağaza Zêr, ayarlar/çıkış nötr). Ham
+    // tema aksanı hiç yazılmaz; çıkış kırmızıya boyanmaz (kırmızı durum
+    // rengidir, eylem rengi değil).
+    expect(source, isNot(contains('iconColor: AppTheme')));
+    expect(source, isNot(contains('AppTheme.')));
     expect(
-      RegExp(r'iconColor: AppTheme\.playGreen').allMatches(source).length,
+      RegExp(r'role: SahneRole\.learn').allMatches(source).length,
       greaterThanOrEqualTo(4),
     );
-    expect(source, contains('iconColor: AppTheme.gold'));
-    expect(source, contains('iconColor: AppTheme.wrong'));
+    expect(source, contains('role: SahneRole.gold'));
+    expect(source, isNot(contains('role: SahneRole.race')));
   });
 
-  testWidgets('profil menü ikonları üç anlamlı renk rolüyle sınırlıdır', (
-    tester,
-  ) async {
+  testWidgets('profil menü satırları üç rolle sınırlıdır', (tester) async {
     await tester.pumpWidget(
       wrap(ProfileScreen(repository: MockZanKurdRepository())),
     );
     await tester.pumpAndSettle();
 
-    final menuBadges = find.byKey(const ValueKey('profile-menu-icon-Dukan'));
-    expect(menuBadges, findsOneWidget);
+    final shop = find.byKey(const ValueKey('profile-menu-icon-Dukan'));
+    expect(shop, findsOneWidget);
+    final row = tester.widget<SahneListRow>(shop);
+    expect(row.role, SahneRole.gold);
 
-    final badge = tester.widget<Container>(menuBadges);
-    final decoration = badge.decoration as BoxDecoration;
-    expect(decoration.shape, BoxShape.circle);
-    expect(decoration.color, isNotNull);
-    expect(decoration.color, isNot(Colors.transparent));
-
-    final source = File(
-      'lib/src/screens/profile_screen.dart',
-    ).readAsStringSync();
-    expect(source, isNot(contains('iconColor: AppTheme.playCyan')));
-    expect(source, isNot(contains('iconColor: AppTheme.secondaryAccent')));
-    expect(source, contains('iconColor: AppTheme.playGreen'));
-    expect(source, contains('iconColor: AppTheme.gold'));
-    expect(source, contains('iconColor: AppTheme.wrong'));
+    final roles = tester
+        .widgetList<SahneListRow>(find.byType(SahneListRow))
+        .map((r) => r.role)
+        .toSet();
+    expect(
+      roles.difference({SahneRole.learn, SahneRole.gold, SahneRole.neutral}),
+      isEmpty,
+    );
   });
 }

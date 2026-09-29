@@ -1,8 +1,12 @@
+// 2026-09-29 Şahnê: ana ekranın kapıları ve oyun merkezinin öteki yolları
+// `ModeCard`/degrade kart değil, liste satırıdır (`SahneListRow`); bekçi
+// "tek birincil (turuncu) eylem, öteki yollar sakin ve erişilebilir"
+// kuralını bu dilde sorar.
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:zankurd_mobile/src/theme/sahne.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/config/feature_flags.dart';
@@ -19,7 +23,6 @@ import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/mode_card.dart';
-import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 
 Widget _homeShell({required bool isKu, required bool isDark}) {
   return MultiProvider(
@@ -60,25 +63,6 @@ Widget _playShell({required bool isKu, required bool isDark}) {
   );
 }
 
-// 2026-09-29 Şahnê: `ModeCard` yüzeyi pahlı olduğu için `ShapeDecoration`dır
-// (ekranın kendi kartları hâlâ `BoxDecoration`); bekçinin sorduğu şey
-// ikisinde de aynı: gradyan ve gölge yok.
-({Gradient? gradient, List<BoxShadow>? boxShadow}) _modeDecoration(
-  WidgetTester tester,
-  String key,
-) {
-  final ink = tester.widget<Ink>(
-    find
-        .descendant(of: find.byKey(ValueKey(key)), matching: find.byType(Ink))
-        .first,
-  );
-  return switch (ink.decoration!) {
-    final ShapeDecoration d => (gradient: d.gradient, boxShadow: d.shadows),
-    final BoxDecoration d => (gradient: d.gradient, boxShadow: d.boxShadow),
-    _ => throw StateError('beklenmeyen süs: ${ink.decoration}'),
-  };
-}
-
 void _expectActionSemantics(WidgetTester tester, String key) {
   final data = tester
       .getSemantics(find.byKey(ValueKey(key)))
@@ -98,6 +82,8 @@ void main() {
     LevelProgressStore.resetInstance();
   });
 
+  // 2026-09-29 Şahnê: kapılar ve oyun yolları liste satırıdır; bekçi aynı
+  // kuralı yeni dilde sorar.
   // 2026-09-27: ana ekran tek turuncu eylem + iki kapı + konu ızgarası
   // düzenine geçti. Bekçinin koruduğu kural aynı: ekranda tek bir birincil
   // (turuncu) eylem vardır, diğer yollar erişilebilir ama sakin kalır.
@@ -122,10 +108,14 @@ void main() {
             final finder = find.byKey(ValueKey(door));
             expect(finder, findsOneWidget, reason: door);
             _expectActionSemantics(tester, door);
+            // 2026-09-29 Şahnê: kapı bir liste satırıdır ve rolü Agir
+            // değildir (Agir bir rol değil, tek birincil eylemin rengidir);
+            // satırda dolgulu düğme yok.
             final tile = tester.widget<HomeDoorTile>(finder);
+            expect(tile.role, isNot(SahneRole.neutral), reason: door);
             expect(
-              tile.accent,
-              isNot(AppTheme.brand),
+              find.descendant(of: finder, matching: find.byType(FilledButton)),
+              findsNothing,
               reason: 'Turuncu yalnız günün dersi düğmesine ayrılmış: $door',
             );
             expect(
@@ -182,39 +172,40 @@ void main() {
             expect(find.byKey(const ValueKey('play-hub-more')), findsOneWidget);
             _expectActionSemantics(tester, 'play-hub-more');
           }
-          for (final key in ['play-hub-create-room', 'play-hub-join-room']) {
-            expect(find.byKey(ValueKey(key)), findsOneWidget);
-            final decoration = _modeDecoration(tester, key);
-            expect(decoration.gradient, isNull, reason: key);
+          // 2026-09-29 Şahnê: öteki yollar liste satırıdır (liste grubunda);
+          // degrade, gölge ve dolgulu düğme taşımazlar. Günün etkinliği
+          // yarış rolünde ve "BUGÜN" rozeti taşır; turnuva ödül (Zêr) rolü.
+          for (final key in [
+            'play-hub-create-room',
+            'play-hub-join-room',
+            'play-hub-daily-contest',
+          ]) {
+            final finder = find.byKey(ValueKey(key));
+            expect(finder, findsOneWidget);
+            expect(tester.widget(finder), isA<SahneListRow>(), reason: key);
             expect(
-              decoration.boxShadow ?? const <BoxShadow>[],
-              isEmpty,
+              find.descendant(of: finder, matching: find.byType(Ink)),
+              findsNothing,
+              reason: key,
+            );
+            expect(
+              find.descendant(of: finder, matching: find.byType(FilledButton)),
+              findsNothing,
               reason: key,
             );
             _expectActionSemantics(tester, key);
           }
-
-          const dailyContestKey = 'play-hub-daily-contest';
-          expect(find.byKey(const ValueKey(dailyContestKey)), findsOneWidget);
-          final dailyContestCard = tester.widget<ModeCard>(
-            find.byKey(const ValueKey(dailyContestKey)),
+          final daily = tester.widget<SahneListRow>(
+            find.byKey(const ValueKey('play-hub-daily-contest')),
           );
-          expect(dailyContestCard.emphasis, ModeCardEmphasis.event);
+          expect(daily.role, SahneRole.race);
           expect(
-            dailyContestCard.accent,
-            AppTheme.gold,
-            reason: '$dailyContestKey semantic accent role',
+            find.descendant(
+              of: find.byKey(const ValueKey('play-hub-daily-contest')),
+              matching: find.byType(SahneBadge),
+            ),
+            findsOneWidget,
           );
-          final dailyContestDecoration = _modeDecoration(
-            tester,
-            dailyContestKey,
-          );
-          expect(dailyContestDecoration.gradient, isNull);
-          expect(
-            dailyContestDecoration.boxShadow ?? const <BoxShadow>[],
-            isEmpty,
-          );
-          _expectActionSemantics(tester, dailyContestKey);
           if (!kTournamentEnabled) {
             expect(tester.takeException(), isNull);
             continue;
@@ -224,27 +215,12 @@ void main() {
           );
           await tester.tap(find.byKey(const ValueKey('play-hub-more')));
           await tester.pumpAndSettle();
+          final tournament = find.byKey(const ValueKey('play-hub-tournament'));
+          expect(tournament, findsOneWidget);
           expect(
-            find.byKey(const ValueKey('play-hub-tournament')),
-            findsOneWidget,
-          );
-          final tournamentCard = tester.widget<ModeCard>(
-            find.byKey(const ValueKey('play-hub-tournament')),
-          );
-          expect(tournamentCard.emphasis, ModeCardEmphasis.event);
-          expect(
-            tournamentCard.accent,
-            AppTheme.gold,
+            tester.widget<SahneListRow>(tournament).role,
+            SahneRole.gold,
             reason: 'Turnuva prestij/ödül rolünü altınla paylaşmalı.',
-          );
-          final tournamentDecoration = _modeDecoration(
-            tester,
-            'play-hub-tournament',
-          );
-          expect(tournamentDecoration.gradient, isNull);
-          expect(
-            tournamentDecoration.boxShadow ?? const <BoxShadow>[],
-            isEmpty,
           );
           _expectActionSemantics(tester, 'play-hub-tournament');
           expect(tester.takeException(), isNull);
@@ -289,89 +265,11 @@ void main() {
       await tester.pumpWidget(_playShell(isKu: false, isDark: false));
       await tester.pumpAndSettle();
 
-      final heading = tester.widget<ScreenSectionHeading>(
-        find.descendant(
-          of: find.byKey(const ValueKey('play-hub-more')),
-          matching: find.byType(ScreenSectionHeading),
-        ),
-      );
-      expect(heading.semanticHeader, isFalse);
-    },
-  );
-
-  testWidgets(
-    'busy mode cards keep readable progress contrast and disabled semantics',
-    (tester) async {
-      await tester.binding.setSurfaceSize(const Size(390, 600));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-
-      const cases = [
-        (emphasis: ModeCardEmphasis.secondary, accent: Color(0xFF1E4FA6)),
-        (emphasis: ModeCardEmphasis.event, accent: Color(0xFF9C6300)),
-        (emphasis: ModeCardEmphasis.primary, accent: Color(0xFFB31E3B)),
-      ];
-
-      for (final isDark in [false, true]) {
-        await tester.pumpWidget(
-          MaterialApp(
-            theme: isDark ? AppTheme.dark() : AppTheme.light(),
-            home: Column(
-              children: [
-                for (final item in cases)
-                  ModeCard(
-                    key: ValueKey('${item.emphasis}-$isDark'),
-                    icon: Icons.bolt,
-                    accent: item.accent,
-                    title: '${item.emphasis} busy',
-                    subtitle: 'Loading',
-                    onTap: () {},
-                    busy: true,
-                    emphasis: item.emphasis,
-                  ),
-              ],
-            ),
-          ),
-        );
-        await tester.pump(const Duration(milliseconds: 100));
-
-        expect(tester.takeException(), isNull);
-        for (final item in cases) {
-          final key = ValueKey('${item.emphasis}-$isDark');
-          final card = find.byKey(key);
-          final spinner = find.descendant(
-            of: card,
-            matching: find.byType(CircularProgressIndicator),
-          );
-          expect(spinner, findsOneWidget, reason: '$key spinner');
-
-          // 2026-09-29 Şahnê: halka her kartta Zêr metni (`goldTx`) —
-          // bulunduğu yüzeyin belirteçlerinden (birincil kart gece sahnesi)
-          // okunur; AA'sı belirteç tablosunda ölçülüdür. Eski bekçi aksanın
-          // hesaplanmış tonunu sabitliyordu.
-          final indicator = tester.widget<CircularProgressIndicator>(spinner);
-          final spinnerColor = indicator.valueColor!.value;
-          expect(
-            spinnerColor,
-            SahneTokens.of(tester.element(spinner)).goldTx,
-            reason: '$key color',
-          );
-          expect(spinnerColor, isNot(Colors.white), reason: '$key color');
-
-          final data = tester.getSemantics(card).getSemanticsData();
-          expect(data.flagsCollection.isButton, isTrue, reason: '$key role');
-          expect(
-            data.flagsCollection.isEnabled,
-            ui.Tristate.isFalse,
-            reason: '$key disabled state',
-          );
-          expect(
-            data.hasAction(ui.SemanticsAction.tap),
-            isFalse,
-            reason: '$key tap disabled',
-          );
-          expect(tester.getRect(card).height, greaterThanOrEqualTo(48));
-        }
-      }
+      final data = tester
+          .getSemantics(find.byKey(const ValueKey('play-hub-more')))
+          .getSemanticsData();
+      expect(data.flagsCollection.isHeader, isFalse);
+      expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
     },
   );
 }

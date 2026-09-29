@@ -1,3 +1,5 @@
+// 2026-09-29 Şahnê: kendi sıran artık `_page(pinned: …)` ile sayfanın
+// altına sabitlenir; kaynak bekçisi o satırı arar.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -54,7 +56,10 @@ void main() {
     // Liderlik yalnız ilk 10'u getiriyor; oyuncu listede yoksa kendi
     // sırasını hiç göremiyordu.
     expect(source, contains('_PinnedMyRank'));
-    expect(source, contains('if (_myRank(entries) == null) _buildMyRankRow'));
+    expect(
+      source,
+      contains('pinned: _myRank(entries) == null ? _buildMyRankRow(ku) : null'),
+    );
   });
 
   test('boş, hata ve yükleniyor durumları ayrı ayrı ele alınır', () {

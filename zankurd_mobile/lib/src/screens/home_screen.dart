@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:provider/provider.dart';
 
 import '../config/app_config.dart';
@@ -19,7 +18,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../providers/sound_provider.dart';
-import '../theme/app_theme.dart';
+import '../widgets/sahne/sahne.dart';
 import '../utils/app_route.dart';
 import '../utils/boot_diagnostics.dart';
 import '../utils/error_reporter.dart';
@@ -37,11 +36,9 @@ import 'quiz_screen.dart';
 import 'home/today_task_card.dart';
 import 'home/home_rows.dart';
 import 'home/home_sections.dart';
-import '../widgets/app_row_card.dart';
 import 'home/daily_missions_card.dart';
 import 'shop_screen.dart';
 import '../data/mastery_store.dart';
-import '../widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/player_identity.dart';
 import '../services/analytics_service.dart';
@@ -413,38 +410,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final size = MediaQuery.sizeOf(context);
-    final isLandscape = size.width > size.height;
-    // Landscape'te alt nav'a yapışan içerik için ekstra nefes payı (faz1 P3).
-    final bottomContentPadding =
-        MediaQuery.paddingOf(context).bottom + (isLandscape ? 140 : 112);
-
     return LayoutBuilder(
-      builder: (context, constraints) => _buildBody(
-        context,
-        ku,
-        bottomContentPadding,
-        constraints.maxWidth > 720,
-      ),
+      builder: (context, constraints) =>
+          _buildBody(context, ku, constraints.maxWidth > 720),
     );
   }
 
-  /// Ana ekranın gövdesi (2026-09-27 sade ilk deneyim).
+  /// Ana ekranın gövdesi (2026-09-27 sade ilk deneyim; 2026-09-29 Şahnê).
   ///
   /// Ekran üç soruyu sırayla yanıtlar:
   /// 1. "Şimdi ne yapayım?" — günün dersi, tek turuncu düğme.
-  /// 2. "Bu uygulamada ne var?" — iki kapı: Kurmancî öğren ve yarış.
-  /// 3. "Neyi öğrenebilirim?" — bütün konular, ilerlemeleriyle.
+  /// 2. "Neyi öğrenebilirim?" — bütün konular, tek bakışta.
+  /// 3. "Başka ne var?" — öğrenme alanı ve yarış kapıları, günlük görevler.
   ///
-  /// Eskiden "Öğrenme yolları" başlığı altında dört ayrı öğrenme kapısı
-  /// vardı ve yarış yalnız ikinci oturumdan sonra sayfanın dibinde
-  /// görünüyordu; yeni gelen hangi kapının ne olduğunu ayırt edemiyordu.
-  Widget _buildBody(
-    BuildContext context,
-    bool ku,
-    double bottomContentPadding,
-    bool isWide,
-  ) {
+  /// Şahnê A iskeleti ([SahneTabPage]): marka satırı (logo + ZanKurd |
+  /// seri, jeton, dil) → 28'lik selamlama → alt başlık → içerik. Eski
+  /// başlıkta avatar madalyonu, renkli haplar ve ayrı bir satırda dil
+  /// düğmesi vardı; avatar Profil sekmesinin işidir, haplar stat çipi oldu.
+  Widget _buildBody(BuildContext context, bool ku, bool isWide) {
     final loader = QuestionBankLoader.instance;
     if (loader.failedAssets.isNotEmpty && loader.allQuestions.isEmpty) {
       return AppErrorState(
@@ -460,6 +443,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         },
       );
     }
+    final t = SahneTokens.of(context);
 
     final primary = _buildAnimatedCard(
       _heroFadeAnimation(0),
@@ -472,11 +456,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               loader.failedAssets.isNotEmpty
                   ? context.t(K.bankPartialWarning)
                   : context.t(K.bootDegradedBody),
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.textMutedColor(context),
-              ),
+              style: SahneType.caption.copyWith(color: t.tx2),
             ),
-            const SizedBox(height: AppSpacing.xs),
+            const SizedBox(height: SahneSpace.x2),
           ],
           TodayTaskCard(
             isKu: ku,
@@ -492,28 +474,28 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           //
           // İlerleme özeti günlük görevin ALTINDA durur: turuncu "Başla"
           // ekranın ilk ve en güçlü eylemi kalmalı. Coin burada YOK:
-          // başlıkta zaten kalıcı bir coin rozeti ve mağaza girişi var.
-          if (_firstSession) ...[
-            const SizedBox(height: AppSpacing.sm),
-            HomeFirstSteps(isKu: ku),
-          ] else ...[
-            const SizedBox(height: AppSpacing.md),
-            ProgressSummary(
-              key: const ValueKey('home-progress-summary'),
-              level: _level,
-              xpInLevel: _xpInLevel,
-              xpNeeded: _xpNeeded,
-              levelLabel: context.t(K.progressLevelLabel),
+          // marka satırında zaten kalıcı bir jeton çipi ve mağaza girişi var.
+          const SizedBox(height: SahneSpace.cardGap),
+          if (_firstSession)
+            HomeFirstSteps(isKu: ku)
+          else
+            SahneSurfaceCard(
+              child: ProgressSummary(
+                key: const ValueKey('home-progress-summary'),
+                level: _level,
+                xpInLevel: _xpInLevel,
+                xpNeeded: _xpNeeded,
+                levelLabel: context.t(K.progressLevelLabel),
+              ),
             ),
-          ],
           if (_reviewReadyCount > 0) ...[
-            const SizedBox(height: AppSpacing.sm),
-            AppRowCard(
+            const SizedBox(height: SahneSpace.cardGap),
+            // Altın yalnız ödül/ilerleme sayılarına ayrılmış; tekrar
+            // satırı öğrenme akışının parçası, o yüzden Zimrût.
+            HomeSupportRow(
               key: const ValueKey('home-review-row'),
               icon: AppIcons.arrowsRotate,
-              // Altın yalnız ödül/ilerleme sayılarına ayrılmış; tekrar
-              // satırı öğrenme akışının parçası, o yüzden marka yeşili.
-              accent: AppTheme.playGreen,
+              role: SahneRole.learn,
               title: context.t(K.homeReviewTime),
               subtitle: context.t(K.homeReviewTimeSub, {
                 'count': '$_reviewReadyCount',
@@ -521,50 +503,46 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: _openLearning,
             ),
           ],
-          const SizedBox(height: AppSpacing.lg),
           if (!_firstSession &&
               _learningGoalLoaded &&
               _learningGoal == null) ...[
+            const SizedBox(height: SahneSpace.cardGap),
             LearningGoalChooser(
               key: const ValueKey('home-learning-goal-chooser'),
               isKu: ku,
               selected: null,
               onSelected: _selectLearningGoal,
             ),
-            const SizedBox(height: AppSpacing.md),
           ],
-          HomeDoors(
-            learn: HomeDoorTile(
-              key: const ValueKey('home-door-learn'),
-              icon: AppIcons.graduationCap,
-              accent: AppTheme.playGreen,
-              title: context.t(K.learnKurmanci),
-              subtitle: context.t(K.homeDoorLearnSub),
-              onTap: widget.onOpenLearning == null ? null : _openLearning,
-            ),
-            // Yarış kapısı ilk oturumda da görünür: uygulamanın ikinci yüzü
-            // budur ve yeni gelen onu ancak burada görürse arar.
-            play: HomeDoorTile(
-              key: const ValueKey('home-door-play'),
-              icon: AppIcons.gamepad,
-              accent: AppTheme.playRed,
-              title: context.t(K.homeDoorPlayTitle),
-              subtitle: context.t(K.homeDoorPlaySub),
-              onTap: widget.onOpenPlay,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          HomeSectionHeader(
-            title: context.t(K.homeTopicsTitle),
-            subtitle: context.t(K.homeTopicsSub),
-          ),
-          const SizedBox(height: AppSpacing.sm),
+          SahneSectionHeader(title: context.t(K.homeTopicsTitle)),
           HomeTopicGrid(
             isKu: ku,
             categories: repo.categories,
             progress: _topicProgress,
             questionCounts: _topicCounts,
             onOpen: _openCategory,
+          ),
+          const SizedBox(height: SahneSpace.x6),
+          // Öğrenme alanı ve yarış: tek liste grubunda iki satır. Yarış
+          // kapısı ilk oturumda da görünür: uygulamanın ikinci yüzü budur
+          // ve yeni gelen onu ancak burada görürse arar.
+          HomeDoors(
+            learn: HomeDoorTile(
+              key: const ValueKey('home-door-learn'),
+              icon: AppIcons.graduationCap,
+              role: SahneRole.learn,
+              title: context.t(K.learnKurmanci),
+              subtitle: context.t(K.homeDoorLearnSub),
+              onTap: widget.onOpenLearning == null ? null : _openLearning,
+            ),
+            play: HomeDoorTile(
+              key: const ValueKey('home-door-play'),
+              icon: AppIcons.gamepad,
+              role: SahneRole.race,
+              title: context.t(K.homeDoorPlayTitle),
+              subtitle: context.t(K.homeDoorPlaySub),
+              onTap: widget.onOpenPlay,
+            ),
           ),
         ],
       ),
@@ -590,14 +568,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           // Satın alma ekranının TEK girişi ayarların en altındaydı: profil
           // sekmesi → Ayarlar → aşağı kaydır → Premium. Para kazandıran tek
           // yüzey için üç dokunuşluk, hiçbir yerde ilan edilmeyen bir yol.
-          // Coin rozetinin mağazaya taşınmasıyla aynı karar (bkz. başlık
-          // rozetleri): kazanan ya da destek olmak isteyen oyuncu nereye
-          // gideceğini bulabilmeli.
           //
-          // Kart başlıkta değil GÖVDENİN SONUNDA durur ve birincil eylemle
-          // yarışmaz: ana ekranın ilk sorusu "şimdi ne yapmalıyım?"dır,
-          // cevabı da turuncu "Başla" düğmesidir. Üçüncü bir başlık rozeti
-          // ise dar ekranlarda (320pt) rozet satırını taşırıyordu.
+          // Satır GÖVDENİN SONUNDA durur ve birincil eylemle yarışmaz: ana
+          // ekranın ilk sorusu "şimdi ne yapmalıyım?"dır, cevabı da turuncu
+          // "Başla" düğmesidir. Renk Zêr (ödül) rolünün ikon karosunda kalır.
           //
           // Zaten abone olana gösterilmez: satın alınmış bir şeyi satmaya
           // devam etmek, ödemiş kullanıcıya reklam gibi görünür.
@@ -609,12 +583,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 return const SizedBox.shrink();
               }
               return Padding(
-                padding: const EdgeInsets.only(top: AppSpacing.xs),
+                padding: const EdgeInsets.only(top: SahneSpace.cardGap),
                 child: HomeSupportRow(
                   key: const ValueKey('home-premium-row'),
                   surfaceKey: const ValueKey('home-premium-flat-surface'),
                   icon: AppIcons.gem,
-                  accent: AppTheme.gold,
+                  role: SahneRole.gold,
                   // Ad çevrilmez: App Store Connect'teki abonelik adının
                   // kendisidir (bkz. `AppConfig.subscriptionDisplayName`).
                   title: AppConfig.subscriptionDisplayName,
@@ -630,64 +604,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ),
     );
 
-    return Container(
-      // Zemin düz: sayfa gradyanı, üstündeki kartların kenarlıklarını
-      // yumuşatıp hiyerarşiyi bulanıklaştırıyordu. Tek gradyan CTA'da kalır.
-      color: AppTheme.bgOf(context),
-      child: CustomScrollView(
-        controller: widget.scrollController,
-        scrollCacheExtent: const ScrollCacheExtent.pixels(1200),
-        slivers: [
-          SliverToBoxAdapter(child: _buildFullBleedHeader(context, ku)),
-          SliverPadding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.page,
-              AppSpacing.md,
-              AppSpacing.page,
-              AppSpacing.lg,
-            ),
-            sliver: SliverToBoxAdapter(
-              child: _firstSession
-                  ? primary
-                  : isWide
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(child: primary),
-                        const SizedBox(width: AppSpacing.md),
-                        Expanded(child: secondary),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        primary,
-                        const SizedBox(height: AppSpacing.lg),
-                        secondary,
-                      ],
-                    ),
-            ),
-          ),
-          SliverToBoxAdapter(child: SizedBox(height: bottomContentPadding)),
+    final Widget content;
+    if (_firstSession) {
+      content = primary;
+    } else if (isWide) {
+      content = Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child: primary),
+          const SizedBox(width: SahneSpace.x4),
+          Expanded(child: secondary),
         ],
-      ),
+      );
+    } else {
+      content = Column(children: [primary, secondary]);
+    }
+
+    return SahneTabPage(
+      controller: widget.scrollController,
+      title: _greeting(context, ku),
+      subtitle: context.t(K.homeMotto),
+      stats: [_buildHeaderControls(context, ku)],
+      children: [content],
     );
   }
 
-  /// Ana sayfanın kompakt hesap başlığı.
-  ///
-  /// Üst alan bir oyun HUD'ı gibi davranmaz; selamlama, hesap kimliği ve
-  /// hızlı ayarlar aynı sakin yüzeyde ikincil önemde tutulur.
-  Widget _buildFullBleedHeader(BuildContext context, bool ku) {
-    return SafeArea(
-      bottom: false,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-        child: _buildCompactHeader(context, ku),
-      ),
-    );
-  }
-
-  Widget _buildCompactHeader(BuildContext context, bool ku) {
+  /// "Hoş geldin, Oyuncu!" — günün saatine göre selam + kısa ad.
+  String _greeting(BuildContext context, bool ku) {
     final isTest = isFlutterTestEnvironment;
     final hour = DateTime.now().hour;
     final String greetingKu;
@@ -715,136 +658,113 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // "ZanKurd" (ana ekran) ile "Lîstikvanê ZanKurd" (profil) gibi iki
     // ayrı kimlik oluşuyordu.
     final shortName = PlayerIdentity.resolveShortName(currentName, isKu: ku);
-    final greeting = context.t(K.homeGreeting, {
+    return context.t(K.homeGreeting, {
       'greeting': ku ? greetingKu : greetingTr,
       'name': shortName,
     });
+  }
 
-    return Padding(
+  /// Marka satırının sağı: seri, jeton (stat çipleri) ve dil düğmesi.
+  ///
+  /// Sayı sıfırken de yazılır: yalnız bir alev yeni gelene hiçbir şey
+  /// anlatmıyordu; "0 gün" bunun bir sayaç olduğunu ve oynadıkça
+  /// büyüyeceğini gösterir. Jeton çipi mağazaya götürür: mağazaya tek giriş
+  /// profil ekranının içindeydi, coin kazanan oyuncu onu nerede
+  /// harcayacağını bulamıyordu (2026-07-27 denetimi).
+  Widget _buildHeaderControls(BuildContext context, bool ku) {
+    return Wrap(
       key: const ValueKey('home-profile-header'),
-      padding: const EdgeInsets.fromLTRB(2, 8, 2, 2),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      greeting,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      // 2026-09-27: sahibi ana ekranı renksiz buldu; selamlama
-                      // 19/w700'dü ve başlık gibi değil bir alt satır gibi
-                      // ağırlık taşıyordu. Ekranın gördüğün ilk metni artık
-                      // gerçek bir başlık kadar iddialı.
-                      style: AppTypography.heading2.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontSize: 22,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: -0.3,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      context.t(K.homeMotto),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: AppTheme.textSubColor(context),
-                        height: 1.35,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              // 2026-09-27: sahibi ana ekranı renksiz buldu; avatar düz bir
-              // daireydi. Altın→turuncu halka iki marka rengini birleştirip
-              // avatarı küçük bir madalyon gibi öne çıkarır — kimliğin ilk
-              // göründüğü nokta artık boş değil.
-              Container(
-                padding: const EdgeInsets.all(2.5),
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    colors: [AppTheme.gold, AppTheme.brand],
-                  ),
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppTheme.bgOf(context),
-                  ),
-                  child: PlayerAvatar(
-                    radius: 20,
-                    displayName: PlayerIdentity.resolveName(
-                      currentName,
-                      isKu: ku,
-                    ),
-                    colorSeed: PlayerIdentity.resolveColorSeed(currentName),
-                  ),
-                ),
-              ),
-            ],
+      spacing: SahneSpace.x2,
+      runSpacing: SahneSpace.x1,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        _statTap(
+          label: context.t(K.dailyStreakDays, {'days': '$_streak'}),
+          onTap: () => _showStreakFreezeBottomSheet(context),
+          chip: SahneStatChip(
+            leading: const SahneGlyph(SahneGlyphKind.flame),
+            label: '$_streak ${context.t(K.streakDayUnit)}',
+            semanticLabel: context.t(K.dailyStreakDays, {'days': '$_streak'}),
           ),
-          const SizedBox(height: 12),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final metrics = Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Sayı sıfırken de yazılır: yalnız bir alev simgesi yeni
-                  // gelene hiçbir şey anlatmıyordu; "0" bunun bir sayaç
-                  // olduğunu ve oynadıkça büyüyeceğini gösterir.
-                  _buildHeaderBadge(
-                    AppIcons.fire,
-                    AppTheme.brand,
-                    '$_streak',
-                    semanticLabel: context.t(K.dailyStreakDays, {
-                      'days': '$_streak',
-                    }),
-                    onTap: () => _showStreakFreezeBottomSheet(context),
-                  ),
-                  const SizedBox(width: 8),
-                  _buildHeaderBadge(
-                    AppIcons.coins,
-                    AppTheme.gold,
-                    '$_coinBalance',
-                    semanticLabel:
-                        '${context.t(K.shop)}. $_coinBalance ${context.t(K.coinWord)}',
-                    onTap: () async {
-                      await Navigator.of(
-                        context,
-                      ).push(AppRoute.to(ShopScreen(repository: repo)));
-                      if (mounted) await _refreshCoins();
-                    },
-                  ),
-                ],
-              );
-              final controls = _buildHeaderQuickControls(context, ku);
-              if (constraints.maxWidth < 300) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Align(alignment: Alignment.centerLeft, child: metrics),
-                    const SizedBox(height: 8),
-                    Align(alignment: Alignment.centerRight, child: controls),
-                  ],
-                );
-              }
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [metrics, controls],
-              );
-            },
+        ),
+        _statTap(
+          label: '${context.t(K.shop)}. $_coinBalance ${context.t(K.coinWord)}',
+          onTap: () async {
+            await Navigator.of(
+              context,
+            ).push(AppRoute.to(ShopScreen(repository: repo)));
+            if (mounted) await _refreshCoins();
+          },
+          chip: SahneStatChip(
+            leading: const SahneGlyph(SahneGlyphKind.coin),
+            label: '$_coinBalance',
           ),
-        ],
+        ),
+        _buildLanguageToggle(context),
+      ],
+    );
+  }
+
+  /// Dokunulabilir stat çipi: görsel 36'lık çip, dokunma kutusu 48.
+  ///
+  /// `SahneStatChip`in kendi dokunma alanı 44'tür; uygulamanın
+  /// `accessibility_guideline_test`i (Android kılavuzu) 48'in altını
+  /// reddediyor. Çip burada yalnız GÖSTERİR; düğüm, söz ve dokunuş 48'lik
+  /// kutudadır (`ZkBackButton` ile aynı desen, 2026-09-29 ek kararı).
+  Widget _statTap({
+    required String label,
+    required VoidCallback onTap,
+    required Widget chip,
+  }) {
+    return Semantics(
+      container: true,
+      button: true,
+      label: label,
+      onTap: onTap,
+      excludeSemantics: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 48, minWidth: 48),
+          child: Center(widthFactor: 1, child: chip),
+        ),
+      ),
+    );
+  }
+
+  /// Dil düğmesi: iki dilli oyuncunun sık kullandığı tek araç.
+  ///
+  /// Seri ve jeton bir DURUMdur; dil bir ARAÇtır. Bu yüzden çip gibi dolgu
+  /// taşımaz — yalnız ikincil metinle "TR"/"KU" yazar; dokunma alanı
+  /// 48 × 48. Tema düğmesi 2026-09-27'de başlıktan kalktı: küçük boyda
+  /// ayar çarkına benziyordu; tema Ayarlar ekranında.
+  Widget _buildLanguageToggle(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final tooltip = context.t(K.language);
+    return Semantics(
+      button: true,
+      label: tooltip,
+      excludeSemantics: true,
+      onTap: context.langProvider.toggle,
+      child: Tooltip(
+        message: tooltip,
+        excludeFromSemantics: true,
+        child: SahneTappable(
+          key: const ValueKey('home-language-toggle'),
+          shape: SahneShape.m,
+          color: Colors.transparent,
+          onTap: context.langProvider.toggle,
+          child: SizedBox.square(
+            dimension: 48,
+            child: Center(
+              child: Text(
+                context.t(K.languageCode),
+                style: SahneType.captionStrong.copyWith(color: t.tx2),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -917,12 +837,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   void _showStreakFreezeBottomSheet(BuildContext context) {
     final isKu = context.isKu;
+    // Biçim temadan gelir (Perde, üstte L pah).
     showModalBottomSheet(
       context: context,
-      backgroundColor: AppTheme.surfaceOf(context),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
       builder: (ctx) {
         // Bilgilendirme sayfası değil, seriyi KORUMAK için gereken bilgi:
         // haftalık ritim, sonraki milestone ve freeze durumu tek yüzeyde.
@@ -930,7 +847,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         // hangi günleri kaçırdığını göremiyordu (2026-08-04).
         return SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.all(SahneSpace.x6),
             child: FutureBuilder<(List<StreakDayState>, StreakStore)>(
               future: () async {
                 final week = await _loadStreakWeek();
@@ -940,7 +857,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 40),
+                    padding: EdgeInsets.symmetric(vertical: SahneSpace.x8),
                     child: Center(child: CircularProgressIndicator()),
                   );
                 }
@@ -949,13 +866,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      Tr.forKu(K.gunlukSeriStreak, isKu),
-                      style: AppTypography.heading2.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
+                    Semantics(
+                      header: true,
+                      child: Text(
+                        Tr.forKu(K.gunlukSeriStreak, isKu),
+                        style: SahneType.headline.copyWith(
+                          color: SahneTokens.of(context).tx,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: SahneSpace.x4),
                     StreakPanel(
                       current: _streak,
                       days: week,
@@ -980,150 +900,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         );
       },
-    );
-  }
-
-  /// Başlık rozeti. [text] null ise yalnız ikon çizilir.
-  Widget _buildHeaderBadge(
-    IconData icon,
-    Color iconColor,
-    String? text, {
-    VoidCallback? onTap,
-    String? semanticLabel,
-  }) {
-    final isLight = AppTheme.isLight(context);
-    // 2026-09-27: sahibi ana ekranı renksiz buldu; rozet nötr bir kart
-    // (aynı kenarlık/dolgu her rozette) taşıyordu, seri ve jeton renginin
-    // hiçbiri rozetin kendisine sızmıyordu. Zemin artık kendi ikon rengiyle
-    // tonlanmış bir hap; her rozet kendi kimliğini taşır.
-    final badge = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: Color.alphaBlend(
-          iconColor.withValues(alpha: isLight ? 0.12 : 0.22),
-          AppTheme.surfaceColor(context),
-        ),
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(color: iconColor.withValues(alpha: 0.30)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: iconColor, size: 16),
-          if (text != null) ...[
-            const SizedBox(width: 5),
-            Text(
-              text,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w800,
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-    if (onTap == null) return badge;
-    // Coin rozeti mağazaya götürür. Mağazaya tek giriş profil ekranının
-    // içindeydi: coin kazanan oyuncu onu nerede harcayacağını bulamıyordu
-    // (2026-07-27 denetimi). Rozet zaten bakiyeyi gösterdiği için doğal
-    // giriş noktası burasıdır.
-    //
-    // `InkWell` değil `GestureDetector`: başlık gradyanı `Material`
-    // ağacının dışında çiziliyor ve InkWell orada "No Material widget
-    // found" ile düşüyordu. Dalga efekti bu rozette zaten görünmezdi.
-    return Semantics(
-      button: true,
-      label: semanticLabel,
-      excludeSemantics: true,
-      onTap: onTap,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        excludeFromSemantics: true,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-          child: Center(child: badge),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeaderQuickControls(BuildContext context, bool ku) {
-    final border = AppTheme.borderColor(context).withValues(alpha: 0.72);
-    final fill = AppTheme.surfaceHiColor(context);
-    final foreground = AppTheme.textSubColor(context);
-
-    Widget control({
-      required Key key,
-      required String tooltip,
-      required Widget child,
-      required VoidCallback onTap,
-      // 2026-09-25: dil ve tema düğmeleri de seri/jeton rozetleriyle aynı
-      // dolgu + kenarlık dilini konuşuyordu; başlıkta dört eşit ağırlıklı
-      // hap yanyana duruyor ve hiyerarşi kayboluyordu. Seri ve jeton bir
-      // DURUMdur (dokununca bir şey anlatırlar); dil ve tema birer ARAÇTIR.
-      // Araçlar yüzeysiz kaldı: dokunma alanı 48×48 olarak korunuyor,
-      // yalnız kutu çizgisi ve dolgusu kalktı. İşlev silinmedi.
-      bool quiet = false,
-    }) {
-      return Semantics(
-        button: true,
-        label: tooltip,
-        excludeSemantics: true,
-        onTap: onTap,
-        child: Tooltip(
-          message: tooltip,
-          child: InkWell(
-            key: key,
-            onTap: onTap,
-            excludeFromSemantics: true,
-            borderRadius: BorderRadius.circular(12),
-            child: Container(
-              width: 48,
-              height: 48,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: quiet ? Colors.transparent : fill,
-                borderRadius: BorderRadius.circular(12),
-                border: quiet
-                    ? Border.all(color: Colors.transparent)
-                    : Border.all(color: border),
-              ),
-              child: child,
-            ),
-          ),
-        ),
-      );
-    }
-
-    // Tema düğmesi 2026-09-27'de başlıktan kalktı: açık temada çizilen
-    // güneş simgesi küçük boyda ayar çarkına benziyordu ve yeni gelen onu
-    // "Ayarlar" sanıyordu. Tema Ayarlar ekranında duruyor; başlıkta yalnız
-    // iki dilli oyuncunun sık kullandığı dil düğmesi kaldı.
-    return Material(
-      type: MaterialType.transparency,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          control(
-            key: const ValueKey('home-language-toggle'),
-            tooltip: context.t(K.language),
-            onTap: context.langProvider.toggle,
-            quiet: true,
-            child: Text(
-              context.t(K.languageCode),
-              style: TextStyle(
-                color: foreground,
-                fontWeight: FontWeight.w800,
-                fontSize: 12,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 

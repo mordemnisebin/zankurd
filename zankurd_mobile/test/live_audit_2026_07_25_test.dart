@@ -1,3 +1,5 @@
+// 2026-09-29 Şahnê: görev kartının renkleri Şahnê belirteçlerinden
+// (Zimrût rol metni, ikincil metin) ölçülür; davranış bekçileri aynı.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +11,7 @@ import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/config/category_visibility.dart';
 import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
@@ -161,15 +164,15 @@ void main() {
           reason: 'Tam görev görünümü diğer ekranlarda panel olarak kalmalı.',
         );
 
+        // 2026-09-29 Şahnê: başlık ikonu Zimrût (öğrenme) rol metni.
         final headerIcon = tester.widget<Icon>(
           find.byIcon(AppIcons.circleCheck).first,
         );
         expect(
           headerIcon.color,
-          AppColors.readableAccent(
+          SahneTokens.of(
             tester.element(find.byIcon(AppIcons.circleCheck).first),
-            AppTheme.culturalBrandBg,
-          ),
+          ).learnTx,
         );
       },
     );
@@ -198,33 +201,21 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // 2026-09-29 Şahnê: tamamlanan görevin adı ikincil metin (üstü
+      // çizili), başlık ve ✓ ikonu Zimrût rol metni.
       final labelFinder = find.text('10 doğru cevap ver');
       final label = tester.widget<Text>(labelFinder);
-      expect(
-        label.style?.color,
-        AppTheme.textMutedColor(tester.element(labelFinder)),
-      );
+      final t = SahneTokens.of(tester.element(labelFinder));
+      expect(label.style?.color, t.tx2);
+      expect(label.style?.decoration, TextDecoration.lineThrough);
 
       final headerIcon = tester.widget<Icon>(
         find.byIcon(AppIcons.circleCheck).first,
       );
-      expect(
-        headerIcon.color,
-        AppColors.readableAccent(
-          tester.element(find.byIcon(AppIcons.circleCheck).first),
-          AppTheme.culturalBrandBg,
-        ),
-      );
+      expect(headerIcon.color, t.learnTx);
 
-      final doneIconFinder = find.byIcon(AppIcons.check);
-      final doneIcon = tester.widget<Icon>(doneIconFinder);
-      expect(
-        doneIcon.color,
-        AppColors.readableAccent(
-          tester.element(doneIconFinder),
-          AppTheme.culturalBrandBg,
-        ),
-      );
+      final doneIcon = tester.widget<Icon>(find.byIcon(AppIcons.check));
+      expect(doneIcon.color, t.learnTx);
     });
   });
 

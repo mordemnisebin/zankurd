@@ -7,7 +7,7 @@ import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
-import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -29,17 +29,16 @@ void main() {
     );
     for (
       var i = 0;
-      i < 40 && find.byType(ScreenSectionHeading).evaluate().isEmpty;
+      i < 40 && find.byType(SahneTabPage).evaluate().isEmpty;
       i++
     ) {
       await tester.pump(const Duration(milliseconds: 50));
     }
 
-    expect(find.byType(ScreenSectionHeading), findsOneWidget);
-    final heading = tester.widget<ScreenSectionHeading>(
-      find.byType(ScreenSectionHeading),
-    );
-    expect(heading.title, 'Profil');
+    // 2026-09-29 Şahnê: sekme sayfası A iskeletidir (`SahneTabPage`).
+    expect(find.byType(SahneTabPage), findsOneWidget);
+    final page = tester.widget<SahneTabPage>(find.byType(SahneTabPage));
+    expect(page.title, 'Profil');
     expect(tester.takeException(), isNull);
   });
 
