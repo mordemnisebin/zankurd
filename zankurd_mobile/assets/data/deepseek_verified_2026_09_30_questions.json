@@ -10438,66 +10438,6 @@
     "explanationTr": "Mem ile Zîn hikayesinde aşk trajediyle sona erer; Mem ve Zîn, olumsuz kader ve Beko'nun hileleri yüzünden ölürler."
   },
   {
-    "id": "ds_muzik_0228",
-    "category": "Muzîk",
-    "difficulty": 5,
-    "prompt": "Di kevneşopiya dengbêjiyê de cudahiya sereke ya di navbera \"kilam\" û \"lawik\" de ji aliyê mijar û rîtmê ve çi ye?",
-    "promptTr": "Dengbêjlik geleneğindeki \"kilam\" ile \"lawik\" arasındaki tür ve içerik farkı nedir?",
-    "answers": [
-      "Kilam tenê bi tembûrê tê gotin; lawik tenê bi def û zirneyê tê lêdan",
-      "Kilam tenê ji bo zarokan e; lawik tenê di şîn û şînan de tê gotin",
-      "Kilam bi zimanê erebî ye; lawik tenê bi zaravayê goranî tê gotin",
-      "Kilam bîra dîrokî û şeran bi şêwaza resîtatîf vedibêje; lawik stranên lîrîk ên evînê ne"
-    ],
-    "answersTr": [
-      "Kilam sadece bağlama ile söylenir; lawik yalnızca davul zurna ile çalınır",
-      "Kilam sadece çocuk masalları içindir; lawik yalnızca cenazelerde okunur",
-      "Kilam Arapça dilindedir; lawik ise yalnızca Goranî lehçesinde söylenir",
-      "Kilam tarihi ve epik olayları serbest ritimle anlatır; lawik aşk ve lirizmi işler"
-    ],
-    "correctAnswer": "Kilam bîra dîrokî û şeran bi şêwaza resîtatîf vedibêje; lawik stranên lîrîk ên evînê ne",
-    "correctAnswerTr": "Kilam tarihi ve epik olayları serbest ritimle anlatır; lawik aşk ve lirizmi işler",
-    "explanation": "Kilam bîra dîrokî û qehremaniyan bi awayekî resîtatîf vedibêje; lawik û heyranok stranên lîrîk ên li ser evînê ne.",
-    "explanationKu": "Kilam bîra dîrokî û qehremaniyan bi awayekî resîtatîf vedibêje; lawik û heyranok stranên lîrîk ên li ser evînê ne.",
-    "explanationTr": "Kilamlar tarihsel ve epik olayları serbest vezin ve anlatıyla aktarırken, lawik ve heyranoklar lirik aşk ve duygu şarkılarıdır.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_muzik_0231",
-    "category": "Muzîk",
-    "difficulty": 5,
-    "prompt": "Di mûzîka kurdî de amûra \"şimşal\"ê (bilûr) li gorî \"duduk\" an \"mey\"ê ji aliyê pêkhateya fîzîkî ve çawa tê cudakirin?",
-    "promptTr": "Kürt müziğinde \"şimşal\" (kaval) enstrümanı yapısal olarak \"mey / duduk\"ten nasıl ayrılır?",
-    "answers": [
-      "Şimşal ji lûleya metal an hestî ya bê zimanik e; mey xwedî qemîşekî duçipî yê fireh e",
-      "Şimşal bi têlên hevrîşimê tê lêdan; mey ji çermê ajalan tê çêkirin",
-      "Şimşal tenê di mûzîka dêrê de heye; mey amûra şerê kevnar e",
-      "Şimşal amûreke bi bişkok e; mey mîna piyanoyê bi klavyeyê dixebite"
-    ],
-    "answersTr": [
-      "Şimşal kamışsız açık metal/kemik borudur; mey ise çift kamışlı geniş bir ağızlığa sahiptir",
-      "Şimşal ipek tellerle çalınır; mey ise hayvan derisinden gerilerek yapılır",
-      "Şimşal sadece kilise müziğinde bulunur; mey ise eski savaşlarda kullanılan bir silahtır",
-      "Şimşal tuşlu bir enstrümandır; mey ise piyano gibi klavyeyle çalışır"
-    ],
-    "correctAnswer": "Şimşal ji lûleya metal an hestî ya bê zimanik e; mey xwedî qemîşekî duçipî yê fireh e",
-    "correctAnswerTr": "Şimşal kamışsız açık metal/kemik borudur; mey ise çift kamışlı geniş bir ağızlığa sahiptir",
-    "explanation": "Şimşal bê qemîş e û ji hestî an metalê tê çêkirin; mey xwedî qemîşekî duçipî ye.",
-    "explanationKu": "Şimşal bê qemîş e û ji hestî an metalê tê çêkirin; mey xwedî qemîşekî duçipî ye.",
-    "explanationTr": "Şimşal dilsiz ve kamışsız doğrudan üflenen bir borudur; mey ise çift kamışlı yapısıyla karakteristik sesini üretir.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
     "id": "ds_muzik_0234",
     "category": "Muzîk",
     "difficulty": 4,
@@ -10522,36 +10462,8 @@
     "explanationTr": "Qewl, Êzdî inancının kutsal dini ilahileridir ve ayinlerde def ve şibab (kaval) eşliğinde okunur.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_muzik_0235",
-    "category": "Muzîk",
-    "difficulty": 4,
-    "prompt": "Amûra \"Def\" (Erbene) di ayînên terîqetên Qadirî û Rifaî de çima zincîrên biçûk (xilxal) li hundirê xwe digire?",
-    "promptTr": "Tasavvufi ayinlerde kullanılan erbane/def çalgısının içindeki çıngırak ve halkaların işlevi nedir?",
-    "answers": [
-      "Ji bo ku di dema lêdanê de dengê şirîn û şerqînekê bide û atmosferê zindî bike",
-      "Ji bo ku giraniya amûrê kêm bike û girtina wê hêsantir bibe",
-      "Ji bo ku çermê defê ji şilbûnê û ziwabûnê biparêze",
-      "Ji bo ku dengê defê kêm bike da ku kes nebihîze"
-    ],
-    "answersTr": [
-      "Vuruş anında ritmik çıngırtı sesi üreterek zikir atmosferini yoğunlaştırmak",
-      "Enstrümanın ağırlığını azaltıp elde tutulmasını kolaylaştırmak",
-      "Def derisini nemden ve kurumaktan korumak",
-      "Defin sesini tamamen keserek duyulmasını engellemek"
-    ],
-    "correctAnswer": "Ji bo ku di dema lêdanê de dengê şirîn û şerqînekê bide û atmosferê zindî bike",
-    "correctAnswerTr": "Vuruş anında ritmik çıngırtı sesi üreterek zikir atmosferini yoğunlaştırmak",
-    "explanation": "Xilxalên erbeneyê di zikrê de dengekî taybet derdixin û ahenga rîtmê zêde dikin.",
-    "explanationKu": "Xilxalên erbeneyê di zikrê de dengekî taybet derdixin û ahenga rîtmê zêde dikin.",
-    "explanationTr": "Erbanenin içindeki metal halkalar zikir ritmine çıngırtı ekleyerek manevi atmosferi güçlendirir.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.iranicaonline.org/articles/qawl/",
+      "sourceTitle": "QAWL - Encyclopaedia Iranica",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -10582,6 +10494,8 @@
     "explanationTr": "Kürt müziğindeki ses dizileri koma (mikrotonal) aralıklar içerir ve Batı tampere sistemine tam oturmaz.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://arxiv.org/abs/2602.20744",
+      "sourceTitle": "Voices of the Mountains: Deep Learning-Based Vocal Error Detection System for Kurdish Maqams",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -10612,6 +10526,8 @@
     "explanationTr": "Egîdê Cimo (\"Mîrê Bilûrê\") Erivan Radyosu'nda onlarca yıl bilûr ve mey çaldı. Karapêtê Xaço ise çalgıcı değil, dengbêjdir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://bianet.org/yazi/mire-bilure-egide-cimo-205075",
+      "sourceTitle": "\"Mîrê Bilûrê\": Egîdê Cimo",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -10642,96 +10558,8 @@
     "explanationTr": "Aram Tîgran ud çalarak söylediği yumuşak vokaliyle Kürtçe şarkılara farklı ve zengin bir makam boyutu kazandırmıştır.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_muzik_0246",
-    "category": "Muzîk",
-    "difficulty": 4,
-    "prompt": "Di nav cureyên strana kurdî de \"Payîzok\" di kîjan demsalê û li ser kîjan mijarê tê gotin?",
-    "promptTr": "Kürt halk edebiyatında \"Payîzok\" adı verilen türküler hangi mevsimde ve hangi temayla söylenir?",
-    "answers": [
-      "Di biharê de di dema Newrozê de tenê ji bo govendên lezgîn",
-      "Di payîzê de dema vegera ji zozanan li ser xatirxwestin û xemgîniyê",
-      "Di havînê de di dema çinîna genim de wekî strana şahiyê",
-      "Di zivistanê de tenê di dema nêçîra berfê de bi qêrîn"
-    ],
-    "answersTr": [
-      "İlkbaharda Newroz bayramında yalnızca hızlı halaylar eşliğinde",
-      "Sonbaharda yayladan köye dönüşte ayrılık, hüzün ve veda temasıyla",
-      "Yazın buğday hasadı sırasında yalnızca neşe ve eğlence amacıyla",
-      "Kışın karlı dağlarda avlanma sırasında yön bulma haykırışıyla"
-    ],
-    "correctAnswer": "Di payîzê de dema vegera ji zozanan li ser xatirxwestin û xemgîniyê",
-    "correctAnswerTr": "Sonbaharda yayladan köye dönüşte ayrılık, hüzün ve veda temasıyla",
-    "explanation": "Payîzok dema ku koçer ji zozanan dadikevin li ser xatirxwestin û sarbûna hewayê têne gotin.",
-    "explanationKu": "Payîzok dema ku koçer ji zozanan dadikevin li ser xatirxwestin û sarbûna hewayê têne gotin.",
-    "explanationTr": "Payîzok, sonbaharda yaylalardan ayrılış hüznünü ve doğanın sararmasını anlatan sonbahar şarkılarıdır.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_muzik_0252",
-    "category": "Muzîk",
-    "difficulty": 4,
-    "prompt": "Kîjan ji van rêzbûnan serdema dengbêjên navdar ên Serhedê ji ya herî kevn ber bi ya nûtir rast nîşan dide?",
-    "promptTr": "Serhed ekolünün büyük dengbêjlerinin kronolojik kuşak sıralaması hangisinde doğrudur?",
-    "answers": [
-      "Evdalê Zeynikê -> Reso -> Şakiro",
-      "Şakiro -> Evdalê Zeynikê -> Reso",
-      "Reso -> Şakiro -> Evdalê Zeynikê",
-      "Şakiro -> Reso -> Evdalê Zeynikê"
-    ],
-    "answersTr": [
-      "Evdalê Zeynikê -> Reso -> Şakiro",
-      "Şakiro -> Evdalê Zeynikê -> Reso",
-      "Reso -> Şakiro -> Evdalê Zeynikê",
-      "Şakiro -> Reso -> Evdalê Zeynikê"
-    ],
-    "correctAnswer": "Evdalê Zeynikê -> Reso -> Şakiro",
-    "correctAnswerTr": "Evdalê Zeynikê -> Reso -> Şakiro",
-    "explanation": "Evdalê Zeynikê di sedsala 19an de, şagirtê wî Reso di sedsala 20an de û Şakiro jî şagirtê Reso bû.",
-    "explanationKu": "Evdalê Zeynikê di sedsala 19an de, şagirtê wî Reso di sedsala 20an de û Şakiro jî şagirtê Reso bû.",
-    "explanationTr": "Evdalê Zeynikê ekolün piri, Reso onun takipçisi, Şakiro ise Reso'nun çırağı olarak bu silsileyi sürdürmüştür.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_muzik_0253",
-    "category": "Muzîk",
-    "difficulty": 5,
-    "prompt": "Di destan û kilamên Evdalê Zeynikê de motîfa \"Quling\" (Turna) çi sembolîze dike?",
-    "promptTr": "Evdalê Zeynikê'nin kilamlarında sıkça seslendiği \"Quling\" (Turna) motifi neyi simgeler?",
-    "answers": [
-      "Tenê nêçîra goşt di dema birçîbûnê de li deşta Rewanê",
-      "Şerê di navbera împaratoriyan de û qedexeya bazirganiyê",
-      "Peyamnêriya di navbera warên dûr de, azadî û xemgîniya dilê dengbêj",
-      "Dewlemendiya feodalîzmê û zêrên mîran ên li qesran"
-    ],
-    "answersTr": [
-      "Rewan ovasında kıtlık zamanı avlanan bir av hayvanı etini",
-      "İmparatorluklar arasındaki sınır savaşlarını ve ticaret ambargosunu",
-      "Uzak diyarlar arasında haber taşıyıcılığı, özgürlük ve dengbêjin içsel hüznünü",
-      "Feodal beylerin saraylarındaki altın ve mücevher zenginliğini"
-    ],
-    "correctAnswer": "Peyamnêriya di navbera warên dûr de, azadî û xemgîniya dilê dengbêj",
-    "correctAnswerTr": "Uzak diyarlar arasında haber taşıyıcılığı, özgürlük ve dengbêjin içsel hüznünü",
-    "explanation": "Quling di kilamên Evdal de sembola gihandina silavan bo warên dûr û bêçaretiya çavên korbûyî ye.",
-    "explanationKu": "Quling di kilamên Evdal de sembola gihandina silavan bo warên dûr û bêçaretiya çavên korbûyî ye.",
-    "explanationTr": "Evdalê Zeynikê körlük ve yalnızlık döneminde turnayı (quling) dert ortağı ve uzaklara selam götüren bir sırdaş bilmiştir.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Aram_Tigran",
+      "sourceTitle": "Aram Tigran",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -10762,6 +10590,8 @@
     "explanationTr": "Umut filmi, Yeşilçam'ın pembe melodram kalıplarını kırarak Türkiye ve Ortadoğu sinemasında gerçekçi sinemanın mihenk taşı olmuştur.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://dergipark.org.tr/tr/pub/inifedergi/article/1859670",
+      "sourceTitle": "Türk Sinemasında Politik Gerçekçiliğin Kurucu Bir Eşiği Olarak Umut (1970)",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -10792,6 +10622,8 @@
     "explanationTr": "Yılmaz Güney İmralı cezaevinden sahne sahne talimat vererek Şerif Gören'e çektirmiş, kurgusunu İsviçre ve Fransa'da tamamlamıştır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.festival-cannes.com/en/2017/yol-the-full-version-in-cannes-classics-the-birth-of-the-palme-dor-1982/",
+      "sourceTitle": "Yol - The full version in Cannes Classics, the birth of the Palme d’or 1982",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -10822,6 +10654,8 @@
     "explanationTr": "Hiner Saleem, sınır kasabasındaki feodal ağalık ile hukuk arayışını çağdaş bir Kürt Western estetiğiyle beyaz perdeye taşımıştır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.lemonde.fr/culture/article/2014/04/08/my-sweet-pepper-land-un-western-aux-portes-du-reel_4396859_3246.html",
+      "sourceTitle": "\"My Sweet Pepper Land\" : un western aux portes du réel",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -10852,6 +10686,8 @@
     "explanationTr": "Bahoz, 90'lı yıllarda taşradan metropol üniversitelerine gelen gençlerin kimlik çatışması ve politik bilinçlenme sürecini anlatır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://dergipark.org.tr/tr/pub/erciyesiletisim/article/472932",
+      "sourceTitle": "Milliyetçilik Bağlamında Bahoz/Fırtına Filminin Söylem Analizi",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -10882,36 +10718,8 @@
     "explanationTr": "Jîn, savaşın vahşetinden kaçan genç bir kızın doğanın kucağında bulduğu masumiyeti masalsı bir dille işler.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0260",
-    "category": "Sînema",
-    "difficulty": 5,
-    "prompt": "Rêzbûna dîrokî ya derketina van fîlmên girîng ên sînemaya kurdî di kîjan vebijêrkê de rast e?",
-    "promptTr": "Aşağıdaki önemli sinema yapımlarının vizyon ve yapım yılı sıralaması hangisinde kronolojik olarak doğrudur?",
-    "answers": [
-      "Min Dît (2009) -> Yol (1982) -> Cîran (2021) -> Bêkes (2012)",
-      "Yol (1982) -> Min Dît (2009) -> Bêkes (2012) -> Cîran (2021)",
-      "Bêkes (2012) -> Yol (1982) -> Min Dît (2009) -> Cîran (2021)",
-      "Yol (1982) -> Cîran (2021) -> Min Dît (2009) -> Bêkes (2012)"
-    ],
-    "answersTr": [
-      "Min Dît (2009) -> Yol (1982) -> Cîran (2021) -> Bêkes (2012)",
-      "Yol (1982) -> Min Dît (2009) -> Bêkes (2012) -> Cîran (2021)",
-      "Bêkes (2012) -> Yol (1982) -> Min Dît (2009) -> Cîran (2021)",
-      "Yol (1982) -> Cîran (2021) -> Min Dît (2009) -> Bêkes (2012)"
-    ],
-    "correctAnswer": "Yol (1982) -> Min Dît (2009) -> Bêkes (2012) -> Cîran (2021)",
-    "correctAnswerTr": "Yol (1982) -> Min Dît (2009) -> Bêkes (2012) -> Cîran (2021)",
-    "explanation": "Yol di 1982an de, Min Dît di 2009an de, Bêkes di 2012an de û Cîran di 2021ê de derketine.",
-    "explanationKu": "Yol di 1982an de, Min Dît di 2009an de, Bêkes di 2012an de û Cîran di 2021ê de derketine.",
-    "explanationTr": "Yol (1982), Min Dît (2009), Bêkes (2012) ve Cîran (2021) şeklinde tarihsel bir gelişim çizgisi izler.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://dergipark.org.tr/tr/pub/inifedergi/article/1736898",
+      "sourceTitle": "Yakın Dönem Türk Sinemasında İnsan-Hayvan İlişkisinin Temsiline Eleştirel Bakış: \"Sivas\" ve \"Jîn\" Film Örnekleri",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -10942,6 +10750,8 @@
     "explanationTr": "Belgesel, 12 Eylül askeri darbesi sonrası Diyarbakır Cezaevi'nde yaşanan insanlık dışı uygulamaları doğrudan tanıkların ağzından belgeler.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://iletisim.hacettepe.edu.tr/pdata/index.php?page_id=149&post_id=76&title=iletisim-fakultesi-belgesel-haftasi-bahar-2011-etkinligi-gerceklestirildi",
+      "sourceTitle": "İletişim Fakültesi Belgesel Haftası Bahar 2011 Etkinliği",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -10972,36 +10782,8 @@
     "explanationTr": "Film, Enfal katliamı hakkında film çekmek isteyen iki çocukluk arkadaşının bürokrasi ve toplumsal tabularla mücadelesini anlatır.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0263",
-    "category": "Sînema",
-    "difficulty": 4,
-    "prompt": "Festîvala Navneteweyî ya Fîlman a Duhokê (Duhok IFF) çi roleke sereke di sînemaya kurdî de dilîze?",
-    "promptTr": "Uluslararası Duhok Film Festivali'nin (Duhok IFF) Kürt sineması sektöründeki ana işlevi nedir?",
-    "answers": [
-      "Tenê nîşandana fîlmên anîmasyonê yên ku ji bo televîzyonê hatine çêkirin",
-      "Firotina kamerayên kevn ji bo kanalên nûçeyan",
-      "Qedexekirina lîstikvanên biyanî ji bo fîlmên herêmî",
-      "Komkirina sînemagerên her çar perçeyan û diyasporayê û piştgirîkirina projeyên nû"
-    ],
-    "answersTr": [
-      "Yalnızca televizyon kanallarında yayınlanan çizgi filmleri ödüllendirmek",
-      "Haber kanallarına ikinci el stüdyo ve kamera ekipmanı temin etmek",
-      "Bölgedeki bağımsız filmlerde yabancı oyuncu ve yönetmenleri yasaklamak",
-      "Dört parça ve diasporadaki Kürt sinemacıları dünya sinemasıyla buluşturup ortak yapımları fonlamak"
-    ],
-    "correctAnswer": "Komkirina sînemagerên her çar perçeyan û diyasporayê û piştgirîkirina projeyên nû",
-    "correctAnswerTr": "Dört parça ve diasporadaki Kürt sinemacıları dünya sinemasıyla buluşturup ortak yapımları fonlamak",
-    "explanation": "Festîvala Duhokê sînemagerên kurd û yên cîhanê tîne cem hev û dibe pira hevberhemanînê.",
-    "explanationKu": "Festîvala Duhokê sînemagerên kurd û yên cîhanê tîne cem hev û dibe pira hevberhemanînê.",
-    "explanationTr": "Duhok Film Festivali, uluslararası standartlarda yarışma ve ortak yapım marketiyle Kürt sinemasının en önemli buluşma merkezidir.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Memories_on_Stone",
+      "sourceTitle": "Memories on Stone",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11032,66 +10814,8 @@
     "explanationTr": "Film, lüks toplu konut şantiyelerinde çalışan ve ölümcül hastalığa yakalanan inşaat işçisi İbrahim'in çaresizliğini anlatır.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0270",
-    "category": "Sînema",
-    "difficulty": 5,
-    "prompt": "Di gelek fîlmên sînemaya kurdî de bikaranîna dîmenên \"çiyayên asê û rêyên berfê\" ji aliyê zimanê sînemayê ve çi îfade dike?",
-    "promptTr": "Kürt sinemasında sarp karlı dağlar ve geçitler sinematografik bir mekan olarak neyi simgeler?",
-    "answers": [
-      "Hem wekî sitargeha parastinê hem jî wekî astengiya herî giran a fîzîkî û sînoran",
-      "Tenê wekî reklamkirina werzişa skiyê ji bo tûrîzma zivistanê",
-      "Wekî qada çêkirina kargehên mezin ên tekstîlê li serê çiya",
-      "Ji bo nîşandana rêyên trênê yên lezgîn di navbera bajaran de"
-    ],
-    "answersTr": [
-      "Hem koruyucu ve sığınılan bir kalkanı hem de aşılması gereken çetin sınır engelini",
-      "Bölgede kış turizmini ve kayak spor tesislerini tanıtma amacını",
-      "Dağ doruklarında kurulacak modern tekstil fabrikalarını göstermeyi",
-      "Şehirler arasında çalışan yüksek hızlı tren hatlarının güzergahını"
-    ],
-    "correctAnswer": "Hem wekî sitargeha parastinê hem jî wekî astengiya herî giran a fîzîkî û sînoran",
-    "correctAnswerTr": "Hem koruyucu ve sığınılan bir kalkanı hem de aşılması gereken çetin sınır engelini",
-    "explanation": "Çiya di sînemaya kurdî de hem penageh e hem jî mekanê zehmetî û derbaskirina sînoran e.",
-    "explanationKu": "Çiya di sînemaya kurdî de hem penageh e hem jî mekanê zehmetî û derbaskirina sînoran e.",
-    "explanationTr": "Dağ motifi hem tarihsel bir sığınak hem de kaçakçılık ve göç yollarındaki ölümcül fiziksel engelleri temsil eder.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0272",
-    "category": "Sînema",
-    "difficulty": 5,
-    "prompt": "Bikaranîna \"bêdengiyê\" (silence) di fîlmên sînemagerên kurd de çima wekî amûreke xurt a zimanê fîlmê tê dîtin?",
-    "promptTr": "Kürt yönetmenlerin filmlerinde uzun sessizlik anlarını dramatik bir araç olarak kullanmalarının nedeni nedir?",
-    "answers": [
-      "Dema ku ziman û peyv qedexe bin, bêdengî dibe qîrîna herî xurt a hest û êşê",
-      "Ji ber ku mîkrofonên fîlmçêkirinê di wan deman de têrê nedikirin",
-      "Ji ber ku lîstikvanan zimanê hev fêm nedikirin di dema kişandinê de",
-      "Ji bo kêmkirina lêçûna fîlmê di qada tomarkirina deng de"
-    ],
-    "answersTr": [
-      "Dilin ve sözün yasaklandığı ortamlarda sessizliğin en güçlü çığlık ve anlatım aracına dönüşmesi",
-      "Setteki mikrofon ve ses kayıt cihazlarının teknik açıdan yetersiz olması",
-      "Oyuncuların çekim sırasında birbirlerinin lehçelerini hiç anlamaması",
-      "Ses tasarımcılarına ödenecek stüdyo bütçesini kısmak amacıyla"
-    ],
-    "correctAnswer": "Dema ku ziman û peyv qedexe bin, bêdengî dibe qîrîna herî xurt a hest û êşê",
-    "correctAnswerTr": "Dilin ve sözün yasaklandığı ortamlarda sessizliğin en güçlü çığlık ve anlatım aracına dönüşmesi",
-    "explanation": "Bêdengî di sînemayê de ciyê peyvên ku nayên gotin digire û kûraniya trawmayê nîşan dide.",
-    "explanationKu": "Bêdengî di sînemayê de ciyê peyvên ku nayên gotin digire û kûraniya trawmayê nîşan dide.",
-    "explanationTr": "Baskılanmış dillerde sessizlik bir eksiklik değil; konuşulamayanların ve travmanın sinematik bir manifestosudur.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.narfilm.com/en/my-father-s-wings",
+      "sourceTitle": "My Father's Wings",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11122,156 +10846,8 @@
     "explanationTr": "Yılmaz Güney Yeşilçam yıldızlığından Umut ile gerçekçi sinemaya adım atmış, Sürü ve Yol ile dünya sineması zirvesine çıkmıştır.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0276",
-    "category": "Sînema",
-    "difficulty": 5,
-    "prompt": "Mijara sereke ya ku derhênerên jin ên kurd (mînak: Bêrîvan Bînevşa, Özlem Yaşar) tînin rojeva sînemayê çi ye?",
-    "promptTr": "Kürt kadın yönetmenlerin (Bêrîvan Bînevşa, Özlem Yaşar) sinema anlatılarında öne çıkardığı temel eksen nedir?",
-    "answers": [
-      "Têkoşîna jinê ya li dijî paşverûtiya feodal û rola pêşeng a jinê ya di guhertina civakê de",
-      "Tenê şîretên çêkirina xwarinên gelerî di bernameyên televîzyonê de",
-      "Bazirganiya kincên modayê û pêşbaziya mankeniyê li bajarên cîhanê",
-      "Dîroka şerên kevnar ên ku jin bi tevahî jê hatine derxistin"
-    ],
-    "answersTr": [
-      "Feodal baskılara karşı kadının özgürleşme mücadelesi ve toplumsal dönüşümdeki öncü rolü",
-      "Televizyon programlarında yalnızca geleneksel yemek tarifleri",
-      "Dünya metropollerinde moda ticareti ve mankenlik rekabeti",
-      "Kadınların tamamen dışlandığı eski savaş tarihinin anlatımı"
-    ],
-    "correctAnswer": "Têkoşîna jinê ya li dijî paşverûtiya feodal û rola pêşeng a jinê ya di guhertina civakê de",
-    "correctAnswerTr": "Feodal baskılara karşı kadının özgürleşme mücadelesi ve toplumsal dönüşümdeki öncü rolü",
-    "explanation": "Derhênerên jin nasnameya jinê û rola wan a çalak di şoreş û civakê de tînin ser ekranê.",
-    "explanationKu": "Derhênerên jin nasnameya jinê û rola wan a çalak di şoreş û civakê de tînin ser ekranê.",
-    "explanationTr": "Kürt kadın sinemacılar hem eril tahakküme karşı kadın direnişini hem de savaş ve barıştaki dönüştürücü gücü merkeze alırlar.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0280",
-    "category": "Sînema",
-    "difficulty": 5,
-    "prompt": "Di dîroka bajarên Kurdistanê de (wekî Amed, Hewlêr, Silêmanî) salên 1960 û 70î sînema çi fonksiyonek dilîst?",
-    "promptTr": "1960'lı ve 70'li yıllarda Diyarbakır, Erbil ve Süleymaniye gibi şehirlerde sinema salonlarının işlevi neydi?",
-    "answers": [
-      "Qada sereke ya hevdîtina civakî, çandî û naskirina sînemaya cîhanê",
-      "Tenê baregeheke leşkerî ya ji bo perwerdeya efseran",
-      "Bazarên sergirtî yên firotina genim û arvan",
-      "Nexweşxaneyên taybet ên ji bo dermankirina nexweşiyan"
-    ],
-    "answersTr": [
-      "Şehir halkının sosyalleştiği, entelektüel buluşmaların ve dünya sinemasının izlendiği ana kamusal alan",
-      "Yalnızca askeri garnizon subaylarının eğitildiği kapalı askeri karargah",
-      "Köylülerin buğday ve un çuvallarını depoladığı kapalı toptancı hali",
-      "Salgın hastalıkların tedavi edildiği karantina ve sağlık merkezleri"
-    ],
-    "correctAnswer": "Qada sereke ya hevdîtina civakî, çandî û naskirina sînemaya cîhanê",
-    "correctAnswerTr": "Şehir halkının sosyalleştiği, entelektüel buluşmaların ve dünya sinemasının izlendiği ana kamusal alan",
-    "explanation": "Salonên sînemayê di wan salan de navendên zindî yên çand û ronakbîriya bajaran bûn.",
-    "explanationKu": "Salonên sînemayê di wan salan de navendên zindî yên çand û ronakbîriya bajaran bûn.",
-    "explanationTr": "Yazlık ve kışlık sinema salonları, o dönemde şehirlerin en canlı kültürel nefes alma ve modernleşme mekanlarıydı.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0281",
-    "category": "Sînema",
-    "difficulty": 4,
-    "prompt": "Di fîlma \"Gava Dibe Tarî\" an belgefîlmên li ser zarokên kolanê çi rastî tê ragihandin?",
-    "promptTr": "Diyarbakır sokak çocuklarını konu alan belgesel ve kurmaca filmlerde işlenen temel sosyolojik olgu nedir?",
-    "answers": [
-      "Pêşketina zanistî ya zarokan di dibistanên taybet ên teknolojiyê de",
-      "Bandora kûr a koçberiya neçarî û zextên aborî li ser zaroktiya li bajaran",
-      "Gera havînê ya zarokan li peravên deryayê yên Ewropayê",
-      "Fêrbûna zimanê latînî ji bo xwendina pirtûkên kevnar"
-    ],
-    "answersTr": [
-      "Çocukların özel teknoloji kolejlerinde üstün başarı gösterip yazılım üretmesi",
-      "Zorunlu köy boşaltmaları sonucu kente göç eden ailelerin çocuklarının yaşadığı travma ve sokak yaşamı",
-      "Yaz aylarında Avrupa sahillerinde yelkencilik eğitimi alan çocukların kampı",
-      "Tarihi el yazmalarını okumak için çocuklara verilen eski Latince dil dersleri"
-    ],
-    "correctAnswer": "Bandora kûr a koçberiya neçarî û zextên aborî li ser zaroktiya li bajaran",
-    "correctAnswerTr": "Zorunlu köy boşaltmaları sonucu kente göç eden ailelerin çocuklarının yaşadığı travma ve sokak yaşamı",
-    "explanation": "Zarokên ku bi koçberiyê hatine bajêr di kolanan de li hemberî xizaniyê têdikoşin.",
-    "explanationKu": "Zarokên ku bi koçberiyê hatine bajêr di kolanan de li hemberî xizaniyê têdikoşin.",
-    "explanationTr": "90'lardaki zorunlu göç dalgası, kent varoşlarında mendil satan, ayakkabı boyayan çocukların dramını doğurmuştur.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0283",
-    "category": "Sînema",
-    "difficulty": 4,
-    "prompt": "Sînemaya serbixwe ya kurdî ya salên 2000î bi piranî li ser kîjan platformên belavkirinê jiyaye?",
-    "promptTr": "2000'li yıllarda bağımsız Kürt sinemasının seyirciyle buluştuğu ana dağıtım ve gösterim alanları hangileriydi?",
-    "answers": [
-      "Kanalên fermî yên televîzyonên dewletê yên bi budçeyên mezin",
-      "Festîvalên navneteweyî, hefteyên fîlman ên serbixwe û qadên çandî",
-      "Rêxistinên bazirganî yên firotina vîdyoyan li balafirgehan",
-      "Tenê dikanên firotina pirtûkan li gundên biçûk"
-    ],
-    "answersTr": [
-      "Büyük bütçeli ana akım devlet televizyonlarının resmi prime-time kuşakları",
-      "Uluslararası film festivalleri, bağımsız gösterimler ve yerel kültür merkezleri",
-      "Havaalanlarında lüks turistlere satış yapan ticari video stantları",
-      "Küçük köylerde açılan yerel kırtasiye ve bakkal dükkanları"
-    ],
-    "correctAnswer": "Festîvalên navneteweyî, hefteyên fîlman ên serbixwe û qadên çandî",
-    "correctAnswerTr": "Uluslararası film festivalleri, bağımsız gösterimler ve yerel kültür merkezleri",
-    "explanation": "Ji ber nebûna sîstema sînemayên fermî, fîlmên kurdî bi rêya festîvalan li cîhanê belav bûn.",
-    "explanationKu": "Ji ber nebûna sîstema sînemayên fermî, fîlmên kurdî bi rêya festîvalan li cîhanê belav bûn.",
-    "explanationTr": "Dağıtım tekelleri nedeniyle vizyon şansı bulamayan filmler festivaller ve bağımsız gösterimlerle izleyiciye ulaşmıştır.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0285",
-    "category": "Sînema",
-    "difficulty": 4,
-    "prompt": "Di sînemaya kurdî de fîlmên ku li ser gundên Êzdiyan hatine çêkirin bi piranî kîjan mijarê radixin ber çavan?",
-    "promptTr": "Êzdî toplumunu konu alan Kürt sineması yapımlarında öne çıkan temel tematik eksen nedir?",
-    "answers": [
-      "Avakirina balafirgehên nûjen li deştên berfireh",
-      "Parastina baweriya kevnar, fermanên dîrokî û girêdana bi xaka Şengalê re",
-      "Guhertina kincên gelerî bi kincên fezayê yên nû",
-      "Bazirganiya zêran di navbera welatên Asyayê de"
-    ],
-    "answersTr": [
-      "Geniş ovalarda uluslararası kargo havalimanları inşa etme projeleri",
-      "Kadim inancın korunması, tarihsel fermanların yaraları ve Şengal topraklarına bağlılık",
-      "Geleneksel kıyafetleri bırakıp fütüristik uzay giysilerine geçiş süreci",
-      "Asya ülkeleri arasında yapılan uluslararası altın ve pırlanta ticareti"
-    ],
-    "correctAnswer": "Parastina baweriya kevnar, fermanên dîrokî û girêdana bi xaka Şengalê re",
-    "correctAnswerTr": "Kadim inancın korunması, tarihsel fermanların yaraları ve Şengal topraklarına bağlılık",
-    "explanation": "Sînemaya li ser Êzdiyan balê dikişîne ser fermanên dîrokî û parastina nasname û baweriya wan.",
-    "explanationKu": "Sînemaya li ser Êzdiyan balê dikişîne ser fermanên dîrokî û parastina nasname û baweriya wan.",
-    "explanationTr": "Êzdî temalı filmler tarihsel katliamların yaralarını, kutsal mekanları ve inancın direnme gücünü işler.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Y%C4%B1lmaz_G%C3%BCney",
+      "sourceTitle": "Yılmaz Güney",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11302,36 +10878,8 @@
     "explanationTr": "Dikenli teller, aynı halkı ve akrabaları birbirinden ayıran yapay sınırların trajedisini görselleştiren temel motiftir.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0287",
-    "category": "Sînema",
-    "difficulty": 4,
-    "prompt": "Derhênerên kurd çima di fîlmên xwe de pir caran xelkê herêmî (ne profesyonel) wekî lîstikvan hildibijêrin?",
-    "promptTr": "Kürt yönetmenlerin filmlerinde profesyonel oyuncular yerine yerel halkı oynatmalarının temel sebebi nedir?",
-    "answers": [
-      "Ji ber ku lîstikvanên profesyonel qet fêrî zimanên herêmî nabin",
-      "Ji bo gihandina hestê rasteqîn, reftara xwezayî û parastina zaravayê resen",
-      "Ji bo qedexekirina sînemaya biyanî li seranserê cîhanê",
-      "Ji ber ku lîstikvaniya profesyonel di qanûnan de hatiye qedexekirin"
-    ],
-    "answersTr": [
-      "Profesyonel tiyatrocuların yerel şiveleri öğrenmesinin imkansız olması",
-      "Duygusal sahiciliği, doğal mimikleri ve otantik yerel aksanı en yalın haliyle yakalamak",
-      "Dünya genelinde yabancı sinema filmlerinin izlenmesini engellemek",
-      "Bölgedeki yerel yasalarda profesyonel oyunculuğun yasaklanmış olması"
-    ],
-    "correctAnswer": "Ji bo gihandina hestê rasteqîn, reftara xwezayî û parastina zaravayê resen",
-    "correctAnswerTr": "Duygusal sahiciliği, doğal mimikleri ve otantik yerel aksanı en yalın haliyle yakalamak",
-    "explanation": "Lîstikvanên xwezayî jiyana rasteqîn a herêmê bêyî çêkirinî dertînin ser ekranê.",
-    "explanationKu": "Lîstikvanên xwezayî jiyana rasteqîn a herêmê bêyî çêkirinî dertînin ser ekranê.",
-    "explanationTr": "Yılmaz Güney'den Ghobadi'ye uzanan gelenekte yerel oyuncular, yapmacıksız doğallıklarıyla sinemaya belgesel niteliğinde bir gerçekçilik katar.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.scielo.org.mx/scielo.php?pid=S1405-09272023000200061&script=sci_arttext",
+      "sourceTitle": "Mutilados por la frontera. Imágenes de Kurdistán y los kurdos en el cine de Bahman Ghobadi",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11362,36 +10910,8 @@
     "explanationTr": "Şerif Gören, sıkıyönetim baskısı altında Yılmaz Güney'in vizyonunu sahada kusursuz bir rejiyona dönüştürmüştür.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0290",
-    "category": "Sînema",
-    "difficulty": 5,
-    "prompt": "Di sînemaya kurdî ya piştî salên 2010an de, veguhestina mijarê ji çiya û gund ber bi bajarên mezin ve çi nîşan dide?",
-    "promptTr": "2010 sonrası Kürt sinemasında mekânın kırdan metropole kayması hangi sosyolojik değişimi gösterir?",
-    "answers": [
-      "Vegera temam a jiyana gundan û kêmkirina rola bajaran di çîrokên nû de",
-      "Bêbandorbûna koçberiyê û domandina heman têkiliyên kevn ên gundî li metropolan",
-      "Rastiya koçberiyê, jiyana nifşên nû yên li metropolan û lêgerîna nasnameyê di nava bajêr de",
-      "Tenê guhertina teknîkên kişandina fîlmê bê têkiliyek bi jiyana civakî re"
-    ],
-    "answersTr": [
-      "Köy yaşamına bütünüyle dönüşü ve yeni anlatılarda kentlerin önemini yitirmesini",
-      "Göçün etkisiz kalmasını ve eski köy ilişkilerinin metropollerde aynen sürmesini",
-      "Göç gerçeğini, metropollerde büyüyen yeni kuşakları ve kentte kimlik arayışını",
-      "Yalnızca çekim tekniklerinin değişmesini ve bunun toplumsal yaşamla ilgisiz olmasını"
-    ],
-    "correctAnswer": "Rastiya koçberiyê, jiyana nifşên nû yên li metropolan û lêgerîna nasnameyê di nava bajêr de",
-    "correctAnswerTr": "Göç gerçeğini, metropollerde büyüyen yeni kuşakları ve kentte kimlik arayışını",
-    "explanation": "Nifşên nû yên derhêneran êdî çîrokên bajêr, koçberî û jiyana rojane ya metropolan dikin fîlm.",
-    "explanationKu": "Nifşên nû yên derhêneran êdî çîrokên bajêr, koçberî û jiyana rojane ya metropolan dikin fîlm.",
-    "explanationTr": "Yeni kuşak sinemacılar kentsel dönüşüm, göçmenlik ve metropoldeki aidiyet krizlerini merkeze almaktadır.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.festival-cannes.com/en/2017/yol-the-full-version-in-cannes-classics-the-birth-of-the-palme-dor-1982/",
+      "sourceTitle": "Yol - The full version in Cannes Classics, the birth of the Palme d’or 1982",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11422,36 +10942,8 @@
     "explanationTr": "Film, 2003 Irak Savaşı'nın hemen öncesinde sınır kampında yaşayan çocukların gözünden savaşı anlatır.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_dirok_0300",
-    "category": "Dîrok",
-    "difficulty": 4,
-    "prompt": "Şerefxanê Bidlîsî di sala 1597an de pirtûka xwe ya navdar \"Şerefname\" çima bi zimanê farisî nivîsand?",
-    "promptTr": "Şerefxanê Bidlîsî 1597'de yazdığı ünlü eseri \"Şerefname\"yi neden Farsça kaleme almıştır?",
-    "answers": [
-      "Zimanê kurdî di wê serdemê de bi fermana padîşah hatibû qedexekirin",
-      "Şerefxan tenê zimanê farisî dizanibû û bi kurdî nizanibû biaxive",
-      "Pirtûk tenê ji bo xwendevanên hindî û efxanî hatibû nivîsandin",
-      "Di wê serdemê de zimanê dîroknivîsî û dîplomasiyê yê herêmê farisî bû"
-    ],
-    "answersTr": [
-      "Kürtçe o dönemde padişah fermanıyla tamamen yasaklanmıştı",
-      "Şerefxan sadece Farsça biliyordu ve Kürtçe konuşamıyordu",
-      "Kitap sadece Hint ve Afgan okurlar için özel olarak yazılmıştı",
-      "O dönemde bölgenin ortak tarih yazımı ve saray diplomasisi dili Farsçaydı"
-    ],
-    "correctAnswer": "Di wê serdemê de zimanê dîroknivîsî û dîplomasiyê yê herêmê farisî bû",
-    "correctAnswerTr": "O dönemde bölgenin ortak tarih yazımı ve saray diplomasisi dili Farsçaydı",
-    "explanation": "16. yüzyılda Ortadoğu ve saray çevrelerinde prestijli tarih ve edebiyat dili Farsça olduğu için Şerefxan eserini Farsça yazmıştır.",
-    "explanationTr": "16. yüzyılda Ortadoğu ve saray çevrelerinde prestijli tarih ve edebiyat dili Farsça olduğu için Şerefxan eserini Farsça yazmıştır.",
-    "explanationKu": "Di sedsala 16an de zimanê hevpar ê dîrok û qesran farisî bû, lewma Şerefname bi vî zimanî hate nivîsandin.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Turtles_Can_Fly",
+      "sourceTitle": "Turtles Can Fly",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11482,6 +10974,8 @@
     "explanationKu": "Piştî şer, mîrektiyên kurd di karên xwe yên navxweyî de serbixwe man û bi sîstema hikûmetê hatin birêvebirin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://islamansiklopedisi.org.tr/ocaklik",
+      "sourceTitle": "OCAKLIK - TDV İslâm Ansiklopedisi",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11512,6 +11006,8 @@
     "explanationKu": "Ji ber zextên siltanê osmanî, rojname neçar ma navenda xwe bibe bajarên Ewropayê yên mîna Cenevre û Londonê.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurdistan_%28newspaper%29",
+      "sourceTitle": "Kurdistan (newspaper)",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11542,6 +11038,8 @@
     "explanationKu": "Piştî ku leşkerên Yekîtiya Sovyetê ji ber peymana petrolê vekişiyan, Komara Mehabadê bê piştgirî ma û hilweşiya.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.iranicaonline.org/articles/iran-ii2-islamic-period-page-6/",
+      "sourceTitle": "IRAN ii. IRANIAN HISTORY (2) Islamic period (page 6) - Encyclopaedia Iranica",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11572,36 +11070,8 @@
     "explanationKu": "Celadet Bedirxan ji bo ku dengên kurdî bi awayekî hêsan û fonetîk werin nivîsandin alfabeya latînî bi kar anî.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_dirok_0306",
-    "category": "Dîrok",
-    "difficulty": 5,
-    "prompt": "Tevgera Şêx Ubeydullahê Nehrî (1880) bi kîjan taybetmendiya xwe ji serhildanên beriya xwe cuda dibe?",
-    "promptTr": "1880 Şeyh Ubeydullah Nehri hareketi kendisinden önceki yerel isyanlardan hangi yönüyle ayrılır?",
-    "answers": [
-      "Tenê ji bo kêmkirina bacên çandiniyê li gundên herêmî derketibû",
-      "Yekem car ji aliyê leşkerên biyanî yên ewropî ve hatibû birêvebirin",
-      "Armanca wê tenê parastina sînorên deryayî yên împaratoriyê bû",
-      "Cara yekem daxwaza yekîtiyeke berfireh a neteweyî li hemberî du dewletan kir"
-    ],
-    "answersTr": [
-      "Sadece yerel köylerdeki tarım vergilerinin indirilmesi amacıyla çıkması",
-      "Tarihte ilk kez yabancı Avrupalı subaylar tarafından komuta edilmesi",
-      "Amacının sadece imparatorluğun deniz sınırlarını korumakla sınırlı olması",
-      "İlk kez iki devlete (Osmanlı ve Kaçar) karşı birleşik ulusal birlik talep etmesi"
-    ],
-    "correctAnswer": "Cara yekem daxwaza yekîtiyeke berfireh a neteweyî li hemberî du dewletan kir",
-    "correctAnswerTr": "İlk kez iki devlete (Osmanlı ve Kaçar) karşı birleşik ulusal birlik talep etmesi",
-    "explanation": "Şeyh Ubeydullah, aşiret sınırlarını aşarak hem Osmanlı hem Kaçar idaresindeki Kürtleri birleştirip bağımsız/özerk bir yönetim kurmayı hedefleyen ilk modern hareket sayılır.",
-    "explanationTr": "Şeyh Ubeydullah, aşiret sınırlarını aşarak hem Osmanlı hem Kaçar idaresindeki Kürtleri birleştirip bağımsız/özerk bir yönetim kurmayı hedefleyen ilk modern hareket sayılır.",
-    "explanationKu": "Tevgera Şêx Ubeydullah ji bo yekîtiya kurdan a li hemberî her du împaratoriyan pêngaveke neteweyî ya mezin bû.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_alphabets",
+      "sourceTitle": "Kurdish alphabets",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11632,6 +11102,8 @@
     "explanationKu": "Bi vê planê re mufetîşiyên giştî hatin damezrandin, qedexeyên li ser ziman zêde bûn û malbatên navdar hatin sirgûnkirin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://dergipark.org.tr/en/pub/eyp/article/1504699",
+      "sourceTitle": "Louis Althusser’in Devletin İdeolojik Aygıtları Bağlamında Şark Islahat Planı",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11662,6 +11134,8 @@
     "explanationKu": "Merwanî li Amed û Silîvayê serwer bûn, lê Şedadî li herêma Qefqasyayê li Gence û Aniyê hukum dikirin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.tandfonline.com/doi/full/10.1080/00263206.2010.492987",
+      "sourceTitle": "State Ideology and the Kurds in Turkey",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11692,6 +11166,8 @@
     "explanationKu": "Bi serkeftina Hîtînê re serdema serweriya xaçperestan a li Qudsê bi dawî bû û bajar hate azadkirin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Battle_of_Hattin",
+      "sourceTitle": "Battle of Hattin",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11722,6 +11198,8 @@
     "explanationKu": "Serhildana Babanan di sedsala 19an de pêngava yekem a li dijî destwerdana waliyên osmanî bû.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.tandfonline.com/doi/full/10.1080/00263206.2018.1542595",
+      "sourceTitle": "Resistance to centralisation in the Ottoman periphery: the Kurdish Baban and Bohtan emirates",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11752,6 +11230,8 @@
     "explanationKu": "Ehmedê Xanî di pêşgotina xwe de gazincan ji bêtifaqiya mîran dike û banga yekîtiyê li gelê xwe dike.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://bnk.institutkurde.org/images/pdf/7KS6DGQY39.pdf",
+      "sourceTitle": "\"And a Thornbush Sprang Up Between Them\": Studies on \"Mem û Zîn\", a Kurdish Romance",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11782,66 +11262,8 @@
     "explanationKu": "Şerîf Paşa li Parîsê bi dîplomatên navneteweyî re hevdîtin kirin û daxwazên gelê kurd pêşkêş kirin.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_dirok_0315",
-    "category": "Dîrok",
-    "difficulty": 5,
-    "prompt": "Armanca sereke ya rapora \"Ziya Gökalp\" a bi navê \"Kürt Aşiretleri Hakkında Sosyolojik Tetkikler\" (1922) çi bû?",
-    "promptTr": "Ziya Gökalp'in \"Kürt Aşiretleri Hakkında Sosyolojik Tetkikler\" (1922) araştırmasının temel hedefi neydi?",
-    "answers": [
-      "Naskirina pêkhateya eşîran ji bo diyarkirina polîtîkayên rêveberî û asîmîlasyonê",
-      "Parastina zimanê kurdî û pêşxistina wêjeya klasîk a herêmê",
-      "Avakirina sîstema aborî ya xweser ji bo cotkarên herêmê",
-      "Nivîsandina dîroka serbixwe ya mîrektiyên kevnar ên serdema navîn"
-    ],
-    "answersTr": [
-      "Aşiret yapılarını inceleyerek yeni devlet için yönetim ve asimilasyon stratejisi sunmak",
-      "Kürtçenin lehçelerini koruma altına alıp klasik edebiyatı geliştirmek",
-      "Bölge çiftçileri için bağımsız ve yerel bir tarım ekonomisi kurmak",
-      "Orta Çağ Kürt mîrliklerinin bağımsız tarih yazımını tamamlamak"
-    ],
-    "correctAnswer": "Naskirina pêkhateya eşîran ji bo diyarkirina polîtîkayên rêveberî û asîmîlasyonê",
-    "correctAnswerTr": "Aşiret yapılarını inceleyerek yeni devlet için yönetim ve asimilasyon stratejisi sunmak",
-    "explanation": "Gökalp, Cumhuriyet kurulurken bölge aşiretlerinin sosyolojik yapısını raporlayarak devletin tek-ulus politikalarına veri hazırlamıştır.",
-    "explanationTr": "Gökalp, Cumhuriyet kurulurken bölge aşiretlerinin sosyolojik yapısını raporlayarak devletin tek-ulus politikalarına veri hazırlamıştır.",
-    "explanationKu": "Ev rapor ji bo ku dewlet civaka eşîran ji nêz ve binase û li gorî wê polîtîkayên xwe diyar bike hate amadekirin.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_dirok_0316",
-    "category": "Dîrok",
-    "difficulty": 5,
-    "prompt": "Cemiyeta Azadiyê (1923, bi serokatiya Xalid Begê Cibirî) ji rêxistinên beriya xwe bi çi cuda dibû?",
-    "promptTr": "1923'te kurulan Azadî Cemiyeti (Cibranlı Halit Bey önderliğinde) önceki örgütlerden nasıl ayrışıyordu?",
-    "answers": [
-      "Tenê li derveyî welat bi awayekî qanûnî û wekî klûbeke sporê dixebitî",
-      "Rêxistineke dînî bû ku tenê ji bo avakirina medreseyan xebat dimeşand",
-      "Girêdayî partiyên desthilatdar ên li paytexta Stenbolê bû",
-      "Bi awayekî veşartî ji aliyê efserên leşkerî û serokên herêmî ve hatibû avakirin"
-    ],
-    "answersTr": [
-      "Yalnızca yurt dışında yasal bir gençlik ve spor kulübü olarak faaliyet yürütmesi",
-      "Sadece yeni medreseler açmayı hedefleyen dini bir yardım derneği olması",
-      "İstanbul'daki iktidar partilerine resmi olarak göbekten bağlı bulunması",
-      "Kürt subaylar ve yerel liderler tarafından gizli/askeri bir teşkilat olarak kurulması"
-    ],
-    "correctAnswer": "Bi awayekî veşartî ji aliyê efserên leşkerî û serokên herêmî ve hatibû avakirin",
-    "correctAnswerTr": "Kürt subaylar ve yerel liderler tarafından gizli/askeri bir teşkilat olarak kurulması",
-    "explanation": "Azadî, İstanbul merkezli cemiyetlerden farklı olarak doğrudan bölgedeki ordu subayları ve aşiret liderlerinin kurduğu illegal bir kadro örgütüydü.",
-    "explanationTr": "Azadî, İstanbul merkezli cemiyetlerden farklı olarak doğrudan bölgedeki ordu subayları ve aşiret liderlerinin kurduğu illegal bir kadro örgütüydü.",
-    "explanationKu": "Cemiyeta Azadiyê li herêmê ji aliyê efserên leşkerî û rêberên herêmî ve bi awayekî nehênî hate birêxistinkirin.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://sjh.univsul.edu.iq/article?id=1158",
+      "sourceTitle": "Geopolitics of the Kurdish Nation at the Paris Peace Conference (1919–1920)",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11872,6 +11294,8 @@
     "explanationKu": "Bi vê qanûnê re desthilatên dadwerî û rêveberiyê yên awarte dan destê qumandarê leşkerî.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.sciencespo.fr/mass-violence-war-massacre-resistance/en/document/dersim-massacre-1937-1938.html",
+      "sourceTitle": "Dersim Massacre, 1937-1938",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11902,6 +11326,8 @@
     "explanationKu": "Di destûra 1958an de şirîkatiya ereb û kurdan a di avakirina Iraqê de bi awayekî fermî hate qebûlkirin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://history.state.gov/historicaldocuments/frus1969-76ve04/d319",
+      "sourceTitle": "Historical Documents - Office of the Historian",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11932,6 +11358,8 @@
     "explanationKu": "Rewadî li herêma Azerbaycanê li derdora Tewrêzê hikûmeteke bihêz a serdema navîn bûn.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.iranicaonline.org/articles/rawwadids/",
+      "sourceTitle": "RAWWADIDS - Encyclopaedia Iranica",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -11962,36 +11390,8 @@
     "explanationKu": "Hesenkeweyhî li çiyayên Zagrosê li herêma Dînewar û Şarezûrê hukumdar bûn.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_dirok_0325",
-    "category": "Dîrok",
-    "difficulty": 4,
-    "prompt": "Sedema vegera Şerefxanê Bidlîsî ji dewleta Sefewiyan bo cem Osmaniyan di sala 1578an de çi bû?",
-    "promptTr": "Şerefxanê Bidlîsî'nin 1578'de Safevi hizmetinden ayrılarak Osmanlı'ya dönmesinin temel sebebi neydi?",
-    "answers": [
-      "Zextên li hemberî wî li Îranê û biryara Sultan Muradê Sêyem a qebûlkirina mîrektiya Bidlîsê",
-      "Hilweşîna temamî ya paytexta Qezwînê ji ber erhejên mezin ên sirûştî",
-      "Daxwaza wî ya ji bo fêrbûna zimanên ewropî li dibistanên paytextê",
-      "Qedexekirina nivîsandina pirtûkên dîrokî ji aliyê şahê nû yê Îranê ve"
-    ],
-    "answersTr": [
-      "İran sarayındaki entrikalar ve III. Murad'ın ata yurdu Bitlis Mîrliğini kendisine iade etmesi",
-      "Safevi başkenti Kazvin'in şiddetli bir depremle tamamen yerle bir olması",
-      "İstanbul'daki medreselerde yabancı Batı dilleri eğitimi alma kararı",
-      "Yeni Safevi şahının sarayda tarih kitabı yazılmasını tamamen yasaklaması"
-    ],
-    "correctAnswer": "Zextên li hemberî wî li Îranê û biryara Sultan Muradê Sêyem a qebûlkirina mîrektiya Bidlîsê",
-    "correctAnswerTr": "İran sarayındaki entrikalar ve III. Murad'ın ata yurdu Bitlis Mîrliğini kendisine iade etmesi",
-    "explanation": "Şah Tahmasb sonrası Safevi sarayında hedef haline gelen Şerefxan, III. Murad'ın Bitlis beyliğini iade fermanı üzerine Osmanlı'ya geçmiştir.",
-    "explanationTr": "Şah Tahmasb sonrası Safevi sarayında hedef haline gelen Şerefxan, III. Murad'ın Bitlis beyliğini iade fermanı üzerine Osmanlı'ya geçmiştir.",
-    "explanationKu": "Ji ber xeterên li qesra Sefewiyan û fermana vegerandina Mîrektiya Bidlîsê, Şerefxan vegeriya cem Osmaniyan.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Hasanwayhids",
+      "sourceTitle": "Hasanwayhids",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12022,6 +11422,8 @@
     "explanationKu": "Tanzîmatê xwest desthilatdariya navendî xurt bike û sîstema kevn a mîran gav bi gav rake.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.tandfonline.com/doi/full/10.1080/00263206.2018.1542595",
+      "sourceTitle": "Resistance to centralisation in the Ottoman periphery: the Kurdish Baban and Bohtan emirates",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12052,66 +11454,8 @@
     "explanationKu": "Koçgirî bi daxwaza naskirina mafên xweseriyê yên herêmî li hemberî hikûmeta Enqereyê dest pê kir.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_dirok_0328",
-    "category": "Dîrok",
-    "difficulty": 4,
-    "prompt": "Peymana Nihênî ya Sykes-Picot (1916) erdnîgariya herêmê li ser kîjan hîmî dabeş kir?",
-    "promptTr": "1916 Sykes-Picot Gizli Antlaşması Ortadoğu ve bölge coğrafyasını hangi temel esasa göre paylaştı?",
-    "answers": [
-      "Li ser daxwaza gelên herêmê û encamên referandûmên demokratîk ên giştî",
-      "Li ser berjewendiyên petrol, rêyên bazirganiyê û herêmên bandora Brîtanya û Fransayê",
-      "Li gorî parastina sînorên dîrokî yên mîrektiyên kevnar ên serdema navîn",
-      "Bi armanca avakirina dewletên neteweyî yên serbixwe ji bo her gelekî"
-    ],
-    "answersTr": [
-      "Bölge halklarının talepleri ve demokratik halk oylaması sonuçlarına göre",
-      "İngiltere ve Fransa'nın petrol, liman ve stratejik nüfuz alanı çıkarlarına göre",
-      "Orta Çağ Kürt ve Arap mîrliklerinin tarihi sınırlarını koruma esasına göre",
-      "Bölgedeki her etnik gruba bağımsız birer ulus devlet kurma amacıyla"
-    ],
-    "correctAnswer": "Li ser berjewendiyên petrol, rêyên bazirganiyê û herêmên bandora Brîtanya û Fransayê",
-    "correctAnswerTr": "İngiltere ve Fransa'nın petrol, liman ve stratejik nüfuz alanı çıkarlarına göre",
-    "explanation": "İngiltere ve Fransa, bölgeyi halkların iradesini yok sayarak kendi sömürge ve petrol çıkarları doğrultusunda yapay hatlarla bölmüştür.",
-    "explanationTr": "İngiltere ve Fransa, bölgeyi halkların iradesini yok sayarak kendi sömürge ve petrol çıkarları doğrultusunda yapay hatlarla bölmüştür.",
-    "explanationKu": "Peymana Sykes-Picot li gorî berjewendiyên emperyalîst sînorên nû yên çêkirî li herêmê ava kirin.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_dirok_0329",
-    "category": "Dîrok",
-    "difficulty": 5,
-    "prompt": "Piştî Şerê Osmanî û Rûsî yê 1828-1829an, helwesta eşîrên kurd ên li ser sînor çawa bû?",
-    "promptTr": "1828-1829 Osmanlı-Rus Savaşı sonrasında Kafkasya sınırındaki Kürt aşiretlerinin jeopolitik konumu nasıl değişti?",
-    "answers": [
-      "Eşîr di navbera du împaratoriyan de bûn xwedî girîngiyeke mezin a stratejîk",
-      "Hemû eşîr ji herêmên çiyayî koçî bajarên deryaya Spî bûn",
-      "Eşîran dev ji çekên xwe berdan û tenê bi bazirganiya hesin re mijûl bûn",
-      "Sînor bi temamî ji aliyê dîwarên bilind ên kevirî ve hate girtin"
-    ],
-    "answersTr": [
-      "Aşiretler iki imparatorluk arasındaki sınır güvenliğinde kritik stratejik aktör haline geldi",
-      "Bütün aşiretler dağlık bölgelerden Akdeniz kıyı kentlerine topluca göç etti",
-      "Aşiretler silahlarını teslim ederek yalnızca maden ticaretiyle uğraşmaya başladı",
-      "Sınır boyları tamamen yüksek taş duvarlar örülerek geçişlere kapatıldı"
-    ],
-    "correctAnswer": "Eşîr di navbera du împaratoriyan de bûn xwedî girîngiyeke mezin a stratejîk",
-    "correctAnswerTr": "Aşiretler iki imparatorluk arasındaki sınır güvenliğinde kritik stratejik aktör haline geldi",
-    "explanation": "Rusya'nın Kafkaslara inmesiyle sınır aşiretleri (Revan, Serhat) iki güç arasında askeri ve diplomatik denge unsuru oldu.",
-    "explanationTr": "Rusya'nın Kafkaslara inmesiyle sınır aşiretleri (Revan, Serhat) iki güç arasında askeri ve diplomatik denge unsuru oldu.",
-    "explanationKu": "Bi nêzîkbûna Rûsyayê re rola leşkerî û stratejîk a eşîrên li ser sînor gelekî zêde bû.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.sciencespo.fr/mass-violence-war-massacre-resistance/en/document/repression-koa-giri-rebellion-1920-1921.html",
+      "sourceTitle": "The Repression of the Koçgiri Rebellion, 1920-1921",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12142,6 +11486,8 @@
     "explanationKu": "Mîr Mihemed li Rewandizê kargeha topan ava kir, dirav lêda û artêşeke mezin ava kir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Mir_Muhammad_of_Rawanduz",
+      "sourceTitle": "Mir Muhammad of Rawanduz",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12172,6 +11518,8 @@
     "explanationKu": "Qasim sozên xwe yên destûrî bicîh neanîn û êrîş bir ser herêmê; vî tiştî şoreşa Îlonê da destpêkirin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://history.state.gov/historicaldocuments/frus1969-76ve04/d319",
+      "sourceTitle": "Historical Documents - Office of the Historian",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12202,96 +11550,8 @@
     "explanationKu": "Kovara Jînê daxwazên neteweyî yên kurdan li ser bingeha prensîbên navneteweyî anîn ziman.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_dirok_0334",
-    "category": "Dîrok",
-    "difficulty": 5,
-    "prompt": "Di Seyahetnameya Ewliya Çelebî ya sedsala 17an de mîrektiyên kurd çawa hatine teswîrkirin?",
-    "promptTr": "17. yüzyıl Evliya Çelebi Seyahatnamesi'nde Kürt mîrlikleri nasıl betimlenmiştir?",
-    "answers": [
-      "Wekî yekîneyên herêmî yên di bin kontrola teng a navendê de û bê protokola xwe",
-      "Wekî desthilatên xweser ên xwedî qesr, artêş û protokolên taybet ên mîran",
-      "Wekî navendên bazirganiyê yên ku rola leşkerî û siyasî ya wan pir kêm bû",
-      "Wekî eşîretên koçer ên bê navendên bajarî û bê avahiyên rêveberiyê"
-    ],
-    "answersTr": [
-      "Merkezin sıkı denetimi altındaki ve kendi protokolü olmayan yerel birimler olarak",
-      "Sarayları, askerî güçleri ve mîrlere özgü protokolleri olan özerk hanedanlar olarak",
-      "Askerî ve siyasî rolü çok sınırlı ticaret merkezleri olarak",
-      "Kent merkezi ve idarî yapıları bulunmayan göçebe aşiretler olarak"
-    ],
-    "correctAnswer": "Wekî desthilatên xweser ên xwedî qesr, artêş û protokolên taybet ên mîran",
-    "correctAnswerTr": "Sarayları, askerî güçleri ve mîrlere özgü protokolleri olan özerk hanedanlar olarak",
-    "explanation": "Evliya Çelebi, Bitlis Mîri Abdal Han'ın sarayını, kütüphanesini, hazinesini ve askeri teşrifatını hayranlıkla anlatmıştır.",
-    "explanationTr": "Evliya Çelebi, Bitlis Mîri Abdal Han'ın sarayını, kütüphanesini, hazinesini ve askeri teşrifatını hayranlıkla anlatmıştır.",
-    "explanationKu": "Ewliya Çelebî di pirtûka xwe de behsa dewlemendî, artêş û qesrên mîrên kurd bi taybetî Mîr Ebdal dike.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_dirok_0335",
-    "category": "Dîrok",
-    "difficulty": 4,
-    "prompt": "Dadgehên Îstiqlalê yên Şerqê (1925) piştî serhildanê kîjan rola sereke lîstin?",
-    "promptTr": "1925 sonrası faaliyet gösteren Şark İstiklal Mahkemeleri bölgede hangi temel işlevi yerine getirdi?",
-    "answers": [
-      "Diyarkirina mûçeyên xebatkarên şaredariyan û çêkirina rêyên trênê",
-      "Birêvebirina hilbijartinên giştî yên azad li hemû bajarên herêmê",
-      "Cezakirina rêberên tevgerê û pêkanîna sirgûnkirina malbatên wan ber bi rojava ve",
-      "Avakirina kargehên nû yên tekstîlê li bajarên Diyarbekir û Wanê"
-    ],
-    "answersTr": [
-      "Belediye memurlarının maaşlarını belirleyip demiryolu hatları inşa etmek",
-      "Bölgedeki bütün şehirlerde serbest ve bağımsız genel seçimler düzenlemek",
-      "Hareket önderlerini yargılayıp ileri gelen aileleri batı vilayetlerine zorunlu iskana tabi tutmak",
-      "Diyarbakır ve Van merkezli yeni tekstil ve sanayi fabrikaları açmak"
-    ],
-    "correctAnswer": "Cezakirina rêberên tevgerê û pêkanîna sirgûnkirina malbatên wan ber bi rojava ve",
-    "correctAnswerTr": "Hareket önderlerini yargılayıp ileri gelen aileleri batı vilayetlerine zorunlu iskana tabi tutmak",
-    "explanation": "Şark İstiklal Mahkemesi, Şeyh Said ve arkadaşlarını idam etmiş, yüzlerce aşiret reisi ve aileyi batıya sürgüne göndermiştir.",
-    "explanationTr": "Şark İstiklal Mahkemesi, Şeyh Said ve arkadaşlarını idam etmiş, yüzlerce aşiret reisi ve aileyi batıya sürgüne göndermiştir.",
-    "explanationKu": "Dadgehên Îstiqlalê rêberên tevgerê darizandin û bi hezaran kes sirgûnî bajarên rojava kirin.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_dirok_0336",
-    "category": "Dîrok",
-    "difficulty": 5,
-    "prompt": "Dewleta Hesenkeweyhî (Hasanveyhî) di bin serweriya Bûweyhiyan de kîjan pêşketina aborî û ewlehiyê ava kiribû?",
-    "promptTr": "Hasanveyhi Devleti Büveyhiler döneminde Zagros ticaret yollarında hangi kurumsal başarıyı sağladı?",
-    "answers": [
-      "Parastina rêyên bazirganiyê yên karwanan û avakirina pire û keleyên xurt",
-      "Bikaranîna yekem diravên kaxezî yên li seranserê cîhana îslamî",
-      "Çêkirina keştiyên mezin ên deryayî li ser çemên biçûk ên çiyayî",
-      "Qedexekirina herikîna bazirganan di navbera bajarên herêmê de"
-    ],
-    "answersTr": [
-      "Kervan yollarının asayişini sağlayıp köprüler, hanlar ve sağlam kaleler inşa etmesi",
-      "İslam dünyasında kâğıt parayı tedavüle sokan ilk devlet mekanizmasını kurması",
-      "Dağlık nehirler üzerinde büyük açık deniz ticaret filoları inşa etmesi",
-      "Şehirlerarası kervan geçişlerini ve tüccar seyahatlerini tamamen yasaklaması"
-    ],
-    "correctAnswer": "Parastina rêyên bazirganiyê yên karwanan û avakirina pire û keleyên xurt",
-    "correctAnswerTr": "Kervan yollarının asayişini sağlayıp köprüler, hanlar ve sağlam kaleler inşa etmesi",
-    "explanation": "İbn Miskeveyh'in aktardığına göre Hasanveyh, hac ve ticaret yollarını eşkıyalardan arındırıp kaleler, köprüler ve camiler yaptırmıştır.",
-    "explanationTr": "İbn Miskeveyh'in aktardığına göre Hasanveyh, hac ve ticaret yollarını eşkıyalardan arındırıp kaleler, köprüler ve camiler yaptırmıştır.",
-    "explanationKu": "Hesenkeweyhî rêyên karwanan parastin û li seranserê herêmê pire û kela xurt ava kirin.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.tandfonline.com/doi/full/10.1080/17449057.2018.1525163",
+      "sourceTitle": "The First World War, the End of the Ottoman Empire, and Question of Kurdish Statehood: A \"Missed\" Opportunity?",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12322,66 +11582,8 @@
     "explanationKu": "Operasyonên Enfalê ji bo xirakirin û valakirina gundan û komkujiya xelkê kurd hate meşandin.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_dirok_0339",
-    "category": "Dîrok",
-    "difficulty": 5,
-    "prompt": "Serhildana Bidlîsê ya sala 1913an (bi serkêşiya Mela Selîm) li dijî kîjan polîtîkayê derketibû holê?",
-    "promptTr": "1913 Bitlis İsyanı (Molla Selim önderliğinde) İttihat ve Terakki'nin hangi politikalarına tepki olarak gelişti?",
-    "answers": [
-      "Li dijî damezrandina rêxistinên mafên mirovan li bajarê Wanê",
-      "Ji ber daxwaza zêdekirina qereqolên leşkerî yên dewletê li herêmê",
-      "Li dijî polîtîkayên navendîbûn û zextên neteweperest ên Îtihad û Teraqiyê",
-      "Ji bo tevlîkirina bajêr bi axa împaratoriya Awistirya-Macaristanê re"
-    ],
-    "answersTr": [
-      "Van şehrinde uluslararası insan hakları derneklerinin kurulmasına karşı",
-      "Bölgedeki devlet askeri karakollarının sayısının artırılması talebiyle",
-      "İttihat ve Terakki'nin katı Türkçü merkezileşme ve yerel medrese/ulema karşıtı baskılarına",
-      "Bitlis şehrini Avusturya-Macaristan İmparatorluğu sınırlarına katmak amacıyla"
-    ],
-    "correctAnswer": "Li dijî polîtîkayên navendîbûn û zextên neteweperest ên Îtihad û Teraqiyê",
-    "correctAnswerTr": "İttihat ve Terakki'nin katı Türkçü merkezileşme ve yerel medrese/ulema karşıtı baskılarına",
-    "explanation": "Molla Selim ve Seyyid Ali önderliğindeki 1913 Bitlis İsyanı, İttihatçıların otoriter merkezileşme ve dini-yerel yapıları tasfiye politikalarına karşı patlak vermiştir.",
-    "explanationTr": "Molla Selim ve Seyyid Ali önderliğindeki 1913 Bitlis İsyanı, İttihatçıların otoriter merkezileşme ve dini-yerel yapıları tasfiye politikalarına karşı patlak vermiştir.",
-    "explanationKu": "Serhildana Bidlîsê bertekek li hemberî navendîbûn û zextên tund ên rêveberiya Îtihadparêzan bû.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_teknoloji_0300",
-    "category": "Teknolojî",
-    "difficulty": 5,
-    "prompt": "Sedema sereke ya ku protokola HTTP/3 li şûna TCP derbasî ser protokola QUIC (UDP) bû çi ye?",
-    "promptTr": "HTTP/3 protokolünün TCP yerine QUIC (UDP) protokolüne geçmesinin temel mimari gerekçesi nedir?",
-    "answers": [
-      "Ji bo rakirina pêdiviya şîfrekirina daneyan a di asta pêwendiya torê de",
-      "Ji bo nehêştina pirsgirêka sekinîna rêzê ya di asta veguhestina TCP de",
-      "Ji bo zêdekirina qebareya serî ya her pakêta daneyê ya di torê de",
-      "Ji bo astengkirina hemû daxwazên paralel ên di navbera du cîhazan de"
-    ],
-    "answersTr": [
-      "Ağ bağlantısı seviyesindeki veri şifreleme gereksinimini ortadan kaldırmak",
-      "TCP taşıma katmanındaki satır başı tıkanıklığı sorununu tamamen çözmek",
-      "Ağdaki her veri paketinin taşıdığı başlık boyutunu bilinçli artırmak",
-      "İki cihaz arasındaki tüm paralel akış taleplerini tamamen engellemek"
-    ],
-    "correctAnswer": "Ji bo nehêştina pirsgirêka sekinîna rêzê ya di asta veguhestina TCP de",
-    "correctAnswerTr": "TCP taşıma katmanındaki satır başı tıkanıklığı sorununu tamamen çözmek",
-    "explanation": "HTTP/2'de tek bir TCP paket kaybı tüm akışları kilitlerken (Head-of-Line Blocking), QUIC her akışı bağımsız yöneterek gecikmeyi önler.",
-    "explanationKu": "Di HTTP/2 de windabûna pakêtekê di asta TCP de hemû herikînan dida sekinandin; QUIC bi serbixwekirina herikînan vê pirsgirêkê çareser dike.",
-    "explanationTr": "HTTP/2'de tek bir TCP paket kaybı tüm akışları kilitlerken (Head-of-Line Blocking), QUIC her akışı bağımsız yöneterek gecikmeyi önler.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.hrw.org/report/1992/12/01/anfal-campaign-iraqi-kurdistan/destruction-koreme",
+      "sourceTitle": "The Anfal Campaign in Iraqi Kurdistan: The Destruction of Koreme",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12412,6 +11614,8 @@
     "explanationTr": "Sanal düğümler, hash halkasındaki veri dağılımını homojenleştirerek bazı sunucuların aşırı yüklenmesini (hotspot) engeller.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.cs.princeton.edu/courses/archive/fall17/cos418/docs/L08-dynamo.pdf",
+      "sourceTitle": "L08-dynamo",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12442,6 +11646,8 @@
     "explanationTr": "LSM-Tree rastgele yazma isteklerini bellekte sıralayıp diske sıralı (sequential) yazarak I/O darboğazını aşar.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://doi.org/10.1145/3813114",
+      "sourceTitle": "A Passive and Hybrid Data Persistence Scheme for LSM-tree based Relational Databases | ACM Transactions on Storage",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12472,6 +11678,8 @@
     "explanationTr": "TLS 1.3 anahtar değişimi ve parametre müzakeresini tek bir mesajda birleştirerek el sıkışmayı 1-RTT'ye düşürür.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.rfc-editor.org/info/rfc8446/",
+      "sourceTitle": "RFC 8446: The Transport Layer Security (TLS) Protocol Version 1.3 | RFC Editor",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12502,6 +11710,8 @@
     "explanationTr": "Rastgele seçim zaman aşımları (150-300ms) sayesinde bir düğüm diğerlerinden önce aday olur ve oyların bölünmesi engellenir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://raft.github.io/raft.pdf",
+      "sourceTitle": "In Search of an Understandable Consensus Algorithm",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12532,6 +11742,8 @@
     "explanationTr": "Okunan önbellek satırı başka hiçbir çekirdekte yoksa ve bellekle uyumluysa \"Exclusive\" (Özel) durumunu alır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/MESI_protocol",
+      "sourceTitle": "MESI protocol",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12562,6 +11774,8 @@
     "explanationTr": "Spectre, işlemcinin spekülatif olarak yürüttüğü dallanma komutlarının önbellekte bıraktığı izleri yan kanal analiziyle okur.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.spectreattack.com/spectre.pdf",
+      "sourceTitle": "Spectre Attacks: Exploiting Speculative Execution",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12592,6 +11806,8 @@
     "explanationTr": "Zayıf Kuşaksal Hipotez'e göre nesnelerin çoğu tahsis edildikten hemen sonra ölür; bu yüzden genç kuşak (Young/Eden) sık taranır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://docs.oracle.com/en/java/javase/12/gctuning/garbage-collector-implementation.html",
+      "sourceTitle": "Garbage Collector Implementation",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12622,6 +11838,8 @@
     "explanationTr": "PACELC: Bir bölümlenme (P) anında A veya C seçilir; aksi durumda (Else) ise Gecikme (L) ile Tutarlılık (C) arasında seçim yapılır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/PACELC_design_principle",
+      "sourceTitle": "PACELC design principle",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12652,6 +11870,8 @@
     "explanationTr": "Lamport saatleri iki olayın eşzamanlı mı yoksa nedensel mi olduğunu ayırt edemezken, Vektör saatleri eşzamanlılığı (causal concurrency) tam belirler.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://people.cs.rutgers.edu/~pxk/classes/417/notes/logical-clocks.html",
+      "sourceTitle": "Logical Clocks",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12682,36 +11902,8 @@
     "explanationTr": "Copy-on-Write sayesinde sayfalar salt-okunur paylaşılır; fiziksel kopyalama sadece süreçlerden biri sayfayı değiştirmeye kalktığında gerçekleşir.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_teknoloji_0311",
-    "category": "Teknolojî",
-    "difficulty": 5,
-    "prompt": "Çima di bin hejmareke pir zêde ya girêdanan de mekanîzmaya \"epoll\" ji \"select\" an \"poll\" pir bi bandortir e?",
-    "promptTr": "Yüksek bağlantı sayısına sahip sunucularda Linux \"epoll\" mekanizmasının \"select/poll\"a göre üstün olmasının temel nedeni nedir?",
-    "answers": [
-      "Hemû girêdanên torê bêyî kontrolkirina çewtiyan rasterast qebûl dike",
-      "Hejmara herî zêde ya girêdanan bi 1024an re sînordar dike ji bo ewlehiyê",
-      "Tenê çalakiyên amade vedigerîne li şûna ku hemû lîsteyê bi O(N) kontrol bike",
-      "Her girêdanê di nav xelekek cuda ya fîzîkî ya pêvajoyê de bi cih dike"
-    ],
-    "answersTr": [
-      "Ağdan gelen tüm paketleri hiçbir hata kontrolünden geçirmeden doğrudan onaylaması",
-      "Güvenlik gerekçesiyle eşzamanlı soket sayısını sabit 1024 dosya tanımlayıcısı ile sınırlaması",
-      "Tüm tanımlayıcı listesini O(N) taramak yerine sadece hazır olan olayları O(1) döndürmesi",
-      "Her gelen bağlantı için işletim sisteminde bağımsız bir fiziksel işlem kanalı açması"
-    ],
-    "correctAnswer": "Tenê çalakiyên amade vedigerîne li şûna ku hemû lîsteyê bi O(N) kontrol bike",
-    "correctAnswerTr": "Tüm tanımlayıcı listesini O(N) taramak yerine sadece hazır olan olayları O(1) döndürmesi",
-    "explanation": "Select/poll her çağrıda tüm dosya tanıtıcılarını O(N) tararken, epoll kernel içi hazır olay kuyruğu sayesinde O(1) maliyetle döner.",
-    "explanationKu": "Select/poll her carî tevahiya lîsteyê O(N) kontrol dike; epoll bi riya qeydkirina di navikê (kernel) de tenê yên çalak O(1) vedigerîne.",
-    "explanationTr": "Select/poll her çağrıda tüm dosya tanıtıcılarını O(N) tararken, epoll kernel içi hazır olay kuyruğu sayesinde O(1) maliyetle döner.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.man7.org/linux/man-pages/man2/fork.2.html",
+      "sourceTitle": "fork(2) — Linux manual page",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12742,6 +11934,8 @@
     "explanationTr": "2PL bir veritabanında serileştirilebilirliği (izolasyon) sağlamak için kilitleri yönetir; 2PC ise dağıtık düğümler arasında atomik onay sağlar.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://cis.temple.edu/~ingargio/cis307/readings/transaction.html",
+      "sourceTitle": "CIS 307: Transactions",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12772,6 +11966,8 @@
     "explanationTr": "ECC 256-bit anahtarla RSA 3072-bit seviyesinde güvenlik sunarak bellek, işlem gücü ve bant genişliği tasarrufu sağlar.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final",
+      "sourceTitle": "Recommendation for Key Management: Part 1 – General",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12802,6 +11998,8 @@
     "explanationTr": "Zamanlama analizinde (Timing Attack) şifre çözme süresindeki mikrosaniyelik farklardan gizli anahtar çıkarılmasını engellemek için kod sabit sürede çalışmalıdır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/secure-coding/mitigate-timing-side-channel-crypto-implementation.html",
+      "sourceTitle": "Guidelines for Mitigating Timing Side Channels Against Cryptographic Implementations",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12832,6 +12030,8 @@
     "explanationTr": "Self-attention matris çarpımında (Q x K^T) N uzunluğundaki dizinin her elemanı diğeriyle karşılaştırıldığı için karmaşıklık O(N^2) olur.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://arxiv.org/abs/2006.04768",
+      "sourceTitle": "Linformer: Self-Attention with Linear Complexity",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12862,6 +12062,8 @@
     "explanationTr": "KV-Cache önceki tokenların Key/Value vektörlerini GPU belleğinde saklayarak her yeni token üretiminde tüm bağlamı baştan hesaplama yükünü ortadan kaldırır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://huggingface.co/docs/transformers/kv_cache",
+      "sourceTitle": "Cache strategies",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12892,6 +12094,8 @@
     "explanationTr": "Kaynaklara küresel bir sıra numarası atanıp kilitlerin sadece artan sırayla talep edilmesi zorunlu tutulursa dairesel bekleme döngüsü oluşamaz.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://os.cs.luc.edu/deadlock.html",
+      "sourceTitle": "Deadlock — Introduction to Operating Systems: Principles and Practice",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12922,6 +12126,8 @@
     "explanationTr": "DNSSEC, DNS yanıtlarını dijital olarak imzalayarak DNS önbellek zehirlemesi (Cache Poisoning) ve sahte yönlendirmeleri engeller.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.rfc-editor.org/info/rfc4033/",
+      "sourceTitle": "RFC 4033: DNS Security Introduction and Requirements | RFC Editor",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12952,6 +12158,8 @@
     "explanationTr": "CUBIC paket kaybını tıkanıklık sanıp pencereyi daraltırken, BBR gerçek darboğaz kapasitesini (BtlBw) ve minimum RTT'yi sürekli ölçer.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://research.google/pubs/bbr-congestion-based-congestion-control/",
+      "sourceTitle": "BBR: Congestion-Based Congestion Control",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -12982,6 +12190,8 @@
     "explanationTr": "WAL, transaction onaylanmadan önce değişiklik kaydını ardışık loga yazıp diske boşaltır (fsync); çökme anında veri kaybı önlenir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.postgresql.org/docs/current/wal-intro.html",
+      "sourceTitle": "PostgreSQL: Documentation: Write-Ahead Logging (WAL)",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13012,6 +12222,8 @@
     "explanationTr": "ROB, komutlar spekülatif veya sırasız tamamlansa bile programın mantıksal durumunu orijinal sıralamayla kaydeder (in-order retire).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://csg.csail.mit.edu/6.823S14/StudyMaterials/Handouts/handout10-ooo.pdf",
+      "sourceTitle": "Out-of-Order Execution with ROB",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13042,6 +12254,8 @@
     "explanationTr": "Bloom Filter sıfır False Negative garantisi verir: \"Yok\" diyorsa kesinlikle yoktur; ancak hash çakışması sebebiyle \"Var\" yanıtında False Positive olabilir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://parquet.apache.org/docs/file-format/bloomfilter/",
+      "sourceTitle": "Bloom Filter | Parquet",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13072,6 +12286,8 @@
     "explanationTr": "Diffie-Hellman kimlik doğrulaması içermediği için araya giren saldırgan her iki tarafla ayrı anahtar oluşturup trafiği çözebilir (MitM).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.rfc-editor.org/info/rfc2786/",
+      "sourceTitle": "RFC 2786: Diffie-Helman USM Key Management Information Base and Textual Convention | RFC Editor",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13102,6 +12318,8 @@
     "explanationTr": "JIT çalışma anında sık çalışan kod bloklarını (hot spots) ve gerçek veri tiplerini izleyerek CPU'ya özel mikro-optimizasyonlar uygular.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://docs.oracle.com/en/graalvm/jdk/24/docs/reference-manual/native-image/optimizations-and-performance/PGO/",
+      "sourceTitle": "Profile-Guided Optimization",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13132,6 +12350,8 @@
     "explanationTr": "Operand Forwarding, ALU çıktısını register'a yazılmasını beklemeden bir sonraki komutun girişine besleyerek RAW (Read-After-Write) gecikmesini önler.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Operand_forwarding",
+      "sourceTitle": "Operand forwarding",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13162,6 +12382,8 @@
     "explanationTr": "Ağırlıkların 4 bite düşürülmesi bellek kaplamasını 4 kat azaltır ve bellek bant genişliği (memory bandwidth) darboğazını hafifletir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://huggingface.co/docs/transformers/v4.52.2/en/quantization/concept_guide",
+      "sourceTitle": "Quantization concepts · Hugging Face",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13192,6 +12414,8 @@
     "explanationTr": "Serializable seviyesi işlemleri sanki ardışık çalışıyormuş gibi izole ederek Phantom Read dahil tüm anomalileri engeller.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.postgresql.org/docs/current/transaction-iso.html",
+      "sourceTitle": "PostgreSQL: Documentation: Transaction Isolation",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13222,6 +12446,8 @@
     "explanationTr": "İki nesne birbirini gösterdiğinde referans sayaçları hiçbir zaman sıfıra inmez; bu döngüsel bellek sızıntısını çözmek için ekstra tarayıcı gerekir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://github.com/python/cpython/blob/main/InternalDocs/garbage_collector.md",
+      "sourceTitle": "cpython/InternalDocs/garbage_collector.md at main · python/cpython · GitHub",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13252,6 +12478,8 @@
     "explanationTr": "Yalın RSA deterministiktir; OAEP rastgelelik ve Feistel tabanlı dolgu ekleyerek CCA2 (uyarlamalı seçilmiş şifreli metin) saldırılarını engeller.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.rfc-editor.org/rfc/rfc8017.html",
+      "sourceTitle": "RFC 8017: PKCS #1: RSA Cryptography Specifications Version 2.2",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13282,6 +12510,8 @@
     "explanationTr": "LRU (Least Recently Used) en uzun süredir erişilmeyen satırı siler; LFU (Least Frequently Used) ise erişim sayacı en düşük olanı tahliye eder.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://redis.io/docs/latest/operate/rc/databases/configuration/data-eviction-policies/",
+      "sourceTitle": "Data eviction | Docs",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13312,6 +12542,8 @@
     "explanationTr": "İki çekirdek birbirinden bağımsız değişkenleri güncellese bile değişkenler aynı 64 baytlık cache line içindeyse sürekli geçersiz kılma trafiği oluşur.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://github.com/intel/intel-performance-skills/blob/main/skills/performance-patterns/patterns/false-sharing.md",
+      "sourceTitle": "intel-performance-skills/skills/performance-patterns/patterns/false-sharing.md at main · intel/intel-performance-skills · GitHub",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13342,6 +12574,8 @@
     "explanationTr": "Sürekli açılıp kapanan (flap eden) kararsız BGP rotaları cezalandırılıp bastırılarak küresel yönlendiricilerin CPU aşırı yükü önlenir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.rfc-editor.org/info/rfc2439/",
+      "sourceTitle": "RFC 2439: BGP Route Flap Damping | RFC Editor",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13372,6 +12606,8 @@
     "explanationTr": "Sütun odaklı depolama (Parquet vb.) sadece sorgulanan sütunları diskten okur ve homojen veri yapısı sayesinde yüksek sıkıştırma sunar.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://docs.aws.amazon.com/athena/latest/ug/columnar-storage.html",
+      "sourceTitle": "Use columnar storage formats - Amazon Athena",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13402,6 +12638,8 @@
     "explanationTr": "OCC kilit maliyetinden kaçınır; işlemler veriyi okuyup değiştirir ve yalnızca commit anında çakışma (versiyon kontrolü) olup olmadığına bakar.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://docs.cloud.google.com/spanner/docs/concurrency-control",
+      "sourceTitle": "Concurrency control | Spanner | Google Cloud Documentation",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13432,6 +12670,8 @@
     "explanationTr": "Zero-Copy, veriyi diskten page cache'e ve oradan kullanıcı alanına kopyalamak yerine DMA ile doğrudan soket tamponuna iletir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.man7.org/linux/man-pages/man2/sendfile.2.html",
+      "sourceTitle": "sendfile(2) — Linux manual page",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13462,6 +12702,8 @@
     "explanationTr": "OCSP Stapling sayesinde sunucu, CA'dan aldığı zaman damgalı geçerlilik yanıtını TLS el sıkışmasına iliştirir; istemci CA'ya ek sorgu atmaz.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.rfc-editor.org/info/rfc6066/",
+      "sourceTitle": "RFC 6066: Transport Layer Security (TLS) Extensions: Extension Definitions | RFC Editor",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13492,6 +12734,8 @@
     "explanationTr": "Stack Canary, yerel değişkenler ile dönüş adresi arasına rastgele bir değer yerleştirir; taşma durumunda bu değer değişirse program çökertilerek istismar önlenir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Buffer_overflow_protection",
+      "sourceTitle": "Buffer overflow protection",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13522,6 +12766,8 @@
     "explanationTr": "L4 taşıma katmanında (IP:Port) paket inceler; L7 ise uygulama katmanında HTTP başlıkları, URI ve çerezleri ayrıştırarak akıllı yönlendirme yapar.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://developers.cloudflare.com/learning-paths/load-balancing/planning/types-load-balancers/",
+      "sourceTitle": "Types of load balancers · Cloudflare Learning Paths",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13552,6 +12798,8 @@
     "explanationTr": "GC Root tarafından doğrudan veya dolaylı olarak referans gösterilen (ör. statik koleksiyonlar, açık listener'lar) nesneler kullanılmasalar bile GC tarafından silinemez.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://docs.oracle.com/en/java/javase/25/troubleshoot/troubleshooting-memory-leaks.html",
+      "sourceTitle": "Troubleshoot Memory Leaks",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13582,6 +12830,8 @@
     "explanationTr": "SYN Cookies sayesinde sunucu yarı-açık bağlantı tablosunda (SYN queue) bellek ayırmaz; el sıkışma durumunu ACK numarasından çözer.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.rfc-editor.org/info/rfc4987/",
+      "sourceTitle": "RFC 4987: TCP SYN Flooding Attacks and Common Mitigations | RFC Editor",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13612,6 +12862,8 @@
     "explanationTr": "DataLoader deseni tek tek yapılan sorguları tek bir event loop döngüsünde toplar (batching) ve tek bir SQL \"IN (...)\" sorgusuna dönüştürür.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://github.com/graphql/dataloader",
+      "sourceTitle": "graphql/dataloader · GitHub",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13642,6 +12894,8 @@
     "explanationTr": "Replica lag nedeniyle kullanıcının kendi profilinde yaptığı değişikliği hemen ardından görememesi sorununu engeller; kendi yazmasını garanti okutur.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Consistency_model",
+      "sourceTitle": "Consistency model",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13672,6 +12926,8 @@
     "explanationTr": "ASLR bellek segmentlerinin başlangıç adreslerini rastgele belirleyerek saldırganın buffer overflow veya ROP zinciri oluşturmasını zorlaştırır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Address_space_layout_randomization",
+      "sourceTitle": "Address space layout randomization",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13702,6 +12958,8 @@
     "explanationKu": "Ji ber pergala ergatîfê, lêker li gorî biresera rasterast dikişe; loma bi \"ez\" re qertafa \"-im\" û bi \"tu\" re qertafa \"-î\" tê.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7",
+      "sourceTitle": "Kurmanji Kurdish | Iranian Languages",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13732,6 +12990,8 @@
     "explanationKu": "Di dema borî ya çîrokî de lêkera negerguhêz bi kirdeyê xwerû (ez hatibûm) û ya gerguhêz bi kirdeyê tewandî (min xwendibû) tê çêkirin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://celcar.indiana.edu/assessment/proficiency_guidelines/Kurmanji%20Grammar.pdf",
+      "sourceTitle": "Kurmanji Grammar",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13762,6 +13022,8 @@
     "explanationKu": "Lêkerên hevedudanî yên bi \"kirin\"ê di dema borî de pergala ergatîfê dixwazin, lê yên bi \"bûn\"ê negerguhêz in û kirdeyê xwerû digirin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://internationalistcommune.com/wp-content/uploads/2024/01/kurmanji-basic.pdf",
+      "sourceTitle": "Kurmanji Kurdish Basics",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13792,6 +13054,8 @@
     "explanationKu": "Di dema borî de qertafa neyîniyê \"ne-\" ye; di lêkera gerguhêz de kirde ditewe (min nexwend), di ya negerguhêz de xwerû ye (ez neçûm).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://bnk.institutkurde.org/images/pdf/48ZLGSQ9XT.pdf",
+      "sourceTitle": "Geçişsiz fiil / Geçişli fiil",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13822,6 +13086,8 @@
     "explanationKu": "Ergatîfiya kurmancî ya dabeşkirî ye; tenê di demên borî de dixebite, di dema niha û ya bê de sîstema xwerû-tewandî ya berovajî heye.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://dergipark.org.tr/tr/pub/kurdiname/article/687447",
+      "sourceTitle": "ERGATÎVÎ DI KURDIYA KURMANCÎ DE Û REWŞÊN AWARTE YÊN ERGATÎVIYA KURMANCÎ",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13852,6 +13118,8 @@
     "explanationKu": "Di îzafeya zincîrî de her navdêr zayenda xwe diparêze: \"derî\" nêr e (-yê), \"ode\" mê ye (-ya) û \"xanî\" nêr e (-yê) digire.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://twpl.library.utoronto.ca/index.php/twpl/article/view/41677",
+      "sourceTitle": "Ezafe in Northern Kurdish | Toronto Working Papers in Linguistics",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13882,6 +13150,8 @@
     "explanationKu": "Peyva \"mirov\" navdêreke nêr e; dema ku bi cînavê pêwendiyê \"ku\" re tê girêdan veqetandeka nêr a yekjimar \"-ê\" digire.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://twpl.library.utoronto.ca/index.php/twpl/article/view/41677",
+      "sourceTitle": "Ezafe in Northern Kurdish | Toronto Working Papers in Linguistics",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13912,36 +13182,8 @@
     "explanationKu": "Navdêrên mê yên yekjimar gava dikevin rewşa tewandî (bi daçekan re an di ergatîfê de) qertafa \"-ê\" digirin.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_ziman_1243",
-    "category": "Ziman",
-    "difficulty": 4,
-    "prompt": "Di tewanga navdêrên nêr ên yekjimar de kîjan qertaf tê bikaranîn?",
-    "promptTr": "Tekil eril isimlerin bükün durumunda (hal çekiminde) hangi ek kullanılır?",
-    "answers": [
-      "Qertafa \"-ê\" (mînak: heval -> hevalê)",
-      "Qertafa \"-an\" (mînak: heval -> hevalan)",
-      "Qertafa \"-î\" (mînak: heval -> hevalî)",
-      "Qertafa \"-a\" (mînak: heval -> hevala)"
-    ],
-    "answersTr": [
-      "\"-ê\" eki (örnek: heval -> hevalê)",
-      "\"-an\" eki (örnek: heval -> hevalan)",
-      "\"-î\" eki (örnek: heval -> hevalî)",
-      "\"-a\" eki (örnek: heval -> hevala)"
-    ],
-    "correctAnswer": "Qertafa \"-î\" (mînak: heval -> hevalî)",
-    "correctAnswerTr": "\"-î\" eki (örnek: heval -> hevalî)",
-    "explanation": "Tekil eril isimler bükün aldıklarında (örneğin \"ji hevalî re\") sonlarına \"-î\" bükün ekini alırlar.",
-    "explanationTr": "Tekil eril isimler bükün aldıklarında (örneğin \"ji hevalî re\") sonlarına \"-î\" bükün ekini alırlar.",
-    "explanationKu": "Navdêrên nêr ên yekjimar dema dikevin rewşa tewangê, qertafa tewangê ya nêr \"-î\" digirin (ji hevalî re, ji xortî re).",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7",
+      "sourceTitle": "Kurmanji Kurdish | Iranian Languages",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -13972,6 +13214,8 @@
     "explanationKu": "Di zimanê kurmancî de di pirjimariyê de cudahiya nêr û mê namîne; her du zayend jî bi qertafa tewangê ya \"-an\"ê ditewin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7",
+      "sourceTitle": "Kurmanji Kurdish | Iranian Languages",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14002,6 +13246,8 @@
     "explanationKu": "Di kurmancî de berambera cînavên xwerû (ez, tu, ew, em, hûn, ew) cînavên tewandî yên (min, te, wî/wê, me, we, wan) ne.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7",
+      "sourceTitle": "Kurmanji Kurdish | Iranian Languages",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14032,6 +13278,8 @@
     "explanationKu": "Peyva mê ya \"mase\" ji ber ku di bin bandora daçeka cîhî ya \"li ser\" de maye, tewiyaye û qertafa tewangê ya \"-ê\" girtiye.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://agorism.dev/book/kurdish/kurmanji_1_grammar.pdf",
+      "sourceTitle": "—Kurmanji Kurdish—",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14062,6 +13310,8 @@
     "explanationKu": "Daçeka \"ji ... re\" datîf e û aliyê wergir nîşan dide; \"ji ... ve\" ablatîf e û jêder an dema destpêkê destnîşan dike.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://agorism.dev/book/kurdish/kurmanji_1_grammar.pdf",
+      "sourceTitle": "—Kurmanji Kurdish—",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14092,6 +13342,8 @@
     "explanationKu": "\"Bi ... re\" hevaltiyê tîne zimên (bi wî re çûm), lê \"bi ... ve\" pêvebûn, zeliqandin an amûrê nîşan dide (bi darê ve kir).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://ezdixan.de/en/wiki/grammatik",
+      "sourceTitle": "Grammar Tables · Êzdîxan",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14122,6 +13374,8 @@
     "explanationKu": "Daçeka bêparbûnê ya \"bêyî\" peyva piştî xwe ditewîne; loma em dibêjin \"bêyî min\", \"bêyî wî\" an \"bêyî zanyariyê\".",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://agorism.dev/book/kurdish/kurmanji_1_grammar.pdf",
+      "sourceTitle": "—Kurmanji Kurdish—",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14152,6 +13406,8 @@
     "explanationKu": "Di lêkerên pêşgirkî de gava forma subjunktîfê tê çêkirin, qertafa \"bi-\" dihele û nayê gotin (veke, rabe, daxe).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://kurdischool.com/grammar.html",
+      "sourceTitle": "Kurmanji grammar, explained simply | Kurdi School",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14182,6 +13438,8 @@
     "explanationKu": "Pêşgira \"ve-\" wateya berfirehkirin, vekirin an dubarekirinê dide lêkeran (mînak: vekirin, vegotin, vegerîn).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://dergipark.org.tr/en/pub/kurdiname/article/1290937",
+      "sourceTitle": "Pêşgira Dariştinê ya ‘Ve-’ yê û Fonksîyonên Wê yên Morfosemantîk di Berhemên Klasîk ên Kurmancîya Jorîn da",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14212,6 +13470,8 @@
     "explanationKu": "Alfabeya Hawarê ya Celadet Bedirxan ji 31 tîpan pêk tê; 8 tîpên wê dengdêr û 23 tîpên wê jî dengdar in.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurmanji_phonology",
+      "sourceTitle": "Kurmanji phonology",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14242,6 +13502,8 @@
     "explanationKu": "Di kurmancî de 5 dengdêrên dirêj (a, ê, î, o, û) û 3 dengdêrên kurt (e, i, u) hene.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://dergipark.org.tr/tr/download/article-file/226713",
+      "sourceTitle": "Remarks on Vowels and Consonants in Kurmanji",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14272,6 +13534,8 @@
     "explanationKu": "Ji bo ku du dengdêr li pey hev nekevin xişrê, dengê navberê yê \"y\" dikeve navbera du dengdêran (mase-y-a min).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://twpl.library.utoronto.ca/index.php/twpl/article/view/41677",
+      "sourceTitle": "Ezafe in Northern Kurdish | Toronto Working Papers in Linguistics",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14302,6 +13566,8 @@
     "explanationKu": "Di kurmancî de zayenda mê û nêr di îzafe û tewangê de zindî ye; lê di soranî de ev cudahî rabûye û îzafe tenê bi \"-î\" çêdibe.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/2",
+      "sourceTitle": "Sorani Kurdish Iranian languages Catalogue | Iranian Languages",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14332,6 +13598,8 @@
     "explanationKu": "Kurmancî û zazakî her du jî zayenda rêzimanî (nêr/mê), sîstema tewangê û rêzika ergatîfê di dema borî de diparêzin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://doi.org/10.1163/9789004706552_004",
+      "sourceTitle": "On the Linguistic History of Kurdish",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14362,6 +13630,8 @@
     "explanationKu": "Paşgira \"-xane\"yê ji bo avakirina navên mekan û saziyan tê bikaranîn (nexweşxane, meyxane, çapxane).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wiktionary.org/wiki/-xane",
+      "sourceTitle": "-xane - Wiktionary, the free dictionary",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14392,6 +13662,8 @@
     "explanationKu": "Paşgira \"-dar\"ê xwedîtî û hebûna têgehekê nîşan dide; rengdêrên wekî birîndar, dildar û zordar jê çêdibin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wiktionary.org/wiki/-dar",
+      "sourceTitle": "-dar - Wiktionary, the free dictionary",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14422,6 +13694,8 @@
     "explanationKu": "Paşgira \"-van\"ê kesê ku karekî diparêze an bi rê ve dibe nîşan dide (mînak: nobedar/nobevan, şivan, baxçevan).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wiktionary.org/wiki/-van",
+      "sourceTitle": "-van - Wiktionary, the free dictionary",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14452,6 +13726,8 @@
     "explanationKu": "Paşgira \"-tî / -atî\"yê ji navdêr û rengdêran navên razber û têgehî çêdike (hevaltî, biratî, zanyarî/zanatî).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://dergipark.org.tr/en/pub/kurdiname/article/1448052",
+      "sourceTitle": "Morfema \"-î\"yê Di Peyvsaziya Kurmancî De",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14482,6 +13758,8 @@
     "explanationKu": "Pêşgira \"bê-\" dikeve serê navdêran û rengdêrên nebûn an bêparbûnê çêdike (bêdeng, bêhêvî, bêbext).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://sites.fas.harvard.edu/~iranian/Kurmanji/kurmanji_3_lexicon.pdf",
+      "sourceTitle": "Kurmanji Lexicon",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14512,96 +13790,8 @@
     "explanationKu": "Paşgirên \"-ik\" û \"-ok\"ê paşgirên biçûkkirin û hezkirinê (dîmînûtîf) ne (mînak: çavên keçikê, xanîkê li ber çem).",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_ziman_1275",
-    "category": "Ziman",
-    "difficulty": 4,
-    "prompt": "Cînavê vegerok ê \"xwe\" di hevokê de li şûna kîjan hêmanan rûdine û taybetmendiya wê ya zayendî çi ye?",
-    "promptTr": "Dönüşlü zamir olan \"xwe\" cümlede hangi ögelerin yerine geçer ve cinsiyet uyumu nasıldır?",
-    "answers": [
-      "Ji bo mê dibe \"xweya\" û ji bo nêr dibe \"xweyê\"",
-      "Tenê ji bo kesê sêyem ê nêr ê yekjimar tê bikaranîn",
-      "Di dema borî de bi tevahî qertafa tewangê digire",
-      "Ji bo hemû kes û zayendan neguherbar e û li şûna xwediyê xwe rûdine"
-    ],
-    "answersTr": [
-      "Dişil için \"xweya\" ve eril için \"xweyê\" şekline dönüşür",
-      "Yalnızca üçüncü tekil şahıs eriller için kullanılır",
-      "Geçmiş zamanda bütünüyle bükün ekleri alarak değişir",
-      "Bütün şahıs ve cinsiyetler için değişmezdir ve öznenin yerini tutar"
-    ],
-    "correctAnswer": "Ji bo hemû kes û zayendan neguherbar e û li şûna xwediyê xwe rûdine",
-    "correctAnswerTr": "Bütün şahıs ve cinsiyetler için değişmezdir ve öznenin yerini tutar",
-    "explanation": "\"Xwe\" dönüşlü zamiri cinsiyet veya tekil/çoğul fark etmeksizin tüm şahıslarda aynı kalır (pirtûka xwe, hevalê xwe).",
-    "explanationTr": "\"Xwe\" dönüşlü zamiri cinsiyet veya tekil/çoğul fark etmeksizin tüm şahıslarda aynı kalır (pirtûka xwe, hevalê xwe).",
-    "explanationKu": "Cînavê vegerok ê \"xwe\" ji bo her sê kesan, ji bo mê û nêr û ji bo yekjimar/pirjimar bê guherîn wekî hev tê bikaranîn.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_ziman_1277",
-    "category": "Ziman",
-    "difficulty": 4,
-    "prompt": "Di gotina pêşiyan a \"Dîwar kerr e, lê xwedî guh e\" de armanca sereke ya vegotinê çi ye?",
-    "promptTr": "\"Dîwar kerr e, lê xwedî guh e\" atasözünün anlatmak istediği temel mesaj nedir?",
-    "answers": [
-      "Xurtbûn û aramiya avahiyên kevnar",
-      "Pêwîstiya lêkirina dîwarên bilind bo gundan",
-      "Zehmetiya axaftina bi mirovên kerr re",
-      "Hişyariya veşartina raz û gotinên nepenî"
-    ],
-    "answersTr": [
-      "Eski binaların dayanıklılığı ve mimari yapısı",
-      "Köyler için yüksek duvar örmenin gerekliliği",
-      "İşitme engelli insanlarla konuşmanın zorluğu",
-      "Sırların ve gizli sözlerin korunması uyarısı"
-    ],
-    "correctAnswer": "Hişyariya veşartina raz û gotinên nepenî",
-    "correctAnswerTr": "Sırların ve gizli sözlerin korunması uyarısı",
-    "explanation": "Türkçedeki \"Yerin kulağı var\" atasözünün karşılığıdır; gizli konuşmaların başkaları tarafından duyulabileceğini belirtir.",
-    "explanationTr": "Türkçedeki \"Yerin kulağı var\" atasözünün karşılığıdır; gizli konuşmaların başkaları tarafından duyulabileceğini belirtir.",
-    "explanationKu": "Ev gotina pêşiyan ji bo hişyarkirina parastina sir û gotinan tê gotin; ango her gotinek dikare bê bihîstin.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_ziman_1279",
-    "category": "Ziman",
-    "difficulty": 4,
-    "prompt": "Gava du navdêr bi hevdudanî wateyeke hevbeş ava dikin (mînak: şevûroj, dêûbav), ev sazî bi çi tê binavkirin?",
-    "promptTr": "İki ismin \"û\" bağlacıyla birleşip ortak kavram oluşturduğu yapılar (şevûroj, dêûbav) ne ad alır?",
-    "answers": [
-      "Navdêrên razber ên xwedîtiyê",
-      "Hevalbendên gerguhêz ên dema niha",
-      "Daçekên çerçoveyî yên cîh û demê",
-      "Navdêrên hevedudanî yên hevrêz (dvandva)"
-    ],
-    "answersTr": [
-      "Sahiplik bildiren soyut isim türevleri",
-      "Şimdiki zamanlı geçişli bağlaç öbekleri",
-      "Mekan bildiren çerçeve çevre edatları",
-      "Eşgüdümlü bileşik isimler (dvandva / copulative)"
-    ],
-    "correctAnswer": "Navdêrên hevedudanî yên hevrêz (dvandva)",
-    "correctAnswerTr": "Eşgüdümlü bileşik isimler (dvandva / copulative)",
-    "explanation": "Dvandva tipi bileşik isimler iki zıt veya eş kavramın \"û\" ile kaynaşmasıyla tek bir kavram oluşturur (şevûroj: gece gündüz).",
-    "explanationTr": "Dvandva tipi bileşik isimler iki zıt veya eş kavramın \"û\" ile kaynaşmasıyla tek bir kavram oluşturur (şevûroj: gece gündüz).",
-    "explanationKu": "Ev avahî wekî hevedudaniya hevrêz (dvandva) tê zanîn ku du peyv bi tîpa \"û\" dibin yek têgeh (dêûbav, jinûmêr).",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.institutkurde.org/publications/kurmanci/telechargement/ku39.pdf",
+      "sourceTitle": "Kurmancî 39",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14632,6 +13822,8 @@
     "explanationKu": "Cînavên nîşandanê di tewangê de ji bo zayenda nêr dibin vî/wî, ji bo mê dibin vê/wê û di pirjimariyê de dibin van/wan.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://sites.fas.harvard.edu/~iranian/Kurmanji/kurmanji_1_grammar.pdf",
+      "sourceTitle": "Kurmanji Kurdish: A Reference Grammar with Selected Readings",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14662,6 +13854,8 @@
     "explanationKu": "\"Pê\" ji \"bi wê/wî\" û \"jê\" ji \"ji wê/wî\" pêk tê; di lêkerên hevedudanî de wateya lêkerê bi van daçekan teşe digire.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://sites.fas.harvard.edu/~iranian/Kurmanji/kurmanji_1_grammar.pdf",
+      "sourceTitle": "Kurmanji Kurdish: A Reference Grammar with Selected Readings",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14692,36 +13886,8 @@
     "explanationKu": "Paşgira \"-ok\"ê dikeve ser qurmê lêkerê û rengdêra xasiyetê ava dike (tirsok: yê ku pir ditirse, kenok: yê ku pir dikene).",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_ziman_1285",
-    "category": "Ziman",
-    "difficulty": 4,
-    "prompt": "Di kurmancî de rengdêrên hevedudanî yên ku bi pêşgira \"xweş-\" (mînak: xweşmêr, xweşnav, xweşbext) çêdibin çi nîşan didin?",
-    "promptTr": "Kurmancîde \"xweş-\" önekiyle kurulan bileşik sıfatlar (xweşmêr, xweşnav, xweşbext) nasıl bir anlam katar?",
-    "answers": [
-      "Tunebûn û neyîniya wî navdêrî diyar dikin",
-      "Tenê mezinahiya laşî ya heyberan destnîşan dikin",
-      "Peyvê dikin amûreke teknîkî ya çandiniyê",
-      "Qencî, rûmet û çêtiya wê xisletê nîşan didin"
-    ],
-    "answersTr": [
-      "O ismin yokluğunu ve olumsuzluk durumunu ifade eder",
-      "Yalnızca nesnelerin fiziksel büyüklüğünü belirtir",
-      "Kelimeyi tarımla ilgili teknik bir alete dönüştürür",
-      "O niteliğin güzelliğini, olumluluğunu ve saygınlığını bildirir"
-    ],
-    "correctAnswer": "Qencî, rûmet û çêtiya wê xisletê nîşan didin",
-    "correctAnswerTr": "O niteliğin güzelliğini, olumluluğunu ve saygınlığını bildirir",
-    "explanation": "\"Xweş-\" öneki bileşik sıfatlarda olumluluk, erdem ve övgü anlamı katar (xweşmêr: mert adam, xweşbext: bahtiyar).",
-    "explanationTr": "\"Xweş-\" öneki bileşik sıfatlarda olumluluk, erdem ve övgü anlamı katar (xweşmêr: mert adam, xweşbext: bahtiyar).",
-    "explanationKu": "Pêşgira \"xweş-\" di peyvsaziyê de wateya başî, qencî û rûmetdariyê li navdêr an rengdêran zêde dike (xweşnav, xweşbêj).",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.institutkurde.org/publications/kurmanci/telechargement/ku39.pdf",
+      "sourceTitle": "Kurmancî 39",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14752,6 +13918,8 @@
     "explanationKu": "Pêşgira \"da-\" berevajî ya \"hil-\" e; tevgera ji jor ber bi jêr ve tîne zimên (daketin, daxistin, danîn).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://sites.fas.harvard.edu/~iranian/Kurmanji/kurmanji_3_lexicon.pdf",
+      "sourceTitle": "Kurmanji Lexicon",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14782,6 +13950,8 @@
     "explanationKu": "Peyva \"ziman\" di kurmancî de nêr e; loma bi veqetandeka nêr re tê bikaranîn (zimanê zikmakî, zimanê kurdî).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wiktionary.org/wiki/ziman",
+      "sourceTitle": "ziman - Wiktionary, the free dictionary",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14812,6 +13982,8 @@
     "explanationKu": "Peyva \"heval\" hevpar e; dema bi \"-ê\" bê (hevalê min) nêr e, dema bi \"-a\" bê (hevala min) zayenda mê nîşan dide.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wiktionary.org/wiki/heval",
+      "sourceTitle": "heval - Wiktionary, the free dictionary",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14842,6 +14014,8 @@
     "explanationKu": "Ji bo nîşandana dûr cînavê xwerû \"ew\" e; di rewşa tewandî de dibe wî (nêr), wê (mê) û wan (pirjimar).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://sites.fas.harvard.edu/~iranian/Kurmanji/kurmanji_1_grammar.pdf",
+      "sourceTitle": "Kurmanji Kurdish: A Reference Grammar with Selected Readings",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14872,6 +14046,8 @@
     "explanationKu": "Pêşgira \"ra-\" bi gelemperî bilindbûn an jî hilgirtina ji ser rûyê erdê nîşan dide (rabûn, rakirin, ragirtin).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://dergipark.org.tr/en/pub/artuklukurdology/article/1539834",
+      "sourceTitle": "Pêşgira Dariştinê ya \"ra-\"yê",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14902,6 +14078,8 @@
     "explanationKu": "Cînavê vegerok ê \"xwe\" nîşana xwedîtiya kirdeyê bixwe ye û ji bo hemû kesan (ez, tu, ew, em, hûn, ew) wekî xwe dimîne.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://multicast.aspra.uni-bamberg.de/data/pubs/Haig2018_Northern-Kurdish_Kurmanji.pdf",
+      "sourceTitle": "Northern Kurdish (Kurmanjî)",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -14932,36 +14110,8 @@
     "explanationKu": "Dema navdêra nêr di tewangê de be û rengdêrek bi dû wê de were, veqetandeka serbixwe ya nêr \"yê\" dikeve navberê.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_ziman_1297",
-    "category": "Ziman",
-    "difficulty": 4,
-    "prompt": "Di kurmancî de ferqa navdêrên hevedudanî yên hevedest (mînak: serok, serdest, pêşeng) li ser kîjan pêkhateyê ava dibe?",
-    "promptTr": "Kurmancîde \"serok\", \"serdest\", \"pêşeng\" gibi bileşik kelimelerin yapısal türetim temeli nedir?",
-    "answers": [
-      "Tenê bi rêya lêkerên dema bê yên ku bi paşgira \"-in\" qediyane",
-      "Bi rêya organên laş (ser, dest, pê) û hevgirtina bi paşgir an rengdêran re",
-      "Bi dabeşkirina navên rojan li ser navên heftê û mehan",
-      "Tenê bi guherandina tîpên dengdêr bo dengdarên req"
-    ],
-    "answersTr": [
-      "Yalnızca \"-in\" ile biten gelecek zamanlı eylemler vasıtasıyla",
-      "Beden uzuvları (ser, dest, pê) ile ek ve sıfatların birleşmesi yoluyla",
-      "Haftanın gün isimlerinin takvimsel olarak bölünmesi yoluyla",
-      "Yalnızca ünlü harflerin sert ünsüzlere dönüştürülmesi yoluyla"
-    ],
-    "correctAnswer": "Bi rêya organên laş (ser, dest, pê) û hevgirtina bi paşgir an rengdêran re",
-    "correctAnswerTr": "Beden uzuvları (ser, dest, pê) ile ek ve sıfatların birleşmesi yoluyla",
-    "explanation": "Kürtçede organ adları (ser: baş, dest: el, pê: ayak) soyut ve idari sıfat/isim türetiminde kök olarak sıkça kullanılır.",
-    "explanationTr": "Kürtçede organ adları (ser: baş, dest, pê) ile ek ve sıfatların birleşmesi yoluyla soyut kavramlar (serok: lider, serdest: egemen) türetilir.",
-    "explanationKu": "Di kurmancî de organên laşî (wekî ser, dest, ber) ji bo avakirina têgehên razber û pêşengiyê tên bikaranîn (serok, serwer, destbira).",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://sites.fas.harvard.edu/~iranian/Kurmanji/kurmanji_1_grammar.pdf",
+      "sourceTitle": "Kurmanji Kurdish: A Reference Grammar with Selected Readings",
       "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -25872,36 +25022,8 @@
     "explanationTr": "Erivan Radyosu sözlü mirası stüdyo kayıtlarıyla ölümsüzleştirmiş ve ortak müzikal bellek oluşturmuştur.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_muzik_0230",
-    "category": "Muzîk",
-    "difficulty": 4,
-    "prompt": "Di vegotina dengbêjiyê de taybetmendiya sereke ya ku ekola \"Serhedê\" ji ekola \"Botanê\" cuda dike çi ye?",
-    "promptTr": "Serhed dengbêjlik ekolü ile Botan ekolü arasındaki temel icra ve üslup farkı nedir?",
-    "answers": [
-      "Li Serhedê tenê amûra piyanoyê heye; li Botanê tenê gîtar tê bikaranîn",
-      "Li Serhedê stran tenê bi tirkî ne; li Botanê tenê bi farisî tên gotin",
-      "Li Serhedê qêrîn û dengê girtî yê bilind serdest e; li Botanê melîzma û kontrola henaseyê heye",
-      "Li Serhedê tenê jin dibêjin; li Botanê dengbêjî tenê ya mêran e /"
-    ],
-    "answersTr": [
-      "Serhed'de sadece piyano çalınır; Botan'da yalnızca gitar kullanılır",
-      "Serhed'de şarkılar sadece Türkçe; Botan'da ise yalnızca Farsça söylenir",
-      "Serhed tiz, gırtlaktan ve lirik-epiktir; Botan daha ritmik ve nefes kontrolüne dayalıdır",
-      "Serhed'de yalnızca kadınlar; Botan'da ise dengbêjlik yalnızca erkeklerce yapılır"
-    ],
-    "correctAnswer": "Li Serhedê qêrîn û dengê girtî yê bilind serdest e; li Botanê melîzma û kontrola henaseyê heye",
-    "correctAnswerTr": "Serhed tiz, gırtlaktan ve lirik-epiktir; Botan daha ritmik ve nefes kontrolüne dayalıdır",
-    "explanation": "Ekola Serhedê bi dengê bilind ê epîk navdar e; ya Botanê bi melodiyên nermtir û kontrola henaseyê tê naskirin.",
-    "explanationKu": "Ekola Serhedê bi dengê bilind ê epîk navdar e; ya Botanê bi melodiyên nermtir û kontrola henaseyê tê naskirin.",
-    "explanationTr": "Serhed ekolü tiz haykırışlarla öne çıkarken Botan ekolü melizmatik nüanslar ve nefes kontrolü taşır.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.institutkurde.org/en/publications/bulletins/423.html",
+      "sourceTitle": "Bulletins 423 - Kurdish Institute of Paris",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -25932,6 +25054,8 @@
     "explanationTr": "90'lar grup müziği halk türkülerini bas, gitar, flüt ve çoksesli koro düzenlemeleriyle çağdaş bir çizgiye taşımıştır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Koma_Deng%C3%AA_Azad%C3%AE",
+      "sourceTitle": "Koma Dengê Azadî",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -25962,36 +25086,8 @@
     "explanationTr": "Şivan Perwer dengbêjlik anlatısını tembûr ve epik sözlerle buluşturarak modern bir halk ozanlığı ekolü yaratmıştır.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_muzik_0248",
-    "category": "Muzîk",
-    "difficulty": 4,
-    "prompt": "Taybetmendiya sereke ya stranên Mihemed Şêxo ya ku wî li Rojavayê Kurdistanê kir sembol çi bû?",
-    "promptTr": "Mihemed Şêxo'yu Rojava ve genel Kürt müziğinde sembolleştiren en temel sanatsal bileşim neydi?",
-    "answers": [
-      "Tenê çêkirina muzîka dansê ya ji bo şahiyên dewlemendan",
-      "Yekkirina helbestên neteweyî yên Cegerxwîn bi melodiyên xemgîn ên tembûrê re",
-      "Bikaranîna teknolojiya dîjîtal a komputerê di salên pênciyan de",
-      "Wergerandina stranên pop ên fransî bo zaravayê soranî"
-    ],
-    "answersTr": [
-      "Yalnızca zengin düğünleri için hafif dans müzikleri üretmesi",
-      "Cegerxwîn'in ulusal şiirlerini bağlamanın hüzünlü ve etkileyici melodileriyle buluşturması",
-      "1950'li yıllarda ilk dijital bilgisayar sentezleyicilerini kullanması",
-      "Fransız pop şarkılarını Soranice lehçesine tercüme edip seslendirmesi"
-    ],
-    "correctAnswer": "Yekkirina helbestên neteweyî yên Cegerxwîn bi melodiyên xemgîn ên tembûrê re",
-    "correctAnswerTr": "Cegerxwîn'in ulusal şiirlerini bağlamanın hüzünlü ve etkileyici melodileriyle buluşturması",
-    "explanation": "Mihemed Şêxo helbestên Cegerxwîn û şairên kurd bi dengekî xemgîn û tembûrê kirin malê hemû gel.",
-    "explanationKu": "Mihemed Şêxo helbestên Cegerxwîn û şairên kurd bi dengekî xemgîn û tembûrê kirin malê hemû gel.",
-    "explanationTr": "Mihemed Şêxo, Cegerxwîn gibi şairlerin dizelerini kendine has buğulu sesi ve tembûruyla hafızalara kazımıştır.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Govenda_Azad%C3%AExwazan",
+      "sourceTitle": "Govenda Azadîxwazan",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26022,66 +25118,8 @@
     "explanationTr": "Karapêtê Xaço, Ermeni kökenli bir dengbêj olarak Serhed kilamlarını en saf haliyle Erivan Radyosu üzerinden geleceğe taşımıştır.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_muzik_0254",
-    "category": "Muzîk",
-    "difficulty": 4,
-    "prompt": "Di muzîka gelêrî de cudahiya bikaranîna \"Dahol û Zirne\" li gorî \"Tembûr\"ê di kîjan qadê de diyar dibe?",
-    "promptTr": "Geleneksel icrada \"Davul-Zurna\" ile \"Tembûr / Bağlama\" çalgılarının kullanım alanı farkı nedir?",
-    "answers": [
-      "Dahol tenê di şînan de tê lêdan; tembûr tenê di govendên lezgîn de ye",
-      "Dahol û zirne ji bo qadên vekirî û govendê ne; tembûr ji bo civatên girtî û guhdarîkirinê ye",
-      "Dahol ji aliyê jinan ve tê lêdan; tembûr tenê ji bo leşkeran e",
-      "Dahol bi elektrîkê dixebite; tembûr amûreke bê deng e"
-    ],
-    "answersTr": [
-      "Davul yalnızca cenazelerde çalınır; tembûr ise yalnızca hızlı halaylarda kullanılır",
-      "Davul-zurna açık hava ve halay içindir; tembûr ise kapalı meclisler ve dinleme içindir",
-      "Davul kadınlarca çalınır; tembûr ise yalnızca ordu askerlerine mahsustur",
-      "Davul elektrikle çalışır; tembûr ise tamamen sessiz bir eğitim aletidir"
-    ],
-    "correctAnswer": "Dahol û zirne ji bo qadên vekirî û govendê ne; tembûr ji bo civatên girtî û guhdarîkirinê ye",
-    "correctAnswerTr": "Davul-zurna açık hava ve halay içindir; tembûr ise kapalı meclisler ve dinleme içindir",
-    "explanation": "Dahol û zirne amûrên derve yên govendê ne; tembûr amûra şevbihêrk û odeyên civatê ye.",
-    "explanationKu": "Dahol û zirne amûrên derve yên govendê ne; tembûr amûra şevbihêrk û odeyên civatê ye.",
-    "explanationTr": "Davul ve zurna yüksek ses gücüyle açık hava düğün ve halaylarında; tembûr ise oda meclislerinde içsel dinletilerde kullanılır.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_muzik_0255",
-    "category": "Muzîk",
-    "difficulty": 5,
-    "prompt": "Taybetmendiya bêhempa ya Hesen Zîrek di muzîka kurdî (beşa Rojhilat û Başûr) de çi bû?",
-    "promptTr": "Hesen Zîrek'in Kürt müzik tarihindeki en hayranlık uyandırıcı bestecilik yeteneği neydi?",
-    "answers": [
-      "Tenê xwendina notayên klasîk ên rojavayî li Radyoya Londonê",
-      "Tenê çêkirina stranên bi zimanê îngilîzî ji bo sînemaya Hollywoodê",
-      "Bêhejmar stran bi afirandina melodî û helbestên serbixwe yên di heman kêliyê de (bê amadekarî)",
-      "Bikaranîna tenê piyanoyê di hemû qeydên xwe yên li Silêmaniyê de"
-    ],
-    "answersTr": [
-      "Londra Radyosu'nda yalnızca Batı klasik müzik notalarını seslendirmesi",
-      "Hollywood sineması için yalnızca İngilizce pop şarkıları bestelemesi",
-      "Stüdyo anında irticalen (doğaçlama) yüzlerce yepyeni beste ve söz üretebilmesi",
-      "Süleymaniye'deki tüm kayıtlarında tek çalgı olarak piyanoyu kullanması"
-    ],
-    "correctAnswer": "Bêhejmar stran bi afirandina melodî û helbestên serbixwe yên di heman kêliyê de (bê amadekarî)",
-    "correctAnswerTr": "Stüdyo anında irticalen (doğaçlama) yüzlerce yepyeni beste ve söz üretebilmesi",
-    "explanation": "Hesen Zîrek xwedî qabiliyeteke mezin a xweber çêkirina stran û melodiyan bû.",
-    "explanationKu": "Hesen Zîrek xwedî qabiliyeteke mezin a xweber çêkirina stran û melodiyan bû.",
-    "explanationTr": "Hesen Zîrek nota veya yazı bilmeden stüdyoya girip o anda doğaçlama olarak yüzlerce ölümsüz beste üretmiştir.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://digitalarchive.library.bogazici.edu.tr/bitstreams/0d2dc0f8-5c2b-459c-8f30-631bdef85335/download",
+      "sourceTitle": "Boğaziçi University Digital Archive - Dengbêjî thesis",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26112,6 +25150,8 @@
     "explanationTr": "Dengbêj Evi, kaybolma tehlikesindeki sözlü kültürü mekanlaştırarak yeni kuşakların ve araştırmacıların erişimine açmıştır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.diyarbakir.bel.tr/ku/nuce/dengbej",
+      "sourceTitle": "Di 3 mehan de 70 hezar kesî serdana Mala Dengbêjan kir",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26142,6 +25182,8 @@
     "explanationTr": "Ali Kemal Çınar, Diyarbakır'da ev ortamında çektiği absürt mizah ve fantastik süper kahraman temalarıyla özgün bir dil kurmuştur.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://altyazi.net/soylesiler/ali-kemal-cinar-ile-soylesi-siradan-seylerin-kahramani/",
+      "sourceTitle": "Ali Kemal Çınar ile Söyleşi: Sıradan Şeylerin Kahramanı",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26172,6 +25214,8 @@
     "explanationTr": "Vodka Lemon, Sovyetler Birliği'nin dağılması sonrası Kafkasya'daki yoksul bir Êzdî köyündeki sıcak insan ilişkilerini kara mizahla aktarır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Vodka_Lemon",
+      "sourceTitle": "Vodka Lemon",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26202,36 +25246,8 @@
     "explanationTr": "Dengbêjlik geleneği, tarihsel olayları ve insan trajedilerini sözlü olarak bugüne taşıyan en zengin senaryo hazinesidir.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0277",
-    "category": "Sînema",
-    "difficulty": 4,
-    "prompt": "Sînemagerên kurd ên diyasporayê (mînak: li Almanyayê, Swêdê, Swîsreyê) çima di fîlmên xwe de pirsa \"nasnameya ducarî\" derdixin pêş?",
-    "promptTr": "Avrupa diasporasında üretim yapan Kürt sinemacılar neden filmlerinde sık sık \"çifte kimlik\" krizini işler?",
-    "answers": [
-      "Ji ber ku zimanê wan ê dayikê qet nayê bîra wan",
-      "Ji ber ku fîlmên wan tenê ji bo şîrketên geştiyariyê têne çêkirin",
-      "Ji ber aloziya di navbera çanda zikmakî û çanda welatê nû yê ku lê dijîn",
-      "Ji bo ku lîstikvanên biyanî fêrî lîstikvaniya kurdî bibin"
-    ],
-    "answersTr": [
-      "Ana dillerini ve geçmişlerini tamamen unuttuklarını kanıtlamak için",
-      "Filmleri yalnızca uluslararası turizm acentelerine tanıtım amacıyla çektikleri için",
-      "Köklerin ait olduğu ana vatan ile yaşanılan göçmen ülkesinin kültürel gerilimi arasında kalındığı için",
-      "Avrupalı tiyatro oyuncularına zorunlu oryantal oyunculuk dersleri vermek için"
-    ],
-    "correctAnswer": "Ji ber aloziya di navbera çanda zikmakî û çanda welatê nû yê ku lê dijîn",
-    "correctAnswerTr": "Köklerin ait olduğu ana vatan ile yaşanılan göçmen ülkesinin kültürel gerilimi arasında kalındığı için",
-    "explanation": "Di diyasporayê de nifşên nû di navbera du kulturan de li nasnameya xwe digerin.",
-    "explanationKu": "Di diyasporayê de nifşên nû di navbera du kulturan de li nasnameya xwe digerin.",
-    "explanationTr": "Diaspora sineması göçmen kuşakların uyum, aidiyet, kökler ve çokkültürlülük eksenindeki kimlik arayışlarını ele alır.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://www.kurdipedia.org/default.aspx?lng=10&q=20221024075138441654",
+      "sourceTitle": "Bir Karşı-Bellek Mekânı Olarak Kürt Sineması: Kilama Dayîka Min Üzerine",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26262,66 +25278,8 @@
     "explanationTr": "Ax, 90'larda yakılan köylerin hüznünü boşaltılmış evlerin arasında toprağına tutunan ihtiyar Zelo üzerinden anlatır.",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0282",
-    "category": "Sînema",
-    "difficulty": 5,
-    "prompt": "Mûzîka fîlmê di sînemaya Bahman Ghobadi de (wekî mûzîkên Hossein Alizadeh) çima xwedî cihekî stratejîk e?",
-    "promptTr": "Bahman Ghobadi sinemasında (Hossein Alizadeh gibi ustaların) film müziklerinin dramatik işlevi nedir?",
-    "answers": [
-      "Ji ber ku lîstikvan di fîlmê de qet neaxivîne û tenê mûzîk heye",
-      "Ji bo firotina kasetan li dikanên mûzîkê yên Amerîkayê",
-      "Ji ber ku qanûnên fîlmçêkirinê bikaranîna dengê zindî qedexe dikin",
-      "Deng û awazên gelerî wekî karakterekî duyem ê sereke yê fîlmê tev li çîrokê dibin"
-    ],
-    "answersTr": [
-      "Oyuncuların film boyunca hiç diyalog kurmayıp yalnızca fon müziği çalması",
-      "Yalnızca Amerikan müzik marketlerinde albüm satışı yaparak kâr elde etmek",
-      "Uluslararası sinema kurallarının diyalog yerine sadece müzik kullanımını zorunlu kılması",
-      "Geleneksel enstrüman ve melodilerin adeta filmin canlı bir başrol karakteri gibi anlatıya katılması"
-    ],
-    "correctAnswer": "Deng û awazên gelerî wekî karakterekî duyem ê sereke yê fîlmê tev li çîrokê dibin",
-    "correctAnswerTr": "Geleneksel enstrüman ve melodilerin adeta filmin canlı bir başrol karakteri gibi anlatıya katılması",
-    "explanation": "Mûzîk di fîlmên Ghobadi de tenê fon nîne; ew hest, serpêhatî û zimanê sereke yê fîlmê ye.",
-    "explanationKu": "Mûzîka di fîlmên Ghobadi de tenê fon nîne; ew hest, serpêhatî û zimanê sereke yê fîlmê ye.",
-    "explanationTr": "Ghobadi filmlerinde def, kaval ve tembûr gibi otantik sesler diyalogların ötesinde bir anlatıcı rolü üstlenir.",
-    "metadata": {
-      "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_sinema_0284",
-    "category": "Sînema",
-    "difficulty": 5,
-    "prompt": "Di sînemaya \"Yılmaz Güney\" de di fîlma \"Ağıt\" (1971) de metafora qaçaxçiyan çi nîşan dide?",
-    "promptTr": "Yılmaz Güney'in \"Ağıt\" (1971) filminde kaçakçılık yapan dağ insanlarının trajedisi neyi yansıtır?",
-    "answers": [
-      "Mirovên ku di navbera zilm, bêçaretî û xiyanetê de asê mane",
-      "Karsazên dewlemend ên ku li bendera Stenbolê keştiyan digirin",
-      "Lîstikvanên şanoyê yên ku li Parîsê perwerdehiyê dibînin",
-      "Zanyarên ku li çolê li bermayiyên dîrokî digerin"
-    ],
-    "answersTr": [
-      "Yoksulluk, devlet baskısı ve iç ihanet çemberinde sıkışıp kalan dağ insanlarının çaresizliğini",
-      "İstanbul limanında uluslararası lüks yük gemileri işleten zengin tüccarları",
-      "Paris'te konservatuvar eğitimi alan tiyatro oyuncularının prova süreçlerini",
-      "Çöl fırtınalarında tarihi kalıntı arayan yabancı arkeolog heyetlerini"
-    ],
-    "correctAnswer": "Mirovên ku di navbera zilm, bêçaretî û xiyanetê de asê mane",
-    "correctAnswerTr": "Yoksulluk, devlet baskısı ve iç ihanet çemberinde sıkışıp kalan dağ insanlarının çaresizliğini",
-    "explanation": "Ağıt li ser sînor çîroka qaçaxçiyên ku ji aliyê pergala zordest û hevalên xwe ve têne xapandin vedibêje.",
-    "explanationKu": "Ağıt li ser sînor çîroka qaçaxçiyên ku ji aliyê pergala zordest û hevalên xwe ve têne xapandin vedibêje.",
-    "explanationTr": "Ağıt, dağlardaki kaçakçıların yoksulluk, kuşatma ve ihanetle örülü trajik dünyasını gerçekçi bir dille yansıtır.",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://iffr.com/en/iffr/2001/films/ax",
+      "sourceTitle": "Ax - IFFR",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26352,6 +25310,8 @@
     "explanationTr": "Film, 14 Temmuz 1982 ölüm orucu sürecini hücrelerin boğucu karanlığı ve sarsıcı gerçekçilikle perdeye aktarır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://bianet.org/haber/diyarbakir-cezaevi-nde-direnisin-oykusu-14-temmuz-188876",
+      "sourceTitle": "Diyarbakır Cezaevi’nde Direnişin Öyküsü: 14 Temmuz",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26382,6 +25342,8 @@
     "explanationTr": "Sınır kaçakçıları dondurucu dağ geçitlerinde katırların donup kalmasını önlemek için sularına alkol katarlar.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.independent.co.uk/arts-entertainment/films/reviews/a-time-for-drunken-horses-aguirre-wrath-of-god-pg-9131670.html",
+      "sourceTitle": "A Time For Drunken Horses; Aguirre, Wrath Of God (PG)",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26412,6 +25374,8 @@
     "explanationKu": "Xoybûnê rewşenbîrên bajêr û serokên eşîran di bin banê rêxistineke hevpar a neteweyî de anîn cem hev.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://doi.org/10.4000/ejts.4064",
+      "sourceTitle": "The Shared Political Production of ‘the East’ as a ‘Resistant’ Territory and Cultural Sphere in the Kemalist Era, 1923-1938",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26442,6 +25406,8 @@
     "explanationKu": "Bi peymana Cezayîrê re Îranê piştgiriya xwe birî û rê li ber têkçûna tevgerê vekir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://history.state.gov/historicaldocuments/frus1969-76v27/d289",
+      "sourceTitle": "Historical Documents - Office of the Historian",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26472,6 +25438,8 @@
     "explanationKu": "Îhsan Nûrî Paşa zanîna xwe ya leşkerî li çiyê bi kar anî û hêzên berxwedanê bi rêkûpêk birêxistin kir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Ihsan_Nuri",
+      "sourceTitle": "Ihsan Nuri",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26502,6 +25470,8 @@
     "explanationKu": "Mele Mistefa Barzanî û hêza wî ya leşkerî parastina Komara Mehabadê girtin ser milê xwe.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.iranicaonline.org/articles/barzani-the-name-of-a-kurdish-tribe-from-barzan-a-town-in-the-former-hakkari-bahdinan-territory-of-northeastern-iraq/",
+      "sourceTitle": "BĀRZĀNĪ - Encyclopaedia Iranica",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26532,6 +25502,8 @@
     "explanationKu": "Bi vê biryarê re herêma qedexeya hewayî hate avakirin û rê li ber avakirina statuya xweser a Başûr vebû.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.afhistory.af.mil/FAQs/Fact-Sheets/Article/458953/1991-operation-provide-comfort-and-northern-watch/",
+      "sourceTitle": "1991 - Operation Provide Comfort and Northern Watch",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26562,6 +25534,8 @@
     "explanationTr": "TLB ıskalandığında MMU donanımı bellek tablosunu hiyerarşik olarak tarar (Page Table Walk), adresi TLB'ye yazar ve komutu yineler.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://download.intel.com/design/intelxscale/31628302.pdf",
+      "sourceTitle": "Memory Management—Microarchitecture",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26592,6 +25566,8 @@
     "explanationTr": "NAND flash bellekte yazma işlemi sayfa bazında yapılırken silme işlemi blok bazında yapılır; bu durum çöp toplama sırasında ekstra yazmaya yol açar.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.kingston.com/en/blog/pc-performance/overprovisioning",
+      "sourceTitle": "SSD Over-provisioning (OP) - Kingston Technology",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26622,6 +25598,8 @@
     "explanationTr": "Namespaces süreçlerin PID, ağ ve mount noktası gibi sistem bileşenlerini izole görmesini sağlar; cgroups ise CPU, RAM ve I/O tüketimini sınırlar.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/managing_monitoring_and_updating_the_kernel/setting-limits-for-applications_assembly_managing-kernel-command-line-parameters-with-uki",
+      "sourceTitle": "Understanding control groups - Red Hat Enterprise Linux Documentation",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26652,6 +25630,8 @@
     "explanationTr": "STUN NAT arkasındaki genel IP/portu keşfeder; doğrudan P2P bağlantı engellendiğinde ise TURN bir aktarıcı (relay) olarak veriyi iletir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://developer.mozilla.org/en-US/docs/Glossary/ICE",
+      "sourceTitle": "ICE - Glossary | MDN",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26682,6 +25662,8 @@
     "explanationTr": "Saga paterni küresel kilit koymaz; her servis kendi yerel transaction'ını yürütür ve hata anında telafi edici (compensating) geri alma adımları tetiklenir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/saga",
+      "sourceTitle": "Saga distributed transactions pattern - Azure Architecture Center",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26712,6 +25694,8 @@
     "explanationTr": "Event Sourcing durumun kendisini değil, durumu değiştiren tüm olayları değişmez bir log olarak tutar; güncel durum olayların yeniden oynatılmasıyla (replay) üretilir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing",
+      "sourceTitle": "Event Sourcing pattern - Azure Architecture Center",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26742,6 +25726,8 @@
     "explanationTr": "RISC sade, sabit uzunluklu komutlar ve ayrık Load/Store mimarisiyle boru hattı verimini artırır; CISC ise değişken uzunluklu karmaşık komutlar içerir.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Reduced_instruction_set_computer",
+      "sourceTitle": "Reduced instruction set computer",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26772,6 +25758,8 @@
     "explanationTr": "Aralık tabanlı parçalamada (ör. artan zaman damgaları) tüm yeni yazma trafiği en son parçaya yığılarak darboğaz (Hotspot) yaratır.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.mongodb.com/docs/manual/core/sharding-troubleshooting-shard-keys/",
+      "sourceTitle": "Troubleshoot Shard Keys - MongoDB Docs",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26802,6 +25790,8 @@
     "explanationTr": "Salt, her kullanıcıya özgü rastgele bir veri ekleyerek aynı parolaların aynı hash değerini üretmesini ve Rainbow Table saldırılarını önler.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html",
+      "sourceTitle": "Password Storage - OWASP Cheat Sheet Series",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26832,6 +25822,8 @@
     "explanationTr": "Güvercin Yuvası İlkesi gereği W + R > N olduğunda okuma kumesi ile yazma kümesi en az bir düğümde kesişir ve en son sürüm kesin okunur.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.sciencedirect.com/science/article/abs/pii/S1389128614003958",
+      "sourceTitle": "On the tradeoff of availability and consistency for quorum systems in data center networks",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26862,6 +25854,8 @@
     "explanationKu": "Di lêkerên gerguhêz ên dema borî de qaîdeya ergatîfê tê sepandin; kirde ditewe û lêker li gorî kes û hejmara bireserê teşe digire.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://multicast.aspra.uni-bamberg.de/data/pubs/Haig2018_Northern-Kurdish_Kurmanji.pdf",
+      "sourceTitle": "Northern Kurdish (Kurmanjî)",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26892,6 +25886,8 @@
     "explanationKu": "Di rêzimana kurmancî de dema ku bireser pirjimar be, lêkera gerguhêz a dema borî jî bi qertafa pirjimariyê \"-in\" xelas dibe.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://multicast.aspra.uni-bamberg.de/data/pubs/Haig2018_Northern-Kurdish_Kurmanji.pdf",
+      "sourceTitle": "Northern Kurdish (Kurmanjî)",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26922,6 +25918,8 @@
     "explanationKu": "Qertafên bangaweziyê di kurmancî de ji bo zayenda nêr \"-o\" (Birayo!), ji bo mê \"-ê\" (Xwişkê!) û ji bo pirjimar \"-no\" (Gelno!) ne.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_grammar",
+      "sourceTitle": "Kurdish grammar",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26952,6 +25950,8 @@
     "explanationKu": "Daçeka çerçoveyî ya \"di ... de\" ji bo nîşandana hundirê mekanekî an têgehekê tê bikaranîn (di nav bajêr de).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://sites.fas.harvard.edu/~iranian/Kurmanji/kurmanji_1_grammar.pdf",
+      "sourceTitle": "Kurmanji Kurdish: A Reference Grammar with Selected Readings",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -26982,6 +25982,8 @@
     "explanationKu": "Dema bê bi daçeka \"ê / dê\" û gopika lêkerê ya dema niha an forma subjunktîfê (ez ê bixwînim, ew ê bê) tê çêkirin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://kurdishstudies.net/menu-script/index.php/KS/article/download/64/55/56",
+      "sourceTitle": "Future tense in Kurmanji",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -27012,6 +26014,8 @@
     "explanationKu": "Di merca nediyar a dema borî de forma daxwazî ya borî (bigota) û dema bê ya borî (ez ê bihatama) bi hev re tên bikaranîn.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://www.kurdipedia.org/docviewer.aspx?book=20220711125204422347&lng=1",
+      "sourceTitle": "Waneyên Rêzimanê Kurmancî",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -27042,6 +26046,8 @@
     "explanationKu": "Di fonolojiya kurmancî de dengên ç, k, p, t du cure ne: req/bêhnkêş (p') û nerm/nebêhnkêş (p) ku wateya peyvê diguherînin.",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://iranian-languages.arizona.edu/node/7",
+      "sourceTitle": "Kurmanji Kurdish | Iranian Languages",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -27072,36 +26078,8 @@
     "explanationKu": "Piştî lêkera şiyanê ya \"karîn\"ê lêkera sereke di forma daxwaziyê (subjunktîf) de tê (dikarim biçim, dikarî bixwînî).",
     "metadata": {
       "reviewStatus": "approved",
-      "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
-      "reviewedAt": "2026-09-30",
-      "lastContentCheckAt": "2026-09-30"
-    }
-  },
-  {
-    "id": "ds_ziman_1286",
-    "category": "Ziman",
-    "difficulty": 5,
-    "prompt": "Di lêkera \"hilgirtin\" de pêşgira \"hil-\" kîjan araste û tevgerê li lêkerê zêde dike?",
-    "promptTr": "\"Hilgirtin\" fiilindeki \"hil-\" öneki fiile hangi yön ve hareket anlamını kazandırır?",
-    "answers": [
-      "Tevgera ber bi jor ve (rakirin an hildan)",
-      "Tevgera ber bi jêr ve û binaxkirinê",
-      "Tenê dubarekirina çalakiyê di heman astê de",
-      "Neyînîkirina çalakiyê û rawestandina kar"
-    ],
-    "answersTr": [
-      "Yukarıya doğru yönelme ve kaldırma hareketi",
-      "Aşağıya doğru yönelme ve gömülme hareketi",
-      "Eylemin aynı düzeyde yalnızca tekrarlanması",
-      "Eylemin olumsuzlanması ve işin durdurulması"
-    ],
-    "correctAnswer": "Tevgera ber bi jor ve (rakirin an hildan)",
-    "correctAnswerTr": "Yukarıya doğru yönelme ve kaldırma hareketi",
-    "explanation": "\"Hil-\" öneki yukarı yönlü hareket bildirir: hilgirtin (yukarı kaldırmak/almak), hilkişîn (tırmanmak), hilfirîn (havalanmak).",
-    "explanationTr": "\"Hil-\" öneki yukarı yönlü hareket bildirir: hilgirtin (yukarı kaldırmak/almak), hilkişîn (tırmanmak), hilfirîn (havalanmak).",
-    "explanationKu": "Pêşgira lêkerî ya \"hil-\" di kurmancî de arasteya ber bi jor nîşan dide (hilgirtin, hilhatin, hilkişîn).",
-    "metadata": {
-      "reviewStatus": "approved",
+      "sourceReference": "https://sites.fas.harvard.edu/~iranian/Kurmanji/kurmanji_1_grammar.pdf",
+      "sourceTitle": "Kurmanji Kurdish: A Reference Grammar with Selected Readings",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -27132,6 +26110,8 @@
     "explanationKu": "Paşgira mekanî ya \"-istan\"ê welat, herêm an cihê pirbûna tiştekî diyar dike (daristan: cihê ku dar lê pir in).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://en.wikipedia.org/wiki/-stan",
+      "sourceTitle": "-stan",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
@@ -27162,6 +26142,8 @@
     "explanationKu": "Di dema niha de sîstema akuzatîfê heye loma bireser ditewe (pirtûkê); di dema borî de sîstema ergatîfê heye loma bireser xwerû dimîne (pirtûk).",
     "metadata": {
       "reviewStatus": "approved",
+      "sourceReference": "https://multicast.aspra.uni-bamberg.de/data/pubs/Haig2018_Northern-Kurdish_Kurmanji.pdf",
+      "sourceTitle": "Northern Kurdish (Kurmanjî)",
       "reviewedBy": "DeepSeek taslağı (2026-08-18), ikinci dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"

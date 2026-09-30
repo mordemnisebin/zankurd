@@ -6,14 +6,15 @@ import 'package:zankurd_mobile/src/data/question_bank_assets.dart';
 
 void main() {
   test('runtime JSON bankalarında kaynaksız soru borcu büyümez', () {
-    // 1199 -> 1394: 2026-09-30 çok modelli doğrulamadan geçen 822 DeepSeek
-    // sorusunun 195'inde `sourceReference` yok (DeepSeek taslağı bazılarına
-    // Vikipedi bağlantısı koyuyordu, bazılarına koymuyordu). Bilinçli borç
-    // artışı: bu kayıtlar URL yerine en az iki bağımsız modelin olgu denetimi
-    // ve Gemini 3.1 Pro'nun Kurmancî okumasıyla doğrulandı (künye:
-    // `metadata.reviewedBy`). Yeni içerik bu tavanı kendiliğinden
-    // büyütemez; bir sonraki artış da aynı şekilde gerekçelendirilmeli.
-    const maximumMissingSourceReferences = 1394;
+    // 1199 -> 1394 -> 1199: 2026-09-30 çok modelli doğrulamadan geçen
+    // DeepSeek sorularının 195'inde `sourceReference` yoktu ve tavan geçici
+    // olarak 1394'e çıkarılmıştı. Aynı gün ChatGPT bu 195 kaydı web'de aradı:
+    // 151'ine güvenilir kaynak bulundu (künyeye yazıldı), 44'ü bulunamadığı
+    // (30) ya da işaretli cevabın yanlış çıktığı (14) için doğrulanmış
+    // kopyadan çıkarılıp karantinaya döndü. Borç artışı tamamen geri alındı:
+    // tavan eski değerine, 1199'a indi. Yeni içerik bu tavanı kendiliğinden
+    // büyütemez; bir artış gerekçelendirilmeden yapılamaz.
+    const maximumMissingSourceReferences = 1199;
     var missing = 0;
 
     for (final asset in questionBankAssets) {
