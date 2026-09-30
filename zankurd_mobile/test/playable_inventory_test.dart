@@ -114,7 +114,13 @@ void main() {
       // emekliye ayrıldı (`retired_question_ids.dart`, "Dördüncü dalga").
       // Oynanabilir -158, çünkü 159'un biri zaten `rejected` idi (aşağıda
       // rejected 14 -> 13). Fiziksel sayı değişmedi.
-      1563,
+      // 1563 -> 1546: 2026-09-30 beşinci dalga, bağımsız model ailesinin
+      // (ChatGPT) ikinci geçişi: tartışmalı kavrama tek "doğru tanım"
+      // dayatan ya da siyasi yüklü terime normatif tanım veren 17 Siyaset
+      // sorusu emekliye ayrıldı (`retired_question_ids.dart`, "Beşinci
+      // dalga"). Hiçbiri `rejected` değildi, yani oynanabilir tam -17.
+      // Fiziksel sayı değişmedi.
+      1546,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -186,7 +192,9 @@ void main() {
       // sunan sorular (Paradigma 108, Siyaset 51). Bu iki kategori yeniden
       // açıldığı için ilk kez bu gerekçeyle giriyorlar.
       'retired=Paradigma': 108,
-      'retired=Siyaset': 51,
+      // 2026-09-30 beşinci dalga (ChatGPT ikinci geçişi): Siyaset 51 -> 68
+      // (+17: 8 çoktan seçmeli + 9 doğru/yanlış). Paradigma değişmedi.
+      'retired=Siyaset': 68,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
 
