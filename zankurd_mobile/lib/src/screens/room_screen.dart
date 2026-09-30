@@ -187,12 +187,34 @@ class _RoomScreenState extends State<RoomScreen> {
   /// değişmişse dönen anlık görüntü bayattır ve uygulanmaz.
   int _realtimeEventSeq = 0;
 
+  /// "Lîsteya lîstikvanan tê nûvekirin…" göstergesinin bağlı olduğu TEK durum.
+  ///
+  /// Kusur (2026-09-30 canlı): gösterge `room.players.length < 2` kapısına
+  /// bağlıydı. Bu bir yenileme durumu değil, bir BEKLEME koşulu: ev sahibi
+  /// odada tek kaldığı sürece — canlı sunucuda 11+ saniye — dönen daire hiç
+  /// kapanmıyordu. Oysa liste çoktan gelmişti; gösterge veriyi değil, ikinci
+  /// oyuncunun yokluğunu işaret ediyordu ve "takılı" görünüyordu.
+  ///
+  /// Bayrak yalnız İLK oyuncu listesi yüklemesi sürerken açık:
+  ///
+  ///   * `initialRoom.players` doluysa hiç açılmaz — ilk veri zaten elimizde,
+  ///   * listeyse boşsa açılır ve `_applyPlayerList` ilk listeyi uyguladığı
+  ///     anda iner (ilk veri geldi → gösterge biter),
+  ///   * ilk deneme hata ile biterse de iner (yenileme bitti → gösterge bitsin),
+  ///   * periyodik arka plan yoklaması (`_pollPlayersOnce`) bayrağı asla
+  ///     AÇMAZ, yalnız kapatır — arka plan tazelemesi gösterge yakmaz.
+  bool _playersRefreshing = false;
+
   static const _pollInterval = Duration(seconds: 3);
   static const _maxPollsBeforePause = 20; // ~60s, yalnızca >=2 oyuncu varken
 
   @override
   void initState() {
     super.initState();
+    // Gösterge yalnız "ilk liste henüz elimize ulaşmadı" durumunda açık
+    // başlar. Odayla birlikte gelen liste ilk veridir; o varsa dönen daire
+    // hiç çizilmez.
+    _playersRefreshing = widget.initialRoom.players.isEmpty;
     _startSubscriptions();
     _startPolling();
     _startStatusPolling();
@@ -315,7 +337,13 @@ class _RoomScreenState extends State<RoomScreen> {
   void _applyPlayerList(List<Player> players) {
     if (!mounted || _leaving || _terminalHandled || quizOpened) return;
     final unique = dedupeRoomPlayers(players);
-    setState(() => room = room.copyWith(players: unique));
+    setState(() {
+      room = room.copyWith(players: unique);
+      // Liste elde: yenileme (ilk yükleme) bitti, gösterge iner. Sonraki
+      // uygulamalar — realtime ya da periyodik arka plan yoklaması — bayrağı
+      // yeniden kaldırmaz.
+      _playersRefreshing = false;
+    });
     _syncPollingForLobby(unique.length);
   }
 
@@ -394,6 +422,12 @@ class _RoomScreenState extends State<RoomScreen> {
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'loadRoomPlayers poll failed');
+      // İlk deneme burada BİTTİ (başarısız da olsa): gösterge sonsuza dek
+      // dönmesin. Bayrak yalnız ilk yükleme sürerken açık olduğu için bu
+      // kapanış sonraki turlarda kendini tekrar etmez.
+      if (mounted && _playersRefreshing) {
+        setState(() => _playersRefreshing = false);
+      }
     }
   }
 
@@ -882,7 +916,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                   title: context.t(K.playersWord),
                                 ),
                               ),
-                              if (room.players.length < 2)
+                              if (_playersRefreshing)
                                 padded(
                                   Padding(
                                     padding: const EdgeInsets.only(
