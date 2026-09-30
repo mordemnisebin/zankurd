@@ -102,13 +102,23 @@ void main() {
       // çoktan seçmelisi 55, bozuk tanım 2, kopya çeldirici/ikinci kılıf 3,
       // Kürt bağsız sinema 3). Bkz. `retired_question_ids.dart`'ın
       // "Üçüncü dalga" belgesi. Fiziksel sayı değişmedi.
-      1204,
+      // 1204 -> 1203: 2026-09-30 simülatör denetimi: "pir" (çok) sorusunun
+      // görseli yaşlı bir adamdı ("pîr"), `offline_0120` emekliye ayrıldı.
+      // Fiziksel sayı değişmedi.
+      1203,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
           'metadata `needsReview`e kaymış ya da yapısal bir alan bozulmuş '
           'olabilir. İkisi birlikte arttıysa yeni içerik gerçekten ulaşıyor.',
     );
+  });
+
+  test('görseli anlamla çelişen "pir" sorusu oynanmaz', () {
+    // 2026-09-30 simülatör: "pir" (çok) görseli yaşlı bir adam ("pîr").
+    expect(isQuestionRetired('offline_0120'), isTrue);
+    expect(playable.any((q) => q.id == 'offline_0120'), isFalse);
+    expect(loaded.any((q) => q.id == 'offline_0120'), isTrue);
   });
 
   test('engellenen kayıtların gerekçesi bilinen ve beklenen gerekçe', () {
@@ -159,7 +169,8 @@ void main() {
       'retired=Edebiyat': 16,
       'retired=Dîrok': 36,
       'retired=Muzîk': 22,
-      'retired=Ziman': 36,
+      // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
+      'retired=Ziman': 37,
       'retired=Çand': 32,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });

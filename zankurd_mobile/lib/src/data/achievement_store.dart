@@ -50,43 +50,46 @@ class AchievementStore {
 
   static AchievementStore? _instance;
 
+  /// 2026-09-30 simülatör: başarı adları cümle düzeninde (Title Case yok) ve
+  /// sözlükteki terimlerle yazılır: konu / mijar, günün soruları / pirsên
+  /// rojê (yasak: kategori, etkinlik). Bekçi: `copy_language_test.dart`.
   static final List<Achievement> definitions = [
     const Achievement(
       id: AchievementIds.firstGame,
-      titleKu: 'Lîstika Yekem',
-      titleTr: 'İlk Oyun',
+      titleKu: 'Lîstika yekem',
+      titleTr: 'İlk oyun',
       descriptionKu: 'Pêşbirka xwe ya yekem qedand.',
       descriptionTr: 'İlk yarışını tamamladın.',
       icon: AppIcons.flag,
     ),
     const Achievement(
       id: AchievementIds.tenStreak,
-      titleKu: '10 Rast Li Pey Hev',
-      titleTr: '10 Doğru Üst Üste',
+      titleKu: '10 rast li pey hev',
+      titleTr: '10 doğru üst üste',
       descriptionKu: 'Di yek pêşbirkê de rêza 10 rast çêkir.',
       descriptionTr: 'Tek yarışta 10 doğru seri yaptın.',
       icon: AppIcons.fire,
     ),
     const Achievement(
       id: AchievementIds.hundredQuestions,
-      titleKu: '100 Pirs',
-      titleTr: '100 Soru',
+      titleKu: '100 pirs',
+      titleTr: '100 soru',
       descriptionKu: 'Bi giştî 100 pirs bersiv da.',
       descriptionTr: 'Toplam 100 soruya cevap verdin.',
       icon: AppIcons.brain,
     ),
     const Achievement(
       id: AchievementIds.allCategories,
-      titleKu: 'Hemû Kategorî',
-      titleTr: 'Her Kategoride Oyun',
-      descriptionKu: 'Di hemû kategoriyan de lîst.',
-      descriptionTr: 'Tüm kategorilerde yarış oynadın.',
+      titleKu: 'Hemû mijar',
+      titleTr: 'Her konuda oyun',
+      descriptionKu: 'Di hemû mijaran de lîst.',
+      descriptionTr: 'Tüm konularda yarış oynadın.',
       icon: AppIcons.tableCells,
     ),
     const Achievement(
       id: AchievementIds.sevenDayStreak,
-      titleKu: '7 Roj Li Pey Hev',
-      titleTr: '7 Günlük Seri',
+      titleKu: '7 roj li pey hev',
+      titleTr: '7 günlük seri',
       // Günlük seri zincîr'dir; `Seriya` tur içi Rêz ile karışır.
       // 30 günlük rozet (`K.badgeStreak30Desc`) aynı kökü kullanır.
       descriptionKu: 'Zincîra rojane gihand 7 rojan.',
@@ -95,26 +98,26 @@ class AchievementStore {
     ),
     const Achievement(
       id: AchievementIds.mistakesCleared,
-      titleKu: 'Şaşî Paqij Kir',
-      titleTr: 'Yanlışlarını Temizledi',
+      titleKu: 'Şaşî paqij kir',
+      titleTr: 'Yanlışlarını temizledi',
       descriptionKu: 'Di moda şaşiyan de hemû pirsgirêk paqij kir.',
       descriptionTr: 'Yanlışlar modunda tüm hatalarını temizledin.',
       icon: AppIcons.graduationCap,
     ),
     const Achievement(
       id: AchievementIds.botWinner,
-      titleKu: 'Bot Têk Bir',
-      titleTr: "Bot'u Yendi",
+      titleKu: 'Bot têk bir',
+      titleTr: "Bot'u yendi",
       descriptionKu: 'Di pêşbirka botan de serket.',
       descriptionTr: 'Bot yarışını birinci bitirdin.',
       icon: AppIcons.robot,
     ),
     const Achievement(
       id: AchievementIds.dailyQuizFive,
-      titleKu: '5 Çalakiyên Rojê',
-      titleTr: 'Günün Etkinliği x5',
-      descriptionKu: 'Te Çalakiya Rojê pênc caran qedand.',
-      descriptionTr: 'Günün etkinliğini 5 kez tamamladın.',
+      titleKu: '5 pirsên rojê',
+      titleTr: 'Günün soruları x5',
+      descriptionKu: 'Te Pirsên rojê pênc caran qedandin.',
+      descriptionTr: 'Günün sorularını 5 kez tamamladın.',
       icon: AppIcons.bolt,
     ),
   ];

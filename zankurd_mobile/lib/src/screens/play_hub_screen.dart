@@ -277,10 +277,30 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     );
   }
 
+  /// Kilitliyken (sunucuya hiç ulaşılamıyor) pasif giriş dokunulunca kısa bir
+  /// geri bildirim verir: sessiz ölü düğme kalmaz. 2026-09-30 simülatör.
+  void _notifyLocked() {
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(content: Text(context.t(K.serverUnreachableTitle))),
+    );
+  }
+
+  /// Pasif girişi dokunuşu yakalayan, ekran okuyucuya EYLEM eklemeyen bir
+  /// sarmalayıcıyla sarar (giriş `enabled: false` kalır).
+  Widget _lockedTap(bool locked, Widget child) => locked
+      ? GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          excludeFromSemantics: true,
+          onTap: _notifyLocked,
+          child: child,
+        )
+      : child;
+
   @override
   Widget build(BuildContext context) {
     final locked = RemoteAvailability.socialLockedIn(context);
-    final unreachable = context.t(K.serverUnreachableTitle);
 
     // 2026-09-29 Şahnê A iskeleti: marka satırı → "Yarış" → alt başlık →
     // tek birincil eylem (hızlı düello sahne kartı) → iki adlandırılmış
@@ -294,36 +314,43 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     // bir açıklama, sonunda ok — iki düğmelik bir iş için şablon bir menü.
     // Artık bölüm başlığının altında tek açıklama satırı ve yan yana iki
     // ikincil düğme. Kodun biçimi katılma sayfasındaki alan ve doğrulama
-    // mesajında yazılı; kilitliyken açıklama satırı sunucu durumunu söyler.
+    // mesajında yazılı. Kilitliyken açıklama satırı DEĞİŞMEZ (2026-09-30: sunucu
+    // durumunu üstteki şerit söyler).
     final createRoom = KeyedSubtree(
       key: const ValueKey('play-hub-create-room'),
-      child: SahneButton.secondary(
-        icon: AppIcons.peopleGroup,
-        label: context.t(K.createRoom),
-        // Anahtarın kendi ekran okuyucu düğümü olsun (düğme + dokunma).
-        semanticLabel: context.t(K.createRoom),
-        loading: _roomActionLoading,
-        expand: true,
-        onPressed: locked ? null : _createOnlineRoom,
+      child: _lockedTap(
+        locked,
+        SahneButton.secondary(
+          icon: AppIcons.peopleGroup,
+          label: context.t(K.createRoom),
+          // Anahtarın kendi ekran okuyucu düğümü olsun (düğme + dokunma).
+          semanticLabel: context.t(K.createRoom),
+          loading: _roomActionLoading,
+          expand: true,
+          onPressed: locked ? null : _createOnlineRoom,
+        ),
       ),
     );
     final joinRoom = KeyedSubtree(
       key: const ValueKey('play-hub-join-room'),
-      child: SahneButton.secondary(
-        icon: AppIcons.hashtag,
-        label: context.t(K.joinByCode),
-        semanticLabel: context.t(K.joinByCode),
-        expand: true,
-        onPressed: locked ? null : _showJoinSheet,
+      child: _lockedTap(
+        locked,
+        SahneButton.secondary(
+          icon: AppIcons.hashtag,
+          label: context.t(K.joinByCode),
+          semanticLabel: context.t(K.joinByCode),
+          expand: true,
+          onPressed: locked ? null : _showJoinSheet,
+        ),
       ),
     );
 
-    final dailyContest = SahneListRow.icon(
+    final dailyContestRow = SahneListRow.icon(
       key: const ValueKey('play-hub-daily-contest'),
       icon: AppIcons.calendarDays,
       role: SahneRole.race,
       title: context.t(K.dailyContest),
-      subtitle: locked ? unreachable : context.t(K.tenQuestions),
+      subtitle: context.t(K.tenQuestions),
       // 2026-09-29 doğallık (K7): sağdaki "Bugün" rozeti kalktı; satırın
       // adı zaten "Günün soruları", rozet aynı sözü ikinci kez söylüyordu.
       trailing: _dailyLoading ? const _RowSpinner() : null,
@@ -331,9 +358,9 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       enabled: !locked,
       onTap: locked || _dailyLoading ? null : _openDailyQuiz,
       semanticLabel:
-          '${context.t(K.dailyContest)}. '
-          '${locked ? unreachable : context.t(K.tenQuestions)}',
+          '${context.t(K.dailyContest)}. ${context.t(K.tenQuestions)}',
     );
+    final dailyContest = _lockedTap(locked, dailyContestRow);
 
     return SahneTabPage(
       title: context.t(K.playTitle),
@@ -345,6 +372,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
       ],
       children: [
         _QuickDuelHero(
+          onLockedTap: locked ? _notifyLocked : null,
           onTap: locked
               ? null
               : () {
@@ -363,27 +391,31 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
           const SizedBox(height: SahneSpace.cardGap),
           SahneListGroup(
             children: [
-              SahneListRow.icon(
-                key: const ValueKey('play-hub-async-duel'),
-                icon: AppIcons.hourglass,
-                role: SahneRole.race,
-                title: context.t(K.asyncDuel),
-                subtitle: locked ? unreachable : context.t(K.asyncDuelSub),
-                chevron: !locked,
-                enabled: !locked,
-                semanticLabel:
-                    '${context.t(K.asyncDuel)}. '
-                    '${locked ? unreachable : context.t(K.asyncDuelSub)}',
-                onTap: locked
-                    ? null
-                    : () async {
-                        await Navigator.of(context).push(
-                          AppRoute.to(
-                            AsyncDuelPlayScreen(repository: widget.repository),
-                          ),
-                        );
-                        if (mounted) _asyncDuelInboxRefresh.value++;
-                      },
+              _lockedTap(
+                locked,
+                SahneListRow.icon(
+                  key: const ValueKey('play-hub-async-duel'),
+                  icon: AppIcons.hourglass,
+                  role: SahneRole.race,
+                  title: context.t(K.asyncDuel),
+                  subtitle: context.t(K.asyncDuelSub),
+                  chevron: !locked,
+                  enabled: !locked,
+                  semanticLabel:
+                      '${context.t(K.asyncDuel)}. ${context.t(K.asyncDuelSub)}',
+                  onTap: locked
+                      ? null
+                      : () async {
+                          await Navigator.of(context).push(
+                            AppRoute.to(
+                              AsyncDuelPlayScreen(
+                                repository: widget.repository,
+                              ),
+                            ),
+                          );
+                          if (mounted) _asyncDuelInboxRefresh.value++;
+                        },
+                ),
               ),
             ],
           ),
@@ -397,7 +429,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         ],
         SahneSectionHeader(title: context.t(K.withFriends)),
         _RoomActions(
-          note: locked ? unreachable : context.t(K.createRoomSub),
+          note: context.t(K.createRoomSub),
           createRoom: createRoom,
           joinRoom: joinRoom,
         ),
@@ -433,26 +465,29 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                   onTap: () => setState(() => _moreOpen = true),
                 ),
               if (_moreOpen)
-                SahneListRow.icon(
-                  key: const ValueKey('play-hub-tournament'),
-                  icon: AppIcons.trophy,
-                  role: SahneRole.gold,
-                  title: context.t(K.tournament),
-                  subtitle: locked ? unreachable : context.t(K.tournamentSub),
-                  chevron: !locked,
-                  enabled: !locked,
-                  semanticLabel:
-                      '${context.t(K.tournament)}. '
-                      '${locked ? unreachable : context.t(K.tournamentSub)}',
-                  onTap: locked
-                      ? null
-                      : () {
-                          Navigator.of(context).push(
-                            AppRoute.to(
-                              TournamentScreen(repository: widget.repository),
-                            ),
-                          );
-                        },
+                _lockedTap(
+                  locked,
+                  SahneListRow.icon(
+                    key: const ValueKey('play-hub-tournament'),
+                    icon: AppIcons.trophy,
+                    role: SahneRole.gold,
+                    title: context.t(K.tournament),
+                    subtitle: context.t(K.tournamentSub),
+                    chevron: !locked,
+                    enabled: !locked,
+                    semanticLabel:
+                        '${context.t(K.tournament)}. '
+                        '${context.t(K.tournamentSub)}',
+                    onTap: locked
+                        ? null
+                        : () {
+                            Navigator.of(context).push(
+                              AppRoute.to(
+                                TournamentScreen(repository: widget.repository),
+                              ),
+                            );
+                          },
+                  ),
                 ),
             ],
           ],
@@ -553,25 +588,28 @@ class _RowSpinner extends StatelessWidget {
 /// çizer: `play-hub-quick-duel-cta` anahtarı ve kartın tek ekran okuyucu
 /// düğümü ("Hızlı düello. Rakip bul") bu ekranın sözleşmesidir.
 ///
-/// Kilitliyken (sunucuya hiç ulaşılamıyor) manşet `K.serverUnreachableTitle`
-/// olur ve düğme görsel olarak pasifleşir (2026-09-27 simülatör turu:
-/// dokununca hiçbir şey olmayan canlı turuncu düğme "bozuk" sanılıyordu).
+/// Kilitliyken (sunucuya hiç ulaşılamıyor) düğme görsel olarak pasifleşir
+/// (2026-09-27 simülatör turu: dokununca hiçbir şey olmayan canlı turuncu
+/// düğme "bozuk" sanılıyordu). 2026-09-30 simülatör: manşet ve alt satırlar
+/// artık "Sunucuya ulaşılamadı" demez; bunu üstteki şerit tek başına söyler
+/// (eskiden aynı cümle Yarış sekmesinde dört kez yazılıyordu).
 class _QuickDuelHero extends StatelessWidget {
-  const _QuickDuelHero({required this.onTap});
+  const _QuickDuelHero({required this.onTap, this.onLockedTap});
 
   final VoidCallback? onTap;
+
+  /// Kilitliyken düğmeye dokunulunca çağrılır (geri bildirim); düğme yine
+  /// pasif görünür ve ekran okuyucuya tıklanabilir bildirilmez.
+  final VoidCallback? onLockedTap;
 
   @override
   Widget build(BuildContext context) {
     final enabled = onTap != null;
-    final title = enabled
-        ? context.t(K.quickDuelHeadline)
-        : context.t(K.serverUnreachableTitle);
+    final title = context.t(K.quickDuelHeadline);
     // Eşleşme odası 10 soruyla kurulur (`MatchmakingScreen`, `limit: 10`).
     // Soru sayısı ve süre ayrı dizgelerdir; ayraç çeviriye girmez.
-    final meta = enabled
-        ? '${context.t(K.tenQuestions)} · ${context.t(K.quickDuelDuration)}'
-        : null;
+    final meta =
+        '${context.t(K.tenQuestions)} · ${context.t(K.quickDuelDuration)}';
 
     return Semantics(
       key: const ValueKey('play-hub-quick-duel'),
@@ -597,23 +635,26 @@ class _QuickDuelHero extends StatelessWidget {
                 ),
                 const SizedBox(height: SahneSpace.x1),
                 Text(title, style: SahneType.headline.copyWith(color: t.tx)),
-                if (meta != null) ...[
-                  const SizedBox(height: SahneSpace.x1),
-                  Text(
-                    meta,
-                    key: const ValueKey('play-hub-quick-duel-meta'),
-                    style: SahneType.caption.copyWith(
-                      color: SahneStageColors.raceSoft,
-                    ),
+                const SizedBox(height: SahneSpace.x1),
+                Text(
+                  meta,
+                  key: const ValueKey('play-hub-quick-duel-meta'),
+                  style: SahneType.caption.copyWith(
+                    color: SahneStageColors.raceSoft,
                   ),
-                ],
+                ),
                 const SizedBox(height: SahneSpace.x4),
                 KeyedSubtree(
                   key: const ValueKey('play-hub-quick-duel-cta'),
-                  child: SahneButton.primary(
-                    label: context.t(K.findOpponent),
-                    onPressed: onTap,
-                    expand: true,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    excludeFromSemantics: true,
+                    onTap: onTap == null ? onLockedTap : null,
+                    child: SahneButton.primary(
+                      label: context.t(K.findOpponent),
+                      onPressed: onTap,
+                      expand: true,
+                    ),
                   ),
                 ),
               ],

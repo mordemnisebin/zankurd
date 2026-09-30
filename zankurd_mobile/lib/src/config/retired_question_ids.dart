@@ -465,6 +465,13 @@ const Set<String> retiredQuestionIds = <String>{
   'cinema_0009', // "Kış Uykusu" (Ceylan)
   'cinema_0027', // "Susuz Yaz" (Erksan)
   'cinema_0051', // "Gegen die Wand" (Akın)
+  // Ziman (1) — görseli soruya değil, benzer sözcüğe uyuyor (2026-09-30
+  // simülatör). "pir" Kurmancîde "çok"tur (doğru şık); görsel ise yaşlı,
+  // gülümseyen bir adamı gösteriyor, yani "pîr" (yaşlı) anlamını. Oyuncu
+  // görüntüye bakıp "yaşlı" düşünür; "çok" şıkkı görselle çelişir. Kayıt
+  // bankada durur (`assets/data/offline_questions.json`); yeni görsel
+  // gelince id buradan çıkarılabilir.
+  'offline_0120',
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

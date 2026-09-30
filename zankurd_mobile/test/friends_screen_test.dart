@@ -133,6 +133,35 @@ void main() {
   }
 
   group('FriendsScreen', () {
+    // 2026-09-30 simülatör: kod GİRME diyaloğu "Kodunu paylaş, iki taraf da
+    // 100 jeton kazansın" diyordu: paylaşma cümlesi, girişle ilgisiz. Kusur
+    // sessizdi çünkü aynı dizge davet kartında doğru yerdeydi.
+    testWidgets('kod girme diyaloğu paylaşma cümlesini tekrarlamaz', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('friends-enter-code-button')));
+      await tester.pumpAndSettle();
+
+      final dialog = find.byType(AlertDialog);
+      expect(dialog, findsOneWidget);
+      expect(
+        find.descendant(
+          of: dialog,
+          matching: find.text('Arkadaşının verdiği kodu gir'),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: dialog,
+          matching: find.textContaining('Kodunu paylaş'),
+        ),
+        findsNothing,
+      );
+    });
+
     testWidgets('arkadaslar ve bekleyen istekler listelenir', (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();

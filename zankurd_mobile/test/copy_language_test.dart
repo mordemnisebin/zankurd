@@ -321,7 +321,7 @@ void main() {
     expect(sevenDay.descriptionTr, contains('Günlük serini'));
     // Defter taraması İngilizce "Streak"i de görmez; TR başlık
     // "7 Gün Streak" deyince ürün terimi seri dururken İngilizce kalır.
-    expect(sevenDay.titleTr, '7 Günlük Seri');
+    expect(sevenDay.titleTr, '7 günlük seri');
 
     final seriya = RegExp(r'\bseriya\b', caseSensitive: false);
     final streakEn = RegExp(r'\bstreak\b', caseSensitive: false);
@@ -951,5 +951,70 @@ void main() {
 
     expect(shell, isNot(contains('hevalên te, Turnuva')));
     expect(onboarding, isNot(contains("ku ? 'Turnuva")));
+  });
+
+  // 2026-09-30 simülatör: başarı (rozet) adları Title Case ("Hemû Kategorî",
+  // "10 Rast Li Pey Hev") ve günlük görev metinleri yasak terimle ("Kültür
+  // kategorisinde oyna", "1 quiz tamamla") yazılıydı. Kusur sessizdi çünkü
+  // bu metinler `strings.dart` defterinde değil, `achievement_store.dart` ve
+  // `daily_mission.dart` içinde durur ve defter taramaları onları görmez.
+  // Bekçi: ad cümle düzeninde (ilk sözden sonra büyük harfle başlayan söz
+  // yok; özel ad "Bot" tırnaklı ekle ve rakamlar hariç) ve metinlerde yasak
+  // terim yok.
+  test('rozet adları cümle düzeninde, sözlük terimleriyle yazılır', () {
+    final banned = RegExp(
+      r'kategori|kategorî|etkinli|çalakiy|quiz|skor|bakiye',
+      caseSensitive: false,
+    );
+    for (final a in AchievementStore.definitions) {
+      for (final text in [
+        a.titleKu,
+        a.titleTr,
+        a.descriptionKu,
+        a.descriptionTr,
+      ]) {
+        expect(banned.hasMatch(text), isFalse, reason: '${a.id}: "$text"');
+      }
+      for (final title in [a.titleKu, a.titleTr]) {
+        final words = title.split(' ').skip(1);
+        for (final word in words) {
+          // "Bot'u" özel adı ilk sözdedir; sonraki sözler küçük harfle başlar.
+          expect(
+            word[0] == word[0].toLowerCase(),
+            isTrue,
+            reason: '${a.id}: "$title" Title Case',
+          );
+        }
+      }
+    }
+  });
+
+  test('günlük görev metinleri yasak terim taşımaz', () {
+    final banned = RegExp(r'kategori|kategorî|quiz', caseSensitive: false);
+    for (final def in MissionDefinitions.pool) {
+      final mission = DailyMission(
+        type: def.type,
+        target: def.target,
+        coinReward: def.coinReward,
+        category: def.category,
+      );
+      for (final text in [mission.labelTr, mission.labelKu]) {
+        expect(banned.hasMatch(text), isFalse, reason: '"$text"');
+      }
+    }
+    final quiz = DailyMission(
+      type: MissionType.completeQuiz,
+      target: 1,
+      coinReward: 25,
+    );
+    expect(quiz.labelTr, '1 yarış tamamla');
+    expect(quiz.labelKu, '1 pêşbirk biqedîne');
+    final culture = DailyMission(
+      type: MissionType.playCategory,
+      target: 1,
+      coinReward: 25,
+      category: 'Çand',
+    );
+    expect(culture.labelTr, endsWith('konusunda oyna'));
   });
 }
