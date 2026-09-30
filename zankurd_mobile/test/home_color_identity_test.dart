@@ -134,7 +134,14 @@ void main() {
           find.descendant(of: finder, matching: find.byType(SahneJewelTile)),
         );
         expect(tile.name, CategoryNames.localized(category, false));
-        expect(tile.otherName, CategoryNames.localized(category, true));
+        // İki ad aynıysa (Siyaset) ikinci satır çizilmez: aynı sözü iki kez
+        // yazmak gürültü olur (`_HomeTopicTile`: `other == name ? null`).
+        final other = CategoryNames.localized(category, true);
+        expect(
+          tile.otherName,
+          other == tile.name ? isNull : other,
+          reason: category,
+        );
 
         // Üretilmiş kategori çizimleri ızgarada yok; konu adı, ikonu ve
         // kendi renk ailesiyle ayrılır.
@@ -165,7 +172,7 @@ void main() {
     },
   );
 
-  testWidgets('konuların hepsi ilk bakışta: 390 pt ekranda dört sütun', (
+  testWidgets('konu ızgarası 390 pt ekranda sözü bölmeyen sütun sayısını seçer', (
     tester,
   ) async {
     await _pumpHome(tester);
@@ -174,8 +181,13 @@ void main() {
       for (final c in repo.categories)
         tester.getTopLeft(find.byKey(ValueKey('home-topic-$c'))).dy,
     };
-    // 7 kategori → 4 + 3: iki satır.
-    expect(tops.length, (repo.categories.length / 4).ceil());
+    // 2026-09-30: 7 kategoride 4 sütun (4 + 3, iki satır) sığıyordu. Paradigma,
+    // Siyaset ve Teknolojî geri gelince 10 kategori oldu ve ızgara 3 sütuna
+    // iner: en uzun söz olan kalın "Paradigma" (~81 pt) 390 pt ekranda 4
+    // sütunun karosuna (~80 pt) sığmıyor, sütun sayısı sözü kelime ortasından
+    // bölmemek için düşüyor (`_columnsFor`). 10 kategori → 3 + 3 + 3 + 1.
+    expect(repo.categories.length, 10);
+    expect(tops.length, (repo.categories.length / 3).ceil());
   });
 
   testWidgets('günün dersi kartında maskot yok', (tester) async {

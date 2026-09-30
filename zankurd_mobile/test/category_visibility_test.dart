@@ -18,6 +18,9 @@ import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 /// Sînema 2026-07-30'da aynı yolu izledi: 30 kaynaklı soruyla gizlendi,
 /// 20 yeni kaynaklı soru yazılınca (50) açıldı.
 ///
+/// 2026-09-27'de gizlenen Paradigma, Siyaset ve Teknolojî 2026-09-30'da
+/// ürün sahibinin kararıyla yeniden açıldı (bkz. `category_visibility.dart`).
+///
 /// Testler artık kategoriyi değil **mekanizmayı** doğruluyor: liste boş da
 /// olsa gizleme çalışmalı, çünkü bir sonraki hazır olmayan kategori için
 /// yine gerekecek.
@@ -30,17 +33,16 @@ import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 /// bir id eklendiğinde döngüler kendiliğinden dolar ve dışlama yolu
 /// yeniden sınanır.
 void main() {
-  test('gizli liste bilinçli: yalnız gerekçesi yazılı kategoriler', () {
-    // Liste bir iddiadır. 2026-09-27'den beri iki kategori gizli
-    // (Paradigma, Siyaset — gerekçe `category_visibility.dart` başında).
-    // Listeye yeni bir id sessizce giremez: bu satır kırılır ve gizlemek
-    // isteyen hem id'yi hem gerekçeyi kaynak dosyaya yazmak zorunda kalır.
-    // 2026-09-27 (içerik denetiminden sonra): Teknolojî de gizlendi —
-    // 217 sorunun 198'i Kürtlerle bağı olmayan genel bilgi.
-    expect(hiddenCategoryIds, {'Paradigma', 'Siyaset', 'Teknolojî'});
-    expect(isCategoryVisible('Paradigma'), isFalse);
-    expect(isCategoryVisible('Siyaset'), isFalse);
-    expect(isCategoryVisible('Teknolojî'), isFalse);
+  test('gizli liste boş: ürün sahibi 2026-09-30\'da üçünü yeniden açtı', () {
+    // 2026-09-27'de gizlenen Paradigma, Siyaset ve Teknolojî'nin gizlenme
+    // gerekçeleri artık kategori bazında değil SORU bazında çözülüyor
+    // (ideolojik sorular `retired_question_ids.dart` ile tek tek emekli).
+    // Listeye bir id sessizce giremez: bu satır kırılır ve gizlemek isteyen
+    // hem id'yi hem gerekçeyi kaynak dosyaya yazmak zorunda kalır.
+    expect(hiddenCategoryIds, isEmpty);
+    expect(isCategoryVisible('Paradigma'), isTrue);
+    expect(isCategoryVisible('Siyaset'), isTrue);
+    expect(isCategoryVisible('Teknolojî'), isTrue);
     expect(isCategoryVisible('Sînema'), isTrue);
     expect(isCategoryVisible('Ziman'), isTrue);
     expect(isCategoryVisible('Dîrok'), isTrue);
@@ -85,12 +87,9 @@ void main() {
   test('visibleCategories sırayı korur', () {
     final input = ['Ziman', 'Dîrok', 'Çand', 'Sînema'];
     expect(visibleCategories(input), input);
-    // Gizli olan araya girse de kalanların sırası bozulmaz.
-    expect(visibleCategories(['Ziman', 'Teknolojî', 'Çand', 'Sînema']), [
-      'Ziman',
-      'Çand',
-      'Sînema',
-    ]);
+    // Yeniden açılan kategoriler de listede yerini korur.
+    final reopened = ['Ziman', 'Teknolojî', 'Çand', 'Siyaset', 'Paradigma'];
+    expect(visibleCategories(reopened), reopened);
   });
 
   test(

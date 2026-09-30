@@ -323,7 +323,8 @@ void main() {
         reason: 'Görünür sayı, gizleme listesiyle tutarlı olmalı',
       );
       // 2026-09-27: Paradigma, Siyaset ve Teknolojî gizlendi (10 -> 7).
-      expect(visible.length, greaterThanOrEqualTo(7));
+      // 2026-09-30: üçü yeniden açıldı (7 -> 10).
+      expect(visible.length, greaterThanOrEqualTo(10));
     });
   });
 }

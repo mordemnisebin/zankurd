@@ -105,7 +105,11 @@ void main() {
       // 1204 -> 1203: 2026-09-30 simülatör denetimi: "pir" (çok) sorusunun
       // görseli yaşlı bir adamdı ("pîr"), `offline_0120` emekliye ayrıldı.
       // Fiziksel sayı değişmedi.
-      1203,
+      // 1203 -> 1721: 2026-09-30 ürün sahibi Paradigma, Siyaset ve Teknolojî'yi
+      // yeniden açtı (+518 oynanabilir: 519 kayıt açıldı, biri reddedilmiş).
+      // İdeolojik soruların tek tek emekliye ayrılması bu sayıyı ayrıca
+      // düşürecek (`retired_question_ids.dart`).
+      1721,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -129,7 +133,9 @@ void main() {
     for (final q in blocked) {
       final issues = policy.validate(q);
       // Gizli kategori kendi başına bir gerekçedir: o kayıtlar sağlam ve
-      // onaylı olabilir, yalnız bilerek gösterilmez.
+      // onaylı olabilir, yalnız bilerek gösterilmez. 2026-09-30'da liste
+      // boşaldı; mekanizma dururken anahtar da durur (yeni bir gizleme
+      // burada kendi satırını görür ve beklenen dağılım güncellenir).
       final key = !isCategoryVisible(q.category)
           ? 'hiddenCategory=${q.category}'
           : isQuestionRetired(q.id)
@@ -146,14 +152,10 @@ void main() {
       // bankalarla yakın tekrar; 16 künyesiz topluluk + 14 rejected duruyor.
       'reviewStatus=${ReviewStatus.needsReview}': 28,
       // 14 -> 13: reddedilmiş bir kayıt gizlenen kategorilerden birinde;
-      // artık gizli kategori gerekçesiyle sayılıyor.
-      'reviewStatus=${ReviewStatus.rejected}': 13,
-      // 2026-09-27: bilerek gizlenen iki kategori (gerekçe
-      // `category_visibility.dart` başında). Onaylı, reddedilmiş ve
-      // kuyruktaki bütün kayıtları dahil.
-      'hiddenCategory=Siyaset': 152,
-      'hiddenCategory=Paradigma': 150,
-      'hiddenCategory=Teknolojî': 217,
+      // gizli kategori gerekçesiyle sayılıyordu.
+      // 13 -> 14: 2026-09-30 üç kategori yeniden açıldı, o kayıt yine
+      // kendi gerekçesiyle (rejected) sayılıyor.
+      'reviewStatus=${ReviewStatus.rejected}': 14,
       // 2026-09-27 içerik denetimi: Kürtlerle bağı olmayan dünya bilgisi.
       // 2026-09-27 ikinci denetim: `offline_tf_` tanım takası kalıbında
       // farklı türden çift (87) + Ziman'da hiç "Rast" örneği olmayan kalıp
@@ -199,9 +201,10 @@ void main() {
     );
     // 10 -> 8: 2026-09-27 Paradigma ve Siyaset gizlendi.
     // 8 -> 7: aynı gün Teknolojî de gizlendi.
+    // 7 -> 10: 2026-09-30 üçü de yeniden açıldı.
     expect(
       byCategory.length,
-      7,
+      10,
       reason: 'Kategori sayısı değişti: ${byCategory.keys.toList()..sort()}',
     );
   });

@@ -23,7 +23,6 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:zankurd_mobile/src/config/category_visibility.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 
 Map<String, Object?> _row(String id, String category, {String? optionD}) => {
@@ -77,7 +76,9 @@ Future<List<String>> _loadIds(List<Map<String, Object?>> rows) async {
 
 void main() {
   test('gizli kategoriden gelen oda sorusu atılmaz, sıra kaymaz', () async {
-    expect(hiddenCategoryIds, contains('Siyaset'));
+    // 2026-09-30: gizli liste boşaldı; bu test artık "oda akışı kategoriye
+    // bakarak soru atmaz" sözleşmesini korur. Gizleme yeniden devreye
+    // girerse (bkz. `category_visibility.dart`) kayma yine burada yakalanır.
 
     final ids = await _loadIds([
       _row('q-0', 'Ziman'),

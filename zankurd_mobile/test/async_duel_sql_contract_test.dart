@@ -337,11 +337,17 @@ void main() {
     });
 
     // İstemci düello sorusunu atlayamaz (index kayar); oda akışındaki
-    // `isPlayableWithHiddenAnswer` süzgeci burada sunucudadır. Gizli
-    // kategori listesi iki yerde yaşar — biri değişip öteki unutulursa
-    // uygulamada gizlenen Siyaset/Paradigma soruları düelloda çıkardı.
+    // `isPlayableWithHiddenAnswer` süzgeci burada sunucudadır.
+    //
+    // 2026-09-30: istemcinin gizli listesi boşaldı (Paradigma, Siyaset,
+    // Teknolojî yeniden açıldı) ama bu göçün gövdesindeki süzgeç canlıda
+    // hâlâ aynı üç adı eliyor. İkisi artık birebir aynı DEĞİL. Bekçi bunu
+    // sessiz bırakmaz: süzgecin bugünkü içeriğini sabitler; sırayla düelloyu
+    // üç kategoriye açacak `create or replace function` göçü yazıldığında bu
+    // beklenti (ve `hiddenCategoryIds` ile karşılaştırması) birlikte
+    // güncellenmeli.
     test(
-      'gizli kategoriler istemcidekiyle birebir aynı ve düelloya girmez',
+      'sunucu düello süzgeci hâlâ 2026-09-28 listesini eliyor (istemci boş)',
       () {
         final body = functionBody('start_async_duel');
         final match = RegExp(r'c\.name not in \(([^)]*)\)').firstMatch(body);
@@ -349,7 +355,13 @@ void main() {
         final names = RegExp(
           r"'([^']+)'",
         ).allMatches(match!.group(1)!).map((m) => m.group(1)!).toSet();
-        expect(names, hiddenCategoryIds);
+        expect(names, {'Paradigma', 'Siyaset', 'Teknolojî'});
+        expect(
+          hiddenCategoryIds,
+          isEmpty,
+          reason:
+              'İstemci gizli listesi doluysa süzgeç listesiyle birebir eşleşmeli',
+        );
         expect(
           body,
           contains('join public.categories c on c.id = q.category_id'),
