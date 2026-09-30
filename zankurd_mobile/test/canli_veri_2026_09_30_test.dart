@@ -59,10 +59,13 @@ LeaderboardEntry _entry(
 );
 
 class _BoardRepo extends MockZanKurdRepository {
-  _BoardRepo(this.rows, {this.stats});
+  _BoardRepo(this.rows, {this.stats, this.periodRank});
 
   final List<LeaderboardEntry> rows;
   final LeaderboardEntry? stats;
+
+  /// Sabit satırın kaynağı (2026-09-30): seçili dönemin sıralaması.
+  final LeaderboardEntry? periodRank;
 
   @override
   Future<List<LeaderboardEntry>> loadLeaderboard({
@@ -72,6 +75,11 @@ class _BoardRepo extends MockZanKurdRepository {
 
   @override
   Future<LeaderboardEntry?> getPlayerStats() async => stats;
+
+  @override
+  Future<LeaderboardEntry?> getMyLeaderboardRank(
+    LeaderboardPeriod period,
+  ) async => periodRank;
 }
 
 Future<void> _pumpBoard(WidgetTester tester, MockZanKurdRepository repo) async {
@@ -127,9 +135,12 @@ void main() {
         tester,
         _BoardRepo(
           [_entry(1, 'a', 'Awaz', 900), _entry(2, 'user', 'Ben', 0, rooms: 1)],
-          // `leaderboard_entries` görünümü profiles.xp verir: dönem puanı
-          // değil, aynı etiketle sunulamaz.
+          // `getPlayerStats` hâlâ `leaderboard_entries`/`profiles.xp`
+          // (TOPLAM XP) verir: dönem puanı değil, aynı etiketle
+          // sunulamaz. Sabit satırın kaynağı artık `getMyLeaderboardRank`
+          // ve burada null — oyuncunun dönem puanı yok.
           stats: _entry(40, 'user', 'Ben', 1143, rooms: 0),
+          periodRank: null,
         ),
       );
       expect(find.text('Awaz'), findsOneWidget);

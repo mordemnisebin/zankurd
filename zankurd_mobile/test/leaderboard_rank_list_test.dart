@@ -65,8 +65,12 @@ class _Repo extends MockZanKurdRepository {
 class _OutsideRepo extends _Repo {
   _OutsideRepo() : super(count: 10);
 
+  // 2026-09-30: sabit satır `getMyLeaderboardRank` ile seçili dönemin
+  // puanını çizer; `getPlayerStats` (toplam XP) artık satırı beslemiyor.
   @override
-  Future<LeaderboardEntry?> getPlayerStats() async => const LeaderboardEntry(
+  Future<LeaderboardEntry?> getMyLeaderboardRank(
+    LeaderboardPeriod period,
+  ) async => const LeaderboardEntry(
     playerId: 'user',
     displayName: 'Rojhat',
     totalScore: 210,
@@ -247,7 +251,8 @@ void main() {
   });
 
   testWidgets('sıralanmamış oyuncuya sahte sıra gösterilmez', (tester) async {
-    // `getPlayerStats` null: sahte "#0" veya "—" satırı çizilmemeli.
+    // `getMyLeaderboardRank` null (dönem puanı yok): sahte "#0" veya "—"
+    // satırı çizilmemeli.
     await _pump(tester, _Repo(count: 10));
     expect(find.byKey(const ValueKey('leaderboard-my-rank-row')), findsNothing);
     expect(find.text('#0'), findsNothing);
