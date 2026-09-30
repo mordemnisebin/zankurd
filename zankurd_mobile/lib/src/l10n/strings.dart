@@ -34,7 +34,7 @@ class Tr {
   static const Map<String, Map<String, String>> _table = {
     // ── Ortak eylemler ───────────────────────────────────────────────
     K.back: {'ku': 'Vegere', 'tr': 'Geri'},
-    K.next: {'ku': 'Ya din', 'tr': 'Sonraki'},
+    K.next: {'ku': 'Bidomîne', 'tr': 'Sonraki'},
     K.skip: {'ku': 'Derbas bike', 'tr': 'Atla'},
     K.start: {'ku': 'Dest pê bike', 'tr': 'Başla'},
     K.save: {'ku': 'Tomar bike', 'tr': 'Kaydet'},
@@ -204,7 +204,7 @@ class Tr {
     },
     K.signingIn: {'ku': 'Tê têketin…', 'tr': 'Giriş yapılıyor…'},
     K.connectingApple: {
-      'ku': 'Bi Apple tê girêdan…',
+      'ku': 'Bi Apple re tê girêdan…',
       'tr': 'Apple ile bağlanılıyor…',
     },
     K.signingInGuest: {
@@ -450,7 +450,7 @@ class Tr {
       'tr': 'Bu kelime veya ifadenin anlamını düşün, sonra yanıtı göster.',
     },
     K.lessonRecallReveal: {'ku': 'Bersivê nîşan bide', 'tr': 'Yanıtı göster'},
-    K.lessonRecallNext: {'ku': 'Ya din', 'tr': 'Sonraki'},
+    K.lessonRecallNext: {'ku': 'Bidomîne', 'tr': 'Sonraki'},
     K.lessonListeningTitle: {'ku': 'Guhdarî', 'tr': 'Dinleme'},
     K.lessonListeningHint: {
       'ku': 'Li deng guhdarî bike û wateya rast hilbijêre.',

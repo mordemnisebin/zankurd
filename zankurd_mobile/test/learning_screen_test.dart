@@ -490,7 +490,7 @@ void main() {
       isNotNull,
     );
     expect(
-      tester.getSemantics(find.bySemanticsLabel('Dersa din. Ders 2. Ya din')),
+      tester.getSemantics(find.bySemanticsLabel('Dersa din. Ders 2. Bidomîne')),
       isNotNull,
     );
     final locked = tester.getSemantics(find.bySemanticsLabel('Ders 3. Girtî'));

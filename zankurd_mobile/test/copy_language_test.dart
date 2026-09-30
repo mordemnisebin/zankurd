@@ -934,7 +934,7 @@ void main() {
       Tr.of(K.connectingGoogle, AppLanguage.ku),
       'Bi Google re tê girêdan…',
     );
-    expect(Tr.of(K.connectingApple, AppLanguage.ku), 'Bi Apple tê girêdan…');
+    expect(Tr.of(K.connectingApple, AppLanguage.ku), 'Bi Apple re tê girêdan…');
 
     final ileCalque = RegExp(r'bi (google|apple) ve\b', caseSensitive: false);
     for (final key in Tr.keys) {

@@ -762,7 +762,7 @@ void main() {
     for (final finder in [
       find.text('Hîn bibe'),
       find.byKey(const ValueKey('onboarding-age-gate')),
-      find.text('Ya din'),
+      find.text('Bidomîne'),
     ]) {
       expect(finder, findsOneWidget);
       final rect = tester.getRect(finder);
@@ -775,7 +775,7 @@ void main() {
     final ageGate = tester.getRect(
       find.byKey(const ValueKey('onboarding-age-gate')),
     );
-    final cta = tester.getRect(find.text('Ya din'));
+    final cta = tester.getRect(find.text('Bidomîne'));
     expect(ageGate.bottom, lessThanOrEqualTo(cta.top));
 
     // Metin bandı kısa içerikte ortalanır, taşan içerikte aşağıdan kayar
