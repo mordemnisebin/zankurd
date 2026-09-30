@@ -312,10 +312,10 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_movement_0009',
     category: 'Çand',
-    prompt: '"Newroz" ji aliyê wateya peyvê ve bi kîjan ravekirinê re nêzîk e?',
+    prompt: 'Wateya peyva "Newroz"ê çi ye?',
     answers: ['Roja nû', 'Şeva dirêj', 'Bara kevn', 'Dengê bilind'],
     correctAnswer: 'Roja nû',
-    promptTr: '"Newroz" sözcük anlamı bakımından hangi karşılığa yakındır?',
+    promptTr: '"Newroz" kelimesinin anlamı nedir?',
     answersTr: ['Yeni gün', 'Uzun gece', 'Eski yük', 'Yüksek ses'],
     correctAnswerTr: 'Yeni gün',
     explanation:
@@ -584,15 +584,13 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Rojavayê Kurdistanê',
     explanation:
-        '"Rojava" di Kurmancî de bi wateya rojava û bi navê herêmî yê Rojavayê Kurdistanê tê bikaranîn.',
+        'Rojava di Kurmancî de tê wateya aliyê rojava. Rojavayê Kurdistanê jî parçeya Kurdistanê ya li rojava ye, loma bersiva rast ev e.',
     difficulty: 2,
     metadata: _kongraStarSource,
     explanationKu:
-        '"Rojava" di Kurmancî de hem aliyê rojava hem navê herêmî yê '
-        'Rojavayê Kurdistanê ye.',
+        'Rojava di Kurmancî de tê wateya aliyê rojava. Rojavayê Kurdistanê jî parçeya Kurdistanê ya li rojava ye, loma bersiva rast ev e.',
     explanationTr:
-        '"Rojava" Kurmancîde hem batı yönü hem de Batı Kürdistan’ın '
-        'bölgesel adıdır.',
+        'Rojava Kürtçede batı yönü demektir. Rojavayê Kurdistanê de Kürdistan’ın batıda kalan parçasıdır, bu yüzden doğru cevap budur.',
   ),
   QuizQuestion(
     id: 'curated_movement_0019',
@@ -646,15 +644,13 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Şiir',
     explanation:
-        'Helbest dikare hest, bîranîn û daxwazên civakî bi zimanekî wêjeyî û xeyalî vegerîne.',
+        'Helbest bi zimanekî hunerî û wêjeyî hest û bîranînan vedibêje. Rapor, lîste û rêbername agahî didin, lê hestên azadî û bîranînê bi hunerî vediguhezîne helbest e.',
     difficulty: 2,
     metadata: _jineolojiSource,
     explanationKu:
-        'Helbest dikare hest, bîranîn û daxwazên civakî bi zimanekî wêjeyî '
-        'vebêje.',
+        'Helbest bi zimanekî hunerî û wêjeyî hest û bîranînan vedibêje. Rapor, lîste û rêbername agahî didin, lê hestên azadî û bîranînê bi hunerî vediguhezîne helbest e.',
     explanationTr:
-        'Şiir; duyguyu, hafızayı ve toplumsal talebi edebî bir dille '
-        'anlatabilir.',
+        'Şiir, duygu ve anıları sanatsal ve edebî bir dille anlatır. Rapor, liste ve rehber bilgi verir; özgürlük ve bellek duygusunu sanatsal dille aktaran tür şiirdir.',
   ),
   // ── Paradigma ────────────────────────────────────────────────────────────
   QuizQuestion(
@@ -1273,15 +1269,13 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Telli çalgı',
     explanation:
-        'Tembûr amûrekî muzîkê yê kevneşopî yê têlî ye, li herêma Kurdistanê û Rojhilata Navîn belav e.',
+        'Tembûr bi têlan tê lêxistin û deng ji têlan derdikeve. Loma ew di nav amûrên têlî de cih digire, ne di nav amûrên bayî an lêdanê de.',
     difficulty: 2,
     metadata: _dengbejSource,
     explanationKu:
-        'Tembûr amûrek muzîkê ya kevneşopî ya têlî ye; li Kurdistanê û '
-        'Rojhilata Navîn belav e.',
+        'Tembûr bi têlan tê lêxistin û deng ji têlan derdikeve. Loma ew di nav amûrên têlî de cih digire, ne di nav amûrên bayî an lêdanê de.',
     explanationTr:
-        'Tembûr geleneksel telli bir çalgıdır; Kürdistan’da ve Ortadoğu’da '
-        'yaygındır.',
+        'Tembûr tellerle çalınır ve ses tellerden çıkar. Bu yüzden üflemeli ya da vurmalı değil, telli çalgılar grubuna girer.',
   ),
   QuizQuestion(
     id: 'curated_muzik_0003',
