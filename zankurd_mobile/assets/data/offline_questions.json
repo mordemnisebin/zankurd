@@ -2220,7 +2220,7 @@
   {
     "id": "offline_2273",
     "category": "Çand",
-    "prompt": "Wateya peyva \"nan\"ê bi tirkî çi ye?",
+    "prompt": "Wateya peyva \"nan\" bi tirkî çi ye?",
     "answers": [
       "Anne",
       "Genim",
@@ -2620,7 +2620,7 @@
   {
     "id": "offline_2417",
     "category": "Ziman",
-    "prompt": "Wateya peyva \"agir\"ê bi tirkî çi ye?",
+    "prompt": "Wateya peyva \"agir\" bi tirkî çi ye?",
     "answers": [
       "Eski",
       "Ekmek",
@@ -3157,7 +3157,7 @@
   {
     "id": "offline_2538",
     "category": "Ziman",
-    "prompt": "Wateya peyva \"çiya\"yê bi tirkî çi ye?",
+    "prompt": "Wateya peyva \"çiya\" bi tirkî çi ye?",
     "answers": [
       "Ova",
       "Nehir",
@@ -4601,7 +4601,7 @@
   {
     "id": "offline_5188",
     "category": "Ziman",
-    "prompt": "Wateya peyva \"kaxiz\"ê bi tirkî çi ye?",
+    "prompt": "Wateya peyva \"kaxiz\" bi tirkî çi ye?",
     "answers": [
       "kağıt",
       "here!",
