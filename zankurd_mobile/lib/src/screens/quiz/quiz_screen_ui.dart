@@ -35,8 +35,9 @@ extension _QuizScreenUI on _QuizScreenState {
           child: SizedBox(
             width: contentWidth,
             height: constraints.maxHeight,
-            child: SingleChildScrollView(
-              key: const ValueKey('quiz-portrait-scroll'),
+            child: SahneStageScroll(
+              scrollKey: const ValueKey('quiz-portrait-scroll'),
+              resetKey: index,
               padding: const EdgeInsets.only(
                 top: SahneSpace.x4,
                 bottom: SahneSpace.x6,
@@ -116,7 +117,8 @@ extension _QuizScreenUI on _QuizScreenState {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
-                  child: SingleChildScrollView(
+                  child: SahneStageScroll(
+                    resetKey: index,
                     padding: scrollPadding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1017,6 +1019,7 @@ extension _QuizScreenUI on _QuizScreenState {
       answerAreaKey: answerAreaKey,
       correctAnswerKey: correctAnswerKey,
       explanationKey: _explanationKey,
+      explanationActionKey: _explanationActionKey,
       onAnswer: _answer,
       onListen: _listenCurrentQuestion,
       canListen: _canListenCurrentQuestion,

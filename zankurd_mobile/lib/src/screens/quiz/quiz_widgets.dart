@@ -366,6 +366,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     this.answerAreaKey,
     this.correctAnswerKey,
     this.explanationKey,
+    this.explanationActionKey,
     this.onListen,
     this.canListen = false,
     this.listeningListenable,
@@ -400,6 +401,10 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   /// quiz ekranı onu görünür alana kaydırır; üç satırlık sorularda kutu sabit
   /// "Sonraki" düğmesinin arkasında kalıyordu (2026-08-16).
   final GlobalKey? explanationKey;
+
+  /// "Açıklamayı gör" satırının kaydırma hedefi (bkz.
+  /// `_QuizScreenState._revealExplanation`).
+  final GlobalKey? explanationActionKey;
 
   /// Gerilim tutuşu: cevap seçildi ama sonuç henüz açıklanmadı.
   /// True iken doğru/yanlış renkleri gizlenir; seçilen şık "kontrol
@@ -457,7 +462,10 @@ class _QuestionTextAndAnswers extends StatelessWidget {
               revealKey: showExplanation ? explanationKey : null,
             ),
             if (showExplanation && answered)
-              _LearningExplanationAction(question: question),
+              _LearningExplanationAction(
+                key: explanationActionKey,
+                question: question,
+              ),
           ],
         );
       },
@@ -603,7 +611,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
 /// (bkz. `lesson_explanation_test`). Not yalnız kapıdır: oyuncu isterse
 /// tek dokunuşla alttan okur.
 class _LearningExplanationAction extends StatelessWidget {
-  const _LearningExplanationAction({required this.question});
+  const _LearningExplanationAction({super.key, required this.question});
 
   final QuizQuestion question;
 

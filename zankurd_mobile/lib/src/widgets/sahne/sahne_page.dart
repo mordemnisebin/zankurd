@@ -723,12 +723,11 @@ class SahneStageScaffold extends StatelessWidget {
       child: Padding(
         // Kapat plakasının görsel kenarı sayfa kenarına (16) oturur; 48'lik
         // dokunma kutusu 2 px dışarı taşar. Sağ öğe yine 16'ya hizalanır
-        // (bkz. [_GameBarLayout.trailingInset]).
+        // (bkz. [_GameBarRow.trailingInset]).
         padding: const EdgeInsets.symmetric(
           horizontal: SahneSpace.page - SahneIconButton.inset,
         ),
-        child: CustomMultiChildLayout(
-          delegate: _GameBarLayout(),
+        child: _GameBarRow(
           children: [
             LayoutId(
               id: _GameBarSlot.leading,
@@ -896,6 +895,94 @@ class SahneStageScaffold extends StatelessWidget {
   }
 }
 
+/// Sahne gövdesinin kayan alanı: üst kenarı yumuşak söner, yeni soruya
+/// geçince başa döner.
+///
+/// 2026-09-30 simülatör (iOS Ekstra Büyük yazı, buyuk/23, 31, 51, 54): uzun
+/// soru metni kaydırılınca kayan alan, elmas ilerleme şeridinin hemen
+/// altında SERT bir çizgiyle kesiliyordu; harfler elmasların dibinde yarım
+/// kalıp şeridin arkasından giriyormuş gibi görünüyordu. Kırpma vardı ama
+/// çizgi elmaslara değdiği için "kırpılmıyor" gibi okunuyordu. Üst [fade]
+/// piksel şimdi saydamdan opağa açılır; içerik şeride varmadan söner.
+/// Kayma konumu başta (`padding.top >= fade`) çizimi değiştirmez.
+///
+/// Konum ayrıca [resetKey] değişince sıfırlanır (buyuk/25, 30): aynı kayan
+/// alan soru değişiminde korunuyor, yeni soru ortadan başlıyordu. Sessizdi
+/// çünkü test ortamında soru değişince alan zaten kısa ve kaydırılmamış
+/// olurdu; büyük yazıda ilk soru kaydırılınca ikinci soruya taşınıyordu.
+class SahneStageScroll extends StatefulWidget {
+  const SahneStageScroll({
+    super.key,
+    required this.child,
+    this.scrollKey,
+    this.resetKey,
+    this.padding = EdgeInsets.zero,
+    this.fade = SahneSpace.x4,
+  });
+
+  final Widget child;
+
+  /// İçteki `SingleChildScrollView`in anahtarı (testler ve ölçümler için).
+  final Key? scrollKey;
+
+  /// Değişince kaydırma başa döner (ör. soru sırası).
+  final Object? resetKey;
+  final EdgeInsets padding;
+
+  /// Üst kenardaki sönme yüksekliği.
+  final double fade;
+
+  @override
+  State<SahneStageScroll> createState() => _SahneStageScrollState();
+}
+
+class _SahneStageScrollState extends State<SahneStageScroll> {
+  final ScrollController _controller = ScrollController();
+
+  @override
+  void didUpdateWidget(SahneStageScroll oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.resetKey != oldWidget.resetKey) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || !_controller.hasClients) return;
+        if (_controller.offset != 0) _controller.jumpTo(0);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final opaque = SahneTokens.of(context).bg;
+    return ShaderMask(
+      blendMode: BlendMode.dstIn,
+      shaderCallback: (bounds) {
+        final stop = bounds.height <= 0
+            ? 0.0
+            : (widget.fade / bounds.height).clamp(0.0, 1.0);
+        return LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          // Yalnız alfa kullanılır; opak uç bir belirteçtir (ham renk yok).
+          colors: [Colors.transparent, opaque],
+          stops: [0, stop],
+        ).createShader(bounds);
+      },
+      child: SingleChildScrollView(
+        key: widget.scrollKey,
+        controller: _controller,
+        padding: widget.padding,
+        child: widget.child,
+      ),
+    );
+  }
+}
+
 /// Alt perdenin üst kenarı: gövde perdenin altında DEVAM EDİYORSA 1 px
 /// ayırıcı çizgi ([SahneTokens.line]), içerik bittiyse hiçbir şey.
 ///
@@ -996,59 +1083,120 @@ enum _GameBarSlot { leading, center, trailing }
 /// Oyun sahnesinin üst satırı: CSS `grid-template-columns: 1fr auto 1fr`
 /// karşılığı. Orta yuva her zaman TAM ortadadır (yan öğelerin genişliği
 /// farklı olsa da); genişliği iki yandaki geniş öğeye göre sınırlanır.
-/// Yükseklik 68 (en az); büyük yazıda orta metin uzarsa satır uzar.
-class _GameBarLayout extends MultiChildLayoutDelegate {
-  static const double _height = 68;
+///
+/// Yükseklik 68 (en az); büyük yazıda orta metin uzarsa satır UZAR.
+///
+/// 2026-09-30 simülatör: bu satır önce `CustomMultiChildLayout` idi ve
+/// `getSize` yüksekliği çocuklar ölçülmeden, 68'e sabitliyordu. Belge "satır
+/// uzar" diyordu ama uzamıyordu: iOS Ekstra Büyük yazıda "Asta xwe diyar
+/// bike" iki satıra çıkıyor, 68'lik bandın dışına taşıp altındaki ilerleme
+/// çubuğunun üstüne biniyordu (buyuk/45). Sessizdi çünkü test ortamında
+/// başlıklar tek satır ve normal ölçekte ölçülüyordu. Yükseklik yalnız
+/// çocuklar ölçüldükten sonra bilinebildiği için özel bir `RenderBox` gerekti.
+class _GameBarRow extends MultiChildRenderObjectWidget {
+  const _GameBarRow({required super.children});
+
+  static const double minHeight = 68;
+
+  /// Orta metin ile satırın alt/üst kenarı arasındaki en az boşluk.
+  static const double centerPad = SahneSpace.x2;
 
   /// Satır, kapat düğmesinin 48'lik dokunma kutusu için sayfa kenarından
   /// 2 px taşar; sağ öğe (skor) yine sayfa kenarına (16) oturur.
   static const double trailingInset = SahneIconButton.inset;
 
   @override
-  Size getSize(BoxConstraints constraints) => Size(
-    constraints.maxWidth,
-    _height.clamp(constraints.minHeight, constraints.maxHeight),
-  );
+  RenderObject createRenderObject(BuildContext context) => _RenderGameBar();
+}
 
+class _RenderGameBar extends RenderBox
+    with
+        ContainerRenderObjectMixin<RenderBox, MultiChildLayoutParentData>,
+        RenderBoxContainerDefaultsMixin<RenderBox, MultiChildLayoutParentData> {
   @override
-  void performLayout(Size size) {
-    final w = size.width;
-    final loose = BoxConstraints(
-      maxWidth: w / 2 - SahneSpace.x1,
-      maxHeight: size.height,
-    );
-    var lw = 0.0;
-    var tw = 0.0;
-    if (hasChild(_GameBarSlot.leading)) {
-      final s = layoutChild(_GameBarSlot.leading, loose);
-      lw = s.width;
-      positionChild(
-        _GameBarSlot.leading,
-        Offset(0, (size.height - s.height) / 2),
-      );
-    }
-    if (hasChild(_GameBarSlot.trailing)) {
-      final s = layoutChild(_GameBarSlot.trailing, loose);
-      tw = s.width + trailingInset;
-      positionChild(
-        _GameBarSlot.trailing,
-        Offset(w - s.width - trailingInset, (size.height - s.height) / 2),
-      );
-    }
-    if (hasChild(_GameBarSlot.center)) {
-      final side = lw > tw ? lw : tw;
-      final maxW = (w - 2 * (side + SahneSpace.x2)).clamp(0.0, w);
-      final s = layoutChild(
-        _GameBarSlot.center,
-        BoxConstraints(maxWidth: maxW, maxHeight: size.height),
-      );
-      positionChild(
-        _GameBarSlot.center,
-        Offset((w - s.width) / 2, (size.height - s.height) / 2),
-      );
+  void setupParentData(RenderBox child) {
+    if (child.parentData is! MultiChildLayoutParentData) {
+      child.parentData = MultiChildLayoutParentData();
     }
   }
 
+  RenderBox? _slot(_GameBarSlot id) {
+    var child = firstChild;
+    while (child != null) {
+      final data = child.parentData! as MultiChildLayoutParentData;
+      if (data.id == id) return child;
+      child = data.nextSibling;
+    }
+    return null;
+  }
+
+  /// Ölçü kuralı; `layout` gerçek yerleşimde çocukları ölçer, kuru
+  /// yerleşimde yalnız boyunu sorar.
+  Size _measure(
+    BoxConstraints constraints,
+    Size Function(RenderBox child, BoxConstraints c) layout,
+    void Function(RenderBox child, Offset offset)? place,
+  ) {
+    final w = constraints.maxWidth;
+    final loose = BoxConstraints(maxWidth: w / 2 - SahneSpace.x1);
+    final leading = _slot(_GameBarSlot.leading);
+    final trailing = _slot(_GameBarSlot.trailing);
+    final center = _slot(_GameBarSlot.center);
+    final ls = leading == null ? Size.zero : layout(leading, loose);
+    final ts = trailing == null ? Size.zero : layout(trailing, loose);
+    final tw = trailing == null ? 0.0 : ts.width + _GameBarRow.trailingInset;
+    final side = ls.width > tw ? ls.width : tw;
+    var cs = Size.zero;
+    if (center != null) {
+      final maxW = (w - 2 * (side + SahneSpace.x2)).clamp(0.0, w);
+      cs = layout(center, BoxConstraints(maxWidth: maxW));
+    }
+    var h = _GameBarRow.minHeight;
+    if (center != null) {
+      h = h > cs.height + 2 * _GameBarRow.centerPad
+          ? h
+          : cs.height + 2 * _GameBarRow.centerPad;
+    }
+    h = h > ls.height ? h : ls.height;
+    h = h > ts.height ? h : ts.height;
+    h = h.clamp(constraints.minHeight, double.infinity);
+    if (place != null) {
+      if (leading != null) place(leading, Offset(0, (h - ls.height) / 2));
+      if (trailing != null) {
+        place(
+          trailing,
+          Offset(w - ts.width - _GameBarRow.trailingInset, (h - ts.height) / 2),
+        );
+      }
+      if (center != null) {
+        place(center, Offset((w - cs.width) / 2, (h - cs.height) / 2));
+      }
+    }
+    return Size(w, h);
+  }
+
   @override
-  bool shouldRelayout(_GameBarLayout oldDelegate) => false;
+  Size computeDryLayout(BoxConstraints constraints) =>
+      _measure(constraints, (c, b) => c.getDryLayout(b), null);
+
+  @override
+  void performLayout() {
+    size = _measure(
+      constraints,
+      (child, c) {
+        child.layout(c, parentUsesSize: true);
+        return child.size;
+      },
+      (child, offset) =>
+          (child.parentData! as MultiChildLayoutParentData).offset = offset,
+    );
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) =>
+      defaultPaint(context, offset);
+
+  @override
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) =>
+      defaultHitTestChildren(result, position: position);
 }

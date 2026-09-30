@@ -274,6 +274,10 @@ class _CoachMarkBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final isLast = index == total - 1;
+    final primaryLabel = isLast
+        ? Tr.forKu(K.anladim, isKu)
+        : Tr.forKu(K.nextStep, isKu);
+    final stacked = MediaQuery.textScalerOf(context).scale(16) / 16 > 1.25;
     // 2026-09-29 Şahnê: balon yüzey kartıdır (Perde, L pah, gündüzde 1 px
     // kenar), bulanık gölge yok. İkon karosu nötr Kulis tonu (M pah);
     // başlık Gövde 700, sayaç kalın açıklama (tablo rakamı), açıklama
@@ -331,26 +335,50 @@ class _CoachMarkBubble extends StatelessWidget {
               style: SahneType.caption.copyWith(color: t.tx2),
             ),
             const SizedBox(height: SahneSpace.x4),
-            Row(
-              children: [
-                SahneButton.text(
+            // 2026-09-30 simülatör (iOS Ekstra Büyük yazı, buyuk/20): yan yana
+            // duran "Atla" ve "İleri" büyük yazıda dar `Flexible` yuvaya
+            // sıkışıyor, "Pêş" düğmesinin etiketi kelimenin ortasından
+            // ("Pê/ş") kırılıyordu. Sessizdi çünkü testler normal ölçekte
+            // koşuyordu. Büyük yazıda düğmeler alt alta, tam genişlikte
+            // dizilir: birincil eylem üstte, "Atla" altta.
+            if (stacked) ...[
+              SahneButton.primary(
+                key: const ValueKey('coach-mark-next'),
+                label: primaryLabel,
+                onPressed: onNext,
+                arrow: !isLast,
+                expand: true,
+              ),
+              const SizedBox(height: SahneSpace.x2),
+              Center(
+                child: SahneButton.text(
+                  key: const ValueKey('coach-mark-skip'),
                   label: Tr.forKu(K.skip, isKu),
                   onPressed: onSkip,
                   arrow: false,
                 ),
-                const Spacer(),
-                Flexible(
-                  flex: 3,
-                  child: SahneButton.primary(
-                    label: isLast
-                        ? (Tr.forKu(K.anladim, isKu))
-                        : (Tr.forKu(K.nextStep, isKu)),
-                    onPressed: onNext,
-                    arrow: !isLast,
+              ),
+            ] else
+              Row(
+                children: [
+                  SahneButton.text(
+                    key: const ValueKey('coach-mark-skip'),
+                    label: Tr.forKu(K.skip, isKu),
+                    onPressed: onSkip,
+                    arrow: false,
                   ),
-                ),
-              ],
-            ),
+                  const Spacer(),
+                  Flexible(
+                    flex: 3,
+                    child: SahneButton.primary(
+                      key: const ValueKey('coach-mark-next'),
+                      label: primaryLabel,
+                      onPressed: onNext,
+                      arrow: !isLast,
+                    ),
+                  ),
+                ],
+              ),
           ],
         ),
       ),
