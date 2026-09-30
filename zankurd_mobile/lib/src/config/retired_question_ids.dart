@@ -150,6 +150,18 @@
 /// sunucuda 64 soruyu onaydan çıkardı, bu 17'si yerel paketteki payıdır).
 /// Kayıtlar silinmedi, bankada duruyor.
 ///
+/// ## Altıncı dalga (2026-09-30, son olgu doğrulaması — üsttekilerden bağımsız kusur)
+///
+/// Son olgu doğrulamasında Gemini, Muse Spark, Grok 4.7 ve Space Bunny'den
+/// en az biri bir soruyu olgu ya da şık doğruluğu açısından işaretledi. Her
+/// işaret ikinci bir turda hem Gemini 3.1 Pro'ya hem Grok 4.7'ye gösterildi;
+/// İKİSİ de sorun olduğunu doğruladığında soru emekliye ayrıldı (45 soru).
+/// Otomatik yeniden yazılmadı: bir modelin önerdiği düzeltmeyi makineyle
+/// uygulamak yeni olgu ya da dil hatası sokma riski taşır. Kusurlar
+/// çoğunlukla «doğru şık sanılan şıkkın kavramı tam karşılamaması» türünden.
+/// Kayıtlar silinmedi; düzeltilip insan okumasından
+/// geçince id buradan çıkarılabilir. 45'in 7'si daha önceki dalgalarda zaten
+/// emekliydi (yinelenen id eklenmedi), 38'i bu dalgada girdi.
 library;
 
 const Set<String> retiredQuestionIds = <String>{
@@ -675,6 +687,65 @@ const Set<String> retiredQuestionIds = <String>{
   'offline_tf_siy_0012',
   'offline_tf_siy_0032',
   'offline_tf_siy_0034',
+
+  // ---------------------------------------------------------------------
+  // Altıncı dalga (2026-09-30): son olgu doğrulaması — bkz. dosya başındaki
+  // "Altıncı dalga" belgesi. Kategoriye göre gruplu.
+  // ---------------------------------------------------------------------
+
+  // Cografya (2) — iki modelin onayladığı olgu/şık kusuru
+  'edit_cografya_0031',
+  'offline_8986',
+
+  // Dîrok (7) — iki modelin onayladığı olgu/şık kusuru
+  'edit_dirok_0006',
+  'edit_dirok_0014',
+  'edit_dirok_0021',
+  'offline_2639',
+  'offline_7360',
+  'offline_7383',
+  'offline_7480',
+
+  // Edebiyat (8) — iki modelin onayladığı olgu/şık kusuru
+  'ds_edebiyat_0249',
+  'edit_edebiyat_0031',
+  'offline_10002',
+  'offline_9405',
+  'offline_9529',
+  'offline_9730',
+  'offline_9953',
+  'offline_curated_20401',
+
+  // Muzîk (5) — iki modelin onayladığı olgu/şık kusuru
+  'edit_muzik_0014',
+  'offline_10427',
+  'offline_10930',
+  'offline_11383',
+  'offline_2499',
+
+  // Siyaset (2) — iki modelin onayladığı olgu/şık kusuru
+  'offline_12745',
+  'offline_12961',
+
+  // Sînema (2) — iki modelin onayladığı olgu/şık kusuru
+  'edit_sinema_0026',
+  'sf_cin_0054',
+
+  // Teknolojî (3) — iki modelin onayladığı olgu/şık kusuru
+  'offline_tek_2008',
+  'tech_invent_0038',
+  'tech_invent_0049',
+
+  // Çand (9) — iki modelin onayladığı olgu/şık kusuru
+  'ds_cand_1201',
+  'edit_cand_0039',
+  'offline_2692',
+  'offline_6067',
+  'offline_6206',
+  'offline_6260',
+  'offline_6523',
+  'offline_6882',
+  'restore_2026_08_07_0003',
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?
