@@ -99,14 +99,16 @@ void main() {
     // Bu iki sayı BİRLİKTE değişmeli: biri değişip diğeri aynı kalırsa
     // ya yeni bir tanım-takası sorusu tek taraflı eklenmiş ya da
     // emekliye ayırma yalnızca Rast/Şaş'ın birinden yapılmıştır.
+    // 2026-09-30: Paradigma, Siyaset ve Teknolojî yeniden açıldı; bu
+    // kalıptaki kayıtlar geri döndü (Rast 80 -> 114, Şaş 55 -> 114).
     expect(
       rast,
-      80,
+      114,
       reason: 'Oynanabilir Rast sayısı değişti (bkz. yukarıdaki yorum).',
     );
     expect(
       sas,
-      55,
+      114,
       reason: 'Oynanabilir Şaş sayısı değişti (bkz. yukarıdaki yorum).',
     );
   });

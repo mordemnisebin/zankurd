@@ -416,8 +416,8 @@ class SahneCategoryLight {
 /// * [detail] — ince ayrıntının rengi: ışık tablosundaki kategori ışığı.
 ///   Yalnız çizgi/yüzey ayrıntısında, düşük örtücülükte; metin değil.
 ///
-/// Işık tablosunda olmayan üç gizli kategori (Siyaset, Paradigma,
-/// Teknolojî) tonlarını kalan boşluklardan alır (zeytin, erik, çelik mavi).
+/// Işık tablosunda olmayan üç kategori (Siyaset, Paradigma, Teknolojî;
+/// 2026-09-30'da gizlilikten çıktılar) tonlarını kalan boşluklardan alır (zeytin, erik, çelik mavi).
 @immutable
 class SahneCategoryTone {
   const SahneCategoryTone({

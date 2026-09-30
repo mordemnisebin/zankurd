@@ -1,5 +1,10 @@
 /// Gizli kategoriler sunucuda da devre dışı — göç sözleşmesi bekçisi.
 ///
+/// 2026-09-30: ürün sahibi üç kategoriyi yeniden açtı; istemci listesi boş,
+/// kapatma göçü canlıda uygulanmış durumda, açma göçü
+/// (`2026-09-30_hidden_categories_reopen.sql`) yazıldı ama henüz
+/// uygulanmadı. Bu dosya iki göçün de sözleşmesini korur.
+///
 /// ## Kusur
 ///
 /// İstemci Paradigma, Siyaset ve Teknolojî'yi listelerde göstermiyor ama
@@ -34,13 +39,17 @@ void main() {
       .where((line) => !line.trimLeft().startsWith('--'))
       .join('\n');
 
-  test('devre dışı bırakılan liste istemcideki gizli listeyle birebir', () {
+  test('2026-09-28 göçü tarihî kayıttır: kapattığı üç ad hâlâ yazılı', () {
+    // İstemci listesi 2026-09-30'da boşaldı (`hiddenCategoryIds`), bu yüzden
+    // artık birebir eşitlik aranmaz; bu göç canlıda uygulanmış bir kayıt.
+    // Yine de içeriği sabit: reopen göçü tam bu üç adı geri açar.
     final match = RegExp(r'where name in \(([^)]*)\)').firstMatch(statements);
     expect(match, isNotNull, reason: 'kategori listesi bulunamadı');
     final names = RegExp(
       r"'([^']+)'",
     ).allMatches(match!.group(1)!).map((m) => m.group(1)!).toSet();
-    expect(names, hiddenCategoryIds);
+    expect(names, {'Paradigma', 'Siyaset', 'Teknolojî'});
+    expect(hiddenCategoryIds, isEmpty);
   });
 
   test('yalnız kategori etkinliğini kapatır, soruya ve silmeye dokunmaz', () {
@@ -68,5 +77,65 @@ void main() {
           orElse: () => '',
         );
     expect(row, contains('✅'));
+  });
+
+  group('2026-09-30 yeniden açma göçü', () {
+    final reopen = File(
+      'supabase/2026-09-30_hidden_categories_reopen.sql',
+    ).readAsStringSync();
+    final reopenStatements = reopen
+        .split('\n')
+        .where((line) => !line.trimLeft().startsWith('--'))
+        .join('\n');
+
+    test('üç kategoriyi slug ile etkinleştirir, tek işlemde', () {
+      expect(reopenStatements, contains('begin;'));
+      expect(reopenStatements, contains('commit;'));
+      expect(reopenStatements, contains('update public.categories'));
+      expect(reopenStatements, contains('set is_active = true'));
+      final match = RegExp(
+        r'where slug in \(([^)]*)\)',
+      ).firstMatch(reopenStatements);
+      expect(match, isNotNull, reason: 'slug listesi bulunamadı');
+      final slugs = RegExp(
+        r"'([^']+)'",
+      ).allMatches(match!.group(1)!).map((m) => m.group(1)!).toSet();
+      expect(slugs, {'paradigma', 'siyaset', 'teknoloji'});
+    });
+
+    test('etkin değilse hata veren doğrulama bloğu var', () {
+      expect(reopenStatements, contains(r'do $$'));
+      expect(reopenStatements, contains('raise exception'));
+      expect(reopenStatements, contains('is_active = true'));
+      expect(reopenStatements, contains('<> 3'));
+    });
+
+    test('soruya dokunmaz, silmez, düşürmez', () {
+      expect(reopenStatements, isNot(contains('public.questions')));
+      expect(reopenStatements.toLowerCase(), isNot(contains('delete')));
+      expect(reopenStatements.toLowerCase(), isNot(contains('drop ')));
+    });
+
+    test('NİÇİN başlığı, geri alma ve postflight dosyada yazılı', () {
+      expect(reopen, contains('Neden:'));
+      expect(reopen, contains('Geri alma'));
+      expect(reopen, contains('set is_active = false'));
+      expect(reopen, contains('Postflight'));
+    });
+
+    // Göç yazıldı ama canlıya UYGULANMADI. Kullanıcı uygulayınca bu satır
+    // ✅'e dönmeli ve bu test güncellenmeli: kayıt ile canlı ayrışmasın.
+    test('applied.md satırı var ve uygulanmadı (⏳) olarak duruyor', () {
+      final applied = File('supabase/applied.md').readAsStringSync();
+      final row = applied
+          .split('\n')
+          .firstWhere(
+            (line) => line.contains('2026-09-30_hidden_categories_reopen.sql'),
+            orElse: () => '',
+          );
+      expect(row, isNotEmpty, reason: 'applied.md satırı eksik');
+      expect(row, contains('⏳'));
+      expect(row, isNot(contains('✅')));
+    });
   });
 }

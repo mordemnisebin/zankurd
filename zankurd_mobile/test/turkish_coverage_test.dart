@@ -70,11 +70,12 @@ void main() {
     // 45 kaydın tamamı oynanabilirdi: 2026-09-02'de kuyruktaki 7 bozuk
     // Kurmancî kayıt yeniden yazıldı. 45 -> 12: 2026-09-27 Paradigma ve
     // Siyaset gizlendi; curated kayıtların 33'ü bu iki kategorideydi.
-    // Sayı düşerse banka yüklenen kümede görünmüyor demektir; artarsa
-    // sessizce yeni curated id girmiştir.
+    // 12 -> 45: 2026-09-30 Paradigma ve Siyaset yeniden açıldı; 33 curated
+    // kayıt geri geldi. Sayı düşerse banka yüklenen kümede görünmüyor
+    // demektir; artarsa sessizce yeni curated id girmiştir.
     expect(
       curated.length,
-      12,
+      45,
       reason:
           'Curated bankadan oynanabilir soru sayısı değişti. Düştüyse banka '
           'yüklenen kümede görünmüyor ve kapsam ölçümü onu atlıyor demektir; '
@@ -97,6 +98,7 @@ void main() {
     expect(thin, isEmpty, reason: 'Türkçe turu dolmayan kategori: $thin');
     // 10 -> 8: 2026-09-27 Paradigma ve Siyaset gizlendi; 8 -> 7: aynı gün
     // Teknolojî (bkz. `category_visibility.dart`).
-    expect(byCategory.length, 7);
+    // 7 -> 10: 2026-09-30 üçü de yeniden açıldı.
+    expect(byCategory.length, 10);
   });
 }
