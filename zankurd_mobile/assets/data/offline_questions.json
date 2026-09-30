@@ -3497,7 +3497,7 @@
   {
     "id": "offline_2638",
     "category": "Dîrok",
-    "prompt": "\"Hesenweyhiyî\", xanedaneke kurd e ku li kîjan herêmê hukim kiriye?",
+    "prompt": "Xanedana kurd a Hesenweyhî li kîjan herêmê hukim kiriye?",
     "answers": [
       "Kafkasya (derdora Gence-Aniyê)",
       "Şerefxan (mîrê Bidlîsê)",
@@ -4160,10 +4160,10 @@
       "Betlane"
     ],
     "correctAnswer": "Xebat",
-    "explanation": "Peyva \"kar\" tê wateya \"İş\"ê.",
+    "explanation": "Peyva \"kar\" tê wateya \"xebatê\".",
     "type": "multipleChoice",
     "difficulty": 2,
-    "explanationKu": "Peyva \"kar\" tê wateya \"İş\"ê.",
+    "explanationKu": "Peyva \"kar\" tê wateya \"xebatê\".",
     "explanationTr": "\"kar\" kelimesi \"İş\" anlamına gelir.",
     "promptTr": "\"kar\" nedir?",
     "answersTr": [
@@ -11729,7 +11729,7 @@
   {
     "id": "offline_11599",
     "category": "Paradigma",
-    "prompt": "Têgiha \"aboriya komînal\" tê çi wateyê?",
+    "prompt": "Têgeha \"aboriya komînal\" tê çi wateyê?",
     "answers": [
       "xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e",
       "aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire",
@@ -18529,14 +18529,14 @@
   {
     "id": "offline_tf_cog_0041",
     "category": "Cografya",
-    "prompt": "Rast e an şaş e: \"Ava Zapê\" ava hov a ku ji Colemêrgê dadikeve û enerjiya avî ya başûr xwedî dike ye.",
+    "prompt": "Rast e an şaş e: Têgeha \"Ava Zapê\" tê vê wateyê: ava hov a ku ji Colemêrgê dadikeve û enerjiya avî ya başûr xwedî dike.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. \"Ava Zapê\" ava hov a ku ji Colemêrgê dadikeve û enerjiya avî ya başûr xwedî dike ye.",
-    "explanationKu": "Rast e. \"Ava Zapê\" ava hov a ku ji Colemêrgê dadikeve û enerjiya avî ya başûr xwedî dike ye.",
+    "explanation": "Rast e. Têgeha \"Ava Zapê\" tê vê wateyê: ava hov a ku ji Colemêrgê dadikeve û enerjiya avî ya başûr xwedî dike.",
+    "explanationKu": "Rast e. Têgeha \"Ava Zapê\" tê vê wateyê: ava hov a ku ji Colemêrgê dadikeve û enerjiya avî ya başûr xwedî dike.",
     "explanationTr": "Doğru. \"Ava Zapê\", Colemêrg'den inen, güneyin su enerjisini besleyen coşkun akarsudur.",
     "type": "trueFalse",
     "difficulty": 3,
@@ -18592,7 +18592,7 @@
   {
     "id": "offline_tf_cog_0044",
     "category": "Cografya",
-    "prompt": "Rast e an şaş e: \"Deşta Amedê\" deşta fireh a başûr e ku çandiniya genim lê serdest e.",
+    "prompt": "Rast e an şaş e: Têgeha \"Deşta Amedê\" tê vê wateyê: deşta fireh a başûr ku çandiniya genim lê serdest e.",
     "answers": [
       "Rast",
       "Şaş"
@@ -18781,7 +18781,7 @@
   {
     "id": "offline_tf_cog_0060",
     "category": "Cografya",
-    "prompt": "Rast e an şaş e: \"Çiyayê Helgurdê\" ew rêzeçiyayên mezin in ku sînorê xwezayî yê welatê kurdan pêk tînin.",
+    "prompt": "Rast e an şaş e: Têgeha \"Çiyayê Helgurdê\" tê vê wateyê: rêzeçiyayên mezin ên ku sînorê xwezayî yê welatê kurdan pêk tînin.",
     "answers": [
       "Rast",
       "Şaş"
@@ -19264,7 +19264,7 @@
   {
     "id": "offline_tf_siy_0024",
     "category": "Siyaset",
-    "prompt": "Rast e an şaş e: \"mafên hindikahiyan\" mafê xwendinê ye bi zimanê ku zarok pê mezin bûye.",
+    "prompt": "Rast e an şaş e: Têgeha \"mafên hindikahiyan\" tê vê wateyê: mafê xwendinê bi zimanê ku zarok pê mezin bûye.",
     "answers": [
       "Rast",
       "Şaş"
@@ -19432,7 +19432,7 @@
   {
     "id": "offline_tf_siy_0034",
     "category": "Siyaset",
-    "prompt": "\"budceya beşdarîxwaz\" saziyên biryardar ên tax û gundan in ên herî nêzî jiyana rojane. Ev rast e an şaş e?",
+    "prompt": "Rast e an şaş e: Têgeha \"budceya beşdarîxwaz\" wiha tê ravekirin: saziyên biryardar ên tax û gundan ên herî nêzî jiyana rojane.",
     "answers": [
       "Rast",
       "Şaş"
@@ -19579,7 +19579,7 @@
   {
     "id": "offline_tf_siy_0042",
     "category": "Siyaset",
-    "prompt": "\"aştiya civakî\" mafê gelan ê jiyaneke bê şer û bê tirsa şîdetê ye. Ev rast e an şaş e?",
+    "prompt": "Rast e an şaş e: \"aştiya civakî\" mafê gelan ê jiyaneke bê şer û bê tirsa şîdetê ye.",
     "answers": [
       "Rast",
       "Şaş"
@@ -19600,7 +19600,7 @@
   {
     "id": "offline_tf_siy_0043",
     "category": "Siyaset",
-    "prompt": "\"mafê aştiyê\" mafê gelan ê jiyaneke bê şer û bê tirsa şîdetê ye. Ev rast e an şaş e?",
+    "prompt": "Rast e an şaş e: \"mafê aştiyê\" mafê gelan ê jiyaneke bê şer û bê tirsa şîdetê ye.",
     "answers": [
       "Rast",
       "Şaş"
@@ -19747,7 +19747,7 @@
   {
     "id": "offline_tf_siy_0050",
     "category": "Siyaset",
-    "prompt": "\"hevpeymaniyên demokratîk\" komek mafan in wekî azadiya gotin, civîn û rêxistinbûnê. Ev rast e an şaş e?",
+    "prompt": "Rast e an şaş e: Têgeha \"hevpeymaniyên demokratîk\" wiha tê ravekirin: komek mafên wekî azadiya gotin, civîn û rêxistinbûnê.",
     "answers": [
       "Rast",
       "Şaş"
@@ -22855,7 +22855,7 @@
   {
     "id": "offline_tf_par_0024",
     "category": "Paradigma",
-    "prompt": "Rast e an şaş e: \"civaka sivîl\" komek saziyan e ku ne dewlet in û ne jî bazar in.",
+    "prompt": "Rast e an şaş e: \"civaka sivîl\" komeke saziyan e ku ne dewlet in û ne jî bazar in.",
     "answers": [
       "Rast",
       "Şaş"
