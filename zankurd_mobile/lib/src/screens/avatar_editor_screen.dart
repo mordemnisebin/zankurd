@@ -13,6 +13,7 @@ import '../l10n/strings.dart';
 import '../models/avatar_identity.dart';
 import '../models/mastery_level.dart';
 import '../utils/error_reporter.dart';
+import '../utils/player_identity.dart';
 import '../widgets/app_state.dart';
 import '../widgets/branded_loader.dart';
 import '../widgets/player_avatar.dart';
@@ -303,7 +304,16 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
                       iconId: _identity.iconId,
                       colorHex: _identity.colorHex,
                       frameId: _identity.frameId,
-                      displayName: _displayName,
+                      // Profil ekranıyla aynı iki girdi: çözülmüş ad ve
+                      // dilden bağımsız renk tohumu. 2026-09-30 simülatör:
+                      // düzenleyici ham adı, profil tohumu kullandığı için
+                      // renk seçilmemişken önizleme turuncu, profil mor
+                      // çiziyordu.
+                      displayName: PlayerIdentity.resolveName(
+                        _displayName,
+                        isKu: ku,
+                      ),
+                      colorSeed: PlayerIdentity.resolveColorSeed(_displayName),
                     ),
                   ),
                   const SizedBox(height: SahneSpace.x4),

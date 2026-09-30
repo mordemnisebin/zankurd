@@ -416,24 +416,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
           // İlk bakışta 4 metrik — kalanı "Detaylı İstatistik"te.
           _StatGrid(
             tiles: [
-              _StatTile(
-                label: context.t(K.statRank),
-                value: context.t(K.statPending),
-                count: _hasServerScore ? _stats!.rank : null,
-                countPrefix: '#',
-                role: SahneRole.gold,
-                icon: AppIcons.chartColumn,
-              ),
-              _StatTile(
-                label: context.t(K.statTotalScore),
-                // Sıralama gibi puan da oynanmış tur şartına bağlı: hiç
-                // soru cevaplamamış oyuncuya beş bin puan gösteriliyordu
-                // (2026-07-25 canlı denetimi).
-                value: context.t(K.statPending),
-                count: _hasServerScore ? _stats!.totalScore : null,
-                role: SahneRole.gold,
-                icon: AppIcons.star,
-              ),
+              // 2026-09-30 simülatör: 390 XP ve 16 cevaplı soru varken bu iki
+              // karo "Hîn tune / Henüz yok" diyordu — yan yana çelişki.
+              // Sıra ve toplam puan SUNUCU yarış puanından gelir; yerel
+              // olarak bilinen bir toplam yoktur (XP ayrı bir kavram, seviye
+              // kartında). Veri yokken karo göstermek yerine gizlenir; yeni
+              // bir "ilk yarıştan sonra" cümlesi uydurulmaz. Sıralama sekmesi
+              // ve ilk yarış eylemi zaten durur.
+              if (_hasServerScore) ...[
+                _StatTile(
+                  label: context.t(K.statRank),
+                  value: '—',
+                  count: _stats!.rank,
+                  countPrefix: '#',
+                  role: SahneRole.gold,
+                  icon: AppIcons.chartColumn,
+                ),
+                _StatTile(
+                  label: context.t(K.statTotalScore),
+                  value: '—',
+                  count: _stats!.totalScore,
+                  role: SahneRole.gold,
+                  icon: AppIcons.star,
+                ),
+              ],
               _StatTile(
                 label: context.t(K.statAnswered),
                 value: '$_answeredTotal',
