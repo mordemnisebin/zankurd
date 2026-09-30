@@ -2602,7 +2602,11 @@ class Tr {
     K.catCografya: {'ku': 'Erdnîgarî', 'tr': 'Coğrafya'},
     K.catMuzik: {'ku': 'Muzîk', 'tr': 'Müzik'},
     K.catSiyaset: {'ku': 'Siyaset', 'tr': 'Siyaset'},
-    K.catParadigma: {'ku': 'Paradîgma', 'tr': 'Paradigma'},
+    // İç kimlik 'Paradigma' kalır (soru bankası, sunucu, depolama anahtarı);
+    // oyuncunun gördüğü ad 2026-09-30'da değişti: tek bir hareketin öğretisi
+    // emekli edilince kalan nötr toplum bilimi, felsefe ve genel bilim
+    // "paradigma" sözünün vaadini taşımıyordu.
+    K.catParadigma: {'ku': 'Zanist û Raman', 'tr': 'Bilim ve Düşünce'},
     K.catTeknoloji: {'ku': 'Teknolojî', 'tr': 'Teknoloji'},
     K.catSinema: {'ku': 'Sînema', 'tr': 'Sinema'},
     K.catTevlihev: {'ku': 'Tevlihev', 'tr': 'Karışık'},
