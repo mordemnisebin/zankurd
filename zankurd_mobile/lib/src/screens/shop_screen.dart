@@ -917,7 +917,15 @@ class _ShopScreenState extends State<ShopScreen> {
           LayoutBuilder(
             builder: (context, constraints) {
               final width = constraints.maxWidth;
-              final columns = width >= 680 ? 3 : (width >= 300 ? 2 : 1);
+              // 2026-09-30 simülatör: büyük yazıda (Ekstra Büyük 2.35x)
+              // iki sütun kalıyordu; ~165 px'lik kartta "Zivirîna zêde"
+              // gibi adlar kelime ortasından kırılıyordu. Yazı 1.5x'i
+              // geçince tek sütun: ad ve düğme tam genişlikte okunur.
+              final largeText =
+                  MediaQuery.textScalerOf(context).scale(1) >= 1.5;
+              final columns = largeText
+                  ? 1
+                  : (width >= 680 ? 3 : (width >= 300 ? 2 : 1));
               return GridView(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,

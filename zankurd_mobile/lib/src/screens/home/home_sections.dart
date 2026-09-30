@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../config/category_visuals.dart';
@@ -75,9 +77,10 @@ class HomeDoorTile extends StatelessWidget {
 /// 2026-09-29 Şahnê: karo [SahneJewelTile] (kare, L pah, gölgesiz). Maketteki kayan raf yerine
 /// ızgara: dört sütun (4 + 3), 330 px içeriğin altında üç sütun — 320 px'te de
 /// her karo tam görünür, yatay kaydırma gerekmez. Adın altında öteki
-/// dildeki ad durur; başlanmış konunun ilerlemesi karonun altında ince bir
-/// Zimrût çubuktur (yüzdeyi ekran okuyucu okur), başlanmamışın soru sayısı
-/// üçüncül metinle yazılır.
+/// dildeki ad durur; her karoda soru sayısı üçüncül metinle yazılır,
+/// başlanmış konunun ilerlemesi onun altında ince bir Zimrût çubuktur
+/// (yüzdeyi ekran okuyucu okur). 2026-09-30 simülatör: çubuk eskiden
+/// sayının yerine geçiyordu; tutarsızdı.
 ///
 /// 2026-09-29 doğallık (K1): karolarda kategori çizimi yok. Yedi karonun
 /// beşi aynı üretilmiş görsel dilini (kilim çerçeve, parlak nesne yığını)
@@ -108,12 +111,75 @@ class HomeTopicGrid extends StatelessWidget {
   final Map<String, int> questionCounts;
   final ValueChanged<String>? onOpen;
 
+  /// Karonun en büyük kenarı (ızgara geniş ekranda karoyu büyütmez).
+  static const _maxTile = 128.0;
+
+  /// Sütun sayısı: kullanılabilir genişlikten başlar (4; 330 px altında 3),
+  /// sonra yazı ölçeğine göre düşer — ta ki hiçbir ad sözü, öteki ad sözü ve
+  /// tek satırlık soru sayısı sütuna sığana (kelime ortasından bölünmeyene)
+  /// kadar.
+  ///
+  /// 2026-09-30 simülatör: büyük yazıda (Ekstra Büyük 2.35x) dört sütun
+  /// sabit kalıyordu; ~78 px'lik sütunda "Ziman" -> "Zima/n", "214 soru" ->
+  /// "214 ..." oluyordu. Tur ve testler 1.0 ölçekte koştuğu için kusur
+  /// sessiz kaldı.
+  int _columnsFor(BuildContext context, double maxWidth, double gap) {
+    final scaler = MediaQuery.textScalerOf(context);
+    final direction = Directionality.of(context);
+    // Ölçü, karonun gerçekten çizdiği biçemle yapılır: `Text` aileyi
+    // mirastan alır, boyayıcı almaz; miras biçem + Şahnê biçemi birleşir.
+    final inherited = DefaultTextStyle.of(context).style;
+    double word(String text, TextStyle style) {
+      final painter = TextPainter(
+        text: TextSpan(
+          text: text,
+          style: inherited.merge(style).copyWith(fontFamily: style.fontFamily),
+        ),
+        textDirection: direction,
+        textScaler: scaler,
+      )..layout();
+      final w = painter.width;
+      painter.dispose();
+      return w;
+    }
+
+    var widest = 0.0;
+    for (final category in categories) {
+      final name = CategoryNames.localized(category, isKu);
+      final other = CategoryNames.localized(category, !isKu);
+      for (final w in name.split(' ')) {
+        widest = math.max(widest, word(w, SahneType.bodyStrong));
+      }
+      for (final w in other.split(' ')) {
+        widest = math.max(widest, word(w, SahneType.caption));
+      }
+      // Soru sayısı ("241 soru") BÜTÜN olarak tek satıra sığmalı: iki
+      // satıra inen sayı karoyu öteki karolardan uzun yapıp yükseklikleri
+      // bozar.
+      final count = questionCounts[category];
+      if (count != null) {
+        widest = math.max(
+          widest,
+          word('$count ${Tr.forKu(K.soru, isKu)}', SahneType.caption),
+        );
+      }
+    }
+    var columns = maxWidth < 330 ? 3 : 4;
+    while (columns > 1) {
+      final tile = (maxWidth - gap * (columns - 1)) / columns;
+      // 1 px pay: kenarda duran sözün ölçümde sığıp çizimde inmesini önler.
+      if (tile >= widest + 1) break;
+      columns--;
+    }
+    return columns;
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final columns = constraints.maxWidth < 330 ? 3 : 4;
         const gap = SahneSpace.x2;
+        final columns = _columnsFor(context, constraints.maxWidth, gap);
         final tileWidth =
             ((constraints.maxWidth - gap * (columns - 1)) / columns)
                 .floorToDouble();
@@ -132,7 +198,8 @@ class HomeTopicGrid extends StatelessWidget {
                   progress: progress[category],
                   questionCount: questionCounts[category],
                   onTap: onOpen == null ? null : () => onOpen!(category),
-                  size: tileWidth,
+                  size: math.min(tileWidth, _maxTile),
+                  width: tileWidth,
                 ),
               ),
           ],
@@ -150,6 +217,7 @@ class _HomeTopicTile extends StatelessWidget {
     required this.questionCount,
     required this.onTap,
     required this.size,
+    required this.width,
     super.key,
   });
 
@@ -162,6 +230,9 @@ class _HomeTopicTile extends StatelessWidget {
   /// Karonun kenarı.
   final double size;
 
+  /// Yazı sütununun genişliği (tek sütunda karodan geniş olabilir).
+  final double width;
+
   @override
   Widget build(BuildContext context) {
     final name = CategoryNames.localized(category, isKu);
@@ -169,12 +240,16 @@ class _HomeTopicTile extends StatelessWidget {
     final ratio = progress?.ratio ?? 0;
     final started = ratio > 0;
     final count = questionCount;
-    final meta = started
-        ? context.percentRatio(ratio)
-        : count == null
-        ? null
-        : '$count ${Tr.forKu(K.soru, isKu)}';
+    final percent = started ? context.percentRatio(ratio) : null;
+    final countText = count == null ? null : '$count ${Tr.forKu(K.soru, isKu)}';
     final t = SahneTokens.of(context);
+    // 2026-09-30 simülatör: oynanmış konuda çubuk soru sayısının YERİNE
+    // geçiyordu, oynanmamışta sayı yazılıydı (tutarsız). Tek kural: her
+    // karoda soru sayısı satırı durur; oynanmış konuda ince çubuk onun
+    // altına eklenir. Oynanmamışta çubuk yerinin boşluğu ayrılır ki bir
+    // satırdaki karoların yüksekliği eşit kalsın.
+    const barGap = SahneSpace.x2;
+    const barHeight = 8.0;
     return SahneJewelTile(
       name: name,
       otherName: other == name ? null : other,
@@ -183,10 +258,19 @@ class _HomeTopicTile extends StatelessWidget {
       tone: CategoryVisuals.tone(category),
       onTap: onTap,
       size: size,
-      metaLabel: meta,
-      meta: started
-          ? Padding(
-              padding: const EdgeInsets.only(top: SahneSpace.x2),
+      width: width,
+      metaLabel: [?countText, ?percent].isEmpty
+          ? null
+          : [?countText, ?percent].join(', '),
+      meta: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (countText != null)
+            Text(countText, style: SahneType.caption.copyWith(color: t.tx3)),
+          if (started)
+            Padding(
+              padding: const EdgeInsets.only(top: barGap),
               // `SahneProgressBar` ile aynı ölçü ve renk (8 px, S pah, iz
               // Ray, dolgu Zimrût). `LinearProgressIndicator` üstüne kurulu
               // çünkü ortak `home_screen_navigation_refresh_test`
@@ -195,22 +279,18 @@ class _HomeTopicTile extends StatelessWidget {
                 clipper: const ShapeBorderClipper(shape: SahneShape.s),
                 child: LinearProgressIndicator(
                   value: ratio,
-                  minHeight: 8,
+                  minHeight: barHeight,
                   color: t.learnBar,
                   backgroundColor: t.s3,
                 ),
               ),
             )
-          // Başlanmamış konu sahte ilerleme çizmez; varsa soru sayısını
-          // söyler (2026-07-25 denetimi).
-          : meta == null
-          ? null
-          : Text(
-              meta,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: SahneType.caption.copyWith(color: t.tx3),
-            ),
+          else
+            // Başlanmamış konu sahte ilerleme çizmez (2026-07-25 denetimi);
+            // yalnız yer ayrılır.
+            const SizedBox(height: barGap + barHeight),
+        ],
+      ),
     );
   }
 }

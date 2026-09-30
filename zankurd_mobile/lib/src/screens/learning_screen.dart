@@ -1326,7 +1326,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                     SahneSpace.page,
                     SahneSpace.x3,
                   ),
-                  child: _SlideNavigation(
+                  child: LessonSlideNavigation(
                     showBack: _currentSlideIndex > 0,
                     isLast: isLast,
                     onBack: () => setState(() => _currentSlideIndex--),
@@ -1346,13 +1346,15 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
 }
 
 /// Ders slaytlarının alt gezinmesi (bkz. [LessonDetailScreen]).
-class _SlideNavigation extends StatelessWidget {
-  const _SlideNavigation({
+@visibleForTesting
+class LessonSlideNavigation extends StatelessWidget {
+  const LessonSlideNavigation({
     required this.showBack,
     required this.isLast,
     required this.onBack,
     required this.onNext,
     required this.onMiniQuiz,
+    super.key,
   });
 
   final bool showBack;
@@ -1382,7 +1384,22 @@ class _SlideNavigation extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final largeText = MediaQuery.textScalerOf(context).scale(16) > 20;
-        final oneRow = isLast && constraints.maxWidth >= 560 && !largeText;
+        // 2026-09-30 simülatör: büyük yazıda "Paş" ve "Biqedîne" yan yana
+        // yarım genişliğe düşüyor, "Biqedîn/e" kelime ortasından
+        // kırılıyordu (tur ve testler 1.0 ölçekte koşuyordu). Büyük yazıda
+        // düğmeler alt alta, tam genişlikte: birincil üstte, ikincil
+        // "Mini Quiz" ve "Paş" altında.
+        if (largeText) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              next,
+              if (isLast) ...[const SizedBox(height: SahneSpace.x2), miniQuiz],
+              if (showBack) ...[const SizedBox(height: SahneSpace.x2), back],
+            ],
+          );
+        }
+        final oneRow = isLast && constraints.maxWidth >= 560;
         final row = Row(
           children: [
             if (showBack) ...[

@@ -491,11 +491,18 @@ class SahneJewelTile extends StatelessWidget {
     this.masteredLabel,
     this.onTap,
     this.size = 128,
+    this.width,
     this.meta,
     this.metaLabel,
     this.tone = SahneCategoryTone.fallback,
     this.mark,
   });
+
+  /// Karonun altındaki yazı sütununun genişliği; verilmezse [size].
+  /// 2026-09-30 simülatör: büyük yazıda ızgara sütun sayısını düşürür ve
+  /// sütun karodan geniş olabilir; ad o genişlikte dizilir, kare ise
+  /// [size]'da kalır.
+  final double? width;
 
   /// Çizimsiz çeşidin zemini (kategori tonu).
   final SahneCategoryTone tone;
@@ -608,7 +615,7 @@ class SahneJewelTile extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
         child: SizedBox(
-          width: size,
+          width: width ?? size,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,

@@ -114,9 +114,17 @@ class BadgeWidget extends StatelessWidget {
                         children: [
                           Icon(AppIcons.check, size: 12, color: t.okTx),
                           const SizedBox(width: SahneSpace.x1),
-                          Text(
-                            Tr.forKu(K.kazanildi, isKu),
-                            style: SahneType.caption.copyWith(color: t.okTx),
+                          // 2026-09-30 simülatör: "Hat qezenckirin" 104
+                          // px'lik sütunda satıra sığmayıp yanda 27 px
+                          // taşıyordu (Kurmancî etiket Türkçeden uzun;
+                          // turlar Türkçe ve 1.0 ölçekteydi). Etiket
+                          // sütuna sığar, gerekirse ikinci satıra iner.
+                          Flexible(
+                            child: Text(
+                              Tr.forKu(K.kazanildi, isKu),
+                              textAlign: TextAlign.center,
+                              style: SahneType.caption.copyWith(color: t.okTx),
+                            ),
                           ),
                         ],
                       ),
