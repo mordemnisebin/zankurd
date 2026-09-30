@@ -156,6 +156,8 @@ class SahneTabPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ConstrainedBox(
+            // a11y-tap-target: noninteractive — marka satırı düzen tabanı;
+            // dokunma hedefi çiplerin kendi 48'lik kutularıdır.
             constraints: const BoxConstraints(minHeight: 44),
             child: _BrandRow(
               gap: SahneSpace.x3,
@@ -417,6 +419,8 @@ class _BrandMark extends StatelessWidget {
       label: name,
       excludeSemantics: true,
       child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — marka işareti; salt görsel,
+        // dokunma hedefi değil.
         constraints: const BoxConstraints(minHeight: 32),
         child: Align(
           alignment: AlignmentDirectional.centerStart,

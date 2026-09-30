@@ -38,6 +38,8 @@ class SahneStatChip extends StatelessWidget {
       color: gold ? t.goldTint : t.s2,
       onTap: onTap,
       child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — görsel çip tabanı; dokunma
+        // hedefi dıştaki 48'lik kutudur (onTap yoksa salt görsel).
         constraints: const BoxConstraints(minHeight: 36),
         child: Padding(
           padding: const EdgeInsetsDirectional.only(
@@ -255,14 +257,18 @@ class SahneRailChip extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(inset),
-          child: SahneTappable(
-            shape: shape,
-            color: selected ? t.roleTint(role) : (onSurface ? t.s2 : t.s1),
-            onTap: onTap,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 44, minWidth: 44),
+        child: ConstrainedBox(
+          // Dokunma kutusu 48: görsel 44 + her yanda [inset] saydam pay.
+          constraints: const BoxConstraints(
+            minHeight: sahneTapTarget,
+            minWidth: sahneTapTarget,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(inset),
+            child: SahneTappable(
+              shape: shape,
+              color: selected ? t.roleTint(role) : (onSurface ? t.s2 : t.s1),
+              onTap: onTap,
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: fitted ? SahneSpace.x2 : SahneSpace.x4,
@@ -322,6 +328,8 @@ class SahneBadge extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(color: bg, shape: SahneShape.s),
         child: ConstrainedBox(
+          // a11y-tap-target: noninteractive — rol rozeti; salt görsel,
+          // dokunma hedefi değil.
           constraints: const BoxConstraints(minHeight: 24),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
@@ -394,6 +402,8 @@ class SahneStatusBadge extends StatelessWidget {
       body = DecoratedBox(
         decoration: ShapeDecoration(color: bg, shape: SahneShape.m),
         child: ConstrainedBox(
+          // a11y-tap-target: noninteractive — durum rozeti; salt görsel,
+          // dokunma hedefi değil.
           constraints: const BoxConstraints(minHeight: 32),
           child: Padding(
             padding: const EdgeInsetsDirectional.only(

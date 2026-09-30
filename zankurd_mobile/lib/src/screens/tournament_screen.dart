@@ -1095,7 +1095,6 @@ class _LadderStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final fg = isFinal ? t.goldTx : t.raceTx;
-    // a11y-tap-target: noninteractive — turnuva merdiveni ilerleme rozeti.
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: isFinal ? t.goldTint : t.raceTint,
@@ -1104,6 +1103,8 @@ class _LadderStep extends StatelessWidget {
             : SahneShape.s,
       ),
       child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — turnuva merdiveni ilerleme
+        // rozeti; salt görsel, dokunma hedefi değil.
         constraints: const BoxConstraints(minWidth: 40, minHeight: 32),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
@@ -1255,6 +1256,8 @@ class _RoundPill extends StatelessWidget {
             : SahneShape.s,
       ),
       child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — tur durumu çipi; salt görsel,
+        // dokunma hedefi değil.
         constraints: const BoxConstraints(minHeight: 28),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),

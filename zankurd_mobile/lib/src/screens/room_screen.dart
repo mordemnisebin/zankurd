@@ -1487,6 +1487,8 @@ class _Pill extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(color: t.s1, shape: SahneShape.m),
       child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — ayar çipi; salt görsel,
+        // dokunma hedefi değil.
         constraints: const BoxConstraints(minHeight: 32),
         child: Padding(
           padding: const EdgeInsetsDirectional.only(

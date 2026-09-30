@@ -181,7 +181,7 @@ class _ProfileHeroCard extends StatelessWidget {
 ///
 /// Kod paylaşmak içindir — arkadaşın onu arama kutusuna yazınca seni tek
 /// ve kesin sonuç olarak bulur. Bu yüzden okunması değil **kopyalanması**
-/// asıl iş; dokunma hedefi bütün satırı kapsar (en az 44).
+/// asıl iş; dokunma hedefi bütün satırı kapsar (en az 48).
 class _PlayerTagChip extends StatelessWidget {
   const _PlayerTagChip({required this.tag, required this.ku});
 
@@ -212,7 +212,10 @@ class _PlayerTagChip extends StatelessWidget {
             );
         },
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 44),
+          constraints: const BoxConstraints(
+            minHeight: sahneTapTarget,
+            minWidth: sahneTapTarget,
+          ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -584,6 +587,8 @@ class _RewardChip extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(color: t.goldTint, shape: SahneShape.m),
       child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — başarı/rozet çipi; salt
+        // görsel, dokunma hedefi değil.
         constraints: const BoxConstraints(minHeight: 36),
         child: Padding(
           padding: const EdgeInsetsDirectional.only(

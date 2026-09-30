@@ -1805,6 +1805,8 @@ class _LevelTag extends StatelessWidget {
         shape: SahneShape.s,
       ),
       child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — seviye etiketi; salt görsel,
+        // dokunma hedefi değil.
         constraints: const BoxConstraints(minHeight: 24),
         child: Padding(
           padding: const EdgeInsets.symmetric(

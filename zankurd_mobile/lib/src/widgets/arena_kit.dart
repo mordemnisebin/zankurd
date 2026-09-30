@@ -190,6 +190,8 @@ class ArenaStatusChip extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(color: bg, shape: SahneShape.s),
       child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — durum çipi (etiket); salt
+        // görsel, dokunma hedefi değil.
         constraints: const BoxConstraints(minHeight: 28),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
