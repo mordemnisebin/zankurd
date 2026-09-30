@@ -27166,5 +27166,1059 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     }
+  },
+  {
+    "id": "ds_teknoloji_0107",
+    "category": "Teknolojî",
+    "prompt": "Kîjan pergala xebitandinê bi gelemperî li ser komputerên ku ji bo kar û nivîsgehê têne bikaranîn tê sazkirin?",
+    "answers": [
+      "Windows",
+      "Android",
+      "iOS",
+      "Tizen"
+    ],
+    "correctAnswer": "Windows",
+    "explanation": "Windows, birçok iş yazılımıyla uyumlu olduğu için genellikle ofis bilgisayarlarına kurulur. Android ve iOS telefonlar içindir ve Tizen televizyonlar içindir.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Microsoft_Windows",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Genellikle iş ve ofis için kullanılan bilgisayarlara hangi işletim sistemi kurulur?",
+    "answersTr": [
+      "Windows",
+      "Android",
+      "iOS",
+      "Tizen"
+    ],
+    "correctAnswerTr": "Windows",
+    "explanationKu": "Windows bi gelemperî li ser komputerên nivîsgehê tê sazkirin ji ber ku bi gelek nermalavên karsaziyê re lihevhatî ye. Android û iOS ji bo têlefonan in û Tizen ji bo televîzyonan e.",
+    "explanationTr": "Windows, birçok iş yazılımıyla uyumlu olduğu için genellikle ofis bilgisayarlarına kurulur. Android ve iOS telefonlar içindir ve Tizen televizyonlar içindir."
+  },
+  {
+    "id": "ds_teknoloji_0105",
+    "category": "Teknolojî",
+    "prompt": "Di komputerê de, kîjan beş wekî \"mejiyê\" komputerê tê hesibandin?",
+    "answers": [
+      "Hard disk",
+      "RAM",
+      "CPU",
+      "Karta grafîkê"
+    ],
+    "correctAnswer": "CPU",
+    "explanation": "CPU (Merkezi İşlem Birimi), tüm komutları işlediği ve bilgisayarın çalışmasını kontrol ettiği için bilgisayarın beyni olarak kabul edilir. RAM geçici bellektir, sabit disk kalıcı depolamadır ve ekran kartı görüntüler içindir.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Central_processing_unit",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Bilgisayarda, hangi parça bilgisayarın \"beyni\" olarak kabul edilir?",
+    "answersTr": [
+      "Sabit Disk",
+      "RAM",
+      "CPU",
+      "Ekran Kartı"
+    ],
+    "correctAnswerTr": "CPU",
+    "explanationKu": "CPU (Yekîneya Navendî ya Pêvajoyê) wekî mejiyê komputerê tê hesibandin ji ber ku ew hemû fermanan pêvajo dike û xebata komputerê kontrol dike. RAM bîra demkî ye, hard disk hilanîna daîmî ye û karta grafîkê ji bo wêneyan e.",
+    "explanationTr": "CPU (Merkezi İşlem Birimi), tüm komutları işlediği ve bilgisayarın çalışmasını kontrol ettiği için bilgisayarın beyni olarak kabul edilir. RAM geçici bellektir, sabit disk kalıcı depolamadır ve ekran kartı görüntüler içindir."
+  },
+  {
+    "id": "ds_teknoloji_0106",
+    "category": "Teknolojî",
+    "prompt": "Kîjan cîhaz ji bo hilanîna daneyan bi awayekî daîmî tê bikaranîn?",
+    "answers": [
+      "Hard disk",
+      "RAM",
+      "CPU",
+      "Karta dengê"
+    ],
+    "correctAnswer": "Hard disk",
+    "explanation": "Sabit disk, verileri kalıcı olarak depolamak için kullanılır. RAM, bilgisayar kapatıldığında boşalan geçici bellektir, CPU işlem yapar ve ses kartı ses içindir.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Hard_disk_drive",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Verileri kalıcı olarak depolamak için hangi cihaz kullanılır?",
+    "answersTr": [
+      "Sabit Disk",
+      "RAM",
+      "CPU",
+      "Ses Kartı"
+    ],
+    "correctAnswerTr": "Sabit Disk",
+    "explanationKu": "Hard disk ji bo hilanîna daneyan bi awayekî daîmî tê bikaranîn. RAM bîra demkî ye ku dema komputer tê girtin vala dibe, CPU pêvajo dike û karta dengê ji bo deng e.",
+    "explanationTr": "Sabit disk, verileri kalıcı olarak depolamak için kullanılır. RAM, bilgisayar kapatıldığında boşalan geçici bellektir, CPU işlem yapar ve ses kartı ses içindir."
+  },
+  {
+    "id": "ds_teknoloji_0111",
+    "category": "Teknolojî",
+    "prompt": "Kîjan pergala xebitandinê herî zêde ji bo serverên webê tê bikaranîn?",
+    "answers": [
+      "Windows",
+      "Linux",
+      "macOS",
+      "Android"
+    ],
+    "correctAnswer": "Linux",
+    "explanation": "Linux, açık kaynaklı, istikrarlı ve birçok şirket tarafından desteklenen bir işletim sistemi olduğu için web sunucuları için en çok kullanılır. Sunucular için çok esnektir.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Linux",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Web sunucuları için en çok hangi işletim sistemi kullanılır?",
+    "answersTr": [
+      "Windows",
+      "Linux",
+      "macOS",
+      "Android"
+    ],
+    "correctAnswerTr": "Linux",
+    "explanationKu": "Linux ji bo serverên webê herî zêde tê bikaranîn ji ber ku ew pergaleke xebitandinê ya çavkaniya vekirî ye, bi îstîqrar e û ji hêla gelek şîrketan ve tê piştgirî kirin. Ew ji bo serveran pir maqûl e.",
+    "explanationTr": "Linux, açık kaynaklı, istikrarlı ve birçok şirket tarafından desteklenen bir işletim sistemi olduğu için web sunucuları için en çok kullanılır. Sunucular için çok esnektir."
+  },
+  {
+    "id": "ds_teknoloji_0110",
+    "category": "Teknolojî",
+    "prompt": "Kîjan beşa komputerê ji bo hilanîna daneyan dema ku komputer vekirî ye tê bikaranîn?",
+    "answers": [
+      "Hard disk",
+      "RAM",
+      "CPU",
+      "Karta torê"
+    ],
+    "correctAnswer": "RAM",
+    "explanation": "RAM (Rastgele Erişimli Bellek), bilgisayar açıkken verileri depolamak için kullanılır. Hızlı okunup yazılabilen geçici bir bellektir, ancak bilgisayar kapatıldığında boşalır.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Random-access_memory",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Bilgisayar açıkken verileri depolamak için bilgisayarın hangi parçası kullanılır?",
+    "answersTr": [
+      "Sabit Disk",
+      "RAM",
+      "CPU",
+      "Ağ Kartı"
+    ],
+    "correctAnswerTr": "RAM",
+    "explanationKu": "RAM (Bîra Xebatê ya Rast) ji bo hilanîna daneyan dema ku komputer vekirî ye tê bikaranîn. Ew bîra demkî ye ku zû tê xwendin û nivîsandin, lê dema komputer tê girtin vala dibe.",
+    "explanationTr": "RAM (Rastgele Erişimli Bellek), bilgisayar açıkken verileri depolamak için kullanılır. Hızlı okunup yazılabilen geçici bir bellektir, ancak bilgisayar kapatıldığında boşalır."
+  },
+  {
+    "id": "ds_teknoloji_0114",
+    "category": "Teknolojî",
+    "prompt": "Kîjan beşa komputerê ji bo nîşandana wêneyan li ser ekranê tê bikaranîn?",
+    "answers": [
+      "CPU",
+      "RAM",
+      "Karta grafîkê",
+      "Hard disk"
+    ],
+    "correctAnswer": "Karta grafîkê",
+    "explanation": "Ekran kartı (GPU), görüntüleri ekranda göstermek için kullanılır. Görüntüleri işler ve ekrana gönderir. CPU genel işlemi yapar, RAM geçici bellektir ve sabit disk kalıcı depolamadır.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Graphics_processing_unit",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Görüntüleri ekranda göstermek için bilgisayarın hangi parçası kullanılır?",
+    "answersTr": [
+      "CPU",
+      "RAM",
+      "Ekran Kartı",
+      "Sabit Disk"
+    ],
+    "correctAnswerTr": "Ekran Kartı",
+    "explanationKu": "Karta grafîkê (GPU) ji bo nîşandana wêneyan li ser ekranê tê bikaranîn. Ew wêneyan pêvajoyê dike û dişîne ekranê. CPU pêvajoya giştî dike, RAM bîra demkî ye û hard disk hilanîna daîmî ye.",
+    "explanationTr": "Ekran kartı (GPU), görüntüleri ekranda göstermek için kullanılır. Görüntüleri işler ve ekrana gönderir. CPU genel işlemi yapar, RAM geçici bellektir ve sabit disk kalıcı depolamadır."
+  },
+  {
+    "id": "ds_teknoloji_0124",
+    "category": "Teknolojî",
+    "prompt": "Kîjan beşa komputerê ji bo hilanîna daneyan bi awayekî demkî dema ku bername tê xebitandin tê bikaranîn?",
+    "answers": [
+      "RAM",
+      "Hard disk",
+      "CPU",
+      "Karta torê"
+    ],
+    "correctAnswer": "RAM",
+    "explanation": "RAM (Rastgele Erişimli Bellek), bir program çalıştırıldığında verileri geçici olarak depolamak için kullanılır. CPU'nun hızlıca erişebilmesi için verileri kısa bir süre tutar. Sabit disk kalıcı depolamadır, CPU işlemleri yapar ve ağ kartı ağ bağlantısı içindir.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Random-access_memory",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Bir program çalıştırıldığında verileri geçici olarak depolamak için bilgisayarın hangi parçası kullanılır?",
+    "answersTr": [
+      "RAM",
+      "Sabit disk",
+      "CPU",
+      "Ağ kartı"
+    ],
+    "correctAnswerTr": "RAM",
+    "explanationKu": "RAM (Bîra Xebatê ya Rast) ji bo hilanîna daneyan bi awayekî demkî dema ku bername tê xebitandin tê bikaranîn. Ew daneyan ji bo demek kurt dihêle ku CPU zû bigihîje wan. Hard disk hilanîna daîmî ye, CPU pêvajoyê dike û karta torê ji bo torê ye.",
+    "explanationTr": "RAM (Rastgele Erişimli Bellek), bir program çalıştırıldığında verileri geçici olarak depolamak için kullanılır. CPU'nun hızlıca erişebilmesi için verileri kısa bir süre tutar. Sabit disk kalıcı depolamadır, CPU işlemleri yapar ve ağ kartı ağ bağlantısı içindir."
+  },
+  {
+    "id": "ds_teknoloji_0112",
+    "category": "Teknolojî",
+    "prompt": "Kîjan cîhaz ji bo girêdana komputerê bi înternetê re tê bikaranîn?",
+    "answers": [
+      "Karta dengê",
+      "Karta grafîkê",
+      "Karta bîrê",
+      "Karta torê"
+    ],
+    "correctAnswer": "Karta torê",
+    "explanation": "Ağ Kartı (Ağ Arayüz Kartı), bilgisayarı internete bağlamak için kullanılır. Bilgisayar ve ağ arasında veri iletir. Ses kartı ses için, ekran kartı görüntüler için ve bellek kartı bellek depolamak içindir.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Network_interface_controller",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Bilgisayarı internete bağlamak için hangi cihaz kullanılır?",
+    "answersTr": [
+      "Ses Kartı",
+      "Ekran Kartı",
+      "Bellek Kartı",
+      "Ağ Kartı"
+    ],
+    "correctAnswerTr": "Ağ Kartı",
+    "explanationKu": "Karta torê (Network Interface Card) ji bo girêdana komputerê bi înternetê re tê bikaranîn. Ew daneyan di navbera komputer û torê de vediguhezîne. Karta dengê ji bo deng, karta grafîkê ji bo wêneyan û karta bîrê ji bo hilanîna bîrê ye.",
+    "explanationTr": "Ağ Kartı (Ağ Arayüz Kartı), bilgisayarı internete bağlamak için kullanılır. Bilgisayar ve ağ arasında veri iletir. Ses kartı ses için, ekran kartı görüntüler için ve bellek kartı bellek depolamak içindir."
+  },
+  {
+    "id": "ds_teknoloji_0116",
+    "category": "Teknolojî",
+    "prompt": "Kîjan cîhaz ji bo zêdekirina bîra komputerê tê bikaranîn?",
+    "answers": [
+      "RAM",
+      "Hard disk",
+      "CPU",
+      "Karta torê"
+    ],
+    "correctAnswer": "RAM",
+    "explanation": "RAM (Rastgele Erişimli Bellek), bilgisayarın belleğini artırmak için kullanılır. RAM eklemek, bilgisayarın hızını artırır çünkü bilgisayar geçici bellekte daha fazla veri tutabilir. Sabit disk kalıcı depolamadır, CPU işlemleri yapar ve ağ kartı ağ bağlantısı içindir.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Random-access_memory",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Bilgisayarın belleğini artırmak için hangi cihaz kullanılır?",
+    "answersTr": [
+      "RAM",
+      "Sabit disk",
+      "CPU",
+      "Ağ kartı"
+    ],
+    "correctAnswerTr": "RAM",
+    "explanationKu": "RAM (Bîra Xebatê ya Rast) ji bo zêdekirina bîra komputerê tê bikaranîn. Zêdekirina RAM-ê leza komputerê zêde dike ji ber ku komputer dikare bêtir daneyan di bîra demkî de bihêle. Hard disk hilanîna daîmî ye, CPU pêvajo dike û karta torê ji bo torê ye.",
+    "explanationTr": "RAM (Rastgele Erişimli Bellek), bilgisayarın belleğini artırmak için kullanılır. RAM eklemek, bilgisayarın hızını artırır çünkü bilgisayar geçici bellekte daha fazla veri tutabilir. Sabit disk kalıcı depolamadır, CPU işlemleri yapar ve ağ kartı ağ bağlantısı içindir."
+  },
+  {
+    "id": "ds_teknoloji_0126",
+    "category": "Teknolojî",
+    "prompt": "Di fêrbûna makîneyê de, kîjan têgeh ji bo daneyên ku ji bo perwerdekirina modelê têne bikaranîn tê gotin?",
+    "answers": [
+      "Daneyên ceribandinê",
+      "Daneyên perwerdeyê",
+      "Daneyên rastkirinê",
+      "Daneyên hilberînê"
+    ],
+    "correctAnswer": "Daneyên perwerdeyê",
+    "explanation": "Eğitim verileri, modelin öğrendiği ve parametrelerini buna göre ayarladığı veri kümesidir. Test verileri, modelin performansını değerlendirmek için kullanılır, öğrenme için değil.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Training,_validation,_and_test_data_sets",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Makine öğrenmesinde, modeli eğitmek için kullanılan verilere hangi kavram denir?",
+    "answersTr": [
+      "Test verileri",
+      "Eğitim verileri",
+      "Düzeltme verileri",
+      "Üretim verileri"
+    ],
+    "correctAnswerTr": "Eğitim verileri",
+    "explanationKu": "Daneyên perwerdeyê koma daneyan e ku model ji wan fêr dibe û parametreyên xwe li gorî wan sererast dike. Daneyên ceribandinê ji bo nirxandina performansa modelê têne bikaranîn, ne ji bo fêrbûnê.",
+    "explanationTr": "Eğitim verileri, modelin öğrendiği ve parametrelerini buna göre ayarladığı veri kümesidir. Test verileri, modelin performansını değerlendirmek için kullanılır, öğrenme için değil."
+  },
+  {
+    "id": "ds_teknoloji_0134",
+    "category": "Teknolojî",
+    "prompt": "Di fêrbûna makîneyê de, kîjan têgeh ji bo pîvana ku model çiqas baş li ser daneyên nû yên nedîtî performansê dide tê bikaranîn?",
+    "answers": [
+      "Leza modelê",
+      "Mezinahiya modelê",
+      "Rastbûna modelê",
+      "Nexşeya modelê"
+    ],
+    "correctAnswer": "Rastbûna modelê",
+    "explanation": "Model doğruluğu (accuracy), modelin tüm tahminlere karşı doğru tahminlerinin oranıdır. Bu ölçüt, modelin daha önce görmediği verilere ne kadar iyi doğru tahminler yapabildiğini gösterir.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Accuracy_and_precision",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Makine öğrenmesinde, modelin görmediği yeni veriler üzerinde ne kadar iyi performans gösterdiğini ölçmek için hangi kavram kullanılır?",
+    "answersTr": [
+      "Model hızı",
+      "Model boyutu",
+      "Model doğruluğu",
+      "Model haritası"
+    ],
+    "correctAnswerTr": "Model doğruluğu",
+    "explanationKu": "Rastbûna modelê (accuracy) rêjeya pêşbîniyên rast ên modelê li hember hemî pêşbîniyan e. Ev pîvan nîşan dide ku model çiqas baş dikare ji daneyên ku berê nedîtine re pêşbîniyên rast bike.",
+    "explanationTr": "Model doğruluğu (accuracy), modelin tüm tahminlere karşı doğru tahminlerinin oranıdır. Bu ölçüt, modelin daha önce görmediği verilere ne kadar iyi doğru tahminler yapabildiğini gösterir."
+  },
+  {
+    "id": "ds_teknoloji_0137",
+    "category": "Teknolojî",
+    "prompt": "Di fêrbûna makîneyê de, kîjan têgeh ji bo rewşa ku model ji daneyên perwerdeyê pir baş fêr dibe lê ji daneyên nû re baş performansê nade tê bikaranîn?",
+    "answers": [
+      "Kêm-fêrbûn",
+      "Zêde-fêrbûn",
+      "Rast-fêrbûn",
+      "Çewt-fêrbûn"
+    ],
+    "correctAnswer": "Zêde-fêrbûn",
+    "explanation": "Aşırı öğrenme (overfitting), modelin eğitim verilerine aşırı uyum sağladığı ve görmediği yeni verilere karşı performansının düştüğü bir durumdur. Bunun nedeni, modelin eğitim verilerindeki gürültüyü ve özel özellikleri de öğrenmesidir.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Overfitting",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Makine öğrenmesinde, modelin eğitim verilerinden çok iyi öğrendiği ancak yeni verilere iyi performans gösteremediği durum için hangi kavram kullanılır?",
+    "answersTr": [
+      "Eksik öğrenme",
+      "Aşırı öğrenme",
+      "Doğru öğrenme",
+      "Yanlış öğrenme"
+    ],
+    "correctAnswerTr": "Aşırı öğrenme",
+    "explanationKu": "Zêde-fêrbûn (overfitting) rewşek e ku tê de model bi awayekî zêde li ser daneyên perwerdeyê tê sazkirin û ji daneyên nû yên nedîtî re performansa wê kêm dibe. Ev ji ber ku model di daneyên perwerdeyê de deng û taybetmendiyên taybet jî fêr dibe.",
+    "explanationTr": "Aşırı öğrenme (overfitting), modelin eğitim verilerine aşırı uyum sağladığı ve görmediği yeni verilere karşı performansının düştüğü bir durumdur. Bunun nedeni, modelin eğitim verilerindeki gürültüyü ve özel özellikleri de öğrenmesidir."
+  },
+  {
+    "id": "ds_teknoloji_0138",
+    "category": "Teknolojî",
+    "prompt": "Di fêrbûna makîneyê de, kîjan têgeh ji bo rewşa ku model nikare ji daneyên perwerdeyê jî bi awayekî rast fêr bibe tê bikaranîn?",
+    "answers": [
+      "Kêm-fêrbûn",
+      "Zêde-fêrbûn",
+      "Rast-fêrbûn",
+      "Bê-fêrbûn"
+    ],
+    "correctAnswer": "Kêm-fêrbûn",
+    "explanation": "Eksik öğrenme (underfitting), modelin çok basit olduğu ve verilerin yapısını doğru bir şekilde yakalayamadığı bir durumdur. Bu durumda, modelin performansı hem eğitim verilerinde hem de yeni verilerde düşüktür.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Overfitting",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Makine öğrenmesinde, modelin eğitim verilerinden bile doğru bir şekilde öğrenemediği durum için hangi kavram kullanılır?",
+    "answersTr": [
+      "Eksik öğrenme",
+      "Aşırı öğrenme",
+      "Doğru öğrenme",
+      "Öğrenmeme"
+    ],
+    "correctAnswerTr": "Eksik öğrenme",
+    "explanationKu": "Kêm-fêrbûn (underfitting) rewşek e ku tê de model pir sade ye û nikare avahiya daneyan bi awayekî rast bigire. Di vê rewşê de, performansa modelê hem li ser daneyên perwerdeyê hem jî li ser daneyên nû kêm e.",
+    "explanationTr": "Eksik öğrenme (underfitting), modelin çok basit olduğu ve verilerin yapısını doğru bir şekilde yakalayamadığı bir durumdur. Bu durumda, modelin performansı hem eğitim verilerinde hem de yeni verilerde düşüktür."
+  },
+  {
+    "id": "ds_teknoloji_0140",
+    "category": "Teknolojî",
+    "prompt": "Di fêrbûna makîneyê de, kîjan têgeh ji bo koma daneyan ku ji bo nirxandina performansa modelê ya dawî tê bikaranîn tê gotin?",
+    "answers": [
+      "Daneyên perwerdeyê",
+      "Daneyên ceribandinê",
+      "Daneyên rastkirinê",
+      "Daneyên hilberînê"
+    ],
+    "correctAnswer": "Daneyên ceribandinê",
+    "explanation": "Test verileri (test data), modelin nihai performansını değerlendirmek için kullanılan veri kümesidir. Modelin eğitim aşamasında hiç görmediği bu veriler, modelin yeni veriler üzerindeki doğruluğunu ölçmek için kullanılır.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Training,_validation,_and_test_data_sets",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Makine öğrenmesinde, modelin nihai performansını değerlendirmek için kullanılan veri kümesine ne ad verilir?",
+    "answersTr": [
+      "Eğitim verileri",
+      "Test verileri",
+      "Düzeltme verileri",
+      "Üretim verileri"
+    ],
+    "correctAnswerTr": "Test verileri",
+    "explanationKu": "Daneyên ceribandinê (test data) koma daneyan e ku ji bo nirxandina performansa modelê ya dawî tê bikaranîn. Ev daneyên ku model di qonaxa perwerdeyê de qet nedîtine, ji bo pîvandina rastiya modelê li ser daneyên nû têne bikaranîn.",
+    "explanationTr": "Test verileri (test data), modelin nihai performansını değerlendirmek için kullanılan veri kümesidir. Modelin eğitim aşamasında hiç görmediği bu veriler, modelin yeni veriler üzerindeki doğruluğunu ölçmek için kullanılır."
+  },
+  {
+    "id": "ds_teknoloji_0129",
+    "category": "Teknolojî",
+    "prompt": "Di hişmendiya çêkirî de, kîjan têgeh ji bo pêvajoya ku model bi ceribandin û xeletiyê fêr dibe û xelatê distîne tê bikaranîn?",
+    "answers": [
+      "Fêrbûna bi çavdêrî",
+      "Fêrbûna bi veguhastinê",
+      "Fêrbûna bi xurtkirinê",
+      "Fêrbûna bi kûrkirinê"
+    ],
+    "correctAnswer": "Fêrbûna bi xurtkirinê",
+    "explanation": "Pekiştirmeli öğrenme (reinforcement learning), modelin (ajan) eylemleriyle ödül veya ceza aldığı ve bu sonuçlardan öğrenerek stratejisini geliştirdiği bir öğrenme türüdür. Bu yöntem genellikle oyunlarda ve robotikte kullanılır.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Reinforcement_learning",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Yapay zekada, modelin deneme yanılma yoluyla öğrendiği ve ödül aldığı süreç için hangi kavram kullanılır?",
+    "answersTr": [
+      "Gözetimli öğrenme",
+      "Aktarımlı öğrenme",
+      "Pekiştirmeli öğrenme",
+      "Derin öğrenme"
+    ],
+    "correctAnswerTr": "Pekiştirmeli öğrenme",
+    "explanationKu": "Fêrbûna bi xurtkirinê (reinforcement learning) celebek fêrbûnê ye ku tê de model (ajans) bi kiryarên xwe re xelat an ceza distîne û ji van encaman fêr dibe da ku stratejiya xwe baştir bike. Ev rêbaz bi gelemperî di lîstikan û robotîkê de tê bikaranîn.",
+    "explanationTr": "Pekiştirmeli öğrenme (reinforcement learning), modelin (ajan) eylemleriyle ödül veya ceza aldığı ve bu sonuçlardan öğrenerek stratejisini geliştirdiği bir öğrenme türüdür. Bu yöntem genellikle oyunlarda ve robotikte kullanılır."
+  },
+  {
+    "id": "ds_teknoloji_0130",
+    "category": "Teknolojî",
+    "prompt": "Di fêrbûna kûr de, kîjan struktur bi gelemperî ji bo pêvajokirina wêneyan tê bikaranîn?",
+    "answers": [
+      "Tora neuralî ya pêşverû",
+      "Tora neuralî ya dubare",
+      "Tora neuralî ya belavbûyî",
+      "Tora neuralî ya konvulsiyonî"
+    ],
+    "correctAnswer": "Tora neuralî ya konvulsiyonî",
+    "explanation": "Evrişimli sinir ağı (CNN) özellikle görüntü işleme için tasarlanmıştır. Evrişim katmanlarını kullanarak kenarlar ve şekiller gibi görsel özellikleri görüntülerden çıkarır ve görüntü tanıma için çok etkilidir.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Convolutional_neural_network",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Derin öğrenmede, görüntüleri işlemek için genellikle hangi yapı kullanılır?",
+    "answersTr": [
+      "İleri beslemeli sinir ağı",
+      "Tekrarlayan sinir ağı",
+      "Dağıtık sinir ağı",
+      "Evrişimli sinir ağı"
+    ],
+    "correctAnswerTr": "Evrişimli sinir ağı",
+    "explanationKu": "Tora neuralî ya konvulsiyonî (CNN) bi taybetî ji bo pêvajokirina wêneyan hatiye sêwirandin. Ew bi karanîna qatên konvulsiyonê taybetmendiyên dîtbarî yên wekî kenar û şêweyan ji wêneyan derdixe û ji bo nasîna wêneyan pir bi bandor e.",
+    "explanationTr": "Evrişimli sinir ağı (CNN) özellikle görüntü işleme için tasarlanmıştır. Evrişim katmanlarını kullanarak kenarlar ve şekiller gibi görsel özellikleri görüntülerden çıkarır ve görüntü tanıma için çok etkilidir."
+  },
+  {
+    "id": "ds_sinema_0200",
+    "category": "Cîhan",
+    "prompt": "Kîjan belgeselvanê amerîkî fîlma \"The Act of Killing\" derxist?",
+    "answers": [
+      "Joshua Oppenheimer",
+      "Adam Curtis",
+      "Nick Broomfield",
+      "Louis Theroux"
+    ],
+    "correctAnswer": "Joshua Oppenheimer",
+    "explanation": "Amerikalı yönetmen Joshua Oppenheimer, \"The Act of Killing\" filmini yayınladı. Bu belgesel Endonezya'daki katliamlar hakkındadır ve katliamı yapanlarla röportajlar yapar.",
+    "type": "multipleChoice",
+    "difficulty": 3,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/The_Act_of_Killing",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "\"The Act of Killing\" (Öldürme Eylemi) filmini hangi belgesel yönetmeni yayınladı?",
+    "answersTr": [
+      "Joshua Oppenheimer",
+      "Adam Curtis",
+      "Nick Broomfield",
+      "Louis Theroux"
+    ],
+    "correctAnswerTr": "Joshua Oppenheimer",
+    "explanationKu": "Joshua Oppenheimer derhênerê amerîkî yê fîlma \"The Act of Killing\" e. Ev belgesel li ser komkujiyên li Îndonezyayê ye û bi kesên ku komkujî kirine re hevpeyivînê dike.",
+    "explanationTr": "Amerikalı yönetmen Joshua Oppenheimer, \"The Act of Killing\" filmini yayınladı. Bu belgesel Endonezya'daki katliamlar hakkındadır ve katliamı yapanlarla röportajlar yapar."
+  },
+  {
+    "id": "ds_sinema_0203",
+    "category": "Cîhan",
+    "prompt": "Kîjan derhênerê japonî fîlma \"Seven Samurai\" derxist?",
+    "answers": [
+      "Akira Kurosawa",
+      "Hayao Miyazaki",
+      "Yasujirō Ozu",
+      "Takashi Miike"
+    ],
+    "correctAnswer": "Akira Kurosawa",
+    "explanation": "Akira Kurosawa, \"Yedi Samuray\" filminin yönetmenidir. Bu film 1954'te gösterime girdi ve sinema tarihinin en etkili filmlerinden biri olarak kabul edilir. Hayao Miyazaki animasyon filmleriyle tanınır, Yasujirō Ozu ise aile filmlerinin yönetmenidir.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Seven_Samurai",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Hangi Japon yönetmen \"Yedi Samuray\" filmini çekti?",
+    "answersTr": [
+      "Akira Kurosawa",
+      "Hayao Miyazaki",
+      "Yasujirō Ozu",
+      "Takashi Miike"
+    ],
+    "correctAnswerTr": "Akira Kurosawa",
+    "explanationKu": "Akira Kurosawa derhênerê fîlma \"Seven Samurai\" ye. Ev fîlm di sala 1954an de derket û wekî yek ji fîlmên herî bandordar ên dîroka sînemayê tê qebûlkirin. Hayao Miyazaki bi fîlmên anîmasyonê tê nasîn, Yasujirō Ozu jî derhênerê fîlmên malbatî ye.",
+    "explanationTr": "Akira Kurosawa, \"Yedi Samuray\" filminin yönetmenidir. Bu film 1954'te gösterime girdi ve sinema tarihinin en etkili filmlerinden biri olarak kabul edilir. Hayao Miyazaki animasyon filmleriyle tanınır, Yasujirō Ozu ise aile filmlerinin yönetmenidir."
+  },
+  {
+    "id": "ds_sinema_0208",
+    "category": "Cîhan",
+    "prompt": "Di fîlma \"Schindler's List\" a Steven Spielberg de, kîjan aktor rola Oskar Schindler lîstiye?",
+    "answers": [
+      "Liam Neeson",
+      "Ben Kingsley",
+      "Ralph Fiennes",
+      "Daniel Day-Lewis"
+    ],
+    "correctAnswer": "Liam Neeson",
+    "explanation": "Liam Neeson, Steven Spielberg'in \"Schindler\"in Listesi' filminde Oskar Schindler rolünü canlandırdı. Bu film 1993'te gösterime girdi ve Holokost sırasında birçok Yahudi'yi kurtaran Schindler'in hayatını konu alır. Ben Kingsley Itzhak Stern, Ralph Fiennes ise Amon Göth rolünü oynadı.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Schindler%27s_List",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Steven Spielberg'in \"Schindler\"in Listesi' filminde Oskar Schindler rolünü hangi aktör canlandırdı?",
+    "answersTr": [
+      "Liam Neeson",
+      "Ben Kingsley",
+      "Ralph Fiennes",
+      "Daniel Day-Lewis"
+    ],
+    "correctAnswerTr": "Liam Neeson",
+    "explanationKu": "Liam Neeson di fîlma \"Schindler's List\" a Steven Spielberg de rola Oskar Schindler lîstiye. Ev fîlm di sala 1993yan de derket û li ser jiyana Schindler e, yê ku di dema Holokostê de gelek cihû rizgar kirin. Ben Kingsley rola Itzhak Stern lîstiye û Ralph Fiennes rola Amon Göth lîstiye.",
+    "explanationTr": "Liam Neeson, Steven Spielberg'in \"Schindler\"in Listesi' filminde Oskar Schindler rolünü canlandırdı. Bu film 1993'te gösterime girdi ve Holokost sırasında birçok Yahudi'yi kurtaran Schindler'in hayatını konu alır. Ben Kingsley Itzhak Stern, Ralph Fiennes ise Amon Göth rolünü oynadı."
+  },
+  {
+    "id": "ds_sinema_0210",
+    "category": "Cîhan",
+    "prompt": "Fîlma \"Rashomon\" a Akira Kurosawa di kîjan salê de derket?",
+    "answers": [
+      "1950",
+      "1945",
+      "1955",
+      "1960"
+    ],
+    "correctAnswer": "1950",
+    "explanation": "\"Rashomon\" filmi 1950'de gösterime girdi ve sinema tarihinin en önemli filmlerinden biri oldu. Bu film, hikayeyi farklı bakış açılarından anlatma konusundaki yenilikçi tekniğiyle tanınır. Kurosawa bu filmle Venedik Film Festivali'nde Altın Aslan Ödülü'nü kazandı.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Rashomon",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Akira Kurosawa'nın \"Rashomon\" filmi hangi yılda gösterime girdi?",
+    "answersTr": [
+      "1950",
+      "1945",
+      "1955",
+      "1960"
+    ],
+    "correctAnswerTr": "1950",
+    "explanationKu": "Fîlma \"Rashomon\" di sala 1950î de derket û bû yek ji fîlmên herî girîng ên dîroka sînemayê. Ev fîlm bi teknîka xwe ya nû ya vegotina çîrokê ji perspektîfên cuda tê nasîn. Kurosawa bi vî fîlmî Xelata Şêrê Zêrîn a Festîvala Venedîkê wergirt.",
+    "explanationTr": "\"Rashomon\" filmi 1950'de gösterime girdi ve sinema tarihinin en önemli filmlerinden biri oldu. Bu film, hikayeyi farklı bakış açılarından anlatma konusundaki yenilikçi tekniğiyle tanınır. Kurosawa bu filmle Venedik Film Festivali'nde Altın Aslan Ödülü'nü kazandı."
+  },
+  {
+    "id": "ds_sinema_0249",
+    "category": "Cîhan",
+    "prompt": "Kîjan têgeh ji bo nîşandana bûyerekê ya ku wê di pêşerojê de biqewime tê bikaranîn?",
+    "answers": [
+      "Flashback",
+      "Pêşketin",
+      "Epîlog",
+      "Flashforward"
+    ],
+    "correctAnswer": "Flashforward",
+    "explanation": "İleri sıçrama, gelecekte meydana gelmiş bir olayı gösterir. Geriye dönüş geçmişi gösterir, gelişme çatışma aşamasıdır ve sonsöz ise sondur.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Flashforward",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Gelecekte meydana gelmiş bir olayı göstermek için hangi terim kullanılır?",
+    "answersTr": [
+      "Geriye dönüş",
+      "Gelişme",
+      "Sonsöz",
+      "İleri sıçrama"
+    ],
+    "correctAnswerTr": "İleri sıçrama",
+    "explanationKu": "Flashforward an jî pêşdîtin, bûyerekê ku wê di pêşerojê de biqewime nîşan dide. Flashback paşerojê nîşan dide, pêşketin qonaxa pevçûnê ye û epîlog jî dawî ye.",
+    "explanationTr": "İleri sıçrama, gelecekte meydana gelmiş bir olayı gösterir. Geriye dönüş geçmişi gösterir, gelişme çatışma aşamasıdır ve sonsöz ise sondur."
+  },
+  {
+    "id": "ds_teknoloji_0018",
+    "category": "Teknolojî",
+    "prompt": "Kîjan protokol ji bo veguhestina daneyan bi awayekî lez û bez tê bikaranîn, lê ne pêbawer e?",
+    "answers": [
+      "TCP",
+      "UDP",
+      "IP",
+      "HTTP"
+    ],
+    "correctAnswer": "UDP",
+    "explanation": "UDP (Kullanıcı Veri Birimi Protokolü), verileri hızlı bir şekilde iletmek için kullanılır, ancak tüm paketlerin hedefe ulaşacağını garanti etmez. TCP güvenilirdir, IP adresleme ve HTTP web siteleri içindir.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/User_Datagram_Protocol",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Verileri hızlı bir şekilde iletmek için hangi protokol kullanılır, ancak güvenilir değildir?",
+    "answersTr": [
+      "TCP",
+      "UDP",
+      "IP",
+      "HTTP"
+    ],
+    "correctAnswerTr": "UDP",
+    "explanationKu": "UDP (User Datagram Protocol) ji bo veguhestina daneyan bi lez tê bikaranîn, lê ew piştrast nake ku hemû pakêt digihîjin armancê. TCP pêbawer e, IP ji bo navnîşankirinê ye û HTTP ji bo malperan e.",
+    "explanationTr": "UDP (Kullanıcı Veri Birimi Protokolü), verileri hızlı bir şekilde iletmek için kullanılır, ancak tüm paketlerin hedefe ulaşacağını garanti etmez. TCP güvenilirdir, IP adresleme ve HTTP web siteleri içindir."
+  },
+  {
+    "id": "ds_teknoloji_0006",
+    "category": "Teknolojî",
+    "prompt": "Di lêpirsîna DNSê de rola \"Recursive Resolver\" û \"Authoritative Name Server\" çawa ji hev vediqete?",
+    "answers": [
+      "Resolver tenê navnîşanên MAC tomar dike, Authoritative daneyên HTTP dişîne",
+      "Resolver tenê di komputerên kesane de heye, Authoritative routera herêmî ye",
+      "Resolver geroka înternetê bixwe ye, Authoritative kerta tora bêtêl e",
+      "Resolver li ser navê klîentê hiyerarşiyê digere, Authoritative qeyda teqez a navê domênê digire"
+    ],
+    "correctAnswer": "Resolver li ser navê klîentê hiyerarşiyê digere, Authoritative qeyda teqez a navê domênê digire",
+    "explanation": "Recursive resolver li seranserê sîstema DNSê digere ta ku navnîşanê bibîne; Authoritative server jî çavkaniya resen a qeydên wî domênî ye.",
+    "type": "multipleChoice",
+    "difficulty": 4,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Domain_Name_System",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "DNS sorgusunda \"Recursive Resolver\" ile \"Authoritative Name Server\" arasındaki görev ayrımı nedir?",
+    "answersTr": [
+      "Resolver yalnızca MAC adreslerini kaydeder, Authoritative HTTP verilerini iletir",
+      "Resolver yalnızca kişisel bilgisayarlarda bulunur, Authoritative yerel yönlendiricidir",
+      "Resolver web tarayıcısının kendisidir, Authoritative ise kablosuz ağ kartıdır",
+      "Resolver istemci adına tüm sunucuları gezer, Authoritative o domainin kesin IP kaydını tutar"
+    ],
+    "correctAnswerTr": "Resolver istemci adına tüm sunucuları gezer, Authoritative o domainin kesin IP kaydını tutar",
+    "explanationKu": "Recursive resolver li seranserê sîstema DNSê digere ta ku navnîşanê bibîne; Authoritative server jî çavkaniya resen a qeydên wî domênî ye.",
+    "explanationTr": "Recursive resolver istemci adına kök ve TLD sunucuları dolaşır; Authoritative sunucu ise o alan adının nihai IP bilgisini barındırır."
+  },
+  {
+    "id": "ds_teknoloji_0007",
+    "category": "Teknolojî",
+    "prompt": "Kîjan protokol ji bo gihîştina pelan ji dûr ve tê bikaranîn?",
+    "answers": [
+      "HTTP",
+      "FTP",
+      "SMTP",
+      "POP3"
+    ],
+    "correctAnswer": "FTP",
+    "explanation": "FTP (Dosya Aktarım Protokolü), bilgisayarlar arasında dosya aktarmak için kullanılır. HTTP web siteleri, SMTP e-posta göndermek ve POP3 e-posta almak içindir.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/File_Transfer_Protocol",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Uzaktaki dosyalara erişmek için hangi protokol kullanılır?",
+    "answersTr": [
+      "HTTP",
+      "FTP",
+      "SMTP",
+      "POP3"
+    ],
+    "correctAnswerTr": "FTP",
+    "explanationKu": "FTP (File Transfer Protocol) ji bo veguhestina pelan di navbera komputeran de tê bikaranîn. HTTP ji bo malperan, SMTP ji bo e-nameyê û POP3 ji bo wergirtina e-nameyan e.",
+    "explanationTr": "FTP (Dosya Aktarım Protokolü), bilgisayarlar arasında dosya aktarmak için kullanılır. HTTP web siteleri, SMTP e-posta göndermek ve POP3 e-posta almak içindir."
+  },
+  {
+    "id": "ds_teknoloji_0010",
+    "category": "Teknolojî",
+    "prompt": "Kîjan teknolojî ji bo girêdana bêtêl a înternetê tê bikaranîn?",
+    "answers": [
+      "Ethernet",
+      "Fiber optic",
+      "Coaxial cable",
+      "Wi-Fi"
+    ],
+    "correctAnswer": "Wi-Fi",
+    "explanation": "Wi-Fi, radyo dalgalarıyla internet bağlantısı sağlayan kablosuz bir teknolojidir. Ethernet, fiber optik ve koaksiyel kablo ise kablolu bağlantılardır.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Wi-Fi",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Kablosuz internet bağlantısı için hangi teknoloji kullanılır?",
+    "answersTr": [
+      "Ethernet",
+      "Fiber optik",
+      "Koaksiyel kablo",
+      "Wi-Fi"
+    ],
+    "correctAnswerTr": "Wi-Fi",
+    "explanationKu": "Wi-Fi teknolojiyeke bêtêl e ku ji bo girêdana înternetê bi pêlên radyoyê tê bikaranîn. Ethernet, fiber optic û kabloya koaksiyal hemû girêdanên bi têl in.",
+    "explanationTr": "Wi-Fi, radyo dalgalarıyla internet bağlantısı sağlayan kablosuz bir teknolojidir. Ethernet, fiber optik ve koaksiyel kablo ise kablolu bağlantılardır."
+  },
+  {
+    "id": "ds_teknoloji_0012",
+    "category": "Teknolojî",
+    "prompt": "Kîjan amûr ji bo parastina torê ji êrîşên derve tê bikaranîn?",
+    "answers": [
+      "Switch",
+      "Router",
+      "Firewall",
+      "Hub"
+    ],
+    "correctAnswer": "Firewall",
+    "explanation": "Güvenlik duvarı (Firewall), korunan ağı dış saldırılardan korur ve ağ trafiğini kontrol eder. Anahtar, yönlendirici ve hub veri bağlantısı ve yönlendirmesi içindir, koruma için değil.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Firewall_(computing)",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Ağı dış saldırılardan korumak için hangi cihaz kullanılır?",
+    "answersTr": [
+      "Anahtar",
+      "Yönlendirici",
+      "Güvenlik Duvarı",
+      "Hub"
+    ],
+    "correctAnswerTr": "Güvenlik Duvarı",
+    "explanationKu": "Firewall (dîwarê agir) tora parastî ji êrîşên derve diparêze û trafîka torê kontrol dike. Switch, router û hub ji bo girêdan û beralîkirina daneyan in, ne ji bo parastinê ne.",
+    "explanationTr": "Güvenlik duvarı (Firewall), korunan ağı dış saldırılardan korur ve ağ trafiğini kontrol eder. Anahtar, yönlendirici ve hub veri bağlantısı ve yönlendirmesi içindir, koruma için değil."
+  },
+  {
+    "id": "ds_teknoloji_0033",
+    "category": "Teknolojî",
+    "prompt": "Kîjan teknolojî ji bo nasnameya dîjîtal a bikarhêner tê bikaranîn?",
+    "answers": [
+      "Îmzeya dîjîtal",
+      "Token",
+      "Sertîfîkaya dîjîtal",
+      "Şîfre"
+    ],
+    "correctAnswer": "Sertîfîkaya dîjîtal",
+    "explanation": "Dijital sertifika, kullanıcının veya sunucunun kimliğini doğrular ve veri güvenliği için kullanılır.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Public_key_certificate",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Kullanıcının dijital kimliği için hangi teknoloji kullanılır?",
+    "answersTr": [
+      "Dijital imza",
+      "Token",
+      "Dijital sertifika",
+      "Parola"
+    ],
+    "correctAnswerTr": "Dijital sertifika",
+    "explanationKu": "Sertîfîkaya dîjîtal nasnameya bikarhêner an serverê piştrast dike û ji bo ewlekariya daneyan tê bikaranîn.",
+    "explanationTr": "Dijital sertifika, kullanıcının veya sunucunun kimliğini doğrular ve veri güvenliği için kullanılır."
+  },
+  {
+    "id": "ds_teknoloji_0049",
+    "category": "Teknolojî",
+    "prompt": "Kîjan teknolojî ji bo nasnameya dîjîtal a bikarhêner bi karanîna taybetmendiyên laşî tê bikaranîn?",
+    "answers": [
+      "Şîfre",
+      "OTP",
+      "Biyometrîk",
+      "Kilîta ewlehiyê"
+    ],
+    "correctAnswer": "Biyometrîk",
+    "explanation": "Biyometrik, kullanıcının parmak izi veya yüzü gibi fiziksel özelliklerini kimlik doğrulama için kullanır.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Biometrics",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Fiziksel özellikleri kullanarak kullanıcının dijital kimliğini doğrulamak için hangi teknoloji kullanılır?",
+    "answersTr": [
+      "Parola",
+      "OTP",
+      "Biyometrik",
+      "Güvenlik anahtarı"
+    ],
+    "correctAnswerTr": "Biyometrik",
+    "explanationKu": "Biyometrîk taybetmendiyên laşî yên wekî şopa tiliyan an rûyê bikarhêner ji bo nasnameyê bikar tîne.",
+    "explanationTr": "Biyometrik, kullanıcının parmak izi veya yüzü gibi fiziksel özelliklerini kimlik doğrulama için kullanır."
+  },
+  {
+    "id": "ds_teknoloji_0034",
+    "category": "Teknolojî",
+    "prompt": "Di torê de, kîjan pîvan ji bo ewlekariya şîfreyê tê bikaranîn?",
+    "answers": [
+      "Reng",
+      "Dirêjahî",
+      "Dema çêkirinê",
+      "Hejmara tîpên mezin"
+    ],
+    "correctAnswer": "Dirêjahî",
+    "explanation": "Şifrenin uzunluğu güvenliğini artırır; uzun şifrelerin kırılması daha zordur.",
+    "type": "multipleChoice",
+    "difficulty": 1,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Password_strength",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Ağda, şifre güvenliğini ölçmek için hangi ölçü kullanılır?",
+    "answersTr": [
+      "Renk",
+      "Uzunluk",
+      "Oluşturulma zamanı",
+      "Büyük harf sayısı"
+    ],
+    "correctAnswerTr": "Uzunluk",
+    "explanationKu": "Dirêjahiya şîfreyê ewlekariya wê zêde dike; şîfreyên dirêj dijwartir in ku bên şikandin.",
+    "explanationTr": "Şifrenin uzunluğu güvenliğini artırır; uzun şifrelerin kırılması daha zordur."
+  },
+  {
+    "id": "ds_teknoloji_0036",
+    "category": "Teknolojî",
+    "prompt": "Di şîfrekirinê de, kîjan têgeh ji bo daneyên ku hatine şîfrekirin tê bikaranîn?",
+    "answers": [
+      "Plaintext",
+      "Ciphertext",
+      "Cleartext",
+      "Hash"
+    ],
+    "correctAnswer": "Ciphertext",
+    "explanation": "Ciphertext şifrelenmiş veridir; yetkisiz kişiler için okunamaz.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Ciphertext",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Şifrelemede, şifrelenmiş veriler için hangi terim kullanılır?",
+    "answersTr": [
+      "Plaintext",
+      "Ciphertext",
+      "Cleartext",
+      "Hash"
+    ],
+    "correctAnswerTr": "Ciphertext",
+    "explanationKu": "Ciphertext daneyên ku hatine şîfrekirin e; ew ji aliyê kesên nedestûrdar ve nayê xwendin.",
+    "explanationTr": "Ciphertext şifrelenmiş veridir; yetkisiz kişiler için okunamaz."
+  },
+  {
+    "id": "ds_teknoloji_0041",
+    "category": "Teknolojî",
+    "prompt": "Kîjan rêbaz ji bo piştrastkirina nasnameya bikarhêner bi du qonaxan tê bikaranîn?",
+    "answers": [
+      "OAuth 2.0",
+      "Kodê vegerandinê",
+      "Şîfreya tenê",
+      "2FA"
+    ],
+    "correctAnswer": "2FA",
+    "explanation": "2FA (İki Faktörlü Kimlik Doğrulama), kimlik doğrulamak için iki aşama kullanır, güvenliği artırır.",
+    "type": "multipleChoice",
+    "difficulty": 2,
+    "metadata": {
+      "reviewStatus": "approved",
+      "dialect": "Kurmancî",
+      "sourceReference": "https://en.wikipedia.org/wiki/Multi-factor_authentication",
+      "qualityVersion": 1,
+      "reviewedBy": "DeepSeek taslağı (2026-08-18), üçüncü dalga. Olgu: en az iki bağımsız model işaretlemedi. Kurmancî: Gemini 3.1 Pro her kayıt için düzeltme önerdi (dil/yazım/terim), Grok 4.7 ya da Gemini 3.8 Flash onayladı; düzeltmeler uygulandı, hangi şıkkın doğru olduğu değişmedi. Derleme ve denetim: Claude Opus.",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30"
+    },
+    "promptTr": "Kullanıcı kimliğini iki aşamalı olarak doğrulamak için hangi yöntem kullanılır?",
+    "answersTr": [
+      "OAuth 2.0",
+      "Kurtarma kodu",
+      "Tek parola",
+      "2FA"
+    ],
+    "correctAnswerTr": "2FA",
+    "explanationKu": "2FA (Two-Factor Authentication) ji bo piştrastkirina nasnameyê du qonaxan bikar tîne, ewlekariyê zêde dike.",
+    "explanationTr": "2FA (İki Faktörlü Kimlik Doğrulama), kimlik doğrulamak için iki aşama kullanır, güvenliği artırır."
   }
 ]
