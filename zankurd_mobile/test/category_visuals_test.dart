@@ -24,6 +24,36 @@ void main() {
     }
   });
 
+  // Kusur: Cîhan ve Cografya ikisi de `AppIcons.globe` kullanıyordu. Ana
+  // sayfada silüet ayırır ama profil istatistiği, oda/düello konu seçici ve
+  // sıralama yalnız simge gösterir; iki konu birbirinin aynı görünüyordu.
+  // Hata vermez, yalnız okunmaz. Bekçi: hiçbir iki kategori simge paylaşmaz.
+  test('no two categories share the same icon', () {
+    const categories = [
+      'Ziman',
+      'Çand',
+      'Dîrok',
+      'Edebiyat',
+      'Cografya',
+      'Muzîk',
+      'Siyaset',
+      'Paradigma',
+      'Teknolojî',
+      'Sînema',
+      'Cîhan',
+    ];
+    final seen = <IconData, String>{};
+    for (final category in categories) {
+      final icon = CategoryVisuals.icon(category);
+      expect(
+        seen[icon],
+        isNull,
+        reason: '$category, ${seen[icon]} ile aynı simgeyi kullanıyor',
+      );
+      seen[icon] = category;
+    }
+  });
+
   test('category mappings avoid dart2js string-switch expressions', () {
     final source = File(
       'lib/src/config/category_visuals.dart',

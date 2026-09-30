@@ -76,7 +76,9 @@ void main() {
       // 2026-09-28: expansion_2026_09_28 (144 soru, hepsi iki dilli).
       // 2075 -> 2937: 2026-09-30 son birleştirme; yeni 862 kaydın hepsi
       // iki dilli (TR alanları dolu).
-      2937,
+      // 2937 -> 2954: +31 üçüncü dalga, -44 karantinaya dönen, +30 bilim;
+      // üçü de iki dilli (TR alanları dolu).
+      2954,
       reason:
           'Türkçe metin taşıyan soru sayısı değişti (yükleyicinin verdiği sayı). Yeni parti geldiyse bu '
           'sayı bilerek güncellenmeli; kendiliğinden düştüyse bir bankanın '

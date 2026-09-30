@@ -302,6 +302,13 @@ class AppIcons {
     fontPackage: 'lucide_icons_flutter',
   );
 
+  /// Lucide `compass`.
+  static const IconData compass = IconData(
+    0xe09b,
+    fontFamily: 'Lucide',
+    fontPackage: 'lucide_icons_flutter',
+  );
+
   /// Lucide `copy`.
   static const IconData copy = IconData(
     0xe09e,

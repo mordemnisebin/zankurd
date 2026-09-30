@@ -24,7 +24,7 @@
 /// * Doğrulanmış DeepSeek dosyası kayıtlı, orijinal kayıtsız; kayıtlı dosya
 ///   orijinalin birebir kopyası (metin değişmemiş), hepsi `approved` ve
 ///   künyeli; orijinalin DOĞRULANMAMIŞ hiçbir kaydı yüklenmiyor.
-/// * 40 bilim sorusu Paradigma'da, kaynaklı, doğru şık konumları dengeli.
+/// * 70 bilim sorusu Paradigma'da, kaynaklı, doğru şık konumları dengeli.
 library;
 
 import 'dart:convert';
@@ -153,7 +153,10 @@ void main() {
       () {
         final original = {for (final q in _read(_quarantined)) q['id']: q};
         final copies = _read(_verified);
-        expect(copies.length, 822); // 458 (dalga 1) + 364 (dalga 2)
+        // 458 (dalga 1) + 364 (dalga 2) + 31 (dalga 3) = 853; ChatGPT'nin
+        // kaynak taramasında 44 kayıt (30 kaynak yok, 14 cevap yanlış)
+        // karantinaya döndü: 853 - 44 = 809.
+        expect(copies.length, 809);
         for (final c in copies) {
           final o = original[c['id']];
           expect(o, isNotNull, reason: '${c['id']} orijinalde yok');
@@ -168,12 +171,13 @@ void main() {
           ]) {
             expect(c[key], o![key], reason: '${c['id']}.$key değişmiş');
           }
-          // Kurmancî metin yalnız ikinci dalgada (Gemini 3.1 Pro düzeltmesi,
+          // Kurmancî metin yalnız ikinci ve üçüncü dalgada (Gemini 3.1 Pro düzeltmesi,
           // Grok/Flash onayı) değişebilir; dalga-1 kayıtları birebir aynı.
           final meta = c['metadata'] as Map<String, dynamic>;
-          final corrected = (meta['reviewedBy'] as String).contains(
-            'ikinci dalga',
-          );
+          final reviewedBy = meta['reviewedBy'] as String;
+          final corrected =
+              reviewedBy.contains('ikinci dalga') ||
+              reviewedBy.contains('üçüncü dalga');
           if (!corrected) {
             for (final key in [
               'prompt',
@@ -226,9 +230,10 @@ void main() {
   });
 
   group('bilim soruları (Paradigma)', () {
-    test('40 kaynaklı soru Paradigma\'da, doğru şık konumları dengeli', () {
+    test('70 kaynaklı soru Paradigma\'da, doğru şık konumları dengeli', () {
       final rows = _read(_science);
-      expect(rows.length, 40);
+      // 40 (ilk dalga) + 30 (bilim_0041…0070, aynı gün).
+      expect(rows.length, 70);
       expect(questionBankAssets, contains(_science));
       final positions = <int, int>{};
       for (final q in rows) {
@@ -254,9 +259,9 @@ void main() {
       }
       // Kaynak JSONL'de doğru şık 40'ın 38'inde ilk şıktaydı. Görünen
       // konumlar dört yana dağılmalı (bütün bankanın dengesini
-      // `question_bank_test` ölçer).
+      // `question_bank_test` ölçer). 70 soruda ideal 17-18.
       for (final p in [0, 1, 2, 3]) {
-        expect(positions[p], inInclusiveRange(6, 14), reason: 'konum $p');
+        expect(positions[p], inInclusiveRange(12, 23), reason: 'konum $p');
       }
     });
 
@@ -265,8 +270,8 @@ void main() {
           .where(policy.isPlayable)
           .where((q) => q.category == 'Paradigma')
           .toList();
-      expect(playable.where((q) => q.id.startsWith('bilim_')).length, 40);
-      expect(playable.length, greaterThanOrEqualTo(80));
+      expect(playable.where((q) => q.id.startsWith('bilim_')).length, 70);
+      expect(playable.length, greaterThanOrEqualTo(110));
     });
   });
 

@@ -44,15 +44,16 @@ void main() {
 
     // Üretilmiş sorular `ds_` önekiyle ayrılır; elle yazılmış editoryal
     // içerik bu kuralın dışındadır (onların denetimi insan incelemesidir).
-    // 2026-09-30: karantinadaki orijinal DeepSeek dosyası ile doğrulanmış
-    // kopyası AYNI id'leri taşır ve bilerek ayrışmıştır (ikinci dalga
-    // Kurmancî düzeltmeleri). Karantina dosyası önce, runtime bankaları sonra
-    // okunur ve id başına SON okunan kazanır; böylece oynanan metin
-    // denetlenir, karantinadaki eski yazım değil.
+    // 2026-09-30: karantinadaki orijinal DeepSeek dosyası (`deepseek_2026_08_18`)
+    // artık TARANMAZ. Doğrulanmış kopya ile aynı id'leri taşıyordu ve
+    // bilerek ayrışmıştı (Kurmancî düzeltmeleri); ChatGPT'nin kaynak
+    // taramasında 44 kayıt doğrulanmış kopyadan çıkıp yalnız karantinada
+    // kalınca bekçi bu kez oynanmayan ESKİ yazımı, yenilenmiş hükümlere
+    // karşı okuyup düştü. Kural OYNANABİLİR sorular içindir: karantinadaki
+    // kayıt oyuncuya gitmez, hükmü de yeni yazıma taşınmadı. Oynanan metin
+    // runtime bankalarından okunur.
     final generatedById = <String, Map<String, dynamic>>{};
-    const extraScan = ['assets/data/deepseek_2026_08_18_questions.json'];
-    final scan = [...extraScan, ...questionBankAssets];
-    for (final asset in scan) {
+    for (final asset in questionBankAssets) {
       final file = File(asset);
       if (!file.existsSync()) continue;
       for (final raw in jsonDecode(file.readAsStringSync()) as List) {
