@@ -190,7 +190,7 @@ void main() {
 
     expect(find.text('Te li ku zehmetî kişand?'), findsOneWidget);
     expect(find.textContaining('Ji bo nirxandina mijarekê'), findsOneWidget);
-    expect(find.text('Bersiva şaş binêre'), findsOneWidget);
+    expect(find.text('Li bersiva şaş binêre'), findsOneWidget);
   });
 
   testWidgets('sonuç kartı seçilen konunun yanlışlarını yerel tekrara açar', (

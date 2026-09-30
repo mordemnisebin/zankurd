@@ -46,7 +46,7 @@ void main() {
       );
 
       expect(question.typeLabelLocalized(false), 'Şıklı');
-      expect(question.typeLabelLocalized(true), 'Hilbijartin');
+      expect(question.typeLabelLocalized(true), 'Bi vebijark');
     });
 
     test('tip rozeti doğru/yanlış için iki dilde doğru', () {

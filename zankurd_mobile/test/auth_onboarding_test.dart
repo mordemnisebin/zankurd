@@ -1226,7 +1226,7 @@ void main() {
     for (final label in [
       'Navnîşana e-nameyê',
       'Şîfre',
-      'Şîfre ji bîr kir?',
+      'Te şîfre ji bîr kir?',
       'Têkeve',
       'Tomar bibe',
     ]) {

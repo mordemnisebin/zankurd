@@ -54,7 +54,7 @@ class Tr {
 
     // ── Ayarlar ekranı ───────────────────────────────────────────────
     K.secAccount: {'ku': 'Hesab', 'tr': 'Hesap'},
-    K.playerName: {'ku': 'Navê lîstikvanê', 'tr': 'Oyuncu adı'},
+    K.playerName: {'ku': 'Navê lîstikvan', 'tr': 'Oyuncu adı'},
     K.playerNameHint: {'ku': 'Navê xwe binivîse…', 'tr': 'Oyundaki adını gir…'},
     K.secLearning: {'ku': 'Hînbûn', 'tr': 'Öğrenme'},
     K.retakePlacement: {
@@ -113,7 +113,7 @@ class Tr {
     K.darkLightMode: {'ku': 'Temaya tarî', 'tr': 'Karanlık tema'},
     K.reduceMotion: {'ku': 'Tevgerê kêm bike', 'tr': 'Hareketi azalt'},
     // Görselin kendi betimlemesi yoksa ekran okuyucuya okunan genel etiket.
-    K.questionImage: {'ku': 'Wêneya pirsê', 'tr': 'Soru görseli'},
+    K.questionImage: {'ku': 'Wêneyê pirsê', 'tr': 'Soru görseli'},
     K.untimedSolo: {'ku': 'Bê dem bilîze', 'tr': 'Süresiz oyna'},
     K.untimedSoloSub: {
       'ku':
@@ -125,13 +125,13 @@ class Tr {
     },
     K.secSoundNotif: {'ku': 'Deng û agahdarî', 'tr': 'Ses ve bildirim'},
     K.soundEffects: {'ku': 'Efektên dengî', 'tr': 'Ses efektleri'},
-    K.dailyReminder: {'ku': 'Bîranîna rojane', 'tr': 'Günlük hatırlatıcı'},
+    K.dailyReminder: {'ku': 'Bîrxistina rojane', 'tr': 'Günlük hatırlatıcı'},
     K.dailyReminderAt: {
       'ku': 'Her roj di demjimêr {time} de',
       'tr': 'Her gün saat {time}',
     },
     K.changeTime: {
-      'ku': 'Demê biguherîne: {time}',
+      'ku': 'Saetê biguherîne: {time}',
       'tr': 'Saati değiştir: {time}',
     },
     K.secTts: {'ku': 'Deng-xwendin', 'tr': 'Seslendirme'},
@@ -154,7 +154,7 @@ class Tr {
     K.version: {'ku': 'Guherto', 'tr': 'Sürüm'},
     K.secDanger: {'ku': 'Karên hesabê', 'tr': 'Hesap işlemleri'},
     K.dangerNote: {
-      'ku': 'Ev kar nayên vegerandin.',
+      'ku': 'Ev çalakî nayên vegerandin.',
       'tr': 'Bu alandaki işlemler geri alınamaz.',
     },
     K.deleteAccount: {'ku': 'Hesabê min jê bibe', 'tr': 'Hesabımı sil'},
@@ -168,7 +168,7 @@ class Tr {
     },
     K.ok: {'ku': 'Baş e', 'tr': 'Tamam'},
     K.deleteConfirmTitle: {
-      'ku': 'Hesabê bi dawî jê bibî?',
+      'ku': 'Hesabê bi yekcarî jê bibe?',
       'tr': 'Hesabı kalıcı olarak sil?',
     },
     K.deleteConfirmBody: {
@@ -204,7 +204,7 @@ class Tr {
     },
     K.signingIn: {'ku': 'Tê têketin…', 'tr': 'Giriş yapılıyor…'},
     K.connectingApple: {
-      'ku': 'Bi Apple tê girêdan…',
+      'ku': 'Bi Apple re tê girêdan…',
       'tr': 'Apple ile bağlanılıyor…',
     },
     K.signingInGuest: {
@@ -257,7 +257,10 @@ class Tr {
     K.passwordLabel: {'ku': 'Şîfre', 'tr': 'Parola'},
     K.showPassword: {'ku': 'Şîfreyê nîşan bide', 'tr': 'Parolayı göster'},
     K.hidePassword: {'ku': 'Şîfreyê veşêre', 'tr': 'Parolayı gizle'},
-    K.forgotPassword: {'ku': 'Şîfre ji bîr kir?', 'tr': 'Parolayı unuttun mu?'},
+    K.forgotPassword: {
+      'ku': 'Te şîfre ji bîr kir?',
+      'tr': 'Parolayı unuttun mu?',
+    },
     K.signIn: {'ku': 'Têkeve', 'tr': 'Giriş yap'},
     K.noAccountPrefix: {'ku': 'Hesabê te tune? ', 'tr': 'Hesabın yok mu? '},
     K.signUp: {'ku': 'Tomar bibe', 'tr': 'Kaydol'},
@@ -369,7 +372,7 @@ class Tr {
     // yazmak onu ilk değişiklikte yalan yapar — nitekim 8'den 4'e
     // düşürüldüğünde bu satır eskimişti (2026-07-27).
     K.tournamentSub: {
-      'ku': 'Elemeya bi lîstikvanên rastî',
+      'ku': 'Dûrxistina bi lîstikvanên rastîn',
       'tr': 'Gerçek oyuncularla eleme',
     },
     K.playMore: {'ku': 'Zêdetir', 'tr': 'Daha fazla'},
@@ -388,7 +391,7 @@ class Tr {
     K.quickDuelDuration: {'ku': '~2 deqe', 'tr': '~2 dakika'},
     K.findOpponent: {'ku': 'Hevrik bibîne', 'tr': 'Rakip bul'},
     K.roomOpenFailed: {
-      'ku': 'Ode nehate vekirin. Têkiliya xwe kontrol bike.',
+      'ku': 'Ode nehat vekirin. Girêdana xwe kontrol bike.',
       'tr': 'Oda açılamadı. Bağlantını kontrol et.',
     },
 
@@ -408,7 +411,7 @@ class Tr {
     K.lexiconCategory: {'ku': 'Mijar', 'tr': 'Konu'},
     K.lexiconEmptyTitle: {'ku': 'Encam tune', 'tr': 'Sonuç yok'},
     K.lexiconEmptyBody: {
-      'ku': 'Bi peyveke din an wateya wê dîsa bigere.',
+      'ku': 'Bi peyv an wateyeke din dîsa bigere.',
       'tr': 'Başka bir kelime veya anlamla tekrar ara.',
     },
     K.loadFailedShort: {'ku': 'Nehat barkirin', 'tr': 'Yüklenemedi'},
@@ -447,15 +450,15 @@ class Tr {
       'tr': 'Bu kelime veya ifadenin anlamını düşün, sonra yanıtı göster.',
     },
     K.lessonRecallReveal: {'ku': 'Bersivê nîşan bide', 'tr': 'Yanıtı göster'},
-    K.lessonRecallNext: {'ku': 'Ya din', 'tr': 'Sonraki'},
+    K.lessonRecallNext: {'ku': 'Bidomîne', 'tr': 'Sonraki'},
     K.lessonListeningTitle: {'ku': 'Guhdarî', 'tr': 'Dinleme'},
     K.lessonListeningHint: {
-      'ku': 'Deng bibihîze û wateya rast hilbijêre.',
+      'ku': 'Li deng guhdarî bike û wateya rast hilbijêre.',
       'tr': 'Sesi dinle ve doğru anlamı seç.',
     },
-    K.lessonListeningPlay: {'ku': 'Bibihîze', 'tr': 'Dinle'},
-    K.lessonListeningReplay: {'ku': 'Dîsa bibihîze', 'tr': 'Tekrar dinle'},
-    K.lessonListeningPlaying: {'ku': 'Tê bihîstin…', 'tr': 'Dinleniyor…'},
+    K.lessonListeningPlay: {'ku': 'Guhdarî bike', 'tr': 'Dinle'},
+    K.lessonListeningReplay: {'ku': 'Dîsa guhdarî bike', 'tr': 'Tekrar dinle'},
+    K.lessonListeningPlaying: {'ku': 'Tê guhdarîkirin…', 'tr': 'Dinleniyor…'},
     K.lessonListeningCorrect: {'ku': 'Rast e', 'tr': 'Doğru'},
     K.lessonListeningWrong: {'ku': 'Ne rast e', 'tr': 'Yanlış'},
 
@@ -468,7 +471,7 @@ class Tr {
     K.streakLetGo: {'ku': 'Na, bila here', 'tr': 'Hayır, sıfırlansın'},
     K.streakFreezeAction: {'ku': 'Biparêze ({cost})', 'tr': 'Koru ({cost})'},
     K.newTitleEarned: {
-      'ku': 'Te nav û nîşana nû stend!',
+      'ku': 'Te nasnavekî nû stend!',
       'tr': 'Yeni unvan kazandın!',
     },
     K.youWon: {'ku': 'Tu bi ser ketî!', 'tr': 'Kazandın!'},
@@ -511,7 +514,7 @@ class Tr {
       'tr': 'Yarışı {rank}. sırada tamamladın.',
     },
     K.leaderFinishedFirst: {
-      'ku': '{leader} pêşî qediya; tu di rêza {rank}. de yî.',
+      'ku': '{leader} pêşî qedand; tu di rêza {rank}. de yî.',
       'tr': '{leader} önde bitirdi; sen {rank}. sıradasın.',
     },
     K.newBadge: {'ku': 'Rozeta nû', 'tr': 'Yeni rozet'},
@@ -533,10 +536,10 @@ class Tr {
       'tr': 'Kontenjan dolunca başlar',
     },
     K.cupStartsLatest: {
-      'ku': 'Herî dereng piştî 24 saetan, bi yên amade',
+      'ku': 'Herî dereng di nav 24 saetan de, bi yên amade',
       'tr': 'En geç 24 saat içinde, eldeki oyuncularla',
     },
-    K.botDailyCup: {'ku': 'Kûpa · elemeyî', 'tr': 'Eleme turnuvası'},
+    K.botDailyCup: {'ku': 'Kûpaya palawtinê', 'tr': 'Eleme turnuvası'},
     // Ayrılma/hükmen bitiş metinleri aynı kavramı `pêşbirk` der.
     // `maçê` çekimi `\bmatch\b` taramasını kör eder; Türkçe "maç"
     // kupa kartında ayrı bir ad gibi duruyordu.
@@ -556,12 +559,12 @@ class Tr {
     K.cupFormatTitle: {'ku': 'Awa', 'tr': 'Format'},
     K.cupNotStarted: {'ku': 'Dest pê nekiriye', 'tr': 'Başlamadı'},
     K.cupRewardClaiming: {
-      'ku': 'Xelat tê kontrolkirin…',
+      'ku': 'Xelat tê piştrastkirin…',
       'tr': 'Ödül doğrulanıyor…',
     },
     K.cupRewardGranted: {'ku': 'Xelat hat dayîn', 'tr': 'Ödül verildi'},
     K.cupRewardUnverified: {
-      'ku': 'Xelat hîn nehat pejirandin',
+      'ku': 'Xelat hîn nehatiye pejirandin',
       'tr': 'Ödül henüz doğrulanmadı',
     },
     K.cupRewardLocal: {
@@ -573,7 +576,7 @@ class Tr {
     // bunu görmez — turnûva ile ters sınıf (eksik û).
     K.cupFinalScore: {'ku': 'Pûana dawî', 'tr': 'Final puanı'},
     K.cupEliminatedRound: {
-      'ku': 'Tu li {round} derketî',
+      'ku': 'Tu di gera {round} de derketî',
       'tr': '{round} turunda elendin',
     },
     // 2026-08-14: gerçek turnuvanın kontenjanı `tournaments.size`
@@ -677,18 +680,15 @@ class Tr {
       'tr': 'Arayamadık, tekrar dene.',
     },
     K.requestSent: {'ku': 'Daxwaz hat şandin', 'tr': 'İstek gönderildi'},
-    K.requestFailed: {
-      'ku': 'Daxwaz neçû, dîsa biceribîne',
-      'tr': 'İstek gönderilemedi',
-    },
-    K.requestAccepted: {'ku': 'Daxwaz hat qebûlkirin', 'tr': 'Arkadaş eklendi'},
+    K.requestFailed: {'ku': 'Daxwaz nehat şandin', 'tr': 'İstek gönderilemedi'},
+    K.requestAccepted: {'ku': 'Heval hat zêdekirin', 'tr': 'Arkadaş eklendi'},
     K.acceptFailed: {
-      'ku': 'Qebûlkirin bi ser neket.',
+      'ku': 'Daxwaz nehat qebûlkirin.',
       'tr': 'İstek kabul edilemedi.',
     },
     K.requestRejected: {'ku': 'Daxwaz hat redkirin', 'tr': 'İstek reddedildi'},
     K.rejectFailed: {
-      'ku': 'Redkirin bi ser neket.',
+      'ku': 'Daxwaz nehat redkirin.',
       'tr': 'İstek reddedilemedi.',
     },
     K.shareRoomCodeWith: {
@@ -718,14 +718,14 @@ class Tr {
     },
     K.noFriends: {'ku': 'Heval tune', 'tr': 'Arkadaş yok'},
     K.noFriendsHint: {
-      'ku': 'Li jorê lîstikvanan bigere û heval zêde bike',
+      'ku': 'Li jorê li lîstikvanan bigere û hevalan zêde bike',
       'tr': 'Yukarıdan oyuncu arayıp arkadaş ekleyebilirsin',
     },
     K.online: {'ku': 'Serhêl', 'tr': 'Çevrimiçi'},
     K.offline: {'ku': 'Ne li serhêl', 'tr': 'Çevrimdışı'},
-    K.inviteToRoom: {'ku': 'Vexwîne', 'tr': 'Odaya çağır'},
+    K.inviteToRoom: {'ku': 'Vexwîne odeyê', 'tr': 'Odaya çağır'},
     K.wantsToBeFriend: {
-      'ku': 'Hevaltiya te dixwaze',
+      'ku': 'Dixwaze bi te re bibe heval',
       'tr': 'Seninle arkadaş olmak istiyor',
     },
     K.rejectAction: {'ku': 'Red bike', 'tr': 'Reddet'},
@@ -740,7 +740,7 @@ class Tr {
     },
     K.inviteShareText: {
       'ku':
-          'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: {tag}. Tu jî were: https://zankurd.com',
+          'Ez bi ZanKurdê Kurmancî hîn dibim û pêşbaziyê dikim! Koda min a vexwendinê: {tag}. Tu jî beşdar bibe: https://zankurd.com',
       'tr':
           'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: {tag}. Sen de katıl: https://zankurd.com',
     },
@@ -754,7 +754,7 @@ class Tr {
     K.referralCodeHint: {'ku': 'Mînak: ZK-XXXX', 'tr': 'Örnek: ZK-XXXX'},
     K.referralApplyAction: {'ku': 'Bi kar bîne', 'tr': 'Kullan'},
     K.referralCodeApplied: {
-      'ku': 'Pîroz be! 100 zêr li hesabê te zêde bû.',
+      'ku': 'Pîroz be! 100 zêr li hesabê te hatin zêdekirin.',
       'tr': 'Tebrikler! Hesabına 100 jeton eklendi.',
     },
     K.cannotUseOwnCode: {
@@ -762,7 +762,7 @@ class Tr {
       'tr': 'Kendi kodunu kullanamazsın.',
     },
     K.referralAlreadyUsed: {
-      'ku': 'Te berê koda vexwendinê bi kar aniye.',
+      'ku': 'Te berê kodeke vexwendinê bi kar aniye.',
       'tr': 'Daha önce bir davet kodu kullandın.',
     },
     K.invalidReferralCode: {
@@ -797,10 +797,10 @@ class Tr {
     K.sikIpucu: {'ku': 'Alîkariya bersivê', 'tr': 'Şık ipucu'},
     K.ciftCevap: {'ku': 'Du bersiv', 'tr': 'Çift cevap'},
     K.soruDegistir: {'ku': 'Pirsê biguhere', 'tr': 'Soru değiştir'},
-    K.yakinda: {'ku': 'Nêzîk de tê', 'tr': 'Yakında'},
+    K.yakinda: {'ku': 'Di nêzîk de', 'tr': 'Yakında'},
     K.soru: {'ku': 'pirs', 'tr': 'soru'},
     K.gunlukGorevler: {'ku': 'Erkên rojane', 'tr': 'Günlük görevler'},
-    K.tamamlandi: {'ku': 'temam', 'tr': 'tamamlandı'},
+    K.tamamlandi: {'ku': 'Temam bû', 'tr': 'tamamlandı'},
     K.pGorevTamam: {'ku': '{p0} erk temam bûn', 'tr': '{p0} görev tamam'},
     K.tumGorevlerTamam: {
       'ku': 'Hemû erk temam bûn!',
@@ -810,7 +810,7 @@ class Tr {
     K.missionClaimAction: {'ku': 'Werbigire', 'tr': 'Ödülü al'},
     K.missionClaimed: {'ku': 'Hate stendin', 'tr': 'Alındı'},
     K.missionXpClaimed: {
-      'ku': '+{xp} XP hate stendin!',
+      'ku': '+{xp} XP hate qezenckirin!',
       'tr': '+{xp} XP kazanıldı!',
     },
     K.firstSessionBadge: {'ku': 'Dersa yekem', 'tr': 'İlk ders'},
@@ -890,7 +890,7 @@ class Tr {
       'ku': 'Ji bo wergerê bitikîne',
       'tr': 'Çeviri için dokun',
     },
-    K.dersTamamlandi: {'ku': 'Ders qediya!', 'tr': 'Ders tamamlandı'},
+    K.dersTamamlandi: {'ku': 'Ders qediya', 'tr': 'Ders tamamlandı'},
     // 2026-08-14: sunucuya yazılamayan tamamlama yine de "Ders tamamlandı"
     // deyip ekranı kapatıyordu; ders listede tamamlanmamış görünmeye devam
     // ediyor, kullanıcı niçin olduğunu hiç göremiyordu.
@@ -900,7 +900,7 @@ class Tr {
       'tr': 'Ders kaydedilemedi. Bağlantını kontrol edip tekrar dene.',
     },
     K.buSeviyeninSorulariYuklenemedi: {
-      'ku': 'Pirsên vê astê neyên barkirin.',
+      'ku': 'Pirsên vê astê nehatin barkirin.',
       'tr': 'Bu seviyenin soruları yüklenemedi.',
     },
     K.kolaydanZoraDogruIlerle: {
@@ -941,7 +941,7 @@ class Tr {
       'ku': '{correct} bersivên rast · delîl hêj tune',
       'tr': '{correct} doğru cevap · kanıt henüz yok',
     },
-    K.baslangic: {'ku': 'Destpêkirin', 'tr': 'Başlangıç'},
+    K.baslangic: {'ku': 'Destpêk', 'tr': 'Başlangıç'},
     K.performansAnalizi: {
       'ku': 'Analîza performansê',
       'tr': 'Performans analizi',
@@ -1013,7 +1013,7 @@ class Tr {
       // 2026-09-25 düzeltmesi: `{p0}s` kısaltması Türkçe saniye
       // kısaltmasıydı; Kurmancî metinde Türkçe harf kalıyordu.
       // `K.secondsShortUnit` zaten "çirke" diyor, o kullanılmalı.
-      'ku': 'Pirsa nû: {p0} çirke',
+      'ku': 'Pirsa din: {p0} çirke',
       'tr': 'Sonraki soru: {p0}sn',
     },
     K.rakipBekleniyor: {'ku': 'Hevrik tê payîn…', 'tr': 'Rakip bekleniyor…'},
@@ -1025,7 +1025,7 @@ class Tr {
     K.cumledenCikar: {'ku': 'Ji hevokê derxe', 'tr': 'Cümleden çıkar'},
     K.cumleyeEkle: {'ku': 'Li hevokê zêde bike', 'tr': 'Cümleye ekle'},
     K.kontrolEt: {'ku': 'Kontrol bike', 'tr': 'Kontrol et'},
-    K.seviyeP: {'ku': 'Ast {p0}', 'tr': 'Seviye {p0}'},
+    K.seviyeP: {'ku': 'Asta {p0}', 'tr': 'Seviye {p0}'},
     // Sonuç `Bidomîne` der (`K.continueAction`, `K.devamEt`). Seviye
     // kutusu "Berdawam bike" deyince aynı eylem iki adla durur. Türkçe
     // `devam` kökü `ber-` ile gizlenir; `contains('bidomîne')` onu
@@ -1049,7 +1049,7 @@ class Tr {
     K.kulturelNot: {'ku': 'Nota çandî', 'tr': 'Kültürel not'},
     K.derseBasla: {'ku': 'Dest bi dersê bike', 'tr': 'Derse başla'},
     K.birAltAlanSecerek: {
-      'ku': 'Barekî hilbijêre û dest bi lîstinê bike.',
+      'ku': 'Beşekê hilbijêre û dest bi lîstinê bike.',
       'tr': 'Bir alt alan seçerek yarışmaya başla.',
     },
     K.huhuGununSorulukEtkinligi: {
@@ -1094,7 +1094,7 @@ class Tr {
     K.tekraraBasla: {'ku': 'Dest bi dubarekirinê bike', 'tr': 'Tekrara başla'},
 
     // ── Soru tipi rozetleri ──────────────────────────────────────────
-    K.qTypeMultipleChoice: {'ku': 'Hilbijartin', 'tr': 'Şıklı'},
+    K.qTypeMultipleChoice: {'ku': 'Bi vebijark', 'tr': 'Şıklı'},
     // Banka seçenekleri `Rast`/`Şaş` (`question_bank_test`). Rozet "Xelet"
     // deyince oyuncu aynı yanlışı iki adla görür. `K.wrong` zaten `Şaş`.
     K.qTypeTrueFalse: {'ku': 'Rast/Şaş', 'tr': 'Doğru/Yanlış'},
@@ -1125,7 +1125,7 @@ class Tr {
       'tr': 'Bu yarıştaki ilerlemen kaybolur.',
     },
     K.leaveOnlineMatchBody: {
-      'ku': 'Heke tu ji pêşbirkê derkevî, tu dê wek têkçûyî bihesibî.',
+      'ku': 'Heke tu ji pêşbirkê derkevî, tu yê wek têkçûyî bêyî hesibandin.',
       'tr': 'Maçtan ayrılırsan hükmen yenilmiş sayılırsın.',
     },
     K.matchForfeitedTitle: {
@@ -1160,7 +1160,7 @@ class Tr {
     K.reportProfileBodyP: {
       'ku':
           'Wêne an navê {p0} neguncaw e? Em ê ragihandinê tomar bikin û '
-          'wî/wê ji te re veşêrin.',
+          'wî/wê ji te veşêrin.',
       'tr':
           '{p0} adlı oyuncunun görseli veya adı uygunsuz mu? Bildirimi '
           'kaydedip bu kişiyi senden gizleyeceğiz.',
@@ -1191,7 +1191,7 @@ class Tr {
       'tr': 'Soru kaydedilemedi.',
     },
     K.reportReasonDefault: {
-      'ku': 'Şaşiya bersiv an naverokê',
+      'ku': 'Şaşiya bersivê an naverokê',
       'tr': 'Cevap veya içerik hatası',
     },
     K.reportQuestion: {'ku': 'Pirsê ragihîne', 'tr': 'Soruyu bildir'},
@@ -1232,7 +1232,7 @@ class Tr {
       'tr': 'Bugünün jeton sınırına ulaştın. Yarın sıfırlanır.',
     },
     K.stopAction: {'ku': 'Rawestîne', 'tr': 'Durdur'},
-    K.listenQuestion: {'ku': 'Pirsê bibihîze', 'tr': 'Soruyu dinle'},
+    K.listenQuestion: {'ku': 'Guh bide pirsê', 'tr': 'Soruyu dinle'},
     K.doubleAnswerHint: {
       'ku': 'Bersiveke din bide',
       'tr': 'Bir cevap daha ver',
@@ -1267,7 +1267,7 @@ class Tr {
       'tr': 'Soru yenisiyle değiştirilir',
     },
     K.wildcardActive: {'ku': 'Çalak', 'tr': 'Etkin'},
-    K.wildcardUsed: {'ku': 'Bikar hatî', 'tr': 'Kullanıldı'},
+    K.wildcardUsed: {'ku': 'Bikarhatî', 'tr': 'Kullanıldı'},
 
     // ── Etkinlik / çark / eşleşme ────────────────────────────────────
     K.noQuestionsFound: {'ku': 'Pirs nehatin dîtin.', 'tr': 'Soru bulunamadı.'},
@@ -1333,18 +1333,18 @@ class Tr {
     },
     K.wheelRewardFailed: {'ku': 'Xelat nehat dayîn.', 'tr': 'Ödül verilemedi.'},
     K.wheelAlreadySpun: {
-      'ku': 'Îro jixwe zivirandî.',
+      'ku': 'Te îro jixwe zivirand',
       'tr': 'Bugün zaten çevirdin.',
     },
     K.playerWord: {'ku': 'Lîstikvan', 'tr': 'Oyuncu'},
     K.opponentWord: {'ku': 'Hevrik', 'tr': 'Rakip'},
     K.matchFailed: {
-      'ku': 'Li hev anîn bi ser neket.',
+      'ku': 'Lihevanîn bi ser neket, dîsa biceribîne.',
       'tr': 'Eşleşme olmadı, tekrar dene.',
     },
     K.searchTimedOut: {'ku': 'Dema gerînê qediya', 'tr': 'Arama süresi doldu'},
     K.playWithBotQ: {
-      'ku': 'Hêj lîstikvan nehate dîtin. Bila ez bi botê bilîzim?',
+      'ku': 'Hêj hevrik nehat dîtin. Dixwazî bi botê re bilîzî?',
       'tr': 'Henüz rakip bulunamadı. Bot ile oynansın mı?',
     },
     K.no: {'ku': 'Na', 'tr': 'Hayır'},
@@ -1354,7 +1354,7 @@ class Tr {
     // görür. `şer` doğru Kurmancîdir; tek üründe tek kök.
     K.duel1v1Short: {'ku': 'Pêşbirka bilez', 'tr': 'Hızlı düello'},
     K.duel1v1: {'ku': 'Pêşbirka bilez', 'tr': 'Hızlı düello'},
-    K.randomMatch: {'ku': 'Hevrikiya rasthatî', 'tr': 'Rastgele eşleşme'},
+    K.randomMatch: {'ku': 'Lihevanîna rasthatî', 'tr': 'Rastgele eşleşme'},
     K.randomMatchSub: {
       'ku': 'Bêyî hilbijartina mijarê rasterast bikeve rêzê.',
       'tr': 'Konu seçmeden doğrudan sıraya gir.',
@@ -1387,7 +1387,7 @@ class Tr {
       'tr': '{code} kopyalandı.',
     },
     K.leaveRoom: {'ku': 'Ji odeyê derkeve', 'tr': 'Odadan ayrıl'},
-    K.leavingRoom: {'ku': 'Ji odeyê derdikevî…', 'tr': 'Odadan ayrılıyor…'},
+    K.leavingRoom: {'ku': 'Ji odeyê tê derketin…', 'tr': 'Odadan ayrılıyor…'},
     K.roomLeaveFailed: {
       'ku': 'Te nikaribû ji odeyê derkevî. Dîsa biceribîne.',
       'tr': 'Odadan ayrılamadın. Tekrar dene.',
@@ -1443,7 +1443,7 @@ class Tr {
     K.startRace: {'ku': 'Dest bi pêşbirkê bike', 'tr': 'Yarışı başlat'},
     K.waitingHost: {
       'ku':
-          'Li benda mêvandar e… Lîstik dê ji aliyê damezrîner ve bê destpêkirin.',
+          'Li benda mêvandar e… Pêşbirk dê ji aliyê damezrîner ve bê destpêkirin.',
       'tr': 'Ev sahibi bekleniyor… Yarışı odayı kuran kişi başlatacak.',
     },
     K.gameStartFailed: {
@@ -1452,8 +1452,8 @@ class Tr {
     },
     K.questionsLoadExhausted: {
       'ku':
-          'Pirs nehatin barkirin. Ev pirsgirêk hin caran çareser dibe; '
-          'dikarî dîsa biceribînî an ji odeyê derkevî.',
+          'Pirs nehatin barkirin. Dibe ku pirsgirêk didome; dikarî dîsa '
+          'biceribînî an ji odeyê derkevî.',
       'tr':
           'Sorular yüklenemedi. Sorun sürüyor olabilir; tekrar deneyebilir '
           'ya da odadan ayrılabilirsin.',
@@ -1507,7 +1507,7 @@ class Tr {
     },
     K.tournamentWaitingBody: {
       'ku':
-          'Kûpa bi lîstikvanên rastî tê lîstin. Gava hejmar temam bibe '
+          'Kûpa bi lîstikvanên rastîn tê lîstin. Gava hejmar temam bibe '
           'hevrik tên diyarkirin; herî dereng piştî 24 saetan bi yên '
           'amade dest pê dike.',
       'tr':
@@ -1515,7 +1515,7 @@ class Tr {
           'kurulur; en geç 24 saat içinde eldeki oyuncularla başlar.',
     },
     K.tournamentWaitingOpponent: {
-      'ku': 'Pûana te hate tomarkirin; em li bersiva hevrikê te dinêrin.',
+      'ku': 'Pûana te hate tomarkirin; em li benda hevrikê te ne.',
       'tr': 'Puanın kaydedildi; rakibinin oynamasını bekliyoruz.',
     },
     K.championRewardGranted: {
@@ -1550,7 +1550,7 @@ class Tr {
       'tr': 'Satın alma sorunu',
     },
     K.purchaseFailed: {
-      'ku': 'Kirîn bi ser neket.',
+      'ku': 'Kirîn bi ser neket. Dîsa biceribîne.',
       'tr': 'Satın alınamadı. Tekrar dene.',
     },
     K.errorOccurred: {
@@ -1558,7 +1558,7 @@ class Tr {
       'tr': 'Bir şey ters gitti. Tekrar dene.',
     },
     K.purchasedItem: {'ku': 'Te {item} kirî.', 'tr': '{item} artık senin.'},
-    K.gotIt: {'ku': 'Fêm kir', 'tr': 'Anladım'},
+    K.gotIt: {'ku': 'Min fêm kir', 'tr': 'Anladım'},
     K.zeroBalanceHint: {
       'ku': 'Zêrên te tune. Çerxê bizivirîne, zêr qezenc bike.',
       'tr': 'Hiç jetonun yok. Çarkı çevir, jeton kazan.',
@@ -1629,7 +1629,7 @@ class Tr {
     K.avatarIconCihan: {'ku': 'Cîhan', 'tr': 'Dünya'},
     K.avatarIconMertal: {'ku': 'Mertal', 'tr': 'Kalkan'},
     K.avatarIconTac: {'ku': 'Tac', 'tr': 'Taç'},
-    K.avatarIconGul: {'ku': 'Gul', 'tr': 'Fidan'},
+    K.avatarIconGul: {'ku': 'Şitil', 'tr': 'Fidan'},
     K.avatarIconDar: {'ku': 'Dar', 'tr': 'Ağaç'},
     K.avatarIconCav: {'ku': 'Çav', 'tr': 'Göz'},
     K.avatarIconBirusk: {'ku': 'Birûsk', 'tr': 'Şimşek'},
@@ -1643,17 +1643,14 @@ class Tr {
       'ku': 'Keska Kurdistanê',
       'tr': 'Kürdistan yeşili',
     }, // #3DA968
-    K.avatarColor3: {
-      'ku': 'Şînahiya deryayê',
-      'tr': 'Petrol yeşili',
-    }, // #2E9E93
+    K.avatarColor3: {'ku': 'Keska petrolê', 'tr': 'Petrol yeşili'}, // #2E9E93
     K.avatarColor4: {'ku': 'Binefşî', 'tr': 'Erik moru'}, // #6B3A7A
-    K.avatarColor5: {'ku': 'Xwelîreng', 'tr': 'Kiremit rengi'}, // #C67A5C
+    K.avatarColor5: {'ku': 'Rengê kermîdê', 'tr': 'Kiremit rengi'}, // #C67A5C
     K.avatarColor6: {'ku': 'Şîna deryayê', 'tr': 'Deniz mavisi'}, // #2B4F7E
     K.avatarColor7: {'ku': 'Pembeyê gulê', 'tr': 'Gül pembesi'}, // #D4789E
     // ── Oda sohbeti moderasyonu (Apple 1.2 / Google Play UGC) ────────
     K.chatBlockedWord: {
-      'ku': 'Ev peyam nayê şandin: gotinên nebaş.',
+      'ku': 'Ev peyam nayê şandin: gotinên nebaş tê de hene.',
       'tr': 'Bu mesaj gönderilemez: uygunsuz sözcük içeriyor.',
     },
     // Oda başlığı `Suhbet` (`K.chat`) der. Bağlantı yasağı "sohbeta"
@@ -1675,7 +1672,7 @@ class Tr {
       'ku': 'Peyam nehat şandin. Dîsa biceribîne.',
       'tr': 'Mesaj gönderilemedi. Tekrar dene.',
     },
-    K.chatReport: {'ku': 'Peyamê ragihîne', 'tr': 'Mesajı bildir'},
+    K.chatReport: {'ku': 'Peyamê gilî bike', 'tr': 'Mesajı bildir'},
     K.chatReportSub: {
       'ku': 'Ji bo lêkolînê tê şandin.',
       'tr': 'İncelenmek üzere gönderilir.',
@@ -1719,7 +1716,7 @@ class Tr {
       'ku': 'Heval: {count} daxwazên nû',
       'tr': 'Arkadaşlar: {count} yeni istek',
     },
-    K.boardLoadFailed: {'ku': 'Tablo nehat barkirin', 'tr': 'Yüklenemedi'},
+    K.boardLoadFailed: {'ku': 'Nehat barkirin', 'tr': 'Yüklenemedi'},
     K.noScoresYet: {'ku': 'Hîn pûan tune', 'tr': 'Henüz puan yok'},
     // 2026-09-30 canlı: sıralama yalnız biten çevrimiçi yarışları sayar;
     // bota karşı düello ve günün soruları cihazda oynanır. Oyuncu ikisini
@@ -1737,7 +1734,7 @@ class Tr {
     K.refreshBoardA11y: {'ku': 'Rêzbendiyê nû bike', 'tr': 'Sıralamayı yenile'},
     K.refreshAction: {'ku': 'Nû bike', 'tr': 'Yenile'},
     K.questionRemoved: {
-      'ku': 'Pirs hate rakirin.',
+      'ku': 'Pirs ji tomaran hate rakirin.',
       'tr': 'Soru kayıtlardan çıkarıldı.',
     },
     // Kaldırma başarısızlığı questionSaveFailed'e düşürülemez: o metin
@@ -1752,7 +1749,7 @@ class Tr {
     },
     K.savedShort: {'ku': 'Tomarkirî', 'tr': 'Kaydedilenler'},
     K.yourFavorites: {
-      'ku': 'Pirsên tomarkirî yên te',
+      'ku': 'Pirsên te yên tomarkirî',
       'tr': 'Kaydedilen soruların',
     },
     K.questionsReplay: {
@@ -1764,7 +1761,7 @@ class Tr {
       'tr': 'Kaydedilen soruları oyna',
     },
     K.noSavedQuestions: {
-      'ku': 'Hîn pirsên tomarkirî tune.',
+      'ku': 'Hîn pirsên tomarkirî tune ne.',
       'tr': 'Henüz kaydedilmiş soru yok.',
     },
     // 2026-08-14: çevrimiçi oda maçında kaydedilen favoriler doğru cevabı
@@ -1800,7 +1797,7 @@ class Tr {
     K.statRank: {'ku': 'Rêz', 'tr': 'Sıralama'},
     K.statTotalScore: {'ku': 'Tevahî pûan', 'tr': 'Toplam puan'},
     K.statAnswered: {'ku': 'Pirsên bersivandî', 'tr': 'Cevaplanan soru'},
-    K.statAccuracy: {'ku': 'Rastî', 'tr': 'Doğruluk'},
+    K.statAccuracy: {'ku': 'Rastbûn', 'tr': 'Doğruluk'},
     // Sunucu metriği yokken karolarda çıplak bir "—" duruyordu. Oyuncu
     // 180 XP'si ve %70 doğruluğu görünürken "Sıralama —" ve "Toplam Puan —"
     // okuyunca bunu kusur sanıyordu; oysa değer YOK değil, HENÜZ yok
@@ -1845,7 +1842,7 @@ class Tr {
     },
     K.suggestQuestion: {'ku': 'Pirs pêşniyar bike', 'tr': 'Soru öner'},
     K.suggestQuestionSub: {
-      'ku': 'Pirsa xwe pêşniyar bike, piştî pejirandinê were zêdekirin',
+      'ku': 'Pirsa xwe pêşniyar bike, bila piştî pejirandinê were zêdekirin',
       'tr': 'Kendi sorunu öner, onaylandıktan sonra eklensin',
     },
     K.saveAccount: {'ku': 'Hesabê xwe tomar bike', 'tr': 'Hesabını kaydet'},
@@ -1875,7 +1872,7 @@ class Tr {
       'tr': 'Hesabın kaydedildi.',
     },
     K.connectingGoogle: {
-      'ku': 'Bi Google tê girêdan…',
+      'ku': 'Bi Google re tê girêdan…',
       'tr': 'Google ile bağlanılıyor…',
     },
     K.signOut: {'ku': 'Derkeve', 'tr': 'Çıkış yap'},
@@ -1917,10 +1914,10 @@ class Tr {
     },
     K.homeReviewTime: {'ku': 'Dema dubarekirinê', 'tr': 'Tekrar zamanı'},
     K.homeReviewTimeSub: {
-      'ku': '{count} pirs li benda te ye',
+      'ku': '{count} pirs li benda te ne',
       'tr': '{count} soru seni bekliyor',
     },
-    K.homePathNext: {'ku': 'Pêngava te: {name}', 'tr': 'Sıradaki: {name}'},
+    K.homePathNext: {'ku': 'Li dorê: {name}', 'tr': 'Sıradaki: {name}'},
     K.homeGreeting: {'ku': '{greeting}, {name}!', 'tr': '{greeting}, {name}!'},
     K.homeGreetingAnon: {'ku': 'Bi xêr hatî!', 'tr': 'Hoş geldin!'},
     K.homeGreetMorning: {'ku': 'Rojbaş', 'tr': 'Günaydın'},
@@ -1933,7 +1930,7 @@ class Tr {
       'tr': 'Ders, hikâye ve sözlük',
     },
     K.homeDoorPlayTitle: {
-      'ku': 'Bi hevalan re bilîze',
+      'ku': 'Bi hevalê xwe re pêşbirkê bike',
       'tr': 'Arkadaşınla yarış',
     },
     K.homeDoorPlaySub: {
@@ -1953,11 +1950,11 @@ class Tr {
       'ku': 'Tu dikarî vê paşê ji mîhengan biguherînî.',
       'tr': 'Bunu daha sonra ayarlardan değiştirebilirsin.',
     },
-    K.learningGoalLearn: {
-      'ku': 'Kurmancî hîn bibim',
-      'tr': 'Kurmancî öğrenmek',
+    K.learningGoalLearn: {'ku': 'Hînbûna Kurmancî', 'tr': 'Kurmancî öğrenmek'},
+    K.learningGoalCulture: {
+      'ku': 'Keşfkirina çandê',
+      'tr': 'Kültürü keşfetmek',
     },
-    K.learningGoalCulture: {'ku': 'Çandê nas bikim', 'tr': 'Kültürü keşfetmek'},
     K.outcomeTitle: {
       'ku': 'Te li ku zehmetî kişand?',
       'tr': 'Nerelerde zorlandın?',
@@ -1976,7 +1973,7 @@ class Tr {
     },
     K.outcomeReview: {
       'ku':
-          '{name}: di {answered} pirsan de {wrong} şaş. Van bersivan careke din bibîne.',
+          '{name}: di {answered} pirsan de {wrong} şaş. Li van bersivan careke din binêre.',
       'tr':
           '{name}: {answered} soruda {wrong} yanlış. Bu cevaplara yeniden bak.',
     },
@@ -1996,11 +1993,11 @@ class Tr {
           'Bir konuyu değerlendirmek için henüz yeterli cevap yok. Birkaç soru daha çözerek devam et.',
     },
     K.outcomeReviewGeneric: {
-      'ku': 'Bersiva şaş binêre',
+      'ku': 'Li bersiva şaş binêre',
       'tr': 'Yanlış cevabı gözden geçir',
     },
     K.outcomeReviewNamed: {
-      'ku': 'Bersivên şaş ên {name} binêre',
+      'ku': 'Li şaşiyên {name} binêre',
       'tr': '{name} yanlışlarını gözden geçir',
     },
     K.storyCatalogTitle: {'ku': 'Çîrokên rojane', 'tr': 'Günlük hikâyeler'},
@@ -2029,7 +2026,7 @@ class Tr {
       'tr': 'Temellerden başlayacağız. Merak etme, adım adım.',
     },
     K.placementAdviceMid: {
-      'ku': 'Bingeha te baş e. Em ê hînê pêş de bibin.',
+      'ku': 'Bingeha te baş e. Em ê te hîn pêş ve bibin.',
       'tr': 'Temelin iyi. Biraz daha ileri götüreceğiz.',
     },
     K.placementAdviceAdvanced: {
@@ -2092,7 +2089,7 @@ class Tr {
     },
     K.paywallPaymentPending: {
       'ku':
-          'Dravdana te li benda pejirandinê ye. Piştî pejirandinê Premium bixweber vedibe.',
+          'Dravdana te li benda pejirandinê ye. Piştî pejirandinê Premium dê bixweber vebe.',
       'tr': 'Ödemen onay bekliyor. Onaylandığında Premium otomatik açılacak.',
     },
     K.paywallPurchaseFailed: {
@@ -2100,7 +2097,7 @@ class Tr {
       'tr': 'Premium alınamadı. Tekrar dene.',
     },
     K.paywallRestoreNothing: {
-      'ku': 'Aboneyeke çalak nehat dîtin.',
+      'ku': 'Abonetiyeke çalak nehat dîtin.',
       'tr': 'Geri yüklenecek aktif abonelik bulunamadı.',
     },
     K.paywallRestoreFailed: {
@@ -2123,7 +2120,7 @@ class Tr {
       'tr': "ZanKurd'a destek",
     },
     K.paywallPerkSupportBody: {
-      'ku': 'Tu pêşketina sepana kurdî û naveroka nû piştgir dikî.',
+      'ku': 'Tu piştgiriya pêşketina sepana kurdî û naveroka nû dikî.',
       'tr': 'Kürtçe uygulamanın gelişimini ve yeni içeriği desteklersin.',
     },
     K.periodMonthly: {'ku': 'Mehane', 'tr': 'Aylık'},
@@ -2147,7 +2144,7 @@ class Tr {
       'tr': 'Satın alımları geri yükle',
     },
     K.paywallPackagesInactive: {
-      'ku': 'Pakêtên Premium hîn nehatine çalak kirin',
+      'ku': 'Pakêtên Premium hîn ne çalak in',
       'tr': 'Premium paketler henüz aktif değil',
     },
     K.paywallPackagesInactiveBody: {
@@ -2159,9 +2156,10 @@ class Tr {
     // yazmasını ister: yenileme, ücretlendirme anı ve iptal yolu.
     K.paywallRenewalTerms: {
       'ku':
-          'Abonetiya te bixweber nû dibe. Heta 24 saetan berî dawiya heyamê '
-          'neyê betalkirin, ji hesabê te yê App Store/Google Play dîsa tê '
-          'kişandin. Tu dikarî her gav ji mîhengên hesabê xwe betal bikî.',
+          'Abonetî bixweber nû dibe. Heke herî kêm 24 saet berî dawiya '
+          'heyamê neyê betalkirin, heqê nûkirinê ji hesabê te yê App '
+          'Store/Google Play tê kişandin. Tu dikarî her gav ji mîhengên '
+          'hesabê xwe betal bikî.',
       'tr':
           'Abonelik otomatik yenilenir. Dönem bitiminden en az 24 saat önce '
           'iptal edilmezse App Store/Google Play hesabından yenileme ücreti '
@@ -2175,13 +2173,13 @@ class Tr {
     // "Avatarê" deyince oyuncu aynı yüzeyi iki adla görür. `Avatarê`
     // çekimi `\bavatar\b` taramasını kör eder — serverê ile aynı sınıf.
     K.editAvatar: {'ku': 'Rûyê xwe biguherîne', 'tr': 'Avatarı düzenle'},
-    K.keepProgress: {'ku': 'Rêça xwe bidomîne', 'tr': 'İlerlemeni sürdür'},
+    K.keepProgress: {'ku': 'Pêşveçûna xwe bidomîne', 'tr': 'İlerlemeni sürdür'},
     K.playerTagCopied: {
       'ku': 'Koda te hate kopîkirin',
       'tr': 'Kodun kopyalandı',
     },
     K.playerTagSemantics: {
-      'ku': 'Koda te: {tag}. Ji bo kopîkirinê bitikîne.',
+      'ku': 'Koda te ya lîstikvan: {tag}. Ji bo kopîkirinê bitikîne.',
       'tr': 'Oyuncu kodun: {tag}. Kopyalamak için dokun.',
     },
     K.searchByNameOrTag: {
@@ -2200,7 +2198,7 @@ class Tr {
     // ── Oyuncu adı kapısı ─────────────────────────────────────────
     K.nameGateSaveFailed: {
       'ku':
-          'Nav nehat tomar kirin. Dîsa biceribîne, an bi «Paşê bike» derbas bibe û paşê ji profîlê binivîse.',
+          'Nav nehat tomarkirin. Dîsa biceribîne, an bi «Paşê bike» derbas bibe û paşê ji profîlê binivîse.',
       'tr':
           'Ad kaydedilemedi. Tekrar dene ya da «Şimdilik geç» ile devam et, adı sonra profilden yazarsın.',
     },
@@ -2272,7 +2270,7 @@ class Tr {
       'tr': 'Oyuncu adı güncellendi.',
     },
     K.playerNameSaveFailed: {
-      'ku': 'Navê lîstikvan nehat tomar kirin.',
+      'ku': 'Navê lîstikvan nehat tomarkirin.',
       'tr': 'Oyuncu adı kaydedilemedi.',
     },
     K.accountDeleteFailed: {
@@ -2281,7 +2279,7 @@ class Tr {
     },
     K.accountLocalCleanupFailed: {
       'ku':
-          'Hesab hate jêbirin, lê daneyên li ser vê amûrê bi tevahî nehatin paqij kirin. Sepanê ji nû ve bide destpêkirin; eger hişyarî bidome, sepanê ji nû ve saz bike.',
+          'Hesab hate jêbirin, lê daneyên herêmî yên li ser vê amûrê bi tevahî nehatin paqijkirin. Sepanê ji nû ve bide destpêkirin; eger hişyarî bidome, sepanê ji nû ve saz bike.',
       'tr':
           'Hesap silindi ancak bu cihazdaki yerel veriler tamamen temizlenemedi. Uygulamayı yeniden başlat; uyarı sürerse uygulamayı yeniden yükle.',
     },
@@ -2393,7 +2391,7 @@ class Tr {
       'ku': 'Hîn peyam tune. Yekem binivîse.',
       'tr': 'Henüz mesaj yok. İlk sen yaz.',
     },
-    K.chatHint: {'ku': 'Peyamek binivîse…', 'tr': 'Bir mesaj yaz…'},
+    K.chatHint: {'ku': 'Peyamekê binivîse…', 'tr': 'Bir mesaj yaz…'},
 
     // ── Güç haritası ──────────────────────────────────────────────
     K.strengthMapTitle: {
@@ -2419,10 +2417,7 @@ class Tr {
       'ku': '{count} pirs ji bo dubarekirinê amade ne',
       'tr': '{count} soru tekrara hazır',
     },
-    K.strengthenMemory: {
-      'ku': 'Bîranîna xwe xurt bike',
-      'tr': 'Hafızanı pekiştir',
-    },
+    K.strengthenMemory: {'ku': 'Bîra xwe xurt bike', 'tr': 'Hafızanı pekiştir'},
     K.reviewsDone: {'ku': 'Dubarekirin temam', 'tr': 'Tekrarlar tamam'},
     K.noReviewsToday: {
       'ku': 'Îro pirsên te yên dubarekirinê tune',
@@ -2439,9 +2434,9 @@ class Tr {
     K.imageCredits: {'ku': 'Çavkaniyên wêneyan', 'tr': 'Görsel kaynakları'},
     K.imageCreditsIntro: {
       'ku':
-          'Wêneyên pirsan ji Wikimedia Commons in û bi lîsansên malê giştî, '
-          'CC0 an CC BY tên bikaranîn. CC BY navê wênegir dixwaze; ev rûpel '
-          'ew erka yasayî pêk tîne.',
+          'Wêneyên pirsan ji Wikimedia Commonsê ne û bi lîsansên qada '
+          'giştî, CC0 an CC BY tên bikaranîn. CC BY navê wênegir dixwaze; '
+          'ev rûpel wê erka yasayî pêk tîne.',
       'tr':
           'Soru fotoğrafları Wikimedia Commons\'tan alınmıştır ve kamu malı, '
           'CC0 ya da CC BY lisanslarıyla kullanılmaktadır. CC BY fotoğrafçının '
@@ -2451,7 +2446,7 @@ class Tr {
     // ── Sonuç ekranı: toplu açıklamalar ──────────────────────────────
     K.allExplanations: {'ku': 'Şîroveyên turê', 'tr': 'Turun açıklamaları'},
     K.explanationTitle: {'ku': 'Şîrove', 'tr': 'Açıklama'},
-    K.viewExplanation: {'ku': 'Şîrove bibîne', 'tr': 'Açıklamayı gör'},
+    K.viewExplanation: {'ku': 'Şîroveyê bibîne', 'tr': 'Açıklamayı gör'},
     K.allExplanationsHint: {
       'ku':
           'Hemû şîrove li vir bi hev re ne. Di dema tûrê de tenê '
@@ -2469,7 +2464,7 @@ class Tr {
     },
     K.selectCategory: {'ku': 'Mijarê hilbijêre', 'tr': 'Konu seç'},
     K.questionCountLabel: {'ku': 'Hejmara pirsan', 'tr': 'Soru sayısı'},
-    K.entryFeeLabel: {'ku': 'Xerca ketinê', 'tr': 'Katılım ücreti'},
+    K.entryFeeLabel: {'ku': 'Xerca beşdarbûnê', 'tr': 'Katılım ücreti'},
     K.freeEntry: {'ku': 'Bêpere (0)', 'tr': 'Ücretsiz (0)'},
     K.insufficientCoins: {
       'ku': 'Zêrên te têr nakin.',
@@ -2483,9 +2478,9 @@ class Tr {
     },
     K.reactionBravo: {'ku': 'Destxweş!', 'tr': 'Tebrikler!'},
     K.reactionGoodLuck: {'ku': 'Serkeftin!', 'tr': 'Başarılar!'},
-    K.reactionFast: {'ku': 'Lez be!', 'tr': 'Hızlı ol!'},
-    K.reactionSmiley: {'ku': 'Kêfxweşî!', 'tr': 'Gülümse!'},
-    K.reactionFire: {'ku': 'Agir!', 'tr': 'Harika!'},
+    K.reactionFast: {'ku': 'Lez bike!', 'tr': 'Hızlı ol!'},
+    K.reactionSmiley: {'ku': 'Bikene!', 'tr': 'Gülümse!'},
+    K.reactionFire: {'ku': 'Bêhempa!', 'tr': 'Harika!'},
 
     // ── Dürüstlük / sunucu yok ──────────────────────────────────────
     K.serverUnreachableTitle: {
@@ -2503,7 +2498,7 @@ class Tr {
     },
     K.bankEmptyTitle: {'ku': 'Pirs tune', 'tr': 'Soru yok'},
     K.bankEmptyBody: {
-      'ku': 'Banka pirsê nehat barkirin.',
+      'ku': 'Bankaya pirsan nehat barkirin.',
       'tr': 'Soru bankası yüklenemedi.',
     },
     K.quizTutorialTimerTitle: {
@@ -2512,7 +2507,7 @@ class Tr {
     },
     K.quizTutorialTimerBody: {
       'ku':
-          '{seconds} çirkeyan de bersiva rast hilbijêre; her bersiva rast pûanan qezenc dike.',
+          'Di {seconds} çirkeyan de bersiva rast hilbijêre; her bersiva rast pûanan qezenc dike.',
       'tr':
           '{seconds} saniyede doğru şıkkı seç; her doğru cevap puan kazandırır.',
     },
@@ -2577,27 +2572,27 @@ class Tr {
     },
     K.badgeStreak30Title: {'ku': '30 roj li pey hev', 'tr': '30 günlük seri'},
     K.badgeStreak30Desc: {
-      'ku': 'Zincîra rojane gihand 30 rojan.',
+      'ku': 'Te zincîra rojane gihand 30 rojan.',
       'tr': 'Günlük serini 30 güne taşıdın.',
     },
     K.badgeQuestions500Title: {'ku': '500 pirs', 'tr': '500 soru'},
     K.badgeQuestions500Desc: {
-      'ku': 'Bi giştî 500 pirs bersiv da.',
+      'ku': 'Te bi giştî bersiva 500 pirsan da.',
       'tr': 'Toplam 500 soruya cevap verdin.',
     },
     K.badgeQuestions1000Title: {'ku': '1000 pirs', 'tr': '1000 soru'},
     K.badgeQuestions1000Desc: {
-      'ku': 'Bi giştî 1000 pirs bersiv da.',
+      'ku': 'Te bi giştî bersiva 1000 pirsan da.',
       'tr': 'Toplam 1000 soruya cevap verdin.',
     },
     K.badgePerfectTitle: {'ku': 'Lîstika bêkêmasî', 'tr': 'Mükemmel oyun'},
     K.badgePerfectDesc: {
-      'ku': 'Di yek pêşbirkê de hemû pirsan rast bersiv da.',
+      'ku': 'Di pêşbirkekê de te hemû pirs rast bersivandin.',
       'tr': 'Bir yarışta tüm soruları doğru cevapladın.',
     },
-    K.badgeSpeedTitle: {'ku': 'Leztir', 'tr': 'Hız canavarı'},
+    K.badgeSpeedTitle: {'ku': 'Cenawirê lezê', 'tr': 'Hız canavarı'},
     K.badgeSpeedDesc: {
-      'ku': 'Pêşbirkek di bin 60 çirkeyan de qedand.',
+      'ku': 'Te pêşbirkek di bin 60 çirkeyan de qedand.',
       'tr': 'Bir yarışı 60 saniyenin altında bitirdin.',
     },
     K.catZiman: {'ku': 'Ziman', 'tr': 'Dil'},
@@ -2644,7 +2639,7 @@ class Tr {
     },
     K.asyncDuelSeeAll: {'ku': 'Hemû', 'tr': 'Tümü'},
     K.asyncDuelOpponent: {'ku': 'Hevrik', 'tr': 'Rakip'},
-    K.asyncDuelWaiting: {'ku': 'Li benda hevrik', 'tr': 'Rakip bekleniyor'},
+    K.asyncDuelWaiting: {'ku': 'Hevrik tê payîn', 'tr': 'Rakip bekleniyor'},
     K.asyncDuelReady: {'ku': 'Encam amade ye', 'tr': 'Sonuç hazır'},
     K.asyncDuelExpired: {'ku': 'Hevrik derneket', 'tr': 'Rakip çıkmadı'},
     K.asyncDuelUnfinished: {'ku': 'Nîvco ma', 'tr': 'Yarım kaldı'},
@@ -2660,11 +2655,12 @@ class Tr {
       'tr': '48 saat içinde rakip çıkmadı. Doğru cevapların için XP alırsın.',
     },
     K.asyncDuelUnfinishedBody: {
-      'ku': 'Te hemû pirs nebersivandin; ev pêşbirk dê bi dawî bibe.',
+      'ku':
+          'Te hemû pirs nebersivandin; ev pêşbirk gava dema wê biqede dê bê girtin.',
       'tr': 'Soruların hepsini cevaplamadın; bu düello süresi dolunca kapanır.',
     },
     K.asyncDuelStartFailed: {
-      'ku': 'Pêşbirk dest pê nekir. Têkiliya xwe kontrol bike.',
+      'ku': 'Pêşbirk nehat destpêkirin. Girêdana xwe kontrol bike.',
       'tr': 'Düello başlatılamadı. Bağlantını kontrol et.',
     },
     K.asyncDuelTooMany: {

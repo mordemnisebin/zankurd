@@ -219,7 +219,7 @@ void main() {
   });
 
   test('quiz soru seslendirmesi dinleme anlamını korur', () {
-    expect(Tr.of(K.listenQuestion, AppLanguage.ku), 'Pirsê bibihîze');
+    expect(Tr.of(K.listenQuestion, AppLanguage.ku), 'Guh bide pirsê');
   });
 
   test('quiz bitirme düğmesi Kurmancîde emir kipindedir', () {
@@ -283,7 +283,7 @@ void main() {
     );
     expect(
       Tr.of(K.badgeStreak30Desc, AppLanguage.ku),
-      contains('Zincîra rojane'),
+      contains('Te zincîra rojane'),
     );
     // `contains('seriya')` "xweseriya"yı da vurur; kelime sınırı şart.
     final seriya = RegExp(r'\bseriya\b', caseSensitive: false);
@@ -855,7 +855,7 @@ void main() {
     );
     expect(
       Tr.of(K.referralAlreadyUsed, AppLanguage.ku),
-      contains('koda vexwendinê'),
+      contains('kodeke vexwendinê'),
     );
 
     final davet = RegExp(r'davet', caseSensitive: false);
@@ -930,8 +930,11 @@ void main() {
     // postposition'dır; kök taraması onu vurur. Marka + ve şart.
     expect(Tr.of(K.signInGoogle, AppLanguage.ku), 'Bi Google têkeve');
     expect(Tr.of(K.linkGoogle, AppLanguage.ku), 'Bi Google girêde');
-    expect(Tr.of(K.connectingGoogle, AppLanguage.ku), 'Bi Google tê girêdan…');
-    expect(Tr.of(K.connectingApple, AppLanguage.ku), 'Bi Apple tê girêdan…');
+    expect(
+      Tr.of(K.connectingGoogle, AppLanguage.ku),
+      'Bi Google re tê girêdan…',
+    );
+    expect(Tr.of(K.connectingApple, AppLanguage.ku), 'Bi Apple re tê girêdan…');
 
     final ileCalque = RegExp(r'bi (google|apple) ve\b', caseSensitive: false);
     for (final key in Tr.keys) {

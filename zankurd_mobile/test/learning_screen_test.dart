@@ -486,7 +486,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      tester.getSemantics(find.bySemanticsLabel('Ders 1. Ders qediya!')),
+      tester.getSemantics(find.bySemanticsLabel('Ders 1. Ders qediya')),
       isNotNull,
     );
     expect(

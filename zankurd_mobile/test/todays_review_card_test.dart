@@ -177,7 +177,7 @@ void main() {
     expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
     expect(data.label, contains('Dubarekirinên îro'));
     expect(data.label, contains('1 pirs ji bo dubarekirinê amade ne'));
-    expect(data.label, contains('Bîranîna xwe xurt bike'));
+    expect(data.label, contains('Bîra xwe xurt bike'));
     semantics.dispose();
   });
 

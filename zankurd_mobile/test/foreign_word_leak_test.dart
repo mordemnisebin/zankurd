@@ -202,7 +202,7 @@ void main() {
     // Tanıtım/rehber "ravekirin" deyince etiket taraması kör kalıyordu.
     expect(Tr.of(K.aciklama, AppLanguage.ku), 'Şîrove:');
     expect(Tr.of(K.explanationTitle, AppLanguage.ku), 'Şîrove');
-    expect(Tr.of(K.viewExplanation, AppLanguage.ku), 'Şîrove bibîne');
+    expect(Tr.of(K.viewExplanation, AppLanguage.ku), 'Şîroveyê bibîne');
     expect(
       Tr.of(K.onbDailyBullet, AppLanguage.ku),
       'Di dersa rojê de dem tune, şîroveya her pirsê heye.',
@@ -325,8 +325,11 @@ void main() {
     // Türkçe "ile" `ve` olarak sızar. `ji nû ve` doğru postposition;
     // marka + ve kalıbı şart.
     expect(Tr.of(K.linkGoogle, AppLanguage.ku), 'Bi Google girêde');
-    expect(Tr.of(K.connectingGoogle, AppLanguage.ku), 'Bi Google tê girêdan…');
-    expect(Tr.of(K.connectingApple, AppLanguage.ku), 'Bi Apple tê girêdan…');
+    expect(
+      Tr.of(K.connectingGoogle, AppLanguage.ku),
+      'Bi Google re tê girêdan…',
+    );
+    expect(Tr.of(K.connectingApple, AppLanguage.ku), 'Bi Apple re tê girêdan…');
 
     final ileCalque = RegExp(r'bi (google|apple) ve\b', caseSensitive: false);
     for (final key in Tr.keys) {
