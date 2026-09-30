@@ -389,46 +389,61 @@ class _CategoryHeader extends StatelessWidget {
 }
 
 // 2026-07-22 canlı UX denetimi: alt kategori ikon eşleştirmesi
+//
+// 2026-09-30 simülatör: Sînema'da "Fîlm û Derhêner" ile "Belgefîlm û
+// Festîval" (ve "Yılmaz Güney") eşlemesiz kalıp ikisi de yer imi ikonunu
+// alıyordu; tanımsız her alt konu sessizce yer imine düşüyordu. Artık her
+// alt konu kimliğinin kendi ikonu var ve aynı kategori altında hiçbir ikon
+// iki kez kullanılmaz. Yeni bir alt konu eklenirse buraya da eklenmeli
+// (bekçi: subcategory_icons_test.dart); yer imi yalnız 'gisti' gibi
+// tanımsız kimliklerin yedeğidir.
 IconData _iconForSubcategory(String id) {
   return switch (id) {
     // ── Ziman ──
-    'reziman' ||
-    'diroka_kevn' ||
-    'helbest' ||
-    'dastangotin' ||
-    'diroka_siyasi' ||
-    'demokratik' => AppIcons.book,
-    // ── Çand & Edebiyat ──
-    'peyvnasi' ||
-    'folklor' ||
-    'diroka_nujen' ||
-    'klasik' ||
-    'bajar_ci' ||
-    'nujen' ||
-    'siyaseta_nujen' ||
-    'ekoloji' => AppIcons.bookOpen,
-    // ── Yazım & Sanat ──
-    'rastnivisin' || 'sexsiyet' || 'roman' => AppIcons.pen,
-    // ── Sınırlar & Coğrafi Yapı ──
-    'sinor_duma' => AppIcons.locationDot,
-    // ── Müzik Aletleri ──
-    'amur' => AppIcons.music,
-    // ── Hareket & Mücadele ──
-    'tevger' => AppIcons.flag,
-    // ── Jineolojî ──
-    'jineoloji' => AppIcons.venus,
-    // ── Kutlama & Gelenek ──
+    'reziman' => AppIcons.language,
+    'peyvnasi' => AppIcons.font,
+    'rastnivisin' => AppIcons.pen,
+    // ── Çand ──
+    'folklor' => AppIcons.masksTheater,
     'cejn' => AppIcons.champagneGlasses,
-    // ── Bilmece & Zekâ ──
+    'dastangotin' => AppIcons.bookOpenReader,
     'tistonek' => AppIcons.lightbulb,
+    // ── Dîrok ──
+    'diroka_kevn' => AppIcons.hourglass,
+    'diroka_nujen' => AppIcons.calendarDays,
+    'sexsiyet' => AppIcons.idBadge,
+    // ── Edebiyat ──
+    'helbest' => AppIcons.quoteLeft,
+    'klasik' => AppIcons.book,
+    'roman' => AppIcons.bookOpen,
     // ── Coğrafya ──
     'ciya_cem' => AppIcons.mountain,
-    // ── Müzik ──
+    'bajar_ci' => AppIcons.house,
+    'sinor_duma' => AppIcons.locationDot,
+    // ── Muzîk ──
     'dengbeji' => AppIcons.microphone,
-    // ── Teknoloji ──
+    'nujen' => AppIcons.circlePlay,
+    'amur' => AppIcons.music,
+    // ── Siyaset ──
+    'diroka_siyasi' => AppIcons.buildingColumns,
+    'siyaseta_nujen' => AppIcons.squareCheck,
+    'tevger' => AppIcons.flag,
+    // ── Paradigma ──
+    'demokratik' => AppIcons.scaleBalanced,
+    'ekoloji' => AppIcons.leaf,
+    'jineoloji' => AppIcons.venus,
+    // ── Teknolojî ──
     'bingehên_teknolojiyê' => AppIcons.gear,
     'programkirin' => AppIcons.robot,
     'dijital_internet' => AppIcons.globe,
+    // ── Sînema ──
+    'filmen_kurdi' => AppIcons.clapperboard,
+    'yilmaz_guney' => AppIcons.star,
+    'festival_belgefilm' => AppIcons.camera,
     _ => AppIcons.bookmark,
   };
 }
+
+/// Yalnız bekçi testi için: eşleme özel kalır, test ona buradan bakar.
+@visibleForTesting
+IconData subcategoryIconForTest(String id) => _iconForSubcategory(id);
