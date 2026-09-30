@@ -252,8 +252,18 @@ class _FriendsScreenState extends State<FriendsScreen> {
           FutureBuilder<String?>(
             future: widget.repository.getPlayerTag(),
             builder: (context, snapshot) {
-              final tag = snapshot.data;
-              final share = tag != null && tag.isNotEmpty
+              final rawTag = snapshot.data;
+              // Kod her yerde "ZK-4F7K" biçiminde görünür ve paylaşılır:
+              // profil rozeti panoya böyle kopyalıyor, arama ve davet
+              // kodu girişi de bu biçimi bekliyor (`search_profiles`
+              // "ZK-4F7K" ve "4F7K"yı aynı kodla eşler). 2026-09-30 canlı:
+              // bu düğme çıplak "7RHC" yazıyordu, profil "ZK-7RHC".
+              final tag = rawTag != null && rawTag.isNotEmpty
+                  ? (rawTag.toUpperCase().startsWith('ZK-')
+                        ? rawTag
+                        : 'ZK-$rawTag')
+                  : null;
+              final share = tag != null
                   ? SahneButton.secondary(
                       key: const ValueKey('friends-share-code-button'),
                       label: tag,
@@ -273,32 +283,18 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 expand: true,
                 onPressed: () => _showReferralDialog(ku),
               );
-              return LayoutBuilder(
-                builder: (context, constraints) {
-                  // Büyük yazıda iki düğme yan yana sığmıyorsa alt alta
-                  // iner; etiket harf harf bölünmez.
-                  final stack =
-                      MediaQuery.textScalerOf(context).scale(16) >= 24 ||
-                      constraints.maxWidth < 300;
-                  if (share == null) return enter;
-                  if (stack) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        share,
-                        const SizedBox(height: SahneSpace.x2),
-                        enter,
-                      ],
-                    );
-                  }
-                  return Row(
-                    children: [
-                      Expanded(child: share),
-                      const SizedBox(width: SahneSpace.x2),
-                      Expanded(child: enter),
-                    ],
-                  );
-                },
+              if (share == null) return enter;
+              // İki düğme HER ZAMAN alt alta: yan yana yarım genişlikte
+              // "Koda vexwendinê" iki satıra kırılıyordu (2026-09-30
+              // canlı); etiketi kısaltmak yerine düğmeye tam genişlik
+              // verilir.
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  share,
+                  const SizedBox(height: SahneSpace.x2),
+                  enter,
+                ],
               );
             },
           ),

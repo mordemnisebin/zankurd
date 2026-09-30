@@ -26,6 +26,7 @@ class AchievementStore {
     this._answeredQuestions,
     this._playedCategories,
     this._dailyQuizCompletions,
+    this._dailyQuizLastDay,
   );
 
   static const requiredCategories = [
@@ -47,6 +48,9 @@ class AchievementStore {
       LocalProgressScope.physical('zankurd.achievements.playedCategories');
   static String get _dailyQuizKey =>
       LocalProgressScope.physical('zankurd.achievements.dailyQuizCompletions');
+
+  static String get _dailyQuizDayKey =>
+      LocalProgressScope.physical('zankurd.achievements.dailyQuizLastDay');
 
   static AchievementStore? _instance;
 
@@ -138,6 +142,7 @@ class AchievementStore {
       preferences?.getInt(_answeredKey) ?? 0,
       preferences?.getStringList(_categoriesKey)?.toSet() ?? <String>{},
       preferences?.getInt(_dailyQuizKey) ?? 0,
+      preferences?.getString(_dailyQuizDayKey),
     );
   }
 
@@ -149,11 +154,13 @@ class AchievementStore {
       _answeredKey,
       _categoriesKey,
       _dailyQuizKey,
+      _dailyQuizDayKey,
     ]);
     _unlockedIds.clear();
     _answeredQuestions = 0;
     _playedCategories.clear();
     _dailyQuizCompletions = 0;
+    _dailyQuizLastDay = null;
   }
 
   final SharedPreferences? _preferences;
@@ -161,6 +168,21 @@ class AchievementStore {
   int _answeredQuestions;
   final Set<String> _playedCategories;
   int _dailyQuizCompletions;
+  String? _dailyQuizLastDay;
+
+  static String _dayString(DateTime day) =>
+      '${day.year}-${day.month.toString().padLeft(2, '0')}-'
+      '${day.day.toString().padLeft(2, '0')}';
+
+  /// Günün soruları turu [day] günü BİTİRİLDİ mi?
+  ///
+  /// 2026-09-30 canlı: tur bittikten sonra Yarış > Pirsên rojê sayfası hâlâ
+  /// "Bugün" ve "Başla" diyordu, çünkü tamamlanma hiçbir yerde günle
+  /// birlikte tutulmuyordu; yalnız toplam sayaç ([_dailyQuizCompletions],
+  /// "5 kez" rozeti için) vardı. Gün, yerel takvim günüdür (görev
+  /// deposuyla aynı); yarım bırakılan tur sonuç ekranına varmadığı için
+  /// yazılmaz.
+  bool dailyQuizDoneOn(DateTime day) => _dailyQuizLastDay == _dayString(day);
 
   Set<String> get unlockedIds => Set.unmodifiable(_unlockedIds);
   List<Achievement> get unlockedAchievements => definitions
@@ -191,7 +213,10 @@ class AchievementStore {
     if (requiredCategories.contains(category)) {
       _playedCategories.add(category);
     }
-    if (dailyQuiz) _dailyQuizCompletions += 1;
+    if (dailyQuiz) {
+      _dailyQuizCompletions += 1;
+      _dailyQuizLastDay = _dayString(DateTime.now());
+    }
 
     final newlyUnlocked = <Achievement>[];
     void unlockWhen(bool condition, String id) {
@@ -236,5 +261,9 @@ class AchievementStore {
       _playedCategories.toList(),
     );
     await _preferences?.setInt(_dailyQuizKey, _dailyQuizCompletions);
+    final lastDay = _dailyQuizLastDay;
+    if (lastDay != null) {
+      await _preferences?.setString(_dailyQuizDayKey, lastDay);
+    }
   }
 }

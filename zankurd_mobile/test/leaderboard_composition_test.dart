@@ -1,3 +1,5 @@
+// 2026-09-30 canlı: sabit kendi-sıran satırı, oyuncu bu dönemde 0 puanla
+// süzüldüyse çizilmez (bkz. `canli_veri_2026_09_30_test.dart`).
 // 2026-09-29 doğallık (K9): podyumun üçlü kalıbı kalktı; tek liste.
 // 2026-09-29 Şahnê: kendi sıran artık `_page(pinned: …)` ile sayfanın
 // altına sabitlenir; kaynak bekçisi o satırı arar.
@@ -53,8 +55,10 @@ void main() {
     expect(source, contains('_PinnedMyRank'));
     expect(
       source,
-      contains('pinned: _myRank(entries) == null ? _buildMyRankRow(ku) : null'),
+      contains('_myRank(entries) == null && !_listsMe(fetched)'),
+      reason: 'sabit satır yalnız oyuncu bu dönemde listede HİÇ yoksa çizilir',
     );
+    expect(source, contains('_buildMyRankRow(ku)'));
   });
 
   test('boş, hata ve yükleniyor durumları ayrı ayrı ele alınır', () {

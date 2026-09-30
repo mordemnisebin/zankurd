@@ -1,4 +1,6 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+// 2026-09-30 canlı: satır alt metninde oyun sayısının birimi "oda" değil
+// "yarış" (bkz. `canli_veri_2026_09_30_test.dart`).
 // 2026-09-29 doğallık (K9): podyum kalktı; ilk üç de listede. Geniş ekran
 // iki sütun değil, okunur genişlikte (≤ 640) ortalanan tek liste; kendi
 // satırın listede bir kez "Sen" ile işaretlenir, ikinci özet yok.
@@ -148,6 +150,7 @@ void main() {
     ).readAsStringSync();
     expect(source.contains('isKu ? "zincîr"'), isFalse);
     expect(source.contains('isKu ? "ode"'), isFalse);
+    expect(source.contains('isKu ? "pêşbirk"'), isFalse);
   });
 
   test('satırlar ayrı kart anatomisine geri dönmüyor', () {
@@ -167,8 +170,8 @@ void main() {
     // 12 oyuncunun hepsi TEK yüzeyde (ilk üç dahil).
     final rows = find.byKey(const ValueKey('leaderboard-rank-row-4'));
     expect(rows, findsOneWidget);
-    // Görünür birim metni aynı kaldı; yalnız kaynak deftere indi.
-    expect(find.text('10 oda · 5 seri'), findsWidgets);
+    // Birim kaynağı defterde (K.raceWord); "oda" yalnız yer gibi okunuyordu.
+    expect(find.text('10 yarış · 5 seri'), findsWidgets);
     // Satırlar tek liste grubunun içindedir — ayrı kartlar değil.
     expect(
       find.ancestor(of: rows, matching: find.byType(SahneListGroup)),

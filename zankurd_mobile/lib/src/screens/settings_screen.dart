@@ -492,9 +492,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ? context.t(K.premiumActive)
                               : context.t(K.premiumPerks),
                           trailing: SahneBadge(
-                            label: isPremium
-                                ? context.t(K.premiumBadgeOn)
-                                : context.t(K.premiumBadgeOff),
+                            label: sentenceCaseLabel(
+                              isPremium
+                                  ? context.t(K.premiumBadgeOn)
+                                  : context.t(K.premiumBadgeOff),
+                              turkish: !context.isKu,
+                            ),
                             tone: isPremium
                                 ? SahneBadgeTone.gold
                                 : SahneBadgeTone.soon,
@@ -1288,4 +1291,31 @@ class _BlockedUsersSectionState extends State<_BlockedUsersSection> {
       },
     );
   }
+}
+
+/// Tamamı büyük harf yazılmış kısa bir etiketi cümle düzenine çevirir.
+///
+/// 2026-09-30 canlı: Premium satırındaki "DEST PÊ BIKE" rozeti ekrandaki
+/// bütün öteki etiketler cümle düzeninde durürken tek başına bağırıyordu
+/// (metin kararı: Title Case ve büyük harf yok). Defterdeki değerler
+/// (`K.premiumBadgeOn/Off`) hâlâ büyük harfle kayıtlı; `strings.dart`
+/// düzelince bu işlev etkisiz kalır (zaten cümle düzeni olan metne
+/// dokunmaz). Türkçede `I`/`İ` özel ele alınır: Dart'ın `toLowerCase()`
+/// "İ"yi "i̇" (i + birleşik nokta) yapar.
+@visibleForTesting
+String sentenceCaseLabel(String raw, {required bool turkish}) {
+  if (raw.isEmpty || raw != raw.toUpperCase() || raw == raw.toLowerCase()) {
+    return raw;
+  }
+  final lower = (turkish ? raw.replaceAll('İ', 'i').replaceAll('I', 'ı') : raw)
+      .toLowerCase();
+  final first = lower.substring(0, 1);
+  final head = turkish
+      ? (first == 'i'
+            ? 'İ'
+            : first == 'ı'
+            ? 'I'
+            : first.toUpperCase())
+      : first.toUpperCase();
+  return head + lower.substring(1);
 }

@@ -397,7 +397,9 @@ class _AnswerField extends StatelessWidget {
       controller: controller,
       style: SahneType.body.copyWith(color: t.tx),
       decoration: InputDecoration(
-        hintText: '$label) ${context.t(K.answerLabel)}',
+        // Yer tutucu harfsiz: harf zaten solda rozette duruyor, "A) Bersiv"
+        // aynı harfi ikinci kez yazıyordu (2026-09-30 canlı).
+        hintText: context.t(K.answerLabel),
         prefixIcon: Padding(
           padding: const EdgeInsetsDirectional.only(
             start: SahneSpace.x2,
