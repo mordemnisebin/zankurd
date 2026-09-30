@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -273,7 +274,7 @@ void main() {
   // yükseklik), hücre tam sayı pikseldir, desen başlığın ve alt satırın
   // sınır kutusuyla kesişmez, alt satırın altında 16-25 px boşluk kalır;
   // 320 px ve %200 yazıda da (bant uzar, hücre yeniden hesaplanır).
-  for (final scale in [1.0, 2.0]) {
+  for (final scale in [1.0, 2.0, 2.35]) {
     for (final width in [320.0, 390.0]) {
       for (final category in CategoryVisuals.markedCategories) {
         testWidgets('$category bandı: desen tam yükseklikte, metinle çakışmaz '
@@ -349,6 +350,58 @@ void main() {
           expect(gap, lessThanOrEqualTo(25), reason: 'alt boşluk $gap');
         });
       }
+    }
+  }
+
+  // 2026-09-30 simülatör: en büyük yazıda (iPhone 17e, %235) alt satır iki
+  // satırda "…" ile kesiliyordu ("Barekî hilbijêre û dest bi lîsti…"); kusur
+  // sessizdi çünkü çubuk yüksekliği de iki satırla ölçülüyor, taşma ya da
+  // çakışma yoktu, yalnız cümle yarım kalıyordu. Bekçi: %235'te iki dilde,
+  // iki genişlikte alt satır ve başlık kesilmez, çubuk ve bant taşmaz.
+  for (final lang in ['tr', 'ku']) {
+    for (final width in [320.0, 390.0]) {
+      testWidgets('alt satır ve başlık x2.35 yazıda kesilmez '
+          '($lang, ${width.round()} px)', (tester) async {
+        _phone(tester, width);
+        await tester.pumpWidget(
+          MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (_) => LanguageProvider()..setLang(lang),
+              ),
+            ],
+            child: MaterialApp(
+              theme: AppTheme.light(),
+              builder: (context, child) => MediaQuery(
+                data: MediaQuery.of(
+                  context,
+                ).copyWith(textScaler: const TextScaler.linear(2.35)),
+                child: child!,
+              ),
+              home: SubcategoryScreen(
+                repository: MockZanKurdRepository(),
+                category: 'Ziman',
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+        final ku = lang == 'ku';
+        for (final text in [
+          Tr.forKu(K.birAltAlanSecerek, ku),
+          CategoryNames.localized('Ziman', ku),
+        ]) {
+          final paragraph = tester.renderObject<RenderParagraph>(
+            find.text(text).first,
+          );
+          expect(
+            paragraph.didExceedMaxLines,
+            isFalse,
+            reason: '"$text" kesiliyor',
+          );
+        }
+      });
     }
   }
 

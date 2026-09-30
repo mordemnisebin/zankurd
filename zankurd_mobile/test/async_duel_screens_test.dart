@@ -173,7 +173,9 @@ void main() {
       // kural aynı: kilitliyken dokunulamaz ve nedenini söyler.
       final card = tester.widget<SahneListRow>(cardFinder);
       expect(card.onTap, isNull, reason: 'kilitliyken kart dokunulamaz olmalı');
-      expect(card.subtitle, 'Sunucuya ulaşılamadı');
+      // 2026-09-30 simülatör: neden üstteki şeritte söylenir; satır kendi
+      // açıklamasını korur.
+      expect(card.subtitle, isNot('Sunucuya ulaşılamadı'));
       expect(
         find.byKey(const ValueKey('play-hub-async-duel-inbox')),
         findsNothing,

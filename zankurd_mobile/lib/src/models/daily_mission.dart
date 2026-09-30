@@ -67,15 +67,18 @@ class DailyMission {
 
   String get labelTr => switch (type) {
     MissionType.answerCorrect => '$target doğru cevap ver',
-    MissionType.completeQuiz => '$target quiz tamamla',
+    MissionType.completeQuiz => '$target yarış tamamla',
     MissionType.useWildcard => '$target joker kullan',
     MissionType.keepStreak => 'Serisini koru',
-    // Kurmancî etiketi kategoriyi çeviriyordu, Türkçe etiketi ham anahtarı
+    // Kurmancî etiketi konuyu çeviriyordu, Türkçe etiketi ham anahtarı
     // yazıyordu: görev "Cografya kategorisinde oyna" (ğ'siz), "Muzîk",
-    // "Dîrok" diyordu — yani Türkçe arayüzde kategori adı hem yanlış
-    // yazılıyor hem Kurmancî kalıyordu (2026-07-27).
+    // "Dîrok" diyordu; yani Türkçe arayüzde konu adı hem yanlış yazılıyor
+    // hem Kurmancî kalıyordu (2026-07-27). 2026-09-30 simülatör: "kategori"
+    // sözlükte yasak, "quiz" İngilizce; konu ve yarış denir ("Kültür
+    // konusunda oyna", "1 yarış tamamla"). KU zaten "mijar" değil konu adını
+    // ve "pêşbirk" sözünü kullanır.
     MissionType.playCategory =>
-      '${CategoryNames.localized(category ?? '?', false)} kategorisinde oyna',
+      '${CategoryNames.localized(category ?? '?', false)} konusunda oyna',
   };
 }
 

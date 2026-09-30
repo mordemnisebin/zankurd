@@ -107,7 +107,10 @@ class Tr {
     },
     K.secAppearance: {'ku': 'Dîmen', 'tr': 'Görünüm'},
     K.appLanguage: {'ku': 'Zimanê sepanê', 'tr': 'Uygulama dili'},
-    K.darkLightMode: {'ku': 'Moda tarî/ronahî', 'tr': 'Karanlık/Aydınlık mod'},
+    // 2026-09-30 simülatör: "Karanlık/Aydınlık mod" tek anahtarda hangi
+    // yönün açık olduğunu söylemiyordu. Anahtar artık tek bir temayı adlandırır
+    // (açık = karanlık tema). Anahtar adı `darkLightMode` kaldı (dış başvuru).
+    K.darkLightMode: {'ku': 'Tema tarî', 'tr': 'Karanlık tema'},
     K.reduceMotion: {'ku': 'Tevgerê kêm bike', 'tr': 'Hareketi azalt'},
     // Görselin kendi betimlemesi yoksa ekran okuyucuya okunan genel etiket.
     K.questionImage: {'ku': 'Wêneya pirsê', 'tr': 'Soru görseli'},
@@ -737,6 +740,12 @@ class Tr {
           'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: {tag}. Sen de katıl: https://zankurd.com',
     },
     K.enterReferralCode: {'ku': 'Koda vexwendinê', 'tr': 'Davet kodu gir'},
+    // 2026-09-30 simülatör: kod GİRME diyaloğu paylaşma cümlesini
+    // ([K.inviteSubtitle]) tekrar ediyordu; girişle ilgisizdi.
+    K.enterReferralCodeHint: {
+      'ku': 'Koda ku hevalê te daye binivîse',
+      'tr': 'Arkadaşının verdiği kodu gir',
+    },
     K.referralCodeHint: {'ku': 'Mînak: ZK-XXXX', 'tr': 'Örnek: ZK-XXXX'},
     K.referralApplyAction: {'ku': 'Bi kar bîne', 'tr': 'Kullan'},
     K.referralCodeApplied: {
@@ -3062,6 +3071,7 @@ class K {
   static const inviteSubtitle = 'friends.inviteSubtitle';
   static const inviteShareText = 'friends.inviteShareText';
   static const enterReferralCode = 'friends.enterReferralCode';
+  static const enterReferralCodeHint = 'friends.enterReferralCodeHint';
   static const referralCodeHint = 'friends.referralCodeHint';
   static const referralApplyAction = 'friends.referralApplyAction';
   static const referralCodeApplied = 'friends.referralCodeApplied';

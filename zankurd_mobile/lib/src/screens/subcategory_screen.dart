@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../l10n/strings.dart';
@@ -109,7 +111,15 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
       // (bkz. `AppTheme.overlayOnDarkHeader`).
       systemOverlayStyle: AppTheme.overlayOnDarkHeader,
       title: Text(CategoryNames.localized(category, ku)),
-      subtitle: Text(Tr.forKu(K.birAltAlanSecerek, ku), maxLines: 2),
+      // 2026-09-30 simülatör: büyük yazıda (%235) alt satır iki satırda
+      // "…" ile kesiliyordu ("Barekî hilbijêre û dest bi lîsti…"); üç satıra
+      // iner, çubuk ve bant yüksekliği aynı üç satırla ölçülür.
+      subtitle: Text(
+        Tr.forKu(K.birAltAlanSecerek, ku),
+        maxLines: _subtitleMaxLines(
+          MediaQuery.textScalerOf(barContext).scale(10) / 10,
+        ),
+      ),
       // Kilim deseni sağ kenardadır: çubuk onun genişliği kadar yer bırakır
       // ([_kilimSlots] x 48 boş yuva), metin desenin altına girmez. Alt satır
       // sarılır (tek satırda kesilirse cümle yarım kalırdı). Motifsiz konuda
@@ -279,10 +289,19 @@ class _SubcategoryProgressHint extends StatelessWidget {
 /// yeterli genişlik bulur. Büyük yazıda (x1,3 ve üstü) bir yuva eksilir: alt
 /// satır en çok iki satırdır ve dar metin alanında ("Bir alt alan seçe...")
 /// yarım kalırdı; desen o zaman daha az sütun gösterir.
+///
+/// 2026-09-30 simülatör: %200'ü aşan yazıda (iPhone 17e en büyük boyut,
+/// %235) bir yuva daha eksilir (en az bir kalır); metin alanı genişler ve
+/// alt satır (bkz. [_subtitleMaxLines]) kesilmeden yerleşir.
 int _kilimSlots(double width, double textScale) {
   final base = width >= 360 ? 3 : 2;
+  if (textScale > 2) return math.max(1, base - 2);
   return textScale > 1.3 ? base - 1 : base;
 }
+
+/// Alt satır en çok kaç satıra iner: %200'e kadar 3, üstünde 4. Ölçüm ve
+/// çizim [zkAppBar] içinde aynı sayıyla yapılır.
+int _subtitleMaxLines(double textScale) => textScale > 2 ? 4 : 3;
 
 /// [slots] yuvanın desene bıraktığı genişlik: yuvalar eksi 12 px nefes.
 double _kilimReserved(int slots) => slots * sahneTapTarget - SahneSpace.x3;

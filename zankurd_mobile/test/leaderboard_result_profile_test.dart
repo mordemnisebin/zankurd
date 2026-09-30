@@ -375,8 +375,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Yeni rozet'), findsOneWidget);
-    expect(find.text('İlk Oyun'), findsOneWidget);
-    expect(find.text('10 Doğru Üst Üste'), findsOneWidget);
+    expect(find.text('İlk oyun'), findsOneWidget);
+    expect(find.text('10 doğru üst üste'), findsOneWidget);
   });
 
   testWidgets('quiz answer feedback labels the correct answer', (tester) async {
@@ -519,7 +519,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Başarılar'), findsOneWidget);
-    expect(find.text('İlk Oyun'), findsOneWidget);
+    expect(find.text('İlk oyun'), findsOneWidget);
   });
 
   testWidgets('profile reloads achievements when refresh signal fires', (
@@ -538,7 +538,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Profil açıldığında henüz rozet yok.
-    expect(find.text('İlk Oyun'), findsNothing);
+    expect(find.text('İlk oyun'), findsNothing);
 
     // Profil tabı dışındayken bir quiz tamamlanıp rozet açılmış gibi yap.
     final store = await AchievementStore.load();
@@ -556,11 +556,11 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(
-      find.text('İlk Oyun'),
+      find.text('İlk oyun'),
       120,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('İlk Oyun'), findsOneWidget);
+    expect(find.text('İlk oyun'), findsOneWidget);
   });
 
   testWidgets('leaderboard error state exposes retry', (tester) async {

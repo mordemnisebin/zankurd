@@ -330,7 +330,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    context.t(K.inviteSubtitle),
+                    context.t(K.enterReferralCodeHint),
                     style: SahneType.caption.copyWith(
                       color: SahneTokens.of(dialogContext).tx2,
                     ),

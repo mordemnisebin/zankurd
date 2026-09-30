@@ -223,9 +223,9 @@ void main() {
   });
 
   group('3) Etkin görünen ama çalışmayan "Rakip bul"', () {
-    testWidgets('kilitliyken alt satır "Sunucuya ulaşılamadı" ve düğme pasif', (
-      tester,
-    ) async {
+    // 2026-09-30 simülatör: kilitliyken manşet de "Sunucuya ulaşılamadı"
+    // demez (şerit söyler); düğme pasif kalır.
+    testWidgets('kilitliyken manşet normal, düğme pasif', (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -240,14 +240,14 @@ void main() {
       final hero = find.byKey(const ValueKey('play-hub-quick-duel'));
       expect(
         find.descendant(of: hero, matching: find.text('Sunucuya ulaşılamadı')),
-        findsOneWidget,
-        reason:
-            'Oda kartlarıyla aynı desen: kilitliyken alt satır dürüst olmalı.',
+        findsNothing,
+        reason: 'Sunucu durumunu üstteki şerit söyler, kart tekrarlamaz.',
       );
       expect(
         find.descendant(of: hero, matching: find.text('Seviyene yakın rakip')),
-        findsNothing,
+        findsOneWidget,
       );
+      expect(find.text('Sunucuya ulaşılamadı'), findsNothing);
 
       // 2026-09-29 Şahnê: düğme `SahneButton.primary`; kilitliyken
       // `onPressed: null` — bileşenin pasif hâli (Perde + üçüncül metin,

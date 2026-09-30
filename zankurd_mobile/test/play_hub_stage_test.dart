@@ -185,11 +185,74 @@ void main() {
       expect(find.text(note), findsOneWidget, reason: 'ku=$isKu');
     }
 
-    // Kilitliyken açıklama satırı dürüst: sunucuya ulaşılamıyor.
-    await tester.pumpWidget(_shell(isKu: false, isDark: false, locked: true));
+    // 2026-09-30 simülatör: kilitliyken açıklama satırları normal kalır;
+    // "Sunucuya ulaşılamadı" Yarış ekranında dört kez yazılıyordu. Sunucu
+    // durumunu üstteki şerit (kabuk) söyler, ekran bu metni HİÇ yazmaz.
+    for (final isKu in [false, true]) {
+      await tester.pumpWidget(_shell(isKu: isKu, isDark: false, locked: true));
+      await tester.pumpAndSettle();
+      expect(
+        find.text(
+          isKu ? 'Hevalên xwe bi kodê vexwîne' : 'Arkadaşlarını kodla çağır',
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.text(isKu ? 'Pêşkêşkar negihîştbar e' : 'Sunucuya ulaşılamadı'),
+        findsNothing,
+        reason: 'kilitli Yarış ekranı sunucu durumunu tekrarlamaz (ku=$isKu)',
+      );
+    }
+  });
+
+  // 2026-09-30 simülatör: kilitliyken "Rakip bul", "Oda kur", "Kodla katıl" ve
+  // "Günün soruları" dokunulunca hiçbir şey yapmıyordu (sessiz ölü düğme).
+  // Bekçi: dördü de pasif kalır (tıklanabilir bildirilmez) ve dokunulunca
+  // kısa bir SnackBar "Sunucuya ulaşılamadı" der.
+  for (final key in [
+    'play-hub-quick-duel-cta',
+    'play-hub-create-room',
+    'play-hub-join-room',
+    'play-hub-daily-contest',
+  ]) {
+    testWidgets('kilitliyken $key dokunulunca geri bildirim verir', (
+      tester,
+    ) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      // Gerçekte ekran kabuğun Scaffold'unun içindedir (SnackBar oraya çıkar).
+      await tester.pumpWidget(
+        testShell(
+          languageProvider: turkishLang(),
+          themeProvider: ThemeProvider(initialMode: ThemeMode.light),
+          remoteAvailability: RemoteAvailability(reachable: false),
+          child: Scaffold(
+            body: PlayHubScreen(repository: MockZanKurdRepository()),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(SnackBar), findsNothing);
+      await tester.tap(find.byKey(ValueKey(key)), warnIfMissed: false);
+      await tester.pump();
+      expect(find.byType(SnackBar), findsOneWidget, reason: key);
+      expect(
+        find.descendant(
+          of: find.byType(SnackBar),
+          matching: find.text('Sunucuya ulaşılamadı'),
+        ),
+        findsOneWidget,
+      );
+    });
+  }
+
+  testWidgets('erişilebilirken dokunuş SnackBar göstermez', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(_shell(isKu: false, isDark: false));
     await tester.pumpAndSettle();
-    expect(find.text('Arkadaşlarını kodla çağır'), findsNothing);
-    expect(find.text('Sunucuya ulaşılamadı'), findsWidgets);
+    expect(find.byType(SnackBar), findsNothing);
   });
 
   testWidgets('günün etkinliği yarış rolünde; adını tekrarlayan rozet yok', (
