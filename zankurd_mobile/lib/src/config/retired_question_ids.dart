@@ -92,6 +92,32 @@
 /// `cinema_0051` ("Gegen die Wand"). Üçü de Türkiye ya da Almanya
 /// sinemasının genel bilgisi; ne film, ne yönetmen, ne konu Kürtlerle
 /// bağlı. Emsal: ikinci dalgada aynı gerekçeyle çıkan `cinema_0036`.
+///
+/// ## Dördüncü dalga (2026-09-30, tartışmalı siyasi görüş — üsttekilerden bağımsız kusur)
+///
+/// Ürün sahibi 2026-09-30'da Paradigma, Siyaset ve Teknolojî'yi yeniden açtı
+/// (bkz. `category_visibility.dart`). 2026-09-27'de bu üç kategorinin
+/// gizlenmesindeki asıl gerekçe, bazı soruların bilgi değil TEK BİR SİYASİ
+/// HAREKETİN öğretisini "doğru cevap" diye sunmasıydı (Türkiye pazarında
+/// hukuki/erişim riski ve tarafsızlık sorunu). Kategoriyi bütünüyle gizlemek
+/// tarafsız soruları da götürüyordu; bu yüzden çözüm SORU bazında yapıldı:
+/// kategoriler açıldı, öğretiyi doğru şık ya da "Rast" diye sunan sorular
+/// tek tek emekliye ayrıldı.
+///
+/// Sınıflama: Paradigma (108) ve Siyaset (51) bankasındaki 159 soru,
+/// Gemini 3.8 Flash ve Muse Spark'ın bağımsız sınıflamasıyla "tartışmalı"
+/// bulundu; iki modelin ayrıştığı sorularda Gemini 3.1 Pro son sözü söyledi.
+/// Sunucudaki karşılığı `supabase/2026-09-30_contested_questions_unapprove.sql`
+/// (zaten uygulandı; sunucuda 502 soruyu onaydan çıkardı). Yerel banka
+/// uygulama paketiyle gelir ve sunucu göçünden etkilenmez, bu yüzden aynı
+/// ayıklama burada da uygulanır; çevrimdışı paket ile sunucu böylece aynı
+/// tutumu gösterir.
+///
+/// Kalan: bu sınıflamada tartışmalı bulunmayan Paradigma/Siyaset soruları
+/// ve Kürt siyasi TARİHİ (olaylar, kişiler, tarihler; Dîrok'ta). Kayıtlar
+/// silinmedi, bankada duruyor; bir id'yi buradan çıkarmak onu yeniden
+/// oynanır yapar.
+///
 library;
 
 const Set<String> retiredQuestionIds = <String>{
@@ -472,6 +498,174 @@ const Set<String> retiredQuestionIds = <String>{
   // bankada durur (`assets/data/offline_questions.json`); yeni görsel
   // gelince id buradan çıkarılabilir.
   'offline_0120',
+
+  // ---------------------------------------------------------------------
+  // Dördüncü dalga (2026-09-30): tartışmalı siyasi görüş — bkz. dosya
+  // başındaki "Dördüncü dalga" belgesi. Kategoriye göre gruplu.
+  // ---------------------------------------------------------------------
+
+  // Paradigma (108) — tek bir siyasi hareketin öğretisini doğru cevap diye sunuyor
+  'edit_paradigma_0001',
+  'edit_paradigma_0002',
+  'edit_paradigma_0003',
+  'edit_paradigma_0004',
+  'edit_paradigma_0005',
+  'edit_paradigma_0006',
+  'edit_paradigma_0007',
+  'edit_paradigma_0008',
+  'edit_paradigma_0010',
+  'edit_paradigma_0011',
+  'edit_paradigma_0012',
+  'edit_paradigma_0013',
+  'edit_paradigma_0015',
+  'edit_paradigma_0017',
+  'edit_paradigma_0018',
+  'edit_paradigma_0019',
+  'edit_paradigma_0020',
+  'edit_paradigma_0021',
+  'edit_paradigma_0022',
+  'edit_paradigma_0023',
+  'edit_paradigma_0024',
+  'offline_11493',
+  'offline_11511',
+  'offline_11517',
+  'offline_11538',
+  'offline_11543',
+  'offline_11556',
+  'offline_11584',
+  'offline_11588',
+  'offline_11599',
+  'offline_11605',
+  'offline_11624',
+  'offline_11649',
+  'offline_11713',
+  'offline_11728',
+  'offline_11779',
+  'offline_11782',
+  'offline_11789',
+  'offline_11792',
+  'offline_11813',
+  'offline_11820',
+  'offline_11838',
+  'offline_11846',
+  'offline_11864',
+  'offline_11870',
+  'offline_11886',
+  'offline_11893',
+  'offline_11917',
+  'offline_12036',
+  'offline_12069',
+  'offline_12073',
+  'offline_12261',
+  'offline_12291',
+  'offline_12344',
+  'offline_12366',
+  'offline_12391',
+  'offline_12401',
+  'offline_2292',
+  'offline_2329',
+  'offline_2503',
+  'offline_2594',
+  'offline_2820',
+  'offline_curated_21751',
+  'offline_curated_21776',
+  'offline_curated_21800',
+  'offline_curated_21826',
+  'offline_curated_21851',
+  'offline_curated_21876',
+  'offline_curated_21901',
+  'offline_curated_21926',
+  'offline_curated_21951',
+  'offline_curated_21975',
+  'offline_par_2003',
+  'offline_par_2004',
+  'offline_tf_0011',
+  'offline_tf_0029',
+  'offline_tf_0035',
+  'offline_tf_0047',
+  'offline_tf_0071',
+  'offline_tf_0075',
+  'offline_tf_0079',
+  'offline_tf_0105',
+  'offline_tf_0129',
+  'offline_tf_0139',
+  'offline_tf_par_0000',
+  'offline_tf_par_0001',
+  'offline_tf_par_0002',
+  'offline_tf_par_0003',
+  'offline_tf_par_0004',
+  'offline_tf_par_0005',
+  'offline_tf_par_0006',
+  'offline_tf_par_0007',
+  'offline_tf_par_0008',
+  'offline_tf_par_0009',
+  'offline_tf_par_0012',
+  'offline_tf_par_0013',
+  'offline_tf_par_0014',
+  'offline_tf_par_0016',
+  'offline_tf_par_0017',
+  'offline_tf_par_0018',
+  'offline_tf_par_0019',
+  'offline_tf_par_0020',
+  'offline_tf_par_0021',
+  'offline_tf_par_0022',
+  'offline_tf_par_0026',
+  'offline_tf_par_0027',
+  'offline_tf_par_0028',
+  'offline_tf_par_0029',
+
+  // Siyaset (51) — tek bir siyasi hareketin öğretisini doğru cevap diye sunuyor
+  'comm_siy_0001',
+  'comm_siy_0002',
+  'edit_siyaset_0003',
+  'edit_siyaset_0005',
+  'edit_siyaset_0006',
+  'edit_siyaset_0010',
+  'edit_siyaset_0012',
+  'edit_siyaset_0013',
+  'edit_siyaset_0017',
+  'offline_12758',
+  'offline_12760',
+  'offline_12771',
+  'offline_12779',
+  'offline_12891',
+  'offline_12981',
+  'offline_12989',
+  'offline_13124',
+  'offline_13394',
+  'offline_13486',
+  'offline_13600',
+  'offline_13649',
+  'offline_13790',
+  'offline_2443',
+  'offline_2502',
+  'offline_2653',
+  'offline_2710',
+  'offline_2741',
+  'offline_2823',
+  'offline_curated_21526',
+  'offline_curated_21551',
+  'offline_curated_21575',
+  'offline_curated_21626',
+  'offline_curated_21701',
+  'offline_curated_21726',
+  'offline_tf_0097',
+  'offline_tf_0099',
+  'offline_tf_0109',
+  'offline_tf_0121',
+  'offline_tf_0125',
+  'offline_tf_0127',
+  'offline_tf_0137',
+  'offline_tf_siy_0007',
+  'offline_tf_siy_0008',
+  'offline_tf_siy_0035',
+  'offline_tf_siy_0036',
+  'offline_tf_siy_0037',
+  'offline_tf_siy_0038',
+  'offline_tf_siy_0049',
+  'offline_tf_siy_0050',
+  'offline_tf_siy_0055',
+  'offline_tf_siy_0056',
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?
