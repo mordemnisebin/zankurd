@@ -75,4 +75,17 @@ const questionBankAssets = <String>[
   // şartıyla karşılandı; Kurmancî metinler yine de ana dili Kurmancî olan
   // bir editörün okumasını bekliyor.
   'assets/data/expansion_2026_09_28_questions.json',
+  // 2026-09-30: karantinadaki DeepSeek dosyasının (yukarıda, listede YOK)
+  // çok modelli doğrulamadan geçen 458 sorusu. Orijinal dosya karantinada
+  // KALIR ve tek bir kayıt bile oradan okunmaz; buraya yalnız şu iki şartı
+  // birden sağlayanların KOPYASI girdi: (1) olgu denetimi — en az iki
+  // bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny
+  // eleği) hiçbir kusur işaretlemedi; (2) Kurmancî okuması — Gemini 3.1 Pro
+  // (ya da Grok 4.7) uygun buldu. Olgu hatası örnekleme ile ~%5–8 çıkmıştı;
+  // bu filtre o oranı soru bazında eler. Metin aynen korunur, yalnız
+  // künye (`reviewedBy`, `reviewedAt`) eklenir. Genel bilgi sayılan sorular
+  // (dünya sineması/coğrafyası/edebiyatı/müziği/tarihi) `Cîhan`
+  // kategorisindedir; Kürt diliyle ve kültürüyle ilgili olanlar kendi
+  // kategorisinde kalır.
+  'assets/data/deepseek_verified_2026_09_30_questions.json',
 ];
