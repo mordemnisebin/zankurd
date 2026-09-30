@@ -109,7 +109,12 @@ void main() {
       // yeniden açtı (+518 oynanabilir: 519 kayıt açıldı, biri reddedilmiş).
       // İdeolojik soruların tek tek emekliye ayrılması bu sayıyı ayrıca
       // düşürecek (`retired_question_ids.dart`).
-      1721,
+      // 1721 -> 1563: aynı gün, o ayıklama yapıldı: tek bir siyasi hareketin
+      // öğretisini doğru cevap diye sunan 159 Paradigma/Siyaset sorusu
+      // emekliye ayrıldı (`retired_question_ids.dart`, "Dördüncü dalga").
+      // Oynanabilir -158, çünkü 159'un biri zaten `rejected` idi (aşağıda
+      // rejected 14 -> 13). Fiziksel sayı değişmedi.
+      1563,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -155,7 +160,10 @@ void main() {
       // gizli kategori gerekçesiyle sayılıyordu.
       // 13 -> 14: 2026-09-30 üç kategori yeniden açıldı, o kayıt yine
       // kendi gerekçesiyle (rejected) sayılıyor.
-      'reviewStatus=${ReviewStatus.rejected}': 14,
+      // 14 -> 13: 2026-09-30 dördüncü dalga; reddedilmiş o kayıt
+      // Paradigma'nın emekli listesine de girdi ve gerekçe olarak
+      // `retired` önce sayıldığı için artık oradan sayılıyor.
+      'reviewStatus=${ReviewStatus.rejected}': 13,
       // 2026-09-27 içerik denetimi: Kürtlerle bağı olmayan dünya bilgisi.
       // 2026-09-27 ikinci denetim: `offline_tf_` tanım takası kalıbında
       // farklı türden çift (87) + Ziman'da hiç "Rast" örneği olmayan kalıp
@@ -174,6 +182,11 @@ void main() {
       // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
       'retired=Ziman': 37,
       'retired=Çand': 32,
+      // 2026-09-30 dördüncü dalga: tartışmalı siyasi görüşü doğru cevap diye
+      // sunan sorular (Paradigma 108, Siyaset 51). Bu iki kategori yeniden
+      // açıldığı için ilk kez bu gerekçeyle giriyorlar.
+      'retired=Paradigma': 108,
+      'retired=Siyaset': 51,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
 

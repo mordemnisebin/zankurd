@@ -48,7 +48,7 @@ void main() {
     expect(isQuestionRetired('bu-kimlik-yok'), isFalse);
   });
 
-  test('yalnız iki bilinen gerekçenin kategorilerinden kimlik alınır', () {
+  test('yalnız bilinen gerekçelerin kategorilerinden kimlik alınır', () {
     // İlk denetimde (dünya bilgisi) Ziman, Çand ve Dîrok'ta soru çıkmadı;
     // bu üçü yalnız 2026-09-27'deki İKİNCİ denetimle (tanım takasında
     // farklı türden çift) listeye girdi — bkz. `retired_question_ids.dart`
@@ -58,6 +58,11 @@ void main() {
     // 2026-09-29 doğallık: üçüncü dalga (şablon izi, bkz. aynı dosyanın
     // "Üçüncü dalga" belgesi) yalnız bu yedi kategoriden id ekledi; küme
     // bilerek aynı kaldı.
+    // 2026-09-30 dördüncü dalga (tartışmalı siyasi görüş, bkz. aynı dosyanın
+    // "Dördüncü dalga" belgesi): ürün sahibi Paradigma ve Siyaset'i yeniden
+    // açtı ve tek bir siyasi hareketin öğretisini doğru cevap diye sunan
+    // 159 soru tek tek emekliye ayrıldı. Bu iki kategori listeye BİLEREK
+    // girdi; kategoriler açık, yalnız o sorular kapalı.
     final byId = {
       for (final q in QuestionBankLoader.instance.allQuestions) q.id: q,
     };
@@ -72,6 +77,8 @@ void main() {
       'Muzîk',
       'Ziman',
       'Çand',
+      'Paradigma',
+      'Siyaset',
     });
   });
 }

@@ -137,7 +137,7 @@
       "Amed",
       "Dêrsim",
       "Wan",
-      "Şîrnex"
+      "Şirnex"
     ],
     "answersTr": [
       "Amed",
@@ -199,7 +199,7 @@
       "Amed",
       "Qamişlo",
       "Hewlêr",
-      "Sînê"
+      "Sine"
     ],
     "answersTr": [
       "Amed",
@@ -229,7 +229,7 @@
     "answers": [
       "Aram Tigran",
       "Ahmet Kaya",
-      "Xerapetê Xaço",
+      "Karapetê Xaço",
       "Seîd Ûsiv"
     ],
     "answersTr": [
@@ -255,7 +255,7 @@
     "difficulty": 2,
     "id": "comm_muz_0004",
     "category": "Muzîk",
-    "prompt": "Di rapa kurdî de bi stranê \"Ax\" tê nasîn — kîjan hunermend e?",
+    "prompt": "Di rapa kurdî de bi strana \"Ax\" tê nasîn — kîjan hunermend e?",
     "promptTr": "Kürt rapinde \"Ax\" şarkısıyla bilinen sanatçı kimdir?",
     "answers": [
       "Şerifê Omerî",
@@ -334,7 +334,7 @@
     "correctAnswer": "11",
     "correctAnswerTr": "11",
     "explanation": "Baba Tahir genellikle 11. yüzyıl şairi sayılır ve dûbeytîleriyle tanınır; ancak kaynaklarda tarihlemesi 10.-13. yüzyıl arasında tartışmalıdır.",
-    "explanationKu": "Baba Tahir bi piranî wek helbestvanê sedsala 11an tê hesibandin û bi dûbeytiyên xwe tê nasîn; lê di çavkaniyan de dema jiyana wî bi nîqaş e, di navbera sedsalên 10 û 13an de tê danîn.",
+    "explanationKu": "Baba Tahir bi piranî wek helbestvanê sedsala 11an tê hesibandin û bi dubeytiyên xwe tê nasîn; lê di çavkaniyan de dema jiyana wî bi nîqaş e, di navbera sedsalên 10 û 13an de tê danîn.",
     "explanationTr": "Baba Tahir genellikle 11. yüzyıl şairi sayılır ve dûbeytîleriyle tanınır; ancak kaynaklarda tarihlemesi 10.-13. yüzyıl arasında tartışmalıdır.",
     "metadata": {
       "reviewStatus": "needsReview",
@@ -352,7 +352,7 @@
     "promptTr": "Hangisi Erebê Şemo'nun yazdığı bir romandır?",
     "answers": [
       "Mem û Zîn",
-      "Stêrka Bakûr",
+      "Stêrka Bakur",
       "Şivanê Kurd",
       "Bîra Qederê"
     ],
@@ -379,8 +379,8 @@
     "difficulty": 3,
     "id": "comm_ede_0003",
     "category": "Edebiyat",
-    "prompt": "Gotina \"Xwîn bi xwînê nayê şûştin\" çi ye?",
-    "promptTr": "\"Xwîn bi xwînê nayê şûştin\" sözü nedir?",
+    "prompt": "Gotina \"Xwîn bi xwînê nayê şuştin\" çi ye?",
+    "promptTr": "\"Xwîn bi xwînê nayê şuştin\" sözü nedir?",
     "answers": [
       "Beytek ji dîwana Melayê Cizîrî",
       "Navê romanekê",
@@ -396,7 +396,7 @@
     "correctAnswer": "Gotineke pêşiyan",
     "correctAnswerTr": "Bir atasözü",
     "explanation": "\"Kan kanla yıkanmaz\" bir Kürt atasözüdür. Mehmed Uzun da metinlerinde bu sözü atasözü olarak aktarır; söz ona ait değildir.",
-    "explanationKu": "\"Xwîn bi xwînê nayê şûştin\" gotineke pêşiyan a kurdî ye. Mehmed Uzun jî wê di metnên xwe de wek gotina pêşiyan neql dike; ne gotina wî ye.",
+    "explanationKu": "\"Xwîn bi xwînê nayê şuştin\" gotineke pêşiyan a kurdî ye. Mehmed Uzun jî wê di metnên xwe de wek gotina pêşiyan neql dike; ne gotina wî ye.",
     "explanationTr": "\"Kan kanla yıkanmaz\" bir Kürt atasözüdür. Mehmed Uzun da metinlerinde bu sözü atasözü olarak aktarır; söz ona ait değildir.",
     "metadata": {
       "reviewStatus": "rejected",
@@ -415,7 +415,7 @@
     "answers": [
       "Yaşar Kemal",
       "Mehmed Uzun",
-      "Ahmedê Xanî",
+      "Ehmedê Xanî",
       "Ali Haydar Kaytan"
     ],
     "answersTr": [
@@ -489,7 +489,7 @@
     "correctAnswer": "Kesên ku bi xwe beşdarî berxwedanê bûne",
     "correctAnswerTr": "Direnişe bizzat katılmış kişiler",
     "explanation": "Film Kobanê ve Tabqa'da çekildi; oyuncuların büyük bölümü profesyonel değil, direnişe bizzat katılmış kişilerdi.",
-    "explanationKu": "Fîlm li Kobanê û Tabqayê hate kişandin; beşek mezin ji lîstikvanan ne pîşeyî bûn, ew bi xwe beşdarî berxwedanê bûbûn.",
+    "explanationKu": "Fîlm li Kobanê û Tabqayê hate kişandin; beşeke mezin ji lîstikvanan ne pîşeyî bûn, ew bi xwe beşdarî berxwedanê bûbûn.",
     "explanationTr": "Film Kobanê ve Tabqa'da çekildi; oyuncuların büyük bölümü profesyonel değil, direnişe bizzat katılmış kişilerdi.",
     "metadata": {
       "reviewStatus": "needsReview",
@@ -566,8 +566,8 @@
     "difficulty": 3,
     "id": "comm_sin_0006",
     "category": "Sînema",
-    "prompt": "Fîlmê \"Ji bo Azadîyê\" kengî derket ser ekranan?",
-    "promptTr": "\"Ji bo Azadîyê\" filmi ne zaman gösterime girmiştir?",
+    "prompt": "Fîlmê \"Ji bo Azadiyê\" kengî derket ser ekranan?",
+    "promptTr": "\"Ji bo Azadiyê\" filmi ne zaman gösterime girmiştir?",
     "answers": [
       "2019",
       "2014",
@@ -597,8 +597,8 @@
     "difficulty": 4,
     "id": "comm_sin_0007",
     "category": "Sînema",
-    "prompt": "Fîlmê \"Ji bo Azadîyê\" li ku derê hatiye kişandin?",
-    "promptTr": "\"Ji bo Azadîyê\" filmi nerede çekilmiştir?",
+    "prompt": "Fîlmê \"Ji bo Azadiyê\" li ku derê hatiye kişandin?",
+    "promptTr": "\"Ji bo Azadiyê\" filmi nerede çekilmiştir?",
     "answers": [
       "Amed (Sûr)",
       "Hewlêr",
@@ -628,8 +628,8 @@
     "difficulty": 3,
     "id": "comm_sin_0008",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê \"Ji bo Azadîyê\" kî ye?",
-    "promptTr": "\"Ji bo Azadîyê\" filminin yönetmeni kimdir?",
+    "prompt": "Derhênerê fîlmê \"Ji bo Azadiyê\" kî ye?",
+    "promptTr": "\"Ji bo Azadiyê\" filminin yönetmeni kimdir?",
     "answers": [
       "Ersin Çelik",
       "Şêro Hindê",
@@ -659,8 +659,8 @@
     "difficulty": 3,
     "id": "comm_sin_0009",
     "category": "Sînema",
-    "prompt": "Muzîka fîlmê \"Ji bo Azadîyê\" ji hêla kê ve hatiye çêkirin?",
-    "promptTr": "\"Ji bo Azadîyê\" filminin müziklerini kim yapmıştır?",
+    "prompt": "Muzîka fîlmê \"Ji bo Azadiyê\" ji hêla kê ve hatiye çêkirin?",
+    "promptTr": "\"Ji bo Azadiyê\" filminin müziklerini kim yapmıştır?",
     "answers": [
       "Hozan Aydin",
       "Mehmûd Berazî",
@@ -676,7 +676,7 @@
     "correctAnswer": "Mehmûd Berazî",
     "correctAnswerTr": "Mehmûd Berazî",
     "explanation": "Filmin müziği Mehmûd Berazî'ye aittir; \"Rûbarê Min\" parçası Mizgîn Tahir'in sesinden filmde yer alır.",
-    "explanationKu": "Muzîka fîlm a Mehmûd Berazî ye; stranê \"Rûbarê Min\" bi dengê Mizgîn Tahir di fîlm de derbas dibe.",
+    "explanationKu": "Muzîka fîlm a Mehmûd Berazî ye; strana \"Rûbarê Min\" bi dengê Mizgîn Tahir di fîlm de derbas dibe.",
     "explanationTr": "Filmin müziği Mehmûd Berazî'ye aittir; \"Rûbarê Min\" parçası Mizgîn Tahir'in sesinden filmde yer alır.",
     "metadata": {
       "reviewStatus": "needsReview",
@@ -755,7 +755,7 @@
     "prompt": "Şehîda fedaî ya ku bi ruhê Kobanê re bûye yek kî ye?",
     "promptTr": "Kobanê ruhuyla bütünleşen fedai şehidimiz kimdir?",
     "answers": [
-      "Arîn Mirkan",
+      "Arîn Mîrkan",
       "Viyan Peyman",
       "Zehra Penaber",
       "Gelhat Gever"
@@ -766,7 +766,7 @@
       "Zehra Penaber",
       "Gelhat Gever"
     ],
-    "correctAnswer": "Arîn Mirkan",
+    "correctAnswer": "Arîn Mîrkan",
     "correctAnswerTr": "Arîn Mirkan",
     "explanation": "",
     "explanationKu": "",
@@ -786,7 +786,7 @@
     "prompt": "Kîjan şehîd bi klamên xwe yên berxwedana Kobanê tê bîranîn?",
     "promptTr": "Kobanê direnişinde söylediği klamlarla hafızalarda kalan şehidimiz kimdir?",
     "answers": [
-      "Arîn Mirkan",
+      "Arîn Mîrkan",
       "Viyan Peyman",
       "Kasım Engin",
       "Atakan Mahir"
@@ -1002,11 +1002,11 @@
     "difficulty": 2,
     "id": "comm_sin_0101",
     "category": "Sînema",
-    "prompt": "Fîlmê \"Yol\" di sala 1982an de li Cannesê kîjan xelat wergirt?",
+    "prompt": "Fîlmê \"Yol\" di sala 1982'an de li Cannesê kîjan xelat wergirt?",
     "promptTr": "\"Yol\" filmi 1982'de Cannes'da hangi ödülü kazandı?",
     "answers": [
       "Xelata Taybet a Jûriyê",
-      "Palmeya Zêrîn",
+      "Palmiyeya Zêrîn",
       "Xelata Derhênerê Herî Baş",
       "Hirça Zêrîn"
     ],
@@ -1016,10 +1016,10 @@
       "En İyi Yönetmen",
       "Altın Ayı"
     ],
-    "correctAnswer": "Palmeya Zêrîn",
+    "correctAnswer": "Palmiyeya Zêrîn",
     "correctAnswerTr": "Altın Palmiye",
     "explanation": "Yılmaz Güney'in senaryosunu yazdığı \"Yol\", 1982 Cannes Film Festivali'nde Altın Palmiye'yi kazandı.",
-    "explanationKu": "\"Yol\", ku senaryoya wê ji hêla Yilmaz Guney ve hatibû nivîsandin, di Festîvala Cannesê ya 1982'an de Palmiya Zêrîn wergirt.",
+    "explanationKu": "\"Yol\", ku senaryoya wê ji hêla Yilmaz Guney ve hatibû nivîsandin, di Festîvala Cannesê ya 1982'an de Palmiyeya Zêrîn wergirt.",
     "explanationTr": "Yılmaz Güney'in senaryosunu yazdığı \"Yol\", 1982 Cannes Film Festivali'nde Altın Palmiye'yi kazandı.",
     "metadata": {
       "reviewStatus": "needsReview",
@@ -1064,7 +1064,7 @@
     "difficulty": 3,
     "id": "comm_sin_0103",
     "category": "Sînema",
-    "prompt": "Fîlmê \"Sûrû\" (1978) senaryoya wê ya kê ye?",
+    "prompt": "Senaryoya fîlmê \"Sürü\" (1978) ya kê ye?",
     "promptTr": "\"Sürü\" (1978) filminin senaryosu kime aittir?",
     "answers": [
       "Yılmaz Güney",
@@ -1099,7 +1099,7 @@
     "promptTr": "\"Sarhoş Atlar Zamanı\" filminin yönetmeni kimdir?",
     "answers": [
       "Hiner Saleem",
-      "Bahman Ghobadi",
+      "Behmen Qubadî",
       "Kazım Öz",
       "Yılmaz Güney"
     ],
@@ -1109,10 +1109,10 @@
       "Kazım Öz",
       "Yılmaz Güney"
     ],
-    "correctAnswer": "Bahman Ghobadi",
+    "correctAnswer": "Behmen Qubadî",
     "correctAnswerTr": "Bahman Ghobadi",
     "explanation": "Bahman Ghobadi'nin ilk uzun metrajı, 2000 Cannes'da Altın Kamera ödülünü kazandı.",
-    "explanationKu": "Fîlmê yekem ê dirêj ê Bahman Ghobadi, di Cannesa 2000'î de Kamera Zêrîn wergirt.",
+    "explanationKu": "Fîlmê yekem ê dirêj ê Behmen Qubadî, di Cannesa 2000'î de Kamera Zêrîn wergirt.",
     "explanationTr": "Bahman Ghobadi'nin ilk uzun metrajı, 2000 Cannes'da Altın Kamera ödülünü kazandı.",
     "metadata": {
       "reviewStatus": "needsReview",
@@ -1126,11 +1126,11 @@
     "difficulty": 3,
     "id": "comm_sin_0105",
     "category": "Sînema",
-    "prompt": "Fîlmê \"Kûsî jî Difirin\" derhênerê wî kî ye?",
+    "prompt": "Derhênerê fîlmê \"Kûsî Jî Dikarin Bifirin\" kî ye?",
     "promptTr": "\"Kaplumbağalar da Uçar\" filminin yönetmeni kimdir?",
     "answers": [
       "Hiner Saleem",
-      "Bahman Ghobadi",
+      "Behmen Qubadî",
       "Erol Mintaş",
       "Hüseyin Karabey"
     ],
@@ -1140,10 +1140,10 @@
       "Erol Mintaş",
       "Hüseyin Karabey"
     ],
-    "correctAnswer": "Bahman Ghobadi",
+    "correctAnswer": "Behmen Qubadî",
     "correctAnswerTr": "Bahman Ghobadi",
     "explanation": "Bahman Ghobadi'nin 2004 yapımı filmi, ABD işgali öncesinde Irak-Türkiye sınırındaki bir mülteci kampında geçer; Berlin'den San Sebastián'a birçok ödül kazandı.",
-    "explanationKu": "Fîlmê Bahman Ghobadi ê 2004'an li kampeke penaberan a li ser sînorê Iraq-Tirkiyê diqewime û gelek xelat wergirtine.",
+    "explanationKu": "Fîlmê Behmen Qubadî yê 2004'an li kampeke penaberan a li ser sînorê Iraq û Tirkiyeyê diqewime û gelek xelat wergirtine.",
     "explanationTr": "Bahman Ghobadi'nin 2004 yapımı filmi, ABD işgali öncesinde Irak-Türkiye sınırındaki bir mülteci kampında geçer; Berlin'den San Sebastián'a birçok ödül kazandı.",
     "metadata": {
       "reviewStatus": "needsReview",
@@ -1160,10 +1160,10 @@
     "prompt": "Derhênerê fîlmê \"Vodka Lemon\" kî ye?",
     "promptTr": "\"Vodka Lemon\" filminin yönetmeni kimdir?",
     "answers": [
-      "Bahman Ghobadi",
+      "Behmen Qubadî",
       "Kazım Öz",
       "Şerif Gören",
-      "Hiner Saleem"
+      "Huner Selîm"
     ],
     "answersTr": [
       "Bahman Ghobadi",
@@ -1171,10 +1171,10 @@
       "Şerif Gören",
       "Hiner Saleem"
     ],
-    "correctAnswer": "Hiner Saleem",
+    "correctAnswer": "Huner Selîm",
     "correctAnswerTr": "Hiner Saleem",
     "explanation": "Hiner Saleem'in 2003 yapımı filmi Venedik Film Festivali'nde ödül aldı.",
-    "explanationKu": "Fîlmê Hiner Saleem ê 2003'yan li Festîvala Venedîkê xelat wergirt.",
+    "explanationKu": "Fîlmê Huner Selîm yê 2003'yan li Festîvala Venedîkê xelat wergirt.",
     "explanationTr": "Hiner Saleem'in 2003 yapımı filmi Venedik Film Festivali'nde ödül aldı.",
     "metadata": {
       "reviewStatus": "needsReview",
@@ -1219,7 +1219,7 @@
     "difficulty": 3,
     "id": "comm_sin_0108",
     "category": "Sînema",
-    "prompt": "Yilmaz Guney di sala kîjan de li Parîsê koça dawî kir?",
+    "prompt": "Yilmaz Guney di kîjan salê de li Parîsê koça dawî kir?",
     "promptTr": "Yılmaz Güney hangi yıl Paris'te hayatını kaybetti?",
     "answers": [
       "1984",
@@ -1236,7 +1236,7 @@
     "correctAnswer": "1984",
     "correctAnswerTr": "1984",
     "explanation": "Yılmaz Güney 9 Eylül 1984'te Paris'te yaşamını yitirdi.",
-    "explanationKu": "Yilmaz Guney di 9'ê îlona 1984'an de li Parîsê koça dawî kir.",
+    "explanationKu": "Yilmaz Guney di 9'ê Îlona 1984'an de li Parîsê koça dawî kir.",
     "explanationTr": "Yılmaz Güney 9 Eylül 1984'te Paris'te yaşamını yitirdi.",
     "metadata": {
       "reviewStatus": "needsReview",
@@ -1281,8 +1281,8 @@
     "difficulty": 4,
     "id": "comm_sin_0110",
     "category": "Sînema",
-    "prompt": "Derhênerê fîlmê \"Klama Dayîka Min\" kî ye?",
-    "promptTr": "\"Annemin Şarkısı\" (Klama Dayîka Min) filminin yönetmeni kimdir?",
+    "prompt": "Derhênerê fîlmê \"Klama Dayika Min\" kî ye?",
+    "promptTr": "\"Annemin Şarkısı\" (Klama Dayika Min) filminin yönetmeni kimdir?",
     "answers": [
       "Kazım Öz",
       "Erol Mintaş",
@@ -1312,7 +1312,7 @@
     "difficulty": 3,
     "id": "comm_sin_0111",
     "category": "Sînema",
-    "prompt": "Fîlmê \"Umut\" (1970) derhênerê wî kî ye?",
+    "prompt": "Derhênerê fîlmê \"Umut\" (1970) kî ye?",
     "promptTr": "\"Umut\" (1970) filminin yönetmeni kimdir?",
     "answers": [
       "Zeki Ökten",

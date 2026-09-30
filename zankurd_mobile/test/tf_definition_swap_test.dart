@@ -101,14 +101,20 @@ void main() {
     // emekliye ayırma yalnızca Rast/Şaş'ın birinden yapılmıştır.
     // 2026-09-30: Paradigma, Siyaset ve Teknolojî yeniden açıldı; bu
     // kalıptaki kayıtlar geri döndü (Rast 80 -> 114, Şaş 55 -> 114).
+    // 2026-09-30 (aynı gün, ikinci adım): tek bir siyasi hareketin öğretisini
+    // doğru cevap diye sunan 159 Paradigma/Siyaset sorusu tek tek emekliye
+    // ayrıldı (`retired_question_ids.dart`, "Dördüncü dalga"); bunların 51'i
+    // bu kalıptaydı: 18 Rast + 33 Şaş. Yeni sayılar Rast 114 -> 96, Şaş
+    // 114 -> 81 (toplam 177, Rast payı %54,2 — %60 tavanının altında).
+    // Birlikte değiştiler, yani emekliye ayırma iki taraftan da yapıldı.
     expect(
       rast,
-      114,
+      96,
       reason: 'Oynanabilir Rast sayısı değişti (bkz. yukarıdaki yorum).',
     );
     expect(
       sas,
-      114,
+      81,
       reason: 'Oynanabilir Şaş sayısı değişti (bkz. yukarıdaki yorum).',
     );
   });

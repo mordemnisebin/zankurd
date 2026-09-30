@@ -4,12 +4,12 @@
     "category": "Sînema",
     "prompt": "Dema ku rûyê lîstikvan bi tevahî dîmenê dagire, ev kîjan plan e?",
     "answers": [
-      "planê dûr (uzak çekim)",
-      "planê nêzîk (yakın çekim)",
-      "planê navîn (orta çekim)",
+      "plana dûr (uzak çekim)",
+      "plana nêzîk (yakın çekim)",
+      "plana navîn (orta çekim)",
       "plana damezrîner (establishing shot)"
     ],
-    "correctAnswer": "planê nêzîk (yakın çekim)",
+    "correctAnswer": "plana nêzîk (yakın çekim)",
     "promptTr": "Oyuncunun yüzü çerçevenin tamamını doldurduğunda bu hangi plandır?",
     "answersTr": [
       "uzak çekim",
@@ -18,7 +18,7 @@
       "geniş açılış çekimi"
     ],
     "correctAnswerTr": "yakın çekim",
-    "explanationKu": "Plana nêzîk rûyê lîstikvan an hûrgiliyekê bi awayekî mezin nîşan dide; bi vî awayî hest û reaksiyonên karakterê dibin navenda dîmenê. Planê dûr jî cih û têkiliyên di navbera hêmanan de nîşan dide.",
+    "explanationKu": "Plana nêzîk rûyê lîstikvan an hûrgiliyekê bi awayekî mezin nîşan dide; bi vî awayî hest û reaksiyonên karakterê dibin navenda dîmenê. Plana dûr jî cih û têkiliyên di navbera hêmanan de nîşan dide.",
     "explanationTr": "Yakın çekim, oyuncunun yüzünü ya da bir ayrıntıyı büyük ölçüde gösterir; böylece karakterin duygu ve tepkileri çerçevenin merkezine gelir. Uzak çekim ise mekânı ve öğeler arasındaki ilişkileri gösterir.",
     "difficulty": 1,
     "type": "multipleChoice",
@@ -38,9 +38,9 @@
     "prompt": "Kîjan plan cih û hawîrdora ku çîrok lê derbas dibe bi tevahî nîşan dide?",
     "answers": [
       "plana damezrîner (establishing shot)",
-      "planê nêzîk (yakın çekim)",
-      "planê serpîrî (baş üstü çekim)",
-      "çapa cemidî (freeze frame)"
+      "plana nêzîk (yakın çekim)",
+      "plana serpîrî (baş üstü çekim)",
+      "çarçoveya cemidî (freeze frame)"
     ],
     "correctAnswer": "plana damezrîner (establishing shot)",
     "promptTr": "Öykünün geçtiği mekânı ve çevreyi bir bütün olarak gösteren plan hangisidir?",
@@ -101,7 +101,7 @@
   {
     "id": "ds26_cinema_0035",
     "category": "Sînema",
-    "prompt": "Têgiha ku hemû hêmanên dîtbarî yên li ber kamerayê (dekor, ronahî, lîstik) di çarçoveyekî de berhev dike çi ye?",
+    "prompt": "Têgiha ku hemû hêmanên dîtbarî yên li ber kamerayê (dekor, ronahî, lîstik) di çarçoveyekê de berhev dike çi ye?",
     "answers": [
       "sînematografî",
       "montaj",
@@ -332,7 +332,7 @@
   {
     "id": "grok26_tech_core_0040",
     "category": "Teknolojî",
-    "prompt": "HTTP koda 404 bi gelemperî çi tê wateya?",
+    "prompt": "Koda HTTP 404 bi gelemperî tê çi wateyê?",
     "answers": [
       "Çavkanî nehat dîtin",
       "Hemû tişt serkeftî ye",
@@ -348,7 +348,7 @@
       "Sunucu yönlendirdi"
     ],
     "correctAnswerTr": "Kaynak bulunamadı",
-    "explanationKu": "404 dibêje ku server hate gihiştin lê rûpel an pelê xwestî li wir nîne.",
+    "explanationKu": "404 nîşan dide ku pêşkêşker bersiv da lê rûpel an pela xwestî li wir nîne.",
     "explanationTr": "404, sunucuya ulaşıldığını ama istenen sayfa veya dosyanın orada olmadığını söyler.",
     "difficulty": 3,
     "type": "multipleChoice",
@@ -365,7 +365,7 @@
   {
     "id": "grok26_tech_core_0071",
     "category": "Teknolojî",
-    "prompt": "Hejmara dual 1010 di dehî de çend e?",
+    "prompt": "Hejmara duyî (binary) 1010 di sîstema dehî de çend e?",
     "answers": [
       "5",
       "8",
@@ -381,7 +381,7 @@
       "12"
     ],
     "correctAnswerTr": "10",
-    "explanationKu": "1010₂ = 1·8 + 0·4 + 1·2 + 0·1 = 10₁₀. Her cîh hêza 2yê ye.",
+    "explanationKu": "1010₂ = 1·8 + 0·4 + 1·2 + 0·1 = 10₁₀. Her xane hêzeke 2yê ye.",
     "explanationTr": "1010₂ = 1·8 + 0·4 + 1·2 + 0·1 = 10₁₀. Her basamak 2'nin kuvvetidir.",
     "difficulty": 3,
     "type": "multipleChoice",
@@ -447,7 +447,7 @@
       "Görüntünün hızı belirgin yavaşlar"
     ],
     "correctAnswerTr": "Yakın ve uzak birlikte net olur",
-    "explanationKu": "Deep focus de cîhên nêzîk û yên dûr di heman demê de zelal têne nîşandan.",
+    "explanationKu": "Di teknîka deep focusê de cihên nêzîk û yên dûr di heman demê de zelal tên nîşandan.",
     "explanationTr": "Deep focus'ta yakın ve uzak düzlemler aynı anda net gösterilir.",
     "difficulty": 2,
     "type": "multipleChoice",
@@ -2610,7 +2610,7 @@
   {
     "id": "sf_tech_0007",
     "category": "Teknolojî",
-    "prompt": "Kurtenivîsa \"URL\" li ser çi tê avakirin?",
+    "prompt": "\"URL\" kurtenivîsa çi ye?",
     "answers": [
       "Universal Reading Language",
       "Uniform Resource Locator",
@@ -2758,7 +2758,7 @@
       "Parola olarak kullanılan kullanıcı adı"
     ],
     "correctAnswerTr": "Birbiriyle birleştirilmiş birkaç farklı sözcükten oluşan ifade",
-    "explanationKu": "Passphrase çend peyvên rastîn li hev tîne; hem hêsantir tê bîrîn hem dirêjtir e.",
+    "explanationKu": "Passphrase çend peyvên rastîn li hev tîne; hem hêsantir li bîr dimîne hem jî dirêjtir e.",
     "explanationTr": "Passphrase birkaç gerçek sözcüğü birleştirir; hem akılda kalıcı hem daha uzundur.",
     "difficulty": 2,
     "type": "multipleChoice",
@@ -2775,7 +2775,7 @@
   {
     "id": "sf_tech_0014",
     "category": "Teknolojî",
-    "prompt": "Çima şîfreya yekseb li gelek malperan xeter e?",
+    "prompt": "Çima bikaranîna heman şîfreyê li gelek malperan xeternak e?",
     "answers": [
       "Ji ber ku malper dikarin bi heman şîfreyê hêdîtir bibin",
       "Ji ber ku şikandina yek hesabî dikare hesabên din jî bixe xetereyê",
@@ -2791,7 +2791,7 @@
       "Aynı parola kullanımı internet trafiğini artırdığı için"
     ],
     "correctAnswerTr": "Bir hesabın ele geçirilmesi diğer hesapları da tehlikeye atabildiği için",
-    "explanationKu": "Ger şîfreya heman li malperekê bikeve destan, hemû hesabên bi wê şîfreyê dikevin xetereyê.",
+    "explanationKu": "Ger heman şîfre li malperekê bikeve destan, hemû hesabên bi wê şîfreyê dikevin xetereyê.",
     "explanationTr": "Aynı parola bir sitede ele geçerse, o parolayı kullanan tüm hesaplar tehlikeye girer.",
     "difficulty": 2,
     "type": "multipleChoice",
