@@ -149,7 +149,7 @@ void main() {
               // Yaş onayı ve düğme her zaman erişilebilir.
               for (final f in [
                 find.byKey(const ValueKey('onboarding-age-gate')),
-                find.text(page == 1 ? 'Dest pê bike' : 'Bidomîne'),
+                find.text(page == 1 ? 'Dest pê bike' : 'Ya din'),
               ]) {
                 if (f.evaluate().isEmpty) continue;
                 final r = tester.getRect(f);
@@ -157,7 +157,7 @@ void main() {
                 expect(r.top, greaterThanOrEqualTo(surface.top));
               }
               if (page == 0) {
-                await tester.tap(find.text('Bidomîne'));
+                await tester.tap(find.text('Ya din'));
                 await tester.pumpAndSettle();
               }
             }

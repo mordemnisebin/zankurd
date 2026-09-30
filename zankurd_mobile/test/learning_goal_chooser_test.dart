@@ -40,7 +40,7 @@ void main() {
     );
 
     expect(find.text('Armanca min'), findsOneWidget);
-    expect(find.text('Kurmancî hîn bibim'), findsOneWidget);
+    expect(find.text('Hînbûna Kurmancî'), findsOneWidget);
     expect(
       tester
           .getSemantics(find.byKey(const ValueKey('learning-goal-language')))

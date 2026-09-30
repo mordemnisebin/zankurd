@@ -92,13 +92,13 @@ void main() {
       tester,
     ) async {
       await _pumpOnboarding(tester, lang: 'ku');
-      expect(find.text('Bidomîne'), findsOneWidget);
+      expect(find.text('Ya din'), findsOneWidget);
 
       await tester.tap(find.byKey(const ValueKey('onboarding-language-tr')));
       await tester.pumpAndSettle();
 
       expect(find.text('Sonraki'), findsOneWidget);
-      expect(find.text('Bidomîne'), findsNothing);
+      expect(find.text('Ya din'), findsNothing);
     });
 
     test('giriş ekranındaki seçiciyle aynı bileşeni paylaşır', () {

@@ -486,11 +486,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      tester.getSemantics(find.bySemanticsLabel('Ders 1. Ders qediya!')),
+      tester.getSemantics(find.bySemanticsLabel('Ders 1. Ders qediya')),
       isNotNull,
     );
     expect(
-      tester.getSemantics(find.bySemanticsLabel('Dersa din. Ders 2. Bidomîne')),
+      tester.getSemantics(find.bySemanticsLabel('Dersa din. Ders 2. Ya din')),
       isNotNull,
     );
     final locked = tester.getSemantics(find.bySemanticsLabel('Ders 3. Girtî'));

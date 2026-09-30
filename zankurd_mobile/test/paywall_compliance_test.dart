@@ -70,7 +70,7 @@ void main() {
     expect(tr, contains('24 saat'));
     expect(tr, contains('iptal'));
     expect(ku, contains('bixweber nû dibe'));
-    expect(ku, contains('24 saetan'));
+    expect(ku, contains('24 saet'));
     expect(ku, contains('betal'));
   });
 
@@ -81,7 +81,7 @@ void main() {
     expect(Tr.of(K.buyAction, AppLanguage.ku), 'Bikire');
     expect(
       Tr.of(K.paywallPackagesInactive, AppLanguage.ku),
-      'Pakêtên Premium hîn nehatine çalak kirin',
+      'Pakêtên Premium hîn ne çalak in',
     );
     expect(Tr.of(K.restorePurchases, AppLanguage.ku), 'Kirînên xwe vegerîne');
 
