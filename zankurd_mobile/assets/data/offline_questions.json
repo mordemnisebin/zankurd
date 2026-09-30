@@ -6510,7 +6510,7 @@
   {
     "id": "offline_6575",
     "category": "Çand",
-    "prompt": "Kîjan têgiha \"şabaş\" rast şirove dike?",
+    "prompt": "Di şahiyan de têgeha \"şabaş\" tê çi wateyê?",
     "answers": [
       "Melek Tawis û motîfa ronahî/rojê",
       "roja ziyaret û bibîranînê ya kevneşopî",
@@ -6523,7 +6523,7 @@
     "difficulty": 3,
     "explanationKu": "\"şabaş\": kevneşopiya avêtina baxşîşê ji muzîkjenan re.",
     "explanationTr": "\"şabaş\": müzisyenlere bahşiş atma geleneği.",
-    "promptTr": "\"şabaş\" terimini hangisi doğru açıklar?",
+    "promptTr": "Eğlencelerde \"şabaş\" terimi ne anlama gelir?",
     "answersTr": [
       "Melek Tawis ve ışık/güneş motifi",
       "geleneksel ziyaret ve anma günü",
@@ -10251,7 +10251,7 @@
   {
     "id": "offline_10228",
     "category": "Edebiyat",
-    "prompt": "\"destan\" çawa divê bê fêmkirin?",
+    "prompt": "\"destan\" kîjan cure vegotinê ye?",
     "answers": [
       "helbesta klasîk a kurdî",
       "xwendekarê medreseyê / feqî",
@@ -10264,7 +10264,7 @@
     "difficulty": 5,
     "explanationKu": "\"destan\" vegotina qehremaniyê ye. Mînak: \"Memê Alan\" destana kurdî ya herî navdar e.",
     "explanationTr": "\"destan\" kahramanlık anlatısıdır. Örnek: \"Memê Alan\" en ünlü Kürt destanıdır.",
-    "promptTr": "\"destan\" nasıl anlaşılmalıdır?",
+    "promptTr": "\"destan\" hangi tür anlatıdır?",
     "answersTr": [
       "klasik Kürt şiiri",
       "medrese öğrencisi / feqî",
@@ -11433,7 +11433,7 @@
   {
     "id": "offline_11431",
     "category": "Muzîk",
-    "prompt": "Kîjan vebijêrk tê wateya \"dengbêj\"?",
+    "prompt": "\"dengbêj\" kî ye, bi awazê çi dike?",
     "answers": [
       "hunermendê ku vegotina devkî ya bi avaz dike",
       "şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê",
@@ -11446,7 +11446,7 @@
     "difficulty": 4,
     "explanationKu": "\"dengbêj\": hunermendê ku vegotina devkî bi awaz dike.",
     "explanationTr": "\"dengbêj\": ezgili sözlü anlatım yapan sanatçı.",
-    "promptTr": "Hangi seçenek \"dengbêj\" anlamına gelir?",
+    "promptTr": "\"dengbêj\" kimdir, ne yapar?",
     "answersTr": [
       "ezgili sözlü anlatım yapan sanatçı",
       "Dihok ve Zaxo yöresine has müzikal tarz",
@@ -14271,7 +14271,7 @@
   {
     "id": "offline_curated_20679",
     "category": "Dîrok",
-    "prompt": "Ji bo dersa dîrok kîjan vebijark ravekirina têgeha \"Rojnameya Kurdistan\" bi awayekî rast temam dike?",
+    "prompt": "Di dîroka çapemeniya kurdî de \"Rojnameya Kurdistan\" çi ye?",
     "answers": [
       "rojnameya kurdî ya ku di 1926an de li Silêmaniyê hat çapkirin",
       "kovara kurdî ya bi alfabeya latînî ku di 1932an de derket",
@@ -14284,7 +14284,7 @@
     "difficulty": 2,
     "explanationTr": "\"Rojnameya Kurdistan\": 1898'de Kahire'de Mîqdat Mîdhad Bedirxan tarafından çıkarılan ilk Kürtçe gazete.",
     "explanationKu": "\"Rojnameya Kurdistan\": rojnameya kurdî ya yekem ku di 1898an de li Qahîreyê ji aliyê Mîqdat Mîdhad Bedirxan ve derket.",
-    "promptTr": "Tarih dersi için hangi seçenek \"Rojnameya Kurdistan\" teriminin açıklamasını doğru biçimde tamamlar?",
+    "promptTr": "Kürt basın tarihinde \"Rojnameya Kurdistan\" nedir?",
     "answersTr": [
       "1926'da Süleymaniye'de basılan Kürtçe gazete",
       "1932'de çıkan Latin alfabeli Kürtçe dergi",
@@ -14405,7 +14405,7 @@
   {
     "id": "offline_curated_20804",
     "category": "Cografya",
-    "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha \"Çemê Firatê\" bi awayekî rast temam dike?",
+    "prompt": "Di erdnîgariyê de girîngiya \"Çemê Firatê\" çi ye?",
     "answers": [
       "çiyayê pîroz ê ku li gorî baweriyan keştiya Nûh Pêxember li ser rûniştiye",
       "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
@@ -14421,7 +14421,7 @@
     "imageAltTr": "Yukarıdan derin bir vadi, katmanlı yeşil kayalıklar; dipte berrak su çizgisi var, güneş yapraklarda parlıyor.",
     "explanationTr": "\"Çemê Firatê\" için doğru açıklama şudur: Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı.",
     "explanationKu": "Ravekirina rast ji bo \"Çemê Firatê\" ev e: yek ji du çemên herî mezin ên Mezopotamyayê ku jiyanê dide axên berdar.",
-    "promptTr": "Coğrafya dersi için hangi seçenek \"Çemê Firatê\" teriminin açıklamasını doğru biçimde tamamlar?",
+    "promptTr": "Coğrafyada \"Çemê Firatê\"nin önemi nedir?",
     "answersTr": [
       "inanışa göre Nuh Peygamber'in gemisinin üzerine oturduğu kutsal dağ",
       "Dicle'nin içinden aktığı, Amed'i koruyan büyük vadi",
@@ -14486,7 +14486,7 @@
   {
     "id": "offline_curated_20879",
     "category": "Cografya",
-    "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha \"Gola Wanê\" bi awayekî rast temam dike?",
+    "prompt": "Di warê erdnîgariyê de taybetmendiya \"Gola Wanê\" çi ye?",
     "answers": [
       "geliyê mezin ê ku çemê Dîcleyê tê re diherike û Amedê diparêze",
       "gola herî mezin a herêmê ku avên wê şor û sodadar in",
@@ -14502,7 +14502,7 @@
     "imageAltTr": "Kıyıdaki bir kayadan bakışla ufka kadar uzanan mavi-yeşil geniş bir göl; önde sarı otlar var.",
     "explanationTr": "\"Gola Wanê\" için doğru açıklama şudur: suları tuzlu ve sodalı olan, bölgenin en büyük gölü.",
     "explanationKu": "Ravekirina rast ji bo \"Gola Wanê\" ev e: gola herî mezin a herêmê ku avên wê şor û sodadar in.",
-    "promptTr": "Coğrafya dersi için hangi seçenek \"Gola Wanê\" teriminin açıklamasını doğru biçimde tamamlar?",
+    "promptTr": "Coğrafi açıdan \"Gola Wanê\"nin özelliği nedir?",
     "answersTr": [
       "Dicle'nin içinden aktığı, Amed'i koruyan büyük vadi",
       "suları tuzlu ve sodalı olan, bölgenin en büyük gölü",
@@ -14626,7 +14626,7 @@
   {
     "id": "offline_curated_20954",
     "category": "Cografya",
-    "prompt": "Ji bo dersa cografya kîjan vebijark ravekirina têgeha \"Heskîf\" bi awayekî rast temam dike?",
+    "prompt": "Taybetmendiya \"Heskîf\"ê ya dîrokî û erdnîgarî çi ye?",
     "answers": [
       "bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye",
       "çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne",
@@ -14642,7 +14642,7 @@
     "imageAltTr": "Uzaktan çekilmiş geniş bir baraj gölü; karşı yakada suya yakın taş kalıntılar, arka planda sisli dağlar var.",
     "explanationTr": "\"Heskîf\" için doğru açıklama şudur: Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent.",
     "explanationKu": "Ravekirina rast ji bo \"Heskîf\" ev e: bajarê kevnar û dîrokî yê li ser çemê Dîcleyê ku xwedî şikeftên bêhempa ye.",
-    "promptTr": "Coğrafya dersi için hangi seçenek \"Heskîf\" teriminin açıklamasını doğru biçimde tamamlar?",
+    "promptTr": "\"Heskîf\"in tarihî ve coğrafi özelliği nedir?",
     "answersTr": [
       "Dicle kıyısındaki, eşsiz mağaralarıyla bilinen kadim tarihî kent",
       "Amed ovasını Riha ovasından ayıran bazaltik volkanik dağ",
@@ -14710,7 +14710,7 @@
   {
     "id": "offline_curated_21029",
     "category": "Çand",
-    "prompt": "Ji bo dersa çand kîjan vebijark ravekirina têgeha \"Newroz\" bi awayekî rast temam dike?",
+    "prompt": "Di çanda kurdan de wate û girîngiya \"Newroz\"ê çi ye?",
     "answers": [
       "destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne",
       "cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye",
@@ -14726,7 +14726,7 @@
     "imageAltTr": "Dağların önünde geniş bir şehir caddesi; renkli Kürt kıyafetli bir grup meşale kaldırmış, önde bir asker var.",
     "explanationTr": "\"Newroz\" için doğru açıklama şudur: başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı.",
     "explanationKu": "Ravekirina rast ji bo \"Newroz\" ev e: cejna neteweyî û sersala kurdî ya ku sembola serhildan, azadî û vejîna xwezayê ye.",
-    "promptTr": "Kültür dersi için hangi seçenek \"Newroz\" teriminin açıklamasını doğru biçimde tamamlar?",
+    "promptTr": "Kürt kültüründe \"Newroz\"un anlamı ve önemi nedir?",
     "answersTr": [
       "Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı",
       "başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı",
@@ -14769,7 +14769,7 @@
   {
     "id": "offline_curated_21076",
     "category": "Çand",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin'?",
+    "prompt": "Dansa komî û gelêrî ya ku bi hevgirtina destan û ruhê hevkariyê tê gerandin kîjan e?",
     "answers": [
       "Sazîbûna Dengbêjiyê",
       "Govenda Kurdî",
@@ -14782,7 +14782,7 @@
     "difficulty": 5,
     "explanationKu": "\"Govenda Kurdî\" tê vê wateyê: dansa komî û gelêrî ya ku bi hevgirtina destan û bi rihê hevkariyê tê gerandin.",
     "explanationTr": "\"Govenda Kurdî\" şu anlama gelir: el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı.",
-    "promptTr": "Şu açıklamayla hangi terim tanınır: \"el ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı\"?",
+    "promptTr": "El ele tutuşarak ve dayanışma ruhuyla oynanan toplu halk dansı hangisidir?",
     "answersTr": [
       "Dengbêjlik Kurumu",
       "Kürt govendi",
@@ -14794,7 +14794,7 @@
   {
     "id": "offline_curated_21101",
     "category": "Çand",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye'?",
+    "prompt": "Şêwaza jiyana kevnar a li zozan û germiyanan kîjan e?",
     "answers": [
       "şevbêrk",
       "hewran",
@@ -14807,7 +14807,7 @@
     "difficulty": 1,
     "explanationKu": "\"çanda koçeriyê\" tê vê wateyê: şêwazê jiyana kevnar a li ser zozan û germiyanê ku çanda kurdî pir dewlemend kiriye.",
     "explanationTr": "\"çanda koçeriyê\" şu anlama gelir: yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi.",
-    "promptTr": "Şu açıklamayla hangi terim tanınır: \"yayla ve germiyan arasındaki, Kürt kültürünü zenginleştiren kadim yaşam biçimi\"?",
+    "promptTr": "Yayla ve germiyan arasındaki kadim yaşam biçimi hangisidir?",
     "answersTr": [
       "şevbêrk",
       "hewran",
@@ -14872,7 +14872,7 @@
   {
     "id": "offline_curated_21176",
     "category": "Çand",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: \"destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne\"?",
+    "prompt": "Destana neteweyî ya ku hîmê Mem û Zînê pêk tîne kîjan e?",
     "answers": [
       "Newroz",
       "Sazîbûna Dengbêjiyê",
@@ -14885,7 +14885,7 @@
     "difficulty": 4,
     "explanationKu": "\"Destana Memê Alan\" tê vê wateyê: destana neteweyî ya kurdî ya ku hîmê Mem û Zîna Xanî pêk tîne.",
     "explanationTr": "\"Destana Memê Alan\" şu anlama gelir: Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı.",
-    "promptTr": "Şu açıklamayla hangi terim tanınır: \"Xanî'nin Mem û Zîn'inin temelini oluşturan Kürt ulusal destanı\"?",
+    "promptTr": "Mem û Zîn'in temelini oluşturan ulusal destan hangisidir?",
     "answersTr": [
       "Newroz",
       "Dengbêjlik Kurumu",
@@ -14922,7 +14922,7 @@
   {
     "id": "offline_curated_21226",
     "category": "Çand",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin'?",
+    "prompt": "Civînên şevên zivistanê yên ku tê de çîrok û metelok dihatin gotin kîjan in?",
     "answers": [
       "şevbêrk",
       "Newroz",
@@ -14935,7 +14935,7 @@
     "difficulty": 1,
     "explanationKu": "\"şevbêrk\" tê vê wateyê: civînên şevê yên zivistanê ku tê de çîrokên gelêrî û metelok dihatin gotin.",
     "explanationTr": "\"şevbêrk\" şu anlama gelir: halk masalları ve bilmecelerin anlatıldığı kış gecesi toplantıları.",
-    "promptTr": "Şu açıklamayla hangi terim tanınır: \"halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları\"?",
+    "promptTr": "Halk masallarının ve bilmecelerin anlatıldığı kış gecesi toplantıları hangisidir?",
     "answersTr": [
       "şevbêrk",
       "Newroz",
@@ -14972,7 +14972,7 @@
   {
     "id": "offline_curated_21276",
     "category": "Muzîk",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e'?",
+    "prompt": "Amûra lêdanê ya zildar a muzîka olî û gelêrî kîjan e?",
     "answers": [
       "bilûr",
       "Koma Wetan",
@@ -14985,7 +14985,7 @@
     "difficulty": 3,
     "explanationKu": "\"erbane\" tê vê wateyê: amûra lêdanê ya zildar ku di muzîka kurdî ya olî û gelêrî de xwedî cihekî girîng e.",
     "explanationTr": "\"erbane\" şu anlama gelir: Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı.",
-    "promptTr": "Hangi terim şu açıklamayla bilinir: \"Kürt dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı\"?",
+    "promptTr": "Dinî ve halk müziğinde önemli yeri olan zilli vurmalı çalgı hangisidir?",
     "answersTr": [
       "bilûr",
       "Koma Wetan",
@@ -14997,7 +14997,7 @@
   {
     "id": "offline_curated_21301",
     "category": "Muzîk",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: \"amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin\"?",
+    "prompt": "Amûra bayê ya şivanan a bi dengê xemgîn kîjan e?",
     "answers": [
       "lîrîka klaman",
       "tembûr",
@@ -15010,7 +15010,7 @@
     "difficulty": 4,
     "explanationKu": "\"bilûr\" tê vê wateyê: amûra bayê ya çobanan ku bi dengê xwe yê xemgîn û lîrik tê naskirin.",
     "explanationTr": "\"bilûr\" şu anlama gelir: hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı.",
-    "promptTr": "Hangi terim şu açıklamayla bilinir: \"hüzünlü ve lirik sesiyle bilinen çoban üflemeli çalgısı\"?",
+    "promptTr": "Hüzünlü sesiyle bilinen çoban üflemeli çalgısı hangisidir?",
     "answersTr": [
       "lîrîka klaman",
       "tembûr",
@@ -15022,7 +15022,7 @@
   {
     "id": "offline_curated_21326",
     "category": "Muzîk",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin'?",
+    "prompt": "Avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin kîjan e?",
     "answers": [
       "strana razanê",
       "lîrîka klaman",
@@ -15035,7 +15035,7 @@
     "difficulty": 5,
     "explanationKu": "\"lîrîka klaman\" tê vê wateyê: avahiya helbestî ya kilamên dengbêjiyê ku çîrokên evîn û şeran vedibêjin.",
     "explanationTr": "\"lîrîka klaman\" şu anlama gelir: aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı.",
-    "promptTr": "Hangi terim şu açıklamayla bilinir: \"aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı\"?",
+    "promptTr": "Aşk ve savaş hikâyelerini anlatan dengbêj kilamlarının şiirsel yapısı hangisidir?",
     "answersTr": [
       "ninni",
       "lîrîka klaman",
@@ -15047,7 +15047,7 @@
   {
     "id": "offline_curated_21351",
     "category": "Muzîk",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'dengbêjê mezin ê ku wekî \"Şahê Dengbêjan\" tê naskirin û xwedî dengekî bêhempa bû'?",
+    "prompt": "Dengbêjê mezin ê bi dengê bêhempa, \"Şahê Dengbêjan\" kî bû?",
     "answers": [
       "Şakiro",
       "lîrîka klaman",
@@ -15060,7 +15060,7 @@
     "difficulty": 1,
     "explanationKu": "\"Şakiro\" tê vê wateyê: dengbêjê mezin ê ku wekî \"Şahê Dengbêjan\" tê naskirin û xwedî dengekî bêhempa bû.",
     "explanationTr": "\"Şakiro\" şu anlama gelir: \"Dengbêjlerin Şahı\" diye bilinen, eşsiz sese sahip büyük dengbêj.",
-    "promptTr": "Hangi terim şu açıklamayla bilinir: \"\"Dengbêjlerin Şahı\" diye bilinen, eşsiz sese sahip büyük dengbêj\"?",
+    "promptTr": "\"Dengbêjlerin Şahı\" diye bilinen, eşsiz sesli büyük dengbêj kimdi?",
     "answersTr": [
       "Şakiro",
       "lîrîka klaman",
@@ -15072,7 +15072,7 @@
   {
     "id": "offline_curated_21376",
     "category": "Muzîk",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: 'yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine'?",
+    "prompt": "Yek ji stûnên muzîka klasîk a ku kilamên devera Botanê tomar kirine kî bû?",
     "answers": [
       "Meryem Xan",
       "Hasan Cizrawî",
@@ -15085,7 +15085,7 @@
     "difficulty": 2,
     "explanationKu": "\"Hasan Cizrawî\" tê vê wateyê: yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine.",
     "explanationTr": "\"Hasan Cizrawî\" şu anlama gelir: Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri.",
-    "promptTr": "Hangi terim şu açıklamayla bilinir: \"Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri\"?",
+    "promptTr": "Botan yöresinin kilamlarını kaydeden, klasik Kurmancî müziğinin direklerinden biri kimdi?",
     "answersTr": [
       "Meryem Xan",
       "Hasan Cizrawî",
@@ -15097,7 +15097,7 @@
   {
     "id": "offline_curated_21401",
     "category": "Muzîk",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: \"stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye\"?",
+    "prompt": "Yekemîn stranbêja kurd a ku dengê xwe li ser plakê tomar kiriye kî bû?",
     "answers": [
       "Şakiro",
       "bilûr",
@@ -15110,7 +15110,7 @@
     "difficulty": 3,
     "explanationKu": "\"Meryem Xan\" tê vê wateyê: stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye.",
     "explanationTr": "\"Meryem Xan\" şu anlama gelir: sesini plağa kaydeden ilk Kürt kadın şarkıcı.",
-    "promptTr": "Hangi terim şu açıklamayla bilinir: \"sesini plağa kaydeden ilk Kürt kadın şarkıcı\"?",
+    "promptTr": "Sesini plağa kaydeden ilk Kürt kadın şarkıcı kimdi?",
     "answersTr": [
       "Şakiro",
       "bilûr",
@@ -15147,7 +15147,7 @@
   {
     "id": "offline_curated_21451",
     "category": "Muzîk",
-    "prompt": "Kîjan têgeh bi vê ravekirinê tê nasîn: \"şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye\"?",
+    "prompt": "Şêwazê kilamên dengbêjiyê yê ku bi piranî li ser evîn û hesretê ye kîjan e?",
     "answers": [
       "bilûr",
       "lawik",
@@ -15160,7 +15160,7 @@
     "difficulty": 5,
     "explanationKu": "\"lawik\" tê vê wateyê: şêwazê kilama dengbêjiyê ya lîrîk ku bi piranî li ser evîn û hesretê ye.",
     "explanationTr": "\"lawik\" şu anlama gelir: çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı.",
-    "promptTr": "Hangi terim şu açıklamayla bilinir: \"çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı\"?",
+    "promptTr": "Çoğunlukla aşk ve hasret üzerine söylenen lirik dengbêjlik kilamı hangisidir?",
     "answersTr": [
       "bilûr",
       "lawik",
@@ -15172,7 +15172,7 @@
   {
     "id": "offline_curated_21475",
     "category": "Muzîk",
-    "prompt": "Têgeha \"heyran\" bi kîjan ravekirinê çêtir tê fêmkirin?",
+    "prompt": "Di muzîka kurdî de taybetmendiya kilamên bi navê \"heyran\" çi ye?",
     "answers": [
       "amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan",
       "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin",
@@ -15185,7 +15185,7 @@
     "difficulty": 5,
     "explanationKu": "\"heyran\" tê vê wateyê: klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin.",
     "explanationTr": "\"heyran\" şu anlama gelir: özellikle kadınların söylediği Serhat yöresi aşk kilamları.",
-    "promptTr": "\"heyran\" terimi hangi açıklamayla daha iyi anlaşılır?",
+    "promptTr": "Kürt müziğinde \"heyran\" adlı kilamların özelliği nedir?",
     "answersTr": [
       "özellikle dinî meclislerde çalınan, Yarsan/Ehl-i Hak geleneğinde kutsal sayılan telli çalgı",
       "özellikle kadınların söylediği Serhed yöresi aşk kilamları",
