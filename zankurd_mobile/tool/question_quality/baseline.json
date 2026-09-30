@@ -5,17 +5,17 @@
   "sourceFingerprints": {
     "assets/data/community_questions.json": "10270b32edce9364267ccbaa6535399a25f081829cc05d3b0c464911f79b3c58",
     "assets/data/deepseek_2026_08_18_questions.json": "652954f029d00c60b5186ceb801e943507537e65f6958f89f594ea49fad3cf3f",
-    "assets/data/editorial_questions.json": "cac29d3b3c3efba51ebb77a42421740453faf18692c08d3f5c64d3da18ec8ee5",
-    "assets/data/expansion_2026_08_19_questions.json": "9cf4a649f568cc4a9daf9b22c901091b1b014f351f3b07c9ba7ae5168b819d12",
-    "assets/data/expansion_2026_08_questions.json": "772acaeb38c03e78a1b77d922c66259b4046708db92d219e2c4c32f2dca53754",
-    "assets/data/expansion_2026_09_28_questions.json": "f404dce281a85f08d21e99060a30788c3aa008a37747078c3334ec7d3da9cb02",
+    "assets/data/editorial_questions.json": "fcc8827d0c2f824b17d95a6e04d5759088f228ced1e93e6d561db48c21017753",
+    "assets/data/expansion_2026_08_19_questions.json": "b5f8104491305f3188184a8132d1b52852e4256dce98d60c9bfa897da38bd4e1",
+    "assets/data/expansion_2026_08_questions.json": "05e69a46afa8a76f12a483bc582c633909d0e321ed5e6f7667af814c984bf716",
+    "assets/data/expansion_2026_09_28_questions.json": "48c974d2667ef8d10522c6427c9bbfbf489bd73a80cac0ad49012ae2a438dbb1",
     "assets/data/fill_in_blank_2026_08_questions.json": "70fb672dbc4710dabf98fb26c837944e8f3e4c4c15931986552e8335b0d67c9a",
-    "assets/data/offline_questions.json": "e7eaec574b721a1dfd5fa9a2779328073923d19833ba9278d037c9a5cba5e69e",
-    "assets/data/restore_2026_08_07_questions.json": "dc6b86f3e3d3181524a3440ee222952633f7cdc376b214f0fe0a1363704c80e6",
+    "assets/data/offline_questions.json": "acf5c493ede22827abab9d963b0e9ac66260e7c1d85830ea8d5045d9cfd0b2f4",
+    "assets/data/restore_2026_08_07_questions.json": "472193374fed3303f9572b54e92a9950838b237ca3786969df93b5d1369b9b66",
     "assets/data/sentence_building_questions.json": "70ec80a279a5101a7c8da0fcb4907f4540ab3ea6c2bf98a2cb56b377a1bf4661",
-    "assets/data/source_first_2026_08_questions.json": "d393fe7d5b59fed81f40b1c472cd8f39a515859a4275d7fbe6e63953e85d8d72",
+    "assets/data/source_first_2026_08_questions.json": "f35407701c5c2744a51e8b9302308fe1bca2fbd4c51161ac55a3db69235bcbc8",
     "assets/data/visual_2026_08_07_questions.json": "c4d898510653a5feb859879bedeeea1c64e094e597110e741b407e52af27e7af",
-    "lib/src/data/curated_question_bank.dart": "1bbdfb519ce8b6bc2d8b731dae2c3665f11cd12ba1c7c38a88416427d1a0e6f3"
+    "lib/src/data/curated_question_bank.dart": "d06386fb944df3b983af127e2945ca2f21c86b64f4f98724159b4ce3cbda2eb2"
   },
   "blockerCount": 0,
   "criticalCount": 0,
@@ -126,7 +126,6 @@
     "7a65878511915f32d327a0e2fbedf04b",
     "7a937265ad593fbf97d1309d3fcef343",
     "7f71109e2602995366be25e8538bf462",
-    "7fe1c5d2d494b46f47b43d9e38b83606",
     "82e7ae918b6c2902839b9df51c20cbfb",
     "8390376489bdbccb2e919e56b58b8c89",
     "85d0f3dfe51e324c7adf94d6192dc5c5",
@@ -235,7 +234,7 @@
     "gateSeverity": {
       "blocker": 0,
       "critical": 0,
-      "warning": 192,
+      "warning": 191,
       "info": 0
     },
     "checks": {}

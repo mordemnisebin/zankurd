@@ -45,9 +45,9 @@
       "Şerefxanê Bidlîsî"
     ],
     "correctAnswer": "Celadet Alî Bedirxan",
-    "explanation": "Celadet Ali Bedirhan 1930'larda Kürtçe Latin alfabesini sistemleştirdi ve Hawar dergisinde yaydı.",
-    "explanationKu": "Celadet Alî Bedirxan di salên 1930î de alfabeya latînî ya kurdî sîstematîze kir û di kovara Hawarê de belav kir.",
-    "explanationTr": "Celadet Ali Bedirhan 1930'larda Kürtçe Latin alfabesini sistemleştirdi ve Hawar dergisinde yaydı.",
+    "explanation": "Celadet Alî Bedirxan, Kurmancî Latin alfabesini düzenleyip Hawar dergisinde yaygınlaştırdı. Böylece Latin harfli Kürtçe yazı modern yazının temeli oldu.",
+    "explanationKu": "Celadet Alî Bedirxan alfabeya latînî ya Kurmancî rêk xist û di kovara Hawarê de belav kir. Bi vê yekê nivîsa Kurmancî ya latînî bû bingeha nivîsandina nûjen.",
+    "explanationTr": "Celadet Alî Bedirxan, Kurmancî Latin alfabesini düzenleyip Hawar dergisinde yaygınlaştırdı. Böylece Latin harfli Kürtçe yazı modern yazının temeli oldu.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -110,9 +110,9 @@
       "Bêjeya pirsê"
     ],
     "correctAnswer": "Veqetandek (izafe)",
-    "explanation": "İzafe (veqetandek) ismi sıfata veya başka bir isme bağlar: \"kitêba min\", \"mala mezin\".",
-    "explanationKu": "Veqetandek (izafe) navdêrê bi rengdêr an navdêreke din ve girê dide: \"kitêb-a min\", \"mal-a mezin\".",
-    "explanationTr": "İzafe (veqetandek) ismi sıfata veya başka bir isme bağlar: \"kitêba min\", \"mala mezin\".",
+    "explanation": "Kurmancîde isim, izafe (veqetandek) ile sıfata ya da başka bir isme bağlanır: kitêba min, mala mezin. Edat ve zamir bu bağı kurmaz.",
+    "explanationKu": "Di Kurmancî de navdêr bi veqetandekê (îzafeyê) bi rengdêr an navdêreke din ve tê girêdan: kitêba min, mala mezin. Daçek û cînav vê girêdanê çênakin.",
+    "explanationTr": "Kurmancîde isim, izafe (veqetandek) ile sıfata ya da başka bir isme bağlanır: kitêba min, mala mezin. Edat ve zamir bu bağı kurmaz.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -496,9 +496,9 @@
       "Tomarkirina stranên dengbêjên Serhedê"
     ],
     "correctAnswer": "Belavkirina alfabeya latînî ya kurdî",
-    "explanation": "Hawar (1932, Şam) Kürtçe Latin alfabesini yaydı ve modern Kürtçenin okulu oldu.",
-    "explanationKu": "Hawar (1932, Şam) alfabeya latînî ya kurdî belav kir û bû dibistana zimanê kurdî ya nûjen.",
-    "explanationTr": "Hawar (1932, Şam) Kürtçe Latin alfabesini yaydı ve modern Kürtçenin okulu oldu.",
+    "explanation": "Hawar 1932'de Şam'da çıkmaya başladı ve Kürtçe Latin alfabesini yaygınlaştırdı. Dil çalışmalarıyla modern Kurmancînin okulu oldu.",
+    "explanationKu": "Hawar di 1932an de li Şamê dest pê kir û alfabeya kurdî ya latînî belav kir. Bi xebatên xwe yên zimanî ew bû dibistana Kurmanciya nûjen.",
+    "explanationTr": "Hawar 1932'de Şam'da çıkmaya başladı ve Kürtçe Latin alfabesini yaygınlaştırdı. Dil çalışmalarıyla modern Kurmancînin okulu oldu.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -560,9 +560,9 @@
       "Hesinker"
     ],
     "correctAnswer": "Hesinker",
-    "explanation": "Demirci Kawa, Dehak'a karşı ayaklandı; zaferi Nevruz ateşiyle simgelenir.",
-    "explanationKu": "Kawayê Hesinker li dijî Dehaq rabû û serkeftina wî bi agirê Newrozê tê nîşankirin.",
-    "explanationTr": "Demirci Kawa, Dehak'a karşı ayaklandı; zaferi Nevruz ateşiyle simgelenir.",
+    "explanation": "Efsaneye göre Demirci Kawa demirciydi ve Dehak'a karşı ayaklandı. Nevruz ateşi onun zaferini simgeler, bu yüzden doğru cevap demircidir.",
+    "explanationKu": "Li gorî efsaneyê Kawayê Hesinker hesinker bû û li hemberî Dehaq rabû. Agirê Newrozê serkeftina wî bi bîr tîne, loma bersiva rast hesinker e.",
+    "explanationTr": "Efsaneye göre Demirci Kawa demirciydi ve Dehak'a karşı ayaklandı. Nevruz ateşi onun zaferini simgeler, bu yüzden doğru cevap demircidir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -592,9 +592,9 @@
       "Horon"
     ],
     "correctAnswer": "Govend",
-    "explanation": "Govend, elele ve sıra hâlinde oynanan Kürt halk dansıdır.",
-    "explanationKu": "Govend reqsa komî ya kurdî ye; mirov bi destan digirin û bi rêz dilîzin.",
-    "explanationTr": "Govend, elele ve sıra hâlinde oynanan Kürt halk dansıdır.",
+    "explanation": "Govend, el ele tutuşup sıra hâlinde oynanan Kürt toplu dansıdır. Semah, zeybek ve horon başka topluluk ve bölgelere aittir.",
+    "explanationKu": "Govend reqseke komî ya kurdî ye; kes bi destên hev digirin û bi rêzê dilîzin. Semah, zeybek û horon reqsên gel û herêmên din in.",
+    "explanationTr": "Govend, el ele tutuşup sıra hâlinde oynanan Kürt toplu dansıdır. Semah, zeybek ve horon başka topluluk ve bölgelere aittir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -720,9 +720,9 @@
       "Kadayîf"
     ],
     "correctAnswer": "Kutilk",
-    "explanation": "Kutilk (içli köfte) bulgurdan yapılır, kıymayla doldurulur.",
-    "explanationKu": "Kutilk (îçli kufte) ji savarê tê çêkirin û bi goştê hûrkirî tê dagirtin.",
-    "explanationTr": "Kutilk (içli köfte) bulgurdan yapılır, kıymayla doldurulur.",
+    "explanation": "Kutilk bulgurdan yapılır, kıymayla doldurulur ve elle yuvarlanır. Bu yüzden dolma, sarma ve kadayıftan farklıdır.",
+    "explanationKu": "Kutilk ji savarê tê çêkirin, bi goştê hûrkirî tê dagirtin û bi destan tê giloverkirin. Loma ew ji dolme, sarma û kadayîfê cuda ye.",
+    "explanationTr": "Kutilk bulgurdan yapılır, kıymayla doldurulur ve elle yuvarlanır. Bu yüzden dolma, sarma ve kadayıftan farklıdır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -908,9 +908,9 @@
       "Zer, mor û sor"
     ],
     "correctAnswer": "Sor, spî, kesk û zer",
-    "explanation": "Kürt bayrağı kırmızı, beyaz, yeşil şeritler ve ortadaki sarı güneşten oluşur.",
-    "explanationKu": "Ala kurdî ji sê rengên horizontal — sor, spî, kesk — û rojeke zer a navendî pêk tê.",
-    "explanationTr": "Kürt bayrağı kırmızı, beyaz, yeşil şeritler ve ortadaki sarı güneşten oluşur.",
+    "explanation": "Kürt bayrağı kırmızı, beyaz ve yeşil üç şeritle ortadaki sarı güneşten oluşur. Bu yüzden dört rengi birlikte sayan cevap doğrudur.",
+    "explanationKu": "Ala kurdî ji sê şerîtên sor, spî û kesk û ji rojeke zer a navendî pêk tê. Loma bersiva rast ew e ku van her çar rengan dihewîne.",
+    "explanationTr": "Kürt bayrağı kırmızı, beyaz ve yeşil üç şeritle ortadaki sarı güneşten oluşur. Bu yüzden dört rengi birlikte sayan cevap doğrudur.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1100,9 +1100,9 @@
       "Vegirtina Qudsê di 1187an de"
     ],
     "correctAnswer": "Vegirtina Qudsê di 1187an de",
-    "explanation": "Kürt kökenli Selahaddin Eyyubi 1187'de Kudüs'ü aldı ve Eyyubi Devleti'ni kurdu.",
-    "explanationKu": "Selahedînê Eyûbî yê bi eslê xwe kurd, di 1187an de Qudsê vegirt û Dewleta Eyûbiyan damezrand.",
-    "explanationTr": "Kürt kökenli Selahaddin Eyyubi 1187'de Kudüs'ü aldı ve Eyyubi Devleti'ni kurdu.",
+    "explanation": "Kürt kökenli Selahaddin Eyyubi 1187'de Kudüs'ü aldı. Kendisi Eyyubi Devleti'nin kurucusudur, Osmanlı'nın değil.",
+    "explanationKu": "Selahedînê Eyûbî yê bi eslê xwe kurd di 1187an de Quds vegirt. Ew damezrînerê Dewleta Eyûbiyan e, ne damezrînerê Osmaniyan e.",
+    "explanationTr": "Kürt kökenli Selahaddin Eyyubi 1187'de Kudüs'ü aldı. Kendisi Eyyubi Devleti'nin kurucusudur, Osmanlı'nın değil.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1352,9 +1352,9 @@
       "Mîrê Botan"
     ],
     "correctAnswer": "Serokê Komara Mehabadê",
-    "explanation": "Kadı Muhammed, Mahabad Cumhuriyeti'nin (1946) lideridir.",
-    "explanationKu": "Qadî Mihemed serokê Komara Mehabadê (1946) bû.",
-    "explanationTr": "Kadı Muhammed, Mahabad Cumhuriyeti'nin (1946) lideridir.",
+    "explanation": "Kadı Muhammed, 1946'da ilan edilen Mahabad Cumhuriyeti'nin lideriydi. Bu yüzden Şerefname, Hawar ya da Botan ile değil, Mahabad ile anılır.",
+    "explanationKu": "Qadî Mihemed serokê Komara Mehabadê bû ku di 1946an de hat ragihandin. Loma ew bi Mehabadê tê nasîn, ne bi Şerefname, Hawar an Botanê.",
+    "explanationTr": "Kadı Muhammed, 1946'da ilan edilen Mahabad Cumhuriyeti'nin lideriydi. Bu yüzden Şerefname, Hawar ya da Botan ile değil, Mahabad ile anılır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1448,9 +1448,9 @@
       "Kafkasya (Gence-Anî)"
     ],
     "correctAnswer": "Mezopotamyaya jorîn",
-    "explanation": "Hurriler ve Mitanniler Yukarı Mezopotamya'da, Dicle-Fırat'ın yukarı havzasında yaşadı.",
-    "explanationKu": "Hûrî û Mîtanî li Mezopotamyaya jorîn — herêma Dîcle û Firatê ya jorîn — dijiyan.",
-    "explanationTr": "Hurriler ve Mitanniler Yukarı Mezopotamya'da, Dicle-Fırat'ın yukarı havzasında yaşadı.",
+    "explanation": "Hurriler ve Mitanniler Yukarı Mezopotamya'da, yani Dicle ve Fırat'ın yukarı havzasında yaşadı. Bu yüzden doğru cevap Yukarı Mezopotamya'dır.",
+    "explanationKu": "Hûrî û Mîtanî li Mezopotamyaya jorîn, ango li herêma jorîn a Dîcle û Firatê dijiyan. Loma bersiva rast Mezopotamyaya jorîn e.",
+    "explanationTr": "Hurriler ve Mitanniler Yukarı Mezopotamya'da, yani Dicle ve Fırat'ın yukarı havzasında yaşadı. Bu yüzden doğru cevap Yukarı Mezopotamya'dır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1480,9 +1480,9 @@
       "Elî Herîrî"
     ],
     "correctAnswer": "Ehmedê Xanî",
-    "explanation": "Ehmedê Xanî (1651-1707) Mem û Zîn'i yazdı; klasik Kürt edebiyatının direğidir.",
-    "explanationKu": "Ehmedê Xanî (1651-1707) Mem û Zîn nivîsî; ew stûna wêjeya klasîk a kurdî ye.",
-    "explanationTr": "Ehmedê Xanî (1651-1707) Mem û Zîn'i yazdı; klasik Kürt edebiyatının direğidir.",
+    "explanation": "Mem û Zîn, Ehmedê Xanî'nin eseridir ve klasik Kürt edebiyatının temel direği sayılır. Seçeneklerdeki diğer isimler bu eserin yazarı değildir.",
+    "explanationKu": "Mem û Zîn berhema Ehmedê Xanî ye û stûna wêjeya klasîk a kurdî tê hesibandin. Navên din ên di vebijarkan de ne xwediyên vê berhemê ne.",
+    "explanationTr": "Mem û Zîn, Ehmedê Xanî'nin eseridir ve klasik Kürt edebiyatının temel direği sayılır. Seçeneklerdeki diğer isimler bu eserin yazarı değildir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1640,9 +1640,9 @@
       "Berhevoka gotinên pêşiyan"
     ],
     "correctAnswer": "Berhevoka helbestên helbestvanekî",
-    "explanation": "Divan, bir şairin şiirlerinin genelde kafiyeye göre düzenlenmiş toplamıdır.",
-    "explanationKu": "Dîwan berhevoka helbestên helbestvanekî ye, bi gelemperî li gorî qafiyeyê rêzkirî.",
-    "explanationTr": "Divan, bir şairin şiirlerinin genelde kafiyeye göre düzenlenmiş toplamıdır.",
+    "explanation": "Kürt edebiyatında divan, bir şairin şiirlerinin derlemesidir. Anlatı şiirinden, dörtlükten ve atasözleri derlemesinden farklıdır.",
+    "explanationKu": "Di wêjeya kurdî de dîwan berhevoka helbestên helbestvanekî ye. Ew ji helbesta çîrokî, ji çarînê û ji berhevoka gotinên pêşiyan cuda ye.",
+    "explanationTr": "Kürt edebiyatında divan, bir şairin şiirlerinin derlemesidir. Anlatı şiirinden, dörtlükten ve atasözleri derlemesinden farklıdır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1732,9 +1732,9 @@
       "Çînî û hindî"
     ],
     "correctAnswer": "Farisî û erebî",
-    "explanation": "Klasik Kürt şiiri, ölçü ve mecaz açısından Fars ve Arap edebiyatıyla etkileşim içindeydi.",
-    "explanationKu": "Helbesta klasîk a kurdî ji aliyê pîvan û mecazan ve bi wêjeya farisî û erebî re di nav danûstandinê de bû.",
-    "explanationTr": "Klasik Kürt şiiri, ölçü ve mecaz açısından Fars ve Arap edebiyatıyla etkileşim içindeydi.",
+    "explanation": "Klasik Kürt şiiri ölçü, mecaz ve biçim yönünden Fars ve Arap edebiyatıyla etkileşim içindeydi. Bu gelenekte Yunan, Slav ya da Çin etkisi görülmez.",
+    "explanationKu": "Helbesta klasîk a kurdî di pîvan, mecaz û formê de bi wêjeya farisî û erebî re di danûstandinê de bû. Bandora yewnanî, slavî an çînî di vê kevneşopiyê de xuya nake.",
+    "explanationTr": "Klasik Kürt şiiri ölçü, mecaz ve biçim yönünden Fars ve Arap edebiyatıyla etkileşim içindeydi. Bu gelenekte Yunan, Slav ya da Çin etkisi görülmez.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1796,9 +1796,9 @@
       "Erebê Şemo"
     ],
     "correctAnswer": "Erebê Şemo",
-    "explanation": "Erebê Şemo, ilk Kürt romanı sayılan \"Şivanê Kurmanca\"yı (1935) yazdı.",
-    "explanationKu": "Erebê Şemo \"Şivanê Kurmanca\" (1935) nivîsî; ew wek romana kurdî ya pêşîn tê hesibandin.",
-    "explanationTr": "Erebê Şemo, ilk Kürt romanı sayılan \"Şivanê Kurmanca\"yı (1935) yazdı.",
+    "explanation": "Erebê Şemo 1935'te Şivanê Kurmanca'yı yazdı ve bu eser ilk Kürt romanı sayılır. Bu yüzden kendisi ilk Kürt romancısı olarak tanınır.",
+    "explanationKu": "Erebê Şemo di 1935an de Şivanê Kurmanca nivîsî û ew wekî romana kurdî ya pêşîn tê hesibandin. Loma ew wekî yekem romannivîsê kurd tê nasîn.",
+    "explanationTr": "Erebê Şemo 1935'te Şivanê Kurmanca'yı yazdı ve bu eser ilk Kürt romanı sayılır. Bu yüzden kendisi ilk Kürt romancısı olarak tanınır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1828,9 +1828,9 @@
       "Zagros"
     ],
     "correctAnswer": "Zagros",
-    "explanation": "Zagros dağları, İran'ın kuzeybatısından Güney Kürdistan'a uzanır.",
-    "explanationKu": "Çiyayên Zagros ji bakurê rojavayê Îranê heta başûrê Kurdistanê dirêj dibin.",
-    "explanationTr": "Zagros dağları, İran'ın kuzeybatısından Güney Kürdistan'a uzanır.",
+    "explanation": "Zagros, Kürt coğrafyasının büyük bölümünü kaplayan ana sıradağdır. Alpler, Kafkaslar ve Batı Toroslar bu bölgenin dışındadır.",
+    "explanationKu": "Zagros zincîra çiyayî ya sereke ye ku piraniya erdnîgariya kurdî digire nav xwe. Alp, Kafkas û Torosên Rojava li derveyî vê herêmê ne.",
+    "explanationTr": "Zagros, Kürt coğrafyasının büyük bölümünü kaplayan ana sıradağdır. Alpler, Kafkaslar ve Batı Toroslar bu bölgenin dışındadır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1860,9 +1860,9 @@
       "Gola Îznîkê"
     ],
     "correctAnswer": "Gola Wanê",
-    "explanation": "Van Gölü yaklaşık 3.700 km² ile Türkiye'nin en büyük gölüdür.",
-    "explanationKu": "Gola Wanê bi qasî 3.700 km² e û gola herî mezin a Tirkiyeyê ye.",
-    "explanationTr": "Van Gölü yaklaşık 3.700 km² ile Türkiye'nin en büyük gölüdür.",
+    "explanation": "Van Gölü, Türkiye'nin en büyük gölüdür ve Kürt bölgesindedir. Tuz, Beyşehir ve İznik gölleri bu bölgede değildir ve bu kadar büyük değildir.",
+    "explanationKu": "Gola Wanê gola herî mezin a Tirkiyeyê ye û li herêma kurdî ye. Golên Tuzê, Beyşehîrê û Îznîkê ne li vê herêmê ne û ne ewqas mezin in.",
+    "explanationTr": "Van Gölü, Türkiye'nin en büyük gölüdür ve Kürt bölgesindedir. Tuz, Beyşehir ve İznik gölleri bu bölgede değildir ve bu kadar büyük değildir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1892,9 +1892,9 @@
       "Ganj û Îndus"
     ],
     "correctAnswer": "Dîcle û Firat",
-    "explanation": "Dicle ve Fırat, Kürdistan dağlarından doğar ve Mezopotamya'yı oluşturur.",
-    "explanationKu": "Dîcle û Firat ji çiyayên Kurdistanê diherikin û Mezopotamyayê ava dikin.",
-    "explanationTr": "Dicle ve Fırat, Kürdistan dağlarından doğar ve Mezopotamya'yı oluşturur.",
+    "explanation": "İki nehir arası ülke anlamına gelen Mezopotamya, Dicle ve Fırat ile bilinir. Nil-Kongo, Volga-Don ve Ganj-İndus başka kıtalardadır.",
+    "explanationKu": "Mezopotamya, ango welatê di navbera herdu çeman de, bi Dîcle û Firatê tê nasîn. Nîl û Kongo, Volga û Don, Ganj û Îndus li parzemînên din in.",
+    "explanationTr": "İki nehir arası ülke anlamına gelen Mezopotamya, Dicle ve Fırat ile bilinir. Nil-Kongo, Volga-Don ve Ganj-İndus başka kıtalardadır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -1924,9 +1924,9 @@
       "Rojhilatê Kurdistanê"
     ],
     "correctAnswer": "Herêma Kurdistanê ya Iraqê",
-    "explanation": "Erbil, Irak Federal Kürdistan Bölgesi'nin başkentidir; kalesi UNESCO listesindedir.",
-    "explanationKu": "Hewlêr paytexta Herêma Kurdistanê ya Federal a Iraqê ye; qelaya wê di lîsteya UNESCOyê de ye.",
-    "explanationTr": "Erbil, Irak Federal Kürdistan Bölgesi'nin başkentidir; kalesi UNESCO listesindedir.",
+    "explanation": "Erbil, Irak Kürdistan Bölgesi'nin yönetim merkezidir; parlamento ve hükümet buradadır. Erbil Kalesi de kentin tarihî simgesidir.",
+    "explanationKu": "Hewlêr navenda rêveberiyê ya Herêma Kurdistanê ya Iraqê ye; parlament û hikûmet li wir in. Qelaya Hewlêrê jî sembola dîrokî ya bajêr e.",
+    "explanationTr": "Erbil, Irak Kürdistan Bölgesi'nin yönetim merkezidir; parlamento ve hükümet buradadır. Erbil Kalesi de kentin tarihî simgesidir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2272,9 +2272,9 @@
       "Zirne"
     ],
     "correctAnswer": "Tembûr",
-    "explanation": "Tembûr telli bir çalgıdır ve Kürt müziğinde merkezi yer tutar.",
-    "explanationKu": "Tembûr amûreke têlî ye û di muzîka kurdî de cihekî navendî digire.",
-    "explanationTr": "Tembûr telli bir çalgıdır ve Kürt müziğinde merkezi yer tutar.",
+    "explanation": "Tembûr uzun saplı telli bir çalgıdır; parmakla ya da mızrapla çalınır. Kürt müziğinde kilam ve türküler özellikle tembûr eşliğinde söylenir.",
+    "explanationKu": "Tembûr amûreke têlî ya bi stûyê dirêj e û bi tiliyan an bi mizrabê tê lêxistin. Di muzîka kurdî de bi taybetî kilam û stran bi tembûrê têne gotin.",
+    "explanationTr": "Tembûr uzun saplı telli bir çalgıdır; parmakla ya da mızrapla çalınır. Kürt müziğinde kilam ve türküler özellikle tembûr eşliğinde söylenir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2336,9 +2336,9 @@
       "Nimêja sibehê"
     ],
     "correctAnswer": "Dawet û govendê",
-    "explanation": "Davul ve zurna, düğün ve halayın klasik ikilisidir.",
-    "explanationKu": "Dahol û zirne cotê amûran ê dawet û govendê ye.",
-    "explanationTr": "Davul ve zurna, düğün ve halayın klasik ikilisidir.",
+    "explanation": "Davul ve zurna yüksek sesleriyle halayın temposunu verir ve oyunu yönlendirir. Bu yüzden düğün ve şenliklerde birlikte çalınır.",
+    "explanationKu": "Dahol û zirne bi dengê xwe yê bilind govendê dimeşînin û ahenga reqsê didin. Lewma di dawet û şahiyan de bi hev re tên lêxistin.",
+    "explanationTr": "Davul ve zurna yüksek sesleriyle halayın temposunu verir ve oyunu yönlendirir. Bu yüzden düğün ve şenliklerde birlikte çalınır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3700,9 +3700,9 @@
       "Şeva Newrozê"
     ],
     "correctAnswer": "Şeva herî dirêj a salê",
-    "explanation": "Yelda gecesi yılın en uzun gecesidir; toplanıp yemekle geçirilir.",
-    "explanationKu": "Şeva Yeldayê şeva herî dirêj a salê ye û bi civîn û xwarinê tê derbaskirin.",
-    "explanationTr": "Yelda gecesi yılın en uzun gecesidir; toplanıp yemekle geçirilir.",
+    "explanation": "Yelda gecesi yılın en uzun gecesidir ve kışa denk gelir. İnsanlar bu gece evlerde toplanır, sohbet ve yemekle geçirir.",
+    "explanationKu": "Şeva Yeldayê şeva herî dirêj a salê ye û dikeve zivistanê. Mirov vê şevê li malan li hev dicivin û bi sohbet û xwarinê derbas dikin.",
+    "explanationTr": "Yelda gecesi yılın en uzun gecesidir ve kışa denk gelir. İnsanlar bu gece evlerde toplanır, sohbet ve yemekle geçirir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4144,9 +4144,9 @@
       "Sitî"
     ],
     "correctAnswer": "Bekir",
-    "explanation": "Bekir, destanda fesatlık rolü oynar ve Mem ile Zin'i birbirinden ayırır.",
-    "explanationKu": "Bekirê Ewan di destanê de rola fesadiyê dilîze û Mem û Zînê ji hev dûr dixe.",
-    "explanationTr": "Bekir, destanda fesatlık rolü oynar ve Mem ile Zin'i birbirinden ayırır.",
+    "explanation": "Mem û Zîn, Ehmedê Xanî'nin mesnevisidir. Destanda Bekir, bozgunculuk ve dedikodularla âşıkları birbirinden ayırır.",
+    "explanationKu": "Mem û Zîn mesnewiya Ehmedê Xanî ye. Tê de Bekir bi fesadî û gotegotan evîndaran ji hev dûr dixe.",
+    "explanationTr": "Mem û Zîn, Ehmedê Xanî'nin mesnevisidir. Destanda Bekir, bozgunculuk ve dedikodularla âşıkları birbirinden ayırır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4268,9 +4268,9 @@
       "Çiyayên Qefqasyayê"
     ],
     "correctAnswer": "Çiyayên rojhilatê Anatolyayê",
-    "explanation": "Fırat, Doğu Anadolu dağlarından doğar ve Basra Körfezi'ne dökülür.",
-    "explanationKu": "Firat ji çiyayên rojhilatê Anatolyayê dest pê dike û diçe Kendava Basrayê.",
-    "explanationTr": "Fırat, Doğu Anadolu dağlarından doğar ve Basra Körfezi'ne dökülür.",
+    "explanation": "Fırat, Doğu Anadolu'nun dağlık kesimindeki sulardan beslenir ve güneye doğru akar. Bu yüzden kaynağı bu bölgededir.",
+    "explanationKu": "Firat ji avên çiyayên rojhilatê Anatolyayê çêdibe û ber bi başûr ve diherike. Lewma jêder li wê herêmê ye.",
+    "explanationTr": "Fırat, Doğu Anadolu'nun dağlık kesimindeki sulardan beslenir ve güneye doğru akar. Bu yüzden kaynağı bu bölgededir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4332,9 +4332,9 @@
       "Avahiyên kelpîçî yên bi qubeyên gilover"
     ],
     "correctAnswer": "Avahiyên kevirî yên li ser çiyê",
-    "explanation": "Mardin, Mezopotamya ovasına bakan yamaçtaki taş yapılarıyla ünlüdür.",
-    "explanationKu": "Mêrdîn bi avahiyên kevirî yên li ser bejahiyê ku li deşta Mezopotamyayê dinêrin navdar e.",
-    "explanationTr": "Mardin, Mezopotamya ovasına bakan yamaçtaki taş yapılarıyla ünlüdür.",
+    "explanation": "Mardin bir yükseltide kuruludur; taş yapıları Mezopotamya ovasına bakar. Taş sokaklar ve evler kentin kimliğidir.",
+    "explanationKu": "Mêrdîn li ser bilindahiyekê ye û avahiyên wê yên kevirî li deşta Mezopotamyayê dinêrin. Kolan û xaniyên kevirî nasnameya bajêr in.",
+    "explanationTr": "Mardin bir yükseltide kuruludur; taş yapıları Mezopotamya ovasına bakar. Taş sokaklar ve evler kentin kimliğidir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4680,9 +4680,9 @@
       "Bûyerên şer û berxwedanê"
     ],
     "correctAnswer": "Bûyerên şer û berxwedanê",
-    "explanation": "Savaş kilamları; savaş, saldırı ve direniş olaylarını aktarır.",
-    "explanationKu": "Kilamên şer bûyerên dîrokî yên şer, êrîş û berxwedanê vediguhezînin.",
-    "explanationTr": "Savaş kilamları; savaş, saldırı ve direniş olaylarını aktarır.",
+    "explanation": "Dengbêjler savaş kilamlarında savaş, saldırı ve direnişi anlatır. Bu kilamlar toplumun tarihî hafızasını korur.",
+    "explanationKu": "Dengbêj di kilamên şer de qala şer, êrîş û berxwedanê dikin. Ev kilam bîra dîrokî ya civakê diparêzin.",
+    "explanationTr": "Dengbêjler savaş kilamlarında savaş, saldırı ve direnişi anlatır. Bu kilamlar toplumun tarihî hafızasını korur.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5182,9 +5182,9 @@
       "Raweya fermanî"
     ],
     "correctAnswer": "Dema niha",
-    "explanation": "\"di-\" ön eki şimdiki zamanı gösterir: \"ez dixwazim\".",
-    "explanationKu": "Pêşgira \"di-\" nîşana dema niha ye: \"ez di-xwaz-im\".",
-    "explanationTr": "\"di-\" ön eki şimdiki zamanı gösterir: \"ez dixwazim\".",
+    "explanation": "\"di-\" ön eki şimdiki zamanı gösterir. \"Ez dixwazim\" cümlesi süren bir isteği anlatır, geçmişi ya da geleceği değil.",
+    "explanationKu": "Pêşgira \"di-\" nîşana dema niha ye. \"Ez dixwazim\" daxwazeke niha nîşan dide, ne ya borî ne ya pêşerojê.",
+    "explanationTr": "\"di-\" ön eki şimdiki zamanı gösterir. \"Ez dixwazim\" cümlesi süren bir isteği anlatır, geçmişi ya da geleceği değil.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5499,9 +5499,9 @@
       "diyarî/xelat"
     ],
     "correctAnswer": "mûyê bizinê",
-    "explanation": "Göçerlerin kara çadırı keçi kılından dokunur; su geçirmez, rüzgârı keser.",
-    "explanationKu": "Çadira koçeran ji mûyê bizinê tê hûnandin; av derbas nake û bayê digire.",
-    "explanationTr": "Göçerlerin kara çadırı keçi kılından dokunur; su geçirmez, rüzgârı keser.",
+    "explanation": "Kara çadır keçi kılından dokunur. Bu çadır suyu geçirmez ve rüzgâra dayanıklıdır, bu yüzden göçer yaşamına uygundur.",
+    "explanationKu": "Çadira reş ji mûyê bizinê tê hûnandin. Ev çadir avê derbas nake û li hember bayê berxwedêr e, lewma ji bo jiyana koçeran guncav e.",
+    "explanationTr": "Kara çadır keçi kılından dokunur. Bu çadır suyu geçirmez ve rüzgâra dayanıklıdır, bu yüzden göçer yaşamına uygundur.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5879,9 +5879,9 @@
       "Bajarekî sînor ê stratejîk"
     ],
     "correctAnswer": "Bajarekî sînor ê stratejîk",
-    "explanation": "Amida, Roma ile Sasaniler arasında stratejik bir sınır kentiydi.",
-    "explanationKu": "Amida di navbera Roma û Sasaniyan de bajarekî sînor ê stratejîk bû.",
-    "explanationTr": "Amida, Roma ile Sasaniler arasında stratejik bir sınır kentiydi.",
+    "explanation": "Amida önemli bir Roma kalesiydi ve Sasani Devleti sınırında yer alıyordu. Bu yüzden askerî ve stratejik bir rol taşıyordu.",
+    "explanationKu": "Amida keleheke girîng a Romayê bû û li ser sînorê dewleta Sasaniyan cih digirt. Lewma xwedî roleke leşkerî û stratejîk bû.",
+    "explanationTr": "Amida önemli bir Roma kalesiydi ve Sasani Devleti sınırında yer alıyordu. Bu yüzden askerî ve stratejik bir rol taşıyordu.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6195,9 +6195,9 @@
       "Salên 2000î"
     ],
     "correctAnswer": "Salên 1950î",
-    "explanation": "Erivan Radyosu'nun Kürtçe yayını 1950'lerde başladı ve önemli bir arşiv oldu.",
-    "explanationKu": "Weşana kurdî ya Radyoya Erîvanê ji salên 1950î ve dest pê kir û bû arşîvek girîng.",
-    "explanationTr": "Erivan Radyosu'nun Kürtçe yayını 1950'lerde başladı ve önemli bir arşiv oldu.",
+    "explanation": "Erivan Radyosu'nun Kürtçe yayını Kürt sanatı ve edebiyatının sesini yaydı. Bu yayın, Kürt kültürü ve müziği için önemli bir ses arşivi oldu.",
+    "explanationKu": "Weşana kurdî ya Radyoya Erîvanê dengê huner û wêjeya kurdî belav kir. Ev weşan bû arşîveke dengî ya girîng ji bo çand û muzîka kurdî.",
+    "explanationTr": "Erivan Radyosu'nun Kürtçe yayını Kürt sanatı ve edebiyatının sesini yaydı. Bu yayın, Kürt kültürü ve müziği için önemli bir ses arşivi oldu.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6323,9 +6323,9 @@
       "Sedsala 10em"
     ],
     "correctAnswer": "Sedsala 19em",
-    "explanation": "Osmanlı merkezileşmesiyle Kürt emirlikleri 19. yüzyılda tek tek kaldırıldı.",
-    "explanationKu": "Bi navendîkirina Osmanî re mîrektiyên kurd di sedsala 19em de yek bi yek hatin hilweşandin.",
-    "explanationTr": "Osmanlı merkezileşmesiyle Kürt emirlikleri 19. yüzyılda tek tek kaldırıldı.",
+    "explanation": "Osmanlılar merkezileşme politikasıyla Kürt emirliklerini tek tek ortadan kaldırdı. Bu süreç 19. yüzyılda tamamlandı.",
+    "explanationKu": "Osmaniyan bi polîtîkaya navendîkirinê mîrektiyên kurd yek bi yek ji holê rakirin. Ev pêvajo di sedsala 19an de bi dawî bû.",
+    "explanationTr": "Osmanlılar merkezileşme politikasıyla Kürt emirliklerini tek tek ortadan kaldırdı. Bu süreç 19. yüzyılda tamamlandı.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6419,9 +6419,9 @@
       "Kovarên çand û wêjeyê"
     ],
     "correctAnswer": "Kovarên çand û wêjeyê",
-    "explanation": "Edebiyat dergileri, yazılı Kürtçenin sürekliliği için önemli yer tutar.",
-    "explanationKu": "Kovarên wêjeyî ji bo domandina kurdiya nivîskî cihekî girîng digirin.",
-    "explanationTr": "Edebiyat dergileri, yazılı Kürtçenin sürekliliği için önemli yer tutar.",
+    "explanation": "Nûbihar ve Tîroj, Kürt kültür ve edebiyat dergileridir. İçlerinde şiir, öykü ve dil-edebiyat araştırmaları yayımlanır.",
+    "explanationKu": "Nûbihar û Tîroj kovarên çand û wêjeya kurdî ne. Tê de helbest, çîrok û lêkolînên li ser ziman û wêjeyê têne weşandin.",
+    "explanationTr": "Nûbihar ve Tîroj, Kürt kültür ve edebiyat dergileridir. İçlerinde şiir, öykü ve dil-edebiyat araştırmaları yayımlanır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6543,9 +6543,9 @@
       "Fîlman"
     ],
     "correctAnswer": "Dengbêj û çîrokbêjan",
-    "explanation": "Matbaadan önce edebiyat sözlü olarak — dengbêj ve masalcılarla — aktarıldı.",
-    "explanationKu": "Berî çapxaneyê, wêje bi devkî — bi dengbêj û çîrokbêjan — hate veguhastin.",
-    "explanationTr": "Matbaadan önce edebiyat sözlü olarak — dengbêj ve masalcılarla — aktarıldı.",
+    "explanation": "Basım ve yazının yaygınlaşmasından önce öykü, kilam ve destanlar sözlü olarak korunuyordu. Dengbêj ve masalcılar bu mirası kuşaktan kuşağa aktardı.",
+    "explanationKu": "Berî belavbûna çap û nivîsê, çîrok, kilam û destan bi devkî hatine parastin. Dengbêj û çîrokbêjan ev mîras ji nifşekî gihandine nifşekî din.",
+    "explanationTr": "Basım ve yazının yaygınlaşmasından önce öykü, kilam ve destanlar sözlü olarak korunuyordu. Dengbêj ve masalcılar bu mirası kuşaktan kuşağa aktardı.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6671,9 +6671,9 @@
       "Behra Spî"
     ],
     "correctAnswer": "Gola Wanê",
-    "explanation": "Van, Van Gölü'nün doğu kıyısındadır.",
-    "explanationKu": "Wan li peravê rojhilatê Gola Wanê ye.",
-    "explanationTr": "Van, Van Gölü'nün doğu kıyısındadır.",
+    "explanation": "Van kenti, Van Gölü'nün doğu kıyısındadır. Göl kentin batısında kalır ve kent yaşamı gölle iç içedir.",
+    "explanationKu": "Bajarê Wanê li peravê rojhilatê Gola Wanê ye. Gol li rojavayê bajêr dimîne û jiyana bajêr bi golê ve girêdayî ye.",
+    "explanationTr": "Van kenti, Van Gölü'nün doğu kıyısındadır. Göl kentin batısında kalır ve kent yaşamı gölle iç içedir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6767,9 +6767,9 @@
       "Sê"
     ],
     "correctAnswer": "Çar",
-    "explanation": "Dört vilayet: Erbil, Süleymaniye, Duhok ve Halepçe.",
-    "explanationKu": "Çar parêzgeh: Hewlêr, Silêmanî, Dihok û Helebce.",
-    "explanationTr": "Dört vilayet: Erbil, Süleymaniye, Duhok ve Halepçe.",
+    "explanation": "Irak Kürdistan Bölgesi dört ilden oluşur: Erbil, Süleymaniye, Duhok ve Halepçe. Her birinin kendi yönetim merkezi vardır.",
+    "explanationKu": "Herêma Kurdistanê ya Iraqê ji çar parêzgehan pêk tê: Hewlêr, Silêmanî, Dihok û Helebce. Her yek xwedî navenda rêveberiya xwe ye.",
+    "explanationTr": "Irak Kürdistan Bölgesi dört ilden oluşur: Erbil, Süleymaniye, Duhok ve Halepçe. Her birinin kendi yönetim merkezi vardır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6831,9 +6831,9 @@
       "Turîzma peravê"
     ],
     "correctAnswer": "Çandiniya genim û ceh",
-    "explanation": "Güneydeki ovalar buğday ve arpa tarımına elverişlidir.",
-    "explanationKu": "Deştên başûr ji bo çandiniya genim û ceh guncav in.",
-    "explanationTr": "Güneydeki ovalar buğday ve arpa tarımına elverişlidir.",
+    "explanation": "Kürdistan'ın güneyindeki ovalar tarıma elverişlidir. Buralarda özellikle buğday ve arpa yetiştirilir.",
+    "explanationKu": "Deştên başûr ên Kurdistanê ji bo çandiniyê guncav in. Li wir bi taybetî genim û ceh tên çandin.",
+    "explanationTr": "Kürdistan'ın güneyindeki ovalar tarıma elverişlidir. Buralarda özellikle buğday ve arpa yetiştirilir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7083,9 +7083,9 @@
       "Bi tiliyan an bi mizrabê"
     ],
     "correctAnswer": "Bi tiliyan an bi mizrabê",
-    "explanation": "Şeştar, tembûr ve saz parmakla ya da mızrapla çalınır.",
-    "explanationKu": "Şeştar, tembûr û saz bi tiliyan an bi mizrabê tên lêxistin.",
-    "explanationTr": "Şeştar, tembûr ve saz parmakla ya da mızrapla çalınır.",
+    "explanation": "Şeştar, tembûr ve saz telli çalgılardır; parmakla ya da mızrapla çalınır. Tellere vurularak ses çıkarılır.",
+    "explanationKu": "Şeştar, tembûr û saz amûrên têlî ne û bi tiliyan an bi mizrabê tên lêxistin. Bi lêxistina têlan deng çêdibe.",
+    "explanationTr": "Şeştar, tembûr ve saz telli çalgılardır; parmakla ya da mızrapla çalınır. Tellere vurularak ses çıkarılır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7179,9 +7179,9 @@
       "Erbane û ney"
     ],
     "correctAnswer": "Dahol û zirne",
-    "explanation": "Davul ve zurna, yüksek sesiyle açık hava halayına uygundur.",
-    "explanationKu": "Dahol û zirne bi dengê xwe yê bilind ji bo govenda derve guncav in.",
-    "explanationTr": "Davul ve zurna, yüksek sesiyle açık hava halayına uygundur.",
+    "explanation": "Kürt düğünlerinde halay davul ve zurnayla yürütülür. Yüksek sesleri açık havadaki toplu dansa uygundur.",
+    "explanationKu": "Di dawetên kurdî de govend bi dahol û zirneyê tê meşandin. Dengê wan ê bilind ji bo reqsa komî ya li derve guncav e.",
+    "explanationTr": "Kürt düğünlerinde halay davul ve zurnayla yürütülür. Yüksek sesleri açık havadaki toplu dansa uygundur.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7903,9 +7903,9 @@
       "Şêrê Zêrîn"
     ],
     "correctAnswer": "Caméra d'Or",
-    "explanation": "Caméra d'Or, bir yönetmenin ilk filmine verilen ödüldür; Bahman Ghobadi bu ödülü 2000 yılında aldı.",
-    "explanationKu": "Caméra d'Or xelata fîlmê yekem ê derhênerekî ye; Bahman Ghobadi ew di sala 2000'î de wergirt.",
-    "explanationTr": "Caméra d'Or, bir yönetmenin ilk filmine verilen ödüldür; Bahman Ghobadi bu ödülü 2000 yılında aldı.",
+    "explanation": "Caméra d'Or, Cannes'da bir yönetmenin ilk filmine verilen ödüldür; Dema Hespên Serxweş, Bahman Ghobadi'nin ilk filmi olarak bu ödülü aldı.",
+    "explanationKu": "Caméra d'Or li Cannesê xelata fîlmê yekem ê derhêner e; Dema Hespên Serxweş fîlmê yekem ê Bahman Ghobadi bû û ev xelat wergirt.",
+    "explanationTr": "Caméra d'Or, Cannes'da bir yönetmenin ilk filmine verilen ödüldür; Dema Hespên Serxweş, Bahman Ghobadi'nin ilk filmi olarak bu ödülü aldı.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -8575,9 +8575,9 @@
       "Ömer Lütfi Akad"
     ],
     "correctAnswer": "Zeki Ökten",
-    "explanation": "Senaryo Yılmaz Güney'e aitti; cezaevinde yazdı ve yönetmenlik Zeki Ökten'e kaldı.",
-    "explanationKu": "Senaryo ya Yilmaz Guney bû; wî di girtîgehê de nivîsand û derhênerî ji Zeki Ökten re ma.",
-    "explanationTr": "Senaryo Yılmaz Güney'e aitti; cezaevinde yazdı ve yönetmenlik Zeki Ökten'e kaldı.",
+    "explanation": "Senaryo Yılmaz Güney'e aitti; o cezaevinde yazmıştı ve filmin yönetmenliğini de Zeki Ökten yaptı.",
+    "explanationKu": "Senaryo ya Yilmaz Güney bû; wî di girtîgehê de nivîsî bû û derhêneriya fîlmê jî Zeki Ökten kir.",
+    "explanationTr": "Senaryo Yılmaz Güney'e aitti; o cezaevinde yazmıştı ve filmin yönetmenliğini de Zeki Ökten yaptı.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",

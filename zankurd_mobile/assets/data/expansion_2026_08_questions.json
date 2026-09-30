@@ -18,11 +18,11 @@
       "Işık asistanı"
     ],
     "correctAnswerTr": "Yönetmen",
-    "explanation": "Yönetmen, senaryonun görüntüye dönüşmesindeki tüm sanatsal seçimlerden sorumludur; oyunculuk, kadraj ve ritim onun kararıyla şekillenir. Ses, kostüm ve ışık ekipleri kendi alanlarında ona bağlı çalışır.",
+    "explanation": "Yönetmen senaryoyu görüntüye dönüştürür; oyunculuk, kadraj ve ritim onun kararıyla şekillenir.",
     "difficulty": 1,
     "type": "multipleChoice",
-    "explanationTr": "Yönetmen, senaryonun görüntüye dönüşmesindeki tüm sanatsal seçimlerden sorumludur; oyunculuk, kadraj ve ritim onun kararıyla şekillenir. Ses, kostüm ve ışık ekipleri kendi alanlarında ona bağlı çalışır.",
-    "explanationKu": "Derhêner ji hemû biryarên hunerî yên veguherîna senaryoyê bo dîmenan berpirsiyar e; lîstikvanî, kadraj û rîtm bi biryara wî şekil digirin. Tîmên deng, kostum û ronahiyê jî di qada xwe de li gorî wî dixebitin.",
+    "explanationTr": "Yönetmen senaryoyu görüntüye dönüştürür; oyunculuk, kadraj ve ritim onun kararıyla şekillenir.",
+    "explanationKu": "Derhêner senaryoyê vediguherîne dîmenan; lîstikvanî, kadraj û rîtm bi biryara wî şekil digirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -86,11 +86,11 @@
       "Yakın plan"
     ],
     "correctAnswerTr": "Yakın plan",
-    "explanation": "Yakın plan yüzü ya da küçük bir ayrıntıyı kadrajın tamamına yayar; duyguyu ve tepkiyi izleyiciye en doğrudan aktaran ölçek budur. Genel ve uzak planlar figürü mekân içinde küçültür, orta plan belden yukarısını alır.",
+    "explanation": "Yakın plan yüzü ya da küçük bir ayrıntıyı büyütüp duyguyu doğrudan aktarır; geniş planlar ise yeri ve mekânı tanıtır.",
     "difficulty": 2,
     "type": "multipleChoice",
-    "explanationTr": "Yakın plan yüzü ya da küçük bir ayrıntıyı kadrajın tamamına yayar; duyguyu ve tepkiyi izleyiciye en doğrudan aktaran ölçek budur. Genel ve uzak planlar figürü mekân içinde küçültür, orta plan belden yukarısını alır.",
-    "explanationKu": "Nêzîkdîtin rû an jî hûrgiliyeke piçûk li ser tevahiya kadrajê belav dike; ev pîvan e ku hest û reaksiyonê herî rasterast digihîne temaşevanan. Dîmenên giştî û dûr laş di nav mekanê de piçûk dikin, dîmena navîn jî ji navqedê ve bilind digire.",
+    "explanationTr": "Yakın plan yüzü ya da küçük bir ayrıntıyı büyütüp duyguyu doğrudan aktarır; geniş planlar ise yeri ve mekânı tanıtır.",
+    "explanationKu": "Plana nêzîk rû an hûrgiliyekê mezin nîşan dide û hestê rasterast digihîne temaşevan; planên fireh berevajî vê yekê cih û mekanê didin nasîn.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -188,11 +188,11 @@
       "Senarist"
     ],
     "correctAnswerTr": "Kurgucu",
-    "explanation": "Kurgucu, çekilen malzemeyi seçip sıralayarak filmin ritmini ve süresini belirler; aynı çekimlerden çok farklı filmler çıkarılabilir. Görüntü yönetmeni ışık ve kamerayla, sanat yönetmeni mekân ve dekorla ilgilenir.",
+    "explanation": "Kurgucu çekilen görüntüleri seçip sıralar; filmin ritmi ve son süresi bu seçimle belirlenir.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Kurgucu, çekilen malzemeyi seçip sıralayarak filmin ritmini ve süresini belirler; aynı çekimlerden çok farklı filmler çıkarılabilir. Görüntü yönetmeni ışık ve kamerayla, sanat yönetmeni mekân ve dekorla ilgilenir.",
-    "explanationKu": "Hevgirêder bi hilbijartin û rêzkirina materyalê kişandî rîtm û dirêjahiya fîlmî diyar dike; ji heman dîmenan gelek fîlmên cuda dikarin derkevin. Derhênerê dîmenê bi ronahî û kamerayê, derhênerê hunerî jî bi mekan û dekorê re mijûl dibe.",
+    "explanationTr": "Kurgucu çekilen görüntüleri seçip sıralar; filmin ritmi ve son süresi bu seçimle belirlenir.",
+    "explanationKu": "Montajkar dîmenên kişandî hildibijêre û rêz dike; rîtm û dirêjahiya dawî ya fîlmî bi vê hilbijartinê diyar dibe.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -392,11 +392,11 @@
       "Müzikal"
     ],
     "correctAnswerTr": "Belgesel",
-    "explanation": "Belgesel gerçekliği doğrudan gözler; yönetmenin seçimi kadraj ve kurguda görünür ama olaylar oyuncularca canlandırılmaz. Diğer üç tür baştan yazılmış kurmaca dünyalara dayanır.",
+    "explanation": "Belgesel gerçek olay ve kişileri kaydeder; kurmaca filmlerin tersine oyuncular rol yapmaz ve hayali bir dünya kurulmaz.",
     "difficulty": 1,
     "type": "multipleChoice",
-    "explanationTr": "Belgesel gerçekliği doğrudan gözler; yönetmenin seçimi kadraj ve kurguda görünür ama olaylar oyuncularca canlandırılmaz. Diğer üç tür baştan yazılmış kurmaca dünyalara dayanır.",
-    "explanationKu": "Belgefîlm rastiyê rasterast dişopîne; hilbijartina derhêner di kadraj û hevgirêdanê de xuya dibe lê bûyer ji aliyê lîstikvanan ve nayên nîşandan. Sê cureyên din xwe dispêrin cîhanên xeyalî yên ku ji berê ve hatine nivîsîn.",
+    "explanationTr": "Belgesel gerçek olay ve kişileri kaydeder; kurmaca filmlerin tersine oyuncular rol yapmaz ve hayali bir dünya kurulmaz.",
+    "explanationKu": "Belgefîlm bûyer û mirovên rastîn tomar dike; berevajî fîlmên çîrokî, lîstikvan rol nagirin û cîhaneke xeyalî nayê avakirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -494,11 +494,11 @@
       "Çekim listesi"
     ],
     "correctAnswerTr": "Storyboard",
-    "explanation": "Storyboard her planı bir kare çizimle gösterir; kamera açısı ve hareket böylece çekime girmeden sınanır. Sinopsis öykünün kısa özetidir, çekim listesi ise yalnızca yazılı bir sıralamadır.",
+    "explanation": "Storyboard planların sırasını kare kare çizimlerle gösterir; kamera açısı ve hareketi çekimden önce böyle planlanır.",
     "difficulty": 2,
     "type": "multipleChoice",
-    "explanationTr": "Storyboard her planı bir kare çizimle gösterir; kamera açısı ve hareket böylece çekime girmeden sınanır. Sinopsis öykünün kısa özetidir, çekim listesi ise yalnızca yazılı bir sıralamadır.",
-    "explanationKu": "Storyboard her dîmenê bi xêzkirineke çarçikî nîşan dide; ji ber vê yekê goşeya kamerayê û tevger berî kişandinê tên ceribandin. Sînopsîs kurteya çîrokê ye, lîsteya kişandinê jî tenê rêzkirineke nivîskî ye.",
+    "explanationTr": "Storyboard planların sırasını kare kare çizimlerle gösterir; kamera açısı ve hareketi çekimden önce böyle planlanır.",
+    "explanationKu": "Storyboard rêza dîmenan bi xêzkirinên çarçik bi çarçik nîşan dide; goşe û tevgera kamerayê berî kişandinê bi vî awayî tê plankirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -596,11 +596,11 @@
       "Foley"
     ],
     "correctAnswerTr": "Foley",
-    "explanation": "Foley sanatçısı sahneyi izleyerek sesleri elle canlandırır, çünkü sette kaydedilen ses çoğu zaman temiz değildir. Dublaj yalnız konuşmayı yeniden kaydeder, doğrudan ses ise çekim anındaki kaydı anlatır.",
+    "explanation": "Foley sesleri çekimden sonra stüdyoda yeniden üretilir; sanatçı sahneyi izleyerek ayak ve kapı gibi sesleri elle canlandırır.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Foley sanatçısı sahneyi izleyerek sesleri elle canlandırır, çünkü sette kaydedilen ses çoğu zaman temiz değildir. Dublaj yalnız konuşmayı yeniden kaydeder, doğrudan ses ise çekim anındaki kaydı anlatır.",
-    "explanationKu": "Hunermendê Foley bi temaşekirina dîmenê dengan bi destan zindî dike, çimkî dengê ku li setê tê tomarkirin pir caran ne pak e. Dublaj tenê axaftinê ji nû ve tomar dike, dengê rasterast jî tomara demjimêra kişandinê vedibêje.",
+    "explanationTr": "Foley sesleri çekimden sonra stüdyoda yeniden üretilir; sanatçı sahneyi izleyerek ayak ve kapı gibi sesleri elle canlandırır.",
+    "explanationKu": "Dengên foley piştî kişandinê li stûdyoyê ji nû ve tên çêkirin; hunermend bi temaşekirina dîmenê dengên gav û derî bi destan zindî dike.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1004,11 +1004,11 @@
       "Kurgucu"
     ],
     "correctAnswerTr": "Yapımcı",
-    "explanation": "Yapımcı finansmanı, takvimi ve ekibi bir arada tutar; sanatsal kararlar yönetmende kalır. Senarist metni yazar, kurgucu ise çekim sonrası aşamada çalışır.",
+    "explanation": "Yapımcı bütçeyi, takvimi ve ekibi bir arada tutar; görüntülere ilişkin sanatsal kararlar yönetmende kalır.",
     "difficulty": 1,
     "type": "multipleChoice",
-    "explanationTr": "Yapımcı finansmanı, takvimi ve ekibi bir arada tutar; sanatsal kararlar yönetmende kalır. Senarist metni yazar, kurgucu ise çekim sonrası aşamada çalışır.",
-    "explanationKu": "Berhemhêner fînansman, danezan û tîmê bi hev re digire dest; biryarên hunerî li ba derhêner dimînin. Senarîstnivîs metnê dinivîse, hevgirêder jî di qonaxa piştî kişandinê de dixebite.",
+    "explanationTr": "Yapımcı bütçeyi, takvimi ve ekibi bir arada tutar; görüntülere ilişkin sanatsal kararlar yönetmende kalır.",
+    "explanationKu": "Berhemhêner budçe, bername û tîmê bi hev re digire; biryarên hunerî yên li ser dîmenan li ba derhêner dimînin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1106,11 +1106,11 @@
       "Öznel çekim"
     ],
     "correctAnswerTr": "Tanıtım planı",
-    "explanation": "Tanıtım planı çoğunlukla geniş bir kadrajdır ve izleyiciyi mekâna yerleştirir; sonraki yakın planlar bu haritaya oturur. Ters açı diyalogda, öznel çekim ise karakterin gözünden bakarken kullanılır.",
+    "explanation": "Tanıtım planı geniş bir kadrajla yeri ve zamanı tanıtır; sonraki yakın çekimler bu mekân haritasına oturur.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Tanıtım planı çoğunlukla geniş bir kadrajdır ve izleyiciyi mekâna yerleştirir; sonraki yakın planlar bu haritaya oturur. Ters açı diyalogda, öznel çekim ise karakterin gözünden bakarken kullanılır.",
-    "explanationKu": "Dîmena danasînê bi piranî kadrojeke fireh e û temaşevanan datîne nav mekanê; dîmenên nêzîk ên piştre li ser vê nexşeyê rûdinin. Goşeya berevajî di dîyalogê de, kişandina taybetî jî dema ku ji çavê karakterî tê temaşekirin tê bikaranîn.",
+    "explanationTr": "Tanıtım planı geniş bir kadrajla yeri ve zamanı tanıtır; sonraki yakın çekimler bu mekân haritasına oturur.",
+    "explanationKu": "Plana danasînê bi kadrajeke fireh cih û dem dide nasîn; dîmenên nêzîk ên piştre li ser vê nexşeya mekanê rûdinên.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1310,11 +1310,11 @@
       "Dış anlatıcı"
     ],
     "correctAnswerTr": "Diegetik ses",
-    "explanation": "Diegetik ses karakterlerin de duyduğu sestir, kaynağı sahnenin içindedir. Perde arkasından gelen müzik ve dış anlatıcı ise yalnızca izleyiciye seslenir; karakterler onları duymaz.",
+    "explanation": "Diegetik ses öykü dünyasının içinden gelir ve karakterler de onu duyar; fon müziği ise yalnızca izleyiciye duyulur.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Diegetik ses karakterlerin de duyduğu sestir, kaynağı sahnenin içindedir. Perde arkasından gelen müzik ve dış anlatıcı ise yalnızca izleyiciye seslenir; karakterler onları duymaz.",
-    "explanationKu": "Dengê diyegetîk dengê ku karakter jî dibihîzin e, çavkaniya wî di hundirê dîmenê de ye. Muzîka ku ji paş perdeyê tê û vegotina derveyî jî tenê ji temaşevan re diaxive; karakter wan nabihîzin.",
+    "explanationTr": "Diegetik ses öykü dünyasının içinden gelir ve karakterler de onu duyar; fon müziği ise yalnızca izleyiciye duyulur.",
+    "explanationKu": "Dengê dîegetîk ji nav cîhana çîrokê tê û karakter jî wî dibihîzin; muzîka paşperdeyê berevajî vê yekê tenê ji temaşevan re tê bihîstin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1514,11 +1514,11 @@
       "Zincirleme geçiş"
     ],
     "correctAnswerTr": "Paralel kurgu",
-    "explanation": "Paralel kurgu iki hattı sırayla keserek gerilimi büyütür; kovalamaca sahnelerinin temelidir. Süreklilik kurgusu tek bir akışı pürüzsüz bağlar, zaman atlaması ise araya giren süreyi atar.",
+    "explanation": "Paralel kurgu aynı anda olan iki olayı dönüşümlü gösterir; bu yapı gerilimi büyütür ve sıkça takip sahnelerinde kullanılır.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Paralel kurgu iki hattı sırayla keserek gerilimi büyütür; kovalamaca sahnelerinin temelidir. Süreklilik kurgusu tek bir akışı pürüzsüz bağlar, zaman atlaması ise araya giren süreyi atar.",
-    "explanationKu": "Montaja paralel bi birîna dorhêlî ya du xetan gerînê mezin dike; ev bingeha dîmenên leyistin-revê ye. Montaja domdarî herikînek yekgirtî bêteqet girê dide, lê pekirina demê dema navbeynkar davêje.",
+    "explanationTr": "Paralel kurgu aynı anda olan iki olayı dönüşümlü gösterir; bu yapı gerilimi büyütür ve sıkça takip sahnelerinde kullanılır.",
+    "explanationKu": "Montaja paralel du bûyerên hevdem bi dorê nîşan dide; ev şêwe aloziyê mezin dike û pir caran di dîmenên şopandinê de tê bikaranîn.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -5560,11 +5560,11 @@
       "Ewr"
     ],
     "correctAnswerTr": "Berf",
-    "explanation": "Berf, gökten yağan kar demektir. Baran yağmur, ba rüzgâr, ewr ise buluttur; dördü de hava olaylarıyla ilgili olduğu için sık karıştırılır.",
+    "explanation": "Berf gökten yağan beyaz donmuş sudur; baran su olarak yağar, ba esen havadır, ewr gökteki damla topluluğudur.",
     "difficulty": 2,
     "type": "multipleChoice",
-    "explanationTr": "Berf, gökten yağan kar demektir. Baran yağmur, ba rüzgâr, ewr ise buluttur; dördü de hava olaylarıyla ilgili olduğu için sık karıştırılır.",
-    "explanationKu": "Berf tê wateya \"kar\"ê (berfa ku ji ezmên dikeve). Baran \"yağmur\"ê, ba \"rüzgar\"ê, ewr jî \"bulut\"ê nîşan dide; ji ber ku her çar jî bi rewşa hewa ve girêdayî ne, pir caran tên tevlihevkirin.",
+    "explanationTr": "Berf gökten yağan beyaz donmuş sudur; baran su olarak yağar, ba esen havadır, ewr gökteki damla topluluğudur.",
+    "explanationKu": "Berf ava cemidî ya spî ye ku ji ezman dibare; baran av e, ba hewaya dilebite ye, ewr jî komika dilopan li ezman e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5697,11 +5697,11 @@
       "Alıntı kelime"
     ],
     "correctAnswerTr": "Eş anlamlı",
-    "explanation": "Eş anlamlı sözcükler farklı yazılır, aynı anlamı taşır: yıl ile sene gibi. Zıt anlamlı karşıtlığı, eş sesli ise aynı yazılışta farklı anlamı gösterir.",
+    "explanation": "Eş anlamlı sözcükler farklı yazılır ama aynı anlamı verir; zıt anlamlılar ise karşıt anlamları gösterir.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Eş anlamlı sözcükler farklı yazılır, aynı anlamı taşır: yıl ile sene gibi. Zıt anlamlı karşıtlığı, eş sesli ise aynı yazılışta farklı anlamı gösterir.",
-    "explanationKu": "Peyvên hevwate bi awayên cuda tên nivîsandin lê heman wateyê dihewînin, wek \"sal\" û \"sene\". Peyvên dijwate wateya berevajî, peyvên hevdeng jî heman nivîsê lê wateyên cuda nîşan didin.",
+    "explanationTr": "Eş anlamlı sözcükler farklı yazılır ama aynı anlamı verir; zıt anlamlılar ise karşıt anlamları gösterir.",
+    "explanationKu": "Peyvên hevwate cuda tên nivîsîn lê heman wateyê didin; peyvên dijwate berevajî vê yekê wateyên dijber nîşan didin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5867,11 +5867,11 @@
       "Sekiz"
     ],
     "correctAnswerTr": "Yedi",
-    "explanation": "Heft yedidir. Beş pênc, altı şeş, sekiz heşttir; şeş ile heşt sesçe yakın olduğu için sık karıştırılır.",
+    "explanation": "Hafta yedi gündür; heft altıdan sonra ve sekizden önce gelen sayıdır.",
     "difficulty": 2,
     "type": "multipleChoice",
-    "explanationTr": "Heft yedidir. Beş pênc, altı şeş, sekiz heşttir; şeş ile heşt sesçe yakın olduğu için sık karıştırılır.",
-    "explanationKu": "Heft tê wateya \"yedi\"yê. Pênc \"beş\"ê, şeş \"altı\"yê, heşt jî \"sekiz\"ê nîşan dide; ji ber ku şeş û heşt di deng de nêzî hev in, pir caran tên tevlihevkirin.",
+    "explanationTr": "Hafta yedi gündür; heft altıdan sonra ve sekizden önce gelen sayıdır.",
+    "explanationKu": "Hefte heft roj in; heft hejmara piştî şeş û berî heştê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6038,11 +6038,11 @@
       "Şev"
     ],
     "correctAnswerTr": "Êvar",
-    "explanation": "Êvar günbatımı vaktidir. Sibe sabahı, nîvro öğleni, şev ise karanlık saatlerin tamamını anlatır; dördü de gün bölümü adıdır.",
+    "explanation": "Êvar güneşin battığı vakittir; sibe günün başlangıcıdır, nîvro gün ortasıdır, şev batımdan sonraki karanlık zamandır.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Êvar günbatımı vaktidir. Sibe sabahı, nîvro öğleni, şev ise karanlık saatlerin tamamını anlatır; dördü de gün bölümü adıdır.",
-    "explanationKu": "Êvar dema avabûna rojê ye. Sibe sibehê, nîvro nîvê rojê, şev jî tevahiya demjimêrên tarî nîşan dide; her çar jî navên perçeyên rojê ne.",
+    "explanationTr": "Êvar güneşin battığı vakittir; sibe günün başlangıcıdır, nîvro gün ortasıdır, şev batımdan sonraki karanlık zamandır.",
+    "explanationKu": "Êvar dema avabûna rojê ye; sibe destpêka rojê ye, nîvro nîvê rojê ye, şev jî dema tarî ya piştî rojavabûnê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6174,11 +6174,11 @@
       "Ewr"
     ],
     "correctAnswerTr": "Stêrk",
-    "explanation": "Stêrk yıldız demektir. Heyv ay, roj hem güneş hem gün, ewr ise buluttur; hepsi gökyüzüyle ilgili olduğu için birlikte öğrenilir.",
+    "explanation": "Stêrk gece göğündeki küçük ışıklardır; heyv gecenin büyük uydusudur, roj gündüzü aydınlatan yıldızdır, ewr gökteki damla kümeleridir.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Stêrk yıldız demektir. Heyv ay, roj hem güneş hem gün, ewr ise buluttur; hepsi gökyüzüyle ilgili olduğu için birlikte öğrenilir.",
-    "explanationKu": "Stêrk wateya peyva \"yıldız\" dide. Heyv ji bo \"ay\", roj hem ji bo \"güneş\" hem ji bo \"gün\", ewr jî ji bo \"bulut\" tê gotin; hemû bi ezmên ve girêdayî ne.",
+    "explanationTr": "Stêrk gece göğündeki küçük ışıklardır; heyv gecenin büyük uydusudur, roj gündüzü aydınlatan yıldızdır, ewr gökteki damla kümeleridir.",
+    "explanationKu": "Stêrk ronahiyên biçûk ên li ezmanê şevê ne; heyv peyka mezin a şevê ye, roj stêrka ku rojê ronî dike ye, ewr jî komên dilopan ên li ezman in.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6208,11 +6208,11 @@
       "Zıt anlamlı"
     ],
     "correctAnswerTr": "Alıntı kelime",
-    "explanation": "Diller birbirinden sözcük alır; bunlara alıntı ya da ödünç kelime denir. Türkçedeki kalem Arapçadan, vapur Fransızcadan gelmiştir.",
+    "explanation": "Alıntı kelime başka bir dilden alınmış sözcüktür; diller birbirinden böyle sözcükler alır.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Diller birbirinden sözcük alır; bunlara alıntı ya da ödünç kelime denir. Türkçedeki kalem Arapçadan, vapur Fransızcadan gelmiştir.",
-    "explanationKu": "Ziman ji hev peyvan digirin; ji van peyvan re peyvên deynkirî tê gotin. Peyva tirkî \"kalem\" ji erebî, \"vapur\" jî ji fransî hatiye wergirtin.",
+    "explanationTr": "Alıntı kelime başka bir dilden alınmış sözcüktür; diller birbirinden böyle sözcükler alır.",
+    "explanationKu": "Peyva deynkirî peyva ku ji zimanekî din hatiye wergirtin e; ziman bi vî awayî ji hev peyvan digirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6480,11 +6480,11 @@
       "Rovî"
     ],
     "correctAnswerTr": "Pisîk",
-    "explanation": "Pisîk kedidir. Kûçik köpek, mişk fare, rovî ise tilkidir; dördü de memeli hayvan adı olduğu için şıklar aynı sınıftandır.",
+    "explanation": "Pisîk fare yakalayan evcil hayvandır; kûçik koruyucudur, mişk onun avıdır, rovî ise yabani bir hayvandır.",
     "difficulty": 2,
     "type": "multipleChoice",
-    "explanationTr": "Pisîk kedidir. Kûçik köpek, mişk fare, rovî ise tilkidir; dördü de memeli hayvan adı olduğu için şıklar aynı sınıftandır.",
-    "explanationKu": "Pisîk tê wateya \"kedi\"yê. Kûçik \"köpek\"ê, mişk \"fare\"yê, rovî jî \"tilki\"yê nîşan dide; ji ber ku her çar jî navên heywanên bêzîndar in, vebijark di heman kategoriyê de ne.",
+    "explanationTr": "Pisîk fare yakalayan evcil hayvandır; kûçik koruyucudur, mişk onun avıdır, rovî ise yabani bir hayvandır.",
+    "explanationKu": "Pisîk heywanê malê ye ku mişkan digire û tê xwedîkirin; kûçik parêzvan e, mişk nêçîra wê ye, rovî jî heywanekî kovî ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6616,11 +6616,11 @@
       "Poz"
     ],
     "correctAnswerTr": "Çav",
-    "explanation": "Çav gözdür. Guh kulak, dev ağız, poz ise burundur; dördü de baştaki organ adıdır ama yalnız biri görmeyle ilgilidir.",
+    "explanation": "Çav görme organıdır; guh işitmek, dev yemek ve konuşmak, poz ise koklamak içindir.",
     "difficulty": 1,
     "type": "multipleChoice",
-    "explanationTr": "Çav gözdür. Guh kulak, dev ağız, poz ise burundur; dördü de baştaki organ adıdır ama yalnız biri görmeyle ilgilidir.",
-    "explanationKu": "Çav tê wateya \"göz\"ê. Guh \"kulak\"ê, dev \"ağız\"ê, poz jî \"burun\"ê nîşan dide; her çar jî navên endamên serî ne lê tenê yek ji wan bi dîtinê ve girêdayî ye.",
+    "explanationTr": "Çav görme organıdır; guh işitmek, dev yemek ve konuşmak, poz ise koklamak içindir.",
+    "explanationKu": "Çav endama dîtinê ye; guh ji bo bihîstinê ye, dev ji bo xwarin û axaftinê ye, poz jî ji bo bêhnê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6650,11 +6650,11 @@
       "Zamir"
     ],
     "correctAnswerTr": "Fiil",
-    "explanation": "Fiil iş, oluş ve durumu anlatır: çûn, xwarin, kirin. Ad varlığı, sıfat niteliği gösterir; zamir ise adın yerine geçer.",
+    "explanation": "Fiil iş, oluş ya da durum bildiren sözcüktür; ad varlığın adıdır, sıfat özellik verir, zamir adın yerine geçer.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Fiil iş, oluş ve durumu anlatır: çûn, xwarin, kirin. Ad varlığı, sıfat niteliği gösterir; zamir ise adın yerine geçer.",
-    "explanationKu": "Lêker kar, çêbûn û rewşê nîşan dide: çûn, xwarin, kirin. Navdêr hebûnê, rengdêr taybetmendiyê nîşan dide; cînavk jî li şûna navdêrê tê.",
+    "explanationTr": "Fiil iş, oluş ya da durum bildiren sözcüktür; ad varlığın adıdır, sıfat özellik verir, zamir adın yerine geçer.",
+    "explanationKu": "Lêker peyva ku kar, çêbûn an rewşê nîşan dide ye; navdêr navê hebûnê ye, rengdêr taybetmendiyê dide, cînavk jî li şûna navdêrê tê.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6684,11 +6684,11 @@
       "İstek kipi"
     ],
     "correctAnswerTr": "Gelecek zaman",
-    "explanation": "Gelecek zaman, kişi zamirine eklenen ê ile ve bi- önekli fiille kurulur. Emir yalnız bi- ister, geçmiş zamanda ise fiil kökü değişir.",
+    "explanation": "\"Ezê biçim\" biçiminde -ê gelecek zaman eki, \"biçim\" ise bi- ön ekli fiildir; ikisi birlikte gelecek zamanı kurar.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Gelecek zaman, kişi zamirine eklenen ê ile ve bi- önekli fiille kurulur. Emir yalnız bi- ister, geçmiş zamanda ise fiil kökü değişir.",
-    "explanationKu": "Dema pêşerojê bi zêdekirina -ê li ser cînavka kesane û bi lêkera pêşgira bi- tê avakirin. Kipa fermanî tenê pêşgira bi- dixwaze, di dema borî de jî koka lêkerê diguhere.",
+    "explanationTr": "\"Ezê biçim\" biçiminde -ê gelecek zaman eki, \"biçim\" ise bi- ön ekli fiildir; ikisi birlikte gelecek zamanı kurar.",
+    "explanationKu": "Di \"Ezê biçim\" de -ê nîşana dema bê ye û \"biçim\" bi pêşgira bi- ye; ev her du nîşan bi hev re dema bê ava dikin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6752,11 +6752,11 @@
       "Mase"
     ],
     "correctAnswerTr": "Qelem",
-    "explanation": "Qelem kalemdir. Pirtûk kitap, kaxez kâğıt, mase ise masadır; hepsi yazı ortamıyla ilgilidir ama yalnız biri yazma aracıdır.",
+    "explanation": "Qelem kalemdir. Pirtûk kitap, kaxez kâğıt, mase ise masadır; yazma aracı olan yalnız kalemdir.",
     "difficulty": 2,
     "type": "multipleChoice",
-    "explanationTr": "Qelem kalemdir. Pirtûk kitap, kaxez kâğıt, mase ise masadır; hepsi yazı ortamıyla ilgilidir ama yalnız biri yazma aracıdır.",
-    "explanationKu": "Qelem tê wateya \"kalem\"ê. Pirtûk \"kitap\"ê, kaxez \"kâğıt\"ê, mase jî \"masa\"yê nîşan dide; hemû bi hawirdora nivîsê ve girêdayî ne lê tenê yek ji wan amûra nivîsandinê ye.",
+    "explanationTr": "Qelem kalemdir. Pirtûk kitap, kaxez kâğıt, mase ise masadır; yazma aracı olan yalnız kalemdir.",
+    "explanationKu": "Qelem tê wateya \"kalem\"ê. Pirtûk \"kitap\" e, kaxez \"kâğıt\" e, mase jî \"masa\" ye; tenê qelem amûra nivîsandinê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6854,10 +6854,10 @@
       "Bapîr"
     ],
     "correctAnswerTr": "Ap",
-    "explanation": "Ap, bazı yörelerde mam, amca demektir. Xal dayı, met hala, bapîr ise dededir; akrabalık adları anne ve baba tarafına göre ayrılır.",
+    "explanation": "Ap, bazı yörelerde amca demektir. Xal dayı, met hala, bapîr ise dededir; akrabalık adları anne ve baba tarafına göre ayrılır.",
     "difficulty": 3,
     "type": "multipleChoice",
-    "explanationTr": "Ap, bazı yörelerde mam, amca demektir. Xal dayı, met hala, bapîr ise dededir; akrabalık adları anne ve baba tarafına göre ayrılır.",
+    "explanationTr": "Ap, bazı yörelerde amca demektir. Xal dayı, met hala, bapîr ise dededir; akrabalık adları anne ve baba tarafına göre ayrılır.",
     "explanationKu": "Ap li hin herêman wateya \"mam\"ê dide. Xal birayê dayikê ye, met xwişka bavê ye, bapîr jî bavê bav an bavê dayikê ye; navên lêzimtiyê li gorî aliyê dayikê û bavê ji hev cuda dibin.",
     "metadata": {
       "dialect": "kurmanci",
@@ -6892,7 +6892,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Sözlük, sözcükleri anlamlarıyla sıralar. Dilbilgisi kuralları anlatır, alfabe harf dizisidir, cümle ise anlamlı söz birliğidir.",
-    "explanationKu": "Ferheng peyvan bi wateyên wan re rêz dike. Rêziman qaîdeyan rave dike, alfabe rêza tîpan e, hevok jî komeke peyvan e ku wateyek têkûz dide.",
+    "explanationKu": "Ferheng peyvan bi wateyên wan re rêz dike. Rêziman qaîdeyan rave dike, alfabe rêza tîpan e, hevok jî komeke peyvan e ku wateyeke têkûz dide.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -7127,11 +7127,11 @@
       "Kew"
     ],
     "correctAnswerTr": "Gur",
-    "explanation": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; ilk üçü yabani memeli, sonuncusu kuş adıdır.",
+    "explanation": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; sürüyle gezip koyuna saldıran gurttur.",
     "difficulty": 2,
     "type": "multipleChoice",
-    "explanationTr": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; ilk üçü yabani memeli, sonuncusu kuş adıdır.",
-    "explanationKu": "Gur bi tirkî \"kurt\" tê gotin. Hirç ango ayî ye, rovî tilkî ye, kew jî keklîk e; sê yên pêşî navên heywanên kûvî ne, ya dawîn navê çûkekê ye.",
+    "explanationTr": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; sürüyle gezip koyuna saldıran gurttur.",
+    "explanationKu": "Gur bi tirkî \"kurt\" e. Hirç ayî ye, rovî tilkî ye, kew jî keklîk e; gurê ku bi kerî digere dijberê pez e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
