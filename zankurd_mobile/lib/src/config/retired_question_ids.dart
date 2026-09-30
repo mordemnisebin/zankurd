@@ -47,6 +47,12 @@
 /// geçmedikleri için hâlâ burada ve hâlâ oynanmaz; geçen bir aday aynı
 /// yoldan dönebilir.
 ///
+/// İkinci tur (aynı gün): 52 kayıt daha (42 sinema, 10 coğrafya/doğa)
+/// aynı yoldan döndü; bu kez her birine Gemini 3.1 Pro bir Kurmancî dil/terim
+/// düzeltmesi önerdi, Grok 4.7 ya da Gemini 3.8 Flash onayladı ve düzeltme
+/// uygulandı (hangi şıkkın doğru olduğu değişmedi). Listeden çıkarıldılar ve
+/// `category` alanı `Cîhan` oldu.
+///
 /// ## İkinci dalga (2026-09-27, tanım takası — üsttekinden bağımsız kusur)
 ///
 /// `tool/author_replacement_questions.py` ve `tool/author_replacements_wave2.py`
@@ -165,82 +171,30 @@
 library;
 
 const Set<String> retiredQuestionIds = <String>{
-  // Sînema (60)
+  // Sînema (18)
   'cinema_0002',
-  'cinema_0005',
-  'cinema_0008',
   'cinema_0011',
-  'cinema_0012',
   'cinema_0014',
   'cinema_0015',
-  'cinema_0017',
   'cinema_0020',
-  'cinema_0021',
-  'cinema_0023',
-  'cinema_0024',
-  'cinema_0025',
-  'cinema_0026',
   'cinema_0029',
-  'cinema_0030',
   'cinema_0032',
-  'cinema_0033',
-  'cinema_0035',
-  'cinema_0037',
-  'cinema_0039',
   'cinema_0041',
-  'cinema_0044',
   'cinema_0047',
-  'cinema_0048',
-  'cinema_0050',
-  'cinema_0052',
   'cinema_0054',
-  'ds26_cinema_0089',
-  'ds26_cinema_0109',
-  'ds26_cinema_0111',
-  'ds26_cinema_0113',
-  'edit_sinema_0011',
   'edit_sinema_0017',
   'edit_sinema_0019',
-  'edit_sinema_0020',
-  'edit_sinema_0022',
-  'edit_sinema_0023',
-  'edit_sinema_0024',
   'edit_sinema_0030',
   'offline_sin_2002',
-  'offline_sin_2011',
-  'offline_sin_2012',
-  'offline_sin_2015',
   'offline_sin_2016',
-  'sf_cin_0004',
   'sf_cin_0005',
-  'sf_cin_0006',
   'sf_cin_0010',
-  'sf_cin_0011',
   'sf_cin_0012',
-  'sf_cin_0020',
-  'sf_cin_0026',
-  'sf_cin_0028',
-  'sf_cin_0029',
-  'sf_cin_0036',
-  'sf_cin_0038',
-  'sf_cin_0040',
-  'sf_cin_0048',
-  'sf_cin_0050',
-  // Cografya (14)
-  'sf_nat_0002',
+  // Cografya (4)
   'sf_nat_0003',
-  'sf_nat_0004',
   'sf_nat_0006',
   'sf_nat_0007',
-  'sf_nat_0008',
-  'sf_nat_0009',
-  'sf_nat_0010',
-  'sf_nat_0011',
-  'sf_nat_0012',
-  'sf_nat_0013',
-  'sf_nat_0015',
   'sf_nat_0018',
-  'sf_nat_0019',
 
   // ---------------------------------------------------------------------
   // İkinci dalga (2026-09-27): tanım takası kalıbında farklı türden çift —

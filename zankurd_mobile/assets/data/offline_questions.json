@@ -24986,7 +24986,7 @@
   },
   {
     "id": "offline_sin_2011",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Yekem fîlmê dirêj ê bi deng \"Ronahiyên Bajêr\" bû.",
     "answers": [
       "Rast",
@@ -24997,7 +24997,7 @@
     "type": "trueFalse",
     "difficulty": 3,
     "explanationTr": "O film sessizdir; konuşmalı sinemanın kapısını 1927'de \"The Jazz Singer\" açtı.",
-    "explanationKu": "Ew fîlm bêdeng e; deriyê sînemaya bi axaftin di sala 1927'an de \"The Jazz Singer\" vekir.",
+    "explanationKu": "Ew fîlm bêdeng e; deriyê sînemaya dengdar di sala 1927'an de \"The Jazz Singer\"ê vekir.",
     "promptTr": "İlk sesli uzun metrajlı film \"Şehir Işıkları\" oldu.",
     "answersTr": [
       "Doğru",
@@ -25007,13 +25007,13 @@
   },
   {
     "id": "offline_sin_2012",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Sê fîlmên \"Pather Panchali\", \"Aparajito\" û \"Apur Sansar\" ji kîjan welatî ne?",
     "answers": [
       "Hindistan",
       "Pakistan",
       "Bangladeş",
-      "Afxanistan"
+      "Efxanistan"
     ],
     "correctAnswer": "Hindistan",
     "explanation": "Yönetmenleri Satyajit Ray'dir; üç film aynı kişinin köyden şehre uzanan yaşamını izler.",
@@ -25078,7 +25078,7 @@
   },
   {
     "id": "offline_sin_2015",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Peyva \"paparazzi\" ku îro ji bo wênegirên stêrkan tê bikaranîn, ji karakterekî kîjan fîlmî tê?",
     "answers": [
       "La Dolce Vita",
@@ -25091,7 +25091,7 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationTr": "Yönetmeni Federico Fellini'dir; o karakter, Roma sokaklarında ünlülerin peşinden koşan bir gazete fotoğrafçısıydı.",
-    "explanationKu": "Derhênerê wê Federico Fellini ye; ew karakter wênegirekî rojnameyê bû ku li kolanên Romayê li pey kesên navdar digeriya.",
+    "explanationKu": "Derhênerê wî Federico Fellini ye; ew karakter wênegirekî rojnameyê bû ku li kolanên Romayê li pey kesên navdar digeriya.",
     "promptTr": "Bugün ünlülerin peşindeki fotoğrafçılar için kullanılan \"paparazzi\" sözcüğü hangi filmin bir karakterinden gelir?",
     "answersTr": [
       "La Dolce Vita",

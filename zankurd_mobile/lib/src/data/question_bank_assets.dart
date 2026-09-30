@@ -87,6 +87,10 @@ const questionBankAssets = <String>[
   // (dünya sineması/coğrafyası/edebiyatı/müziği/tarihi) `Cîhan`
   // kategorisindedir; Kürt diliyle ve kültürüyle ilgili olanlar kendi
   // kategorisinde kalır.
+  // Aynı gün ikinci tur: aynı filtreden geçen 364 soru daha eklendi; bunlarda
+  // ayrıca Gemini 3.1 Pro'nun önerdiği, Grok 4.7 ya da Gemini 3.8 Flash'ın
+  // onayladığı bir Kurmancî dil/terim düzeltmesi uygulandı (doğru şıkkın
+  // KONUMU ve anlamı değişmedi; Türkçe alanlara dokunulmadı).
   'assets/data/deepseek_verified_2026_09_30_questions.json',
   // 2026-09-30: «Bilim ve Düşünce / Zanist û Raman» (iç kimlik Paradigma)
   // tek bir hareketin öğretisi emekli edilince 42 soruya inmişti; kalan
