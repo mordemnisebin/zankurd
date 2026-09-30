@@ -71,7 +71,8 @@ void main() {
       // gizlenen yedi alt kategoriyi açmak için. 1931 → 2075.
       // 2075 -> 2937: 2026-09-30 son birleştirme (+822 doğrulanmış DeepSeek,
       // +40 bilim; bkz. `playable_inventory_test.dart`).
-      2937,
+      // 2937 -> 2954: +31 üçüncü dalga, -44 karantinaya dönen, +30 bilim.
+      2954,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

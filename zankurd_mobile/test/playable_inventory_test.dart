@@ -69,7 +69,11 @@ void main() {
       // çok modelli doğrulamadan geçen 822 DeepSeek sorusu kopya dosyada
       // (`deepseek_verified_2026_09_30`; orijinal karantinada kalır) ve 40
       // kaynaklı bilim sorusu (`bilim_2026_09_30`, Paradigma).
-      2937,
+      // 2937 -> 2954 (+17): aynı gün üç ek iş. +31 üçüncü dalga (Kurmancî
+      // düzeltmeli DeepSeek), -44 kaynağı bulunamayan ya da cevabı yanlış
+      // çıkan DeepSeek kaydı karantinaya döndü (853 -> 809), +30 yeni
+      // kaynaklı bilim sorusu (bilim_0041…0070). Kontrol: 31 - 44 + 30 = 17.
+      2954,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -134,7 +138,10 @@ void main() {
       //   ikisinin de onayladığı 38 soru emekliye ayrıldı (hepsi mevcut
       //   bankalarda; yeni kopya dosyadan hiçbiri değil).
       // Kontrol: 862 + 99 - 38 = 923.
-      2469,
+      // 2469 -> 2486 (+17): fiziksel sayıyla aynı üç iş (+31 üçüncü dalga,
+      // -44 karantinaya dönen, +30 bilim); hepsi `approved` ve oynanabilir,
+      // karantinaya dönen 44'ün hiçbiri retired değildi.
+      2486,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
