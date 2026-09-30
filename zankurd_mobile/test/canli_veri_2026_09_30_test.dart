@@ -308,8 +308,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('ZK-7RHC'), findsOneWidget);
       expect(find.text('7RHC'), findsNothing);
-      // "Koda vexwendinê" tek satır: tam genişlikte düğme.
-      final label = tester.getSize(find.text('Koda vexwendinê'));
+      // "Kodê binivîse" tek satır: tam genişlikte düğme.
+      final label = tester.getSize(find.text('Kodê binivîse'));
       expect(label.height, lessThanOrEqualTo(26));
     });
 

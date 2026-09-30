@@ -361,7 +361,7 @@
     "correctAnswer": "Bi cilên xortan",
     "correctAnswerTr": "Erkek kıyafetleriyle",
     "explanation": "Newroz'da Zîn ile Sitî erkek kıyafeti, Mem ile Tacdîn ise kız kıyafeti giyer; karşılaşıp birbirlerine gönül verirler ve yüzüklerini değiştirirler.",
-    "explanationKu": "Di Newrozê de Zîn û Sitî cilên kurran li xwe dikin, Mem û Tacdîn jî cilên keçan; ew hev dibînin, dilê wan dikeve hev û gustîlên xwe diguherin.",
+    "explanationKu": "Di Newrozê de Zîn û Sitî cilên xortan li xwe dikin, Mem û Tacdîn jî cilên keçan; ew hev dibînin, dilê wan dikeve hev û gustîlên xwe diguherin.",
     "explanationTr": "Newroz'da Zîn ile Sitî erkek kıyafeti, Mem ile Tacdîn ise kız kıyafeti giyer; karşılaşıp birbirlerine gönül verirler ve yüzüklerini değiştirirler.",
     "metadata": {
       "dialect": "kurmanci",
@@ -565,7 +565,7 @@
     "correctAnswer": "Feqiyê Teyran",
     "correctAnswerTr": "Feqiyê Teyran",
     "explanation": "Klasik şair Feqiyê Teyran, Dimdim savaşını (1609–1610) edebî olarak ilk anlatan kişidir. Sözlü gelenekte bu anlatı \"Beytî Dimdim\" olarak da söylenir.",
-    "explanationKu": "Helbestvanê klasîk Feqiyê Teyran yekem car şerê Dimdimê (1609–1610) bi awayekî wêjeyî vegotiye. Di kevneşopiya devkî de ev çîrok wekî \"Beytî Dimdim\" jî tê gotin.",
+    "explanationKu": "Helbestvanê klasîk Feqiyê Teyran yekem car şerê Dimdimê (1609–1610) bi awayekî wêjeyî vegotiye. Di kevneşopiya devkî de ev çîrok wekî \"Beyta Dimdimê\" jî tê gotin.",
     "explanationTr": "Klasik şair Feqiyê Teyran, Dimdim savaşını (1609–1610) edebî olarak ilk anlatan kişidir. Sözlü gelenekte bu anlatı \"Beytî Dimdim\" olarak da söylenir.",
     "metadata": {
       "dialect": "kurmanci",
@@ -598,9 +598,9 @@
     ],
     "correctAnswer": "Hekarî",
     "correctAnswerTr": "Hakkari",
-    "explanation": "Destanın tam adı \"Cembeliyê Mîrê Hekkarî û Binevşa Narîn\"dir; Cembelî, Hakkari Miri'nin oğlu ve tahtının varisidir. Hikâye Viranşehir'den Hakkari'nin yüksek yaylalarına uzanır.",
-    "explanationKu": "Navê tevahî yê destanê \"Cembeliyê Mîrê Hekkarî û Binevşa Narîn\" e; Cembelî kur û wêrisê textê Mîrê Hekariyê ye. Çîrok ji Weranşarê heta zozanên bilind ên Hekariyê dirêj dibe.",
-    "explanationTr": "Destanın tam adı \"Cembeliyê Mîrê Hekkarî û Binevşa Narîn\"dir; Cembelî, Hakkari Miri'nin oğlu ve tahtının varisidir. Hikâye Viranşehir'den Hakkari'nin yüksek yaylalarına uzanır.",
+    "explanation": "Destanın tam adı \"Cembeliyê Mîrê Hekkarî û Binevşa Narîn\"dir; Cembelî, Hakkari Miri'nin oğlu ve tahtının varisidir. Hikâye Karacadağ'dan Hakkari'nin yüksek yaylalarına uzanır.",
+    "explanationKu": "Navê tevahî yê destanê \"Cembeliyê Mîrê Hekkarî û Binevşa Narîn\" e; Cembelî kur û wêrisê textê Mîrê Hekariyê ye. Çîrok ji Qerejdaxê heta zozanên bilind ên Hekariyê dirêj dibe.",
+    "explanationTr": "Destanın tam adı \"Cembeliyê Mîrê Hekkarî û Binevşa Narîn\"dir; Cembelî, Hakkari Miri'nin oğlu ve tahtının varisidir. Hikâye Karacadağ'dan Hakkari'nin yüksek yaylalarına uzanır.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Cembeliyê Mîrê Hekkarî û Binevşa Narîn Destanı - Hakkari Haber",
@@ -667,7 +667,7 @@
     "correctAnswer": "Bilûr",
     "correctAnswerTr": "Kaval",
     "explanation": "Cembelî'nin kavalının sesi o kadar güzeldi ki Binevş ilk kez köşkten çıkıp sesin geldiği yöne gitti. Kaval hikâyenin başında da vardır: ilk karşılaşmada Cembelî'nin kavalı Binevş'in eline geçmişti.",
-    "explanationKu": "Dengê bilûra Cembelî ewqas xweş bû ku Binevş cara yekem ji koşkê derket û ber bi dengê çû. Bilûr di destpêka çîrokê de jî heye: di hevdîtina yekem de bilûra Cembelî ketibû destê Binevşê.",
+    "explanationKu": "Dengê bilûra Cembelî ewqas xweş bû ku Binevş cara yekem ji koşkê derket û ber bi wî dengî ve çû. Bilûr di destpêka çîrokê de jî heye: di hevdîtina yekem de bilûra Cembelî ketibû destê Binevşê.",
     "explanationTr": "Cembelî'nin kavalının sesi o kadar güzeldi ki Binevş ilk kez köşkten çıkıp sesin geldiği yöne gitti. Kaval hikâyenin başında da vardır: ilk karşılaşmada Cembelî'nin kavalı Binevş'in eline geçmişti.",
     "metadata": {
       "dialect": "kurmanci",
@@ -735,7 +735,7 @@
     "correctAnswer": "Hedban",
     "correctAnswerTr": "Hedban",
     "explanation": "Hedban, Derwêş'in atının adıdır; destan ve kilamlarda Derwêş Hedban ile birlikte anılır.",
-    "explanationKu": "Hedban navê hespê Derwêş e; di destan û kilaman de Derwêş bi Hedban tê bibîranîn.",
+    "explanationKu": "Hedban navê hespê Derwêş e; di destan û kilaman de Derwêş bi Hedbanê tê bibîranîn.",
     "explanationTr": "Hedban, Derwêş'in atının adıdır; destan ve kilamlarda Derwêş Hedban ile birlikte anılır.",
     "metadata": {
       "dialect": "kurmanci",
@@ -1415,7 +1415,7 @@
     "correctAnswer": "Festîvala Mannheim-Heidelbergê",
     "correctAnswerTr": "Mannheim-Heidelberg Film Festivali",
     "explanation": "58. Uluslararası Mannheim-Heidelberg Film Festivali'nde \"Son Mevsim: Şavaklar\", uzun metraj bölümündeki tek belgeseldi ve Jüri Özel Ödülü'nü aldı.",
-    "explanationKu": "Li 58emîn Festîvala Navneteweyî ya Mannheim-Heidelbergê, \"Demsala Dawî: Şewaxan\" di beşa fîlmên dirêj de tenê belgefîlm bû û Xelata Taybet a Jûriyê wergirt.",
+    "explanationKu": "Li 58emîn Festîvala Navneteweyî ya Mannheim-Heidelbergê, \"Demsala Dawî: Şewaxan\" di beşa fîlmên dirêj de yekane belgefîlm bû û Xelata Taybet a Jûriyê wergirt.",
     "explanationTr": "58. Uluslararası Mannheim-Heidelberg Film Festivali'nde \"Son Mevsim: Şavaklar\", uzun metraj bölümündeki tek belgeseldi ve Jüri Özel Ödülü'nü aldı.",
     "metadata": {
       "dialect": "kurmanci",
@@ -1823,7 +1823,7 @@
     "correctAnswer": "Gönül Yarası",
     "correctAnswerTr": "Gönül Yarası",
     "explanation": "Aynur \"Gönül Yarası\"nda kendisi olarak küçük bir rolde göründü ve \"Dar Hejiroke\"yi söyledi; bu sayede Türk dinleyiciler de onu tanıdı.",
-    "explanationKu": "Aynur di \"Gönül Yarası\" de di roleke biçûk de wek xwe xuya bû û strana \"Dar Hejîroke\" got; bi vê yekê guhdarên tirk jî ew nas kirin.",
+    "explanationKu": "Aynur di \"Gönül Yarası\" de di roleke biçûk de wek xwe xuya bû û strana \"Dar Hejîrokê\" got; bi vê yekê guhdarên tirk jî ew nas kirin.",
     "explanationTr": "Aynur \"Gönül Yarası\"nda kendisi olarak küçük bir rolde göründü ve \"Dar Hejiroke\"yi söyledi; bu sayede Türk dinleyiciler de onu tanıdı.",
     "metadata": {
       "dialect": "kurmanci",
@@ -1993,7 +1993,7 @@
     "correctAnswer": "Mîmar",
     "correctAnswerTr": "Mimar",
     "explanation": "Mehmet Atlı Yıldız Teknik Üniversitesi Mimarlık Bölümü'nü bitirdi, Mardin Artuklu Üniversitesi'nde mimarlık dersleri verdi ve mimarlıkla müziği birlikte sürdürüyor.",
-    "explanationKu": "Mehmet Atli beşa mîmariyê ya Zanîngeha Teknîkî ya Yıldızê qedand, li Zanîngeha Artukluyê ya Mêrdînê mamostetiya mîmariyê kir û niha jî hem mîmarî hem muzîkê didomîne.",
+    "explanationKu": "Mehmet Atli beşa mîmariyê ya Zanîngeha Teknîkî ya Yildizê qedand, li Zanîngeha Artukluyê ya Mêrdînê mamostetiya mîmariyê kir û niha jî hem mîmariyê hem muzîkê didomîne.",
     "explanationTr": "Mehmet Atlı Yıldız Teknik Üniversitesi Mimarlık Bölümü'nü bitirdi, Mardin Artuklu Üniversitesi'nde mimarlık dersleri verdi ve mimarlıkla müziği birlikte sürdürüyor.",
     "metadata": {
       "dialect": "kurmanci",
@@ -2078,7 +2078,7 @@
     "category": "Muzîk",
     "difficulty": 3,
     "type": "multipleChoice",
-    "prompt": "Grûpa Kardeş Türküler rêvebiriya muzîkê û aranjmanên kîjan albûma Şivan Perwer a sala 2000î kir?",
+    "prompt": "Grûpa Kardeş Türküler rêvebiriya muzîkê û aranjmanên kîjan albûma Şivan Perwer a sala 2000î kirin?",
     "promptTr": "Kardeş Türküler, Şivan Perwer'in 2000 yılında çıkan hangi albümünün müzik yönetmenliğini ve düzenlemelerini üstlendi?",
     "answers": [
       "Dotmam",
@@ -3302,13 +3302,13 @@
     "category": "Çand",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Mamikeke kurdî (tiştonek) wiha dibêje: \"Kalokî tê ji deştê, barê strîyan li piştê.\" Bersiv çi ye?",
+    "prompt": "Mamikeke kurdî (tiştonek) wiha dibêje: \"Kalokî tê ji deştê, barê striyan li piştê.\" Bersiv çi ye?",
     "promptTr": "Bir Kürt bilmecesi şöyle der: \"Bir ihtiyarcık ovadan gelir, sırtında diken yükü.\" Cevabı nedir?",
     "answers": [
       "Kêvroşk",
       "Jîjo",
       "Rovî",
-      "Kusî"
+      "Kûsî"
     ],
     "answersTr": [
       "Tavşan",

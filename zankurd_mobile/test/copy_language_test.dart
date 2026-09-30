@@ -195,7 +195,7 @@ void main() {
     expect(Tr.of(K.explanationTitle, AppLanguage.ku), 'Şîrove');
     expect(
       Tr.of(K.onbDailyBullet, AppLanguage.ku),
-      'Di dersa rojê de dem tune, her pirs şîroveya xwe heye.',
+      'Di dersa rojê de dem tune, şîroveya her pirsê heye.',
     );
     expect(
       Tr.of(K.quizTutorialUntimedBody, AppLanguage.ku),
@@ -848,7 +848,7 @@ void main() {
     // Etiket `Koda Vexwendinê` der (`K.enterReferralCode`). Misafir
     // yasağı "davetê" deyince oyuncu aynı kodu iki adla görür. Türkçe
     // `davet` kökü `contains('vexwend')` taramasını kör eder.
-    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Koda vexwendinê');
+    expect(Tr.of(K.enterReferralCode, AppLanguage.ku), 'Kodê binivîse');
     expect(
       Tr.of(K.referralGuestBlocked, AppLanguage.ku),
       contains('Koda vexwendinê'),
