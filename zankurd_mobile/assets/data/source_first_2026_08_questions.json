@@ -133,7 +133,7 @@
   },
   {
     "id": "ds26_cinema_0087",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Xelatên Oscarê cara yekem di kîjan salê de hatin pêşkêşkirin?",
     "answers": [
       "1919",
@@ -199,7 +199,7 @@
   },
   {
     "id": "ds26_cinema_0090",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Kîjan festîvala fîlman a herî kevn a cîhanê ye?",
     "answers": [
       "Festîvala Cannesê",
@@ -463,7 +463,7 @@
   },
   {
     "id": "sf_cin_0003",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Festîvala Fîlman a Venedîkê di kîjan salê de hate damezrandin?",
     "answers": [
       "1946",
@@ -595,7 +595,7 @@
   },
   {
     "id": "sf_cin_0007",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Jûriya navneteweyî cara yekem di kîjan salê de hate destnîşankirin?",
     "answers": [
       "1934",
@@ -628,7 +628,7 @@
   },
   {
     "id": "sf_cin_0008",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Edîsyona yekem li ku hate lidarxistin?",
     "answers": [
       "Li terasa Hotel Excelsior",
@@ -661,7 +661,7 @@
   },
   {
     "id": "sf_cin_0009",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "La Biennale di Venezia di kîjan salê de hate damezrandin?",
     "answers": [
       "1895",
@@ -793,7 +793,7 @@
   },
   {
     "id": "sf_cin_0013",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê \"À bout de souffle\" (1960) kî ye?",
     "answers": [
       "François Truffaut",
@@ -826,7 +826,7 @@
   },
   {
     "id": "sf_cin_0014",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"À bout de souffle\" di kîjan salê de derket?",
     "answers": [
       "1954",
@@ -859,7 +859,7 @@
   },
   {
     "id": "sf_cin_0015",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê \"Battleship Potemkin\" kî ye?",
     "answers": [
       "Sergei M. Eisenstein",
@@ -892,7 +892,7 @@
   },
   {
     "id": "sf_cin_0016",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Battleship Potemkin\" di kîjan salê de derket?",
     "answers": [
       "1919",
@@ -925,7 +925,7 @@
   },
   {
     "id": "sf_cin_0017",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê \"Metropolis\" (1927) kî ye?",
     "answers": [
       "F. W. Murnau",
@@ -958,7 +958,7 @@
   },
   {
     "id": "sf_cin_0018",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Metropolis\" (1927) hilberîna kîjan welatî ye?",
     "answers": [
       "Fransa",
@@ -991,7 +991,7 @@
   },
   {
     "id": "sf_cin_0019",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê \"Nosferatu\" (1922) kî ye?",
     "answers": [
       "Fritz Lang",
@@ -1057,7 +1057,7 @@
   },
   {
     "id": "sf_cin_0021",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê \"Tokyo Story\" (1953) kî ye?",
     "answers": [
       "Akira Kurosawa",
@@ -1090,7 +1090,7 @@
   },
   {
     "id": "sf_cin_0022",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Tokyo Story\" hilberîna kîjan welatî ye?",
     "answers": [
       "Çîn",
@@ -1222,7 +1222,7 @@
   },
   {
     "id": "sf_cin_0032",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê \"The 400 Blows\" kî ye?",
     "answers": [
       "François Truffaut",
@@ -1255,7 +1255,7 @@
   },
   {
     "id": "sf_cin_0033",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"The 400 Blows\" hilberîna kîjan welatî ye?",
     "answers": [
       "Belçîka",
@@ -1288,7 +1288,7 @@
   },
   {
     "id": "sf_cin_0034",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Seven Samurai\" di kîjan salê de derket?",
     "answers": [
       "1948",
@@ -1321,7 +1321,7 @@
   },
   {
     "id": "sf_cin_0035",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Festîvala Fîlman a Berlînê di kîjan salê de hate avakirin?",
     "answers": [
       "1932",
@@ -1387,7 +1387,7 @@
   },
   {
     "id": "sf_cin_0037",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê \"Persona\" kî ye?",
     "answers": [
       "Ingmar Bergman",
@@ -1486,7 +1486,7 @@
   },
   {
     "id": "sf_cin_0043",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê \"Vertigo\" kî ye?",
     "answers": [
       "Alfred Hitchcock",
@@ -1519,7 +1519,7 @@
   },
   {
     "id": "sf_cin_0044",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Vertigo\" di kîjan salê de derket?",
     "answers": [
       "1944",
@@ -1552,7 +1552,7 @@
   },
   {
     "id": "sf_cin_0045",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Sunrise A Song of Two Humans\" di kîjan salê de derket?",
     "answers": [
       "1935",
@@ -1585,7 +1585,7 @@
   },
   {
     "id": "sf_cin_0047",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Man with a Movie Camera\" di kîjan salê de derket?",
     "answers": [
       "1917",
@@ -1651,7 +1651,7 @@
   },
   {
     "id": "sf_cin_0049",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Mirror\" di kîjan salê de derket?",
     "answers": [
       "1962",
@@ -1717,7 +1717,7 @@
   },
   {
     "id": "sf_cin_0051",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"In the Mood for Love\" di kîjan salê de derket?",
     "answers": [
       "1988",
@@ -1750,7 +1750,7 @@
   },
   {
     "id": "sf_cin_0052",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê \"Come and See\" kî ye?",
     "answers": [
       "Andrei Tarkovsky",
@@ -1849,7 +1849,7 @@
   },
   {
     "id": "sf_geo_0001",
-    "category": "Cografya",
+    "category": "Cîhan",
     "prompt": "Di dîrokê de çend okyanûsên bi nav hebûn?",
     "answers": [
       "Çar",
@@ -1882,7 +1882,7 @@
   },
   {
     "id": "sf_geo_0002",
-    "category": "Cografya",
+    "category": "Cîhan",
     "prompt": "Kîjan okyanûs wek okyanûsa pêncem tê naskirin?",
     "answers": [
       "Okyanûsa Hindî",
@@ -1915,7 +1915,7 @@
   },
   {
     "id": "sf_geo_0003",
-    "category": "Cografya",
+    "category": "Cîhan",
     "prompt": "Sînorên Okyanûsa Başûr di kîjan salê de ji IHOyê re hatin pêşniyarkirin?",
     "answers": [
       "1982",
@@ -1948,7 +1948,7 @@
   },
   {
     "id": "sf_geo_0004",
-    "category": "Cografya",
+    "category": "Cîhan",
     "prompt": "Li gorî NOAAyê, ji hêla fizîkî ve li cîhanê çend okyanûs hene?",
     "answers": [
       "Çar okyanûsên cuda",
@@ -2080,7 +2080,7 @@
   },
   {
     "id": "sf_nat_0005",
-    "category": "Cografya",
+    "category": "Cîhan",
     "prompt": "Di sîstema rojê de çend gerstêrk hene?",
     "answers": [
       "Şeş",
@@ -2377,7 +2377,7 @@
   },
   {
     "id": "sf_nat_0014",
-    "category": "Cografya",
+    "category": "Cîhan",
     "prompt": "Kîjan gaz para herî mezin a atmosfera Cîhanê pêk tîne?",
     "answers": [
       "Oksîjen",
@@ -2444,7 +2444,7 @@
   },
   {
     "id": "sf_nat_0016",
-    "category": "Cografya",
+    "category": "Cîhan",
     "prompt": "Piraniya ava şêrîn a Cîhanê li ku ye?",
     "answers": [
       "Di golan de",
@@ -2477,7 +2477,7 @@
   },
   {
     "id": "sf_nat_0017",
-    "category": "Cografya",
+    "category": "Cîhan",
     "prompt": "Dûrahiya navînî ya di navbera Cîhan û Heyvê de çend kîlometre ye?",
     "answers": [
       "150.000 km",
@@ -2576,7 +2576,7 @@
   },
   {
     "id": "sf_nat_0020",
-    "category": "Cografya",
+    "category": "Cîhan",
     "prompt": "Navê Challenger Deepê ji ku tê?",
     "answers": [
       "Ji navê zanyarekî",

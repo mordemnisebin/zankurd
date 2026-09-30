@@ -30,6 +30,23 @@
 /// yeniden oynanır yapar. İleride ayrı bir "Genel Kültür" kategorisi
 /// açılırsa bu liste onun kaynağıdır.
 ///
+/// ## Cîhan'a dönenler (2026-09-30)
+///
+/// Ürün sahibi o "ayrı kategori" kararını verdi: ürün ~%70 Kürt içeriği,
+/// ~%30 açıkça adlandırılmış nötr genel bilgi olacak. İlk (dünya bilgisi)
+/// dalgadan 47 kayıt — dünya sineması (37), dünya coğrafyası ve doğa
+/// bilgisi (9: okyanuslar, atmosfer, Challenger Deep…) ve Don Kişot (1) —
+/// emekliden çıkarıldı ve `Cîhan` (Türkçe «Dünya») kategorisine alındı.
+/// Bu 47'yi kalan emeklilerden ayıran şey, ikinci ve sonraki dalgaların
+/// KUSURLARINA (tanım takası, şablon izi, tartışmalı görüş) değil yalnız
+/// «Kürt bağı yok» gerekçesine dayanmalarıdır; o gerekçe artık kusur değil,
+/// kategorinin tanımıdır. Olgu ve dil denetimleri (en az iki bağımsız model
+/// + Gemini 3.1 Pro Kurmancî okuması) temiz çıktı. Kayıtlar kendi
+/// bankalarında duruyor; yalnız `category` alanı `Cîhan` oldu. Emekli kalan
+/// dünya bilgisi soruları (örneğin `cinema_0009`) bu denetimlerden
+/// geçmedikleri için hâlâ burada ve hâlâ oynanmaz; geçen bir aday aynı
+/// yoldan dönebilir.
+///
 /// ## İkinci dalga (2026-09-27, tanım takası — üsttekinden bağımsız kusur)
 ///
 /// `tool/author_replacement_questions.py` ve `tool/author_replacements_wave2.py`
@@ -136,7 +153,7 @@
 library;
 
 const Set<String> retiredQuestionIds = <String>{
-  // Sînema (97)
+  // Sînema (60)
   'cinema_0002',
   'cinema_0005',
   'cinema_0008',
@@ -157,7 +174,6 @@ const Set<String> retiredQuestionIds = <String>{
   'cinema_0033',
   'cinema_0035',
   'cinema_0037',
-  'cinema_0038',
   'cinema_0039',
   'cinema_0041',
   'cinema_0044',
@@ -166,83 +182,42 @@ const Set<String> retiredQuestionIds = <String>{
   'cinema_0050',
   'cinema_0052',
   'cinema_0054',
-  'ds26_cinema_0087',
   'ds26_cinema_0089',
-  'ds26_cinema_0090',
   'ds26_cinema_0109',
   'ds26_cinema_0111',
   'ds26_cinema_0113',
   'edit_sinema_0011',
-  'edit_sinema_0012',
-  'edit_sinema_0013',
-  'edit_sinema_0014',
-  'edit_sinema_0015',
   'edit_sinema_0017',
   'edit_sinema_0019',
   'edit_sinema_0020',
-  'edit_sinema_0021',
   'edit_sinema_0022',
   'edit_sinema_0023',
   'edit_sinema_0024',
-  'edit_sinema_0027',
   'edit_sinema_0030',
   'offline_sin_2002',
-  'offline_sin_2005',
-  'offline_sin_2008',
   'offline_sin_2011',
   'offline_sin_2012',
-  'offline_sin_2013',
   'offline_sin_2015',
   'offline_sin_2016',
-  'sf_cin_0003',
   'sf_cin_0004',
   'sf_cin_0005',
   'sf_cin_0006',
-  'sf_cin_0007',
-  'sf_cin_0008',
-  'sf_cin_0009',
   'sf_cin_0010',
   'sf_cin_0011',
   'sf_cin_0012',
-  'sf_cin_0013',
-  'sf_cin_0014',
-  'sf_cin_0015',
-  'sf_cin_0016',
-  'sf_cin_0017',
-  'sf_cin_0018',
-  'sf_cin_0019',
   'sf_cin_0020',
-  'sf_cin_0021',
-  'sf_cin_0022',
   'sf_cin_0026',
   'sf_cin_0028',
   'sf_cin_0029',
-  'sf_cin_0032',
-  'sf_cin_0033',
-  'sf_cin_0034',
-  'sf_cin_0035',
   'sf_cin_0036',
-  'sf_cin_0037',
   'sf_cin_0038',
   'sf_cin_0040',
-  'sf_cin_0043',
-  'sf_cin_0044',
-  'sf_cin_0045',
-  'sf_cin_0047',
   'sf_cin_0048',
-  'sf_cin_0049',
   'sf_cin_0050',
-  'sf_cin_0051',
-  'sf_cin_0052',
-  // Cografya (23)
-  'sf_geo_0001',
-  'sf_geo_0002',
-  'sf_geo_0003',
-  'sf_geo_0004',
+  // Cografya (14)
   'sf_nat_0002',
   'sf_nat_0003',
   'sf_nat_0004',
-  'sf_nat_0005',
   'sf_nat_0006',
   'sf_nat_0007',
   'sf_nat_0008',
@@ -251,15 +226,9 @@ const Set<String> retiredQuestionIds = <String>{
   'sf_nat_0011',
   'sf_nat_0012',
   'sf_nat_0013',
-  'sf_nat_0014',
   'sf_nat_0015',
-  'sf_nat_0016',
-  'sf_nat_0017',
   'sf_nat_0018',
   'sf_nat_0019',
-  'sf_nat_0020',
-  // Edebiyat (1)
-  'offline_ede_2014',
 
   // ---------------------------------------------------------------------
   // İkinci dalga (2026-09-27): tanım takası kalıbında farklı türden çift —

@@ -24844,7 +24844,7 @@
   },
   {
     "id": "offline_sin_2005",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Belgefîlma \"Nanook of the North\" piştî Şerê Cîhanê yê Duyem hate kişandin.",
     "answers": [
       "Rast",
@@ -24915,7 +24915,7 @@
   },
   {
     "id": "offline_sin_2008",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Di sînemaya klasîk de ji bo tevgereke xwezayî di çirkeyekê de 24 wêne tên nîşandan.",
     "answers": [
       "Rast",
@@ -25032,7 +25032,7 @@
   },
   {
     "id": "offline_sin_2013",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Ousmane Sembène, ku wek bavê sînemaya Afrîkayê tê hesibandin, ji kîjan welatî ye?",
     "answers": [
       "Misir",
@@ -26214,7 +26214,7 @@
   },
   {
     "id": "offline_ede_2014",
-    "category": "Edebiyat",
+    "category": "Cîhan",
     "prompt": "\"Don Kîşot\" wek yekem romana nûjen a wêjeya Ewropayê tê hesibandin.",
     "answers": [
       "Rast",
