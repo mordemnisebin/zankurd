@@ -15,12 +15,47 @@ import '../widgets/room_chat.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/join_deep_link.dart';
+import '../utils/player_identity.dart';
 import '../widgets/floating_reaction_overlay.dart';
 import '../widgets/player_moderation_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+
+/// Aynı kimlikli oyuncuyu TEK satıra indirir.
+///
+/// 2026-09-30 canlı: lobinin ilk 1-2 saniyesinde oyuncu iki satır
+/// görünüyordu (ikisi de "Mêvandar"), sonra teke iniyordu. `room_players`
+/// tablosunun (room_id, player_id) birincil anahtarı sunucuda çift satırı
+/// engeller; çift, istemcide oluşuyordu: ilk yükleme ile realtime
+/// `stream()` tohumu/INSERT olayı aynı satırı iki kez getirebiliyor. Ekran
+/// listeyi olduğu gibi çizdiği ve `players.length < 2` kapısını da buna
+/// bakarak açtığı için çift satır hem yanlış görünüyor hem de tek başına
+/// ev sahibine "2 oyuncu var, başlat" dedirtebilirdi.
+///
+/// İlk görülme sırası korunur; aynı kimlik tekrar gelirse veri SON
+/// gelenden alınır (daha taze hazır durumu). Kimliksiz (yerel/eski) satırlara
+/// dokunulmaz: onlar adla ayrışır ve aynı adlı iki yerel oyuncu meşrudur.
+List<Player> dedupeRoomPlayers(List<Player> players) {
+  final indexById = <String, int>{};
+  final result = <Player>[];
+  for (final player in players) {
+    final id = player.id?.trim();
+    if (id == null || id.isEmpty) {
+      result.add(player);
+      continue;
+    }
+    final existing = indexById[id];
+    if (existing == null) {
+      indexById[id] = result.length;
+      result.add(player);
+    } else {
+      result[existing] = player;
+    }
+  }
+  return result;
+}
 
 /// Odadan çıkış RPC'sinin beklenebileceği en uzun süre.
 ///
@@ -49,7 +84,9 @@ class _RoomScreenState extends State<RoomScreen> {
   /// haklıydı, ama çözümü sohbeti silmek değil katlamaktı.
   bool _chatOpen = false;
 
-  late GameRoom room = widget.initialRoom;
+  late GameRoom room = widget.initialRoom.copyWith(
+    players: dedupeRoomPlayers(widget.initialRoom.players),
+  );
 
   /// Kullanıcı anahtara *elle* dokunduysa dediği geçer; dokunmadıysa
   /// sunucudaki gerçek durum gösterilir.
@@ -258,7 +295,12 @@ class _RoomScreenState extends State<RoomScreen> {
           final senderId = payload['sender_id'] as String?;
           final senderName = payload['sender_name'] as String?;
           if (text != null && senderId != _currentUserId) {
-            _reactionController.triggerReaction(text, senderName: senderName);
+            _reactionController.triggerReaction(
+              text,
+              senderName: senderName == null
+                  ? null
+                  : PlayerIdentity.resolveName(senderName, isKu: context.isKu),
+            );
           }
         }
       });
@@ -272,8 +314,9 @@ class _RoomScreenState extends State<RoomScreen> {
 
   void _applyPlayerList(List<Player> players) {
     if (!mounted || _leaving || _terminalHandled || quizOpened) return;
-    setState(() => room = room.copyWith(players: players));
-    _syncPollingForLobby(players.length);
+    final unique = dedupeRoomPlayers(players);
+    setState(() => room = room.copyWith(players: unique));
+    _syncPollingForLobby(unique.length);
   }
 
   /// Lobide yedek yoklama AÇIK kalır; yalnız yarış başlayınca durur.
@@ -506,7 +549,10 @@ class _RoomScreenState extends State<RoomScreen> {
   Future<void> _sendReaction(String text) async {
     final roomId = room.id;
     final me = room.players.where((p) => p.id == _currentUserId).firstOrNull;
-    final myName = me?.name ?? 'Tu';
+    final myName = PlayerIdentity.resolveName(
+      me?.name ?? 'Tu',
+      isKu: context.isKu,
+    );
     _reactionController.triggerReaction(text, senderName: myName);
     if (roomId == null) return;
     try {
@@ -1147,11 +1193,17 @@ class _RoomScreenState extends State<RoomScreen> {
 }
 
 /// Mêvandarın (ev sahibinin) görünen adı — guest lobi çipi için.
-String _hostName(GameRoom room) {
+///
+/// Yer tutucu ad ("ZanKurd Oyuncusu") dile göre [PlayerIdentity] ile çözülür.
+String _hostName(GameRoom room, {required bool isKu}) {
   for (final player in room.players) {
-    if (player.id != null && player.id == room.hostId) return player.name;
+    if (player.id != null && player.id == room.hostId) {
+      return PlayerIdentity.resolveName(player.name, isKu: isKu);
+    }
   }
-  return room.players.isNotEmpty ? room.players.first.name : '—';
+  return room.players.isNotEmpty
+      ? PlayerIdentity.resolveName(room.players.first.name, isKu: isKu)
+      : '—';
 }
 
 /// Oda çubuğu — B iskeletinin çubuğu (en az 64; 44'lük pahlı geri
@@ -1296,7 +1348,9 @@ class _RoomHero extends StatelessWidget {
                   _Pill(
                     label: isHost
                         ? context.t(K.host)
-                        : context.t(K.hostNamed, {'name': _hostName(room)}),
+                        : context.t(K.hostNamed, {
+                            'name': _hostName(room, isKu: context.isKu),
+                          }),
                     icon: AppIcons.star,
                   ),
                 ],
@@ -1551,7 +1605,9 @@ class _RoomPlayerRow extends StatelessWidget {
   /// "Tu" yazdığını görüyor ve bunu bir kullanıcı adı sanıyordu
   /// (2026-07-26).
   String _displayName(BuildContext context) =>
-      player.name == 'Tu' && player.id == null ? context.t(K.you) : player.name;
+      player.name == 'Tu' && player.id == null
+      ? context.t(K.you)
+      : PlayerIdentity.resolveName(player.name, isKu: isKu);
 
   /// Depodan gelen durum metni Türkçe sabittir; KU modunda burada çevrilir.
   String _localizedState(String state) {
@@ -1689,7 +1745,7 @@ class _RoomPlayerRow extends StatelessWidget {
             PlayerModerationButton(
               repository: repository,
               playerId: player.id,
-              playerName: player.name,
+              playerName: _displayName(context),
               isSelf: isSelf,
               compact: true,
               onBlocked: onBlocked,

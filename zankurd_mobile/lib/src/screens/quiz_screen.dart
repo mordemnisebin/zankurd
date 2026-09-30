@@ -40,6 +40,7 @@ import 'quiz/word_ordering_widget.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/player_identity.dart';
 import '../utils/question_timer_resume.dart';
 import '../utils/test_environment.dart';
 import '../widgets/confetti_overlay.dart';
@@ -386,15 +387,33 @@ class _QuizScreenState extends State<QuizScreen>
   bool get _usesServerHiddenAnswers =>
       _isMultiplayer && widget.repository.usesServerHiddenAnswers;
 
+  /// Bot yarışında yerel "ben" satırının kimliği (oturum kimliği yoksa).
+  static const _localSelfId = 'local:self';
+
+  /// [_isMe]nin karşılaştırdığı kimlik.
+  ///
+  /// 2026-09-30 canlı: bot rakipli hızlı düelloda `_composeBotRacePlayers`
+  /// kendi satırını kimliksiz ("Tu", id null) kuruyordu; oturum açık bir
+  /// misafirin `_myId`si ise dolu. `playerMatchesIdentity` iki taraftan
+  /// birinde kimlik varsa ADI hiç bakmaz, kimliksiz satır "ben" sayılmıyordu.
+  /// Sonuç: üst puan kartı rakibi "listedeki ilk ben-olmayan satır" diye
+  /// seçince benim puanlı satırım rakip tarafına düşüyordu. Yerel satır artık
+  /// aynı kimliği taşır; botlar kimliksiz kalır.
+  String? get _selfMatchId =>
+      _botRace != null ? (_myId ?? _localSelfId) : _myId;
+
   bool _isMe(Player player) =>
-      playerMatchesIdentity(player, id: _myId, legacyName: _myName);
+      playerMatchesIdentity(player, id: _selfMatchId, legacyName: _myName);
 
   Iterable<Player> get _opponents =>
       livePlayers.where((player) => !_isMe(player));
 
   GameRoom get _resultRoom {
     final myIndex = livePlayers.indexWhere(_isMe);
-    if (myIndex == -1) return widget.room;
+    // Bot yarışında yerel "ben" satırı ("Tu") avatarsızdır; sonuç ekranı
+    // kimliği `room.players.first`ten (matchmaking'in kurduğu, gerçek
+    // avatarlı satır) okur, o yüzden oda olduğu gibi kalır.
+    if (myIndex == -1 || _botRace != null) return widget.room;
     return widget.room.copyWith(players: [livePlayers[myIndex], ..._opponents]);
   }
 
@@ -534,7 +553,12 @@ class _QuizScreenState extends State<QuizScreen>
                 final text = payload['text'] as String?;
                 final sender = payload['sender_name'] as String? ?? senderName;
                 if (text != null && !isSelf) {
-                  _reactionController.triggerReaction(text, senderName: sender);
+                  _reactionController.triggerReaction(
+                    text,
+                    senderName: sender == null
+                        ? null
+                        : PlayerIdentity.resolveName(sender, isKu: _isKu),
+                  );
                 }
                 return;
               }
@@ -1248,6 +1272,7 @@ class _QuizScreenState extends State<QuizScreen>
   List<Player> _composeBotRacePlayers() {
     final players = [
       Player(
+        id: _selfMatchId,
         name: Tr.forKu(K.you, _isKu),
         score: score,
         state: '—',

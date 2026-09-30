@@ -19,6 +19,7 @@ import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/player_identity.dart';
 import '../services/analytics_service.dart';
 import '../services/matchmaking_metrics.dart';
 import '../utils/test_environment.dart';
@@ -142,6 +143,24 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   String? _profileName;
 
   String get _myName => _profileName ?? (context.t(K.playerWord));
+
+  /// Ekranda gösterilen kendi adım.
+  ///
+  /// 2026-09-30 canlı: Kurmancî ekranda misafirin sunucu varsayılanı
+  /// "ZanKurd Oyuncusu" (Türkçe) olduğu gibi yazılıyordu. Kimlik karşılaştırması
+  /// ham [_myName] ile sürer (sunucu satırındaki ad da ham); yalnız ÇİZİLEN
+  /// ad [PlayerIdentity] ile dile göre çözülür.
+  String get _myDisplayName =>
+      PlayerIdentity.resolveName(_profileName, isKu: context.isKu);
+
+  /// Rakip adının ekranda görünen hâli (yer tutucu ad dile göre çözülür).
+  String? get _opponentDisplayName {
+    final name = _opponentName;
+    return name == null
+        ? null
+        : PlayerIdentity.resolveName(name, isKu: context.isKu);
+  }
+
   bool _isCancelled = false;
   bool _cancelling = false;
   bool _cancelRequested = false;
@@ -960,8 +979,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       if (opponentLevel != null) _opponentLevel = opponentLevel;
       _opponentIdentity = opponentIdentity;
       _opponentId = opponentId;
-      _statusTextKu = 'Lîstikvanek hat dîtin: $matchedName!';
-      _statusTextTr = 'Rakip bulundu: $matchedName!';
+      final shownName = PlayerIdentity.resolveName(matchedName, isKu: ku);
+      _statusTextKu = 'Lîstikvanek hat dîtin: $shownName!';
+      _statusTextTr = 'Rakip bulundu: $shownName!';
     });
 
     // Wait 1.5 seconds for victory transition animation
@@ -1289,7 +1309,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             ),
           ),
           name: Text(
-            _myName,
+            _myDisplayName,
             maxLines: 2,
             overflow: TextOverflow.clip,
             softWrap: true,
@@ -1347,7 +1367,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               ? '?'
               : _opponentBlocked
               ? context.t(K.chatBlocked)
-              : (_opponentName ?? ''),
+              : (_opponentDisplayName ?? ''),
           maxLines: 2,
           overflow: TextOverflow.clip,
           softWrap: true,
@@ -1368,7 +1388,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               PlayerModerationButton(
                 repository: widget.repository,
                 playerId: _opponentId,
-                playerName: _opponentName ?? '',
+                playerName: _opponentDisplayName ?? '',
                 compact: true,
                 onBlocked: () => setState(() => _opponentBlocked = true),
               ),
@@ -1384,7 +1404,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 PlayerModerationButton(
                   repository: widget.repository,
                   playerId: _opponentId,
-                  playerName: _opponentName ?? '',
+                  playerName: _opponentDisplayName ?? '',
                   compact: true,
                   onBlocked: () => setState(() => _opponentBlocked = true),
                 ),

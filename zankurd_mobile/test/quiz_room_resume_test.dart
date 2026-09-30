@@ -1,3 +1,4 @@
+// 2026-09-30 canlı: puan kartındaki İngilizce "pts" kısaltması "puan" oldu (sözlük); beklentiler güncellendi.
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
@@ -459,7 +460,7 @@ void main() {
 
       expect(find.text('Pirs 2'), findsOneWidget);
       expect(find.text('Pirs 1'), findsNothing);
-      expect(find.text('420 pts'), findsOneWidget);
+      expect(find.text('420 puan'), findsOneWidget);
       expect(find.text('x3'), findsOneWidget);
       expect(find.text('Rakip bekleniyor…'), findsNothing);
 
@@ -713,7 +714,7 @@ void main() {
       expect(repository.leaveCalls, 0);
       expect(repository.resumeCalls, greaterThan(callsBeforeResume));
       expect(find.text('Pirs 3'), findsOneWidget);
-      expect(find.text('760 pts'), findsOneWidget);
+      expect(find.text('760 puan'), findsOneWidget);
       expect(find.text('x4'), findsOneWidget);
       final timer = tester.widget<QuizTimerWidget>(
         find.byKey(const ValueKey('quiz-circular-timer')),

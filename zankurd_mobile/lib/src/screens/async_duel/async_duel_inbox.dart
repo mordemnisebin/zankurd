@@ -8,6 +8,7 @@ import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
+import '../../utils/player_identity.dart';
 import '../../widgets/app_state.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../../widgets/zk_back_button.dart';
@@ -251,7 +252,10 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
     // Rakibi henüz belli olmayan satırda başlık durumun kendisidir
     // ("Rakip bekleniyor"); "Rakip / Rakip bekleniyor" aynı sözü iki kez
     // söylüyordu. Alt satır o zaman oyuncunun kendi skorunu verir.
-    final knownOpponent = summary.opponentName;
+    final rawOpponent = summary.opponentName;
+    final knownOpponent = rawOpponent == null
+        ? null
+        : context.playerDisplayName(rawOpponent);
     final myCorrect = view.myCorrect;
     final title = knownOpponent ?? statusLabel;
     final subtitle = knownOpponent != null

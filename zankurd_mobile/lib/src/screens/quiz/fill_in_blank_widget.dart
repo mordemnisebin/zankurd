@@ -164,7 +164,10 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
             child: Text(Tr.forKu(K.kontrolEt, isKu)),
           ),
         ],
-        if (widget.showResult) ...[
+        // Süre dolunca doğru cevabı zaten `QuizTimeoutNotice` yazıyor
+        // ("Dem qediya. Bersiv: X"); buradaki kutu da aynı cevabı yazınca
+        // iki bant üst üste aynı sözü söylüyordu (2026-09-30 canlı).
+        if (widget.showResult && widget.selectedAnswer != 'TIMEOUT') ...[
           const SizedBox(height: SahneSpace.x3),
           Semantics(
             liveRegion: true,
