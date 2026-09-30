@@ -432,7 +432,15 @@ void main() {
     addTearDown(tester.view.reset);
 
     await tester.pumpWidget(
-      _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+      _shell(
+        MatchmakingScreen(
+          repository: repository,
+          metrics: metrics,
+          // 2026-09-30: `kAsyncDuelEnabled` açıldı; bot teklifi (Evet/Hayır)
+          // bu testin konusu, bu yüzden sırayla düello düğmesi kapalı verilir.
+          asyncDuelEnabled: false,
+        ),
+      ),
     );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Rastgele eşleşme'));
@@ -466,7 +474,15 @@ void main() {
     addTearDown(tester.view.reset);
 
     await tester.pumpWidget(
-      _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+      _shell(
+        MatchmakingScreen(
+          repository: repository,
+          metrics: metrics,
+          // 2026-09-30: `kAsyncDuelEnabled` açıldı; bot teklifi (Evet/Hayır)
+          // bu testin konusu, bu yüzden sırayla düello düğmesi kapalı verilir.
+          asyncDuelEnabled: false,
+        ),
+      ),
     );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Rastgele eşleşme'));

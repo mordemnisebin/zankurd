@@ -27,7 +27,11 @@
 -- Postflight:
 --   select name, is_active from public.categories order by name;
 
+begin;
+
 update public.categories
 set is_active = false
 where name in ('Paradigma', 'Siyaset', 'Teknolojî')
   and is_active = true;
+
+commit;
