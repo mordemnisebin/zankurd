@@ -921,7 +921,7 @@ class Tr {
       'tr': '{p0} kilitli. Önceki seviyeyi tamamla.',
     },
     K.zorlukUzerindenPYildiz: {
-      'ku': 'Zehmetî: Ji 5an {p0} stêrk',
+      'ku': 'Zehmetî: ji 5an {p0} stêrk',
       'tr': 'Zorluk: 5 üzerinden {p0} yıldız',
     },
     K.zorluk: {'ku': 'Zehmetî', 'tr': 'Zorluk'},
@@ -1557,10 +1557,7 @@ class Tr {
       'ku': 'Pirsgirêkek derket. Dîsa biceribîne.',
       'tr': 'Bir şey ters gitti. Tekrar dene.',
     },
-    K.purchasedItem: {
-      'ku': '{item} êdî yê/ya te ye.',
-      'tr': '{item} artık senin.',
-    },
+    K.purchasedItem: {'ku': 'Te {item} kirî.', 'tr': '{item} artık senin.'},
     K.gotIt: {'ku': 'Fêm kir', 'tr': 'Anladım'},
     K.zeroBalanceHint: {
       'ku': 'Zêrên te tune. Çerxê bizivirîne, zêr qezenc bike.',
