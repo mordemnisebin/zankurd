@@ -744,7 +744,7 @@ class Tr {
       'tr':
           'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: {tag}. Sen de katıl: https://zankurd.com',
     },
-    K.enterReferralCode: {'ku': 'Koda vexwendinê', 'tr': 'Davet kodu gir'},
+    K.enterReferralCode: {'ku': 'Kodê binivîse', 'tr': 'Davet kodu gir'},
     // 2026-09-30 simülatör: kod GİRME diyaloğu paylaşma cümlesini
     // ([K.inviteSubtitle]) tekrar ediyordu; girişle ilgisizdi.
     K.enterReferralCodeHint: {
@@ -1389,7 +1389,7 @@ class Tr {
     K.leaveRoom: {'ku': 'Ji odeyê derkeve', 'tr': 'Odadan ayrıl'},
     K.leavingRoom: {'ku': 'Ji odeyê derdikevî…', 'tr': 'Odadan ayrılıyor…'},
     K.roomLeaveFailed: {
-      'ku': 'Ji odeyê derneketî. Dîsa biceribîne.',
+      'ku': 'Te nikaribû ji odeyê derkevî. Dîsa biceribîne.',
       'tr': 'Odadan ayrılamadın. Tekrar dene.',
     },
     K.roomClosedByHost: {
@@ -2051,7 +2051,7 @@ class Tr {
     // oyuncu aynı açıklamayı iki adla görür; çekim `Şîroveyê
     // bibihîze` ile aynıdır.
     K.onbDailyBullet: {
-      'ku': 'Di dersa rojê de dem tune, her pirs şîroveya xwe heye.',
+      'ku': 'Di dersa rojê de dem tune, şîroveya her pirsê heye.',
       'tr': 'Günün dersinde süre yok, her sorunun açıklaması var.',
     },
     K.onbCompeteTitle: {
@@ -2191,7 +2191,7 @@ class Tr {
     K.signOutGuestWarn: {
       'ku':
           'Tu wek mêvan têketî yî. Heke derkevî, XP, zêr, rozet û '
-          'zincîra te bi tevahî winda dibin. Vegerandin tune.',
+          'zincîra te bi tevahî tên jêbirin. Nayên vegerandin.',
       'tr':
           'Misafir olarak giriş yaptın. Çıkarsan XP, jeton, rozet ve '
           'serin kalıcı olarak silinir. Geri getirilemez.',

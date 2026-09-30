@@ -20753,14 +20753,14 @@
   {
     "id": "offline_tf_can_0014",
     "category": "Çand",
-    "prompt": "Rast e an şaş e: Têgeha \"destmala govendê\" tê vê wateyê: destmala ku serê govendê di destê xwe de dihejîne.",
+    "prompt": "Rast e an şaş e: Têgeha \"destmala govendê\" tê vê wateyê: destmala ku sergovend di destê xwe de dihejîne.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. \"destmala govendê\" tê vê wateyê: destmala ku serê govendê di destê xwe de dihejîne.",
-    "explanationKu": "Rast e. \"destmala govendê\" tê vê wateyê: destmala ku serê govendê di destê xwe de dihejîne.",
+    "explanation": "Rast e. \"destmala govendê\" tê vê wateyê: destmala ku sergovend di destê xwe de dihejîne.",
+    "explanationKu": "Rast e. \"destmala govendê\" tê vê wateyê: destmala ku sergovend di destê xwe de dihejîne.",
     "explanationTr": "Doğru. \"destmala govendê\" şu anlama gelir: halay başının elinde salladığı mendil.",
     "type": "trueFalse",
     "difficulty": 3,
@@ -22139,14 +22139,14 @@
   {
     "id": "offline_tf_muz_0020",
     "category": "Muzîk",
-    "prompt": "Rast e an şaş e: Têgeha \"Ciwan Haco\" tê vê wateyê: hunermendê ku bayê rock û caz anî muzîka kurdî.",
+    "prompt": "Rast e an şaş e: \"Ciwan Haco\" ew hunermend e ku bayê rock û cazê anî muzîka kurdî.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. \"Ciwan Haco\" tê vê wateyê: hunermendê ku bayê rock û caz anî muzîka kurdî.",
-    "explanationKu": "Rast e. \"Ciwan Haco\" tê vê wateyê: hunermendê ku bayê rock û caz anî muzîka kurdî.",
+    "explanation": "Rast e. \"Ciwan Haco\" ew hunermend e ku bayê rock û cazê anî muzîka kurdî.",
+    "explanationKu": "Rast e. \"Ciwan Haco\" ew hunermend e ku bayê rock û cazê anî muzîka kurdî.",
     "explanationTr": "Doğru. \"Ciwan Haco\" şu anlama gelir: Kürt müziğine rock ve caz rüzgârını getiren sanatçı.",
     "type": "trueFalse",
     "difficulty": 3,
@@ -22202,7 +22202,7 @@
   {
     "id": "offline_tf_muz_0023",
     "category": "Muzîk",
-    "prompt": "Rast e an şaş e: Têgeha \"Mihemed Şêxo\" tê vê wateyê: muzîkjenê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin.",
+    "prompt": "Rast e an şaş e: \"Mihemed Şêxo\" ew muzîkjenê bi eslê xwe ermenî ye ku bi stranên kurdî tê naskirin.",
     "answers": [
       "Rast",
       "Şaş"
@@ -22223,14 +22223,14 @@
   {
     "id": "offline_tf_muz_0024",
     "category": "Muzîk",
-    "prompt": "Rast e an şaş e: Têgeha \"Aram Tîgran\" tê vê wateyê: muzîkjenê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin.",
+    "prompt": "Rast e an şaş e: \"Aram Tîgran\" ew muzîkjenê bi eslê xwe ermenî ye ku bi stranên kurdî tê naskirin.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. \"Aram Tîgran\" tê vê wateyê: muzîkjenê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin.",
-    "explanationKu": "Rast e. \"Aram Tîgran\" tê vê wateyê: muzîkjenê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin.",
+    "explanation": "Rast e. \"Aram Tîgran\" ew muzîkjenê bi eslê xwe ermenî ye ku bi stranên kurdî tê naskirin.",
+    "explanationKu": "Rast e. \"Aram Tîgran\" ew muzîkjenê bi eslê xwe ermenî ye ku bi stranên kurdî tê naskirin.",
     "explanationTr": "Doğru. \"Aram Tîgran\" şu anlama gelir: Kürtçe şarkılarıyla tanınan, Ermeni kökenli müzisyen.",
     "type": "trueFalse",
     "difficulty": 4,

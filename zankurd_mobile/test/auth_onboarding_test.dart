@@ -784,7 +784,7 @@ void main() {
     // günlük ders maddesi kaydırarak görünür hale gelmeli.
     final pageScroll = find.byType(SingleChildScrollView);
     final dailyBullet = find.text(
-      'Di dersa rojê de dem tune, her pirs şîroveya xwe heye.',
+      'Di dersa rojê de dem tune, şîroveya her pirsê heye.',
     );
     final pageScrollable = find.descendant(
       of: pageScroll,
@@ -804,8 +804,8 @@ void main() {
     final dailyRect = tester.getRect(dailyBullet);
     expect(afterScrollY, lessThan(beforeScrollY));
     expect(dailyRect.top, greaterThanOrEqualTo(scrollRect.top));
-    // 2026-09-29 doğallık: madde metni "Di dersa rojê de dem tune, her pirs
-    // şîroveya xwe heye." uzadı; 2x ölçekte 288 px yüksekliğinde, SE'nin
+    // 2026-09-29 doğallık: madde metni "Di dersa rojê de dem tune, şîroveya
+    // her pirsê heye." uzadı; 2x ölçekte 288 px yüksekliğinde, SE'nin
     // 219 px'lik kaydırma alanından büyük. Sözleşme "madde bir bakışta
     // tamamen sığar" değil "madde kaydırarak TAMAMEN okunabilir" olarak
     // sıkı tutuldu: alt kenarı görünür alana getirene dek kaydırılır.
