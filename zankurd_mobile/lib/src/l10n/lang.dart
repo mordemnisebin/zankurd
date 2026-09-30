@@ -186,6 +186,7 @@ class CategoryNames {
     'Paradigma': K.catParadigma,
     'Teknolojî': K.catTeknoloji,
     'Sînema': K.catSinema,
+    'Cîhan': K.catCihan,
     'Tevlihev': K.catTevlihev,
   };
 

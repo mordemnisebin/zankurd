@@ -238,6 +238,12 @@ class SubcategoryConfig {
       ),
     ],
     'Sînema': _sinemaSubcategories,
+    // 2026-09-30: Kürtlerle doğrudan bağı olmayan nötr genel bilgi. Üç konu
+    // "ne sorulursa" değil, bankadaki gerçek sorulara göre kuruldu: dünya
+    // sineması (yönetmen, film, festival), dünya coğrafyası (okyanus,
+    // parçalar, başkentler, harita kavramları) ve geriye kalan tarih,
+    // dünya edebiyatı, klasik müzik ve genel kültür.
+    'Cîhan': _cihanSubcategories,
   };
 
   /// Kategori adını — takma ad olsa bile — alt kategori listesine çevirir.
@@ -280,6 +286,30 @@ class SubcategoryConfig {
       nameTr: 'Belgesel & Festivaller',
       descriptionKu: 'Belgefîlm û festîvalên sînemayê',
       descriptionTr: 'Belgesel sinema ve festivaller',
+    ),
+  ];
+
+  static const List<SubcategoryInfo> _cihanSubcategories = [
+    SubcategoryInfo(
+      id: 'sinema_cihan',
+      nameKu: 'Sînemaya Cîhanê',
+      nameTr: 'Dünya Sineması',
+      descriptionKu: 'Fîlm, derhêner û festîvalên cîhanê',
+      descriptionTr: 'Dünya filmleri, yönetmenleri ve festivalleri',
+    ),
+    SubcategoryInfo(
+      id: 'erdnigari_cihan',
+      nameKu: 'Erdnîgariya Cîhanê',
+      nameTr: 'Dünya Coğrafyası',
+      descriptionKu: 'Okyanûs, parzemîn, paytext û nexşe',
+      descriptionTr: 'Okyanuslar, kıtalar, başkentler ve haritalar',
+    ),
+    SubcategoryInfo(
+      id: 'dirok_gisti',
+      nameKu: 'Dîrok û Zanyariya Giştî',
+      nameTr: 'Tarih ve Genel Kültür',
+      descriptionKu: 'Dîrok, wêje û muzîka cîhanê',
+      descriptionTr: 'Dünya tarihi, edebiyatı ve müziği',
     ),
   ];
 
@@ -483,6 +513,76 @@ class SubcategoryConfig {
     'bingehên_teknolojiyê': ['komputer', 'amûra', 'pergal', 'teknolojî'],
     // Sînema
     'filmen_kurdi': ['fîlm', 'derhêner', 'sînema', 'lîstikvan', 'senaryo'],
+    // Cîhan (2026-09-30). Eşleşme yalnız soru metni + doğru cevapta, alt dize
+    // olarak yapılır (bkz. `_matchByKeyword`); bu yüzden «welat» gibi çok
+    // yerde geçen kökler bilerek YOK: «kîjan welatî de ji dayik bûye» her
+    // kişi sorusunu coğrafyaya çekerdi. Eşit puanda listedeki ilk konu
+    // kazanır (sinema_cihan > erdnigari_cihan > dirok_gisti); üçüncü konu
+    // tarih, dünya edebiyatı, klasik müzik ve genel kültürün toplandığı
+    // kalan konudur.
+    'sinema_cihan': [
+      'fîlm',
+      'derhêner',
+      'sînema',
+      'oscar',
+      'festîval',
+      'edîsyon',
+      'montaj',
+      'anîmasyon',
+      'studyo',
+      'biennale',
+      'jûriya',
+    ],
+    'erdnigari_cihan': [
+      'okyanûs',
+      'parzemîn',
+      'paytext',
+      'nexşe',
+      'koordînat',
+      'projeksiyon',
+      'azîmût',
+      'bajarvanî',
+      'koçberiy',
+      'penaberî',
+      'nifûs',
+      'gerstêrk',
+      'atmosfer',
+      'ava şêrîn',
+      'challenger',
+      'heyv',
+    ],
+    'dirok_gisti': [
+      'dîrok',
+      'împaratorî',
+      'sedsal',
+      'şer',
+      'şoreş',
+      'sumer',
+      'babîl',
+      'mezopotamya',
+      'akkad',
+      'riya îpekê',
+      'gerok',
+      'roman',
+      'destan',
+      'çîrok',
+      'fabl',
+      'nobel',
+      'nivîskar',
+      'muzîk',
+      'bestekar',
+      'opera',
+      'senfoni',
+      'orkestra',
+      'jazz',
+      'blues',
+      'mozart',
+      'beethoven',
+      'haydn',
+      'amûr',
+      'têgîn',
+      'têgeha',
+    ],
     // "rê" çıkarıldı: iki harflik alt dize "berê", "rêz", "rasterast"
     // gibi yüzlerce kelimede geçiyor ve çekim tekniği sorularını bu alt
     // kategoriye çekiyordu. Güney'in filmleri özgün adlarıyla aranır.

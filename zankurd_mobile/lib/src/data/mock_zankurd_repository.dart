@@ -181,6 +181,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // kapatılmak yerine dolduruldu; sorular kavramla birlikte kavramın
     // Kurmancî karşılığını da öğretiyor.
     'Teknolojî',
+    // 2026-09-30: Kürt kategorilerinden SONRA gelir. Kürtlerle bağı olmayan
+    // nötr genel bilgi (dünya sineması/coğrafyası/tarih) kendi adıyla ayrı
+    // durur; ürünün ~%70'i Kürt içeriği, ~%30'u bu tür genel bilgidir.
+    'Cîhan',
   ];
 
   @override

@@ -445,6 +445,10 @@ IconData _iconForSubcategory(String id) {
     'filmen_kurdi' => AppIcons.clapperboard,
     'yilmaz_guney' => AppIcons.star,
     'festival_belgefilm' => AppIcons.camera,
+    // ── Cîhan ──
+    'sinema_cihan' => AppIcons.clapperboard,
+    'erdnigari_cihan' => AppIcons.globe,
+    'dirok_gisti' => AppIcons.graduationCap,
     _ => AppIcons.bookmark,
   };
 }

@@ -416,8 +416,9 @@ class SahneCategoryLight {
 /// * [detail] — ince ayrıntının rengi: ışık tablosundaki kategori ışığı.
 ///   Yalnız çizgi/yüzey ayrıntısında, düşük örtücülükte; metin değil.
 ///
-/// Işık tablosunda olmayan üç kategori (Siyaset, Paradigma, Teknolojî;
-/// 2026-09-30'da gizlilikten çıktılar) tonlarını kalan boşluklardan alır (zeytin, erik, çelik mavi).
+/// Işık tablosunda olmayan dört kategori (Siyaset, Paradigma, Teknolojî;
+/// 2026-09-30'da gizlilikten çıktılar; ve aynı gün eklenen Cîhan) tonlarını
+/// kalan boşluklardan alır (zeytin, erik, çelik mavi, deniz petrolü).
 @immutable
 class SahneCategoryTone {
   const SahneCategoryTone({
@@ -470,6 +471,14 @@ class SahneCategoryTone {
     deep: Color(0xFF1A2C47),
     detail: Color(0xFF4F8EF0),
   );
+  // Cîhan: deniz petrolü. Teknolojî'nin lacivertiyle (0xFF22395E) Ziman'ın
+  // yeşilimsi turkuazı (0xFF22595E) arasındaki boşluk; zemin gece birincil
+  // metni üstünde ≥ 4,5:1 (bekçi: category_color_identity_test).
+  static const cihan = SahneCategoryTone(
+    ground: Color(0xFF1F4B6B),
+    deep: Color(0xFF173A54),
+    detail: Color(0xFF5BC0EB),
+  );
   static const paradigma = SahneCategoryTone(
     ground: Color(0xFF54225E),
     deep: Color(0xFF401A47),
@@ -505,6 +514,7 @@ class SahneCategoryTone {
     'Teknolojî': teknoloji,
     'Paradigma': paradigma,
     'Siyaset': siyaset,
+    'Cîhan': cihan,
   };
 
   /// Kanonik kategori kimliğinin tonu; bilinmeyen kategori [fallback].
