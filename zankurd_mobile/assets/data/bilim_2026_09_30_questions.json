@@ -42,14 +42,14 @@
     "prompt": "Sala ronahiyê kîjan mezinahiya fîzîkî îfade dike?",
     "promptTr": "Işık yılı hangi fiziksel büyüklüğü ifade eder?",
     "answers": [
-      "Dûrî",
       "Dem",
+      "Dûrî",
       "Girse",
       "Germahî"
     ],
     "answersTr": [
-      "Uzaklık",
       "Zaman",
+      "Uzaklık",
       "Kütle",
       "Sıcaklık"
     ],
@@ -77,14 +77,14 @@
     "prompt": "Hejmara atomê ya elementeke kîmyewî çi nîşan dide?",
     "promptTr": "Bir kimyasal elementin atom numarası neyi gösterir?",
     "answers": [
-      "Hejmara protonên di navikê de",
       "Hejmara notronên di navikê de",
+      "Hejmara protonên di navikê de",
       "Hejmara qatên elektronan",
       "Hejmara îzotopan"
     ],
     "answersTr": [
-      "Çekirdekteki proton sayısını",
       "Çekirdekteki nötron sayısını",
+      "Çekirdekteki proton sayısını",
       "Elektron katmanı sayısını",
       "İzotop sayısını"
     ],
@@ -112,16 +112,16 @@
     "prompt": "Formûla kîmyewî ya avê kîjan e?",
     "promptTr": "Suyun kimyasal formülü hangisidir?",
     "answers": [
-      "H2O",
       "CO2",
       "O2",
-      "H2O2"
+      "H2O2",
+      "H2O"
     ],
     "answersTr": [
-      "H2O",
       "CO2",
       "O2",
-      "H2O2"
+      "H2O2",
+      "H2O"
     ],
     "correctAnswer": "H2O",
     "correctAnswerTr": "H2O",
@@ -182,15 +182,15 @@
     "prompt": "Di DNAyê de baza adenîn bi normalî bi kîjan bazê re dibe cot?",
     "promptTr": "DNA'da adenin normal olarak hangi bazla eşleşir?",
     "answers": [
-      "Tîmîn",
       "Sîtozîn",
       "Guanîn",
+      "Tîmîn",
       "Urasîl"
     ],
     "answersTr": [
-      "Timin",
       "Sitozin",
       "Guanin",
+      "Timin",
       "Urasil"
     ],
     "correctAnswer": "Tîmîn",
@@ -252,16 +252,16 @@
     "prompt": "Organê herî mezin ê laşê mirov kîjan e?",
     "promptTr": "İnsan vücudunun en büyük organı hangisidir?",
     "answers": [
-      "Çerm",
       "Kezeba reş",
       "Pişik",
-      "Mejî"
+      "Mejî",
+      "Çerm"
     ],
     "answersTr": [
-      "Deri",
       "Karaciğer",
       "Akciğer",
-      "Beyin"
+      "Beyin",
+      "Deri"
     ],
     "correctAnswer": "Çerm",
     "correctAnswerTr": "Deri",
@@ -287,15 +287,15 @@
     "prompt": "Li gorî sîstema ABOyê, li ser rûyê xirokên sor ên kesekî/ê ku grûpa xwîna wî/wê AB ye kîjan antîjen hene?",
     "promptTr": "AB kan grubundaki bir kişinin alyuvarlarının yüzeyinde ABO sistemine göre hangi antijenler bulunur?",
     "answers": [
+      "Antîjenên Ayê û Byê",
       "Tenê antîjena Ayê",
       "Tenê antîjena Byê",
-      "Antîjenên Ayê û Byê",
       "Ne antîjena Ayê û ne jî ya Byê"
     ],
     "answersTr": [
+      "A ve B antijenleri",
       "Yalnız A antijeni",
       "Yalnız B antijeni",
-      "A ve B antijenleri",
       "Ne A ne de B antijeni"
     ],
     "correctAnswer": "Antîjenên Ayê û Byê",
@@ -322,15 +322,15 @@
     "prompt": "Yek ji bandorên sereke yên derziyan, amadekirina sîstema bergiriyê ji bo hilberîna çiyê ye?",
     "promptTr": "Aşıların temel etkilerinden biri bağışıklık sistemini ne üretmeye hazırlamaktır?",
     "answers": [
-      "Antîkorên li dijî antîjenên diyarkirî",
       "Bêhtir hemoglobîn",
       "Bêhtir asîda mîdeyê",
+      "Antîkorên li dijî antîjenên diyarkirî",
       "Bêhtir zerav"
     ],
     "answersTr": [
-      "Belirli antijenlere karşı antikorlar",
       "Daha fazla hemoglobin",
       "Daha fazla mide asidi",
+      "Belirli antijenlere karşı antikorlar",
       "Daha fazla safra"
     ],
     "correctAnswer": "Antîkorên li dijî antîjenên diyarkirî",
@@ -357,15 +357,15 @@
     "prompt": "Antîbiyotîk li ser enfeksiyonên vîral ên wekî sermagirtin û grîpê çawa bandorê dikin?",
     "promptTr": "Antibiyotikler soğuk algınlığı ve grip gibi viral enfeksiyonlar üzerinde nasıl etki gösterir?",
     "answers": [
-      "Vîrusan derman nakin",
       "Vîrusan rasterast dikujin",
       "Her tim dema nexweşiyê dadixînin nîvê",
+      "Vîrusan derman nakin",
       "Ketina vîrusan a nav xaneyê bi temamî asteng dikin"
     ],
     "answersTr": [
-      "Virüsleri tedavi etmez",
       "Virüsleri doğrudan öldürür",
       "Her zaman hastalık süresini yarıya indirir",
+      "Virüsleri tedavi etmez",
       "Virüslerin hücreye girişini tamamen engeller"
     ],
     "correctAnswer": "Vîrusan derman nakin",
@@ -392,15 +392,15 @@
     "prompt": "Leza ronahiyê ya di valahiyê de, di sîstema SIyê de bi temamî çend metre/çirke ye?",
     "promptTr": "Işığın boşluktaki hızı SI sisteminde tam olarak kaç metredir/saniyedir?",
     "answers": [
-      "299.792.458 m/s",
       "300.000.000 m/s",
       "299.792.458 km/s",
+      "299.792.458 m/s",
       "299.792 m/s"
     ],
     "answersTr": [
-      "299.792.458 m/s",
       "300.000.000 m/s",
       "299.792.458 km/s",
+      "299.792.458 m/s",
       "299.792 m/s"
     ],
     "correctAnswer": "299.792.458 m/s",
@@ -427,15 +427,15 @@
     "prompt": "Ji bo cismekî ku girseya wî sabît e, hevkêşeya ku yasaya duyem a tevgerê ya Newton îfade dike kîjan e?",
     "promptTr": "Kütlesi sabit bir cisim için Newton'un ikinci hareket yasasını ifade eden denklem hangisidir?",
     "answers": [
-      "F = m × a",
       "E = m × c²",
       "V = I × R",
+      "F = m × a",
       "P = F ÷ A"
     ],
     "answersTr": [
-      "F = m × a",
       "E = m × c²",
       "V = I × R",
+      "F = m × a",
       "P = F ÷ A"
     ],
     "correctAnswer": "F = m × a",
@@ -462,14 +462,14 @@
     "prompt": "Berhema navdar a Cezerî ku di 1206an de pêşkêş kiriye kîjan e?",
     "promptTr": "El-Cezerî'nin 1206'da sunduğu ünlü eser hangisidir?",
     "answers": [
-      "Kîtab fî me'rîfet el-hiyel el-hendesiyye",
       "El-Qanûn fî't-Tibb",
+      "Kîtab fî me'rîfet el-hiyel el-hendesiyye",
       "Kîtab el-Menazir",
       "Muqeddîme"
     ],
     "answersTr": [
-      "Kitâb fî ma'rifat al-hiyal al-handasiyya",
       "El-Kanun fi't-Tıb",
+      "Kitâb fî ma'rifat al-hiyal al-handasiyya",
       "Kitab al-Manazir",
       "Mukaddime"
     ],
@@ -567,16 +567,16 @@
     "prompt": "Fîlozofê ku li Yewnanîstana Antîk mantiq kiriye dîsîplîneke sîstematîk û teoriya qiyasê pêş xistiye kî ye?",
     "promptTr": "Antik Yunan'da mantığı sistematik bir disiplin hâline getirip kıyas teorisini geliştiren filozof kimdir?",
     "answers": [
-      "Arîstotelês",
       "Zenon",
       "Epîkuros",
-      "Plotînos"
+      "Plotînos",
+      "Arîstotelês"
     ],
     "answersTr": [
-      "Aristoteles",
       "Zenon",
       "Epikuros",
-      "Plotinos"
+      "Plotinos",
+      "Aristoteles"
     ],
     "correctAnswer": "Arîstotelês",
     "correctAnswerTr": "Aristoteles",
@@ -602,14 +602,14 @@
     "prompt": "Damezrînerê dibistana felsefeyê ya Stoayî kî ye?",
     "promptTr": "Stoacı felsefe okulunun kurucusu kimdir?",
     "answers": [
-      "Zenonê Kîtionî",
       "Epîkuros",
+      "Zenonê Kîtionî",
       "Pyrrhon",
       "Dîogenês"
     ],
     "answersTr": [
-      "Kitionlu Zenon",
       "Epikuros",
+      "Kitionlu Zenon",
       "Pyrrhon",
       "Diogenes"
     ],
@@ -707,14 +707,14 @@
     "prompt": "Cota fîlozofan a ku herî rasterast bi kevneşopiya fêdedariya klasîk re tê têkildarkirin kîjan e?",
     "promptTr": "Klasik faydacılık geleneğiyle en doğrudan ilişkilendirilen filozof çifti hangisidir?",
     "answers": [
-      "Jeremy Bentham û John Stuart Mill",
       "René Descartes û Baruch Spinoza",
+      "Jeremy Bentham û John Stuart Mill",
       "Platon û Arîstotelês",
       "Søren Kierkegaard û Friedrich Nietzsche"
     ],
     "answersTr": [
-      "Jeremy Bentham ve John Stuart Mill",
       "René Descartes ve Baruch Spinoza",
+      "Jeremy Bentham ve John Stuart Mill",
       "Platon ve Aristoteles",
       "Søren Kierkegaard ve Friedrich Nietzsche"
     ],
@@ -742,16 +742,16 @@
     "prompt": "Nêzîkatiya ku di bidestxistina zanyariyê de serpêhatiya hestan wekî çavkaniya bingehîn derdixe pêş kîjan e?",
     "promptTr": "Bilginin edinilmesinde duyu deneyimini temel kaynak olarak öne çıkaran yaklaşım hangisidir?",
     "answers": [
-      "Empîrîzm",
       "Rasyonalîzm",
       "Stoaîzm",
-      "Eksîstensiyalîzm"
+      "Eksîstensiyalîzm",
+      "Empîrîzm"
     ],
     "answersTr": [
-      "Empirizm",
       "Rasyonalizm",
       "Stoacılık",
-      "Varoluşçuluk"
+      "Varoluşçuluk",
+      "Empirizm"
     ],
     "correctAnswer": "Empîrîzm",
     "correctAnswerTr": "Empirizm",
@@ -777,16 +777,16 @@
     "prompt": "Nêzîkatiya kevneşopî ya ku diparêze ku hin zanyarî û têgeh dikarin ji serpêhatiya hestan serbixwe bi riya aqil werin bidestxistin kîjan e?",
     "promptTr": "Bazı bilgi ve kavramların duyu deneyiminden bağımsız biçimde akıl yoluyla elde edilebileceğini savunan geleneksel yaklaşım hangisidir?",
     "answers": [
-      "Rasyonalîzm",
       "Empîrîzm",
       "Pragmatîzm",
-      "Stoaîzm"
+      "Stoaîzm",
+      "Rasyonalîzm"
     ],
     "answersTr": [
-      "Rasyonalizm",
       "Empirizm",
       "Pragmatizm",
-      "Stoacılık"
+      "Stoacılık",
+      "Rasyonalizm"
     ],
     "correctAnswer": "Rasyonalîzm",
     "correctAnswerTr": "Rasyonalizm",
@@ -812,14 +812,14 @@
     "prompt": "Nivîskarê Şerefnameyê ku ji bo dîroka kurdan çavkaniyeke girîng e kî ye?",
     "promptTr": "Kürt tarihi açısından önemli bir kaynak olan Şerefname'nin yazarı kimdir?",
     "answers": [
-      "Şerefxanê Bedlîsî",
       "Ehmedê Xanî",
+      "Şerefxanê Bedlîsî",
       "Mela Mehmûdê Bazîdî",
       "Celadet Alî Bedirxan"
     ],
     "answersTr": [
-      "Şeref Han Bitlisî",
       "Ehmedê Xanî",
+      "Şeref Han Bitlisî",
       "Molla Mahmud Bâyezîdî",
       "Celadet Alî Bedirxan"
     ],
@@ -847,16 +847,16 @@
     "prompt": "Nivîskarê Mem û Zînê ku ji berhemên klasîk ên edebiyata Kurmancî ye kî ye?",
     "promptTr": "Kurmancî edebiyatının klasik eserlerinden Mem û Zîn'in yazarı kimdir?",
     "answers": [
-      "Ehmedê Xanî",
       "Şerefxanê Bedlîsî",
       "Celadet Alî Bedirxan",
-      "Mela Mehmûdê Bazîdî"
+      "Mela Mehmûdê Bazîdî",
+      "Ehmedê Xanî"
     ],
     "answersTr": [
-      "Ehmedê Xanî",
       "Şeref Han Bitlisî",
       "Celadet Alî Bedirxan",
-      "Molla Mahmud Bâyezîdî"
+      "Molla Mahmud Bâyezîdî",
+      "Ehmedê Xanî"
     ],
     "correctAnswer": "Ehmedê Xanî",
     "correctAnswerTr": "Ehmedê Xanî",
@@ -882,16 +882,16 @@
     "prompt": "Zimannasê ku bi sêwirandina alfabeya Hawarê ya li ser bingeha Latînî ji bo Kurmancî tê naskirin kî ye?",
     "promptTr": "Kurmancî için Latin temelli Hawar alfabesini tasarlamasıyla tanınan dilci kimdir?",
     "answers": [
-      "Celadet Alî Bedirxan",
       "Şerefxanê Bedlîsî",
       "Ehmedê Xanî",
-      "Mela Mehmûdê Bazîdî"
+      "Mela Mehmûdê Bazîdî",
+      "Celadet Alî Bedirxan"
     ],
     "answersTr": [
-      "Celadet Alî Bedirxan",
       "Şeref Han Bitlisî",
       "Ehmedê Xanî",
-      "Molla Mahmud Bâyezîdî"
+      "Molla Mahmud Bâyezîdî",
+      "Celadet Alî Bedirxan"
     ],
     "correctAnswer": "Celadet Alî Bedirxan",
     "correctAnswerTr": "Celadet Alî Bedirxan",
@@ -952,15 +952,15 @@
     "prompt": "Di modela cudabûna hêzan de rayeyên dewletê bi kevneşopî li kîjan sê dabeşan tên veqetandin?",
     "promptTr": "Kuvvetler ayrılığı modelinde devlet yetkileri geleneksel olarak hangi üç işleve ayrılır?",
     "answers": [
-      "Zagonsazî, cîbicîkirin û daraz",
       "Navend, herêm û şaredarî",
       "Bac, butçe û bazirganî",
+      "Zagonsazî, cîbicîkirin û daraz",
       "Polîs, artêş û dîplomasî"
     ],
     "answersTr": [
-      "Yasama, yürütme ve yargı",
       "Merkez, bölge ve belediye",
       "Vergi, bütçe ve ticaret",
+      "Yasama, yürütme ve yargı",
       "Polis, ordu ve diplomasi"
     ],
     "correctAnswer": "Zagonsazî, cîbicîkirin û daraz",
@@ -987,15 +987,15 @@
     "prompt": "Di modela cudabûna hêzan de erka bingehîn a zagonsaziyê kîjan e?",
     "promptTr": "Kuvvetler ayrılığı modelinde yasama işlevinin temel görevi hangisidir?",
     "answers": [
-      "Zagonan çêkirin",
       "Zagonan cîbicî kirin",
       "Nakokiyên darazî bi biryar kirin",
+      "Zagonan çêkirin",
       "Nûnertiya dîplomatîk birêve birin"
     ],
     "answersTr": [
-      "Kanun yapmak",
       "Kanunları uygulamak",
       "Yargısal uyuşmazlıkları karara bağlamak",
+      "Kanun yapmak",
       "Diplomatik temsil yürütmek"
     ],
     "correctAnswer": "Zagonan çêkirin",
@@ -1022,15 +1022,15 @@
     "prompt": "Pênaseya herî giştî ya têgeha destûra bingehîn kîjan e?",
     "promptTr": "Anayasa kavramının en genel tanımı hangisidir?",
     "answers": [
-      "Tevahiya prensîb û rêgezên rêxistiniya bingehîn a dewletekê",
       "Belgeya ku tenê butçeya salane ya dewletê diyar dike",
       "Tevahiya biryarên ku rêxistinên navneteweyî wergirtine",
+      "Tevahiya prensîb û rêgezên rêxistiniya bingehîn a dewletekê",
       "Zagona ku tenê sûcên cezayî rêz dike"
     ],
     "answersTr": [
-      "Bir devletin temel örgütlenme ilke ve kurallarının bütünü",
       "Yalnızca yıllık devlet bütçesini belirleyen belge",
       "Uluslararası örgütlerin aldığı tüm kararların toplamı",
+      "Bir devletin temel örgütlenme ilke ve kurallarının bütünü",
       "Sadece ceza suçlarını sıralayan kanun"
     ],
     "correctAnswer": "Tevahiya prensîb û rêgezên rêxistiniya bingehîn a dewletekê",
@@ -1127,16 +1127,16 @@
     "prompt": "Neteweyên Yekbûyî di kîjan dîrokê de bi awayekî fermî dest bi xebata xwe kir?",
     "promptTr": "Birleşmiş Milletler resmen hangi tarihte faaliyete geçti?",
     "answers": [
-      "24ê Çiriya Pêşîn a 1945an",
       "10ê Kanûna Pêşîn a 1948an",
       "26ê Hezîrana 1945an",
-      "1ê Rêbendana 1950yî"
+      "1ê Rêbendana 1950yî",
+      "24ê Çiriya Pêşîn a 1945an"
     ],
     "answersTr": [
-      "24 Ekim 1945",
       "10 Aralık 1948",
       "26 Haziran 1945",
-      "1 Ocak 1950"
+      "1 Ocak 1950",
+      "24 Ekim 1945"
     ],
     "correctAnswer": "24ê Çiriya Pêşîn a 1945an",
     "correctAnswerTr": "24 Ekim 1945",
@@ -1162,14 +1162,14 @@
     "prompt": "Di sala 1945an de hejmara dewletên endam ên resen ên Neteweyên Yekbûyî çend bû?",
     "promptTr": "Birleşmiş Milletlerin 1945'teki özgün üye devlet sayısı kaçtı?",
     "answers": [
-      "51",
       "50",
+      "51",
       "57",
       "193"
     ],
     "answersTr": [
-      "51",
       "50",
+      "51",
       "57",
       "193"
     ],
@@ -1197,14 +1197,14 @@
     "prompt": "Konseya Ewlekariyê ya Neteweyên Yekbûyî bi giştî ji çend endaman pêk tê?",
     "promptTr": "Birleşmiş Milletler Güvenlik Konseyi toplam kaç üyeden oluşur?",
     "answers": [
-      "15",
       "10",
+      "15",
       "20",
       "25"
     ],
     "answersTr": [
-      "15",
       "10",
+      "15",
       "20",
       "25"
     ],
@@ -1232,16 +1232,16 @@
     "prompt": "Hejmarên endamên daîmî û nedaîmî yên Konseya Ewlekariyê ya NYyê di kîjan vebijarkê de rast hatine dayîn?",
     "promptTr": "BM Güvenlik Konseyi'nin daimi ve daimi olmayan üyelerinin sayıları hangi seçenekte doğru verilmiştir?",
     "answers": [
-      "5 daîmî, 10 nedaîmî",
       "10 daîmî, 5 nedaîmî",
       "5 daîmî, 15 nedaîmî",
-      "15 daîmî, 5 nedaîmî"
+      "15 daîmî, 5 nedaîmî",
+      "5 daîmî, 10 nedaîmî"
     ],
     "answersTr": [
-      "5 daimi, 10 daimi olmayan",
       "10 daimi, 5 daimi olmayan",
       "5 daimi, 15 daimi olmayan",
-      "15 daimi, 5 daimi olmayan"
+      "15 daimi, 5 daimi olmayan",
+      "5 daimi, 10 daimi olmayan"
     ],
     "correctAnswer": "5 daîmî, 10 nedaîmî",
     "correctAnswerTr": "5 daimi, 10 daimi olmayan",
@@ -1267,15 +1267,15 @@
     "prompt": "Statuya Dîwana Dadê ya Navneteweyî ya di nav sîstema NYyê de kîjan e?",
     "promptTr": "Uluslararası Adalet Divanı'nın BM sistemi içindeki statüsü hangisidir?",
     "answers": [
-      "Organa darazê ya sereke ya Neteweyên Yekbûyî ye",
       "Organa zagonsaziyê ya Neteweyên Yekbûyî ye",
       "Binkomîteya Konseya Ewlekariyê ya NYyê ye",
+      "Organa darazê ya sereke ya Neteweyên Yekbûyî ye",
       "Organa temyîzê ya Dadgeha Cezayê ya Navneteweyî ye"
     ],
     "answersTr": [
-      "Birleşmiş Milletlerin başlıca yargı organıdır",
       "Birleşmiş Milletlerin yasama organıdır",
       "BM Güvenlik Konseyi'nin alt komitesidir",
+      "Birleşmiş Milletlerin başlıca yargı organıdır",
       "Uluslararası Ceza Mahkemesinin temyiz organıdır"
     ],
     "correctAnswer": "Organa darazê ya sereke ya Neteweyên Yekbûyî ye",
@@ -1302,14 +1302,14 @@
     "prompt": "Navenda Dîwana Dadê ya Navneteweyî li kîjan bajarî ye?",
     "promptTr": "Uluslararası Adalet Divanı'nın merkezi hangi şehirdedir?",
     "answers": [
-      "Lahey",
       "Cenevre",
+      "Lahey",
       "New York",
       "Strasbourg"
     ],
     "answersTr": [
-      "Lahey",
       "Cenevre",
+      "Lahey",
       "New York",
       "Strazburg"
     ],
@@ -1337,15 +1337,15 @@
     "prompt": "Li gorî xala 1emîn a Peymana Mafên Zarokan a NYyê, wekî rêgez, kî zarok tê hesibandin?",
     "promptTr": "BM Çocuk Haklarına Dair Sözleşme'nin 1. maddesine göre genel kural olarak kim çocuk sayılır?",
     "answers": [
-      "Her mirovê ku ji 18 saliyê biçûktir e",
       "Her mirovê ku ji 16 saliyê biçûktir e",
       "Her mirovê ku ji 21 saliyê biçûktir e",
+      "Her mirovê ku ji 18 saliyê biçûktir e",
       "Tenê kesên di temenê perwerdeya mecbûrî de ne"
     ],
     "answersTr": [
-      "18 yaşından küçük her insan",
       "16 yaşından küçük her insan",
       "21 yaşından küçük her insan",
+      "18 yaşından küçük her insan",
       "Yalnızca zorunlu eğitim çağındaki kişiler"
     ],
     "correctAnswer": "Her mirovê ku ji 18 saliyê biçûktir e",
@@ -1372,16 +1372,16 @@
     "prompt": "Yek ji hêmanên bingehîn ên pênaseya penaberiyê ya di Peymana Penaberan a 1951ê de kîjan e?",
     "promptTr": "1951 Mülteci Sözleşmesi'ndeki mülteci tanımının temel unsurlarından biri hangisidir?",
     "answers": [
-      "Ji ber tirsa zilmê ya li ser hincetên mafdar, li derveyî welatê ku ew hemwelatiyê wî ye mayîn",
       "Tenê ji bo bidestxistina dahateke bilindtir barkirina welatekî din",
       "Di heman welatî de barkirina bajarekî din",
-      "Ji bo demeke kurt geşteke turîstîk bo welatekî din kirin"
+      "Ji bo demeke kurt geşteke turîstîk bo welatekî din kirin",
+      "Ji ber tirsa zilmê ya li ser hincetên mafdar, li derveyî welatê ku ew hemwelatiyê wî ye mayîn"
     ],
     "answersTr": [
-      "Haklı nedenlere dayanan zulüm korkusu nedeniyle vatandaşı olduğu ülkenin dışında bulunmak",
       "Yalnızca daha yüksek gelir elde etmek için başka ülkeye taşınmak",
       "Aynı ülke içinde başka bir şehre taşınmak",
-      "Başka bir ülkeye kısa süreli turistik gezi yapmak"
+      "Başka bir ülkeye kısa süreli turistik gezi yapmak",
+      "Haklı nedenlere dayanan zulüm korkusu nedeniyle vatandaşı olduğu ülkenin dışında bulunmak"
     ],
     "correctAnswer": "Ji ber tirsa zilmê ya li ser hincetên mafdar, li derveyî welatê ku ew hemwelatiyê wî ye mayîn",
     "correctAnswerTr": "Haklı nedenlere dayanan zulüm korkusu nedeniyle vatandaşı olduğu ülkenin dışında bulunmak",
