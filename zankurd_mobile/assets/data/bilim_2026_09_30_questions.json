@@ -1758,15 +1758,15 @@
     "promptTr": "Baklagillerin kök nodüllerinde yaşayan Rhizobium bakterilerinin önemli işlevi hangisidir?",
     "answers": [
       "Veguherandina nîtrojena atmosferî bo pêkhateyên ku riwek dikare bikar bîne",
-      "Veguherandina fosfora di axê de bo oksîjenê",
-      "Depokirina hemû ava riwekê",
-      "Sekinandina bi tevahî ya çêkirina klorofîlê"
+      "Veguherandina fosfora di axê de bo oksîjena ku riwek dikare bikar bîne",
+      "Depokirina hemû ava ku riwek ji axê dikişîne di girêkên kokê de",
+      "Sekinandina bi tevahî ya çêkirina klorofîlê di pelên riwekê de"
     ],
     "answersTr": [
       "Atmosferik azotu bitkinin kullanabileceği bileşiklere dönüştürmek",
-      "Topraktaki fosforu oksijene çevirmek",
-      "Bitkinin tüm suyunu depolamak",
-      "Klorofil üretimini tamamen durdurmak"
+      "Topraktaki fosforu bitkinin kullanabileceği oksijene dönüştürmek",
+      "Bitkinin topraktan çektiği tüm suyu kök nodüllerinde depolamak",
+      "Bitki yapraklarında klorofil üretimini tamamen durdurmak"
     ],
     "correctAnswer": "Veguherandina nîtrojena atmosferî bo pêkhateyên ku riwek dikare bikar bîne",
     "correctAnswerTr": "Atmosferik azotu bitkinin kullanabileceği bileşiklere dönüştürmek",
