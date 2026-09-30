@@ -158,7 +158,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Güney senaryoyu cezaevindeyken yazdı, çekimi Şerif Gören yürüttü, kurguyu ise Güney yurt dışına çıktıktan sonra kendisi yaptı. Ödül o yıl Costa-Gavras'ın \"Kayıp\" filmiyle paylaşıldı.",
-    "explanationKu": "Güney senaryo dema ku li girtîgehê bû nivîsî, kişandin ji aliyê Şerif Gören ve hat kirin, hevgirêdan jî piştî ku Güney derket derveyî welat wî bi xwe kir. Xelat wê salê digel fîlmê \"Kayıp\" yê Costa-Gavras hat parvekirin.",
+    "explanationKu": "Güney senaryo dema ku li girtîgehê bû nivîsî, kişandin ji aliyê Şerif Gören ve hat kirin, montaj jî piştî ku Güney derket derveyî welat wî bi xwe kir. Xelat wê salê digel fîlmê \"Kayıp\" yê Costa-Gavras hat parvekirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -274,7 +274,7 @@
   {
     "id": "cinema_0010",
     "category": "Sînema",
-    "prompt": "Dîmenek ku bêyî qutkirinê bi kişandineke domdar tê tomarkirin, çi tê navandin?",
+    "prompt": "Dîmenek ku bêyî qutkirinê bi kişandineke domdar tê tomarkirin, çawa tê binavkirin?",
     "answers": [
       "Montaja paralel",
       "Plan-sekans",
@@ -294,7 +294,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Plan sekansta kamera durmadan çalışır ve sahne kurguyla parçalanmaz; zaman izleyiciye olduğu gibi akar. Paralel kurgu ile sıçramalı kesme kesmeye dayanır, kararma ise bir geçiş efektidir.",
-    "explanationKu": "Di plansekansê de kamera bêdawî dixebite û dîmen bi hevgirêdanê nayê perçekirin; dem wek ku ye ji temaşevan re diherike. Hevgirêdana paralel û qutbûna bilez xwe dispêrin qutkirinê, tarîbûn jî efekteke derbasbûnê ye.",
+    "explanationKu": "Di plansekansê de kamera bêdawî dixebite û dîmen bi montajê nayê perçekirin; dem wek ku ye ji temaşevan re diherike. Montaja paralel û qutbûna bilez xwe dispêrin qutkirinê, tarîbûn jî efekteke derbasbûnê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -376,7 +376,7 @@
   {
     "id": "cinema_0013",
     "category": "Sînema",
-    "prompt": "Fîlmê ku bûyer û mirovên rastîn bêyî senaryoyeke çîrokî tomar dike, di kîjan cûreyê de ye?",
+    "prompt": "Fîlmê ku bûyer û mirovên rastîn bêyî senaryoyeke çîrokî tomar dike, di kîjan cureyê de ye?",
     "answers": [
       "Belgefîlm",
       "Zanistî-xeyalî",
@@ -546,7 +546,7 @@
   {
     "id": "cinema_0018",
     "category": "Sînema",
-    "prompt": "Fîlmê 2000î \"Demê ku Hesp Serxweş Dibin\" ku li Cannesê Caméra d'Or wergirt, ji kîjan derhênerî ye?",
+    "prompt": "Fîlmê 2000î \"Dema Hesp Serxweş Dibin\" ku li Cannesê Caméra d'Or wergirt, yê kîjan derhênerî ye?",
     "answers": [
       "Hîner Salêm",
       "Bahman Ghobadî",
@@ -580,7 +580,7 @@
   {
     "id": "cinema_0019",
     "category": "Sînema",
-    "prompt": "Dengên wek gavan an vekirina derî yên ku piştî kişandinê li stûdyoyê ji nû ve tên çêkirin, çi tên navandin?",
+    "prompt": "Dengên wek gavan an vekirina derî yên ku piştî kişandinê li stûdyoyê ji nû ve tên çêkirin, çawa tên binavkirin?",
     "answers": [
       "Muzîka fîlmî",
       "Dublaj",
@@ -702,7 +702,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Senaryo, filmin sahne sahne planıdır; konuşmalar ve olay örgüsü burada belirlenir. Kurgucu çekilmiş görüntüyle, görüntü yönetmeni kamerayla, sanat yönetmeni mekân ve dekorla çalışır.",
-    "explanationKu": "Senaryo plansaziya fîlmê ya dîmen bi dîmen e; axaftin û tevna bûyeran li vir tê diyarkirin. Hevgirêder bi dîmenên kişandî, derhênerê dîmenê bi kamerayê, derhênerê hunerî jî bi mekan û dekorê re dixebite.",
+    "explanationKu": "Senaryo plansaziya fîlmê ya dîmen bi dîmen e; axaftin û tevna bûyeran li vir tê diyarkirin. Montajkar bi dîmenên kişandî, derhênerê dîmenê bi kamerayê, derhênerê hunerî jî bi mekan û dekorê re dixebite.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -886,7 +886,7 @@
   {
     "id": "cinema_0028",
     "category": "Sînema",
-    "prompt": "Dîmenê ku tê de kamera rasterast ji jor ve li cihê bûyerê dinêre, çi tê navandin?",
+    "prompt": "Dîmenê ku tê de kamera rasterast ji jor ve li cihê bûyerê dinêre, çawa tê binavkirin?",
     "answers": [
       "Plana ji jêr",
       "Plana hemwaz",
@@ -988,7 +988,7 @@
   {
     "id": "cinema_0031",
     "category": "Sînema",
-    "prompt": "Kî budçeya fîlmekî peyda dike û pêvajoya berhemanînê birêve dibe?",
+    "prompt": "Kî budçeya fîlmekî peyda dike û pêvajoya berhemanînê bi rê ve dibe?",
     "answers": [
       "Derhêner",
       "Berhemhêner",
@@ -1090,7 +1090,7 @@
   {
     "id": "cinema_0034",
     "category": "Sînema",
-    "prompt": "Dîmenê destpêkê yê ku cih û dema sekansekê dide nasîn, çi tê navandin?",
+    "prompt": "Dîmenê destpêkê yê ku cih û dema sekansekê dide nasîn, çawa tê binavkirin?",
     "answers": [
       "Plana berevajî",
       "Plana detayê",
@@ -1382,7 +1382,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Ermenistan'daki bir Kürt köyünde geçen film, kışın yoksulluğunu kuru bir mizahla anlatır ve yönetmenin en tanınan işidir. Ghobadi, Öz ve Khalil de Kürt sinemasının başka yönetmenleridir.",
-    "explanationKu": "Fîlm li gundekî kurdan ê li Ermenistanê derbas dibe, xizaniya zivistanê bi henekek hişk vedibêje û berhema herî navdar a derhêner e. Ghobadi, Öz û Khalil jî derhênerên din ên sînemaya kurdî ne.",
+    "explanationKu": "Fîlm li gundekî kurdan ê li Ermenistanê derbas dibe, xizaniya zivistanê bi henekeke hişk vedibêje û berhema herî navdar a derhêner e. Ghobadî, Öz û Xelîl jî derhênerên din ên sînemaya kurdî ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1399,7 +1399,7 @@
     "prompt": "Di sînemayê de şeklê çarçoveya dîmenê bi kîjan pîvanê tê diyarkirin?",
     "answers": [
       "Hejmara kadroyên ku di saniyeyekê de tên nîşandan",
-      "Kûrahiya zeviya di navbera pêş û paş de",
+      "Kûrahiya qadê ya di navbera pêş û paş de",
       "Asta bilindbûna dengê tomarkirî",
       "Rêjeya firehî û bilindahiyê"
     ],
@@ -1484,7 +1484,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Ad, Beyoğlu'ndaki bir sokaktan gelir; yapım şirketleri orada toplandığı için dönemin popüler film üretimi bu adla anıldı. Bir festivalin, ödülün ya da derginin adı değildir.",
-    "explanationKu": "Ev nav ji kolanek li Beyoğluyê tê; ji ber ku şîrketên hilberînê li wir kom bibûn, hilberîna fîlmên populer ya wê serdemê bi vî navî hat binavkirin. Ne navê festîval, xelat an kovarekê ye.",
+    "explanationKu": "Ev nav ji kolanekê li Beyoğluyê tê; ji ber ku şîrketên hilberînê li wir kom bibûn, hilberîna fîlmên populer a wê serdemê bi vî navî hat binavkirin. Ne navê festîval, xelat an kovarekê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1498,7 +1498,7 @@
   {
     "id": "cinema_0046",
     "category": "Sînema",
-    "prompt": "Du bûyerên ku di heman demê de li cihên cuda diqewimin bi dor tên nîşandan; ev şêwaza montajê çi ye?",
+    "prompt": "Du bûyerên ku di heman demê de li cihên cuda diqewimin bi dorê tên nîşandan; ev şêwaza montajê çi ye?",
     "answers": [
       "Montaja domdar",
       "Montaja paralel",
@@ -1756,7 +1756,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Film, ölmek isteyen bir adamın araba içinde geçen konuşmalarını izler; ödül o yıl Shohei Imamura'nın filmiyle paylaşıldı. Farhadi sonraki kuşaktandır, Macidi ve Mehrcui ise başka işlerle anılır.",
-    "explanationKu": "Fîlm li peyivînên zilamekî ku dixwaze bimire, di hundirê erebeyekê de, temaşe dike; xelat wê salê bi fîlmê Shohei Imamura re hat parvekirin. Farhadi ji nifşekî paşerojê ye, Macidi û Mehrcui jî bi berhemên din tên nasîn.",
+    "explanationKu": "Fîlm peyivînên zilamekî ku dixwaze bimire, di hundirê erebeyekê de, dişopîne; xelat wê salê bi fîlmê Shohei Imamura re hat parvekirin. Ferhadî ji nifşekî paşerojê ye, Macîdî û Mehrcûî jî bi berhemên din tên nasîn.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1804,7 +1804,7 @@
   {
     "id": "cinema_0055",
     "category": "Sînema",
-    "prompt": "Fîlmê 1999an \"Güneşe Yolculuk\" ji kîjan derhênerî ye?",
+    "prompt": "Fîlmê 1999an \"Güneşe Yolculuk\" yê kîjan derhênerî ye?",
     "answers": [
       "Zekî Demîrkubuz",
       "Handan Îpekçî",
@@ -1824,7 +1824,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Film, İstanbul'da tanışan iki genç adamın ülkenin doğusuna uzanan yolculuğunu izler ve Berlin'de ödül almıştır. Demirkubuz, İpekçi ve Akar da 1990'ların sonunda öne çıkan yönetmenlerdir.",
-    "explanationKu": "Fîlm rêwîtiya du xortên ku li Stenbolê nas dibin ber bi rojhilatê welat ve dişopîne û li Berlînê xelat wergirtiye. Demirkubuz, İpekçi û Akar jî derhênerên ku di dawiya salên 1990î de derketine pêş in.",
+    "explanationKu": "Fîlm rêwîtiya du xortên ku li Stenbolê nas dibin ber bi rojhilatê welat ve dişopîne û li Berlînê xelat wergirtiye. Demîrkubuz, Îpekçî û Akar jî derhênerên ku di dawiya salên 1990î de derketine pêş in.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1858,7 +1858,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Bir bayt 8 bittir; bu yüzden tek bir bayt 2 üzeri 8, yani 256 farklı değer taşıyabilir. 4, 6 ve 16 bitlik gruplar standart bayt uzunluğu sayılmaz.",
-    "explanationKu": "Bayt yek ji 8 bîtan pêk tê; ji ber vê yekê baytek dikare 2 bi hêza 8, ango 256 nirxên cuda hilgire. Komên 4, 6 û 16 bîtî wek dirêjahiya baytê ya standard nayên hesibandin.",
+    "explanationKu": "Baytek ji 8 bîtan pêk tê; ji ber vê yekê baytek dikare 2 bi hêza 8, ango 256 nirxên cuda hilgire. Komên 4, 6 û 16 bîtî wek dirêjahiya baytê ya standard nayên hesibandin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -1892,7 +1892,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "İşlemci komutu alır, çözer ve yürütür. Sabit disk veriyi saklar, ekran kartı görüntüyü üretir, güç kaynağı ise yalnızca elektrik sağlar.",
-    "explanationKu": "Pêvajoker fermanê distîne, wê çareser dike û bi cih tîne. Dîska hişk daneyan hildide, karta dîmenê wêneyan çêdike, çavkaniya hêzê jî tenê ceryanê peyda dike.",
+    "explanationKu": "Pêvajoker fermanan distîne, wan çareser dike û bi cih tîne. Dîska hişk daneyan hildigire, karta dîmenê wêneyan çêdike, çavkaniya hêzê jî tenê ceryanê peyda dike.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -1926,7 +1926,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "RAM uçucu bellektir; içeriğini korumak için sürekli elektrik ister. Sabit disk, SSD ve USB bellek elektrik kesilse de veriyi tutmayı sürdürür.",
-    "explanationKu": "RAM bîreke gerguhêz e; ji bo parastina naveroka xwe hewceyî ceryana berdewam e. Dîska hişk, SSD û bîra USBê jî heke ceryan were birîn dîsa daneyan diparêzin.",
+    "explanationKu": "RAM bîreke demkî ye; ji bo parastina naveroka xwe hewceyî ceryana berdewam e. Dîska hişk, SSD û bîra USBê jî heke ceryan were birîn dîsa daneyan diparêzin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -1942,7 +1942,7 @@
     "category": "Teknolojî",
     "prompt": "Kîjan yekîneya daneyê ji megabaytê mezintir e?",
     "answers": [
-      "Kilobayt",
+      "Kîlobayt",
       "Bayt",
       "Bît",
       "Gîgabayt"
@@ -1994,7 +1994,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "İşletim sistemi donanımı yönetir ve öteki programların çalışmasını sağlar. Tarayıcı, antivirüs ve programlama dilleri onun üstünde duran ayrı araçlardır.",
-    "explanationKu": "Pergala xebitandinê rehiyê bi rê ve dibe û dihêle bernameyên din bixebitin. Geroka webê, antîvîrus û zimanên bernamesaziyê amûrên cuda ne ku li ser wê radiwestin.",
+    "explanationKu": "Pergala xebitandinê hişkalavê bi rê ve dibe û dihêle bernameyên din bixebitin. Geroka webê, antîvîrus û zimanên bernamesaziyê amûrên cuda ne ku li ser wê dixebitin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2028,7 +2028,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Basamak değerleri sağdan sola 1, 2, 4, 8 diye gider; 1100 sayısında 8 ve 4 basamakları doludur, toplamları 12 eder.",
-    "explanationKu": "Nirxên hanikan ji rastê ber bi çepê ve wiha ne: 1, 2, 4, 8; di hejmara 1100 de hanikên 8 û 4 tijî ne, kombûna wan dibe 12.",
+    "explanationKu": "Nirxên xaneyan ji rastê ber bi çepê ve wiha ne: 1, 2, 4, 8; di hejmara 1100 de xaneyên 8 û 4 tijî ne, kombûna wan dibe 12.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2044,12 +2044,12 @@
     "category": "Teknolojî",
     "prompt": "Taybetiya ku SSDyê ji dîska hişk a klasîk cuda dike çi ye?",
     "answers": [
-      "Parçeyên wê yên tevger tune ne",
+      "Parçeyên wê yên livok nîn in",
       "Bi dîskên zivirok ên magnetîk dixebite",
       "Gava ceryan biqete dane jê tên jêbirin",
       "Tenê ji bo bernameyên grafîkê hatiye çêkirin"
     ],
-    "correctAnswer": "Parçeyên wê yên tevger tune ne",
+    "correctAnswer": "Parçeyên wê yên livok nîn in",
     "promptTr": "SSD'yi klasik sabit diskten ayıran temel özellik nedir?",
     "answersTr": [
       "Hareketli parçası yoktur",
@@ -2062,7 +2062,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "SSD veriyi flash çiplerde tutar; dönen tabla ve okuma kolu bulunmaz, bu yüzden sessiz ve darbeye dayanıklıdır. Verisi elektrik kesilse de kalır.",
-    "explanationKu": "SSD daneyan di çîpên flashê de dihêle; ne texteyeke zivirok û ne jî milê xwendinê tê de heye, ji ber vê yekê bêdeng e û li hember lêdanan xurt e. Heke ceryan were birîn jî daneya wê namîne winda.",
+    "explanationKu": "SSD daneyan di çîpên flashê de dihêle; ne texteyeke zivirok û ne jî milê xwendinê tê de heye, ji ber vê yekê bêdeng e û li hember lêdanan xurt e. Heke ceryan were birîn jî daneyên wê winda nabin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2198,7 +2198,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Klavye kullanıcıdan veri alıp bilgisayara iletir. Yazıcı, hoparlör ve ekran ise bilgisayardan çıkan veriyi dışarı verir.",
-    "explanationKu": "Klavye ji bikarhêner daneyan distîne û ji kompîterê re dişîne. Çapker, hoparlor û ekran jî daneya ku ji kompîterê derdikeve ber bi derve ve didin.",
+    "explanationKu": "Klavye ji bikarhêner daneyan distîne û ji kompîterê re dişîne. Çaper, bilindgoh û ekran jî daneya ku ji kompîterê derdikeve ber bi derve ve didin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2232,7 +2232,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "13 sayısı 8 + 4 + 1 biçiminde ayrışır; bu da soldan sağa 1101 basamaklarını verir. 1011 sayısı 11'e, 1110 ise 14'e karşılık gelir.",
-    "explanationKu": "Hejmara 13 wek 8 + 4 + 1 tê parvekirin; ev jî ji çepê ber bi rastê ve hanikên 1101 dide. Hejmara 1011 li gorî 11, ya 1110 jî li gorî 14 tê.",
+    "explanationKu": "Hejmara 13 wek 8 + 4 + 1 tê parvekirin; ev jî ji çepê ber bi rastê ve reqemên 1101 dide. Hejmara 1011 hevbera 11, ya 1110 jî hevbera 14an e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2266,7 +2266,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Yazılım, donanıma ne yapacağını söyleyen komut ve program bütünüdür. Elle tutulan parçalar ve kablolar donanım sayılır.",
-    "explanationKu": "Nermalav komek ferman û bername ye ku ji rehiyê re dibêje çi bike. Perçeyên ku bi destan tên girtin û kablo wek rehî tên hesibandin.",
+    "explanationKu": "Nermalav komek ferman û bernameyan e ku ji reqalavê re dibêje çi bike. Perçeyên ku bi destan tên girtin û kablo wek reqalav tên hesibandin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2300,7 +2300,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "ROM salt okunur bellektir, içeriği elektrik kesilince silinmez ve açılış yazılımı orada durur. RAM ile önbellek uçucudur, sanal bellek ise diskte tutulur.",
-    "explanationKu": "ROM bîreke ku tenê tê xwendin e, dema ceryan were birîn naveroka wê nayê jêbirin û nermalava vebûnê li wir dimîne. RAM û bîra cache gerguhêz in, bîra virtual jî li ser dîskê tê hiştin.",
+    "explanationKu": "ROM bîreke ku tenê tê xwendin e, dema ceryan were birîn naveroka wê nayê jêbirin û nermalava vebûnê li wir dimîne. RAM û bîra cache demkî ne, bîra virtual jî li ser dîskê tê hiştin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2334,7 +2334,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Hertz saniyedeki çevrim sayısıdır, 1 GHz saniyede bir milyar çevrim demektir. Depolama baytla, sıcaklık dereceyle ölçülür.",
-    "explanationKu": "Hertz jimara zivirînan a di saniyeyekê de ye, 1 GHz tê wateya mîlyar zivirînan di saniyeyekê de. Anîna cih bi baytan, germahî jî bi derece tê pîvan.",
+    "explanationKu": "Hertz hejmara çerxan a di çirkeyekê de ye, 1 GHz tê wateya mîlyar çerxan di çirkeyekê de. Hilanîna daneyan bi baytan, germahî jî bi dereceyan tê pîvan.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2402,7 +2402,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "32 bitlik adresleme yaklaşık 4 GB belleği gösterebilir; 64 bitlik adres alanı bu sınırı pratikte kaldırır. Ekran, kablo ve dosya boyutuyla ilgisi yoktur.",
-    "explanationKu": "Navnîşankirina 32-bît dikare bi qasî 4 GB bîrê nîşan bide; qada navnîşanê ya 64-bît bi awayekî pratîkî vê sînorê radike. Ev bi ekran, kablo an mezinahiya pelan ve girêdayî nîne.",
+    "explanationKu": "Navnîşankirina 32-bît dikare bi qasî 4 GB bîrê nîşan bide; qada navnîşanê ya 64-bît bi awayekî pratîkî vî sînorî radike. Ev bi ekran, kablo an mezinahiya pelan ve girêdayî nîne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2436,7 +2436,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Açılışta anakart üstündeki ürün yazılımı donanımı sınar ve işletim sistemini belleğe yükler. Tarayıcı ile antivirüs ancak sistem açıldıktan sonra devreye girer.",
-    "explanationKu": "Di dema vebûnê de firmware ya li ser dayikbendê rehiyê kontrol dike û pergala xebitandinê dike nav bîrê. Geroka webê û antîvîrus tenê piştî ku pergal vebe dikevin xebatê.",
+    "explanationKu": "Di dema vebûnê de firmwareya li ser karta dayikê reqalavê kontrol dike û pergala xebitandinê li bîrê bar dike. Geroka webê û antîvîrus tenê piştî ku pergal vebe dikevin xebatê.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2470,7 +2470,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Sekiz basamağın hepsi 1 olduğunda toplam 2 üzeri 8 eksi 1, yani 255 eder; bu yüzden bir bayt en çok 255 değerini tutar. 256 ise farklı değerlerin adedidir.",
-    "explanationKu": "Gava hemû heşt hanik 1 bin, kombûn dibe 2 bi hêza 8 kêm 1, ango 255; ji ber vê yekê baytek herî zêde nirxa 255î digire. 256 jî hejmara nirxên cuda ye.",
+    "explanationKu": "Gava hemû heşt bît 1 bin, kombûn dibe 2 bi hêza 8 kêm 1, ango 255; ji ber vê yekê baytek herî zêde nirxa 255an digire. 256 jî hejmara nirxên cuda ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2572,7 +2572,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Paketlerin doğru makineye ulaşması için her aygıta sayısal bir adres verilir. Hız, tarayıcı ve dosya boyutu bu adresten bağımsızdır.",
-    "explanationKu": "Ji bo ku paket bighin makîneya rast, her amûrê navnîşaneke hejmarî tê dayîn. Lez, geroka webê û mezinahiya pelê ji vê navnîşanê serbixwe ne.",
+    "explanationKu": "Ji bo ku paket bighêjin makîneya rast, ji her amûrekê re navnîşaneke hejmarî tê dayîn. Lez, geroka webê û mezinahiya pelê ji vê navnîşanê serbixwe ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2606,7 +2606,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Bluetooth kısa mesafede düşük güçle çalışır; kulaklık, klavye ve saat gibi aygıtları bağlar. Geniş alana internet dağıtmak Wi-Fi'nin işidir.",
-    "explanationKu": "Bluetooth di dûrahiyeke kin de bi hêzeke kêm dixebite; amûrên wek guhdirêj, klavye û saetê girê dide. Belavkirina înternetê li qadeke fireh erka Wi-Fiyê ye.",
+    "explanationKu": "Bluetooth di dûrahiyeke kin de bi enerjiyeke kêm dixebite; amûrên wek guhk, klavye û saetê girê dide. Belavkirina înternetê li qadeke fireh erka Wi-Fiyê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2620,7 +2620,7 @@
   {
     "id": "tech_core_0024",
     "category": "Teknolojî",
-    "prompt": "Koda 404 ya HTTPê çi tê wateyê?",
+    "prompt": "Koda 404 ya HTTPê tê çi wateyê?",
     "answers": [
       "Çavkanî li ser server nehat dîtin",
       "Server zêde bar girtiye",
@@ -2742,7 +2742,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Yönlendirici paketlere hangi yoldan gideceklerini söyler ve yerel ağı dış ağa bağlar. Veri saklamak ve parola üretmek onun işi değildir.",
-    "explanationKu": "Rêker ji paketan re dibêje ji kîjan rêyê biçin û torê herêmî bi torê derve ve girê dide. Hilanîna daneyan û çêkirina şîfreyan ne erka wî ye.",
+    "explanationKu": "Rêker ji paketan re dibêje ji kîjan rêyê biçin û tora herêmî bi tora derve ve girê dide. Hilanîna daneyan û çêkirina şîfreyan ne erka wî ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2776,7 +2776,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "TCP paketlerin ulaştığını ve sırasını denetler, kaybolanı yeniden gönderir. UDP bu denetimi yapmadığı için daha hızlıdır ama teslim güvencesi vermez.",
-    "explanationKu": "TCP kontrol dike ka paket gihîştine an na û rêza wan çi ye, ya wenda bûyî ji nû ve dişîne. UDP vê kontrolê nake, ji ber vê yekê bilezetir e lê ti garantiya gihîştinê nade.",
+    "explanationKu": "TCP kontrol dike ka paket gihîştine an na û rêza wan çi ye, yên wendabûyî ji nû ve dişîne. UDP vê kontrolê nake, ji ber vê yekê bileztir e lê ti garantiya gihîştinê nade.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2810,7 +2810,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "HTML sayfanın başlık, paragraf ve bağlantı gibi yapı taşlarını kurar. CSS görünümü düzenler, SQL veritabanı sorgular, Python genel amaçlı bir dildir.",
-    "explanationKu": "HTML kevirên avaniyê yên rûpelê, wek sernav, paragraf û girêdanan, ava dike. CSS xuyangê rêk dixe, SQL danegehê pirsyar dike, Python jî zimanekî armancî giştî ye.",
+    "explanationKu": "HTML kevirên avaniyê yên rûpelê, wek sernav, paragraf û girêdanan, ava dike. CSS xuyangê rêk dixe, SQL danegehê pirsyar dike, Python jî zimanekî bi armanca giştî ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2844,7 +2844,7 @@
     "difficulty": 5,
     "type": "multipleChoice",
     "explanationTr": "IPv4 adresleri 32 bittir ve dört sekizli sayı olarak yazılır; her sekizli 0 ile 255 arasındadır. 128 bitlik uzunluk IPv6 adreslerine aittir.",
-    "explanationKu": "Navnîşanên IPv4 32 bît in û wek çar komên heştî tên nivîsandin; her komek di navbera 0 û 255 de ye. Dirêjahiya 128 bîtî ya navnîşanên IPv6 e.",
+    "explanationKu": "Navnîşanên IPv4 32 bît in û wek çar komên heştbîtî tên nivîsandin; nirxa her komekê di navbera 0 û 255an de ye. Dirêjahiya 128 bîtî ya navnîşanên IPv6ê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2912,7 +2912,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "BCC gizli kopya alanıdır; oradaki kişi iletiyi alır ama adresi öteki alıcıların listesinde görünmez. CC alanındaki adresler ise herkese açıktır.",
-    "explanationKu": "BCC qada kopya ya veşartî ye; kesê ku li wir e peyamê distîne lê navnîşana wî di navnîşa wergirên din de xuya nake. Navnîşanên di qada CC de ji bo hemûyan vekirî ne.",
+    "explanationKu": "BCC qada kopyaya veşartî ye; kesê ku li wir e peyamê distîne lê navnîşana wî ji wergirên din re xuya nake. Navnîşanên di qada CCyê de ji bo hemûyan vekirî ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2946,7 +2946,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Düşük frekanslı dalga duvarları daha iyi aşar ve geniş alan kaplar; 5 GHz ise daha yüksek hız sunar ama menzili kısadır ve engellere takılır.",
-    "explanationKu": "Pêla bi frekansa nizm çêtir di dîwaran re derbas dibe û qadeke fireh dide xuyakirin; 5 GHz jî lezeke bilindtir dide lê hêla wê kurttir e û li ber astengan digire.",
+    "explanationKu": "Pêla bi frekansa nizm çêtir di dîwaran re derbas dibe û qadeke firehtir vedigire; 5 GHz jî lezeke bilindtir dide lê menzîla wê kurttir e û li ber astengan digire.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -2980,7 +2980,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Modem hattan gelen sinyali bilgisayarın anlayacağı sayısal veriye, giden veriyi de hatta uygun sinyale çevirir. Yönlendirme ve depolama başka aygıtların işidir.",
-    "explanationKu": "Modem sînyala ku ji xeta têlefonê tê vediguhezîne dane ya hejmarî ku kompîter jê fêm dike, û daneya derveyî jî vediguhezîne sînyala li gorî xetê. Rêvekirin û hilanîn erka amûrên din e.",
+    "explanationKu": "Modem sînyala ku ji xeta têlefonê tê vediguherîne daneya hejmarî ku kompîter jê fêm dike, û daneya ji kompîterê tê jî vediguherîne sînyala li gorî xetê. Rêvekirin û hilanîn erka amûrên din e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3014,7 +3014,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Gecikme bir süredir, milisaniyeyle ölçülür; bant genişliği ise birim zamanda taşınabilen veri miktarıdır. Hattın biri yüksek, öteki düşük olabilir.",
-    "explanationKu": "Latency demjimêrek e, bi mîlîsaniyeyan tê pîvan; firehiya bendikê jî mîqdara daneya ku di demeke diyar de dikare bê veguhastin e. Ya yekê li ser xeteke dikare bilind be, ya din nizm.",
+    "explanationKu": "Latency dem e û bi mîlîsaniyeyan tê pîvan; firehiya bendikê jî mîqdara daneya ku di demeke diyar de dikare bê veguhastin e. Dibe ku li ser xetekê ya yek bilind be, ya din nizm be.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3048,7 +3048,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Sunucu bekler, gelen isteği işler ve yanıtı geri gönderir; isteği başlatan taraf istemcidir. Tarayıcı bu modelde istemci konumundadır.",
-    "explanationKu": "Server li bendê dimîne, daxwaza hatî dişixule û bersivê vedigerîne; alîyê ku daxwazê destpê dike xerîdar e. Geroka webê di vê modelê de li şûna xerîdar radiweste.",
+    "explanationKu": "Server li bendê dimîne, daxwaza hatî dişixulîne û bersivê vedigerîne; aliyê ku daxwazê dest pê dike xerîdar e. Geroka webê di vê modelê de di rola xerîdar de ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3116,7 +3116,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Parola çalınsa bile saldırganda telefona gelen kod ya da güvenlik anahtarı gibi ikinci kanıt bulunmaz, giriş bu yüzden tamamlanamaz.",
-    "explanationKu": "Heke şîfre jî bê dizîn, dîsa jî li ba êrîşkar delîleke duyemîn a wek koda ku dikeve telefonê an mifteya ewlehiyê tune ye, ji ber vê yekê têketin nayê temamkirin.",
+    "explanationKu": "Heke şîfre bê dizîn jî, ji ber ku li ba êrîşkar delîleke duyem a wek koda ku ji telefonê re tê an mifteya ewlehiyê tune ye, têketin nayê temamkirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3150,7 +3150,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Saldırgan tanıdık bir kurumun kılığına girip kullanıcıyı parolasını ya da kodunu kendi eliyle vermeye ikna eder; teknik bir kırma gerekmez.",
-    "explanationKu": "Êrîşkar xwe dixe qiyafeta dezgeheke naskirî û bikarhêner qanih dike ku bi destê xwe şîfreya xwe an koda xwe bide; ne hewceyî şikandineke teknîkî ye.",
+    "explanationKu": "Êrîşkar xwe dixe şiklê dezgeheke naskirî û bikarhêner qaneh dike ku bi destê xwe şîfre an koda xwe bide; hewce nake ku bi awayekî teknîkî pergalê bişkîne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3184,7 +3184,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Eklenen her karakter denenmesi gereken olasılığı katlar. Soyadı ve doğum tarihi gibi kişisel bilgiler kolay bulunur, saldırganın ilk denediği şeydir.",
-    "explanationKu": "Her karaktera ku tê zêdekirin îhtîmala ku divê bê ceribandin çend qat zêde dike. Agahiyên kesane yên wek paşnav û dîroka jidayikbûnê bi hêsanî tên dîtin, ya ku êrîşkar pêşî diceribîne ye.",
+    "explanationKu": "Her karaktera ku tê zêdekirin, hejmara îhtîmalên ku divê bên ceribandin çend qatan zêde dike. Agahiyên kesane yên wek paşnav û dîroka jidayikbûnê bi hêsanî tên dîtin û tiştên pêşî ne ku êrîşkar diceribînin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3218,7 +3218,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Yedek asıl veriyle aynı odadaysa tek bir yangın, su baskını ya da hırsızlık ikisini birden götürür; ayrı konum bu ortak riski keser.",
-    "explanationKu": "Eger kopiya ewlehiyê û dane ya orîjînal di heman odê de bin, agirek yek, lehiya avê an dizîyek dikare her duyan bi hev re ji holê rake; cihê veqetandî vê rîska hevpar qut dike.",
+    "explanationKu": "Eger kopiya ewlehiyê û daneya orîjînal di heman odeyê de bin, agirek, lehiyeke avê an jî diziyek dikare her duyan bi hev re ji holê rake; cihê veqetandî pêşî li vê rîska hevpar digire.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3286,7 +3286,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Kullanıcı tek bir ana parolayı hatırlar, araç geri kalanını üretip saklar; böylece aynı parolanın onlarca sitede tekrarlanması önlenir.",
-    "explanationKu": "Bikarhêner tenê şîfreyeke sereke tîne bîra xwe, amûr yên din çêdike û hildide; bi vî awayî pêşî li dubarekirina heman şîfreyê li dehan malperan tê girtin.",
+    "explanationKu": "Bikarhêner tenê şîfreyeke sereke li bîra xwe digire, amûr yên din çêdike û hiltîne; bi vî awayî pêşî li bikaranîna heman şîfreyê li gelek malperan tê girtin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3320,7 +3320,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Ortak ağda paketler aynı ortamdan geçer; şifresiz bir bağlantıda aradaki biri içeriği okuyabilir. HTTPS ve VPN bu riski büyük ölçüde kapatır.",
-    "explanationKu": "Di torê giştî de paket ji heman derdorê derbas dibin; di girêdanek bêşîfre de kesekî di navberê de dikare naverokê bixwîne. HTTPS û VPN vê rîskê bi giranî kêm dikin.",
+    "explanationKu": "Di tora giştî de paket di heman derdorê re derbas dibin; di girêdaneke bêşîfre de kesekî di navberê de dikare naverokê bixwîne. HTTPS û VPN vê rîskê gelekî kêm dikin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3354,7 +3354,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Aceleye getirmek, kurbanın durup doğrulamasını engellemek için kullanılan klasik bir baskıdır. Logo, resmi dil ve gönderim saati kolayca taklit edilir.",
-    "explanationKu": "Lezandin fişarek klasîk e ku tê bikaranîn da ku qurban raneweste û rastdêriyê neke. Logo, zimanê fermî û saeta şandinê bi hêsanî têne teqlîdkirin.",
+    "explanationKu": "Lezkirin fişareke klasîk e ku tê bikaranîn da ku qurbanî nefikire û rastiya wê kontrol neke. Logo, zimanê fermî û saeta şandinê bi hêsanî dikarin bên teqlîdkirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3388,7 +3388,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Şifreleme veriyi anahtarsız çözülemeyen bir biçime sokar. Boyutu küçültmek sıkıştırmanın, kopya çıkarmak ise yedeklemenin işidir.",
-    "explanationKu": "Şîfrekirin danê dixe forma ku bêyî mifte nayê çareserkirin. Piçûkkirina mezinahiyê karê hilteşandinê ye, derxistina kopiyê jî karê hilanîna ewlehiyê ye.",
+    "explanationKu": "Şîfrekirin daneyan dixe formeke ku bêyî mifteyê nayên çareserkirin. Piçûkkirina mezinahiyê karê dewisandinê ye, derxistina kopiyan jî karê hilanîna ewlehiyê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3422,7 +3422,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Fidye yazılımı dosyaları şifreleyip anahtar karşılığında ödeme ister. Güncel ve ayrı tutulan bir yedek, ödeme yapmadan kurtulmanın en sağlam yoludur.",
-    "explanationKu": "Nermalava fîdyê (ransomware) pelan şîfre dike û li şûna mifteyê pere dixwaze. Kopiyeke ewlehiyê ya rojane û cihê hatî hilanîn, riya herî xurt e ji bo xilasbûnê bêyî ku meriv pere bide.",
+    "explanationKu": "Nermalava fîdyeyê (ransomware) pelan şîfre dike û ji bo mifteyê pere dixwaze. Riya herî baş a xilasbûna bêyî dayîna pereyan, hebûna kopiyeke ewlehiyê ya rojane ye ku li cihekî cuda hatiye hilanîn.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3660,7 +3660,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Ek dosya açıldığında çalışan kod taşıyabilir; fatura ya da belge kılığındaki dosyalar zararlıyı sisteme bu yolla sokar.",
-    "explanationKu": "Gava pêveka pel tê vekirin, dikare koda ku dixebite hilgire; pelên di rengê fatûre an belgeyê de bi vî awayî nermalava xerab dixin nav pergalê.",
+    "explanationKu": "Gava pêvekek tê vekirin, dikare koda ku dixebite hilgire; pelên di rengê fatûre an belgeyê de bi vî awayî nermalava xerab dixin nav pergalê.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -3674,7 +3674,7 @@
   {
     "id": "tech_core_0055",
     "category": "Teknolojî",
-    "prompt": "Şîfrekirina serî-bi-serî çi tê wateyê?",
+    "prompt": "Şîfrekirina serî-bi-serî tê çi wateyê?",
     "answers": [
       "Tenê server dikare peyaman bixwîne",
       "Tenê şander û wergir dikarin peyaman bixwînin",
@@ -3708,7 +3708,7 @@
   {
     "id": "tech_invent_0001",
     "category": "Teknolojî",
-    "prompt": "Di derdora sala 1450an de li Ewrûpayê makîneya çapê ya bi tîpên tevger kî pêş xist?",
+    "prompt": "Di derdora sala 1450an de li Ewrûpayê makîneya çapê ya bi tîpên livok kî pêş xist?",
     "answers": [
       "Johannes Gutenberg",
       "Nicolaus Copernicus",
@@ -3830,7 +3830,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Edison'un ekibi 1879'da yüksek dirençli karbon flamanla saatlerce yanan bir ampul üretti ve bunu bir elektrik dağıtım sistemiyle birleştirdi. Volta pili, Faraday indüksiyonu, Tesla ise alternatif akım motorlarıyla anılır.",
-    "explanationKu": "Tîma Edîson di sala 1879an de bi filamana karbonê ya berxwedanek bilind ampûlek çêkir ku bi saetan dişewitî û ev bi pergaleke belavkirina elektrîkê ve girêda. Volta bi pîlê, Faraday bi endûksiyonê, Tesla jî bi motorên cereyana alternîf têne nasîn.",
+    "explanationKu": "Tîma Edîson di sala 1879an de bi fîlamana karbonê ya berxwedaneke bilind ampûlek çêkir ku bi saetan dişewitî û ev bi pergaleke belavkirina elektrîkê ve girêda. Volta bi pîlê, Faraday bi endûksiyonê, Tesla jî bi motorên cereyana alternatîf têne nasîn.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -3864,7 +3864,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Gümüş kaplı bakır levhaya kaydedilen bu yöntem, geliştiricisinin adıyla dagerotip diye anılır. Eastman rulo filmi yaygınlaştırdı, Lumière kardeşler sinemayı, Swan ise ampul çalışmalarını temsil eder.",
-    "explanationKu": "Ev rêbaz a ku li ser lewheya sifir a bi zîv hatiye pêçandin tê tomarkirin, bi navê pêşxerê xwe re wek dagerotîp tê nasîn. Eastman fîlmê rûlok belav kir, xwişk û birayên Lumière sînemayê, Swan jî xebatên li ser ampûlê temsîl dike.",
+    "explanationKu": "Ev rêbaza ku li ser lewheya sifir a bi zîv hatiye pêçandin tê tomarkirin, bi navê pêşxerê xwe wek dagerotîp tê nasîn. Eastman fîlmê rûlok belav kir, xwişk û birayên Lumière sînemayê, Swan jî xebatên li ser ampûlê temsîl dike.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -3878,7 +3878,7 @@
   {
     "id": "tech_invent_0006",
     "category": "Teknolojî",
-    "prompt": "Gutenberg çapxaneya xwe ya bi tîpên tevger li kîjan bajarê Almanyayê damezrand?",
+    "prompt": "Gutenberg çapxaneya xwe ya bi tîpên livok li kîjan bajarê Almanyayê damezrand?",
     "answers": [
       "Köln",
       "Nürnberg",
@@ -3912,7 +3912,7 @@
   {
     "id": "tech_invent_0007",
     "category": "Teknolojî",
-    "prompt": "Amûra fonograf a ku dengê tomarkirî ji nû ve dilîze di sala 1877an de ji aliyê kê ve hat çêkirin?",
+    "prompt": "Amûra fonografê ya ku dengê tomarkirî ji nû ve lê dixe di sala 1877an de ji aliyê kê ve hat çêkirin?",
     "answers": [
       "Thomas Edison",
       "Emile Berliner",
@@ -3966,7 +3966,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "İlk nokta temaslı transistor germanyum kristali üzerine kuruldu; silisyum ancak 1950'lerde saflaştırma kolaylaşınca öne geçti. Galyum arsenit çok daha sonraki yüksek hızlı devrelerin malzemesidir.",
-    "explanationKu": "Transîstora yekem a xala-pêwendiyê li ser krîstala germanyûmê hate avakirin; silîkon tenê di salên 1950î de, gava paqijkirin hêsantir bû, derket pêş. Galyûm arsenît madeya deverên leza bilind ên gelekî paşerojtir e.",
+    "explanationKu": "Transîstora yekem a xala-pêwendiyê li ser krîstala germanyûmê hate avakirin; sîlîkon tenê di salên 1950î de, gava paqijkirin hêsantir bû, derket pêş. Galyûm arsenît madeya çerxên leza bilind ên gelekî paşerojtir e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4014,7 +4014,7 @@
   {
     "id": "tech_invent_0010",
     "category": "Teknolojî",
-    "prompt": "Di sala 1895an de tîrêjên X kî keşf kir?",
+    "prompt": "Di sala 1895an de tîrêjên X kê keşf kirin?",
     "answers": [
       "Henri Becquerel",
       "Wilhelm Röntgen",
@@ -4068,7 +4068,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Marconi, İngiltere'den gönderilen sinyali Newfoundland'da uçurtmaya asılı antenle yakaladı ve telsizin okyanus aşırı çalışabildiğini gösterdi. Hertz radyo dalgalarını laboratuvarda kanıtlamıştı ama iletişim sistemi kurmadı.",
-    "explanationKu": "Marconî sînyala ku ji Îngilîstanê hatibû şandin li Newfoundlandê bi antenek li fırfırokê daliqandî girt û nîşan da ku telsiz dikare li ser okyanûsê bixebite. Hertz pêlên radyoyê li laboratuwarê îspat kiribû, lê pergaleke ragihandinê ava nekiribû.",
+    "explanationKu": "Marconî sînyala ku ji Îngilîstanê hatibû şandin li Newfoundlandê bi anteneke bi bafirokê ve daliqandî girt û nîşan da ku telsiz dikare li ser okyanûsê bixebite. Hertz pêlên radyoyê li laboratuwarê îspat kiribû, lê pergaleke ragihandinê ava nekiribû.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4102,7 +4102,7 @@
     "difficulty": 5,
     "type": "multipleChoice",
     "explanationTr": "Bardeen 1956'da transistor, 1972'de BCS süperiletkenlik kuramıyla ödül aldı ve fizikte iki Nobel kazanan tek kişi oldu. Brattain ile Shockley yalnız 1956 ödülünü paylaştı; Noyce tümleşik devre çalışmalarıyla anılır.",
-    "explanationKu": "Bardeen di sala 1956an de ji bo transîstorê, di 1972yan de jî ji bo teoriya supernaqilbariya BCS Xelata Nobelê wergirt û bû yekane kesê ku du caran di fizîkê de Nobel wergirtiye. Brattain û Shockley tenê xelata 1956an parve kirin; Noyce bi xebatên li ser deverên tevlihev têne nasîn.",
+    "explanationKu": "Bardeen di sala 1956an de ji bo transîstorê, di 1972yan de jî ji bo teoriya supernaqilbariya BCS Xelata Nobelê wergirt û bû yekane kesê ku du caran di fizîkê de Nobel wergirtiye. Brattain û Shockley tenê xelata 1956an parve kirin; Noyce bi xebatên li ser çerxên hevgirtî tê nasîn.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4136,7 +4136,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Dizilen harfler yüzlerce kopya basılana dek kalıpta kaldığı için bir metnin maliyeti elle çoğaltmaya göre çok düştü. Cam, giysi ve kâğıt üretimi bu makineyle değil, kendi zanaatlarının gelişimiyle ucuzladı.",
-    "explanationKu": "Ji ber ku tîpên rêzkirî heta çapkirina bi sedan kopyan di kelûpelê de dimane, lêçûna nivîsekê li gorî ji-nû-nivîsandina bi destan pir kêm bû. Hilberîna camî, cil û kaxezê ne bi vê makîneyê, lê bi pêşketina zanetiyên xwe yên taybet erzan bû.",
+    "explanationKu": "Ji ber ku tîpên rêzkirî heta çapkirina bi sedan kopyan di kelûpelê de diman, lêçûna nivîsekê li gorî ji-nû-nivîsandina bi destan pir kêm bû. Hilberîna cam, cil û kaxezê ne bi vê makîneyê, lê bi pêşketina teknolojiyên wan ên taybet erzan bû.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4170,7 +4170,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Volta çinko ve bakır levhaları tuzlu bezle üst üste dizerek kesintisiz akım üretti; bu yığın kimyasal enerjiyi elektriğe çeviren ilk kaynaktı. Ohm direnç bağıntısını, Ampère akımı, Faraday indüksiyonu inceledi.",
-    "explanationKu": "Volta bi rêzkirina lewheyên zîk û sifirî bi qumaşê xwêdar li ser hev cereyanek bêderfet çêkir; ev tûde çavkaniya yekem bû ku enerjiya kîmyewî vediguherîne elektrîkê. Ohm têkiliya berxwedanê, Ampère cereyanê, Faraday jî endûksiyonê lêkolîn kirin.",
+    "explanationKu": "Volta bi rêzkirina lewheyên zînk û sifir bi qumaşê xwêdar li ser hev cereyaneke bêrawestan çêkir; ev kom çavkaniya yekem bû ku enerjiya kîmyewî vediguherîne elektrîkê. Ohm têkiliya berxwedanê, Ampère cereyanê, Faraday jî endûksiyonê lêkolîn kirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4184,7 +4184,7 @@
   {
     "id": "tech_invent_0015",
     "category": "Teknolojî",
-    "prompt": "Kî di sala 1831ê de nîşan da ku magnetek tevgerî di têlekê de cereyan çêdike?",
+    "prompt": "Kê di sala 1831ê de nîşan da ku mîknatîseke di tevgerê de di têlekê de cereyanê çêdike?",
     "answers": [
       "Michael Faraday",
       "James Clerk Maxwell",
@@ -4238,7 +4238,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Watt, buhar makinesine ayrı bir yoğuşturucu ekleyerek verimini büyük ölçüde artırdı; güç birimi onun anısına adlandırıldı. Otto ve Diesel içten yanmalı motorlarla, Stephenson lokomotifle anılır.",
-    "explanationKu": "Watt bi lêzêdekirina kondansatorekê ya cuda li makîneya hilmê, karîgeriya wê pir zêde kir; yekîneya hêzê bi bîranîna wî hate navandin. Otto û Dîzel bi motorên şewitandina hundir, Stephenson jî bi lokomotîfê têne nasîn.",
+    "explanationKu": "Watt bi lêzêdekirina kondansatoreke cuda li makîneya hilmê, karîgeriya wê pir zêde kir; yekîneya hêzê bi bîranîna wî hate navkirin. Otto û Dîzel bi motorên şewitandina hundir, Stephenson jî bi lokomotîfê têne nasîn.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4272,7 +4272,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Motorda akım taşıyan sargı manyetik alandan kuvvet görür ve mil döner; çıkan ürün harekettir. Kimyasal dönüşüm pilde, ışık lambada, nükleer dönüşüm ise reaktörde olur.",
-    "explanationKu": "Di motorê de sarincîka ku cereyanê digire ji qada mîknatîsî hêzê distîne û mil dizivire; encama derketî tevger e. Veguherîna kîmyewî di pîlê de, ronahî di lambeyê de, veguherîna nukleerî jî di reaktorê de çêdibe.",
+    "explanationKu": "Di motorê de bobîna ku cereyanê digire ji qada mîknatîsî hêzê distîne û mîl dizivire; encama derketî tevger e. Veguherîna kîmyewî di pîlê de, ronahî di lambeyê de, veguherîna nukleerî jî di reaktorê de çêdibe.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4306,7 +4306,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Jeneratörde döndürülen sargı manyetik alan içinde indüksiyon akımı üretir. Transformatör gerilimi değiştirir, kondansatör yük depolar, direnç ise akımı sınırlar.",
-    "explanationKu": "Di jeneratorê de sarincîka ku tê zivirandin di nav qada mîknatîsî de cereyaneke endûksiyonê çêdike. Transformator voltajê diguherîne, kondansator barê hildide, berxwedan jî cereyanê sînordar dike.",
+    "explanationKu": "Di jeneratorê de bobîna ku tê zivirandin di nav qada mîknatîsî de cereyaneke endûksiyonê çêdike. Transformator voltajê diguherîne, kondansator barê hildide, berxwedan jî cereyanê sînordar dike.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4340,7 +4340,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Gerilim, akım ile direncin çarpımına eşittir; direnç sabitken akımı iki katına çıkarmak gerilimi de iki katına çıkarır. Bölmeli biçimler birimleri tutturmaz, karesi alınmış biçim ise güç hesabından karışmıştır.",
-    "explanationKu": "Voltaj wekhevî ye bi hasilê cereyan û berxwedanê; dema berxwedan sabît be, du qatkirina cereyanê voltajê jî du qat dike. Formên dabeşkirî yekîneyan ranagihînin, forma bi kar hatî girtin jî ji hesabê hêzê tevlihev bûye.",
+    "explanationKu": "Voltaj wekheviya encama lêkdana cereyan û berxwedanê ye; dema berxwedan sabît be, du qatkirina cereyanê voltajê jî du qat dike. Formên dabeşkirî xelet in, forma bi kare jî bi hesabê hêzê re hatiye tevlîhevkirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4374,7 +4374,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Esen havanın kinetik enerjisi kanatları döndürür, mil de jeneratörü çevirir. Su akışı hidroelektrikte, yer ısısı jeotermalde, güneş ışığı ise panellerde kullanılır.",
-    "explanationKu": "Enerjiya kînetîk a bayê ku dibe pêlên tîrbînê dizivirîne, mil jî jeneratorê dizivirîne. Herikîna avê di hîdroelektrîkê de, germahiya erdê di jeotermalê de, tîrêja rojê jî di panelan de tê bikaranîn.",
+    "explanationKu": "Enerjiya kînetîk a bayê perikên tîrbînê dizivirîne, mîl jî jeneratorê dizivirîne. Herikîna avê di hîdroelektrîkê de, germahiya erdê di jeotermalê de, tîrêja rojê jî di panelan de tê bikaranîn.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4408,7 +4408,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Silisyum yarı iletkendir; ışık soğurulunca elektronları serbest kalır ve devrede akım doğar. Bakır ile alüminyum yalnız iletken, çinko ise pil ve kaplama malzemesidir.",
-    "explanationKu": "Silîkon nîv-derbasker e; gava ronahî tê hilmisandin, elektronên wê azad dimînin û di deverê de cereyan çêdibe. Sifir û alûmînyûm tenê derbasker in, zîk jî madeya pîl û pêçanê ye.",
+    "explanationKu": "Sîlîkon nîv-derbasker e; gava ronahî tê mijîn, elektronên wê azad dimînin û di çerxê de cereyan çêdibe. Sifir û alûmînyûm tenê derbasker in, zînk jî madeya pîl û pêçanê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4442,7 +4442,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Yüksekte tutulan su yerçekimi potansiyel enerjisi depolar; borudan düşerken bu enerji harekete, türbinde de elektriğe dönüşür. Isı ve kimyasal enerji başka santral türlerinin girdisidir.",
-    "explanationKu": "Ava ku li bilindiyê tê girtin enerjiya potansiyel a kaşgeriyê hildide; dema ku ji borî dadikeve, ev enerjî vediguhere tevgerê, di tîrbînê de jî vediguhere elektrîkê. Germahî û enerjiya kîmyewî nirxên têketî yên cureyên din ên santralan in.",
+    "explanationKu": "Ava ku li bilindiyê tê girtin enerjiya potansiyel a rakêşiyê hildide; dema ku ji boriyê dadikeve, ev enerjî vediguhere tevgerê, di tîrbînê de jî vediguhere elektrîkê. Germahî û enerjiya kîmyewî nirxên têketî yên cureyên din ên santralan in.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4458,7 +4458,7 @@
     "category": "Teknolojî",
     "prompt": "Makîneyeke sade hêza pêwîst kêm dike; lê di berdêla wê de çi zêde dibe?",
     "answers": [
-      "Kara ku tê kirin",
+      "Karê ku tê kirin",
       "Enerjiya ku tê xerckirin",
       "Dûrahiya rêwîtiya hêzê",
       "Girseya barê"
@@ -4510,7 +4510,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "İki sargı arasındaki sarım sayısı oranı gerilimi yükseltir ya da düşürür; frekans aynı kalır. Yön çevirme doğrultucunun işidir, iletken cinsi ise tesisatın kurulumunda belirlenir.",
-    "explanationKu": "Rêjeya hejmara zivirandinê ya di navbera du sarincîkan de voltajê bilind an nizim dike; frekans wek xwe dimîne. Guherandina alî karê rastkerê ye, cureyê derbasker jî di sazkirina tesîsatê de tê diyarkirin.",
+    "explanationKu": "Rêjeya hejmara zivirandinê ya di navbera du bobînan de voltajê bilind an nizim dike; frekans wek xwe dimîne. Guherandina alî karê rastkerê ye, cureyê derbasker jî di sazkirina tesîsatê de tê diyarkirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4558,7 +4558,7 @@
   {
     "id": "tech_invent_0026",
     "category": "Teknolojî",
-    "prompt": "Hêza elektrîkî ya amûrekê bi kîjan pirdankê tê hesibandin?",
+    "prompt": "Hêza elektrîkî ya amûrekê bi kîjan formûlê tê hesibandin?",
     "answers": [
       "Voltaj × cereyan",
       "Voltaj ÷ cereyan",
@@ -4646,7 +4646,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Sigortadaki ince tel belirli bir akımın üstünde ısınıp erir ve devreyi açar; böylece kablolar yanmaz. Gerilim yükseltmek transformatörün, enerji depolamak pilin işidir.",
-    "explanationKu": "Têla zirav a di sîgortayê de gava cereyan ji astekê zêdetir be germ dibe û dihele û çerxê vedike; bi vî awayî kabel naşewitin. Bilindkirina voltajê kar ê transformatorê ye, hilanîna enerjiyê jî kar ê pîlê ye.",
+    "explanationKu": "Têla zirav a di sîgortayê de gava cereyan ji astekê zêdetir be germ dibe û dihele û çerxê vedike; bi vî awayî kabel naşewitin. Bilindkirina voltajê karê transformatorê ye, hilanîna enerjiyê jî karê pîlê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4680,7 +4680,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Kömür suyu kaynatır, yüksek basınçlı buhar türbin kanatlarına çarparak mili döndürür. Duman bacadan atılan atıktır; soğuk su ise buharı yoğuşturmak için ayrı bir devrede dolaşır.",
-    "explanationKu": "Komir avê dikelîne, avjenka bi zextek bilind li pêlên tirbînê dide û mîlê dizivirîne. Dûman atiyê ye ku ji bacê tê avêtin; ava sar jî di çerxeke cuda de digere da ku avjenkê bike av.",
+    "explanationKu": "Komir avê dikelîne, hilma bi zexteke bilind li perikên tîrbînê dide û mîlê dizivirîne. Dûman bermayî ye ku ji bacê tê avêtin; ava sar jî di çerxeke cuda de digere da ku hilmê bike av.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4748,7 +4748,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Toplam miktar sabit kalır; enerji yalnız bir türden ötekine geçer, örneğin harekete ya da ısıya. Sürtünmede enerji yok olmaz, düşük sıcaklıkta ısı olarak dağılır ve iş yapmaya elverişsizleşir.",
-    "explanationKu": "Giştî mîqdar wek xwe dimîne; enerjî tenê ji celebek derbasî celebekî din dibe, mînak bo tevgerê an germahiyê. Di şeqitandinê de enerjî nayê windakirin, bi germahiyeke nizm belav dibe û ji bo kirina karî nemazin dibe.",
+    "explanationKu": "Mîqdara giştî wek xwe dimîne; enerjî tenê ji cureyekî derbasî cureyekî din dibe, mînak bo tevgerê an germahiyê. Di lêkxişandinê de enerjî nayê windakirin, bi germahiyeke nizm belav dibe û ji bo kirina karî bêkêr dibe.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4782,7 +4782,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Diş sayısı büyüdükçe dakikadaki tur sayısı düşer, ama aynı güç aktarıldığı için döndürme momenti büyür. Hızın ve torkun birlikte artması güç kazancı demek olurdu, bu da olanaksızdır.",
-    "explanationKu": "Çiqas hejmara diranan zêde bibe, hejmara zivirînên di deqîqeyê de kêm dibe, lê ji ber ku heman hêz tê veguhastin, moment (gera zivirandinê) mezin dibe. Zêdebûna leza û momentê bi hev re dê bibûya qezenca hêzê, ku ev jî ne mimkun e.",
+    "explanationKu": "Çiqas hejmara diranan zêde bibe, hejmara zivirînên di deqîqeyê de ew qas kêm dibe, lê ji ber ku heman hêz tê veguhastin, moment (gera zivirandinê) mezin dibe. Zêdebûna lez û momentê bi hev re dê bibûya qezenca enerjiyê, ku ev jî ne mimkun e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4850,7 +4850,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Amper, saniyede bir kesitten geçen yük miktarını ölçer. Volt gerilimi, ohm direnci, watt ise gücü belirtir; bu üçü akımın kendisini vermez.",
-    "explanationKu": "Amper, mîqdara barê ku di saniyeyekê de ji rebekê derbas dibe dipîve. Volt voltajê, ohm berxwedanê, watt jî hêzê nîşan dide; van her sê yekîneyan bi xwe cereyanê nadin.",
+    "explanationKu": "Amper, mîqdara barê ku di saniyeyekê de ji rûberekê derbas dibe dipîve. Volt voltajê, ohm berxwedanê, wat jî hêzê nîşan dide; van her sê yekîneyan bi xwe cereyanê nadin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4918,7 +4918,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Fotovoltaik hücrede soğurulan ışık elektronları serbest bırakır ve doğrudan akım doğar; arada buhar ya da türbin yoktur. Güneş kolektörleri ise elektrik değil, sıcak su üretir.",
-    "explanationKu": "Di şaneya fotovoltaîk de ronahiya ku tê hemzkirin elektronan azad dike û rasterast cereyan çêdibe; di navberê de ne avjenk û ne jî tirbîn heye. Kolektorên rojê jî ne elektrîk, belkî avê germ çêdikin.",
+    "explanationKu": "Di şaneya fotovoltaîk de ronahiya ku tê mijandin elektronan azad dike û rasterast cereyan çêdibe; di navberê de ne jenerator û ne jî turbîn heye. Kolektorên rojê jî ne elektrîkê, lê avê germ dikin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4952,7 +4952,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Wright kardeşler Kuzey Carolina'daki Kitty Hawk'ta motorlu uçaklarıyla kısa ama yönlendirilebilir bir uçuş yaptı. Lilienthal motorsuz planörlerle süzülmüştü, Montgolfier'ler balonla uçmuştu, Lumière'ler ise sinemayla anılır.",
-    "explanationKu": "Birayên Wright li Kitty Hawk a li Karolînaya Bakur bi balafira xwe ya motordar firîneke kurt lê bikontrol pêk anîn. Lilienthal bi balafirên bêmotor difiriya, Montgolfier bi belonê firîbûn, Lumière jî bi sînemayê tên naskirin.",
+    "explanationKu": "Birayên Wright li Kitty Hawk a li Karolînaya Bakur bi balafira xwe ya motordar firîneke kurt lê bikontrol pêk anîn. Lilienthal bi balafirên bêmotor difiriya, Montgolfier bi balonê firîbûn, Lumière jî bi sînemayê tên naskirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4966,7 +4966,7 @@
   {
     "id": "tech_invent_0038",
     "category": "Teknolojî",
-    "prompt": "Sala 1957an, yekem peykê çêkirî yê ku li dora Erdê geriya kîjan bû?",
+    "prompt": "Sala 1957an, yekem peyka çêkirî ya ku li dora Erdê geriya kîjan bû?",
     "answers": [
       "Explorer 1",
       "Vostok 1",
@@ -4986,7 +4986,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Sovyetler Birliği'nin fırlattığı bu küçük küre radyo sinyali yayıyordu ve uzay yarışını başlattı. Explorer 1 bir yıl sonra ABD'nin ilk uydusu oldu; Vostok insanlı, Luna ise Ay görevlerinin adıdır.",
-    "explanationKu": "Ev gogê piçûk ku Yekîtiya Sovyetê avêt, sînyalên radyoyê belav dikir û pêşbaziya fezayê da destpêkirin. Explorer 1 salek şûnda bû yekem peyka Amerîkayê; Vostok navê peykên bi mirov e, Luna jî navê mîsyonên Heyvê ye.",
+    "explanationKu": "Ev goga piçûk a ku Yekîtiya Sovyetê şand fezayê, sînyalên radyoyê belav dikir û pêşbaziya fezayê da destpêkirin. Explorer 1 salek şûnda bû yekem peyka Amerîkayê; Vostok navê peykên bi mirov e, Luna jî navê mîsyonên Heyvê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5088,7 +5088,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Her etkiye eşit ve zıt bir tepki vardır: dışarı atılan sıcak gaz roketi ileri iter, bu yüzden hava bulunmayan yerde de çalışır. Havaya yaslanmak gerekseydi uzayda hiç ilerleyemezdi.",
-    "explanationKu": "Ji bo her tesîrê bertekek wekhev û berevajî heye: gaza germ a ber bi derve ve hatî avêtin roketê pêş ve dide, ji ber vê li cihê bêhewa jî dixebite. Eger pêwîstiya xwe li hewayê bispartana, li fezayê qet pêş ve neçûbûya.",
+    "explanationKu": "Ji bo her çalakiyê bertekek wekhev û berevajî heye: gaza germ a ku ber bi derve ve tê avêtin roketê pêş ve dide, ji ber vê li cihê bêhewa jî dixebite. Eger xwe bispartana hewayê, li fezayê qet pêş ve neçûbûya.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5122,7 +5122,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Bu yükseklikte bir tur tam yirmi dört saat sürer, uydu da yerden bakınca gökyüzünde sabit görünür; yayın uyduları bu yüzden oraya konur. 400 km alçak yörüngedir, orada bir tur doksan dakikadır.",
-    "explanationKu": "Li vê bilindahiyê zivirandinek tam bîst û çar saetan didome, ji erdê ve mêze bikî peyk di ezmên de sabît xuya dike; ji ber vê yekê peykên weşanê li wir tên bicihkirin. 400 km orbîteke nizm e, li wir zivirandinek nod deqîqeyan dajo.",
+    "explanationKu": "Li vê bilindahiyê zivirek tam bîst û çar saetan didome, heke mirov ji erdê lê binêre peyk di ezmên de sabît xuya dike; ji ber vê yekê peykên weşanê li wir tên bicihkirin. 400 km orbîteke nizm e, li wir zivirek nod deqîqeyan dajo.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5190,7 +5190,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Kanadın üstünden akan hava daha hızlı gider ve orada basınç düşer; alttaki yüksek basınç kanadı yukarı iter. Balonlar çevrelerindeki havadan hafif oldukları için yükselir, uçaklar ise havadan ağırdır.",
-    "explanationKu": "Hewa ya ku li ser baskê diherike bi lezekê mezintir diherike û li wir zext dakeve; zexta bilind a li jêr baskê ber bi jor ve dide. Belon ji ber ku ji hewaya derdora xwe sivîktir in bilind dibin, balafir jî ji hewayê giran in.",
+    "explanationKu": "Hewaya ku li ser baskê re diherike bi lezeke mezintir diherike û li wir zext dadikeve; zexta bilind a li binê baskê wê ber bi jor ve dehf dide. Balon ji ber ku ji hewaya derdora xwe sivîktir in bilind dibin, balafir jî ji hewayê girantir in.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5224,7 +5224,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Kâğıt ve kumaştan yapılan balon, altında yakılan ateşin ısıttığı havayla yükseldi; insanlı ilk uçuşlar böyle başladı. Zeppelin sert gövdeli hava gemilerini, Blériot ise 1909'daki Manş geçişini temsil eder.",
-    "explanationKu": "Belona ji kaxez û qumaş çêbûyî, bi hewaya ku êgirê li binê wê germ kiribû bilind bû; yekem firînên bi mirov weha dest pê kirin. Zeppelin keştiyên hewayî yên bi laşê zexm temsîl dike, Blériot jî derbaskirina Kanala Manş a 1909an.",
+    "explanationKu": "Balona ji kaxez û qumaş çêbûyî, bi hewaya ku agirê li binê wê germ kiribû bilind bû; yekem firînên bi mirov wiha dest pê kirin. Zeppelin keştiyên hewayî yên bi laşê zexm temsîl dike, Blériot jî derbaskirina Kanala Manşê ya 1909an.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5292,7 +5292,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Ay'ın kayda değer bir atmosferi yoktur; izleri silecek rüzgâr ya da su akışı bulunmaz, yalnız mikro göktaşları çok yavaş aşındırır. Ay tozu kupkurudur ve çekimi Dünya'nınkinin altıda biri kadardır.",
-    "explanationKu": "Heyvê atmosfereke berçav tune ye; ne bayek û ne jî herikîna avê heye ku şopan jê bibe, tenê mîkro-meteorît hêdî hêdî wan diherikînin. Toza Heyvê tam ziwa ye û kişandina wê yek li şeşê ya Erdê ye.",
+    "explanationKu": "Atmosfera Heyvê ya berçav tune ye; ne bayek û ne jî herikîna avê heye ku şopan jê bibe, tenê mîkro-meteorît hêdî hêdî wan xera dikin. Toza Heyvê tam ziwa ye û kişandina wê ji şeşan yekê ya Erdê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5326,7 +5326,7 @@
     "difficulty": 5,
     "type": "multipleChoice",
     "explanationTr": "İniş aracının adı Eagle, yörüngede kalan komuta modülünün adı ise Columbia'ydı. Falcon Apollo 15'in, Challenger Apollo 17'nin iniş araçlarının adıdır.",
-    "explanationKu": "Navê amûra danîndayînê Eagle bû, navê modula fermandariyê ya ku li orbîtê ma jî Columbia bû. Falcon navê amûra danîndayînê ya Apollo 15an e, Challenger jî ya Apollo 17an e.",
+    "explanationKu": "Navê amûra daketinê Eagle bû, navê modula fermandariyê ya ku li orbîtê ma jî Columbia bû. Falcon navê amûra daketinê ya Apollo 15an e, Challenger jî ya Apollo 17an e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5360,7 +5360,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Üç kademeli Saturn V, Apollo görevlerinin tümünü fırlattı ve bugüne dek uçmuş en güçlü roketlerden biridir. Atlas ile Titan II daha küçük Mercury ve Gemini kapsüllerini taşıdı; Soyuz Sovyet aracıdır.",
-    "explanationKu": "Saturn V ya sê qonaxî, hemû mîsyonên Apollo avêtin fezayê û heta niha yek ji bihêztirîn roketên ku firîne ye. Atlas û Titan II kapsûlên piçûktir ên Mercury û Gemini hilgirtin; Soyuz jî amûreke Sovyetê ye.",
+    "explanationKu": "Saturn V ya sê qonaxî, hemû mîsyonên Apollo avêtin fezayê û heta niha yek ji bihêztirîn roketên ku firiyane ye. Atlas û Titan II kapsûlên piçûktir ên Mercury û Gemini hilgirtin; Soyuz jî amûreke Sovyetê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5394,7 +5394,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "İstasyon yaklaşık 400 km yükseklikte saatte 28 bin kilometre hızla dolanır; bu da mürettebat için günde on altı gün doğuşu demektir. Yirmi dört saatlik tur ancak çok daha yüksekteki yer durağan yörüngede olur.",
-    "explanationKu": "Îstasyon li bilindahiyeke nêzî 400 km bi lezeke 28 hezar kîlometreyan di saetê de digere; ev tê wateya ku ji bo ekîbê rojê şazdeh hilatina rojê heye. Zivirandinek bîst û çar saetî tenê li orbîta erdmayî ya pir bilindtir çêdibe.",
+    "explanationKu": "Îstasyon li bilindahiyeke nêzî 400 km bi lezeke 28 hezar kîlometreyan di saetê de digere; ev tê wateya ku ji bo ekîbê rojê şazdeh hilatinên rojê hene. Zivireke bîst û çar saetî tenê li orbîta erdmayî ya pir bilindtir çêdibe.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5428,7 +5428,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Yaklaşık yüz kilometrede hava öyle seyrelir ki kanatla kaldırma üretmek için gereken hız yörünge hızına yaklaşır; sınır bu yüzden oraya konmuştur. Yolcu uçakları 10-12 km'de uçar.",
-    "explanationKu": "Li nêzî sed kîlometreyan hewa ewqas zok dibe ku leza pêwîst ji bo çêkirina hêza bilindkirinê bi baskan nêzîkî leza orbîtê dibe; ji ber vê yekê sînor li wir hatiye danîn. Balafirên rêwiyan li 10-12 km difirin.",
+    "explanationKu": "Li nêzî sed kîlometreyan hewa ewqas tenik dibe ku leza pêwîst ji bo çêkirina hêza hilkişînê ya bi baskan nêzîkî leza orbîtê dibe; ji ber vê yekê sînor li wir hatiye danîn. Balafirên rêwiyan li 10-12 km difirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5476,7 +5476,7 @@
   {
     "id": "tech_invent_0054",
     "category": "Teknolojî",
-    "prompt": "Du sondeyên Voyager ku di sala 1977an de hatin şandin bi sereke armanca kîjan cismên ezmanî bûn?",
+    "prompt": "Du sondeyên Voyager ku di sala 1977an de hatin şandin, wekî armanca sereke ber bi kîjan cismên ezmanî ve çûn?",
     "answers": [
       "Gerstêrkên dêw ên derve",
       "Gerstêrkên bihişk ên hundir",
@@ -5530,7 +5530,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Yakıtı biten tank ve motorlar ölü ağırlığa dönüşür; onları bırakan roket kalan yakıtla çok daha fazla hızlanır. Kademeli yapı üretimi kolaylaştırmaz, tersine karmaşıklaştırır.",
-    "explanationKu": "Tank û motorên ku sotemeniya wan xelas bûye dibin giraniyeke mirî; roketê ku wan berdide, bi sotemeniya mayî pir zêdetir bilez dibe. Avahiya qonaxî hilberînê hêsantir nake, berevajî wê tevlihevtir dike.",
+    "explanationKu": "Tank û motorên ku sotemeniya wan xelas bûye dibin giraniyeke mirî; roketa ku wan berdide, bi sotemeniya mayî pir zûtir lezê digire. Avahiya qonaxî hilberînê hêsantir nake, berevajî wê tevlihevtir dike.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5544,7 +5544,7 @@
   {
     "id": "ziman_x_0001",
     "category": "Ziman",
-    "prompt": "Kîjan peyva Kurmancî tê wateya karê Tirkî ya ku ji ezman dibare?",
+    "prompt": "Kîjan peyva kurmancî tê wateya peyva \"kar\" a tirkî ya ku ji ezmên dibare?",
     "answers": [
       "Baran",
       "Berf",
@@ -5632,7 +5632,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Hûn, çoğul ikinci kişiyi yani \"siz\" anlamına gelir. \"Biz\" em, \"onlar\" ew, \"sen\" ise tudur; dördü de kişi zamiri olduğu için birlikte öğrenilir.",
-    "explanationKu": "Hûn cînavka kesê duyem a pirjimar e û wateya wê \"siz\" e. Em ji bo peyva \"biz\", ew ji bo \"onlar\", tu jî ji bo \"sen\" tê bikaranîn; her çar jî cînavkên kesane ne.",
+    "explanationKu": "Hûn cînavka kesê duyem ê pirjimar e û wateya wê \"siz\" e. Em ji bo peyva \"biz\", ew ji bo \"onlar\", tu jî ji bo \"sen\" tê bikaranîn; her çar jî cînavkên kesane ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5769,7 +5769,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Geçişli fiillerin geçmiş zamanında özne bükümlü hâle girer, bu yüzden \"ez\" yerine \"min\" gelir. \"Ez nan dixwim\" ise ekmek yiyorum demektir.",
-    "explanationKu": "Di dema borî ya lêkerên gerguhêz de kirde vediguhere forma xwar, ji ber vê yekê li şûna \"ez\", \"min\" tê bikaranîn. Hevoka \"Ez nan dixwim\" wateya xwarina nên dide.",
+    "explanationKu": "Di dema borî ya lêkerên gerguhêz de kirde vediguhere forma tewandî, ji ber vê yekê li şûna \"ez\", \"min\" tê bikaranîn. Hevoka \"Ez nan dixwim\" wateya xwarina nên dide.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -5906,7 +5906,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "İkisi aynı dilin iki lehçesidir; söz varlığı büyük ölçüde ortaktır ama ses ve çekim farkları vardır. Yazı sistemi ayrı bir konudur.",
-    "explanationKu": "Her du jî du zaravayên heman zimanî ne; peyvzana wan bi piranî hevpar e lê di deng û kişandinê de cudahî hene. Sîstema nivîsê mijarek cuda ye.",
+    "explanationKu": "Her du jî du zaravayên heman zimanî ne; xezîneya peyvan a wan bi piranî hevpar e lê di deng û kişandinê de cudahî hene. Sîstema nivîsê mijarek cuda ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6282,7 +6282,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Nesne konumundaki zamir bükümlü hâle girer: tu biçimi te olur. \"Tu\" yalın öznedir, \"wî\" eril üçüncü kişi, \"ew\" ise yalın üçüncü kişidir.",
-    "explanationKu": "Cînavka di rewşa bireserê de vediguhere forma xwar: forma \"tu\" dibe \"te\". \"Tu\" kirdeyê rasterast e, \"wî\" kesê sêyem ê nêr, \"ew\" jî kesê sêyem ê rasterast e.",
+    "explanationKu": "Cînavk di rewşa bireserê de vediguhere forma tewandî: \"tu\" dibe \"te\". \"Tu\" kirdeya xwerû ye, \"wî\" kesê sêyem ê nêr e, \"ew\" jî kesê sêyem ê xwerû ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6402,9 +6402,9 @@
     "prompt": "Peyva \"şîr\" li ser sifreyê kîjan tiştî nîşan dide?",
     "answers": [
       "Vexwarina spî ya ji heywanan tê girtin",
-      "Madeya şîrîn a ku hingiv çêdikin",
-      "Xwarina şîrî ya bi tirşandinê tê çêkirin",
-      "Rûna ku ji şîr tê derxistin"
+      "Madeya şîrîn a ku mêşhingiv çêdikin",
+      "Xwarina ji şîr a bi tirşandinê tê çêkirin",
+      "Rûnê ku ji şîr tê derxistin"
     ],
     "correctAnswer": "Vexwarina spî ya ji heywanan tê girtin",
     "promptTr": "Sofradaki \"şîr\" hangi içeceği belirtir?",
@@ -6419,7 +6419,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Şîr süttür. Bal hingiv, yoğurt mast, yağ ise rûn olarak geçer; dördü de süt sofrasında bulunduğu için birbirine yakın şıklardır.",
-    "explanationKu": "Şîr tê wateya \"süt\"ê. Hingiv \"bal\"ê, mast \"yoğurt\"ê, rûn jî \"yağ\"ê nîşan dide; ji ber ku her çar jî li ser sifreya şîr in, vebijark nêzî hev in.",
+    "explanationKu": "Şîr tê wateya \"süt\"ê. Hingiv \"bal\"ê, mast \"yoğurt\"ê, rûn jî \"yağ\"ê nîşan dide; ji ber ku her çar jî xwarinên taştêyê ne, vebijark nêzîkî hev in.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6590,7 +6590,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Daçekten sonra ad bükümlü hâle girer ve çoğulun bükümlü eki -an'dır. \"Zarokên\" izafe biçimidir, ardından bir niteleyici ya da sahip ister.",
-    "explanationKu": "Piştî daçekê navdêr vediguhere forma xwar û nîşana xwar a pirjimar -an e. \"Zarokên\" forma îzafeyê ye, li pey xwe pêdiviya wê bi rengdêrek an xwedîkerek heye.",
+    "explanationKu": "Piştî daçekê navdêr vediguhere forma tewandî û nîşana tewangê ya pirjimar -an e. \"Zarokên\" forma îzafeyê ye, li pey xwe pêdiviya wê bi rengdêrek an xwediyekî heye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6604,7 +6604,7 @@
   {
     "id": "ziman_x_0035",
     "category": "Ziman",
-    "prompt": "Endama ku pê tê dîtin, bi kurmancî çi ye?",
+    "prompt": "Endamê ku pê tê dîtin, bi kurmancî çi ye?",
     "answers": [
       "Guh",
       "Dev",
@@ -6624,7 +6624,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Çav görme organıdır; guh işitmek, dev yemek ve konuşmak, poz ise koklamak içindir.",
-    "explanationKu": "Çav endama dîtinê ye; guh ji bo bihîstinê ye, dev ji bo xwarin û axaftinê ye, poz jî ji bo bêhnê ye.",
+    "explanationKu": "Çav endamê dîtinê ye; guh ji bo bihîstinê ye, dev ji bo xwarin û axaftinê ye, poz jî ji bo bêhnê ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6672,7 +6672,7 @@
   {
     "id": "ziman_x_0037",
     "category": "Ziman",
-    "prompt": "Hevoka \"Ezê biçim\" kîjan demê nîşan dide?",
+    "prompt": "Hevoka \"Ez ê biçim\" kîjan demê nîşan dide?",
     "answers": [
       "Dema borî",
       "Fermanî",
@@ -6692,7 +6692,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "\"Ezê biçim\" biçiminde -ê gelecek zaman eki, \"biçim\" ise bi- ön ekli fiildir; ikisi birlikte gelecek zamanı kurar.",
-    "explanationKu": "Di \"Ezê biçim\" de -ê nîşana dema bê ye û \"biçim\" bi pêşgira bi- ye; ev her du nîşan bi hev re dema bê ava dikin.",
+    "explanationKu": "Di \"Ez ê biçim\" de ê nîşana dema bê ye û \"biçim\" bi pêşgira bi- ye; ev her du nîşan bi hev re dema bê ava dikin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6794,7 +6794,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Kengî \"ne zaman\" demektir ve zamanı sorar. Yeri \"li ku\", kişiyi \"kî\", sebebi ise \"çima\" sorar; her biri farklı bir öge arar.",
-    "explanationKu": "Kengî tê wateya \"ne zaman\" e û pirsa demê dike. \"Li ku\" pirsa cihî, \"kî\" pirsa kesî, \"çima\" jî pirsa sedemê dike; her yek li elementek cuda digere.",
+    "explanationKu": "Kengî tê wateya \"ne zaman\" û pirsa demê dike. \"Li ku\" pirsa cih, \"kî\" pirsa kes, \"çima\" jî pirsa sedemê dike; her yek li elementek cuda digere.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -6862,7 +6862,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Ap, bazı yörelerde amca demektir. Xal dayı, met hala, bapîr ise dededir; akrabalık adları anne ve baba tarafına göre ayrılır.",
-    "explanationKu": "Ap li hin herêman wateya \"mam\"ê dide. Xal birayê dayikê ye, met xwişka bavê ye, bapîr jî bavê bav an bavê dayikê ye; navên lêzimtiyê li gorî aliyê dayikê û bavê ji hev cuda dibin.",
+    "explanationKu": "Ap û mam hevwate ne (amca). Xal birayê dayikê ye, met xwişka bavê ye, bapîr jî bavê bav an bavê dayikê ye; navên lêzimtiyê li gorî aliyê dayik û bav ji hev cuda dibin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -7013,7 +7013,7 @@
   {
     "id": "ziman_x_0050",
     "category": "Ziman",
-    "prompt": "Li ser sifreyê \"goşt\" heye. Ev xwarin bi tirkî çi tê gotin?",
+    "prompt": "Li ser sifreyê \"goşt\" heye. Ev xwarin bi tirkî çi ye?",
     "answers": [
       "Balık",
       "Ekmek",
@@ -7033,7 +7033,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Goşt et demektir. Balık masî, ekmek nan, çorba ise şorbe olarak geçer; dördü de yemek adı olduğu için aynı kavram sınıfındadır.",
-    "explanationKu": "Goşt tê wateya \"et\". Masî balîk e, nan ekmek e, şorbe jî çorbe ye; her çar jî navên xwarinê ne, loma di heman refa têgehî de ne.",
+    "explanationKu": "Goşt tê wateya \"et\"ê. Masî \"balık\", nan \"ekmek\", şorbe jî \"çorba\" ye; her çar jî navên xwarinê ne, loma di heman refa têgehî de ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -7102,7 +7102,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "İzafe eki adın cinsiyetine, zamir ise sahibin cinsiyetine bakar. Kitap dişil olduğu için -a gelir; eril sahip wî, dişil wê, çoğul ise wan olur.",
-    "explanationKu": "Hevalbendiya îzafeyê li gorî zayenda navdêrê ye, lê cînavk li gorî zayenda xwedî ye. Ji ber ku \"kitêb\" mê ye, -a tê; xwedîyê nêr wî ye, yê mê wê ye, pirjimar jî wan e.",
+    "explanationKu": "Hevalbendiya îzafeyê li gorî zayenda navdêrê ye, lê cînavk li gorî zayenda xwedî ye. Ji ber ku \"pirtûk\" mê ye, -a digire; cînavka xwediyê nêr \"wî\" ye, yê mê \"wê\" ye, yê pirjimar jî \"wan\" e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -7137,7 +7137,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Gur kurttur. Hirç ayı, rovî tilki, kew ise kekliktir; sürüyle gezip koyuna saldıran gurttur.",
-    "explanationKu": "Gur bi tirkî \"kurt\" e. Hirç ayî ye, rovî tilkî ye, kew jî keklîk e; gurê ku bi kerî digere dijberê pez e.",
+    "explanationKu": "Gur bi tirkî \"kurt\" e. Hirç \"ayı\", rovî \"tilki\", kew jî \"keklik\" e; gurê ku bi kerî digere dijminê pez e.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",
@@ -7172,7 +7172,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "İstek bildiren xwestin fiilinden sonraki yan cümle bi- önekli istek kipiyle kurulur. \"Diçim\" bildirme, \"çûm\" geçmiş, \"naçim\" ise olumsuzdur.",
-    "explanationKu": "Hevoka alîkar a piştî lêkera xwestin (ku daxwazê nîşan dide) bi dema subjunktîf a pêşgira bi- tê avakirin. \"Diçim\" dema niha ya erênî nîşan dide, \"çûm\" dema borî ye, \"naçim\" jî neyînî ye.",
+    "explanationKu": "Hevoka alîkar a piştî lêkera xwestinê (ku daxwazê nîşan dide) bi raweya daxwazî û pêşgira bi- tê avakirin. \"Diçim\" dema niha ya erênî nîşan dide, \"çûm\" dema borî ye, \"naçim\" jî neyînî ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Ziman û rêziman — Kurmancî",

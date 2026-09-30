@@ -102,7 +102,7 @@
     "id": "ds_cografya_0250",
     "category": "Cografya",
     "difficulty": 4,
-    "prompt": "Li Çiyayên Cîlo û Agiriyê hebûna cemedên serdemî (buzul) encama kîjan taybetmendiya erdnîgarî ye?",
+    "prompt": "Li Çiyayên Cîlo û Agiriyê hebûna cemedên herdemî (buzul) encama kîjan taybetmendiya erdnîgarî ye?",
     "promptTr": "Cilo ve Ağrı Dağları'nda sirk ve vadi buzullarının günümüze kadar varlığını koruyabilmesi hangi coğrafi etmene bağlıdır?",
     "answers": [
       "Bilindahiya zêde ya li ser xeta berfê ya herdemî",
@@ -234,7 +234,7 @@
     "id": "ds_cografya_0254",
     "category": "Cografya",
     "difficulty": 4,
-    "prompt": "Di nexşerêya bi Projeksiyona Mercator de kîjan herêm ji mezinahiya xwe ya rasteqîn pir mezintir xuya dike?",
+    "prompt": "Di nexşeya bi Projeksiyona Mercator de kîjan herêm ji mezinahiya xwe ya rasteqîn pir mezintir xuya dike?",
     "promptTr": "Mercator silindirik projeksiyonu ile çizilen dünya haritalarında hangi bölge gerçek alanına kıyasla en fazla oranda büyük görünür?",
     "answers": [
       "Girava Gronlandê û herêmên cemserî",
@@ -765,7 +765,7 @@
     "prompt": "Kanyona Çemê Botanê çima wekî yek ji kanyonên herî kûr û asê yên herêmê tê hesibandin?",
     "promptTr": "Botan Çayı Kanyonu'nun çok dik ve derin bir yarık vadi oluşturmasında hangi jeomorfolojik etken belirleyicidir?",
     "answers": [
-      "Herikîna hêdî ya li ser deştên kumî yên bê kevir",
+      "Herikîna hêdî ya li ser deştên qûmî yên bê kevir",
       "Bilindbûna tektonîk û xurtiya kolandina avê ya li ser kevirên kilsî",
       "Çêbûna bendavên xwezayî yên ji qeşayê li ber avê",
       "Nebûna ti herikîna avê di werzê bihar û havînê de"
@@ -931,7 +931,7 @@
     "promptTr": "Serhat ve Botan yaylalarının yaz mevsiminde göçer hayvancılık için tercih edilmesinin temel klimatik ve vejetatif nedeni nedir?",
     "answers": [
       "Nebûna ti zinar û çiyayan li tevahiya herêmê",
-      "Hebûna germiyana zêde ya ji bo çandiniya pembû",
+      "Hebûna germahiya zêde ya ji bo çandiniya pembû",
       "Dûrketina ji hemû çavkaniyên avê yên xwezayî",
       "Hewaya hênik, çavkaniyên avê û giyayên hêşîn ên çêrgehan"
     ],
@@ -1131,7 +1131,7 @@
       "Zinarên granîtî yên herî req ên kûrahiya erdê",
       "Zinarên bazaltî yên reş ên Çiyayê Qerecdaxê",
       "Kevirên mermerê yên qerisî yên binê deryayan",
-      "Kilsên nerm ên kilsî û kevirên xîçî yên hewzeyê"
+      "Zinarên kilsî yên nerm û kevirên xîçî yên hewzeyê"
     ],
     "answersTr": [
       "Yeraltının en sert derinlik kayacı olan masif granitler",
@@ -1139,7 +1139,7 @@
       "Deniz tabanından başkalaşıma uğramış sert metamorfik mermerler",
       "Kolay oyulabilen kalkerli kireçtaşı ve kumtaşı tabakaları"
     ],
-    "correctAnswer": "Kilsên nerm ên kilsî û kevirên xîçî yên hewzeyê",
+    "correctAnswer": "Zinarên kilsî yên nerm û kevirên xîçî yên hewzeyê",
     "correctAnswerTr": "Kolay oyulabilen kalkerli kireçtaşı ve kumtaşı tabakaları",
     "explanation": "Hasankeyf kanyonundaki miyosen yaşlı yumuşak kalker ve kireçli kumtaşları insanların kolayca binlerce mağara oymasına olanak tanımıştır.",
     "explanationTr": "Hasankeyf kanyonundaki miyosen yaşlı yumuşak kalker ve kireçli kumtaşları insanların kolayca binlerce mağara oymasına olanak tanımıştır.",
@@ -1328,7 +1328,7 @@
     "answers": [
       "Zêdebûna hewaya germ a li ser serê lûtkeyên çiyayan",
       "Ji bo firotina hemû ajalan di bazarên Ewropayê de",
-      "Kewbûna sermayê, barîna berfa giran û xitîbûna çêrgehan",
+      "Zêdebûna sermayê, barîna berfa giran û nemana çêrgehan",
       "Dîtina kaniyên nû yên avê li ser lûtkeyên berfîn"
     ],
     "answersTr": [
@@ -1337,7 +1337,7 @@
       "Şiddetli don olayları, yoğun kar yağışı ve yayla otlaklarının kapanması",
       "Karlı dağ zirvelerinde yeni sıcak su pınarları aramak"
     ],
-    "correctAnswer": "Kewbûna sermayê, barîna berfa giran û xitîbûna çêrgehan",
+    "correctAnswer": "Zêdebûna sermayê, barîna berfa giran û nemana çêrgehan",
     "correctAnswerTr": "Şiddetli don olayları, yoğun kar yağışı ve yayla otlaklarının kapanması",
     "explanation": "Kışın yüksek yaylaların kar altında kalması ve dondurucu soğuklar nedeniyle sürüler kışı geçirmek için ılık Germiyan vadilerine indirilir.",
     "explanationTr": "Kışın yüksek yaylaların kar altında kalması ve dondurucu soğuklar nedeniyle sürüler kışı geçirmek için ılık Germiyan vadilerine indirilir.",
@@ -1755,7 +1755,7 @@
     "prompt": "Di çanda Elewiyên herêma Dêrsimê de têgeha \"Ziyaretgeh\" behsa kîjan mekanên pîroz dike?",
     "promptTr": "Dersim ve çevresi Alevi kültüründe \"Ziyaret\" (Ziyaretgeh) inancı hangi kutsal mekan anlayışını ifade eder?",
     "answers": [
-      "Kaniyên avê, darên kevnar, teht û gorekên pîroz ên sirûştê",
+      "Kaniyên avê, darên kevnar, teht û gorên pîroz ên sirûştê",
       "Tenê qonaxên dewlemendan ên li navenda bajaran",
       "Bazarên bazirganiyê yên ku di cejnan de vedibin",
       "Kelehên leşkerî yên serdema şerên kevn ên navçeyê"
@@ -1766,7 +1766,7 @@
       "Bayram günlerinde kurulan geçici ticari pazar yerleri",
       "Eski savaş dönemlerinden kalan askeri savunma kaleleri"
     ],
-    "correctAnswer": "Kaniyên avê, darên kevnar, teht û gorekên pîroz ên sirûştê",
+    "correctAnswer": "Kaniyên avê, darên kevnar, teht û gorên pîroz ên sirûştê",
     "correctAnswerTr": "Kutsal su kaynakları, ulu ağaçlar, kayalıklar ve ocak erenlerinin mekanları",
     "explanation": "Dersim Aleviliğinde doğadaki pınarlar (Munzur), dağlar, ulu ağaçlar ve ulu zatların mekanları kutsal birer ziyaretgah kabul edilir.",
     "explanationTr": "Dersim Aleviliğinde doğadaki pınarlar (Munzur), dağlar, ulu ağaçlar ve ulu zatların mekanları kutsal birer ziyaretgah kabul edilir.",
@@ -1818,7 +1818,7 @@
     "id": "ds_cand_1193",
     "category": "Çand",
     "difficulty": 4,
-    "prompt": "Kevneşopiya \"Kalo Gaxand\" li herêma Dêrsimê di destpêka sala nû de kîjan rola hevgirtinê dileyize?",
+    "prompt": "Kevneşopiya \"Kalo Gaxand\" li herêma Dêrsimê di destpêka sala nû de kîjan rola hevgirtinê dilîze?",
     "promptTr": "Dersim yöresindeki \"Kalo Gaxand\" yılbaşı geleneğinin temel toplumsal dayanışma rolü nedir?",
     "answers": [
       "Komkirina xwarin û xelatan ji bo alîkariya malbatên hejar",
@@ -1950,7 +1950,7 @@
     "id": "ds_cand_1197",
     "category": "Çand",
     "difficulty": 4,
-    "prompt": "Kevneşopiya hevkariyê ya bi navê \"Zibar\" (an Îmece) di gundan de bi taybetî di kîjan karan de dihate bikaranîn?",
+    "prompt": "Kevneşopiya hevkariyê ya bi navê \"Zîbar\" (an Îmece) di gundan de bi taybetî di kîjan karan de dihate bikaranîn?",
     "promptTr": "Geleneksel köy yaşamındaki \"Zîbar\" (imece) dayanışma kurumu özellikle hangi işlerde uygulanırdı?",
     "answers": [
       "Dirûna zeviyan, çêkirina xaniyan û berhevkirina berheman",
@@ -2115,7 +2115,7 @@
     "id": "ds_cand_1202",
     "category": "Çand",
     "difficulty": 4,
-    "prompt": "Kevneşopiya \"Meyrangêhê\" (Seyrana biharê) ya di meha gulanê de ji aliyê civakî ve xwedî kîjan wateyê ye?",
+    "prompt": "Kevneşopiya \"Meyrangehê\" (Seyrana biharê) ya di meha gulanê de ji aliyê civakî ve xwedî kîjan wateyê ye?",
     "promptTr": "Bahar aylarında düzenlenen toplu kır gezileri ve mesirelerin (Meyrangêh/Seyran) toplumsal açıdan ana anlamı nedir?",
     "answers": [
       "Tenê komkirina bacên salane ji bo axayên herêmê",
@@ -2199,7 +2199,7 @@
     "correctAnswerTr": "Yağmurda liflerin şişip su geçirmemesi, sıcakta ise gözeneklerin hava alması",
     "explanation": "Keçi kılı ıslandığında lifleri şişerek su geçirmez bir örtüye dönüşür; kurak sıcakta ise gözenekleri açılarak doğal havalandırma sağlar.",
     "explanationTr": "Keçi kılı ıslandığında lifleri şişerek su geçirmez bir örtüye dönüşür; kurak sıcakta ise gözenekleri açılarak doğal havalandırma sağlar.",
-    "explanationKu": "Mûyê bizinê gava şil dibe dişêve û nahêle av derbas bibe, di germê de jî rê dide bayê hênik.",
+    "explanationKu": "Mûyê bizinê gava şil dibe diwerime û nahêle av derbas bibe, di germê de jî rê dide bayê hênik.",
     "type": "multipleChoice",
     "metadata": {
       "reviewStatus": "approved",
@@ -2214,7 +2214,7 @@
     "id": "ds_cand_1205",
     "category": "Çand",
     "difficulty": 5,
-    "prompt": "Di \"Dîwanxaneyên\" kevneşopî de cîhê rûniştinê yê li serê malê (serê odê) li gorî kîjan pîvanê dihate diyarkirin?",
+    "prompt": "Di \"dîwanxaneyên\" kevneşopî de cihê rûniştinê yê li serê malê (serê odê) li gorî kîjan pîvanê dihate diyarkirin?",
     "promptTr": "Geleneksel divanhane ve köy odalarında başköşeye (serê odê) oturma düzeni hangi toplumsal kurala göre belirlenirdi?",
     "answers": [
       "Tenê li gorî leza hespê yê ku herî pêşîn hatiye",
@@ -2265,7 +2265,7 @@
     "correctAnswerTr": "Hem şiddetli yağmur ve soğuğu geçirmez hem de arazide yatak görevi görür",
     "explanation": "Sıkıştırılmış yünden yapılan kepenek su, rüzgar ve soğuk geçirmez; çoban açık arazide hem manto hem de çadır/yatak olarak kullanır.",
     "explanationTr": "Sıkıştırılmış yünden yapılan kepenek su, rüzgar ve soğuk geçirmez; çoban açık arazide hem manto hem de çadır/yatak olarak kullanır.",
-    "explanationKu": "Kulav ji hiriya xurt tê kutan û nahêle serma û baran derbas bibe, şivan di çiyê de wekî nivîn jî bikar tînin.",
+    "explanationKu": "Kulav ji hiriya xurt tê kutan û nahêle serma û baran derbas bibe, şivan di çiyê de wekî nivîn jî bi kar tînin.",
     "type": "multipleChoice",
     "metadata": {
       "reviewStatus": "approved",
