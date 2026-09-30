@@ -475,9 +475,13 @@ class SahneCategoryTone {
     deep: Color(0xFF401A47),
     detail: Color(0xFFD07FE0),
   );
+  // Zemin 0xFF575528 idi: alt konu bandındaki gece alt satırı (`tx2`) 4,41:1
+  // kalıyordu (< 4,5). Kimliği bozmayan bir basamak koyulaştırıldı (4,61:1);
+  // bekçi yalnız yedi konuyu ölçtüğü için kusur bu üçüne bakılmadan
+  // sessiz kalmıştı (`sahne_topic_marks_test`, artık 11 işaretin hepsi).
   static const siyaset = SahneCategoryTone(
-    ground: Color(0xFF575528),
-    deep: Color(0xFF42401E),
+    ground: Color(0xFF54522A),
+    deep: Color(0xFF413F1F),
     detail: Color(0xFFB8B24A),
   );
 

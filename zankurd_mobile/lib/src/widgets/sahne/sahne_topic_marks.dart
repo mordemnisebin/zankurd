@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../theme/sahne.dart';
 
-/// Konunun görsel dili: yedi ana konunun her birinin bir silüeti (ana sayfa
+/// Konunun görsel dili: her konunun (yedi ana konu + Siyaset, Paradigma,
+/// Teknolojî, Cîhan) bir silüeti (ana sayfa
 /// karosu, [SahneCategoryGlyphPainter]) ve bir kilim motifi (alt konu bandı,
 /// [SahneKilimBandPainter]) vardır.
 ///
@@ -11,13 +12,31 @@ import '../../theme/sahne.dart';
 /// K3 (tek dolu nesne, iki renk), alt konu bandında K1 (dokuma motif).
 /// Koordinatlar ve ızgaralar `kimlik/konu/gen.py` taslağından birebir
 /// taşındı. Eşleme `CategoryVisuals.mark`ta tek yerde durur; işareti
-/// olmayan konu (Siyaset, Paradigma, Teknolojî) çizimi yerine eski ikon +
-/// ton hâline düşer.
+/// olmayan (bilinmeyen) kategori eski ikon + ton hâline düşer.
+///
+/// Sonradan gelen dört işaret aynı dilde çizildi (2026-09-30): tek dolu
+/// gövde, tek kalınlıkta zemin renginde iç çizgi, 64 birimlik kutuda
+/// pahlı köşe. Parti, bayrak ya da ideolojik simge yok — uygulama her
+/// görüşten Kürde hitap eder. Siyaset: katlı köşeli kâğıt sandığın ağzına
+/// düşer (sivil eylem); Paradigma: dallanan ağaçlı ampul (fikir);
+/// Teknolojî: yonga (cihaz/devre); Cîhan: enlem-boylam çizgili küre.
 ///
 /// Renkler yalnız [SahneCategoryTone]dan gelir: silüet `detail` dolgu, iç
 /// ayrıntı `ground` çizgi; motif `deep` alan üstünde `detail` ve `ground`.
 /// Karo ve bant kimlik taşır: tema değişse de aynı kalır.
-enum SahneTopicMark { ziman, cand, dirok, edebiyat, cografya, muzik, sinema }
+enum SahneTopicMark {
+  ziman,
+  cand,
+  dirok,
+  edebiyat,
+  cografya,
+  muzik,
+  sinema,
+  siyaset,
+  paradigma,
+  teknoloji,
+  cihan,
+}
 
 /// SVG yol dizgisini [Path]e çevirir. Taslaktaki silüetler yalnız mutlak
 /// `M L H V Q T Z` kullanır; dizgiler gen.py'den olduğu gibi kopyalandığı
@@ -185,6 +204,49 @@ final Map<SahneTopicMark, _Glyph> _glyphs = {
       _r(34, 26, 19, 12.5),
     ],
   ),
+  // Sandık: katlı köşeli kâğıt sandığın ağzına düşer. Parti, bayrak ya da
+  // simge yok; her görüşten seçmen için aynı sivil eylem.
+  SahneTopicMark.siyaset: _Glyph(
+    fill: [
+      _svgPath('M8 34H56V58L54 60H10L8 58Z'),
+      _svgPath('M19 3H40L45 8V29H19Z'),
+    ],
+    line: [_svgPath('M17 43H47M25 17L30 22L38 11')],
+  ),
+  // Ampul içinde dallanan bir ağaç: düşünce ve dallanan fikir.
+  SahneTopicMark.paradigma: _Glyph(
+    fill: [
+      _svgPath('M32 3Q51 3 51 22Q51 32 43 39V46H21V39Q13 32 13 22Q13 3 32 3Z'),
+      _svgPath('M22 50H42V54Q42 59 37 59H27Q22 59 22 54Z'),
+    ],
+    line: [_svgPath('M32 40V19M32 33L23 24M32 28L41 19')],
+  ),
+  // Yonga: gövde, her kenarda üç bacak, içinde çekirdek ve 1. bacak çentiği.
+  SahneTopicMark.teknoloji: _Glyph(
+    fill: [
+      _svgPath('M17 12H47L52 17V47L47 52H17L12 47V17Z'),
+      for (final p in const [21.0, 30.0, 39.0]) ...[
+        Path()..addRect(_r(p, 3, 4, 10)), // üst
+        Path()..addRect(_r(p, 51, 4, 10)), // alt
+        Path()..addRect(_r(3, p, 10, 4)), // sol
+        Path()..addRect(_r(51, p, 10, 4)), // sağ
+      ],
+    ],
+    line: [_svgPath('M24 24H40V40H24Z')],
+  ),
+  // Küre: bir boylam halkası ile ekvator ve iki enlem yayı.
+  SahneTopicMark.cihan: _Glyph(
+    fill: [
+      Path()
+        ..addOval(Rect.fromCircle(center: const Offset(32, 32), radius: 28)),
+    ],
+    line: [
+      _svgPath(
+        'M32 4Q46 4 46 32Q46 60 32 60Q18 60 18 32Q18 4 32 4'
+        'M2 32H62M6 17Q32 24 58 17M6 47Q32 40 58 47',
+      ),
+    ],
+  ),
 };
 
 /// K3: konu başına tek dolu silüet ([SahneCategoryTone.detail]), iç ayrıntı
@@ -272,9 +334,10 @@ class SahneCategoryGlyphPainter extends CustomPainter {
 
 /// K1 motif ızgaraları (9x9). `#` = [SahneCategoryTone.detail], `o` = konu
 /// zemini ([SahneCategoryTone.ground]), `.` = [SahneCategoryTone.deep]
-/// alanı. Yedi konunun yedi ayrı dokuma biçimi: sarmal (Ziman), yıldız
+/// alanı. Her konunun ayrı bir dokuma biçimi: sarmal (Ziman), yıldız
 /// (Çand), basamak (Dîrok), zikzak (Wêje), dişli dağ (Erdnîgarî), dama
-/// (Muzîk), sekizgen halka (Sînema).
+/// (Muzîk), sekizgen halka (Sînema), ikili kemer dizisi (Siyaset), dallanan
+/// Y (Paradigma), devre izi (Teknolojî), enlem-boylam kafesi (Cîhan).
 const Map<SahneTopicMark, List<String>> sahneKilimGrids = {
   SahneTopicMark.ziman: [
     '#########',
@@ -351,6 +414,50 @@ const Map<SahneTopicMark, List<String>> sahneKilimGrids = {
     '#.##o##.#',
     '##.###.##',
     '.##...##.',
+    '..#####..',
+  ],
+  SahneTopicMark.siyaset: [
+    '#########',
+    '##.###.##',
+    '#...#...#',
+    '#...#...#',
+    '#...#...#',
+    '#...#...#',
+    '#########',
+    '.........',
+    '#########',
+  ],
+  SahneTopicMark.paradigma: [
+    '#.......#',
+    '.#.....#.',
+    '..#...#..',
+    '...#.#...',
+    '....#....',
+    '#...#...#',
+    '.#..#..#.',
+    '..#.#.#..',
+    '...###...',
+  ],
+  SahneTopicMark.teknoloji: [
+    '###......',
+    '#o####...',
+    '###..#...',
+    '.....#.##',
+    '##...#.#o',
+    '#o####.##',
+    '##....#..',
+    '......#..',
+    'o#####...',
+  ],
+  SahneTopicMark.cihan: [
+    '..#####..',
+    '.#.#.#.#.',
+    '#..#.#..#',
+    '#..#.#..#',
+    '#########',
+    '#..#.#..#',
+    '#..#.#..#',
+    '.#.#.#.#.',
     '..#####..',
   ],
 };
