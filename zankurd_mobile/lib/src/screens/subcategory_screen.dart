@@ -83,8 +83,13 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
               id: 'gisti',
               nameKu: Tr.of(K.allQuestionsSubcategory, AppLanguage.ku),
               nameTr: Tr.of(K.allQuestionsSubcategory, AppLanguage.tr),
-              descriptionKu: 'Têkelpêkel pirsên $category',
-              descriptionTr: '$category kategorisindeki tüm sorular',
+              // Kimlik ('Paradigma') değil görünen ad yazılır: 2026-09-30'da
+              // kategori "Bilim ve Düşünce" oldu, bu satır hâlâ eski adı
+              // gösteriyordu.
+              descriptionKu:
+                  'Têkelpêkel pirsên ${CategoryNames.localized(category, true)}',
+              descriptionTr:
+                  '${CategoryNames.localized(category, false)} kategorisindeki tüm sorular',
             ),
           ];
     final t = SahneTokens.of(context);
@@ -428,10 +433,10 @@ IconData _iconForSubcategory(String id) {
     'diroka_siyasi' => AppIcons.buildingColumns,
     'siyaseta_nujen' => AppIcons.squareCheck,
     'tevger' => AppIcons.flag,
-    // ── Paradigma ──
-    'demokratik' => AppIcons.scaleBalanced,
-    'ekoloji' => AppIcons.leaf,
-    'jineoloji' => AppIcons.venus,
+    // ── Paradigma (Bilim ve Düşünce) ──
+    'civak_maf' => AppIcons.scaleBalanced,
+    'raman_felsefe' => AppIcons.lightbulb,
+    'zanist_jiyan' => AppIcons.leaf,
     // ── Teknolojî ──
     'bingehên_teknolojiyê' => AppIcons.gear,
     'programkirin' => AppIcons.robot,

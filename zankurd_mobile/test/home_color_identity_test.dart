@@ -175,23 +175,26 @@ void main() {
     },
   );
 
-  testWidgets('konu ızgarası 390 pt ekranda sözü bölmeyen sütun sayısını seçer', (
-    tester,
-  ) async {
-    await _pumpHome(tester);
-    final repo = freshMockRepository();
-    final tops = <double>{
-      for (final c in repo.categories)
-        tester.getTopLeft(find.byKey(ValueKey('home-topic-$c'))).dy,
-    };
-    // 2026-09-30: 7 kategoride 4 sütun (4 + 3, iki satır) sığıyordu. Paradigma,
-    // Siyaset ve Teknolojî geri gelince 10 kategori oldu ve ızgara 3 sütuna
-    // iner: en uzun söz olan kalın "Paradigma" (~81 pt) 390 pt ekranda 4
-    // sütunun karosuna (~80 pt) sığmıyor, sütun sayısı sözü kelime ortasından
-    // bölmemek için düşüyor (`_columnsFor`). 10 kategori → 3 + 3 + 3 + 1.
-    expect(repo.categories.length, 10);
-    expect(tops.length, (repo.categories.length / 3).ceil());
-  });
+  testWidgets(
+    'konu ızgarası 390 pt ekranda sözü bölmeyen sütun sayısını seçer',
+    (tester) async {
+      await _pumpHome(tester);
+      final repo = freshMockRepository();
+      final tops = <double>{
+        for (final c in repo.categories)
+          tester.getTopLeft(find.byKey(ValueKey('home-topic-$c'))).dy,
+      };
+      // 2026-09-30: Paradigma, Siyaset ve Teknolojî geri gelince 10 kategori
+      // oldu ve en uzun söz olan kalın "Paradigma" (~81 pt) 390 pt ekranda 4
+      // sütunun karosuna (~80 pt) sığmadığı için ızgara 3 sütuna iniyordu
+      // (3 + 3 + 3 + 1). Aynı gün Paradigma "Bilim ve Düşünce / Zanist û
+      // Raman" adını aldı: ad iki satıra sarılır ama en uzun TEK söz artık
+      // "Coğrafya" / "Erdnîgarî" (4 sütuna sığar), böylece ızgara 4 sütuna
+      // döndü (`_columnsFor`): 10 kategori → 4 + 4 + 2.
+      expect(repo.categories.length, 10);
+      expect(tops.length, (repo.categories.length / 4).ceil());
+    },
+  );
 
   testWidgets('günün dersi kartında maskot yok', (tester) async {
     await tester.pumpWidget(

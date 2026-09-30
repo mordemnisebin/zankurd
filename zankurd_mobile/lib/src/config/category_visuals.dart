@@ -26,6 +26,9 @@ class CategoryVisuals {
     'Erdnîgarî': 'Cografya',
     'Müzik': 'Muzîk',
     'Paradîgma': 'Paradigma',
+    // 2026-09-30'dan beri oyuncunun gördüğü adlar; kimlik 'Paradigma' kalır.
+    'Zanist û Raman': 'Paradigma',
+    'Bilim ve Düşünce': 'Paradigma',
     'Teknoloji': 'Teknolojî',
     'Sinema': 'Sînema',
     'Film': 'Sînema',

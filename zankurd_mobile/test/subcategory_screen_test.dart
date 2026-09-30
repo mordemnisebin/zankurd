@@ -523,22 +523,29 @@ void main() {
     );
   });
 
-  testWidgets('jineoloji anlamına uygun venus ikonu alır', (tester) async {
-    // 'Paradigma' kategorisi de tamamen gizli — bkz. yukarıdaki yorum.
-    await expectCardIcon(
-      tester,
-      category: 'Paradigma',
-      id: 'jineoloji',
-      expectedIcon: AppIcons.venus,
-      repository: _FixedPlayableRepository(
-        _keywordMatchedQuestions(
-          category: 'Paradigma',
-          keyword: 'jineolojî',
-          count: SubcategoryConfig.kMinSubcategoryQuestions,
+  // 2026-09-30: Paradigma "Bilim ve Düşünce" oldu; üç alt konu yeni kimlik
+  // ve ikon alır (eski demokratik/ekoloji/jineoloji kimlikleri kalktı).
+  for (final entry in {
+    'civak_maf': (AppIcons.scaleBalanced, 'hemwelatî'),
+    'raman_felsefe': (AppIcons.lightbulb, 'felsefe'),
+    'zanist_jiyan': (AppIcons.leaf, 'zanist'),
+  }.entries) {
+    testWidgets('Paradigma › ${entry.key} kendi ikonunu alır', (tester) async {
+      await expectCardIcon(
+        tester,
+        category: 'Paradigma',
+        id: entry.key,
+        expectedIcon: entry.value.$1,
+        repository: _FixedPlayableRepository(
+          _keywordMatchedQuestions(
+            category: 'Paradigma',
+            keyword: entry.value.$2,
+            count: SubcategoryConfig.kMinSubcategoryQuestions,
+          ),
         ),
-      ),
-    );
-  });
+      );
+    });
+  }
 
   // Listenin sonundaki bilgilendirme kartı ("Kolaydan zora doğru ilerle")
   // hiçbir hedefe gitmiyordu ama sağ ucundaki `chevronRight` ikonu, listedeki
