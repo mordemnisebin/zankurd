@@ -3864,7 +3864,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Gümüş kaplı bakır levhaya kaydedilen bu yöntem, geliştiricisinin adıyla dagerotip diye anılır. Eastman rulo filmi yaygınlaştırdı, Lumière kardeşler sinemayı, Swan ise ampul çalışmalarını temsil eder.",
-    "explanationKu": "Ev rêbaza ku li ser lewheya sifir a bi zîv hatiye pêçandin tê tomarkirin, bi navê pêşxerê xwe wek dagerotîp tê nasîn. Eastman fîlmê rûlok belav kir, xwişk û birayên Lumière sînemayê, Swan jî xebatên li ser ampûlê temsîl dike.",
+    "explanationKu": "Ev rêbaza ku li ser lewheya sifir a bi zîv hatiye pêçandin tê tomarkirin, bi navê pêşxerê xwe wek dagerotîp tê nasîn. Eastman fîlmê rûlok belav kir, birayên Lumière sînemayê pêş xistin, Swan jî bi xebatên xwe yên li ser ampûlê tê nasîn.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -4918,7 +4918,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Fotovoltaik hücrede soğurulan ışık elektronları serbest bırakır ve doğrudan akım doğar; arada buhar ya da türbin yoktur. Güneş kolektörleri ise elektrik değil, sıcak su üretir.",
-    "explanationKu": "Di şaneya fotovoltaîk de ronahiya ku tê mijandin elektronan azad dike û rasterast cereyan çêdibe; di navberê de ne jenerator û ne jî turbîn heye. Kolektorên rojê jî ne elektrîkê, lê avê germ dikin.",
+    "explanationKu": "Di şaneya fotovoltaîk de ronahiya ku tê mijandin elektronan azad dike û rasterast cereyan çêdibe; di navberê de ne jenerator û ne jî turbîn heye. Kolektorên rojê jî elektrîkê çênakin, lê avê germ dikin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5088,7 +5088,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Her etkiye eşit ve zıt bir tepki vardır: dışarı atılan sıcak gaz roketi ileri iter, bu yüzden hava bulunmayan yerde de çalışır. Havaya yaslanmak gerekseydi uzayda hiç ilerleyemezdi.",
-    "explanationKu": "Ji bo her çalakiyê bertekek wekhev û berevajî heye: gaza germ a ku ber bi derve ve tê avêtin roketê pêş ve dide, ji ber vê li cihê bêhewa jî dixebite. Eger xwe bispartana hewayê, li fezayê qet pêş ve neçûbûya.",
+    "explanationKu": "Ji bo her kiryarê bertekek wekhev û berevajî heye: gaza germ a ku ber bi derve ve tê avêtin roketê pêş ve dide, ji ber vê yekê li cihê bêhewa jî dixebite. Eger roket xwe bisparta hewayê, li fezayê qet pêş ve neçûya.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
@@ -5544,7 +5544,7 @@
   {
     "id": "ziman_x_0001",
     "category": "Ziman",
-    "prompt": "Kîjan peyva kurmancî tê wateya peyva \"kar\" a tirkî ya ku ji ezmên dibare?",
+    "prompt": "Kîjan peyva Kurmancî tê wateya peyva \"kar\" a Tirkî ya ku ji ezman dibare?",
     "answers": [
       "Baran",
       "Berf",

@@ -118,6 +118,21 @@
 /// silinmedi, bankada duruyor; bir id'yi buradan çıkarmak onu yeniden
 /// oynanır yapar.
 ///
+/// ## Beşinci dalga (2026-09-30, ikinci geçiş — bağımsız model ailesi)
+///
+/// Dördüncü dalgadan sonra kalan Siyaset/Paradigma soruları bağımsız bir
+/// model ailesine (ChatGPT) de okutuldu. İşaretlediği 17 yerel soru iki
+/// türdendi: RİSK — siyasi yüklü bir terime normatif tek tanım ya da bir
+/// akıma ideolojik etiket ("mafê statuyê" gibi güncel siyasal talepler
+/// atıfsız, genel-geçer bilgi gibi sunuluyordu); YANLIŞ — tartışmalı bir
+/// siyaset bilimi kavramına ("radikal demokrasi", "katılımcı bütçe",
+/// "toplumsal adalet") tek bir "doğru tanım" dayatılıyordu. Bilgi
+/// yarışmasında cevabı tartışılabilir soru kötü sorudur; ürün sahibinin
+/// "tartışmalıları ayıkla" çizgisinin devamıdır. Sunucudaki karşılığı
+/// `supabase/2026-09-30_siyaset_second_pass_unapprove.sql` (zaten uygulandı;
+/// sunucuda 64 soruyu onaydan çıkardı, bu 17'si yerel paketteki payıdır).
+/// Kayıtlar silinmedi, bankada duruyor.
+///
 library;
 
 const Set<String> retiredQuestionIds = <String>{
@@ -666,6 +681,31 @@ const Set<String> retiredQuestionIds = <String>{
   'offline_tf_siy_0050',
   'offline_tf_siy_0055',
   'offline_tf_siy_0056',
+
+  // ---------------------------------------------------------------------
+  // Beşinci dalga (2026-09-30): bağımsız model ailesinin ikinci geçişi —
+  // bkz. dosya başındaki "Beşinci dalga" belgesi.
+  // ---------------------------------------------------------------------
+
+  // Siyaset (17) — tartışmalı kavrama tek "doğru tanım" (YANLIŞ)
+  // ya da siyasi yüklü terime normatif tanım / ideolojik etiket (RİSK)
+  'offline_12703',
+  'offline_12742',
+  'offline_12985',
+  'offline_13129',
+  'offline_13169',
+  'offline_13382',
+  'offline_2336',
+  'offline_curated_21500',
+  'offline_tf_0063',
+  'offline_tf_0073',
+  'offline_tf_siy_0003',
+  'offline_tf_siy_0004',
+  'offline_tf_siy_0005',
+  'offline_tf_siy_0006',
+  'offline_tf_siy_0012',
+  'offline_tf_siy_0032',
+  'offline_tf_siy_0034',
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

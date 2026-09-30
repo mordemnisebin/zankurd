@@ -379,8 +379,8 @@
     "difficulty": 3,
     "id": "comm_ede_0003",
     "category": "Edebiyat",
-    "prompt": "Gotina \"Xwîn bi xwînê nayê şuştin\" çi ye?",
-    "promptTr": "\"Xwîn bi xwînê nayê şuştin\" sözü nedir?",
+    "prompt": "Gotina \"Xwîn bi xwînê nayê şûştin\" çi ye?",
+    "promptTr": "\"Xwîn bi xwînê nayê şûştin\" sözü nedir?",
     "answers": [
       "Beytek ji dîwana Melayê Cizîrî",
       "Navê romanekê",
@@ -396,7 +396,7 @@
     "correctAnswer": "Gotineke pêşiyan",
     "correctAnswerTr": "Bir atasözü",
     "explanation": "\"Kan kanla yıkanmaz\" bir Kürt atasözüdür. Mehmed Uzun da metinlerinde bu sözü atasözü olarak aktarır; söz ona ait değildir.",
-    "explanationKu": "\"Xwîn bi xwînê nayê şuştin\" gotineke pêşiyan a kurdî ye. Mehmed Uzun jî wê di metnên xwe de wek gotina pêşiyan neql dike; ne gotina wî ye.",
+    "explanationKu": "\"Xwîn bi xwînê nayê şûştin\" gotineke pêşiyan a kurdî ye. Mehmed Uzun jî wê di metnên xwe de wek gotina pêşiyan neql dike; ne gotina wî ye.",
     "explanationTr": "\"Kan kanla yıkanmaz\" bir Kürt atasözüdür. Mehmed Uzun da metinlerinde bu sözü atasözü olarak aktarır; söz ona ait değildir.",
     "metadata": {
       "reviewStatus": "rejected",

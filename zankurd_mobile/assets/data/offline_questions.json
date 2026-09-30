@@ -2233,7 +2233,7 @@
     "explanation": "Dew/doogh, yoğurt temelli ferahlatıcı bir içecek geleneğiyle ilişkilidir.",
     "type": "multipleChoice",
     "difficulty": 2,
-    "explanationKu": "Dew vexwarineke hênikker a ji mast e û bi kevneşopiyê ve girêdayî ye.",
+    "explanationKu": "Dew vexwarineke hênikker e ku ji mast tê çêkirin û bi kevneşopiyê ve girêdayî ye.",
     "explanationTr": "Dew/doogh, yoğurt temelli ferahlatıcı bir içecek geleneğiyle ilişkilidir.",
     "promptTr": "Dew/doogh türündeki içecek hangi temel maddeyle ilişkilidir?",
     "answersTr": [
@@ -3533,7 +3533,7 @@
     "explanation": "Efsanede Dehak, omuzlarındaki yılanları beslemek için halka zulmeden zalim bir kraldır; demirci Kawa öncülüğündeki halk ayaklanması onu devirir ve Newroz bu kurtuluş günü sayılır.",
     "type": "multipleChoice",
     "difficulty": 3,
-    "explanationKu": "Di efsaneyê de Dehaq padîşahekî pir zalim e; li gor vegotinê marên li ser milên wî xwîna ciwanan dixwazin. Kawayê Hesinkar pêşengiya serhildana gel dike û Newroz roja rizgariya ji vê zilmê tê hesibandin.",
+    "explanationKu": "Di efsaneyê de Dehaq padîşahekî pir zalim e; li gorî vegotinê marên li ser milên wî xwîna ciwanan dixwazin. Kawayê Hesinkar pêşengiya serhildana gel dike û Newroz wek roja rizgariyê ji vê zilmê tê hesibandin.",
     "explanationTr": "Efsanede Dehak, omuzlarındaki yılanları beslemek için halka zulmeden zalim bir kraldır; demirci Kawa öncülüğündeki halk ayaklanması onu devirir ve Newroz bu kurtuluş günü sayılır.",
     "promptTr": "Newroz efsanesinde Dehak nasıl biri olarak anlatılır?",
     "answersTr": [
@@ -3670,7 +3670,7 @@
   {
     "id": "offline_2669",
     "category": "Dîrok",
-    "prompt": "Eyûbiyan kîjan bajar ji bo demeke dirêj wek navend bi kar anîne?",
+    "prompt": "Eyûbiyan kîjan bajaran ji bo demeke dirêj wek navend bi kar anîne?",
     "answers": [
       "Pekîn û Tokyo",
       "Madrîd û Lîzbon",
@@ -8919,14 +8919,14 @@
     "category": "Cografya",
     "prompt": "\"Çemê Garzanê\" çi ye?",
     "answers": [
-      "çemê girîng ê ku ji Êlihê derbas dibe û dirijê Dîcleyê",
+      "çemê girîng ê ku ji Êlihê derbas dibe û digihîje Dîcleyê",
       "geliyê bi statuya parka neteweyî ya li Dêrsimê",
       "beşa bilind a bakurê rojavayê erdnîgariya Kurdistanê",
       "nebat û dara tîpîk a çiyayên Kurdistanê"
     ],
-    "correctAnswer": "çemê girîng ê ku ji Êlihê derbas dibe û dirijê Dîcleyê",
+    "correctAnswer": "çemê girîng ê ku ji Êlihê derbas dibe û digihîje Dîcleyê",
     "explanation": "\"Garzan çayı\": Batman'dan geçip Dicle'ye dökülen önemli akarsu.",
-    "explanationKu": "\"Çemê Garzanê\": Çemê girîng ê ku ji Êlihê derbas dibe û dirije Dîcleyê.",
+    "explanationKu": "\"Çemê Garzanê\": çemekî girîng e ku ji Êlihê derbas dibe û digihîje Dîcleyê.",
     "type": "visual",
     "difficulty": 2,
     "imageUrl": "asset://assets/question_images/ava_zape.webp",
@@ -9273,11 +9273,11 @@
     "prompt": "Kovara \"Ronahî\" çi bû?",
     "answers": [
       "rojnameya kurdî ya yekem a ku li Qahîreyê derket",
-      "kovara wêjeyî ya biwêne ya ku li Şamê bi alfabeya latînî derket",
+      "kovara wêjeyî ya bi wêne ya ku li Şamê bi alfabeya latînî derket",
       "kovara ku li Erîvanê bi alfabeya krîlî dihat çapkirin",
       "kovara zanistî ya ku li Bexdayê bi erebî derdiket"
     ],
-    "correctAnswer": "kovara wêjeyî ya biwêne ya ku li Şamê bi alfabeya latînî derket",
+    "correctAnswer": "kovara wêjeyî ya bi wêne ya ku li Şamê bi alfabeya latînî derket",
     "explanation": "\"Ronahî dergisi\": Şam'da Latin alfabesiyle çıkarılan edebi dergi.",
     "type": "multipleChoice",
     "difficulty": 1,
@@ -10503,7 +10503,7 @@
   {
     "id": "offline_10427",
     "category": "Muzîk",
-    "prompt": "\"heyranok\" çi ye?",
+    "prompt": "\"hîran\" çi ye?",
     "answers": [
       "lêdanên birêkûpêk ên ku bingeha muzîkê ne",
       "amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin",
@@ -10511,12 +10511,12 @@
       "dengê bihêz ê ku kurd jê re dibêjin \"şahê dengbêjan\""
     ],
     "correctAnswer": "şêwazeke din a awazê di muzîka gelêrî ya kurdî de",
-    "explanation": "\"heyranok\": Kürt halk müziğinde bir başka ezgi tarzı.",
+    "explanation": "\"hîran\": Kürt halk müziğinde bir başka ezgi tarzı.",
     "type": "multipleChoice",
     "difficulty": 2,
-    "explanationKu": "\"heyranok\": şêwazeke awazê ye di muzîka gelêrî ya kurdî de.",
-    "explanationTr": "\"heyranok\": Kürt halk müziğinde bir başka ezgi tarzı.",
-    "promptTr": "\"heyranok\" nedir?",
+    "explanationKu": "\"hîran\": şêwazeke awazê ye di muzîka gelêrî ya kurdî de.",
+    "explanationTr": "\"hîran\": Kürt halk müziğinde bir başka ezgi tarzı.",
+    "promptTr": "\"hîran\" nedir?",
     "answersTr": [
       "müziğin temelini oluşturan düzenli vuruşlar",
       "Kürt coğrafyasında da çalınan yaylı çalgı",
@@ -11460,7 +11460,7 @@
       "hunermendê ku vegotina devkî bi awaz dike",
       "şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê",
       "sazê rîtmê yê ku bi zirneyê re tê lêxistin",
-      "bêyî amûr û bi avaza xweberî"
+      "bêyî amûr û bi awaza xweberî"
     ],
     "correctAnswer": "hunermendê ku vegotina devkî bi awaz dike",
     "explanation": "\"dengbêj\": ezgili sözlü anlatım yapan sanatçı.",
@@ -12054,11 +12054,11 @@
   {
     "id": "offline_11846",
     "category": "Paradigma",
-    "prompt": "Têgiha \"kantona demokratîk\" tê çi wateyê?",
+    "prompt": "Têgeha \"kantona demokratîk\" tê çi wateyê?",
     "answers": [
       "li seranserê cîhanê bûye sembola azadiya jinê",
       "yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî",
-      "pergaleke civakî ku zilamî serdest dike û jinê tepserî dike",
+      "pergaleke civakî ku zilamî serdest dike û jinê tepser dike",
       "metna damezrîner a hevbeş a kanton û komînan"
     ],
     "correctAnswer": "yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî",
@@ -12754,7 +12754,7 @@
   {
     "id": "offline_12776",
     "category": "Siyaset",
-    "prompt": "Têgeha \"lihevkirina civakî\" çi îfade dike?",
+    "prompt": "Têgeha \"lihevkirina civakî\" tê çi wateyê?",
     "answers": [
       "gihiştina civakê ya biryareke hevbeş ji bo çareseriyeke aştiyane",
       "bikaranîna zimanê zikmakî di qadên fermî û gelemperî de",
@@ -17644,7 +17644,7 @@
   {
     "id": "offline_tf_0139",
     "category": "Paradigma",
-    "prompt": "Rast e an şaş e: \"zanistiya azad\" analîzkirin û hilweşandina sîstema serdest a mêr e li ser civakê.",
+    "prompt": "Rast e an şaş e: \"zanistiya azad\" analîzkirin û hilweşandina sîstema serdest a mêr a li ser civakê ye.",
     "answers": [
       "Rast",
       "Şaş"
@@ -18655,7 +18655,7 @@
   {
     "id": "offline_tf_cog_0050",
     "category": "Cografya",
-    "prompt": "\"Karacadax\" ew rêzeçiyayên ku serekaniya gelek çeman in û bi zozanên xwe tên naskirin e. Ev rast e an şaş e?",
+    "prompt": "\"Karacadax\" rêzeçiyayek e ku serekaniya gelek çeman e û bi zozanên xwe tê naskirin. Ev rast e an şaş e?",
     "answers": [
       "Rast",
       "Şaş"
@@ -19306,14 +19306,14 @@
   {
     "id": "offline_tf_siy_0027",
     "category": "Siyaset",
-    "prompt": "\"garantiya destûrî\" girêdana mafekî ye bi destûra bingehîn da ku bi qanûneke asayî neyê rakirin. Ev rast e an şaş e?",
+    "prompt": "\"garantiya destûrî\" girêdana mafekî bi destûra bingehîn e da ku bi qanûneke asayî neyê rakirin. Ev rast e an şaş e?",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. \"garantiya destûrî\" girêdana mafekî ye bi destûra bingehîn da ku bi qanûneke asayî neyê rakirin. \"dadgehkirina dadperwer\" têgeheke cuda ye: mafê her kesî yê darizandina eşkere, bêalî û di demeke maqûl de ye.",
-    "explanationKu": "Rast e. \"garantiya destûrî\" girêdana mafekî ye bi destûra bingehîn da ku bi qanûneke asayî neyê rakirin. \"dadgehkirina dadperwer\" têgeheke cuda ye: mafê her kesî yê darizandina eşkere, bêalî û di demeke maqûl de ye.",
+    "explanation": "Rast e. \"garantiya destûrî\" girêdana mafekî bi destûra bingehîn e da ku bi qanûneke asayî neyê rakirin. \"dadgehkirina dadperwer\" têgeheke cuda ye: mafê her kesî yê darizandina eşkere, bêalî û di demeke maqûl de ye.",
+    "explanationKu": "Rast e. \"garantiya destûrî\" girêdana mafekî bi destûra bingehîn e da ku bi qanûneke asayî neyê rakirin. \"dadgehkirina dadperwer\" têgeheke cuda ye: mafê her kesî yê darizandina eşkere, bêalî û di demeke maqûl de ye.",
     "explanationTr": "Doğru. \"garantiya destûrî\", bir hakkın sıradan yasayla kaldırılamaması için anayasaya bağlanmasıdır. \"dadgehkirina dadperwer\" ayrı bir kavramdır: herkesin açık, tarafsız ve makul sürede yargılanma hakkıdır.",
     "type": "trueFalse",
     "difficulty": 4,
@@ -19453,14 +19453,14 @@
   {
     "id": "offline_tf_siy_0035",
     "category": "Siyaset",
-    "prompt": "\"meclîsên herêmî\" saziyên biryardar ên tax û gundan in ên herî nêzî jiyana rojane. Ev rast e an şaş e?",
+    "prompt": "\"meclîsên herêmî\" saziyên biryardar ên tax û gundan ên herî nêzî jiyana rojane ne. Ev rast e an şaş e?",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. \"meclîsên herêmî\" saziyên biryardar ên tax û gundan in ên herî nêzî jiyana rojane. Ji bilî vê \"vîna herêmî\" jî heye; ew biryardayîna li ser pirsên herêmê ye ji hêla xelkê wê herêmê ve.",
-    "explanationKu": "Rast e. \"meclîsên herêmî\" saziyên biryardar ên tax û gundan in ên herî nêzî jiyana rojane. Ji bilî vê \"vîna herêmî\" jî heye; ew biryardayîna li ser pirsên herêmê ye ji hêla xelkê wê herêmê ve.",
+    "explanation": "Rast e. \"meclîsên herêmî\" saziyên biryardar ên tax û gundan ên herî nêzî jiyana rojane ne. Ji bilî vê \"vîna herêmî\" jî heye; ew biryardayîna li ser pirsên herêmê ye ji hêla xelkê wê herêmê ve.",
+    "explanationKu": "Rast e. \"meclîsên herêmî\" saziyên biryardar ên tax û gundan ên herî nêzî jiyana rojane ne. Ji bilî vê \"vîna herêmî\" jî heye; ew biryardayîna li ser pirsên herêmê ye ji hêla xelkê wê herêmê ve.",
     "explanationTr": "Doğru. \"meclîsên herêmî\", gündelik yaşama en yakın karar organları olan mahalle ve köy meclisleridir. Bunun yanında \"vîna herêmî\" de vardır; o, bölgeye dair kararların o bölgenin halkınca verilmesidir.",
     "type": "trueFalse",
     "difficulty": 3,
@@ -19726,14 +19726,14 @@
   {
     "id": "offline_tf_siy_0049",
     "category": "Siyaset",
-    "prompt": "Rast e an şaş e: \"hevpeymaniyên demokratîk\" hevkariya hêzên cuda yên civakê ne li ser bernameyeke hevpar.",
+    "prompt": "Rast e an şaş e: \"hevpeymaniyên demokratîk\" hevkariyên hêzên cuda yên civakê ne li ser bernameyeke hevpar.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. \"hevpeymaniyên demokratîk\" hevkariya hêzên cuda yên civakê ne li ser bernameyeke hevpar. Ji heman qadê \"beşdariya siyasî\" jî heye; ew tevlîbûna hemwelatiyan e di biryar û çavdêriya rêveberiyê de.",
-    "explanationKu": "Rast e. \"hevpeymaniyên demokratîk\" hevkariya hêzên cuda yên civakê ne li ser bernameyeke hevpar. Ji heman qadê \"beşdariya siyasî\" jî heye; ew tevlîbûna hemwelatiyan e di biryar û çavdêriya rêveberiyê de.",
+    "explanation": "Rast e. \"hevpeymaniyên demokratîk\" hevkariyên hêzên cuda yên civakê ne li ser bernameyeke hevpar. Ji heman qadê \"beşdariya siyasî\" jî heye; ew tevlîbûna hemwelatiyan e di biryar û çavdêriya rêveberiyê de.",
+    "explanationKu": "Rast e. \"hevpeymaniyên demokratîk\" hevkariyên hêzên cuda yên civakê ne li ser bernameyeke hevpar. Ji heman qadê \"beşdariya siyasî\" jî heye; ew tevlîbûna hemwelatiyan e di biryar û çavdêriya rêveberiyê de.",
     "explanationTr": "Doğru. \"hevpeymaniyên demokratîk\", toplumun farklı güçlerinin ortak program üzerinde iş birliğidir. Aynı alandan \"beşdariya siyasî\" de vardır; o, yurttaşların karara ve yönetimin denetimine katılmasıdır.",
     "type": "trueFalse",
     "difficulty": 4,
@@ -19915,14 +19915,14 @@
   {
     "id": "offline_tf_dir_0002",
     "category": "Dîrok",
-    "prompt": "\"Mîrgeha Babanê\" mîrnişîna kurd bû bi navenda Silêmaniyê ku di sedsala 18em de bihêz bû. Ev rast e an şaş e?",
+    "prompt": "\"Mîrgeha Babanê\" mîrnişîneke kurdî ya bi navenda Silêmaniyê bû ku di sedsala 18an de bihêz bû. Ev rast e an şaş e?",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. \"Mîrgeha Babanê\" mîrnişîna kurd bû bi navenda Silêmaniyê ku di sedsala 18em de bihêz bû.",
-    "explanationKu": "Rast e. \"Mîrgeha Babanê\" mîrnişîna kurd bû bi navenda Silêmaniyê ku di sedsala 18em de bihêz bû.",
+    "explanation": "Rast e. \"Mîrgeha Babanê\" mîrnişîneke kurdî ya bi navenda Silêmaniyê bû ku di sedsala 18an de bihêz bû.",
+    "explanationKu": "Rast e. \"Mîrgeha Babanê\" mîrnişîneke kurdî ya bi navenda Silêmaniyê bû ku di sedsala 18an de bihêz bû.",
     "explanationTr": "Doğru. \"Mîrgeha Babanê\", 18. yüzyılda güçlenen, merkezi Süleymaniye olan Kürt beyliğiydi.",
     "type": "trueFalse",
     "difficulty": 4,
@@ -20104,14 +20104,14 @@
   {
     "id": "offline_tf_dir_0012",
     "category": "Dîrok",
-    "prompt": "Rast e an şaş e: \"Komara Mehabadê\" komara kurdî bû ya kurtedem ku di sala 1946an de li rojhilat hat avakirin.",
+    "prompt": "Rast e an şaş e: \"Komara Mehabadê\" komareke kurdî ya kurtedem bû ku di sala 1946an de li rojhilat hat avakirin.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. \"Komara Mehabadê\" komara kurdî bû ya kurtedem ku di sala 1946an de li rojhilat hat avakirin.",
-    "explanationKu": "Rast e. \"Komara Mehabadê\" komara kurdî bû ya kurtedem ku di sala 1946an de li rojhilat hat avakirin.",
+    "explanation": "Rast e. \"Komara Mehabadê\" komareke kurdî ya kurtedem bû ku di sala 1946an de li rojhilat hat avakirin.",
+    "explanationKu": "Rast e. \"Komara Mehabadê\" komareke kurdî ya kurtedem bû ku di sala 1946an de li rojhilat hat avakirin.",
     "explanationTr": "Doğru. \"Komara Mehabadê\", 1946'da doğuda kurulan kısa ömürlü Kürt cumhuriyetiydi.",
     "type": "trueFalse",
     "difficulty": 3,
@@ -20209,7 +20209,7 @@
   {
     "id": "offline_tf_dir_0017",
     "category": "Dîrok",
-    "prompt": "Rast e an şaş e: \"Şêx Seîd\" serokê tevgera neteweyî bû ya başûr ku bi dehsalan berdewam kir.",
+    "prompt": "Rast e an şaş e: \"Şêx Seîd\" serokê tevgera neteweyî ya başûr bû ku bi dehsalan berdewam kir.",
     "answers": [
       "Rast",
       "Şaş"
@@ -20230,14 +20230,14 @@
   {
     "id": "offline_tf_dir_0018",
     "category": "Dîrok",
-    "prompt": "Mistefa Barzanî serokê tevgera neteweyî ya başûr e ya ku bi dehsalan berdewam kir. Ev rast e an şaş e?",
+    "prompt": "Mistefa Barzanî serokê tevgera neteweyî ya başûr bû ku bi dehsalan berdewam kir. Ev rast e an şaş e?",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. Mistefa Barzanî serokê tevgera neteweyî ya başûr e ya ku bi dehsalan berdewam kir.",
-    "explanationKu": "Rast e. Mistefa Barzanî serokê tevgera neteweyî ya başûr e ya ku bi dehsalan berdewam kir.",
+    "explanation": "Rast e. Mistefa Barzanî serokê tevgera neteweyî ya başûr bû ku bi dehsalan berdewam kir.",
+    "explanationKu": "Rast e. Mistefa Barzanî serokê tevgera neteweyî ya başûr bû ku bi dehsalan berdewam kir.",
     "explanationTr": "Doğru. Mistefa Barzanî, güneyde onlarca yıl süren ulusal hareketin önderidir.",
     "type": "trueFalse",
     "difficulty": 3,
@@ -20566,14 +20566,14 @@
   {
     "id": "offline_tf_can_0004",
     "category": "Çand",
-    "prompt": "Rast e an şaş e: Pêjgeha kurdî kevneşopiya xwarinê ye ku li gorî herêm, avhewa û zaravayê diguhere.",
+    "prompt": "Rast e an şaş e: Pêjgeha kurdî kevneşopiya xwarinê ye ku li gorî herêmê, avhewayê û zaravayê diguhere.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. Pêjgeha kurdî kevneşopiya xwarinê ye ku li gorî herêm, avhewa û zaravayê diguhere.",
-    "explanationKu": "Rast e. Pêjgeha kurdî kevneşopiya xwarinê ye ku li gorî herêm, avhewa û zaravayê diguhere.",
+    "explanation": "Rast e. Pêjgeha kurdî kevneşopiya xwarinê ye ku li gorî herêmê, avhewayê û zaravayê diguhere.",
+    "explanationKu": "Rast e. Pêjgeha kurdî kevneşopiya xwarinê ye ku li gorî herêmê, avhewayê û zaravayê diguhere.",
     "explanationTr": "Doğru. pêjgeha kurdî, bölgeye, iklime ve lehçeye göre değişen yemek geleneğidir.",
     "type": "trueFalse",
     "difficulty": 2,
@@ -21868,14 +21868,14 @@
   {
     "id": "offline_tf_muz_0006",
     "category": "Muzîk",
-    "prompt": "Rast e an şaş e: \"rîtm\" parkirina demê ye ku govend û stran li ser tên avakirin.",
+    "prompt": "Rast e an şaş e: \"rîtm\" parvekirina demê ye ku govend û stran li ser tên avakirin.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. \"rîtm\" parkirina demê ye ku govend û stran li ser tên avakirin.",
-    "explanationKu": "Rast e. \"rîtm\" parkirina demê ye ku govend û stran li ser tên avakirin.",
+    "explanation": "Rast e. \"rîtm\" parvekirina demê ye ku govend û stran li ser tên avakirin.",
+    "explanationKu": "Rast e. \"rîtm\" parvekirina demê ye ku govend û stran li ser tên avakirin.",
     "explanationTr": "Doğru. \"rîtm\", halayın ve şarkının üzerine kurulduğu zaman bölümlenmesidir.",
     "type": "trueFalse",
     "difficulty": 1,

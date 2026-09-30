@@ -54,7 +54,7 @@ class Tr {
 
     // ── Ayarlar ekranı ───────────────────────────────────────────────
     K.secAccount: {'ku': 'Hesab', 'tr': 'Hesap'},
-    K.playerName: {'ku': 'Navê lîstikvan', 'tr': 'Oyuncu adı'},
+    K.playerName: {'ku': 'Navê lîstikvanê', 'tr': 'Oyuncu adı'},
     K.playerNameHint: {'ku': 'Navê xwe binivîse…', 'tr': 'Oyundaki adını gir…'},
     K.secLearning: {'ku': 'Hînbûn', 'tr': 'Öğrenme'},
     K.retakePlacement: {
@@ -2262,15 +2262,15 @@ class Tr {
 
     // ── Ayarlar — kalan metinler ──────────────────────────────────
     K.playerNameLoadFailed: {
-      'ku': 'Navê lîstikvan nehat barkirin.',
+      'ku': 'Navê lîstikvanê nehat barkirin.',
       'tr': 'Oyuncu adı yüklenemedi.',
     },
     K.playerNameUpdated: {
-      'ku': 'Navê lîstikvan hate nûvekirin.',
+      'ku': 'Navê lîstikvanê hate nûvekirin.',
       'tr': 'Oyuncu adı güncellendi.',
     },
     K.playerNameSaveFailed: {
-      'ku': 'Navê lîstikvan nehat tomarkirin.',
+      'ku': 'Navê lîstikvanê nehat tomarkirin.',
       'tr': 'Oyuncu adı kaydedilemedi.',
     },
     K.accountDeleteFailed: {

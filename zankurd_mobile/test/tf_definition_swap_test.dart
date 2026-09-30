@@ -107,14 +107,20 @@ void main() {
     // bu kalıptaydı: 18 Rast + 33 Şaş. Yeni sayılar Rast 114 -> 96, Şaş
     // 114 -> 81 (toplam 177, Rast payı %54,2 — %60 tavanının altında).
     // Birlikte değiştiler, yani emekliye ayırma iki taraftan da yapıldı.
+    // 2026-09-30 beşinci dalga (bağımsız model ailesinin ikinci geçişi,
+    // `retired_question_ids.dart`): tartışmalı kavrama tek "doğru tanım"
+    // dayatan ya da normatif tanım veren 17 Siyaset sorusundan 9'u bu
+    // kalıptaydı: 2 Rast + 7 Şaş. Yeni sayılar Rast 96 -> 94, Şaş 81 -> 74
+    // (toplam 168, Rast payı %56,0 — %60 tavanının altında). Yine iki taraf
+    // birlikte değişti.
     expect(
       rast,
-      96,
+      94,
       reason: 'Oynanabilir Rast sayısı değişti (bkz. yukarıdaki yorum).',
     );
     expect(
       sas,
-      81,
+      74,
       reason: 'Oynanabilir Şaş sayısı değişti (bkz. yukarıdaki yorum).',
     );
   });
