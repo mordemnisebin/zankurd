@@ -18296,7 +18296,7 @@
   {
     "id": "offline_tf_cog_0032",
     "category": "Cografya",
-    "prompt": "Rast e an şaş e: Têgeha \"Sînor\" tê vê wateyê: çemê ku ji Amedê dest pê dike û bi Ferat re Mezopotamyayê xwedî dike.",
+    "prompt": "Rast e an şaş e: Têgeha \"Sînor\" tê vê wateyê: çemê ku di nav Amedê re diherike û bi Ferat re Mezopotamyayê xwedî dike.",
     "answers": [
       "Rast",
       "Şaş"
@@ -18307,7 +18307,7 @@
     "explanationTr": "Hayır — bu tanım \"Çemê Dîcleyê\" kavramına ait; \"Sînor\" şu anlama gelir: iki yeri ya da iki ülkeyi birbirinden ayıran çizgi.",
     "type": "trueFalse",
     "difficulty": 2,
-    "promptTr": "Doğru mu yanlış mı: \"Sînor\" terimi şu anlama gelir: Amed'den doğup Fırat ile Mezopotamya'yı besleyen nehir.",
+    "promptTr": "Doğru mu yanlış mı: \"Sînor\" terimi şu anlama gelir: Amed'in içinden akıp Fırat ile Mezopotamya'yı besleyen nehir.",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -18317,18 +18317,18 @@
   {
     "id": "offline_tf_cog_0033",
     "category": "Cografya",
-    "prompt": "Rast e an şaş e: Têgeha \"Çemê Dîcleyê\" tê vê wateyê: çemê ku ji Amedê dest pê dike û bi Ferat re Mezopotamyayê xwedî dike.",
+    "prompt": "Rast e an şaş e: Têgeha \"Çemê Dîcleyê\" tê vê wateyê: çemê ku di nav Amedê re diherike û bi Ferat re Mezopotamyayê xwedî dike.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Rast",
-    "explanation": "Rast e. \"Çemê Dîcleyê\" tê vê wateyê: çemê ku ji Amedê dest pê dike û bi Ferat re Mezopotamyayê xwedî dike.",
-    "explanationKu": "Rast e. \"Çemê Dîcleyê\" tê vê wateyê: çemê ku ji Amedê dest pê dike û bi Ferat re Mezopotamyayê xwedî dike.",
-    "explanationTr": "Doğru. \"Çemê Dîcleyê\" şu anlama gelir: Amed'den doğup Fırat ile Mezopotamya'yı besleyen nehir.",
+    "explanation": "Rast e. \"Çemê Dîcleyê\" tê vê wateyê: çemê ku di nav Amedê re diherike û bi Ferat re Mezopotamyayê xwedî dike.",
+    "explanationKu": "Rast e. \"Çemê Dîcleyê\" tê vê wateyê: çemê ku di nav Amedê re diherike û bi Ferat re Mezopotamyayê xwedî dike.",
+    "explanationTr": "Doğru. \"Çemê Dîcleyê\" şu anlama gelir: Amed'in içinden akıp Fırat ile Mezopotamya'yı besleyen nehir.",
     "type": "trueFalse",
     "difficulty": 2,
-    "promptTr": "Doğru mu yanlış mı: \"Çemê Dîcleyê\" terimi şu anlama gelir: Amed'den doğup Fırat ile Mezopotamya'yı besleyen nehir.",
+    "promptTr": "Doğru mu yanlış mı: \"Çemê Dîcleyê\" terimi şu anlama gelir: Amed'in içinden akıp Fırat ile Mezopotamya'yı besleyen nehir.",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -18344,9 +18344,9 @@
       "Şaş"
     ],
     "correctAnswer": "Şaş",
-    "explanation": "Na — ev ravekirina \"Çemê Firatê\" e; \"Çemê Dîcleyê\" tê vê wateyê: çemê ku ji Amedê dest pê dike û bi Ferat re Mezopotamyayê xwedî dike.",
-    "explanationKu": "Na — ev ravekirina \"Çemê Firatê\" e; \"Çemê Dîcleyê\" tê vê wateyê: çemê ku ji Amedê dest pê dike û bi Ferat re Mezopotamyayê xwedî dike.",
-    "explanationTr": "Hayır — bu tanım \"Çemê Firatê\" kavramına ait; \"Çemê Dîcleyê\" şu anlama gelir: Amed'den doğup Fırat ile Mezopotamya'yı besleyen nehir.",
+    "explanation": "Na — ev ravekirina \"Çemê Firatê\" e; \"Çemê Dîcleyê\" tê vê wateyê: çemê ku di nav Amedê re diherike û bi Ferat re Mezopotamyayê xwedî dike.",
+    "explanationKu": "Na — ev ravekirina \"Çemê Firatê\" e; \"Çemê Dîcleyê\" tê vê wateyê: çemê ku di nav Amedê re diherike û bi Ferat re Mezopotamyayê xwedî dike.",
+    "explanationTr": "Hayır — bu tanım \"Çemê Firatê\" kavramına ait; \"Çemê Dîcleyê\" şu anlama gelir: Amed'in içinden akıp Fırat ile Mezopotamya'yı besleyen nehir.",
     "type": "trueFalse",
     "difficulty": 3,
     "promptTr": "\"Çemê Dîcleyê\" terimi şöyle tanımlanır: Erzerom dağlarından doğan, Batı Asya'nın en uzun nehri. Bu doğru mu yanlış mı?",

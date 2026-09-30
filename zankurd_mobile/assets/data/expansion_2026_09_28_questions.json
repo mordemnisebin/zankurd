@@ -530,9 +530,9 @@
     ],
     "correctAnswer": "Erebê Şemo",
     "correctAnswerTr": "Erebê Şemo",
-    "explanation": "\"Şivanê Kurmanca\" (1931) ile Kurmancî romanın öncüsü sayılan Erebê Şemo, 1966'da \"Dimdim\" romanını yayımladı. Roman sonradan \"Il castello di Dimdim\" adıyla İtalyancaya da çevrildi.",
-    "explanationKu": "Erebê Şemo, ku bi \"Şivanê Kurmanca\" (1931) wekî damezrînerê romana kurmancî tê naskirin, di sala 1966an de romana \"Dimdim\" weşand. Ev roman paşê bi navê \"Il castello di Dimdim\" bo îtalî jî hat wergerandin.",
-    "explanationTr": "\"Şivanê Kurmanca\" (1931) ile Kurmancî romanın öncüsü sayılan Erebê Şemo, 1966'da \"Dimdim\" romanını yayımladı. Roman sonradan \"Il castello di Dimdim\" adıyla İtalyancaya da çevrildi.",
+    "explanation": "\"Şivanê Kurmanca\" (1935) ile Kurmancî romanın öncüsü sayılan Erebê Şemo, 1966'da \"Dimdim\" romanını yayımladı. Roman sonradan \"Il castello di Dimdim\" adıyla İtalyancaya da çevrildi.",
+    "explanationKu": "Erebê Şemo, ku bi \"Şivanê Kurmanca\" (1935) wekî damezrînerê romana kurmancî tê naskirin, di sala 1966an de romana \"Dimdim\" weşand. Ev roman paşê bi navê \"Il castello di Dimdim\" bo îtalî jî hat wergerandin.",
+    "explanationTr": "\"Şivanê Kurmanca\" (1935) ile Kurmancî romanın öncüsü sayılan Erebê Şemo, 1966'da \"Dimdim\" romanını yayımladı. Roman sonradan \"Il castello di Dimdim\" adıyla İtalyancaya da çevrildi.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Arab Shamilov - Wikipedia",
@@ -4631,22 +4631,22 @@
     "prompt": "Di fîlmê \"Dema Hespên Serxweş\" de, da ku hêstir li ber sermaya zivistana çiyê xwe ragirin, çi didin wan?",
     "promptTr": "\"Sarhoş Atlar Zamanı\" filminde katırların dağın sert kışına dayanabilmesi için onlara ne verilir?",
     "answers": [
-      "Vodka",
-      "Viskî",
-      "Araq",
-      "Şerab"
+      "Çaya germ",
+      "Vexwarina alkolî",
+      "Şîrê germ",
+      "Ava bi xwê"
     ],
     "answersTr": [
-      "Votka",
-      "Viski",
-      "Rakı",
-      "Şarap"
+      "Sıcak çay",
+      "Alkollü içki",
+      "Sıcak süt",
+      "Tuzlu su"
     ],
-    "correctAnswer": "Viskî",
-    "correctAnswerTr": "Viski",
-    "explanation": "Kaçakçılar katırlara, dağın sert kışına dayanabilsinler diye viski içirir; eserin adı da bu sahneye gönderme yapar.",
-    "explanationKu": "Qaçaxçî viskiyê didin hêstiran da ku li ber zivistana dijwar a çiyê xwe ragirin; navê berhemê jî vê dîmenê tîne bîra mirov.",
-    "explanationTr": "Kaçakçılar katırlara, dağın sert kışına dayanabilsinler diye viski içirir; eserin adı da bu sahneye gönderme yapar.",
+    "correctAnswer": "Vexwarina alkolî",
+    "correctAnswerTr": "Alkollü içki",
+    "explanation": "Kaçakçılar katırların dağın sert kışına dayanabilmesi için onlara alkollü içki verir (kaynaklarda kimi zaman viski, kimi zaman votka diye geçer); filmin adı da bu sahneden gelir.",
+    "explanationKu": "Qaçaxçî vexwarina alkolî (çavkanî carinan viskî, carinan jî vodka dibêjin) didin hêstiran da ku li ber zivistana dijwar a çiyê xwe ragirin; navê fîlmê jî ji vê dîmenê tê.",
+    "explanationTr": "Kaçakçılar katırların dağın sert kışına dayanabilmesi için onlara alkollü içki verir (kaynaklarda kimi zaman viski, kimi zaman votka diye geçer); filmin adı da bu sahneden gelir.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "A Time for Drunken Horses - Wikipedia",
