@@ -88,4 +88,12 @@ const questionBankAssets = <String>[
   // kategorisindedir; Kürt diliyle ve kültürüyle ilgili olanlar kendi
   // kategorisinde kalır.
   'assets/data/deepseek_verified_2026_09_30_questions.json',
+  // 2026-09-30: «Bilim ve Düşünce / Zanist û Raman» (iç kimlik Paradigma)
+  // tek bir hareketin öğretisi emekli edilince 42 soruya inmişti; kalan
+  // içerik de alt konuların çoğunu boş bırakıyordu. 40 yeni soru, her biri
+  // açılmış bir web kaynağından (NASA, NIST, WHO, UN, Stanford Encyclopedia
+  // of Philosophy…; URL `sourceReference`da) ChatGPT'yle taslaklandı,
+  // Gemini 3.1 Pro Kurmancîye çevirdi, Grok 4.7 okudu. Konular: temel bilim,
+  // felsefe tarihi, anayasa/BM/insan hakları, Kürt düşünce tarihi.
+  'assets/data/bilim_2026_09_30_questions.json',
 ];

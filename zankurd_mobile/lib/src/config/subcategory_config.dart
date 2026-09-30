@@ -454,6 +454,12 @@ class SubcategoryConfig {
     // Paradigma (Bilim ve Düşünce). Eşleşme yalnız soru metni + doğru
     // cevap üzerinde, Kurmancî yazımla yapılır; eşit puanda listedeki ilk
     // konu kazanır (civak_maf > raman_felsefe > zanist_jiyan).
+    // 2026-09-30: 40 yeni soru (bilim_0001…0040) bu üç konuya gerçek
+    // içerikleriyle bağlandı: BM/anayasa/insan hakları → civak_maf; felsefe
+    // tarihi ve Kürt düşünce tarihi (Şerefname, Mem û Zîn, Hawar alfabesi)
+    // → raman_felsefe; fizik/kimya/biyoloji/sağlık/astronomi → zanist_jiyan.
+    // Yazım uyarısı: alt dize aranır, bu yüzden «ronahiy» (ronahiyê) ve
+    // «dnayê» gibi çekimli biçimler kasıtlı olarak kök hâlinde yazıldı.
     'civak_maf': [
       'demokrasi',
       'demokratîk',
@@ -468,6 +474,19 @@ class SubcategoryConfig {
       'nasname',
       'xwe-rêxistin',
       'maf',
+      'neteweyên yekbûyî',
+      'konseya ewlekariyê',
+      'dîwana dadê',
+      'zagonsazî',
+      'cudabûna hêzan',
+      'destûra bingehîn',
+      'danezana gerdûnî',
+      'mafên mirovan',
+      'penaberî',
+      'peymana mafên zarokan',
+      'peymana penaberan',
+      'perwerde',
+      'darazê',
     ],
     'raman_felsefe': [
       'utopya',
@@ -487,6 +506,21 @@ class SubcategoryConfig {
       'raman',
       'rexne',
       'têgeh',
+      'fîlozof',
+      'sokrat',
+      'platon',
+      'arîstotel',
+      'zenon',
+      'descartes',
+      'immanuel kant',
+      'empîrîzm',
+      'rasyonalîzm',
+      'fêdedarî',
+      'şerefxan',
+      'ehmedê xanî',
+      'celadet',
+      'mela mehmûd',
+      'şerefname',
     ],
     'zanist_jiyan': [
       'zanist',
@@ -506,6 +540,21 @@ class SubcategoryConfig {
       'vîtamîn',
       'teknolojî',
       'enerjî',
+      'gerstêrk',
+      'sîstema rojê',
+      'kîmyewî',
+      'fotosentez',
+      'dnayê',
+      'xane',
+      'organ',
+      'derzî',
+      'antîbiyotîk',
+      'antîjen',
+      'ronahiy',
+      'newton',
+      'cezerî',
+      'hejmara atomê',
+      'valahiyê',
     ],
     // Teknolojî
     'programkirin': ['program', 'kod', 'algorîtma', 'nivîsandina bernameyê'],
