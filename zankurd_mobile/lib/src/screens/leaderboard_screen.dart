@@ -367,6 +367,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     super.dispose();
   }
 
+  bool _listsMe(List<LeaderboardEntry> entries) {
+    final uid = widget.repository.currentUserId;
+    return uid != null && entries.any((e) => e.playerId == uid);
+  }
+
   /// Oturum sahibinin haftalık listedeki sırası; listede yoksa ya da
   /// puanı sıfırsa null.
   ///
@@ -580,10 +585,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             ),
           );
         }
-        final entries = snap.data ?? stale ?? [];
+        final fetched = snap.data ?? stale ?? [];
         // Sunucuya ulaşılamıyorken boş liste "henüz puan yok" demek
         // değildir: sıralama yalnız okunamadı (2026-09-27 simülatör turu).
-        if (entries.isEmpty && RemoteAvailability.socialLockedIn(context)) {
+        if (fetched.isEmpty && RemoteAvailability.socialLockedIn(context)) {
           return _page(
             context,
             ku,
@@ -595,6 +600,16 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             ),
           );
         }
+        // 2026-09-30 canlı: sıralama YALNIZ biten çevrimiçi odalardan
+        // toplanır (`get_leaderboard`: room_players x rooms). Bot düellosu
+        // ve günün soruları cihazda oynanır, oda açmaz; oyuncu ikisini de
+        // oynadığı hâlde satırı "0 puan" görünüyordu ve 0 puanlı satır
+        // sıralama değil gürültüdür (Ay sekmesinde dört ad sıfırla
+        // sıralanıyordu). Puanı olmayanlar listeye girmez; hiç kimse
+        // puanlı değilse boş durum ("Henüz puan yok", yarışa yönlendirir)
+        // dürüst olandır. Sıra sunucu sırasıdır ve sıfırlar sondadır, yani
+        // süzmek kalanların sırasını kaydırmaz.
+        final entries = fetched.where((e) => e.totalScore > 0).toList();
         if (entries.isEmpty) {
           return _page(
             context,
@@ -635,7 +650,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
           // Liderlik yalnız ilk 10'u getiriyor; oyuncu listede yoksa
           // kendi sırasını hiç göremiyordu (2026-07-22 UX denetimi). Satır
           // listenin altına sabitlenir — her zaman ekranda (2026-07-25).
-          pinned: _myRank(entries) == null ? _buildMyRankRow(ku) : null,
+          //
+          // Oyuncunun kendi satırı bu dönemde listeden yalnız 0 puanla
+          // süzüldüyse sabit satır da çizilmez: `getPlayerStats` toplam XP
+          // ve tüm profiller içindeki sırayı verir (dönem puanı değil);
+          // "0 puan" yerine XP'yi göstermek aynı ekranda iki ayrı sayıyı
+          // aynı etiketle sunmak olurdu.
+          pinned: _myRank(entries) == null && !_listsMe(fetched)
+              ? _buildMyRankRow(ku)
+              : null,
         );
       },
     );
@@ -967,9 +990,15 @@ class _RankRow extends StatelessWidget {
   /// Oyu…" diye kesiliyordu). Avatar rengi ham addan türer (değişmez).
   String get _name => PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
 
+  /// Alt metindeki sayı `get_leaderboard`ın `count(distinct room_id)`
+  /// değeridir: oyuncunun BİTMİŞ çevrimiçi yarış (oda) sayısı. Birim
+  /// eskiden "oda / ode" idi; oyuncu için bu bir yer değil oyun sayısı
+  /// olduğundan sözlükteki "yarış / pêşbirk" ([K.raceWord]) yazılır
+  /// (2026-09-30 canlı: "1 ode" anlaşılmıyordu). Bot düellosu ve günün
+  /// soruları oda açmadığı için bu sayıya girmez.
   String get _meta => entry.showcaseTitle != null
       ? '${entry.showcaseTitle} · ${entry.bestStreak} ${Tr.forKu(K.streakUnit, isKu)}'
-      : '${entry.roomsPlayed} ${Tr.forKu(K.roomUnit, isKu)}'
+      : '${entry.roomsPlayed} ${Tr.forKu(K.raceWord, isKu).toLowerCase()}'
             ' · ${entry.bestStreak} ${Tr.forKu(K.streakUnit, isKu)}';
 
   @override

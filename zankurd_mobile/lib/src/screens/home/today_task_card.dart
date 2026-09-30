@@ -81,7 +81,15 @@ class TodayTaskCard extends StatelessWidget {
       firstSession ? K.firstSessionBadge : K.bugununGorevi,
       isKu,
     );
-    final label = started ? Tr.forKu(K.devamEt, isKu) : Tr.forKu(K.start, isKu);
+    // Hedef dolduysa "Devam et" yalan olur: devam edilecek bir şey kalmadı
+    // (2026-09-30 canlı: 10/10 elması yanında "Devam et"). Kart yine yeni
+    // bir tur açar; bu yüzden düğme "Tekrar oyna" der.
+    final reached = total > 0 && done >= total;
+    final label = reached
+        ? Tr.forKu(K.playAgain, isKu)
+        : started
+        ? Tr.forKu(K.devamEt, isKu)
+        : Tr.forKu(K.start, isKu);
 
     return KeyedSubtree(
       key: const ValueKey('home-daily-task'),

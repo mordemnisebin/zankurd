@@ -191,7 +191,7 @@ class _PlayerTagChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final label = 'ZK-$tag';
+    final label = tag.toUpperCase().startsWith('ZK-') ? tag : 'ZK-$tag';
     return Semantics(
       button: true,
       label: Tr.forKu(K.playerTagSemantics, ku, {'tag': label}),

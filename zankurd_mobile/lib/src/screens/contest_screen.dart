@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../data/achievement_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
@@ -31,14 +32,59 @@ class ContestScreen extends StatefulWidget {
   State<ContestScreen> createState() => _ContestScreenState();
 }
 
-class _ContestScreenState extends State<ContestScreen> {
+class _ContestScreenState extends State<ContestScreen> with RouteAware {
   late Future<Contest?> _contestFuture;
   bool _starting = false;
+
+  /// Günün soruları turu bugün bitirildi mi (bkz.
+  /// [AchievementStore.dailyQuizDoneOn]).
+  ///
+  /// 2026-09-30 canlı: tur bitip sayfaya dönülünce kart yine boş "Bugün"
+  /// dairesi ve "Başla" gösteriyordu. Not: Öğren'deki "Günün dersi" kartı
+  /// AYRI bir kavramdır (bugün doğru cevaplanan soru sayısı, her modda
+  /// sayılır); bu bayrak yalnız bu sayfanın turunu anlatır.
+  bool _doneToday = false;
+  ModalRoute<dynamic>? _route;
 
   @override
   void initState() {
     super.initState();
     _loadContest();
+    _loadDoneToday();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route is PageRoute<dynamic> && !identical(route, _route)) {
+      if (_route != null) appPageRouteObserver.unsubscribe(this);
+      _route = route;
+      appPageRouteObserver.subscribe(this, route);
+    }
+  }
+
+  @override
+  void dispose() {
+    appPageRouteObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  /// Quiz ekranı sonuç ekranını `pushReplacement` ile açtığı için
+  /// `await Navigator.push(QuizScreen)` sonuç yazılmadan tamamlanır
+  /// (bkz. `app_shell.dart` `didPopNext`); gerçek dönüş buradadır.
+  @override
+  void didPopNext() => _loadDoneToday();
+
+  Future<void> _loadDoneToday() async {
+    try {
+      final store = await AchievementStore.load();
+      final done = store.dailyQuizDoneOn(DateTime.now());
+      if (!mounted || done == _doneToday) return;
+      setState(() => _doneToday = done);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'contest done flag');
+    }
   }
 
   void _loadContest() {
@@ -153,13 +199,35 @@ class _ContestScreenState extends State<ContestScreen> {
                 ),
               );
             }
+            // 2026-09-30 canlı: kart ve iki çip ekranın üst yarısında
+            // kalıyor, alt yarı bomboştu. İçerik artık kalan alanın
+            // üst üçte birinde durur (optik denge); uzun içerik ya da büyük
+            // yazıda alan yetmezse sayfa yine kayar.
+            //
+            // `SliverFillRemaining(hasScrollBody: false)` kullanılamaz:
+            // içerik bir `LayoutBuilder` taşıyor (geniş ekran düzeni) ve
+            // o iç boyut hesabını desteklemiyor.
             return SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
-              sliver: SliverToBoxAdapter(
-                child: _ContestContent(
-                  contest: contest,
-                  starting: _starting,
-                  onStart: () => _startQuiz(contest),
+              sliver: SliverLayoutBuilder(
+                builder: (context, sliver) => SliverToBoxAdapter(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: sliver.remainingPaintExtent,
+                    ),
+                    child: Align(
+                      alignment: const Alignment(0, -0.6),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: _ContestContent(
+                          contest: contest,
+                          doneToday: _doneToday,
+                          starting: _starting,
+                          onStart: () => _startQuiz(contest),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             );
@@ -175,9 +243,11 @@ class _ContestContent extends StatelessWidget {
     required this.contest,
     required this.starting,
     required this.onStart,
+    this.doneToday = false,
   });
 
   final Contest contest;
+  final bool doneToday;
   final bool starting;
   final VoidCallback onStart;
 
@@ -209,15 +279,21 @@ class _ContestContent extends StatelessWidget {
       accent: SahneTokens.of(context).race,
       icon: AppIcons.champagneGlasses,
       tokens: [
+        // Bitirilmiş günde rozet "Bugün" değil "Tamamlandı" der ve düğme
+        // "Tekrar oyna"dır; tur yine oynanabilir (davranış değişmez).
         ArenaStatusChip(
-          status: ArenaStatus.live,
-          label: context.t(K.contestToday),
+          status: doneToday ? ArenaStatus.completed : ArenaStatus.live,
+          label: context.t(
+            doneToday ? K.streakDayStateCompleted : K.contestToday,
+          ),
           onSolid: true,
           role: SahneRole.race,
         ),
       ],
       action: GeometricGradientButton(
-        label: starting ? (context.t(K.preparing)) : (context.t(K.startEvent)),
+        label: starting
+            ? (context.t(K.preparing))
+            : (context.t(doneToday ? K.playAgain : K.startEvent)),
         icon: AppIcons.play,
         isLoading: starting,
         onPressed: starting ? null : onStart,
