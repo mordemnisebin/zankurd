@@ -39,10 +39,16 @@ void main() {
   test('hiçbir soru Dicle\'nin Amed\'den doğduğunu söylemez', () {
     for (final q in [...offline, ...expansion]) {
       final text = jsonEncode(q);
-      expect(text.contains('ji Amedê dest pê dike'), isFalse,
-          reason: '${q['id']}: Dicle Amed\'den doğmaz, oradan geçer');
-      expect(text.contains("Amed'den doğ"), isFalse,
-          reason: '${q['id']}: Dicle Amed\'den doğmaz, oradan geçer');
+      expect(
+        text.contains('ji Amedê dest pê dike'),
+        isFalse,
+        reason: '${q['id']}: Dicle Amed\'den doğmaz, oradan geçer',
+      );
+      expect(
+        text.contains("Amed'den doğ"),
+        isFalse,
+        reason: '${q['id']}: Dicle Amed\'den doğmaz, oradan geçer',
+      );
     }
   });
 
@@ -51,8 +57,11 @@ void main() {
       for (final entry in q.entries) {
         final v = entry.value;
         if (v is String && v.contains('Şivanê Kurmanca')) {
-          expect(v.contains('1931'), isFalse,
-              reason: '${q['id']}.${entry.key}: 1931 Rusça baskıdır');
+          expect(
+            v.contains('1931'),
+            isFalse,
+            reason: '${q['id']}.${entry.key}: 1931 Rusça baskıdır',
+          );
         }
       }
     }
