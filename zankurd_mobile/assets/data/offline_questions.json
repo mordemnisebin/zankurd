@@ -13112,11 +13112,11 @@
       "mafê parastinê li dadgehên serbixwe û bêalî"
     ],
     "correctAnswer": "mafê birêvebirina budçe û xizmetên herêmî bi xwe",
-    "explanation": "\"idari özerklik\": mafê birêvebirina budçe û xizmetên herêmî bi xwe.",
+    "explanation": "Xweseriya îdarî tê wateya ku herêmek di nav heman dewletê de karên xwe yên rojane, wek budçe û xizmetên giştî, bi rêvebiriya xwe ya herêmî birêve dibe. Ev ne serxwebûn e; herêm beşek ji dewletê dimîne.",
     "type": "multipleChoice",
     "difficulty": 2,
-    "explanationTr": "\"idari özerklik\": yerel bütçe ve hizmetleri kendi yönetme hakkı.",
-    "explanationKu": "\"idari özerklik\": mafê birêvebirina budçe û xizmetên herêmî bi xwe.",
+    "explanationTr": "İdari özerklik, bir bölgenin aynı devlet içinde bütçe ve kamu hizmetleri gibi günlük işlerini kendi yerel yönetimiyle yürütmesi demektir. Bu bağımsızlık değildir; bölge devletin bir parçası olarak kalır.",
+    "explanationKu": "Xweseriya îdarî tê wateya ku herêmek di nav heman dewletê de karên xwe yên rojane, wek budçe û xizmetên giştî, bi rêvebiriya xwe ya herêmî birêve dibe. Ev ne serxwebûn e; herêm beşek ji dewletê dimîne.",
     "promptTr": "\"idari özerklik\" nasıl anlaşılmalıdır?",
     "answersTr": [
       "yerel bütçe ve hizmetleri kendi yönetme hakkı",
