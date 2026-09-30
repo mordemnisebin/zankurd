@@ -97,7 +97,10 @@ class CategoryVisuals {
     'Paradigma': AppIcons.brain,
     'Teknolojî': AppIcons.mobileScreen,
     'Sînema': AppIcons.clapperboard,
-    'Cîhan': AppIcons.globe,
+    // Cografya küre; Cîhan (dünya/genel bilgi) pusula. İkisi aynı küreyse
+    // profil istatistiği, oda/düello konu seçici ve sıralamada ayırt
+    // edilemezdi (ana sayfa karosu silüetle ayrışıyordu, bu yüzeyler değil).
+    'Cîhan': AppIcons.compass,
   };
 
   static const Map<String, String> _imagePaths = {

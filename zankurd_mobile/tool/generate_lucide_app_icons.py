@@ -96,6 +96,7 @@ MAPPING = {
     "cloud": "cloud",
     "coins": "coins",
     "comment": "message-circle",
+    "compass": "compass",  # Cîhan: Cografya `globe` ile aynı görünmesin
     "copy": "copy",
     "dice": "dice-5",  # tek zar
     "doorOpen": "door-open",
