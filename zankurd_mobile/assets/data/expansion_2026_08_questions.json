@@ -3320,7 +3320,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Ortak ağda paketler aynı ortamdan geçer; şifresiz bir bağlantıda aradaki biri içeriği okuyabilir. HTTPS ve VPN bu riski büyük ölçüde kapatır.",
-    "explanationKu": "Di tora giştî de paket di heman derdorê re derbas dibin; di girêdaneke bêşîfre de kesekî di navberê de dikare naverokê bixwîne. HTTPS û VPN vê rîskê gelekî kêm dikin.",
+    "explanationKu": "Di tora giştî de paket di heman derdorê re derbas dibin; di girêdaneke bêşîfre de kesek di navberê de dikare naverokê bixwîne. HTTPS û VPN vê rîskê gelekî kêm dikin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Teknolojiya bingehîn — zanyariya perwerdehiyê",
@@ -4340,7 +4340,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Gerilim, akım ile direncin çarpımına eşittir; direnç sabitken akımı iki katına çıkarmak gerilimi de iki katına çıkarır. Bölmeli biçimler birimleri tutturmaz, karesi alınmış biçim ise güç hesabından karışmıştır.",
-    "explanationKu": "Voltaj wekheviya encama lêkdana cereyan û berxwedanê ye; dema berxwedan sabît be, du qatkirina cereyanê voltajê jî du qat dike. Formên dabeşkirî xelet in, forma bi kare jî bi hesabê hêzê re hatiye tevlîhevkirin.",
+    "explanationKu": "Voltaj bi encama lêkdana cereyan û berxwedanê wekhev e; dema berxwedan sabît be, du qatkirina cereyanê voltajê jî du qat dike. Formên dabeşkirî xelet in, forma bi R² jî bi hesabê hêzê re hatiye tevlîhevkirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Dahêner û makîne — zanyariya perwerdehiyê",
