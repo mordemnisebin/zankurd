@@ -29,7 +29,7 @@ class ImageCreditsScreen extends StatefulWidget {
 }
 
 class _ImageCreditsScreenState extends State<ImageCreditsScreen> {
-  List<_Credit>? _credits;
+  List<ImageCredit>? _credits;
   Object? _loadError;
 
   @override
@@ -42,14 +42,12 @@ class _ImageCreditsScreenState extends State<ImageCreditsScreen> {
     try {
       final raw = await rootBundle.loadString('assets/data/image_credits.json');
       final decoded = jsonDecode(raw) as Map<String, dynamic>;
-      final parsed =
-          decoded.entries
-              .map(
-                (entry) =>
-                    _Credit.fromJson(entry.value as Map<String, dynamic>),
-              )
-              .toList()
-            ..sort((a, b) => a.title.compareTo(b.title));
+      final parsed = decoded.entries
+          .map(
+            (entry) =>
+                ImageCredit.fromJson(entry.value as Map<String, dynamic>),
+          )
+          .toList();
       if (mounted) {
         setState(() {
           _credits = parsed;
@@ -69,7 +67,15 @@ class _ImageCreditsScreenState extends State<ImageCreditsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final credits = _credits;
+    final ku = context.isKu;
+    // Sıra görünen başlığa göre; dil değişince başlık da değiştiği için
+    // sıralama burada, yüklemede değil.
+    final credits = _credits == null
+        ? null
+        : ([..._credits!]..sort(
+            (a, b) =>
+                _sortKey(a.heading(ku)).compareTo(_sortKey(b.heading(ku))),
+          ));
     final t = SahneTokens.of(context);
     // 2026-09-29 Şahnê: B iskeleti (başlık çubukta); künye tek bir liste
     // grubunda, her eser bir satır. Hata durumu Şaş metni + ikonla.
@@ -133,25 +139,71 @@ class _ImageCreditsScreenState extends State<ImageCreditsScreen> {
   }
 }
 
-class _Credit {
-  const _Credit({
+/// Türkçe/Kurmancî alfabe sırası için kaba anahtar.
+///
+/// `String.compareTo` kod birimine bakar: "ğ" (U+011F) "s"den sonra
+/// geldiği için "Ağrı Dağı" "Asurilerin"in ardına düşüyordu. Özel harfler
+/// temel harfin hemen ardına yerleştirilir (ç→c~, ı→h~ …); tam bir
+/// harmanlama değil, kısa bir liste için yeterli.
+String _sortKey(String text) {
+  const map = {
+    'ç': 'c~',
+    'ğ': 'g~',
+    'ı': 'h~',
+    'ö': 'o~',
+    'ş': 's~',
+    'ü': 'u~',
+    'ê': 'e~',
+    'î': 'i~',
+    'û': 'u~~',
+  };
+  final out = StringBuffer();
+  for (final ch in text.toLowerCase().split('')) {
+    out.write(map[ch] ?? ch);
+  }
+  return out.toString();
+}
+
+/// Künye satırının verisi; başlık seçimi test edilebilsin diye açık.
+@visibleForTesting
+class ImageCredit {
+  const ImageCredit({
     required this.title,
     required this.artist,
     required this.license,
     required this.source,
+    this.captionKu = '',
+    this.captionTr = '',
   });
 
-  factory _Credit.fromJson(Map<String, dynamic> json) => _Credit(
+  factory ImageCredit.fromJson(Map<String, dynamic> json) => ImageCredit(
     title: (json['title'] as String?) ?? '',
     artist: (json['artist'] as String?) ?? '',
     license: (json['license'] as String?) ?? '',
     source: (json['source'] as String?) ?? '',
+    captionKu: (json['caption_ku'] as String?) ?? '',
+    captionTr: (json['caption_tr'] as String?) ?? '',
   );
 
   final String title;
   final String artist;
   final String license;
   final String source;
+
+  /// Görselin ne gösterdiği, oyuncunun dilinde.
+  ///
+  /// Başlık satırı Wikimedia dosya adıydı; temizlense de İngilizce kalıyordu
+  /// ("Great Zab 02", "Tandoor") ve Kurmancî/Türkçe ekranda yabancı bir
+  /// liste gibi duruyordu (2026-09-30 simülatör denetimi). Dosya adı
+  /// silinmedi: eserin kendi adı olarak altta küçük satırda durur.
+  final String captionKu;
+  final String captionTr;
+
+  /// Satırın başlığı: dildeki alt yazı, yoksa temizlenmiş dosya adı.
+  String heading(bool ku) {
+    final caption = ku ? captionKu : captionTr;
+    return caption.isNotEmpty ? caption : displayTitle;
+  }
 
   /// Okunabilir başlık.
   ///
@@ -186,11 +238,13 @@ class _Credit {
 class _CreditTile extends StatelessWidget {
   const _CreditTile({required this.credit});
 
-  final _Credit credit;
+  final ImageCredit credit;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    final heading = credit.heading(context.isKu);
+    final workTitle = credit.displayTitle;
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(
         SahneSpace.x4,
@@ -201,10 +255,11 @@ class _CreditTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            credit.displayTitle,
-            style: SahneType.bodyStrong.copyWith(color: t.tx),
-          ),
+          Text(heading, style: SahneType.bodyStrong.copyWith(color: t.tx)),
+          if (workTitle != heading) ...[
+            const SizedBox(height: SahneSpace.x1),
+            Text(workTitle, style: SahneType.caption.copyWith(color: t.tx2)),
+          ],
           const SizedBox(height: SahneSpace.x1),
           Text(
             '${credit.artist} · ${credit.license}',

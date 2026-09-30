@@ -25,6 +25,29 @@ void main() {
     expect(find.text(Tr.of(K.imageCredits, AppLanguage.tr)), findsOneWidget);
   });
 
+  test('satır başlığı oyuncunun dilindeki alt yazıdır', () {
+    // Başlık eskiden İngilizce Wikimedia dosya adıydı ("Lake Van (East)
+    // 01"); dosya adı artık altta küçük satırda, eserin adı olarak durur.
+    final credit = ImageCredit.fromJson(const {
+      'title': 'Lake_Van_(East)_01.jpg',
+      'artist': 'EvgenyGenkin',
+      'license': 'CC BY 2.5',
+      'source':
+          'https://commons.wikimedia.org/wiki/File:Lake_Van_(East)_01.jpg',
+      'caption_ku': 'Gola Wanê',
+      'caption_tr': 'Van Gölü',
+    });
+    expect(credit.heading(true), 'Gola Wanê');
+    expect(credit.heading(false), 'Van Gölü');
+    expect(credit.displayTitle, 'Lake Van (East) 01');
+
+    // Alt yazısız eski kayıt temizlenmiş dosya adına düşer, boş kalmaz.
+    final bare = ImageCredit.fromJson(const {
+      'title': 'Tandoor_(4310722187).jpg',
+    });
+    expect(bare.heading(true), 'Tandoor (4310722187)');
+  });
+
   test('boş ve hata metinleri tabloda durur', () {
     expect(Tr.keys, contains(K.imageCreditsEmpty));
     expect(Tr.keys, contains(K.imageCreditsFailed));
