@@ -35,12 +35,14 @@ void main() {
   ///
   /// 2026-09-29 (birleştirme): `Color(0x` 4 — üçü Google giriş düğmesinin
   /// markalı yüzey/kenar/mürekkebi, biri profildeki Google işareti.
+  /// 2026-09-30: `LinearGradient(` 2 → 1 (simülatör düzeltmelerinde biri
+  /// ekrandan kalktı; kalan, şık karosunun seçim dolgusu).
   const ceilings = <String, int>{
     'Color(0x': 4,
     'BorderRadius.circular(': 0,
     'bulanık BoxShadow': 0,
     'Colors.white + Agir/marka dolgusu': 0,
-    'LinearGradient(': 2,
+    'LinearGradient(': 1,
   };
 
   final screens = <File>[
