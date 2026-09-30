@@ -160,6 +160,8 @@ class QuizOptionTile extends StatelessWidget {
               const SizedBox(width: SahneSpace.x3),
               Expanded(
                 child: ConstrainedBox(
+                  // a11y-tap-target: noninteractive — şık metninin hizalama
+                  // tabanı; dokunma hedefi tüm şık kutusudur (en az 52).
                   constraints: const BoxConstraints(minHeight: 36),
                   child: Align(
                     alignment: AlignmentDirectional.centerStart,

@@ -377,6 +377,8 @@ class _AnswerLine extends StatelessWidget {
               : SahneShape.withSide(SahneShape.m, ring, width: SahneRing.r2),
         ),
         child: ConstrainedBox(
+          // a11y-tap-target: noninteractive — cevap satırı; salt görsel,
+          // dokunma hedefi değil.
           constraints: const BoxConstraints(minHeight: 44),
           child: Padding(
             padding: const EdgeInsets.symmetric(

@@ -1777,6 +1777,8 @@ class _StatTile extends StatelessWidget {
           vertical: SahneSpace.x2,
         ),
         child: ConstrainedBox(
+          // a11y-tap-target: noninteractive — istatistik karosu; salt
+          // görsel, dokunma hedefi değil.
           constraints: const BoxConstraints(minHeight: 40),
           child: Row(
             children: [
