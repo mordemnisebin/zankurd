@@ -58,9 +58,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   List<LeaderboardEntry>? _lastEntries;
   List<Friend>? _lastFriends;
 
-  /// Oyuncunun kendi istatistikleri; ilk 10'da değilse sırasını yine de
+  /// Oyuncunun kendi satırı; ilk 10'da değilse sırasını yine de
   /// gösterebilmek için ayrıca yüklenir.
-  Future<LeaderboardEntry?>? _myStatsFuture;
+  ///
+  /// 2026-09-30: sonuç SEÇİLİ DÖNEMİN (Gün/Hafta/Ay) sıralamasından gelir
+  /// (`getMyLeaderboardRank`), toplam XP'den değil — liste de aynı dönem
+  /// süzgeciyle çiziliyor.
+  Future<LeaderboardEntry?>? _myRankFuture;
 
   /// Bekleyen arkadaşlık isteği sayısı — başlıktaki rozet için.
   ///
@@ -100,9 +104,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     _loadData();
   }
 
-  Future<LeaderboardEntry?> _loadMyStats() async {
+  /// Seçili dönemin sıralamasındaki kendi satırı.
+  ///
+  /// `getMyLeaderboardRank` yalnız biten çevrimiçi odalardan gelen dönem
+  /// puanını döndürür (`get_leaderboard` ile aynı süzgeç); `getPlayerStats`
+  /// toplam XP veriyordu ve aynı ekranda iki ayrı sayı aynı etiketle
+  /// sunuluyordu. Dönemde puanı yoksa null — sabit satır çizilmez.
+  Future<LeaderboardEntry?> _loadMyRank() async {
     try {
-      return await widget.repository.getPlayerStats();
+      return await widget.repository.getMyLeaderboardRank(_period);
     } catch (_) {
       return null;
     }
@@ -179,9 +189,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   }
 
   /// Oyuncu ilk 10'da değilse en alta sabitlenen kendi sırası.
+  ///
+  /// Satır, seçili dönemin (Gün/Hafta/Ay) puanını ve dönem içindeki sırasını
+  /// gösterir — liste satırlarıyla aynı `get_leaderboard` süzgecinden gelir
+  /// (`getMyLeaderboardRank`), toplam XP'den değil.
   Widget _buildMyRankRow(bool ku) {
     return FutureBuilder<LeaderboardEntry?>(
-      future: _myStatsFuture,
+      future: _myRankFuture,
       builder: (context, snapshot) {
         final me = snapshot.data;
         // Veri yokken hiçbir şey çizilmez — sarmalayıcı da dahil. Aksi
@@ -189,7 +203,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         // görünmez bir satır için dikey alan harcanır.
         // Puan kapısı `_myRank` ile aynı sebeple burada da gerekli: aksi
         // hâlde banner susarken bu sabit satır sıfır puanla "#1" demeye
-        // devam eder, yani yanlış iddia yer değiştirmiş olur.
+        // devam eder, yani yanlış iddia yer değiştirmiş olur. Dönem puanı
+        // olmayan oyuncuya toplam XP de basılmaz (2026-09-30).
         if (me == null || me.rank <= 0 || me.totalScore <= 0) {
           return const SizedBox.shrink();
         }
@@ -214,7 +229,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   }
 
   void _loadData() {
-    _myStatsFuture = _loadMyStats();
+    _myRankFuture = _loadMyRank();
     unawaited(_refreshPendingRequests());
     if (_tabController.index == 3) {
       setState(() {
@@ -651,9 +666,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
           // kendi sırasını hiç göremiyordu (2026-07-22 UX denetimi). Satır
           // listenin altına sabitlenir — her zaman ekranda (2026-07-25).
           //
-          // Oyuncunun kendi satırı bu dönemde listeden yalnız 0 puanla
-          // süzüldüyse sabit satır da çizilmez: `getPlayerStats` toplam XP
-          // ve tüm profiller içindeki sırayı verir (dönem puanı değil);
+          // Satırın içeriği 2026-09-30'dan beri `getMyLeaderboardRank`: seçili
+          // dönemin sıralaması, `get_leaderboard` ile aynı süzgeçten. Dönemde
+          // puanı yoksa (listeden 0 puanla süzüldüyse ya da hiç oynamadıysa)
+          // RPC boş döner ve sabit satır çizilmez; toplam XP basılmaz —
           // "0 puan" yerine XP'yi göstermek aynı ekranda iki ayrı sayıyı
           // aynı etiketle sunmak olurdu.
           pinned: _myRank(entries) == null && !_listsMe(fetched)

@@ -267,6 +267,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<LeaderboardEntry?> getMyLeaderboardRank(
+    LeaderboardPeriod period,
+  ) async {
+    // Sahte depoda biten çevrimiçi oda yok; `loadLeaderboard` de boş
+    // liste verdiği için dönemin sıralamasında satır yoktur. Sabit satır
+    // ancak gerçekten dönem puanı geldiğinde çizilir (2026-09-30).
+    return null;
+  }
+
+  @override
   Future<List<String>> loadCategories() async => categories;
 
   @override

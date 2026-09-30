@@ -554,6 +554,52 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  /// Sabitlenen "benim sıram" satırının dönem (Gün/Hafta/Ay) karşılığı.
+  ///
+  /// `get_my_leaderboard_rank` yalnız `auth.uid()` satırını, `get_leaderboard`
+  /// ile BİREBİR aynı süzgeçten döndürür (biten çevrimiçi odalar, dönem
+  /// puanı > 0) — yani satırda gördüğün sayı, listedeki sayıdır.
+  ///
+  /// Hata ya da eksik RPC `null` döner: eski `leaderboard_entries`
+  /// görünümüne (toplam XP) DÜŞÜLMEZ, satır hiç çizilmez. Dönem puanı
+  /// doğrulanamıyorsa yanlış iddia sessizce tercih edilir (2026-09-30).
+  @override
+  Future<LeaderboardEntry?> getMyLeaderboardRank(
+    LeaderboardPeriod period,
+  ) async {
+    try {
+      if (currentUserId == null) return null;
+
+      final rows = await client.rpc<List<dynamic>>(
+        'get_my_leaderboard_rank',
+        params: {'p_days': period.days},
+      );
+      if (rows.isEmpty) return null;
+
+      final row = rows.first as Map<String, dynamic>;
+      final rank = (row['rank'] as num?)?.toInt() ?? 0;
+      final totalScore = (row['total_score'] as num?)?.toInt() ?? 0;
+      if (rank <= 0 || totalScore <= 0) return null;
+
+      return LeaderboardEntry(
+        rank: rank,
+        playerId: row['player_id'] as String? ?? '',
+        displayName: row['display_name'] as String? ?? 'Oyuncu',
+        totalScore: totalScore,
+        bestStreak: (row['best_streak'] as num?)?.toInt() ?? 0,
+        roomsPlayed: (row['rooms_played'] as num?)?.toInt() ?? 0,
+        avatarIcon: row['avatar_icon'] as String?,
+        avatarColor: row['avatar_color'] as String?,
+        avatarUrl: row['avatar_url'] as String?,
+        avatarFrame: row['avatar_frame'] as String?,
+        showcaseTitle: row['showcase_title'] as String?,
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'getMyLeaderboardRank failed');
+      return null;
+    }
+  }
+
   @override
   Future<List<String>> loadCategories() async {
     return _offline.loadCategories();

@@ -155,6 +155,19 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   Future<void> deleteMyAccount();
   Future<LeaderboardEntry?> getPlayerStats();
 
+  /// Sıralama ekranının altına sabitlenen "benim sıram" satırının SEÇİLİ
+  /// DÖNEME (Gün/Hafta/Ay) ait karşılığı.
+  ///
+  /// `getPlayerStats()` toplam XP'yi (`profiles.xp`) ve TÜM profiller
+  /// içindeki sırayı verir; liste ise `get_leaderboard(p_days)` ile yalnız
+  /// biten çevrimiçi odalardan, dönem süzgeciyle gelir. Aynı ekranda iki
+  /// ayrı sayıyı aynı etiketle sunmamak için sabit satır bu metodu kullanır
+  /// (2026-09-30).
+  ///
+  /// Dönemde puanı yoksa, oturum yoksa ya da RPC yok/hata veriyorsa null
+  /// döner — satır çizilmez, eski (toplam XP) yola düşülmez.
+  Future<LeaderboardEntry?> getMyLeaderboardRank(LeaderboardPeriod period);
+
   /// Öğrenme/tek kişilik akışların çevrimdışı kategori listesi.
   Future<List<String>> loadCategories();
 
