@@ -40,6 +40,7 @@ import '../widgets/learning_goal_chooser.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'image_credits_screen.dart';
 import 'paywall_screen.dart';
+import '../widgets/dialog_action_pair.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -702,13 +703,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text(context.t(K.deleteConfirmTitle)),
         content: Text(context.t(K.deleteConfirmBody)),
         actions: [
-          OutlinedButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(context.t(K.cancel)),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(context.t(K.continueAction)),
+          DialogActionPair(
+            cancel: OutlinedButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(context.t(K.cancel)),
+            ),
+            confirm: FilledButton(
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: Text(context.t(K.continueAction)),
+            ),
           ),
         ],
       ),
@@ -795,15 +798,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
               actions: [
-                OutlinedButton(
-                  onPressed: () => Navigator.pop(dialogContext, false),
-                  child: Text(context.t(K.cancel)),
-                ),
-                FilledButton(
-                  onPressed: canDelete
-                      ? () => Navigator.pop(dialogContext, true)
-                      : null,
-                  child: Text(context.t(K.deleteForever)),
+                DialogActionPair(
+                  cancel: OutlinedButton(
+                    onPressed: () => Navigator.pop(dialogContext, false),
+                    child: Text(context.t(K.cancel)),
+                  ),
+                  confirm: FilledButton(
+                    onPressed: canDelete
+                        ? () => Navigator.pop(dialogContext, true)
+                        : null,
+                    child: Text(context.t(K.deleteForever)),
+                  ),
                 ),
               ],
             );

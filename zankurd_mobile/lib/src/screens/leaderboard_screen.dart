@@ -20,6 +20,7 @@ import '../widgets/sahne/sahne.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../widgets/dialog_action_pair.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({
@@ -289,14 +290,16 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
           }),
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(dialogContext.t(K.cancel)),
-          ),
-          FilledButton(
-            key: const ValueKey('report-profile-confirm'),
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(dialogContext.t(K.reportAction)),
+          DialogActionPair(
+            cancel: TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(dialogContext.t(K.cancel)),
+            ),
+            confirm: FilledButton(
+              key: const ValueKey('report-profile-confirm'),
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: Text(dialogContext.t(K.reportAction)),
+            ),
           ),
         ],
       ),

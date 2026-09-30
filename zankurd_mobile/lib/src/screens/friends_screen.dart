@@ -15,6 +15,7 @@ import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
 import 'room_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../widgets/dialog_action_pair.dart';
 
 /// Arkadaş listesi, oyuncu arama ve istek yönetimi ekranı.
 class FriendsScreen extends StatefulWidget {
@@ -348,51 +349,53 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 ],
               ),
               actions: [
-                TextButton(
-                  onPressed: submitting
-                      ? null
-                      : () => Navigator.of(dialogContext).pop(),
-                  child: Text(context.t(K.cancel)),
-                ),
-                // Diyaloğun tek birincil eylemi: Agir, koyu metin. Eski
-                // düğme turuncu üstüne beyaz yazıyordu (2,35:1).
-                SahneButton.primary(
-                  key: const ValueKey('referral-code-submit'),
-                  label: context.t(K.referralApplyAction),
-                  arrow: false,
-                  onPressed: submitting
-                      ? null
-                      : () async {
-                          final code = controller.text.trim();
-                          if (code.isEmpty) return;
-                          setDialogState(() => submitting = true);
-                          final result = await widget.repository
-                              .redeemReferralCode(code);
-                          if (!dialogContext.mounted) return;
-                          Navigator.of(dialogContext).pop();
-                          if (!mounted) return;
-                          if (result.isSuccess) {
-                            HapticFeedback.mediumImpact();
-                            _showMessage(context.t(K.referralCodeApplied));
-                          } else {
-                            final msg = switch (result.status) {
-                              ReferralStatus.ownCode => context.t(
-                                K.cannotUseOwnCode,
-                              ),
-                              ReferralStatus.alreadyRedeemed => context.t(
-                                K.referralAlreadyUsed,
-                              ),
-                              ReferralStatus.notFound => context.t(
-                                K.invalidReferralCode,
-                              ),
-                              ReferralStatus.notVerified => context.t(
-                                K.referralGuestBlocked,
-                              ),
-                              _ => context.t(K.searchFailed),
-                            };
-                            _showMessage(msg);
-                          }
-                        },
+                DialogActionPair(
+                  cancel: TextButton(
+                    onPressed: submitting
+                        ? null
+                        : () => Navigator.of(dialogContext).pop(),
+                    child: Text(context.t(K.cancel)),
+                  ),
+                  // Diyaloğun tek birincil eylemi: Agir, koyu metin. Eski
+                  // düğme turuncu üstüne beyaz yazıyordu (2,35:1).
+                  confirm: SahneButton.primary(
+                    key: const ValueKey('referral-code-submit'),
+                    label: context.t(K.referralApplyAction),
+                    arrow: false,
+                    onPressed: submitting
+                        ? null
+                        : () async {
+                            final code = controller.text.trim();
+                            if (code.isEmpty) return;
+                            setDialogState(() => submitting = true);
+                            final result = await widget.repository
+                                .redeemReferralCode(code);
+                            if (!dialogContext.mounted) return;
+                            Navigator.of(dialogContext).pop();
+                            if (!mounted) return;
+                            if (result.isSuccess) {
+                              HapticFeedback.mediumImpact();
+                              _showMessage(context.t(K.referralCodeApplied));
+                            } else {
+                              final msg = switch (result.status) {
+                                ReferralStatus.ownCode => context.t(
+                                  K.cannotUseOwnCode,
+                                ),
+                                ReferralStatus.alreadyRedeemed => context.t(
+                                  K.referralAlreadyUsed,
+                                ),
+                                ReferralStatus.notFound => context.t(
+                                  K.invalidReferralCode,
+                                ),
+                                ReferralStatus.notVerified => context.t(
+                                  K.referralGuestBlocked,
+                                ),
+                                _ => context.t(K.searchFailed),
+                              };
+                              _showMessage(msg);
+                            }
+                          },
+                  ),
                 ),
               ],
             );

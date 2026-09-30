@@ -116,7 +116,7 @@ class AchievementStore {
       id: AchievementIds.dailyQuizFive,
       titleKu: '5 pirsên rojê',
       titleTr: 'Günün soruları x5',
-      descriptionKu: 'Te Pirsên rojê pênc caran qedandin.',
+      descriptionKu: 'Te pirsên rojê pênc caran qedandin.',
       descriptionTr: 'Günün sorularını 5 kez tamamladın.',
       icon: AppIcons.bolt,
     ),

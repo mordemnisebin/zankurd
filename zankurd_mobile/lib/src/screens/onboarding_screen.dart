@@ -538,8 +538,6 @@ class _OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-
     // 2026-09-25 iPhone SE denetimi: kısa ekranda ve XXXL yazıda kahraman
     // yerini metne verir. Kahraman ürünün bir örneğidir; başlık, gövde ve
     // maddeler içeriktir. Yüksekliği < 300pt sınırı içinde kalır
@@ -627,38 +625,84 @@ class _OnboardingPage extends StatelessWidget {
               // (büyük yazı, uzun çeviri) bant kalan yüksekliğe sınırlanır ve
               // aşağıdan kayar. `auth_onboarding_test` bunu SE + %200 yazıda
               // sözleşme olarak kilitler.
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Semantics(
-                      header: true,
-                      child: Text(
-                        data.title,
-                        style: (compact ? SahneType.headline : SahneType.title)
-                            .copyWith(color: t.tx),
-                      ),
-                    ),
-                    const SizedBox(height: SahneSpace.x2),
-                    Text(
-                      data.body,
-                      style: SahneType.body.copyWith(color: t.tx2),
-                    ),
-                    if (data.bullets.isNotEmpty) ...[
-                      SizedBox(height: compact ? SahneSpace.x3 : SahneSpace.x4),
-                      for (final bullet in data.bullets) ...[
-                        _BulletRow(text: bullet, role: data.role),
-                        const SizedBox(height: SahneSpace.x2),
-                      ],
-                    ],
-                  ],
-                ),
-              ),
+              child: _OnboardingTextBand(data: data, compact: compact),
             ),
           ],
         );
       },
+    );
+  }
+}
+
+/// Sayfanın metin bandı: başlık, gövde ve maddeler. İçerik kalan yüksekliğe
+/// sığmazsa aşağı kayar.
+///
+/// 2026-09-30 simülatör: Ekstra Büyük yazıda (2.35x, iPhone 17e) ikinci
+/// maddenin son satırı bandın alt kenarında yarıda kesik kalıyordu ve band
+/// kayabildiği hâlde hiçbir şey kaydığını söylemiyordu; kullanıcı kesik
+/// metni "kaydırılamıyor" diye okudu. Taşan bandın yanında artık her zaman
+/// görünen ince bir kaydırma çubuğu durur (taşma yoksa çizilmez); metin
+/// yine kesilmez, kaydırılınca tamamı görünür. Bekçi:
+/// `test/sim_son_2026_09_30_test.dart`.
+class _OnboardingTextBand extends StatefulWidget {
+  const _OnboardingTextBand({required this.data, required this.compact});
+
+  final _OnboardingData data;
+  final bool compact;
+
+  @override
+  State<_OnboardingTextBand> createState() => _OnboardingTextBandState();
+}
+
+class _OnboardingTextBandState extends State<_OnboardingTextBand> {
+  final _scroll = ScrollController();
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final data = widget.data;
+    final compact = widget.compact;
+    return RawScrollbar(
+      key: const ValueKey('onboarding-text-scrollbar'),
+      controller: _scroll,
+      thumbVisibility: true,
+      thickness: 4,
+      minThumbLength: 32,
+      thumbColor: t.tx3,
+      child: SingleChildScrollView(
+        controller: _scroll,
+        // Çubuk metnin üstüne binmesin.
+        padding: const EdgeInsetsDirectional.only(end: SahneSpace.x2),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Semantics(
+              header: true,
+              child: Text(
+                data.title,
+                style: (compact ? SahneType.headline : SahneType.title)
+                    .copyWith(color: t.tx),
+              ),
+            ),
+            const SizedBox(height: SahneSpace.x2),
+            Text(data.body, style: SahneType.body.copyWith(color: t.tx2)),
+            if (data.bullets.isNotEmpty) ...[
+              SizedBox(height: compact ? SahneSpace.x3 : SahneSpace.x4),
+              for (final bullet in data.bullets) ...[
+                _BulletRow(text: bullet, role: data.role),
+                const SizedBox(height: SahneSpace.x2),
+              ],
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

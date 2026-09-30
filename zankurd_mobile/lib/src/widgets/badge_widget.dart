@@ -64,8 +64,14 @@ class BadgeWidget extends StatelessWidget {
           vertical: SahneSpace.x2,
         ),
         // Dar ızgara hücresinde büyük yazı taşmasın: içerik küçülerek sığar.
+        //
+        // 2026-09-30 simülatör: içerik hücrede DİKEY ORTALANIYORDU; adı iki
+        // satır olan hücrenin ("30 roj li pey hev") içeriği yüksek olduğu
+        // için ikonu komşularından yukarıda duruyordu. Üste yaslanır: ikonlar
+        // aynı yatay çizgide, ad ve kilit altta akar.
         child: FittedBox(
           fit: BoxFit.scaleDown,
+          alignment: Alignment.topCenter,
           child: SizedBox(
             width: 104,
             child: Column(

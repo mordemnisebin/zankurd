@@ -37,16 +37,18 @@ class _QuizExitDialog extends StatelessWidget {
       // en çok oraya gittiği için varsayılan gibi duruyordu
       // (2026-07-25 canlı denetimi).
       actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(true),
-          style: TextButton.styleFrom(
-            foregroundColor: Theme.of(context).colorScheme.error,
+        DialogActionPair(
+          cancel: TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
+            child: Text(context.t(K.leaveAction)),
           ),
-          child: Text(context.t(K.leaveAction)),
-        ),
-        FilledButton(
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(context.t(K.continueAction)),
+          confirm: FilledButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(context.t(K.continueAction)),
+          ),
         ),
       ],
     );
@@ -92,13 +94,15 @@ class _QuizReportDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(context.t(K.cancel)),
-        ),
-        FilledButton(
-          onPressed: () => Navigator.of(context).pop(controller.text),
-          child: Text(context.t(K.sendAction)),
+        DialogActionPair(
+          cancel: TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(context.t(K.cancel)),
+          ),
+          confirm: FilledButton(
+            onPressed: () => Navigator.of(context).pop(controller.text),
+            child: Text(context.t(K.sendAction)),
+          ),
         ),
       ],
     );

@@ -49,6 +49,7 @@ import 'quiz_screen.dart';
 import 'review_screen.dart';
 import 'room_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../widgets/dialog_action_pair.dart';
 
 /// Seri kararının sonucu.
 ///
@@ -195,13 +196,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             }),
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(false),
-              child: Text(context.t(K.cancel)),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.of(ctx).pop(true),
-              child: Text(context.t(K.continueAction)),
+            DialogActionPair(
+              cancel: TextButton(
+                onPressed: () => Navigator.of(ctx).pop(false),
+                child: Text(context.t(K.cancel)),
+              ),
+              confirm: FilledButton(
+                onPressed: () => Navigator.of(ctx).pop(true),
+                child: Text(context.t(K.continueAction)),
+              ),
             ),
           ],
         ),
@@ -646,14 +649,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           context.t(K.streakFreezeAsk, {'cost': '$_streakFreezeCost'}),
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(context.t(K.streakLetGo)),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(
-              context.t(K.streakFreezeAction, {'cost': '$_streakFreezeCost'}),
+          DialogActionPair(
+            cancel: TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: Text(context.t(K.streakLetGo)),
+            ),
+            confirm: FilledButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              child: Text(
+                context.t(K.streakFreezeAction, {'cost': '$_streakFreezeCost'}),
+              ),
             ),
           ),
         ],
