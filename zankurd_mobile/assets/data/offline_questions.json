@@ -5950,24 +5950,24 @@
     "prompt": "\"hewran\" çi ye?",
     "answers": [
       "\"Nû\" (nû) + \"roj\" (roj)",
-      "çêkirina kevneşopî ya konê ji mûyî",
+      "kincê dirêj ê ku li ser kincên din tê lixistin",
       "Girêdanên civak û malbatê",
       "hatina biharê û nûbûn"
     ],
-    "correctAnswer": "çêkirina kevneşopî ya konê ji mûyî",
+    "correctAnswer": "kincê dirêj ê ku li ser kincên din tê lixistin",
     "explanation": "\"hewran\": diğer giysilerin üstüne giyilen uzun üstlük (aba).",
     "type": "multipleChoice",
     "difficulty": 5,
-    "explanationKu": "\"hewran\": kincê hewrî yê dirêj ê ku li ser kincên din tê wergirtin.",
+    "explanationKu": "\"hewran\": kincê dirêj ê ku li ser kincên din tê lixistin.",
     "explanationTr": "\"hewran\": diğer giysilerin üstüne giyilen uzun üstlük (aba).",
     "promptTr": "\"Hewran\" nedir?",
     "answersTr": [
       "\"Nû\" (yeni) + \"roj\" (gün)",
-      "kıldan geleneksel çadır yapımı",
+      "diğer giysilerin üstüne giyilen uzun giysi",
       "Toplum ve aile bağları",
       "baharın gelişi ve yenilenme"
     ],
-    "correctAnswerTr": "kıldan geleneksel çadır yapımı"
+    "correctAnswerTr": "diğer giysilerin üstüne giyilen uzun giysi"
   },
   {
     "id": "offline_6067",
@@ -9450,25 +9450,25 @@
     "category": "Edebiyat",
     "prompt": "\"Feqiyê Teyran\" kî bû?",
     "answers": [
-      "helbestvanê kurd ê navdar ê ku bi zimanê teyran dinivîsî",
+      "helbestvanê kurd ê navdar ê ku bi zimanê teyran dizanibû",
       "destana gelêrî ya ku bingeha Mem û Zînê ye",
       "helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî",
       "çîrok, destan û vegotinên dengbêjan"
     ],
-    "correctAnswer": "helbestvanê kurd ê navdar ê ku bi zimanê teyran dinivîsî",
-    "explanation": "\"Feqiyê Teyran\": kuşların diliyle yazan meşhur Kürt şair.",
+    "correctAnswer": "helbestvanê kurd ê navdar ê ku bi zimanê teyran dizanibû",
+    "explanation": "\"Feqiyê Teyran\": kuşların dilini bilen meşhur Kürt şair.",
     "type": "multipleChoice",
     "difficulty": 5,
     "explanationKu": "\"Feqiyê Teyran\": helbestvanê navdar ê kurd ê ku bi zimanê teyran dizanibû.",
-    "explanationTr": "\"Feqiyê Teyran\": kuşların diliyle yazan meşhur Kürt şair.",
+    "explanationTr": "\"Feqiyê Teyran\": kuşların dilini bilen meşhur Kürt şair.",
     "promptTr": "\"Feqiyê Teyran\" kimdi?",
     "answersTr": [
-      "kuşların diliyle yazan ünlü Kürt şair",
+      "kuşların dilini bilen ünlü Kürt şair",
       "Mem û Zîn'in temelini oluşturan halk destanı",
       "Mevlid-i Şerif'i Kürtçe yazan klasik şair",
       "dengbêjlerin hikâye, destan ve anlatıları"
     ],
-    "correctAnswerTr": "kuşların diliyle yazan ünlü Kürt şair"
+    "correctAnswerTr": "kuşların dilini bilen ünlü Kürt şair"
   },
   {
     "id": "offline_9405",

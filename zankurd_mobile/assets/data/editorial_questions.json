@@ -4015,7 +4015,7 @@
     "difficulty": 5,
     "id": "edit_dirok_0023",
     "category": "Dîrok",
-    "prompt": "Di dîroka nûjen de \"Kurdên Sor\" (Sûriye) bi çi têkildar e?",
+    "prompt": "Di dîroka nûjen de kurdên Sûriyeyê yên wekî \"ecanîb\" û \"mektûm\" hatine dabeşkirin bi çi têkildar in?",
     "answers": [
       "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962an",
       "Tevgera çandî ya kurdan li Sûriyeyê di salên 1930î de",
@@ -4033,7 +4033,7 @@
       "sourceReference": "The Cambridge History of the Kurds (2021); Encyclopaedia Iranica — Kurds; Şerefxanê Bidlîsî, Şerefname (1597)",
       "qualityVersion": 2
     },
-    "promptTr": "Modern tarihte \"Kurdên Sor\" (Suriye) neyle ilgilidir?",
+    "promptTr": "Modern tarihte Suriye'de \"ecanib\" (yabancı) ve \"mektum\" (kayıtsız) diye sınıflandırılan Kürtler neyle ilgilidir?",
     "answersTr": [
       "1962 sayımı sonrası Suriye Kürtlerinin vatansızlığıyla",
       "1930'larda Suriye'deki Kürt kültür hareketiyle",
@@ -6585,9 +6585,9 @@
       "Destaneke evînî ya gelêrî"
     ],
     "correctAnswer": "Destaneke evînî ya gelêrî",
-    "explanation": "Zembîlfiroş, yoksul bir âşığın hikâyesidir; sözlü ve yazılı olarak yayılmıştır.",
-    "explanationKu": "Zembîlfiroş çîroka evîndarekî hejar e; hem bi devkî hem bi nivîskî belav bûye.",
-    "explanationTr": "Zembîlfiroş, yoksul bir âşığın hikâyesidir; sözlü ve yazılı olarak yayılmıştır.",
+    "explanation": "Zembîlfiroş, prensliği bırakıp sepet satan zâhid bir dervişin, kendisine âşık olan Xatûn'un aşkını reddetmesinin hikâyesidir; sözlü ve yazılı olarak yayılmıştır.",
+    "explanationKu": "Zembîlfiroş çîroka dervîşekî zahid e ku dev ji mîrektiyê berda, zembîl firot û evîna Xatûnê red kir; hem bi devkî hem bi nivîskî belav bûye.",
+    "explanationTr": "Zembîlfiroş, prensliği bırakıp sepet satan zâhid bir dervişin, kendisine âşık olan Xatûn'un aşkını reddetmesinin hikâyesidir; sözlü ve yazılı olarak yayılmıştır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6746,9 +6746,9 @@
       "Dîcle"
     ],
     "correctAnswer": "Dîcle",
-    "explanation": "Botan Çayı Hakkâri'den gelir ve Dicle'ye karışır.",
-    "explanationKu": "Çemê Botan ji Colemêrgê tê û digihîje Dîcleyê.",
-    "explanationTr": "Botan Çayı Hakkâri'den gelir ve Dicle'ye karışır.",
+    "explanation": "Botan Çayı, Van–Hakkâri sınırındaki yaylalardan doğar ve Dicle'ye karışır.",
+    "explanationKu": "Çemê Botan ji zozanên sînorê Wan û Colemêrgê dest pê dike û digihîje Dîcleyê.",
+    "explanationTr": "Botan Çayı, Van–Hakkâri sınırındaki yaylalardan doğar ve Dicle'ye karışır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",

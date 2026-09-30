@@ -369,7 +369,7 @@
     "prompt": "Xeta Şikesteka Rojhilatê Anatolyayê (EAF) li kîjan herêmê bi Xeta Şikesteka Bakurê Anatolyayê (NAF) re digihîje hev?",
     "promptTr": "Doğu Anadolu Fay Hattı (DAF) ile Kuzey Anadolu Fay Hattı (KAF) hangi tektonik kavşak noktasında birleşir?",
     "answers": [
-      "Li herêma Qereyazî û Gola Wanê",
+      "Li herêma Qirlîovayê (Çewlîg)",
       "Li Deşta Herranê li başûr",
       "Li zozanên Cizîrê û Botanê",
       "Li newala Çemê Dîcleyê li Amedê"
@@ -380,11 +380,11 @@
       "Cizre ve Botan kireçtaşı yaylasında",
       "Diyarbakır Dicle taşkın ovasında"
     ],
-    "correctAnswer": "Li herêma Qereyazî û Gola Wanê",
+    "correctAnswer": "Li herêma Qirlîovayê (Çewlîg)",
     "correctAnswerTr": "Karlıova düğüm noktasında (Bingöl)",
     "explanation": "Kuzey Anadolu Fayı (KAF) ile Doğu Anadolu Fayı (DAF) Bingöl'ün Karlıova ilçesinde kesişerek ana tektonik kavşağı oluşturur.",
     "explanationTr": "Kuzey Anadolu Fayı (KAF) ile Doğu Anadolu Fayı (DAF) Bingöl'ün Karlıova ilçesinde kesişerek ana tektonik kavşağı oluşturur.",
-    "explanationKu": "Her du şikestekên sereke yên erdhejê li Qereyazî / Gola Wanê nêzîkî hev dibin û li Qirlîovayê digihîjin hev.",
+    "explanationKu": "Şikesteka Bakurê Anatolyayê û şikesteka Rojhilatê li herêma Qirlîovayê ya Çewlîgê digihîjin hev; ev nuqteya sereke ya tektonîk e.",
     "type": "multipleChoice",
     "metadata": {
       "reviewStatus": "approved",
@@ -2383,21 +2383,21 @@
     "promptTr": "Şam'da çıkan \"Hawar\" (1932) dergisi ile Erivan'da çıkan \"Rêya Teze\" (1930) arasındaki temel alfabe ve yazı sistemi farkı neydi?",
     "answers": [
       "Hawar tenê bi zimanê fransî derket, Rêya Teze tenê bi zimanê ermenî bû",
-      "Hawar bi alfabeya latînî derket, Rêya Teze bi kîrîlî ya wê serdemê",
+      "Her du jî bi alfabeya latînî derketin, lê Rêya Teze guhertoyeke cuda ya Sovyetî bi kar anî",
       "Hawar tenê kovareke wêneyî bû, Rêya Teze qet tiştek çap nedikir",
       "Her du weşanan jî tenê alfabeya erebî ya kevn a osmanî bi kar dianîn"
     ],
     "answersTr": [
       "Hawar yalnızca Fransızca yayımlandı; Rêya Teze ise tamamen Ermenice olarak basıldı",
-      "Hawar günümüz Kürt Latin alfabesini kurup yaygınlaştırdı; Rêya Teze ise Sovyetler'de Kiril/farklı alfabeler kullandı",
+      "İkisi de Latin alfabesiyle yayımlandı, ancak Rêya Teze farklı bir Sovyet versiyonu kullandı",
       "Hawar yalnızca resimli bir bültendi; Rêya Teze ise hiçbir zaman matbaada basılmadı",
       "Her iki yayın da yalnızca klasik Arap harfli Osmanlı imlasını ve dizgisini kullanmıştır"
     ],
-    "correctAnswer": "Hawar bi alfabeya latînî derket, Rêya Teze bi kîrîlî ya wê serdemê",
-    "correctAnswerTr": "Hawar günümüz Kürt Latin alfabesini kurup yaygınlaştırdı; Rêya Teze ise Sovyetler'de Kiril/farklı alfabeler kullandı",
-    "explanation": "Celadet Bedirxan Hawar ile bugünkü 31 harfli Kürt-Latin alfabesini standartlaştırmıştır; Sovyet Kürtleri ise Rêya Teze'de önce Marogulov Latin, sonra Kiril alfabesi kullanmıştır.",
-    "explanationTr": "Celadet Bedirxan Hawar ile bugünkü 31 harfli Kürt-Latin alfabesini standartlaştırmıştır; Sovyet Kürtleri ise Rêya Teze'de önce Marogulov Latin, sonra Kiril alfabesi kullanmıştır.",
-    "explanationKu": "Kovara Hawarê bi pêşengiya Celadet Bedirxan alfabeya kurdî ya latînî ava kir û kire bingeha edebiyata nûjen.",
+    "correctAnswer": "Her du jî bi alfabeya latînî derketin, lê Rêya Teze guhertoyeke cuda ya Sovyetî bi kar anî",
+    "correctAnswerTr": "İkisi de Latin alfabesiyle yayımlandı, ancak Rêya Teze farklı bir Sovyet versiyonu kullandı",
+    "explanation": "Celadet Bedirxan Hawar ile bugünkü 31 harfli Kürt-Latin alfabesini standartlaştırmıştır; Rêya Teze ise 1930–1937 arasında Îsahak Marogulov ve Ereb Şemo'nun hazırladığı Sovyet Latin alfabesiyle çıkmış, 1955'te Kiril alfabesiyle yeniden başlamıştır.",
+    "explanationTr": "Celadet Bedirxan Hawar ile bugünkü 31 harfli Kürt-Latin alfabesini standartlaştırmıştır; Rêya Teze ise 1930–1937 arasında Îsahak Marogulov ve Ereb Şemo'nun hazırladığı Sovyet Latin alfabesiyle çıkmış, 1955'te Kiril alfabesiyle yeniden başlamıştır.",
+    "explanationKu": "Celadet Bedirxan di Hawarê de alfabeya kurdî ya latînî standard kir; Rêya Teze di 1930–1937an de bi guhertoyeke latînî ya Sovyetî ya ku Îsahak Marogûlov û Ereb Şemo amade kiribû derket, paşê di 1955an de bi kîrîlî dest pê kir.",
     "type": "multipleChoice",
     "metadata": {
       "reviewStatus": "approved",
