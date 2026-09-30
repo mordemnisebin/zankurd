@@ -340,35 +340,28 @@ void main() {
     // `isPlayableWithHiddenAnswer` süzgeci burada sunucudadır.
     //
     // 2026-09-30: istemcinin gizli listesi boşaldı (Paradigma, Siyaset,
-    // Teknolojî yeniden açıldı) ama bu göçün gövdesindeki süzgeç canlıda
-    // hâlâ aynı üç adı eliyor. İkisi artık birebir aynı DEĞİL. Bekçi bunu
-    // sessiz bırakmaz: süzgecin bugünkü içeriğini sabitler; sırayla düelloyu
-    // üç kategoriye açacak `create or replace function` göçü yazıldığında bu
-    // beklenti (ve `hiddenCategoryIds` ile karşılaştırması) birlikte
-    // güncellenmeli.
-    test(
-      'sunucu düello süzgeci hâlâ 2026-09-28 listesini eliyor (istemci boş)',
-      () {
-        final body = functionBody('start_async_duel');
-        final match = RegExp(r'c\.name not in \(([^)]*)\)').firstMatch(body);
-        expect(match, isNotNull, reason: 'gizli kategori süzgeci yok');
-        final names = RegExp(
-          r"'([^']+)'",
-        ).allMatches(match!.group(1)!).map((m) => m.group(1)!).toSet();
-        expect(names, {'Paradigma', 'Siyaset', 'Teknolojî'});
-        expect(
-          hiddenCategoryIds,
-          isEmpty,
-          reason:
-              'İstemci gizli listesi doluysa süzgeç listesiyle birebir eşleşmeli',
-        );
-        expect(
-          body,
-          contains('join public.categories c on c.id = q.category_id'),
-        );
-        expect(body, contains('and c.is_active = true'));
-      },
-    );
+    // Teknolojî yeniden açıldı). 2026-09-28 gövdesi o üç adı sabit liste
+    // olarak eliyordu; 2026-09-30_async_duel_all_categories.sql aynı gövdeyi
+    // o satır olmadan yeniden kurdu (canlıda uygulandı). Görünürlüğün tek
+    // kaynağı artık `categories.is_active`: bekçi hem eski dosyanın tarihî
+    // listesini hem yeni gövdenin listesiz olduğunu sabitler.
+    test('sırayla düello görünürlüğü yalnız is_active ile süzer', () {
+      final old = functionBody('start_async_duel');
+      final match = RegExp(r'c\.name not in \(([^)]*)\)').firstMatch(old);
+      expect(match, isNotNull, reason: '2026-09-28 tarihî gövdesi değişmiş');
+
+      final current = File(
+        'supabase/2026-09-30_async_duel_all_categories.sql',
+      ).readAsStringSync();
+      final body = current.substring(current.indexOf('CREATE OR REPLACE'));
+      expect(body, isNot(contains('c.name not in')));
+      expect(body, contains('and c.is_active = true'));
+      expect(
+        body,
+        contains('join public.categories c on c.id = q.category_id'),
+      );
+      expect(hiddenCategoryIds, isEmpty);
+    });
 
     test('yalnız şıkları eksiksiz, doğru şıkkı geçerli metin soruları', () {
       final body = functionBody('start_async_duel');

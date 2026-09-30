@@ -1,9 +1,9 @@
 /// Gizli kategoriler sunucuda da devre dışı — göç sözleşmesi bekçisi.
 ///
 /// 2026-09-30: ürün sahibi üç kategoriyi yeniden açtı; istemci listesi boş,
-/// kapatma göçü canlıda uygulanmış durumda, açma göçü
-/// (`2026-09-30_hidden_categories_reopen.sql`) yazıldı ama henüz
-/// uygulanmadı. Bu dosya iki göçün de sözleşmesini korur.
+/// kapatma göçü ve açma göçü (`2026-09-30_hidden_categories_reopen.sql`)
+/// ikisi de canlıda uygulandı (açma 2026-09-30). Bu dosya iki göçün de
+/// sözleşmesini korur.
 ///
 /// ## Kusur
 ///
@@ -123,9 +123,8 @@ void main() {
       expect(reopen, contains('Postflight'));
     });
 
-    // Göç yazıldı ama canlıya UYGULANMADI. Kullanıcı uygulayınca bu satır
-    // ✅'e dönmeli ve bu test güncellenmeli: kayıt ile canlı ayrışmasın.
-    test('applied.md satırı var ve uygulanmadı (⏳) olarak duruyor', () {
+    // Göç 2026-09-30'da canlıya uygulandı; kayıt ile canlı ayrışmasın.
+    test('applied.md satırı var ve uygulandı (✅) olarak duruyor', () {
       final applied = File('supabase/applied.md').readAsStringSync();
       final row = applied
           .split('\n')
@@ -134,8 +133,8 @@ void main() {
             orElse: () => '',
           );
       expect(row, isNotEmpty, reason: 'applied.md satırı eksik');
-      expect(row, contains('⏳'));
-      expect(row, isNot(contains('✅')));
+      expect(row, contains('✅'));
+      expect(row, isNot(contains('⏳')));
     });
   });
 }
