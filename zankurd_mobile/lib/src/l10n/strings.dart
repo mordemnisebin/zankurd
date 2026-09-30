@@ -144,8 +144,10 @@ class Tr {
       'ku': 'Parastina xweber a zincîrê û piştgiriya ZanKurdê',
       'tr': "Otomatik seri koruması ve ZanKurd'a destek",
     },
-    K.premiumBadgeOn: {'ku': 'VEKIRÎ', 'tr': 'AKTİF'},
-    K.premiumBadgeOff: {'ku': 'DEST PÊ BIKE', 'tr': 'BAŞLA'},
+    // 2026-09-30 canlı: rozetler büyük harfle kayıtlıydı ve ekrandaki tek
+    // bağıran etiketti (metin kararı: büyük harf yok).
+    K.premiumBadgeOn: {'ku': 'Vekirî', 'tr': 'Aktif'},
+    K.premiumBadgeOff: {'ku': 'Dest pê bike', 'tr': 'Başla'},
     K.secAbout: {'ku': 'Derbarê sepanê', 'tr': 'Uygulama hakkında'},
     K.howToPlay: {'ku': 'Çawa tê lîstin?', 'tr': 'Nasıl oynanır?'},
     K.privacy: {'ku': 'Nepenî', 'tr': 'Gizlilik'},
@@ -1721,9 +1723,16 @@ class Tr {
     },
     K.boardLoadFailed: {'ku': 'Tablo nehat barkirin', 'tr': 'Yüklenemedi'},
     K.noScoresYet: {'ku': 'Hîn pûan tune', 'tr': 'Henüz puan yok'},
+    // 2026-09-30 canlı: sıralama yalnız biten çevrimiçi yarışları sayar;
+    // bota karşı düello ve günün soruları cihazda oynanır. Oyuncu ikisini
+    // oynayıp sıralamayı boş görünce nedenini bilmiyordu.
     K.startRaceHint: {
-      'ku': 'Pêşbirka xwe ya yekem bilîze, navê te li vir xuya bibe.',
-      'tr': 'İlk yarışını oyna, adın burada çıksın.',
+      'ku':
+          'Pêşbirka xwe ya serhêl a yekem bilîze, navê te li vir xuya bibe. '
+          'Pêşbirka bi botê û pirsên rojê di rêzbendiyê de nayên jimartin.',
+      'tr':
+          'İlk çevrimiçi yarışını oyna, adın burada çıksın. '
+          'Botla düello ve günün soruları sıralamaya sayılmaz.',
     },
     K.startRaceAction: {'ku': 'Dest bi pêşbirkê bike', 'tr': 'Yarışa başla'},
     K.leaderboardTitle: {'ku': 'Rêzbendî', 'tr': 'Sıralama'},

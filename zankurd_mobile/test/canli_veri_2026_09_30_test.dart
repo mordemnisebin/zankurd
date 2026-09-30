@@ -30,13 +30,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
-import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/screens/suggest_question_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
@@ -272,14 +273,14 @@ void main() {
   });
 
   group('küçük düzeltmeler', () {
-    test('premium rozeti cümle düzenine çevrilir', () {
-      expect(sentenceCaseLabel('DEST PÊ BIKE', turkish: false), 'Dest pê bike');
-      expect(sentenceCaseLabel('VEKIRÎ', turkish: false), 'Vekirî');
-      expect(sentenceCaseLabel('AKTİF', turkish: true), 'Aktif');
-      expect(sentenceCaseLabel('BAŞLA', turkish: true), 'Başla');
-      expect(sentenceCaseLabel('IŞIK', turkish: true), 'Işık');
-      // Zaten cümle düzeninde olana dokunmaz.
-      expect(sentenceCaseLabel('Başla', turkish: true), 'Başla');
+    test('premium rozeti cümle düzeninde kayıtlı', () {
+      // 2026-09-30: ekrandaki çevirici kaldırıldı, kaynak düzeldi.
+      for (final key in [K.premiumBadgeOn, K.premiumBadgeOff]) {
+        for (final lang in AppLanguage.values) {
+          final v = Tr.of(key, lang);
+          expect(v, isNot(v.toUpperCase()), reason: '$key $lang');
+        }
+      }
     });
 
     testWidgets('davet kodu düğmesi "ZK-" ile yazılır ve satıra kırılmaz', (
