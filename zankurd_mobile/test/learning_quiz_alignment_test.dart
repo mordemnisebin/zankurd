@@ -172,6 +172,31 @@ void main() {
       'restore_2026_08_07_0007',
       'restore_2026_08_07_0014',
       'restore_2026_08_07_0015',
+      // Üçüncü tur: Muse/Gemini uyuşmazlığında MiMo'nun üçüncü oyu.
+      'edit_cografya_0001',
+      'edit_cografya_0003',
+      'edit_cografya_0011',
+      'edit_cografya_0016',
+      'edit_cografya_0032',
+      'edit_ziman_0043',
+      'ex28_sinor_duma_001',
+      'ex28_sinor_duma_002',
+      'ex28_sinor_duma_003',
+      'fill_ziman_0003',
+      'offline_8615',
+      'offline_8903',
+      'offline_9103',
+      'offline_curated_20026',
+      'offline_curated_20076',
+      'offline_curated_20176',
+      'offline_curated_20226',
+      'offline_curated_20750',
+      'offline_curated_20804',
+      'offline_curated_21029',
+      'offline_tf_cog_0033',
+      'wo-ku-007',
+      'ziman_x_0008',
+      'ziman_x_0048',
     });
   });
 
@@ -181,13 +206,14 @@ void main() {
     const expectedCounts = {
       'everyday_1': 3,
       'everyday_3': 5,
-      'grammar_1': 2,
+      'grammar_1': 3,
       'grammar_2': 5,
       'food_1': 4,
       'animals_1': 4,
       'animals_2': 2,
       'emotions_1': 1,
       'time_2': 5,
+      'time_1': 1,
     };
 
     for (final entry in expectedCounts.entries) {

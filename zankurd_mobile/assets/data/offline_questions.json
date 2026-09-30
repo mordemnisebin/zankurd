@@ -8785,7 +8785,10 @@
       "pınar",
       "vadi"
     ],
-    "correctAnswerTr": "akarsu"
+    "correctAnswerTr": "akarsu",
+    "metadata": {
+      "learningLessonId": "geography_1"
+    }
   },
   {
     "id": "offline_8672",
@@ -9001,7 +9004,10 @@
       "UNESCO mirasındaki tarihî höyük yerleşimi",
       "krater gölüne sahip aktif volkanik dağ"
     ],
-    "correctAnswerTr": "Mezopotamya'ya hayat veren büyük nehir"
+    "correctAnswerTr": "Mezopotamya'ya hayat veren büyük nehir",
+    "metadata": {
+      "learningLessonId": "geography_1"
+    }
   },
   {
     "id": "offline_8916",
@@ -13570,7 +13576,10 @@
       "rênivîsa Hawarê",
       "ezafe"
     ],
-    "correctAnswerTr": "tewandin"
+    "correctAnswerTr": "tewandin",
+    "metadata": {
+      "learningLessonId": "grammar_2"
+    }
   },
   {
     "id": "offline_curated_20051",
@@ -13620,7 +13629,10 @@
       "cînavkên tewandî",
       "daçekên hevedudanî"
     ],
-    "correctAnswerTr": "cînavkên tewandî"
+    "correctAnswerTr": "cînavkên tewandî",
+    "metadata": {
+      "learningLessonId": "grammar_2"
+    }
   },
   {
     "id": "offline_curated_20100",
@@ -13720,7 +13732,10 @@
       "cînavkên kesane",
       "paşgirên tewandinê"
     ],
-    "correctAnswerTr": "cînavkên kesane"
+    "correctAnswerTr": "cînavkên kesane",
+    "metadata": {
+      "learningLessonId": "grammar_1"
+    }
   },
   {
     "id": "offline_curated_20201",
@@ -13770,7 +13785,10 @@
       "paşgirên tewandinê",
       "ezafe"
     ],
-    "correctAnswerTr": "paşgirên tewandinê"
+    "correctAnswerTr": "paşgirên tewandinê",
+    "metadata": {
+      "learningLessonId": "grammar_2"
+    }
   },
   {
     "id": "offline_curated_20251",
@@ -14351,7 +14369,10 @@
       "Van Gölü'nün kuzeyindeki yüksek ve karlı volkanik dağ",
       "Riha yakınındaki, insanlığın en eski tapınak alanı"
     ],
-    "correctAnswerTr": "Kürtlerin ülkesinin doğal sınırını oluşturan büyük ve sarp sıradağlar"
+    "correctAnswerTr": "Kürtlerin ülkesinin doğal sınırını oluşturan büyük ve sarp sıradağlar",
+    "metadata": {
+      "learningLessonId": "geography_1"
+    }
   },
   {
     "id": "offline_curated_20776",
@@ -14407,7 +14428,10 @@
       "Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı",
       "suları tuzlu ve sodalı olan, bölgenin en büyük gölü"
     ],
-    "correctAnswerTr": "Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı"
+    "correctAnswerTr": "Mezopotamya'nın en büyük iki nehrinden biri; verimli toprakların can damarı",
+    "metadata": {
+      "learningLessonId": "geography_1"
+    }
   },
   {
     "id": "offline_curated_20826",
@@ -14709,7 +14733,10 @@
       "konuğun evin bereketi sayıldığı toplumsal ilişki",
       "keçi kılından yapılan, göçerleri sıcaktan ve soğuktan koruyan kara çadır"
     ],
-    "correctAnswerTr": "başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı"
+    "correctAnswerTr": "başkaldırının, özgürlüğün ve doğanın yeniden dirilişinin simgesi olan Kürt ulusal bayramı ve yılbaşı",
+    "metadata": {
+      "learningLessonId": "culture_2"
+    }
   },
   {
     "id": "offline_curated_21054",
@@ -18387,7 +18414,10 @@
       "Doğru",
       "Yanlış"
     ],
-    "correctAnswerTr": "Doğru"
+    "correctAnswerTr": "Doğru",
+    "metadata": {
+      "learningLessonId": "geography_1"
+    }
   },
   {
     "id": "offline_tf_cog_0034",
@@ -26642,7 +26672,10 @@
       "İkişer ikişer, karşılıklı dururlar",
       "Oturarak, yalnız elleriyle tempo tutarlar"
     ],
-    "correctAnswerTr": "El ele tutuşup dizi ya da yarım çember oluştururlar"
+    "correctAnswerTr": "El ele tutuşup dizi ya da yarım çember oluştururlar",
+    "metadata": {
+      "learningLessonId": "culture_1"
+    }
   },
   {
     "id": "offline_9104",

@@ -1838,7 +1838,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "geography_1"
     },
     "promptTr": "Kürt coğrafyasının büyük bölümünden geçen sıradağ hangisidir?",
     "answersTr": [
@@ -1870,7 +1871,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "geography_1"
     },
     "promptTr": "Türkiye'nin Kürt bölgesinde yer alan en büyük gölü hangisidir?",
     "answersTr": [
@@ -2125,7 +2127,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "geography_1"
     },
     "promptTr": "Doğru mu yanlış mı: Wan Gölü'nün suyu tuzludur.",
     "answersTr": [
@@ -4280,7 +4283,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "geography_1"
     },
     "promptTr": "Fırat Nehri hangi bölgeden kaynağını alır?",
     "answersTr": [
@@ -5290,7 +5294,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "grammar_2"
     },
     "promptTr": "Kurmancîde \"min got\" ile \"ez gotim\" — hangisi doğrudur?",
     "answersTr": [
@@ -6907,7 +6912,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "geography_1"
     },
     "promptTr": "Doğru mu yanlış mı: Dicle ve Fırat, Basra Körfezi'ne ulaşır.",
     "answersTr": [
