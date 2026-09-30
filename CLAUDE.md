@@ -38,3 +38,10 @@ tamamını tek karede basar; `ZANKURD_SCREEN_TOUR_THEME=light|dark` bütün
 kareleri tek temada `<çıktı>/<tema>/` altına basar (yoksa `_dark` kareleri
 gece, ötekiler gündüz). Emoji ve `CustomPainter` metni test koşucusunda kutu
 çıkar; o ikisi simülatörden doğrulanır.
+
+## Push'tan önce
+
+`zankurd_mobile/tool/ci_yerel.sh` CI'nin analyze-and-test adımlarını
+(format, analiz, soru kalitesi, şık taraması, dokunma hedefi) yerelde
+koşturur; `--tam` tam testi de ekler. Yalnız `flutter test`'e bakıp push
+etmek CI'yı iki kez kırdı (2026-09-30).

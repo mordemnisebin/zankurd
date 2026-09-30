@@ -13864,7 +13864,7 @@
   {
     "id": "offline_curated_20375",
     "category": "Edebiyat",
-    "prompt": "Cegerxwîn kî bû?",
+    "prompt": "Cegerxwîn di helbesta kurdî de bi çi tê naskirin?",
     "answers": [
       "helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye",
       "rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide",
@@ -13877,7 +13877,7 @@
     "difficulty": 1,
     "explanationKu": "\"Cegerxwîn\" tê vê wateyê: helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû.",
     "explanationTr": "\"Cegerxwîn\" şu anlama gelir: modern Kürt şiirini yeni bir aşamaya taşıyan devrimci ve toplumcu şair.",
-    "promptTr": "Cegerxwîn kimdi?",
+    "promptTr": "Cegerxwîn Kürt şiirinde neyle tanınır?",
     "answersTr": [
       "ilk Kürt Mevlidini Kurmancî lehçesinde yazan şair",
       "ölçüsüz ve kafiyesiz, ağırlığını sözcüğe veren modern şiir yöntemi",
