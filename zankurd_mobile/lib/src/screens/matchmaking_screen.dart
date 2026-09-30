@@ -29,6 +29,7 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../config/bot_names.dart';
 import '../config/category_visuals.dart';
 import '../config/feature_flags.dart';
+import '../widgets/dialog_action_pair.dart';
 
 Player? selectOpponentPlayer(
   Iterable<Player> players, {
@@ -795,13 +796,15 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             style: SahneType.body.copyWith(color: SahneTokens.of(context).tx2),
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: Text(context.t(K.no)),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              child: Text(context.t(K.yes)),
+            DialogActionPair(
+              cancel: TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text(context.t(K.no)),
+              ),
+              confirm: FilledButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(context.t(K.yes)),
+              ),
             ),
           ],
         ),
@@ -823,23 +826,34 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
           context.t(K.asyncDuelOfferBody),
           style: SahneType.body.copyWith(color: SahneTokens.of(context).tx2),
         ),
+        // Üç eylem: hep alt alta, tam genişlikte, birincil üstte
+        // (2026-09-30 simülatör: `AlertDialog.actions` üçünü içerik
+        // genişliğinde, sağa yaslı diziyordu; bkz. [DialogActionPair]).
         actions: [
-          TextButton(
-            key: const ValueKey('mm-offer-cancel'),
-            onPressed: () =>
-                Navigator.of(context).pop(_NoOpponentChoice.cancel),
-            child: Text(context.t(K.cancel)),
-          ),
-          TextButton(
-            key: const ValueKey('mm-offer-bot'),
-            onPressed: () => Navigator.of(context).pop(_NoOpponentChoice.bot),
-            child: Text(context.t(K.asyncDuelOfferBot)),
-          ),
-          FilledButton(
-            key: const ValueKey('mm-offer-async-duel'),
-            onPressed: () =>
-                Navigator.of(context).pop(_NoOpponentChoice.asyncDuel),
-            child: Text(context.t(K.asyncDuel)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              FilledButton(
+                key: const ValueKey('mm-offer-async-duel'),
+                onPressed: () =>
+                    Navigator.of(context).pop(_NoOpponentChoice.asyncDuel),
+                child: Text(context.t(K.asyncDuel)),
+              ),
+              const SizedBox(height: 8),
+              TextButton(
+                key: const ValueKey('mm-offer-bot'),
+                onPressed: () =>
+                    Navigator.of(context).pop(_NoOpponentChoice.bot),
+                child: Text(context.t(K.asyncDuelOfferBot)),
+              ),
+              const SizedBox(height: 8),
+              TextButton(
+                key: const ValueKey('mm-offer-cancel'),
+                onPressed: () =>
+                    Navigator.of(context).pop(_NoOpponentChoice.cancel),
+                child: Text(context.t(K.cancel)),
+              ),
+            ],
           ),
         ],
       ),

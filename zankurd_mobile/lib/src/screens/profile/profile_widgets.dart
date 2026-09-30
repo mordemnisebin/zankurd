@@ -814,11 +814,6 @@ class _PedagogicalAnalyticsSectionState
         }
         // Sort by correct count descending
         categoryBars.sort((a, b) => b.correct.compareTo(a.correct));
-        final maxBar = categoryBars.isEmpty
-            ? 1
-            : categoryBars
-                  .map((e) => e.correct + e.mistakes)
-                  .reduce((a, b) => a > b ? a : b);
 
         final t = SahneTokens.of(context);
         Widget pill(String text, Color bg, Color fg) => DecoratedBox(
@@ -864,14 +859,10 @@ class _PedagogicalAnalyticsSectionState
                       ),
                       const SizedBox(width: SahneSpace.x2),
                       Expanded(
-                        child: ClipPath(
-                          clipper: const ShapeBorderClipper(
-                            shape: SahneShape.s,
-                          ),
-                          child: _categoryBarFill(
-                            context,
-                            end: (bar.correct + bar.mistakes) / maxBar,
-                          ),
+                        child: CategoryOutcomeBar(
+                          key: ValueKey('profile-category-bar-${bar.category}'),
+                          correct: bar.correct,
+                          mistakes: bar.mistakes,
                         ),
                       ),
                       const SizedBox(width: SahneSpace.x2),
@@ -984,24 +975,89 @@ class _CategoryBarData {
 
 // ─── Legend Dot ─────────────────────────────────────────────────────────────
 
-/// Kategori çubuğu dolumu süsüdür. Tercih açıkken ilk karede tam boyda
-/// durur; yoksa profil analiz paneli ayarı yok sayar. Çubuk bir grafik
-/// sütunudur (16 px), ilerleme çubuğu değil; iz Ray, dolgu Rast tonu.
-Widget _categoryBarFill(BuildContext context, {required double end}) {
-  final t = SahneTokens.of(context);
-  Widget bar(double value) => LinearProgressIndicator(
-    value: value,
-    minHeight: 16,
-    backgroundColor: t.s3,
-    color: t.okFill,
-  );
-  if (ReducedMotionProvider.isReducedIn(context)) return bar(end);
-  return TweenAnimationBuilder<double>(
-    tween: Tween(begin: 0, end: end),
-    duration: const Duration(milliseconds: 700),
-    curve: Curves.easeOutCubic,
-    builder: (context, value, _) => bar(value),
-  );
+/// Konu başına doğru / yanlış oranı: çubuğun tamamı o konuda verilen
+/// cevaplardır, yeşil pay doğru, kırmızı pay yanlış.
+///
+/// 2026-09-30 simülatör: çubuk eskiden yalnız "doğru + yanlış / en çok
+/// cevaplanan konu" uzunluğunda TEK renk (Rast) doluyordu. Her konuda
+/// bir cevap varken beş çubuk da tam yeşil çıktı; doğru sayısı 0 olan
+/// Wêje ve Erdnîgarî bile yeşil doluydu ve yanlış payı hiç görünmüyordu
+/// (lejantta "Rast / Şaş" yazıyordu ama çubuk yalnız Rast'ı çiziyordu).
+/// Artık pay renkle ve uzunlukla söylenir. Bekçi:
+/// `test/sim_son_2026_09_30_test.dart`.
+///
+/// Dolum süsüdür: tercih açıkken ilk karede tam boyda durur; yoksa profil
+/// analiz paneli ayarı yok sayar. Çubuk bir grafik sütunudur (16 px); iz
+/// Ray, yeşil Rast, kırmızı Şaş dolgusu.
+@visibleForTesting
+class CategoryOutcomeBar extends StatelessWidget {
+  const CategoryOutcomeBar({
+    required this.correct,
+    required this.mistakes,
+    super.key,
+  });
+
+  final int correct;
+  final int mistakes;
+
+  /// Doğru payı (0..1); hiç cevap yoksa 0.
+  double get correctShare {
+    final total = correct + mistakes;
+    return total == 0 ? 0 : correct / total;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    Widget bar(double grow) => ColoredBox(
+      color: t.s3,
+      child: SizedBox(
+        height: 16,
+        width: double.infinity,
+        child: Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: FractionallySizedBox(
+            widthFactor: grow,
+            child: Row(
+              children: [
+                if (correct > 0)
+                  Expanded(
+                    flex: correct,
+                    child: ColoredBox(
+                      key: const ValueKey('category-bar-correct'),
+                      color: t.okFill,
+                      child: const SizedBox(height: 16),
+                    ),
+                  ),
+                if (correct > 0 && mistakes > 0) const SizedBox(width: 2),
+                if (mistakes > 0)
+                  Expanded(
+                    flex: mistakes,
+                    child: ColoredBox(
+                      key: const ValueKey('category-bar-wrong'),
+                      color: t.errFill,
+                      child: const SizedBox(height: 16),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    final clipped = ClipPath(
+      clipper: const ShapeBorderClipper(shape: SahneShape.s),
+      child: ReducedMotionProvider.isReducedIn(context)
+          ? bar(1)
+          : TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0, end: 1),
+              duration: const Duration(milliseconds: 700),
+              curve: Curves.easeOutCubic,
+              builder: (context, value, _) => bar(value),
+            ),
+    );
+    return clipped;
+  }
 }
 
 class _LegendDot extends StatelessWidget {

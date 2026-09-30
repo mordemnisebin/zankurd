@@ -14,6 +14,7 @@ import '../../widgets/sahne/sahne.dart';
 import '../quiz/quiz_option_tile.dart';
 import '../quiz/quiz_timer_controller.dart';
 import 'async_duel_result_screen.dart';
+import '../../widgets/dialog_action_pair.dart';
 
 /// Tek bir sorunun yaşam döngüsündeki adım.
 ///
@@ -309,16 +310,18 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
         title: Text(dialogContext.t(K.asyncDuelQuitTitle)),
         content: Text(dialogContext.t(K.asyncDuelQuitBody)),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: TextButton.styleFrom(
-              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+          DialogActionPair(
+            cancel: TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(true),
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(dialogContext).colorScheme.error,
+              ),
+              child: Text(dialogContext.t(K.asyncDuelQuit)),
             ),
-            child: Text(dialogContext.t(K.asyncDuelQuit)),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(dialogContext.t(K.asyncDuelKeepPlaying)),
+            confirm: FilledButton(
+              onPressed: () => Navigator.of(dialogContext).pop(false),
+              child: Text(dialogContext.t(K.asyncDuelKeepPlaying)),
+            ),
           ),
         ],
       ),

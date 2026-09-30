@@ -74,7 +74,7 @@ void main() {
     );
     expect(dailyActivity.titleKu, '5 pirsên rojê');
     expect(dailyActivity.titleTr, 'Günün soruları x5');
-    expect(dailyActivity.descriptionKu, 'Te Pirsên rojê pênc caran qedandin.');
+    expect(dailyActivity.descriptionKu, 'Te pirsên rojê pênc caran qedandin.');
     expect(dailyActivity.descriptionTr, 'Günün sorularını 5 kez tamamladın.');
   });
 

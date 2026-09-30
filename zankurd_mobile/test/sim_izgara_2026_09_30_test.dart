@@ -28,7 +28,7 @@ import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/home/home_rows.dart';
 import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
-import 'package:zankurd_mobile/src/screens/profile_screen.dart';
+import 'package:zankurd_mobile/src/widgets/dialog_action_pair.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/story_screen.dart';

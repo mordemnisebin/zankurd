@@ -1,4 +1,6 @@
 // 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+// 2026-09-30 simülatör: kategori çubuğu artık LinearProgressIndicator değil
+// doğru/yanlış paylı CategoryOutcomeBar; bekçi bunu bulur.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,9 +18,7 @@ import 'support/widget_test_helpers.dart';
 /// tam boyda durmalı. Aksi hâlde ayar, profilin analiz yüzeyinde yok
 /// sayılmış olur.
 Finder _categoryBars() {
-  return find.byWidgetPredicate(
-    (widget) => widget is LinearProgressIndicator && widget.minHeight == 16,
-  );
+  return find.byType(CategoryOutcomeBar);
 }
 
 Future<void> _openAnalytics(
@@ -64,14 +64,21 @@ void main() {
     expect(find.text('Konulara göre performans'), findsOneWidget);
     expect(_categoryBars(), findsNWidgets(2));
     expect(
-      find.ancestor(
+      find.descendant(
         of: _categoryBars(),
         matching: find.byType(TweenAnimationBuilder<double>),
       ),
       findsNothing,
     );
-    final bar = tester.widget<LinearProgressIndicator>(_categoryBars().first);
-    expect(bar.value, closeTo(1.0, 0.001));
+    final fill = tester.widget<FractionallySizedBox>(
+      find
+          .descendant(
+            of: _categoryBars().first,
+            matching: find.byType(FractionallySizedBox),
+          )
+          .first,
+    );
+    expect(fill.widthFactor, closeTo(1.0, 0.001));
     expect(tester.takeException(), isNull);
   });
 
@@ -80,7 +87,7 @@ void main() {
 
     expect(find.text('Konulara göre performans'), findsOneWidget);
     expect(
-      find.ancestor(
+      find.descendant(
         of: _categoryBars(),
         matching: find.byType(TweenAnimationBuilder<double>),
       ),

@@ -56,6 +56,7 @@ import 'quiz/quiz_wildcard_bar.dart';
 import 'quiz_result_screen.dart';
 import 'room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../widgets/dialog_action_pair.dart';
 
 part 'quiz/quiz_layout_rules.dart';
 part 'quiz/quiz_session_types.dart';

@@ -24,6 +24,7 @@ import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
+import '../widgets/dialog_action_pair.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/skeleton_loader.dart';
 import '../models/avatar_identity.dart';
@@ -962,13 +963,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               : (context.t(K.signOutConfirm)),
         ),
         actions: [
-          OutlinedButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(context.t(K.cancel)),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(context.t(K.signOut)),
+          DialogActionPair(
+            cancel: OutlinedButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(context.t(K.cancel)),
+            ),
+            confirm: FilledButton(
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: Text(context.t(K.signOut)),
+            ),
           ),
         ],
       ),
@@ -1089,49 +1092,6 @@ class _SyncStatusChip extends StatelessWidget {
           },
         );
       },
-    );
-  }
-}
-
-/// Diyalog eylem çifti: iptal + onay.
-///
-/// 2026-09-30 simülatör: `AlertDialog.actions` iki düğmeyi kendi
-/// içeriği kadar genişlikte, sağa yaslı diziyordu; büyük yazıda "Betal
-/// bike" ile "Tomar bike" farklı genişlikte ve hizasız alt alta düşüyordu.
-/// Normal yazıda yan yana eşit genişlikte; büyük yazıda tam genişlikte alt
-/// alta, birincil (onay) üstte. Tur ve testler 1.0 ölçekte koştuğu için
-/// kusur sessiz kaldı.
-@visibleForTesting
-class DialogActionPair extends StatelessWidget {
-  const DialogActionPair({
-    required this.cancel,
-    required this.confirm,
-    super.key,
-  });
-
-  final Widget cancel;
-  final Widget confirm;
-
-  @override
-  Widget build(BuildContext context) {
-    final largeText = MediaQuery.textScalerOf(context).scale(14) > 15;
-    return SizedBox(
-      width: double.infinity,
-      child: largeText
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [confirm, const SizedBox(height: 8), cancel],
-            )
-          : IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(child: cancel),
-                  const SizedBox(width: 8),
-                  Expanded(child: confirm),
-                ],
-              ),
-            ),
     );
   }
 }

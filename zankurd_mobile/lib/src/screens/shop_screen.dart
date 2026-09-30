@@ -22,6 +22,7 @@ import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../widgets/dialog_action_pair.dart';
 
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
 /// Statik yedek listedeki (`ShopItem.catalog`) her ikon burada da
@@ -527,17 +528,19 @@ class _ShopScreenState extends State<ShopScreen> {
             ],
           ),
           actions: [
-            SahneButton.text(
-              label: context.t(K.cancelShort),
-              arrow: false,
-              onPressed: () => Navigator.of(ctx).pop(false),
-            ),
-            // Diyaloğun tek birincil eylemi. Bakiye yetersizse pasif kalır;
-            // kullanıcı 'Jeton kazan' ile çarka yönlendirilir.
-            SahneButton.primary(
-              label: context.t(K.buyAction),
-              arrow: false,
-              onPressed: short ? null : () => Navigator.of(ctx).pop(true),
+            DialogActionPair(
+              cancel: SahneButton.text(
+                label: context.t(K.cancelShort),
+                arrow: false,
+                onPressed: () => Navigator.of(ctx).pop(false),
+              ),
+              // Diyaloğun tek birincil eylemi. Bakiye yetersizse pasif kalır;
+              // kullanıcı 'Jeton kazan' ile çarka yönlendirilir.
+              confirm: SahneButton.primary(
+                label: context.t(K.buyAction),
+                arrow: false,
+                onPressed: short ? null : () => Navigator.of(ctx).pop(true),
+              ),
             ),
           ],
         );
