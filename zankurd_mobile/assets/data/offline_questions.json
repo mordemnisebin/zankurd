@@ -9017,7 +9017,7 @@
     "explanation": "\"Aras nehri\": Kars ve Iğdır sınırlarından geçip Hazar'a dökülen su.",
     "type": "multipleChoice",
     "difficulty": 3,
-    "explanationKu": "\"Çemê Araksê\": çemê ku ji sînorên Qersê û Îdirê derbas dibe û dirijê Deryaya Xezerê.",
+    "explanationKu": "\"Çemê Erezê\": çemê ku ji sînorên Qersê û Îdirê derbas dibe û dirijê Deryaya Xezerê.",
     "explanationTr": "\"Aras nehri\": Kars ve Iğdır sınırlarından geçip Hazar'a dökülen su.",
     "promptTr": "\"Aras nehri\" hakkında doğru olan hangisidir?",
     "answersTr": [
@@ -18421,10 +18421,10 @@
     "correctAnswer": "Rast",
     "explanation": "Rast e. \"Çemê Erezê\" tê vê wateyê: çemê ku sînorê bakurê rojhilat ê herêmê pêk tîne û diherike Deryaya Xezerê.",
     "explanationKu": "Rast e. \"Çemê Erezê\" tê vê wateyê: çemê ku sînorê bakurê rojhilat ê herêmê pêk tîne û diherike Deryaya Xezerê.",
-    "explanationTr": "Doğru. \"Çemê Araksê\" şu anlama gelir: bölgenin kuzeydoğu sınırını çizen ve Hazar'a dökülen nehir.",
+    "explanationTr": "Doğru. \"Çemê Erezê\" şu anlama gelir: bölgenin kuzeydoğu sınırını çizen ve Hazar'a dökülen nehir.",
     "type": "trueFalse",
     "difficulty": 4,
-    "promptTr": "Doğru mu yanlış mı: \"Çemê Araksê\" terimi şu anlama gelir: bölgenin kuzeydoğu sınırını çizen ve Hazar'a dökülen nehir.",
+    "promptTr": "Doğru mu yanlış mı: \"Çemê Erezê\" terimi şu anlama gelir: bölgenin kuzeydoğu sınırını çizen ve Hazar'a dökülen nehir.",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -18434,18 +18434,18 @@
   {
     "id": "offline_tf_cog_0038",
     "category": "Cografya",
-    "prompt": "Rast e an şaş e: Têgeha \"Çemê Araksê\" tê vê wateyê: çemê ku ji Botanê tê û li nêzîkî Zaxoyê digihîje Dîcleyê.",
+    "prompt": "Rast e an şaş e: Têgeha \"Çemê Erezê\" tê vê wateyê: çemê ku ji Botanê tê û li nêzîkî Zaxoyê digihîje Dîcleyê.",
     "answers": [
       "Rast",
       "Şaş"
     ],
     "correctAnswer": "Şaş",
-    "explanation": "Na — ev ravekirina \"Çemê Xabûrê\" e; \"Çemê Araksê\" tê vê wateyê: çemê ku sînorê bakurê rojhilat ê herêmê pêk tîne û diherike Deryaya Xezerê.",
-    "explanationKu": "Na — ev ravekirina \"Çemê Xabûrê\" e; \"Çemê Araksê\" tê vê wateyê: çemê ku sînorê bakurê rojhilat ê herêmê pêk tîne û diherike Deryaya Xezerê.",
-    "explanationTr": "Hayır — bu tanım \"Çemê Xabûrê\" kavramına ait; \"Çemê Araksê\" şu anlama gelir: bölgenin kuzeydoğu sınırını çizen ve Hazar'a dökülen nehir.",
+    "explanation": "Na — ev ravekirina \"Çemê Xabûrê\" e; \"Çemê Erezê\" tê vê wateyê: çemê ku sînorê bakurê rojhilat ê herêmê pêk tîne û diherike Deryaya Xezerê.",
+    "explanationKu": "Na — ev ravekirina \"Çemê Xabûrê\" e; \"Çemê Erezê\" tê vê wateyê: çemê ku sînorê bakurê rojhilat ê herêmê pêk tîne û diherike Deryaya Xezerê.",
+    "explanationTr": "Hayır — bu tanım \"Çemê Xabûrê\" kavramına ait; \"Çemê Erezê\" şu anlama gelir: bölgenin kuzeydoğu sınırını çizen ve Hazar'a dökülen nehir.",
     "type": "trueFalse",
     "difficulty": 5,
-    "promptTr": "Doğru mu yanlış mı: \"Çemê Araksê\" terimi şu anlama gelir: Botan'dan gelip Zaxo yakınlarında Dicle'ye karışan çay.",
+    "promptTr": "Doğru mu yanlış mı: \"Çemê Erezê\" terimi şu anlama gelir: Botan'dan gelip Zaxo yakınlarında Dicle'ye karışan çay.",
     "answersTr": [
       "Doğru",
       "Yanlış"
