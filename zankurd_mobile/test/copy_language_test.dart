@@ -27,7 +27,7 @@ void main() {
     // taşıyordu; birim `ode`, kupa `kûpa`.
     expect(
       Tr.of(K.untimedSoloSub, AppLanguage.ku),
-      'Dema tu bi tenê dilîzî dem nayê jimartin. Di ode, rû bi rû û kûpayê de dem heye.',
+      'Dema tu bi tenê dilîzî dem nayê jimartin. Di odeyê, rû bi rû û kûpayê de dem heye.',
     );
     // Avatar simgesi "Kupa" deyince û düşer; `contains('kûpa')` onu
     // görmez — puan ile aynı sınıf.
@@ -378,7 +378,7 @@ void main() {
   test('çift cevap ipucu ikinci hakkı doğru açıklar', () {
     expect(
       Tr.of(K.wildcardDoubleHint, AppLanguage.ku),
-      'Heke bersiva yekem şaş be, derfetek din heye.',
+      'Heke bersiva yekem şaş be, derfeteke din heye.',
     );
   });
 
@@ -390,7 +390,7 @@ void main() {
     // tek kök olmalı — uygulamanın sloganı da `hîn bibe` diyor.
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.ku),
-      'Dersa rojê amade ye. Îro hîn bibe.',
+      'Dersa rojê amade ye. Îro hînbûnê bidomîne.',
     );
     expect(
       Tr.of(K.huhuGununSorulukEtkinligi, AppLanguage.tr),
@@ -639,7 +639,7 @@ void main() {
   });
 
   test('işletim yüzeyi Kurmancîde pergal olarak kalır', () {
-    // Gövde `Pergal destûra…` der. Satır içi "sîstemê" deyince oyuncu
+    // Gövde `Pergal ji bo ZanKurdê destûra…` der. Satır içi "sîstemê" deyince oyuncu
     // aynı işletim yüzeyini iki adla görür. Türkçe `sistem` kökü î ile
     // gizlenir; `contains('sistem')` onu görmez — turnûva ile aynı sınıf.
     expect(
@@ -652,7 +652,7 @@ void main() {
     );
     expect(
       Tr.of(K.notifPermDeniedBody, AppLanguage.ku),
-      contains('Pergal destûra'),
+      contains('Pergal ji bo ZanKurdê destûra'),
     );
 
     final sistem = RegExp(r's[iî]stem', caseSensitive: false);

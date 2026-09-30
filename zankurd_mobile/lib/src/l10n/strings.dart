@@ -70,7 +70,7 @@ class Tr {
       'tr': 'Mevcut seviyen: {name}',
     },
     K.secSafety: {'ku': 'Ewlekarî', 'tr': 'Güvenlik'},
-    K.secPrivacy: {'ku': 'Nepenî û daneyên', 'tr': 'Gizlilik ve veri'},
+    K.secPrivacy: {'ku': 'Nepenî û dane', 'tr': 'Gizlilik ve veri'},
     K.analyticsConsent: {'ku': 'Analîza bikaranînê', 'tr': 'Kullanım analizi'},
     K.analyticsConsentSub: {
       'ku': 'Ji bo em sepanê baştir bikin, daneyên bênav bişîne',
@@ -110,14 +110,14 @@ class Tr {
     // 2026-09-30 simülatör: "Karanlık/Aydınlık mod" tek anahtarda hangi
     // yönün açık olduğunu söylemiyordu. Anahtar artık tek bir temayı adlandırır
     // (açık = karanlık tema). Anahtar adı `darkLightMode` kaldı (dış başvuru).
-    K.darkLightMode: {'ku': 'Tema tarî', 'tr': 'Karanlık tema'},
+    K.darkLightMode: {'ku': 'Temaya tarî', 'tr': 'Karanlık tema'},
     K.reduceMotion: {'ku': 'Tevgerê kêm bike', 'tr': 'Hareketi azalt'},
     // Görselin kendi betimlemesi yoksa ekran okuyucuya okunan genel etiket.
     K.questionImage: {'ku': 'Wêneya pirsê', 'tr': 'Soru görseli'},
     K.untimedSolo: {'ku': 'Bê dem bilîze', 'tr': 'Süresiz oyna'},
     K.untimedSoloSub: {
       'ku':
-          'Dema tu bi tenê dilîzî dem nayê jimartin. Di ode, rû bi rû '
+          'Dema tu bi tenê dilîzî dem nayê jimartin. Di odeyê, rû bi rû '
           'û kûpayê de dem heye.',
       'tr':
           'Tek başına oynarken süre işlemez. Oda, düello ve turnuvada '
@@ -146,7 +146,7 @@ class Tr {
     },
     // 2026-09-30 canlı: rozetler büyük harfle kayıtlıydı ve ekrandaki tek
     // bağıran etiketti (metin kararı: büyük harf yok).
-    K.premiumBadgeOn: {'ku': 'Vekirî', 'tr': 'Aktif'},
+    K.premiumBadgeOn: {'ku': 'Çalak', 'tr': 'Aktif'},
     K.premiumBadgeOff: {'ku': 'Dest pê bike', 'tr': 'Başla'},
     K.secAbout: {'ku': 'Derbarê sepanê', 'tr': 'Uygulama hakkında'},
     K.howToPlay: {'ku': 'Çawa tê lîstin?', 'tr': 'Nasıl oynanır?'},
@@ -184,7 +184,7 @@ class Tr {
       'ku': 'Ji bo jêbirina hesabê "{word}" binivîse.',
       'tr': 'Hesabını silmek için "{word}" yaz.',
     },
-    K.deleteForever: {'ku': 'Bi dawî jê bibe', 'tr': 'Kalıcı olarak sil'},
+    K.deleteForever: {'ku': 'Bi yekcarî jê bibe', 'tr': 'Kalıcı olarak sil'},
     K.ttsUnavailable: {
       'ku': 'Deng-xwendin li vê amûrê nayê bikaranîn.',
       'tr': 'Seslendirme bu cihazda kullanılamıyor.',
@@ -503,7 +503,7 @@ class Tr {
     K.rate: {'ku': 'Binirxîne', 'tr': 'Değerlendir'},
     K.you: {'ku': 'Tu', 'tr': 'Sen'},
     K.compareRivals: {
-      'ku': 'Bi hevrikan re beramber bike',
+      'ku': 'Bi hevrikan re berawird bike',
       'tr': 'Rakiplerle karşılaştır',
     },
     K.finishedAtRank: {
@@ -601,7 +601,7 @@ class Tr {
     // gönderdiği bu tarih hiçbir ekranda görünmüyordu — oyuncu ne zamana
     // kadar oynaması gerektiğini bilmiyordu.
     K.tournamentMatchDeadline: {
-      'ku': 'Heta {time} bilîze, yan na tu têk diçî.',
+      'ku': 'Heta {time} bilîze, yan na tu yê têk biçî.',
       'tr': '{time} tarihine kadar oyna, yoksa maçı kaybedersin.',
     },
     K.tournamentMatchDeadlinePassed: {
@@ -652,8 +652,8 @@ class Tr {
     },
     K.suggestionReceived: {
       'ku':
-          'Pêşniyara te hat hildan. Piştî pejirandinê, tu yê 50 zêr û '
-          'xelata Rozeta Nivîskar qezenc bikî.',
+          'Pêşniyara te hat wergirtin. Piştî pejirandinê, tu yê 50 zêr û '
+          'Rozeta Nivîskar qezenc bikî.',
       'tr':
           'Önerin alındı. Onaylanınca 50 jeton ve Yazar Rozeti '
           'kazanırsın.',
@@ -673,7 +673,7 @@ class Tr {
       'tr': 'Oyuncu bulunamadı',
     },
     K.searchFailed: {
-      'ku': 'Lêgerîn nebû, dîsa biceribîne.',
+      'ku': 'Lêgerîn bi ser neket, dîsa biceribîne.',
       'tr': 'Arayamadık, tekrar dene.',
     },
     K.requestSent: {'ku': 'Daxwaz hat şandin', 'tr': 'İstek gönderildi'},
@@ -711,7 +711,7 @@ class Tr {
       'ku': 'Daxwaz nehatin barkirin.',
       'tr': 'İstekler yüklenemedi.',
     },
-    K.pendingRequests: {'ku': 'Daxwazên hevaltiyê', 'tr': 'Bekleyen istekler'},
+    K.pendingRequests: {'ku': 'Daxwazên li bendê', 'tr': 'Bekleyen istekler'},
     K.friendsLoadFail: {
       'ku': 'Heval nehatin barkirin',
       'tr': 'Arkadaşlar yüklenemedi',
@@ -730,7 +730,10 @@ class Tr {
     },
     K.rejectAction: {'ku': 'Red bike', 'tr': 'Reddet'},
     K.acceptAction: {'ku': 'Qebûl', 'tr': 'Kabul'},
-    K.inviteFriends: {'ku': 'Hevalan vexwîne', 'tr': 'Arkadaşlarını davet et'},
+    K.inviteFriends: {
+      'ku': 'Hevalên xwe vexwîne',
+      'tr': 'Arkadaşlarını davet et',
+    },
     K.inviteSubtitle: {
       'ku': 'Koda xwe parve bike, her du alî jî 100 zêr bistînin.',
       'tr': 'Kodunu paylaş, iki taraf da 100 jeton kazansın.',
@@ -767,7 +770,7 @@ class Tr {
       'tr': 'Bu kod bulunamadı.',
     },
     K.shareRewardEarned: {
-      'ku': 'Parvekirina yekem a rojê, +25 zêr hat qezenckirin!',
+      'ku': 'Ji bo parvekirina yekem a rojê, te +25 zêr qezenc kir!',
       'tr': 'Günün ilk paylaşımı için +25 jeton kazandın!',
     },
     K.resultShareText: {
@@ -786,7 +789,7 @@ class Tr {
 
     // ── Göç edilen ekran metinleri (2026-07-31) ─────────────────────
     K.altinLig: {'ku': 'Lîga zêrîn', 'tr': 'Altın lig'},
-    K.gumusLig: {'ku': 'Lîga zîv', 'tr': 'Gümüş lig'},
+    K.gumusLig: {'ku': 'Lîga zîvîn', 'tr': 'Gümüş lig'},
     // Sözlük kararı (2026-09): `Bronz` yerleşik alıntıdır. `tunc` bakır
     // alaşımıdır, yanlış metal olur; `Zîv`/`Zêr` gibi yerli karşılık yok.
     K.bronzLig: {'ku': 'Lîga bronz', 'tr': 'Bronz lig'},
@@ -914,11 +917,11 @@ class Tr {
       'tr': 'Önce {p0} seviyeyi tamamla.',
     },
     K.pKilitliOncekiSeviyeyi: {
-      'ku': '{p0} girtî. Berî wê astê temam bike.',
+      'ku': '{p0} girtî ye. Asta berê temam bike.',
       'tr': '{p0} kilitli. Önceki seviyeyi tamamla.',
     },
     K.zorlukUzerindenPYildiz: {
-      'ku': 'Zehmetî: {p0} ji 5 stêrk',
+      'ku': 'Zehmetî: ji 5an {p0} stêrk',
       'tr': 'Zorluk: 5 üzerinden {p0} yıldız',
     },
     K.zorluk: {'ku': 'Zehmetî', 'tr': 'Zorluk'},
@@ -988,7 +991,7 @@ class Tr {
     K.allQuestionsSubcategory: {'ku': 'Hemû pirs', 'tr': 'Tüm sorular'},
     K.seri: {'ku': 'Li pey hev', 'tr': 'Üst üste'},
     K.sureDolduDogruCevap: {
-      'ku': 'Dem qediya. Bersivên rast: {p0}',
+      'ku': 'Dem qediya. Bersiva rast: {p0}',
       'tr': 'Süre doldu. Doğru cevap: {p0}',
     },
     K.tebriklerSeviyeAtladinYeni: {
@@ -1013,10 +1016,7 @@ class Tr {
       'ku': 'Pirsa nû: {p0} çirke',
       'tr': 'Sonraki soru: {p0}sn',
     },
-    K.rakipBekleniyor: {
-      'ku': 'Li benda hevrikê ye…',
-      'tr': 'Rakip bekleniyor…',
-    },
+    K.rakipBekleniyor: {'ku': 'Hevrik tê payîn…', 'tr': 'Rakip bekleniyor…'},
     K.cumleyiOlusturmakIcinKelimeleri: {
       'ku': 'Peyvan hilbijêre ku hevokê çêbikî',
       'tr': 'Cümleyi oluşturmak için kelimeleri seç',
@@ -1053,11 +1053,11 @@ class Tr {
       'tr': 'Bir alt alan seçerek yarışmaya başla.',
     },
     K.huhuGununSorulukEtkinligi: {
-      'ku': 'Dersa rojê amade ye. Îro hîn bibe.',
+      'ku': 'Dersa rojê amade ye. Îro hînbûnê bidomîne.',
       'tr': 'Günün dersi hazır. Bugün öğrenmeye devam et.',
     },
     K.zanaDiyorKiYeni: {
-      'ku': 'Zana dibêje: hevalek nû',
+      'ku': 'Zana dibêje: hevalekî nû',
       'tr': 'Zana diyor ki: yeni bir arkadaş',
     },
     K.huhuPSeninleYarismak: {
@@ -1240,10 +1240,7 @@ class Tr {
     K.difficultyHard: {'ku': 'Dijwar', 'tr': 'Zor'},
     K.difficultyMedium: {'ku': 'Navîn', 'tr': 'Orta'},
     K.difficultyEasy: {'ku': 'Hêsan', 'tr': 'Kolay'},
-    K.waitingOpponent: {
-      'ku': 'Li benda hevrikê ye…',
-      'tr': 'Rakip bekleniyor…',
-    },
+    K.waitingOpponent: {'ku': 'Hevrik tê payîn…', 'tr': 'Rakip bekleniyor…'},
     K.finishAction: {'ku': 'Biqedîne', 'tr': 'Bitir'},
     // Düğme `Alîkariya Bersivê` der (`K.sikIpucu`). Bitirme ipucu
     // "jokeran" deyince oyuncu aynı yardımcıyı Türkçe adla görür.
@@ -1262,7 +1259,7 @@ class Tr {
       'tr': 'Tahmini şık dağılımını gösterir',
     },
     K.wildcardDoubleHint: {
-      'ku': 'Heke bersiva yekem şaş be, derfetek din heye.',
+      'ku': 'Heke bersiva yekem şaş be, derfeteke din heye.',
       'tr': 'İlk deneme yanlışsa bir hak daha',
     },
     K.wildcardChangeHint: {
@@ -1287,7 +1284,7 @@ class Tr {
       'ku': 'Pirsên rojê hîn amade nînin. Paşê dîsa were.',
       'tr': 'Günün soruları henüz hazır değil. Daha sonra tekrar gel.',
     },
-    K.goHome: {'ku': 'Biçe rûpela sereke', 'tr': 'Ana sayfaya dön'},
+    K.goHome: {'ku': 'Vegere rûpela sereke', 'tr': 'Ana sayfaya dön'},
     K.dailyEvent: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
     K.dailyEventCardTitle: {'ku': 'Pirsên tevlihev', 'tr': 'Karışık sorular'},
     K.dailyEventCardBody: {
@@ -1375,7 +1372,7 @@ class Tr {
     K.levelUnknown: {'ku': 'Ast nediyar', 'tr': 'Seviye bilinmiyor'},
     K.startingSoon: {'ku': 'Dest pê dike…', 'tr': 'Başlamak üzere…'},
     // Eşleşme durumunun ilk (henüz sunucudan söz gelmemiş) hâli.
-    K.searchingShort: {'ku': 'Tê gerîn…', 'tr': 'Aranıyor…'},
+    K.searchingShort: {'ku': 'Lê tê gerîn…', 'tr': 'Aranıyor…'},
     K.searchingNote: {
       'ku':
           'Li hevrikekî tê gerîn. Heke lîstikvanekî zindî neyê dîtin, tu yê bi botekê re bêyî lihevanîn. Tu dikarî betal bikî.',
@@ -1406,7 +1403,7 @@ class Tr {
     // Oda daveti (2026-09-27). Bağlantı web sürümünde odaya doğrudan
     // katılır (`JoinDeepLink`); kod, uygulamadan elle girmek isteyen için.
     K.roomInviteAction: {
-      'ku': 'Hevalan vexwîne',
+      'ku': 'Hevalên xwe vexwîne',
       'tr': 'Arkadaşlarını davet et',
     },
     K.roomInviteShareText: {
@@ -1482,7 +1479,8 @@ class Tr {
     K.earnCoins: {'ku': 'Zêr qezenc bike', 'tr': 'Jeton kazan'},
     K.cancelShort: {'ku': 'Betal', 'tr': 'Vazgeç'},
     K.rewardPending: {
-      'ku': 'Girêdan tune. Xelata te tê tomarkirin û paşê tê dayîn.',
+      'ku':
+          'Girêdan tune. Xelata te hate tomarkirin, dema girêdan çêbibe wê were dayîn.',
       'tr': 'Bağlantı yok. Ödülün kaydedildi, bağlanınca verilecek.',
     },
     K.rewardUnresolved: {
@@ -1603,7 +1601,7 @@ class Tr {
     K.titleWord: {'ku': 'Nav û nîşan', 'tr': 'Unvan'},
     K.hideAction: {'ku': 'Veşêre', 'tr': 'Gizle'},
     K.noTitlesYet: {
-      'ku': 'Hîn nav û nîşan tune. Bi lîstinê bidest bixe.',
+      'ku': 'Hîn nav û nîşan tune. Bi lîstinê bi dest bixe.',
       'tr': 'Henüz unvan yok. Oynayarak kazan.',
     },
     K.noFriendsAddHint: {
@@ -2294,8 +2292,8 @@ class Tr {
     },
     K.notifPermDeniedBody: {
       'ku':
-          'Pergal destûra agahdariyan nade ZanKurd. Ji mîhengên '
-          'pergala amûrê ve agahdariyên ZanKurd veke.',
+          'Pergal ji bo ZanKurdê destûra agahdariyan nade. Ji mîhengên '
+          'pergala amûrê agahdariyên ZanKurdê veke.',
       'tr':
           'Sistem, ZanKurd için bildirimlere izin vermiyor. Cihazının '
           'sistem ayarlarından ZanKurd bildirimlerini aç.',
@@ -2399,16 +2397,16 @@ class Tr {
 
     // ── Güç haritası ──────────────────────────────────────────────
     K.strengthMapTitle: {
-      'ku': 'Hêz û cihên pêşketinê',
+      'ku': 'Aliyên xurt û yên pêşxistinê',
       'tr': 'Güçlü ve geliştirilecek alanlar',
     },
     K.strengthStrong: {'ku': 'Xurt', 'tr': 'Güçlü'},
     K.strengthToImprove: {'ku': 'Cihên pêşketinê', 'tr': 'Geliştirilecek'},
     K.strengthEmpty: {
-      'ku': 'Ji bo analîzê hê hindik dane heye. Piçekî bêtir bilîze.',
+      'ku': 'Ji bo analîzê hîn daneyên kêm hene. Piçekî bêtir bilîze.',
       'tr': 'Analiz için henüz az veri var. Biraz daha oyna.',
     },
-    K.strengthKeepForm: {'ku': 'Formê xwe biparêze', 'tr': 'Formunu koru'},
+    K.strengthKeepForm: {'ku': 'Forma xwe biparêze', 'tr': 'Formunu koru'},
     K.strengthReviewReady: {'ku': 'Dubarekirin amade', 'tr': 'Tekrar hazır'},
     K.strengthPractice: {
       'ku': 'Piçek pratîk baş e',
@@ -2456,7 +2454,7 @@ class Tr {
     K.viewExplanation: {'ku': 'Şîrove bibîne', 'tr': 'Açıklamayı gör'},
     K.allExplanationsHint: {
       'ku':
-          'Hemû şîrove li vir bi hev re in. Di dema turê de tenê '
+          'Hemû şîrove li vir bi hev re ne. Di dema tûrê de tenê '
           'bersiva rast xuya dibe.',
       'tr':
           'Tüm açıklamalar burada bir arada. Tur sırasında yalnız '
