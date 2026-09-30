@@ -226,14 +226,14 @@ def main() -> int:
 -- bilim sorusu (bilim_0041…0070) geldi — ilk 40'ı cihan_and_science.sql ile
 -- sunucuda. Oda ve düello soruları sunucudan çeker;
 -- `2026-09-30_cihan_and_science.sql` bunlardan yalnız Cîhan'dakileri
--- ({already_total}) ekledi. Teknolojî ve Kürt kategorilerindeki doğrulanmış
+-- ({s['already'].get('Cîhan', 0)}) ve ilk {s['already'].get('Paradigma', 0)} bilim sorusunu ekledi. Teknolojî ve Kürt kategorilerindeki doğrulanmış
 -- sorular sunucuda yoktu: tek kişilik modda görünen soru odada/düelloda
 -- hiç gelmiyordu.
 --
 -- KAÇ SORU: {n} yeni satır. Kategori dağılımı:
 {cat_lines}
 --
--- TEKRAR YOK: sunucuda zaten bulunan {already_total} soru (Cîhan; aynı uuid5)
+-- TEKRAR YOK: sunucuda zaten bulunan {already_total} soru (aynı uuid5; {dict(s['already'])})
 -- bu dosyaya HİÇ yazılmadı. Yine de her satır `on conflict (id) do nothing`
 -- ile eklenir; ikinci çalıştırma 0 satır ekler.
 --
