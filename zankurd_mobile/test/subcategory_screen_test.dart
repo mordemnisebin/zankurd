@@ -221,7 +221,7 @@ void main() {
   // 2026-09-30 kimlik: yedi konunun HEPSİ (eskiden çizimi olanlar ve
   // olmayanlar iki ayrı dilde konuşuyordu) kendi motifini taşır; motifsiz
   // konu düz tonda kalır ve çökmez. 320 px, %200 yazıda taşma yok.
-  for (final category in [...CategoryVisuals.markedCategories, 'Siyaset']) {
+  for (final category in [...CategoryVisuals.markedCategories, 'Bilinmeyen']) {
     testWidgets('$category başlığı 320 px ve %200 yazıda taşmaz', (
       tester,
     ) async {

@@ -148,8 +148,11 @@ void main() {
         expect(tile.image, isNull, reason: category);
         expect(tile.tone, CategoryVisuals.tone(category), reason: category);
         // 2026-09-30 kimlik: silüeti olan konu ikon yerine K3 silüetini
-        // çizer; silüetsiz konu (Siyaset, Paradigma, Teknolojî) ikonda kalır.
+        // çizer. Görünür her konunun silüeti var (Siyaset, Paradigma ve
+        // Teknolojî de; eskiden ikonda kalıyorlardı, yan yana tutarsızdı).
+        // İkon dalı yalnız işaretsiz (bilinmeyen) kategori için durur.
         final mark = CategoryVisuals.mark(category);
+        expect(mark, isNotNull, reason: '$category: silüetsiz karo kalmamalı');
         expect(tile.mark, mark, reason: category);
         final glyphs = find.descendant(
           of: finder,

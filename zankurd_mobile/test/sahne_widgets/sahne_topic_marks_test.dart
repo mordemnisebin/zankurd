@@ -22,8 +22,19 @@
 ///   (silüet `detail`, desen `deep`/`detail`); yol çözümlemesi çökmez.
 /// * Renkler yalnız [SahneCategoryTone]dan gelir: ressam dosyasında ham
 ///   renk yok.
-/// * Eşleme: yedi ana konu (ve takma adları) işaret alır; Siyaset,
-///   Paradigma, Teknolojî ve bilinmeyen kategori almaz, karo ikona düşer.
+/// * Eşleme: görünür her konu (ve takma adları) kendi işaretini alır;
+///   yalnız bilinmeyen kategori almaz, karo ikona düşer.
+///
+/// ## 2026-09-30: Siyaset, Paradigma, Teknolojî, Cîhan
+///
+/// Bu üç konu geri görünür olduğunda işaretsizdi: yedi silüetin yanında
+/// tek başına eski ikon + eğik köşe kalıyordu ve ızgara iki dilde
+/// konuşuyordu. Kusur sessizdi: hiçbir test "her görünür konunun silüeti
+/// var" demiyordu, aksine bu dosya işaretsiz kalmalarını SABİTLİYORDU.
+/// Dördüncü ('Cîhan', dünya sineması/coğrafyası/edebiyatı) kategori olarak
+/// henüz yok; adı eşlemede hazır. Bekçi artık `colorDefinedCategories`in
+/// her üyesinin işaretli olduğunu ölçer: yeni bir konu eklenip işaret
+/// unutulursa burada patlar.
 /// * Kilim: desen sağ kenardan taşar (kırpılır), sol taraf düz zemin kalır
 ///   (başlık okunurluğu) ve görünen genişlik ayrılan yeri aşmaz.
 library;
@@ -103,10 +114,16 @@ void main() {
     SahneTopicMark.cografya: SahneCategoryTone.cografya,
     SahneTopicMark.muzik: SahneCategoryTone.muzik,
     SahneTopicMark.sinema: SahneCategoryTone.sinema,
+    SahneTopicMark.siyaset: SahneCategoryTone.siyaset,
+    SahneTopicMark.paradigma: SahneCategoryTone.paradigma,
+    SahneTopicMark.teknoloji: SahneCategoryTone.teknoloji,
+    // 'Cîhan' henüz kategori değil, tonu yok: fallback. Ton eklenince bu
+    // satır yeni tona çevrilir (eşleme testi tonu `CategoryVisuals`tan okur).
+    SahneTopicMark.cihan: SahneCategoryTone.fallback,
   };
 
   group('eşleme (CategoryVisuals.mark)', () {
-    test('yedi ana konunun her biri kendi işaretini alır', () {
+    test('her görünür konu kendi işaretini alır', () {
       expect(CategoryVisuals.markedCategories.toSet(), {
         'Ziman',
         'Çand',
@@ -115,7 +132,18 @@ void main() {
         'Cografya',
         'Muzîk',
         'Sînema',
+        'Siyaset',
+        'Paradigma',
+        'Teknolojî',
+        'Cîhan',
       });
+      for (final category in CategoryVisuals.colorDefinedCategories) {
+        expect(
+          CategoryVisuals.mark(category),
+          isNotNull,
+          reason: '$category: görünür konu işaretsiz kalamaz',
+        );
+      }
       expect(
         CategoryVisuals.markedCategories.map(CategoryVisuals.mark).toSet(),
         SahneTopicMark.values.toSet(),
@@ -135,17 +163,12 @@ void main() {
       expect(CategoryVisuals.mark('Erdnîgarî'), SahneTopicMark.cografya);
       expect(CategoryVisuals.mark('Müzik'), SahneTopicMark.muzik);
       expect(CategoryVisuals.mark('Sinema'), SahneTopicMark.sinema);
+      expect(CategoryVisuals.mark('Paradîgma'), SahneTopicMark.paradigma);
+      expect(CategoryVisuals.mark('Teknoloji'), SahneTopicMark.teknoloji);
     });
 
-    test('silüeti olmayan ve bilinmeyen kategori işaret almaz', () {
-      for (final category in const [
-        'Siyaset',
-        'Paradigma',
-        'Teknolojî',
-        'Bilinmeyen',
-      ]) {
-        expect(CategoryVisuals.mark(category), isNull, reason: category);
-      }
+    test('bilinmeyen kategori işaret almaz (silüet uydurulmaz)', () {
+      expect(CategoryVisuals.mark('Bilinmeyen'), isNull);
     });
   });
 
@@ -185,7 +208,7 @@ void main() {
       }
     });
 
-    testWidgets('karo silüetli çizilir; silüetsiz konu ikona düşer', (
+    testWidgets('karo silüetli çizilir; işaretsiz karo ikona düşer', (
       tester,
     ) async {
       await pumpSahne(
@@ -200,9 +223,9 @@ void main() {
               size: 96,
             ),
             SahneJewelTile(
-              name: 'Siyaset',
+              name: 'Bilinmeyen',
               icon: AppIcons.scaleBalanced,
-              tone: SahneCategoryTone.siyaset,
+              tone: SahneCategoryTone.fallback,
               size: 96,
             ),
           ],
@@ -239,7 +262,7 @@ void main() {
       expect(
         sahneKilimGrids.values.map((g) => g.join()).toSet(),
         hasLength(SahneTopicMark.values.length),
-        reason: 'yedi konu yedi ayrı motif',
+        reason: 'her konu ayrı bir dokuma motifi',
       );
     });
 

@@ -111,9 +111,13 @@ class CategoryVisuals {
   /// Konunun görsel dili: ana sayfa karosundaki K3 silüeti ve alt konu
   /// bandındaki K1 kilim motifi TEK yerden eşlenir (2026-09-30 kimlik).
   ///
-  /// Yedi ana konunun işareti var; Siyaset, Paradigma, Teknolojî ve
-  /// bilinmeyen kategori `null` döner ve çağıran eski ikon + ton hâline
-  /// düşer (silüet uydurulmaz).
+  /// Görünür her konunun kendi işareti var. Siyaset, Paradigma ve Teknolojî
+  /// önce işaretsizdi ve yan yana yedi silüetin yanında tek başına eski ikon
+  /// + eğik köşe hâline düşüyordu; 2026-09-30'da dördüncü ailesi geldi.
+  /// 'Cîhan' (dünya sineması, coğrafyası, edebiyatı: Kürde özgü olmayan genel
+  /// kültür) henüz kategori değil; ad tabloya şimdiden yazıldı ki eklendiği
+  /// gün silüetsiz kalmasın. Bilinmeyen kategori `null` döner ve çağıran eski
+  /// ikon + ton hâline düşer (silüet uydurulmaz).
   static const Map<String, SahneTopicMark> _marks = {
     'Ziman': SahneTopicMark.ziman,
     'Çand': SahneTopicMark.cand,
@@ -122,6 +126,10 @@ class CategoryVisuals {
     'Cografya': SahneTopicMark.cografya,
     'Muzîk': SahneTopicMark.muzik,
     'Sînema': SahneTopicMark.sinema,
+    'Siyaset': SahneTopicMark.siyaset,
+    'Paradigma': SahneTopicMark.paradigma,
+    'Teknolojî': SahneTopicMark.teknoloji,
+    'Cîhan': SahneTopicMark.cihan,
   };
 
   /// İşareti (silüet + motif) olan kategoriler, kanonik kimlikle.
