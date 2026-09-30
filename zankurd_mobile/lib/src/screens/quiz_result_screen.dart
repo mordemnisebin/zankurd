@@ -1196,7 +1196,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ),
       ],
       const SizedBox(height: SahneSpace.x2),
-      _StatTiles(
+      ResultStatTiles(
         correct: correctCount,
         wrong: wrongCount,
         unanswered: unanswered,
@@ -1657,12 +1657,14 @@ class _RewardCard extends StatelessWidget {
 /// Karolar eşit genişlikte yan yana durur; dar ekranda ya da büyük yazıda
 /// bir karo 96'dan darsa ikişerli satıra iner (sayı ve söz harf harf
 /// bölünmez).
-class _StatTiles extends StatelessWidget {
-  const _StatTiles({
+@visibleForTesting
+class ResultStatTiles extends StatelessWidget {
+  const ResultStatTiles({
     required this.correct,
     required this.wrong,
     required this.unanswered,
     required this.streak,
+    super.key,
   });
 
   final int correct;
@@ -1706,12 +1708,38 @@ class _StatTiles extends StatelessWidget {
             (constraints.maxWidth - gap * (perRow - 1)) / perRow < minTile) {
           perRow = perRow > 2 ? 2 : 1;
         }
-        final width = (constraints.maxWidth - gap * (perRow - 1)) / perRow;
-        return Wrap(
-          spacing: gap,
-          runSpacing: gap,
+        // 2026-09-30 simülatör: karolar `Wrap` içinde kendi boyunda
+        // duruyordu; "Li pey hev" iki satıra kırılınca üçüncü karo öteki
+        // ikisinden uzun çıkıyordu. Satırdaki karolar artık eşit yükseklikte
+        // (`IntrinsicHeight` + uzatma); eksik kalan son satır boş
+        // `SizedBox` ile aynı genişliği korur. Normal ölçekte sözler tek
+        // satırdı, tur ve testler orada koştuğu için kusur sessiz kaldı.
+        final rows = <Widget>[];
+        for (var i = 0; i < tiles.length; i += perRow) {
+          final chunk = tiles.sublist(i, math.min(i + perRow, tiles.length));
+          rows.add(
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (var j = 0; j < perRow; j++) ...[
+                    if (j > 0) const SizedBox(width: gap),
+                    Expanded(
+                      child: j < chunk.length ? chunk[j] : const SizedBox(),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            for (final tile in tiles) SizedBox(width: width, child: tile),
+            for (var i = 0; i < rows.length; i++) ...[
+              if (i > 0) const SizedBox(height: gap),
+              rows[i],
+            ],
           ],
         );
       },
@@ -2401,7 +2429,7 @@ class _AllExplanationsCard extends StatelessWidget {
           dividerIndent: SahneSpace.x3 + 28 + SahneSpace.x3,
           children: [
             for (final entry in entries)
-              _ExplanationEntry(
+              ResultExplanationEntry(
                 index: entry.index,
                 record: entry.record,
                 explanation: entry.explanation,
@@ -2413,11 +2441,13 @@ class _AllExplanationsCard extends StatelessWidget {
   }
 }
 
-class _ExplanationEntry extends StatelessWidget {
-  const _ExplanationEntry({
+@visibleForTesting
+class ResultExplanationEntry extends StatelessWidget {
+  const ResultExplanationEntry({
     required this.index,
     required this.record,
     required this.explanation,
+    super.key,
   });
 
   final int index;
@@ -2462,10 +2492,13 @@ class _ExplanationEntry extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // 2026-09-30 simülatör: soru 3 satırda "…" ile kesiliyordu;
+                // oyuncu altındaki cevabı ve açıklamayı soruyu hatırlamadan
+                // okuyordu (bu liste tam da "neden" diye açıklamaların
+                // toplandığı yer). Soru metni artık tam görünür; uzun soru
+                // listeyi uzatır, kaydırma zaten var.
                 Text(
                   '$index. ${record.prompt}',
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
                   style: SahneType.bodyStrong.copyWith(color: t.tx),
                 ),
                 const SizedBox(height: SahneSpace.x1),

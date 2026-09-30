@@ -840,43 +840,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           actions: [
-            OutlinedButton(
-              onPressed: submitting
-                  ? null
-                  : () => Navigator.pop(dialogContext, null),
-              child: Text(context.t(K.cancel)),
-            ),
-            FilledButton(
-              onPressed: submitting
-                  ? null
-                  : () async {
-                      if (!(formKey.currentState?.validate() ?? false)) return;
-                      setDialogState(() => submitting = true);
-                      final auth = context.read<AuthProvider>();
-                      final success = await auth.upgradeGuestAccount(
-                        email: emailController.text.trim(),
-                        password: passwordController.text,
-                      );
-                      if (!ctx.mounted) return;
-                      Navigator.pop(
-                        dialogContext,
-                        !success
-                            ? _GuestUpgradeAction.emailFailure
-                            : auth.needsEmailConfirmation
-                            ? _GuestUpgradeAction.emailPendingConfirmation
-                            : _GuestUpgradeAction.emailSuccess,
-                      );
-                    },
-              child: submitting
-                  ? SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: SahneTokens.of(ctx).tx3,
-                      ),
-                    )
-                  : Text(context.t(K.save)),
+            DialogActionPair(
+              cancel: OutlinedButton(
+                onPressed: submitting
+                    ? null
+                    : () => Navigator.pop(dialogContext, null),
+                child: Text(context.t(K.cancel)),
+              ),
+              confirm: FilledButton(
+                onPressed: submitting
+                    ? null
+                    : () async {
+                        if (!(formKey.currentState?.validate() ?? false)) {
+                          return;
+                        }
+                        setDialogState(() => submitting = true);
+                        final auth = context.read<AuthProvider>();
+                        final success = await auth.upgradeGuestAccount(
+                          email: emailController.text.trim(),
+                          password: passwordController.text,
+                        );
+                        if (!ctx.mounted) return;
+                        Navigator.pop(
+                          dialogContext,
+                          !success
+                              ? _GuestUpgradeAction.emailFailure
+                              : auth.needsEmailConfirmation
+                              ? _GuestUpgradeAction.emailPendingConfirmation
+                              : _GuestUpgradeAction.emailSuccess,
+                        );
+                      },
+                child: submitting
+                    ? SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: SahneTokens.of(ctx).tx3,
+                        ),
+                      )
+                    : Text(context.t(K.save)),
+              ),
             ),
           ],
         ),
@@ -1079,6 +1083,49 @@ class _SyncStatusChip extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+/// Diyalog eylem çifti: iptal + onay.
+///
+/// 2026-09-30 simülatör: `AlertDialog.actions` iki düğmeyi kendi
+/// içeriği kadar genişlikte, sağa yaslı diziyordu; büyük yazıda "Betal
+/// bike" ile "Tomar bike" farklı genişlikte ve hizasız alt alta düşüyordu.
+/// Normal yazıda yan yana eşit genişlikte; büyük yazıda tam genişlikte alt
+/// alta, birincil (onay) üstte. Tur ve testler 1.0 ölçekte koştuğu için
+/// kusur sessiz kaldı.
+@visibleForTesting
+class DialogActionPair extends StatelessWidget {
+  const DialogActionPair({
+    required this.cancel,
+    required this.confirm,
+    super.key,
+  });
+
+  final Widget cancel;
+  final Widget confirm;
+
+  @override
+  Widget build(BuildContext context) {
+    final largeText = MediaQuery.textScalerOf(context).scale(14) > 15;
+    return SizedBox(
+      width: double.infinity,
+      child: largeText
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [confirm, const SizedBox(height: 8), cancel],
+            )
+          : IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(child: cancel),
+                  const SizedBox(width: 8),
+                  Expanded(child: confirm),
+                ],
+              ),
+            ),
     );
   }
 }

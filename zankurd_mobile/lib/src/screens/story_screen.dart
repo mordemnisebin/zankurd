@@ -77,6 +77,11 @@ class _StoryScreenState extends State<StoryScreen> {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
+      // 2026-09-30 simülatör: büyük yazıda rehber sayfası ekran boyuna
+      // uzuyor ve başlığı durum çubuğunun altına giriyordu (saatle üst
+      // üste). Güvenli alan içinde açılır; 1.0 ölçekte sayfa kısa kaldığı
+      // için kusur turda görünmüyordu.
+      useSafeArea: true,
       backgroundColor: t.s1,
       shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       builder: (ctx) => _MiniGuideView(guide: guide, isKu: context.isKu),

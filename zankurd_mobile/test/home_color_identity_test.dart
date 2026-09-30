@@ -29,6 +29,9 @@
 /// (`CategoryVisuals.mark`); silüeti olmayan konu eski ikonda kalır. Bekçi
 /// "ikon çizilir" beklentisini "silüet çizilir, silüetsizde ikon çizilir"e
 /// çevirdi.
+///
+/// 2026-09-30 simülatör: "dört sütun" bekçisi gerçek yazı tipiyle koşar
+/// (ızgara sütun sayısını yazı genişliğinden çıkarır); davranış aynı.
 library;
 
 import 'package:flutter/material.dart';
@@ -46,6 +49,7 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
+import 'support/realistic_device.dart';
 import 'support/widget_test_helpers.dart' show freshMockRepository;
 
 Widget _wrap(Widget child) => MultiProvider(
@@ -80,6 +84,13 @@ Future<void> _pumpHome(WidgetTester tester) async {
 }
 
 void main() {
+  // 2026-09-30 simülatör: konu ızgarası sütun sayısını yazının gerçek
+  // genişliğinden çıkarır (büyük yazıda 4 sütun adları bölüyordu). Ölçü
+  // fontunda her harf kare olduğundan "245 soru" 96 px tutar ve ızgara
+  // 4 yerine 2 sütuna iner; "dört sütun" beklentisi ancak gerçek yazı
+  // tipiyle anlamlıdır.
+  setUpAll(loadAppFonts);
+
   setUp(() {
     freshMockRepository();
   });
