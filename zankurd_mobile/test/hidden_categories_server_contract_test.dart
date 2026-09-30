@@ -56,7 +56,10 @@ void main() {
     expect(sql, contains('Postflight'));
   });
 
-  test('applied.md satırı uygulanmadı olarak duruyor', () {
+  // 2026-09-30: göç canlıya uygulandı ve salt okunur sorguyla doğrulandı
+  // (Paradigma/Siyaset/Teknolojî pasif, Sînema aktif). Bekçi artık kaydın
+  // "uygulandı" olduğunu korur: canlı durum ile kayıt ayrışmasın.
+  test('applied.md satırı uygulandı olarak duruyor', () {
     final applied = File('supabase/applied.md').readAsStringSync();
     final row = applied
         .split('\n')
@@ -64,6 +67,6 @@ void main() {
           (line) => line.contains('2026-09-28_hidden_categories_inactive.sql'),
           orElse: () => '',
         );
-    expect(row, contains('⏳'));
+    expect(row, contains('✅'));
   });
 }
