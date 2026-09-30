@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/category_visibility.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/question_bank_assets.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/question_metadata.dart';
 import 'package:zankurd_mobile/src/services/question_content_policy.dart';
@@ -59,11 +60,12 @@ void main() {
     // yeni bir kategori açmak, onu doldurmadan mümkün olmasın.
     const floor = 40;
     final counts = <String, int>{};
-    for (final source in [
-      'assets/data/offline_questions.json',
-      'assets/data/community_questions.json',
-      'assets/data/editorial_questions.json',
-    ]) {
+    // 2026-09-30: liste eskiden üç bankayı sayıyordu (offline, community,
+    // editorial). Cîhan'ın soruları çoğunlukla başka bankalarda (kaynaklı
+    // sinema/coğrafya ve doğrulanmış DeepSeek); üç bankaya bakan ölçüm
+    // 399 sorulu kategoriyi «18 soru» sayıp yanlış alarm veriyordu. Artık
+    // uygulamanın yüklediği bütün bankalar sayılır (`questionBankAssets`).
+    for (final source in questionBankAssets) {
       final file = File(source);
       if (!file.existsSync()) continue;
       for (final raw in jsonDecode(file.readAsStringSync()) as List) {

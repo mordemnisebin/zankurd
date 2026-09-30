@@ -8194,12 +8194,12 @@
     "type": "multipleChoice",
     "difficulty": 1,
     "id": "edit_sinema_0011",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Parazît\" ji kîjan welatî ye?",
     "answers": [
       "Japonya",
       "Çîn",
-      "Taylandistan",
+      "Tayland",
       "Koreya Başûr"
     ],
     "correctAnswer": "Koreya Başûr",
@@ -8226,7 +8226,7 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "id": "edit_sinema_0012",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Kîjan fîlm bû yekem berhema ne bi îngilîzî ku Oscara Fîlmê Herî Baş wergirt?",
     "answers": [
       "Roma",
@@ -8258,7 +8258,7 @@
     "type": "multipleChoice",
     "difficulty": 2,
     "id": "edit_sinema_0013",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê \"Heft Samurai\" (1954) kî ye?",
     "answers": [
       "Yasujiro Ozu",
@@ -8290,7 +8290,7 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "id": "edit_sinema_0014",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê yekem ê bi diyalogên bideng ê Charlie Chaplin kîjan e?",
     "answers": [
       "Ronahiyên Bajêr",
@@ -8322,7 +8322,7 @@
     "type": "multipleChoice",
     "difficulty": 2,
     "id": "edit_sinema_0015",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê anîmasyona \"Spirited Away\" kî ye?",
     "answers": [
       "Isao Takahata",
@@ -8418,7 +8418,7 @@
     "type": "multipleChoice",
     "difficulty": 2,
     "id": "edit_sinema_0020",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Cinema Paradiso\" ji kîjan welatî ye?",
     "answers": [
       "Fransa",
@@ -8428,7 +8428,7 @@
     ],
     "correctAnswer": "Îtalya",
     "explanation": "Yönetmeni Giuseppe Tornatore'dir; film sinema sevgisi üzerinedir.",
-    "explanationKu": "Derhênerê wê Giuseppe Tornatore ye; fîlm li ser hezkirina sînemayê ye.",
+    "explanationKu": "Derhênerê wî Giuseppe Tornatore ye; fîlm li ser hezkirina sînemayê ye.",
     "explanationTr": "Yönetmeni Giuseppe Tornatore'dir; film sinema sevgisi üzerinedir.",
     "metadata": {
       "reviewStatus": "approved",
@@ -8450,7 +8450,7 @@
     "type": "multipleChoice",
     "difficulty": 4,
     "id": "edit_sinema_0021",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Diziyên Bîsikletê\" (1948) mînaka kîjan tevgera sînemayî ye?",
     "answers": [
       "Ekspresyonîzma Alman",
@@ -8482,7 +8482,7 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "id": "edit_sinema_0022",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê \"Keştiya Şer Potemkin\" (1925) û teorîsyenê montajê kî ye?",
     "answers": [
       "Dziga Vertov",
@@ -8492,7 +8492,7 @@
     ],
     "correctAnswer": "Sergey Eisenstein",
     "explanation": "Anlamın yalnız görüntüde değil, görüntülerin sıralanışında da oluştuğunu gösterdi.",
-    "explanationKu": "Ew nîşan da ku wate ne tenê di dîmenê de, di rêza dîmenan de jî çêdibe.",
+    "explanationKu": "Wî nîşan da ku wate ne tenê di dîmenê de, di rêza dîmenan de jî çêdibe.",
     "explanationTr": "Anlamın yalnız görüntüde değil, görüntülerin sıralanışında da oluştuğunu gösterdi.",
     "metadata": {
       "reviewStatus": "approved",
@@ -8514,12 +8514,12 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "id": "edit_sinema_0023",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Ingmar Bergman ji kîjan welatî ye?",
     "answers": [
       "Swêd",
       "Danîmarka",
-      "Norwec",
+      "Norwêc",
       "Fînlandiya"
     ],
     "correctAnswer": "Swêd",
@@ -8546,7 +8546,7 @@
     "type": "multipleChoice",
     "difficulty": 4,
     "id": "edit_sinema_0024",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Rashomon\" (1950) bi kîjan taybetmendiya vegotinê tê nasîn?",
     "answers": [
       "Fîlm bi tevahî di yek plana dirêj de hatiye kişandin",
@@ -8556,7 +8556,7 @@
     ],
     "correctAnswer": "Heman bûyer ji devê şahidên cuda bi awayên nakok tê vegotin",
     "explanation": "Bu anlatım biçimi bugün hâlâ filmin adıyla anılır.",
-    "explanationKu": "Ev awayê vegotinê îro jî bi navê fîlm tê binavkirin.",
+    "explanationKu": "Ev awayê vegotinê îro jî bi navê fîlmî tê binavkirin.",
     "explanationTr": "Bu anlatım biçimi bugün hâlâ filmin adıyla anılır.",
     "metadata": {
       "reviewStatus": "approved",
@@ -8642,7 +8642,7 @@
     "type": "multipleChoice",
     "difficulty": 5,
     "id": "edit_sinema_0027",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê \"Cîranê Min Totoro\" ji hêla kîjan stûdyoyê ve hatiye çêkirin?",
     "answers": [
       "Studio Ghibli",

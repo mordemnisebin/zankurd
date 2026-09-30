@@ -75,4 +75,29 @@ const questionBankAssets = <String>[
   // şartıyla karşılandı; Kurmancî metinler yine de ana dili Kurmancî olan
   // bir editörün okumasını bekliyor.
   'assets/data/expansion_2026_09_28_questions.json',
+  // 2026-09-30: karantinadaki DeepSeek dosyasının (yukarıda, listede YOK)
+  // çok modelli doğrulamadan geçen 458 sorusu. Orijinal dosya karantinada
+  // KALIR ve tek bir kayıt bile oradan okunmaz; buraya yalnız şu iki şartı
+  // birden sağlayanların KOPYASI girdi: (1) olgu denetimi — en az iki
+  // bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny
+  // eleği) hiçbir kusur işaretlemedi; (2) Kurmancî okuması — Gemini 3.1 Pro
+  // (ya da Grok 4.7) uygun buldu. Olgu hatası örnekleme ile ~%5–8 çıkmıştı;
+  // bu filtre o oranı soru bazında eler. Metin aynen korunur, yalnız
+  // künye (`reviewedBy`, `reviewedAt`) eklenir. Genel bilgi sayılan sorular
+  // (dünya sineması/coğrafyası/edebiyatı/müziği/tarihi) `Cîhan`
+  // kategorisindedir; Kürt diliyle ve kültürüyle ilgili olanlar kendi
+  // kategorisinde kalır.
+  // Aynı gün ikinci tur: aynı filtreden geçen 364 soru daha eklendi; bunlarda
+  // ayrıca Gemini 3.1 Pro'nun önerdiği, Grok 4.7 ya da Gemini 3.8 Flash'ın
+  // onayladığı bir Kurmancî dil/terim düzeltmesi uygulandı (doğru şıkkın
+  // KONUMU ve anlamı değişmedi; Türkçe alanlara dokunulmadı).
+  'assets/data/deepseek_verified_2026_09_30_questions.json',
+  // 2026-09-30: «Bilim ve Düşünce / Zanist û Raman» (iç kimlik Paradigma)
+  // tek bir hareketin öğretisi emekli edilince 42 soruya inmişti; kalan
+  // içerik de alt konuların çoğunu boş bırakıyordu. 40 yeni soru, her biri
+  // açılmış bir web kaynağından (NASA, NIST, WHO, UN, Stanford Encyclopedia
+  // of Philosophy…; URL `sourceReference`da) ChatGPT'yle taslaklandı,
+  // Gemini 3.1 Pro Kurmancîye çevirdi, Grok 4.7 okudu. Konular: temel bilim,
+  // felsefe tarihi, anayasa/BM/insan hakları, Kürt düşünce tarihi.
+  'assets/data/bilim_2026_09_30_questions.json',
 ];

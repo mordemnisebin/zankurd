@@ -191,7 +191,9 @@ void main() {
       // Raman" adını aldı: ad iki satıra sarılır ama en uzun TEK söz artık
       // "Coğrafya" / "Erdnîgarî" (4 sütuna sığar), böylece ızgara 4 sütuna
       // döndü (`_columnsFor`): 10 kategori → 4 + 4 + 2.
-      expect(repo.categories.length, 10);
+      // 2026-09-30: 'Cîhan / Dünya' (nötr genel bilgi) on birinci kategori
+      // olarak geldi: 11 kategori → 4 + 4 + 3 (yine ceil(11 / 4) satır).
+      expect(repo.categories.length, 11);
       expect(tops.length, (repo.categories.length / 4).ceil());
     },
   );

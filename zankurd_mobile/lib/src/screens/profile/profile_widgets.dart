@@ -24,6 +24,7 @@ const List<String> _kProfileAnalysisCategories = [
   'Paradigma',
   'Sînema',
   'Teknolojî',
+  'Cîhan',
 ];
 
 /// Profil kimliği: avatar (dokununca düzenleme) + ad + oyuncu kodu

@@ -65,7 +65,11 @@ void main() {
       // 2026-09-28: expansion_2026_09_28 (144 soru) eklendi. Fiziksel ve
       // oynanabilir BİRLİKTE +144: kayıtlar kaynaklı ve `reviewStatus`
       // taşımıyor, yani kuyrukta beklemiyor, oyuncuya ulaşıyor.
-      2075,
+      // 2075 -> 2937: 2026-09-30 son içerik birleştirmesi. Fiziksel +862:
+      // çok modelli doğrulamadan geçen 822 DeepSeek sorusu kopya dosyada
+      // (`deepseek_verified_2026_09_30`; orijinal karantinada kalır) ve 40
+      // kaynaklı bilim sorusu (`bilim_2026_09_30`, Paradigma).
+      2937,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -120,7 +124,17 @@ void main() {
       // sorusu emekliye ayrıldı (`retired_question_ids.dart`, "Beşinci
       // dalga"). Hiçbiri `rejected` değildi, yani oynanabilir tam -17.
       // Fiziksel sayı değişmedi.
-      1546,
+      // 1546 -> 2469 (+923): 2026-09-30 son birleştirme.
+      //   +862 yeni kayıt (822 doğrulanmış DeepSeek + 40 bilim), hepsi
+      //   `approved` ve oynanabilir;
+      //   +99 emekliden dönen dünya bilgisi (47 + 52 sinema/coğrafya/Don
+      //   Kişot; `Cîhan` kategorisinde, bkz. `retired_question_ids.dart`
+      //   «Cîhan'a dönenler»);
+      //   -38 son olgu doğrulaması (altıncı dalga): Gemini 3.1 Pro ve Grok 4.7
+      //   ikisinin de onayladığı 38 soru emekliye ayrıldı (hepsi mevcut
+      //   bankalarda; yeni kopya dosyadan hiçbiri değil).
+      // Kontrol: 862 + 99 - 38 = 923.
+      2469,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -180,21 +194,32 @@ void main() {
       // 2026-09-29 doğallık (üçüncü dalga, şablon izi, 90 kayıt):
       // Sînema 99->102, Cografya 53->67, Edebiyat 10->16, Dîrok 17->36,
       // Muzîk 12->22, Ziman 10->36, Çand 20->32.
-      'retired=Sînema': 102,
-      'retired=Cografya': 67,
-      'retired=Edebiyat': 16,
-      'retired=Dîrok': 36,
-      'retired=Muzîk': 22,
+      // 2026-09-30 Cîhan: 99 kayıt emekliden çıkıp `Cîhan`a döndü (ilk tur
+      // 47: Sînema 37, Cografya 9, Edebiyat 1; ikinci tur 52: Sînema 42,
+      // Cografya 10) ve altıncı dalga (son olgu doğrulaması) 38 kayıt ekledi
+      // (Çand 9, Edebiyat 8, Dîrok 7, Muzîk 5, Teknolojî 3, Siyaset 2,
+      // Cografya 2, Sînema 2):
+      //   Sînema 102 - 79 + 2 = 25; Cografya 67 - 19 + 2 = 50;
+      //   Edebiyat 16 - 1 + 8 = 23; Dîrok 36 + 7 = 43; Muzîk 22 + 5 = 27;
+      //   Çand 32 + 9 = 41; Teknolojî 0 + 3 = 3; Siyaset 68 + 2 = 70.
+      'retired=Sînema': 25,
+      'retired=Cografya': 50,
+      'retired=Edebiyat': 23,
+      'retired=Dîrok': 43,
+      'retired=Muzîk': 27,
       // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
       'retired=Ziman': 37,
-      'retired=Çand': 32,
+      'retired=Çand': 41,
+      // 2026-09-30 altıncı dalga: Teknolojî'den iki modelce onaylanan 3 soru.
+      'retired=Teknolojî': 3,
       // 2026-09-30 dördüncü dalga: tartışmalı siyasi görüşü doğru cevap diye
       // sunan sorular (Paradigma 108, Siyaset 51). Bu iki kategori yeniden
       // açıldığı için ilk kez bu gerekçeyle giriyorlar.
       'retired=Paradigma': 108,
       // 2026-09-30 beşinci dalga (ChatGPT ikinci geçişi): Siyaset 51 -> 68
       // (+17: 8 çoktan seçmeli + 9 doğru/yanlış). Paradigma değişmedi.
-      'retired=Siyaset': 68,
+      // 2026-09-30 altıncı dalga: +2 (68 -> 70).
+      'retired=Siyaset': 70,
     }, reason: 'Engellenen kayıtların dağılımı değişti: $byReason');
   });
 
@@ -223,9 +248,10 @@ void main() {
     // 10 -> 8: 2026-09-27 Paradigma ve Siyaset gizlendi.
     // 8 -> 7: aynı gün Teknolojî de gizlendi.
     // 7 -> 10: 2026-09-30 üçü de yeniden açıldı.
+    // 10 -> 11: 2026-09-30 `Cîhan` (Dünya) kategorisi eklendi.
     expect(
       byCategory.length,
-      10,
+      11,
       reason: 'Kategori sayısı değişti: ${byCategory.keys.toList()..sort()}',
     );
   });

@@ -32,6 +32,10 @@ class CategoryVisuals {
     'Teknoloji': 'Teknolojî',
     'Sinema': 'Sînema',
     'Film': 'Sînema',
+    // Oyuncunun gördüğü Türkçe ad 'Dünya'; kimlik 'Cîhan' (soru bankası,
+    // sunucu slug'ı `cihan`, depolama anahtarları).
+    'Dünya': 'Cîhan',
+    'Cihan': 'Cîhan',
   };
 
   /// Tanınan takma adlar. Bekçiler bu listeyi kendi kopyasından değil
@@ -93,6 +97,7 @@ class CategoryVisuals {
     'Paradigma': AppIcons.brain,
     'Teknolojî': AppIcons.mobileScreen,
     'Sînema': AppIcons.clapperboard,
+    'Cîhan': AppIcons.globe,
   };
 
   static const Map<String, String> _imagePaths = {
@@ -109,6 +114,9 @@ class CategoryVisuals {
     'Teknolojî': 'assets/question_images/cat_paradigma.webp',
     // Sînema için henüz ayrı görsel yok; kültür görseli geçici kaynaktır.
     'Sînema': 'assets/question_images/cat_cand.webp',
+    // Cîhan'ın da kendi görseli yok; kimlik karosu silüet + ton taşır,
+    // `ownImagePath` null döner (ödünç görsel yanlış konuyu anlatırdı).
+    'Cîhan': 'assets/question_images/cat_cografya.webp',
   };
 
   /// Konunun görsel dili: ana sayfa karosundaki K3 silüeti ve alt konu
@@ -117,9 +125,9 @@ class CategoryVisuals {
   /// Görünür her konunun kendi işareti var. Siyaset, Paradigma ve Teknolojî
   /// önce işaretsizdi ve yan yana yedi silüetin yanında tek başına eski ikon
   /// + eğik köşe hâline düşüyordu; 2026-09-30'da dördüncü ailesi geldi.
-  /// 'Cîhan' (dünya sineması, coğrafyası, edebiyatı: Kürde özgü olmayan genel
-  /// kültür) henüz kategori değil; ad tabloya şimdiden yazıldı ki eklendiği
-  /// gün silüetsiz kalmasın. Bilinmeyen kategori `null` döner ve çağıran eski
+  /// 'Cîhan' (dünya sineması, coğrafyası, tarih ve genel kültür: Kürde özgü
+  /// olmayan nötr bilgi) 2026-09-30'da kategori oldu; silüeti hazırdı.
+  /// Bilinmeyen kategori `null` döner ve çağıran eski
   /// ikon + ton hâline düşer (silüet uydurulmaz).
   static const Map<String, SahneTopicMark> _marks = {
     'Ziman': SahneTopicMark.ziman,

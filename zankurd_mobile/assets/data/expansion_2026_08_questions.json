@@ -103,13 +103,13 @@
   },
   {
     "id": "cinema_0005",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Nûbûna sereke ya fîlmê 1927an \"The Jazz Singer\" di dîroka sînemayê de çi bû?",
     "answers": [
       "Diyaloga hevaheng a bi deng",
       "Karanîna pêşîn a Technicolorê",
-      "Yekem fîlmê sê-alîkî",
-      "Yekem animasyona dirêj"
+      "Yekem fîlmê sê-alî",
+      "Yekem anîmasyona dirêj"
     ],
     "correctAnswer": "Diyaloga hevaheng a bi deng",
     "promptTr": "1927 yapımı \"The Jazz Singer\" filminin sinema tarihindeki temel yeniliği neydi?",
@@ -205,10 +205,10 @@
   },
   {
     "id": "cinema_0008",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Dîmena navdar a pêpelûkên Odessayê di kîjan fîlmê Sergey Eisenstein ê 1925an de derbas dibe?",
     "answers": [
-      "Oktobre",
+      "Cotmeh",
       "Grev",
       "Îvanê Tirsnak",
       "Keştiya Şer Potemkin"
@@ -341,7 +341,7 @@
   },
   {
     "id": "cinema_0012",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Navê \"Bollywood\" ji bo pîşesaziya fîlmên hindî yên kîjan bajarî tê bikaranîn?",
     "answers": [
       "Kolkata",
@@ -362,7 +362,7 @@
     "difficulty": 1,
     "type": "multipleChoice",
     "explanationTr": "Ad, şehrin eski adı Bombay ile Hollywood'un birleşiminden gelir ve Hintçe film üretimini anlatır. Chennai'deki Tamil sineması Kollywood, Kolkata'daki Bengalce sinema ise Tollywood diye anılır.",
-    "explanationKu": "Nav ji navê kevn ê bajêr Bombay û Hollywoodê tê û berhemhênana fîlmên hindî vedibêje. Sînemaya tamîlî ya li Chennaiyê Kollywood, sînemaya bengalî ya li Kolkatayê jî Tollywood tê binavkirin.",
+    "explanationKu": "Nav ji navê kevn ê bajêr Bombay û Hollywoodê tê û berhemhênana fîlmên hindî vedibêje. Sînemaya tamîlî ya li Çennaîyê Kollywood, sînemaya bengalî ya li Kolkatayê jî Tollywood tê binavkirin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -511,7 +511,7 @@
   },
   {
     "id": "cinema_0017",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Fîlmê 1920yî \"Kabîneya Doktor Caligari\" bi dekorên xwar û siyên tûj nûnerê kîjan şêwazê ye?",
     "answers": [
       "Ekspresyonîzma almanî",
@@ -532,7 +532,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Bu akımda dekor ve ışık karakterin ruh halini dışarı taşır; gerçekçi mekân yerine boyanmış, eğri bir dünya kurulur. Şiirsel gerçekçilik 1930'lar Fransa'sına, sine-göz ise Sovyet belgeseline aittir.",
-    "explanationKu": "Di vê tevgerê de dekor û ronahî rewşa giyanî ya karakterî derdixin holê; li şûna mekaneke rasteqîn, cîhaneke boyaxkirî û xwar tê avakirin. Rasteqînbûna helbestkî ya Fransaya salên 1930î ye, sîne-çav jî ya belgefîlma sovyetî ye.",
+    "explanationKu": "Di vê tevgerê de dekor û ronahî rewşa giyanî ya karakteran derdixin holê; li şûna mekanekî rasteqîn, cîhaneke boyaxkirî û xwar tê avakirin. Realîzma poetîk ya Fransaya salên 1930î ye, Sînema-çav jî ya belgefîlma sovyetî ye.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -647,7 +647,7 @@
   },
   {
     "id": "cinema_0021",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê swêdî yê fîlmê 1957an \"Det sjunde inseglet\" (Mohra Heftemîn) kî ye?",
     "answers": [
       "Victor Sjöström",
@@ -668,7 +668,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Film, Haçlı seferinden dönen bir şövalyenin Ölüm'le satranç oynamasını anlatır; inanç ve ölüm sorusu yönetmenin bütün işlerinde sürer. Sjöström, Widerberg ve Troell de İsveç sinemasının önemli adlarıdır.",
-    "explanationKu": "Fîlm vedigire ka şovalyeyekî ku ji Seferên Xaçparêzan vedigere, bi Mirinê re satrancê dilîze; pirsa baweriyê û mirinê di hemû berhemên derhêner de didome. Sjöström, Widerberg û Troell jî navên girîng ên sînemaya swêdî ne.",
+    "explanationKu": "Fîlm vedibêje ku şovalyeyekî ku ji Seferên Xaçparêzan vedigere, bi Mirinê re satrancê dilîze; pirsa baweriyê û mirinê di hemû berhemên derhêner de didome. Sjöström, Widerberg û Troell jî navên girîng ên sînemaya swêdî ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -715,7 +715,7 @@
   },
   {
     "id": "cinema_0023",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Kîjan festîvala fîlman a navneteweyî ya sereke di sala 1932yan de, berî yên din, hat damezrandin?",
     "answers": [
       "Cannes",
@@ -736,7 +736,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "1932'de başlayan bu festivalin büyük ödülü Altın Aslan'dır. Cannes ve Karlovy Vary 1946'da düzenli hale geldi, Berlinale ise 1951'de kuruldu.",
-    "explanationKu": "Xelata mezin a vî festîvalê yê ku di sala 1932yan de dest pê kiriye, Şêrê Zêrîn e. Cannes û Karlovy Vary di sala 1946an de bûn birêkûpêk, Berlinale jî di sala 1951ê de hat damezrandin.",
+    "explanationKu": "Xelata mezin a vê festîvalê ya ku di sala 1932yan de dest pê kiriye, Şêrê Zêrîn e. Cannes û Karlovy Vary di sala 1946an de bûn birêkûpêk, Berlînale jî di sala 1951ê de hat damezrandin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -749,7 +749,7 @@
   },
   {
     "id": "cinema_0024",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Krîza afirînerî ya derhênerekî di fîlmê 1963yan \"8½\" de tê vegotin; ev berhem ya kîjan derhênerê îtalî ye?",
     "answers": [
       "Federico Fellini",
@@ -770,7 +770,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Yönetmen kendi tıkanmışlığını rüya, anı ve gerçeği iç içe geçirerek anlattı; başlık o güne dek çektiği film sayısına gönderme yapar. Visconti, Antonioni ve Pasolini de aynı dönemin İtalyan ustalarıdır.",
-    "explanationKu": "Derhêner tikaniya xwe ya hunerî bi tevliheviya xewn, bîr û rastiyê vegot; sernav bal dikişîne ser hejmara fîlmên ku heta wê rojê kişandibû. Visconti, Antonioni û Pasolini jî hostayên îtalî yên heman serdemê ne.",
+    "explanationKu": "Derhêner xitimîna xwe ya hunerî bi tevliheviya xewn, bîr û rastiyê vegot; sernav bal dikişîne ser hejmara fîlmên ku heta wê rojê kişandibû. Visconti, Antonioni û Pasolini jî hostayên îtalî yên heman serdemê ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -783,7 +783,7 @@
   },
   {
     "id": "cinema_0025",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Di standarda klasîk a sînemaya 35 mm de di saniyeyekê de çend kadro tên nîşandan?",
     "answers": [
       "16",
@@ -804,7 +804,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Sesli sinemaya geçişle birlikte bu hız standart oldu, çünkü ses bandının düzgün okunması sabit bir hız gerektiriyordu. Sessiz dönemde çekim hızı 16 ile 18 arasında değişebiliyordu.",
-    "explanationKu": "Bi derbasbûna bo sînemaya dengdar re ev leza kadroyan bû standart, çimkî xwendina rast a bandê dengî lezeke sabît hewce dikir. Di serdema bêdengiyê de lezê kişandinê di navbera 16 û 18an de dihat guhertin.",
+    "explanationKu": "Bi derbasbûna bo sînemaya dengdar re ev leza kadroyan bû standard, çimkî xwendina rast a banda dengî lezeke sabît hewce dikir. Di serdema bêdengiyê de leza kişandinê di navbera 16 û 18an de dihat guhertin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -817,8 +817,8 @@
   },
   {
     "id": "cinema_0026",
-    "category": "Sînema",
-    "prompt": "Fîlmê 1959an \"Les 400 coups\" ku destpêka Tevgera Nû ya Fransî tê hesibandin, ji kê ye?",
+    "category": "Cîhan",
+    "prompt": "Fîlmê 1959an \"Les 400 coups\" ku destpêka Pêla Nû ya Fransî tê hesibandin, ji kê ye?",
     "answers": [
       "François Truffaut",
       "Jean-Luc Godard",
@@ -953,7 +953,7 @@
   },
   {
     "id": "cinema_0030",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê senegalî yê ku bi fîlmê 1966an \"La Noire de…\" tê nasîn kî ye?",
     "answers": [
       "Djibril Diop Mambéty",
@@ -974,7 +974,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Roman yazarlığından gelen yönetmen, Fransa'da çalışan bir Senegalli kadının öyküsüyle Sahra altı Afrika'nın uluslararası ilgi gören ilk uzun metrajlarından birini verdi. Mambéty, Cissé ve Hondo da Afrika sinemasının önemli adlarıdır.",
-    "explanationKu": "Derhênerê ku ji romannivîsiyê hatibû, bi çîroka jineke senegalî ya li Fransayê dixebitî, yek ji fîlmên pêşîn ên dirêjmetraj ên Afrîkaya binê Sahrayê ku baldarî ya navneteweyî kişand, da. Mambéty, Cissé û Hondo jî navên girîng ên sînemaya afrîkî ne.",
+    "explanationKu": "Derhênerê ku ji romannivîsiyê hatibû, bi çîroka jineke senegalî ya li Fransayê dixebitî, yek ji fîlmên pêşîn ên dirêjmetraj ên Afrîkaya binê Sahrayê ku baldariya navneteweyî kişand, çêkir. Mambéty, Cissé û Hondo jî navên girîng ên sînemaya afrîkî ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1055,7 +1055,7 @@
   },
   {
     "id": "cinema_0033",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê hongkongî yê fîlmê 2000î \"In the Mood for Love\" kî ye?",
     "answers": [
       "Wong Kar-waî",
@@ -1076,7 +1076,7 @@
     "difficulty": 3,
     "type": "multipleChoice",
     "explanationTr": "Film, 1960'ların Hong Kong'unda iki komşunun söze dökülmeyen yakınlığını dar kadrajlar ve yavaşlatılmış geçişlerle anlatır. Woo, Tsui Hark ve Ann Hui aynı sinemanın başka damarlarını temsil eder.",
-    "explanationKu": "Fîlm nêzîkbûna neaxaftî ya di navbera du cîranan de li Hong Kongê ya salên 1960î bi kadrojên teng û derbasbûnên hêdîkirî vedibêje. Woo, Tsui Hark û Ann Hui jî damarên din ên heman sînemayê temsîl dikin.",
+    "explanationKu": "Fîlm nêzîkbûna neaxaftî ya di navbera du cîranan de li Hong Konga salên 1960î bi kadroyên teng û derbasbûnên hêdîkirî vedibêje. Woo, Tsui Hark û Ann Hui jî damarên din ên heman sînemayê temsîl dikin.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1123,8 +1123,8 @@
   },
   {
     "id": "cinema_0035",
-    "category": "Sînema",
-    "prompt": "Kûrahiya zeviyê ya berfireh bi fîlmê 1941ê \"Citizen Kane\" navdar bû; derhênerê wî kî ye?",
+    "category": "Cîhan",
+    "prompt": "Kûrahiya qadê ya berfireh bi fîlmê 1941ê \"Citizen Kane\" navdar bû; derhênerê wî kî ye?",
     "answers": [
       "Howard Hawks",
       "Orson Welles",
@@ -1191,8 +1191,8 @@
   },
   {
     "id": "cinema_0037",
-    "category": "Sînema",
-    "prompt": "Cûreyê fîlmî yê ku li rojavayê Amerîkayê ya sedsala 19an, bi kovboy û şerên sînoran derbas dibe kîjan e?",
+    "category": "Cîhan",
+    "prompt": "Cureyê fîlmî yê ku li rojavayê Amerîkayê ya sedsala 19an, bi kovboy û şerên sînoran derbas dibe kîjan e?",
     "answers": [
       "Western",
       "Melodram",
@@ -1225,7 +1225,7 @@
   },
   {
     "id": "cinema_0038",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Kîjan kovara fransî di salên 1950î de nêrîna \"derhêner nivîskarê fîlmî ye\" belav kir?",
     "answers": [
       "Sight and Sound",
@@ -1259,7 +1259,7 @@
   },
   {
     "id": "cinema_0039",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Palme d'Or a sala 2019an ji fîlmê \"Parasite\" re hat dayîn; ev fîlm ji kîjan welatî ye?",
     "answers": [
       "Japonya",
@@ -1280,7 +1280,7 @@
     "difficulty": 2,
     "type": "multipleChoice",
     "explanationTr": "Bong Joon-ho'nun filmi iki ailenin sınıf farkını tek bir evin katmanlarında anlatır. Aynı film ertesi yıl Oscar'da en iyi film seçilerek bu ödülü kazanan ilk İngilizce olmayan yapım oldu.",
-    "explanationKu": "Fîlmê Bong Joon-ho cudahiya çînî ya di navbera du malbatan de bi qatên xaniyekî tenê vedibêje. Heman fîlm sala pey re li Oscarê wek fîlmê herî baş hat hilbijartin û bû berhema pêşîn a ne-îngilîzî ku vê xelatê wergirt.",
+    "explanationKu": "Fîlmê Bong Joon-ho cudahiya çînan a di navbera du malbatan de bi qatên xaniyekî tenê vedibêje. Heman fîlm sala pey re li Oscarê wek fîlmê herî baş hat hilbijartin û bû yekemîn berhema ne bi îngilîzî ku vê xelatê wergirt.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1429,8 +1429,8 @@
   },
   {
     "id": "cinema_0044",
-    "category": "Sînema",
-    "prompt": "Ceribandina ku nîşan da wateya heman dîmenê rû li gorî dîmenê pê re diguhere, bi navê kê tê zanîn?",
+    "category": "Cîhan",
+    "prompt": "Ceribandina ku nîşan da wateya heman dîmena rûyî li gorî dîmena pê re diguhere, bi navê kê tê zanîn?",
     "answers": [
       "Dziga Vertov",
       "Vsevolod Pudovkin",
@@ -1565,8 +1565,8 @@
   },
   {
     "id": "cinema_0048",
-    "category": "Sînema",
-    "prompt": "Derhênerê spanî yê ku bi fîlmê xwe yê 1999an \"Dayika Min\" Oscara fîlmê biyanî wergirt kî ye?",
+    "category": "Cîhan",
+    "prompt": "Derhênerê spanî yê ku bi fîlmê xwe yê 1999an \"Her Tişt Li Ser Dayika Min\" Oscara fîlmê biyanî wergirt kî ye?",
     "answers": [
       "Carlos Saura",
       "Luis Buñuel",
@@ -1633,7 +1633,7 @@
   },
   {
     "id": "cinema_0050",
-    "category": "Sînema",
+    "category": "Cîhan",
     "prompt": "Derhênerê fîlmê 1979an \"Stalker\" ê ku li Yekîtiya Sovyetê hat kişandin kî ye?",
     "answers": [
       "Andrey Tarkovskî",
@@ -1654,7 +1654,7 @@
     "difficulty": 4,
     "type": "multipleChoice",
     "explanationTr": "Yönetmen uzun çekimleri ve ağır ritmiyle bilimkurgunun aksiyonunu değil inanç sorusunu öne aldı; film Strugatski kardeşlerin romanından uyarlandı. Parajanov, Klimov ve Mihalkov aynı dönemin diğer Sovyet yönetmenleridir.",
-    "explanationKu": "Derhêner bi dîmenên dirêj û rîtma xwe ya giran, ne aksiyona zanistiya xeyalî, lê pirsa baweriyê xist pêş; fîlm ji romana birayên Strugatskî hatiye wergerandin. Parajanov, Klimov û Mihalkov jî derhênerên din ên Sovyetê yên heman serdemê ne.",
+    "explanationKu": "Derhêner bi dîmenên dirêj û rîtma xwe ya giran, ne aksiyona xeyalî-zanistî, lê pirsa baweriyê xist pêş; fîlm ji romana birayên Strugatskî hatiye guncandin. Parajanov, Klimov û Mihalkov jî derhênerên din ên Sovyetê yên heman serdemê ne.",
     "metadata": {
       "dialect": "kurmanci",
       "sourceTitle": "Sînema: huner, dîrok û derhêner",
@@ -1701,8 +1701,8 @@
   },
   {
     "id": "cinema_0052",
-    "category": "Sînema",
-    "prompt": "Di zimanê Hitchcock de, tişta ku lehengan dide tevgerê lê bi xwe ne girîng e, çi tê navandin?",
+    "category": "Cîhan",
+    "prompt": "Di zimanê Hitchcock de, tişta ku lehengan dide tevgerê lê bi xwe ne girîng e, çawa tê binavkirin?",
     "answers": [
       "MacGuffin",
       "Deus ex machina",

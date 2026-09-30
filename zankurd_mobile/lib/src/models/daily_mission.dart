@@ -49,6 +49,7 @@ class DailyMission {
     'Siyaset': 'siyaset',
     'Paradigma': 'paradigma',
     'Teknolojî': 'teknoloji',
+    'Cîhan': 'cihan',
   };
 
   static String _categorySlug(String category) =>

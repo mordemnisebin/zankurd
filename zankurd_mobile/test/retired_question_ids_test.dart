@@ -69,7 +69,12 @@ void main() {
     final categories = {
       for (final id in retiredQuestionIds) byId[id]?.category,
     };
+    // 2026-09-30 altıncı dalga (son olgu doğrulaması, Gemini 3.1 Pro + Grok
+    // 4.7 ikisi de onayladı): Teknolojî ilk kez listeye girdi (3 soru).
+    // Aynı gün `Cîhan` kategorisine 99 sinema/coğrafya/edebiyat kaydı döndü
+    // ve hiçbiri artık bu listede değil — `Cîhan` burada ÇIKMAMALI.
     expect(categories, {
+      'Teknolojî',
       'Sînema',
       'Cografya',
       'Edebiyat',

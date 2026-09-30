@@ -44,9 +44,14 @@ void main() {
 
     // Üretilmiş sorular `ds_` önekiyle ayrılır; elle yazılmış editoryal
     // içerik bu kuralın dışındadır (onların denetimi insan incelemesidir).
-    final generated = <Map<String, dynamic>>[];
+    // 2026-09-30: karantinadaki orijinal DeepSeek dosyası ile doğrulanmış
+    // kopyası AYNI id'leri taşır ve bilerek ayrışmıştır (ikinci dalga
+    // Kurmancî düzeltmeleri). Karantina dosyası önce, runtime bankaları sonra
+    // okunur ve id başına SON okunan kazanır; böylece oynanan metin
+    // denetlenir, karantinadaki eski yazım değil.
+    final generatedById = <String, Map<String, dynamic>>{};
     const extraScan = ['assets/data/deepseek_2026_08_18_questions.json'];
-    final scan = {...questionBankAssets, ...extraScan};
+    final scan = [...extraScan, ...questionBankAssets];
     for (final asset in scan) {
       final file = File(asset);
       if (!file.existsSync()) continue;
@@ -70,9 +75,10 @@ void main() {
             metadata?['reviewStatus'] == 'rejected') {
           continue;
         }
-        generated.add(question);
+        generatedById[question['id'] as String] = question;
       }
     }
+    final generated = generatedById.values.toList();
     if (generated.isEmpty) return; // üretilmiş soru yoksa kural boşta
 
     final unchecked = generated
@@ -119,7 +125,7 @@ void main() {
       // yazıldı; "Herêma Kurdistanê"nin kurulması BM 688'in doğrudan
       // hükmü değildi, o ibare çıkarıldı.
       'ds_dirok_0338':
-          'Herêma dije-firoke li bakur ava kir û vegera penaberan hêsantir kir',
+          'Herêma qedexeya firînê li bakur ava kir û vegera penaberan hêsantir kir',
       // Zirne (zurna) geleneksel olarak DAHOL (davul) eşliğinde çalınır;
       // bankanın kendi üç kaydı da böyle diyor (edit_muzik_0004,
       // edit_muzik_0024, offline_2178). Kayıt "Def" işaretliydi ve
@@ -194,6 +200,14 @@ void main() {
           'Her du jî bi alfabeya latînî derketin, lê Rêya Teze guhertoyeke cuda ya Sovyetî bi kar anî',
     };
 
+    // 2026-09-30 ikinci dalga: Gemini 3.1 Pro Kurmancî dil/terim düzeltmeleri
+    // önerdi (Grok 4.7 ya da Gemini 3.8 Flash onayladı) ve 45 kaydın doğru
+    // şıkkının YAZIMI değişti («Komîdî→Komedî», «Vadî→Newal», «Pitch→Perde»
+    // gibi; hangi şıkkın doğru olduğu değil). Çapraz kontrol hükümleri metin
+    // sakladığı için eskidi — yanlış değil, adres değiştirdi — ve
+    // `capraz_kontrol.json`daki bu 45 hüküm yeni yazıma taşındı. Yukarıdaki
+    // `ds_dirok_0338` aşması da aynı nedenle yeni yazıma (`dije-firoke` →
+    // `qedexeya firînê`) taşındı.
     final contradicting = <String>[];
     for (final question in generated) {
       final given = verdicts[question['id']] as String?;

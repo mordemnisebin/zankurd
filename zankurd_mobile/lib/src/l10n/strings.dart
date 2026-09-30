@@ -2609,6 +2609,10 @@ class Tr {
     K.catParadigma: {'ku': 'Zanist û Raman', 'tr': 'Bilim ve Düşünce'},
     K.catTeknoloji: {'ku': 'Teknolojî', 'tr': 'Teknoloji'},
     K.catSinema: {'ku': 'Sînema', 'tr': 'Sinema'},
+    // 2026-09-30: Kürtlerle doğrudan bağı olmayan nötr genel bilgi (dünya
+    // sineması, dünya coğrafyası, tarih ve genel kültür) kendi adıyla ayrı
+    // durur; Kürt kategorilerinin içine karışmaz.
+    K.catCihan: {'ku': 'Cîhan', 'tr': 'Dünya'},
     K.catTevlihev: {'ku': 'Tevlihev', 'tr': 'Karışık'},
     K.levelDestpek: {'ku': 'Destpêk', 'tr': 'Başlangıç'},
     K.levelBingeh: {'ku': 'Bingeh', 'tr': 'Temel'},
@@ -3816,6 +3820,7 @@ class K {
   static const catParadigma = 'cat.paradigma';
   static const catTeknoloji = 'cat.teknoloji';
   static const catSinema = 'cat.sinema';
+  static const catCihan = 'cat.cihan';
   static const catTevlihev = 'cat.tevlihev';
   static const levelDestpek = 'level.destpek';
   static const levelBingeh = 'level.bingeh';
