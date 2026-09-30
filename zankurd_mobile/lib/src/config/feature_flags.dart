@@ -32,4 +32,11 @@ const kWeeklyLeagueEnabled = false;
 /// henüz UYGULANMADI. Göç olmadan kart açılırsa her dokunuş "Düello
 /// başlatılamadı" ile düşer — oyuncu kırık bir özellik görür. Göç
 /// uygulanıp `applied.md`ye işlenince bu bayrak `true` yapılır.
-const kAsyncDuelEnabled = false;
+///
+/// 2026-09-30: `true`. DİKKAT: bu değişiklik `async/ac` dalındadır ve
+/// dört göç (`2026-09-22_xp_and_coin_idempotency`, `2026-09-28_async_duels`,
+/// `_async_duels_cron`, `_hidden_categories_inactive`) canlıya uygulanıp
+/// `2026-09-30_async_duels_verify.sql` temiz geçmeden ANA DALA
+/// BİRLEŞTİRİLMEMELİDİR; aksi hâlde yayınlanan sürümde kart açık, sunucuda
+/// RPC yok olur.
+const kAsyncDuelEnabled = true;

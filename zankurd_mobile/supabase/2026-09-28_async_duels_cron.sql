@@ -6,6 +6,8 @@
 --
 -- Bu dosya da 2026-09-28_async_duels.sql ile birlikte UYGULANMAMIŞTIR.
 
+begin;
+
 create extension if not exists pg_cron with schema pg_catalog;
 
 select cron.unschedule('expire-async-duels')
@@ -18,3 +20,5 @@ select cron.schedule(
   '37 * * * *',
   $$select public.expire_async_duels()$$
 );
+
+commit;

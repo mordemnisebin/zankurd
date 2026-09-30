@@ -133,7 +133,13 @@ void main() {
     // açılır; başlık altı açıklama satırı yok (maket).
     expect(find.text('Arkadaşlarınla'), findsOneWidget);
     expect(find.text('Her gün'), findsOneWidget);
-    expect(find.byType(SahneSectionHeader), findsNWidgets(2));
+    // 2026-09-30: `kAsyncDuelEnabled` açıkken "Düellolarım" gelen kutusu
+    // kendi bölüm başlığını çizer (üçüncü başlık); bayrak kapalıyken yalnız
+    // iki başlık vardır.
+    expect(
+      find.byType(SahneSectionHeader),
+      findsNWidgets(kAsyncDuelEnabled ? 3 : 2),
+    );
     expect(find.byKey(const ValueKey('play-hub-quick-duel')), findsOneWidget);
     expect(find.byKey(const ValueKey('play-hub-create-room')), findsOneWidget);
     expect(find.byKey(const ValueKey('play-hub-join-room')), findsOneWidget);
