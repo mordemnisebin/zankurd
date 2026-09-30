@@ -1403,7 +1403,7 @@
   {
     "id": "offline_2106",
     "category": "Dîrok",
-    "prompt": "Navenda Mîrgeha Babanan li kîjan bajarî bû?",
+    "prompt": "Mîrgeha Baban navenda xwe li kîjan bajarî bû?",
     "answers": [
       "Kerkûk",
       "Hewlêr",
@@ -3645,7 +3645,7 @@
   {
     "id": "offline_2668",
     "category": "Dîrok",
-    "prompt": "Selahedînê Eyûbî li kîjan bajarî ji dayik bûye?",
+    "prompt": "Selahaddînê Eyûbî li kîjan bajarî ji dayik bûye?",
     "answers": [
       "Bağdat",
       "Tikrit",
@@ -5950,11 +5950,11 @@
     "prompt": "\"hewran\" çi ye?",
     "answers": [
       "\"Nû\" (nû) + \"roj\" (roj)",
-      "kincê dirêj ê ku li ser kincên din tê lixistin",
+      "kincê dirêj ê li ser kincên din",
       "Girêdanên civak û malbatê",
       "hatina biharê û nûbûn"
     ],
-    "correctAnswer": "kincê dirêj ê ku li ser kincên din tê lixistin",
+    "correctAnswer": "kincê dirêj ê li ser kincên din",
     "explanation": "\"hewran\": diğer giysilerin üstüne giyilen uzun üstlük (aba).",
     "type": "multipleChoice",
     "difficulty": 5,
@@ -15743,7 +15743,7 @@
     "category": "Teknolojî",
     "prompt": "Peyva \"klavye\" di Kurmancî de bi kîjan peyvê tê naskirin?",
     "answers": [
-      "Klavye",
+      "Klavyeya",
       "Bûka tiliyan",
       "Teşta tiliyan",
       "Textê tiliyan"
@@ -15870,7 +15870,7 @@
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationTr": "\"Pel\" Türkçede \"dosya\" demektir; \"rûpel\" sayfa, \"wêne\" resim, \"stran\" şarkıdır.",
-    "explanationKu": "\"Pel\" bi Tirkî \"dosya\" ye; \"rûpel\" sayfa, \"wêne\" resim û \"stran\" şarkı ye.",
+    "explanationKu": "\"Pel\" bi Tirkî \"dosya\" ye; \"rûpel\" \"sayfa\", \"wêne\" \"resim\" û \"stran\" \"şarkı\" ye.",
     "promptTr": "\"Pel\" Türkçede ne demektir?",
     "answersTr": [
       "Sayfa",

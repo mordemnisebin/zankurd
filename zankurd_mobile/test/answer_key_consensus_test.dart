@@ -168,6 +168,30 @@ void main() {
       // "-ê" diyor; o feminen tewang ile eril İZAFEnin (hevalê min)
       // biçimidir — sorunun ayırt etmek istediği karışıklık tam bu.
       'ds_ziman_1243': 'Qertafa "-î" (mînak: heval -> hevalî)',
+      //
+      // 2026-09-30, Kurmancî incelemesi + web doğrulaması. Üçünde ANLAM
+      // değişmedi, şıkkın yazımı düzeldi; çapraz kontrol hükmü metin
+      // sakladığı için eskidi (yukarıdaki üç kayıtla aynı durum):
+      //   ds_cografya_0281  "Kilsên kilsî" → "Zinarên kilsî" (totoloji)
+      //   ds_cografya_0287  "Kewbûna" / "xitîbûna" → "Zêdebûna" / "nemana"
+      //   ds_cand_1191      "gorekên" → "gorên"
+      'ds_cografya_0281': 'Zinarên kilsî yên nerm û kevirên xîçî yên hewzeyê',
+      'ds_cografya_0287':
+          'Zêdebûna sermayê, barîna berfa giran û nemana çêrgehan',
+      'ds_cand_1191':
+          'Kaniyên avê, darên kevnar, teht û gorên pîroz ên sirûştê',
+      // Aşağıdaki ikisinde ise ANLAM değişti ve çapraz kontrolü yapan model
+      // ESKİ, YANLIŞ anahtarı onaylamıştı: hüküm eskimiştir, yanlış
+      // anahtarın onayıdır. Web'de doğrulandı, anahtar düzeltildi:
+      //   ds_cografya_0258  KAF ile DAF Qereyazî/Gola Wanê'de değil,
+      //                     Qirlîova'da (Karlıova, Bingöl) birleşir
+      //                     (Wikipedia, "North Anatolian Fault").
+      //   ds_edebiyat_0246  Rêya Teze (1930–37) Sovyet Latin alfabesiyle
+      //                     çıktı, Kiril'e 1955'te geçti; "Kiril" anahtarı
+      //                     yanlıştı (Wikipedia, "Ria Taza").
+      'ds_cografya_0258': 'Li herêma Qirlîovayê (Çewlîg)',
+      'ds_edebiyat_0246':
+          'Her du jî bi alfabeya latînî derketin, lê Rêya Teze guhertoyeke cuda ya Sovyetî bi kar anî',
     };
 
     final contradicting = <String>[];

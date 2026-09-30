@@ -201,7 +201,17 @@ void main() {
     // Kalan 208 = offline 179 + editoryal 29. Kategoriye göre offline
     // dağılımı: Paradigma 30, Çand 28, Siyaset 26, Muzîk 25, Edebiyat 21,
     // Dîrok 20, Cografya 19, Ziman 10.
-    const ceiling = 208;
+    //
+    // 2026-09-30: 208 -> 246. Yeni bir kusur girmedi, eski borç
+    // GÖRÜNÜR oldu: aynı gün yapılan ilk tam Kurmancî incelemesi (492
+    // düzeltme) şık ve şîrove yazımlarını birbirine eşitledi. Eskiden
+    // "avazê" / "awazê", "tepser" / "tepserî" gibi yazım farkı yüzünden
+    // açıklama soruya "yeni sözcük" katıyor sayılıyordu; yazımlar
+    // eşitlenince aynı açıklama doğru şıkkın birebir tekrarı olarak
+    // ölçülüyor. Ayrıca Türkçe kalmış 25 şîrove Kurmancîye çevrildi;
+    // çeviri çoğu yerde tanımı yeniden söylüyor. Tavan bir mandaldır,
+    // yalnız inebilir: bu sayı artık yeni başlangıç noktasıdır.
+    const ceiling = 246;
 
     // `\w` Dart'ta ASCII'dir: "çîrokê" üç parçaya bölünür ve hepsi
     // uzunluk süzgecine takılır, yani Kurmancî bir açıklama "boş" görünür.
