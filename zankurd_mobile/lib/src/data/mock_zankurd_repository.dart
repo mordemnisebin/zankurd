@@ -441,17 +441,25 @@ class MockZanKurdRepository implements ZanKurdRepository {
         )
         .toList(growable: false);
 
-    if (exact.isNotEmpty) return _selectFresh(exact, limit);
-
-    // Üretim bankasında açık ders etiketi yoksa yalnız aynı dersin yerel,
-    // editoryal sözlük çiftlerinden ölçme sorusu üret. Geniş kategori havuzu
-    // artık fallback değildir; aksi hâlde mini-quiz dersle ilgisiz genel
-    // kategori sorularını "ders sorusu" gibi gösterebiliyordu.
-    return LearningAssessmentBank.questionsFor(
+    // Açık ders etiketli sorular önce gelir; eksik kalan yer yalnız aynı
+    // dersin yerel, editoryal sözlük çiftlerinden üretilen ölçme sorularıyla
+    // doldurulur. Geniş kategori havuzu fallback değildir: mini-quiz dersle
+    // ilgisiz genel kategori sorularını "ders sorusu" gibi gösterebiliyordu.
+    //
+    // 2026-09-30: etiketli soru varken dolgu yapılmıyordu; bir etiketli
+    // sorusu olan ders (grammar_1, animals_2) tek soruluk bir quiz
+    // açıyordu, yani bir derse soru etiketlemek o dersi KISALTIYORDU.
+    final tagged = exact.isEmpty
+        ? const <QuizQuestion>[]
+        : await _selectFresh(exact, limit);
+    if (tagged.length >= limit) return tagged;
+    final taggedIds = tagged.map((q) => q.id).toSet();
+    final fillers = LearningAssessmentBank.questionsFor(
       lessonId: learningLessonId,
       category: category,
       limit: limit,
-    );
+    ).where((q) => !taggedIds.contains(q.id));
+    return [...tagged, ...fillers].take(limit).toList(growable: false);
   }
 
   @override

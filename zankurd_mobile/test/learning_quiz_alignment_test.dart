@@ -64,7 +64,18 @@ void main() {
         limit: 5,
       );
 
-      expect(questions.map((q) => q.id), ['food']);
+      // Etiketli soru önce gelir; eksik yer yalnız aynı dersin sözlük
+      // sorularıyla dolar (2026-09-30: önceden tek soruluk quiz açılıyordu).
+      expect(questions.first.id, 'food');
+      expect(questions, hasLength(5));
+      expect(
+        questions.every((q) => q.metadata?.learningLessonId == 'food_1'),
+        isTrue,
+      );
+      expect(
+        questions.map((q) => q.id),
+        isNot(anyOf(contains('legacy'), contains('wrong-category'))),
+      );
     });
 
     test(
@@ -81,7 +92,8 @@ void main() {
           limit: 5,
         );
 
-        expect(questions.map((q) => q.id), ['food']);
+        expect(questions.first.id, 'food');
+        expect(questions.map((q) => q.id), isNot(contains('recall')));
       },
     );
 
@@ -125,36 +137,39 @@ void main() {
     });
   });
 
-  test(
-    'seeded production lessons select only their exact tagged pool',
-    () async {
-      SharedPreferences.setMockInitialValues({});
-      final repository = MockZanKurdRepository();
-      const expectedCounts = {
-        'everyday_3': 3,
-        'grammar_1': 1,
-        'food_1': 2,
-        'animals_1': 3,
-        'animals_2': 1,
-        'time_2': 2,
-      };
+  test('seeded production lessons put their exact tagged pool first', () async {
+    SharedPreferences.setMockInitialValues({});
+    final repository = MockZanKurdRepository();
+    const expectedCounts = {
+      'everyday_3': 3,
+      'grammar_1': 1,
+      'food_1': 2,
+      'animals_1': 3,
+      'animals_2': 1,
+      'time_2': 2,
+    };
 
-      for (final entry in expectedCounts.entries) {
-        final questions = await repository.loadLearningQuizQuestions(
-          category: 'Ziman',
-          learningLessonId: entry.key,
-          limit: 5,
-        );
+    for (final entry in expectedCounts.entries) {
+      final questions = await repository.loadLearningQuizQuestions(
+        category: 'Ziman',
+        learningLessonId: entry.key,
+        limit: 5,
+      );
 
-        expect(questions, hasLength(entry.value), reason: entry.key);
-        expect(
-          questions.every((q) => q.metadata?.learningLessonId == entry.key),
-          isTrue,
-          reason: '${entry.key} broad filler karıştırmamalı',
-        );
-      }
-    },
-  );
+      // Etiketli sorular önce ve eksiksiz gelir; quiz sözlük sorularıyla
+      // beşe tamamlanır.
+      expect(questions, hasLength(5), reason: entry.key);
+      // Sözlükten üretilenler `lesson_` önekli; etiketli banka soruları
+      // hepsi ve önde.
+      final tagged = questions.takeWhile((q) => !q.id.startsWith('lesson_'));
+      expect(tagged, hasLength(entry.value), reason: entry.key);
+      expect(
+        questions.every((q) => q.metadata?.learningLessonId == entry.key),
+        isTrue,
+        reason: '${entry.key} broad filler karıştırmamalı',
+      );
+    }
+  });
 
   test(
     'all 17 packaged lessons have explicit aligned mini-quiz coverage',
