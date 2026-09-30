@@ -5,6 +5,7 @@ import '../../l10n/strings.dart';
 import '../../providers/reduced_motion_provider.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/percent_format.dart';
+import '../../utils/player_identity.dart';
 import '../../widgets/sahne/sahne.dart';
 
 /// Şık çubuğu — Şahnê'nin "8 · Şık çubuğu" bileşeni (maketteki `.sh-ans`).
@@ -379,7 +380,7 @@ class _OpponentMark extends StatelessWidget {
             // Uzun isim %200'de rozet genişliğini aşmasın.
             Flexible(
               child: Text(
-                name,
+                context.playerDisplayName(name),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: SahneType.captionStrong.copyWith(color: tokens.tx),
@@ -441,7 +442,12 @@ class _HatchPainter extends CustomPainter {
 /// biçim sistem yazı tipine düşer ve ekranda Bricolage çizilirken ölçüm
 /// başka bir tiple yapılırdı (`painter_font_test` bu kuralın bekçisidir).
 class QuizQuestionPrompt extends StatelessWidget {
-  const QuizQuestionPrompt(this.text, {super.key, this.forceHeadline = false});
+  const QuizQuestionPrompt(
+    this.text, {
+    super.key,
+    this.forceHeadline = false,
+    this.titleLineBudget = maxTitleLines,
+  });
 
   final String text;
 
@@ -451,12 +457,21 @@ class QuizQuestionPrompt extends StatelessWidget {
   /// Başlık 28/32'de en çok bu kadar satır.
   static const int maxTitleLines = 4;
 
+  /// Bu soruda Başlık 28/32'ye izin verilen en çok satır.
+  ///
+  /// Düelloda üstteki puan kartı (~120 pt) şıkların bütçesinden yer yer.
+  /// 2026-09-30 canlı: dört satırlık soru + dört şıkta D şıkkı alt perdenin
+  /// arkasına düşüyordu; düelloda sınır 3 satıra iner, uzun soru Manşet
+  /// 22/28'e geçer (yaklaşık 40 pt kazanç). Varsayılan [maxTitleLines].
+  final int titleLineBudget;
+
   /// [text]'in [maxWidth] genişlikte alacağı biçem.
   static TextStyle styleFor(
     BuildContext context,
     String text,
     double maxWidth, {
     bool forceHeadline = false,
+    int titleLineBudget = maxTitleLines,
   }) {
     final t = SahneTokens.of(context);
     final headline = SahneType.headline.copyWith(color: t.tx);
@@ -472,7 +487,7 @@ class QuizQuestionPrompt extends StatelessWidget {
     )..layout(maxWidth: maxWidth);
     final lines = painter.computeLineMetrics().length;
     painter.dispose();
-    return lines > maxTitleLines ? headline : title;
+    return lines > titleLineBudget ? headline : title;
   }
 
   @override
@@ -485,6 +500,7 @@ class QuizQuestionPrompt extends StatelessWidget {
           text,
           constraints.maxWidth,
           forceHeadline: forceHeadline,
+          titleLineBudget: titleLineBudget,
         ),
       ),
     );

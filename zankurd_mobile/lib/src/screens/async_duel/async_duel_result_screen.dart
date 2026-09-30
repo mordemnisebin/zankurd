@@ -10,6 +10,7 @@ import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
+import '../../utils/player_identity.dart';
 import '../../utils/error_reporter.dart';
 import '../../widgets/sahne/sahne.dart';
 import 'async_duel_play_screen.dart';
@@ -467,7 +468,10 @@ class _CompletedBody extends StatelessWidget {
       AsyncDuelOutcome.loss => context.t(K.youLost),
       AsyncDuelOutcome.draw => context.t(K.draw),
     };
-    final opponentName = view.opponentName ?? context.t(K.asyncDuelOpponent);
+    final rawOpponentName = view.opponentName;
+    final opponentName = rawOpponentName == null
+        ? context.t(K.asyncDuelOpponent)
+        : context.playerDisplayName(rawOpponentName);
     final xp = _completedXp(view);
     final win = outcome == AsyncDuelOutcome.win;
 

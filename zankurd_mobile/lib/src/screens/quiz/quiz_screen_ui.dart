@@ -1004,6 +1004,10 @@ extension _QuizScreenUI on _QuizScreenState {
     Widget textAndAnswers({required bool headline}) => _QuestionTextAndAnswers(
       promptText: promptText,
       forceHeadline: headline,
+      // Düello kartı ~120 pt yer tutar: uzun soru bir kademe erken küçülür.
+      titleLineBudget: widget.is1v1
+          ? QuizQuestionPrompt.maxTitleLines - 1
+          : QuizQuestionPrompt.maxTitleLines,
       question: question,
       selectedAnswer: selectedAnswer,
       adjudicatedCorrect: _currentAnswerAdjudication,

@@ -37,6 +37,7 @@ import '../widgets/sahne/sahne.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/percent_format.dart';
+import '../utils/player_identity.dart';
 import '../data/daily_mission_store.dart';
 import '../data/xp_store.dart';
 import '../services/analytics_service.dart';
@@ -2079,7 +2080,7 @@ class _RaceStandings extends StatelessWidget {
     final summary = leader.state == 'Player'
         ? context.t(K.finishedAtRank, {'rank': '$userRank'})
         : context.t(K.leaderFinishedFirst, {
-            'leader': leader.name,
+            'leader': context.playerDisplayName(leader.name),
             'rank': '$userRank',
           });
 
@@ -2119,8 +2120,8 @@ class _RaceStandings extends StatelessWidget {
         pending.add(
           SahneListRow.rank(
             rank: i + 1,
-            title: player.name,
-            initial: name.isEmpty ? null : name.characters.first.toUpperCase(),
+            title: context.playerDisplayName(player.name),
+            initial: name.isEmpty ? null : context.playerInitial(player.name),
             icon: AppIcons.user,
             // Oyuncunun kendi kimliği (fotoğraf, ikon, renk, çerçeve)
             // satırın 36'lık avatar yuvasında.

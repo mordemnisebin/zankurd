@@ -113,7 +113,7 @@ class _LiveScoreRow extends StatelessWidget {
           const SizedBox(width: SahneSpace.x2),
           Expanded(
             child: Text(
-              player.name,
+              context.playerDisplayName(player.name),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: SahneType.bodyStrong.copyWith(color: t.tx),
@@ -359,6 +359,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.suspense,
     required this.onAnswer,
     this.forceHeadline = false,
+    this.titleLineBudget = QuizQuestionPrompt.maxTitleLines,
     this.audiencePoll,
     this.opponentSelectedAnswers,
     this.isCompact = false,
@@ -387,6 +388,9 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   /// Telefon-yatay: soru hep Manşet 22; dört şık genişse iki sütun.
   final bool forceHeadline;
   final bool twoColumn;
+
+  /// Sorunun Başlık 28/32 ile çizilebileceği en çok satır (düelloda 3).
+  final int titleLineBudget;
 
   /// Quiz turu için cevap alanını hedef gösteren GlobalKey.
   final GlobalKey? answerAreaKey;
@@ -441,6 +445,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                   child: QuizQuestionPrompt(
                     promptText,
                     forceHeadline: forceHeadline,
+                    titleLineBudget: titleLineBudget,
                   ),
                 ),
                 if (showListen) ...[
@@ -772,13 +777,15 @@ class _DuelScoreHeader extends StatelessWidget {
               : CrossAxisAlignment.start,
           children: [
             Text(
-              p.name,
+              context.playerDisplayName(p.name),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: SahneType.captionStrong.copyWith(color: t.tx),
             ),
             Text(
-              '${p.score} pts',
+              // 2026-09-30 canlı: "pts" İngilizce kısaltmaydı; terim sözlüğü
+              // puan/pûan der, kelime `K.scoreWord`tan gelir.
+              '${p.score} ${context.t(K.scoreWord).toLowerCase()}',
               style: SahneType.captionStrong.copyWith(
                 color: t.goldTx,
                 fontFeatures: const [FontFeature.tabularFigures()],

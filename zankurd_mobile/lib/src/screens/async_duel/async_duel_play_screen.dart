@@ -9,6 +9,7 @@ import '../../models/async_duel.dart';
 import '../../models/quiz_question.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
+import '../../utils/player_identity.dart';
 import '../../utils/error_reporter.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../quiz/quiz_option_tile.dart';
@@ -521,7 +522,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
                       Text(
                         duel.role == AsyncDuelRole.opponent
                             ? '${context.t(K.you)} · '
-                                  '${duel.opponentName ?? context.t(K.asyncDuelOpponent)}'
+                                  '${duel.opponentName == null ? context.t(K.asyncDuelOpponent) : context.playerDisplayName(duel.opponentName)}'
                             : context.t(K.asyncDuelSub),
                         style: SahneType.caption.copyWith(color: t.tx2),
                       ),
