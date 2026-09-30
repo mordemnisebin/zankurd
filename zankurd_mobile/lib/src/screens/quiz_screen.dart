@@ -77,6 +77,7 @@ class QuizScreen extends StatefulWidget {
     this.contestId,
     this.versusBannerText,
     this.resumeSnapshot,
+    @visibleForTesting this.suspenseHold,
     super.key,
   });
 
@@ -106,6 +107,11 @@ class QuizScreen extends StatefulWidget {
 
   /// Süreç yeniden açıldığında sunucudan gelen yetkili aktif-oda durumu.
   final RoomResumeSnapshot? resumeSnapshot;
+
+  /// Cevaptan sonraki "gerilim tutuşu" süresi. `null` → üretimde 520 ms,
+  /// test ortamında sıfır. Yalnız testler üretim değerini zorlamak için verir
+  /// (bkz. `quiz_offline_answer_test`).
+  final Duration? suspenseHold;
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -321,19 +327,33 @@ class _QuizScreenState extends State<QuizScreen>
   /// görüyor, cevabın kendisini görmek için kaydırmak zorunda kalıyordu.
   /// Ders modunun bütün değeri o kutuda olduğu için bu sessiz bir kayıptı
   /// (2026-08-16 simülatör taraması, iPhone 17).
+  ///
+  /// 2026-09-30 simülatör: kusur geri geldi, bu kez "Açıklamayı gör" satırı
+  /// için. Kaydırma hedefi yalnız serbest metin türlerinin "doğru cevap"
+  /// kutusuydu ([_explanationKey]); şıklı sorularda görünen satırın anahtarı
+  /// yoktu, hedef bulunamayıp çağrı sessizce dönüyordu ve satır perdenin
+  /// (Sonraki/Bitir) kenarında yarım kalıyordu (normal/02, 19, 24). Ayrıca
+  /// çağrı test ortamında hiç çalışmıyordu (`isFlutterTestEnvironment`), bu
+  /// yüzden hiçbir test yakalayamadı. Artık hedef satırın kendisidir; hareketi
+  /// azalt açıkken kaydırma anlıktır.
   void _revealExplanation() {
-    if (isFlutterTestEnvironment) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      final target = _explanationKey.currentContext;
+      final target =
+          _explanationActionKey.currentContext ??
+          _explanationKey.currentContext;
       if (target == null) return;
       Scrollable.ensureVisible(
         target,
-        duration: const Duration(milliseconds: 320),
+        duration: sahneMotionReduced(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 320),
         curve: Curves.easeOutCubic,
-        // 1.0: kutunun ALT kenarı görünür alanın altına yaslanır. Kutu
-        // zaten içeriğin en altındadır; hizayı yukarı çekmek soruyu
-        // gereksizce ekran dışına itiyordu.
+        // 1.0: hedefin ALT kenarı görünür alanın altına yaslanır. Kayan
+        // alan alt perdenin üstünde biter (`extendBody` payı), yani satır
+        // perdenin üstünde TAMAMEN görünür kalır. Kutu zaten içeriğin en
+        // altındadır; hizayı yukarı çekmek soruyu gereksizce ekran dışına
+        // itiyordu.
         alignment: 1.0,
         alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
       );
@@ -341,6 +361,9 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   final GlobalKey _explanationKey = GlobalKey();
+
+  /// Şıklı sorularda görünen "Açıklamayı gör" satırı ([_revealExplanation]).
+  final GlobalKey _explanationActionKey = GlobalKey();
   final GlobalKey _comboKey = GlobalKey();
   final GlobalKey _wildcardKey = GlobalKey();
   final GlobalKey _nextButtonKey = GlobalKey();
@@ -3169,8 +3192,13 @@ class _QuizScreenState extends State<QuizScreen>
       _suspense = !isTimeout || _usesServerHiddenAnswers;
     });
     final responseMs = _questionStopwatch.elapsedMilliseconds;
-    if (!isTimeout && !isFlutterTestEnvironment) {
-      await Future.delayed(const Duration(milliseconds: 520));
+    final hold =
+        widget.suspenseHold ??
+        (isFlutterTestEnvironment
+            ? Duration.zero
+            : const Duration(milliseconds: 520));
+    if (!isTimeout && hold > Duration.zero) {
+      await Future.delayed(hold);
     }
     // Bekleme sırasında soru ilerlediyse (ör. hızlı "Piştre") sonucu
     // yeni soruya uygulama — eski cevabın skor bulaşmasını önler.
@@ -3181,6 +3209,15 @@ class _QuizScreenState extends State<QuizScreen>
     try {
       // Zaman aşımı: ağ takılırsa gerilim tutuşu sonsuza dek sürmez;
       // catch bloğundaki yerel değerlendirme devreye girer.
+      //
+      // 2026-09-30 simülatör (S11): çevrimdışı turda "Sonraki" düğmesi
+      // kum saatiyle 4-8 sn pasif görünüyordu ve oyuncu ne beklediğini
+      // bilmiyordu. Tek kişilik turda (oda kimliği yok) cevap zaten
+      // cihazda değerlendirilir; sunucuya gidecek bir şey yoktur. Yine de
+      // bir depo cevabı geciktirirse (takılan bağlantı, yavaş yerel depo)
+      // 8 sn beklemek yalnız oyuncuyu bekletir. Yerel turda bekleme sınırı
+      // kısadır; çevrimiçi odada sunucunun yetkili cevabı gerektiği için
+      // eski 8 sn korunur.
       final result = await widget.repository
           .submitAnswer(
             room: widget.room,
@@ -3188,7 +3225,11 @@ class _QuizScreenState extends State<QuizScreen>
             selectedOptionOptionKey: optionKey,
             responseMs: responseMs,
           )
-          .timeout(const Duration(seconds: 8));
+          .timeout(
+            _isMultiplayer
+                ? const Duration(seconds: 8)
+                : const Duration(milliseconds: 300),
+          );
 
       if (!mounted || index != questionIndex) return;
 

@@ -206,7 +206,11 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
       'index': '${_index + 1}',
       'total': '${_questions.length}',
     });
-    return SingleChildScrollView(
+    return SahneStageScroll(
+      // Yeni soruda başa dön, üst kenar ilerleme çubuğunun altında sönsün
+      // (bkz. `SahneStageScroll`).
+      scrollKey: const ValueKey('placement-scroll'),
+      resetKey: _index,
       padding: const EdgeInsets.fromLTRB(
         SahneSpace.page,
         SahneSpace.x4,
