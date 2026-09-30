@@ -23,7 +23,10 @@
       "ben",
       "ev"
     ],
-    "correctAnswerTr": "su"
+    "correctAnswerTr": "su",
+    "metadata": {
+      "learningLessonId": "food_1"
+    }
   },
   {
     "id": "offline_0010",
@@ -380,7 +383,10 @@
       "dört",
       "öğrenmek"
     ],
-    "correctAnswerTr": "teşekkür"
+    "correctAnswerTr": "teşekkür",
+    "metadata": {
+      "learningLessonId": "everyday_3"
+    }
   },
   {
     "id": "offline_0067",
@@ -535,7 +541,10 @@
       "soğuk hava",
       "kitap"
     ],
-    "correctAnswerTr": "bugün"
+    "correctAnswerTr": "bugün",
+    "metadata": {
+      "learningLessonId": "time_2"
+    }
   },
   {
     "id": "offline_0095",
@@ -561,7 +570,10 @@
       "kutsal gün",
       "dün"
     ],
-    "correctAnswerTr": "dün"
+    "correctAnswerTr": "dün",
+    "metadata": {
+      "learningLessonId": "time_2"
+    }
   },
   {
     "id": "offline_0105",
@@ -1264,7 +1276,10 @@
       "Doğru",
       "Yanlış"
     ],
-    "correctAnswerTr": "Doğru"
+    "correctAnswerTr": "Doğru",
+    "metadata": {
+      "learningLessonId": "culture_2"
+    }
   },
   {
     "id": "offline_2066",
@@ -1645,7 +1660,10 @@
       "Agirî Dağı",
       "Qendîl Dağı"
     ],
-    "correctAnswerTr": "Agirî Dağı"
+    "correctAnswerTr": "Agirî Dağı",
+    "metadata": {
+      "learningLessonId": "geography_1"
+    }
   },
   {
     "id": "offline_2147",
@@ -2491,7 +2509,10 @@
       "Başûr (Güney)",
       "Rojhilat (Doğu)"
     ],
-    "correctAnswerTr": "Rojava (Batı)"
+    "correctAnswerTr": "Rojava (Batı)",
+    "metadata": {
+      "learningLessonId": "geography_2"
+    }
   },
   {
     "id": "offline_2362",
@@ -2721,7 +2742,10 @@
       "Aras",
       "Euphrates"
     ],
-    "correctAnswerTr": "Tigris"
+    "correctAnswerTr": "Tigris",
+    "metadata": {
+      "learningLessonId": "geography_1"
+    }
   },
   {
     "id": "offline_2443",
@@ -3330,7 +3354,10 @@
       "Tereyağı",
       "Yoğurt"
     ],
-    "correctAnswerTr": "Yoğurt"
+    "correctAnswerTr": "Yoğurt",
+    "metadata": {
+      "learningLessonId": "food_1"
+    }
   },
   {
     "id": "offline_2606",
@@ -3977,7 +4004,10 @@
       "Savaş",
       "Korku"
     ],
-    "correctAnswerTr": "Barış"
+    "correctAnswerTr": "Barış",
+    "metadata": {
+      "learningLessonId": "emotions_1"
+    }
   },
   {
     "id": "offline_2782",
@@ -6159,7 +6189,10 @@
       "Melek Tavus (Tawûsî Melek)",
       "amcanın kızı ve oğlu (pismam)"
     ],
-    "correctAnswerTr": "baharın gelişi ve yenilenme"
+    "correctAnswerTr": "baharın gelişi ve yenilenme",
+    "metadata": {
+      "learningLessonId": "culture_2"
+    }
   },
   {
     "id": "offline_6325",
@@ -6260,7 +6293,10 @@
       "toplu halk oyunu",
       "baharatlı pirinç"
     ],
-    "correctAnswerTr": "toplu halk oyunu"
+    "correctAnswerTr": "toplu halk oyunu",
+    "metadata": {
+      "learningLessonId": "culture_1"
+    }
   },
   {
     "id": "offline_6457",
@@ -15887,7 +15923,10 @@
       "Doğru",
       "Yanlış"
     ],
-    "correctAnswerTr": "Yanlış"
+    "correctAnswerTr": "Yanlış",
+    "metadata": {
+      "learningLessonId": "everyday_3"
+    }
   },
   {
     "id": "offline_curated_30016",
@@ -15908,7 +15947,10 @@
       "Doğru",
       "Yanlış"
     ],
-    "correctAnswerTr": "Doğru"
+    "correctAnswerTr": "Doğru",
+    "metadata": {
+      "learningLessonId": "everyday_1"
+    }
   },
   {
     "id": "offline_curated_30017",
@@ -15933,7 +15975,10 @@
       "Rojbaş",
       "Şevbaş"
     ],
-    "correctAnswerTr": "Êvarbaş"
+    "correctAnswerTr": "Êvarbaş",
+    "metadata": {
+      "learningLessonId": "everyday_1"
+    }
   },
   {
     "id": "offline_curated_30018",
@@ -15954,7 +15999,10 @@
       "Doğru",
       "Yanlış"
     ],
-    "correctAnswerTr": "Yanlış"
+    "correctAnswerTr": "Yanlış",
+    "metadata": {
+      "learningLessonId": "everyday_1"
+    }
   },
   {
     "id": "offline_curated_30024",

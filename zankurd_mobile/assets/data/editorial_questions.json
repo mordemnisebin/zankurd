@@ -536,7 +536,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "grammar_2"
     },
     "promptTr": "Kurmancîde \"min\" ile \"ez\" arasındaki fark nedir?",
     "answersTr": [
@@ -600,7 +601,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "culture_1"
     },
     "promptTr": "El ele tutuşarak ve sıra hâlinde oynanan Kürt halk dansı hangisidir?",
     "answersTr": [
@@ -1900,7 +1902,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "geography_1"
     },
     "promptTr": "Mezopotamya'nın iki ana nehri hangileridir?",
     "answersTr": [
@@ -3422,7 +3425,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Rêzimana kurdî — Bedirxan & Lescot",
       "sourceReference": "Celadet Alî Bedirxan & Roger Lescot, Grammaire Kurde (Dialecte Kurmandji), Paris 1970; Hawar (1932-1943)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "grammar_1"
     },
     "promptTr": "Kurmancîde \"tu\" ile \"hûn\" arasındaki fark nedir?",
     "answersTr": [
@@ -5697,7 +5701,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Folklor û kevneşopiya kurdî",
       "sourceReference": "Ordîxanê Celîl & Celîlê Celîl, Zargotina Kurda; Encyclopaedia Iranica — Newruz",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "culture_1"
     },
     "promptTr": "Doğru mu yanlış mı: Govend genellikle el ele tutuşarak oynanır.",
     "answersTr": [
@@ -6679,7 +6684,8 @@
       "dialect": "Kurmancî",
       "sourceTitle": "Erdnîgariya herêmê",
       "sourceReference": "Encyclopaedia Britannica — Kurdistan, Zagros, Lake Van; UNESCO World Heritage List (Diyarbakır Fortress and Hevsel Gardens, 2015)",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "geography_1"
     },
     "promptTr": "Wan şehri neyin kıyısındadır?",
     "answersTr": [

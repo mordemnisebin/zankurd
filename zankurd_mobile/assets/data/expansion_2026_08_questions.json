@@ -6050,7 +6050,8 @@
       "reviewedBy": "automated:validate_batch.py",
       "reviewedAt": "2026-08-06",
       "lastContentCheckAt": "2026-08-06",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "time_2"
     }
   },
   {
@@ -6288,7 +6289,8 @@
       "reviewedBy": "automated:validate_batch.py",
       "reviewedAt": "2026-08-06",
       "lastContentCheckAt": "2026-08-06",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "grammar_2"
     }
   },
   {
@@ -6492,7 +6494,8 @@
       "reviewedBy": "automated:validate_batch.py",
       "reviewedAt": "2026-08-06",
       "lastContentCheckAt": "2026-08-06",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "animals_1"
     }
   },
   {
@@ -7105,7 +7108,8 @@
       "reviewedBy": "automated:validate_batch.py",
       "reviewedAt": "2026-08-06",
       "lastContentCheckAt": "2026-08-06",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "grammar_2"
     }
   },
   {
@@ -7139,7 +7143,8 @@
       "reviewedBy": "automated:validate_batch.py",
       "reviewedAt": "2026-08-06",
       "lastContentCheckAt": "2026-08-06",
-      "qualityVersion": 2
+      "qualityVersion": 2,
+      "learningLessonId": "animals_2"
     }
   },
   {

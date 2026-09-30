@@ -116,7 +116,7 @@ void main() {
     );
   });
 
-  test('production bank keeps the reviewed 12-question alignment seed', () {
+  test('production bank keeps the reviewed lesson alignment seed', () {
     final tagged = QuestionBankLoader.instance.allQuestions
         .where((q) => q.metadata?.learningLessonId != null)
         .toList(growable: false);
@@ -134,6 +134,44 @@ void main() {
       'offline_5016',
       'offline_5094',
       'offline_5903',
+      // 2026-09-30: Muse Spark ve Gemini 3.1 Pro'nun ayrı ayrı aynı derse
+      // koyduğu 20 soru (uyuşmayanlar ve karantinadaki DeepSeek bankası
+      // dışarıda).
+      'edit_ziman_0020',
+      'edit_ziman_0030',
+      'fill_ziman_0002',
+      'fill_ziman_0005',
+      'offline_0005',
+      'offline_0065',
+      'offline_0090',
+      'offline_0095',
+      'offline_2599',
+      'offline_2780',
+      'offline_curated_30014',
+      'offline_curated_30016',
+      'offline_curated_30017',
+      'offline_curated_30018',
+      'wo-ku-008',
+      'ziman_x_0016',
+      'ziman_x_0025',
+      'ziman_x_0031',
+      'ziman_x_0052',
+      'ziman_x_0054',
+      // İkinci tur: Folklor, Bayramlar, Coğrafya, Yönler (Çand/Cografya).
+      'comm_cog_0001',
+      'edit_cand_0003',
+      'edit_cand_0034',
+      'edit_cografya_0004',
+      'edit_cografya_0024',
+      'offline_2052',
+      'offline_2141',
+      'offline_2354',
+      'offline_2436',
+      'offline_6260',
+      'offline_6406',
+      'restore_2026_08_07_0007',
+      'restore_2026_08_07_0014',
+      'restore_2026_08_07_0015',
     });
   });
 
@@ -141,12 +179,15 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     final repository = MockZanKurdRepository();
     const expectedCounts = {
-      'everyday_3': 3,
-      'grammar_1': 1,
-      'food_1': 2,
-      'animals_1': 3,
-      'animals_2': 1,
-      'time_2': 2,
+      'everyday_1': 3,
+      'everyday_3': 5,
+      'grammar_1': 2,
+      'grammar_2': 5,
+      'food_1': 4,
+      'animals_1': 4,
+      'animals_2': 2,
+      'emotions_1': 1,
+      'time_2': 5,
     };
 
     for (final entry in expectedCounts.entries) {
