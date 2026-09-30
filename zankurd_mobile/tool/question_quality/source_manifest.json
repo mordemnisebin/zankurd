@@ -2425,11 +2425,11 @@
    "parser": "json",
    "canonicalGroup": "runtime_questions",
    "reportIncluded": true,
-   "gateIncluded": true,
+   "gateIncluded": false,
    "productionLike": true,
    "precedence": 980,
    "expectedRecordCount": 1110,
-   "notes": "tool/content_authoring/ boru hattı; yapısal denetim + kalite kapısı geçildi",
+   "notes": "tool/content_authoring/ boru hattı; yapısal denetim + kalite kapısı geçildi | 2026-09-30: KARANTİNADA (runtime listesinde yok) ve artık kalite KAPISINDA değil: doğrulanan 822 kaydın Kurmancî düzeltmeli/kategorisi değişmiş kopyası deepseek_verified_2026_09_30 kaynağında kapıdan geçer; orijinal ile kopya aynı kimlikleri taşıdığı ve bilerek ayrıştığı için ikisi birden kapıda olunca 249 çapraz-kaynak ayrışması BLOCKER üretiyordu. Rapor kapsamında kalır (reportIncluded).",
    "columns": {
     "id": "id",
     "category": "category",

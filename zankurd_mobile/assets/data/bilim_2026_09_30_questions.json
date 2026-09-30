@@ -322,13 +322,13 @@
     "prompt": "Yek ji bandorên sereke yên derziyan, amadekirina sîstema bergiriyê ji bo hilberîna çiyê ye?",
     "promptTr": "Aşıların temel etkilerinden biri bağışıklık sistemini ne üretmeye hazırlamaktır?",
     "answers": [
-      "Bêhtir hemoglobîn",
+      "Bêhtir hemoglobîn di xwînê de",
       "Antîkorên li dijî antîjenên diyarkirî",
       "Bêhtir asîda mîdeyê",
       "Bêhtir zerav"
     ],
     "answersTr": [
-      "Daha fazla hemoglobin",
+      "Kanda daha fazla hemoglobin",
       "Belirli antijenlere karşı antikorlar",
       "Daha fazla mide asidi",
       "Daha fazla safra"
@@ -464,13 +464,13 @@
     "answers": [
       "El-Qanûn fî't-Tibb",
       "Kîtab el-Menazir",
-      "Muqeddîme",
+      "Kîtab el-Cebr û el-Muqabele",
       "Kîtab fî me'rîfet el-hiyel el-hendesiyye"
     ],
     "answersTr": [
       "El-Kanun fi't-Tıb",
       "Kitab al-Manazir",
-      "Mukaddime",
+      "Kitâbü'l-Cebr ve'l-Mukabele",
       "Kitâb fî ma'rifat al-hiyal al-handasiyya"
     ],
     "correctAnswer": "Kîtab fî me'rîfet el-hiyel el-hendesiyye",
