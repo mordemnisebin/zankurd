@@ -76,9 +76,12 @@ void main() {
     // ya da kart sayısı bu kategori için düşürülünce bu satır SİLİNİR. Test
     // açığın aynı kalmasını bağlar: başka bir seviye düşerse ya da bu açık
     // büyürse yine kırılır.
-    const knownShortfalls = <String>[
-      'Paradigma › Mamoste (5. seviye): kart 15 diyor, havuz 13 verebiliyor',
-    ];
+    //
+    // KAPANDI (2026-09-30 son birleştirme): 40 kaynaklı bilim sorusu
+    // (`bilim_2026_09_30_questions.json`) Paradigma'nın zor bandına da soru
+    // ekledi (zorluk 4-5: 7 soru); 5. seviye artık 15 soruyu veriyor. Liste
+    // boş: bundan sonra HERHANGİ bir açık yeni bir gerilemedir.
+    const knownShortfalls = <String>[];
 
     expect(
       shortfalls,

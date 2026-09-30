@@ -6,7 +6,14 @@ import 'package:zankurd_mobile/src/data/question_bank_assets.dart';
 
 void main() {
   test('runtime JSON bankalarında kaynaksız soru borcu büyümez', () {
-    const maximumMissingSourceReferences = 1199;
+    // 1199 -> 1394: 2026-09-30 çok modelli doğrulamadan geçen 822 DeepSeek
+    // sorusunun 195'inde `sourceReference` yok (DeepSeek taslağı bazılarına
+    // Vikipedi bağlantısı koyuyordu, bazılarına koymuyordu). Bilinçli borç
+    // artışı: bu kayıtlar URL yerine en az iki bağımsız modelin olgu denetimi
+    // ve Gemini 3.1 Pro'nun Kurmancî okumasıyla doğrulandı (künye:
+    // `metadata.reviewedBy`). Yeni içerik bu tavanı kendiliğinden
+    // büyütemez; bir sonraki artış da aynı şekilde gerekçelendirilmeli.
+    const maximumMissingSourceReferences = 1394;
     var missing = 0;
 
     for (final asset in questionBankAssets) {
@@ -24,7 +31,7 @@ void main() {
       missing,
       lessThanOrEqualTo(maximumMissingSourceReferences),
       reason:
-          '2026-09-25 ölçümünde runtime JSON kaynak borcu '
+          '2026-09-30 ölçümünde runtime JSON kaynak borcu '
           '$maximumMissingSourceReferences kayıttı. Yeni içerik gerçek '
           'sourceReference olmadan bu borcu büyütemez.',
     );

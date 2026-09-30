@@ -31,8 +31,8 @@
 /// tek başına eski ikon + eğik köşe kalıyordu ve ızgara iki dilde
 /// konuşuyordu. Kusur sessizdi: hiçbir test "her görünür konunun silüeti
 /// var" demiyordu, aksine bu dosya işaretsiz kalmalarını SABİTLİYORDU.
-/// Dördüncü ('Cîhan', dünya sineması/coğrafyası/edebiyatı) kategori olarak
-/// henüz yok; adı eşlemede hazır. Bekçi artık `colorDefinedCategories`in
+/// Dördüncüsü ('Cîhan', dünya sineması/coğrafyası/tarihi) aynı gün kategori
+/// oldu ve kendi tonunu aldı. Bekçi artık `colorDefinedCategories`in
 /// her üyesinin işaretli olduğunu ölçer: yeni bir konu eklenip işaret
 /// unutulursa burada patlar.
 /// * Kilim: desen sağ kenardan taşar (kırpılır), sol taraf düz zemin kalır
@@ -117,9 +117,9 @@ void main() {
     SahneTopicMark.siyaset: SahneCategoryTone.siyaset,
     SahneTopicMark.paradigma: SahneCategoryTone.paradigma,
     SahneTopicMark.teknoloji: SahneCategoryTone.teknoloji,
-    // 'Cîhan' henüz kategori değil, tonu yok: fallback. Ton eklenince bu
-    // satır yeni tona çevrilir (eşleme testi tonu `CategoryVisuals`tan okur).
-    SahneTopicMark.cihan: SahneCategoryTone.fallback,
+    // 2026-09-30: 'Cîhan' kategori oldu ve kendi tonunu (deniz petrolü) aldı;
+    // sahne gecesi yedeğine düşmesi artık hata sayılır.
+    SahneTopicMark.cihan: SahneCategoryTone.cihan,
   };
 
   group('eşleme (CategoryVisuals.mark)', () {

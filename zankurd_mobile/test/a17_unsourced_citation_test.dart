@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/config/retired_question_ids.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/question_metadata.dart';
@@ -43,7 +44,14 @@ void main() {
         reason: question.id,
       );
       expect(meta.reviewStatus, ReviewStatus.approved, reason: question.id);
-      expect(policy.isPlayable(question), isTrue, reason: question.id);
+      // 2026-09-30: son olgu doğrulamasında iki model (Gemini 3.1 Pro +
+      // Grok 4.7) `ds_cand_1201` gibi birkaç kaydın olgusunu çürüttü ve
+      // kayıtlar emekliye ayrıldı (`retired_question_ids.dart`, altıncı
+      // dalga). Künye şartı hepsi için geçerli kalır; oynanabilirlik şartı
+      // yalnız emekli OLMAYANlara.
+      if (!isQuestionRetired(question.id)) {
+        expect(policy.isPlayable(question), isTrue, reason: question.id);
+      }
     }
   });
 

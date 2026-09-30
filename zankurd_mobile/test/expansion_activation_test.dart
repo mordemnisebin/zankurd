@@ -69,7 +69,9 @@ void main() {
       // semantik tekrarı olduğu için kaldırıldı.
       // 2026-09-28: expansion_2026_09_28 (144 kaynaklı soru) eklendi;
       // gizlenen yedi alt kategoriyi açmak için. 1931 → 2075.
-      2075,
+      // 2075 -> 2937: 2026-09-30 son birleştirme (+822 doğrulanmış DeepSeek,
+      // +40 bilim; bkz. `playable_inventory_test.dart`).
+      2937,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

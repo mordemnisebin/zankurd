@@ -99,6 +99,8 @@ void main() {
     // 10 -> 8: 2026-09-27 Paradigma ve Siyaset gizlendi; 8 -> 7: aynı gün
     // Teknolojî (bkz. `category_visibility.dart`).
     // 7 -> 10: 2026-09-30 üçü de yeniden açıldı.
-    expect(byCategory.length, 10);
+    // 10 -> 11: 2026-09-30 `Cîhan` (Dünya) eklendi; 399 sorusunun hepsi
+    // iki dilli, yani Türkçe turu rahatça doluyor.
+    expect(byCategory.length, 11);
   });
 }

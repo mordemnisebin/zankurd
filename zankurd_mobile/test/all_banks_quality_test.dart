@@ -95,7 +95,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla on iki kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla on dört kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -119,6 +119,10 @@ void main() {
         ...fromJson('assets/data/expansion_2026_08_19_questions.json'),
         // 2026-09-28: gizlenen yedi alt kategoriyi açan 144 kaynaklı soru.
         ...fromJson('assets/data/expansion_2026_09_28_questions.json'),
+        // 2026-09-30: çok modelli doğrulamadan geçen DeepSeek kopyası (orijinal
+        // dosya hâlâ listede YOK) ve kaynaklı bilim soruları.
+        ...fromJson('assets/data/deepseek_verified_2026_09_30_questions.json'),
+        ...fromJson('assets/data/bilim_2026_09_30_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;
