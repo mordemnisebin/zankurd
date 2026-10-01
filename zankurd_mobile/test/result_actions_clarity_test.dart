@@ -93,20 +93,24 @@ AnswerRecord _record(String id, String category, {required bool correct}) =>
       explanation: 'Şirove',
     );
 
-/// Kusur 1'in koşulu: 3 kategoriden 3 cevap, 1 yanlış. Hiçbir kategori
-/// `answered >= 2` eşiğini geçmediği için (`LearningOutcome.fromRecords`teki
-/// `review` seçimi) `reviewCategory` null kalır — kart TÜM yanlışları açar.
+/// Kusur 1'in koşulu: kartın açacağı kayıtlar TÜM yanlışlara eşit — 3
+/// kategoriden 3 cevap, 1 yanlış (Muzik). Kart tek yanlışı gösterir ve
+/// o yanlış zaten tüm yanlışlardır; yan düğme aynı eylemi tekrarlardı.
+/// (2026-10-02'den önce bu koşul `reviewCategory == null` ile kuruluyordu:
+/// tek soruluk kategori eşiği geçemiyordu. Zayıf konu artık eşiğe bağlı
+/// değil; koşul kapsamdan, yani "kart hepsini açıyor mu"dan okunur.)
 List<AnswerRecord> _noDominantCategoryRecords() => [
   _record('1', 'Ziman', correct: true),
   _record('2', 'Cografya', correct: true),
   _record('3', 'Muzik', correct: false),
 ];
 
-/// Kontrast senaryo: Ziman'da 2 cevap / %50 yanlış → `reviewCategory` =
-/// 'Ziman' (dolu, eşik TAM tutturuluyor). Cografya'da AYRICA, Ziman'dan
-/// bağımsız bir yanlış var. Kart yalnız Ziman'ın yanlışını açar (1 kayıt);
-/// yan düğme HER İKİSİNİ de açar (2 kayıt) — burada iki düğme GERÇEKTEN
-/// farklı kapsamlar sunar, ikisi de kalmalı.
+/// Kontrast senaryo: Ziman 1/2 (%50) ve Cografya 0/1 (%0) — iki ayrı konuda
+/// birer yanlış. Zayıf konu en düşük doğruluklu olan Cografya'dır; kart
+/// yalnız onun yanlışını açar (1 kayıt), yan düğme HER İKİSİNİ de açar
+/// (2 kayıt) — burada iki düğme GERÇEKTEN farklı kapsamlar sunar, ikisi de
+/// kalmalı. (2026-10-02 öncesi zayıf konu Ziman'dı; seçim kuralı değişti,
+/// senaryonun amacı aynı.)
 List<AnswerRecord> _dominantCategoryPlusElsewhereRecords() => [
   _record('1', 'Ziman', correct: true),
   _record('2', 'Ziman', correct: false),

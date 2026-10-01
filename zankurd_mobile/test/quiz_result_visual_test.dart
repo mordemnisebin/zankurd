@@ -85,6 +85,21 @@ QuizResultScreen buildScreen(MockZanKurdRepository repository) {
         selectedAnswer: 'B',
         explanation: 'Rast bersiv A ye.',
       ),
+      // 2026-10-02: ikinci yanlış BAŞKA bir konuda. Zayıf konu artık yanlışı
+      // olan her turda seçilir (eşiğe bağlı değil); kart yalnız o konunun
+      // yanlışını açar, "yanlışları incele" yan düğmesi ise HEPSİNİ açar —
+      // iki eylem farklı kapsamda olduğu sürece ikisi de görünür. Tek
+      // konuda toplanan yanlışlarda yan düğme kartı tekrarlamasın diye
+      // gizlenir (bkz. `result_actions_clarity_test.dart`).
+      AnswerRecord(
+        id: 'q3',
+        category: 'Cografya',
+        prompt: 'Kîjan çiya herî bilind e?',
+        answers: ['A', 'B', 'C', 'D'],
+        correctAnswer: 'A',
+        selectedAnswer: 'C',
+        explanation: 'Rast bersiv A ye.',
+      ),
     ],
   );
 }
@@ -406,7 +421,10 @@ void main() {
   testWidgets('dar sonuçta öğrenme özeti ikincil eylemlerden önce gelir', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
+    // 2026-10-02: fixture ikinci bir konu (Cografya) kazandı, kategori listesi
+    // uzadı; kart ile yan düğme aynı anda kurulu kalsın diye yükseklik
+    // artırıldı (genişlik — "dar" olan — aynı).
+    await tester.binding.setSurfaceSize(const Size(390, 1100));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(wrap(buildScreen(MockZanKurdRepository())));
     await tester.pump(const Duration(seconds: 1));

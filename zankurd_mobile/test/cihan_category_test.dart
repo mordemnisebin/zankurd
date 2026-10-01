@@ -161,9 +161,15 @@ void main() {
           final o = original[c['id']];
           expect(o, isNotNull, reason: '${c['id']} orijinalde yok');
           // Türkçe alanlar, zorluk ve tür hiçbir dalgada değişmez.
+          //
+          // 2026-10-02: ŞIK SIRASI hariç. `rebalance_answer_positions.py`
+          // doğru cevabın konumunu kategori başına dengeler ve kopyayı
+          // karantinadaki orijinalden bağımsız olarak yeniden sıralar; bu
+          // yüzden şıklar SIRALANMIŞ karşılaştırılır (aynı şık kümesi) ve
+          // doğru cevabın kimliği (Kurmancî ↔ Türkçe hizası) ayrıca
+          // doğrulanır — eskiden "konum aynı" diye bakılan şey buydu.
           for (final key in [
             'promptTr',
-            'answersTr',
             'correctAnswerTr',
             'explanationTr',
             'difficulty',
@@ -171,6 +177,13 @@ void main() {
           ]) {
             expect(c[key], o![key], reason: '${c['id']}.$key değişmiş');
           }
+          List<String> sorted(Object? list) =>
+              (list as List).cast<String>().toList()..sort();
+          expect(
+            sorted(c['answersTr']),
+            sorted(o!['answersTr']),
+            reason: '${c['id']}.answersTr kümesi değişmiş',
+          );
           // Kurmancî metin yalnız ikinci ve üçüncü dalgada (Gemini 3.1 Pro düzeltmesi,
           // Grok/Flash onayı) değişebilir; dalga-1 kayıtları birebir aynı.
           final meta = c['metadata'] as Map<String, dynamic>;
@@ -181,26 +194,32 @@ void main() {
           if (!corrected) {
             for (final key in [
               'prompt',
-              'answers',
               'correctAnswer',
               'explanationKu',
               'explanation',
             ]) {
-              expect(c[key], o![key], reason: '${c['id']}.$key değişmiş');
+              expect(c[key], o[key], reason: '${c['id']}.$key değişmiş');
             }
-          } else if (c['explanation'] != o!['explanation']) {
+            expect(
+              sorted(c['answers']),
+              sorted(o['answers']),
+              reason: '${c['id']}.answers kümesi değişmiş',
+            );
+          } else if (c['explanation'] != o['explanation']) {
             // Bazı DeepSeek kayıtlarında `explanation` Türkçe değil Kurmancî
             // açıklamanın kopyasıdır; düzeltme ikisine birlikte uygulanır.
             expect(o['explanation'], o['explanationKu'], reason: '${c['id']}');
             expect(c['explanation'], c['explanationKu'], reason: '${c['id']}');
           }
-          // Hangi şıkkın doğru olduğu (konum) hiçbir düzeltmeyle değişmez.
-          final oldAnswers = (o!['answers'] as List).cast<String>();
+          // Doğru şıkkın KİMLİĞİ hiçbir düzeltmeyle değişmez: Kurmancî ve
+          // Türkçe doğru cevap aynı konumda durur (hiza) ve Türkçe doğru
+          // cevap orijinaliyle aynı kalır.
+          final oldAnswers = (o['answers'] as List).cast<String>();
           final newAnswers = (c['answers'] as List).cast<String>();
           expect(
             newAnswers.indexOf(c['correctAnswer'] as String),
-            oldAnswers.indexOf(o['correctAnswer'] as String),
-            reason: '${c['id']}: doğru şıkkın konumu değişmiş',
+            (c['answersTr'] as List).indexOf(c['correctAnswerTr']),
+            reason: '${c['id']}: Kurmancî ve Türkçe doğru şık hizalı değil',
           );
           expect(newAnswers.length, oldAnswers.length);
           expect(newAnswers.toSet().length, newAnswers.length);
