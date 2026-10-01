@@ -12,6 +12,7 @@ import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 /// Misafir (isGuest = true) durumunu taklit eden sahte AuthProvider.
 class _GuestAuthProvider extends AuthProvider {
@@ -184,7 +185,7 @@ void main() {
 
       // Dialog açıldı — başlık ve iki form alanı
       expect(
-        find.byType(TextFormField),
+        find.byType(SahneField),
         findsNWidgets(2),
         reason: 'E-posta ve şifre için iki form alanı olmalı',
       );
@@ -247,12 +248,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // E-posta alanını doldur
-      final emailField = find.byType(TextFormField).first;
+      final emailField = find.byType(SahneField).first;
       await tester.enterText(emailField, 'test@zankurd.com');
       await tester.pumpAndSettle();
 
       // Şifre alanını doldur
-      final passwordField = find.byType(TextFormField).last;
+      final passwordField = find.byType(SahneField).last;
       await tester.enterText(passwordField, 'gizli123');
       await tester.pumpAndSettle();
 
@@ -290,10 +291,10 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.enterText(
-        find.byType(TextFormField).first,
+        find.byType(SahneField).first,
         'bekleyen@zankurd.com',
       );
-      await tester.enterText(find.byType(TextFormField).last, 'gizli123');
+      await tester.enterText(find.byType(SahneField).last, 'gizli123');
       await tester.pumpAndSettle();
       await tester.tap(find.text('Kaydet'));
       await tester.pumpAndSettle();

@@ -13,7 +13,6 @@ import '../widgets/app_logo.dart';
 import '../widgets/language_toggle.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/sahne/sahne.dart';
-import '../widgets/styled_input.dart';
 import 'sign_up_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -54,8 +53,8 @@ class _SignInScreenState extends State<SignInScreen>
   }
 
   Future<void> _signIn(AuthProvider authProvider) async {
-    // StyledInputField, TextField kullandığı için Form.validate() ile
-    // tetiklenmez. Boş alan kontrolü manuel yapılır.
+    // Bu ekranda Form sarmalayıcısı yok; boş alan kontrolü elle yapılır
+    // (alanlar satır içi doğrulamayı kendileri gösterir).
     if (_emailController.text.trim().isEmpty) {
       _showAuthError(context.t(K.emailRequired));
       return;
@@ -197,8 +196,6 @@ class _SignInScreenState extends State<SignInScreen>
     final t = SahneTokens.of(context);
     final screenSize = MediaQuery.sizeOf(context);
     final compact = screenSize.height < 900;
-    final labelStyle = SahneType.captionStrong.copyWith(color: t.tx);
-    final inputStyle = SahneType.body.copyWith(color: t.tx);
 
     // 2026-09-29 Şahnê: marka anı. Üstte gece sahne kartı (her iki temada
     // da gece): logo işareti plakada, 28'lik başlık, slogan. Altında tek
@@ -242,11 +239,9 @@ class _SignInScreenState extends State<SignInScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      StyledInputField(
+                      SahneField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         label: context.t(K.emailAddress),
-                        labelStyle: labelStyle,
-                        inputTextStyle: inputStyle,
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         prefixIcon: AppIcons.envelope,
@@ -267,11 +262,9 @@ class _SignInScreenState extends State<SignInScreen>
                         opacity: LoadAnimationSequence.formField2FadeAnimation(
                           _animationController,
                         ),
-                        child: StyledInputField(
+                        child: SahneField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           label: context.t(K.passwordLabel),
-                          labelStyle: labelStyle,
-                          inputTextStyle: inputStyle,
                           controller: _passwordController,
                           obscureText: _obscurePassword,
                           prefixIcon: AppIcons.lock,

@@ -10,7 +10,7 @@ import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
 
 import 'support/widget_test_helpers.dart';
 
-/// `StyledInputField` label metnine göre `TextField`'ı bulur.
+/// `SahneField` label metnine göre `TextField`'ı bulur.
 Finder textFieldByLabel(String label) {
   return find
       .descendant(

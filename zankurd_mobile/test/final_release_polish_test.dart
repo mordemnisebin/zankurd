@@ -112,7 +112,7 @@ void main() {
     );
 
     expect(
-      File('lib/src/widgets/styled_input.dart').readAsStringSync(),
+      File('lib/src/widgets/sahne/sahne_field.dart').readAsStringSync(),
       contains('minWidth: 48'),
     );
     expect(

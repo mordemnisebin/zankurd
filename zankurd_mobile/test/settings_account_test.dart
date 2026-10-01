@@ -440,7 +440,10 @@ void main() {
   // bekçide: `ZanKurd Oyuncusu` hiçbir biçimde görünmez.
   String fieldText(WidgetTester tester) => tester
       .widget<TextField>(
-        find.byKey(const ValueKey('settings-player-name-field')),
+        find.descendant(
+          of: find.byKey(const ValueKey('settings-player-name-field')),
+          matching: find.byType(TextField),
+        ),
       )
       .controller!
       .text;
@@ -475,5 +478,35 @@ void main() {
     expect(find.text('ZanKurd Oyuncusu'), findsNothing);
     expect(fieldText(tester), isEmpty);
     expect(find.text('Oyundaki adını gir…'), findsOneWidget);
+  });
+
+  testWidgets('Kaydet ad değişmeden kapalı, değişince birincil ve açık', (
+    tester,
+  ) async {
+    // 2026-09-30 denetimi: ikincil çerçeveli "Kaydet" ad değişse de
+    // değişmese de aynı görünüyordu; yazan kişi kaydedilecek bir şey olduğunu
+    // fark etmiyordu. Şimdi değişmemişken kapalı, değişince Agir.
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    final saveFinder = find.widgetWithText(SahneButton, 'Kaydet');
+    expect(saveFinder, findsOneWidget);
+    FilledButton button() => tester.widget<FilledButton>(
+      find.descendant(of: saveFinder, matching: find.byType(FilledButton)),
+    );
+    expect(button().onPressed, isNull);
+
+    await tester.enterText(
+      find.descendant(
+        of: find.byKey(const ValueKey('settings-player-name-field')),
+        matching: find.byType(TextField),
+      ),
+      'Rojda',
+    );
+    await tester.pump();
+    expect(button().onPressed, isNotNull);
   });
 }

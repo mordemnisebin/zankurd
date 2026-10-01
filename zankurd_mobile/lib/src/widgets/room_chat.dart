@@ -359,7 +359,9 @@ class _RoomChatState extends State<RoomChat> {
               // Giriş alanı
               DecoratedBox(
                 decoration: BoxDecoration(
-                  color: t.s2,
+                  // Perde: giriş alanı Kulis (`s2`) tonunda ve aynı tonlu
+                  // çubukta görünmez oluyordu.
+                  color: t.s1,
                   border: Border(top: BorderSide(color: t.line)),
                 ),
                 child: Padding(
@@ -372,16 +374,12 @@ class _RoomChatState extends State<RoomChat> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: TextField(
+                        child: SahneField(
                           controller: _messageController,
                           textInputAction: TextInputAction.send,
                           onSubmitted: (_) => _sendMessage(),
-                          maxLines: 1,
-                          decoration: InputDecoration(
-                            hintText: context.t(K.chatHint),
-                            isDense: true,
-                          ),
-                          style: SahneType.body.copyWith(color: t.tx),
+                          hintText: context.t(K.chatHint),
+                          semanticLabel: context.t(K.chatHint),
                         ),
                       ),
                       const SizedBox(width: SahneSpace.x1),

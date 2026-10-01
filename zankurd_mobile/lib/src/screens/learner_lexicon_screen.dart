@@ -46,19 +46,10 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  TextField(
+                  SahneField.search(
                     key: const ValueKey('lexicon-search-field'),
-                    textInputAction: TextInputAction.search,
+                    hintText: context.t(K.lexiconSearchHint),
                     onChanged: (value) => setState(() => _query = value),
-                    style: SahneType.body.copyWith(color: t.tx),
-                    decoration: InputDecoration(
-                      hintText: context.t(K.lexiconSearchHint),
-                      prefixIcon: Icon(
-                        AppIcons.magnifyingGlass,
-                        size: 20,
-                        color: t.tx2,
-                      ),
-                    ),
                   ),
                   const SizedBox(height: SahneSpace.x3),
                   Text(

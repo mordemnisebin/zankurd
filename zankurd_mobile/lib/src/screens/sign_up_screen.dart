@@ -10,7 +10,6 @@ import '../services/analytics_service.dart';
 import '../services/display_name_policy.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/sahne/sahne.dart';
-import '../widgets/styled_input.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -30,10 +29,10 @@ class _SignUpScreenState extends State<SignUpScreen>
   // 2026-07-22 canlı UX denetimi: inline doğrulama
   final _step0FormKey = GlobalKey<FormState>();
   final _step1FormKey = GlobalKey<FormState>();
-  final _emailFieldKey = GlobalKey<StyledInputFieldState>();
-  final _passwordFieldKey = GlobalKey<StyledInputFieldState>();
-  final _confirmPasswordFieldKey = GlobalKey<StyledInputFieldState>();
-  final _usernameFieldKey = GlobalKey<StyledInputFieldState>();
+  final _emailFieldKey = GlobalKey<SahneFieldState>();
+  final _passwordFieldKey = GlobalKey<SahneFieldState>();
+  final _confirmPasswordFieldKey = GlobalKey<SahneFieldState>();
+  final _usernameFieldKey = GlobalKey<SahneFieldState>();
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
@@ -293,7 +292,7 @@ class _SignUpScreenState extends State<SignUpScreen>
           key: _step0FormKey,
           child: Column(
             children: [
-              StyledInputField(
+              SahneField(
                 key: _emailFieldKey,
                 label: context.t(K.emailAddress),
                 controller: _emailController,
@@ -315,7 +314,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                 opacity: LoadAnimationSequence.formField2FadeAnimation(
                   _animationController,
                 ),
-                child: StyledInputField(
+                child: SahneField(
                   key: _passwordFieldKey,
                   label: context.t(K.passwordLabel),
                   controller: _passwordController,
@@ -345,7 +344,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                 ),
               ),
               const SizedBox(height: 20),
-              StyledInputField(
+              SahneField(
                 key: _confirmPasswordFieldKey,
                 label: context.t(K.confirmPassword),
                 controller: _confirmPasswordController,
@@ -383,7 +382,7 @@ class _SignUpScreenState extends State<SignUpScreen>
           key: _step1FormKey,
           child: Column(
             children: [
-              StyledInputField(
+              SahneField(
                 key: _usernameFieldKey,
                 label: context.t(K.username),
                 controller: _usernameController,

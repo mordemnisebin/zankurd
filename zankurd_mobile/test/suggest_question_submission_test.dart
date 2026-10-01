@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/suggest_question_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -26,11 +27,11 @@ class _SuggestionRepository extends MockZanKurdRepository {
 }
 
 Future<void> _completeSuggestionForm(WidgetTester tester) async {
-  await tester.tap(find.byType(DropdownButtonFormField<String>));
+  await tester.tap(find.byType(SahneDropdownField<String>));
   await tester.pumpAndSettle();
   await tester.tap(find.text('Dil').last);
 
-  final fields = find.byType(TextFormField);
+  final fields = find.byType(TextField);
   await tester.enterText(fields.at(0), 'Pirtûk çi ye?');
   await tester.enterText(fields.at(1), 'Kitap');
   await tester.enterText(fields.at(2), 'Masa');

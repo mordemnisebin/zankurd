@@ -204,21 +204,17 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                       ),
                     ),
                     const SizedBox(height: SahneSpace.x4),
-                    TextFormField(
+                    SahneField(
                       key: const ValueKey('play-hub-join-room-code-field'),
+                      label: context.t(K.roomCode),
                       controller: controller,
                       textCapitalization: TextCapitalization.characters,
                       // Yazarken kanonik biçime çeker: kullanıcı yalnız soneki
                       // yazsa da alanda `ZK-ABCDEF0123` görünür, yani gönderilen
                       // kodun doğru olduğunu göndermeden önce görür.
                       inputFormatters: const [_RoomCodeInputFormatter()],
-                      style: inputTextStyle,
-                      errorBuilder: (_, errorText) =>
-                          Text(errorText, overflow: TextOverflow.visible),
-                      decoration: InputDecoration(
-                        labelText: context.t(K.roomCode),
-                        prefixIcon: const Icon(AppIcons.doorOpen),
-                      ),
+                      inputTextStyle: inputTextStyle,
+                      prefixIcon: AppIcons.doorOpen,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return context.t(K.roomCodeRequired);

@@ -6,7 +6,6 @@ import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/app_logo.dart';
 import '../widgets/sahne/sahne.dart';
-import '../widgets/styled_input.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Kurtarma bağlantısıyla açılmış oturumda yeni parolayı alır.
@@ -28,8 +27,8 @@ class PasswordRecoveryScreen extends StatefulWidget {
 }
 
 class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
-  final _passwordFieldKey = GlobalKey<StyledInputFieldState>();
-  final _confirmFieldKey = GlobalKey<StyledInputFieldState>();
+  final _passwordFieldKey = GlobalKey<SahneFieldState>();
+  final _confirmFieldKey = GlobalKey<SahneFieldState>();
   final _passwordController = TextEditingController();
   final _confirmController = TextEditingController();
 
@@ -136,7 +135,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        StyledInputField(
+                        SahneField(
                           key: _passwordFieldKey,
                           label: context.t(K.newPasswordLabel),
                           controller: _passwordController,
@@ -166,7 +165,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                           },
                         ),
                         const SizedBox(height: SahneSpace.x4),
-                        StyledInputField(
+                        SahneField(
                           key: _confirmFieldKey,
                           label: context.t(K.confirmPassword),
                           controller: _confirmController,

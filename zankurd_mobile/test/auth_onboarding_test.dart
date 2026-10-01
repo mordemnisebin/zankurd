@@ -483,13 +483,19 @@ void main() {
       expect(title.style?.color?.computeLuminance(), greaterThan(0.75));
 
       // Form etiketi temayla birlikte renk değiştirir; sabit beyaz olmamalı.
+      // Etiket her formda aynıdır (SahneField: ikincil metin `tx2`); giriş
+      // ekranı eskiden kendi etiket rengini (`tx`) verip kayıt formundan
+      // ayrışıyordu. Okunurluk korunur: kart zemininde AA (≥ 4,5).
       final emailLabel = tester.widget<Text>(find.text('E-posta adresi'));
-      final labelLuminance = emailLabel.style?.color?.computeLuminance() ?? 0;
-      if (mode == ThemeMode.light) {
-        expect(labelLuminance, lessThan(0.3));
-      } else {
-        expect(labelLuminance, greaterThan(0.6));
-      }
+      final tokens = mode == ThemeMode.light
+          ? SahneTokens.day
+          : SahneTokens.night;
+      expect(emailLabel.style?.color, tokens.tx2);
+      final hi = emailLabel.style!.color!.computeLuminance();
+      final lo = tokens.s1.computeLuminance();
+      final contrast =
+          (hi > lo ? hi + 0.05 : lo + 0.05) / (hi > lo ? lo + 0.05 : hi + 0.05);
+      expect(contrast, greaterThanOrEqualTo(4.5));
 
       expect(find.text('Misafir olarak devam et'), findsOneWidget);
       expect(tester.takeException(), isNull);

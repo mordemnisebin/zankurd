@@ -9,6 +9,7 @@ import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_wildcard_bar.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -326,7 +327,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('fill-in-blank-submit')));
     await tester.pumpAndSettle();
 
-    expect(tester.widget<TextField>(input).controller?.text, isEmpty);
+    expect(tester.widget<SahneField>(input).controller?.text, isEmpty);
     await tester.enterText(input, 'yanlış');
     await tester.pump();
     final submit = tester.widget<FilledButton>(

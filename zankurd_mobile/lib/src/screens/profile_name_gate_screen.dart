@@ -166,7 +166,7 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  TextFormField(
+                                  SahneField(
                                     key: const ValueKey('player-name-field'),
                                     controller: _controller,
                                     // Hata yalnız Form.validate() ile
@@ -178,14 +178,9 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
                                         AutovalidateMode.onUserInteraction,
                                     textCapitalization:
                                         TextCapitalization.words,
-                                    style: SahneType.body.copyWith(color: t.tx),
-                                    decoration: InputDecoration(
-                                      hintText: context.t(K.nameGateHint),
-                                      prefixIcon: const Icon(
-                                        AppIcons.user,
-                                        size: 20,
-                                      ),
-                                    ),
+                                    hintText: context.t(K.nameGateHint),
+                                    semanticLabel: context.t(K.nameGateHint),
+                                    prefixIcon: AppIcons.user,
                                     validator: (value) {
                                       // 2026-08-02: burada YALNIZ
                                       // uzunluk kontrol ediliyordu.
