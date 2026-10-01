@@ -78,7 +78,8 @@ void main() {
       // iki dilli (TR alanları dolu).
       // 2937 -> 2954: +31 üçüncü dalga, -44 karantinaya dönen, +30 bilim;
       // üçü de iki dilli (TR alanları dolu).
-      2954,
+      // 2954 -> 2971: +17 `altkonu_2026_10_01`; hepsi iki dilli (TR dolu).
+      2971,
       reason:
           'Türkçe metin taşıyan soru sayısı değişti (yükleyicinin verdiği sayı). Yeni parti geldiyse bu '
           'sayı bilerek güncellenmeli; kendiliğinden düştüyse bir bankanın '
