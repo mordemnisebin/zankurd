@@ -72,9 +72,12 @@ void main() {
       // 2075 -> 2937: 2026-09-30 son birleştirme (+822 doğrulanmış DeepSeek,
       // +40 bilim; bkz. `playable_inventory_test.dart`).
       // 2937 -> 2954: +31 üçüncü dalga, -44 karantinaya dönen, +30 bilim.
-      // 2954 -> 2971: +17 `altkonu_2026_10_01` (üç gizli alt konuyu açan
-      // kaynaklı sorular).
-      2971,
+      // 2954 -> 2971 (+17): 2026-10-01 `altkonu_2026_10_01` — üç gizli alt
+      // konuyu açan kaynaklı sorular. 2971 -> 3045 (+74): 2026-10-01
+      // `ders_2026_10_01`, derse etiketli alıştırma soruları (bkz.
+      // `lesson_practice_depth_test.dart`). 3045 -> 3048 (+3): aynı gün
+      // yeniden yazılan üç ders sorusu.
+      3048,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

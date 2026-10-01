@@ -121,7 +121,15 @@ void main() {
         .where((q) => q.metadata?.learningLessonId != null)
         .toList(growable: false);
 
-    expect(tagged.map((q) => q.id).toSet(), {
+    // 2026-10-01: `ders_2026_10_01_*` (74 soru) bilerek yeni eklendi ve
+    // aşağıdaki tohum kümesinin DIŞINDA sayılır; tohum (eski inceleme
+    // turlarının etiketlediği sorular) değişmeden sabit kalır. Yeni
+    // kümenin kendi bekçisi `lesson_practice_depth_test.dart`.
+    final seed = tagged
+        .where((q) => !q.id.startsWith('ders_2026_10_01_'))
+        .map((q) => q.id)
+        .toSet();
+    expect(seed, {
       'offline_curated_30013',
       'edit_ziman_0038',
       'offline_0062',
@@ -203,17 +211,22 @@ void main() {
   test('seeded production lessons put their exact tagged pool first', () async {
     SharedPreferences.setMockInitialValues({});
     final repository = MockZanKurdRepository();
+    // 2026-10-01: `ders_2026_10_01` her bu dersi en az 7 etiketli soruya
+    // çıkardı; limit 5 olduğundan quiz artık TAMAMEN etiketli sorudan
+    // kuruluyor ve sözlük dolgusu (`lesson_` önekli) hiç girmiyor. Önceki
+    // sayılar (everyday_1: 3, grammar_1: 3, animals_2: 2, emotions_1: 1,
+    // time_1: 1...) bu derslerin eskiden dolguya yaslandığını gösteriyordu.
     const expectedCounts = {
-      'everyday_1': 3,
+      'everyday_1': 5,
       'everyday_3': 5,
-      'grammar_1': 3,
+      'grammar_1': 5,
       'grammar_2': 5,
-      'food_1': 4,
-      'animals_1': 4,
-      'animals_2': 2,
-      'emotions_1': 1,
+      'food_1': 5,
+      'animals_1': 5,
+      'animals_2': 5,
+      'emotions_1': 5,
       'time_2': 5,
-      'time_1': 1,
+      'time_1': 5,
     };
 
     for (final entry in expectedCounts.entries) {

@@ -78,8 +78,12 @@ void main() {
       // iki dilli (TR alanları dolu).
       // 2937 -> 2954: +31 üçüncü dalga, -44 karantinaya dönen, +30 bilim;
       // üçü de iki dilli (TR alanları dolu).
-      // 2954 -> 2971: +17 `altkonu_2026_10_01`; hepsi iki dilli (TR dolu).
-      2971,
+      // 2954 -> 2971 (+17): 2026-10-01 `altkonu_2026_10_01` — üç gizli alt
+      // konuyu açan kaynaklı sorular. 2971 -> 3045 (+74): 2026-10-01
+      // `ders_2026_10_01`, derse etiketli alıştırma soruları (bkz.
+      // `lesson_practice_depth_test.dart`). 3045 -> 3048 (+3): aynı gün
+      // yeniden yazılan üç ders sorusu.
+      3048,
       reason:
           'Türkçe metin taşıyan soru sayısı değişti (yükleyicinin verdiği sayı). Yeni parti geldiyse bu '
           'sayı bilerek güncellenmeli; kendiliğinden düştüyse bir bankanın '

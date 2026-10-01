@@ -108,4 +108,10 @@ const questionBankAssets = <String>[
   // Kurmancîye çevirdi, Grok 4.7 olgu ve dil açısından okudu; doğrulanamayan
   // bir soru (Hozan Dîno albüm yılı) çıkarıldı.
   'assets/data/altkonu_2026_10_01_questions.json',
+  // 2026-10-01: 14 dersin uçtaki alıştırması etiketli sorudan yoksundu; 74
+  // yeni soru `learningLessonId` ile derse bağlandı (kimlikler
+  // `ders_2026_10_01_*`). Sözcükler dersin kendi sözlük çiftlerinden;
+  // metinler çok modelli turdan geçti. Bekçi:
+  // `test/lesson_practice_depth_test.dart`.
+  'assets/data/ders_2026_10_01_questions.json',
 ];

@@ -95,7 +95,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla on beş kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla on altı kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -126,6 +126,8 @@ void main() {
         // 2026-10-01: üç gizli alt konuyu (Muzîka Nûjen, Programkirin,
         // Yılmaz Güney û Klasîk) açan 17 kaynaklı soru.
         ...fromJson('assets/data/altkonu_2026_10_01_questions.json'),
+        // 2026-10-01: derse etiketli alıştırma soruları (74).
+        ...fromJson('assets/data/ders_2026_10_01_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;
