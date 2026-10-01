@@ -13,7 +13,119 @@ Yeni sürüm hazırlarken: en üste yeni bir başlık aç, eskiyi silme.
 
 ---
 
+## 2.0.0 (21) — 2026-10-01
+
+Marketing sürümü 1.9.2'den 2.0.0'a çıktı (1.9.2 (20) mağazaya gönderilmiş son
+build'di; build numarası 21). Sebep: görünüm, içerik ve oyun modları öyle
+değişti ki "küçük güncelleme" demek yanlış olurdu. Aşağıda "Oyuncunun göreceği"
+yalnız kodda bugün açık olanı yazar; kapalı olan her şey en altta ayrıca
+sayılır.
+
+### Oyuncunun göreceği
+
+- **Yeni görünüm (Şahnê tasarım sistemi).** Her ekran aynı bileşen
+  ailesinden çiziliyor: sekmeler ve alt gezinme, soru ekranı, yarış akışları,
+  hesap/ayarlar/mağaza/giriş/tanıtım. Yeni logo (pahlı soru balonu içinde Z)
+  ve yeni uygulama simgesi. Her konunun kendi silüeti ve kilim bandı var
+  (on bir konu).
+- **On bir kategori:** Dil, Kültür, Tarih, Edebiyat, Coğrafya, Müzik,
+  Sinema, Siyaset, Bilim ve Düşünce, Teknoloji, Dünya (Kurmancî: Ziman, Çand,
+  Dîrok, Wêje, Erdnîgarî, Muzîk, Sînema, Siyaset, Zanist û Raman, Teknolojî,
+  Cîhan). Her kategoride beş seviye. Paradigma iç kimlik olarak kalır; oyuncu
+  "Bilim ve Düşünce / Zanist û Raman" görür. Dünya yeni: Kürtlerle doğrudan
+  bağı olmayan nötr genel bilgi artık Kürt kategorilerine karışmayıp kendi
+  adıyla duruyor.
+- **2.486 oynanabilir soru.** Yaklaşık yüzde 70'i Kürt
+  dili, tarihi ve kültürü; yaklaşık yüzde 30'u Dünya, Teknoloji ve Bilim ve
+  Düşünce'de genel bilgi. Mağaza metni aşağı yuvarlanmış "2.400'den fazla"
+  der.
+- **Sırayla düello açık** (`kAsyncDuelEnabled = true`). Yarış sekmesinde
+  "Sırayla düello" kartı: oyuncu sunucunun seçtiği soruları şimdi oynar, rakip
+  kendi zamanında; sonuçlar "Düellolarım"da. Hızlı düelloda 20 saniyede
+  rakip bulunamazsa teklif olarak çıkar.
+- **Yarış sekmesi:** Hızlı düello (1v1 canlı), Sırayla düello, "Arkadaşlarınla"
+  altında Oda kur / Kodla katıl (davet bağlantısı `zankurd.com/join/KOD`),
+  Günün soruları. Liderlik tablosu: Gün / Hafta / Ay / Arkadaşlar; altına
+  sabitlenen "benim sıram" satırı artık dönem puanından hesaplanır.
+- **Öğren:** ders yolu, günlük hikâyeler, kelime kartları, Sözlük (Ferheng).
+  Günün dersi 10 soru (ilk oturumda 5).
+- Kurmancî arayüz metinlerinin tamamı ve soru bankası çok modelli denetimden
+  geçti (aşağıda).
+- Çevrimdışı tek kişilik oyun, reklamsız, isteğe bağlı abonelik ("ZanKurd
+  Pro") aynen duruyor.
+
+### Kapalı olanlar (oyuncu görmez)
+
+- Turnuva: `kTournamentEnabled = false`; ekran kodda var, Yarış sekmesinde
+  görünmez. Mağaza ve review metinleri turnuvadan söz etmez.
+- Haftalık lig (`kWeeklyLeagueEnabled = false`).
+- Gizli kategori yok: `hiddenCategoryIds` boş (Paradigma, Siyaset, Teknolojî
+  2026-09-30'da yeniden açıldı).
+
+### Kaputun altında
+
+**İçerik genişlemesi ve doğrulama.**
+
+- DeepSeek sorularından çok modelli doğrulamadan geçenler ayrı bir kopyada
+  oynanır hâle geldi: 458 + 364 = 822 soru, üçüncü dalgada 31 soru daha
+  (Kurmancî düzeltmeli). 151 doğrulanmış soruya kaynak yazıldı; kaynağı
+  bulunamayan ya da cevabı yanlış çıkan 44 soru karantinaya döndü.
+- Bilim ve Düşünce'ye kaynaklı 70 soru (bilim_0001–0070 aralığındaki yeniler);
+  doğru şık konumları dengelendi (40'ın 38'i A'ydı).
+- Dünya bilgisi olduğu için bir ara emekliye ayrılan 99 soru Dünya altında
+  geri döndü; son olgu doğrulamasında iki modelin onayladığı 38 soru emekliye
+  ayrıldı.
+- Tek bir siyasi görüşü doğru cevap diye sunan sorular kategori yerine tek tek
+  ayıklandı: 159 Paradigma/Siyaset sorusu + 17 yerel Siyaset sorusu istemcide
+  emekli (`retired_question_ids.dart`); sunucuda 502 + 64 soru
+  `is_approved = false` (silinmedi).
+- Kurmancî: 687 arayüz metni ilk kez tam denetlendi (108 düzeltme), 1.316
+  sorunun ilk tam Kurmancî denetimi yapıldı; uyuşmazlıkta üçüncü oy ChatGPT.
+  Şablon izli soru metinleri doğallaştırıldı.
+- Kalite kapısı ve sabitlenmiş sayılar (`test/playable_inventory_test.dart`)
+  yeni bankalara göre yeniden kuruldu.
+
+**Sunucu göçleri (hepsi canlıda, ayrıntı `supabase/applied.md`):**
+
+- 2026-09-30: `xp_and_coin_idempotency`, `async_duels`, `async_duels_cron`,
+  `hidden_categories_inactive` (kullanıcı terminalinden, tek işlemde; doğrulama
+  `async_duels_verify` hepsi tamam). Sırayla düello bu göçlerle açıldı.
+- 2026-09-30: `leaderboard_positive_scores`, `my_leaderboard_rank`,
+  `sinema_category_and_questions` (+ `sinema_drunken_horses_fix`).
+- 2026-09-30: `hidden_categories_reopen`, `contested_questions_unapprove`,
+  `async_duel_all_categories`, `siyaset_second_pass_unapprove`,
+  `cihan_and_science` (Dünya 399, Bilim ve Düşünce 132).
+- 2026-10-01: `deepseek_verified_sync` (+539 soru; etkin kategorilerde onaylı
+  4.179 → 4.718).
+- Bu sürümde uygulanacak bekleyen göç yok. Sunucu 4.718 onaylı soru tutar;
+  istemci 2.486'sını paketli taşır, çevrimiçi düello ve odalar sunucu
+  bankasından çeker.
+
+**Kod tarafı:** `pubspec.yaml` `2.0.0+21`; `docs/app_review_packet_2.0.0_build21.md`
+bu build için yazıldı (eski 1.9.2 paketi tarihçe olarak duruyor);
+`test/subscription_disclosure_test.dart` paket dosyasını artık sürüm başlığından
+bulur (dosya adına gömülü 1.9.2 kalktı).
+
+### Yayın öncesi kapılar
+
+1. App Store Connect ve Play Console'daki en yüksek build numarasını kontrol
+   et (21 hepsinin üstünde olmalı).
+2. Mağaza ekran görüntüleri Şahnê öncesinden: yeniden alınmalı
+   (`docs/store_listing.md` → "Mağaza ekran görüntüleri").
+3. Mağaza metni: `docs/store_listing.md` (karakter sayıları sayılı). Kurmancî
+   liste metninin anadil kontrolü.
+4. App Review paketi: `docs/app_review_packet_2.0.0_build21.md`; App Privacy
+   cevapları ikili ile karşılaştırılacak (veri envanteri değişmedi).
+5. Fiziksel cihazda bir tur (YAYIN_ADIMLARI.md bölüm 6): bildirim simgesi,
+   abonelik, bir tur oyun; ayrıca yeni logonun simge olarak doğru çıktığı.
+
+---
+
 ## Sonraki sürüm — taslak (2026-09-27, sürüm numarası verilmedi)
+
+> 2026-10-01: Bu taslak 2.0.0 (21) olarak yayına hazırlandı; güncel durum
+> yukarıdaki bölümde. Aşağısı 2026-09-27 anının kaydıdır ("7 kategori" ve
+> "sırayla düello kapalı" artık geçerli değil).
 
 Dal: `tasarim/sade-ilk-deneyim` (uzakta `tasarim-sade-ilk-deneyim`). Yön:
 arkadaşla oda + 1v1 yarışma (TRT Bil Bakalım modeli) VE öğrenme alanı; ilk
