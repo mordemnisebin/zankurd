@@ -34,6 +34,7 @@ class _RetryableLevelRepository extends MockZanKurdRepository {
     required int difficultyMin,
     required int difficultyMax,
     String? subCategory,
+    int? levelNumber,
     int limit = 10,
   }) async {
     loadCalls += 1;
@@ -44,6 +45,7 @@ class _RetryableLevelRepository extends MockZanKurdRepository {
       difficultyMin: difficultyMin,
       difficultyMax: difficultyMax,
       subCategory: subCategory,
+      levelNumber: levelNumber,
       limit: limit,
     );
   }

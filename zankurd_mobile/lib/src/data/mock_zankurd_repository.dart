@@ -26,9 +26,9 @@ import 'curated_question_bank.dart';
 import 'learning_assessment_bank.dart';
 import 'question_bank_loader.dart';
 import 'seen_question_store.dart';
+import 'subcategory_level_plan.dart';
 import 'durable_write.dart';
 import 'zankurd_repository.dart';
-import '../config/subcategory_config.dart';
 import '../config/category_visibility.dart';
 import '../services/question_set_policy.dart';
 import '../services/question_content_policy.dart';
@@ -158,7 +158,50 @@ AsyncDuelOutcome _asyncDuelOutcome({
 }
 
 class MockZanKurdRepository implements ZanKurdRepository {
-  MockZanKurdRepository();
+  /// [levelSeed] alt konu seviyelerinin dolgu karıştırma tohumudur; verilmezse
+  /// her depo (= her oturum) kendi rastgele tohumunu alır: dolgu oturum
+  /// içinde kararlı, oturumlar arasında farklıdır. Testler sabit verir.
+  MockZanKurdRepository({int? levelSeed})
+    : _levelSeed = levelSeed ?? Random().nextInt(0x7fffffff);
+
+  final int _levelSeed;
+
+  /// Alt konu planları (kategori|alt konu → plan). Plan, soru listesi
+  /// değişmedikçe aynıdır; `build` her çizimde çağrıldığı için ağır planı
+  /// yeniden kurmamak gerekir. Kaynak liste özdeş değilse (testler her
+  /// çağrıda yeni liste döndürür) önbellek atılır.
+  Object? _plansSource;
+  final Map<String, SubcategoryLevelPlan> _plans = {};
+
+  SubcategoryLevelPlan _subcategoryPlan(String category, String subCategory) {
+    final source = questions;
+    if (!identical(source, _plansSource)) {
+      _plans.clear();
+      _plansSource = source;
+    }
+    return _plans.putIfAbsent(
+      '$category|$subCategory',
+      () => SubcategoryLevelPlan.build(
+        standardLevels: levelsForCategory(category),
+        categoryPool: [
+          for (final q in _playableQuestions)
+            if (q.category == category) q,
+        ],
+        subCategory: subCategory,
+        seed: _levelSeed,
+      ),
+    );
+  }
+
+  /// "Bu kategorinin tamamı" satırı ([SubcategoryScreen] alt konusu
+  /// kalmayan kategoriler için gösterir); gerçek bir alt konu değildir,
+  /// kategori yolunu kullanır.
+  static const _wholeCategoryId = 'gisti';
+
+  static bool _isRealSubcategory(String? subCategory) =>
+      subCategory != null &&
+      subCategory.isNotEmpty &&
+      subCategory != _wholeCategoryId;
 
   static const _contentPolicy = QuestionContentPolicy();
 
@@ -338,7 +381,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  List<QuizLevel> levelsForCategory(String category) {
+  List<QuizLevel> levelsForCategory(String category, {String? subCategory}) {
+    if (_isRealSubcategory(subCategory)) {
+      // Alt konu yolu: kart GERÇEK boyutu ve zorluk aralığını gösterir
+      // (bkz. [SubcategoryLevelPlan]).
+      return [
+        for (final level in _subcategoryPlan(category, subCategory!).levels)
+          level.toQuizLevel(),
+      ];
+    }
     return [
       QuizLevel(
         number: 1,
@@ -396,10 +447,33 @@ class MockZanKurdRepository implements ZanKurdRepository {
     required int difficultyMin,
     required int difficultyMax,
     String? subCategory,
+    int? levelNumber,
     int limit = 10,
   }) async {
+    if (_isRealSubcategory(subCategory)) {
+      // Alt konu yolu zorluk BANDIYLA değil, havuzun zorluğa göre
+      // bölünmüş çakışmasız DİLİMİYLE çalışır (bkz. [SubcategoryLevelPlan]);
+      // bu yüzden hangi seviye olduğu bilinmelidir. Seviye numarası
+      // verilmeyen eski çağrılar bandından çıkarılır.
+      final plan = _subcategoryPlan(category, subCategory!);
+      final planned = plan.level(
+        levelNumber ?? plan.numberFor(difficultyMin, difficultyMax),
+      );
+      // Plan bu alt konu için en az bir soru kuruyorsa SON SÖZÜ o söyler:
+      // boş kalan bir seviye kategori havuzuna düşmez (eskiden `pool.isEmpty
+      // ? playable` her şeyi geri getiriyor, seviyeler arası tekrarı ve
+      // konu dışı soruyu sessizce geri sokuyordu). Alt konunun hiç sorusu
+      // yoksa (bilinmeyen kimlik) kategori yoluna düşülür.
+      final hasQuestions = plan.levels.any(
+        (level) => level.candidates.isNotEmpty,
+      );
+      if (hasQuestions) {
+        return _selectFresh(planned?.candidates ?? const [], limit);
+      }
+    }
+
     final playable = _playableQuestions;
-    final byCategoryAndDifficulty = playable
+    final pool = playable
         .where(
           (question) =>
               question.category == category &&
@@ -407,46 +481,6 @@ class MockZanKurdRepository implements ZanKurdRepository {
               question.difficulty <= difficultyMax,
         )
         .toList();
-
-    var pool = byCategoryAndDifficulty;
-    if (subCategory != null) {
-      final matched = byCategoryAndDifficulty
-          .where((q) => SubcategoryConfig.getSubcategoryId(q) == subCategory)
-          .toList();
-      // 2026-09-28: `getSubcategoryId` artık rastgele bir kovaya düşürmüyor
-      // (bkz. subcategory_config.dart) — eşleşmeyen soru '' (genel) döner.
-      // Eşleşen sayı limit'in altında kalırsa tamamlama sırası da dürüst
-      // olmalı:
-      //   1) ÖNCE genel sorular (aynı kategori+zorluk, hiçbir alt kategoriye
-      //      ait olduğu iddia edilmeyen sorular) — bunlar yanlış bir konu
-      //      etiketi taşımaz, yalnızca "bu turun konusu net değil" demektir.
-      //   2) Genel sorular da yetmezse, ANCAK O ZAMAN başka bir alt
-      //      kategorinin (yanlış konu altında görünecek) sorusuna başvurulur.
-      // Kullanıcı "Dîroka Kevn" seçtiğinde mümkün olduğunca "Dîroka Nûjen"
-      // sorusu görmemeli; hiç genel soru kalmadıysa yine de turu eksik
-      // bırakmak yerine başka alt kategoriden tamamlanır.
-      if (matched.length < limit) {
-        final matchedIds = matched.map((q) => q.id).toSet();
-        final remaining = byCategoryAndDifficulty
-            .where((q) => !matchedIds.contains(q.id))
-            .toList();
-        final general = remaining
-            .where((q) => SubcategoryConfig.getSubcategoryId(q).isEmpty)
-            .toList();
-        final need = limit - matched.length;
-        final fillers = general.length >= need
-            ? general.take(need * 3)
-            : [
-                ...general,
-                ...remaining.where(
-                  (q) => SubcategoryConfig.getSubcategoryId(q).isNotEmpty,
-                ),
-              ].take(need * 3);
-        pool = [...matched, ...fillers];
-      } else {
-        pool = matched;
-      }
-    }
 
     // İlk iki basamak (Destpêk / Bingeh) bir öğrenme yolunun girişidir:
     // bankadaki `difficulty` etiketi konu zorluğunu anlatır ama okuma

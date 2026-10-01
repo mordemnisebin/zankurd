@@ -490,8 +490,8 @@ const curatedQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt:
         'Rast e yan şaş e? "Xwe-rêxistin tenê ji bo kesên ku li bajarên mezin dijîn e."',
-    answers: ['Rast e', 'Şaş e'],
-    correctAnswer: 'Şaş e',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Şaş',
     promptTr:
         'Doğru mu yanlış mı? "Öz örgütlenme yalnızca büyük şehirlerde yaşayanlar içindir."',
     answersTr: ['Doğru', 'Yanlış'],
@@ -513,8 +513,8 @@ const curatedQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt:
         'Rast e yan şaş e? "Berxwedan" her tim tenê bi awayê çekdarî tê pênasekirin.',
-    answers: ['Rast e', 'Şaş e'],
-    correctAnswer: 'Şaş e',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Şaş',
     promptTr:
         'Doğru mu yanlış mı? "Direniş" her zaman yalnızca silahlı biçimde tanımlanır.',
     answersTr: ['Doğru', 'Yanlış'],

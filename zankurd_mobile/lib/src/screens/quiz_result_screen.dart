@@ -1186,10 +1186,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // kartın altında birebir aynı eylemi ikinci kez sunuyordu. `reviewCategory`
     // doluyken kart yalnız O KONUNUN yanlışlarını gösterir — o zaman ikisi
     // farklı kapsamdır ("bu konudakiler" ↔ "hepsi") ve yan eylem kalmalı.
+    //
+    // 2026-10-02: `reviewCategory` artık YANLIŞI olan her turda dolu (zayıf
+    // konu eşiğe bağlı değil; bkz. `LearningOutcome.fromRecords`). "Kart hepsini
+    // açıyor" koşulu bu yüzden kategori adının boşluğundan değil kapsamdan
+    // okunur: kartın açacağı kayıtlar tüm yanlışlara eşitse (tek konuda
+    // toplanmışsa ya da konusuz kayıtlarsa) yan düğme aynı eylemi tekrarlar.
     final learningOutcomeAlreadyOffersAllMistakes =
         answerRecords.isNotEmpty &&
-        learningOutcome.reviewCategory == null &&
-        learningOutcome.reviewRecords.isNotEmpty;
+        learningOutcome.reviewRecords.isNotEmpty &&
+        learningOutcome.reviewRecords.length >= wrongRecords.length;
     // 2026-09-29 Şahnê: "Paylaş" alt perdede birincil eylemin yanında durur
     // (maketteki `.sh-dock--2`). Geri kalan yan eylemler öğrenme özetinin
     // ALTINDA, ikincil düğme olarak kalır — öğrenme içgörüsü onlardan önce
@@ -1317,7 +1323,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         if (breakdown.isNotEmpty) ...[
           SahneSectionHeader(title: context.t(K.resultLearnedTitle)),
           _CategoryLearnings(breakdown: breakdown),
-          const SizedBox(height: SahneSpace.cardGap),
+          // Yorumu olmayan kart çizilmez (bkz. [LearningOutcomeCard]): boşluk
+          // da onunla birlikte gider.
+          if (learningOutcome.hasSpotlight)
+            const SizedBox(height: SahneSpace.cardGap),
         ] else
           const SizedBox(height: SahneSpace.sectionTop),
         LearningOutcomeCard(

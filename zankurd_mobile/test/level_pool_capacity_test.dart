@@ -114,7 +114,11 @@ void main() {
         // Yalnız ilk seviye ölçülür: en dar bant odur (zorluk 1-2) ve
         // yetersizlik önce orada görünür. Bütün seviyeleri × bütün alt
         // kategorileri gezmek testi gereksizce uzatırdı.
-        final level = repository.levelsForCategory(category).first;
+        // 2026-10-02: kart alt konunun GERÇEK boyutunu söyler (bkz.
+        // [SubcategoryLevelPlan]); 10 sabiti yerine o sayı sorulur.
+        final level = repository
+            .levelsForCategory(category, subCategory: subcategory.id)
+            .first;
         shortfalls.add('$category/${subcategory.id}/${level.questionCount}');
       }
     }
@@ -127,12 +131,15 @@ void main() {
       final category = parts[0];
       final subcategory = parts[1];
       final wanted = int.parse(parts[2]);
-      final level = repository.levelsForCategory(category).first;
+      final level = repository
+          .levelsForCategory(category, subCategory: subcategory)
+          .first;
       final questions = await repository.loadLevelQuestions(
         category: category,
         difficultyMin: level.difficultyMin,
         difficultyMax: level.difficultyMax,
         subCategory: subcategory,
+        levelNumber: level.number,
         limit: wanted,
       );
       if (questions.length < wanted) {

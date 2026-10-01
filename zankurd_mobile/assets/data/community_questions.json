@@ -103,16 +103,16 @@
     "prompt": "Behra Wanê di nav sînorên kîjan du parêzgehan de ye?",
     "promptTr": "Van Gölü hangi iki ilin sınırları içindedir?",
     "answers": [
+      "Wan û Bidlîs",
       "Amed û Êlih",
       "Şirnex û Colemêrg",
-      "Muş û Agirî",
-      "Wan û Bidlîs"
+      "Muş û Agirî"
     ],
     "answersTr": [
+      "Van ve Bitlis",
       "Diyarbakır ve Batman",
       "Şırnak ve Hakkâri",
-      "Muş ve Ağrı",
-      "Van ve Bitlis"
+      "Muş ve Ağrı"
     ],
     "correctAnswer": "Wan û Bidlîs",
     "correctAnswerTr": "Van ve Bitlis",
@@ -135,14 +135,14 @@
     "promptTr": "Pîr Seyîd Rıza nerelidir?",
     "answers": [
       "Amed",
-      "Dêrsim",
       "Wan",
+      "Dêrsim",
       "Şirnex"
     ],
     "answersTr": [
       "Amed",
-      "Dêrsim",
       "Wan",
+      "Dêrsim",
       "Şîrnex"
     ],
     "correctAnswer": "Dêrsim",
@@ -353,14 +353,14 @@
     "answers": [
       "Mem û Zîn",
       "Stêrka Bakur",
-      "Şivanê Kurd",
-      "Bîra Qederê"
+      "Bîra Qederê",
+      "Şivanê Kurd"
     ],
     "answersTr": [
       "Mem û Zîn",
       "Stêrka Bakûr",
-      "Şivanê Kurd",
-      "Bîra Qederê"
+      "Bîra Qederê",
+      "Şivanê Kurd"
     ],
     "correctAnswer": "Şivanê Kurd",
     "correctAnswerTr": "Şivanê Kurd",
@@ -383,14 +383,14 @@
     "promptTr": "\"Xwîn bi xwînê nayê şûştin\" sözü nedir?",
     "answers": [
       "Beytek ji dîwana Melayê Cizîrî",
-      "Navê romanekê",
       "Gotineke pêşiyan",
+      "Navê romanekê",
       "Dubeytiyeke Baba Tahir"
     ],
     "answersTr": [
       "Melayê Cizîrî divanından bir beyit",
-      "Bir roman adı",
       "Bir atasözü",
+      "Bir roman adı",
       "Baba Tahir dûbeytîsi"
     ],
     "correctAnswer": "Gotineke pêşiyan",
@@ -444,16 +444,16 @@
     "prompt": "Muzîka fîlmê Kobanê ji hêla kê ve hatiye çêkirin?",
     "promptTr": "Kobanê filminin müziklerini kim yapmıştır?",
     "answers": [
-      "Mehmûd Berazî",
       "Şivan Perwer",
       "Seyidxanê Boyaxçî",
-      "Şakiro"
+      "Şakiro",
+      "Mehmûd Berazî"
     ],
     "answersTr": [
-      "Mehmûd Berazî",
       "Şivan Perwer",
       "Seyidxanê Boyaxçî",
-      "Şakiro"
+      "Şakiro",
+      "Mehmûd Berazî"
     ],
     "correctAnswer": "Mehmûd Berazî",
     "correctAnswerTr": "Mehmûd Berazî",
@@ -663,14 +663,14 @@
     "promptTr": "\"Ji bo Azadiyê\" filminin müziklerini kim yapmıştır?",
     "answers": [
       "Hozan Aydin",
-      "Mehmûd Berazî",
       "Hekîm Sefqan",
+      "Mehmûd Berazî",
       "Awazê Çiya"
     ],
     "answersTr": [
       "Hozan Aydin",
-      "Mehmûd Berazî",
       "Hekîm Sefqan",
+      "Mehmûd Berazî",
       "Awazê Çiya"
     ],
     "correctAnswer": "Mehmûd Berazî",
@@ -693,14 +693,14 @@
     "prompt": "Şehîdê ku wek \"Şêrê Efrînê\" tê nasîn kî ye?",
     "promptTr": "Efrîn'deki direnişin sembol ismi \"Şêrê Efrînê\" olarak bilinen şehidimiz kimdir?",
     "answers": [
-      "Gelhat Gever",
       "Karker Tolhildan",
+      "Gelhat Gever",
       "Çiyager Hêvî",
       "Hakî Karer"
     ],
     "answersTr": [
-      "Gelhat Gever",
       "Karker Tolhildan",
+      "Gelhat Gever",
       "Çiyager Hêvî",
       "Hakî Karer"
     ],
@@ -786,14 +786,14 @@
     "prompt": "Kîjan şehîd bi klamên xwe yên berxwedana Kobanê tê bîranîn?",
     "promptTr": "Kobanê direnişinde söylediği klamlarla hafızalarda kalan şehidimiz kimdir?",
     "answers": [
-      "Arîn Mîrkan",
       "Viyan Peyman",
+      "Arîn Mîrkan",
       "Kasım Engin",
       "Atakan Mahir"
     ],
     "answersTr": [
-      "Arîn Mirkan",
       "Viyan Peyman",
+      "Arîn Mirkan",
       "Kasım Engin",
       "Atakan Mahir"
     ],
@@ -910,15 +910,15 @@
     "prompt": "Şanogerê ku di berxwedana benda Tişrînê de şehîd ket kî ye?",
     "promptTr": "Tişrin barajındaki direniş sırasında şehit olan tiyatrocu kimdir?",
     "answers": [
+      "Bavê Teyar",
       "Nazmi Karaman",
       "Mirza Metin",
-      "Bavê Teyar",
       "Biçûk"
     ],
     "answersTr": [
+      "Bavê Teyar",
       "Nazmi Karaman",
       "Mirza Metin",
-      "Bavê Teyar",
       "Aydın Orak"
     ],
     "correctAnswer": "Bavê Teyar",
@@ -1005,14 +1005,14 @@
     "prompt": "Fîlmê \"Yol\" di sala 1982'an de li Cannesê kîjan xelat wergirt?",
     "promptTr": "\"Yol\" filmi 1982'de Cannes'da hangi ödülü kazandı?",
     "answers": [
-      "Xelata Taybet a Jûriyê",
       "Palmiyeya Zêrîn",
+      "Xelata Taybet a Jûriyê",
       "Xelata Derhênerê Herî Baş",
       "Hirça Zêrîn"
     ],
     "answersTr": [
-      "Jüri Özel Ödülü",
       "Altın Palmiye",
+      "Jüri Özel Ödülü",
       "En İyi Yönetmen",
       "Altın Ayı"
     ],
@@ -1129,14 +1129,14 @@
     "prompt": "Derhênerê fîlmê \"Kûsî Jî Dikarin Bifirin\" kî ye?",
     "promptTr": "\"Kaplumbağalar da Uçar\" filminin yönetmeni kimdir?",
     "answers": [
-      "Hiner Saleem",
       "Behmen Qubadî",
+      "Hiner Saleem",
       "Erol Mintaş",
       "Hüseyin Karabey"
     ],
     "answersTr": [
-      "Hiner Saleem",
       "Bahman Ghobadi",
+      "Hiner Saleem",
       "Erol Mintaş",
       "Hüseyin Karabey"
     ],
@@ -1316,15 +1316,15 @@
     "promptTr": "\"Umut\" (1970) filminin yönetmeni kimdir?",
     "answers": [
       "Zeki Ökten",
+      "Yılmaz Güney",
       "Şerif Gören",
-      "Atıf Yılmaz",
-      "Yılmaz Güney"
+      "Atıf Yılmaz"
     ],
     "answersTr": [
       "Zeki Ökten",
+      "Yılmaz Güney",
       "Şerif Gören",
-      "Atıf Yılmaz",
-      "Yılmaz Güney"
+      "Atıf Yılmaz"
     ],
     "correctAnswer": "Yılmaz Güney",
     "correctAnswerTr": "Yılmaz Güney",

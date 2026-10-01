@@ -200,8 +200,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   bool get usesServerHiddenAnswers => true;
 
   @override
-  List<QuizLevel> levelsForCategory(String category) =>
-      _offline.levelsForCategory(category);
+  List<QuizLevel> levelsForCategory(String category, {String? subCategory}) =>
+      _offline.levelsForCategory(category, subCategory: subCategory);
 
   @override
   GameRoom joinRoom(String code) => _offline.joinRoom(code);
@@ -665,6 +665,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     required int difficultyMin,
     required int difficultyMax,
     String? subCategory,
+    int? levelNumber,
     int limit = 10,
   }) async {
     return _offline.loadLevelQuestions(
@@ -672,6 +673,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       difficultyMin: difficultyMin,
       difficultyMax: difficultyMax,
       subCategory: subCategory,
+      levelNumber: levelNumber,
       limit: limit,
     );
   }

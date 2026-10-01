@@ -149,14 +149,14 @@
     "answers": [
       "Oksîjen",
       "Azot",
-      "Hîdrojen",
-      "Karbondîoksît"
+      "Karbondîoksît",
+      "Hîdrojen"
     ],
     "answersTr": [
       "Oksijen",
       "Azot",
-      "Hidrojen",
-      "Karbondioksit"
+      "Karbondioksit",
+      "Hidrojen"
     ],
     "correctAnswer": "Karbondîoksît",
     "correctAnswerTr": "Karbondioksit",
@@ -289,14 +289,14 @@
     "answers": [
       "Tenê antîjena Ayê",
       "Tenê antîjena Byê",
-      "Ne antîjena Ayê û ne jî ya Byê",
-      "Antîjenên Ayê û Byê"
+      "Antîjenên Ayê û Byê",
+      "Ne antîjena Ayê û ne jî ya Byê"
     ],
     "answersTr": [
       "Yalnız A antijeni",
       "Yalnız B antijeni",
-      "Ne A ne de B antijeni",
-      "A ve B antijenleri"
+      "A ve B antijenleri",
+      "Ne A ne de B antijeni"
     ],
     "correctAnswer": "Antîjenên Ayê û Byê",
     "correctAnswerTr": "A ve B antijenleri",
@@ -357,15 +357,15 @@
     "prompt": "Antîbiyotîk li ser enfeksiyonên vîral ên wekî sermagirtin û grîpê çawa bandorê dikin?",
     "promptTr": "Antibiyotikler soğuk algınlığı ve grip gibi viral enfeksiyonlar üzerinde nasıl etki gösterir?",
     "answers": [
-      "Vîrusan derman nakin",
       "Vîrusan rasterast dikujin",
       "Her tim dema nexweşiyê dadixînin nîvê",
+      "Vîrusan derman nakin",
       "Ketina vîrusan a nav xaneyê bi temamî asteng dikin"
     ],
     "answersTr": [
-      "Virüsleri tedavi etmez",
       "Virüsleri doğrudan öldürür",
       "Her zaman hastalık süresini yarıya indirir",
+      "Virüsleri tedavi etmez",
       "Virüslerin hücreye girişini tamamen engeller"
     ],
     "correctAnswer": "Vîrusan derman nakin",

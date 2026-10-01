@@ -63,13 +63,21 @@ void main() {
         );
         if (subcategories.isEmpty) continue;
 
-        for (final level in repository.levelsForCategory(category)) {
-          for (final sub in subcategories) {
+        // 2026-10-02: alt konu kartı artık GERÇEK boyutu gösterir (havuzun
+        // beşte biri, en az 5, en çok normal boyut; bkz.
+        // [SubcategoryLevelPlan]). Bekçi "kart ne diyorsa tur o kadar soru
+        // verir" kuralını o boyutla sorar; 10 sabiti artık vaat değil.
+        for (final sub in subcategories) {
+          for (final level in repository.levelsForCategory(
+            category,
+            subCategory: sub.id,
+          )) {
             final questions = await repository.loadLevelQuestions(
               category: category,
               difficultyMin: level.difficultyMin,
               difficultyMax: level.difficultyMax,
               subCategory: sub.id,
+              levelNumber: level.number,
               limit: level.questionCount,
             );
             if (questions.length < level.questionCount) {

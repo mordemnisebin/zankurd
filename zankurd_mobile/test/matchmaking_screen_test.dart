@@ -196,6 +196,7 @@ class _HiddenAnswerMatchRepository extends MockZanKurdRepository {
     required int difficultyMin,
     required int difficultyMax,
     String? subCategory,
+    int? levelNumber,
     int limit = 10,
   }) async {
     loadLevelCalls += 1;
@@ -204,6 +205,7 @@ class _HiddenAnswerMatchRepository extends MockZanKurdRepository {
       difficultyMin: difficultyMin,
       difficultyMax: difficultyMax,
       subCategory: subCategory,
+      levelNumber: levelNumber,
       limit: limit,
     );
   }
