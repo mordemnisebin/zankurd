@@ -12,7 +12,7 @@
 -- Geniş yetki temizliği 2026-10-02_grants_hardening.sql'de; bu dosya yalnız
 -- en acil açığı kapatır ve tek başına güvenle uygulanabilir.
 -- Geri alma: gerekmez (istemci yolu yok); gerekirse grant ile geri verilir.
--- Uygulama: supabase db query --linked -f supabase/2026-10-02_quiz_eligible_view_lockdown.sql
+-- Uygulama: supabase db query --linked -f supabase/2026-10-02_eligible_view_lockdown.sql
 begin;
 
 revoke insert, update, delete, truncate, references, trigger

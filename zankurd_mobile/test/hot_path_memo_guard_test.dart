@@ -113,11 +113,19 @@ void main() {
       for (final c in SubcategoryConfig.subcategories.keys) {
         SubcategoryConfig.visibleFor(c, playable); // ısıt
       }
-      final watch = Stopwatch()..start();
-      for (final c in SubcategoryConfig.subcategories.keys) {
-        SubcategoryConfig.visibleFor(c, playable);
+      // 2026-10-02: tek ölçüm yüklü makinede (paralel test koşuları) 234 ms
+      // görüp düştü; beş ölçümün en kısası gürültüden etkilenmez, önbellek
+      // kaybolursa en kısası da 48+ ms olur.
+      var best = 1 << 30;
+      for (var i = 0; i < 5; i++) {
+        final w = Stopwatch()..start();
+        for (final c in SubcategoryConfig.subcategories.keys) {
+          SubcategoryConfig.visibleFor(c, playable);
+        }
+        w.stop();
+        if (w.elapsedMilliseconds < best) best = w.elapsedMilliseconds;
       }
-      watch.stop();
+      final watch = (elapsedMilliseconds: best);
       // Önbelleksiz ölçüm: 11 kategori 48-190 ms (JIT). Isınmış: 2-8 ms.
       // Tavan bilerek gevşek (40 ms); amaç gürültü değil sıçrama yakalamak.
       expect(
