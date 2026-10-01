@@ -80,11 +80,15 @@ void main() {
 
       // Süre seçimi (20 sn varsayılan; 30 sn seçelim)
       expect(find.text('20 sn'), findsOneWidget);
+      await tester.ensureVisible(find.text('30 sn'));
+      await tester.pump();
       await tester.tap(find.text('30 sn'));
       await tester.pumpAndSettle();
 
       // Soru sayısı seçimi (5 soru seçelim)
       expect(find.text('5 soru'), findsOneWidget);
+      await tester.ensureVisible(find.text('5 soru'));
+      await tester.pump();
       await tester.tap(find.text('5 soru'));
       await tester.pumpAndSettle();
 
