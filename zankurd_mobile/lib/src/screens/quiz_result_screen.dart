@@ -113,7 +113,7 @@ class QuizResultScreen extends StatefulWidget {
   /// o durumda yerel oynanabilir banka geriye dönük yedek olarak kullanılır.
   final List<QuizQuestion> sourceQuestions;
 
-  /// Sıfır jeton, günlük tavana varıldığı İÇİN mi?
+  /// Ödül, günlük tavana varıldığı İÇİN mi sıfır ya da kısık?
   ///
   /// Sunucu `claim_solo_reward` yanıtında bunu açıkça söylüyor. İstemci bir
   /// zamanlar yalnız miktarı okuyup gerisini atıyordu: tavana varan oyuncu
@@ -1273,7 +1273,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       // görmüyor, yalnız hiçbir şey görmüyordu. Sıfır tek başına
       // belirsizdir — tavan da sıfır verir, arıza da. Sebebi yazmak,
       // sessizliği bilgiye çevirir (2026-08-12 denetimi).
-      if (widget.dailyCapReached && coinsAwarded <= 0)
+      //
+      // 2026-10-02: yalnız SIFIR ödülde değil, tavan ödülü kıstığında da.
+      // Sunucu `cap_reached`i `amount >= kalan` iken doğru yollar; kalan 1
+      // jetonken 17'lik tur "+1" veriyor ve aynı bayrağı taşıyordu, ama ekran
+      // yalnız `<= 0` için konuştuğundan oyuncu "+1"in sebebini hiçbir
+      // yerden öğrenemiyordu (QA turu, Cîhan 8/10).
+      if (widget.dailyCapReached)
         _HeroNotice(
           key: const ValueKey('result-daily-cap-notice'),
           icon: AppIcons.coins,
