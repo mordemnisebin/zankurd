@@ -84,26 +84,45 @@ class SahneProgressBar extends StatelessWidget {
       ),
     );
     final percent = PercentFormat.ratio(v, isKu: sahneIsKu(context));
+    // Büyük yazı ölçeğinde (≥ 1.5) sağdaki değer çubuğun yanında durmaz,
+    // ALTINA iner (liste satırındaki rozetle aynı kural): "0/2 Seviye" gibi
+    // bir değer %200'de 256 px'lik satırı 39 px taşırıyordu (Seviyeler,
+    // 320 px). Çubuk 0 genişliğe inebilir ama değer metni inemez; kısaltmak
+    // da yanlış bilgi olurdu, o yüzden değer kendi satırını alır.
+    final stacked = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    final valueText = trailing == null
+        ? null
+        : Text(
+            trailing!,
+            style: SahneType.captionStrong.copyWith(
+              color: t.tx,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          );
     return Semantics(
       label: semanticLabel,
       value: trailing ?? percent,
       excludeSemantics: true,
-      child: trailing == null
+      child: valueText == null
           ? bar
+          : stacked
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                bar,
+                const SizedBox(height: SahneSpace.x1),
+                Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: valueText,
+                ),
+              ],
+            )
           : Row(
               children: [
                 Expanded(child: bar),
                 const SizedBox(width: SahneSpace.x3),
-                Flexible(
-                  flex: 0,
-                  child: Text(
-                    trailing!,
-                    style: SahneType.captionStrong.copyWith(
-                      color: t.tx,
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
-                  ),
-                ),
+                Flexible(flex: 0, child: valueText),
               ],
             ),
     );

@@ -276,4 +276,39 @@ void main() {
     expect(quarter.dx, closeTo(60, 0.01));
     expect(quarter.dy, closeTo(30, 0.01));
   });
+
+  // Kusur (2026-10-02 erişilebilirlik denetimi): çubuğun yanındaki değer
+  // metni `Flexible(flex: 0)` idi, yani hiç küçülmezdi; çubuk 0 genişliğe
+  // inebilir ama metin inemez. Seviyeler ekranının "0/2 Seviye" değeri 320
+  // px + %200 yazıda 256 px'lik satırı 39 px taşırıyordu. Sessiz kalma
+  // sebebi: dokunma/etiket/kontrast kılavuzları taşmayı ölçmez, taşan
+  // Row'daki her düğüm hâlâ "dokunulur ve etiketli" görünür; yalnız
+  // 320 px @2.0 koşulu yakalar. Büyük yazıda değer çubuğun ALTINA iner.
+  for (final MapEntry(key: name, value: dark) in kThemes.entries) {
+    testWidgets('$name: uzun değer büyük yazıda taşmaz, çubuğun altına iner', (
+      tester,
+    ) async {
+      await pumpSahne(
+        tester,
+        const SahneProgressBar(
+          value: 0.3,
+          trailing: '3/12 Seviye tamamlandı',
+          semanticLabel: 'Seviyeler',
+        ),
+        dark: dark,
+      );
+      expect(tester.takeException(), isNull);
+      final barBottom = tester
+          .getBottomLeft(
+            find.descendant(
+              of: find.byType(SahneProgressBar),
+              matching: find.byType(FractionallySizedBox),
+            ),
+          )
+          .dy;
+      final text = find.text('3/12 Seviye tamamlandı');
+      expect(tester.getTopLeft(text).dy, greaterThanOrEqualTo(barBottom));
+      expect(tester.getTopRight(text).dx, lessThanOrEqualTo(320 - 16 + 0.5));
+    });
+  }
 }

@@ -250,4 +250,37 @@ void main() {
       }
     }
   }
+
+  // En sıkışık gerçek koşul: 320 px genişlik, %200 yazı. Taşma Flutter'da
+  // bir istisna olarak raporlanır; kılavuzlar taşmayı ölçmez (kırpılan metin
+  // ya da dışarı çıkan düğme "dokunulur" ve "etiketli" kalır), bu yüzden
+  // ayrı sorulur. Kurmancî metin Türkçeden uzundur, ikisi de koşulur.
+  for (final entry in _screens.entries) {
+    for (final ku in [false, true]) {
+      testWidgets('taşma 320px/%200: ${entry.key} / ${ku ? 'KU' : 'TR'}', (
+        tester,
+      ) async {
+        tester.view.devicePixelRatio = 1;
+        tester.view.physicalSize = const Size(320, 640);
+        addTearDown(tester.view.reset);
+        await tester.pumpWidget(
+          testShell(
+            child: MediaQuery(
+              data: const MediaQueryData(
+                size: Size(320, 640),
+                textScaler: TextScaler.linear(2),
+              ),
+              child: entry.value(freshMockRepository()),
+            ),
+            languageProvider: ku ? kurmanciLang() : turkishLang(),
+          ),
+        );
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 1600));
+        final then = _thens[entry.key];
+        if (then != null) await then(tester);
+        expect(tester.takeException(), isNull);
+      });
+    }
+  }
 }
