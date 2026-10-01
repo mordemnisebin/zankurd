@@ -217,7 +217,12 @@ void main() {
     // (128 OK, 49 düzeltildi, 1 red — reddedilen açıklama sorunun kendi
     // bilgi yanlışını tekrarlıyordu: offline_tf_cog_0003 emekliye ayrıldı).
     // Kalan 69'un çoğu emekli sorulardır (bekçi emeklileri de tarar).
-    const ceiling = 69;
+    // 2026-10-02: 69 -> 5. Kalan 69'un hepsi zaten emekli sorulardı; yine de
+    // yeniden yazıldı (Muse Spark 1.3 yazdı, Gemini 3.1 Pro doğruladı, Grok
+    // 4.7 düzeltmeleri ikinci kez okudu), ileride biri geri açılırsa öğretici
+    // açıklamayla açılsın. Kalan 5 soruda açıklama değil soru kusurlu
+    // (cevap soruda veriliyor/totolojik); hepsi zaten emekli.
+    const ceiling = 5;
 
     // `\w` Dart'ta ASCII'dir: "çîrokê" üç parçaya bölünür ve hepsi
     // uzunluk süzgecine takılır, yani Kurmancî bir açıklama "boş" görünür.
