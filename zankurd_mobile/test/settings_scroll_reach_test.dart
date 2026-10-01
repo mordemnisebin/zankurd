@@ -23,7 +23,6 @@
 // altta da AYNI olmalı. Tembel liste en üstteyken kestirimle farklı bir sayı
 // verir (deneyde 2482 ↔ 2368). Üstüne, tema+dil değişiminden sonra (TR ve KU)
 // hesap silme satırı kaydırılıp dokunulabilir olmalı.
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/app_config.dart';
@@ -104,7 +103,7 @@ void main() {
       final del = find.byKey(const ValueKey('delete-account-action'));
       expect(del, findsOneWidget);
       final rect = tester.getRect(del);
-      final viewportBottom = 874.0 - 34.0;
+      const viewportBottom = 874.0 - 34.0;
       expect(
         rect.bottom,
         lessThanOrEqualTo(viewportBottom),
