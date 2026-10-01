@@ -182,6 +182,7 @@ class StreakPanel extends StatelessWidget {
                 value: (current / nextMilestone!).clamp(0.0, 1.0),
                 tone: SahneProgressTone.gold,
                 trailing: '$current/${nextMilestone!}',
+                semanticLabel: dayUnitLabel.isEmpty ? null : dayUnitLabel,
               ),
             ],
             if (freezeState == StreakFreezeState.available &&

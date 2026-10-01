@@ -1239,6 +1239,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                   child: SahneProgressBar(
                     value: (_currentSlideIndex + 1) / slides.length,
                     trailing: '${_currentSlideIndex + 1}/${slides.length}',
+                    semanticLabel: ku
+                        ? widget.lesson.titleKu
+                        : (widget.lesson.titleTr ?? widget.lesson.titleKu),
                   ),
                 ),
                 Expanded(
@@ -1441,33 +1444,37 @@ class _SlideImage extends StatelessWidget {
       color: t.s2,
       child: Center(child: child),
     );
-    return ClipPath(
-      clipper: const ShapeBorderClipper(shape: SahneShape.l),
-      child: SizedBox(
-        width: double.infinity,
-        height: 200,
-        child: url.startsWith('asset://')
-            ? Image.asset(
-                url.replaceFirst('asset://', ''),
-                fit: BoxFit.cover,
-                errorBuilder: (_, _, _) => const SizedBox(),
-              )
-            : CachedNetworkImage(
-                memCacheWidth: 720,
-                imageUrl: url,
-                fit: BoxFit.cover,
-                placeholder: (context, _) => placeholder(
-                  SizedBox.square(
-                    dimension: 24,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: t.learnTx,
+    // Görsel süstür (ders/soru metni zaten okunur); ekran okuyucuya etiketsiz
+    // bir "görsel" düğümü olarak çıkmaz.
+    return ExcludeSemantics(
+      child: ClipPath(
+        clipper: const ShapeBorderClipper(shape: SahneShape.l),
+        child: SizedBox(
+          width: double.infinity,
+          height: 200,
+          child: url.startsWith('asset://')
+              ? Image.asset(
+                  url.replaceFirst('asset://', ''),
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) => const SizedBox(),
+                )
+              : CachedNetworkImage(
+                  memCacheWidth: 720,
+                  imageUrl: url,
+                  fit: BoxFit.cover,
+                  placeholder: (context, _) => placeholder(
+                    SizedBox.square(
+                      dimension: 24,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: t.learnTx,
+                      ),
                     ),
                   ),
+                  errorWidget: (context, _, _) =>
+                      placeholder(Icon(AppIcons.image, color: t.tx3, size: 32)),
                 ),
-                errorWidget: (context, _, _) =>
-                    placeholder(Icon(AppIcons.image, color: t.tx3, size: 32)),
-              ),
+        ),
       ),
     );
   }

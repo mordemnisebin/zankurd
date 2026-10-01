@@ -51,6 +51,8 @@ class AppLogo extends StatelessWidget {
       width: width,
       cacheWidth: (width * devicePixelRatio).round(),
       fit: BoxFit.contain,
+      // Marka işareti süstür: ad, bulunduğu ekranın başlığında yazılıdır.
+      excludeFromSemantics: true,
       filterQuality: FilterQuality.high,
       isAntiAlias: true,
     );

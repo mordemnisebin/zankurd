@@ -717,7 +717,10 @@ class _MasteryRow extends StatelessWidget {
             ],
           ),
           const SizedBox(height: SahneSpace.x1),
-          SahneProgressBar(value: progress),
+          SahneProgressBar(
+            value: progress,
+            semanticLabel: CategoryNames.localized(category, isKu),
+          ),
           const SizedBox(height: SahneSpace.x1),
           // Rubik U+2713 taşımıyor; onay işareti metin olarak
           // yazıldığında sistem yazı tipine düşüyordu.

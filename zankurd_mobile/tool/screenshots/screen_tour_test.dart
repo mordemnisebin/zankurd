@@ -2114,7 +2114,7 @@ void main() {
       t,
       ReviewScreen(
         room: repository.createRoom(),
-        records: _tourRecords().take(2).toList(),
+        records: _tourRecords(wrong: 0).take(2).toList(),
       ),
     );
     await _shoot(t, '210_review_all_correct');
@@ -2181,30 +2181,67 @@ void main() {
 
 /// Sonuç ekranı çeşitleri (A6 kareleri): aynı üç soruluk tur, ödül/mod
 /// bayraklarıyla farklı bitişler.
-List<AnswerRecord> _tourRecords() => const [
-  AnswerRecord(
-    id: 'r1',
-    category: 'Ziman',
-    prompt: 'Peyva «av» bi Tirkî çi tê gotin?',
-    answers: ['su', 'ekmek', 'yol', 'dağ'],
-    correctAnswer: 'su',
-    selectedAnswer: 'su',
-    explanation: '«av» Türkçede «su» demektir.',
-    explanationKu: '«av» bi Tirkî dibe «su».',
-    explanationTr: '«av» Türkçede «su» demektir.',
-  ),
-  AnswerRecord(
-    id: 'r2',
-    category: 'Ziman',
-    prompt: 'Peyva «agir» bi Tirkî çi tê gotin?',
-    answers: ['ateş', 'su', 'hava', 'toprak'],
-    correctAnswer: 'ateş',
-    selectedAnswer: 'ateş',
-    explanation: '«agir» Türkçede «ateş» demektir.',
-    explanationKu: '«agir» bi Tirkî dibe «ateş».',
-    explanationTr: '«agir» Türkçede «ateş» demektir.',
-  ),
-];
+///
+/// Kayıtlar [wrong] sayısından ÜRETİLİR (son [wrong] soru yanlış). Eskiden
+/// sabit iki doğru kayıt vardı ve `_resultVariant` sayıları (2/3 doğru,
+/// 1 yanlış) ayrıca elle veriyordu: kahraman "3 sorudan 2 doğru" derken
+/// "Konulara göre" kartı kayıtlardan hesaplandığı için "Dil 2/2" ve
+/// "2 sorudan 2 doğru" yazıyordu — üçüncü soru kayıtta hiç yoktu. Gerçek
+/// ekranda bu ayrışma olmaz (her soru, zaman aşımı dahil, bir kayıt
+/// bırakır); kusur yalnız turun örnek verisindeydi ve turun kareleri
+/// tasarım kararlarına kaynak olduğu için tutarsız bir örnek yanıltıcıydı.
+/// Sayılar artık kayıtlardan türer, ayrışmaları yapısal olarak imkânsızdır.
+List<AnswerRecord> _tourRecords({int wrong = 1}) {
+  assert(wrong >= 0 && wrong <= 3);
+  const specs = [
+    (
+      id: 'r1',
+      category: 'Ziman',
+      prompt: 'Peyva «av» bi Tirkî çi tê gotin?',
+      answers: ['su', 'ekmek', 'yol', 'dağ'],
+      correct: 'su',
+      wrongPick: 'yol',
+      ku: '«av» bi Tirkî dibe «su».',
+      tr: '«av» Türkçede «su» demektir.',
+    ),
+    (
+      id: 'r2',
+      category: 'Ziman',
+      prompt: 'Peyva «agir» bi Tirkî çi tê gotin?',
+      answers: ['ateş', 'su', 'hava', 'toprak'],
+      correct: 'ateş',
+      wrongPick: 'hava',
+      ku: '«agir» bi Tirkî dibe «ateş».',
+      tr: '«agir» Türkçede «ateş» demektir.',
+    ),
+    (
+      id: 'r3',
+      category: 'Çand',
+      prompt: 'Çay li kîjan firaxê tê vexwarin?',
+      answers: ['bardak', 'kase', 'sênî', 'beroş'],
+      correct: 'bardak',
+      wrongPick: 'kase',
+      ku: 'Çay bi gelemperî di «bardak»ê de tê vexwarin.',
+      tr: 'Çay genellikle «bardak» ile içilir.',
+    ),
+  ];
+  return [
+    for (var i = 0; i < specs.length; i++)
+      AnswerRecord(
+        id: specs[i].id,
+        category: specs[i].category,
+        prompt: specs[i].prompt,
+        answers: specs[i].answers,
+        correctAnswer: specs[i].correct,
+        selectedAnswer: i >= specs.length - wrong
+            ? specs[i].wrongPick
+            : specs[i].correct,
+        explanation: specs[i].tr,
+        explanationKu: specs[i].ku,
+        explanationTr: specs[i].tr,
+      ),
+  ];
+}
 
 Widget _resultVariant({
   bool isLearningExperience = false,
@@ -2218,8 +2255,10 @@ Widget _resultVariant({
 }) {
   final repository = _TourRepository();
   final room = repository.createRoom();
-  const total = 3;
-  final correct = total - wrong;
+  final records = _tourRecords(wrong: wrong);
+  final total = records.length;
+  final correct = records.where((r) => r.isCorrect).length;
+  assert(correct + wrong == total, 'kahraman sayıları kayıtlarla uyuşmalı');
   return QuizResultScreen(
     repository: repository,
     room: room,
@@ -2243,7 +2282,7 @@ Widget _resultVariant({
               state: Player.readyState,
             ),
           ],
-    answerRecords: _tourRecords(),
+    answerRecords: records,
   );
 }
 

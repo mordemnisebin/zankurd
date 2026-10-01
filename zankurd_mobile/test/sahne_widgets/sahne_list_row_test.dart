@@ -11,6 +11,8 @@
 /// * Ekran okuyucu başlık + alt satırı (ve sağdaki rozetin sözünü) okur.
 library;
 
+import 'dart:ui' show Tristate;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -221,4 +223,50 @@ void main() {
         (box.decoration as ShapeDecoration).shape as BeveledRectangleBorder;
     expect(shape.borderRadius, SahneShape.m.borderRadius);
   });
+
+  // Kusur (2026-10-02 erişilebilirlik denetimi): sağında `Switch` olan satır
+  // iki düğüme ayrılıyordu — başlık satırın etiketinde, anahtar ise kendi
+  // başına ADSIZ bir düğümdü ("anahtar, açık"). TalkBack/VoiceOver kullanan
+  // oyuncu Ayarlar'da hangi anahtarın neyi açıp kapattığını duyamıyordu.
+  // Sessiz kaldı çünkü `labeledTapTargetGuideline` yalnız çizilen düğümleri
+  // ölçer ve Ayarlar'ın alt anahtarları ilk ekranın dışında kalıyordu; kısa
+  // görünümlü bekçi onları hiç görmedi.
+  for (final MapEntry(key: name, value: dark) in kThemes.entries) {
+    testWidgets('$name: anahtarlı satır tek düğüm: başlık + açık/kapalı', (
+      tester,
+    ) async {
+      final semantics = tester.ensureSemantics();
+      await pumpSahne(
+        tester,
+        SahneListGroup(
+          children: [
+            SahneListRow.plain(
+              key: const Key('sw'),
+              title: 'Moda tarî',
+              subtitle: 'Şev û roj',
+              trailing: Switch(value: true, onChanged: (_) {}),
+            ),
+          ],
+        ),
+        dark: dark,
+      );
+      final node = tester
+          .getSemantics(
+            find.descendant(
+              of: find.byType(SahneListGroup),
+              matching: find.byType(MergeSemantics),
+            ),
+          )
+          .getSemanticsData();
+      expect(node.label, contains('Moda tarî'));
+      expect(node.label, contains('Şev û roj'));
+      expect(
+        node.flagsCollection.isToggled,
+        isNot(Tristate.none),
+        reason: 'anahtarın açık/kapalı durumu aynı düğümde olmalı',
+      );
+      await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+      semantics.dispose();
+    });
+  }
 }

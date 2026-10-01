@@ -536,13 +536,18 @@ class SahneListRow extends StatelessWidget {
 
     // Öncül ve metin satırın etiketinde okunur; sağdaki rozet/değer kendi
     // sözüyle aynı düğüme eklenir (ör. "Günün Etkinliği, …, BUGÜN").
-    return Semantics(
+    final semantics = Semantics(
       container: true,
       button: onTap != null,
       enabled: enabled,
       label: label,
       child: body,
     );
+    // Sağında açma/kapama anahtarı olan satır TEK düğüm olur: "Karanlık mod,
+    // anahtar, açık". Birleştirmeden anahtar kendi başına, adsız bir düğümdü
+    // ("anahtar, açık"): ekran okuyucu satırın başlığını ayrı, anahtarı adsız
+    // okuyordu (`labeledTapTargetGuideline` ayarlar ekranında yakaladı).
+    return trailing is Switch ? MergeSemantics(child: semantics) : semantics;
   }
 }
 

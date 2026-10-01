@@ -418,6 +418,7 @@ class MissionProgressCard extends StatelessWidget {
                   ? SahneProgressTone.learn
                   : SahneProgressTone.gold,
               trailing: '$current/$target',
+              semanticLabel: title,
             ),
             if (done && onClaim != null) ...[
               const SizedBox(height: SahneSpace.x2),

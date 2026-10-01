@@ -115,6 +115,8 @@ class PlayerAvatar extends StatelessWidget {
       return Image(
         image: provider,
         fit: BoxFit.cover,
+        // Fotoğraf süstür: oyuncunun adı yanındaki metindedir.
+        excludeFromSemantics: true,
         errorBuilder: (context, error, stack) => _iconOrLetter(context, bg),
       );
     }
