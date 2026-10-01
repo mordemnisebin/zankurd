@@ -145,17 +145,18 @@ class HomeTopicGrid extends StatelessWidget {
 
     var widest = 0.0;
     for (final category in categories) {
-      final name = CategoryNames.localized(category, isKu);
-      final other = CategoryNames.localized(category, !isKu);
-      for (final w in name.split(' ')) {
-        widest = math.max(widest, word(w, SahneType.bodyStrong));
-      }
-      for (final w in other.split(' ')) {
-        widest = math.max(widest, word(w, SahneType.caption));
-      }
-      // Soru sayısı ("241 soru") BÜTÜN olarak tek satıra sığmalı: iki
-      // satıra inen sayı karoyu öteki karolardan uzun yapıp yükseklikleri
-      // bozar.
+      // Karo adları tek satırdır ve sarmaz: ölçü sözcük değil BÜTÜN ad,
+      // yoksa uzun ad "…" ile kesilir. Kısa karo adları
+      // ([CategoryNames.tile]) kullanılır.
+      widest = math.max(
+        widest,
+        word(CategoryNames.tile(category, isKu), SahneType.bodyStrong),
+      );
+      widest = math.max(
+        widest,
+        word(CategoryNames.tile(category, !isKu), SahneType.caption),
+      );
+      // Soru sayısı ("241 soru") BÜTÜN olarak tek satıra sığmalı.
       final count = questionCounts[category];
       if (count != null) {
         widest = math.max(
@@ -235,24 +236,30 @@ class _HomeTopicTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = CategoryNames.localized(category, isKu);
-    final other = CategoryNames.localized(category, !isKu);
-    final ratio = progress?.ratio ?? 0;
+    // Karoda KISA ad yazılır (bkz. [CategoryNames.tile]); ekran okuyucu tam
+    // adı okur.
+    final name = CategoryNames.tile(category, isKu);
+    final other = CategoryNames.tile(category, !isKu);
+    final fullName = CategoryNames.localized(category, isKu);
+    final fullOther = CategoryNames.localized(category, !isKu);
+    final ratio = (progress?.ratio ?? 0).clamp(0.0, 1.0);
     final started = ratio > 0;
     final count = questionCount;
     final percent = started ? context.percentRatio(ratio) : null;
     final countText = count == null ? null : '$count ${Tr.forKu(K.soru, isKu)}';
     final t = SahneTokens.of(context);
-    // 2026-09-30 simülatör: oynanmış konuda çubuk soru sayısının YERİNE
-    // geçiyordu, oynanmamışta sayı yazılıydı (tutarsız). Tek kural: her
-    // karoda soru sayısı satırı durur; oynanmış konuda ince çubuk onun
-    // altına eklenir. Oynanmamışta çubuk yerinin boşluğu ayrılır ki bir
-    // satırdaki karoların yüksekliği eşit kalsın.
+    // 2026-09-30 izgara: yazı bloğu her karoda AYNI satırlardan kurulur —
+    // ad, öteki ad (iki dil aynıysa boş satır), soru sayısı, ilerleme çizgisi.
+    // Çizgi ARTIK HER karoda durur: oynanmamışta boş iz (%0) çizilir. Eskiden
+    // çubuk yalnız oynanmış konuda çıkıyor, alt boşluk karodan karoya
+    // değişiyordu (Siyaset altında ~100 pt boş kuyu). Boş iz sahte ilerleme
+    // değildir: dolgu yok, yalnız yer ve "henüz yok" bilgisi.
     const barGap = SahneSpace.x2;
     const barHeight = 8.0;
     return SahneJewelTile(
       name: name,
       otherName: other == name ? null : other,
+      semanticName: fullOther == fullName ? fullName : '$fullName, $fullOther',
       icon: CategoryVisuals.icon(category),
       mark: CategoryVisuals.mark(category),
       tone: CategoryVisuals.tone(category),
@@ -266,29 +273,40 @@ class _HomeTopicTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (countText != null)
-            Text(countText, style: SahneType.caption.copyWith(color: t.tx3)),
-          if (started)
-            Padding(
-              padding: const EdgeInsets.only(top: barGap),
-              // `SahneProgressBar` ile aynı ölçü ve renk (8 px, S pah, iz
-              // Ray, dolgu Zimrût). `LinearProgressIndicator` üstüne kurulu
-              // çünkü ortak `home_screen_navigation_refresh_test`
-              // ilerlemenin karoda bu tiple çizildiğini arıyor.
+          Text(
+            countText ?? '\u00A0',
+            maxLines: 1,
+            softWrap: false,
+            overflow: TextOverflow.ellipsis,
+            style: SahneType.caption.copyWith(color: t.tx3),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: barGap),
+            // `SahneProgressBar` ile aynı ölçü, renk ve kenar (8 px, S pah,
+            // iz Ray, dolgu Zimrût). `LinearProgressIndicator` üstüne kurulu
+            // çünkü ortak `home_screen_navigation_refresh_test`
+            // ilerlemenin karoda bu tiple çizildiğini arıyor.
+            child: DecoratedBox(
+              position: DecorationPosition.foreground,
+              decoration: ShapeDecoration(
+                shape: SahneShape.withSide(
+                  SahneShape.s,
+                  sahneTrackEdge(t),
+                  width: 1,
+                ),
+              ),
               child: ClipPath(
                 clipper: const ShapeBorderClipper(shape: SahneShape.s),
                 child: LinearProgressIndicator(
+                  key: ValueKey('home-topic-progress-$category'),
                   value: ratio,
                   minHeight: barHeight,
                   color: t.learnBar,
                   backgroundColor: t.s3,
                 ),
               ),
-            )
-          else
-            // Başlanmamış konu sahte ilerleme çizmez (2026-07-25 denetimi);
-            // yalnız yer ayrılır.
-            const SizedBox(height: barGap + barHeight),
+            ),
+          ),
         ],
       ),
     );

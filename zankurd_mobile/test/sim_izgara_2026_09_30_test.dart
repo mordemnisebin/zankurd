@@ -216,7 +216,13 @@ void main() {
             reason: '$c karosunda soru sayısı yok',
           );
         }
-        expect(find.byType(LinearProgressIndicator), findsNWidgets(2));
+        // 2026-09-30 izgara: çubuk HER karoda (oynanmamışta boş iz); dolu
+        // olanlar yalnız oynanmışlar.
+        final bars = tester.widgetList<LinearProgressIndicator>(
+          find.byType(LinearProgressIndicator),
+        );
+        expect(bars.length, _categories.length);
+        expect(bars.where((b) => (b.value ?? 0) > 0).length, 2);
         // Aynı satırdaki karolar (Ziman oynanmamış, Çand ve Dîrok oynanmış) eşit yükseklikte.
         final heights = ['Ziman', 'Çand', 'Dîrok']
             .map((c) => tester.getSize(find.byKey(ValueKey('home-topic-$c'))))

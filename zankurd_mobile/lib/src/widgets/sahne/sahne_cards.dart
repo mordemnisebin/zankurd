@@ -485,6 +485,7 @@ class SahneJewelTile extends StatelessWidget {
     super.key,
     required this.name,
     this.otherName,
+    this.semanticName,
     this.image,
     this.icon = AppIcons.clapperboard,
     this.mastered = false,
@@ -519,6 +520,10 @@ class SahneJewelTile extends StatelessWidget {
 
   final String name;
   final String? otherName;
+
+  /// Ekran okuyucunun okuduğu ad (ör. kısa karo adı "Bilim" iken tam ad
+  /// "Bilim ve Düşünce, Zanist û Raman"). `null` ise [name] ve [otherName].
+  final String? semanticName;
   final ImageProvider? image;
 
   /// Çizimsiz çeşidin ikonu.
@@ -597,8 +602,8 @@ class SahneJewelTile extends StatelessWidget {
     );
 
     final label = [
-      name,
-      ?otherName,
+      semanticName ?? name,
+      if (semanticName == null) ?otherName,
       ?metaLabel,
       if (mastered && masteredLabel != null) masteredLabel!,
     ].join(', ');
@@ -622,12 +627,25 @@ class SahneJewelTile extends StatelessWidget {
             children: [
               jewel,
               const SizedBox(height: SahneSpace.x3),
-              Text(name, style: SahneType.bodyStrong.copyWith(color: t.tx)),
-              if (otherName != null)
-                Text(
-                  otherName!,
-                  style: SahneType.caption.copyWith(color: t.tx2),
-                ),
+              // 2026-09-30 izgara: yazı bloğu SABİT yüksekliktedir. Ad ve öteki
+              // ad birer satırdır (sarmaz, sığmazsa "…"); öteki ad yoksa satırı
+              // bölünmez boşlukla AYRILIR (ızgara karoları arası sayı ve çubuk
+              // aynı hizada kalır). Uzun adın sarıp karoyu uzatması, ızgarada
+              // satır boylarını eşitsiz bırakıyordu.
+              Text(
+                name,
+                maxLines: 1,
+                softWrap: false,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.bodyStrong.copyWith(color: t.tx),
+              ),
+              Text(
+                otherName ?? '\u00A0',
+                maxLines: 1,
+                softWrap: false,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
               ?meta,
             ],
           ),

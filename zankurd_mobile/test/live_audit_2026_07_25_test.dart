@@ -265,13 +265,19 @@ void main() {
           ),
           findsOneWidget,
         );
-        expect(
+        // 2026-09-30 izgara: her karoda ilerleme çizgisi durur ki satır
+        // boyları eşit kalsın; başlanmamış konunun çizgisi BOŞ izdir (%0),
+        // sahte dolgu çizmez.
+        final freshBar = tester.widget<LinearProgressIndicator>(
           find.descendant(
             of: fresh,
             matching: find.byType(LinearProgressIndicator),
           ),
-          findsNothing,
-          reason: 'Başlanmamış konuda boş bir ilerleme çubuğu çizilmemeli.',
+        );
+        expect(
+          freshBar.value,
+          0,
+          reason: 'Başlanmamış konuda dolgu (sahte ilerleme) çizilmemeli.',
         );
         expect(
           find.descendant(of: fresh, matching: find.text('245 soru')),

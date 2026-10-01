@@ -133,10 +133,12 @@ void main() {
         final tile = tester.widget<SahneJewelTile>(
           find.descendant(of: finder, matching: find.byType(SahneJewelTile)),
         );
-        expect(tile.name, CategoryNames.localized(category, false));
-        // İki ad aynıysa (Siyaset) ikinci satır çizilmez: aynı sözü iki kez
-        // yazmak gürültü olur (`_HomeTopicTile`: `other == name ? null`).
-        final other = CategoryNames.localized(category, true);
+        // Karoda KISA ad yazılır (Bilim ve Düşünce -> Bilim).
+        expect(tile.name, CategoryNames.tile(category, false));
+        // İki ad aynıysa (Siyaset) ikinci satırın SÖZÜ yazılmaz (satırın yeri
+        // ayrılır): aynı sözü iki kez yazmak gürültü olur
+        // (`_HomeTopicTile`: `other == name ? null`).
+        final other = CategoryNames.tile(category, true);
         expect(
           tile.otherName,
           other == tile.name ? isNull : other,
