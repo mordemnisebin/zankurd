@@ -2561,6 +2561,35 @@
     "reviewedAt": "metadata.reviewedAt",
     "locale": "ku-kmr"
    }
+  },
+  {
+   "id": "altkonu_2026_10_01",
+   "description": "2026-10-01: Muzîka Nûjen, Programkirin ve Yılmaz Güney û Klasîk alt konularını 20 oynanabilir soruya taşıyan 17 kaynaklı soru",
+   "path": "assets/data/altkonu_2026_10_01_questions.json",
+   "role": "runtime_secondary",
+   "parser": "json",
+   "canonicalGroup": "runtime_questions",
+   "reportIncluded": true,
+   "gateIncluded": true,
+   "productionLike": true,
+   "precedence": 996,
+   "expectedRecordCount": 17,
+   "notes": "Her olgu açılmış bir web kaynağından (Vikipedi, MDN, Python belgeleri, W3Schools, Eurasianet; metadata.sourceReference). Taslak MiMo-V2.6-Flash, Kurmancî çeviri Gemini 3.1 Pro, olgu ve dil incelemesi Grok 4.7.",
+   "columns": {
+    "id": "id",
+    "category": "category",
+    "prompt": "prompt",
+    "options": "answers",
+    "correct": "correctAnswer",
+    "explanation": "explanationKu",
+    "difficulty": "difficulty",
+    "type": "type",
+    "dialect": "metadata.dialect",
+    "sourceTitle": "metadata.sourceTitle",
+    "sourceUrl": "metadata.sourceReference",
+    "reviewedAt": "metadata.reviewedAt",
+    "locale": "ku-kmr"
+   }
   }
  ]
 }

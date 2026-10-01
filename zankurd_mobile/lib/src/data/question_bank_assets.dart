@@ -100,4 +100,12 @@ const questionBankAssets = <String>[
   // Gemini 3.1 Pro Kurmancîye çevirdi, Grok 4.7 okudu. Konular: temel bilim,
   // felsefe tarihi, anayasa/BM/insan hakları, Kürt düşünce tarihi.
   'assets/data/bilim_2026_09_30_questions.json',
+  // 2026-10-01: üç alt konu 20 oynanabilir soruya ulaşamadığı için kartı
+  // gizliydi: Muzîk › Muzîka Nûjen (15), Teknolojî › Programkirin (16),
+  // Sînema › Yılmaz Güney û Klasîk (18). 17 yeni soru, her biri açılmış bir
+  // web kaynağından (Vikipedi, MDN, Python belgeleri, W3Schools, Eurasianet;
+  // URL `sourceReference`da) MiMo-V2.6-Flash'la taslaklandı, Gemini 3.1 Pro
+  // Kurmancîye çevirdi, Grok 4.7 olgu ve dil açısından okudu; doğrulanamayan
+  // bir soru (Hozan Dîno albüm yılı) çıkarıldı.
+  'assets/data/altkonu_2026_10_01_questions.json',
 ];

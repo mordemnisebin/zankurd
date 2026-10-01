@@ -446,7 +446,24 @@ class SubcategoryConfig {
     // Muzîk
     'dengbeji': ['dengbêj', 'stran', 'kilam', 'lawik', 'şeşbend'],
     'amur': ['amûr', 'tembûr', 'bilûr', 'def', 'zirne', 'saz', 'erbane'],
-    'nujen': ['muzîka nûjen', 'komele', 'grûp', 'albûm', 'stranbêj'],
+    // 2026-10-01: 15 soruyla gizliydi. Yeni sorular modern sanatçıları ve
+    // grupları ADLARIYLA soruyor (Ciwan Haco kaç yaşında doğdu, Koma Wetan
+    // nerede kuruldu); bu sorularda «albûm»/«stranbêj» geçmediği için hiçbir
+    // alt konuya düşmüyorlardı. Genel kökler («koma», «hunermend») bilerek
+    // eklenmedi: «koma» «komar»ın alt dizesidir ve cumhuriyet sorularını
+    // çekerdi. Yalnız bankada soru olan modern sanatçı/grup adları.
+    'nujen': [
+      'muzîka nûjen',
+      'komele',
+      'grûp',
+      'albûm',
+      'stranbêj',
+      'ciwan haco',
+      'rojda',
+      'nîzamettîn arîç',
+      'kardeş türküler',
+      'koma wetan',
+    ],
     // Siyaset
     'diroka_siyasi': ['dîroka siyasî', 'partî', 'tevgera netewî', 'serhildana'],
     'siyaseta_nujen': ['hilbijartin', 'parlamento', 'meclis', 'siyaseta nûjen'],
@@ -557,7 +574,24 @@ class SubcategoryConfig {
       'valahiyê',
     ],
     // Teknolojî
-    'programkirin': ['program', 'kod', 'algorîtma', 'nivîsandina bernameyê'],
+    // 2026-10-01: 16 soruyla gizliydi. Yeni sorular dili/kavramı ADIYLA
+    // soruyor (Python, SQL, CSS, yığın, ikili arama) ve «program»/«kod»
+    // geçmediği için konusuz kalıyordu. Yalnız programlama dili/kavramı adı
+    // eklendi; «http», «web», «dîjîtal» gibi ağ kökleri bilerek YOK, onlar
+    // Dîjîtal û Înternet'e aittir.
+    'programkirin': [
+      'program',
+      'kod',
+      'algorîtma',
+      'nivîsandina bernameyê',
+      'python',
+      'sql',
+      'css',
+      'html',
+      'javascript',
+      'stack',
+      'binary search',
+    ],
     'dijital_internet': ['înternet', 'tor', 'dîjîtal', 'ewlehî', 'protokol'],
     'bingehên_teknolojiyê': ['komputer', 'amûra', 'pergal', 'teknolojî'],
     // Sînema
