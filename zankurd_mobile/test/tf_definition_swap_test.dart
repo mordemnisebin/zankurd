@@ -113,9 +113,11 @@ void main() {
     // kalıptaydı: 2 Rast + 7 Şaş. Yeni sayılar Rast 96 -> 94, Şaş 81 -> 74
     // (toplam 168, Rast payı %56,0 — %60 tavanının altında). Yine iki taraf
     // birlikte değişti.
+    // 2026-10-01: offline_tf_cog_0003 (Rast) bilgi yanlışı olduğu için
+    // emekliye ayrıldı: Rast 94 -> 93 (toplam 167, Rast payı %55,7).
     expect(
       rast,
-      94,
+      93,
       reason: 'Oynanabilir Rast sayısı değişti (bkz. yukarıdaki yorum).',
     );
     expect(

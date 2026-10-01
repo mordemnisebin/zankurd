@@ -700,6 +700,12 @@ const Set<String> retiredQuestionIds = <String>{
   'offline_6523',
   'offline_6882',
   'restore_2026_08_07_0003',
+  // ---------------------------------------------------------------------
+  // 2026-10-01: bilgi yanlışı — "Geliyê Botan … Cizîrê dorpêç dike" doğru
+  // cevabı "Rast" olan bir D/Y'ydi; Botan Vadisi Siirt'tedir, Cizre'yi
+  // çevrelemez. Açıklama yeniden yazılırken Gemini 3.1 Pro yakaladı.
+  // ---------------------------------------------------------------------
+  'offline_tf_cog_0003',
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

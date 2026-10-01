@@ -211,7 +211,13 @@ void main() {
     // ölçülüyor. Ayrıca Türkçe kalmış 25 şîrove Kurmancîye çevrildi;
     // çeviri çoğu yerde tanımı yeniden söylüyor. Tavan bir mandaldır,
     // yalnız inebilir: bu sayı artık yeni başlangıç noktasıdır.
-    const ceiling = 246;
+    //
+    // 2026-10-01: 246 -> 69. Oynanan 178 kusurlu açıklama Muse Spark 1.3
+    // ile yeniden yazıldı, Gemini 3.1 Pro bilgi ve dil denetimi yaptı
+    // (128 OK, 49 düzeltildi, 1 red — reddedilen açıklama sorunun kendi
+    // bilgi yanlışını tekrarlıyordu: offline_tf_cog_0003 emekliye ayrıldı).
+    // Kalan 69'un çoğu emekli sorulardır (bekçi emeklileri de tarar).
+    const ceiling = 69;
 
     // `\w` Dart'ta ASCII'dir: "çîrokê" üç parçaya bölünür ve hepsi
     // uzunluk süzgecine takılır, yani Kurmancî bir açıklama "boş" görünür.

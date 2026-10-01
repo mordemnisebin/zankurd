@@ -304,9 +304,9 @@
       "koyun"
     ],
     "correctAnswer": "at",
-    "explanation": "\"Hesp\" Türkçede \"at\" demektir.",
-    "explanationKu": "\"Hesp\" bi Tirkî \"at\" e.",
-    "explanationTr": "\"Hesp\" Türkçede \"at\" demektir.",
+    "explanation": "\"Hesp\" Türkçede \"at\" demektir; binilen dört ayaklı bir hayvandır. Örnek: \"Hesp direve.\" (At koşuyor.)",
+    "explanationKu": "\"Hesp\" bi Tirkî \"at\" e; heywanekî çarling ê siwarbûnê ye. Mînak: \"Hesp direve.\"",
+    "explanationTr": "\"Hesp\" Türkçede \"at\" demektir; binilen dört ayaklı bir hayvandır. Örnek: \"Hesp direve.\" (At koşuyor.)",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -2846,9 +2846,9 @@
       "özgürlük"
     ],
     "correctAnswer": "özgürlük",
-    "explanation": "\"Azadî\" Türkçede \"özgürlük\" demektir.",
-    "explanationKu": "\"Azadî\" bi Tirkî \"özgürlük\" e.",
-    "explanationTr": "\"Azadî\" Türkçede \"özgürlük\" demektir.",
+    "explanation": "\"Azadî\" Türkçede \"özgürlük\" demektir; bağımsız ve bağsız yaşamak anlamına gelir. Örnek: \"Çûk azad e.\" (Kuş özgürdür.)",
+    "explanationKu": "\"Azadî\" bi Tirkî \"özgürlük\" e; tê wateya serbixwe û bê girêdan jiyan. Mînak: \"Çûk azad e.\"",
+    "explanationTr": "\"Azadî\" Türkçede \"özgürlük\" demektir; bağımsız ve bağsız yaşamak anlamına gelir. Örnek: \"Çûk azad e.\" (Kuş özgürdür.)",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -3226,9 +3226,9 @@
       "ağaç"
     ],
     "correctAnswer": "ağaç",
-    "explanation": "\"Dar\" Türkçede \"ağaç\" demektir.",
-    "explanationKu": "\"Dar\" bi Tirkî \"ağaç\" e.",
-    "explanationTr": "\"Dar\" Türkçede \"ağaç\" demektir.",
+    "explanation": "\"Dar\" Türkçede \"ağaç\" demektir; gövdeli ve yapraklı yüksek bir bitkidir. Örnek: \"Dar şîn bû.\" (Ağaç yeşerdi.)",
+    "explanationKu": "\"Dar\" bi Tirkî \"ağaç\" e; riwekeke bilind a bi qurm û pelan e. Mînak: \"Dar şîn bû.\"",
+    "explanationTr": "\"Dar\" Türkçede \"ağaç\" demektir; gövdeli ve yapraklı yüksek bir bitkidir. Örnek: \"Dar şîn bû.\" (Ağaç yeşerdi.)",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4404,9 +4404,9 @@
       "köy"
     ],
     "correctAnswer": "köy",
-    "explanation": "\"Gund\" Türkçede \"köy\" demektir.",
-    "explanationKu": "\"Gund\" bi Tirkî \"köy\" e.",
-    "explanationTr": "\"Gund\" Türkçede \"köy\" demektir.",
+    "explanation": "\"Gund\" Türkçede \"köy\" demektir; şehirden küçük bir yerleşim yeridir. Örnek: \"Em di gund de dijîn.\" (Köyde yaşıyoruz.)",
+    "explanationKu": "\"Gund\" bi Tirkî \"köy\" e; cihekî biçûk ê niştecihbûnê ye, biçûktir ji bajêr. Mînak: \"Em di gund de dijîn.\"",
+    "explanationTr": "\"Gund\" Türkçede \"köy\" demektir; şehirden küçük bir yerleşim yeridir. Örnek: \"Em di gund de dijîn.\" (Köyde yaşıyoruz.)",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4656,9 +4656,9 @@
       "şarkı"
     ],
     "correctAnswer": "ses",
-    "explanation": "\"Deng\" Türkçede \"ses\" demektir.",
-    "explanationKu": "\"Deng\" bi Tirkî \"ses\" e.",
-    "explanationTr": "\"Deng\" Türkçede \"ses\" demektir.",
+    "explanation": "\"Deng\" Türkçede \"ses\" demektir; kulakla duyulan şeydir. Örnek: \"Dengê te xweş e.\" (Sesin güzel.)",
+    "explanationKu": "\"Deng\" bi Tirkî \"ses\" e; tiştê ku bi guh tê bihîstin e. Mînak: \"Dengê te xweş e.\"",
+    "explanationTr": "\"Deng\" Türkçede \"ses\" demektir; kulakla duyulan şeydir. Örnek: \"Dengê te xweş e.\" (Sesin güzel.)",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -4812,9 +4812,9 @@
       "şehir"
     ],
     "correctAnswer": "halk",
-    "explanation": "\"Gel\" Türkçede \"halk\" demektir.",
-    "explanationKu": "\"Gel\" bi Tirkî \"halk\" e.",
-    "explanationTr": "\"Gel\" Türkçede \"halk\" demektir.",
+    "explanation": "\"Gel\" Türkçede \"halk\" demektir; insan topluluğu, toplum anlamına gelir. Örnek: \"Gel li qadan e.\" (Halk meydanda.)",
+    "explanationKu": "\"Gel\" bi Tirkî \"halk\" e; tê wateya koma mirovan, civakê. Mînak: \"Gel li qadan e.\"",
+    "explanationTr": "\"Gel\" Türkçede \"halk\" demektir; insan topluluğu, toplum anlamına gelir. Örnek: \"Gel li qadan e.\" (Halk meydanda.)",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5032,9 +5032,9 @@
       "toplum"
     ],
     "correctAnswer": "doğa",
-    "explanation": "\"Xweza\" Türkçede \"doğa\" demektir.",
-    "explanationKu": "\"Xweza\" bi Tirkî \"doğa\" ye.",
-    "explanationTr": "\"Xweza\" Türkçede \"doğa\" demektir.",
+    "explanation": "\"Xweza\" Türkçede \"doğa\" demektir; ağaç, dağ, ırmak ve tüm çevre anlamına gelir. Örnek: \"Xweza bedew e.\" (Doğa güzeldir.)",
+    "explanationKu": "\"Xweza\" bi Tirkî \"doğa\" ye; tê wateya dar, çiya, çem û hemû jîngehê. Mînak: \"Xweza bedew e.\"",
+    "explanationTr": "\"Xweza\" Türkçede \"doğa\" demektir; ağaç, dağ, ırmak ve tüm çevre anlamına gelir. Örnek: \"Xweza bedew e.\" (Doğa güzeldir.)",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5092,9 +5092,9 @@
       "sırt"
     ],
     "correctAnswer": "el",
-    "explanation": "\"Dest\" Türkçede \"el\" demektir.",
-    "explanationKu": "\"Dest\" bi Tirkî \"el\" e.",
-    "explanationTr": "\"Dest\" Türkçede \"el\" demektir.",
+    "explanation": "\"Dest\" Türkçede \"el\" demektir; tutup yazdığımız organdır. Örnek: \"Destê xwe bişo.\" (Elini yıka.)",
+    "explanationKu": "\"Dest\" bi Tirkî \"el\" e; endamê ku em pê digirin û dinivîsin e. Mînak: \"Destê xwe bişo.\"",
+    "explanationTr": "\"Dest\" Türkçede \"el\" demektir; tutup yazdığımız organdır. Örnek: \"Destê xwe bişo.\" (Elini yıka.)",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -5351,9 +5351,9 @@
       "yağ"
     ],
     "correctAnswer": "hamur",
-    "explanation": "\"Hevîr\" Türkçede \"hamur\" demektir.",
-    "explanationKu": "\"Hevîr\" bi Tirkî \"hamur\" e.",
-    "explanationTr": "\"Hevîr\" Türkçede \"hamur\" demektir.",
+    "explanation": "\"Hevîr\" Türkçede \"hamur\" demektir; ekmek yapılan un ve su karışımıdır. Örnek: \"Dayik hevîr dike.\" (Anne hamur yoğuruyor.)",
+    "explanationKu": "\"Hevîr\" bi Tirkî \"hamur\" e; têkeliya ard û avê ye ku nan jê tê çêkirin. Mînak: \"Dayik hevîr dike.\"",
+    "explanationTr": "\"Hevîr\" Türkçede \"hamur\" demektir; ekmek yapılan un ve su karışımıdır. Örnek: \"Dayik hevîr dike.\" (Anne hamur yoğuruyor.)",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -6301,9 +6301,9 @@
       "tarih"
     ],
     "correctAnswer": "tarih",
-    "explanation": "\"Dîrok\" Türkçede \"tarih\" demektir.",
-    "explanationKu": "\"Dîrok\" bi Tirkî \"tarih\" e.",
-    "explanationTr": "\"Dîrok\" Türkçede \"tarih\" demektir.",
+    "explanation": "\"Dîrok\" Türkçede \"tarih\" demektir; geçmiş olaylar ve onları inceleyen bilim anlamına gelir. Örnek: \"Em dîrokê dixwînin.\" (Tarih okuyoruz.)",
+    "explanationKu": "\"Dîrok\" bi Tirkî \"tarih\" e; tê wateya bûyerên berê û zanista wan. Mînak: \"Em dîrokê dixwînin.\"",
+    "explanationTr": "\"Dîrok\" Türkçede \"tarih\" demektir; geçmiş olaylar ve onları inceleyen bilim anlamına gelir. Örnek: \"Em dîrokê dixwînin.\" (Tarih okuyoruz.)",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7031,9 +7031,9 @@
       "deniz"
     ],
     "correctAnswer": "deniz",
-    "explanation": "\"Behr\" Türkçede \"deniz\" demektir.",
-    "explanationKu": "\"Behr\" bi Tirkî \"deniz\" e.",
-    "explanationTr": "\"Behr\" Türkçede \"deniz\" demektir.",
+    "explanation": "Behr, büyük ve tuzlu su kütlesidir; Türkçedeki karşılığı \"deniz\"dir.",
+    "explanationKu": "Behr ava mezin û şor e; bi Tirkî jê re \"deniz\" tê gotin.",
+    "explanationTr": "Behr, büyük ve tuzlu su kütlesidir; Türkçedeki karşılığı \"deniz\"dir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7443,9 +7443,9 @@
       "halay"
     ],
     "correctAnswer": "halay",
-    "explanation": "\"Govend\" Türkçede \"halay\" demektir.",
-    "explanationKu": "\"Govend\" bi Tirkî \"halay\" e.",
-    "explanationTr": "\"Govend\" Türkçede \"halay\" demektir.",
+    "explanation": "Govend, el ele tutuşarak grup hâlinde oynanan halk oyunudur; Türkçedeki karşılığı \"halay\"dır.",
+    "explanationKu": "Govend lîstikeke komî ye ku bi girtina destan tê lîstin; bi Tirkî jê re \"halay\" tê gotin.",
+    "explanationTr": "Govend, el ele tutuşarak grup hâlinde oynanan halk oyunudur; Türkçedeki karşılığı \"halay\"dır.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",
@@ -7507,9 +7507,9 @@
       "adalet"
     ],
     "correctAnswer": "eşitlik",
-    "explanation": "\"Wekhevî\" Türkçede \"eşitlik\" demektir.",
-    "explanationKu": "\"Wekhevî\" bi Tirkî \"eşitlik\" e.",
-    "explanationTr": "\"Wekhevî\" Türkçede \"eşitlik\" demektir.",
+    "explanation": "\"Wekhevî\", \"wekhev (eşit)\" sözünden türemiştir; insanların eşit olma durumunu anlatır, Türkçesi \"eşitlik\"tir.",
+    "explanationKu": "Wekhevî ji \"wekhev\" tê; rewşa wekhevbûna mirovan e û bi Tirkî \"eşitlik\" e.",
+    "explanationTr": "\"Wekhevî\", \"wekhev (eşit)\" sözünden türemiştir; insanların eşit olma durumunu anlatır, Türkçesi \"eşitlik\"tir.",
     "metadata": {
       "reviewStatus": "approved",
       "dialect": "Kurmancî",

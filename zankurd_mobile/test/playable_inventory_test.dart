@@ -141,7 +141,9 @@ void main() {
       // 2469 -> 2486 (+17): fiziksel sayıyla aynı üç iş (+31 üçüncü dalga,
       // -44 karantinaya dönen, +30 bilim); hepsi `approved` ve oynanabilir,
       // karantinaya dönen 44'ün hiçbiri retired değildi.
-      2486,
+      // 2486 -> 2485 (-1): offline_tf_cog_0003 bilgi yanlışı ("Geliyê Botan
+      // Cizîrê dorpêç dike" — Botan Vadisi Siirt'tedir) emekliye ayrıldı.
+      2485,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -210,7 +212,7 @@ void main() {
       //   Edebiyat 16 - 1 + 8 = 23; Dîrok 36 + 7 = 43; Muzîk 22 + 5 = 27;
       //   Çand 32 + 9 = 41; Teknolojî 0 + 3 = 3; Siyaset 68 + 2 = 70.
       'retired=Sînema': 25,
-      'retired=Cografya': 50,
+      'retired=Cografya': 51,
       'retired=Edebiyat': 23,
       'retired=Dîrok': 43,
       'retired=Muzîk': 27,
