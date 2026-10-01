@@ -720,7 +720,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       ErrorReporter.record(error, stack, reason: 'streak_freeze_balance');
       return false;
     }
-    if (!mounted || balance < _streakFreezeCost) return false;
+    if (!mounted) return false;
+    if (balance < _streakFreezeCost) {
+      // Bakiye yetmiyorsa teklif edilecek bir şey yok, ama seri BU turda
+      // kırılıyor: oyuncuya söylenir (yalnız bilgi, karar istemez; akış ve
+      // makbuz aşamaları değişmez — soru her zaman `false` döner).
+      await _showStreakFreezeShortfall(
+        missing: coinShortfall(cost: _streakFreezeCost, balance: balance),
+      );
+      return false;
+    }
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -745,6 +754,48 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       ),
     );
     return confirmed == true && mounted;
+  }
+
+  /// Seri kırılacak ama bakiye korumaya yetmiyor: eksik miktar ve jeton
+  /// kazanma yolu. Hiçbir yan etkisi yoktur; kesintide yeniden gösterilmesi
+  /// güvenlidir (`pendingUserDecision` aşamasındayız).
+  Future<void> _showStreakFreezeShortfall({required int missing}) async {
+    final goEarn = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(context.t(K.streakBreaking)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(context.t(K.streakFreezeNoCoins), textAlign: TextAlign.center),
+            const SizedBox(height: SahneSpace.x2),
+            SahneShortfallNote(
+              key: const ValueKey('result-streak-shortfall'),
+              missing: missing,
+              alert: true,
+              center: true,
+            ),
+          ],
+        ),
+        actions: [
+          DialogActionPair(
+            cancel: TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: Text(context.t(K.gotIt)),
+            ),
+            confirm: SahneButton.primary(
+              key: const ValueKey('result-streak-earn-coins'),
+              label: context.t(K.earnCoins),
+              arrow: false,
+              onPressed: () => Navigator.of(ctx).pop(true),
+            ),
+          ),
+        ],
+      ),
+    );
+    // Çark, sonuç akışını beklemeden açılır; akış `false` ile sürer.
+    if (goEarn == true && mounted) unawaited(_openSpinWheel());
   }
 
   /// Coini harcar ve dondurmayı uygular.
