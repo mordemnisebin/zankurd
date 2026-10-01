@@ -2160,6 +2160,12 @@ class Tr {
       'ku': 'Pakêtên Premium hîn ne çalak in',
       'tr': 'Premium paketler henüz aktif değil',
     },
+    K.paywallOfferingsLoadFailed: {
+      'ku':
+          'Pakêtên Premium nehatin barkirin. Girêdana xwe kontrol bike û dîsa biceribîne.',
+      'tr':
+          'Premium paketleri yüklenemedi. Bağlantını kontrol edip tekrar dene.',
+    },
     K.paywallPackagesInactiveBody: {
       'ku': 'Pakêtên Premium dê di demeke kurt de çalak bibin. Paşê vegere.',
       'tr': 'Paketler yakında açılacak.',
@@ -3680,6 +3686,7 @@ class K {
   static const priceComing = 'paywall.priceComing';
   static const restorePurchases = 'paywall.restore';
   static const paywallPackagesInactive = 'paywall.packages.inactive';
+  static const paywallOfferingsLoadFailed = 'paywall.offerings.loadFailed';
   static const paywallPackagesInactiveBody = 'paywall.packages.inactive.body';
   static const paywallRenewalTerms = 'paywall.renewalTerms';
   static const paywallRestoreFailed = 'paywall.restore.failed';

@@ -512,7 +512,10 @@ class _OfferingsLoadError extends StatelessWidget {
     return _NoticeCard(
       icon: AppIcons.triangleExclamation,
       title: context.t(K.genericErrorTitle),
-      body: context.t(K.genericErrorBody),
+      // 2026-10-02 QA: gövde "Tekrar dene." idi — hem düğmenin adının
+      // kopyası hem de ne olduğunu söylemeyen bir cümle. Neyin
+      // yüklenemediği ve ne yapılacağı yazılır.
+      body: context.t(K.paywallOfferingsLoadFailed),
       retryLabel: context.t(K.retry),
       onRetry: onRetry,
       error: true,

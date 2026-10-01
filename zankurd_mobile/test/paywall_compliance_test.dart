@@ -137,8 +137,27 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text(Tr.of(K.genericErrorTitle, AppLanguage.tr)), findsOne);
-      expect(find.text(Tr.of(K.genericErrorBody, AppLanguage.tr)), findsOne);
+      // 2026-10-02 QA: gövde "Tekrar dene." idi — düğmenin adının kopyası ve
+      // neyin yüklenemediğini söylemeyen bir cümle. Niçin sessiz kaldı:
+      // bekçi gövdeyi ortak `genericErrorBody` sabitine bağlamıştı, yani
+      // metin değişmedikçe "doğru"ydu. Şimdi gövde açıklayıcı ve düğme
+      // adından farklı; geri yükleme ve yasal bağlantılar yerinde.
+      expect(
+        find.text(Tr.of(K.paywallOfferingsLoadFailed, AppLanguage.tr)),
+        findsOne,
+      );
+      expect(
+        find.text(Tr.of(K.genericErrorBody, AppLanguage.tr)),
+        findsNothing,
+      );
+      expect(
+        Tr.of(K.paywallOfferingsLoadFailed, AppLanguage.tr),
+        isNot(Tr.of(K.retry, AppLanguage.tr)),
+      );
       expect(find.text(Tr.of(K.retry, AppLanguage.tr)), findsOne);
+      expect(find.text(Tr.of(K.restorePurchases, AppLanguage.tr)), findsOne);
+      expect(find.text(Tr.of(K.privacyPolicy, AppLanguage.tr)), findsOne);
+      expect(find.text(Tr.of(K.termsOfUse, AppLanguage.tr)), findsOne);
       expect(
         find.text(Tr.of(K.paywallPackagesInactive, AppLanguage.tr)),
         findsNothing,
