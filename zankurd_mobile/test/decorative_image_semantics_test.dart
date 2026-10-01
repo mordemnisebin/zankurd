@@ -42,8 +42,6 @@ void main() {
           continue;
         }
         if (!call.hasMatch(line)) continue;
-        if (line.contains('const ') && line.contains('Image(') == false)
-          continue;
         // Çağrı gövdesi: parantez kapanana dek (en çok 40 satır).
         final body = StringBuffer();
         var depth = 0;
