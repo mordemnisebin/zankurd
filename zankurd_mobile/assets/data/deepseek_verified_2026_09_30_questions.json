@@ -766,7 +766,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Geographic_coordinate_system",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-02 (uçtan uca QA): çeldirici \"Dirêjahî û firehî\" enlem/boylam için de geçerli ikinci doğru cevap olduğundan \"Dem û lez\" ile değiştirildi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },

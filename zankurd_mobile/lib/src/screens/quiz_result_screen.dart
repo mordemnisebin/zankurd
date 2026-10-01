@@ -18,6 +18,7 @@ import '../data/xp_award_publisher.dart';
 import '../data/zankurd_repository.dart';
 import '../utils/error_reporter.dart';
 import '../l10n/lang.dart';
+import '../utils/coin_calculator.dart';
 import '../l10n/strings.dart';
 import '../services/premium_service.dart';
 import '../services/quiz_reward_settlement_service.dart';
@@ -161,6 +162,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   int get bestStreak => widget.bestStreak;
   List<AnswerRecord> get answerRecords => widget.answerRecords;
   int get coinsAwarded => widget.coinsAwarded;
+
+  /// Günlük tavan ödülü sıfırladı ya da istenenden aza indirdi mi?
+  bool get _dailyCapCutReward =>
+      widget.dailyCapReached &&
+      (coinsAwarded <= 0 ||
+          coinsAwarded <
+              CoinCalculator.soloAward(
+                correctCount: widget.correctCount,
+                bestStreak: widget.bestStreak,
+              ));
   List<Player> get opponents => widget.opponents;
   bool get practice => widget.practice;
   bool get dailyQuiz => widget.dailyQuiz;
@@ -1274,12 +1285,14 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       // belirsizdir — tavan da sıfır verir, arıza da. Sebebi yazmak,
       // sessizliği bilgiye çevirir (2026-08-12 denetimi).
       //
-      // 2026-10-02: yalnız SIFIR ödülde değil, tavan ödülü kıstığında da.
-      // Sunucu `cap_reached`i `amount >= kalan` iken doğru yollar; kalan 1
-      // jetonken 17'lik tur "+1" veriyor ve aynı bayrağı taşıyordu, ama ekran
-      // yalnız `<= 0` için konuştuğundan oyuncu "+1"in sebebini hiçbir
-      // yerden öğrenemiyordu (QA turu, Cîhan 8/10).
-      if (widget.dailyCapReached)
+      // 2026-10-02: yalnız SIFIR ödülde değil, tavan ödülü KIRPTIĞINDA da.
+      // Kalan 1 jetonken 17'lik tur "+1" veriyor ve sunucu `cap_reached`i
+      // yine yolluyordu, ama ekran yalnız `<= 0` için konuştuğundan oyuncu
+      // "+1"in sebebini öğrenemiyordu (QA turu, Cîhan 8/10). Tavan TAM
+      // ödemeyle dolduysa (istenen = verilen) mesaj yersiz kalır: oyuncu
+      // kazandığını aldı. İstenen miktar sunucuyla aynı formüldür
+      // (`CoinCalculator.soloAward`, bkz. solo_reward_parity_test).
+      if (_dailyCapCutReward)
         _HeroNotice(
           key: const ValueKey('result-daily-cap-notice'),
           icon: AppIcons.coins,

@@ -157,6 +157,16 @@ void main() {
         // kaynak taramasında 44 kayıt (30 kaynak yok, 14 cevap yanlış)
         // karantinaya döndü: 853 - 44 = 809.
         expect(copies.length, 809);
+        // 2026-10-02: TEK editoryal düzeltme. `ds_cografya_0177`nin çeldiricisi
+        // "Dirêjahî û firehî" ("Uzunluk ve genişlik") enlem/boylam için de
+        // geçerli bir Kurmancî ifadeydi: iki doğru şık. "Dem û lez" ("Zaman ve
+        // hız") ile değişti; şıkkın iki dildeki karşılığı birlikte değişir,
+        // doğru şıkkın konumu aynı kalır. Sunucu göçü:
+        // supabase/2026-10-02_e2e_content_fixes.sql. Başka kayıt bu listeye
+        // bilinçli bir kararla eklenir.
+        const editorialFixes = <String, Set<String>>{
+          'ds_cografya_0177': {'answers', 'answersTr'},
+        };
         for (final c in copies) {
           final o = original[c['id']];
           expect(o, isNotNull, reason: '${c['id']} orijinalde yok');
@@ -169,6 +179,7 @@ void main() {
             'difficulty',
             'type',
           ]) {
+            if (editorialFixes[c['id']]?.contains(key) ?? false) continue;
             expect(c[key], o![key], reason: '${c['id']}.$key değişmiş');
           }
           // Kurmancî metin yalnız ikinci ve üçüncü dalgada (Gemini 3.1 Pro düzeltmesi,
@@ -186,6 +197,7 @@ void main() {
               'explanationKu',
               'explanation',
             ]) {
+              if (editorialFixes[c['id']]?.contains(key) ?? false) continue;
               expect(c[key], o![key], reason: '${c['id']}.$key değişmiş');
             }
           } else if (c['explanation'] != o!['explanation']) {
@@ -202,6 +214,16 @@ void main() {
             oldAnswers.indexOf(o['correctAnswer'] as String),
             reason: '${c['id']}: doğru şıkkın konumu değişmiş',
           );
+          if (editorialFixes.containsKey(c['id'])) {
+            // Düzeltilen şık iki dilde de aynı konumda değişmiş olmalı.
+            final tr = (c['answersTr'] as List).cast<String>();
+            expect(tr.length, newAnswers.length);
+            expect(
+              tr.indexOf(c['correctAnswerTr'] as String),
+              newAnswers.indexOf(c['correctAnswer'] as String),
+              reason: '${c['id']}: iki dildeki doğru konum ayrışmış',
+            );
+          }
           expect(newAnswers.length, oldAnswers.length);
           expect(newAnswers.toSet().length, newAnswers.length);
           expect(meta['reviewStatus'], 'approved', reason: '${c['id']}');

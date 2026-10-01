@@ -94,4 +94,17 @@ void main() {
     await pumpResult(tester, coinsAwarded: 17, rewardQueued: false);
     expect(find.text(capText), findsNothing);
   });
+
+  testWidgets('tavan tam ödemeyle dolduysa (istenen = verilen) ileti çıkmaz', (
+    tester,
+  ) async {
+    // pumpResult: 7 doğru, seri 4 -> istenen 4 + 7 + 4 = 15.
+    await pumpResult(
+      tester,
+      coinsAwarded: 15,
+      rewardQueued: false,
+      dailyCapReached: true,
+    );
+    expect(find.text(capText), findsNothing);
+  });
 }
