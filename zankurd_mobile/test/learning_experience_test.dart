@@ -91,8 +91,9 @@ void main() {
   Future<void> pumpAndOpenExit(
     WidgetTester tester,
     MockZanKurdRepository repository,
-    QuizExperience experience,
-  ) async {
+    QuizExperience experience, {
+    bool answerFirst = true,
+  }) async {
     await tester.pumpWidget(
       testShell(
         child: Builder(
@@ -118,8 +119,10 @@ void main() {
 
     // Onay diyalogu yalnız ilerleme varsa çıkar (`PopScope.canPop`):
     // önce bir şık işaretlenir.
-    await tester.tap(find.text(repository.questions.first.answers.first));
-    await tester.pumpAndSettle();
+    if (answerFirst) {
+      await tester.tap(find.text(repository.questions.first.answers.first));
+      await tester.pumpAndSettle();
+    }
 
     // Quiz ekranı bir rota olarak açıldığı için AppBar geri düğmesi var;
     // PopScope onu yakalayıp onay diyalogunu gösterir.
@@ -129,6 +132,32 @@ void main() {
     // diyaloğundan geçer.
     await tester.tap(find.byKey(const ValueKey('quiz-close')));
     await tester.pumpAndSettle();
+  }
+
+  // 2026-10-02 uçtan uca QA: ilk soruda (cevap yok) X'e dokunmak turu sormadan
+  // bitiriyordu; onay yalnız "ilerleme" varken (`PopScope.canPop`) çıkıyordu.
+  // Niçin sessiz kalıyordu: bütün çıkış testleri önce bir şık işaretleyip
+  // sonra çıkıyordu, yani "ilerleme var" yolunu sınıyor, ilk soru yolunu
+  // hiç sınamıyordu.
+  for (final experience in QuizExperience.values) {
+    testWidgets('ilk soruda da X onay sorar ($experience), vazgeçince tur '
+        'sürer', (tester) async {
+      await pumpAndOpenExit(tester, repository, experience, answerFirst: false);
+      expect(
+        find.text(
+          experience == QuizExperience.learning
+              ? 'Dersten çıkılsın mı?'
+              : 'Yarıştan çıkılsın mı?',
+        ),
+        findsOneWidget,
+        reason: 'ilk soruda X sormadan çıkarmamalı',
+      );
+      // Güvenli eylem: turda kal.
+      await tester.tap(find.text('Devam et'));
+      await tester.pumpAndSettle();
+      expect(find.byType(QuizScreen), findsOneWidget);
+      expect(find.byType(AlertDialog), findsNothing);
+    });
   }
 
   testWidgets('öğrenme akışında çıkış diyalogu "ders" der', (tester) async {
