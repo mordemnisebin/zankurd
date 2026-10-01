@@ -1317,7 +1317,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         if (breakdown.isNotEmpty) ...[
           SahneSectionHeader(title: context.t(K.resultLearnedTitle)),
           _CategoryLearnings(breakdown: breakdown),
-          const SizedBox(height: SahneSpace.cardGap),
+          // Yorumu olmayan kart çizilmez (bkz. [LearningOutcomeCard]): boşluk
+          // da onunla birlikte gider.
+          if (learningOutcome.hasSpotlight)
+            const SizedBox(height: SahneSpace.cardGap),
         ] else
           const SizedBox(height: SahneSpace.sectionTop),
         LearningOutcomeCard(

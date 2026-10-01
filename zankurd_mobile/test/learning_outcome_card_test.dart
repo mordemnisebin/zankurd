@@ -118,15 +118,121 @@ void main() {
     }
   }
 
-  test('tek sorudan konu gücü ya da konu eksiği çıkarmaz', () {
+  test('tek doğru soru konu gücü ilan etmez; tek yanlış tekrar konusudur', () {
+    // 2026-10-02: eskiden tek yanlış da eşiğe takılıyor, kutu "Nerelerde
+    // zorlandın?" derken yalnız güçlü konuyu yazıyordu. Güçlü konu eşiği
+    // (2+ cevap) aynı kaldı; zayıf konu artık en az bir yanlışı olan en
+    // düşük doğruluklu kategoridir.
     final outcome = LearningOutcome.fromRecords([
       _record('1', 'Ziman', correct: true),
       _record('2', 'Dîrok', correct: false),
     ]);
 
     expect(outcome.strongestCategory, isNull);
-    expect(outcome.reviewCategory, isNull);
+    expect(outcome.reviewCategory, 'Dîrok');
     expect(outcome.reviewRecords.map((record) => record.id), ['2']);
+  });
+
+  test('simülatör turu: Siyaset 0/1 zayıf, Coğrafya 3/3 güçlü konudur', () {
+    // 2026-10-02 simülatör: Günün dersi 9/10, Siyaset 0/1, Coğrafya 3/3.
+    // Kutu zayıf konu yerine en çok sorulan konuyu yazıyordu.
+    final outcome = LearningOutcome.fromRecords([
+      _record('c1', 'Cografya', correct: true),
+      _record('c2', 'Cografya', correct: true),
+      _record('c3', 'Cografya', correct: true),
+      _record('s1', 'Siyaset', correct: false),
+      _record('z1', 'Ziman', correct: true),
+      _record('z2', 'Ziman', correct: true),
+      _record('m1', 'Muzîk', correct: true),
+      _record('d1', 'Dîrok', correct: true),
+      _record('d2', 'Dîrok', correct: true),
+      _record('k1', 'Çand', correct: true),
+    ]);
+
+    expect(outcome.reviewCategory, 'Siyaset');
+    expect(outcome.reviewWrong, 1);
+    expect(outcome.reviewAnswered, 1);
+    expect(outcome.reviewRecords.map((r) => r.id), ['s1']);
+    expect(outcome.strongestCategory, 'Cografya');
+  });
+
+  test('zayıf konu: en düşük doğruluk, eşitlikte en çok yanlış', () {
+    final outcome = LearningOutcome.fromRecords([
+      // Ziman 3/4 (1 yanlış, %75), Dîrok 1/3 (2 yanlış, %33),
+      // Çand 0/1 (1 yanlış, %0), Muzîk 0/2 (2 yanlış, %0).
+      _record('z1', 'Ziman', correct: true),
+      _record('z2', 'Ziman', correct: true),
+      _record('z3', 'Ziman', correct: true),
+      _record('z4', 'Ziman', correct: false),
+      _record('d1', 'Dîrok', correct: true),
+      _record('d2', 'Dîrok', correct: false),
+      _record('d3', 'Dîrok', correct: false),
+      _record('c1', 'Çand', correct: false),
+      _record('m1', 'Muzîk', correct: false),
+      _record('m2', 'Muzîk', correct: false),
+    ]);
+
+    expect(outcome.reviewCategory, 'Muzîk');
+    expect(outcome.reviewWrong, 2);
+  });
+
+  testWidgets('başlık satırın söylediğiyle uyuşur: zayıf konu varken zorlanma '
+      'sorulur, tek yanlış satırı gösterilir', (tester) async {
+    final outcome = LearningOutcome.fromRecords([
+      _record('c1', 'Cografya', correct: true),
+      _record('c2', 'Cografya', correct: true),
+      _record('c3', 'Cografya', correct: true),
+      _record('s1', 'Siyaset', correct: false),
+    ]);
+    await tester.pumpWidget(
+      _wrap(LearningOutcomeCard(outcome: outcome, onReview: () {})),
+    );
+    expect(find.text('Nerelerde zorlandın?'), findsOneWidget);
+    expect(find.textContaining('Siyaset: 1 soruda 1 yanlış'), findsOneWidget);
+    expect(find.textContaining('Coğrafya: 3 sorudan 3 doğru'), findsOneWidget);
+  });
+
+  testWidgets('yanlışsız turda başlık "zorlandın" demez; güçlü konu kendi '
+      'başlığıyla gelir', (tester) async {
+    final outcome = LearningOutcome.fromRecords([
+      _record('c1', 'Cografya', correct: true),
+      _record('c2', 'Cografya', correct: true),
+      _record('c3', 'Cografya', correct: true),
+      _record('z1', 'Ziman', correct: true),
+    ]);
+    await tester.pumpWidget(
+      _wrap(
+        LearningOutcomeCard(
+          outcome: outcome,
+          onReview: null,
+          showCounts: false,
+        ),
+      ),
+    );
+    expect(find.text('Nerelerde zorlandın?'), findsNothing);
+    expect(find.text('En güçlü olduğun konu:'), findsOneWidget);
+    expect(find.textContaining('Coğrafya: 3 sorudan 3 doğru'), findsOneWidget);
+    expect(find.byKey(const ValueKey('learning-outcome-review')), findsNothing);
+  });
+
+  testWidgets('yorumu olmayan ve sayımı başka yerde gösterilen kart gizlenir', (
+    tester,
+  ) async {
+    final outcome = LearningOutcome.fromRecords([
+      _record('1', 'Ziman', correct: true),
+      _record('2', 'Dîrok', correct: true),
+    ]);
+    await tester.pumpWidget(
+      _wrap(
+        LearningOutcomeCard(
+          outcome: outcome,
+          onReview: null,
+          showCounts: false,
+        ),
+      ),
+    );
+    expect(find.byKey(const ValueKey('learning-outcome-card')), findsNothing);
+    expect(find.text('Nerelerde zorlandın?'), findsNothing);
   });
 
   test('yeterli kayıtta en güçlü ve tekrar konusunu cevaplardan türetir', () {
@@ -174,24 +280,30 @@ void main() {
     expect(tapped, isTrue);
   });
 
-  testWidgets('Kurmancî kart tek kayıt için temkinli genel öneri gösterir', (
-    tester,
-  ) async {
-    final outcome = LearningOutcome.fromRecords([
-      _record('1', 'Dîrok', correct: false),
-    ]);
+  testWidgets(
+    'Kurmancî kart tek yanlışı zayıf konu olarak, iddiasız gösterir',
+    (tester) async {
+      // 2026-10-02: tek yanlış artık "temkinli genel öneri" değil, sayıyla
+      // söylenen zayıf konu satırıdır ("1 pirsê 1 şaş"); iddia değil sayım.
+      final outcome = LearningOutcome.fromRecords([
+        _record('1', 'Dîrok', correct: false),
+      ]);
 
-    await tester.pumpWidget(
-      _wrap(
-        LearningOutcomeCard(outcome: outcome, onReview: () {}),
-        language: 'ku',
-      ),
-    );
+      await tester.pumpWidget(
+        _wrap(
+          LearningOutcomeCard(outcome: outcome, onReview: () {}),
+          language: 'ku',
+        ),
+      );
 
-    expect(find.text('Te li ku zehmetî kişand?'), findsOneWidget);
-    expect(find.textContaining('Ji bo nirxandina mijarekê'), findsOneWidget);
-    expect(find.text('Li bersiva şaş binêre'), findsOneWidget);
-  });
+      expect(find.text('Te li ku zehmetî kişand?'), findsOneWidget);
+      expect(
+        find.textContaining('Dîrok: di 1 pirsan de 1 şaş'),
+        findsOneWidget,
+      );
+      expect(find.text('Li şaşiyên Dîrok binêre'), findsOneWidget);
+    },
+  );
 
   testWidgets('sonuç kartı seçilen konunun yanlışlarını yerel tekrara açar', (
     tester,

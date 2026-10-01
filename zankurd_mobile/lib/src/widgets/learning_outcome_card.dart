@@ -54,9 +54,55 @@ class LearningOutcome {
       stats[category] = current.add(record.isCorrect);
     }
 
-    MapEntry<String, _TopicStats>? strongest;
+    // 2026-10-02: "Nerelerde zorlandın?" kutusu ZAYIF konuyu göstermeli.
+    //
+    // ## Kusur
+    //
+    // Her iki seçim de `answered >= 2` eşiğine bağlıydı. Karışık turlarda
+    // (günün dersi: kategori başına çoğu zaman TEK soru) tek yanlış hiçbir
+    // eşiği geçemiyor, bu yüzden kutu yalnız en çok sorulan güçlü konuyu
+    // yazıyordu: simülatörde 9/10'luk turda Siyaset 0/1 (tek yanlış), Coğrafya
+    // 3/3 iken "Nerelerde zorlandın?" başlığının altında yeşil tikle
+    // "Coğrafya: 3 sorudan 3 doğru" çıktı — başlık zorlanmayı sorarken cevap
+    // başarıyı söylüyordu.
+    //
+    // ## Niçin sessiz kalırdı
+    //
+    // Eşik "tek soruyu güç/eksiklik SAYMA" kararını korumak için konmuştu
+    // (2026-09-27) ve bir testle bağlanmıştı; ama o karar iki ayrı şeyi
+    // birleştirdi: tek soruluk GÜÇ iddiası (haklı olarak ihtiyatlı) ile tek
+    // yanlışın GÖSTERİLMESİ (sayım iddiası değil, tekrar önerisi). Hiçbir
+    // test başlığın söylediği ile satırın söylediğini birlikte okumadı.
+    //
+    // ## Kural
+    //
+    // Zayıf konu = en az bir yanlışı olan kategoriler arasında en düşük
+    // doğruluk; eşitlikte en çok yanlış; sonra turda ilk görülen. Güçlü
+    // konu eşiği (2+ cevap, 2+ doğru, %75+) AYNI kaldı ve zayıf konudan
+    // farklı bir kategori olmalı. Yanlışı olmayan turda başlık "zorlandın"
+    // demez (bkz. [LearningOutcomeCard]).
     MapEntry<String, _TopicStats>? review;
     for (final entry in stats.entries) {
+      final value = entry.value;
+      if (value.wrong == 0) continue;
+      if (review == null) {
+        review = entry;
+        continue;
+      }
+      final current = review.value;
+      // Doğruluk çapraz çarpımla karşılaştırılır (bölme yok): düşük olan
+      // zayıf.
+      final accuracy = value.correct * current.answered;
+      final currentAccuracy = current.correct * value.answered;
+      if (accuracy < currentAccuracy ||
+          (accuracy == currentAccuracy && value.wrong > current.wrong)) {
+        review = entry;
+      }
+    }
+
+    MapEntry<String, _TopicStats>? strongest;
+    for (final entry in stats.entries) {
+      if (entry.key == review?.key) continue;
       final value = entry.value;
       if (value.answered >= 2 &&
           value.correct >= 2 &&
@@ -68,16 +114,6 @@ class LearningOutcome {
                       strongest.value.correct / strongest.value.answered &&
                   value.answered > strongest.value.answered))) {
         strongest = entry;
-      }
-      if (value.answered >= 2 &&
-          value.wrong > 0 &&
-          value.wrong / value.answered >= 0.5 &&
-          (review == null ||
-              value.wrong > review.value.wrong ||
-              (value.wrong == review.value.wrong &&
-                  value.wrong / value.answered >
-                      review.value.wrong / review.value.answered))) {
-        review = entry;
       }
     }
 
@@ -119,6 +155,11 @@ class LearningOutcome {
   final int answered;
   final int correct;
   final int unanswered;
+
+  /// Kutunun söyleyecek bir yorumu var mı (zayıf ya da güçlü konu)?
+  /// Sayımlar zaten başka yerde gösteriliyorsa (`showCounts: false`) yorumsuz
+  /// kutu gizlenir.
+  bool get hasSpotlight => reviewCategory != null || strongestCategory != null;
 
   /// Turda görülen HER kategori, sırayla (turda ilk cevaplanan kategori
   /// önce), eşiksiz ham sayımla. `strongestCategory`/`reviewCategory`
@@ -201,6 +242,18 @@ class LearningOutcomeCard extends StatelessWidget {
     // güçlü konu Rast ✓, tekrar konusu Zêr hedef. Gözden geçirme ikincil
     // düğme (Kulis): sonuç ekranının birincil eylemi "Devam et"tir.
     final t = SahneTokens.of(context);
+
+    // Başlık satırın söylediğiyle UYUŞMALI (2026-10-02): "Nerelerde
+    // zorlandın?" yalnız gerçekten bir zayıf konu varsa. Yanlışsız turda
+    // güçlü konu satırı kendi başlığıyla ("En güçlü olduğun konu:") gelir;
+    // yalnız eşiksiz sayımlar varsa nötr "Konulara göre" kullanılır. Söyleyecek
+    // yorumu olmayan ve sayımları başka yerde gösterilen kutu hiç çizilmez.
+    if (!showCounts && !outcome.hasSpotlight) return const SizedBox.shrink();
+    final title = reviewName != null
+        ? K.outcomeTitle
+        : strongestName != null
+        ? K.enGucluOldugunKategori
+        : K.resultLearnedTitle;
     return AppPanel(
       key: const ValueKey('learning-outcome-card'),
       color: t.learn,
@@ -213,7 +266,7 @@ class LearningOutcomeCard extends StatelessWidget {
               const SizedBox(width: SahneSpace.x2),
               Expanded(
                 child: Text(
-                  context.t(K.outcomeTitle),
+                  context.t(title),
                   style: SahneType.bodyStrong.copyWith(color: t.tx),
                 ),
               ),

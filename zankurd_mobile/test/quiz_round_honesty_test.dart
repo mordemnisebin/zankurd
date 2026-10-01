@@ -161,14 +161,16 @@ void main() {
       () {
         final outcome = LearningOutcome.fromRecords(_mixedRoundRecords());
 
-        // Karar: `answered >= 2` eşiği KORUNDU — tek soruluk sinyali "en
-        // güçlü/tekrar" ilan ETMEZ (bkz. dosya başı ve
-        // `learning_outcome_card_test.dart`daki "tek sorudan konu gücü ya
-        // da konu eksiği çıkarmaz" adanmış testi). Ama artık spotlight'a
-        // giremeyen kategoriler TAMAMEN GİZLENMEZ; eşiksiz sayımla listeye
-        // girerler.
+        // Karar (2026-10-02 güncellemesi): güçlü konu eşiği (`answered >= 2`)
+        // KORUNDU — tek soruluk sinyali "en güçlü" ilan ETMEZ. Ama ZAYIF
+        // konu artık eşiğe bağlı değil: en az bir yanlışı olan kategoriler
+        // arasında en düşük doğruluk (bkz. `LearningOutcome.fromRecords`).
+        // Eskiden Kültür 0/1 spotlight'a giremiyor, "Nerelerde zorlandın?"
+        // başlığının altında yalnız güçlü konu yazıyordu. Spotlight'a
+        // girmeyenler eşiksiz sayımla listelenmeye devam eder.
         expect(outcome.strongestCategory, 'Ziman');
-        expect(outcome.reviewCategory, isNull);
+        expect(outcome.reviewCategory, 'Çand');
+        expect(outcome.reviewWrong, 1);
         expect(outcome.categoryBreakdown.map((c) => c.category).toList(), [
           'Muzîk',
           'Ziman',
@@ -177,12 +179,15 @@ void main() {
         ]);
 
         final leftover = outcome.categoryBreakdown
-            .where((c) => c.category != outcome.strongestCategory)
+            .where(
+              (c) =>
+                  c.category != outcome.strongestCategory &&
+                  c.category != outcome.reviewCategory,
+            )
             .toList();
         expect(leftover.map((c) => (c.category, c.answered, c.correct)), [
           ('Muzîk', 1, 1),
           ('Cografya', 1, 1),
-          ('Çand', 1, 0),
         ]);
       },
     );
@@ -215,10 +220,12 @@ void main() {
           findsOneWidget,
           reason: 'Tek soruluk Coğrafya kategorisi özetten kayboldu.',
         );
+        // 2026-10-02: tek yanlış artık zayıf konu satırıdır (sayım satırı
+        // değil): başlığın sorduğu şeyi cevaplar.
         expect(
-          find.textContaining("Kültür: 1 sorudan 0 doğru"),
+          find.textContaining("Kültür: 1 soruda 1 yanlış"),
           findsOneWidget,
-          reason: 'Tek soruluk Kültür kategorisi özetten kayboldu.',
+          reason: 'Tek yanlışlı Kültür kategorisi özetten kayboldu.',
         );
       },
     );
