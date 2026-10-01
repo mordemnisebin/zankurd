@@ -1175,7 +1175,7 @@ void main() {
   // Kayıt sihirbazının 2. adımı: alt perdede "Geri" metin düğmesi görünür
   // (1. adımda "Giriş yap" bağlantısı vardır). Önceki tur yalnız ilk adımı
   // basıyordu; ikincil eylemin yeri ve ilerleme çubuğunun dolgusu görünmezdi.
-  testWidgets('107 kayıt, 2. adım', (t) async {
+  testWidgets('118 kayıt, 2. adım', (t) async {
     await _pump(t, const SignUpScreen());
     final fields = find.byType(EditableText);
     await t.enterText(fields.at(0), 'rojda@example.com');
@@ -1185,7 +1185,7 @@ void main() {
     for (var i = 0; i < 3; i++) {
       await t.pump(const Duration(milliseconds: 300));
     }
-    await _shoot(t, '107_sign_up_step2');
+    await _shoot(t, '118_sign_up_step2');
   }, tags: ['preview']);
 
   testWidgets('77 ad sorma', (t) async {
@@ -1351,7 +1351,7 @@ void main() {
   // Oda lobisinin üç durumu: ev sahibi yalnız (rakip bekliyor), ev sahibi
   // + hazır olmayan konuk, konuk. Önceki kareler yalnız "iki hazır oyunculu
   // ev sahibi"ni basıyordu; asıl kalabalık ve asıl boş durumlar görünmezdi.
-  testWidgets('104 oda — ev sahibi yalnız', (t) async {
+  testWidgets('115 oda — ev sahibi yalnız', (t) async {
     await _pump(
       t,
       RoomScreen(
@@ -1359,10 +1359,10 @@ void main() {
         initialRoom: _LobbyTourRepository.room(_LobbyView.hostAlone),
       ),
     );
-    await _shoot(t, '104_room_host_alone');
+    await _shoot(t, '115_room_host_alone');
   }, tags: ['preview']);
 
-  testWidgets('105 oda — ev sahibi, konuk hazır değil', (t) async {
+  testWidgets('116 oda — ev sahibi, konuk hazır değil', (t) async {
     await _pump(
       t,
       RoomScreen(
@@ -1370,10 +1370,10 @@ void main() {
         initialRoom: _LobbyTourRepository.room(_LobbyView.hostGuestNotReady),
       ),
     );
-    await _shoot(t, '105_room_host_guest_not_ready');
+    await _shoot(t, '116_room_host_guest_not_ready');
   }, tags: ['preview']);
 
-  testWidgets('106 oda — konuk', (t) async {
+  testWidgets('117 oda — konuk', (t) async {
     await _pump(
       t,
       RoomScreen(
@@ -1381,7 +1381,7 @@ void main() {
         initialRoom: _LobbyTourRepository.room(_LobbyView.guest),
       ),
     );
-    await _shoot(t, '106_room_guest');
+    await _shoot(t, '117_room_guest');
   }, tags: ['preview']);
 
   testWidgets('62 oda (Kurmancî)', (t) async {

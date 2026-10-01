@@ -1479,10 +1479,7 @@ class Tr {
     K.earnCoins: {'ku': 'Zêr qezenc bike', 'tr': 'Jeton kazan'},
     // "Jeton yetmiyor" durumunun miktarlı sözü (`SahneShortfallNote`): oyuncu
     // yalnız "yetmiyor" değil, NE KADAR eksik olduğunu da bilir.
-    K.coinsShort: {
-      'ku': '{coins} zêr kêm e',
-      'tr': '{coins} jeton eksik',
-    },
+    K.coinsShort: {'ku': '{coins} zêr kêm e', 'tr': '{coins} jeton eksik'},
     K.cancelShort: {'ku': 'Betal', 'tr': 'Vazgeç'},
     K.rewardPending: {
       'ku':
