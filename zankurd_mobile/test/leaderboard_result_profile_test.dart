@@ -106,8 +106,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // 2026-09-29 doğallık (K9): podyum kalktı; ilk üç de sıra satırıdır ve
-    // sırasını satırın başında rakamla yazar.
+    // 2026-09-29 doğallık (K9) podyumu kaldırmıştı; 2026-10-01 (A8) ilk üç
+    // süssüz bir podyumla geri geldi. İlk üçün her biri hâlâ `leaderboard-
+    // rank-row-N` anahtarını ve sırasını rakamla yazar (kaidede).
     for (final rank in [1, 2, 3]) {
       expect(
         find.descendant(
@@ -118,7 +119,7 @@ void main() {
         reason: 'leaderboard-rank-row-$rank',
       );
     }
-    expect(find.byKey(const ValueKey('leaderboard-podium')), findsNothing);
+    expect(find.byKey(const ValueKey('leaderboard-podium')), findsOneWidget);
   });
 
   testWidgets('leaderboard podium text stays readable on dark panel', (

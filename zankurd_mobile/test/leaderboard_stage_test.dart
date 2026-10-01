@@ -29,6 +29,13 @@
 /// liste, ilk üç yalnız sıra rakamının renginden ayrılır. Bekçi artık
 /// listenin her dilde ve temada sade kaldığını (taç yok, degrade/Ink yok,
 /// adlar birincil metin) ve rakam renklerinin okunabilirliğini ölçer.
+///
+/// ## 2026-10-01 (tasarım denetimi A8):
+///
+/// İlk üç için süssüz bir podyum geri geldi (`LeaderboardPodium`: üç pahlı
+/// kaide, birincinin üstünde tek taç; hale/degrade/Ink yok). Sadelik
+/// sözleşmesi korunur: yalnız TEK taç, degrade ve Ink yok, adlar birincil
+/// metin; birincinin kaidesindeki rakam (altın) altın tintte de AA tutar.
 library;
 
 import 'package:flutter/material.dart';
@@ -154,28 +161,24 @@ void main() {
           final why = 'ku=$isKu dark=$isDark';
           expect(tester.takeException(), isNull, reason: why);
 
-          expect(
-            find.byKey(const ValueKey('leaderboard-podium')),
-            findsNothing,
-            reason: why,
-          );
-          final list = find.byKey(const ValueKey('leaderboard-rank-list'));
-          expect(list, findsOneWidget, reason: why);
-          final t = SahneTokens.of(tester.element(list));
+          // Üç oyuncu: hepsi podyumda, liste yüzeyi çizilmez.
+          final podium = find.byKey(const ValueKey('leaderboard-podium'));
+          expect(podium, findsOneWidget, reason: why);
+          final t = SahneTokens.of(tester.element(podium));
 
           expect(
-            find.descendant(of: list, matching: find.byType(Ink)),
+            find.descendant(of: podium, matching: find.byType(Ink)),
             findsNothing,
             reason: why,
           );
           final crowns = tester
               .widgetList<SahneGlyph>(find.byType(SahneGlyph))
               .where((g) => g.kind == SahneGlyphKind.crown);
-          expect(crowns, isEmpty, reason: why);
+          expect(crowns, hasLength(1), reason: why);
 
           for (final name in ['Rojda', 'Baran', 'Dilan']) {
             final nameText = tester.widget<Text>(
-              find.descendant(of: list, matching: find.text(name)),
+              find.descendant(of: podium, matching: find.text(name)),
             );
             expect(nameText.style?.color, t.tx, reason: '$why: $name');
           }
@@ -190,6 +193,8 @@ void main() {
       // gümüş, üçüncü bronz, gerisi ikincil metin. Gümüş ve bronz zeminde
       // de (Sen satırı ve boş alan) AA tutar.
       expect(_contrast(t.goldTx, t.s1), greaterThanOrEqualTo(4.5));
+      // Birincinin kaidesi altın tintte durur; rakamı orada da okunur.
+      expect(_contrast(t.goldTx, t.goldTint), greaterThanOrEqualTo(4.5));
       for (final medal in [t.silverTx, t.bronzeTx]) {
         expect(_contrast(medal, t.s1), greaterThanOrEqualTo(4.5));
         expect(_contrast(medal, t.bg), greaterThanOrEqualTo(4.5));

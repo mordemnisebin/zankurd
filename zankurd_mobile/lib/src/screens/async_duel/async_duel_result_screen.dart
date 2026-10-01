@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -232,371 +231,129 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
     }
   }
 
-  /// 2026-09-29 Şahnê: C iskeleti (oyun sahnesi, her temada gece). Üstte
-  /// kapat + ortada bağlam ("Sırayla düello"); içerik ortada bir sonuç
-  /// kahramanı; alt perdede ikincil "Kapat" + TEK birincil "Yeni düello".
-  /// Kazanma Zêr taç + altın başlık; kaybetme ve beraberlik nötr; yarış
-  /// kimliği Boyax (VS amblemi; zaferde kilim şeridi). Rast/Şaş ailesi
-  /// kullanılmaz.
+  /// 2026-10-01 (A6): ortak sonuç şablonu ([SahneResultScaffold]): kahraman
+  /// (amblem → başlık → skor → bağlam), ödül (yalnız XP > 0 iken) ve alt
+  /// perdede ikincil "Kapat" + TEK birincil "Yeni düello". Yarım kalan
+  /// düelloda tek eylem "Kapat"tır ve birincil olur. Kazanma Zêr taç +
+  /// altın başlık; kaybetme ve beraberlik nötr; yarış kimliği Boyax
+  /// (zaferde kilim şeridi). Rast/Şaş ailesi kullanılmaz.
   @override
   Widget build(BuildContext context) {
     final view = widget.view;
-    final content = switch (view.kind) {
-      AsyncDuelResultKind.completed => _CompletedBody(view: view),
-      AsyncDuelResultKind.waiting => _WaitingBody(view: view),
-      AsyncDuelResultKind.expired => _ExpiredBody(view: view),
-      AsyncDuelResultKind.unfinished => _UnfinishedBody(view: view),
-    };
+    final t = SahneTokens.of(context);
+    final close = SahneResultAction(
+      label: context.t(K.close),
+      onPressed: () => Navigator.of(context).pop(),
+    );
     final canStartNew = view.kind != AsyncDuelResultKind.unfinished;
-    final celebrate =
-        view.kind == AsyncDuelResultKind.completed &&
-        view.outcome == AsyncDuelOutcome.win;
 
-    return SahneStageScaffold(
+    final SahneResultHero hero;
+    int xp = 0;
+    switch (view.kind) {
+      case AsyncDuelResultKind.completed:
+        final outcome = view.outcome ?? AsyncDuelOutcome.draw;
+        final win = outcome == AsyncDuelOutcome.win;
+        final rawOpponentName = view.opponentName;
+        final opponentName = rawOpponentName == null
+            ? context.t(K.asyncDuelOpponent)
+            : context.playerDisplayName(rawOpponentName);
+        xp = _completedXp(view);
+        // 2026-09-29 doğallık: sonuçta iki amblem üst üsteydi (taç/bayrak/
+        // terazi + iki avatarlı VS amblemi). Avatarlar yalnız "sen" ve
+        // rakibin baş harfiydi; aynı bilgi skor satırında ("Sen 2 – 0
+        // Rojda") yazılı. Tek amblem kalır: sonucun kendisi.
+        hero = SahneResultHero(
+          emblem: switch (outcome) {
+            AsyncDuelOutcome.win => const SahneResultEmblem.win(),
+            AsyncDuelOutcome.loss => const SahneResultEmblem.state(
+              icon: AppIcons.flag,
+            ),
+            AsyncDuelOutcome.draw => const SahneResultEmblem.state(
+              icon: AppIcons.scaleBalanced,
+            ),
+          },
+          title: switch (outcome) {
+            AsyncDuelOutcome.win => context.t(K.youWon),
+            AsyncDuelOutcome.loss => context.t(K.youLost),
+            AsyncDuelOutcome.draw => context.t(K.draw),
+          },
+          titleRole: win ? SahneRole.gold : null,
+          subtitle:
+              '${context.t(K.you)} ${view.myCorrect} – ${view.opponentCorrect} '
+              '$opponentName',
+          extras: [
+            if (outcome != AsyncDuelOutcome.draw &&
+                view.myCorrect != null &&
+                view.myCorrect == view.opponentCorrect)
+              Text(
+                context.t(K.asyncDuelTieBreak),
+                key: const ValueKey('async-duel-result-tiebreak'),
+                textAlign: TextAlign.center,
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+          ],
+          // Kilim şeridi ve ışınlar yalnız zaferde (2026-09-29 K4).
+          celebrate: win,
+          tone: SahneResultTone.race,
+        );
+      case AsyncDuelResultKind.waiting:
+        hero = SahneResultHero(
+          emblem: const SahneResultEmblem.state(icon: AppIcons.hourglass),
+          title: context.t(K.asyncDuelTurnDone),
+          // Sonuç bilinmiyorsa ([myCorrect] null) skor GÖSTERİLMEZ: "0/7"
+          // oyuncuya yanlış bir sonuç söylerdi.
+          value: view.myCorrect,
+          suffix: '/${view.total}',
+          valueKey: const ValueKey('async-duel-result-score'),
+          body: context.t(K.asyncDuelWaitingBody),
+          tone: SahneResultTone.race,
+        );
+      case AsyncDuelResultKind.expired:
+        xp = _expiredXp(view);
+        hero = SahneResultHero(
+          emblem: const SahneResultEmblem.state(icon: AppIcons.clock),
+          title: context.t(K.asyncDuelExpired),
+          body: context.t(K.asyncDuelExpiredBody),
+          tone: SahneResultTone.race,
+        );
+      case AsyncDuelResultKind.unfinished:
+        hero = SahneResultHero(
+          emblem: const SahneResultEmblem.state(
+            icon: AppIcons.triangleExclamation,
+          ),
+          title: context.t(K.asyncDuelUnfinished),
+          body: context.t(K.asyncDuelUnfinishedBody),
+          tone: SahneResultTone.race,
+        );
+    }
+
+    return SahneResultScaffold(
       key: const ValueKey('async-duel-result'),
       closeLabel: context.t(K.close),
-      beam: false,
-      center: Text(context.t(K.asyncDuel)),
-      dock: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 560),
-          child: _ResultDock(
-            onClose: () => Navigator.of(context).pop(),
-            onNew: canStartNew
-                ? () {
-                    Navigator.of(context).pushReplacement(
-                      AppRoute.to(
-                        AsyncDuelPlayScreen(repository: widget.repository),
-                      ),
-                    );
-                  }
-                : null,
-          ),
-        ),
-      ),
-      // İçerik kısa ekranda ortada durur; %200 yazıda uzarsa sayfa kayar.
-      // Işınlar kahramanın dışına taşar; kısa içerikte kaydırma alanı
-      // kırpmadığı için üst satırın üstüne boyanmasın diye gövde kırpılır.
-      body: LayoutBuilder(
-        builder: (context, constraints) => ClipRect(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: SahneSpace.page,
-              vertical: SahneSpace.x4,
-            ),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: math.max(0, constraints.maxHeight - SahneSpace.x8),
-              ),
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 560),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Positioned.fill(
-                        child: IgnorePointer(
-                          child: ExcludeSemantics(
-                            child: CustomPaint(
-                              painter: SahneResultBackdropPainter(
-                                rays: celebrate,
-                                raysCenterY: 60,
-                                bg: SahneTokens.night.bg,
-                                ridge: SahneTokens.night.s1,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: SahneSpace.x6),
-                        child: SizedBox(width: double.infinity, child: content),
-                      ),
-                    ],
+      contextLabel: context.t(K.asyncDuel),
+      hero: hero,
+      // Sıfır XP ("+0 XP") gösterilmez: yanlış ya da süresi dolmuş sıfır
+      // doğrulu düello ödülsüz biter.
+      rewards: xp > 0
+          ? SahneResultRewards(
+              xp: xp,
+              xpLabel: context.t(K.asyncDuelXp, {'xp': '$xp'}),
+            )
+          : null,
+      primary: canStartNew
+          ? SahneResultAction(
+              key: const ValueKey('async-duel-result-new'),
+              label: context.t(K.asyncDuelNew),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  AppRoute.to(
+                    AsyncDuelPlayScreen(repository: widget.repository),
                   ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Alt perde: ikincil "Kapat" + birincil "Yeni düello"; yarım kalan
-/// düelloda yalnız "Kapat". Büyük yazıda alt alta iner, birincil üstte.
-class _ResultDock extends StatelessWidget {
-  const _ResultDock({required this.onClose, required this.onNew});
-
-  final VoidCallback onClose;
-  final VoidCallback? onNew;
-
-  @override
-  Widget build(BuildContext context) {
-    final close = SahneButton.secondary(
-      label: context.t(K.close),
-      onPressed: onClose,
-      expand: true,
-    );
-    final onNew = this.onNew;
-    if (onNew == null) return close;
-    final create = SahneButton.primary(
-      key: const ValueKey('async-duel-result-new'),
-      label: context.t(K.asyncDuelNew),
-      onPressed: onNew,
-      expand: true,
-    );
-    if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          create,
-          const SizedBox(height: SahneSpace.x2),
-          close,
-        ],
-      );
-    }
-    return Row(
-      children: [
-        Expanded(flex: 2, child: close),
-        const SizedBox(width: SahneSpace.x3),
-        Expanded(flex: 3, child: create),
-      ],
-    );
-  }
-}
-
-/// Sonuç kahramanının ortak iskeleti: amblem → Başlık 28 → isteğe bağlı
-/// büyük sayı / skor satırı → açıklama → (zaferde) kilim şeridi → XP çipi.
-class _DuelHero extends StatelessWidget {
-  const _DuelHero({
-    required this.emblem,
-    required this.title,
-    this.titleColor,
-    this.children = const [],
-  });
-
-  final Widget emblem;
-  final String title;
-  final Color? titleColor;
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        emblem,
-        const SizedBox(height: SahneSpace.x4),
-        Semantics(
-          header: true,
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: SahneType.title.copyWith(color: titleColor ?? t.tx),
-          ),
-        ),
-        ...children,
-      ],
-    );
-  }
-}
-
-/// Durum amblemi: 72'lik Kulis pahlı karesi, içinde ikincil metin ikon.
-/// 2026-09-29 doğallık (K5): eskiden elmastı (avatarla aynı bileşen).
-class _StateDiamond extends StatelessWidget {
-  const _StateDiamond({required this.icon});
-
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return SahneAvatar(size: 72, icon: icon, color: t.s2, foreground: t.tx2);
-  }
-}
-
-/// Zêr XP çipi (ödül rolü).
-class _XpChip extends StatelessWidget {
-  const _XpChip({required this.xp});
-
-  final int xp;
-
-  @override
-  Widget build(BuildContext context) {
-    return SahneStatChip(
-      gold: true,
-      leading: const SahneGlyph(SahneGlyphKind.bolt),
-      label: context.t(K.asyncDuelXp, {'xp': '$xp'}),
-    );
-  }
-}
-
-/// Yarış kimliğinin kilim göz şeridi (Boyax, %70) — yalnız galibiyette.
-///
-/// 2026-09-29 doğallık (K4): şerit bekleyen, süresi dolan, kaybedilen ve
-/// berabere biten düelloda da skorun altındaydı. Her durumda aynı süs bir
-/// şablon izi oluyordu; şerit, sonuç ışınlarıyla aynı anda (zaferde) açılır.
-class _RaceStrip extends StatelessWidget {
-  const _RaceStrip();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 160,
-      child: SahneKilimStrip(
-        color: SahneTokens.of(context).raceTx.withValues(alpha: 0.7),
-      ),
-    );
-  }
-}
-
-class _CompletedBody extends StatelessWidget {
-  const _CompletedBody({required this.view});
-
-  final AsyncDuelResultView view;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final outcome = view.outcome ?? AsyncDuelOutcome.draw;
-    final title = switch (outcome) {
-      AsyncDuelOutcome.win => context.t(K.youWon),
-      AsyncDuelOutcome.loss => context.t(K.youLost),
-      AsyncDuelOutcome.draw => context.t(K.draw),
-    };
-    final rawOpponentName = view.opponentName;
-    final opponentName = rawOpponentName == null
-        ? context.t(K.asyncDuelOpponent)
-        : context.playerDisplayName(rawOpponentName);
-    final xp = _completedXp(view);
-    final win = outcome == AsyncDuelOutcome.win;
-
-    // 2026-09-29 doğallık: sonuçta iki amblem üst üsteydi (taç/bayrak/terazi
-    // + iki avatarlı VS amblemi). Avatarlar yalnız "sen" ve rakibin baş
-    // harfiydi; aynı bilgi hemen altındaki skor satırında ("Sen 2 – 0
-    // Rojda") yazılı. Tek amblem kalır: sonucun kendisi, bekleyen ve süresi
-    // dolan düellodaki durum amblemiyle aynı yuvada.
-    return _DuelHero(
-      emblem: switch (outcome) {
-        AsyncDuelOutcome.win => const SizedBox.square(
-          dimension: 72,
-          child: Center(child: SahneGlyph(SahneGlyphKind.crown, size: 56)),
-        ),
-        AsyncDuelOutcome.loss => const _StateDiamond(icon: AppIcons.flag),
-        AsyncDuelOutcome.draw => const _StateDiamond(
-          icon: AppIcons.scaleBalanced,
-        ),
-      },
-      title: title,
-      titleColor: win ? t.goldTx : null,
-      children: [
-        const SizedBox(height: SahneSpace.x2),
-        Text(
-          '${context.t(K.you)} ${view.myCorrect} – ${view.opponentCorrect} '
-          '$opponentName',
-          textAlign: TextAlign.center,
-          style: SahneType.headline.copyWith(
-            color: t.tx,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          ),
-        ),
-        if (outcome != AsyncDuelOutcome.draw &&
-            view.myCorrect != null &&
-            view.myCorrect == view.opponentCorrect) ...[
-          const SizedBox(height: SahneSpace.x1),
-          Text(
-            context.t(K.asyncDuelTieBreak),
-            key: const ValueKey('async-duel-result-tiebreak'),
-            textAlign: TextAlign.center,
-            style: SahneType.caption.copyWith(color: t.tx2),
-          ),
-        ],
-        if (win) ...[const SizedBox(height: SahneSpace.x3), const _RaceStrip()],
-        const SizedBox(height: SahneSpace.x4),
-        _XpChip(xp: xp),
-      ],
-    );
-  }
-}
-
-class _WaitingBody extends StatelessWidget {
-  const _WaitingBody({required this.view});
-
-  final AsyncDuelResultView view;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return _DuelHero(
-      emblem: const _StateDiamond(icon: AppIcons.hourglass),
-      title: context.t(K.asyncDuelTurnDone),
-      children: [
-        if (view.myCorrect case final myCorrect?)
-          Text(
-            '$myCorrect/${view.total}',
-            key: const ValueKey('async-duel-result-score'),
-            style: SahneType.screen.copyWith(color: t.gold),
-          ),
-        const SizedBox(height: SahneSpace.x2),
-        Text(
-          context.t(K.asyncDuelWaitingBody),
-          textAlign: TextAlign.center,
-          style: SahneType.body.copyWith(color: t.tx2),
-        ),
-      ],
-    );
-  }
-}
-
-class _ExpiredBody extends StatelessWidget {
-  const _ExpiredBody({required this.view});
-
-  final AsyncDuelResultView view;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final xp = _expiredXp(view);
-    return _DuelHero(
-      emblem: const _StateDiamond(icon: AppIcons.clock),
-      title: context.t(K.asyncDuelExpired),
-      children: [
-        const SizedBox(height: SahneSpace.x2),
-        Text(
-          context.t(K.asyncDuelExpiredBody),
-          textAlign: TextAlign.center,
-          style: SahneType.body.copyWith(color: t.tx2),
-        ),
-        const SizedBox(height: SahneSpace.x4),
-        _XpChip(xp: xp),
-      ],
-    );
-  }
-}
-
-class _UnfinishedBody extends StatelessWidget {
-  const _UnfinishedBody({required this.view});
-
-  final AsyncDuelResultView view;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return _DuelHero(
-      emblem: const _StateDiamond(icon: AppIcons.triangleExclamation),
-      title: context.t(K.asyncDuelUnfinished),
-      children: [
-        const SizedBox(height: SahneSpace.x2),
-        Text(
-          context.t(K.asyncDuelUnfinishedBody),
-          textAlign: TextAlign.center,
-          style: SahneType.body.copyWith(color: t.tx2),
-        ),
-      ],
+                );
+              },
+            )
+          : close,
+      secondary: canStartNew ? close : null,
     );
   }
 }
