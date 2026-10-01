@@ -799,6 +799,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   void _showStreakFreezeBottomSheet(BuildContext context) {
     final isKu = context.isKu;
+    // Yükleme sayfa açılırken BİR kez başlar. `future:` `builder` içinde
+    // yazılınca sayfa her yeniden kurulduğunda (klavye, yazı ölçeği,
+    // döndürme) hafta ve seri deposu diskten yeniden okunuyor ve sayfa
+    // yükleniyor görünümüne geri düşüyordu.
+    final streakFuture = () async {
+      final week = await _loadStreakWeek();
+      final store = await StreakStore.load();
+      return (week, store);
+    }();
     // Biçim temadan gelir (Perde, üstte L pah).
     showModalBottomSheet(
       context: context,
@@ -811,11 +820,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: Padding(
             padding: const EdgeInsets.all(SahneSpace.x6),
             child: FutureBuilder<(List<StreakDayState>, StreakStore)>(
-              future: () async {
-                final week = await _loadStreakWeek();
-                final store = await StreakStore.load();
-                return (week, store);
-              }(),
+              future: streakFuture,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Padding(
