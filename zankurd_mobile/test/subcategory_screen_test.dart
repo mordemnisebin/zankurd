@@ -312,19 +312,33 @@ void main() {
           final painter =
               tester.widget<CustomPaint>(bandFinder).painter!
                   as SahneKilimBandPainter;
-          final cell = SahneKilimBandPainter.cellFor(band.height);
+          final cell = SahneKilimBandPainter.cellFor(
+            band.height,
+            painter.reservedWidth,
+          );
           expect(cell, cell.roundToDouble(), reason: 'hücre tam sayı');
           expect(band.height % 9, 0, reason: 'yükseklik 9 katı');
-          expect(cell * 9, band.height, reason: 'hücre = yükseklik / 9');
+          expect(cell * 9, lessThanOrEqualTo(band.height));
+          expect(
+            cell * 9,
+            lessThanOrEqualTo(painter.reservedWidth + 0.001),
+            reason: 'desen ayrılan yere sığar',
+          );
 
           final pattern = SahneKilimBandPainter.patternRect(
             band.size,
             painter.reservedWidth,
           ).shift(band.topLeft);
-          expect(pattern.top, band.top, reason: 'desen bandın üstüne değer');
-          expect(pattern.bottom, band.bottom, reason: 'altına değer');
+          // 2026-10-01 maket: desen kırpılmaz. Yüksekliğe sığan hücreyle
+          // bandı doldurur; yazı büyüyüp ayrılan genişlik yetmezse küçülür
+          // ve ortalanır, ama bandın hiçbir kenarından taşmaz.
           final visible = pattern.intersect(band);
-          expect(visible.width, greaterThan(0), reason: 'desen görünür');
+          expect(visible, pattern, reason: 'desen bandın içinde kırpılmadan');
+          expect(pattern.right, band.right, reason: 'sağ kenara yaslı');
+          if (cell * 9 == band.height) {
+            expect(pattern.top, band.top, reason: 'desen bandın üstüne değer');
+            expect(pattern.bottom, band.bottom, reason: 'altına değer');
+          }
 
           final title = tester.getRect(
             find.text(CategoryNames.localized(category, false)),

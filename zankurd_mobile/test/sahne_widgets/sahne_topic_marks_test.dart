@@ -267,47 +267,48 @@ void main() {
     });
 
     for (final entry in tones.entries) {
-      testWidgets('${entry.key.name}: desen sağdan taşar, sol düz kalır', (
-        tester,
-      ) async {
-        final tone = entry.value;
-        const size = Size(390, 216);
-        const reserved = 132.0;
-        final raster = await _paint(
-          tester,
-          SahneKilimBandPainter(
-            mark: entry.key,
-            tone: tone,
-            reservedWidth: reserved,
-          ),
-          size,
-        );
-        // Sol yarı yalnız zemin: başlık desenin üstüne binmez.
-        final left = (size.width - reserved - 8).floor();
-        expect(
-          _count(raster, tone.ground, x0: 0, x1: left),
-          left * size.height.round(),
-          reason: 'sol taraf düz zemin',
-        );
-        expect(_count(raster, tone.deep), greaterThan(0));
-        expect(_count(raster, tone.detail), greaterThan(0));
-        // Desen bandın dışına taşar: son sütunda desen pikseli var.
-        var edge = 0;
-        for (var y = 0; y < raster.height; y++) {
-          final p = raster.at(raster.width - 1, y);
-          if (p != _rgba(tone.ground)) edge++;
-        }
-        expect(edge, greaterThan(0), reason: 'sağ kenarda desen görünmeli');
-        // 2026-09-30 bant: desen bandın tam yüksekliğindedir; üst ve alt
-        // kenar satırında (durum çubuğunun arkası dahil) desen pikseli var.
-        for (final y in [0, raster.height - 1]) {
-          var ink = 0;
-          for (var x = 0; x < raster.width; x++) {
-            if (raster.at(x, y) != _rgba(tone.ground)) ink++;
+      testWidgets(
+        '${entry.key.name}: desen sağa yaslı ve eksiksiz, sol düz kalır',
+        (tester) async {
+          final tone = entry.value;
+          const size = Size(390, 126);
+          const reserved = 132.0;
+          final raster = await _paint(
+            tester,
+            SahneKilimBandPainter(
+              mark: entry.key,
+              tone: tone,
+              reservedWidth: reserved,
+            ),
+            size,
+          );
+          // Sol yarı yalnız zemin: başlık desenin üstüne binmez.
+          final left = (size.width - reserved - 8).floor();
+          expect(
+            _count(raster, tone.ground, x0: 0, x1: left),
+            left * size.height.round(),
+            reason: 'sol taraf düz zemin',
+          );
+          expect(_count(raster, tone.deep), greaterThan(0));
+          expect(_count(raster, tone.detail), greaterThan(0));
+          // Desen sağ kenara yaslıdır (kırpılmaz): son sütunda desen pikseli var.
+          var edge = 0;
+          for (var y = 0; y < raster.height; y++) {
+            final p = raster.at(raster.width - 1, y);
+            if (p != _rgba(tone.ground)) edge++;
           }
-          expect(ink, greaterThan(0), reason: 'y=$y satırında desen yok');
-        }
-      });
+          expect(edge, greaterThan(0), reason: 'sağ kenarda desen görünmeli');
+          // 2026-09-30 bant: desen bandın tam yüksekliğindedir; üst ve alt
+          // kenar satırında (durum çubuğunun arkası dahil) desen pikseli var.
+          for (final y in [0, raster.height - 1]) {
+            var ink = 0;
+            for (var x = 0; x < raster.width; x++) {
+              if (raster.at(x, y) != _rgba(tone.ground)) ink++;
+            }
+            expect(ink, greaterThan(0), reason: 'y=$y satırında desen yok');
+          }
+        },
+      );
     }
 
     // Bant her temada gece değerleriyle çizilir; çubuğun gece metinleri
@@ -330,34 +331,90 @@ void main() {
       }
     });
 
-    test('görünen genişlik ayrılan yeri aşmaz', () {
-      for (final reserved in [84.0, 132.0]) {
+    test('desen hiçbir boyutta kırpılmaz ve ayrılan yeri aşmaz', () {
+      for (final reserved in [36.0, 84.0, 132.0]) {
         for (final size in const [
           Size(320, 108),
-          Size(390, 108),
+          Size(390, 99),
+          Size(390, 126),
           Size(390, 216),
           Size(320, 279),
         ]) {
-          final visible = SahneKilimBandPainter.patternRect(
-            size,
-            reserved,
-          ).intersect(Offset.zero & size);
-          expect(visible.width, lessThanOrEqualTo(reserved + 0.001));
+          final rect = SahneKilimBandPainter.patternRect(size, reserved);
+          expect(
+            rect.left,
+            greaterThanOrEqualTo(0),
+            reason: '$size / $reserved',
+          );
+          expect(
+            rect.top,
+            greaterThanOrEqualTo(0),
+            reason: '$size / $reserved',
+          );
+          expect(rect.right, lessThanOrEqualTo(size.width));
+          expect(rect.bottom, lessThanOrEqualTo(size.height));
+          expect(rect.width, lessThanOrEqualTo(reserved + 0.001));
+          expect(rect.width, rect.height, reason: 'hücre kare');
+          expect(rect.right, size.width, reason: 'sağ kenara yaslı');
         }
       }
     });
 
+    // 2026-10-01 maket: yeniden çizilen motifler tekrar eden küçük bir
+    // birimdir; kilimde birim sağ-sol aynalıdır ve eksiksiz biter. Simetri
+    // bozulursa (tek taraflı kırpık ya da gürültü) birim tekrarı okunmaz.
+    test('yeniden çizilen motifler sağ-sol aynalı ve en az iki renk basar', () {
+      for (final mark in [
+        SahneTopicMark.muzik,
+        SahneTopicMark.siyaset,
+        SahneTopicMark.teknoloji,
+        SahneTopicMark.cihan,
+        SahneTopicMark.sinema,
+        SahneTopicMark.dirok,
+        SahneTopicMark.cografya,
+      ]) {
+        final grid = sahneKilimGrids[mark]!;
+        for (final row in grid) {
+          expect(
+            row.split('').reversed.join(),
+            row,
+            reason: '${mark.name}: "$row" aynalı değil',
+          );
+        }
+        final ink = grid.join().split('').where((c) => c != '.').length;
+        expect(ink, inInclusiveRange(20, 60), reason: '${mark.name}: yoğunluk');
+      }
+    });
+
+    // Eski kusurlar geri gelmesin: Muzîk dama gürültüsü (yatay komşular
+    // sürekli farklı), Teknolojî QR kodu (simetrisiz parçalı bloklar).
+    test('Muzîk dama değil; Teknolojî QR benzeri parçalı değil', () {
+      final muzik = sahneKilimGrids[SahneTopicMark.muzik]!;
+      var flips = 0;
+      for (final row in muzik) {
+        for (var i = 1; i < 9; i++) {
+          if (row[i] != row[i - 1]) flips++;
+        }
+      }
+      expect(flips, lessThan(40), reason: 'dama gürültüsü: $flips geçiş');
+      final tek = sahneKilimGrids[SahneTopicMark.teknoloji]!;
+      for (var j = 0; j < 9; j++) {
+        expect(tek[j], tek[8 - j], reason: 'Teknolojî dikey aynalı');
+      }
+    });
+
     // 2026-09-30 bant: hücre bant yüksekliğinin 1/9'u, tam sayı piksel;
-    // 9'un katı yükseklikte desen bandın üst ve alt kenarına tam değer.
+    // 9'un katı yükseklikte (ve yer yetiyorsa) desen üst ve alt kenara tam
+    // değer.
     test('hücre tam sayı ve desen 9 katı yükseklikte kenardan kenara', () {
-      for (final raw in [100.0, 108.0, 131.5, 216.0, 279.0]) {
+      for (final raw in [100.0, 108.0, 131.5, 144.0]) {
         final h = SahneKilimBandPainter.snapHeight(raw);
         expect(h % 9, 0);
         expect(h, greaterThanOrEqualTo(raw));
         expect(h - raw, lessThan(9));
-        final c = SahneKilimBandPainter.cellFor(h);
+        final c = SahneKilimBandPainter.cellFor(h, 168);
         expect(c, c.roundToDouble());
-        final rect = SahneKilimBandPainter.patternRect(Size(390, h), 132);
+        final rect = SahneKilimBandPainter.patternRect(Size(390, h), 168);
         expect(rect.top, 0, reason: 'h=$h');
         expect(rect.bottom, h, reason: 'h=$h');
       }
