@@ -27,7 +27,7 @@
 -- GERİ ALMA: aynı id listesiyle `update questions set is_approved = true
 --   where id in (…)` (çıkarılan kümenin tamamı bu dosyadaki listedir).
 --
--- Üretici: tool/sync_local_parity_to_server.py (YEREL_OYNANABILIR: 2502)
+-- Üretici: tool/sync_local_parity_to_server.py (YEREL_OYNANABILIR: 2579)
 -- Uygulama: supabase db query --linked -f supabase/2026-10-01_retired_local_unapprove.sql
 
 begin;

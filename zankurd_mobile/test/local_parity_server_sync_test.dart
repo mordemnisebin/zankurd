@@ -9,8 +9,12 @@
 /// bazı sorular sunucuda onaylı kalmıştı (2026-10-01).
 /// `tool/sync_local_parity_to_server.py` farkı iki göç dosyasına döker:
 ///
-///   * `2026-10-01_local_parity_sync.sql` — sunucuda eksik oynanabilir
-///     yerel soruları (uuid5 kimlikli) ekler, bayat satırları yerel sürüme çeker;
+///   * `2026-10-01_local_parity_sync_<kategori>.sql` — kategori başına,
+///     sunucuda eksik oynanabilir yerel soruları (uuid5 kimlikli) ekler.
+///     Görselli sorular BİLEREK yok: mağazadaki eski sürümlerde yeni görsel
+///     dosyaları yok (kırık görsel); 2.0.0 sonrası ayrı göçle;
+///   * `2026-10-01_local_parity_update_<kategori>.sql` — uuid5 eşli bayat
+///     satırları yerel sürüme çeker;
 ///   * `2026-10-01_retired_local_unapprove.sql` — yerelde emekli/oynanamaz
 ///     olup sunucuda hâlâ onaylı duran satırları onaydan çıkarır.
 ///
@@ -47,7 +51,8 @@ import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/services/question_content_policy.dart';
 
-const _syncSql = 'supabase/2026-10-01_local_parity_sync.sql';
+const _syncPrefix = '2026-10-01_local_parity_sync_';
+const _updatePrefix = '2026-10-01_local_parity_update_';
 const _retiredSql = 'supabase/2026-10-01_retired_local_unapprove.sql';
 const _namespace = '5a1e2b7c-3d4f-4e60-9a8b-2c1d0f9e8a77';
 
@@ -83,15 +88,26 @@ final _retiredRe = RegExp(
   multiLine: true,
 );
 
+/// `supabase/` altında verilen önekle başlayan göçler: ad -> içerik.
+Map<String, String> _files(String prefix) => {
+  for (final f in Directory('supabase').listSync().whereType<File>())
+    if (f.uri.pathSegments.last.startsWith(prefix))
+      f.uri.pathSegments.last: f.readAsStringSync(),
+};
+
 void main() {
   const policy = QuestionContentPolicy();
   late Map<String, QuizQuestion> byId;
-  late String sync;
+  late Map<String, String> syncFiles;
+  late Map<String, String> updateFiles;
+  late String sync; // bütün ekleme dosyaları birleşik
   late String retired;
 
   setUpAll(() {
     byId = {for (final q in QuestionBankLoader.instance.allQuestions) q.id: q};
-    sync = File(_syncSql).readAsStringSync();
+    syncFiles = _files(_syncPrefix);
+    updateFiles = _files(_updatePrefix);
+    sync = syncFiles.values.join('\n');
     retired = File(_retiredSql).readAsStringSync();
   });
 
@@ -126,9 +142,15 @@ void main() {
       expect(q.prompt.trim(), prompt, reason: '$localId: soru metni ayrışmış');
       expect(
         q.type == QuestionType.fillInBlank ||
-            q.type == QuestionType.wordOrdering,
+            q.type == QuestionType.wordOrdering ||
+            q.type == QuestionType.visual,
         isFalse,
-        reason: '$localId: tür sunucu şemasına sığmaz',
+        reason: '$localId: tür sunucu şemasına sığmaz ya da görselli',
+      );
+      expect(
+        q.hasImage,
+        isFalse,
+        reason: '$localId görselli: görselli sorular 2.0.0 sonrası eklenir',
       );
       expect(ids.add(id), isTrue, reason: 'yinelenen kimlik $id');
       expect(
@@ -139,16 +161,54 @@ void main() {
     }
   });
 
-  test('göçün satır sayısı başlıkla ve doğrulama bloğuyla tutarlı', () {
-    final n = _insertRe.allMatches(sync).length;
-    expect(sync, contains('EKSİK $n sorusu'));
-    expect(sync, contains('<> $n then'));
-    final code = _code(sync);
-    expect(code, contains('on conflict (id) do nothing'));
-    expect(code, isNot(contains('insert into categories')));
-    expect(code.toLowerCase(), isNot(contains('delete ')));
-    expect(code, contains('Eksik kategori'));
-    expect(code.trimRight(), endsWith('commit;'));
+  test(
+    'her ekleme dosyası tek kategori, kendi önkoşul ve sayı doğrulamasıyla',
+    () {
+      expect(syncFiles, isNotEmpty);
+      for (final entry in syncFiles.entries) {
+        final sql = entry.value;
+        final rows = _insertRe.allMatches(sql).toList();
+        final n = rows.length;
+        expect(n, greaterThan(0), reason: entry.key);
+        final categories = rows.map((m) => m.group(2)!).toSet();
+        expect(
+          categories.length,
+          1,
+          reason: '${entry.key}: tek kategori olmalı',
+        );
+        expect(sql, contains('EKSİK $n ${categories.single} sorusu'));
+        expect(sql, contains('<> $n then'), reason: entry.key);
+        expect(sql, contains('GÖRSELLİ SORULAR BU DOSYADA YOK'));
+        final code = _code(sql);
+        expect(code, contains('on conflict (id) do nothing'));
+        expect(code, isNot(contains('insert into categories')));
+        expect(code.toLowerCase(), isNot(contains('delete ')));
+        expect(code, contains('Eksik kategori'));
+        expect(code.trimRight(), endsWith('commit;'));
+      }
+    },
+  );
+
+  test('eşitleme dosyaları uuid5 kimlikli, oynanabilir yerel sorulara ait', () {
+    expect(updateFiles, isNotEmpty);
+    final idRe = RegExp(
+      r"^  \('([0-9a-f-]{36})'::uuid, .*\)[,;] -- yerel: (\S+)$",
+      multiLine: true,
+    );
+    for (final entry in updateFiles.entries) {
+      final rows = idRe.allMatches(entry.value).toList();
+      expect(rows, isNotEmpty, reason: entry.key);
+      expect(entry.value, contains('<> ${rows.length} then'));
+      for (final m in rows) {
+        final q = byId[m.group(2)!];
+        expect(q, isNotNull, reason: '${m.group(2)} bankada yok');
+        expect(m.group(1), _uuid5('zankurd-local:${q!.id}'));
+        expect(policy.isPlayable(q), isTrue, reason: '${q.id} oynanamaz');
+      }
+      final code = _code(entry.value);
+      expect(code.toLowerCase(), isNot(contains('delete ')));
+      expect(code.trimRight(), endsWith('commit;'));
+    }
   });
 
   test('onaydan çıkarılanların yerel karşılığı oynanamaz', () {
@@ -203,7 +263,10 @@ void main() {
 
   test('applied.md iki göçü de bekleyen olarak kaydediyor', () {
     final applied = File('supabase/applied.md').readAsStringSync();
-    expect(applied, contains('2026-10-01_local_parity_sync.sql'));
+    for (final name in [...syncFiles.keys, ...updateFiles.keys]) {
+      expect(applied, contains(name), reason: '$name applied.md\'de yok');
+    }
+    expect(applied, contains('Görselli'));
     expect(applied, contains('2026-10-01_retired_local_unapprove.sql'));
   });
 }

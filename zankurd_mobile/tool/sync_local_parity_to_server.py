@@ -47,7 +47,10 @@ doğru: yerelde EMEKLİ edilmiş bazı sorular sunucuda hâlâ onaylı duruyordu
       sürüm yeni uuid5 satırı olarak eklenir, eski satır onaysız KALIR);
   (c) sunucuda YOK — uuid5 satırı olarak eklenir;
   ayrıca `capraz` (aynı soru+cevap başka kategoride onaylı; eklenmez),
-  `sema` (sunucu şemasına sığmayan: boşluk doldurma/cümle dizme, 4 şıksız).
+  `sema` (sunucu şemasına sığmayan: boşluk doldurma/cümle dizme, 4 şıksız),
+  `gorsel_atlandi` (eklenecekti ama görselli: `--include-visual` yoksa
+  eklenmez; mağazadaki eski sürümlerde yeni görsel dosyaları yok, oda/düelloda
+  kırık görsel çıkar; 2.0.0 yayına çıkınca ayrı göçle eklenecek).
 
 Sunucuda onaylı satırlardan, EMEKLİ/oynanamaz bir yerel soruyla soru metni +
 doğru cevabı eşleşenler `bilinen kötü` sayılır ve ikinci dosyayla onaydan
@@ -63,7 +66,9 @@ farkı sayılmaz) `drift` olarak yerel sürüme güncellenir.
   python3 tool/sync_local_parity_to_server.py --check    # yalnız raporla
   python3 tool/sync_local_parity_to_server.py --server-json X --local-json Y
 
-Çıktılar: supabase/2026-10-01_local_parity_sync.sql,
+Çıktılar: kategori başına supabase/2026-10-01_local_parity_sync_<kategori>.sql
+(ekleme) ve 2026-10-01_local_parity_update_<kategori>.sql (uuid5 eşli bayat
+satırları yerel sürüme çekme), ayrıca
 supabase/2026-10-01_retired_local_unapprove.sql. Tekrar çalıştırılabilir: iş
 kalmadıysa mevcut göç dosyasının üzerine yazmaz. Ayrıntı döküm:
 `.tmp/parity/detay.tsv`.
@@ -87,7 +92,6 @@ import sync_sinema_to_server as base  # noqa: E402
 ROOT = base.ROOT
 NAMESPACE = base.NAMESPACE
 SQL_DIR = ROOT / "supabase"
-SYNC_SQL = SQL_DIR / "2026-10-01_local_parity_sync.sql"
 RETIRED_SQL = SQL_DIR / "2026-10-01_retired_local_unapprove.sql"
 WORK = ROOT / ".tmp" / "parity"
 
@@ -279,7 +283,21 @@ def insert_sql(r: dict) -> str:
 
 
 # ------------------------------------------------------------ sınıflandırma
-def classify(local: list[dict], server: list[dict], include_identical: bool):
+def _queue_insert(plan, stat, q, row, kind, include_visual) -> None:
+    """Eklenecekse kuyruğa al; görselliyse bayrak yoksa yalnız say."""
+    if q["type"] == "visual" and not include_visual:
+        stat["gorsel_atlandi"] += 1
+        plan["detail"].append(("gorsel_atlandi", q["id"], q["category"], kind))
+        return
+    plan["insert"].append((kind, row))
+
+
+def classify(
+    local: list[dict],
+    server: list[dict],
+    include_identical: bool,
+    include_visual: bool,
+):
     by_id = {r["id"]: r for r in server}
     by_pc: dict[tuple[str, str], list[dict]] = collections.defaultdict(list)
     by_p: dict[str, list[dict]] = collections.defaultdict(list)
@@ -342,10 +360,10 @@ def classify(local: list[dict], server: list[dict], include_identical: bool):
                     ("b_ozdes", q["id"], q["category"], "; ".join(r["id"] for r in cands))
                 )
                 if include_identical:
-                    plan["insert"].append(("b_ozdes", row))
+                    _queue_insert(plan, stat, q, row, "b_ozdes", include_visual)
             else:
                 stat["b_varyant"] += 1
-                plan["insert"].append(("b_varyant", row))
+                _queue_insert(plan, stat, q, row, "b_varyant", include_visual)
             continue
         np_ = norm(q["prompt"])
         cross = [
@@ -363,7 +381,7 @@ def classify(local: list[dict], server: list[dict], include_identical: bool):
             )
             continue
         stat["c"] += 1
-        plan["insert"].append(("c", row))
+        _queue_insert(plan, stat, q, row, "c", include_visual)
     return plan
 
 
@@ -404,110 +422,121 @@ def find_retired_live(local: list[dict], server: list[dict], claimed: set[str]):
 
 
 # ------------------------------------------------------------- SQL yazımı
-def write_sync_sql(plan, server, local_count: int) -> tuple[str, dict]:
-    s = base.sql_str
-    inserts = sorted(plan["insert"], key=lambda x: (x[1]["category"], x[1]["local_id"]))
-    rows = [r for _, r in inserts]
-    kinds = collections.Counter(k for k, _ in inserts)
-    per_cat = collections.Counter(r["category"] for r in rows)
-    updates = sorted(plan["update"] + plan["reapprove"], key=lambda r: r["local_id"])
-    reapprove_ids = [r["id"] for r in plan["reapprove"]]
-    if not rows and not updates:
-        return "", {}
-    cats = sorted(set(per_cat) | {r["category"] for r in updates})
-    cat_lines = "\n".join(f"--   - {c}: {per_cat.get(c, 0)}" for c in cats)
-    n = len(rows)
-    by_type = collections.Counter(r["qtype"] for r in rows)
+def ascii_slug(category: str) -> str:
+    s = unicodedata.normalize("NFKD", category)
+    s = "".join(ch for ch in s if not unicodedata.combining(ch))
+    return re.sub(r"[^a-z0-9]+", "", s.casefold())
 
-    header = f"""-- 2026-10-01: yerel denetlenmiş bankanın sunucuda EKSİK {n} sorusu + {len(updates)} satır eşitleme (canlı sunucu).
+
+def insert_path(category: str) -> Path:
+    return SQL_DIR / f"2026-10-01_local_parity_sync_{ascii_slug(category)}.sql"
+
+
+def update_path(category: str) -> Path:
+    return SQL_DIR / f"2026-10-01_local_parity_update_{ascii_slug(category)}.sql"
+
+
+def _precondition(category: str) -> str:
+    return (
+        "-- Önkoşul: kategori sunucuda var (bu göç oluşturmaz).\n"
+        "do $$\nbegin\n"
+        f"  if not exists (select 1 from categories where name = {base.sql_str(category)}) then\n"
+        f"    raise exception 'Eksik kategori: {category}';\n"
+        "  end if;\nend\n$$;\n"
+    )
+
+
+def write_insert_sql(
+    category: str, inserts: list[tuple[str, dict]], local_count: int, visual_skipped: int
+) -> str:
+    """Tek kategori için ekleme göçü (kendi önkoşulu ve kesin sayı doğrulamasıyla)."""
+    s = base.sql_str
+    inserts = sorted(inserts, key=lambda x: x[1]["local_id"])
+    rows = [r for _, r in inserts]
+    n = len(rows)
+    kinds = collections.Counter(k for k, _ in inserts)
+    by_type = collections.Counter(r["qtype"] for r in rows)
+    types = ", ".join(f"{k} {v}" for k, v in sorted(by_type.items()))
+    lines = [
+        insert_sql(r) + ("," if i + 1 < n else "") + f" -- yerel: {r['local_id']}"
+        for i, r in enumerate(rows)
+    ]
+    ids = ", ".join(s(r["id"]) for r in rows)
+    header = f"""-- 2026-10-01: yerel denetlenmiş bankanın sunucuda EKSİK {n} {category} sorusu (canlı sunucu).
 --
 -- NİÇİN: oda ve düello soruları sunucudaki `questions` tablosundan oynanır;
 -- kaynak doğru ise denetlenmiş yerel bankadır (question_bank_assets.dart ∖
 -- retired_question_ids.dart ∖ QuestionContentPolicy.isPlayable dışı).
--- Yerelde {local_count} oynanabilir soru var; sunucudaki onaylı karşılığı (uuid5
--- ya da aynı kategoride aynı soru metni) bulunmayanlar burada. Oyuncu tek
--- başına gördüğü soruyu odada/düelloda görmüyordu (Siyaset 0/64, Edebiyat
--- 6/152, Cografya 18/204, Ziman 120/359 …).
+-- Sunucuda bu kategorideki yerel sorunun onaylı karşılığı (uuid5 ya da aynı
+-- kategoride aynı soru metni) bulunmayanlar burada; oyuncu tek başına
+-- gördüğü soruyu odada/düelloda görmüyordu. Kategori başına ayrı dosyadır
+-- (her biri kendi önkoşulu ve kesin sayı doğrulamasıyla; kısmi uygulama olur).
 --
--- KAÇ SATIR EKLENİR: {n} ({dict(by_type)}). Kategori dağılımı:
-{cat_lines}
---   sınıf: sunucuda hiç yok (c) {kinds.get('c', 0)}; sunucuda yalnız onaysız ve
---   başka yazımda (b_varyant) {kinds.get('b_varyant', 0)}; özdeş onaysız (b_ozdes,
---   yalnız --include-unapproved-identical ile) {kinds.get('b_ozdes', 0)}.
+-- KAÇ SATIR: {n} ({types}). Sınıf: sunucuda hiç yok (c) {kinds.get('c', 0)};
+-- sunucuda yalnız onaysız ve başka yazımda (b_varyant) {kinds.get('b_varyant', 0)};
+-- özdeş onaysız (b_ozdes, yalnız --include-unapproved-identical) {kinds.get('b_ozdes', 0)}.
 --
--- ONAYSIZ SATIRLAR (b) NASIL ELE ALINDI: sunucuda aynı soru onaysız duruyorsa
--- iki durum var. (1) İçerik yereldekiyle ÖZDEŞ: onay kaldırma editoryal bir
--- karardı (2026-09-30 tartışmalı soru ayıklaması, 2026-10-01 yalnız-sunucuda
--- ayıklaması, canlı kalite karantinası); yerel inceleme o kararı sessizce
--- geri çevirmesin diye bu satırlara DOKUNULMADI (kimlikleri tool çıktısında).
--- (2) Sunucudaki onaysız satır başka yazımda (eski tohum: Türkçe şık, yazım
--- hatası): onu yeniden onaylamak eski metni canlıya çıkarırdı; bunun yerine
--- yerel sürüm yeni uuid5 satırı olarak eklenir, eski satır onaysız KALIR.
--- Böylece sunucuda aynı sorunun iki ONAYLI kopyası oluşmaz.
+-- ONAYSIZ SATIRLAR (b): sunucuda içeriği yereldekiyle ÖZDEŞ ve onaysız duran
+-- sorulara DOKUNULMADI (onay kaldırma editoryal bir karardı). Başka yazımda
+-- onaysız duranlar için eski satır yeniden onaylanmaz (eski metin canlıya
+-- çıkardı); yerel sürüm yeni uuid5 satırı olarak eklenir, eski satır onaysız
+-- kalır. Böylece aynı sorunun iki ONAYLI kopyası oluşmaz.
 --
--- EŞİTLEME (güncelleme): kimliği uuid5 ile eşleşen {len(updates)} satır yerel sürüme
--- çekilir ({len(plan['update'])} onaylı satırın metni yerelden anlamlı ayrışmıştı: sonradan yapılan
--- Kurmancî yazım düzeltmeleri ve bir doğru cevap farkı; şık SIRASI farkı sayılmadı;
--- {len(reapprove_ids)} onaysız satır yeniden onaylanır). Kimlik uuid5 olduğu için eşleşme kesindir.
+-- GÖRSELLİ SORULAR BU DOSYADA YOK: yerelde bu kategoride {visual_skipped} görselli
+-- (`asset://`) soru atlandı. Mağazadaki eski uygulama sürümlerinde yeni görsel
+-- dosyaları paketli değil; oda/düelloda kırık görsel çıkardı. 2.0.0 yayına
+-- çıkınca ayrı bir göçle (`--include-visual`) eklenecek. Boşluk doldurma ve
+-- cümle dizme gibi sunucu şemasına sığmayan türler de atlandı.
 --
--- ATLANANLAR (sunucu şemasına sığmayan): boşluk doldurma, cümle dizme ve
--- dört şıksız sorular; görselsiz anlamsız sorular. Görselli sorular
--- `question_type = 'visual'` ve `asset://` görsel adresiyle eklenir (sunucuda
--- zaten 30'a yakın böyle satır var; get_room_questions image_url döndürür).
+-- KATEGORİ: `categories.name` ile aranır; yoksa hiçbir şey eklenmeden işlem
+-- geri alınır. Kategori OLUŞTURMAZ.
 --
--- KATEGORİ: `categories.name` ile aranır; başta tümünün varlığı denetlenir,
--- biri yoksa hiçbir şey eklenmeden işlem geri alınır. Kategori OLUŞTURMAZ.
---
--- TEKRAR ÇALIŞTIRILABİLİR: ekleme `on conflict (id) do nothing`; güncelleme
--- aynı değerleri yazar; ikinci çalıştırma yeni satır eklemez. Doğrulama bloğu
--- her kategori için bu dosyadaki kimliklerin hepsinin ONAYLI durduğunu ve
--- eşitlenen satırların metnini denetler; tutmazsa tümü geri alınır.
+-- TEKRAR ÇALIŞTIRILABİLİR: `on conflict (id) do nothing`; ikinci çalıştırma
+-- satır eklemez. Doğrulama bloğu bu dosyadaki {n} kimliğin hepsinin kategoride
+-- ONAYLI durduğunu denetler; tutmazsa işlem geri alınır.
 --
 -- GERİ ALMA (yalnız bu göçün satırları):
---   delete from questions where id in (<bu dosyadaki ekleme kimlikleri>);
---   Güncellenen satırların eski metni bu dosyada YOK; geri alma gerekirse
---   sunucu dökümünden (tool/sync_local_parity_to_server.py --server-json)
---   alınır. Yeniden onaylananlar için: is_approved = false.
+--   delete from questions where id in (<bu dosyadaki kimlikler>);
 --
 -- Üretici: tool/sync_local_parity_to_server.py (YEREL_OYNANABILIR: {local_count})
--- Uygulama: supabase db query --linked -f supabase/2026-10-01_local_parity_sync.sql
+-- Uygulama: supabase db query --linked -f supabase/{insert_path(category).name}
+"""
+    return f"""{header}
+begin;
+
+{_precondition(category)}
+insert into questions ({base.COLUMNS})
+values
+{chr(10).join(lines)}
+on conflict (id) do nothing;
+
+-- Doğrulama: bu dosyadaki kimliklerin hepsi {category} kategorisinde onaylı olmalı.
+do $$
+declare
+  v_count integer;
+begin
+  select count(*) into v_count
+  from questions
+  where id in ({ids})
+    and category_id = (select id from categories where name = {s(category)})
+    and is_approved = true;
+  if v_count <> {n} then
+    raise exception '{category}: beklenen {n} onayli soru, bulunan %', v_count;
+  end if;
+end
+$$;
+
+commit;
 """
 
-    parts = [header, "begin;\n"]
-    parts.append(
-        "-- Önkoşul: gerekli kategorilerin hepsi sunucuda var (bu göç oluşturmaz).\n"
-        "do $$\ndeclare\n  v_missing text;\nbegin\n"
-        "  select string_agg(n, ', ') into v_missing\n"
-        f"  from unnest(array[{', '.join(s(c) for c in cats)}]) as t(n)\n"
-        "  where not exists (select 1 from categories where name = n);\n"
-        "  if v_missing is not null then\n"
-        "    raise exception 'Eksik kategori(ler): %', v_missing;\n"
-        "  end if;\nend\n$$;\n"
-    )
-    if rows:
-        lines = [
-            insert_sql(r) + ("," if i + 1 < n else "") + f" -- yerel: {r['local_id']}"
-            for i, r in enumerate(rows)
-        ]
-        parts.append(
-            f"insert into questions ({base.COLUMNS})\nvalues\n"
-            + "\n".join(lines)
-            + "\non conflict (id) do nothing;\n"
-        )
-    if updates:
-        parts.append(_update_block(updates, s))
-    parts.append(_sync_verification(rows, updates, reapprove_ids, per_cat, s))
-    parts.append("commit;\n")
-    return "\n".join(parts), {
-        "rows": n,
-        "per_cat": per_cat,
-        "kinds": kinds,
-        "updates": len(plan["update"]),
-        "reapprove": len(reapprove_ids),
-    }
 
-
-def _update_block(updates: list[dict], s) -> str:
+def write_update_sql(
+    category: str, updates: list[dict], reapprove: list[dict], local_count: int
+) -> str:
+    """Tek kategori için eşitleme (uuid5 eşli satırları yerel sürüme çekme)."""
+    s = base.sql_str
+    rows = sorted(updates + reapprove, key=lambda r: r["local_id"])
+    n = len(rows)
     vals = "\n".join(
         "  ("
         + ", ".join(
@@ -522,27 +551,53 @@ def _update_block(updates: list[dict], s) -> str:
             ]
         )
         + ")"
-        + ("," if i + 1 < len(updates) else "")
+        + ("," if i + 1 < n else ";")
         + f" -- yerel: {r['local_id']}"
-        for i, r in enumerate(updates)
+        for i, r in enumerate(rows)
     )
-    return f"""-- Eşitleme: kimliği uuid5 ile eşleşen satırlar yerel (denetlenmiş) sürüme çekilir.
+    header = f"""-- 2026-10-01: {category} kategorisinde sunucudaki {n} bayat satırı yerel denetlenmiş sürüme çek (canlı sunucu).
+--
+-- NİÇİN: kimliği uuid5('zankurd-local:' + yerel id) olan bu satırlar daha önce
+-- yerel bankadan sunucuya eklendi; sonra yerelde metin düzeltildi (Kurmancî
+-- yazım/terim düzeltmeleri, bir doğru cevap farkı) ama sunucu eski kopyayla
+-- kaldı. Kimlik uuid5 olduğu için eşleşme kesindir. Yalnız soru metni, şık
+-- KÜMESİ ya da doğru cevap ayrışanlar alınır; şık SIRASI farkı sayılmadı.
+-- Güncellenen: {len(updates)}; onaysızken yeniden onaylanan: {len(reapprove)}.
+--
+-- Alanlar: prompt, option_a-d, correct_option, explanation(_ku/_tr);
+-- is_approved = true, review_status = 'approved', updated_at = now().
+--
+-- TEKRAR ÇALIŞTIRILABİLİR: aynı değerleri yazar. Doğrulama bloğu {n} satırın
+-- yerel metne eşit olduğunu denetler; tutmazsa işlem geri alınır.
+--
+-- GERİ ALMA: eski metin bu dosyada YOK; gerekirse sunucu dökümünden
+-- (`tool/sync_local_parity_to_server.py` çalıştırılırken `.tmp/parity/
+-- server_questions.json`) alınır. Yeniden onaylananlar için is_approved = false.
+--
+-- Üretici: tool/sync_local_parity_to_server.py (YEREL_OYNANABILIR: {local_count})
+-- Uygulama: supabase db query --linked -f supabase/{update_path(category).name}
+"""
+    return f"""{header}
+begin;
+
+{_precondition(category)}
 create temp table _parity_guncel(
   id uuid primary key, prompt text, option_a text, option_b text,
   option_c text, option_d text, correct_option text,
   explanation text, explanation_ku text, explanation_tr text
 ) on commit drop;
 insert into _parity_guncel values
-{vals};
+{vals}
 
 do $$
 declare
   v_known int;
 begin
   select count(*) into v_known
-  from questions q join _parity_guncel g on g.id = q.id;
-  if v_known <> {len(updates)} then
-    raise exception 'güncellenecek % satırdan yalnız % sunucuda', {len(updates)}, v_known;
+  from questions q join _parity_guncel g on g.id = q.id
+  where q.category_id = (select id from categories where name = {s(category)});
+  if v_known <> {n} then
+    raise exception '{category}: güncellenecek {n} satırdan yalnız % sunucuda', v_known;
   end if;
 end
 $$;
@@ -560,43 +615,11 @@ set prompt = g.prompt,
     updated_at = now()
 from _parity_guncel g
 where g.id = q.id;
-"""
 
-
-def _sync_verification(rows, updates, reapprove_ids, per_cat, s) -> str:
-    ids_by_cat: dict[str, list[str]] = collections.defaultdict(list)
-    for r in rows:
-        ids_by_cat[r["category"]].append(r["id"])
-    checks = []
-    for name in sorted(ids_by_cat):
-        ids = ", ".join(s(i) for i in ids_by_cat[name])
-        c = len(ids_by_cat[name])
-        checks.append(
-            f"""
-  select count(*) into v_count
-  from questions
-  where id in ({ids})
-    and category_id = (select id from categories where name = {s(name)})
-    and is_approved = true;
-  if v_count <> {c} then
-    raise exception '{name}: beklenen {c} onayli soru, bulunan %', v_count;
-  end if;"""
-        )
-    if rows:
-        all_ids = ", ".join(s(r["id"]) for r in rows)
-        checks.append(
-            f"""
-  select count(*) into v_count
-  from questions
-  where id in ({all_ids})
-    and is_approved = true;
-  if v_count <> {len(rows)} then
-    raise exception 'Toplam: beklenen {len(rows)} onayli soru, bulunan %', v_count;
-  end if;"""
-        )
-    if updates:
-        checks.append(
-            f"""
+do $$
+declare
+  v_count integer;
+begin
   select count(*) into v_count
   from questions q join _parity_guncel g on g.id = q.id
   where q.is_approved = true
@@ -604,17 +627,15 @@ def _sync_verification(rows, updates, reapprove_ids, per_cat, s) -> str:
     and q.correct_option = g.correct_option
     and q.option_a = g.option_a and q.option_b = g.option_b
     and q.option_c = g.option_c and q.option_d = g.option_d;
-  if v_count <> {len(updates)} then
-    raise exception 'Eşitleme: beklenen {len(updates)} güncel onayli satir, bulunan %', v_count;
-  end if;"""
-        )
-    return (
-        "\n-- Doğrulama: her kategori için bu dosyadaki kimliklerin hepsi o kategoride\n"
-        "-- onaylı durmalı; aksi halde işlem geri alınır.\n"
-        "do $$\ndeclare\n  v_count integer;\nbegin"
-        + "".join(checks)
-        + "\nend\n$$;\n"
-    )
+  if v_count <> {n} then
+    raise exception '{category}: beklenen {n} güncel onayli satir, bulunan %', v_count;
+  end if;
+end
+$$;
+
+commit;
+"""
+
 
 
 def write_retired_sql(hits: dict[str, dict], local_count: int) -> tuple[str, dict]:
@@ -732,6 +753,12 @@ def main() -> int:
         action="store_true",
         help="sunucuda ÖZDEŞ içerikle onaysız duranlar için de yeni satır ekle",
     )
+    ap.add_argument(
+        "--include-visual",
+        action="store_true",
+        help="görselli (asset://) soruları da ekle; varsayılan atlar (eski "
+        "uygulama sürümlerinde yeni görsel dosyaları yok, kırık görsel çıkar)",
+    )
     ap.add_argument("--work-dir", default=str(WORK))
     args = ap.parse_args()
     work = Path(args.work_dir)
@@ -752,14 +779,16 @@ def main() -> int:
         )
 
     playable_total = sum(1 for q in local if q["playable"])
-    plan = classify(local, server, args.include_unapproved_identical)
+    plan = classify(
+        local, server, args.include_unapproved_identical, args.include_visual
+    )
     hits = find_retired_live(local, server, plan["claimed"])
 
     # ---- rapor
     stat = plan["stat"]
     cols = [
         "yerel_oynanabilir", "a_uuid", "a_ozdes", "a_varyant", "b_uuid",
-        "b_ozdes", "b_varyant", "capraz", "c", "sema", "drift",
+        "b_ozdes", "b_varyant", "capraz", "c", "gorsel_atlandi", "sema", "drift",
     ]
     print(f"Yerel yüklenen: {len(local)}  oynanabilir: {playable_total}")
     print(f"Sunucu satırı: {len(server)}  onaylı: {sum(1 for r in server if r['is_approved'])}")
@@ -808,12 +837,29 @@ def main() -> int:
     if args.check:
         return 0
 
-    sync_sql, sync_info = write_sync_sql(plan, server, playable_total)
-    if sync_sql:
-        SYNC_SQL.write_text(sync_sql, encoding="utf-8")
-        print(f"Yazıldı: {SYNC_SQL} ({len(sync_sql)} bayt, {sync_info['rows']} ekleme)")
-    else:
-        print("Eşitleme göçü: iş yok, dosyaya dokunulmadı.")
+    ins_by_cat: dict[str, list[tuple[str, dict]]] = collections.defaultdict(list)
+    for kind, r in plan["insert"]:
+        ins_by_cat[r["category"]].append((kind, r))
+    upd_by_cat: dict[str, list[dict]] = collections.defaultdict(list)
+    rea_by_cat: dict[str, list[dict]] = collections.defaultdict(list)
+    for r in plan["update"]:
+        upd_by_cat[r["category"]].append(r)
+    for r in plan["reapprove"]:
+        rea_by_cat[r["category"]].append(r)
+    for cat in sorted(ins_by_cat):
+        sql = write_insert_sql(
+            cat, ins_by_cat[cat], playable_total, stat[cat]["gorsel_atlandi"]
+        )
+        path = insert_path(cat)
+        path.write_text(sql, encoding="utf-8")
+        print(f"Yazıldı: {path.name} ({len(sql)} bayt, {len(ins_by_cat[cat])} ekleme)")
+    for cat in sorted(set(upd_by_cat) | set(rea_by_cat)):
+        sql = write_update_sql(cat, upd_by_cat[cat], rea_by_cat[cat], playable_total)
+        path = update_path(cat)
+        path.write_text(sql, encoding="utf-8")
+        print(f"Yazıldı: {path.name} ({len(sql)} bayt)")
+    if not ins_by_cat and not upd_by_cat and not rea_by_cat:
+        print("Eşitleme göçleri: iş yok, dosyalara dokunulmadı.")
     ret_sql, ret_info = write_retired_sql(hits, playable_total)
     if ret_sql:
         RETIRED_SQL.write_text(ret_sql, encoding="utf-8")
