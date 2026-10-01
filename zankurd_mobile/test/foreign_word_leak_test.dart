@@ -284,8 +284,9 @@ void main() {
     // Ürün terimi zaten `Alîkariya Bersivê` (`K.sikIpucu`). Bitirme
     // ipucu "jokeran" deyince aynı yardımcı Türkçe adla duruyordu.
     // `jokeran` çekimi `joker\s*50` taramasını kör eder — turnûva
-    // ile aynı sınıf.
-    expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkarî'));
+    // ile aynı sınıf. 2026-10-02: çoğul çekimde son î kısalır
+    // ("alîkariyan"), bu yüzden kök aranır.
+    expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkar'));
     expect(
       Tr.of(K.onbRewardBullet, AppLanguage.ku),
       'Bi bersivên rast zêr qezenc bike, di pirsên zor de alîkariyê bi kar bîne.',
