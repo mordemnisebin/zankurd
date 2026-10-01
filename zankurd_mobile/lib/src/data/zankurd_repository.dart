@@ -88,7 +88,16 @@ typedef QuizRewardClaim = ({
 /// ya da sunucunun tanınmayan bir mesajı için düşer; bu durumda "oda
 /// bulunamadı" gibi YANLIŞ bir kesinlik iddia edilmemelidir (2026-08-14
 /// denetimi).
-enum RoomJoinFailureReason { notFound, full, alreadyInAnotherRoom, unknown }
+enum RoomJoinFailureReason {
+  notFound,
+  full,
+  alreadyInAnotherRoom,
+
+  /// Odanın katılım ücretine bakiye yetmiyor. Sunucu bunu
+  /// `'Insufficient coins for room entry fee'` ile reddeder.
+  insufficientCoins,
+  unknown,
+}
 
 class RoomJoinException implements Exception {
   const RoomJoinException(this.reason, [this.message]);
@@ -113,6 +122,9 @@ RoomJoinFailureReason roomJoinFailureReasonForMessage(String message) {
   }
   if (message.contains('already in another live room')) {
     return RoomJoinFailureReason.alreadyInAnotherRoom;
+  }
+  if (message.contains('Insufficient coins')) {
+    return RoomJoinFailureReason.insufficientCoins;
   }
   if (message.contains('Room not found') ||
       message.contains('already started')) {

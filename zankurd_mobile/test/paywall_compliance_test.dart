@@ -77,7 +77,6 @@ void main() {
   test('paywall Kurmancî eylem ve durum metinleri doğaldır', () {
     expect(Tr.of(K.paywallPerkSupport, AppLanguage.ku), 'Piştgiriya ZanKurdê');
     expect(Tr.of(K.cancelAnytime, AppLanguage.ku), 'Her gav dikarî betal bikî');
-    expect(Tr.of(K.popularBadge, AppLanguage.ku), 'Ya herî zêde tê kirîn');
     expect(Tr.of(K.buyAction, AppLanguage.ku), 'Bikire');
     expect(
       Tr.of(K.paywallPackagesInactive, AppLanguage.ku),
@@ -213,13 +212,19 @@ void main() {
     // Hata dalı değil: teknik hata başlığı gösterilmemeli.
     expect(find.text(Tr.of(K.genericErrorTitle, AppLanguage.tr)), findsNothing);
     // 2026-09-29 doğallık (K10): satın alınacak paket yokken yenileme
-    // koşulları ve "geri yükle" görünmez — olmayan bir aboneliğin
-    // koşullarını saymak ekranın asıl sözünü bastırıyordu.
+    // koşulları görünmez — olmayan bir aboneliğin koşullarını saymak
+    // ekranın asıl sözünü bastırıyordu.
     expect(
       find.text(Tr.of(K.paywallRenewalTerms, AppLanguage.tr)),
       findsNothing,
     );
-    expect(find.text(Tr.of(K.restorePurchases, AppLanguage.tr)), findsNothing);
+    // 2026-10-01 (A10): "geri yükle" ve hukuk bağlantıları paket olmasa da
+    // görünür (başka cihazdan abone olan kullanıcının tek yolu); yalnız
+    // yenileme koşulları pakete bağlı kalır.
+    expect(
+      find.text(Tr.of(K.restorePurchases, AppLanguage.tr)),
+      findsOneWidget,
+    );
 
     // Kullanıcı çıkışsız kalmamalı: durum oturum içinde tazelenebilmeli.
     final retry = find.text(Tr.of(K.retry, AppLanguage.tr));

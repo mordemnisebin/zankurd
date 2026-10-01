@@ -1477,6 +1477,12 @@ class Tr {
       'tr': 'Jetonların: {coins}',
     },
     K.earnCoins: {'ku': 'Zêr qezenc bike', 'tr': 'Jeton kazan'},
+    // "Jeton yetmiyor" durumunun miktarlı sözü (`SahneShortfallNote`): oyuncu
+    // yalnız "yetmiyor" değil, NE KADAR eksik olduğunu da bilir.
+    K.coinsShort: {
+      'ku': 'Hîn {coins} zêr hewce ye',
+      'tr': '{coins} jeton eksik',
+    },
     K.cancelShort: {'ku': 'Betal', 'tr': 'Vazgeç'},
     K.rewardPending: {
       'ku':
@@ -2134,7 +2140,6 @@ class Tr {
     K.perMonthSuffix: {'ku': '/meh', 'tr': '/ay'},
     K.perYearSuffix: {'ku': '/sal', 'tr': '/yıl'},
     K.perWeekSuffix: {'ku': '/hefte', 'tr': '/hafta'},
-    K.popularBadge: {'ku': 'Ya herî zêde tê kirîn', 'tr': 'En çok alınan'},
     K.priceComing: {'ku': 'Biha tê', 'tr': 'Fiyat geliyor'},
     // Satın alma düğmesi için ayrı bir anahtar açılmadı: mağazadaki
     // `K.buyAction` aynı kavramdır. Paywall satır içiyken 'Satın al',
@@ -3387,6 +3392,7 @@ class K {
   static const roomJoinFailed = 'room.joinFailed';
   static const yourBalance = 'shop.yourBalance';
   static const earnCoins = 'shop.earnCoins';
+  static const coinsShort = 'shop.coinsShort';
   static const cancelShort = 'common.cancelShort';
   static const rewardPending = 'result.rewardPending';
   static const rewardUnresolved = 'result.rewardUnresolved';
@@ -3661,7 +3667,6 @@ class K {
   static const perMonthSuffix = 'paywall.suffix.month';
   static const perYearSuffix = 'paywall.suffix.year';
   static const perWeekSuffix = 'paywall.suffix.week';
-  static const popularBadge = 'paywall.popular';
   static const priceComing = 'paywall.priceComing';
   static const restorePurchases = 'paywall.restore';
   static const paywallPackagesInactive = 'paywall.packages.inactive';

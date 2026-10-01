@@ -486,43 +486,33 @@ class _ShopScreenState extends State<ShopScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: SahneSpace.x3),
               // Yetersiz bakiye bir durumdur: Şaş metni + ikon + söz; yalnız
-              // renkle verilmez.
+              // renkle verilmez. Eksik miktar yazılır; bakiye satırı hep
+              // görünür.
+              const SizedBox(height: SahneSpace.x3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    AppIcons.wallet,
-                    size: 16,
-                    color: short ? t.errTx : t.tx2,
-                  ),
+                  Icon(AppIcons.wallet, size: 16, color: t.tx2),
                   const SizedBox(width: SahneSpace.x2),
                   Flexible(
                     child: Text(
                       context.t(K.yourBalance, {'coins': '$_coinBalance'}),
-                      style:
-                          (short ? SahneType.captionStrong : SahneType.caption)
-                              .copyWith(color: short ? t.errTx : t.tx2),
+                      style: SahneType.caption.copyWith(color: t.tx2),
                     ),
                   ),
                 ],
               ),
-              // Yetersiz bakiye: coin kazanma yoluna yönlendiren ikincil
-              // eylem. Daha önce actions listesindeydi; üç eylem tek satıra
-              // sığmayınca OverflowBar bunları merdiven gibi üç ayrı hizaya
-              // dağıtıyordu (2026-07-22 canlı UX denetimi). İçeriğe alınınca
-              // actions'ta iki eylem kalıyor ve düzgün hizalanıyor.
               if (short) ...[
-                const SizedBox(height: SahneSpace.x3),
-                SahneButton.secondary(
-                  label: context.t(K.earnCoins),
-                  icon: AppIcons.dice,
-                  expand: true,
-                  onPressed: () async {
-                    Navigator.of(ctx).pop(false);
-                    await _openSpinWheel();
-                  },
+                const SizedBox(height: SahneSpace.x2),
+                SahneShortfallNote(
+                  key: const ValueKey('shop-dialog-shortfall'),
+                  missing: coinShortfall(
+                    cost: item.cost,
+                    balance: _coinBalance,
+                  ),
+                  alert: true,
+                  center: true,
                 ),
               ],
             ],
@@ -534,13 +524,24 @@ class _ShopScreenState extends State<ShopScreen> {
                 arrow: false,
                 onPressed: () => Navigator.of(ctx).pop(false),
               ),
-              // Diyaloğun tek birincil eylemi. Bakiye yetersizse pasif kalır;
-              // kullanıcı 'Jeton kazan' ile çarka yönlendirilir.
-              confirm: SahneButton.primary(
-                label: context.t(K.buyAction),
-                arrow: false,
-                onPressed: short ? null : () => Navigator.of(ctx).pop(true),
-              ),
+              // Diyaloğun tek birincil eylemi. Bakiye yetmiyorsa "Satın al"
+              // pasif bırakılmaz, YERİNE gerçek bir sonraki adım gelir:
+              // günlük çark (jeton kazanılan, kodda var olan yol).
+              confirm: short
+                  ? SahneButton.primary(
+                      key: const ValueKey('shop-dialog-earn-coins'),
+                      label: context.t(K.earnCoins),
+                      arrow: false,
+                      onPressed: () async {
+                        Navigator.of(ctx).pop(false);
+                        await _openSpinWheel();
+                      },
+                    )
+                  : SahneButton.primary(
+                      label: context.t(K.buyAction),
+                      arrow: false,
+                      onPressed: () => Navigator.of(ctx).pop(true),
+                    ),
             ),
           ],
         );
@@ -1007,6 +1008,22 @@ class _ShopScreenState extends State<ShopScreen> {
         inner - SahneSpace.x3 * 2 - 20 - SahneSpace.x2,
       );
       button = math.max(button, labelHeight + SahneSpace.x3 * 2);
+      // Jeton yetmeyen ürünün durum çipi fiyat satırı + eksik sözü taşır;
+      // düğmeden uzundur, hücre onu da sığdırmalı.
+      final missing = coinShortfall(cost: item.cost, balance: _coinBalance);
+      if (missing > 0 &&
+          SahnePriceChip.noteShownFor(price: item.cost, missing: missing) &&
+          !_purchasedItemIds.contains(item.id)) {
+        final noteHeight = measure(
+          context.t(K.coinsShort, {'coins': '$missing'}),
+          SahneType.captionStrong,
+          inner - SahneSpace.x3 * 2,
+        );
+        button = math.max(
+          button,
+          SahnePriceChip.verticalPad * 2 + labelHeight + noteHeight,
+        );
+      }
     }
     // +2: basınca 2 px çöken düğmenin payı ve yuvarlama.
     return pad +
@@ -1129,6 +1146,20 @@ class _ShopScreenState extends State<ShopScreen> {
       'item': ku ? item.titleKu : item.titleTr,
       'coins': '${item.cost}',
     });
+    // Jeton yetmiyorsa düğme YOKTUR: etkin görünüp dokunulunca pasif bir
+    // "Satın al" gösteren pencere açan düğme, sonuç vermeyen bir eylemdi
+    // (2026-10-01 tasarım denetimi, A5). Yerine durum çipi gelir; kartın
+    // kendisi dokunulabilir kalır ve pencere jeton kazanma yolunu sunar.
+    final missing = coinShortfall(cost: item.cost, balance: _coinBalance);
+    if (missing > 0) {
+      return SahnePriceChip(
+        key: ValueKey('shop-short-${item.id}'),
+        price: item.cost,
+        missing: missing,
+        semanticLabel:
+            '$semanticLabel. ${context.t(K.coinsShort, {'coins': '$missing'})}',
+      );
+    }
     final onPressed = _loading ? null : () => _confirmPurchase(item);
     const glyph = SahneGlyph(SahneGlyphKind.coin, size: 20);
     if (primary) {
