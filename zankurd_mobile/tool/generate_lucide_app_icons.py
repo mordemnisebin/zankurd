@@ -3,7 +3,6 @@
 
 Kullanım (zankurd_mobile/ içinden):
 
-    flutter pub get
     python3 tool/generate_lucide_app_icons.py
     dart format lib/src/theme/app_icons.dart
 
@@ -37,20 +36,17 @@ kontur yıldız "boş" okunur ve renk körü oyuncu için doluluk tek ayırt
 edicidir. O yüzden yalnız bu ad Font Awesome Solid'de kalır.
 """
 import json
-import re
 import sys
 from pathlib import Path
-from urllib.parse import unquote, urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "lib/src/theme/app_icons.dart"
-PACKAGE_CONFIG = ROOT / ".dart_tool/package_config.json"
 
 # Paketin varsayılan (2 px çizgi) statik ailesi. Değişken ağırlıklı
 # `Lucide400` aynı kod noktalarını taşır ama ayrı bir yazı tipi dosyasıdır;
 # ekran turu tek dosya yüklesin diye statik aile seçildi.
 LUCIDE_FAMILY = "Lucide"
-LUCIDE_PACKAGE = "lucide_icons_flutter"
+CODEPOINTS = ROOT / "tool/lucide/codepoints.json"
 
 # AppIcons adı -> Lucide ikon adı (kebab-case). Sıra çıktının sırasıdır.
 # Yorumlar anlamca birebir olmayan seçimlerin gerekçesidir.
@@ -211,29 +207,11 @@ def kebab_to_camel(name: str) -> str:
 
 
 def lucide_codepoints() -> dict[str, int]:
-    """Paketin Dart kaynağından `LucideIcons.<ad>` -> kod noktası."""
-    config = json.loads(PACKAGE_CONFIG.read_text())
-    entry = next(p for p in config["packages"] if p["name"] == LUCIDE_PACKAGE)
-    # `rootUri` göreli ("../x") ya da mutlak ("file:///...") olabilir;
-    # pub önbelleğindeki paketler mutlak gelir.
-    uri = entry["rootUri"]
-    if uri.startswith("file:"):
-        root = Path(unquote(urlparse(uri).path))
-    else:
-        root = (PACKAGE_CONFIG.parent / uri).resolve()
-    source = (root / "lib/lucide_icons.dart").read_text(encoding="utf-8")
-    pattern = re.compile(
-        r"static const IconData (\w+) = const IconData\(\s*(\d+),\s*"
-        r"fontFamily: '(\w+)',\s*fontPackage: '(\w+)'\);"
-    )
-    found = {}
-    for name, code, family, package in pattern.findall(source):
-        # Yalnız statik ana aile; `...100`, `...Dir` vb. varyantlar hariç.
-        if family == LUCIDE_FAMILY and package == LUCIDE_PACKAGE:
-            found[name] = int(code)
-    if not found:
-        sys.exit("HATA: paket kaynağında Lucide sabitleri ayrıştırılamadı")
-    return found
+    """`tool/lucide/codepoints.json` (kebab ad -> kod noktası) -> camelCase ad."""
+    table = json.loads(CODEPOINTS.read_text(encoding="utf-8"))
+    if not table:
+        sys.exit("HATA: tool/lucide/codepoints.json boş")
+    return {kebab_to_camel(name): int(code) for name, code in table.items()}
 
 
 def main() -> None:
@@ -246,7 +224,8 @@ def main() -> None:
         "//",
         "// Değerler literal IconData'dır: const `Icon(AppIcons.x)` çağrıları için",
         "// gerekir ve Flutter'ın kendi Icons sınıfıyla aynı desendir. Kod noktaları",
-        "// lucide_icons_flutter'ın kendi Dart kaynağından okunur, tahmin edilmez.",
+        "// tool/lucide/codepoints.json'dan (Lucide yazı tipinin kendi tablosu) okunur,",
+        "// tahmin edilmez. Yazı tipi `assets/fonts/Lucide.ttf`tir; paket bağımlılığı yok.",
         "//",
         "// Tek istisna `starSolid`: Lucide'da dolu yıldız olmadığından Font Awesome",
         "// Solid'de kalır (bkz. betiğin başlığı). Bu yüzden font_awesome_flutter",
@@ -267,13 +246,13 @@ def main() -> None:
             if key not in codepoints:
                 missing.append((app_name, lucide_name))
                 continue
-            code, family, package = codepoints[key], LUCIDE_FAMILY, LUCIDE_PACKAGE
+            code, family, package = codepoints[key], LUCIDE_FAMILY, None
             lines.append(f"  /// Lucide `{lucide_name}`.")
         lines += [
             f"  static const IconData {app_name} = IconData(",
             f"    0x{code:x},",
             f"    fontFamily: '{family}',",
-            f"    fontPackage: '{package}',",
+            *([f"    fontPackage: '{package}',"] if package else []),
             "  );",
             "",
         ]
