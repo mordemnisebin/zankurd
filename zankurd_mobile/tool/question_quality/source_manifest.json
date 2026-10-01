@@ -2561,6 +2561,35 @@
     "reviewedAt": "metadata.reviewedAt",
     "locale": "ku-kmr"
    }
+  },
+  {
+   "id": "ders_2026_10_01",
+   "description": "2026-10-01: 14 dersin alıştırması için 74 derse etiketli soru (learningLessonId)",
+   "path": "assets/data/ders_2026_10_01_questions.json",
+   "role": "runtime_secondary",
+   "parser": "json",
+   "canonicalGroup": "runtime_questions",
+   "reportIncluded": true,
+   "gateIncluded": true,
+   "productionLike": true,
+   "precedence": 996,
+   "expectedRecordCount": 74,
+   "notes": "Sözcükler dersin kendi sözlük çiftlerinden (metadata.sourceReference ders kimliğini taşır); çok modelli taslak, Kurmancî inceleme ve hakem turu, Claude Opus derleme ve denetim.",
+   "columns": {
+    "id": "id",
+    "category": "category",
+    "prompt": "prompt",
+    "options": "answers",
+    "correct": "correctAnswer",
+    "explanation": "explanationKu",
+    "difficulty": "difficulty",
+    "type": "type",
+    "dialect": "metadata.dialect",
+    "sourceTitle": "metadata.sourceTitle",
+    "sourceUrl": "metadata.sourceReference",
+    "reviewedAt": "metadata.reviewedAt",
+    "locale": "ku-kmr"
+   }
   }
  ]
 }

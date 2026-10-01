@@ -73,7 +73,9 @@ void main() {
       // düzeltmeli DeepSeek), -44 kaynağı bulunamayan ya da cevabı yanlış
       // çıkan DeepSeek kaydı karantinaya döndü (853 -> 809), +30 yeni
       // kaynaklı bilim sorusu (bilim_0041…0070). Kontrol: 31 - 44 + 30 = 17.
-      2954,
+      // 2954 -> 3028 (+74): 2026-10-01 `ders_2026_10_01`, derse etiketli
+      // alıştırma soruları; hepsi `approved`, aşağıdaki oynanabilir sayıda da +74.
+      3028,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -143,7 +145,10 @@ void main() {
       // karantinaya dönen 44'ün hiçbiri retired değildi.
       // 2486 -> 2485 (-1): offline_tf_cog_0003 bilgi yanlışı ("Geliyê Botan
       // Cizîrê dorpêç dike" — Botan Vadisi Siirt'tedir) emekliye ayrıldı.
-      2485,
+      // 2485 -> 2559 (+74): 2026-10-01 `ders_2026_10_01` — 14 dersin
+      // alıştırması için derse etiketli, `approved` ve oynanabilir sorular
+      // (fiziksel sayıyla birlikte +74: içerik gerçekten ulaşıyor).
+      2559,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

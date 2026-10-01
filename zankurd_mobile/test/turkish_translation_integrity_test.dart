@@ -78,7 +78,8 @@ void main() {
       // iki dilli (TR alanları dolu).
       // 2937 -> 2954: +31 üçüncü dalga, -44 karantinaya dönen, +30 bilim;
       // üçü de iki dilli (TR alanları dolu).
-      2954,
+      // 2954 -> 3028 (+74): 2026-10-01 `ders_2026_10_01`, hepsi iki dilli.
+      3028,
       reason:
           'Türkçe metin taşıyan soru sayısı değişti (yükleyicinin verdiği sayı). Yeni parti geldiyse bu '
           'sayı bilerek güncellenmeli; kendiliğinden düştüyse bir bankanın '

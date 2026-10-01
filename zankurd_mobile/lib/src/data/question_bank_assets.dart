@@ -100,4 +100,10 @@ const questionBankAssets = <String>[
   // Gemini 3.1 Pro Kurmancîye çevirdi, Grok 4.7 okudu. Konular: temel bilim,
   // felsefe tarihi, anayasa/BM/insan hakları, Kürt düşünce tarihi.
   'assets/data/bilim_2026_09_30_questions.json',
+  // 2026-10-01: 14 dersin uçtaki alıştırması etiketli sorudan yoksundu; 74
+  // yeni soru `learningLessonId` ile derse bağlandı (kimlikler
+  // `ders_2026_10_01_*`). Sözcükler dersin kendi sözlük çiftlerinden;
+  // metinler çok modelli turdan geçti. Bekçi:
+  // `test/lesson_practice_depth_test.dart`.
+  'assets/data/ders_2026_10_01_questions.json',
 ];

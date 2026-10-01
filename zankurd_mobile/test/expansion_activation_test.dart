@@ -72,7 +72,9 @@ void main() {
       // 2075 -> 2937: 2026-09-30 son birleştirme (+822 doğrulanmış DeepSeek,
       // +40 bilim; bkz. `playable_inventory_test.dart`).
       // 2937 -> 2954: +31 üçüncü dalga, -44 karantinaya dönen, +30 bilim.
-      2954,
+      // 2954 -> 3028 (+74): 2026-10-01 `ders_2026_10_01` — derse etiketli
+      // 74 alıştırma sorusu (bkz. `lesson_practice_depth_test.dart`).
+      3028,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

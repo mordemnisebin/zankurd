@@ -1,0 +1,2666 @@
+[
+  {
+    "id": "ders_2026_10_01_0001",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Rojbaş\" bi tirkî çi ye?",
+    "promptTr": "\"Rojbaş\" Türkçesi nedir?",
+    "answers": [
+      "Günaydın / İyi günler",
+      "İyi akşamlar",
+      "İyi geceler",
+      "Merhaba"
+    ],
+    "answersTr": [
+      "Günaydın / İyi günler",
+      "İyi akşamlar",
+      "İyi geceler",
+      "Merhaba"
+    ],
+    "correctAnswer": "Günaydın / İyi günler",
+    "correctAnswerTr": "Günaydın / İyi günler",
+    "explanation": "\"Rojbaş\" sabah ve gündüz söylenir.",
+    "explanationKu": "\"Rojbaş\" di sibehê û di rojê de tê gotin.",
+    "explanationTr": "\"Rojbaş\" sabah ve gündüz söylenir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0002",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"İyi akşamlar\" bi kurmancî çi ye?",
+    "promptTr": "\"İyi akşamlar\" Kurmancîsi nedir?",
+    "answers": [
+      "Rojbaş",
+      "Şevbaş",
+      "Silav",
+      "Êvarbaş"
+    ],
+    "answersTr": [
+      "Günaydın",
+      "İyi geceler",
+      "Merhaba",
+      "İyi akşamlar"
+    ],
+    "correctAnswer": "Êvarbaş",
+    "correctAnswerTr": "İyi akşamlar",
+    "explanation": "\"Êvarbaş\" akşam söylenir.",
+    "explanationKu": "\"Êvarbaş\" êvarê tê gotin.",
+    "explanationTr": "\"Êvarbaş\" akşam söylenir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0003",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Sibehê tu çi dibêjî? ___",
+    "promptTr": "Sabah ne dersin? ___",
+    "answers": [
+      "Rojbaş",
+      "Şevbaş",
+      "Êvarbaş",
+      "Silav"
+    ],
+    "answersTr": [
+      "Günaydın",
+      "İyi geceler",
+      "İyi akşamlar",
+      "Merhaba"
+    ],
+    "correctAnswer": "Rojbaş",
+    "correctAnswerTr": "Günaydın",
+    "explanation": "Sabah \"Rojbaş\" deriz.",
+    "explanationKu": "Sibehê em dibêjin \"Rojbaş\".",
+    "explanationTr": "Sabah \"Rojbaş\" deriz.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0004",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Berî xewê tu çi dibêjî? ___",
+    "promptTr": "Yatmadan önce ne dersin? ___",
+    "answers": [
+      "Rojbaş",
+      "Êvarbaş",
+      "Şevbaş",
+      "Silav"
+    ],
+    "answersTr": [
+      "Günaydın",
+      "İyi akşamlar",
+      "İyi geceler",
+      "Merhaba"
+    ],
+    "correctAnswer": "Şevbaş",
+    "correctAnswerTr": "İyi geceler",
+    "explanation": "Yatmadan önce \"Şevbaş\" deriz.",
+    "explanationKu": "Berî xewê em dibêjin \"Şevbaş\".",
+    "explanationTr": "Yatmadan önce \"Şevbaş\" deriz.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0006",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Navê te çi ye?\" bi tirkî çi ye?",
+    "promptTr": "\"Navê te çi ye?\" Türkçesi nedir?",
+    "answers": [
+      "Nerelisin?",
+      "Nasılsın?",
+      "Adın ne?",
+      "Kaç yaşındasın?"
+    ],
+    "answersTr": [
+      "Nerelisin?",
+      "Nasılsın?",
+      "Adın ne?",
+      "Kaç yaşındasın?"
+    ],
+    "correctAnswer": "Adın ne?",
+    "correctAnswerTr": "Adın ne?",
+    "explanation": "\"Navê te çi ye?\" ismi sormak için söylenir.",
+    "explanationKu": "\"Navê te çi ye?\" ji bo pirskirina navan tê gotin.",
+    "explanationTr": "\"Navê te çi ye?\" ismi sormak için söylenir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0007",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Benim adım Azad\" bi kurmancî çi ye?",
+    "promptTr": "\"Benim adım Azad\" Kurmancîsi nedir?",
+    "answers": [
+      "Navê te çi ye?",
+      "Tu ji ku derê yî?",
+      "Ez ji Amedê me.",
+      "Navê min Azad e."
+    ],
+    "answersTr": [
+      "Adın ne?",
+      "Nerelisin?",
+      "Amedliyim.",
+      "Benim adım Azad."
+    ],
+    "correctAnswer": "Navê min Azad e.",
+    "correctAnswerTr": "Benim adım Azad.",
+    "explanation": "Kendimizi tanıtırken \"Navê min Azad e\" deriz.",
+    "explanationKu": "Dema em xwe didin nasîn, em dibêjin \"Navê min Azad e\".",
+    "explanationTr": "Kendimizi tanıtırken \"Navê min Azad e\" deriz.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0008",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Tu ji ku derê yî?\" bi tirkî çi ye?",
+    "promptTr": "\"Tu ji ku derê yî?\" Türkçesi nedir?",
+    "answers": [
+      "Adın ne?",
+      "Nerelisin?",
+      "Kaç yaşındasın?",
+      "Nereye gidiyorsun?"
+    ],
+    "answersTr": [
+      "Adın ne?",
+      "Nerelisin?",
+      "Kaç yaşındasın?",
+      "Nereye gidiyorsun?"
+    ],
+    "correctAnswer": "Nerelisin?",
+    "correctAnswerTr": "Nerelisin?",
+    "explanation": "\"Tu ji ku derê yî?\" yeri sormak için söylenir.",
+    "explanationKu": "\"Tu ji ku derê yî?\" ji bo pirsîna cihî tê gotin.",
+    "explanationTr": "\"Tu ji ku derê yî?\" yeri sormak için söylenir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0009",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Amedliyim\" bi kurmancî çi ye?",
+    "promptTr": "\"Amedliyim\" Kurmancîsi nedir?",
+    "answers": [
+      "Navê min Azad e.",
+      "Tu ji ku derê yî?",
+      "Navê te çi ye?",
+      "Ez ji Amedê me."
+    ],
+    "answersTr": [
+      "Benim adım Azad.",
+      "Nerelisin?",
+      "Adın ne?",
+      "Amedliyim."
+    ],
+    "correctAnswer": "Ez ji Amedê me.",
+    "correctAnswerTr": "Amedliyim.",
+    "explanation": "Şehrimizden bahsederken \"Ez ji Amedê me\" deriz.",
+    "explanationKu": "Dema em qala bajarê xwe dikin, em dibêjin \"Ez ji Amedê me\".",
+    "explanationTr": "Şehrimizden bahsederken \"Ez ji Amedê me\" deriz.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0010",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "___ çi ye? Navê min Azad e.",
+    "promptTr": "___ nedir? Benim adım Azad.",
+    "answers": [
+      "Navê te",
+      "Navê min",
+      "Ku der",
+      "Amed"
+    ],
+    "answersTr": [
+      "Adın",
+      "Adım",
+      "Neresi",
+      "Amed"
+    ],
+    "correctAnswer": "Navê te",
+    "correctAnswerTr": "Adın",
+    "explanation": "Soru \"Navê te çi ye?\", cevap \"Navê min Azad e\"dir.",
+    "explanationKu": "Pirs \"Navê te çi ye?\" ye, bersiv jî \"Navê min Azad e\" ye.",
+    "explanationTr": "Soru \"Navê te çi ye?\", cevap \"Navê min Azad e\"dir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0011",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Navê min ___ e.",
+    "promptTr": "Benim adım ___.",
+    "answers": [
+      "çi",
+      "te",
+      "ku",
+      "Azad"
+    ],
+    "answersTr": [
+      "ne",
+      "senin",
+      "neresi",
+      "Azad"
+    ],
+    "correctAnswer": "Azad",
+    "correctAnswerTr": "Azad",
+    "explanation": "\"Azad\" burada addır; \"Navê min Azad e\" deriz.",
+    "explanationKu": "\"Azad\" li vir nav e; em dibêjin \"Navê min Azad e\".",
+    "explanationTr": "\"Azad\" burada addır; \"Navê min Azad e\" deriz.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0014",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Spas\" bi tirkî çi ye?",
+    "promptTr": "\"Spas\" Türkçesi nedir?",
+    "answers": [
+      "Lütfen",
+      "Buyurun",
+      "Teşekkürler",
+      "Özür dilerim"
+    ],
+    "answersTr": [
+      "Lütfen",
+      "Buyurun",
+      "Teşekkürler",
+      "Özür dilerim"
+    ],
+    "correctAnswer": "Teşekkürler",
+    "correctAnswerTr": "Teşekkürler",
+    "explanation": "\"Spas\" teşekkür için söylenir.",
+    "explanationKu": "\"Spas\" ji bo spaskirinê tê gotin.",
+    "explanationTr": "\"Spas\" teşekkür için söylenir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_3",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_3 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_3"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0015",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Lütfen\" bi kurmancî çi ye?",
+    "promptTr": "\"Lütfen\" Kurmancîsi nedir?",
+    "answers": [
+      "Fermo",
+      "Ji kerema xwe",
+      "Spas",
+      "Bibexşîne"
+    ],
+    "answersTr": [
+      "Buyurun",
+      "Lütfen",
+      "Teşekkürler",
+      "Özür dilerim"
+    ],
+    "correctAnswer": "Ji kerema xwe",
+    "correctAnswerTr": "Lütfen",
+    "explanation": "\"Ji kerema xwe\" rica için söylenir.",
+    "explanationKu": "\"Ji kerema xwe\" ji bo daxwazê tê gotin.",
+    "explanationTr": "\"Ji kerema xwe\" rica için söylenir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_3",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_3 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_3"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0016",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Te şaşîyek kir, tu çi dibêjî? ___",
+    "promptTr": "Hata yaptın, ne dersin? ___",
+    "answers": [
+      "Spas",
+      "Fermo",
+      "Bibexşîne",
+      "Kerem bike"
+    ],
+    "answersTr": [
+      "Teşekkürler",
+      "Buyurun",
+      "Özür dilerim",
+      "Buyur/Geç"
+    ],
+    "correctAnswer": "Bibexşîne",
+    "correctAnswerTr": "Özür dilerim",
+    "explanation": "Hata yapınca \"Bibexşîne\" deriz.",
+    "explanationKu": "Dema em şaşîyekê dikin, em dibêjin \"Bibexşîne\".",
+    "explanationTr": "Hata yapınca \"Bibexşîne\" deriz.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: everyday_3",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi everyday_3 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "everyday_3"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0017",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Ez\" bi tirkî çi ye?",
+    "promptTr": "\"Ez\" Türkçesi nedir?",
+    "answers": [
+      "Ben",
+      "Sen",
+      "O",
+      "Biz"
+    ],
+    "answersTr": [
+      "Ben",
+      "Sen",
+      "O",
+      "Biz"
+    ],
+    "correctAnswer": "Ben",
+    "correctAnswerTr": "Ben",
+    "explanation": "\"Ez\" birinci tekil şahıs zamiridir.",
+    "explanationKu": "\"Ez\" cînavka kesê yekem a yekjimar e.",
+    "explanationTr": "\"Ez\" birinci tekil şahıs zamiridir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: grammar_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "grammar_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0018",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Siz\" bi kurmancî çi ye?",
+    "promptTr": "\"Siz\" Kurmancîsi nedir?",
+    "answers": [
+      "Ez",
+      "Tu",
+      "Hûn",
+      "Em"
+    ],
+    "answersTr": [
+      "Ben",
+      "Sen",
+      "Siz",
+      "Biz"
+    ],
+    "correctAnswer": "Hûn",
+    "correctAnswerTr": "Siz",
+    "explanation": "\"Siz\" için \"Hûn\" denir.",
+    "explanationKu": "\"Hûn\" ji bo \"siz\" tê gotin.",
+    "explanationTr": "\"Siz\" için \"Hûn\" denir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: grammar_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "grammar_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0019",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "___ çûm. Kîjan rast e?",
+    "promptTr": "___ gittim. Hangisi doğru?",
+    "answers": [
+      "Tu",
+      "Ez",
+      "Ew",
+      "Hûn"
+    ],
+    "answersTr": [
+      "Sen",
+      "Ben",
+      "O",
+      "Siz"
+    ],
+    "correctAnswer": "Ez",
+    "correctAnswerTr": "Ben",
+    "explanation": "\"Ez çûm\" doğrudur, \"ez\" ile \"çûm\" kullanılır.",
+    "explanationKu": "\"Ez çûm\" rast e, \"ez\" bi lêkera \"çûm\" re tê bikaranîn.",
+    "explanationTr": "\"Ez çûm\" doğrudur, \"ez\" ile \"çûm\" kullanılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: grammar_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "grammar_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0020",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ez û hevalê min: ___",
+    "promptTr": "Ben ve arkadaşım: ___",
+    "answers": [
+      "Ez",
+      "Tu",
+      "Em",
+      "Ew"
+    ],
+    "answersTr": [
+      "Ben",
+      "Sen",
+      "Biz",
+      "O"
+    ],
+    "correctAnswer": "Em",
+    "correctAnswerTr": "Biz",
+    "explanation": "\"Ben ve arkadaşım\" \"biz\" olur.",
+    "explanationKu": "\"Ez û hevalê min\" dibe \"em\".",
+    "explanationTr": "\"Ben ve arkadaşım\" \"biz\" olur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: grammar_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "grammar_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0021",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Ew\" bi tirkî çi ye?",
+    "promptTr": "\"Ew\" Türkçesi nedir?",
+    "answers": [
+      "Ben",
+      "Sen",
+      "Siz",
+      "O"
+    ],
+    "answersTr": [
+      "Ben",
+      "Sen",
+      "Siz",
+      "O"
+    ],
+    "correctAnswer": "O",
+    "correctAnswerTr": "O",
+    "explanation": "\"Ew\" üçüncü kişi için söylenir.",
+    "explanationKu": "\"Ew\" ji bo kesê sêyem tê gotin.",
+    "explanationTr": "\"Ew\" üçüncü kişi için söylenir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: grammar_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "grammar_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0022",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Govend\" bi tirkî çi ye?",
+    "promptTr": "\"Govend\" Türkçesi nedir?",
+    "answers": [
+      "Düğün",
+      "Halay",
+      "Şenlik",
+      "Türkü"
+    ],
+    "answersTr": [
+      "Düğün",
+      "Halay",
+      "Şenlik",
+      "Türkü"
+    ],
+    "correctAnswer": "Halay",
+    "correctAnswerTr": "Halay",
+    "explanation": "\"Govend\" el ele tutup oynanan halaydır.",
+    "explanationKu": "\"Govend\" lîstikek e; mirov destê hev digirin û dilîzin.",
+    "explanationTr": "\"Govend\" el ele tutup oynanan halaydır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: culture_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "culture_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0023",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Dawet\" bi tirkî çi ye?",
+    "promptTr": "\"Dawet\" Türkçesi nedir?",
+    "answers": [
+      "Halay",
+      "Şenlik",
+      "Türkü",
+      "Düğün"
+    ],
+    "answersTr": [
+      "Halay",
+      "Şenlik",
+      "Türkü",
+      "Düğün"
+    ],
+    "correctAnswer": "Düğün",
+    "correctAnswerTr": "Düğün",
+    "explanation": "\"Dawet\" düğündür; içinde halay ve eğlence olur.",
+    "explanationKu": "\"Dawet\" cejna zewacê ye; tê de govend û dîlan hene.",
+    "explanationTr": "\"Dawet\" düğündür; içinde halay ve eğlence olur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: culture_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "culture_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0024",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di dawetê de em ___ digirin.",
+    "promptTr": "Düğünde ___ oynarız.",
+    "answers": [
+      "Şahî",
+      "Dîlan",
+      "Govend",
+      "Xwarin"
+    ],
+    "answersTr": [
+      "Şenlik",
+      "Eğlence",
+      "Halay",
+      "Yemek"
+    ],
+    "correctAnswer": "Govend",
+    "correctAnswerTr": "Halay",
+    "explanation": "Düğünde halay oynarız.",
+    "explanationKu": "Di dawetê de em govendê digirin.",
+    "explanationTr": "Düğünde halay oynarız.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: culture_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "culture_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0025",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Şahî\" bi tirkî çi ye?",
+    "promptTr": "\"Şahî\" Türkçesi nedir?",
+    "answers": [
+      "Halay",
+      "Düğün",
+      "Yemek",
+      "Şenlik"
+    ],
+    "answersTr": [
+      "Halay",
+      "Düğün",
+      "Yemek",
+      "Şenlik"
+    ],
+    "correctAnswer": "Şenlik",
+    "correctAnswerTr": "Şenlik",
+    "explanation": "\"Şahî\" keyifli bir şenliktir.",
+    "explanationKu": "\"Şahî\" civîneke bi kêf e.",
+    "explanationTr": "\"Şahî\" keyifli bir şenliktir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: culture_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "culture_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0026",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Cejna Remezanê\" bi tirkî çi ye?",
+    "promptTr": "\"Cejna Remezanê\" Türkçesi nedir?",
+    "answers": [
+      "Kurban Bayramı",
+      "Ramazan Bayramı",
+      "Nevruz Bayramı",
+      "Kandil Gecesi"
+    ],
+    "answersTr": [
+      "Kurban Bayramı",
+      "Ramazan Bayramı",
+      "Nevruz Bayramı",
+      "Kandil Gecesi"
+    ],
+    "correctAnswer": "Ramazan Bayramı",
+    "correctAnswerTr": "Ramazan Bayramı",
+    "explanation": "\"Cejna Remezanê\" Ramazan'dan sonra kutlanır.",
+    "explanationKu": "\"Cejna Remezanê\" piştî meha Remezanê tê pîrozkirin.",
+    "explanationTr": "\"Cejna Remezanê\" Ramazan'dan sonra kutlanır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: culture_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "culture_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0027",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Kurban Bayramı\" bi kurmancî çi ye?",
+    "promptTr": "\"Kurban Bayramı\" Kurmancîsi nedir?",
+    "answers": [
+      "Cejna Remezanê",
+      "Cejna Newrozê",
+      "Roja Înê",
+      "Cejna Qurbanê"
+    ],
+    "answersTr": [
+      "Ramazan Bayramı",
+      "Nevruz Bayramı",
+      "Cuma günü",
+      "Kurban Bayramı"
+    ],
+    "correctAnswer": "Cejna Qurbanê",
+    "correctAnswerTr": "Kurban Bayramı",
+    "explanation": "\"Cejna Qurbanê\" kurban kesme bayramıdır.",
+    "explanationKu": "\"Cejna Qurbanê\" cejna serjêkirina qurbanê ye.",
+    "explanationTr": "\"Cejna Qurbanê\" kurban kesme bayramıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: culture_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "culture_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0028",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Piştî meha Remezanê kîjan cejn tê?",
+    "promptTr": "Ramazan ayından sonra hangi bayram gelir?",
+    "answers": [
+      "Cejna Qurbanê",
+      "Cejna Newrozê",
+      "Cejna Remezanê",
+      "Şeva Yeldê"
+    ],
+    "answersTr": [
+      "Kurban Bayramı",
+      "Nevruz Bayramı",
+      "Ramazan Bayramı",
+      "Yelda Gecesi"
+    ],
+    "correctAnswer": "Cejna Remezanê",
+    "correctAnswerTr": "Ramazan Bayramı",
+    "explanation": "Ramazan'dan sonra \"Cejna Remezanê\" gelir.",
+    "explanationKu": "Piştî meha Remezanê \"Cejna Remezanê\" tê.",
+    "explanationTr": "Ramazan'dan sonra \"Cejna Remezanê\" gelir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: culture_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "culture_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0029",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di ___ de qurban tê serjêkirin.",
+    "promptTr": "___ kurban kesilir.",
+    "answers": [
+      "Cejna Remezanê",
+      "Cejna Newrozê",
+      "Roja Duşemê",
+      "Cejna Qurbanê"
+    ],
+    "answersTr": [
+      "Ramazan Bayramı",
+      "Nevruz Bayramı",
+      "Pazartesi günü",
+      "Kurban Bayramı"
+    ],
+    "correctAnswer": "Cejna Qurbanê",
+    "correctAnswerTr": "Kurban Bayramı",
+    "explanation": "\"Cejna Qurbanê\"de kurban kesilir.",
+    "explanationKu": "Di \"Cejna Qurbanê\" de qurban tê serjêkirin.",
+    "explanationTr": "\"Cejna Qurbanê\"de kurban kesilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: culture_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "culture_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0030",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Malbat di \"Cejna Remezanê\" de çi dike?",
+    "promptTr": "Aile \"Ramazan Bayramı\"nda ne yapar?",
+    "answers": [
+      "Cejnê pîroz dike",
+      "Rojîyê digire",
+      "Qurbanê serjê dike",
+      "Dikeve rêwîtîyê"
+    ],
+    "answersTr": [
+      "Bayramı kutlar",
+      "Oruç tutar",
+      "Kurban keser",
+      "Yolculuğa çıkar"
+    ],
+    "correctAnswer": "Cejnê pîroz dike",
+    "correctAnswerTr": "Bayramı kutlar",
+    "explanation": "Bayramda aile bayramı kutlar.",
+    "explanationKu": "Di cejnê de malbat cejnê pîroz dike.",
+    "explanationTr": "Bayramda aile bayramı kutlar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: culture_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "culture_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0031",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan her du jî cejnên dînî ne?",
+    "promptTr": "Hangileri dinî bayramlardır?",
+    "answers": [
+      "Newroz û Remezan",
+      "Qurban û Sersal",
+      "Remezan û Qurban",
+      "Rojî û Nimêj"
+    ],
+    "answersTr": [
+      "Nevruz ve Ramazan",
+      "Kurban ve Yılbaşı",
+      "Ramazan ve Kurban",
+      "Oruç ve Namaz"
+    ],
+    "correctAnswer": "Remezan û Qurban",
+    "correctAnswerTr": "Ramazan ve Kurban",
+    "explanation": "\"Cejna Remezanê\" ve \"Cejna Qurbanê\" dinî bayramlardır.",
+    "explanationKu": "\"Cejna Remezanê\" û \"Cejna Qurbanê\" cejnên dînî ne.",
+    "explanationTr": "\"Cejna Remezanê\" ve \"Cejna Qurbanê\" dinî bayramlardır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: culture_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "culture_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0032",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Nan\" bi tirkî çi ye?",
+    "promptTr": "\"Nan\" Türkçesi nedir?",
+    "answers": [
+      "Ekmek",
+      "Su",
+      "Et",
+      "Yoğurt"
+    ],
+    "answersTr": [
+      "Ekmek",
+      "Su",
+      "Et",
+      "Yoğurt"
+    ],
+    "correctAnswer": "Ekmek",
+    "correctAnswerTr": "Ekmek",
+    "explanation": "\"Nan\" her günün temel yemeğidir.",
+    "explanationKu": "\"Nan\" xwarina sereke ya her rojê ye.",
+    "explanationTr": "\"Nan\" her günün temel yemeğidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0033",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Kahvaltı\" bi kurmancî çi ye?",
+    "promptTr": "\"Kahvaltı\" Kurmancîsi nedir?",
+    "answers": [
+      "Firavîn",
+      "Şîv",
+      "Mast",
+      "Taştê"
+    ],
+    "answersTr": [
+      "Öğle yemeği",
+      "Akşam yemeği",
+      "Yoğurt",
+      "Kahvaltı"
+    ],
+    "correctAnswer": "Taştê",
+    "correctAnswerTr": "Kahvaltı",
+    "explanation": "\"Taştê\" sabah yemeğidir.",
+    "explanationKu": "\"Taştê\" xwarina sibehê ye.",
+    "explanationTr": "\"Taştê\" sabah yemeğidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0034",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Êvarê em ___ dixwin.",
+    "promptTr": "Akşam ___ yeriz.",
+    "answers": [
+      "Şîv",
+      "Taştê",
+      "Firavîn",
+      "Av"
+    ],
+    "answersTr": [
+      "Akşam yemeği",
+      "Kahvaltı",
+      "Öğle yemeği",
+      "Su"
+    ],
+    "correctAnswer": "Şîv",
+    "correctAnswerTr": "Akşam yemeği",
+    "explanation": "\"Şîv\" akşam yemeğidir.",
+    "explanationKu": "\"Şîv\" xwarina êvarê ye.",
+    "explanationTr": "\"Şîv\" akşam yemeğidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0035",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ji bo jiyanê ___ pêwîst e.",
+    "promptTr": "Yaşam için ___ gereklidir.",
+    "answers": [
+      "Goşt",
+      "Mast",
+      "Av",
+      "Nan"
+    ],
+    "answersTr": [
+      "Et",
+      "Yoğurt",
+      "Su",
+      "Ekmek"
+    ],
+    "correctAnswer": "Av",
+    "correctAnswerTr": "Su",
+    "explanation": "\"Av\" yaşam için gereklidir.",
+    "explanationKu": "\"Av\" ji bo jiyanê pêwîst e.",
+    "explanationTr": "\"Av\" yaşam için gereklidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0036",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Sêv\" bi tirkî çi ye?",
+    "promptTr": "\"Sêv\" Türkçesi nedir?",
+    "answers": [
+      "Elma",
+      "Nar",
+      "Üzüm",
+      "İncir"
+    ],
+    "answersTr": [
+      "Elma",
+      "Nar",
+      "Üzüm",
+      "İncir"
+    ],
+    "correctAnswer": "Elma",
+    "correctAnswerTr": "Elma",
+    "explanation": "\"Sêv\" kırmızı ya da yeşil bir meyvedir.",
+    "explanationKu": "\"Sêv\" fêkî ye; sor an kesk e.",
+    "explanationTr": "\"Sêv\" kırmızı ya da yeşil bir meyvedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0037",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Nar\" bi kurmancî çi ye?",
+    "promptTr": "\"Nar\" Kurmancîsi nedir?",
+    "answers": [
+      "Sêv",
+      "Tirî",
+      "Hejîr",
+      "Hinar"
+    ],
+    "answersTr": [
+      "Elma",
+      "Üzüm",
+      "İncir",
+      "Nar"
+    ],
+    "correctAnswer": "Hinar",
+    "correctAnswerTr": "Nar",
+    "explanation": "\"Hinar\" kırmızı, çekirdekli bir meyvedir.",
+    "explanationKu": "\"Hinar\" fêkiyekî sor û bi dendik e.",
+    "explanationTr": "\"Hinar\" kırmızı, çekirdekli bir meyvedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0038",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Üzüm\" bi kurmancî çi ye?",
+    "promptTr": "\"Üzüm\" Kurmancîsi nedir?",
+    "answers": [
+      "Tirî",
+      "Hejîr",
+      "Sêv",
+      "Pîvaz"
+    ],
+    "answersTr": [
+      "Üzüm",
+      "İncir",
+      "Elma",
+      "Soğan"
+    ],
+    "correctAnswer": "Tirî",
+    "correctAnswerTr": "Üzüm",
+    "explanation": "\"Tirî\" küçük ve tatlı bir meyvedir.",
+    "explanationKu": "\"Tirî\" fêkiyekî biçûk û şirîn e.",
+    "explanationTr": "\"Tirî\" küçük ve tatlı bir meyvedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0039",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Soğan\" bi kurmancî çi ye?",
+    "promptTr": "\"Soğan\" Kurmancîsi nedir?",
+    "answers": [
+      "Sîr",
+      "Bacan",
+      "Pîvaz",
+      "Tirî"
+    ],
+    "answersTr": [
+      "Sarımsak",
+      "Patlıcan",
+      "Soğan",
+      "Üzüm"
+    ],
+    "correctAnswer": "Pîvaz",
+    "correctAnswerTr": "Soğan",
+    "explanation": "\"Pîvaz\" göz yakan bir sebzedir.",
+    "explanationKu": "\"Pîvaz\" keskahî ye û çavan dişewitîne.",
+    "explanationTr": "\"Pîvaz\" göz yakan bir sebzedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0040",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Sarımsak\" bi kurmancî çi ye?",
+    "promptTr": "\"Sarımsak\" Kurmancîsi nedir?",
+    "answers": [
+      "Pîvaz",
+      "Bacan",
+      "Sêv",
+      "Sîr"
+    ],
+    "answersTr": [
+      "Soğan",
+      "Patlıcan",
+      "Elma",
+      "Sarımsak"
+    ],
+    "correctAnswer": "Sîr",
+    "correctAnswerTr": "Sarımsak",
+    "explanation": "\"Sîr\" kokulu bir sebzedir.",
+    "explanationKu": "\"Sîr\" keskahî ye û bi bêhn e.",
+    "explanationTr": "\"Sîr\" kokulu bir sebzedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0041",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Hejîr\" bi tirkî çi ye?",
+    "promptTr": "\"Hejîr\" Türkçesi nedir?",
+    "answers": [
+      "Elma",
+      "İncir",
+      "Nar",
+      "Üzüm"
+    ],
+    "answersTr": [
+      "Elma",
+      "İncir",
+      "Nar",
+      "Üzüm"
+    ],
+    "correctAnswer": "İncir",
+    "correctAnswerTr": "İncir",
+    "explanation": "\"Hejîr\" tatlı bir meyvedir.",
+    "explanationKu": "\"Hejîr\" fêkî ye û şîrîn e.",
+    "explanationTr": "\"Hejîr\" tatlı bir meyvedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0042",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Soğan\" û \"sarımsak\" bi kurmancî çi ne?",
+    "promptTr": "\"Soğan\" ve \"sarımsak\"ın Kurmancîsi nedir?",
+    "answers": [
+      "Pîvaz û Sîr",
+      "Sêv û Hinar",
+      "Tirî û Hejîr",
+      "Nan û Av"
+    ],
+    "answersTr": [
+      "Soğan ve Sarımsak",
+      "Elma ve Nar",
+      "Üzüm ve İncir",
+      "Ekmek ve Su"
+    ],
+    "correctAnswer": "Pîvaz û Sîr",
+    "correctAnswerTr": "Soğan ve Sarımsak",
+    "explanation": "\"Pîvaz\" soğandır, \"Sîr\" sarımsaktır.",
+    "explanationKu": "\"Pîvaz\" bi tirkî \"soğan\" e, \"sîr\" jî \"sarımsak\" e.",
+    "explanationTr": "\"Pîvaz\" soğandır, \"Sîr\" sarımsaktır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0043",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan keskahî ye?",
+    "promptTr": "Hangisi sebzedir?",
+    "answers": [
+      "Sêv",
+      "Bacan",
+      "Hinar",
+      "Tirî"
+    ],
+    "answersTr": [
+      "Elma",
+      "Patlıcan",
+      "Nar",
+      "Üzüm"
+    ],
+    "correctAnswer": "Bacan",
+    "correctAnswerTr": "Patlıcan",
+    "explanation": "\"Bacan\" sebzedir, diğerleri meyvedir.",
+    "explanationKu": "\"Bacan\" keskahî ye, yên din fêkî ne.",
+    "explanationTr": "\"Bacan\" sebzedir, diğerleri meyvedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: food_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi food_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "food_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0044",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Pisîk\" bi tirkî çi ye?",
+    "promptTr": "\"Pisîk\" Türkçesi nedir?",
+    "answers": [
+      "Köpek",
+      "At",
+      "İnek",
+      "Kedi"
+    ],
+    "answersTr": [
+      "Köpek",
+      "At",
+      "İnek",
+      "Kedi"
+    ],
+    "correctAnswer": "Kedi",
+    "correctAnswerTr": "Kedi",
+    "explanation": "\"Pisîk\" küçük bir ev hayvanıdır.",
+    "explanationKu": "\"Pisîk\" heywanekî malê yê biçûk e.",
+    "explanationTr": "\"Pisîk\" küçük bir ev hayvanıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: animals_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi animals_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "animals_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0045",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Köpek\" bi kurmancî çi ye?",
+    "promptTr": "\"Köpek\" Kurmancîsi nedir?",
+    "answers": [
+      "Pisîk",
+      "Kûçik",
+      "Hesp",
+      "Mîh"
+    ],
+    "answersTr": [
+      "Kedi",
+      "Köpek",
+      "At",
+      "Koyun"
+    ],
+    "correctAnswer": "Kûçik",
+    "correctAnswerTr": "Köpek",
+    "explanation": "\"Kûçik\" bekçi ev hayvanıdır.",
+    "explanationKu": "\"Kûçik\" heywanekî malê yê parêzvan e.",
+    "explanationTr": "\"Kûçik\" bekçi ev hayvanıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: animals_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi animals_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "animals_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0046",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan şîr dide? ___",
+    "promptTr": "Hangisi süt verir? ___",
+    "answers": [
+      "Bizin",
+      "Hesp",
+      "Kûçik",
+      "Pisîk"
+    ],
+    "answersTr": [
+      "Keçi",
+      "At",
+      "Köpek",
+      "Kedi"
+    ],
+    "correctAnswer": "Bizin",
+    "correctAnswerTr": "Keçi",
+    "explanation": "\"Bizin\" süt verir ve evcil bir hayvandır.",
+    "explanationKu": "\"Bizin\" şîr dide û heywanekî malê ye.",
+    "explanationTr": "\"Bizin\" süt verir ve evcil bir hayvandır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: animals_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi animals_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "animals_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0047",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Hesp\" bi tirkî çi ye?",
+    "promptTr": "\"Hesp\" Türkçesi nedir?",
+    "answers": [
+      "İnek",
+      "At",
+      "Koyun",
+      "Keçi"
+    ],
+    "answersTr": [
+      "İnek",
+      "At",
+      "Koyun",
+      "Keçi"
+    ],
+    "correctAnswer": "At",
+    "correctAnswerTr": "At",
+    "explanation": "\"Hesp\" büyük ve hızlı bir hayvandır.",
+    "explanationKu": "\"Hesp\" heywanekî mezin û bilez e.",
+    "explanationTr": "\"Hesp\" büyük ve hızlı bir hayvandır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: animals_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi animals_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "animals_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0048",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Şêr\" bi tirkî çi ye?",
+    "promptTr": "\"Şêr\" Türkçesi nedir?",
+    "answers": [
+      "Kurt",
+      "Tilki",
+      "Ayı",
+      "Aslan"
+    ],
+    "answersTr": [
+      "Kurt",
+      "Tilki",
+      "Ayı",
+      "Aslan"
+    ],
+    "correctAnswer": "Aslan",
+    "correctAnswerTr": "Aslan",
+    "explanation": "\"Şêr\" güçlü bir yabani hayvandır.",
+    "explanationKu": "\"Şêr\" heywanekî kovî yê bihêz e.",
+    "explanationTr": "\"Şêr\" güçlü bir yabani hayvandır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: animals_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi animals_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "animals_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0049",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Kurt\" bi kurmancî çi ye?",
+    "promptTr": "\"Kurt\" Kurmancîsi nedir?",
+    "answers": [
+      "Şêr",
+      "Gur",
+      "Rûvî",
+      "Hirç"
+    ],
+    "answersTr": [
+      "Aslan",
+      "Kurt",
+      "Tilki",
+      "Ayı"
+    ],
+    "correctAnswer": "Gur",
+    "correctAnswerTr": "Kurt",
+    "explanation": "\"Gur\" dağda yaşayan yabani hayvandır.",
+    "explanationKu": "\"Gur\" heywanekî kovî yê çiyê ye.",
+    "explanationTr": "\"Gur\" dağda yaşayan yabani hayvandır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: animals_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi animals_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "animals_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0050",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Tilki\" bi kurmancî çi ye?",
+    "promptTr": "\"Tilki\" Kurmancîsi nedir?",
+    "answers": [
+      "Kevok",
+      "Qijik",
+      "Rûvî",
+      "Eylo"
+    ],
+    "answersTr": [
+      "Güvercin",
+      "Karga",
+      "Tilki",
+      "Kartal"
+    ],
+    "correctAnswer": "Rûvî",
+    "correctAnswerTr": "Tilki",
+    "explanation": "\"Rûvî\" kurnaz bir yabani hayvandır.",
+    "explanationKu": "\"Rûvî\" heywanekî kovî yê fêlbaz e.",
+    "explanationTr": "\"Rûvî\" kurnaz bir yabani hayvandır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: animals_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi animals_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "animals_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0051",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan difire? ___",
+    "promptTr": "Hangisi uçar? ___",
+    "answers": [
+      "Hirç",
+      "Eylo",
+      "Gur",
+      "Şêr"
+    ],
+    "answersTr": [
+      "Ayı",
+      "Kartal",
+      "Kurt",
+      "Aslan"
+    ],
+    "correctAnswer": "Eylo",
+    "correctAnswerTr": "Kartal",
+    "explanation": "\"Eylo\" büyük bir kuştur ve uçar.",
+    "explanationKu": "\"Eylo\" çûkekî mezin e û difire.",
+    "explanationTr": "\"Eylo\" büyük bir kuştur ve uçar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: animals_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi animals_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "animals_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0052",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Kevok\" bi tirkî çi ye?",
+    "promptTr": "\"Kevok\" Türkçesi nedir?",
+    "answers": [
+      "Kartal",
+      "Karga",
+      "Güvercin",
+      "Tilki"
+    ],
+    "answersTr": [
+      "Kartal",
+      "Karga",
+      "Güvercin",
+      "Tilki"
+    ],
+    "correctAnswer": "Güvercin",
+    "correctAnswerTr": "Güvercin",
+    "explanation": "\"Kevok\" uysal bir kuştur.",
+    "explanationKu": "\"Kevok\" çûkekî aram e.",
+    "explanationTr": "\"Kevok\" uysal bir kuştur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: animals_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi animals_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "animals_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0053",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Karga\" bi kurmancî çi ye?",
+    "promptTr": "\"Karga\" Kurmancîsi nedir?",
+    "answers": [
+      "Qijik",
+      "Eylo",
+      "Kevok",
+      "Rûvî"
+    ],
+    "answersTr": [
+      "Karga",
+      "Kartal",
+      "Güvercin",
+      "Tilki"
+    ],
+    "correctAnswer": "Qijik",
+    "correctAnswerTr": "Karga",
+    "explanation": "\"Qijik\" siyah bir kuştur.",
+    "explanationKu": "\"Qijik\" çûkeke reş e.",
+    "explanationTr": "\"Qijik\" siyah bir kuştur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: animals_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi animals_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "animals_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0054",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Kêfxweş\" bi tirkî çi ye?",
+    "promptTr": "\"Kêfxweş\" Türkçesi nedir?",
+    "answers": [
+      "Üzgün",
+      "Öfkeli",
+      "Mutlu",
+      "Umutsuz"
+    ],
+    "answersTr": [
+      "Üzgün",
+      "Öfkeli",
+      "Mutlu",
+      "Umutsuz"
+    ],
+    "correctAnswer": "Mutlu",
+    "correctAnswerTr": "Mutlu",
+    "explanation": "\"Kêfxweş\" olumlu bir duygudur.",
+    "explanationKu": "\"Kêfxweş\" hesteke erênî ye.",
+    "explanationTr": "\"Kêfxweş\" olumlu bir duygudur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0055",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Sevinçli\" bi kurmancî çi ye?",
+    "promptTr": "\"Sevinçli\" Kurmancîsi nedir?",
+    "answers": [
+      "Xemgîn",
+      "Dilşad",
+      "Hêrsbûyî",
+      "Bêhêvî"
+    ],
+    "answersTr": [
+      "Üzgün",
+      "Sevinçli",
+      "Öfkeli",
+      "Umutsuz"
+    ],
+    "correctAnswer": "Dilşad",
+    "correctAnswerTr": "Sevinçli",
+    "explanation": "\"Dilşad\" sevinç ve neşedir.",
+    "explanationKu": "Wateya \"dilşad\"ê, dilxweşî û şadî ye.",
+    "explanationTr": "\"Dilşad\" sevinç ve neşedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0056",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Aşık\" bi kurmancî çi ye?",
+    "promptTr": "\"Aşık\" Kurmancîsi nedir?",
+    "answers": [
+      "Dilşikestî",
+      "Tirsiyayî",
+      "Evîndar",
+      "Bêhêvî"
+    ],
+    "answersTr": [
+      "Kalbi kırık",
+      "Korkmuş",
+      "Aşık",
+      "Umutsuz"
+    ],
+    "correctAnswer": "Evîndar",
+    "correctAnswerTr": "Aşık",
+    "explanation": "\"Evîndar\" aşık olan kişi için söylenir.",
+    "explanationKu": "\"Evîndar\" ji bo kesê ku evînê dike tê gotin.",
+    "explanationTr": "\"Evîndar\" aşık olan kişi için söylenir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0057",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Barış\" bi kurmancî çi ye?",
+    "promptTr": "\"Barış\" Kurmancîsi nedir?",
+    "answers": [
+      "Aştî",
+      "Hêvî",
+      "Bawerî",
+      "Evîn"
+    ],
+    "answersTr": [
+      "Barış",
+      "Umut",
+      "İnanç",
+      "Aşk"
+    ],
+    "correctAnswer": "Aştî",
+    "correctAnswerTr": "Barış",
+    "explanation": "\"Aştî\" savaşın karşıtıdır.",
+    "explanationKu": "\"Aştî\" dijberê şer e.",
+    "explanationTr": "\"Aştî\" savaşın karşıtıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0058",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Umut\" bi kurmancî çi ye?",
+    "promptTr": "\"Umut\" Kurmancîsi nedir?",
+    "answers": [
+      "Bawerî",
+      "Aştî",
+      "Hêvî",
+      "Dilşad"
+    ],
+    "answersTr": [
+      "İnanç",
+      "Barış",
+      "Umut",
+      "Sevinçli"
+    ],
+    "correctAnswer": "Hêvî",
+    "correctAnswerTr": "Umut",
+    "explanation": "\"Hêvî\" iyi günleri beklemektir.",
+    "explanationKu": "\"Hêvî\" çaverêkirina rojên baş e.",
+    "explanationTr": "\"Hêvî\" iyi günleri beklemektir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0059",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ez pir ___ im: dilê min tijî hêvî ye.",
+    "promptTr": "Çok ___ : kalbim umutla dolu.",
+    "answers": [
+      "xemgîn",
+      "kêfxweş",
+      "hêrsbûyî",
+      "tirsiyayî"
+    ],
+    "answersTr": [
+      "üzgün",
+      "mutlu",
+      "öfkeli",
+      "korkmuş"
+    ],
+    "correctAnswer": "kêfxweş",
+    "correctAnswerTr": "mutlu",
+    "explanation": "Umutla dolu kalp \"mutlu\"dur.",
+    "explanationKu": "Mirovê ku dilê wî tijî hêvî ye \"kêfxweş\" e.",
+    "explanationTr": "Umutla dolu kalp \"mutlu\"dur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0060",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Bawerî\" bi tirkî çi ye?",
+    "promptTr": "\"Bawerî\" Türkçesi nedir?",
+    "answers": [
+      "Umut",
+      "Barış",
+      "İnanç / Güven",
+      "Sevinç"
+    ],
+    "answersTr": [
+      "Umut",
+      "Barış",
+      "İnanç / Güven",
+      "Sevinç"
+    ],
+    "correctAnswer": "İnanç / Güven",
+    "correctAnswerTr": "İnanç / Güven",
+    "explanation": "\"Bawerî\" birine inanmaktır.",
+    "explanationKu": "\"Bawerî\" bawerkirina bi kesekî ye.",
+    "explanationTr": "\"Bawerî\" birine inanmaktır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0061",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Xemgîn\" bi tirkî çi ye?",
+    "promptTr": "\"Xemgîn\" Türkçesi nedir?",
+    "answers": [
+      "Mutlu",
+      "Öfkeli",
+      "Umutlu",
+      "Üzgün"
+    ],
+    "answersTr": [
+      "Mutlu",
+      "Öfkeli",
+      "Umutlu",
+      "Üzgün"
+    ],
+    "correctAnswer": "Üzgün",
+    "correctAnswerTr": "Üzgün",
+    "explanation": "\"Xemgîn\" olumsuz bir duygudur.",
+    "explanationKu": "\"Xemgîn\" hesteke neyînî ye.",
+    "explanationTr": "\"Xemgîn\" olumsuz bir duygudur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0062",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Öfkeli\" bi kurmancî çi ye?",
+    "promptTr": "\"Öfkeli\" Kurmancîsi nedir?",
+    "answers": [
+      "Kêfxweş",
+      "Hêrsbûyî",
+      "Xemgîn",
+      "Dilşad"
+    ],
+    "answersTr": [
+      "Mutlu",
+      "Öfkeli",
+      "Üzgün",
+      "Sevinçli"
+    ],
+    "correctAnswer": "Hêrsbûyî",
+    "correctAnswerTr": "Öfkeli",
+    "explanation": "\"Hêrsbûyî\" öfke duygusudur.",
+    "explanationKu": "\"Hêrsbûyî\" hesta hêrsê ye.",
+    "explanationTr": "\"Hêrsbûyî\" öfke duygusudur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0063",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Korkmuş\" bi kurmancî çi ye?",
+    "promptTr": "\"Korkmuş\" Kurmancîsi nedir?",
+    "answers": [
+      "Bêhêvî",
+      "Evîndar",
+      "Aştî",
+      "Tirsiyayî"
+    ],
+    "answersTr": [
+      "Umutsuz",
+      "Aşık",
+      "Barış",
+      "Korkmuş"
+    ],
+    "correctAnswer": "Tirsiyayî",
+    "correctAnswerTr": "Korkmuş",
+    "explanation": "\"Tirsiyayî\" korku duygusudur.",
+    "explanationKu": "\"Tirsiyayî\" hesta tirsê ye.",
+    "explanationTr": "\"Tirsiyayî\" korku duygusudur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0064",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Umutsuz\" bi kurmancî çi ye?",
+    "promptTr": "\"Umutsuz\" Kurmancîsi nedir?",
+    "answers": [
+      "Hêvî",
+      "Bawerî",
+      "Bêhêvî",
+      "Dilşad"
+    ],
+    "answersTr": [
+      "Umut",
+      "İnanç",
+      "Umutsuz",
+      "Sevinçli"
+    ],
+    "correctAnswer": "Bêhêvî",
+    "correctAnswerTr": "Umutsuz",
+    "explanation": "\"Bêhêvî\" \"hêvî\"nin karşıtıdır.",
+    "explanationKu": "\"Bêhêvî\" dijberê \"hêvî\"yê ye.",
+    "explanationTr": "\"Bêhêvî\" \"hêvî\"nin karşıtıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0065",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Kalbi kırık\" bi kurmancî çi ye?",
+    "promptTr": "\"Kalbi kırık\" Kurmancîsi nedir?",
+    "answers": [
+      "Xemgîn",
+      "Hêrsbûyî",
+      "Evîndar",
+      "Dilşikestî"
+    ],
+    "answersTr": [
+      "Üzgün",
+      "Öfkeli",
+      "Aşık",
+      "Kalbi kırık"
+    ],
+    "correctAnswer": "Dilşikestî",
+    "correctAnswerTr": "Kalbi kırık",
+    "explanation": "\"Dilşikestî\" kalp acısıdır.",
+    "explanationKu": "\"Dilşikestî\" êşa dil e.",
+    "explanationTr": "\"Dilşikestî\" kalp acısıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0066",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Wî nûçeyeke nexweş bihîst, ew niha ___ e.",
+    "promptTr": "Kötü bir haber duydu, şimdi ___ .",
+    "answers": [
+      "kêfxweş",
+      "xemgîn",
+      "dilşad",
+      "evîndar"
+    ],
+    "answersTr": [
+      "mutlu",
+      "üzgün",
+      "sevinçli",
+      "aşık"
+    ],
+    "correctAnswer": "xemgîn",
+    "correctAnswerTr": "üzgün",
+    "explanation": "Kötü haberden sonra \"üzgün\" oluruz.",
+    "explanationKu": "Piştî nûçeyên nexweş em \"xemgîn\" dibin.",
+    "explanationTr": "Kötü haberden sonra \"üzgün\" oluruz.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0067",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan hest neyînî ye?",
+    "promptTr": "Hangisi olumsuz duygudur?",
+    "answers": [
+      "Kêfxweş",
+      "Hêvî",
+      "Aştî",
+      "Bêhêvî"
+    ],
+    "answersTr": [
+      "Mutlu",
+      "Umut",
+      "Barış",
+      "Umutsuz"
+    ],
+    "correctAnswer": "Bêhêvî",
+    "correctAnswerTr": "Umutsuz",
+    "explanation": "\"Bêhêvî\" olumsuzdur, diğerleri olumludur.",
+    "explanationKu": "\"Bêhêvî\" neyînî ye, yên din erênî ne.",
+    "explanationTr": "\"Bêhêvî\" olumsuzdur, diğerleri olumludur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0068",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Dengekî bilind hat, zarok ___ bû.",
+    "promptTr": "Yüksek ses geldi, çocuk ___ .",
+    "answers": [
+      "kêfxweş",
+      "dilşad",
+      "tirsiyayî",
+      "evîndar"
+    ],
+    "answersTr": [
+      "mutlu",
+      "sevinçli",
+      "korkmuş",
+      "aşık"
+    ],
+    "correctAnswer": "tirsiyayî",
+    "correctAnswerTr": "korkmuş",
+    "explanation": "Yüksek ses korku yaratır.",
+    "explanationKu": "Dengê bilind tirsê çêdike.",
+    "explanationTr": "Yüksek ses korku yaratır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: emotions_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi emotions_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "emotions_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0069",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Rêbendan\" bi tirkî çi ye?",
+    "promptTr": "\"Rêbendan\" Türkçesi nedir?",
+    "answers": [
+      "Şubat",
+      "Mart",
+      "Nisan",
+      "Ocak"
+    ],
+    "answersTr": [
+      "Şubat",
+      "Mart",
+      "Nisan",
+      "Ocak"
+    ],
+    "correctAnswer": "Ocak",
+    "correctAnswerTr": "Ocak",
+    "explanation": "\"Rêbendan\" birinci aydır.",
+    "explanationKu": "\"Rêbendan\" meha yekem e.",
+    "explanationTr": "\"Rêbendan\" birinci aydır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: time_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "time_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0070",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Şubat\" bi kurmancî çi ye?",
+    "promptTr": "\"Şubat\" Kurmancîsi nedir?",
+    "answers": [
+      "Reşemeh",
+      "Rêbendan",
+      "Adar",
+      "Nîsan"
+    ],
+    "answersTr": [
+      "Şubat",
+      "Ocak",
+      "Mart",
+      "Nisan"
+    ],
+    "correctAnswer": "Reşemeh",
+    "correctAnswerTr": "Şubat",
+    "explanation": "\"Reşemeh\" ikinci aydır.",
+    "explanationKu": "\"Reşemeh\" meha duyem e.",
+    "explanationTr": "\"Reşemeh\" ikinci aydır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: time_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "time_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0071",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Mart\" bi kurmancî çi ye?",
+    "promptTr": "\"Mart\" Kurmancîsi nedir?",
+    "answers": [
+      "Gulan",
+      "Hezîran",
+      "Adar",
+      "Rêbendan"
+    ],
+    "answersTr": [
+      "Mayıs",
+      "Haziran",
+      "Mart",
+      "Ocak"
+    ],
+    "correctAnswer": "Adar",
+    "correctAnswerTr": "Mart",
+    "explanation": "\"Adar\" üçüncü aydır.",
+    "explanationKu": "\"Adar\" meha sêyem e.",
+    "explanationTr": "\"Adar\" üçüncü aydır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: time_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "time_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0072",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Nisan\" bi kurmancî çi ye?",
+    "promptTr": "\"Nisan\" Kurmancîsi nedir?",
+    "answers": [
+      "Nîsan",
+      "Gulan",
+      "Adar",
+      "Reşemeh"
+    ],
+    "answersTr": [
+      "Nisan",
+      "Mayıs",
+      "Mart",
+      "Şubat"
+    ],
+    "correctAnswer": "Nîsan",
+    "correctAnswerTr": "Nisan",
+    "explanation": "\"Nîsan\" dördüncü aydır.",
+    "explanationKu": "\"Nîsan\" meha çarem e.",
+    "explanationTr": "\"Nîsan\" dördüncü aydır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: time_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "time_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0073",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Mayıs\" bi kurmancî çi ye?",
+    "promptTr": "\"Mayıs\" Kurmancîsi nedir?",
+    "answers": [
+      "Hezîran",
+      "Nîsan",
+      "Rêbendan",
+      "Gulan"
+    ],
+    "answersTr": [
+      "Haziran",
+      "Nisan",
+      "Ocak",
+      "Mayıs"
+    ],
+    "correctAnswer": "Gulan",
+    "correctAnswerTr": "Mayıs",
+    "explanation": "\"Gulan\" beşinci aydır.",
+    "explanationKu": "\"Gulan\" meha pêncem e.",
+    "explanationTr": "\"Gulan\" beşinci aydır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: time_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "time_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0074",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Haziran\" bi kurmancî çi ye?",
+    "promptTr": "\"Haziran\" Kurmancîsi nedir?",
+    "answers": [
+      "Hezîran",
+      "Adar",
+      "Gulan",
+      "Nîsan"
+    ],
+    "answersTr": [
+      "Haziran",
+      "Mart",
+      "Mayıs",
+      "Nisan"
+    ],
+    "correctAnswer": "Hezîran",
+    "correctAnswerTr": "Haziran",
+    "explanation": "\"Hezîran\" altıncı aydır.",
+    "explanationKu": "\"Hezîran\" meha şeşem e.",
+    "explanationTr": "\"Hezîran\" altıncı aydır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: time_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "time_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0075",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Piştî meha Adarê kîjan meh tê?",
+    "promptTr": "Marttan sonra hangi ay gelir?",
+    "answers": [
+      "Reşemeh",
+      "Rêbendan",
+      "Nîsan",
+      "Gulan"
+    ],
+    "answersTr": [
+      "Şubat",
+      "Ocak",
+      "Nisan",
+      "Mayıs"
+    ],
+    "correctAnswer": "Nîsan",
+    "correctAnswerTr": "Nisan",
+    "explanation": "Marttan sonra Nisan gelir.",
+    "explanationKu": "Piştî meha Adarê, meha Nîsanê tê.",
+    "explanationTr": "Marttan sonra Nisan gelir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: time_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_1 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "time_1"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0076",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "\"Sabah\" bi kurmancî çi ye?",
+    "promptTr": "\"Sabah\" Kurmancîsi nedir?",
+    "answers": [
+      "Sibeh",
+      "Êvar",
+      "Şev",
+      "Nîvro"
+    ],
+    "answersTr": [
+      "Sabah",
+      "Akşam",
+      "Gece",
+      "Öğle"
+    ],
+    "correctAnswer": "Sibeh",
+    "correctAnswerTr": "Sabah",
+    "explanation": "\"Sibeh\" günün başlangıcıdır.",
+    "explanationKu": "\"Sibeh\" destpêka rojê ye.",
+    "explanationTr": "\"Sibeh\" günün başlangıcıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: time_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "time_2"
+    }
+  },
+  {
+    "id": "ders_2026_10_01_0077",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Duh, îro, ___: kîjan rast e?",
+    "promptTr": "Dün, bugün, ___: hangisi doğru?",
+    "answers": [
+      "Nîvro",
+      "Şev",
+      "Êvar",
+      "Sibe"
+    ],
+    "answersTr": [
+      "Öğle",
+      "Gece",
+      "Akşam",
+      "Yarın"
+    ],
+    "correctAnswer": "Sibe",
+    "correctAnswerTr": "Yarın",
+    "explanation": "\"Duh\" dündür, \"îro\" bugündür, \"sibe\" yarındır.",
+    "explanationKu": "\"Duh\" roja borî ye, \"îro\" ev roj e, \"sibe\" roja bê ye.",
+    "explanationTr": "\"Duh\" dündür, \"îro\" bugündür, \"sibe\" yarındır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ZanKurd dersi: time_2",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_2 sözlük çiftleri (learner_lexicon)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak ve Kurmancî inceleme: çok modelli tur (Muse Spark 1.3, Gemini, hakem turu); derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2,
+      "learningLessonId": "time_2"
+    }
+  }
+]

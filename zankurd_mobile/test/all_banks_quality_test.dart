@@ -95,7 +95,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla on dört kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla on beş kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -123,6 +123,8 @@ void main() {
         // dosya hâlâ listede YOK) ve kaynaklı bilim soruları.
         ...fromJson('assets/data/deepseek_verified_2026_09_30_questions.json'),
         ...fromJson('assets/data/bilim_2026_09_30_questions.json'),
+        // 2026-10-01: derse etiketli alıştırma soruları (74).
+        ...fromJson('assets/data/ders_2026_10_01_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;
