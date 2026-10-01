@@ -563,6 +563,9 @@ class SahneListGroup extends StatelessWidget {
   final List<Widget> children;
   final double dividerIndent;
 
+  /// Ayırıcının sağ (son) iç boşluğu; kartın kenarına değmez.
+  static const double dividerEndInset = SahneSpace.x4;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
@@ -578,11 +581,17 @@ class SahneListGroup extends StatelessWidget {
             for (var i = 0; i < children.length; i++) ...[
               if (i > 0)
                 Padding(
+                  // Ayırıcı iki yandan içeridedir: başta ikon/avatar hizası,
+                  // sonda [dividerEndInset]. Eskiden sağ kenara kadar
+                  // uzanıyor, kartın pahlı kenarının dışına taşıyordu
+                  // (2026-10-01 tasarım denetimi: ayarlar, paywall, düello
+                  // kutusu, alt konu listesi).
                   padding: EdgeInsetsDirectional.only(
                     start: switch (children[i]) {
                       final SahneListRow row => row.dividerIndent,
                       _ => dividerIndent,
                     },
+                    end: dividerEndInset,
                   ),
                   child: ExcludeSemantics(
                     child: SizedBox(

@@ -445,8 +445,8 @@ Widget _lists() => Column(
       children: [
         SahneListRow.thumb(
           image: _img('cand'),
-          title: 'Çay Evinde',
-          subtitle: 'Li Çayxanê',
+          title: 'Çay evinde',
+          subtitle: 'Li çayxanê',
           trailing: const SahneRowValue.meta('4 dk'),
           chevron: true,
           onTap: _noop,
@@ -933,16 +933,16 @@ Widget _pushedPage() => SahnePushedPage(
             children: [
               SahneListRow.thumb(
                 image: _img('cand'),
-                title: 'Çay Evinde',
-                subtitle: 'Li Çayxanê',
+                title: 'Çay evinde',
+                subtitle: 'Li çayxanê',
                 trailing: const SahneRowValue.meta('4 dk'),
                 chevron: true,
                 onTap: _noop,
               ),
               SahneListRow.thumb(
                 image: _img('edebiyat'),
-                title: 'Kendini Tanıtma',
-                subtitle: 'Xwe Nasandin',
+                title: 'Kendini tanıtma',
+                subtitle: 'Xwe nasandin',
                 trailing: const SahneRowValue.meta('3 dk'),
                 chevron: true,
                 onTap: _noop,

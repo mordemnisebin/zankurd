@@ -8,6 +8,7 @@ import '../models/quiz_question.dart';
 import '../config/category_visuals.dart';
 import '../services/placement_scoring.dart';
 import '../theme/app_icons.dart';
+import '../widgets/category_kicker_mark.dart';
 import '../widgets/sahne/sahne.dart';
 import 'quiz/quiz_option_tile.dart';
 import 'quiz_screen.dart' show QuizQuestionImage;
@@ -227,15 +228,14 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
               // metni ("SORU 1/12") ekranda kalır; çubuk görsel özettir.
               Row(
                 children: [
-                  Icon(
-                    CategoryVisuals.icon(question.category),
-                    size: 20,
-                    color: t.tx2,
+                  CategoryKickerMark(
+                    category: question.category,
+                    fallbackColor: t.tx2,
                   ),
                   const SizedBox(width: SahneSpace.x2),
                   Expanded(
                     child: Text(
-                      sahneUpper(context, '$category  •  $progress'),
+                      '$category · $progress',
                       style: SahneType.eyebrow.copyWith(color: t.tx),
                     ),
                   ),

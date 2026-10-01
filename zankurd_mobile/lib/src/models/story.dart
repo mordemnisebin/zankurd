@@ -71,8 +71,8 @@ class Story {
 /// Karmaşık tarihsel iddia içermez; nazik, bağlamsal geri bildirim kullanır.
 final Story cayxaneStory = Story(
   id: 'cayxane',
-  titleKu: 'Li Çayxanê',
-  titleTr: 'Çay Evinde',
+  titleKu: 'Li çayxanê',
+  titleTr: 'Çay evinde',
   startNodeId: 'start',
   nodes: [
     const StoryNode(
@@ -136,8 +136,8 @@ final Story cayxaneStory = Story(
 /// Günlük tanışma: kullanıcı adını söyler, karşısındakini tanır ve vedalaşır.
 final Story introducingYourselfStory = Story(
   id: 'xwe-nasandin',
-  titleKu: 'Xwe Nasandin',
-  titleTr: 'Kendini Tanıtma',
+  titleKu: 'Xwe nasandin',
+  titleTr: 'Kendini tanıtma',
   startNodeId: 'start',
   nodes: [
     const StoryNode(
@@ -213,7 +213,7 @@ final Story introducingYourselfStory = Story(
 /// Küçük bir dükkânda ürün sorma, fiyat öğrenme ve karar verme hikâyesi.
 final Story shoppingStory = Story(
   id: 'kirin',
-  titleKu: 'Li Dikanê',
+  titleKu: 'Li dikanê',
   titleTr: 'Alışverişte',
   startNodeId: 'start',
   nodes: [
@@ -296,8 +296,8 @@ final Story shoppingStory = Story(
 /// Sokakta yön sorma ve verilen kısa tarifi takip etme hikâyesi.
 final Story askingDirectionsStory = Story(
   id: 'rê-pirsîn',
-  titleKu: 'Rê Pirsîn',
-  titleTr: 'Yol Sorma',
+  titleKu: 'Rê pirsîn',
+  titleTr: 'Yol sorma',
   startNodeId: 'start',
   nodes: [
     const StoryNode(

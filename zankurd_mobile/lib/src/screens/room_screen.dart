@@ -972,6 +972,12 @@ class _RoomScreenState extends State<RoomScreen> {
                                               rank: i + 1,
                                               player: visiblePlayers[i],
                                               isKu: ku,
+                                              // Oyun başlamadan puan ve seri
+                                              // yok: "0 / 0 üst üste" anlamsız
+                                              // sütundu.
+                                              showScore:
+                                                  room.status !=
+                                                  RoomStatus.lobby,
                                               repository: widget.repository,
                                               isSelf:
                                                   visiblePlayers[i].id ==
@@ -1614,6 +1620,7 @@ class _RoomPlayerRow extends StatelessWidget {
     required this.repository,
     required this.isSelf,
     this.isHost = false,
+    this.showScore = true,
     this.onBlocked,
   });
 
@@ -1624,6 +1631,10 @@ class _RoomPlayerRow extends StatelessWidget {
   final Player player;
   final bool isKu;
   final bool isHost;
+
+  /// Puan ve seri sütunu. Salon (lobby) aşamasında herkes 0'dadır; sıfırlar
+  /// bilgi vermez, yalnız gürültü ekler — oyun başlayınca görünür.
+  final bool showScore;
 
   /// Bildir/engelle için; yeni bir backend yok, mevcut RPC'ler kullanılır.
   final ZanKurdRepository repository;
@@ -1766,14 +1777,17 @@ class _RoomPlayerRow extends StatelessWidget {
                   nameText,
                   const SizedBox(height: 2),
                   state,
-                  if (stacked) ...[
+                  if (stacked && showScore) ...[
                     const SizedBox(height: SahneSpace.x1),
                     score,
                   ],
                 ],
               ),
             ),
-            if (!stacked) ...[const SizedBox(width: SahneSpace.x2), score],
+            if (!stacked && showScore) ...[
+              const SizedBox(width: SahneSpace.x2),
+              score,
+            ],
             // Yabancı bir oyuncunun avatarı ve adı bu satırda da
             // gösteriliyor; bildir/engelle burada (2026-08-06 denetimi).
             // Satırın SONUNDA: 48 dp'lik hedef metin sütununu uzatırsa

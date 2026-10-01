@@ -569,7 +569,7 @@ void main() {
     // tekrarı yalnız oyalıyordu (bkz. profile_name_gate_screen.dart build()
     // notu). Bu testin asıl iddiası (ekran doğal Kurmancî gösterir) artık
     // kalan tek soru üzerinden sınanır.
-    expect(find.text('Navê te di lîstikê de çi be?'), findsOneWidget);
+    expect(find.text('Navê te çi be?'), findsOneWidget);
   });
 
   testWidgets('guest sign in is reachable in the first mobile auth viewport', (

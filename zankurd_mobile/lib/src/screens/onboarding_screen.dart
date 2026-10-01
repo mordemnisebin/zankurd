@@ -324,19 +324,28 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     SizedBox(height: compact ? SahneSpace.x2 : SahneSpace.x3),
                     ConstrainedBox(
                       constraints: BoxConstraints(maxWidth: buttonMaxWidth),
-                      child: SahneButton.primary(
-                        expand: true,
-                        onPressed: last
-                            ? _completeIfAgeOk
-                            : () {
-                                _controller.nextPage(
-                                  duration: reduce
-                                      ? const Duration(milliseconds: 1)
-                                      : const Duration(milliseconds: 250),
-                                  curve: Curves.easeOutCubic,
-                                );
-                              },
-                        label: last ? context.t(K.start) : context.t(K.next),
+                      // Son sayfada kutu işaretsizken "Başla" PASİF görünür
+                      // (Perde + üçüncül metin): eskiden tam etkin görünüp
+                      // basınca hata veriyordu. Pasif düğmeye basılırsa yine
+                      // satır içi ipucu çıkar ([_completeIfAgeOk]) — oyuncu
+                      // ne eksik olduğunu öğrenir; doğrulama değişmedi.
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: last && !_ageConfirmed ? _completeIfAgeOk : null,
+                        child: SahneButton.primary(
+                          expand: true,
+                          onPressed: last
+                              ? (_ageConfirmed ? _completeIfAgeOk : null)
+                              : () {
+                                  _controller.nextPage(
+                                    duration: reduce
+                                        ? const Duration(milliseconds: 1)
+                                        : const Duration(milliseconds: 250),
+                                    curve: Curves.easeOutCubic,
+                                  );
+                                },
+                          label: last ? context.t(K.start) : context.t(K.next),
+                        ),
                       ),
                     ),
                   ],

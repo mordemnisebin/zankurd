@@ -733,20 +733,20 @@ class SahneType {
     leadingDistribution: TextLeadingDistribution.even,
   );
 
-  /// 14/20 — soru ekranının üst satırı ("KONU • SORU n/N"): başlık ailesi,
-  /// BÜYÜK HARF, +%8 aralık. Metin [upperFor] ile büyütülür;
-  /// `toUpperCase()` yerele duyarsızdır.
+  /// 14/20 — soru sahnesinin üst satırı ("Konu · Soru n/N"), hikâye ve
+  /// bölüm künyesi: başlık ailesi, 800, CÜMLE DÜZENİ, harf aralığı yok.
   ///
-  /// 2026-09-29 doğallık (K8): rozet, çip ve kart üst etiketleri artık bunu
-  /// kullanmaz ([captionStrong], cümle düzeni). Her etiketin büyük harf +
-  /// harf aralığıyla bağırması şablon izi bırakıyordu; büyük harf tek bir
-  /// yerde, soru sahnesinin künyesinde kalır.
+  /// 2026-09-29 doğallık (K8): rozet, çip ve kart üst etiketleri
+  /// [captionStrong]a (cümle düzeni) geçmişti; büyük harf yalnız soru
+  /// künyesinde kalmıştı. 2026-10-01 tasarım denetimi: künye de cümle
+  /// düzenine geçti — "SİYASET • SORU 1/5" bağırıyordu ve harf aralığı
+  /// Kurmancî uzun kategori adlarını daha erken sarıyordu. Artık hiçbir
+  /// etiket büyük harfle çizilmez (bekçi: `no_caps_labels_test.dart`).
   static const TextStyle eyebrow = TextStyle(
     fontFamily: display,
     fontWeight: FontWeight.w800,
     fontSize: 14,
     height: 20 / 14,
-    letterSpacing: 14 * 0.08,
     leadingDistribution: TextLeadingDistribution.even,
   );
 

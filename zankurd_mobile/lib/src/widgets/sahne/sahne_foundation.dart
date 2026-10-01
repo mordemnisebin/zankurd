@@ -82,7 +82,7 @@ Color sahneOnFill(Color fill) {
   return contrast(light, fill) >= contrast(dark, fill) ? light : dark;
 }
 
-/// Etkin dil Kurmancî mi? Büyük harf ([SahneType.upperFor]) için.
+/// Etkin dil Kurmancî mi? Yereli bilen biçimlendirme (avatar harfi, yüzde) için.
 ///
 /// Bileşenler dil sağlayıcısı olmadan da çizilebilsin (galeri, çıplak
 /// test) diye sağlayıcı yoksa Türkçe varsayılır; uygulamada sağlayıcı
@@ -115,10 +115,6 @@ String? _appLabel(BuildContext context, String key) {
     return null;
   }
 }
-
-/// Üst etiket ve rozet metnini yerele duyarlı büyütür.
-String sahneUpper(BuildContext context, String text) =>
-    SahneType.upperFor(text, isKu: sahneIsKu(context));
 
 /// "Hareketi azalt" açık mı? Açıkken yalnız renk ve şekil değişir.
 ///

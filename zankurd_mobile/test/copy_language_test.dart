@@ -890,7 +890,7 @@ void main() {
     // "jokeran" deyince oyuncu aynı yardımcıyı Türkçe adla görür.
     // `jokeran` çekimi `joker\s*50` taramasını kör eder — turnûva
     // ile aynı sınıf.
-    expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkariyan'));
+    expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkarî'));
     expect(Tr.of(K.onbRewardBullet, AppLanguage.ku), contains('alîkariyê'));
     expect(Tr.of(K.sikIpucu, AppLanguage.ku), 'Alîkariya bersivê');
 

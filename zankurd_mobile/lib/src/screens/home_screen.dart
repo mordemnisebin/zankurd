@@ -704,36 +704,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   /// Dil düğmesi: iki dilli oyuncunun sık kullandığı tek araç.
   ///
-  /// Seri ve jeton bir DURUMdur; dil bir ARAÇtır. Bu yüzden çip gibi dolgu
-  /// taşımaz — yalnız ikincil metinle "TR"/"KU" yazar; dokunma alanı
-  /// 48 × 48. Tema düğmesi 2026-09-27'de başlıktan kalktı: küçük boyda
-  /// ayar çarkına benziyordu; tema Ayarlar ekranında.
+  /// Şahnê stat çipi (Kulis zemini, M pah, 36 görsel, 48 dokunma kutusu)
+  /// ve solunda dil ikonu: yalnız metin "TR" yazarken düğmeye benzemiyordu,
+  /// yanındaki seri/jeton çiplerinin yanında kaybolup gidiyordu
+  /// (2026-10-01 tasarım denetimi). Çip DURUM taşımaz — dokununca dil
+  /// değişir; ekran okuyucu "Dil, TR" der. Tema düğmesi 2026-09-27'de
+  /// başlıktan kalktı: küçük boyda ayar çarkına benziyordu; tema Ayarlar
+  /// ekranında.
   Widget _buildLanguageToggle(BuildContext context) {
-    final t = SahneTokens.of(context);
     final tooltip = context.t(K.language);
-    return Semantics(
-      button: true,
-      label: tooltip,
-      excludeSemantics: true,
-      onTap: context.langProvider.toggle,
-      child: Tooltip(
-        message: tooltip,
-        excludeFromSemantics: true,
-        child: SahneTappable(
-          key: const ValueKey('home-language-toggle'),
-          shape: SahneShape.m,
-          color: Colors.transparent,
-          onTap: context.langProvider.toggle,
-          child: SizedBox.square(
-            dimension: 48,
-            child: Center(
-              child: Text(
-                context.t(K.languageCode),
-                style: SahneType.captionStrong.copyWith(color: t.tx2),
-              ),
-            ),
-          ),
+    final code = context.t(K.languageCode);
+    return Tooltip(
+      message: tooltip,
+      excludeFromSemantics: true,
+      child: SahneStatChip(
+        key: const ValueKey('home-language-toggle'),
+        leading: Icon(
+          AppIcons.language,
+          size: 18,
+          color: SahneTokens.of(context).tx2,
         ),
+        label: code,
+        semanticLabel: '$tooltip, $code',
+        onTap: context.langProvider.toggle,
       ),
     );
   }

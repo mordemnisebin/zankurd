@@ -74,11 +74,14 @@ void main() {
       _wrap(const ReviewScreen(records: records, room: _room)),
     );
 
-    expect(find.text('1 doğru · 1 yanlış · 1 boş'), findsOneWidget);
-    expect(find.text('DOĞRU'), findsOneWidget);
-    expect(find.text('YANLIŞ'), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('BOŞ BIRAKILDI'), 300);
-    expect(find.text('BOŞ BIRAKILDI'), findsOneWidget);
+    // Sayılar karolarda; başlık altında tekrar eden özet satırı yok
+    // (2026-10-01 tasarım denetimi). Rozetler cümle düzeninde: karo
+    // etiketi ile kart rozeti aynı sözü taşır.
+    expect(find.text('1 doğru · 1 yanlış · 1 boş'), findsNothing);
+    expect(find.text('Doğru'), findsNWidgets(2));
+    expect(find.text('Yanlış'), findsNWidgets(2));
+    await tester.scrollUntilVisible(find.text('Boş bırakıldı'), 300);
+    expect(find.text('Boş bırakıldı'), findsOneWidget);
   });
 
   testWidgets('şıkta doğru/yanlış işaretleme ve açıklama panelini gösterir', (

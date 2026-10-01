@@ -168,8 +168,7 @@ class ScreenSectionHeading extends StatelessWidget {
   }
 }
 
-/// Bölüm etiketi — üst etiket biçemi (başlık ailesi, BÜYÜK HARF, yerele
-/// duyarlı).
+/// Bölüm etiketi — üst etiket biçemi (başlık ailesi, cümle düzeni).
 ///
 /// 2026-09-29 Şahnê: sol aksan çubuğu kaldırıldı (Şahnê'de sol çubuk yok);
 /// renk ham aksan değil, aksanın rolünün metin rengidir.
@@ -190,7 +189,7 @@ class ScreenSectionLabel extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: SahneSpace.x2),
       child: Text(
-        sahneUpper(context, label),
+        label,
         style: SahneType.eyebrow.copyWith(
           color: role == SahneRole.neutral ? t.tx2 : t.roleText(role),
         ),

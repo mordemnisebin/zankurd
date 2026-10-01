@@ -285,7 +285,7 @@ void main() {
     // ipucu "jokeran" deyince aynı yardımcı Türkçe adla duruyordu.
     // `jokeran` çekimi `joker\s*50` taramasını kör eder — turnûva
     // ile aynı sınıf.
-    expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkariyan'));
+    expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkarî'));
     expect(
       Tr.of(K.onbRewardBullet, AppLanguage.ku),
       'Bi bersivên rast zêr qezenc bike, di pirsên zor de alîkariyê bi kar bîne.',

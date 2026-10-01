@@ -332,6 +332,43 @@ class SahneCategoryGlyphPainter extends CustomPainter {
       old.mark != mark || old.tone != tone;
 }
 
+/// Konunun KÜÇÜK işareti: [SahneCategoryGlyphPainter]ın yuvarlak köşeli
+/// küçük karosu (soru künyesi, satır başı). Ana sayfa karosundaki silüetin
+/// aynısıdır — künyede genel bir Material ikonu durunca (Siyaset için
+/// "terazi") aynı konu iki ayrı çizimle anlatılıyordu (2026-10-01 tasarım
+/// denetimi).
+///
+/// Kare [size] kenarlıdır; silüet karonun %72'si olduğundan 28'de ~20 px
+/// çizilir ve iç çizgi en az 1,5 px kalır. Ekran okuyucudan gizlenir: konu
+/// adı yanındaki metinde zaten yazar.
+class SahneTopicMarkBadge extends StatelessWidget {
+  const SahneTopicMarkBadge({
+    super.key,
+    required this.mark,
+    required this.tone,
+    this.size = 28,
+  });
+
+  final SahneTopicMark mark;
+  final SahneCategoryTone tone;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return ExcludeSemantics(
+      child: SizedBox.square(
+        dimension: size,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(size * 0.25),
+          child: CustomPaint(
+            painter: SahneCategoryGlyphPainter(mark: mark, tone: tone),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// K1 motif ızgaraları (9x9). `#` = [SahneCategoryTone.detail], `o` = konu
 /// zemini ([SahneCategoryTone.ground]), `.` = [SahneCategoryTone.deep]
 /// alanı. Her konunun ayrı bir dokuma biçimi: sarmal (Ziman), yıldız
