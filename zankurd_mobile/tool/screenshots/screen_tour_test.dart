@@ -1610,6 +1610,13 @@ void main() {
   //    süre ve jeton bahsi seçimleri. Açık/TR, karanlık ve Kurmancî.
   testWidgets("90 oda kurma sheet'i", (t) async {
     await _pump(t, PlayHubScreen(repository: repository));
+    // Dar ekranda / büyük yazıda düğme kıvrımın altında kalır (tur
+    // `ZANKURD_SCREEN_TOUR_WIDTH/TEXT_SCALE` ile bu koşulu basabilir).
+    await t.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-create-room')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
@@ -1618,6 +1625,13 @@ void main() {
 
   testWidgets("91 oda kurma sheet'i (karanlık)", (t) async {
     await _pump(t, PlayHubScreen(repository: repository), dark: true);
+    // Dar ekranda / büyük yazıda düğme kıvrımın altında kalır (tur
+    // `ZANKURD_SCREEN_TOUR_WIDTH/TEXT_SCALE` ile bu koşulu basabilir).
+    await t.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-create-room')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
@@ -1626,6 +1640,13 @@ void main() {
 
   testWidgets("92 oda kurma sheet'i (Kurmancî)", (t) async {
     await _pump(t, PlayHubScreen(repository: repository), ku: true);
+    // Dar ekranda / büyük yazıda düğme kıvrımın altında kalır (tur
+    // `ZANKURD_SCREEN_TOUR_WIDTH/TEXT_SCALE` ile bu koşulu basabilir).
+    await t.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-create-room')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
