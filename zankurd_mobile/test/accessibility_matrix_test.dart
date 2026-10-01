@@ -21,6 +21,7 @@ import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
+import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
@@ -65,7 +66,41 @@ const _records = [
 
 typedef _Build = Widget Function(MockZanKurdRepository repository);
 
+/// Ekranı çizdikten sonra çalışan, durumu ilerleten adım (ör. şık seçmek).
+typedef _Then = Future<void> Function(WidgetTester tester);
+
+/// İlk şıkka dokunur ve geri bildirim/açıklama animasyonlarının bitmesini
+/// bekler: doğru/yanlış/seçili şıkların kontrastı yalnız cevaptan SONRA
+/// çizilir ve ilk kareyi ölçen bekçi onu hiç görmezdi.
+Future<void> _answerFirstOption(WidgetTester tester) async {
+  final repository = freshMockRepository();
+  await tester.tap(find.text(repository.questions.first.answers.first));
+  await tester.pump();
+  for (var i = 0; i < 12; i++) {
+    await tester.pump(const Duration(milliseconds: 300));
+  }
+}
+
+final Map<String, _Then> _thens = {
+  'soru (cevaplandı)': _answerFirstOption,
+  'ders sorusu (cevaplandı)': _answerFirstOption,
+};
+
 final Map<String, _Build> _screens = {
+  'soru (cevaplandı)': (r) => QuizScreen(
+    repository: r,
+    room: r.createRoom().copyWith(questionCount: 1),
+    questions: r.questions.take(1).toList(),
+    enableTimer: false,
+  ),
+  'ders sorusu (cevaplandı)': (r) => QuizScreen(
+    repository: r,
+    room: r.createRoom().copyWith(questionCount: 1),
+    questions: r.questions.take(1).toList(),
+    experience: QuizExperience.learning,
+    enableTimer: false,
+  ),
+  'seviye sınavı': (r) => LevelPlacementScreen(repository: r),
   'ana ekran': (r) => Scaffold(body: HomeScreen(repository: r)),
   'alt kategoriler': (r) => SubcategoryScreen(repository: r, category: 'Ziman'),
   'seviyeler': (r) => LevelScreen(repository: r, category: 'Ziman'),
@@ -135,6 +170,8 @@ Future<List<String>> _audit(
     () => Future<void>.delayed(const Duration(milliseconds: 50)),
   );
   await tester.pump(const Duration(milliseconds: 1600));
+  final then = _thens[name];
+  if (then != null) await then(tester);
 
   // Olumsuz denetim: ekran gerçekten istenen bileşimde çizildi mi? Boş ya da
   // yanlış temada çizilmiş bir kare her kılavuzdan "geçer" ve bekçiyi

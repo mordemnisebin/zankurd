@@ -116,7 +116,11 @@ class ProgressSummary extends StatelessWidget {
             ],
           ),
           SizedBox(height: inlineNumbers ? SahneSpace.x3 : SahneSpace.x2),
-          SahneProgressBar(value: ratio, tone: SahneProgressTone.gold),
+          SahneProgressBar(
+            value: ratio,
+            tone: SahneProgressTone.gold,
+            semanticLabel: levelLabel,
+          ),
           // Hedef bilinmiyorsa yalnız kazanılan XP gösterilir — "12/0"
           // gibi anlamsız bir oran yazılmaz.
           if (!inlineNumbers) ...[

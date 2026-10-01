@@ -1239,6 +1239,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                   child: SahneProgressBar(
                     value: (_currentSlideIndex + 1) / slides.length,
                     trailing: '${_currentSlideIndex + 1}/${slides.length}',
+                    semanticLabel: ku
+                        ? widget.lesson.titleKu
+                        : (widget.lesson.titleTr ?? widget.lesson.titleKu),
                   ),
                 ),
                 Expanded(
