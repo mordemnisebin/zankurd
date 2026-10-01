@@ -778,13 +778,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 const SizedBox(height: SahneSpace.x4),
-                TextFormField(
+                SahneField(
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: context.t(K.email),
-                    border: const OutlineInputBorder(),
-                  ),
+                  label: context.t(K.email),
                   validator: (v) {
                     if (v == null || v.isEmpty || !v.contains('@')) {
                       return context.t(K.emailInvalid);
@@ -793,13 +790,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                 ),
                 const SizedBox(height: 12),
-                TextFormField(
+                SahneField(
                   controller: passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: context.t(K.password),
-                    border: const OutlineInputBorder(),
-                  ),
+                  label: context.t(K.password),
                   validator: (v) {
                     if (v == null || v.length < 6) {
                       return context.t(K.passwordTooShort);

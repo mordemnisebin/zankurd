@@ -333,14 +333,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     ),
                   ),
                   const SizedBox(height: SahneSpace.x3),
-                  TextField(
+                  SahneField(
                     key: const ValueKey('referral-code-input'),
                     controller: controller,
                     textCapitalization: TextCapitalization.characters,
-                    // Girdi görünüşü temadan (Kulis, M pah, odakta Halka 2).
-                    decoration: InputDecoration(
-                      hintText: context.t(K.referralCodeHint),
-                    ),
+                    hintText: context.t(K.referralCodeHint),
+                    semanticLabel: context.t(K.referralCodeHint),
                   ),
                 ],
               ),
@@ -402,7 +400,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
   }
 
   Widget _buildSearchSection(bool ku) {
-    final t = SahneTokens.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -413,14 +410,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
           key: const ValueKey('friends-search-panel'),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final field = TextField(
+              final field = SahneField.search(
                 controller: _searchController,
-                textInputAction: TextInputAction.search,
+                hintText: context.t(K.searchByNameOrTag),
                 onSubmitted: (_) => _search(),
-                decoration: InputDecoration(
-                  hintText: context.t(K.searchByNameOrTag),
-                  prefixIcon: Icon(AppIcons.magnifyingGlass, color: t.tx2),
-                ),
               );
               final button = SahneButton.secondary(
                 label: context.t(K.searchAction),

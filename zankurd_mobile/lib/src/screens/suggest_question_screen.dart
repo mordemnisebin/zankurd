@@ -135,11 +135,12 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _FieldLabel(context.t(K.categoryLabel)),
-                    DropdownButtonFormField<String>(
+                    SahneDropdownField<String>(
+                      label: context.t(K.categoryLabel),
                       initialValue: _selectedCategory,
-                      isExpanded: true,
-                      hint: Text(context.t(K.categoryPick)),
+                      // Konu seçilince "konu seç" uyarısı kendiliğinden kalkar.
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      hintText: context.t(K.categoryPick),
                       items: categories.map((cat) {
                         return DropdownMenuItem(
                           value: cat,
@@ -157,14 +158,12 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                       },
                     ),
                     const SizedBox(height: SahneSpace.x4),
-                    _FieldLabel(context.t(K.questionKurmanci)),
-                    TextFormField(
+                    SahneField(
+                      label: context.t(K.questionKurmanci),
                       controller: _promptController,
                       maxLines: 3,
-                      style: SahneType.body.copyWith(color: t.tx),
-                      decoration: InputDecoration(
-                        hintText: context.t(K.questionHint),
-                      ),
+                      keyboardType: TextInputType.multiline,
+                      hintText: context.t(K.questionHint),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return context.t(K.questionEmpty);
@@ -196,7 +195,6 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                           _optionDController,
                         ][i],
                         label: letter,
-                        isCorrect: _correctOption == letter,
                       ),
                     ],
                   ],
@@ -229,14 +227,12 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _FieldLabel(context.t(K.explanationOptional)),
-                    TextFormField(
+                    SahneField(
+                      label: context.t(K.explanationOptional),
                       controller: _explanationController,
                       maxLines: 3,
-                      style: SahneType.body.copyWith(color: t.tx),
-                      decoration: InputDecoration(
-                        hintText: context.t(K.explanationHint),
-                      ),
+                      keyboardType: TextInputType.multiline,
+                      hintText: context.t(K.explanationHint),
                     ),
                     const SizedBox(height: SahneSpace.x4),
                     _FieldLabel(
@@ -353,7 +349,7 @@ class _SuggestQuestionScreenState extends State<SuggestQuestionScreen> {
   }
 }
 
-/// Girdi alanının etiketi — [StyledInputField] ile aynı dil: kalın
+/// Girdi alanının etiketi — [SahneField] ile aynı dil: kalın
 /// açıklama, ikincil metin, altında 8.
 class _FieldLabel extends StatelessWidget {
   const _FieldLabel(this.text);
@@ -376,57 +372,36 @@ class _FieldLabel extends StatelessWidget {
 
 /// Tek bir cevap alanı (A/B/C/D).
 ///
-/// Şık harfi renksizdir (Ray karosu, birincil metin — quizdeki şık dili).
-/// Yazarın doğru diye beyan ettiği şık Rast tonunu ve ✓ işaretini alır:
-/// durum hiçbir zaman yalnız renkle verilmez.
+/// Harf rozeti renksizdir (Ray karosu, birincil metin — quizdeki şık dili).
+/// Hangi şıkkın doğru olduğu YALNIZ aşağıdaki "Doğru cevabı seç" rayında
+/// seçilir ve orada görünür; satırda ikinci bir ✓/ton yok. Eskiden aynı seçim
+/// hem satırın ✓'inde hem rayda gösteriliyordu: kullanıcı iki denetimden
+/// hangisinin geçerli olduğunu bilemiyordu (2026-09-30 denetimi).
 class _AnswerField extends StatelessWidget {
-  const _AnswerField({
-    required this.controller,
-    required this.label,
-    required this.isCorrect,
-  });
+  const _AnswerField({required this.controller, required this.label});
 
   final TextEditingController controller;
   final String label;
-  final bool isCorrect;
 
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return TextFormField(
+    return SahneField(
       controller: controller,
-      style: SahneType.body.copyWith(color: t.tx),
-      decoration: InputDecoration(
-        // Yer tutucu harfsiz: harf zaten solda rozette duruyor, "A) Bersiv"
-        // aynı harfi ikinci kez yazıyordu (2026-09-30 canlı).
-        hintText: context.t(K.answerLabel),
-        prefixIcon: Padding(
-          padding: const EdgeInsetsDirectional.only(
-            start: SahneSpace.x2,
-            end: SahneSpace.x2,
-          ),
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: isCorrect ? t.okTint : t.s3,
-              shape: SahneShape.m,
-            ),
-            child: SizedBox.square(
-              dimension: 36,
-              child: Center(
-                child: Text(
-                  label,
-                  style: SahneType.button.copyWith(
-                    color: isCorrect ? t.okTx : t.tx,
-                  ),
-                ),
-              ),
+      // Yer tutucu harfsiz: harf zaten solda rozette duruyor, "A) Bersiv"
+      // aynı harfi ikinci kez yazıyordu (2026-09-30 canlı).
+      hintText: context.t(K.answerLabel),
+      semanticLabel: '${context.t(K.answerLabel)} $label',
+      leading: ExcludeSemantics(
+        child: DecoratedBox(
+          decoration: ShapeDecoration(color: t.s3, shape: SahneShape.m),
+          child: SizedBox.square(
+            dimension: 36,
+            child: Center(
+              child: Text(label, style: SahneType.button.copyWith(color: t.tx)),
             ),
           ),
         ),
-        prefixIconConstraints: const BoxConstraints(minWidth: 52),
-        suffixIcon: isCorrect
-            ? Icon(AppIcons.circleCheck, color: t.okTx, size: 22)
-            : null,
       ),
       validator: (value) {
         if (value == null || value.trim().isEmpty) {

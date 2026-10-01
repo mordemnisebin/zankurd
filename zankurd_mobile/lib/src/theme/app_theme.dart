@@ -1169,39 +1169,18 @@ class AppTheme {
         indicatorColor: t.learnBar,
         dividerColor: t.line,
       ),
+      // Girdi alanı görünüşü TEMADA DEĞİL: `SahneField`/`SahneDropdownField`
+      // (widgets/sahne/sahne_field.dart) çerçevesini kendisi çizer. Buradaki
+      // yuvarlak Material kutusu, ekranlara sızan ikinci bir girdi dilinin
+      // kaynağıydı (2026-09-30); artık yalnız yazı stilleri kalır ve ham bir
+      // `TextField` çizgisiz görünür — bekçi test onu zaten yakalar.
       inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: t.s2,
+        border: InputBorder.none,
         hintStyle: SahneType.body.copyWith(color: t.tx3),
         labelStyle: SahneType.body.copyWith(color: t.tx2),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(SahneShape.mValue),
-          borderSide: BorderSide(color: t.edge),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(SahneShape.mValue),
-          borderSide: BorderSide(color: t.edge),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(SahneShape.mValue),
-          borderSide: BorderSide(color: t.tx, width: SahneRing.r2),
-        ),
-        // Doğrulama hatası krem/koyu yüzeyde okunmuyordu (2026-07-25).
         errorStyle: SahneType.caption.copyWith(
           color: t.errTx,
           fontWeight: FontWeight.w600,
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(SahneShape.mValue),
-          borderSide: BorderSide(color: t.errTx, width: 1.5),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(SahneShape.mValue),
-          borderSide: BorderSide(color: t.errTx, width: SahneRing.r2),
         ),
       ),
       snackBarTheme: SnackBarThemeData(

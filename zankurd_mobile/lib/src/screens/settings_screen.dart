@@ -225,29 +225,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    context.t(K.playerName),
-                    style: SahneType.captionStrong.copyWith(color: t.tx2),
-                  ),
-                  const SizedBox(height: SahneSpace.x2),
-                  TextField(
+                  SahneField(
                     key: const ValueKey('settings-player-name-field'),
+                    label: context.t(K.playerName),
                     controller: _nameController,
                     enabled: !_loadingName && !_savingName,
-                    style: SahneType.body.copyWith(color: t.tx),
-                    decoration: InputDecoration(
-                      hintText: context.t(K.playerNameHint),
-                      prefixIcon: const Icon(AppIcons.idBadge, size: 20),
-                    ),
+                    hintText: context.t(K.playerNameHint),
+                    prefixIcon: AppIcons.idBadge,
                     textInputAction: TextInputAction.done,
                     onSubmitted: (_) => _savePlayerName(),
                   ),
                   const SizedBox(height: SahneSpace.x3),
-                  // Ayarlarda ekranın tek bir ana eylemi yok: ad kaydetmek
-                  // bir alanın onayıdır, birincil (Agir) değil ikincil.
-                  SahneButton.secondary(
+                  // Ad değişmeden "Kaydet" kapalı (hiçbir şey kaydedilecek
+                  // değil); değişince ekranın tek canlı eylemi olur ve
+                  // birincil (Agir) görünür — ikincil düğme değişikliği
+                  // fark ettirmiyordu.
+                  SahneButton.primary(
                     label: Tr.forKu(K.save, ku),
                     icon: AppIcons.floppyDisk,
+                    arrow: false,
                     expand: true,
                     onPressed: _loadingName || _savingName || !_isNameDirty
                         ? null
@@ -784,11 +780,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: [
                   Text(context.t(K.deleteTypeWord, {'word': confirmWord})),
                   const SizedBox(height: 12),
-                  TextField(
+                  SahneField(
                     key: const ValueKey('delete-confirm-field'),
                     controller: controller,
                     textCapitalization: TextCapitalization.characters,
-                    decoration: InputDecoration(hintText: confirmWord),
+                    hintText: confirmWord,
+                    semanticLabel: confirmWord,
                     onChanged: (value) {
                       setDialogState(
                         () => canDelete = value.trim() == confirmWord,

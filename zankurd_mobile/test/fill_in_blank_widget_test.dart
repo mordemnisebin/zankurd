@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/quiz/fill_in_blank_widget.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 /// 2026-08-10 denetim bulgusu: `fillInBlank` modelde ve rozetlerde vardı
 /// ama quiz alanı onu normal şıklara düşürüyordu; yazılabilir bir alan hiç
@@ -105,7 +106,7 @@ void main() {
     await tester.pumpWidget(_host(question: _nextQuestion, onSubmit: (_) {}));
     await tester.pump();
 
-    expect(tester.widget<TextField>(input).controller!.text, isEmpty);
+    expect(tester.widget<SahneField>(input).controller!.text, isEmpty);
   });
 
   testWidgets('yanlış yazılı yanıttan sonra kanonik doğru cevap gösterilir', (

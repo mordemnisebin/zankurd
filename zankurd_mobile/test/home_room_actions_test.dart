@@ -9,6 +9,7 @@ import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/main.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'support/widget_test_helpers.dart';
 
 class _CapturingJoinRepository extends MockZanKurdRepository {
@@ -246,15 +247,12 @@ void main() {
 
     final field = find.byKey(const ValueKey('play-hub-join-room-code-field'));
     for (final rune in 'ZK-ABCDEF0123'.runes) {
-      final current = tester.widget<TextFormField>(field).controller!.text;
+      final current = tester.widget<SahneField>(field).controller!.text;
       await tester.enterText(field, '$current${String.fromCharCode(rune)}');
       await tester.pump();
     }
 
-    expect(
-      tester.widget<TextFormField>(field).controller!.text,
-      'ZK-ABCDEF0123',
-    );
+    expect(tester.widget<SahneField>(field).controller!.text, 'ZK-ABCDEF0123');
     await tester.tap(find.text('Katıl'));
     await tester.pumpAndSettle();
     expect(repository.joinedCode, 'ZK-ABCDEF0123');
@@ -286,7 +284,7 @@ void main() {
 
     final field = find.byKey(const ValueKey('play-hub-join-room-code-field'));
     for (final rune in 'ZKAB'.runes) {
-      final current = tester.widget<TextFormField>(field).controller!.text;
+      final current = tester.widget<SahneField>(field).controller!.text;
       await tester.enterText(field, '$current${String.fromCharCode(rune)}');
       await tester.pump();
     }

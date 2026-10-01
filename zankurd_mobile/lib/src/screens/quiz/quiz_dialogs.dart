@@ -84,14 +84,12 @@ class _QuizReportDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(context.t(K.reportQuestion)),
-      content: TextField(
+      content: SahneField(
         controller: controller,
         minLines: 2,
         maxLines: 4,
-        decoration: InputDecoration(
-          labelText: context.t(K.reasonLabel),
-          border: const OutlineInputBorder(),
-        ),
+        keyboardType: TextInputType.multiline,
+        label: context.t(K.reasonLabel),
       ),
       actions: [
         DialogActionPair(

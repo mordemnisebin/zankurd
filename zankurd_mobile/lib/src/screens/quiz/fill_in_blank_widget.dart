@@ -136,7 +136,7 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextField(
+        SahneField(
           key: const ValueKey('fill-in-blank-input'),
           controller: _controller,
           enabled: !widget.disabled,
@@ -144,12 +144,10 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
           autocorrect: false,
           enableSuggestions: false,
           onSubmitted: (_) => _submit(),
-          style: SahneType.bodyStrong.copyWith(color: t.tx),
-          decoration: InputDecoration(
-            labelText: label,
-            hintText: label,
-            prefixIcon: Icon(AppIcons.pen, color: t.tx2, size: 20),
-          ),
+          inputTextStyle: SahneType.bodyStrong,
+          hintText: label,
+          semanticLabel: label,
+          prefixIcon: AppIcons.pen,
         ),
         if (!widget.disabled) ...[
           const SizedBox(height: SahneSpace.x3),
