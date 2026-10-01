@@ -119,12 +119,15 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final result = _result;
+    if (_questions.isNotEmpty && result != null) {
+      return _buildResultScaffold(context, ku, result);
+    }
     final skipLabel = context.t(K.placementSkip);
     final textScale = MediaQuery.textScalerOf(context).scale(16) / 16;
     final useCompactSkip =
         MediaQuery.sizeOf(context).width < 380 || textScale > 1.05;
-    final showQuestion = _questions.isNotEmpty && _result == null;
-    final question = showQuestion
+    final question = _questions.isNotEmpty
         ? _questions[_index].localized(isKu: ku)
         : null;
 
@@ -139,19 +142,17 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
             ),
       ridge: true,
       center: Semantics(header: true, child: Text(context.t(K.placementTitle))),
-      score: _result == null
-          ? (useCompactSkip
-                ? _SkipIconButton(
-                    key: const ValueKey('placement-skip-compact'),
-                    label: skipLabel,
-                    onPressed: _inputLocked ? null : _skip,
-                  )
-                : _SkipTextButton(
-                    key: const ValueKey('placement-skip'),
-                    label: skipLabel,
-                    onPressed: _inputLocked ? null : _skip,
-                  ))
-          : null,
+      score: useCompactSkip
+          ? _SkipIconButton(
+              key: const ValueKey('placement-skip-compact'),
+              label: skipLabel,
+              onPressed: _inputLocked ? null : _skip,
+            )
+          : _SkipTextButton(
+              key: const ValueKey('placement-skip'),
+              label: skipLabel,
+              onPressed: _inputLocked ? null : _skip,
+            ),
       progress: question == null
           ? null
           : SahneProgressBar(
@@ -161,23 +162,10 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
                 'total': '${_questions.length}',
               }),
             ),
-      dock: _result == null
-          ? null
-          : SahneButton.primary(
-              key: const ValueKey('placement-continue'),
-              label: context.t(K.start),
-              expand: true,
-              onPressed: () {
-                widget.onFinished?.call(_result!.level);
-                Navigator.of(context).maybePop();
-              },
-            ),
       body: Builder(
         builder: (context) => _questions.isEmpty
             ? _buildUnavailable(context)
-            : (_result != null
-                  ? _buildResult(context, ku, _result!)
-                  : _buildQuestion(context, question!)),
+            : _buildQuestion(context, question!),
       ),
     );
   }
@@ -276,8 +264,15 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
     );
   }
 
-  Widget _buildResult(BuildContext context, bool ku, PlacementResult result) {
-    final t = SahneTokens.of(context);
+  /// Sonuç ortak şablondadır ([SahneResultScaffold], 2026-10-01 A6):
+  /// seviye amblemi → "Seviyen" → seviye adı → "9/12 doğru" → öneri, alt
+  /// perdede tek birincil "Başla". Ödül ve sayım karosu yok: sınav
+  /// baskısızdır, jeton ya da XP vermez.
+  Widget _buildResultScaffold(
+    BuildContext context,
+    bool ku,
+    PlacementResult result,
+  ) {
     final level = result.level;
     // Seviye bir öğrenme sonucudur (Zimrût); en üst seviye ödül (Zêr).
     final (icon, role) = switch (level) {
@@ -285,62 +280,53 @@ class _LevelPlacementScreenState extends State<LevelPlacementScreen> {
       PlacementLevel.navin => (AppIcons.arrowTrendUp, SahneRole.learn),
       PlacementLevel.pesketi => (AppIcons.medal, SahneRole.gold),
     };
-    return Center(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(SahneSpace.x6),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 560),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Seviye rozeti: 88'lik pahlı kare, rolün ton zemini + rol
-              // ikonu. 2026-09-29 doğallık (K5): eskiden elmastı; elmas
-              // yalnız soru ilerlemesi ve ders sayacında kalır.
-              DecoratedBox(
+    return SahneResultScaffold(
+      closeLabel: context.t(K.close),
+      contextLabel: context.t(K.placementTitle),
+      hero: SahneResultHero(
+        // Seviye rozeti: 56'lık pahlı kare, rolün ton zemini + rol ikonu.
+        // 2026-09-29 doğallık (K5): eskiden elmastı; elmas yalnız soru
+        // ilerlemesi ve ders sayacında kalır.
+        emblem: Builder(
+          // Sahne bağlamı (gece) için: ekranın kendi bağlamı gündüz olabilir.
+          builder: (context) {
+            final t = SahneTokens.of(context);
+            return Center(
+              child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: t.roleTint(role),
                   shape: SahneShape.withSide(
-                    SahneShape.forSize(88),
+                    SahneShape.forSize(56),
                     t.roleText(role),
                     width: SahneRing.r2,
                   ),
                 ),
                 child: SizedBox.square(
-                  dimension: 88,
-                  child: Icon(icon, color: t.roleText(role), size: 36),
+                  dimension: 56,
+                  child: Icon(icon, color: t.roleText(role), size: 28),
                 ),
               ),
-              const SizedBox(height: SahneSpace.x5),
-              // K8: büyük harfli künye yalnız soru satırında; burada cümle
-              // düzeni.
-              Text(
-                context.t(K.placementYourLevel),
-                style: SahneType.captionStrong.copyWith(color: t.tx2),
-              ),
-              const SizedBox(height: SahneSpace.x1),
-              Text(
-                ku ? level.labelKu : level.labelTr,
-                key: const ValueKey('placement-result-level'),
-                textAlign: TextAlign.center,
-                style: SahneType.title.copyWith(color: t.roleText(role)),
-              ),
-              const SizedBox(height: SahneSpace.x2),
-              Text(
-                context.t(K.placementScore, {
-                  'correct': '${result.correctCount}',
-                  'total': '${result.totalCount}',
-                }),
-                style: SahneType.captionStrong.copyWith(color: t.tx2),
-              ),
-              const SizedBox(height: SahneSpace.x4),
-              Text(
-                _resultHint(ku, level),
-                textAlign: TextAlign.center,
-                style: SahneType.body.copyWith(color: t.tx),
-              ),
-            ],
-          ),
+            );
+          },
         ),
+        // K8: büyük harfli künye yalnız soru satırında; burada cümle düzeni.
+        eyebrow: context.t(K.placementYourLevel),
+        title: ku ? level.labelKu : level.labelTr,
+        titleKey: const ValueKey('placement-result-level'),
+        titleRole: role,
+        caption: context.t(K.placementScore, {
+          'correct': '${result.correctCount}',
+          'total': '${result.totalCount}',
+        }),
+        body: _resultHint(ku, level),
+      ),
+      primary: SahneResultAction(
+        key: const ValueKey('placement-continue'),
+        label: context.t(K.start),
+        onPressed: () {
+          widget.onFinished?.call(result.level);
+          Navigator.of(context).maybePop();
+        },
       ),
     );
   }

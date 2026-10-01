@@ -38,6 +38,7 @@ import 'package:zankurd_mobile/src/screens/favorite_questions_screen.dart';
 import 'package:zankurd_mobile/src/screens/image_credits_screen.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
@@ -440,8 +441,9 @@ Future<void> _pump(
   Widget child, {
   bool dark = false,
   bool ku = false,
+  Size? size,
 }) async {
-  _applyViewport(tester, _size);
+  _applyViewport(tester, size ?? _size);
   await tester.pumpWidget(_tourShell(child: child, dark: dark, ku: ku));
   // pumpAndSettle KULLANILMAZ: yükleme göstergeleri sonsuz animasyondur ve
   // tur boyunca kilitlenmeye yol açar. Sabit süreli pump yeterlidir.
@@ -1713,6 +1715,324 @@ void main() {
     );
     await _shoot(t, '103_async_duel_result_win_dark_ku');
   }, tags: ['preview']);
+
+  // ── Sonuç şablonu (A6): her bitiş ekranı kendi çeşidiyle ──────────────
+  testWidgets('200 sonuç — öğrenme (ödülsüz)', (t) async {
+    await _pump(
+      t,
+      _resultVariant(isLearningExperience: true, coins: 0, wrong: 1),
+    );
+    await _shoot(t, '200_result_learning');
+  }, tags: ['preview']);
+
+  testWidgets('201 sonuç — öğrenme (Kurmancî, karanlık)', (t) async {
+    await _pump(
+      t,
+      _resultVariant(isLearningExperience: true, coins: 0, wrong: 1),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '201_result_learning_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('202 sonuç — günün dersi', (t) async {
+    await _pump(t, _resultVariant(dailyQuiz: true, coins: 20, wrong: 1));
+    await _shoot(t, '202_result_daily');
+  }, tags: ['preview']);
+
+  testWidgets('203 sonuç — alıştırma (hepsi doğru, ödül yok)', (t) async {
+    await _pump(
+      t,
+      _resultVariant(practice: true, coins: 0, wrong: 0, streak: 0),
+    );
+    await _shoot(t, '203_result_practice_perfect');
+  }, tags: ['preview']);
+
+  testWidgets('204 sonuç — 1v1 kayıp (karanlık)', (t) async {
+    await _pump(
+      t,
+      _resultVariant(duelOpponentScore: 400, coins: 0, wrong: 2),
+      dark: true,
+    );
+    await _shoot(t, '204_result_1v1_loss_dark');
+  }, tags: ['preview']);
+
+  testWidgets('205 sonuç — günlük tavan', (t) async {
+    await _pump(t, _resultVariant(coins: 0, wrong: 1, dailyCapReached: true));
+    await _shoot(t, '205_result_daily_cap');
+  }, tags: ['preview']);
+
+  AsyncDuelSummary duelSummary({int? mine, AsyncDuelStatus? status}) {
+    return AsyncDuelSummary(
+      duelId: 'tour-duel',
+      status: status ?? AsyncDuelStatus.expired,
+      role: AsyncDuelRole.creator,
+      opponentName: 'Rojda',
+      myCorrect: mine,
+      createdAt: DateTime.utc(2026, 9, 28),
+      seen: false,
+    );
+  }
+
+  testWidgets('206 sırayla düello — süresi doldu', (t) async {
+    await _pump(
+      t,
+      AsyncDuelResultScreen(
+        repository: MockZanKurdRepository(),
+        view: AsyncDuelResultView.fromSummary(duelSummary(mine: 4)),
+      ),
+    );
+    await _shoot(t, '206_async_duel_result_expired');
+  }, tags: ['preview']);
+
+  testWidgets('207 sırayla düello — yarım kaldı (Kurmancî)', (t) async {
+    await _pump(
+      t,
+      AsyncDuelResultScreen(
+        repository: MockZanKurdRepository(),
+        view: AsyncDuelResultView.fromSummary(duelSummary()),
+      ),
+      ku: true,
+    );
+    await _shoot(t, '207_async_duel_result_unfinished_ku');
+  }, tags: ['preview']);
+
+  Future<void> finishPlacement(WidgetTester t) async {
+    await t.tap(find.byType(QuizOptionTile).first);
+    // Sonuç `PlacementStore` yazımından sonra çıkar (gerçek I/O).
+    await t.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 100)),
+    );
+    await t.pump(const Duration(milliseconds: 1600));
+  }
+
+  testWidgets('208 seviye belirleme sonucu', (t) async {
+    await _pump(
+      t,
+      LevelPlacementScreen(repository: repository, questionCount: 1),
+    );
+    await finishPlacement(t);
+    await _shoot(t, '208_placement_result');
+  }, tags: ['preview']);
+
+  testWidgets('209 seviye belirleme sonucu (Kurmancî, karanlık)', (t) async {
+    await _pump(
+      t,
+      LevelPlacementScreen(repository: repository, questionCount: 1),
+      dark: true,
+      ku: true,
+    );
+    await finishPlacement(t);
+    await _shoot(t, '209_placement_result_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('210 tur özeti — hepsi doğru (sıfır karo yok)', (t) async {
+    await _pump(
+      t,
+      ReviewScreen(
+        room: repository.createRoom(),
+        records: _tourRecords().take(2).toList(),
+      ),
+    );
+    await _shoot(t, '210_review_all_correct');
+  }, tags: ['preview']);
+
+  // ── Sıralama (A8): podyum, sabit kendi satırı ─────────────────────────
+  testWidgets('220 sıralama — podyum', (t) async {
+    await _pump(
+      t,
+      LeaderboardScreen(repository: _BoardRepository(players: 10)),
+    );
+    await _shoot(t, '220_leaderboard_podium');
+  }, tags: ['preview']);
+
+  testWidgets('221 sıralama — podyum (Kurmancî, karanlık)', (t) async {
+    await _pump(
+      t,
+      LeaderboardScreen(repository: _BoardRepository(players: 10)),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '221_leaderboard_podium_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('222 sıralama — iki oyuncu', (t) async {
+    await _pump(t, LeaderboardScreen(repository: _BoardRepository(players: 2)));
+    await _shoot(t, '222_leaderboard_two');
+  }, tags: ['preview']);
+
+  testWidgets('223 sıralama — sen listede değilsin (sabit satır)', (t) async {
+    await _pump(
+      t,
+      LeaderboardScreen(repository: _BoardRepository(players: 10, myRank: 14)),
+    );
+    await _shoot(t, '223_leaderboard_self_pinned');
+  }, tags: ['preview']);
+
+  testWidgets('224 sıralama — sabit satır (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      LeaderboardScreen(repository: _BoardRepository(players: 10, myRank: 14)),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '224_leaderboard_self_pinned_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('225 sıralama — henüz sıralamada değilsin', (t) async {
+    await _pump(t, LeaderboardScreen(repository: _BoardRepository(players: 5)));
+    await _shoot(t, '225_leaderboard_not_ranked');
+  }, tags: ['preview']);
+
+  testWidgets('226 sıralama — dar ekran, uzun adlar', (t) async {
+    await _pump(
+      t,
+      LeaderboardScreen(
+        repository: _BoardRepository(players: 6, longNames: true, myRank: 9),
+      ),
+      size: const Size(320, 760),
+    );
+    await _shoot(t, '226_leaderboard_narrow_long_names');
+  }, tags: ['preview']);
+}
+
+/// Sonuç ekranı çeşitleri (A6 kareleri): aynı üç soruluk tur, ödül/mod
+/// bayraklarıyla farklı bitişler.
+List<AnswerRecord> _tourRecords() => const [
+  AnswerRecord(
+    id: 'r1',
+    category: 'Ziman',
+    prompt: 'Peyva «av» bi Tirkî çi tê gotin?',
+    answers: ['su', 'ekmek', 'yol', 'dağ'],
+    correctAnswer: 'su',
+    selectedAnswer: 'su',
+    explanation: '«av» Türkçede «su» demektir.',
+    explanationKu: '«av» bi Tirkî dibe «su».',
+    explanationTr: '«av» Türkçede «su» demektir.',
+  ),
+  AnswerRecord(
+    id: 'r2',
+    category: 'Ziman',
+    prompt: 'Peyva «agir» bi Tirkî çi tê gotin?',
+    answers: ['ateş', 'su', 'hava', 'toprak'],
+    correctAnswer: 'ateş',
+    selectedAnswer: 'ateş',
+    explanation: '«agir» Türkçede «ateş» demektir.',
+    explanationKu: '«agir» bi Tirkî dibe «ateş».',
+    explanationTr: '«agir» Türkçede «ateş» demektir.',
+  ),
+];
+
+Widget _resultVariant({
+  bool isLearningExperience = false,
+  bool dailyQuiz = false,
+  bool practice = false,
+  bool dailyCapReached = false,
+  int? duelOpponentScore,
+  int coins = 30,
+  int wrong = 1,
+  int streak = 2,
+}) {
+  final repository = _TourRepository();
+  final room = repository.createRoom();
+  const total = 3;
+  final correct = total - wrong;
+  return QuizResultScreen(
+    repository: repository,
+    room: room,
+    score: isLearningExperience ? 0 : 240,
+    correctCount: correct,
+    wrongCount: wrong,
+    totalQuestions: total,
+    bestStreak: streak,
+    coinsAwarded: coins,
+    isLearningExperience: isLearningExperience,
+    dailyQuiz: dailyQuiz,
+    practice: practice,
+    dailyCapReached: dailyCapReached,
+    opponents: duelOpponentScore == null
+        ? const []
+        : [
+            Player(
+              id: 'opp',
+              name: 'Rojda',
+              score: duelOpponentScore,
+              state: Player.readyState,
+            ),
+          ],
+    answerRecords: _tourRecords(),
+  );
+}
+
+/// Sıralama kareleri için ayarlanabilir tahta: [players] satır (en üst 10'a
+/// kadar), isteğe bağlı olarak oyuncunun listenin DIŞINDAKİ dönem sırası.
+class _BoardRepository extends MockZanKurdRepository {
+  _BoardRepository({
+    required this.players,
+    this.myRank,
+    this.longNames = false,
+  });
+
+  final int players;
+  final int? myRank;
+  final bool longNames;
+
+  static const _names = [
+    'Rojda',
+    'Baran',
+    'Dilan',
+    'Diyar',
+    'Berfin',
+    'Rojîn',
+    'Zelal',
+    'Hêvîdar',
+    'Azad',
+    'Narîn',
+  ];
+  static const _longNames = [
+    'Mihemed Emînê Şerefxan',
+    'Ayşegül Hêvîdar Bayram',
+    'Abdurrahman Cizîrî',
+    'Zeynep Narîn Kaya',
+    'Muhammed Resul Demir',
+    'Rojhat Kendal',
+  ];
+
+  @override
+  Future<List<LeaderboardEntry>> loadLeaderboard({
+    int limit = 10,
+    LeaderboardPeriod period = LeaderboardPeriod.weekly,
+  }) async {
+    return [
+      for (var i = 0; i < players; i++)
+        LeaderboardEntry(
+          rank: i + 1,
+          playerId: 'board-$i',
+          displayName: longNames
+              ? _longNames[i % _longNames.length]
+              : _names[i % _names.length],
+          totalScore: 8420 - i * 700,
+          bestStreak: 11 - i,
+          roomsPlayed: 14 - i,
+        ),
+    ];
+  }
+
+  @override
+  Future<LeaderboardEntry?> getMyLeaderboardRank(
+    LeaderboardPeriod period,
+  ) async {
+    final rank = myRank;
+    if (rank == null) return null;
+    return LeaderboardEntry(
+      rank: rank,
+      playerId: 'user',
+      displayName: 'ZanKurd Oyuncusu',
+      totalScore: 240,
+      bestStreak: 2,
+      roomsPlayed: 1,
+    );
+  }
 }
 
 /// Teslim edilememiş bir 1v1 sonucu — kurtarma ekranının beslendiği veri.

@@ -133,9 +133,12 @@ class _ViewModeChip extends StatelessWidget {
       SahneRailChip(label: label, selected: selected, onTap: onTap);
 }
 
-/// Üç sayaç karosu (yüzey kartı): doğru ✓ (Rast), yanlış ✗ (Şaş), boş
-/// (kum saati, ikincil). Durum yalnız renkle verilmez: ikon ve söz her
-/// zaman birlikte.
+/// Sayaç karoları: doğru ✓ (Rast), yanlış ✗ (Şaş), boş (kum saati,
+/// ikincil). Karolar ortak sonuç şablonundandır ([SahneResultStats],
+/// 2026-10-01 A6): tur sonucundaki karolarla aynı biçim, aynı büyük yazı
+/// davranışı. Burada tek fark kural: bu ekran cevap incelemesidir, sıfır
+/// karo HİÇ çizilmez ("0 Boş" hiçbir şey söylemeyen bir kutuydu); kalan
+/// karolar genişliği paylaşır, kayıt varken en az biri sıfırdan büyüktür.
 class _SummaryStrip extends StatelessWidget {
   const _SummaryStrip({
     required this.correct,
@@ -150,84 +153,24 @@ class _SummaryStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    // Sıfır karo çizilmez: "0 Boş" hiçbir şey söylemeyen bir kutuydu. Kalan
-    // karolar genişliği paylaşır; kayıt varken en az biri sıfırdan büyüktür.
-    final tiles = <Widget>[
-      if (correct > 0)
-        _SummaryTile(
-          color: t.okTx,
-          icon: AppIcons.circleCheck,
-          value: '$correct',
+    return SahneResultStats(
+      stats: [
+        SahneResultStat(
+          leading: Icon(AppIcons.circleCheck, size: 20, color: t.okTx),
+          value: correct,
           label: context.t(K.correct),
         ),
-      if (wrong > 0)
-        _SummaryTile(
-          color: t.errTx,
-          icon: AppIcons.circleXmark,
-          value: '$wrong',
+        SahneResultStat(
+          leading: Icon(AppIcons.circleXmark, size: 20, color: t.errTx),
+          value: wrong,
           label: context.t(K.wrong),
         ),
-      if (empty > 0)
-        _SummaryTile(
-          color: t.tx2,
-          icon: AppIcons.hourglass,
-          value: '$empty',
+        SahneResultStat(
+          leading: Icon(AppIcons.hourglass, size: 20, color: t.tx2),
+          value: empty,
           label: context.t(K.blank),
         ),
-    ];
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (var i = 0; i < tiles.length; i++) ...[
-            if (i > 0) const SizedBox(width: SahneSpace.x2),
-            Expanded(child: tiles[i]),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _SummaryTile extends StatelessWidget {
-  const _SummaryTile({
-    required this.color,
-    required this.icon,
-    required this.value,
-    required this.label,
-  });
-
-  final Color color;
-  final IconData icon;
-  final String value;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return SahneSurfaceCard(
-      padding: const EdgeInsets.all(SahneSpace.x3),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(icon, color: color, size: 20),
-              const SizedBox(width: SahneSpace.x2),
-              Flexible(
-                child: Text(
-                  value,
-                  style: SahneType.headline.copyWith(
-                    color: t.tx,
-                    fontFeatures: const [FontFeature.tabularFigures()],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Text(label, style: SahneType.caption.copyWith(color: t.tx2)),
-        ],
-      ),
+      ],
     );
   }
 }

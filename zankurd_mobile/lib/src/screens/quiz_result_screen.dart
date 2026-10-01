@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,8 +27,6 @@ import '../models/daily_mission.dart';
 import '../models/quiz_question.dart';
 import '../models/player.dart';
 import '../models/room.dart';
-import '../providers/reduced_motion_provider.dart';
-import '../widgets/rolling_count.dart';
 import '../widgets/learning_outcome_card.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
@@ -1161,7 +1157,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         _HeroNotice(icon: AppIcons.cloud, text: context.t(K.rewardUnresolved)),
     ];
 
-    final hasRewards = coinsAwarded > 0 || _earnedXP > 0 || _levelJourneyReady;
+    final hasRewards = SahneResultRewards.hasAny(
+      coins: coinsAwarded,
+      xp: _earnedXP,
+      progress: _levelJourneyReady,
+    );
     final breakdown = learningOutcome.categoryBreakdown;
     final hasGains =
         _newAchievements.isNotEmpty ||
@@ -1169,45 +1169,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         _completedMissions.isNotEmpty ||
         _dailyStreak > 0;
 
-    final children = <Widget>[
-      _ResultHero(
-        key: const ValueKey('result-score-header'),
-        starsEarned: starsEarned,
-        duel: duelOutcome,
-        title: headerTitle,
-        // Öğrenme turunda puan üretilmez (`score` hep 0); büyük sayı "0"
-        // yazınca 3 doğru yapan kullanıcıya başarısız gibi görünüyordu
-        // (2026-09-10 simülatör turu). Öğrenmede sayı, doğru cevap
-        // sayısıdır: "3/5".
-        value: isLearningExperience ? correctCount : score,
-        suffix: isLearningExperience ? '/$totalQuestions' : '',
-        caption: isLearningExperience
-            ? accuracyText
-            : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
-        celebrate: celebrate,
-        notices: notices,
-      ),
-      if (hasRewards) ...[
-        const SizedBox(height: SahneSpace.x3),
-        _RewardCard(
-          coins: coinsAwarded,
-          coinLabel: '+$coinsAwarded',
-          coinSemanticLabel: '+$coinsAwarded ${context.t(K.coinWord)}',
-          xp: _earnedXP,
-          journeyReady: _levelJourneyReady,
-          level: _currentLevel,
-          xpInLevel: _xpInCurrentLevel,
-          xpNeeded: _xpNeededForNextLevel,
-          progress: _levelProgress,
-        ),
-      ],
-      const SizedBox(height: SahneSpace.x2),
-      ResultStatTiles(
-        correct: correctCount,
-        wrong: wrongCount,
-        unanswered: unanswered,
-        streak: bestStreak,
-      ),
+    // 2026-10-01 (A6): kahraman, sayımlar ve ödül ortak sonuç şablonundan
+    // ([SahneResultScaffold]) gelir; burada yalnız bu ekrana özgü bölümler
+    // sıralanır. Sıra artık şablonun sırası: kahraman → sayımlar → ödül.
+    final sections = <Widget>[
       if (opponents.isNotEmpty)
         _RaceStandings(
           userScore: score,
@@ -1262,72 +1227,95 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       ),
     ];
 
-    final scaffold = SahneStageScaffold(
+    final scaffold = SahneResultScaffold(
       // Çevrimiçi turda kapatmak da ana eylem gibi ilk rotaya döner; solo
       // turda yalnız sonuç rotası kapanır (`PopScope` aşağıda).
       onClose: isOnlineRoom ? completeResultAction : null,
       closeLabel: context.t(K.close),
-      // Sonuçta dar huzme yerine sonuç ışınları (kahramanın arkasında).
-      beam: false,
       // Orta yuva bağlamdır: "Yarış tamamlandı" zaten içerikte başlık,
       // ekran adı ("Sonuç") tekrarlanmaz.
-      center: Text(
-        [
-          ?roundLabel,
-          context.t(K.questionCount, {'count': '$totalQuestions'}),
-        ].join(' • '),
-      ),
-      dock: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: _maxContentWidth),
-          child: _ResultDock(
-            primaryKey: primaryResultKey,
-            primaryLabel: primaryResultLabel,
-            primaryIcon: learningContinue ? null : nextActionIcon,
-            onPrimary: completeResultAction,
-            shareLabel: context.t(K.share),
-            onShare: shareResult,
+      contextLabel: [
+        ?roundLabel,
+        context.t(K.questionCount, {'count': '$totalQuestions'}),
+      ].join(' • '),
+      hero: SahneResultHero(
+        key: const ValueKey('result-score-header'),
+        emblem: switch (duelOutcome) {
+          null => SizedBox(height: 44, child: _ScoreStars(earned: starsEarned)),
+          _DuelOutcome.win => const SahneResultEmblem.win(),
+          _DuelOutcome.draw => const SahneResultEmblem.state(
+            icon: AppIcons.scaleBalanced,
           ),
-        ),
-      ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final side = math.max(
-            SahneSpace.page,
-            (constraints.maxWidth - _maxContentWidth) / 2,
-          );
-          // Işınlar kahramanın dışına taşar; üst satırın (kapat, bağlam)
-          // üstüne boyanmasın diye gövde kırpılır.
-          return ClipRect(
-            child: Stack(
-              children: [
-                ListView(
-                  // Sonuçtaki açıklamalar, öğrenme özeti ve yan eylemler tek
-                  // bir öğrenme yüzeyidir. Kısa ekranlarda da erişilebilirlik
-                  // ağacına birlikte girsinler; kayıt sayısı oda soru
-                  // sayısıyla sınırlı olduğu için geniş önbellek güvenlidir.
-                  scrollCacheExtent: const ScrollCacheExtent.pixels(2500),
-                  padding: EdgeInsets.fromLTRB(
-                    side,
-                    SahneSpace.x2,
-                    side,
-                    SahneSpace.x6,
-                  ),
-                  children: children,
-                ),
-                if (_showConfetti)
-                  ConfettiOverlay(
-                    onFinished: () {
-                      setState(() {
-                        _showConfetti = false;
-                      });
-                    },
-                  ),
-              ],
-            ),
-          );
+          _DuelOutcome.loss => const SahneResultEmblem.state(
+            icon: AppIcons.flag,
+          ),
         },
+        title: headerTitle,
+        titleRole: duelOutcome == _DuelOutcome.win ? SahneRole.gold : null,
+        // Öğrenme turunda puan üretilmez (`score` hep 0); büyük sayı "0"
+        // yazınca 3 doğru yapan kullanıcıya başarısız gibi görünüyordu
+        // (2026-09-10 simülatör turu). Öğrenmede sayı, doğru cevap
+        // sayısıdır: "3/5".
+        value: isLearningExperience ? correctCount : score,
+        suffix: isLearningExperience ? '/$totalQuestions' : '',
+        caption: isLearningExperience
+            ? accuracyText
+            : '${context.t(K.scoreWord).toLowerCase()} • $accuracyText',
+        celebrate: celebrate,
+        tone: duelOutcome == null
+            ? SahneResultTone.reward
+            : SahneResultTone.race,
+        notices: notices,
       ),
+      stats: ResultStatTiles(
+        correct: correctCount,
+        wrong: wrongCount,
+        unanswered: unanswered,
+        streak: bestStreak,
+      ),
+      rewards: hasRewards
+          ? SahneResultRewards(
+              coins: coinsAwarded,
+              coinLabel: '+$coinsAwarded',
+              coinSemanticLabel: '+$coinsAwarded ${context.t(K.coinWord)}',
+              xp: _earnedXP,
+              progress: _levelJourneyReady
+                  ? KeyedSubtree(
+                      key: const ValueKey('result-level-journey-progress'),
+                      child: SahneResultLevelProgress(
+                        levelLabel: context.t(K.seviyeP, {
+                          'p0': '$_currentLevel',
+                        }),
+                        xpInLevel: _xpInCurrentLevel,
+                        xpNeeded: _xpNeededForNextLevel,
+                        progress: _levelProgress,
+                      ),
+                    )
+                  : null,
+            )
+          : null,
+      sections: sections,
+      primary: SahneResultAction(
+        key: ValueKey(primaryResultKey),
+        label: primaryResultLabel,
+        icon: learningContinue ? null : nextActionIcon,
+        onPressed: completeResultAction,
+      ),
+      secondary: SahneResultAction(
+        key: const ValueKey('result-share-button'),
+        label: context.t(K.share),
+        icon: AppIcons.shareNodes,
+        onPressed: shareResult,
+      ),
+      overlay: _showConfetti
+          ? ConfettiOverlay(
+              onFinished: () {
+                setState(() {
+                  _showConfetti = false;
+                });
+              },
+            )
+          : null,
     );
 
     return PopScope<void>(
@@ -1340,135 +1328,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   }
 }
 
-/// Geniş ekranda (tablet, masaüstü) içerik ve alt perde bu genişlikte
-/// ortalanır; satırlar ekran boyunca uzayıp okunmaz hâle gelmez.
-const double _maxContentWidth = 560;
-
 enum _DuelOutcome { win, draw, loss }
-
-/// Sonuç kahramanı — maketteki "5 · Sonuç" (`.sh-res`).
-///
-/// Kart DEĞİL: doğrudan sahnenin üstünde durur. Yukarıdan aşağı: üç puan
-/// yıldızı (ortadaki büyük) ya da 1v1'de sonuç amblemi → Başlık 28 →
-/// puan Ekran 64 Zêr → "puan • %67 doğruluk" Açıklama → (yalnız zaferde)
-/// kilim göz şeridi (160). Arkada sonuç ışınları (yalnız kutlanacak
-/// sonuçta) ve alçak bir dağ sırtı ufku.
-class _ResultHero extends StatelessWidget {
-  const _ResultHero({
-    required this.starsEarned,
-    required this.duel,
-    required this.title,
-    required this.value,
-    required this.suffix,
-    required this.caption,
-    required this.celebrate,
-    required this.notices,
-    super.key,
-  });
-
-  final int starsEarned;
-  final _DuelOutcome? duel;
-  final String title;
-  final int value;
-  final String suffix;
-  final String caption;
-  final bool celebrate;
-  final List<Widget> notices;
-
-  /// Işınların merkezi: kahramanın tepesinden puan sayısının ortasına.
-  static const double _raysCenterY = 104;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final duel = this.duel;
-    final emblem = duel == null
-        ? _ScoreStars(earned: starsEarned)
-        : _DuelEmblem(outcome: duel);
-    final content = Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(height: 44, child: emblem),
-        const SizedBox(height: SahneSpace.x1),
-        Semantics(
-          header: true,
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: SahneType.title.copyWith(
-              color: duel == _DuelOutcome.win ? t.goldTx : t.tx,
-            ),
-          ),
-        ),
-        // Puan sayarak çıkar: tırmanışı izlemek kazanmanın kendisidir (bkz.
-        // `RollingCount`). Hareket azaltma açıkken sayım yapılmaz.
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          child: RollingCount(
-            key: const ValueKey('result-score-count'),
-            value: value,
-            suffix: suffix,
-            style: SahneType.screen.copyWith(color: t.gold),
-          ),
-        ),
-        const SizedBox(height: SahneSpace.x1),
-        Text(
-          caption,
-          textAlign: TextAlign.center,
-          style: SahneType.caption.copyWith(color: t.tx2),
-        ),
-        // Kilim göz şeridi yalnız ZAFERDE (üç yıldız / galibiyet) puanın
-        // altında durur; rengi rolü izler: solo ödül altını, 1v1 yarış lalı.
-        //
-        // 2026-09-29 doğallık (K4): şerit her sonucun altındaydı; kaybedilen
-        // ya da sıradan bir turda da aynı süs olunca bir kimlik değil
-        // şablon izi oluyordu. Şerit, ışınlarla aynı anda — kazanılmış
-        // anda — açılır.
-        if (celebrate) ...[
-          const SizedBox(height: SahneSpace.x2),
-          SizedBox(
-            width: 160,
-            child: SahneKilimStrip(
-              color: (duel == null ? t.gold : t.raceTx).withValues(alpha: 0.7),
-            ),
-          ),
-        ],
-        for (final notice in notices) ...[
-          const SizedBox(height: SahneSpace.x2),
-          notice,
-        ],
-      ],
-    );
-
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned.fill(
-          child: IgnorePointer(
-            child: ExcludeSemantics(
-              child: CustomPaint(
-                painter: SahneResultBackdropPainter(
-                  rays: celebrate,
-                  raysCenterY: _raysCenterY,
-                  bg: t.bg,
-                  ridge: t.s1,
-                ),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: SahneSpace.x2,
-            bottom: SahneSpace.x4,
-          ),
-          child: SizedBox(width: double.infinity, child: content),
-        ),
-      ],
-    );
-  }
-}
 
 /// Kahramanın üç puan yıldızı: 32 · 44 · 32, alta hizalı, 8 aralık.
 ///
@@ -1503,28 +1363,6 @@ class _ScoreStars extends StatelessWidget {
   }
 }
 
-/// 1v1 sonuç amblemi: kazanınca Zêr taç; berabere ve kaybedince nötr ikon
-/// (ikincil metin). Rast/Şaş ailesi kullanılmaz.
-class _DuelEmblem extends StatelessWidget {
-  const _DuelEmblem({required this.outcome});
-
-  final _DuelOutcome outcome;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return switch (outcome) {
-      _DuelOutcome.win => const SahneGlyph(SahneGlyphKind.crown, size: 44),
-      _DuelOutcome.draw => ExcludeSemantics(
-        child: Icon(AppIcons.scaleBalanced, size: 36, color: t.tx2),
-      ),
-      _DuelOutcome.loss => ExcludeSemantics(
-        child: Icon(AppIcons.flag, size: 36, color: t.tx2),
-      ),
-    };
-  }
-}
-
 /// Kahramanın altındaki bilgi satırı (günlük tavan, bekleyen ödül).
 class _HeroNotice extends StatelessWidget {
   const _HeroNotice({required this.icon, required this.text, super.key});
@@ -1556,113 +1394,10 @@ class _HeroNotice extends StatelessWidget {
   }
 }
 
-/// Ödül kartı — maketteki `.sh-rew`: yüzey kartı; üstte Zêr ödül çipleri
-/// (+jeton, +XP), altında seviye satırı ve Zêr ilerleme çubuğu.
-class _RewardCard extends StatelessWidget {
-  const _RewardCard({
-    required this.coins,
-    required this.coinLabel,
-    required this.coinSemanticLabel,
-    required this.xp,
-    required this.journeyReady,
-    required this.level,
-    required this.xpInLevel,
-    required this.xpNeeded,
-    required this.progress,
-  });
-
-  final int coins;
-  final String coinLabel;
-  final String coinSemanticLabel;
-  final int xp;
-  final bool journeyReady;
-  final int level;
-  final int xpInLevel;
-  final int xpNeeded;
-  final double progress;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    final hasChips = coins > 0 || xp > 0;
-    final levelLabel = context.t(K.seviyeP, {'p0': '$level'});
-    return SahneSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (hasChips)
-            // Ödül çipleri skor SAYIMI bittikten sonra yerine oturur: ödül
-            // bir SONUÇtur, sebebinden önce gösterilmez (bkz.
-            // `_RewardEntrance`).
-            _RewardEntrance(
-              child: Wrap(
-                spacing: SahneSpace.x2,
-                runSpacing: SahneSpace.x2,
-                children: [
-                  if (coins > 0)
-                    SahneStatChip(
-                      gold: true,
-                      leading: const SahneGlyph(SahneGlyphKind.coin),
-                      label: coinLabel,
-                      semanticLabel: coinSemanticLabel,
-                    ),
-                  if (xp > 0)
-                    SahneStatChip(
-                      gold: true,
-                      leading: const SahneGlyph(SahneGlyphKind.bolt),
-                      label: '+$xp XP',
-                    ),
-                ],
-              ),
-            ),
-          if (journeyReady) ...[
-            if (hasChips) const SizedBox(height: SahneSpace.x3),
-            KeyedSubtree(
-              key: const ValueKey('result-level-journey-progress'),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Wrap(
-                    alignment: WrapAlignment.spaceBetween,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: SahneSpace.x3,
-                    children: [
-                      Text(
-                        levelLabel,
-                        style: SahneType.bodyStrong.copyWith(color: t.tx),
-                      ),
-                      Text(
-                        '$xpInLevel / $xpNeeded XP',
-                        style: SahneType.caption.copyWith(
-                          color: t.tx2,
-                          fontFeatures: const [FontFeature.tabularFigures()],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: SahneSpace.x2),
-                  SahneProgressBar(
-                    value: progress,
-                    tone: SahneProgressTone.gold,
-                    semanticLabel: levelLabel,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-/// İstatistik karoları — maketteki `.sh-stats`: doğru ✓ / yanlış ✗ /
-/// (boş ⧗) / seri alev; en az 56 yüksek, L pah yüzey. Durum hiçbir zaman
-/// yalnız renkle verilmez: ikon şekli ve söz birlikte.
-///
-/// Karolar eşit genişlikte yan yana durur; dar ekranda ya da büyük yazıda
-/// bir karo 96'dan darsa ikişerli satıra iner (sayı ve söz harf harf
-/// bölünmez).
+/// Tur sayımları — doğru ✓ / yanlış ✗ / (boş ⧗) / seri alev. Karoların
+/// kendisi ortak şablondadır ([SahneResultStats]); burada yalnız bu turun
+/// kuralı verilir: doğru/yanlış çifti turun omurgası olduğu için sıfırken de
+/// durur, boş ve seri karoları sıfırken çizilmez (anlamsız sıfır yok).
 @visibleForTesting
 class ResultStatTiles extends StatelessWidget {
   const ResultStatTiles({
@@ -1681,133 +1416,31 @@ class ResultStatTiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    final tiles = <Widget>[
-      _StatTile(
-        leading: Icon(AppIcons.check, size: 20, color: t.okTx),
-        value: '$correct',
-        label: context.t(K.correct),
-      ),
-      _StatTile(
-        leading: Icon(AppIcons.xmark, size: 20, color: t.errTx),
-        value: '$wrong',
-        label: context.t(K.wrong),
-      ),
-      if (unanswered > 0)
-        _StatTile(
+    return SahneResultStats(
+      stats: [
+        SahneResultStat(
+          leading: Icon(AppIcons.check, size: 20, color: t.okTx),
+          value: correct,
+          label: context.t(K.correct),
+          showWhenZero: true,
+        ),
+        SahneResultStat(
+          leading: Icon(AppIcons.xmark, size: 20, color: t.errTx),
+          value: wrong,
+          label: context.t(K.wrong),
+          showWhenZero: true,
+        ),
+        SahneResultStat(
           leading: Icon(AppIcons.hourglass, size: 20, color: t.tx2),
-          value: '$unanswered',
+          value: unanswered,
           label: context.t(K.blank),
         ),
-      if (streak > 0)
-        _StatTile(
+        SahneResultStat(
           leading: const SahneGlyph(SahneGlyphKind.flame),
-          value: '$streak',
+          value: streak,
           label: context.t(K.streakLabel),
         ),
-    ];
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        const gap = SahneSpace.x2;
-        final minTile = MediaQuery.textScalerOf(context).scale(96);
-        var perRow = tiles.length;
-        while (perRow > 1 &&
-            (constraints.maxWidth - gap * (perRow - 1)) / perRow < minTile) {
-          perRow = perRow > 2 ? 2 : 1;
-        }
-        // 2026-09-30 simülatör: karolar `Wrap` içinde kendi boyunda
-        // duruyordu; "Li pey hev" iki satıra kırılınca üçüncü karo öteki
-        // ikisinden uzun çıkıyordu. Satırdaki karolar artık eşit yükseklikte
-        // (`IntrinsicHeight` + uzatma); eksik kalan son satır boş
-        // `SizedBox` ile aynı genişliği korur. Normal ölçekte sözler tek
-        // satırdı, tur ve testler orada koştuğu için kusur sessiz kaldı.
-        final rows = <Widget>[];
-        for (var i = 0; i < tiles.length; i += perRow) {
-          final chunk = tiles.sublist(i, math.min(i + perRow, tiles.length));
-          rows.add(
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  for (var j = 0; j < perRow; j++) ...[
-                    if (j > 0) const SizedBox(width: gap),
-                    Expanded(
-                      child: j < chunk.length ? chunk[j] : const SizedBox(),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          );
-        }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (var i = 0; i < rows.length; i++) ...[
-              if (i > 0) const SizedBox(height: gap),
-              rows[i],
-            ],
-          ],
-        );
-      },
-    );
-  }
-}
-
-class _StatTile extends StatelessWidget {
-  const _StatTile({
-    required this.leading,
-    required this.value,
-    required this.label,
-  });
-
-  final Widget leading;
-  final String value;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return Semantics(
-      container: true,
-      label: '$value $label',
-      excludeSemantics: true,
-      child: SahneSurfaceCard(
-        padding: const EdgeInsets.symmetric(
-          horizontal: SahneSpace.x3,
-          vertical: SahneSpace.x2,
-        ),
-        child: ConstrainedBox(
-          // a11y-tap-target: noninteractive — istatistik karosu; salt
-          // görsel, dokunma hedefi değil.
-          constraints: const BoxConstraints(minHeight: 40),
-          child: Row(
-            children: [
-              SizedBox.square(dimension: 20, child: leading),
-              const SizedBox(width: SahneSpace.x2),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      value,
-                      style: SahneType.bodyStrong.copyWith(
-                        color: t.tx,
-                        fontFeatures: const [FontFeature.tabularFigures()],
-                      ),
-                    ),
-                    Text(
-                      label,
-                      style: SahneType.caption.copyWith(color: t.tx2),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      ],
     );
   }
 }
@@ -1935,109 +1568,6 @@ class _SecondaryActions extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-/// Alt perde — maketteki `.sh-dock--2`: solda ikincil "Paylaş", sağda TEK
-/// birincil ("Tekrar oyna" / "Ana Sayfa" / öğrenmede "Devam Et"). Büyük
-/// yazıda alt alta iner, birincil üstte.
-class _ResultDock extends StatelessWidget {
-  const _ResultDock({
-    required this.primaryKey,
-    required this.primaryLabel,
-    required this.primaryIcon,
-    required this.onPrimary,
-    required this.shareLabel,
-    required this.onShare,
-  });
-
-  final String primaryKey;
-  final String primaryLabel;
-
-  /// `null` → ikon yok, sağda ok (öğrenmede "Devam Et →").
-  final IconData? primaryIcon;
-  final VoidCallback onPrimary;
-  final String shareLabel;
-  final VoidCallback onShare;
-
-  @override
-  Widget build(BuildContext context) {
-    final primary = _DockAction(
-      key: ValueKey(primaryKey),
-      label: primaryLabel,
-      onTap: onPrimary,
-      child: SahneButton.primary(
-        label: primaryLabel,
-        icon: primaryIcon,
-        arrow: primaryIcon == null,
-        expand: true,
-        onPressed: onPrimary,
-      ),
-    );
-    final share = _DockAction(
-      key: const ValueKey('result-share-button'),
-      label: shareLabel,
-      onTap: onShare,
-      child: SahneButton.secondary(
-        label: shareLabel,
-        icon: AppIcons.shareNodes,
-        expand: true,
-        onPressed: onShare,
-      ),
-    );
-    if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [primary, share],
-      );
-    }
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(flex: 2, child: share),
-          const SizedBox(width: SahneSpace.x3),
-          Expanded(flex: 3, child: primary),
-        ],
-      ),
-    );
-  }
-}
-
-/// Alt perde düğmesinin dokunma kutusu: görsel 52, dokunma ve ekran
-/// okuyucu alanı en az 56 (sonuç eyleminin 54'lük tabanı,
-/// `quiz_result_visual_test`). Ekran okuyucu tek bir düğme okur.
-class _DockAction extends StatelessWidget {
-  const _DockAction({
-    required this.label,
-    required this.onTap,
-    required this.child,
-    super.key,
-  });
-
-  final String label;
-  final VoidCallback onTap;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      container: true,
-      button: true,
-      enabled: true,
-      label: label,
-      onTap: onTap,
-      excludeSemantics: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 56),
-          child: Center(child: child),
-        ),
-      ),
     );
   }
 }
@@ -2521,49 +2051,6 @@ class ResultExplanationEntry extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-/// Ödül çiplerini skor sayımından SONRA yerine oturtur.
-///
-/// Gecikme ayrı bir zamanlayıcı yerine `Interval` ile verilir: `Timer` +
-/// `setState` ikilisi ekran erken kapatıldığında ölü bir State'e dokunur
-/// ve sonuç ekranı tam da ödüller yazılırken kapatılabiliyor.
-///
-/// Hareket azaltma açıkken giriş animasyonu yapılmaz; çipler doğrudan
-/// yerinde çizilir. Sağlayıcı yoksa (izole widget testleri) animasyon
-/// sessizce oynar — dekoratif bir davranış, ağacı eksik diye ekranı
-/// çökertmemeli.
-class _RewardEntrance extends StatelessWidget {
-  const _RewardEntrance({required this.child});
-
-  final Widget child;
-
-  /// Skor sayımının tipik süresi kadar beklenir (bkz. `RollingCount`).
-  static const _total = Duration(milliseconds: 1500);
-  static const _start = 0.62;
-
-  @override
-  Widget build(BuildContext context) {
-    final reduced =
-        context.watch<ReducedMotionProvider?>()?.reduceMotion ?? false;
-    if (reduced) return child;
-
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0, end: 1),
-      duration: _total,
-      curve: const Interval(_start, 1, curve: Curves.easeOutBack),
-      builder: (context, value, child) => Opacity(
-        // `easeOutBack` 1'i aşar; opaklık kırpılmazsa assert atar.
-        opacity: value.clamp(0.0, 1.0),
-        child: Transform.scale(
-          scale: value,
-          alignment: AlignmentDirectional.centerStart,
-          child: child,
-        ),
-      ),
-      child: child,
     );
   }
 }
