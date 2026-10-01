@@ -713,15 +713,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (dialogContext) => AlertDialog(
         title: Text(context.t(K.deleteConfirmTitle)),
         content: Text(context.t(K.deleteConfirmBody)),
+        // 2026-10-02 uçtan uca QA: yıkıcı eylem "Devam et" adıyla turuncu
+        // birincil düğmeydi; göz oraya gidiyor, "Devam et" silmeyi
+        // söylemiyordu. Şimdi güvenli eylem ("Vazgeç") varsayılan dolgulu
+        // düğme; yıkıcı olan hata tonlu düz metin ve adı silmeyi açıkça
+        // söylüyor (aynı düzen: çıkış onayı, `_QuizExitDialog`).
         actions: [
           DialogActionPair(
-            cancel: OutlinedButton(
-              onPressed: () => Navigator.pop(dialogContext, false),
-              child: Text(context.t(K.cancel)),
+            cancel: TextButton(
+              key: const ValueKey('delete-continue'),
+              onPressed: () => Navigator.pop(dialogContext, true),
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(dialogContext).colorScheme.error,
+              ),
+              child: Text(context.t(K.deleteAccount)),
             ),
             confirm: FilledButton(
-              onPressed: () => Navigator.pop(dialogContext, true),
-              child: Text(context.t(K.continueAction)),
+              key: const ValueKey('delete-keep'),
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(context.t(K.cancel)),
             ),
           ),
         ],
@@ -816,9 +826,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Text(context.t(K.cancel)),
                   ),
                   confirm: FilledButton(
+                    key: const ValueKey('delete-forever'),
                     onPressed: canDelete
                         ? () => Navigator.pop(dialogContext, true)
                         : null,
+                    // Geri alınamaz eylem: turuncu birincil değil hata tonu.
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Theme.of(
+                        dialogContext,
+                      ).colorScheme.error,
+                      foregroundColor: Theme.of(
+                        dialogContext,
+                      ).colorScheme.onError,
+                      disabledBackgroundColor: SahneTokens.of(dialogContext).s1,
+                      disabledForegroundColor: SahneTokens.of(
+                        dialogContext,
+                      ).tx3,
+                    ),
                     child: Text(context.t(K.deleteForever)),
                   ),
                 ),

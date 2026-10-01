@@ -186,6 +186,66 @@ void main() {
     expect(repository.deleteCalls, 0);
   });
 
+  // 2026-10-02 uçtan uca QA: hesap silme onayının yıkıcı düğmesi "Devam et"
+  // adıyla turuncu birincil (Agir) dolguydu. Silmeyi söylemiyordu ve göz
+  // güvenli eylemi değil onu varsayılan sanıyordu. Niçin sessiz kalıyordu:
+  // testler düğmeyi METNİYLE ("Devam et") tıklıyordu; renk ve ad hiçbir
+  // yerde sabitlenmemişti. İki adımlı akış korunur.
+  testWidgets('hesap silme onayı: yıkıcı eylem hata tonunda ve adı silmeyi '
+      'söyler, güvenli eylem varsayılandır', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _DeleteTrackingRepository();
+
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(await _scrollToDeleteAction(tester));
+    await tester.pumpAndSettle();
+
+    final scheme = Theme.of(
+      tester.element(find.byType(AlertDialog)),
+    ).colorScheme;
+    expect(find.text('Devam et'), findsNothing);
+    final destructive = tester.widget<TextButton>(
+      find.byKey(const ValueKey('delete-continue')),
+    );
+    expect(
+      destructive.style!.foregroundColor!.resolve({}),
+      scheme.error,
+      reason: 'yıkıcı eylem hata tonunda olmalı',
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('delete-continue')),
+        matching: find.text('Hesabımı sil'),
+      ),
+      findsOneWidget,
+    );
+    // Güvenli eylem dolgulu varsayılan düğme.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('delete-keep')),
+        matching: find.text('Vazgeç'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      tester.widget(find.byKey(const ValueKey('delete-keep'))),
+      isA<FilledButton>(),
+    );
+
+    // İkinci adım: kalıcı silme de hata tonunda.
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
+    await tester.pumpAndSettle();
+    final forever = tester.widget<FilledButton>(
+      find.byKey(const ValueKey('delete-forever')),
+    );
+    expect(forever.style!.backgroundColor!.resolve({}), scheme.error);
+    expect(repository.deleteCalls, 0);
+  });
+
   testWidgets('settings separates dangerous account actions', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 1200));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -285,7 +345,7 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam et'));
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
@@ -321,7 +381,7 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam et'));
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
@@ -357,7 +417,7 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam et'));
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
@@ -410,7 +470,7 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam et'));
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
