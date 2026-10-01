@@ -1144,6 +1144,22 @@ void main() {
     await _shoot(t, '76_sign_up');
   }, tags: ['preview']);
 
+  // Kayıt sihirbazının 2. adımı: alt perdede "Geri" metin düğmesi görünür
+  // (1. adımda "Giriş yap" bağlantısı vardır). Önceki tur yalnız ilk adımı
+  // basıyordu; ikincil eylemin yeri ve ilerleme çubuğunun dolgusu görünmezdi.
+  testWidgets('107 kayıt, 2. adım', (t) async {
+    await _pump(t, const SignUpScreen());
+    final fields = find.byType(EditableText);
+    await t.enterText(fields.at(0), 'rojda@example.com');
+    await t.enterText(fields.at(1), 'sifre123');
+    await t.enterText(fields.at(2), 'sifre123');
+    await t.tap(find.text('İleri'));
+    for (var i = 0; i < 3; i++) {
+      await t.pump(const Duration(milliseconds: 300));
+    }
+    await _shoot(t, '107_sign_up_step2');
+  }, tags: ['preview']);
+
   testWidgets('77 ad sorma', (t) async {
     await _pump(
       t,

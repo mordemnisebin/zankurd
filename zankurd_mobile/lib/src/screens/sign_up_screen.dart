@@ -8,6 +8,7 @@ import '../providers/auth_provider.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../services/analytics_service.dart';
 import '../services/display_name_policy.dart';
+import '../widgets/app_logo.dart';
 import '../widgets/loading_overlay.dart';
 import '../widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -37,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen>
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   int _currentStep = 0;
+  static const _stepCount = 3;
   late AnimationController _animationController;
 
   @override
@@ -157,116 +159,98 @@ class _SignUpScreenState extends State<SignUpScreen>
       _animationController,
     );
 
-    // 2026-09-29 Şahnê: giriş ekranıyla aynı marka anı — gece sahne
-    // kartında 28'lik başlık ve adımın açıklaması. Form tek yüzey kartında;
-    // "İleri / Hesap oluştur" ekranın tek birincil eylemi, "Geri" ikincil.
-    // 2026-09-29 doğallık: adım göstergesi kartın içinde "1/3" metni
-    // (bkz. [_ProgressIndicator]).
-    return Scaffold(
-      backgroundColor: t.bg,
-      body: SafeArea(
-        child: _AuthScrollFrame(
-          child: Consumer<AuthProvider>(
-            builder: (context, authProvider, _) {
-              final loading = authProvider.isLoading;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  FadeTransition(
-                    opacity: LoadAnimationSequence.titleFadeAnimation(
-                      _animationController,
-                    ),
-                    child: AnimatedBuilder(
-                      animation: slide,
-                      builder: (context, child) => Transform.translate(
-                        offset: Offset(0, slide.value),
-                        child: child,
-                      ),
-                      child: _SignUpHeroBanner(
-                        step: _currentStep,
-                        subtitle: _getStepSubtitle(context),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: SahneSpace.x4),
-                  SahneSurfaceCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        FadeTransition(
-                          opacity:
-                              LoadAnimationSequence.formField1FadeAnimation(
-                                _animationController,
-                              ),
-                          child: _buildStepContent(context),
-                        ),
-                        const SizedBox(height: SahneSpace.x6),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // İlk adımda da geri çıkış olmalı: sihirbazın
-                            // hiçbir adımında app bar/geri yoktu, tek
-                            // çıkış alttaki metin bağlantısıydı
-                            // (2026-07-22 canlı UX denetimi).
-                            Expanded(
-                              child: SahneButton.secondary(
-                                key: const ValueKey('signup-back-button'),
-                                label: context.t(K.backStep),
-                                expand: true,
-                                onPressed: loading
-                                    ? null
-                                    : (_currentStep > 0
-                                          ? _previousStep
-                                          : () => Navigator.of(
-                                              context,
-                                            ).maybePop()),
-                              ),
-                            ),
-                            const SizedBox(width: SahneSpace.x3),
-                            Expanded(
-                              child: SahneButton.primary(
-                                label: _currentStep == 2
-                                    ? context.t(K.createAccount)
-                                    : context.t(K.nextStep),
-                                icon: _currentStep == 2
-                                    ? AppIcons.circleCheck
-                                    : null,
-                                arrow: _currentStep != 2,
-                                expand: true,
-                                onPressed: loading
-                                    ? null
-                                    : (_currentStep == 2
-                                          ? () => _signUp(authProvider)
-                                          : _nextStep),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: SahneSpace.x4),
-                        Wrap(
-                          alignment: WrapAlignment.center,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          spacing: SahneSpace.x1,
-                          children: [
-                            Text(
-                              context.t(K.haveAccountPrefix),
-                              style: SahneType.body.copyWith(color: t.tx2),
-                            ),
-                            SahneButton.text(
-                              label: context.t(K.signIn),
-                              onPressed: () => Navigator.of(context).pop(),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            },
+    // 2026-10-01 giriş iskeleti (bkz. [SahneEntryScaffold]): giriş ve ad
+    // ekranıyla aynı yerleşim — kahraman kart, sola yaslı başlık + adımın
+    // açıklaması, form tek yüzey kartında. Adım göstergesi artık kartın
+    // içinde ortalı "1/3" metni değil, üst çubuğun altında ilerleme çubuğu
+    // (+ "1/3" yazısı); "İleri / Hesap oluştur" alt perdede sabit,
+    // "Geri" altında ikincil metin eylemi.
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, _) {
+        final loading = authProvider.isLoading;
+        return SahneEntryScaffold(
+          progress: FadeTransition(
+            opacity: LoadAnimationSequence.titleFadeAnimation(
+              _animationController,
+            ),
+            child: SahneProgressBar(
+              key: const ValueKey('signup-progress'),
+              value: (_currentStep + 1) / _stepCount,
+              trailing: '${_currentStep + 1}/$_stepCount',
+              semanticLabel: '${_currentStep + 1}/$_stepCount',
+            ),
           ),
-        ),
-      ),
+          hero: FadeTransition(
+            opacity: LoadAnimationSequence.titleFadeAnimation(
+              _animationController,
+            ),
+            child: AnimatedBuilder(
+              animation: slide,
+              builder: (context, child) => Transform.translate(
+                offset: Offset(0, slide.value),
+                child: child,
+              ),
+              child: const SahneEntryHero(
+                key: ValueKey('sign-up-hero-banner'),
+                padding: EdgeInsets.fromLTRB(
+                  SahneSpace.x4,
+                  SahneSpace.x6,
+                  SahneSpace.x4,
+                  SahneSpace.x5,
+                ),
+                child: Center(child: AppLogo(width: 64)),
+              ),
+            ),
+          ),
+          title: context.t(K.createYourAccount),
+          body: _getStepSubtitle(context),
+          content: SahneSurfaceCard(
+            child: FadeTransition(
+              opacity: LoadAnimationSequence.formField1FadeAnimation(
+                _animationController,
+              ),
+              child: _buildStepContent(context),
+            ),
+          ),
+          primary: SahneButton.primary(
+            label: _currentStep == 2
+                ? context.t(K.createAccount)
+                : context.t(K.nextStep),
+            icon: _currentStep == 2 ? AppIcons.circleCheck : null,
+            arrow: _currentStep != 2,
+            expand: true,
+            onPressed: loading
+                ? null
+                : (_currentStep == 2 ? () => _signUp(authProvider) : _nextStep),
+          ),
+          // İlk adımda "geri" yok, çünkü geri gidilecek adım yok; çıkış
+          // "Giriş yap" bağlantısıdır (2026-07-22 canlı UX denetimi:
+          // sihirbazın hiçbir adımında geri yoktu). Sonraki adımlarda
+          // "Geri" bir önceki adıma döner.
+          secondary: _currentStep > 0
+              ? SahneButton.text(
+                  key: const ValueKey('signup-back-button'),
+                  label: context.t(K.backStep),
+                  arrow: false,
+                  onPressed: loading ? null : _previousStep,
+                )
+              : Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: SahneSpace.x1,
+                  children: [
+                    Text(
+                      context.t(K.haveAccountPrefix),
+                      style: SahneType.body.copyWith(color: t.tx2),
+                    ),
+                    SahneButton.text(
+                      label: context.t(K.signIn),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
+        );
+      },
     );
   }
 
@@ -437,49 +421,6 @@ class _SignUpScreenState extends State<SignUpScreen>
   }
 }
 
-/// Kayıt adımı: "1/3" metni. Etkin adımın rakamı öğrenme metni renginde,
-/// toplam ikincil metinde; ekran okuyucu "1/3" okur.
-///
-/// 2026-09-29 doğallık: eskiden üç büyük numaralı elmastı. Elmas
-/// uygulamada yalnız soru ilerlemesi ve ders sayacı anlamını taşır
-/// (GORSEL_KARARLAR K5); üç adımlık bir form için üç 44'lük rozet de
-/// ekranın en göz alıcı öğesiydi. Durum rakamla söylenir.
-class _ProgressIndicator extends StatelessWidget {
-  final int currentStep;
-
-  const _ProgressIndicator({required this.currentStep});
-
-  static const _total = 3;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    const figures = [FontFeature.tabularFigures()];
-    return Text.rich(
-      key: const ValueKey('signup-progress'),
-      textAlign: TextAlign.center,
-      TextSpan(
-        children: [
-          TextSpan(
-            text: '${currentStep + 1}',
-            style: SahneType.captionStrong.copyWith(
-              color: t.learnTx,
-              fontFeatures: figures,
-            ),
-          ),
-          TextSpan(
-            text: '/$_total',
-            style: SahneType.captionStrong.copyWith(
-              color: t.tx2,
-              fontFeatures: figures,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _ReviewItem extends StatelessWidget {
   final String label;
   final String value;
@@ -502,89 +443,6 @@ class _ReviewItem extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// Marka anı: gece sahne kartı içinde 28'lik başlık + adımın açıklaması.
-class _SignUpHeroBanner extends StatelessWidget {
-  const _SignUpHeroBanner({required this.step, required this.subtitle});
-
-  /// Etkin adımın sırası (0'dan).
-  final int step;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return SahneStageCard(
-      key: const ValueKey('sign-up-hero-banner'),
-      padding: const EdgeInsets.fromLTRB(
-        SahneSpace.x4,
-        SahneSpace.x6,
-        SahneSpace.x4,
-        SahneSpace.x5,
-      ),
-      child: Builder(
-        builder: (context) {
-          final t = SahneTokens.of(context);
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _ProgressIndicator(currentStep: step),
-              const SizedBox(height: SahneSpace.x2),
-              Semantics(
-                header: true,
-                child: Text(
-                  context.t(K.createYourAccount),
-                  style: SahneType.title.copyWith(color: t.tx),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SizedBox(height: SahneSpace.x1),
-              Text(
-                subtitle,
-                style: SahneType.body.copyWith(color: t.tx2),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _AuthScrollFrame extends StatelessWidget {
-  const _AuthScrollFrame({required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // Sayfa kenarı 16; dikeyde 24. İçerik ortalanır; klavye açılınca
-        // negatif yükseklik oluşmasın diye alt sınır sıfırda kırpılır.
-        const padding = EdgeInsets.symmetric(
-          horizontal: SahneSpace.page,
-          vertical: SahneSpace.x6,
-        );
-        return SingleChildScrollView(
-          padding: padding,
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: 440,
-                minHeight: (constraints.maxHeight - padding.vertical).clamp(
-                  0.0,
-                  double.infinity,
-                ),
-              ),
-              child: Center(child: child),
-            ),
-          ),
-        );
-      },
     );
   }
 }

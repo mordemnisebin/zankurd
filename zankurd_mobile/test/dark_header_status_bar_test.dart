@@ -1,5 +1,6 @@
 /// Koyu başlığı durum çubuğunun altına uzanan ekranlar açık saat ve pil
-/// ikonu ister.
+/// ikonu ister (bugün yalnız kategori ekranı; ad ekranı 2026-10-01'de giriş
+/// iskeletine geçip şeridi bıraktı).
 ///
 /// ## Kusur
 ///
@@ -36,9 +37,14 @@ void main() {
     );
   });
 
-  testWidgets('ad ekranı açık temada da açık durum çubuğu ikonu ister', (
+  testWidgets('ad ekranı artık koyu şerit uzatmaz, zorla açık ikon istemez', (
     tester,
   ) async {
+    // 2026-10-01 giriş iskeleti: ad ekranı da giriş ve kayıt gibi sayfa
+    // zemini üstünde başlar (üst çubuk + kahraman kart). Durum çubuğunun
+    // altında artık koyu bir şerit YOK; eskiden zorla istenen açık ikon
+    // açık temada AÇIK zeminde görünmez olurdu. Bu yüzden ekran stili
+    // temaya bırakır (kök, temadan seçer).
     await tester.pumpWidget(
       testShell(
         child: ProfileNameGateScreen(
@@ -55,7 +61,10 @@ void main() {
         matching: find.byType(AnnotatedRegion<SystemUiOverlayStyle>),
       ),
     );
-    expect(regions.map((r) => r.value), contains(AppTheme.overlayOnDarkHeader));
+    expect(
+      regions.map((r) => r.value),
+      isNot(contains(AppTheme.overlayOnDarkHeader)),
+    );
   });
 
   testWidgets('kategori ekranının saydam app bar\'ı açık ikon ister', (

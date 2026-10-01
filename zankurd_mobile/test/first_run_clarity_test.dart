@@ -200,10 +200,10 @@ void main() {
         expect(find.byKey(const ValueKey('player-name-field')), findsOneWidget);
         expect(find.text('Şimdilik geç'), findsOneWidget);
 
-        // Hero tamamen kaldırılmadı — küçük marka şeridi (logo) kaldı.
+        // Hero tamamen kaldırılmadı — küçük marka kartı (logo) kaldı.
         expect(
           find.descendant(
-            of: find.byKey(const ValueKey('profile-name-gate-hero-surface')),
+            of: find.byKey(const ValueKey('profile-name-gate-hero')),
             matching: find.byType(AppLogo),
           ),
           findsOneWidget,
@@ -229,16 +229,22 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      final heroBottom = tester
-          .getBottomLeft(find.byKey(const ValueKey('profile-name-gate-hero')))
+      // 2026-10-01 giriş iskeleti: başlık ve açıklama artık kahraman
+      // kartın altında, kart açıklamanın hemen altında başlar.
+      final helpBottom = tester
+          .getBottomLeft(
+            find.text('Bu ad sıralamada ve çevrimiçi odalarda görünecek.'),
+          )
           .dy;
       final cardTop = tester
           .getTopLeft(find.byKey(const ValueKey('profile-name-gate-card')))
           .dy;
       expect(
-        cardTop - heroBottom,
+        cardTop - helpBottom,
         lessThanOrEqualTo(AppSpacing.xl + 1),
-        reason: 'Kart şeridin altında sayfa boşluğu kadar aralıkla başlamalı.',
+        reason:
+            'Kart açıklamanın altında sayfa boşluğu kadar aralıkla '
+            'başlamalı; uzun ekranda ortaya yüzmemeli.',
       );
     });
   });
@@ -378,9 +384,16 @@ void main() {
 
         expect(find.byType(AppLogo), findsOneWidget);
         final widthPage0 = tester.widget<AppLogo>(find.byType(AppLogo)).width;
-        final headerHeightPage0 = tester
-            .getSize(find.byKey(const ValueKey('onboarding-header')))
-            .height;
+        // 2026-10-01 giriş iskeleti: üst alan artık 88–148 px'lik sabit bir
+        // logo yığını değil, üst çubuk + ilerleme çubuğudur; "zıplamaz"
+        // kuralı aynı: çubuğun ve birincil düğmenin yeri sayfalar arasında
+        // değişmez.
+        final barTop0 = tester
+            .getTopLeft(find.byKey(const ValueKey('onboarding-progress')))
+            .dy;
+        final primaryTop0 = tester
+            .getTopLeft(find.byKey(const ValueKey('entry-dock')))
+            .dy;
 
         await tester.tap(find.text('Sonraki'));
         await tester.pumpAndSettle();
@@ -394,12 +407,22 @@ void main() {
           reason: '2. sayfada da logo görünmeli, düz metne düşmemeli',
         );
         final widthPage1 = tester.widget<AppLogo>(find.byType(AppLogo)).width;
-        final headerHeightPage1 = tester
-            .getSize(find.byKey(const ValueKey('onboarding-header')))
-            .height;
+        final barTop1 = tester
+            .getTopLeft(find.byKey(const ValueKey('onboarding-progress')))
+            .dy;
+        final primaryTop1 = tester
+            .getTopLeft(find.byKey(const ValueKey('entry-dock')))
+            .dy;
 
         expect(widthPage1, widthPage0);
-        expect(headerHeightPage1, headerHeightPage0);
+        expect(barTop1, barTop0);
+        expect(
+          primaryTop1,
+          primaryTop0,
+          reason:
+              '"Geri" yalnız 2. sayfada görünür ama yeri ayrılıdır; alt '
+              'perde ve birincil düğme 48 px zıplamamalı.',
+        );
       },
     );
   });
