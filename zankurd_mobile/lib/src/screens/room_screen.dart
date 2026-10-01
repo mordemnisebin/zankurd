@@ -906,7 +906,6 @@ class _RoomScreenState extends State<RoomScreen> {
                               padded(
                                 _RoomHero(
                                   room: room,
-                                  isHost: isHost,
                                   onCopy: () => _copyRoomCode(context, ku),
                                   onShare: _shareRoomInvite,
                                 ),
@@ -1004,34 +1003,6 @@ class _RoomScreenState extends State<RoomScreen> {
                                         ],
                                       ),
                               ),
-                              if (room.players.length < 2)
-                                // Tek satırlık davet ipucu (başlatma uyarısı
-                                // aşağıdaki hazır kartında).
-                                padded(
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: SahneSpace.x3,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          AppIcons.userPlus,
-                                          color: t.goldTx,
-                                          size: 16,
-                                        ),
-                                        const SizedBox(width: SahneSpace.x2),
-                                        Expanded(
-                                          child: Text(
-                                            context.t(K.inviteFriendByCode),
-                                            style: SahneType.caption.copyWith(
-                                              color: t.tx2,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
                               const SizedBox(height: SahneSpace.cardGap),
                               padded(
                                 SahneSurfaceCard(
@@ -1064,8 +1035,13 @@ class _RoomScreenState extends State<RoomScreen> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: SahneSpace.x4),
-                              _buildQuickReactionChips(context),
+                              // Tepkiler yalnız karşıda biri varken anlamlı;
+                              // tek başına bekleyen ev sahibine ikinci bir
+                              // eylem yığını göstermenin yararı yok.
+                              if (room.players.length >= 2) ...[
+                                const SizedBox(height: SahneSpace.x4),
+                                _buildQuickReactionChips(context),
+                              ],
 
                               // ── Oda sohbeti ───────────────────────
                               //
@@ -1232,20 +1208,6 @@ class _RoomScreenState extends State<RoomScreen> {
   }
 }
 
-/// Mêvandarın (ev sahibinin) görünen adı — guest lobi çipi için.
-///
-/// Yer tutucu ad ("ZanKurd Oyuncusu") dile göre [PlayerIdentity] ile çözülür.
-String _hostName(GameRoom room, {required bool isKu}) {
-  for (final player in room.players) {
-    if (player.id != null && player.id == room.hostId) {
-      return PlayerIdentity.resolveName(player.name, isKu: isKu);
-    }
-  }
-  return room.players.isNotEmpty
-      ? PlayerIdentity.resolveName(room.players.first.name, isKu: isKu)
-      : '—';
-}
-
 /// Oda çubuğu — B iskeletinin çubuğu (en az 64; 44'lük pahlı geri
 /// plakası + 12 + Manşet 22 başlık).
 ///
@@ -1301,22 +1263,24 @@ class _RoomBar extends StatelessWidget {
   }
 }
 
-/// Oda kahramanı — yarış rolünde sahne kartı.
+/// Oda kahramanı — yarış rolünde sahne kartı; odanın TEK başlığı.
 ///
-/// "Özel Oda" etiketi, oda adı (Başlık 28), ayar çipleri (kategori, süre,
-/// soru sayısı, giriş ücreti, ev sahibi), oda kodu kutusu (dokun, kopyala;
-/// 44'lük kopyala karosu) ve ikincil "Arkadaşlarını davet et". Kart iki
-/// temada da gecedir.
+/// Okuma sırası yukarıdan aşağıya üç basamaktır: (1) kim — "Özel oda"
+/// etiketi, oyuncu sayısı ve oda adı; (2) nasıl — kategori, süre, soru
+/// sayısı, giriş ücreti tek satırlık sade bir künye olarak; (3) nasıl
+/// katılınır — dokun-kopyala oda kodu çipi ve altında düz bir "davet et"
+/// bağlantısı. Eskiden kodun üstünde uzun bir "dokun ve kopyala" yazısı,
+/// altında tam genişlikte ikinci bir düğme, yukarıda da bir "Ev sahibi"
+/// çipi vardı: kartın içinde üç ayrı basış hedefi aynı ağırlıkla yarışıyor,
+/// ev sahibi bilgisi de oyuncu satırındaki rozetle tekrarlanıyordu.
 class _RoomHero extends StatelessWidget {
   const _RoomHero({
     required this.room,
-    required this.isHost,
     required this.onCopy,
     required this.onShare,
   });
 
   final GameRoom room;
-  final bool isHost;
   final VoidCallback onCopy;
   final Future<void> Function(Rect? origin) onShare;
 
@@ -1328,29 +1292,55 @@ class _RoomHero extends StatelessWidget {
         builder: (context) {
           // Sahne kartının içi gece belirteçleridir.
           final t = SahneTokens.of(context);
+          final meta = <(IconData, String)>[
+            (
+              AppIcons.tableCells,
+              CategoryNames.localized(room.category, context.isKu),
+            ),
+            (
+              AppIcons.stopwatch,
+              '${room.secondsPerQuestion} ${context.t(K.secondsShortUnit)}',
+            ),
+            (
+              AppIcons.circleQuestion,
+              '${room.questionCount} ${context.t(K.soru)}',
+            ),
+            if (room.entryFee > 0)
+              (AppIcons.coins, '${room.entryFee} ${context.t(K.coinWord)}'),
+          ];
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Etiket büyük harfe ÇEVRİLMEZ: "Özel Oda" oda kimliğinin
-              // parçası olarak okunur (rozet değil, tür adı).
-              // 2026-09-29 doğallık (K10): etiketteki yıldız kalktı. Kartta
-              // iki yıldız vardı (bu etiket ve "Ev sahibi" çipi); yıldız
-              // yalnız ev sahibini işaretler, tür adı süs taşımaz.
-              DecoratedBox(
-                decoration: ShapeDecoration(
-                  color: t.goldTint,
-                  shape: SahneShape.s,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: SahneSpace.x2,
-                    vertical: 2,
+              Row(
+                children: [
+                  // Etiket büyük harfe ÇEVRİLMEZ: "Özel Oda" oda kimliğinin
+                  // parçası olarak okunur (rozet değil, tür adı).
+                  Expanded(
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: t.goldTint,
+                          shape: SahneShape.s,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: SahneSpace.x2,
+                            vertical: 2,
+                          ),
+                          child: Text(
+                            context.t(K.privateRoom),
+                            style: SahneType.captionStrong.copyWith(
+                              color: t.goldTx,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  child: Text(
-                    context.t(K.privateRoom),
-                    style: SahneType.captionStrong.copyWith(color: t.goldTx),
-                  ),
-                ),
+                  const SizedBox(width: SahneSpace.x3),
+                  _PlayerCount(count: room.players.length),
+                ],
               ),
               const SizedBox(height: SahneSpace.x2),
               Semantics(
@@ -1362,117 +1352,93 @@ class _RoomHero extends StatelessWidget {
                   style: SahneType.title.copyWith(color: t.tx),
                 ),
               ),
-              const SizedBox(height: SahneSpace.x3),
+              const SizedBox(height: SahneSpace.x2),
+              // Künye: çip değil düz satır. Dar ekranda ve büyük yazıda
+              // alt satıra sarar; hiçbir öğe kesilmez.
               Wrap(
-                spacing: SahneSpace.x2,
-                runSpacing: SahneSpace.x2,
+                spacing: SahneSpace.x4,
+                runSpacing: SahneSpace.x1,
                 children: [
-                  _Pill(
-                    label: CategoryNames.localized(room.category, context.isKu),
-                    icon: AppIcons.tableCells,
-                  ),
-                  _Pill(
-                    label:
-                        '${room.secondsPerQuestion} ${context.t(K.secondsShortUnit)}',
-                    icon: AppIcons.stopwatch,
-                  ),
-                  _Pill(
-                    label: '${room.questionCount} ${context.t(K.soru)}',
-                    icon: AppIcons.circleQuestion,
-                  ),
-                  if (room.entryFee > 0)
-                    _Pill(
-                      label: '${room.entryFee} ${context.t(K.coinWord)}',
-                      icon: AppIcons.coins,
-                    ),
-                  _Pill(
-                    label: isHost
-                        ? context.t(K.host)
-                        : context.t(K.hostNamed, {
-                            'name': _hostName(room, isKu: context.isKu),
-                          }),
-                    icon: AppIcons.star,
-                  ),
+                  for (final (icon, label) in meta)
+                    _MetaItem(icon: icon, label: label),
                 ],
               ),
               const SizedBox(height: SahneSpace.x4),
-              // Büyük davet kodu: kopyalanabilir tek yüzey.
-              Material(
-                color: t.bg,
-                shape: SahneShape.withSide(
-                  SahneShape.m,
-                  SahneStageColors.raceSoft.withValues(alpha: 0.4),
-                  width: SahneRing.r1,
-                ),
-                clipBehavior: Clip.antiAlias,
-                child: InkWell(
-                  key: const ValueKey('room-code-copy'),
-                  onTap: onCopy,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      SahneSpace.x4,
-                      SahneSpace.x3,
-                      SahneSpace.x3,
-                      SahneSpace.x3,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                context.t(K.roomCodeTapCopy),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: SahneType.caption.copyWith(color: t.tx2),
-                              ),
-                              const SizedBox(height: SahneSpace.x1),
-                              // Kod hiçbir genişlikte kısaltılmaz: 13
-                              // karakter 320 px'te de tam okunur.
-                              FittedBox(
-                                fit: BoxFit.scaleDown,
-                                alignment: AlignmentDirectional.centerStart,
-                                child: Text(
-                                  room.code,
-                                  key: const ValueKey('room-code'),
+              // Oda kodu: kopyalanabilir tek çip. Uzun "dokun ve kopyala"
+              // yazısı ekran okuyucuya ipucu olarak kaldı; görünürde kısa
+              // "Oda kodu" etiketi ve kopya simgesi yeter (kopyalayınca
+              // onay çubuğu çıkar).
+              Semantics(
+                button: true,
+                hint: context.t(K.roomCodeTapCopy),
+                child: Material(
+                  color: t.bg,
+                  shape: SahneShape.withSide(
+                    SahneShape.m,
+                    SahneStageColors.raceSoft.withValues(alpha: 0.4),
+                    width: SahneRing.r1,
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    key: const ValueKey('room-code-copy'),
+                    onTap: onCopy,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: SahneSpace.x4,
+                        vertical: SahneSpace.x3,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  context.t(K.roomCode),
                                   maxLines: 1,
-                                  softWrap: false,
-                                  style: SahneType.title.copyWith(
-                                    color: t.gold,
-                                    letterSpacing: 3,
-                                    fontFeatures: const [
-                                      FontFeature.tabularFigures(),
-                                    ],
+                                  overflow: TextOverflow.ellipsis,
+                                  style: SahneType.caption.copyWith(
+                                    color: t.tx2,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: SahneSpace.x3),
-                        ExcludeSemantics(
-                          child: DecoratedBox(
-                            decoration: ShapeDecoration(
-                              color: t.s2,
-                              shape: SahneShape.m,
+                                const SizedBox(height: SahneSpace.x1),
+                                // Kod hiçbir genişlikte kısaltılmaz: 13
+                                // karakter 320 px'te de tam okunur.
+                                FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  alignment: AlignmentDirectional.centerStart,
+                                  child: Text(
+                                    room.code,
+                                    key: const ValueKey('room-code'),
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    style: SahneType.title.copyWith(
+                                      color: t.gold,
+                                      letterSpacing: 3,
+                                      fontFeatures: const [
+                                        FontFeature.tabularFigures(),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            child: SizedBox.square(
-                              dimension: 44,
-                              child: Icon(
-                                AppIcons.copy,
-                                color: t.goldTx,
-                                size: 20,
-                              ),
+                          ),
+                          const SizedBox(width: SahneSpace.x3),
+                          ExcludeSemantics(
+                            child: Icon(
+                              AppIcons.copy,
+                              color: t.goldTx,
+                              size: 22,
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: SahneSpace.x3),
+              const SizedBox(height: SahneSpace.x1),
               _RoomInviteButton(
                 label: context.t(K.roomInviteAction),
                 onShare: onShare,
@@ -1485,7 +1451,73 @@ class _RoomHero extends StatelessWidget {
   }
 }
 
-/// Oda lobisindeki davet düğmesi — sahne kartının ikincil eylemi.
+/// Oyuncu sayısı: kart başlığının sağında "kişi simgesi + sayı". Yalnız
+/// simge ve rakamdır; ekran okuyucu "Oyuncular: 2" duyar.
+class _PlayerCount extends StatelessWidget {
+  const _PlayerCount({required this.count});
+
+  static const anchorKey = ValueKey('room-player-count');
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      key: anchorKey,
+      label: '${context.t(K.playersWord)}: $count',
+      excludeSemantics: true,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            AppIcons.peopleGroup,
+            size: 18,
+            color: SahneStageColors.raceSoft,
+          ),
+          const SizedBox(width: SahneSpace.x1),
+          Text(
+            '$count',
+            style: SahneType.bodyStrong.copyWith(
+              color: t.tx,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Künye öğesi: yumuşak lal simge + ikincil renkte tek satır söz.
+class _MetaItem extends StatelessWidget {
+  const _MetaItem({required this.icon, required this.label});
+
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: SahneStageColors.raceSoft, size: 16),
+        const SizedBox(width: SahneSpace.x1 + 2),
+        Flexible(
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: SahneType.captionStrong.copyWith(color: t.tx),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Oda lobisindeki davet bağlantısı — sahne kartının en hafif eylemi.
 ///
 /// Paylaşım sayfası iPad'de bir çıkış noktası ister; düğmenin kendi
 /// konumu [onShare]'e verilir. Telefonlarda yok sayılır.
@@ -1497,60 +1529,29 @@ class _RoomInviteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SahneButton.secondary(
-      key: const ValueKey('room-invite-share'),
-      label: label,
-      icon: AppIcons.shareNodes,
-      expand: true,
-      onPressed: () {
-        HapticFeedback.selectionClick();
-        final box = context.findRenderObject() as RenderBox?;
-        final origin = box == null || !box.hasSize
-            ? null
-            : box.localToGlobal(Offset.zero) & box.size;
-        onShare(origin);
-      },
-    );
-  }
-}
-
-/// Ayar çipi: sahne kartında Perde tonu, S pah, yumuşak lal ikon.
-class _Pill extends StatelessWidget {
-  const _Pill({required this.label, required this.icon});
-
-  final String label;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return DecoratedBox(
-      decoration: ShapeDecoration(color: t.s1, shape: SahneShape.m),
-      child: ConstrainedBox(
-        // a11y-tap-target: noninteractive — ayar çipi; salt görsel,
-        // dokunma hedefi değil.
-        constraints: const BoxConstraints(minHeight: 32),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.only(
-            start: SahneSpace.x2,
-            end: SahneSpace.x3,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, color: SahneStageColors.raceSoft, size: 16),
-              const SizedBox(width: SahneSpace.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: SahneType.captionStrong.copyWith(color: t.tx),
-                ),
-              ),
-            ],
-          ),
+    return Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: TextButton.icon(
+        key: const ValueKey('room-invite-share'),
+        icon: Icon(AppIcons.shareNodes, size: 18, color: t.actTx),
+        label: Text(
+          label,
+          style: SahneType.captionStrong.copyWith(color: t.actTx),
         ),
+        style: TextButton.styleFrom(
+          minimumSize: const Size(sahneTapTarget, sahneTapTarget),
+          shape: SahneShape.m,
+          padding: const EdgeInsetsDirectional.only(end: SahneSpace.x3),
+        ),
+        onPressed: () {
+          HapticFeedback.selectionClick();
+          final box = context.findRenderObject() as RenderBox?;
+          final origin = box == null || !box.hasSize
+              ? null
+              : box.localToGlobal(Offset.zero) & box.size;
+          onShare(origin);
+        },
       ),
     );
   }
@@ -1924,8 +1925,9 @@ class _ReactionChip extends StatelessWidget {
 /// odayı seyreltmek için sohbeti tamamen kaldırmıştı; kalabalık kaygısı
 /// haklıydı ama çözüm silmek değil katlamaktı (2026-07-31).
 ///
-/// 2026-09-29 Şahnê: liste grubunda tek standart satır (yarış tonu ikon
-/// karosu + söz + aç/kapa oku).
+/// 2026-10-01: kartlı liste satırı kalktı. Lobinin en az önemli eylemi
+/// "Hazırım" kartı ve başlat düğmesiyle aynı yüzey ağırlığını taşıyordu;
+/// artık yüzeysiz, ortalı bir metin eylemi (simge + söz).
 class _ChatToggleRow extends StatelessWidget {
   const _ChatToggleRow({required this.open, required this.onToggle});
 
@@ -1935,23 +1937,21 @@ class _ChatToggleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
-      child: SahneListGroup(
-        children: [
-          SahneListRow.icon(
-            key: const ValueKey('room-chat-toggle'),
-            icon: AppIcons.comment,
-            role: SahneRole.race,
-            title: context.t(K.chat),
-            trailing: Icon(
-              open ? AppIcons.chevronUp : AppIcons.chevronDown,
-              color: t.tx3,
-              size: 20,
-            ),
-            onTap: onToggle,
-          ),
-        ],
+    return Center(
+      child: TextButton.icon(
+        key: const ValueKey('room-chat-toggle'),
+        onPressed: onToggle,
+        icon: Icon(AppIcons.comment, size: 18, color: t.tx2),
+        label: Text(
+          context.t(K.chat),
+          style: SahneType.captionStrong.copyWith(color: t.tx2),
+        ),
+        iconAlignment: IconAlignment.start,
+        style: TextButton.styleFrom(
+          minimumSize: const Size(sahneTapTarget, sahneTapTarget),
+          shape: SahneShape.m,
+          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x4),
+        ),
       ),
     );
   }

@@ -85,9 +85,12 @@ import '../../test/support/widget_test_helpers.dart';
 /// platform render'ında yakalar.
 /// Tur görüntü boyutu. Yükseklik `ZANKURD_SCREEN_TOUR_HEIGHT` ile
 /// büyütülebilir: kaydırılan bir ekranın tamamını tek karede görmek için
-/// (ör. `ZANKURD_SCREEN_TOUR_HEIGHT=1800`). Varsayılan, iPhone boyu.
+/// (ör. `ZANKURD_SCREEN_TOUR_HEIGHT=1800`). Genişlik
+/// `ZANKURD_SCREEN_TOUR_WIDTH` ile (ör. `320`, en dar telefon). Varsayılan,
+/// iPhone boyu.
 final _size = Size(
-  390,
+  double.tryParse(Platform.environment['ZANKURD_SCREEN_TOUR_WIDTH'] ?? '') ??
+      390,
   double.tryParse(Platform.environment['ZANKURD_SCREEN_TOUR_HEIGHT'] ?? '') ??
       844,
 );
@@ -144,6 +147,15 @@ void _applyViewport(WidgetTester tester, Size size, {double dpr = 3.0}) {
   tester.view.devicePixelRatio = dpr;
   tester.view.physicalSize = size * dpr;
   addTearDown(tester.view.reset);
+  // `ZANKURD_SCREEN_TOUR_TEXT_SCALE=2` büyük yazıyı (sistem yazı ölçeği)
+  // bütün karelere uygular; 320 px + 2.0 en sıkışık gerçek koşuldur.
+  final scale = double.tryParse(
+    Platform.environment['ZANKURD_SCREEN_TOUR_TEXT_SCALE'] ?? '',
+  );
+  if (scale != null) {
+    tester.platformDispatcher.textScaleFactorTestValue = scale;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+  }
 }
 
 Future<void> _shoot(WidgetTester tester, String name) async {
@@ -309,6 +321,59 @@ const _tourRoomCode = 'ZK-7A41C29E0B';
 
 /// Oda yarışının puanı: `68_result` karesi ve sıralamadaki kendi satır.
 const _tourRaceScore = 240;
+
+enum _LobbyView { hostAlone, hostGuestNotReady, guest }
+
+/// Oda lobisinin ev sahibi / konuk durumları için tur deposu. Oyuncu
+/// kimliği `user`; ev sahibi olan odalarda `hostId` oyuncunun kendisidir,
+/// konuk odasında Berfin.
+class _LobbyTourRepository extends _TourRepository {
+  _LobbyTourRepository(this.view);
+
+  final _LobbyView view;
+
+  static GameRoom room(_LobbyView view) {
+    const me = Player(
+      id: 'user',
+      name: 'Sen',
+      score: 0,
+      state: Player.readyState,
+    );
+    const berfin = Player(
+      id: 'tour-berfin',
+      name: 'Berfin',
+      score: 0,
+      state: Player.readyState,
+    );
+    const berfinWaiting = Player(
+      id: 'tour-berfin',
+      name: 'Berfin',
+      score: 0,
+      state: 'Bekliyor',
+    );
+    return GameRoom(
+      id: 'tour-room-lobby',
+      name: 'Hevalên Zanînê',
+      code: _tourRoomCode,
+      category: 'Ziman',
+      players: switch (view) {
+        _LobbyView.hostAlone => const [me],
+        _LobbyView.hostGuestNotReady => const [me, berfinWaiting],
+        _LobbyView.guest => const [berfin, me],
+      },
+      status: RoomStatus.lobby,
+      questionCount: 10,
+      hostId: view == _LobbyView.guest ? 'tour-berfin' : 'user',
+    );
+  }
+
+  @override
+  Future<List<Player>> loadRoomPlayers(GameRoom room) async => room.players;
+
+  @override
+  Stream<List<Player>> subscribeRoomPlayers(GameRoom room) =>
+      Stream.value(room.players);
+}
 
 class _TourRepository extends TestMockZanKurdRepository {
   @override
@@ -1237,6 +1302,42 @@ void main() {
       ku: true,
     );
     await _shoot(t, '60b_levels_bilim_ku');
+  }, tags: ['preview']);
+
+  // Oda lobisinin üç durumu: ev sahibi yalnız (rakip bekliyor), ev sahibi
+  // + hazır olmayan konuk, konuk. Önceki kareler yalnız "iki hazır oyunculu
+  // ev sahibi"ni basıyordu; asıl kalabalık ve asıl boş durumlar görünmezdi.
+  testWidgets('104 oda — ev sahibi yalnız', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _LobbyTourRepository(_LobbyView.hostAlone),
+        initialRoom: _LobbyTourRepository.room(_LobbyView.hostAlone),
+      ),
+    );
+    await _shoot(t, '104_room_host_alone');
+  }, tags: ['preview']);
+
+  testWidgets('105 oda — ev sahibi, konuk hazır değil', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _LobbyTourRepository(_LobbyView.hostGuestNotReady),
+        initialRoom: _LobbyTourRepository.room(_LobbyView.hostGuestNotReady),
+      ),
+    );
+    await _shoot(t, '105_room_host_guest_not_ready');
+  }, tags: ['preview']);
+
+  testWidgets('106 oda — konuk', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _LobbyTourRepository(_LobbyView.guest),
+        initialRoom: _LobbyTourRepository.room(_LobbyView.guest),
+      ),
+    );
+    await _shoot(t, '106_room_guest');
   }, tags: ['preview']);
 
   testWidgets('62 oda (Kurmancî)', (t) async {
