@@ -968,33 +968,33 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
 
             // Ücrete yetilmiyorsa "Oda aç" pasif bırakılmaz: yerine jeton
             // kazanma yolu gelir. Ücretsiz seçenek yukarıda her zaman açık.
-            if (hasEnoughCoins)
-              SahneButton.primary(
-                key: const ValueKey('custom-room-open'),
-                label: context.t(K.openRoom),
-                arrow: false,
-                expand: true,
-                onPressed: () {
-                  Navigator.of(context).pop(
-                    _CustomRoomConfig(
-                      category: _selectedCategory,
-                      duration: _selectedDuration,
-                      questionCount: _selectedQuestionCount,
-                      entryFee: _selectedEntryFee,
+            // Sayfanın düğmesi `FilledButton` kalır: ekranın tek `SahneButton.
+            // primary`si hızlı düellodur (bkz. `brand_accent_guard_test`).
+            SizedBox(
+              width: double.infinity,
+              child: hasEnoughCoins
+                  ? FilledButton(
+                      key: const ValueKey('custom-room-open'),
+                      onPressed: () {
+                        Navigator.of(context).pop(
+                          _CustomRoomConfig(
+                            category: _selectedCategory,
+                            duration: _selectedDuration,
+                            questionCount: _selectedQuestionCount,
+                            entryFee: _selectedEntryFee,
+                          ),
+                        );
+                      },
+                      child: Text(context.t(K.openRoom)),
+                    )
+                  : FilledButton.icon(
+                      key: const ValueKey('custom-room-earn-coins'),
+                      onPressed: () =>
+                          Navigator.of(context).pop(const _EarnCoinsRequest()),
+                      icon: const Icon(AppIcons.dice),
+                      label: Text(context.t(K.earnCoins)),
                     ),
-                  );
-                },
-              )
-            else
-              SahneButton.primary(
-                key: const ValueKey('custom-room-earn-coins'),
-                label: context.t(K.earnCoins),
-                icon: AppIcons.dice,
-                arrow: false,
-                expand: true,
-                onPressed: () =>
-                    Navigator.of(context).pop(const _EarnCoinsRequest()),
-              ),
+            ),
           ],
         ),
       ),

@@ -234,14 +234,7 @@ void main() {
       final earn = find.byKey(const ValueKey('custom-room-earn-coins'));
       expect(earn, findsOneWidget);
       await tester.ensureVisible(earn);
-      expect(
-        tester
-            .widget<FilledButton>(
-              find.descendant(of: earn, matching: find.byType(FilledButton)),
-            )
-            .onPressed,
-        isNotNull,
-      );
+      expect(tester.widget<FilledButton>(earn).onPressed, isNotNull);
 
       await tester.tap(earn);
       await tester.pumpAndSettle();
