@@ -240,13 +240,17 @@ class SahneRailChip extends StatelessWidget {
         color: selected ? t.roleText(role) : t.tx2,
       ),
     );
-    final shape = selected
-        ? SahneShape.withSide(
-            SahneShape.m,
-            t.roleText(role),
-            width: SahneRing.r2,
-          )
-        : SahneShape.withSide(SahneShape.m, t.edge, width: 1);
+    final fill = selected ? t.roleTint(role) : (onSurface ? t.s2 : t.s1);
+    // Seçili olmayan çip de AYNI kalınlıkta halka taşır; halkası kendi
+    // zeminin rengindedir (görünmez). Eskiden 1 px'lik soluk bir kenar vardı:
+    // gündüzde sayfa zeminiyle birleşip beyaz alanı küçültüyor, seçilince
+    // Halka 2 çipi "büyütüyordu" (2026-10-01 tasarım denetimi: 88 ↔ 82 px).
+    // İki hâlde de dolu alan aynı 44'ü kaplar; fark yalnız halkanın rengi.
+    final shape = SahneShape.withSide(
+      SahneShape.m,
+      selected ? t.roleText(role) : fill,
+      width: SahneRing.r2,
+    );
     return Semantics(
       container: true,
       button: true,
@@ -267,7 +271,7 @@ class SahneRailChip extends StatelessWidget {
             padding: const EdgeInsets.all(inset),
             child: SahneTappable(
               shape: shape,
-              color: selected ? t.roleTint(role) : (onSurface ? t.s2 : t.s1),
+              color: fill,
               onTap: onTap,
               child: Padding(
                 padding: EdgeInsets.symmetric(

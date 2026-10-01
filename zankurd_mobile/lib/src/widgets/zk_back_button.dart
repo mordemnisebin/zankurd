@@ -78,7 +78,8 @@ PreferredSizeWidget zkAppBar(
   // sarar; büyük yazıda "Dilbilgisi / Gr…" diye kesiliyordu. Başlık en çok
   // iki satıra sarar ve KESİLMEZ: iki satıra sığmıyorsa yazı ölçeği o kadar
   // küçülür ([_titleScaler]); ölçüm ve çizim aynı ölçeği kullanır.
-  final titleRoom = _titleRoom(context, hasLeading, actionCount);
+  final trailingGap = _trailingGap(actions);
+  final titleRoom = _titleRoom(context, hasLeading, actionCount, trailingGap);
   final Widget? shownTitle = titleText == null
       ? title
       : Text(
@@ -102,6 +103,7 @@ PreferredSizeWidget zkAppBar(
     hasSubtitle: subtitle != null,
     hasLeading: hasLeading,
     actionCount: actionCount,
+    trailingGap: trailingGap,
   );
   // 2026-09-30 bant: `AppBar` başlığı yazı ölçeğini 1,34'te kırpar; çubuk
   // yüksekliği ise gerçek ölçekle ölçülür ([_barHeight]). %200'de çubuk
@@ -141,9 +143,15 @@ PreferredSizeWidget zkAppBar(
     title: heading,
     titleSpacing: hasLeading ? SahneSpace.x3 : SahneSpace.page,
     titleTextStyle: SahneType.headline.copyWith(color: t.tx),
-    actions: actions == null
-        ? null
-        : [...actions, const SizedBox(width: SahneSpace.x2)],
+    // Son eylemin görsel kenarı, geri plakasının sol kenarı gibi sayfa
+    // kenarından 16 içeride durur. Eskiden sabit 8'lik boşluk vardı: mağaza
+    // çubuğunda jeton çipi sağ kenara ~8 px, geri plakası sola 16 px
+    // uzaktaydı (2026-10-01 tasarım denetimi). 44'lük ikon düğmesi 48'lik
+    // kutusunda her yanda [SahneIconButton.inset] saydam pay taşır; çip
+    // ise yatayda payı yoktur.
+    actions: actions == null || actions.isEmpty
+        ? actions
+        : [...actions, SizedBox(width: trailingGap)],
     backgroundColor: backgroundColor ?? t.bg,
     surfaceTintColor: Colors.transparent,
     elevation: elevation ?? 0,
@@ -174,17 +182,41 @@ PreferredSizeWidget zkAppBar(
 const int _titleMaxLines = 2;
 
 /// Başlığa ayrılan genişlik: ekran − öncül − başlık boşluğu − eylemler − kenar.
-double _titleRoom(BuildContext context, bool hasLeading, int actionCount) {
+double _titleRoom(
+  BuildContext context,
+  bool hasLeading,
+  int actionCount,
+  double trailingGap,
+) {
   final width = MediaQuery.sizeOf(context).width;
   final lead = hasLeading ? _backInset + ZkBackButton.tapTarget : 0.0;
+  final spacing = hasLeading ? SahneSpace.x3 : SahneSpace.page;
+  // Eylem varken sağda gerçekte durana ayrılır: son boşluk + başlığın sağ
+  // başlık boşluğu (AppBar `titleSpacing`i iki yana uygular). Eylem yoksa
+  // eski 16.
+  final right = actionCount > 0 && trailingGap > SahneSpace.x2
+      ? trailingGap + spacing
+      : SahneSpace.page;
   return math.max(
     48.0,
-    width -
-        lead -
-        (hasLeading ? SahneSpace.x3 : SahneSpace.page) -
-        actionCount * sahneTapTarget -
-        SahneSpace.page,
+    width - lead - spacing - actionCount * sahneTapTarget - right,
   );
+}
+
+/// Son eylemin ardındaki boşluk: son eylemin GÖRSEL kenarı sayfa kenarından
+/// [SahneSpace.page] içeride dursun (geri plakasının sol kenarı gibi).
+/// 44'lük ikon düğmesi 48'lik kutusunda her yanda [SahneIconButton.inset]
+/// saydam pay taşır; çip ve diğerlerinin yatayda payı yoktur.
+double _trailingGap(List<Widget>? actions) {
+  if (actions == null || actions.isEmpty) return 0;
+  final last = actions.last;
+  // Saydam yuva (`SizedBox`) görünür bir eylem değildir: alt kategori
+  // başlığı kilim desenine yer ayırmak için 48'lik boş yuvalar verir; orada
+  // eski 8'lik boşluk kalır (aksi hâlde alt satır bir satır daha sarıyordu).
+  if (last is SizedBox) return SahneSpace.x2;
+  return last is SahneIconButton
+      ? SahneSpace.page - SahneIconButton.inset
+      : SahneSpace.page;
 }
 
 /// Başlığın yazı ölçeği: en uzun söz satıra sığar ([sahneUnbrokenScaler]) ve
@@ -232,10 +264,11 @@ double _barHeight(
   required bool hasSubtitle,
   required bool hasLeading,
   required int actionCount,
+  required double trailingGap,
 }) {
   final scaler = MediaQuery.textScalerOf(context);
   final direction = Directionality.maybeOf(context) ?? TextDirection.ltr;
-  final room = _titleRoom(context, hasLeading, actionCount);
+  final room = _titleRoom(context, hasLeading, actionCount, trailingGap);
   double measure(
     String? text,
     TextStyle style, {

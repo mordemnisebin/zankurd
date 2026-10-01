@@ -875,7 +875,10 @@ class _RowDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(start: _rowTextInset),
+      padding: const EdgeInsetsDirectional.only(
+        start: _rowTextInset,
+        end: SahneListGroup.dividerEndInset,
+      ),
       child: ExcludeSemantics(
         child: SizedBox(
           height: 1,
