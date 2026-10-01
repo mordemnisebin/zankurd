@@ -201,6 +201,22 @@ class CategoryNames {
     if (key == null) return kuName;
     return Tr.forKu(key, isKu);
   }
+
+  /// Ana ekran konu karosunun dar yazı sütununa sığan KISA adlar. Karo adı
+  /// tek satırdır ve sarmaz; "Bilim ve Düşünce / Zanist û Raman" dört satıra
+  /// sarıp ızgaranın satır boylarını bozuyordu (2026-09-30 simülatör).
+  /// Burada olmayan konunun tam adı zaten kısadır.
+  static const Map<String, String> _tileKeys = {
+    'Paradigma': K.catParadigmaTile,
+  };
+
+  /// Karoda yazılan ad: kısa adı varsa o, yoksa [localized]. Tam ad başka
+  /// her yerde ([localized]) olduğu gibi kalır.
+  static String tile(String kuName, bool isKu) {
+    final key = _tileKeys[kuName];
+    if (key == null) return localized(kuName, isKu);
+    return Tr.forKu(key, isKu);
+  }
 }
 
 /// Seviye adları veri katmanında Kurmancî sabit olarak tutulur (kimlik

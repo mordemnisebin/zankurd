@@ -2607,6 +2607,9 @@ class Tr {
     // emekli edilince kalan nötr toplum bilimi, felsefe ve genel bilim
     // "paradigma" sözünün vaadini taşımıyordu.
     K.catParadigma: {'ku': 'Zanist û Raman', 'tr': 'Bilim ve Düşünce'},
+    // Yalnız ana ekran karosunun dar yazı sütunu için kısa ad
+    // ([CategoryNames.tile]); tam ad her yerde ötekidir.
+    K.catParadigmaTile: {'ku': 'Zanist', 'tr': 'Bilim'},
     K.catTeknoloji: {'ku': 'Teknolojî', 'tr': 'Teknoloji'},
     K.catSinema: {'ku': 'Sînema', 'tr': 'Sinema'},
     // 2026-09-30: Kürtlerle doğrudan bağı olmayan nötr genel bilgi (dünya
@@ -3818,6 +3821,7 @@ class K {
   static const catMuzik = 'cat.muzik';
   static const catSiyaset = 'cat.siyaset';
   static const catParadigma = 'cat.paradigma';
+  static const catParadigmaTile = 'cat.paradigmaTile';
   static const catTeknoloji = 'cat.teknoloji';
   static const catSinema = 'cat.sinema';
   static const catCihan = 'cat.cihan';

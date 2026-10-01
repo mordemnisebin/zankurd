@@ -7,6 +7,17 @@ import 'sahne_painters.dart';
 
 export 'sahne_painters.dart' show SahneDiamondState;
 
+/// İlerleme izinin kenar rengi.
+///
+/// 2026-09-30 izgara: gündüzde iz (`s3` #D0D7EC) beyaz yüzeyde ve sayfa
+/// zemininde ~1,4:1 kalıyor, BOŞ (%0) çubuk neredeyse görünmüyordu — "0/5
+/// seviye" satırı ve ana ekrandaki oynanmamış konu karoları boş sayfa gibi
+/// duruyordu. Gündüzde iz, ikincil metin renginden türeyen 1 px kenar alır
+/// (≥ 3:1); gecede iz zaten koyu yüzeyden ayrışır, kenar şeffaf kalır.
+Color sahneTrackEdge(SahneTokens t) => t.bg == SahneTokens.day.bg
+    ? t.tx3.withValues(alpha: 0.75)
+    : Colors.transparent;
+
 /// İlerleme çubuğunun tonu.
 enum SahneProgressTone {
   /// Öğrenme (`learnBar`): ders, konu.
@@ -18,7 +29,8 @@ enum SahneProgressTone {
 
 /// İlerleme çubuğu — maketteki `.sh-bar` / `.sh-prog`.
 ///
-/// 8 px, S pah; iz Ray (`s3`), dolgu öğrenmede `learnBar`, ödülde Zêr.
+/// 8 px, S pah; iz Ray (`s3`; gündüzde ince bir kenarla, bkz.
+/// [sahneTrackEdge]), dolgu öğrenmede `learnBar`, ödülde Zêr.
 /// İsteğe bağlı sağda değer ([trailing], ör. "2/5", "200 XP"; kalın
 /// açıklama, tablo rakamı). Ekran okuyucu değeri yüzde olarak duyar.
 /// Değer değişimi 240 ms kayar; hareketi azaltta anında.
@@ -50,7 +62,14 @@ class SahneProgressBar extends StatelessWidget {
       builder: (context, animated, _) => SizedBox(
         height: 8,
         child: DecoratedBox(
-          decoration: ShapeDecoration(color: t.s3, shape: SahneShape.s),
+          decoration: ShapeDecoration(
+            color: t.s3,
+            shape: SahneShape.withSide(
+              SahneShape.s,
+              sahneTrackEdge(t),
+              width: 1,
+            ),
+          ),
           child: Align(
             alignment: AlignmentDirectional.centerStart,
             child: FractionallySizedBox(

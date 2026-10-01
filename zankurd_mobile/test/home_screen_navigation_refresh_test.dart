@@ -178,7 +178,13 @@ void main() {
         reason: category,
       );
     }
-    expect(find.byType(LinearProgressIndicator), findsNothing);
+    // 2026-09-30 izgara: ilerleme çizgisi HER karoda durur (oynanmamışta boş
+    // iz); hiçbirinin dolgusu yoktur.
+    final bars = tester.widgetList<LinearProgressIndicator>(
+      find.byType(LinearProgressIndicator),
+    );
+    expect(bars.length, repo.categories.length);
+    expect(bars.every((b) => b.value == 0), isTrue);
   });
 
   testWidgets('konu karosu dokunulan kategoriyi açar', (tester) async {

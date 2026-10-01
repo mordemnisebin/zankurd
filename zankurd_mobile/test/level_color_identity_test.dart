@@ -93,9 +93,11 @@ void main() {
           matching: find.text(title),
         );
         expect(inBar, findsOneWidget, reason: combo);
+        // 2026-09-30 izgara: başlık bantlıdır (kategori tonu, her temada
+        // gece zemini); ad gece metniyle yazılır, temaya göre değişmez.
         expect(
           DefaultTextStyle.of(tester.element(inBar)).style.color,
-          t.tx,
+          SahneTokens.night.tx,
           reason: combo,
         );
         final gradients = find.byWidgetPredicate((widget) {

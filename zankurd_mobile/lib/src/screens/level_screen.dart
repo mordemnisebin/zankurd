@@ -7,7 +7,7 @@ import '../l10n/lang.dart';
 import '../models/quiz_level.dart';
 import '../widgets/app_state.dart';
 import '../widgets/sahne/sahne.dart';
-import '../widgets/zk_back_button.dart';
+import '../widgets/category_band.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'quiz_screen.dart';
@@ -56,64 +56,59 @@ class _LevelScreenState extends State<LevelScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final t = SahneTokens.of(context);
     final levels = widget.repository.levelsForCategory(widget.category);
     final heading = _LevelHeading.of(widget.category, widget.subCategory, ku);
 
-    // 2026-09-29 Şahnê: B iskeleti. Ad (alt kategori ya da kategori) ve
-    // bağlamı çubukta; eski kategori degradeli kimlik kartı kalktı. İçerik:
-    // ilerleme kartı → seviye yolu (yol elmasları + satırlar; sıradaki
-    // seviye sahne kartında, ekranın TEK birincil eylemiyle).
-    return Scaffold(
-      backgroundColor: t.bg,
-      appBar: zkAppBar(
-        context,
-        title: Text(heading.title),
-        subtitle: Text(heading.subtitle),
-      ),
-      body: SafeArea(
-        top: false,
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(
-            SahneSpace.page,
-            SahneSpace.x2,
-            SahneSpace.page,
-            SahneSpace.x6,
-          ),
-          children: [
-            if (levels.isNotEmpty) ...[
-              _LevelProgressCard(
-                description: heading.description,
-                completed: _playedLevels.length,
-                total: levels.length,
-                isKu: ku,
-              ),
-              const SizedBox(height: SahneSpace.x4),
-            ],
-            switch (_loadState) {
-              _LevelLoadState.error => AppErrorState(
-                title: context.t(K.loadFailedShort),
-                message: context.t(K.buSeviyeninSorulariYuklenemedi),
-                retryLabel: context.t(K.retryShort),
-                onRetry: _retrySelectedLevel,
-              ),
-              _LevelLoadState.empty => AppEmptyState(
-                icon: AppIcons.bookOpen,
-                title: context.t(K.noQuestionsForCategory),
-                message: context.t(K.buSeviyeninSorulariYuklenemedi),
-                actionLabel: context.t(K.retryShort),
-                onAction: _retrySelectedLevel,
-              ),
-              _LevelLoadState.ready => _LevelPath(
-                levels: levels,
-                disabled: _loading,
-                isKu: ku,
-                playedLevels: _playedLevels,
-                onOpen: _openLevel,
-              ),
-            },
-          ],
+    // 2026-09-30 izgara: başlık alt kategori ekranıyla AYNI bantlı bileşendir
+    // ([CategoryBandScaffold]; kategori tonu + kilim deseni). Eskiden bu
+    // ekran düz gündüz çubuğu ve başka bir geri düğmesi taşıyordu; konu
+    // akışında bir adım ilerleyince başlık değişiyordu. İçerik: ilerleme
+    // kartı → seviye yolu (sıradaki seviye sahne kartında, ekranın TEK
+    // birincil eylemiyle).
+    return CategoryBandScaffold(
+      category: widget.category,
+      title: heading.title,
+      subtitle: heading.subtitle,
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(
+          SahneSpace.page,
+          SahneSpace.x4,
+          SahneSpace.page,
+          SahneSpace.x6,
         ),
+        children: [
+          if (levels.isNotEmpty) ...[
+            _LevelProgressCard(
+              description: heading.description,
+              completed: _playedLevels.length,
+              total: levels.length,
+              isKu: ku,
+            ),
+            const SizedBox(height: SahneSpace.x4),
+          ],
+          switch (_loadState) {
+            _LevelLoadState.error => AppErrorState(
+              title: context.t(K.loadFailedShort),
+              message: context.t(K.buSeviyeninSorulariYuklenemedi),
+              retryLabel: context.t(K.retryShort),
+              onRetry: _retrySelectedLevel,
+            ),
+            _LevelLoadState.empty => AppEmptyState(
+              icon: AppIcons.bookOpen,
+              title: context.t(K.noQuestionsForCategory),
+              message: context.t(K.buSeviyeninSorulariYuklenemedi),
+              actionLabel: context.t(K.retryShort),
+              onAction: _retrySelectedLevel,
+            ),
+            _LevelLoadState.ready => _LevelPath(
+              levels: levels,
+              disabled: _loading,
+              isKu: ku,
+              playedLevels: _playedLevels,
+              onOpen: _openLevel,
+            ),
+          },
+        ],
       ),
     );
   }
@@ -530,9 +525,20 @@ class _LevelRowContent extends StatelessWidget {
               ),
               const SizedBox(width: SahneSpace.x2),
             ],
+            // Kilitli seviye NEDEN kilitli olduğunu söyler (2026-09-30
+            // izgara): yalnız soru sayısı yazıyordu, kilit ikonuna dokunmak
+            // dışında açılma koşulu görünmüyordu. Koşul tek satırdır
+            // ("Önce 1. seviyeyi tamamla."); soru sayısı açılınca görünür.
             Flexible(
               child: Text(
-                '${level.questionCount} ${context.t(K.soru)}',
+                locked
+                    ? context.t(K.oncePSeviyeyiTamamla, {
+                        'p0': '${level.number - 1}.',
+                      })
+                    : '${level.questionCount} ${context.t(K.soru)}',
+                key: locked
+                    ? ValueKey('level-lock-hint-${level.number}')
+                    : null,
                 style: SahneType.caption.copyWith(color: t.tx2),
               ),
             ),

@@ -173,18 +173,23 @@ PreferredSizeWidget zkAppBar(
 /// Başlığın en çok kaç satıra sarabileceği.
 const int _titleMaxLines = 2;
 
-/// Başlığa ayrılan genişlik: ekran − öncül − başlık boşluğu − eylemler − kenar.
+/// Başlığa ayrılan genişlik: ekran − öncül − iki yanda başlık boşluğu −
+/// eylemler. `NavigationToolbar` başlık boşluğunu İKİ yana da koyar
+/// (`middleSpacing * 2`) ve [zkAppBar] eylemlerin sonuna [SahneSpace.x2]'lik
+/// bir pay ekler; ölçüm bunların hepsini sayar.
+///
+/// 2026-09-30 izgara: eskiden eylem payı (8) ve sağ boşluk 12 yerine 16
+/// sayılıyordu; ölçüm gerçek alandan ~4 px geniş kalıyor, kilim yuvası olan
+/// çubukta alt satır ölçülenden bir satır fazla sarıp bandın altında
+/// kırpılıyordu (Kurmancî "Zanist û Raman" ekranı).
 double _titleRoom(BuildContext context, bool hasLeading, int actionCount) {
   final width = MediaQuery.sizeOf(context).width;
   final lead = hasLeading ? _backInset + ZkBackButton.tapTarget : 0.0;
-  return math.max(
-    48.0,
-    width -
-        lead -
-        (hasLeading ? SahneSpace.x3 : SahneSpace.page) -
-        actionCount * sahneTapTarget -
-        SahneSpace.page,
-  );
+  final spacing = hasLeading ? SahneSpace.x3 : SahneSpace.page;
+  final actions = actionCount == 0
+      ? 0.0
+      : actionCount * sahneTapTarget + SahneSpace.x2;
+  return math.max(48.0, width - lead - spacing * 2 - actions);
 }
 
 /// Başlığın yazı ölçeği: en uzun söz satıra sığar ([sahneUnbrokenScaler]) ve

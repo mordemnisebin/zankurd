@@ -1202,6 +1202,43 @@ void main() {
     await _shoot(t, '60_levels_ku');
   }, tags: ['preview']);
 
+  // 2026-09-30 izgara: konu akışının ortak başlığı (alt kategori → seviye)
+  // yalnız kategoriyle açılan seviye ekranında değil, alt kategoriyle açılan
+  // gerçek akışta ve uzun adlı konuda (Zanist û Raman) da görülmeli.
+  testWidgets('38b seviyeler (alt kategori)', (t) async {
+    await _pump(
+      t,
+      LevelScreen(
+        repository: repository,
+        category: 'Ziman',
+        subCategory: 'reziman',
+      ),
+    );
+    await _shoot(t, '38b_levels_sub');
+  }, tags: ['preview']);
+
+  testWidgets('37b alt kategoriler (Bilim ve Düşünce, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      SubcategoryScreen(repository: repository, category: 'Paradigma'),
+      ku: true,
+    );
+    await _shoot(t, '37b_subcategories_bilim_ku');
+  }, tags: ['preview']);
+
+  testWidgets('60b seviyeler (Bilim ve Düşünce, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      LevelScreen(
+        repository: repository,
+        category: 'Paradigma',
+        subCategory: 'civak_maf',
+      ),
+      ku: true,
+    );
+    await _shoot(t, '60b_levels_bilim_ku');
+  }, tags: ['preview']);
+
   testWidgets('62 oda (Kurmancî)', (t) async {
     await _pump(
       t,
