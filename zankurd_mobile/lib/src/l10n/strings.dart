@@ -1480,7 +1480,7 @@ class Tr {
     // "Jeton yetmiyor" durumunun miktarlı sözü (`SahneShortfallNote`): oyuncu
     // yalnız "yetmiyor" değil, NE KADAR eksik olduğunu da bilir.
     K.coinsShort: {
-      'ku': 'Hîn {coins} zêr hewce ye',
+      'ku': '{coins} zêr kêm e',
       'tr': '{coins} jeton eksik',
     },
     K.cancelShort: {'ku': 'Betal', 'tr': 'Vazgeç'},
