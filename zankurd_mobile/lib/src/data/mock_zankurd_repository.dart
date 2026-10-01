@@ -162,8 +162,36 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   static const _contentPolicy = QuestionContentPolicy();
 
-  List<QuizQuestion> get _playableQuestions =>
-      questions.where(_contentPolicy.isPlayable).toList(growable: false);
+  /// Oynanabilir havuz, kaynak liste DEĞİŞMEDİKÇE bir kez hesaplanır.
+  ///
+  /// Eskiden getter her çağrıda ~3.000 soruyu `isPlayable`den geçirip yeni
+  /// bir liste kuruyordu (ölçüm: JIT'te ~2 ms/çağrı). Çağıranlar yalnız
+  /// olay işleyicileri değil: `SubcategoryScreen.build` her yeniden çizimde
+  /// çağırıyordu. Kusur sessizdi — sonuç doğruydu, yalnız her çağrı aynı işi
+  /// baştan yapıyordu.
+  ///
+  /// Anahtar kaynak listenin KİMLİĞİDİR (`identical`): yükleyici
+  /// `_questions`ı yeni bir liste ile değiştirdiğinde (`load`,
+  /// `setQuestionsForTest`) ya da bir test `questions`ı geçersiz kıldığında
+  /// kimlik değişir ve önbellek kendiliğinden düşer. `isPlayable` saftır
+  /// (sabit gizli-kategori kümesi, sabit emekli kimlik kümesi, değişmez
+  /// soru) — aynı liste aynı sonucu verir.
+  List<QuizQuestion>? _playableCache;
+  List<QuizQuestion>? _playableCacheSource;
+
+  List<QuizQuestion> get _playableQuestions {
+    final source = questions;
+    final cached = _playableCache;
+    if (cached != null && identical(_playableCacheSource, source)) {
+      return cached;
+    }
+    final playable = List<QuizQuestion>.unmodifiable(
+      source.where(_contentPolicy.isPlayable),
+    );
+    _playableCache = playable;
+    _playableCacheSource = source;
+    return playable;
+  }
 
   static const _allCategories = <String>[
     'Ziman',

@@ -87,6 +87,16 @@ Future<void> _loadFonts() async {
         ))
         .load();
   }
+  // Lucide artık paket değil uygulamanın kendi varlığıdır (`pubspec.yaml`,
+  // aile `Lucide`, `fontPackage` yok); öneksiz adla yüklenmeli.
+  final lucide = File('assets/fonts/Lucide.ttf');
+  if (lucide.existsSync()) {
+    await (FontLoader('Lucide')
+          ..addFont(lucide.readAsBytes().then((b) => ByteData.view(b.buffer))))
+        .load();
+  } else {
+    print('UYARI: assets/fonts/Lucide.ttf bulunamadı — ikonlar kare çizilecek');
+  }
   final packageConfig =
       jsonDecode(File('.dart_tool/package_config.json').readAsStringSync())
           as Map<String, dynamic>;
@@ -101,7 +111,6 @@ Future<void> _loadFonts() async {
   }
 
   const iconFonts = {
-    'lucide_icons_flutter': {'Lucide': 'assets/lucide.ttf'},
     'font_awesome_flutter': {
       'FontAwesomeSolid': 'lib/fonts/Font-Awesome-7-Free-Solid-900.otf',
       'FontAwesomeRegular': 'lib/fonts/Font-Awesome-7-Free-Regular-400.otf',

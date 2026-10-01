@@ -32,6 +32,16 @@ class _FriendsScreenState extends State<FriendsScreen> {
 
   late Future<List<Friend>> _friendsFuture;
   late Future<List<FriendRequest>> _requestsFuture;
+
+  /// Davet kodu, ekran açılırken BİR kez istenir.
+  ///
+  /// `FutureBuilder(future: repository.getPlayerTag())` doğrudan `build`
+  /// içinde yazılıydı: ekranın her `setState`i (arama kutusuna her harf,
+  /// istek gönderme, oda açma) Supabase'e yeni bir `profiles` sorgusu
+  /// atıyor ve davet düğmesi bekleme anına geri dönüp titriyordu. Davet
+  /// kodu oturum boyunca değişmez; sonuç doğruydu, yalnız her yeniden
+  /// çizimde ağ gidiş-dönüşü ödeniyordu.
+  late final Future<String?> _playerTagFuture;
   List<PlayerSearchResult> _searchResults = const [];
   bool _searching = false;
   bool _roomLoading = false;
@@ -40,6 +50,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
   @override
   void initState() {
     super.initState();
+    _playerTagFuture = widget.repository.getPlayerTag();
     _loadFriends();
   }
 
@@ -250,7 +261,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
           ),
           const SizedBox(height: SahneSpace.x4),
           FutureBuilder<String?>(
-            future: widget.repository.getPlayerTag(),
+            future: _playerTagFuture,
             builder: (context, snapshot) {
               final rawTag = snapshot.data;
               // Kod her yerde "ZK-4F7K" biçiminde görünür ve paylaşılır:

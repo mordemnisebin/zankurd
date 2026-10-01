@@ -709,9 +709,7 @@ class SubcategoryConfig {
   /// kategori havuzunu tamamlamak için kullanılır, ama hiçbir alt
   /// kategoriye "ait" gösterilmez).
   static String getSubcategoryId(QuizQuestion question) {
-    final list = subcategories[question.category];
-    if (list == null || list.isEmpty) return '';
-    return _matchByKeyword(question, list)?.id ?? '';
+    return _matchOf(question)?.id ?? '';
   }
 
   /// Soru için alt kategori etiketini döner; eşleşme yoksa ''.
@@ -722,9 +720,7 @@ class SubcategoryConfig {
   /// koymaktır. Boş etiket "bu sorunun belirli bir alt konusu yok" der —
   /// bu, yanlış bir konu iddiasından daha dürüsttür.
   static String getSubcategoryLabel(QuizQuestion question, bool isKu) {
-    final list = subcategories[question.category];
-    if (list == null || list.isEmpty) return '';
-    final matched = _matchByKeyword(question, list);
+    final matched = _matchOf(question);
     if (matched == null) return '';
     return isKu ? matched.nameKu : matched.nameTr;
   }
@@ -774,6 +770,34 @@ class SubcategoryConfig {
         .toList(growable: false);
   }
 
+  /// Sorunun alt kategorisi, soru başına BİR kez hesaplanır.
+  ///
+  /// [_matchByKeyword] her çağrıda `prompt + correctAnswer`ı birleştirip
+  /// küçük harfe çeviriyor, sonra o kategorinin her alt konusunun her anahtar
+  /// kelimesini `contains` ile arıyor. [visibleFor] bunu kategorinin bütün
+  /// soruları için, `SubcategoryScreen.build` içinden HER yeniden çizimde
+  /// çalıştırıyordu: ölçüm (oynanabilir banka, JIT): tek kategori ~4–6 ms,
+  /// 11 kategori ~60 ms. `loadLevelQuestions` de aynı süzmeyi her seviye
+  /// açılışında yineliyordu. Sonuç doğruydu, yalnız aynı soru için aynı
+  /// cevap baştan hesaplanıyordu — bu yüzden hiçbir test kırmızıya dönmedi.
+  ///
+  /// Anahtar soru NESNESİNİN kimliğidir ([Expando]): `QuizQuestion` değişmez,
+  /// anahtar kelime tabloları `const`; aynı nesne her zaman aynı sonucu
+  /// verir. Nesne bellekten gidince girdi de gider — sızıntı yok.
+  static final Expando<_SubcategoryMatch> _matchCache =
+      Expando<_SubcategoryMatch>('subcategoryMatch');
+
+  static SubcategoryInfo? _matchOf(QuizQuestion question) {
+    final cached = _matchCache[question];
+    if (cached != null) return cached.info;
+    final list = subcategories[question.category];
+    final info = (list == null || list.isEmpty)
+        ? null
+        : _matchByKeyword(question, list);
+    _matchCache[question] = _SubcategoryMatch(info);
+    return info;
+  }
+
   static SubcategoryInfo? _matchByKeyword(
     QuizQuestion question,
     List<SubcategoryInfo> list,
@@ -805,4 +829,12 @@ class SubcategoryConfig {
     }
     return best;
   }
+}
+
+/// [SubcategoryConfig._matchCache] değeri: "eşleşme yok" (`null`) da bir
+/// sonuçtur ve önbelleğe alınır; `Expando` null değer tutamadığı için sarılır.
+class _SubcategoryMatch {
+  const _SubcategoryMatch(this.info);
+
+  final SubcategoryInfo? info;
 }

@@ -705,6 +705,18 @@ void main() {
       print('UYARI: MaterialIcons bulunamadı — o ikonlar kare çizilecek');
     }
 
+    final lucideFont = File('assets/fonts/Lucide.ttf');
+    if (lucideFont.existsSync()) {
+      await (FontLoader('Lucide')..addFont(
+            lucideFont.readAsBytes().then((b) => ByteData.view(b.buffer)),
+          ))
+          .load();
+    } else {
+      print(
+        'UYARI: assets/fonts/Lucide.ttf bulunamadı — ikonlar kare çizilecek',
+      );
+    }
+
     // İkon yazı tipi paket içinden gelir; o da yüklenmezse her ikon küçük
     // bir kare olarak çizilir ve ekranın yarısı okunmaz kalır. Yol
     // `package_config.json`dan çözülür, sabit yazılmaz — pub önbelleği
@@ -727,13 +739,13 @@ void main() {
 
     // paket -> {aile -> paket içi yazı tipi dosyası}
     //
-    // Lucide: `AppIcons` ikonlarının neredeyse hepsi (Şahnê çizgi ailesi).
+    // Lucide burada DEĞİL: uygulamanın kendi varlığı (`assets/fonts/Lucide.ttf`,
+    // aşağıda öneksiz yüklenir). `AppIcons` ikonlarının neredeyse hepsi odur.
     // Font Awesome: yalnız dolu puan yıldızı (`AppIcons.starSolid`, Lucide'da
     // dolgu yok) ve Google markası. Solid VE Regular birlikte yüklenir;
     // yalnız Solid yüklenirken Regular ailesindeki ikonlar kare çiziliyordu
     // (2026-07-26).
     const iconFonts = {
-      'lucide_icons_flutter': {'Lucide': 'assets/lucide.ttf'},
       'font_awesome_flutter': {
         'FontAwesomeSolid': 'lib/fonts/Font-Awesome-7-Free-Solid-900.otf',
         'FontAwesomeRegular': 'lib/fonts/Font-Awesome-7-Free-Regular-400.otf',
