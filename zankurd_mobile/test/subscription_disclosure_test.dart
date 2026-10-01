@@ -151,13 +151,16 @@ void main() {
 
     test('yayınlanacak paket bu yolu tarif eder', () {
       final pubspec = File('pubspec.yaml').readAsStringSync();
-      final build = RegExp(
-        r'^version:\s*\d+\.\d+\.\d+\+(\d+)',
+      final version = RegExp(
+        r'^version:\s*(\d+\.\d+\.\d+)\+(\d+)',
         multiLine: true,
-      ).firstMatch(pubspec)!.group(1)!;
+      ).firstMatch(pubspec)!;
 
+      // Paket dosyası sürüm ve build numarasıyla adlanır; adı bu teste
+      // gömmek, sürüm her çıktığında testin yanlış dosyayı (ya da hiç
+      // dosyayı) aramasına yol açıyordu (2.0.0'a geçerken görüldü).
       final packet = File(
-        'docs/app_review_packet_1.9.2_build$build.md',
+        'docs/app_review_packet_${version.group(1)}_build${version.group(2)}.md',
       ).readAsStringSync();
 
       // Yolun iki durağı da yazılı olmalı: hangi sekmeden girileceği ve

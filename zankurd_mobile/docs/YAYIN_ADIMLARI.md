@@ -582,3 +582,9 @@ yine daha önce yüklenmiş olanların üstünde olmalıdır.
 Sürüm veya build değişince `docs/app_review_packet_<version>_build<build>.md`
 paketini yeni binary ile eşleştir ve sürüm notlarını
 `docs/release_notes_internal.md` en üstüne yeni başlıkla ekle; eski kaydı silme.
+
+2026-10-01: 2.0.0 (21) bu kurala uyar: marketing sürümü 1.9.2'den 2.0.0'a ilerledi
+ve build numarası 21, bilinen son build 20'nin üstünde. Konsollardaki gerçek en
+yüksek numara yine de gönderimden önce elle kontrol edilir; paket
+`docs/app_review_packet_2.0.0_build21.md`, sürüm notu `docs/release_notes_internal.md`
+en üstünde.
