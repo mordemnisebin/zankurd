@@ -32,8 +32,8 @@ class MiniGuide {
 
 /// Çayxane hikâyesine eşlik eden örnek mini rehber.
 const MiniGuide cayxaneGuide = MiniGuide(
-  titleKu: 'Li Çayxanê',
-  titleTr: 'Çay Evinde',
+  titleKu: 'Li çayxanê',
+  titleTr: 'Çay evinde',
   newWords: [
     GuidePair('çay', 'çay'),
     GuidePair('şekir', 'şeker'),
@@ -52,8 +52,8 @@ const MiniGuide cayxaneGuide = MiniGuide(
 );
 
 const MiniGuide introducingYourselfGuide = MiniGuide(
-  titleKu: 'Xwe Nasandin',
-  titleTr: 'Kendini Tanıtma',
+  titleKu: 'Xwe nasandin',
+  titleTr: 'Kendini tanıtma',
   newWords: [
     GuidePair('nav', 'ad'),
     GuidePair('xwendekar', 'öğrenci'),
@@ -70,7 +70,7 @@ const MiniGuide introducingYourselfGuide = MiniGuide(
 );
 
 const MiniGuide shoppingGuide = MiniGuide(
-  titleKu: 'Li Dikanê',
+  titleKu: 'Li dikanê',
   titleTr: 'Alışverişte',
   newWords: [
     GuidePair('dikan', 'dükkân'),
@@ -89,8 +89,8 @@ const MiniGuide shoppingGuide = MiniGuide(
 );
 
 const MiniGuide askingDirectionsGuide = MiniGuide(
-  titleKu: 'Rê Pirsîn',
-  titleTr: 'Yol Sorma',
+  titleKu: 'Rê pirsîn',
+  titleTr: 'Yol sorma',
   newWords: [
     GuidePair('rê', 'yol'),
     GuidePair('rast', 'düz'),

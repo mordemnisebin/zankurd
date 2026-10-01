@@ -176,7 +176,7 @@ class _StoryScreenState extends State<StoryScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      sahneUpper(context, context.t(K.storyWord)),
+                      context.t(K.storyWord),
                       style: SahneType.eyebrow.copyWith(color: s.learnTx),
                     ),
                     const SizedBox(height: SahneSpace.x2),

@@ -49,7 +49,7 @@ void main() {
           SahneListRow.thumb(
             key: Key('info'),
             image: _thumb,
-            title: 'Li Çayxanê',
+            title: 'Li çayxanê',
             trailing: SahneRowValue.meta('4 deq'),
             chevron: true,
             onTap: noop,

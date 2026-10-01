@@ -43,6 +43,7 @@ import '../utils/error_reporter.dart';
 import '../utils/player_identity.dart';
 import '../utils/question_timer_resume.dart';
 import '../utils/test_environment.dart';
+import '../widgets/category_kicker_mark.dart';
 import '../widgets/confetti_overlay.dart';
 import '../widgets/floating_reaction_overlay.dart';
 import '../widgets/mission_toast.dart';

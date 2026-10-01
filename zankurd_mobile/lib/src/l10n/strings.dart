@@ -363,7 +363,7 @@ class Tr {
       'ku': 'Hevalên xwe bi kodê vexwîne',
       'tr': 'Arkadaşlarını kodla çağır',
     },
-    K.joinByCode: {'ku': 'Bi kodê tevlî bibe', 'tr': 'Kodla katıl'},
+    K.joinByCode: {'ku': 'Bi kod têkeve', 'tr': 'Kodla katıl'},
     K.events: {'ku': 'Her roj', 'tr': 'Her gün'},
     K.dailyContest: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
     K.tenQuestions: {'ku': '10 pirs', 'tr': '10 soru'},
@@ -397,7 +397,7 @@ class Tr {
 
     // ── Öğrenme ekranı ───────────────────────────────────────────────
     K.learnKurmanci: {'ku': 'Kurmancî hîn bibe', 'tr': 'Kurmancî öğren'},
-    K.storyWord: {'ku': 'ÇÎROK', 'tr': 'HİKÂYE'},
+    K.storyWord: {'ku': 'Çîrok', 'tr': 'Hikâye'},
     K.lexiconTitle: {'ku': 'Ferheng', 'tr': 'Sözlük'},
     K.lexiconSearchHint: {
       'ku': 'Bi Kurmancî an Tirkî bigere…',
@@ -425,7 +425,7 @@ class Tr {
       'ku': 'Di vê mijarê de hîn ders tune',
       'tr': 'Bu konuda henüz ders yok',
     },
-    K.recommendedForYou: {'ku': 'Dersa din', 'tr': 'Sıradaki ders'},
+    K.recommendedForYou: {'ku': 'Dersa dorê', 'tr': 'Sıradaki ders'},
     K.noQuestionsForCategory: {
       'ku': 'Ji bo vê mijarê pirs nehatin dîtin',
       'tr': 'Bu konu için soru bulunamadı',
@@ -487,7 +487,7 @@ class Tr {
     K.correct: {'ku': 'Rast', 'tr': 'Doğru'},
     K.wrong: {'ku': 'Şaş', 'tr': 'Yanlış'},
     K.blank: {'ku': 'Vala', 'tr': 'Boş'},
-    K.streakLabel: {'ku': 'Li pey hev', 'tr': 'Üst üste'},
+    K.streakLabel: {'ku': 'Zincîr', 'tr': 'Üst üste'},
     K.dailyStreakDays: {
       'ku': 'Zincîra rojane: {days} roj',
       'tr': 'Günlük seri: {days} gün',
@@ -884,7 +884,7 @@ class Tr {
       'tr': 'Senin sıran: {p0}. {p1}, {p2} puan',
     },
     K.pPPPuan: {'ku': '{p0}. {p1}, {p2} pûan', 'tr': '{p0}. {p1}, {p2} puan'},
-    K.soruCoz: {'ku': 'Pirsan bibersivîne', 'tr': 'Soru çöz'},
+    K.soruCoz: {'ku': 'Bersiv bide', 'tr': 'Soru çöz'},
     K.flasKart: {'ku': 'Kartên peyvan', 'tr': 'Kelime kartları'},
     K.ceviriIcinDokun: {
       'ku': 'Ji bo wergerê bitikîne',
@@ -904,7 +904,7 @@ class Tr {
       'tr': 'Bu seviyenin soruları yüklenemedi.',
     },
     K.kolaydanZoraDogruIlerle: {
-      'ku': 'Ji hêsan ber bi dijwar ve, pûanên xwe bicivîne.',
+      'ku': 'Ji hêsan bo dijwar biçe, pûan kom ke.',
       'tr': 'Kolaydan zora doğru ilerle, puan topla.',
     },
     K.pPSeviye: {'ku': '{p0}/{p1} ast', 'tr': '{p0}/{p1} seviye'},
@@ -1247,8 +1247,8 @@ class Tr {
     // `jokeran` çekimi `joker\s*50` taramasını kör eder — turnûva
     // ile aynı sınıf.
     K.finishQuizHint: {
-      'ku': 'Quizê biqedîne, zêr qezenc bike û alîkariyan veke',
-      'tr': 'Quizi bitir, jeton kazan ve jokerleri aç',
+      'ku': 'Pêşbirkê qedîne, zêr bigire, alîkarî veke',
+      'tr': 'Yarışı bitir, jeton kazan, jokerleri aç',
     },
     K.wildcardFiftyHint: {
       'ku': 'Du bersivên şaş tên jêbirin',
@@ -2203,7 +2203,7 @@ class Tr {
           'Ad kaydedilemedi. Tekrar dene ya da «Şimdilik geç» ile devam et, adı sonra profilden yazarsın.',
     },
     K.nameGateQuestion: {
-      'ku': 'Navê te di lîstikê de çi be?',
+      'ku': 'Navê te çi be?',
       'tr': 'Oyundaki adın ne olsun?',
     },
     K.nameGateHelp: {
@@ -2251,9 +2251,9 @@ class Tr {
       'ku': '{correct} rast · {wrong} şaş · {empty} vala',
       'tr': '{correct} doğru · {wrong} yanlış · {empty} boş',
     },
-    K.blankBadge: {'ku': 'Vala ma', 'tr': 'BOŞ BIRAKILDI'},
-    K.correctBadge: {'ku': 'RAST', 'tr': 'DOĞRU'},
-    K.wrongBadge: {'ku': 'ŞAŞ', 'tr': 'YANLIŞ'},
+    K.blankBadge: {'ku': 'Vala ma', 'tr': 'Boş bırakıldı'},
+    K.correctBadge: {'ku': 'Rast', 'tr': 'Doğru'},
+    K.wrongBadge: {'ku': 'Şaş', 'tr': 'Yanlış'},
     K.questionIndex: {'ku': 'Pirs {index}', 'tr': 'Soru {index}'},
     K.yourAnswer: {
       'ku': 'Bersiva te: {answer}',

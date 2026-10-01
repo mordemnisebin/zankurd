@@ -8,6 +8,7 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 const _room = GameRoom(
   name: 'Oda',
@@ -106,7 +107,13 @@ void main() {
 
             if (state == _ReviewState.list) {
               final scrollable = find.byType(Scrollable).first;
-              final status = find.text(locale == 'ku' ? 'ŞAŞ' : 'YANLIŞ');
+              // Rozet: üstteki özet karosu da aynı sözü ("Yanlış") taşır; kart
+              // rozetini kendi türüyle ayırt et.
+              Finder badge(String label) => find.descendant(
+                of: find.byType(SahneStatusBadge),
+                matching: find.text(label),
+              );
+              final status = badge(locale == 'ku' ? 'Şaş' : 'Yanlış');
               await tester.scrollUntilVisible(
                 status,
                 200,
@@ -118,10 +125,13 @@ void main() {
                 findsOneWidget,
               );
               for (final label in [
-                locale == 'ku' ? 'RAST' : 'DOĞRU',
-                locale == 'ku' ? 'Vala ma' : 'BOŞ BIRAKILDI',
+                locale == 'ku' ? 'Rast' : 'Doğru',
+                locale == 'ku' ? 'Vala ma' : 'Boş bırakıldı',
               ]) {
-                final statusLabel = find.text(label);
+                final statusLabel =
+                    label.startsWith('Vala') || label.startsWith('Boş')
+                    ? find.text(label)
+                    : badge(label);
                 await tester.scrollUntilVisible(
                   statusLabel,
                   200,

@@ -227,6 +227,8 @@ extension _QuizScreenUI on _QuizScreenState {
   /// gövdedeki düello kartında yan yana durur.
   Widget? _buildScoreChip(BuildContext context) {
     if (_isLearningExperience || widget.is1v1) return null;
+    // Tur başında "★ 0" bilgi vermez, yalnız baskı kurar; ilk puanda belirir.
+    if (score <= 0) return null;
     return SahneStatChip(
       leading: const SahneGlyph(SahneGlyphKind.star),
       label: '$score',
@@ -331,16 +333,15 @@ extension _QuizScreenUI on _QuizScreenState {
         : context.t(K.save);
     return Row(
       children: [
-        Icon(
-          CategoryVisuals.icon(question.category),
+        CategoryKickerMark(
           key: const ValueKey('quiz-question-icon-badge'),
-          size: 20,
-          color: t.tx2,
+          category: question.category,
+          fallbackColor: t.tx2,
         ),
         const SizedBox(width: SahneSpace.x2),
         Expanded(
           child: Text(
-            sahneUpper(context, '$category  •  $progress'),
+            '$category · $progress',
             style: SahneType.eyebrow.copyWith(color: t.tx),
           ),
         ),

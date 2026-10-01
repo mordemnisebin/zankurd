@@ -58,7 +58,9 @@ void main() {
       final text = tester.widget<Text>(find.text(label));
       expect(text.style?.fontSize, SahneType.captionStrong.fontSize);
       expect(text.style?.fontWeight, SahneType.captionStrong.fontWeight);
-      expect(text.style?.letterSpacing, isNot(SahneType.eyebrow.letterSpacing));
+      // Künye stili (başlık ailesi, 800) değil, açıklama kalını (metin ailesi):
+      // eyebrow 2026-10-01'de harf aralığını da bıraktı, ayrım artık aile.
+      expect(text.style?.fontFamily, isNot(SahneType.eyebrow.fontFamily));
       expect(find.text(label.toUpperCase()), findsNothing);
     });
   }

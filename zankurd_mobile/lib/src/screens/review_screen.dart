@@ -40,24 +40,18 @@ class _ReviewScreenState extends State<ReviewScreen> {
         .length;
     final empty = widget.records.where((r) => r.isUnanswered).length;
 
-    // 2026-09-29 Şahnê: B iskeleti. "Cevaplar" ve tek satırlık özet
-    // ("1 doğru · 1 yanlış · 1 boş") çubukta; eski camgöbeği kimlik bandı ve
+    // 2026-09-29 Şahnê: B iskeleti. "Cevaplar" çubukta (2026-10-01'de tek
+    // satırlık özet kalktı: karolar aynı sayıları söylüyor); eski camgöbeği kimlik bandı ve
     // kilim ayracı kalktı. İçerik: üç sayaç karosu → görünüm rayı → (varsa)
     // TEK birincil "Tekrara başla" → cevap kartları ya da hafıza kartı.
     return Scaffold(
       backgroundColor: t.bg,
       appBar: zkAppBar(
         context,
+        // Alt başlık yok: aynı üç sayıyı hemen altındaki karolar zaten
+        // söylüyor (2026-10-01 tasarım denetimi: özet satırı karoları
+        // tekrarlıyordu).
         title: Text(context.t(K.answersTitle)),
-        subtitle: widget.records.isEmpty
-            ? null
-            : Text(
-                context.t(K.reviewSummaryLine, {
-                  'correct': '$correct',
-                  'wrong': '$wrong',
-                  'empty': '$empty',
-                }),
-              ),
       ),
       body: SafeArea(
         top: false,
@@ -156,36 +150,39 @@ class _SummaryStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    // Sıfır karo çizilmez: "0 Boş" hiçbir şey söylemeyen bir kutuydu. Kalan
+    // karolar genişliği paylaşır; kayıt varken en az biri sıfırdan büyüktür.
+    final tiles = <Widget>[
+      if (correct > 0)
+        _SummaryTile(
+          color: t.okTx,
+          icon: AppIcons.circleCheck,
+          value: '$correct',
+          label: context.t(K.correct),
+        ),
+      if (wrong > 0)
+        _SummaryTile(
+          color: t.errTx,
+          icon: AppIcons.circleXmark,
+          value: '$wrong',
+          label: context.t(K.wrong),
+        ),
+      if (empty > 0)
+        _SummaryTile(
+          color: t.tx2,
+          icon: AppIcons.hourglass,
+          value: '$empty',
+          label: context.t(K.blank),
+        ),
+    ];
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: _SummaryTile(
-              color: t.okTx,
-              icon: AppIcons.circleCheck,
-              value: '$correct',
-              label: context.t(K.correct),
-            ),
-          ),
-          const SizedBox(width: SahneSpace.x2),
-          Expanded(
-            child: _SummaryTile(
-              color: t.errTx,
-              icon: AppIcons.circleXmark,
-              value: '$wrong',
-              label: context.t(K.wrong),
-            ),
-          ),
-          const SizedBox(width: SahneSpace.x2),
-          Expanded(
-            child: _SummaryTile(
-              color: t.tx2,
-              icon: AppIcons.hourglass,
-              value: '$empty',
-              label: context.t(K.blank),
-            ),
-          ),
+          for (var i = 0; i < tiles.length; i++) ...[
+            if (i > 0) const SizedBox(width: SahneSpace.x2),
+            Expanded(child: tiles[i]),
+          ],
         ],
       ),
     );

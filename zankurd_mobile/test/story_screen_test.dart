@@ -89,7 +89,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final storyLabel = tester.widget<Text>(find.text('HİKÂYE'));
+    final storyLabel = tester.widget<Text>(find.text('Hikâye'));
     expect(storyLabel.style?.color, SahneTokens.night.learnTx);
 
     await tester.tap(find.byKey(const ValueKey('story-open-guide')));

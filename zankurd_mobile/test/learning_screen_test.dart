@@ -490,7 +490,9 @@ void main() {
       isNotNull,
     );
     expect(
-      tester.getSemantics(find.bySemanticsLabel('Dersa din. Ders 2. Bidomîne')),
+      tester.getSemantics(
+        find.bySemanticsLabel('Dersa dorê. Ders 2. Bidomîne'),
+      ),
       isNotNull,
     );
     final locked = tester.getSemantics(find.bySemanticsLabel('Ders 3. Girtî'));
@@ -948,8 +950,8 @@ void main() {
     const lesson = Lesson(
       id: 'everyday_3',
       slug: 'everyday-3',
-      titleKu: 'Pratikên Rojane',
-      titleTr: 'Günlük Pratik İfadeler',
+      titleKu: 'Pratikên rojane',
+      titleTr: 'Günlük pratik ifadeler',
       category: 'everyday',
     );
 
@@ -1107,7 +1109,7 @@ void main() {
     expect(
       find.descendant(
         of: find.byKey(const ValueKey('lexicon-entry-av')),
-        matching: find.text('Kaynak: Temel Yemekler'),
+        matching: find.text('Kaynak: Temel yemekler'),
       ),
       findsOneWidget,
     );
