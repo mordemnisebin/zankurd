@@ -205,17 +205,24 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 isKu: ku,
                 isBusy: context.watch<PremiumService>().purchaseInProgress,
               ),
-            // 2026-09-29 doğallık (K10): yenileme koşulları, hukuk
-            // bağlantıları ve "Satın alımları geri yükle" yalnız satın
-            // alınabilir bir paket varken görünür. Paket yokken ekran
-            // olmayan bir aboneliğin koşullarını sayıyor ve geri yüklenecek
-            // bir şeyi olmayan kullanıcıya düğme gösteriyordu; kalıp metin
-            // kalabalığı ekranın asıl söylediğini ("paketler henüz aktif
-            // değil") bastırıyordu. Apple 3.1.2'nin istediği yer satın alma
-            // anıdır: paket çizildiği anda hepsi yeniden görünür.
-            if (!_loading && _packages.isNotEmpty) ...[
+            // Geri yükleme ve hukuk bağlantıları yükleme bitince HER durumda
+            // görünür; otomatik yenileme koşulları yalnız satın alınabilir
+            // bir paket varken (olmayan bir aboneliğin koşulunu saymak
+            // ekranın asıl sözünü bastırır — 2026-09-29, K10).
+            //
+            // 2026-10-01 (A10): geri yükleme eskiden paket yokken de
+            // gizliydi. Paketler yüklenemeyen (ağ hatası) ya da henüz
+            // aktif olmayan ekranda, başka cihazdan abone olmuş kullanıcı
+            // aboneliğini geri getirecek TEK yolu görmüyordu; yeniden
+            // satın almaya itiliyordu. Restore, ürün listesine bağlı
+            // değildir.
+            if (!_loading) ...[
               const SizedBox(height: SahneSpace.x6),
-              _FooterActions(isKu: ku, onRestore: _restore),
+              _FooterActions(
+                isKu: ku,
+                onRestore: _restore,
+                showRenewalTerms: _packages.isNotEmpty,
+              ),
             ],
           ],
         ),
@@ -290,7 +297,6 @@ class _PackageList extends StatelessWidget {
           _PackageRow(
             package: ordered[i],
             isKu: isKu,
-            featured: ordered[i].packageType == PackageType.annual,
             primary: i == (primaryIndex < 0 ? 0 : primaryIndex),
             isBusy: isBusy,
             onBuy: () => onBuy(ordered[i]),
@@ -305,7 +311,6 @@ class _PackageRow extends StatelessWidget {
   const _PackageRow({
     required this.package,
     required this.isKu,
-    required this.featured,
     required this.primary,
     required this.onBuy,
     required this.isBusy,
@@ -313,7 +318,6 @@ class _PackageRow extends StatelessWidget {
 
   final Package package;
   final bool isKu;
-  final bool featured;
   final bool primary;
   final bool isBusy;
   final VoidCallback onBuy;
@@ -331,12 +335,10 @@ class _PackageRow extends StatelessWidget {
     }
   }
 
-  String _packageSubtitle() {
-    if (package.packageType == PackageType.monthly) {
-      return Tr.forKu(K.cancelAnytime, isKu);
-    }
-    return '';
-  }
+  /// Her dönemde aynı söz: iptal koşulu yalnız aylık pakette yazıldığında
+  /// yıllık paket "iptal edilemez" gibi okunuyordu. İptal her pakette
+  /// aynıdır (yenilemeyi durdurur); karttaki söz bunu simetrik söyler.
+  String _packageSubtitle() => Tr.forKu(K.cancelAnytime, isKu);
 
   String? _perMonthEquivalent() {
     if (package.packageType != PackageType.annual) return null;
@@ -365,9 +367,15 @@ class _PackageRow extends StatelessWidget {
     final price = package.storeProduct.price;
     final priceString = package.storeProduct.priceString;
     final label = Tr.forKu(K.buyAction, isKu);
-    final onPressed = isBusy ? null : onBuy;
-    // Paket bir yüzey kartıdır; öne çıkan paket "POPÜLER" Zêr rozetiyle
-    // ayrılır (altın kenar ve bulanık gölge yok).
+    // Fiyatı çözülemeyen paket (mağaza fiyat vermedi) satın alınamaz:
+    // "Fiyat geliyor" yazan bir kartın "Satın al" düğmesi, kullanıcıyı
+    // ne ödeyeceğini bilmeden onaya götürürdü (Apple 3.1.2: fiyat satın
+    // alma anında görünür olmalı).
+    final onPressed = (isBusy || price <= 0) ? null : onBuy;
+    // Paket bir yüzey kartıdır. Rozet yok: "En çok alınan" gibi bir söz
+    // için satış verisi yoktu (mağazadaki aynı rozet 2026-09-29'da bu
+    // yüzden kalkmıştı); yıllık paketin gerçek farkı aşağıdaki "≈ aylık"
+    // satırıdır ve mağazanın kendi fiyatından hesaplanır.
     return SahneSurfaceCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -381,18 +389,12 @@ class _PackageRow extends StatelessWidget {
                 _packageTitle(),
                 style: SahneType.headline.copyWith(color: t.tx),
               ),
-              if (featured)
-                SahneBadge(
-                  label: Tr.forKu(K.popularBadge, isKu),
-                  tone: SahneBadgeTone.gold,
-                ),
             ],
           ),
-          if (_packageSubtitle().isNotEmpty)
-            Text(
-              _packageSubtitle(),
-              style: SahneType.caption.copyWith(color: t.tx2),
-            ),
+          Text(
+            _packageSubtitle(),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
           const SizedBox(height: SahneSpace.x2),
           Text(
             price > 0
@@ -519,9 +521,17 @@ class _OfferingsLoadError extends StatelessWidget {
 }
 
 class _FooterActions extends StatelessWidget {
-  const _FooterActions({required this.isKu, required this.onRestore});
+  const _FooterActions({
+    required this.isKu,
+    required this.onRestore,
+    required this.showRenewalTerms,
+  });
   final bool isKu;
   final VoidCallback onRestore;
+
+  /// Satın alınabilir paket varken true: yenileme koşulları yalnız o zaman
+  /// yazılır.
+  final bool showRenewalTerms;
 
   @override
   Widget build(BuildContext context) {
@@ -537,15 +547,17 @@ class _FooterActions extends StatelessWidget {
           ),
         ),
         const SizedBox(height: SahneSpace.x2),
-        // Apple App Store Review 3.1.2 ve Google Play abonelik politikası,
-        // otomatik yenileme koşullarının satın alma ekranının KENDİSİNDE
-        // yazmasını ister: yenileme, ücretlendirme anı ve iptal yolu.
-        Text(
-          Tr.forKu(K.paywallRenewalTerms, isKu),
-          style: SahneType.caption.copyWith(color: t.tx3),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: SahneSpace.x2),
+        if (showRenewalTerms) ...[
+          // Apple App Store Review 3.1.2 ve Google Play abonelik politikası,
+          // otomatik yenileme koşullarının satın alma ekranının KENDİSİNDE
+          // yazmasını ister: yenileme, ücretlendirme anı ve iptal yolu.
+          Text(
+            Tr.forKu(K.paywallRenewalTerms, isKu),
+            style: SahneType.caption.copyWith(color: t.tx3),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: SahneSpace.x2),
+        ],
         // Yasal bağlantılar — abonelikli uygulamalarda Apple zorunlu tutar.
         const Center(child: LegalLinksRow(alignment: MainAxisAlignment.center)),
       ],

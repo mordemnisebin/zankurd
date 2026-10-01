@@ -17,6 +17,7 @@ import 'async_duel/async_duel_play_screen.dart';
 import 'contest_screen.dart';
 import 'matchmaking_screen.dart';
 import 'room_screen.dart';
+import 'spin_wheel_screen.dart';
 import 'tournament_screen.dart';
 import 'home/home_rows.dart' show TabStatChips;
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -116,7 +117,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
     if (!mounted) return;
 
-    final config = await showModalBottomSheet<_CustomRoomConfig>(
+    final config = await showModalBottomSheet<Object>(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
@@ -128,6 +129,14 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     );
 
     if (config == null || !mounted) return;
+
+    // Oyuncu seçtiği katılım ücretine yetmediğini görüp "Jeton kazan"ı
+    // seçtiyse oda kurulmaz; jeton kazanılan yere (günlük çark) gidilir.
+    if (config is _EarnCoinsRequest) {
+      await _openSpinWheel();
+      return;
+    }
+    if (config is! _CustomRoomConfig) return;
 
     setState(() => _roomActionLoading = true);
     try {
@@ -149,6 +158,12 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     } finally {
       if (mounted) setState(() => _roomActionLoading = false);
     }
+  }
+
+  Future<void> _openSpinWheel() async {
+    await Navigator.of(context).push(
+      AppRoute<void>(page: SpinWheelScreen(repository: widget.repository)),
+    );
   }
 
   void _openRoom(GameRoom room) {
@@ -250,11 +265,25 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                             if (!sheetCtx.mounted) return;
                             Navigator.of(sheetCtx).pop();
                             if (!mounted) return;
+                            // Ücretli odaya jetonu yetmeyen oyuncuya "tekrar
+                            // dene" demek yalandı: tekrar denemek sonucu
+                            // değiştirmez. Mesajın yanında gerçek sonraki
+                            // adım (jeton kazan) durur.
+                            final short =
+                                error is RoomJoinException &&
+                                error.reason ==
+                                    RoomJoinFailureReason.insufficientCoins;
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
                                   context.t(joinRoomErrorKey(error)),
                                 ),
+                                action: short
+                                    ? SnackBarAction(
+                                        label: context.t(K.earnCoins),
+                                        onPressed: _openSpinWheel,
+                                      )
+                                    : null,
                               ),
                             );
                           }
@@ -677,6 +706,7 @@ String joinRoomErrorKey(Object error) {
     RoomJoinFailureReason.notFound => K.roomNotFound,
     RoomJoinFailureReason.full => K.roomFull,
     RoomJoinFailureReason.alreadyInAnotherRoom => K.roomAlreadyInAnotherRoom,
+    RoomJoinFailureReason.insufficientCoins => K.insufficientCoins,
     RoomJoinFailureReason.unknown => K.roomJoinFailed,
   };
 }
@@ -704,6 +734,12 @@ class _RoomCodeInputFormatter extends TextInputFormatter {
       selection: TextSelection.collapsed(offset: normalized.length),
     );
   }
+}
+
+/// Oda kurma sayfasından dönen "jeton kazanmaya git" isteği: katılım
+/// ücretine yetmeyen oyuncuya, ölü bir düğme yerine gerçek sonraki adım.
+class _EarnCoinsRequest {
+  const _EarnCoinsRequest();
 }
 
 class _CustomRoomConfig {
@@ -917,33 +953,48 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
             ),
             if (!hasEnoughCoins) ...[
               const SizedBox(height: SahneSpace.x2),
-              Text(
-                context.t(K.insufficientCoins),
-                style: SahneType.captionStrong.copyWith(
-                  color: SahneTokens.of(context).errTx,
+              // Eksik miktar yazılır ("N jeton eksik"); düz "Jetonun
+              // yetmiyor" ne kadar eksik olduğunu söylemiyordu.
+              SahneShortfallNote(
+                key: const ValueKey('custom-room-shortfall'),
+                missing: coinShortfall(
+                  cost: _selectedEntryFee,
+                  balance: widget.coinBalance,
                 ),
+                alert: true,
               ),
             ],
             const SizedBox(height: SahneSpace.x6),
 
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: !hasEnoughCoins
-                    ? null
-                    : () {
-                        Navigator.of(context).pop(
-                          _CustomRoomConfig(
-                            category: _selectedCategory,
-                            duration: _selectedDuration,
-                            questionCount: _selectedQuestionCount,
-                            entryFee: _selectedEntryFee,
-                          ),
-                        );
-                      },
-                child: Text(context.t(K.openRoom)),
+            // Ücrete yetilmiyorsa "Oda aç" pasif bırakılmaz: yerine jeton
+            // kazanma yolu gelir. Ücretsiz seçenek yukarıda her zaman açık.
+            if (hasEnoughCoins)
+              SahneButton.primary(
+                key: const ValueKey('custom-room-open'),
+                label: context.t(K.openRoom),
+                arrow: false,
+                expand: true,
+                onPressed: () {
+                  Navigator.of(context).pop(
+                    _CustomRoomConfig(
+                      category: _selectedCategory,
+                      duration: _selectedDuration,
+                      questionCount: _selectedQuestionCount,
+                      entryFee: _selectedEntryFee,
+                    ),
+                  );
+                },
+              )
+            else
+              SahneButton.primary(
+                key: const ValueKey('custom-room-earn-coins'),
+                label: context.t(K.earnCoins),
+                icon: AppIcons.dice,
+                arrow: false,
+                expand: true,
+                onPressed: () =>
+                    Navigator.of(context).pop(const _EarnCoinsRequest()),
               ),
-            ),
           ],
         ),
       ),

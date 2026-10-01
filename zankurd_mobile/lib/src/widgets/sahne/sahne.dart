@@ -17,4 +17,5 @@ export 'sahne_page.dart';
 export 'sahne_painters.dart';
 export 'sahne_progress.dart';
 export 'sahne_section_header.dart';
+export 'sahne_shortfall.dart';
 export 'sahne_topic_marks.dart';

@@ -19,6 +19,7 @@ import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/models/contest.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
 import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
@@ -60,6 +61,7 @@ import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 
+import '../../test/support/paywall_fixtures.dart';
 import '../../test/support/widget_test_helpers.dart';
 
 /// Uygulamanın her ekranını gerçek widget ağacıyla açıp PNG'ye basar.
@@ -375,6 +377,16 @@ class _TourRepository extends TestMockZanKurdRepository {
   }
 }
 
+/// Belirli bir jeton bakiyesiyle açılan tur deposu: "jeton yetmiyor"
+/// karelerinin (mağaza, oda kurma, paywall değil) bakiyesi.
+class _BalanceTourRepository extends _TourRepository {
+  _BalanceTourRepository(this.coins);
+  final int coins;
+
+  @override
+  Future<int> loadCoinBalance() async => coins;
+}
+
 /// Rojda ile oynanan sırayla düello: Rojda 3 doğruyla bitirmiş, oyuncu
 /// ilk beş soruyu doğru, son ikisini yanlış cevaplar — 5–3 galibiyet.
 /// Seçim sabit bir harf ("A") değil, bankadaki doğru cevaptan hesaplanır:
@@ -422,7 +434,12 @@ Future<void> _playAsyncDuel(
 /// onu görmeli. İlk uygulama listeyi elle kopyalamıştı; kopya, testlerin
 /// gördüğü uygulamayla turun gösterdiği uygulamayı sessizce ayırır — turun
 /// tek işi "uygulama gerçekte neye benziyor" sorusuna cevap vermekken.
-Widget _tourShell({required Widget child, bool dark = false, bool ku = false}) {
+Widget _tourShell({
+  required Widget child,
+  bool dark = false,
+  bool ku = false,
+  PremiumService? premiumService,
+}) {
   return RepaintBoundary(
     key: _boundaryKey,
     child: testShell(
@@ -431,6 +448,7 @@ Widget _tourShell({required Widget child, bool dark = false, bool ku = false}) {
         initialMode: _forcedTheme ?? (dark ? ThemeMode.dark : ThemeMode.light),
       ),
       languageProvider: ku ? kurmanciLang() : null,
+      premiumService: premiumService,
     ),
   );
 }
@@ -440,9 +458,17 @@ Future<void> _pump(
   Widget child, {
   bool dark = false,
   bool ku = false,
+  PremiumService? premiumService,
 }) async {
   _applyViewport(tester, _size);
-  await tester.pumpWidget(_tourShell(child: child, dark: dark, ku: ku));
+  await tester.pumpWidget(
+    _tourShell(
+      child: child,
+      dark: dark,
+      ku: ku,
+      premiumService: premiumService,
+    ),
+  );
   // pumpAndSettle KULLANILMAZ: yükleme göstergeleri sonsuz animasyondur ve
   // tur boyunca kilitlenmeye yol açar. Sabit süreli pump yeterlidir.
   await tester.pump();
@@ -1712,6 +1738,126 @@ void main() {
       ku: true,
     );
     await _shoot(t, '103_async_duel_result_win_dark_ku');
+  }, tags: ['preview']);
+
+  // ── 2026-10-01 "Jeton yetmiyor" ve paywall dürüstlüğü (A5, A10) ──────
+  //
+  // Mağaza yarı yarıya yeten bakiyeyle: 120'lik ürün alınabilir (düğme),
+  // ötekiler eksik miktarlı durum çipi taşır.
+  testWidgets('104 mağaza — kısmen yeten bakiye', (t) async {
+    await _pump(t, ShopScreen(repository: _BalanceTourRepository(200)));
+    await _shoot(t, '104_shop_partial');
+  }, tags: ['preview']);
+
+  testWidgets('105 mağaza — kısmen yeten bakiye (karanlık)', (t) async {
+    await _pump(
+      t,
+      ShopScreen(repository: _BalanceTourRepository(200)),
+      dark: true,
+    );
+    await _shoot(t, '105_shop_partial_dark');
+  }, tags: ['preview']);
+
+  testWidgets('106 mağaza — kısmen yeten bakiye (Kurmancî)', (t) async {
+    await _pump(
+      t,
+      ShopScreen(repository: _BalanceTourRepository(200)),
+      ku: true,
+    );
+    await _shoot(t, '106_shop_partial_ku');
+  }, tags: ['preview']);
+
+  testWidgets('107 mağaza — yetmeyen ürünün penceresi', (t) async {
+    await _pump(t, ShopScreen(repository: _BalanceTourRepository(200)));
+    await t.tap(find.byKey(const ValueKey('shop-hero-surface')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    await _shoot(t, '107_shop_short_dialog');
+  }, tags: ['preview']);
+
+  testWidgets(
+    '108 mağaza — yetmeyen ürünün penceresi (karanlık, Kurmancî)',
+    (t) async {
+      await _pump(
+        t,
+        ShopScreen(repository: _BalanceTourRepository(200)),
+        dark: true,
+        ku: true,
+      );
+      await t.tap(find.byKey(const ValueKey('shop-hero-surface')));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 600));
+      await _shoot(t, '108_shop_short_dialog_dark_ku');
+    },
+    tags: ['preview'],
+  );
+
+  testWidgets('109 oda kurma — ücrete yetmiyor', (t) async {
+    await _pump(t, PlayHubScreen(repository: _BalanceTourRepository(10)));
+    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    final fee = find.byKey(const ValueKey('custom-room-fee-50'));
+    await t.ensureVisible(fee);
+    await t.tap(fee);
+    await t.pump(const Duration(milliseconds: 400));
+    await _shoot(t, '109_custom_room_short');
+  }, tags: ['preview']);
+
+  testWidgets('110 oda kurma — ücrete yetmiyor (karanlık, Kurmancî)', (
+    t,
+  ) async {
+    await _pump(
+      t,
+      PlayHubScreen(repository: _BalanceTourRepository(10)),
+      dark: true,
+      ku: true,
+    );
+    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    final fee = find.byKey(const ValueKey('custom-room-fee-50'));
+    await t.ensureVisible(fee);
+    await t.tap(fee);
+    await t.pump(const Duration(milliseconds: 400));
+    await _shoot(t, '110_custom_room_short_dark_ku');
+  }, tags: ['preview']);
+
+  // Paywall PAKETLİ durumda: şimdiye dek turda yalnız "paketler yakında"
+  // boş hâli vardı; fiyat, dönem, iptal sözü, yenileme koşulu, geri yükle
+  // ve hukuk bağlantıları hiç görülmemişti.
+  testWidgets('111 paywall — paketli', (t) async {
+    await _pump(
+      t,
+      PaywallScreen(repository: repository),
+      premiumService: fakePaywallService(),
+    );
+    await _shoot(t, '111_paywall_packages');
+  }, tags: ['preview']);
+
+  testWidgets('112 paywall — paketli (karanlık)', (t) async {
+    await _pump(
+      t,
+      PaywallScreen(repository: repository),
+      dark: true,
+      premiumService: fakePaywallService(),
+    );
+    await _shoot(t, '112_paywall_packages_dark');
+  }, tags: ['preview']);
+
+  testWidgets('113 paywall — paketli (Kurmancî)', (t) async {
+    await _pump(
+      t,
+      PaywallScreen(repository: repository),
+      ku: true,
+      premiumService: fakePaywallService(),
+    );
+    await _shoot(t, '113_paywall_packages_ku');
+  }, tags: ['preview']);
+
+  testWidgets('114 paywall — paketler yok (geri yükle görünür)', (t) async {
+    await _pump(t, PaywallScreen(repository: repository));
+    await _shoot(t, '114_paywall_empty_restore');
   }, tags: ['preview']);
 }
 

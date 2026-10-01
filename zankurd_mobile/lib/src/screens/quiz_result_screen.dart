@@ -49,6 +49,7 @@ import 'leaderboard_screen.dart';
 import 'quiz_screen.dart';
 import 'review_screen.dart';
 import 'room_screen.dart';
+import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
 
@@ -187,6 +188,25 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   Future<void> _openNewRoom() async {
     if (_newRoomLoading) return;
     if (widget.room.entryFee > 0) {
+      // Bakiye ONAYDAN ÖNCE bilinir: yetmeyen oyuncuya "ücret düşecek,
+      // devam?" diye sorup sonra sunucunun reddini genel bir hata olarak
+      // göstermek, tekrar denetilen ama hiç değişmeyecek bir yoldu.
+      int? balance;
+      try {
+        balance = await widget.repository.loadCoinBalance();
+      } catch (error, stack) {
+        // Bakiye okunamadıysa karar sunucuya kalır; ret aşağıda
+        // anlamlı mesajla gösterilir.
+        ErrorReporter.record(error, stack, reason: 'new_room_balance');
+      }
+      if (!mounted) return;
+      final missing = balance == null
+          ? 0
+          : coinShortfall(cost: widget.room.entryFee, balance: balance);
+      if (missing > 0) {
+        await _showNewRoomShortfall(missing, balance!);
+        return;
+      }
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -230,12 +250,75 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'new room create failed');
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.t(K.roomOpenFailed))));
+      // Sunucu ücrete yetmeyen bakiyeyi 'Insufficient coins' ile reddeder
+      // (bakiye okuması ile ret arasında harcama olmuş olabilir): "Oda
+      // açılamadı" demek tekrar denemeye çağırır, oysa çözüm jeton kazanmak.
+      final short = e.toString().contains('Insufficient coins');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            context.t(short ? K.insufficientCoins : K.roomOpenFailed),
+          ),
+          action: short
+              ? SnackBarAction(
+                  label: context.t(K.earnCoins),
+                  onPressed: _openSpinWheel,
+                )
+              : null,
+        ),
+      );
     } finally {
       if (mounted) setState(() => _newRoomLoading = false);
     }
+  }
+
+  Future<void> _openSpinWheel() async {
+    await Navigator.of(context).push(
+      AppRoute<void>(page: SpinWheelScreen(repository: widget.repository)),
+    );
+  }
+
+  /// Ücretli odanın tekrarı için bakiye yetmiyor: eksik miktar ve gerçek
+  /// sonraki adım (jeton kazan). Onay penceresi hiç açılmaz.
+  Future<void> _showNewRoomShortfall(int missing, int balance) async {
+    final goEarn = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(context.t(K.newRoomAction)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              context.t(K.yourBalance, {'coins': '$balance'}),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: SahneSpace.x2),
+            SahneShortfallNote(
+              key: const ValueKey('result-new-room-shortfall'),
+              missing: missing,
+              alert: true,
+              center: true,
+            ),
+          ],
+        ),
+        actions: [
+          DialogActionPair(
+            cancel: TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: Text(context.t(K.cancel)),
+            ),
+            confirm: SahneButton.primary(
+              key: const ValueKey('result-new-room-earn-coins'),
+              label: context.t(K.earnCoins),
+              arrow: false,
+              onPressed: () => Navigator.of(ctx).pop(true),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (goEarn == true && mounted) await _openSpinWheel();
   }
 
   @override

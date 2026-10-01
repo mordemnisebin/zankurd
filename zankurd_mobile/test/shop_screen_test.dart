@@ -492,16 +492,12 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('120'));
     await tester.pumpAndSettle();
-    // Dalga 5: yetersiz bakiyede onay dialogunda 'Satın al' gri disabled
-    // olur ve 'Coin kazan' ikincil butonu görünür; harcama yapılmaz.
-    final buyButton = tester.widget<FilledButton>(
-      find.ancestor(
-        of: find.text('Satın al'),
-        matching: find.byType(FilledButton),
-      ),
-    );
-    expect(buyButton.onPressed, isNull);
+    // 2026-10-01 (A5): yetersiz bakiyede pencerede pasif bir 'Satın al'
+    // DURMAZ; yerine gerçek sonraki adım ('Jeton kazan') ve eksik miktar
+    // gelir. Ayrıntılı bekçi: `coin_shortfall_pattern_test.dart`.
+    expect(find.text('Satın al'), findsNothing);
     expect(find.text('Jeton kazan'), findsOneWidget);
+    expect(find.text('70 jeton eksik'), findsWidgets);
     expect(repository.spendReasons, isEmpty);
     expect(tester.takeException(), isNull);
   });
