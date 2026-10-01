@@ -36,7 +36,8 @@ ve boş durumlar dahil. `ZANKURD_SCREEN_TOUR_OUT_DIR` çıktıyı başka klasör
 yönlendirir; `ZANKURD_SCREEN_TOUR_HEIGHT=1800` kaydırılan bir ekranın
 tamamını tek karede basar; `ZANKURD_SCREEN_TOUR_THEME=light|dark` bütün
 kareleri tek temada `<çıktı>/<tema>/` altına basar (yoksa `_dark` kareleri
-gece, ötekiler gündüz). Emoji ve `CustomPainter` metni test koşucusunda kutu
+gece, ötekiler gündüz). `ZANKURD_SCREEN_TOUR_WIDTH=320` en dar
+telefonu, `ZANKURD_SCREEN_TOUR_TEXT_SCALE=2` büyük yazıyı bütün karelere uygular. Emoji ve `CustomPainter` metni test koşucusunda kutu
 çıkar; o ikisi simülatörden doğrulanır.
 
 ## Push'tan önce

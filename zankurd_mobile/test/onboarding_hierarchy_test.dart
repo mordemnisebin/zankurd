@@ -77,7 +77,12 @@ void main() {
     final hero = tester.getSize(
       find.byKey(const ValueKey('onboarding-hero-panel')),
     );
-    expect(hero.height, lessThan(300));
+    // 2026-10-01: logo üst yığından kartın içine taşındı; tavan 296'dan 340'a
+    // çıktı (net dikey kullanım aynı: üstteki 128–148 px'lik logo bloğu
+    // gitti). Korunan kural: kahraman sayfanın yarısını aşmaz, metne yer
+    // kalır.
+    expect(hero.height, lessThanOrEqualTo(340));
+    expect(hero.height, lessThan(844 / 2));
   });
 
   // 2026-09-29 Şahnê: bu iki bekçi Forest degradesini (hero ve seçili adım
@@ -100,7 +105,10 @@ void main() {
     await tester.pumpAndSettle();
 
     SahneStageCard hero() => tester.widget<SahneStageCard>(
-      find.byKey(const ValueKey('onboarding-hero-panel')),
+      find.descendant(
+        of: find.byKey(const ValueKey('onboarding-hero-panel')),
+        matching: find.byType(SahneStageCard),
+      ),
     );
 
     expect(hero().role, SahneRole.learn);
@@ -111,7 +119,11 @@ void main() {
     expect(hero().role, SahneRole.race);
   });
 
-  testWidgets('onboarding seçili adım göstergesi uzun çubukla ayrışır', (
+  // 2026-10-01 giriş iskeleti: sayfa göstergesi iki ayrı çubuk değil, kayıt
+  // ve seviye sınavıyla aynı tek ilerleme çubuğudur (`SahneProgressBar`) ve
+  // yanında "1/2" yazar. Korunan kural eskisinin aynısı: durum renkten
+  // bağımsız — dolgu oranı ve sayı — söylenir.
+  testWidgets('onboarding ilerleme çubuğu sayfa oranını ve sayısını söyler', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -122,17 +134,15 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    Size dot(int i) => tester.getSize(
-      find.descendant(
-        of: find.byKey(ValueKey('onboarding-page-indicator-$i')),
-        matching: find.byType(AnimatedContainer),
-      ),
-    );
-    expect(dot(0).width, greaterThan(dot(1).width));
+    final bar = find.byKey(const ValueKey('onboarding-progress'));
+    expect(tester.widget<SahneProgressBar>(bar).value, 0.5);
+    expect(tester.widget<SahneProgressBar>(bar).trailing, '1/2');
+    expect(find.text('1/2'), findsOneWidget);
 
     await tester.tap(find.text('Sonraki'));
     await tester.pumpAndSettle();
-    expect(dot(1).width, greaterThan(dot(0).width));
+    expect(tester.widget<SahneProgressBar>(bar).value, 1.0);
+    expect(tester.widget<SahneProgressBar>(bar).trailing, '2/2');
   });
 
   testWidgets('onboarding dil düğmesi başlık alanına yayılmaz', (tester) async {
@@ -198,8 +208,18 @@ void main() {
 
       // 2026-09-30 logo: işaret plakasız (`onBrandSurface` kalktı, bkz.
       // splash_screen_test); maskot yok ("maskot: Yok", spec_sahne.json).
+      //
+      // 2026-10-01: logo üst yığından kahraman kartın İÇİNE taşındı (giriş,
+      // kayıt ve ad ekranındaki kartlar da logo taşır) ve 40 genişliğinde.
       final logo = tester.widget<AppLogo>(find.byType(AppLogo));
-      expect(logo.width, 64);
+      expect(logo.width, 40);
+      expect(
+        find.ancestor(
+          of: find.byType(AppLogo),
+          matching: find.byKey(const ValueKey('onboarding-hero-panel')),
+        ),
+        findsOneWidget,
+      );
       expect(find.byType(RojMascot), findsNothing);
 
       await tester.pumpWidget(const SizedBox.shrink());

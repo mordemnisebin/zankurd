@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
-import '../theme/app_theme.dart';
 import '../services/display_name_policy.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_logo.dart';
@@ -110,260 +108,107 @@ class _ProfileNameGateScreenState extends State<ProfileNameGateScreen> {
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
-    // Gece bandı durum çubuğunun altına uzanır; saat ve pil açık renkte
-    // olmalı (bkz. `AppTheme.overlayOnDarkHeader`).
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: AppTheme.overlayOnDarkHeader,
-      child: Scaffold(
-        backgroundColor: t.bg,
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            final compact = constraints.maxHeight < 860;
-
-            return Column(
-              children: [
-                // 2026-07-23 M23: hero sabit flex (42-45%) alıyordu ama
-                // içeriği çok daha az yer kaplıyor — alt kısmı boş kalıyordu.
-                // Artık içerik kadar yer kaplıyor, kalan alan forma (Expanded)
-                // gidiyor.
-                //
-                // 2026-09-27 canlı gezinti: bu ekran tanıtım turunun VE giriş
-                // ekranının HEMEN ardından açılıyor; ikisi de zaten "ZanKurd'a
-                // Hoş Geldin" başlığını ve ürünün ne sunduğunu anlatmıştı.
-                // Burada aynı karşılamayı üçüncü kez göstermek yalnız
-                // oyalıyordu; asıl iş tek bir soru ("Oyundaki adın ne olsun?").
-                //
-                // 2026-09-29 Şahnê: marka anı. Forest degrade şerit yerine
-                // gece sahnesi bandı (her iki temada gece): logo işareti
-                // plakada ve ekranın tek sorusu 28'lik başlık olarak bandın
-                // içinde. Altında tek yüzey kartı: ad alanı + tek birincil.
-                _NameGateHero(
-                  compact: compact,
-                  title: context.t(K.nameGateQuestion),
-                  body: context.t(K.nameGateHelp),
-                ),
-                Expanded(
-                  child: SafeArea(
-                    top: false,
-                    // Kart bandın hemen altında başlar (göz logodan soruya,
-                    // sorudan alana iner) ve klavye açılınca yerinden
-                    // zıplamaz (2026-09-27).
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(
-                        SahneSpace.page,
-                        SahneSpace.x6,
-                        SahneSpace.page,
-                        SahneSpace.x6,
-                      ),
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 440),
-                          child: SahneSurfaceCard(
-                            key: const ValueKey('profile-name-gate-card'),
-                            child: Form(
-                              key: _formKey,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  SahneField(
-                                    key: const ValueKey('player-name-field'),
-                                    controller: _controller,
-                                    // Hata yalnız Form.validate() ile
-                                    // güncelleniyordu: geçerli bir ad
-                                    // yazıldıktan sonra da uyarı ekranda
-                                    // kalıyordu (2026-07-22 canlı UX
-                                    // denetimi).
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    textCapitalization:
-                                        TextCapitalization.words,
-                                    hintText: context.t(K.nameGateHint),
-                                    semanticLabel: context.t(K.nameGateHint),
-                                    prefixIcon: AppIcons.user,
-                                    validator: (value) {
-                                      // 2026-08-02: burada YALNIZ
-                                      // uzunluk kontrol ediliyordu.
-                                      // Ad, sohbet mesajından daha
-                                      // görünür bir UGC yüzeyi —
-                                      // liderlikte, odada ve
-                                      // eşleştirmede yabancılara
-                                      // gösteriliyor ve kalıcı.
-                                      final verdict = DisplayNamePolicy.review(
-                                        value ?? '',
-                                      );
-                                      if (verdict ==
-                                          DisplayNameVerdict.allowed) {
-                                        return null;
-                                      }
-                                      return context.t(
-                                        DisplayNamePolicy.messageKeyFor(
-                                          verdict,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  if (_saveError != null) ...[
-                                    const SizedBox(height: SahneSpace.x4),
-                                    DecoratedBox(
-                                      key: const ValueKey(
-                                        'name-gate-save-error',
-                                      ),
-                                      decoration: ShapeDecoration(
-                                        color: t.errTint,
-                                        shape: SahneShape.m,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(
-                                          SahneSpace.x3,
-                                        ),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 2,
-                                              ),
-                                              child: Icon(
-                                                AppIcons.triangleExclamation,
-                                                size: 20,
-                                                color: t.errTx,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: SahneSpace.x2,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                _saveError!,
-                                                style: SahneType.body.copyWith(
-                                                  color: t.tx,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                  const SizedBox(height: SahneSpace.x5),
-                                  SahneButton.primary(
-                                    label: context.t(K.nameGateCta),
-                                    expand: true,
-                                    onPressed: _saving ? null : _save,
-                                  ),
-                                  const SizedBox(height: SahneSpace.x2),
-                                  // 2026-07-23 UX: isim artık zorunlu değil;
-                                  // kullanıcı varsayılan adla geçip sonra
-                                  // profilden değiştirebilir.
-                                  Center(
-                                    child: SahneButton.text(
-                                      label: context.t(K.nameGateSkip),
-                                      arrow: false,
-                                      onPressed: _saving
-                                          ? null
-                                          : widget.onCompleted,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+    // 2026-10-01 giriş iskeleti (bkz. [SahneEntryScaffold]): giriş ve kayıt
+    // ekranıyla aynı yerleşim. Eskiden bu ekran tek başına durum çubuğunun
+    // altına uzanan tam genişlikte bir gece bandıydı (başlık bandın içinde,
+    // ortalı); "Şimdilik geç" kartın içinde birincil düğmenin altındaydı.
+    // Şimdi: kahraman kart (logo), sola yaslı soru + açıklama, tek yüzey
+    // kartında ad alanı; "Oyuna başla" alt perdede sabit, "Şimdilik geç"
+    // karşılamadaki "Atla" ve seviye sınavındaki "Şimdilik geç" gibi
+    // SAĞ ÜSTTE.
+    //
+    // 2026-07-27 canlı gezinti: bu ekran tanıtım turunun VE giriş
+    // ekranının HEMEN ardından açılıyor; ikisi de zaten "ZanKurd'a Hoş
+    // Geldin" başlığını anlatmıştı. Burada aynı karşılamayı üçüncü kez
+    // göstermek yalnız oyalıyordu; asıl iş tek bir soru.
+    return SahneEntryScaffold(
+      skip: SahneButton.text(
+        key: const ValueKey('name-gate-skip'),
+        label: context.t(K.nameGateSkip),
+        arrow: false,
+        onPressed: _saving ? null : widget.onCompleted,
+      ),
+      hero: const SahneEntryHero(
+        key: ValueKey('profile-name-gate-hero'),
+        padding: EdgeInsets.fromLTRB(
+          SahneSpace.x4,
+          SahneSpace.x6,
+          SahneSpace.x4,
+          SahneSpace.x5,
+        ),
+        child: Center(child: AppLogo(width: 64)),
+      ),
+      title: context.t(K.nameGateQuestion),
+      body: context.t(K.nameGateHelp),
+      content: SahneSurfaceCard(
+        key: const ValueKey('profile-name-gate-card'),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SahneField(
+                key: const ValueKey('player-name-field'),
+                controller: _controller,
+                // Hata yalnız Form.validate() ile güncelleniyordu: geçerli
+                // bir ad yazıldıktan sonra da uyarı ekranda kalıyordu
+                // (2026-07-22 canlı UX denetimi).
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                textCapitalization: TextCapitalization.words,
+                hintText: context.t(K.nameGateHint),
+                semanticLabel: context.t(K.nameGateHint),
+                prefixIcon: AppIcons.user,
+                validator: (value) {
+                  // 2026-08-02: burada YALNIZ uzunluk kontrol ediliyordu.
+                  // Ad, sohbet mesajından daha görünür bir UGC yüzeyi —
+                  // liderlikte, odada ve eşleştirmede yabancılara
+                  // gösteriliyor ve kalıcı.
+                  final verdict = DisplayNamePolicy.review(value ?? '');
+                  if (verdict == DisplayNameVerdict.allowed) return null;
+                  return context.t(DisplayNamePolicy.messageKeyFor(verdict));
+                },
+              ),
+              if (_saveError != null) ...[
+                const SizedBox(height: SahneSpace.x4),
+                DecoratedBox(
+                  key: const ValueKey('name-gate-save-error'),
+                  decoration: ShapeDecoration(
+                    color: t.errTint,
+                    shape: SahneShape.m,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(SahneSpace.x3),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 2),
+                          child: Icon(
+                            AppIcons.triangleExclamation,
+                            size: 20,
+                            color: t.errTx,
                           ),
                         ),
-                      ),
+                        const SizedBox(width: SahneSpace.x2),
+                        Expanded(
+                          child: Text(
+                            _saveError!,
+                            style: SahneType.body.copyWith(color: t.tx),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ],
-            );
-          },
+            ],
+          ),
         ),
       ),
-    );
-  }
-}
-
-/// Gece sahnesi bandı: durum çubuğunun altına uzanır, alt köşeleri L pahlı.
-/// Sahne kartının zemini (gece degradesi + öğrenme radyali) her iki temada
-/// da gecedir; içindeki logo plakası ve metinler gece belirteçlerini alır.
-/// Yüksekliği içerik kadardır — ekran boyuna göre esnemez.
-class _NameGateHero extends StatelessWidget {
-  const _NameGateHero({
-    required this.compact,
-    required this.title,
-    required this.body,
-  });
-
-  final bool compact;
-  final String title;
-  final String body;
-
-  static const _shape = BeveledRectangleBorder(
-    borderRadius: BorderRadius.only(
-      bottomLeft: Radius.circular(SahneShape.lValue),
-      bottomRight: Radius.circular(SahneShape.lValue),
-    ),
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return SahneStage(
-      stage: AppTheme.stage,
-      child: Builder(
-        builder: (context) {
-          final t = SahneTokens.of(context);
-          return ClipPath(
-            key: const ValueKey('profile-name-gate-hero'),
-            clipper: const ShapeBorderClipper(shape: _shape),
-            child: CustomPaint(
-              key: const ValueKey('profile-name-gate-hero-surface'),
-              painter: SahneStagePainter(
-                race: false,
-                glow: t.roleGlow(SahneRole.learn),
-              ),
-              child: SafeArea(
-                bottom: false,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    SahneSpace.x6,
-                    compact ? SahneSpace.x4 : SahneSpace.x8,
-                    SahneSpace.x6,
-                    compact ? SahneSpace.x5 : SahneSpace.x8,
-                  ),
-                  child: Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 440),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Center(child: AppLogo(width: compact ? 56 : 72)),
-                          SizedBox(
-                            height: compact ? SahneSpace.x3 : SahneSpace.x4,
-                          ),
-                          Semantics(
-                            header: true,
-                            child: Text(
-                              title,
-                              textAlign: TextAlign.center,
-                              style: SahneType.title.copyWith(color: t.tx),
-                            ),
-                          ),
-                          const SizedBox(height: SahneSpace.x1),
-                          Text(
-                            body,
-                            textAlign: TextAlign.center,
-                            style: SahneType.body.copyWith(color: t.tx2),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
+      primary: SahneButton.primary(
+        label: context.t(K.nameGateCta),
+        expand: true,
+        onPressed: _saving ? null : _save,
       ),
     );
   }

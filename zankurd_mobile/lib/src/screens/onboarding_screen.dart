@@ -76,285 +76,183 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     final pages = _pages(context);
     final last = _page == pages.length - 1;
 
+    // 2026-10-01 giriş iskeleti (bkz. [SahneEntryScaffold]): giriş, kayıt ve
+    // ad ekranıyla aynı yerleşim. Üstte dil seçici solda, "Atla" sağda, altında
+    // ilerleme çubuğu (eskiden altta bir çubuk çifti, üstte 88–148 px'lik
+    // logo/dil/atla yığını); ortada sayfa (kahraman kart + başlık + gövde +
+    // maddeler); altta yaş kutusu, tek birincil "Sonraki / Başla" ve ikinci
+    // sayfada ikincil "Geri". Logo artık üst yığında değil, kahraman kartın
+    // içinde (giriş ve kayıt ekranlarındaki gibi).
+    //
     // 2026-09-29 Şahnê: marka anı. Düz zemin (yumuşak ışık halkaları
-    // kalktı); üstte logo işareti plakası, her slayt bir sahne kartı
-    // (öğren = Zimrût, yarış = Boyax), ekranın tek birincil eylemi
-    // "Sonraki / Başla".
+    // kalktı); her slayt bir sahne kartı (öğren = Zimrût, yarış = Boyax).
     //
     // 2026-09-29 doğallık: sayfa göstergesi elmas değil çubuk. Elmas
     // uygulamada yalnız iki şey söyler — soru ilerlemesi ve ders sayacı
     // (GORSEL_KARARLAR K5); sayfa göstergesinde üçüncü bir anlam
     // yükleniyordu.
-    return Scaffold(
-      backgroundColor: t.bg,
-      body: Container(
-        key: const ValueKey('onboarding-surface'),
-        decoration: BoxDecoration(color: t.bg),
-        child: SafeArea(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final textScale = MediaQuery.textScalerOf(context).scale(1);
-              final accessibilityText = textScale >= 2.0;
-              final compact = constraints.maxHeight < 560 || accessibilityText;
-              final wide = constraints.maxWidth >= 720;
-              final wideCompact = compact && wide;
-              final horizontalPadding = wide ? SahneSpace.x8 : SahneSpace.page;
-              final verticalPadding = compact ? SahneSpace.x1 : SahneSpace.x2;
-              // Kısa ekranda (< 560px) küçük başlık, orta (< 720px) ve
-              // geniş ekranda tam başlık alanı. Başlık alanı sayfalar arası
-              // sabittir: logo her sayfada aynı, üst kısım zıplamaz.
-              const double kHeaderCompact = 88.0; // < 560px: mini logo
-              const double kHeaderMedium = 128.0; // 560–719px: normal
-              const double kHeaderFull = 148.0; // ≥ 720px: geniş
-              final headerHeight = accessibilityText
-                  ? 112.0
-                  : (compact
-                        ? kHeaderCompact
-                        : (constraints.maxHeight < 720
-                              ? kHeaderMedium
-                              : kHeaderFull));
-              final buttonMaxWidth = wide ? 520.0 : double.infinity;
-              final skipButton = SahneButton.text(
-                label: context.t(K.skip),
-                arrow: false,
-                onPressed: _completeIfAgeOk,
-              );
-
-              return Padding(
-                padding: EdgeInsets.fromLTRB(
-                  horizontalPadding,
-                  verticalPadding,
-                  horizontalPadding,
-                  // CTA'ya sabit bottom-safe mesafe (SafeArea içinde).
-                  SahneSpace.x4,
+    // Ekran ölçüsü `MediaQuery`den değil kısıttan okunur: bölünmüş ekran,
+    // katlanabilir cihaz ve testlerde `MediaQuery.size` gerçek yerleşim
+    // alanını söylemeyebilir.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final height =
+            constraints.maxHeight - MediaQuery.paddingOf(context).vertical;
+        final textScale = MediaQuery.textScalerOf(context).scale(1);
+        final accessibilityText = textScale >= 2.0;
+        final compact = height < 560 || accessibilityText;
+        final wide = constraints.maxWidth >= 720;
+        return SahneEntryScaffold(
+          surfaceKey: const ValueKey('onboarding-surface'),
+          // Dil seçimi ilk ekranda görünür olmalı: uygulama doğrudan Kurmancî
+          // açılıyor ve Türkçe okuyan kullanıcı, tanıtımı hiç anlamadan geçmek
+          // zorunda kalıyordu (2026-07-25 canlı denetimi).
+          leading: const LanguageToggle(
+            kuKey: ValueKey('onboarding-language-ku'),
+            trKey: ValueKey('onboarding-language-tr'),
+          ),
+          skip: SahneButton.text(
+            label: context.t(K.skip),
+            arrow: false,
+            onPressed: _completeIfAgeOk,
+          ),
+          progress: pages.length > 1
+              ? ExcludeSemantics(
+                  child: SahneProgressBar(
+                    key: const ValueKey('onboarding-progress'),
+                    value: (_page + 1) / pages.length,
+                    trailing: '${_page + 1}/${pages.length}',
+                  ),
+                )
+              : null,
+          paged: PageView.builder(
+            controller: _controller,
+            itemCount: pages.length,
+            onPageChanged: (value) => setState(() => _page = value),
+            itemBuilder: (context, index) => _OnboardingPage(
+              data: pages[index],
+              compact: compact,
+              wide: wide,
+              textRoom: accessibilityText || (!compact && height < 700),
+              accessibilityText: accessibilityText,
+              brand: _AnimatedBrandLockup(
+                scale: _brandScale,
+                opacity: _brandOpacity,
+                logoWidth: 40,
+              ),
+            ),
+          ),
+          // Başarısız bir "Başla" denemesinden sonra kutu satırı Şaş halkasıyla
+          // vurgulanır; hemen altında ne yapılacağını söyleyen metin durur (bkz.
+          // [K.ageGateHint]).
+          aboveAction: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              DecoratedBox(
+                decoration: ShapeDecoration(
+                  shape: SahneShape.withSide(
+                    SahneShape.m,
+                    _showAgeGateHint ? t.errTx : Colors.transparent,
+                    width: SahneRing.r2,
+                  ),
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      key: const ValueKey('onboarding-header'),
-                      height: headerHeight,
-                      child: accessibilityText
-                          ? Column(
-                              children: [
-                                Row(
-                                  key: const ValueKey(
-                                    'onboarding-accessibility-top-controls',
-                                  ),
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const LanguageToggle(
-                                      kuKey: ValueKey('onboarding-language-ku'),
-                                      trKey: ValueKey('onboarding-language-tr'),
-                                    ),
-                                    const SizedBox(width: SahneSpace.x2),
-                                    Expanded(
-                                      child: Align(
-                                        alignment: AlignmentDirectional.topEnd,
-                                        child: skipButton,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Expanded(
-                                  child: Center(
-                                    key: const ValueKey(
-                                      'onboarding-accessibility-brand',
-                                    ),
-                                    child: FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      // Logo her sayfada aynı; kontrolör
-                                      // 900ms'de bir kez koşar, geç
-                                      // sayfalarda zaten bitmiş durur
-                                      // (2026-09-27).
-                                      child: _AnimatedBrandLockup(
-                                        scale: _brandScale,
-                                        opacity: _brandOpacity,
-                                        logoWidth: 40,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Stack(
-                              children: [
-                                Align(
-                                  alignment: wideCompact
-                                      ? AlignmentDirectional.centerStart
-                                      : Alignment.topCenter,
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.only(
-                                      top: compact ? 0 : SahneSpace.x1,
-                                      start: wideCompact ? SahneSpace.x1 : 0,
-                                    ),
-                                    // Kısa pencerelerde sabit başlık
-                                    // kutusunu taşırmasın diye gerekirse
-                                    // küçülür.
-                                    child: FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      child: _AnimatedBrandLockup(
-                                        scale: _brandScale,
-                                        opacity: _brandOpacity,
-                                        logoWidth: compact ? 40 : 64,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // Dil seçimi ilk ekranda görünür olmalı:
-                                // uygulama doğrudan Kurmancî açılıyor ve
-                                // Türkçe okuyan kullanıcı, tanıtımı hiç
-                                // anlamadan geçmek zorunda kalıyordu
-                                // (2026-07-25 canlı denetimi).
-                                const Align(
-                                  alignment: AlignmentDirectional.topStart,
-                                  child: LanguageToggle(
-                                    kuKey: ValueKey('onboarding-language-ku'),
-                                    trKey: ValueKey('onboarding-language-tr'),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional.topEnd,
-                                  child: skipButton,
-                                ),
-                              ],
-                            ),
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: CheckboxListTile(
+                    key: const ValueKey('onboarding-age-gate'),
+                    value: _ageConfirmed,
+                    onChanged: (value) => setState(() {
+                      _ageConfirmed = value ?? false;
+                      if (_ageConfirmed) _showAgeGateHint = false;
+                    }),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: SahneSpace.x1,
                     ),
-                    Expanded(
-                      child: PageView.builder(
-                        controller: _controller,
-                        itemCount: pages.length,
-                        onPageChanged: (value) => setState(() => _page = value),
-                        itemBuilder: (context, index) => _OnboardingPage(
-                          data: pages[index],
-                          compact: compact,
-                          wideCompact: wideCompact,
-                          textRoom:
-                              accessibilityText ||
-                              (!compact && constraints.maxHeight < 700),
-                          accessibilityText: accessibilityText,
-                        ),
-                      ),
+                    shape: SahneShape.m,
+                    title: Text(
+                      context.t(K.ageGateLabel),
+                      style: SahneType.body.copyWith(color: t.tx),
                     ),
-                    const SizedBox(height: SahneSpace.x2),
-                    if (pages.length > 1)
-                      ExcludeSemantics(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            for (var i = 0; i < pages.length; i++)
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: SahneSpace.x1,
-                                ),
-                                child: _PageBar(
-                                  key: ValueKey('onboarding-page-indicator-$i'),
-                                  active: i == _page,
-                                  role: pages[i].role,
-                                  reduce: reduce,
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    SizedBox(height: compact ? SahneSpace.x2 : SahneSpace.x3),
-                    // Başarısız bir "Başla" denemesinden sonra kutu satırı
-                    // Şaş halkasıyla vurgulanır; hemen altında ne
-                    // yapılacağını söyleyen metin durur (bkz.
-                    // [K.ageGateHint]).
-                    DecoratedBox(
-                      decoration: ShapeDecoration(
-                        shape: SahneShape.withSide(
-                          SahneShape.m,
-                          _showAgeGateHint ? t.errTx : Colors.transparent,
-                          width: SahneRing.r2,
-                        ),
-                      ),
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: CheckboxListTile(
-                          key: const ValueKey('onboarding-age-gate'),
-                          value: _ageConfirmed,
-                          onChanged: (value) => setState(() {
-                            _ageConfirmed = value ?? false;
-                            if (_ageConfirmed) _showAgeGateHint = false;
-                          }),
-                          controlAffinity: ListTileControlAffinity.leading,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: SahneSpace.x1,
-                          ),
-                          shape: SahneShape.m,
-                          title: Text(
-                            context.t(K.ageGateLabel),
-                            style: SahneType.body.copyWith(color: t.tx),
-                          ),
-                        ),
-                      ),
-                    ),
-                    if (_showAgeGateHint) ...[
-                      const SizedBox(height: SahneSpace.x1),
+                  ),
+                ),
+              ),
+              if (_showAgeGateHint) ...[
+                const SizedBox(height: SahneSpace.x1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: SahneSpace.x2,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: SahneSpace.x2,
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Icon(
+                          AppIcons.triangleExclamation,
+                          size: 16,
+                          color: t.errTx,
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 2),
-                              child: Icon(
-                                AppIcons.triangleExclamation,
-                                size: 16,
-                                color: t.errTx,
-                              ),
-                            ),
-                            const SizedBox(width: SahneSpace.x2),
-                            Expanded(
-                              child: Text(
-                                context.t(K.ageGateHint),
-                                key: const ValueKey('onboarding-age-gate-hint'),
-                                style: SahneType.captionStrong.copyWith(
-                                  color: t.errTx,
-                                ),
-                              ),
-                            ),
-                          ],
+                      ),
+                      const SizedBox(width: SahneSpace.x2),
+                      Expanded(
+                        child: Text(
+                          context.t(K.ageGateHint),
+                          key: const ValueKey('onboarding-age-gate-hint'),
+                          style: SahneType.captionStrong.copyWith(
+                            color: t.errTx,
+                          ),
                         ),
                       ),
                     ],
-                    SizedBox(height: compact ? SahneSpace.x2 : SahneSpace.x3),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: buttonMaxWidth),
-                      // Son sayfada kutu işaretsizken "Başla" PASİF görünür
-                      // (Perde + üçüncül metin): eskiden tam etkin görünüp
-                      // basınca hata veriyordu. Pasif düğmeye basılırsa yine
-                      // satır içi ipucu çıkar ([_completeIfAgeOk]) — oyuncu
-                      // ne eksik olduğunu öğrenir; doğrulama değişmedi.
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: last && !_ageConfirmed ? _completeIfAgeOk : null,
-                        child: SahneButton.primary(
-                          expand: true,
-                          onPressed: last
-                              ? (_ageConfirmed ? _completeIfAgeOk : null)
-                              : () {
-                                  _controller.nextPage(
-                                    duration: reduce
-                                        ? const Duration(milliseconds: 1)
-                                        : const Duration(milliseconds: 250),
-                                    curve: Curves.easeOutCubic,
-                                  );
-                                },
-                          label: last ? context.t(K.start) : context.t(K.next),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              );
-            },
+              ],
+            ],
           ),
-        ),
-      ),
+          // Son sayfada kutu işaretsizken "Başla" PASİF görünür (Perde +
+          // üçüncül metin): eskiden tam etkin görünüp basınca hata veriyordu.
+          // Pasif düğmeye basılırsa yine satır içi ipucu çıkar
+          // ([_completeIfAgeOk]) — oyuncu ne eksik olduğunu öğrenir;
+          // doğrulama değişmedi.
+          primary: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: last && !_ageConfirmed ? _completeIfAgeOk : null,
+            child: SahneButton.primary(
+              expand: true,
+              onPressed: last
+                  ? (_ageConfirmed ? _completeIfAgeOk : null)
+                  : () {
+                      _controller.nextPage(
+                        duration: reduce
+                            ? const Duration(milliseconds: 1)
+                            : const Duration(milliseconds: 250),
+                        curve: Curves.easeOutCubic,
+                      );
+                    },
+              label: last ? context.t(K.start) : context.t(K.next),
+            ),
+          ),
+          // "Geri" her yerde alttaki ikincil metin eylemidir (kayıtta da öyle);
+          // ilk sayfada geri yok.
+          secondary: _page > 0
+              ? SahneButton.text(
+                  key: const ValueKey('onboarding-back'),
+                  label: context.t(K.backStep),
+                  arrow: false,
+                  onPressed: () {
+                    _controller.previousPage(
+                      duration: reduce
+                          ? const Duration(milliseconds: 1)
+                          : const Duration(milliseconds: 250),
+                      curve: Curves.easeOutCubic,
+                    );
+                  },
+                )
+              : null,
+        );
+      },
     );
   }
 
@@ -429,34 +327,6 @@ class _AnimatedBrandLockup extends StatelessWidget {
   }
 }
 
-/// Sayfa göstergesinin çubuğu: etkin sayfa kendi rolünün metin renginde
-/// uzun (24), ötekiler Ray tonunda kısa (12); ikisi de 4 boyunda. Durum
-/// yalnız renkle değil uzunlukla da ayrışır. Hareketi azaltta geçiş anında.
-class _PageBar extends StatelessWidget {
-  const _PageBar({
-    required this.active,
-    required this.role,
-    required this.reduce,
-    super.key,
-  });
-
-  final bool active;
-  final SahneRole role;
-  final bool reduce;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = SahneTokens.of(context);
-    return AnimatedContainer(
-      duration: reduce ? Duration.zero : SahneMotion.answerReveal,
-      curve: Curves.easeInOut,
-      width: active ? 24 : 12,
-      height: 4,
-      color: active ? t.roleText(role) : t.s3,
-    );
-  }
-}
-
 /// Tanıtım kartındaki soru maketinin verisi.
 ///
 /// Uydurma soru değildir: soru bankasında gerçekten bulunan bir sorunun
@@ -525,14 +395,19 @@ class _OnboardingPage extends StatelessWidget {
   const _OnboardingPage({
     required this.data,
     required this.compact,
-    required this.wideCompact,
+    required this.wide,
     required this.textRoom,
     required this.accessibilityText,
+    required this.brand,
   });
 
   final _OnboardingData data;
   final bool compact;
-  final bool wideCompact;
+  final bool wide;
+
+  /// Kahraman kartın tepesindeki logo (giriş, kayıt ve ad ekranındaki kartlar
+  /// da logo taşır). Yer yoksa çizilmez.
+  final Widget brand;
 
   /// Dekoratif hero panelinin küçülüp yerini metne bırakması gereken ekran
   /// sınıfı: ya sistem metin ölçeği çok büyük ya da ekran kısa. Bkz.
@@ -544,6 +419,10 @@ class _OnboardingPage extends StatelessWidget {
   /// dilimi bile madde listesini kaydırma alanının dışına iterdi. İçerik
   /// (başlık, gövde, maddeler) kaybolmaz; yalnız süs.
   final bool accessibilityText;
+
+  /// Kahraman kartın boy tavanı; logo kartın içindeyken ikincisi.
+  static const double _heroCap = 296;
+  static const double _brandHeroCap = 340;
 
   @override
   Widget build(BuildContext context) {
@@ -566,10 +445,46 @@ class _OnboardingPage extends StatelessWidget {
     // Tavan elle bölünür ve tam piksele yuvarlanır: kesirli sınır metin
     // bandının tepesini (kaydırma kabı) yarım piksele düşürüyordu.
     return LayoutBuilder(
+      builder: (context, outer) {
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: wide ? SahneSpace.x8 : SahneSpace.page,
+          ),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: SahneEntryScaffold.columnWidth,
+              ),
+              child: _buildPage(context, outer.maxHeight, gap, heroShare),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildPage(
+    BuildContext context,
+    double maxHeight,
+    double gap,
+    double heroShare,
+  ) {
+    return LayoutBuilder(
       builder: (context, constraints) {
-        final heroMax = ((constraints.maxHeight - gap) * heroShare)
-            .floorToDouble()
-            .clamp(0.0, 296.0);
+        final room = (maxHeight - gap) * heroShare;
+        // Logo kartın içindeyse (yer varsa) tavan logonun yüksekliği kadar
+        // artar: eskiden logo kartın DIŞINDA, 88–148 px'lik üst yığındaydı;
+        // net dikey kullanım aynı kalır.
+        final showBrand = !accessibilityText && room >= 240;
+        // 120'den kısa tavanda soru maketi okunmaz bir şeride ezilir (kısa
+        // yatay telefon): kahraman çekilir, metin tüm yeri alır. İçerik
+        // (başlık, gövde, maddeler) kaybolmaz; yalnız süs.
+        final heroMax = room < 120
+            ? 0.0
+            : room.floorToDouble().clamp(
+                0.0,
+                showBrand ? _brandHeroCap : _heroCap,
+              );
         // Dört şık alt alta ~260pt ister; daha dar tavanda şıklar ikişerli
         // iki sıraya dizilir, kalan fark ölçeklenerek kapanır. Yarış
         // slaytında şıklar her zaman ikişerli: üstteki ilerleme sırasına
@@ -579,26 +494,26 @@ class _OnboardingPage extends StatelessWidget {
           0.0,
           420.0,
         );
-        // Kahraman ile metin bir grup olarak dikeyde ortalanır; aralarında
-        // yalnız [gap] kalır. Eskiden metin bandı kalan yüksekliği
-        // dolduruyor ve içeriğini kendi ortasına koyuyordu: kahraman
-        // içeriğin boyuna inince aradaki boşluk büyüyordu.
+        // Kahraman ile metin sayfanın TEPESİNDEN başlar (giriş, kayıt ve ad
+        // ekranlarıyla aynı hiza); aralarında yalnız [gap] kalır.
         return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (heroMax > 0)
               Center(
                 child: ConstrainedBox(
+                  // Kart HER ZAMAN tam genişlikte: içerik sığmak için
+                  // küçülürse kenarlarda boşluk kartın içinde kalır, kart
+                  // daralıp sayfanın kenarından kopmaz.
                   constraints: BoxConstraints(
+                    minWidth: mockWidth + SahneSpace.x4 * 2,
                     maxHeight: heroMax,
                     maxWidth: mockWidth + SahneSpace.x4 * 2,
                   ),
-                  child: SahneStageCard(
+                  child: SahneEntryHero(
                     key: const ValueKey('onboarding-hero-panel'),
                     role: data.role,
-                    // Kilim şeridi açık kalan üç yerden biri (K4).
-                    kilim: true,
                     padding: EdgeInsets.fromLTRB(
                       SahneSpace.x4,
                       compact ? SahneSpace.x4 : SahneSpace.x5,
@@ -608,19 +523,32 @@ class _OnboardingPage extends StatelessWidget {
                     // `Center` değil: gevşek kısıtta boyu tavana kadar
                     // doldururdu. `FittedBox` içeriğin boyunu alır, tavanı
                     // aşarsa küçültür.
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      // Maket: dokunulmaz, ekran okuyucuya duyurulmaz.
-                      // Başlık ve gövde aynı şeyi metinle söyler.
-                      child: ExcludeSemantics(
-                        child: SizedBox(
-                          width: mockWidth,
-                          child: _QuestionMock(
-                            question: data.question,
-                            grid: grid,
-                            // Kısa ekranda ilerleme sırası düşer: soru ve
-                            // şıklar okunur boyda kalsın.
-                            progress: data.showProgress && heroMax >= 190,
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        // Maket: dokunulmaz, ekran okuyucuya duyurulmaz.
+                        // Başlık ve gövde aynı şeyi metinle söyler.
+                        child: ExcludeSemantics(
+                          child: SizedBox(
+                            width: mockWidth,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                if (showBrand) ...[
+                                  Center(child: brand),
+                                  const SizedBox(height: SahneSpace.x3),
+                                ],
+                                _QuestionMock(
+                                  question: data.question,
+                                  grid: grid,
+                                  // Kısa ekranda ilerleme sırası düşer: soru
+                                  // ve şıklar okunur boyda kalsın.
+                                  progress: data.showProgress && heroMax >= 190,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -628,12 +556,12 @@ class _OnboardingPage extends StatelessWidget {
                   ),
                 ),
               ),
-            SizedBox(height: gap),
+            if (heroMax > 0) SizedBox(height: gap),
             Flexible(
-              // Kısa içerik kendi boyundadır (grup ortalanır); uzun içerikte
-              // (büyük yazı, uzun çeviri) bant kalan yüksekliğe sınırlanır ve
-              // aşağıdan kayar. `auth_onboarding_test` bunu SE + %200 yazıda
-              // sözleşme olarak kilitler.
+              // Kısa içerik kendi boyundadır; uzun içerikte (büyük yazı, uzun
+              // çeviri) bant kalan yüksekliğe sınırlanır ve aşağıdan kayar.
+              // `auth_onboarding_test` bunu SE + %200 yazıda sözleşme olarak
+              // kilitler.
               child: _OnboardingTextBand(data: data, compact: compact),
             ),
           ],
@@ -692,16 +620,11 @@ class _OnboardingTextBandState extends State<_OnboardingTextBand> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Semantics(
-              header: true,
-              child: Text(
-                data.title,
-                style: (compact ? SahneType.headline : SahneType.title)
-                    .copyWith(color: t.tx),
-              ),
+            SahneEntryHeading(
+              title: data.title,
+              body: data.body,
+              compact: compact,
             ),
-            const SizedBox(height: SahneSpace.x2),
-            Text(data.body, style: SahneType.body.copyWith(color: t.tx2)),
             if (data.bullets.isNotEmpty) ...[
               SizedBox(height: compact ? SahneSpace.x3 : SahneSpace.x4),
               for (final bullet in data.bullets) ...[

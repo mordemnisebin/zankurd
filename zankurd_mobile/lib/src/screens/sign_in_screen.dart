@@ -194,243 +194,202 @@ class _SignInScreenState extends State<SignInScreen>
       _animationController.value = 1;
     }
     final t = SahneTokens.of(context);
-    final screenSize = MediaQuery.sizeOf(context);
-    final compact = screenSize.height < 900;
 
-    // 2026-09-29 Şahnê: marka anı. Üstte gece sahne kartı (her iki temada
-    // da gece): logo işareti plakada, 28'lik başlık, slogan. Altında tek
-    // yüzey kartı: marka giriş düğmeleri, misafir bağlantısı, e-posta formu
-    // ve ekranın TEK birincil eylemi "Giriş Yap". Yumuşak ışık halkaları,
-    // Forest degrade şerit ve gölgeli kart kalktı.
-    Widget hero({required bool dense}) => _AnimatedTitle(
-      controller: _animationController,
-      child: _SignInHeroBanner(
-        compact: dense,
-        logo: ScaleTransition(
-          scale: LoadAnimationSequence.logoScaleAnimation(_animationController),
-          child: AppLogo(width: dense ? 56 : 72),
-        ),
-      ),
-    );
+    // 2026-10-01 giriş iskeleti: dil seçici solda, kahraman kart (logo),
+    // sola yaslı başlık, tek yüzey kartında sosyal girişler + e-posta formu;
+    // ekranın TEK birincil eylemi "Giriş Yap" alt perdede sabit, "Kaydol"
+    // altında ikincil metin eylemi (bkz. [SahneEntryScaffold]). Eskiden
+    // "Giriş Yap" kartın ortasında kayıyor, dil seçici sağ üstte duruyor,
+    // başlık kahraman kartın İÇİNDE ortalanıyordu — kayıt ve ad ekranı başka
+    // bir yerleşimdi.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Ölçü kısıttan okunur (`MediaQuery.size` bölünmüş ekranda ve
+        // testlerde gerçek alanı söylemez). Kısa yatay telefonda düğmeler bir
+        // basamak alçalır (iki sütun, alan dar); dikey telefonda hiç sıkılaşmaz.
+        final size = constraints.biggest;
+        final denseWide =
+            (size.width > 720 || (size.width >= 640 && size.height < 420)) &&
+            (size.height < 520 || size.width > size.height);
+        return Consumer<AuthProvider>(
+          builder: (context, authProvider, _) {
+            final loading = authProvider.isLoading;
 
-    const languageToggle = LanguageToggle(
-      kuKey: ValueKey('sign-in-language-chip-KU'),
-      trKey: ValueKey('sign-in-language-chip-TR'),
-    );
-
-    return Scaffold(
-      backgroundColor: t.bg,
-      body: SafeArea(
-        child: _AuthScrollFrame(
-          builder: (context, isWide) => Consumer<AuthProvider>(
-            builder: (context, authProvider, _) {
-              final denseWide =
-                  isWide &&
-                  (screenSize.height < 520 ||
-                      screenSize.width > screenSize.height);
-              final loading = authProvider.isLoading;
-
-              final form = Form(
-                key: _formKey,
-                child: FadeTransition(
-                  opacity: LoadAnimationSequence.formField1FadeAnimation(
-                    _animationController,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SahneField(
+            final form = Form(
+              key: _formKey,
+              child: FadeTransition(
+                opacity: LoadAnimationSequence.formField1FadeAnimation(
+                  _animationController,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SahneField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      label: context.t(K.emailAddress),
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      prefixIcon: AppIcons.envelope,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return context.t(K.emailRequired);
+                        }
+                        if (!value.contains('@')) {
+                          return context.t(K.emailInvalid2);
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: denseWide ? SahneSpace.x2 : SahneSpace.x4),
+                    FadeTransition(
+                      opacity: LoadAnimationSequence.formField2FadeAnimation(
+                        _animationController,
+                      ),
+                      child: SahneField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        label: context.t(K.emailAddress),
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        prefixIcon: AppIcons.envelope,
+                        label: context.t(K.passwordLabel),
+                        controller: _passwordController,
+                        obscureText: _obscurePassword,
+                        prefixIcon: AppIcons.lock,
+                        suffixIcon: _obscurePassword
+                            ? AppIcons.eyeSlash
+                            : AppIcons.eye,
+                        suffixSemanticLabel: context.t(
+                          _obscurePassword ? K.showPassword : K.hidePassword,
+                        ),
+                        onSuffixIconPressed: () {
+                          setState(() => _obscurePassword = !_obscurePassword);
+                        },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return context.t(K.emailRequired);
+                            return context.t(K.passwordRequired);
                           }
-                          if (!value.contains('@')) {
-                            return context.t(K.emailInvalid2);
+                          if (value.length < 6) {
+                            return context.t(K.passwordMin6);
                           }
                           return null;
                         },
                       ),
-                      SizedBox(
-                        height: denseWide ? SahneSpace.x2 : SahneSpace.x4,
-                      ),
-                      FadeTransition(
-                        opacity: LoadAnimationSequence.formField2FadeAnimation(
-                          _animationController,
-                        ),
-                        child: SahneField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          label: context.t(K.passwordLabel),
-                          controller: _passwordController,
-                          obscureText: _obscurePassword,
-                          prefixIcon: AppIcons.lock,
-                          suffixIcon: _obscurePassword
-                              ? AppIcons.eyeSlash
-                              : AppIcons.eye,
-                          suffixSemanticLabel: context.t(
-                            _obscurePassword ? K.showPassword : K.hidePassword,
-                          ),
-                          onSuffixIconPressed: () {
-                            setState(
-                              () => _obscurePassword = !_obscurePassword,
-                            );
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return context.t(K.passwordRequired);
-                            }
-                            if (value.length < 6) {
-                              return context.t(K.passwordMin6);
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: SahneButton.text(
-                          label: context.t(K.forgotPassword),
-                          arrow: false,
-                          onPressed: loading
-                              ? null
-                              : () => _resetPassword(authProvider),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-
-              final panel = SahneSurfaceCard(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (isWide) ...[
-                      const Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: languageToggle,
-                      ),
-                      SizedBox(
-                        height: denseWide ? SahneSpace.x1 : SahneSpace.x3,
-                      ),
-                    ],
-                    if (_supportsGoogleSignIn) ...[
-                      _GoogleSignInButton(
-                        dense: denseWide,
-                        onPressed: loading
-                            ? null
-                            : () => _signInWithGoogle(authProvider),
-                      ),
-                      SizedBox(
-                        height: denseWide ? SahneSpace.x1 : SahneSpace.x2,
-                      ),
-                    ],
-                    if (_supportsAppleSignIn) ...[
-                      _AppleSignInButton(
-                        dense: denseWide,
-                        onPressed: loading
-                            ? null
-                            : () => _signInWithApple(authProvider),
-                      ),
-                      SizedBox(
-                        height: denseWide ? SahneSpace.x1 : SahneSpace.x2,
-                      ),
-                    ],
-                    // Misafir girişi bir kaçış yolu: metin bağlantısı olarak
-                    // sosyal girişlerden ayrılır.
-                    Center(
-                      child: _GuestSignInLink(
-                        onPressed: loading
-                            ? null
-                            : () => _signInAsGuest(authProvider),
-                      ),
                     ),
-                    SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
-                    const _EmailSectionDivider(),
-                    SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x3),
-                    form,
-                    SizedBox(height: denseWide ? SahneSpace.x2 : SahneSpace.x3),
-                    FadeTransition(
-                      opacity: LoadAnimationSequence.buttonFadeAnimation(
-                        _animationController,
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: SahneButton.text(
+                        label: context.t(K.forgotPassword),
+                        arrow: false,
+                        onPressed: loading
+                            ? null
+                            : () => _resetPassword(authProvider),
                       ),
-                      child: ScaleTransition(
-                        scale: LoadAnimationSequence.buttonScaleAnimation(
-                          _animationController,
-                        ),
-                        child: SahneButton.primary(
-                          label: context.t(K.signIn),
-                          icon: AppIcons.rightToBracket,
-                          arrow: false,
-                          expand: true,
-                          onPressed: loading
-                              ? null
-                              : () => _signIn(authProvider),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: denseWide ? SahneSpace.x2 : SahneSpace.x4),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: SahneSpace.x1,
-                      children: [
-                        Text(
-                          context.t(K.noAccountPrefix),
-                          style: SahneType.body.copyWith(color: t.tx2),
-                        ),
-                        SahneButton.text(
-                          label: context.t(K.signUp),
-                          onPressed: () => Navigator.of(
-                            context,
-                          ).push(AppRoute.to(const SignUpScreen())),
-                        ),
-                      ],
                     ),
                   ],
                 ),
-              );
+              ),
+            );
 
-              if (isWide) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 5,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: denseWide ? SahneSpace.x6 : SahneSpace.x8 + 8,
-                        ),
-                        child: hero(dense: denseWide),
-                      ),
-                    ),
-                    const SizedBox(width: SahneSpace.x8),
-                    Expanded(flex: 6, child: panel),
-                  ],
-                );
-              }
-
-              return Column(
+            final panel = SahneSurfaceCard(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: languageToggle,
+                  if (_supportsGoogleSignIn) ...[
+                    _GoogleSignInButton(
+                      dense: denseWide,
+                      onPressed: loading
+                          ? null
+                          : () => _signInWithGoogle(authProvider),
+                    ),
+                    SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
+                  ],
+                  if (_supportsAppleSignIn) ...[
+                    _AppleSignInButton(
+                      dense: denseWide,
+                      onPressed: loading
+                          ? null
+                          : () => _signInWithApple(authProvider),
+                    ),
+                    SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
+                  ],
+                  // Misafir girişi bir kaçış yolu: metin bağlantısı olarak
+                  // sosyal girişlerden ayrılır.
+                  Center(
+                    child: _GuestSignInLink(
+                      onPressed: loading
+                          ? null
+                          : () => _signInAsGuest(authProvider),
+                    ),
                   ),
-                  SizedBox(height: compact ? SahneSpace.x2 : SahneSpace.x4),
-                  hero(dense: compact),
-                  SizedBox(height: compact ? SahneSpace.x3 : SahneSpace.x4),
-                  panel,
+                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
+                  const _EmailSectionDivider(),
+                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x3),
+                  form,
                 ],
-              );
-            },
-          ),
-        ),
-      ),
+              ),
+            );
+
+            return SahneEntryScaffold(
+              leading: const LanguageToggle(
+                kuKey: ValueKey('sign-in-language-chip-KU'),
+                trKey: ValueKey('sign-in-language-chip-TR'),
+              ),
+              hero: _AnimatedTitle(
+                controller: _animationController,
+                child: SahneEntryHero(
+                  key: const ValueKey('sign-in-hero-banner'),
+                  padding: const EdgeInsets.fromLTRB(
+                    SahneSpace.x4,
+                    SahneSpace.x6,
+                    SahneSpace.x4,
+                    SahneSpace.x5,
+                  ),
+                  child: Center(
+                    child: ScaleTransition(
+                      scale: LoadAnimationSequence.logoScaleAnimation(
+                        _animationController,
+                      ),
+                      child: const AppLogo(width: 64),
+                    ),
+                  ),
+                ),
+              ),
+              title: context.t(K.welcomeTitle),
+              content: panel,
+              primary: FadeTransition(
+                opacity: LoadAnimationSequence.buttonFadeAnimation(
+                  _animationController,
+                ),
+                child: ScaleTransition(
+                  scale: LoadAnimationSequence.buttonScaleAnimation(
+                    _animationController,
+                  ),
+                  child: SahneButton.primary(
+                    label: context.t(K.signIn),
+                    icon: AppIcons.rightToBracket,
+                    arrow: false,
+                    expand: true,
+                    onPressed: loading ? null : () => _signIn(authProvider),
+                  ),
+                ),
+              ),
+              secondary: Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: SahneSpace.x1,
+                children: [
+                  Text(
+                    context.t(K.noAccountPrefix),
+                    style: SahneType.body.copyWith(color: t.tx2),
+                  ),
+                  SahneButton.text(
+                    label: context.t(K.signUp),
+                    onPressed: () => Navigator.of(
+                      context,
+                    ).push(AppRoute.to(const SignUpScreen())),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
@@ -453,49 +412,6 @@ class _AnimatedTitle extends StatelessWidget {
         builder: (context, child) =>
             Transform.translate(offset: Offset(0, slide.value), child: child),
         child: child,
-      ),
-    );
-  }
-}
-
-/// Marka anı: gece sahne kartı (kilim şeridi, rol radyali) içinde logo
-/// işareti plakası, 28'lik başlık ve slogan. Sahne kartı gündüz temasında
-/// da gece çizilir; başlık her iki temada açık metindir.
-class _SignInHeroBanner extends StatelessWidget {
-  const _SignInHeroBanner({required this.compact, required this.logo});
-
-  final bool compact;
-  final Widget logo;
-
-  @override
-  Widget build(BuildContext context) {
-    return SahneStageCard(
-      key: const ValueKey('sign-in-hero-banner'),
-      padding: EdgeInsets.fromLTRB(
-        SahneSpace.x4,
-        compact ? SahneSpace.x5 : SahneSpace.x8,
-        SahneSpace.x4,
-        compact ? SahneSpace.x4 : SahneSpace.x6,
-      ),
-      child: Builder(
-        builder: (context) {
-          final t = SahneTokens.of(context);
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Center(child: logo),
-              SizedBox(height: compact ? SahneSpace.x3 : SahneSpace.x4),
-              Semantics(
-                header: true,
-                child: Text(
-                  context.t(K.welcomeTitle),
-                  textAlign: TextAlign.center,
-                  style: SahneType.title.copyWith(color: t.tx),
-                ),
-              ),
-            ],
-          );
-        },
       ),
     );
   }
@@ -725,51 +641,6 @@ class _EmailSectionDivider extends StatelessWidget {
           line(),
         ],
       ),
-    );
-  }
-}
-
-class _AuthScrollFrame extends StatelessWidget {
-  const _AuthScrollFrame({required this.builder});
-
-  // isWide gerçek yerleşim genişliğinden hesaplanır (MediaQuery.size değil):
-  // bölünmüş ekran/katlanabilir cihaz ve testlerde doğru düzen seçilir.
-  final Widget Function(BuildContext context, bool isWide) builder;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // Tablet/masaüstü yanında kısa landscape telefonlarda da iki sütuna
-        // geç. iPhone SE landscape 667×375 civarında kalır; yalnız 720 px
-        // eşiği kullanılırsa çevrimdışı durum şeridi misafir eylemini ilk
-        // viewport dışına iter. 640 altındaki dar landscape cihazlarda ise
-        // iki sütun sosyal giriş düğmelerini gereğinden fazla sıkıştırır.
-        final isShortLandscapePhone =
-            constraints.maxWidth >= 640 && constraints.maxHeight < 420;
-        final isWide = constraints.maxWidth > 720 || isShortLandscapePhone;
-        // Sayfa kenarı 16; dikeyde 24. İçerik ortalanır, klavye açılınca
-        // negatif yükseklik oluşmasın diye alt sınır sıfırda kırpılır.
-        const padding = EdgeInsets.symmetric(
-          horizontal: SahneSpace.page,
-          vertical: SahneSpace.x6,
-        );
-        return SingleChildScrollView(
-          padding: padding,
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: isWide ? 960 : 440,
-                minHeight: (constraints.maxHeight - padding.vertical).clamp(
-                  0.0,
-                  double.infinity,
-                ),
-              ),
-              child: Center(child: builder(context, isWide)),
-            ),
-          ),
-        );
-      },
     );
   }
 }

@@ -196,20 +196,17 @@ void main() {
     await tester.pumpAndSettle();
 
     // 2026-09-29 Şahnê: aktif adım Forest gradyanı + gölge değil, öğrenme
-    // rolüdür. Korunan kural: aktif adım öğrenme kimliğini taşır ve
-    // toplamdan ayrılır.
-    // 2026-09-29 doğallık: üç numaralı elmas yerine "1/3" metni (K5:
-    // elmas yalnız soru ilerlemesi ve ders sayacı). Bu bekçi elmasın
-    // dolgusunu ve halkasını sabitliyordu; artık etkin adımın rakamı
-    // öğrenme metni renginde, toplam ikincil metinde.
+    // rolüdür. Korunan kural: aktif adım toplamdan ayrılır.
+    // 2026-10-01 giriş iskeleti: "1/3" artık kartın içindeki renkli metin
+    // değil, üst çubuğun altındaki ilerleme çubuğunun yanındaki sayıdır
+    // (karşılama ve seviye sınavıyla aynı bileşen). Durum renkten bağımsız:
+    // dolgu oranı + sayı.
     final stepFinder = find.byKey(const ValueKey('signup-progress'));
     expect(stepFinder, findsOneWidget);
-    final text = tester.widget<Text>(stepFinder);
-    expect(text.textSpan!.toPlainText(), '1/3');
-    final spans = (text.textSpan! as TextSpan).children!.cast<TextSpan>();
-    final t = SahneTokens.of(tester.element(stepFinder));
-    expect(spans.first.style!.color, t.learnTx);
-    expect(spans.last.style!.color, t.tx2);
+    final bar = tester.widget<SahneProgressBar>(stepFinder);
+    expect(bar.trailing, '1/3');
+    expect(bar.value, closeTo(1 / 3, 1e-9));
+    expect(find.text('1/3'), findsOneWidget);
     expect(find.byKey(const ValueKey('signup-progress-step-1')), findsNothing);
   });
 
@@ -228,7 +225,7 @@ void main() {
 
     _expectLearnStageIdentity(
       tester,
-      find.byKey(const ValueKey('profile-name-gate-hero-surface')),
+      find.byKey(const ValueKey('profile-name-gate-hero')),
     );
   });
 
@@ -478,9 +475,21 @@ void main() {
       await tester.tap(find.text('Veya e-posta ile'));
       await tester.pumpAndSettle();
 
-      // Renkli welcome banner başlığı iki temada da beyaz kalır.
+      // 2026-10-01 giriş iskeleti: başlık gece bandının içinde değil sayfa
+      // zemininde durur; rengi temayla birlikte değişir (`tx`) ve sayfa
+      // zemininde AA (≥ 4,5) kalır. Eskiden iki temada da beyazdı.
+      final pageTokens = mode == ThemeMode.light
+          ? SahneTokens.day
+          : SahneTokens.night;
       final title = tester.widget<Text>(find.text('ZanKurd\'a hoş geldin'));
-      expect(title.style?.color?.computeLuminance(), greaterThan(0.75));
+      expect(title.style?.color, pageTokens.tx);
+      final titleHi = title.style!.color!.computeLuminance();
+      final titleLo = pageTokens.bg.computeLuminance();
+      expect(
+        (titleHi > titleLo ? titleHi + 0.05 : titleLo + 0.05) /
+            (titleHi > titleLo ? titleLo + 0.05 : titleHi + 0.05),
+        greaterThanOrEqualTo(4.5),
+      );
 
       // Form etiketi temayla birlikte renk değiştirir; sabit beyaz olmamalı.
       // Etiket her formda aynıdır (SahneField: ikincil metin `tx2`); giriş
@@ -744,25 +753,23 @@ void main() {
     );
     final logo = find.byType(AppLogo);
     final skip = find.text('Derbas bike');
-    final header = find.byKey(const ValueKey('onboarding-header'));
-    final topControls = find.byKey(
-      const ValueKey('onboarding-accessibility-top-controls'),
-    );
-    final accessibilityBrand = find.byKey(
-      const ValueKey('onboarding-accessibility-brand'),
-    );
-    expect(logo, findsOneWidget);
+    final language = find.byKey(const ValueKey('onboarding-language-ku'));
+    // 2026-10-01 giriş iskeleti: eski 112 px'lik header (üst kontroller +
+    // marka) kalktı; üstte tek satırlık çubuk var (dil seçici solda, "Atla"
+    // sağda). XXXL'de kahraman kart çekilir ve logo kartın içinde olduğu
+    // için onunla gider (marka splash ve giriş ekranında); korunan kural:
+    // iki üst kontrol çakışmadan, ekran dışına taşmadan sığar.
+    expect(logo, findsNothing);
     expect(skip, findsOneWidget);
-    expect(header, findsOneWidget);
-    expect(topControls, findsOneWidget);
-    expect(accessibilityBrand, findsOneWidget);
+    expect(language, findsOneWidget);
+    final skipRect = tester.getRect(skip);
+    final languageRect = tester.getRect(language);
+    expect(skipRect.right, lessThanOrEqualTo(surface.right));
+    expect(languageRect.left, greaterThanOrEqualTo(surface.left));
     expect(
-      tester.getSize(topControls).height +
-          tester.getSize(accessibilityBrand).height,
-      lessThanOrEqualTo(tester.getSize(header).height),
-      reason:
-          'XXXL başlıkta üst kontroller ile marka aynı header yüksekliğine '
-          'çakışmadan sığmalı.',
+      skipRect.left,
+      greaterThanOrEqualTo(languageRect.right),
+      reason: 'XXXL başlıkta dil seçici ile "Atla" üst üste binmemeli.',
     );
     expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsNothing);
     for (final finder in [

@@ -41,6 +41,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
+import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
@@ -71,6 +72,30 @@ Map<String, Map<String, dynamic>> _bankById() {
     }
   }
   return byId;
+}
+
+/// Kahraman yuvası ([SahneEntryHero]) bir sahne kartı sarar; rol ve kilim
+/// kartın kendi alanlarıdır.
+SahneStageCard _card(WidgetTester tester, Finder hero) =>
+    tester.widget<SahneStageCard>(
+      find.descendant(of: hero, matching: find.byType(SahneStageCard)),
+    );
+
+/// Kahramanın içindeki tek görsel logodur (K1: kategori çizimi kolajı
+/// kalktı). 2026-10-01'den beri logo kartın içinde durur (giriş, kayıt ve ad
+/// ekranındaki kartlar gibi); bu yüzden "hiç `Image` yok" yerine "her `Image`
+/// bir `AppLogo`nun içinde" denir.
+void _expectOnlyLogoImages(WidgetTester tester, Finder hero) {
+  final images = find.descendant(of: hero, matching: find.byType(Image));
+  final inLogo = find.descendant(
+    of: find.descendant(of: hero, matching: find.byType(AppLogo)),
+    matching: find.byType(Image),
+  );
+  expect(
+    images.evaluate().length,
+    inLogo.evaluate().length,
+    reason: 'kategori çizimi kolajı kalktı (K1); yalnız logo görseli kalır',
+  );
 }
 
 void main() {
@@ -112,12 +137,8 @@ void main() {
           findsOneWidget,
         );
       }
-      expect(
-        find.descendant(of: hero, matching: find.byType(Image)),
-        findsNothing,
-        reason: 'kategori çizimi kolajı kalktı (K1)',
-      );
-      expect(tester.widget<SahneStageCard>(hero).kilim, isTrue);
+      _expectOnlyLogoImages(tester, hero);
+      expect(_card(tester, hero).kilim, isTrue);
     });
 
     testWidgets('Kurmancî arayüzde soru metni Kurmancîdir', (tester) async {
@@ -168,7 +189,7 @@ void main() {
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
       await _pumpOnboarding(tester);
-      expect(tester.widget<SahneStageCard>(hero).role, SahneRole.learn);
+      expect(_card(tester, hero).role, SahneRole.learn);
       expect(
         find.descendant(of: hero, matching: find.byType(SahneDiamondRow)),
         findsNothing,
@@ -177,7 +198,7 @@ void main() {
       await tester.tap(find.text('Sonraki'));
       await tester.pumpAndSettle();
 
-      expect(tester.widget<SahneStageCard>(hero).role, SahneRole.race);
+      expect(_card(tester, hero).role, SahneRole.race);
       expect(
         find.descendant(of: hero, matching: find.byType(SahneDiamondRow)),
         findsOneWidget,
@@ -195,10 +216,7 @@ void main() {
         findsNothing,
         reason: 'VS amblemi (iki elmas avatar) kalktı (K5)',
       );
-      expect(
-        find.descendant(of: hero, matching: find.byType(Image)),
-        findsNothing,
-      );
+      _expectOnlyLogoImages(tester, hero);
       expect(find.byType(RojMascot), findsNothing, reason: 'maskot yok');
     });
   });
