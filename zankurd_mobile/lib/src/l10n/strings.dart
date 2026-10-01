@@ -363,7 +363,7 @@ class Tr {
       'ku': 'Hevalên xwe bi kodê vexwîne',
       'tr': 'Arkadaşlarını kodla çağır',
     },
-    K.joinByCode: {'ku': 'Bi kod têkeve', 'tr': 'Kodla katıl'},
+    K.joinByCode: {'ku': 'Bi kodê têkeve', 'tr': 'Kodla katıl'},
     K.events: {'ku': 'Her roj', 'tr': 'Her gün'},
     K.dailyContest: {'ku': 'Pirsên rojê', 'tr': 'Günün soruları'},
     K.tenQuestions: {'ku': '10 pirs', 'tr': '10 soru'},
@@ -904,7 +904,7 @@ class Tr {
       'tr': 'Bu seviyenin soruları yüklenemedi.',
     },
     K.kolaydanZoraDogruIlerle: {
-      'ku': 'Ji hêsan bo dijwar biçe, pûan kom ke.',
+      'ku': 'Ji hêsan ber bi dijwar ve biçe, pûan kom bike.',
       'tr': 'Kolaydan zora doğru ilerle, puan topla.',
     },
     K.pPSeviye: {'ku': '{p0}/{p1} ast', 'tr': '{p0}/{p1} seviye'},
@@ -1247,7 +1247,7 @@ class Tr {
     // `jokeran` çekimi `joker\s*50` taramasını kör eder — turnûva
     // ile aynı sınıf.
     K.finishQuizHint: {
-      'ku': 'Pêşbirkê qedîne, zêr bigire, alîkarî veke',
+      'ku': 'Pêşbirkê qedîne, zêr bigire, alîkariyan veke',
       'tr': 'Yarışı bitir, jeton kazan, jokerleri aç',
     },
     K.wildcardFiftyHint: {

@@ -123,7 +123,7 @@ void main() {
                 SahneListRow.icon(
                   icon: AppIcons.hashtag,
                   role: SahneRole.race,
-                  title: 'Bi kod têkeve',
+                  title: 'Bi kodê têkeve',
                   chevron: true,
                   onTap: noop,
                 ),

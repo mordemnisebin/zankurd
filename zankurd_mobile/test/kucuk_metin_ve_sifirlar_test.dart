@@ -47,15 +47,19 @@ void main() {
   // NİÇİN SESSİZ: Türkçe karşılıkları kısaydı, testler ve tur Türkçe ile
   // koşuyordu; Kurmancî uzunluğu yalnız simülatörde, gözle görüldü. İki model
   // aynı kısaltmalarda uyuştu; bu test onları sabitler, geri uzatan olursa
-  // düşer.
+  // düşer. 2026-10-02 dil denetimi (Gemini 3.1 Pro + Grok 4.7, Flash üçüncü
+  // oy): "Bi kod" -> "Bi kodê" (bi'den sonra bükümlü hâl), "bo dijwar" ->
+  // "ber bi dijwar ve", "kom ke" -> "kom bike", "alîkarî" -> "alîkariyan"
+  // (jokerler çoğul). Uzunluk sınırı korunarak düzeltildi.
   group('1) Kurmancî kısa metinler', () {
     const ku = <String, String>{
       K.streakLabel: 'Zincîr',
-      K.joinByCode: 'Bi kod têkeve',
+      K.joinByCode: 'Bi kodê têkeve',
       K.soruCoz: 'Bersiv bide',
-      K.kolaydanZoraDogruIlerle: 'Ji hêsan bo dijwar biçe, pûan kom ke.',
+      K.kolaydanZoraDogruIlerle:
+          'Ji hêsan ber bi dijwar ve biçe, pûan kom bike.',
       K.nameGateQuestion: 'Navê te çi be?',
-      K.finishQuizHint: 'Pêşbirkê qedîne, zêr bigire, alîkarî veke',
+      K.finishQuizHint: 'Pêşbirkê qedîne, zêr bigire, alîkariyan veke',
       K.recommendedForYou: 'Dersa dorê',
     };
 

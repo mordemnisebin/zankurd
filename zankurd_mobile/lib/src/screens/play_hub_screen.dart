@@ -528,7 +528,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
 /// Arkadaşlarla oynamanın iki yolu: tek açıklama satırı + yan yana iki
 /// ikincil düğme. Sığmazlarsa (dar ekran, büyük yazı) alt alta dizilir;
-/// "Kodla katıl" Kurmancîde ("Bi kod têkeve") yarım genişliğe iki
+/// "Kodla katıl" Kurmancîde ("Bi kodê têkeve") yarım genişliğe iki
 /// satırdan fazla düşmesin diye eşik yazı ölçeğine de bakar.
 class _RoomActions extends StatelessWidget {
   const _RoomActions({

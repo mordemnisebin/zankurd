@@ -889,8 +889,9 @@ void main() {
     // Düğme `Alîkariya Bersivê` der (`K.sikIpucu`). Bitirme ipucu
     // "jokeran" deyince oyuncu aynı yardımcıyı Türkçe adla görür.
     // `jokeran` çekimi `joker\s*50` taramasını kör eder — turnûva
-    // ile aynı sınıf.
-    expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkarî'));
+    // ile aynı sınıf. 2026-10-02: çoğul çekimde son î kısalır
+    // ("alîkariyan"), bu yüzden kök aranır.
+    expect(Tr.of(K.finishQuizHint, AppLanguage.ku), contains('alîkar'));
     expect(Tr.of(K.onbRewardBullet, AppLanguage.ku), contains('alîkariyê'));
     expect(Tr.of(K.sikIpucu, AppLanguage.ku), 'Alîkariya bersivê');
 

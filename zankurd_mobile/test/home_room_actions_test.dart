@@ -149,7 +149,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Bi kod têkeve'), findsOneWidget);
+    expect(find.text('Bi kodê têkeve'), findsOneWidget);
     expect(find.text('Bi Kodê Tevlî Bibe'), findsNothing);
     expect(find.text('Bi Kodê Bikeve'), findsNothing);
   });
