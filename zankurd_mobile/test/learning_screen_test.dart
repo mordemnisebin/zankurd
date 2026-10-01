@@ -93,6 +93,7 @@ class _RetryablePracticeRepository extends MockZanKurdRepository {
     required int difficultyMin,
     required int difficultyMax,
     String? subCategory,
+    int? levelNumber,
     int limit = 10,
   }) async {
     loadCalls += 1;
@@ -107,6 +108,7 @@ class _RetryablePracticeRepository extends MockZanKurdRepository {
           difficultyMin: difficultyMin,
           difficultyMax: difficultyMax,
           subCategory: subCategory,
+          levelNumber: levelNumber,
           limit: limit,
         );
     }

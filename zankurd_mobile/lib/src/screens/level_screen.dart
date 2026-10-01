@@ -56,7 +56,13 @@ class _LevelScreenState extends State<LevelScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final levels = widget.repository.levelsForCategory(widget.category);
+    // Alt konu yolunda kart gerçek boyutu gösterir: havuzu küçük bir alt konu
+    // "10 soru" vaat edip ilgisiz dolguyla tamamlamaz (bkz.
+    // [SubcategoryLevelPlan]).
+    final levels = widget.repository.levelsForCategory(
+      widget.category,
+      subCategory: widget.subCategory,
+    );
     final heading = _LevelHeading.of(widget.category, widget.subCategory, ku);
 
     // 2026-09-30 izgara: başlık alt kategori ekranıyla AYNI bantlı bileşendir
@@ -126,6 +132,7 @@ class _LevelScreenState extends State<LevelScreen> {
         difficultyMin: level.difficultyMin,
         difficultyMax: level.difficultyMax,
         subCategory: widget.subCategory,
+        levelNumber: level.number,
         limit: level.questionCount,
       );
       if (!mounted) return;

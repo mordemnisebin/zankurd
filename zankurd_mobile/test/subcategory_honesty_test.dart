@@ -228,81 +228,140 @@ void main() {
   });
 
   group('loadLevelQuestions — tamamlama sırası dürüst', () {
+    // 2026-10-02: alt konu yolu artık havuzu seviyelere ÇAKIŞMAYAN dilimlerle
+    // böler (bkz. [SubcategoryLevelPlan]); bu yüzden tamamlama sırası artık
+    // bir seviyenin değil BEŞ seviyenin birlikte davranışıdır. Sahte banka:
+    // 3 eşleşen (r), 5 genel (g), 2 başka alt konu (p) — hepsi zorluk 1.
+    Future<List<List<String>>> loadAllLevels(
+      MockZanKurdRepository repository,
+    ) async {
+      final levels = repository.levelsForCategory(
+        'Ziman',
+        subCategory: 'reziman',
+      );
+      return [
+        for (final level in levels)
+          [
+            for (final q in await repository.loadLevelQuestions(
+              category: 'Ziman',
+              difficultyMin: level.difficultyMin,
+              difficultyMax: level.difficultyMax,
+              subCategory: 'reziman',
+              levelNumber: level.number,
+              limit: level.questionCount,
+            ))
+              q.id,
+          ],
+      ];
+    }
+
     test(
       'genel sorular yetiyorsa başka alt kategoriden HİÇ soru gelmez',
       () async {
         final repository = _SyntheticSubcategoryRepository();
+        final levels = await loadAllLevels(repository);
 
-        // matched(reziman)=3, need=3; genel(5) >= need → doldurma yalnız
-        // genelden yapılmalı, "peyvnasi" (p*) hiç görünmemeli.
-        final questions = await repository.loadLevelQuestions(
-          category: 'Ziman',
-          difficultyMin: 1,
-          difficultyMax: 2,
-          subCategory: 'reziman',
-          limit: 6,
-        );
-
+        // 1. seviye: 1 eşleşen + 4 dolgu; genel(5) ihtiyacı (4) karşılar →
+        // "peyvnasi" (p*) hiç görünmemeli.
+        expect(levels[0].length, 5);
         expect(
-          questions.length,
-          6,
-          reason: 'Havuzda fazlasıyla uygun soru var; tur kısalmamalı.',
-        );
-        expect(
-          questions.map((q) => q.id).where((id) => id.startsWith('p')),
+          levels[0].where((id) => id.startsWith('p')),
           isEmpty,
           reason:
-              'Genel sorular (g*) ihtiyacı karşılıyor; başka alt kategoriden '
-              '(p*, peyvnasi) hiç soru gelmemeliydi.',
+              'Genel sorular (g*) 1. seviyenin ihtiyacını karşılıyor; başka '
+              'alt kategoriden (p*, peyvnasi) soru gelmemeliydi.',
         );
         expect(
-          questions.map((q) => q.id).where((id) => id.startsWith('r')),
-          isNotEmpty,
-          reason: 'Eşleşen (reziman) sorular turdan tamamen dışlanmamalı.',
+          levels[0].where((id) => id.startsWith('r')),
+          hasLength(1),
+          reason: 'Eşleşen (reziman) dilim turdan dışlanmamalı.',
         );
       },
     );
 
     test(
-      'genel sorular yetmezse ANCAK O ZAMAN başka alt kategoriden tamamlanır',
+      'genel sorular yetmezse ANCAK O ZAMAN başka alt kategoriden tamamlanır; '
+      'hiçbir soru iki seviyede yok',
       () async {
         final repository = _SyntheticSubcategoryRepository();
+        final levels = await loadAllLevels(repository);
 
-        // matched(reziman)=3, genel=5, others(peyvnasi)=2 → toplam havuz
-        // tam 10. limit=10 istemek, HEM eşleşeni HEM geneli HEM DE (genel
-        // tükendiği için) her iki "peyvnasi" sorusunu da zorunlu kılar;
-        // havuz büyüklüğü tam limit'e eşit olduğu için seçim rastgeleliği
-        // (preferUnseen shuffle) sonucu etkilemez — kim seçilirse seçilsin
-        // hepsi seçilmek zorunda.
-        final questions = await repository.loadLevelQuestions(
-          category: 'Ziman',
-          difficultyMin: 1,
-          difficultyMax: 2,
-          subCategory: 'reziman',
-          limit: 10,
-        );
-
-        expect(questions.length, 10);
+        final all = [for (final level in levels) ...level];
         expect(
-          questions.map((q) => q.id).toSet(),
+          all.toSet().length,
+          all.length,
+          reason: 'Aynı yolun iki seviyesinde aynı soru çıkmamalı: $levels',
+        );
+        expect(
+          all.toSet(),
           {'r1', 'r2', 'r3', 'g1', 'g2', 'g3', 'g4', 'g5', 'p1', 'p2'},
           reason:
-              'Havuzun TAMAMI (eşleşen + genel + başka alt kategori) tam '
-              'limit kadar; genel tükenince başka alt kategoriye düşülmesi '
-              'gerektiğini kanıtlar.',
+              'Havuzun TAMAMI (3 eşleşen + 5 genel + 2 başka alt kategori) '
+              'dağıtılır; genel tükenince başka alt kategoriye düşülür.',
+        );
+        // p ancak genel (g) tükendikten sonra: 1. seviyede yok, g'lerin
+        // hepsi p'lerden ÖNCEki seviyelerde ya da aynı seviyede kullanıldı.
+        final firstP = levels.indexWhere(
+          (level) => level.any((id) => id.startsWith('p')),
+        );
+        final lastG = levels.lastIndexWhere(
+          (level) => level.any((id) => id.startsWith('g')),
+        );
+        expect(firstP, greaterThan(0));
+        expect(lastG, lessThanOrEqualTo(firstP));
+      },
+    );
+
+    test(
+      'dolgu oturum tohumuna göre değişir, oturum içinde kararlıdır',
+      () async {
+        final a = await _SyntheticSubcategoryRepository(seed: 1).loadFirstIds();
+        final aAgain = await _SyntheticSubcategoryRepository(
+          seed: 1,
+        ).loadFirstIds();
+        expect(aAgain, a, reason: 'Aynı tohum aynı dolguyu vermeli.');
+
+        final fillers = <String>{};
+        for (var seed = 1; seed <= 12; seed++) {
+          fillers.addAll(
+            await _SyntheticSubcategoryRepository(seed: seed).loadFirstIds(),
+          );
+        }
+        expect(
+          fillers.where((id) => id.startsWith('g')).length,
+          greaterThan(4),
+          reason:
+              'Dolgu hep aynı ilk genel sorulardan oluşuyordu '
+              '(`general.take`, karıştırmadan).',
         );
       },
     );
   });
 }
 
-/// `loadLevelQuestions`ın tamamlama sırasını (eşleşen → genel → başka alt
+/// Alt konu seviye planının tamamlama sırasını (eşleşen → genel → başka alt
 /// kategori) laboratuvar koşullarında, gerçek bankanın büyüklüğü ve
 /// rastgeleliği karışmadan ölçmek için sabit, sızıntısız, tekrarsız bir soru
 /// kümesi. Her sorunun `correctAnswer`ı benzersizdir ki
 /// `QuestionSetPolicy.withoutLeaks` hiçbirini elemesin — aksi hâlde seçilen
 /// küme daha küçük çıkar ve testin sayım varsayımları bozulur.
 class _SyntheticSubcategoryRepository extends MockZanKurdRepository {
+  _SyntheticSubcategoryRepository({int seed = 7}) : super(levelSeed: seed);
+
+  /// 1. seviyenin kimlikleri (dolgu tohuma bağlı olduğu için).
+  Future<Set<String>> loadFirstIds() async {
+    final level = levelsForCategory('Ziman', subCategory: 'reziman').first;
+    final questions = await loadLevelQuestions(
+      category: 'Ziman',
+      difficultyMin: level.difficultyMin,
+      difficultyMax: level.difficultyMax,
+      subCategory: 'reziman',
+      levelNumber: level.number,
+      limit: level.questionCount,
+    );
+    return {for (final q in questions) q.id};
+  }
+
   @override
   List<QuizQuestion> get questions => [
     // 'rêziman' anahtar kelimesiyle eşleşen 3 soru.

@@ -196,12 +196,13 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
     String? categoryId,
     int limit = 10,
   });
-  List<QuizLevel> levelsForCategory(String category);
+  List<QuizLevel> levelsForCategory(String category, {String? subCategory});
   Future<List<QuizQuestion>> loadLevelQuestions({
     required String category,
     required int difficultyMin,
     required int difficultyMax,
     String? subCategory,
+    int? levelNumber,
     int limit = 10,
   });
   Future<List<QuizQuestion>> loadLearningQuizQuestions({
