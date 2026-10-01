@@ -129,6 +129,21 @@ class _LessonQuizProbeRepository extends MockZanKurdRepository {
   }
 }
 
+/// Sunucu dersi gibi davranır: `id` bir UUID, slayt her kimlik için var.
+class _ServerLessonRepository extends _LessonQuizProbeRepository {
+  @override
+  Future<List<LessonSlide>> loadLessonSlides(String lessonId) async => [
+    for (var i = 1; i <= 2; i++)
+      LessonSlide(
+        id: 's$i',
+        lessonId: lessonId,
+        order: i,
+        contentKu: 'Naverok $i',
+        contentTr: 'İçerik $i',
+      ),
+  ];
+}
+
 class _FakeLessonListeningSpeaker implements LessonListeningSpeaker {
   _FakeLessonListeningSpeaker({this.available = true});
 
@@ -943,30 +958,74 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('ders mini quiz isteği açık lesson id ile repositoryye gider', (
+  // 2026-10-02: sunucu dersinde `id` bir UUID'dir ve ölçme bankasında
+  // karşılığı yoktur; kısa test dersin slug'ı ile aranır. Eski test id ile
+  // slug'ı hep aynı (yerel katalog) kurduğu için bu kusuru göremiyordu.
+  testWidgets(
+    'ders mini quiz isteği UUID id ile değil ders slug\'ı ile gider',
+    (tester) async {
+      final repository = _ServerLessonRepository();
+      const lesson = Lesson(
+        id: '42197347-eff7-436d-833c-71918aff4dc0',
+        slug: 'silav-u-nasin',
+        titleKu: 'Silav û Nasîn',
+        titleTr: 'Selamlaşma ve Tanışma',
+        category: 'everyday',
+      );
+
+      await tester.pumpWidget(
+        wrapKu(LessonDetailScreen(lesson: lesson, repository: repository)),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Pêş'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Azmûna kurt'));
+      await tester.pumpAndSettle();
+
+      expect(repository.requestedCategory, 'Ziman');
+      expect(repository.requestedLessonId, 'silav-u-nasin');
+    },
+  );
+
+  // 2026-10-02: "soru yok" durumu "Quiz yüklenemedi" (hata) diyor ve yalnız
+  // "Tekrar dene" sunuyordu; yeniden denemek sonucu değiştirmediği için
+  // çıkışsız bir sokaktı. Niçin sessiz kalıyordu: boş durum testi yoktu, yalnız
+  // "Soru çöz"ün boş/hatalı yolları sınanıyordu.
+  testWidgets('kısa test boşsa hata değil bilgi gösterir ve kapatılabilir', (
     tester,
   ) async {
-    final repository = _LessonQuizProbeRepository();
+    final repository = _ServerLessonRepository();
     const lesson = Lesson(
-      id: 'everyday_3',
-      slug: 'everyday-3',
-      titleKu: 'Pratikên rojane',
-      titleTr: 'Günlük pratik ifadeler',
+      id: '68a70d45-6dc3-47cf-8bcb-ccebc8bca409',
+      slug: 'hejmar',
+      titleKu: 'Hejmar',
+      titleTr: 'Sayılar',
       category: 'everyday',
     );
 
     await tester.pumpWidget(
-      wrapKu(LessonDetailScreen(lesson: lesson, repository: repository)),
+      wrap(LessonDetailScreen(lesson: lesson, repository: repository)),
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Pêş'));
+    await tester.tap(find.text('İleri'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Azmûna kurt'));
+    await tester.tap(find.text('Kısa test'));
     await tester.pumpAndSettle();
 
-    expect(repository.requestedCategory, 'Ziman');
-    expect(repository.requestedLessonId, 'everyday_3');
+    expect(find.byKey(const ValueKey('mini-quiz-empty')), findsOneWidget);
+    expect(find.text('Bu konu için soru bulunamadı'), findsOneWidget);
+    expect(
+      find.text('Bu ders için henüz kısa test yok. Dersi tamamlayabilirsin.'),
+      findsOneWidget,
+    );
+    expect(find.text('Quiz yüklenemedi'), findsNothing);
+    expect(find.text('Tekrar dene'), findsNothing);
+
+    await tester.tap(find.text('Kapat'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('mini-quiz-empty')), findsNothing);
   });
 
   // 2026-08-14 denetimi: "Dersler" düğmesi `enabled: true` sabitti — ders

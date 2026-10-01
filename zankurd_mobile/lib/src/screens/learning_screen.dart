@@ -960,7 +960,10 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     try {
       final questions = await widget.repository.loadLearningQuizQuestions(
         category: quizCategory,
-        learningLessonId: widget.lesson.id,
+        // Kimlik değil slug: yerel derste ikisi aynıdır, sunucu dersinde
+        // `id` bir UUID'dir ve ölçme bankasında karşılığı yoktur (bkz.
+        // `LearningLessonAliases`).
+        learningLessonId: widget.lesson.slug,
         limit: 5,
       );
 
@@ -1248,12 +1251,20 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         if (_miniQuizEmpty)
+                          // "Soru yok" bir HATA değildir: tekrar denemek
+                          // sonucu değiştirmez. Eskiden "Quiz yüklenemedi" +
+                          // yalnız "Tekrar dene" vardı, yani çıkışsız bir
+                          // sokaktı. Şimdi durum açıkça söylenir ve kapatılır;
+                          // ders akışı (Geri / Tamamla) altta duruyor.
                           AppEmptyState(
+                            key: const ValueKey('mini-quiz-empty'),
                             icon: AppIcons.bookOpen,
                             title: context.t(K.noQuestionsForCategory),
-                            message: context.t(K.quizLoadFail),
-                            actionLabel: context.t(K.retryShort),
-                            onAction: _startMiniQuiz,
+                            message: context.t(K.miniQuizNone),
+                            actionLabel: context.t(K.close),
+                            primaryAction: false,
+                            onAction: () =>
+                                setState(() => _miniQuizEmpty = false),
                           ),
                         if (_miniQuizErrorMessage != null)
                           AppErrorState(

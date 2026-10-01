@@ -431,6 +431,10 @@ class Tr {
       'tr': 'Bu konu için soru bulunamadı',
     },
     K.quizLoadFail: {'ku': 'Quiz nehate barkirin', 'tr': 'Quiz yüklenemedi'},
+    K.miniQuizNone: {
+      'ku': 'Ji bo vê dersê hîn azmûna kurt tune ye. Dikarî dersê biqedînî.',
+      'tr': 'Bu ders için henüz kısa test yok. Dersi tamamlayabilirsin.',
+    },
     K.translation: {'ku': 'Werger', 'tr': 'Çeviri'},
     // Aynı görünümün adı zaten `K.flashcards` ("Kartên Hînbûnê" /
     // "Hafıza Kartları"). Tooltip "Flashcard modu" deyince Türkçe
@@ -2935,6 +2939,7 @@ class K {
   static const recommendedForYou = 'learn.recommended';
   static const noQuestionsForCategory = 'learn.noQuestionsForCategory';
   static const quizLoadFail = 'learn.quizLoadFail';
+  static const miniQuizNone = 'learn.miniQuizNone';
   static const translation = 'learn.translation';
   static const flashcardMode = 'learn.flashcardMode';
   static const slidesLoadFail = 'learn.slidesLoadFail';
