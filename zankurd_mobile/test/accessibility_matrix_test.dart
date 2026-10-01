@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
+import 'package:zankurd_mobile/src/models/lesson.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
@@ -86,7 +87,12 @@ final Map<String, _Then> _thens = {
   'ders sorusu (cevaplandı)': _answerFirstOption,
 };
 
+/// Ders ekranı bir dersi sabit ister; ders verisi depodan bağımsızdır ve
+/// `setUpAll`da bir kez yüklenir.
+late final Lesson _lesson;
+
 final Map<String, _Build> _screens = {
+  'ders slaytı': (r) => LessonDetailScreen(lesson: _lesson, repository: r),
   'soru (cevaplandı)': (r) => QuizScreen(
     repository: r,
     room: r.createRoom().copyWith(questionCount: 1),
@@ -211,6 +217,12 @@ Future<List<String>> _audit(
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUpAll(() async {
+    _lesson = (await freshMockRepository().loadLessonsByCategory(
+      'everyday',
+    )).first;
+  });
 
   setUp(() {
     SharedPreferences.setMockInitialValues({});
