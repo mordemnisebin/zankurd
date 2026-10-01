@@ -335,9 +335,19 @@ class SahneCategoryGlyphPainter extends CustomPainter {
 /// K1 motif ızgaraları (9x9). `#` = [SahneCategoryTone.detail], `o` = konu
 /// zemini ([SahneCategoryTone.ground]), `.` = [SahneCategoryTone.deep]
 /// alanı. Her konunun ayrı bir dokuma biçimi: sarmal (Ziman), yıldız
-/// (Çand), basamak (Dîrok), zikzak (Wêje), dişli dağ (Erdnîgarî), dama
-/// (Muzîk), sekizgen halka (Sînema), ikili kemer dizisi (Siyaset), dallanan
-/// Y (Paradigma), devre izi (Teknolojî), enlem-boylam kafesi (Cîhan).
+/// (Çand), basamaklı üçgen (Dîrok), zikzak (Wêje), üst üste dağ sırası
+/// (Erdnîgarî), karşılıklı koçboynuzu kancaları (Muzîk), kare-ve-nokta film
+/// şeridi (Sînema), elmas ağı (Siyaset), dallanan Y (Paradigma), iç içe
+/// basamaklı elmas (Teknolojî), dört gül ve yıldız (Cîhan).
+///
+/// 2026-10-01 maket (gerçek cihaz sıralaması): en güçlü üçü (Ziman, Wêje,
+/// Çand) küçük bir birimin RİTİMLE tekrarlanması ve desenin bandın içinde
+/// eksiksiz bitmesiyle kilim gibi okunuyordu. Zayıf beşi (Muzîk dama
+/// gürültüsü, Siyaset iki koyu blok, Teknolojî QR kodu, Cîhan kaba pencere
+/// ızgarası, Sînema kaba bloklar) aynı dille yeniden çizildi; Dîrok ve
+/// Erdnîgarî de çizgiye değil motife dönüştü. Hepsi geleneksel kilim
+/// sözcüğünden: koçboynuzu, göz/elmas, gül, basamak. Siyasette parti ya da
+/// bayrak simgesi yok.
 const Map<SahneTopicMark, List<String>> sahneKilimGrids = {
   SahneTopicMark.ziman: [
     '#########',
@@ -362,15 +372,15 @@ const Map<SahneTopicMark, List<String>> sahneKilimGrids = {
     '#...#...#',
   ],
   SahneTopicMark.dirok: [
-    '....o....',
-    '.........',
     '....#....',
-    '...###...',
-    '..#####..',
-    '.#######.',
+    '...#o#...',
+    '..#o#o#..',
+    '.#o#.#o#.',
+    '#o#...#o#',
     '#########',
     '.........',
     '#########',
+    '.........',
   ],
   SahneTopicMark.edebiyat: [
     '#o.###.o#',
@@ -385,47 +395,47 @@ const Map<SahneTopicMark, List<String>> sahneKilimGrids = {
   ],
   SahneTopicMark.cografya: [
     '..#...#..',
-    '.###.###.',
-    '#########',
-    '.........',
-    '#...#...#',
-    '##.###.##',
-    '#########',
-    '.........',
-    '#########',
+    '.#o#.#o#.',
+    '#ooo#ooo#',
+    '..#...#..',
+    '.#o#.#o#.',
+    '#ooo#ooo#',
+    '..#...#..',
+    '.#o#.#o#.',
+    '#ooo#ooo#',
   ],
   SahneTopicMark.muzik: [
-    '#.#.#.#.#',
-    '.o.o.o.o.',
-    '#.#.#.#.#',
-    '.o.o.o.o.',
-    '#.#.#.#.#',
-    '.o.o.o.o.',
-    '#.#.#.#.#',
-    '.o.o.o.o.',
-    '#.#.#.#.#',
+    '####.####',
+    '#oo#.#oo#',
+    '#.##.##.#',
+    '#.......#',
+    '.........',
+    '#.......#',
+    '#.##.##.#',
+    '#oo#.#oo#',
+    '####.####',
   ],
   SahneTopicMark.sinema: [
-    '..#####..',
-    '.##...##.',
-    '##.###.##',
-    '#.##o##.#',
-    '#.#o#o#.#',
-    '#.##o##.#',
-    '##.###.##',
-    '.##...##.',
-    '..#####..',
+    '.........',
+    '#.#.#.#.#',
+    '#########',
+    '#ooo#ooo#',
+    '#o#o#o#o#',
+    '#ooo#ooo#',
+    '#########',
+    '#.#.#.#.#',
+    '.........',
   ],
   SahneTopicMark.siyaset: [
-    '#########',
-    '##.###.##',
-    '#...#...#',
-    '#...#...#',
-    '#...#...#',
-    '#...#...#',
-    '#########',
-    '.........',
-    '#########',
+    '....#....',
+    '...#.#...',
+    '#.#.#.#.#',
+    '.#.#.#.#.',
+    '..#.#.#..',
+    '.#.#.#.#.',
+    '#.#.#.#.#',
+    '...#.#...',
+    '....#....',
   ],
   SahneTopicMark.paradigma: [
     '#.......#',
@@ -439,26 +449,26 @@ const Map<SahneTopicMark, List<String>> sahneKilimGrids = {
     '...###...',
   ],
   SahneTopicMark.teknoloji: [
-    '###......',
-    '#o####...',
-    '###..#...',
-    '.....#.##',
-    '##...#.#o',
-    '#o####.##',
-    '##....#..',
-    '......#..',
-    'o#####...',
+    '....#....',
+    '...#.#...',
+    '..#.o.#..',
+    '.#.o#o.#.',
+    '#.o#o#o.#',
+    '.#.o#o.#.',
+    '..#.o.#..',
+    '...#.#...',
+    '....#....',
   ],
   SahneTopicMark.cihan: [
-    '..#####..',
-    '.#.#.#.#.',
-    '#..#.#..#',
-    '#..#.#..#',
-    '#########',
-    '#..#.#..#',
-    '#..#.#..#',
-    '.#.#.#.#.',
-    '..#####..',
+    '.##...##.',
+    '#oo#.#oo#',
+    '#oo#.#oo#',
+    '.##.#.##.',
+    '...###...',
+    '.##.#.##.',
+    '#oo#.#oo#',
+    '#oo#.#oo#',
+    '.##...##.',
   ],
 };
 
@@ -474,12 +484,11 @@ const Map<SahneTopicMark, List<String>> sahneKilimGrids = {
 /// iki kenara da tam değer. Eskiden desen bandın ortasında küçük bir blok
 /// olarak duruyor, altında büyük bir boşluk kalıyordu.
 ///
-/// Yatayda merkez sağ kenardan [centerInset] hücre içeridedir (taslak: 402
-/// px bant, 18 px hücre, 78 px), yani desenin dış kenarı bandın dışına taşar
-/// ve kırpılır. Görünen genişlik [reservedWidth]'i aşmaz: çubuk o kadar yer
-/// bırakır ve metin desenin üstüne binmez. Hücre büyüdüğünde (büyük yazıda
-/// bant uzar) desen sola değil sağa doğru daha çok kırpılır, yani daha az
-/// sütun görünür.
+/// Desen sağ kenara yaslıdır ve HİÇ kırpılmaz (bkz. [patternRect]): hücre
+/// boyu en çok `reservedWidth / 9`dur, yani görünen genişlik ayrılan yeri
+/// aşmaz ve metin desenin üstüne binmez. Büyük yazıda bant uzayıp 9 hücre
+/// ayrılan yere sığmazsa desen sağa yaslı ve dikeyde ortalı kalarak küçülür;
+/// eskiden sağ sütunlar kırpılıyor, tekrar eden birim yarım kalıyordu.
 class SahneKilimBandPainter extends CustomPainter {
   const SahneKilimBandPainter({
     required this.mark,
@@ -493,13 +502,7 @@ class SahneKilimBandPainter extends CustomPainter {
   /// Desenin görünen genişliğinin üst sınırı (px); çubuk bu kadar yer bırakır.
   final double reservedWidth;
 
-  /// Merkezin sağ kenara uzaklığı (hücre); taslakta 78 / 18.
-  static const double centerInset = 78 / 18;
-
   static const int _cells = 9;
-
-  /// Desenin bandın içinde kalan hücre sayısı (kırpma öncesi).
-  static const double visibleCells = centerInset + _cells / 2;
 
   /// Bandı 9'un katına yükseltir: hücre tam sayı piksel olur ve desen iki
   /// kenara tam değer.
@@ -507,23 +510,28 @@ class SahneKilimBandPainter extends CustomPainter {
       (height / _cells).ceilToDouble() * _cells;
 
   /// [height] yüksekliğindeki bant için hücre boyu: yüksekliğin 1/9'u, tam
-  /// sayı piksele yuvarlanmış (en az 1).
-  static double cellFor(double height) {
-    final c = (height / _cells).roundToDouble();
+  /// sayı piksele yuvarlanmış (en az 1). Ayrılan genişlik dar kalıyorsa
+  /// ([reservedWidth] verilmişse) 9 hücre sığacak kadar küçültülür.
+  static double cellFor(double height, [double? reservedWidth]) {
+    var c = (height / _cells).roundToDouble();
+    if (reservedWidth != null) {
+      final fit = (reservedWidth / _cells).floorToDouble();
+      if (fit < c) c = fit;
+    }
     return c < 1 ? 1 : c;
   }
 
-  /// Desenin bant koordinatlarındaki kırpılmamış dikdörtgeni: yükseklik
-  /// 9 hücre, üstü bandın üstü ([height] 9'un katıysa alt kenarı bandın alt
-  /// kenarı). Sol kenarı hiçbir zaman `genişlik - reservedWidth`in soluna
-  /// geçmez.
+  /// Desenin bant koordinatlarındaki dikdörtgeni: 9x9 hücre, sağ kenara
+  /// yaslı, dikeyde ortalı. Desen HİÇ kırpılmaz: motif tam görünsün diye
+  /// (2026-10-01 maket: dokuma motifi kırpılınca birim tekrarı okunmaz) hücre
+  /// boyu en çok `reservedWidth / 9`dur; büyük yazıda bant uzayıp desen
+  /// taşacak olursa desen küçülür ve ortada kalır, kırpılmaz. Eskiden desen
+  /// sağdan yarım hücre taşıp kırpılıyordu (merkez sağ kenardan 78/18 hücre
+  /// içeride) ve dar ayrılan yerde (84 px) sağ iki sütun kesiliyordu.
   static Rect patternRect(Size size, double reservedWidth) {
-    final c = cellFor(size.height);
-    final left = (size.width - visibleCells * c) > (size.width - reservedWidth)
-        ? (size.width - visibleCells * c)
-        : (size.width - reservedWidth);
+    final c = cellFor(size.height, reservedWidth);
     return Rect.fromLTWH(
-      left.roundToDouble(),
+      (size.width - _cells * c).roundToDouble(),
       ((size.height - _cells * c) / 2).roundToDouble(),
       _cells * c,
       _cells * c,
@@ -538,8 +546,8 @@ class SahneKilimBandPainter extends CustomPainter {
     canvas.drawRect(Offset.zero & size, Paint()..color = tone.ground);
     final grid = sahneKilimGrids[mark]!;
     final n = grid.length;
-    final c = cellFor(size.height);
     final rect = patternRect(size, reservedWidth);
+    final c = rect.width / n;
     final x0 = rect.left;
     final y0 = rect.top;
     canvas.drawRect(
