@@ -109,7 +109,15 @@ void main() {
     // Sessizce hiçbir şey yapmayan düğüm "bozuk" hissi verir.
     await tester.tap(find.byIcon(AppIcons.lock).first);
     await tester.pump();
-    expect(find.textContaining('seviyeyi tamamla'), findsOneWidget);
+    // Kilitli satırlar koşulu kendi satırında da yazar; nedeni söyleyen
+    // bildirim ayrıca çıkar.
+    expect(
+      find.descendant(
+        of: find.byType(SnackBar),
+        matching: find.textContaining('seviyeyi tamamla'),
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('seviye numarası sakin ama belirgin ağırlık taşır', (

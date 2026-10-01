@@ -14,6 +14,8 @@ import 'package:zankurd_mobile/src/screens/subcategory_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
+import 'package:zankurd_mobile/src/widgets/category_band.dart';
+import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
@@ -116,8 +118,20 @@ void main() {
     expect(find.byKey(cardKey), findsOneWidget);
     expect(find.text(first.nameTr), findsOneWidget);
 
-    final row = tester.widget<SahneListRow>(find.byKey(cardKey));
-    expect(row.role, SahneRole.learn);
+    // 2026-09-30 izgara: satır ikonu genel Zimrût değil KONUNUN renginde
+    // (başlık bandı ve ana ekran karosuyla aynı aile).
+    final tile = tester.widget<DecoratedBox>(
+      find
+          .descendant(
+            of: find.byKey(cardKey),
+            matching: find.byType(DecoratedBox),
+          )
+          .first,
+    );
+    expect(
+      (tile.decoration as ShapeDecoration).color,
+      CategoryVisuals.tone('Ziman').ground,
+    );
     final group = tester.widget<Material>(
       find
           .descendant(
@@ -206,7 +220,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(Image), findsNothing);
-    final band = find.byKey(const ValueKey('subcategory-kilim-band'));
+    final band = find.byKey(const ValueKey('category-kilim-band'));
     expect(band, findsOneWidget);
     expect(
       find.ancestor(of: band, matching: find.byType(ExcludeSemantics)),
@@ -258,7 +272,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull, reason: category);
-      final band = find.byKey(const ValueKey('subcategory-kilim-band'));
+      final band = find.byKey(const ValueKey('category-kilim-band'));
       expect(
         band,
         CategoryVisuals.mark(category) == null ? findsNothing : findsOneWidget,
@@ -305,9 +319,7 @@ void main() {
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull, reason: category);
 
-          final bandFinder = find.byKey(
-            const ValueKey('subcategory-kilim-band'),
-          );
+          final bandFinder = find.byKey(const ValueKey('category-kilim-band'));
           final band = tester.getRect(bandFinder);
           final painter =
               tester.widget<CustomPaint>(bandFinder).painter!
@@ -547,13 +559,12 @@ void main() {
     });
   }
 
-  // Listenin sonundaki bilgilendirme kartı ("Kolaydan zora doğru ilerle")
-  // hiçbir hedefe gitmiyordu ama sağ ucundaki `chevronRight` ikonu, listedeki
-  // her TIKLANABİLİR alt kategori satırıyla aynı görsel dili taşıyordu —
-  // kullanıcı dokunuyor, hiçbir şey olmuyordu (2026-08-14 denetimi).
-  // Düzeltme sahte "buraya dokun" ipucunu kaldırdı; bu bekçi ikonun geri
-  // gelmediğini doğrular.
-  testWidgets('ilerleme ipucu kartı sahte "dokun" oku taşımıyor', (
+  // 2026-09-30 izgara: listenin sonundaki "Kolaydan zora doğru ilerle"
+  // kartı kalktı. Seviye numaraları, zorluk çubukları ve kilit koşulu (seviye
+  // ekranı) aynı şeyi söylüyordu; kart hem yer kaplıyor hem hiçbir yere
+  // gitmiyordu (2026-08-14: sahte "dokun" okuyla da yanıltmıştı). Bekçi
+  // kartın geri gelmediğini ölçer.
+  testWidgets('alt kategori ekranında "kolaydan zora" ipucu kartı yok', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -565,32 +576,118 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    // 2026-09-29 Şahnê: B çubuğu 64 (56'ydı); ipucu kartı tembel listenin
-    // önbellek sınırının dışına düştü. Kullanıcı gibi kaydırarak bulunur.
-    await tester.scrollUntilVisible(
-      find.text('Kolaydan zora doğru ilerle, puan topla.'),
-      120,
-      scrollable: find.byType(Scrollable).last,
-    );
-
-    final hintPanel = find.ancestor(
-      of: find.text('Kolaydan zora doğru ilerle, puan topla.'),
-      matching: find.byType(AppPanel),
-    );
-    expect(hintPanel, findsOneWidget);
-
-    final icons = tester
-        .widgetList<Icon>(
-          find.descendant(of: hintPanel, matching: find.byType(Icon)),
-        )
-        .map((w) => w.icon)
-        .toSet();
-    expect(
-      icons,
-      isNot(contains(AppIcons.chevronRight)),
-      reason:
-          'Kart hiçbir yere gitmiyor; ok ikonu "buraya dokun" derken '
-          'yalan söylüyordu',
-    );
+    expect(find.text('Kolaydan zora doğru ilerle, puan topla.'), findsNothing);
+    expect(find.byType(AppPanel), findsNothing);
   });
+
+  // Satır ikonu her konuda KONUNUN renginde (eskiden hepsi Zimrût).
+  for (final category in ['Ziman', 'Çand', 'Dîrok', 'Cografya', 'Muzîk']) {
+    testWidgets('$category satır ikonları konunun renginde', (tester) async {
+      await tester.pumpWidget(
+        wrap(
+          SubcategoryScreen(
+            repository: MockZanKurdRepository(),
+            category: category,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final tiles = tester.widgetList<CategoryIconTile>(
+        find.byType(CategoryIconTile),
+      );
+      expect(tiles, isNotEmpty, reason: category);
+      expect(tiles.every((t) => t.category == category), isTrue);
+    });
+  }
+
+  // Konu akışının ortak başlığı: alt kategori ve seviye ekranı AYNI bantlı
+  // bileşeni ve aynı kategori tonunu taşır; üçüncü bir başlık yapısı yok.
+  for (final category in ['Ziman', 'Çand', 'Paradigma']) {
+    testWidgets('$category: alt kategori ve seviye ekranı aynı bantlı başlığı '
+        'kullanır', (tester) async {
+      _phone(tester, 390);
+      for (final screen in <Widget>[
+        SubcategoryScreen(
+          repository: MockZanKurdRepository(),
+          category: category,
+        ),
+        LevelScreen(repository: MockZanKurdRepository(), category: category),
+      ]) {
+        await tester.pumpWidget(wrap(screen));
+        await tester.pumpAndSettle();
+        expect(find.byType(CategoryBandScaffold), findsOneWidget);
+        final band = tester.widget<CategoryBand>(find.byType(CategoryBand));
+        expect(band.category, category);
+        // Geri düğmesi tek tür: Şahnê geri plakası.
+        expect(find.byType(ZkBackButton), findsOneWidget);
+      }
+    });
+  }
+
+  // Kurmancî "Zanist û Raman": ad iki satıra sarar, alt satır üç satıra;
+  // hiçbiri kırpılmaz ve bant, çubuğun ölçülen yüksekliğinden kısa kalmaz.
+  // Eskiden başlık odası gerçek alandan geniş ölçülüyor, alt satır ölçülenden
+  // bir satır fazla sarıp bandın altında kırpılıyordu (2026-09-30).
+  for (final screen in ['alt kategori', 'seviye']) {
+    for (final width in [320.0, 360.0, 390.0]) {
+      for (final scale in [1.0, 1.5, 2.0]) {
+        testWidgets('Zanist û Raman başlığı kırpılmaz ($screen, '
+            '${width.round()} px, x$scale)', (tester) async {
+          _phone(tester, width);
+          await tester.pumpWidget(
+            MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (_) => LanguageProvider()..setLang('ku'),
+                ),
+              ],
+              child: MaterialApp(
+                theme: AppTheme.light(),
+                builder: (context, child) => MediaQuery(
+                  data: MediaQuery.of(
+                    context,
+                  ).copyWith(textScaler: TextScaler.linear(scale)),
+                  child: child!,
+                ),
+                home: screen == 'alt kategori'
+                    ? SubcategoryScreen(
+                        repository: MockZanKurdRepository(),
+                        category: 'Paradigma',
+                      )
+                    : LevelScreen(
+                        repository: MockZanKurdRepository(),
+                        category: 'Paradigma',
+                      ),
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          expect(tester.takeException(), isNull);
+          final bar = tester.getRect(find.byType(AppBar));
+          final band = tester.getRect(find.byType(CategoryBand));
+          for (final text in tester.widgetList<Text>(
+            find.descendant(
+              of: find.byType(AppBar),
+              matching: find.byType(Text),
+            ),
+          )) {
+            final finder = find.byWidget(text);
+            final paragraph = tester.renderObject<RenderParagraph>(finder);
+            expect(
+              paragraph.didExceedMaxLines,
+              isFalse,
+              reason: '"${text.data}" kesiliyor',
+            );
+            final rect = tester.getRect(finder);
+            expect(
+              rect.bottom,
+              lessThanOrEqualTo(band.bottom),
+              reason: '"${text.data}" bandın dışına taşıyor',
+            );
+          }
+          expect(bar.bottom, lessThanOrEqualTo(band.bottom));
+        });
+      }
+    }
+  }
 }
