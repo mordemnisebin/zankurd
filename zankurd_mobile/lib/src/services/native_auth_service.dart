@@ -16,6 +16,7 @@ class NativeAuthCredential {
     required this.idToken,
     this.accessToken,
     this.nonce,
+    this.authorizationCode,
   });
 
   const NativeAuthCredential.google({
@@ -30,16 +31,23 @@ class NativeAuthCredential {
   const NativeAuthCredential.apple({
     required String idToken,
     required String rawNonce,
+    String? authorizationCode,
   }) : this(
          provider: NativeAuthProvider.apple,
          idToken: idToken,
          nonce: rawNonce,
+         authorizationCode: authorizationCode,
        );
 
   final NativeAuthProvider provider;
   final String idToken;
   final String? accessToken;
   final String? nonce;
+
+  /// Yalnız Apple: tek kullanımlık (~5 dk) yetkilendirme kodu. Hesap
+  /// silinirken Apple bağlantısını iptal edebilmek için girişten hemen sonra
+  /// sunucuya iletilir (`apple_revocation.dart`).
+  final String? authorizationCode;
 }
 
 /// Kullanıcının sağlayıcı ekranını kapatması hata değildir.
@@ -125,7 +133,11 @@ class PlatformNativeAuthService implements NativeAuthService {
       if (idToken == null || idToken.isEmpty) {
         throw const AuthException('Apple ID token alınamadı.');
       }
-      return NativeAuthCredential.apple(idToken: idToken, rawNonce: rawNonce);
+      return NativeAuthCredential.apple(
+        idToken: idToken,
+        rawNonce: rawNonce,
+        authorizationCode: credential.authorizationCode,
+      );
     } on SignInWithAppleAuthorizationException catch (error) {
       if (error.code == AuthorizationErrorCode.canceled) return null;
       rethrow;
