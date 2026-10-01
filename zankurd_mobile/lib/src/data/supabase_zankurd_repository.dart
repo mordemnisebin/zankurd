@@ -20,6 +20,7 @@ import '../models/room_message.dart';
 import '../models/tournament.dart';
 import '../models/referral_result.dart';
 import '../providers/analytics_consent_provider.dart';
+import '../services/apple_revocation.dart';
 import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../config/category_visibility.dart';
@@ -510,9 +511,20 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     ]);
   }
 
+  /// Oturumdaki hesabın Apple kimliği var mı (testlerde geçersiz kılınır).
+  @visibleForTesting
+  bool get hasAppleIdentity => userHasAppleIdentity(client.auth.currentUser);
+
   @override
   Future<void> deleteMyAccount() async {
     try {
+      // Apple ile girilmiş hesapta ÖNCE Apple bağlantısı iptal edilir
+      // (Kılavuz 5.1.1(v)); hesap silindikten sonra kullanıcının JWT'si
+      // geçersiz olur ve iptal edilemez. İptal başarısız olursa silme
+      // YİNE DE sürer (`revokeAppleAuthorization` hiç fırlatmaz).
+      if (hasAppleIdentity) {
+        await revokeAppleAuthorization(client);
+      }
       await client.rpc('delete_my_account');
     } catch (error, stack) {
       _recordError(error, stack, reason: 'delete_my_account failed');
@@ -1652,6 +1664,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  /// Sunucu `question_reports.reason` için 500 karakter üst sınırı koyar
+  /// (2026-10-02_report_hardening.sql); sınırı aşan serbest metin reddedilmek
+  /// yerine burada kırpılır.
+  static String _clampReportReason(String reason) {
+    final trimmed = reason.trim();
+    if (trimmed.isEmpty) return 'Kontrol edilmeli';
+    return trimmed.length > 500 ? trimmed.substring(0, 500) : trimmed;
+  }
+
   @override
   Future<void> reportQuestion(QuizQuestion question, String reason) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
@@ -1659,7 +1680,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     await client.from('question_reports').insert({
       'question_id': question.id,
       'reporter_id': user.id,
-      'reason': reason.trim().isEmpty ? 'Kontrol edilmeli' : reason.trim(),
+      'reason': _clampReportReason(reason),
     });
 
     // Editör kuyruğuna giden sayaç, eski rapor tablosuyla birlikte tutulur.

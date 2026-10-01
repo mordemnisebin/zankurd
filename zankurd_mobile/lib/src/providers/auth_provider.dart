@@ -20,6 +20,7 @@ import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/story_progress_store.dart';
 import '../data/sync_manager.dart';
 import '../services/premium_service.dart';
+import '../services/apple_revocation.dart';
 import '../services/native_auth_service.dart';
 import '../utils/error_reporter.dart';
 
@@ -400,6 +401,7 @@ class AuthProvider extends ChangeNotifier {
           idToken: credential.idToken,
           nonce: credential.nonce,
         );
+        _registerAppleAuthorization(client, credential);
     }
   }
 
@@ -420,7 +422,20 @@ class AuthProvider extends ChangeNotifier {
           idToken: credential.idToken,
           nonce: credential.nonce,
         );
+        _registerAppleAuthorization(client, credential);
     }
+  }
+
+  /// Apple'ın tek kullanımlık kodunu sunucuya iletir (hesap silinirken Apple
+  /// bağlantısı iptal edilebilsin diye). Giriş akışını BEKLETMEZ ve hata
+  /// vermez: bkz. `apple_revocation.dart`.
+  void _registerAppleAuthorization(
+    SupabaseClient client,
+    NativeAuthCredential credential,
+  ) {
+    final code = credential.authorizationCode;
+    if (code == null || code.isEmpty) return;
+    unawaited(registerAppleAuthorization(client, code));
   }
 
   /// iOS'ta Google hesabını uygulama içindeki native SDK ile alır.
