@@ -1730,6 +1730,13 @@ class Tr {
           'Botla düello ve günün soruları sıralamaya sayılmaz.',
     },
     K.startRaceAction: {'ku': 'Dest bi pêşbirkê bike', 'tr': 'Yarışa başla'},
+    // 2026-10-01 (A8): sıralamanın altına sabitlenen kendi satırı, oyuncunun
+    // seçili dönemde puanı yoksa sessiz kalıyordu; "sıralamada değilim"
+    // ile "sıralama yüklenmedi" ayrılmıyordu.
+    K.notRankedYet: {
+      'ku': 'Tu hîn di vê rêzbendiyê de nînî.',
+      'tr': 'Bu sıralamada henüz yoksun.',
+    },
     K.leaderboardTitle: {'ku': 'Rêzbendî', 'tr': 'Sıralama'},
     K.refreshBoardA11y: {'ku': 'Rêzbendiyê nû bike', 'tr': 'Sıralamayı yenile'},
     K.refreshAction: {'ku': 'Nû bike', 'tr': 'Yenile'},
@@ -3482,6 +3489,7 @@ class K {
   static const noScoresYet = 'leaderboard.noScores';
   static const startRaceHint = 'leaderboard.startRaceHint';
   static const startRaceAction = 'leaderboard.startRace';
+  static const notRankedYet = 'leaderboard.notRankedYet';
   static const leaderboardTitle = 'leaderboard.title';
 
   /// Sıralama başlığının alt yazısı: nasıl yükselinir.

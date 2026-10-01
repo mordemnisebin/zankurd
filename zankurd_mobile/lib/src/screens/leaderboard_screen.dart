@@ -15,6 +15,7 @@ import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
 import '../utils/player_identity.dart';
 import '../widgets/app_state.dart';
+import '../widgets/leaderboard_podium.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
 import 'friends_screen.dart';
@@ -64,7 +65,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   /// 2026-09-30: sonuç SEÇİLİ DÖNEMİN (Gün/Hafta/Ay) sıralamasından gelir
   /// (`getMyLeaderboardRank`), toplam XP'den değil — liste de aynı dönem
   /// süzgeciyle çiziliyor.
-  Future<LeaderboardEntry?>? _myRankFuture;
+  Future<_MyRankLookup>? _myRankFuture;
 
   /// Bekleyen arkadaşlık isteği sayısı — başlıktaki rozet için.
   ///
@@ -110,22 +111,26 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   /// puanını döndürür (`get_leaderboard` ile aynı süzgeç); `getPlayerStats`
   /// toplam XP veriyordu ve aynı ekranda iki ayrı sayı aynı etiketle
   /// sunuluyordu. Dönemde puanı yoksa null — sabit satır çizilmez.
-  Future<LeaderboardEntry?> _loadMyRank() async {
+  Future<_MyRankLookup> _loadMyRank() async {
     try {
-      return await widget.repository.getMyLeaderboardRank(_period);
+      return _MyRankLookup(
+        await widget.repository.getMyLeaderboardRank(_period),
+      );
     } catch (_) {
-      return null;
+      // Okunamadı: "sıralamada değilsin" demek için sebep yok.
+      return const _MyRankLookup(null, failed: true);
     }
   }
 
-  /// Liderlik gövdesi: (varsa lig bandı) + sıralı liste.
+  /// Liderlik gövdesi: (varsa lig bandı) + ilk üç podyum + kalan sıralı liste.
   ///
-  /// 2026-09-29 doğallık (K9): podyum kalktı. İlk üç büyük elmas avatar,
-  /// madalya halkası, birincide taç ve altın haleyle kaidelere diziliyordu;
-  /// üç kişilik bir haftada ekranın tamamı buydu ve "kutlama" hiçbir şey
-  /// kazanılmadan çiziliyordu. Artık bütün sıralama tek liste: ilk üç
-  /// yalnız sıra rakamının renginden ayrılır ([_RankRow]), oyuncunun kendi
-  /// satırı listede "Sen" rozetiyle, listede değilse altta sabit.
+  /// 2026-09-29 doğallık (K9) podyumu kaldırmıştı (büyük elmaslar, madalya
+  /// halkası, taç, hale). 2026-10-01 tasarım denetimi (A8) ilk üçün
+  /// ayrışmasını yeniden istedi: [LeaderboardPodium] — süssüz, üç pahlı
+  /// kaide. Üç ve daha çok oyuncu varken ilk üç podyumda, 4. sıradan
+  /// itibaren liste; daha azında ya da podyum sığmayan yerde (320 px'te
+  /// büyük yazı) bütün sıralama tek liste. Oyuncunun kendi satırı listede
+  /// (ya da podyumda) "Sen" rozetiyle, ilk 10'da değilse altta sabit.
   ///
   /// Geniş ekranda (iPad) liste okunur bir genişlikte (≤ 640) ortalanır;
   /// eskiden sol sütun podyumu, sağ sütun listeyi taşıyordu. 720 eşiği
@@ -137,11 +142,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   ) {
     final uid = widget.repository.currentUserId;
 
-    final list = KeyedSubtree(
+    Widget listOf(List<LeaderboardEntry> rows) => KeyedSubtree(
       key: const ValueKey('leaderboard-rank-list'),
       child: _RankListSurface(
         rows: [
-          for (final e in entries)
+          for (final e in rows)
             _RankRow(
               entry: e,
               isKu: ku,
@@ -161,21 +166,39 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         ? _LeagueBanner(myRank: _myRank(entries), isKu: ku)
         : null;
 
-    final column = Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (banner != null) ...[
-          banner,
-          const SizedBox(height: SahneSpace.cardGap),
-        ],
-        list,
-      ],
-    );
-
     return LayoutBuilder(
       builder: (context, constraints) {
         // Eşik ekran enidir; gövde sayfa kenarı (2 × 16) kadar daha dardır.
-        if (constraints.maxWidth + 2 * SahneSpace.page < 720) return column;
+        final wide = constraints.maxWidth + 2 * SahneSpace.page >= 720;
+        final width = wide ? 640.0 : constraints.maxWidth;
+        final podium =
+            entries.length >= 3 && LeaderboardPodium.fits(context, width);
+
+        final column = Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (banner != null) ...[
+              banner,
+              const SizedBox(height: SahneSpace.cardGap),
+            ],
+            if (podium) ...[
+              LeaderboardPodium(
+                key: const ValueKey('leaderboard-podium'),
+                entries: entries.take(3).toList(growable: false),
+                isKu: ku,
+                selfId: uid,
+                colorOverrides: avatarColorOverrides,
+                onReport: _reportProfile,
+              ),
+              if (entries.length > 3) ...[
+                const SizedBox(height: SahneSpace.cardGap),
+                listOf(entries.skip(3).toList(growable: false)),
+              ],
+            ] else
+              listOf(entries),
+          ],
+        );
+        if (!wide) return column;
         return Align(
           alignment: Alignment.topCenter,
           child: ConstrainedBox(
@@ -193,20 +216,29 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   /// Satır, seçili dönemin (Gün/Hafta/Ay) puanını ve dönem içindeki sırasını
   /// gösterir — liste satırlarıyla aynı `get_leaderboard` süzgecinden gelir
   /// (`getMyLeaderboardRank`), toplam XP'den değil.
+  ///
+  /// Dönemde puanı yoksa (hiç oynamadı, ya da yalnız bot düellosu ve günün
+  /// soruları oynadı) ve sorgu BAŞARILI döndüyse satırın yerinde dürüst
+  /// bir boş durum durur: "bu sıralamada henüz yoksun" + yarışa başla.
+  /// Sorgu okunamadıysa ya da oturum yoksa hiçbir şey iddia edilmez.
   Widget _buildMyRankRow(bool ku) {
-    return FutureBuilder<LeaderboardEntry?>(
+    return FutureBuilder<_MyRankLookup>(
       future: _myRankFuture,
       builder: (context, snapshot) {
-        final me = snapshot.data;
-        // Veri yokken hiçbir şey çizilmez — sarmalayıcı da dahil. Aksi
-        // halde listenin altında boş, kenarlıklı bir şerit kalır ve
-        // görünmez bir satır için dikey alan harcanır.
+        final lookup = snapshot.data;
+        if (lookup == null || lookup.failed) return const SizedBox.shrink();
+        final me = lookup.entry;
         // Puan kapısı `_myRank` ile aynı sebeple burada da gerekli: aksi
         // hâlde banner susarken bu sabit satır sıfır puanla "#1" demeye
         // devam eder, yani yanlış iddia yer değiştirmiş olur. Dönem puanı
         // olmayan oyuncuya toplam XP de basılmaz (2026-09-30).
         if (me == null || me.rank <= 0 || me.totalScore <= 0) {
-          return const SizedBox.shrink();
+          if (widget.repository.currentUserId == null) {
+            return const SizedBox.shrink();
+          }
+          return _PinnedMyRank(
+            child: _NotRankedStrip(isKu: ku, onStart: _startQuickRace),
+          );
         }
         return _PinnedMyRank(
           child: _RankRow(entry: me, isKu: ku, highlight: true),
@@ -672,13 +704,20 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
           // RPC boş döner ve sabit satır çizilmez; toplam XP basılmaz —
           // "0 puan" yerine XP'yi göstermek aynı ekranda iki ayrı sayıyı
           // aynı etiketle sunmak olurdu.
-          pinned: _myRank(entries) == null && !_listsMe(fetched)
-              ? _buildMyRankRow(ku)
-              : null,
+          pinned: !_listsMe(entries) ? _buildMyRankRow(ku) : null,
         );
       },
     );
   }
+}
+
+/// Oyuncunun dönem sırası sorgusunun sonucu. [failed]: sorgu okunamadı —
+/// "sıralamada yoksun" ile "sıralama okunamadı" ayrı şeylerdir.
+class _MyRankLookup {
+  const _MyRankLookup(this.entry, {this.failed = false});
+
+  final LeaderboardEntry? entry;
+  final bool failed;
 }
 
 // ─── Sabitlenen kendi sıran ─────────────────────────────────────────────────
@@ -711,6 +750,46 @@ class _PinnedMyRank extends StatelessWidget {
           child: child,
         ),
       ),
+    );
+  }
+}
+
+/// Sabit kendi-satırın dürüst boş durumu: bu dönemde puanı yok.
+class _NotRankedStrip extends StatelessWidget {
+  const _NotRankedStrip({required this.isKu, required this.onStart});
+
+  final bool isKu;
+  final VoidCallback onStart;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Wrap(
+      key: const ValueKey('leaderboard-not-ranked'),
+      alignment: WrapAlignment.spaceBetween,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: SahneSpace.x3,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ExcludeSemantics(
+              child: Icon(AppIcons.trophy, size: 20, color: t.tx2),
+            ),
+            const SizedBox(width: SahneSpace.x3),
+            Flexible(
+              child: Text(
+                Tr.forKu(K.notRankedYet, isKu),
+                style: SahneType.captionStrong.copyWith(color: t.tx),
+              ),
+            ),
+          ],
+        ),
+        SahneButton.text(
+          label: Tr.forKu(K.startRaceAction, isKu),
+          onPressed: onStart,
+        ),
+      ],
     );
   }
 }

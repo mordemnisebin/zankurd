@@ -1,6 +1,10 @@
 // 2026-09-30 canlı: sabit kendi-sıran satırı, oyuncu bu dönemde 0 puanla
 // süzüldüyse çizilmez (bkz. `canli_veri_2026_09_30_test.dart`).
 // 2026-09-29 doğallık (K9): podyumun üçlü kalıbı kalktı; tek liste.
+// 2026-10-01 (A8): ilk üç için süssüz `LeaderboardPodium` geri geldi
+// (slotsuz: yalnız var olan oyuncular, üç ve daha çoğunda); kalan liste
+// 4. sıradan başlar. Sabit satır artık `_MyRankLookup` ile dürüst boş durumu
+// da taşır.
 // 2026-09-29 Şahnê: kendi sıran artık `_page(pinned: …)` ile sayfanın
 // altına sabitlenir; kaynak bekçisi o satırı arar.
 import 'dart:io';
@@ -29,7 +33,8 @@ void main() {
   test('bütün sıralama tek listede; üçlü kalıp yok', () {
     // 2026-09-29 doğallık (K9): podyum kalktı. Liste yalnız var olan
     // oyuncuları çizer; eksik yer için boş siluet ya da sahte oyuncu yok.
-    expect(source, contains('for (final e in entries)'));
+    expect(source, contains('for (final e in rows)'));
+    expect(source, contains('entries.length >= 3'));
     expect(source, isNot(contains('class _Podium')));
     expect(source, isNot(contains('podium-slot')));
   });
@@ -55,8 +60,10 @@ void main() {
     expect(source, contains('_PinnedMyRank'));
     expect(
       source,
-      contains('_myRank(entries) == null && !_listsMe(fetched)'),
-      reason: 'sabit satır yalnız oyuncu bu dönemde listede HİÇ yoksa çizilir',
+      contains('!_listsMe(entries) ? _buildMyRankRow(ku)'),
+      reason:
+          'sabit satır yalnız oyuncu GÖRÜNEN listede (podyum dahil) yoksa '
+          'çizilir',
     );
     expect(source, contains('_buildMyRankRow(ku)'));
   });
