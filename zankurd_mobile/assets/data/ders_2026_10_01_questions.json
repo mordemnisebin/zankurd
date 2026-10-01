@@ -188,14 +188,14 @@
     "promptTr": "\"Navê te çi ye?\" Türkçesi nedir?",
     "answers": [
       "Nerelisin?",
-      "Nasılsın?",
       "Adın ne?",
+      "Nasılsın?",
       "Kaç yaşındasın?"
     ],
     "answersTr": [
       "Nerelisin?",
-      "Nasılsın?",
       "Adın ne?",
+      "Nasılsın?",
       "Kaç yaşındasın?"
     ],
     "correctAnswer": "Adın ne?",

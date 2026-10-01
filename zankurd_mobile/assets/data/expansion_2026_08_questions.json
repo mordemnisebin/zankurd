@@ -752,17 +752,17 @@
     "category": "Cîhan",
     "prompt": "Krîza afirînerî ya derhênerekî di fîlmê 1963yan \"8½\" de tê vegotin; ev berhem ya kîjan derhênerê îtalî ye?",
     "answers": [
-      "Federico Fellini",
       "Luchino Visconti",
       "Michelangelo Antonioni",
+      "Federico Fellini",
       "Pier Paolo Pasolini"
     ],
     "correctAnswer": "Federico Fellini",
     "promptTr": "1963 yapımı \"8½\" bir yönetmenin yaratıcılık bunalımını anlatır; film hangi İtalyan yönetmenindir?",
     "answersTr": [
-      "Federico Fellini",
       "Luchino Visconti",
       "Michelangelo Antonioni",
+      "Federico Fellini",
       "Pier Paolo Pasolini"
     ],
     "correctAnswerTr": "Federico Fellini",
@@ -2419,17 +2419,17 @@
     "prompt": "Dema kompîter vedibe, kîjan nermalav berî pergala xebitandinê dixebite?",
     "answers": [
       "Geroka înternetê ya standard",
+      "Firmware (BIOS/UEFI)",
       "Bernameya antîvîrus",
-      "Edîtora nivîsê",
-      "Firmware (BIOS/UEFI)"
+      "Edîtora nivîsê"
     ],
     "correctAnswer": "Firmware (BIOS/UEFI)",
     "promptTr": "Bilgisayar açılırken işletim sisteminden önce hangi yazılım çalışır?",
     "answersTr": [
       "Sistemde kurulu internet tarayıcısı",
+      "Ürün yazılımı (BIOS/UEFI)",
       "Antivirüs programı",
-      "Metin düzenleyici",
-      "Ürün yazılımı (BIOS/UEFI)"
+      "Metin düzenleyici"
     ],
     "correctAnswerTr": "Ürün yazılımı (BIOS/UEFI)",
     "explanation": "Açılışta anakart üstündeki ürün yazılımı donanımı sınar ve işletim sistemini belleğe yükler. Tarayıcı ile antivirüs ancak sistem açıldıktan sonra devreye girer.",
@@ -3201,17 +3201,17 @@
     "prompt": "Çima divê kopiyeke ewlehiyê li cihekî fizîkî yê din bê hilanîn?",
     "answers": [
       "Ji ber ku wisa pel piçûktir dibin",
+      "Ji ber ku agir an dizî nikare her duyan bibe",
       "Ji ber ku wisa şîfre ne hewce ye",
-      "Ji ber ku wisa înternet zûtir dibe",
-      "Ji ber ku agir an dizî nikare her duyan bibe"
+      "Ji ber ku wisa înternet zûtir dibe"
     ],
     "correctAnswer": "Ji ber ku agir an dizî nikare her duyan bibe",
     "promptTr": "Yedek kopya neden başka bir fiziksel yerde saklanmalıdır?",
     "answersTr": [
       "Dosyalar böylece küçülür",
+      "Yangın ya da hırsızlık ikisini birden alamaz",
       "Böylece parolaya gerek kalmaz",
-      "Böylece internet hızlanır",
-      "Yangın ya da hırsızlık ikisini birden alamaz"
+      "Böylece internet hızlanır"
     ],
     "correctAnswerTr": "Yangın ya da hırsızlık ikisini birden alamaz",
     "explanation": "Yedek asıl veriyle aynı odadaysa tek bir yangın, su baskını ya da hırsızlık ikisini birden götürür; ayrı konum bu ortak riski keser.",
@@ -3337,17 +3337,17 @@
     "prompt": "Kîjan nîşan e-nameyekê gumanbar dike?",
     "answers": [
       "Bikaranîna zimanekî fermî",
+      "Daxwaza lezgîn a tikandina girêdanekê",
       "Hebûna logoya sazîyê",
-      "Şandin di roja xebatê de",
-      "Daxwaza lezgîn a tikandina girêdanekê"
+      "Şandin di roja xebatê de"
     ],
     "correctAnswer": "Daxwaza lezgîn a tikandina girêdanekê",
     "promptTr": "Bir e-postayı şüpheli kılan işaret hangisidir?",
     "answersTr": [
       "Resmi bir dil kullanılması",
+      "Bir bağlantıya acilen tıklanması isteği",
       "Kurum logosunun bulunması",
-      "İş günü içinde gönderilmesi",
-      "Bir bağlantıya acilen tıklanması isteği"
+      "İş günü içinde gönderilmesi"
     ],
     "correctAnswerTr": "Bir bağlantıya acilen tıklanması isteği",
     "explanation": "Aceleye getirmek, kurbanın durup doğrulamasını engellemek için kullanılan klasik bir baskıdır. Logo, resmi dil ve gönderim saati kolayca taklit edilir.",
@@ -3472,18 +3472,18 @@
     "category": "Teknolojî",
     "prompt": "Zirara bikaranîna heman şîfreyê li gelek malperan çi ye?",
     "answers": [
+      "Derketina daneyan a li yek malperê hesaban vedike",
       "Şîfre bi demê re bixweber dirêjtir û tevlihevtir dibe",
       "Malper hêdîtir vedibin",
-      "Gerok şîfreyê ji bîr dike",
-      "Derketina daneyan a li yek malperê hesaban vedike"
+      "Gerok şîfreyê ji bîr dike"
     ],
     "correctAnswer": "Derketina daneyan a li yek malperê hesaban vedike",
     "promptTr": "Aynı parolayı birçok sitede kullanmanın zararı nedir?",
     "answersTr": [
+      "Tek bir sızıntı öteki hesapları da açar",
       "Parola zamanla kendiliğinden uzayıp karmaşıklaşır",
       "Siteler daha yavaş açılır",
-      "Tarayıcı parolayı unutur",
-      "Tek bir sızıntı öteki hesapları da açar"
+      "Tarayıcı parolayı unutur"
     ],
     "correctAnswerTr": "Tek bir sızıntı öteki hesapları da açar",
     "explanation": "Saldırganlar bir yerde sızan parola listesini başka sitelerde otomatik dener; tek kurum ele geçtiğinde öteki hesaplar da peş peşe düşer.",
@@ -4968,18 +4968,18 @@
     "category": "Teknolojî",
     "prompt": "Sala 1957an, yekem peyka çêkirî ya ku li dora Erdê geriya kîjan bû?",
     "answers": [
+      "Sputnik 1",
       "Explorer 1",
       "Vostok 1",
-      "Luna 2",
-      "Sputnik 1"
+      "Luna 2"
     ],
     "correctAnswer": "Sputnik 1",
     "promptTr": "1957'de Dünya çevresinde dolanan ilk yapay uydu hangisidir?",
     "answersTr": [
+      "Sputnik 1",
       "Explorer 1",
       "Vostok 1",
-      "Luna 2",
-      "Sputnik 1"
+      "Luna 2"
     ],
     "correctAnswerTr": "Sputnik 1",
     "explanation": "Sovyetler Birliği'nin fırlattığı bu küçük küre radyo sinyali yayıyordu ve uzay yarışını başlattı. Explorer 1 bir yıl sonra ABD'nin ilk uydusu oldu; Vostok insanlı, Luna ise Ay görevlerinin adıdır.",
@@ -5342,18 +5342,18 @@
     "category": "Teknolojî",
     "prompt": "Kîjan roket astronotên Apollo di salên 1960 û 1970yî de birin ber bi Heyvê?",
     "answers": [
-      "Saturn V",
       "Soyuz",
       "Atlas",
-      "Titan II"
+      "Titan II",
+      "Saturn V"
     ],
     "correctAnswer": "Saturn V",
     "promptTr": "Apollo astronotlarını 1960 ve 1970'lerde Ay'a hangi roket taşıdı?",
     "answersTr": [
-      "Saturn V",
       "Soyuz",
       "Atlas",
-      "Titan II"
+      "Titan II",
+      "Saturn V"
     ],
     "correctAnswerTr": "Saturn V",
     "explanation": "Üç kademeli Saturn V, Apollo görevlerinin tümünü fırlattı ve bugüne dek uçmuş en güçlü roketlerden biridir. Atlas ile Titan II daha küçük Mercury ve Gemini kapsüllerini taşıdı; Soyuz Sovyet aracıdır.",
@@ -5923,16 +5923,16 @@
     "prompt": "Hevoka \"Ez diçim\" çawa tê neyînîkirin?",
     "answers": [
       "Ez neçim",
-      "Ez nediçim",
       "Ez naçim",
+      "Ez nediçim",
       "Ez biçim"
     ],
     "correctAnswer": "Ez naçim",
     "promptTr": "\"Ez diçim\" cümlesi nasıl olumsuz yapılır?",
     "answersTr": [
       "Ez neçim",
-      "Ez nediçim",
       "Ez naçim",
+      "Ez nediçim",
       "Ez biçim"
     ],
     "correctAnswerTr": "Ez naçim",
@@ -7084,18 +7084,18 @@
     "category": "Ziman",
     "prompt": "Ji bo xwedîtiya nêr, wateya \"onun kitabı\" kîjan form e?",
     "answers": [
-      "pirtûka wî",
       "pirtûka wê",
       "pirtûkên wî",
-      "pirtûka wan"
+      "pirtûka wan",
+      "pirtûka wî"
     ],
     "correctAnswer": "pirtûka wî",
     "promptTr": "Eril sahiplik için \"onun kitabı\" hangi biçimdir?",
     "answersTr": [
-      "pirtûka wî",
       "pirtûka wê",
       "pirtûkên wî",
-      "pirtûka wan"
+      "pirtûka wan",
+      "pirtûka wî"
     ],
     "correctAnswerTr": "pirtûka wî",
     "explanation": "İzafe eki adın cinsiyetine, zamir ise sahibin cinsiyetine bakar. Kitap dişil olduğu için -a gelir; eril sahip wî, dişil wê, çoğul ise wan olur.",

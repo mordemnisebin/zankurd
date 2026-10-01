@@ -685,8 +685,8 @@
     "prompt": "Paytextê Arjantînê kîjan bajar e?",
     "answers": [
       "Córdoba",
-      "Rosario",
       "Buenos Aires",
+      "Rosario",
       "Mendoza"
     ],
     "correctAnswer": "Buenos Aires",
@@ -705,8 +705,8 @@
     "promptTr": "Arjantin'in başkenti hangi şehirdir?",
     "answersTr": [
       "Córdoba",
-      "Rosario",
       "Buenos Aires",
+      "Rosario",
       "Mendoza"
     ],
     "correctAnswerTr": "Buenos Aires",
@@ -889,8 +889,8 @@
     "prompt": "Kîjan têgih ji bo zêdebûna hejmara niştecîhan li bajaran tê bikaranîn?",
     "answers": [
       "Koçberî",
-      "Nifûs",
       "Bajarvanî",
+      "Nifûs",
       "Şaristanî"
     ],
     "correctAnswer": "Bajarvanî",
@@ -909,8 +909,8 @@
     "promptTr": "Şehirlerdeki nüfus artışı için hangi terim kullanılır?",
     "answersTr": [
       "Göç",
-      "Nüfus",
       "Kentleşme",
+      "Nüfus",
       "Medeniyet"
     ],
     "correctAnswerTr": "Kentleşme",
@@ -1671,8 +1671,8 @@
     "prompt": "Bedirxan Paşa bi kîjan navî jî tê zanîn?",
     "answers": [
       "Mîr Bedir",
-      "Xan Bedir",
       "Bedirxan Beg",
+      "Xan Bedir",
       "Begê Bedir"
     ],
     "correctAnswer": "Bedirxan Beg",
@@ -1691,8 +1691,8 @@
     "promptTr": "Bedirxan Paşa hangi isimle de bilinir?",
     "answersTr": [
       "Mîr Bedir",
-      "Xan Bedir",
       "Bedirxan Beg",
+      "Xan Bedir",
       "Begê Bedir"
     ],
     "correctAnswerTr": "Bedirxan Beg",
@@ -3065,9 +3065,9 @@
     "prompt": "Di destana \"Odîseya\" de, Odîseus çi demê vedigere malê?",
     "answers": [
       "Piştî mirina xwe",
+      "Piştî şerê Troyayê",
       "Piştî ku bibe padîşah",
-      "Piştî ku cîhanê bigire",
-      "Piştî şerê Troyayê"
+      "Piştî ku cîhanê bigire"
     ],
     "correctAnswer": "Piştî şerê Troyayê",
     "explanation": "\"Odysseia\" destanında Odysseus, Truva Savaşı'ndan sonra eve döner, ancak yolculuğu birçok macerayla geçer.",
@@ -3085,9 +3085,9 @@
     "promptTr": "\"Odysseia\" destanında Odysseus ne zaman eve döner?",
     "answersTr": [
       "Ölümünden sonra",
+      "Truva Savaşı'ndan sonra",
       "Kral olduktan sonra",
-      "Dünyayı fethettikten sonra",
-      "Truva Savaşı'ndan sonra"
+      "Dünyayı fethettikten sonra"
     ],
     "correctAnswerTr": "Truva Savaşı'ndan sonra",
     "explanationKu": "Di destana \"Odîseya\" de, Odîseus piştî şerê Troyayê vedigere malê, lê rêwîtiya wî bi gelek serpêhatiyan re derbas dibe.",
@@ -5990,8 +5990,8 @@
     "answers": [
       "UDP",
       "ICMP",
-      "ARP",
-      "TLS"
+      "TLS",
+      "ARP"
     ],
     "correctAnswer": "TLS",
     "explanation": "TLS (Transport Layer Security), sunucu ve istemci arasındaki verileri şifreler ve güvenlik sağlar.",
@@ -6010,8 +6010,8 @@
     "answersTr": [
       "UDP",
       "ICMP",
-      "ARP",
-      "TLS"
+      "TLS",
+      "ARP"
     ],
     "correctAnswerTr": "TLS",
     "explanationKu": "TLS (Transport Layer Security) daneyan di navbera server û klîentê de şîfre dike û ewlekariyê peyda dike.",
@@ -8334,10 +8334,10 @@
     "category": "Ziman",
     "prompt": "Kîjan form ji bo dema niha ya kurmancî rast e?",
     "answers": [
-      "ez diçim",
       "ez çûm",
       "ez diçûm",
-      "ez herim"
+      "ez herim",
+      "ez diçim"
     ],
     "correctAnswer": "ez diçim",
     "explanation": "\"Çûn\" fiilinin şimdiki zamanı \"ez diçim\" ile söylenir. \"Ez çûm\" geçmiş zaman, \"ez diçûm\" sürekli geçmiş zaman ve \"ez herim\" istek kipi gelecek zamandır.",
@@ -8354,10 +8354,10 @@
     },
     "promptTr": "Kurmanci şimdiki zaman için hangi form doğrudur?",
     "answersTr": [
-      "ez diçim",
       "ez çûm",
       "ez diçûm",
-      "ez herim"
+      "ez herim",
+      "ez diçim"
     ],
     "correctAnswerTr": "ez diçim",
     "explanationKu": "Dema niha ya \"çûn\" bi \"ez diçim\" tê gotin. \"Ez çûm\" dema borî ye, \"ez diçûm\" dema borî ya berdewam e û \"ez herim\" dema bê ya xwestekî ye.",
@@ -10636,14 +10636,14 @@
     "prompt": "Di fîlma \"My Sweet Pepper Land\" (2013) a Hiner Saleem de, kîjan şêwaza sînemayê bi erdnîgariya Kurdistanê re hatiye lihevanîn?",
     "promptTr": "Hiner Saleem'in \"Tatlı Biber Diyarım\" filminde Kürt coğrafyası hangi sinema türünün estetiğiyle harmanlanmıştır?",
     "answers": [
-      "Şêwaza fîlmên tirsnak ên gotîk ên sedsala 19an",
       "Şêwaza Western a nûjen bi mijara desthilata qanûnê û têkoşîna jinekê re",
+      "Şêwaza fîlmên tirsnak ên gotîk ên sedsala 19an",
       "Mûzîkala klasîk a Hollywoodê ya bi dansên komî",
       "Sînemaya belgefîlmê ya zanistî ya li ser feleknasiyê"
     ],
     "answersTr": [
-      "19. yüzyıl gotik korku ve vampir filmleri estetiğiyle",
       "Modern Western türü estetiğiyle kanunsuz sınır kasabası ve kadın mücadelesi",
+      "19. yüzyıl gotik korku ve vampir filmleri estetiğiyle",
       "Büyük kalabalık dansların yer aldığı klasik Hollywood müzikaliyle",
       "Uzay ve gökbilim üzerine yapılan bilimsel belgesel sinemasıyla"
     ],
@@ -11309,14 +11309,14 @@
     "promptTr": "1958 Irak İhtilali sonrası Abdülkerim Kasım döneminde hazırlanan geçici anayasada Kürtler için hangi hüküm yer aldı?",
     "answers": [
       "Zimanê kurdî wekî tekane zimanê fermî yê tevahiya dewletê hate ragihandin",
-      "Ereb û kurd di avakirina welêt de wekî du şirîkên sereke hatin qebûlkirin",
       "Hemû partiyên siyasî yên herêmî bi temamî hatin qedexekirin",
+      "Ereb û kurd di avakirina welêt de wekî du şirîkên sereke hatin qebûlkirin",
       "Herêmên kurdan ji axa dewleta Iraqê bi temamî hatin veqetandin"
     ],
     "answersTr": [
       "Kürtçenin ülkedeki tek ve mutlak resmi devlet dili ilan edilmesi",
-      "Kürtlerin ve Arapların Irak ortak vatanında eşit ortak olduğu maddesi",
       "Bölgedeki tüm siyasi partilerin ve örgütlerin süresiz kapatılması",
+      "Kürtlerin ve Arapların Irak ortak vatanında eşit ortak olduğu maddesi",
       "Kürt bölgelerinin Irak devlet sınırlarından tamamen çıkarılması"
     ],
     "correctAnswer": "Ereb û kurd di avakirina welêt de wekî du şirîkên sereke hatin qebûlkirin",
@@ -11373,15 +11373,15 @@
     "promptTr": "10. yüzyılda kurulan Hasanveyhi (Hesenkêwî) Devleti hangi coğrafi sahada hüküm sürdü?",
     "answers": [
       "Li deşta Nînovayê li derdora bajarê Mûsilê û Şingalê",
-      "Li herêma Zagrosê li derdora Dînewar, Şarezûr û Hemedanê",
       "Li peravên deryaya Xezerê li nêzîkî bajarê Bakûyê",
-      "Li rojavayê Anatolyayê li derdora bajarê Îzmîrê"
+      "Li rojavayê Anatolyayê li derdora bajarê Îzmîrê",
+      "Li herêma Zagrosê li derdora Dînewar, Şarezûr û Hemedanê"
     ],
     "answersTr": [
       "Ninova ovasında Musul ve Sincar şehirleri etrafında",
-      "Zagros Dağları hattında Dinever, Şehrizor ve Hemedan çevresinde",
       "Hazar Denizi kıyılarında Bakü ve Derbent yakınlarında",
-      "Batı Anadolu kıyılarında İzmir ve Manisa düzlüklerinde"
+      "Batı Anadolu kıyılarında İzmir ve Manisa düzlüklerinde",
+      "Zagros Dağları hattında Dinever, Şehrizor ve Hemedan çevresinde"
     ],
     "correctAnswer": "Li herêma Zagrosê li derdora Dînewar, Şarezûr û Hemedanê",
     "correctAnswerTr": "Zagros Dağları hattında Dinever, Şehrizor ve Hemedan çevresinde",
@@ -14157,9 +14157,9 @@
     "prompt": "Çiyayê Qendîlê li kîjan devera Kurdistanê ye?",
     "answers": [
       "Bakur",
-      "Başûr",
       "Rojava",
-      "Rojhilat"
+      "Rojhilat",
+      "Başûr"
     ],
     "correctAnswer": "Başûr",
     "explanation": "Kandil Dağı, Kürdistan'ın güneyinde, Irak ve İran sınırındadır ve tarihi dağlık merkezidir.",
@@ -14177,9 +14177,9 @@
     "promptTr": "Kandil Dağı Kürdistan'ın hangi bölgesindedir?",
     "answersTr": [
       "Kuzey",
-      "Güney",
       "Batı",
-      "Doğu"
+      "Doğu",
+      "Güney"
     ],
     "correctAnswerTr": "Güney",
     "explanationKu": "Çiyayê Qendîlê li başûrê Kurdistanê, li ser sînorê Iraq û Îranê ye û navendeke çiyayî ya dîrokî ye.",
@@ -14497,8 +14497,8 @@
     "prompt": "Li herêmên germ û ziwa, bi barîna kêm, kîjan cure riwek bi piranî tê dîtin?",
     "answers": [
       "Daristana baranê",
-      "Kaktûs",
       "Giyayên mêrgê",
+      "Kaktûs",
       "Daristana kajan"
     ],
     "correctAnswer": "Kaktûs",
@@ -14517,8 +14517,8 @@
     "promptTr": "Az yağışlı sıcak ve kurak bölgelerde en çok hangi tür bitki bulunur?",
     "answersTr": [
       "Yağmur ormanı",
-      "Kaktüs",
       "Bozkır otları",
+      "Kaktüs",
       "Çam ormanı"
     ],
     "correctAnswerTr": "Kaktüs",
@@ -14600,8 +14600,8 @@
     "answers": [
       "Toronto",
       "Vancouver",
-      "Ottawa",
-      "Montreal"
+      "Montreal",
+      "Ottawa"
     ],
     "correctAnswer": "Ottawa",
     "explanation": "Ottawa, Kanada'nın başkentidir. Toronto, Vancouver ve Montreal büyük şehirlerdir ancak başkent değildirler.",
@@ -14620,8 +14620,8 @@
     "answersTr": [
       "Toronto",
       "Vancouver",
-      "Ottawa",
-      "Montreal"
+      "Montreal",
+      "Ottawa"
     ],
     "correctAnswerTr": "Ottawa",
     "explanationKu": "Ottawa paytexta Kanadayê ye. Toronto, Vancouver û Montreal bajarên mezin in lê ne paytext in.",
@@ -16266,8 +16266,8 @@
     "answers": [
       "Sedsalên 5an û 4an berî zayînê",
       "Sedsalên 2an û 3an piştî zayînê",
-      "Sedsalên 10an û 11an piştî zayînê",
-      "Sedsalên 7an û 6an berî zayînê"
+      "Sedsalên 7an û 6an berî zayînê",
+      "Sedsalên 10an û 11an piştî zayînê"
     ],
     "correctAnswer": "Sedsalên 7an û 6an berî zayînê",
     "explanation": "Med siyasal gücünün imparatorluk dönemi esasen MÖ 7. ve 6. yüzyıllardır; MÖ 550'de Ahamenişlere geçti.",
@@ -16286,8 +16286,8 @@
     "answersTr": [
       "MÖ 5. ve 4. yüzyıllar",
       "MS 2. ve 3. yüzyıllar",
-      "MS 10. ve 11. yüzyıllar",
-      "MÖ 7. ve 6. yüzyıllar"
+      "MÖ 7. ve 6. yüzyıllar",
+      "MS 10. ve 11. yüzyıllar"
     ],
     "correctAnswerTr": "MÖ 7. ve 6. yüzyıllar",
     "explanationKu": "Serdema împaratoriya Medan bi giranî sedsalên 7an û 6an berî zayînê ye.",
@@ -16401,8 +16401,8 @@
     "prompt": "Kîjan mîrektiya kurdan di sedsala 16an de li herêma çiyayî ya di navbera Wan û Musilê de hukum dikir?",
     "answers": [
       "Mîrektiya Botanê",
-      "Mîrektiya Babanê",
       "Mîrektiya Colemêrgê",
+      "Mîrektiya Babanê",
       "Mîrektiya Soranê"
     ],
     "correctAnswer": "Mîrektiya Colemêrgê",
@@ -16421,8 +16421,8 @@
     "promptTr": "16. yüzyılda Van ile Musul arasındaki dağlık bölgede hüküm süren Kürt emirliği hangisidir?",
     "answersTr": [
       "Botan Emirliği",
-      "Baban Emirliği",
       "Hakkari Emirliği",
+      "Baban Emirliği",
       "Soran Emirliği"
     ],
     "correctAnswerTr": "Hakkari Emirliği",
@@ -16572,8 +16572,8 @@
     "answers": [
       "Serdema Sefewî",
       "Serdema Memlûkan",
-      "Serdema Emevîyan",
-      "Serdema Osmanî"
+      "Serdema Osmanî",
+      "Serdema Emevîyan"
     ],
     "correctAnswer": "Serdema Osmanî",
     "explanation": "Kurdistan, Kürtlerin Osmanlı merkeziyetçi politikasına karşı seslerini yükselttiği Osmanlı İmparatorluğu döneminde çıktı.",
@@ -16592,8 +16592,8 @@
     "answersTr": [
       "Safevi Dönemi",
       "Memlük Dönemi",
-      "Emevi Dönemi",
-      "Osmanlı Dönemi"
+      "Osmanlı Dönemi",
+      "Emevi Dönemi"
     ],
     "correctAnswerTr": "Osmanlı Dönemi",
     "explanationKu": "Kurdistan di serdema Împaratoriya Osmanî de derket, dema ku kurdan li hember siyaseta navendî ya Osmanî dengê xwe bilind dikir.",
@@ -17387,8 +17387,8 @@
     "prompt": "Kîjan kesayetî wek \"Bavê Dîrokê\" tê zanîn?",
     "answers": [
       "Homeros",
-      "Thukydides",
       "Herodotos",
+      "Thukydides",
       "Hesiodos"
     ],
     "correctAnswer": "Herodotos",
@@ -17407,8 +17407,8 @@
     "promptTr": "\"Tarihin Babası\" olarak bilinen kişi kimdir?",
     "answersTr": [
       "Homeros",
-      "Thukydides",
       "Herodotos",
+      "Thukydides",
       "Hesiodos"
     ],
     "correctAnswerTr": "Herodotos",
@@ -17660,8 +17660,8 @@
     "answers": [
       "Vasco da Gama",
       "Pedro Álvares Cabral",
-      "Diogo Cão",
-      "Bartolomeu Dias"
+      "Bartolomeu Dias",
+      "Diogo Cão"
     ],
     "correctAnswer": "Bartolomeu Dias",
     "explanation": "Bartolomeu Dias, 1488'de Ümit Burnu'nu ilk kez geçti. Bu, Hindistan'a giden deniz yolunun önünü açtı.",
@@ -17680,8 +17680,8 @@
     "answersTr": [
       "Vasco da Gama",
       "Pedro Álvares Cabral",
-      "Diogo Cão",
-      "Bartolomeu Dias"
+      "Bartolomeu Dias",
+      "Diogo Cão"
     ],
     "correctAnswerTr": "Bartolomeu Dias",
     "explanationKu": "Bartolomeu Dias di sala 1488'an de yekem car derbasî Kapa Hêviya Baş bû. Vê yekê rê ji bo rêya deryayî ya Hindistanê vekir.",
@@ -17762,8 +17762,8 @@
     "answers": [
       "Richard Arkwright",
       "Samuel Crompton",
-      "Edmund Cartwright",
-      "James Watt"
+      "James Watt",
+      "Edmund Cartwright"
     ],
     "correctAnswer": "James Watt",
     "explanation": "James Watt, 1769'da fabrikalar ve ulaşım için enerji sağlayan ve Sanayi Devrimi'ni hızlandıran gelişmiş buhar makinesini yaptı.",
@@ -17782,8 +17782,8 @@
     "answersTr": [
       "Richard Arkwright",
       "Samuel Crompton",
-      "Edmund Cartwright",
-      "James Watt"
+      "James Watt",
+      "Edmund Cartwright"
     ],
     "correctAnswerTr": "James Watt",
     "explanationKu": "James Watt di 1769'an de makîneya hilmê ya pêşkeftî çêkir, ku ji bo kargehan û veguhestinê enerjiyê peyda kir û Şoreşa Pîşesaziyê zûtir kir.",
@@ -18442,8 +18442,8 @@
     "answers": [
       "Julius Caesar",
       "Napoleon",
-      "Îskenderê Mezin",
-      "Marko Polo"
+      "Marko Polo",
+      "Îskenderê Mezin"
     ],
     "correctAnswer": "Marko Polo",
     "explanation": "Marko Polo İpek Yolu ile ilişkilidir çünkü o yolla Çin'e gitti ve seyahatlerini yazdı.",
@@ -18462,8 +18462,8 @@
     "answersTr": [
       "Jül Sezar",
       "Napolyon",
-      "Büyük İskender",
-      "Marko Polo"
+      "Marko Polo",
+      "Büyük İskender"
     ],
     "correctAnswerTr": "Marko Polo",
     "explanationKu": "Marko Polo bi Riya Îpekê re têkildar e, ji ber ku ew bi wê rêyê çû Çînê û seferên xwe nivîsand.",
@@ -19292,8 +19292,8 @@
     "answers": [
       "Ulysses",
       "The Great Gatsby",
-      "One Hundred Years of Solitude",
-      "Mrs Dalloway"
+      "Mrs Dalloway",
+      "One Hundred Years of Solitude"
     ],
     "correctAnswer": "Mrs Dalloway",
     "explanation": "Woolf'un \"Mrs Dalloway\"i bilinç akışı tekniğiyle tanınır ve modernizmin eserlerinden biridir.",
@@ -19312,8 +19312,8 @@
     "answersTr": [
       "Ulysses",
       "Muhteşem Gatsby",
-      "Yüzyıllık Yalnızlık",
-      "Mrs Dalloway"
+      "Mrs Dalloway",
+      "Yüzyıllık Yalnızlık"
     ],
     "correctAnswerTr": "Mrs Dalloway",
     "explanationKu": "Romana Woolf a bi navê \"Mrs Dalloway\" bi teknîka herikîna hiş tê naskirin û yek ji berhemên modernîzmê ye.",
@@ -21128,8 +21128,8 @@
     "answers": [
       "Jinekê û keça wê",
       "Xortekî û hevala wî",
-      "Mêrekî û jina wî",
-      "Bavekî û kurê wî"
+      "Bavekî û kurê wî",
+      "Mêrekî û jina wî"
     ],
     "correctAnswer": "Bavekî û kurê wî",
     "explanation": "\"Bicycle Thieves\", çalınan bir bisikletin peşine düşen bir baba ve oğlunun hikayesini anlatır. Bu film, İtalyan neorealizminin en ünlü filmlerinden biridir.",
@@ -21148,8 +21148,8 @@
     "answersTr": [
       "Bir kadın ve kızının",
       "Bir genç ve arkadaşının",
-      "Bir adam ve karısının",
-      "Bir baba ve oğlunun"
+      "Bir baba ve oğlunun",
+      "Bir adam ve karısının"
     ],
     "correctAnswerTr": "Bir baba ve oğlunun",
     "explanationKu": "\"Bicycle Thieves\" çîroka bavekî û kurê wî vedibêje ku li pey bisîkleteke diziyayî digerin. Ev fîlm yek ji fîlmên herî navdar ên neorealîzma îtalyan e.",
@@ -21908,9 +21908,9 @@
     "category": "Teknolojî",
     "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe rast an derew tê bikaranîn?",
     "answers": [
-      "Mantiqî",
       "Guherbar",
       "Xelek",
+      "Mantiqî",
       "Şert"
     ],
     "correctAnswer": "Mantiqî",
@@ -21928,9 +21928,9 @@
     },
     "promptTr": "Programlamada, doğru veya yanlış olabilen bir değeri saklamak için hangi kavram kullanılır?",
     "answersTr": [
-      "Mantıksal",
       "Değişken",
       "Döngü",
+      "Mantıksal",
       "Koşul"
     ],
     "correctAnswerTr": "Mantıksal",
@@ -23644,8 +23644,8 @@
     "answers": [
       "ode",
       "zewq",
-      "metbex",
-      "hewş"
+      "hewş",
+      "metbex"
     ],
     "correctAnswer": "metbex",
     "explanation": "Mutfak, yemek pişirme ve hazırlamanın ana yeridir. Oda, zevk ve avlu yemek yapmak için değildir.",
@@ -23664,8 +23664,8 @@
     "answersTr": [
       "oda",
       "zevk",
-      "mutfak",
-      "avlu"
+      "avlu",
+      "mutfak"
     ],
     "correctAnswerTr": "mutfak",
     "explanationKu": "Metbex, cihê sereke yê çêkirin û amadekirina xwarinê ye. Ode, zewq û hewş ne ji bo çêkirina xwarinê ne.",
@@ -24050,8 +24050,8 @@
     "category": "Çand",
     "prompt": "Di çanda kurdî de, kilîm bi gelemperî ji kîjan materyalî tê çêkirin?",
     "answers": [
-      "Hirî",
       "Pembû",
+      "Hirî",
       "Hevrîşim",
       "Ketan"
     ],
@@ -24070,8 +24070,8 @@
     },
     "promptTr": "Kürt kültüründe kilim genellikle hangi malzemeden yapılır?",
     "answersTr": [
-      "Yün",
       "Pamuk",
+      "Yün",
       "İpek",
       "Keten"
     ],

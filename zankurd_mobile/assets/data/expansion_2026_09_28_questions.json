@@ -1061,16 +1061,16 @@
     "prompt": "Fîlmê \"Kilomètre zéro\" yê Hiner Saleem bû yekem berhema Iraqê ku ji bo xelata sereke ya kîjan festîvalê ket pêşbirka fermî?",
     "promptTr": "Hiner Saleem'in \"Kilomètre zéro\" filmi hangi festivalin büyük ödülü için resmî yarışmaya giren ilk Irak yapımı oldu?",
     "answers": [
+      "Cannes",
       "Venedîk",
       "Berlîn",
-      "Toronto",
-      "Cannes"
+      "Toronto"
     ],
     "answersTr": [
+      "Cannes",
       "Venedik",
       "Berlin",
-      "Toronto",
-      "Cannes"
+      "Toronto"
     ],
     "correctAnswer": "Cannes",
     "correctAnswerTr": "Cannes",
@@ -1130,14 +1130,14 @@
     "promptTr": "Hisham Zaman art arda iki yıl \"en iyi İskandinav filmi\" dalında Dragon Ödülü'nü kazandı. Bu ödül hangi şehrin festivalinde verilir?",
     "answers": [
       "Kopenhag",
-      "Stockholm",
       "Göteborg",
+      "Stockholm",
       "Oslo"
     ],
     "answersTr": [
       "Kopenhag",
-      "Stockholm",
       "Göteborg",
+      "Stockholm",
       "Oslo"
     ],
     "correctAnswer": "Göteborg",
@@ -1267,14 +1267,14 @@
     "answers": [
       "Xelata Montaja Herî Baş",
       "Xelata Lîstikvanê Zarok ê Herî Baş",
-      "Xelata Fîlma Yekem a Herî Baş",
-      "Xelata Senaryoya Herî Baş"
+      "Xelata Senaryoya Herî Baş",
+      "Xelata Fîlma Yekem a Herî Baş"
     ],
     "answersTr": [
       "En İyi Kurgu Ödülü",
       "En İyi Çocuk Oyuncu Ödülü",
-      "En İyi İlk Film Ödülü",
-      "En İyi Senaryo Ödülü"
+      "En İyi Senaryo Ödülü",
+      "En İyi İlk Film Ödülü"
     ],
     "correctAnswer": "Xelata Fîlma Yekem a Herî Baş",
     "correctAnswerTr": "En İyi İlk Film Ödülü",
@@ -4125,14 +4125,14 @@
     "promptTr": "Halk Yılmaz Güney'e hangi lakapla seslenirdi?",
     "answers": [
       "Aslan Yürek",
-      "Çirkin Kral",
       "Deli Yusuf",
+      "Çirkin Kral",
       "Kara Şahin"
     ],
     "answersTr": [
       "Aslan Yürek",
-      "Çirkin Kral",
       "Deli Yusuf",
+      "Çirkin Kral",
       "Kara Şahin"
     ],
     "correctAnswer": "Çirkin Kral",

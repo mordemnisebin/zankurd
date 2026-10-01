@@ -1754,17 +1754,17 @@
     "prompt": "Derhênerê fîlmê \"Come and See\" kî ye?",
     "answers": [
       "Andrei Tarkovsky",
+      "Elem Klimov",
       "Nikita Mikhalkov",
-      "Sergei Bondarchuk",
-      "Elem Klimov"
+      "Sergei Bondarchuk"
     ],
     "correctAnswer": "Elem Klimov",
     "promptTr": "\"Come and See\" filminin yönetmeni kimdir?",
     "answersTr": [
       "Andrei Tarkovsky",
+      "Elem Klimov",
       "Nikita Mikhalkov",
-      "Sergei Bondarchuk",
-      "Elem Klimov"
+      "Sergei Bondarchuk"
     ],
     "correctAnswerTr": "Elem Klimov",
     "explanationKu": "Li gorî kataloga BFIyê derhênerê fîlmê Elem Klimov e.",

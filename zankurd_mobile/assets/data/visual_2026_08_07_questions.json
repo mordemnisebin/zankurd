@@ -424,17 +424,17 @@
     "category": "Edebiyat",
     "prompt": "Wêne helbesteke ku bi destxetê hatiye nivîsandin nîşan dide. Di helbestê de lihevhatina dengên li dawiya rêzikan çawa tê binavkirin?",
     "answers": [
+      "Qafiye",
       "Kîte",
       "Rêzik",
-      "Qafiye",
       "Malik"
     ],
     "correctAnswer": "Qafiye",
     "promptTr": "Görselde el yazısıyla yazılmış bir şiir var. Şiirde dize sonlarındaki seslerin birbirini tutmasına ne denir?",
     "answersTr": [
+      "Kafiye",
       "Hece",
       "Dize",
-      "Kafiye",
       "Beyit"
     ],
     "correctAnswerTr": "Kafiye",

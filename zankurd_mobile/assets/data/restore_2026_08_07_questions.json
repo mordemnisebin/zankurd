@@ -70,18 +70,18 @@
     "category": "Çand",
     "prompt": "Di kurmancî de gotina kurt a pêşiyan ku ezmûneke civakî bi çend peyvan vedibêje çi ye?",
     "answers": [
-      "metelok",
       "şabaş",
       "mêvanperwerî",
-      "govend"
+      "govend",
+      "metelok"
     ],
     "correctAnswer": "metelok",
     "promptTr": "Kurmancîde toplumsal bir deneyimi birkaç sözcükle anlatan kısa atasözüne ne denir?",
     "answersTr": [
-      "metelok",
       "şabaş",
       "mêvanperwerî",
-      "govend"
+      "govend",
+      "metelok"
     ],
     "correctAnswerTr": "metelok",
     "explanation": "Metelok, kuşakların deneyimini yeni kuşaklara taşıyan kısa ve yoğun anlamlı sözdür.",

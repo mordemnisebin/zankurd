@@ -812,8 +812,8 @@
     "category": "Çand",
     "prompt": "Rast e an şaş e: Newroz tenê ji aliyê kurdan ve tê pîrozkirin.",
     "answers": [
-      "Şaş",
-      "Rast"
+      "Rast",
+      "Şaş"
     ],
     "correctAnswer": "Şaş",
     "explanation": "Nevruz İran, Afganistan, Azerbaycan ve Orta Asya'da da kutlanır.",
@@ -828,8 +828,8 @@
     },
     "promptTr": "Doğru mu yanlış mı: Newroz yalnızca Kürtler tarafından kutlanır.",
     "answersTr": [
-      "Yanlış",
-      "Doğru"
+      "Doğru",
+      "Yanlış"
     ],
     "correctAnswerTr": "Yanlış"
   },
@@ -3064,8 +3064,8 @@
     "category": "Paradigma",
     "prompt": "Rast e an şaş e: Di paradîgmaya netewa demokratîk de armanc damezrandina dewleteke nû ye.",
     "answers": [
-      "Şaş",
-      "Rast"
+      "Rast",
+      "Şaş"
     ],
     "correctAnswer": "Şaş",
     "explanation": "Amaç yeni bir devlet kurmak değil, devlet dışında toplumsal öz yönetimdir.",
@@ -3080,8 +3080,8 @@
     },
     "promptTr": "Doğru mu yanlış mı: Demokratik ulus paradigmasında amaç yeni bir devlet kurmaktır.",
     "answersTr": [
-      "Yanlış",
-      "Doğru"
+      "Doğru",
+      "Yanlış"
     ],
     "correctAnswerTr": "Yanlış"
   },
@@ -4523,8 +4523,8 @@
     "prompt": "\"Zirne\" kîjan cureyê amûran e?",
     "answers": [
       "Amûra têlî",
-      "Amûra pifê",
       "Amûra lêdanê",
+      "Amûra pifê",
       "Amûra kevanî"
     ],
     "correctAnswer": "Amûra pifê",
@@ -4541,8 +4541,8 @@
     "promptTr": "\"Zirne\" ne tür bir çalgıdır?",
     "answersTr": [
       "Telli çalgı",
-      "Üflemeli çalgı",
       "Vurmalı çalgı",
+      "Üflemeli çalgı",
       "Yaylı çalgı"
     ],
     "correctAnswerTr": "Üflemeli çalgı"
@@ -5058,8 +5058,8 @@
     "category": "Paradigma",
     "prompt": "Rast e an şaş e: Di paradîgmaya ekolojîk de mirov li derveyî xwezayê tê dîtin.",
     "answers": [
-      "Şaş",
-      "Rast"
+      "Rast",
+      "Şaş"
     ],
     "correctAnswer": "Şaş",
     "explanation": "Tersine: insan doğanın parçasıdır; ayrışma krizin kökü olarak görülür.",
@@ -5074,8 +5074,8 @@
     },
     "promptTr": "Doğru mu yanlış mı: Ekolojik paradigmada insan doğanın dışında görülür.",
     "answersTr": [
-      "Yanlış",
-      "Doğru"
+      "Doğru",
+      "Yanlış"
     ],
     "correctAnswerTr": "Yanlış"
   },
@@ -5979,10 +5979,10 @@
     "category": "Dîrok",
     "prompt": "Selahedînê Eyûbî li kîjan bajarî ji dayik bû?",
     "answers": [
-      "Tikrît",
       "Şam",
       "Qahîre",
-      "Musil"
+      "Musil",
+      "Tikrît"
     ],
     "correctAnswer": "Tikrît",
     "explanation": "Selahaddin 1137'de Tikrit'te doğdu.",
@@ -5997,10 +5997,10 @@
     },
     "promptTr": "Selahedînê Eyûbî hangi kentte doğdu?",
     "answersTr": [
-      "Tikrit",
       "Şam",
       "Kahire",
-      "Musul"
+      "Musul",
+      "Tikrit"
     ],
     "correctAnswerTr": "Tikrit"
   },
@@ -7566,8 +7566,8 @@
     "prompt": "Zimanê perwerdehiyê li Herêma Kurdistanê ya Iraqê bi giştî çi ye?",
     "answers": [
       "Erebî",
-      "Kurdî",
       "Îngilîzî",
+      "Kurdî",
       "Farisî"
     ],
     "correctAnswer": "Kurdî",
@@ -7584,8 +7584,8 @@
     "promptTr": "Irak Kürdistan Bölgesi'nde eğitim dili genel olarak nedir?",
     "answersTr": [
       "Arapça",
-      "Kürtçe",
       "İngilizce",
+      "Kürtçe",
       "Farsça"
     ],
     "correctAnswerTr": "Kürtçe"
@@ -7625,8 +7625,8 @@
     "category": "Paradigma",
     "prompt": "Di paradîgmayê de \"civaka xwezayî\" tê wateya çi?",
     "answers": [
-      "civaka exlaqî-polîtîk",
       "civaka berî hiyerarşiya dewletê",
+      "civaka exlaqî-polîtîk",
       "rexneya patriyarkayê",
       "yekîtiya wekhev a beşên cuda yên bindest"
     ],
@@ -7643,8 +7643,8 @@
     },
     "promptTr": "Paradigmada \"doğal toplum\" ne anlama gelir?",
     "answersTr": [
-      "ahlaki-politik toplum",
       "devlet hiyerarşisinden önceki toplum",
+      "ahlaki-politik toplum",
       "patriyarka eleştirisi",
       "ezilen farklı kesimlerin eşit birliği"
     ],
@@ -7753,8 +7753,8 @@
     "category": "Paradigma",
     "prompt": "Rast e an şaş e: Di modela komunal de biryar ji jor ber bi jêr ve tê dayîn.",
     "answers": [
-      "Şaş",
-      "Rast"
+      "Rast",
+      "Şaş"
     ],
     "correctAnswer": "Şaş",
     "explanation": "Tersine: karar aşağıdan — komün ve meclislerden — yukarı doğru gider.",
@@ -7769,8 +7769,8 @@
     },
     "promptTr": "Doğru mu yanlış mı: Komünal modelde karar yukarıdan aşağıya doğru verilir.",
     "answersTr": [
-      "Yanlış",
-      "Doğru"
+      "Doğru",
+      "Yanlış"
     ],
     "correctAnswerTr": "Yanlış"
   },
@@ -7941,8 +7941,8 @@
     "category": "Sînema",
     "prompt": "Bûyera fîlmê \"Kûsî jî Difirin\" li ku derê diqewime?",
     "answers": [
-      "Li zozanên bilind ên Çiyayê Agirî",
       "Li kampeke penaberan a Kurdistana Iraqê",
+      "Li zozanên bilind ên Çiyayê Agirî",
       "Li taxeke koçberan a bajarekî mezin",
       "Li gundekî çiyayî yê li ser sînorê Îranê"
     ],
@@ -7959,8 +7959,8 @@
     },
     "promptTr": "\"Kûsî jî Difirin\" filminin olayları nerede geçer?",
     "answersTr": [
-      "Çiyayê Agirî'nin yüksek yaylalarında",
       "Irak Kürdistanı'ndaki bir mülteci kampında",
+      "Çiyayê Agirî'nin yüksek yaylalarında",
       "Büyük bir kentin göçmen mahallesinde",
       "Îran sınırındaki bir dağ köyünde"
     ],
@@ -8262,9 +8262,9 @@
     "prompt": "Derhênerê fîlmê \"Heft Samurai\" (1954) kî ye?",
     "answers": [
       "Yasujiro Ozu",
+      "Akira Kurosawa",
       "Kenji Mizoguchi",
-      "Hirokazu Kore-eda",
-      "Akira Kurosawa"
+      "Hirokazu Kore-eda"
     ],
     "correctAnswer": "Akira Kurosawa",
     "explanation": "Film dünya sinemasını derinden etkiledi ve defalarca yeniden çevrildi.",
@@ -8280,9 +8280,9 @@
     "promptTr": "\"Yedi Samuray\" (1954) filminin yönetmeni kimdir?",
     "answersTr": [
       "Yasujiro Ozu",
+      "Akira Kurosawa",
       "Kenji Mizoguchi",
-      "Hirokazu Kore-eda",
-      "Akira Kurosawa"
+      "Hirokazu Kore-eda"
     ],
     "correctAnswerTr": "Akira Kurosawa"
   },

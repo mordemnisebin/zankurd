@@ -105,15 +105,15 @@
     "prompt": "Li Çiyayên Cîlo û Agiriyê hebûna cemedên herdemî (buzul) encama kîjan taybetmendiya erdnîgarî ye?",
     "promptTr": "Cilo ve Ağrı Dağları'nda sirk ve vadi buzullarının günümüze kadar varlığını koruyabilmesi hangi coğrafi etmene bağlıdır?",
     "answers": [
-      "Bilindahiya zêde ya li ser xeta berfê ya herdemî",
       "Nêzîkbûna wan a ber bi qiraxa Deryaya Reş ve",
       "Kêmbûna zexta atmosferê ya li ser çolên germ",
+      "Bilindahiya zêde ya li ser xeta berfê ya herdemî",
       "Hebûna daristanên berfireh li bilindahiyan"
     ],
     "answersTr": [
-      "Kalıcı kar sınırının üzerindeki yüksek irtifaya sahip olmaları",
       "Karadeniz kıyı şeridine doğrudan komşu ve yakın konumda bulunmaları",
       "Sıcak çöl alanları üzerindeki alçak hava basıncı etkileri",
+      "Kalıcı kar sınırının üzerindeki yüksek irtifaya sahip olmaları",
       "Zirve seviyelerinde yoğun ve geniş orman örtüsünün bulunması"
     ],
     "correctAnswer": "Bilindahiya zêde ya li ser xeta berfê ya herdemî",
@@ -369,14 +369,14 @@
     "prompt": "Xeta Şikesteka Rojhilatê Anatolyayê (EAF) li kîjan herêmê bi Xeta Şikesteka Bakurê Anatolyayê (NAF) re digihîje hev?",
     "promptTr": "Doğu Anadolu Fay Hattı (DAF) ile Kuzey Anadolu Fay Hattı (KAF) hangi tektonik kavşak noktasında birleşir?",
     "answers": [
-      "Li herêma Qirlîovayê (Çewlîg)",
       "Li Deşta Herranê li başûr",
+      "Li herêma Qirlîovayê (Çewlîg)",
       "Li zozanên Cizîrê û Botanê",
       "Li newala Çemê Dîcleyê li Amedê"
     ],
     "answersTr": [
-      "Karlıova düğüm noktasında (Bingöl)",
       "Harran Ovası güney grabeninde",
+      "Karlıova düğüm noktasında (Bingöl)",
       "Cizre ve Botan kireçtaşı yaylasında",
       "Diyarbakır Dicle taşkın ovasında"
     ],
