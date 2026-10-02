@@ -64,7 +64,28 @@ void main() {
   test('Türkçe metin taşıyan soru sayısı ölçülen değerde', () {
     expect(
       translated.length,
-      2173,
+
+      // 2026-08-19: dış kalite denetimi bankalar arası 199 tekrar
+      // kümesi buldu; her kümeden biri bırakılıp 294 kayıt elendi
+      // (silinenler docs/content_batches/ayiklanan_tekrarlar.json).
+      // Bekçinin işi değişmedi, saydığı banka küçüldü.
+      // 2026-08-24: expansion_2026_08_19 bankası eklendi (77 soru).
+      // 2026-08-26 A17: künye aldı ve oynanabilir oldu.
+      // 2026-09-02: DeepSeek runtime karantinası, 3042 → 1932.
+      // 2026-09-21: offline_2556 semantik tekrar olduğu için kaldırıldı.
+      // 2026-09-28: expansion_2026_09_28 (144 soru, hepsi iki dilli).
+      // 2075 -> 2937: 2026-09-30 son birleştirme; yeni 862 kaydın hepsi
+      // iki dilli (TR alanları dolu).
+      // 2937 -> 2954: +31 üçüncü dalga, -44 karantinaya dönen, +30 bilim;
+      // üçü de iki dilli (TR alanları dolu).
+      // 2954 -> 2971 (+17): 2026-10-01 `altkonu_2026_10_01` — üç gizli alt
+      // konuyu açan kaynaklı sorular. 2971 -> 3045 (+74): 2026-10-01
+      // `ders_2026_10_01`, derse etiketli alıştırma soruları (bkz.
+      // `lesson_practice_depth_test.dart`). 3045 -> 3048 (+3): aynı gün
+      // yeniden yazılan üç ders sorusu. 3048 -> 3169 (+121): 2026-10-02
+      // `bosluk_2026_10_02`; hepsi iki dilli (TR alanları dolu).
+      // 3169 -> 3201 (+32): 2026-10-02 `ders_2026_10_02`; hepsi iki dilli.
+      3201,
       reason:
           'Türkçe metin taşıyan soru sayısı değişti (yükleyicinin verdiği sayı). Yeni parti geldiyse bu '
           'sayı bilerek güncellenmeli; kendiliğinden düştüyse bir bankanın '

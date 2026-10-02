@@ -4,7 +4,7 @@ import { createReadStream, existsSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 
-const require = createRequire(import.meta.url);
+const require = createRequire(new URL('./playwright/package.json', import.meta.url));
 const { chromium } = require('playwright');
 
 const root = path.resolve('build/web');
@@ -60,10 +60,7 @@ async function shotAfter(page, action, name) {
 async function main() {
   const port = 5139;
   await listen(port);
-  const browser = await chromium.launch({
-    headless: true,
-    executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
-  });
+  const browser = await chromium.launch({ channel: 'chrome', headless: true });
   const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
   const consoleMessages = [];
   page.on('console', (msg) => consoleMessages.push(`${msg.type()}: ${msg.text()}`));

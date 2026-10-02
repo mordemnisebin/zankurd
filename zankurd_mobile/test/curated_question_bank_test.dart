@@ -18,20 +18,12 @@ void main() {
         .toList();
     expect(
       pending,
-      hasLength(7),
+      isEmpty,
       reason:
-          'İnceleme kuyruğu 7 kayıt olmalı (Kurmancîsi bozuk Paradigma/'
-          'Siyaset soruları). Büyüdüyse yeni kusur girmiş, küçüldüyse '
-          'metin düzeltilmiş demektir — ikisi de bilinçli olmalı. '
-          'Şu an: ${pending.map((q) => q.id).join(", ")}',
+          '2026-09-02: yedi bozuk Kurmancî kaydı yeniden yazılıp approved '
+          'oldu. Kuyruk yeniden doluysa yeni kusur girmiştir: '
+          '${pending.map((q) => q.id).join(", ")}',
     );
-    for (final question in pending) {
-      expect(
-        question.metadata?.reviewStatus,
-        ReviewStatus.needsReview,
-        reason: '${question.id}: kuyrukta bekleyen kayıt needsReview olmalı',
-      );
-    }
 
     for (final question in curatedQuestionBank) {
       expect(question.metadata?.dialect, 'Kurmancî');

@@ -1,0 +1,1154 @@
+[
+    {
+        "id": "ders_2026_10_02_0001",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Yek\" bi tirkî çi ye?",
+        "promptTr": "\"Yek\" Türkçesi nedir?",
+        "answers": [
+            "İki",
+            "Üç",
+            "Bir",
+            "Dört"
+        ],
+        "answersTr": [
+            "İki",
+            "Üç",
+            "Bir",
+            "Dört"
+        ],
+        "correctAnswer": "Bir",
+        "correctAnswerTr": "Bir",
+        "explanation": "\"Yek\" ilk sayıdır, bir demektir.",
+        "explanationKu": "\"Yek\" hejmara yekem e.",
+        "explanationTr": "\"Yek\" ilk sayıdır, bir demektir.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: numbers_1",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi numbers_1 (sunucu dersi hejmar; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "numbers_1"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0002",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Üç\" bi kurmancî çi ye?",
+        "promptTr": "\"Üç\" Kurmancîsi nedir?",
+        "answers": [
+            "Sê",
+            "Du",
+            "Çar",
+            "Yek"
+        ],
+        "answersTr": [
+            "Üç",
+            "İki",
+            "Dört",
+            "Bir"
+        ],
+        "correctAnswer": "Sê",
+        "correctAnswerTr": "Üç",
+        "explanation": "\"Sê\" üç sayısı için söylenir.",
+        "explanationKu": "\"Sê\" ji bo hejmara 3 tê gotin.",
+        "explanationTr": "\"Sê\" üç sayısı için söylenir.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: numbers_1",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi numbers_1 (sunucu dersi hejmar; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "numbers_1"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0003",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Pênc\" bi tirkî çi ye?",
+        "promptTr": "\"Pênc\" Türkçesi nedir?",
+        "answers": [
+            "Dört",
+            "Altı",
+            "Yedi",
+            "Beş"
+        ],
+        "answersTr": [
+            "Dört",
+            "Altı",
+            "Yedi",
+            "Beş"
+        ],
+        "correctAnswer": "Beş",
+        "correctAnswerTr": "Beş",
+        "explanation": "\"Pênc\" beş sayısıdır.",
+        "explanationKu": "\"Pênc\" hejmara 5 e.",
+        "explanationTr": "\"Pênc\" beş sayısıdır.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: numbers_1",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi numbers_1 (sunucu dersi hejmar; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "numbers_1"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0004",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Heşt\" bi tirkî çi ye?",
+        "promptTr": "\"Heşt\" Türkçesi nedir?",
+        "answers": [
+            "Yedi",
+            "Sekiz",
+            "Dokuz",
+            "Altı"
+        ],
+        "answersTr": [
+            "Yedi",
+            "Sekiz",
+            "Dokuz",
+            "Altı"
+        ],
+        "correctAnswer": "Sekiz",
+        "correctAnswerTr": "Sekiz",
+        "explanation": "\"Heşt\" sekiz sayısıdır.",
+        "explanationKu": "\"Heşt\" hejmara 8 e.",
+        "explanationTr": "\"Heşt\" sekiz sayısıdır.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: numbers_1",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi numbers_1 (sunucu dersi hejmar; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "numbers_1"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0005",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Deh\" bi tirkî çi ye?",
+        "promptTr": "\"Deh\" Türkçesi nedir?",
+        "answers": [
+            "Dokuz",
+            "Yirmi",
+            "On",
+            "Sekiz"
+        ],
+        "answersTr": [
+            "Dokuz",
+            "Yirmi",
+            "On",
+            "Sekiz"
+        ],
+        "correctAnswer": "On",
+        "correctAnswerTr": "On",
+        "explanation": "\"Deh\" on sayısıdır.",
+        "explanationKu": "\"Deh\" hejmara 10 e.",
+        "explanationTr": "\"Deh\" on sayısıdır.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: numbers_1",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi numbers_1 (sunucu dersi hejmar; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "numbers_1"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0006",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Yirmi\" bi kurmancî çi ye?",
+        "promptTr": "\"Yirmi\" Kurmancîsi nedir?",
+        "answers": [
+            "Bîst",
+            "Deh",
+            "Sed",
+            "Şeş"
+        ],
+        "answersTr": [
+            "Yirmi",
+            "On",
+            "Yüz",
+            "Altı"
+        ],
+        "correctAnswer": "Bîst",
+        "correctAnswerTr": "Yirmi",
+        "explanation": "\"Bîst\" yirmi sayısıdır.",
+        "explanationKu": "\"Bîst\" hejmara 20 e.",
+        "explanationTr": "\"Bîst\" yirmi sayısıdır.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: numbers_1",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi numbers_1 (sunucu dersi hejmar; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "numbers_1"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0007",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Sed\" bi tirkî çi ye?",
+        "promptTr": "\"Sed\" Türkçesi nedir?",
+        "answers": [
+            "Yirmi",
+            "On",
+            "Dokuz",
+            "Yüz"
+        ],
+        "answersTr": [
+            "Yirmi",
+            "On",
+            "Dokuz",
+            "Yüz"
+        ],
+        "correctAnswer": "Yüz",
+        "correctAnswerTr": "Yüz",
+        "explanation": "\"Sed\" yüz sayısıdır.",
+        "explanationKu": "\"Sed\" hejmara 100 e.",
+        "explanationTr": "\"Sed\" yüz sayısıdır.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: numbers_1",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi numbers_1 (sunucu dersi hejmar; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "numbers_1"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0008",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Du û sê dibin ___",
+        "promptTr": "İki ve üç ___ eder.",
+        "answers": [
+            "Çar",
+            "Pênc",
+            "Şeş",
+            "Heft"
+        ],
+        "answersTr": [
+            "Dört",
+            "Beş",
+            "Altı",
+            "Yedi"
+        ],
+        "correctAnswer": "Pênc",
+        "correctAnswerTr": "Beş",
+        "explanation": "İki artı üç beş eder.",
+        "explanationKu": "Du û sê dibin pênc.",
+        "explanationTr": "İki artı üç beş eder.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: numbers_1",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi numbers_1 (sunucu dersi hejmar; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "numbers_1"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0009",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Ez Kurd ___.",
+        "promptTr": "Ben Kürt___.",
+        "answers": [
+            "î",
+            "e",
+            "im",
+            "in"
+        ],
+        "answersTr": [
+            "î (sen)",
+            "e (o)",
+            "im (ben)",
+            "in (biz/siz/onlar)"
+        ],
+        "correctAnswer": "im",
+        "correctAnswerTr": "im (ben)",
+        "explanation": "Ünsüzden sonra \"ez\" ile \"im\" kullanılır: \"Ez Kurd im.\"",
+        "explanationKu": "Piştî dengdarê, \"ez\" bi \"im\" re tê: \"Ez Kurd im.\"",
+        "explanationTr": "Ünsüzden sonra \"ez\" ile \"im\" kullanılır: \"Ez Kurd im.\"",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: grammar_bun",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_bun (sunucu dersi lekera-bun; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "grammar_bun"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0010",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Tu li malê ___.",
+        "promptTr": "Sen evde___.",
+        "answers": [
+            "yî",
+            "im",
+            "e",
+            "in"
+        ],
+        "answersTr": [
+            "yî (sen, ünlüden sonra)",
+            "im (ben)",
+            "e (o)",
+            "in (biz/siz/onlar)"
+        ],
+        "correctAnswer": "yî",
+        "correctAnswerTr": "yî (sen, ünlüden sonra)",
+        "explanation": "Ünlüden sonra \"yî\" gelir: \"Tu li malê yî.\"",
+        "explanationKu": "Piştî dengdêra \"ê\" \"yî\" tê: \"Tu li malê yî.\"",
+        "explanationTr": "Ünlüden sonra \"yî\" gelir: \"Tu li malê yî.\"",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: grammar_bun",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_bun (sunucu dersi lekera-bun; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "grammar_bun"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0011",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Ew doktor ___.",
+        "promptTr": "O doktor___.",
+        "answers": [
+            "im",
+            "î",
+            "in",
+            "e"
+        ],
+        "answersTr": [
+            "im (ben)",
+            "î (sen)",
+            "in (biz/siz/onlar)",
+            "e (o)"
+        ],
+        "correctAnswer": "e",
+        "correctAnswerTr": "e (o)",
+        "explanation": "Ünsüzden sonra \"ew\" ile \"e\" kullanılır: \"Ew doktor e.\"",
+        "explanationKu": "Piştî dengdarê, \"ew\" bi \"e\" re tê: \"Ew doktor e.\"",
+        "explanationTr": "Ünsüzden sonra \"ew\" ile \"e\" kullanılır: \"Ew doktor e.\"",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: grammar_bun",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_bun (sunucu dersi lekera-bun; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "grammar_bun"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0012",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Em heval ___.",
+        "promptTr": "Biz arkadaş___.",
+        "answers": [
+            "im",
+            "in",
+            "î",
+            "e"
+        ],
+        "answersTr": [
+            "im (ben)",
+            "in (biz/siz/onlar)",
+            "î (sen)",
+            "e (o)"
+        ],
+        "correctAnswer": "in",
+        "correctAnswerTr": "in (biz/siz/onlar)",
+        "explanation": "Ünsüzden sonra \"em\" ile \"in\" kullanılır: \"Em heval in.\"",
+        "explanationKu": "Piştî dengdarê, \"em\" bi \"in\" re tê: \"Em heval in.\"",
+        "explanationTr": "Ünsüzden sonra \"em\" ile \"in\" kullanılır: \"Em heval in.\"",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: grammar_bun",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_bun (sunucu dersi lekera-bun; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "grammar_bun"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0013",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Hûn mamoste ___.",
+        "promptTr": "Siz öğretmen___.",
+        "answers": [
+            "me",
+            "yî",
+            "ne",
+            "ye"
+        ],
+        "answersTr": [
+            "me (ben, ünlüden sonra)",
+            "yî (sen, ünlüden sonra)",
+            "ne (çoğul, ünlüden sonra)",
+            "ye (o, ünlüden sonra)"
+        ],
+        "correctAnswer": "ne",
+        "correctAnswerTr": "ne (çoğul, ünlüden sonra)",
+        "explanation": "Ünlüden sonra \"hûn\" ile \"ne\" kullanılır: \"Hûn mamoste ne.\"",
+        "explanationKu": "Piştî dengdêra \"e\", \"hûn\" bi \"ne\" re tê: \"Hûn mamoste ne.\"",
+        "explanationTr": "Ünlüden sonra \"hûn\" ile \"ne\" kullanılır: \"Hûn mamoste ne.\"",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: grammar_bun",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_bun (sunucu dersi lekera-bun; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "grammar_bun"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0014",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Ez mamoste ___.",
+        "promptTr": "Ben öğretmen___.",
+        "answers": [
+            "me",
+            "yî",
+            "ye",
+            "ne"
+        ],
+        "answersTr": [
+            "me (ben, ünlüden sonra)",
+            "yî (sen, ünlüden sonra)",
+            "ye (o, ünlüden sonra)",
+            "ne (çoğul, ünlüden sonra)"
+        ],
+        "correctAnswer": "me",
+        "correctAnswerTr": "me (ben, ünlüden sonra)",
+        "explanation": "Ünlüden sonra \"ez\" ile \"me\" kullanılır: \"Ez mamoste me.\"",
+        "explanationKu": "Piştî dengdêra \"e\", \"ez\" bi \"me\" re tê: \"Ez mamoste me.\"",
+        "explanationTr": "Ünlüden sonra \"ez\" ile \"me\" kullanılır: \"Ez mamoste me.\"",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: grammar_bun",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_bun (sunucu dersi lekera-bun; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "grammar_bun"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0015",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Navê wî Zana ___.",
+        "promptTr": "Onun adı Zana___.",
+        "answers": [
+            "î",
+            "im",
+            "ne",
+            "ye"
+        ],
+        "answersTr": [
+            "î (sen)",
+            "im (ben)",
+            "ne (çoğul, ünlüden sonra)",
+            "ye (o, ünlüden sonra)"
+        ],
+        "correctAnswer": "ye",
+        "correctAnswerTr": "ye (o, ünlüden sonra)",
+        "explanation": "Ünlüden sonra \"ye\" gelir: \"Navê wî Zana ye.\"",
+        "explanationKu": "Piştî dengdêra \"a\" \"ye\" tê: \"Navê wî Zana ye.\"",
+        "explanationTr": "Ünlüden sonra \"ye\" gelir: \"Navê wî Zana ye.\"",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: grammar_bun",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_bun (sunucu dersi lekera-bun; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "grammar_bun"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0016",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Sen öğrencisin\" bi kurmancî çi ye?",
+        "promptTr": "\"Sen öğrencisin\" Kurmancîsi nedir?",
+        "answers": [
+            "Ez xwendekar im",
+            "Tu xwendekar î",
+            "Ew xwendekar e",
+            "Em xwendekar in"
+        ],
+        "answersTr": [
+            "Ez xwendekar im",
+            "Tu xwendekar î",
+            "Ew xwendekar e",
+            "Em xwendekar in"
+        ],
+        "correctAnswer": "Tu xwendekar î",
+        "correctAnswerTr": "Tu xwendekar î",
+        "explanation": "Ünsüzden sonra \"tu\" ile \"î\" kullanılır: \"Tu xwendekar î.\"",
+        "explanationKu": "Piştî dengdarê, \"tu\" bi \"î\" re tê: \"Tu xwendekar î.\"",
+        "explanationTr": "Ünsüzden sonra \"tu\" ile \"î\" kullanılır: \"Tu xwendekar î.\"",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: grammar_bun",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi grammar_bun (sunucu dersi lekera-bun; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "grammar_bun"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0017",
+        "category": "Çand",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Dengbêj\" bi tirkî çi ye?",
+        "promptTr": "\"Dengbêj\" Türkçesi nedir?",
+        "answers": [
+            "Davulcu",
+            "Ressam",
+            "Halk ozanı",
+            "Çoban"
+        ],
+        "answersTr": [
+            "Davulcu",
+            "Ressam",
+            "Halk ozanı",
+            "Çoban"
+        ],
+        "correctAnswer": "Halk ozanı",
+        "correctAnswerTr": "Halk ozanı",
+        "explanation": "Dengbejler halk ozanlarıdır.",
+        "explanationKu": "Dengbêj stranbêjên gelêrî ne.",
+        "explanationTr": "Dengbejler halk ozanlarıdır.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: culture_dengbeji",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_dengbeji (sunucu dersi dengbeji; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "culture_dengbeji"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0018",
+        "category": "Çand",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Kilam\" bi tirkî çi ye?",
+        "promptTr": "\"Kilam\" Türkçesi nedir?",
+        "answers": [
+            "Anlatı şarkısı",
+            "Bir tür yemek",
+            "Bir müzik aleti",
+            "Bir halay adı"
+        ],
+        "answersTr": [
+            "Anlatı şarkısı",
+            "Bir tür yemek",
+            "Bir müzik aleti",
+            "Bir halay adı"
+        ],
+        "correctAnswer": "Anlatı şarkısı",
+        "correctAnswerTr": "Anlatı şarkısı",
+        "explanation": "Dengbejlerin kilamları aşk ve savaş hikâyeleri anlatır.",
+        "explanationKu": "Kilamên dengbêjan çîrokên evîn û şer vedibêjin.",
+        "explanationTr": "Dengbejlerin kilamları aşk ve savaş hikâyeleri anlatır.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: culture_dengbeji",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_dengbeji (sunucu dersi dengbeji; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "culture_dengbeji"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0019",
+        "category": "Çand",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Stran\" bi tirkî çi ye?",
+        "promptTr": "\"Stran\" Türkçesi nedir?",
+        "answers": [
+            "Halay",
+            "Bayram",
+            "Davul",
+            "Şarkı"
+        ],
+        "answersTr": [
+            "Halay",
+            "Bayram",
+            "Davul",
+            "Şarkı"
+        ],
+        "correctAnswer": "Şarkı",
+        "correctAnswerTr": "Şarkı",
+        "explanation": "\"Stran\" sesle söylenen şarkıdır.",
+        "explanationKu": "\"Stran\" tê wateya muzîka bi deng.",
+        "explanationTr": "\"Stran\" sesle söylenen şarkıdır.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: culture_dengbeji",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_dengbeji (sunucu dersi dengbeji; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "culture_dengbeji"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0020",
+        "category": "Çand",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Dengbêj li ku kom dibin û kilaman dibêjin?",
+        "promptTr": "Dengbejler nerede toplanıp kilam söyler?",
+        "answers": [
+            "Di dibistanê de",
+            "Di dîwanê de",
+            "Di nexweşxaneyê de",
+            "Di firokexaneyê de"
+        ],
+        "answersTr": [
+            "Okulda",
+            "Divanda (toplanılan mecliste)",
+            "Hastanede",
+            "Havalimanında"
+        ],
+        "correctAnswer": "Di dîwanê de",
+        "correctAnswerTr": "Divanda (toplanılan mecliste)",
+        "explanation": "Dengbejler divanda toplanıp kilam söyler.",
+        "explanationKu": "Dengbêj di dîwanê de kom dibin û kilaman dibêjin.",
+        "explanationTr": "Dengbejler divanda toplanıp kilam söyler.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: culture_dengbeji",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_dengbeji (sunucu dersi dengbeji; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "culture_dengbeji"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0021",
+        "category": "Çand",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Dengbêjî bi çi tê kirin?",
+        "promptTr": "Dengbejlik neyle yapılır?",
+        "answers": [
+            "Bi piyanoyê",
+            "Bi dahol û zurnayê",
+            "Tenê bi deng",
+            "Bi gîtara elektrîkî"
+        ],
+        "answersTr": [
+            "Piyanoyla",
+            "Davul ve zurnayla",
+            "Sadece sesle",
+            "Elektro gitarla"
+        ],
+        "correctAnswer": "Tenê bi deng",
+        "correctAnswerTr": "Sadece sesle",
+        "explanation": "Dengbejlik enstrümansız, sadece sesle yapılır.",
+        "explanationKu": "Dengbêjî bê amûr, tenê bi deng tê kirin.",
+        "explanationTr": "Dengbejlik enstrümansız, sadece sesle yapılır.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: culture_dengbeji",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_dengbeji (sunucu dersi dengbeji; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "culture_dengbeji"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0022",
+        "category": "Çand",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Evdalê Zeynikê kî ye?",
+        "promptTr": "Evdalê Zeynikê kimdir?",
+        "answers": [
+            "Dengbêjekî navdar",
+            "Nîgarkêşekî navdar",
+            "Mamosteyekî navdar",
+            "Pehlewanekî navdar"
+        ],
+        "answersTr": [
+            "Ünlü bir dengbej",
+            "Ünlü bir ressam",
+            "Ünlü bir öğretmen",
+            "Ünlü bir pehlivan"
+        ],
+        "correctAnswer": "Dengbêjekî navdar",
+        "correctAnswerTr": "Ünlü bir dengbej",
+        "explanation": "Evdalê Zeynikê ünlü bir dengbejdir.",
+        "explanationKu": "Evdalê Zeynikê dengbêjekî navdar e.",
+        "explanationTr": "Evdalê Zeynikê ünlü bir dengbejdir.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: culture_dengbeji",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_dengbeji (sunucu dersi dengbeji; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "culture_dengbeji"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0023",
+        "category": "Çand",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Kilamên dengbêjan çi vedibêjin?",
+        "promptTr": "Dengbejlerin kilamları ne anlatır?",
+        "answers": [
+            "Rêbaza çêkirina nan",
+            "Qaîdeyên rêziman",
+            "Encamên maçan",
+            "Çîrokên evîn û şer"
+        ],
+        "answersTr": [
+            "Ekmek yapma yöntemini",
+            "Dil bilgisi kurallarını",
+            "Maç sonuçlarını",
+            "Aşk ve savaş hikâyelerini"
+        ],
+        "correctAnswer": "Çîrokên evîn û şer",
+        "correctAnswerTr": "Aşk ve savaş hikâyelerini",
+        "explanation": "Dengbejlerin kilamları aşk ve savaş hikâyeleri anlatır.",
+        "explanationKu": "Kilamên dengbêjan çîrokên evîn û şer vedibêjin.",
+        "explanationTr": "Dengbejlerin kilamları aşk ve savaş hikâyeleri anlatır.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: culture_dengbeji",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_dengbeji (sunucu dersi dengbeji; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "culture_dengbeji"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0024",
+        "category": "Çand",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Kesê ku bi dengê xwe kilam dibêje çi ye?",
+        "promptTr": "Sesiyle kilam söyleyen kişiye ne denir?",
+        "answers": [
+            "Mamoste",
+            "Dengbêj",
+            "Şivan",
+            "Nîgarkêş"
+        ],
+        "answersTr": [
+            "Öğretmen",
+            "Dengbej",
+            "Çoban",
+            "Ressam"
+        ],
+        "correctAnswer": "Dengbêj",
+        "correctAnswerTr": "Dengbej",
+        "explanation": "Sesiyle kilam söyleyen kişi dengbejdir.",
+        "explanationKu": "Kesê ku bi dengê xwe kilam dibêje dengbêj e.",
+        "explanationTr": "Sesiyle kilam söyleyen kişi dengbejdir.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: culture_dengbeji",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi culture_dengbeji (sunucu dersi dengbeji; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "culture_dengbeji"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0025",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Bihar\" bi tirkî çi ye?",
+        "promptTr": "\"Bihar\" Türkçesi nedir?",
+        "answers": [
+            "Yaz",
+            "Sonbahar",
+            "İlkbahar",
+            "Kış"
+        ],
+        "answersTr": [
+            "Yaz",
+            "Sonbahar",
+            "İlkbahar",
+            "Kış"
+        ],
+        "correctAnswer": "İlkbahar",
+        "correctAnswerTr": "İlkbahar",
+        "explanation": "\"Bihar\" çiçeklerin açtığı mevsimdir.",
+        "explanationKu": "\"Bihar\" demsala vebûna kulîlkan e.",
+        "explanationTr": "\"Bihar\" çiçeklerin açtığı mevsimdir.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: time_seasons",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_seasons (sunucu dersi demsal; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "time_seasons"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0026",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Yaz\" bi kurmancî çi ye?",
+        "promptTr": "\"Yaz\" Kurmancîsi nedir?",
+        "answers": [
+            "Havîn",
+            "Bihar",
+            "Payîz",
+            "Zivistan"
+        ],
+        "answersTr": [
+            "Yaz",
+            "İlkbahar",
+            "Sonbahar",
+            "Kış"
+        ],
+        "correctAnswer": "Havîn",
+        "correctAnswerTr": "Yaz",
+        "explanation": "\"Havîn\" en sıcak mevsimdir.",
+        "explanationKu": "\"Havîn\" demsala herî germ e.",
+        "explanationTr": "\"Havîn\" en sıcak mevsimdir.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: time_seasons",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_seasons (sunucu dersi demsal; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "time_seasons"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0027",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Payîz\" bi tirkî çi ye?",
+        "promptTr": "\"Payîz\" Türkçesi nedir?",
+        "answers": [
+            "İlkbahar",
+            "Yaz",
+            "Kış",
+            "Sonbahar"
+        ],
+        "answersTr": [
+            "İlkbahar",
+            "Yaz",
+            "Kış",
+            "Sonbahar"
+        ],
+        "correctAnswer": "Sonbahar",
+        "correctAnswerTr": "Sonbahar",
+        "explanation": "\"Payîz\" yaprakların döküldüğü mevsimdir.",
+        "explanationKu": "Di payîzê de pelên daran diweşin.",
+        "explanationTr": "\"Payîz\" yaprakların döküldüğü mevsimdir.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: time_seasons",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_seasons (sunucu dersi demsal; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "time_seasons"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0028",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "\"Kış\" bi kurmancî çi ye?",
+        "promptTr": "\"Kış\" Kurmancîsi nedir?",
+        "answers": [
+            "Bihar",
+            "Zivistan",
+            "Havîn",
+            "Payîz"
+        ],
+        "answersTr": [
+            "İlkbahar",
+            "Kış",
+            "Yaz",
+            "Sonbahar"
+        ],
+        "correctAnswer": "Zivistan",
+        "correctAnswerTr": "Kış",
+        "explanation": "\"Zivistan\" karlı ve soğuk mevsimdir.",
+        "explanationKu": "\"Zivistan\" demsala berf û sermayê ye.",
+        "explanationTr": "\"Zivistan\" karlı ve soğuk mevsimdir.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: time_seasons",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_seasons (sunucu dersi demsal; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "time_seasons"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0029",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Pelên daran di kîjan demsalê de diweşin?",
+        "promptTr": "Ağaçların yaprakları hangi mevsimde dökülür?",
+        "answers": [
+            "Bihar",
+            "Havîn",
+            "Payîz",
+            "Zivistan"
+        ],
+        "answersTr": [
+            "İlkbahar",
+            "Yaz",
+            "Sonbahar",
+            "Kış"
+        ],
+        "correctAnswer": "Payîz",
+        "correctAnswerTr": "Sonbahar",
+        "explanation": "Ağaç yaprakları sonbaharda dökülür.",
+        "explanationKu": "Pelên daran di payîzê de diweşin.",
+        "explanationTr": "Ağaç yaprakları sonbaharda dökülür.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: time_seasons",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_seasons (sunucu dersi demsal; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "time_seasons"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0030",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Newroz di kîjan demsalê de tê?",
+        "promptTr": "Newroz hangi mevsimde gelir?",
+        "answers": [
+            "Bihar",
+            "Havîn",
+            "Payîz",
+            "Zivistan"
+        ],
+        "answersTr": [
+            "İlkbahar",
+            "Yaz",
+            "Sonbahar",
+            "Kış"
+        ],
+        "correctAnswer": "Bihar",
+        "correctAnswerTr": "İlkbahar",
+        "explanation": "Newroz ilkbaharda gelir.",
+        "explanationKu": "Newroz di biharê de tê.",
+        "explanationTr": "Newroz ilkbaharda gelir.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: time_seasons",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_seasons (sunucu dersi demsal; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "time_seasons"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0031",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Kîjan demsal ya herî germ e?",
+        "promptTr": "En sıcak mevsim hangisidir?",
+        "answers": [
+            "Bihar",
+            "Payîz",
+            "Zivistan",
+            "Havîn"
+        ],
+        "answersTr": [
+            "İlkbahar",
+            "Sonbahar",
+            "Kış",
+            "Yaz"
+        ],
+        "correctAnswer": "Havîn",
+        "correctAnswerTr": "Yaz",
+        "explanation": "Yaz en sıcak mevsimdir.",
+        "explanationKu": "Havîn demsala herî germ e.",
+        "explanationTr": "Yaz en sıcak mevsimdir.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: time_seasons",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_seasons (sunucu dersi demsal; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "time_seasons"
+        }
+    },
+    {
+        "id": "ders_2026_10_02_0032",
+        "category": "Ziman",
+        "difficulty": 1,
+        "type": "multipleChoice",
+        "prompt": "Salê çend demsal hene?",
+        "promptTr": "Bir yılda kaç mevsim vardır?",
+        "answers": [
+            "Sê",
+            "Çar",
+            "Pênc",
+            "Şeş"
+        ],
+        "answersTr": [
+            "Üç",
+            "Dört",
+            "Beş",
+            "Altı"
+        ],
+        "correctAnswer": "Çar",
+        "correctAnswerTr": "Dört",
+        "explanation": "Yılın dört mevsimi vardır.",
+        "explanationKu": "Çar demsalên salê hene.",
+        "explanationTr": "Yılın dört mevsimi vardır.",
+        "metadata": {
+            "dialect": "kurmanci",
+            "sourceTitle": "ZanKurd dersi: time_seasons",
+            "sourceReference": "ZanKurd Kurmancî öğrenme dersi time_seasons (sunucu dersi demsal; supabase/2026-07-06_lesson_seed.sql slaytları)",
+            "reviewStatus": "approved",
+            "reviewedBy": "Taslak: Claude Sonnet; Kurmancî inceleme: Gemini 3.1 Pro ve Grok 4.7 (agy, cursor-agent), hakem Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+            "reviewedAt": "2026-10-02",
+            "lastContentCheckAt": "2026-10-02",
+            "qualityVersion": 2,
+            "learningLessonId": "time_seasons"
+        }
+    }
+]

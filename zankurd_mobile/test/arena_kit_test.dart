@@ -18,17 +18,22 @@ Widget _wrap(Widget child, {Brightness brightness = Brightness.light}) =>
 
 void main() {
   group('RewardToken', () {
-    test('coin, XP ve streak birbirinden ayrı renk taşır', () {
+    test('coin, XP ve streak birbirinden ayrı glif taşır', () {
       // Üçü aynı sarı sayı olarak çizildiğinde oyuncu üç farklı ekonomiyi
       // tek bir şey sanıyordu.
-      final tones = {
-        RewardKind.coin.color,
-        RewardKind.xp.color,
-        RewardKind.streak.color,
-        RewardKind.level.color,
-        RewardKind.rank.color,
+      //
+      // 2026-09-29 Şahnê: ödülün tek rengi Zêr'dir; türler RENKLE değil
+      // dolu glifin ŞEKLİYLE ayrışır (jeton, şimşek, alev, yıldız, taç).
+      // Bekçi eskiden beş ayrı rengi sayıyordu; korunan şey — ekonomilerin
+      // karışmaması — artık glif kümesinde ölçülür (renk körü için de).
+      final glyphs = {
+        RewardKind.coin.glyph,
+        RewardKind.xp.glyph,
+        RewardKind.streak.glyph,
+        RewardKind.level.glyph,
+        RewardKind.rank.glyph,
       };
-      expect(tones, hasLength(5));
+      expect(glyphs, hasLength(5));
     });
 
     test('her ödül türünün ayrı ikonu vardır', () {

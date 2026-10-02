@@ -1,0 +1,2452 @@
+[
+  {
+    "id": "bilim_0001",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di Sîstema Rojê de çend gerstêrk hene?",
+    "promptTr": "Güneş Sistemi'nde kaç gezegen vardır?",
+    "answers": [
+      "7",
+      "8",
+      "9",
+      "10"
+    ],
+    "answersTr": [
+      "7",
+      "8",
+      "9",
+      "10"
+    ],
+    "correctAnswer": "8",
+    "correctAnswerTr": "8",
+    "explanation": "NASA, Güneş Sistemi'nde sekiz gezegen bulunduğunu belirtir. Plüton cüce gezegen olarak sınıflandırılır.",
+    "explanationKu": "NASA destnîşan dike ku di Sîstema Rojê de heşt gerstêrk hene. Plûton wekî gerstêrkeke bejnbihost tê senifandin.",
+    "explanationTr": "NASA, Güneş Sistemi'nde sekiz gezegen bulunduğunu belirtir. Plüton cüce gezegen olarak sınıflandırılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "science.nasa.gov",
+      "sourceReference": "https://science.nasa.gov/solar-system/planets/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0002",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Sala ronahiyê kîjan mezinahiya fîzîkî îfade dike?",
+    "promptTr": "Işık yılı hangi fiziksel büyüklüğü ifade eder?",
+    "answers": [
+      "Dûrî",
+      "Dem",
+      "Girse",
+      "Germahî"
+    ],
+    "answersTr": [
+      "Uzaklık",
+      "Zaman",
+      "Kütle",
+      "Sıcaklık"
+    ],
+    "correctAnswer": "Dûrî",
+    "correctAnswerTr": "Uzaklık",
+    "explanation": "Işık yılı, ışığın bir yılda katettiği mesafedir. Adında yıl geçmesine rağmen bir zaman değil, uzaklık birimidir.",
+    "explanationKu": "Sala ronahiyê, ew mesafe ye ku ronahî di salekê de derbas dike. Her çend di navê wê de sal hebe jî, ew ne yekeyeke demê ye, yekeyeke dûriyê ye.",
+    "explanationTr": "Işık yılı, ışığın bir yılda katettiği mesafedir. Adında yıl geçmesine rağmen bir zaman değil, uzaklık birimidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "science.nasa.gov",
+      "sourceReference": "https://science.nasa.gov/exoplanets/what-is-a-light-year/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0003",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Hejmara atomê ya elementeke kîmyewî çi nîşan dide?",
+    "promptTr": "Bir kimyasal elementin atom numarası neyi gösterir?",
+    "answers": [
+      "Hejmara notronên di navikê de",
+      "Hejmara protonên di navikê de",
+      "Hejmara qatên elektronan",
+      "Hejmara îzotopan"
+    ],
+    "answersTr": [
+      "Çekirdekteki nötron sayısını",
+      "Çekirdekteki proton sayısını",
+      "Elektron katmanı sayısını",
+      "İzotop sayısını"
+    ],
+    "correctAnswer": "Hejmara protonên di navikê de",
+    "correctAnswerTr": "Çekirdekteki proton sayısını",
+    "explanation": "IUPAC'a göre atom numarası, atom çekirdeğindeki proton sayısına eşittir. Elementin kimliğini belirleyen temel sayıdır.",
+    "explanationKu": "Li gorî IUPACê hejmara atomê, wekhevê hejmara protonên di navika atomê de ye. Ew hejmara bingehîn e ku nasnameya elementê diyar dike.",
+    "explanationTr": "IUPAC'a göre atom numarası, atom çekirdeğindeki proton sayısına eşittir. Elementin kimliğini belirleyen temel sayıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "goldbook.iupac.org",
+      "sourceReference": "https://goldbook.iupac.org/terms/view/A00499",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0004",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Formûla kîmyewî ya avê kîjan e?",
+    "promptTr": "Suyun kimyasal formülü hangisidir?",
+    "answers": [
+      "CO2",
+      "H2O",
+      "O2",
+      "H2O2"
+    ],
+    "answersTr": [
+      "CO2",
+      "H2O",
+      "O2",
+      "H2O2"
+    ],
+    "correctAnswer": "H2O",
+    "correctAnswerTr": "H2O",
+    "explanation": "Bir su molekülü iki hidrojen ve bir oksijen atomundan oluşur; bu nedenle formülü H2O'dur.",
+    "explanationKu": "Molekuleke avê ji du atomên hîdrojenê û atomeke oksîjenê pêk tê; ji ber vê yekê formûla wê H2O ye.",
+    "explanationTr": "Bir su molekülü iki hidrojen ve bir oksijen atomundan oluşur; bu nedenle formülü H2O'dur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "pubchem.ncbi.nlm.nih.gov",
+      "sourceReference": "https://pubchem.ncbi.nlm.nih.gov/compound/Water",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0005",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Riwek di dema fotosentezê de ji hewayê bi giranî kîjan gazê digirin?",
+    "promptTr": "Bitkiler fotosentez sırasında havadan temel olarak hangi gazı alır?",
+    "answers": [
+      "Oksîjen",
+      "Azot",
+      "Karbondîoksît",
+      "Hîdrojen"
+    ],
+    "answersTr": [
+      "Oksijen",
+      "Azot",
+      "Karbondioksit",
+      "Hidrojen"
+    ],
+    "correctAnswer": "Karbondîoksît",
+    "correctAnswerTr": "Karbondioksit",
+    "explanation": "Fotosentezde bitkiler karbondioksit ve suyu, ışık enerjisinden yararlanarak organik maddelere dönüştürür; süreçte oksijen açığa çıkar.",
+    "explanationKu": "Di fotosentezê de riwek karbondîoksît û avê, bi bikaranîna enerjiya ronahiyê vediguherînin madeyên organîk; di vê pêvajoyê de oksîjen derdikeve holê.",
+    "explanationTr": "Fotosentezde bitkiler karbondioksit ve suyu, ışık enerjisinden yararlanarak organik maddelere dönüştürür; süreçte oksijen açığa çıkar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "education.nationalgeographic.org",
+      "sourceReference": "https://education.nationalgeographic.org/resource/photosynthesis/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0006",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di DNAyê de baza adenîn bi normalî bi kîjan bazê re dibe cot?",
+    "promptTr": "DNA'da adenin normal olarak hangi bazla eşleşir?",
+    "answers": [
+      "Sîtozîn",
+      "Guanîn",
+      "Tîmîn",
+      "Urasîl"
+    ],
+    "answersTr": [
+      "Sitozin",
+      "Guanin",
+      "Timin",
+      "Urasil"
+    ],
+    "correctAnswer": "Tîmîn",
+    "correctAnswerTr": "Timin",
+    "explanation": "DNA'nın çift sarmal yapısında adenin timinle, guanin ise sitozinle baz çifti oluşturur.",
+    "explanationKu": "Di pêkhateya lûlpêça ducar a DNAyê de adenîn bi tîmînê re, guanîn jî bi sîtozînê re cotên bazan pêk tînin.",
+    "explanationTr": "DNA'nın çift sarmal yapısında adenin timinle, guanin ise sitozinle baz çifti oluşturur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.genome.gov",
+      "sourceReference": "https://www.genome.gov/about-genomics/fact-sheets/Deoxyribonucleic-Acid-Fact-Sheet",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0007",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di xaneyên okaryot de organelê ku herî zêde bi hilberîna ATPyê re têkildar e kîjan e?",
+    "promptTr": "Ökaryot hücrelerde ATP üretimiyle en yakından ilişkili organel hangisidir?",
+    "answers": [
+      "Sîstema Golgî",
+      "Mîtokondrî",
+      "Lîzozom",
+      "Navik"
+    ],
+    "answersTr": [
+      "Golgi aygıtı",
+      "Mitokondri",
+      "Lizozom",
+      "Çekirdek"
+    ],
+    "correctAnswer": "Mîtokondrî",
+    "correctAnswerTr": "Mitokondri",
+    "explanation": "Mitokondriler hücresel solunum yoluyla hücrenin kullanabildiği enerjinin büyük bölümünü ATP biçiminde üretir.",
+    "explanationKu": "Mîtokondrî bi riya bêhngirtina xaneyî beşeke mezin a enerjiya ku xane dikare bikar bîne bi forma ATPyê hildiberînin.",
+    "explanationTr": "Mitokondriler hücresel solunum yoluyla hücrenin kullanabildiği enerjinin büyük bölümünü ATP biçiminde üretir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.nigms.nih.gov",
+      "sourceReference": "https://www.nigms.nih.gov/biobeat/2021/03/take-a-tour-of-your-cells-organelles",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0008",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Organê herî mezin ê laşê mirov kîjan e?",
+    "promptTr": "İnsan vücudunun en büyük organı hangisidir?",
+    "answers": [
+      "Kezeba reş",
+      "Çerm",
+      "Pişik",
+      "Mejî"
+    ],
+    "answersTr": [
+      "Karaciğer",
+      "Deri",
+      "Akciğer",
+      "Beyin"
+    ],
+    "correctAnswer": "Çerm",
+    "correctAnswerTr": "Deri",
+    "explanation": "Deri, yüzey alanı ve toplam büyüklüğü bakımından insan vücudunun en büyük organıdır.",
+    "explanationKu": "Çerm ji aliyê rûber û mezinahiya xwe ya giştî ve organê herî mezin ê laşê mirov e.",
+    "explanationTr": "Deri, yüzey alanı ve toplam büyüklüğü bakımından insan vücudunun en büyük organıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.niams.nih.gov",
+      "sourceReference": "https://www.niams.nih.gov/health-topics/educational-resources/health-lesson-learning-about-skin",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0009",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Li gorî sîstema ABOyê, li ser rûyê xirokên sor ên kesekî/ê ku grûpa xwîna wî/wê AB ye kîjan antîjen hene?",
+    "promptTr": "AB kan grubundaki bir kişinin alyuvarlarının yüzeyinde ABO sistemine göre hangi antijenler bulunur?",
+    "answers": [
+      "Tenê antîjena Ayê",
+      "Tenê antîjena Byê",
+      "Antîjenên Ayê û Byê",
+      "Ne antîjena Ayê û ne jî ya Byê"
+    ],
+    "answersTr": [
+      "Yalnız A antijeni",
+      "Yalnız B antijeni",
+      "A ve B antijenleri",
+      "Ne A ne de B antijeni"
+    ],
+    "correctAnswer": "Antîjenên Ayê û Byê",
+    "correctAnswerTr": "A ve B antijenleri",
+    "explanation": "AB fenotipinde alyuvarlar hem A hem de B antijenini taşır. O fenotipinde ise bu iki antijen de bulunmaz.",
+    "explanationKu": "Di fenotîpa AByê de xirokên sor hem antîjena A hem jî ya B hildigirin. Di fenotîpa Oyê de ev her du antîjen jî nîn in.",
+    "explanationTr": "AB fenotipinde alyuvarlar hem A hem de B antijenini taşır. O fenotipinde ise bu iki antijen de bulunmaz.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.ncbi.nlm.nih.gov",
+      "sourceReference": "https://www.ncbi.nlm.nih.gov/books/NBK2267/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0010",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Yek ji bandorên sereke yên derziyan, amadekirina sîstema bergiriyê ji bo hilberîna çiyê ye?",
+    "promptTr": "Aşıların temel etkilerinden biri bağışıklık sistemini ne üretmeye hazırlamaktır?",
+    "answers": [
+      "Bêhtir hemoglobîn di xwînê de",
+      "Antîkorên li dijî antîjenên diyarkirî",
+      "Bêhtir asîda mîdeyê",
+      "Bêhtir zerav"
+    ],
+    "answersTr": [
+      "Kanda daha fazla hemoglobin",
+      "Belirli antijenlere karşı antikorlar",
+      "Daha fazla mide asidi",
+      "Daha fazla safra"
+    ],
+    "correctAnswer": "Antîkorên li dijî antîjenên diyarkirî",
+    "correctAnswerTr": "Belirli antijenlere karşı antikorlar",
+    "explanation": "Aşılar bağışıklık sistemine belirli bir etkene karşı savunma geliştirmeyi öğretir ve antikor yanıtının oluşmasına yardımcı olur.",
+    "explanationKu": "Derzî hînî sîstema bergiriyê dikin ku li dijî hokarekê berevaniyê pêş bixe û alîkariya pêkhatina bersiva antîkoran dikin.",
+    "explanationTr": "Aşılar bağışıklık sistemine belirli bir etkene karşı savunma geliştirmeyi öğretir ve antikor yanıtının oluşmasına yardımcı olur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.who.int",
+      "sourceReference": "https://www.who.int/news-room/questions-and-answers/item/vaccines-and-immunization-what-is-vaccination",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0011",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Antîbiyotîk li ser enfeksiyonên vîral ên wekî sermagirtin û grîpê çawa bandorê dikin?",
+    "promptTr": "Antibiyotikler soğuk algınlığı ve grip gibi viral enfeksiyonlar üzerinde nasıl etki gösterir?",
+    "answers": [
+      "Vîrusan rasterast dikujin",
+      "Her tim dema nexweşiyê dadixînin nîvê",
+      "Vîrusan derman nakin",
+      "Ketina vîrusan a nav xaneyê bi temamî asteng dikin"
+    ],
+    "answersTr": [
+      "Virüsleri doğrudan öldürür",
+      "Her zaman hastalık süresini yarıya indirir",
+      "Virüsleri tedavi etmez",
+      "Virüslerin hücreye girişini tamamen engeller"
+    ],
+    "correctAnswer": "Vîrusan derman nakin",
+    "correctAnswerTr": "Virüsleri tedavi etmez",
+    "explanation": "Antibiyotikler bakterilere karşı kullanılan ilaçlardır; soğuk algınlığı ve grip gibi virüs kaynaklı enfeksiyonları tedavi etmezler.",
+    "explanationKu": "Antîbiyotîk dermanên ku li dijî bakteriyan tên bikaranîn in; ew enfeksiyonên ji ber vîrusan ên mîna sermagirtin û grîpê derman nakin.",
+    "explanationTr": "Antibiyotikler bakterilere karşı kullanılan ilaçlardır; soğuk algınlığı ve grip gibi virüs kaynaklı enfeksiyonları tedavi etmezler.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.cdc.gov",
+      "sourceReference": "https://www.cdc.gov/antibiotic-use/about/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0012",
+    "category": "Paradigma",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Leza ronahiyê ya di valahiyê de, di sîstema SIyê de bi temamî çend metre/çirke ye?",
+    "promptTr": "Işığın boşluktaki hızı SI sisteminde tam olarak kaç metredir/saniyedir?",
+    "answers": [
+      "300.000.000 m/s",
+      "299.792.458 km/s",
+      "299.792 m/s",
+      "299.792.458 m/s"
+    ],
+    "answersTr": [
+      "300.000.000 m/s",
+      "299.792.458 km/s",
+      "299.792 m/s",
+      "299.792.458 m/s"
+    ],
+    "correctAnswer": "299.792.458 m/s",
+    "correctAnswerTr": "299.792.458 m/s",
+    "explanation": "SI tanımında ışığın boşluktaki hızı tam olarak 299.792.458 metre/saniye olarak sabitlenmiştir.",
+    "explanationKu": "Di pênaseya SIyê de leza ronahiyê ya di valahiyê de tam wekî 299.792.458 metre/çirke hatiye sabîtkirin.",
+    "explanationTr": "SI tanımında ışığın boşluktaki hızı tam olarak 299.792.458 metre/saniye olarak sabitlenmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.nist.gov",
+      "sourceReference": "https://www.nist.gov/si-redefinition/meet-constants",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0013",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Ji bo cismekî ku girseya wî sabît e, hevkêşeya ku yasaya duyem a tevgerê ya Newton îfade dike kîjan e?",
+    "promptTr": "Kütlesi sabit bir cisim için Newton'un ikinci hareket yasasını ifade eden denklem hangisidir?",
+    "answers": [
+      "E = m × c²",
+      "V = I × R",
+      "P = F ÷ A",
+      "F = m × a"
+    ],
+    "answersTr": [
+      "E = m × c²",
+      "V = I × R",
+      "P = F ÷ A",
+      "F = m × a"
+    ],
+    "correctAnswer": "F = m × a",
+    "correctAnswerTr": "F = m × a",
+    "explanation": "Newton'un ikinci yasasında net kuvvet, sabit kütle ile ivmenin çarpımına eşittir: F = m × a.",
+    "explanationKu": "Di yasaya duyem a Newton de hêza net, wekhevê lêkdana girseya sabît û lezbûnê ye: F = m × a.",
+    "explanationTr": "Newton'un ikinci yasasında net kuvvet, sabit kütle ile ivmenin çarpımına eşittir: F = m × a.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.grc.nasa.gov",
+      "sourceReference": "https://www.grc.nasa.gov/WWW/K-12/BGP/newton2.html",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0014",
+    "category": "Paradigma",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Berhema navdar a Cezerî ku di 1206an de pêşkêş kiriye kîjan e?",
+    "promptTr": "El-Cezerî'nin 1206'da sunduğu ünlü eser hangisidir?",
+    "answers": [
+      "Kîtab fî me'rîfet el-hiyel el-hendesiyye",
+      "El-Qanûn fî't-Tibb",
+      "Kîtab el-Menazir",
+      "Kîtab el-Cebr û el-Muqabele"
+    ],
+    "answersTr": [
+      "Kitâb fî ma'rifat al-hiyal al-handasiyya",
+      "El-Kanun fi't-Tıb",
+      "Kitab al-Manazir",
+      "Kitâbü'l-Cebr ve'l-Mukabele"
+    ],
+    "correctAnswer": "Kîtab fî me'rîfet el-hiyel el-hendesiyye",
+    "correctAnswerTr": "Kitâb fî ma'rifat al-hiyal al-handasiyya",
+    "explanation": "Mühendis ve mucit El-Cezerî, 1206'da çeşitli makineleri ve mekanik düzenekleri anlattığı Kitâb fî ma'rifat al-hiyal al-handasiyya adlı eserini sundu.",
+    "explanationKu": "Endezyar û dahêner Cezerî, di 1206an de berhema xwe ya bi navê Kîtab fî me'rîfet el-hiyel el-hendesiyye pêşkêş kir ku tê de behsa makîne û pergalên mekanîkî yên cihêreng dike.",
+    "explanationTr": "Mühendis ve mucit El-Cezerî, 1206'da çeşitli makineleri ve mekanik düzenekleri anlattığı Kitâb fî ma'rifat al-hiyal al-handasiyya adlı eserini sundu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "collection.sciencemuseumgroup.org.uk",
+      "sourceReference": "https://collection.sciencemuseumgroup.org.uk/people/cp52302/ismail-ibn-al-razzaz-al-jazari",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0015",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Hejmara berhemên felsefî yên Sokratês ku wî bi xwe nivîsandine û gihîştine roja me çend e?",
+    "promptTr": "Sokrates'in günümüze ulaşmış, kendisinin yazdığı felsefi eser sayısı kaçtır?",
+    "answers": [
+      "0",
+      "1",
+      "4",
+      "12"
+    ],
+    "answersTr": [
+      "0",
+      "1",
+      "4",
+      "12"
+    ],
+    "correctAnswer": "0",
+    "correctAnswerTr": "0",
+    "explanation": "Sokrates'in kendisinin yazdığı bilinen bir eser yoktur. Onun hakkındaki bilgiler başta Platon ve Ksenophon olmak üzere başka antik kaynaklardan gelir.",
+    "explanationKu": "Tu berhemeke zanbûyî ya Sokratês ku wî bi xwe nivîsandibe nîn e. Agahiyên li ser wî di serî de ji Platon û Ksenophon, ji çavkaniyên din ên antîk tên.",
+    "explanationTr": "Sokrates'in kendisinin yazdığı bilinen bir eser yoktur. Onun hakkındaki bilgiler başta Platon ve Ksenophon olmak üzere başka antik kaynaklardan gelir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "plato.stanford.edu",
+      "sourceReference": "https://plato.stanford.edu/entries/socrates/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0016",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Dibistana felsefeyê ya ku Platon li Atînayê ava kiriye bi kîjan navî tê zanîn?",
+    "promptTr": "Platon'un Atina'da kurduğu felsefe okulu hangi adla bilinir?",
+    "answers": [
+      "Lykeion",
+      "Stoa",
+      "Baxçe",
+      "Akademî"
+    ],
+    "answersTr": [
+      "Lykeion",
+      "Stoa",
+      "Bahçe",
+      "Akademi"
+    ],
+    "correctAnswer": "Akademî",
+    "correctAnswerTr": "Akademi",
+    "explanation": "Platon yaklaşık MÖ 387'de Atina'da Akademi olarak bilinen okulu kurdu.",
+    "explanationKu": "Platon derdora b.z. 387an de li Atînayê dibistana ku bi navê Akademî tê zanîn ava kir.",
+    "explanationTr": "Platon yaklaşık MÖ 387'de Atina'da Akademi olarak bilinen okulu kurdu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Platonic_Academy",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0017",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Fîlozofê ku li Yewnanîstana Antîk mantiq kiriye dîsîplîneke sîstematîk û teoriya qiyasê pêş xistiye kî ye?",
+    "promptTr": "Antik Yunan'da mantığı sistematik bir disiplin hâline getirip kıyas teorisini geliştiren filozof kimdir?",
+    "answers": [
+      "Zenon",
+      "Epîkuros",
+      "Plotînos",
+      "Arîstotelês"
+    ],
+    "answersTr": [
+      "Zenon",
+      "Epikuros",
+      "Plotinos",
+      "Aristoteles"
+    ],
+    "correctAnswer": "Arîstotelês",
+    "correctAnswerTr": "Aristoteles",
+    "explanation": "Stanford Encyclopedia of Philosophy, mantığın tam anlamıyla sistematik bir disiplin hâline gelişini Aristoteles'le ilişkilendirir; onun temel başarılarından biri kıyas teorisidir.",
+    "explanationKu": "Stanford Encyclopedia of Philosophy, bi temamî sîstematîkbûna mantiqê bi Arîstotelês ve girê dide; yek ji serkeftinên wî yên bingehîn teoriya qiyasê ye.",
+    "explanationTr": "Stanford Encyclopedia of Philosophy, mantığın tam anlamıyla sistematik bir disiplin hâline gelişini Aristoteles'le ilişkilendirir; onun temel başarılarından biri kıyas teorisidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "plato.stanford.edu",
+      "sourceReference": "https://plato.stanford.edu/entries/logic-ancient/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0018",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Damezrînerê dibistana felsefeyê ya Stoayî kî ye?",
+    "promptTr": "Stoacı felsefe okulunun kurucusu kimdir?",
+    "answers": [
+      "Zenonê Kîtionî",
+      "Epîkuros",
+      "Pyrrhon",
+      "Dîogenês"
+    ],
+    "answersTr": [
+      "Kitionlu Zenon",
+      "Epikuros",
+      "Pyrrhon",
+      "Diogenes"
+    ],
+    "correctAnswer": "Zenonê Kîtionî",
+    "correctAnswerTr": "Kitionlu Zenon",
+    "explanation": "Stoacı okul yaklaşık MÖ 300'de Kitionlu Zenon tarafından Atina'da kuruldu.",
+    "explanationKu": "Dibistana Stoayî derdora b.z. 300î de ji aliyê Zenonê Kîtionî ve li Atînayê hat avakirin.",
+    "explanationTr": "Stoacı okul yaklaşık MÖ 300'de Kitionlu Zenon tarafından Atina'da kuruldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "plato.stanford.edu",
+      "sourceReference": "https://plato.stanford.edu/archives/sum2024/entries/stoicism/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0019",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Gotina Cogito, ergo sum herî zêde bi kîjan fîlozofî re tê têkildarkirin?",
+    "promptTr": "Cogito, ergo sum ifadesi en çok hangi filozofla ilişkilendirilir?",
+    "answers": [
+      "David Hume",
+      "Immanuel Kant",
+      "René Descartes",
+      "Baruch Spinoza"
+    ],
+    "answersTr": [
+      "David Hume",
+      "Immanuel Kant",
+      "René Descartes",
+      "Baruch Spinoza"
+    ],
+    "correctAnswer": "René Descartes",
+    "correctAnswerTr": "René Descartes",
+    "explanation": "Cogito, ergo sum, Türkçede yaklaşık olarak Düşünüyorum, öyleyse varım şeklinde ifade edilen ve Descartes'ın felsefesiyle özdeşleşen önermedir.",
+    "explanationKu": "Cogito, ergo sum, bi Kurmancî bi qasî \"Ez difikirim, nexwe ez heme\" tê îfadekirin û pêşniyazek e ku bi felsefeya Descartes re bûye yek.",
+    "explanationTr": "Cogito, ergo sum, Türkçede yaklaşık olarak Düşünüyorum, öyleyse varım şeklinde ifade edilen ve Descartes'ın felsefesiyle özdeşleşen önermedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.britannica.com",
+      "sourceReference": "https://www.britannica.com/biography/Rene-Descartes",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0020",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Têgeha ferza kategorîk herî rasterast bi felsefeya exlaqê ya kîjan fîlozofî re têkildar e?",
+    "promptTr": "Kategorik imperatif kavramı en doğrudan hangi filozofun ahlak felsefesiyle ilişkilidir?",
+    "answers": [
+      "Immanuel Kant",
+      "John Locke",
+      "David Hume",
+      "Thomas Hobbes"
+    ],
+    "answersTr": [
+      "Immanuel Kant",
+      "John Locke",
+      "David Hume",
+      "Thomas Hobbes"
+    ],
+    "correctAnswer": "Immanuel Kant",
+    "correctAnswerTr": "Immanuel Kant",
+    "explanation": "Kategorik imperatif Kant'ın pratik felsefesinin merkezindedir. Kant bunun temel formüllerinden birini, kişinin ilkesinin evrensel yasa olmasını isteyebilmesi üzerinden açıklar.",
+    "explanationKu": "Ferza kategorîk di navenda felsefeya pratîk a Kant de ye. Kant yek ji formûlên wê yên bingehîn, di ser daxwaza mirov a ku prensîba wî bibe yasayeke gerdûnî re vedibêje.",
+    "explanationTr": "Kategorik imperatif Kant'ın pratik felsefesinin merkezindedir. Kant bunun temel formüllerinden birini, kişinin ilkesinin evrensel yasa olmasını isteyebilmesi üzerinden açıklar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "plato.stanford.edu",
+      "sourceReference": "https://plato.stanford.edu/entries/kant-social-political/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0021",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Cota fîlozofan a ku herî rasterast bi kevneşopiya fêdedariya klasîk re tê têkildarkirin kîjan e?",
+    "promptTr": "Klasik faydacılık geleneğiyle en doğrudan ilişkilendirilen filozof çifti hangisidir?",
+    "answers": [
+      "René Descartes û Baruch Spinoza",
+      "Platon û Arîstotelês",
+      "Jeremy Bentham û John Stuart Mill",
+      "Søren Kierkegaard û Friedrich Nietzsche"
+    ],
+    "answersTr": [
+      "René Descartes ve Baruch Spinoza",
+      "Platon ve Aristoteles",
+      "Jeremy Bentham ve John Stuart Mill",
+      "Søren Kierkegaard ve Friedrich Nietzsche"
+    ],
+    "correctAnswer": "Jeremy Bentham û John Stuart Mill",
+    "correctAnswerTr": "Jeremy Bentham ve John Stuart Mill",
+    "explanation": "Bentham ve John Stuart Mill klasik faydacılığın başlıca temsilcileri olarak kabul edilir. Her ikisinin yaklaşımında sonuçlar ve mutluluk kavramı merkezi yer tutar.",
+    "explanationKu": "Bentham û John Stuart Mill wekî nûnerên sereke yên fêdedariya klasîk tên qebûlkirin. Di nêzîkatiya herduyan de jî encam û têgeha bextewariyê xwedî ciyekî navendî ye.",
+    "explanationTr": "Bentham ve John Stuart Mill klasik faydacılığın başlıca temsilcileri olarak kabul edilir. Her ikisinin yaklaşımında sonuçlar ve mutluluk kavramı merkezi yer tutar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "plato.stanford.edu",
+      "sourceReference": "https://plato.stanford.edu/archives/win2022/entries/utilitarianism-history/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0022",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Nêzîkatiya ku di bidestxistina zanyariyê de serpêhatiya hestan wekî çavkaniya bingehîn derdixe pêş kîjan e?",
+    "promptTr": "Bilginin edinilmesinde duyu deneyimini temel kaynak olarak öne çıkaran yaklaşım hangisidir?",
+    "answers": [
+      "Rasyonalîzm",
+      "Empîrîzm",
+      "Stoaîzm",
+      "Eksîstensiyalîzm"
+    ],
+    "answersTr": [
+      "Rasyonalizm",
+      "Empirizm",
+      "Stoacılık",
+      "Varoluşçuluk"
+    ],
+    "correctAnswer": "Empîrîzm",
+    "correctAnswerTr": "Empirizm",
+    "explanation": "Empirizm, bilgi ve kavramların edinilmesinde deneyimin, özellikle duyu deneyiminin temel rolünü vurgulayan epistemolojik yaklaşımdır.",
+    "explanationKu": "Empîrîzm nêzîkatiyeke epîstemolojîk e ku di bidestxistina zanyarî û têgehan de rola bingehîn a serpêhatiyê, bi taybetî jî serpêhatiya hestan radixe ber çavan.",
+    "explanationTr": "Empirizm, bilgi ve kavramların edinilmesinde deneyimin, özellikle duyu deneyiminin temel rolünü vurgulayan epistemolojik yaklaşımdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "plato.stanford.edu",
+      "sourceReference": "https://plato.stanford.edu/archives/sum2022/entries/rationalism-empiricism/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0023",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Nêzîkatiya kevneşopî ya ku diparêze ku hin zanyarî û têgeh dikarin ji serpêhatiya hestan serbixwe bi riya aqil werin bidestxistin kîjan e?",
+    "promptTr": "Bazı bilgi ve kavramların duyu deneyiminden bağımsız biçimde akıl yoluyla elde edilebileceğini savunan geleneksel yaklaşım hangisidir?",
+    "answers": [
+      "Empîrîzm",
+      "Pragmatîzm",
+      "Stoaîzm",
+      "Rasyonalîzm"
+    ],
+    "answersTr": [
+      "Empirizm",
+      "Pragmatizm",
+      "Stoacılık",
+      "Rasyonalizm"
+    ],
+    "correctAnswer": "Rasyonalîzm",
+    "correctAnswerTr": "Rasyonalizm",
+    "explanation": "Geleneksel rasyonalizm, önemli bazı bilgi veya kavramların yalnızca duyu deneyimine dayanmadığını ve aklın bağımsız bir rol oynadığını savunur.",
+    "explanationKu": "Rasyonalîzma kevneşopî diparêze ku hin zanyarî yan jî têgehên girîng tenê bi serpêhatiya hestan ve girêdayî nîn in û aqil roleke serbixwe dilîze.",
+    "explanationTr": "Geleneksel rasyonalizm, önemli bazı bilgi veya kavramların yalnızca duyu deneyimine dayanmadığını ve aklın bağımsız bir rol oynadığını savunur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "plato.stanford.edu",
+      "sourceReference": "https://plato.stanford.edu/archives/sum2022/entries/rationalism-empiricism/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0024",
+    "category": "Paradigma",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Nivîskarê Şerefnameyê ku ji bo dîroka kurdan çavkaniyeke girîng e kî ye?",
+    "promptTr": "Kürt tarihi açısından önemli bir kaynak olan Şerefname'nin yazarı kimdir?",
+    "answers": [
+      "Ehmedê Xanî",
+      "Şerefxanê Bedlîsî",
+      "Mela Mehmûdê Bazîdî",
+      "Celadet Alî Bedirxan"
+    ],
+    "answersTr": [
+      "Ehmedê Xanî",
+      "Şeref Han Bitlisî",
+      "Molla Mahmud Bâyezîdî",
+      "Celadet Alî Bedirxan"
+    ],
+    "correctAnswer": "Şerefxanê Bedlîsî",
+    "correctAnswerTr": "Şeref Han Bitlisî",
+    "explanation": "Şeref Han Bitlisî, Farsça kaleme aldığı Şerefname'nin yazarıdır. Eserin önemli bir bölümü Kürt hanedanları ve topluluklarının tarihini ele alır.",
+    "explanationKu": "Şerefxanê Bedlîsî nivîskarê Şerefnameyê ye ku bi Farsî hatiye nivîsandin. Beşeke girîng a berhemê behsa dîroka xanedan û civakên kurdan dike.",
+    "explanationTr": "Şeref Han Bitlisî, Farsça kaleme aldığı Şerefname'nin yazarıdır. Eserin önemli bir bölümü Kürt hanedanları ve topluluklarının tarihini ele alır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.iranicaonline.org",
+      "sourceReference": "https://www.iranicaonline.org/articles/bedlisi-saraf-al-din-khan-b/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0025",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Nivîskarê Mem û Zînê ku ji berhemên klasîk ên edebiyata Kurmancî ye kî ye?",
+    "promptTr": "Kurmancî edebiyatının klasik eserlerinden Mem û Zîn'in yazarı kimdir?",
+    "answers": [
+      "Şerefxanê Bedlîsî",
+      "Celadet Alî Bedirxan",
+      "Mela Mehmûdê Bazîdî",
+      "Ehmedê Xanî"
+    ],
+    "answersTr": [
+      "Şeref Han Bitlisî",
+      "Celadet Alî Bedirxan",
+      "Molla Mahmud Bâyezîdî",
+      "Ehmedê Xanî"
+    ],
+    "correctAnswer": "Ehmedê Xanî",
+    "correctAnswerTr": "Ehmedê Xanî",
+    "explanation": "Mem û Zîn, Ehmedê Xanî'nin en tanınmış eseridir ve klasik Kürt edebiyatının başlıca yapıtları arasında yer alır.",
+    "explanationKu": "Mem û Zîn berhema herî naskirî ya Ehmedê Xanî ye û di nav berhemên sereke yên edebiyata kurdî ya klasîk de cih digire.",
+    "explanationTr": "Mem û Zîn, Ehmedê Xanî'nin en tanınmış eseridir ve klasik Kürt edebiyatının başlıca yapıtları arasında yer alır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Ehmed%C3%AA_Xan%C3%AE",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0026",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Zimannasê ku bi sêwirandina alfabeya Hawarê ya li ser bingeha Latînî ji bo Kurmancî tê naskirin kî ye?",
+    "promptTr": "Kurmancî için Latin temelli Hawar alfabesini tasarlamasıyla tanınan dilci kimdir?",
+    "answers": [
+      "Şerefxanê Bedlîsî",
+      "Ehmedê Xanî",
+      "Mela Mehmûdê Bazîdî",
+      "Celadet Alî Bedirxan"
+    ],
+    "answersTr": [
+      "Şeref Han Bitlisî",
+      "Ehmedê Xanî",
+      "Molla Mahmud Bâyezîdî",
+      "Celadet Alî Bedirxan"
+    ],
+    "correctAnswer": "Celadet Alî Bedirxan",
+    "correctAnswerTr": "Celadet Alî Bedirxan",
+    "explanation": "Celadet Alî Bedirxan, Latin temelli Hawar alfabesini tasarlaması ve modern Kurmancî dilbilgisi çalışmalarına katkısıyla tanınır.",
+    "explanationKu": "Celadet Alî Bedirxan, bi sêwirandina alfabeya Hawarê ya bi tîpên Latînî û tevkariya xwe ya li xebatên rêzimana Kurmancî ya modern tê naskirin.",
+    "explanationTr": "Celadet Alî Bedirxan, Latin temelli Hawar alfabesini tasarlaması ve modern Kurmancî dilbilgisi çalışmalarına katkısıyla tanınır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Celadet_Al%C3%AE_Bedirxan",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0027",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Nivîskarê berhema bi navê Adat û Rusûmatnameyê Ekradiye ku di 1858an de hatiye nivîsandin kî ye?",
+    "promptTr": "1858'de yazılan Âdât u Rusûmetnâme-i Ekrâdiye adlı eserin yazarı kimdir?",
+    "answers": [
+      "Mela Mehmûdê Bazîdî",
+      "Ehmedê Xanî",
+      "Şerefxanê Bedlîsî",
+      "Celadet Alî Bedirxan"
+    ],
+    "answersTr": [
+      "Molla Mahmud Bâyezîdî",
+      "Ehmedê Xanî",
+      "Şeref Han Bitlisî",
+      "Celadet Alî Bedirxan"
+    ],
+    "correctAnswer": "Mela Mehmûdê Bazîdî",
+    "correctAnswerTr": "Molla Mahmud Bâyezîdî",
+    "explanation": "Âdât u Rusûmetnâme-i Ekrâdiye, Molla Mahmud Bâyezîdî tarafından 1858'de yazıldı. Eser Kürtlerin toplumsal hayatı, örfleri ve kültürü hakkında erken dönem önemli bir etnografik kaynaktır.",
+    "explanationKu": "Adat û Rusûmatnameyê Ekradiye, di 1858an de ji aliyê Mela Mehmûdê Bazîdî ve hatiye nivîsandin. Berhem çavkaniyeke etnografîk a girîng a serdema destpêkê ya li ser jiyana civakî, orf û çanda kurdan e.",
+    "explanationTr": "Âdât u Rusûmetnâme-i Ekrâdiye, Molla Mahmud Bâyezîdî tarafından 1858'de yazıldı. Eser Kürtlerin toplumsal hayatı, örfleri ve kültürü hakkında erken dönem önemli bir etnografik kaynaktır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "islamansiklopedisi.org.tr",
+      "sourceReference": "https://islamansiklopedisi.org.tr/bayezidi-molla-mahmud",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0028",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di modela cudabûna hêzan de rayeyên dewletê bi kevneşopî li kîjan sê dabeşan tên veqetandin?",
+    "promptTr": "Kuvvetler ayrılığı modelinde devlet yetkileri geleneksel olarak hangi üç işleve ayrılır?",
+    "answers": [
+      "Navend, herêm û şaredarî",
+      "Bac, butçe û bazirganî",
+      "Zagonsazî, cîbicîkirin û daraz",
+      "Polîs, artêş û dîplomasî"
+    ],
+    "answersTr": [
+      "Merkez, bölge ve belediye",
+      "Vergi, bütçe ve ticaret",
+      "Yasama, yürütme ve yargı",
+      "Polis, ordu ve diplomasi"
+    ],
+    "correctAnswer": "Zagonsazî, cîbicîkirin û daraz",
+    "correctAnswerTr": "Yasama, yürütme ve yargı",
+    "explanation": "Kuvvetler ayrılığı öğretisi devletin temel işlevlerini yasama, yürütme ve yargı olarak ayrı dallara ayırır.",
+    "explanationKu": "Hînkirina cudabûna hêzan, karên bingehîn ên dewletê wekî zagonsazî, cîbicîkirin û daraz dike sê şaxên cuda.",
+    "explanationTr": "Kuvvetler ayrılığı öğretisi devletin temel işlevlerini yasama, yürütme ve yargı olarak ayrı dallara ayırır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.law.cornell.edu",
+      "sourceReference": "https://www.law.cornell.edu/wex/separation_of_powers",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0029",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di modela cudabûna hêzan de erka bingehîn a zagonsaziyê kîjan e?",
+    "promptTr": "Kuvvetler ayrılığı modelinde yasama işlevinin temel görevi hangisidir?",
+    "answers": [
+      "Zagonan cîbicî kirin",
+      "Zagonan çêkirin",
+      "Nakokiyên darazî bi biryar kirin",
+      "Nûnertiya dîplomatîk birêve birin"
+    ],
+    "answersTr": [
+      "Kanunları uygulamak",
+      "Kanun yapmak",
+      "Yargısal uyuşmazlıkları karara bağlamak",
+      "Diplomatik temsil yürütmek"
+    ],
+    "correctAnswer": "Zagonan çêkirin",
+    "correctAnswerTr": "Kanun yapmak",
+    "explanation": "Yasama işlevi genel olarak kanunların oluşturulmasıyla ilişkilidir; yürütme uygulama, yargı ise hukuki uyuşmazlıkların karara bağlanması işlevini üstlenir.",
+    "explanationKu": "Karê zagonsaziyê bi giştî bi çêkirina zagonan ve girêdayî ye; cîbicîkirin bicihanînê, daraz jî karê çareserkirina nakokiyên hiqûqî hildigire ser xwe.",
+    "explanationTr": "Yasama işlevi genel olarak kanunların oluşturulmasıyla ilişkilidir; yürütme uygulama, yargı ise hukuki uyuşmazlıkların karara bağlanması işlevini üstlenir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.law.cornell.edu",
+      "sourceReference": "https://www.law.cornell.edu/wex/separation_of_powers",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0030",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Pênaseya herî giştî ya têgeha destûra bingehîn kîjan e?",
+    "promptTr": "Anayasa kavramının en genel tanımı hangisidir?",
+    "answers": [
+      "Belgeya ku tenê butçeya salane ya dewletê diyar dike",
+      "Tevahiya biryarên ku rêxistinên navneteweyî wergirtine",
+      "Tevahiya prensîb û rêgezên rêxistiniya bingehîn a dewletekê",
+      "Zagona ku tenê sûcên cezayî rêz dike"
+    ],
+    "answersTr": [
+      "Yalnızca yıllık devlet bütçesini belirleyen belge",
+      "Uluslararası örgütlerin aldığı tüm kararların toplamı",
+      "Bir devletin temel örgütlenme ilke ve kurallarının bütünü",
+      "Sadece ceza suçlarını sıralayan kanun"
+    ],
+    "correctAnswer": "Tevahiya prensîb û rêgezên rêxistiniya bingehîn a dewletekê",
+    "correctAnswerTr": "Bir devletin temel örgütlenme ilke ve kurallarının bütünü",
+    "explanation": "Anayasa, bir siyasal devletin temel örgütlenme ilkelerini oluşturan doktrin ve uygulamalar bütünüdür. Her anayasanın tek bir yazılı belgeden oluşması zorunlu değildir.",
+    "explanationKu": "Destûra bingehîn tevahiya bîrdoz û sepanên ku prensîbên rêxistiniya bingehîn a dewleteke siyasî pêk tînin e. Ne mecbûr e ku her destûreke bingehîn ji yek belgeyeke nivîskî pêk bê.",
+    "explanationTr": "Anayasa, bir siyasal devletin temel örgütlenme ilkelerini oluşturan doktrin ve uygulamalar bütünüdür. Her anayasanın tek bir yazılı belgeden oluşması zorunlu değildir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.britannica.com",
+      "sourceReference": "https://www.britannica.com/topic/constitution-politics-and-law",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0031",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Danezana Gerdûnî ya Mafên Mirovan di kîjan dîrokê de ji aliyê Civata Giştî ya Neteweyên Yekbûyî ve hate îlankirin?",
+    "promptTr": "İnsan Hakları Evrensel Beyannamesi Birleşmiş Milletler Genel Kurulu tarafından hangi tarihte ilan edildi?",
+    "answers": [
+      "24ê Çiriya Pêşîn a 1945an",
+      "10ê Kanûna Pêşîn a 1948an",
+      "26ê Hezîrana 1945an",
+      "20ê Mijdara 1989an"
+    ],
+    "answersTr": [
+      "24 Ekim 1945",
+      "10 Aralık 1948",
+      "26 Haziran 1945",
+      "20 Kasım 1989"
+    ],
+    "correctAnswer": "10ê Kanûna Pêşîn a 1948an",
+    "correctAnswerTr": "10 Aralık 1948",
+    "explanation": "İnsan Hakları Evrensel Beyannamesi, BM Genel Kurulu tarafından Paris'te 10 Aralık 1948'de 217 A sayılı kararla ilan edildi.",
+    "explanationKu": "Danezana Gerdûnî ya Mafên Mirovan, di 10ê Kanûna Pêşîn a 1948an de li Parîsê bi biryara hejmar 217 A ji aliyê Civata Giştî ya NYyê ve hate îlankirin.",
+    "explanationTr": "İnsan Hakları Evrensel Beyannamesi, BM Genel Kurulu tarafından Paris'te 10 Aralık 1948'de 217 A sayılı kararla ilan edildi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.un.org",
+      "sourceReference": "https://www.un.org/en/about-us/universal-declaration-of-human-rights",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0032",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Xala 26an a Danezana Gerdûnî ya Mafên Mirovan kîjan mafî bi eşkereyî rêk dixe?",
+    "promptTr": "İnsan Hakları Evrensel Beyannamesi'nin 26. maddesi hangi hakkı açıkça düzenler?",
+    "answers": [
+      "Mafê penabertiyê",
+      "Mafê milkdariyê",
+      "Mafê perwerdeyê",
+      "Mafê kombûna aştiyane"
+    ],
+    "answersTr": [
+      "Sığınma hakkı",
+      "Mülkiyet hakkı",
+      "Eğitim hakkı",
+      "Barışçıl toplanma hakkı"
+    ],
+    "correctAnswer": "Mafê perwerdeyê",
+    "correctAnswerTr": "Eğitim hakkı",
+    "explanation": "Beyannamenin 26. maddesi herkesin eğitim hakkına sahip olduğunu belirtir ve temel eğitimin niteliğine ilişkin ilkeler içerir.",
+    "explanationKu": "Xala 26an a Danezanê destnîşan dike ku mafê her kesî yê perwerdeyê heye û derbarê çawaniya perwerdeya bingehîn de hin prensîban lixwe digire.",
+    "explanationTr": "Beyannamenin 26. maddesi herkesin eğitim hakkına sahip olduğunu belirtir ve temel eğitimin niteliğine ilişkin ilkeler içerir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.un.org",
+      "sourceReference": "https://www.un.org/en/about-us/universal-declaration-of-human-rights",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0033",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Neteweyên Yekbûyî di kîjan dîrokê de bi awayekî fermî dest bi xebata xwe kir?",
+    "promptTr": "Birleşmiş Milletler resmen hangi tarihte faaliyete geçti?",
+    "answers": [
+      "24ê Çiriya Pêşîn a 1945an",
+      "10ê Kanûna Pêşîn a 1948an",
+      "26ê Hezîrana 1945an",
+      "1ê Rêbendana 1950yî"
+    ],
+    "answersTr": [
+      "24 Ekim 1945",
+      "10 Aralık 1948",
+      "26 Haziran 1945",
+      "1 Ocak 1950"
+    ],
+    "correctAnswer": "24ê Çiriya Pêşîn a 1945an",
+    "correctAnswerTr": "24 Ekim 1945",
+    "explanation": "BM Şartı gerekli onayların ardından 24 Ekim 1945'te yürürlüğe girdi ve Birleşmiş Milletler o gün resmen varlık kazandı.",
+    "explanationKu": "Peymana NYyê piştî pejirandinên pêwîst di 24ê Çiriya Pêşîn a 1945an de ket meriyetê û Neteweyên Yekbûyî wê rojê bi awayekî fermî bû xwedî hebûn.",
+    "explanationTr": "BM Şartı gerekli onayların ardından 24 Ekim 1945'te yürürlüğe girdi ve Birleşmiş Milletler o gün resmen varlık kazandı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.un.org",
+      "sourceReference": "https://www.un.org/en/about-us/history-of-the-un",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0034",
+    "category": "Paradigma",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Di sala 1945an de hejmara dewletên endam ên resen ên Neteweyên Yekbûyî çend bû?",
+    "promptTr": "Birleşmiş Milletlerin 1945'teki özgün üye devlet sayısı kaçtı?",
+    "answers": [
+      "50",
+      "51",
+      "57",
+      "193"
+    ],
+    "answersTr": [
+      "50",
+      "51",
+      "57",
+      "193"
+    ],
+    "correctAnswer": "51",
+    "correctAnswerTr": "51",
+    "explanation": "San Francisco Konferansı'na 50 devlet katıldı; Polonya daha sonra Şartı imzaladı ve BM'nin özgün 51 üyesinden biri oldu.",
+    "explanationKu": "50 dewlet beşdarî Konferansa San Franciscoyê bûn; Polonyayê piştre Peyman îmze kir û bû yek ji 51 endamên resen ên NYyê.",
+    "explanationTr": "San Francisco Konferansı'na 50 devlet katıldı; Polonya daha sonra Şartı imzaladı ve BM'nin özgün 51 üyesinden biri oldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.un.org",
+      "sourceReference": "https://www.un.org/en/about-us/history-of-the-un/preparatory-years",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0035",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Konseya Ewlekariyê ya Neteweyên Yekbûyî bi giştî ji çend endaman pêk tê?",
+    "promptTr": "Birleşmiş Milletler Güvenlik Konseyi toplam kaç üyeden oluşur?",
+    "answers": [
+      "10",
+      "15",
+      "20",
+      "25"
+    ],
+    "answersTr": [
+      "10",
+      "15",
+      "20",
+      "25"
+    ],
+    "correctAnswer": "15",
+    "correctAnswerTr": "15",
+    "explanation": "BM Güvenlik Konseyi toplam 15 üyeden oluşur: beş daimi ve on daimi olmayan üye.",
+    "explanationKu": "Konseya Ewlekariyê ya NYyê bi giştî ji 15 endaman pêk tê: pênc endamên daîmî û deh endamên nedaîmî.",
+    "explanationTr": "BM Güvenlik Konseyi toplam 15 üyeden oluşur: beş daimi ve on daimi olmayan üye.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "main.un.org",
+      "sourceReference": "https://main.un.org/securitycouncil/en/content/current-members",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0036",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Hejmarên endamên daîmî û nedaîmî yên Konseya Ewlekariyê ya NYyê di kîjan vebijarkê de rast hatine dayîn?",
+    "promptTr": "BM Güvenlik Konseyi'nin daimi ve daimi olmayan üyelerinin sayıları hangi seçenekte doğru verilmiştir?",
+    "answers": [
+      "5 daîmî, 10 nedaîmî",
+      "10 daîmî, 5 nedaîmî",
+      "5 daîmî, 15 nedaîmî",
+      "15 daîmî, 5 nedaîmî"
+    ],
+    "answersTr": [
+      "5 daimi, 10 daimi olmayan",
+      "10 daimi, 5 daimi olmayan",
+      "5 daimi, 15 daimi olmayan",
+      "15 daimi, 5 daimi olmayan"
+    ],
+    "correctAnswer": "5 daîmî, 10 nedaîmî",
+    "correctAnswerTr": "5 daimi, 10 daimi olmayan",
+    "explanation": "Güvenlik Konseyi'nde beş daimi üye ve Genel Kurul tarafından iki yıllık dönemler için seçilen on daimi olmayan üye bulunur.",
+    "explanationKu": "Di Konseya Ewlekariyê de pênc endamên daîmî û deh endamên nedaîmî hene ku ji aliyê Civata Giştî ve ji bo du salan tên hilbijartin.",
+    "explanationTr": "Güvenlik Konseyi'nde beş daimi üye ve Genel Kurul tarafından iki yıllık dönemler için seçilen on daimi olmayan üye bulunur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "main.un.org",
+      "sourceReference": "https://main.un.org/securitycouncil/en/content/current-members",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0037",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Statuya Dîwana Dadê ya Navneteweyî ya di nav sîstema NYyê de kîjan e?",
+    "promptTr": "Uluslararası Adalet Divanı'nın BM sistemi içindeki statüsü hangisidir?",
+    "answers": [
+      "Organa zagonsaziyê ya Neteweyên Yekbûyî ye",
+      "Binkomîteya Konseya Ewlekariyê ya NYyê ye",
+      "Organa darazê ya sereke ya Neteweyên Yekbûyî ye",
+      "Organa temyîzê ya Dadgeha Cezayê ya Navneteweyî ye"
+    ],
+    "answersTr": [
+      "Birleşmiş Milletlerin yasama organıdır",
+      "BM Güvenlik Konseyi'nin alt komitesidir",
+      "Birleşmiş Milletlerin başlıca yargı organıdır",
+      "Uluslararası Ceza Mahkemesinin temyiz organıdır"
+    ],
+    "correctAnswer": "Organa darazê ya sereke ya Neteweyên Yekbûyî ye",
+    "correctAnswerTr": "Birleşmiş Milletlerin başlıca yargı organıdır",
+    "explanation": "Uluslararası Adalet Divanı, Birleşmiş Milletlerin başlıca yargı organıdır. Devletler arasındaki hukuki uyuşmazlıkları ele alır ve yetkili BM organlarına danışma görüşleri verebilir.",
+    "explanationKu": "Dîwana Dadê ya Navneteweyî organa darazê ya sereke ya Neteweyên Yekbûyî ye. Nakokiyên hiqûqî yên di navbera dewletan de dinirxîne û dikare ramanên şêwirmendiyê bide organên rayedar ên NYyê.",
+    "explanationTr": "Uluslararası Adalet Divanı, Birleşmiş Milletlerin başlıca yargı organıdır. Devletler arasındaki hukuki uyuşmazlıkları ele alır ve yetkili BM organlarına danışma görüşleri verebilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.icj-cij.org",
+      "sourceReference": "https://www.icj-cij.org/court",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0038",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Navenda Dîwana Dadê ya Navneteweyî li kîjan bajarî ye?",
+    "promptTr": "Uluslararası Adalet Divanı'nın merkezi hangi şehirdedir?",
+    "answers": [
+      "Lahey",
+      "Cenevre",
+      "New York",
+      "Strasbourg"
+    ],
+    "answersTr": [
+      "Lahey",
+      "Cenevre",
+      "New York",
+      "Strazburg"
+    ],
+    "correctAnswer": "Lahey",
+    "correctAnswerTr": "Lahey",
+    "explanation": "Uluslararası Adalet Divanı, Hollanda'nın Lahey kentindeki Barış Sarayı'nda bulunur.",
+    "explanationKu": "Dîwana Dadê ya Navneteweyî, li Qesra Aştiyê ya li Laheya Hollandayê ye.",
+    "explanationTr": "Uluslararası Adalet Divanı, Hollanda'nın Lahey kentindeki Barış Sarayı'nda bulunur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.icj-cij.org",
+      "sourceReference": "https://www.icj-cij.org/court",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0039",
+    "category": "Paradigma",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Li gorî xala 1emîn a Peymana Mafên Zarokan a NYyê, wekî rêgez, kî zarok tê hesibandin?",
+    "promptTr": "BM Çocuk Haklarına Dair Sözleşme'nin 1. maddesine göre genel kural olarak kim çocuk sayılır?",
+    "answers": [
+      "Her mirovê ku ji 16 saliyê biçûktir e",
+      "Her mirovê ku ji 21 saliyê biçûktir e",
+      "Tenê kesên di temenê perwerdeya mecbûrî de ne",
+      "Her mirovê ku ji 18 saliyê biçûktir e"
+    ],
+    "answersTr": [
+      "16 yaşından küçük her insan",
+      "21 yaşından küçük her insan",
+      "Yalnızca zorunlu eğitim çağındaki kişiler",
+      "18 yaşından küçük her insan"
+    ],
+    "correctAnswer": "Her mirovê ku ji 18 saliyê biçûktir e",
+    "correctAnswerTr": "18 yaşından küçük her insan",
+    "explanation": "Sözleşme, uygulanabilir hukukta erginlik daha önce kazanılmadıkça 18 yaşından küçük her insanı çocuk olarak tanımlar.",
+    "explanationKu": "Peyman, heta ku li gorî hiqûqa sepandinê balixbûn zûtir pêk neyê, her mirovê/a ji 18 saliyê biçûktir wekî zarok pênase dike.",
+    "explanationTr": "Sözleşme, uygulanabilir hukukta erginlik daha önce kazanılmadıkça 18 yaşından küçük her insanı çocuk olarak tanımlar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.unicef.org",
+      "sourceReference": "https://www.unicef.org/child-rights-convention/convention-text",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0040",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Yek ji hêmanên bingehîn ên pênaseya penaberiyê ya di Peymana Penaberan a 1951ê de kîjan e?",
+    "promptTr": "1951 Mülteci Sözleşmesi'ndeki mülteci tanımının temel unsurlarından biri hangisidir?",
+    "answers": [
+      "Ji ber tirsa zilmê ya li ser hincetên mafdar, li derveyî welatê ku ew hemwelatiyê wî ye mayîn",
+      "Tenê ji bo bidestxistina dahateke bilindtir barkirina welatekî din",
+      "Di heman welatî de barkirina bajarekî din",
+      "Ji bo demeke kurt geşteke turîstîk bo welatekî din kirin"
+    ],
+    "answersTr": [
+      "Haklı nedenlere dayanan zulüm korkusu nedeniyle vatandaşı olduğu ülkenin dışında bulunmak",
+      "Yalnızca daha yüksek gelir elde etmek için başka ülkeye taşınmak",
+      "Aynı ülke içinde başka bir şehre taşınmak",
+      "Başka bir ülkeye kısa süreli turistik gezi yapmak"
+    ],
+    "correctAnswer": "Ji ber tirsa zilmê ya li ser hincetên mafdar, li derveyî welatê ku ew hemwelatiyê wî ye mayîn",
+    "correctAnswerTr": "Haklı nedenlere dayanan zulüm korkusu nedeniyle vatandaşı olduğu ülkenin dışında bulunmak",
+    "explanation": "1951 Sözleşmesi, belirli nedenlerle zulme uğrama konusunda haklı korkusu bulunan, ülkesinin dışında olan ve o ülkenin korumasından yararlanamayan veya yararlanmak istemeyen kişileri kapsayan bir tanım getirir.",
+    "explanationKu": "Peymana 1951ê pênaseyeke ku kesên ku ji ber hin sedeman xwedî tirseke mafdar a rastî zilmê hatinê ne, li derveyî welatê xwe ne û nikarin yan jî naxwazin ji parastina wî welatî sûdê werbigirin li xwe digire tîne.",
+    "explanationTr": "1951 Sözleşmesi, belirli nedenlerle zulme uğrama konusunda haklı korkusu bulunan, ülkesinin dışında olan ve o ülkenin korumasından yararlanamayan veya yararlanmak istemeyen kişileri kapsayan bir tanım getirir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "emergency.unhcr.org",
+      "sourceReference": "https://emergency.unhcr.org/protection/legal-framework/refugee-definition",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0041",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Li gorî CDC'yê ji bo mezinên di navbera 18-60 salî de dema xewê ya rojane ya tê pêşniyarkirin herî kêm çend saet e?",
+    "promptTr": "CDC'ye göre 18–60 yaş arasındaki yetişkinler için önerilen günlük uyku süresi en az kaç saattir?",
+    "answers": [
+      "5 saet",
+      "7 saet",
+      "6 saet",
+      "9 saet"
+    ],
+    "answersTr": [
+      "5 saat",
+      "7 saat",
+      "6 saat",
+      "9 saat"
+    ],
+    "correctAnswer": "7 saet",
+    "correctAnswerTr": "7 saat",
+    "explanation": "CDC, 18–60 yaş grubundaki yetişkinlerin günde 7 saat veya daha fazla uyumasını önerir.",
+    "explanationKu": "CDC pêşniyar dike ku mezinên di koma 18-60 salî de rojê 7 saetan an jî zêdetir razên.",
+    "explanationTr": "CDC, 18–60 yaş grubundaki yetişkinlerin günde 7 saat veya daha fazla uyumasını önerir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.cdc.gov",
+      "sourceReference": "https://www.cdc.gov/sleep/about/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0042",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Yek ji peywirên girîng ên vîtamîna D di rûviyan de kîjan e?",
+    "promptTr": "D vitamininin bağırsaklardaki önemli görevlerinden biri hangisidir?",
+    "answers": [
+      "Sekinandina mijandina sodyûmê",
+      "Veguherandina proteînan bo glukozê",
+      "Valakirina depoyên hesin",
+      "Zêdekirina mijandina kalsiyûmê"
+    ],
+    "answersTr": [
+      "Sodyum emilimini durdurmak",
+      "Proteinleri glikoza çevirmek",
+      "Demir depolarını boşaltmak",
+      "Kalsiyum emilimini artırmak"
+    ],
+    "correctAnswer": "Zêdekirina mijandina kalsiyûmê",
+    "correctAnswerTr": "Kalsiyum emilimini artırmak",
+    "explanation": "D vitamini bağırsakta kalsiyum emilimini destekler ve normal kemik mineralizasyonuna katkıda bulunur.",
+    "explanationKu": "Vîtamîna D li rûviyan piştgiriyê dide mijandina kalsiyûmê û tevkariyê li mîneralîzasyona asayî ya hestiyan dike.",
+    "explanationTr": "D vitamini bağırsakta kalsiyum emilimini destekler ve normal kemik mineralizasyonuna katkıda bulunur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ods.od.nih.gov",
+      "sourceReference": "https://ods.od.nih.gov/factsheets/VITAMIND-HealthProfessional/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0043",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Rêxistina Tenduristiyê ya Cîhanê pêşniyar dike ku mezin xwarina xwê ya rojane di bin kîjan astê de bihêlin?",
+    "promptTr": "Dünya Sağlık Örgütü yetişkinlerin günlük tuz tüketimini hangi düzeyin altında tutmasını önerir?",
+    "answers": [
+      "15 gram",
+      "5 gram",
+      "10 gram",
+      "8 gram"
+    ],
+    "answersTr": [
+      "15 gram",
+      "5 gram",
+      "10 gram",
+      "8 gram"
+    ],
+    "correctAnswer": "5 gram",
+    "correctAnswerTr": "5 gram",
+    "explanation": "WHO yetişkinler için günde 5 gramdan az tuz, yani yaklaşık 2 gramdan az sodyum önerir.",
+    "explanationKu": "WHO ji bo mezinan rojê ji 5 gramî kêmtir xwê, ango bi qasî ji 2 gramî kêmtir sodyûm pêşniyar dike.",
+    "explanationTr": "WHO yetişkinler için günde 5 gramdan az tuz, yani yaklaşık 2 gramdan az sodyum önerir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.who.int",
+      "sourceReference": "https://www.who.int/news-room/fact-sheets/detail/sodium-reduction",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0044",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Zêdebûna neasayî ya germahiya ava deryayê rasterast çawa dibe sedema spîbûna mircanan?",
+    "promptTr": "Deniz suyu sıcaklığındaki olağandışı artış mercan beyazlamasına doğrudan nasıl yol açabilir?",
+    "answers": [
+      "Bi dûrxistina algên sîmbiyotîk ji tevnên wê",
+      "Bi stûrkirina qalikê mircanê",
+      "Bi çêkirina bêtir kalsiyûmê ji aliyê mircanê ve",
+      "Bi sekinandina çêkirina ronahiyê ya mircanê"
+    ],
+    "answersTr": [
+      "Mercanın simbiyotik alglerini dokusundan uzaklaştırmasına neden olarak",
+      "Mercanın kabuğunu kalınlaştırarak",
+      "Mercanın daha fazla kalsiyum üretmesini sağlayarak",
+      "Mercanın ışık üretmesini durdurarak"
+    ],
+    "correctAnswer": "Bi dûrxistina algên sîmbiyotîk ji tevnên wê",
+    "correctAnswerTr": "Mercanın simbiyotik alglerini dokusundan uzaklaştırmasına neden olarak",
+    "explanation": "Isı stresi mercanların dokularındaki simbiyotik algleri dışarı atmasına yol açabilir. Alglerin kaybı mercanın soluk veya beyaz görünmesine neden olur.",
+    "explanationKu": "Stresa germê dikare bibe sedem ku mircan algên sîmbiyotîk ên di nav tevnên xwe de bavêjin derve. Windabûna algan dibe sedem ku mircan mat an jî spî xuya bike.",
+    "explanationTr": "Isı stresi mercanların dokularındaki simbiyotik algleri dışarı atmasına yol açabilir. Alglerin kaybı mercanın soluk veya beyaz görünmesine neden olur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "oceanservice.noaa.gov",
+      "sourceReference": "https://oceanservice.noaa.gov/facts/coral_bleach.html",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0045",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Pêvajoya ku tê de riwek ji pelên xwe hilma avê didin atmosferê, çawa tê binavkirin?",
+    "promptTr": "Bitkilerin yapraklarından atmosfere su buharı vermesi hangi süreç olarak adlandırılır?",
+    "answers": [
+      "Tîrbûn",
+      "Transpîrasyon",
+      "Înfiltrasyon",
+      "Sublîmasyon"
+    ],
+    "answersTr": [
+      "Yoğunlaşma",
+      "Transpirasyon",
+      "İnfiltrasyon",
+      "Süblimleşme"
+    ],
+    "correctAnswer": "Transpîrasyon",
+    "correctAnswerTr": "Transpirasyon",
+    "explanation": "Transpirasyon sırasında su bitki yapraklarından buhar hâlinde atmosfere geçer ve su döngüsüne katılır.",
+    "explanationKu": "Di dema transpîrasyonê de av ji pelên riwekan bi şêweyê hilmê derbasî atmosferê dibe û tevlî çerxa avê dibe.",
+    "explanationTr": "Transpirasyon sırasında su bitki yapraklarından buhar hâlinde atmosfere geçer ve su döngüsüne katılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.usgs.gov",
+      "sourceReference": "https://www.usgs.gov/media/images/evapotranspiration-contributes-water-air-water-cycle",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0046",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Karê serekî yê tozkaran (pollinator) di riwekên kulîlkdar de kîjan e?",
+    "promptTr": "Çiçekli bitkilerde tozlayıcıların temel işlevi hangisidir?",
+    "answers": [
+      "Veguhastina avê ji koka riwekê ber bi pelan ve",
+      "Binaxkirina tovan rasterast di nav axê de",
+      "Çêkirina klorofîlê di pelan de",
+      "Veguhastina polenê ji nêrîkê bo mêyîkê"
+    ],
+    "answersTr": [
+      "Köklerden yapraklara su taşımak",
+      "Tohumları doğrudan toprağa gömmek",
+      "Yapraklarda klorofil üretmek",
+      "Poleni başçıktan tepeciğe taşımak"
+    ],
+    "correctAnswer": "Veguhastina polenê ji nêrîkê bo mêyîkê",
+    "correctAnswerTr": "Poleni başçıktan tepeciğe taşımak",
+    "explanation": "Tozlayıcılar çiçeklerle beslenirken polen tanelerini başçıktan tepeciğe taşıyarak döllenmeye katkı sağlar.",
+    "explanationKu": "Tozkar di heman demê de ku bi kulîlkan xwedî dibin, bi veguhastina libên polenê ji nêrîkê bo mêyîkê tevkariyê li pîtandinê dikin.",
+    "explanationTr": "Tozlayıcılar çiçeklerle beslenirken polen tanelerini başçıktan tepeciğe taşıyarak döllenmeye katkı sağlar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "naturalhistory.si.edu",
+      "sourceReference": "https://naturalhistory.si.edu/events/festivals-and-event-series/pollinators-plants",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0047",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Çend dilên heştpêyekê hene?",
+    "promptTr": "Bir ahtapotun kaç kalbi vardır?",
+    "answers": [
+      "Yek",
+      "Sê",
+      "Du",
+      "Çar"
+    ],
+    "answersTr": [
+      "Bir",
+      "Üç",
+      "İki",
+      "Dört"
+    ],
+    "correctAnswer": "Sê",
+    "correctAnswerTr": "Üç",
+    "explanation": "Ahtapotlarda üç kalp bulunur; ikisi solungaçlara, biri ise vücudun geri kalanına kan pompalar.",
+    "explanationKu": "Sê dilên heştpêyan hene; du ji wan xwînê pompe dikin bo xiriyan, yê din jî pompe dike bo laşê mayî.",
+    "explanationTr": "Ahtapotlarda üç kalp bulunur; ikisi solungaçlara, biri ise vücudun geri kalanına kan pompalar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "education.nationalgeographic.org",
+      "sourceReference": "https://education.nationalgeographic.org/resource/animals-101-octopuses/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0048",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di hûrguca hêştirê de bi giranî çi tê depokirin?",
+    "promptTr": "Devenin hörgücünde esas olarak ne depolanır?",
+    "answers": [
+      "Bez",
+      "Av",
+      "Xwîn",
+      "Xwê"
+    ],
+    "answersTr": [
+      "Yağ",
+      "Su",
+      "Kan",
+      "Tuz"
+    ],
+    "correctAnswer": "Bez",
+    "correctAnswerTr": "Yağ",
+    "explanation": "Develerin hörgüçleri su deposu değildir; esas olarak gerektiğinde enerji kaynağı olarak kullanılabilen yağ içerir.",
+    "explanationKu": "Hûrgucên hêştiran ne depoyên avê ne; di serî de beza ku dema pêwîst be wekî çavkaniya enerjiyê tê bikaranîn, li xwe digirin.",
+    "explanationTr": "Develerin hörgüçleri su deposu değildir; esas olarak gerektiğinde enerji kaynağı olarak kullanılabilen yağ içerir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.loc.gov",
+      "sourceReference": "https://www.loc.gov/everyday-mysteries/categories/zoology/item/how-much-water-does-a-camels-hump-hold/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0049",
+    "category": "Paradigma",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Di têkiliya mîkorîzayê de kivark bi gelemperî kîjan fêdeyê dide koka riwekê?",
+    "promptTr": "Mikoriza ilişkisinde mantar, bitki köküne genellikle hangi yararı sağlar?",
+    "answers": [
+      "Guhertina rengê kulîlkê",
+      "Pêşxistina wergirtina av û mîneralan",
+      "Zêdekirina hejmara tovan bi awayekî rasterast",
+      "Dabînkirina berhemanîna ronahiyê ji aliyê pelan ve"
+    ],
+    "answersTr": [
+      "Çiçek rengini değiştirmek",
+      "Su ve mineral alımını geliştirmek",
+      "Tohum sayısını doğrudan artırmak",
+      "Yaprakların ışık üretmesini sağlamak"
+    ],
+    "correctAnswer": "Pêşxistina wergirtina av û mîneralan",
+    "correctAnswerTr": "Su ve mineral alımını geliştirmek",
+    "explanation": "Mikorizal mantarlar kökün toprakla temasını genişleterek özellikle su, azot ve fosfor alımını artırabilir. Buna karşılık bitki mantara fotosentez ürünleri sağlar.",
+    "explanationKu": "Kivarkên mîkorîzal dikarin bi berfirehkirina temasa kokê ya bi axê re, bi taybetî wergirtina av, nîtrojen û fosforê zêde bikin. Di berdêla vê de, riwek jî berhemên fotosentezê dide kivarkê.",
+    "explanationTr": "Mikorizal mantarlar kökün toprakla temasını genişleterek özellikle su, azot ve fosfor alımını artırabilir. Buna karşılık bitki mantara fotosentez ürünleri sağlar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "research.fs.usda.gov",
+      "sourceReference": "https://research.fs.usda.gov/treesearch/9995",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0050",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Yek ji peywirên girîng ên daristanên mangrovê di ekosîstemên peravê de kîjan e?",
+    "promptTr": "Mangrov ormanlarının kıyı ekosistemlerinde önemli işlevlerinden biri hangisidir?",
+    "answers": [
+      "Ji holê rakirina bi tevahî ya şoriya ava deryayê",
+      "Dabînkirina jîngeheke parastî ji bo masiyên ciwan",
+      "Lezkirina çêbûna volkanan li binê okyanûsê",
+      "Sekinandina bi tevahî ya tevgerên med û cezrê"
+    ],
+    "answersTr": [
+      "Deniz suyunun tuzluluğunu tamamen ortadan kaldırmak",
+      "Genç balıklar için korunaklı yaşam alanı sağlamak",
+      "Okyanus tabanında volkan oluşumunu hızlandırmak",
+      "Gelgit hareketlerini bütünüyle durdurmak"
+    ],
+    "correctAnswer": "Dabînkirina jîngeheke parastî ji bo masiyên ciwan",
+    "correctAnswerTr": "Genç balıklar için korunaklı yaşam alanı sağlamak",
+    "explanation": "Mangrov kökleri birçok genç balık ve omurgasız için korunaklı bir büyüme alanı oluşturur. Mangrovlar aynı zamanda dalga etkisini azaltarak kıyıları korur.",
+    "explanationKu": "Kokên mangrovê ji bo gelek masiyên ciwan û lawirên bêmovik qadek mezinbûnê ya parastî diafirînin. Mangrov di heman demê de bi kêmkirina bandora pêlan peravan diparêzin.",
+    "explanationTr": "Mangrov kökleri birçok genç balık ve omurgasız için korunaklı bir büyüme alanı oluşturur. Mangrovlar aynı zamanda dalga etkisini azaltarak kıyıları korur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "floridakeys.noaa.gov",
+      "sourceReference": "https://floridakeys.noaa.gov/plants/mangroves.html",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0051",
+    "category": "Paradigma",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Karê girîng ê bakteriyên Rhizobiumê ku di girêkên koka riwekên baqilan de dijîn kîjan e?",
+    "promptTr": "Baklagillerin kök nodüllerinde yaşayan Rhizobium bakterilerinin önemli işlevi hangisidir?",
+    "answers": [
+      "Veguherandina nîtrojena atmosferî bo pêkhateyên ku riwek dikare bikar bîne",
+      "Veguherandina fosfora di axê de bo oksîjena ku riwek dikare bikar bîne",
+      "Depokirina hemû ava ku riwek ji axê dikişîne di girêkên kokê de",
+      "Sekinandina bi tevahî ya çêkirina klorofîlê di pelên riwekê de"
+    ],
+    "answersTr": [
+      "Atmosferik azotu bitkinin kullanabileceği bileşiklere dönüştürmek",
+      "Topraktaki fosforu bitkinin kullanabileceği oksijene dönüştürmek",
+      "Bitkinin topraktan çektiği tüm suyu kök nodüllerinde depolamak",
+      "Bitki yapraklarında klorofil üretimini tamamen durdurmak"
+    ],
+    "correctAnswer": "Veguherandina nîtrojena atmosferî bo pêkhateyên ku riwek dikare bikar bîne",
+    "correctAnswerTr": "Atmosferik azotu bitkinin kullanabileceği bileşiklere dönüştürmek",
+    "explanation": "Rhizobium bakterileri baklagillerle simbiyotik ilişki kurarak atmosferik azotun biyolojik olarak bağlanmasına katkı sağlar.",
+    "explanationKu": "Bakteriyên Rhizobium bi riwekên baqilan re têkiliyeke sîmbiyotîk çêdikin û tevkariyê li girêdana biyolojîk a nîtrojena atmosferî dikin.",
+    "explanationTr": "Rhizobium bakterileri baklagillerle simbiyotik ilişki kurarak atmosferik azotun biyolojik olarak bağlanmasına katkı sağlar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.fao.org",
+      "sourceReference": "https://www.fao.org/4/x5546e/x5546e05.htm",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0052",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Beşeke pir mezin a kalsiyûma di laşê mirovan de li ku tê dîtin?",
+    "promptTr": "İnsan vücudundaki kalsiyumun çok büyük bölümü nerede bulunur?",
+    "answers": [
+      "Di plazmaya xwînê de",
+      "Di şaneyên kezebê de",
+      "Di hestî û diranan de",
+      "Di masûlkeyên îskeletê de"
+    ],
+    "answersTr": [
+      "Kan plazmasında",
+      "Karaciğer hücrelerinde",
+      "Kemiklerde ve dişlerde",
+      "İskelet kaslarında"
+    ],
+    "correctAnswer": "Di hestî û diranan de",
+    "correctAnswerTr": "Kemiklerde ve dişlerde",
+    "explanation": "Vücuttaki kalsiyumun ezici çoğunluğu kemik ve dişlerin mineral yapısında bulunur.",
+    "explanationKu": "Beşa herî mezin a kalsiyûma di laş de, di pêkhateya mîneralî ya hestî û diranan de cih digire.",
+    "explanationTr": "Vücuttaki kalsiyumun ezici çoğunluğu kemik ve dişlerin mineral yapısında bulunur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ods.od.nih.gov",
+      "sourceReference": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0053",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Li gorî yasaya yekem a livînê ya Newtonê, cisimek ku dilive û hêzeke net lê nayê sepandin, çawa tevdigere?",
+    "promptTr": "Newton'un birinci hareket yasasına göre net kuvvet uygulanmayan hareketli bir cisim nasıl davranır?",
+    "answers": [
+      "Bi berdewamî lez dibe",
+      "Livîna xwe ya xêzikî bi lezeke sabît didomîne",
+      "Ji xweber hêdî dibe û disekine",
+      "Dikeve orbîteke gilover"
+    ],
+    "answersTr": [
+      "Sürekli hızlanır",
+      "Sabit hızla doğrusal hareketini sürdürür",
+      "Kendiliğinden yavaşlayıp durur",
+      "Dairesel yörüngeye girer"
+    ],
+    "correctAnswer": "Livîna xwe ya xêzikî bi lezeke sabît didomîne",
+    "correctAnswerTr": "Sabit hızla doğrusal hareketini sürdürür",
+    "explanation": "Newton'un birinci yasası eylemsizliği tanımlar: net kuvvet yoksa cismin hızı ve hareket doğrultusu değişmez.",
+    "explanationKu": "Yasaya yekem a Newtonê tewrebûnê pênase dike: Heke hêzeke net nebe, lez û arasteya livînê ya cismê naguhere.",
+    "explanationTr": "Newton'un birinci yasası eylemsizliği tanımlar: net kuvvet yoksa cismin hızı ve hareket doğrultusu değişmez.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www1.grc.nasa.gov",
+      "sourceReference": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0054",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Îzotopên heman elementê di serî de bi kîjan taybetmendiya xwe ji hev cihê dibin?",
+    "promptTr": "Aynı elementin izotopları birbirinden temel olarak hangi özellikleriyle ayrılır?",
+    "answers": [
+      "Bi barê elektrîkî yê protonên xwe",
+      "Bi barê bingehîn ê elektronên xwe",
+      "Bi hejmara neutronan",
+      "Bi cihê ku navik lê ye"
+    ],
+    "answersTr": [
+      "Protonlarının elektrik yüküyle",
+      "Elektronlarının temel yüküyle",
+      "Nötron sayılarıyla",
+      "Çekirdeğin bulunduğu konumla"
+    ],
+    "correctAnswer": "Bi hejmara neutronan",
+    "correctAnswerTr": "Nötron sayılarıyla",
+    "explanation": "Bir elementin izotoplarında proton sayısı aynıdır, nötron sayısı ise farklıdır. Bu nedenle kütleleri farklı olabilir.",
+    "explanationKu": "Di îzotopên elementekê de hejmara protonan heman e, lê hejmara neutronan cuda ye. Ji ber vê yekê baristeyên wan dikarin cuda bin.",
+    "explanationTr": "Bir elementin izotoplarında proton sayısı aynıdır, nötron sayısı ise farklıdır. Bu nedenle kütleleri farklı olabilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.energy.gov",
+      "sourceReference": "https://www.energy.gov/science/doe-explainsisotopes",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0055",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Germtirîn gerstêrka di Sîstema Rojê de kîjan e?",
+    "promptTr": "Güneş Sistemi'ndeki en sıcak gezegen hangisidir?",
+    "answers": [
+      "Venûs",
+      "Merkûr",
+      "Mars",
+      "Jupîter"
+    ],
+    "answersTr": [
+      "Venüs",
+      "Merkür",
+      "Mars",
+      "Jüpiter"
+    ],
+    "correctAnswer": "Venûs",
+    "correctAnswerTr": "Venüs",
+    "explanation": "Venüs, yoğun atmosferinin oluşturduğu güçlü sera etkisi nedeniyle Güneş Sistemi'nin en sıcak gezegenidir.",
+    "explanationKu": "Venûs, ji ber bandora xurt a serayê ku ji aliyê atmosfera wê ya tîr ve tê afirandin, gerstêrka herî germ a Sîstema Rojê ye.",
+    "explanationTr": "Venüs, yoğun atmosferinin oluşturduğu güçlü sera etkisi nedeniyle Güneş Sistemi'nin en sıcak gezegenidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "science.nasa.gov",
+      "sourceReference": "https://science.nasa.gov/venus/venus-facts/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0056",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Yekeyeke astronomîk (au) bi qasî kîjan dûriyê ye?",
+    "promptTr": "Bir astronomik birim (au) yaklaşık olarak hangi uzaklığa karşılık gelir?",
+    "answers": [
+      "15 milyon kîlometre",
+      "15 milyar kîlometre",
+      "150 milyon kîlometre",
+      "1,5 milyon kîlometre"
+    ],
+    "answersTr": [
+      "15 milyon kilometre",
+      "15 milyar kilometre",
+      "150 milyon kilometre",
+      "1,5 milyon kilometre"
+    ],
+    "correctAnswer": "150 milyon kîlometre",
+    "correctAnswerTr": "150 milyon kilometre",
+    "explanation": "Bir astronomik birim tam olarak 149.597.870,7 kilometre olarak tanımlanmıştır ve yaklaşık Dünya-Güneş uzaklığına karşılık gelir.",
+    "explanationKu": "Yekeyeke astronomîk tam wekî 149.597.870,7 kîlometre hatiye pênasekirin û bi qasî dûriya di navbera Erd û Rojê de ye.",
+    "explanationTr": "Bir astronomik birim tam olarak 149.597.870,7 kilometre olarak tanımlanmıştır ve yaklaşık Dünya-Güneş uzaklığına karşılık gelir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "science.nasa.gov",
+      "sourceReference": "https://science.nasa.gov/universe/glossary/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0057",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Ji rengên di spektruma ronahiya dîtbar de kîjan xwediyê dirêjahiya pêlê ya herî mezin e?",
+    "promptTr": "Görünür ışık tayfındaki renklerden hangisinin dalga boyu en uzundur?",
+    "answers": [
+      "Mor",
+      "Sor",
+      "Şîn",
+      "Kesk"
+    ],
+    "answersTr": [
+      "Mor",
+      "Kırmızı",
+      "Mavi",
+      "Yeşil"
+    ],
+    "correctAnswer": "Sor",
+    "correctAnswerTr": "Kırmızı",
+    "explanation": "Görünür tayfta mor ışık en kısa, kırmızı ışık ise en uzun dalga boylarına sahiptir.",
+    "explanationKu": "Di spektruma dîtbar de dirêjiya pêla ronahiya mor herî kurt, ya ronahiya sor jî herî dirêj e.",
+    "explanationTr": "Görünür tayfta mor ışık en kısa, kırmızı ışık ise en uzun dalga boylarına sahiptir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "science.nasa.gov",
+      "sourceReference": "https://science.nasa.gov/ems/09_visiblelight/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0058",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di pîvana reqiya mîneralan a Mohs de kîjan mîneral xwediyê nirxê 10'an e?",
+    "promptTr": "Mohs mineral sertlik ölçeğinde 10 değerine sahip mineral hangisidir?",
+    "answers": [
+      "Kuvars",
+      "Topaz",
+      "Elmas",
+      "Kalsît"
+    ],
+    "answersTr": [
+      "Kuvars",
+      "Topaz",
+      "Elmas",
+      "Kalsit"
+    ],
+    "correctAnswer": "Elmas",
+    "correctAnswerTr": "Elmas",
+    "explanation": "Mohs ölçeğinde elmas 10 ile standart listedeki en yüksek sertlik değerine sahiptir.",
+    "explanationKu": "Di pîvana Mohs de elmas bi nirxê 10'an di lîsteya standard de xwedî bilindtirîn nirxê reqiyê ye.",
+    "explanationTr": "Mohs ölçeğinde elmas 10 ile standart listedeki en yüksek sertlik değerine sahiptir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "pubs.usgs.gov",
+      "sourceReference": "https://pubs.usgs.gov/gip/gemstones/mineral.html",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0059",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di derdora 25 °C'yê de gîraweyeke (çözelti) avî ku nirxê wê yê pH'yê 5 e, çawa tê dabeşkirin?",
+    "promptTr": "25 °C civarında pH değeri 5 olan sulu bir çözelti nasıl sınıflandırılır?",
+    "answers": [
+      "Asîdîk",
+      "Bazîk",
+      "Nêtar",
+      "Têrbûyî"
+    ],
+    "answersTr": [
+      "Asidik",
+      "Bazik",
+      "Nötr",
+      "Doymuş"
+    ],
+    "correctAnswer": "Asîdîk",
+    "correctAnswerTr": "Asidik",
+    "explanation": "Standart pH ölçeğinde 7'nin altındaki değerler asidik, 7 nötr ve 7'nin üzerindeki değerler bazik kabul edilir.",
+    "explanationKu": "Di pîvana standard a pH'yê de nirxên di bin 7'an de asîdîk, 7 nêtar û nirxên li ser 7'an jî bazîk tên qebûlkirin.",
+    "explanationTr": "Standart pH ölçeğinde 7'nin altındaki değerler asidik, 7 nötr ve 7'nin üzerindeki değerler bazik kabul edilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "chem.libretexts.org",
+      "sourceReference": "https://chem.libretexts.org/Courses/Victor_Valley_College/VVC_Chemistry_100/12%3A_Acids_and_Bases/12.08%3A_The_pH_and_pOH_Scales_-_Ways_to_Express_Acidity_and_Basicity",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0060",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Rêjeya navîn a şoriya okyanûsên Cîhanê bi qasî ji hezarî çend e?",
+    "promptTr": "Dünya okyanuslarının ortalama tuzluluğu yaklaşık kaç binde birdir?",
+    "answers": [
+      "5",
+      "15",
+      "35",
+      "75"
+    ],
+    "answersTr": [
+      "5",
+      "15",
+      "35",
+      "75"
+    ],
+    "correctAnswer": "35",
+    "correctAnswerTr": "35",
+    "explanation": "NOAA'ya göre deniz suyunun ortalama tuzluluğu yaklaşık binde 35'tir; bu yaklaşık yüzde 3,5'e karşılık gelir.",
+    "explanationKu": "Li gorî NOAA'yê şoriya navîn a ava deryayê nêzîkî ji hezarî 35 e; ev jî tekabulî ji sedî 3,5 dike.",
+    "explanationTr": "NOAA'ya göre deniz suyunun ortalama tuzluluğu yaklaşık binde 35'tir; bu yaklaşık yüzde 3,5'e karşılık gelir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "oceanservice.noaa.gov",
+      "sourceReference": "https://oceanservice.noaa.gov/facts/whysalty.html",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0061",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Sedema serekî ya geşxuyabûna Heyvê di ezmanê şevê de çi ye?",
+    "promptTr": "Ay'ın gece gökyüzünde parlak görünmesinin temel nedeni nedir?",
+    "answers": [
+      "Bi domdarî hilberîna ronahiyê di nava xwe de",
+      "Hilberîna ronahiya Cîhanê",
+      "Vegerandina ronahiya Rojê",
+      "Pêkhatina şewatê di atmosfera wê de"
+    ],
+    "answersTr": [
+      "Kendi içinde sürekli ışık üretmesi",
+      "Dünya'nın ışığını üretmesi",
+      "Güneş ışığını yansıtması",
+      "Atmosferinde yanma gerçekleşmesi"
+    ],
+    "correctAnswer": "Vegerandina ronahiya Rojê",
+    "correctAnswerTr": "Güneş ışığını yansıtması",
+    "explanation": "Ay kendi görünür ışığını üretmez; gördüğümüz ay ışığı, yüzeyinden yansıyan Güneş ışığıdır.",
+    "explanationKu": "Heyv ronahiya xwe ya dîtbar nahilberîne; ronahiya ku em dibînin, ronahiya Rojê ye ku ji rûyê wê vedigere.",
+    "explanationTr": "Ay kendi görünür ışığını üretmez; gördüğümüz ay ışığı, yüzeyinden yansıyan Güneş ışığıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "spaceplace.nasa.gov",
+      "sourceReference": "https://spaceplace.nasa.gov/moon-phases/sp/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0062",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Beşeke mezin ji erdhejên li Cîhanê li kîjan herêman kom dibin?",
+    "promptTr": "Dünya'daki depremlerin büyük bölümü hangi bölgelerde yoğunlaşır?",
+    "answers": [
+      "Di navenda parzemînan de",
+      "Di dirêjahiya sînorên lewheyên tektonîk de",
+      "Tenê li herêmên cemsaran",
+      "Tenê di navenda okyanûsan de"
+    ],
+    "answersTr": [
+      "Kıtaların tam merkezlerinde",
+      "Tektonik levha sınırları boyunca",
+      "Yalnızca kutup bölgelerinde",
+      "Yalnızca okyanusların ortasında"
+    ],
+    "correctAnswer": "Di dirêjahiya sînorên lewheyên tektonîk de",
+    "correctAnswerTr": "Tektonik levha sınırları boyunca",
+    "explanation": "Tektonik levhalar sürekli hareket eder ve dünyadaki depremler büyük ölçüde levha sınırlarındaki faylarda yoğunlaşır.",
+    "explanationKu": "Lewheyên tektonîk bi domdarî dilivin û erdhejên li cîhanê bi piranî li fayên ku li ser sînorên lewheyan in kom dibin.",
+    "explanationTr": "Tektonik levhalar sürekli hareket eder ve dünyadaki depremler büyük ölçüde levha sınırlarındaki faylarda yoğunlaşır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.usgs.gov",
+      "sourceReference": "https://www.usgs.gov/programs/earthquake-hazards/science-earthquakes",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0063",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Zanyara ku him di warê Fîzîkê him jî di yê Kîmyayê de Xelata Nobelê stendiye, kî ye?",
+    "promptTr": "Hem Fizik hem de Kimya alanında Nobel Ödülü alan bilim insanı kimdir?",
+    "answers": [
+      "Dorothy Hodgkin",
+      "Lise Meitner",
+      "Marie Curie",
+      "Emmy Noether"
+    ],
+    "answersTr": [
+      "Dorothy Hodgkin",
+      "Lise Meitner",
+      "Marie Curie",
+      "Emmy Noether"
+    ],
+    "correctAnswer": "Marie Curie",
+    "correctAnswerTr": "Marie Curie",
+    "explanation": "Marie Curie 1903'te Fizik, 1911'de Kimya Nobel Ödülü'nü aldı. Nobel kayıtlarına göre iki kez Nobel alan ilk kadın ve bu iki bilim dalında ödül alan ilk kişidir.",
+    "explanationKu": "Marie Curie di sala 1903'yan de Xelata Nobelê ya Fîzîkê û di 1911'an de jî ya Kîmyayê stend. Li gorî qeydên Nobelê ew yekem jin e ku du caran ev xelat stendiye û kesa yekem e ku di her du warên zanistî de xelat girtiye.",
+    "explanationTr": "Marie Curie 1903'te Fizik, 1911'de Kimya Nobel Ödülü'nü aldı. Nobel kayıtlarına göre iki kez Nobel alan ilk kadın ve bu iki bilim dalında ödül alan ilk kişidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.nobelprize.org",
+      "sourceReference": "https://www.nobelprize.org/prizes/lists/nobel-prize-awarded-women/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0064",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Xebatên Edward Jenner ên di sala 1796'an de bi vaksîna (derzî) ku li dijî kîjan nexweşiyê hatiye pêşxistin re têkildar in?",
+    "promptTr": "Edward Jenner'ın 1796'daki çalışmaları hangi hastalığa karşı geliştirilen aşıyla ilişkilidir?",
+    "answers": [
+      "Nexweşiya xurîkê",
+      "Sorka",
+      "Nexweşiya hariyê",
+      "Felca zarokan"
+    ],
+    "answersTr": [
+      "Çiçek hastalığı",
+      "Kızamık",
+      "Kuduz",
+      "Çocuk felci"
+    ],
+    "correctAnswer": "Nexweşiya xurîkê",
+    "correctAnswerTr": "Çiçek hastalığı",
+    "explanation": "Jenner, sığır çiçeği materyalini kullanarak çiçek hastalığına karşı koruma sağlayan erken aşılama çalışmasını gerçekleştirdi.",
+    "explanationKu": "Jenner bi bikaranîna materyalê xurîka çêlekan, xebata derzîlêdanê ya seretayî pêk anî ku li dijî nexweşiya xurîkê parastinê çêdike.",
+    "explanationTr": "Jenner, sığır çiçeği materyalini kullanarak çiçek hastalığına karşı koruma sağlayan erken aşılama çalışmasını gerçekleştirdi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.who.int",
+      "sourceReference": "https://www.who.int/news-room/spotlight/history-of-vaccination/history-of-smallpox-vaccination",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0065",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Gregor Mendel di ceribandinên xwe yên navdar ên li ser bomaweyê de bi giranî kîjan zindî bikar anî?",
+    "promptTr": "Gregor Mendel kalıtım üzerine ünlü deneylerinde ağırlıklı olarak hangi canlıyı kullandı?",
+    "answers": [
+      "Mêşa fêkiyan",
+      "Riweka lazûtê",
+      "Riweka polikê",
+      "Mişkê laboratuwarê"
+    ],
+    "answersTr": [
+      "Meyve sineği",
+      "Mısır bitkisi",
+      "Bezelye bitkisi",
+      "Laboratuvar faresi"
+    ],
+    "correctAnswer": "Riweka polikê",
+    "correctAnswerTr": "Bezelye bitkisi",
+    "explanation": "Mendel manastır bahçesinde binlerce bezelye çaprazlaması yaparak kalıtımın temel örüntülerini ortaya koydu.",
+    "explanationKu": "Mendel li baxçeyê keşîşxaneyê bi hezaran caran polik li hev xistin û bi vî awayî nexşên bingehîn ên bomaweyê derxistin holê.",
+    "explanationTr": "Mendel manastır bahçesinde binlerce bezelye çaprazlaması yaparak kalıtımın temel örüntülerini ortaya koydu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.genome.gov",
+      "sourceReference": "https://www.genome.gov/genetics-glossary/Gregor-Johann-Mendel",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0066",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Galileo Galilei di sala 1610'an de bi teleskopê çavdêrî kir û çar heyvên mezin ên li dor kîjan gerstêrkê dizivirin pênase kir?",
+    "promptTr": "Galileo Galilei 1610'da teleskopla gözlemleyerek hangi gezegenin çevresinde dönen dört büyük uyduyu tanımladı?",
+    "answers": [
+      "Saturn",
+      "Jupîter",
+      "Mars",
+      "Uranus"
+    ],
+    "answersTr": [
+      "Satürn",
+      "Jüpiter",
+      "Mars",
+      "Uranüs"
+    ],
+    "correctAnswer": "Jupîter",
+    "correctAnswerTr": "Jüpiter",
+    "explanation": "Galileo, Io, Europa, Ganymede ve Callisto olarak bilinen dört büyük Jüpiter uydusunu 1610'da gözlemledi.",
+    "explanationKu": "Galileo di sala 1610'an de çar heyvên mezin ên Jupîterê yên bi navê Io, Europa, Ganymede û Callisto çavdêrî kir.",
+    "explanationTr": "Galileo, Io, Europa, Ganymede ve Callisto olarak bilinen dört büyük Jüpiter uydusunu 1610'da gözlemledi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "science.nasa.gov",
+      "sourceReference": "https://science.nasa.gov/jupiter/jupiter-moons/all-jupiter-moons/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0067",
+    "category": "Paradigma",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Gerstêrka ku di 1781'an de ji aliyê William Herschel ve hatiye keşfkirin kîjan e?",
+    "promptTr": "1781'de William Herschel tarafından keşfedilen gezegen hangisidir?",
+    "answers": [
+      "Neptun",
+      "Saturn",
+      "Uranus",
+      "Merkûr"
+    ],
+    "answersTr": [
+      "Neptün",
+      "Satürn",
+      "Uranüs",
+      "Merkür"
+    ],
+    "correctAnswer": "Uranus",
+    "correctAnswerTr": "Uranüs",
+    "explanation": "William Herschel 13 Mart 1781'de Uranüs'ü gözlemledi. Uranüs teleskop yardımıyla keşfedilen ilk gezegen olarak kabul edilir.",
+    "explanationKu": "William Herschel di 13'ê Adara 1781'an de çavdêriya Uranusê kir. Uranus wekî yekem gerstêrka ku bi alîkariya teleskopê hatiye keşfkirin, tê qebûlkirin.",
+    "explanationTr": "William Herschel 13 Mart 1781'de Uranüs'ü gözlemledi. Uranüs teleskop yardımıyla keşfedilen ilk gezegen olarak kabul edilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "science.nasa.gov",
+      "sourceReference": "https://science.nasa.gov/uranus/exploration/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0068",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Têgîna \"al-jabr\" a ku çavkaniya peyva \"algebra\" ya di zimanên rojavayî de ye, di navê berhema navdar a kîjan matematîknasî de derbas dibe?",
+    "promptTr": "Batı dillerindeki \"algebra\" sözcüğüne kaynaklık eden \"al-jabr\" terimi hangi matematikçinin ünlü eserinin adında yer alır?",
+    "answers": [
+      "Mihemed bin Mûsa el-Xwarezmî",
+      "Omer Xeyam",
+      "Nesredîn Tûsî",
+      "Ebû Reyhan el-Bîrûnî"
+    ],
+    "answersTr": [
+      "Muhammed bin Musa el-Harezmi",
+      "Ömer Hayyam",
+      "Nasîrüddin Tûsî",
+      "Ebu Reyhan el-Bîrûnî"
+    ],
+    "correctAnswer": "Mihemed bin Mûsa el-Xwarezmî",
+    "correctAnswerTr": "Muhammed bin Musa el-Harezmi",
+    "explanation": "El-Harezmi'nin cebir üzerine eserinin adındaki \"al-jabr\" terimi zamanla \"algebra\" sözcüğüne kaynaklık etmiştir.",
+    "explanationKu": "Têgîna \"al-jabr\" a di navê pirtûka El-Xwarezmî ya li ser cebîrê de, bi demê re bûye çavkanî ji bo peyva \"algebra\"yê.",
+    "explanationTr": "El-Harezmi'nin cebir üzerine eserinin adındaki \"al-jabr\" terimi zamanla \"algebra\" sözcüğüne kaynaklık etmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Algebra",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0069",
+    "category": "Paradigma",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Berhema bibandor a bi navê \"Kîtab el-Menazir\" a Îbn el-Heysem ê ku di sedsala 11'an de jiyaye, di serî de bi kîjan şaxê zanistê re têkildar e?",
+    "promptTr": "11. yüzyılda yaşayan İbnü'l-Heysem'in \"Kitab el-Menazır\" adlı etkili eseri esas olarak hangi bilim dalıyla ilgilidir?",
+    "answers": [
+      "Jeolojî",
+      "Botanîk",
+      "Optîk",
+      "Metalurjî"
+    ],
+    "answersTr": [
+      "Jeoloji",
+      "Botanik",
+      "Optik",
+      "Metalurji"
+    ],
+    "correctAnswer": "Optîk",
+    "correctAnswerTr": "Optik",
+    "explanation": "İbnü'l-Heysem'in Kitab el-Menazır adlı eseri ışık, görme, yansıma ve kırılma gibi optik konularını sistemli biçimde ele aldı.",
+    "explanationKu": "Pirtûka Îbn el-Heysem a bi navê Kîtab el-Menazir; mijarên optîkê yên wekî ronahî, dîtin, vedan û şikestinê bi awayekî sîstematîk girtiye dest.",
+    "explanationTr": "İbnü'l-Heysem'in Kitab el-Menazır adlı eseri ışık, görme, yansıma ve kırılma gibi optik konularını sistemli biçimde ele aldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "pmc.ncbi.nlm.nih.gov",
+      "sourceReference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6074172/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bilim_0070",
+    "category": "Paradigma",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Çavdêriyên Alexander Fleming ên di sala 1928'an de, bi keşfa kîjan madeya antîbakteriyel re têkildar e?",
+    "promptTr": "Alexander Fleming'in 1928'deki gözlemleri hangi antibakteriyel maddenin keşfiyle ilişkilidir?",
+    "answers": [
+      "Însulîn",
+      "Kînîn",
+      "Streptomîsîn",
+      "Penîsîlîn"
+    ],
+    "answersTr": [
+      "İnsülin",
+      "Kinin",
+      "Streptomisin",
+      "Penisilin"
+    ],
+    "correctAnswer": "Penîsîlîn",
+    "correctAnswerTr": "Penisilin",
+    "explanation": "Fleming, bir Penicillium küfünün bakterilerin büyümesini engellediğini gözlemledi ve bu madde penisilin olarak adlandırıldı.",
+    "explanationKu": "Fleming çavdêrî kir ku kefa Penicilliumê li pêşiya mezinbûna bakteriyan dibe asteng û ev made wekî penîsîlîn hat binavkirin.",
+    "explanationTr": "Fleming, bir Penicillium küfünün bakterilerin büyümesini engellediğini gözlemledi ve bu madde penisilin olarak adlandırıldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.nobelprize.org",
+      "sourceReference": "https://www.nobelprize.org/prizes/medicine/1945/summary/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: ChatGPT (açılmış web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; inceleme: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-09-30",
+      "lastContentCheckAt": "2026-09-30",
+      "qualityVersion": 2
+    }
+  }
+]

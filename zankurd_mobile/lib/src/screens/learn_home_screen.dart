@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../data/zankurd_repository.dart';
 import '../utils/app_route.dart';
-import 'categories_tab.dart';
 import 'home_screen.dart';
 import 'subcategory_screen.dart';
 
 /// Faz 3: Birleşik "Fêr Bibe" sekmesi. Ana ekran içeriğini ([HomeScreen])
-/// gösterir ve Kategorî akışını ayrı bir sekme yerine bu ekran içinden
-/// erişilebilir kılar (kart → push [CategoriesTab]).
+/// gösterir; kategoriler ana ekrandaki konu ızgarasından doğrudan
+/// [SubcategoryScreen]'e açılır.
 class LearnHomeScreen extends StatelessWidget {
   const LearnHomeScreen({
     required this.repository,
@@ -36,14 +35,8 @@ class LearnHomeScreen extends StatelessWidget {
       refreshSignal: refreshSignal,
       onOpenLearning: onOpenLearning,
       onOpenPlay: onOpenPlay,
-      onOpenCategories: () async {
-        await Navigator.of(
-          context,
-        ).push(AppRoute.to(CategoriesTab(repository: repository)));
-      },
-      // "Kaldığın yer" satırı artık genel listeye değil doğrudan dokunulan
-      // kategoriye gider (2026-08-14 denetimi, bkz. home_screen.dart
-      // HomeScreen.onOpenCategory doc yorumu).
+      // Konu ızgarasında dokunulan kategori doğrudan açılır (bkz.
+      // home_screen.dart HomeScreen.onOpenCategory).
       onOpenCategory: (category) async {
         await Navigator.of(context).push(
           AppRoute.to(

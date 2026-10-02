@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import '../models/quiz_question.dart';
+import '../utils/error_reporter.dart';
 import 'curated_question_bank.dart';
 import 'question_bank_assets.dart';
 import 'question_bank_loader_stub.dart'
@@ -31,6 +32,10 @@ class QuestionBankLoader {
 
   List<QuizQuestion> _questions = const [];
   bool _loaded = false;
+  final List<String> _failedAssets = [];
+
+  /// Yüklenemeyen paketler: içerik kaybını sağlıklı açılıştan ayırır.
+  List<String> get failedAssets => List.unmodifiable(_failedAssets);
 
   /// Tüm sorular (curated + sentences + community + editorial + offline).
   List<QuizQuestion> get allQuestions {
@@ -74,7 +79,7 @@ class QuestionBankLoader {
   }
 
   /// Tek bir JSON asset dosyasını yükler ve `List<QuizQuestion>` döndürür.
-  static Future<List<QuizQuestion>> _loadJson(String assetPath) async {
+  Future<List<QuizQuestion>> _loadJson(String assetPath) async {
     try {
       final raw = await rootBundle.loadString(assetPath);
       // JSON çözme ARKA İSOLATE'te.
@@ -92,7 +97,16 @@ class QuestionBankLoader {
       return list
           .map((e) => QuizQuestion.fromJson(e as Map<String, dynamic>))
           .toList(growable: false);
-    } catch (e) {
+    } catch (_, stack) {
+      _failedAssets.add(assetPath);
+      // Ham JSON/parsing hatası içerik taşıyabilir. Yalnız paket kimliğini
+      // kaydet; diğer bankalarla devam etme davranışı korunur.
+      ErrorReporter.record(
+        StateError('Question bank could not be loaded: $assetPath'),
+        stack,
+        reason: 'question_bank_load',
+      );
+      debugPrint('[QuestionBank] Could not load $assetPath');
       // Asset bulunamazsa veya parse hatası olursa boş liste döndür
       // (uygulama curated + diğer banka ile devam eder).
       return const [];

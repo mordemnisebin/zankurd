@@ -72,10 +72,10 @@ void main() {
     final dailyActivity = unlocks.singleWhere(
       (achievement) => achievement.id == AchievementIds.dailyQuizFive,
     );
-    expect(dailyActivity.titleKu, '5 Çalakiyên Rojê');
-    expect(dailyActivity.titleTr, 'Günün Etkinliği x5');
-    expect(dailyActivity.descriptionKu, 'Te Çalakiya Rojê pênc caran qedand.');
-    expect(dailyActivity.descriptionTr, 'Günün etkinliğini 5 kez tamamladın.');
+    expect(dailyActivity.titleKu, '5 pirsên rojê');
+    expect(dailyActivity.titleTr, 'Günün soruları x5');
+    expect(dailyActivity.descriptionKu, 'Te pirsên rojê pênc caran qedandin.');
+    expect(dailyActivity.descriptionTr, 'Günün sorularını 5 kez tamamladın.');
   });
 
   test('unlocks category, streak, mistake, and bot achievements', () async {

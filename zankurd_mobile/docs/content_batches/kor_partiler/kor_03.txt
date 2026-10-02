@@ -1,0 +1,1318 @@
+Aşağıda 194 çoktan seçmeli soru var. Her biri için DOĞRU şıkkı seç.
+
+- Yalnız JSON dizisi döndür, başka hiçbir şey yazma.
+- Biçim: [{"id":"...","cevap":"<şıkkın TAM METNİ>"}]
+- Cevabı şıklardan birinin metnini AYNEN kopyalayarak yaz; harf yazma.
+- Emin değilsen "?" yaz. Tahmin etme — emin olmadığını söylemek,
+  yanlış bir kesinlikten daha değerli.
+
+Sorular Kurmancî. Doğru cevap sana GÖSTERİLMİYOR; bu kasıtlı.
+Gösterilseydi kendi seçimini savunma eğilimi ölçümü değersizleştirirdi.
+
+SORULAR:
+
+[offline_5041]
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "okumak" ye?
+  A) nanxane
+  B) ad/isim
+  C) kursî
+  D) xwendin
+
+[offline_5090]
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "kalp/gönül" ye?
+  A) dil
+  B) biçûk
+  C) dar
+  D) gül
+
+[offline_5094]
+S: "şev" (Kurmancî) bi Tirkî kîjan wateyê digire?
+  A) baba
+  B) gece
+  C) hava
+  D) okul
+
+[offline_5095]
+S: Hevwateya "okul/akademi" bi Kurmancî çi ye?
+  A) Dokuz
+  B) Pazartesi
+  C) Xwendegeh
+  D) Sekiz
+
+[offline_5099]
+S: Di Kurmancî de dema "mase" tê gotin, "sandalye" tê xwestin?
+  A) Rast
+  B) Şaş
+
+[offline_5143]
+S: "welat" (Kurmancî) bi Tirkî kîjan wateyê digire?
+  A) yazmak
+  B) ülke/vatan
+  C) ez nizanim
+  D) kız kardeş
+
+[offline_5158]
+S: Wateya Tirkî ya "berf" "ateş" e?
+  A) Rast
+  B) Şaş
+
+[offline_5168]
+S: Wateya Tirkî ya "kûçik" "kedi" e?
+  A) Rast
+  B) Şaş
+
+[offline_5174]
+S: Wateya Tirkî ya "ba" "yağmur" e?
+  A) Rast
+  B) Şaş
+
+[offline_5188]
+S: Wateya Tirkî ya peyva "kaxiz" kîjan e?
+  A) kağıt
+  B) here!
+  C) doğru
+  D) yazmak
+
+[offline_5202]
+S: Wateya Tirkî ya peyva "xanî" kîjan e?
+  A) yol
+  B) kapı
+  C) pencere
+  D) bina/ev
+
+[offline_5204]
+S: Wateya Tirkî ya "pirtûk" "bilmek" e?
+  A) Rast
+  B) Şaş
+
+[offline_5208]
+S: Rast e an şaş e: Kurmancî "zarok" = "öğrenci".
+  A) Rast
+  B) Şaş
+
+[offline_5221]
+S: Wateya Tirkî ya peyva "kal" kîjan e?
+  A) baba
+  B) hava
+  C) dede
+  D) rast
+
+[offline_5225]
+S: Ji bo gotina "göz" di Kurmancî de kîjan peyv tê bikaranîn?
+  A) di-
+  B) kar
+  C) mal
+  D) çav
+
+[offline_5236]
+S: Ji bo gotina "yol" di Kurmancî de kîjan peyv tê bikaranîn?
+  A) el
+  B) rê
+  C) av
+  D) ay
+
+[offline_5260]
+S: Peyva Kurmancî "reng" bi Tirkî çi tê gotin?
+  A) kitap
+  B) kaya
+  C) defter
+  D) renk
+
+[offline_5264]
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "kapı" ye?
+  A) derî
+  B) bîrge
+  C) bira
+  D) dev
+
+[offline_5268]
+S: Rast e an şaş e: Kurmancî "pisîk" = "kedi".
+  A) Rast
+  B) Şaş
+
+[offline_5270]
+S: Hevwateya "sevmek" bi Kurmancî çi ye?
+  A) xwarin
+  B) bihîstin
+  C) rêvekirin
+  D) hezkirin
+
+[offline_5297]
+S: Peyva Kurmancî "malbat" bi Tirkî çi tê gotin?
+  A) aile
+  B) hava
+  C) türkü
+  D) eski
+
+[offline_5307]
+S: Di Kurmancî de dema "av" tê gotin, "gün/güneş" tê xwestin?
+  A) Rast
+  B) Şaş
+
+[offline_5314]
+S: Wateya Tirkî ya "ba" "rüzgar" e?
+  A) Rast
+  B) Şaş
+
+[offline_5325]
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "işitmek" ye?
+  A) mamoste
+  B) bihîstin
+  C) komputer
+  D) dibistan
+
+[offline_5364]
+S: Di Kurmancî de dema "derî" tê gotin, "pencere" tê xwestin?
+  A) Rast
+  B) Şaş
+
+[offline_5386]
+S: Peyva Kurmancî "rûniştin" bi Tirkî çi tê gotin?
+  A) öğrenci
+  B) pencere
+  C) oturmak
+  D) kırmızı
+
+[offline_5433]
+S: Wateya Tirkî ya "destpêk" "ağaç" e?
+  A) Rast
+  B) Şaş
+
+[offline_5440]
+S: "mamoste" (Kurmancî) bi Tirkî kîjan wateyê digire?
+  A) altı
+  B) öğretmen
+  C) baba
+  D) baş/kafa
+
+[offline_5448]
+S: Wateya Tirkî ya peyva "wêne" kîjan e?
+  A) Arkadaş/yoldaş
+  B) yaşlı/ihtiyar
+  C) resim/fotoğraf
+  D) Latin (Hawar)
+
+[offline_5459]
+S: Hevwateya "ağız" bi Kurmancî çi ye?
+  A) poz
+  B) dev
+  C) şêr
+  D) deh
+
+[offline_5475]
+S: Wateya Tirkî ya "deşt" "kaya" e?
+  A) Rast
+  B) Şaş
+
+[offline_5499]
+S: Di Kurmancî de dema "nanpêj" tê gotin, "fırıncı" tê xwestin?
+  A) Rast
+  B) Şaş
+
+[offline_5514]
+S: Peyva Kurmancî "jin" bi Tirkî çi tê gotin?
+  A) doğru
+  B) küçük
+  C) kadın
+  D) nehir
+
+[offline_5524]
+S: Ji bo gotina "Kürt" di Kurmancî de kîjan peyv tê bikaranîn?
+  A) kurd
+  B) deşt
+  C) xweş
+  D) hesp
+
+[offline_5542]
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "arkadaş" ye?
+  A) hevîr
+  B) heval
+  C) nivîn
+  D) kursî
+
+[offline_5557]
+S: Peyva "kaxiz" tê wateya "resim/fotoğraf".
+  A) Rast
+  B) Şaş
+
+[offline_5591]
+S: Rast e an şaş e: Kurmancî "xwendekar" = "doğru".
+  A) Rast
+  B) Şaş
+
+[offline_5593]
+S: Rast e an şaş e: Kurmancî "çav" = "burun".
+  A) Rast
+  B) Şaş
+
+[offline_5599]
+S: Hevwateya "kalkmak" bi Kurmancî çi ye?
+  A) nivîn
+  B) siyah
+  C) rabûn
+  D) diçim
+
+[offline_5606]
+S: Ji bo ronahî û hewayê li dîwarê tê vekirin; bi Tirkî kîjan e?
+  A) pencere
+  B) ad/isim
+  C) beş
+  D) kitap
+
+[offline_5631]
+S: Di Kurmancî de dema "şev" tê gotin, "deniz" tê xwestin?
+  A) Rast
+  B) Şaş
+
+[offline_5632]
+S: Wateya Tirkî ya "şêr" "köpek" e?
+  A) Rast
+  B) Şaş
+
+[offline_5644]
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "el" ye?
+  A) heval
+  B) bira
+  C) kal
+  D) dest
+
+[offline_5675]
+S: Rast e an şaş e: Kurmancî "pê" = "baş/kafa".
+  A) Rast
+  B) Şaş
+
+[offline_5676]
+S: Di Kurmancî de dema "diran" tê gotin, "saç" tê xwestin?
+  A) Rast
+  B) Şaş
+
+[offline_5685]
+S: Hevwateya "ay" bi Kurmancî çi ye?
+  A) rast
+  B) heyv
+  C) deşt
+  D) derî
+
+[offline_5699]
+S: Ji bo gotina "yazmak" di Kurmancî de kîjan peyv tê bikaranîn?
+  A) xwendegeh
+  B) roj baş
+  C) roj
+  D) nivîsandin
+
+[offline_5719]
+S: Peyva "ax" tê wateya "toprak".
+  A) Rast
+  B) Şaş
+
+[offline_5722]
+S: Di Kurmancî de dema "ziman" tê gotin, "okul" tê xwestin?
+  A) Rast
+  B) Şaş
+
+[offline_5733]
+S: Di Kurmancî de dema "cîhan" tê gotin, "dünya" tê xwestin?
+  A) Rast
+  B) Şaş
+
+[offline_5805]
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "aile" ye?
+  A) helbest
+  B) kilam
+  C) malbat
+  D) azadî
+
+[offline_5813]
+S: Di Kurmancî de peyva "baran" bi Tirkî çi ye?
+  A) okumak
+  B) yağmur
+  C) yoğurt
+  D) gelmek
+
+[offline_5834]
+S: Di Kurmancî de dema "pir" tê gotin, "başlangıç" tê xwestin?
+  A) Rast
+  B) Şaş
+
+[offline_5848]
+S: Di Kurmancî de dema "welat" tê gotin, "dünya" tê xwestin?
+  A) Rast
+  B) Şaş
+
+[offline_5886]
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "ülke/vatan" ye?
+  A) welat
+  B) beyaz
+  C) stran
+  D) nivîn
+
+[offline_5894]
+S: "nivîn" (Kurmancî) bi Tirkî kîjan wateyê digire?
+  A) kapı
+  B) yatak
+  C) masa
+  D) burun
+
+[offline_5897]
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "yatak" ye?
+  A) nivîn
+  B) jin
+  C) rast
+  D) beyaz
+
+[offline_5903]
+S: Kîjan ji van peyva Kurmancî ye ku wateya wê "bugün" ye?
+  A) dar
+  B) îro
+  C) gul
+  D) dil
+
+[offline_5916]
+S: Peyva Kurmancî "çem" bi Tirkî çi tê gotin?
+  A) dağ
+  B) yol
+  C) nehir
+  D) burun
+
+[offline_5930]
+S: "kanî" (Kurmancî) bi Tirkî kîjan wateyê digire?
+  A) Hint-Avrupa
+  B) Kız (çocuğu)
+  C) Yirmi
+  D) çeşme/pınar
+
+[offline_5933]
+S: Hevwateya "masa" bi Kurmancî çi ye?
+  A) derî
+  B) text
+  C) kursî
+  D) mase
+
+[offline_5934]
+S: Di Kurmancî de peyva "teşt" bi Tirkî çi ye?
+  A) diçim
+  B) leğen
+  C) küçük
+  D) doğru
+
+[offline_5941]
+S: Di Kurmancî de dema "derya" tê gotin, "yıldız" tê xwestin?
+  A) Rast
+  B) Şaş
+
+[offline_5969]
+S: Kîjan vebijêrk tê wateya "şahmaran"?
+  A) şêwaza jiyana koçerî û rîtma reqsê
+  B) reqsa gelêrî ya kevneşopî ya sê-pêyî
+  C) fîgura mîtolojîk a çanda rojhilat
+  D) ji bo vegotina ku devkî an ji ber tê veguhastin
+
+[offline_6020]
+S: Ji aliyê Çandê ve ji bo "govendên herêmî" îfadeya rast kîjan e?
+  A) tora rêxistinbûna civakî, ewlehî, hilberîn û têkiliya siyasî
+  B) mêvanperwerî û daxwaza avakirina têkiliyê
+  C) reqsên gelêrî yên ku li her devera Kurdistanê cuda ne
+  D) govend tê girtin û li ser agir tê banzdan
+
+[offline_6042]
+S: Peyva "pêncşem" bi Tirkî çi ye?
+  A) Çarşamba
+  B) Cuma
+  C) Cumartesi
+  D) Perşembe
+
+[offline_6053]
+S: Derbarê "şal û şapik" de ravekirina rast kîjan e?
+  A) amûra kevneşopî ya dişibe bilûrê
+  B) çanda pêşkêşkirina dew û avê
+  C) vejîna xwezayê û bereket
+  D) cilûbergê kevneşopî yê mêran
+
+[offline_6059]
+S: Ji bo "hewran" pênaseya derbasdar kîjan e?
+  A) "Nû" (nû) + "roj" (roj)
+  B) çêkirina kevneşopî ya konê ji mûyî
+  C) Girêdanên civak û malbatê
+  D) hatina biharê û nûbûn
+
+[offline_6067]
+S: Derbarê "çilkez" de ya rast a zanîn çi ye?
+  A) îlahiyên olî/nivîsarên pîroz ên devkî
+  B) modela kevneşopî ya rêsê porê kurdî
+  C) sembola çandî û bîranîna rengan
+  D) tûrikê hunandî yê ji bo hilgirtina xwarinê
+
+[offline_6083]
+S: Peyva "destmal" bi tirkî çi ye?
+  A) mendil
+  B) halı
+  C) yastık
+  D) battaniye
+
+[offline_6093]
+S: Ji bo "tûrik" pênaseya derbasdar kîjan e?
+  A) şivantiya kevneşopî û zanîna xwezayê
+  B) cejna berdana beran û ajaldariyê
+  C) çîrok û kilam/stran
+  D) tûra hûnandî ya ku xwarin tê de tê hilgirtin
+
+[offline_6117]
+S: Derbarê "nanê tenûrê" de kîjan rast e?
+  A) nanê ku li dîwarê firna axî tê pehtin
+  B) berxwedana li dijî zilmê û ji nû ve jidayikbûn
+  C) xwarina sebzeyê ya bi tirş/goşt an yaxnî
+  D) vegotina bûyerên balkêş ên jiyayî
+
+[offline_6136]
+S: Kîjan têgiha "koçerî" rast şirove dike?
+  A) îlahiyên olî/nivîsarên pîroz ên devkî
+  B) hesinkarê ku li dijî zilmê rabû
+  C) jiyana ku bi demsalan di navbera zozan û warî de digere
+  D) vegotina ku ji nifşî bo nifşî hatiye veguhastin
+
+[offline_6182]
+S: "memê alan" çi îfade dike?
+  A) vegotina gelêrî ya kurdî ya destanî
+  B) xwarina kevneşopî ya ku bi mirîşk û birincê tê çêkirin
+  C) ziman, çand, weşangerî, hevgirtin û veguhastina nasnameyê
+  D) ji ber ku bîra çandî, wêje, vegotina devkî û aîdiyetê hildigire
+
+[offline_6189]
+S: Îfadeya ku têgiha "cîranî" rast vedibêje kîjan e?
+  A) peywendiya alîkariya di navbera malên nêzîk de
+  B) tûrikê ku ji bo hilgirtina xwarinê tê hûnandin
+  C) Melek Tawis û motîfa ronahî/rojê
+  D) cejna berdana beran û ajaldariyê
+
+[offline_6206]
+S: "dengbêj" çawa tê pênasekirin?
+  A) vegotina devkî û çîroka bi avaz
+  B) xurtkirina girêdanên civakî
+  C) amûra kevneşopî ya dişibe bilûrê
+  D) ji bo vegotina ku devkî an ji ber tê veguhastin
+
+[offline_6260]
+S: Kîjan pênase bi "Newroz" re li hev tê?
+  A) "Nû" (nû) + "roj" (roj)
+  B) hatina biharê û nûbûn
+  C) Melek Tavus (Tawûsî Melek)
+  D) keça û kurê apê (pismam)
+
+[offline_6325]
+S: Derbarê "bilûr" de ya rast a zanîn çi ye?
+  A) pîrozbahiya serê salê di salnameya gelêrî ya kurdî de
+  B) govend tê girtin û li ser agir tê banzdan
+  C) rola çandî ya jinên ku pez didoşin
+  D) amûreke pifê ya kevneşopî ya şivanan
+
+[offline_6343]
+S: Li jêr ji bo "tûtik" kîjan rast e?
+  A) amûra kevneşopî ya dişibe bilûrê
+  B) çanda pêşkêşkirina dew û avê
+  C) kevneşopiya muzîk û rîtûel/avazê
+  D) xurtkirina girêdanên civakî
+
+[offline_6365]
+S: Derbarê "zembîlfiroş" de kîjan rast e?
+  A) lehengên destaneke evînê
+  B) çîroka gelêrî ya kurdî ya navdar
+  C) pîrozbahiyeke komî/kolektîf
+  D) hest û bîra civakî
+
+[offline_6406]
+S: Berambera rast a peyva "govend" kîjan e?
+  A) Cilê herêmî
+  B) Rîtueleke çandî
+  C) Lîstika komî ya gelêrî
+  D) Birinca bi biharat
+
+[offline_6457]
+S: "şabaş" çawa tê pênasekirin?
+  A) îlahiyên olî/nivîsarên pîroz ên devkî
+  B) zêrên ku di dawetan de li bûkê tên kirin
+  C) kevneşopiya bexşîş dayîna muzîkjenan
+  D) konê eşîrên kurdên koçer
+
+[offline_6465]
+S: Ji bo Çandê derbarê "sersal" de vebijêrka rast kîjan e?
+  A) amûra pifê ya kevneşopî ya bilûrî
+  B) pîrozbahiya serê salê di salnameya gelêrî ya kurdî de
+  C) kewa bi hene û sembola hezkirina xwezayê
+  D) rola çandî ya jinên ku pez didoşin
+
+[offline_6523]
+S: "şîlan" çawa divê bê fêmkirin?
+  A) nanê kevneşopî yê ku di tenûrê de tê patin
+  B) kevneşopiya gula çolê û çaya nebatî
+  C) berxwedana li dijî zilmê û ji nû ve jidayikbûn
+  D) çîrok û kilam/stran
+
+[offline_6530]
+S: Dema "kelaş" tê gotin, çi tê xwestin?
+  A) berxwedana gel û hêviya azadiyê
+  B) pêlava kurdî ya kevneşopî ya destçêkirî
+  C) hunermendê ku kilaman ji ber dibêje
+  D) cejna dirûn û bereketê ya kevneşopî
+
+[offline_6533]
+S: Kîjan têgiha "vegotina çîrokan" rast şirove dike?
+  A) mîrateya devkî ya ku ji nifşî bo nifşî tê veguhastin
+  B) modela kevneşopî ya rêsê porê kurdî
+  C) konê ji mûyê bizina reş
+  D) reqsa gelêrî ya kevneşopî ya sê lingan
+
+[offline_6538]
+S: Bi "şevbêrk" çi tê xwestin?
+  A) bi jiyana di erdnîgariya çiyayî de di dirêjahiya dîrokê de
+  B) kincên rengîn, gelek-tebeqe û dirêj (kras)
+  C) lîstik an reqsên kevneşopî yên jinan
+  D) civînên axaftinê yên şevên zivistanê
+
+[offline_6555]
+S: Kîjan têgiha "serzêr" rast şirove dike?
+  A) nanê kevneşopî yê di tenûrê de tê pijandin
+  B) konê ji mûyê bizina reş
+  C) zêrên ku di dawetan de li bûkê tên kirin
+  D) hunermendê ku kilaman ji ber dibêje
+
+[offline_6560]
+S: Derbarê "çilkez" de agahiya herî rast kîjan e?
+  A) ji ber ku herêm, zarava, avhewa, çandinî û danûstandina bi mitbaxên cîran re cuda ne
+  B) ji ber ku zanîna jiyana rojane, motîf û estetîka herêmî hildigire
+  C) ji ber ku li avhewaya çiyayî berxwedana demsalî û ewlehiya xwarinê peyda dike
+  D) modela kezîkirina kurdî ya kevneşopî
+
+[offline_6575]
+S: Kîjan têgiha "şabaş" rast şirove dike?
+  A) Melek Tawis û motîfa ronahî/rojê
+  B) roja ziyaret û bibîranînê ya kevneşopî
+  C) kevneşopiya avêtina baxşîşê ji muzîkjenan re
+  D) tûrikê ku ji bo hilgirtina xwarinê tê hûnandin
+
+[offline_6581]
+S: Derbarê "nanê sêlê" de ravekirina rast kîjan e?
+  A) nanê ku li ser sacê tê pijandin
+  B) bi kevneşopiya devkî ve girêdayî ye
+  C) şorbeya kevneşopî ya heft dexlan
+  D) kevneşopiya muzîk û risim/awazê
+
+[offline_6610]
+S: "lûr" çawa tê pênasekirin?
+  A) pêlava kurdî ya kevneşopî ya destçêkirî
+  B) kewa bi hene û sembola hezkirina xwezayê
+  C) avaza şînî ya di muzîka gelêrî ya kurdî de
+  D) berxwedana gel û hêviya azadiyê
+
+[offline_6626]
+S: Derbarê "şînî" de agahiya herî rast kîjan e?
+  A) çînên olî-civakî
+  B) çîroka gelêrî ya kurdî ya navdar
+  C) hest û bîra civakî
+  D) destaneke gelêrî ya klasîk
+
+[offline_6642]
+S: Dema "mêvanperwerî" tê gotin, çi tê xwestin?
+  A) hevgirtina civakî
+  B) alîkariya di navbera cîranan de
+  C) mêvan bi rûmet pêşwazîkirin
+  D) diyarîkirina di dawetan de
+
+[offline_6716]
+S: Berambera rast a biwêja "bêrîvan" kîjan e?
+  A) rola çandî ya jinên ku pez didoşin
+  B) şêwaza jiyana koçerî û rîtma reqsê
+  C) cejna dirûn û bereketê ya kevneşopî
+  D) kevneşopiya gula çolê û çaya nebatî
+
+[offline_6722]
+S: "fistan" çi îfade dike?
+  A) bi hunera destan ve girêdayî ye
+  B) lehengên destaneke evînê
+  C) cilê kevneşopî yê jinan
+  D) odeyên gund û dîwan
+
+[offline_6730]
+S: Derbarê "serpêhatî" de vebijêrka rast kîjan e?
+  A) zêrên ku di dawetan de li bûkê tên kirin
+  B) cejna kevneşopî ya rakirin û berekatê
+  C) vegotina bûyerên balkêş ên rastî
+  D) rolên kevneşopî yên civakî-olî
+
+[offline_6823]
+S: Kîjan têgiha "motîfên kilimê" rast şirove dike?
+  A) motîfa qesra zêrîn a çîrokan
+  B) îlahiyên olî/nivîsarên pîroz ên devkî
+  C) sembola çandî û bîranîna rengan
+  D) bi dawet û pîrozbahiyê ve girêdayî ye
+
+[offline_6835]
+S: Derbarê "qutik" de ravekirina rast kîjan e?
+  A) zêrên ku di dawetan de li bûkê tên kirin
+  B) berxwedan û ji nû ve jidayikbûn li hember zulmê
+  C) konê eşîrên kurdên koçer
+  D) yelek an cilê kevneşopî yê kurdî
+
+[offline_6841]
+S: "reşmal" çawa divê bê fêmkirin?
+  A) Konê ji mûyê bizina reş
+  B) Doşeka ji hiriya pez
+  C) Tenûra ku nan tê pijandin
+  D) Kembera zîv a jinan
+
+[offline_6882]
+S: Li jêr ji bo "mitbaxa gel" kîjan rast e?
+  A) Sor, kesk û zer
+  B) Mafên ziman û çandî
+  C) Jiyana herêmî û parvekirin
+  D) Heval-hevaltî û hevgirtin
+
+[offline_6971]
+S: Ji bo "sêpê" pênaseya derbasdar kîjan e?
+  A) bi çanda rojane ve girêdayî ye
+  B) sembola çandî û bîranîna rengan
+  C) reqsa gelêrî ya kevneşopî ya sê gavan
+  D) kesayetiyeke mîtolojîk a çanda rojhilat
+
+[offline_7011]
+S: Rojnameya "Jiyan" çi bû?
+  A) pergala niştecihbûna domdar
+  B) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
+  C) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
+  D) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
+
+[offline_7015]
+S: Di zanîna dîrokê de der barê "Eyaleta Kurdistanê" de ya rast kîjan e?
+  A) mîrê kurd ê ku di sedsala 19em de têkoşîna xweseriyê da
+  B) 1923
+  C) eyaleta îdarî ya kurtedem a ku di sala 1847 de di dema Osmaniyan de hat avakirin
+  D) mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike
+
+[offline_7053]
+S: "Tevgera Barzanî" tê çi wateyê?
+  A) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+  B) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
+  C) weşanger û ronakbîrê ku alfabeya kurdî pêş xist
+  D) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+
+[offline_7058]
+S: Li jêr kîjan têgiha "Mezopotamya" rave dike?
+  A) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
+  B) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
+  C) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
+  D) herêma dîrokî ya derdora Dîcle û Firatê
+
+[offline_7066]
+S: "Dersim 1937" bi kîjan aliyê xwe ve tê nasîn?
+  A) serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand
+  B) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+  C) Mîrê Kor
+  D) operasyona leşkerî û kuştinên girseyî yên li herêma Dêrsimê
+
+[offline_7145]
+S: "Şeyh Said" di mijara dîrokê de çi vedibêje?
+  A) Kahire
+  B) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
+  C) serokê sereke yê Serhildana Şêx Seîd a 1925an
+  D) yekem dewleta kurdî ya kurtjiyan a ku di 1946an de hat damezrandin
+
+[offline_7151]
+S: "Mîrgeha Babanê" bi awayekî rast çawa tê ravekirin?
+  A) dewleta mezin a ku Selahedînê Eyûbî damezrand
+  B) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
+  C) hêza mezin a serdema kevnar a bi navenda Zagrosê
+  D) mîrektiya kurd a girîng a bi navenda Cizîrê
+
+[offline_7201]
+S: "Celadet Bedirxan" wek kî tê naskirin?
+  A) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
+  B) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+  C) weşanger û ronakbîrê ku alfabeya kurdî pêş xist
+  D) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+
+[offline_7210]
+S: Kîjan kesê/a "Mîrê Kor" rast dide nasîn?
+  A) weşanger û ronakbîrê ku alfabeya kurdî pêş xist
+  B) belge an tiştê ku ji wê serdemê maye (çavkaniya yekemîn)
+  C) mîrektiya kurd a ku li başûrê Gola Wanê hukum kir
+  D) serokê bihêz ê mîrektiya Soranê yê bi leqeba kor
+
+[offline_7223]
+S: Ji bo "Peymana Qesrişîrînê" ravekirina herî dirust kîjan e?
+  A) peymana ku sînorê Osmanî û Sefewî diyar kir
+  B) serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand
+  C) peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
+  D) avahiya ku bi rêveberiya navendî ve hat girêdan / hat rakirin
+
+[offline_7242]
+S: Li jêr kîjan têgiha "Peymana Lozanê" rave dike?
+  A) mîrektiya kurd a ku heta 1847an li başûrê Gola Wanê hukum kir
+  B) peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
+  C) berhema dîroka kurdan a ku Şerefxan di 1597an de nivîsî
+  D) avahiya ku di 1864an de bi rêveberiya navendî ve hat girêdan
+
+[offline_7247]
+S: Li jêr ji bo "Şengal" kîjan rast e?
+  A) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
+  B) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
+  C) herêma dîrokî ya derdora Dîcle û Firatê
+  D) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
+
+[offline_7249]
+S: Di dîrokê de "Şeyh Mahmud Berzenci" kî ye?
+  A) serokê Komara Mehabadê
+  B) jenosîda ku rejîma Iraqê li dijî kurdan pêk anî
+  C) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+  D) serokê ku li Iraqê xwe wek qralê Kurdistanê ragihand
+
+[offline_7257]
+S: "Qazi Muhammed" çi îfade dike?
+  A) Ji bo herêmeke kurdî ya xweser madde dihewand
+  B) Vegirtina Qudsê di 1187an de
+  C) serokkomarê Komara Kurd a Mehabadê
+  D) Navbeynkariya di navbera Osmanî û mîrên kurd de
+
+[offline_7293]
+S: "Serhildanên Agirî" bi kîjan aliyê xwe ve tê nasîn?
+  A) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
+  B) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
+  C) êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin
+  D) berxwedana derdora Çiyayê Agirî ya di navbera salên 1927-1930 de
+
+[offline_7300]
+S: Li jêr ji bo "Mela Mahmude Bayazidi" kîjan rast e?
+  A) avahiya ku bi rêveberiya navendî ve hat girêdan / hat rakirin
+  B) belge an tiştê ku ji wê serdemê maye (çavkaniya yekemîn)
+  C) yekem lêkolînerê ku edet û kevneşopiyên kurdî berhev kirin
+  D) peymana ku sînorê Osmanî û Sefewî diyar kir
+
+[offline_7334]
+S: Têgiha "Tevgera Barzanî" çi pêk tîne?
+  A) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+  B) Tevgera netewî ya ku bi salan li Kurdistana Başûr berdewam kir
+  C) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+  D) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
+
+[offline_7335]
+S: Derbarê "Ehmedê Xanî" de agahiya rast kîjan e?
+  A) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
+  B) êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin
+  C) weşana dîrokî ya kurdî ya serdema destpêka sedsala 20an ku li ser mafên neteweyî dinivîsî
+  D) rêxistina kurdî ya ku di destpêka sedsala 20em de hat damezrandin
+
+[offline_7360]
+S: Ji bo "Mîrgeha Soran" ravekirina herî dirust kîjan e?
+  A) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
+  B) mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû
+  C) mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir
+  D) xanedaniya kurd a serdema navîn a bi navenda Amedê
+
+[offline_7383]
+S: Kîjan pênase ji bo "Komara Mehabadê" rast e?
+  A) Yekem dewleta kurdî ya kurtjiyan a ku di 1946an de li rojhilatê Kurdistanê hate damezrandin
+  B) Dewleteke kurdî ya ku di 1920an de li Silêmaniyê hate damezrandin
+  C) Rêveberiyeke herêmî ya ku di 1970an de li Hewlêrê hate avakirin
+  D) Mîrektiyeke kurdî ya ku di 1830an de li Rewandizê hate damezrandin
+
+[offline_7394]
+S: Kîjan pênase bi "Serhildana Koçgirî" re li hev tê?
+  A) serhildana kurdî ya ku di sala 1925 de li derdora Amedê pêş ket
+  B) komeleya kurdî ya ku di sala 1908 de li Stenbolê hat damezrandin
+  C) serhildana kurdî ya ku di sala 1937 de li derdora Dêrsimê pêş ket
+  D) tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket
+
+[offline_7417]
+S: "şîroveya dîrokî" çi îfade dike?
+  A) ji delîlan wate derxistin
+  B) bandorkirina civakan li hev
+  C) rêbaza têgihiştina rabirdûyê bi şahidî û vegotinan
+  D) veguhastina cih a civakan
+
+[offline_7443]
+S: "Eyûbî" çawa tê pênasekirin?
+  A) hêza mezin a serdema kevnar a bi navenda Zagrosê
+  B) dewleta mezin a ku Selahedînê Eyûbî damezrand
+  C) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
+  D) mîrektiya kurd a girîng a bi navenda Cizîrê
+
+[offline_7474]
+S: Berambera rast a biwêja "dîroka devkî" kîjan e?
+  A) bandorkirina civakan li hev
+  B) ji delîlan wate derxistin
+  C) têgihiştina rabirdûyê bi şahidiyan
+  D) veguhastina cih a civakan
+
+[offline_7480]
+S: Kîjan vebijêrk tê wateya "Cizîr"?
+  A) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
+  B) herêma dîrokî ya derdora Dîcle û Firatê
+  C) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
+  D) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
+
+[offline_7483]
+S: Qadî Mihemed kî ye?
+  A) Serokkomarê Komara Kurd a Mehabadê
+  B) Serokê mîrektiyeke kurdî ya kevnar
+  C) Ronakbîrekî kurd ê ku tenê bi xebatên edebî tê naskirin
+  D) Rêveberekî herêmî yê Împaratoriya Osmanî
+
+[offline_7497]
+S: "Mustafa Barzani" bi kîjan aliyê xwe ve tê nasîn?
+  A) Çemê Batmanê
+  B) ji serokên leşkerî û siyasî yên tevgera neteweyî ya kurdî
+  C) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
+  D) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
+
+[offline_7507]
+S: "koçberî" çawa tê pênasekirin?
+  A) bandorkirina civakan li hev
+  B) ji delîlan wate derxistin
+  C) veguhastina cih a civakan
+  D) rêbaza têgihiştina rabirdûyê bi şahidî û vegotinan
+
+[offline_7527]
+S: "Amida" di mijara dîrokê de çi vedibêje?
+  A) Selaheddînê Eyûbî
+  B) navê dîrokî yê Amedê yê serdema kevnar û kela wê
+  C) jenosîda ku rejîma Iraqê li dijî kurdan pêk anî
+  D) ji serokên leşkerî û siyasî yên tevgera neteweyî ya kurdî
+
+[offline_7569]
+S: Derbarê "kronoloji" de ya rast a zanîn çi ye?
+  A) rêzkirina bûyeran li gorî demê
+  B) Serokkomarê Iraqê
+  C) Kafkasya (derdora Gence-Aniyê)
+  D) bandorkirina civakan li hev
+
+[offline_7598]
+S: Dema "Rojnameya Kurdistan" tê gotin, çi tê xwestin?
+  A) kovara kurdî ya ku di sala 1932 de li Şamê hat weşandin
+  B) kovara kurdî ya ku di sala 1913 de li Stenbolê hat weşandin
+  C) rojnameya kurdî ya ku di sala 1908 de li Stenbolê hat çapkirin
+  D) rojnameya kurdî ya yekem a ku di sala 1898 de li Qahîreyê hat çapkirin
+
+[offline_7605]
+S: Kîjan têgeha "çavkaniya yekemîn" di nav dîrokê de rast bi cih dike?
+  A) serokkomarê Komara Kurd a Mehabadê
+  B) Împeratoriya Medan (berî Faris)
+  C) belge an tiştê ku rasterast ji wê serdemê maye
+  D) peymana 1923an ku cihê Sevrê girt û statûyeke kurdî nedihewand
+
+[offline_7633]
+S: Kîjan kesê/a "Leyla Qasim" rast dide nasîn?
+  A) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
+  B) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+  C) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+  D) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
+
+[offline_7643]
+S: "Mikdat Mithat Bedirxan" çawa divê bê fêmkirin?
+  A) tevgera neteweyî ya ku ji 1961an ve li Başûrê Kurdistanê dom kir
+  B) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+  C) efserê ku di 1927an de bi navê Xoybûnê serokatiya leşkerî kir
+  D) çalakvana kurd a ku di 1974an de ji aliyê rejîma Iraqê ve hat îdamkirin
+
+[offline_7644]
+S: Ji bo "Amida" ravekirina herî dirust kîjan e?
+  A) Tevgera netewî ya ku bi salan li Kurdistana Başûr berdewam kir
+  B) Dewleta mezin a ku ji aliyê Selahedînê Eyûbî ve hatiye avakirin
+  C) Rêberê efsaneyî yê leşkerî û siyasî yê tevgera kurd
+  D) navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de
+
+[offline_7657]
+S: Kîjan kesê/a "Mîrgeha Bidlîsê" rast dide nasîn?
+  A) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
+  B) hêza mezin a serdema kevnar a bi navenda Zagrosê
+  C) mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir
+  D) xanedaniya kurd a serdema navîn a bi navenda Amedê
+
+[offline_7668]
+S: Dema "Komkujiya Helebceyê" tê gotin, çi tê xwestin?
+  A) tevgera kurdî ya ku di sala 1921 de li derdora Sêwasê pêş ket
+  B) helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî
+  C) rojnameya kurdî ya yekem a ku di sala 1898 de li Qahîreyê hat çapkirin
+  D) êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin
+
+[offline_7717]
+S: Kîjan vebijêrk pênaseya "Cemiyeta Tealiya Kurdan" dide?
+  A) Rêxistineke siyasî ya kurdan a ku di destpêka sedsala 20an de hate damezrandin
+  B) Rêxistineke çandî ya kurdan a ku di nîveka sedsala 19an de çalak bû
+  C) Komeleyeke xwendekaran a kurdan a ku piştî sala 1950î hate damezrandin
+  D) Partiyeke herêmî ya kurdan a ku di dawiya sedsala 20an de hate damezrandin
+
+[offline_7763]
+S: Derbarê "Mîrgeha Botan" de vebijêrka rast kîjan e?
+  A) dewleta mezin a ku Selahedînê Eyûbî damezrand
+  B) mîrektiya kurd a girîng a bi navenda Cizîrê
+  C) hêza mezin a serdema kevnar a bi navenda Zagrosê
+  D) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
+
+[offline_7778]
+S: "Merwanî" çi îfade dike?
+  A) xanedaniya kurd a serdema navîn a bi navenda Amedê
+  B) hukumdariya kurd a ku di serdema Osmanî de xweser mabû
+  C) hêza mezin a serdema kevnar a bi navenda Zagrosê
+  D) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
+
+[offline_7798]
+S: Li jêr ji bo "Îhsan Nûrî Paşa" kîjan rast e?
+  A) tevgera neteweyî ya ku bi salan li Başûrê Kurdistanê dom kir
+  B) kesê ku di 1898an de rojnameya kurdî ya yekem, Kurdistan, derxist
+  C) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
+  D) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+
+[offline_7852]
+S: "Kovara Hawar" çawa tê pênasekirin?
+  A) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
+  B) pergala niştecihbûna domdar
+  C) rojnameya kurdî ya serdema destpêkê ya ku li Silêmaniyê hat çapkirin
+  D) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
+
+[offline_7866]
+S: Derbarê "arkeoloji" de agahiya herî rast kîjan e?
+  A) Şerê Enqereyê
+  B) lêkolîna borî bi rêya bermahiyên maddî
+  C) yek ji wargehên herî kevn ên domdar
+  D) bandorkirina civakan li hev
+
+[offline_7874]
+S: "Împaratoriya Medî" bi kîjan aliyê xwe ve tê nasîn?
+  A) dewleta mezin a ku Selahedînê Eyûbî damezrand
+  B) mîrektiya kurd a bihêz a bi navenda Silêmaniyê
+  C) hêza mezin a serdema kevnar a bi navenda Zagrosê
+  D) xanedaniya kurd a serdema navîn a bi navenda Amedê
+
+[offline_7881]
+S: Ji aliyê dîrokê ve ji bo "bandora çandî" gotina rast kîjan e?
+  A) bandorkirina civakan li hev
+  B) ji delîlan wate derxistin
+  C) rêbaza têgihiştina rabirdûyê bi şahidî û vegotinan
+  D) veguhastina cih a civakan
+
+[offline_7905]
+S: Di zanîna dîrokê de der barê "Kampanyaya Enfalê" de ya rast kîjan e?
+  A) Qahîre û Şam
+  B) navê dîrokî yê Amedê yê serdema kevnar û kela wê
+  C) jenosîda ku rejîma Iraqê li dijî kurdan pêk anî
+  D) efserê ku bi navê komeleya Xoybûnê serokatiya leşkerî kir
+
+[offline_7983]
+S: Berambera rast a biwêja "jiyana nîştecîh" kîjan e?
+  A) Celadet Alî Bedirxan
+  B) pergala niştecihbûna domdar
+  C) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
+  D) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
+
+[offline_8023]
+S: Kîjan di Dîrokê de têgiha "Heskîf" rast bi cih dike?
+  A) bajarê dîrokî yê hezaran salî yê li ser çemê Dîclê
+  B) bajarê ku dergûşa mîrektiya Botan û çanda dîrokî ye
+  C) herêma dîrokî ya derdora Dîcle û Firatê
+  D) yek ji herêmên niştecihbûn û pîroziyê yên dîrokî yên êzidiyan
+
+[offline_8108]
+S: "herêma Behdînan" di erdnîgariyê de çi îfade dike?
+  A) deşta keviran a ku ji lavên Karacadaxê pêk hatiye
+  B) herêma çiyayî ya derdora Zaxo û Dihokê
+  C) rêzeçiyayên herî asê yên erdnîgariya Dêrsimê
+  D) çiyayê dîrokî yê ku tê bawerkirin keştiya Nuh lê daketiye
+
+[offline_8141]
+S: Li jêr ji bo "Gola Derbendîxanê" kîjan rast e?
+  A) gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin
+  B) geliyê kanyonê yê kûr ê ku çemê Botan ava kiriye
+  C) deşteke bibereket a çandiniyê ya başûrê Kurdistanê
+  D) çemê mezin ê ku jiyanê dide Mezopotamyayê
+
+[offline_8149]
+S: "Munzur vadisi" çawa divê bê fêmkirin?
+  A) deşta keviran a ku ji lavên Karacadaxê pêk hatiye
+  B) geliyê bi statuya parka neteweyî ya li Dêrsimê
+  C) deşta çandiniyê ya mezin a ku bi çemikên Firatê tê avdan
+  D) çiyayê ku gola kraterê ya duyemîn a herî mezin a cîhanê lê ye
+
+[offline_8155]
+S: "Çiyayê Sîpanê" çi îfade dike?
+  A) Newala ku li Dêrsimê bi statûya parka neteweyî heye
+  B) zozanên bilind ên ku çemeke gelek jê serê xwe digirin
+  C) Çiyayê volkanîk ê vemirî yê li bakurê Gola Wanê
+  D) deşta bereketdar a ku Cizîr û Silopiyê digire
+
+[offline_8181]
+S: Peyva "daristan" bi tirkî çi ye?
+  A) çöl
+  B) ova
+  C) çayır
+  D) orman
+
+[offline_8200]
+S: "Deşta Sêwregê" di mijara erdnîgariyê de çi vedibêje?
+  A) deşta keviran a ku ji lavên Karacadaxê pêk hatiye
+  B) deşta çandiniyê ya mezin a ku bi çemikên Firatê tê avdan
+  C) çiyayê stratejîk ê ku li navenda deşta Mûsilê bilind dibe
+  D) çemê ku ji herêma Sêrtê derbas dibe û dirijê Dîcleyê
+
+[offline_8220]
+S: "Zap vadisi" kîjan hêmana erdnîgariyê ye?
+  A) Gola bendavê ya çêkirî ya nêzî Silêmaniyê
+  B) Çiyayê stratejîk ê ku di navenda deşta Mûsilê de bilind dibe
+  C) newala kûr a ku ava Zapê di navbera kevirên bilind re diherike
+  D) çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parve dikin
+
+[offline_8242]
+S: Beşa Firata Jorîn li ku derê ye?
+  A) Deşta çandiniyê ya mezin a ku şaxên Feratê av didinê
+  B) Çiyayê dîrokî yê ku bawer tê kirin keştiya Nûh lê rûniştiye
+  C) zozanên bilind ên ku çemeke gelek jê serê xwe digirin
+  D) Beşê bakurrojava yê bilind ê erdnîgariya Kurdistanê
+
+[offline_8255]
+S: Li jêr ji bo "Rêzeçiyayên Zagrosê" kîjan rast e?
+  A) çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin
+  B) çemê ku ji herêma Sêrtê derbas dibe û dirijê Dîcleyê
+  C) çiyayê ku gola kraterê ya duyemîn a herî mezin a cîhanê lê ye
+  D) çiyayê stratejîk ê ku li navenda deşta Mûsilê bilind dibe
+
+[offline_8263]
+S: Li jêr ji bo "Çemê Botanê" kîjan rast e?
+  A) çemê ku ji herêma Sêrtê derbas dibe û dirijê Dîcleyê
+  B) rêzeçiyayên herî asê yên erdnîgariya Dêrsimê
+  C) deşta çandiniyê ya mezin a ku bi çemikên Firatê tê avdan
+  D) hewza gola şor a li rojhilatê Kurdistanê
+
+[offline_8316]
+S: "daristanên berû" çi îfade dike?
+  A) deşta bi bereket a ku deştên Cizîr û Silopiyê digire
+  B) nebat û dara tîpîk a çiyayên Kurdistanê
+  C) çiyayê ku gola kraterê ya duyemîn a herî mezin a cîhanê lê ye
+  D) avhewaya ku li herêmên kurdî yên nêzî Behra Spî tê dîtin
+
+[offline_8319]
+S: "Nemrut krateri" li ku / wek çi tê zanîn?
+  A) çiyayê ku gola kraterê ya duyemîn a herî mezin a cîhanê lê ye
+  B) çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin
+  C) çiyayê volkanîk ê nefeal ê li bakurê Gola Wanê
+  D) gola bendavê ya çêkirî ya li nêzî Silêmaniyê
+
+[offline_8331]
+S: Ji aliyê erdnîgariyê ve derbarê "Gola Ûrmiyeyê" de vebijêrka rast kîjan e?
+  A) çiyayê dîrokî yê ku tê bawerkirin keştiya Nuh lê daketiye
+  B) çemê hêrs ê ku çiyayên Colemêrgê diqelêşe
+  C) hewza çem a ku Amed û Şirnexê digire
+  D) hewza gola şor a li rojhilatê Kurdistanê
+
+[offline_8356]
+S: "Çiyayê Halgurdê" çawa divê bê fêmkirin?
+  A) Lûtkeya herî bilind a li sînorên Kurdistana Iraqê
+  B) newala kûr a ku ava Zapê di navbera kevirên bilind re diherike
+  C) Gola bendavê ya çêkirî ya nêzî Silêmaniyê
+  D) nebat û darên tîpîk ên çiyayên Kurdistanê
+
+[offline_8361]
+S: Li jêr ji bo "Çiyayên Bîngolê" kîjan rast e?
+  A) Newala ku li Dêrsimê bi statûya parka neteweyî heye
+  B) zozanên bilind ên ku çemeke gelek jê serê xwe digirin
+  C) Çiyayê volkanîk ê vemirî yê li bakurê Gola Wanê
+  D) avhewaya ku li herêmên kurdî yên nêzî Deryaya Spî tê dîtin
+
+[offline_8367]
+S: Ji aliyê erdnîgariyê ve "gol" çi ye?
+  A) Lûtkeyeke çiyayî
+  B) Deşta berfireh
+  C) Çemekî herikbar
+  D) Ava rawestayî
+
+[offline_8384]
+S: Di zanîna erdnîgariyê de der barê "Deşta Hewlêrê" de ya rast kîjan e?
+  A) deşta keviran a ku ji lavên Karacadaxê pêk hatiye
+  B) gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin
+  C) gola tektonîk a di sînorên Elezîzê de
+  D) deşteke bibereket a çandiniyê ya başûrê Kurdistanê
+
+[offline_8406]
+S: Kîjan wate ji bo peyva "erd" rast e?
+  A) Zemîn
+  B) Ezman
+  C) Derya
+  D) Ewr
+
+[offline_8473]
+S: Derbarê "Gola Wanê" de ya rast kîjan e?
+  A) girseya çiyayî ya nêzî çemê Garzanê
+  B) hewza ku gola sodalî ya herî mezin a cîhanê ye
+  C) çemikê Dîcleyê yê ku sînorê Tirkiye û Iraqê xêz dike
+  D) gola tektonîk a di sînorên Elezîzê de
+
+[offline_8479]
+S: Ji bo Gevera (Yüksekova) ravekirina herî dirust kîjan e?
+  A) geliyê bi statuya parka neteweyî ya li Dêrsimê
+  B) deşta bi bereket a ku deştên Cizîr û Silopiyê digire
+  C) çemê girîng ê ku ji Êlihê derbas dibe û dirijê Dîcleyê
+  D) deşta tektonîk a bilind a li Colemêrgê
+
+[offline_8480]
+S: Derbarê "Karacadax" de vebijêrka rast kîjan e?
+  A) volkana bazaltî ya berfireh a li deşta Amedê
+  B) beşa bilind a bakurê rojavayê erdnîgariya Kurdistanê
+  C) geliyê bi statuya parka neteweyî ya li Dêrsimê
+  D) avhewaya ku li herêmên kurdî yên nêzî Behra Spî tê dîtin
+
+[offline_8506]
+S: "Çiyayên Qendîlê" li ku ne?
+  A) çiyayên bilind ên li ser sînorê Îraq û Îranê
+  B) lûtkeya herî bilind a erdnîgariya Kurdistanê
+  C) girseya çiyayî ya nêzî çemê Garzanê
+  D) çiyayê volkanîk ê feal ê xwedî gola kraterê
+
+[offline_8523]
+S: Di zanîna erdnîgariyê de der barê "Dicle nehri" de ya rast kîjan e?
+  A) gola tektonîk a di sînorên Elezîzê de
+  B) çemê ku ji bin sûrên Amedê derbas dibe
+  C) gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin
+  D) rêzeçiyayên herî asê yên erdnîgariya Dêrsimê
+
+[offline_8532]
+S: Gola Dokanê li ku derê ye?
+  A) çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin
+  B) çemê girîng ê ku ji Êlihê derbas dibe û dirijê Dîcleyê
+  C) gola bendavê ya çêkirî ya li nêzî Silêmaniyê
+  D) çiyayê stratejîk ê ku li navenda deşta Mûsilê bilind dibe
+
+[offline_8539]
+S: "avhewaya Kurdistanê" çawa divê bê fêmkirin?
+  A) hewza ku gola herî mezin a sodadar a dinyayê ye
+  B) zivistanên sar ên deverên bejahî û çiyayî
+  C) newala kanyonê ya kûr a ku Çemê Botan çêkiriye
+  D) Kendava Besrayê (bi ser Şet-ul Erebê ve)
+
+[offline_8561]
+S: Ji bo "akdeniz iklimi" ravekirina herî dirust kîjan e?
+  A) çiyayê stratejîk ê ku li navenda deşta Mûsilê bilind dibe
+  B) avhewaya ku li herêmên kurdî yên nêzî Behra Spî tê dîtin
+  C) deşta tektonîk a bilind a li Colemêrgê
+  D) çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin
+
+[offline_8585]
+S: Kîjan têgeha "Deşta Şehrezorê" di nav erdnîgariyê de rast bi cih dike?
+  A) geliyê kanyonê yê kûr ê ku çemê Botan ava kiriye
+  B) deşta dîrokî ya bibereket a li başûrê Silêmaniyê
+  C) beşa bilind a bakurê rojavayê erdnîgariya Kurdistanê
+  D) herêma çiyayî ya derdora Zaxo û Dihokê
+
+[offline_8603]
+S: Gola Hazarê li ku derê ye?
+  A) gola tektonîk a di sînorên Elezîzê de
+  B) rêzeçiyayên herî asê yên erdnîgariya Dêrsimê
+  C) gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin
+  D) çemê ku ji bin sûrên Amedê derbas dibe
+
+[offline_8615]
+S: Peyva "çem" bi tirkî çi ye?
+  A) akarsu
+  B) göl
+  C) pınar
+  D) vadi
+
+[offline_8672]
+S: Ji aliyê erdnîgariyê ve derbarê "Beşa Dîcleyê" de vebijêrka rast kîjan e?
+  A) hewza çem a ku Amed û Şirnexê digire
+  B) bi yek ji cihên niştecihbûna berdewam a herî kevn a cîhanê bûyîna xwe
+  C) wek parêzgeha 19em a Iraqê statuyeke cuda bi dest xist
+  D) gola bendavê ya çêkirî ya li nêzî Silêmaniyê
+
+[offline_8678]
+S: "sînor" bi awayekî rast çawa tê ravekirin?
+  A) devera ku bi darên xurt hatiye nixumandin
+  B) erdê rast û berdar ê ku çandinî lê hêsan e
+  C) ava sekinî ya ku li newalekê kom dibe
+  D) xeta ku du waran an du welatan ji hev vediqetîne
+
+[offline_8686]
+S: Derbarê "Çiyayên Mûnzûrê" de ya rast kîjan e?
+  A) çiyayê stratejîk ê ku li navenda deşta Mûsilê bilind dibe
+  B) geliyê kanyonê yê kûr ê ku çemê Botan ava kiriye
+  C) deşta çandiniyê ya mezin a ku bi çemikên Firatê tê avdan
+  D) rêzeçiyayên herî asê yên erdnîgariya Dêrsimê
+
+[offline_8715]
+S: Peyva "hewa" bi Tirkî çi tê gotin?
+  A) vadi
+  B) hava
+  C) ova
+  D) sınır
+
+[offline_8828]
+S: "Çemê Garzanê" tê çi wateyê?
+  A) çemê girîng ê ku ji Êlihê derbas dibe û dirijê Dîcleyê
+  B) geliyê bi statuya parka neteweyî ya li Dêrsimê
+  C) beşa bilind a bakurê rojavayê erdnîgariya Kurdistanê
+  D) nebat û dara tîpîk a çiyayên Kurdistanê
+
+[offline_8833]
+S: "Çiyayê Agirî" di mijara erdnîgariyê de çi vedibêje?
+  A) hewza gola şor a li rojhilatê Kurdistanê
+  B) lûtkeya herî bilind a erdnîgariya Kurdistanê
+  C) deşteke bibereket a çandiniyê ya başûrê Kurdistanê
+  D) gola tektonîk a di sînorên Elezîzê de
+
+[offline_8902]
+S: Derbarê "newal" de vebijêrka rast kîjan e?
+  A) tepe
+  B) ada
+  C) vadi
+  D) kıyı
+
+[offline_8903]
+S: Di zanîna erdnîgariyê de der barê "Çemê Firatê" de ya rast kîjan e?
+  A) çemê mezin ê ku jiyanê dide Mezopotamyayê
+  B) hewza ku gola sodalî ya herî mezin a cîhanê ye
+  C) niştecihbûna girê dîrokî ya mîrateya UNESCOyê
+  D) çiyayê volkanîk ê feal ê xwedî gola kraterê
+
+[offline_8916]
+S: Derbarê "Aras nehri" de ya rast kîjan e?
+  A) çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin
+  B) ava ku ji sînorên Qers û Îdirê derbas dibe û dirijê Hezarê
+  C) beşa bilind a bakurê rojavayê erdnîgariya Kurdistanê
+  D) geliyê bi statuya parka neteweyî ya li Dêrsimê
+
+[offline_8950]
+S: "Gola Dokanê" ji aliyê erdnîgarî ve çi vedibêje?
+  A) deşta bi bereket a ku deştên Cizîr û Silopiyê digire
+  B) gola bendavê ya çêkirî ya li nêzî Silêmaniyê
+  C) çemê girîng ê ku ji Êlihê derbas dibe û dirijê Dîcleyê
+  D) çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin
+
+[offline_8965]
+S: Kîjan vebijark têgeha "Gever (Yüksekova)" rave dike?
+  A) Bi bûyîna yek ji niştecihiyên herî kevn ên domdar ên dinyayê
+  B) ava ku ji sînorên Qers û Îdirê derbas dibe û dikeve Deryaya Hazarê
+  C) Lûtkeya herî bilind a li sînorên Kurdistana Iraqê
+  D) Deşta tektonîkî ya bilind a Geverê
+
+[offline_8986]
+S: "Çiyayê Şengalê" kîjan hêmana erdnîgariyê ye?
+  A) çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin
+  B) avhewaya ku li herêmên kurdî yên nêzî Behra Spî tê dîtin
+  C) çiyayê volkanîk ê nefeal ê li bakurê Gola Wanê
+  D) çiyayê stratejîk ê ku li navenda deşta Mûsilê bilind dibe
+
+[offline_9008]
+S: "Deşta Mûşê" ji aliyê erdnîgarî ve çi vedibêje?
+  A) çiyayê dîrokî yê ku tê bawerkirin keştiya Nuh lê daketiye
+  B) çiyayê volkanîk ê nefeal ê li bakurê Gola Wanê
+  C) deşta çandiniyê ya mezin a ku bi çemikên Firatê tê avdan
+  D) beşa bilind a bakurê rojavayê erdnîgariya Kurdistanê
+
+[offline_9036]
+S: Kîjan cihê "Çiyayê Tendûrekê" rast tarîf dike?
+  A) mîmariya kevirî û dîmena Mezopotamyayê
+  B) çiyayê volkanîk ê feal ê xwedî gola kraterê
+  C) gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin
+  D) çemikê Dîcleyê yê ku sînorê Tirkiye û Iraqê xêz dike
+
+[offline_9087]
+S: "deşt" tê çi wateyê?
+  A) vadi
+  B) dağ
+  C) yayla
+  D) ova

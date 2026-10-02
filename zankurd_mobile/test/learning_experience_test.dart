@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ import 'package:zankurd_mobile/src/widgets/coach_mark.dart';
 import 'support/widget_test_helpers.dart';
 
 /// 2026-07-25 canlı denetimi: ana ekranın tek birincil eylemi olan
-/// "Günün Dersi", `experience` verilmediği için varsayılan `competition`
+/// "Günün dersi", `experience` verilmediği için varsayılan `competition`
 /// modunda açılıyordu. Sonuçları: yanlış cevaptan sonra açıklama paneli hiç
 /// render edilmiyor, çıkış diyalogu dersi "yarış" diye adlandırıyor ve
 /// analytics tüm ders oturumlarını solo quiz olarak raporluyordu.
@@ -31,7 +32,11 @@ void main() {
     final source = File('lib/src/screens/home_screen.dart').readAsStringSync();
     final start = source.indexOf('Future<void> _startDailyQuiz()');
     expect(start, greaterThan(-1), reason: '_startDailyQuiz bulunamadı');
-    final body = source.substring(start, start + 1400);
+    final nextMethod = source.indexOf('\n  Future<void> ', start + 1);
+    final body = source.substring(
+      start,
+      nextMethod == -1 ? source.length : nextMethod,
+    );
 
     expect(
       body,
@@ -39,6 +44,31 @@ void main() {
       reason: 'Günün Dersi yarışma modunda açılıyor',
     );
     expect(body, contains('enableTimer: false'));
+  });
+
+  test('profil yanlışları da öğrenme pratiği olarak başlatılır', () {
+    final source = File(
+      'lib/src/screens/profile_screen.dart',
+    ).readAsStringSync();
+    final start = source.indexOf('Future<void> _startMistakePractice()');
+    expect(start, greaterThan(-1), reason: '_startMistakePractice bulunamadı');
+    final nextMethod = source.indexOf('\n  Future<void> ', start + 1);
+    final body = source.substring(
+      start,
+      nextMethod == -1 ? source.length : nextMethod,
+    );
+
+    expect(body, contains('practice: true'));
+    expect(
+      body,
+      contains('experience: QuizExperience.learning'),
+      reason: 'Profil yanlışları yarışma deneyimine düşmemeli',
+    );
+    expect(
+      body,
+      contains('enableTimer: false'),
+      reason: 'Yanlış tekrarı süre baskısı olmadan çalışmalı',
+    );
   });
 
   testWidgets('öğrenme akışında joker çubuğu gösterilmez', (tester) async {
@@ -54,15 +84,16 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Nîv bi Nîv'), findsNothing);
+    expect(find.text('Nîv bi nîv'), findsNothing);
     expect(find.text('50/50'), findsNothing);
   });
 
   Future<void> pumpAndOpenExit(
     WidgetTester tester,
     MockZanKurdRepository repository,
-    QuizExperience experience,
-  ) async {
+    QuizExperience experience, {
+    bool answerFirst = true,
+  }) async {
     await tester.pumpWidget(
       testShell(
         child: Builder(
@@ -88,13 +119,45 @@ void main() {
 
     // Onay diyalogu yalnız ilerleme varsa çıkar (`PopScope.canPop`):
     // önce bir şık işaretlenir.
-    await tester.tap(find.text(repository.questions.first.answers.first));
-    await tester.pumpAndSettle();
+    if (answerFirst) {
+      await tester.tap(find.text(repository.questions.first.answers.first));
+      await tester.pumpAndSettle();
+    }
 
     // Quiz ekranı bir rota olarak açıldığı için AppBar geri düğmesi var;
     // PopScope onu yakalayıp onay diyalogunu gösterir.
-    await tester.tap(find.byType(BackButton));
+    //
+    // 2026-09-29 Şahnê: soru ekranı oyun sahnesidir (C iskeleti); geri oku
+    // yerine sahnenin kapat (✗) düğmesi ayrılır. Kural aynı: çıkış onay
+    // diyaloğundan geçer.
+    await tester.tap(find.byKey(const ValueKey('quiz-close')));
     await tester.pumpAndSettle();
+  }
+
+  // 2026-10-02 uçtan uca QA: ilk soruda (cevap yok) X'e dokunmak turu sormadan
+  // bitiriyordu; onay yalnız "ilerleme" varken (`PopScope.canPop`) çıkıyordu.
+  // Niçin sessiz kalıyordu: bütün çıkış testleri önce bir şık işaretleyip
+  // sonra çıkıyordu, yani "ilerleme var" yolunu sınıyor, ilk soru yolunu
+  // hiç sınamıyordu.
+  for (final experience in QuizExperience.values) {
+    testWidgets('ilk soruda da X onay sorar ($experience), vazgeçince tur '
+        'sürer', (tester) async {
+      await pumpAndOpenExit(tester, repository, experience, answerFirst: false);
+      expect(
+        find.text(
+          experience == QuizExperience.learning
+              ? 'Dersten çıkılsın mı?'
+              : 'Yarıştan çıkılsın mı?',
+        ),
+        findsOneWidget,
+        reason: 'ilk soruda X sormadan çıkarmamalı',
+      );
+      // Güvenli eylem: turda kal.
+      await tester.tap(find.text('Devam et'));
+      await tester.pumpAndSettle();
+      expect(find.byType(QuizScreen), findsOneWidget);
+      expect(find.byType(AlertDialog), findsNothing);
+    });
   }
 
   testWidgets('öğrenme akışında çıkış diyalogu "ders" der', (tester) async {
@@ -156,8 +219,14 @@ void main() {
   ) async {
     await answerFirst(tester, QuizExperience.learning);
     expect(find.text('Bu acikllamanin gorunmesi gerekir.'), findsNothing);
-    // Doğru cevap yine anında görünür.
-    expect(find.text('Doğru cevap'), findsOneWidget);
+    // 2026-08-19: "Doğru cevap" kutusu çoktan seçmeli sorulardan
+    // kaldırıldı — doğru şık zaten yeşile dönüp tik alıyordu, kutu aynı
+    // bilgiyi ikinci kez söyleyip kıt olan dikey alanı kaplıyordu
+    // (uygulama sahibinin bildirimi). Kutu yalnız kelime sıralamada
+    // kalır; orada doğru dizilimi açan başka hiçbir şey yok
+    // (bkz. `needsAnswerRevealFallback`, `lesson_explanation_test`).
+    // Korunan asıl kural DEĞİŞMEDİ: açıklama METNİ tur içinde açılmaz.
+    expect(find.text('Doğru cevap'), findsNothing);
   });
 
   testWidgets('yarışma akışında da açıklama gösterilmez', (tester) async {
@@ -192,11 +261,11 @@ void main() {
     expect(overlay, findsOneWidget);
     // Sayaç çizilmediği için ilk adım sayacı hedefleyemez.
     expect(
-      find.descendant(of: overlay, matching: find.text('Süre + Cevap')),
+      find.descendant(of: overlay, matching: find.text('Süre ve cevap')),
       findsNothing,
     );
     expect(
-      find.descendant(of: overlay, matching: find.text('Cevabı seç')),
+      find.descendant(of: overlay, matching: find.text('Cevabını ver')),
       findsOneWidget,
     );
   });

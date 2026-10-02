@@ -1,4 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'checked_preferences_removal.dart';
+import 'local_progress_scope.dart';
 
 import '../models/achievement.dart';
 import '../models/player.dart';
@@ -24,6 +26,7 @@ class AchievementStore {
     this._answeredQuestions,
     this._playedCategories,
     this._dailyQuizCompletions,
+    this._dailyQuizLastDay,
   );
 
   static const requiredCategories = [
@@ -37,76 +40,88 @@ class AchievementStore {
     'Paradigma',
   ];
 
-  static const _unlockedKey = 'zankurd.achievements.unlocked';
-  static const _answeredKey = 'zankurd.achievements.answeredQuestions';
-  static const _categoriesKey = 'zankurd.achievements.playedCategories';
-  static const _dailyQuizKey = 'zankurd.achievements.dailyQuizCompletions';
+  static String get _unlockedKey =>
+      LocalProgressScope.physical('zankurd.achievements.unlocked');
+  static String get _answeredKey =>
+      LocalProgressScope.physical('zankurd.achievements.answeredQuestions');
+  static String get _categoriesKey =>
+      LocalProgressScope.physical('zankurd.achievements.playedCategories');
+  static String get _dailyQuizKey =>
+      LocalProgressScope.physical('zankurd.achievements.dailyQuizCompletions');
+
+  static String get _dailyQuizDayKey =>
+      LocalProgressScope.physical('zankurd.achievements.dailyQuizLastDay');
 
   static AchievementStore? _instance;
 
+  /// 2026-09-30 simülatör: başarı adları cümle düzeninde (Title Case yok) ve
+  /// sözlükteki terimlerle yazılır: konu / mijar, günün soruları / pirsên
+  /// rojê (yasak: kategori, etkinlik). Bekçi: `copy_language_test.dart`.
   static final List<Achievement> definitions = [
     const Achievement(
       id: AchievementIds.firstGame,
-      titleKu: 'Lîstika Yekem',
-      titleTr: 'İlk Oyun',
+      titleKu: 'Lîstika yekem',
+      titleTr: 'İlk oyun',
       descriptionKu: 'Pêşbirka xwe ya yekem qedand.',
       descriptionTr: 'İlk yarışını tamamladın.',
       icon: AppIcons.flag,
     ),
     const Achievement(
       id: AchievementIds.tenStreak,
-      titleKu: '10 Rast Li Pey Hev',
-      titleTr: '10 Doğru Üst Üste',
+      titleKu: '10 rast li pey hev',
+      titleTr: '10 doğru üst üste',
       descriptionKu: 'Di yek pêşbirkê de rêza 10 rast çêkir.',
       descriptionTr: 'Tek yarışta 10 doğru seri yaptın.',
       icon: AppIcons.fire,
     ),
     const Achievement(
       id: AchievementIds.hundredQuestions,
-      titleKu: '100 Pirs',
-      titleTr: '100 Soru',
+      titleKu: '100 pirs',
+      titleTr: '100 soru',
       descriptionKu: 'Bi giştî 100 pirs bersiv da.',
       descriptionTr: 'Toplam 100 soruya cevap verdin.',
       icon: AppIcons.brain,
     ),
     const Achievement(
       id: AchievementIds.allCategories,
-      titleKu: 'Hemû Kategorî',
-      titleTr: 'Her Kategoride Oyun',
-      descriptionKu: 'Di hemû kategoriyan de lîst.',
-      descriptionTr: 'Tüm kategorilerde yarış oynadın.',
+      titleKu: 'Hemû mijar',
+      titleTr: 'Her konuda oyun',
+      descriptionKu: 'Di hemû mijaran de lîst.',
+      descriptionTr: 'Tüm konularda yarış oynadın.',
       icon: AppIcons.tableCells,
     ),
     const Achievement(
       id: AchievementIds.sevenDayStreak,
-      titleKu: '7 Roj Li Pey Hev',
-      titleTr: '7 Gün Streak',
-      descriptionKu: 'Seriya rojane gihand 7 rojan.',
+      titleKu: '7 roj li pey hev',
+      titleTr: '7 günlük seri',
+      // Günlük seri zincîr'dir; `Seriya` tur içi Rêz ile karışır.
+      // 30 günlük rozet (`K.badgeStreak30Desc`) aynı kökü kullanır.
+      descriptionKu: 'Zincîra rojane gihand 7 rojan.',
       descriptionTr: 'Günlük serini 7 güne taşıdın.',
       icon: AppIcons.calendarDays,
     ),
     const Achievement(
       id: AchievementIds.mistakesCleared,
-      titleKu: 'Şaşî Paqij Kir',
-      titleTr: 'Yanlışlarını Temizledi',
+      titleKu: 'Şaşî paqij kir',
+      titleTr: 'Yanlışlarını temizledi',
       descriptionKu: 'Di moda şaşiyan de hemû pirsgirêk paqij kir.',
       descriptionTr: 'Yanlışlar modunda tüm hatalarını temizledin.',
       icon: AppIcons.graduationCap,
     ),
     const Achievement(
       id: AchievementIds.botWinner,
-      titleKu: 'Bot Têk Bir',
-      titleTr: "Bot'u Yendi",
+      titleKu: 'Bot têk bir',
+      titleTr: "Bot'u yendi",
       descriptionKu: 'Di pêşbirka botan de serket.',
       descriptionTr: 'Bot yarışını birinci bitirdin.',
       icon: AppIcons.robot,
     ),
     const Achievement(
       id: AchievementIds.dailyQuizFive,
-      titleKu: '5 Çalakiyên Rojê',
-      titleTr: 'Günün Etkinliği x5',
-      descriptionKu: 'Te Çalakiya Rojê pênc caran qedand.',
-      descriptionTr: 'Günün etkinliğini 5 kez tamamladın.',
+      titleKu: '5 pirsên rojê',
+      titleTr: 'Günün soruları x5',
+      descriptionKu: 'Te pirsên rojê pênc caran qedandin.',
+      descriptionTr: 'Günün sorularını 5 kez tamamladın.',
       icon: AppIcons.bolt,
     ),
   ];
@@ -127,20 +142,25 @@ class AchievementStore {
       preferences?.getInt(_answeredKey) ?? 0,
       preferences?.getStringList(_categoriesKey)?.toSet() ?? <String>{},
       preferences?.getInt(_dailyQuizKey) ?? 0,
+      preferences?.getString(_dailyQuizDayKey),
     );
   }
 
   static void resetInstance() => _instance = null;
 
   Future<void> clear() async {
+    await removePersistedPreferenceKeys(_preferences, [
+      _unlockedKey,
+      _answeredKey,
+      _categoriesKey,
+      _dailyQuizKey,
+      _dailyQuizDayKey,
+    ]);
     _unlockedIds.clear();
     _answeredQuestions = 0;
     _playedCategories.clear();
     _dailyQuizCompletions = 0;
-    await _preferences?.remove(_unlockedKey);
-    await _preferences?.remove(_answeredKey);
-    await _preferences?.remove(_categoriesKey);
-    await _preferences?.remove(_dailyQuizKey);
+    _dailyQuizLastDay = null;
   }
 
   final SharedPreferences? _preferences;
@@ -148,6 +168,21 @@ class AchievementStore {
   int _answeredQuestions;
   final Set<String> _playedCategories;
   int _dailyQuizCompletions;
+  String? _dailyQuizLastDay;
+
+  static String _dayString(DateTime day) =>
+      '${day.year}-${day.month.toString().padLeft(2, '0')}-'
+      '${day.day.toString().padLeft(2, '0')}';
+
+  /// Günün soruları turu [day] günü BİTİRİLDİ mi?
+  ///
+  /// 2026-09-30 canlı: tur bittikten sonra Yarış > Pirsên rojê sayfası hâlâ
+  /// "Bugün" ve "Başla" diyordu, çünkü tamamlanma hiçbir yerde günle
+  /// birlikte tutulmuyordu; yalnız toplam sayaç ([_dailyQuizCompletions],
+  /// "5 kez" rozeti için) vardı. Gün, yerel takvim günüdür (görev
+  /// deposuyla aynı); yarım bırakılan tur sonuç ekranına varmadığı için
+  /// yazılmaz.
+  bool dailyQuizDoneOn(DateTime day) => _dailyQuizLastDay == _dayString(day);
 
   Set<String> get unlockedIds => Set.unmodifiable(_unlockedIds);
   List<Achievement> get unlockedAchievements => definitions
@@ -178,7 +213,10 @@ class AchievementStore {
     if (requiredCategories.contains(category)) {
       _playedCategories.add(category);
     }
-    if (dailyQuiz) _dailyQuizCompletions += 1;
+    if (dailyQuiz) {
+      _dailyQuizCompletions += 1;
+      _dailyQuizLastDay = _dayString(DateTime.now());
+    }
 
     final newlyUnlocked = <Achievement>[];
     void unlockWhen(bool condition, String id) {
@@ -223,5 +261,9 @@ class AchievementStore {
       _playedCategories.toList(),
     );
     await _preferences?.setInt(_dailyQuizKey, _dailyQuizCompletions);
+    final lastDay = _dailyQuizLastDay;
+    if (lastDay != null) {
+      await _preferences?.setString(_dailyQuizDayKey, lastDay);
+    }
   }
 }

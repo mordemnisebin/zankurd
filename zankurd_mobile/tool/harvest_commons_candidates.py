@@ -24,7 +24,7 @@ from fetch_commons_images import CONCEPTS, candidates  # noqa: E402
 
 THUMBS = '/tmp/zk_commons'
 MANIFEST = '/tmp/zk_commons/manifest.json'
-UA = 'ZanKurd/1.0 (educational quiz app; contact nisebinbawer47@gmail.com)'
+UA = 'ZanKurd/1.0 (educational quiz app; contact iletisim@zankurd.com)'
 PER_CONCEPT = 4
 
 

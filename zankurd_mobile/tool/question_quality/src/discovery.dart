@@ -61,6 +61,7 @@ List<DiscoveredSource> discoverPotentialQuestionSources(Directory root) {
 
 bool _excluded(String path) =>
     path.startsWith('.git/') ||
+    path.startsWith('.tmp/') ||
     path.startsWith('.dart_tool/') ||
     path.startsWith('build/') ||
     path.startsWith('docs/') ||

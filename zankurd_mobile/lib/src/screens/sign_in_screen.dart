@@ -1,20 +1,18 @@
-import 'package:flutter/foundation.dart'
-    show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../theme/brand_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../animations/load_animations.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../providers/auth_provider.dart';
+import '../providers/reduced_motion_provider.dart';
 import '../services/analytics_service.dart';
-import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../widgets/app_logo.dart';
+import '../widgets/language_toggle.dart';
 import '../widgets/loading_overlay.dart';
-import '../widgets/styled_button.dart';
-import '../widgets/styled_input.dart';
+import '../widgets/sahne/sahne.dart';
 import 'sign_up_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -55,8 +53,8 @@ class _SignInScreenState extends State<SignInScreen>
   }
 
   Future<void> _signIn(AuthProvider authProvider) async {
-    // StyledInputField, TextField kullandığı için Form.validate() ile
-    // tetiklenmez. Boş alan kontrolü manuel yapılır.
+    // Bu ekranda Form sarmalayıcısı yok; boş alan kontrolü elle yapılır
+    // (alanlar satır içi doğrulamayı kendileri gösterir).
     if (_emailController.text.trim().isEmpty) {
       _showAuthError(context.t(K.emailRequired));
       return;
@@ -98,8 +96,29 @@ class _SignInScreenState extends State<SignInScreen>
 
     final success = await authProvider.signInWithGoogle();
 
-    if (success) {
+    // Android/web dış OAuth akışında `true`, oturumun tamamlandığını
+    // değil yalnız tarayıcı/redirect akışının başlatıldığını gösterebilir.
+    // Login metriğini ancak AuthProvider gerçekten bir session gördüğünde yaz.
+    if (success && authProvider.isAuthenticated) {
       AnalyticsService.instance.logSignIn('google');
+    }
+
+    if (mounted) {
+      LoadingOverlay.hide(context);
+
+      if (!success && authProvider.errorMessage != null) {
+        _showAuthError(authProvider.errorMessage!);
+      }
+    }
+  }
+
+  Future<void> _signInWithApple(AuthProvider authProvider) async {
+    LoadingOverlay.show(context, message: context.t(K.connectingApple));
+
+    final success = await authProvider.signInWithApple();
+
+    if (success && authProvider.isAuthenticated) {
+      AnalyticsService.instance.logSignIn('apple');
     }
 
     if (mounted) {
@@ -168,710 +187,251 @@ class _SignInScreenState extends State<SignInScreen>
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.sizeOf(context);
-    final compact = screenSize.height < 900;
-    // Kompakt düzen boyut sabitleri — M-8 denetim düzeltmesi.
-    // Her sabitin anlamı yorumda belgelenmiştir; ileride tek noktadan değişir.
-    const double kLogoWidthCompact = 71.0; // Kısa ekranda küçültülmüş logo
-    const double kLogoWidthNormal = 120.0; // Normal ekranda tam logo
-    const double kAltGapCompact = 8.0; // "Veya" bölümü üst boşluk (kısa)
-    const double kAltGapNormal = 20.0; // "Veya" bölümü üst boşluk (tam)
-    const double kBottomGapCompact = 14.0; // Alt misafir butonu boşluğu (kısa)
-    const double kBottomGapNormal = 32.0; // Alt misafir butonu boşluğu (tam)
+    // Kademeli logo/başlık girişi süsüdür. Tercih açıkken onboarding ve
+    // splash gibi ilk karede bitmiş değerde durur; yoksa ayar, kullanıcının
+    // gördüğü ilk form ekranında yok sayılmış olur.
+    if (ReducedMotionProvider.isReducedIn(context)) {
+      _animationController.value = 1;
+    }
+    final t = SahneTokens.of(context);
 
-    // Beyaz logo kutusu %40 küçültüldü (118→71, 200→120).
-    final logoWidth = compact ? kLogoWidthCompact : kLogoWidthNormal;
-    final topGap = compact ? 0.0 : AppSpacing.md;
-    final actionGap = compact ? AppSpacing.sm : AppSpacing.lg;
-    final altGap = compact ? kAltGapCompact : kAltGapNormal;
-    final bottomGap = compact ? kBottomGapCompact : kBottomGapNormal;
-    final authInputLabelStyle = TextStyle(
-      color: AppTheme.textPrimaryColor(context),
-      fontWeight: FontWeight.w700,
-    );
-    final authInputTextStyle = TextStyle(
-      color: AppTheme.textPrimaryColor(context),
-      fontWeight: FontWeight.w600,
-    );
+    // 2026-10-01 giriş iskeleti: dil seçici solda, kahraman kart (logo),
+    // sola yaslı başlık, tek yüzey kartında sosyal girişler + e-posta formu;
+    // ekranın TEK birincil eylemi "Giriş Yap" alt perdede sabit, "Kaydol"
+    // altında ikincil metin eylemi (bkz. [SahneEntryScaffold]). Eskiden
+    // "Giriş Yap" kartın ortasında kayıyor, dil seçici sağ üstte duruyor,
+    // başlık kahraman kartın İÇİNDE ortalanıyordu — kayıt ve ad ekranı başka
+    // bir yerleşimdi.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Ölçü kısıttan okunur (`MediaQuery.size` bölünmüş ekranda ve
+        // testlerde gerçek alanı söylemez). Kısa yatay telefonda düğmeler bir
+        // basamak alçalır (iki sütun, alan dar); dikey telefonda hiç sıkılaşmaz.
+        final size = constraints.biggest;
+        final denseWide =
+            (size.width > 720 || (size.width >= 640 && size.height < 420)) &&
+            (size.height < 520 || size.width > size.height);
+        return Consumer<AuthProvider>(
+          builder: (context, authProvider, _) {
+            final loading = authProvider.isLoading;
 
-    final isDark = !AppTheme.isLight(context);
-    final glowColor1 = AppTheme.gold.withValues(alpha: isDark ? 0.08 : 0.05);
-    final glowColor2 = isDark
-        ? AppTheme.secondaryAccent.withValues(alpha: 0.12)
-        : AppTheme.borderOf(context).withValues(alpha: 0.06);
+            final form = Form(
+              key: _formKey,
+              child: FadeTransition(
+                opacity: LoadAnimationSequence.formField1FadeAnimation(
+                  _animationController,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SahneField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      label: context.t(K.emailAddress),
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      prefixIcon: AppIcons.envelope,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return context.t(K.emailRequired);
+                        }
+                        if (!value.contains('@')) {
+                          return context.t(K.emailInvalid2);
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: denseWide ? SahneSpace.x2 : SahneSpace.x4),
+                    FadeTransition(
+                      opacity: LoadAnimationSequence.formField2FadeAnimation(
+                        _animationController,
+                      ),
+                      child: SahneField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        label: context.t(K.passwordLabel),
+                        controller: _passwordController,
+                        obscureText: _obscurePassword,
+                        prefixIcon: AppIcons.lock,
+                        suffixIcon: _obscurePassword
+                            ? AppIcons.eyeSlash
+                            : AppIcons.eye,
+                        suffixSemanticLabel: context.t(
+                          _obscurePassword ? K.showPassword : K.hidePassword,
+                        ),
+                        onSuffixIconPressed: () {
+                          setState(() => _obscurePassword = !_obscurePassword);
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return context.t(K.passwordRequired);
+                          }
+                          if (value.length < 6) {
+                            return context.t(K.passwordMin6);
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: SahneButton.text(
+                        label: context.t(K.forgotPassword),
+                        arrow: false,
+                        onPressed: loading
+                            ? null
+                            : () => _resetPassword(authProvider),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
 
-    final keyboardOpen = MediaQuery.viewInsetsOf(context).bottom > 0;
+            final panel = SahneSurfaceCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (_supportsGoogleSignIn) ...[
+                    _GoogleSignInButton(
+                      dense: denseWide,
+                      onPressed: loading
+                          ? null
+                          : () => _signInWithGoogle(authProvider),
+                    ),
+                    SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
+                  ],
+                  if (_supportsAppleSignIn) ...[
+                    _AppleSignInButton(
+                      dense: denseWide,
+                      onPressed: loading
+                          ? null
+                          : () => _signInWithApple(authProvider),
+                    ),
+                    SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
+                  ],
+                  // Misafir girişi bir kaçış yolu: metin bağlantısı olarak
+                  // sosyal girişlerden ayrılır.
+                  Center(
+                    child: _GuestSignInLink(
+                      onPressed: loading
+                          ? null
+                          : () => _signInAsGuest(authProvider),
+                    ),
+                  ),
+                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x2),
+                  const _EmailSectionDivider(),
+                  SizedBox(height: denseWide ? SahneSpace.x1 : SahneSpace.x3),
+                  form,
+                ],
+              ),
+            );
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          // Context-aware düz zemin (light: lightBg, dark: bg)
-          Container(decoration: BoxDecoration(color: AppTheme.bgOf(context))),
-          // Soft Glow 1: Sağ Üst
-          Positioned(
-            top: -120,
-            right: -120,
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 250),
-              opacity: keyboardOpen ? 0.0 : 1.0,
-              child: Container(
-                width: 320,
-                height: 320,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [glowColor1, glowColor1.withValues(alpha: 0)],
+            return SahneEntryScaffold(
+              leading: const LanguageToggle(
+                kuKey: ValueKey('sign-in-language-chip-KU'),
+                trKey: ValueKey('sign-in-language-chip-TR'),
+              ),
+              hero: _AnimatedTitle(
+                controller: _animationController,
+                child: SahneEntryHero(
+                  key: const ValueKey('sign-in-hero-banner'),
+                  padding: const EdgeInsets.fromLTRB(
+                    SahneSpace.x4,
+                    SahneSpace.x6,
+                    SahneSpace.x4,
+                    SahneSpace.x5,
+                  ),
+                  child: Center(
+                    child: ScaleTransition(
+                      scale: LoadAnimationSequence.logoScaleAnimation(
+                        _animationController,
+                      ),
+                      child: const AppLogo(width: 64),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-          // Soft Glow 2: Sol Alt
-          Positioned(
-            bottom: -140,
-            left: -140,
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 250),
-              opacity: keyboardOpen ? 0.0 : 1.0,
-              child: Container(
-                width: 360,
-                height: 360,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [glowColor2, glowColor2.withValues(alpha: 0)],
+              title: context.t(K.welcomeTitle),
+              content: panel,
+              primary: FadeTransition(
+                opacity: LoadAnimationSequence.buttonFadeAnimation(
+                  _animationController,
+                ),
+                child: ScaleTransition(
+                  scale: LoadAnimationSequence.buttonScaleAnimation(
+                    _animationController,
+                  ),
+                  child: SahneButton.primary(
+                    label: context.t(K.signIn),
+                    icon: AppIcons.rightToBracket,
+                    arrow: false,
+                    expand: true,
+                    onPressed: loading ? null : () => _signIn(authProvider),
                   ),
                 ),
               ),
-            ),
-          ),
-          // Main content
-          Positioned.fill(
-            child: SafeArea(
-              child: _AuthScrollFrame(
-                builder: (context, isWide) => Consumer<AuthProvider>(
-                  builder: (context, authProvider, _) {
-                    final denseWide =
-                        isWide &&
-                        (screenSize.height < 520 ||
-                            screenSize.width > screenSize.height);
-                    final wideGap = denseWide ? 4.0 : 16.0;
-                    final wideButtonGap = denseWide ? 4.0 : 12.0;
-                    final wideLogoTop = denseWide ? 24.0 : 40.0;
-
-                    if (isWide) {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 5,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: wideLogoTop),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ScaleTransition(
-                                    scale:
-                                        LoadAnimationSequence.logoScaleAnimation(
-                                          _animationController,
-                                        ),
-                                    child: Center(
-                                      child: AppLogo(
-                                        width: logoWidth * 1.2,
-                                        onCard: true,
-                                        cardRadius: 24,
-                                        cardPadding: const EdgeInsets.symmetric(
-                                          horizontal: 18,
-                                          vertical: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: denseWide
-                                        ? AppSpacing.xs
-                                        : AppSpacing.lg,
-                                  ),
-                                  FadeTransition(
-                                    opacity:
-                                        LoadAnimationSequence.titleFadeAnimation(
-                                          _animationController,
-                                        ),
-                                    child: Transform.translate(
-                                      offset: Offset(
-                                        0,
-                                        LoadAnimationSequence.titleSlideAnimation(
-                                          _animationController,
-                                        ).value,
-                                      ),
-                                      child: _SignInHeroBanner(
-                                        compact: denseWide,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 48),
-                          Expanded(
-                            flex: 6,
-                            child: _AuthFormPanel(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: ScaleTransition(
-                                      scale:
-                                          LoadAnimationSequence.logoScaleAnimation(
-                                            _animationController,
-                                          ),
-                                      child: _LanguageToggle(),
-                                    ),
-                                  ),
-                                  SizedBox(height: wideGap),
-                                  if (_supportsGoogleSignIn) ...[
-                                    _GoogleSignInButton(
-                                      dense: denseWide,
-                                      onPressed: authProvider.isLoading
-                                          ? null
-                                          : () =>
-                                                _signInWithGoogle(authProvider),
-                                    ),
-                                    SizedBox(height: denseWide ? 4 : 8),
-                                  ],
-                                  Center(
-                                    child: _GuestSignInLink(
-                                      onPressed: authProvider.isLoading
-                                          ? null
-                                          : () => _signInAsGuest(authProvider),
-                                    ),
-                                  ),
-                                  SizedBox(height: wideButtonGap),
-                                  const _EmailSectionDivider(),
-                                  ...[
-                                    SizedBox(height: wideButtonGap),
-                                    FadeTransition(
-                                      opacity:
-                                          LoadAnimationSequence.formField1FadeAnimation(
-                                            _animationController,
-                                          ),
-                                      child: Form(
-                                        key: _formKey,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            StyledInputField(
-                                              autovalidateMode: AutovalidateMode
-                                                  .onUserInteraction,
-                                              label: context.t(K.emailAddress),
-                                              labelStyle: authInputLabelStyle,
-                                              inputTextStyle:
-                                                  authInputTextStyle,
-                                              controller: _emailController,
-                                              keyboardType:
-                                                  TextInputType.emailAddress,
-                                              prefixIcon: AppIcons.envelope,
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return context.t(
-                                                    K.emailRequired,
-                                                  );
-                                                }
-                                                if (!value.contains('@')) {
-                                                  return context.t(
-                                                    K.emailInvalid2,
-                                                  );
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                            SizedBox(height: wideGap),
-                                            FadeTransition(
-                                              opacity:
-                                                  LoadAnimationSequence.formField2FadeAnimation(
-                                                    _animationController,
-                                                  ),
-                                              child: StyledInputField(
-                                                autovalidateMode:
-                                                    AutovalidateMode
-                                                        .onUserInteraction,
-                                                label: context.t(
-                                                  K.passwordLabel,
-                                                ),
-                                                labelStyle: authInputLabelStyle,
-                                                inputTextStyle:
-                                                    authInputTextStyle,
-                                                controller: _passwordController,
-                                                obscureText: _obscurePassword,
-                                                prefixIcon: AppIcons.lock,
-                                                suffixIcon: _obscurePassword
-                                                    ? AppIcons.eyeSlash
-                                                    : AppIcons.eye,
-                                                suffixSemanticLabel: context.t(
-                                                  _obscurePassword
-                                                      ? K.showPassword
-                                                      : K.hidePassword,
-                                                ),
-                                                onSuffixIconPressed: () {
-                                                  setState(
-                                                    () => _obscurePassword =
-                                                        !_obscurePassword,
-                                                  );
-                                                },
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return context.t(
-                                                      K.passwordRequired,
-                                                    );
-                                                  }
-                                                  if (value.length < 6) {
-                                                    return context.t(
-                                                      K.passwordMin6,
-                                                    );
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                            ),
-                                            SizedBox(height: denseWide ? 0 : 8),
-                                            Align(
-                                              alignment: Alignment.centerRight,
-                                              child: TextButton(
-                                                onPressed:
-                                                    authProvider.isLoading
-                                                    ? null
-                                                    : () => _resetPassword(
-                                                        authProvider,
-                                                      ),
-                                                child: Text(
-                                                  context.t(K.forgotPassword),
-                                                  style: AppTypography
-                                                      .bodyMedium
-                                                      .copyWith(
-                                                        color:
-                                                            AppTheme.textSubColor(
-                                                              context,
-                                                            ),
-                                                        fontSize: 13,
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: wideButtonGap),
-                                    FadeTransition(
-                                      opacity:
-                                          LoadAnimationSequence.buttonFadeAnimation(
-                                            _animationController,
-                                          ),
-                                      child: ScaleTransition(
-                                        scale:
-                                            LoadAnimationSequence.buttonScaleAnimation(
-                                              _animationController,
-                                            ),
-                                        child: GeometricGradientButton(
-                                          label: context.t(K.signIn),
-                                          icon: AppIcons.rightToBracket,
-                                          isLoading: authProvider.isLoading,
-                                          onPressed: authProvider.isLoading
-                                              ? null
-                                              : () => _signIn(authProvider),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                  SizedBox(height: wideGap),
-                                  Wrap(
-                                    alignment: WrapAlignment.center,
-                                    crossAxisAlignment:
-                                        WrapCrossAlignment.center,
-                                    children: [
-                                      Text(
-                                        context.t(K.noAccountPrefix),
-                                        style: AppTypography.bodyMedium
-                                            .copyWith(
-                                              color: AppTheme.textSubColor(
-                                                context,
-                                              ),
-                                            ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            AppRoute.to(const SignUpScreen()),
-                                          );
-                                        },
-                                        borderRadius: BorderRadius.circular(
-                                          AppRadius.badge,
-                                        ),
-                                        child: Text(
-                                          context.t(K.signUp),
-                                          style: AppTypography.bodyMedium
-                                              .copyWith(
-                                                color: AppColors.readableAccent(
-                                                  context,
-                                                  AppTheme.accent,
-                                                ),
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        // Language toggle - top right
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: ScaleTransition(
-                            scale: LoadAnimationSequence.logoScaleAnimation(
-                              _animationController,
-                            ),
-                            child: _LanguageToggle(),
-                          ),
-                        ),
-                        SizedBox(height: topGap),
-                        // Logo
-                        ScaleTransition(
-                          scale: LoadAnimationSequence.logoScaleAnimation(
-                            _animationController,
-                          ),
-                          child: Center(
-                            child: AppLogo(
-                              width: logoWidth,
-                              onCard: true,
-                              cardRadius: 24,
-                              cardPadding: const EdgeInsets.symmetric(
-                                horizontal: 18,
-                                vertical: 14,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: compact ? AppSpacing.sm : AppSpacing.lg,
-                        ),
-                        FadeTransition(
-                          opacity: LoadAnimationSequence.titleFadeAnimation(
-                            _animationController,
-                          ),
-                          child: Transform.translate(
-                            offset: Offset(
-                              0,
-                              LoadAnimationSequence.titleSlideAnimation(
-                                _animationController,
-                              ).value,
-                            ),
-                            child: _SignInHeroBanner(compact: compact),
-                          ),
-                        ),
-                        SizedBox(
-                          height: compact ? AppSpacing.md : AppSpacing.lg,
-                        ),
-                        _AuthFormPanel(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              if (_supportsGoogleSignIn) ...[
-                                _GoogleSignInButton(
-                                  onPressed: authProvider.isLoading
-                                      ? null
-                                      : () => _signInWithGoogle(authProvider),
-                                ),
-                                const SizedBox(height: 8),
-                              ],
-                              // Misafir girişi: ikincil eylem, outlined buton
-                              // olarak sosyal girişlerden ayrılır.
-                              Center(
-                                child: _GuestSignInLink(
-                                  onPressed: authProvider.isLoading
-                                      ? null
-                                      : () => _signInAsGuest(authProvider),
-                                ),
-                              ),
-                              SizedBox(height: actionGap),
-                              const _EmailSectionDivider(),
-                              ...[
-                                SizedBox(height: altGap),
-                                // Form fields with fade animations
-                                FadeTransition(
-                                  opacity:
-                                      LoadAnimationSequence.formField1FadeAnimation(
-                                        _animationController,
-                                      ),
-                                  child: Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        StyledInputField(
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          label: context.t(K.emailAddress),
-                                          labelStyle: authInputLabelStyle,
-                                          inputTextStyle: authInputTextStyle,
-                                          controller: _emailController,
-                                          keyboardType:
-                                              TextInputType.emailAddress,
-                                          prefixIcon: AppIcons.envelope,
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return context.t(K.emailRequired);
-                                            }
-                                            if (!value.contains('@')) {
-                                              return context.t(K.emailInvalid2);
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                        const SizedBox(height: 20),
-                                        FadeTransition(
-                                          opacity:
-                                              LoadAnimationSequence.formField2FadeAnimation(
-                                                _animationController,
-                                              ),
-                                          child: StyledInputField(
-                                            autovalidateMode: AutovalidateMode
-                                                .onUserInteraction,
-                                            label: context.t(K.passwordLabel),
-                                            labelStyle: authInputLabelStyle,
-                                            inputTextStyle: authInputTextStyle,
-                                            controller: _passwordController,
-                                            obscureText: _obscurePassword,
-                                            prefixIcon: AppIcons.lock,
-                                            suffixIcon: _obscurePassword
-                                                ? AppIcons.eyeSlash
-                                                : AppIcons.eye,
-                                            suffixSemanticLabel: context.t(
-                                              _obscurePassword
-                                                  ? K.showPassword
-                                                  : K.hidePassword,
-                                            ),
-                                            onSuffixIconPressed: () {
-                                              setState(
-                                                () => _obscurePassword =
-                                                    !_obscurePassword,
-                                              );
-                                            },
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return context.t(
-                                                  K.passwordRequired,
-                                                );
-                                              }
-                                              if (value.length < 6) {
-                                                return context.t(
-                                                  K.passwordMin6,
-                                                );
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                        ),
-                                        const SizedBox(height: 12),
-                                        Align(
-                                          alignment: Alignment.centerRight,
-                                          child: TextButton(
-                                            onPressed: authProvider.isLoading
-                                                ? null
-                                                : () => _resetPassword(
-                                                    authProvider,
-                                                  ),
-                                            child: Text(
-                                              context.t(K.forgotPassword),
-                                              style: TextStyle(
-                                                color: AppTheme.textSubColor(
-                                                  context,
-                                                ),
-                                                fontSize: 13,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: actionGap),
-                                // Sign In Button with animations
-                                FadeTransition(
-                                  opacity:
-                                      LoadAnimationSequence.buttonFadeAnimation(
-                                        _animationController,
-                                      ),
-                                  child: ScaleTransition(
-                                    scale:
-                                        LoadAnimationSequence.buttonScaleAnimation(
-                                          _animationController,
-                                        ),
-                                    child: GeometricGradientButton(
-                                      label: context.t(K.signIn),
-                                      icon: AppIcons.rightToBracket,
-                                      isLoading: authProvider.isLoading,
-                                      onPressed: authProvider.isLoading
-                                          ? null
-                                          : () => _signIn(authProvider),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              SizedBox(height: compact ? 16 : 24),
-                              // Sign Up link
-                              Wrap(
-                                alignment: WrapAlignment.center,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  Text(
-                                    context.t(K.noAccountPrefix),
-                                    style: AppTypography.bodyMedium.copyWith(
-                                      color: AppTheme.textSubColor(context),
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.of(
-                                        context,
-                                      ).push(AppRoute.to(const SignUpScreen()));
-                                    },
-                                    borderRadius: BorderRadius.circular(
-                                      AppRadius.badge,
-                                    ),
-                                    child: Text(
-                                      context.t(K.signUp),
-                                      style: AppTypography.bodyMedium.copyWith(
-                                        color: AppColors.readableAccent(
-                                          context,
-                                          AppTheme.accent,
-                                        ),
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: bottomGap),
-                      ],
-                    );
-                  },
-                ),
+              secondary: Wrap(
+                alignment: WrapAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: SahneSpace.x1,
+                children: [
+                  Text(
+                    context.t(K.noAccountPrefix),
+                    style: SahneType.body.copyWith(color: t.tx2),
+                  ),
+                  SahneButton.text(
+                    label: context.t(K.signUp),
+                    onPressed: () => Navigator.of(
+                      context,
+                    ).push(AppRoute.to(const SignUpScreen())),
+                  ),
+                ],
               ),
-            ),
-          ),
-        ],
-      ),
+            );
+          },
+        );
+      },
     );
   }
 }
 
-class _SignInHeroBanner extends StatelessWidget {
-  const _SignInHeroBanner({required this.compact});
+/// Başlığın kademeli girişi: solarak ve 20 px aşağıdan gelir. Hareketi
+/// azalt açıkken denetleyici ilk karede bitmiş değerdedir.
+class _AnimatedTitle extends StatelessWidget {
+  const _AnimatedTitle({required this.controller, required this.child});
 
-  final bool compact;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppRadius.card),
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(compact ? AppSpacing.md : AppSpacing.lg),
-        decoration: BoxDecoration(
-          // 2026-07-24 canlı denetim: banner, "Têkeve" butonu ve KU/TR çipi
-          // aynı anda turuncuydu — ekranda üç eşit ağırlıkta turuncu kütle
-          // vardı. Banner kimlik rengine (Kesk) alındı; turuncu yalnız
-          // birincil eylemde kalır.
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
-          ),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
-        ),
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Text(
-                  context.t(K.welcomeTitle),
-                  style: AppTypography.heading1.copyWith(
-                    color: Colors.white,
-                    fontSize: compact ? 22 : 26,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                Text(
-                  context.t(K.welcomeSubtitle),
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: Colors.white.withValues(alpha: 0.78),
-                    fontSize: compact ? 13 : 14,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AuthFormPanel extends StatelessWidget {
-  const _AuthFormPanel({required this.child});
-
+  final AnimationController controller;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    final isLight = AppTheme.isLight(context);
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: isLight
-            ? AppTheme.lightSurface
-            : Colors.white.withValues(alpha: 0.04),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(
-          color: isLight
-              ? AppTheme.lightBorder
-              : Colors.white.withValues(alpha: 0.1),
-        ),
-        boxShadow: isLight ? AppTheme.cardShadow(context) : null,
+    final slide = LoadAnimationSequence.titleSlideAnimation(controller);
+    return FadeTransition(
+      opacity: LoadAnimationSequence.titleFadeAnimation(controller),
+      child: AnimatedBuilder(
+        animation: slide,
+        builder: (context, child) =>
+            Transform.translate(offset: Offset(0, slide.value), child: child),
+        child: child,
       ),
-      child: child,
     );
   }
 }
 
-bool get _supportsGoogleSignIn =>
-    kIsWeb ||
-    (defaultTargetPlatform != TargetPlatform.iOS &&
-        defaultTargetPlatform != TargetPlatform.macOS);
+// Supabase OAuth, iOS'ta da sistem tarayıcısını açıp Info.plist'teki
+// `com.zankurd.app://login-callback/` şemasına döner. Bu yüzden sosyal
+// girişleri iOS'ta gizlemek hem Google'ı hem de zorunlu Apple seçeneğini
+// kaldırıyordu; desteklenen tüm ZanKurd yüzeylerinde gösterilir.
+bool get _supportsGoogleSignIn => true;
+
+bool get _supportsAppleSignIn => true;
+
+/// Google'ın kendi marka kılavuzundaki "Sign in with Google" renkleri:
+/// beyaz dolgu, #747775 kontur, #1F1F1F yazı. Bunlar Şahnê paletinin
+/// değil, üçüncü tarafın zorunlu kimliğidir; bu yüzden belirteç değil,
+/// burada adlandırılmış sabittir. Şekil uygulamanın M pahıdır, gölge yok.
+const _googleSurface = Color(0xFFFFFFFF);
+const _googleStroke = Color(0xFF747775);
+const _googleInk = Color(0xFF1F1F1F);
 
 class _GoogleSignInButton extends StatelessWidget {
   const _GoogleSignInButton({required this.onPressed, this.dense = false});
@@ -882,61 +442,43 @@ class _GoogleSignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final enabled = onPressed != null;
+    final shape = SahneShape.withSide(SahneShape.m, _googleStroke, width: 1);
     return IgnorePointer(
       ignoring: !enabled,
       child: Opacity(
+        // Marka düğmesi Şahnê'nin pasif tonuna boyanamaz (kılavuz); yükleme
+        // sürerken yalnız soluklaşır, dokunuş almaz.
         opacity: enabled ? 1 : 0.55,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-            // Beyaz düğme beyaz kartın üstünde duruyor: kontur olmayınca
-            // görünen tek şey alttaki gölge yayı kalıyordu ve düğme üstten
-            // kırpılmış gibi duruyordu (2026-07-30 ekran turu, 74/75).
-            // Uygulamanın ilk ekranındaki ilk düğme bu. Renk Google'ın kendi
-            // marka kılavuzundaki kontur tonudur; koyu temada da görünür.
-            border: Border.all(color: const Color(0xFF747775), width: 1),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.14),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
-                spreadRadius: -2,
-              ),
-            ],
-          ),
-          child: Material(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(AppRadius.lg),
-              onTap: onPressed,
-              child: Container(
-                height: dense ? 48 : 54,
-                padding: EdgeInsets.symmetric(horizontal: dense ? 12 : 20),
+        child: Material(
+          color: _googleSurface,
+          shape: shape,
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            customBorder: shape,
+            onTap: onPressed,
+            child: SizedBox(
+              height: dense ? 48 : 52,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: dense ? SahneSpace.x3 : SahneSpace.x5,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    FaIcon(
-                      FontAwesomeIcons.google,
-                      color: const Color(0xFF1F1F1F),
-                      size: dense ? 18 : 21,
+                    BrandIcon(
+                      BrandIcons.google,
+                      color: _googleInk,
+                      size: dense ? 18 : 20,
                     ),
-                    SizedBox(width: dense ? 8 : 12),
+                    SizedBox(width: dense ? SahneSpace.x2 : SahneSpace.x3),
                     Flexible(
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
-                        alignment: Alignment.centerLeft,
+                        alignment: AlignmentDirectional.centerStart,
                         child: Text(
                           context.t(K.signInGoogle),
                           maxLines: 1,
-                          style: TextStyle(
-                            color: AppTheme.bgDeep,
-                            fontWeight: FontWeight.w800,
-                            fontSize: dense ? 14 : 16,
-                            letterSpacing: 0.1,
-                          ),
+                          style: SahneType.button.copyWith(color: _googleInk),
                         ),
                       ),
                     ),
@@ -951,8 +493,85 @@ class _GoogleSignInButton extends StatelessWidget {
   }
 }
 
+class _AppleSignInButton extends StatelessWidget {
+  const _AppleSignInButton({required this.onPressed, this.dense = false});
+
+  final VoidCallback? onPressed;
+  final bool dense;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = onPressed != null;
+    // Apple'ın kendi düğme kılavuzu iki varyant tanımlar: açık zeminde siyah,
+    // koyu zeminde beyaz. Düğme ilk yazıldığında yalnız siyah varyant vardı
+    // ve karanlık temada gövde kartın zeminine 1.24:1 ile oturuyordu —
+    // yalnız beyaz yazı havada duruyordu (2026-08-16 ekran turu,
+    // 75_sign_in_dark). Siyah/beyaz Apple'ın zorunlu kimliğidir, belirteç
+    // değil; şekil uygulamanın M pahı, gölge yok.
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    final surface = dark ? Colors.white : Colors.black;
+    final onSurface = dark ? Colors.black : Colors.white;
+    return IgnorePointer(
+      ignoring: !enabled,
+      child: Opacity(
+        opacity: enabled ? 1 : 0.55,
+        child: AnimatedContainer(
+          duration: sahneMotionReduced(context)
+              ? Duration.zero
+              : SahneMotion.fade,
+          decoration: ShapeDecoration(color: surface, shape: SahneShape.m),
+          child: Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              customBorder: SahneShape.m,
+              onTap: onPressed,
+              child: SizedBox(
+                height: dense ? 48 : 52,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: dense ? SahneSpace.x3 : SahneSpace.x5,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BrandIcon(
+                        BrandIcons.apple,
+                        color: onSurface,
+                        size: dense ? 18 : 20,
+                      ),
+                      SizedBox(width: dense ? SahneSpace.x2 : SahneSpace.x3),
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text(
+                            context.t(K.signInApple),
+                            maxLines: 1,
+                            style: SahneType.button.copyWith(color: onSurface),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Misafir girişi: ikincil eylem olarak altı çizili metin bağlantısı.
 /// Sosyal giriş bulunmayan Apple platformlarında da ana akış açık kalır.
+///
+/// Misafir girişi bir *kaçış yolu*, üçüncü bir teklif değil. Turuncu
+/// konturlu tam boy buton olarak Google (beyaz) ve Apple (siyah)
+/// düğmeleriyle aynı ağırlıktaydı; ekranda üç birincil eylem görünüyor ve
+/// hangisinin beklenen yol olduğu belirsiz kalıyordu (2026-07-25 canlı
+/// denetimi). 2026-09-29 Şahnê: birincil metin rengi (Agir değil — Agir
+/// ekranın tek birincil eylemine, "Giriş Yap"a ait), 48 dokunma alanı.
 class _GuestSignInLink extends StatelessWidget {
   const _GuestSignInLink({required this.onPressed});
 
@@ -960,46 +579,28 @@ class _GuestSignInLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final enabled = onPressed != null;
-    final isLight = AppTheme.isLight(context);
-    final fg = isLight ? AppTheme.lightTextPrimary : Colors.white;
+    final fg = enabled ? t.tx : t.tx3;
     return IgnorePointer(
       ignoring: !enabled,
-      child: Opacity(
-        opacity: enabled ? 1 : 0.55,
-        // Misafir girişi bir *kaçış yolu*, üçüncü bir teklif değil. Turuncu
-        // konturlu tam boy buton olarak Google (beyaz) ve Apple (siyah)
-        // düğmeleriyle aynı ağırlıktaydı; ekranda üç birincil eylem
-        // görünüyor ve hangisinin beklenen yol olduğu belirsiz kalıyordu
-        // (2026-07-25 canlı denetimi). Metin bağlantısı hiyerarşiyi
-        // netleştirir, eylemi kaldırmadan.
-        child: TextButton.icon(
-          onPressed: onPressed,
-          icon: Icon(AppIcons.user, size: 17, color: fg.withValues(alpha: 0.8)),
-          label: Text(
-            context.t(K.continueGuest),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: fg.withValues(alpha: 0.85),
-              decoration: TextDecoration.underline,
-              decorationColor: fg.withValues(alpha: 0.4),
-            ),
+      child: TextButton.icon(
+        onPressed: onPressed,
+        icon: Icon(AppIcons.user, size: 18, color: fg),
+        label: Text(
+          context.t(K.continueGuest),
+          textAlign: TextAlign.center,
+          style: SahneType.captionStrong.copyWith(
+            color: fg,
+            decoration: TextDecoration.underline,
+            decorationColor: fg,
           ),
-          style: TextButton.styleFrom(
-            foregroundColor: fg,
-            // Dokunma hedefi iOS asgarisinin (44pt) altına inmez.
-            minimumSize: const Size(double.infinity, 46),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            // `styleFrom(textStyle:)` temanın biçimini değiştirir,
-            // birleştirmez; aile yazılmazsa yazı sistem tipine düşer.
-            textStyle: const TextStyle(
-              fontFamily: AppTypography.fontFamily,
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-              letterSpacing: 0.1,
-            ),
-          ),
+        ),
+        style: TextButton.styleFrom(
+          foregroundColor: fg,
+          minimumSize: const Size(48, 48),
+          shape: SahneShape.m,
+          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x4),
         ),
       ),
     );
@@ -1013,168 +614,32 @@ class _EmailSectionDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final t = SahneTokens.of(context);
+    Widget line() => Expanded(
+      child: SizedBox(height: 1, child: ColoredBox(color: t.line)),
+    );
+    return ConstrainedBox(
+      // a11y-tap-target: noninteractive — statik bölüm ayıracı.
       constraints: const BoxConstraints(minHeight: 44),
-      alignment: Alignment.center,
       child: Row(
         children: [
-          Expanded(
-            child: Divider(color: AppTheme.borderColor(context), thickness: 1),
-          ),
+          line(),
           Flexible(
             // Uzun çeviri metni iki Expanded çizgiyle eşit pay (flex:1)
             // aldığında dar ekranlarda kesiliyordu; metne 3 kat pay
             // veriyoruz ki çizgiler ince kalıp metin tam sığsın.
             flex: 3,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
               child: Text(
                 context.t(K.orWithEmail),
                 textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textMutedColor(context),
-                ),
+                style: SahneType.caption.copyWith(color: t.tx2),
               ),
             ),
           ),
-          Expanded(
-            child: Divider(color: AppTheme.borderColor(context), thickness: 1),
-          ),
+          line(),
         ],
-      ),
-    );
-  }
-}
-
-class _AuthScrollFrame extends StatelessWidget {
-  const _AuthScrollFrame({required this.builder});
-
-  // isWide gerçek yerleşim genişliğinden hesaplanır (MediaQuery.size değil):
-  // bölünmüş ekran/katlanabilir cihaz ve testlerde doğru düzen seçilir.
-  final Widget Function(BuildContext context, bool isWide) builder;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isWide = constraints.maxWidth > 720;
-        const edgePadding = 32.0;
-        // 2026-07-22 canlı UX denetimi: dikey ortalama + padding düzeltmesi
-        // minHeight clamp: klavye açıldığında negatif değer engellenir
-        return SingleChildScrollView(
-          padding: const EdgeInsets.all(edgePadding),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: isWide ? 960 : 420,
-              minHeight: (constraints.maxHeight - (edgePadding * 2)).clamp(
-                0.0,
-                double.infinity,
-              ),
-            ),
-            child: Center(child: builder(context, isWide)),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _LanguageToggle extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final isKu = context.isKu;
-    return Container(
-      padding: const EdgeInsets.all(3),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context).withValues(alpha: 0.45),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: AppTheme.borderColor(context).withValues(alpha: 0.3),
-          width: 1.2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-            spreadRadius: -2,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _LanguageChip(
-            label: 'KU',
-            active: isKu,
-            onTap: () => context.langProvider.setLang('ku'),
-          ),
-          _LanguageChip(
-            label: 'TR',
-            active: !isKu,
-            onTap: () => context.langProvider.setLang('tr'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _LanguageChip extends StatelessWidget {
-  const _LanguageChip({
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    // Erişilebilirlik ağacında bu iki buton etiketsiz görünüyordu
-    // (yalnız "button"); ekran okuyucu hangi dile geçildiğini
-    // söyleyemiyordu (2026-07-22 canlı UX denetimi).
-    return Semantics(
-      button: true,
-      selected: active,
-      label: label == 'KU' ? 'Kurmancî' : 'Türkçe',
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 240),
-          curve: Curves.easeInOut,
-          constraints: const BoxConstraints(minHeight: 36, minWidth: 36),
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-          decoration: BoxDecoration(
-            gradient: active ? AppTheme.accentGradient : null,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: active
-                ? [
-                    BoxShadow(
-                      color: AppTheme.primaryGradientStart.withValues(
-                        alpha: 0.35,
-                      ),
-                      blurRadius: 8,
-                      offset: const Offset(0, 3),
-                    ),
-                  ]
-                : null,
-          ),
-          child: Text(
-            label,
-            style: AppTypography.bodyMedium.copyWith(
-              color: active ? Colors.white : AppTheme.textMutedColor(context),
-              fontWeight: FontWeight.w800,
-              letterSpacing: 0.5,
-            ),
-          ),
-        ),
       ),
     );
   }

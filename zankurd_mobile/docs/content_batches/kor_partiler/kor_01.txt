@@ -1,0 +1,1691 @@
+Aşağıda 245 çoktan seçmeli soru var. Her biri için DOĞRU şıkkı seç.
+
+- Yalnız JSON dizisi döndür, başka hiçbir şey yazma.
+- Biçim: [{"id":"...","cevap":"<şıkkın TAM METNİ>"}]
+- Cevabı şıklardan birinin metnini AYNEN kopyalayarak yaz; harf yazma.
+- Emin değilsen "?" yaz. Tahmin etme — emin olmadığını söylemek,
+  yanlış bir kesinlikten daha değerli.
+
+Sorular Kurmancî. Doğru cevap sana GÖSTERİLMİYOR; bu kasıtlı.
+Gösterilseydi kendi seçimini savunma eğilimi ölçümü değersizleştirirdi.
+
+SORULAR:
+
+[comm_cog_0001]
+S: Amed li kîjan parçeyê Kurdistanê ye?
+  A) Rojhilatê Kurdistan
+  B) Bakûrê Kurdistan
+  C) Rojavayê Kurdistan
+  D) Başûrê Kurdistan
+
+[comm_cog_0002]
+S: Ava Spî (Serê Avê) bi kîjan navçeyê ve girêdayî ye?
+  A) Qoser
+  B) Nisêbîn
+  C) Artuklu
+  D) Mîdyat
+
+[comm_cog_0003]
+S: Nisêbîn navçeya kîjan bajarî ye?
+  A) Amed
+  B) Şirnex
+  C) Mêrdîn
+  D) Êlih
+
+[comm_cog_0004]
+S: Behra Wanê di nav sînorên kîjan du parêzgehan de ye?
+  A) Amed û Êlih
+  B) Şirnex û Colemêrg
+  C) Muş û Agirî
+  D) Wan û Bidlîs
+
+[comm_cog_0005]
+S: Pîr Seyîd Riza xelkê ku derê ye?
+  A) Amed
+  B) Dêrsim
+  C) Wan
+  D) Şîrnex
+
+[comm_muz_0001]
+S: Koma rockê ya kurdî ya yekem kîjan e?
+  A) Agirê Jiyan
+  B) Siya Şevê
+  C) Koma Amed
+  D) Koma Wetan
+
+[comm_muz_0002]
+S: Mihemmed Şêxo li ku derê ji dayik bûye?
+  A) Amed
+  B) Qamişlo
+  C) Hewlêr
+  D) Sînê
+
+[comm_muz_0003]
+S: Kîjan hunermend gotiye: hemû çek, tank û topan bihelînin em cumbûşê çêkin?
+  A) Aram Tigran
+  B) Ahmet Kaya
+  C) Xerapetê Xaço
+  D) Seîd Ûsiv
+
+[comm_muz_0004]
+S: Di rapa kurdî de bi stranê "Ax" tê nasîn — kîjan hunermend e?
+  A) Şerifê Omerî
+  B) Simyager
+  C) Serhado
+  D) Kimyager
+
+[comm_muz_0005]
+S: Kîjan hunermend bi rapên xwe yên li Rojava tê nasîn?
+  A) Serhado
+  B) Simyager
+  C) Şerifê Omerî
+  D) Kimyager
+
+[comm_ede_0001]
+S: Baba Tahirê Uryan bi giştî wek helbestvanê kîjan sedsalê tê bibîranîn?
+  A) 10
+  B) 15
+  C) 20
+  D) 11
+
+[comm_ede_0002]
+S: Kîjan roman ji hêla Erebê Şemo ve hatiye nivîsandin?
+  A) Mem û Zîn
+  B) Stêrka Bakûr
+  C) Şivanê Kurd
+  D) Bîra Qederê
+
+[comm_ede_0003]
+S: Gotina "Xwîn bi xwînê nayê şûştin" çi ye?
+  A) Beytek ji dîwana Melayê Cizîrî
+  B) Navê romanekê
+  C) Gotineke pêşiyan
+  D) Dubeytiyeke Baba Tahir
+
+[comm_ede_0004]
+S: Nivîskarê pirtûka "Bîra Qederê" kî ye?
+  A) Yaşar Kemal
+  B) Mehmed Uzun
+  C) Ahmedê Xanî
+  D) Ali Haydar Kaytan
+
+[comm_sin_0001]
+S: Muzîka fîlmê Kobanê ji hêla kê ve hatiye çêkirin?
+  A) Mehmûd Berazî
+  B) Şivan Perwer
+  C) Seyidxanê Boyaxçî
+  D) Şakiro
+
+[comm_sin_0003]
+S: Di fîlmê Kobanê de lîstikvan bi piranî kî ne?
+  A) Lîstikvanên şanoya Şamê
+  B) Xwendekarên dibistana fîlman a Duhokê
+  C) Lîstikvanên navdar ên Hollywoodê
+  D) Kesên ku bi xwe beşdarî berxwedanê bûne
+
+[comm_sin_0004]
+S: Muzîka fîlmê "14 Tîrmeh" ji hêla kê ve hatiye çêkirin?
+  A) Mehmûd Berazî
+  B) Awazê Çiya
+  C) Koma Hevra
+  D) TEV-ÇAND
+
+[comm_sin_0005]
+S: Fîlmê "14 Tîrmeh" kengî derket ser ekranan?
+  A) 2012
+  B) 2014
+  C) 2017
+  D) 2020
+
+[comm_sin_0006]
+S: Fîlmê "Ji bo Azadîyê" kengî derket ser ekranan?
+  A) 2019
+  B) 2014
+  C) 2016
+  D) 2023
+
+[comm_sin_0007]
+S: Fîlmê "Ji bo Azadîyê" li ku derê hatiye kişandin?
+  A) Amed (Sûr)
+  B) Hewlêr
+  C) Qamişlo
+  D) Kobanê
+
+[comm_sin_0008]
+S: Derhênerê fîlmê "Ji bo Azadîyê" kî ye?
+  A) Ersin Çelik
+  B) Şêro Hindê
+  C) Özlem Yaşar
+  D) Kazim Öz
+
+[comm_sin_0009]
+S: Muzîka fîlmê "Ji bo Azadîyê" ji hêla kê ve hatiye çêkirin?
+  A) Hozan Aydin
+  B) Mehmûd Berazî
+  C) Hekîm Sefqan
+  D) Awazê Çiya
+
+[comm_dir_0001]
+S: Şehîdê ku wek "Şêrê Efrînê" tê nasîn kî ye?
+  A) Gelhat Gever
+  B) Karker Tolhildan
+  C) Çiyager Hêvî
+  D) Hakî Karer
+
+[comm_dir_0002]
+S: Kîjan şehîd bi berxwedana Sûra Amedê re bûye yek?
+  A) Gelhat Gever
+  B) Karker Tolhildan
+  C) Riza Altun
+  D) Çiyager Hêvî
+
+[comm_dir_0003]
+S: Şehîda fedaî ya ku bi ruhê Kobanê re bûye yek kî ye?
+  A) Arîn Mirkan
+  B) Viyan Peyman
+  C) Zehra Penaber
+  D) Gelhat Gever
+
+[comm_dir_0004]
+S: Kîjan şehîd bi klamên xwe yên berxwedana Kobanê tê bîranîn?
+  A) Arîn Mirkan
+  B) Viyan Peyman
+  C) Kasım Engin
+  D) Atakan Mahir
+
+[comm_dir_0006]
+S: Kemal Pir, yê ku wek "Laz Kemal" tê nasîn, xelkê ku derê ye?
+  A) Amed
+  B) Qamişlo
+  C) Gümüşhane
+  D) Hewraman
+
+[comm_dir_0007]
+S: Hakî Karer xelkê ku derê ye?
+  A) Giresun
+  B) Ordu
+  C) Rize
+  D) Gümüşhane
+
+[comm_dir_0008]
+S: Kîjan heval wek "cêwiyê ruhê min" tê bilêvkirin?
+  A) Hakî Karer
+  B) Kemal Pir
+  C) Dibistan
+  D) Mehmet Karasungur
+
+[comm_dir_0009]
+S: Şanogerê ku di berxwedana benda Tişrînê de şehîd ket kî ye?
+  A) Nazmi Karaman
+  B) Mirza Metin
+  C) Bavê Teyar
+  D) Biçûk
+
+[comm_siy_0001]
+S: Siyasetmedarê ku wek "Bavê Welat" tê nasîn kî ye?
+  A) Salih Mislim
+  B) Aldar Xelîl
+  C) Mazlum Kobanê
+  D) Bavê Teyar
+
+[comm_siy_0002]
+S: Yekîneya şervanên jin a li Rojava kîjan e?
+  A) YJA-Star
+  B) YPJ
+  C) YPG
+  D) HPJ
+
+[comm_sin_0101]
+S: Fîlmê "Yol" di sala 1982an de li Cannesê kîjan xelat wergirt?
+  A) Xelata Taybet a Jûriyê
+  B) Palmeya Zêrîn
+  C) Xelata Derhênerê Herî Baş
+  D) Hirça Zêrîn
+
+[comm_sin_0102]
+S: Ji ber ku Yilmaz Guney di girtîgehê de bû, derhêneriya fîlmê "Yol" kê kir?
+  A) Zeki Ökten
+  B) Atıf Yılmaz
+  C) Ömer Lütfi Akad
+  D) Şerif Gören
+
+[comm_sin_0103]
+S: Fîlmê "Sûrû" (1978) senaryoya wê ya kê ye?
+  A) Yılmaz Güney
+  B) Zeki Ökten
+  C) Kazım Öz
+  D) Hiner Saleem
+
+[comm_sin_0104]
+S: Derhênerê fîlmê "Dema Hespên Serxweş" kî ye?
+  A) Hiner Saleem
+  B) Bahman Ghobadi
+  C) Kazım Öz
+  D) Yılmaz Güney
+
+[comm_sin_0105]
+S: Fîlmê "Kûsî jî Difirin" derhênerê wî kî ye?
+  A) Hiner Saleem
+  B) Bahman Ghobadi
+  C) Erol Mintaş
+  D) Hüseyin Karabey
+
+[comm_sin_0106]
+S: Derhênerê fîlmê "Vodka Lemon" kî ye?
+  A) Bahman Ghobadi
+  B) Kazım Öz
+  C) Şerif Gören
+  D) Hiner Saleem
+
+[comm_sin_0107]
+S: Fîlmên "Fotoğraf", "Bahoz" û "Zer" ji hêla kîjan derhêner ve hatine çêkirin?
+  A) Kazım Öz
+  B) Erol Mintaş
+  C) Hüseyin Karabey
+  D) Ersin Çelik
+
+[comm_sin_0108]
+S: Yilmaz Guney di sala kîjan de li Parîsê koça dawî kir?
+  A) 1984
+  B) 1980
+  C) 1988
+  D) 1992
+
+[comm_sin_0109]
+S: Fîlmê dawî yê Yilmaz Guney kîjan e?
+  A) Yol
+  B) Sürü
+  C) Duvar
+  D) Umut
+
+[comm_sin_0110]
+S: Derhênerê fîlmê "Klama Dayîka Min" kî ye?
+  A) Kazım Öz
+  B) Erol Mintaş
+  C) Hüseyin Karabey
+  D) Ersin Çelik
+
+[comm_sin_0111]
+S: Fîlmê "Umut" (1970) derhênerê wî kî ye?
+  A) Zeki Ökten
+  B) Şerif Gören
+  C) Atıf Yılmaz
+  D) Yılmaz Güney
+
+[comm_sin_0112]
+S: Derhêner Bahman Ghobadi ji kîjan perçeyê Kurdistanê ye?
+  A) Rojhilatê Kurdistanê
+  B) Bakurê Kurdistanê
+  C) Rojavayê Kurdistanê
+  D) Başûrê Kurdistanê
+
+[edit_ziman_0001]
+S: Alfabeya Kurdî ya latînî ji çend tîpan pêk tê?
+  A) 29
+  B) 31
+  C) 26
+  D) 34
+
+[edit_ziman_0002]
+S: Alfabeya latînî ya Kurmancî ji aliyê kê ve hat sîstematîzekirin?
+  A) Ehmedê Xanî
+  B) Celadet Alî Bedirxan
+  C) Melayê Cizîrî
+  D) Şerefxanê Bidlîsî
+
+[edit_ziman_0003]
+S: Di alfabeya kurdî ya latînî de çend dengdêr (vowel) hene?
+  A) 8
+  B) 5
+  C) 6
+  D) 10
+
+[edit_ziman_0004]
+S: Di Kurmancî de girêdana navdêr bi rengdêr an bi navdêreke din re bi çi tê çêkirin?
+  A) Daçek
+  B) Cînav
+  C) Veqetandek (izafe)
+  D) Bêjeya pirsê
+
+[edit_ziman_0005]
+S: Di Kurmancî de peyva "jin" ji kîjan zayendê ye?
+  A) Nêr
+  B) Mê
+  C) Bêzayend
+  D) Herdu jî
+
+[edit_ziman_0006]
+S: Nîşana pirjimariyê ya rewşa tewandî (oblique) di Kurmancî de kîjan e?
+  A) -an
+  B) -ek
+  C) -ê
+  D) -ne
+
+[edit_ziman_0007]
+S: Lêkera "kirin" di dema niha de ji bo kesê sêyemîn ê yekjimar çawa tê kişandin?
+  A) Ew kir
+  B) Ew bike
+  C) Ew dike
+  D) Ew kiriye
+
+[edit_ziman_0008]
+S: Di Kurmancî de "ergatîf" çi tê wateyê?
+  A) Di dema niha de lêker bi biker re hevaheng dibe
+  B) Di dema borî ya lêkerên gerguhêz de bikerê tewandî
+  C) Navdêr li gorî zayendê tê dabeşkirin
+  D) Di lêkerên negerguhêz de biker her tim tewandî ye
+
+[edit_ziman_0009]
+S: Peyva "rojname" ji kîjan du peyvan pêk tê?
+  A) Roj + name
+  B) Ro + jname
+  C) Rojan + me
+  D) Roja + nem
+
+[edit_ziman_0011]
+S: Peyva Kurmancî "hesp" bi Tirkî çi tê wateyê?
+  A) köpek
+  B) at
+  C) kuş
+  D) koyun
+
+[edit_ziman_0013]
+S: Hevwateya peyva "dilgeş" di Kurmancî de kîjan e?
+  A) Xemgîn
+  B) Şa
+  C) Westiyayî
+  D) Tirsonek
+
+[edit_ziman_0014]
+S: Dijwateya peyva "germ" di Kurmancî de kîjan e?
+  A) Sar
+  B) Nerm
+  C) Tarî
+  D) Giran
+
+[edit_ziman_0015]
+S: Di Kurmancî de "daçek" (preposition/postposition) çi ye?
+  A) avahiya lêkerê ya ku kiryarek berî kiryareke din a rabirdûyê qediyaye nîşan dide
+  B) Peyvên wek "di, bi, ji, li" yên ku têkiliya navdêran diyar dikin
+  C) "Tu" yekjimar, "hûn" pirjimar/rêzdarî ye
+  D) guhertina paşgira navdêr an cînavkan li gorî rola wan a di hevokê de
+
+[edit_ziman_0016]
+S: Di Kurmancî de "raweya fermanî" ya lêkera "hatin" ji bo kesê duyemîn ê yekjimar kîjan e?
+  A) Were
+  B) Hat
+  C) Tê
+  D) Hatiye
+
+[edit_ziman_0017]
+S: Rast e an şaş e: Di Kurmancî de tîpa "Q" heye.
+  A) Rast
+  B) Şaş
+
+[edit_ziman_0019]
+S: Kovara "Hawar" bi taybetî ji bo çi girîng e?
+  A) Belavkirina alfabeya latînî ya kurdî
+  B) Weşandina romana yekem a kurdî
+  C) Amadekirina ferhenga mezin a kurdî
+  D) Tomarkirina stranên dengbêjên Serhedê
+
+[edit_ziman_0020]
+S: Di Kurmancî de cudahiya "min" û "ez" çi ye?
+  A) Herdu jî heman in
+  B) "Ez" rewşa xwerû, "min" rewşa tewandî ye
+  C) "Min" pirjimar e
+  D) "Ez" tenê di dema borî de tê bikaranîn
+
+[edit_cand_0002]
+S: Li gorî efsaneya Newrozê, Kawa pîşeya wî çi bû?
+  A) Şivan
+  B) Cotkar
+  C) Bazirgan
+  D) Hesinker
+
+[edit_cand_0003]
+S: Reqsa gelêrî ya kurdî ya ku bi destgirtin û bi rêz tê kirin çi ye?
+  A) Govend
+  B) Semah
+  C) Zeybek
+  D) Horon
+
+[edit_cand_0004]
+S: Di çanda kurdî de "tiştonek" çi ye?
+  A) Stranek dînî
+  B) Cureyekî xwarinê
+  C) Mamik / bilmece
+  D) Reqsek gelêrî
+
+[edit_cand_0005]
+S: Cilê jinan ê kurdî yê ku li ser serî tê girêdan û bi pûl tê xemilandin bi giştî çi navê digire?
+  A) Şal û şapik
+  B) Klîtik / kofî
+  C) Kras
+  D) Şûtik
+
+[edit_cand_0006]
+S: Di kevneşopiya kurdî de "şevbihêrk" çi ye?
+  A) civîna şevê ya çîrok û stranan
+  B) girêdanên civak û malbatê
+  C) xurtkirina girêdanên civakî
+  D) cilûbergê kevneşopî yê mêran
+
+[edit_cand_0007]
+S: Xwarina kurdî ya ku ji savar û goşt tê çêkirin û bi destan tê gilover kirin çi ye?
+  A) Dolme
+  B) Kutilk
+  C) Sarma
+  D) Kadayîf
+
+[edit_cand_0008]
+S: Di çanda kurdî de "heval" bi giştî çi tê wateyê?
+  A) Hogir / dost
+  B) Toplu halk oyunu
+  C) Mamik / bilmece
+  D) Atalar/ecdat
+
+[edit_cand_0009]
+S: Destana "Mem û Zîn" bi giştî çîroka çi ye?
+  A) nasname û cihêrengiya herêmî
+  B) misafirperweriya kurdî
+  C) Evîna Mem û Zînê ya ku nagihîje hev
+  D) bi çanda devkî ve girêdayî ye
+
+[edit_cand_0010]
+S: Rast e an şaş e: Newroz tenê ji aliyê kurdan ve tê pîrozkirin.
+  A) Şaş
+  B) Rast
+
+[edit_cand_0011]
+S: Di dawetên kurdî de "berbû" kî ne?
+  A) Muzîkjenên dawetê
+  B) Kesên ku bûkê ji mala wê tînin
+  C) Mêvanên ji dûr
+  D) Xwarinçêkerên dawetê
+
+[edit_cand_0012]
+S: Rêûresma "kirîvatî" di civaka kurdî de çi ye?
+  A) reqsa kevneşopî ya herêma Şirnexê
+  B) amûra kevneşopî ya dişibe bilûrê
+  C) bi çanda sifrê ve girêdayî ye
+  D) Girêdana malbatan bi rêya sinetê
+
+[edit_cand_0013]
+S: Rengên ku bi gelemperî di ala kurdî de derbas dibin kîjan in?
+  A) Şîn, spî û sor
+  B) Sor, spî, kesk û zer
+  C) Reş, spî û kesk
+  D) Zer, mor û sor
+
+[edit_cand_0014]
+S: Di çanda kurdî de "gotinên pêşiyan" çi ne?
+  A) stranên olî yên ku di dua û ayînan de tên gotin
+  B) navên gundên kevn ên ku di nexşeyan de dijîn
+  C) rêzikên rêzimanî yên ku hevoksaziyê diyar dikin
+  D) gotinên kurt ên ku ezmûna nifşan digihînin hev
+
+[edit_cand_0015]
+S: Xwarina "dew" ji çi tê çêkirin?
+  A) Ard û av
+  B) Şîr û şekir
+  C) Genim û rûn
+  D) Mast û av
+
+[edit_cand_0016]
+S: Di kevneşopiya kurdî de "rîspî" kî ye?
+  A) Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike
+  B) pîrozbahiya serê salê di salnameya gelêrî ya kurdî de
+  C) reqsa kevneşopî ya herêma Şirnexê
+  D) vegotina ku ji nifşî bo nifşî hatiye veguhastin
+
+[edit_dirok_0001]
+S: Kovara "Hawar" di kîjan salê de dest bi weşanê kir?
+  A) 1932
+  B) 1898
+  C) 1945
+  D) 1960
+
+[edit_dirok_0002]
+S: Yekem rojnameya kurdî "Kurdistan" di kîjan salê û li ku derê hat weşandin?
+  A) 1908, Stenbol
+  B) 1920, Bexda
+  C) 1932, Şam
+  D) 1898, Qahîre
+
+[edit_dirok_0003]
+S: Selahedînê Eyûbî bi taybetî bi çi tê nasîn?
+  A) Damezrandina Împeratoriya Osmanî di 1299an de
+  B) Nivîsandina Mem û Zînê di 1692an de
+  C) Vedîtina alfabeya kurdî di 1932an de
+  D) Vegirtina Qudsê di 1187an de
+
+[edit_dirok_0004]
+S: Peymana Lozanê di kîjan salê de hat îmzekirin?
+  A) 1920
+  B) 1918
+  C) 1923
+  D) 1932
+
+[edit_dirok_0005]
+S: Peymana Sevrê (1920) ji bo kurdan çima tê gotin ku girîng e?
+  A) Ji bo dewleteke kurdî ya serbixwe yekser sînor diyarkir
+  B) Ji bo herêmeke kurdî ya xweser madde dihewand
+  C) Hemû herêmên kurdî xiste bin rêveberiya yek dewletê
+  D) Mîrektiyên kurdî wek dewletên serbixwe nas kir
+
+[edit_dirok_0006]
+S: Împeratoriya Medan bi giştî di kîjan sedsalê de hat damezrandin?
+  A) Sedsala 3em a piştî zayînê
+  B) Sedsala 12em
+  C) Sedsala 1em a berî zayînê
+  D) Sedsala 7em a berî zayînê
+
+[edit_dirok_0007]
+S: Ehmedê Xanî "Mem û Zîn" di kîjan salê de nivîsî?
+  A) 1592
+  B) 1692
+  C) 1792
+  D) 1892
+
+[edit_dirok_0008]
+S: Mîrektiya Botan bi kîjan navendê tê nasîn?
+  A) Hewlêr
+  B) Sanandaj
+  C) Kirmanşan
+  D) Cizîr
+
+[edit_dirok_0009]
+S: "Şerefname" ya Şerefxanê Bidlîsî çi ye?
+  A) Dîwanek helbestî
+  B) Dîroknameya mîrektiyên kurdan
+  C) Ferhengek kurdî-erebî
+  D) Pirtûkeke rêzimanî
+
+[edit_dirok_0010]
+S: Rast e an şaş e: Celadet Alî Bedirxan hem zimannas hem jî weşanger bû.
+  A) Rast
+  B) Şaş
+
+[edit_dirok_0012]
+S: Qadî Mihemed bi çi tê nasîn?
+  A) Nivîskarê Şerefnameyê
+  B) Serokê Komara Mehabadê
+  C) Damezrînerê kovara Hawarê
+  D) Mîrê Botan
+
+[edit_dirok_0013]
+S: Bajarê Amedê di dîrokê de bi kîjan navê latînî jî tê nasîn?
+  A) Ninova
+  B) Palmyra
+  C) Amida
+  D) Edessa
+
+[edit_dirok_0014]
+S: Gundê "Xerabreşk" an bi giştî wêrankirina gundan di salên 1990î de bi kîjan têgînê tê nasîn?
+  A) Koçberiya bi darê zorê
+  B) Reforma erdê
+  C) Bajarvanîkirin
+  D) Kolonîzasyona çandinî
+
+[edit_dirok_0015]
+S: Hûrî û Mîtanî bi giştî li kîjan herêmê dijiyan?
+  A) Sine (Sanandaj)
+  B) Amed û derdora wê
+  C) Mezopotamyaya jorîn
+  D) Kafkasya (Gence-Anî)
+
+[edit_edebiyat_0001]
+S: Nivîskarê "Mem û Zîn" kî ye?
+  A) Melayê Cizîrî
+  B) Ehmedê Xanî
+  C) Feqiyê Teyran
+  D) Elî Herîrî
+
+[edit_edebiyat_0002]
+S: Melayê Cizîrî bi giştî bi çi tê nasîn?
+  A) Yekem romana kurdî
+  B) Ferhenga kurdî-erebî
+  C) Dîwana xwe ya helbestên sofîyane
+  D) Dîroknameya mîrektiyan
+
+[edit_edebiyat_0003]
+S: "Feqiyê Teyran" di wêjeya kurdî de bi çi hate naskirin?
+  A) helbestên xwe yên li ser xweza û teyran
+  B) helbestvanê mezin ê ku şêwaza azad anî helbesta kurdî
+  C) helbestvanê civakî yê pêşeng ê helbesta kurdî ya nûjen
+  D) akademîsyenê ku li ser ziman û wêjeya kurdî dixebite
+
+[edit_edebiyat_0004]
+S: Mehmed Uzun bi giştî bi kîjan cureya wêjeyî tê nasîn?
+  A) Helbesta klasîk
+  B) Şano
+  C) Roman
+  D) Ferhengnasî
+
+[edit_edebiyat_0005]
+S: Şêrko Bêkes bi kîjan zaravayî nivîsandiye?
+  A) Kurmancî
+  B) Soranî
+  C) Zazakî
+  D) Goranî
+
+[edit_edebiyat_0006]
+S: Di wêjeya kurdî de "dîwan" çi tê wateyê?
+  A) Forma helbestî ya çîrokî bi beytên qafiyedar
+  B) Helbesta kurt a çar rêzikî
+  C) Berhevoka helbestên helbestvanekî
+  D) Berhevoka gotinên pêşiyan
+
+[edit_edebiyat_0007]
+S: Cegerxwîn bi giştî çi bû?
+  A) Helbestvan
+  B) Romannivîs
+  C) Dîroknas
+  D) Muzîkjen
+
+[edit_edebiyat_0008]
+S: Rast e an şaş e: "Siya Evînê" romaneke Mehmed Uzun e.
+  A) Rast
+  B) Şaş
+
+[edit_edebiyat_0009]
+S: Di helbesta klasîk a kurdî de bandora kîjan wêjeyan zêde xuya dike?
+  A) Farisî û erebî
+  B) Yewnanî û latînî
+  C) Slavî û rûsî
+  D) Çînî û hindî
+
+[edit_edebiyat_0010]
+S: Berhema "Nûbihara Biçûkan" a Ehmedê Xanî çi ye?
+  A) mesnewiya evînê ya Mem û Zînê
+  B) ferhengeke helbestî ya kurdî-erebî ji bo zarokan
+  C) dîwaneke helbestên sofîyane
+  D) destaneke gelêrî ya li ser Memê Alan
+
+[edit_edebiyat_0012]
+S: Kî wek "yekem romannivîsa kurd" tê hesibandin ku romana "Şivanê Kurmanca" nivîsî?
+  A) Cegerxwîn
+  B) Mehmed Uzun
+  C) Ehmedê Xanî
+  D) Erebê Şemo
+
+[edit_cografya_0001]
+S: Zincîra çiyayên ku bi piranî di erdnîgariya kurdî re derbas dibe kîjan e?
+  A) Alp
+  B) Kafkas
+  C) Toros Rojava
+  D) Zagros
+
+[edit_cografya_0003]
+S: Gola herî mezin a Tirkiyeyê ku li herêma kurdî ye kîjan e?
+  A) Gola Tuzê
+  B) Gola Beyşehîrê
+  C) Gola Wanê
+  D) Gola Îznîkê
+
+[edit_cografya_0004]
+S: Herdu çemên sereke yên Mezopotamyayê kîjan in?
+  A) Nîl û Kongo
+  B) Dîcle û Firat
+  C) Volga û Don
+  D) Ganj û Îndus
+
+[edit_cografya_0005]
+S: Bajarê Hewlêr (Erbil) navenda kîjan herêmê ye?
+  A) Rojavayê Kurdistanê
+  B) Bakurê Kurdistanê
+  C) Herêma Kurdistanê ya Iraqê
+  D) Rojhilatê Kurdistanê
+
+[edit_cografya_0006]
+S: Sûrên bazaltî yên ku di lîsteya mîrateya cîhanî ya UNESCOyê de ne li kîjan bajarî ne?
+  A) Amed
+  B) Wan
+  C) Mêrdîn
+  D) Riha
+
+[edit_cografya_0007]
+S: Girê Navokê (Göbeklitepe) li nêzîkî kîjan bajarî ye?
+  A) Wan
+  B) Amed
+  C) Riha
+  D) Elezîz
+
+[edit_cografya_0008]
+S: Bendava Îlisûyê li ser kîjan çemî hatiye avakirin?
+  A) Firat
+  B) Dîcle
+  C) Murat
+  D) Zap
+
+[edit_cografya_0009]
+S: Hesenkeyf berî ku di bin avê de bimîne li ser kîjan çemî bû?
+  A) Firat
+  B) Botan
+  C) Dîcle
+  D) Zap
+
+[edit_cografya_0010]
+S: Çemê Zap bi giştî diherike nav kîjan çemî?
+  A) Firat
+  B) Erez
+  C) Çoruh
+  D) Dîcle
+
+[edit_cografya_0011]
+S: Rast e an şaş e: Gola Wanê ava wê şor e.
+  A) Rast
+  B) Şaş
+
+[edit_cografya_0012]
+S: Herêma Behdînan bi giştî li kîjan parçeyê Kurdistanê ye?
+  A) Bakur
+  B) Rojava
+  C) Başûr
+  D) Rojhilat
+
+[edit_cografya_0013]
+S: Bajarê Qamişlo li kîjan parçeyê Kurdistanê ye?
+  A) Bakur
+  B) Rojava
+  C) Başûr
+  D) Rojhilat
+
+[edit_cografya_0014]
+S: Bajarê Sineyê (Sanandaj) li kîjan perçeyê Kurdistanê ye?
+  A) Bakurê Kurdistanê
+  B) Rojavayê Kurdistanê
+  C) Rojhilatê Kurdistanê
+  D) Başûrê Kurdistanê
+
+[edit_muzik_0001]
+S: "Dengbêj" kî ye?
+  A) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
+  B) stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye
+  C) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
+  D) Stranbêjê devkî yê ku çîrokan bi kilaman dibêje
+
+[edit_muzik_0002]
+S: Amûra kurdî ya bi têlan a ku bi navê "saz" jî tê nasîn kîjan e?
+  A) Bilûr
+  B) Tembûr
+  C) Def
+  D) Zirne
+
+[edit_muzik_0003]
+S: "Bilûr" cureyekî çi amûrê ye?
+  A) Amûra têlî
+  B) Amûra lêdanê
+  C) Amûra elektronîk
+  D) Amûra pifê
+
+[edit_muzik_0004]
+S: "Dahol û zirne" bi gelemperî di kîjan rewşê de tên lêxistin?
+  A) Rêûresma şînê
+  B) Dersên dibistanê
+  C) Dawet û govendê
+  D) Nimêja sibehê
+
+[edit_muzik_0005]
+S: Şivan Perwer bi giştî bi çi tê nasîn?
+  A) Koma stranbêj û muzîkjenan
+  B) Dengbêjeke jin a navdar a sedsala 20em
+  C) Stranbêjê devkî yê ku çîrokan bi kilaman dibêje
+  D) Stranbêjiya kurdî ya nûjen û siyasî
+
+[edit_muzik_0006]
+S: "Kilam" di muzîka kurdî de çi ye?
+  A) Reqsa komî
+  B) Stranên dirêj ên çîrokî
+  C) Amûreke têlî
+  D) Cureyekî xwarinê
+
+[edit_muzik_0007]
+S: Ayşe Şan di dîroka muzîka kurdî de çima girîng e?
+  A) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
+  B) yekem hunermenda kurd a jin a ku plak dagirt
+  C) sazê rîtmê yê ku bi zirneyê re tê lêxistin
+  D) yek ji dengên jin ên pêşeng ê muzîka kurdî ye
+
+[edit_muzik_0008]
+S: "Lawik" di muzîka kurdî de bi giştî çi ye?
+  A) Yek ji dengên jin ên pêşeng ê muzîka kurdî ye
+  B) Belavbûna cîhanî ya stran û tomarkirinê
+  C) Cureyekî kilamê yê bi gelemperî evîndar
+  D) Bi tiliyan an bi mizrabê
+
+[edit_muzik_0009]
+S: Rast e an şaş e: Dengbêj bi gelemperî bêyî amûra muzîkê distirên.
+  A) Rast
+  B) Şaş
+
+[edit_muzik_0011]
+S: Koma Mizgîn, Koma Amed û Koma Dengê Azadî bi giştî çi ne?
+  A) Komên muzîka kurdî ya nûjen
+  B) Rojnameyên kurdî
+  C) Partiyên siyasî
+  D) Weşanxaneyên pirtûkan
+
+[edit_muzik_0012]
+S: Peyva "stran" bi Tirkî çi tê wateyê?
+  A) dans
+  B) saz
+  C) şarkı
+  D) ses
+
+[edit_muzik_0013]
+S: "Erbane" cureyekî çi amûrê ye?
+  A) Avaz û qalibê kilamê
+  B) Amûra lêdanê ya wek def
+  C) Reqsa gelêrî ya komî
+  D) Bûyerên şer û berxwedanê
+
+[edit_siyaset_0001]
+S: Kurd bi giştî li çend welatên sereke belav bûne?
+  A) Çar
+  B) Du
+  C) Şeş
+  D) Heşt
+
+[edit_siyaset_0003]
+S: "Hevserokatî" di siyaseta kurdî de çi ye?
+  A) Hilbijartina du salane
+  B) Sîstema du meclîsan
+  C) Serokatiya dorveger a bajaran
+  D) Rêveberiya bi jin û mêrekî bi hev re
+
+[edit_siyaset_0005]
+S: Kongra Star bi giştî li ser çi kar dike?
+  A) Weşana rojnameyan
+  B) Bazirganiya navneteweyî
+  C) Rêxistinbûna jinan li Rojava
+  D) Perwerdehiya leşkerî ya giştî
+
+[edit_siyaset_0006]
+S: "KJAR" kurtenavê çi ye?
+  A) Beşdariya rasterast û berdewam a ji binî pêş dixe
+  B) Komelgeha Jinên Azad a Rojhilatê Kurdistanê
+  C) mafên xwepêşandan, xwerêxistin û azadiya îfadeyê
+  D) hêza rêveberê herêmî yê hilbijartî li şûna qeyûmê ji navendê tayînkirî
+
+[edit_siyaset_0007]
+S: Rast e an şaş e: Zimanê kurdî li Herêma Kurdistanê ya Iraqê zimanekî fermî ye.
+  A) Rast
+  B) Şaş
+
+[edit_siyaset_0008]
+S: Referandûma serxwebûnê ya Herêma Kurdistanê ya Iraqê di kîjan salê de pêk hat?
+  A) 2005
+  B) 2011
+  C) 2017
+  D) 2020
+
+[edit_siyaset_0010]
+S: "Netewa demokratîk" bi kîjan xalê ji "dewleta netewe" cuda dibe?
+  A) nasnameyên cuda di nav yek civakê de tên parastin, dewlet ne pêwîst e
+  B) daxwaza misogeriya destûrî û naskirina mafên çandî
+  C) hêza ji navendekê bo yekîneyên herêmî belavkirin
+  D) statûya xweseriyê û biryargirtinê li herêmê
+
+[edit_siyaset_0011]
+S: Peyva "azadî" bi Tirkî çi tê wateyê?
+  A) eşitlik
+  B) adalet
+  C) barış
+  D) özgürlük
+
+[edit_siyaset_0012]
+S: Di siyaseta herêmî de "komûn" bi giştî çi ye?
+  A) yekeya biryardayînê ya herî biçûk a taxê an gund
+  B) mafê parastinê li dadgehên serbixwe û bêalî
+  C) beşdariya rasterast a gel di biryarên siyasî de
+  D) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin
+
+[edit_paradigma_0001]
+S: "Jineolojî" bi gelemperî çi tê wateyê?
+  A) Hunera nîgarkêşiyê
+  B) Zanista erdnîgariyê
+  C) Rêbaza aboriyê
+  D) Zanista jinê û jiyanê
+
+[edit_paradigma_0002]
+S: Di paradîgmaya ekolojîk de armanca sereke çi ye?
+  A) Zêdekirina hilberînê bi her awayî
+  B) Bazirganiya azad a bêsînor
+  C) Lihevhatina civak û xwezayê
+  D) Bajarvanîkirina bilez
+
+[edit_paradigma_0003]
+S: "Xwe-parastin" di vê paradîgmayê de bi giştî çi tê wateyê?
+  A) Bazirganiya çekan
+  B) Veqetîna ji cîhanê
+  C) Rêveberiya bi tenê bi hilbijartinan
+  D) Parastina civakê bi rêxistinbûna wê ya xwe
+
+[edit_paradigma_0004]
+S: Têgîna "modernîteya demokratîk" li hember çi tê danîn?
+  A) Serdema navîn
+  B) Modernîteya kapîtalîst
+  C) Şoreşa pîşesazî
+  D) Felsefeya antîk
+
+[edit_paradigma_0005]
+S: Di vê paradîgmayê de "civaka exlaqî û polîtîk" çi tê wateyê?
+  A) Civaka ku tenê bi qanûnan tê birêvebirin
+  B) Civaka bêrêxistin
+  C) Civaka ku ji aliyê pisporan ve tê rêvebirin
+  D) Civaka ku bi nirx û biryardayîna hevpar tê birêvebirin
+
+[edit_paradigma_0006]
+S: Rast e an şaş e: Di paradîgmaya netewa demokratîk de armanc damezrandina dewleteke nû ye.
+  A) Şaş
+  B) Rast
+
+[edit_paradigma_0007]
+S: Di têgîna "aboriya komunal" de xala sereke çi ye?
+  A) mafê civakê yê xwe parastin û xwerêxistinê
+  B) civakeke xwedî nirxên exlaqî ku biryarên xwe bi xwe digire
+  C) hilberîn li gorî pêdiviya civakê, ne li gorî qezencê
+  D) pîvana herî bingehîn a azadbûna civakî
+
+[edit_paradigma_0008]
+S: "Hiyerarşî" û "dewlet" di vê xebata teorîk de çawa tên nirxandin?
+  A) Wek pêvajoyên dîrokî yên ku dikarin bên guhertin
+  B) Wek rewşên xwezayî yên neguherbar
+  C) Wek diyardeyên tenê aborî
+  D) Wek pirsgirêkên teknîkî
+
+[edit_paradigma_0009]
+S: Peyva "jiyan" bi Tirkî çi tê wateyê?
+  A) özgürlük
+  B) toplum
+  C) yaşam
+  D) doğa
+
+[edit_paradigma_0010]
+S: Di paradîgmayê de "azadiya jinê" çima wek pîvana azadiya civakê tê dîtin?
+  A) krîza navendîbûna aborî û siyasî ya destekî yekane
+  B) jiyaneke hevbeş a wekhev ku li ser tepser û xwedîtiyê ava nabe
+  C) pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de
+  D) ji ber ku koletiya yekem li ser jinê hatiye avakirin
+
+[edit_ziman_0021]
+S: Peyva Kurmancî "dar" bi Tirkî çi tê wateyê?
+  A) taş
+  B) yol
+  C) kapı
+  D) ağaç
+
+[edit_ziman_0024]
+S: Hejmara "deh" di Kurmancî de bi hejmarî çi ye?
+  A) 7
+  B) 12
+  C) 20
+  D) 10
+
+[edit_ziman_0025]
+S: Di Kurmancî de "-ek" wek paşgir çi diyar dike?
+  A) nebinavkirîbûn (yek/bir)
+  B) cînavkên kesane
+  C) kesê ku karekî dike
+  D) lêkera gerguhêz
+
+[edit_ziman_0027]
+S: Di hevoka "Min ew dît" de lêker li gorî kê tê kişandin?
+  A) Li gorî bireserê (ew)
+  B) Li gorî bikerê (min)
+  C) Li gorî demê
+  D) Li gorî zayendê
+
+[edit_ziman_0028]
+S: Peyva "xwendegeh" ji kîjan koka lêkerê tê?
+  A) Gotin
+  B) Xwendin
+  C) Xwarin
+  D) Nivîsîn
+
+[edit_ziman_0029]
+S: Paşgira "-istan/-stan" di peyvên wek "Kurdistan" de çi diyar dike?
+  A) Kesayet
+  B) Dem
+  C) Hejmar
+  D) Cih / war
+
+[edit_ziman_0030]
+S: Di Kurmancî de cudahiya "tu" û "hûn" çi ye?
+  A) "Tu" yekjimar, "hûn" pirjimar/rêzdarî ye
+  B) Herdu jî pirjimar in
+  C) "Tu" tenê ji bo jinan e
+  D) "Hûn" tenê di nivîsê de tê bikaranîn
+
+[edit_ziman_0031]
+S: Di Kurmancî de "raweya bilanî" (subjunctive) bi kîjan pêşgirê tê çêkirin?
+  A) di-
+  B) na-
+  C) bi-
+  D) ne-
+
+[edit_ziman_0032]
+S: Nîşana neyîniyê ya dema niha di Kurmancî de kîjan e?
+  A) ne-
+  B) na-
+  C) bi-
+  D) di-
+
+[edit_ziman_0033]
+S: Rast e an şaş e: Di Kurmancî de navdêr xwedî zayendê ne (nêr û mê).
+  A) Rast
+  B) Şaş
+
+[edit_cand_0017]
+S: Di kevneşopiya kurdî de "berxwedan" bi giştî çi tê wateyê?
+  A) Amûra hûnandina xalîçe û bêrîkan
+  B) Kesên ku bûkê ji mala wê tînin
+  C) Destana Memê Alan
+  D) Li ber xwe dan / direniş
+
+[edit_cand_0018]
+S: Xwarina "dolme" ya kurdî bi giştî ji çi tê çêkirin?
+  A) Amûra hûnandina xalîçe û bêrîkan
+  B) Belg û sebzeyên dagirtî
+  C) Li ber xwe dan / direniş
+  D) Şeva herî dirêj a salê
+
+[edit_cand_0019]
+S: Cejna Newrozê bi kîjan sembola sereke tê nasîn?
+  A) Agir
+  B) Av
+  C) Berf
+  D) Bager
+
+[edit_cand_0020]
+S: "Pêşmerge" peyv bi rastî çi tê wateyê?
+  A) Bi hunera destan ve girêdayî ye
+  B) Yê ku li pêşiya mirinê ye
+  C) Komeke malbatên bi xizmî girêdayî
+  D) Civîna şevê ya çîrok û stranan
+
+[edit_cand_0021]
+S: Di civaka kurdî de "eşîret" çi ye?
+  A) Rêxistineke siyasî ya nûjen
+  B) Cureyekî xwarinê
+  C) Komeke malbatên bi xizmî girêdayî
+  D) Navê herêmeke bajarî
+
+[edit_cand_0022]
+S: "Şeva Yeldayê" (Şeva Zivistanê) çi ye?
+  A) Şeva herî dirêj a salê
+  B) Yekem roja biharê
+  C) Roja dawî ya havînê
+  D) Şeva Newrozê
+
+[edit_cand_0023]
+S: Di dawetên kurdî de "qelen" çi ye?
+  A) komeke malbatên bi xizmî girêdayî
+  B) cilûbergê kevneşopî yê mêran
+  C) diyariya ku ji bo bûkê tê dayîn
+  D) şêwaza jiyana koçerî û rîtma reqsê
+
+[edit_cand_0024]
+S: "Dîwanxane" di malên kurdî yên kevneşopî de çi ye?
+  A) Mêvan bi rûmet pêşwazîkirin
+  B) Odeya mêvanan û civînê
+  C) Hest û bîra civakî
+  D) Belg û sebzeyên dagirtî
+
+[edit_dirok_0016]
+S: Şerefxanê Bidlîsî Şerefname di kîjan salê de temam kir?
+  A) 1497
+  B) 1697
+  C) 1797
+  D) 1597
+
+[edit_dirok_0017]
+S: Bedirxan Beg mîrê kîjan mîrektiyê bû?
+  A) Baban
+  B) Erdelan
+  C) Botan
+  D) Soran
+
+[edit_dirok_0018]
+S: Mîrektiya Baban navenda xwe bi giştî li ku derê bû?
+  A) Silêmanî
+  B) Hewlêr
+  C) Wan
+  D) Kirmanşan
+
+[edit_dirok_0019]
+S: Peymana Zuhabê (Qesr-î Şîrîn, 1639) ji bo kurdan çima girîng e?
+  A) Sînorê dewleteke kurdî ya serbixwe bi fermî hate diyarkirin
+  B) Hemû herêmên kurdî bi tevahî ketin bin desthilata Sefewiyan
+  C) Herêma kurdî di navbera Osmanî û Sefewiyan de hat parvekirin
+  D) Mîrektiyên kurdî ji her du împaratoriyan serbixwe hatin naskirin
+
+[edit_dirok_0020]
+S: Kovara "Jîn" di kîjan salan de derket?
+  A) Salên 1890î
+  B) Salên 1950î
+  C) Salên 1970yî
+  D) Salên 1918-1919an
+
+[edit_dirok_0021]
+S: "Xoybûn" çi bû?
+  A) Rêxistineke çandî ya kurdan a salên 1950î
+  B) Partiyeke siyasî ya ku piştî 1960î li Iraqê hate damezrandin
+  C) Rêxistineke siyasî ya kurdan a salên 1920î
+  D) Komelayeke xwendekarî ya kurdan a dawiya sedsala 19an
+
+[edit_dirok_0022]
+S: Rast e an şaş e: Selahedînê Eyûbî Dewleta Eyûbiyan damezrand.
+  A) Rast
+  B) Şaş
+
+[edit_dirok_0023]
+S: Di dîroka nûjen de "Kurdên Sor" (Sûriye) bi çi têkildar e?
+  A) Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962an
+  B) Tevgera çandî ya kurdan li Sûriyeyê di salên 1930î de
+  C) Koçberiya kurdan ji Sûriyeyê ber bi Iraqê ve di salên 1950î de
+  D) Damezrandina rêveberiyeke kurdî li Sûriyeyê di salên 1940î de
+
+[edit_dirok_0024]
+S: Qelaya Hewlêrê bi çi taybetî tê nasîn?
+  A) Navenda yekem a împaratoriya Medan bû
+  B) Di sedsala 20an de ji nû ve bi tevahî hate avakirin
+  C) Yek ji kevintirîn cihên bi domdarî lêniştî yên cîhanê
+  D) Tenê wek keleheke leşkerî ya bê niştecih hate bikaranîn
+
+[edit_edebiyat_0013]
+S: Elî Herîrî di wêjeya kurdî de bi çi tê nasîn?
+  A) Romannivîsê yekem ê kurdî
+  B) Damezrînerê kovara Hawarê
+  C) Zimannasê rêzimana kurmancî
+  D) Helbestvanekî klasîk ê pêşîn
+
+[edit_edebiyat_0014]
+S: Berhema "Rewşenbîr" an kovarên edebî yên kurdî bi giştî çi rol lîstin?
+  A) Berhevkirina destanên devkî yên gelêrî
+  B) Wergerandina berhemên klasîk bo erebî
+  C) Pêşxistina zimanê nivîskî yê kurdî
+  D) Amadekirina ferhengên dibistanê
+
+[edit_edebiyat_0016]
+S: Di "Mem û Zîn" de karakterê ku bûye sedema veqetîna evîndaran kî ye?
+  A) Bekir
+  B) Tacdîn
+  C) Mîr Zeynedîn
+  D) Sitî
+
+[edit_edebiyat_0017]
+S: Berhemên Cegerxwîn bi giştî li ser çi ne?
+  A) Berhevoka helbestên helbestvanekî
+  B) Destaneke evînî ya gelêrî
+  C) Welatparêzî, azadî û jiyana gel
+  D) Vegotineke dirêj a lehengiyê
+
+[edit_edebiyat_0018]
+S: "Bahoz" an romanên nûjen ên kurdî bi piranî di kîjan serdemê de zêde bûn?
+  A) Di sedsala 17em de
+  B) Piştî salên 1980î
+  C) Berî 1900î
+  D) Di 1930î de
+
+[edit_edebiyat_0019]
+S: Rast e an şaş e: Ehmedê Xanî di Mem û Zînê de behsa yekîtiya kurdan jî dike.
+  A) Rast
+  B) Şaş
+
+[edit_cografya_0016]
+S: Çemê Firat ji kîjan herêmê diherike?
+  A) Çiyayên rojhilatê Anatolyayê
+  B) Çiyayên Zagrosê
+  C) Çiyayên Torosê
+  D) Çiyayên Qefqasyayê
+
+[edit_cografya_0017]
+S: Bajarê Silêmaniyê li kîjan perçeyê Kurdistanê ye?
+  A) Bakurê Kurdistanê
+  B) Rojavayê Kurdistanê
+  C) Rojhilatê Kurdistanê
+  D) Başûrê Kurdistanê
+
+[edit_cografya_0018]
+S: Bajarê Mêrdînê bi çi taybetiya xwe ya mîmarî navdar e?
+  A) Avahiyên kevirî yên li ser çiyê
+  B) Avahiyên kerpîçî yên li deştê
+  C) Avahiyên darîn ên du qatî
+  D) Avahiyên kelpîçî yên bi qubeyên gilover
+
+[edit_cografya_0019]
+S: Çiyayê Cûdî di sînorên kîjan bajarî de dimîne?
+  A) Wan
+  B) Amed
+  C) Şirnex
+  D) Riha
+
+[edit_cografya_0020]
+S: Peyva "gund" bi Tirkî çi tê wateyê?
+  A) şehir
+  B) dağ
+  C) ova
+  D) köy
+
+[edit_cografya_0021]
+S: Herêma "Serhed" bi giştî kîjan derdorê digire?
+  A) Herêma Botanê ya derdora Cizîrê
+  B) Herêma bilind a Agirî-Wan-Mûşê
+  C) Herêma Behdînan a derdora Dihokê
+  D) Herêma Serhedê ya derdora Kerkûkê
+
+[edit_cografya_0022]
+S: Deşta Cizîrê bi giştî li ku derê ye?
+  A) Di navbera Dîcle û Firatê de, bakurê rojhilatê Sûriyeyê
+  B) deşta dîrokî ya bibereket a li başûrê Silêmaniyê
+  C) deşta çandiniyê ya mezin a ku bi çemikên Firatê tê avdan
+  D) gola bendavê ya ku li ser çemê Diyalayê hatiye avakirin
+
+[edit_cografya_0023]
+S: Rast e an şaş e: Çiyayê Agirî çiyayekî volkanîk e.
+  A) Rast
+  B) Şaş
+
+[edit_muzik_0014]
+S: "Zirne" cureyekî çi amûrê ye?
+  A) Amûra têlî
+  B) Amûra pifê
+  C) Amûra lêdanê
+  D) Amûra kevanî
+
+[edit_muzik_0015]
+S: "Heyranok" di muzîka kurdî de bi giştî çi ye?
+  A) avaza ku ji rêzbûna dengan pêk tê
+  B) stranbêjî an lêxistina bi tenê ya hunermendekî
+  C) navê yekem koma rocka kurdî di dîrokê de
+  D) stranên kurt ên bi gelemperî evîndar
+
+[edit_muzik_0016]
+S: Meryem Xan di muzîka kurdî de kî ye?
+  A) Nivîskareke romanên dîrokî yên sedsala 20em
+  B) Dengbêjeke jin a navdar a sedsala 20em
+  C) Damezrînera kovareke edebî ya Stenbolê
+  D) Lêdera yekem a jin a tembûrê li Amedê
+
+[edit_muzik_0017]
+S: Radyoya Erîvanê ji bo muzîka kurdî çima girîng e?
+  A) bi salan stranên kurdî li seranserê herêmê belav kir
+  B) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
+  C) veguhastina muzîkal a bi têkiliya hoste-şagird
+  D) edeta ku ji muzîkjenan re pere tê avêtin
+
+[edit_muzik_0018]
+S: Peyva "deng" bi Tirkî çi tê wateyê?
+  A) söz
+  B) ses
+  C) saz
+  D) şarkı
+
+[edit_muzik_0019]
+S: Di dengbêjiyê de "kilamên şer" bi giştî li ser çi ne?
+  A) Avaz û qalibê kilamê
+  B) Awayê stranbêjiya bi kom
+  C) Dawet û govendê
+  D) Bûyerên şer û berxwedanê
+
+[edit_muzik_0020]
+S: Rast e an şaş e: Def û erbane herdu jî amûrên lêdanê ne.
+  A) Rast
+  B) Şaş
+
+[edit_siyaset_0013]
+S: Di sîstema meclîsên gel de biryar bi giştî çawa tên girtin?
+  A) Bi nîqaş û lihevkirina beşdaran
+  B) Ji aliyê pisporan ve bi tenê
+  C) Bi fermana navendî
+  D) Bi hilbijartina her deh salan
+
+[edit_siyaset_0014]
+S: "Kurdên Feylî" bi giştî li kîjan herêmê dijîn?
+  A) Amed, Mêrdîn û derdora Botanê
+  B) Hewlêr, Dihok û derdora Musilê
+  C) Bexda, Îlam û sînorê Iraq-Îranê
+  D) Gence, Erîvan û derdora Anîyê
+
+[edit_siyaset_0015]
+S: Peyva "gel" bi Tirkî çi tê wateyê?
+  A) devlet
+  B) halk
+  C) ordu
+  D) şehir
+
+[edit_siyaset_0016]
+S: Statuya "Kerkûk" di siyaseta Iraqê de bi kîjan maddeya destûrî ve girêdayî ye?
+  A) Maddeya 5em
+  B) Maddeya 61ê
+  C) Maddeya 140î
+  D) Maddeya 100î
+
+[edit_siyaset_0017]
+S: Rast e an şaş e: Li Rojava pergala hevserokatiyê tê sepandin.
+  A) Rast
+  B) Şaş
+
+[edit_siyaset_0018]
+S: "Diaspora" ya kurdî bi giştî li ku derê herî zêde ye?
+  A) Amerîkaya Başûr
+  B) Ewropaya Rojava
+  C) Afrîkaya Başûr
+  D) Awustralya
+
+[edit_paradigma_0011]
+S: Di paradîgmayê de "kooperatîf" çima girîng e?
+  A) Hilberîna hevpar li şûna kara kesane
+  B) Kapîtalîzm, pîşesazîparêzî û dewleta netewe
+  C) Guhertin bi perwerdehî û hişmendiyê dest pê dike
+  D) Parastina civakê bi rêxistinbûna wê ya xwe
+
+[edit_paradigma_0012]
+S: "Akademî" di modela civakî ya Rojava de çi rol dilîze?
+  A) Tenê perwerdehiya teknîkî
+  B) Perwerdehiya civakî û ramanî
+  C) Rêveberiya darayî
+  D) Kontrola sînoran
+
+[edit_paradigma_0013]
+S: Rexneya "pozîtîvîzmê" di vê paradîgmayê de li ser çi ye?
+  A) mafê civakê yê xwe parastin û xwerêxistinê
+  B) têgihiştina mirov a ku ew parçeyekî xwezayê ye
+  C) yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî
+  D) zanist ji civak û exlaqê nayê veqetandin
+
+[edit_paradigma_0014]
+S: Peyva "xweza" bi Tirkî çi tê wateyê?
+  A) şehir
+  B) doğa
+  C) insan
+  D) toplum
+
+[edit_paradigma_0015]
+S: Rast e an şaş e: Di paradîgmaya ekolojîk de mirov li derveyî xwezayê tê dîtin.
+  A) Şaş
+  B) Rast
+
+[edit_ziman_0036]
+S: Peyva Kurmancî "dest" bi Tirkî çi tê wateyê?
+  A) el
+  B) ayak
+  C) baş
+  D) sırt
+
+[edit_ziman_0038]
+S: Peyva Kurmancî "spas" bi Tirkî çi tê wateyê?
+  A) merhaba
+  B) hoşça kal
+  C) teşekkür
+  D) lütfen
+
+[edit_ziman_0039]
+S: Dijwateya peyva "dirêj" di Kurmancî de kîjan e?
+  A) Kurt
+  B) Fireh
+  C) Giran
+  D) Nerm
+
+[edit_ziman_0040]
+S: Di Kurmancî de "ez dixwazim" hevoka çi demê ye?
+  A) Dema borî
+  B) Dema niha
+  C) Dema bê
+  D) Raweya fermanî
+
+[edit_ziman_0041]
+S: Di Kurmancî de paşgira "-van" di peyvên wek "dergehvan" de çi diyar dike?
+  A) Kesê ku karekî dike
+  B) cînavkên tewandî
+  C) rênivîsa Hawarê
+  D) Zayend: "-ê" nêr, "-a" mê
+
+[edit_ziman_0042]
+S: Di Kurmancî de "were" û "biçe" kîjan raweyê nîşan didin?
+  A) Raweya bilanî
+  B) Raweya fermanî
+  C) Dema borî
+  D) Dema bê
+
+[edit_ziman_0043]
+S: Di Kurmancî de "min got" û "ez gotim" — kîjan rast e?
+  A) "Ez gotim" rast e
+  B) Herdu jî rast in
+  C) Herdu jî şaş in
+  D) "Min got" rast e
+
+[edit_ziman_0044]
+S: Di Kurmancî de cudahiya "-ê" û "-a" ya veqetandekê çi ye?
+  A) Hejmar: "-ê" yekjimar, "-a" pirjimar
+  B) Zayend: "-ê" nêr, "-a" mê
+  C) Dem: "-ê" borî, "-a" niha
+  D) Rewş: "-ê" xwerû, "-a" tewandî
+
+[edit_ziman_0045]
+S: Peyva "hevîr" bi Tirkî çi tê wateyê?
+  A) hamur
+  B) peynir
+  C) tuz
+  D) yağ
+
+[edit_ziman_0046]
+S: Hevwateya peyva "westiyayî" di Kurmancî de kîjan e?
+  A) Kêfxweş
+  B) Betilî
+  C) Bilez
+  D) Nexweş
+
+[edit_ziman_0047]
+S: Rast e an şaş e: Di Kurmancî de sifet (rengdêr) piştî navdêrê tê.
+  A) Rast
+  B) Şaş
+
+[edit_ziman_0049]
+S: Peyva "zanîngeh" ji kîjan beşan pêk tê?
+  A) Zan + îng
+  B) Za + nîngeh
+  C) Zanîn + geh (cih)
+  D) Zanî + gehîn
+
+[edit_cand_0026]
+S: Xwarina "savar" ji çi tê çêkirin?
+  A) Genim
+  B) Birinc
+  C) Ard
+  D) Nok
+
+[edit_cand_0028]
+S: "Çadira reş" bi giştî ji çi tê çêkirin?
+  A) mûyê bizinê
+  B) çanda koçeriyê
+  C) kilimên kurdî
+  D) diyarî/xelat
+
+[edit_cand_0029]
+S: Di çanda kurdî de "koçerî" çi ye?
+  A) Evîna trajîk a li çiyê
+  B) Jiyana bi ajalan re ya guhêrbar
+  C) Sor, spî, kesk û zer
+  D) Roja ziyaret û bibîranînê ya kevneşopî
+
+[edit_cand_0030]
+S: "Zozan" çi ye?
+  A) çanda koçeriyê
+  B) vegotina devkî û çîroka bi avaz
+  C) çîmena çiyayî ya havînê
+  D) şeva herî dirêj a salê
+
+[edit_cand_0031]
+S: Di rêûresma şînê ya kurdî de "şînbêj" kî ye?
+  A) kesa ku bi dengekî bilind lorî û şîn dibêje
+  B) civaka olî-çandî ya taybet û trawmayên dîrokî
+  C) xwarina sebze an pelan a ku bi dagirtinê tê tijîkirin
+  D) vegotina ku ji nifşî bo nifşî hatiye veguhastin
+
+[edit_cand_0032]
+S: "Berbang" di Kurmancî de çi tê wateyê?
+  A) çanda koçeriyê
+  B) hest û bîra civakî
+  C) serê sibê / şafak
+  D) çîmena çiyayî ya havînê
+
+[edit_cand_0033]
+S: Di destana "Siyabend û Xecê" de mijara sereke çi ye?
+  A) Şerê du eşîran
+  B) Evîna trajîk a li çiyê
+  C) Rêwîtiya bazirganekî
+  D) Damezrandina gundekî
+
+[edit_cand_0034]
+S: Rast e an şaş e: Govend bi gelemperî bi destgirtin tê lîstin.
+  A) Rast
+  B) Şaş
+
+[edit_cand_0035]
+S: Xwarina "serê salê" an xwarinên cejnê bi giştî çima girîng in?
+  A) Ji ber ku erzan in
+  B) Ji ber ku zû tên çêkirin
+  C) Ji ber ku tenê ji bo mêvanan in
+  D) Ji ber ku civak û malbatê tînin cem hev
+
+[edit_cand_0036]
+S: "Hevrîşk" an "hevrîşim" di destkariya kurdî de çi ye?
+  A) amûra kevneşopî ya dişibe bilûrê
+  B) hevrîşim (ipek) — ji bo tevn û xemlê
+  C) mêvan bi rûmet pêşwazîkirin
+  D) fîgura mîtolojîk a çanda rojhilat
+
+[edit_cand_0037]
+S: "Tevn" di destkariya kurdî de çi ye?
+  A) amûra hûnandina xalîçe û bêrîkan
+  B) danûstandina civakî û biryardayîn
+  C) amûra kevneşopî ya dişibe bilûrê
+  D) bi hunera destan ve girêdayî ye
+
+[edit_cand_0038]
+S: Xalîçe û kilîmên kurdî bi giştî bi çi tên xemilandin?
+  A) Wêneyên fotografî
+  B) Motîfên hêjmarî û sembolîk
+  C) Nivîsên dirêj
+  D) Rengên tenê reş û spî
+
+[edit_cand_0039]
+S: Di civaka kurdî de "xwarina şîvê ya hevpar" li dîwanxaneyê bi giştî çi fonksiyonê digire?
+  A) pîroziya ku ji ronahî/rojê re tê dayîn
+  B) şeva herî dirêj a salê
+  C) misafirperweriya kurdî
+  D) danûstandina civakî û biryardayîn
+
+[edit_dirok_0025]
+S: Bajarê Amedê di serdema Romayê de çi rolê digirt?
+  A) Paytexta împeratoriyê
+  B) Navenda olî ya sereke
+  C) Girava bazirganiyê
+  D) Bajarekî sînor ê stratejîk
+
+[edit_dirok_0026]
+S: Xanedaniya Mervaniyan bi giştî li ku derê hukum kir?
+  A) Amed û derdora wê
+  B) Silêmanî
+  C) Sine (Sanandaj)
+  D) Mezopotamyaya jorîn
+
+[edit_dirok_0027]
+S: Xanedaniya Şedadiyan bi giştî li kîjan herêmê hukum kir?
+  A) Amed û derdora wê
+  B) Mezopotamyaya jorîn
+  C) Kafkasya (Gence-Anî)
+  D) Peymana Lozanê
+
+[edit_dirok_0028]
+S: Selahedînê Eyûbî li kîjan bajarî ji dayik bû?
+  A) Tikrît
+  B) Şam
+  C) Qahîre
+  D) Musil
+
+[edit_dirok_0029]
+S: Şerê Çaldiranê (1514) di navbera kê de bû?
+  A) Roma û Sasanî
+  B) Med û Asûrî
+  C) Eyûbî û Xaçparêz
+  D) Osmanî û Sefewî
+
+[edit_dirok_0030]
+S: Îdrîsê Bidlîsî di dîroka Osmanî de bi çi tê nasîn?
+  A) Navbeynkariya di navbera Osmanî û mîrên kurd de
+  B) xanedaniya kurd a serdema navîn a bi navenda Amedê
+  C) serokkomarê Komara Kurd a Mehabadê
+  D) çalakvana kurd a jin a ku ji aliyê rejîma Iraqê ve hat îdamkirin
+
+[edit_dirok_0031]
+S: Mîrektiya Erdelan navenda xwe li ku derê bû?
+  A) Silêmanî
+  B) Sine (Sanandaj)
+  C) Amed û derdora wê
+  D) Kafkasya (Gence-Anî)
+
+[edit_dirok_0032]
+S: Rast e an şaş e: Kovara Hawar bi alfabeya latînî hat weşandin.
+  A) Rast
+  B) Şaş
+
+[edit_dirok_0033]
+S: Kovara "Ronahî" ji aliyê kê ve hat weşandin?
+  A) Celadet Alî Bedirxan
+  B) pergala niştecihbûna domdar
+  C) rojnameyeke kurdî ya destpêkê ku li Silêmaniyê hate çapkirin
+  D) yekem kovara kurdî ya ku bi alfabeya latînî hat çapkirin
+
+[edit_dirok_0034]
+S: Kurdên Kafkasyayê (Ermenistan-Gurcistan) bi giştî di kîjan serdemê de li wir bi cih bûn?
+  A) Sedsala 12em
+  B) Berî zayînê
+  C) Sedsala 21em
+  D) Sedsalên 19-20em
+
+[edit_dirok_0035]
+S: Yekem weşana radyoyê ya bi kurdî li Erîvanê di kîjan salan de dest pê kir?
+  A) Salên 1950î
+  B) Salên 1920î
+  C) Salên 1980î
+  D) Salên 2000î
+
+[edit_dirok_0036]
+S: "Şerefname" bi kîjan zimanî hat nivîsandin?
+  A) Kurmancî
+  B) Erebî
+  C) Farisî
+  D) Tirkî
+
+[edit_dirok_0037]
+S: Qelaya Dimdimê di dîroka kurdî de bi çi tê nasîn?
+  A) Berxwedana li dijî hêzeke mezin
+  B) lêkolîna borî bi rêya bermahiyên maddî
+  C) peymana ku sînorê Osmanî û Sefewî diyar kir
+  D) padîşahekî/tîranekî zalim
+
+[edit_dirok_0038]
+S: Peyva "dîrok" bi Tirkî çi tê wateyê?
+  A) coğrafya
+  B) edebiyat
+  C) müzik
+  D) tarih
+
+[edit_dirok_0039]
+S: Mîrektiyên kurd bi giştî di kîjan sedsalê de hatin ji holê rakirin?
+  A) Sedsala 19em
+  B) Sedsala 15em
+  C) Sedsala 21em
+  D) Sedsala 10em
+
+[edit_edebiyat_0020]
+S: Mela Ehmed, ku yek ji helbestvanên klasîk ên kurdî ye, li kîjan bajarî jiya?
+  A) Hewlêr
+  B) Cizîr
+  C) Wan
+  D) Şam

@@ -52,7 +52,7 @@ void main() {
     expect(result.remainingToTarget, 14999);
   });
 
-  test('candidate without difficulty or verified source is quarantined', () {
+  test('candidate without difficulty is quarantined; source is optional', () {
     final result = promoteCandidates(
       candidates: [
         candidate(difficulty: null, verified: 'Kısmen', sourceUrl: ''),
@@ -62,14 +62,9 @@ void main() {
     );
 
     expect(result.accepted, isEmpty);
-    expect(
-      result.rejectedByReason.keys,
-      containsAll(<String>{
-        'missing_difficulty',
-        'unverified_source',
-        'missing_source_url',
-      }),
-    );
+    expect(result.rejectedByReason.keys, contains('missing_difficulty'));
+    expect(result.rejectedByReason.keys, isNot(contains('unverified_source')));
+    expect(result.rejectedByReason.keys, isNot(contains('missing_source_url')));
   });
 
   test('canonical duplicate against active bank is rejected', () {

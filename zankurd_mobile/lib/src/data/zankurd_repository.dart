@@ -1,5 +1,8 @@
+// ignore_for_file: annotate_overrides
 import 'dart:typed_data';
 
+import 'durable_write.dart';
+import '../models/async_duel.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/friend.dart';
@@ -12,6 +15,9 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
+import '../models/referral_result.dart';
+
+part 'repository_ports.dart';
 
 /// Seri dondurma tahsilatının sonucu.
 ///
@@ -82,7 +88,16 @@ typedef QuizRewardClaim = ({
 /// ya da sunucunun tanınmayan bir mesajı için düşer; bu durumda "oda
 /// bulunamadı" gibi YANLIŞ bir kesinlik iddia edilmemelidir (2026-08-14
 /// denetimi).
-enum RoomJoinFailureReason { notFound, full, alreadyInAnotherRoom, unknown }
+enum RoomJoinFailureReason {
+  notFound,
+  full,
+  alreadyInAnotherRoom,
+
+  /// Odanın katılım ücretine bakiye yetmiyor. Sunucu bunu
+  /// `'Insufficient coins for room entry fee'` ile reddeder.
+  insufficientCoins,
+  unknown,
+}
 
 class RoomJoinException implements Exception {
   const RoomJoinException(this.reason, [this.message]);
@@ -108,13 +123,17 @@ RoomJoinFailureReason roomJoinFailureReasonForMessage(String message) {
   if (message.contains('already in another live room')) {
     return RoomJoinFailureReason.alreadyInAnotherRoom;
   }
-  if (message.contains('Room not found') || message.contains('already started')) {
+  if (message.contains('Insufficient coins')) {
+    return RoomJoinFailureReason.insufficientCoins;
+  }
+  if (message.contains('Room not found') ||
+      message.contains('already started')) {
     return RoomJoinFailureReason.notFound;
   }
   return RoomJoinFailureReason.unknown;
 }
 
-abstract class ZanKurdRepository {
+abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   List<String> get categories;
   List<QuizQuestion> get questions;
 
@@ -148,6 +167,19 @@ abstract class ZanKurdRepository {
   Future<void> deleteMyAccount();
   Future<LeaderboardEntry?> getPlayerStats();
 
+  /// Sıralama ekranının altına sabitlenen "benim sıram" satırının SEÇİLİ
+  /// DÖNEME (Gün/Hafta/Ay) ait karşılığı.
+  ///
+  /// `getPlayerStats()` toplam XP'yi (`profiles.xp`) ve TÜM profiller
+  /// içindeki sırayı verir; liste ise `get_leaderboard(p_days)` ile yalnız
+  /// biten çevrimiçi odalardan, dönem süzgeciyle gelir. Aynı ekranda iki
+  /// ayrı sayıyı aynı etiketle sunmamak için sabit satır bu metodu kullanır
+  /// (2026-09-30).
+  ///
+  /// Dönemde puanı yoksa, oturum yoksa ya da RPC yok/hata veriyorsa null
+  /// döner — satır çizilmez, eski (toplam XP) yola düşülmez.
+  Future<LeaderboardEntry?> getMyLeaderboardRank(LeaderboardPeriod period);
+
   /// Öğrenme/tek kişilik akışların çevrimdışı kategori listesi.
   Future<List<String>> loadCategories();
 
@@ -164,13 +196,19 @@ abstract class ZanKurdRepository {
     String? categoryId,
     int limit = 10,
   });
-  List<QuizLevel> levelsForCategory(String category);
+  List<QuizLevel> levelsForCategory(String category, {String? subCategory});
   Future<List<QuizQuestion>> loadLevelQuestions({
     required String category,
     required int difficultyMin,
     required int difficultyMax,
     String? subCategory,
+    int? levelNumber,
     int limit = 10,
+  });
+  Future<List<QuizQuestion>> loadLearningQuizQuestions({
+    required String category,
+    required String learningLessonId,
+    int limit = 5,
   });
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room);
 
@@ -182,8 +220,43 @@ abstract class ZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   });
   Future<GameRoom> joinOnlineRoom(String code);
+
+  // ─── Sırayla düello (async 1v1) ──────────────────────────────────────
+  //
+  // Rakibin aynı anda çevrimiçi olması gerekmeyen 1v1: oyuncu sunucunun
+  // seçtiği 7 soruyu hemen oynar; bekleyen açık bir düello varsa onun
+  // rakibi olur (sonuç anında kesinleşir), yoksa yeni bir düello açar
+  // (sonuç rakip bitirince kesinleşir). Sözleşme
+  // `lib/src/models/async_duel.dart`dadır; doğru cevap oda maçlarıyla
+  // aynı şekilde `answer_async_duel` cevaplanana kadar gizlidir.
+
+  /// Bekleyen açık bir düelloya katılır (rakip=ben) ya da yenisini açar.
+  /// [category] `categories.name` iledir; `null` ise herhangi bir kategori.
+  Future<AsyncDuelStart> startAsyncDuel({String? category});
+
+  /// Tek bir soruyu cevaplar. Aynı [questionIndex] ikinci kez
+  /// gönderilemez — sunucu ilk cevabı kilitler.
+  Future<AsyncDuelAnswer> answerAsyncDuel({
+    required String duelId,
+    required int questionIndex,
+    required String choice,
+    required int responseMs,
+  });
+
+  /// Son 30 gündeki düellolarımın özetini (yeniden eskiye) yükler.
+  /// Sunucuya ulaşılamazsa fırlatır; boş liste "hiç düellon yok" demektir.
+  Future<List<AsyncDuelSummary>> loadMyAsyncDuels();
+
+  /// Bir düello sonucunu "görüldü" işaretler ("Sonuç hazır" rozeti buna göre iner).
+  Future<void> markAsyncDuelSeen(String duelId);
+
+  /// Bitmiş (ya da süresi dolmuş) bir düellonun XP'sini talep eder;
+  /// idempotenttir — ikinci çağrı yeniden XP eklemez.
+  Future<int> claimAsyncDuelXp(String duelId);
 
   /// Sunucudaki odanın tek ve yetkili snapshot'ını oyuncularıyla yükler.
   ///
@@ -249,6 +322,14 @@ abstract class ZanKurdRepository {
   /// Bakiye yeterli değilse false, başarılıysa true döner.
   Future<bool> spendCoins(int amount, String reason);
 
+  /// Aynı anahtarla ikinci çağrı coin'i yeniden kesmez.
+  /// Fonksiyon yoksa bir kez [spendCoins] yapılır ve yeniden denenmez.
+  Future<DurableCoinSpend> spendCoinsDurable(
+    int amount,
+    String reason,
+    String idempotencyKey,
+  );
+
   /// Seri dondurma ücretini IDEMPOTENT biçimde tahsil eder.
   ///
   /// [idempotencyKey] değişmez olmalıdır (sonuç makbuzunun kimliği). Aynı
@@ -309,9 +390,21 @@ abstract class ZanKurdRepository {
   /// Miktarı sunucu belirler: RPC çağrı başına 2000, günde 20000 ile
   /// sınırlar. İstemci yalnız bildirir.
   ///
-  /// Bu çağrı oyuncuyu BEKLETMEZ ve hata fırlatmaz: XP'nin cihazdaki hâli
-  /// zaten yazılmıştır, sunucu yazımı en iyi çabadır.
+  /// Dönüş `profiles.xp` toplamıysa true. Mock ve çevrimdışı false döner;
+  /// onların dönüşü seviye çubuğunu ezmez.
+  bool get xpAwardIsServerTotal;
+
+  /// Oturum sahibinin `profiles.xp` değeri. Okunamazsa null; 0 gerçek toplamdır.
+  Future<int?> loadServerXp();
+
+  /// Bu çağrı oyuncuyu BEKLETMEZ. Sunucu yazımı onaylanmazsa fırlatır;
+  /// çağıran deltayı kuyruğa alır. Dönüş, yazım onaylandıysa sunucu toplamıdır.
   Future<int> awardXp(int delta);
+  Future<int> awardRoomXp(String roomId);
+
+  /// Aynı anahtarla ikinci çağrı XP'yi yeniden eklemez.
+  /// Fonksiyon yoksa bir kez [awardXp] yapılır ve [ServerXpWrite.retryable] false olur.
+  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey);
 
   /// Oyuncunun görsel kimliğini (avatar/çerçeve/unvan) yükler.
   Future<AvatarIdentity> loadAvatarIdentity();
@@ -375,6 +468,9 @@ abstract class ZanKurdRepository {
 
   /// Arkadaş ekleme isteği gönder.
   Future<bool> addFriend(String friendId, String friendName);
+
+  /// Bu cihazın FCM token'ını sunucuya yazar. Push kuyruğu token'ı buradan okur.
+  Future<void> setFcmToken(String token);
 
   /// Arkadaş isteğini kabul et.
   Future<bool> acceptFriendRequest(String requestId);
@@ -521,4 +617,7 @@ abstract class ZanKurdRepository {
     String? explanation,
     int difficulty = 3,
   });
+
+  /// Davet / referans kodunu kullanır ve ödül verir.
+  Future<ReferralResult> redeemReferralCode(String code);
 }

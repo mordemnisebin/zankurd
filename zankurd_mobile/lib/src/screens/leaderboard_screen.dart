@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../config/feature_flags.dart';
 import '../config/avatar_presets.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -11,27 +11,36 @@ import '../models/friend.dart';
 import '../models/leaderboard_entry.dart';
 import '../models/leaderboard_period.dart';
 import '../models/league_tier.dart';
-import '../theme/app_theme.dart';
+import '../providers/remote_availability.dart';
 import '../utils/app_route.dart';
+import '../utils/player_identity.dart';
 import '../widgets/app_state.dart';
-import '../widgets/arena_kit.dart';
+import '../widgets/leaderboard_podium.dart';
 import '../widgets/player_avatar.dart';
-import '../widgets/roj_mascot.dart';
+import '../widgets/sahne/sahne.dart';
 import 'friends_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../widgets/dialog_action_pair.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({
     required this.repository,
     this.scrollController,
     this.refreshSignal,
+    this.isVisible,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final ScrollController? scrollController;
   final ValueNotifier<int>? refreshSignal;
+
+  /// AppShell sekmesi görünür mü? `IndexedStack` gizli sekmeleri dispose
+  /// etmediği için 30sn'lik otomatik tazeleme, kullanıcı başka sekmedeyken
+  /// bile RPC atıyordu. Kapı kapalıyken sayaç atlanır; null ise eski
+  /// davranış (her zaman tazele) korunur.
+  final bool Function()? isVisible;
 
   @override
   State<LeaderboardScreen> createState() => _LeaderboardScreenState();
@@ -50,9 +59,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   List<LeaderboardEntry>? _lastEntries;
   List<Friend>? _lastFriends;
 
-  /// Oyuncunun kendi istatistikleri; ilk 10'da değilse sırasını yine de
+  /// Oyuncunun kendi satırı; ilk 10'da değilse sırasını yine de
   /// gösterebilmek için ayrıca yüklenir.
-  Future<LeaderboardEntry?>? _myStatsFuture;
+  ///
+  /// 2026-09-30: sonuç SEÇİLİ DÖNEMİN (Gün/Hafta/Ay) sıralamasından gelir
+  /// (`getMyLeaderboardRank`), toplam XP'den değil — liste de aynı dönem
+  /// süzgeciyle çiziliyor.
+  Future<_MyRankLookup>? _myRankFuture;
 
   /// Bekleyen arkadaşlık isteği sayısı — başlıktaki rozet için.
   ///
@@ -92,193 +105,106 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     _loadData();
   }
 
-  Future<LeaderboardEntry?> _loadMyStats() async {
+  /// Seçili dönemin sıralamasındaki kendi satırı.
+  ///
+  /// `getMyLeaderboardRank` yalnız biten çevrimiçi odalardan gelen dönem
+  /// puanını döndürür (`get_leaderboard` ile aynı süzgeç); `getPlayerStats`
+  /// toplam XP veriyordu ve aynı ekranda iki ayrı sayı aynı etiketle
+  /// sunuluyordu. Dönemde puanı yoksa null — sabit satır çizilmez.
+  Future<_MyRankLookup> _loadMyRank() async {
     try {
-      return await widget.repository.getPlayerStats();
+      return _MyRankLookup(
+        await widget.repository.getMyLeaderboardRank(_period),
+      );
     } catch (_) {
-      return null;
+      // Okunamadı: "sıralamada değilsin" demek için sebep yok.
+      return const _MyRankLookup(null, failed: true);
     }
   }
 
-  /// Liderlik gövdesi: dar ekranda tek sütun, geniş ekranda iki sütun.
+  /// Liderlik gövdesi: (varsa lig bandı) + ilk üç podyum + kalan sıralı liste.
   ///
-  /// iPad'de telefon düzeni yukarıdan aşağı gerilmiş hâlde çiziliyordu:
-  /// podyum ekranın üçte birini kaplıyor, sıralama listesi katlamanın
-  /// altında kalıyordu — yani tabletin bütün fazla genişliği boşa
-  /// gidiyordu. 720 eşiği `onboarding_screen.dart`taki eşikle aynıdır ve
-  /// iPad mini'nin dikey genişliğinin (744 pt) altında, en geniş telefonun
-  /// (440 pt) çok üstündedir; telefon düzeni hiçbir biçimde değişmez
-  /// (2026-08-04).
+  /// 2026-09-29 doğallık (K9) podyumu kaldırmıştı (büyük elmaslar, madalya
+  /// halkası, taç, hale). 2026-10-01 tasarım denetimi (A8) ilk üçün
+  /// ayrışmasını yeniden istedi: [LeaderboardPodium] — süssüz, üç pahlı
+  /// kaide. Üç ve daha çok oyuncu varken ilk üç podyumda, 4. sıradan
+  /// itibaren liste; daha azında ya da podyum sığmayan yerde (320 px'te
+  /// büyük yazı) bütün sıralama tek liste. Oyuncunun kendi satırı listede
+  /// (ya da podyumda) "Sen" rozetiyle, ilk 10'da değilse altta sabit.
   ///
-  /// `ResponsiveWrapper.maxContentWidth` içeriği 820 pt'de sınırladığı için
-  /// iki sütun iPad Pro'da da bu genişlik içinde kalır — sütunlar
-  /// okunamayacak kadar açılmaz.
+  /// Geniş ekranda (iPad) liste okunur bir genişlikte (≤ 640) ortalanır;
+  /// eskiden sol sütun podyumu, sağ sütun listeyi taşıyordu. 720 eşiği
+  /// `onboarding_screen.dart`taki eşikle aynıdır (2026-08-04).
   Widget _buildBody(
     List<LeaderboardEntry> entries,
     Map<String, Color> avatarColorOverrides,
     bool ku,
   ) {
     final uid = widget.repository.currentUserId;
-    final rest = entries.skip(3).toList();
 
-    List<Widget> rankRows() => [
-      for (final e in rest)
-        _RankRow(
-          entry: e,
-          isKu: ku,
-          grouped: true,
-          highlight: uid != null && e.playerId == uid,
-          colorOverride: avatarColorOverrides[e.playerId],
-          // Kişi kendini bildiremez. Liste eskiden kendi satırında da
-          // bildir düğmesi çiziyordu, çünkü satırın kime ait olduğu
-          // sorulmuyordu (2026-08-04).
-          onReport: e.playerId == uid ? null : () => _reportProfile(e),
-        ),
-    ];
-
-    final podium = _Podium(
-      entries: entries.take(3).toList(),
-      isKu: ku,
-      colorOverrides: avatarColorOverrides,
+    Widget listOf(List<LeaderboardEntry> rows) => KeyedSubtree(
+      key: const ValueKey('leaderboard-rank-list'),
+      child: _RankListSurface(
+        rows: [
+          for (final e in rows)
+            _RankRow(
+              entry: e,
+              isKu: ku,
+              grouped: true,
+              highlight: uid != null && e.playerId == uid,
+              colorOverride: avatarColorOverrides[e.playerId],
+              // Kişi kendini bildiremez. Liste eskiden kendi satırında da
+              // bildir düğmesi çiziyordu, çünkü satırın kime ait olduğu
+              // sorulmuyordu (2026-08-04).
+              onReport: e.playerId == uid ? null : () => _reportProfile(e),
+            ),
+        ],
+      ),
     );
-    final banner = _period == LeaderboardPeriod.weekly
+    // Lig bandı bayrakla kapalı (bkz. `kWeeklyLeagueEnabled`).
+    final banner = kWeeklyLeagueEnabled && _period == LeaderboardPeriod.weekly
         ? _LeagueBanner(myRank: _myRank(entries), isKu: ku)
-        : null;
-
-    // Geniş ekranda sol sütun podyumdan sonra boş kalıyordu; oyuncunun
-    // kendi satırı ise sağdaki uzun listenin ortasında bir yerdeydi.
-    // Bağlam sütununa kendi sıra özeti konur — AMA yalnız oyuncu gerçekten
-    // sıralanmışsa ve podyumda DEĞİLSE. Podyumdaysa kimliği zaten en büyük
-    // öğede duruyor; ikinci bir özet aynı şeyi iki kez söylerdi.
-    //
-    // `_myRank` puan kapısını da uyguladığı için sıfır puanlı oyuncuya
-    // burada da sıra gösterilmez; o durumda listenin altındaki sabit satır
-    // devreye girer ve ikisi asla birlikte çizilmez.
-    final selfIndex = uid == null
-        ? -1
-        : entries.indexWhere((e) => e.playerId == uid);
-    final selfSummary = (_myRank(entries) != null && selfIndex >= 3)
-        ? _RankRow(
-            entry: entries[selfIndex],
-            isKu: ku,
-            highlight: true,
-            colorOverride: avatarColorOverrides[entries[selfIndex].playerId],
-          )
         : null;
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth < 720) {
-          // 2026-08-14 görsel denetimi: podyum + banner içerik olmadığında
-          // (ör. yalnız ilk 3 kişi, kendi sıra satırı da yoksa) `ListView`
-          // içeriği tepede bırakıyor ve ekranın alt yarısı boş krem renginde
-          // kalıyordu — yarım yüklenmiş gibi görünüyordu.
-          //
-          // Yalnız `rest.isEmpty` (sıralama listesi hiç yoksa) dalında
-          // ortalanır — kasıtlı olarak dar tutuldu. `_RankListSurface` /
-          // `_RankRow` bir `Expanded`li satır taşıyor; bu satır bir
-          // `ConstrainedBox(minHeight)` + `crossAxisAlignment.stretch`
-          // zincirinin İÇİNE (SIKI genişlik verilerek) alındığında, uzun ad +
-          // "Sen" etiketi olan satırlarda `Expanded`in payı yanlış
-          // hesaplanıp 33px'e sıkışıyor ve taşıyordu (2x yazı ölçeği
-          // testinde yakalanan, ayrı bir Flutter kısıtı — bkz.
-          // `test/leaderboard_rank_list_test.dart` "uzun ad" testi). Liste
-          // varken bu riske hiç girilmez: `ListView` aynen korunur; boşluk
-          // sorunu zaten yalnız listesiz halde görülüyordu.
-          if (rest.isEmpty) {
-            final minH = math.max(
-              0.0,
-              constraints.maxHeight - AppSpacing.xs - AppSpacing.xl,
-            );
-            return SingleChildScrollView(
-              controller: widget.scrollController,
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.page,
-                AppSpacing.xs,
-                AppSpacing.page,
-                AppSpacing.xl,
+        // Eşik ekran enidir; gövde sayfa kenarı (2 × 16) kadar daha dardır.
+        final wide = constraints.maxWidth + 2 * SahneSpace.page >= 720;
+        final width = wide ? 640.0 : constraints.maxWidth;
+        final podium =
+            entries.length >= 3 && LeaderboardPodium.fits(context, width);
+
+        final column = Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (banner != null) ...[
+              banner,
+              const SizedBox(height: SahneSpace.cardGap),
+            ],
+            if (podium) ...[
+              LeaderboardPodium(
+                key: const ValueKey('leaderboard-podium'),
+                entries: entries.take(3).toList(growable: false),
+                isKu: ku,
+                selfId: uid,
+                colorOverrides: avatarColorOverrides,
+                onReport: _reportProfile,
               ),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: minH),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (banner != null) ...[
-                      banner,
-                      const SizedBox(height: AppSpacing.cardGap),
-                    ],
-                    podium,
-                  ],
-                ),
-              ),
-            );
-          }
-          return ListView(
-            controller: widget.scrollController,
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.page,
-              AppSpacing.xs,
-              AppSpacing.page,
-              AppSpacing.xl,
-            ),
-            children: [
-              if (banner != null) ...[
-                banner,
-                const SizedBox(height: AppSpacing.cardGap),
+              if (entries.length > 3) ...[
+                const SizedBox(height: SahneSpace.cardGap),
+                listOf(entries.skip(3).toList(growable: false)),
               ],
-              podium,
-              const SizedBox(height: AppSpacing.cardGap),
-              _RankListSurface(rows: rankRows()),
-            ],
-          );
-        }
-        // Geniş ekran: sol sütun bağlam (lig bandı + podyum), sağ sütun
-        // sıralama. Podyum sola sabitlenip aşırı genişlemesin diye sol
-        // sütun daha dar tutulur; liste satır yüksekliğini korur.
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.page,
-            AppSpacing.xs,
-            AppSpacing.page,
-            0,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.xl),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (banner != null) ...[
-                        banner,
-                        const SizedBox(height: AppSpacing.cardGap),
-                      ],
-                      podium,
-                      if (selfSummary != null) ...[
-                        const SizedBox(height: AppSpacing.cardGap),
-                        selfSummary,
-                      ],
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.cardGap),
-              Expanded(
-                flex: 6,
-                child: rest.isEmpty
-                    ? const SizedBox.shrink()
-                    : ListView(
-                        key: const ValueKey('leaderboard-wide-list'),
-                        controller: widget.scrollController,
-                        padding: const EdgeInsets.only(bottom: AppSpacing.xl),
-                        children: [_RankListSurface(rows: rankRows())],
-                      ),
-              ),
-            ],
+            ] else
+              listOf(entries),
+          ],
+        );
+        if (!wide) return column;
+        return Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            key: const ValueKey('leaderboard-wide-list'),
+            constraints: const BoxConstraints(maxWidth: 640),
+            child: column,
           ),
         );
       },
@@ -286,19 +212,33 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   }
 
   /// Oyuncu ilk 10'da değilse en alta sabitlenen kendi sırası.
+  ///
+  /// Satır, seçili dönemin (Gün/Hafta/Ay) puanını ve dönem içindeki sırasını
+  /// gösterir — liste satırlarıyla aynı `get_leaderboard` süzgecinden gelir
+  /// (`getMyLeaderboardRank`), toplam XP'den değil.
+  ///
+  /// Dönemde puanı yoksa (hiç oynamadı, ya da yalnız bot düellosu ve günün
+  /// soruları oynadı) ve sorgu BAŞARILI döndüyse satırın yerinde dürüst
+  /// bir boş durum durur: "bu sıralamada henüz yoksun" + yarışa başla.
+  /// Sorgu okunamadıysa ya da oturum yoksa hiçbir şey iddia edilmez.
   Widget _buildMyRankRow(bool ku) {
-    return FutureBuilder<LeaderboardEntry?>(
-      future: _myStatsFuture,
+    return FutureBuilder<_MyRankLookup>(
+      future: _myRankFuture,
       builder: (context, snapshot) {
-        final me = snapshot.data;
-        // Veri yokken hiçbir şey çizilmez — sarmalayıcı da dahil. Aksi
-        // halde listenin altında boş, kenarlıklı bir şerit kalır ve
-        // görünmez bir satır için dikey alan harcanır.
+        final lookup = snapshot.data;
+        if (lookup == null || lookup.failed) return const SizedBox.shrink();
+        final me = lookup.entry;
         // Puan kapısı `_myRank` ile aynı sebeple burada da gerekli: aksi
         // hâlde banner susarken bu sabit satır sıfır puanla "#1" demeye
-        // devam eder, yani yanlış iddia yer değiştirmiş olur.
+        // devam eder, yani yanlış iddia yer değiştirmiş olur. Dönem puanı
+        // olmayan oyuncuya toplam XP de basılmaz (2026-09-30).
         if (me == null || me.rank <= 0 || me.totalScore <= 0) {
-          return const SizedBox.shrink();
+          if (widget.repository.currentUserId == null) {
+            return const SizedBox.shrink();
+          }
+          return _PinnedMyRank(
+            child: _NotRankedStrip(isKu: ku, onStart: _startQuickRace),
+          );
         }
         return _PinnedMyRank(
           child: _RankRow(entry: me, isKu: ku, highlight: true),
@@ -321,7 +261,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   }
 
   void _loadData() {
-    _myStatsFuture = _loadMyStats();
+    _myRankFuture = _loadMyRank();
     unawaited(_refreshPendingRequests());
     if (_tabController.index == 3) {
       setState(() {
@@ -390,18 +330,23 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         title: Text(dialogContext.t(K.reportProfileTitle)),
         content: Text(
           Tr.forKu(K.reportProfileBodyP, dialogContext.isKu, {
-            'p0': entry.displayName,
+            'p0': PlayerIdentity.resolveName(
+              entry.displayName,
+              isKu: dialogContext.isKu,
+            ),
           }),
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(dialogContext.t(K.cancel)),
-          ),
-          FilledButton(
-            key: const ValueKey('report-profile-confirm'),
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(dialogContext.t(K.reportAction)),
+          DialogActionPair(
+            cancel: TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(dialogContext.t(K.cancel)),
+            ),
+            confirm: FilledButton(
+              key: const ValueKey('report-profile-confirm'),
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: Text(dialogContext.t(K.reportAction)),
+            ),
           ),
         ],
       ),
@@ -436,7 +381,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   void _startAutoRefresh() {
     _refreshTimer?.cancel();
     _refreshTimer = Timer.periodic(const Duration(seconds: 30), (_) {
-      if (mounted) _loadData();
+      if (!mounted) return;
+      if (!(widget.isVisible?.call() ?? true)) return;
+      _loadData();
     });
   }
 
@@ -465,6 +412,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     _tabController.dispose();
     _refreshTimer?.cancel();
     super.dispose();
+  }
+
+  bool _listsMe(List<LeaderboardEntry> entries) {
+    final uid = widget.repository.currentUserId;
+    return uid != null && entries.any((e) => e.playerId == uid);
   }
 
   /// Oturum sahibinin haftalık listedeki sırası; listede yoksa ya da
@@ -514,63 +466,99 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     );
   }
 
+  /// Sayfa iskeleti: sekme olarak A (marka satırı + 28'lik başlık), quiz
+  /// sonucundan tam rota olarak açıldığında B (geri + 22'lik başlık).
+  ///
+  /// Bu ekran İKİ ayrı biçimde kullanılıyor: `AppShell`in 2. sekmesi olarak
+  /// ve quiz sonucundan tam rota olarak (`quiz_result_screen.dart` →
+  /// `AppRoute.to(...)`). İkinci kullanımda eskiden hiçbir Material atası ve
+  /// geri düğmesi yoktu; iOS'ta ekran çıkışsız kalıyordu (2026-08-02
+  /// denetimi, A-10). Sekme olarak açıldığında `canPop` false'tur.
+  ///
+  /// [pinned]: oyuncu ilk 10'da değilse listenin altına sabitlenen kendi
+  /// sırası — kaydırmadan bağımsız, her zaman ekranda.
+  Widget _page(
+    BuildContext context,
+    bool ku, {
+    required Widget content,
+    Widget? pinned,
+  }) {
+    final canPop = Navigator.of(context).canPop();
+    final actions = _HeaderActions(
+      onRefresh: _loadData,
+      onOpenFriends: _openFriends,
+      pendingRequestCount: _pendingRequests,
+    );
+    final top = <Widget>[
+      _PeriodRail(controller: _tabController, ku: ku),
+      const SizedBox(height: SahneSpace.x4),
+      content,
+    ];
+
+    final Widget scroll;
+    if (canPop) {
+      // Sonuç ekranından açılan liderlik: B iskeleti. Geri düğmesinin
+      // sabit anahtarı (`leaderboard-back`) bileşene verilir.
+      scroll = SahnePushedPage(
+        title: context.t(K.leaderboardTitle),
+        backKey: const ValueKey('leaderboard-back'),
+        backLabel: context.t(K.back),
+        controller: widget.scrollController,
+        actions: [actions],
+        children: top,
+      );
+    } else {
+      scroll = SahneTabPage(
+        controller: widget.scrollController,
+        title: context.t(K.leaderboardTitle),
+        stats: [actions],
+        children: top,
+      );
+    }
+
+    return Material(
+      color: SahneTokens.of(context).bg,
+      child: Column(
+        children: [
+          Expanded(child: scroll),
+          ?pinned,
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    return _tabController.index == 3
+        ? _buildFriendsTab(ku)
+        : _buildLeaderboardTab(ku);
+  }
 
-    // Bu ekran İKİ ayrı biçimde kullanılıyor: `AppShell`in 2. sekmesi olarak
-    // (Scaffold'u kabuk sağlar) ve quiz sonucundan tam rota olarak
-    // (`quiz_result_screen.dart` → `AppRoute.to(...)`). İkinci kullanımda
-    // hiçbir Material atası yoktu; Flutter o durumda metinleri
-    // `DefaultTextStyle.fallback()` ile — sarı çift alt çizgiyle ve yanlış
-    // tipografiyle — çizer. Bu yalnız debug'a özel DEĞİLDİR, release'te de
-    // aynı görünür. Üstelik geri düğmesi de yoktu: Android'de sistem geri
-    // tuşu kurtarıyordu ama iOS'ta `AppRoute` bir `PageRouteBuilder`
-    // olduğundan kaydırarak-geri de yok, yani ekran çıkışsız kalıyordu
-    // (2026-08-02 denetimi, A-10).
-    //
-    // Çözüm `categories_tab.dart`'takiyle aynı: şeffaf `Material` sarmalayıcı
-    // + `canPop`'a bağlı geri düğmesi. Sekme olarak açıldığında `canPop`
-    // false'tur, dolayısıyla gömülü görünüm hiç değişmez.
-    final canPop = Navigator.of(context).canPop();
+  /// Filtre/yenileme sırasında mevcut liste korunur; ince çubuk yükleme
+  /// sinyali verir — gri boş ekran yerine.
+  Widget _refreshBar(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: SahneSpace.x3),
+      child: ClipPath(
+        clipper: const ShapeBorderClipper(shape: SahneShape.s),
+        child: LinearProgressIndicator(
+          minHeight: 4,
+          color: t.goldTx,
+          backgroundColor: t.s3,
+        ),
+      ),
+    );
+  }
 
-    return Material(
-      type: MaterialType.transparency,
-      child: Container(
-        color: AppTheme.bgOf(context),
-        child: SafeArea(
-          child: Column(
-            children: [
-              if (canPop)
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 4, top: 4),
-                    child: IconButton(
-                      key: const ValueKey('leaderboard-back'),
-                      icon: const Icon(Icons.arrow_back),
-                      color: AppTheme.textPrimaryColor(context),
-                      tooltip: MaterialLocalizations.of(
-                        context,
-                      ).backButtonTooltip,
-                      onPressed: () => Navigator.of(context).maybePop(),
-                    ),
-                  ),
-                ),
-              _Header(
-                ku: ku,
-                onRefresh: _loadData,
-                onOpenFriends: _openFriends,
-                pendingRequestCount: _pendingRequests,
-              ),
-              _PeriodTabs(controller: _tabController, ku: ku),
-              Expanded(
-                child: _tabController.index == 3
-                    ? _buildFriendsTab(ku)
-                    : _buildLeaderboardTab(ku),
-              ),
-            ],
-          ),
+  Widget _loadingIndicator(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: SahneSpace.x8),
+      child: Center(
+        child: CircularProgressIndicator(
+          color: SahneTokens.of(context).goldTx,
+          strokeWidth: 2.5,
         ),
       ),
     );
@@ -581,62 +569,45 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       future: _friendsFuture,
       builder: (ctx, snap) {
         final stale = _lastFriends;
+        final Widget content;
         if (snap.connectionState == ConnectionState.waiting && stale == null) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppTheme.primaryGradientStart,
-              strokeWidth: 2.5,
-            ),
-          );
-        }
-        if (snap.hasError && stale == null) {
-          return AppErrorState(
+          content = _loadingIndicator(context);
+        } else if (snap.hasError && stale == null) {
+          content = AppErrorState(
             title: context.t(K.friendsLoadFail),
             message: context.t(K.checkConnection),
             retryLabel: context.t(K.retry),
             onRetry: _loadData,
           );
-        }
-        final friends = snap.data ?? stale ?? [];
-        if (friends.isEmpty) {
-          return AppEmptyState(
-            icon: AppIcons.peopleGroup,
-            title: context.t(K.noFriends),
-            message: context.t(K.noFriendsAddHint),
-            actionLabel: context.t(K.addFriend),
-            actionIcon: AppIcons.userPlus,
-            onAction: _openFriends,
-          );
-        }
-        return Column(
-          children: [
-            if (snap.connectionState == ConnectionState.waiting)
-              // `backgroundColor` verilmezse M3 rayı `secondaryContainer`
-              // yapar. lib/src'deki 12 LinearProgressIndicator'ın 10'u bunu
-              // açıkça veriyor; yalnız bu iki kardeş vermiyordu
-              // (2026-07-31 denetimi).
-              LinearProgressIndicator(
-                minHeight: 2,
-                color: AppTheme.primaryGradientStart,
-                backgroundColor: AppTheme.borderColor(context),
-              ),
-            Expanded(
-              child: ListView(
-                controller: widget.scrollController,
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.page,
-                  AppSpacing.xs,
-                  AppSpacing.page,
-                  AppSpacing.xl,
+        } else {
+          final friends = snap.data ?? stale ?? [];
+          if (friends.isEmpty) {
+            content = AppEmptyState(
+              icon: AppIcons.peopleGroup,
+              title: context.t(K.noFriends),
+              message: context.t(K.noFriendsAddHint),
+              actionLabel: context.t(K.addFriend),
+              actionIcon: AppIcons.userPlus,
+              onAction: _openFriends,
+            );
+          } else {
+            content = Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (snap.connectionState == ConnectionState.waiting)
+                  _refreshBar(context),
+                SahneListGroup(
+                  dividerIndent: SahneSpace.x3 + 36 + SahneSpace.x3,
+                  children: [
+                    for (final friend in friends)
+                      _FriendRankRow(friend: friend, isKu: ku),
+                  ],
                 ),
-                children: [
-                  for (final friend in friends)
-                    _FriendRankRow(friend: friend, isKu: ku),
-                ],
-              ),
-            ),
-          ],
-        );
+              ],
+            );
+          }
+        }
+        return _page(context, ku, content: content);
       },
     );
   }
@@ -647,36 +618,62 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       builder: (ctx, snap) {
         final stale = _lastEntries;
         if (snap.connectionState == ConnectionState.waiting && stale == null) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppTheme.primaryGradientStart,
-              strokeWidth: 2.5,
+          return _page(context, ku, content: _loadingIndicator(context));
+        }
+        if (snap.hasError && stale == null) {
+          return _page(
+            context,
+            ku,
+            content: AppErrorState(
+              title: context.t(K.boardLoadFailed),
+              message: context.t(K.checkConnection),
+              retryLabel: context.t(K.retry),
+              onRetry: _loadData,
             ),
           );
         }
-        if (snap.hasError && stale == null) {
-          return AppErrorState(
-            title: context.t(K.boardLoadFailed),
-            message: context.t(K.checkConnection),
-            retryLabel: context.t(K.retry),
-            onRetry: _loadData,
+        final fetched = snap.data ?? stale ?? [];
+        // Sunucuya ulaşılamıyorken boş liste "henüz puan yok" demek
+        // değildir: sıralama yalnız okunamadı (2026-09-27 simülatör turu).
+        if (fetched.isEmpty && RemoteAvailability.socialLockedWatch(context)) {
+          return _page(
+            context,
+            ku,
+            content: AppErrorState(
+              title: context.t(K.boardLoadFailed),
+              message: context.t(K.checkConnection),
+              retryLabel: context.t(K.retry),
+              onRetry: _loadData,
+            ),
           );
         }
-        final entries = snap.data ?? stale ?? [];
+        // 2026-09-30 canlı: sıralama YALNIZ biten çevrimiçi odalardan
+        // toplanır (`get_leaderboard`: room_players x rooms). Bot düellosu
+        // ve günün soruları cihazda oynanır, oda açmaz; oyuncu ikisini de
+        // oynadığı hâlde satırı "0 puan" görünüyordu ve 0 puanlı satır
+        // sıralama değil gürültüdür (Ay sekmesinde dört ad sıfırla
+        // sıralanıyordu). Puanı olmayanlar listeye girmez; hiç kimse
+        // puanlı değilse boş durum ("Henüz puan yok", yarışa yönlendirir)
+        // dürüst olandır. Sıra sunucu sırasıdır ve sıfırlar sondadır, yani
+        // süzmek kalanların sırasını kaydırmaz.
+        final entries = fetched.where((e) => e.totalScore > 0).toList();
         if (entries.isEmpty) {
-          return AppEmptyState(
-            icon: AppIcons.trophy,
-            title: context.t(K.noScoresYet),
-            message: context.t(K.startRaceHint),
-            actionLabel: context.t(K.startRaceAction),
-            actionIcon: AppIcons.bolt,
-            onAction: _startQuickRace,
+          return _page(
+            context,
+            ku,
+            content: AppEmptyState(
+              icon: AppIcons.trophy,
+              title: context.t(K.noScoresYet),
+              message: context.t(K.startRaceHint),
+              actionLabel: context.t(K.startRaceAction),
+              actionIcon: AppIcons.bolt,
+              onAction: _startQuickRace,
+            ),
           );
         }
         // 2026-07-23 M25b: görünür ilk 10 arasında hash çakışması varsa
         // (ör. podyumdaki 3 oyuncu aynı pembe) round-robin ile çözülür.
-        // Build başında bir kez hesaplanır — ListView içinde her frame'de
-        // yeniden çağrılmaz, renkler "titremesin" diye.
+        // Build başında bir kez hesaplanır, renkler "titremesin" diye.
         final avatarColorOverrides = resolveAvatarColors(
           entries.map(
             (e) => (
@@ -686,42 +683,48 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             ),
           ),
         );
-        return Column(
-          children: [
-            // Filtre/yenileme sırasında mevcut liste korunur; ince çubuk
-            // yükleme sinyali verir — gri boş ekran yerine.
-            if (snap.connectionState == ConnectionState.waiting)
-              // `backgroundColor` verilmezse M3 rayı `secondaryContainer`
-              // yapar. lib/src'deki 12 LinearProgressIndicator'ın 10'u bunu
-              // açıkça veriyor; yalnız bu iki kardeş vermiyordu
-              // (2026-07-31 denetimi).
-              LinearProgressIndicator(
-                minHeight: 2,
-                color: AppTheme.primaryGradientStart,
-                backgroundColor: AppTheme.borderColor(context),
-              ),
-            Expanded(child: _buildBody(entries, avatarColorOverrides, ku)),
-            // Liderlik yalnız ilk 10'u getiriyor; oyuncu listede yoksa
-            // kendi sırasını hiç göremiyordu — tablonun temel motivasyon
-            // mekanizması eksikti (2026-07-22 UX denetimi).
-            //
-            // Satır listenin *içinde*, en altta duruyordu: podyum tek
-            // başına bir ekranı doldurduğu için kullanıcı kendi sırasını
-            // görmek üzere aşağı kaydırmak zorundaydı ve satır pratikte
-            // görünmez kalıyordu (2026-07-25 canlı denetimi). Artık
-            // listenin altına sabitlenir — her zaman ekranda.
-            if (_myRank(entries) == null) _buildMyRankRow(ku),
-          ],
+        return _page(
+          context,
+          ku,
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (snap.connectionState == ConnectionState.waiting)
+                _refreshBar(context),
+              _buildBody(entries, avatarColorOverrides, ku),
+            ],
+          ),
+          // Liderlik yalnız ilk 10'u getiriyor; oyuncu listede yoksa
+          // kendi sırasını hiç göremiyordu (2026-07-22 UX denetimi). Satır
+          // listenin altına sabitlenir — her zaman ekranda (2026-07-25).
+          //
+          // Satırın içeriği 2026-09-30'dan beri `getMyLeaderboardRank`: seçili
+          // dönemin sıralaması, `get_leaderboard` ile aynı süzgeçten. Dönemde
+          // puanı yoksa (listeden 0 puanla süzüldüyse ya da hiç oynamadıysa)
+          // RPC boş döner ve sabit satır çizilmez; toplam XP basılmaz —
+          // "0 puan" yerine XP'yi göstermek aynı ekranda iki ayrı sayıyı
+          // aynı etiketle sunmak olurdu.
+          pinned: !_listsMe(entries) ? _buildMyRankRow(ku) : null,
         );
       },
     );
   }
 }
 
-// ─── Haftalık Lig Bandı ──────────────────────────────────────────────────────
+/// Oyuncunun dönem sırası sorgusunun sonucu. [failed]: sorgu okunamadı —
+/// "sıralamada yoksun" ile "sıralama okunamadı" ayrı şeylerdir.
+class _MyRankLookup {
+  const _MyRankLookup(this.entry, {this.failed = false});
+
+  final LeaderboardEntry? entry;
+  final bool failed;
+}
+
+// ─── Sabitlenen kendi sıran ─────────────────────────────────────────────────
 
 /// Liderlik listesinin altına sabitlenen "senin sıran" şeridi. Listeden
 /// ayrı bir katman olduğu için kaydırmadan bağımsız olarak hep görünür.
+/// Zemin sayfanın kendisi; üstte 1 px çizgi.
 class _PinnedMyRank extends StatelessWidget {
   const _PinnedMyRank({required this.child});
 
@@ -729,23 +732,20 @@ class _PinnedMyRank extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        border: Border(
-          top: BorderSide(
-            color: AppTheme.borderColor(context).withValues(alpha: 0.55),
-          ),
-        ),
+        color: t.bg,
+        border: Border(top: BorderSide(color: t.line)),
       ),
       child: SafeArea(
         top: false,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(
-            AppSpacing.page,
-            AppSpacing.xs,
-            AppSpacing.page,
-            AppSpacing.xs,
+            SahneSpace.page,
+            SahneSpace.x2,
+            SahneSpace.page,
+            SahneSpace.x2,
           ),
           child: child,
         ),
@@ -754,8 +754,51 @@ class _PinnedMyRank extends StatelessWidget {
   }
 }
 
+/// Sabit kendi-satırın dürüst boş durumu: bu dönemde puanı yok.
+class _NotRankedStrip extends StatelessWidget {
+  const _NotRankedStrip({required this.isKu, required this.onStart});
+
+  final bool isKu;
+  final VoidCallback onStart;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Wrap(
+      key: const ValueKey('leaderboard-not-ranked'),
+      alignment: WrapAlignment.spaceBetween,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: SahneSpace.x3,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ExcludeSemantics(
+              child: Icon(AppIcons.trophy, size: 20, color: t.tx2),
+            ),
+            const SizedBox(width: SahneSpace.x3),
+            Flexible(
+              child: Text(
+                Tr.forKu(K.notRankedYet, isKu),
+                style: SahneType.captionStrong.copyWith(color: t.tx),
+              ),
+            ),
+          ],
+        ),
+        SahneButton.text(
+          label: Tr.forKu(K.startRaceAction, isKu),
+          onPressed: onStart,
+        ),
+      ],
+    );
+  }
+}
+
+// ─── Haftalık Lig Bandı ──────────────────────────────────────────────────────
+
 /// Haftalık ligde oyuncunun kademesini gösterir: Zêr / Zîv / Bronz.
-/// Kademe canlı haftalık sıradan türetilir; Zêr'de Zana kutlama yapar.
+/// Kademe canlı haftalık sıradan türetilir. Yüzey kartı; kademe ikonu Zêr
+/// (ödül) tonlu karoda.
 class _LeagueBanner extends StatelessWidget {
   const _LeagueBanner({required this.myRank, required this.isKu});
 
@@ -764,180 +807,113 @@ class _LeagueBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final tier = LeagueTier.forRank(myRank);
-    final color = tier.color;
-    final surface = AppTheme.surfaceHiColor(context);
+    final accessibilityText = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
 
-    return Container(
+    return KeyedSubtree(
       key: const ValueKey('league-banner'),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
-      ),
-      decoration: BoxDecoration(
-        color: Color.alphaBlend(color.withValues(alpha: 0.10), surface),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: color.withValues(alpha: 0.32)),
-      ),
-      child: Row(
-        children: [
-          if (tier == LeagueTier.zer)
-            const RojMascot(size: 44, mood: RojMood.celebrate)
-          else
-            Container(
-              width: 40,
-              height: 40,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.18),
-                shape: BoxShape.circle,
-                border: Border.all(color: color.withValues(alpha: 0.4)),
+      child: SahneSurfaceCard(
+        padding: const EdgeInsets.all(SahneSpace.x3),
+        child: Row(
+          children: [
+            DecoratedBox(
+              decoration: ShapeDecoration(
+                color: t.goldTint,
+                shape: SahneShape.m,
               ),
-              child: Icon(
-                tier.icon,
-                color: AppColors.onAccentTint(context, color),
-                size: 22,
+              child: SizedBox.square(
+                dimension: 44,
+                child: Icon(tier.icon, color: t.goldTx, size: 24),
               ),
             ),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  tier.label(isKu),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
+            const SizedBox(width: SahneSpace.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    tier.label(isKu),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.bodyStrong.copyWith(color: t.tx),
                   ),
-                ),
-                Text(
-                  myRank != null
-                      ? (Tr.forKu(K.buHaftakiSiranP, isKu, {'p0': '$myRank'}))
-                      : (Tr.forKu(K.buHaftaYarisLige, isKu)),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textMutedColor(context),
+                  Text(
+                    myRank != null
+                        ? (Tr.forKu(K.buHaftakiSiranP, isKu, {'p0': '$myRank'}))
+                        : (Tr.forKu(K.buHaftaYarisLige, isKu)),
+                    maxLines: accessibilityText ? 2 : 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.caption.copyWith(color: t.tx2),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Icon(tier.icon, color: color.withValues(alpha: 0.55), size: 28),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
-// ─── Header ──────────────────────────────────────────────────────────────────
+// ─── Başlık eylemleri ───────────────────────────────────────────────────────
 
-class _Header extends StatelessWidget {
-  const _Header({
-    required this.ku,
+/// Arkadaşlar ve yenile: marka satırının sağında (A) ya da çubuğun sağında
+/// (B) duran iki 44'lük pahlı ikon düğmesi (48 dokunma alanı).
+class _HeaderActions extends StatelessWidget {
+  const _HeaderActions({
     required this.onRefresh,
     required this.onOpenFriends,
     required this.pendingRequestCount,
   });
 
-  final bool ku;
   final VoidCallback onRefresh;
 
   /// Arkadaş ekranını açar. Bu düğme 2026-07-31'e kadar YOKTU.
   ///
   /// `FriendsScreen` — oyuncu arama, istek gönderme, GELEN İSTEKLERİ
-  /// kabul/ret, arkadaşla oda kurma — uygulamanın tamamında yalnız tek
-  /// yerden açılıyordu: Liderlik > Arkadaşlar sekmesinin BOŞ DURUM
-  /// düğmesinden. Kullanıcı bir arkadaş edindiği anda `friends.isEmpty`
-  /// false oluyor, boş durum kayboluyor ve yerine dokunulamayan bir liste
-  /// geliyordu. O andan sonra ekrana giden hiçbir yol kalmıyordu: yeni
-  /// arkadaş aranamıyor, gelen istekler hiçbir yerde görülemiyor, arkadaşla
-  /// oda kurulamıyordu. Tüm sosyal katman ilk arkadaştan sonra sessizce
-  /// ölüyordu.
+  /// kabul/ret, arkadaşla oda kurma — yalnız Arkadaşlar sekmesinin BOŞ DURUM
+  /// düğmesinden açılıyordu. Kullanıcı bir arkadaş edindiği anda boş durum
+  /// kayboluyor ve ekrana giden hiçbir yol kalmıyordu: tüm sosyal katman
+  /// ilk arkadaştan sonra sessizce ölüyordu.
   final VoidCallback onOpenFriends;
 
   /// Bekleyen arkadaşlık isteği sayısı; 0 ise rozet çizilmez.
-  ///
-  /// Görünür bir işaret olmadan istekler asla fark edilmiyordu: gönderen
-  /// taraf cevap bekliyor, alan taraf isteğin varlığından habersizdi.
   final int pendingRequestCount;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.page,
-        AppSpacing.lg,
-        AppSpacing.md,
-        AppSpacing.xxs,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 4,
-            height: 44,
-            margin: const EdgeInsets.only(right: AppSpacing.sm, top: 2),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
-              color: AppTheme.brand,
-            ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.t(K.leaderboardTitle),
-                  style: AppTypography.heading1.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xxs),
-                Text(
-                  context.t(K.refreshEvery30),
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          _HeaderAction(
-            valueKey: const ValueKey('leaderboard-friends-button'),
-            icon: AppIcons.userPlus,
-            tooltip: context.t(K.friendsScreen),
-            semanticLabel: pendingRequestCount > 0
-                ? context.t(K.friendRequestsPendingA11y, {
-                    'count': '$pendingRequestCount',
-                  })
-                : context.t(K.friendsScreen),
-            onPressed: onOpenFriends,
-            badgeCount: pendingRequestCount,
-          ),
-          const SizedBox(width: AppSpacing.xs),
-          _HeaderAction(
-            valueKey: const ValueKey('leaderboard-refresh-button'),
-            icon: AppIcons.arrowsRotate,
-            tooltip: context.t(K.refreshAction),
-            semanticLabel: context.t(K.refreshBoardA11y),
-            onPressed: onRefresh,
-          ),
-        ],
-      ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _HeaderAction(
+          valueKey: const ValueKey('leaderboard-friends-button'),
+          icon: AppIcons.userPlus,
+          tooltip: context.t(K.friendsScreen),
+          semanticLabel: pendingRequestCount > 0
+              ? context.t(K.friendRequestsPendingA11y, {
+                  'count': '$pendingRequestCount',
+                })
+              : context.t(K.friendsScreen),
+          onPressed: onOpenFriends,
+          badgeCount: pendingRequestCount,
+        ),
+        _HeaderAction(
+          valueKey: const ValueKey('leaderboard-refresh-button'),
+          icon: AppIcons.arrowsRotate,
+          tooltip: context.t(K.refreshAction),
+          semanticLabel: context.t(K.refreshBoardA11y),
+          onPressed: onRefresh,
+        ),
+      ],
     );
   }
 }
 
-/// Liderlik başlığındaki kare eylem düğmesi.
-///
-/// İki düğme aynı kabı paylaşsın diye ayrıldı; ayrıca rozeti tek yerde
-/// çizer. Rozet yalnız sayı sıfırdan büyükken görünür — boş bir nokta
-/// "bir şey var" der ama ne olduğunu söylemez.
+/// Tek başlık düğmesi: 44'lük görsel (Perde, M pah, gündüzde 1 px kenar)
+/// 48'lik dokunma kutusunda. Rozet yalnız sayı sıfırdan büyükken görünür —
+/// boş bir nokta "bir şey var" der ama ne olduğunu söylemez. Rozet dolu
+/// kırmızı değil: Boyax tonu + sayı.
 class _HeaderAction extends StatelessWidget {
   const _HeaderAction({
     required this.valueKey,
@@ -957,25 +933,12 @@ class _HeaderAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final button = Container(
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context),
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-        border: Border.all(
-          color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-        ),
-      ),
-      child: Semantics(
-        button: true,
-        label: semanticLabel,
-        excludeSemantics: true,
-        child: IconButton(
-          key: valueKey,
-          tooltip: tooltip,
-          onPressed: onPressed,
-          icon: Icon(icon, color: AppTheme.textSubColor(context), size: 20),
-        ),
-      ),
+    final button = SahneIconButton(
+      key: valueKey,
+      icon: icon,
+      semanticLabel: semanticLabel,
+      tooltip: tooltip,
+      onPressed: onPressed,
     );
 
     if (badgeCount <= 0) return button;
@@ -984,28 +947,14 @@ class _HeaderAction extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         button,
-        Positioned(
-          right: -2,
-          top: -2,
-          child: Container(
-            key: const ValueKey('leaderboard-friends-badge'),
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-            constraints: const BoxConstraints(minWidth: 18),
-            decoration: BoxDecoration(
-              color: AppTheme.brand,
-              borderRadius: BorderRadius.circular(AppRadius.pill),
-              border: Border.all(color: AppTheme.bgOf(context), width: 1.5),
-            ),
-            child: Text(
-              badgeCount > 9 ? '9+' : '$badgeCount',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.onSolid(AppTheme.brand),
-                fontFamily: AppTypography.fontFamily,
-                fontSize: 10,
-                fontWeight: FontWeight.w800,
-                height: 1.2,
-              ),
+        PositionedDirectional(
+          end: -SahneSpace.x1,
+          top: -SahneSpace.x1,
+          child: IgnorePointer(
+            child: SahneBadge(
+              key: const ValueKey('leaderboard-friends-badge'),
+              label: badgeCount > 9 ? '9+' : '$badgeCount',
+              tone: SahneBadgeTone.race,
             ),
           ),
         ),
@@ -1014,385 +963,59 @@ class _HeaderAction extends StatelessWidget {
   }
 }
 
-// ─── Period Tabs ─────────────────────────────────────────────────────────────
+// ─── Dönem rayı ─────────────────────────────────────────────────────────────
 
-class _PeriodTabs extends StatelessWidget {
-  const _PeriodTabs({required this.controller, required this.ku});
+/// Gün / Hafta / Ay / Arkadaş — sığan seçim rayı ([SahneRail.fit]); seçili
+/// çip Zêr (ödül) tonu. Kısa etiketler: 4 eşit çip 320 px'te de sığar.
+class _PeriodRail extends StatelessWidget {
+  const _PeriodRail({required this.controller, required this.ku});
 
   final TabController controller;
   final bool ku;
 
   @override
   Widget build(BuildContext context) {
-    // Kısa etiketler: 4 eşit sekme 390px'te uzun TR etiketleri kırpıyordu
-    // ("Haftalı…", "Arkada…").
     final labels = ku
         ? ['Roj', 'Heft', 'Meh', 'Heval']
         : ['Gün', 'Hafta', 'Ay', 'Arkadaş'];
-
-    return Container(
-      margin: const EdgeInsets.fromLTRB(
-        AppSpacing.page,
-        AppSpacing.xs,
-        AppSpacing.page,
-        AppSpacing.xxs,
-      ),
-      height: 44,
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(
-          color: AppTheme.gold.withValues(alpha: 0.22),
-          width: 1,
-        ),
-      ),
-      child: TabBar(
-        controller: controller,
-        labelColor: AppTheme.textPrimaryColor(context),
-        unselectedLabelColor: AppTheme.textMutedColor(context),
-        labelStyle: AppTypography.bodyMedium.copyWith(
-          fontWeight: FontWeight.w800,
-        ),
-        unselectedLabelStyle: AppTypography.bodyMedium.copyWith(
-          fontWeight: FontWeight.w600,
-        ),
-        indicator: BoxDecoration(
-          color: AppTheme.gold.withValues(alpha: 0.16),
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          border: Border.all(
-            color: AppTheme.gold.withValues(alpha: 0.46),
-            width: 1.2,
-          ),
-        ),
-        indicatorSize: TabBarIndicatorSize.tab,
-        // Varsayılan 16px label padding 4 sekmede "Arkadaş"ı kırpıyordu.
-        labelPadding: const EdgeInsets.symmetric(horizontal: 4),
-        dividerColor: Colors.transparent,
-        tabs: [for (final label in labels) Tab(text: label)],
-      ),
-    );
-  }
-}
-
-// ─── Podium (top 3) ──────────────────────────────────────────────────────────
-
-class _Podium extends StatelessWidget {
-  const _Podium({
-    required this.entries,
-    required this.isKu,
-    this.colorOverrides = const {},
-  });
-
-  final List<LeaderboardEntry> entries;
-  final bool isKu;
-  final Map<String, Color> colorOverrides;
-
-  @override
-  Widget build(BuildContext context) {
-    final first = entries.isNotEmpty ? entries[0] : null;
-    final second = entries.length > 1 ? entries[1] : null;
-    final third = entries.length > 2 ? entries[2] : null;
-
-    // Yerleşim: 2. sol, 1. orta (daha büyük), 3. sağ
-    final slots = [
-      if (second != null)
-        _PodiumSlot(
-          entry: second,
-          isCenter: false,
-          colorOverride: colorOverrides[second.playerId],
-        ),
-      if (first != null)
-        _PodiumSlot(
-          entry: first,
-          isCenter: true,
-          colorOverride: colorOverrides[first.playerId],
-        ),
-      if (third != null)
-        _PodiumSlot(
-          entry: third,
-          isCenter: false,
-          colorOverride: colorOverrides[third.playerId],
-        ),
-    ];
-
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(AppRadius.card),
-      child: Container(
-        key: const ValueKey('leaderboard-podium'),
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.sm,
-          AppSpacing.md,
-          AppSpacing.sm,
-          AppSpacing.md,
-        ),
-        decoration: BoxDecoration(
-          // 2026-07-24: madalya gradyanı ve altın gölge kaldırıldı. Podyum
-          // sıradan bir yüzeydir; sıralamayı taşıyan şey rakam ve isim,
-          // parlaklık değil. Altın yalnız 1. sıranın rakamında kalır.
-          color: AppTheme.surfaceColor(context),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(color: AppTheme.borderColor(context)),
-        ),
-        child: slots.length == 1
-            ? Center(child: slots.first)
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [for (final slot in slots) Expanded(child: slot)],
-              ),
-      ),
-    );
-  }
-}
-
-class _PodiumSlot extends StatelessWidget {
-  const _PodiumSlot({
-    required this.entry,
-    required this.isCenter,
-    this.colorOverride,
-  });
-
-  final LeaderboardEntry entry;
-  final bool isCenter;
-  final Color? colorOverride;
-
-  Color _colorFor(bool isLight) {
-    switch (entry.rank) {
-      case 1:
-        return AppTheme.gold;
-      case 2:
-        return isLight ? AppTheme.silverLight : AppTheme.silver;
-      default:
-        return isLight ? AppTheme.bronzeLight : AppTheme.bronze;
-    }
-  }
-
-  IconData get _medalIcon {
-    if (entry.rank == 1) return AppIcons.trophy;
-    return AppIcons.medal;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final color = _colorFor(AppTheme.isLight(context));
-    final avatarR = isCenter ? 28.0 : 22.0;
-    final nameFontSz = isCenter ? 13.5 : 12.0;
-    final scoreFontSz = isCenter ? 15.5 : 13.5;
-    final pedestalH = isCenter
-        ? 56.0
-        : entry.rank == 2
-        ? 42.0
-        : 34.0;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
+    // Çip görselde 44; dokunma kutusu ve ekran okuyucu düğümü 48
+    // (2026-09-29 ek kararı: `SahneRailChip` 48'lik kutuya sarılır).
+    return SahneRail.fit(
       children: [
-        Container(
-          key: ValueKey('podium-slot-${entry.rank}'),
-          padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(_medalIcon, color: color, size: isCenter ? 30 : 22),
-              const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.all(2.5),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: color, width: isCenter ? 2.5 : 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: color.withValues(alpha: 0.35),
-                      blurRadius: isCenter ? 14 : 8,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: PlayerAvatar(
-                  radius: avatarR,
-                  photoUrl: entry.avatarUrl,
-                  iconId: entry.avatarIcon,
-                  colorHex: entry.avatarColor,
-                  frameId: entry.avatarFrame,
-                  displayName: entry.displayName,
-                  colorOverride: colorOverride,
+        for (var i = 0; i < labels.length; i++)
+          Semantics(
+            container: true,
+            button: true,
+            selected: controller.index == i,
+            label: labels[i],
+            onTap: () => controller.index = i,
+            excludeSemantics: true,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => controller.index = i,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: SahneRailChip(
+                  label: labels[i],
+                  selected: controller.index == i,
+                  role: SahneRole.gold,
+                  onTap: () => controller.index = i,
                 ),
               ),
-              const SizedBox(height: 6),
-              Text(
-                entry.displayName,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: AppTypography.bodyLarge.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w800,
-                  fontSize: nameFontSz,
-                ),
-              ),
-              if (entry.showcaseTitle != null)
-                Text(
-                  entry.showcaseTitle!,
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.gold,
-                    fontSize: 10,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              const SizedBox(height: 4),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      color.withValues(alpha: 0.28),
-                      color.withValues(alpha: 0.12),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: color.withValues(alpha: 0.4)),
-                ),
-                // Puan %200 yazıda "50/00" gibi iki satıra bölünüyordu:
-                // sayı bir sözcük değil, bölününce anlamını kaybediyor ve
-                // birinciyle üçüncüyü karşılaştırmak imkânsızlaşıyordu.
-                //
-                // `FittedBox` YALNIZ sayıya uygulanır ve yalnız gerekince
-                // küçültür (`scaleDown`): erişilebilirlik ölçeği kapatılmaz,
-                // sabit küçük font dayatılmaz, değer kısaltılmaz — sığdığı
-                // sürece kullanıcının seçtiği boyutta çizilir
-                // (2026-08-04 görsel denetimi).
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    '${entry.totalScore}',
-                    maxLines: 1,
-                    softWrap: false,
-                    style: TextStyle(
-                      color: AppColors.readableAccent(context, color),
-                      fontWeight: FontWeight.w800,
-                      fontSize: scoreFontSz,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              // Klasik podyum kaidesi (sabit genişlik — tek kazanan landscape'te
-              // tüm satırı şişirmesin).
-              Container(
-                width: isCenter ? 88 : 72,
-                height: pedestalH,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      color.withValues(alpha: 0.55),
-                      color.withValues(alpha: 0.28),
-                    ],
-                  ),
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(10),
-                  ),
-                  border: Border.all(color: color.withValues(alpha: 0.45)),
-                ),
-                child: Builder(
-                  builder: (context) {
-                    final pedestal = Color.alphaBlend(
-                      color.withValues(alpha: 0.28),
-                      AppTheme.surfaceColor(context),
-                    );
-                    final ink = AppColors.onSolid(pedestal);
-                    return Text(
-                      '#${entry.rank}',
-                      style: AppTypography.heading2.copyWith(
-                        // Kaidenin üstündeki beyaz "#1" altın zeminde 1.36:1
-                        // ölçüldü — okunabilirliğini yalnız altındaki gölgeye
-                        // borçluydu (2026-07-27). Yazı rengi kaidenin gerçek
-                        // rengine göre seçilir; gradyanın açık ucu (%28) en
-                        // kötü durum olduğu için ölçüt odur.
-                        color: ink,
-                        fontWeight: FontWeight.w900,
-                        fontSize: isCenter ? 20 : 16,
-                        // Gölge yalnız beyaz yazıya destekti; koyu yazının
-                        // altında kirli bir hale bırakıyor.
-                        shadows: ink == Colors.white
-                            ? const [
-                                Shadow(
-                                  color: Color(0x66000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 1),
-                                ),
-                              ]
-                            : null,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
       ],
     );
   }
 }
 
-// ─── Rank Row (4-10) ─────────────────────────────────────────────────────────
+// ─── Sıra satırı ────────────────────────────────────────────────────────────
 
-/// Oyuncunun kendi satırının vurgu tonu — safir (#1E4FA6).
+/// Sıralama satırlarını tek bir yüzeyde toplar: liste grubu, satırlar
+/// arası avatar hizasından başlayan 1 px ayırıcı.
 ///
-/// Eskiden marka turuncusuydu. Turuncu bu üründe TEK bir işi olan renktir:
-/// birincil eylem. Sıralamadaki kendi satırın bir eylem değil, bir konum;
-/// turuncuya boyanınca listenin ortasında basılacak bir düğme gibi
-/// duruyordu. Safir dikkati aynı güçte çeker ama "buraya bas" demez
-/// (2026-08-04).
-///
-/// Renk tek kanal da değildir: aynı satır ayrıca sol kenarda bir şerit ve
-/// adın yanında "Sen"/"Tu" etiketi taşır.
-const Color _selfRankTone = Color(0xFF1E4FA6);
-
-/// "Sen"/"Tu" etiketi — vurgunun ÜÇÜNCÜ kanalı (dolgu ve şeritten sonra).
-///
-/// Renk ve şerit görsel işaretlerdir; ekran okuyucu kullanan ya da renk
-/// ayrımını göremeyen oyuncu için satırın kendisine ait olduğunu SÖYLEYEN
-/// bir metin gerekir. Satırın birleşik semantik etiketi ayrıca
-/// `K.seninSiranPP` ile "senin sıran" der.
-class _SelfTag extends StatelessWidget {
-  const _SelfTag({required this.isKu});
-
-  final bool isKu;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-      decoration: BoxDecoration(
-        color: _selfRankTone.withValues(
-          alpha: AppTheme.isLight(context) ? 0.14 : 0.30,
-        ),
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-      ),
-      child: Text(
-        Tr.forKu(K.you, isKu),
-        maxLines: 1,
-        style: AppTypography.caption.copyWith(
-          fontWeight: FontWeight.w900,
-          color: AppColors.readableAccent(context, _selfRankTone),
-        ),
-      ),
-    );
-  }
-}
-
-/// Sıralama satırlarını tek bir yüzeyde toplar.
-///
-/// Satırlar arasındaki ayrım ince bir ayraçla yapılır; her satıra ayrı
-/// kenarlık, gölge ve dış boşluk vermek listeyi on ayrı karta bölüyordu.
+/// Her satıra ayrı kenarlık, gölge ve dış boşluk vermek listeyi on ayrı
+/// karta bölüyordu (2026-08-04).
 class _RankListSurface extends StatelessWidget {
   const _RankListSurface({required this.rows});
 
@@ -1400,29 +1023,9 @@ class _RankListSurface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(AppTheme.cardRadiusSmall),
-        border: Border.all(
-          color: AppTheme.borderColor(context).withValues(alpha: 0.55),
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (var i = 0; i < rows.length; i++) ...[
-            if (i > 0)
-              Divider(
-                height: 1,
-                thickness: 1,
-                color: AppTheme.borderColor(context).withValues(alpha: 0.45),
-              ),
-            rows[i],
-          ],
-        ],
-      ),
+    return SahneListGroup(
+      dividerIndent: SahneSpace.x3 + 24 + SahneSpace.x3,
+      children: rows,
     );
   }
 }
@@ -1440,210 +1043,234 @@ class _RankRow extends StatelessWidget {
   final LeaderboardEntry entry;
   final bool isKu;
 
-  /// Oyuncunun kendi satırı: listede görünmediğinde en alta sabitlenir.
+  /// Oyuncunun kendi satırı. Grup DIŞINDA (sabitlenen satır, geniş ekran
+  /// özeti) maketteki "Sen" satırıdır: Zêr tonu + altın halka, L pah.
+  /// Grubun içinde sıra no koyu altın ve adın yanında "Sen" rozeti —
+  /// vurgu renk tek başına değil, söz de taşır.
   final bool highlight;
 
-  /// Satır ortak bir liste yüzeyinin İÇİNDE mi çiziliyor.
-  ///
-  /// Sıralama on ayrı beyaz kart olarak çiziliyordu: her satırın kendi
-  /// kenarlığı, kendi dolgusu ve kendi dış boşluğu vardı. Sonuç, sırayla
-  /// okunması gereken bir listede on ayrı "bu bir kart" sinyaliydi — göz
-  /// ritmi yakalayamıyor, kenarlıklar üst üste binerek gürültü
-  /// oluşturuyordu. Gruplu satır kendi kabuğunu bırakır; ayrım tek bir
-  /// ince ayraçla yapılır (2026-08-04).
-  ///
-  /// Sabitlenmiş "kendi sıram" satırı listenin dışında, kendi katmanında
-  /// durduğu için gruplu DEĞİLDİR — orada kabuk gerçekten gerekli.
+  /// Satır ortak liste grubunun İÇİNDE mi çiziliyor.
   final bool grouped;
 
   /// 2026-07-23 M25b: yalnız ana listeden (görünür ilk 10) çağrılırken
-  /// [resolveAvatarColors] ile doldurulur. `_buildMyRankRow`'un ayrıca
-  /// getirdiği "kendi sıram" satırı bu listenin dışında, override almaz.
+  /// [resolveAvatarColors] ile doldurulur.
   final Color? colorOverride;
 
   /// Bu oyuncunun profilini (avatar + ad) bildirme eylemi.
   ///
   /// Avatar, yabancılara gösterilen bir GÖRSEL UGC yüzeyidir; 2026-08-02'ye
   /// kadar onu bildirmenin hiçbir yolu yoktu (A-05 -> P1-008). Eylem
-  /// GÖRÜNÜR bir düğmedir: sohbetteki bildir/engelle yalnız keşfedilemez bir
-  /// uzun basmayla erişilebiliyordu ve denetimde bu ayrıca kusur sayılmıştı.
-  ///
-  /// Kendi satırında null'dır — kişi kendini bildiremez.
+  /// GÖRÜNÜR bir düğmedir. Kendi satırında null'dır — kişi kendini
+  /// bildiremez.
   final VoidCallback? onReport;
+
+  /// Sıra rakamının rengi — ilk üçü listede ayıran TEK işaret.
+  ///
+  /// 2026-09-29 doğallık (K9): podyum, taç ve madalya halkası yok; birinci
+  /// altın, ikinci gümüş, üçüncü bronz ([SahneTokens.silverTx],
+  /// [SahneTokens.bronzeTx]; iki temada AA), gerisi ikincil metin. Rakam
+  /// her zaman yazılıdır: sıra yalnız renkle anlatılmaz.
+  Color _rankColor(SahneTokens t) {
+    if (highlight) return t.goldTx;
+    return switch (entry.rank) {
+      1 => t.goldTx,
+      2 => t.silverTx,
+      3 => t.bronzeTx,
+      _ => t.tx2,
+    };
+  }
+
+  /// Görünen ad: sunucunun yer tutucu adı ("ZanKurd Oyuncusu") ham
+  /// basılmaz, dile göre "Oyuncu" / "Lîstikvan" olur (satırda "ZanKurd
+  /// Oyu…" diye kesiliyordu). Avatar rengi ham addan türer (değişmez).
+  String get _name => PlayerIdentity.resolveName(entry.displayName, isKu: isKu);
+
+  /// Alt metindeki sayı `get_leaderboard`ın `count(distinct room_id)`
+  /// değeridir: oyuncunun BİTMİŞ çevrimiçi yarış (oda) sayısı. Birim
+  /// eskiden "oda / ode" idi; oyuncu için bu bir yer değil oyun sayısı
+  /// olduğundan sözlükteki "yarış / pêşbirk" ([K.raceWord]) yazılır
+  /// (2026-09-30 canlı: "1 ode" anlaşılmıyordu). Bot düellosu ve günün
+  /// soruları oda açmadığı için bu sayıya girmez.
+  String get _meta => entry.showcaseTitle != null
+      ? '${entry.showcaseTitle} · ${entry.bestStreak} ${Tr.forKu(K.streakUnit, isKu)}'
+      : '${entry.roomsPlayed} ${Tr.forKu(K.raceWord, isKu).toLowerCase()}'
+            ' · ${entry.bestStreak} ${Tr.forKu(K.streakUnit, isKu)}';
 
   @override
   Widget build(BuildContext context) {
     // Satır sıra, ad, oda/zincir ve puanı ayrı metinler olarak taşıyordu;
     // ekran okuyucu bunları bağlamsız dört parça hâlinde okuyordu. Tek
     // düğümde birleştirilir (2026-07-25 denetimi).
+    final label = highlight
+        ? (Tr.forKu(K.seninSiranPP, isKu, {
+            'p0': '${entry.rank}',
+            'p1': _name,
+            'p2': '${entry.totalScore}',
+          }))
+        : (Tr.forKu(K.pPPPuan, isKu, {
+            'p0': '${entry.rank}',
+            'p1': _name,
+            'p2': '${entry.totalScore}',
+          }));
+
+    if (highlight && !grouped) {
+      return SahneListRow.me(
+        key: const ValueKey('leaderboard-my-rank-row'),
+        rank: entry.rank,
+        title: _name,
+        subtitle: _meta,
+        // "Sen" rozeti vurgunun sözlü kanalı: altın ton ve halka tek
+        // başına renk körü oyuncuya yetmez.
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SahneBadge(label: Tr.forKu(K.you, isKu), tone: SahneBadgeTone.gold),
+            const SizedBox(width: SahneSpace.x2),
+            _score(),
+          ],
+        ),
+        semanticLabel: label,
+      );
+    }
     return Semantics(
-      label: highlight
-          ? (Tr.forKu(K.seninSiranPP, isKu, {
-              'p0': '${entry.rank}',
-              'p1': entry.displayName,
-              'p2': '${entry.totalScore}',
-            }))
-          : (Tr.forKu(K.pPPPuan, isKu, {
-              'p0': '${entry.rank}',
-              'p1': entry.displayName,
-              'p2': '${entry.totalScore}',
-            })),
-      excludeSemantics: true,
+      key: ValueKey('leaderboard-rank-row-${entry.rank}'),
+      container: true,
+      label: label,
       child: _buildRow(context),
     );
   }
 
-  Widget _buildRow(BuildContext context) {
-    final light = AppTheme.isLight(context);
-    // Vurgu dolgusu koyu temada daha güçlü olmalı: aynı alfa açık zeminde
-    // görünen farkı koyu zeminde vermiyor.
-    final fill = highlight
-        ? _selfRankTone.withValues(alpha: light ? 0.09 : 0.20)
-        : (grouped ? Colors.transparent : AppTheme.surfaceColor(context));
+  Widget _score() => ConstrainedBox(
+    constraints: const BoxConstraints(maxWidth: 72),
+    child: FittedBox(
+      fit: BoxFit.scaleDown,
+      child: SahneRowValue('${entry.totalScore}'),
+    ),
+  );
 
-    return Container(
-      key: highlight && !grouped
-          ? const ValueKey('leaderboard-my-rank-row')
-          : ValueKey('leaderboard-rank-row-${entry.rank}'),
-      // Gruplu satır kendi dış boşluğunu ve kabuğunu taşımaz — ayrım
-      // yüzeyin kendi ayracıyla yapılır.
-      margin: grouped
-          ? EdgeInsets.zero
-          : const EdgeInsets.only(bottom: AppSpacing.sm),
-      // Gruplu satırda şerit yüzeyin sol kenarına yaslanır; kabuklu
-      // satırda kenarlığın içinde kalması için soldan da boşluk alır.
-      padding: EdgeInsets.fromLTRB(
-        grouped ? 0 : AppSpacing.sm,
-        AppSpacing.xs,
-        AppSpacing.md,
-        AppSpacing.xs,
-      ),
-      decoration: BoxDecoration(
-        color: fill,
-        borderRadius: grouped
-            ? null
-            : BorderRadius.circular(AppTheme.cardRadiusSmall),
-        border: grouped
-            ? null
-            : Border.all(
-                color: highlight
-                    ? _selfRankTone.withValues(alpha: 0.45)
-                    : AppTheme.borderColor(context).withValues(alpha: 0.55),
-              ),
-      ),
-      child: Row(
-        children: [
-          // Sol şerit: vurgunun İKİNCİ kanalı. Dolgu tonu tek başına renk
-          // körü oyuncuya yeterli fark vermez.
-          Container(
-            width: 3,
-            height: 40,
-            decoration: BoxDecoration(
-              color: highlight ? _selfRankTone : Colors.transparent,
-              borderRadius: BorderRadius.circular(AppRadius.pill),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          RankMedal(rank: entry.rank, size: 34),
-          const SizedBox(width: 10),
-          PlayerAvatar(
-            radius: 18,
-            photoUrl: entry.avatarUrl,
-            iconId: entry.avatarIcon,
-            colorHex: entry.avatarColor,
-            frameId: entry.avatarFrame,
-            displayName: entry.displayName,
-            colorOverride: colorOverride,
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Ad ve "Sen" etiketi tek satırda; ad esner, etiket esnemez.
-                // Uzun bir kullanıcı adı etiketi ekrandan atmamalı — asıl
-                // bilgi hangi satırın SENİN olduğun.
-                Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        entry.displayName,
-                        style: AppTypography.bodyMedium.copyWith(
-                          color: AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w800,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+  Widget _buildRow(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 56),
+      child: Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(
+          SahneSpace.x3,
+          SahneSpace.x1,
+          onReport == null && !grouped ? SahneSpace.x4 : 0,
+          SahneSpace.x1,
+        ),
+        child: Row(
+          children: [
+            ExcludeSemantics(
+              child: SizedBox(
+                width: 24,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    '${entry.rank}',
+                    maxLines: 1,
+                    style: SahneType.bodyStrong.copyWith(
+                      color: _rankColor(t),
+                      fontFeatures: const [FontFeature.tabularFigures()],
                     ),
-                    if (highlight) ...[
-                      const SizedBox(width: 6),
-                      _SelfTag(isKu: isKu),
-                    ],
-                  ],
-                ),
-                const SizedBox(height: 1),
-                Text(
-                  entry.showcaseTitle != null
-                      ? '${entry.showcaseTitle} · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}'
-                      : '${entry.roomsPlayed} ${isKu ? "ode" : "oda"}'
-                            ' · ${entry.bestStreak} ${isKu ? "zincîr" : "seri"}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-          const SizedBox(width: 8),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 72),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                '${entry.totalScore}',
-                style: AppTypography.bodyLarge.copyWith(
-                  // Ham altın beyaz kart üstünde 2.30:1; sıralamadaki puan
-                  // okunmuyordu (2026-07-27).
-                  color: AppColors.readableAccent(context, AppTheme.gold),
-                  fontWeight: FontWeight.w700,
+            const SizedBox(width: SahneSpace.x3),
+            PlayerAvatar(
+              radius: 18,
+              photoUrl: entry.avatarUrl,
+              iconId: entry.avatarIcon,
+              colorHex: entry.avatarColor,
+              frameId: entry.avatarFrame,
+              displayName: entry.displayName,
+              colorOverride: colorOverride,
+            ),
+            const SizedBox(width: SahneSpace.x3),
+            Expanded(
+              child: ExcludeSemantics(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Ad ve "Sen" rozeti tek satırda; ad esner, rozet
+                    // esnemez. %200 yazı + 320 px gibi aşırı dar durumda
+                    // rozet yalnız okunabileceği genişlikte çizilir; satırın
+                    // birleşik etiketi "senin sıran" bilgisini zaten verir.
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final showSelfTag =
+                            highlight && constraints.maxWidth >= 72;
+                        return Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                _name,
+                                style: SahneType.bodyStrong.copyWith(
+                                  color: t.tx,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            if (showSelfTag) ...[
+                              const SizedBox(width: SahneSpace.x2),
+                              SahneBadge(
+                                label: Tr.forKu(K.you, isKu),
+                                tone: SahneBadgeTone.gold,
+                              ),
+                            ],
+                          ],
+                        );
+                      },
+                    ),
+                    Text(
+                      _meta,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SahneType.caption.copyWith(color: t.tx2),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),
-          // Bildir düğmesi GÖRÜNÜRDÜR. Sohbetteki bildir/engelle yalnız
-          // keşfedilemez bir uzun basmayla erişilebiliyordu ve denetimde
-          // bu ayrıca kusur sayılmıştı; aynı hatayı burada tekrarlamıyoruz.
-          // Kendi satırında düğme yok ama LİSTE İÇİNDE yeri durur: aksi
-          // hâlde o satırın puanı sağa kayıyor ve listenin sağ kenarı tam
-          // da en çok bakılan satırda kırılıyordu (2026-08-04).
-          //
-          // Tek başına duran özet kartında rezerve edilmez: hizalanacak
-          // kardeş satır yok ve dar sütunda o 44 pt doğrudan addan çalınıp
-          // ismi "Oy..." hâline getiriyordu.
-          if (onReport == null)
-            if (grouped) const SizedBox(width: 44) else const SizedBox.shrink()
-          else
-            Semantics(
-              button: true,
-              label: Tr.forKu(K.reportProfileTitle, isKu),
-              child: IconButton(
-                key: ValueKey('leaderboard-report-${entry.playerId}'),
-                onPressed: onReport,
-                icon: const Icon(AppIcons.flag, size: 16),
-                color: AppTheme.textMutedColor(context),
-                // 44pt'lik dokunma hedefi: denetimde 48dp altı hedefler
-                // ayrıca kusur olarak kaydedilmişti.
-                constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
-                padding: EdgeInsets.zero,
-                tooltip: Tr.forKu(K.reportProfileTitle, isKu),
+            const SizedBox(width: SahneSpace.x2),
+            ExcludeSemantics(
+              child: DefaultTextStyle.merge(
+                style: TextStyle(color: highlight ? t.goldTx : t.tx),
+                child: _score(),
               ),
             ),
-        ],
+            // Bildir düğmesi GÖRÜNÜRDÜR. Sohbetteki bildir/engelle yalnız
+            // keşfedilemez bir uzun basmayla erişilebiliyordu ve denetimde
+            // bu ayrıca kusur sayılmıştı. Kendi satırında düğme yok ama
+            // LİSTE İÇİNDE yeri durur: aksi hâlde puan sağa kayıyor ve
+            // listenin sağ kenarı en çok bakılan satırda kırılıyordu.
+            if (onReport == null)
+              if (grouped)
+                const SizedBox(width: 48)
+              else
+                const SizedBox.shrink()
+            else
+              Semantics(
+                button: true,
+                label: Tr.forKu(K.reportProfileTitle, isKu),
+                child: IconButton(
+                  key: ValueKey('leaderboard-report-${entry.playerId}'),
+                  onPressed: onReport,
+                  icon: const Icon(AppIcons.flag, size: 16),
+                  color: t.tx3,
+                  // Android dokunma hedefi: 48 dp altına düşmez.
+                  constraints: const BoxConstraints(
+                    minWidth: 48,
+                    minHeight: 48,
+                  ),
+                  padding: EdgeInsets.zero,
+                  tooltip: Tr.forKu(K.reportProfileTitle, isKu),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -1651,6 +1278,12 @@ class _RankRow extends StatelessWidget {
 
 // ─── Friend Rank Row (Arkadaşlar tab) ─────────────────────────────────────────
 
+/// Arkadaş sıralaması satırı (liste grubunun içinde): seviye karesi,
+/// avatar + çevrimiçi işareti, ad + durum sözü, puan. Durum yalnız renkle
+/// verilmez: "Çevrimiçi" / "Çevrimdışı" yazar.
+///
+/// 2026-09-29 doğallık (K5): çevrimiçi işareti küçük elmastı; elmas yalnız
+/// soru ilerlemesi ve ders sayacında kalır, işaret küçük pahlı kare.
 class _FriendRankRow extends StatelessWidget {
   const _FriendRankRow({required this.friend, required this.isKu});
 
@@ -1659,119 +1292,103 @@ class _FriendRankRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final online = friend.isOnline;
-    return Container(
+    return ConstrainedBox(
       key: ValueKey('friend-rank-row-${friend.friendId}'),
-      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
-      ),
-      decoration: AppTheme.statCard(context, AppTheme.cyan).copyWith(
-        border: Border.all(color: AppTheme.cyan.withValues(alpha: 0.22)),
-      ),
-      child: Row(
-        children: [
-          // Level badge
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: AppTheme.surfaceHiColor(context),
-              borderRadius: BorderRadius.circular(AppRadius.badge),
-              border: Border.all(
-                color: AppTheme.borderColor(context),
-                width: 1,
-              ),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              '${friend.level}',
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppTheme.textSubColor(context),
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          // Avatar with online dot
-          SizedBox(
-            width: 40,
-            height: 40,
-            child: Stack(
-              children: [
-                PlayerAvatar(
-                  radius: 18,
-                  colorHex: friend.friendAvatarColor,
-                  displayName: friend.friendName,
+      constraints: const BoxConstraints(minHeight: 64),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(
+          SahneSpace.x3,
+          SahneSpace.x2,
+          SahneSpace.x4,
+          SahneSpace.x2,
+        ),
+        child: Row(
+          children: [
+            // Seviye karesi
+            DecoratedBox(
+              decoration: ShapeDecoration(color: t.s2, shape: SahneShape.s),
+              child: SizedBox.square(
+                dimension: 36,
+                child: Center(
+                  child: Text(
+                    '${friend.level}',
+                    style: SahneType.captionStrong.copyWith(color: t.tx2),
+                  ),
                 ),
-                // Online status dot
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    width: 12,
-                    height: 12,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: online ? AppTheme.brand : AppTheme.textMuted,
-                      border: Border.all(
-                        color: AppTheme.surfaceColor(context),
-                        width: 2,
+              ),
+            ),
+            const SizedBox(width: SahneSpace.x3),
+            SizedBox.square(
+              dimension: 40,
+              child: Stack(
+                children: [
+                  PlayerAvatar(
+                    radius: 18,
+                    colorHex: friend.friendAvatarColor,
+                    displayName: friend.friendName,
+                  ),
+                  PositionedDirectional(
+                    bottom: 0,
+                    end: 0,
+                    child: SizedBox.square(
+                      dimension: 12,
+                      child: DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: online ? t.learnTx : t.tx3,
+                          shape: SahneShape.withSide(
+                            SahneShape.forSize(12),
+                            t.s1,
+                            width: SahneRing.r2,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  friend.friendName,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
+            const SizedBox(width: SahneSpace.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    PlayerIdentity.resolveName(friend.friendName, isKu: isKu),
+                    style: SahneType.bodyStrong.copyWith(color: t.tx),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 1),
-                Text(
-                  online
-                      ? (Tr.forKu(K.online, isKu))
-                      : (Tr.forKu(K.offline, isKu)),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.caption.copyWith(
-                    color: online
-                        ? AppTheme.brand
-                        : AppTheme.textMutedColor(context),
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
+                  Text(
+                    online
+                        ? (Tr.forKu(K.online, isKu))
+                        : (Tr.forKu(K.offline, isKu)),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.caption.copyWith(
+                      color: online ? t.learnTx : t.tx2,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 8),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 72),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                '${friend.totalScore}',
-                style: AppTypography.bodyLarge.copyWith(
-                  color: AppColors.readableAccent(context, AppTheme.cyan),
-                  fontWeight: FontWeight.w700,
+            const SizedBox(width: SahneSpace.x2),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 72),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  '${friend.totalScore}',
+                  style: SahneType.bodyStrong.copyWith(
+                    color: t.tx,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

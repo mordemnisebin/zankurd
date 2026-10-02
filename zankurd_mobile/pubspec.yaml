@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.9.1+13
+version: 2.0.0+21
 
 environment:
   sdk: ^3.12.1
@@ -30,11 +30,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
+  # `cupertino_icons` bilerek YOK: uygulama hiçbir Cupertino widget'ı/ikonu
+  # kullanmıyor ve release derlemede kullanılmayan yazı tipi budanmıyor,
+  # 258 KB olduğu gibi pakete giriyordu (bkz. test/asset_usage_test.dart).
   supabase_flutter: ^2.14.1
+  google_sign_in: ^7.2.0
+  sign_in_with_apple: ^8.1.0
+  crypto: ^3.0.7
   flutter_local_notifications: ^22.1.0
   timezone: ^0.11.1
 
@@ -42,25 +47,24 @@ dependencies:
   firebase_core: ^4.12.1
   firebase_crashlytics: ^5.2.6
   firebase_analytics: ^12.4.5
+  firebase_messaging: ^16.0.0
 
   # State management
   provider: ^6.1.0
   shared_preferences: ^2.5.5
 
-  # Ses efektleri (Sprint 1)
+  # Ses efektleri
   audioplayers: ^6.1.0
 
   # Metin-okuma (TTS) — soruları seslendirme
   flutter_tts: ^4.2.3
 
-  # Shimmer skeleton loading (Sprint 1)
-  shimmer: ^3.0.0
+  # Shimmer skeleton loading
+  shimmer: ^4.0.0
 
 
-  # Paylaşım (Sprint 5'te kullanılacak)
   share_plus: ^13.2.1
 
-  # Mağaza değerlendirmesi (Sprint 5'te kullanılacak)
   in_app_review: ^2.0.9
 
   # Dış bağlantılar (gizlilik politikası / kullanım koşulları)
@@ -69,15 +73,22 @@ dependencies:
   # Abonelik / premium yönetimi (RevenueCat)
   purchases_flutter: ^10.6.0
 
-  # Bağlantı durumu (Sprint 6'da kullanılacak)
   connectivity_plus: ^7.3.0
+  # Uzak ulaşılabiliğer yoklaması (`_pingSupabase`): boot'da zaman aşımına
+  # uğrayan Supabase başlatmasının sonradan gerçekten açıldığına, yani
+  # sunucuya ağ turu atılabildiğine bakar. dev'te DEĞİL: lib/ kullanıyor.
+  http: ^1.2.0
   image_picker: ^1.2.3
   package_info_plus: ^10.2.1
-  font_awesome_flutter: ^11.0.0
   flutter_timezone: ^5.1.0
 
   # Ağ görseli önbellekleme
   cached_network_image: ^3.4.1
+
+  # Lucide ikon yazı tipi paket olarak DEĞİL, `assets/fonts/Lucide.ttf` olarak
+  # taşınır: `lucide_icons_flutter` paketi 6 ağırlıklı değişken yazı tipini
+  # de (2,86 MB) bildiriyor ve kullanılmayan yazı tipi budanmadan pakete
+  # giriyordu. AppIcons yalnız statik `Lucide` ailesini kullanır.
 
 dev_dependencies:
   flutter_test:
@@ -95,13 +106,22 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  # Supabase repository hata-enjeksiyon testlerinde sahte http.Client için
-  # (test/supabase_offline_fallback_test.dart).
-  http: ^1.2.0
+  # Zamanlayıcı/geri çekilmeli yeniden deneme testleri (sahte saat).
+  fake_async: ^1.3.3
   # `UrlLauncherPlatform.instance`i sahte bir uygulamayla değiştirip
   # "hedefi açacak uygulama yok" durumunu simüle etmek için
   # (test/legal_link_open_failure_test.dart).
   url_launcher_platform_interface: ^2.3.2
+  patrol: ^4.10.0
+
+patrol:
+  app_name: ZanKurd
+  test_directory: patrol_test
+  android:
+    package_name: com.zankurd.app
+  ios:
+    bundle_id: com.zankurd.app
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -119,18 +139,63 @@ flutter:
     - assets/zankurd.webp
     - assets/zankurd_icon.webp
     - assets/sounds/
-    - assets/data/
+    # İkon yazı tipi lisansları lisans sayfasına koddan kaydedilir
+    # (lib/src/utils/bundled_font_licenses.dart).
+    - assets/fonts/LICENSE-FontAwesome.txt
+    - assets/fonts/LICENSE-Lucide.txt
+    # Veri bankaları TEK TEK sayılır; `assets/data/` klasörü bildirilmez.
+    # Klasör bildirilince karantinadaki `deepseek_2026_08_18_questions.json`
+    # (1,5 MB, çalışma zamanında hiç okunmaz) da pakete giriyordu. Yeni banka
+    # eklerken `lib/src/data/question_bank_assets.dart` + buraya; unutulursa
+    # `test/asset_usage_test.dart` kırılır.
+    - assets/data/image_credits.json
+    - assets/data/sentence_building_questions.json
+    - assets/data/fill_in_blank_2026_08_questions.json
+    - assets/data/community_questions.json
+    - assets/data/editorial_questions.json
+    - assets/data/offline_questions.json
+    - assets/data/expansion_2026_08_questions.json
+    - assets/data/source_first_2026_08_questions.json
+    - assets/data/visual_2026_08_07_questions.json
+    - assets/data/restore_2026_08_07_questions.json
+    - assets/data/expansion_2026_08_19_questions.json
+    - assets/data/expansion_2026_09_28_questions.json
+    - assets/data/deepseek_verified_2026_09_30_questions.json
+    - assets/data/bilim_2026_09_30_questions.json
+    - assets/data/altkonu_2026_10_01_questions.json
+    - assets/data/ders_2026_10_01_questions.json
+    - assets/data/bosluk_2026_10_02_questions.json
+    - assets/data/ders_2026_10_02_questions.json
 
+  # Şahnê yazı tipleri (OFL; lisans metinleri assets/fonts/OFL-*.txt).
+  # Değişken dosyalardan sabit kalınlıklar üretildi: FontWeight doğrudan
+  # çalışsın, her TextStyle'a FontVariation yazmak gerekmesin.
   fonts:
-    - family: Rubik
+    - family: Lucide
       fonts:
-        - asset: assets/fonts/Rubik-Regular.ttf
-        - asset: assets/fonts/Rubik-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Rubik-Bold.ttf
+        - asset: assets/fonts/Lucide.ttf
+    # Yalnız Google ve Apple marka glifleri (`BrandIcons`). font_awesome_flutter
+    # paketi Solid + Regular + Brands = ~718 KB yazi tipi tasiyordu, uygulama
+    # yalniz Brands'ten iki glif kullaniyordu; Brands dosyasi degistirilmeden
+    # buraya alindi, paket kaldirildi. Lisans: assets/fonts/LICENSE-FontAwesome.txt
+    - family: FontAwesomeBrands
+      fonts:
+        - asset: assets/fonts/Font-Awesome-7-Brands-Regular-400.otf
+    - family: BricolageGrotesque
+      fonts:
+        - asset: assets/fonts/BricolageGrotesque-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Rubik-Black.ttf
-          weight: 900
+        - asset: assets/fonts/BricolageGrotesque-ExtraBold.ttf
+          weight: 800
+    - family: Onest
+      fonts:
+        - asset: assets/fonts/Onest-Regular.ttf
+        - asset: assets/fonts/Onest-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Onest-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Onest-Bold.ttf
+          weight: 700
 
   # To add assets to your application, add an assets section, like this:
   # assets:

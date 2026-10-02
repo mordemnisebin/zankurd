@@ -3,24 +3,38 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
-import 'package:zankurd_mobile/src/screens/categories_tab.dart';
+import 'package:zankurd_mobile/src/models/async_duel.dart';
+import 'package:zankurd_mobile/src/models/room.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_inbox.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_result_screen.dart';
+import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
+import 'package:zankurd_mobile/src/screens/learn_home_screen.dart';
+import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
+import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
+import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
+import 'package:zankurd_mobile/src/screens/password_recovery_screen.dart';
 import 'package:zankurd_mobile/src/screens/paywall_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
+import 'package:zankurd_mobile/src/screens/room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
+import 'package:zankurd_mobile/src/screens/subcategory_screen.dart';
+import 'package:zankurd_mobile/src/screens/suggest_question_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -287,12 +301,52 @@ void main() {
     );
   });
 
-  testWidgets('kategoriler', (t) async {
-    await expectNoOverflow(
-      t,
-      Scaffold(body: CategoriesTab(repository: repository)),
-    );
-  });
+  // JEV 2026-09-23 denetimi: ekran turunda bulunan ancak %200 yazı
+  // ratchet'inde hiç açılmayan yüzeyler. Her birini hem büyük yazıda hem
+  // de iPhone SE genişliğinde kuruyoruz; iki eksen ayrı tutuluyor ki bir
+  // kırılma olduğunda sebebi doğrudan görülsün.
+  Map<String, Widget Function()> extendedLargeTextScreens() => {
+    'öğren ana sayfası': () => LearnHomeScreen(repository: repository),
+    'seviye listesi': () =>
+        LevelScreen(repository: repository, category: 'Ziman'),
+    'alt kategori': () =>
+        SubcategoryScreen(repository: repository, category: 'Ziman'),
+    'soru öner': () => SuggestQuestionScreen(repository: repository),
+    'parola kurtarma': () => const PasswordRecoveryScreen(),
+    'öğrenci sözlüğü': () => const LearnerLexiconScreen(),
+    'avatar düzenleyici': () => AvatarEditorScreen(repository: repository),
+    'onboarding': () => OnboardingScreen(onComplete: () {}),
+    'oda sonuç kurtarma': () {
+      final room = repository.createRoom();
+      return RoomResultRecoveryScreen(
+        repository: repository,
+        snapshot: RoomResultSnapshot(
+          room: room,
+          ownPlayerId: 'user',
+          questionIds: const [],
+          answers: const [],
+          winnerId: null,
+          endedReason: 'completed',
+          forfeitedBy: null,
+          finishedAt: DateTime.utc(2026, 9, 23),
+        ),
+        // Bu vaka sahiplik uyuşmazlığı hata yüzeyini deterministik açar;
+        // ağ/ödül settlement'ı çalıştırmadan recovery ekranının gerçek
+        // büyük-yazı düzenini ölçer.
+        expectedUserId: 'different-user',
+      );
+    },
+  };
+
+  for (final entry in extendedLargeTextScreens().entries) {
+    testWidgets('${entry.key} — %200 yazı', (t) async {
+      await expectNoOverflow(t, entry.value());
+    });
+
+    testWidgets('dar ekran — ${entry.key}', (t) async {
+      await expectNoOverflow(t, entry.value(), size: se, textScale: 1.0);
+    });
+  }
 
   testWidgets('dar ekran — oda', (t) async {
     await expectNoOverflow(
@@ -314,5 +368,124 @@ void main() {
 
   testWidgets('dar ekran — giriş', (t) async {
     await expectNoOverflow(t, const SignInScreen(), size: se, textScale: 1.0);
+  });
+
+  testWidgets('şık — üç uzun rakip ismi %200 yazıda alt satıra iner', (
+    t,
+  ) async {
+    // 2026-09: rakip rozetleri sabit `Row` idi; 2-3 uzun isim veya %200
+    // ölçekte yatay taşma çizgileri çıkıyordu. `Wrap` aynı görünümü tek
+    // satırda korur, sığmayınca alt satıra iner. Bu test dar çerçevede
+    // (320px) üç uzun isimle taşma olmadığını sabitler.
+    await expectNoOverflow(
+      t,
+      Scaffold(
+        body: Center(
+          child: SizedBox(
+            width: 320,
+            child: QuizOptionTile(
+              index: 0,
+              answer: 'Bersiva rast a pirsê ev e',
+              selected: false,
+              correct: false,
+              disabled: true,
+              onTap: () {},
+              opponentNamesWhoSelected: const [
+                'Dilbixwînê Mezin',
+                'Rojda Xanimê Dirêj',
+                'Şivanê Çiyayî',
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  });
+
+  testWidgets('oyun merkezi — sırayla düello (%200 yazı)', (t) async {
+    final repo = MockZanKurdRepository();
+    await t.runAsync(() async {
+      final a = await repo.startAsyncDuel();
+      for (var i = 0; i < a.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: a.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 1000,
+        );
+      }
+      repo.addPendingAsyncDuelForTesting(
+        opponentName: 'Rojda',
+        opponentCorrect: 3,
+        opponentMs: 60000,
+      );
+      final b = await repo.startAsyncDuel();
+      for (var i = 0; i < b.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: b.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 4000,
+        );
+      }
+    });
+    await expectNoOverflow(
+      t,
+      PlayHubScreen(repository: repo, asyncDuelEnabled: true),
+    );
+  });
+
+  testWidgets('sırayla düello — soru (%200 yazı)', (t) async {
+    final repo = MockZanKurdRepository();
+    await t.runAsync(() async {
+      await repo.startAsyncDuel();
+    });
+    await expectNoOverflow(t, AsyncDuelPlayScreen(repository: repo));
+  });
+
+  testWidgets('sırayla düello — sonuç (%200 yazı)', (t) async {
+    final repo = MockZanKurdRepository();
+    late AsyncDuelSummary completedSummary;
+    await t.runAsync(() async {
+      repo.addPendingAsyncDuelForTesting(
+        opponentName: 'Rojda',
+        opponentCorrect: 0,
+        opponentMs: 999999,
+      );
+      final a = await repo.startAsyncDuel();
+      for (var i = 0; i < a.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: a.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 1000,
+        );
+      }
+      final summaries = await repo.loadMyAsyncDuels();
+      completedSummary = summaries.firstWhere((s) => s.outcome != null);
+    });
+    await expectNoOverflow(
+      t,
+      AsyncDuelResultScreen(
+        repository: repo,
+        view: AsyncDuelResultView.fromSummary(completedSummary),
+      ),
+    );
+  });
+
+  testWidgets('sırayla düello listesi (%200 yazı)', (t) async {
+    final repo = MockZanKurdRepository();
+    await t.runAsync(() async {
+      final a = await repo.startAsyncDuel();
+      for (var i = 0; i < a.questions.length; i++) {
+        await repo.answerAsyncDuel(
+          duelId: a.duelId,
+          questionIndex: i,
+          choice: 'A',
+          responseMs: 1000,
+        );
+      }
+    });
+    await expectNoOverflow(t, AsyncDuelListScreen(repository: repo));
   });
 }

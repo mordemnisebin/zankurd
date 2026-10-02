@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'durable_write.dart';
+import '../models/async_duel.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/friend.dart';
@@ -16,14 +18,15 @@ import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/room_message.dart';
 import '../models/tournament.dart';
+import '../models/referral_result.dart';
 import '../providers/analytics_consent_provider.dart';
+import '../services/apple_revocation.dart';
 import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../config/category_visibility.dart';
 import 'mock_zankurd_repository.dart';
 import 'xp_store.dart';
 import 'zankurd_repository.dart';
-import '../services/question_content_policy.dart';
 
 class _ManagedRoomChannel {
   _ManagedRoomChannel(this.channel);
@@ -177,7 +180,6 @@ ResumedPendingAnswer? _requiredPendingAnswer(Map<String, dynamic> json) {
 class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
 
-  static const _contentPolicy = QuestionContentPolicy();
   static const _defaultAvatarColor = '#2E9E93';
 
   final MockZanKurdRepository _offline = MockZanKurdRepository();
@@ -198,8 +200,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   bool get usesServerHiddenAnswers => true;
 
   @override
-  List<QuizLevel> levelsForCategory(String category) =>
-      _offline.levelsForCategory(category);
+  List<QuizLevel> levelsForCategory(String category, {String? subCategory}) =>
+      _offline.levelsForCategory(category, subCategory: subCategory);
 
   @override
   GameRoom joinRoom(String code) => _offline.joinRoom(code);
@@ -478,7 +480,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<String> uploadAvatarPhoto(Uint8List bytes, String contentType) async {
     final user = client.auth.currentUser;
     if (user == null) {
-      return _offline.uploadAvatarPhoto(bytes, contentType);
+      throw StateError('Remote service unavailable.');
     }
     final ext = contentType == 'image/png' ? 'png' : 'jpg';
     final path = '${user.id}/avatar.$ext';
@@ -497,7 +499,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   @override
   Future<void> deleteAvatarPhoto() async {
     final user = client.auth.currentUser;
-    if (user == null) return _offline.deleteAvatarPhoto();
+    if (user == null) {
+      throw StateError('Remote service unavailable.');
+    }
     // Uzantı içerik türünden seçiliyor (`uploadAvatarPhoto`), yani aynı
     // kullanıcının geçmişte hem .png hem .jpg nesnesi olabilir. İkisini de
     // kaldırmak gerekir; `remove` var olmayan yolu sorun etmez.
@@ -507,9 +511,20 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     ]);
   }
 
+  /// Oturumdaki hesabın Apple kimliği var mı (testlerde geçersiz kılınır).
+  @visibleForTesting
+  bool get hasAppleIdentity => userHasAppleIdentity(client.auth.currentUser);
+
   @override
   Future<void> deleteMyAccount() async {
     try {
+      // Apple ile girilmiş hesapta ÖNCE Apple bağlantısı iptal edilir
+      // (Kılavuz 5.1.1(v)); hesap silindikten sonra kullanıcının JWT'si
+      // geçersiz olur ve iptal edilemez. İptal başarısız olursa silme
+      // YİNE DE sürer (`revokeAppleAuthorization` hiç fırlatmaz).
+      if (hasAppleIdentity) {
+        await revokeAppleAuthorization(client);
+      }
       await client.rpc('delete_my_account');
     } catch (error, stack) {
       _recordError(error, stack, reason: 'delete_my_account failed');
@@ -547,6 +562,52 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'getPlayerStats failed');
+      return null;
+    }
+  }
+
+  /// Sabitlenen "benim sıram" satırının dönem (Gün/Hafta/Ay) karşılığı.
+  ///
+  /// `get_my_leaderboard_rank` yalnız `auth.uid()` satırını, `get_leaderboard`
+  /// ile BİREBİR aynı süzgeçten döndürür (biten çevrimiçi odalar, dönem
+  /// puanı > 0) — yani satırda gördüğün sayı, listedeki sayıdır.
+  ///
+  /// Hata ya da eksik RPC `null` döner: eski `leaderboard_entries`
+  /// görünümüne (toplam XP) DÜŞÜLMEZ, satır hiç çizilmez. Dönem puanı
+  /// doğrulanamıyorsa yanlış iddia sessizce tercih edilir (2026-09-30).
+  @override
+  Future<LeaderboardEntry?> getMyLeaderboardRank(
+    LeaderboardPeriod period,
+  ) async {
+    try {
+      if (currentUserId == null) return null;
+
+      final rows = await client.rpc<List<dynamic>>(
+        'get_my_leaderboard_rank',
+        params: {'p_days': period.days},
+      );
+      if (rows.isEmpty) return null;
+
+      final row = rows.first as Map<String, dynamic>;
+      final rank = (row['rank'] as num?)?.toInt() ?? 0;
+      final totalScore = (row['total_score'] as num?)?.toInt() ?? 0;
+      if (rank <= 0 || totalScore <= 0) return null;
+
+      return LeaderboardEntry(
+        rank: rank,
+        playerId: row['player_id'] as String? ?? '',
+        displayName: row['display_name'] as String? ?? 'Oyuncu',
+        totalScore: totalScore,
+        bestStreak: (row['best_streak'] as num?)?.toInt() ?? 0,
+        roomsPlayed: (row['rooms_played'] as num?)?.toInt() ?? 0,
+        avatarIcon: row['avatar_icon'] as String?,
+        avatarColor: row['avatar_color'] as String?,
+        avatarUrl: row['avatar_url'] as String?,
+        avatarFrame: row['avatar_frame'] as String?,
+        showcaseTitle: row['showcase_title'] as String?,
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'getMyLeaderboardRank failed');
       return null;
     }
   }
@@ -604,6 +665,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     required int difficultyMin,
     required int difficultyMax,
     String? subCategory,
+    int? levelNumber,
     int limit = 10,
   }) async {
     return _offline.loadLevelQuestions(
@@ -611,6 +673,20 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       difficultyMin: difficultyMin,
       difficultyMax: difficultyMax,
       subCategory: subCategory,
+      levelNumber: levelNumber,
+      limit: limit,
+    );
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadLearningQuizQuestions({
+    required String category,
+    required String learningLessonId,
+    int limit = 5,
+  }) async {
+    return _offline.loadLearningQuizQuestions(
+      category: category,
+      learningLessonId: learningLessonId,
       limit: limit,
     );
   }
@@ -625,10 +701,19 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'get_room_questions',
         params: {'p_room_id': roomId},
       );
+      // Oda soruları SUNUCUNUN sırasıyla birebir kalır; istemci soru ATMAZ.
+      //
+      // Oda akışı sunucunun `current_question_index`iyle ilerler, ekran
+      // `_questions[index]`i gösterir, cevap `p_question_id` ile gider.
+      // İstemci bir soruyu atarsa sonraki bütün sorular bir kayar: oyuncu
+      // ekranda bir soruyu görür, sunucu başkasını bekler. Hepsi atılırsa
+      // (ör. "Rastgele" eşleşme gizli bir kategoriye düştüyse) oyun hiç
+      // başlamaz. Gizli kategori (`category_visibility.dart`) listeleme ve
+      // seçim kararıdır; sunucu bir soruyu odaya koyduysa o soru oynanır.
+      // Seçim süzgecinin yeri sunucudur.
       final roomQuestions = (response as List<dynamic>)
           .whereType<Map<String, dynamic>>()
-          .map(_roomQuestionFromRow)
-          .where(_contentPolicy.isPlayableWithHiddenAnswer)
+          .map(QuizQuestion.fromServerRow)
           .toList();
 
       if (roomQuestions.isNotEmpty) return roomQuestions;
@@ -661,6 +746,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   }) async {
     try {
       if (client.auth.currentUser == null) {
@@ -673,6 +760,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         params: {
           'p_category_name': category,
           'p_seconds_per_question': secondsPerQuestion,
+          'p_question_count': questionCount,
+          'p_entry_fee': entryFee,
         },
       );
       final snapshot = _requiredJsonObject(response, 'create_online_room');
@@ -682,10 +771,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final canonicalCategory = _requiredString(snapshot, const [
         'category_name',
       ]);
-      final questionCount = _requiredInt(snapshot, const ['question_count']);
+      final serverQuestionCount = _requiredInt(snapshot, const [
+        'question_count',
+      ]);
       final serverSeconds = _requiredInt(snapshot, const [
         'seconds_per_question',
       ]);
+      final serverEntryFee = snapshot['entry_fee'] != null
+          ? (snapshot['entry_fee'] as num).toInt()
+          : entryFee;
 
       final players = await _loadRoomPlayersById(roomId);
       return GameRoom(
@@ -695,8 +789,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         category: canonicalCategory,
         players: players,
         status: _roomStatusFromValue(snapshot['status'] ?? 'lobby'),
-        questionCount: questionCount,
+        questionCount: serverQuestionCount,
         secondsPerQuestion: serverSeconds,
+        entryFee: serverEntryFee,
         hostId: hostId,
       );
     } catch (error, stack) {
@@ -753,6 +848,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       secondsPerQuestion:
           (room['seconds_per_question'] as int?) ??
           GameRoom.defaultSecondsPerQuestion,
+      entryFee: (room['entry_fee'] as num?)?.toInt() ?? 0,
     );
 
     // Katılan oyuncu `join_room_by_code`un yazdığı gibi HAZIR DEĞİL başlar.
@@ -776,7 +872,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final row = await client
         .from('rooms')
         .select(
-          'id, code, host_id, question_count, seconds_per_question, status, '
+          'id, code, host_id, question_count, seconds_per_question, entry_fee, status, '
           'categories(name)',
         )
         .eq('id', roomId)
@@ -795,6 +891,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       secondsPerQuestion:
           (row['seconds_per_question'] as num?)?.toInt() ??
           GameRoom.defaultSecondsPerQuestion,
+      entryFee: (row['entry_fee'] as num?)?.toInt() ?? 0,
       hostId: row['host_id'] as String?,
     );
   }
@@ -1361,10 +1458,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // okuyor — aynı deseni burada da kullan.
       final ids = await loadBlockedPlayerIds();
       if (ids.isEmpty) return const [];
-      final profiles = await client
-          .from('profiles')
-          .select('id, display_name, player_tag')
-          .inFilter('id', ids.toList());
+      final profiles = await _fetchPublicProfiles(ids.toList());
       final byId = {for (final p in profiles) p['id'] as String: p};
       return ids.map((id) {
         final profile = byId[id];
@@ -1430,12 +1524,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
           if (missingProfileIds.isNotEmpty) {
             try {
-              final profiles = await client
-                  .from('profiles')
-                  .select(
-                    'id, display_name, avatar_icon, avatar_color, avatar_url, avatar_frame, showcase_title',
-                  )
-                  .inFilter('id', missingProfileIds);
+              final profiles = await _fetchPublicProfiles(missingProfileIds);
               for (final p in profiles) {
                 final id = p['id'] as String;
                 _profileCache[id] = p;
@@ -1577,6 +1666,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  /// Sunucu `question_reports.reason` için 500 karakter üst sınırı koyar
+  /// (2026-10-02_report_hardening.sql); sınırı aşan serbest metin reddedilmek
+  /// yerine burada kırpılır.
+  static String _clampReportReason(String reason) {
+    final trimmed = reason.trim();
+    if (trimmed.isEmpty) return 'Kontrol edilmeli';
+    return trimmed.length > 500 ? trimmed.substring(0, 500) : trimmed;
+  }
+
   @override
   Future<void> reportQuestion(QuizQuestion question, String reason) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
@@ -1584,7 +1682,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     await client.from('question_reports').insert({
       'question_id': question.id,
       'reporter_id': user.id,
-      'reason': reason.trim().isEmpty ? 'Kontrol edilmeli' : reason.trim(),
+      'reason': _clampReportReason(reason),
     });
 
     // Editör kuyruğuna giden sayaç, eski rapor tablosuyla birlikte tutulur.
@@ -1629,9 +1727,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // (favorite_questions_screen.dart).
       if (unresolvedIds.isNotEmpty) {
         try {
-          final resolved = await _resolveServerFavoriteQuestions(
-            unresolvedIds,
-          );
+          final resolved = await _resolveServerFavoriteQuestions(unresolvedIds);
           byId.addAll(resolved);
         } catch (error, stack) {
           _recordError(
@@ -1684,7 +1780,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
 
     return {
       for (final row in rows)
-        row['id'] as String: _roomQuestionFromRow({
+        row['id'] as String: QuizQuestion.fromServerRow({
           ...row,
           'category_name': categoryNames[row['category_id']] ?? 'Ziman',
         }),
@@ -1933,24 +2029,122 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  static final _lessonUuid = RegExp(
+    r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$',
+  );
+
+  @override
+  bool get xpAwardIsServerTotal => true;
+
+  @override
+  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey) async {
+    final key = idempotencyKey.trim();
+    if (key.isEmpty) {
+      final total = await awardXp(delta);
+      return ServerXpWrite(total: total, retryable: false);
+    }
+    try {
+      final response = await client.rpc<dynamic>(
+        'award_xp_delta_once',
+        params: {'p_delta': delta, 'p_idempotency_key': key},
+      );
+      if (response is int) {
+        return ServerXpWrite(total: response, retryable: true);
+      }
+      if (response is num) {
+        return ServerXpWrite(total: response.toInt(), retryable: true);
+      }
+      throw StateError('award_xp_delta_once returned an unreadable total.');
+    } on PostgrestException catch (error, stack) {
+      if (_isMissingFunction(error)) {
+        final total = await awardXp(delta);
+        return ServerXpWrite(total: total, retryable: false);
+      }
+      _recordError(error, stack, reason: 'award_xp_delta_once failed');
+      throw RetryableWriteException(error);
+    } catch (error, stack) {
+      if (error is RetryableWriteException) rethrow;
+      _recordError(error, stack, reason: 'award_xp_delta_once failed');
+      throw RetryableWriteException(error);
+    }
+  }
+
+  @override
+  Future<DurableCoinSpend> spendCoinsDurable(
+    int amount,
+    String reason,
+    String idempotencyKey,
+  ) async {
+    final key = idempotencyKey.trim();
+    if (key.isEmpty) {
+      return DurableCoinSpend(
+        success: await spendCoins(amount, reason),
+        retryable: false,
+      );
+    }
+    try {
+      final response = await client.rpc(
+        'spend_coins_once',
+        params: {
+          'p_amount': amount,
+          'p_reason': reason,
+          'p_idempotency_key': key,
+        },
+      );
+      return coinSpendFromRpc(response);
+    } on PostgrestException catch (error, stack) {
+      if (_isMissingFunction(error)) {
+        return DurableCoinSpend(
+          success: await spendCoins(amount, reason),
+          retryable: false,
+        );
+      }
+      _recordError(error, stack, reason: 'spend_coins_once failed');
+      throw RetryableWriteException(error);
+    } catch (error, stack) {
+      if (error is RetryableWriteException) rethrow;
+      _recordError(error, stack, reason: 'spend_coins_once failed');
+      throw RetryableWriteException(error);
+    }
+  }
+
+  @override
+  Future<int?> loadServerXp() async {
+    try {
+      final user = client.auth.currentUser;
+      if (user == null) return null;
+      final profile = await client
+          .from('profiles')
+          .select('xp')
+          .eq('id', user.id)
+          .maybeSingle();
+      if (profile == null) return null;
+      return (profile['xp'] as num?)?.toInt() ?? 0;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'loadServerXp failed');
+      return null;
+    }
+  }
+
   @override
   Future<int> awardXp(int delta) async {
     if (delta <= 0) return 0;
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
       await ensureProfile();
-      if (currentUserId?.trim() != user.id) return 0;
+      if (currentUserId?.trim() != user.id) {
+        throw StateError('XP award user changed before the write.');
+      }
       final response = await client.rpc<dynamic>(
         'award_xp_delta',
         params: {'p_delta': delta},
       );
       if (response is int) return response;
       if (response is num) return response.toInt();
-      return 0;
+      throw StateError('award_xp_delta returned an unreadable total.');
     } on PostgrestException catch (error, stack) {
-      // Göç uygulanmamışsa fonksiyon yoktur (42883). Bu bir arıza değil:
-      // XP'nin cihazdaki hâli zaten yazıldı, sunucu tarafı sessizce
-      // beklemeye devam eder.
+      // Göç uygulanmamışsa fonksiyon yoktur (42883). Kuyruk bunu kalıcı
+      // düşürür; 0 dönmek sunucu toplamı sanılıp çubuğu siler.
       _recordError(
         error,
         stack,
@@ -1958,17 +2152,74 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             ? 'award_xp_delta missing — migration not applied yet'
             : 'award_xp_delta failed',
       );
-      return 0;
+      rethrow;
     } catch (error, stack) {
-      // Ödül yolu OYUNCUYU BEKLETMEZ ve turu düşürmez: sunucuya XP
-      // yazılamaması, tamamlanmış bir turu geçersiz kılmaz.
       _recordError(error, stack, reason: 'award_xp_delta failed');
-      return 0;
+      rethrow;
+    }
+  }
+
+  @override
+  Future<int> awardRoomXp(String roomId) async {
+    final id = roomId.trim();
+    if (id.isEmpty) return 0;
+    try {
+      final user = client.auth.currentUser ?? await signInAnonymously();
+      await ensureProfile();
+      if (currentUserId?.trim() != user.id) {
+        throw StateError('Room XP award user changed before the write.');
+      }
+      final response = await client.rpc<dynamic>(
+        'award_room_xp',
+        params: {'p_room_id': id},
+      );
+      if (response is int) return response;
+      if (response is num) return response.toInt();
+      throw StateError('award_room_xp returned an unreadable total.');
+    } on PostgrestException catch (error, stack) {
+      _recordError(
+        error,
+        stack,
+        reason: error.code == '42883'
+            ? 'award_room_xp missing — migration not applied yet'
+            : 'award_room_xp failed',
+      );
+      rethrow;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'award_room_xp failed');
+      rethrow;
     }
   }
 
   void _recordError(Object error, StackTrace stack, {String? reason}) {
     ErrorReporter.record(error, stack, reason: reason);
+  }
+
+  Future<List<Map<String, dynamic>>> _fetchPublicProfiles(
+    List<String> ids,
+  ) async {
+    if (ids.isEmpty) return const [];
+    try {
+      final response = await client.rpc(
+        'get_public_profiles',
+        params: {'p_ids': ids},
+      );
+      if (response is List) {
+        return response.whereType<Map<String, dynamic>>().toList();
+      }
+      return const [];
+    } on PostgrestException catch (error, stack) {
+      if (error.code != '42883') {
+        _recordError(error, stack, reason: 'get_public_profiles failed');
+        rethrow;
+      }
+      return await client
+          .from('profiles')
+          .select(
+            'id, display_name, player_tag, avatar_icon, avatar_color, avatar_url, avatar_frame, showcase_title',
+          )
+          .inFilter('id', ids);
+    }
   }
 
   int? _amountFromRpcResponse(Object? response) {
@@ -2149,32 +2400,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }).toList();
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadLeaderboard RPC failed');
-      // RPC henüz kurulu değilse all-time view'a geri dön
-      try {
-        final rows = await client
-            .from('leaderboard_entries')
-            .select(
-              'player_id, display_name, total_score, best_streak, rooms_played',
-            )
-            .order('total_score', ascending: false)
-            .order('best_streak', ascending: false)
-            .limit(limit);
-        return rows.indexed.map((item) {
-          final index = item.$1;
-          final row = item.$2;
-          return LeaderboardEntry(
-            rank: index + 1,
-            playerId: row['player_id'] as String? ?? '',
-            displayName: row['display_name'] as String? ?? 'Oyuncu',
-            totalScore: row['total_score'] as int? ?? 0,
-            bestStreak: row['best_streak'] as int? ?? 0,
-            roomsPlayed: row['rooms_played'] as int? ?? 0,
-          );
-        }).toList();
-      } catch (error, stack) {
-        _recordError(error, stack, reason: 'loadLeaderboard failed');
-        return const [];
-      }
+      // Eski leaderboard_entries görünümü profiles.xp'ye dayanabilir ve
+      // geçmişte istemci deltasından etkilenmiş olabilir. Yetkili RPC
+      // okunamıyorsa güvenilir olmayan rekabetçi puanı göstermeyiz.
+      return const [];
     }
   }
 
@@ -2212,35 +2441,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         showcaseTitle: profile?['showcase_title'] as String?,
       );
     }).toList();
-  }
-
-  QuizQuestion _roomQuestionFromRow(Map<String, dynamic> row) {
-    final answers = <String>[
-      row['option_a'] as String? ?? '',
-      row['option_b'] as String? ?? '',
-      row['option_c'] as String? ?? '',
-      row['option_d'] as String? ?? '',
-    ].where((answer) => answer.trim().isNotEmpty && answer != '-').toList();
-
-    return QuizQuestion(
-      id: row['id'] as String,
-      category: row['category_name'] as String? ?? 'Ziman',
-      prompt: row['prompt'] as String,
-      answers: answers,
-      correctAnswer: '',
-      explanation: '',
-      type: _questionTypeFromRow(row),
-      imageUrl: row['image_url'] as String?,
-      difficulty: row['difficulty'] as int? ?? 2,
-    );
-  }
-
-  QuestionType _questionTypeFromRow(Map<String, dynamic> row) {
-    try {
-      return questionTypeFromStorage(row['question_type']);
-    } on ArgumentError {
-      return QuestionType.multipleChoice;
-    }
   }
 
   @override
@@ -2436,12 +2636,32 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  Future<String?> _canonicalLessonId(String lessonId) async {
+    final id = lessonId.trim();
+    if (id.isEmpty) return null;
+    if (_lessonUuid.hasMatch(id)) return id;
+    try {
+      final row = await client
+          .from('lessons')
+          .select('id')
+          .eq('slug', id)
+          .maybeSingle();
+      final resolved = row?['id'];
+      if (resolved is String && _lessonUuid.hasMatch(resolved)) return resolved;
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'lesson slug lookup failed');
+    }
+    return null;
+  }
+
   @override
   Future<bool> markLessonCompleted(String lessonId) async {
     try {
+      final canonicalId = await _canonicalLessonId(lessonId);
+      if (canonicalId == null) return false;
       await client.rpc(
         'mark_lesson_completed',
-        params: {'p_lesson_id': lessonId},
+        params: {'p_lesson_id': canonicalId},
       );
       return true;
     } catch (e, s) {
@@ -2502,6 +2722,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // metinleri vardı ama hiç görünmüyordu, çünkü depo hep true
       // dönüyordu (2026-08-02 denetimi).
       return false;
+    }
+  }
+
+  @override
+  Future<void> setFcmToken(String token) async {
+    try {
+      await client.rpc<void>('set_fcm_token', params: {'p_token': token});
+    } catch (e, s) {
+      _recordError(e, s, reason: 'setFcmToken failed');
     }
   }
 
@@ -2662,7 +2891,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e, s) {
       _recordError(e, s, reason: 'syncMissionCompletion failed');
-      return _offline.syncMissionCompletion(missionKey, coinReward, xpReward);
+      return false;
     }
   }
 
@@ -2684,7 +2913,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return (_firstRow(response)?['success'] as bool?) ?? false;
     } catch (e, s) {
       _recordError(e, s, reason: 'logAnalyticsEvent failed');
-      return _offline.logAnalyticsEvent(eventName, params);
+      return false;
     }
   }
 
@@ -2869,7 +3098,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final bracket = await loadRealTournamentBracket();
     if (bracket == null) return _offline.loadTournamentStandings(limit: limit);
     final standings = _standingsFromBracket(bracket);
-    if (standings.isEmpty) return _offline.loadTournamentStandings(limit: limit);
+    if (standings.isEmpty) {
+      return _offline.loadTournamentStandings(limit: limit);
+    }
     return standings.take(limit).toList();
   }
 
@@ -2920,7 +3151,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }
     }
 
-    const statusWeight = {'champion': 0, 'finalist': 1, 'active': 2, 'eliminated': 3};
+    const statusWeight = {
+      'champion': 0,
+      'finalist': 1,
+      'active': 2,
+      'eliminated': 3,
+    };
     final ids = names.keys.toList()
       ..sort((a, b) {
         final byStatus = (statusWeight[status[a]] ?? 2).compareTo(
@@ -2952,17 +3188,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final response = await client.rpc<dynamic>('claim_tournament_reward');
       return _amountFromRpcResponse(response) ?? 0;
     } catch (e, s) {
-      // Göç uygulanmamışsa (`_isMissingFunction`) benzetime düşmek meşru.
-      // Başka her hatada (ağ, sunucu, 500) sahte depoya düşmek koşulsuz
-      // 500 coin uyduruyordu: kullanıcı gerçek turnuvayı kazanıyor, RPC
-      // geçici bir hatayla düşüyor, ekran "+500 coin" gösteriyor ama
-      // `coin_transactions`ta hiçbir satır yok — bakiyeye hiçbir şey
-      // eklenmiyor. `tournament_screen.dart`ın bu durum için yazılmış
-      // dürüst `unverified` ("ödül henüz doğrulanmadı") durumu, depo
-      // istisnayı yutup pozitif sayı döndürdüğü için hiç devreye
-      // giremiyordu (2026-08-14 denetimi).
+      // Ödül yalnız sunucu tarafından doğrulanabilir. RPC eksik olsa bile
+      // mock depoya düşmek 500 coin uydurur ve ekranın dürüst `unverified`
+      // durumunu atlatır. Eksik fonksiyon ödül verilmedi anlamına gelir.
       if (_isMissingFunction(e)) {
-        return _offline.claimTournamentChampionReward();
+        _recordError(e, s, reason: 'claimTournamentChampionReward missing');
+        return 0;
       }
       _recordError(e, s, reason: 'claimTournamentChampionReward failed');
       rethrow;
@@ -3001,6 +3232,148 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     } catch (e, stack) {
       _recordError(e, stack, reason: 'submitSuggestedQuestion failed');
       return false;
+    }
+  }
+
+  @override
+  Future<ReferralResult> redeemReferralCode(String code) async {
+    final clean = code.trim().toUpperCase();
+    if (clean.isEmpty) {
+      return const ReferralResult(
+        status: ReferralStatus.notFound,
+        message: 'Invalid code',
+      );
+    }
+    try {
+      final response = await client.rpc(
+        'redeem_referral_code',
+        params: {'p_code': clean},
+      );
+      if (response is Map<String, dynamic>) {
+        final result = ReferralResult.fromMap(response);
+        if (result.isSuccess) {
+          unawaited(loadCoinBalance());
+        }
+        return result;
+      }
+      return const ReferralResult(
+        status: ReferralStatus.networkError,
+        message: 'Unexpected response format',
+      );
+    } catch (e, stack) {
+      _recordError(e, stack, reason: 'redeemReferralCode failed');
+      final msg = e.toString();
+      if (msg.contains('own_code') || msg.contains('Cannot use own code')) {
+        return const ReferralResult(status: ReferralStatus.ownCode);
+      }
+      if (msg.contains('already_redeemed') || msg.contains('already used')) {
+        return const ReferralResult(status: ReferralStatus.alreadyRedeemed);
+      }
+      if (msg.contains('code_not_found') ||
+          msg.contains('Invalid referral code')) {
+        return const ReferralResult(status: ReferralStatus.notFound);
+      }
+      return const ReferralResult(status: ReferralStatus.networkError);
+    }
+  }
+
+  // ─── Sırayla düello (async 1v1) ──────────────────────────────────────
+  //
+  // Rakibin aynı anda çevrimiçi olmasını gerektirmeyen 1v1: oyuncu 7 soruyu
+  // hemen oynar, rakip (varsa açık bir düello alarak, yoksa sonradan
+  // katılarak) kendi zamanında oynar. Sözleşme `sirayla_duello_tasarim.md`de
+  // sabittir; burası yalnız RPC çağrısı + JSON ayrıştırmadır, iş kuralları
+  // (kazanan, XP, süre) sunucudadır.
+
+  @override
+  Future<AsyncDuelStart> startAsyncDuel({String? category}) async {
+    try {
+      if (client.auth.currentUser == null) {
+        await signInAnonymously();
+      }
+      await ensureProfile();
+      final response = await client.rpc(
+        'start_async_duel',
+        params: {'p_category': category},
+      );
+      return AsyncDuelStart.fromJson(
+        _requiredJsonObject(response, 'start_async_duel'),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'startAsyncDuel failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AsyncDuelAnswer> answerAsyncDuel({
+    required String duelId,
+    required int questionIndex,
+    required String choice,
+    required int responseMs,
+  }) async {
+    try {
+      final response = await client.rpc(
+        'answer_async_duel',
+        params: {
+          'p_duel_id': duelId,
+          'p_question_index': questionIndex,
+          'p_choice': choice,
+          'p_response_ms': responseMs,
+        },
+      );
+      return AsyncDuelAnswer.fromJson(
+        _requiredJsonObject(response, 'answer_async_duel'),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'answerAsyncDuel failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<AsyncDuelSummary>> loadMyAsyncDuels() async {
+    try {
+      final response = await client.rpc<List<dynamic>>('list_my_async_duels');
+      return response
+          .map(
+            (row) => AsyncDuelSummary.fromJson(
+              Map<String, dynamic>.from(row as Map),
+            ),
+          )
+          .toList();
+    } catch (error, stack) {
+      // Boş listeye düşülmez: "hiç düellon yok" demek, rakibini bekleyen ya
+      // da sonucu hazır bir düelloyu oyuncudan gizlemek olurdu. Ekran hatayı
+      // "yeniden dene" olarak gösterir.
+      _recordError(error, stack, reason: 'loadMyAsyncDuels failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> markAsyncDuelSeen(String duelId) async {
+    try {
+      await client.rpc('mark_async_duel_seen', params: {'p_duel_id': duelId});
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'markAsyncDuelSeen failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<int> claimAsyncDuelXp(String duelId) async {
+    try {
+      final response = await client.rpc<dynamic>(
+        'claim_async_duel_xp',
+        params: {'p_duel_id': duelId},
+      );
+      if (response is int) return response;
+      if (response is num) return response.toInt();
+      throw StateError('claim_async_duel_xp returned an unreadable total.');
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'claimAsyncDuelXp failed');
+      rethrow;
     }
   }
 }

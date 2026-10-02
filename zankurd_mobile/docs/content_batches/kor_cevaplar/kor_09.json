@@ -1,0 +1,578 @@
+[
+  {
+    "id": "sf_cin_0052",
+    "cevap": "Elem Klimov"
+  },
+  {
+    "id": "sf_cin_0053",
+    "cevap": "Abbas Kiarostami"
+  },
+  {
+    "id": "sf_cin_0054",
+    "cevap": "Îran"
+  },
+  {
+    "id": "sf_geo_0001",
+    "cevap": "Çar"
+  },
+  {
+    "id": "sf_geo_0002",
+    "cevap": "Okyanûsa Başûr"
+  },
+  {
+    "id": "sf_geo_0003",
+    "cevap": "2000"
+  },
+  {
+    "id": "sf_geo_0004",
+    "cevap": "Tenê yek okyanûsa gerdûnî"
+  },
+  {
+    "id": "sf_nat_0002",
+    "cevap": "Şor e"
+  },
+  {
+    "id": "sf_nat_0003",
+    "cevap": "Hilmê"
+  },
+  {
+    "id": "sf_nat_0004",
+    "cevap": "Ji ava di hewayê de"
+  },
+  {
+    "id": "sf_nat_0005",
+    "cevap": "Heşt"
+  },
+  {
+    "id": "sf_nat_0006",
+    "cevap": "Jupiter"
+  },
+  {
+    "id": "sf_nat_0007",
+    "cevap": "Venus"
+  },
+  {
+    "id": "sf_nat_0008",
+    "cevap": "4.6 milyar"
+  },
+  {
+    "id": "sf_nat_0009",
+    "cevap": "365.25 roj"
+  },
+  {
+    "id": "sf_nat_0010",
+    "cevap": "23.9 saet"
+  },
+  {
+    "id": "sf_nat_0011",
+    "cevap": "Yek"
+  },
+  {
+    "id": "sf_nat_0012",
+    "cevap": "Ji sedî 71"
+  },
+  {
+    "id": "sf_nat_0013",
+    "cevap": "Ji sedî 21"
+  },
+  {
+    "id": "sf_nat_0014",
+    "cevap": "Nîtrojen"
+  },
+  {
+    "id": "sf_nat_0015",
+    "cevap": "Ji sedî 96.5"
+  },
+  {
+    "id": "sf_nat_0016",
+    "cevap": "Di qeşa û cemedan de"
+  },
+  {
+    "id": "sf_nat_0017",
+    "cevap": "384.400 km"
+  },
+  {
+    "id": "sf_nat_0018",
+    "cevap": "27 roj"
+  },
+  {
+    "id": "sf_nat_0019",
+    "cevap": "Challenger Deep"
+  },
+  {
+    "id": "sf_nat_0020",
+    "cevap": "Ji navê keştiyekê"
+  },
+  {
+    "id": "sf_tech_0007",
+    "cevap": "Uniform Resource Locator"
+  },
+  {
+    "id": "sf_tech_0008",
+    "cevap": "Navnîşana çavkaniyekê"
+  },
+  {
+    "id": "sf_tech_0010",
+    "cevap": "Daxwaz hat qebûlkirin"
+  },
+  {
+    "id": "sf_tech_0012",
+    "cevap": "Na, êdî mecbûr nayên pêşniyarkirin"
+  },
+  {
+    "id": "sf_tech_0013",
+    "cevap": "Rêzek ji çend peyvên cuda yên bi hev ve girêdayî"
+  },
+  {
+    "id": "sf_tech_0014",
+    "cevap": "Ji ber ku şikandina yek hesabî dikare hesabên din jî bixe xetereyê"
+  },
+  {
+    "id": "visual_2026_08_07_0001",
+    "cevap": "Bi tenê dengê mirov, bê amûr"
+  },
+  {
+    "id": "visual_2026_08_07_0002",
+    "cevap": "Bi xêr hatî"
+  },
+  {
+    "id": "visual_2026_08_07_0003",
+    "cevap": "şûtik"
+  },
+  {
+    "id": "visual_2026_08_07_0004",
+    "cevap": "Ew di dema bûyerê de hatine çêkirin"
+  },
+  {
+    "id": "visual_2026_08_07_0005",
+    "cevap": "Ji bo civakên ku bîra wan neketiye arşîvan"
+  },
+  {
+    "id": "visual_2026_08_07_0006",
+    "cevap": "Kîjan bûyer berî ya din qewimiye"
+  },
+  {
+    "id": "visual_2026_08_07_0007",
+    "cevap": "Ji yên jorîn kevntir in"
+  },
+  {
+    "id": "visual_2026_08_07_0008",
+    "cevap": "Vegera demsalî ya bo heman cihî çênabe"
+  },
+  {
+    "id": "visual_2026_08_07_0009",
+    "cevap": "Destpêkirina çandinî û hilanîna genim"
+  },
+  {
+    "id": "visual_2026_08_07_0010",
+    "cevap": "Peyvên nû ji hev tên girtin û bi kar tên"
+  },
+  {
+    "id": "visual_2026_08_07_0011",
+    "cevap": "Bi rêzik û bendan"
+  },
+  {
+    "id": "visual_2026_08_07_0012",
+    "cevap": "Beş"
+  },
+  {
+    "id": "visual_2026_08_07_0013",
+    "cevap": "Qafiye"
+  },
+  {
+    "id": "visual_2026_08_07_0014",
+    "cevap": "Vebêj"
+  },
+  {
+    "id": "visual_2026_08_07_0015",
+    "cevap": "Erozyon"
+  },
+  {
+    "id": "visual_2026_08_07_0016",
+    "cevap": "Bi her lêdanê re dengekî zingînî derdixin"
+  },
+  {
+    "id": "visual_2026_08_07_0017",
+    "cevap": "Bi tilî û pelkên herdu destan"
+  },
+  {
+    "id": "visual_2026_08_07_0018",
+    "cevap": "Têlên wê bi tilî an bi mizrabê tên kişandin"
+  },
+  {
+    "id": "visual_2026_08_07_0019",
+    "cevap": "Pênc xêz"
+  },
+  {
+    "id": "visual_2026_08_07_0020",
+    "cevap": "Harmonî"
+  },
+  {
+    "id": "restore_2026_08_07_0001",
+    "cevap": "şabaş"
+  },
+  {
+    "id": "restore_2026_08_07_0002",
+    "cevap": "kelaş"
+  },
+  {
+    "id": "restore_2026_08_07_0003",
+    "cevap": "metelok"
+  },
+  {
+    "id": "restore_2026_08_07_0004",
+    "cevap": "reşmal"
+  },
+  {
+    "id": "restore_2026_08_07_0005",
+    "cevap": "Qahîre"
+  },
+  {
+    "id": "restore_2026_08_07_0006",
+    "cevap": "Şerefxanê Bidlîsî"
+  },
+  {
+    "id": "restore_2026_08_07_0007",
+    "cevap": "Bakurê Kurdistanê"
+  },
+  {
+    "id": "restore_2026_08_07_0008",
+    "cevap": "axa bazaltî ya berdar"
+  },
+  {
+    "id": "restore_2026_08_07_0009",
+    "cevap": "dahol"
+  },
+  {
+    "id": "restore_2026_08_07_0010",
+    "cevap": "zurna"
+  },
+  {
+    "id": "restore_2026_08_07_0011",
+    "cevap": "kilam"
+  },
+  {
+    "id": "restore_2026_08_07_0012",
+    "cevap": "Kilam çîrokê vedibêje, stranên govendê rîtmî ne"
+  },
+  {
+    "id": "restore_2026_08_07_0013",
+    "cevap": "bilûr"
+  },
+  {
+    "id": "restore_2026_08_07_0014",
+    "cevap": "Bakurê Kurdistanê"
+  },
+  {
+    "id": "restore_2026_08_07_0015",
+    "cevap": "Bakurê Kurdistanê"
+  },
+  {
+    "id": "ds_cografya_0247",
+    "cevap": "Şetulereb - Kendava Farsê"
+  },
+  {
+    "id": "ds_cografya_0248",
+    "cevap": "Hêzar gola tektonîk e, Nemrûd gola kalderayê ya volkanîk e"
+  },
+  {
+    "id": "ds_cografya_0249",
+    "cevap": "Herka Nemrûdê pêşiya newala Mûşê girtiye û hewzeya wê girtî maye"
+  },
+  {
+    "id": "ds_cografya_0250",
+    "cevap": "Bilindahiya zêde ya li ser xeta berfê ya herdemî"
+  },
+  {
+    "id": "ds_cografya_0251",
+    "cevap": "Cudahiya bilindahî û germahiya giştî ya salane"
+  },
+  {
+    "id": "ds_cografya_0252",
+    "cevap": "Deryaya Qezwînê (Xezer)"
+  },
+  {
+    "id": "ds_cografya_0253",
+    "cevap": "Ji bo parastina hêsan a leşkerî û nêzîkbûna çavkaniya avê"
+  },
+  {
+    "id": "ds_cografya_0254",
+    "cevap": "Girava Gronlandê û herêmên cemserî"
+  },
+  {
+    "id": "ds_cografya_0255",
+    "cevap": "Ji bo nîşandana rûberên rasteqîn ên parzemînên Afrîka û Başûr"
+  },
+  {
+    "id": "ds_cografya_0256",
+    "cevap": "Arîtmetîk li gorî tevahiya rûberê ye, fîzyolojîk li gorî qada çandiniyê ye"
+  },
+  {
+    "id": "ds_cografya_0257",
+    "cevap": "Xwedî xwarbûna (meyl) zêde û geliyên teng ên kûr ên Zagrosê ye"
+  },
+  {
+    "id": "ds_cografya_0258",
+    "cevap": "Li herêma Qereyazî û Gola Wanê"
+  },
+  {
+    "id": "ds_cografya_0259",
+    "cevap": "Li nêzî Zaxo û Pêşxabûrê"
+  },
+  {
+    "id": "ds_cografya_0260",
+    "cevap": "Rêzeçiyayên bilind rê li ber hilma deryayê digirin"
+  },
+  {
+    "id": "ds_cografya_0261",
+    "cevap": "Li ser quntarên ku berê wan li bayê bi şilî ye"
+  },
+  {
+    "id": "ds_cografya_0262",
+    "cevap": "Evaporasyona (hilkişîna avê) zêde ya havînê û kêmbûna şiliyê"
+  },
+  {
+    "id": "ds_cografya_0263",
+    "cevap": "Ji bo rawestandina erozyona axê û ragirtina ava baranê"
+  },
+  {
+    "id": "ds_cografya_0264",
+    "cevap": "Rewşa hewayê ya demkurt e, avhewa navîniya demdirêj e"
+  },
+  {
+    "id": "ds_cografya_0265",
+    "cevap": "Helîna kîmyewî ya kevirên kilsî (karstîk)"
+  },
+  {
+    "id": "ds_cografya_0266",
+    "cevap": "Avakirina bendavên zêde li ser çemên wê û çandiniya bêserûber"
+  },
+  {
+    "id": "ds_cografya_0267",
+    "cevap": "Di biharê û destpêka havînê de"
+  },
+  {
+    "id": "ds_cografya_0268",
+    "cevap": "Bilindahiya zêde û dirêjbûna dema sermaya zivistanê"
+  },
+  {
+    "id": "ds_cografya_0269",
+    "cevap": "Germahiyê zêde dike û hewayê hişk dike"
+  },
+  {
+    "id": "ds_cografya_0270",
+    "cevap": "Bilindbûna tektonîk û xurtiya kolandina avê ya li ser kevirên kilsî"
+  },
+  {
+    "id": "ds_cografya_0271",
+    "cevap": "Mila herî dirêj e û xwedî qada hewzeya herî berfireh e"
+  },
+  {
+    "id": "ds_cografya_0272",
+    "cevap": "Di kûraniyên mezin ên şikestekên plakayan de enerjiyeke mezin dertê"
+  },
+  {
+    "id": "ds_cografya_0273",
+    "cevap": "Germbûna lezgîn a rûyê erdê û bilindbûna konveksîyonî ya hewayê"
+  },
+  {
+    "id": "ds_cografya_0274",
+    "cevap": "Genim, ceh û nîsk"
+  },
+  {
+    "id": "ds_cografya_0275",
+    "cevap": "Hewaya hênik, çavkaniyên avê û giyayên hêşîn ên çêrgehan"
+  },
+  {
+    "id": "ds_cografya_0276",
+    "cevap": "Bendera Deryaya Reş bi herêmên hundir û Rêya Hevrîşimê ve girêdidin"
+  },
+  {
+    "id": "ds_cografya_0277",
+    "cevap": "Urmiye xwedî ava şor a klorûrî ye, Wan xwedî ava sodavî ya karbonatî ye"
+  },
+  {
+    "id": "ds_cografya_0278",
+    "cevap": "Li başûrê Bexdayê tevlî Çemê Dîcleyê dibe"
+  },
+  {
+    "id": "ds_cografya_0279",
+    "cevap": "Daketina blokên erdê di navbera xetên şikestekan de (graben)"
+  },
+  {
+    "id": "ds_cografya_0280",
+    "cevap": "Axa bi bereket (aluvyon) li pişt bendavan digirin û xwarê xizan dikin"
+  },
+  {
+    "id": "ds_cografya_0281",
+    "cevap": "Kilsên nerm ên kilsî û kevirên xîçî yên hewzeyê"
+  },
+  {
+    "id": "ds_cografya_0282",
+    "cevap": "Parastina ji lehiyê, nêzîkbûna çavkaniyên avê û parastina zeviyên çandiniyê"
+  },
+  {
+    "id": "ds_cografya_0283",
+    "cevap": "Hêlîlarên navîn (orta enlemler)"
+  },
+  {
+    "id": "ds_cografya_0284",
+    "cevap": "Ji hesin, magnezyum û mîneralên volkanîk gelekî dewlemend e"
+  },
+  {
+    "id": "ds_cografya_0285",
+    "cevap": "Zexta Plakaya Erebistanê ya li ser Plakaya Ewrasyayê"
+  },
+  {
+    "id": "ds_cografya_0286",
+    "cevap": "Darên pelweşîn (berû) -> darên derzîkî -> çêrgehên alpîn"
+  },
+  {
+    "id": "ds_cografya_0287",
+    "cevap": "Kewbûna sermayê, barîna berfa giran û xitîbûna çêrgehan"
+  },
+  {
+    "id": "ds_cand_1179",
+    "cevap": "Guhertina cihê ajalan a li gorî demsal û çêrgehan"
+  },
+  {
+    "id": "ds_cand_1180",
+    "cevap": "Jina ku diçe dotina pez û çêkirina berhemên şîr"
+  },
+  {
+    "id": "ds_cand_1181",
+    "cevap": "Ji mûyê bizina tiftîkê (maraz) ku havînê hênik û zivistanê germ digire"
+  },
+  {
+    "id": "ds_cand_1182",
+    "cevap": "Kirasê jêrîn ê mil-dirêj (lewendî) û fîstanê rengîn ê qedîfe li ser"
+  },
+  {
+    "id": "ds_cand_1183",
+    "cevap": "Bereketa sirûştê, kulîlkên biharê û hezkirina malbatê"
+  },
+  {
+    "id": "ds_cand_1184",
+    "cevap": "Sêl sivik e, hêsan tê veguhastin û zû tê pijandin"
+  },
+  {
+    "id": "ds_cand_1185",
+    "cevap": "Li herêma Riha û Amedê"
+  },
+  {
+    "id": "ds_cand_1186",
+    "cevap": "Parvekirina xemgîniya komî û bîranîna qenciyên mirî"
+  },
+  {
+    "id": "ds_cand_1187",
+    "cevap": "Berbûk (şandeya bûkê)"
+  },
+  {
+    "id": "ds_cand_1188",
+    "cevap": "Giranî bi gavên giran û seknekê ye, Şêxanî bileztir û bi livdar e"
+  },
+  {
+    "id": "ds_cand_1189",
+    "cevap": "Çarşema Sor (Çarşema Serê Nîsanê)"
+  },
+  {
+    "id": "ds_cand_1190",
+    "cevap": "Tembûr (Tembûra Yarsan)"
+  },
+  {
+    "id": "ds_cand_1191",
+    "cevap": "Kaniyên avê, darên kevnar, teht û gorekên pîroz ên sirûştê"
+  },
+  {
+    "id": "ds_cand_1192",
+    "cevap": "Veguhastina destan, çîrok û bîra dîrokî ya ji nifşekî bo nifşê din"
+  },
+  {
+    "id": "ds_cand_1193",
+    "cevap": "Komkirina xwarin û xelatan ji bo alîkariya malbatên hejar"
+  },
+  {
+    "id": "ds_cand_1194",
+    "cevap": "Sergovend (serkêş)"
+  },
+  {
+    "id": "ds_cand_1195",
+    "cevap": "Ji bo havênbûna hênik, hevgirtina bîhnê û negirtina hewayê"
+  },
+  {
+    "id": "ds_cand_1196",
+    "cevap": "Di navbera malbatên cuda de pêwendiyeke xurt a xizmantiya rûhî ava dike"
+  },
+  {
+    "id": "ds_cand_1197",
+    "cevap": "Dirûna zeviyan, çêkirina xaniyan û berhevkirina berheman"
+  },
+  {
+    "id": "ds_cand_1198",
+    "cevap": "Zanistên olî û felsefî li gel ziman û edebiyata kurdî bi hev re dihatin xwendin"
+  },
+  {
+    "id": "ds_cand_1199",
+    "cevap": "Li Midyadê (Mêrdîn)"
+  },
+  {
+    "id": "ds_cand_1200",
+    "cevap": "Hokeya ser axê an golfê"
+  },
+  {
+    "id": "ds_cand_1201",
+    "cevap": "Ji bo paqijkirina birînan, kuxikê û zêdekirina aramiya laş"
+  },
+  {
+    "id": "ds_cand_1202",
+    "cevap": "Pêşwazîkirina zindîbûna sirûştê û xurtkirina têkiliyên hevaltiyê"
+  },
+  {
+    "id": "ds_cand_1203",
+    "cevap": "Heft sirên pîroz ên rêveberiya gerdûnê û afirandinê"
+  },
+  {
+    "id": "ds_cand_1204",
+    "cevap": "Di baranê de mû diwerime û avê bernade, di germê de jî hewayê derbas dike"
+  },
+  {
+    "id": "ds_cand_1205",
+    "cevap": "Li gorî temen, zanîn, mêvanperwerî û rûmeta kesayetiyê"
+  },
+  {
+    "id": "ds_cand_1206",
+    "cevap": "Hem ji baran û sermayê diparêze hem jî wekî doşek û nivîn tê bikaranîn"
+  },
+  {
+    "id": "ds_cand_1207",
+    "cevap": "Mirovê ku bi yekî re xwarin xwariye divê ti carî îxanetê lê neke"
+  },
+  {
+    "id": "ds_edebiyat_0244",
+    "cevap": "Xanî çîroka gelêrî veguherandiye mesnewiyeke felsefî, tesewufî û nasnameyî"
+  },
+  {
+    "id": "ds_edebiyat_0245",
+    "cevap": "Evîna heqîqî (îlahî), gerdûn û sirên nûra heqîqetê"
+  },
+  {
+    "id": "ds_edebiyat_0246",
+    "cevap": "Hawar bi alfabeya latînî derket, Rêya Teze bi kîrîlî ya wê serdemê"
+  },
+  {
+    "id": "ds_edebiyat_0247",
+    "cevap": "Yekem romana nûjen a kurdî ye ku bi zimanê kurmancî hatiye çapkirin"
+  },
+  {
+    "id": "ds_edebiyat_0248",
+    "cevap": "Zimanê helbestê ji qalibên giran ên erûzê ber bi zimanê gel û têkoşîna civakî ve bir"
+  },
+  {
+    "id": "ds_edebiyat_0249",
+    "cevap": "Metnên devkî yên Kurmancî, Zazakî û Soranî yên wê serdemê bi awayekî nivîskî tomar kirin"
+  },
+  {
+    "id": "ds_edebiyat_0250",
+    "cevap": "Bîra dîrokî û çanda devkî bi zimanekî nûjen û estetîk kire bingeha romana kurdî"
+  }
+]

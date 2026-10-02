@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-07-23 canlı UX denetimi M18: misafir hesabını Google ile bağlama.
 // signInWithGoogle() anonim oturumu değiştiriyordu (ilerleme kaybı riski);
 // linkGoogleAccount() Supabase'in linkIdentity PKCE akışını kullanarak
@@ -93,7 +94,7 @@ Future<void> _openGuestUpgradeDialog(
   WidgetTester tester, {
   bool isKu = false,
 }) async {
-  final label = isKu ? 'Hesabê Xwe Tomar Bike' : 'Hesabını Kaydet';
+  final label = isKu ? 'Hesabê xwe tomar bike' : 'Hesabını kaydet';
   final scrollFinder = find.byType(Scrollable).first;
   final ctaFinder = find.text(label);
   await tester.scrollUntilVisible(ctaFinder, 200, scrollable: scrollFinder);
@@ -106,7 +107,7 @@ void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   group('GuestGoogleLink — buton görünürlüğü', () {
-    testWidgets('misafir yükseltme dialog\'unda "Google ile Bağla" görünür', (
+    testWidgets('misafir yükseltme dialog\'unda "Google ile bağla" görünür', (
       tester,
     ) async {
       final guestAuth = _GuestAuthProviderWithGoogleLink();
@@ -119,7 +120,7 @@ void main() {
       await tester.pumpAndSettle();
       await _openGuestUpgradeDialog(tester);
 
-      expect(find.text('Google ile Bağla'), findsOneWidget);
+      expect(find.text('Google ile bağla'), findsOneWidget);
     });
 
     testWidgets('iOS misafir yükseltmesinde sosyal hesap seçeneği görünmez', (
@@ -138,7 +139,7 @@ void main() {
       await _openGuestUpgradeDialog(tester);
       debugDefaultTargetPlatformOverride = null;
 
-      expect(find.text('Google ile Bağla'), findsNothing);
+      expect(find.text('Google ile bağla'), findsNothing);
       expect(find.text('E-posta'), findsWidgets);
       expect(tester.takeException(), isNull);
     });
@@ -155,16 +156,16 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // "Hesabını Kaydet" satırı hiç yok, dolayısıyla "Google ile Bağla"
+      // "Hesabını kaydet" satırı hiç yok, dolayısıyla "Google ile bağla"
       // seçeneği de kalıcı kullanıcıya asla gösterilmez.
-      expect(find.text('Hesabını Kaydet'), findsNothing);
-      expect(find.text('Google ile Bağla'), findsNothing);
+      expect(find.text('Hesabını kaydet'), findsNothing);
+      expect(find.text('Google ile bağla'), findsNothing);
     });
   });
 
   group('GuestGoogleLink — başarı akışı', () {
     testWidgets(
-      '"Google ile Bağla" dokunulunca linkGoogleAccount() çağrılır ve dialog kapanır',
+      '"Google ile bağla" dokunulunca linkGoogleAccount() çağrılır ve dialog kapanır',
       (tester) async {
         final guestAuth = _GuestAuthProviderWithGoogleLink();
         await tester.pumpWidget(
@@ -176,7 +177,7 @@ void main() {
         await tester.pumpAndSettle();
         await _openGuestUpgradeDialog(tester);
 
-        await tester.tap(find.text('Google ile Bağla'));
+        await tester.tap(find.text('Google ile bağla'));
         await tester.pumpAndSettle();
 
         expect(guestAuth.googleLinkCalled, isTrue);
@@ -206,7 +207,7 @@ void main() {
       await tester.pumpAndSettle();
       await _openGuestUpgradeDialog(tester);
 
-      await tester.tap(find.text('Google ile Bağla'));
+      await tester.tap(find.text('Google ile bağla'));
       await tester.pumpAndSettle();
 
       expect(guestAuth.googleLinkCalled, isTrue);
@@ -216,44 +217,43 @@ void main() {
       );
     });
 
-    testWidgets(
-      'Kurmancî arayüzde Google bağlama hatası Kurmancîye çevrilir',
-      (tester) async {
-        // 2026-08-14 denetimi: `_linkGoogleAccount` hatayı
-        // `translateAuthError`dan geçirmeden basıyordu — Kurmancî
-        // kullanıcı sunucunun Türkçe metnini görüyordu. Hemen üstteki
-        // test (Türkçe arayüz) hâlâ ham Türkçe metni bekliyor —
-        // `translateAuthError` Türkçe arayüzde metni değiştirmeden
-        // döndürür, bu yüzden o test bu düzeltmeyle bozulmadı.
-        final guestAuth = _GuestAuthProviderWithGoogleLink(
-          googleLinkSucceeds: false,
-          googleErrorMessage: 'Bu Google hesabı zaten başka bir hesaba bağlı.',
-        );
-        await tester.pumpWidget(
-          _wrapWithProviders(
-            ProfileScreen(repository: MockZanKurdRepository()),
-            guestAuth,
-            isKu: true,
-          ),
-        );
-        await tester.pumpAndSettle();
-        await _openGuestUpgradeDialog(tester, isKu: true);
+    testWidgets('Kurmancî arayüzde Google bağlama hatası Kurmancîye çevrilir', (
+      tester,
+    ) async {
+      // 2026-08-14 denetimi: `_linkGoogleAccount` hatayı
+      // `translateAuthError`dan geçirmeden basıyordu — Kurmancî
+      // kullanıcı sunucunun Türkçe metnini görüyordu. Hemen üstteki
+      // test (Türkçe arayüz) hâlâ ham Türkçe metni bekliyor —
+      // `translateAuthError` Türkçe arayüzde metni değiştirmeden
+      // döndürür, bu yüzden o test bu düzeltmeyle bozulmadı.
+      final guestAuth = _GuestAuthProviderWithGoogleLink(
+        googleLinkSucceeds: false,
+        googleErrorMessage: 'Bu Google hesabı zaten başka bir hesaba bağlı.',
+      );
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          ProfileScreen(repository: MockZanKurdRepository()),
+          guestAuth,
+          isKu: true,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openGuestUpgradeDialog(tester, isKu: true);
 
-        await tester.tap(find.text('Bi Google ve Girêde'));
-        await tester.pumpAndSettle();
+      await tester.tap(find.text('Bi Google girêde'));
+      await tester.pumpAndSettle();
 
-        expect(guestAuth.googleLinkCalled, isTrue);
-        expect(
-          find.text('Bu Google hesabı zaten başka bir hesaba bağlı.'),
-          findsNothing,
-          reason: 'Kurmancî arayüzde Türkçe hata metni gösterilmemeli',
-        );
-        expect(
-          find.text('Ev hesabê Google jixwe bi hesabek din ve girêdayî ye.'),
-          findsOneWidget,
-        );
-      },
-    );
+      expect(guestAuth.googleLinkCalled, isTrue);
+      expect(
+        find.text('Bu Google hesabı zaten başka bir hesaba bağlı.'),
+        findsNothing,
+        reason: 'Kurmancî arayüzde Türkçe hata metni gösterilmemeli',
+      );
+      expect(
+        find.text('Ev hesabê Google jixwe bi hesabek din ve girêdayî ye.'),
+        findsOneWidget,
+      );
+    });
   });
 
   group('GuestGoogleLink — hata çevirisi (AuthProvider)', () {

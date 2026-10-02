@@ -43,6 +43,7 @@ class NotificationService {
   static const _nextFireKey = 'zankurd.notifications.nextFireAt';
 
   static NotificationService? _instance;
+  static Future<NotificationService>? _loading;
 
   /// Kurulu değilse null. Bildirimler bir iyileştirmedir; servis
   /// yüklenmemişse (web, test, yapılandırmasız derleme) çağıran taraf
@@ -57,6 +58,22 @@ class NotificationService {
   }) async {
     final cached = _instance;
     if (cached != null) return cached;
+    final inFlight = _loading;
+    if (inFlight != null) return inFlight;
+
+    final loading = _loadFresh(timeZoneResolver);
+    _loading = loading;
+    try {
+      final service = await loading;
+      return _instance ??= service;
+    } finally {
+      if (identical(_loading, loading)) _loading = null;
+    }
+  }
+
+  static Future<NotificationService> _loadFresh(
+    TimeZoneResolver timeZoneResolver,
+  ) async {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -75,12 +92,13 @@ class NotificationService {
     if (service.enabled) {
       await service._scheduleDaily();
     }
-    return _instance = service;
+    return service;
   }
 
   /// Testlerde tekil örneği sıfırlamak için.
   static void resetInstance() {
     _instance = null;
+    _loading = null;
   }
 
   final SharedPreferences? _preferences;
@@ -155,7 +173,6 @@ class NotificationService {
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService init');
-      debugPrint('Failed to initialize local notifications: $e');
     }
   }
 
@@ -175,7 +192,6 @@ class NotificationService {
           ?.requestPermissions(alert: true, badge: true, sound: true);
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService');
-      debugPrint('Failed to request notifications permission: $e');
     }
   }
 
@@ -202,7 +218,6 @@ class NotificationService {
       }
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService check');
-      debugPrint('Failed to check notification permission: $e');
     }
     return true;
   }
@@ -262,6 +277,9 @@ class NotificationService {
       await _localNotificationsPlugin.zonedSchedule(
         id: 0,
         title: 'ZanKurd',
+        // Altın yol öğrenmedir; yarış/etkinlik metni kullanıcıyı yanlış
+        // sekmeye çağırırdı. Gövde [K.huhuGununSorulukEtkinligi] ile
+        // ana sayfadaki günün dersine hizalıdır.
         body: Tr.forKu(K.huhuGununSorulukEtkinligi, isKu),
         scheduledDate: scheduledTime,
         notificationDetails: details,
@@ -270,7 +288,6 @@ class NotificationService {
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService schedule');
-      debugPrint('Failed to schedule local notification: $e');
     }
   }
 
@@ -281,7 +298,6 @@ class NotificationService {
       await _localNotificationsPlugin.cancelAll();
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService cancel');
-      debugPrint('Failed to cancel notifications: $e');
     }
   }
 
@@ -293,12 +309,9 @@ class NotificationService {
   /// zamanlanabilir, dışarıdan tetiklenemez — yani bu metot ancak push
   /// (FCM) altyapısıyla işe yarar.
   ///
-  /// Altyapının yarısı hazır: `profiles.fcm_token` kolonu ve `set_fcm_token`
-  /// RPC'si var. Eksik olan sunucu tarafı gönderici (arkadaşlık isteği
-  /// eklendiğinde tetiklenen bir Edge Function ya da trigger). O gelene
-  /// kadar bu metot bilerek bağlanmadan duruyor; uygulama içindeki
-  /// görünürlüğü liderlik başlığındaki bekleyen istek rozeti sağlıyor
-  /// (2026-07-31 denetimi).
+  /// Yerel ön plan bildirimi. Üretimdeki asıl yol `push_outbox` +
+  /// `claim_push_outbox` (FCM). Bu metot uygulama açıkken yedek kalır
+  /// ve çağrılmaz; rozet `list_pending_friend_requests` ile gelir.
   Future<void> showFriendRequest(String fromName, {bool isKu = true}) async {
     if (kIsWeb || !_enabled) return;
     try {
@@ -326,7 +339,6 @@ class NotificationService {
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService friend request');
-      debugPrint('Failed to show friend request notification: $e');
     }
   }
 
@@ -377,10 +389,13 @@ class NotificationService {
         scheduledTime = scheduledTime.add(const Duration(days: 1));
       }
 
+      // Günlük seri zincîr'dir; `Rêz` tur içi doğru cevap dizisidir.
+      // Kanal adı Android ayarlarında görünür; gövde zincîr derken
+      // kanal "Bîranîna Rêzê" deyince oyuncu iki kavramı karıştırır.
       const androidDetails = AndroidNotificationDetails(
         'zankurd_streak_warning',
-        'ZanKurd Bîranîna Rêzê',
-        channelDescription: 'Bîranîna parastina rêza rojane',
+        'ZanKurd Bîranîna Zincîrê',
+        channelDescription: 'Bîranîna parastina zincîra rojane',
         importance: Importance.defaultImportance,
         priority: Priority.defaultPriority,
       );
@@ -401,7 +416,6 @@ class NotificationService {
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService streak');
-      debugPrint('Failed to schedule streak warning: $e');
     }
   }
 
@@ -434,7 +448,6 @@ class NotificationService {
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService friend accepted');
-      debugPrint('Failed to show friend accepted notification: $e');
     }
   }
 }

@@ -63,29 +63,11 @@ const _jineolojiSource = QuestionMetadata(
   qualityVersion: 1,
 );
 
-/// Kurmancîsi bozuk olduğu için oyuncuya gösterilmeyen kayıtların kaynağı.
-///
-/// 2026-07-30 dil taraması: bu dosyadaki yedi soruda `prompt` ve `answers`
-/// alanları Kurmancîde var **olmayan** sözcükler taşıyordu — "Fakltîzm",
-/// "Demorkrasîxerbirîna", "Hespê ûrikirî ya leşkerî", "Kîmoka zîvkirî",
-/// "Kom-xwebûn rêxistin", "şûnartî", "kendê". Aynı kayıtların
-/// `explanationKu`/`explanationTr` alanları düzgün yazılmış; yani bir
-/// önceki elden geçirme açıklamaları onarmış, soru ve şıkları atlamış.
-///
-/// Kurmancî öğreten bir uygulamada oyuncuya uydurma sözcüğü **doğru cevap**
-/// diye göstermek, sorunun hiç sorulmamasından kötüdür: oyuncu yanlışı
-/// öğrenir ve öğrendiğinden emin olur. Sorular silinmedi — şıkları gerçek
-/// Kurmancîyle yeniden yazılana dek inceleme kuyruğunda bekliyor.
-/// Geri açmak için: metnini düzelt, `reviewStatus`u `approved` yap.
-const _bozukKurmanciBekliyor = QuestionMetadata(
-  reviewStatus: ReviewStatus.needsReview,
-  dialect: 'Kurmancî',
-  sourceTitle: 'Kurmancî metni yeniden yazılmayı bekliyor (2026-07-30)',
-  sourceReference:
-      'Şıklar ve soru gövdesi Kurmancîde var olmayan sözcükler taşıyor; '
-      'açıklama alanları sağlam. copy_language_test bekçisi bkz.',
-  qualityVersion: 1,
-);
+/// 2026-09-02: 2026-07-30 taramasında kuyruğa alınan yedi Paradigma/Siyaset
+/// kaydı gerçek Kurmancîyle yeniden yazıldı ve kaynaklı `approved` oldu.
+/// Uydurma gövde (`Fakltîzm`, `Kîmoka zîvkirî`, `şûnartî`…) silindi; bekçi
+/// listesi `all_banks_quality_test` içinde duruyor ki aynı sözcükler geri
+/// gelmesin.
 
 /// İlk editoryal dalga: Kurmancî öncelikli, kaynaklı ve bağlamlı sorular.
 /// Eski otomatik havuzdan ayrı tutulur; yeni içerik kalite filtresinden geçmiştir.
@@ -313,6 +295,12 @@ const curatedQuestionBank = <QuizQuestion>[
     difficulty: 2,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/newroz.webp',
+    imageAltKu:
+        'Li kolaneke li ber çiyan, jin û mêr bi cilên kurdî û şerîtên zer '
+        'meşaleyan di destan de digirin.',
+    imageAltTr:
+        'Dağların önündeki bir caddede Kürt kıyafetli, sarı kuşaklı kadın '
+        've erkekler ellerinde meşale tutuyor.',
     metadata: _kjarSource,
     explanationKu:
         'Agirê Newrozê di gelek vegotinên kurdan de bi ronahî, hêvî û '
@@ -324,10 +312,10 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_movement_0009',
     category: 'Çand',
-    prompt: '"Newroz" ji aliyê wateya peyvê ve bi kîjan ravekirinê re nêzîk e?',
+    prompt: 'Wateya peyva "Newroz"ê çi ye?',
     answers: ['Roja nû', 'Şeva dirêj', 'Bara kevn', 'Dengê bilind'],
     correctAnswer: 'Roja nû',
-    promptTr: '"Newroz" sözcük anlamı bakımından hangi karşılığa yakındır?',
+    promptTr: '"Newroz" kelimesinin anlamı nedir?',
     answersTr: ['Yeni gün', 'Uzun gece', 'Eski yük', 'Yüksek ses'],
     correctAnswerTr: 'Yeni gün',
     explanation:
@@ -354,11 +342,17 @@ const curatedQuestionBank = <QuizQuestion>[
     difficulty: 1,
     type: QuestionType.visual,
     imageUrl: 'asset://assets/question_images/cat_siyaset.webp',
+    imageAltKu:
+        'Wêneyeke rengîn: kursiyeke axaftinê bi du mîkrofonan, sindoqa '
+        'dengdanê, belgeyek û li jor balonên axaftinê.',
+    imageAltTr:
+        'Renkli bir çizim: iki mikrofonlu kürsü, oy sandığı, bir belge ve '
+        'üstte konuşma balonları.',
     metadata: _kongraStarSource,
     explanationKu:
         '"Rêxistin" wateya rêkxistinê û rêxistina kes an koman dide.',
     explanationTr:
-        '"Rêxistin", düzenleme ve kişilerin ya da grupların örgütlenmesi'
+        '"Rêxistin", düzenleme ve kişilerin ya da grupların örgütlenmesi '
         'anlamına gelir.',
   ),
   QuizQuestion(
@@ -496,8 +490,8 @@ const curatedQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt:
         'Rast e yan şaş e? "Xwe-rêxistin tenê ji bo kesên ku li bajarên mezin dijîn e."',
-    answers: ['Rast e', 'Şaş e'],
-    correctAnswer: 'Şaş e',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Şaş',
     promptTr:
         'Doğru mu yanlış mı? "Öz örgütlenme yalnızca büyük şehirlerde yaşayanlar içindir."',
     answersTr: ['Doğru', 'Yanlış'],
@@ -519,8 +513,8 @@ const curatedQuestionBank = <QuizQuestion>[
     category: 'Siyaset',
     prompt:
         'Rast e yan şaş e? "Berxwedan" her tim tenê bi awayê çekdarî tê pênasekirin.',
-    answers: ['Rast e', 'Şaş e'],
-    correctAnswer: 'Şaş e',
+    answers: ['Rast', 'Şaş'],
+    correctAnswer: 'Şaş',
     promptTr:
         'Doğru mu yanlış mı? "Direniş" her zaman yalnızca silahlı biçimde tanımlanır.',
     answersTr: ['Doğru', 'Yanlış'],
@@ -590,15 +584,13 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Rojavayê Kurdistanê',
     explanation:
-        '"Rojava" di Kurmancî de bi wateya rojava û bi navê herêmî yê Rojavayê Kurdistanê tê bikaranîn.',
+        'Rojava di Kurmancî de tê wateya aliyê rojava. Rojavayê Kurdistanê jî parçeya Kurdistanê ya li rojava ye, loma bersiva rast ev e.',
     difficulty: 2,
     metadata: _kongraStarSource,
     explanationKu:
-        '"Rojava" di Kurmancî de hem aliyê rojava hem navê herêmî yê '
-        'Rojavayê Kurdistanê ye.',
+        'Rojava di Kurmancî de tê wateya aliyê rojava. Rojavayê Kurdistanê jî parçeya Kurdistanê ya li rojava ye, loma bersiva rast ev e.',
     explanationTr:
-        '"Rojava" Kurmancîde hem batı yönü hem de Batı Kürdistan’ın '
-        'bölgesel adıdır.',
+        'Rojava Kürtçede batı yönü demektir. Rojavayê Kurdistanê de Kürdistan’ın batıda kalan parçasıdır, bu yüzden doğru cevap budur.',
   ),
   QuizQuestion(
     id: 'curated_movement_0019',
@@ -652,21 +644,19 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Şiir',
     explanation:
-        'Helbest dikare hest, bîranîn û daxwazên civakî bi zimanekî wêjeyî û xeyalî vegerîne.',
+        'Helbest bi zimanekî hunerî û wêjeyî hest û bîranînan vedibêje. Rapor, lîste û rêbername agahî didin, lê hestên azadî û bîranînê bi hunerî vediguhezîne helbest e.',
     difficulty: 2,
     metadata: _jineolojiSource,
     explanationKu:
-        'Helbest dikare hest, bîranîn û daxwazên civakî bi zimanekî wêjeyî '
-        'vebêje.',
+        'Helbest bi zimanekî hunerî û wêjeyî hest û bîranînan vedibêje. Rapor, lîste û rêbername agahî didin, lê hestên azadî û bîranînê bi hunerî vediguhezîne helbest e.',
     explanationTr:
-        'Şiir; duyguyu, hafızayı ve toplumsal talebi edebî bir dille '
-        'anlatabilir.',
+        'Şiir, duygu ve anıları sanatsal ve edebî bir dille anlatır. Rapor, liste ve rehber bilgi verir; özgürlük ve bellek duygusunu sanatsal dille aktaran tür şiirdir.',
   ),
   // ── Paradigma ────────────────────────────────────────────────────────────
   QuizQuestion(
     id: 'curated_paradigma_0001',
     category: 'Paradigma',
-    prompt: 'Peyva "jineolojî" çi dihundirîne?',
+    prompt: 'Peyva "jineolojî" çi tê de ye?',
     answers: [
       'Zanistiya jinê',
       'Zanistiya azadiyê',
@@ -685,7 +675,7 @@ const curatedQuestionBank = <QuizQuestion>[
     explanation:
         'Jineolojî ji "jin" û "lojî" (zanist) pêk tê; zanistiya jinê û rêxistinkirina civaka azad e.',
     difficulty: 1,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _jineolojiSource,
     explanationKu:
         'Jineolojî ji "jin" û "lojî" (zanist) pêk tê; zanistiya jinê û '
         'rêxistinkirina civaka azad e.',
@@ -698,12 +688,12 @@ const curatedQuestionBank = <QuizQuestion>[
     category: 'Paradigma',
     prompt: 'Kîjan têgeh bi "konfederalîzm"ê re herî nêzîk e?',
     answers: [
-      'Kom-xwebûn rêxistin',
-      'Bikarhnêrîn',
-      'Hukmêkerek',
+      'Rêxistinên xwe-bi-xwe yên herêmî',
+      'Serfkarî',
+      'Yek serwer',
       'Kolonyalîzm',
     ],
-    correctAnswer: 'Kom-xwebûn rêxistin',
+    correctAnswer: 'Rêxistinên xwe-bi-xwe yên herêmî',
     promptTr: 'Hangi kavram "konfederalizm"e en yakındır?',
     answersTr: [
       'Topluluk özyönetimi örgütlenmesi',
@@ -713,9 +703,9 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Topluluk özyönetimi örgütlenmesi',
     explanation:
-        'Konfederalîzmek modela ku rêxistinên xwe-bixwe yên herêmî yên xwebûn-bixwe li ser wekheviyê tên girêdan e.',
+        'Konfederalîzm modelek e ku rêxistinên herêmî yên xwe-bi-xwe li ser bingeha wekheviyê bi hev ve girê dide.',
     difficulty: 2,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _anfSource,
     explanationKu:
         'Konfederalîzm modelek e ku rêxistinên herêmî yên xwe-bi-xwe li ser '
         'bingeha wekheviyê bi hev ve girê dide.',
@@ -759,23 +749,23 @@ const curatedQuestionBank = <QuizQuestion>[
     prompt: 'Abdullah Öcalan di gotarên xwe de kîjan "-îzm"ê pêşniyar kir?',
     answers: [
       'Konfederalîzma demokratîk',
-      'Fakltîzm',
-      'Fermendîzm',
-      'Medyatîkdemokrasî',
+      'Liberalîzm',
+      'Sosyalîzma dewletê',
+      'Neteweperestî',
     ],
     correctAnswer: 'Konfederalîzma demokratîk',
     promptTr: 'Abdullah Öcalan yazılarında hangi "-izm"i önerdi?',
     answersTr: [
       'Demokratik konfederalizm',
-      'Faklitizm',
-      'Fermendizm',
-      'Medyatik demokrasi',
+      'Liberalizm',
+      'Devlet sosyalizmi',
+      'Milliyetçilik',
     ],
     correctAnswerTr: 'Demokratik konfederalizm',
     explanation:
-        'Di "Demokratik Konfederalîzm" de civak bi şiklê rêxistinên xwe-bixwe têne rêxistinkirin, ne dewletî.',
+        'Di konfederalîzma demokratîk de civak bi rêxistinên xwe-bi-xwe tê organîzekirin, ne bi dewletê.',
     difficulty: 2,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _anfSource,
     explanationKu:
         'Di konfederalîzma demokratîk de civak bi rêxistinên xwe-bi-xwe tê '
         'organîzekirin, ne bi dewletê.',
@@ -786,14 +776,14 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_paradigma_0005',
     category: 'Paradigma',
-    prompt: 'Civaka takekesî li şûna netewe-dewletê çi pêşniyar dike?',
+    prompt: 'Li şûna netewe-dewletê kîjan model tê pêşniyarkirin?',
     answers: [
-      'Birayên xwe rêxistinbranî',
-      'Demokrasîxerbirîna gelemperî',
-      'Hespê ûrikirî ya leşkerî',
-      'Hiqûqa malbatê ya nepenî',
+      'Belavkirina rêxistinî ya biratiyê',
+      'Demokratîkbûna gelemperî',
+      'Pileyên leşkerî',
+      'Hiqûqa malbatê ya veşartî',
     ],
-    correctAnswer: 'Demokrasîxerbirîna gelemperî',
+    correctAnswer: 'Demokratîkbûna gelemperî',
     promptTr: 'Ulus-devlet yerine hangi model önerilir?',
     answersTr: [
       'Kardeşliğin örgütsel dağıtımı',
@@ -803,9 +793,9 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Toplumun geneline yayılan demokratikleşme',
     explanation:
-        'Paradîgma demokratîk a civakî rêxistinên demokratîk û rihevketa gelemperî hene dihundirîne.',
+        'Paradîgmaya civaka demokratîk rêxistinên demokratîk û biryardana gelemperî digire nav xwe.',
     difficulty: 3,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _anfSource,
     explanationKu:
         'Paradîgmaya civaka demokratîk rêxistinên demokratîk û biryardana '
         'gelemperî digire nav xwe.',
@@ -877,14 +867,14 @@ const curatedQuestionBank = <QuizQuestion>[
     id: 'curated_paradigma_0008',
     category: 'Paradigma',
     prompt:
-        'Peyva "pîvana rast" ji bo rêxistinkirina civaka demokratîk çi tê wateyek?',
+        'Peyva "pîvana rast" ji bo rêxistinkirina civaka demokratîk çi wateyê dide?',
     answers: [
-      'Yekserîn û şiklê radestî',
-      'Konsensus û şûnartî',
-      'Hiqûqa serdestê meclîsê',
-      'Girtinên gelemperî yên girtîgehê',
+      'Fermana yekdest û teslîmbûn',
+      'Lihevkirin û biryara herêmî',
+      'Serdestiya serokê meclîsê',
+      'Girtinên giştî',
     ],
-    correctAnswer: 'Konsensus û şûnartî',
+    correctAnswer: 'Lihevkirin û biryara herêmî',
     promptTr: 'Demokratik toplumu örgütlemede "doğru ölçü" ne anlama gelir?',
     answersTr: [
       'Tek elden buyruk ve teslimiyet',
@@ -894,9 +884,9 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Uzlaşı ve yerinden karar',
     explanation:
-        'Biryarên civakî bi şiklê konsensus û şûnartî tên standin, ne bi werdêjin.',
+        'Biryarên civakî bi rêya lihevkirin û gotûbêjê tên girtin, ne bi ferzkirinê.',
     difficulty: 3,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _anfSource,
     explanationKu:
         'Biryarên civakî bi rêya lihevkirin û gotûbêjê tên girtin, ne bi '
         'ferzkirinê.',
@@ -936,14 +926,14 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_paradigma_0010',
     category: 'Paradigma',
-    prompt: 'Sembola jinên Şoreşa Rojavayê aliyê çi li ser kendê ye?',
+    prompt: 'Sembola jinên Şoreşa Rojavayê çi derdixe pêş?',
     answers: [
-      'Saltê rengîn',
+      'Cilê rengîn',
       'Hirça mezin',
-      'Li xebatê rengîn û alîserdestiyê jin',
-      'Kîmoka zîvkirî',
+      'Jinên di xebat û parastinê de',
+      'Zelata zîv',
     ],
-    correctAnswer: 'Li xebatê rengîn û alîserdestiyê jin',
+    correctAnswer: 'Jinên di xebat û parastinê de',
     promptTr: 'Rojava Devrimi\'nde kadınların simgesi neyi öne çıkarır?',
     answersTr: [
       'Renkli bir kumaş',
@@ -953,9 +943,9 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Emekte ve öz savunmada yer alan kadın',
     explanation:
-        'Sembola rengîn a jinên parastina jinê ye, ku azadiyê û bicihbûna civakê destnîşan dike.',
+        'Sembol nîşana parastina jinê ye û azadî û cihgirtina wê ya civakî destnîşan dike.',
     difficulty: 2,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _kongraStarSource,
     explanationKu:
         'Sembol nîşana parastina jinê ye û azadî û cihgirtina wê ya civakî '
         'destnîşan dike.',
@@ -1089,14 +1079,14 @@ const curatedQuestionBank = <QuizQuestion>[
   QuizQuestion(
     id: 'curated_siyaset_0006',
     category: 'Siyaset',
-    prompt: 'Konfederalîzma demokratîk li kîjan herêmê peydexandî ye?',
+    prompt: 'Konfederalîzma demokratîk li kîjan herêmê hat bicihkirin?',
     answers: [
-      'Rojavayê Bakurûrê Sûrîyê',
-      'Bakurê Kûrdistanê (Tûrkiye)',
+      'Rojava (bakurê Sûriyê)',
+      'Bakurê Kurdistanê (Tirkiye)',
       'Başûrê Kurdistanê (Îraq)',
       'Rojhilatê Kurdistanê (Îran)',
     ],
-    correctAnswer: 'Rojavayê Bakurûrê Sûrîyê',
+    correctAnswer: 'Rojava (bakurê Sûriyê)',
     promptTr: 'Demokratik konfederalizm hangi bölgede uygulandı?',
     answersTr: [
       'Rojava (Kuzey Suriye)',
@@ -1106,9 +1096,9 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Rojava (Kuzey Suriye)',
     explanation:
-        'DMC (Xebûna Demokratîk a Rojava-Bakurûrê Sûrîyê) li Rojava hat ava kirin, paşê bû Konfederalîzma Demokratîk a Sûrîyê Bakûr.',
+        'Rêveberiya xweser a Rojava piştre wek konfederalîzmeke herêmî ya bakurê Sûriyê hat berfirehkirin.',
     difficulty: 2,
-    metadata: _bozukKurmanciBekliyor,
+    metadata: _kjarSource,
     explanationKu:
         'Rêveberiya xweser a Rojava piştre wek konfederalîzmeke herêmî ya '
         'bakurê Sûriyê hat berfirehkirin.',
@@ -1279,15 +1269,13 @@ const curatedQuestionBank = <QuizQuestion>[
     ],
     correctAnswerTr: 'Telli çalgı',
     explanation:
-        'Tembûr amûrekî muzîkê yê kevneşopî yê têlî ye, li herêma Kurdistanê û Rojhilata Navîn belav e.',
+        'Tembûr bi têlan tê lêxistin û deng ji têlan derdikeve. Loma ew di nav amûrên têlî de cih digire, ne di nav amûrên bayî an lêdanê de.',
     difficulty: 2,
     metadata: _dengbejSource,
     explanationKu:
-        'Tembûr amûrek muzîkê ya kevneşopî ya têlî ye; li Kurdistanê û '
-        'Rojhilata Navîn belav e.',
+        'Tembûr bi têlan tê lêxistin û deng ji têlan derdikeve. Loma ew di nav amûrên têlî de cih digire, ne di nav amûrên bayî an lêdanê de.',
     explanationTr:
-        'Tembûr geleneksel telli bir çalgıdır; Kürdistan’da ve Ortadoğu’da '
-        'yaygındır.',
+        'Tembûr tellerle çalınır ve ses tellerden çıkar. Bu yüzden üflemeli ya da vurmalı değil, telli çalgılar grubuna girer.',
   ),
   QuizQuestion(
     id: 'curated_muzik_0003',

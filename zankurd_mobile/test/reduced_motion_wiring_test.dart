@@ -98,7 +98,6 @@ void main() {
       // `repeat()` çağıran her yer.
       const owners = {
         'lib/src/screens/matchmaking_screen.dart': 'radar ve nabız',
-        'lib/src/screens/categories_tab.dart': 'shimmer',
         'lib/src/screens/quiz/quiz_timer_widget.dart': 'sayaç nabzı',
       };
       owners.forEach((path, what) {

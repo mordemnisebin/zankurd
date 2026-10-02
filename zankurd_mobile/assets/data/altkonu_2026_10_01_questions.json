@@ -1,0 +1,597 @@
+[
+  {
+    "id": "altkonu_0001",
+    "category": "Muzîk",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Albûma stûdyoyê ya yekem ya Şivan Perwer kîjan e?",
+    "promptTr": "Şivan Perwer'in ilk stüdyo albümü hangisidir?",
+    "answers": [
+      "Seyir",
+      "Govenda Azadîxwazan",
+      "Sebra Min",
+      "Lê Dayê"
+    ],
+    "answersTr": [
+      "Seyir",
+      "Govenda Azadîxwazan",
+      "Sebra Min",
+      "Lê Dayê"
+    ],
+    "correctAnswer": "Govenda Azadîxwazan",
+    "correctAnswerTr": "Govenda Azadîxwazan",
+    "explanation": "Şivan Perwer'in ilk albümü 1975'te yayımlandı; sanatçı 1976'da Almanya'ya göç etti.",
+    "explanationKu": "Albûma yekem ya Şivan Perwer di sala 1975'an de derket; hunermend di sala 1976'an de koçî Almanyayê kir.",
+    "explanationTr": "Şivan Perwer'in ilk albümü 1975'te yayımlandı; sanatçı 1976'da Almanya'ya göç etti.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/%C5%9Eivan_Perwer",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0002",
+    "category": "Muzîk",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Ciwan Haco li ku ji dayik bûye?",
+    "promptTr": "Ciwan Haco nerede doğmuştur?",
+    "answers": [
+      "Misirc",
+      "Dêrxas",
+      "Dêrsim",
+      "Qamişlo"
+    ],
+    "answersTr": [
+      "Kurtalan",
+      "Hasköy",
+      "Tunceli",
+      "Kamışlı"
+    ],
+    "correctAnswer": "Qamişlo",
+    "correctAnswerTr": "Kamışlı",
+    "explanation": "Ciwan Haco 17 Ağustos 1957'de Suriye'nin Kamışlı kentinde doğdu; eğitimini Almanya'nın Bochum kentinde tamamladı.",
+    "explanationKu": "Ciwan Haco di 17'ê Tebaxa 1957'an de li Qamişloyê, li Sûriyeyê ji dayik bû; perwerdeya xwe li Bochumê, li Almanyayê qedand.",
+    "explanationTr": "Ciwan Haco 17 Ağustos 1957'de Suriye'nin Kamışlı kentinde doğdu; eğitimini Almanya'nın Bochum kentinde tamamladı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Ciwan_Haco",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0003",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Albûma stûdyoyê ya duyem ya Aynûr Dogan ku di sala 2004'an de derketiye kîjan e?",
+    "promptTr": "Aynur Doğan'ın 2004'te yayımlanan ikinci stüdyo albümü hangisidir?",
+    "answers": [
+      "Seyir",
+      "Nûpel",
+      "Bahar",
+      "Keçe Kurdan"
+    ],
+    "answersTr": [
+      "Seyir",
+      "Nüpel",
+      "Bahar",
+      "Keçe Kurdan"
+    ],
+    "correctAnswer": "Keçe Kurdan",
+    "correctAnswerTr": "Keçe Kurdan",
+    "explanation": "Keçe Kurdan, Aynur Doğan'ın 2004'te yayımlanan ikinci stüdyo albümüdür; ilk albümü Seyir'dir (2002).",
+    "explanationKu": "Keçe Kurdan, albûma stûdyoyê ya duyem ya Aynûr Dogan e ku di sala 2004'an de derketiye; albûma wê ya yekem Seyir e (2002).",
+    "explanationTr": "Keçe Kurdan, Aynur Doğan'ın 2004'te yayımlanan ikinci stüdyo albümüdür; ilk albümü Seyir'dir (2002).",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Ke%C3%A7e_Kurdan",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0004",
+    "category": "Muzîk",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kardeş Türküler di kîjan salê de hatiye avakirin?",
+    "promptTr": "Kardeş Türküler hangi yıl kurulmuştur?",
+    "answers": [
+      "1988",
+      "1993",
+      "1996",
+      "1999"
+    ],
+    "answersTr": [
+      "1988",
+      "1993",
+      "1996",
+      "1999"
+    ],
+    "correctAnswer": "1993",
+    "correctAnswerTr": "1993",
+    "explanation": "Kardeş Türküler 1993'te Boğaziçi Üniversitesinde kuruldu; Anadolu'nun farklı dillerinde şarkılar seslendirir.",
+    "explanationKu": "Kardeş Türküler di sala 1993'yan de li Zankoya Boğaziçiyê hat avakirin; ew bi zimanên cihê yên Anatolyayê stranan dibêjin.",
+    "explanationTr": "Kardeş Türküler 1993'te Boğaziçi Üniversitesinde kuruldu; Anadolu'nun farklı dillerinde şarkılar seslendirir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Karde%C5%9F_T%C3%BCrk%C3%BCler",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0005",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Rojda li ku ji dayik bûye?",
+    "promptTr": "Rojda nerede doğmuştur?",
+    "answers": [
+      "Dêrsim",
+      "Misirc",
+      "Qamişlo",
+      "Agirî"
+    ],
+    "answersTr": [
+      "Tunceli",
+      "Kurtalan",
+      "Kamışlı",
+      "Ağrı"
+    ],
+    "correctAnswer": "Misirc",
+    "correctAnswerTr": "Kurtalan",
+    "explanation": "Rojda 1978'de Siirt'in Kurtalan ilçesinde doğdu; asıl adı Kadriye Şenses'tir.",
+    "explanationKu": "Rojda di sala 1978'an de li navçeya Misircê ya Sêrtê ji dayik bû; navê wê yê rast Kadriye Şenses e.",
+    "explanationTr": "Rojda 1978'de Siirt'in Kurtalan ilçesinde doğdu; asıl adı Kadriye Şenses'tir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Rojda",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0006",
+    "category": "Muzîk",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Nîzamettîn Arîç di kîjan salê de ji dayik bûye?",
+    "promptTr": "Nizamettin Ariç hangi yıl doğmuştur?",
+    "answers": [
+      "1948",
+      "1956",
+      "1959",
+      "1962"
+    ],
+    "answersTr": [
+      "1948",
+      "1956",
+      "1959",
+      "1962"
+    ],
+    "correctAnswer": "1956",
+    "correctAnswerTr": "1956",
+    "explanation": "Nizamettin Ariç 1956'da Ağrı'da doğdu; Dayê albümüyle tanınır.",
+    "explanationKu": "Nîzamettîn Arîç di sala 1956'an de li Agiriyê ji dayik bû; bi albûma xwe ya Dayê tê naskirin.",
+    "explanationTr": "Nizamettin Ariç 1956'da Ağrı'da doğdu; Dayê albümüyle tanınır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Nizamettin_Ari%C3%A7",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0007",
+    "category": "Muzîk",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Koma Wetan li kîjan bajarî hatiye avakirin?",
+    "promptTr": "Koma Wetan hangi şehirde kurulmuştur?",
+    "answers": [
+      "Berlîn",
+      "Tiflîs",
+      "Stokholm",
+      "Londra"
+    ],
+    "answersTr": [
+      "Berlin",
+      "Tiflis",
+      "Stockholm",
+      "Londra"
+    ],
+    "correctAnswer": "Tiflîs",
+    "correctAnswerTr": "Tiflis",
+    "explanation": "Koma Wetan 1973'te Sovyetler Birliği'nin Tiflis kentinde kuruldu ve ilk Kürt rock grubu kabul edilir.",
+    "explanationKu": "Koma Wetan di sala 1973'yan de li Tiflîsa Yekîtiya Sovyetê hat avakirin û wekî yekemîn koma rockê ya kurdî tê qebûlkirin.",
+    "explanationTr": "Koma Wetan 1973'te Sovyetler Birliği'nin Tiflis kentinde kuruldu ve ilk Kürt rock grubu kabul edilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "eurasianet.org",
+      "sourceReference": "https://eurasianet.org/the-worlds-first-kurdish-rock-group-and-its-roots-in-soviet-georgia",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0008",
+    "category": "Teknolojî",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di Pythonê de kîjan fonksiyon dirêjiya rêzekê vedigerîne?",
+    "promptTr": "Python'da bir dizinin uzunluğunu döndüren işlev hangisidir?",
+    "answers": [
+      "count()",
+      "size()",
+      "len()",
+      "length()"
+    ],
+    "answersTr": [
+      "count()",
+      "size()",
+      "len()",
+      "length()"
+    ],
+    "correctAnswer": "len()",
+    "correctAnswerTr": "len()",
+    "explanation": "Python'da len() işlevi bir dizinin, metnin veya sözlüğün uzunluğunu döndürür.",
+    "explanationKu": "Di Pythonê de fonksiyona len() dirêjiya rêzekê, nivîsekê an ferhengekî vedigerîne.",
+    "explanationTr": "Python'da len() işlevi bir dizinin, metnin veya sözlüğün uzunluğunu döndürür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "docs.python.org",
+      "sourceReference": "https://docs.python.org/3/library/functions.html",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0009",
+    "category": "Teknolojî",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Wateya koda rewşê ya HTTP 404 çi ye?",
+    "promptTr": "HTTP durum kodu 404 ne anlama gelir?",
+    "answers": [
+      "Rûpel nehat dîtin",
+      "Çewtiya pêşkêşkar",
+      "Beralîkirin",
+      "Gihîştina bêdestûr"
+    ],
+    "answersTr": [
+      "Sayfa bulunamadı",
+      "Sunucu hatası",
+      "Yönlendirme",
+      "Yetkisiz erişim"
+    ],
+    "correctAnswer": "Rûpel nehat dîtin",
+    "correctAnswerTr": "Sayfa bulunamadı",
+    "explanation": "HTTP 404 kodu \"Not Found\" (bulunamadı) anlamına gelir; istenen kaynak sunucuda yoktur.",
+    "explanationKu": "Koda HTTP 404 tê wateya \"Not Found\" (nehat dîtin); çavkaniya ku tê xwestin di pêşkêşkar de tune ye.",
+    "explanationTr": "HTTP 404 kodu \"Not Found\" (bulunamadı) anlamına gelir; istenen kaynak sunucuda yoktur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "developer.mozilla.org",
+      "sourceReference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0010",
+    "category": "Teknolojî",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Vekirina (wateya) CSS ya bi îngilîzî çi ye?",
+    "promptTr": "CSS'in İngilizce açılımı nedir?",
+    "answers": [
+      "Computer Style Sheets",
+      "Cascading Style Sheets",
+      "Creative Style Systems",
+      "Colorful Style Sheets"
+    ],
+    "answersTr": [
+      "Computer Style Sheets",
+      "Cascading Style Sheets",
+      "Creative Style Systems",
+      "Colorful Style Sheets"
+    ],
+    "correctAnswer": "Cascading Style Sheets",
+    "correctAnswerTr": "Cascading Style Sheets",
+    "explanation": "CSS, İngilizce \"Cascading Style Sheets\" ifadesinin kısaltmasıdır ve belgelerin görsel sunumunu tanımlar.",
+    "explanationKu": "CSS, kurteya biwêja îngilîzî \"Cascading Style Sheets\" e û xuyanga dîtbarî ya belgeyan diyar dike.",
+    "explanationTr": "CSS, İngilizce \"Cascading Style Sheets\" ifadesinin kısaltmasıdır ve belgelerin görsel sunumunu tanımlar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "developer.mozilla.org",
+      "sourceReference": "https://developer.mozilla.org/en-US/docs/Web/CSS",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0011",
+    "category": "Teknolojî",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Di lêgerîna duduî (binary search) de, tevlîheviya demê ya rewşa herî xirab çi ye?",
+    "promptTr": "İkili aramanın (binary search) en kötü durum zaman karmaşıklığı nedir?",
+    "answers": [
+      "O(1)",
+      "O(n)",
+      "O(n²)",
+      "O(log n)"
+    ],
+    "answersTr": [
+      "O(1)",
+      "O(n)",
+      "O(n²)",
+      "O(log n)"
+    ],
+    "correctAnswer": "O(log n)",
+    "correctAnswerTr": "O(log n)",
+    "explanation": "İkili arama, sıralı bir dizide her adımda aralık yarıya indirdiği için en kötü durumda O(log n) karmaşıklığına sahiptir.",
+    "explanationKu": "Lêgerîna duduî, di rêzeke rêzkirî de di her gavê de navberê nîv dike, loma di rewşa herî xirab de tevlîheviya wê O(log n) ye.",
+    "explanationTr": "İkili arama, sıralı bir dizide her adımda aralık yarıya indirdiği için en kötü durumda O(log n) karmaşıklığına sahiptir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Binary_search",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0012",
+    "category": "Teknolojî",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Pêkhateya daneyê ya lodê (stack) bi kîjan prensîbî dixebite?",
+    "promptTr": "Yığın (stack) veri yapısı hangi ilkeyle çalışır?",
+    "answers": [
+      "FIFO (yê ku yekem dikeve, yekem derdikeve)",
+      "Gihîştina rêzkirî",
+      "LIFO (yê ku dawî dikeve, yekem derdikeve)",
+      "Gihîştina rasthatî"
+    ],
+    "answersTr": [
+      "FIFO (ilk giren ilk çıkar)",
+      "Sıralı erişim",
+      "LIFO (son giren ilk çıkar)",
+      "Rastgele erişim"
+    ],
+    "correctAnswer": "LIFO (yê ku dawî dikeve, yekem derdikeve)",
+    "correctAnswerTr": "LIFO (son giren ilk çıkar)",
+    "explanation": "Yığın (stack) LIFO ilkesiyle çalışır: son eklenen eleman ilk çıkarılır.",
+    "explanationKu": "Lod (stack) bi prensîbê LIFO dixebite: hêmana ku herî dawî hatiye zêdekirin, yekem tê derxistin.",
+    "explanationTr": "Yığın (stack) LIFO ilkesiyle çalışır: son eklenen eleman ilk çıkarılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0013",
+    "category": "Teknolojî",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Di SQL'ê de ji bo kişandina daneyan ji tabloyekê kîjan ferman tê bikaranîn?",
+    "promptTr": "SQL'de bir tablodan veri çekmek için hangi komut kullanılır?",
+    "answers": [
+      "INSERT",
+      "UPDATE",
+      "DELETE",
+      "SELECT"
+    ],
+    "answersTr": [
+      "INSERT",
+      "UPDATE",
+      "DELETE",
+      "SELECT"
+    ],
+    "correctAnswer": "SELECT",
+    "correctAnswerTr": "SELECT",
+    "explanation": "SQL'de bir tablodan veri çekmek için SELECT komutu kullanılır.",
+    "explanationKu": "Di SQL'ê de ji bo kişandina daneyan ji tabloyekê fermana SELECT tê bikaranîn.",
+    "explanationTr": "SQL'de bir tablodan veri çekmek için SELECT komutu kullanılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.w3schools.com",
+      "sourceReference": "https://www.w3schools.com/sql/sql_syntax.asp",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0014",
+    "category": "Sînema",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Fîlmê Yilmaz Guney yê ku di sala 1982'yan de li Festîvala Fîlman ya Cannesê xelata Palmiyeya Zêrîn girtiye, kîjan e?",
+    "promptTr": "Yılmaz Güney'in 1982 Cannes Film Festivali'nde Altın Palmiye kazanan filmi hangisidir?",
+    "answers": [
+      "Ağıt",
+      "Yol",
+      "Duvar",
+      "Umut"
+    ],
+    "answersTr": [
+      "Ağıt",
+      "Yol",
+      "Duvar",
+      "Umut"
+    ],
+    "correctAnswer": "Yol",
+    "correctAnswerTr": "Yol",
+    "explanation": "Yılmaz Güney'in senaryosunu yazdığı ve Şerif Gören'le birlikte yönettiği Yol, 1982 Cannes Film Festivali'nde Altın Palmiye kazandı.",
+    "explanationKu": "Fîlmê Yol ku Yilmaz Guney senaryoya wî nivîsandiye û bi Şerîf Goren re derhêneriya wî kiriye, di sala 1982'yan de li Festîvala Fîlman ya Cannesê Palmiyeya Zêrîn wergirt.",
+    "explanationTr": "Yılmaz Güney'in senaryosunu yazdığı ve Şerif Gören'le birlikte yönettiği Yol, 1982 Cannes Film Festivali'nde Altın Palmiye kazandı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Y%C4%B1lmaz_G%C3%BCney",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0015",
+    "category": "Sînema",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Fîlmê Yilmaz Guney yê bi navê \"Umut\" di kîjan salê de hat nîşandan?",
+    "promptTr": "Yılmaz Güney'in \"Umut\" filmi hangi yılda gösterime girdi?",
+    "answers": [
+      "1966",
+      "1968",
+      "1970",
+      "1973"
+    ],
+    "answersTr": [
+      "1966",
+      "1968",
+      "1970",
+      "1973"
+    ],
+    "correctAnswer": "1970",
+    "correctAnswerTr": "1970",
+    "explanation": "Umut, Yılmaz Güney'in 1970 yapımı filmidir ve Türk sinemasının ilk gerçekçi filmlerinden biri sayılır.",
+    "explanationKu": "Umut, fîlmekî Yilmaz Guney yê sala 1970'an e û yek ji yekemîn fîlmên realîst ên sînemaya Tirkiyeyê tê qebûlkirin.",
+    "explanationTr": "Umut, Yılmaz Güney'in 1970 yapımı filmidir ve Türk sinemasının ilk gerçekçi filmlerinden biri sayılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Y%C4%B1lmaz_G%C3%BCney",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0016",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan derhêner fîlmê \"Rashomon\" derhênaye?",
+    "promptTr": "\"Rashomon\" filmini hangi yönetmen çekmiştir?",
+    "answers": [
+      "Yasujirō Ozu",
+      "Akira Kurosawa",
+      "Kenji Mizoguchi",
+      "Masaki Kobayashi"
+    ],
+    "answersTr": [
+      "Yasujirō Ozu",
+      "Akira Kurosawa",
+      "Kenji Mizoguchi",
+      "Masaki Kobayashi"
+    ],
+    "correctAnswer": "Akira Kurosawa",
+    "correctAnswerTr": "Akira Kurosawa",
+    "explanation": "Rashomon, Akira Kurosawa'nın 1950 tarihli filmidir; 1951 Venedik Film Festivali'nde Altın Aslan kazandı.",
+    "explanationKu": "Rashomon, fîlmeke Akira Kurosawa ya sala 1950'yan e; di sala 1951'an de li Festîvala Fîlman ya Venedîkê xelata Şêrê Zêrîn girt.",
+    "explanationTr": "Rashomon, Akira Kurosawa'nın 1950 tarihli filmidir; 1951 Venedik Film Festivali'nde Altın Aslan kazandı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Rashomon",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "altkonu_0017",
+    "category": "Sînema",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Fîlmê \"Dizên Duçerxeyan\" ji serberhemên kîjan herika sînemayê tê hejmartin?",
+    "promptTr": "\"Bisiklet Hırsızları\" hangi sinema akımının başyapıtlarından sayılır?",
+    "answers": [
+      "Pêla Nû ya Fransî",
+      "Pêla Nû ya Çekî",
+      "Neo-realîzma Îtalî",
+      "Pêla Nû ya Alman"
+    ],
+    "answersTr": [
+      "Fransız Yeni Dalga",
+      "Çek Yeni Dalgası",
+      "İtalyan neo-gerçekçilik",
+      "Alman Yeni Dalga"
+    ],
+    "correctAnswer": "Neo-realîzma Îtalî",
+    "correctAnswerTr": "İtalyan neo-gerçekçilik",
+    "explanation": "Bisiklet Hırsızları (Ladri di biciclette), Vittorio De Sica'nın 1948 tarihli filmi olup İtalyan neo-gerçekçiliğinin başyapıtlarından sayılır.",
+    "explanationKu": "Dizên Duçerxeyan (Ladri di biciclette), fîlmeke Vittorio De Sica ya sala 1948'an e û ji serberhemên neo-realîzma îtalî tê hejmartin.",
+    "explanationTr": "Bisiklet Hırsızları (Ladri di biciclette), Vittorio De Sica'nın 1948 tarihli filmi olup İtalyan neo-gerçekçiliğinin başyapıtlarından sayılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Bicycle_Thieves",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri: Gemini 3.1 Pro; olgu ve dil incelemesi: Grok 4.7; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-01",
+      "lastContentCheckAt": "2026-10-01",
+      "qualityVersion": 2
+    }
+  }
+]

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_theme.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/percent_format.dart';
+import 'kilim_board.dart';
+import 'roj_mascot.dart';
+import 'sahne/sahne.dart';
 
 /// Paylaşım için sabit boyutlu, markalı sonuç kartı. RepaintBoundary ile
 /// PNG'ye render edilip share_plus üzerinden paylaşılır.
@@ -16,6 +18,7 @@ class ShareResultCard extends StatelessWidget {
     required this.totalQuestions,
     required this.bestStreak,
     required this.category,
+    this.results = const [],
     super.key,
   });
 
@@ -26,146 +29,162 @@ class ShareResultCard extends StatelessWidget {
   final int bestStreak;
   final String category;
 
+  /// Turun soru soru sonucu. Boşsa şerit çizilmez (eski çağıranlar).
+  final List<bool> results;
+
   @override
   Widget build(BuildContext context) {
+    // Paylaşım kartı bir sahnedir: iki temada da gece çizilir.
+    return SahneStage(
+      stage: AppTheme.stage,
+      child: Builder(builder: _build),
+    );
+  }
+
+  Widget _build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final accuracy = totalQuestions == 0
         ? 0
         : ((correctCount / totalQuestions) * 100).round();
 
-    return Container(
+    // 2026-09-29 Şahnê: gece sahne kartı zemini (degrade + L pah yok —
+    // paylaşılan görüntü dikdörtgendir), marka anı logo işareti plakası +
+    // "ZanKurd", puan Ekran 64 Zêr (tablo rakamı), tur şeridi,
+    // istatistikler Manşet + Açıklama, kategori Kulis çipi.
+    //
+    // 2026-09-29 doğallık (K4, K8): puanın altındaki kilim göz şeridi
+    // kalktı — hemen altındaki tur şeridi (KilimBoard) zaten kilimdir; iki
+    // kilim üst üste süs tekrarıydı. Puanın künyesi büyük harfli `K.puan`
+    // ("PUAN") değil, cümle düzenindeki `K.scoreWord` ("Puan"): büyük harf
+    // yalnız soru künyesinde.
+    return SizedBox(
       width: 360,
-      padding: const EdgeInsets.all(28),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppTheme.culturalBrandBg, AppTheme.culturalBrandBg],
+      child: CustomPaint(
+        painter: SahneStagePainter(
+          race: false,
+          glow: t.roleGlow(SahneRole.gold),
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Marka
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+        child: Padding(
+          padding: const EdgeInsets.all(SahneSpace.x6),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Icon(AppIcons.question, color: AppTheme.gold, size: 26),
-              SizedBox(width: 8),
+              // Marka
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const BrandMarkPlate(size: 32),
+                  const SizedBox(width: SahneSpace.x2),
+                  Text(
+                    'ZanKurd',
+                    style: SahneType.headline.copyWith(color: t.tx),
+                  ),
+                ],
+              ),
+              const SizedBox(height: SahneSpace.x1),
               Text(
-                'ZanKurd',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 24,
-                  letterSpacing: 0.5,
+                Tr.forKu(K.kurmancBilgiYarismasi, isKu),
+                textAlign: TextAlign.center,
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+              const SizedBox(height: SahneSpace.x6),
+
+              // Skor
+              Text(
+                '$score',
+                textAlign: TextAlign.center,
+                style: SahneType.screen.copyWith(color: t.gold),
+              ),
+              const SizedBox(height: SahneSpace.x1),
+              Text(
+                Tr.forKu(K.scoreWord, isKu),
+                textAlign: TextAlign.center,
+                style: SahneType.captionStrong.copyWith(color: t.tx2),
+              ),
+              const SizedBox(height: SahneSpace.x5),
+
+              // Dokunan kilim.
+              //
+              // Kart bu satırdan önce yalnız SAYI paylaşıyordu: 340 puan,
+              // %70, 5 seri. Sayı paylaşılabilir bir nesne değildir — ne
+              // gören biri için bir şey ifade eder ne de paylaşanın turuna
+              // ait bir şey taşır; her turun kartı aynı görünür.
+              //
+              // Şerit turun kendisidir ve her turda başkadır. Wordle'ın
+              // ızgarasının yaptığı iş budur: paylaşılan şey skor değil,
+              // oyunun ŞEKLİdir. Burada o şekil kilim olarak söylenir,
+              // yani ZanKurd'a ait bir dille.
+              if (results.isNotEmpty) ...[
+                KilimBoard(
+                  total: results.length,
+                  currentIndex: results.length,
+                  showCurrent: false,
+                  height: 24,
+                  results: results,
+                ),
+                const SizedBox(height: SahneSpace.x5),
+              ],
+
+              // İstatistik satırı
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _stat(
+                    t,
+                    '$correctCount/$totalQuestions',
+                    Tr.forKu(K.correct, isKu),
+                  ),
+                  _stat(
+                    t,
+                    PercentFormat.value(accuracy, isKu: isKu),
+                    Tr.forKu(K.isabet, isKu),
+                  ),
+                  _stat(t, '$bestStreak', Tr.forKu(K.seri2, isKu)),
+                ],
+              ),
+              const SizedBox(height: SahneSpace.x5),
+
+              DecoratedBox(
+                decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: SahneSpace.x2),
+                  child: Text(
+                    // `category` çağırandan Kurmancî kimlik olarak gelir
+                    // (bkz. `CategoryNames`); paylaşım kartı Türkçe modda ham
+                    // kimliği basıyordu, kartı gören herkes görüyordu
+                    // (2026-08-14 denetimi).
+                    CategoryNames.localized(category, isKu),
+                    textAlign: TextAlign.center,
+                    style: SahneType.captionStrong.copyWith(color: t.tx),
+                  ),
                 ),
               ),
+              const SizedBox(height: SahneSpace.x4),
+
+              Text(
+                Tr.forKu(K.senDeOynaPlay, isKu),
+                textAlign: TextAlign.center,
+                style: SahneType.captionStrong.copyWith(color: t.goldTx),
+              ),
             ],
           ),
-          const SizedBox(height: 4),
-          Text(
-            Tr.forKu(K.kurmancBilgiYarismasi, isKu),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.6),
-              fontSize: 12,
-            ),
-          ),
-          const SizedBox(height: 22),
-
-          // Skor
-          Text(
-            '$score',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: AppTheme.gold,
-              fontWeight: FontWeight.w800,
-              fontSize: 64,
-              height: 1.0,
-            ),
-          ),
-          Text(
-            Tr.forKu(K.puan, isKu),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.7),
-              fontWeight: FontWeight.w800,
-              fontSize: 13,
-              letterSpacing: 3,
-            ),
-          ),
-          const SizedBox(height: 22),
-
-          // İstatistik satırı
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _stat('$correctCount/$totalQuestions', Tr.forKu(K.correct, isKu)),
-              _stat(
-                PercentFormat.value(accuracy, isKu: isKu),
-                Tr.forKu(K.isabet, isKu),
-              ),
-              _stat('$bestStreak', Tr.forKu(K.seri2, isKu)),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.08),
-              borderRadius: BorderRadius.circular(AppRadius.badge),
-            ),
-            child: Text(
-              // `category` çağırandan Kurmancî kimlik olarak gelir (bkz.
-              // `CategoryNames`); paylaşım kartı Türkçe modda ham kimliği
-              // basıyordu, kartı gören herkes görüyordu (2026-08-14
-              // denetimi).
-              CategoryNames.localized(category, isKu),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
-              ),
-            ),
-          ),
-          const SizedBox(height: 18),
-
-          Text(
-            Tr.forKu(K.senDeOynaPlay, isKu),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppTheme.gold.withValues(alpha: 0.9),
-              fontWeight: FontWeight.w700,
-              fontSize: 12.5,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _stat(String value, String label) {
+  Widget _stat(SahneTokens t, String value, String label) {
     return Column(
       children: [
         Text(
           value,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w800,
-            fontSize: 22,
+          style: SahneType.headline.copyWith(
+            color: t.tx,
+            fontFeatures: const [FontFeature.tabularFigures()],
           ),
         ),
-        const SizedBox(height: 2),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.6),
-            fontSize: 11,
-          ),
-        ),
+        Text(label, style: SahneType.caption.copyWith(color: t.tx2)),
       ],
     );
   }

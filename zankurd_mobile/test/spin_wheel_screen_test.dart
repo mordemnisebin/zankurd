@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 /// Çark durumunu deterministik kontrol eden sahte depo.
 class _SpinRepository extends MockZanKurdRepository {
@@ -53,6 +55,36 @@ void main() {
     addTearDown(tester.view.reset);
   }
 
+  // 2026-09-29 Şahnê: bekçi eskiden merkez göbeğin `Container` +
+  // `identityHeaderGradient` (orman yeşili degrade) + bulanık gölge
+  // taşıdığını sınıyordu — eski görünüşün kendisi. Şahnê'de göbek ZK
+  // amblemidir: gece sahnesinde altın Halka 3'lü elmas, gölgesiz. Palet
+  // dışı yeşil ve bulanık gölge geri gelmesin diye yeni biçim sabitlenir.
+  // 2026-09-29 doğallık: göbek elmas değil yuvarlak (K5: elmas yalnız soru
+  // ilerlemesi ve ders sayacı). Korunan kural aynı: altın Halka 3, gölge
+  // ve degrade yok.
+  testWidgets('çark merkezindeki ZK göbeği altın halkalı ve yuvarlaktır', (
+    tester,
+  ) async {
+    await useTallPhoneViewport(tester);
+    final repository = _SpinRepository(canSpin: true);
+    await tester.pumpWidget(_shell(SpinWheelScreen(repository: repository)));
+    await tester.pump();
+    await tester.pump();
+
+    final hub = tester.widget<DecoratedBox>(
+      find
+          .ancestor(of: find.text('ZK'), matching: find.byType(DecoratedBox))
+          .first,
+    );
+    final decoration = hub.decoration as ShapeDecoration;
+    final shape = decoration.shape as CircleBorder;
+    expect(shape.side.width, SahneRing.r3);
+    expect(shape.side.color, SahneTokens.night.gold);
+    expect(decoration.shadows, isNull);
+    expect(decoration.gradient, isNull);
+  });
+
   testWidgets('çark hakkı varken Çevir butonu aktiftir', (tester) async {
     await useTallPhoneViewport(tester);
     final repository = _SpinRepository(canSpin: true);
@@ -60,7 +92,7 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    expect(find.text('Çevir!'), findsOneWidget);
+    expect(find.text('Çevir'), findsOneWidget);
     final button = tester.widget<FilledButton>(find.byType(FilledButton));
     expect(button.onPressed, isNotNull);
     expect(tester.takeException(), isNull);
@@ -75,7 +107,7 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    expect(find.text('Yarın tekrar gel!'), findsOneWidget);
+    expect(find.text('Yarın tekrar gel.'), findsOneWidget);
     expect(find.textContaining('Yeni çevirme hakkı'), findsOneWidget);
     final button = tester.widget<FilledButton>(find.byType(FilledButton));
     expect(button.onPressed, isNull);
@@ -91,7 +123,7 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    await tester.tap(find.text('Çevir!'));
+    await tester.tap(find.text('Çevir'));
     await tester.pump();
     // Animasyon sürerken ikinci hızlı dokunuş çift ödül vermemeli.
     await tester.pump(const Duration(milliseconds: 100));
@@ -101,8 +133,8 @@ void main() {
     await tester.pump(const Duration(seconds: 3));
 
     expect(repository.awardCalls, 1);
-    expect(find.textContaining('+50 coin kazandın'), findsOneWidget);
-    expect(find.text('Yarın tekrar gel!'), findsOneWidget);
+    expect(find.textContaining('+50 jeton kazandın'), findsOneWidget);
+    expect(find.text('Yarın tekrar gel.'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -118,12 +150,12 @@ void main() {
       await tester.pump();
       await tester.pump();
 
-      await tester.tap(find.text('Çevir!'));
+      await tester.tap(find.text('Çevir'));
       await tester.pump();
       await tester.pump();
 
       expect(find.text('Bugün zaten çevirdin.'), findsOneWidget);
-      expect(find.text('Yarın tekrar gel!'), findsOneWidget);
+      expect(find.text('Yarın tekrar gel.'), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );
@@ -155,7 +187,7 @@ void main() {
       find.text('Çark durumunu görmek için internet bağlantısı gerekiyor.'),
       findsOneWidget,
     );
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -195,7 +227,7 @@ void main() {
       await tester.pump();
       await tester.pump();
 
-      expect(find.text('Yarın tekrar gel!'), findsOneWidget);
+      expect(find.text('Yarın tekrar gel.'), findsOneWidget);
 
       final navigator = tester.state<NavigatorState>(find.byType(Navigator));
       navigator.push(MaterialPageRoute<void>(builder: (_) => const SizedBox()));
@@ -208,7 +240,7 @@ void main() {
       navigator.pop();
       await tester.pumpAndSettle();
 
-      expect(find.text('Çevir!'), findsOneWidget);
+      expect(find.text('Çevir'), findsOneWidget);
       final button = tester.widget<FilledButton>(find.byType(FilledButton));
       expect(button.onPressed, isNotNull);
       expect(tester.takeException(), isNull);
@@ -224,14 +256,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
 
     repository.fail = false;
-    await tester.tap(find.text('Tekrar'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pumpAndSettle();
 
     expect(repository.statusCalls, 2);
-    expect(find.text('Çevir!'), findsOneWidget);
+    expect(find.text('Çevir'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

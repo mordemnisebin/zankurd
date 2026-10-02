@@ -37,7 +37,10 @@ WORD = re.compile(r"[a-zA-ZçêîşûÇÊÎŞÛğıöüĞİÖÜ]+")
 
 # Oyuncuya görünen Kurmancî alanlar. Türkçe alanlar bu kapıya girmez:
 # sözleşme Kurmancî terminolojisi içindir.
-VISIBLE_KU = ("promptKu", "explanationKu", "hintKu")
+# Gerçek banka şeması: `prompt` (Ku), `explanation`/`explanationKu`,
+# `hint`/`hintKu`, `answers`/`answersKu`. Eski `promptKu` adı bankada yok;
+# geriye dönük uyumluluk için listede tutuluyor.
+VISIBLE_KU = ("prompt", "promptKu", "explanation", "explanationKu", "hint", "hintKu")
 
 
 def corpus_tokens() -> collections.Counter:
@@ -62,6 +65,7 @@ def corpus_tokens() -> collections.Counter:
 
 def visible_words(q: dict) -> list[str]:
     fields = [q.get(f) or "" for f in VISIBLE_KU]
+    fields += [a for a in (q.get("answers") or [])]
     fields += [a for a in (q.get("answersKu") or [])]
     out: list[str] = []
     for f in fields:

@@ -1,11 +1,150 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+
+/// `deploy_sftp.sh`in aktarımdan önce varlığını şart koştuğu derleme
+/// çıktıları.
+///
+/// `.well-known` ikilisi 2026-09-27'de eklendi. Davet bağlantısının
+/// (zankurd.com/join/KOD) yüklü uygulamayı açması bu iki dosyaya bağlı: iOS
+/// `apple-app-site-association`, Android `assetlinks.json`. Derleme onları
+/// düşürse ya da aktarım kaçırsa site yine açılır, hiçbir kontrol kızarmaz;
+/// bağlantı yalnız tarayıcıda kalır ve kusur ancak telefonda fark edilir.
+const _requiredWebOutputs = [
+  'index.html',
+  'main.dart.js',
+  'flutter_bootstrap.js',
+  '.htaccess',
+  'privacy.html',
+  'terms.html',
+  'delete-account.html',
+  '.well-known/apple-app-site-association',
+  '.well-known/assetlinks.json',
+];
 
 void main() {
   test('Flutter web viewport is owned by the engine', () {
     final index = File('web/index.html').readAsStringSync();
     expect(index, isNot(contains('name="viewport"')));
+  });
+
+  test('Playwright web denetimi platforma özel Chrome yoluna bağlı değil', () {
+    final source = File('tools/audit_web_app.mjs').readAsStringSync();
+    expect(source, contains("channel: 'chrome'"));
+    expect(
+      source,
+      contains(
+        "createRequire(new URL('./playwright/package.json', import.meta.url))",
+      ),
+    );
+    expect(source, isNot(contains('C:/Program Files/Google/Chrome')));
+    expect(source, isNot(contains('executablePath:')));
+  });
+
+  test(
+    'Playwright smoke güncel tek sayfalık onboarding sözleşmesini izler',
+    () {
+      final source = File('tools/playwright/smoke.mjs').readAsStringSync();
+      expect(source, contains("Ez ji 13 salî mezintir im"));
+      expect(source, contains('await ageGate.click();'));
+      expect(source, contains("await ageGate.waitFor({ state: 'visible'"));
+      expect(source, contains("aria-checked"));
+      expect(source, isNot(contains('ageGate.check()')));
+      expect(source, contains("clickText('Bidomîne')"));
+      expect(source, contains("clickText('Dest pê bike')"));
+      // 2026-09-29 doğallık: ilk ders etiketi cümle düzeninde ("Dersa
+      // yekem"); "Hemû mijar" düğmesi ve "Kategorî" ekranı uygulamada çoktan
+      // yoktu (konular ana sayfadaki "Mijar" ızgarasında), smoke onları
+      // bekleyip ilk adımda takılıyordu. Beklenti ekrandaki metne çevrildi.
+      expect(source, contains("expectText('Dersa yekem')"));
+      expect(source, isNot(contains("DERSA YEKEM")));
+      expect(source, contains("expectText('Mijar')"));
+      expect(source, isNot(contains("clickText('Hemû mijar')")));
+      expect(source, isNot(contains("expectText('Kategorî')")));
+      expect(source, contains('ZANKURD_EXPECT_SOCIAL'));
+      expect(source, contains('expectSocialBackend'));
+      expect(source, contains("Pêşkêşkar negihîştbar e"));
+      expect(
+        source,
+        contains("getByRole('button', { name: /Pêşbirka bilez/ })"),
+      );
+      expect(source, contains('await quickDuel.isEnabled()'));
+      expect(source, isNot(contains("Rojbaş, Rojda!")));
+      expect(source, isNot(contains("Bi hevalên xwe re pêşbirkê bike")));
+    },
+  );
+
+  test('learning-focus tarayıcı turu güncel yaş ve misafir kapısını izler', () {
+    final source = File(
+      'tools/playwright/learning-focus.mjs',
+    ).readAsStringSync();
+    expect(source, contains("Ez ji 13 salî mezintir im"));
+    expect(source, contains("Wek mêvan bidomîne"));
+    expect(source, contains("click('Bidomîne')"));
+    expect(source, contains("Hînbûn temam bû"));
+    expect(source, contains('ZANKURD_AUDIT_DIR'));
+    expect(source, contains('ZANKURD_AUDIT_MODE'));
+    expect(source, isNot(contains("mode:'local debug, offline repository'")));
+  });
+
+  test(
+    'Play Store iç test belgesi gerçek artifact ve migration kapısını kullanır',
+    () {
+      final doc = File('docs/play_store_internal_test.md').readAsStringSync();
+
+      expect(doc, contains('build/app/outputs/bundle/release/app-release.aab'));
+      expect(doc, contains('docs/YAYIN_ADIMLARI.md'));
+      expect(doc, contains('supabase migration list --linked'));
+      expect(doc, contains('20260819000000_gamification_and_custom_rooms.sql'));
+      expect(
+        doc,
+        isNot(contains('release_packages/zankurd-playstore-release.aab')),
+      );
+      expect(doc, isNot(contains('supabase/daily_spin_rpc.sql')));
+      expect(doc, isNot(contains('supabase/quiz_reward_rpc.sql')));
+      expect(doc, isNot(contains('supabase/coin_policies.sql')));
+    },
+  );
+
+  test(
+    'CI mobil derlemeleri release derleyicisini ve staging kapısını kullanır',
+    () {
+      final workflow = File(
+        '../.github/workflows/flutter_ci.yml',
+      ).readAsStringSync();
+
+      expect(workflow, contains('flutter build appbundle --release'));
+      expect(workflow, contains('flutter build ios --release --no-codesign'));
+      expect(workflow, contains('--dart-define=APP_ENV=staging'));
+      expect(workflow, contains('REVENUECAT_API_KEY_ANDROID=test_'));
+      expect(workflow, contains('REVENUECAT_API_KEY_IOS=test_'));
+      expect(workflow, isNot(contains('flutter build apk --debug')));
+      expect(workflow, isNot(contains('flutter build ios --debug')));
+      expect(workflow, isNot(contains('device-nightly-note:')));
+    },
+  );
+
+  test('yayın rehberi dört cihaz testini kanıt dosyasıyla kapatır', () {
+    final steps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
+
+    for (final testName in [
+      'local_backend_1v1_test.dart',
+      'revenuecat_roundtrip_test.dart',
+      'notification_real_schedule_test.dart',
+      'os_level_resilience_test.dart',
+    ]) {
+      expect(
+        steps,
+        contains(testName),
+        reason: '$testName yayın kapısında yok',
+      );
+    }
+    expect(
+      steps,
+      contains('dart run tool/validate_device_release_evidence.dart'),
+    );
+    expect(steps, contains('.release-device-evidence.json'));
   });
 
   test('Google Play için bağımsız hesap silme sayfası mevcut', () {
@@ -73,17 +212,39 @@ void main() {
     expect(source, contains(r'BACKUP_RUN="$REMOTE_BACKUP_REALPATH/'));
     expect(source, isNot(contains('--protect-args')));
     expect(source, isNot(contains('--delete')));
-    for (final output in [
-      'index.html',
-      'main.dart.js',
-      'flutter_bootstrap.js',
-      '.htaccess',
-      'privacy.html',
-      'terms.html',
-      'delete-account.html',
-    ]) {
-      expect(source, contains(output));
+    final requiredLine = source
+        .split('\n')
+        .firstWhere((line) => line.startsWith('for output in '));
+    for (final output in _requiredWebOutputs) {
+      expect(requiredLine, contains(output));
     }
+  });
+
+  test('uygulama bağlantısı dosyaları web kaynağında duruyor', () {
+    for (final output in _requiredWebOutputs.where(
+      (output) => output.startsWith('.well-known/'),
+    )) {
+      expect(File('web/$output').existsSync(), isTrue, reason: output);
+    }
+  });
+
+  // CI'daki Android işi yalnız release derleyicisini sınar; Gradle ise
+  // gerçek imza olmadan release'i bilerek durdurur. Atılacak bir anahtar
+  // üretilmeden iş 2026-08-09'dan beri her koşuda kırmızıydı; sürekli
+  // kırmızı bir CI, gerçek kırılmaları görünmez kılar.
+  test('CI Android derlemesi atılacak bir anahtarla imzalanır', () {
+    final workflow = File(
+      '../.github/workflows/flutter_ci.yml',
+    ).readAsStringSync();
+    final keyStep = workflow.indexOf('keytool -genkeypair');
+    final build = workflow.indexOf('flutter build appbundle --release');
+    expect(keyStep, isNonNegative);
+    expect(build, greaterThan(keyStep));
+    expect(workflow, contains(r'$RUNNER_TEMP/ci-throwaway.jks'));
+    expect(workflow, contains('> android/key.properties'));
+    expect(workflow, contains('-validity 1'));
+    // Gerçek yükleme anahtarının yolu ya da adı CI'a asla girmez.
+    expect(workflow, isNot(contains('zankurd-upload')));
   });
 
   test('SFTP dry-run yazılamayan yedek kökünde aktarımı durdurur', () async {
@@ -96,16 +257,10 @@ void main() {
       final bin = Directory('${temp.path}/bin')..createSync();
       final localBuild = Directory('${temp.path}/build/web')
         ..createSync(recursive: true);
-      for (final output in [
-        'index.html',
-        'main.dart.js',
-        'flutter_bootstrap.js',
-        '.htaccess',
-        'privacy.html',
-        'terms.html',
-        'delete-account.html',
-      ]) {
-        File('${localBuild.path}/$output').writeAsStringSync(output);
+      for (final output in _requiredWebOutputs) {
+        File('${localBuild.path}/$output')
+          ..parent.createSync(recursive: true)
+          ..writeAsStringSync(output);
       }
 
       final identity = File('${temp.path}/identity')..writeAsStringSync('key');
@@ -373,6 +528,68 @@ printf '%s\n' rsync >> "$FAKE_COMMAND_LOG"
     }
   });
 
+  test(
+    'yayın belgesi migration-history ayrışmasını db push öncesi durdurur',
+    () {
+      final steps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
+      final cutoverStart = steps.indexOf('## 3. Koordineli üretim kesimi');
+      expect(cutoverStart, isNonNegative);
+      final nextSection = steps.indexOf('\n## 4.', cutoverStart);
+      expect(nextSection, greaterThan(cutoverStart));
+      final cutover = steps.substring(cutoverStart, nextSection);
+
+      expect(cutover, contains('supabase migration list --linked'));
+      expect(
+        cutover,
+        contains('20260819000000_gamification_and_custom_rooms.sql'),
+      );
+      expect(cutover, contains('supabase migration repair'));
+      expect(cutover, contains('supabase db push'));
+      expect(
+        cutover,
+        isNot(contains('bir kez uygula')),
+        reason:
+            'Uygulanmış eski SQL dosyaları history gap yüzünden yeniden '
+            'çalıştırılmamalı; önce migration history bilinçli onarılmalı.',
+      );
+    },
+  );
+
+  test(
+    'release notes onarılmış 19 Ağustos migration history durumunu açık bırakmaz',
+    () {
+      final notes = File('docs/release_notes_internal.md').readAsStringSync();
+      final sectionStart = notes.indexOf('## 1.9.2+20');
+      expect(sectionStart, isNonNegative);
+      final olderRelease = notes.indexOf('\n## ', sectionStart + 4);
+      final current = notes.substring(
+        sectionStart,
+        olderRelease < 0 ? notes.length : olderRelease,
+      );
+
+      expect(
+        current,
+        contains('20260819000000_gamification_and_custom_rooms.sql'),
+      );
+      expect(
+        current,
+        contains('supabase migration repair --status applied 20260819000000'),
+        reason:
+            'Applied ledger ile aynı repair gerçeği release notes içinde görünmeli.',
+      );
+      expect(
+        current,
+        isNot(
+          contains(
+            'Production migration-history farkının hesap sahibi onayıyla giderilmesi.',
+          ),
+        ),
+        reason:
+            'Tamamlanmış migration-history onarımı kalan manuel kapı sayılamaz.',
+      );
+    },
+  );
+
   test('1v1 üretim göçü hazırlanmış istemci ve legacy kapısıyla kesilir', () {
     final steps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
     final normalized = steps.toLowerCase().replaceAll(RegExp(r'\s+'), ' ');
@@ -384,7 +601,11 @@ printf '%s\n' rsync >> "$FAKE_COMMAND_LOG"
     final androidArtifact = steps.indexOf('flutter build appbundle --release');
     final iosArtifact = steps.indexOf('flutter build ipa --release');
     final legacyGate = steps.indexOf('Bu göç yeni `ready` protokolü');
-    final productionMigration = steps.indexOf("1. Staging'de doğrulanan");
+    final cutoverStart = steps.indexOf('## 3. Koordineli üretim kesimi');
+    final productionMigration = steps.indexOf(
+      'supabase migration list --linked',
+      cutoverStart,
+    );
     final dryRuns = RegExp(
       r'^\./deploy_sftp\.sh --dry-run$',
       multiLine: true,
@@ -482,8 +703,78 @@ printf '%s\n' rsync >> "$FAKE_COMMAND_LOG"
     expect(source, contains('path: zankurd_mobile/coverage/lcov.info'));
     expect(
       source,
-      contains('path: zankurd_mobile/build/app/outputs/flutter-apk'),
+      contains(
+        'path: zankurd_mobile/build/app/outputs/bundle/release/app-release.aab',
+      ),
     );
+    expect(
+      source,
+      contains('flutter build ios --release --no-codesign'),
+      reason: 'iOS derlemesi yoksa Apple yüzeyi yalnız yerelde kırılır.',
+    );
+    expect(
+      source,
+      contains(
+        'flutter build web --release --no-web-resources-cdn '
+        '--dart-define=USE_BUNDLED_SUPABASE_DEFAULTS=true',
+      ),
+      reason:
+          'Release web derlemesi CI dışında kalırsa web-only derleme ve '
+          'release yapılandırma kusurları push sırasında görülmez.',
+    );
+  });
+
+  test('Supabase yayın rehberi uygulanmış göçü yeniden uygulatmaz', () {
+    final steps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
+
+    expect(steps, contains('20260802000000_multiplayer_session_hardening.sql'));
+    expect(steps, contains('20260819000000_gamification_and_custom_rooms.sql'));
+    expect(steps, contains('supabase migration list --linked'));
+    expect(
+      steps,
+      contains(
+        "to_regprocedure('public.create_online_room(text,integer,integer,integer)')",
+      ),
+    );
+    expect(
+      steps,
+      isNot(
+        contains("to_regprocedure('public.create_online_room(text,integer)')"),
+      ),
+    );
+    expect(
+      steps,
+      isNot(
+        contains(
+          '`supabase/2026-08-02_multiplayer_session_hardening.sql` gerekir',
+        ),
+      ),
+    );
+  });
+
+  test('iOS inceleme notu güncel giriş seçeneklerini anlatır', () {
+    final steps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
+    final normalized = steps.toLowerCase();
+
+    expect(normalized, contains('apple'));
+    expect(normalized, contains('google'));
+    expect(normalized, contains('e-posta/şifre'));
+    expect(normalized, contains('misafir'));
+    expect(
+      normalized,
+      isNot(contains('sosyal giriş seçenekleri bu sürümde bilerek sunulmaz')),
+    );
+  });
+
+  test('bir sonraki mağaza sürümü yayımlanmış kimliği tekrar kullanmaz', () {
+    final steps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
+    final normalized = steps.toLowerCase();
+
+    expect(normalized, contains('marketing version'));
+    expect(normalized, contains('en yüksek `versioncode`'));
+    expect(normalized, contains('app store connect'));
+    expect(normalized, contains('zaten yayındaysa'));
+    expect(normalized, contains('build numarası'));
   });
 
   test('mobile release commands always load explicit public configuration', () {
@@ -501,6 +792,14 @@ printf '%s\n' rsync >> "$FAKE_COMMAND_LOG"
       final steps = File('docs/YAYIN_ADIMLARI.md').readAsStringSync();
       expect(steps, contains('staging/preview'));
       expect(steps.toLowerCase(), contains('iki ayrı istemci'));
+      expect(
+        RegExp(r'`version: \d+\.\d+\.\d+\+\d+`').hasMatch(steps),
+        isFalse,
+        reason:
+            'Yayın rehberi mevcut sürüm numarasını kopyalarsa ilk version bump '
+            'sonrasında sessizce bayatlar; yalnız version şablonunu anlatmalı.',
+      );
+      expect(steps, contains('`version: x.y.z+N`'));
 
       final releaseGuideBuildCommands = RegExp(
         r'^flutter build [^\r\n]+',

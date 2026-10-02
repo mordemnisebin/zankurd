@@ -4,22 +4,22 @@
     "category": "Çand",
     "prompt": "Wêne mêrekî nîşan dide ku destê xwe daniye ser guhê xwe û bi dengekî bilind kilamekê dibêje. Kilamên dengbêjan bi kevneşopî çawa têne pêşkêşkirin?",
     "answers": [
-      "Bi zurne û def a li ber govendê",
-      "Bi tenê dengê mirov, bê amûr",
+      "Bi zurne û defa li ber govendê",
       "Bi tembûr û bilûrê bi hev re",
-      "Bi koroyeke ji gelek stranbêjan"
+      "Bi koroyeke ji gelek stranbêjan",
+      "Bi tenê dengê mirov, bê amûr"
     ],
     "correctAnswer": "Bi tenê dengê mirov, bê amûr",
     "promptTr": "Görsel, elini kulağına götürüp yüksek sesle bir kilam söyleyen bir adamı gösteriyor. Dengbêj kilamları geleneksel olarak nasıl icra edilir?",
     "answersTr": [
       "Halay başındaki zurna ve davulla",
-      "Yalnızca insan sesiyle, çalgısız",
       "Tembûr ve kaval eşliğinde birlikte",
-      "Çok sesli bir stranbêj korosuyla"
+      "Çok sesli bir stranbêj korosuyla",
+      "Yalnızca insan sesiyle, çalgısız"
     ],
     "correctAnswerTr": "Yalnızca insan sesiyle, çalgısız",
     "explanation": "Kilam geleneksel olarak çalgısız, yalnızca insan sesiyle söylenir; bu yüzden ses, nefes ve ezgi bu sanatın temelidir. Elin kulağa götürülmesi, söyleyenin kendi sesini iyi duyup perdesini korumasına yardım eder.",
-    "explanationKu": "Kilam bi kevneşopî bêyî amûrên muzîkê, tenê bi dengê mirov tê gotin; ji ber vê yekê deng, bêhn û awaz bingeha vê hunerê ne. Destê li ber guh alîkariyê dike ku gotinbêj dengê xwe baş bibihîze û perdeya xwe biparêze.",
+    "explanationKu": "Kilam bi kevneşopî bêyî amûrên muzîkê, tenê bi dengê mirov tê gotin; ji ber vê yekê deng, bêhn û awaz bingeha vê hunerê ne. Destê li ber guh alîkariyê dike ku dengbêj dengê xwe baş bibihîze û perdeya xwe biparêze.",
     "explanationTr": "Kilam geleneksel olarak çalgısız, yalnızca insan sesiyle söylenir; bu yüzden ses, nefes ve ezgi bu sanatın temelidir. Elin kulağa götürülmesi, söyleyenin kendi sesini iyi duyup perdesini korumasına yardım eder.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/dengbej.webp",
@@ -39,16 +39,16 @@
     "category": "Çand",
     "prompt": "Di wêneyê de çay ji kesekî nû gihîştî re tê dirêjkirin. Di kurmancî de xwediyê malê bi kîjan gotinê kesê ku li ber derî peyda dibe pêşwazî dike?",
     "answers": [
-      "Bi xêr hatî",
       "Bi xatirê te",
+      "Bi xêr hatî",
       "Serê te sax be",
       "Roj li te xweş"
     ],
     "correctAnswer": "Bi xêr hatî",
     "promptTr": "Görselde yeni gelen birine çay uzatılıyor. Kurmancîde ev sahibi, kapıda beliren kişiyi hangi sözle karşılar?",
     "answersTr": [
-      "Bi xêr hatî",
       "Bi xatirê te",
+      "Bi xêr hatî",
       "Serê te sax be",
       "Roj li te xweş"
     ],
@@ -74,22 +74,22 @@
     "category": "Çand",
     "prompt": "Di wêneyê de cilên kevneşopî xuya dikin. Qumaşê dirêj û fireh ê ku di cilê mêran ê kevneşopî de çend caran li dora navtengê tê pêçandin, bi kîjan navî tê nasîn?",
     "answers": [
-      "kolos",
       "şûtik",
+      "kolos",
       "kiras",
       "elek"
     ],
     "correctAnswer": "şûtik",
     "promptTr": "Görselde geleneksel giysiler görünüyor. Erkeklerin geleneksel giyiminde bele birkaç kez dolanan uzun ve geniş kumaş parçası hangi adla bilinir?",
     "answersTr": [
-      "kolos",
       "şûtik",
+      "kolos",
       "kiras",
       "elek"
     ],
     "correctAnswerTr": "şûtik",
     "explanation": "Şûtik, şal û şapikin üzerine belin çevresine birkaç kez dolanan uzun ve geniş kumaştır; beli sıkı tutup destekler. Kolos bir başlık, kiras kollu üst giysi, elek ise kolsuz yelektir.",
-    "explanationKu": "Şûtik qumaşekî dirêj û fireh e ku li ser şal û şapikê çend gav li dora navtengê tê pêçandin, piştê xurt digire û navtengê digire hev. Kolos serpoşek e, kiras cilê ser bedenê yê bimil e, elek jî berstûkeke bêmil e.",
+    "explanationKu": "Şûtik qumaşekî dirêj û fireh e ku li ser şal û şapikê çend caran li dora navtengê tê pêçandin, piştê xurt dike û navtengê zexm digire. Kolos serpoşek e, kiras cilê ser bedenê yê bimil e, elek jî berstûkeke bêmil e.",
     "explanationTr": "Şûtik, şal û şapikin üzerine belin çevresine birkaç kez dolanan uzun ve geniş kumaştır; beli sıkı tutup destekler. Kolos bir başlık, kiras kollu üst giysi, elek ise kolsuz yelektir.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/yerel_kiyafetler.webp",
@@ -102,29 +102,29 @@
       "replacesRetiredCircularQuestion": true
     },
     "imageAltTr": "Bazalt taştan, sivri kemerli bir yapının (Amed mimarisi) önünde geleneksel giysili bir kadın ve bir erkek merdivenden inip yürüyor; erkekte şal û şapik ve bele dolanmış turuncu-kırmızı geniş kuşak, ka",
-    "imageAltKu": "Li ber avahiyeke ji kevirê bazalt bi kemera tûj, jinek û mêrek bi cilên kevneşopî ji pêlikan dadikevin; li mêr şal û şapik û şûtikeke fireh a sor-porteqalî heye, li jinê kirasekî dirêj ê neqişandin û serpêç."
+    "imageAltKu": "Li ber avahiyeke ji kevirê bazalt bi kemera tûj, jinek û mêrek bi cilên kevneşopî ji pêlikan dadikevin; li mêr şal û şapik û qumaşekî fireh ê sor-porteqalî yê li dora navtengê pêçandî heye, li jinê kirasekî dirêj ê neqişandin û serpêç."
   },
   {
     "id": "visual_2026_08_07_0004",
     "category": "Dîrok",
     "prompt": "Wêne belgeyên destnivîs ên kevn nîşan dide. Dîroknas di lêkolînên xwe de cihekî taybet didin belgeyên weha. Sedema vê yekê çi ye?",
     "answers": [
-      "Ew di dema bûyerê de hatine çêkirin",
       "Ew ji bo dersên dibistanê hatine amadekirin",
+      "Ew di dema bûyerê de hatine çêkirin",
       "Ew ji zanyarên îro re hatine kurtkirin",
       "Ew ji gelek pirtûkên nû hatine berhevkirin"
     ],
     "correctAnswer": "Ew di dema bûyerê de hatine çêkirin",
     "promptTr": "Görsel eski el yazması belgeleri gösteriyor. Tarihçiler araştırmalarında bu tür belgelere özel bir yer verir. Bunun nedeni nedir?",
     "answersTr": [
-      "Olayın yaşandığı dönemde üretilmiş olmaları",
       "Okul dersleri için hazırlanmış olmaları",
+      "Olayın yaşandığı dönemde üretilmiş olmaları",
       "Bugünün araştırmacıları için özetlenmiş olmaları",
       "Birçok yeni kitaptan derlenmiş olmaları"
     ],
     "correctAnswerTr": "Olayın yaşandığı dönemde üretilmiş olmaları",
     "explanation": "Olayın yaşandığı dönemde üretilen belge — el yazması, mektup, ferman, hesap defteri, antlaşma — birincil kaynaktır. Sonradan bunlar üzerine yazılanlar ikincil kaynaktır: başkasının yorumudur, dönemin tanıklığı değil. Bu yüzden tarihçiler her şeyden önce birincil kaynağı görmek ister.",
-    "explanationKu": "Belgeya ku di dema bûyerê de hatiye çêkirin — destnivîs, name, ferman, defterên hesêb, peyman — çavkaniya seretayî ye. Xebatên ku paşê li ser wan tên nivîsandin çavkaniya duyemîn in: ew şîroveya kesekî din e, ne şahidiya wê demê bi xwe. Loma dîroknas her gav dixwazin berî her tiştî çavkaniya seretayî bibînin.",
+    "explanationKu": "Belgeya ku di dema bûyerê de hatiye çêkirin — destnivîs, name, ferman, defterên hesaban, peyman — çavkaniya seretayî ye. Xebatên ku paşê li ser wan tên nivîsandin çavkaniyên duyemîn in: ew şîroveyên kesekî din in, ne şahidiya wê demê bi xwe ne. Loma dîroknas her gav dixwazin berî her tiştî çavkaniya seretayî bibînin.",
     "explanationTr": "Olayın yaşandığı dönemde üretilen belge — el yazması, mektup, ferman, hesap defteri, antlaşma — birincil kaynaktır. Sonradan bunlar üzerine yazılanlar ikincil kaynaktır: başkasının yorumudur, dönemin tanıklığı değil. Bu yüzden tarihçiler her şeyden önce birincil kaynağı görmek ister.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/birincil_kaynak.webp",
@@ -144,18 +144,18 @@
     "category": "Dîrok",
     "prompt": "Di wêneyê de kalek bîranînên xwe vedibêje û gotinên wî tên tomarkirin. Ev şêwaza lêkolînê bi taybetî ji bo kîjan rewşê girîng e?",
     "answers": [
-      "Ji bo civakên ku bîra wan neketiye arşîvan",
       "Ji bo civakên ku belgeyên wan pir zêde ne",
       "Ji bo bûyerên ku bi hejmaran tên pîvandin",
-      "Ji bo demên ku şahidên wan nemane"
+      "Ji bo demên ku şahidên wan nemane",
+      "Ji bo civakên ku bîra wan neketiye arşîvan"
     ],
     "correctAnswer": "Ji bo civakên ku bîra wan neketiye arşîvan",
     "promptTr": "Görselde yaşlı bir adam anılarını anlatıyor ve sözleri kayda alınıyor. Bu araştırma biçimi özellikle hangi durumda önemlidir?",
     "answersTr": [
-      "Belleği arşivlere geçmemiş topluluklar için",
       "Belgeleri çok fazla olan topluluklar için",
       "Yalnızca sayılarla ölçülen olaylar için",
-      "Tanığı kalmamış dönemler için"
+      "Tanığı kalmamış dönemler için",
+      "Belleği arşivlere geçmemiş topluluklar için"
     ],
     "correctAnswerTr": "Belleği arşivlere geçmemiş topluluklar için",
     "explanation": "Sözlü tarih, kayıt altına alınan görüşmelerle yaşayan tanıkların tanıklığını toplar. Dili resmî arşivlerde yer bulmamış topluluklar için bu, çoğu zaman belleğin yitmesini önleyen tek yoldur. Ancak yaşayan tanığa bağlıdır: hiç tanığı kalmamış dönemler için kullanılamaz.",
@@ -179,16 +179,16 @@
     "category": "Dîrok",
     "prompt": "Qûmsaeta di wêneyê de derbasbûna demê dipîve. Dîroknas jî bûyeran li gorî demê rêz dikin. Ev rêzkirin berî her tiştî çi diyar dike?",
     "answers": [
-      "Kîjan bûyer berî ya din qewimiye",
       "Kîjan bûyer ji ya din girîngtir e",
+      "Kîjan bûyer berî ya din qewimiye",
       "Kîjan bûyer bêtir hatiye nivîsandin",
-      "Kîjan bûyer li dever firehtir belav bûye"
+      "Kîjan bûyer li devereke firehtir belav bûye"
     ],
     "correctAnswer": "Kîjan bûyer berî ya din qewimiye",
     "promptTr": "Görseldeki kum saati zamanın akışını ölçer. Tarihçiler de olayları zamana göre sıralar. Bu sıralama her şeyden önce neyi gösterir?",
     "answersTr": [
-      "Hangi olayın diğerinden önce olduğunu",
       "Hangi olayın diğerinden önemli olduğunu",
+      "Hangi olayın diğerinden önce olduğunu",
       "Hangi olayın daha çok yazıya geçtiğini",
       "Hangi olayın daha geniş alana yayıldığını"
     ],
@@ -250,16 +250,16 @@
     "prompt": "Wêne komeke ku bi barên xwe ve ber bi niştecihiyeke dûr ve dimeşe nîşan dide. Di dîrokê de cihguhertineke bi vî rengî ji hereketa demsalî ya koçeran bi çi tê cudakirin?",
     "answers": [
       "Bi tevahî bêyî heywan û barên giran pêk tê",
-      "Her tim di demsala zivistanê de tê kirin",
       "Vegera demsalî ya bo heman cihî çênabe",
+      "Her tim di demsala zivistanê de tê kirin",
       "Di nav sînorên yek gundî de tê sînordarkirin"
     ],
     "correctAnswer": "Vegera demsalî ya bo heman cihî çênabe",
     "promptTr": "Görselde yükleriyle uzaktaki bir yerleşime doğru yürüyen bir grup var. Tarihte bu türden bir yer değiştirme, göçerlerin mevsimlik hareketinden hangi yönüyle ayrılır?",
     "answersTr": [
       "Hayvansız ve ağır yüksüz olarak gerçekleşir",
-      "Her zaman kış mevsiminde yapılır",
       "Aynı yere mevsimlik dönüş söz konusu olmaz",
+      "Her zaman kış mevsiminde yapılır",
       "Tek bir köyün sınırları içinde kalır"
     ],
     "correctAnswerTr": "Aynı yere mevsimlik dönüş söz konusu olmaz",
@@ -282,14 +282,14 @@
   {
     "id": "visual_2026_08_07_0009",
     "category": "Dîrok",
-    "prompt": "Wêne gundekî çiyayî yê bi xaniyên keviran û bi ajelên kedîkirî nîşan dide. Derbasbûna mirovan ji jiyaneke gerok bo jiyaneke wiha ya domdar bi giranî bi kîjan pêşketinê ve girêdayî ye?",
+    "prompt": "Wêne gundekî çiyayî yê bi xaniyên ji kevir û bi ajalên kedîkirî nîşan dide. Derbasbûna mirovan ji jiyaneke gerok bo jiyaneke wiha ya domdar bi giranî bi kîjan pêşketinê ve girêdayî ye?",
     "answers": [
       "Kifşkirina metalên bihagiran ên kanan",
       "Belavbûna çapxane û pirtûkên çapkirî",
       "Avakirina keştiyên mezin ên deryayî",
-      "Destpêkirina çandinî û hilanîna genim"
+      "Destpêkirina çandiniyê û hilanîna genim"
     ],
-    "correctAnswer": "Destpêkirina çandinî û hilanîna genim",
+    "correctAnswer": "Destpêkirina çandiniyê û hilanîna genim",
     "promptTr": "Görsel, taş evleri ve evcilleştirilmiş hayvanlarıyla dağlık bir köyü gösteriyor. İnsanların gezgin bir yaşamdan böyle kalıcı bir yaşama geçişi asıl olarak hangi gelişmeye bağlıdır?",
     "answersTr": [
       "Madenlerdeki değerli metallerin bulunması",
@@ -317,24 +317,24 @@
   {
     "id": "visual_2026_08_07_0010",
     "category": "Dîrok",
-    "prompt": "Wêne bazareke nixumandî nîşan dide ku bazirgan û kirrûbirên ji deverên cuda tê de tên cem hev. Gava du civak bi salan bi vî awayî têkilî datînin, di zimanên wan de bi piranî çi diqewime?",
+    "prompt": "Wêne bazareke nixumandî nîşan dide ku bazirgan, kiriyar û firoşkarên ji deverên cuda tê de tên cem hev. Gava du civak bi salan bi vî awayî têkiliyê datînin, di zimanên wan de bi piranî çi diqewime?",
     "answers": [
+      "Peyvên nû ji hev tên girtin û bi kar tên",
       "Rêzimana herdu zimanan dibe yek rêziman",
       "Zimanê ku kêmtir tê axaftin yekser winda dibe",
-      "Peyvên nû ji hev tên girtin û bi kar tên",
       "Dengên herdu zimanan ji nişka ve diguherin"
     ],
     "correctAnswer": "Peyvên nû ji hev tên girtin û bi kar tên",
     "promptTr": "Görsel, farklı yörelerden tüccar ve alıcıların bir araya geldiği kapalı bir çarşıyı gösteriyor. İki toplum yıllarca bu biçimde ilişki kurunca, dillerinde çoğunlukla ne olur?",
     "answersTr": [
+      "Birbirinden yeni sözcükler alınır ve kullanılır",
       "İki dilin dilbilgisi tek bir dilbilgisine dönüşür",
       "Daha az konuşulan dil bir anda ortadan kalkar",
-      "Birbirinden yeni sözcükler alınır ve kullanılır",
       "İki dilin sesleri bir anda değişime uğrar"
     ],
     "correctAnswerTr": "Birbirinden yeni sözcükler alınır ve kullanılır",
     "explanation": "Uzun süreli ticaret ve komşuluk ilişkisi önce sözcükleri taşır: her dil ötekinden yeni nesnelerin, yemeklerin ve mesleklerin adlarını alır. Ödünç sözcükler kültürel etkileşimin işaretidir; dilbilgisi ve ses düzeni çok daha yavaş değişir.",
-    "explanationKu": "Têkiliya dirêj a bazirganî û cîranîyê pêşî peyvan diguhezîne: her ziman ji yê din navên tiştên nû, xwarin û pîşeyan werdigire. Peyvên deynkirî nîşana bandora çandî ne; rêziman û dengsazî pir hêdîtir diguherin.",
+    "explanationKu": "Têkiliya dirêj a bazirganî û cîraniyê pêşî peyvan diguhezîne: her ziman ji yê din navên tiştên nû, xwarin û pîşeyan werdigire. Peyvên deynkirî nîşana bandora çandî ne; rêziman û dengsazî pir hêdîtir diguherin.",
     "explanationTr": "Uzun süreli ticaret ve komşuluk ilişkisi önce sözcükleri taşır: her dil ötekinden yeni nesnelerin, yemeklerin ve mesleklerin adlarını alır. Ödünç sözcükler kültürel etkileşimin işaretidir; dilbilgisi ve ses düzeni çok daha yavaş değişir.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/kulturel_etkilesim.webp",
@@ -352,24 +352,24 @@
   {
     "id": "visual_2026_08_07_0011",
     "category": "Edebiyat",
-    "prompt": "Di wêneyê de qelemek li ser kaxezeke vala ya hê nenivîsandî ye. Xisleta ku helbestê ji pexşanê vediqetîne bi giranî çi ye?",
+    "prompt": "Di wêneyê de qelemek li ser kaxezeke vala heye. Helbest bi giranî bi kîjan yekeyên avahiyê tê rêzkirin?",
     "answers": [
-      "Bi paragrafên dirêj û bêyî rêzikan tê nivîsîn",
-      "Bi rêzikên kurt û bi ahenga dengan tê hûnandin",
-      "Bi diyalogên li ser dikê û bi perdeyan tê dabeşkirin",
-      "Bi bûyerên rojane û bi jêderan tê tomarkirin"
+      "Bi paragraf û beşan",
+      "Bi perde û dîmenan",
+      "Bi rêzik û bendan",
+      "Bi bendên qanûnî"
     ],
-    "correctAnswer": "Bi rêzikên kurt û bi ahenga dengan tê hûnandin",
-    "promptTr": "Görselde henüz yazılmamış boş bir kâğıdın üzerinde bir kalem duruyor. Şiiri düz yazıdan ayıran temel özellik nedir?",
+    "correctAnswer": "Bi rêzik û bendan",
+    "promptTr": "Görselde boş bir kâğıt üzerinde bir kalem var. Şiir çoğunlukla hangi yapısal birimlerle düzenlenir?",
     "answersTr": [
-      "Uzun paragraflarla, dizelere bölünmeden yazılır",
-      "Kısa dizelerle ve ses ahengiyle örülür",
-      "Sahne diyaloglarıyla ve perdelere bölünür",
-      "Günlük olaylarla ve kaynaklarla kaydedilir"
+      "Paragraf ve bölümlerle",
+      "Perde ve sahnelerle",
+      "Dize ve bentlerle",
+      "Yasa maddeleriyle"
     ],
-    "correctAnswerTr": "Kısa dizelerle ve ses ahengiyle örülür",
-    "explanation": "Şiir dize ve bentler halinde örülür; ses ahengi, ölçü ve uyak orada anlam kadar önemlidir. Düz yazı cümle ve paragraflarla akar, sahne diyaloğu ise tiyatroya aittir.",
-    "explanationKu": "Helbest bi rêzik û bendan tê hûnandin; ahenga dengan, kêş û qafiye tê de bi qasî wateyê giring in. Pexşan bi hevok û paragrafan diherike, diyaloga dikê jî ya şanoyê ye.",
+    "correctAnswerTr": "Dize ve bentlerle",
+    "explanation": "Şiir dize (rêzik) ve bentlerle düzenlenir; düzyazı paragraflarla, tiyatro perde ve sahnelerle. Serbest şiir ölçü/kafiye taşımayabilir, bu yüzden ayrım ses ahengiyle değil yapı birimiyle kurulur.",
+    "explanationKu": "Helbest bi rêzik û bendan tê rêzkirin; pexşan bi paragrafan, şano bi perde û dîmenan. Dibe ku di helbesta azad de pîvan û qafiye tune bin.",
     "explanationTr": "Şiir dize ve bentler halinde örülür; ses ahengi, ölçü ve uyak orada anlam kadar önemlidir. Düz yazı cümle ve paragraflarla akar, sahne diyaloğu ise tiyatroya aittir.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/helbest.webp",
@@ -387,7 +387,7 @@
   {
     "id": "visual_2026_08_07_0012",
     "category": "Edebiyat",
-    "prompt": "Wêne kitêbeke stûr û girtî nîşan dide. Berhemeke dirêj a pexşanî bi gelemperî li perçeyên li pey hev tê dabeşkirin; ev perçe çi tên navandin?",
+    "prompt": "Wêne kitêbeke stûr û girtî nîşan dide. Berhemeke dirêj a pexşanî bi gelemperî li parçeyên li pey hev tê dabeşkirin; ev parçe çawa tên binavkirin?",
     "answers": [
       "Perde",
       "Beş",
@@ -422,19 +422,19 @@
   {
     "id": "visual_2026_08_07_0013",
     "category": "Edebiyat",
-    "prompt": "Wêne helbesteke bi destxet hatiye nivîsandin nîşan dide. Di helbestê de lihevhatina dengên li dawiya rêzikan çi tê navandin?",
+    "prompt": "Wêne helbesteke ku bi destxetê hatiye nivîsandin nîşan dide. Di helbestê de lihevhatina dengên li dawiya rêzikan çawa tê binavkirin?",
     "answers": [
+      "Qafiye",
       "Kîte",
       "Rêzik",
-      "Qafiye",
       "Malik"
     ],
     "correctAnswer": "Qafiye",
     "promptTr": "Görselde el yazısıyla yazılmış bir şiir var. Şiirde dize sonlarındaki seslerin birbirini tutmasına ne denir?",
     "answersTr": [
+      "Kafiye",
       "Hece",
       "Dize",
-      "Kafiye",
       "Beyit"
     ],
     "correctAnswerTr": "Kafiye",
@@ -457,20 +457,20 @@
   {
     "id": "visual_2026_08_07_0014",
     "category": "Edebiyat",
-    "prompt": "Wêne kesekî nîşan dide ku bi mîkrofonê diaxive û tiştekî digihîne guhdaran. Di çîrok û romanan de dengê ku bûyeran ji xwendevan re radigihîne çi tê navandin?",
+    "prompt": "Wêne kesekî nîşan dide ku bi mîkrofonê diaxive û tiştekî digihîne guhdaran. Di çîrok û romanan de dengê ku bûyeran ji xwendevan re radigihîne çawa tê binavkirin?",
     "answers": [
+      "Vebêj",
       "Nivîskar",
       "Rexnegir",
-      "Leheng",
-      "Vebêj"
+      "Leheng"
     ],
     "correctAnswer": "Vebêj",
     "promptTr": "Görselde mikrofonla konuşup dinleyicilere bir şey aktaran biri var. Öykü ve romanlarda olayları okura aktaran sese ne denir?",
     "answersTr": [
+      "Anlatıcı",
       "Yazar",
       "Eleştirmen",
-      "Kahraman",
-      "Anlatıcı"
+      "Kahraman"
     ],
     "correctAnswerTr": "Anlatıcı",
     "explanation": "Anlatıcı, olayları aktaran sestir; yazarla her zaman aynı kişi değildir, çünkü yazar kurgusal bir anlatıcı yaratabilir. Kahraman olayları yaşayan kişi, eleştirmen ise eseri yorumlayan kişidir.",
@@ -492,7 +492,7 @@
   {
     "id": "visual_2026_08_07_0015",
     "category": "Cografya",
-    "prompt": "Wêne axeke vekirî ya bêriwek nîşan dide. Dema ba û av tebeqeya jorîn a vê axê ji cihê wê hildigirin û dibin cihekî din, ev pêvajoya xwezayî çi tê navandin?",
+    "prompt": "Wêne axeke vekirî ya bêriwek nîşan dide. Dema ba û av tebeqeya jorîn a vê axê ji cihê wê hildigirin û dibin cihekî din, ev pêvajoya xwezayî çawa tê binavkirin?",
     "answers": [
       "Buharbûn",
       "Kondensasyon",
@@ -565,21 +565,21 @@
     "prompt": "Di wêneyê de jin amûreke lêdanê ya gilover a bi çermekî tenê digirin. Ev amûr bi kîjan awayî tê lêxistin?",
     "answers": [
       "Bi du daran ji herdu aliyên çerm",
-      "Bi tilî û pelkên herdu destan",
       "Bi darekê û bi tenê destekê",
+      "Bi tilî û kefa herdu destan",
       "Bi firçeyên têlî yên nerm"
     ],
-    "correctAnswer": "Bi tilî û pelkên herdu destan",
+    "correctAnswer": "Bi tilî û kefa herdu destan",
     "promptTr": "Görselde kadınlar tek deri gerilmiş yuvarlak bir vurmalı çalgı tutuyor. Bu çalgı hangi yolla çalınır?",
     "answersTr": [
       "İki tokmakla derinin iki yanından",
-      "İki elin parmak ve avuçlarıyla",
       "Bir tokmak ve tek elle",
+      "İki elin parmak ve avuçlarıyla",
       "Yumuşak telli fırçalarla"
     ],
     "correctAnswerTr": "İki elin parmak ve avuçlarıyla",
     "explanation": "Erbane bir elle tutulur ve iki elin parmakları ile avuçlarıyla deriye vurularak çalınır; bu yüzden ince ve hızlı vuruşlara elverişlidir. Tokmakla çalınan çalgı dahol'dur, telli fırçalar ise caz müziğinde trampet üzerinde kullanılır.",
-    "explanationKu": "Erbane bi destekê tê girtin û bi tilî û pelkên herdu destan li çerm tê xistin; ji ber vê yekê lêdanên nazik û bilez pêkan in. Amûra ku bi daran tê lêxistin dahol e, firçeyên têlî jî di muzîka cazê de li ser trampetê tên bikaranîn.",
+    "explanationKu": "Erbane bi destekê tê girtin û bi tilî û kefa herdu destan li çerm tê xistin; ji ber vê yekê lêdanên nazik û bilez pêkan in. Amûra ku bi daran tê lêxistin dahol e, firçeyên têlî jî di muzîka cazê de li ser trampetê tên bikaranîn.",
     "explanationTr": "Erbane bir elle tutulur ve iki elin parmakları ile avuçlarıyla deriye vurularak çalınır; bu yüzden ince ve hızlı vuruşlara elverişlidir. Tokmakla çalınan çalgı dahol'dur, telli fırçalar ise caz müziğinde trampet üzerinde kullanılır.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/erbane.webp",
@@ -632,7 +632,7 @@
   {
     "id": "visual_2026_08_07_0019",
     "category": "Muzîk",
-    "prompt": "Wêne rûpeleke notayan a li ser klavyeyekê nîşan dide. Ew komika xêzên hevterîb ên ku not li ser wan tên danîn ji çend xêzan pêk tê?",
+    "prompt": "Wêne rûpeleke notayan a li ser klavyeyekê nîşan dide. Ew komika xêzên hevterîb ên ku nota li ser wan tên danîn ji çend xêzan pêk tê?",
     "answers": [
       "Sê xêz",
       "Çar xêz",
@@ -669,22 +669,22 @@
     "category": "Muzîk",
     "prompt": "Di wêneyê de komek stranbêj bi hev re distirên. Gava di heman gavê de çend dengên ji hev cuda lê lihevhatî bi hev re tên gotin, navê vê hevbûna dengan çi ye?",
     "answers": [
-      "Harmonî",
       "Melodî",
       "Rîtm",
-      "Tempo"
+      "Tempo",
+      "Harmonî"
     ],
     "correctAnswer": "Harmonî",
     "promptTr": "Görselde bir topluluk birlikte şarkı söylüyor. Aynı anda, birbirinden farklı ama birbiriyle uyuşan sesler birlikte söylendiğinde bu ses birlikteliğine ne ad verilir?",
     "answersTr": [
-      "Armoni",
       "Melodi",
       "Ritim",
-      "Tempo"
+      "Tempo",
+      "Armoni"
     ],
     "correctAnswerTr": "Armoni",
     "explanation": "Armoni, aynı anda söylenen ve birbiriyle uyuşan farklı seslerin birlikteliğidir. Melodi seslerin peş peşe dizilişi, ritim zamanın bölünüşü, tempo ise icranın hızıdır.",
-    "explanationKu": "Harmonî hevbûna çend dengên cuda ye ku di heman demê de tên gotin û bi hev re lihev tên. Melodî rêza dengên li pey hev e, rîtm dabeşkirina demê ye, tempo jî lezê nîşan dide.",
+    "explanationKu": "Harmonî hevbûna çend dengên cuda ye ku di heman demê de tên gotin û bi hev re li hev tên. Melodî rêza dengên li pey hev e, rîtm dabeşkirina demê ye, tempo jî lezê nîşan dide.",
     "explanationTr": "Armoni, aynı anda söylenen ve birbiriyle uyuşan farklı seslerin birlikteliğidir. Melodi seslerin peş peşe dizilişi, ritim zamanın bölünüşü, tempo ise icranın hızıdır.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/koro.webp",

@@ -113,6 +113,30 @@ void main() {
     );
   });
 
+  test('singleton gün değişince resetInstance olmadan yenilenir', () async {
+    final dayOne = DateTime(2026, 9, 8, 23, 59);
+    final dayTwo = DateTime(2026, 9, 9, 0, 1);
+    SharedPreferences.setMockInitialValues({
+      'zankurd.missions.date': '2026-09-08',
+      'zankurd.missions.answeredToday': 6,
+    });
+
+    final store = await DailyMissionStore.load(now: dayOne);
+    expect(store.correctAnswersToday, 6);
+
+    final reloaded = await DailyMissionStore.load(now: dayTwo);
+    expect(
+      identical(reloaded, store),
+      isFalse,
+      reason: 'Gün döndüğünde cached store yeniden kullanılmamalı.',
+    );
+    expect(
+      reloaded.correctAnswersToday,
+      0,
+      reason: 'Dünün cached sayacı bugüne taşınmamalı.',
+    );
+  });
+
   test('clear sayacı da temizliyor', () async {
     final store = await DailyMissionStore.loadForTest([
       mission(MissionType.useWildcard),

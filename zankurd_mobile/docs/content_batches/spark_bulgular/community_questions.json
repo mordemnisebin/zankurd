@@ -1,0 +1,43 @@
+[
+  {
+    "id": "comm_cog_0001",
+    "kusur": [
+      "dil_hatasi"
+    ],
+    "not": "Kurmancî şıklarda 'Bakûr' (şapkalı û) yazılmış, doğrusu 'Bakur'dur ve izafe tamlamasında 'Kurdistanê' (-ê eki) eksiktir. Ayrıca answersTr Türkçe yerine Kurmancî bırakılmıştır.",
+    "oneri": "Şıklar 'Bakurê Kurdistanê', 'Başûrê Kurdistanê' olarak düzeltilmeli; answersTr Türkçeleştirilmelidir."
+  },
+  {
+    "id": "comm_cog_0003",
+    "kusur": [
+      "dil_hatasi"
+    ],
+    "not": "Kurmancî şıklarda Kürtçe yer adları (Mêrdîn, Amed, Şirnex, Êlih) yerine Türkçe resmi il adları (Mardin, Diyarbakır, Şırnak, Batman) kullanılmıştır.",
+    "oneri": "Kurmancî şıklar Mêrdîn, Amed, Şirnex, Êlih yapılmalı."
+  },
+  {
+    "id": "comm_cog_0005",
+    "kusur": [
+      "kategori_yanlis",
+      "dil_hatasi"
+    ],
+    "not": "Seyîd Rıza tarihi bir şahsiyettir, soru Cografya kategorisine konmuştur. Ayrıca şıklarda 'Şîrnex' (hatalı î) yazılmıştır.",
+    "oneri": "Kategori Dîrok yapılmalı, şıktaki yazım Şirnex olarak düzeltilmeli."
+  },
+  {
+    "id": "comm_sin_0101",
+    "kusur": [
+      "dil_hatasi"
+    ],
+    "not": "Kurmancî sorunun şıkları tamamen Türkçe yazılmıştır ('Altın Palmiye', 'Altın Ayı' vb.).",
+    "oneri": "Kurmancî şıklar 'Palmiyeya Zêrîn', 'Hirça Zêrîn' gibi Kurmancî terimlere çevrilmeli."
+  },
+  {
+    "id": "comm_sin_0103",
+    "kusur": [
+      "dil_hatasi"
+    ],
+    "not": "Film adı Kurmancî promptta 'Sûrû' olarak hatalı yazılmıştır (filmin adı Sürü'dür).",
+    "oneri": "Prompt 'Fîlma \"Sürü\" (1978)...' olarak düzeltilmeli."
+  }
+]

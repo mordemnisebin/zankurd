@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/strings.dart';
-import '../theme/app_theme.dart';
+import 'sahne/sahne.dart';
 
 /// Bir rehber turu adımı: hedef widget'ın konumu + açıklayıcı metin.
 class CoachMarkStep {
   const CoachMarkStep({
     required this.targetKey,
     required this.icon,
-    required this.titleKu,
-    required this.titleTr,
-    required this.descriptionKu,
-    required this.descriptionTr,
+    required this.title,
+    required this.description,
   });
 
   final GlobalKey targetKey;
   final IconData icon;
-  final String titleKu;
-  final String titleTr;
-  final String descriptionKu;
-  final String descriptionTr;
+  final String title;
+  final String description;
 }
 
 /// Ekranın üstüne bindirilen, hedef widget'ı aydınlık bırakıp gerisini
@@ -180,7 +176,7 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
 
     return Positioned.fill(
       child: Material(
-        color: Colors.transparent,
+        type: MaterialType.transparency,
         child: Stack(
           children: [
             Positioned.fill(
@@ -189,14 +185,17 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
                   _next();
                 },
                 child: CustomPaint(
-                  painter: _SpotlightPainter(highlightRect),
+                  painter: _SpotlightPainter(
+                    highlightRect,
+                    ring: SahneTokens.of(context).gold,
+                  ),
                   size: Size.infinite,
                 ),
               ),
             ),
             Positioned(
-              left: 20,
-              right: 20,
+              left: SahneSpace.page,
+              right: SahneSpace.page,
               top: tooltipTop,
               bottom: tooltipBottom,
               child: _CoachMarkBubble(
@@ -217,38 +216,41 @@ class _CoachMarkOverlayState extends State<CoachMarkOverlay> {
   }
 }
 
+/// Karartma + hedefin çevresinde pahlı ışık deliği.
+///
+/// 2026-09-29 Şahnê: perde gecenin zemini (`night.bg`, %80), delik M pah,
+/// kenarı Halka 2 Zêr (ışık); eski Agir kontur birincil eylem rengini
+/// süs olarak kullanıyordu.
 class _SpotlightPainter extends CustomPainter {
-  _SpotlightPainter(this.rect);
+  _SpotlightPainter(this.rect, {required this.ring});
 
   final Rect rect;
+  final Color ring;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final overlayPath = Path()
-      ..addRect(Rect.fromLTWH(0, 0, size.width, size.height));
-    final holePath = Path()
-      ..addRRect(RRect.fromRectAndRadius(rect, const Radius.circular(16)));
+    final hole = SahneShape.m.getOuterPath(rect);
     final combined = Path.combine(
       PathOperation.difference,
-      overlayPath,
-      holePath,
+      Path()..addRect(Offset.zero & size),
+      hole,
     );
     canvas.drawPath(
       combined,
-      Paint()..color = Colors.black.withValues(alpha: 0.72),
+      Paint()..color = SahneTokens.night.bg.withValues(alpha: 0.8),
     );
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(rect, const Radius.circular(16)),
+    canvas.drawPath(
+      hole,
       Paint()
-        ..color = AppTheme.accent
+        ..color = ring
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.5,
+        ..strokeWidth = SahneRing.r2,
     );
   }
 
   @override
   bool shouldRepaint(covariant _SpotlightPainter oldDelegate) =>
-      oldDelegate.rect != rect;
+      oldDelegate.rect != rect || oldDelegate.ring != ring;
 }
 
 class _CoachMarkBubble extends StatelessWidget {
@@ -270,79 +272,115 @@ class _CoachMarkBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final isLast = index == total - 1;
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-        boxShadow: AppTheme.cardShadow(context),
+    final primaryLabel = isLast
+        ? Tr.forKu(K.anladim, isKu)
+        : Tr.forKu(K.nextStep, isKu);
+    final stacked = MediaQuery.textScalerOf(context).scale(16) / 16 > 1.25;
+    // 2026-09-29 Şahnê: balon yüzey kartıdır (Perde, L pah, gündüzde 1 px
+    // kenar), bulanık gölge yok. İkon karosu nötr Kulis tonu (M pah);
+    // başlık Gövde 700, sayaç kalın açıklama (tablo rakamı), açıklama
+    // ikincil metin. "Atla" metin düğmesi, "İleri/Anladım" ekranın
+    // o anki tek birincil eylemi. Açıklama Açıklama biçemindedir.
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: t.s1,
+        shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 36,
-                height: 36,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  gradient: AppTheme.accentGradient,
-                  borderRadius: BorderRadius.circular(AppRadius.badge),
-                ),
-                child: Icon(step.icon, color: Colors.white, size: 19),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  isKu ? step.titleKu : step.titleTr,
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
-                    fontSize: 16,
+      child: Padding(
+        padding: const EdgeInsets.all(SahneSpace.x4),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: t.roleTint(SahneRole.gold),
+                    shape: SahneShape.m,
+                  ),
+                  child: SizedBox.square(
+                    dimension: 36,
+                    child: Icon(
+                      step.icon,
+                      color: t.roleText(SahneRole.gold),
+                      size: 20,
+                    ),
                   ),
                 ),
-              ),
-              Text(
-                '${index + 1}/$total',
-                style: TextStyle(
-                  color: AppTheme.textMutedColor(context),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(
+                  child: Text(
+                    step.title,
+                    style: SahneType.bodyStrong.copyWith(color: t.tx),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Text(
-            isKu ? step.descriptionKu : step.descriptionTr,
-            style: TextStyle(
-              color: AppTheme.textSubColor(context),
-              fontSize: 13.5,
-              height: 1.4,
+                Text(
+                  '${index + 1}/$total',
+                  style: SahneType.captionStrong.copyWith(
+                    color: t.tx3,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              TextButton(
-                onPressed: onSkip,
-                child: Text(Tr.forKu(K.skip, isKu)),
-              ),
-              const Spacer(),
-              FilledButton(
+            const SizedBox(height: SahneSpace.x3),
+            // Açıklama boyu: balon hedefin karşı kenarına sabitlendiğinde
+            // (ör. öğrenme turunda şıklar ekranın ortasında) içeriği
+            // örtmemesi için kısa kalmalı (`quiz_tutorial_learning_layout`).
+            Text(
+              step.description,
+              style: SahneType.caption.copyWith(color: t.tx2),
+            ),
+            const SizedBox(height: SahneSpace.x4),
+            // 2026-09-30 simülatör (iOS Ekstra Büyük yazı, buyuk/20): yan yana
+            // duran "Atla" ve "İleri" büyük yazıda dar `Flexible` yuvaya
+            // sıkışıyor, "Pêş" düğmesinin etiketi kelimenin ortasından
+            // ("Pê/ş") kırılıyordu. Sessizdi çünkü testler normal ölçekte
+            // koşuyordu. Büyük yazıda düğmeler alt alta, tam genişlikte
+            // dizilir: birincil eylem üstte, "Atla" altta.
+            if (stacked) ...[
+              SahneButton.primary(
+                key: const ValueKey('coach-mark-next'),
+                label: primaryLabel,
                 onPressed: onNext,
-                child: Text(
-                  isLast
-                      ? (Tr.forKu(K.anladim, isKu))
-                      : (Tr.forKu(K.nextStep, isKu)),
+                arrow: !isLast,
+                expand: true,
+              ),
+              const SizedBox(height: SahneSpace.x2),
+              Center(
+                child: SahneButton.text(
+                  key: const ValueKey('coach-mark-skip'),
+                  label: Tr.forKu(K.skip, isKu),
+                  onPressed: onSkip,
+                  arrow: false,
                 ),
               ),
-            ],
-          ),
-        ],
+            ] else
+              Row(
+                children: [
+                  SahneButton.text(
+                    key: const ValueKey('coach-mark-skip'),
+                    label: Tr.forKu(K.skip, isKu),
+                    onPressed: onSkip,
+                    arrow: false,
+                  ),
+                  const Spacer(),
+                  Flexible(
+                    flex: 3,
+                    child: SahneButton.primary(
+                      key: const ValueKey('coach-mark-next'),
+                      label: primaryLabel,
+                      onPressed: onNext,
+                      arrow: !isLast,
+                    ),
+                  ),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }

@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
 import '../utils/percent_format.dart';
+import 'sahne/sahne.dart';
 
-/// Kültürel Modern ilerleme dili: dolgunun üzerinde kilim dokuma izi.
+/// İlerleme çubuğu (eski adıyla kilim çubuğu).
 ///
-/// 2026-07-25 görsel denetimi: bu bileşenin adı ve belgesi bir kilim
-/// motifi vaat ediyordu ("mercan dolgu üzerinde dokuma izi") ama gövdesi
-/// düz renkli yuvarlak bir çubuktan ibaretti — uygulamanın kültürel görsel
-/// kimliğini taşıyabilecek tek yer boş duruyordu. Desen artık çizilir.
+/// 2026-09-29 Şahnê: görünüş [SahneProgressBar] — S pah, iz Ray (`s3`),
+/// dolgu rolün rengi: öğrenmede `learnBar`, ödülde Zêr, yarışta Boyax.
+/// Kilim deseni çubuktan kaldırıldı: Şahnê'de tek sahiplenilmiş motif
+/// kilim göz şerididir ve yalnız sahne kartının üst kenarında ve sonuç
+/// puanının altında durur (`spec_sahne.json` → `illustrationIconRule`).
 ///
-/// Motif, Kurdî kilimlerinin en yaygın öğesi olan baklava dizisidir.
-/// Amaç süs değil kimlik: desen okunurluğu bozmayacak kadar sessiz
-/// tutulur ve yalnız dolu kısımda görünür, böylece ilerleme oranı yine
-/// tek bakışta okunur.
+/// [color] ham renk olarak boyanmaz, rolüne çevrilir ([sahneRoleFor]);
+/// yalnız nötr bir renk (ör. koyu bir kahramanın üstünde beyaz) çağıranın
+/// kendi zemin kararı sayılır ve korunur. [trackColor] ve [borderColor]
+/// renkli zeminler için dışarıdan verilebilir.
 class KilimProgressBar extends StatelessWidget {
   const KilimProgressBar({
     required this.value,
     this.height = 8,
-    this.color = AppTheme.brand,
+    this.color,
     this.trackColor,
     this.borderColor,
     super.key,
@@ -26,29 +27,38 @@ class KilimProgressBar extends StatelessWidget {
 
   final double value;
   final double height;
-  final Color color;
 
-  /// Boş kısmın rengi. Verilmezse tema yüzeyi kullanılır.
+  /// Dolgunun rolü; verilmezse öğrenme.
+  final Color? color;
+
+  /// Boş kısmın rengi. Verilmezse Ray (`s3`).
   ///
-  /// Renkli bir zeminin (ör. kategori hero'su) üstünde tema yüzeyi açık
-  /// kaldığı için iz, dolgudan ayırt edilemiyor ve %0 ilerleme "tamamen
-  /// dolu" gibi okunuyordu (2026-07-25). Renkli zeminlerde çağıran taraf
-  /// yarı saydam bir iz vermelidir.
+  /// Renkli bir zeminin (ör. kategori hero'su) üstünde tema izi dolgudan
+  /// ayırt edilemiyor ve %0 ilerleme "tamamen dolu" gibi okunuyordu
+  /// (2026-07-25). Renkli zeminlerde çağıran taraf yarı saydam bir iz
+  /// vermelidir.
   final Color? trackColor;
 
-  /// İz kenarlığı. Verilmezse tema kenarlığı kullanılır; renkli zeminde
-  /// [Colors.transparent] geçilebilir.
+  /// İz kenarlığı. Verilmezse kenar yok.
   final Color? borderColor;
 
-  /// Motifin görünür olabilmesi için gereken asgari yükseklik. Daha ince
-  /// çubuklarda baklavalar birbirine girip dolguyu gri bir bulanıklığa
-  /// çeviriyor; o durumda düz dolgu daha okunur.
-  static const double _minHeightForPattern = 6;
+  Color _fill(SahneTokens t) {
+    final c = color;
+    if (c == null) return t.learnBar;
+    return switch (sahneRoleFor(c)) {
+      SahneRole.learn => t.learnBar,
+      SahneRole.gold => t.gold,
+      SahneRole.race => t.race,
+      SahneRole.neutral => c,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final progress = value.clamp(0.0, 1.0);
-    final radius = BorderRadius.circular(AppRadius.pill);
+    final shape = height <= 28 ? SahneShape.s : SahneShape.m;
+    final border = borderColor;
 
     return Semantics(
       value: context.percentRatio(progress),
@@ -56,79 +66,22 @@ class KilimProgressBar extends StatelessWidget {
         key: const ValueKey('kilim-progress-track'),
         height: height,
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          color: trackColor ?? AppTheme.surfaceHiColor(context),
-          borderRadius: radius,
-          border: Border.all(
-            color:
-                borderColor ??
-                AppTheme.borderColor(context).withValues(alpha: 0.45),
-          ),
+        decoration: ShapeDecoration(
+          color: trackColor ?? t.s3,
+          shape: border == null
+              ? shape
+              : SahneShape.withSide(shape, border, width: 1),
         ),
-        alignment: Alignment.centerLeft,
+        alignment: AlignmentDirectional.centerStart,
         child: FractionallySizedBox(
           key: const ValueKey('kilim-progress-fill'),
           widthFactor: progress,
           heightFactor: 1,
           child: DecoratedBox(
-            decoration: BoxDecoration(color: color, borderRadius: radius),
-            child: height >= _minHeightForPattern
-                ? CustomPaint(
-                    key: const ValueKey('kilim-progress-motif'),
-                    painter: _KilimMotifPainter(height: height, fill: color),
-                    size: Size.infinite,
-                  )
-                : null,
+            decoration: ShapeDecoration(color: _fill(t), shape: shape),
           ),
         ),
       ),
     );
   }
-}
-
-/// Dolgunun üzerine baklava dizisi çizer.
-///
-/// Motif rengi dolgudan türetilir: koyu dolguda açık, açık dolguda koyu
-/// bir ton kullanılır. Sabit beyaz kullanılsaydı beyaz dolgulu çubuklarda
-/// (ör. renkli hero üzerindeki ilerleme) desen tamamen kaybolurdu —
-/// uygulamanın başka yerlerindeki kontrast-farkında renk mantığıyla
-/// (bkz. `AppColors.readableAccent`) aynı ilke.
-class _KilimMotifPainter extends CustomPainter {
-  const _KilimMotifPainter({required this.height, required this.fill});
-
-  final double height;
-  final Color fill;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (size.width <= 0 || size.height <= 0) return;
-
-    // Baklava genişliği yüksekliğe bağlanır: çubuk kalınlaştıkça motif de
-    // büyür, oran sabit kalır. Sabit piksel kullanılsaydı ince çubukta
-    // desen sıkışır, kalın çubukta seyrelirdi.
-    final unit = height * 0.9;
-    final isLightFill = fill.computeLuminance() > 0.6;
-    final paint = Paint()
-      ..color = (isLightFill ? Colors.black : Colors.white).withValues(
-        alpha: isLightFill ? 0.14 : 0.22,
-      )
-      ..style = PaintingStyle.fill;
-
-    final halfHeight = size.height / 2;
-    // Sol kenardan yarım birim içeride başlanır ki ilk baklava dolgunun
-    // başlangıcında yarım kalmasın.
-    for (var x = unit / 2; x < size.width + unit; x += unit) {
-      final diamond = Path()
-        ..moveTo(x, 0)
-        ..lineTo(x + unit / 2, halfHeight)
-        ..lineTo(x, size.height)
-        ..lineTo(x - unit / 2, halfHeight)
-        ..close();
-      canvas.drawPath(diamond, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(_KilimMotifPainter oldDelegate) =>
-      oldDelegate.height != height || oldDelegate.fill != fill;
 }

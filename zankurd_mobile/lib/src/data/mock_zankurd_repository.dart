@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/async_duel.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/friend.dart';
@@ -19,23 +20,222 @@ import '../game/speed_score.dart';
 import '../models/room_message.dart';
 import '../utils/error_reporter.dart';
 import '../models/tournament.dart';
+import '../models/referral_result.dart';
 import '../utils/coin_calculator.dart';
 import 'curated_question_bank.dart';
+import 'learning_assessment_bank.dart';
+import 'learning_lesson_aliases.dart';
 import 'question_bank_loader.dart';
 import 'seen_question_store.dart';
+import 'subcategory_level_plan.dart';
+import 'durable_write.dart';
 import 'zankurd_repository.dart';
-import '../config/subcategory_config.dart';
 import '../config/category_visibility.dart';
 import '../services/question_set_policy.dart';
 import '../services/question_content_policy.dart';
 
+/// [MockZanKurdRepository.addPendingAsyncDuelForTesting] ile kurulan, henüz
+/// kimse tarafından alınmamış "açık" düello.
+///
+/// Gerçek üründe bekleyen taraf başka bir kullanıcının cihazıdır. Tek
+/// kullanıcılı sahte depoda gerçek bir ikinci oyuncu yok; bu kayıt testin
+/// önceden "oynanmış" saydığı rakip tarafı temsil eder — sonraki
+/// `startAsyncDuel` çağrısı bunu tüketir ve çağıranı `opponent` yapar.
+class _MockPendingAsyncDuel {
+  _MockPendingAsyncDuel({
+    required this.category,
+    required this.opponentName,
+    required this.questions,
+    required this.opponentCorrect,
+    required this.opponentMs,
+  });
+
+  final String? category;
+  final String opponentName;
+  final List<QuizQuestion> questions;
+  final int opponentCorrect;
+  final int opponentMs;
+}
+
+/// Tek bir sırayla düellonun bellek içi durumu.
+///
+/// Sahte depo tek bir yerel oyuncuyu temsil eder; sunucudaki simetrik
+/// creator/opponent satırları yerine yalnız "ben" (bu düelloda benim
+/// oynadığım taraf, [myCorrect]/[myMs]) ve "öteki" (rakip, [otherCorrect]/
+/// [otherMs]) tutulur. [questions] GERÇEK doğru cevaplarla tutulur ve asla
+/// dışarı verilmez — [hiddenQuestions] her zaman gizli kopyayı döner.
+class _MockAsyncDuel {
+  _MockAsyncDuel({
+    required this.id,
+    required this.role,
+    required this.category,
+    required this.questions,
+    required this.opponentName,
+    required this.createdAt,
+    required this.expiresAt,
+    this.otherCorrect,
+    this.otherMs,
+  });
+
+  final String id;
+  final AsyncDuelRole role;
+  final String? category;
+  final List<QuizQuestion> questions;
+  final String? opponentName;
+  final DateTime createdAt;
+  final DateTime expiresAt;
+
+  final Set<int> answeredIndices = {};
+  int myCorrect = 0;
+  int myMs = 0;
+
+  /// Rakip bitirmeden `null`dır. `role == opponent` olan düellolarda testin
+  /// önceden kurduğu (`addPendingAsyncDuelForTesting`) değerle, oluşumda
+  /// hemen dolu gelir — bu yüzden opponent akışı ilk sorudan itibaren
+  /// "eşleşmiş", son cevapta "tamamlanmış" görünür.
+  int? otherCorrect;
+  int? otherMs;
+
+  DateTime? completedAt;
+  bool seen = false;
+  bool xpAwarded = false;
+
+  bool get myFinished => answeredIndices.length >= questions.length;
+  bool get otherFinished => otherCorrect != null && otherMs != null;
+
+  AsyncDuelStatus get status {
+    if (myFinished && otherFinished) return AsyncDuelStatus.completed;
+    if (DateTime.now().toUtc().isAfter(expiresAt)) {
+      return AsyncDuelStatus.expired;
+    }
+    if (otherFinished) return AsyncDuelStatus.matched;
+    return AsyncDuelStatus.open;
+  }
+
+  List<QuizQuestion> get hiddenQuestions =>
+      questions.map((q) => q.copyWith(correctAnswer: '')).toList();
+
+  /// Son soru cevaplandığında `answerAsyncDuel`ın gömdüğü karşılaştırma.
+  AsyncDuelResult buildResult() {
+    final correctOther = otherCorrect;
+    final msOther = otherMs;
+    if (correctOther == null || msOther == null) {
+      return AsyncDuelResult(waiting: true, myCorrect: myCorrect, myMs: myMs);
+    }
+    return AsyncDuelResult(
+      waiting: false,
+      myCorrect: myCorrect,
+      myMs: myMs,
+      opponentCorrect: correctOther,
+      opponentMs: msOther,
+      outcome: _asyncDuelOutcome(
+        myCorrect: myCorrect,
+        myMs: myMs,
+        otherCorrect: correctOther,
+        otherMs: msOther,
+      ),
+    );
+  }
+}
+
+/// Sırayla düello kazananı: sunucu kuralıyla birebir aynı (bkz.
+/// `sirayla_duello_tasarim.md` § KESİN SÖZLEŞME) — çok doğru kazanır,
+/// eşitlikte toplam süresi kısa olan, o da eşitse berabere.
+AsyncDuelOutcome _asyncDuelOutcome({
+  required int myCorrect,
+  required int myMs,
+  required int otherCorrect,
+  required int otherMs,
+}) {
+  if (myCorrect != otherCorrect) {
+    return myCorrect > otherCorrect
+        ? AsyncDuelOutcome.win
+        : AsyncDuelOutcome.loss;
+  }
+  if (myMs != otherMs) {
+    return myMs < otherMs ? AsyncDuelOutcome.win : AsyncDuelOutcome.loss;
+  }
+  return AsyncDuelOutcome.draw;
+}
+
 class MockZanKurdRepository implements ZanKurdRepository {
-  MockZanKurdRepository();
+  /// [levelSeed] alt konu seviyelerinin dolgu karıştırma tohumudur; verilmezse
+  /// her depo (= her oturum) kendi rastgele tohumunu alır: dolgu oturum
+  /// içinde kararlı, oturumlar arasında farklıdır. Testler sabit verir.
+  MockZanKurdRepository({int? levelSeed})
+    : _levelSeed = levelSeed ?? Random().nextInt(0x7fffffff);
+
+  final int _levelSeed;
+
+  /// Alt konu planları (kategori|alt konu → plan). Plan, soru listesi
+  /// değişmedikçe aynıdır; `build` her çizimde çağrıldığı için ağır planı
+  /// yeniden kurmamak gerekir. Kaynak liste özdeş değilse (testler her
+  /// çağrıda yeni liste döndürür) önbellek atılır.
+  Object? _plansSource;
+  final Map<String, SubcategoryLevelPlan> _plans = {};
+
+  SubcategoryLevelPlan _subcategoryPlan(String category, String subCategory) {
+    final source = questions;
+    if (!identical(source, _plansSource)) {
+      _plans.clear();
+      _plansSource = source;
+    }
+    return _plans.putIfAbsent(
+      '$category|$subCategory',
+      () => SubcategoryLevelPlan.build(
+        standardLevels: levelsForCategory(category),
+        categoryPool: [
+          for (final q in _playableQuestions)
+            if (q.category == category) q,
+        ],
+        subCategory: subCategory,
+        seed: _levelSeed,
+      ),
+    );
+  }
+
+  /// "Bu kategorinin tamamı" satırı ([SubcategoryScreen] alt konusu
+  /// kalmayan kategoriler için gösterir); gerçek bir alt konu değildir,
+  /// kategori yolunu kullanır.
+  static const _wholeCategoryId = 'gisti';
+
+  static bool _isRealSubcategory(String? subCategory) =>
+      subCategory != null &&
+      subCategory.isNotEmpty &&
+      subCategory != _wholeCategoryId;
 
   static const _contentPolicy = QuestionContentPolicy();
 
-  List<QuizQuestion> get _playableQuestions =>
-      questions.where(_contentPolicy.isPlayable).toList(growable: false);
+  /// Oynanabilir havuz, kaynak liste DEĞİŞMEDİKÇE bir kez hesaplanır.
+  ///
+  /// Eskiden getter her çağrıda ~3.000 soruyu `isPlayable`den geçirip yeni
+  /// bir liste kuruyordu (ölçüm: JIT'te ~2 ms/çağrı). Çağıranlar yalnız
+  /// olay işleyicileri değil: `SubcategoryScreen.build` her yeniden çizimde
+  /// çağırıyordu. Kusur sessizdi — sonuç doğruydu, yalnız her çağrı aynı işi
+  /// baştan yapıyordu.
+  ///
+  /// Anahtar kaynak listenin KİMLİĞİDİR (`identical`): yükleyici
+  /// `_questions`ı yeni bir liste ile değiştirdiğinde (`load`,
+  /// `setQuestionsForTest`) ya da bir test `questions`ı geçersiz kıldığında
+  /// kimlik değişir ve önbellek kendiliğinden düşer. `isPlayable` saftır
+  /// (sabit gizli-kategori kümesi, sabit emekli kimlik kümesi, değişmez
+  /// soru) — aynı liste aynı sonucu verir.
+  List<QuizQuestion>? _playableCache;
+  List<QuizQuestion>? _playableCacheSource;
+
+  List<QuizQuestion> get _playableQuestions {
+    final source = questions;
+    final cached = _playableCache;
+    if (cached != null && identical(_playableCacheSource, source)) {
+      return cached;
+    }
+    final playable = List<QuizQuestion>.unmodifiable(
+      source.where(_contentPolicy.isPlayable),
+    );
+    _playableCache = playable;
+    _playableCacheSource = source;
+    return playable;
+  }
 
   static const _allCategories = <String>[
     'Ziman',
@@ -53,6 +253,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // kapatılmak yerine dolduruldu; sorular kavramla birlikte kavramın
     // Kurmancî karşılığını da öğretiyor.
     'Teknolojî',
+    // 2026-09-30: Kürt kategorilerinden SONRA gelir. Kürtlerle bağı olmayan
+    // nötr genel bilgi (dünya sineması/coğrafyası/tarih) kendi adıyla ayrı
+    // durur; ürünün ~%70'i Kürt içeriği, ~%30'u bu tür genel bilgidir.
+    'Cîhan',
   ];
 
   @override
@@ -99,10 +303,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<String?> getPlayerTag() async {
-    // Çevrimdışı depoda sabit bir kod: ekranın kodu nasıl gösterdiği
-    // testlerde ve turda görünür olsun, ama gerçek bir kodmuş gibi
-    // davranmasın.
-    return 'DEMO';
+    // 2026-09-29 doğallık (K10): burada sabit 'DEMO' dönüyordu ve arkadaş
+    // ekranı onu paylaşılabilir bir davet kodu düğmesi olarak ("DEMO")
+    // çiziyordu; profil de "ZK-DEMO" yazıyordu. Kimsenin kullanamayacağı
+    // bir kod, gerçek bir kod gibi sunuluyordu. Sunucu kimliği olmayan
+    // depo kod üretmez (`OfflineZanKurdRepository` gibi): düğme görünmez,
+    // "Davet kodu gir" kalır. Kodun nasıl göründüğünü ekran turu kendi
+    // hikâyesiyle gösterir (`tool/screenshots/screen_tour_test.dart`).
+    return null;
   }
 
   @override
@@ -131,6 +339,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // (`_hasServerScore`) örtmüştü; sıralamada öyle bir kapı yoktu ve yalan
     // olduğu gibi göründü. Kaynağı düzeltmek iki ekranı da düzeltir: hiç
     // oynamamış oyuncunun sunucu satırı yoktur.
+    return null;
+  }
+
+  @override
+  Future<LeaderboardEntry?> getMyLeaderboardRank(
+    LeaderboardPeriod period,
+  ) async {
+    // Sahte depoda biten çevrimiçi oda yok; `loadLeaderboard` de boş
+    // liste verdiği için dönemin sıralamasında satır yoktur. Sabit satır
+    // ancak gerçekten dönem puanı geldiğinde çizilir (2026-09-30).
     return null;
   }
 
@@ -164,7 +382,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  List<QuizLevel> levelsForCategory(String category) {
+  List<QuizLevel> levelsForCategory(String category, {String? subCategory}) {
+    if (_isRealSubcategory(subCategory)) {
+      // Alt konu yolu: kart GERÇEK boyutu ve zorluk aralığını gösterir
+      // (bkz. [SubcategoryLevelPlan]).
+      return [
+        for (final level in _subcategoryPlan(category, subCategory!).levels)
+          level.toQuizLevel(),
+      ];
+    }
     return [
       QuizLevel(
         number: 1,
@@ -222,10 +448,33 @@ class MockZanKurdRepository implements ZanKurdRepository {
     required int difficultyMin,
     required int difficultyMax,
     String? subCategory,
+    int? levelNumber,
     int limit = 10,
   }) async {
+    if (_isRealSubcategory(subCategory)) {
+      // Alt konu yolu zorluk BANDIYLA değil, havuzun zorluğa göre
+      // bölünmüş çakışmasız DİLİMİYLE çalışır (bkz. [SubcategoryLevelPlan]);
+      // bu yüzden hangi seviye olduğu bilinmelidir. Seviye numarası
+      // verilmeyen eski çağrılar bandından çıkarılır.
+      final plan = _subcategoryPlan(category, subCategory!);
+      final planned = plan.level(
+        levelNumber ?? plan.numberFor(difficultyMin, difficultyMax),
+      );
+      // Plan bu alt konu için en az bir soru kuruyorsa SON SÖZÜ o söyler:
+      // boş kalan bir seviye kategori havuzuna düşmez (eskiden `pool.isEmpty
+      // ? playable` her şeyi geri getiriyor, seviyeler arası tekrarı ve
+      // konu dışı soruyu sessizce geri sokuyordu). Alt konunun hiç sorusu
+      // yoksa (bilinmeyen kimlik) kategori yoluna düşülür.
+      final hasQuestions = plan.levels.any(
+        (level) => level.candidates.isNotEmpty,
+      );
+      if (hasQuestions) {
+        return _selectFresh(planned?.candidates ?? const [], limit);
+      }
+    }
+
     final playable = _playableQuestions;
-    final byCategoryAndDifficulty = playable
+    final pool = playable
         .where(
           (question) =>
               question.category == category &&
@@ -233,26 +482,6 @@ class MockZanKurdRepository implements ZanKurdRepository {
               question.difficulty <= difficultyMax,
         )
         .toList();
-
-    var pool = byCategoryAndDifficulty;
-    if (subCategory != null) {
-      final matched = byCategoryAndDifficulty
-          .where((q) => SubcategoryConfig.getSubcategoryId(q) == subCategory)
-          .toList();
-      // Alt kategori etiketi gerçek bir alan değil, id hash'inden türetilir;
-      // eşleşen sayı limit'in altında kalırsa aynı kategori+zorluktaki diğer
-      // sorularla tamamla, seviyeyi eksik soruyla bitirme.
-      if (matched.length < limit) {
-        final matchedIds = matched.map((q) => q.id).toSet();
-        final need = limit - matched.length;
-        final fillers = byCategoryAndDifficulty
-            .where((q) => !matchedIds.contains(q.id))
-            .take(need * 3);
-        pool = [...matched, ...fillers];
-      } else {
-        pool = matched;
-      }
-    }
 
     // İlk iki basamak (Destpêk / Bingeh) bir öğrenme yolunun girişidir:
     // bankadaki `difficulty` etiketi konu zorluğunu anlatır ama okuma
@@ -266,12 +495,323 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<List<QuizQuestion>> loadLearningQuizQuestions({
+    required String category,
+    required String learningLessonId,
+    int limit = 5,
+  }) async {
+    // Sunucu dersi slug'ı (`silav-u-nasin`) bir ya da birkaç yerel ders
+    // kimliğine açılır; yerel kimlik kendisidir (bkz. LearningLessonAliases).
+    final bankIds = LearningLessonAliases.bankIdsFor(learningLessonId);
+    final exact = _playableQuestions
+        .where(
+          (question) =>
+              question.category == category &&
+              bankIds.contains(question.metadata?.learningLessonId),
+        )
+        .toList(growable: false);
+
+    // Açık ders etiketli sorular önce gelir; eksik kalan yer yalnız aynı
+    // dersin yerel, editoryal sözlük çiftlerinden üretilen ölçme sorularıyla
+    // doldurulur. Geniş kategori havuzu fallback değildir: mini-quiz dersle
+    // ilgisiz genel kategori sorularını "ders sorusu" gibi gösterebiliyordu.
+    //
+    // 2026-09-30: etiketli soru varken dolgu yapılmıyordu; bir etiketli
+    // sorusu olan ders (grammar_1, animals_2) tek soruluk bir quiz
+    // açıyordu, yani bir derse soru etiketlemek o dersi KISALTIYORDU.
+    final tagged = exact.isEmpty
+        ? const <QuizQuestion>[]
+        : await _selectFresh(exact, limit);
+    if (tagged.length >= limit) return tagged;
+    final taggedIds = tagged.map((q) => q.id).toSet();
+    // Birden çok bankalı ders (Selamlaşma ve Tanışma) için dolgu sırayla
+    // karıştırılır; yoksa ilk bankanın beş sorusu ikincisini hiç göstermezdi.
+    final perBank = [
+      for (final bankId in bankIds)
+        LearningAssessmentBank.questionsFor(
+          lessonId: bankId,
+          category: category,
+          limit: limit,
+        ),
+    ];
+    final fillers = <QuizQuestion>[
+      for (var i = 0; i < limit; i++)
+        for (final bank in perBank)
+          if (i < bank.length) bank[i],
+    ].where((q) => !taggedIds.contains(q.id));
+    return [...tagged, ...fillers].take(limit).toList(growable: false);
+  }
+
+  @override
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room) async {
     final playable = _playableQuestions;
     final pool = playable
         .where((question) => question.category == room.category)
         .toList(growable: false);
     return _selectFresh(pool.isEmpty ? playable : pool, room.questionCount);
+  }
+
+  // ─── Sırayla düello (async 1v1) ──────────────────────────────────────
+  //
+  // Bellek içi tam bir uygulama: gerçek bir ikinci oyuncu yok, ama sözleşme
+  // (bkz. `lib/src/models/async_duel.dart`) sunucudakiyle aynı davranır.
+  // Normal akışta her `startAsyncDuel` çağrısı yeni bir düello açar (creator)
+  // — sahte depo kendi kendini rakip yapmaz. Bir "opponent" akışını
+  // sınamak için test önce [addPendingAsyncDuelForTesting] ile bekleyen bir
+  // düello kurar; bir SONRAKİ `startAsyncDuel` bunu tüketir.
+
+  static const _asyncDuelQuestionCount = 7;
+  static const _asyncDuelDuration = Duration(hours: 48);
+
+  int _asyncDuelSeq = 0;
+  final Map<String, _MockAsyncDuel> _asyncDuels = {};
+  final List<_MockPendingAsyncDuel> _pendingAsyncDuels = [];
+
+  String? _normalizedAsyncDuelCategory(String? category) {
+    final trimmed = category?.trim();
+    return (trimmed == null || trimmed.isEmpty) ? null : trimmed;
+  }
+
+  /// 7 oynanabilir soru seçer: `option_a`..`d` şık anahtarına dökülemeyen
+  /// türler (cümle kurma, boşluk doldurma) elenir — `QuestionContentPolicy`
+  /// hileyi gizli-cevap yoluna aynı gerekçeyle kapatır (bkz.
+  /// `isPlayableWithHiddenAnswer`, oda RPC'sinin uyguladığı süzgeç).
+  List<QuizQuestion> _pickAsyncDuelQuestions(String? category) {
+    final playable = _playableQuestions;
+    final byCategory = category == null
+        ? playable
+        : playable
+              .where((question) => question.category == category)
+              .toList(growable: false);
+    final pool = byCategory.isEmpty ? playable : byCategory;
+    final shuffled = [...pool]..shuffle(Random());
+
+    final picked = <QuizQuestion>[];
+    final chosenIds = <String>{};
+    for (final question in shuffled) {
+      if (picked.length >= _asyncDuelQuestionCount) break;
+      if (!chosenIds.add(question.id)) continue;
+      final hiddenPreview = question.copyWith(correctAnswer: '');
+      if (_contentPolicy.isPlayableWithHiddenAnswer(hiddenPreview)) {
+        picked.add(question);
+      }
+    }
+    // Sunucu tarafı `No questions` diye fırlatır (bkz. sözleşme); yerel
+    // banka yeterli soru sunmuyorsa aynı hatayla düşer — sahte bir kısa
+    // tur uydurmak (7 yerine 3 soru) sonucu sessizce bozardı.
+    if (picked.length < _asyncDuelQuestionCount) {
+      throw StateError('No questions');
+    }
+    return picked;
+  }
+
+  int _clampAsyncDuelResponseMs(int responseMs) {
+    if (responseMs < 0) return 0;
+    if (responseMs > 120000) return 120000;
+    return responseMs;
+  }
+
+  @override
+  Future<AsyncDuelStart> startAsyncDuel({String? category}) async {
+    final normalizedCategory = _normalizedAsyncDuelCategory(category);
+    final pendingIndex = _pendingAsyncDuels.indexWhere(
+      (pending) =>
+          normalizedCategory == null ||
+          pending.category == null ||
+          pending.category == normalizedCategory,
+    );
+
+    final now = DateTime.now().toUtc();
+    final id = 'mock_async_duel_${++_asyncDuelSeq}';
+
+    if (pendingIndex != -1) {
+      final pending = _pendingAsyncDuels.removeAt(pendingIndex);
+      final duel = _MockAsyncDuel(
+        id: id,
+        role: AsyncDuelRole.opponent,
+        category: pending.category,
+        questions: pending.questions,
+        opponentName: pending.opponentName,
+        createdAt: now,
+        expiresAt: now.add(_asyncDuelDuration),
+        otherCorrect: pending.opponentCorrect,
+        otherMs: pending.opponentMs,
+      );
+      _asyncDuels[id] = duel;
+      return AsyncDuelStart(
+        duelId: id,
+        role: AsyncDuelRole.opponent,
+        opponentName: pending.opponentName,
+        expiresAt: duel.expiresAt,
+        questions: duel.hiddenQuestions,
+      );
+    }
+
+    final questions = _pickAsyncDuelQuestions(normalizedCategory);
+    final duel = _MockAsyncDuel(
+      id: id,
+      role: AsyncDuelRole.creator,
+      category: normalizedCategory,
+      questions: questions,
+      opponentName: null,
+      createdAt: now,
+      expiresAt: now.add(_asyncDuelDuration),
+    );
+    _asyncDuels[id] = duel;
+    return AsyncDuelStart(
+      duelId: id,
+      role: AsyncDuelRole.creator,
+      expiresAt: duel.expiresAt,
+      questions: duel.hiddenQuestions,
+    );
+  }
+
+  @override
+  Future<AsyncDuelAnswer> answerAsyncDuel({
+    required String duelId,
+    required int questionIndex,
+    required String choice,
+    required int responseMs,
+  }) async {
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw StateError('Duel not found');
+    if (DateTime.now().toUtc().isAfter(duel.expiresAt)) {
+      throw StateError('Duel expired');
+    }
+    if (questionIndex < 0 || questionIndex >= duel.questions.length) {
+      throw StateError('Invalid index');
+    }
+    // 'TIMEOUT': süre dolunca istemcinin gönderdiği anahtar. Sunucu onu
+    // geçerli ama YANLIŞ bir cevap sayar — soru kilitlenir, süre toplama
+    // eklenir. Reddedilseydi süresi dolan oyuncu o soruda takılı kalırdı.
+    const validChoices = {'A', 'B', 'C', 'D', 'TIMEOUT'};
+    if (!validChoices.contains(choice)) {
+      throw StateError('Invalid choice');
+    }
+    // İlk cevap kilitlenir — sunucudaki `(duel_id, player_id, question_index)`
+    // birincil anahtarıyla aynı davranış: aynı soru ikinci kez oynanamaz.
+    if (duel.answeredIndices.contains(questionIndex)) {
+      throw StateError('Already answered');
+    }
+
+    final question = duel.questions[questionIndex];
+    const letters = ['A', 'B', 'C', 'D'];
+    final correctIndex = question.answers.indexOf(question.correctAnswer);
+    final correctOption = (correctIndex >= 0 && correctIndex < letters.length)
+        ? letters[correctIndex]
+        : 'A';
+    final isCorrect = choice == correctOption;
+
+    duel.answeredIndices.add(questionIndex);
+    if (isCorrect) duel.myCorrect++;
+    duel.myMs += _clampAsyncDuelResponseMs(responseMs);
+
+    final answered = duel.answeredIndices.length;
+    final total = duel.questions.length;
+    final finished = answered == total;
+    if (finished && duel.otherFinished) {
+      duel.completedAt = DateTime.now().toUtc();
+    }
+
+    return AsyncDuelAnswer(
+      correct: isCorrect,
+      correctOption: correctOption,
+      answered: answered,
+      total: total,
+      finished: finished,
+      result: finished ? duel.buildResult() : null,
+    );
+  }
+
+  @override
+  Future<List<AsyncDuelSummary>> loadMyAsyncDuels() async {
+    final entries = _asyncDuels.values.toList()
+      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return [
+      for (final duel in entries)
+        AsyncDuelSummary(
+          duelId: duel.id,
+          status: duel.status,
+          role: duel.role,
+          opponentName: duel.opponentName,
+          categoryName: duel.category,
+          myCorrect: duel.myFinished ? duel.myCorrect : null,
+          opponentCorrect: duel.otherCorrect,
+          outcome: (duel.myFinished && duel.otherFinished)
+              ? _asyncDuelOutcome(
+                  myCorrect: duel.myCorrect,
+                  myMs: duel.myMs,
+                  otherCorrect: duel.otherCorrect!,
+                  otherMs: duel.otherMs!,
+                )
+              : null,
+          createdAt: duel.createdAt,
+          completedAt: duel.completedAt,
+          seen: duel.seen,
+        ),
+    ];
+  }
+
+  @override
+  Future<void> markAsyncDuelSeen(String duelId) async {
+    _asyncDuels[duelId]?.seen = true;
+  }
+
+  @override
+  Future<int> claimAsyncDuelXp(String duelId) async {
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw StateError('Duel not found');
+    // Sunucuda sonuç satırı yalnız 7 soruyu bitirene yazılır; süresi dolmuş
+    // bir düelloda bile turunu bitirmeyen oyuncuya XP yazılmaz.
+    if (!duel.myFinished) throw StateError('Duel not finished');
+    final status = duel.status;
+    if (status != AsyncDuelStatus.completed &&
+        status != AsyncDuelStatus.expired) {
+      throw StateError('Duel not finished');
+    }
+    if (duel.xpAwarded) return awardedXpTotal;
+
+    final otherCorrect = duel.otherCorrect;
+    final otherMs = duel.otherMs;
+    final outcome = (otherCorrect != null && otherMs != null)
+        ? _asyncDuelOutcome(
+            myCorrect: duel.myCorrect,
+            myMs: duel.myMs,
+            otherCorrect: otherCorrect,
+            otherMs: otherMs,
+          )
+        : null;
+    // Doğru başına 20 XP + galibiyet 30 XP (bkz. sözleşme). Rakip hiç
+    // çıkmadan süresi dolan düelloda `outcome` `null` kalır — galibiyet
+    // bonusu YOKTUR, yalnız kendi doğruların sayılır.
+    final amount =
+        duel.myCorrect * 20 + (outcome == AsyncDuelOutcome.win ? 30 : 0);
+    duel.xpAwarded = true;
+    return awardXp(amount);
+  }
+
+  /// Testin, sanki başka biri düello açıp yedi soruyu bitirmiş gibi bir
+  /// "açık düello" kurmasını sağlar. Bunu tüketen sonraki `startAsyncDuel`
+  /// çağrısı `opponent` rolüyle döner ve anında karşılaştırma yapılabilir
+  /// hâle gelir — gerçek üründe bu, başka bir kullanıcının cihazında daha
+  /// önce oynanmış bir düellodur.
+  @visibleForTesting
+  void addPendingAsyncDuelForTesting({
+    String? category,
+    String opponentName = 'Heval',
+    required int opponentCorrect,
+    required int opponentMs,
+  }) {
+    final normalizedCategory = _normalizedAsyncDuelCategory(category);
+    _pendingAsyncDuels.add(
+      _MockPendingAsyncDuel(
+        category: normalizedCategory,
+        opponentName: opponentName,
+        questions: _pickAsyncDuelQuestions(normalizedCategory),
+        opponentCorrect: opponentCorrect,
+        opponentMs: opponentMs,
+      ),
+    );
   }
 
   /// Gün bazlı sabit tohum: aynı gün herkes aynı sırayı görür.
@@ -312,11 +852,43 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Havuzdan limitten fazlası istenir: sızıntı süzgeci bir kısmını
     // eleyeceği için tam limitte istemek turu eksik bırakırdı.
     final candidates = store.preferUnseen(pool, limit * 3);
-    final clean = QuestionSetPolicy.withoutLeaks(candidates, limit: limit);
-    // Süzgeç limiti dolduramazsa (küçük havuz) elde kalanla devam edilir;
-    // eksik bir tur, kendi cevabını ele veren bir turdan iyidir ama boş
-    // bir tur ikisinden de kötüdür.
-    final selected = clean.isEmpty ? candidates.take(limit).toList() : clean;
+    final clean = QuestionSetPolicy.diverseWithoutLeaks(
+      candidates,
+      limit: limit,
+    );
+
+    // Süzgeç limiti dolduramazsa elde kalanla devam edilir: eksik bir tur,
+    // kendi cevabını ele veren bir turdan iyidir. Ama "eksik"in de bir
+    // tabanı olmalı.
+    //
+    // ## Kusur
+    //
+    // Eskiden yalnız `clean` BOŞSA yedeğe düşülüyordu. `clean` bir tek soru
+    // döndürdüğünde o tek soru turun tamamı oluyordu: "Dil › Kelime Bilgisi ›
+    // 1. Seviye" kartı "10 soru" yazıyor, oyuncu tek soru cevaplıyor ve
+    // ekranda "Yarış tamamlandı" çıkıyordu (2026-08-16 simülatör taraması).
+    //
+    // Sebep havuzun küçüklüğü değil, süzgeçlerin üst üste binmesi: bir
+    // kelime bilgisi havuzunda soruların neredeyse hepsi çeviri sorusudur,
+    // `_dedupeByTranslationPair` aynı kelime çiftini toplar, ardından
+    // sızıntı süzgeci kalanların birbirini ele verenlerini atar. Otuz
+    // adaydan geriye bir tane kalabiliyor.
+    //
+    // ## Kural
+    //
+    // Sızıntısız sorular her zaman önce gelir; tur onlarla dolmuyorsa
+    // elenmiş adaylarla, o da yetmezse havuzun geri kalanıyla tamamlanır.
+    // Tekrar eden bir soru, tek soruluk bir turdan iyidir.
+    final selected = <QuizQuestion>[...clean];
+    if (selected.length < limit) {
+      final chosen = selected.map((q) => q.id).toSet();
+      for (final source in [candidates, pool]) {
+        for (final question in source) {
+          if (selected.length >= limit) break;
+          if (chosen.add(question.id)) selected.add(question);
+        }
+      }
+    }
     return _withVisualBlend(selected, pool, limit);
   }
 
@@ -375,10 +947,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   }) async {
-    return createRoom(
-      category: category,
-    ).copyWith(secondsPerQuestion: secondsPerQuestion);
+    return createRoom(category: category).copyWith(
+      secondsPerQuestion: secondsPerQuestion,
+      questionCount: questionCount,
+      entryFee: entryFee,
+    );
   }
 
   @override
@@ -607,7 +1183,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<void> reportQuestion(QuizQuestion question, String reason) async {}
+  Future<void> reportQuestion(QuizQuestion question, String reason) async {
+    reportedQuestions.add((id: question.id, reason: reason));
+  }
+
+  final reportedQuestions = <({String id, String reason})>[];
 
   @override
   Future<List<QuizQuestion>> loadFavoriteQuestions() async {
@@ -637,11 +1217,32 @@ class MockZanKurdRepository implements ZanKurdRepository {
   int awardedXpTotal = 0;
 
   @override
+  bool get xpAwardIsServerTotal => false;
+
+  @override
+  Future<int?> loadServerXp() async => null;
+
+  @override
   Future<int> awardXp(int delta) async {
     if (delta <= 0) return awardedXpTotal;
     awardedXpTotal += delta;
     return awardedXpTotal;
   }
+
+  @override
+  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey) async {
+    final total = await awardXp(delta);
+    return ServerXpWrite(total: total, retryable: false);
+  }
+
+  @override
+  Future<int> awardRoomXp(String roomId) async {
+    if (roomId.trim().isEmpty) return awardedXpTotal;
+    awardedRoomXpCalls.add(roomId);
+    return awardedXpTotal;
+  }
+
+  final awardedRoomXpCalls = <String>[];
 
   @override
   Future<int> awardSpinCoins() async {
@@ -691,6 +1292,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
       outcome: StreakFreezeChargeOutcome.charged,
       idempotent: true,
     );
+  }
+
+  @override
+  Future<DurableCoinSpend> spendCoinsDurable(
+    int amount,
+    String reason,
+    String idempotencyKey,
+  ) async {
+    final success = await spendCoins(amount, reason);
+    return DurableCoinSpend(success: success, retryable: false);
   }
 
   @override
@@ -948,8 +1559,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'everyday_3',
         slug: 'everyday_3',
-        titleKu: 'Pratikên Rojane',
-        titleTr: 'Günlük Pratik İfadeler',
+        titleKu: 'Pratikên rojane',
+        titleTr: 'Günlük pratik ifadeler',
         category: 'everyday',
         iconName: 'forum',
         order: 3,
@@ -959,8 +1570,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'grammar_1',
         slug: 'grammar_1',
-        titleKu: 'Cînavkên Kesane',
-        titleTr: 'Şahıs Zamirleri',
+        titleKu: 'Cînavkên kesane',
+        titleTr: 'Şahıs zamirleri',
         category: 'grammar',
         iconName: 'g_translate',
         order: 1,
@@ -969,7 +1580,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'grammar_2',
         slug: 'grammar_2',
         titleKu: 'Tewandin',
-        titleTr: 'Büküm (Hal Çekimi)',
+        titleTr: 'Büküm (hal çekimi)',
         category: 'grammar',
         iconName: 'sort_by_alpha',
         order: 2,
@@ -979,8 +1590,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'culture_1',
         slug: 'culture_1',
-        titleKu: 'Folklor û Govend',
-        titleTr: 'Folklor & Halay',
+        titleKu: 'Folklor û govend',
+        titleTr: 'Folklor & halay',
         category: 'culture',
         iconName: 'music_note',
         order: 1,
@@ -988,7 +1599,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'culture_2',
         slug: 'culture_2',
-        titleKu: 'Cejn û Cejndarî',
+        titleKu: 'Cejn û cejndarî',
         titleTr: 'Bayramlar',
         category: 'culture',
         iconName: 'celebration',
@@ -999,8 +1610,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'food_1',
         slug: 'food_1',
-        titleKu: 'Xwarinên Bingehîn',
-        titleTr: 'Temel Yemekler',
+        titleKu: 'Xwarinên bingehîn',
+        titleTr: 'Temel yemekler',
         category: 'food',
         iconName: 'restaurant',
         order: 1,
@@ -1008,8 +1619,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'food_2',
         slug: 'food_2',
-        titleKu: 'Fêkî û Keskahî',
-        titleTr: 'Meyve & Sebzeler',
+        titleKu: 'Fêkî û keskahî',
+        titleTr: 'Meyve & sebzeler',
         category: 'food',
         iconName: 'local_grocery_store',
         order: 2,
@@ -1019,8 +1630,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'animals_1',
         slug: 'animals_1',
-        titleKu: 'Heywanên Malê',
-        titleTr: 'Evcil Hayvanlar',
+        titleKu: 'Heywanên malê',
+        titleTr: 'Evcil hayvanlar',
         category: 'animals',
         iconName: 'pets',
         order: 1,
@@ -1028,8 +1639,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'animals_2',
         slug: 'animals_2',
-        titleKu: 'Heywanên Kovî',
-        titleTr: 'Yabani Hayvanlar',
+        titleKu: 'Heywanên kovî',
+        titleTr: 'Yabani hayvanlar',
         category: 'animals',
         iconName: 'forest',
         order: 2,
@@ -1048,7 +1659,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'geography_2',
         slug: 'geography_2',
-        titleKu: 'Aliyên Erdnîgarî',
+        titleKu: 'Aliyên erdnîgarî',
         titleTr: 'Yönler',
         category: 'geography',
         iconName: 'explore',
@@ -1059,8 +1670,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'emotions_1',
         slug: 'emotions_1',
-        titleKu: 'Hestên Erênî',
-        titleTr: 'Olumlu Duygular',
+        titleKu: 'Hestên erênî',
+        titleTr: 'Olumlu duygular',
         category: 'emotions',
         iconName: 'sentiment_very_satisfied',
         order: 1,
@@ -1068,8 +1679,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'emotions_2',
         slug: 'emotions_2',
-        titleKu: 'Hestên Neyînî',
-        titleTr: 'Olumsuz Duygular',
+        titleKu: 'Hestên neyînî',
+        titleTr: 'Olumsuz duygular',
         category: 'emotions',
         iconName: 'sentiment_very_dissatisfied',
         order: 2,
@@ -1079,8 +1690,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'time_1',
         slug: 'time_1',
-        titleKu: 'Roj û Meh',
-        titleTr: 'Günler & Aylar',
+        titleKu: 'Roj û meh',
+        titleTr: 'Günler & aylar',
         category: 'time',
         iconName: 'calendar_month',
         order: 1,
@@ -1088,8 +1699,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'time_2',
         slug: 'time_2',
-        titleKu: 'Serdem û Demjimêr',
-        titleTr: 'Zaman Dilimleri',
+        titleKu: 'Serdem û demjimêr',
+        titleTr: 'Zaman dilimleri',
         category: 'time',
         iconName: 'schedule',
         order: 2,
@@ -1382,7 +1993,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'time_1',
         order: 2,
         contentKu:
-            'Mehên serê salê:\n\n• Rêbendan (Ocak), Reşemeh (Şubat), Adar (Mart)\n• Nîsan (Nisan), Gulan (Mayıs), Hezîran (Haziran)',
+            'Mehên serê salê:\n\n• Rêbendan: Ocak, Reşemeh: Şubat, Adar: Mart\n• Nîsan: Nisan, Gulan: Mayıs, Hezîran: Haziran',
         contentTr: 'Yılın ilk 6 ayı.',
       ),
     ],
@@ -1442,6 +2053,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<bool> addFriend(String friendId, String friendName) async {
     return true;
+  }
+
+  String? lastFcmToken;
+
+  @override
+  Future<void> setFcmToken(String token) async {
+    lastFcmToken = token;
   }
 
   @override
@@ -1615,5 +2233,37 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Mock: her zaman başarılı olarak dön.
     // Canlı ortamda Supabase 'suggested_questions' tablosuna yazılır.
     return true;
+  }
+
+  bool _mockReferralUsed = false;
+
+  @override
+  Future<ReferralResult> redeemReferralCode(String code) async {
+    final clean = code.trim().toUpperCase();
+    if (clean.isEmpty) {
+      return const ReferralResult(
+        status: ReferralStatus.notFound,
+        message: 'Invalid code',
+      );
+    }
+    if (_mockReferralUsed) {
+      return const ReferralResult(
+        status: ReferralStatus.alreadyRedeemed,
+        message: 'Already redeemed',
+      );
+    }
+    if (clean == 'ZK-TEST' || clean == 'ZK-ME') {
+      return const ReferralResult(
+        status: ReferralStatus.ownCode,
+        message: 'Cannot use own code',
+      );
+    }
+    _mockReferralUsed = true;
+    _mockCoins += 100;
+    return const ReferralResult(
+      status: ReferralStatus.success,
+      coinsAwarded: 100,
+      referrerName: 'ZanKurd Heval',
+    );
   }
 }

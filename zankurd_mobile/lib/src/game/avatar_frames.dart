@@ -52,7 +52,10 @@ Color frameColor(AvatarFrame frame) => switch (frame) {
   AvatarFrame.bronze => const Color(0xFFCD7F32),
   AvatarFrame.silver => const Color(0xFFB6BDC9),
   AvatarFrame.gold => AppTheme.gold,
-  AvatarFrame.mamoste => AppTheme.violet,
+  // 2026-09-30 simülatör: `AppTheme.violet` Şahnê'de altına bağlandığından
+  // Mamoste çerçevesi Altın'la aynı sarıydı; en yüksek ustalık ayırt
+  // edilemiyordu. Zimrût (öğrenme rengi): ustalık bir öğrenme başarısıdır.
+  AvatarFrame.mamoste => const Color(0xFF1DB482),
   // Marka paletindeki teal'in doygun hâli: "neon" adını karşılıyor ama
   // uygulamanın renk ailesinden çıkmıyor.
   AvatarFrame.neon => const Color(0xFF2ED3B7),

@@ -1,14 +1,19 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/floating_reaction_overlay.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
+import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/widgets/styled_button.dart';
 import 'support/widget_test_helpers.dart';
 
@@ -132,9 +137,112 @@ class _StaleStatusPollRecoveryRepository extends MockZanKurdRepository {
   }
 }
 
+class _BroadcastRoomRepository extends MockZanKurdRepository {
+  final StreamController<Map<String, dynamic>> broadcasts =
+      StreamController<Map<String, dynamic>>.broadcast(sync: true);
+
+  @override
+  Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId) {
+    return broadcasts.stream;
+  }
+}
+
 void main() {
   late MockZanKurdRepository repository;
   setUp(() => repository = freshMockRepository());
+
+  test('RoomScreen disposes the reaction controller it owns', () {
+    final source = File('lib/src/screens/room_screen.dart').readAsStringSync();
+    final disposeBody = RegExp(
+      r'void dispose\(\) \{(.*?)super\.dispose\(\);',
+      dotAll: true,
+    ).firstMatch(source)?.group(1);
+
+    expect(disposeBody, isNotNull);
+    expect(
+      disposeBody,
+      contains('_reactionController.dispose();'),
+      reason:
+          'RoomScreen creates its reaction controller, so it must release the '
+          'ChangeNotifier when the route is disposed.',
+    );
+  });
+
+  testWidgets('room reaction bubble avoids critical lobby content at 390x844', (
+    tester,
+  ) async {
+    final repository = _BroadcastRoomRepository();
+    addTearDown(repository.broadcasts.close);
+    tester.view.devicePixelRatio = 3.0;
+    tester.view.physicalSize = const Size(390, 844) * 3.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      testShell(
+        child: RoomScreen(
+          repository: repository,
+          initialRoom: repository.createRoom().copyWith(
+            id: 'room-reaction-layout',
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    repository.broadcasts.add(const {
+      'type': 'reaction',
+      'text': '👏 Destxweş!',
+      'sender_id': 'remote-user',
+      'sender_name': 'Berfin',
+    });
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    final bubble = // 2026-09-29 Şahnê: balon eskiden görünüşüyle (14/8 dolgu, 20
+        // yarıçap) bulunuyordu; pahlı Şahnê balonu anahtarıyla bulunur.
+        find.byKey(FloatingReactionOverlay.bubbleKey);
+    expect(bubble, findsOneWidget);
+
+    final bubbleRect = tester.getRect(bubble);
+    expect(bubbleRect.top, greaterThanOrEqualTo(0));
+    expect(bubbleRect.left, greaterThanOrEqualTo(0));
+    expect(bubbleRect.right, lessThanOrEqualTo(390));
+    expect(bubbleRect.bottom, lessThanOrEqualTo(844));
+
+    final roomLabelRect = tester.getRect(find.text('Özel oda'));
+    expect(
+      bubbleRect.bottom,
+      lessThanOrEqualTo(roomLabelRect.top - 4),
+      reason:
+          'Room-header reactions must stay in the compact navigation band; '
+          'their height must not depend on a lucky horizontal position.',
+    );
+
+    final protectedRects = <Rect>[
+      // 2026-09-29 Şahnê: "odadan ayrıl" artık Şahnê ikon düğmesidir
+      // (`SahneIconButton`, 48 dokunma); ipucuyla bulunur.
+      tester.getRect(find.byTooltip('Odadan ayrıl')),
+      tester.getRect(find.text('Özel oda')),
+      tester.getRect(find.text('Hevalên Zanînê')),
+      tester.getRect(find.byKey(const ValueKey('room-code-copy'))),
+      tester.getRect(find.byKey(const ValueKey('room-player-tile-1'))),
+      tester.getRect(find.byKey(const ValueKey('room-player-tile-2'))),
+      tester.getRect(find.byType(SwitchListTile)),
+      tester.getRect(
+        find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
+      ),
+    ];
+    for (final rect in protectedRects) {
+      expect(
+        bubbleRect.overlaps(rect),
+        isFalse,
+        reason:
+            'Transient reaction must not obscure navigation, room identity, '
+            'players, readiness, or the primary action.',
+      );
+    }
+    expect(tester.takeException(), isNull);
+  });
 
   testWidgets('room lobby remains usable in landscape', (tester) async {
     await tester.binding.setSurfaceSize(const Size(844, 390));
@@ -150,17 +258,17 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Özel Oda'), findsOneWidget);
+    expect(find.text('Özel oda'), findsOneWidget);
     expect(find.text('Oyuncular'), findsOneWidget);
 
     await tester.scrollUntilVisible(
-      find.text('Yarışı Başlat'),
+      find.text('Yarışı başlat'),
       120,
       scrollable: find.byType(Scrollable).last,
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Yarışı Başlat'), findsOneWidget);
+    expect(find.text('Yarışı başlat'), findsOneWidget);
   });
 
   testWidgets('wide room lobby centers content within 680 px', (tester) async {
@@ -273,7 +381,7 @@ void main() {
     );
 
     final startButton = tester.widget<GeometricGradientButton>(
-      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+      find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
     );
     expect(startButton.onPressed, isNull);
   });
@@ -307,7 +415,7 @@ void main() {
     );
 
     final startButton = tester.widget<GeometricGradientButton>(
-      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+      find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
     );
     expect(startButton.onPressed, isNotNull);
   });
@@ -336,7 +444,7 @@ void main() {
     await tester.pump();
 
     final startButton = tester.widget<GeometricGradientButton>(
-      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+      find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
     );
     expect(startButton.onPressed, isNull);
     expect(find.byType(QuizScreen), findsNothing);
@@ -372,7 +480,7 @@ void main() {
     await tester.pump();
 
     await tester.tap(
-      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+      find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
     );
     await tester.pumpAndSettle();
 
@@ -417,9 +525,13 @@ void main() {
     );
     await tester.pump();
 
-    await tester.tap(
-      find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
-    );
+    // Üç oyunculu lobide başlat düğmesi ilk ekranın altında kalabilir
+    // (2026-09-27'den beri kod kartının altında davet düğmesi var); oyuncu
+    // gibi önce kaydırıp sonra dokunuyoruz.
+    final start = find.widgetWithText(GeometricGradientButton, 'Yarışı başlat');
+    await tester.ensureVisible(start);
+    await tester.pump();
+    await tester.tap(start);
     await tester.pumpAndSettle();
 
     final quiz = tester.widget<QuizScreen>(find.byType(QuizScreen));
@@ -446,7 +558,7 @@ void main() {
 
       expect(find.text('Misafir'), findsNothing);
       final disabledButton = tester.widget<GeometricGradientButton>(
-        find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+        find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
       );
       expect(disabledButton.onPressed, isNull);
 
@@ -457,7 +569,7 @@ void main() {
       expect(find.text('Misafir'), findsOneWidget);
 
       final enabledButton = tester.widget<GeometricGradientButton>(
-        find.widgetWithText(GeometricGradientButton, 'Yarışı Başlat'),
+        find.widgetWithText(GeometricGradientButton, 'Yarışı başlat'),
       );
       expect(enabledButton.onPressed, isNotNull);
       expect(find.byType(QuizScreen), findsNothing);
@@ -534,4 +646,59 @@ void main() {
 
     expect(find.text('Tu'), findsOneWidget);
   });
+
+  testWidgets(
+    'oda ekrani kahraman oda kartinda kilim motifi, PlayerAvatar ve bekleyen slotu gosterir',
+    (tester) async {
+      // 4.1 Gorsel Kimlik: Oda kodu Jackbox kahramani olarak one cikarilir,
+      // arkasina kilim borduru konur, oyuncular PlayerAvatar ile render edilir
+      // ve odada 2. oyuncu yokken bekleyen slot cizilir.
+      final repository = MockZanKurdRepository();
+      final singlePlayerRoom = repository.createRoom().copyWith(
+        players: const [
+          Player(name: 'Tu', score: 0, state: 'Hazır', streak: 0),
+        ],
+      );
+      await tester.pumpWidget(
+        testShell(
+          child: RoomScreen(
+            repository: repository,
+            initialRoom: singlePlayerRoom,
+          ),
+        ),
+      );
+      await tester.pump();
+
+      // Oda kodu karti ve kopyalama anahtarlari mevcut
+      expect(find.byKey(const ValueKey('room-code')), findsOneWidget);
+      expect(find.byKey(const ValueKey('room-code-copy')), findsOneWidget);
+
+      // PlayerAvatar ile oyuncu cizimi (tek oyuncu)
+      expect(find.byType(PlayerAvatar), findsOneWidget);
+
+      // 2. oyuncu henüz yokken bekleyen slot görünür.
+      //
+      // Beklenen metinler `strings.dart`tan OKUNUR, elle yazılmaz.
+      // İlk hâlinde '2. Oyuncu' ve 'Bekleniyor' diye tahmin edilmişti;
+      // ikisi de bankada yok — widget `K.waitingOpponent` ve
+      // `K.statPending` kullanıyor (proje kuralı: çeviri tek kaynaktan).
+      // Elle yazılan etiket, çeviri değişince testi sessizce kırar.
+      final slot = find.byKey(const ValueKey('room-waiting-slot'));
+      expect(slot, findsOneWidget);
+      expect(
+        find.descendant(
+          of: slot,
+          matching: find.text(Tr.forKu(K.waitingOpponent, false)),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: slot,
+          matching: find.text(Tr.forKu(K.statPending, false)),
+        ),
+        findsOneWidget,
+      );
+    },
+  );
 }

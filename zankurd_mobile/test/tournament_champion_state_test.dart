@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -136,7 +137,7 @@ void main() {
     await _pump(tester, _LocalRepo('won'));
     expect(find.byKey(const ValueKey('tournament-champion')), findsOneWidget);
     expect(
-      find.text('Bu kupa yerel oynandı — ödül verilmez'),
+      find.text('Bu turnuva yerelde oynandı, ödül verilmez'),
       findsOneWidget,
       reason: 'yerel kupada kutlama var ama ödül yok; bu söylenmeli',
     );
@@ -194,7 +195,7 @@ void main() {
 
   testWidgets('elenen oyuncu gerçek skorunu görür', (tester) async {
     await _pump(tester, _LocalRepo('eliminated'));
-    expect(find.textContaining('Final skoru: 340'), findsWidgets);
+    expect(find.textContaining('Final puanı: 340'), findsWidgets);
   });
 
   testWidgets('sahte teselli ödülü üretilmez', (tester) async {

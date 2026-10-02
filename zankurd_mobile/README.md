@@ -2,12 +2,13 @@
 
 ZanKurd, Kurmanci odaklı bir bilgi yarışması uygulamasıdır. Bu klasör Play Store'a gönderilecek ana Flutter uygulamasıdır.
 
-Web prototipi `../zankurd` altında durur; Play Console'a yüklenecek paket bu projeden üretilir.
+Eski Vite prototipi `../docs/archive/web_prototype` altındadır; Play paketi bu klasörden üretilir.
 
 ## Ürün Kapsamı
 
 - Misafir/anonim giriş ve profil adı akışı
-- Kurmanci/Türkçe arayüz geçişi (çift dilli ARB dosyaları)
+- Ana yol: günün dersi ve solo quiz; davet bağlantılı arkadaş odası ve 1v1
+- Kurmanci/Türkçe arayüz geçişi (anahtar tabanlı kayıt: `lib/src/l10n/strings.dart`)
 - Aydınlık/Karanlık tema geçişi
 - Kategori ve seviye bazlı quiz
 - Günlük yarışma
@@ -16,12 +17,24 @@ Web prototipi `../zankurd` altında durur; Play Console'a yüklenecek paket bu p
 - Online oda, canlı oyuncu listesi ve liderlik tablosu
 - Rozet & Streak sistemi (30 gün, 500/1000 soru, mükemmel oyun, hız)
 - SM-2 aralıklı tekrar algoritması ile yanlış soru takibi
-- Günlük push hatırlatıcı bildirimleri (saat seçimi ile)
+- Günlük push hatırlatıcı bildirimleri (saat seçimi ile). Sunucu kuyruğu
+  `push_outbox`; Google'a gönderim `tool/send_push_outbox.py` (Firebase
+  servis hesabı gerekir, repoda yok).
 - Anonim kullanım analitikleri (Firebase Analytics)
-- Glassmorphism efektli modern UI bileşenleri
+- Kilim motifli, antrasit/yeşil paletli arayüz
 - Uygulama içinden hesap silme isteği
 - Firebase Crashlytics ile çökme raporlama
-- Offline XP senkronizasyonu
+- Çevrimdışı kuyruk quiz ödülünü taşır; XP sahte eşitlemesi yok
+
+Hikâye (Öğren → Kurmancî öğren), arkadaşlar (Liderlik), günlük çark (Mağaza)
+ve yerleştirme (Ayarlar) ikinci katmandadır. Turnuva ve haftalık lig
+`lib/src/config/feature_flags.dart` ile kapalıdır. Sırayla düello (sen şimdi
+oyna, rakibin sonra) hazırdır ama sunucu göçü
+`supabase/2026-09-28_async_duels.sql` canlıya uygulanana dek
+`kAsyncDuelEnabled` ile kapalıdır. Paradigma, Siyaset ve
+Teknolojî kategorileri `lib/src/config/category_visibility.dart` ile
+gizlidir. Kürtlerle bağı olmayan dünya bilgisi soruları bankada durur ama
+`lib/src/config/retired_question_ids.dart` ile oyuna çıkmaz.
 
 ## Mimari
 
@@ -29,12 +42,16 @@ Detaylı mimari belgeler için [ARCHITECTURE.md](ARCHITECTURE.md) dosyasına bak
 
 - `lib/main.dart`: Firebase/Crashlytics, Analytics ve Supabase başlangıcı
 - `lib/src/data/`: Repository, SM-2, Streak, Badge, XP ve Sync veri katmanı
-- `lib/src/screens/`: Ana ekran, quiz, liderlik, profil, ayarlar ve oda akışları
-- `lib/src/widgets/`: Ortak panel, badge widget, glass panel, chart bileşenleri
-- `lib/src/theme/`: Material 3 tema, glassmorphism ve renk sistemi
-- `lib/src/l10n/`: Kurmanci/Türkçe çeviri dosyaları (ARB) ve dil yardımcıları
-- `lib/src/services/`: Analitik, bildirim ve rozet servisleri
-- `lib/src/providers/`: Auth, Theme, Language ve Sound state management
+- `lib/src/screens/`: Öğren sekmesi `LearnHomeScreen` (`HomeScreen`
+  sarmalayıcısı), quiz, liderlik, profil, ayarlar ve oda akışları
+- `lib/src/widgets/`: Ortak panel, rozet, kilim ve grafik bileşenleri
+- `lib/src/theme/`: Material 3 tema, antrasit/yeşil palet
+- `lib/src/l10n/`: Kurmancî/Türkçe anahtar tabanlı metinler (`strings.dart`, `lang.dart`)
+- `lib/src/services/`: Analitik, bildirim ve Premium (`premium_service.dart`)
+- `lib/src/data/badge_service.dart`: Rozet tanımları ve kilit açma
+- `lib/src/providers/`: Auth, Theme, Sound, AnalyticsConsent,
+  ReducedMotion, UntimedMode, RemoteAvailability
+  (LanguageProvider `lib/src/l10n/lang.dart` içindedir)
 - `supabase/`: Play sürümü için gereken SQL/RPC/policy dosyaları
 
 ## Geliştirme
@@ -45,6 +62,14 @@ flutter run -d chrome
 flutter run -d windows
 flutter run -d emulator-5554
 ```
+
+Web önizleme (üretim tanımlarıyla):
+
+```bash
+flutter run -d chrome --dart-define-from-file=.env.web.release.json
+```
+
+Web üretimde `PluginConnectivityMonitor` kullanılır; `AlwaysOnlineConnectivityMonitor` yalnız test içindir.
 
 Üretim derlemesi Supabase yapılandırmasının açıkça verilmesini zorunlu tutar:
 
@@ -65,15 +90,12 @@ flutter run `
 
 ```powershell
 dart analyze
-flutter test --exclude-tags preview
-
-Pushd widgetbook
-flutter pub get
-dart analyze
-Pop-Location
+flutter test --coverage
 ```
 
-Kök analiz ZanKurd uygulama paketinin tamamını doğrular.
+Kök analiz ZanKurd uygulama paketinin tamamını doğrular. `preview` etiketli
+PNG üreticileri `tool/screenshots/` altındadır; varsayılan birim/widget
+koşusu onları içermez.
 
 ### Soru ekleme ve çıkarma
 
@@ -168,9 +190,11 @@ doğrulamak için salt-okunur adjudication raporu üretilebilir:
 dart run tool/question_quality/adjudication/adjudication.dart report
 ```
 
-Çıktılar `docs/audit/question_quality/adjudication_2026-07-15/` altındadır.
-Komut soru kaynaklarını, baseline'ı veya source manifesti değiştirmez ve hiçbir
-kaydı otomatik düzeltilebilir olarak işaretlemez.
+Komut, çıktıyı yerel `docs/audit/question_quality/adjudication_2026-07-15/`
+altına yazar (`.gitignore`; dizin repoda yok). Tarihî 2026-07-15 CSV ve
+rapor silindi — kaynağa bakın: `tool/question_quality/adjudication/`.
+Tarihî kaynak CSV yoksa rapor boş listeyle biter; komut kaynakları,
+baseline'ı veya source manifesti değiştirmez.
 
 Windows'ta Android/Gradle build öncesi geçici dizini ASCII bir yola alın:
 
@@ -290,22 +314,10 @@ Google Play'de gizlilik politikası için `web/privacy.html` dosyası herkese a�
 
 ## Canlı Backend SQL Sırası
 
-Supabase SQL Editor'de en az şu dosyalar uygulanmış olmalıdır:
+Canlıya uygulanan dosyaların **tek** doğruluk kaynağı
+`supabase/applied.md` dosyasıdır. Tarihsiz kök SQL dosyalarını
+(`public_read_policies.sql`, `online_room_policies.sql` vb.) yeniden
+çalıştırma: sonraki tarihli göçlerin üzerine yazarlar.
 
-1. `supabase/public_read_policies.sql`
-2. `supabase/online_room_policies.sql`
-3. `supabase/online_game_sync.sql`
-4. `supabase/leaderboard_view.sql`
-5. `supabase/submit_answer_function.sql`
-6. `supabase/daily_spin_rpc.sql`
-7. `supabase/quiz_reward_rpc.sql`
-8. `supabase/coin_policies.sql`
-9. `supabase/delete_my_account_rpc.sql`
-10. `supabase/2026-07-29_release_readiness_hardening.sql`
-11. `supabase/2026-07-29_shop_purchase_integrity_fix.sql`
-
-Canlıya uygulanan dosyaların tek doğruluk kaynağı
-`supabase/applied.md` dosyasıdır; tarihsel SQL dosyaları yeni göçlerin
-üzerine yeniden çalıştırılmaz.
-
-Soru bankası temizliği için `supabase/dedupe_and_fix_questions.sql` ayrıca çalıştırılabilir.
+Yeni bir göç uyguladıktan sonra `applied.md` satırını güncelle; bekçi
+testleri dosya içeriğini kilitler, canlı katalog doğrulaması ayrıdır.

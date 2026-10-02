@@ -14,10 +14,10 @@ import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 /// sorgu her açılışta hata verip sessizce yedeğe düşüyordu. Uzak katalog
 /// çalışmadığı için ayrışma da görünmüyordu.
 ///
-/// Ad düzeltilince ayrışma bir anda ANLAMLI hâle geldi: üretimdeki tablo
-/// 2026-07-13 tohumunun eski fiyatlarını taşıyor (200/600/750/1000) ve
-/// düzeltilmiş istemci onları okumaya başlayınca ölçülerek belirlenmiş
-/// fiyat çıpası sessizce ezilirdi.
+/// Ad düzeltilince ayrışma anlamlı oldu: üretim 2026-08-26'ya kadar
+/// 2026-07-13 tohumunun eski fiyatlarını taşıyordu (200/600/750/1000).
+/// Göç uygulanmazsa düzeltilmiş istemci uzak tabloyu okuyunca çıpa
+/// sessizce ezilirdi. Çıpa 2026-08-26'da canlıya alındı.
 ///
 /// Bu bekçi, göç dosyasındaki fiyatları statik katalogla karşılaştırır.
 /// Biri değişip öteki unutulursa test düşer.

@@ -5,10 +5,10 @@ import '../data/mistake_store.dart';
 import '../data/zankurd_repository.dart';
 import '../models/quiz_question.dart';
 import '../screens/quiz_screen.dart';
-import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../theme/app_icons.dart';
+import 'sahne/sahne.dart';
 
 /// "Bugünkü Tekrarlar" kartı — SM-2 aralıklı tekrar sisteminin ürün yüzü.
 ///
@@ -22,11 +22,19 @@ class TodaysReviewCard extends StatefulWidget {
     required this.isKu,
     this.onStartReview,
     this.refreshSignal,
+    this.hideWhenEmpty = false,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final bool isKu;
+
+  /// Hazır tekrar yokken hiçbir şey çizme.
+  ///
+  /// Öğrenme ekranı hiç ders çözmemiş birine "Tekrarlar tamam" diyordu —
+  /// yapılmamış bir işin bittiğini söyleyen bir satır. Orada kart yalnız
+  /// gerçekten tekrar bekliyorsa görünür.
+  final bool hideWhenEmpty;
 
   /// Test/özelleştirme için: verilirse quiz açmak yerine bu çağrılır.
   final void Function(List<QuizQuestion> questions)? onStartReview;
@@ -41,8 +49,6 @@ class TodaysReviewCard extends StatefulWidget {
 class _TodaysReviewCardState extends State<TodaysReviewCard> {
   int _readyCount = 0;
   bool _loading = true;
-
-  static const _accent = AppTheme.playGreen;
 
   @override
   void initState() {
@@ -132,136 +138,87 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   @override
   Widget build(BuildContext context) {
     if (_loading) return const SizedBox.shrink();
+    if (_readyCount == 0 && widget.hideWhenEmpty) {
+      return const SizedBox.shrink();
+    }
     final ku = widget.isKu;
     return _readyCount > 0
         ? _buildReady(context, ku)
         : _buildEmpty(context, ku);
   }
 
+  // 2026-09-29 Şahnê: öğrenme rolünün satırı — 36'lık M karo (Zimrût tonu
+  // + Zimrût metni ikon), üst satır kalın açıklama Zimrût metni, alt satır
+  // Gövde 700; chevron üçüncül.
+  //
+  // 2026-09-29 doğallık (K7): sağda sayıyı ikinci kez yazan Zimrût rozeti
+  // vardı ("3 soru tekrara hazır" + "3"). Sayı yalnız cümlede kalır.
+  Widget _tile(SahneTokens t, IconData icon) => DecoratedBox(
+    decoration: ShapeDecoration(color: t.learnTint, shape: SahneShape.m),
+    child: SizedBox.square(
+      dimension: 36,
+      child: Icon(icon, color: t.learnTx, size: 20),
+    ),
+  );
+
   Widget _buildReady(BuildContext context, bool ku) {
-    final surface = AppTheme.surfaceHiColor(context);
-    return ClipRRect(
+    final t = SahneTokens.of(context);
+    final semanticLabel = [
+      Tr.forKu(K.todaysReviews, ku),
+      Tr.forKu(K.todaysReviewsCount, ku, {'count': '$_readyCount'}),
+      Tr.forKu(K.strengthenMemory, ku),
+    ].join('. ');
+    return Semantics(
       key: const ValueKey('todays-review-card'),
-      borderRadius: BorderRadius.circular(AppRadius.card),
+      container: true,
+      button: true,
+      enabled: true,
+      label: semanticLabel,
+      excludeSemantics: true,
+      onTap: _startReview,
       child: Material(
-        color: Colors.transparent,
+        type: MaterialType.transparency,
         child: InkWell(
           onTap: _startReview,
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Container(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            decoration: BoxDecoration(
-              color: surface,
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(
-                color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-                width: 1.0,
+          excludeFromSemantics: true,
+          customBorder: SahneShape.m,
+          child: Padding(
+            key: const ValueKey('todays-review-status-row'),
+            padding: const EdgeInsets.symmetric(vertical: SahneSpace.x2),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 52),
+              child: Row(
+                children: [
+                  _tile(t, AppIcons.arrowsRotate),
+                  const SizedBox(width: SahneSpace.x3),
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          Tr.forKu(K.todaysReviews, ku),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: SahneType.captionStrong.copyWith(
+                            color: t.learnTx,
+                          ),
+                        ),
+                        Text(
+                          Tr.forKu(K.todaysReviewsCount, ku, {
+                            'count': '$_readyCount',
+                          }),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: SahneType.bodyStrong.copyWith(color: t.tx),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: SahneSpace.x2),
+                  Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
+                ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.04),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Stack(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 46,
-                      height: 46,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _accent.withValues(alpha: 0.18),
-                        border: Border.all(
-                          color: _accent.withValues(alpha: 0.4),
-                          width: 1.2,
-                        ),
-                      ),
-                      child: Icon(
-                        AppIcons.arrowsRotate,
-                        color: AppColors.onAccentTint(context, _accent),
-                        size: 24,
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.sm + 2),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                width: 3,
-                                height: 13,
-                                decoration: AppTheme.sectionAccent(_accent),
-                              ),
-                              const SizedBox(width: 7),
-                              Flexible(
-                                child: Text(
-                                  Tr.forKu(K.todaysReviews, ku),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTypography.caption.copyWith(
-                                    color: _accent,
-                                    fontWeight: FontWeight.w800,
-                                    letterSpacing: 0.4,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            Tr.forKu(K.todaysReviewsCount, ku, {
-                              'count': '$_readyCount',
-                            }),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.bodyLarge.copyWith(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w800,
-                              height: 1.2,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            Tr.forKu(K.strengthenMemory, ku),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.caption.copyWith(
-                              color: AppTheme.textMutedColor(context),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.xs),
-                    Container(
-                      constraints: const BoxConstraints(minWidth: 34),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: _accent,
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                      ),
-                      child: Text(
-                        '$_readyCount',
-                        textAlign: TextAlign.center,
-                        style: AppTypography.bodyLarge.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
             ),
           ),
         ),
@@ -270,50 +227,32 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   }
 
   Widget _buildEmpty(BuildContext context, bool ku) {
+    final t = SahneTokens.of(context);
     final title = Tr.forKu(K.reviewsDone, ku);
     final detail = Tr.forKu(K.noReviewsToday, ku);
     return Semantics(
       key: const ValueKey('todays-review-empty'),
       label: '$title. $detail',
       excludeSemantics: true,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm,
-          vertical: AppSpacing.xs,
-        ),
-        decoration: BoxDecoration(
-          color: _accent.withValues(alpha: 0.07),
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 28,
-              height: 28,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _accent.withValues(alpha: 0.12),
-              ),
-              child: Icon(
-                AppIcons.circleCheck,
-                color: _accent.withValues(alpha: 0.9),
-                size: 17,
-              ),
-            ),
-            const SizedBox(width: AppSpacing.xs),
-            Expanded(
-              child: Text(
-                title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w700,
+      child: Padding(
+        key: const ValueKey('todays-review-status-row'),
+        padding: const EdgeInsets.symmetric(vertical: SahneSpace.x2),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 48),
+          child: Row(
+            children: [
+              _tile(t, AppIcons.circleCheck),
+              const SizedBox(width: SahneSpace.x3),
+              Expanded(
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: SahneType.bodyStrong.copyWith(color: t.tx),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

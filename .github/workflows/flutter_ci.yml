@@ -2,7 +2,7 @@
 #
 # 2026-07-31 denetimine kadar `zankurd_mobile/.github/workflows/` altındaydı.
 # GitHub Actions yalnızca deponun kökündeki `.github/workflows` dizinini okur,
-# dolayısıyla biçim denetimi, `dart analyze`, soru kalitesi kapısı, 1103 test
+# dolayısıyla biçim denetimi, `dart analyze`, soru kalitesi kapısı, testler
 # ve APK derlemesi hiçbir push'ta koşmuyordu — README ise yayın adımı olarak
 # "CI sonucunu doğrulayın" diyordu. Doğrulanacak bir CI yoktu.
 #
@@ -14,6 +14,9 @@ name: ZanKurd Flutter CI
 on:
   push:
   pull_request:
+  schedule:
+    # Cihazsız tam regresyonu geceleri de yeniden çalıştır.
+    - cron: '17 2 * * *'
 
 defaults:
   run:
@@ -40,6 +43,9 @@ jobs:
     - name: Install app dependencies
       run: flutter pub get
 
+    - name: Validate pinned release toolchain
+      run: dart run tool/validate_release_toolchain.dart
+
     - name: Check formatting
       # offline_question_bank.dart üretilmiş bir dosya; kanonik biçimini
       # tool/verify_and_fix_question_bank.py belirliyor, dart format'ınkiyle
@@ -60,8 +66,55 @@ jobs:
     - name: Check question quality regressions
       run: dart run tool/question_quality/question_quality_audit.dart gate
 
+    # Şık sızması taraması (saf Python, mandalı `FINDING_RATCHET = 0`).
+    #
+    # Niçin CI'da: bu araç 2026-08-22'ye kadar bulgu üretiyor ama hüküm
+    # vermiyordu; mandal o gün eklendi, ama mandalı çeken bir koşucu
+    # yoktu. Bulgusunu kimseye söylemeyen bir bekçi, tıpkı deponun
+    # kökünde durmayan bir CI dosyası gibi (bkz. bu dosyanın başlığı),
+    # yalnız varmış gibi görünür.
+    #
+    # Dart kalite kapısından ayrı durur: kapı elle sayılmış bir kaynak
+    # listesine bakar, bu tarama banka listesini
+    # `question_bank_assets.dart` manifestosundan okur — yeni eklenen bir
+    # bankayı kendiliğinden kapsar.
+    - name: Check option-leak scan (Python)
+      run: python3 tool/content_authoring/sik_kalite_taramasi.py
+
+    - name: Check static tap targets
+      run: python3 tool/a11y/tap_target_taramasi.py
+
     - name: Run unit and widget tests with coverage
       run: flutter test --coverage
+
+    # Cihazsız uçtan uca akış (IntegrationTest değil). 1v1, RevenueCat,
+    # gerçek bildirim ve OS dayanıklılık testleri fiziksel cihaz release
+    # kapısında ayrıca doğrulanır.
+    - name: Run device-less app flows
+      run: flutter test -d flutter-tester integration_test/app_flows_test.dart
+
+    # Ekran turu her ana ekranı gerçek widget ağacıyla açıp PNG'ye basar.
+    #
+    # Niçin CI'da: tur elle çalıştırılan bir araçtı ve kimse çalıştırmayınca
+    # hiçbir şey söylemiyordu. Oysa 2026-08-16'da Kurmancî joker
+    # etiketlerinin kırpıldığını bulan oydu — kusur widget testlerine
+    # görünmüyordu çünkü onlar metnin VARLIĞINI ölçüyor, genişliğini değil.
+    #
+    # Bu adım bir piksel karşılaştırması DEĞİLDİR: Linux koşucusu ile
+    # macOS aynı kareyi birebir çizmez, öyle bir kapı sürekli yanlış alarm
+    # verirdi. Ölçtüğü şey daha temel ve yine de değerli: her ekran
+    # istisnasız açılıyor ve çiziliyor mu. Kareler artefakt olarak
+    # yükleniyor; düzen bozulduğunda insan bakacak bir şey buluyor.
+    - name: Render screen tour
+      run: flutter test tool/screenshots/screen_tour_test.dart
+
+    - name: Upload screen tour
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: screen-tour
+        path: zankurd_mobile/docs/screenshots/tour/
+        retention-days: 14
 
     - name: Upload coverage report
       if: always()
@@ -70,6 +123,28 @@ jobs:
         name: coverage-report
         path: zankurd_mobile/coverage/lcov.info
         retention-days: 30
+
+  # Web yalnız widget testleriyle doğrulanamaz: release derleyicisi, web'e
+  # özgü paket kodu ve release yapılandırma kapısı ayrı ayrı kırılabilir.
+  # Üretim sırrı kullanmadan repodaki public varsayılanlarla gerçek release
+  # artefaktını derleyerek bu sınıf regresyonları push/PR sırasında yakalar.
+  build-web:
+    runs-on: ubuntu-latest
+    needs: analyze-and-test
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.44.7'
+        channel: 'stable'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build web (release)
+      run: flutter build web --release --no-web-resources-cdn --dart-define=USE_BUNDLED_SUPABASE_DEFAULTS=true
 
   build-android:
     runs-on: ubuntu-latest
@@ -93,12 +168,131 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
 
-    - name: Build Android APK (debug)
-      run: flutter build apk --debug
+    - name: Create throwaway CI signing key (compile check only)
+      # Gradle release derlemesini gerçek imza olmadan bilerek durdurur
+      # (debug imzaya düşmesin). Bu iş yalnız release DERLEYİCİSİNİ (R8,
+      # manifest birleştirme) sınar: her koşuda yeni, bir günlük, atılacak
+      # bir anahtar üretilir. Bu AAB Play'e yüklenemez — yükleme anahtarı
+      # farklıdır. Adım yokken iş 2026-08-09'dan beri her koşuda kırmızıydı
+      # ve kırmızı CI gerçek kırılmaları görünmez kılıyordu.
+      run: |
+        keytool -genkeypair -noprompt -keystore "$RUNNER_TEMP/ci-throwaway.jks" \
+          -storepass ci-throwaway -keypass ci-throwaway -alias ci-throwaway \
+          -keyalg RSA -keysize 2048 -validity 1 -dname "CN=ZanKurd CI throwaway"
+        printf 'storeFile=%s\nstorePassword=ci-throwaway\nkeyAlias=ci-throwaway\nkeyPassword=ci-throwaway\n' \
+          "$RUNNER_TEMP/ci-throwaway.jks" > android/key.properties
 
-    - name: Upload APK
+    - name: Build Android AAB (release compiler, staging public config)
+      run: >-
+        flutter build appbundle --release
+        --dart-define=APP_ENV=staging
+        --dart-define=USE_BUNDLED_SUPABASE_DEFAULTS=true
+        --dart-define=REVENUECAT_API_KEY_ANDROID=test_CI_PUBLIC_BUILD_ONLY_20260913_KEY
+        --dart-define=REVENUECAT_API_KEY_IOS=test_CI_PUBLIC_BUILD_ONLY_20260913_KEY
+
+    - name: Upload release-compiler AAB
       uses: actions/upload-artifact@v4
       with:
-        name: android-debug-apk
-        path: zankurd_mobile/build/app/outputs/flutter-apk/app-debug.apk
+        name: android-release-compiler-aab
+        path: zankurd_mobile/build/app/outputs/bundle/release/app-release.aab
+        retention-days: 14
+
+  # İmzalı IPA insan adımı olarak kalır. Bu iş yalnız derlemenin
+  # kırılmadığını söyler; mağaza yüklemesi yapmaz.
+  build-ios:
+    runs-on: macos-latest
+    needs: analyze-and-test
+    if: github.event_name == 'push'
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.44.7'
+        channel: 'stable'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build iOS (release compiler, no codesign, staging public config)
+      run: >-
+        flutter build ios --release --no-codesign
+        --dart-define=APP_ENV=staging
+        --dart-define=USE_BUNDLED_SUPABASE_DEFAULTS=true
+        --dart-define=REVENUECAT_API_KEY_ANDROID=test_CI_PUBLIC_BUILD_ONLY_20260913_KEY
+        --dart-define=REVENUECAT_API_KEY_IOS=test_CI_PUBLIC_BUILD_ONLY_20260913_KEY
+
+  patrol-ios-smoke:
+    runs-on: macos-latest
+    needs: analyze-and-test
+    if: github.event_name != 'schedule'
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.44.7'
+        channel: 'stable'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Install Patrol CLI
+      run: |
+        dart pub global activate patrol_cli 4.8.0
+        echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+
+    - name: Boot an available iPhone simulator
+      id: simulator
+      run: |
+        DEVICE_ID="$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(x["udid"] for devices in d["devices"].values() for x in devices if x.get("isAvailable") and x["name"].startswith("iPhone")))')"
+        xcrun simctl boot "$DEVICE_ID" 2>/dev/null || true
+        xcrun simctl bootstatus "$DEVICE_ID" -b
+        echo "device_id=$DEVICE_ID" >> "$GITHUB_OUTPUT"
+
+    - name: Run patrol test on real ZanKurd app tree
+      run: patrol test -t patrol_test/smoke_test.dart -d "${{ steps.simulator.outputs.device_id }}"
+
+  # Fiziksel cihaz isteyen 1v1, RevenueCat, gerçek bildirim ve OS dayanıklılık
+  # testleri CI koşucusunda cihaz varmış gibi işaretlenmez. Bunlar her release
+  # adayı için docs/YAYIN_ADIMLARI.md içindeki manuel cihaz kapısından geçer.
+
+
+  native-visual-qa:
+    runs-on: macos-latest
+    needs: patrol-ios-smoke
+    if: github.event_name != 'schedule'
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.44.7'
+        channel: 'stable'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Boot an available iPhone simulator
+      id: native-simulator
+      run: |
+        DEVICE_ID="$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(x["udid"] for devices in d["devices"].values() for x in devices if x.get("isAvailable") and x["name"].startswith("iPhone")))')"
+        xcrun simctl boot "$DEVICE_ID" 2>/dev/null || true
+        xcrun simctl bootstatus "$DEVICE_ID" -b
+        echo "device_id=$DEVICE_ID" >> "$GITHUB_OUTPUT"
+
+    - name: Capture native-only visual evidence
+      run: >-
+        ZANKURD_NATIVE_VISUAL_DEVICE="${{ steps.native-simulator.outputs.device_id }}"
+        ./tool/native_visual_qa.sh
+
+    - name: Upload native visual evidence
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: native-visual-qa
+        path: zankurd_mobile/.tmp/design_qa/native/
         retention-days: 14

@@ -53,8 +53,9 @@ void main() {
     final beforeRunApp = mainSource.substring(0, mainSource.indexOf('runApp('));
     for (final deferred in [
       'premiumService.warmUp()',
-      'AnalyticsService.instance.initialize()',
+      'AnalyticsService.instance.initialize(enabled: true)',
       'NotificationService.load()',
+      'ErrorReporter.setCollectionEnabled(true)',
     ]) {
       expect(
         mainSource,
@@ -66,7 +67,14 @@ void main() {
     expect(beforeRunApp, isNot(contains('await NotificationService.load()')));
     expect(
       beforeRunApp,
-      isNot(contains('await AnalyticsService.instance.initialize()')),
+      isNot(
+        contains('await AnalyticsService.instance.initialize(enabled: true)'),
+      ),
+    );
+    expect(
+      mainSource,
+      isNot(contains('await ErrorReporter.setCollectionEnabled(true)')),
+      reason: 'Crashlytics etkinleştirme ilk Flutter karesini bekletmemeli.',
     );
     expect(mainSource, contains('startInBackground'));
   });

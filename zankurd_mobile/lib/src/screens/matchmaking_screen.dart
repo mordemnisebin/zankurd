@@ -10,19 +10,27 @@ import '../models/avatar_identity.dart';
 import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../models/player.dart';
+import '../widgets/kilim_progress_bar.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/player_moderation_button.dart';
+import '../widgets/roj_mascot.dart';
+import '../widgets/sahne/sahne.dart';
 import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/player_identity.dart';
 import '../services/analytics_service.dart';
+import '../services/matchmaking_metrics.dart';
 import '../utils/test_environment.dart';
 import '../widgets/app_state.dart';
+import 'async_duel/async_duel_play_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../config/bot_names.dart';
 import '../config/category_visuals.dart';
+import '../config/feature_flags.dart';
+import '../widgets/dialog_action_pair.dart';
 
 Player? selectOpponentPlayer(
   Iterable<Player> players, {
@@ -55,10 +63,34 @@ Player? selectOpponentPlayer(
   return null;
 }
 
+/// 20sn'de rakip bulunamayınca oyuncunun `_showBotPrompt` diyaloğunda
+/// verdiği karar.
+enum _NoOpponentChoice {
+  /// Aramadan tamamen vazgeç (eski "Hayır"ın karşılığı).
+  cancel,
+
+  /// Botla hemen oyna (eski "Evet").
+  bot,
+
+  /// Sırayla düello başlat: rakip aynı anda çevrimiçi olmasa da katılır.
+  asyncDuel,
+}
+
 class MatchmakingScreen extends StatefulWidget {
-  const MatchmakingScreen({required this.repository, super.key});
+  const MatchmakingScreen({
+    required this.repository,
+    this.metrics,
+    this.asyncDuelEnabled = kAsyncDuelEnabled,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
+  final MatchmakingMetrics? metrics;
+
+  /// Varsayılanı [kAsyncDuelEnabled]; testler ve ekran turu bayrak
+  /// kapalıyken de "sırayla düello" teklifini açabilsin diye parametredir
+  /// (bkz. `PlayHubScreen.asyncDuelEnabled` — aynı desen).
+  final bool asyncDuelEnabled;
 
   @override
   State<MatchmakingScreen> createState() => _MatchmakingScreenState();
@@ -111,6 +143,24 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   String? _profileName;
 
   String get _myName => _profileName ?? (context.t(K.playerWord));
+
+  /// Ekranda gösterilen kendi adım.
+  ///
+  /// 2026-09-30 canlı: Kurmancî ekranda misafirin sunucu varsayılanı
+  /// "ZanKurd Oyuncusu" (Türkçe) olduğu gibi yazılıyordu. Kimlik karşılaştırması
+  /// ham [_myName] ile sürer (sunucu satırındaki ad da ham); yalnız ÇİZİLEN
+  /// ad [PlayerIdentity] ile dile göre çözülür.
+  String get _myDisplayName =>
+      PlayerIdentity.resolveName(_profileName, isKu: context.isKu);
+
+  /// Rakip adının ekranda görünen hâli (yer tutucu ad dile göre çözülür).
+  String? get _opponentDisplayName {
+    final name = _opponentName;
+    return name == null
+        ? null
+        : PlayerIdentity.resolveName(name, isKu: context.isKu);
+  }
+
   bool _isCancelled = false;
   bool _cancelling = false;
   bool _cancelRequested = false;
@@ -135,17 +185,29 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   List<String> _categories = const [];
   bool _loadingCategories = false;
   bool _categoriesError = false;
-  String? _selectedCategory;
   String? _lastMatchCategory;
   String? _matchmakingErrorMessage;
 
   StreamSubscription? _matchmakingSub;
   Timer? _statusTimer;
   int _secondsElapsed = 0;
+  final Stopwatch _matchmakingClock = Stopwatch()..start();
+  late final MatchmakingMetrics _matchmakingMetrics;
 
   @override
   void initState() {
     super.initState();
+    _matchmakingMetrics =
+        widget.metrics ??
+        MatchmakingMetrics(
+          elapsed: () => _matchmakingClock.elapsed,
+          record: (parameters) {
+            AnalyticsService.instance.logMatchmakingWait(
+              outcome: parameters['outcome']! as String,
+              waitSeconds: parameters['wait_seconds']! as int,
+            );
+          },
+        );
     _radarController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 4),
@@ -224,8 +286,13 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       final result = await repository.cancelMatchmaking();
       final roomId = _matchedRoomId(result);
       if (roomId != null) {
+        // Ekran kapanırken eşleşme cevabı geç geldiyse bekleme sonucu
+        // iptal değil, gerçek rakip eşleşmesidir.
+        _matchmakingMetrics.finish(MatchmakingOutcome.human);
         await repository.leaveOnlineRoom(_roomReference(roomId));
         joinTimedOut = false;
+      } else {
+        _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'matchmaking_dispose_cancel');
@@ -247,6 +314,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     // şey yapmaz; çıkışı hemen ver, temizliği arka planda en iyi çaba
     // olarak sürdür.
     if (_cancelFailed) {
+      _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
       _matchmakingSub?.cancel();
       _matchmakingSub = null;
       _statusTimer?.cancel();
@@ -300,11 +368,15 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       final result = await repository.cancelMatchmaking();
       final matchedRoomId = _matchedRoomId(result);
       if (matchedRoomId != null) {
+        _matchmakingMetrics.finish(MatchmakingOutcome.human);
         await repository.leaveOnlineRoom(_roomReference(matchedRoomId));
         joinTimedOut = false;
+      } else {
+        _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'matchmaking_cancel_and_pop');
+      _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
       _cancelFailed = true;
       if (mounted) {
         setState(() {
@@ -444,6 +516,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     // sonra başlatılan aramada iptal hâlâ "ateşle-unut" kalır ve hayalet
     // kuyruğa karşı koruma sessizce kaybolurdu.
     _cancelFailed = false;
+    _matchmakingMetrics.start();
     AnalyticsService.instance.logActivationStep('matchmaking_started');
     // Eşleşme akışı asenkron: rakip adı yer tutucusu, `context` async
     // boşluğun ötesine taşınmasın diye burada, senkron olarak çözülür.
@@ -484,7 +557,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         // C-2: null-safe cast — Supabase schema hatası veya edge-case'de
         // String? null dönebilir; null ise navigasyon iptal edilir.
         final roomId = matchRes['room_id'] as String?;
-        if (roomId == null) return; // beklenmedik schema yanıtı
+        if (roomId == null) {
+          _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
+          return; // beklenmedik schema yanıtı
+        }
         final matchedRoom = await _loadMatchedRoom(roomId);
         if (!_isAttemptActive(attempt)) return;
         final opponent = selectOpponentPlayer(
@@ -522,7 +598,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             // C-2: null-safe cast — subscription yanıtı beklenmedik türde
             // olursa crash yerine sessizce çıkar.
             final roomId = entry['room_id'] as String?;
-            if (roomId == null) return;
+            if (roomId == null) {
+              _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
+              return;
+            }
             try {
               // Fetch opponent display name
               String matchedName = opponentPlaceholder;
@@ -591,6 +670,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 stack,
                 reason: 'matchmaking_timeout_cancel',
               );
+              _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
               if (mounted) {
                 setState(() {
                   _found = false;
@@ -618,6 +698,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 stack,
                 reason: 'matchmaking_timeout_matched_room',
               );
+              _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
               if (mounted) {
                 setState(() {
                   _found = false;
@@ -628,13 +709,13 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
             }
 
             if (!_isAttemptActive(attempt)) return;
-            // Ask user for bot fallback
+            // Ask user for bot fallback / sırayla düello / cancel
             setState(() => _botPromptOpen = true);
-            final playWithBot = await _showBotPrompt();
+            final choice = await _showBotPrompt();
             if (mounted) setState(() => _botPromptOpen = false);
             if (!_isAttemptActive(attempt)) return;
             if (!mounted) return;
-            if (playWithBot == true) {
+            if (choice == _NoOpponentChoice.bot) {
               // M-3: Bot isimleri merkezi config'den; inline liste kaldırıldı.
               final matchedName =
                   BotNames.pool[Random().nextInt(BotNames.pool.length)];
@@ -653,7 +734,26 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
                 attempt,
                 opponentLevel: botLevel,
               );
+            } else if (choice == _NoOpponentChoice.asyncDuel) {
+              _matchmakingMetrics.finish(MatchmakingOutcome.asyncDuel);
+              _isCancelled = true;
+              // Sunucu 'Rastgele' kategori adını tanımaz; sırayla düello
+              // ekranı `category == null` olduğunda kendi rastgele
+              // kategori seçimini yapar (bkz. `AsyncDuelPlayScreen`).
+              final category = chosenCategory.toLowerCase() == 'rastgele'
+                  ? null
+                  : chosenCategory;
+              Navigator.of(context).pushReplacement(
+                AppRoute.to(
+                  AsyncDuelPlayScreen(
+                    repository: widget.repository,
+                    category: category,
+                  ),
+                ),
+              );
             } else {
+              // cancel/null: eski "Hayır" dalıyla birebir.
+              _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
               _isCancelled = true;
               Navigator.of(context).pop();
             }
@@ -678,6 +778,7 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'matchmaking_start');
       if (!_isAttemptActive(attempt)) return;
+      _matchmakingMetrics.finish(MatchmakingOutcome.cancelled);
       _matchmakingSub?.cancel();
       _statusTimer?.cancel();
       setState(() {
@@ -687,41 +788,91 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     }
   }
 
-  Future<bool?> _showBotPrompt() async {
-    return showDialog<bool>(
+  /// 20sn zaman aşımında oyuncuya sunulan üç seçenek.
+  ///
+  /// [asyncDuelEnabled] kapalıyken [asyncDuel] hiç üretilmez — diyalog eski
+  /// iki düğmeli hâlindedir ve `bot`/`cancel` dışında bir değer dönmez.
+  Future<_NoOpponentChoice?> _showBotPrompt() async {
+    if (!widget.asyncDuelEnabled) {
+      // Bayrak kapalıyken diyalog BİREBİR eski hâlidir: aynı iki metin,
+      // aynı iki düğme. Sunucu göçü uygulanana dek (bkz. `kAsyncDuelEnabled`
+      // yorumu) mevcut kullanıcı hiçbir fark görmez.
+      final playWithBot = await showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          // 2026-09-29 Şahnê: yazı ve renk temadan; "Hayır" bir hata
+          // durumu değil (Şaş kırmızısı kalktı), "Evet" diyaloğun tek
+          // birincil eylemi (Agir, koyu metin — temanın düğmesi).
+          title: Text(
+            context.t(K.searchTimedOut),
+            style: SahneType.headline.copyWith(
+              color: SahneTokens.of(context).tx,
+            ),
+          ),
+          content: Text(
+            context.t(K.playWithBotQ),
+            style: SahneType.body.copyWith(color: SahneTokens.of(context).tx2),
+          ),
+          actions: [
+            DialogActionPair(
+              cancel: TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text(context.t(K.no)),
+              ),
+              confirm: FilledButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(context.t(K.yes)),
+              ),
+            ),
+          ],
+        ),
+      );
+      return playWithBot == true
+          ? _NoOpponentChoice.bot
+          : _NoOpponentChoice.cancel;
+    }
+
+    return showDialog<_NoOpponentChoice>(
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        backgroundColor: AppTheme.surfaceColor(context),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: AppTheme.borderColor(context)),
-        ),
         title: Text(
           context.t(K.searchTimedOut),
-          style: TextStyle(
-            color: AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.bold,
-          ),
+          style: SahneType.headline.copyWith(color: SahneTokens.of(context).tx),
         ),
         content: Text(
-          context.t(K.playWithBotQ),
-          style: TextStyle(color: AppTheme.textSubColor(context)),
+          context.t(K.asyncDuelOfferBody),
+          style: SahneType.body.copyWith(color: SahneTokens.of(context).tx2),
         ),
+        // Üç eylem: hep alt alta, tam genişlikte, birincil üstte
+        // (2026-09-30 simülatör: `AlertDialog.actions` üçünü içerik
+        // genişliğinde, sağa yaslı diziyordu; bkz. [DialogActionPair]).
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(
-              context.t(K.no),
-              style: const TextStyle(color: AppTheme.wrong),
-            ),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: AppTheme.primaryGradientStart,
-            ),
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(context.t(K.yes)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              FilledButton(
+                key: const ValueKey('mm-offer-async-duel'),
+                onPressed: () =>
+                    Navigator.of(context).pop(_NoOpponentChoice.asyncDuel),
+                child: Text(context.t(K.asyncDuel)),
+              ),
+              const SizedBox(height: 8),
+              TextButton(
+                key: const ValueKey('mm-offer-bot'),
+                onPressed: () =>
+                    Navigator.of(context).pop(_NoOpponentChoice.bot),
+                child: Text(context.t(K.asyncDuelOfferBot)),
+              ),
+              const SizedBox(height: 8),
+              TextButton(
+                key: const ValueKey('mm-offer-cancel'),
+                onPressed: () =>
+                    Navigator.of(context).pop(_NoOpponentChoice.cancel),
+                child: Text(context.t(K.cancel)),
+              ),
+            ],
           ),
         ],
       ),
@@ -817,6 +968,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     int? opponentLevel,
   }) async {
     if (!_isAttemptActive(attempt)) return;
+    _matchmakingMetrics.finish(
+      matchedRoom == null ? MatchmakingOutcome.bot : MatchmakingOutcome.human,
+    );
     AnalyticsService.instance.logActivationStep('matchmaking_matched');
     setState(() {
       _found = true;
@@ -825,8 +979,9 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
       if (opponentLevel != null) _opponentLevel = opponentLevel;
       _opponentIdentity = opponentIdentity;
       _opponentId = opponentId;
-      _statusTextKu = 'Lîstikvanek hat dîtin: $matchedName!';
-      _statusTextTr = 'Rakip bulundu: $matchedName!';
+      final shownName = PlayerIdentity.resolveName(matchedName, isKu: ku);
+      _statusTextKu = 'Lîstikvanek hat dîtin: $shownName!';
+      _statusTextTr = 'Rakip bulundu: $shownName!';
     });
 
     // Wait 1.5 seconds for victory transition animation
@@ -948,9 +1103,8 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final status = ku
-        ? (_statusTextKu ?? 'Tê gerîn...')
-        : (_statusTextTr ?? 'Aranıyor...');
+    final status =
+        (ku ? _statusTextKu : _statusTextTr) ?? context.t(K.searchingShort);
 
     return PopScope(
       // İptal bir kez başarısız olduysa sistem geri hareketi de serbest
@@ -961,778 +1115,713 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         if (didPop) return;
         _handleCancelAndPop();
       },
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
-          leading: _searchingStarted
-              ? IconButton(
-                  icon: const Icon(AppIcons.arrowLeft),
-                  tooltip: context.t(K.back),
-                  onPressed: _cancelling ? null : _handleCancelAndPop,
-                )
-              : null,
-        ),
-        body: Container(
-          color: AppTheme.bgOf(context),
-          child: SafeArea(
-            child: _searchingStarted
-                ? _buildRadarSearch(status, ku)
-                : _buildSelectionMenu(ku),
-          ),
-        ),
-      ),
+      // 2026-09-29 Şahnê: seçim B iskeletidir (açılan sayfa); arama ve
+      // eşleşme anı C iskeletidir (oyun sahnesi, her temada gece). Eski
+      // alt kenardaki üçgen kilim deseni kalktı.
+      child: _searchingStarted
+          ? _buildSearchStage(status, ku)
+          : _buildSelectionMenu(ku),
     );
   }
 
   Widget _buildSelectionMenu(bool ku) {
-    // Dikey ortalama yok: hero kart üstten başlar, boşluk alta kalır.
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
-      children: [
-        Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            // Aynı özellik, tek kimlik.
-            //
-            // Oyun merkezindeki "Hızlı düello" kartı marka yeşiliyle
-            // sunuluyor (play_hub_screen.dart:370), eşleşme ekranının
-            // hero'su ise `playPink` ile — kullanıcı aynı özelliğe iki
-            // ayrı renkten giriyordu. `shop_screen.dart`taki M24 notu
-            // playPink/playCyan/playPurple'ı zaten "marka dışı" diye
-            // işaretlemişti; bu yüzey o kararın dışında kalmıştı
-            // (2026-07-31 denetimi).
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [AppTheme.culturalBrandBg, Color(0xFF1E6B4C)],
+    final t = SahneTokens.of(context);
+    final Widget categories;
+    if (_loadingCategories) {
+      categories = Padding(
+        padding: const EdgeInsets.all(SahneSpace.x6),
+        child: Center(child: CircularProgressIndicator(color: t.raceTx)),
+      );
+    } else if (_categories.isEmpty) {
+      // Ekranın birincil eylemi yukarıdaki rastgele eşleşme kartı; buradaki
+      // yeniden deneme ikincildir.
+      categories = _categoriesError
+          ? AppErrorState(
+              title: context.t(K.loadFailedShort),
+              message: context.t(K.categoriesLoadFail),
+              retryLabel: context.t(K.retryShort),
+              primaryAction: false,
+              onRetry: _loadCategoriesOnly,
+            )
+          : AppEmptyState(
+              icon: AppIcons.layerGroup,
+              title: context.t(K.categoriesNotFound),
+              message: context.t(K.checkConnection),
+              actionLabel: context.t(K.retryShort),
+              primaryAction: false,
+              onAction: _loadCategoriesOnly,
+            );
+    } else {
+      // Kategori satırı: 36'lık çizimsiz küçük (kategori tonu + ikon); alt
+      // satırda öteki dildeki ad. Tam kategori çizimi (mücevher karo) burada yok:
+      // eşleşme bir kategori vitrini değil, hızlı bir seçim listesi.
+      categories = SahneListGroup(
+        children: [
+          for (final category in _categories) _categoryRow(category, ku),
+        ],
+      );
+    }
+
+    return SahnePushedPage(
+      // Ekranın kimliği artık B iskeletinin çubuğudur (başlık + alt satır);
+      // eski kimlik başlığının anahtarı çubuğu taşıyan sayfadadır.
+      key: const ValueKey('matchmaking-selection-header'),
+      title: context.t(K.duel1v1),
+      backLabel: context.t(K.back),
+      slivers: [
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+          sliver: SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _RandomMatchCard(onTap: () => _startMatchmaking('Rastgele')),
+                SahneSectionHeader(title: context.t(K.matchByCategory)),
+                categories,
+              ],
             ),
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.18)),
-            boxShadow: [
-              BoxShadow(
-                color: AppTheme.culturalBrandBg.withValues(alpha: 0.30),
-                blurRadius: 18,
-                offset: const Offset(0, 8),
-                spreadRadius: -4,
-              ),
-            ],
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _categoryRow(String category, bool ku) {
+    void onTap() => _startMatchmaking(category);
+
+    final title = CategoryNames.localized(category, ku);
+    final other = CategoryNames.localized(category, !ku);
+    final subtitle = other == title ? null : other;
+    // 2026-09-29 doğallık (K1): liste satırında çizim yok. 36'lık küçükte
+    // üretilmiş çizim seçilemeyen bir renk lekesiydi; her kategori
+    // çizimsiz karonun küçüğünü alır (kendi tonu + kendi ikonu).
+    return SahneListRow.thumb(
+      image: null,
+      icon: CategoryVisuals.icon(category),
+      tone: CategoryVisuals.tone(category),
+      title: title,
+      subtitle: subtitle,
+      chevron: true,
+      onTap: onTap,
+    );
+  }
+
+  Widget _buildSearchStage(String status, bool ku) {
+    final Widget body;
+    if (_cancelling) {
+      body = Center(
+        child: Column(
+          key: const ValueKey('matchmaking-cancelling-state'),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox.square(
+              dimension: 44,
+              child: CircularProgressIndicator(
+                strokeWidth: 3,
+                color: SahneTokens.of(context).raceTx,
+              ),
+            ),
+            const SizedBox(height: SahneSpace.x6),
+            Text(
+              status,
+              style: SahneType.headline.copyWith(
+                color: SahneTokens.of(context).tx,
+              ),
+            ),
+          ],
+        ),
+      );
+    } else if (_matchmakingErrorMessage != null) {
+      body = Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 64,
-                height: 64,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.18),
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.28),
-                  ),
-                ),
-                child: const Icon(AppIcons.bolt, color: Colors.white, size: 32),
+              AppErrorState(
+                title: context.t(K.loadFailedShort),
+                message: _matchmakingErrorMessage!,
+                retryLabel: context.t(K.retryShort),
+                onRetry: () {
+                  final category = _lastMatchCategory;
+                  if (category != null) _startMatchmaking(category);
+                },
               ),
-              const SizedBox(height: 16),
-              Text(
-                context.t(K.duel1v1),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 24,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                context.t(K.duel1v1Sub),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.9),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
+              SahneButton.secondary(
+                label: context.t(K.cancelAction),
+                icon: AppIcons.xmark,
+                onPressed: _cancelling ? null : _handleCancelAndPop,
               ),
             ],
           ),
         ),
-        const SizedBox(height: 20),
-        // 1. Random Match Card
-        Material(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          child: InkWell(
-            onTap: () => _startMatchmaking('Rastgele'),
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            child: Container(
-              key: const ValueKey('matchmaking-duel-card'),
-              decoration: BoxDecoration(
-                // Rastgele eşleşme birincil CTA: kırmızı (tehlike anlamı)
-                // yerine oda/mod kimliğiyle tutarlı teal-yeşil gradyan.
-                gradient: const LinearGradient(
-                  colors: [AppTheme.playCyan, Color(0xFF1E6E66)],
+      );
+    } else {
+      body = _buildVersus(status, ku);
+    }
+
+    final showDock =
+        !_cancelling && _matchmakingErrorMessage == null && !_found;
+    return SahneStageScaffold(
+      closeLabel: context.t(K.back),
+      onClose: _cancelling ? null : _handleCancelAndPop,
+      center: _categoryName == null
+          ? null
+          : Text(
+              context.t(K.categoryPrefix, {
+                'name': CategoryNames.localized(_categoryName!, ku),
+              }),
+            ),
+      body: body,
+      dock: showDock
+          ? SahneButton.secondary(
+              label: context.t(K.cancelAction),
+              icon: AppIcons.xmark,
+              expand: true,
+              onPressed: _cancelling ? null : _handleCancelAndPop,
+            )
+          : null,
+    );
+  }
+
+  /// VS sahnesi: iki elmas avatar yüz yüze, arada logo işareti + "VS".
+  ///
+  /// Yarış rolünde sahne kartı (Boyax sahne degradesi). Kullanıcı Halka 3
+  /// altın; rakip aranırken boş elmas ("?") ve etrafında atan elmas halkalar
+  /// (hareketi azaltta durur), bulununca oyuncunun elması + Halka 3 Rast.
+  Widget _buildVersus(String status, bool ku) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final t = SahneTokens.of(context);
+        final reduce = sahneMotionReduced(context) || isFlutterTestEnvironment;
+        final largeText = MediaQuery.textScalerOf(context).scale(1) > 1.3;
+
+        final me = _VersusSide(
+          avatar: _RingedAvatar(
+            ring: t.gold,
+            child: PlayerAvatar(
+              radius: 32,
+              photoUrl: _myIdentity.photoUrl,
+              iconId: _myIdentity.iconId,
+              colorHex: _myIdentity.colorHex,
+              frameId: _myIdentity.frameId,
+              displayName: _myName,
+            ),
+          ),
+          name: Text(
+            _myDisplayName,
+            maxLines: 2,
+            overflow: TextOverflow.clip,
+            softWrap: true,
+            textAlign: TextAlign.center,
+            style: SahneType.bodyStrong.copyWith(color: t.tx),
+          ),
+          level: _LevelTag(
+            label: context.t(K.levelPrefix, {'level': '$_myLevel'}),
+          ),
+        );
+
+        final Widget opponentAvatar;
+        if (_found && _opponentBlocked) {
+          // Engellenen rakibin YÜKLEDİĞİ fotoğrafı artık çizilmez — bu tam
+          // da kullanıcının engelleyerek bir daha görmek istemediği şey.
+          opponentAvatar = _RingedAvatar(
+            ring: t.tx3,
+            child: SahneAvatar(
+              size: 64,
+              icon: AppIcons.circleXmark,
+              color: t.s3,
+              foreground: t.tx2,
+            ),
+          );
+        } else if (_found) {
+          opponentAvatar = _RingedAvatar(
+            ring: t.okTx,
+            child: PlayerAvatar(
+              radius: 32,
+              photoUrl: _opponentIdentity.photoUrl,
+              iconId: _opponentIdentity.iconId,
+              colorHex: _opponentIdentity.colorHex,
+              frameId: _opponentIdentity.frameId,
+              displayName: _opponentName,
+            ),
+          );
+        } else {
+          opponentAvatar = _SearchPulse(
+            controller: _pulseController,
+            animate: !reduce,
+            child: const _RingedAvatar(
+              ring: SahneStageColors.raceSoft,
+              child: SahneAvatar(
+                size: 64,
+                icon: AppIcons.question,
+                color: SahneStageColors.race3,
+                foreground: SahneStageColors.raceSoft,
+              ),
+            ),
+          );
+        }
+
+        final opponentNameText = Text(
+          !_found
+              ? '?'
+              : _opponentBlocked
+              ? context.t(K.chatBlocked)
+              : (_opponentDisplayName ?? ''),
+          maxLines: 2,
+          overflow: TextOverflow.clip,
+          softWrap: true,
+          textAlign: TextAlign.center,
+          style: SahneType.bodyStrong.copyWith(
+            color: _found ? t.tx : SahneStageColors.raceSoft,
+          ),
+        );
+
+        // Rakibin YÜKLEDİĞİ fotoğraf ve adı burada tam ekran gösteriliyor;
+        // bildir/engelle de tam burada olmalı (2026-08-06 denetimi).
+        final Widget opponentName;
+        if (largeText && _found && !_opponentBlocked) {
+          opponentName = Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              opponentNameText,
+              PlayerModerationButton(
+                repository: widget.repository,
+                playerId: _opponentId,
+                playerName: _opponentDisplayName ?? '',
+                compact: true,
+                onBlocked: () => setState(() => _opponentBlocked = true),
+              ),
+            ],
+          );
+        } else {
+          opponentName = Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(child: opponentNameText),
+              if (_found && !_opponentBlocked)
+                PlayerModerationButton(
+                  repository: widget.repository,
+                  playerId: _opponentId,
+                  playerName: _opponentDisplayName ?? '',
+                  compact: true,
+                  onBlocked: () => setState(() => _opponentBlocked = true),
                 ),
-                borderRadius: BorderRadius.circular(AppRadius.card),
-                border: Border.all(
-                  color: AppTheme.playCyan.withValues(alpha: 0.7),
+            ],
+          );
+        }
+
+        final opponent = _VersusSide(
+          avatar: opponentAvatar,
+          name: opponentName,
+          level: _LevelTag(
+            label: !_found
+                ? '?'
+                : _opponentLevelKnown
+                ? context.t(K.levelPrefix, {'level': '$_opponentLevel'})
+                : context.t(K.levelUnknown),
+            found: _found,
+          ),
+        );
+
+        // Eşleşme bulunduğunda VS altın renge döner ve yarışma programı
+        // hissiyle "punch" yapar; hareketi azaltta yalnız renk değişir.
+        final vs = TweenAnimationBuilder<double>(
+          key: ValueKey('vs-punch-$_found'),
+          tween: Tween(begin: _found && !reduce ? 1.8 : 1.0, end: 1.0),
+          duration: reduce ? Duration.zero : const Duration(milliseconds: 450),
+          curve: Curves.easeOutBack,
+          builder: (context, scale, child) =>
+              Transform.scale(scale: scale, child: child),
+          child: Text(
+            'VS',
+            style: SahneType.title.copyWith(
+              color: _found ? t.gold : SahneStageColors.raceSoft,
+            ),
+          ),
+        );
+
+        final emblem = Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: SahneSpace.x1),
+            const RojMascot(size: 36),
+            const SizedBox(height: SahneSpace.x2),
+            vs,
+          ],
+        );
+
+        // Büyük yazıda iki yan yan yana sığmaz (ad harf harf bölünür): yüz
+        // yüze düzen dikey bir sıraya döner — oyuncu, amblem, rakip.
+        final stage = SahneStageCard(
+          role: SahneRole.race,
+          padding: const EdgeInsets.fromLTRB(
+            SahneSpace.x3,
+            SahneSpace.x6,
+            SahneSpace.x3,
+            SahneSpace.x5,
+          ),
+          child: largeText
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    me,
+                    const SizedBox(height: SahneSpace.x3),
+                    emblem,
+                    const SizedBox(height: SahneSpace.x3),
+                    opponent,
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: me),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: SahneSpace.x2,
+                      ),
+                      child: emblem,
+                    ),
+                    Expanded(child: opponent),
+                  ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppTheme.playCyan.withValues(alpha: 0.18),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
+        );
+
+        // İçerik C iskeletinde olduğu gibi üst satırın hemen altından
+        // başlar (dikey ortalama yok): yüz yüze kart sahnenin ışık
+        // huzmesinin altında durur, durum metni onun altında.
+        return SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(
+            SahneSpace.page,
+            SahneSpace.x6,
+            SahneSpace.page,
+            SahneSpace.x6,
+          ),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 480),
+              child: Column(
+                key: const ValueKey('matchmaking-waiting-state'),
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  stage,
+                  const SizedBox(height: SahneSpace.x6),
+                  if (!_found) ...[
+                    Center(
+                      child: SizedBox(
+                        width: 180,
+                        child: AnimatedBuilder(
+                          animation: _pulseController,
+                          builder: (context, child) {
+                            final val = reduce
+                                ? 0.65
+                                : (0.35 + 0.45 * _pulseController.value);
+                            return KilimProgressBar(
+                              value: val,
+                              height: 8,
+                              color: t.race,
+                              trackColor: t.s3,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: SahneSpace.x4),
+                  ],
+                  Text(
+                    status,
+                    textAlign: TextAlign.center,
+                    style: SahneType.headline.copyWith(
+                      color: _found ? t.okTx : t.tx,
+                    ),
                   ),
+                  if (_found) ...[
+                    const SizedBox(height: SahneSpace.x2),
+                    Text(
+                      context.t(K.startingSoon),
+                      textAlign: TextAlign.center,
+                      style: SahneType.bodyStrong.copyWith(color: t.goldTx),
+                    ),
+                  ],
+                  if (!_found) ...[
+                    const SizedBox(height: SahneSpace.x3),
+                    // Geçen bekleme süresi — yalnız gösterim; zamanlayıcı
+                    // mantığı değişmez. Bot diyaloğu açıkken çip gizlenir.
+                    if (!_botPromptOpen)
+                      Center(
+                        child: SahneStatChip(
+                          leading: Icon(
+                            AppIcons.stopwatch,
+                            size: 20,
+                            color: t.tx2,
+                          ),
+                          label: ku
+                              // Çip yalnız geçen süreyi taşır; durumu
+                              // üstteki başlık söyler. İkisi de durum
+                              // yazdığında biri ötekini yalanlıyordu.
+                              ? '$_secondsElapsed çirke'
+                              : '$_secondsElapsed saniye',
+                        ),
+                      ),
+                    const SizedBox(height: SahneSpace.x3),
+                    Text(
+                      context.t(K.searchingNote),
+                      textAlign: TextAlign.center,
+                      style: SahneType.caption.copyWith(color: t.tx2),
+                    ),
+                  ],
                 ],
               ),
-              padding: const EdgeInsets.all(20),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// Rastgele eşleşme — seçim ekranının TEK birincil eylemi.
+///
+/// 2026-09-29 doğallık (K7): kartın tamamı Agir (turuncu) dolguydu; ekranın
+/// üst yarısı tek bir turuncu blok olunca eylem değil afiş gibi okunuyordu.
+/// Kart artık ikincil yüzeydir (Perde `s1`, düz, gölgesiz, kenarlıksız, L
+/// pah); turuncu
+/// yalnız sağdaki ok karosunda kalır — ekranda tek turuncu öğe. Kartın
+/// tamamı yine dokunulur. Kart kendi dolgusunu taşıyan bir `Container`dır
+/// (bekçi: `matchmaking_screen_test`); pah şekli kırpıcıyla verilir.
+class _RandomMatchCard extends StatelessWidget {
+  const _RandomMatchCard({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return SahnePressSink(
+      enabled: true,
+      child: ClipPath(
+        clipper: const ShapeBorderClipper(shape: SahneShape.l),
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            onTap: onTap,
+            child: Container(
+              key: const ValueKey('matchmaking-duel-card'),
+              // Kenarlık yok: dikdörtgen kenarlık pah kırpıcısında köşeleri
+              // kesik bir çerçeve bırakıyordu.
+              decoration: BoxDecoration(
+                color: t.s1,
+                boxShadow: const <BoxShadow>[],
+              ),
+              padding: const EdgeInsets.all(SahneSpace.x4),
               child: Row(
                 children: [
-                  Container(
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.18),
-                      borderRadius: BorderRadius.circular(12),
+                  DecoratedBox(
+                    // İkon karosu nötr (Kulis): kartın tek renkli öğesi
+                    // sağdaki Agir ok karosudur.
+                    decoration: ShapeDecoration(
+                      color: t.s2,
+                      shape: SahneShape.m,
                     ),
-                    child: const Icon(AppIcons.shuffle, color: Colors.white),
+                    child: SizedBox.square(
+                      dimension: 44,
+                      child: Icon(AppIcons.shuffle, color: t.tx2, size: 24),
+                    ),
                   ),
-                  const SizedBox(width: 14),
+                  const SizedBox(width: SahneSpace.x3),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           context.t(K.randomMatch),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                          style: SahneType.button.copyWith(color: t.tx),
                         ),
-                        const SizedBox(height: 2),
                         Text(
                           context.t(K.randomMatchSub),
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 12,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                          style: SahneType.caption.copyWith(color: t.tx2),
                         ),
                       ],
                     ),
                   ),
-                  const Icon(
-                    AppIcons.chevronRight,
-                    color: Colors.white70,
-                    size: 16,
+                  const SizedBox(width: SahneSpace.x3),
+                  DecoratedBox(
+                    key: const ValueKey('matchmaking-duel-card-go'),
+                    decoration: ShapeDecoration(
+                      color: AppTheme.primaryCtaColor(context),
+                      shape: SahneShape.m,
+                    ),
+                    child: SizedBox.square(
+                      dimension: 44,
+                      child: Icon(
+                        AppIcons.arrowRight,
+                        color: t.onAct,
+                        size: 20,
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
         ),
-        const SizedBox(height: 16),
-        // 2. Category selection label
-        Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 10),
-          child: Text(
-            context.t(K.matchByCategory),
-            style: TextStyle(
-              color: AppTheme.textPrimaryColor(context),
-              fontWeight: FontWeight.w800,
-              fontSize: 15,
-            ),
-          ),
-        ),
-        if (_loadingCategories)
-          const Center(
-            child: CircularProgressIndicator(
-              color: AppTheme.primaryGradientStart,
-            ),
-          )
-        else if (_categories.isEmpty)
-          _categoriesError
-              ? AppErrorState(
-                  title: context.t(K.loadFailedShort),
-                  message: context.t(K.categoriesLoadFail),
-                  retryLabel: context.t(K.retryShort),
-                  onRetry: _loadCategoriesOnly,
-                )
-              : AppEmptyState(
-                  icon: AppIcons.layerGroup,
-                  title: context.t(K.categoriesNotFound),
-                  message: context.t(K.categoriesSubtitle),
-                  actionLabel: context.t(K.retryShort),
-                  onAction: _loadCategoriesOnly,
-                )
-        else
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: _categories.map((category) {
-              final tint = CategoryVisuals.color(category);
-              final isSelected = _selectedCategory == category;
-              return Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    setState(() => _selectedCategory = category);
-                    _startMatchmaking(category);
-                  },
-                  borderRadius: BorderRadius.circular(AppRadius.md),
-                  child: Ink(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: isSelected
-                          ? LinearGradient(
-                              colors: [
-                                tint,
-                                Color.alphaBlend(
-                                  Colors.black.withValues(alpha: 0.14),
-                                  tint,
-                                ),
-                              ],
-                            )
-                          : null,
-                      color: isSelected
-                          ? null
-                          : AppTheme.surfaceHiColor(context),
-                      borderRadius: BorderRadius.circular(AppRadius.md),
-                      border: Border.all(
-                        color: isSelected
-                            ? Colors.white.withValues(alpha: 0.2)
-                            : tint.withValues(alpha: 0.45),
-                        width: isSelected ? 1.2 : 1.4,
-                      ),
-                      boxShadow: isSelected
-                          ? [
-                              BoxShadow(
-                                color: tint.withValues(alpha: 0.28),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ]
-                          : null,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          CategoryVisuals.icon(category),
-                          size: 16,
-                          color: isSelected
-                              ? Colors.white
-                              : AppColors.toneOnSurface(context, tint),
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          CategoryNames.localized(category, ku),
-                          style: TextStyle(
-                            color: isSelected
-                                ? Colors.white
-                                : AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w800,
-                            fontSize: 13.5,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
+      ),
+    );
+  }
+}
+
+/// VS sahnesinin bir yanı: avatar, ad, seviye etiketi.
+class _VersusSide extends StatelessWidget {
+  const _VersusSide({
+    required this.avatar,
+    required this.name,
+    required this.level,
+  });
+
+  final Widget avatar;
+  final Widget name;
+  final Widget level;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        avatar,
+        const SizedBox(height: SahneSpace.x3),
+        name,
+        const SizedBox(height: SahneSpace.x2),
+        level,
       ],
     );
   }
+}
 
-  Widget _buildRadarSearch(String status, bool ku) {
-    if (_cancelling) {
-      return Center(
-        child: Column(
-          key: const ValueKey('matchmaking-cancelling-state'),
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CircularProgressIndicator(
-              color: AppTheme.primaryGradientStart,
-            ),
-            const SizedBox(height: 24),
-            Text(
-              status,
-              style: TextStyle(
-                color: AppTheme.textPrimaryColor(context),
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
+/// 80'lik pahlı kare yuva: içte 64'lük avatar, dışta Halka 3.
+///
+/// 2026-09-29 doğallık (K5): yuva ve arama halkaları elmastı; avatar pahlı
+/// kare olunca elmas halka kareyi çevreleyen ikinci bir şekil oluyordu.
+/// Elmas yalnız soru ilerlemesi ve ders sayacında kalır.
+class _RingedAvatar extends StatelessWidget {
+  const _RingedAvatar({required this.ring, required this.child});
+
+  final Color ring;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.square(
+      dimension: 80,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          shape: SahneShape.withSide(
+            SahneShape.forSize(80),
+            ring,
+            width: SahneRing.r3,
+          ),
         ),
-      );
-    }
-    if (_matchmakingErrorMessage != null) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AppErrorState(
-              title: context.t(K.loadFailedShort),
-              message: _matchmakingErrorMessage!,
-              retryLabel: context.t(K.retryShort),
-              onRetry: () {
-                final category = _lastMatchCategory;
-                if (category != null) _startMatchmaking(category);
-              },
-            ),
-            OutlinedButton.icon(
-              onPressed: _cancelling ? null : _handleCancelAndPop,
-              icon: const Icon(AppIcons.xmark, size: 18),
-              label: Text(context.t(K.cancelAction)),
-            ),
-          ],
-        ),
-      );
-    }
-    return Center(
-      child: Column(
-        key: const ValueKey('matchmaking-waiting-state'),
-        mainAxisAlignment: MainAxisAlignment.center,
+        child: Center(child: child),
+      ),
+    );
+  }
+}
+
+/// Aranırken rakip yuvasının etrafında atan pahlı kare halkalar.
+///
+/// Denetleyici hareketi azalt açıkken hiç başlamaz (bkz. `initState`);
+/// [animate] `false` iken halkalar sabit ve sönük durur.
+class _SearchPulse extends StatelessWidget {
+  const _SearchPulse({
+    required this.controller,
+    required this.animate,
+    required this.child,
+  });
+
+  final Animation<double> controller;
+  final bool animate;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.square(
+      dimension: 80,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
         children: [
-          if (_categoryName != null) ...[
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              decoration: BoxDecoration(
-                color: AppTheme.primaryGradientStart.withValues(alpha: 0.14),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: AppTheme.primaryGradientStart.withValues(alpha: 0.32),
-                ),
-              ),
-              child: Text(
-                context.t(K.categoryPrefix, {
-                  'name': CategoryNames.localized(_categoryName!, context.isKu),
-                }),
-                style: TextStyle(
-                  color: AppColors.onAccentTint(
-                    context,
-                    AppTheme.primaryGradientStart,
-                  ),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-          ],
-          // Matching Animation View
-          SizedBox(
-            width: 260,
-            height: 260,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                // Scanning background radar circles
-                for (double radius in [60.0, 110.0, 160.0, 210.0])
-                  AnimatedBuilder(
-                    animation: _pulseController,
-                    builder: (context, child) {
-                      final pulseValue = _pulseController.value;
-                      final isLight = AppTheme.isLight(context);
-                      final baseAlpha = 1.0 - (radius / 260.0);
-                      final alpha = (isLight ? baseAlpha * 1.5 : baseAlpha)
-                          .clamp(0.06, 0.6);
-                      return Container(
-                        width: radius + (pulseValue * 15.0),
-                        height: radius + (pulseValue * 15.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: _found
-                                ? AppTheme.correct.withValues(alpha: alpha)
-                                : AppTheme.primaryGradientStart.withValues(
-                                    alpha: alpha,
-                                  ),
-                            width: 1.5,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                // Rotating Sweep Indicator (only when searching)
-                if (!_found)
-                  RotationTransition(
-                    turns: _radarController,
-                    child: Container(
-                      width: 220,
-                      height: 220,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: SweepGradient(
-                          colors: [
-                            AppTheme.primaryGradientStart.withValues(
-                              alpha: AppTheme.isLight(context) ? 0.35 : 0.25,
-                            ),
-                            Colors.transparent,
-                          ],
-                          stops: const [0.15, 1.0],
-                        ),
-                      ),
-                    ),
-                  ),
-                // Avatars view
-                //
-                // İki sütun da `Flexible`: sütunun genişliğini avatar değil
-                // altındaki oyuncu adı belirliyor ve ad sınırsız uzayabilir.
-                // Uzun adlı bir rakip bulunduğunda 260 piksellik radar
-                // alanı taşıyordu (2026-07-30: 148 piksel). Avatarlar 72
-                // piksel sabit olduğu için sıkışacak yer var; taşan tek şey
-                // addır, o da tek satıra kırpılır.
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          AnimatedBuilder(
+            animation: controller,
+            builder: (context, _) {
+              final v = animate ? controller.value : 0.0;
+              return IgnorePointer(
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
                   children: [
-                    // User Avatar
-                    Flexible(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 72,
-                            height: 72,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppTheme.primaryGradientStart,
-                                width: 3,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppTheme.primaryGradientStart
-                                      .withValues(alpha: 0.3),
-                                  blurRadius: 15,
-                                ),
-                              ],
-                            ),
-                            child: PlayerAvatar(
-                              radius: 33,
-                              photoUrl: _myIdentity.photoUrl,
-                              iconId: _myIdentity.iconId,
-                              colorHex: _myIdentity.colorHex,
-                              frameId: _myIdentity.frameId,
-                              displayName: _myName,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            _myName,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppTheme.textPrimaryColor(context),
-                              fontWeight: FontWeight.w700,
-                              fontSize: 13,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 6,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppTheme.isLight(context)
-                                  ? Colors.black.withValues(alpha: 0.06)
-                                  : Colors.white.withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              context.t(K.levelPrefix, {'level': '$_myLevel'}),
-                              style: TextStyle(
-                                color: AppTheme.textSubColor(context),
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                    for (final base in const [96.0, 112.0])
+                      SizedBox.square(
+                        dimension: base + 8 * v,
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            shape: SahneShape.withSide(
+                              SahneShape.forSize(base + 8 * v),
+                              SahneStageColors.raceSoft.withValues(
+                                alpha:
+                                    (base == 96 ? 0.32 : 0.16) * (1 - 0.5 * v),
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    // Eşleşme bulunduğunda VS altın renge döner ve
-                    // yarışma programı hissiyle "punch" yapar.
-                    TweenAnimationBuilder<double>(
-                      key: ValueKey('vs-punch-$_found'),
-                      tween: Tween(begin: _found ? 2.4 : 1.0, end: 1.0),
-                      duration: const Duration(milliseconds: 450),
-                      curve: Curves.easeOutBack,
-                      builder: (context, scale, child) =>
-                          Transform.scale(scale: scale, child: child),
-                      child: Text(
-                        'VS',
-                        style: TextStyle(
-                          color: _found
-                              ? AppTheme.gold
-                              : AppTheme.primaryGradientStart,
-                          fontWeight: FontWeight.w900,
-                          fontSize: _found ? 26 : 22,
-                          fontStyle: FontStyle.italic,
-                          letterSpacing: 1,
-                          shadows: _found
-                              ? [
-                                  Shadow(
-                                    color: AppTheme.gold.withValues(alpha: 0.7),
-                                    blurRadius: 14,
-                                  ),
-                                ]
-                              : null,
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 24),
-                    // Opponent Avatar (fades in or animated)
-                    Flexible(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 72,
-                            height: 72,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: _found
-                                    ? AppTheme.correct
-                                    : Colors.white24,
-                                width: 3,
-                              ),
-                              boxShadow: _found
-                                  ? [
-                                      BoxShadow(
-                                        color: AppTheme.correct.withValues(
-                                          alpha: 0.35,
-                                        ),
-                                        blurRadius: 15,
-                                      ),
-                                    ]
-                                  : [],
-                            ),
-                            child: _found && _opponentBlocked
-                                // Engellenen rakibin YÜKLEDİĞİ fotoğrafı
-                                // artık çizilmez — bu tam da kullanıcının
-                                // engelleyerek bir daha görmek istemediği
-                                // şey.
-                                ? CircleAvatar(
-                                    backgroundColor: AppColors.disabledSurface(
-                                      context,
-                                    ),
-                                    child: Icon(
-                                      AppIcons.circleXmark,
-                                      color: AppTheme.isLight(context)
-                                          ? AppTheme.textMutedColor(context)
-                                          : Colors.white24,
-                                      size: 32,
-                                    ),
-                                  )
-                                : _found
-                                ? PlayerAvatar(
-                                    radius: 33,
-                                    photoUrl: _opponentIdentity.photoUrl,
-                                    iconId: _opponentIdentity.iconId,
-                                    colorHex: _opponentIdentity.colorHex,
-                                    frameId: _opponentIdentity.frameId,
-                                    displayName: _opponentName,
-                                  )
-                                : CircleAvatar(
-                                    backgroundColor: AppColors.disabledSurface(
-                                      context,
-                                    ),
-                                    child: Icon(
-                                      AppIcons.question,
-                                      color: AppTheme.isLight(context)
-                                          ? AppTheme.textMutedColor(context)
-                                          : Colors.white24,
-                                      size: 38,
-                                    ),
-                                  ),
-                          ),
-                          const SizedBox(height: 8),
-                          // Rakibin YÜKLEDİĞİ fotoğraf ve adı burada tam
-                          // ekran gösteriliyor; bildir/engelle de tam
-                          // burada olmalı. Eskiden bu ekranda hiçbir
-                          // moderasyon aracı yoktu: tek yol ya sohbete
-                          // mesaj yazmış birine long-press ya da ilk
-                          // 10'a girmiş birini liderlikten bildirmekti
-                          // (2026-08-06 denetimi).
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  !_found
-                                      ? '?'
-                                      : _opponentBlocked
-                                      ? context.t(K.chatBlocked)
-                                      : (_opponentName ?? ''),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: _found
-                                        ? AppTheme.textPrimaryColor(context)
-                                        : AppTheme.textMutedColor(context),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                              if (_found && !_opponentBlocked)
-                                PlayerModerationButton(
-                                  repository: widget.repository,
-                                  playerId: _opponentId,
-                                  playerName: _opponentName ?? '',
-                                  compact: true,
-                                  onBlocked: () =>
-                                      setState(() => _opponentBlocked = true),
-                                ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 6,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: _found
-                                  ? AppTheme.correct.withValues(alpha: 0.15)
-                                  : (AppTheme.isLight(context)
-                                        ? Colors.black.withValues(alpha: 0.05)
-                                        : Colors.white.withValues(alpha: 0.05)),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              !_found
-                                  ? '?'
-                                  : _opponentLevelKnown
-                                  ? (context.t(K.levelPrefix, {
-                                      'level': '$_opponentLevel',
-                                    }))
-                                  : context.t(K.levelUnknown),
-                              style: TextStyle(
-                                color: _found
-                                    ? AppTheme.correct
-                                    : AppTheme.textMutedColor(context),
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
-          const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Text(
-              status,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: _found
-                    ? AppTheme.correct
-                    : AppTheme.textPrimaryColor(context),
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          if (_found) ...[
-            const SizedBox(height: 10),
-            Text(
-              context.t(K.startingSoon),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppTheme.gold,
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-          if (!_found) ...[
-            const SizedBox(height: 12),
-            // Geçen bekleme süresi — yalnız gösterim; zamanlayıcı mantığı
-            // değişmez. Bot diyaloğu açıkken çip gizlenir.
-            if (!_botPromptOpen)
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: AppTheme.surfaceHiColor(context),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                    color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-                  ),
-                ),
-                child: Text(
-                  ku
-                      // Çip yalnız geçen süreyi taşır; durumu üstteki
-                      // başlık söyler. İkisi de durum yazdığında biri
-                      // ötekini yalanlıyordu.
-                      ? '$_secondsElapsed çirke'
-                      : '$_secondsElapsed saniye',
-                  style: TextStyle(
-                    color: AppTheme.textSubColor(context),
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Text(
-                context.t(K.searchingNote),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppTheme.textMutedColor(context),
-                  fontSize: 13,
-                ),
-              ),
-            ),
-            const SizedBox(height: 28),
-            OutlinedButton.icon(
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppTheme.textPrimaryColor(context),
-                side: BorderSide(
-                  color: AppTheme.primaryGradientStart.withValues(alpha: 0.55),
-                  width: 1.4,
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 28,
-                  vertical: 14,
-                ),
-              ),
-              onPressed: _cancelling ? null : _handleCancelAndPop,
-              icon: const Icon(AppIcons.xmark, size: 18),
-              label: Text(
-                context.t(K.cancelAction),
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              ),
-            ),
-          ],
+          child,
         ],
+      ),
+    );
+  }
+}
+
+/// Seviye etiketi: S pah, ton zemin + kalın açıklama. Büyük harfe
+/// çevrilmez (ad ve seviye sözü olduğu gibi okunur); dar sütunda sarar.
+class _LevelTag extends StatelessWidget {
+  const _LevelTag({required this.label, this.found = true});
+
+  final String label;
+  final bool found;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: found ? t.s2 : SahneStageColors.race3,
+        shape: SahneShape.s,
+      ),
+      child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — seviye etiketi; salt görsel,
+        // dokunma hedefi değil.
+        constraints: const BoxConstraints(minHeight: 24),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.x2,
+            vertical: 2,
+          ),
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            softWrap: true,
+            style: SahneType.captionStrong.copyWith(
+              color: found ? t.tx2 : SahneStageColors.raceSoft,
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -137,7 +137,15 @@ void main() {
       expect(SubcategoryConfig.getSubcategoryId(q), 'dengbeji');
     });
 
-    test('konusu belirsiz soru yine de bir alt kategoriye düşer', () {
+    // 2026-09-28 içerik dürüstlüğü düzeltmesi: bu test eskiden tam tersini
+    // istiyordu (`isNotEmpty`) — konusu belirsiz bir soru bile
+    // `id.hashCode % n` ile bir alt kategoriye düşürülüyordu. O davranış
+    // "her soru bir yere düşmeli" diye savunuluyordu ama sonucu sahte bir
+    // konu iddiasıydı: rastgele düşen kova gerçek konuyla ilgisizdi. Doğrusu
+    // budur — konusu belirsiz soru HİÇBİR alt kategoriye ait değildir, boş
+    // dize bunu söyler ve soru kategori genelindeki havuzda kalır (bkz.
+    // subcategory_config.dart `getSubcategoryId`, subcategory_honesty_test.dart).
+    test('konusu belirsiz soru hiçbir alt kategoriye düşmez (genel kalır)', () {
       const q = QuizQuestion(
         id: 'test_fallback',
         category: 'Çand',
@@ -146,7 +154,7 @@ void main() {
         correctAnswer: 'A',
         explanation: 'Ravekirin bi têra xwe dirêj e ji bo testê.',
       );
-      expect(SubcategoryConfig.getSubcategoryId(q), isNotEmpty);
+      expect(SubcategoryConfig.getSubcategoryId(q), isEmpty);
     });
   });
 }

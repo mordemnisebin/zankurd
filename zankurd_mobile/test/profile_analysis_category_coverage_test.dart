@@ -68,8 +68,7 @@ void main() {
       expect(
         src,
         contains('const categories = _kProfileAnalysisCategories;'),
-        reason:
-            '_PedagogicalAnalyticsSection kendi kopyasına dönmüş olabilir',
+        reason: '_PedagogicalAnalyticsSection kendi kopyasına dönmüş olabilir',
       );
     },
   );

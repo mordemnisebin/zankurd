@@ -56,4 +56,79 @@ const questionBankAssets = <String>[
   // metelok, hewran, Şerefname, Rojnameya Kurdistan, Çiyayê Cûdî, Deşta
   // Amedê. Terim tanımları bankanın kendi onaylı açıklamalarıyla birebir.
   'assets/data/restore_2026_08_07_questions.json',
+  // 2026-08-18 DeepSeek dalgası (~1110 kayıt) dosya olarak durur ama
+  // runtime listesinde YOKTUR: olgusal doğruluk örneklemle ~%5–8 hata
+  // verdi. Oyuncuya yanlış olgu öğretmek, sayıyı şişirmekten pahalıdır
+  // (2026-09-02 karantina). Yeniden almak için insan incelemesi + bu
+  // listeye bilinçli ekleme gerekir. Cevap anahtarı bekçisi dosyayı
+  // yine tarar. Bu dalgadan ayrıca incelenip künyelenen 77 soru ise
+  // aşağıdaki dosyada, oyuncuya açık.
+  'assets/data/expansion_2026_08_19_questions.json',
+  // 2026-09-28: alt kategoriler yalnız gerçekten o konudaki soruları
+  // gösterince yedisi 20 sorunun altında kalıp gizlendi (Rastnivîsîn,
+  // Dastangotin, Tiştonek, Sînor û Dûmahî, Muzîka Nûjen, Yılmaz Güney û
+  // Klasîk, Belgefîlm û Festîval). 144 soru onları açmak için yazıldı:
+  // her olgu açılmış bir kaynaktan alıntıyla (URL `sourceReference`da),
+  // her soru olgu, dil ve soru zanaatı gözüyle üç ayrı ajanca
+  // doğrulandı, onarıldı ve son bir denetimden geçti. DeepSeek
+  // dalgasının dersi (kaynaksız üretim ~%5–8 olgu hatası) burada kaynak
+  // şartıyla karşılandı; Kurmancî metinler yine de ana dili Kurmancî olan
+  // bir editörün okumasını bekliyor.
+  'assets/data/expansion_2026_09_28_questions.json',
+  // 2026-09-30: karantinadaki DeepSeek dosyasının (yukarıda, listede YOK)
+  // çok modelli doğrulamadan geçen 458 sorusu. Orijinal dosya karantinada
+  // KALIR ve tek bir kayıt bile oradan okunmaz; buraya yalnız şu iki şartı
+  // birden sağlayanların KOPYASI girdi: (1) olgu denetimi — en az iki
+  // bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny
+  // eleği) hiçbir kusur işaretlemedi; (2) Kurmancî okuması — Gemini 3.1 Pro
+  // (ya da Grok 4.7) uygun buldu. Olgu hatası örnekleme ile ~%5–8 çıkmıştı;
+  // bu filtre o oranı soru bazında eler. Metin aynen korunur, yalnız
+  // künye (`reviewedBy`, `reviewedAt`) eklenir. Genel bilgi sayılan sorular
+  // (dünya sineması/coğrafyası/edebiyatı/müziği/tarihi) `Cîhan`
+  // kategorisindedir; Kürt diliyle ve kültürüyle ilgili olanlar kendi
+  // kategorisinde kalır.
+  // Aynı gün ikinci tur: aynı filtreden geçen 364 soru daha eklendi; bunlarda
+  // ayrıca Gemini 3.1 Pro'nun önerdiği, Grok 4.7 ya da Gemini 3.8 Flash'ın
+  // onayladığı bir Kurmancî dil/terim düzeltmesi uygulandı (doğru şıkkın
+  // KONUMU ve anlamı değişmedi; Türkçe alanlara dokunulmadı).
+  'assets/data/deepseek_verified_2026_09_30_questions.json',
+  // 2026-09-30: «Bilim ve Düşünce / Zanist û Raman» (iç kimlik Paradigma)
+  // tek bir hareketin öğretisi emekli edilince 42 soruya inmişti; kalan
+  // içerik de alt konuların çoğunu boş bırakıyordu. 40 yeni soru, her biri
+  // açılmış bir web kaynağından (NASA, NIST, WHO, UN, Stanford Encyclopedia
+  // of Philosophy…; URL `sourceReference`da) ChatGPT'yle taslaklandı,
+  // Gemini 3.1 Pro Kurmancîye çevirdi, Grok 4.7 okudu. Konular: temel bilim,
+  // felsefe tarihi, anayasa/BM/insan hakları, Kürt düşünce tarihi.
+  'assets/data/bilim_2026_09_30_questions.json',
+  // 2026-10-01: üç alt konu 20 oynanabilir soruya ulaşamadığı için kartı
+  // gizliydi: Muzîk › Muzîka Nûjen (15), Teknolojî › Programkirin (16),
+  // Sînema › Yılmaz Güney û Klasîk (18). 17 yeni soru, her biri açılmış bir
+  // web kaynağından (Vikipedi, MDN, Python belgeleri, W3Schools, Eurasianet;
+  // URL `sourceReference`da) MiMo-V2.6-Flash'la taslaklandı, Gemini 3.1 Pro
+  // Kurmancîye çevirdi, Grok 4.7 olgu ve dil açısından okudu; doğrulanamayan
+  // bir soru (Hozan Dîno albüm yılı) çıkarıldı.
+  'assets/data/altkonu_2026_10_01_questions.json',
+  // 2026-10-01: 14 dersin uçtaki alıştırması etiketli sorudan yoksundu; 74
+  // yeni soru `learningLessonId` ile derse bağlandı (kimlikler
+  // `ders_2026_10_01_*`). Sözcükler dersin kendi sözlük çiftlerinden;
+  // metinler çok modelli turdan geçti. Bekçi:
+  // `test/lesson_practice_depth_test.dart`.
+  'assets/data/ders_2026_10_01_questions.json',
+  // 2026-10-02: denge denetiminin bulduğu dört boşluk. (1) Cîhan zor katman:
+  // d4=12, d5=3 idi, 5. seviye 15 soruyla kalıyordu (+20 zor soru).
+  // (2) Paradigma (Bilim ve Düşünce) zorluk 5: 7 soru (+12). (3) Siyaset >
+  // Dîroka Siyasî ve Siyaseta Nûjen alt konularında eşleşen soru yoktu
+  // (+22 / +22, nötr olgusal tarih ve kurumlar). (4) Çand, Dîrok, Cografya
+  // doğru/yanlış soruları %64–74 "Rast" cevaplıydı; 3x15 "Şaş" cevaplı ifade
+  // eklendi. Her soru açılmış bir web kaynağına (URL `sourceReference`da)
+  // bağlı: MiMo-V2.6-Flash taslakladı, Gemini 3.1 Pro Kurmancî/Türkçe
+  // düzeltti, Grok 4.7 olgu ve dili bağımsız okudu, uyuşmazlıkta Gemini 3.8
+  // Flash hakemlik etti. Bekçi: `test/bosluk_balance_test.dart`.
+  'assets/data/bosluk_2026_10_02_questions.json',
+  // 2026-10-02: son dört sunucu dersi (`hejmar`, `lekera-bun`, `dengbeji`,
+  // `demsal`) alıştırmasız kalmıştı; 32 soru derse etiketli (`numbers_1`,
+  // `grammar_bun`, `culture_dengbeji`, `time_seasons`). Sözcükler dersin kendi
+  // slaytlarından (supabase/2026-07-06_lesson_seed.sql); Kurmancî Gemini 3.1
+  // Pro + Grok 4.7 okumasından geçti. Eşleme: `learning_lesson_aliases.dart`.
+  'assets/data/ders_2026_10_02_questions.json',
 ];

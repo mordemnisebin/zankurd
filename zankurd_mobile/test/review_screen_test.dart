@@ -1,3 +1,6 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -6,11 +9,13 @@ import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 Widget _wrap(Widget child) {
   return ChangeNotifierProvider<LanguageProvider>(
     create: (_) => LanguageProvider()..setLang('tr'),
-    child: MaterialApp(home: child),
+    child: MaterialApp(theme: AppTheme.light(), home: child),
   );
 }
 
@@ -69,11 +74,14 @@ void main() {
       _wrap(const ReviewScreen(records: records, room: _room)),
     );
 
-    expect(find.text('1 doğru · 1 yanlış · 1 boş'), findsOneWidget);
-    expect(find.text('DOĞRU'), findsOneWidget);
-    expect(find.text('YANLIŞ'), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('BOŞ BIRAKILDI'), 300);
-    expect(find.text('BOŞ BIRAKILDI'), findsOneWidget);
+    // Sayılar karolarda; başlık altında tekrar eden özet satırı yok
+    // (2026-10-01 tasarım denetimi). Rozetler cümle düzeninde: karo
+    // etiketi ile kart rozeti aynı sözü taşır.
+    expect(find.text('1 doğru · 1 yanlış · 1 boş'), findsNothing);
+    expect(find.text('Doğru'), findsNWidgets(2));
+    expect(find.text('Yanlış'), findsNWidgets(2));
+    await tester.scrollUntilVisible(find.text('Boş bırakıldı'), 300);
+    expect(find.text('Boş bırakıldı'), findsOneWidget);
   });
 
   testWidgets('şıkta doğru/yanlış işaretleme ve açıklama panelini gösterir', (
@@ -96,8 +104,18 @@ void main() {
     );
 
     expect(find.text('Hilbijêre'), findsOneWidget);
+    // Doğru şık ✓ taşır. ✗ iki yerdedir: seçilen yanlış şıkta ve
+    // 2026-09-29 Şahnê'den beri kartın durum rozetinde ("YANLIŞ" — durum
+    // hiçbir zaman yalnız renkle verilmez, `SahneStatusBadge`).
     expect(find.byIcon(AppIcons.check), findsOneWidget);
-    expect(find.byIcon(AppIcons.xmark), findsOneWidget);
+    expect(find.byIcon(AppIcons.xmark), findsNWidgets(2));
+    expect(
+      find.descendant(
+        of: find.byType(SahneStatusBadge),
+        matching: find.byIcon(AppIcons.xmark),
+      ),
+      findsOneWidget,
+    );
     expect(find.text('Açıklama metni burada.'), findsOneWidget);
   });
 
@@ -123,13 +141,148 @@ void main() {
         _wrap(const ReviewScreen(records: records, room: _room)),
       );
 
-      await tester.tap(find.text('Hafıza Kartları'));
+      await tester.tap(find.text('Kelime kartları'));
       await tester.pumpAndSettle();
 
+      // 2026-09-29 doğallık: kategori rozeti (`SahneBadge`) artık cümle
+      // düzeninde (K8); bu bekçi eskiden büyük harfi ("DİL") bekliyordu.
+      // Korunan şey değişmedi: Türkçe turda çevrilmiş ad görünür.
       expect(find.text('Dil'), findsOneWidget);
       expect(find.text('Ziman'), findsNothing);
+      expect(find.text('ZIMAN'), findsNothing);
     },
   );
+
+  // 2026-09-29 Şahnê: arka yüz gece sahne kartıdır; "Doğru cevap:" durum
+  // rengi Rast metni (✓ ikonuyla), "Açıklama:" öğrenme rolünün metni.
+  // Eskiden eski yeşilin / morun "okunur" tonları ölçülüyordu; mor palet
+  // dışıdır ve kalktı.
+  testWidgets('flashcard arka yüz etiketleri gece sahnesinde okunur tonda', (
+    tester,
+  ) async {
+    const records = [
+      AnswerRecord(
+        id: 'q1',
+        category: 'Ziman',
+        prompt: 'Hilbijêre',
+        answers: ['Rast', 'Şaş'],
+        correctAnswer: 'Rast',
+        selectedAnswer: 'Şaş',
+        explanation: 'Açıklama metni burada.',
+      ),
+    ];
+
+    await tester.pumpWidget(
+      _wrap(const ReviewScreen(records: records, room: _room)),
+    );
+    await tester.tap(find.text('Kelime kartları'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('review-flashcard')));
+    await tester.pumpAndSettle();
+
+    final correct = tester.widget<Text>(find.text('Doğru cevap:'));
+    expect(correct.style?.color, SahneTokens.night.okTx);
+
+    final explanation = tester.widget<Text>(find.text('Açıklama:'));
+    expect(explanation.style?.color, SahneTokens.night.learnTx);
+  });
+
+  testWidgets('flashcard ön ve arka yüzü tek actionable semantics nodeudur', (
+    tester,
+  ) async {
+    const records = [
+      AnswerRecord(
+        id: 'q1',
+        category: 'Ziman',
+        prompt: 'Hilbijêre',
+        answers: ['Rast', 'Şaş'],
+        correctAnswer: 'Rast',
+        selectedAnswer: 'Şaş',
+        explanation: 'Açıklama metni burada.',
+      ),
+    ];
+    final semantics = tester.ensureSemantics();
+
+    await tester.pumpWidget(
+      _wrap(const ReviewScreen(records: records, room: _room)),
+    );
+    await tester.tap(find.text('Kelime kartları'));
+    await tester.pumpAndSettle();
+
+    final card = find.byKey(const ValueKey('review-flashcard'));
+    var data = tester.getSemantics(card).getSemanticsData();
+    expect(data.flagsCollection.isButton, isTrue);
+    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    expect(data.label, contains('Soru (ön yüz)'));
+    expect(data.label, contains('Hilbijêre'));
+    expect(data.label, contains('Cevabı görmek için dokun'));
+    expect(data.label, isNot(contains('Doğru Cevap')));
+    expect(find.bySemanticsLabel('Soru (ön yüz)'), findsNothing);
+
+    await tester.tap(card);
+    await tester.pumpAndSettle();
+
+    data = tester.getSemantics(card).getSemanticsData();
+    expect(data.flagsCollection.isButton, isTrue);
+    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    expect(data.label, contains('Cevap (arka yüz)'));
+    expect(data.label, contains('Doğru cevap:'));
+    expect(data.label, contains('Rast'));
+    expect(data.label, contains('Açıklama:'));
+    expect(data.label, contains('Açıklama metni burada.'));
+    expect(data.label, isNot(contains('Cevabı görmek için dokun')));
+    expect(find.bySemanticsLabel('Cevap (arka yüz)'), findsNothing);
+    semantics.dispose();
+  });
+
+  testWidgets('flashcard Kurmancî ön ve arka semantics güncellenir', (
+    tester,
+  ) async {
+    const records = [
+      AnswerRecord(
+        id: 'q1',
+        category: 'Ziman',
+        prompt: 'Hilbijêre',
+        answers: ['Rast', 'Şaş'],
+        correctAnswer: 'Rast',
+        selectedAnswer: 'Şaş',
+        explanation: 'Ravekirina testê.',
+      ),
+    ];
+    final semantics = tester.ensureSemantics();
+
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => LanguageProvider()..setLang('ku'),
+          ),
+        ],
+        child: const MaterialApp(
+          home: ReviewScreen(records: records, room: _room),
+        ),
+      ),
+    );
+    await tester.tap(find.text('Kartên peyvan'));
+    await tester.pumpAndSettle();
+
+    final card = find.byKey(const ValueKey('review-flashcard'));
+    var data = tester.getSemantics(card).getSemanticsData();
+    expect(data.label, contains('Pirs (rû)'));
+    expect(data.label, contains('Ji bo dîtina bersivê bitikîne'));
+
+    await tester.tap(card);
+    await tester.pumpAndSettle();
+
+    data = tester.getSemantics(card).getSemanticsData();
+    expect(data.flagsCollection.isButton, isTrue);
+    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    expect(data.label, contains('Bersiv (pişt)'));
+    expect(data.label, contains('Bersiva rast:'));
+    expect(data.label, contains('Şîrove:'));
+    expect(data.label, contains('Ravekirina testê.'));
+    semantics.dispose();
+  });
 
   testWidgets('şık listesinde olmayan yazılı kullanıcı yanıtını gösterir', (
     tester,
@@ -177,5 +330,30 @@ void main() {
 
     expect(find.byKey(const ValueKey('review-typed-answer')), findsNothing);
     expect(find.textContaining('TIMEOUT'), findsNothing);
+  });
+
+  testWidgets('yanlış cevap varsa tekrar eylemi görünür', (tester) async {
+    const records = [
+      AnswerRecord(
+        id: 'practice-1',
+        category: 'Ziman',
+        prompt: 'Hilbijêre',
+        answers: ['Rast', 'Şaş'],
+        correctAnswer: 'Rast',
+        selectedAnswer: 'Şaş',
+        explanation: '',
+      ),
+    ];
+
+    await tester.pumpWidget(
+      _wrap(const ReviewScreen(records: records, room: _room)),
+    );
+
+    final action = find.byKey(const ValueKey('review-practice-cta'));
+    expect(action, findsOneWidget);
+    expect(
+      find.descendant(of: action, matching: find.text('Tekrara başla')),
+      findsOneWidget,
+    );
   });
 }

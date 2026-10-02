@@ -1,0 +1,34 @@
+[
+  {
+    "id": "ds26_cinema_0001",
+    "kusur": [
+      "dil_hatasi"
+    ],
+    "not": "Kurmancî şıkların içine parantez içinde Türkçe karşılıkları ('yakın çekim', 'uzak çekim') gömülmüştür. Kurmancî şık yalnız Kurmancî olmalıdır.",
+    "oneri": "Şıklardaki parantez içi Türkçe açıklamalar kaldırılmalıdır."
+  },
+  {
+    "id": "ds26_cinema_0002",
+    "kusur": [
+      "dil_hatasi"
+    ],
+    "not": "Kurmancî şıklarda Türkçe çeviriler parantez içinde yer almaktadır ('yakın çekim', 'baş üstü çekim').",
+    "oneri": "Parantez içi Türkçe terimler Kurmancî şıktan temizlenmelidir."
+  },
+  {
+    "id": "ds26_cinema_0005",
+    "kusur": [
+      "dil_hatasi"
+    ],
+    "not": "Kurmancî şıklarda Türkçe çeviriler ('vedimirîn' yanında 'fade out', 'qutbûna ji nişkê' yanında 'jump cut') karışık parantezli biçimde yazılmıştır.",
+    "oneri": "Kurmancî şıklar saf Kurmancî terimlerle sadeleştirilmelidir."
+  },
+  {
+    "id": "sf_nat_0015",
+    "kusur": [
+      "tekrar"
+    ],
+    "not": "sf_nat_0001 numaralı soruyla ('Li gorî USGSê, ji sedî çend ava cîhanê di okyanûsan de ye?') birebir aynı olguyu ve aynı kaynağı sormaktadır (biri %96, diğeri %96.5 cevabını vermektedir).",
+    "oneri": "Sorulardan biri farklı bir hidrolojik olguyla (ör. yer altı suları oranı) değiştirilmelidir."
+  }
+]

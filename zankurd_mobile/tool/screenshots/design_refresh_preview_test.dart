@@ -13,7 +13,6 @@ import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
-import 'package:zankurd_mobile/src/screens/categories_tab.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
@@ -97,7 +96,6 @@ void main() {
               displayName: 'Zelal',
               scrollController: ScrollController(),
               onOpenPlay: () {},
-              onOpenCategories: () {},
             ),
           ),
         ),
@@ -122,7 +120,6 @@ void main() {
               displayName: 'Zelal',
               scrollController: ScrollController(),
               onOpenPlay: () {},
-              onOpenCategories: () {},
             ),
           ),
         ),
@@ -130,25 +127,6 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
     await _capture(tester, key, '$out/home_dark.png');
-  }, tags: ['preview']);
-
-  testWidgets('categories light', (tester) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    final key = GlobalKey();
-    await tester.pumpWidget(
-      _wrap(
-        mode: ThemeMode.light,
-        lang: 'tr',
-        child: Scaffold(
-          body: RepaintBoundary(
-            key: key,
-            child: CategoriesTab(repository: MockZanKurdRepository()),
-          ),
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-    await _capture(tester, key, '$out/categories_light.png');
   }, tags: ['preview']);
 
   testWidgets('play hub light', (tester) async {
@@ -479,24 +457,5 @@ void main() {
     );
     await tester.pumpAndSettle();
     await _capture(tester, key, '$out/play_hub_dark.png');
-  }, tags: ['preview']);
-
-  testWidgets('categories dark', (tester) async {
-    await tester.binding.setSurfaceSize(const Size(390, 844));
-    final key = GlobalKey();
-    await tester.pumpWidget(
-      _wrap(
-        mode: ThemeMode.dark,
-        lang: 'tr',
-        child: Scaffold(
-          body: RepaintBoundary(
-            key: key,
-            child: CategoriesTab(repository: MockZanKurdRepository()),
-          ),
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-    await _capture(tester, key, '$out/categories_dark.png');
   }, tags: ['preview']);
 }

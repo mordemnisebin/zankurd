@@ -29,10 +29,16 @@ void main() {
     'lib/src/widgets/bouncing_button.dart',
     'lib/src/utils/app_route.dart',
     'lib/src/screens/spin_wheel_screen.dart',
+    'lib/src/screens/splash_screen.dart',
+    'lib/src/screens/sign_in_screen.dart',
+    'lib/src/screens/sign_up_screen.dart',
+    'lib/src/screens/profile/profile_widgets.dart',
     // Zaten uyanlar — geri gitmesinler diye listede.
     'lib/src/widgets/confetti_overlay.dart',
     'lib/src/widgets/skeleton_loader.dart',
     'lib/src/screens/quiz/quiz_effects.dart',
+    'lib/src/widgets/weekly_performance_chart.dart',
+    'lib/src/widgets/kilim_reveal.dart',
   ];
 
   for (final path in mustHonour) {
@@ -56,14 +62,16 @@ void main() {
   /// RATCHET: bilinen borç dondurulur, BÜYÜMESİ engellenir.
   ///
   /// Denetimde 12 dosyanın daha animasyon üretip tercihi okumadığı
-  /// bulundu. Hepsini tek turda düzeltmek sorumsuzca olurdu — her biri
-  /// ayrı bir davranış kararı (bir animasyon süs mü, yoksa durum mu
-  /// taşıyor?). Bu yüzden borç sayı olarak dondurulur: yeni bir ihlal
-  /// eklenirse test kırılır, düzeltildikçe sayı DÜŞÜRÜLMELİDİR.
+  /// bulundu. Splash, haftalık grafik, kilim kutlama, giriş, kayıt ve
+  /// profil kategori çubukları kapandı; kalan 4. Hepsini tek turda düzeltmek sorumsuzca
+  /// olurdu — her biri ayrı bir davranış kararı (bir animasyon süs mü,
+  /// yoksa durum mu taşıyor?). Bu yüzden borç sayı olarak dondurulur:
+  /// yeni bir ihlal eklenirse test kırılır, düzeltildikçe sayı
+  /// DÜŞÜRÜLMELİDİR.
   ///
   /// Aynı desen depoda zaten var (`*_ratchet_test.dart`).
   test('hareketi azalt borcu büyümüyor', () {
-    const knownDebt = 12;
+    const knownDebt = 4;
 
     /// Sürekli/işlevsel göstergeler: süs değil, durum taşıyorlar.
     const exempt = <String>{

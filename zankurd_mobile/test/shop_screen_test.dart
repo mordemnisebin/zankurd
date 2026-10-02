@@ -1,14 +1,22 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+// 2026-09-29 doğallık (G3): fiyat etiketi "120j" değil "120" (birimi jeton
+// glifi söyler, K10); ürün adları cümle düzeninde ("Neon çerçeve"). Bu
+// beklentiler yalnız eski yazımı sabitliyordu; davranış aynı.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/avatar_identity.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
+import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
+import 'package:zankurd_mobile/src/screens/spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 
 /// Bakiye ve satın alma durumunu deterministik kontrol eden sahte depo.
 class _ShopRepository extends MockZanKurdRepository {
@@ -18,6 +26,7 @@ class _ShopRepository extends MockZanKurdRepository {
   int coins;
   final Set<String> purchased;
   final List<String> spendReasons = [];
+  int hasPurchasedCalls = 0;
 
   @override
   Future<int> loadCoinBalance() async => coins;
@@ -31,22 +40,93 @@ class _ShopRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<bool> hasPurchased(String itemId) async => purchased.contains(itemId);
+  Future<bool> hasPurchased(String itemId) async {
+    hasPurchasedCalls++;
+    return purchased.contains(itemId);
+  }
 }
 
-Widget _shell(Widget child) {
+class _FailingEffectShopRepository extends _ShopRepository {
+  _FailingEffectShopRepository() : super(coins: 1000);
+
+  bool failEffect = true;
+  int effectWriteCalls = 0;
+  AvatarIdentity identity = const AvatarIdentity(
+    iconId: 'roj',
+    colorHex: '#E94560',
+  );
+
+  @override
+  Future<bool> spendCoins(int amount, String reason) async {
+    final success = await super.spendCoins(amount, reason);
+    if (success && reason.startsWith('purchase_')) {
+      purchased.add(reason.substring('purchase_'.length));
+    }
+    return success;
+  }
+
+  @override
+  Future<AvatarIdentity> loadAvatarIdentity() async => identity;
+
+  @override
+  Future<void> updateAvatarIdentity(AvatarIdentity next) async {
+    effectWriteCalls += 1;
+    if (failEffect) throw StateError('avatar identity persist failed');
+    identity = next;
+  }
+}
+
+class _SpinWheelShopRepository extends _ShopRepository {
+  _SpinWheelShopRepository() : super(coins: 0);
+
+  @override
+  Future<bool> canSpinToday() async => true;
+
+  @override
+  Future<int> awardSpinCoins() async {
+    coins += 30;
+    return 30;
+  }
+}
+
+Widget _shell(Widget child, {bool reducedMotion = false}) {
   return MultiProvider(
     providers: [
       ChangeNotifierProvider<LanguageProvider>(
         create: (_) => LanguageProvider()..setLang('tr'),
       ),
       ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
+      ChangeNotifierProvider<ReducedMotionProvider>(
+        create: (_) => ReducedMotionProvider(initialUserReduce: reducedMotion),
+      ),
       ChangeNotifierProvider<PremiumService>(
         create: (_) => PremiumService.fallback(),
       ),
     ],
     child: MaterialApp(theme: AppTheme.dark(), home: child),
   );
+}
+
+Future<void> _spinAndReturn(
+  WidgetTester tester,
+  _SpinWheelShopRepository repository,
+  String entryKey,
+) async {
+  await tester.tap(find.byKey(ValueKey(entryKey)));
+  await tester.pumpAndSettle();
+  await tester.pump();
+  expect(find.text('Günün çarkı'), findsOneWidget);
+  expect(find.byType(SpinWheelScreen), findsOneWidget);
+  await tester.drag(find.byType(Scrollable), const Offset(0, -500));
+  await tester.pump();
+  await tester.tap(find.text('Çevir'));
+  await tester.pump();
+  await tester.pump(const Duration(seconds: 5));
+  await tester.pumpAndSettle();
+  // 2026-09-29 Şahnê: çark sayfası B iskeletidir; geri düğmesi bileşenin
+  // 44'lük plakası, sözü uygulamanın dilinden ('Geri').
+  await tester.tap(find.byTooltip('Geri'));
+  await tester.pumpAndSettle();
 }
 
 void main() {
@@ -89,12 +169,46 @@ void main() {
       await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Neon Çerçeve'));
+      await tester.tap(find.text('Neon çerçeve'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Satın Al'));
+      await tester.tap(find.text('Satın al'));
       await tester.pumpAndSettle();
 
       expect((await repository.loadAvatarIdentity()).frameId, 'neon');
+    },
+  );
+
+  testWidgets(
+    'kozmetik alındıktan sonra kuşanma kaydı bozulursa tekrar coin harcanmaz',
+    (tester) async {
+      final repository = _FailingEffectShopRepository();
+      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Neon çerçeve'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Satın al'));
+      await tester.pumpAndSettle();
+
+      expect(repository.spendReasons, ['purchase_avatar_frame_neon']);
+      expect(repository.effectWriteCalls, 1);
+      expect(find.text('Tebrikler!'), findsNothing);
+      expect(find.text('Kaydedilemedi.'), findsOneWidget);
+      expect(find.text('Tekrar dene'), findsOneWidget);
+
+      repository.failEffect = false;
+      await tester.tap(find.text('Tekrar dene'));
+      await tester.pumpAndSettle();
+
+      expect(
+        repository.spendReasons,
+        ['purchase_avatar_frame_neon'],
+        reason:
+            'Kuşanma retry satın almayı ve coin harcamasını tekrarlamamalı.',
+      );
+      expect(repository.effectWriteCalls, 2);
+      expect(repository.identity.frameId, 'neon');
+      expect(find.text('Tebrikler!'), findsOneWidget);
     },
   );
 
@@ -114,41 +228,222 @@ void main() {
     });
   });
 
+  testWidgets('mağaza ürün rengini büyük yüzeylere taşımadan sakin kalır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _ShopRepository(coins: 500);
+
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    // 2026-09-29 Şahnê: öne çıkan ürün ve ızgara kartları aynı yüzey
+    // kartıdır (`SahneSurfaceCard`: Perde dolgu, L pah, gündüzde 1 px
+    // kenar, gölgesiz, degradesiz). Kural aynı: ürün rengi büyük yüzeye
+    // taşınmaz, kartlar sakin kalır.
+    void expectCalmSurface(Finder card) {
+      expect(card, findsOneWidget);
+      expect(tester.widget(card), isA<SahneSurfaceCard>());
+      final material = tester.widget<Material>(
+        find.descendant(of: card, matching: find.byType(Material)).first,
+      );
+      final t = SahneTokens.of(tester.element(card));
+      expect(material.color, t.s1);
+      expect(material.elevation, 0);
+      final shape = material.shape! as BeveledRectangleBorder;
+      expect(shape.side.color, t.edge);
+      expect(
+        find
+            .descendant(of: card, matching: find.byType(DecoratedBox))
+            .evaluate()
+            .where((e) {
+              final d = (e.widget as DecoratedBox).decoration;
+              return d is BoxDecoration &&
+                  (d.gradient != null || (d.boxShadow?.isNotEmpty ?? false));
+            }),
+        isEmpty,
+      );
+    }
+
+    expectCalmSurface(find.byKey(const ValueKey('shop-hero-surface')));
+    expectCalmSurface(
+      find.byKey(const ValueKey('shop-item-surface-spin_wheel_extra')),
+    );
+    expect(
+      find.byKey(const ValueKey('shop-item-accent-stripe-spin_wheel_extra')),
+      findsNothing,
+      reason: 'Ürün rengi tam genişlik dekor şeridine dönüşmemeli.',
+    );
+  });
+
+  testWidgets('mağazada yalnız hero satın alma eylemi primary CTA olur', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _ShopRepository(coins: 1000);
+
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    final heroButtonFinder = find.ancestor(
+      of: find.text('720'),
+      matching: find.byType(FilledButton),
+    );
+    final gridButtonFinder = find.ancestor(
+      of: find.text('120'),
+      matching: find.byType(FilledButton),
+    );
+    expect(heroButtonFinder, findsOneWidget);
+    expect(gridButtonFinder, findsOneWidget);
+
+    final heroPrimary = AppTheme.primaryCtaColor(
+      tester.element(heroButtonFinder),
+    );
+    final gridPrimary = AppTheme.primaryCtaColor(
+      tester.element(gridButtonFinder),
+    );
+
+    // 2026-09-29 Şahnê: birincil düğme dolgusunu temadan alır (düğmenin
+    // kendi `style`ında değil); ölçülen, çizilen ETKİN dolgudur.
+    Color? fill(Finder button) => tester
+        .widget<Material>(
+          find.descendant(of: button, matching: find.byType(Material)).first,
+        )
+        .color;
+
+    expect(fill(heroButtonFinder), heroPrimary);
+    expect(fill(gridButtonFinder), isNot(gridPrimary));
+  });
+
   testWidgets('mağaza bakiyeyi ve ürünleri listeler', (tester) async {
     final repository = _ShopRepository(coins: 500);
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.text('500 coin'), findsOneWidget);
-    expect(find.text('Ekstra Çevirme'), findsOneWidget);
-    expect(find.text('Altın Çerçeve'), findsOneWidget);
-    expect(find.text('VIP Rozeti'), findsOneWidget);
+    expect(find.text('500 jeton'), findsOneWidget);
+    expect(find.text('Ekstra çevirme'), findsOneWidget);
+    expect(find.text('Altın çerçeve'), findsOneWidget);
+    expect(find.text('VIP rozeti'), findsOneWidget);
     expect(find.text('Joker Paketi'), findsNothing);
     expect(find.text('Ekstra Can'), findsNothing);
     expect(find.text('Premium Renkler'), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
+  // 2026-09-29 doğallık (K10): "En çok alınan" rozeti satış verisi
+  // olmadan her kurulumda en pahalı ürüne yapışıyordu — uydurma bir iddia.
+  // Veri gelene dek hiçbir üründe görünmez.
+  testWidgets('mağaza satış verisi olmadan "en çok alınan" demez', (
+    tester,
+  ) async {
+    final repository = _ShopRepository(coins: 500);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(find.text('En çok alınan'), findsNothing);
+    expect(find.byType(SahneBadge), findsNothing);
+  });
+
+  // 2026-09-29 doğallık (K10): çerçeve ürününün karosunda boş bir yıldız
+  // duruyordu; oyuncu neyi satın alacağını görmüyordu. Karo artık
+  // oyuncunun kendi avatarını o çerçeveyle gösterir.
+  testWidgets('çerçeve ürünü oyuncunun avatarını o çerçeveyle gösterir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _ShopRepository(coins: 500);
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    for (final id in ['avatar_frame_gold', 'avatar_frame_neon']) {
+      final card = find.byKey(ValueKey('shop-item-surface-$id'));
+      expect(card, findsOneWidget);
+      final avatar = find.descendant(
+        of: card,
+        matching: find.byType(PlayerAvatar),
+      );
+      expect(avatar, findsOneWidget, reason: '$id karosu avatar göstermeli');
+      expect(
+        tester.widget<PlayerAvatar>(avatar).frameId,
+        applyShopPurchaseEffect(id, const AvatarIdentity()).frameId,
+      );
+    }
+    // Çerçeve olmayan ürün ikonunda kalır.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('shop-item-surface-spin_wheel_extra')),
+        matching: find.byType(PlayerAvatar),
+      ),
+      findsNothing,
+    );
+  });
+
   // 2026-08-14 denetimi: çarka giden TEK yol, bakiye TAM 0 iken görünen
   // `_buildEarnCoinCta`ydı. Bakiyesi 0'dan farklı bir oyuncu (ör. burada
-  // 500 coin) çarkı bir daha hiç bulamıyordu. AppBar'daki giriş düğmesi
+  // 500 jeton) çarkı bir daha hiç bulamıyordu. AppBar'daki giriş düğmesi
   // bakiyeden bağımsız her zaman görünmeli ve çarka götürmeli.
-  testWidgets(
-    'çark girişi bakiye sıfır olmasa da görünür ve çarka götürür',
-    (tester) async {
-      final repository = _ShopRepository(coins: 500);
-      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
-      await tester.pumpAndSettle();
+  testWidgets('AppBar çarkı sonrası bakiye ve katalog state korunur', (
+    tester,
+  ) async {
+    final repository = _SpinWheelShopRepository();
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: repository), reducedMotion: true),
+    );
+    await tester.pumpAndSettle();
 
-      final entry = find.byKey(const ValueKey('shop-spin-wheel-entry'));
-      expect(entry, findsOneWidget);
+    final initialCatalogReads = repository.hasPurchasedCalls;
+    expect(find.text('0 jeton'), findsOneWidget);
+    await _spinAndReturn(tester, repository, 'shop-spin-wheel-entry');
 
-      await tester.tap(entry);
-      await tester.pumpAndSettle();
+    expect(find.text('30 jeton'), findsOneWidget);
+    expect(repository.hasPurchasedCalls, initialCatalogReads);
+  });
 
-      expect(find.text('Günün Çarkı'), findsOneWidget);
-    },
-  );
+  testWidgets('bakiye 0 jeton kazan CTA çarkı sonrası bakiyeyi yeniler', (
+    tester,
+  ) async {
+    final repository = _SpinWheelShopRepository();
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: repository), reducedMotion: true),
+    );
+    await tester.pumpAndSettle();
+
+    await _spinAndReturn(tester, repository, 'shop-earn-coin-cta');
+    expect(find.text('30 jeton'), findsOneWidget);
+  });
+
+  testWidgets('yetersiz bakiye dialogundaki Coin kazan çarkı sonrası yeniler', (
+    tester,
+  ) async {
+    final repository = _SpinWheelShopRepository();
+    await tester.pumpWidget(
+      _shell(ShopScreen(repository: repository), reducedMotion: true),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('120'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('120'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Jeton kazan'));
+    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.drag(find.byType(Scrollable), const Offset(0, -500));
+    await tester.pump();
+    await tester.tap(find.text('Çevir'));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 5));
+    await tester.pumpAndSettle();
+    // 2026-09-29 Şahnê: çark sayfası B iskeletidir; geri düğmesi bileşenin
+    // 44'lük plakası, sözü uygulamanın dilinden ('Geri').
+    await tester.tap(find.byTooltip('Geri'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('30 jeton'), findsOneWidget);
+  });
 
   testWidgets('dar kart açıklamayı gizler, ürüne dokununca ayrıntıyı açar', (
     tester,
@@ -161,11 +456,11 @@ void main() {
 
     const description = 'Bugün çarkı tekrar çevirmek için ekstra hak verir.';
     expect(find.text(description), findsNothing);
-    await tester.ensureVisible(find.text('Ekstra Çevirme'));
-    await tester.tap(find.text('Ekstra Çevirme'));
+    await tester.ensureVisible(find.text('Ekstra çevirme'));
+    await tester.tap(find.text('Ekstra çevirme'));
     await tester.pumpAndSettle();
     expect(find.text(description), findsOneWidget);
-    expect(find.text('Satın Al'), findsOneWidget);
+    expect(find.text('Satın al'), findsOneWidget);
   });
 
   testWidgets('satın alma eylemleri düz ve gölgesizdir', (tester) async {
@@ -173,10 +468,10 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120c'));
+    await tester.ensureVisible(find.text('120'));
     await tester.pumpAndSettle();
     final button = tester.widget<FilledButton>(
-      find.ancestor(of: find.text('120c'), matching: find.byType(FilledButton)),
+      find.ancestor(of: find.text('120'), matching: find.byType(FilledButton)),
     );
     expect(button.style?.elevation?.resolve(<WidgetState>{}), 0);
     expect(
@@ -192,21 +487,17 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    // Ekstra çark 120c — bakiye 50c ile alınamamalı.
-    await tester.ensureVisible(find.text('120c'));
+    // Ekstra çark 120 jeton — bakiye 50c ile alınamamalı.
+    await tester.ensureVisible(find.text('120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120c'));
+    await tester.tap(find.text('120'));
     await tester.pumpAndSettle();
-    // Dalga 5: yetersiz bakiyede onay dialogunda 'Satın Al' gri disabled
-    // olur ve 'Coin kazan' ikincil butonu görünür; harcama yapılmaz.
-    final buyButton = tester.widget<FilledButton>(
-      find.ancestor(
-        of: find.text('Satın Al'),
-        matching: find.byType(FilledButton),
-      ),
-    );
-    expect(buyButton.onPressed, isNull);
-    expect(find.text('Coin kazan'), findsOneWidget);
+    // 2026-10-01 (A5): yetersiz bakiyede pencerede pasif bir 'Satın al'
+    // DURMAZ; yerine gerçek sonraki adım ('Jeton kazan') ve eksik miktar
+    // gelir. Ayrıntılı bekçi: `coin_shortfall_pattern_test.dart`.
+    expect(find.text('Satın al'), findsNothing);
+    expect(find.text('Jeton kazan'), findsOneWidget);
+    expect(find.text('70 jeton eksik'), findsWidgets);
     expect(repository.spendReasons, isEmpty);
     expect(tester.takeException(), isNull);
   });
@@ -218,18 +509,18 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120c'));
+    await tester.ensureVisible(find.text('120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120c'));
+    await tester.tap(find.text('120'));
     await tester.pumpAndSettle();
-    // Confirm dialog: tap "Satın Al"
-    await tester.tap(find.text('Satın Al'));
+    // Confirm dialog: tap "Satın al"
+    await tester.tap(find.text('Satın al'));
     await tester.pumpAndSettle();
 
     expect(repository.spendReasons, ['purchase_spin_wheel_extra']);
     // 500 - 120 (yeni ekstra çevirme fiyatı) = 380
     expect(repository.coins, 380);
-    expect(find.text('380 coin'), findsOneWidget);
+    expect(find.text('380 jeton'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -246,7 +537,7 @@ void main() {
     expect(find.text('Sende'), findsOneWidget);
 
     // Purchased items cannot be re-purchased — no buy button shown
-    expect(find.text('480c'), findsNothing);
+    expect(find.text('480'), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
@@ -260,7 +551,7 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    expect(find.text('120c'), findsOneWidget);
+    expect(find.text('120'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -271,15 +562,15 @@ void main() {
     await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('120c'));
+    await tester.ensureVisible(find.text('120'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('120c'));
+    await tester.tap(find.text('120'));
     await tester.pumpAndSettle();
-    // Confirm dialog: tap "Satın Al"
-    await tester.tap(find.text('Satın Al'));
+    // Confirm dialog: tap "Satın al"
+    await tester.tap(find.text('Satın al'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Satın alma başarısız oldu.'), findsOneWidget);
+    expect(find.text('Satın alınamadı. Tekrar dene.'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -359,14 +650,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
 
     repository.fail = false;
-    await tester.tap(find.text('Tekrar'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pumpAndSettle();
 
     expect(repository.loadCalls, 2);
-    expect(find.text('500 coin'), findsOneWidget);
+    expect(find.text('500 jeton'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -384,7 +675,7 @@ void main() {
       find.text('Mağaza verileri için internet bağlantısı gerekiyor.'),
       findsOneWidget,
     );
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

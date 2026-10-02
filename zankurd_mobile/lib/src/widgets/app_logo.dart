@@ -1,26 +1,35 @@
 import 'package:flutter/material.dart';
 
-/// ZanKurd marka logosu.
+/// ZanKurd marka logosu (L4 soru balonu).
 ///
-/// 2026-07-21: logo saydam arka planlı (tool/make_logo_transparent.py) —
-/// [onCard] true verilse bile beyaz kutu çizilmiyor, hangi zeminin
-/// üzerine konursa konsun doğrudan içine gömülü görünür.
+/// 2026-07-21: logo saydam arka planlı — [onCard] true verilse bile beyaz
+/// kutu çizilmiyor, hangi zeminin üzerine konursa konsun doğrudan içine
+/// gömülü görünür.
 ///
-/// [width] < [_wordmarkThreshold] olduğunda tam logo yerine yalnızca
-/// simge (assets/zankurd_icon.webp — Z + güneş + dağ + kitap, "ZANKURD"
-/// yazısı olmadan) gösterilir: küçük boyutlarda ("Xweş hatî ZanKurdê!"
-/// başlığının üstündeki 76-88px kullanım gibi) tam logo + wordmark
-/// birlikte okunaksız bir karmaşaya dönüşüyordu (kullanıcı geri
-/// bildirimi — "kötü duruyor"). Yanındaki başlık metni zaten marka
-/// adını yazılı olarak veriyor, simge tekrar yazmaya gerek bırakmıyor.
-/// [onCard]/[cardRadius]/[cardPadding] API geriye-uyum için korunuyor.
+/// 2026-09-30: logo değişti. Eski logo (kırmızı Z, güneş, dağ, kitap)
+/// yapay zekâ üretimi bir resim gibi duruyordu ve küçükte okunmuyordu; yeni
+/// işaret turuncu bir konuşma balonu, içinde pahlı Z oyuğu. `assets/`
+/// altındaki iki dosya `tool/generate_app_icons.py` ile üretilir.
+///
+/// [width] < [_wordmarkThreshold] olduğunda tam kilit yerine yalnızca işaret
+/// (assets/zankurd_icon.webp) gösterilir; uygulamada logonun yanında
+/// başlık metni zaten "ZanKurd" yazar ve yazı Flutter `Text`iyle (net,
+/// ölçeklenir, dile uyar) çizilir. Yatay kilit (assets/zankurd.webp:
+/// işaret + yazı) yalnız [_wordmarkThreshold] ve üstü genişlikler için;
+/// yazısı açık renktir (gece zemini).
+///
+/// Plaka yok: eski logonun dağları koyu zeminde kaybolduğu için turuncu
+/// hero üstüne "logo plakası" konuyordu (2026-07-25, 2026-09-29). Yeni
+/// işaret tek renkli ve doygun; gece ve gündüz zeminde kendi başına
+/// ayrışır. Plaka logonun etrafında kutu içinde kutu yaratıyordu ve balonun
+/// kuyruğunu keserdi, bu yüzden kalktı. [onCard]/[cardRadius]/[cardPadding]
+/// API geriye-uyum için korunuyor.
 class AppLogo extends StatelessWidget {
   const AppLogo({
     this.width = 160,
     this.onCard = false,
     this.cardRadius = 24,
     this.cardPadding = const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-    this.onBrandSurface = false,
     super.key,
   });
 
@@ -28,14 +37,6 @@ class AppLogo extends StatelessWidget {
   final bool onCard;
   final double cardRadius;
   final EdgeInsets cardPadding;
-
-  /// Logo, markanın turuncusu gibi doygun bir zeminin üzerinde mi duruyor?
-  ///
-  /// Logo turuncu/altın tonlardan oluşur; turuncu hero üzerine konduğunda
-  /// zeminle aynı renge düşüp neredeyse kayboluyordu (2026-07-25 canlı
-  /// denetimi, isim ekranı). True verildiğinde logonun arkasına yumuşak
-  /// açık bir daire konur — marka rengi korunur, kontrast geri gelir.
-  final bool onBrandSurface;
 
   static const double _wordmarkThreshold = 150;
 
@@ -45,30 +46,15 @@ class AppLogo extends StatelessWidget {
         ? 'assets/zankurd_icon.webp'
         : 'assets/zankurd.webp';
     final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
-    final image = Image.asset(
+    return Image.asset(
       asset,
       width: width,
       cacheWidth: (width * devicePixelRatio).round(),
       fit: BoxFit.contain,
+      // Marka işareti süstür: ad, bulunduğu ekranın başlığında yazılıdır.
+      excludeFromSemantics: true,
       filterQuality: FilterQuality.high,
       isAntiAlias: true,
-    );
-    if (!onBrandSurface) return image;
-    final pad = width * 0.14;
-    return Container(
-      padding: EdgeInsets.all(pad),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white.withValues(alpha: 0.92),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.12),
-            blurRadius: 14,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: image,
     );
   }
 }

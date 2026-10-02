@@ -1,4 +1,5 @@
 import '../models/quiz_question.dart';
+import 'category_visuals.dart';
 
 class SubcategoryInfo {
   final String id;
@@ -186,27 +187,31 @@ class SubcategoryConfig {
         descriptionTr: 'Toplumsal örgüt ve partiler',
       ),
     ],
+    // 2026-09-30: kategori "Bilim ve Düşünce / Zanist û Raman" adıyla
+    // sunulur (iç kimlik 'Paradigma' kalır). Tek bir hareketin öğretisini
+    // anlatan sorular emekli edildi; kalan nötr toplum bilimi / felsefe
+    // soruları ile genel bilim (atom, sağlık, doğa) üç konuya bölünür.
     'Paradigma': [
       SubcategoryInfo(
-        id: 'demokratik',
-        nameKu: 'Demokratîk',
-        nameTr: 'Demokratik Konfederalizm',
-        descriptionKu: 'Ramana neteweya demokratîk',
-        descriptionTr: 'Demokratik ulus kuramı ve esasları',
+        id: 'civak_maf',
+        nameKu: 'Civak û Maf',
+        nameTr: 'Toplum ve Haklar',
+        descriptionKu: 'Demokrasî, maf û jiyana hevpar',
+        descriptionTr: 'Demokrasi, haklar ve ortak yaşam',
       ),
       SubcategoryInfo(
-        id: 'ekoloji',
-        nameKu: 'Ekolojî',
-        nameTr: 'Ekoloji',
-        descriptionKu: 'Parastina xweza û jiyanê',
-        descriptionTr: 'Doğa ve yaşamın korunması bilinci',
+        id: 'raman_felsefe',
+        nameKu: 'Raman û Felsefe',
+        nameTr: 'Felsefe ve Düşünce',
+        descriptionKu: 'Ramanên mezin, nirx û têgeh',
+        descriptionTr: 'Büyük fikirler, değerler ve kavramlar',
       ),
       SubcategoryInfo(
-        id: 'jineoloji',
-        nameKu: 'Jineolojî',
-        nameTr: 'Jineoloji (Kadın Bilimi)',
-        descriptionKu: 'Zanistiya jin û jiyanê',
-        descriptionTr: 'Kadın ve yaşam bilimi çalışmaları',
+        id: 'zanist_jiyan',
+        nameKu: 'Zanist û Jiyan',
+        nameTr: 'Bilim ve Yaşam',
+        descriptionKu: 'Xweza, tenduristî û teknolojî',
+        descriptionTr: 'Doğa, sağlık ve teknoloji',
       ),
     ],
     'Teknolojî': [
@@ -233,8 +238,32 @@ class SubcategoryConfig {
       ),
     ],
     'Sînema': _sinemaSubcategories,
-    'Sinema': _sinemaSubcategories,
+    // 2026-09-30: Kürtlerle doğrudan bağı olmayan nötr genel bilgi. Üç konu
+    // "ne sorulursa" değil, bankadaki gerçek sorulara göre kuruldu: dünya
+    // sineması (yönetmen, film, festival), dünya coğrafyası (okyanus,
+    // parçalar, başkentler, harita kavramları) ve geriye kalan tarih,
+    // dünya edebiyatı, klasik müzik ve genel kültür.
+    'Cîhan': _cihanSubcategories,
   };
+
+  /// Kategori adını — takma ad olsa bile — alt kategori listesine çevirir.
+  ///
+  /// `CategoryVisuals` on bir takma ad tanır ('Dil'→'Ziman', 'Tarih'→'Dîrok',
+  /// 'Film'→'Sînema', …) çünkü kategori adı her zaman kanonik biçimde
+  /// gelmiyor. Bu haritada anahtarlar YALNIZ kanonik biçimdir; ham `[]`
+  /// erişimi bir takma adla çağrıldığında sessizce `null` döner ve çağıran
+  /// alt kategoriyi hiç yokmuş gibi ele alır — hata yok, yalnız kaybolmuş
+  /// bir başlık.
+  ///
+  /// Bu tam olarak bir kez yaşandı ve tek vakalık yamalandı: haritada
+  /// `'Sînema'` ile birebir aynı listeyi taşıyan ikinci bir `'Sinema'`
+  /// anahtarı duruyordu. Yama yalnız o takma adı kurtarıyor, kalan onunu
+  /// bırakıyordu. Çözüm kopya anahtar değil, kanonikleştiren tek bir
+  /// erişimci: çağıranın takma adı düşünmesi gerekmiyor (2026-08-17).
+  static List<SubcategoryInfo> forCategory(String category) =>
+      subcategories[category] ??
+      subcategories[CategoryVisuals.canonicalName(category)] ??
+      const [];
 
   static const List<SubcategoryInfo> _sinemaSubcategories = [
     SubcategoryInfo(
@@ -257,6 +286,30 @@ class SubcategoryConfig {
       nameTr: 'Belgesel & Festivaller',
       descriptionKu: 'Belgefîlm û festîvalên sînemayê',
       descriptionTr: 'Belgesel sinema ve festivaller',
+    ),
+  ];
+
+  static const List<SubcategoryInfo> _cihanSubcategories = [
+    SubcategoryInfo(
+      id: 'sinema_cihan',
+      nameKu: 'Sînemaya Cîhanê',
+      nameTr: 'Dünya Sineması',
+      descriptionKu: 'Fîlm, derhêner û festîvalên cîhanê',
+      descriptionTr: 'Dünya filmleri, yönetmenleri ve festivalleri',
+    ),
+    SubcategoryInfo(
+      id: 'erdnigari_cihan',
+      nameKu: 'Erdnîgariya Cîhanê',
+      nameTr: 'Dünya Coğrafyası',
+      descriptionKu: 'Okyanûs, parzemîn, paytext û nexşe',
+      descriptionTr: 'Okyanuslar, kıtalar, başkentler ve haritalar',
+    ),
+    SubcategoryInfo(
+      id: 'dirok_gisti',
+      nameKu: 'Dîrok û Zanyariya Giştî',
+      nameTr: 'Tarih ve Genel Kültür',
+      descriptionKu: 'Dîrok, wêje û muzîka cîhanê',
+      descriptionTr: 'Dünya tarihi, edebiyatı ve müziği',
     ),
   ];
 
@@ -304,6 +357,10 @@ class SubcategoryConfig {
     'cejn': ['newroz', 'cejn', 'eyd', 'roja', 'kevneşop', 'dawet', 'bûk'],
     'dastangotin': [
       'dastan',
+      // Kurmancîde yaygın biçim "destan"dır. Yalın "destan" kullanılamaz:
+      // "el" (dest) kelimesinin çoğuluyla aynıdır ("bi hevgirtina destan"
+      // = el ele tutuşarak); izafeli "destana ..." yalnız destanı anlatır.
+      'destana',
       'mem û zîn',
       'siyabend',
       'kawa',
@@ -355,6 +412,13 @@ class SubcategoryConfig {
       'feqiyê teyran',
       'elî herîrî',
       'dîwan',
+      // Klasik soruların çoğu bu adları yalnız ÇELDİRİCİDE taşıyordu;
+      // eşleştirme artık çeldiriciye bakmadığı için klasik eserin ve
+      // şairin kendisi anahtar kelimedir.
+      'ehmedê xanî',
+      'mem û zîn',
+      'nûbihar',
+      'melayê bateyî',
     ],
     'roman': ['roman', 'çîroknivîs', 'nivîskar', 'pirtûk', 'kovar', 'weşan'],
     // Cografya
@@ -382,68 +446,371 @@ class SubcategoryConfig {
     // Muzîk
     'dengbeji': ['dengbêj', 'stran', 'kilam', 'lawik', 'şeşbend'],
     'amur': ['amûr', 'tembûr', 'bilûr', 'def', 'zirne', 'saz', 'erbane'],
-    'nujen': ['muzîka nûjen', 'komele', 'grûp', 'albûm', 'stranbêj'],
+    // 2026-10-01: 15 soruyla gizliydi. Yeni sorular modern sanatçıları ve
+    // grupları ADLARIYLA soruyor (Ciwan Haco kaç yaşında doğdu, Koma Wetan
+    // nerede kuruldu); bu sorularda «albûm»/«stranbêj» geçmediği için hiçbir
+    // alt konuya düşmüyorlardı. Genel kökler («koma», «hunermend») bilerek
+    // eklenmedi: «koma» «komar»ın alt dizesidir ve cumhuriyet sorularını
+    // çekerdi. Yalnız bankada soru olan modern sanatçı/grup adları.
+    'nujen': [
+      'muzîka nûjen',
+      'komele',
+      'grûp',
+      'albûm',
+      'stranbêj',
+      'ciwan haco',
+      'rojda',
+      'nîzamettîn arîç',
+      'kardeş türküler',
+      'koma wetan',
+    ],
     // Siyaset
     'diroka_siyasi': ['dîroka siyasî', 'partî', 'tevgera netewî', 'serhildana'],
     'siyaseta_nujen': ['hilbijartin', 'parlamento', 'meclis', 'siyaseta nûjen'],
     'tevger': ['tevger', 'rêxistin', 'kongra', 'kjar', 'jineolojî', 'yekîtî'],
-    // Paradigma
-    'demokratik': [
-      'konfederalîzm',
+    // Paradigma (Bilim ve Düşünce). Eşleşme yalnız soru metni + doğru
+    // cevap üzerinde, Kurmancî yazımla yapılır; eşit puanda listedeki ilk
+    // konu kazanır (civak_maf > raman_felsefe > zanist_jiyan).
+    // 2026-09-30: 40 yeni soru (bilim_0001…0040) bu üç konuya gerçek
+    // içerikleriyle bağlandı: BM/anayasa/insan hakları → civak_maf; felsefe
+    // tarihi ve Kürt düşünce tarihi (Şerefname, Mem û Zîn, Hawar alfabesi)
+    // → raman_felsefe; fizik/kimya/biyoloji/sağlık/astronomi → zanist_jiyan.
+    // Yazım uyarısı: alt dize aranır, bu yüzden «ronahiy» (ronahiyê) ve
+    // «dnayê» gibi çekimli biçimler kasıtlı olarak kök hâlinde yazıldı.
+    'civak_maf': [
+      'demokrasi',
       'demokratîk',
-      'komun',
-      'xweseriya',
-      'meclisa gel',
+      'konfederalîzm',
+      'hemwelatî',
+      'sivîl',
+      'desthilat',
+      'veqetandina hêzan',
+      'dadperweriya',
+      'hevgirtin',
+      'pirrengî',
+      'nasname',
+      'xwe-rêxistin',
+      'maf',
+      'neteweyên yekbûyî',
+      'konseya ewlekariyê',
+      'dîwana dadê',
+      'zagonsazî',
+      'cudabûna hêzan',
+      'destûra bingehîn',
+      'danezana gerdûnî',
+      'mafên mirovan',
+      'penaberî',
+      'peymana mafên zarokan',
+      'peymana penaberan',
+      'perwerde',
+      'darazê',
     ],
-    'ekoloji': ['ekolojî', 'xweza', 'jîngeh', 'avhewa', 'çandinî'],
-    'jineoloji': [
+    'raman_felsefe': [
+      'utopya',
+      'lîberalîzm',
+      'anarşîzm',
+      'marksîst',
+      'kapîtalîzm',
+      'femînîzm',
+      'patriyarka',
+      'zayend',
       'jineolojî',
-      'jin',
-      'azadiya jinê',
-      'hevserok',
-      'xwe-parastin',
+      'felsefe',
+      'etîk',
+      'exlaq',
+      'nirx',
+      'paradîgma',
+      'raman',
+      'rexne',
+      'têgeh',
+      'fîlozof',
+      'sokrat',
+      'platon',
+      'arîstotel',
+      'zenon',
+      'descartes',
+      'immanuel kant',
+      'empîrîzm',
+      'rasyonalîzm',
+      'fêdedarî',
+      'şerefxan',
+      'ehmedê xanî',
+      'celadet',
+      'mela mehmûd',
+      'şerefname',
+    ],
+    'zanist_jiyan': [
+      'zanist',
+      'xweza',
+      'ekolojî',
+      'jîngeh',
+      'avhewa',
+      'çandin',
+      'şoreşa neolîtîk',
+      'atom',
+      'element',
+      'kîmya',
+      'fîzîk',
+      'bîyolojî',
+      'tenduristî',
+      'nexweş',
+      'vîtamîn',
+      'teknolojî',
+      'enerjî',
+      'gerstêrk',
+      'sîstema rojê',
+      'kîmyewî',
+      'fotosentez',
+      'dnayê',
+      'xane',
+      'organ',
+      'derzî',
+      'antîbiyotîk',
+      'antîjen',
+      'ronahiy',
+      'newton',
+      'cezerî',
+      'hejmara atomê',
+      'valahiyê',
     ],
     // Teknolojî
-    'programkirin': ['program', 'kod', 'algorîtma', 'nivîsandina bernameyê'],
+    // 2026-10-01: 16 soruyla gizliydi. Yeni sorular dili/kavramı ADIYLA
+    // soruyor (Python, SQL, CSS, yığın, ikili arama) ve «program»/«kod»
+    // geçmediği için konusuz kalıyordu. Yalnız programlama dili/kavramı adı
+    // eklendi; «http», «web», «dîjîtal» gibi ağ kökleri bilerek YOK, onlar
+    // Dîjîtal û Înternet'e aittir.
+    'programkirin': [
+      'program',
+      'kod',
+      'algorîtma',
+      'nivîsandina bernameyê',
+      'python',
+      'sql',
+      'css',
+      'html',
+      'javascript',
+      'stack',
+      'binary search',
+    ],
     'dijital_internet': ['înternet', 'tor', 'dîjîtal', 'ewlehî', 'protokol'],
     'bingehên_teknolojiyê': ['komputer', 'amûra', 'pergal', 'teknolojî'],
     // Sînema
     'filmen_kurdi': ['fîlm', 'derhêner', 'sînema', 'lîstikvan', 'senaryo'],
-    'yilmaz_guney': ['yılmaz güney', 'rê', 'yol', 'sûr', 'dîwar', 'klasîk'],
+    // Cîhan (2026-09-30). Eşleşme yalnız soru metni + doğru cevapta, alt dize
+    // olarak yapılır (bkz. `_matchByKeyword`); bu yüzden «welat» gibi çok
+    // yerde geçen kökler bilerek YOK: «kîjan welatî de ji dayik bûye» her
+    // kişi sorusunu coğrafyaya çekerdi. Eşit puanda listedeki ilk konu
+    // kazanır (sinema_cihan > erdnigari_cihan > dirok_gisti); üçüncü konu
+    // tarih, dünya edebiyatı, klasik müzik ve genel kültürün toplandığı
+    // kalan konudur.
+    'sinema_cihan': [
+      'fîlm',
+      'derhêner',
+      'sînema',
+      'oscar',
+      'festîval',
+      'edîsyon',
+      'montaj',
+      'anîmasyon',
+      'studyo',
+      'biennale',
+      'jûriya',
+    ],
+    'erdnigari_cihan': [
+      'okyanûs',
+      'parzemîn',
+      'paytext',
+      'nexşe',
+      'koordînat',
+      'projeksiyon',
+      'azîmût',
+      'bajarvanî',
+      'koçberiy',
+      'penaberî',
+      'nifûs',
+      'gerstêrk',
+      'atmosfer',
+      'ava şêrîn',
+      'challenger',
+      'heyv',
+    ],
+    'dirok_gisti': [
+      'dîrok',
+      'împaratorî',
+      'sedsal',
+      'şer',
+      'şoreş',
+      'sumer',
+      'babîl',
+      'mezopotamya',
+      'akkad',
+      'riya îpekê',
+      'gerok',
+      'roman',
+      'destan',
+      'çîrok',
+      'fabl',
+      'nobel',
+      'nivîskar',
+      'muzîk',
+      'bestekar',
+      'opera',
+      'senfoni',
+      'orkestra',
+      'jazz',
+      'blues',
+      'mozart',
+      'beethoven',
+      'haydn',
+      'amûr',
+      'têgîn',
+      'têgeha',
+    ],
+    // "rê" çıkarıldı: iki harflik alt dize "berê", "rêz", "rasterast"
+    // gibi yüzlerce kelimede geçiyor ve çekim tekniği sorularını bu alt
+    // kategoriye çekiyordu. Güney'in filmleri özgün adlarıyla aranır.
+    //
+    // Ad iki yazımla aranır. Kurmancî alfabede ı ve ü yoktur; banka Kurmancî
+    // cümlede adı "Yilmaz Guney" diye yazar (2026-09-28'de beş soru). Liste
+    // yalnız Türkçe yazımı tanıdığı için bu beş soru Güney hakkında olduğu
+    // hâlde "Kürt filmleri"ne ya da genel havuza düşüyordu.
+    'yilmaz_guney': [
+      'yılmaz güney',
+      'yilmaz guney',
+      'güney',
+      'guney',
+      'yol',
+      'sûr',
+      'dîwar',
+      'klasîk',
+      'umut',
+      'sürü',
+      'endişe',
+      'düşman',
+      'duvar',
+    ],
     'festival_belgefilm': ['belgefîlm', 'festîval', 'xelat', 'sînematografî'],
   };
 
   /// Soruyu konusuna göre bir alt kategoriye eşler.
   ///
-  /// Anahtar kelime eşleşmesi bulunamazsa, kategori içinde **dengeli
-  /// dağıtım** için id türevli sabit bir indeks kullanılır. Bu, eski
-  /// davranışın bilinçli olarak korunan tek parçasıdır: konusu belirsiz
-  /// soru da bir yere düşmeli, yoksa alt kategori listesi boş kalır.
+  /// 2026-09-28 içerik dürüstlüğü düzeltmesi: anahtar kelime eşleşmesi
+  /// bulunamazsa artık `id.hashCode % listUzunluğu` ile RASTGELE bir alt
+  /// kategoriye düşürülmüyor. Bu eski davranış "dengeli dağıtım" diye
+  /// yorumlanmıştı ama gerçekte sahte bir konu sözüydü: "Dîroka Kevn"
+  /// filtresi id'nin hash'ine göre bir "Dîroka Nûjen" sorusunu da
+  /// gösterebiliyordu, kullanıcı seçtiği konunun tam tersini okuyordu.
+  /// Ölçüm (oynanabilir banka, 2026-09-28): Dîrok'un 157 sorusunun 48'i
+  /// hiçbir anahtar kelimeyle eşleşmiyor ve böyle rastgele yerleşiyordu.
+  ///
+  /// Eşleşme yoksa boş dize döner: soru hiçbir alt kategoriye ait
+  /// OLMADIĞINI açıkça söyler ve kategori genelindeki soru havuzunda kalır
+  /// (bkz. `MockZanKurdRepository.loadLevelQuestions` — genel sorular alt
+  /// kategori havuzunu tamamlamak için kullanılır, ama hiçbir alt
+  /// kategoriye "ait" gösterilmez).
   static String getSubcategoryId(QuizQuestion question) {
-    final list = subcategories[question.category];
-    if (list == null || list.isEmpty) return '';
-    final matched = _matchByKeyword(question, list);
-    if (matched != null) return matched.id;
-    return list[question.id.hashCode.abs() % list.length].id;
+    return _matchOf(question)?.id ?? '';
   }
 
-  /// Soru için alt kategori etiketini döner.
+  /// Soru için alt kategori etiketini döner; eşleşme yoksa ''.
+  ///
+  /// Rastgele bir başlık uydurmak [getSubcategoryId] ile aynı hataya
+  /// düşer: konusu belirsiz bir soruya "Şexsiyetên Dîrokî" gibi somut bir
+  /// etiket yapıştırmak, o etiketin altına hiç ait olmadığı bir soru
+  /// koymaktır. Boş etiket "bu sorunun belirli bir alt konusu yok" der —
+  /// bu, yanlış bir konu iddiasından daha dürüsttür.
   static String getSubcategoryLabel(QuizQuestion question, bool isKu) {
-    final list = subcategories[question.category];
-    if (list == null || list.isEmpty) return '';
-    final matched =
-        _matchByKeyword(question, list) ??
-        list[question.id.hashCode.abs() % list.length];
+    final matched = _matchOf(question);
+    if (matched == null) return '';
     return isKu ? matched.nameKu : matched.nameTr;
+  }
+
+  /// Bir alt kategorinin oynanabilirlik kartında görünmesi için gereken
+  /// asgari anahtar-kelime-eşleşmeli soru sayısı.
+  ///
+  /// 20 = ilk iki seviyenin (Destpêk + Bingeh, her biri 10 soru) GERÇEK
+  /// eşleşen sorularla doldurulabilmesi için gereken taban. Bunun altında
+  /// kalan bir alt kategori kartı ("10 soru" vaadi) kendi konusundan değil
+  /// komşu alt kategorilerden ya da genel havuzdan doldurulurdu — kart
+  /// somut bir konu vaat eder, o vaadi tutamayan kategori hiç gösterilmez.
+  static const int kMinSubcategoryQuestions = 20;
+
+  /// Bir kategorinin, verilen oynanabilir soru havuzunda GERÇEKTEN yeterli
+  /// içeriği olan alt kategorilerini yapılandırma sırasıyla döner.
+  ///
+  /// "Yeterli" = kategorideki [playable] sorular arasında bu alt kategoriye
+  /// anahtar kelimeyle eşleşen sayı >= [kMinSubcategoryQuestions]. Saf bir
+  /// fonksiyondur (yan etkisi yok); `SubcategoryScreen` onu seviye
+  /// yükleyicisinin kullandığı AYNI havuzla (`playableQuestions`) çağırır —
+  /// ayrı havuz kullanılsaydı ekran bir kart gösterir, seviye yükleyici o
+  /// alt kategoride eşleşen soru bulamazdı.
+  ///
+  /// İçeriği bugün az olan bir alt kategori (ör. Muzîk › Muzîka Nûjen)
+  /// burada gizlenir ama kalıcı biçimde değil: banka büyüyüp eşiği
+  /// aştığında aynı kod aynı alt kategoriyi otomatik gösterir — sorusu
+  /// yetince kendiliğinden görünür. Gizleme listesi elle tutulmaz.
+  static List<SubcategoryInfo> visibleFor(
+    String category,
+    Iterable<QuizQuestion> playable,
+  ) {
+    final list = forCategory(category);
+    if (list.isEmpty) return const [];
+    final canonical = CategoryVisuals.canonicalName(category);
+    final counts = <String, int>{};
+    for (final question in playable) {
+      if (CategoryVisuals.canonicalName(question.category) != canonical) {
+        continue;
+      }
+      final id = getSubcategoryId(question);
+      if (id.isEmpty) continue;
+      counts[id] = (counts[id] ?? 0) + 1;
+    }
+    return list
+        .where((info) => (counts[info.id] ?? 0) >= kMinSubcategoryQuestions)
+        .toList(growable: false);
+  }
+
+  /// Sorunun alt kategorisi, soru başına BİR kez hesaplanır.
+  ///
+  /// [_matchByKeyword] her çağrıda `prompt + correctAnswer`ı birleştirip
+  /// küçük harfe çeviriyor, sonra o kategorinin her alt konusunun her anahtar
+  /// kelimesini `contains` ile arıyor. [visibleFor] bunu kategorinin bütün
+  /// soruları için, `SubcategoryScreen.build` içinden HER yeniden çizimde
+  /// çalıştırıyordu: ölçüm (oynanabilir banka, JIT): tek kategori ~4–6 ms,
+  /// 11 kategori ~60 ms. `loadLevelQuestions` de aynı süzmeyi her seviye
+  /// açılışında yineliyordu. Sonuç doğruydu, yalnız aynı soru için aynı
+  /// cevap baştan hesaplanıyordu — bu yüzden hiçbir test kırmızıya dönmedi.
+  ///
+  /// Anahtar soru NESNESİNİN kimliğidir ([Expando]): `QuizQuestion` değişmez,
+  /// anahtar kelime tabloları `const`; aynı nesne her zaman aynı sonucu
+  /// verir. Nesne bellekten gidince girdi de gider — sızıntı yok.
+  static final Expando<_SubcategoryMatch> _matchCache =
+      Expando<_SubcategoryMatch>('subcategoryMatch');
+
+  static SubcategoryInfo? _matchOf(QuizQuestion question) {
+    final cached = _matchCache[question];
+    if (cached != null) return cached.info;
+    final list = subcategories[question.category];
+    final info = (list == null || list.isEmpty)
+        ? null
+        : _matchByKeyword(question, list);
+    _matchCache[question] = _SubcategoryMatch(info);
+    return info;
   }
 
   static SubcategoryInfo? _matchByKeyword(
     QuizQuestion question,
     List<SubcategoryInfo> list,
   ) {
+    // Yalnız soru metni ve DOĞRU cevap aranır; çeldiriciler aranmaz.
+    // Çeldirici çoğu zaman başka bir alt konudan seçilir: bir halay
+    // sorusunun çeldiricisi "Destana Memê Alan" olunca soru destanlara,
+    // bir ritim sorusunun çeldiricisinde "stran" geçince dengbêjliğe
+    // düşüyordu (2026-09-28 ölçümü: 150'yi aşkın soru yalnız bir
+    // çeldirici yüzünden bir alt kategoriye yazılmıştı).
     final haystack = [
       question.prompt,
-      ...question.answers,
+      question.correctAnswer,
     ].join(' ').toLowerCase();
 
     SubcategoryInfo? best;
@@ -462,4 +829,12 @@ class SubcategoryConfig {
     }
     return best;
   }
+}
+
+/// [SubcategoryConfig._matchCache] değeri: "eşleşme yok" (`null`) da bir
+/// sonuçtur ve önbelleğe alınır; `Expando` null değer tutamadığı için sarılır.
+class _SubcategoryMatch {
+  const _SubcategoryMatch(this.info);
+
+  final SubcategoryInfo? info;
 }

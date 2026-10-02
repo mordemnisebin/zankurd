@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +26,13 @@ class _RecordingRepo extends MockZanKurdRepository {
   Future<void> updateAvatarIdentity(AvatarIdentity identity) async {
     saved = identity;
     await super.updateAvatarIdentity(identity);
+  }
+}
+
+class _FailingAvatarLoadRepo extends _RecordingRepo {
+  @override
+  Future<AvatarIdentity> loadAvatarIdentity() async {
+    throw StateError('avatar load unavailable');
   }
 }
 
@@ -59,6 +68,18 @@ void main() {
     child: MaterialApp(theme: AppTheme.dark(), home: child),
   );
 
+  testWidgets('avatar yüklenemezse varsayılan kimlik kaydedilemez', (
+    tester,
+  ) async {
+    final repo = _FailingAvatarLoadRepo();
+    await tester.pumpWidget(shell(AvatarEditorScreen(repository: repo)));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
+    expect(find.byKey(const ValueKey('avatar-save')), findsNothing);
+    expect(repo.saved, isNull);
+  });
+
   testWidgets('ikon seçimi önizlemeye yansır ve kaydedilir', (tester) async {
     // Kimlik kartı + avatar + grid 600px viewport'ta sığmıyor.
     tester.view.physicalSize = const Size(400, 1200);
@@ -71,6 +92,13 @@ void main() {
     await tester.pumpAndSettle();
 
     await scrollTo(tester, find.byKey(const ValueKey('avatar-icon-newroz')));
+    expect(
+      tester
+          .getSemantics(find.byKey(const ValueKey('avatar-icon-newroz')))
+          .getSemanticsData()
+          .hasAction(ui.SemanticsAction.tap),
+      isTrue,
+    );
     await tester.tap(find.byKey(const ValueKey('avatar-icon-newroz')));
     await tester.pumpAndSettle();
 
@@ -84,6 +112,30 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repo.saved?.iconId, 'newroz');
+  });
+
+  testWidgets('avatar renk seçimi ekran okuyucudan etkinleştirilebilir', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(400, 1200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      shell(AvatarEditorScreen(repository: _RecordingRepo())),
+    );
+    await tester.pumpAndSettle();
+
+    const colorKey = ValueKey('avatar-color-#E5533D');
+    await scrollTo(tester, find.byKey(colorKey));
+    expect(
+      tester
+          .getSemantics(find.byKey(colorKey))
+          .getSemanticsData()
+          .hasAction(ui.SemanticsAction.tap),
+      isTrue,
+    );
   });
 
   testWidgets('kilitli çerçeve seçilemez, kilit uyarısı gösterilir', (

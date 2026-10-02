@@ -6,10 +6,10 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/analytics_consent_provider.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/providers/untimed_mode_provider.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
@@ -43,11 +43,16 @@ Widget _wrap(Widget child) => MultiProvider(
     ChangeNotifierProvider(create: (_) => ThemeProvider()),
     ChangeNotifierProvider(create: (_) => SoundProvider()),
     ChangeNotifierProvider(create: (_) => ReducedMotionProvider()),
+    // Ayarlar artık tembel liste değil (hepsi kurulur, bkz.
+    // settings_scroll_reach_test): Süresiz mod anahtarı da kurulur.
+    ChangeNotifierProvider(create: (_) => UntimedModeProvider()),
     ChangeNotifierProvider(create: (_) => AnalyticsConsentProvider()),
-    ChangeNotifierProvider(create: (_) => ChildSafetyProvider()),
     ChangeNotifierProvider(create: (_) => PremiumService.fallback()),
   ],
-  child: MaterialApp(theme: AppTheme.light(), home: Scaffold(body: child)),
+  child: MaterialApp(
+    theme: AppTheme.light(),
+    home: Scaffold(body: child),
+  ),
 );
 
 void main() {

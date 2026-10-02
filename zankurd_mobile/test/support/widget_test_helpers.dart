@@ -1,16 +1,26 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
+import 'package:zankurd_mobile/src/data/badge_service.dart';
+import 'package:zankurd_mobile/src/data/daily_mission_store.dart';
+import 'package:zankurd_mobile/src/data/level_progress_store.dart';
+import 'package:zankurd_mobile/src/data/mastery_store.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/data/seen_question_store.dart';
+import 'package:zankurd_mobile/src/data/story_progress_store.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
+import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/l10n/material_locales.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/analytics_consent_provider.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
+import 'package:zankurd_mobile/src/providers/remote_availability.dart';
+import 'package:zankurd_mobile/src/providers/repository_holder.dart';
 import 'package:zankurd_mobile/src/providers/untimed_mode_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
@@ -19,6 +29,7 @@ import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
+import 'package:zankurd_mobile/src/utils/boot_diagnostics.dart';
 
 /// `test/widget_test.dart` bölünmeden önce burada özel (private, `_` önekli)
 /// olan ortak test kurulumu — birden fazla test dosyası tarafından
@@ -83,7 +94,10 @@ Widget testShell({
   AuthProvider? authProvider,
   LanguageProvider? languageProvider,
   ThemeProvider? themeProvider,
-  ChildSafetyProvider? childSafetyProvider,
+  PremiumService? premiumService,
+  RemoteAvailability? remoteAvailability,
+  RepositoryHolder? repositoryHolder,
+  bool reducedMotion = false,
 }) {
   return MultiProvider(
     providers: [
@@ -98,7 +112,7 @@ Widget testShell({
       ),
       ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
       ChangeNotifierProvider<ReducedMotionProvider>(
-        create: (_) => ReducedMotionProvider(),
+        create: (_) => ReducedMotionProvider(initialUserReduce: reducedMotion),
       ),
       // Süresiz mod: varsayılan kapalı, yani testlerde sayaç davranışı
       // değişmez. Sağlayıcının burada olması gerekiyor çünkü Ayarlar ekranı
@@ -109,18 +123,26 @@ Widget testShell({
       ChangeNotifierProvider<AnalyticsConsentProvider>(
         create: (_) => AnalyticsConsentProvider(),
       ),
-      ChangeNotifierProvider<ChildSafetyProvider>(
-        create: (_) => childSafetyProvider ?? ChildSafetyProvider(),
+      ChangeNotifierProvider<RemoteAvailability>.value(
+        value: remoteAvailability ?? RemoteAvailability(reachable: true),
       ),
       ChangeNotifierProvider<PremiumService>(
-        create: (_) => PremiumService.fallback(),
+        create: (_) => premiumService ?? PremiumService.fallback(),
       ),
+      // Geç kurtarma testleri: depo takasını kabuğun izlemesi için verilir.
+      // Sağlayıcı yoksa AppShell `widget.repository`a düşer.
+      if (repositoryHolder != null)
+        ChangeNotifierProvider<RepositoryHolder>.value(value: repositoryHolder),
     ],
     child: Consumer<ThemeProvider>(
       builder: (context, theme, _) => MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
         themeMode: theme.mode,
+        locale: const Locale('tr'),
+        supportedLocales: AppMaterialLocales.supported,
+        localizationsDelegates: AppMaterialLocales.delegates,
         navigatorObservers: [appRouteObserver, appPageRouteObserver],
         home: child,
       ),
@@ -171,12 +193,26 @@ MockZanKurdRepository freshMockRepository() {
   SharedPreferences.setMockInitialValues({
     'zankurd.onboarding.seen': true,
     'zankurd.profileName.completed.user': true,
-    'zankurd.navTour.seen': true,
     'zankurd.quiz_tutorial.seen': true,
   });
+  // Tekil örneği olan HER store sıfırlanır. Bu liste bir zamanlar dörttü ve
+  // eksikliği sessizdi: `LevelProgressStore` testler arasında yaşadığı için
+  // XP birikiyordu. Dördüncü testte oyuncu seviye atlıyor, sonuç ekranının
+  // üstüne "Seviye atladın!" kutlama ROTASI biniyordu — sistem geri o
+  // rotayı kapatıyor, oda rotası hiç temizlenmiyordu. Test tek başına
+  // koşunca geçiyor, dosya sırasıyla koşunca düşüyordu; kusur sorunun
+  // içinde değil, önceki testin artığındaydı (2026-08-19).
   AchievementStore.resetInstance();
-  SeenQuestionStore.resetInstance();
-  StreakStore.resetInstance();
+  BadgeService.resetInstance();
+  DailyMissionStore.resetInstance();
+  LevelProgressStore.resetInstance();
+  MasteryStore.resetInstance();
   MistakeStore.resetInstance();
+  PlacementStore.resetInstance();
+  SeenQuestionStore.resetInstance();
+  StoryProgressStore.resetInstance();
+  StreakStore.resetInstance();
+  XPStore.resetInstance();
+  BootDiagnostics.instance.reset();
   return TestMockZanKurdRepository();
 }

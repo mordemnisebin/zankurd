@@ -1,15 +1,27 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'checked_preferences_removal.dart';
+import 'local_progress_scope.dart';
 
 import '../models/daily_mission.dart';
 import '../utils/error_reporter.dart';
 
 class DailyMissionStore {
-  DailyMissionStore._(this._prefs, this._missions, this._correctAnswersToday);
+  DailyMissionStore._(
+    this._prefs,
+    this._missions,
+    this._correctAnswersToday,
+    this._loadedDateKey,
+  );
 
-  static const _dateKey = 'zankurd.missions.date';
-  static const _progressKey = 'zankurd.missions.progress';
-  static const _completedKey = 'zankurd.missions.completed';
+  static String get _dateKey =>
+      LocalProgressScope.physical('zankurd.missions.date');
+  static String get _progressKey =>
+      LocalProgressScope.physical('zankurd.missions.progress');
+  static String get _completedKey =>
+      LocalProgressScope.physical('zankurd.missions.completed');
+  static String get _claimedKey =>
+      LocalProgressScope.physical('zankurd.missions.claimed');
 
   /// Bugün verilen doğru cevap sayısı — günlük göreve BAĞLI DEĞİL.
   ///
@@ -28,12 +40,14 @@ class DailyMissionStore {
   ///
   /// Sayaç buraya konuyor çünkü "bugün" kavramının sahibi bu depo: tarih
   /// anahtarı, sıfırlama ve kalıcılık zaten burada.
-  static const _answeredKey = 'zankurd.missions.answeredToday';
+  static String get _answeredKey =>
+      LocalProgressScope.physical('zankurd.missions.answeredToday');
 
   static DailyMissionStore? _instance;
 
   final SharedPreferences? _prefs;
   final List<DailyMission> _missions;
+  final String _loadedDateKey;
   int _correctAnswersToday;
 
   List<DailyMission> get missions => List.unmodifiable(_missions);
@@ -50,9 +64,11 @@ class DailyMissionStore {
       '${day.year}-${day.month.toString().padLeft(2, '0')}-'
       '${day.day.toString().padLeft(2, '0')}';
 
-  static Future<DailyMissionStore> load() async {
+  static Future<DailyMissionStore> load({DateTime? now}) async {
+    final today = now ?? DateTime.now();
+    final todayKey = _dateString(today);
     final cached = _instance;
-    if (cached != null) return cached;
+    if (cached != null && cached._loadedDateKey == todayKey) return cached;
 
     SharedPreferences? prefs;
     try {
@@ -65,8 +81,6 @@ class DailyMissionStore {
       );
     }
 
-    final today = DateTime.now();
-    final todayKey = _dateString(today);
     final storedDate = prefs?.getString(_dateKey);
     final missions = MissionDefinitions.forDay(today);
     var answeredToday = 0;
@@ -74,6 +88,7 @@ class DailyMissionStore {
     if (storedDate == todayKey) {
       final progressList = prefs?.getStringList(_progressKey) ?? [];
       final completedList = prefs?.getStringList(_completedKey) ?? [];
+      final claimedList = prefs?.getStringList(_claimedKey) ?? [];
       for (var i = 0; i < missions.length; i++) {
         if (i < progressList.length) {
           missions[i].progress = int.tryParse(progressList[i]) ?? 0;
@@ -81,13 +96,21 @@ class DailyMissionStore {
         if (i < completedList.length) {
           missions[i].completed = completedList[i] == 'true';
         }
+        if (i < claimedList.length) {
+          missions[i].claimed = claimedList[i] == 'true';
+        }
       }
       // Tarih anahtarı görevlerle ORTAK: gün dönünce ikisi birlikte
       // sıfırlanır ve sayaç dünün doğrularını bugüne taşıyamaz.
       answeredToday = prefs?.getInt(_answeredKey) ?? 0;
     }
 
-    return _instance = DailyMissionStore._(prefs, missions, answeredToday);
+    return _instance = DailyMissionStore._(
+      prefs,
+      missions,
+      answeredToday,
+      todayKey,
+    );
   }
 
   @visibleForTesting
@@ -104,21 +127,30 @@ class DailyMissionStore {
         reason: 'daily_mission_test_preferences',
       );
     }
-    return _instance = DailyMissionStore._(prefs, missions, 0);
+    return _instance = DailyMissionStore._(
+      prefs,
+      missions,
+      0,
+      _dateString(DateTime.now()),
+    );
   }
 
   static void resetInstance() => _instance = null;
 
   Future<void> clear() async {
+    await removePersistedPreferenceKeys(_prefs, [
+      _dateKey,
+      _progressKey,
+      _completedKey,
+      _claimedKey,
+      _answeredKey,
+    ]);
     for (final mission in _missions) {
       mission.progress = 0;
       mission.completed = false;
+      mission.claimed = false;
     }
     _correctAnswersToday = 0;
-    await _prefs?.remove(_dateKey);
-    await _prefs?.remove(_progressKey);
-    await _prefs?.remove(_completedKey);
-    await _prefs?.remove(_answeredKey);
   }
 
   Future<List<DailyMission>> reportQuizCompleted({
@@ -171,9 +203,15 @@ class DailyMissionStore {
     return null;
   }
 
+  Future<bool> claimReward(DailyMission mission) async {
+    if (!mission.completed || mission.claimed) return false;
+    mission.claimed = true;
+    await _persist();
+    return true;
+  }
+
   Future<void> _persist() async {
-    final today = _dateString(DateTime.now());
-    await _prefs?.setString(_dateKey, today);
+    await _prefs?.setString(_dateKey, _loadedDateKey);
     await _prefs?.setStringList(
       _progressKey,
       _missions.map((m) => m.progress.toString()).toList(),
@@ -181,6 +219,10 @@ class DailyMissionStore {
     await _prefs?.setStringList(
       _completedKey,
       _missions.map((m) => m.completed.toString()).toList(),
+    );
+    await _prefs?.setStringList(
+      _claimedKey,
+      _missions.map((m) => m.claimed.toString()).toList(),
     );
     await _prefs?.setInt(_answeredKey, _correctAnswersToday);
   }

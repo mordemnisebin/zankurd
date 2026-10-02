@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -156,16 +157,16 @@ void main() {
   testWidgets('yarışma turnuvanın kopyası değil', (tester) async {
     await _pump(tester);
     // Turnuvanın kimlik öğeleri burada YOK.
-    expect(find.text('Kupa yolu'), findsNothing);
-    expect(find.textContaining('Eleme kupası'), findsNothing);
+    expect(find.text('Turnuva yolu'), findsNothing);
+    expect(find.textContaining('Eleme turnuvası'), findsNothing);
     // Kendi kimliği var: bugüne ait, doğrudan bir etkinlik.
     expect(find.text('Bugün'), findsOneWidget);
   });
 
   testWidgets('ekranın adı oyun merkezindeki girişle eşleşir', (tester) async {
-    // Kimlik bandı kalır: hero "Günün 10 Sorusu" der, bant ekranın adını.
+    // Kimlik bandı kalır: hero "Karışık sorular" der, bant ekranın adını.
     await _pump(tester);
-    expect(find.text('Günün Etkinliği'), findsWidgets);
+    expect(find.text('Günün soruları'), findsWidgets);
   });
 
   // ── Durumlar ────────────────────────────────────────────────────────────
@@ -180,7 +181,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 700));
     await tester.pump(const Duration(milliseconds: 700));
     expect(find.byType(ArenaHero), findsNothing);
-    expect(find.text('Günün Etkinliği'), findsOneWidget);
+    expect(find.text('Günün soruları'), findsOneWidget);
   });
 
   // ── Dayanıklılık ────────────────────────────────────────────────────────
@@ -223,7 +224,7 @@ void main() {
 
   testWidgets('ana eylem görünür ve çizim hatasız', (tester) async {
     await _pump(tester);
-    expect(find.text('Etkinliğe başla'), findsOneWidget);
+    expect(find.text('Başla'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

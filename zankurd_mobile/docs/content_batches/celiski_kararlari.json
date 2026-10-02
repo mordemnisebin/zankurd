@@ -1,0 +1,39 @@
+{
+  "date": "2026-08-26",
+  "note": "Kör çapraz kontroldeki 22 çelişki. Model anahtarı kopyalanmadı; banka yalnız iki yerde düzeltildi.",
+  "banka_duzeltildi": [
+    {
+      "id": "ds_muzik_0033",
+      "neden": "Doğru şık Dahol; açıklama yanlışlıkla def diyordu."
+    },
+    {
+      "id": "comm_cog_0002",
+      "neden": "Ava Spî Midyat/Taşlıburç bağlısı; banka Nisêbîn yazmıştı."
+    }
+  ],
+  "banka_dogru_model_yanlis": [
+    "ds_cografya_0193",
+    "ds_dirok_0109",
+    "ds_dirok_0124",
+    "ds_cand_0064",
+    "ds_dirok_0114",
+    "ds_dirok_0134",
+    "ds_cografya_0235",
+    "ds_dirok_0231",
+    "ds_dirok_0338",
+    "ds_ziman_1237",
+    "ds_ziman_1243",
+    "comm_muz_0001",
+    "comm_muz_0003",
+    "comm_sin_0006",
+    "comm_sin_0007",
+    "offline_8200",
+    "offline_curated_30024",
+    "offline_curated_30025",
+    "offline_curated_30033",
+    "offline_tf_0113"
+  ],
+  "kaynak_hizalama": {
+    "ds_cografya_0193": "sourceReference Winkel Tripel maddesine alındı; açıklamaya 1995 dergi / 1998 standart notu eklendi."
+  }
+}

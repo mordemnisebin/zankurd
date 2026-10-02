@@ -4,8 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../services/analytics_service.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeProvider({ThemeMode initialMode = ThemeMode.light})
-    : _mode = initialMode;
+  ThemeProvider({ThemeMode initialMode = ThemeMode.dark}) : _mode = initialMode;
 
   static const _storageKey = 'zankurd.themeMode';
 
@@ -40,7 +39,10 @@ class ThemeProvider extends ChangeNotifier {
       'dark' => ThemeMode.dark,
       'light' => ThemeMode.light,
       'system' => ThemeMode.system,
-      _ => ThemeMode.light,
+      // Şahnê gece öncelikli bir kimliktir (2026-09-29): tercihi hiç
+      // kaydedilmemiş oyuncu gece sahnesiyle açılır. Açık temayı seçmiş
+      // olanın kaydı korunur.
+      _ => ThemeMode.dark,
     };
   }
 

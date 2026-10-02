@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -69,18 +70,17 @@ void main() {
     expect(tr, contains('24 saat'));
     expect(tr, contains('iptal'));
     expect(ku, contains('bixweber nû dibe'));
-    expect(ku, contains('24 saetan'));
+    expect(ku, contains('24 saet'));
     expect(ku, contains('betal'));
   });
 
   test('paywall Kurmancî eylem ve durum metinleri doğaldır', () {
     expect(Tr.of(K.paywallPerkSupport, AppLanguage.ku), 'Piştgiriya ZanKurdê');
     expect(Tr.of(K.cancelAnytime, AppLanguage.ku), 'Her gav dikarî betal bikî');
-    expect(Tr.of(K.popularBadge, AppLanguage.ku), 'NAVDAR');
     expect(Tr.of(K.buyAction, AppLanguage.ku), 'Bikire');
     expect(
       Tr.of(K.paywallPackagesInactive, AppLanguage.ku),
-      'Pakêtên Premium hîn nehatine çalak kirin',
+      'Pakêtên Premium hîn ne çalak in',
     );
     expect(Tr.of(K.restorePurchases, AppLanguage.ku), 'Kirînên xwe vegerîne');
 
@@ -137,8 +137,27 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text(Tr.of(K.genericErrorTitle, AppLanguage.tr)), findsOne);
-      expect(find.text(Tr.of(K.genericErrorBody, AppLanguage.tr)), findsOne);
+      // 2026-10-02 QA: gövde "Tekrar dene." idi — düğmenin adının kopyası ve
+      // neyin yüklenemediğini söylemeyen bir cümle. Niçin sessiz kaldı:
+      // bekçi gövdeyi ortak `genericErrorBody` sabitine bağlamıştı, yani
+      // metin değişmedikçe "doğru"ydu. Şimdi gövde açıklayıcı ve düğme
+      // adından farklı; geri yükleme ve yasal bağlantılar yerinde.
+      expect(
+        find.text(Tr.of(K.paywallOfferingsLoadFailed, AppLanguage.tr)),
+        findsOne,
+      );
+      expect(
+        find.text(Tr.of(K.genericErrorBody, AppLanguage.tr)),
+        findsNothing,
+      );
+      expect(
+        Tr.of(K.paywallOfferingsLoadFailed, AppLanguage.tr),
+        isNot(Tr.of(K.retry, AppLanguage.tr)),
+      );
       expect(find.text(Tr.of(K.retry, AppLanguage.tr)), findsOne);
+      expect(find.text(Tr.of(K.restorePurchases, AppLanguage.tr)), findsOne);
+      expect(find.text(Tr.of(K.privacyPolicy, AppLanguage.tr)), findsOne);
+      expect(find.text(Tr.of(K.termsOfUse, AppLanguage.tr)), findsOne);
       expect(
         find.text(Tr.of(K.paywallPackagesInactive, AppLanguage.tr)),
         findsNothing,
@@ -211,6 +230,20 @@ void main() {
     );
     // Hata dalı değil: teknik hata başlığı gösterilmemeli.
     expect(find.text(Tr.of(K.genericErrorTitle, AppLanguage.tr)), findsNothing);
+    // 2026-09-29 doğallık (K10): satın alınacak paket yokken yenileme
+    // koşulları görünmez — olmayan bir aboneliğin koşullarını saymak
+    // ekranın asıl sözünü bastırıyordu.
+    expect(
+      find.text(Tr.of(K.paywallRenewalTerms, AppLanguage.tr)),
+      findsNothing,
+    );
+    // 2026-10-01 (A10): "geri yükle" ve hukuk bağlantıları paket olmasa da
+    // görünür (başka cihazdan abone olan kullanıcının tek yolu); yalnız
+    // yenileme koşulları pakete bağlı kalır.
+    expect(
+      find.text(Tr.of(K.restorePurchases, AppLanguage.tr)),
+      findsOneWidget,
+    );
 
     // Kullanıcı çıkışsız kalmamalı: durum oturum içinde tazelenebilmeli.
     final retry = find.text(Tr.of(K.retry, AppLanguage.tr));
