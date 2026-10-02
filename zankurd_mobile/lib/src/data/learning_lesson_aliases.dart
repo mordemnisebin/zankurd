@@ -1,3 +1,5 @@
+import 'learner_lexicon.dart';
+
 /// Sunucudaki ders kimliklerini (slug) yerel ölçme bankasının ders
 /// kimliklerine bağlar.
 ///
@@ -68,4 +70,29 @@ class LearningLessonAliases {
   /// olmadığı için boş sonuç verir.
   static List<String> bankIdsFor(String lessonKey) =>
       bySlug[lessonKey] ?? [lessonKey];
+
+  /// [lessonKey] (yerel kimlik ya da sunucu slug'ı) dersinin sözlük çiftleri.
+  ///
+  /// Hatırlama ve dinleme kartları bunu kullanır. Eskiden ders ekranı
+  /// `LearnerLexicon.entriesForSource(lesson.id)` çağırıyordu; sunucu
+  /// dersinde `id` bir UUID olduğundan kartlar sessizce hiç görünmüyordu
+  /// (aynı eşleşmezlik kısa testte de vardı, bkz. [bankIdsFor]). Birden çok
+  /// bankalı derste (`silav-u-nasin`) çiftler banka sırasıyla birleşir.
+  ///
+  /// [fallbackKey] (dersin `id`'si) yalnız slug hiçbir çift vermediğinde
+  /// denenir: yerel katalogda `id == slug` olmayan dersler (ör. `id:
+  /// everyday_1`, `slug: selamlasma`) kendi kimlikleriyle de bulunabilsin.
+  static List<LearnerLexiconEntry> lexiconEntriesFor(
+    String lessonKey, {
+    String? fallbackKey,
+  }) {
+    final bySlugKey = [
+      for (final bankId in bankIdsFor(lessonKey))
+        ...LearnerLexicon.entriesForSource(bankId),
+    ];
+    if (bySlugKey.isNotEmpty || fallbackKey == null) {
+      return List.unmodifiable(bySlugKey);
+    }
+    return LearnerLexicon.entriesForSource(fallbackKey);
+  }
 }
