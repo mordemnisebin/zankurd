@@ -74,6 +74,8 @@ void main() {
       'expansion0819': fromJson(
         'assets/data/expansion_2026_08_19_questions.json',
       ),
+      // 2026-10-02: boşluk bankası (121 soru) kalite bekçilerine de bağlı.
+      'bosluk': fromJson('assets/data/bosluk_2026_10_02_questions.json'),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -95,7 +97,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla on altı kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla on yedi kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -128,6 +130,10 @@ void main() {
         ...fromJson('assets/data/altkonu_2026_10_01_questions.json'),
         // 2026-10-01: derse etiketli alıştırma soruları (74).
         ...fromJson('assets/data/ders_2026_10_01_questions.json'),
+        // 2026-10-02: denge denetiminin bulduğu boşlukları dolduran 121
+        // kaynaklı soru (Cîhan zor katman, Paradigma d5, Siyaset iki alt
+        // konu, Çand/Dîrok/Cografya "Şaş" cevaplı doğru-yanlış).
+        ...fromJson('assets/data/bosluk_2026_10_02_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;

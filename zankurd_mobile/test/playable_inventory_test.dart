@@ -77,8 +77,9 @@ void main() {
       // konuyu açan kaynaklı sorular. 2971 -> 3045 (+74): 2026-10-01
       // `ders_2026_10_01`, derse etiketli alıştırma soruları (bkz.
       // `lesson_practice_depth_test.dart`). 3045 -> 3048 (+3): aynı gün
-      // yeniden yazılan üç ders sorusu.
-      3048,
+      // yeniden yazılan üç ders sorusu. 3048 -> 3169 (+121): 2026-10-02
+      // `bosluk_2026_10_02`; yeni dosyadaki kayıtlar fiziksel sayıya girer.
+      3169,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -152,8 +153,10 @@ void main() {
       // (+74): 2026-10-01 `ders_2026_10_01`, 14 dersin alıştırması için derse
       // etiketli sorular. Hepsi `approved` ve oynanabilir; fiziksel sayıyla
       // birlikte arttı (içerik gerçekten ulaşıyor). 2576 -> 2579 (+3): aynı
-      // gün yeniden yazılan üç ders sorusu.
-      2579,
+      // gün yeniden yazılan üç ders sorusu. 2579 -> 2700 (+121): 2026-10-02
+      // `bosluk_2026_10_02`, hepsi `approved` ve oynanabilir (Cîhan zor
+      // katman, Paradigma d5, Siyaset iki alt konu, doğru-yanlış dengesi).
+      2700,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

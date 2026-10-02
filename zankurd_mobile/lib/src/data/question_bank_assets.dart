@@ -114,4 +114,15 @@ const questionBankAssets = <String>[
   // metinler çok modelli turdan geçti. Bekçi:
   // `test/lesson_practice_depth_test.dart`.
   'assets/data/ders_2026_10_01_questions.json',
+  // 2026-10-02: denge denetiminin bulduğu dört boşluk. (1) Cîhan zor katman:
+  // d4=12, d5=3 idi, 5. seviye 15 soruyla kalıyordu (+20 zor soru).
+  // (2) Paradigma (Bilim ve Düşünce) zorluk 5: 7 soru (+12). (3) Siyaset >
+  // Dîroka Siyasî ve Siyaseta Nûjen alt konularında eşleşen soru yoktu
+  // (+22 / +22, nötr olgusal tarih ve kurumlar). (4) Çand, Dîrok, Cografya
+  // doğru/yanlış soruları %64–74 "Rast" cevaplıydı; 3x15 "Şaş" cevaplı ifade
+  // eklendi. Her soru açılmış bir web kaynağına (URL `sourceReference`da)
+  // bağlı: MiMo-V2.6-Flash taslakladı, Gemini 3.1 Pro Kurmancî/Türkçe
+  // düzeltti, Grok 4.7 olgu ve dili bağımsız okudu, uyuşmazlıkta Gemini 3.8
+  // Flash hakemlik etti. Bekçi: `test/bosluk_balance_test.dart`.
+  'assets/data/bosluk_2026_10_02_questions.json',
 ];

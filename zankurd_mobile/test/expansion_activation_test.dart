@@ -76,8 +76,10 @@ void main() {
       // konuyu açan kaynaklı sorular. 2971 -> 3045 (+74): 2026-10-01
       // `ders_2026_10_01`, derse etiketli alıştırma soruları (bkz.
       // `lesson_practice_depth_test.dart`). 3045 -> 3048 (+3): aynı gün
-      // yeniden yazılan üç ders sorusu.
-      3048,
+      // yeniden yazılan üç ders sorusu. 3048 -> 3169 (+121): 2026-10-02
+      // `bosluk_2026_10_02`, denge denetiminin bulduğu boşlukları dolduran
+      // kaynaklı sorular (bkz. `bosluk_balance_test.dart`).
+      3169,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '
