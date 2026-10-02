@@ -79,7 +79,9 @@ void main() {
       // yeniden yazılan üç ders sorusu. 3048 -> 3169 (+121): 2026-10-02
       // `bosluk_2026_10_02`, denge denetiminin bulduğu boşlukları dolduran
       // kaynaklı sorular (bkz. `bosluk_balance_test.dart`).
-      3169,
+      // 3169 -> 3201 (+32): 2026-10-02 `ders_2026_10_02`, son dört sunucu
+      // dersinin (hejmar, lekera-bun, dengbeji, demsal) etiketli soruları.
+      3201,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

@@ -18,7 +18,9 @@
 //
 // Üretim `lessons` tablosunun 15 slug'ı (2026-10-02) burada sabittir. Her biri
 // ya eşlenir (ve eşlenen ders KENDİ etiketli sorularını döndürür) ya da
-// [LearningLessonAliases.unmapped] içinde adıyla durur ve boş döner. Yerel
+// [LearningLessonAliases.unmapped] içinde adıyla durur ve boş döner.
+// 2026-10-02: `hejmar`, `lekera-bun`, `dengbeji`, `demsal` için sorular
+// yazıldı (`ders_2026_10_02`); dört ders eşlendi, `unmapped` boşaldı. Yerel
 // katalogdaki her ders kimliği de soru döndürmek zorundadır.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/learner_lexicon.dart';
@@ -60,10 +62,18 @@ void main() {
       _productionLessons.keys.toSet(),
       reason: 'sunucuya ders eklendiyse eşle ya da unmapped içine yaz',
     );
+    // 2026-10-02: `numbers_1`, `grammar_bun`, `culture_dengbeji`,
+    // `time_seasons` yerel sözlük kaynağı değil, yalnız etiketli soru
+    // bankası kimliğidir; bu yüzden "kaynak ya da en az bir etiketli soru"
+    // aranır (ikisi de yoksa eşleme boşa gider).
+    final taggedIds = repository.playableQuestions
+        .map((q) => q.metadata?.learningLessonId)
+        .whereType<String>()
+        .toSet();
     for (final ids in LearningLessonAliases.bySlug.values) {
       for (final id in ids) {
         expect(
-          LearnerLexicon.sources.containsKey(id),
+          LearnerLexicon.sources.containsKey(id) || taggedIds.contains(id),
           isTrue,
           reason: '$id yerel ölçme bankasında yok',
         );
