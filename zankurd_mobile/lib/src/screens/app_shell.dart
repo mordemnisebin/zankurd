@@ -13,6 +13,7 @@ import '../l10n/strings.dart';
 import '../models/room.dart';
 import '../providers/auth_provider.dart';
 import '../providers/remote_availability.dart';
+import '../providers/repository_holder.dart';
 import '../data/offline_zankurd_repository.dart';
 import '../widgets/sahne/sahne.dart';
 import '../utils/app_route.dart';
@@ -137,6 +138,10 @@ class _AppShellState extends State<AppShell>
   final Map<String, int> _roomResumeScheduledEpochs = {};
   final Map<String, int> _roomResumeInFlightEpochs = {};
   final Map<String, int> _roomResumeRouteScheduledEpochs = {};
+
+  /// Geç kurtarmada depo bu nesne üzerinden değişir ([_repository]).
+  /// Sağlayıcı yoksa null kalır — izole widget testleri aynı ağırlıkta.
+  RepositoryHolder? _repositoryHolder;
   ModalRoute<dynamic>? _shellRoute;
   String? _roomResumeAccountUserId;
   int _roomResumeEpoch = 0;
@@ -166,6 +171,9 @@ class _AppShellState extends State<AppShell>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    // Rota kontrolünden ÖNCE okunmalı: rota aynıysa erken dönüldüğünde
+    // depo takası hiç izlenmezdi.
+    _repositoryHolder = RepositoryHolder.read(context);
     final route = ModalRoute.of<dynamic>(context);
     if (identical(route, _shellRoute)) return;
     final previous = _shellRoute;
@@ -255,7 +263,13 @@ class _AppShellState extends State<AppShell>
       _isOffline = nextOffline;
       _connectivityKnown = true;
     });
-    if (reconnected) _wakeRoomResumeForCurrentUser();
+    if (reconnected) {
+      _wakeRoomResumeForCurrentUser();
+      // Yerel ağ geri geldiyse uzak başlatma da artık tamamlanmış
+      // olabilir: arkadaki geri çekilmeyi (2 sn ve sonrası) beklemeden
+      // hemen yokla. Başarısızsa takvim kendi yolunda sürer.
+      _retryRemoteAvailability();
+    }
     if (!transitioned) return;
     // Bağlantı koptuğunda sosyal kilit dürüstçe kapanır; bağlantı
     // dönünce kilit yalnız depo ölü değilse açılır. Ölü depo =
@@ -263,7 +277,7 @@ class _AppShellState extends State<AppShell>
     // backend yerine geçtiği için kilit sayılmaz.
     try {
       context.read<RemoteAvailability>().update(
-        !nextOffline && widget.repository is! OfflineZanKurdRepository,
+        !nextOffline && _repository is! OfflineZanKurdRepository,
       );
     } on ProviderNotFoundException {
       // Yalıtık widget testleri — sağlayıcı yok, kilit main() değerinde kalır.
@@ -275,8 +289,26 @@ class _AppShellState extends State<AppShell>
     if (state == AppLifecycleState.resumed) {
       _wakeRoomResumeForCurrentUser();
       unawaited(widget.pushTokenSync?.sync());
+      // Arkaya atılmış bir deneme ön plana dönüşle tazelenir: kullanıcı
+      // uygulamayı açtığında "sunucuya ulaşılamadı" bandı, bir sonraki
+      // geriçekilmeyi (60 sn'ye kadar) beklemeden kalkabilir.
+      _retryRemoteAvailability();
+      _considerRemoteUpgrade();
     }
   }
+
+  /// Uzak ulaşılabiliğer yoklaması — sağlayıcı yoksa sessizce yok sayılır
+  /// (izole widget testleri).
+  void _retryRemoteAvailability() {
+    final availability = RemoteAvailability.read(context);
+    if (availability == null) return;
+    unawaited(availability.retryNow());
+  }
+
+  /// Boot'da çevrimdışı kalan oturumun uzak oturumla yeniden kurulması
+  /// için kalan tek koşul: üstünde açık rota kalmamış olması (kökteyiz).
+  void _considerRemoteUpgrade() =>
+      RemoteAvailability.read(context)?.considerUpgradeNow();
 
   @override
   void didPushNext() {
@@ -337,6 +369,9 @@ class _AppShellState extends State<AppShell>
       }
     }
     _retryRoomResumeWhenVisible();
+    // Kabuk yeniden kök: üstteki ekran kapandı, yani ertelenmiş uzak
+    // oturum yeniden kurulumu artık güvenlidir.
+    _considerRemoteUpgrade();
   }
 
   @override
@@ -373,13 +408,23 @@ class _AppShellState extends State<AppShell>
     setState(() => _showOnboarding = false);
   }
 
+  /// Etkin depo.
+  ///
+  /// Geç kurtarmada [RepositoryHolder] değişir; sağlayıcı yoksa (izole
+  /// widget testleri) kurucuda verilen [AppShell.repository] kalır.
+  ZanKurdRepository get _repository =>
+      _repositoryHolder?.repository ?? widget.repository;
+
   @override
   Widget build(BuildContext context) {
+    // Depo takasını izle: geç kurtarmada holder değişince kabuk yeniden
+    // çizilir ve [_repository] yeni depoyu okur. Rota yığını bozulmaz.
+    _repositoryHolder = RepositoryHolder.watch(context);
     final authProvider = context.watch<AuthProvider>();
     final ku = context.isKu;
     _syncRoomResumeAccount(
       authProvider.isAuthenticated
-          ? _normalizedUserId(widget.repository.currentUserId)
+          ? _normalizedUserId(_repository.currentUserId)
           : null,
     );
 
@@ -425,7 +470,7 @@ class _AppShellState extends State<AppShell>
       return const PasswordRecoveryScreen();
     }
 
-    final activeUserId = widget.repository.currentUserId;
+    final activeUserId = _repository.currentUserId;
     if (_profileCheckedUserId != activeUserId) {
       _profileCheckedUserId = activeUserId;
       _profileCheckStarted = false;
@@ -446,7 +491,7 @@ class _AppShellState extends State<AppShell>
 
     if (!_profileNameComplete) {
       return ProfileNameGateScreen(
-        repository: widget.repository,
+        repository: _repository,
         onCompleted: _completeProfileName,
       );
     }
@@ -564,7 +609,10 @@ class _AppShellState extends State<AppShell>
   }
 
   Widget _statusBanner(BuildContext context) {
-    final remoteLocked = RemoteAvailability.socialLockedIn(context);
+    // `watch`: uzak kurtarma (arka plan geriçekilmesi) başardığında bant
+    // kendiliğinden kalkar; `socialLockedIn` (dinlemeyen) yalnız bir
+    // sonraki tesadüfi çizimde kalkardı.
+    final remoteLocked = RemoteAvailability.socialLockedWatch(context);
     if (remoteLocked) {
       return OfflineBanner(
         isOffline: true,
@@ -579,7 +627,7 @@ class _AppShellState extends State<AppShell>
   /// ya da yerel ağ kaybı. İkisi ayrışırsa bant görünürlüğüyle üst boşluk
   /// düzeltmesi de ayrışır — bkz. `_buildScaffold`teki `rawContent` yorumu.
   bool _statusBannerVisible(BuildContext context) {
-    return RemoteAvailability.socialLockedIn(context) || _isOffline;
+    return RemoteAvailability.socialLockedWatch(context) || _isOffline;
   }
 
   bool _joinDeepLinkScheduled = false;
@@ -628,12 +676,10 @@ class _AppShellState extends State<AppShell>
   /// farkı yalnız KODUN NEREDEN geldiğidir.
   Future<void> _joinOnlineRoomAndOpen(String code) async {
     try {
-      final room = await widget.repository.joinOnlineRoom(code);
+      final room = await _repository.joinOnlineRoom(code);
       if (!mounted) return;
       await Navigator.of(context).push(
-        AppRoute.to(
-          RoomScreen(repository: widget.repository, initialRoom: room),
-        ),
+        AppRoute.to(RoomScreen(repository: _repository, initialRoom: room)),
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'join deep link failed');
@@ -690,7 +736,7 @@ class _AppShellState extends State<AppShell>
         unawaited(
           Navigator.of(
             context,
-          ).push(AppRoute.to(FriendsScreen(repository: widget.repository))),
+          ).push(AppRoute.to(FriendsScreen(repository: _repository))),
         );
     }
   }
@@ -699,27 +745,24 @@ class _AppShellState extends State<AppShell>
     if (!_visitedTabs.contains(index)) return const SizedBox.shrink();
     return switch (index) {
       0 => LearnHomeScreen(
-        repository: widget.repository,
+        repository: _repository,
         scrollController: _homeScrollController,
         refreshSignal: _homeRefresh,
         onOpenLearning: () async {
           await Navigator.of(
             context,
-          ).push(AppRoute.to(LearningScreen(repository: widget.repository)));
+          ).push(AppRoute.to(LearningScreen(repository: _repository)));
         },
         onOpenPlay: () => _selectTab(1),
       ),
-      1 => PlayHubScreen(
-        repository: widget.repository,
-        refreshSignal: _playRefresh,
-      ),
+      1 => PlayHubScreen(repository: _repository, refreshSignal: _playRefresh),
       2 => LeaderboardScreen(
-        repository: widget.repository,
+        repository: _repository,
         refreshSignal: _leaderboardRefresh,
         isVisible: () => _tab == 2,
       ),
       3 => ProfileScreen(
-        repository: widget.repository,
+        repository: _repository,
         refreshSignal: _profileRefresh,
         scrollController: _profileScrollController,
       ),
@@ -888,7 +931,7 @@ class _AppShellState extends State<AppShell>
     // yeni oyuncunun kapısını atlatır ve aynı varsayılan adı 1v1 kimliğine
     // taşır. İsim, HomeScreen'in arka plan akışında zenginleşir; ağdaki
     // yeniden denemeler başlangıç rotasını veya tam ekranı bekletemez.
-    if (!mounted || widget.repository.currentUserId != userId) return;
+    if (!mounted || _repository.currentUserId != userId) return;
     setState(() {
       _profileNameComplete = completed;
       _checkingProfileName = false;
@@ -899,7 +942,7 @@ class _AppShellState extends State<AppShell>
     final offlineMode = context.read<AuthProvider>().isOfflineMode;
     final preferences = await SharedPreferences.getInstance();
     final key = _profileNameCompletionKey(
-      widget.repository.currentUserId,
+      _repository.currentUserId,
       offlineMode: offlineMode,
     );
     if (key != null) await preferences.setBool(key, true);
@@ -957,7 +1000,7 @@ class _AppShellState extends State<AppShell>
   Future<void> _loadRoomResume(String userId, int epoch) async {
     var errorReason = 'app_shell_room_resume';
     try {
-      final snapshot = await widget.repository.loadMyResumableRoom();
+      final snapshot = await _repository.loadMyResumableRoom();
       if (!_continueRoomResumeOrDefer(userId, epoch)) return;
 
       if (snapshot != null && snapshot.room.status != RoomStatus.finished) {
@@ -965,11 +1008,11 @@ class _AppShellState extends State<AppShell>
         switch (snapshot.room.status) {
           case RoomStatus.lobby:
             destination = RoomScreen(
-              repository: widget.repository,
+              repository: _repository,
               initialRoom: snapshot.room,
             );
           case RoomStatus.active:
-            final questions = await widget.repository.loadRoomQuestions(
+            final questions = await _repository.loadRoomQuestions(
               snapshot.room,
             );
             if (questions.isEmpty) {
@@ -977,7 +1020,7 @@ class _AppShellState extends State<AppShell>
             }
             if (!_continueRoomResumeOrDefer(userId, epoch)) return;
             destination = QuizScreen(
-              repository: widget.repository,
+              repository: _repository,
               room: snapshot.room,
               questions: questions,
               is1v1: true,
@@ -991,7 +1034,7 @@ class _AppShellState extends State<AppShell>
       }
 
       errorReason = 'app_shell_pending_room_result';
-      final pending = await widget.repository.loadMyPendingRoomResult();
+      final pending = await _repository.loadMyPendingRoomResult();
       if (!_continueRoomResumeOrDefer(userId, epoch)) return;
       if (pending == null) {
         _roomResumeCheckedUsers.add(userId);
@@ -1007,7 +1050,7 @@ class _AppShellState extends State<AppShell>
         epoch,
         pending.room,
         RoomResultRecoveryScreen(
-          repository: widget.repository,
+          repository: _repository,
           snapshot: pending,
           expectedUserId: userId,
         ),
@@ -1080,14 +1123,14 @@ class _AppShellState extends State<AppShell>
       return false;
     }
     return context.read<AuthProvider>().isAuthenticated &&
-        _normalizedUserId(widget.repository.currentUserId) == userId;
+        _normalizedUserId(_repository.currentUserId) == userId;
   }
 
   bool _isCurrentRoomResumeIdentity(String userId, int epoch) {
     return mounted &&
         _roomResumeEpoch == epoch &&
         _roomResumeAccountUserId == userId &&
-        _normalizedUserId(widget.repository.currentUserId) == userId;
+        _normalizedUserId(_repository.currentUserId) == userId;
   }
 
   bool _isValidPendingRoomResult(RoomResultSnapshot snapshot, String userId) {

@@ -1010,7 +1010,7 @@ class _SyncStatusChip extends StatelessWidget {
                 // bekleyen kayıt olmadığı için çip "Bulutla senkronize"
                 // diyordu. Yalan: bulut yok (2026-09-27 simülatör turu).
                 final deviceOnly =
-                    isSynced && RemoteAvailability.socialLockedIn(context);
+                    isSynced && RemoteAvailability.socialLockedWatch(context);
                 final (bg, fg) = hasFailed
                     ? (t.errTint, t.errTx)
                     : deviceOnly
