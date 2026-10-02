@@ -276,8 +276,8 @@ class QuestionSetPolicy {
       final word = raw.replaceAll(RegExp(r'[^\p{L}\p{N}]', unicode: true), '');
       if (word.isEmpty) break;
       final first = String.fromCharCode(word.runes.first);
-      final isCapital =
-          first != first.toLowerCase() && first == first.toUpperCase();
+      // Büyük harf: küçüğü kendinden farklı olan harf (büyütme çağrısı yok).
+      final isCapital = first.toLowerCase() != first;
       if (!isCapital || name.length >= 3) break;
       // Cümle başı sözcüğü ad değildir; ad öbeğinin içinde kalan "Mela" gibi
       // sözcükler ise listede olsa bile yalnız İLK sözcükte süzülür.
