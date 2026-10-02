@@ -208,7 +208,7 @@ function App() {
           </div>
           <div className="footer-links">
             <a href="https://zankurd.com">{t('Sepan', 'Uygulama')}</a>
-            <a href="mailto:nisebinbawer47@gmail.com">{t('Têkilî', 'İletişim')}</a>
+            <a href="mailto:iletisim@zankurd.com">{t('Têkilî', 'İletişim')}</a>
           </div>
         </div>
       </footer>
