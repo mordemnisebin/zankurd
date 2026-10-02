@@ -158,6 +158,7 @@ flutter:
     - assets/data/bilim_2026_09_30_questions.json
     - assets/data/altkonu_2026_10_01_questions.json
     - assets/data/ders_2026_10_01_questions.json
+    - assets/data/bosluk_2026_10_02_questions.json
 
   # Şahnê yazı tipleri (OFL; lisans metinleri assets/fonts/OFL-*.txt).
   # Değişken dosyalardan sabit kalınlıklar üretildi: FontWeight doğrudan
