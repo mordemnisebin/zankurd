@@ -432,7 +432,7 @@ class Tr {
     },
     K.quizLoadFail: {'ku': 'Quiz nehate barkirin', 'tr': 'Quiz yüklenemedi'},
     K.miniQuizNone: {
-      'ku': 'Ji bo vê dersê hîn azmûna kurt tune ye. Dikarî dersê biqedînî.',
+      'ku': 'Ji bo vê dersê hîn azmûneke kurt tune ye. Dikarî dersê biqedînî.',
       'tr': 'Bu ders için henüz kısa test yok. Dersi tamamlayabilirsin.',
     },
     K.translation: {'ku': 'Werger', 'tr': 'Çeviri'},
