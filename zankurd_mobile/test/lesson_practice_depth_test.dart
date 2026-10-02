@@ -73,6 +73,8 @@ const _added = <String, int>{
 };
 
 void main() {
+  group('sunucu dersleri (ders_2026_10_02)', serverLessonGuards);
+
   const policy = QuestionContentPolicy();
   late List<QuizQuestion> playable;
 
@@ -110,6 +112,55 @@ void main() {
         added.where((q) => q.metadata?.learningLessonId == entry.key).length,
         entry.value,
         reason: entry.key,
+      );
+    }
+  });
+}
+
+/// 2026-10-02: son dört sunucu dersi (`hejmar`, `lekera-bun`, `dengbeji`,
+/// `demsal`) alıştırmasız kalmıştı; `LearningLessonAliases` onları bu yerel
+/// etiketlere bağlar. Her biri en az [_minTagged] oynanabilir ve kendi test
+/// kategorisinde etiketli soruya sahip olmalı.
+const _serverLessonCategories = <String, String>{
+  'numbers_1': 'everyday',
+  'grammar_bun': 'grammar',
+  'culture_dengbeji': 'culture',
+  'time_seasons': 'time',
+};
+
+void serverLessonGuards() {
+  const policy = QuestionContentPolicy();
+  late List<QuizQuestion> playable;
+
+  setUpAll(() {
+    playable = QuestionBankLoader.instance.allQuestions
+        .where(policy.isPlayable)
+        .toList();
+  });
+
+  for (final entry in _serverLessonCategories.entries) {
+    test('${entry.key}: en az $_minTagged etiketli oynanabilir alıştırma', () {
+      final category = quizCategoryForLesson(entry.value);
+      final tagged = playable.where(
+        (q) =>
+            q.category == category && q.metadata?.learningLessonId == entry.key,
+      );
+      expect(
+        tagged.length,
+        greaterThanOrEqualTo(_minTagged),
+        reason: entry.key,
+      );
+    });
+  }
+
+  test('ders_2026_10_02: 32 soru oynanabilir, dört derse 8\'er dağılmış', () {
+    final added = playable.where((q) => q.id.startsWith('ders_2026_10_02_'));
+    expect(added.length, 32);
+    for (final id in _serverLessonCategories.keys) {
+      expect(
+        added.where((q) => q.metadata?.learningLessonId == id).length,
+        8,
+        reason: id,
       );
     }
   });

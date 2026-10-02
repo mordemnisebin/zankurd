@@ -126,7 +126,13 @@ void main() {
     // turlarının etiketlediği sorular) değişmeden sabit kalır. Yeni
     // kümenin kendi bekçisi `lesson_practice_depth_test.dart`.
     final seed = tagged
-        .where((q) => !q.id.startsWith('ders_2026_10_01_'))
+        // 2026-10-02: `ders_2026_10_02_*` (32 soru, sunucu dersleri hejmar,
+        // lekera-bun, dengbeji, demsal) da tohumun dışındadır.
+        .where(
+          (q) =>
+              !q.id.startsWith('ders_2026_10_01_') &&
+              !q.id.startsWith('ders_2026_10_02_'),
+        )
         .map((q) => q.id)
         .toSet();
     expect(seed, {

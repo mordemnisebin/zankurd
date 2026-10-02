@@ -2648,6 +2648,35 @@
     "reviewedAt": "metadata.reviewedAt",
     "locale": "ku-kmr"
    }
+  },
+  {
+   "id": "ders_2026_10_02",
+   "description": "2026-10-02: son dört sunucu dersi (hejmar, lekera-bun, dengbeji, demsal) için 32 derse etiketli soru (learningLessonId)",
+   "path": "assets/data/ders_2026_10_02_questions.json",
+   "role": "runtime_secondary",
+   "parser": "json",
+   "canonicalGroup": "runtime_questions",
+   "reportIncluded": true,
+   "gateIncluded": true,
+   "productionLike": true,
+   "precedence": 998,
+   "expectedRecordCount": 32,
+   "notes": "Sözcükler dersin kendi slaytlarından (supabase/2026-07-06_lesson_seed.sql; metadata.sourceReference ders kimliğini taşır). Taslak Claude Sonnet, Kurmancî inceleme Gemini 3.1 Pro ve Grok 4.7, uyuşmazlıkta Gemini 3.8 Flash, Claude Opus derleme ve denetim.",
+   "columns": {
+    "id": "id",
+    "category": "category",
+    "prompt": "prompt",
+    "options": "answers",
+    "correct": "correctAnswer",
+    "explanation": "explanationKu",
+    "difficulty": "difficulty",
+    "type": "type",
+    "dialect": "metadata.dialect",
+    "sourceTitle": "metadata.sourceTitle",
+    "sourceUrl": "metadata.sourceReference",
+    "reviewedAt": "metadata.reviewedAt",
+    "locale": "ku-kmr"
+   }
   }
  ]
 }

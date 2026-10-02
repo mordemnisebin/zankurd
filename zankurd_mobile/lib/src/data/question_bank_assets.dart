@@ -125,4 +125,10 @@ const questionBankAssets = <String>[
   // düzeltti, Grok 4.7 olgu ve dili bağımsız okudu, uyuşmazlıkta Gemini 3.8
   // Flash hakemlik etti. Bekçi: `test/bosluk_balance_test.dart`.
   'assets/data/bosluk_2026_10_02_questions.json',
+  // 2026-10-02: son dört sunucu dersi (`hejmar`, `lekera-bun`, `dengbeji`,
+  // `demsal`) alıştırmasız kalmıştı; 32 soru derse etiketli (`numbers_1`,
+  // `grammar_bun`, `culture_dengbeji`, `time_seasons`). Sözcükler dersin kendi
+  // slaytlarından (supabase/2026-07-06_lesson_seed.sql); Kurmancî Gemini 3.1
+  // Pro + Grok 4.7 okumasından geçti. Eşleme: `learning_lesson_aliases.dart`.
+  'assets/data/ders_2026_10_02_questions.json',
 ];

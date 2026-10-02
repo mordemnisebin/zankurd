@@ -84,7 +84,8 @@ void main() {
       // `lesson_practice_depth_test.dart`). 3045 -> 3048 (+3): aynı gün
       // yeniden yazılan üç ders sorusu. 3048 -> 3169 (+121): 2026-10-02
       // `bosluk_2026_10_02`; hepsi iki dilli (TR alanları dolu).
-      3169,
+      // 3169 -> 3201 (+32): 2026-10-02 `ders_2026_10_02`; hepsi iki dilli.
+      3201,
       reason:
           'Türkçe metin taşıyan soru sayısı değişti (yükleyicinin verdiği sayı). Yeni parti geldiyse bu '
           'sayı bilerek güncellenmeli; kendiliğinden düştüyse bir bankanın '
