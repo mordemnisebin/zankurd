@@ -93,10 +93,27 @@ void main() {
     expect(find.byKey(noticeKey), findsNothing);
   });
 
-  testWidgets('jeton kazanıldıysa tavan satırı çıkmıyor', (tester) async {
-    // Tavan bayrağı gelse bile miktar sıfırdan büyükse mesaj yersizdir:
-    // oyuncu bu turda jeton KAZANDI, sınıra bir sonrakinde çarpacak.
+  // 2026-10-02: eski bekçi "bayrak gelse bile miktar > 0 ise mesaj yersiz"
+  // diyordu. Bu, tavanın ödülü KIRPTIĞI turu (kalan 1 jetonken 17'lik tur
+  // "+1" verir) sessiz bırakıyordu: QA'da oyuncu "+1"in sebebini
+  // öğrenemedi. Ayrım artık "bayrak" değil, "istenen ile verilen": tur 4/5
+  // doğru, seri 3 -> istenen 4+4+3 = 11.
+  testWidgets('tavan ödülü kırptıysa (4 < 11) sebep gösterilir', (
+    tester,
+  ) async {
     await tester.pumpWidget(wrap(screen(capReached: true, coinsAwarded: 4)));
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(noticeKey), findsOneWidget);
+  });
+
+  testWidgets('ödül tam verildiyse (11 = 11) tavan satırı çıkmıyor', (
+    tester,
+  ) async {
+    // Bayrak gelse bile istenen miktar eksiksiz ödendiyse mesaj yersizdir:
+    // oyuncu bu turda kazandığını aldı, sınıra bir sonrakinde çarpacak.
+    await tester.pumpWidget(wrap(screen(capReached: true, coinsAwarded: 11)));
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 

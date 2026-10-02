@@ -24,6 +24,7 @@ import '../models/referral_result.dart';
 import '../utils/coin_calculator.dart';
 import 'curated_question_bank.dart';
 import 'learning_assessment_bank.dart';
+import 'learning_lesson_aliases.dart';
 import 'question_bank_loader.dart';
 import 'seen_question_store.dart';
 import 'subcategory_level_plan.dart';
@@ -499,11 +500,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
     required String learningLessonId,
     int limit = 5,
   }) async {
+    // Sunucu dersi slug'ı (`silav-u-nasin`) bir ya da birkaç yerel ders
+    // kimliğine açılır; yerel kimlik kendisidir (bkz. LearningLessonAliases).
+    final bankIds = LearningLessonAliases.bankIdsFor(learningLessonId);
     final exact = _playableQuestions
         .where(
           (question) =>
               question.category == category &&
-              question.metadata?.learningLessonId == learningLessonId,
+              bankIds.contains(question.metadata?.learningLessonId),
         )
         .toList(growable: false);
 
@@ -520,11 +524,21 @@ class MockZanKurdRepository implements ZanKurdRepository {
         : await _selectFresh(exact, limit);
     if (tagged.length >= limit) return tagged;
     final taggedIds = tagged.map((q) => q.id).toSet();
-    final fillers = LearningAssessmentBank.questionsFor(
-      lessonId: learningLessonId,
-      category: category,
-      limit: limit,
-    ).where((q) => !taggedIds.contains(q.id));
+    // Birden çok bankalı ders (Selamlaşma ve Tanışma) için dolgu sırayla
+    // karıştırılır; yoksa ilk bankanın beş sorusu ikincisini hiç göstermezdi.
+    final perBank = [
+      for (final bankId in bankIds)
+        LearningAssessmentBank.questionsFor(
+          lessonId: bankId,
+          category: category,
+          limit: limit,
+        ),
+    ];
+    final fillers = <QuizQuestion>[
+      for (var i = 0; i < limit; i++)
+        for (final bank in perBank)
+          if (i < bank.length) bank[i],
+    ].where((q) => !taggedIds.contains(q.id));
     return [...tagged, ...fillers].take(limit).toList(growable: false);
   }
 

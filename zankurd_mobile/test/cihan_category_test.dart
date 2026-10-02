@@ -157,9 +157,19 @@ void main() {
         // kaynak taramasında 44 kayıt (30 kaynak yok, 14 cevap yanlış)
         // karantinaya döndü: 853 - 44 = 809.
         expect(copies.length, 809);
+        // 2026-10-02: TEK editoryal düzeltme. `ds_cografya_0177`nin çeldiricisi
+        // "Dirêjahî û firehî" ("Uzunluk ve genişlik") enlem/boylam için de
+        // geçerli bir Kurmancî ifadeydi: iki doğru şık. "Dem û lez" ("Zaman ve
+        // hız") ile değişti; şıkkın iki dildeki karşılığı birlikte değişir,
+        // doğru şıkkın konumu aynı kalır. Sunucu göçü:
+        // supabase/2026-10-02_e2e_content_fixes.sql. Başka kayıt bu listeye
+        // bilinçli bir kararla eklenir.
+        const editorialFixes = <String, Set<String>>{
+          'ds_cografya_0177': {'answers', 'answersTr'},
+        };
         for (final c in copies) {
           final o = original[c['id']];
-          expect(o, isNotNull, reason: '${c['id']} orijinalde yok');
+          if (o == null) fail('${c['id']} orijinalde yok');
           // Türkçe alanlar, zorluk ve tür hiçbir dalgada değişmez.
           //
           // 2026-10-02: ŞIK SIRASI hariç. `rebalance_answer_positions.py`
@@ -175,15 +185,18 @@ void main() {
             'difficulty',
             'type',
           ]) {
-            expect(c[key], o![key], reason: '${c['id']}.$key değişmiş');
+            if (editorialFixes[c['id']]?.contains(key) ?? false) continue;
+            expect(c[key], o[key], reason: '${c['id']}.$key değişmiş');
           }
           List<String> sorted(Object? list) =>
               (list as List).cast<String>().toList()..sort();
-          expect(
-            sorted(c['answersTr']),
-            sorted(o!['answersTr']),
-            reason: '${c['id']}.answersTr kümesi değişmiş',
-          );
+          if (!(editorialFixes[c['id']]?.contains('answersTr') ?? false)) {
+            expect(
+              sorted(c['answersTr']),
+              sorted(o['answersTr']),
+              reason: '${c['id']}.answersTr kümesi değişmiş',
+            );
+          }
           // Kurmancî metin yalnız ikinci ve üçüncü dalgada (Gemini 3.1 Pro düzeltmesi,
           // Grok/Flash onayı) değişebilir; dalga-1 kayıtları birebir aynı.
           final meta = c['metadata'] as Map<String, dynamic>;
@@ -198,13 +211,16 @@ void main() {
               'explanationKu',
               'explanation',
             ]) {
+              if (editorialFixes[c['id']]?.contains(key) ?? false) continue;
               expect(c[key], o[key], reason: '${c['id']}.$key değişmiş');
             }
-            expect(
-              sorted(c['answers']),
-              sorted(o['answers']),
-              reason: '${c['id']}.answers kümesi değişmiş',
-            );
+            if (!(editorialFixes[c['id']]?.contains('answers') ?? false)) {
+              expect(
+                sorted(c['answers']),
+                sorted(o['answers']),
+                reason: '${c['id']}.answers kümesi değişmiş',
+              );
+            }
           } else if (c['explanation'] != o['explanation']) {
             // Bazı DeepSeek kayıtlarında `explanation` Türkçe değil Kurmancî
             // açıklamanın kopyasıdır; düzeltme ikisine birlikte uygulanır.
@@ -221,6 +237,16 @@ void main() {
             (c['answersTr'] as List).indexOf(c['correctAnswerTr']),
             reason: '${c['id']}: Kurmancî ve Türkçe doğru şık hizalı değil',
           );
+          if (editorialFixes.containsKey(c['id'])) {
+            // Düzeltilen şık iki dilde de aynı konumda değişmiş olmalı.
+            final tr = (c['answersTr'] as List).cast<String>();
+            expect(tr.length, newAnswers.length);
+            expect(
+              tr.indexOf(c['correctAnswerTr'] as String),
+              newAnswers.indexOf(c['correctAnswer'] as String),
+              reason: '${c['id']}: iki dildeki doğru konum ayrışmış',
+            );
+          }
           expect(newAnswers.length, oldAnswers.length);
           expect(newAnswers.toSet().length, newAnswers.length);
           expect(meta['reviewStatus'], 'approved', reason: '${c['id']}');

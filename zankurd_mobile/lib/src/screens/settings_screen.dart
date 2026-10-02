@@ -211,402 +211,417 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: zkAppBar(context, title: Text(context.t(K.settings))),
       body: SafeArea(
         top: false,
-        child: ListView(
+        // 2026-10-02: bu sayfa tembel `ListView` idi. Tembel liste, ekran
+        // dışındaki çocukların boyunu KESTİRİR; ayarlardaki gibi boyları çok
+        // farklı (başlık, kart, anahtar satırı, açılır satır) satırlar
+        // iOS'ta alt uca yaklaşırken kayma uzunluğunu eksik kestirebilir ve
+        // kullanıcı "Hakkında" kartının yarısında kalır: en alttaki "Hesabımı
+        // sil" (App Store 5.1.1(v)) görünmez olur. Sayfa yirmi kadar satırdır;
+        // tembelliğin kazancı yok, kestirimin riski var. Ölçüsü kesin olan
+        // `SingleChildScrollView` + `Column` kullanılır.
+        child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(
             SahneSpace.page,
             0,
             SahneSpace.page,
             SahneSpace.x8,
           ),
-          children: [
-            // ============ HESAP / ACCOUNT ============
-            SahneSectionHeader(title: context.t(K.secAccount)),
-            SahneSurfaceCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // ============ HESAP / ACCOUNT ============
+              SahneSectionHeader(title: context.t(K.secAccount)),
+              SahneSurfaceCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SahneField(
+                      key: const ValueKey('settings-player-name-field'),
+                      label: context.t(K.playerName),
+                      controller: _nameController,
+                      enabled: !_loadingName && !_savingName,
+                      hintText: context.t(K.playerNameHint),
+                      prefixIcon: AppIcons.idBadge,
+                      textInputAction: TextInputAction.done,
+                      onSubmitted: (_) => _savePlayerName(),
+                    ),
+                    const SizedBox(height: SahneSpace.x3),
+                    // Ad değişmeden "Kaydet" kapalı (hiçbir şey kaydedilecek
+                    // değil); değişince ekranın tek canlı eylemi olur ve
+                    // birincil (Agir) görünür — ikincil düğme değişikliği
+                    // fark ettirmiyordu.
+                    SahneButton.primary(
+                      label: Tr.forKu(K.save, ku),
+                      icon: AppIcons.floppyDisk,
+                      arrow: false,
+                      expand: true,
+                      onPressed: _loadingName || _savingName || !_isNameDirty
+                          ? null
+                          : _savePlayerName,
+                    ),
+                  ],
+                ),
+              ),
+
+              // ============ ÖĞRENME / LEARNING ============
+              SahneSectionHeader(title: context.t(K.secLearning)),
+              SahneSurfaceCard(
+                key: const ValueKey('settings-learning-goal'),
+                child: LearningGoalChooser(
+                  isKu: ku,
+                  selected: _learningGoal,
+                  compact: true,
+                  onSelected: _setLearningGoal,
+                ),
+              ),
+              const SizedBox(height: SahneSpace.cardGap),
+              SahneListGroup(
                 children: [
-                  SahneField(
-                    key: const ValueKey('settings-player-name-field'),
-                    label: context.t(K.playerName),
-                    controller: _nameController,
-                    enabled: !_loadingName && !_savingName,
-                    hintText: context.t(K.playerNameHint),
-                    prefixIcon: AppIcons.idBadge,
-                    textInputAction: TextInputAction.done,
-                    onSubmitted: (_) => _savePlayerName(),
-                  ),
-                  const SizedBox(height: SahneSpace.x3),
-                  // Ad değişmeden "Kaydet" kapalı (hiçbir şey kaydedilecek
-                  // değil); değişince ekranın tek canlı eylemi olur ve
-                  // birincil (Agir) görünür — ikincil düğme değişikliği
-                  // fark ettirmiyordu.
-                  SahneButton.primary(
-                    label: Tr.forKu(K.save, ku),
-                    icon: AppIcons.floppyDisk,
-                    arrow: false,
-                    expand: true,
-                    onPressed: _loadingName || _savingName || !_isNameDirty
-                        ? null
-                        : _savePlayerName,
+                  FutureBuilder<PlacementStore>(
+                    future: _placementStoreFuture,
+                    builder: (context, snap) {
+                      final level = snap.data?.level;
+                      final String sub;
+                      if (level == null) {
+                        sub = context.t(K.retakePlacementSub);
+                      } else {
+                        final name = ku ? level.labelKu : level.labelTr;
+                        sub = context.t(K.currentLevel, {'name': name});
+                      }
+                      return SahneListRow.plain(
+                        key: const ValueKey('retake-placement-action'),
+                        title: context.t(K.retakePlacement),
+                        subtitle: sub,
+                        chevron: true,
+                        onTap: _openPlacement,
+                      );
+                    },
                   ),
                 ],
               ),
-            ),
 
-            // ============ ÖĞRENME / LEARNING ============
-            SahneSectionHeader(title: context.t(K.secLearning)),
-            SahneSurfaceCard(
-              key: const ValueKey('settings-learning-goal'),
-              child: LearningGoalChooser(
-                isKu: ku,
-                selected: _learningGoal,
-                compact: true,
-                onSelected: _setLearningGoal,
-              ),
-            ),
-            const SizedBox(height: SahneSpace.cardGap),
-            SahneListGroup(
-              children: [
-                FutureBuilder<PlacementStore>(
-                  future: _placementStoreFuture,
-                  builder: (context, snap) {
-                    final level = snap.data?.level;
-                    final String sub;
-                    if (level == null) {
-                      sub = context.t(K.retakePlacementSub);
-                    } else {
-                      final name = ku ? level.labelKu : level.labelTr;
-                      sub = context.t(K.currentLevel, {'name': name});
-                    }
-                    return SahneListRow.plain(
-                      key: const ValueKey('retake-placement-action'),
-                      title: context.t(K.retakePlacement),
-                      subtitle: sub,
-                      chevron: true,
-                      onTap: _openPlacement,
-                    );
-                  },
-                ),
-              ],
-            ),
-
-            // ============ GÜVENLİK / SAFETY ============
-            //
-            // Apple 1.2 dördüncü şart: UGC barındıran uygulamada
-            // iletişim bilgisi YAYIMLANMIŞ olmalı. Oda sohbeti
-            // 2026-07-31'de moderasyonuyla geri geldi; bu satır
-            // kullanıcının taciz bildirimini nereye yapacağını söyler.
-            // Web sayfasında durması yetmez — uygulamadan ulaşılmalı.
-            SahneSectionHeader(title: context.t(K.secSafety)),
-            // İki eylem TEK bir yüzeyde durur (bkz.
-            // `beta_release_experience_test`: ortak `AppPanel` atası).
-            // `AppPanel` Şahnê'de yüzey kartıdır; satırlar liste grubunun
-            // diliyle, aralarında ikon hizasından başlayan ayırıcıyla.
-            AppPanel(
-              padding: EdgeInsets.zero,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SahneListRow.plain(
-                    key: const ValueKey('settings-report-abuse'),
-                    title: context.t(K.reportAbuse),
-                    chevron: true,
-                    onTap: _openAbuseReport,
-                  ),
-                  const _RowDivider(),
-                  SahneListRow.plain(
-                    key: const ValueKey('settings-beta-feedback'),
-                    title: context.t(K.betaFeedback),
-                    subtitle: context.t(K.betaFeedbackSub),
-                    chevron: true,
-                    onTap: _openBetaFeedback,
-                  ),
-                ],
-              ),
-            ),
-
-            // ============ GİZLİLİK / PRIVACY ============
-            SahneSectionHeader(title: context.t(K.secPrivacy)),
-            SahneListGroup(
-              dividerIndent: _rowTextInset,
-              children: [
-                Consumer<AnalyticsConsentProvider>(
-                  builder: (context, consent, _) => SahneListRow.plain(
-                    title: context.t(K.analyticsConsent),
-                    subtitle: context.t(K.analyticsConsentSub),
-                    trailing: Switch(
-                      key: const ValueKey('analytics-consent-switch'),
-                      value: consent.enabled,
-                      onChanged: _setAnalyticsConsent,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            // ============ GÖRÜNÜM / APPEARANCE ============
-            SahneSectionHeader(title: context.t(K.secAppearance)),
-            SahneListGroup(
-              dividerIndent: _rowTextInset,
-              children: [
-                SahneListRow.plain(
-                  title: context.t(K.appLanguage),
-                  trailing: const LanguageToggle(
-                    kuKey: ValueKey('settings-language-ku'),
-                    trKey: ValueKey('settings-language-tr'),
-                  ),
-                ),
-                Consumer<ThemeProvider>(
-                  builder: (context, themeProvider, _) => SahneListRow.plain(
-                    title: context.t(K.darkLightMode),
-                    trailing: Switch(
-                      value: themeProvider.isDark,
-                      onChanged: (_) {
-                        themeProvider.toggleDarkLight();
-                      },
-                    ),
-                  ),
-                ),
-                Consumer<ReducedMotionProvider>(
-                  builder: (context, motion, _) => SahneListRow.plain(
-                    title: context.t(K.reduceMotion),
-                    trailing: Switch(
-                      key: const ValueKey('reduce-motion-switch'),
-                      value: motion.userReduce,
-                      onChanged: (v) => motion.setUserReduce(v),
-                    ),
-                  ),
-                ),
-                // WCAG 2.2.1: zaman sınırı olan içerikte sınırı kapatma
-                // yolu bulunmalı. Öğrenme ve tekrar akışları zaten
-                // sayaçsızdı; kategori ve alıştırma turunda kapatmanın
-                // hiçbir yolu yoktu.
-                Consumer<UntimedModeProvider>(
-                  builder: (context, untimed, _) => SahneListRow.plain(
-                    title: context.t(K.untimedSolo),
-                    subtitle: context.t(K.untimedSoloSub),
-                    trailing: Switch(
-                      key: const ValueKey('untimed-solo-switch'),
-                      value: untimed.enabled,
-                      onChanged: (v) => untimed.setEnabled(v),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            // ============ SES & BİLDİRİM / SOUND & NOTIFICATIONS ============
-            SahneSectionHeader(title: context.t(K.secSoundNotif)),
-            SahneListGroup(
-              dividerIndent: _rowTextInset,
-              children: [
-                // Ses efektleri web'de HİÇ çalmıyor: `SoundProvider._play`
-                // ikinci satırında `if (kIsWeb) return;` diyor. Anahtar
-                // yine de koşulsuz gösteriliyordu, yani web kullanıcısı
-                // hiçbir şey yapmayan bir kontrolü açıp kapatıyordu
-                // (2026-07-31 denetimi). Ölü kontrol, bozuk kontroldür.
-                if (!kIsWeb)
-                  Consumer<SoundProvider>(
-                    builder: (context, sound, _) => SahneListRow.plain(
-                      title: context.t(K.soundEffects),
-                      trailing: Switch(
-                        value: sound.enabled,
-                        onChanged: (_) => sound.toggle(),
-                      ),
-                    ),
-                  ),
-                Column(
+              // ============ GÜVENLİK / SAFETY ============
+              //
+              // Apple 1.2 dördüncü şart: UGC barındıran uygulamada
+              // iletişim bilgisi YAYIMLANMIŞ olmalı. Oda sohbeti
+              // 2026-07-31'de moderasyonuyla geri geldi; bu satır
+              // kullanıcının taciz bildirimini nereye yapacağını söyler.
+              // Web sayfasında durması yetmez — uygulamadan ulaşılmalı.
+              SahneSectionHeader(title: context.t(K.secSafety)),
+              // İki eylem TEK bir yüzeyde durur (bkz.
+              // `beta_release_experience_test`: ortak `AppPanel` atası).
+              // `AppPanel` Şahnê'de yüzey kartıdır; satırlar liste grubunun
+              // diliyle, aralarında ikon hizasından başlayan ayırıcıyla.
+              AppPanel(
+                padding: EdgeInsets.zero,
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SahneListRow.plain(
-                      title: context.t(K.dailyReminder),
-                      subtitle: context.t(K.dailyReminderAt, {
-                        'time': _notificationTime,
-                      }),
-                      trailing: Switch(
-                        value: _notificationsEnabled,
-                        onChanged: _toggleNotifications,
-                      ),
+                      key: const ValueKey('settings-report-abuse'),
+                      title: context.t(K.reportAbuse),
+                      chevron: true,
+                      onTap: _openAbuseReport,
                     ),
-                    if (_notificationsEnabled && _systemPermissionDenied)
-                      _InlineNotice(
-                        icon: AppIcons.bellSlash,
-                        text: context.t(K.notifPermDeniedInline),
-                        error: true,
-                      ),
+                    const _RowDivider(),
+                    SahneListRow.plain(
+                      key: const ValueKey('settings-beta-feedback'),
+                      title: context.t(K.betaFeedback),
+                      subtitle: context.t(K.betaFeedbackSub),
+                      chevron: true,
+                      onTap: _openBetaFeedback,
+                    ),
                   ],
                 ),
-                if (_notificationsEnabled)
-                  SahneListRow.plain(
-                    title: context.t(K.changeTime, {'time': _notificationTime}),
-                    chevron: true,
-                    onTap: _pickNotificationTime,
+              ),
+
+              // ============ GİZLİLİK / PRIVACY ============
+              SahneSectionHeader(title: context.t(K.secPrivacy)),
+              SahneListGroup(
+                dividerIndent: _rowTextInset,
+                children: [
+                  Consumer<AnalyticsConsentProvider>(
+                    builder: (context, consent, _) => SahneListRow.plain(
+                      title: context.t(K.analyticsConsent),
+                      subtitle: context.t(K.analyticsConsentSub),
+                      trailing: Switch(
+                        key: const ValueKey('analytics-consent-switch'),
+                        value: consent.enabled,
+                        onChanged: _setAnalyticsConsent,
+                      ),
+                    ),
                   ),
-              ],
-            ),
+                ],
+              ),
 
-            // ============ SESLENDİRME (TTS) ============
-            SahneSectionHeader(title: context.t(K.secTts)),
-            const _TtsSettingsSection(),
+              // ============ GÖRÜNÜM / APPEARANCE ============
+              SahneSectionHeader(title: context.t(K.secAppearance)),
+              SahneListGroup(
+                dividerIndent: _rowTextInset,
+                children: [
+                  SahneListRow.plain(
+                    title: context.t(K.appLanguage),
+                    trailing: const LanguageToggle(
+                      kuKey: ValueKey('settings-language-ku'),
+                      trKey: ValueKey('settings-language-tr'),
+                    ),
+                  ),
+                  Consumer<ThemeProvider>(
+                    builder: (context, themeProvider, _) => SahneListRow.plain(
+                      title: context.t(K.darkLightMode),
+                      trailing: Switch(
+                        value: themeProvider.isDark,
+                        onChanged: (_) {
+                          themeProvider.toggleDarkLight();
+                        },
+                      ),
+                    ),
+                  ),
+                  Consumer<ReducedMotionProvider>(
+                    builder: (context, motion, _) => SahneListRow.plain(
+                      title: context.t(K.reduceMotion),
+                      trailing: Switch(
+                        key: const ValueKey('reduce-motion-switch'),
+                        value: motion.userReduce,
+                        onChanged: (v) => motion.setUserReduce(v),
+                      ),
+                    ),
+                  ),
+                  // WCAG 2.2.1: zaman sınırı olan içerikte sınırı kapatma
+                  // yolu bulunmalı. Öğrenme ve tekrar akışları zaten
+                  // sayaçsızdı; kategori ve alıştırma turunda kapatmanın
+                  // hiçbir yolu yoktu.
+                  Consumer<UntimedModeProvider>(
+                    builder: (context, untimed, _) => SahneListRow.plain(
+                      title: context.t(K.untimedSolo),
+                      subtitle: context.t(K.untimedSoloSub),
+                      trailing: Switch(
+                        key: const ValueKey('untimed-solo-switch'),
+                        value: untimed.enabled,
+                        onChanged: (v) => untimed.setEnabled(v),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
 
-            // ============ ENGELLENENLER ============
-            // 2026-08-02 denetimi: `unblockPlayer` depoda vardı ama TEK
-            // bir çağıranı bile yoktu — kullanıcı birini engelledikten
-            // sonra kararını geri alamıyordu. Engelleme, geri alınabilir
-            // olmadıkça bir moderasyon aracı değil tek yönlü bir kapıdır.
-            SahneSectionHeader(title: context.t(K.secBlocked)),
-            _BlockedUsersSection(repository: widget.repository),
+              // ============ SES & BİLDİRİM / SOUND & NOTIFICATIONS ============
+              SahneSectionHeader(title: context.t(K.secSoundNotif)),
+              SahneListGroup(
+                dividerIndent: _rowTextInset,
+                children: [
+                  // Ses efektleri web'de HİÇ çalmıyor: `SoundProvider._play`
+                  // ikinci satırında `if (kIsWeb) return;` diyor. Anahtar
+                  // yine de koşulsuz gösteriliyordu, yani web kullanıcısı
+                  // hiçbir şey yapmayan bir kontrolü açıp kapatıyordu
+                  // (2026-07-31 denetimi). Ölü kontrol, bozuk kontroldür.
+                  if (!kIsWeb)
+                    Consumer<SoundProvider>(
+                      builder: (context, sound, _) => SahneListRow.plain(
+                        title: context.t(K.soundEffects),
+                        trailing: Switch(
+                          value: sound.enabled,
+                          onChanged: (_) => sound.toggle(),
+                        ),
+                      ),
+                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SahneListRow.plain(
+                        title: context.t(K.dailyReminder),
+                        subtitle: context.t(K.dailyReminderAt, {
+                          'time': _notificationTime,
+                        }),
+                        trailing: Switch(
+                          value: _notificationsEnabled,
+                          onChanged: _toggleNotifications,
+                        ),
+                      ),
+                      if (_notificationsEnabled && _systemPermissionDenied)
+                        _InlineNotice(
+                          icon: AppIcons.bellSlash,
+                          text: context.t(K.notifPermDeniedInline),
+                          error: true,
+                        ),
+                    ],
+                  ),
+                  if (_notificationsEnabled)
+                    SahneListRow.plain(
+                      title: context.t(K.changeTime, {
+                        'time': _notificationTime,
+                      }),
+                      chevron: true,
+                      onTap: _pickNotificationTime,
+                    ),
+                ],
+              ),
 
-            // ============ PREMIUM ABONELİK ============
-            // Diğer her blok gibi premium de kendi bölüm başlığını taşır.
-            // Başlıksızken kart, bir üstteki "Seslendirme" bölümünün
-            // devamı gibi görünüyor ve para kazandıran tek giriş noktası
-            // ayarların içinde kayboluyordu (2026-07-25 canlı denetimi).
-            //
-            // Abone olmayana + yapılandırma yoksa bölüm gizlenir: ürünsüz
-            // paywall ölü sokaktır (2026-09-05 canlı turu). Abone, durum
-            // satırını her zaman görür.
-            Consumer<PremiumService>(
-              builder: (context, premium, _) {
-                final isPremium = premium.isPremium;
-                if (!isPremium && !AppConfig.hasRevenuecatConfig) {
-                  return const SizedBox.shrink();
-                }
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SahneSectionHeader(title: 'Premium'),
-                    SahneListGroup(
-                      children: [
-                        SahneListRow.icon(
-                          icon: AppIcons.gem,
-                          role: SahneRole.gold,
-                          title: isPremium
-                              ? context.t(K.premiumBrand)
-                              : context.t(K.premiumCta),
-                          subtitle: isPremium
-                              ? context.t(K.premiumActive)
-                              : context.t(K.premiumPerks),
-                          trailing: SahneBadge(
-                            label: isPremium
-                                ? context.t(K.premiumBadgeOn)
-                                : context.t(K.premiumBadgeOff),
-                            tone: isPremium
-                                ? SahneBadgeTone.gold
-                                : SahneBadgeTone.soon,
-                          ),
-                          chevron: true,
-                          onTap: () => Navigator.of(context).push(
-                            AppRoute.to(
-                              PaywallScreen(repository: widget.repository),
+              // ============ SESLENDİRME (TTS) ============
+              SahneSectionHeader(title: context.t(K.secTts)),
+              const _TtsSettingsSection(),
+
+              // ============ ENGELLENENLER ============
+              // 2026-08-02 denetimi: `unblockPlayer` depoda vardı ama TEK
+              // bir çağıranı bile yoktu — kullanıcı birini engelledikten
+              // sonra kararını geri alamıyordu. Engelleme, geri alınabilir
+              // olmadıkça bir moderasyon aracı değil tek yönlü bir kapıdır.
+              SahneSectionHeader(title: context.t(K.secBlocked)),
+              _BlockedUsersSection(repository: widget.repository),
+
+              // ============ PREMIUM ABONELİK ============
+              // Diğer her blok gibi premium de kendi bölüm başlığını taşır.
+              // Başlıksızken kart, bir üstteki "Seslendirme" bölümünün
+              // devamı gibi görünüyor ve para kazandıran tek giriş noktası
+              // ayarların içinde kayboluyordu (2026-07-25 canlı denetimi).
+              //
+              // Abone olmayana + yapılandırma yoksa bölüm gizlenir: ürünsüz
+              // paywall ölü sokaktır (2026-09-05 canlı turu). Abone, durum
+              // satırını her zaman görür.
+              Consumer<PremiumService>(
+                builder: (context, premium, _) {
+                  final isPremium = premium.isPremium;
+                  if (!isPremium && !AppConfig.hasRevenuecatConfig) {
+                    return const SizedBox.shrink();
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SahneSectionHeader(title: 'Premium'),
+                      SahneListGroup(
+                        children: [
+                          SahneListRow.icon(
+                            icon: AppIcons.gem,
+                            role: SahneRole.gold,
+                            title: isPremium
+                                ? context.t(K.premiumBrand)
+                                : context.t(K.premiumCta),
+                            subtitle: isPremium
+                                ? context.t(K.premiumActive)
+                                : context.t(K.premiumPerks),
+                            trailing: SahneBadge(
+                              label: isPremium
+                                  ? context.t(K.premiumBadgeOn)
+                                  : context.t(K.premiumBadgeOff),
+                              tone: isPremium
+                                  ? SahneBadgeTone.gold
+                                  : SahneBadgeTone.soon,
                             ),
+                            chevron: true,
+                            onTap: () => Navigator.of(context).push(
+                              AppRoute.to(
+                                PaywallScreen(repository: widget.repository),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
+
+              // ============ HAKKINDA / ABOUT ============
+              SahneSectionHeader(title: context.t(K.secAbout)),
+              SahneListGroup(
+                dividerIndent: _rowTextInset,
+                children: [
+                  _ExpandableRow(
+                    title: context.t(K.howToPlay),
+                    body: context.t(K.howToPlayBody),
+                  ),
+                  _ExpandableRow(
+                    title: context.t(K.privacy),
+                    body: context.t(K.privacyBody),
+                  ),
+                ],
+              ),
+              const SizedBox(height: SahneSpace.cardGap),
+              // Sürüm, hakkında metni ve yasal bağlantılar tek bir yüzey
+              // kartında; marka logo plakasıyla (eski "ZK" degrade karosu
+              // kalktı).
+              SahneSurfaceCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const BrandMarkPlate(size: 44),
+                        const SizedBox(width: SahneSpace.x3),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'ZanKurd',
+                                style: SahneType.bodyStrong.copyWith(
+                                  color: t.tx,
+                                ),
+                              ),
+                              Text(
+                                '${context.t(K.version)} $_versionLabel',
+                                style: SahneType.caption.copyWith(
+                                  color: t.tx2,
+                                  fontFeatures: const [
+                                    FontFeature.tabularFigures(),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
+                    const SizedBox(height: SahneSpace.x3),
+                    Text(
+                      context.t(K.aboutBody),
+                      style: SahneType.body.copyWith(color: t.tx2),
+                    ),
+                    const SizedBox(height: SahneSpace.x3),
+                    // Yasal bağlantılar (mağaza şartı)
+                    const LegalLinksRow(),
+                    // Soru fotoğrafları CC BY lisanslıdır; atıf yasal
+                    // yükümlülüktür (bkz. image_credits_screen.dart).
+                    SahneButton.text(
+                      key: const ValueKey('settings-image-credits'),
+                      label: context.t(K.imageCredits),
+                      onPressed: () => Navigator.of(
+                        context,
+                      ).push(AppRoute.to(const ImageCreditsScreen())),
+                    ),
                   ],
-                );
-              },
-            ),
+                ),
+              ),
 
-            // ============ HAKKINDA / ABOUT ============
-            SahneSectionHeader(title: context.t(K.secAbout)),
-            SahneListGroup(
-              dividerIndent: _rowTextInset,
-              children: [
-                _ExpandableRow(
-                  title: context.t(K.howToPlay),
-                  body: context.t(K.howToPlayBody),
+              // Hesap silme en yıkıcı eylem olmasına rağmen ayarların
+              // en üstünde, ikinci kartta duruyordu. Yeni kullanıcı
+              // için yanlış öncelik — en alta taşındı
+              // (2026-07-22 canlı UX denetimi).
+              SahneSectionHeader(title: context.t(K.secDanger)),
+              Padding(
+                padding: const EdgeInsets.only(bottom: SahneSpace.x3),
+                child: Text(
+                  context.t(K.dangerNote),
+                  style: SahneType.caption.copyWith(color: t.tx2),
                 ),
-                _ExpandableRow(
-                  title: context.t(K.privacy),
-                  body: context.t(K.privacyBody),
-                ),
-              ],
-            ),
-            const SizedBox(height: SahneSpace.cardGap),
-            // Sürüm, hakkında metni ve yasal bağlantılar tek bir yüzey
-            // kartında; marka logo plakasıyla (eski "ZK" degrade karosu
-            // kalktı).
-            SahneSurfaceCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              SahneListGroup(
                 children: [
-                  Row(
-                    children: [
-                      const BrandMarkPlate(size: 44),
-                      const SizedBox(width: SahneSpace.x3),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'ZanKurd',
-                              style: SahneType.bodyStrong.copyWith(color: t.tx),
-                            ),
-                            Text(
-                              '${context.t(K.version)} $_versionLabel',
-                              style: SahneType.caption.copyWith(
-                                color: t.tx2,
-                                fontFeatures: const [
-                                  FontFeature.tabularFigures(),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: SahneSpace.x3),
-                  Text(
-                    context.t(K.aboutBody),
-                    style: SahneType.body.copyWith(color: t.tx2),
-                  ),
-                  const SizedBox(height: SahneSpace.x3),
-                  // Yasal bağlantılar (mağaza şartı)
-                  const LegalLinksRow(),
-                  // Soru fotoğrafları CC BY lisanslıdır; atıf yasal
-                  // yükümlülüktür (bkz. image_credits_screen.dart).
-                  SahneButton.text(
-                    key: const ValueKey('settings-image-credits'),
-                    label: context.t(K.imageCredits),
-                    onPressed: () => Navigator.of(
-                      context,
-                    ).push(AppRoute.to(const ImageCreditsScreen())),
+                  SahneListRow.plain(
+                    key: const ValueKey('delete-account-action'),
+                    destructive: true,
+                    title: context.t(K.deleteAccount),
+                    subtitle: context.t(K.deleteAccountSub),
+                    trailing: _deleting
+                        ? const BrandedLoader(size: 20, strokeWidth: 2)
+                        : null,
+                    chevron: !_deleting,
+                    onTap: _deleting ? null : _confirmDeleteAccount,
                   ),
                 ],
               ),
-            ),
-
-            // Hesap silme en yıkıcı eylem olmasına rağmen ayarların
-            // en üstünde, ikinci kartta duruyordu. Yeni kullanıcı
-            // için yanlış öncelik — en alta taşındı
-            // (2026-07-22 canlı UX denetimi).
-            SahneSectionHeader(title: context.t(K.secDanger)),
-            Padding(
-              padding: const EdgeInsets.only(bottom: SahneSpace.x3),
-              child: Text(
-                context.t(K.dangerNote),
-                style: SahneType.caption.copyWith(color: t.tx2),
-              ),
-            ),
-            SahneListGroup(
-              children: [
-                SahneListRow.plain(
-                  key: const ValueKey('delete-account-action'),
-                  destructive: true,
-                  title: context.t(K.deleteAccount),
-                  subtitle: context.t(K.deleteAccountSub),
-                  trailing: _deleting
-                      ? const BrandedLoader(size: 20, strokeWidth: 2)
-                      : null,
-                  chevron: !_deleting,
-                  onTap: _deleting ? null : _confirmDeleteAccount,
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -698,15 +713,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (dialogContext) => AlertDialog(
         title: Text(context.t(K.deleteConfirmTitle)),
         content: Text(context.t(K.deleteConfirmBody)),
+        // 2026-10-02 uçtan uca QA: yıkıcı eylem "Devam et" adıyla turuncu
+        // birincil düğmeydi; göz oraya gidiyor, "Devam et" silmeyi
+        // söylemiyordu. Şimdi güvenli eylem ("Vazgeç") varsayılan dolgulu
+        // düğme; yıkıcı olan hata tonlu düz metin ve adı silmeyi açıkça
+        // söylüyor (aynı düzen: çıkış onayı, `_QuizExitDialog`).
         actions: [
           DialogActionPair(
-            cancel: OutlinedButton(
-              onPressed: () => Navigator.pop(dialogContext, false),
-              child: Text(context.t(K.cancel)),
+            cancel: TextButton(
+              key: const ValueKey('delete-continue'),
+              onPressed: () => Navigator.pop(dialogContext, true),
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(dialogContext).colorScheme.error,
+              ),
+              child: Text(context.t(K.deleteAccount)),
             ),
             confirm: FilledButton(
-              onPressed: () => Navigator.pop(dialogContext, true),
-              child: Text(context.t(K.continueAction)),
+              key: const ValueKey('delete-keep'),
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(context.t(K.cancel)),
             ),
           ),
         ],
@@ -801,9 +826,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Text(context.t(K.cancel)),
                   ),
                   confirm: FilledButton(
+                    key: const ValueKey('delete-forever'),
                     onPressed: canDelete
                         ? () => Navigator.pop(dialogContext, true)
                         : null,
+                    // Geri alınamaz eylem: turuncu birincil değil hata tonu.
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Theme.of(
+                        dialogContext,
+                      ).colorScheme.error,
+                      foregroundColor: Theme.of(
+                        dialogContext,
+                      ).colorScheme.onError,
+                      disabledBackgroundColor: SahneTokens.of(dialogContext).s1,
+                      disabledForegroundColor: SahneTokens.of(
+                        dialogContext,
+                      ).tx3,
+                    ),
                     child: Text(context.t(K.deleteForever)),
                   ),
                 ),

@@ -66,6 +66,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Oda kurucusu artık soru başına süreyi seçtiği bir sheet görür.
+      // Sayfa %90 yükseklikle sınırlı ve içi kayar (kapatılabilsin diye):
+      // düğme görünür alanın dışında kalabilir.
+      await tester.ensureVisible(find.text('Odayı aç'));
+      await tester.pump();
       await tester.tap(find.text('Odayı aç'));
       await tester.pumpAndSettle();
 

@@ -56,6 +56,11 @@ const _updatePrefix = '2026-10-01_local_parity_update_';
 const _retiredSql = 'supabase/2026-10-01_retired_local_unapprove.sql';
 const _namespace = '5a1e2b7c-3d4f-4e60-9a8b-2c1d0f9e8a77';
 
+/// Ekleme göçündeki kategorisi sonradan yerelde değiştirilen sorular:
+/// yerel id -> ekleme dosyasındaki ESKİ kategori. Düzeltme göçü
+/// `supabase/2026-10-02_e2e_content_fixes.sql`dir.
+const _recategorisedLocally = <String, String>{'offline_0757': 'Cografya'};
+
 /// RFC 4122 sürüm 5 (SHA-1) — Python'daki `uuid.uuid5` ile aynı.
 String _uuid5(String name) {
   final ns = <int>[];
@@ -138,7 +143,17 @@ void main() {
         reason:
             '$localId oynanabilir değil (emekli/reddedilmiş) ama sunucuya ekleniyor',
       );
-      expect(q.category, category, reason: '$localId: kategori ayrışmış');
+      // 2026-10-02: tek bilinçli ayrışma. offline_0757 ('"su" bi Kurmancî
+      // çi ye?') ekleme göçünde Cografya idi; sözcük çevirisi olduğu için
+      // yerelde Ziman'a alındı ve sunucuda
+      // `2026-10-02_e2e_content_fixes.sql` ile alınır (aşağıdaki test
+      // göçün varlığını denetler). Başka ayrışma hâlâ kusurdur.
+      final oldCategory = _recategorisedLocally[localId];
+      if (oldCategory == null) {
+        expect(q.category, category, reason: '$localId: kategori ayrışmış');
+      } else {
+        expect(category, oldCategory, reason: '$localId: eski kategori');
+      }
       expect(q.prompt.trim(), prompt, reason: '$localId: soru metni ayrışmış');
       expect(
         q.type == QuestionType.fillInBlank ||
@@ -268,5 +283,28 @@ void main() {
     }
     expect(applied, contains('Görselli'));
     expect(applied, contains('2026-10-01_retired_local_unapprove.sql'));
+  });
+
+  test('yerelde kategorisi değişen ekleme satırlarının düzeltme göçü var', () {
+    final fix = File(
+      'supabase/2026-10-02_e2e_content_fixes.sql',
+    ).readAsStringSync();
+    for (final localId in _recategorisedLocally.keys) {
+      final id = _uuid5('zankurd-local:$localId');
+      expect(fix, contains(id), reason: '$localId için göç yok');
+      expect(
+        byId[localId]!.category,
+        isNot(_recategorisedLocally[localId]),
+        reason: '$localId yerelde hâlâ eski kategoride; listeden çıkar',
+      );
+    }
+    // Koordinat sorusu: göçteki yeni şık yereldekiyle aynı.
+    expect(fix, contains('Dem û lez'));
+    expect(
+      byId['ds_cografya_0177']!.answers,
+      contains('Dem û lez'),
+      reason: 'göç ile yerel şık ayrışmış',
+    );
+    expect(fix, contains(_uuid5('zankurd-local:ds_cografya_0177')));
   });
 }

@@ -431,6 +431,10 @@ class Tr {
       'tr': 'Bu konu için soru bulunamadı',
     },
     K.quizLoadFail: {'ku': 'Quiz nehate barkirin', 'tr': 'Quiz yüklenemedi'},
+    K.miniQuizNone: {
+      'ku': 'Ji bo vê dersê hîn azmûna kurt tune ye. Dikarî dersê biqedînî.',
+      'tr': 'Bu ders için henüz kısa test yok. Dersi tamamlayabilirsin.',
+    },
     K.translation: {'ku': 'Werger', 'tr': 'Çeviri'},
     // Aynı görünümün adı zaten `K.flashcards` ("Kartên Hînbûnê" /
     // "Hafıza Kartları"). Tooltip "Flashcard modu" deyince Türkçe
@@ -2156,6 +2160,12 @@ class Tr {
       'ku': 'Pakêtên Premium hîn ne çalak in',
       'tr': 'Premium paketler henüz aktif değil',
     },
+    K.paywallOfferingsLoadFailed: {
+      'ku':
+          'Pakêtên Premium nehatin barkirin. Girêdana xwe kontrol bike û dîsa biceribîne.',
+      'tr':
+          'Premium paketleri yüklenemedi. Bağlantını kontrol edip tekrar dene.',
+    },
     K.paywallPackagesInactiveBody: {
       'ku': 'Pakêtên Premium dê di demeke kurt de çalak bibin. Paşê vegere.',
       'tr': 'Paketler yakında açılacak.',
@@ -2935,6 +2945,7 @@ class K {
   static const recommendedForYou = 'learn.recommended';
   static const noQuestionsForCategory = 'learn.noQuestionsForCategory';
   static const quizLoadFail = 'learn.quizLoadFail';
+  static const miniQuizNone = 'learn.miniQuizNone';
   static const translation = 'learn.translation';
   static const flashcardMode = 'learn.flashcardMode';
   static const slidesLoadFail = 'learn.slidesLoadFail';
@@ -3675,6 +3686,7 @@ class K {
   static const priceComing = 'paywall.priceComing';
   static const restorePurchases = 'paywall.restore';
   static const paywallPackagesInactive = 'paywall.packages.inactive';
+  static const paywallOfferingsLoadFailed = 'paywall.offerings.loadFailed';
   static const paywallPackagesInactiveBody = 'paywall.packages.inactive.body';
   static const paywallRenewalTerms = 'paywall.renewalTerms';
   static const paywallRestoreFailed = 'paywall.restore.failed';

@@ -606,10 +606,10 @@
     "category": "Ziman",
     "prompt": "Wêneya \"xwendekar\" tê çi wateyê?",
     "answers": [
-      "bir",
+      "öğretmen",
       "öğrenci",
-      "ergatif",
-      "üç"
+      "doktor",
+      "çiftçi"
     ],
     "correctAnswer": "öğrenci",
     "explanation": "\"xwendekar\" \"öğrenci\" demektir.",
@@ -620,10 +620,10 @@
     "difficulty": 2,
     "promptTr": "\"xwendekar\" görseli ne anlama gelir?",
     "answersTr": [
-      "bir",
+      "öğretmen",
       "öğrenci",
-      "ergatif",
-      "üç"
+      "doktor",
+      "çiftçi"
     ],
     "correctAnswerTr": "öğrenci"
   },
@@ -968,7 +968,7 @@
   },
   {
     "id": "offline_0757",
-    "category": "Cografya",
+    "category": "Ziman",
     "prompt": "\"su\" bi Kurmancî çi ye?",
     "answers": [
       "ax",
@@ -22182,7 +22182,7 @@
     "explanationTr": "Doğru. Ciwan Haco Kürt ezgilerini elektrikli çalgılarla, rock ve caz dokunuşlarıyla birleştirdi; böylece Kürt müziğine modern bir ses getirdi.",
     "type": "trueFalse",
     "difficulty": 3,
-    "promptTr": "Doğru mu yanlış mı: \"Ciwan Haco\" terimi şu anlama gelir: Kürt müziğine rock ve caz rüzgârını getiren sanatçı.",
+    "promptTr": "Doğru mu yanlış mı: \"Ciwan Haco\", Kürt müziğine rock ve caz rüzgârını getiren sanatçıdır.",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -22203,7 +22203,7 @@
     "explanationTr": "Hayır — bu tanım \"Mihemed Şêxo\" kavramına ait; \"Ciwan Haco\" şu anlama gelir: Kürt müziğine rock ve caz rüzgârını getiren sanatçı.",
     "type": "trueFalse",
     "difficulty": 4,
-    "promptTr": "Doğru mu yanlış mı: \"Ciwan Haco\" terimi şu anlama gelir: tembûr ve sesiyle modern kilamlar üreten sanatçı.",
+    "promptTr": "Doğru mu yanlış mı: \"Ciwan Haco\", tembûr ve sesiyle modern kilamlar üreten sanatçıdır.",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -22224,7 +22224,7 @@
     "explanationTr": "Doğru. Mihemed Şêxo temburu ve güçlü sesiyle tanınır; aşk ve hasret temalı kilamları dinleyiciler arasında iz bırakmıştır.",
     "type": "trueFalse",
     "difficulty": 4,
-    "promptTr": "Doğru mu yanlış mı: \"Mihemed Şêxo\" terimi şu anlama gelir: tembûr ve sesiyle modern kilamlar üreten sanatçı.",
+    "promptTr": "Doğru mu yanlış mı: \"Mihemed Şêxo\", tembûr ve sesiyle modern kilamlar üreten sanatçıdır.",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -22245,7 +22245,7 @@
     "explanationTr": "Hayır — bu tanım \"Aram Tîgran\" kavramına ait; \"Mihemed Şêxo\" şu anlama gelir: tembûr ve sesiyle modern kilamlar üreten sanatçı.",
     "type": "trueFalse",
     "difficulty": 5,
-    "promptTr": "Doğru mu yanlış mı: \"Mihemed Şêxo\" terimi şu anlama gelir: Kürtçe şarkılarıyla tanınan, Ermeni kökenli müzisyen.",
+    "promptTr": "Doğru mu yanlış mı: \"Mihemed Şêxo\", Kürtçe şarkılarıyla tanınan, Ermeni kökenli müzisyendir.",
     "answersTr": [
       "Doğru",
       "Yanlış"
@@ -22266,7 +22266,7 @@
     "explanationTr": "Doğru. Aram Tîgran Ermeni kökenlidir ve ününü büyük ölçüde Kürtçe şarkılarla kazanmıştır; böylece iki kültür arasında bir köprü olmuştur.",
     "type": "trueFalse",
     "difficulty": 4,
-    "promptTr": "Doğru mu yanlış mı: \"Aram Tîgran\" terimi şu anlama gelir: Kürtçe şarkılarıyla tanınan, Ermeni kökenli müzisyen.",
+    "promptTr": "Doğru mu yanlış mı: \"Aram Tîgran\", Kürtçe şarkılarıyla tanınan, Ermeni kökenli müzisyendir.",
     "answersTr": [
       "Doğru",
       "Yanlış"

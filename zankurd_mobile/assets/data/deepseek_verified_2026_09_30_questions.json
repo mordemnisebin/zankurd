@@ -755,7 +755,7 @@
       "Bilindahî û kûrahî",
       "Germahî û zext",
       "Hêlîpan û hêlîdirêj",
-      "Dirêjahî û firehî"
+      "Dem û lez"
     ],
     "correctAnswer": "Hêlîpan û hêlîdirêj",
     "explanation": "Enlem ve boylam, dünya üzerindeki kesin konumu belirleyen koordinatlardır. Yükseklik ve derinlik de önemlidir, ancak kesin konum için enlem ve boylam esastır.",
@@ -766,7 +766,7 @@
       "dialect": "Kurmancî",
       "sourceReference": "https://en.wikipedia.org/wiki/Geographic_coordinate_system",
       "qualityVersion": 1,
-      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus.",
+      "reviewedBy": "DeepSeek taslağı (2026-08-18). Olgu: en az iki bağımsız model (Gemini 3.8 Flash / Muse Spark, Grok 4.7, Space Bunny eleği) işaretlemedi. Kurmancî: Gemini 3.1 Pro (ya da Grok 4.7) uygun buldu. Toplu derleme ve denetim: Claude Opus. 2026-10-02 (uçtan uca QA): çeldirici \"Dirêjahî û firehî\" enlem/boylam için de geçerli ikinci doğru cevap olduğundan \"Dem û lez\" ile değiştirildi.",
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
@@ -775,7 +775,7 @@
       "Yükseklik ve derinlik",
       "Sıcaklık ve basınç",
       "Enlem ve boylam",
-      "Uzunluk ve genişlik"
+      "Zaman ve hız"
     ],
     "correctAnswerTr": "Enlem ve boylam",
     "explanationKu": "Hêlîpan (enlem) û hêlîdirêj (boylam) koordînatên ku cihê rast li ser rûyê erdê diyar dikin in. Bilindahî û kûrahî jî girîng in, lê ji bo cihê rast hêlîpan û hêlîdirêj bingeh in.",

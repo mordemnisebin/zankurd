@@ -1631,9 +1631,13 @@ class _QuizScreenState extends State<QuizScreen>
       );
     }
 
-    final hasProgress = index > 0 || answered;
+    // 2026-10-02 uçtan uca QA: çıkış onayı yalnız ilerleme varken (soru 2+
+    // ya da cevap verilmiş) soruluyordu; ilk soruda X'e dokunmak turu
+    // sormadan bitiriyordu (öğrenme alıştırması ve konu turu, 1/10). Tur
+    // başlamış sayılır: ilk soruda da sorulur. Sonuç ekranında sorulmaz (o
+    // ayrı ekran).
     return PopScope(
-      canPop: !_isMultiplayer && !hasProgress && !_exitInFlight,
+      canPop: false,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _confirmExit();
       },
