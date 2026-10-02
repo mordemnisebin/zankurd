@@ -74,6 +74,10 @@ dependencies:
   purchases_flutter: ^10.6.0
 
   connectivity_plus: ^7.3.0
+  # Uzak ulaşılabiliğer yoklaması (`_pingSupabase`): boot'da zaman aşımına
+  # uğrayan Supabase başlatmasının sonradan gerçekten açıldığına, yani
+  # sunucuya ağ turu atılabildiğine bakar. dev'te DEĞİL: lib/ kullanıyor.
+  http: ^1.2.0
   image_picker: ^1.2.3
   package_info_plus: ^10.2.1
   font_awesome_flutter: ^11.0.0
@@ -103,9 +107,8 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  # Supabase repository hata-enjeksiyon testlerinde sahte http.Client için
-  # (test/supabase_offline_fallback_test.dart).
-  http: ^1.2.0
+  # Zamanlayıcı/geri çekilmeli yeniden deneme testleri (sahte saat).
+  fake_async: ^1.3.3
   # `UrlLauncherPlatform.instance`i sahte bir uygulamayla değiştirip
   # "hedefi açacak uygulama yok" durumunu simüle etmek için
   # (test/legal_link_open_failure_test.dart).

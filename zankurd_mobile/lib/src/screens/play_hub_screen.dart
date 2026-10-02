@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -302,9 +304,16 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     );
   }
 
-  /// Kilitliyken (sunucuya hiç ulaşılamıyor) pasif giriş dokunulunca kısa bir
+  /// Kilitliyken (sunucuya ulaşılamıyor) pasif giriş dokunulunca kısa bir
   /// geri bildirim verir: sessiz ölü düğme kalmaz. 2026-09-30 simülatör.
+  ///
+  /// Dokunuş AYNI ZAMANDA en güçlü "tekrar dene" işaretidir: kullanıcı
+  /// sunucuya ulaşmak istiyor. Arkadaki geri çekilmeyi (60 sn'ye kadar)
+  /// beklemeden hemen yokla; başarısız olursa kilit yerinde kalır, geri
+  /// çekilme kendi takviminde sürer.
   void _notifyLocked() {
+    final availability = RemoteAvailability.read(context);
+    if (availability != null) unawaited(availability.retryNow());
     final messenger = ScaffoldMessenger.of(context);
     messenger.hideCurrentSnackBar();
     messenger.showSnackBar(
@@ -325,7 +334,10 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final locked = RemoteAvailability.socialLockedIn(context);
+    // `watch`: arka plan geriçekilmesi uzak başlatmayı sonlandırdığında
+    // düğmeler anında açılsın; `socialLockedIn` (dinlemeyen) yalnız bir
+    // sonraki tesadüfi çizimde açardı.
+    final locked = RemoteAvailability.socialLockedWatch(context);
 
     // 2026-09-29 Şahnê A iskeleti: marka satırı → "Yarış" → alt başlık →
     // tek birincil eylem (hızlı düello sahne kartı) → iki adlandırılmış

@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -166,12 +167,20 @@ Future<void> main() async {
         reason: 'premium load',
         fallback: PremiumService.fallback,
       );
-      final remoteReadyFuture = AppConfig.hasSupabaseConfig
+      // Ham başlatma AYRI tutulur: `bootStep` 4 sn'lik sınırda düşerse
+      // bile `Supabase.initialize` arka planda kendi yoluna sürer ve bu
+      // future, sonradan yapılan ulaşılabiliğer yoklamasının (probe)
+      // kaynağıdır. `bootStep` yalnız İLK KARE kararını verir — kararın
+      // ömrü oturum boyunca değildir (bkz. [RemoteAvailability]).
+      final Future<Supabase>? supabaseInit = AppConfig.hasSupabaseConfig
+          ? Supabase.initialize(
+              url: AppConfig.supabaseUrl,
+              publishableKey: AppConfig.supabaseAnonKey,
+            )
+          : null;
+      final remoteReadyFuture = supabaseInit != null
           ? bootStep(
-              Supabase.initialize(
-                url: AppConfig.supabaseUrl,
-                publishableKey: AppConfig.supabaseAnonKey,
-              ).then((_) => true),
+              supabaseInit.then((_) => true),
               reason: 'supabase init',
               fallback: () => false,
             )
@@ -221,6 +230,22 @@ Future<void> main() async {
         repository = OfflineZanKurdRepository();
         authProvider = AuthProvider.offline();
       }
+
+      // Zaman aşımı KALICI ÇEVRİMDIŞI karar değildir: `reachable: false`
+      // yalnız açılış anlıktır, arka planda geri çekilmeyle yeniden
+      // denenir. `probe` (bkz. [_probeSupabase]) başlatmayı bitirir ve
+      // ardından sunucuya gerçek bir ağ turu atar — ikisinden biri
+      // başarısızsa kilit yerinde kalır, yani gerçek çevrimdışı
+      // davranış korunur.
+      final probeInit = supabaseInit;
+      final remoteAvailability = RemoteAvailability(
+        reachable: remoteReady,
+        probe: probeInit == null ? null : () => _probeSupabase(probeInit),
+        // Init bekleme + ping aynı pencereye sığsın: boot'ta zaten 4 sn
+        // harcanmış olan bir başlatma, 6 sn daha sürebilir.
+        probeTimeout: const Duration(seconds: 8),
+      );
+      if (!remoteReady) remoteAvailability.startRetries();
 
       await bootStepVoid(
         SyncManager.initialize(repository),
@@ -282,6 +307,34 @@ Future<void> main() async {
       }
       startInBackground(NotificationService.load(), 'notifications load');
 
+      // Açılış çevrimdışı kararına rağmen Supabase sonradan açıldıysa,
+      // ÇEVRİMDIŞI depoyla kurulan oturum uzak oturumla yeniden kurulur.
+      // Kancalar yalnız bu durumda bağlanır: zaten uzak açılan bir
+      // oturumda yeniden kurulum gereksizdir ve ara sıra tetiklenen
+      // bir kök ağaç tazelemesi olurdu.
+      //
+      // `isUpgradeSafe`: kullanıcı üstünde bir ekran (oda, quiz, alt sayfa)
+      // açıkkken kök değişmez; kurtarma, kabuğa dönüldüğünde ya da
+      // uygulama ön plana çıktığında uygulanır (bkz. AppShell).
+      if (!remoteReady && supabaseInit != null) {
+        remoteAvailability.onUpgradeRequest = () {
+          unawaited(
+            _rebuildWithRemote(
+              previousAvailability: remoteAvailability,
+              languageProvider: languageProvider,
+              themeProvider: themeProvider,
+              soundProvider: soundProvider,
+              reducedMotionProvider: reducedMotionProvider,
+              untimedModeProvider: untimedModeProvider,
+              analyticsConsentProvider: analyticsConsentProvider,
+              premiumService: premiumService,
+            ),
+          );
+        };
+        remoteAvailability.isUpgradeSafe = () =>
+            !(_navigatorKey.currentState?.canPop() ?? false);
+      }
+
       runApp(
         ZanKurdApp(
           repository: repository,
@@ -292,7 +345,7 @@ Future<void> main() async {
           reducedMotionProvider: reducedMotionProvider,
           untimedModeProvider: untimedModeProvider,
           analyticsConsentProvider: analyticsConsentProvider,
-          remoteAvailability: RemoteAvailability(reachable: remoteReady),
+          remoteAvailability: remoteAvailability,
           premiumService: premiumService,
         ),
       );
@@ -305,6 +358,137 @@ Future<void> main() async {
       );
     },
   );
+}
+
+/// Uygulama kökü navigatorunun anahtarı.
+///
+/// Yalnız geç kurtarmada kullanılır: [RemoteAvailability.isUpgradeSafe]
+/// üstünde açık rota var mı diye buradan bakar, böylece kullanıcı oda ya
+/// da quiz ortasındayken kök ağaç tazelenmez.
+final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+/// Her geç kurtarımda bir artar; kök widget'ın anahtarı değişince Flutter
+/// eski ağacı söker ve yenisini kurar — `runApp` aynı tipte kökle
+/// çağrılırsa ağaç korunur ve ESKİ rotanın kapanışı (eski çevrimdışı
+/// depoyu taşıyan ekranlar) hiç değişmezdi.
+int _bootGeneration = 0;
+
+/// Boot'da çevrimdışı kalan uygulamayı, sonradan açılan Supabase ile
+/// UZAK oturumda yeniden kurar.
+///
+/// ## Niçin yeniden kurulum?
+///
+/// Depo ve auth açılışta BİR KEZ seçilir (`OfflineZanKurdRepository` ↔
+/// `SupabaseZanKurdRepository`); çalışma sırasında yer değiştirmek,
+/// ekranların kurucularında tuttuğu ESKİ depo örneğiyle kimlik ve
+/// ilerlemenin dağılmasına yol açardı (XP bir tarafta, arayüz öbür
+/// tarafta). Uygulamayı kapıp açmak bu yüzden düzeltiyordu — bu işlev
+/// bilinen ve test edilmiş o yolu, splash'siz ve otomatik olarak çalıştırır.
+///
+/// Geçişten önce `SyncManager` yeni devreye alınır (kuyruk uzak depoya
+/// aksın) ve yerel ilerleme kapsamı yeni oturuma bağlanır. Eski
+/// [RemoteAvailability] dispose edilir ki geri çekilme zamanlayıcısı
+/// boş yere her60 sn'de bir istek atmasın.
+Future<void> _rebuildWithRemote({
+  required RemoteAvailability previousAvailability,
+  required LanguageProvider languageProvider,
+  required ThemeProvider themeProvider,
+  required SoundProvider soundProvider,
+  required ReducedMotionProvider reducedMotionProvider,
+  required UntimedModeProvider untimedModeProvider,
+  required AnalyticsConsentProvider analyticsConsentProvider,
+  required PremiumService premiumService,
+}) async {
+  final repository = SupabaseZanKurdRepository(Supabase.instance.client);
+  final authProvider = AuthProvider(Supabase.instance.client);
+  try {
+    await SyncManager.initialize(repository);
+  } catch (error, stack) {
+    ErrorReporter.record(error, stack, reason: 'remote upgrade sync init');
+  }
+  try {
+    await authProvider.bindLocalProgressScope();
+  } catch (error, stack) {
+    ErrorReporter.record(
+      error,
+      stack,
+      reason: 'remote upgrade local progress scope',
+    );
+  }
+  runApp(
+    ZanKurdApp(
+      // Anahtar farkı = eski ağaç sökülür, yenisinin rotaları sıfırdan
+      // kurulur; eski rotalarda kalmış çevrimdışı depo örneği kalmasın.
+      key: ValueKey('zankurd.remote-upgrade-${++_bootGeneration}'),
+      // Splash yok: kullanıcı zaten uygulamanın içinde, marka penceresi
+      // ortasında ikinci bir açılış animasyonu göstermek samimiyetsizdi.
+      home: AppShell(
+        repository: repository,
+        pushTokenSync: PushTokenSync(
+          source: kIsWeb
+              ? const NoopPushTokenSource()
+              : const FirebasePushTokenSource(),
+          repository: repository,
+        ),
+      ),
+      repository: repository,
+      authProvider: authProvider,
+      languageProvider: languageProvider,
+      themeProvider: themeProvider,
+      soundProvider: soundProvider,
+      reducedMotionProvider: reducedMotionProvider,
+      untimedModeProvider: untimedModeProvider,
+      analyticsConsentProvider: analyticsConsentProvider,
+      remoteAvailability: RemoteAvailability(reachable: true),
+      premiumService: premiumService,
+    ),
+  );
+  previousAvailability.dispose();
+}
+
+/// Boot'da zaman aşımına uğrayan Supabase başlatmasını yoklar.
+///
+/// İki aşama, ikisi de zorunlu:
+///
+/// 1. **Başlatma** — `supabaseInit` sürüyorsa bitmesi beklenir (dışarıdaki
+///    `probeTimeout` asılı kalmasın diye sınırlar); fırlattıysa
+///    `Supabase.initialize` idempotent olduğu için bir kez daha denenir.
+/// 2. **Ağ turu** — sunucuya gerçek bir istek atılır. Bu aşama
+///    ATLANIRSA "gerçek çevrimdışıyı bozardık": oturum cihazda geçerliyken
+///    başlatma ağ olmadan da tamamlanabilir (yalnız yerel depo okunur),
+///    o zaman kalkan bant "sunucuya ulaşılabiliyor" der ve yalan olurdu.
+Future<bool> _probeSupabase(Future<Supabase> bootInit) async {
+  try {
+    await bootInit;
+  } catch (_) {
+    try {
+      await Supabase.initialize(
+        url: AppConfig.supabaseUrl,
+        publishableKey: AppConfig.supabaseAnonKey,
+      );
+    } catch (_) {
+      return false;
+    }
+  }
+  return _pingSupabase();
+}
+
+/// Sunucuya giden tek bir hafif istek. Herhangi bir HTTP cevabı (200,
+/// 401, 404…) "sunucu orada" demektir; yanıtın hiç gelmemesi (DNS, soket,
+/// zaman aşımı) "ulaşılamadı" demektir — PostgREST'in izin hatası bile
+/// sunucuya ulaşıldığının kanıtıdır.
+Future<bool> _pingSupabase() async {
+  try {
+    await http
+        .get(
+          Uri.parse('${AppConfig.supabaseUrl}/rest/v1/'),
+          headers: {'apikey': AppConfig.supabaseAnonKey},
+        )
+        .timeout(const Duration(seconds: 4));
+    return true;
+  } catch (_) {
+    return false;
+  }
 }
 
 class _ConfigurationErrorApp extends StatelessWidget {
@@ -437,6 +621,9 @@ class ZanKurdApp extends StatelessWidget {
                 ? Duration.zero
                 : const Duration(milliseconds: 600),
             themeAnimationCurve: Curves.easeInOutCubic,
+            // Geç kurtarmada kökün üstünde açık rota var mı diye bakılır
+            // (bkz. `_navigatorKey`).
+            navigatorKey: _navigatorKey,
             locale: const Locale('tr'),
             supportedLocales: AppMaterialLocales.supported,
             localizationsDelegates: AppMaterialLocales.delegates,

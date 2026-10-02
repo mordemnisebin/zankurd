@@ -635,7 +635,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         final fetched = snap.data ?? stale ?? [];
         // Sunucuya ulaşılamıyorken boş liste "henüz puan yok" demek
         // değildir: sıralama yalnız okunamadı (2026-09-27 simülatör turu).
-        if (fetched.isEmpty && RemoteAvailability.socialLockedIn(context)) {
+        if (fetched.isEmpty && RemoteAvailability.socialLockedWatch(context)) {
           return _page(
             context,
             ku,

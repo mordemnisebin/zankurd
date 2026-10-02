@@ -255,7 +255,13 @@ class _AppShellState extends State<AppShell>
       _isOffline = nextOffline;
       _connectivityKnown = true;
     });
-    if (reconnected) _wakeRoomResumeForCurrentUser();
+    if (reconnected) {
+      _wakeRoomResumeForCurrentUser();
+      // Yerel ağ geri geldiyse uzak başlatma da artık tamamlanmış
+      // olabilir: arkadaki geri çekilmeyi (2 sn ve sonrası) beklemeden
+      // hemen yokla. Başarısızsa takvim kendi yolunda sürer.
+      _retryRemoteAvailability();
+    }
     if (!transitioned) return;
     // Bağlantı koptuğunda sosyal kilit dürüstçe kapanır; bağlantı
     // dönünce kilit yalnız depo ölü değilse açılır. Ölü depo =
@@ -275,8 +281,26 @@ class _AppShellState extends State<AppShell>
     if (state == AppLifecycleState.resumed) {
       _wakeRoomResumeForCurrentUser();
       unawaited(widget.pushTokenSync?.sync());
+      // Arkaya atılmış bir deneme ön plana dönüşle tazelenir: kullanıcı
+      // uygulamayı açtığında "sunucuya ulaşılamadı" bandı, bir sonraki
+      // geriçekilmeyi (60 sn'ye kadar) beklemeden kalkabilir.
+      _retryRemoteAvailability();
+      _considerRemoteUpgrade();
     }
   }
+
+  /// Uzak ulaşılabiliğer yoklaması — sağlayıcı yoksa sessizce yok sayılır
+  /// (izole widget testleri).
+  void _retryRemoteAvailability() {
+    final availability = RemoteAvailability.read(context);
+    if (availability == null) return;
+    unawaited(availability.retryNow());
+  }
+
+  /// Boot'da çevrimdışı kalan oturumun uzak oturumla yeniden kurulması
+  /// için kalan tek koşul: üstünde açık rota kalmamış olması (kökteyiz).
+  void _considerRemoteUpgrade() =>
+      RemoteAvailability.read(context)?.considerUpgradeNow();
 
   @override
   void didPushNext() {
@@ -337,6 +361,9 @@ class _AppShellState extends State<AppShell>
       }
     }
     _retryRoomResumeWhenVisible();
+    // Kabuk yeniden kök: üstteki ekran kapandı, yani ertelenmiş uzak
+    // oturum yeniden kurulumu artık güvenlidir.
+    _considerRemoteUpgrade();
   }
 
   @override
@@ -564,7 +591,10 @@ class _AppShellState extends State<AppShell>
   }
 
   Widget _statusBanner(BuildContext context) {
-    final remoteLocked = RemoteAvailability.socialLockedIn(context);
+    // `watch`: uzak kurtarma (arka plan geriçekilmesi) başardığında bant
+    // kendiliğinden kalkar; `socialLockedIn` (dinlemeyen) yalnız bir
+    // sonraki tesadüfi çizimde kalkardı.
+    final remoteLocked = RemoteAvailability.socialLockedWatch(context);
     if (remoteLocked) {
       return OfflineBanner(
         isOffline: true,
@@ -579,7 +609,7 @@ class _AppShellState extends State<AppShell>
   /// ya da yerel ağ kaybı. İkisi ayrışırsa bant görünürlüğüyle üst boşluk
   /// düzeltmesi de ayrışır — bkz. `_buildScaffold`teki `rawContent` yorumu.
   bool _statusBannerVisible(BuildContext context) {
-    return RemoteAvailability.socialLockedIn(context) || _isOffline;
+    return RemoteAvailability.socialLockedWatch(context) || _isOffline;
   }
 
   bool _joinDeepLinkScheduled = false;
