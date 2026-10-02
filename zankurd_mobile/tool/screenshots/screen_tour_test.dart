@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print, invalid_use_of_visible_for_testing_member
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -717,61 +716,21 @@ void main() {
       );
     }
 
-    // İkon yazı tipi paket içinden gelir; o da yüklenmezse her ikon küçük
-    // bir kare olarak çizilir ve ekranın yarısı okunmaz kalır. Yol
-    // `package_config.json`dan çözülür, sabit yazılmaz — pub önbelleği
-    // makineden makineye değişir.
-    final packageConfig =
-        jsonDecode(File('.dart_tool/package_config.json').readAsStringSync())
-            as Map<String, dynamic>;
-    String packageRoot(String name) {
-      final entry = (packageConfig['packages'] as List)
-          .cast<Map<String, dynamic>>()
-          .firstWhere((p) => p['name'] == name);
-      // `rootUri` sonunda eğik çizgi yok; doğrudan birleştirmek
-      // ".../font_awesome_flutter-11.0.0lib/fonts/..." gibi var olmayan bir
-      // yol üretiyordu ve uyarı sessizce geçilip ikonlar kare kalıyordu.
-      final root = Uri.parse(entry['rootUri'] as String).toFilePath();
-      return root.endsWith(Platform.pathSeparator)
-          ? root
-          : '$root${Platform.pathSeparator}';
-    }
-
-    // paket -> {aile -> paket içi yazı tipi dosyası}
-    //
-    // Lucide burada DEĞİL: uygulamanın kendi varlığı (`assets/fonts/Lucide.ttf`,
-    // aşağıda öneksiz yüklenir). `AppIcons` ikonlarının neredeyse hepsi odur.
-    // Font Awesome: yalnız dolu puan yıldızı (`AppIcons.starSolid`, Lucide'da
-    // dolgu yok) ve Google markası. Solid VE Regular birlikte yüklenir;
-    // yalnız Solid yüklenirken Regular ailesindeki ikonlar kare çiziliyordu
-    // (2026-07-26).
-    const iconFonts = {
-      'font_awesome_flutter': {
-        'FontAwesomeSolid': 'lib/fonts/Font-Awesome-7-Free-Solid-900.otf',
-        'FontAwesomeRegular': 'lib/fonts/Font-Awesome-7-Free-Regular-400.otf',
-        'FontAwesomeBrands': 'lib/fonts/Font-Awesome-7-Brands-Regular-400.otf',
-      },
-    };
-    for (final package in iconFonts.keys) {
-      final base = packageRoot(package);
-      final families = iconFonts[package]!;
-      for (final family in families.keys) {
-        final iconFont = File('$base${families[family]}');
-        if (!iconFont.existsSync()) {
-          print(
-            'UYARI: $package/$family bulunamadı — o ikonlar kare çizilecek',
-          );
-          continue;
-        }
-        // Aile adı paket önekiyle kaydedilmeli: `IconData` içindeki
-        // `fontPackage` alanı, Flutter'ın çözdüğü aileyi
-        // `packages/<paket>/<aile>` biçimine çevirir. Öneksiz kayıt sessizce
-        // eşleşmez ve ikonlar yine kare çizilir.
-        final iconLoader = FontLoader(
-          'packages/$package/$family',
-        )..addFont(iconFont.readAsBytes().then((b) => ByteData.view(b.buffer)));
-        await iconLoader.load();
-      }
+    // Google/Apple marka glifleri (Font Awesome Brands) de uygulamanın kendi
+    // varlığıdır (`assets/fonts/Font-Awesome-7-Brands-Regular-400.otf`, aile
+    // `FontAwesomeBrands`, öneksiz). Yüklenmezse glifler kare çizilir.
+    final brandsFont = File(
+      'assets/fonts/Font-Awesome-7-Brands-Regular-400.otf',
+    );
+    if (brandsFont.existsSync()) {
+      await (FontLoader('FontAwesomeBrands')..addFont(
+            brandsFont.readAsBytes().then((b) => ByteData.view(b.buffer)),
+          ))
+          .load();
+    } else {
+      print(
+        'UYARI: Brands yazı tipi bulunamadı — marka ikonları kare çizilecek',
+      );
     }
   });
 

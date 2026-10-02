@@ -8,7 +8,7 @@ void main() {
       'lib/src/screens/sign_in_screen.dart',
     ).readAsStringSync();
 
-    expect(source, contains('FontAwesomeIcons.google'));
+    expect(source, contains('BrandIcons.google'));
     expect(source, isNot(contains("Text(\n                      'G'")));
   });
 
@@ -17,7 +17,7 @@ void main() {
       'lib/src/screens/profile_screen.dart',
     ).readAsStringSync();
 
-    expect(source, contains('FontAwesomeIcons.google'));
+    expect(source, contains('BrandIcons.google'));
     expect(
       source,
       isNot(contains("icon: const Text(\n                        'G'")),
@@ -31,5 +31,6 @@ void main() {
 
     expect(source, contains("'FontAwesomeBrands'"));
     expect(source, contains('Font-Awesome-7-Brands-Regular-400.otf'));
+    expect(source, isNot(contains('font_awesome_flutter')));
   });
 }

@@ -13,6 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'firebase_options.dart';
 import 'src/utils/join_deep_link.dart';
+import 'src/utils/bundled_font_licenses.dart';
 import 'src/config/app_config.dart';
 import 'src/data/offline_zankurd_repository.dart';
 import 'src/data/question_bank_loader.dart';
@@ -65,6 +66,7 @@ Future<void> main() async {
   runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+      registerBundledFontLicenses();
 
       // Widget rendering hataları için şık global kurtarma UI'ı
       ErrorWidget.builder = (FlutterErrorDetails details) {

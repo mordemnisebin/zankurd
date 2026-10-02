@@ -26,14 +26,11 @@ tahmin edilmez. Çıktı `LucideIcons.x` başvurusu değil literal
 sınıfıyla aynı desendir; paket bir sabiti yeniden adlandırırsa çıktı
 kırılmaz, betik yeniden çalıştırılınca fark görünür.
 
-## Lucide'ın karşılayamadığı tek ad
+## Font Awesome yok
 
-`starSolid`: Lucide yalnız konturdur; yazı tipi biçiminde dolu yıldız
-yok (paketin `test/lucide_fill_diagnostic_test.dart`ı yazı tiplerinin
-bilerek dolgu içermediğini denetler). Kazanılan puan yıldızının DOLU
-çizilmesi bir tasarım gereğidir — bkz. `quiz_result_star_fill_test.dart`:
-kontur yıldız "boş" okunur ve renk körü oyuncu için doluluk tek ayırt
-edicidir. O yüzden yalnız bu ad Font Awesome Solid'de kalır.
+Eskiden `starSolid` Font Awesome Solid'de kalıyordu; hiçbir ekran onu
+kullanmıyordu (puan yıldızı `SahneGlyph(star)` ile çizilir) ve kaldırıldı.
+Google/Apple marka glifleri `lib/src/theme/brand_icons.dart`tadır.
 """
 import json
 import sys
@@ -167,7 +164,6 @@ MAPPING = {
     # anlamını taşır (alt kategori zorluk basamağı).
     "stairs": "chart-no-axes-column-increasing",
     "star": "star",
-    "starSolid": None,  # Lucide'da dolu yıldız yok; aşağıdaki FA kalıntısı
     "stopwatch": "timer",
     "store": "store",
     "sun": "sun",
@@ -187,19 +183,6 @@ MAPPING = {
     "wandMagicSparkles": "wand-sparkles",
     "xmark": "x",
 }
-
-# Lucide karşılığı olmayan adlar: (kod noktası, aile, paket, gerekçe).
-# Kod noktası font_awesome_flutter 11'in FontAwesomeIcons.star.data
-# değeridir (Font Awesome 7 Free Solid).
-FONT_AWESOME_REMNANTS = {
-    "starSolid": (
-        0xF005,
-        "FontAwesomeSolid",
-        "font_awesome_flutter",
-        "dolgu yok, dolu yıldız gerekli.",
-    ),
-}
-
 
 def kebab_to_camel(name: str) -> str:
     head, *rest = name.split("-")
@@ -226,10 +209,6 @@ def main() -> None:
         "// gerekir ve Flutter'ın kendi Icons sınıfıyla aynı desendir. Kod noktaları",
         "// tool/lucide/codepoints.json'dan (Lucide yazı tipinin kendi tablosu) okunur,",
         "// tahmin edilmez. Yazı tipi `assets/fonts/Lucide.ttf`tir; paket bağımlılığı yok.",
-        "//",
-        "// Tek istisna `starSolid`: Lucide'da dolu yıldız olmadığından Font Awesome",
-        "// Solid'de kalır (bkz. betiğin başlığı). Bu yüzden font_awesome_flutter",
-        "// bağımlılığı durur (ayrıca Google markası için).",
         "import 'package:flutter/widgets.dart';",
         "",
         "class AppIcons {",
@@ -238,16 +217,12 @@ def main() -> None:
     ]
     missing = []
     for app_name, lucide_name in MAPPING.items():
-        if lucide_name is None:
-            code, family, package, why = FONT_AWESOME_REMNANTS[app_name]
-            lines.append(f"  /// Lucide karşılığı yok: {why}")
-        else:
-            key = kebab_to_camel(lucide_name)
-            if key not in codepoints:
-                missing.append((app_name, lucide_name))
-                continue
-            code, family, package = codepoints[key], LUCIDE_FAMILY, None
-            lines.append(f"  /// Lucide `{lucide_name}`.")
+        key = kebab_to_camel(lucide_name)
+        if key not in codepoints:
+            missing.append((app_name, lucide_name))
+            continue
+        code, family, package = codepoints[key], LUCIDE_FAMILY, None
+        lines.append(f"  /// Lucide `{lucide_name}`.")
         lines += [
             f"  static const IconData {app_name} = IconData(",
             f"    0x{code:x},",
