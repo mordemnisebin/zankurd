@@ -80,7 +80,6 @@ dependencies:
   http: ^1.2.0
   image_picker: ^1.2.3
   package_info_plus: ^10.2.1
-  font_awesome_flutter: ^11.0.0
   flutter_timezone: ^5.1.0
 
   # Ağ görseli önbellekleme
@@ -140,6 +139,10 @@ flutter:
     - assets/zankurd.webp
     - assets/zankurd_icon.webp
     - assets/sounds/
+    # İkon yazı tipi lisansları lisans sayfasına koddan kaydedilir
+    # (lib/src/utils/bundled_font_licenses.dart).
+    - assets/fonts/LICENSE-FontAwesome.txt
+    - assets/fonts/LICENSE-Lucide.txt
     # Veri bankaları TEK TEK sayılır; `assets/data/` klasörü bildirilmez.
     # Klasör bildirilince karantinadaki `deepseek_2026_08_18_questions.json`
     # (1,5 MB, çalışma zamanında hiç okunmaz) da pakete giriyordu. Yeni banka
@@ -171,6 +174,13 @@ flutter:
     - family: Lucide
       fonts:
         - asset: assets/fonts/Lucide.ttf
+    # Yalnız Google ve Apple marka glifleri (`BrandIcons`). font_awesome_flutter
+    # paketi Solid + Regular + Brands = ~718 KB yazi tipi tasiyordu, uygulama
+    # yalniz Brands'ten iki glif kullaniyordu; Brands dosyasi degistirilmeden
+    # buraya alindi, paket kaldirildi. Lisans: assets/fonts/LICENSE-FontAwesome.txt
+    - family: FontAwesomeBrands
+      fonts:
+        - asset: assets/fonts/Font-Awesome-7-Brands-Regular-400.otf
     - family: BricolageGrotesque
       fonts:
         - asset: assets/fonts/BricolageGrotesque-Bold.ttf

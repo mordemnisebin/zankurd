@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../data/learner_lexicon.dart';
+import '../data/learning_lesson_aliases.dart';
 import '../data/sync_manager.dart';
 import '../data/placement_store.dart';
 import '../data/zankurd_repository.dart';
@@ -887,8 +888,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     _flashcardMode = widget.initialFlashcardMode;
     _listeningSpeaker = widget.listeningSpeaker;
     _loadSlides();
-    if (_listeningSpeaker == null &&
-        LearnerLexicon.entriesForSource(widget.lesson.id).length >= 2) {
+    if (_listeningSpeaker == null && _lexiconEntries.length >= 2) {
       unawaited(_loadListeningSpeaker());
     }
     _flipController = AnimationController(
@@ -899,6 +899,14 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
       CurvedAnimation(parent: _flipController, curve: Curves.easeInOut),
     );
   }
+
+  /// Dersin sözlük çiftleri. Kimlik değil slug: sunucu dersinde `id` UUID'dir
+  /// (bkz. `LearningLessonAliases.lexiconEntriesFor`).
+  List<LearnerLexiconEntry> get _lexiconEntries =>
+      LearningLessonAliases.lexiconEntriesFor(
+        widget.lesson.slug,
+        fallbackKey: widget.lesson.id,
+      );
 
   Future<void> _loadListeningSpeaker() async {
     try {
@@ -1224,9 +1232,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
             }
             final slide = slides[_currentSlideIndex];
             final isLast = _currentSlideIndex == slides.length - 1;
-            final recallEntries = LearnerLexicon.entriesForSource(
-              widget.lesson.id,
-            );
+            final recallEntries = _lexiconEntries;
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

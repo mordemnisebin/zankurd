@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../theme/brand_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../animations/load_animations.dart';
@@ -465,8 +465,8 @@ class _GoogleSignInButton extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    FaIcon(
-                      FontAwesomeIcons.google,
+                    BrandIcon(
+                      BrandIcons.google,
                       color: _googleInk,
                       size: dense ? 18 : 20,
                     ),
@@ -534,8 +534,8 @@ class _AppleSignInButton extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FaIcon(
-                        FontAwesomeIcons.apple,
+                      BrandIcon(
+                        BrandIcons.apple,
                         color: onSurface,
                         size: dense ? 18 : 20,
                       ),

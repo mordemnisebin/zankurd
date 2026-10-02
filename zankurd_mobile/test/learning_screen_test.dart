@@ -74,6 +74,27 @@ class _SourceLessLessonRepository extends MockZanKurdRepository {
   ];
 }
 
+/// Sunucu dersi gibi tek slaytlı depo: ders kimliği UUID, slug'ı eşlenmiş.
+class _UuidLessonRepository extends MockZanKurdRepository {
+  @override
+  Future<List<LessonSlide>> loadLessonSlides(String lessonId) async => const [
+    LessonSlide(
+      id: 'server-slide',
+      lessonId: 'f3b1c0de-0000-4000-8000-000000000001',
+      order: 1,
+      contentKu: 'Naveroka dersa serverê.',
+      contentTr: 'Sunucu dersi içeriği.',
+    ),
+    LessonSlide(
+      id: 'server-slide-2',
+      lessonId: 'f3b1c0de-0000-4000-8000-000000000001',
+      order: 2,
+      contentKu: 'Naveroka dersa serverê 2.',
+      contentTr: 'Sunucu dersi içeriği 2.',
+    ),
+  ];
+}
+
 /// Hiçbir kategoride ders döndürmeyen depo — "kategori boş" durumunu
 /// taklit eder.
 class _NoLessonsRepository extends MockZanKurdRepository {
@@ -1326,6 +1347,44 @@ void main() {
 
     expect(find.byKey(const ValueKey('lesson-listening-card')), findsNothing);
   });
+
+  // 2026-10-02 KUSUR: ders ekranı hatırlama ve dinleme kartlarını
+  // `LearnerLexicon.entriesForSource(lesson.id)` ile arıyordu. Sunucu
+  // derslerinde `id` bir UUID'dir; sözlük kaynakları yerel kimliklerle
+  // (`everyday_1`) anahtarlı olduğundan kartlar sunucu dersinde sessizce hiç
+  // çıkmıyordu. SESSİZ KALDI: testler yerel dersleri (`id == slug`) kullanır,
+  // kart yokluğu da hata değil "bu derste kart yok" gibi görünür; kısa
+  // testteki aynı eşleşmezlik görününce kartlar için bakılmadı.
+  testWidgets(
+    'UUID kimlikli sunucu dersi eşlenmiş slug ile sözlük kartı alır',
+    (tester) async {
+      const lesson = Lesson(
+        id: 'f3b1c0de-0000-4000-8000-000000000001',
+        slug: 'silav-u-nasin',
+        titleKu: 'Silav û Nasîn',
+        titleTr: 'Selamlaşma ve Tanışma',
+        category: 'everyday',
+      );
+      await tester.pumpWidget(
+        wrap(
+          LessonDetailScreen(
+            lesson: lesson,
+            repository: _UuidLessonRepository(),
+            listeningSpeaker: _FakeLessonListeningSpeaker(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('İleri'));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('lesson-recall-card')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('lesson-listening-card')),
+        findsOneWidget,
+      );
+    },
+  );
 
   testWidgets('kaynağı olmayan derste hızlı hatırlama uydurulmaz', (
     tester,

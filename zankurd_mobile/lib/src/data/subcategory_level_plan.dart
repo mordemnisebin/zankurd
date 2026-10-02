@@ -39,6 +39,11 @@ import 'seen_question_store.dart';
 ///    beşte biri, 5. seviye en zor beşte biri; hiçbir soru iki dilimde yok.
 /// 3. Seviye boyutu = min(normal boyut, max(5, havuz ~/ 5)). Havuz 25 ve
 ///    üstündeyse dilim her zaman boyutu karşılar: dolgu YOK.
+/// 3b. Konu çeşitliliği: bir dilimde aynı kişi/terim hakkında birden çok
+///    soru ya da neredeyse aynı metinli iki soru varsa, fazlalık bitişik
+///    dilimlerdeki konusu çakışmayan, zorluğu en çok 1 (yoksa 2) farklı bir soruyla
+///    TAKAS edilir (bkz. [_spreadSubjects]). Takas dilim boyutlarını ve
+///    ayrıklığı korur; uygun takas yoksa dilim olduğu gibi kalır.
 /// 4. Havuz 25'ten küçükse eksik, aynı kategoriden dolguyla tamamlanır:
 ///    önce genel (alt konusu olmayan) sorular, yetmezse başka alt konu;
 ///    seviyenin zorluk bandında (yetmezse ±1), tohumlu karıştırılmış
@@ -100,6 +105,7 @@ class SubcategoryLevelPlan {
       bands.add(matched.sublist(start, end));
       start = end;
     }
+    _spreadSubjects(bands);
 
     final sizes = [
       for (final level in standardLevels)
@@ -130,6 +136,94 @@ class SubcategoryLevelPlan {
           size: sizes[i],
         ),
     ]);
+  }
+
+  /// Dilimlerdeki konu tekrarlarını komşu dilimlerle soru takasıyla giderir.
+  ///
+  /// ## Kusur (2026-10-02)
+  ///
+  /// "Edebiyat › Helbest › 1. Seviye" dokuz sorunun üçünde Cegerxwîn'i
+  /// soruyor, ikisi de neredeyse aynı kafiye sorusuydu. Dilim tam boyda
+  /// (9 soru, 9 aday) olduğundan tur seçimi (`_selectFresh`) yer değiştirecek
+  /// başka aday bulamıyordu: tekrar PLANDA, yani dilimin bileşiminde
+  /// doğuyordu, seçimde değil.
+  ///
+  /// ## Kural
+  ///
+  /// Her dilimde, kendinden önceki bir soruyla aynı konuyu ([QuestionSetPolicy
+  /// .repeatsSubject]) paylaşan soru için, başka bir dilimden çakışmayan ve
+  /// zorluğu en çok 1 (yoksa 2) farklı bir soru bulunur; ikisi yer değiştirir. Dilim
+  /// boyları değişmez, hiçbir soru iki dilimde olmaz. Karşılık yoksa dilim
+  /// bozulmaz (küçük havuzda kural vazgeçer, seviye asla kısalmaz).
+  static void _spreadSubjects(List<List<QuizQuestion>> bands) {
+    for (var pass = 0; pass < 4; pass++) {
+      var swapped = false;
+      for (var i = 0; i < bands.length; i++) {
+        var k = 1;
+        while (k < bands[i].length) {
+          final q = bands[i][k];
+          if (!QuestionSetPolicy.repeatsAny(q, bands[i].take(k))) {
+            k++;
+            continue;
+          }
+          if (_swapOut(bands, i, k)) {
+            swapped = true;
+            // Yeni gelen soru da denetlenmeli: aynı k'da kal.
+          } else {
+            k++;
+          }
+        }
+      }
+      if (!swapped) break;
+    }
+  }
+
+  /// `bands[i][k]` için komşu dilimlerden uygun bir karşılık bulup takas eder.
+  /// Önce zorluğu en çok 1, bulunamazsa en çok 2 farklı karşılık aranır.
+  static bool _swapOut(List<List<QuizQuestion>> bands, int i, int k) {
+    for (final tolerance in const [1, 2]) {
+      if (_swapOutWithin(bands, i, k, tolerance)) return true;
+    }
+    return false;
+  }
+
+  static bool _swapOutWithin(
+    List<List<QuizQuestion>> bands,
+    int i,
+    int k,
+    int tolerance,
+  ) {
+    final q = bands[i][k];
+    final restOfI = [
+      for (var n = 0; n < bands[i].length; n++)
+        if (n != k) bands[i][n],
+    ];
+    final order = [
+      for (var j = 0; j < bands.length; j++)
+        if (j != i) j,
+    ]..sort((a, b) => (a - i).abs().compareTo((b - i).abs()));
+    for (final j in order) {
+      final candidates = [for (var m = 0; m < bands[j].length; m++) m]
+        ..sort(
+          (a, b) => (bands[j][a].difficulty - q.difficulty).abs().compareTo(
+            (bands[j][b].difficulty - q.difficulty).abs(),
+          ),
+        );
+      for (final m in candidates) {
+        final r = bands[j][m];
+        if ((r.difficulty - q.difficulty).abs() > tolerance) break;
+        if (QuestionSetPolicy.repeatsAny(r, restOfI)) continue;
+        final restOfJ = [
+          for (var n = 0; n < bands[j].length; n++)
+            if (n != m) bands[j][n],
+        ];
+        if (QuestionSetPolicy.repeatsAny(q, restOfJ)) continue;
+        bands[i][k] = r;
+        bands[j][m] = q;
+        return true;
+      }
+    }
+    return false;
   }
 
   static List<QuizQuestion> _byDifficulty(List<QuizQuestion> questions) {
@@ -194,8 +288,14 @@ class SubcategoryLevelPlan {
                   q.difficulty <= level.difficultyMax + tolerance)
                 q,
           ]..shuffle(random);
-          for (final q in eligible) {
-            if (need <= 0) break;
+          // Konu çeşitliliği: her adımda dilim ve önceki dolguyla çakışmayan
+          // ilk aday alınır; hepsi çakışıyorsa ilki (seviye kısalmaz).
+          while (need > 0 && eligible.isNotEmpty) {
+            final taken = [...bands[i], ...fillers[i]];
+            final index = eligible.indexWhere(
+              (q) => !QuestionSetPolicy.repeatsAny(q, taken),
+            );
+            final q = eligible.removeAt(index < 0 ? 0 : index);
             used.add(q.id);
             fillers[i].add(q);
             need--;

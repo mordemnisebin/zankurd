@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -97,38 +96,14 @@ Future<void> _loadFonts() async {
   } else {
     print('UYARI: assets/fonts/Lucide.ttf bulunamadı — ikonlar kare çizilecek');
   }
-  final packageConfig =
-      jsonDecode(File('.dart_tool/package_config.json').readAsStringSync())
-          as Map<String, dynamic>;
-  String packageRoot(String name) {
-    final entry = (packageConfig['packages'] as List)
-        .cast<Map<String, dynamic>>()
-        .firstWhere((p) => p['name'] == name);
-    final root = Uri.parse(entry['rootUri'] as String).toFilePath();
-    return root.endsWith(Platform.pathSeparator)
-        ? root
-        : '$root${Platform.pathSeparator}';
-  }
-
-  const iconFonts = {
-    'font_awesome_flutter': {
-      'FontAwesomeSolid': 'lib/fonts/Font-Awesome-7-Free-Solid-900.otf',
-      'FontAwesomeRegular': 'lib/fonts/Font-Awesome-7-Free-Regular-400.otf',
-      'FontAwesomeBrands': 'lib/fonts/Font-Awesome-7-Brands-Regular-400.otf',
-    },
-  };
-  for (final package in iconFonts.keys) {
-    final base = packageRoot(package);
-    for (final family in iconFonts[package]!.entries) {
-      final file = File('$base${family.value}');
-      if (!file.existsSync()) {
-        print('UYARI: $package/${family.key} bulunamadı');
-        continue;
-      }
-      await (FontLoader('packages/$package/${family.key}')
-            ..addFont(file.readAsBytes().then((b) => ByteData.view(b.buffer))))
-          .load();
-    }
+  // Google/Apple marka glifleri: uygulamanın kendi varlığı (öneksiz aile).
+  final brands = File('assets/fonts/Font-Awesome-7-Brands-Regular-400.otf');
+  if (brands.existsSync()) {
+    await (FontLoader('FontAwesomeBrands')
+          ..addFont(brands.readAsBytes().then((b) => ByteData.view(b.buffer))))
+        .load();
+  } else {
+    print('UYARI: Brands yazı tipi bulunamadı — marka ikonları kare çizilecek');
   }
 }
 

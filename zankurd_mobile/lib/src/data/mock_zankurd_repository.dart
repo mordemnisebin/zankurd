@@ -852,7 +852,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Havuzdan limitten fazlası istenir: sızıntı süzgeci bir kısmını
     // eleyeceği için tam limitte istemek turu eksik bırakırdı.
     final candidates = store.preferUnseen(pool, limit * 3);
-    final clean = QuestionSetPolicy.withoutLeaks(candidates, limit: limit);
+    final clean = QuestionSetPolicy.diverseWithoutLeaks(
+      candidates,
+      limit: limit,
+    );
 
     // Süzgeç limiti dolduramazsa elde kalanla devam edilir: eksik bir tur,
     // kendi cevabını ele veren bir turdan iyidir. Ama "eksik"in de bir

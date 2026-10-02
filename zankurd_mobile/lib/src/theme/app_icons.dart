@@ -7,10 +7,6 @@
 // gerekir ve Flutter'ın kendi Icons sınıfıyla aynı desendir. Kod noktaları
 // tool/lucide/codepoints.json'dan (Lucide yazı tipinin kendi tablosu) okunur,
 // tahmin edilmez. Yazı tipi `assets/fonts/Lucide.ttf`tir; paket bağımlılığı yok.
-//
-// Tek istisna `starSolid`: Lucide'da dolu yıldız olmadığından Font Awesome
-// Solid'de kalır (bkz. betiğin başlığı). Bu yüzden font_awesome_flutter
-// bağımlılığı durur (ayrıca Google markası için).
 import 'package:flutter/widgets.dart';
 
 class AppIcons {
@@ -369,13 +365,6 @@ class AppIcons {
 
   /// Lucide `star`.
   static const IconData star = IconData(0xe176, fontFamily: 'Lucide');
-
-  /// Lucide karşılığı yok: dolgu yok, dolu yıldız gerekli.
-  static const IconData starSolid = IconData(
-    0xf005,
-    fontFamily: 'FontAwesomeSolid',
-    fontPackage: 'font_awesome_flutter',
-  );
 
   /// Lucide `timer`.
   static const IconData stopwatch = IconData(0xe1e0, fontFamily: 'Lucide');
