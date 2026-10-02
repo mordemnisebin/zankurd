@@ -86,6 +86,288 @@ class QuestionSetPolicy {
     return kept;
   }
 
+  // ─── Tur içi konu çeşitliliği ────────────────────────────────────────
+  //
+  // Kusur (2026-10-02): "Edebiyat › Helbest › 1. Seviye" dokuz soruluk bir
+  // turda üç kez Cegerxwîn'i soruyor, iki de neredeyse aynı "qafiye/kafiye"
+  // sorusu içeriyordu. Her soru tek başına doğruydu; tekrar tur İÇİNDEKİ
+  // soruların birbirine benzemesindeydi. Mevcut süzgeçler yalnız aynı metni
+  // (`dedupeByPrompt`), aynı kelime çiftini (`dedupeByTranslationPair`) ve
+  // cevap sızıntısını yakalıyordu; "aynı kişi hakkında üç ayrı soru" hiçbirine
+  // takılmıyordu.
+
+  static final RegExp _quotedTerm = RegExp('[«"“\']([^«»"”\']{2,40})[»"”\']');
+
+  /// Soru cümlesini açan ama özel ad olmayan sözcükler (büyük harfle
+  /// başlarlar çünkü cümle başıdır). Liste kapsamlı değil, ucuz bir
+  /// buluşsal: kaçırılan bir sözcük yalnız o iki soruyu "aynı konu" sayar ve
+  /// çeşitlilik kuralı zaten yumuşaktır (havuz küçükse vazgeçer).
+  static const Set<String> _sentenceStarters = {
+    'kîjan',
+    'kijan',
+    'kî',
+    'çi',
+    'çawa',
+    'çend',
+    'çima',
+    'kengê',
+    'kû',
+    'gelo',
+    'rast',
+    'şaş',
+    'ev',
+    'ew',
+    'di',
+    'ji',
+    'bi',
+    'li',
+    'ber',
+    'piştî',
+    'berî',
+    'dema',
+    'gava',
+    'heke',
+    'eger',
+    'ger',
+    'ku',
+    'her',
+    'yek',
+    'hin',
+    'têgeha',
+    'têgeh',
+    'peyva',
+    'peyvên',
+    'bêjeya',
+    'rêbaza',
+    'cureyê',
+    'cure',
+    'wêne',
+    'wêneyê',
+    'wêneya',
+    'navê',
+    'nav',
+    'hevoka',
+    'hevok',
+    'gotina',
+    'wateya',
+    'dîwan',
+    'destan',
+    'helbest',
+    'helbesta',
+    'wêje',
+    'wêjeya',
+    'ziman',
+    'zimanê',
+    'zaravayê',
+    'nivîsa',
+    'nivîs',
+    'kurmancî',
+    'kurdî',
+    'ka',
+    'tu',
+    'min',
+    'em',
+    'hûn',
+    'ez',
+    'wan',
+    'wî',
+    'wê',
+    'rojek',
+    'roja',
+    'salê',
+    'mehê',
+    'mehek',
+    'cihê',
+    'bajarê',
+    'bajar',
+    'welatê',
+    'gundê',
+    'çiyayê',
+    'çemê',
+    'avê',
+    'xwarina',
+    'xwarin',
+    'heywanê',
+    'heywan',
+    'rengê',
+    'reng',
+    'jimara',
+    'jimar',
+    'hejmara',
+    'hejmar',
+    'dengê',
+    'deng',
+    'tîpa',
+    'tîp',
+    'alfabeya',
+    'ferhenga',
+    'ferheng',
+    'komeke',
+    'nimûne',
+    'mînak',
+    'tiştê',
+    'tişt',
+    'kesê',
+    'kes',
+    'wek',
+    'weke',
+    'wekî',
+    'bê',
+    'bêyî',
+    'bo',
+    'ne',
+    'na',
+    'erê',
+    'belê',
+  };
+
+  /// Doğru/yanlış tipi cevaplar konu taşımaz.
+  static const Set<String> _verdictWords = {
+    'rast',
+    'şaş',
+    'erê',
+    'na',
+    'evet',
+    'hayır',
+    'doğru',
+    'yanlış',
+    'true',
+    'false',
+  };
+
+  /// Sorunun *konusu*: aynı turda iki kez sorulmaması istenen kişi/terim.
+  ///
+  /// Sırayla: (1) soru metnindeki tırnaklı terim, (2) metnin başındaki
+  /// büyük harfli özel ad ("Cegerxwîn bi çi tê naskirin?"), (3) doğru cevap
+  /// kısa bir terim ya da özel adsa o. Doğru/yanlış cevapları (Rast, Şaş) ve
+  /// sayılar konu sayılmaz. Hiçbiri yoksa `null`: o soru çeşitlilik
+  /// kuralından muaftır (tarih, dilbilgisi gibi konusuz sorular).
+  static String? subjectKey(QuizQuestion question) {
+    final key = _rawSubjectKey(question);
+    // Yazım değişkeleri aynı konudur: "qafiye" / "kafiye" (banka ikisini de
+    // kullanıyor). Yalnız karşılaştırma anahtarında q -> k katlanır.
+    return key?.replaceAll('q', 'k');
+  }
+
+  static String? _rawSubjectKey(QuizQuestion question) {
+    final quoted = _quotedTerm.firstMatch(question.prompt);
+    if (quoted != null) {
+      final term = normalize(quoted.group(1) ?? '');
+      if (term.length >= 3) return term;
+    }
+
+    final leading = _leadingName(question.prompt);
+    if (leading != null) return leading;
+
+    if (question.type == QuestionType.trueFalse) return null;
+    final answer = normalize(question.correctAnswer);
+    if (answer.length < 3 || answer.length > 24) return null;
+    if (_verdictWords.contains(answer)) return null;
+    if (RegExp(r'^[\d\s]+$').hasMatch(answer)) return null;
+    if (answer.split(' ').length > 3) return null;
+    return answer;
+  }
+
+  /// Metnin başındaki büyük harfli ad öbeği (en çok üç sözcük); yoksa null.
+  static String? _leadingName(String prompt) {
+    final words = prompt.trim().split(RegExp(r'\s+'));
+    final name = <String>[];
+    for (final raw in words) {
+      final word = raw.replaceAll(RegExp(r'[^\p{L}\p{N}]', unicode: true), '');
+      if (word.isEmpty) break;
+      final first = String.fromCharCode(word.runes.first);
+      final isCapital =
+          first != first.toLowerCase() && first == first.toUpperCase();
+      if (!isCapital || name.length >= 3) break;
+      // Cümle başı sözcüğü ad değildir; ad öbeğinin içinde kalan "Mela" gibi
+      // sözcükler ise listede olsa bile yalnız İLK sözcükte süzülür.
+      if (name.isEmpty && _sentenceStarters.contains(word.toLowerCase())) {
+        return null;
+      }
+      name.add(word);
+      // Virgül ya da nokta öbeği bitirir ("Mela Ehmed, ku ...").
+      if (RegExp(r'[,.;:?!]$').hasMatch(raw)) break;
+    }
+    if (name.isEmpty) return null;
+    final key = normalize(name.join(' '));
+    if (name.length == 1 && key.length < 4) return null;
+    return key;
+  }
+
+  /// Karşılaştırma için sade belirteç kümesi: "Rast e an şaş e" kalıbı
+  /// atılır (yoksa iki ilgisiz doğru/yanlış sorusu kalıp yüzünden benzer
+  /// görünürdü).
+  static Set<String> _promptTokens(String prompt) {
+    final text = ' ${normalize(prompt)} '
+        .replaceAll(' ev rast e an şaş e ', ' ')
+        .replaceAll(' rast e an şaş e ', ' ');
+    return text.split(' ').where((token) => token.isNotEmpty).toSet();
+  }
+
+  /// İki soru metninin belirteç Jaccard benzerliği (0–1). Üçten az
+  /// belirteçli metinlerde 0 döner: kısa kalıplar ("X kî bû?") kalıbın
+  /// kendisi yüzünden benzer çıkardı.
+  static double promptSimilarity(String a, String b) {
+    final left = _promptTokens(a);
+    final right = _promptTokens(b);
+    if (left.length < 3 || right.length < 3) return 0;
+    final shared = left.intersection(right).length;
+    final union = left.length + right.length - shared;
+    return union == 0 ? 0 : shared / union;
+  }
+
+  /// Benzer metin eşiği (belirteç Jaccard).
+  static const double similarPromptThreshold = 0.6;
+
+  /// [a] ve [b] aynı turda birlikte "tekrar" sayılır mı: aynı konu ya da
+  /// neredeyse aynı soru metni.
+  static bool repeatsSubject(QuizQuestion a, QuizQuestion b) {
+    final keyA = subjectKey(a);
+    if (keyA != null && keyA == subjectKey(b)) return true;
+    return promptSimilarity(a.prompt, b.prompt) >= similarPromptThreshold;
+  }
+
+  /// [candidate] [chosen] içindeki herhangi bir soruyu tekrar ediyor mu?
+  static bool repeatsAny(
+    QuizQuestion candidate,
+    Iterable<QuizQuestion> chosen,
+  ) {
+    return chosen.any(
+      (other) => other.id != candidate.id && repeatsSubject(other, candidate),
+    );
+  }
+
+  /// [withoutLeaks] + konu çeşitliliği: tur ([limit] soru) önce hem
+  /// sızıntısız hem tekrarsız sorularla kurulur; yetmezse eksik, yalnız
+  /// çeşitlilik yüzünden atlanan (ama sızıntısız) sorularla tamamlanır.
+  /// Yani kural bir TERCİHTİR, turu asla kısaltmaz: havuz küçükse eski
+  /// davranış (yalnız sızıntı süzgeci) aynen geçerlidir.
+  static List<QuizQuestion> diverseWithoutLeaks(
+    List<QuizQuestion> candidates, {
+    required int limit,
+  }) {
+    final kept = <QuizQuestion>[];
+    final deferred = <QuizQuestion>[];
+    for (final candidate in candidates) {
+      if (kept.length >= limit) break;
+      if (kept.any((q) => leaksBetween(q, candidate))) continue;
+      if (repeatsAny(candidate, kept)) {
+        deferred.add(candidate);
+        continue;
+      }
+      kept.add(candidate);
+    }
+    if (kept.length >= limit) return kept;
+    // Aday sırası korunur: tekrar sayılan sorular, kalan yeri doldururken
+    // yine sızıntı denetiminden geçer.
+    for (final candidate in deferred) {
+      if (kept.length >= limit) break;
+      if (kept.any((q) => leaksBetween(q, candidate))) continue;
+      kept.add(candidate);
+    }
+    return kept;
+  }
+
   /// Sorunun *okuma yükü*: metin ve şık uzunluğundan türetilen kaba bir
   /// karmaşıklık ölçüsü. Düşük = kısa ve doğrudan.
   ///
