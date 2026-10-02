@@ -1723,14 +1723,14 @@
     "promptTr": "Mangrov ormanlarının kıyı ekosistemlerinde önemli işlevlerinden biri hangisidir?",
     "answers": [
       "Ji holê rakirina bi tevahî ya şoriya ava deryayê",
-      "Lezkirina çêbûna volkanan li binê okyanûsê",
       "Dabînkirina jîngeheke parastî ji bo masiyên ciwan",
+      "Lezkirina çêbûna volkanan li binê okyanûsê",
       "Sekinandina bi tevahî ya tevgerên med û cezrê"
     ],
     "answersTr": [
       "Deniz suyunun tuzluluğunu tamamen ortadan kaldırmak",
-      "Okyanus tabanında volkan oluşumunu hızlandırmak",
       "Genç balıklar için korunaklı yaşam alanı sağlamak",
+      "Okyanus tabanında volkan oluşumunu hızlandırmak",
       "Gelgit hareketlerini bütünüyle durdurmak"
     ],
     "correctAnswer": "Dabînkirina jîngeheke parastî ji bo masiyên ciwan",

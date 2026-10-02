@@ -4742,9 +4742,9 @@
     "category": "Siyaset",
     "prompt": "Di sîstema meclîsên gel de biryar bi giştî çawa tên girtin?",
     "answers": [
-      "Bi nîqaş û lihevkirina beşdaran",
       "Ji aliyê pisporan ve bi tenê",
       "Bi fermana navendî",
+      "Bi nîqaş û lihevkirina beşdaran",
       "Bi hilbijartina her deh salan"
     ],
     "correctAnswer": "Bi nîqaş û lihevkirina beşdaran",
@@ -4760,9 +4760,9 @@
     },
     "promptTr": "Halk meclisleri sisteminde kararlar genel olarak nasıl alınır?",
     "answersTr": [
-      "Katılımcıların tartışıp uzlaşmasıyla",
       "Yalnızca uzmanlar tarafından",
       "Merkezden gelen buyrukla",
+      "Katılımcıların tartışıp uzlaşmasıyla",
       "On yılda bir yapılan seçimle"
     ],
     "correctAnswerTr": "Katılımcıların tartışıp uzlaşmasıyla"
@@ -4899,8 +4899,8 @@
     "prompt": "Diasporaya kurdî bi giştî herî zêde li ku derê ye?",
     "answers": [
       "Amerîkaya Başûr",
-      "Ewropaya Rojava",
       "Afrîkaya Başûr",
+      "Ewropaya Rojava",
       "Awustralya"
     ],
     "correctAnswer": "Ewropaya Rojava",
@@ -4917,8 +4917,8 @@
     "promptTr": "Kürt \"diasporası\" genel olarak en çok nerededir?",
     "answersTr": [
       "Güney Amerika",
-      "Batı Avrupa",
       "Güney Afrika",
+      "Batı Avrupa",
       "Avustralya"
     ],
     "correctAnswerTr": "Batı Avrupa"

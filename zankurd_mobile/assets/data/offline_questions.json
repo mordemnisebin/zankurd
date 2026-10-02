@@ -9706,9 +9706,9 @@
     "category": "Edebiyat",
     "prompt": "\"Şivanê Kurd\" çi ye?",
     "answers": [
-      "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
       "destana evînê ya ku di 1692an de hat nivîsandin",
       "kovara wêjeyî ya ku di 1932an de li Şamê derket",
+      "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
       "rojnameya kurdî ya ku di 1898an de derket"
     ],
     "correctAnswer": "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
@@ -9719,9 +9719,9 @@
     "explanationTr": "\"Şivanê Kurd\": 1935 yılında basılan ilk modern Kürtçe roman.",
     "promptTr": "\"Şivanê Kurd\" nedir?",
     "answersTr": [
-      "1935 yılında basılan ilk modern Kürtçe roman",
       "1692'de yazılan aşk destanı",
       "1932'de Şam'da çıkan edebiyat dergisi",
+      "1935 yılında basılan ilk modern Kürtçe roman",
       "1898'de çıkan Kürtçe gazete"
     ],
     "correctAnswerTr": "1935 yılında basılan ilk modern Kürtçe roman"
@@ -11087,9 +11087,9 @@
     "category": "Muzîk",
     "prompt": "Di zanîna Muzîkê de derbarê \"kemençe\" de ya rast kîjan e?",
     "answers": [
-      "amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin",
       "dengê efsanewî yê muzîka klasîk a Behdînan",
       "lêdanên birêkûpêk ên ku bingeha muzîkê ne",
+      "amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin",
       "kesa ku bi giştî stranan dibêje"
     ],
     "correctAnswer": "amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin",
@@ -11100,9 +11100,9 @@
     "explanationTr": "Kemençe yayla çalınır; Karadeniz'de de yaygındır ve sesi tiz ve incedir.",
     "promptTr": "Müzik bilgisinde \"kemençe\" hakkında doğru olan hangisidir?",
     "answersTr": [
-      "Kürt coğrafyasında da çalınan yaylı çalgı",
       "Behdînan klasik müziğinin efsanevi sesi",
       "müziğin temelini oluşturan düzenli vuruşlar",
+      "Kürt coğrafyasında da çalınan yaylı çalgı",
       "genel olarak şarkı söyleyen kişi"
     ],
     "correctAnswerTr": "Kürt coğrafyasında da çalınan yaylı çalgı"
@@ -11992,8 +11992,8 @@
     "answers": [
       "ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne",
       "belgeya ku prensîbên hevjiyana civakê diyar dike",
-      "hevpariyeke pirkulturî û wekhev di welatekî hevbeş de",
-      "têgihiştineke zanistî ya neyekdestî ku xizmeta civakê dike"
+      "têgihiştineke zanistî ya neyekdestî ku xizmeta civakê dike",
+      "hevpariyeke pirkulturî û wekhev di welatekî hevbeş de"
     ],
     "correctAnswer": "hevpariyeke pirkulturî û wekhev di welatekî hevbeş de",
     "explanation": "Demokratik ulus tek bir dil ya da etnisite üzerine kurulmaz; farklı kimliklerin eşit birlikteliğidir ve birliği zorla değil gönüllülükle olur.",
@@ -12005,8 +12005,8 @@
     "answersTr": [
       "doğayı yalnızca sömürülecek bir nesne olarak görmediği için",
       "toplumun birlikte yaşama ilkelerini belirleyen belge",
-      "ortak bir ülkede çok kültürlü ve eşit birliktelik",
-      "tekelleşmemiş, topluma hizmet eden bilim anlayışı"
+      "tekelleşmemiş, topluma hizmet eden bilim anlayışı",
+      "ortak bir ülkede çok kültürlü ve eşit birliktelik"
     ],
     "correctAnswerTr": "ortak bir ülkede çok kültürlü ve eşit birliktelik"
   },
@@ -12840,8 +12840,8 @@
     "category": "Siyaset",
     "prompt": "Derbarê \"beşdariya rasterast\" de ravekirina rast kîjan e?",
     "answers": [
-      "beşdariya rasterast a gel di biryarên siyasî de",
       "nûnertiya wekhev a jin-mêr û rêveberiya hevbeş",
+      "beşdariya rasterast a gel di biryarên siyasî de",
       "hevkombûna aliyan li ser berjewendiya hevbeş",
       "meclîsên gel ên ku biryarên herêmî lê tên girtin"
     ],
@@ -12853,8 +12853,8 @@
     "explanationKu": "Beşdariya rasterast tê wateya ku gel ne tenê bi hilbijartinan, lê rasterast bi deng, nêrîn û biryaran tevlî siyasetê dibe. Ji ber vê yekê vebijêrka rast \"beşdariya rasterast a gel di biryarên siyasî de\" ye.",
     "promptTr": "\"doğrudan katılım\" hakkında doğru açıklama hangisidir?",
     "answersTr": [
-      "halkın siyasal kararlara doğrudan katılması",
       "kadın-erkek eşit temsili ve ortak yönetim",
+      "halkın siyasal kararlara doğrudan katılması",
       "tarafların ortak çıkar üzerinde buluşması",
       "yerel kararların alındığı halk meclisleri"
     ],
@@ -13140,9 +13140,9 @@
     "category": "Siyaset",
     "prompt": "Ji bo \"mafên hindikahiyan\" ravekirina herî dirust kîjan e?",
     "answers": [
-      "parastina komên ku ji piraniyê cuda ne",
       "platforma hevbeş a aştiyê ya komên muxalif ên cuda",
       "îradeya çareserkirina pevçûnan bi diyalogê li şûna çekan",
+      "parastina komên ku ji piraniyê cuda ne",
       "hêza ji navendekê bo yekîneyên herêmî belavkirin"
     ],
     "correctAnswer": "parastina komên ku ji piraniyê cuda ne",
@@ -13153,9 +13153,9 @@
     "explanationKu": "\"azınlık hakları\": parastina komên ku ji piraniyê cuda ne.",
     "promptTr": "\"azınlık hakları\" için en doğru açıklama hangisidir?",
     "answersTr": [
-      "çoğunluktan farklı grupların korunması",
       "farklı muhalif grupların ortak barış platformu",
       "çatışmayı silahla değil diyalogla çözme iradesi",
+      "çoğunluktan farklı grupların korunması",
       "yetkinin merkezden yerel birimlere dağıtılması"
     ],
     "correctAnswerTr": "çoğunluktan farklı grupların korunması"
@@ -15608,8 +15608,8 @@
     "answers": [
       "aboriya komûnal",
       "Ekolojiya Civakî",
-      "civaka exlaqî-polîtîk",
-      "Modernîteya Demokratîk"
+      "Modernîteya Demokratîk",
+      "civaka exlaqî-polîtîk"
     ],
     "correctAnswer": "civaka exlaqî-polîtîk",
     "explanation": "\"civaka exlaqî-polîtîk\" tê vê wateyê: civaka azad a ku biryarên xwe bi hişmendiya exlaqî û polîtîk dide.",
@@ -15621,8 +15621,8 @@
     "answersTr": [
       "aboriya komûnal",
       "Ekolojiya Civakî",
-      "civaka exlaqî-polîtîk",
-      "Moderniteya Demokratîk"
+      "Moderniteya Demokratîk",
+      "civaka exlaqî-polîtîk"
     ],
     "correctAnswerTr": "civaka exlaqî-polîtîk"
   },

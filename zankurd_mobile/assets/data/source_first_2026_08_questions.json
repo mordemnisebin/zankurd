@@ -2117,16 +2117,16 @@
     "prompt": "Gerstêrka herî mezin a sîstema rojê kîjan e?",
     "answers": [
       "Saturn",
-      "Jupiter",
       "Neptun",
+      "Jupiter",
       "Mars"
     ],
     "correctAnswer": "Jupiter",
     "promptTr": "Güneş sisteminin en büyük gezegeni hangisidir?",
     "answersTr": [
       "Satürn",
-      "Jüpiter",
       "Neptün",
+      "Jüpiter",
       "Mars"
     ],
     "correctAnswerTr": "Jüpiter",

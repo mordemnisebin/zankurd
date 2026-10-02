@@ -889,8 +889,8 @@
     "prompt": "Kîjan têgih ji bo zêdebûna hejmara niştecîhan li bajaran tê bikaranîn?",
     "answers": [
       "Koçberî",
-      "Bajarvanî",
       "Nifûs",
+      "Bajarvanî",
       "Şaristanî"
     ],
     "correctAnswer": "Bajarvanî",
@@ -909,8 +909,8 @@
     "promptTr": "Şehirlerdeki nüfus artışı için hangi terim kullanılır?",
     "answersTr": [
       "Göç",
-      "Kentleşme",
       "Nüfus",
+      "Kentleşme",
       "Medeniyet"
     ],
     "correctAnswerTr": "Kentleşme",
@@ -990,10 +990,10 @@
     "category": "Cîhan",
     "prompt": "Kîjan têgih ji bo koçkirina mirovan ji gundan bo bajaran tê bikaranîn?",
     "answers": [
-      "Koçberiya hundirîn",
       "Koçberiya derveyî",
       "Koçberiya demkî",
-      "Koçberiya çerxî"
+      "Koçberiya çerxî",
+      "Koçberiya hundirîn"
     ],
     "correctAnswer": "Koçberiya hundirîn",
     "explanation": "İç göç, bir ülke içinde, örneğin köyden şehre göç etmek anlamına gelir. Dış göç başka bir ülkeye gitmektir; geçici ve döngüsel göç ise geçicidir.",
@@ -1010,10 +1010,10 @@
     },
     "promptTr": "İnsanların köylerden şehirlere göç etmesi için hangi terim kullanılır?",
     "answersTr": [
-      "İç göç",
       "Dış göç",
       "Geçici göç",
-      "Döngüsel göç"
+      "Döngüsel göç",
+      "İç göç"
     ],
     "correctAnswerTr": "İç göç",
     "explanationKu": "Koçberiya hundirîn tê wateya koçkirina di nav welatekî de, wek ji gund bo bajar. Koçberiya derveyî derbasî welatekî din dibe, ya demkî û çerxî jî demkî ne.",
@@ -14498,8 +14498,8 @@
     "answers": [
       "Daristana baranê",
       "Giyayên mêrgê",
-      "Kaktûs",
-      "Daristana kajan"
+      "Daristana kajan",
+      "Kaktûs"
     ],
     "correctAnswer": "Kaktûs",
     "explanation": "Kaktüs, az yağışlı sıcak ve kurak bölgelerde en çok bulunur.",
@@ -14518,8 +14518,8 @@
     "answersTr": [
       "Yağmur ormanı",
       "Bozkır otları",
-      "Kaktüs",
-      "Çam ormanı"
+      "Çam ormanı",
+      "Kaktüs"
     ],
     "correctAnswerTr": "Kaktüs",
     "explanationKu": "Kaktûs li herêmên germ û ziwa, bi barîna kêm, bi piranî tê dîtin.",
@@ -14598,10 +14598,10 @@
     "category": "Cîhan",
     "prompt": "Paytexta Kanadayê kîjan bajar e?",
     "answers": [
+      "Ottawa",
       "Toronto",
       "Vancouver",
-      "Montreal",
-      "Ottawa"
+      "Montreal"
     ],
     "correctAnswer": "Ottawa",
     "explanation": "Ottawa, Kanada'nın başkentidir. Toronto, Vancouver ve Montreal büyük şehirlerdir ancak başkent değildirler.",
@@ -14618,10 +14618,10 @@
     },
     "promptTr": "Kanada'nın başkenti hangi şehirdir?",
     "answersTr": [
+      "Ottawa",
       "Toronto",
       "Vancouver",
-      "Montreal",
-      "Ottawa"
+      "Montreal"
     ],
     "correctAnswerTr": "Ottawa",
     "explanationKu": "Ottawa paytexta Kanadayê ye. Toronto, Vancouver û Montreal bajarên mezin in lê ne paytext in.",
@@ -17556,8 +17556,8 @@
     "category": "Cîhan",
     "prompt": "Kîjan şerê navdar di sala 216'an a berî zayînê de qewimî û tê de Hannibalî artêşa Romayê têk bir?",
     "answers": [
-      "Şerê Zamayê",
       "Şerê Cannaeyê",
+      "Şerê Zamayê",
       "Şerê Trebiayê",
       "Şerê Trasimeneyê"
     ],
@@ -17576,8 +17576,8 @@
     },
     "promptTr": "MÖ 216'da Hannibal'ın Roma ordusunu yendiği ünlü savaş hangisidir?",
     "answersTr": [
-      "Zama Savaşı",
       "Cannae Savaşı",
+      "Zama Savaşı",
       "Trebia Savaşı",
       "Trasimene Savaşı"
     ],
@@ -17660,8 +17660,8 @@
     "answers": [
       "Vasco da Gama",
       "Pedro Álvares Cabral",
-      "Bartolomeu Dias",
-      "Diogo Cão"
+      "Diogo Cão",
+      "Bartolomeu Dias"
     ],
     "correctAnswer": "Bartolomeu Dias",
     "explanation": "Bartolomeu Dias, 1488'de Ümit Burnu'nu ilk kez geçti. Bu, Hindistan'a giden deniz yolunun önünü açtı.",
@@ -17680,8 +17680,8 @@
     "answersTr": [
       "Vasco da Gama",
       "Pedro Álvares Cabral",
-      "Bartolomeu Dias",
-      "Diogo Cão"
+      "Diogo Cão",
+      "Bartolomeu Dias"
     ],
     "correctAnswerTr": "Bartolomeu Dias",
     "explanationKu": "Bartolomeu Dias di sala 1488'an de yekem car derbasî Kapa Hêviya Baş bû. Vê yekê rê ji bo rêya deryayî ya Hindistanê vekir.",
@@ -18984,8 +18984,8 @@
     "category": "Cîhan",
     "prompt": "Berhema Shakespeare a bi navê \"King Lear\" ji kîjan cureyê wêjeyî ye?",
     "answers": [
-      "Komedî",
       "Trajedî",
+      "Komedî",
       "Dîrok",
       "Romans"
     ],
@@ -19004,8 +19004,8 @@
     },
     "promptTr": "Shakespeare'in \"Kral Lear\" adlı eseri hangi edebî türdendir?",
     "answersTr": [
-      "Komedi",
       "Trajedi",
+      "Komedi",
       "Tarih",
       "Romantik"
     ],
@@ -19018,9 +19018,9 @@
     "category": "Cîhan",
     "prompt": "Berhema Shakespeare a bi navê \"A Midsummer Night's Dream\" ji kîjan cureyê wêjeyî ye?",
     "answers": [
+      "Komedî",
       "Trajedî",
       "Dîrok",
-      "Komedî",
       "Pastoral"
     ],
     "correctAnswer": "Komedî",
@@ -19038,9 +19038,9 @@
     },
     "promptTr": "Shakespeare'in \"Bir Yaz Gecesi Rüyası\" adlı eseri hangi edebî türdendir?",
     "answersTr": [
+      "Komedi",
       "Trajedi",
       "Tarih",
-      "Komedi",
       "Pastoral"
     ],
     "correctAnswerTr": "Komedi",
