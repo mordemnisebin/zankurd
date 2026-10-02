@@ -28,21 +28,24 @@ String _sql() =>
     File('supabase/2026-10-02_report_question_dedupe.sql').readAsStringSync();
 
 void main() {
-  test('tek işlemde, doğrulamalı, geri alma notlu, applied.md te ⏳', () {
-    final sql = _sql();
-    expect(sql.trimLeft(), startsWith('--'));
-    expect(sql, contains('\nbegin;'));
-    expect(sql.trimRight(), endsWith('commit;'));
-    expect(sql, contains('raise exception'));
-    expect(sql, contains('GERİ ALMA'));
-    expect(
-      RegExp(
-        r'^\| 2026-10-02_report_question_dedupe\.sql \| ⏳ \|',
-        multiLine: true,
-      ).hasMatch(File('supabase/applied.md').readAsStringSync()),
-      isTrue,
-    );
-  });
+  test(
+    'tek işlemde, doğrulamalı, geri alma notlu, applied.md te kayıtlı (2026-10-02 uygulandı: ✅)',
+    () {
+      final sql = _sql();
+      expect(sql.trimLeft(), startsWith('--'));
+      expect(sql, contains('\nbegin;'));
+      expect(sql.trimRight(), endsWith('commit;'));
+      expect(sql, contains('raise exception'));
+      expect(sql, contains('GERİ ALMA'));
+      expect(
+        RegExp(
+          r'^\| 2026-10-02_report_question_dedupe\.sql \| ✅ \|',
+          multiLine: true,
+        ).hasMatch(File('supabase/applied.md').readAsStringSync()),
+        isTrue,
+      );
+    },
+  );
 
   test('kullanıcı başına soru başına tek bildirim: indeks ve yumuşak atlama', () {
     final sql = _sql();
