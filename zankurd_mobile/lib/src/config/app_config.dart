@@ -244,7 +244,7 @@ class AppConfig {
   //
   // Bilerek hesap silme sayfasındakiyle AYNI adres: iki ayrı destek kanalı
   // ikisinin de bakımsız kalmasına yol açar.
-  static const supportEmail = 'nisebinbawer47@gmail.com';
+  static const supportEmail = 'iletisim@zankurd.com';
 
   /// Ayarlar → Güvenlik satırının açtığı, konusu hazır e-posta.
   ///

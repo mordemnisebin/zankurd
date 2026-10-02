@@ -165,7 +165,7 @@ in-app and is also documented at the public deletion URL above.
 
 Room messages and visible profile/player content are user-generated content.
 The app exposes Report and Block controls, while the public support page gives
-the abuse-report route: nisebinbawer47@gmail.com.
+the abuse-report route: iletisim@zankurd.com.
 
 ## External services and data flows
 
