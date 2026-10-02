@@ -20,6 +20,7 @@ import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/analytics_consent_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/remote_availability.dart';
+import 'package:zankurd_mobile/src/providers/repository_holder.dart';
 import 'package:zankurd_mobile/src/providers/untimed_mode_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
@@ -95,6 +96,7 @@ Widget testShell({
   ThemeProvider? themeProvider,
   PremiumService? premiumService,
   RemoteAvailability? remoteAvailability,
+  RepositoryHolder? repositoryHolder,
   bool reducedMotion = false,
 }) {
   return MultiProvider(
@@ -127,6 +129,10 @@ Widget testShell({
       ChangeNotifierProvider<PremiumService>(
         create: (_) => premiumService ?? PremiumService.fallback(),
       ),
+      // Geç kurtarma testleri: depo takasını kabuğun izlemesi için verilir.
+      // Sağlayıcı yoksa AppShell `widget.repository`a düşer.
+      if (repositoryHolder != null)
+        ChangeNotifierProvider<RepositoryHolder>.value(value: repositoryHolder),
     ],
     child: Consumer<ThemeProvider>(
       builder: (context, theme, _) => MaterialApp(

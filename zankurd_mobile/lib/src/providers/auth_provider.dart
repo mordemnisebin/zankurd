@@ -45,9 +45,12 @@ class AuthProvider extends ChangeNotifier {
   /// [_resetLocalProgressIfForeignUser].
   static const _deviceOwnerUserIdKey = LocalProgressScope.ownerKey;
 
-  final SupabaseClient? _client;
-  final NativeAuthService _nativeAuth;
-  final bool _offlineMode;
+  // `final` değiller: boot'da çevrimdışı açılan sağlayıcı, sonradan
+  // açılan Supabase'e [attachSupabase] ile bağlanır (bkz. servisler
+  // altındaki `remote_upgrade.dart`).
+  SupabaseClient? _client;
+  NativeAuthService _nativeAuth;
+  bool _offlineMode;
   StreamSubscription<AuthState>? _authSub;
   Future<void> _authTransition = Future<void>.value();
   int _authGeneration = 0;
@@ -94,8 +97,47 @@ class AuthProvider extends ChangeNotifier {
       _offlineMode = false,
       _nativeAuth =
           nativeAuth ?? PlatformNativeAuthService(supabaseClient: client) {
+    _wireAuth(client);
+  }
+
+  /// Boot'da çevrimdışı açılmış sağlayıcıyı sonradan açılan Supabase'e
+  /// bağlar.
+  ///
+  /// ## Niçin ayrı bir kapı
+  ///
+  /// Kurtarma daha önce `AuthProvider(Supabase.instance.client)` ile
+  /// SIFIRDAN bir sağlayıcı kuruyordu. Bu iki sonuç doğuruyordu:
+  ///
+  /// 1. Çevrimdışı misafir (`_mockAuthenticated`) külüne düşüyor ve
+  ///    arayüz oturumu kaybediliyordu.
+  /// 2. Supabase deposu ilk kullanımda `signInAnonymously` ile YENİ bir
+  ///    anonim oturum açabiliyordu — misafirin yerel ilerlemesi başka
+  ///    bir kimliğe taşınıyordu.
+  ///
+  /// Burada yalnız cihazda ZATEN kayıtlı bir oturum varsa bağlanır.
+  /// Oturum yoksa hiçbir şey değişmez ve `false` döner: kurtarma
+  /// vazgeçer, çevrimdışı oturum aynen sürer, `SharedPreferences`
+  /// dokunulmaz.
+  ///
+  /// Bağlama [AuthProvider] kurucusuyla AYNI işi yapar: mevcut kullanıcı
+  /// okunur, premium kimliği eşlenir ve auth olayları dinlenmeye başlar.
+  Future<bool> attachSupabase(SupabaseClient client) async {
+    final existing = _client;
+    if (existing != null) return identical(existing, client);
+    if (client.auth.currentSession == null) return false;
+    _client = client;
+    _offlineMode = false;
+    _nativeAuth = PlatformNativeAuthService(supabaseClient: client);
+    _wireAuth(client);
+    notifyListeners();
+    return true;
+  }
+
+  /// Mevcut oturumu okur ve auth olaylarını dinlemeye başlar.
+  void _wireAuth(SupabaseClient client) {
     _currentUser = client.auth.currentUser;
     unawaited(_syncPremiumIdentity(_currentUser));
+    _authSub?.cancel();
     _authSub = client.auth.onAuthStateChange.listen((state) {
       final next = state.session?.user;
       final changed = next?.id != _currentUser?.id;

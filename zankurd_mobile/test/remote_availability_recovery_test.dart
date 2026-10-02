@@ -220,6 +220,65 @@ void main() {
     });
   });
 
+  group('tek uçuşlu probe ve kurtarma sonucu', () {
+    test('kurtarma uygulanamazsa karar geri alinir ve deneme surer', () async {
+      late RemoteAvailability availability;
+      var upgrades = 0;
+      var applied = false;
+      availability = RemoteAvailability(
+        reachable: false,
+        probe: () => Future<bool>.value(true),
+        retrySchedule: const [Duration(milliseconds: 5)],
+        onUpgradeRequest: () {
+          upgrades += 1;
+          if (applied) {
+            availability.completeUpgrade();
+          } else {
+            // Örn. cihazda kayıtlı uzak oturum yok: takas yapılmaz.
+            availability.upgradeDeclined();
+          }
+        },
+      );
+      addTearDown(availability.dispose);
+
+      await availability.retryNow();
+      expect(upgrades, 1, reason: 'kurtarma istenmeli');
+      expect(
+        availability.reachable,
+        isFalse,
+        reason: 'takas olmadan bant kalkmamalı',
+      );
+      expect(
+        availability.retrying,
+        isTrue,
+        reason: 'yeniden deneme takvimi sürmeli',
+      );
+
+      // Kanca kapalı olmadığı için sonraki başarılı yoklama yeniden dener.
+      await Future<void>.delayed(const Duration(milliseconds: 40));
+      expect(
+        upgrades,
+        greaterThanOrEqualTo(2),
+        reason: 'uygulanamayan kurtarma ikinci kez denenmeli',
+      );
+      expect(availability.reachable, isFalse);
+
+      final appliedCount = upgrades + 1;
+      applied = true;
+      await Future<void>.delayed(const Duration(milliseconds: 40));
+      expect(upgrades, appliedCount, reason: 'kurtarma bir kez uygulanmalı');
+      expect(availability.reachable, isTrue, reason: 'uygulanınca bant kalkar');
+      expect(availability.retrying, isFalse, reason: 'takvim durmalı');
+
+      await Future<void>.delayed(const Duration(milliseconds: 30));
+      expect(
+        upgrades,
+        appliedCount,
+        reason: 'tamamlanınca kurtarma tekrar tetiklenmemeli',
+      );
+    });
+  });
+
   group('AppShell üzerinden kurtarma', () {
     testWidgets('uzak kurtarma başlayınca sunucu bandı kalkar', (tester) async {
       SharedPreferences.setMockInitialValues({'zankurd.onboarding.seen': true});

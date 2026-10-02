@@ -26,9 +26,11 @@ import 'src/providers/auth_provider.dart';
 import 'src/providers/analytics_consent_provider.dart';
 import 'src/providers/reduced_motion_provider.dart';
 import 'src/providers/remote_availability.dart';
+import 'src/providers/repository_holder.dart';
 import 'src/providers/untimed_mode_provider.dart';
 import 'src/utils/boot_step.dart';
 import 'src/utils/firebase_bootstrap.dart';
+import 'src/utils/supabase_boot.dart';
 import 'src/providers/sound_provider.dart';
 import 'src/providers/theme_provider.dart';
 import 'src/screens/app_shell.dart';
@@ -38,6 +40,7 @@ import 'src/services/notification_service.dart';
 import 'src/services/premium_service.dart';
 import 'src/services/push_tap_router.dart';
 import 'src/services/push_token_sync.dart';
+import 'src/services/remote_upgrade.dart';
 import 'src/services/firebase_push_token_source.dart';
 import 'src/theme/app_theme.dart';
 import 'src/utils/app_route.dart';
@@ -172,12 +175,22 @@ Future<void> main() async {
       // future, sonradan yapılan ulaşılabiliğer yoklamasının (probe)
       // kaynağıdır. `bootStep` yalnız İLK KARE kararını verir — kararın
       // ömrü oturum boyunca değildir (bkz. [RemoteAvailability]).
-      final Future<Supabase>? supabaseInit = AppConfig.hasSupabaseConfig
-          ? Supabase.initialize(
-              url: AppConfig.supabaseUrl,
-              publishableKey: AppConfig.supabaseAnonKey,
+      //
+      // Başlatma ÖMÜR BOYU tek future'da tutulur ([SupabaseBoot]): probe
+      // başarısız olunca `Supabase.initialize` BİR DAHA çağrılmaz. Eski
+      // düzende ikinci bir başlatma "already initialized" hatasıyla
+      // `Supabase.instance`'ı hiç kurdurmadan uygulamayı kalıcı çevrimdışı
+      // bırakabiliyordu.
+      final SupabaseBoot? supabaseBoot = AppConfig.hasSupabaseConfig
+          ? SupabaseBoot(
+              start: () => Supabase.initialize(
+                url: AppConfig.supabaseUrl,
+                publishableKey: AppConfig.supabaseAnonKey,
+              ),
+              ping: _pingSupabase,
             )
           : null;
+      final Future<Supabase>? supabaseInit = supabaseBoot?.boot;
       final remoteReadyFuture = supabaseInit != null
           ? bootStep(
               supabaseInit.then((_) => true),
@@ -230,17 +243,21 @@ Future<void> main() async {
         repository = OfflineZanKurdRepository();
         authProvider = AuthProvider.offline();
       }
+      // Depo kaynağı ağaç boyunca TEK nesne olur. Sonradan gelen uzak
+      // başlatmada ağaç TAZELENMEZ; yalnız bu nesne değişir ve kabuk
+      // bir sonraki çizimde okur (bkz. [RepositoryHolder]).
+      final repositoryHolder = RepositoryHolder(repository);
 
       // Zaman aşımı KALICI ÇEVRİMDIŞI karar değildir: `reachable: false`
-      // yalnız açılış anlıktır, arka planda geri çekilmeyle yeniden
-      // denenir. `probe` (bkz. [_probeSupabase]) başlatmayı bitirir ve
+      // yalnız açılış anlıktır, arka plan geriçekilmesiyle yeniden
+      // denenir. `probe` (bkz. [SupabaseBoot.probe]) başlatmayı bitirir ve
       // ardından sunucuya gerçek bir ağ turu atar — ikisinden biri
       // başarısızsa kilit yerinde kalır, yani gerçek çevrimdışı
-      // davranış korunur.
-      final probeInit = supabaseInit;
+      // davranış korunur. Başlatma tek future'da paylaşıldığı için
+      // eşzamanlı denemeler tek uçuşta birleşir.
       final remoteAvailability = RemoteAvailability(
         reachable: remoteReady,
-        probe: probeInit == null ? null : () => _probeSupabase(probeInit),
+        probe: supabaseBoot?.probe,
         // Init bekleme + ping aynı pencereye sığsın: boot'ta zaten 4 sn
         // harcanmış olan bir başlatma, 6 sn daha sürebilir.
         probeTimeout: const Duration(seconds: 8),
@@ -319,16 +336,18 @@ Future<void> main() async {
       if (!remoteReady && supabaseInit != null) {
         remoteAvailability.onUpgradeRequest = () {
           unawaited(
-            _rebuildWithRemote(
-              previousAvailability: remoteAvailability,
-              languageProvider: languageProvider,
-              themeProvider: themeProvider,
-              soundProvider: soundProvider,
-              reducedMotionProvider: reducedMotionProvider,
-              untimedModeProvider: untimedModeProvider,
-              analyticsConsentProvider: analyticsConsentProvider,
-              premiumService: premiumService,
-            ),
+            _upgradeToRemote(
+              authProvider: authProvider,
+              repositoryHolder: repositoryHolder,
+            ).then((applied) {
+              if (applied) {
+                remoteAvailability.completeUpgrade();
+              } else {
+                // Uzak oturum yoksa kurtarma VAZGEÇER: karar geri alınır,
+                // bant yerinde kalır ve geri çekilmeli deneme sürer.
+                remoteAvailability.upgradeDeclined();
+              }
+            }),
           );
         };
         remoteAvailability.isUpgradeSafe = () =>
@@ -338,6 +357,7 @@ Future<void> main() async {
       runApp(
         ZanKurdApp(
           repository: repository,
+          repositoryHolder: repositoryHolder,
           authProvider: authProvider,
           languageProvider: languageProvider,
           themeProvider: themeProvider,
@@ -367,116 +387,67 @@ Future<void> main() async {
 /// da quiz ortasındayken kök ağaç tazelenmez.
 final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
-/// Her geç kurtarımda bir artar; kök widget'ın anahtarı değişince Flutter
-/// eski ağacı söker ve yenisini kurar — `runApp` aynı tipte kökle
-/// çağrılırsa ağaç korunur ve ESKİ rotanın kapanışı (eski çevrimdışı
-/// depoyu taşıyan ekranlar) hiç değişmezdi.
-int _bootGeneration = 0;
-
 /// Boot'da çevrimdışı kalan uygulamayı, sonradan açılan Supabase ile
-/// UZAK oturumda yeniden kurar.
+/// UZAK oturuma geçirir — AĞAÇ TAZELENMEDEN.
 ///
-/// ## Niçin yeniden kurulum?
+/// ## Niçin yeniden kurulum yok?
 ///
-/// Depo ve auth açılışta BİR KEZ seçilir (`OfflineZanKurdRepository` ↔
-/// `SupabaseZanKurdRepository`); çalışma sırasında yer değiştirmek,
-/// ekranların kurucularında tuttuğu ESKİ depo örneğiyle kimlik ve
-/// ilerlemenin dağılmasına yol açardı (XP bir tarafta, arayüz öbür
-/// tarafta). Uygulamayı kapıp açmak bu yüzden düzeltiyordu — bu işlev
-/// bilinen ve test edilmiş o yolu, splash'siz ve otomatik olarak çalıştırır.
+/// Eski yol kök widget'ı yeni bir `key` ile yeniden `runApp` ediyordu.
+/// Oysa `GlobalKey` (`_navigatorKey`) durumunda Flutter eski
+/// `MaterialApp` elementini ağaç sökmeden geri alır
+/// (`FrameworkElement._retakeInactiveElement`, `_globalKeyRegistry`
+/// unmount'a kadar temizlenmediği için) — yani rota yığını DEĞİŞMEZ,
+/// navigator geçmişi korunur ve açık rotalar ESKİ çevrimdışı depo
+/// örneğiyle kalırdı. Yeni bir `AuthProvider` kurmak ayrıca sıfırdan
+/// anonim oturum açma riski taşıyordu (misafirin yerel ilerlemesi
+/// başka kimliğe taşınabilir).
 ///
-/// Geçişten önce `SyncManager` yeni devreye alınır (kuyruk uzak depoya
-/// aksın) ve yerel ilerleme kapsamı yeni oturuma bağlanır. Eski
-/// [RemoteAvailability] dispose edilir ki geri çekilme zamanlayıcısı
-/// boş yere her60 sn'de bir istek atmasın.
-Future<void> _rebuildWithRemote({
-  required RemoteAvailability previousAvailability,
-  required LanguageProvider languageProvider,
-  required ThemeProvider themeProvider,
-  required SoundProvider soundProvider,
-  required ReducedMotionProvider reducedMotionProvider,
-  required UntimedModeProvider untimedModeProvider,
-  required AnalyticsConsentProvider analyticsConsentProvider,
-  required PremiumService premiumService,
+/// Artık yalnız depo takas edilir:
+///
+/// * `AuthProvider` AYNI nesne olarak kalır ve [attachSupabase] ile
+///   cihazda ZATEN kayıtlı oturuma bağlanır — oturum yoksa hiçbir
+///   şey yapılmaz, `SharedPreferences` dokunulmaz.
+/// * Depo [RepositoryHolder] üzerinden değişir; kabuk bir sonraki
+///   çizimde okur, açık ekranlar ve rota yığını bozulmaz.
+/// * `SyncManager` yeni depoyla yeniden kurulur, yerel ilerleme
+///   kapsamı yeni oturuma bağlanır.
+///
+/// Sonuç `true` ise [RemoteAvailability.completeUpgrade] çağrılır
+/// (karar kesinleşir); `false` ise [RemoteAvailability.upgradeDeclined]
+/// (karar geri alınır, bant yerinde kalır, deneme sürer).
+Future<bool> _upgradeToRemote({
+  required AuthProvider authProvider,
+  required RepositoryHolder repositoryHolder,
 }) async {
-  final repository = SupabaseZanKurdRepository(Supabase.instance.client);
-  final authProvider = AuthProvider(Supabase.instance.client);
+  final SupabaseClient client;
   try {
-    await SyncManager.initialize(repository);
+    // Başlatma hâlâ sürüyor ya da hata fırlattıysa `Supabase.instance`
+    // geçersizdir; bu bir "kurtarma olamaz" durumudur, çökme değil.
+    client = Supabase.instance.client;
   } catch (error, stack) {
-    ErrorReporter.record(error, stack, reason: 'remote upgrade sync init');
+    ErrorReporter.record(error, stack, reason: 'remote upgrade client');
+    return false;
   }
-  try {
-    await authProvider.bindLocalProgressScope();
-  } catch (error, stack) {
-    ErrorReporter.record(
-      error,
-      stack,
-      reason: 'remote upgrade local progress scope',
-    );
-  }
-  runApp(
-    ZanKurdApp(
-      // Anahtar farkı = eski ağaç sökülür, yenisinin rotaları sıfırdan
-      // kurulur; eski rotalarda kalmış çevrimdışı depo örneği kalmasın.
-      key: ValueKey('zankurd.remote-upgrade-${++_bootGeneration}'),
-      // Splash yok: kullanıcı zaten uygulamanın içinde, marka penceresi
-      // ortasında ikinci bir açılış animasyonu göstermek samimiyetsizdi.
-      home: AppShell(
-        repository: repository,
-        pushTokenSync: PushTokenSync(
-          source: kIsWeb
-              ? const NoopPushTokenSource()
-              : const FirebasePushTokenSource(),
-          repository: repository,
-        ),
-      ),
-      repository: repository,
-      authProvider: authProvider,
-      languageProvider: languageProvider,
-      themeProvider: themeProvider,
-      soundProvider: soundProvider,
-      reducedMotionProvider: reducedMotionProvider,
-      untimedModeProvider: untimedModeProvider,
-      analyticsConsentProvider: analyticsConsentProvider,
-      remoteAvailability: RemoteAvailability(reachable: true),
-      premiumService: premiumService,
-    ),
+  return upgradeOfflineBootToRemote(
+    client: client,
+    authProvider: authProvider,
+    repositoryHolder: repositoryHolder,
+    createRepository: SupabaseZanKurdRepository.new,
+    onRepositoryReady: SyncManager.initialize,
   );
-  previousAvailability.dispose();
 }
 
-/// Boot'da zaman aşımına uğrayan Supabase başlatmasını yoklar.
+/// Sunucuya giden tek bir hafif istek — [SupabaseBoot.probe]'in ikinci
+/// aşaması. Herhangi bir HTTP cevabı (200, 401, 404…) "sunucu orada"
+/// demektir; yanıtın hiç gelmemesi (DNS, soket, zaman aşımı)
+/// "ulaşılamadı" demektir — PostgREST'in izin hatası bile sunucuya
+/// ulaşıldığının kanıtıdır.
 ///
-/// İki aşama, ikisi de zorunlu:
+/// ## Niçin bu aşama ATLANAMAZ
 ///
-/// 1. **Başlatma** — `supabaseInit` sürüyorsa bitmesi beklenir (dışarıdaki
-///    `probeTimeout` asılı kalmasın diye sınırlar); fırlattıysa
-///    `Supabase.initialize` idempotent olduğu için bir kez daha denenir.
-/// 2. **Ağ turu** — sunucuya gerçek bir istek atılır. Bu aşama
-///    ATLANIRSA "gerçek çevrimdışıyı bozardık": oturum cihazda geçerliyken
-///    başlatma ağ olmadan da tamamlanabilir (yalnız yerel depo okunur),
-///    o zaman kalkan bant "sunucuya ulaşılabiliyor" der ve yalan olurdu.
-Future<bool> _probeSupabase(Future<Supabase> bootInit) async {
-  try {
-    await bootInit;
-  } catch (_) {
-    try {
-      await Supabase.initialize(
-        url: AppConfig.supabaseUrl,
-        publishableKey: AppConfig.supabaseAnonKey,
-      );
-    } catch (_) {
-      return false;
-    }
-  }
-  return _pingSupabase();
-}
-
-/// Sunucuya giden tek bir hafif istek. Herhangi bir HTTP cevabı (200,
-/// 401, 404…) "sunucu orada" demektir; yanıtın hiç gelmemesi (DNS, soket,
-/// zaman aşımı) "ulaşılamadı" demektir — PostgREST'in izin hatası bile
-/// sunucuya ulaşıldığının kanıtıdır.
+/// Oturum cihazda geçerliyken başlatma ağ olmadan da tamamlanabilir
+/// (yalnız yerel depo okunur). Ping atılmazsa bant "sunucuya
+/// ulaşılabiliyor" der ve yalan olurdu.
 Future<bool> _pingSupabase() async {
   try {
     await http
@@ -542,6 +513,7 @@ class ZanKurdApp extends StatelessWidget {
   /// eski dinleyiciler sessizce kopar.
   ZanKurdApp({
     required this.repository,
+    RepositoryHolder? repositoryHolder,
     this.home,
     AuthProvider? authProvider,
     LanguageProvider? languageProvider,
@@ -553,7 +525,8 @@ class ZanKurdApp extends StatelessWidget {
     RemoteAvailability? remoteAvailability,
     PremiumService? premiumService,
     super.key,
-  }) : authProvider = authProvider ?? AuthProvider.test(),
+  }) : repositoryHolder = repositoryHolder ?? RepositoryHolder(repository),
+       authProvider = authProvider ?? AuthProvider.test(),
        languageProvider = languageProvider ?? LanguageProvider(),
        themeProvider = themeProvider ?? ThemeProvider(),
        soundProvider = soundProvider ?? SoundProvider(),
@@ -566,6 +539,9 @@ class ZanKurdApp extends StatelessWidget {
        premiumService = premiumService ?? PremiumService.fallback();
 
   final ZanKurdRepository repository;
+
+  /// Depo kaynağı — kurtarmada değişen tek nesne (bkz. [RepositoryHolder]).
+  final RepositoryHolder repositoryHolder;
   final Widget? home;
   final AuthProvider authProvider;
   final LanguageProvider languageProvider;
@@ -581,9 +557,14 @@ class ZanKurdApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Repository tek bir immutable instance olarak paylaşılıyor —
-        // ekranların constructor'ından geçirmek yerine context üzerinden okunur.
-        Provider<ZanKurdRepository>.value(value: repository),
+        // Depo kaynağı: AYNI nesne açılışta bir kez kurulur, geç kurtarmada
+        // yalnız bu nesne değişir. `ZanKurdRepository` okuyan herkes bunu
+        // alttaki ProxyProvider üzerinden görür; ekranların constructor'ından
+        // geçirmek yerine context üzerinden okunur.
+        ChangeNotifierProvider<RepositoryHolder>.value(value: repositoryHolder),
+        ProxyProvider<RepositoryHolder, ZanKurdRepository>(
+          update: (_, holder, _) => holder.repository,
+        ),
         // Dışarıdan verilen instance'lar `.value` ile paylaşılır. `create:`
         // ile verilirse Provider bunların sahipliğini üstlenir ve ağaç
         // söküldüğünde dispose eder; oysa bu nesneler main() içinde
@@ -689,6 +670,7 @@ class ZanKurdApp extends StatelessWidget {
                   ? const NoopPushTokenSource()
                   : const FirebasePushTokenSource(),
               repository: repository,
+              repositoryHolder: repositoryHolder,
             ),
           ),
         );

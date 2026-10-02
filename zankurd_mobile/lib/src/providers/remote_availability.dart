@@ -89,8 +89,10 @@ class RemoteAvailability extends ChangeNotifier {
   /// Boot kararı çevrimdışı kalmışken uzak başlatma sonunda başarılı
   /// olursa çağrılır (`main`de uygulamayı uzak oturumla yeniden kurar).
   ///
-  /// Bir kez tükenebilir: tüketildikten sonra nesne nullptr'ye çekilir,
-  /// aynı kurtarma iki kez tetiklenemez.
+  /// Kendi kendini tüketmez: kurtarma gerçeğe dönüşünce [completeUpgrade]
+  /// çağrılır ve kancalar kapanır. Kurtarma UYGULANAMAZSA (ör. cihazda
+  /// kayıtlı uzak oturum yoksa) kanca yerinde kalır, karar geri alınır
+  /// ([upgradeDeclined]) ve sonraki başarılı yoklamada yeniden denenir.
   VoidCallback? onUpgradeRequest;
 
   /// [onUpgradeRequest]'in ne zaman güvenli olduğu — `main` rota
@@ -168,13 +170,20 @@ class RemoteAvailability extends ChangeNotifier {
     try {
       // Zaman aşımı `Future.timeout` ile: probe asılı kalsa bile deneme
       // biter ve bir sonraki geri çekilme planlanır. `bootStep`in aksine
-      // buradaki AŞIM karar değildir, yalnızca bir denemenin sonudur.
+      // buradaki AŞIM karar değildir, yalnızca bir denemenin sonudur —
+      // ve alttaki probe'u İPTAL ETMEZ. Asılı deneme BIRAKILIR (sonraki
+      // deneme yeni bir probe çağırır); eşzamanlı çok istek probe'un
+      // KENDİSİNDE engellenir: üretimde `probe`, başlatma + ping
+      // yolculuğunu ömür boyu tek future'da paylaşan [SupabaseBoot.probe]tir,
+      // yani kaç deneme başlatılırsa başlatılsın sunucuya TEK ağ turu gider.
       ok = await probe().timeout(_probeTimeout);
     } catch (_) {
       // Ağ yok, zaman aşımı, yapılandırma hatası — hepsi "henüz ulaşılamadı".
       // Her denemenin hatayı [ErrorReporter]'a yazması çevrimdışı
       // cihazda dakikada bir hata yağmuru demek olurdu; bu yüzden
       // başarısız probe sessizdir, kararı [reachable] yansıtır.
+      // Zaman aşan denemenin sonucu bu yüzden YOK SAYILIR: altında
+      // hâlâ sürüyorsa sonraki deneme onu beklemeye devam eder.
       ok = false;
     }
     _probing = false;
@@ -220,10 +229,40 @@ class RemoteAvailability extends ChangeNotifier {
     if (request == null) return;
     final safe = isUpgradeSafe;
     if (safe != null && !safe()) return;
+    // Kanca BURADA tüketilmez: kurtarma gerçeğe dönüşünce [completeUpgrade]
+    // çağrılır, uygulanamazsa (ör. cihazda uzak oturum yoksa) kanca yerinde
+    // kalır ve sonraki başarılı yoklamada yeniden denenir. Daha önce kanca
+    // hemen nullptr'ye çekildiği için uygulanamayan kurtarma bir daha hiç
+    // denenmiyordu.
     _upgradePending = false;
+    request();
+  }
+
+  /// Kurtarma uygulandı: kancalar kapanır, takvim durur, karar kesindir.
+  void completeUpgrade() {
+    if (_disposed) return;
     onUpgradeRequest = null;
     isUpgradeSafe = null;
-    request();
+    _upgradePending = false;
+    _retryStep = 0;
+    _cancelRetryTimer();
+    update(true);
+  }
+
+  /// Kurtarma UYGULANAMADI (ör. cihazda kayıtlı uzak oturum yok): karar
+  /// geri alınır, bant yerinde kalır ve geri çekilmeyi büyütülerek
+  /// kendi takviminde sürer. Kanca kapalı olmadığı için sonraki başarılı
+  /// yoklama kurtarmayı yeniden dener.
+  ///
+  /// `reachable` bu çağrıya kadar `true` yapılmıştı (yoklama başarılı
+  /// olmuştu); kurtarma uygulanmadan bant KALKMAMALI — yoksa "sunucuya
+  /// ulaşılabiliyor ama sosyal yüzey çevrimdışı depoya bağlı" yalanı
+  /// çizilir.
+  void upgradeDeclined() {
+    if (_disposed) return;
+    if (_reachable) update(false);
+    if (_retryStep < _retrySchedule.length - 1) _retryStep += 1;
+    _ensureRetryScheduled();
   }
 
   @override
