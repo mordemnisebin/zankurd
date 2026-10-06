@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/learner_lexicon.dart';
+import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 
 void main() {
   test('öğrenen sözlüğü benzersiz ve kaynaklı kayıtlar içerir', () {
@@ -51,11 +52,28 @@ void main() {
         'culture_dengbeji',
         'time_seasons',
       };
+      // 'questions' (Sorulardan): sözcükler ders değil soru bankasından
+      // gelir; terim ya da biçimlerinden biri bankada geçmelidir.
+      final bank = QuestionBankLoader.instance.allQuestions
+          .map((q) => '${q.prompt} ${q.explanationKu} ${q.explanation}')
+          .join(' ')
+          .toLowerCase();
       final seed = File(
         'supabase/2026-07-06_lesson_seed.sql',
       ).readAsStringSync().toLowerCase();
 
       for (final entry in LearnerLexicon.entries) {
+        if (entry.sourceId == 'questions') {
+          expect(
+            [
+              entry.termKu,
+              ...entry.forms,
+            ].any((v) => bank.contains(v.toLowerCase())),
+            isTrue,
+            reason: '${entry.id} soru bankasında geçmiyor: ${entry.termKu}',
+          );
+          continue;
+        }
         if (serverOnly.contains(entry.sourceId)) {
           expect(
             seed,
@@ -76,7 +94,7 @@ void main() {
     },
   );
 
-  test('güvenli kaynak genişlemesi 25 dersin tamamını kapsar', () {
+  test('güvenli kaynak genişlemesi 25 dersin tamamını + Sorulardan kapsar', () {
     expect(LearnerLexicon.entriesForSource('everyday_2'), hasLength(4));
     // 2026-10-06: başlangıç yolu dört yerel ders + dört sunucu-yalnız kaynak
     // ekledi (17 -> 25).
@@ -85,7 +103,8 @@ void main() {
     expect(LearnerLexicon.entriesForSource('time_1'), hasLength(6));
 
     final covered = LearnerLexicon.sources.keys.toSet();
-    expect(covered, hasLength(25));
+    // 25 ders kaynağı + 'questions' (Sorulardan, 2026-10-07).
+    expect(covered, hasLength(26));
     expect(covered.contains('time_1'), isTrue);
   });
 }

@@ -194,16 +194,18 @@ void main() {
           }
         }
       }
-      final tagged = QuestionBankLoader.instance.allQuestions.where(
-        (q) => q.metadata?.learningLessonId != null,
-      );
+      // 2026-10-07: "Sorulardan" kaynağı sözlüğe soru sözcüklerini ekledi;
+      // artık ders-bağlı olmayan her oynanabilir soru da kullanım sayılır.
       final questionText = StringBuffer();
-      for (final q in tagged) {
+      for (final q in QuestionBankLoader.instance.allQuestions.where(
+        _policy.isPlayable,
+      )) {
         questionText
           ..writeln(q.prompt)
           ..writeln(q.answers.join(' '))
           ..writeln(q.correctAnswer)
-          ..writeln(q.explanationKu ?? '');
+          ..writeln(q.explanationKu ?? '')
+          ..writeln(q.explanation);
       }
       final seed = File(
         'supabase/2026-07-06_lesson_seed.sql',
@@ -322,6 +324,67 @@ void main() {
       expect(ids('xal'), contains('Xal'));
       expect(ids('qelem'), contains('Qelem'));
       expect(ids('kelem'), isNot(contains('Qelem')));
+    });
+
+    test('Ziman + kolay (1-2) soru istemlerinin >= %90 sözcüğü sözlükte', () {
+      // Soru istemindeki her Kurmancî sözcük (özel adlar hariç: cümle
+      // başında olmayan büyük harfli sözcük) dokunulabilir olmalı; yoksa
+      // bilmediği sözcüğü soruda aratan öğrenen sonuç bulamaz. Dokunulabilir
+      // bölge `LexiconTapPolicy` ile aynı: tam metin, boşluk doldurmada ve
+      // "bi Tirkî" sorularında ilk tırnak, "bi Kurmancî" ve cümle kurmada yok.
+      final word = RegExp(r'[\p{L}̧̂]+', unicode: true);
+      var total = 0;
+      var covered = 0;
+      final missing = <String, int>{};
+      for (final q in playable) {
+        if (q.category != 'Ziman' && q.difficulty > 2) continue;
+        final lower = q.prompt.toLowerCase();
+        if (q.type == QuestionType.wordOrdering ||
+            RegExp(r'bi kurmanc|kurmancîsi|kurmancisi').hasMatch(lower)) {
+          continue;
+        }
+        final firstQuoteOnly =
+            q.type == QuestionType.fillInBlank ||
+            RegExp(r'bi tirk|türkçesi|turkcesi').hasMatch(lower);
+        var inQuote = false;
+        var quoteIndex = -1;
+        var cursor = 0;
+        for (final m in word.allMatches(q.prompt)) {
+          for (final c in q.prompt.substring(cursor, m.start).split('')) {
+            if (c == '"' || c == '“' || c == '«') {
+              inQuote = !inQuote || c != '"';
+              if (inQuote) quoteIndex++;
+            } else if (c == '”' || c == '»') {
+              inQuote = false;
+            }
+          }
+          cursor = m.end;
+          final w = m.group(0)!;
+          if (w.runes.length < 2) continue;
+          if (firstQuoteOnly && !(inQuote && quoteIndex == 0)) continue;
+          final before = q.prompt.substring(0, m.start).trimRight();
+          final sentenceStart =
+              before.isEmpty || RegExp(r'[.?!:]$').hasMatch(before);
+          final capital = w[0] != w[0].toLowerCase();
+          if (capital && !sentenceStart) continue; // özel ad
+          total++;
+          if (LearnerLexicon.lookup(w) != null) {
+            covered++;
+          } else {
+            missing[_fold(w)] = (missing[_fold(w)] ?? 0) + 1;
+          }
+        }
+      }
+      final top =
+          (missing.entries.toList()..sort((a, b) => b.value.compareTo(a.value)))
+              .take(15)
+              .map((e) => '${e.key}:${e.value}')
+              .toList();
+      expect(
+        covered / total,
+        greaterThanOrEqualTo(0.90),
+        reason: '$covered/$total; en sık eksikler: $top',
+      );
     });
   });
 }

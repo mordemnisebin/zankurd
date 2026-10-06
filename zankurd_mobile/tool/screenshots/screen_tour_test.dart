@@ -49,6 +49,7 @@ import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
+import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
@@ -2244,6 +2245,39 @@ void main() {
     await _pump(t, LessonDetailScreen(lesson: lesson, repository: repository));
     await t.pumpAndSettle();
     await _shoot(t, '235_lexicon_tap_slide');
+  }, tags: ['preview']);
+
+  testWidgets('236 sözlük dokunuşu — kategori sorusu ve şablon sözcüğü', (
+    t,
+  ) async {
+    final q = QuestionBankLoader.instance.allQuestions.firstWhere(
+      (q) => q.id == 'offline_0055',
+    );
+    await _pump(
+      t,
+      QuizScreen(
+        repository: repository,
+        room: repository.createRoom(),
+        questions: [q],
+        experience: QuizExperience.learning,
+        enableTimer: false,
+      ),
+      ku: true,
+    );
+    await _shoot(t, '236_lexicon_question_words');
+    await t.tap(find.byKey(const ValueKey('lexicon-word-wateya')).first);
+    await t.pumpAndSettle();
+    await _shoot(t, '237_lexicon_question_template_sheet');
+  }, tags: ['preview']);
+
+  testWidgets('238 sözlük — soru sözcüğü aranır', (t) async {
+    await _pump(t, const LearnerLexiconScreen());
+    await t.enterText(
+      find.byKey(const ValueKey('lexicon-search-field')),
+      'wateya',
+    );
+    await t.pumpAndSettle();
+    await _shoot(t, '238_lexicon_search_question_word');
   }, tags: ['preview']);
 
   testWidgets('230 sözlük — aksansız arama (cay)', (t) async {
