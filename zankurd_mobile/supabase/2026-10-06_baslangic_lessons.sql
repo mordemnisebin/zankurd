@@ -31,12 +31,12 @@
 --   update lessons set order_in_category = 2 where slug = 'hejmar';
 --   (lesson_slides satırları ON DELETE CASCADE ile gider.)
 --
--- Uygulama (2.0.1 yayınlanınca): supabase db query --linked -f supabase/2026-10-06_baslangic_lessons.sql
+-- Uygulama: supabase db query --linked -f supabase/2026-10-06_baslangic_lessons.sql
 
 begin;
 
 insert into lessons (slug, title_ku, title_tr, description_ku, category, icon_name, order_in_category, language) values
-  ('alfabe', 'Alfabe', 'Alfabe (Hawar harfleri)', 'Tîpên Kurmancî û dengên wan', 'everyday', 'sort_by_alpha', 1, 'ku'),
+  ('alfabe', 'Alfabe', 'Alfabe', 'Tîpên Kurmancî û dengên wan', 'everyday', 'sort_by_alpha', 1, 'ku'),
   ('silav-u-rezdari', 'Silav û rêzdarî 2', 'Selamlaşma ve nezaket 2', 'Silav, spas û xatirxwestin', 'everyday', 'forum', 3, 'ku'),
   ('xwe-nasandin', 'Xwe nasandin', 'Kendini tanıtma', 'Nav, temen, welat û pîşe', 'everyday', 'badge', 4, 'ku'),
   ('malbat', 'Malbat', 'Aile', 'Endamên malbatê', 'everyday', 'family_restroom', 5, 'ku')
