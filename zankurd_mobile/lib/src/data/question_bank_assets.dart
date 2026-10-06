@@ -131,4 +131,14 @@ const questionBankAssets = <String>[
   // slaytlarından (supabase/2026-07-06_lesson_seed.sql); Kurmancî Gemini 3.1
   // Pro + Grok 4.7 okumasından geçti. Eşleme: `learning_lesson_aliases.dart`.
   'assets/data/ders_2026_10_02_questions.json',
+  // 2026-10-06: BAŞLANGIÇ YOLU. Sıfırdan başlayan test kullanıcıları soru
+  // azlığından ve uygulamanın Kürtçeyi zaten bilenlere göre kurulmasından
+  // yakındı. Dört yeni ders (alfabe, selamlaşma II, kendini tanıtma, aile)
+  // için derse etiketli 32 çoktan seçmeli, ayrıca bu derslere ve mevcut
+  // başlangıç derslerine bağlı 69 boşluk doldurma ve 51 cümle kurma
+  // sorusu (`learningLessonId`). Boşluk doldurma ve cümle kurma yalnız
+  // yerel bankada yaşar (çevrimiçi oda protokolü A–D anahtarı taşır).
+  // Kurmancî Gemini 3.1 Pro ve Grok 4.7 okumasından geçti. Bekçi:
+  // `test/beginner_track_test.dart`.
+  'assets/data/baslangic_2026_10_06_questions.json',
 ];

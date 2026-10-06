@@ -81,7 +81,9 @@ void main() {
       // `bosluk_2026_10_02`; yeni dosyadaki kayıtlar fiziksel sayıya girer.
       // 3169 -> 3201 (+32): 2026-10-02 `ders_2026_10_02`, sunucu dersleri
       // hejmar/lekera-bun/dengbeji/demsal için etiketli sorular.
-      3201,
+      // 3201 -> 3353 (+152): 2026-10-06 `baslangic_2026_10_06`, başlangıç
+      // yolu (32 çoktan seçmeli + 69 boşluk doldurma + 51 cümle kurma).
+      3353,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -160,7 +162,9 @@ void main() {
       // katman, Paradigma d5, Siyaset iki alt konu, doğru-yanlış dengesi).
       // 2700 -> 2732 (+32): 2026-10-02 `ders_2026_10_02`, hepsi `approved`
       // ve oynanabilir (dört sunucu dersinin kısa testi).
-      2732,
+      // 2732 -> 2884 (+152): 2026-10-06 `baslangic_2026_10_06`, hepsi
+      // `approved` ve oynanabilir (bkz. `beginner_track_test.dart`).
+      2884,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

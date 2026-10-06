@@ -491,7 +491,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
     final ordered = difficultyMax <= 2
         ? QuestionSetPolicy.byReadingLoad(pool.isEmpty ? playable : pool)
         : (pool.isEmpty ? playable : pool);
-    return _selectFresh(ordered, limit);
+    final selected = await _selectFresh(ordered, limit);
+    // `byReadingLoad` üretim sorularını (boşluk doldurma, cümle kurma) bilerek
+    // sona iter; tanıma sorusu havuzu turu doldurduğu için yeni başlayan hiç
+    // yazmalı/sıralamalı soru GÖRMÜYORDU (2026-10-06, başlangıç yolu geri
+    // bildirimi). İlk iki basamakta derse bağlı bir cümle kurma (ve 10
+    // soruluk turda bir boşluk doldurma) üçüncü sıradan sonra eklenir.
+    return difficultyMax <= 2
+        ? _withBeginnerProduction(selected, pool, limit, Random())
+        : selected;
   }
 
   @override
@@ -521,7 +529,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // açıyordu, yani bir derse soru etiketlemek o dersi KISALTIYORDU.
     final tagged = exact.isEmpty
         ? const <QuizQuestion>[]
-        : await _selectFresh(exact, limit);
+        : await _selectLessonMix(exact, limit);
     if (tagged.length >= limit) return tagged;
     final taggedIds = tagged.map((q) => q.id).toSet();
     // Birden çok bankalı ders (Selamlaşma ve Tanışma) için dolgu sırayla
@@ -838,8 +846,134 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
     final playable = _playableQuestions;
-    final pool = [...playable]..shuffle(Random(dailySeedFor(currentUserId)));
-    return _withVisualBlend(pool.take(limit).toList(), playable, limit);
+    final seed = dailySeedFor(currentUserId);
+    final pool = [...playable]..shuffle(Random(seed));
+    final daily = _withVisualBlend(pool.take(limit).toList(), playable, limit);
+    // Günlük ders rastgele havuzdan çekilir; üretim soruları bankanın ~%3'ü
+    // olduğundan yeni başlayan günlük derste hiç cümle kurma görmeyebilirdi.
+    return _withBeginnerProduction(daily, playable, limit, Random(seed));
+  }
+
+  /// Dersin kısa testi: etiketli tanıma sorularının arasına, dersin etiketli
+  /// cümle kurma ve boşluk doldurma soruları da girer.
+  ///
+  /// ## Kusur
+  ///
+  /// `_selectFresh(exact, limit)` türden habersizdi ve etiketli havuz çoğunlukla
+  /// çoktan seçmeliydi; bir derse bağlanmış cümle kurma/boşluk doldurma
+  /// sorusu sıfır ya da yok denecek kadar az şansla çıkıyordu. "Kelimeleri
+  /// sürükleyip basit cümle kur" isteyen yeni başlayan, dersin sonunda yine
+  /// yalnız şık işaretliyordu.
+  ///
+  /// ## Kural
+  ///
+  /// [limit] 3 ve üstündeyse ve derste üretim sorusu varsa turun 1 (limit 5 ve
+  /// üstünde 2) sorusu üretim sorusudur: önce cümle kurma (dokunmayla, daha
+  /// kolay), sonra boşluk doldurma. Tanıma soruları turu açar; üretim soruları
+  /// 3. ve 5. sıraya girer. Havuzda tanıma sorusu yoksa eski davranış.
+  Future<List<QuizQuestion>> _selectLessonMix(
+    List<QuizQuestion> exact,
+    int limit,
+  ) async {
+    final production = exact
+        .where(QuestionSetPolicy.isProductionTask)
+        .toList(growable: false);
+    final recognition = exact
+        .where((question) => !QuestionSetPolicy.isProductionTask(question))
+        .toList(growable: false);
+    if (production.isEmpty || recognition.isEmpty || limit < 3) {
+      return _selectFresh(exact, limit);
+    }
+    final wanted = limit >= 5 ? 2 : 1;
+    final ordering = production
+        .where((q) => q.type == QuestionType.wordOrdering)
+        .toList(growable: false);
+    final fill = production
+        .where((q) => q.type == QuestionType.fillInBlank)
+        .toList(growable: false);
+    final picks = <QuizQuestion>[
+      ...await _selectFresh(ordering, 1),
+      ...await _selectFresh(fill, 1),
+    ];
+    if (picks.length < wanted) {
+      final chosen = picks.map((q) => q.id).toSet();
+      final more = (ordering.length >= fill.length ? ordering : fill)
+          .where((q) => !chosen.contains(q.id))
+          .take(wanted - picks.length);
+      picks.addAll(more);
+    }
+    final production2 = picks.take(wanted).toList();
+    final warmup = await _selectFresh(recognition, limit - production2.length);
+    final mixed = [...warmup];
+    for (final (index, pick) in production2.indexed) {
+      mixed.insert((2 + index * 2).clamp(0, mixed.length), pick);
+    }
+    return mixed.take(limit).toList(growable: false);
+  }
+
+  /// Turda hiç cümle kurma / boşluk doldurma yoksa, derse bağlı kolay (zorluk
+  /// <= 2) bir tanesini ÜÇÜNCÜ sıradan sonraya koyar. [limit] 5'ten azsa
+  /// dokunmaz; 10 ve üstünde ayrıca bir boşluk doldurma da ekler.
+  List<QuizQuestion> _withBeginnerProduction(
+    List<QuizQuestion> selected,
+    List<QuizQuestion> pool,
+    int limit,
+    Random random,
+  ) {
+    if (limit < 5 || selected.isEmpty) return selected;
+    final result = [...selected];
+    final used = result.map((q) => q.id).toSet();
+
+    bool has(QuestionType type) => result.any((q) => q.type == type);
+    void insertOne(QuestionType type) {
+      if (has(type)) return;
+      final candidates = pool
+          .where(
+            (q) =>
+                q.type == type &&
+                q.difficulty <= 2 &&
+                q.metadata?.learningLessonId != null &&
+                !used.contains(q.id),
+          )
+          .toList(growable: false);
+      if (candidates.isEmpty) return;
+      final pick = candidates[random.nextInt(candidates.length)];
+      // İlk iki soru ısınmadır; değiştirilecek soru üretim sorusu ve görselli
+      // olmayan, en sondaki tanıma sorusudur.
+      final replaceAt = result.lastIndexWhere(
+        (q) => !QuestionSetPolicy.isProductionTask(q) && !q.hasImage,
+      );
+      if (replaceAt < 2) {
+        if (result.length < limit) result.add(pick);
+        used.add(pick.id);
+        return;
+      }
+      result[replaceAt] = pick;
+      used.add(pick.id);
+    }
+
+    insertOne(QuestionType.wordOrdering);
+    if (limit >= 10) insertOne(QuestionType.fillInBlank);
+    return _recognitionFirst(result);
+  }
+
+  /// İlk iki soru tanıma sorusudur: yeni öğrenenin ilk teması yazmak ya da
+  /// sıralamak olmamalı (bkz. `QuestionSetPolicy.byReadingLoad`). Havuzdaki
+  /// üretim sorusu seçimde baştan gelmişse sonraki tanıma sorularıyla yer
+  /// değiştirir; geri kalan sıra korunur.
+  List<QuizQuestion> _recognitionFirst(List<QuizQuestion> questions) {
+    final result = [...questions];
+    for (var slot = 0; slot < 2 && slot < result.length; slot++) {
+      if (!QuestionSetPolicy.isProductionTask(result[slot])) continue;
+      final swapWith = result.indexWhere(
+        (q) => !QuestionSetPolicy.isProductionTask(q),
+        slot + 1,
+      );
+      if (swapWith == -1) break;
+      final moved = result.removeAt(swapWith);
+      result.insert(slot, moved);
+    }
+    return result;
   }
 
   /// Görülmemiş soruları öne alan tekrar-önleyici seçim.
@@ -1539,13 +1673,33 @@ class MockZanKurdRepository implements ZanKurdRepository {
   static const Map<String, List<Lesson>> _lessonsData = {
     'everyday': [
       Lesson(
+        id: 'alphabet_1',
+        slug: 'alphabet_1',
+        titleKu: 'Alfabe',
+        titleTr: 'Alfabe',
+        descriptionKu: 'Tîpên Kurmancî û dengên wan',
+        category: 'everyday',
+        iconName: 'sort_by_alpha',
+        order: 1,
+      ),
+      Lesson(
         id: 'everyday_1',
         slug: 'everyday_1',
         titleKu: 'Silavkirin',
         titleTr: 'Selamlaşma',
         category: 'everyday',
         iconName: 'waving_hand',
-        order: 1,
+        order: 2,
+      ),
+      Lesson(
+        id: 'greetings_2',
+        slug: 'greetings_2',
+        titleKu: 'Silav û rêzdarî 2',
+        titleTr: 'Selamlaşma ve nezaket 2',
+        descriptionKu: 'Silav, spas û xatirxwestin',
+        category: 'everyday',
+        iconName: 'forum',
+        order: 3,
       ),
       Lesson(
         id: 'everyday_2',
@@ -1554,7 +1708,27 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleTr: 'Tanışma',
         category: 'everyday',
         iconName: 'handshake',
-        order: 2,
+        order: 4,
+      ),
+      Lesson(
+        id: 'intro_1',
+        slug: 'intro_1',
+        titleKu: 'Xwe nasandin',
+        titleTr: 'Kendini tanıtma',
+        descriptionKu: 'Nav, temen, welat û pîşe',
+        category: 'everyday',
+        iconName: 'badge',
+        order: 5,
+      ),
+      Lesson(
+        id: 'family_1',
+        slug: 'family_1',
+        titleKu: 'Malbat',
+        titleTr: 'Aile',
+        descriptionKu: 'Endamên malbatê',
+        category: 'everyday',
+        iconName: 'family_restroom',
+        order: 6,
       ),
       Lesson(
         id: 'everyday_3',
@@ -1563,7 +1737,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleTr: 'Günlük pratik ifadeler',
         category: 'everyday',
         iconName: 'forum',
-        order: 3,
+        order: 7,
       ),
     ],
     'grammar': [
@@ -1709,6 +1883,197 @@ class MockZanKurdRepository implements ZanKurdRepository {
   };
 
   static const Map<String, List<LessonSlide>> _slidesData = {
+    'alphabet_1': [
+      LessonSlide(
+        id: 'alphabet_1_s1',
+        lessonId: 'alphabet_1',
+        order: 1,
+        contentKu:
+            'Alfabeya Kurmancî (Hawar) 31 tîp e:\n\nA B C Ç D E Ê F G H I Î J K L M N O P Q R S Ş T U Û V W X Y Z\n\nHeşt tîp dengdêr in, bîst û sê tîp dengdar in.\n\n• Alfabe: Alfabe\n• Tîp: Harf\n• Dengdêr: Ünlü harf\n• Dengdar: Ünsüz harf',
+        contentTr:
+            'Kurmancî (Hawar) alfabesi 31 harftir: 8 ünlü ve 23 ünsüz harf. Hawar alfabesi Latin harflerini kullanır.',
+        exampleKu: 'A, B, C, Ç, D...',
+      ),
+      LessonSlide(
+        id: 'alphabet_1_s2',
+        lessonId: 'alphabet_1',
+        order: 2,
+        contentKu:
+            'Dengdêr (ünlü) tîp:\n\na — av\ne — ez\nê — êvar\ni — dil\nî — îro\no — ode\nu — kur\nû — dûr',
+        contentTr:
+            'Sekiz ünlü: a, e, ê, i, î, o, u, û. Kısa ve uzun ünlüler ayrı harflerdir: i kısa ve gevşek bir i\'dir (Türkçedeki ı değildir), î uzun i\'dir; u kısa, û uzun u\'dur; e açık ve kısa, ê kapalı ve uzun bir e\'dir.',
+        exampleKu: 'Av, ez, êvar, dil, îro, ode, kur, dûr.',
+      ),
+      LessonSlide(
+        id: 'alphabet_1_s3',
+        lessonId: 'alphabet_1',
+        order: 3,
+        contentKu:
+            'Tîpên taybet 1:\n\nç — wekî di tirkî de: çay\nş — wekî di tirkî de: şev\nc — wekî di tirkî de: cil\nj — wekî di tirkî de: jin\nw — wekî "w" a îngilîzî (water): welat',
+        contentTr:
+            'Özel harfler 1: ç ve ş Türkçedeki gibi okunur. w, İngilizce water kelimesindeki w gibidir (Türkçede yoktur). c ve j de Türkçedeki gibidir.',
+        exampleKu: 'Çay, şev, welat, cil, jin.',
+      ),
+      LessonSlide(
+        id: 'alphabet_1_s4',
+        lessonId: 'alphabet_1',
+        order: 4,
+        contentKu:
+            'Tîpên taybet 2:\n\nx — dengê qirikê (mîna "خ" ya erebî), di tirkî de tune ye: xal\nq — dengekî "k" yê kûr ji qirikê: qelem\nê — dengê "e" yê dirêj: êvar\nî — dengê "i" yê dirêj: îro\nû — dengê "u" yê dirêj: dûr',
+        contentTr:
+            'Özel harfler 2: x boğazdan çıkan, Türkçede olmayan bir sestir (Arapça خ ya da Almanca Bach\'taki ch gibi; Türkçe ğ ile aynı değildir). q boğazdan çıkan derin bir k\'dır (Arapça ق gibi). ê, î, û uzun ünlülerdir.',
+        exampleKu: 'Xal, qelem, êvar, îro, dûr.',
+      ),
+      LessonSlide(
+        id: 'alphabet_1_s5',
+        lessonId: 'alphabet_1',
+        order: 5,
+        contentKu:
+            'Peyv û tîp (C–H):\n\n• Cil: Giysi\n• Çay: Çay\n• Dar: Ağaç\n• Fêkî: Meyve\n• Gul: Gül\n• Heval: Arkadaş',
+        contentTr: 'Harflerle örnek kelimeler: c, ç, d, f, g, h.',
+        exampleKu: 'Ev gul e. Ew heval e.',
+      ),
+      LessonSlide(
+        id: 'alphabet_1_s6',
+        lessonId: 'alphabet_1',
+        order: 6,
+        contentKu:
+            'Peyv û tîp (K–W) û çend peyvên din:\n\n• Ker: Eşek\n• Lêv: Dudak\n• Mal: Ev\n• Ode: Oda\n• Qelem: Kalem\n• Roj: Gün / Güneş\n• Welat: Ülke\n• Dil: Kalp\n• Dûr: Uzak\n• Ev: Bu',
+        contentTr:
+            'Harflerle örnek kelimeler: k, l, m, o, q, r, w. "Mal" ev (bina), "ev" ise "bu" demektir; ikisini karıştırma.',
+        exampleKu: 'Ev qelem e. Ev ode ye.',
+      ),
+    ],
+    'greetings_2': [
+      LessonSlide(
+        id: 'greetings_2_s1',
+        lessonId: 'greetings_2',
+        order: 1,
+        contentKu:
+            'Silav û bi xêr hatin:\n\n• Silav: Selam\n• Bi xêr hatî: Hoş geldin\n• Sibeha te bi xêr: Günaydın\n• Êvara te bi xêr: İyi akşamlar\n• Şeva te bi xêr: İyi geceler',
+        contentTr:
+            'Selamlaşma kalıpları. "Xêr" hayır/iyilik demektir; "Sibeha te bi xêr" sabahın hayırlı olsun anlamındadır.',
+        exampleKu: 'Silav heval! Bi xêr hatî!',
+      ),
+      LessonSlide(
+        id: 'greetings_2_s2',
+        lessonId: 'greetings_2',
+        order: 2,
+        contentKu:
+            'Hal pirsîn:\n\n• Hûn çawa ne?: Nasılsınız?\n• Ez baş im: İyiyim\n• Ez gelek baş im: Çok iyiyim\n• Çawa: Nasıl\n• Baş: İyi\n• Gelek: Çok',
+        contentTr:
+            'Hal hatır sorma. "Tu çawa yî?" tek kişiye, "Hûn çawa ne?" birden çok kişiye ya da saygıyla sorulur.',
+        exampleKu: 'Tu çawa yî? Ez gelek baş im, spas.',
+      ),
+      LessonSlide(
+        id: 'greetings_2_s3',
+        lessonId: 'greetings_2',
+        order: 3,
+        contentKu:
+            'Spas, lêborîn û gotin:\n\n• Gelek spas: Çok teşekkürler\n• Bibore: Özür dilerim / Pardon\n• Gotin: Söylemek',
+        contentTr: 'Teşekkür ve özür. "Spas" tek başına da kullanılır.',
+        exampleKu: 'Gelek spas, heval!',
+      ),
+      LessonSlide(
+        id: 'greetings_2_s4',
+        lessonId: 'greetings_2',
+        order: 4,
+        contentKu:
+            'Xatirxwestin:\n\n• Bi xatirê te: Hoşça kal\n• Bi xatirê we: Hoşça kalın\n• Oxir be: Güle güle\n• Xêr: Hayır / İyilik\n• We: Size / Sizin (tewandî hal)',
+        contentTr:
+            'Vedalaşma. "Te" tek kişiye, "we" birden çok kişiye ya da saygıyla söylenir.',
+        exampleKu: 'Bi xatirê te, heval. — Oxir be!',
+      ),
+    ],
+    'intro_1': [
+      LessonSlide(
+        id: 'intro_1_s1',
+        lessonId: 'intro_1',
+        order: 1,
+        contentKu:
+            'Nav:\n\n• Nav: Ad / İsim\n• Navê min Rojîn e: Benim adım Rojîn.\n• Rojîn: Kız ismi\n• Çi: Ne\n• Navê te çi ye?: Adın ne?',
+        contentTr: 'Adını söyleme. "Navê min ... e" = benim adım ...',
+        exampleKu: 'Navê min Rojîn e. Navê te çi ye?',
+      ),
+      LessonSlide(
+        id: 'intro_1_s2',
+        lessonId: 'intro_1',
+        order: 2,
+        contentKu:
+            'Temen:\n\n• Tu çend salî yî?: Kaç yaşındasın?\n• Ez bîst salî me: Yirmi yaşındayım.\n• Sal: Yıl\n• Çend: Kaç',
+        contentTr: 'Yaşı söyleme: "Ez ... salî me." (sal + î = yaşında).',
+        exampleKu: 'Ez deh salî me. Tu çend salî yî?',
+      ),
+      LessonSlide(
+        id: 'intro_1_s3',
+        lessonId: 'intro_1',
+        order: 3,
+        contentKu:
+            'Welat û bajar:\n\n• Ez ji Wanê me: Vanlıyım.\n• Ji: -den / -dan\n• Ku: Nerede / Nere\n• Der: Yer (ku derê = nere)\n• Wan: Van\n• Mêrdîn: Mardin\n• Stenbol: İstanbul\n• Kurd: Kürt',
+        contentTr:
+            'Nerelisin? sorusu ve cevabı. "ji" ile dişil şehir adlarının sonuna -ê eklenir: Wan → Wanê, Mêrdîn → Mêrdînê, Stenbol → Stenbolê..',
+        exampleKu: 'Tu ji ku derê yî? Ez ji Mêrdînê me.',
+      ),
+      LessonSlide(
+        id: 'intro_1_s4',
+        lessonId: 'intro_1',
+        order: 4,
+        contentKu:
+            'Pîşe:\n\n• Pîşe: Meslek\n• Xwendekar: Öğrenci\n• Mamoste: Öğretmen\n• Doktor: Doktor\n• Karker: İşçi',
+        contentTr:
+            'Meslek söyleme: "Ez ... im" (ünsüzden sonra) ya da "Ez ... me" (ünlüden sonra).',
+        exampleKu: 'Ez xwendekar im. Ez mamoste me.',
+      ),
+      LessonSlide(
+        id: 'intro_1_s5',
+        lessonId: 'intro_1',
+        order: 5,
+        contentKu:
+            'Ziman:\n\n• Kurdî: Kürtçe\n• Kurmancî: Kurmancî (Kürtçenin bir lehçesi)\n• Tirkî: Türkçe\n• Zanîn: Bilmek\n• Bi: İle / -le / -ce (dil)',
+        contentTr: 'Dil bilme: "Ez bi Kurmancî dizanim" = Kurmancî biliyorum.',
+        exampleKu: 'Ez bi Kurmancî dizanim. Tu bi Tirkî dizanî?',
+      ),
+    ],
+    'family_1': [
+      LessonSlide(
+        id: 'family_1_s1',
+        lessonId: 'family_1',
+        order: 1,
+        contentKu:
+            'Malbata nêzîk:\n\n• Malbat: Aile\n• Dê: Anne\n• Bav: Baba\n• Bira: Erkek kardeş\n• Xwişk: Kız kardeş\n• Kur: Oğul / Erkek çocuk\n• Keç: Kız (çocuk)',
+        contentTr: 'Yakın aile üyeleri. "Bavê min" = benim babam (bav + -ê).',
+        exampleKu: 'Ev dê ye. Ev bavê min e.',
+      ),
+      LessonSlide(
+        id: 'family_1_s2',
+        lessonId: 'family_1',
+        order: 2,
+        contentKu:
+            'Malbata mezin:\n\n• Dapîr: Büyükanne\n• Bapîr: Büyükbaba\n• Mam: Amca\n• Met: Hala\n• Xal: Dayı\n• Xaltî: Teyze',
+        contentTr:
+            'Geniş aile. Amca (mam) ve hala (met) baba tarafı, dayı (xal) ve teyze (xaltî) anne tarafıdır.',
+        exampleKu: 'Dapîra min li malê ye.',
+      ),
+      LessonSlide(
+        id: 'family_1_s3',
+        lessonId: 'family_1',
+        order: 3,
+        contentKu:
+            'Kes û zarok:\n\n• Jin: Kadın / Eş\n• Mêr: Erkek / Koca\n• Zarok: Çocuk',
+        contentTr: 'İnsan ve çocuk sözcükleri.',
+        exampleKu: 'Bapîr mêr e. Dapîr jin e.',
+      ),
+      LessonSlide(
+        id: 'family_1_s4',
+        lessonId: 'family_1',
+        order: 4,
+        contentKu:
+            'Hevok:\n\n• Ev dê ye: Bu anne.\n• Ev bavê min e: Bu benim babam.\n• Dê û bav li malê ne: Anne ve baba evde.\n• Û: Ve\n• Li: -de / -da (yer)',
+        contentTr:
+            'Basit aile cümleleri. "ye" ünlüyle biten sözcükten sonra, "e" ünsüzle bitenden sonra gelir.',
+        exampleKu: 'Bira û xwişk li malê ne.',
+      ),
+    ],
     'everyday_1': [
       LessonSlide(
         id: 'everyday_1_s1',
@@ -1816,6 +2181,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
             'Dengbêjî:\n\nDengbêjî, parastin û ragihandina dîrok û çanda kurdî ya bi riya stran û kilaman e.',
         contentTr: 'Dengbêjlik kültürü hakkında bilgi.',
       ),
+      LessonSlide(
+        id: 'culture_1_s3',
+        lessonId: 'culture_1',
+        order: 3,
+        contentKu: 'Dawet:\n\n• Dawet: Düğün',
+        contentTr: 'Düğün ziyafeti anlamında bir sözcük.',
+        exampleKu: 'Dawet li malê ye.',
+      ),
     ],
     'culture_2': [
       LessonSlide(
@@ -1851,6 +2224,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Danên xwarinê:\n\n• Taştê: Kahvaltı\n• Firavîn: Öğle yemeği\n• Şîv: Akşam yemeği',
         contentTr: 'Öğün isimleri.',
+      ),
+      LessonSlide(
+        id: 'food_1_s3',
+        lessonId: 'food_1',
+        order: 3,
+        contentKu:
+            'Xwarin û vexwarin:\n\n• Xwarin: Yemek yemek\n• Vexwarin: İçmek',
+        contentTr:
+            'Yemek yemek (xwarin) ve içmek (vexwarin) fiilleri. "Ez nan dixwim" = ekmek yiyorum, "Ez av vedixwim" = su içiyorum.',
+        exampleKu: 'Ez nan dixwim. Ez av vedixwim.',
       ),
     ],
     'food_2': [
@@ -2012,6 +2395,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
         order: 2,
         contentKu: 'Demên nêzîk:\n\n• Duh: Dün\n• Îro: Bugün\n• Sibe: Yarın',
         contentTr: 'Zaman belirteçleri.',
+      ),
+      LessonSlide(
+        id: 'time_2_s3',
+        lessonId: 'time_2',
+        order: 3,
+        contentKu: 'Çûn:\n\n• Çûn: Gitmek',
+        contentTr: '"Ez diçim malê" = eve gidiyorum.',
+        exampleKu: 'Îro ez diçim malê.',
       ),
     ],
   };

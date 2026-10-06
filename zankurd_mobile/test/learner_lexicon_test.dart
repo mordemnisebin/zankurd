@@ -36,13 +36,34 @@ void main() {
   });
 
   test(
-    'ilk sözlük çekirdeğindeki her çeviri ders kaynağında birebir vardır',
+    'her sözlük çevirisi ders kaynağında birebir vardır (sunucu-yalnız dersler '
+    'sunucu tohumunda)',
     () {
       final lessonSource = File(
         'lib/src/data/mock_zankurd_repository.dart',
       ).readAsStringSync();
+      // Yerel katalogda ders olmayan, yalnız sunucuda yaşayan dersler: çiftleri
+      // `2026-07-06_lesson_seed.sql` slaytlarında geçer (biçim farklı:
+      // `yek (1)`), bu yüzden terimin kendisi aranır.
+      const serverOnly = {
+        'numbers_1',
+        'grammar_bun',
+        'culture_dengbeji',
+        'time_seasons',
+      };
+      final seed = File(
+        'supabase/2026-07-06_lesson_seed.sql',
+      ).readAsStringSync().toLowerCase();
 
       for (final entry in LearnerLexicon.entries) {
+        if (serverOnly.contains(entry.sourceId)) {
+          expect(
+            seed,
+            contains(entry.termKu.toLowerCase()),
+            reason: '${entry.id} sunucu tohumunda yok: ${entry.termKu}',
+          );
+          continue;
+        }
         final authoredPair = '${entry.termKu}: ${entry.meaningTr}';
         expect(
           lessonSource,
@@ -55,14 +76,16 @@ void main() {
     },
   );
 
-  test('güvenli kaynak genişlemesi 17 dersin tamamını kapsar', () {
+  test('güvenli kaynak genişlemesi 25 dersin tamamını kapsar', () {
     expect(LearnerLexicon.entriesForSource('everyday_2'), hasLength(4));
+    // 2026-10-06: başlangıç yolu dört yerel ders + dört sunucu-yalnız kaynak
+    // ekledi (17 -> 25).
     expect(LearnerLexicon.entriesForSource('culture_2'), hasLength(2));
     expect(LearnerLexicon.entriesForSource('geography_1'), hasLength(2));
     expect(LearnerLexicon.entriesForSource('time_1'), hasLength(6));
 
     final covered = LearnerLexicon.sources.keys.toSet();
-    expect(covered, hasLength(17));
+    expect(covered, hasLength(25));
     expect(covered.contains('time_1'), isTrue);
   });
 }

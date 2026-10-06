@@ -138,6 +138,8 @@ void main() {
         ...fromJson('assets/data/bosluk_2026_10_02_questions.json'),
         // 2026-10-02: sunucu dersleri hejmar/lekera-bun/dengbeji/demsal (32).
         ...fromJson('assets/data/ders_2026_10_02_questions.json'),
+        // 2026-10-06: başlangıç yolu (152).
+        ...fromJson('assets/data/baslangic_2026_10_06_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;

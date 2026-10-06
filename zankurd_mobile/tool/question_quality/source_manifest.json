@@ -2677,6 +2677,35 @@
     "reviewedAt": "metadata.reviewedAt",
     "locale": "ku-kmr"
    }
+  },
+  {
+   "id": "baslangic_2026_10_06",
+   "description": "2026-10-06: başlangıç yolu (alfabe, selamlaşma II, kendini tanıtma, aile): 32 derse etiketli çoktan seçmeli + 69 boşluk doldurma + 51 cümle kurma",
+   "path": "assets/data/baslangic_2026_10_06_questions.json",
+   "role": "runtime_secondary",
+   "parser": "json",
+   "canonicalGroup": "runtime_questions",
+   "reportIncluded": true,
+   "gateIncluded": true,
+   "productionLike": true,
+   "precedence": 998,
+   "expectedRecordCount": 152,
+   "notes": "Sözcükler dersin kendi slaytlarından (yerel katalog ve supabase/2026-10-06_baslangic_lessons.sql). Taslak Claude Opus (ana ajan), Kurmancî inceleme Gemini 3.1 Pro ve Grok 4.7, uyuşmazlıkta Gemini 3.8 Flash.",
+   "columns": {
+    "id": "id",
+    "category": "category",
+    "prompt": "prompt",
+    "options": "answers",
+    "correct": "correctAnswer",
+    "explanation": "explanationKu",
+    "difficulty": "difficulty",
+    "type": "type",
+    "dialect": "metadata.dialect",
+    "sourceTitle": "metadata.sourceTitle",
+    "sourceUrl": "metadata.sourceReference",
+    "reviewedAt": "metadata.reviewedAt",
+    "locale": "ku-kmr"
+   }
   }
  ]
 }
