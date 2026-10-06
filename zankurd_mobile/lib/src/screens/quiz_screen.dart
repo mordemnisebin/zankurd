@@ -126,6 +126,21 @@ class _QuizScreenState extends State<QuizScreen>
   bool get _isLearningExperience =>
       widget.experience == QuizExperience.learning;
 
+  /// Sözcüğe dokununca sözlük anlamı: yalnız başkasına karşı puanlanmayan,
+  /// tek kişilik oyunda. Kategori seviyesi, günün dersi ve yanlış çalışması
+  /// `learning`; ödülsüz tekrar (`practice`) de öyle. Oda, hızlı düello,
+  /// eşzamansız düello (`is1v1`), turnuva (`botRace`/`versusBannerText`),
+  /// günlük yarışma (`dailyQuiz`/`contestId`) her koşulda kapalıdır.
+  bool get _lexiconTapAllowed => lexiconTapAllowedFor(
+    learning: _isLearningExperience,
+    practice: widget.practice,
+    is1v1: widget.is1v1,
+    botRace: widget.botRace,
+    dailyQuiz: widget.dailyQuiz,
+    contest: widget.contestId != null,
+    versus: widget.versusBannerText != null,
+  );
+
   /// Süresiz modun geçerli olabileceği tek yer: ödül üretmeyen tek kişilik
   /// turlar.
   ///
