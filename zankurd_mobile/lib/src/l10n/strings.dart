@@ -409,6 +409,12 @@ class Tr {
     },
     K.lexiconSource: {'ku': 'Çavkanî', 'tr': 'Kaynak'},
     K.lexiconCategory: {'ku': 'Mijar', 'tr': 'Konu'},
+    K.lexiconForms: {'ku': 'Şêwe', 'tr': 'Biçimler'},
+    K.lexiconOpen: {'ku': 'Di ferhengê de veke', 'tr': 'Sözlükte aç'},
+    K.lexiconWordHint: {
+      'ku': 'Wateya peyvê di ferhengê de heye',
+      'tr': 'Sözcüğün anlamı sözlükte var',
+    },
     K.lexiconEmptyTitle: {'ku': 'Encam tune', 'tr': 'Sonuç yok'},
     K.lexiconEmptyBody: {
       'ku': 'Bi peyveke din an bi wateya wê dîsa bigere.',
@@ -2935,6 +2941,9 @@ class K {
   static const lexiconCount = 'learn.lexicon.count';
   static const lexiconSource = 'learn.lexicon.source';
   static const lexiconCategory = 'learn.lexicon.category';
+  static const lexiconForms = 'learn.lexicon.forms';
+  static const lexiconOpen = 'learn.lexicon.open';
+  static const lexiconWordHint = 'learn.lexicon.wordHint';
   static const lexiconEmptyTitle = 'learn.lexicon.emptyTitle';
   static const lexiconEmptyBody = 'learn.lexicon.emptyBody';
   static const loadFailedShort = 'common.loadFailed.short';

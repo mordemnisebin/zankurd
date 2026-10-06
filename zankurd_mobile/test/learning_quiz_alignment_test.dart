@@ -131,7 +131,9 @@ void main() {
         .where(
           (q) =>
               !q.id.startsWith('ders_2026_10_01_') &&
-              !q.id.startsWith('ders_2026_10_02_'),
+              !q.id.startsWith('ders_2026_10_02_') &&
+              // 2026-10-06: başlangıç yolu (152) da tohumun dışındadır.
+              !q.id.startsWith('baslangic_2026_10_06_'),
         )
         .map((q) => q.id)
         .toSet();
@@ -299,7 +301,8 @@ void main() {
         }
       }
 
-      expect(lessonCount, 17);
+      // 2026-10-06: +4 başlangıç dersi (alphabet_1, greetings_2, intro_1, family_1).
+      expect(lessonCount, 21);
     },
   );
 }

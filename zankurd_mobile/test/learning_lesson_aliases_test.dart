@@ -47,6 +47,11 @@ const _productionLessons = <String, String>{
   'hesten-bingehin': 'emotions',
   'rojen-hefteye': 'time',
   'demsal': 'time',
+  // 2026-10-06: başlangıç yolu (supabase/2026-10-06_baslangic_lessons.sql).
+  'alfabe': 'everyday',
+  'silav-u-rezdari': 'everyday',
+  'xwe-nasandin': 'everyday',
+  'malbat': 'everyday',
 };
 
 void main() {

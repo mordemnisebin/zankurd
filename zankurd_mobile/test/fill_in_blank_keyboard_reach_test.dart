@@ -43,9 +43,10 @@ void main() {
   });
 
   test('boşluk doldurma bankası duruyor', () {
+    // 2026-10-06: +69 başlangıç yolu boşluk doldurma sorusu (20 -> 89).
     expect(
       blanks.length,
-      20,
+      89,
       reason:
           'Boşluk doldurma soru sayısı değişti; bu bekçi yeni kayıtları da '
           'kapsamalı.',

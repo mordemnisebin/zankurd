@@ -25,6 +25,7 @@ import '../widgets/story_catalog.dart';
 import '../widgets/todays_review_card.dart';
 import '../widgets/zk_back_button.dart';
 import 'learner_lexicon_screen.dart';
+import '../widgets/lexicon_lookup.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -788,6 +789,11 @@ const Map<String, IconData> _lessonIconNameMap = {
   'favorite': AppIcons.heart,
   'calendar_today': AppIcons.calendarDays,
   'wb_sunny': AppIcons.sun,
+  // 2026-10-06 başlangıç yolu: alfabe, aile, kendini tanıtma, selamlaşma II.
+  'sort_by_alpha': AppIcons.font,
+  'family_restroom': AppIcons.peopleRoof,
+  'badge': AppIcons.user,
+  'forum': AppIcons.comment,
 };
 
 /// Ders KONUSUNDAN (`Lesson.category`) ikon — sunucu/mock her ikisinde de
@@ -1015,9 +1021,24 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     }
   }
 
-  Widget _buildKuContentRow(LessonSlide slide, BuildContext context) {
+  Widget _buildKuContentRow(
+    LessonSlide slide,
+    BuildContext context, {
+    bool lookup = true,
+  }) {
     final t = SahneTokens.of(context);
-    return Text(slide.contentKu, style: SahneType.body.copyWith(color: t.tx));
+    // Kart kipinde dokunuş kartı çevirir; sözcük dokunuşu orada kapalı.
+    if (!lookup) {
+      return Text(slide.contentKu, style: SahneType.body.copyWith(color: t.tx));
+    }
+    // Kurmancî sözcüğe dokununca sözlük maddesi açılır. `• terim: anlam`
+    // çiftleri düz kalır (terim ve anlamı zaten yan yana yazılı); başlık ve
+    // örnek satırlardaki sözcükler dokunulabilir.
+    return LexiconText(
+      slide.contentKu,
+      style: SahneType.body.copyWith(color: t.tx),
+      skipLinePattern: RegExp(r'^• .+?: .+$'),
+    );
   }
 
   /// Örnek cümle: Kulis (`s2`) tonlu M pahlı kutu, ikincil metin.
@@ -1089,7 +1110,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
               ],
             ),
             const SizedBox(height: SahneSpace.x4),
-            _buildKuContentRow(slide, context),
+            _buildKuContentRow(slide, context, lookup: false),
             if (slide.exampleKu case final exampleKu?) ...[
               const SizedBox(height: SahneSpace.x3),
               _buildExample(exampleKu, context),

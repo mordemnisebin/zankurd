@@ -235,7 +235,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final firstNode = find.byKey(
-      const ValueKey('learning-path-node-everyday_1'),
+      const ValueKey('learning-path-node-alphabet_1'),
     );
     expect(firstNode, findsOneWidget);
     expect(
@@ -244,7 +244,7 @@ void main() {
       reason: 'Rêya Zanînê üzerindeki dersler ayrı kartlar olmamalı.',
     );
     expect(
-      find.byKey(const ValueKey('learning-route-stop-everyday_1')),
+      find.byKey(const ValueKey('learning-route-stop-alphabet_1')),
       findsOneWidget,
     );
   });
@@ -406,7 +406,7 @@ void main() {
     final semanticsData = tester.getSemantics(nextStep).getSemanticsData();
     expect(semanticsData.hasAction(ui.SemanticsAction.tap), isTrue);
     expect(semanticsData.label, contains('Sıradaki ders'));
-    expect(semanticsData.label, contains('Selamlaşma'));
+    expect(semanticsData.label, contains('Alfabe'));
     semantics.dispose();
 
     await tester.ensureVisible(nextStep);
@@ -434,7 +434,7 @@ void main() {
       findsOneWidget,
     );
     final title = tester.widget<Text>(
-      find.descendant(of: nextStep, matching: find.text('Selamlaşma')),
+      find.descendant(of: nextStep, matching: find.text('Alfabe')),
     );
     // Sahne kartı gündüz temasında da gece çizilir.
     expect(title.style?.color, SahneTokens.night.tx);
@@ -667,6 +667,10 @@ void main() {
   });
 
   testWidgets('önerilen ders rota içinde tek kez görünür', (tester) async {
+    // Önceki testlerin yerleştirme kaydı sızmasın: 2026-10-06'da yol 3 yerine 7
+    // ders oldu, yerleştirme indeksi artık ilk düğüme düşmeyebilir.
+    SharedPreferences.setMockInitialValues({});
+    PlacementStore.resetInstance();
     await tester.pumpWidget(
       wrap(LearningScreen(repository: MockZanKurdRepository())),
     );
@@ -677,9 +681,9 @@ void main() {
     // `test/lesson_title_language_test.dart` (2026-07-27).
     // Önerilen ders ayrı bir üst kart olarak tekrarlanmaz; rota üzerindeki
     // aktif durak hem dersin kendisini hem öneri işaretini taşır.
-    expect(find.text('Selamlaşma'), findsOneWidget);
+    expect(find.text('Alfabe'), findsOneWidget);
     final firstNode = find.byKey(
-      const ValueKey('learning-path-node-everyday_1'),
+      const ValueKey('learning-path-node-alphabet_1'),
     );
     expect(
       find.descendant(
@@ -823,7 +827,7 @@ void main() {
     // artık koşulsuz "önerilen" olmadığını doğrularız — kaydırmaya
     // bağımlı olmayan, ilk kareden görünür bir kanıt.
     final firstNode = find.byKey(
-      const ValueKey('learning-path-node-everyday_1'),
+      const ValueKey('learning-path-node-alphabet_1'),
     );
     expect(firstNode, findsOneWidget);
     expect(
@@ -1097,7 +1101,7 @@ void main() {
     tester,
   ) async {
     final repository = MockZanKurdRepository();
-    await repository.markLessonCompleted('everyday_1');
+    await repository.markLessonCompleted('alphabet_1');
     await tester.pumpWidget(wrap(LearningScreen(repository: repository)));
     await tester.pumpAndSettle();
 
@@ -1113,7 +1117,7 @@ void main() {
     final detail = tester.widget<LessonDetailScreen>(
       find.byType(LessonDetailScreen),
     );
-    expect(detail.lesson.id, 'everyday_2');
+    expect(detail.lesson.id, 'everyday_1');
     expect(detail.initialFlashcardMode, isTrue);
   });
 

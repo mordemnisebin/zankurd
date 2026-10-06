@@ -9,14 +9,26 @@ import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 
 class LearnerLexiconScreen extends StatefulWidget {
-  const LearnerLexiconScreen({super.key});
+  const LearnerLexiconScreen({this.initialQuery = '', super.key});
+
+  /// Dokunmayla açılan balondan gelen arama metni (boşsa tüm sözlük).
+  final String initialQuery;
 
   @override
   State<LearnerLexiconScreen> createState() => _LearnerLexiconScreenState();
 }
 
 class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
-  String _query = '';
+  late String _query = widget.initialQuery;
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialQuery,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +60,7 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
                 children: [
                   SahneField.search(
                     key: const ValueKey('lexicon-search-field'),
+                    controller: _controller,
                     hintText: context.t(K.lexiconSearchHint),
                     onChanged: (value) => setState(() => _query = value),
                   ),
@@ -92,11 +105,19 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
                             '${context.t(K.lexiconSource)}: $sourceTitle';
                         final categoryText =
                             '${context.t(K.lexiconCategory)}: $category';
+                        // Terimin cümlede görünen biçimleri (`malê`,
+                        // `dizanim`): öğrenen sorudaki çekimli sözcüğü
+                        // aratınca neden bu maddenin çıktığını görür.
+                        final formsText = entry.forms.isEmpty
+                            ? null
+                            : '${context.t(K.lexiconForms)}: '
+                                  '${entry.forms.join(', ')}';
 
                         return Semantics(
                           container: true,
                           label:
                               '${entry.termKu}. ${entry.meaningTr}. '
+                              '${formsText == null ? '' : '$formsText. '}'
                               '$sourceText. $categoryText.',
                           child: ExcludeSemantics(
                             child: SahneSurfaceCard(
@@ -117,6 +138,18 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
                                       color: t.tx2,
                                     ),
                                   ),
+                                  if (formsText != null) ...[
+                                    const SizedBox(height: SahneSpace.x1),
+                                    Text(
+                                      formsText,
+                                      key: ValueKey(
+                                        'lexicon-forms-${entry.id}',
+                                      ),
+                                      style: SahneType.caption.copyWith(
+                                        color: t.tx3,
+                                      ),
+                                    ),
+                                  ],
                                   const SizedBox(height: SahneSpace.x2),
                                   Wrap(
                                     spacing: SahneSpace.x3,

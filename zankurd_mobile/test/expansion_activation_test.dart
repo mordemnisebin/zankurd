@@ -81,7 +81,9 @@ void main() {
       // kaynaklı sorular (bkz. `bosluk_balance_test.dart`).
       // 3169 -> 3201 (+32): 2026-10-02 `ders_2026_10_02`, son dört sunucu
       // dersinin (hejmar, lekera-bun, dengbeji, demsal) etiketli soruları.
-      3201,
+      // 3201 -> 3353 (+152): 2026-10-06 `baslangic_2026_10_06`, başlangıç
+      // yolu (32 çoktan seçmeli, 69 boşluk doldurma, 51 cümle kurma).
+      3353,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

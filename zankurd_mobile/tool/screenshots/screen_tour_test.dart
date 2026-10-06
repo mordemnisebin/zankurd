@@ -47,6 +47,7 @@ import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
+import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
@@ -2147,6 +2148,118 @@ void main() {
       size: const Size(320, 760),
     );
     await _shoot(t, '226_leaderboard_narrow_long_names');
+  }, tags: ['preview']);
+
+  // ── Başlangıç yolu (2026-10-06) ─────────────────────────────────────
+  testWidgets('227 başlangıç dersi — Alfabe', (t) async {
+    final lesson = (await repository.loadLessonsByCategory(
+      'everyday',
+    )).firstWhere((l) => l.id == 'alphabet_1');
+    await _pump(t, LessonDetailScreen(lesson: lesson, repository: repository));
+    await t.pumpAndSettle();
+    await _shoot(t, '227_beginner_lesson_alphabet');
+    await t.tap(find.text('İleri'));
+    await t.pumpAndSettle();
+    await _shoot(t, '231_beginner_lesson_alphabet_s2');
+  }, tags: ['preview']);
+
+  testWidgets('228 başlangıç — boşluk doldurma', (t) async {
+    final questions = await repository.loadLearningQuizQuestions(
+      category: 'Ziman',
+      learningLessonId: 'family_1',
+      limit: 5,
+    );
+    final fill = questions.firstWhere(
+      (q) => q.type == QuestionType.fillInBlank,
+    );
+    await _pump(
+      t,
+      QuizScreen(
+        repository: repository,
+        room: repository.createRoom(),
+        questions: [fill],
+        experience: QuizExperience.learning,
+        enableTimer: false,
+      ),
+    );
+    await _shoot(t, '228_beginner_fill_in_blank');
+  }, tags: ['preview']);
+
+  testWidgets('229 başlangıç — cümle kurma', (t) async {
+    final questions = await repository.loadLearningQuizQuestions(
+      category: 'Ziman',
+      learningLessonId: 'greetings_2',
+      limit: 5,
+    );
+    final order = questions.firstWhere(
+      (q) => q.type == QuestionType.wordOrdering,
+    );
+    await _pump(
+      t,
+      QuizScreen(
+        repository: repository,
+        room: repository.createRoom(),
+        questions: [order],
+        experience: QuizExperience.learning,
+        enableTimer: false,
+      ),
+    );
+    await _shoot(t, '229_beginner_word_ordering');
+  }, tags: ['preview']);
+
+  testWidgets('233 sözlük dokunuşu — soru ekranında anlam balonu', (t) async {
+    final questions = await repository.loadLearningQuizQuestions(
+      category: 'Ziman',
+      learningLessonId: 'family_1',
+      limit: 5,
+    );
+    final fill = questions.firstWhere(
+      (q) => q.type == QuestionType.fillInBlank,
+    );
+    await _pump(
+      t,
+      QuizScreen(
+        repository: repository,
+        room: repository.createRoom(),
+        questions: [fill],
+        experience: QuizExperience.learning,
+        enableTimer: false,
+      ),
+    );
+    await _shoot(t, '233_lexicon_tap_prompt');
+    final words = find.byWidgetPredicate(
+      (w) =>
+          w.key is ValueKey &&
+          '${(w.key as ValueKey).value}'.startsWith('lexicon-word-'),
+    );
+    await t.tap(words.first);
+    await t.pumpAndSettle();
+    await _shoot(t, '234_lexicon_tap_sheet');
+  }, tags: ['preview']);
+
+  testWidgets('235 sözlük dokunuşu — ders slaydı', (t) async {
+    final lesson = (await repository.loadLessonsByCategory(
+      'everyday',
+    )).firstWhere((l) => l.id == 'alphabet_1');
+    await _pump(t, LessonDetailScreen(lesson: lesson, repository: repository));
+    await t.pumpAndSettle();
+    await _shoot(t, '235_lexicon_tap_slide');
+  }, tags: ['preview']);
+
+  testWidgets('230 sözlük — aksansız arama (cay)', (t) async {
+    await _pump(t, const LearnerLexiconScreen());
+    await t.enterText(
+      find.byKey(const ValueKey('lexicon-search-field')),
+      'cay',
+    );
+    await t.pumpAndSettle();
+    await _shoot(t, '230_lexicon_search_cay');
+    await t.enterText(
+      find.byKey(const ValueKey('lexicon-search-field')),
+      'dizanim',
+    );
+    await t.pumpAndSettle();
+    await _shoot(t, '232_lexicon_search_forms');
   }, tags: ['preview']);
 }
 
