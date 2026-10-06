@@ -77,7 +77,15 @@ void main() {
     await tester.pump(const Duration(milliseconds: 1300));
     await tester.pump(const Duration(milliseconds: 100));
     // 2026-09-29 doğallık (K9): podyum kalktı; ilk üç de sıra satırıdır.
-    expect(find.byKey(const ValueKey('leaderboard-rank-list')), findsOneWidget);
+    // 2026-10-02 (A8): podyum geri geldi. Üç oyuncuda yalnız podyum çizilir
+    // (`leaderboard-rank-list` yok), dörtte ve üstünde podyum + liste; ilk
+    // üçün satır anahtarları iki yüzeyde de aynıdır. Bu test yalnız
+    // "sıralama yüzeyi çizildi" der, hangisinin çizildiğine bağlı değildir.
+    expect(
+      find.byKey(const ValueKey('leaderboard-podium')).evaluate().length +
+          find.byKey(const ValueKey('leaderboard-rank-list')).evaluate().length,
+      greaterThanOrEqualTo(1),
+    );
     expect(
       find.byKey(const ValueKey('leaderboard-rank-row-1')),
       findsOneWidget,
