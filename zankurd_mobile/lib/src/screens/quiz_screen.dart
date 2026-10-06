@@ -49,6 +49,7 @@ import '../widgets/floating_reaction_overlay.dart';
 import '../widgets/mission_toast.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/quiz_tutorial_overlay.dart';
+import '../widgets/lexicon_lookup.dart';
 import '../widgets/sahne/sahne.dart';
 import 'quiz/quiz_effects.dart';
 import 'quiz/quiz_feedback_overlay.dart';

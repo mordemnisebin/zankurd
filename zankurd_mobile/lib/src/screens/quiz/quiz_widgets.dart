@@ -358,6 +358,7 @@ class _QuestionTextAndAnswers extends StatelessWidget {
     required this.showExplanation,
     required this.suspense,
     required this.onAnswer,
+    this.lexiconEnabled = false,
     this.forceHeadline = false,
     this.titleLineBudget = QuizQuestionPrompt.maxTitleLines,
     this.audiencePoll,
@@ -374,6 +375,10 @@ class _QuestionTextAndAnswers extends StatelessWidget {
   });
 
   final String promptText;
+
+  /// Sözlük dokunuşu: yalnız öğrenme modunda (günün dersi, ders kısa testi,
+  /// alıştırma); yarış, oda ve düelloda KAPALI.
+  final bool lexiconEnabled;
   final QuizQuestion question;
   final String selectedAnswer;
   final bool? adjudicatedCorrect;
@@ -444,6 +449,14 @@ class _QuestionTextAndAnswers extends StatelessWidget {
                 Expanded(
                   child: QuizQuestionPrompt(
                     promptText,
+                    lexicon: LexiconTapPolicy.forQuestion(
+                      enabled: lexiconEnabled,
+                      isKu: context.isKu,
+                      answered: answered,
+                      type: question.type.name,
+                      promptText: promptText,
+                      correctAnswer: question.correctAnswer,
+                    ),
                     forceHeadline: forceHeadline,
                     titleLineBudget: titleLineBudget,
                   ),

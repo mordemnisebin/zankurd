@@ -6,6 +6,7 @@ import '../../providers/reduced_motion_provider.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/percent_format.dart';
 import '../../utils/player_identity.dart';
+import '../../widgets/lexicon_lookup.dart';
 import '../../widgets/sahne/sahne.dart';
 
 /// Şık çubuğu — Şahnê'nin "8 · Şık çubuğu" bileşeni (maketteki `.sh-ans`).
@@ -449,9 +450,13 @@ class QuizQuestionPrompt extends StatelessWidget {
     super.key,
     this.forceHeadline = false,
     this.titleLineBudget = maxTitleLines,
+    this.lexicon = LexiconTapPolicy.off,
   });
 
   final String text;
+
+  /// Sözlük için dokunulabilir sözcükler (yalnız öğrenme modunda açık).
+  final LexiconTapPolicy lexicon;
 
   /// Telefon-yatay gibi dar dikey alanda hep Manşet 22.
   final bool forceHeadline;
@@ -495,16 +500,18 @@ class QuizQuestionPrompt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) => Text(
-        text,
-        style: styleFor(
+      builder: (context, constraints) {
+        final style = styleFor(
           context,
           text,
           constraints.maxWidth,
           forceHeadline: forceHeadline,
           titleLineBudget: titleLineBudget,
-        ),
-      ),
+        );
+        return lexicon.enabled
+            ? LexiconText(text, style: style, policy: lexicon)
+            : Text(text, style: style);
+      },
     );
   }
 }
