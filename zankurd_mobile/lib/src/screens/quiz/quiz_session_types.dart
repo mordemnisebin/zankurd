@@ -9,6 +9,21 @@ part of '../quiz_screen.dart';
 
 enum QuizExperience { learning, competition }
 
+/// Sözlük dokunuşu açık mı? Başkasıyla puan yarışılan hiçbir akışta açılmaz;
+/// bkz. `_lexiconTapAllowed` ve `test/lexicon_lookup_test.dart`.
+bool lexiconTapAllowedFor({
+  required bool learning,
+  required bool practice,
+  required bool is1v1,
+  required bool botRace,
+  required bool dailyQuiz,
+  required bool contest,
+  required bool versus,
+}) {
+  if (is1v1 || botRace || dailyQuiz || contest || versus) return false;
+  return learning || practice;
+}
+
 /// Ödül üretmeyen tek kişilik tur: süre tercihi yalnız burada geçerlidir.
 bool isRewardNeutralSoloQuiz({
   required bool is1v1,

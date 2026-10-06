@@ -54,6 +54,10 @@ Future<void> _open(
   WidgetTester tester,
   QuizQuestion question, {
   required QuizExperience experience,
+  bool practice = false,
+  bool is1v1 = false,
+  bool botRace = false,
+  bool dailyQuiz = false,
 }) async {
   final repository = freshMockRepository();
   await tester.pumpWidget(
@@ -63,6 +67,10 @@ Future<void> _open(
         room: repository.createRoom(),
         questions: [question],
         experience: experience,
+        practice: practice,
+        is1v1: is1v1,
+        botRace: botRace,
+        dailyQuiz: dailyQuiz,
         enableTimer: false,
       ),
     ),
@@ -83,6 +91,8 @@ void main() {
       expect(LearnerLexicon.lookup('xyz'), isNull);
       // 3 harfli kök önek olarak çalışmaz: `kurmanc` -> Kur(d) değil.
       expect(LearnerLexicon.lookup('baxa'), isNull);
+      // Kök + en çok 3 harflik ek: `dest` (el) `destûrname` sözcüğünü açmaz.
+      expect(LearnerLexicon.lookup('destûrname')?.termKu, isNot('Dest'));
     });
   });
 
@@ -129,6 +139,78 @@ void main() {
       );
       expect(p.blocked, contains('de'));
       expect(p.mode, LexiconTapMode.firstQuote);
+    });
+  });
+
+  group('hangi oyunda açık (2026-10-07)', () {
+    // Kategori/alt kategori seviyesi, günün dersi ve yanlış çalışması tek
+    // kişilik ve başkasıyla puanlanmayan akışlardır: sözlük açık. Oda, hızlı
+    // düello, eşzamansız düello, turnuva ve günlük yarışma kapalı.
+    bool allowed({
+      bool learning = false,
+      bool practice = false,
+      bool is1v1 = false,
+      bool botRace = false,
+      bool dailyQuiz = false,
+      bool contest = false,
+      bool versus = false,
+    }) => lexiconTapAllowedFor(
+      learning: learning,
+      practice: practice,
+      is1v1: is1v1,
+      botRace: botRace,
+      dailyQuiz: dailyQuiz,
+      contest: contest,
+      versus: versus,
+    );
+
+    test('tek kişilik öğrenme ve ödülsüz tekrar: açık', () {
+      expect(allowed(learning: true), isTrue, reason: 'kategori seviyesi');
+      expect(allowed(learning: true, practice: true), isTrue);
+      expect(allowed(practice: true), isTrue, reason: 'yanlış çalışması');
+    });
+
+    test('puanlı ve çok oyunculu akışlar: kapalı', () {
+      expect(allowed(), isFalse, reason: 'oda / varsayılan yarış');
+      expect(allowed(learning: true, is1v1: true), isFalse);
+      expect(allowed(practice: true, is1v1: true), isFalse);
+      expect(
+        allowed(learning: true, botRace: true),
+        isFalse,
+        reason: 'turnuva',
+      );
+      expect(allowed(learning: true, dailyQuiz: true), isFalse);
+      expect(allowed(learning: true, contest: true), isFalse);
+      expect(allowed(practice: true, versus: true), isFalse);
+    });
+
+    testWidgets('tek kişilik kategori sınavında açılır', (tester) async {
+      await _open(tester, _fill, experience: QuizExperience.learning);
+      expect(_word('ev'), findsOneWidget);
+    });
+
+    testWidgets('düello, turnuva ve günlük yarışmada kapalı', (tester) async {
+      await _open(
+        tester,
+        _fill,
+        experience: QuizExperience.learning,
+        is1v1: true,
+      );
+      expect(_word('ev'), findsNothing);
+      await _open(
+        tester,
+        _fill,
+        experience: QuizExperience.learning,
+        botRace: true,
+      );
+      expect(_word('ev'), findsNothing);
+      await _open(
+        tester,
+        _fill,
+        experience: QuizExperience.learning,
+        dailyQuiz: true,
+      );
+      expect(_word('ev'), findsNothing);
     });
   });
 

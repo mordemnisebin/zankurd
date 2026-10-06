@@ -104,7 +104,9 @@ void main() {
     const warmup = QuizQuestion(
       id: 'warmup-second',
       category: 'Ziman',
-      prompt: 'Pirsa germkirinê',
+      // Sözlükte olmayan sözcükler: öğrenme modunda sözlükteki sözcükler
+      // dokunulabilir (WidgetSpan) çizilir ve `find.text` düz metni bulamaz.
+      prompt: 'Qiqrop zeqnok',
       answers: ['A', 'B', 'C', 'D'],
       correctAnswer: 'A',
       explanation: 'A bersiva rast e.',
@@ -132,7 +134,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Pirsa germkirinê'), findsOneWidget);
+    expect(find.text('Qiqrop zeqnok'), findsOneWidget);
     expect(find.text('Hilberîna nivîskî'), findsNothing);
     expect(find.byKey(const ValueKey('fill-in-blank-input')), findsNothing);
   });
