@@ -319,9 +319,53 @@ class QuestionSetPolicy {
   /// Benzer metin eşiği (belirteç Jaccard).
   static const double similarPromptThreshold = 0.6;
 
+  /// Sorunun HEDEF metinleri: cevaplatılan cümle/terim.
+  ///
+  /// Cümle kurma sorusunda hedef doğru cevabın kendisidir ("Navê min Rojîn
+  /// e"); çeviri sorusunda ya soru metninin tırnaklı terimi ya da doğru
+  /// cevaptır. İki dilin metinleri de katılır. Doğru/yanlış tipi ve
+  /// "Rast/Şaş" gibi hüküm sözcükleri ile salt sayılar hedef sayılmaz.
+  static Set<String> targetTexts(QuizQuestion q) {
+    final keys = <String>{};
+    void add(String? raw) {
+      final key = normalize(raw ?? '');
+      if (key.length < 3) return;
+      if (_verdictWords.contains(key)) return;
+      if (RegExp(r'^[\d\s]+$').hasMatch(key)) return;
+      keys.add(key);
+    }
+
+    for (final prompt in [q.prompt, q.promptTr]) {
+      if (prompt == null) continue;
+      add(_quotedTerm.firstMatch(prompt)?.group(1));
+    }
+    if (q.type != QuestionType.trueFalse) {
+      add(q.correctAnswer);
+      add(q.correctAnswerTr);
+    }
+    return keys;
+  }
+
+  /// [a] ve [b] aynı cümle/terimi sordurur mu (türleri farklı olsa da).
+  ///
+  /// ## Kusur
+  ///
+  /// Ders mini testinde cümle kurma "Navê min Rojîn e" ve çoktan seçmeli
+  /// "'Navê min Rojîn e' Türkçesi nedir?" art arda geldi (2026-10-07 QA):
+  /// konu anahtarı yalnız tırnaklı terim ya da KISA cevaba bakıyordu, dört
+  /// sözcüklü cümle ikisine de takılmıyordu; ayrıca cümle kurma ile şıklı
+  /// soru ayrı havuzlardan seçildiği için birbirini görmüyordu.
+  static bool sharesTargetText(QuizQuestion a, QuizQuestion b) {
+    if (a.id == b.id) return false;
+    final left = targetTexts(a);
+    if (left.isEmpty) return false;
+    return targetTexts(b).any(left.contains);
+  }
+
   /// [a] ve [b] aynı turda birlikte "tekrar" sayılır mı: aynı konu ya da
   /// neredeyse aynı soru metni.
   static bool repeatsSubject(QuizQuestion a, QuizQuestion b) {
+    if (sharesTargetText(a, b)) return true;
     final keyA = subjectKey(a);
     if (keyA != null && keyA == subjectKey(b)) return true;
     return promptSimilarity(a.prompt, b.prompt) >= similarPromptThreshold;
