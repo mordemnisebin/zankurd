@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -153,7 +154,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 1));
 
-    expect(find.text('Süre doldu! Doğru cevap: Kitêb'), findsOneWidget);
+    expect(find.text('Süre doldu. Doğru cevap: Kitêb'), findsOneWidget);
     final revealedTiles = tester
         .widgetList<QuizOptionTile>(find.byType(QuizOptionTile))
         .toList();

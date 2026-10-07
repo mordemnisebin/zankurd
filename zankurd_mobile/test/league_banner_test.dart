@@ -1,6 +1,8 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:zankurd_mobile/src/config/feature_flags.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
@@ -45,18 +47,44 @@ Widget _shell(Widget child) {
 }
 
 void main() {
-  testWidgets('haftalık görünümde lig bandı görünür', (tester) async {
-    tester.view.physicalSize = const Size(480, 1400);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.reset);
+  // Lig 2026-09-27'den beri bayrakla kapalı (kWeeklyLeagueEnabled): az
+  // oyuncuyla herkes "Bronz lig"de kalıyordu. Bayrak açılınca bu test yine
+  // koşar; kapalıyken ikinci test bandın hiç çizilmediğini denetler.
+  testWidgets(
+    'haftalık görünümde lig bandı görünür',
+    skip: !kWeeklyLeagueEnabled,
+    (tester) async {
+      tester.view.physicalSize = const Size(480, 1400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
 
-    await tester.pumpWidget(
-      _shell(LeaderboardScreen(repository: _TestLeagueRepository())),
-    );
-    await tester.pumpAndSettle();
+      await tester.pumpWidget(
+        _shell(LeaderboardScreen(repository: _TestLeagueRepository())),
+      );
+      await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('league-banner')), findsOneWidget);
-    expect(find.text('Bronz Lig'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
+      expect(find.byKey(const ValueKey('league-banner')), findsOneWidget);
+      expect(find.text('Bronz lig'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'lig kapalıyken haftalık görünümde bant çizilmez',
+    skip: kWeeklyLeagueEnabled,
+    (tester) async {
+      tester.view.physicalSize = const Size(480, 1400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(
+        _shell(LeaderboardScreen(repository: _TestLeagueRepository())),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('league-banner')), findsNothing);
+      expect(find.text('Bronz lig'), findsNothing);
+      expect(tester.takeException(), isNull);
+    },
+  );
 }

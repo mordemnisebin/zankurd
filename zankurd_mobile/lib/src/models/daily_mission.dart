@@ -18,6 +18,7 @@ class DailyMission {
     this.category,
     this.progress = 0,
     this.completed = false,
+    this.claimed = false,
   });
 
   final MissionType type;
@@ -26,6 +27,7 @@ class DailyMission {
   final String? category;
   int progress;
   bool completed;
+  bool claimed;
 
   /// Günlük görevler çevrimdışı ilerlediği için coin hakkı sunucuda güvenle
   /// doğrulanamaz. Yayın sürümünde görev tamamlaması sabit XP verir.
@@ -47,6 +49,7 @@ class DailyMission {
     'Siyaset': 'siyaset',
     'Paradigma': 'paradigma',
     'Teknolojî': 'teknoloji',
+    'Cîhan': 'cihan',
   };
 
   static String _categorySlug(String category) =>
@@ -56,22 +59,27 @@ class DailyMission {
     MissionType.answerCorrect => '$target bersivên rast bide',
     MissionType.completeQuiz => '$target pêşbirk biqedîne',
     MissionType.useWildcard => '$target joker bikar bîne',
-    MissionType.keepStreak => 'Seriya xwe biparêze',
+    // Günlük seri zincîr'dir; `Seriya` tur içi Rêz ile karışır.
+    // Koruma düğmesi (`K.streakProtectAction`) aynı kökü kullanır.
+    MissionType.keepStreak => 'Zincîra xwe biparêze',
     MissionType.playCategory =>
       'Di ${CategoryNames.localized(category ?? '?', true)} de bilîze',
   };
 
   String get labelTr => switch (type) {
     MissionType.answerCorrect => '$target doğru cevap ver',
-    MissionType.completeQuiz => '$target quiz tamamla',
+    MissionType.completeQuiz => '$target yarış tamamla',
     MissionType.useWildcard => '$target joker kullan',
     MissionType.keepStreak => 'Serisini koru',
-    // Kurmancî etiketi kategoriyi çeviriyordu, Türkçe etiketi ham anahtarı
+    // Kurmancî etiketi konuyu çeviriyordu, Türkçe etiketi ham anahtarı
     // yazıyordu: görev "Cografya kategorisinde oyna" (ğ'siz), "Muzîk",
-    // "Dîrok" diyordu — yani Türkçe arayüzde kategori adı hem yanlış
-    // yazılıyor hem Kurmancî kalıyordu (2026-07-27).
+    // "Dîrok" diyordu; yani Türkçe arayüzde konu adı hem yanlış yazılıyor
+    // hem Kurmancî kalıyordu (2026-07-27). 2026-09-30 simülatör: "kategori"
+    // sözlükte yasak, "quiz" İngilizce; konu ve yarış denir ("Kültür
+    // konusunda oyna", "1 yarış tamamla"). KU zaten "mijar" değil konu adını
+    // ve "pêşbirk" sözünü kullanır.
     MissionType.playCategory =>
-      '${CategoryNames.localized(category ?? '?', false)} kategorisinde oyna',
+      '${CategoryNames.localized(category ?? '?', false)} konusunda oyna',
   };
 }
 

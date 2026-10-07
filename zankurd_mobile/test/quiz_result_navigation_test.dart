@@ -1,9 +1,11 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -60,8 +62,11 @@ Future<void> _pumpResultOnFinishedRoomStack(
   );
   await tester.pump();
   await tester.pump(const Duration(seconds: 1));
+  final primaryActionKey = roomId == null
+      ? 'result-play-again-button'
+      : 'result-primary-home';
   await tester.scrollUntilVisible(
-    find.byKey(const ValueKey('result-play-again-button')),
+    find.byKey(ValueKey(primaryActionKey)),
     500,
     scrollable: find.byType(Scrollable).last,
   );
@@ -77,9 +82,9 @@ void main() {
         roomId: 'online-room-id',
       );
 
-      final action = find.byKey(const ValueKey('result-play-again-button'));
+      final action = find.byKey(const ValueKey('result-primary-home'));
       expect(
-        find.descendant(of: action, matching: find.text('Ana Sayfa')),
+        find.descendant(of: action, matching: find.text('Ana sayfa')),
         findsOneWidget,
       );
 
@@ -101,14 +106,17 @@ void main() {
       roomId: 'online-room-id',
     );
 
-    final action = find.byKey(const ValueKey('result-play-again-button'));
+    final action = find.byKey(const ValueKey('result-primary-home'));
     expect(
-      find.descendant(of: action, matching: find.text('Sereke')),
+      find.descendant(of: action, matching: find.text('Rûpela sereke')),
       findsOneWidget,
     );
   });
 
-  testWidgets('çevrimiçi AppBar geri bitmiş oda rotasını temizler', (
+  // 2026-09-29 Şahnê: sonuç C iskeletine (oyun sahnesi) taşındı; AppBar'ın
+  // geri düğmesinin yerini sahnenin üst satırındaki kapat (✕) aldı. Korunan
+  // davranış aynı: çevrimiçi turda kapatmak bitmiş oda rotasını temizler.
+  testWidgets('çevrimiçi sahne kapatma bitmiş oda rotasını temizler', (
     tester,
   ) async {
     await _pumpResultOnFinishedRoomStack(
@@ -117,7 +125,7 @@ void main() {
       roomId: 'online-room-id',
     );
 
-    await tester.tap(find.byType(BackButton));
+    await tester.tap(find.byType(SahneIconButton));
     await tester.pumpAndSettle();
 
     expect(find.text(_rootMarker), findsOneWidget);

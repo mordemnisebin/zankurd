@@ -1,6 +1,12 @@
+// 2026-09-29 doğallık (K6): sıfır bakiyede ana sayfada jeton çipi yok.
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+import 'dart:ui' as ui;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -13,10 +19,56 @@ import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_up_screen.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/services/analytics_service.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
+
+class _AppleAuthProvider extends AuthProvider {
+  _AppleAuthProvider() : super.test();
+
+  bool appleSignInCalled = false;
+
+  @override
+  Future<bool> signInWithApple() async {
+    appleSignInCalled = true;
+    return true;
+  }
+}
+
+class _GoogleAuthProvider extends AuthProvider {
+  _GoogleAuthProvider() : super.test();
+
+  bool googleSignInCalled = false;
+
+  @override
+  Future<bool> signInWithGoogle() async {
+    googleSignInCalled = true;
+    return true;
+  }
+}
+
+/// 2026-09-29 Şahnê: giriş, kayıt ve oyuncu adı kahramanları ortak kimliği
+/// eski Forest gradyanıyla değil Şahnê sahne zeminiyle taşır: gece
+/// degradesi + Zimrût (öğrenme) köşe radyali ([SahneStagePainter]). Korunan
+/// kural aynı: üç giriş yüzeyi AYNI kimliği paylaşır.
+void _expectLearnStageIdentity(WidgetTester tester, Finder hero) {
+  expect(hero, findsOneWidget);
+  final painters = tester
+      .widgetList<CustomPaint>(
+        find.descendant(
+          of: hero,
+          matching: find.byType(CustomPaint),
+          matchRoot: true,
+        ),
+      )
+      .map((p) => p.painter)
+      .whereType<SahneStagePainter>()
+      .toList();
+  expect(painters, isNotEmpty, reason: 'kahraman sahne zemini taşımalı');
+  expect(painters.first.race, isFalse);
+  expect(painters.first.glow, SahneTokens.night.roleGlow(SahneRole.learn));
+}
 
 void main() {
   late MockZanKurdRepository repository;
@@ -47,12 +99,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
+    expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
     expect(find.text('Misafir olarak devam et'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('giriş ekranı resmî ZanKurd sloganını kullanır', (tester) async {
+  testWidgets('giriş ekranı slogan satırı göstermez (2026-09-29 doğallık: '
+      '"Kurmancî hîn bibe, pêş bikeve." kaldırıldı)', (tester) async {
     await tester.pumpWidget(
       testShell(
         child: const SignInScreen(),
@@ -62,29 +115,220 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsOneWidget);
+    expect(find.text('Bi xêr hatî ZanKurdê'), findsOneWidget);
+    expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsNothing);
     expect(find.textContaining('pêşbirkê bike'), findsNothing);
   });
 
-  testWidgets(
-    'iOS giriş ekranı yalnız e-posta ve misafir seçeneklerini sunar',
-    (tester) async {
-      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+  testWidgets('giriş hero alanı ortak Forest kimlik gradientini kullanır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
+    );
+    await tester.pumpAndSettle();
 
-      await tester.pumpWidget(
-        testShell(
-          child: const SignInScreen(),
-          authProvider: GateAuthProvider(),
+    _expectLearnStageIdentity(
+      tester,
+      find.byKey(const ValueKey('sign-in-hero-banner')),
+    );
+  });
+
+  // 2026-09-29 Şahnê: dil seçici seçim rayının sığan çeşididir; seçili çip
+  // eskiden Forest gradyanı + gölge taşıyordu. Korunan şey: etkin dil
+  // görünür biçimde (ton + Halka 2) ve ekran okuyucuda seçili.
+  testWidgets('giriş dil seçimi aktif dili seçili çiple gösterir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      testShell(
+        child: const SignInScreen(),
+        authProvider: GateAuthProvider(),
+        languageProvider: kurmanciLang(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final chipFinder = find.byKey(const ValueKey('sign-in-language-chip-KU'));
+    expect(chipFinder, findsOneWidget);
+    final chip = tester.widget<SahneRailChip>(
+      find.descendant(of: chipFinder, matching: find.byType(SahneRailChip)),
+    );
+    expect(chip.selected, isTrue);
+    final other = tester.widget<SahneRailChip>(
+      find.descendant(
+        of: find.byKey(const ValueKey('sign-in-language-chip-TR')),
+        matching: find.byType(SahneRailChip),
+      ),
+    );
+    expect(other.selected, isFalse);
+    expect(
+      tester
+          .getSemantics(chipFinder)
+          .getSemanticsData()
+          .flagsCollection
+          .isSelected
+          .toString(),
+      'Tristate.isTrue',
+    );
+  });
+
+  testWidgets('kayıt hero alanı ortak Forest kimlik gradientini kullanır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      testShell(child: const SignUpScreen(), authProvider: GateAuthProvider()),
+    );
+    await tester.pumpAndSettle();
+
+    _expectLearnStageIdentity(
+      tester,
+      find.byKey(const ValueKey('sign-up-hero-banner')),
+    );
+  });
+
+  testWidgets('kayıt ilerleme göstergesi aktif adımda Forest kullanır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      testShell(child: const SignUpScreen(), authProvider: GateAuthProvider()),
+    );
+    await tester.pumpAndSettle();
+
+    // 2026-09-29 Şahnê: aktif adım Forest gradyanı + gölge değil, öğrenme
+    // rolüdür. Korunan kural: aktif adım toplamdan ayrılır.
+    // 2026-10-01 giriş iskeleti: "1/3" artık kartın içindeki renkli metin
+    // değil, üst çubuğun altındaki ilerleme çubuğunun yanındaki sayıdır
+    // (karşılama ve seviye sınavıyla aynı bileşen). Durum renkten bağımsız:
+    // dolgu oranı + sayı.
+    final stepFinder = find.byKey(const ValueKey('signup-progress'));
+    expect(stepFinder, findsOneWidget);
+    final bar = tester.widget<SahneProgressBar>(stepFinder);
+    expect(bar.trailing, '1/3');
+    expect(bar.value, closeTo(1 / 3, 1e-9));
+    expect(find.text('1/3'), findsOneWidget);
+    expect(find.byKey(const ValueKey('signup-progress-step-1')), findsNothing);
+  });
+
+  testWidgets('oyuncu adı hero alanı ortak Forest kimliğini kullanır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      testShell(
+        child: ProfileNameGateScreen(
+          repository: repository,
+          onCompleted: () {},
         ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    _expectLearnStageIdentity(
+      tester,
+      find.byKey(const ValueKey('profile-name-gate-hero')),
+    );
+  });
+
+  testWidgets('iOS giriş ekranı Google ve Apple seçeneklerini sunar', (
+    tester,
+  ) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+    await tester.pumpWidget(
+      testShell(child: const SignInScreen(), authProvider: GateAuthProvider()),
+    );
+    await tester.pumpAndSettle();
+    debugDefaultTargetPlatformOverride = null;
+
+    expect(find.text('Google ile giriş yap'), findsOneWidget);
+    expect(find.text('Apple ile giriş yap'), findsOneWidget);
+    expect(find.text('Misafir olarak devam et'), findsOneWidget);
+    expect(find.text('Veya e-posta ile'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets(
+    'desteklenen giriş ekranında Apple seçeneği görünür ve akışı başlatır',
+    (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+      final authProvider = _AppleAuthProvider();
+      await tester.pumpWidget(
+        testShell(child: const SignInScreen(), authProvider: authProvider),
       );
       await tester.pumpAndSettle();
-      debugDefaultTargetPlatformOverride = null;
 
-      expect(find.text('Google ile giriş yap'), findsNothing);
-      expect(find.text('Apple ile giriş yap'), findsNothing);
-      expect(find.text('Misafir olarak devam et'), findsOneWidget);
-      expect(find.text('Veya e-posta ile'), findsOneWidget);
+      final appleButton = find.text('Apple ile giriş yap');
+      expect(appleButton, findsOneWidget);
+
+      await tester.tap(appleButton);
+      await tester.pumpAndSettle();
+
+      debugDefaultTargetPlatformOverride = null;
+      expect(authProvider.appleSignInCalled, isTrue);
       expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('OAuth tarayıcı açılışı tamamlanmış login olarak ölçülmez', (
+    tester,
+  ) async {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+    final loginMethods = <String>[];
+    AnalyticsService.instance.debugEventSink = (name, parameters) {
+      if (name == 'login') {
+        loginMethods.add(parameters?['method']?.toString() ?? '');
+      }
+    };
+    addTearDown(() => AnalyticsService.instance.debugEventSink = null);
+
+    // Bu fake, dış OAuth gibi yalnız başlatma başarısını döndürür;
+    // AuthProvider.test() authenticated hâle gelmez.
+    final authProvider = _AppleAuthProvider();
+    await tester.pumpWidget(
+      testShell(child: const SignInScreen(), authProvider: authProvider),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Apple ile giriş yap'));
+    await tester.pumpAndSettle();
+
+    debugDefaultTargetPlatformOverride = null;
+    expect(authProvider.appleSignInCalled, isTrue);
+    expect(authProvider.isAuthenticated, isFalse);
+    expect(loginMethods, isEmpty);
+  });
+
+  testWidgets(
+    'Google OAuth tarayıcı açılışı tamamlanmış login olarak ölçülmez',
+    (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+      final loginMethods = <String>[];
+      AnalyticsService.instance.debugEventSink = (name, parameters) {
+        if (name == 'login') {
+          loginMethods.add(parameters?['method']?.toString() ?? '');
+        }
+      };
+      addTearDown(() => AnalyticsService.instance.debugEventSink = null);
+
+      final authProvider = _GoogleAuthProvider();
+      await tester.pumpWidget(
+        testShell(child: const SignInScreen(), authProvider: authProvider),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Google ile giriş yap'));
+      await tester.pumpAndSettle();
+
+      debugDefaultTargetPlatformOverride = null;
+      expect(authProvider.googleSignInCalled, isTrue);
+      expect(authProvider.isAuthenticated, isFalse);
+      expect(loginMethods, isEmpty);
     },
   );
 
@@ -231,18 +475,36 @@ void main() {
       await tester.tap(find.text('Veya e-posta ile'));
       await tester.pumpAndSettle();
 
-      // Renkli welcome banner başlığı iki temada da beyaz kalır.
-      final title = tester.widget<Text>(find.text('ZanKurd\'a Hoş Geldin'));
-      expect(title.style?.color?.computeLuminance(), greaterThan(0.75));
+      // 2026-10-01 giriş iskeleti: başlık gece bandının içinde değil sayfa
+      // zemininde durur; rengi temayla birlikte değişir (`tx`) ve sayfa
+      // zemininde AA (≥ 4,5) kalır. Eskiden iki temada da beyazdı.
+      final pageTokens = mode == ThemeMode.light
+          ? SahneTokens.day
+          : SahneTokens.night;
+      final title = tester.widget<Text>(find.text('ZanKurd\'a hoş geldin'));
+      expect(title.style?.color, pageTokens.tx);
+      final titleHi = title.style!.color!.computeLuminance();
+      final titleLo = pageTokens.bg.computeLuminance();
+      expect(
+        (titleHi > titleLo ? titleHi + 0.05 : titleLo + 0.05) /
+            (titleHi > titleLo ? titleLo + 0.05 : titleHi + 0.05),
+        greaterThanOrEqualTo(4.5),
+      );
 
       // Form etiketi temayla birlikte renk değiştirir; sabit beyaz olmamalı.
+      // Etiket her formda aynıdır (SahneField: ikincil metin `tx2`); giriş
+      // ekranı eskiden kendi etiket rengini (`tx`) verip kayıt formundan
+      // ayrışıyordu. Okunurluk korunur: kart zemininde AA (≥ 4,5).
       final emailLabel = tester.widget<Text>(find.text('E-posta adresi'));
-      final labelLuminance = emailLabel.style?.color?.computeLuminance() ?? 0;
-      if (mode == ThemeMode.light) {
-        expect(labelLuminance, lessThan(0.3));
-      } else {
-        expect(labelLuminance, greaterThan(0.6));
-      }
+      final tokens = mode == ThemeMode.light
+          ? SahneTokens.day
+          : SahneTokens.night;
+      expect(emailLabel.style?.color, tokens.tx2);
+      final hi = emailLabel.style!.color!.computeLuminance();
+      final lo = tokens.s1.computeLuminance();
+      final contrast =
+          (hi > lo ? hi + 0.05 : lo + 0.05) / (hi > lo ? lo + 0.05 : hi + 0.05);
+      expect(contrast, greaterThanOrEqualTo(4.5));
 
       expect(find.text('Misafir olarak devam et'), findsOneWidget);
       expect(tester.takeException(), isNull);
@@ -310,10 +572,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(
-      find.text('Hîn bibe, pêş bikeve û bi hevalên xwe re kêf bike.'),
-      findsOneWidget,
-    );
+    // 2026-09-27: eski karşılama alt yazısı ("Hîn bibe, pêş bikeve û bi
+    // hevalên xwe re kêf bike.") ekrandan kaldırıldı — tanıtım turu ve
+    // giriş ekranı aynı şeyi zaten iki kez söylemişti, burada üçüncü kez
+    // tekrarı yalnız oyalıyordu (bkz. profile_name_gate_screen.dart build()
+    // notu). Bu testin asıl iddiası (ekran doğal Kurmancî gösterir) artık
+    // kalan tek soru üzerinden sınanır.
+    expect(find.text('Navê te çi be?'), findsOneWidget);
   });
 
   testWidgets('guest sign in is reachable in the first mobile auth viewport', (
@@ -345,8 +610,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
-    expect(find.text('Günün Etkinliği'), findsNothing);
+    expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
+    expect(find.text('Günün soruları'), findsNothing);
   });
 
   testWidgets('first launch shows onboarding before auth screen', (
@@ -372,10 +637,12 @@ void main() {
     expect(find.text('Atla'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
+    await tester.tap(find.byKey(const ValueKey('onboarding-age-gate')));
+    await tester.pump();
     await tester.tap(find.text('Atla'));
     await tester.pumpAndSettle();
 
-    expect(find.text('ZanKurd\'a Hoş Geldin'), findsOneWidget);
+    expect(find.text('ZanKurd\'a hoş geldin'), findsOneWidget);
     expect(tester.takeException(), isNull);
     final preferences = await SharedPreferences.getInstance();
     expect(preferences.getBool('zankurd.onboarding.seen'), isTrue);
@@ -399,6 +666,15 @@ void main() {
       tester.getBottomRight(find.text('Sonraki')).dy,
       lessThanOrEqualTo(390),
     );
+
+    await tester.tap(find.text('Sonraki'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Başla'), findsOneWidget);
+    expect(
+      tester.getBottomRight(find.text('Başla')).dy,
+      lessThanOrEqualTo(390),
+    );
     expect(tester.takeException(), isNull);
   });
 
@@ -417,18 +693,156 @@ void main() {
       tester.getBottomRight(find.text('Sonraki')).dy,
       lessThanOrEqualTo(844),
     );
+
+    await tester.tap(find.text('Sonraki'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Başla'), findsOneWidget);
+    expect(
+      tester.getBottomRight(find.text('Başla')).dy,
+      lessThanOrEqualTo(844),
+    );
     expect(tester.takeException(), isNull);
 
-    // Açık tema varsayılan sözleşmesi (Pirs hizası).
-    expect(
-      Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+    // 2026-09-29 Şahnê: varsayılan tema GECE (Şahnê "Gece sahnesi";
+    // `ThemeProvider` varsayılanı `ThemeMode.dark`). Eski "açık tema
+    // varsayılan" (Pirs hizası) sözleşmesi kalktı. Korunan kural: tanıtım
+    // yüzeyi düz sayfa zeminidir (degrade değil) ve temanın `bg`sidir.
+    final onboardingTheme = Theme.of(
+      tester.element(find.byType(OnboardingScreen)),
     );
+    expect(onboardingTheme.brightness, Brightness.dark);
     final surface = tester.widget<Container>(
       find.byKey(const ValueKey('onboarding-surface')),
     );
     final decoration = surface.decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.lightBg);
+    expect(decoration.gradient, isNull);
+    expect(
+      decoration.color,
+      SahneTokens.of(tester.element(find.byType(OnboardingScreen))).bg,
+    );
+  });
+
+  testWidgets('iPhone SE accessibility XXXL onboarding stays in viewport', (
+    tester,
+  ) async {
+    const size = Size(375, 667);
+    await tester.binding.setSurfaceSize(size);
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    tester.takeException();
+
+    await tester.pumpWidget(
+      testShell(
+        languageProvider: kurmanciLang(),
+        child: MediaQuery(
+          data: const MediaQueryData(
+            size: size,
+            // ZanKurdApp production kökü sistem XXXL ölçeğini 2.0'a clamp
+            // ediyor. Burada 3.0 kullanmak gerçek iPhone SE geometrisini
+            // temsil etmiyor ve header çakışmasını gizliyordu.
+            textScaler: TextScaler.linear(2),
+          ),
+          child: OnboardingScreen(onComplete: () {}),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final surface = tester.getRect(
+      find.byKey(const ValueKey('onboarding-surface')),
+    );
+    final logo = find.byType(AppLogo);
+    final skip = find.text('Derbas bike');
+    final language = find.byKey(const ValueKey('onboarding-language-ku'));
+    // 2026-10-01 giriş iskeleti: eski 112 px'lik header (üst kontroller +
+    // marka) kalktı; üstte tek satırlık çubuk var (dil seçici solda, "Atla"
+    // sağda). XXXL'de kahraman kart çekilir ve logo kartın içinde olduğu
+    // için onunla gider (marka splash ve giriş ekranında); korunan kural:
+    // iki üst kontrol çakışmadan, ekran dışına taşmadan sığar.
+    expect(logo, findsNothing);
+    expect(skip, findsOneWidget);
+    expect(language, findsOneWidget);
+    final skipRect = tester.getRect(skip);
+    final languageRect = tester.getRect(language);
+    expect(skipRect.right, lessThanOrEqualTo(surface.right));
+    expect(languageRect.left, greaterThanOrEqualTo(surface.left));
+    expect(
+      skipRect.left,
+      greaterThanOrEqualTo(languageRect.right),
+      reason: 'XXXL başlıkta dil seçici ile "Atla" üst üste binmemeli.',
+    );
+    expect(find.text('Kurmancî hîn bibe, pêş bikeve.'), findsNothing);
+    for (final finder in [
+      find.text('Hîn bibe'),
+      find.byKey(const ValueKey('onboarding-age-gate')),
+      find.text('Bidomîne'),
+    ]) {
+      expect(finder, findsOneWidget);
+      final rect = tester.getRect(finder);
+      expect(rect.left, greaterThanOrEqualTo(surface.left));
+      expect(rect.right, lessThanOrEqualTo(surface.right));
+      expect(rect.top, greaterThanOrEqualTo(surface.top));
+      expect(rect.bottom, lessThanOrEqualTo(surface.bottom));
+    }
+
+    final ageGate = tester.getRect(
+      find.byKey(const ValueKey('onboarding-age-gate')),
+    );
+    final cta = tester.getRect(find.text('Bidomîne'));
+    expect(ageGate.bottom, lessThanOrEqualTo(cta.top));
+
+    // Metin bandı kısa içerikte ortalanır, taşan içerikte aşağıdan kayar
+    // (`ConstrainedBox(minHeight)` + `Column(mainAxisSize: min)`,
+    // 2026-09-25 SE düzeltmesi). Sözleşme widget tipi değil davranış:
+    // günlük ders maddesi kaydırarak görünür hale gelmeli.
+    final pageScroll = find.byType(SingleChildScrollView);
+    final dailyBullet = find.text(
+      'Di dersa rojê de dem tune, şîroveya her pirsê heye.',
+    );
+    final pageScrollable = find.descendant(
+      of: pageScroll,
+      matching: find.byType(Scrollable),
+    );
+    expect(pageScroll, findsOneWidget);
+    expect(pageScrollable, findsOneWidget);
+    expect(dailyBullet, findsOneWidget);
+    final beforeScrollY = tester.getTopLeft(dailyBullet).dy;
+    await tester.scrollUntilVisible(
+      dailyBullet,
+      180,
+      scrollable: pageScrollable,
+    );
+    final afterScrollY = tester.getTopLeft(dailyBullet).dy;
+    final scrollRect = tester.getRect(pageScroll);
+    final dailyRect = tester.getRect(dailyBullet);
+    expect(afterScrollY, lessThan(beforeScrollY));
+    expect(dailyRect.top, greaterThanOrEqualTo(scrollRect.top));
+    // 2026-09-29 doğallık: madde metni "Di dersa rojê de dem tune, şîroveya
+    // her pirsê heye." uzadı; 2x ölçekte 288 px yüksekliğinde, SE'nin
+    // 219 px'lik kaydırma alanından büyük. Sözleşme "madde bir bakışta
+    // tamamen sığar" değil "madde kaydırarak TAMAMEN okunabilir" olarak
+    // sıkı tutuldu: alt kenarı görünür alana getirene dek kaydırılır.
+    // 2026-09-29 doğallık (G3): onboarding yeniden kurulunca "tamamen
+    // sığar" geri getirilmeye çalışıldı, olmadı. XXXL'de kahraman zaten
+    // sıfırdır; metin bandını daraltan sabit parçalar: başlık (112: dil
+    // seçici 80 + logo 32), yaş kutusu (208: test yazı tipinde dört satır)
+    // ve düğme. Bant 227 px kalıyor, madde 288 px. 61 px'lik açık ancak
+    // yaş onayını ya da logoyu başlıktan çıkararak kapanır; ikisi de
+    // erişilebilirlik ve yasal bekçilerinin sabitlediği öğeler.
+    final position = tester.state<ScrollableState>(pageScrollable).position;
+    final overflow = dailyRect.bottom - scrollRect.bottom;
+    if (overflow > 0) {
+      expect(
+        position.maxScrollExtent - position.pixels,
+        greaterThanOrEqualTo(overflow),
+        reason: 'madde alt kenarı kaydırılarak görünür olabilmeli',
+      );
+      position.jumpTo(position.pixels + overflow);
+      await tester.pumpAndSettle();
+    }
+    final settledRect = tester.getRect(dailyBullet);
+    expect(settledRect.bottom, lessThanOrEqualTo(scrollRect.bottom));
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('onboarding fits a tablet and web viewport', (tester) async {
@@ -447,10 +861,20 @@ void main() {
       tester.getBottomRight(find.text('Sonraki')).dy,
       lessThanOrEqualTo(800),
     );
+
+    await tester.tap(find.text('Sonraki'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Başla'), findsOneWidget);
+    expect(
+      tester.getBottomRight(find.text('Başla')).dy,
+      lessThanOrEqualTo(800),
+    );
     expect(tester.takeException(), isNull);
+    // 2026-09-29 Şahnê: varsayılan tema gece (bkz. telefon testi).
     expect(
       Theme.of(tester.element(find.byType(OnboardingScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
   });
 
@@ -513,20 +937,26 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(HomeScreen), findsOneWidget);
-    // Ana ekran tek bir soruyu yanıtlar: "şimdi ne yapmalıyım?"
+    // Ana ekranın tek birincil eylemi günün dersidir.
     expect(find.text('Günün dersi'), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
-    expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
 
-    // Yarış'a yalnız alt navigasyondan gidilir — ana ekranda kopyası yok.
-    await tester.tap(find.byKey(const ValueKey('nav-play')));
+    // 2026-09-27: yarış kapısı ilk oturumdan itibaren ana ekrandadır ve
+    // ayrı bir ekran değil, alt menüdeki Yarış sekmesinin kendisini açar —
+    // aynı yere giden iki farklı yüzey oluşmaz.
+    final playDoor = find.byKey(const ValueKey('home-door-play'));
+    await tester.ensureVisible(playDoor);
+    await tester.pumpAndSettle();
+    await tester.tap(playDoor);
     await tester.pumpAndSettle();
     expect(find.byType(PlayHubScreen), findsOneWidget);
   });
 
-  testWidgets('home header exposes language and theme quick controls', (
+  testWidgets('home header is compact and exposes account quick controls', (
     tester,
   ) async {
+    final semantics = tester.ensureSemantics();
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -545,40 +975,76 @@ void main() {
     // "ZanKurd", profil ekranında "Lîstikvanê ZanKurd" oluyordu — aynı
     // oturumda iki kimlik. Artık her iki ekran da [PlayerIdentity] üzerinden
     // tek bir yedeğe düşer.
-    expect(find.text('Hoş geldin, Oyuncu!'), findsOneWidget);
+    expect(find.text('Hoş geldin!'), findsOneWidget);
     expect(find.text('Seviye 5'), findsNothing);
     expect(find.byIcon(Icons.diamond), findsNothing);
+    expect(
+      find.byKey(const ValueKey('home-zana')),
+      findsNothing,
+      reason: 'Ana başlık yetişkin ürün kimliğinde maskot hero taşımamalı.',
+    );
 
-    // Pirs/mockup-3 sözleşmesi: ince karşılama satırı; kalın gradyan banner yok.
-    expect(find.byKey(const ValueKey('home-profile-header')), findsOneWidget);
+    // Ana ekranın üst bölümü günlük görevin önüne geçen ikinci bir hero olmaz.
+    final header = find.byKey(const ValueKey('home-profile-header'));
+    expect(header, findsOneWidget);
+    expect(
+      tester.getSize(header).height,
+      lessThanOrEqualTo(150),
+      reason: 'Profil/seri araçları kompakt hesap başlığı içinde kalmalı.',
+    );
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
-    // "Yarış" artık yalnız alt navigasyonda geçer (ana ekranda kopyası yok).
+    // "Yarış" sekme etiketi tektir; ana ekrandaki yarış kapısı kendi
+    // başlığını ("Arkadaşınla yarış") taşır.
     expect(find.text('Yarış'), findsOneWidget);
     expect(find.text('Profil'), findsOneWidget);
 
-    final navTheme = tester.widget<NavigationBarTheme>(
-      find.byType(NavigationBarTheme),
+    // Tema düğmesi 2026-09-27'de başlıktan kalktı (güneş simgesi ayar
+    // çarkıyla karışıyordu); tema Ayarlar'da.
+    expect(find.byKey(const ValueKey('home-theme-toggle')), findsNothing);
+    for (final key in const [ValueKey('home-language-toggle')]) {
+      final control = find.byKey(key);
+      expect(tester.getSize(control).width, greaterThanOrEqualTo(48));
+      expect(tester.getSize(control).height, greaterThanOrEqualTo(48));
+      expect(
+        tester
+            .getSemantics(control)
+            .getSemanticsData()
+            .hasAction(ui.SemanticsAction.tap),
+        isTrue,
+      );
+    }
+    // 2026-09-29 doğallık (K6): yeni oyuncunun bakiyesi 0; sıfır sayaç
+    // çizilmez, ekran okuyucuya da "0 jeton" duyurulmaz. Bakiyesi olan
+    // oyuncuda çipin miktarı söyleyip mağazayı açtığını
+    // `home_shop_entry_test` ölçer.
+    final storeBadge = find.bySemanticsLabel(
+      RegExp(r'^Mağaza.*\d+.*jeton$', caseSensitive: false),
     );
-    expect(navTheme.data.height, 70);
-    expect(navTheme.data.backgroundColor, AppTheme.lightSurface);
-    expect(
-      navTheme.data.indicatorColor,
-      const Color(0xFFD4650A).withValues(alpha: 0.18),
-    );
+    expect(storeBadge, findsNothing);
+
+    // 2026-09-29 Şahnê: alt gezinmenin görünüşü tümüyle temadandır
+    // (`navigationBarTheme`: 64 yükseklik, `nav` zemini, seçili sekme Ray
+    // plaketi). Turuncu gösterge kalktı: Agir ekranın tek birincil eylemidir,
+    // gezinme değil. Korunan kural: seçili gösterge sekmeyle değişmez.
+    final navContext = tester.element(find.byType(NavigationBar));
+    final t = SahneTokens.of(navContext);
+    final navTheme = Theme.of(navContext).navigationBarTheme;
+    expect(navTheme.height, 64);
+    expect(navTheme.backgroundColor, t.nav);
+    expect(navTheme.indicatorColor, t.s3);
+    expect(navTheme.indicatorColor, isNot(t.act));
 
     // Alt nav'daki "Yarış" — lobi kartıyla karışmasın.
-    await tester.tap(find.text('Yarış').last);
+    await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
     expect(find.byType(PlayHubScreen), findsOneWidget);
 
-    // Bottom nav seçili rengi sekmeyle değişmez; sabit brand kalır.
-    final navThemeAfter = tester.widget<NavigationBarTheme>(
-      find.byType(NavigationBarTheme),
-    );
-    expect(
-      navThemeAfter.data.indicatorColor,
-      const Color(0xFFD4650A).withValues(alpha: 0.18),
-    );
+    // Bottom nav seçili rengi sekmeyle değişmez.
+    final navThemeAfter = Theme.of(
+      tester.element(find.byType(NavigationBar)),
+    ).navigationBarTheme;
+    expect(navThemeAfter.indicatorColor, t.s3);
+    semantics.dispose();
   });
 
   testWidgets('theme toggle changes visible home surface colors', (
@@ -598,31 +1064,36 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Açık tema varsayılan sözleşmesi (Pirs hizası: parlak ilk izlenim).
+    // 2026-09-29 Şahnê: varsayılan tema GECE (eski "açık tema varsayılan"
+    // Pirs hizası kalktı). Korunan kural: tema düğmesi görünen sayfa
+    // zeminini değiştirir; zemin düz renktir (2026-07-24: gradyan zemin
+    // kartların 1 px kenarlığını yutuyordu).
+    Color homeBg() {
+      final page = tester.widget<Material>(
+        find
+            .descendant(
+              of: find.byType(HomeScreen),
+              matching: find.byType(Material),
+            )
+            .first,
+      );
+      return page.color!;
+    }
+
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.light,
+      Brightness.dark,
     );
-    final home = tester.widget<Container>(
-      find
-          .descendant(
-            of: find.byType(HomeScreen),
-            matching: find.byType(Container),
-          )
-          .first,
-    );
-    // 2026-07-24: sayfa zemini düz renk. Gradyan zemin, üstündeki kartların
-    // 1px kenarlığını yutup hiyerarşiyi bulanıklaştırıyordu.
-    expect(home.color, AppTheme.lightBg);
-    expect(home.decoration, isNull);
+    expect(homeBg(), SahneTokens.night.bg);
 
     theme.toggleDarkLight();
     await tester.pumpAndSettle();
 
     expect(
       Theme.of(tester.element(find.byType(HomeScreen))).brightness,
-      Brightness.dark,
+      Brightness.light,
     );
+    expect(homeBg(), SahneTokens.day.bg);
   });
 
   testWidgets('auth requires player name before home', (tester) async {
@@ -704,6 +1175,7 @@ void main() {
 
     final guestButton = find.text('Misafir olarak devam et');
     expect(guestButton, findsOneWidget);
+    final beforeDragY = tester.getTopLeft(guestButton).dy;
 
     await tester.drag(
       find.byType(SingleChildScrollView),
@@ -711,6 +1183,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    final afterDragY = tester.getTopLeft(guestButton).dy;
+    expect(afterDragY, lessThan(beforeDragY - 100));
     expect(tester.getBottomRight(guestButton).dy, lessThan(390));
   });
 
@@ -728,6 +1202,88 @@ void main() {
     final guestButton = find.text('Misafir olarak devam et');
     expect(guestButton, findsOneWidget);
     expect(tester.getBottomRight(guestButton).dy, lessThan(390));
+  });
+
+  testWidgets('iPhone SE landscape XXXL auth form stays reachable', (
+    tester,
+  ) async {
+    const size = Size(667, 375);
+    await tester.binding.setSurfaceSize(size);
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    tester.takeException();
+
+    await tester.pumpWidget(
+      testShell(
+        authProvider: GateAuthProvider(),
+        languageProvider: kurmanciLang(),
+        child: const MediaQuery(
+          data: MediaQueryData(size: size, textScaler: TextScaler.linear(2)),
+          child: SignInScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final pageScroll = find.byType(SingleChildScrollView);
+    final pageScrollable = find.descendant(
+      of: pageScroll,
+      matching: find.byWidgetPredicate(
+        (widget) =>
+            widget is Scrollable && widget.axisDirection == AxisDirection.down,
+      ),
+    );
+    expect(pageScroll, findsOneWidget);
+    expect(pageScrollable, findsOneWidget);
+
+    final scrollRect = tester.getRect(pageScroll);
+    for (final label in [
+      'Navnîşana e-nameyê',
+      'Şîfre',
+      'Te şîfre ji bîr kir?',
+      'Têkeve',
+      'Tomar bibe',
+    ]) {
+      final finder = find.text(label);
+      expect(finder, findsOneWidget, reason: label);
+      await tester.scrollUntilVisible(finder, 220, scrollable: pageScrollable);
+      final rect = tester.getRect(finder);
+      expect(rect.top, greaterThanOrEqualTo(scrollRect.top), reason: label);
+      expect(rect.bottom, lessThanOrEqualTo(scrollRect.bottom), reason: label);
+    }
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('iPad erişilebilirlik XXXL auth etiketlerini kesmez', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(744, 1133));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(
+        authProvider: GateAuthProvider(),
+        languageProvider: kurmanciLang(),
+        child: const MediaQuery(
+          data: MediaQueryData(
+            size: Size(744, 1133),
+            textScaler: TextScaler.linear(3),
+          ),
+          child: SignInScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    for (final label in ['Wek mêvan bidomîne', 'An jî bi e-nameyê']) {
+      final finder = find.text(label);
+      expect(finder, findsOneWidget, reason: label);
+      final paragraph = tester.renderObject<RenderParagraph>(finder);
+      expect(
+        paragraph.didExceedMaxLines,
+        isFalse,
+        reason: '$label erişilebilirlik metin ölçeğinde ellipsis olmamalı',
+      );
+    }
   });
 
   testWidgets('language toggle works on the auth screen', (tester) async {

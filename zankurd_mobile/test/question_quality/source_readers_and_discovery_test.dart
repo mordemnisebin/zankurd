@@ -236,6 +236,10 @@ const bank = <QuizQuestion>[
       File(
         '${temp.path}/README.md',
       ).writeAsStringSync('# Question audit report');
+      Directory('${temp.path}/.tmp').createSync();
+      File(
+        '${temp.path}/.tmp/settings_safety_preview_test.dart',
+      ).writeAsStringSync('const sample = QuizQuestion(prompt: "Pirs?");');
       Directory('${temp.path}/data').createSync();
       File(
         '${temp.path}/data/new_questions.csv',
@@ -254,6 +258,7 @@ const bank = <QuizQuestion>[
         'release_packages/supabase_sql/question_seed.sql',
         'tools/playwright/node_modules/package/questions.json',
         'README.md',
+        '.tmp/settings_safety_preview_test.dart',
       ]) {
         expect(discovered, isNot(contains(ignored)));
       }

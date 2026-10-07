@@ -1,0 +1,308 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
+import 'package:zankurd_mobile/src/models/question_metadata.dart';
+import 'package:zankurd_mobile/src/models/quiz_question.dart';
+
+class _InjectedQuestionsRepository extends MockZanKurdRepository {
+  _InjectedQuestionsRepository(this.seededQuestions);
+
+  final List<QuizQuestion> seededQuestions;
+
+  @override
+  List<QuizQuestion> get questions => seededQuestions;
+}
+
+QuizQuestion _question({
+  required String id,
+  required String category,
+  String? learningLessonId,
+  bool recall = false,
+}) {
+  return QuizQuestion(
+    id: id,
+    category: category,
+    prompt: '$id?',
+    answers: const ['A', 'B', 'C', 'D'],
+    correctAnswer: 'A',
+    explanation: 'A',
+    type: QuestionType.multipleChoice,
+    metadata: QuestionMetadata(
+      learningLessonId: learningLessonId,
+      reviewStatus: recall ? ReviewStatus.approved : null,
+      productiveRecallEligible: recall,
+    ),
+  );
+}
+
+void main() {
+  group('lesson-specific learning quiz', () {
+    late _InjectedQuestionsRepository repository;
+
+    setUp(() {
+      repository = _InjectedQuestionsRepository([
+        _question(id: 'food', category: 'Ziman', learningLessonId: 'food_1'),
+        _question(
+          id: 'animals',
+          category: 'Ziman',
+          learningLessonId: 'animals_1',
+        ),
+        _question(id: 'legacy', category: 'Ziman'),
+        _question(
+          id: 'wrong-category',
+          category: 'Çand',
+          learningLessonId: 'food_1',
+        ),
+      ]);
+    });
+
+    test('explicit lesson tags win without unrelated fillers', () async {
+      final questions = await repository.loadLearningQuizQuestions(
+        category: 'Ziman',
+        learningLessonId: 'food_1',
+        limit: 5,
+      );
+
+      // Etiketli soru önce gelir; eksik yer yalnız aynı dersin sözlük
+      // sorularıyla dolar (2026-09-30: önceden tek soruluk quiz açılıyordu).
+      expect(questions.first.id, 'food');
+      expect(questions, hasLength(5));
+      expect(
+        questions.every((q) => q.metadata?.learningLessonId == 'food_1'),
+        isTrue,
+      );
+      expect(
+        questions.map((q) => q.id),
+        isNot(anyOf(contains('legacy'), contains('wrong-category'))),
+      );
+    });
+
+    test(
+      'etiketli ders havuzuna etiketsiz hatırlama sorusu karışmaz',
+      () async {
+        repository = _InjectedQuestionsRepository([
+          _question(id: 'food', category: 'Ziman', learningLessonId: 'food_1'),
+          _question(id: 'recall', category: 'Ziman', recall: true),
+        ]);
+
+        final questions = await repository.loadLearningQuizQuestions(
+          category: 'Ziman',
+          learningLessonId: 'food_1',
+          limit: 5,
+        );
+
+        expect(questions.first.id, 'food');
+        expect(questions.map((q) => q.id), isNot(contains('recall')));
+      },
+    );
+
+    test(
+      'missing explicit mapping uses only lesson-authored assessment',
+      () async {
+        final questions = await repository.loadLearningQuizQuestions(
+          category: 'Ziman',
+          learningLessonId: 'time_1',
+          limit: 5,
+        );
+
+        expect(questions, hasLength(5));
+        expect(
+          questions.every((q) => q.metadata?.learningLessonId == 'time_1'),
+          isTrue,
+        );
+        expect(questions.map((q) => q.id), isNot(contains('legacy')));
+      },
+    );
+  });
+
+  test('production bank keeps the reviewed lesson alignment seed', () {
+    final tagged = QuestionBankLoader.instance.allQuestions
+        .where((q) => q.metadata?.learningLessonId != null)
+        .toList(growable: false);
+
+    // 2026-10-01: `ders_2026_10_01_*` (74 soru) bilerek yeni eklendi ve
+    // aşağıdaki tohum kümesinin DIŞINDA sayılır; tohum (eski inceleme
+    // turlarının etiketlediği sorular) değişmeden sabit kalır. Yeni
+    // kümenin kendi bekçisi `lesson_practice_depth_test.dart`.
+    final seed = tagged
+        // 2026-10-02: `ders_2026_10_02_*` (32 soru, sunucu dersleri hejmar,
+        // lekera-bun, dengbeji, demsal) da tohumun dışındadır.
+        .where(
+          (q) =>
+              !q.id.startsWith('ders_2026_10_01_') &&
+              !q.id.startsWith('ders_2026_10_02_') &&
+              // 2026-10-06: başlangıç yolu (152) da tohumun dışındadır.
+              !q.id.startsWith('baslangic_2026_10_06_'),
+        )
+        .map((q) => q.id)
+        .toSet();
+    expect(seed, {
+      'offline_curated_30013',
+      'edit_ziman_0038',
+      'offline_0062',
+      'ziman_x_0004',
+      'offline_0055',
+      'ziman_x_0050',
+      'offline_5268',
+      'edit_ziman_0011',
+      'ziman_x_0014',
+      'offline_5016',
+      'offline_5094',
+      'offline_5903',
+      // 2026-09-30: Muse Spark ve Gemini 3.1 Pro'nun ayrı ayrı aynı derse
+      // koyduğu 20 soru (uyuşmayanlar ve karantinadaki DeepSeek bankası
+      // dışarıda).
+      'edit_ziman_0020',
+      'edit_ziman_0030',
+      'fill_ziman_0002',
+      'fill_ziman_0005',
+      'offline_0005',
+      'offline_0065',
+      'offline_0090',
+      'offline_0095',
+      'offline_2599',
+      'offline_2780',
+      'offline_curated_30014',
+      'offline_curated_30016',
+      'offline_curated_30017',
+      'offline_curated_30018',
+      'wo-ku-008',
+      'ziman_x_0016',
+      'ziman_x_0025',
+      'ziman_x_0031',
+      'ziman_x_0052',
+      'ziman_x_0054',
+      // İkinci tur: Folklor, Bayramlar, Coğrafya, Yönler (Çand/Cografya).
+      'comm_cog_0001',
+      'edit_cand_0003',
+      'edit_cand_0034',
+      'edit_cografya_0004',
+      'edit_cografya_0024',
+      'offline_2052',
+      'offline_2141',
+      'offline_2354',
+      'offline_2436',
+      'offline_6260',
+      'offline_6406',
+      'restore_2026_08_07_0007',
+      'restore_2026_08_07_0014',
+      'restore_2026_08_07_0015',
+      // Üçüncü tur: Muse/Gemini uyuşmazlığında MiMo'nun üçüncü oyu.
+      'edit_cografya_0001',
+      'edit_cografya_0003',
+      'edit_cografya_0011',
+      'edit_cografya_0016',
+      'edit_cografya_0032',
+      'edit_ziman_0043',
+      'ex28_sinor_duma_001',
+      'ex28_sinor_duma_002',
+      'ex28_sinor_duma_003',
+      'fill_ziman_0003',
+      'offline_8615',
+      'offline_8903',
+      'offline_9103',
+      'offline_curated_20026',
+      'offline_curated_20076',
+      'offline_curated_20176',
+      'offline_curated_20226',
+      'offline_curated_20750',
+      'offline_curated_20804',
+      'offline_curated_21029',
+      'offline_tf_cog_0033',
+      'wo-ku-007',
+      'ziman_x_0008',
+      'ziman_x_0048',
+    });
+  });
+
+  test('seeded production lessons put their exact tagged pool first', () async {
+    SharedPreferences.setMockInitialValues({});
+    final repository = MockZanKurdRepository();
+    // 2026-10-01: `ders_2026_10_01` her bu dersi en az 7 etiketli soruya
+    // çıkardı; limit 5 olduğundan quiz artık TAMAMEN etiketli sorudan
+    // kuruluyor ve sözlük dolgusu (`lesson_` önekli) hiç girmiyor. Önceki
+    // sayılar (everyday_1: 3, grammar_1: 3, animals_2: 2, emotions_1: 1,
+    // time_1: 1...) bu derslerin eskiden dolguya yaslandığını gösteriyordu.
+    const expectedCounts = {
+      'everyday_1': 5,
+      'everyday_3': 5,
+      'grammar_1': 5,
+      'grammar_2': 5,
+      'food_1': 5,
+      'animals_1': 5,
+      'animals_2': 5,
+      'emotions_1': 5,
+      'time_2': 5,
+      'time_1': 5,
+    };
+
+    for (final entry in expectedCounts.entries) {
+      final questions = await repository.loadLearningQuizQuestions(
+        category: 'Ziman',
+        learningLessonId: entry.key,
+        limit: 5,
+      );
+
+      // Etiketli sorular önce ve eksiksiz gelir; quiz sözlük sorularıyla
+      // beşe tamamlanır.
+      expect(questions, hasLength(5), reason: entry.key);
+      // Sözlükten üretilenler `lesson_` önekli; etiketli banka soruları
+      // hepsi ve önde.
+      final tagged = questions.takeWhile((q) => !q.id.startsWith('lesson_'));
+      expect(tagged, hasLength(entry.value), reason: entry.key);
+      expect(
+        questions.every((q) => q.metadata?.learningLessonId == entry.key),
+        isTrue,
+        reason: '${entry.key} broad filler karıştırmamalı',
+      );
+    }
+  });
+
+  test(
+    'all 17 packaged lessons have explicit aligned mini-quiz coverage',
+    () async {
+      SharedPreferences.setMockInitialValues({});
+      final repository = MockZanKurdRepository();
+      const categories = <String, String>{
+        'everyday': 'Ziman',
+        'grammar': 'Ziman',
+        'culture': 'Çand',
+        'food': 'Ziman',
+        'animals': 'Ziman',
+        'geography': 'Cografya',
+        'emotions': 'Ziman',
+        'time': 'Ziman',
+      };
+      var lessonCount = 0;
+
+      for (final entry in categories.entries) {
+        final lessons = await repository.loadLessonsByCategory(entry.key);
+        lessonCount += lessons.length;
+        for (final lesson in lessons) {
+          final questions = await repository.loadLearningQuizQuestions(
+            category: entry.value,
+            learningLessonId: lesson.id,
+            limit: 5,
+          );
+
+          expect(
+            questions,
+            isNotEmpty,
+            reason: '${lesson.id} quizsiz kalmamalı',
+          );
+          expect(
+            questions.every(
+              (question) => question.metadata?.learningLessonId == lesson.id,
+            ),
+            isTrue,
+            reason: '${lesson.id} geniş kategori filler almamalı',
+          );
+        }
+      }
+
+      // 2026-10-06: +4 başlangıç dersi (alphabet_1, greetings_2, intro_1, family_1).
+      expect(lessonCount, 21);
+    },
+  );
+}

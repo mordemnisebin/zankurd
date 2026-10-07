@@ -1,0 +1,978 @@
+Aşağıda 138 çoktan seçmeli soru var. Her biri için DOĞRU şıkkı seç.
+
+- Yalnız JSON dizisi döndür, başka hiçbir şey yazma.
+- Biçim: [{"id":"...","cevap":"<şıkkın TAM METNİ>"}]
+- Cevabı şıklardan birinin metnini AYNEN kopyalayarak yaz; harf yazma.
+- Emin değilsen "?" yaz. Tahmin etme — emin olmadığını söylemek,
+  yanlış bir kesinlikten daha değerli.
+
+Sorular Kurmancî. Doğru cevap sana GÖSTERİLMİYOR; bu kasıtlı.
+Gösterilseydi kendi seçimini savunma eğilimi ölçümü değersizleştirirdi.
+
+SORULAR:
+
+[offline_9096]
+S: Ji aliyê erdnîgariyê ve ji bo "Çemê Garzanê" îfadeya rast kîjan e?
+  A) çemê girîng ê ku di Batmanê re derbas dibe û dikeve Dîcleyê
+  B) zozanên bilind ên ku çemeke gelek jê serê xwe digirin
+  C) Çiyayê dîrokî yê ku bawer tê kirin keştiya Nûh lê rûniştiye
+  D) çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parve dikin
+
+[offline_9132]
+S: "Çemê Xabûrê" ji aliyê erdnîgarî ve çi vedibêje?
+  A) çemikê Dîcleyê yê ku sînorê Tirkiye û Iraqê xêz dike
+  B) çemê hêrs ê ku çiyayên Colemêrgê diqelêşe
+  C) çiyayê volkanîk ê feal ê xwedî gola kraterê
+  D) hewza gola şor a li rojhilatê Kurdistanê
+
+[offline_9207]
+S: Kovara "Ronahî" çi bû?
+  A) rojnameya kurdî ya yekem a ku li Qahîreyê derket
+  B) kovara wêjeyî ya bi wêne ku li Şamê bi alfabeya latînî derket
+  C) kovara ku li Erîvanê bi alfabeya krîlî dihat çapkirin
+  D) kovara zanistî ya ku li Bexdayê bi erebî derdiket
+
+[offline_9215]
+S: Kîjan cureya vegotinê bi gelemperî kurt e û li ser bûyerek an çend bûyeran e?
+  A) Çîrok
+  B) Helbest
+  C) Destan
+  D) Şano
+
+[offline_9227]
+S: "Cegerxwîn" çi îfade dike?
+  A) helbestvanê civakî yê pêşeng ê helbesta kurdî ya nûjen
+  B) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
+  C) belavbûna alfabeya kurdî ya bi bingehê latînî
+  D) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
+
+[offline_9266]
+S: Dema "diyalog" tê gotin, çi tê xwestin?
+  A) axaftina bi hev re
+  B) vegotina lehengiyê
+  C) axaftina dirêj a kesekî tenê
+  D) cihê ku bûyer tê de diqewime
+
+[offline_9280]
+S: Li jêr ji bo "roman" ya rast kîjan e?
+  A) helbesteke kurt a bi qafiye
+  B) vegotina dirêj a bi pexşan
+  C) berhevoka gotinên pêşiyan
+  D) lîstika ku ji bo dikê tê nivîsandin
+
+[offline_9287]
+S: "karakter" di mijara wêjeyê de çi vedibêje?
+  A) cihê ku bûyer diqewime
+  B) ramana sereke ya berhemê
+  C) kesayeta vegotinê
+  D) dengê ku çîrokê radigihîne
+
+[offline_9344]
+S: Kîjan têgeha "Hejar Mukriyanî" di nav wêjeyê de rast bi cih dike?
+  A) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+  B) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
+  C) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî
+  D) yekem ferhenga kurdî ya ku Ehmedê Xanî nivîsî
+
+[offline_9378]
+S: Derbarê "Feqiyê Teyran" de ya rast kîjan e?
+  A) helbestvanê kurd ê navdar ê ku bi zimanê teyran dinivîsî
+  B) destana gelêrî ya ku bingeha Mem û Zînê ye
+  C) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
+  D) çîrok, destan û vegotinên dengbêjan
+
+[offline_9405]
+S: Ji aliyê Edebiyatê ve ji bo "Mem û Zîn" îfadeya rast kîjan e?
+  A) berhevoka helbestên sofîyane yên Melayê Cizîrî
+  B) mesnewiya evînê ya klasîk a ku Ehmedê Xanî nivîsandiye
+  C) romana kurdî ya nûjen a ku li Ermenistanê hat çapkirin
+  D) ferhenga helbestî ya kurdî-erebî ya ji bo zarokan
+
+[offline_9408]
+S: "Mestûre Kurdistanî" tê çi wateyê?
+  A) helbestvana jin a navdar a ku li mîrektiya Erdelanê jiya
+  B) helbestvanê dîwana klasîk ê helbesta tesewufî ya kurdî
+  C) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
+  D) yek ji şanonivîsên damezrîner ên şanoya kurdî
+
+[offline_9409]
+S: Ji bo Edebiyatê derbarê "Ehmedê Xasî" de vebijêrka rast kîjan e?
+  A) Mehmed Uzun
+  B) çîrok, destan û vegotinên dengbêjan
+  C) helbestvanê rubaiyan ê klasîk ê herî kevn ê wêjeya kurdî
+  D) helbestvan û alimê dîn ê ku yekem mewlûda kirmanckî nivîsî
+
+[offline_9410]
+S: Derbarê "destana Memê Alan" de ya rast a zanîn çi ye?
+  A) destana gelêrî ya ku Ehmedê Xanî jê îlham girt bo Mem û Zîn
+  B) yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî
+  C) bi weşandina yekem rojnameya kurdî, Kurdistanê re girêdayî ye
+  D) pêşketina cureyên wek roman û rojnameyê di serdema nûjen de
+
+[offline_9434]
+S: Rojnameya "Riya Taza" çawa tê pênasekirin?
+  A) rojnameya kurdî ya ku li Stenbolê bi osmanî derket
+  B) kovara wêjeyî ya ku li Şamê bi latînî derket
+  C) rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin
+  D) rojnameya ku li Bexdayê ji aliyê dewletê ve dihat weşandin
+
+[offline_9456]
+S: Ji bo "Xanî Mektebi" ravekirina herî dirust kîjan e?
+  A) tevgera ku bi kovara Hawarê re li Şamê pêk hat
+  B) dibistana helbesta klasîk a ku li derdora Babanê geş bû
+  C) tevgera romannivîsiyê ya ku li Ermenistanê dest pê kir
+  D) ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir
+
+[offline_9459]
+S: Têgiha "vebêj" çi pêk tîne?
+  A) kesayeta sereke ya çîrokê
+  B) cihê ku bûyer tê de diqewime
+  C) ramana sereke ya berhemê
+  D) dengê ku çîrokê vedibêje
+
+[offline_9473]
+S: "Arabê Şamo" di mijara wêjeyê de çi vedibêje?
+  A) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
+  B) nivîskar û ramanwerê navdar ê berhema Mem û Zîn
+  C) helbestvanê rubaiyan ê klasîk ê herî kevn ê wêjeya kurdî
+  D) helbestvanê ku di serdema klasîk de berhemên kurdî nivîsîn
+
+[offline_9474]
+S: Der barê "Abdulla Goran" de ji bo wêjeyê bijardeya rast kîjan e?
+  A) yek ji şanonivîsên damezrîner ên şanoya kurdî
+  B) rojnameya kurdî ya ku bi salan li Erîvanê hat çapkirin
+  C) pêşengê nûjenbûnê di helbesta kurdî ya soranî de
+  D) belavbûna alfabeya kurdî ya bi bingehê latînî
+
+[offline_9529]
+S: Kîjan têgeha "Şivanê Kurd" di nav wêjeyê de rast bi cih dike?
+  A) yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin
+  B) destana evînê ya ku di 1692an de hat nivîsandin
+  C) kovara wêjeyî ya ku di 1932an de li Şamê derket
+  D) rojnameya kurdî ya ku di 1898an de derket
+
+[offline_9552]
+S: Di zanîna wêjeyê de der barê "Masture Erdelan" de ya rast kîjan e?
+  A) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
+  B) yekem dîroknas û helbestvana kurd a jin a ku dîwan nivîsî
+  C) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî
+  D) zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî
+
+[offline_9579]
+S: "Ferhad û Şîrîn" di mijara wêjeyê de çi vedibêje?
+  A) çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin
+  B) destana şer a li ser mîrektiyên kurdan
+  C) berhevoka gotinên pêşiyan a ku ji devkî hat nivîsandin
+  D) lîstika şanoyî ya yekem a bi kurmancî
+
+[offline_9594]
+S: Kîjan têgiha "Nûbihara Biçukan" rast şirove dike?
+  A) mesnewiya evînê ya klasîk a Ehmedê Xanî
+  B) ferhenga helbestî ya kurdî-erebî ya ji bo zarokan
+  C) berhevoka helbestên sofîyane yên Melayê Cizîrî
+  D) destana gelêrî ya li ser Memê Alan
+
+[offline_9612]
+S: Têgiha "kafiye" çi pêk tîne?
+  A) pîvana kîteyên rêzikê
+  B) ramana sereke ya helbestê
+  C) lihevhatina dengên dawiya rêzikan
+  D) dubarekirina peyvekê di destpêkê de
+
+[offline_9623]
+S: Derbarê "tema" de vebijêrka rast kîjan e?
+  A) ramana sereke ya berhemê
+  B) bûyera sereke ya vegotinê
+  C) kesayeta sereke ya çîrokê
+  D) cihê ku bûyer diqewime
+
+[offline_9625]
+S: "Osman Sabri" wek kî tê naskirin?
+  A) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
+  B) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê
+  C) nîşandana nirxa ziman û yekîtiya kurdî
+  D) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
+
+[offline_9668]
+S: Kîjan li gorî pênaseya "destana Dewrêşê Evdî" ye?
+  A) yek ji weşanên wêjeyî û siyasî yên destpêkê yên kurdî
+  B) çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin
+  C) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+  D) yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî
+
+[offline_9716]
+S: Derbarê "Hêmin Mukriyanî" de ya rast kîjan e?
+  A) damezrînerê ekola wêjeyî ya ku kovara Hawarê derxist
+  B) helbestvanê ku di wêjeya klasîk a kurdî de cihekî girîng digire
+  C) helbestvan û nivîskarê nûjen ê navdar ê rojhilatê Kurdistanê
+  D) damezrîner û pêşengê romana kurdî ya nûjen
+
+[offline_9724]
+S: Ji bo "Ekola Hawarê" ravekirina herî dirust kîjan e?
+  A) dibistana helbesta klasîk a ku li Babanê geş bû
+  B) tevgera romannivîsiyê ya ku li Erîvanê pêk hat
+  C) ekola ramanî ya ku Ehmedê Xanî dest pê kir
+  D) tevgera wêjeyî ya ku ronakbîrî û alfabeya latînî belav kir
+
+[offline_9730]
+S: Di zanîna wêjeyê de der barê "Şêrko Bêkes" de ya rast kîjan e?
+  A) pêşengê nûjenbûnê di helbesta kurdî ya soranî de
+  B) helbestvanê klasîk ê dîwana Babanê
+  C) romannivîsê yekem ê kurdî yê nûjen
+  D) damezrînerê kovara Hawarê
+
+[offline_9749]
+S: Ji bo Edebiyatê derbarê "Qanadê Kurdo" de vebijêrka rast kîjan e?
+  A) yek ji navên damezrîner ên çîroknivîsiya kurdî ya nûjen
+  B) ji ber ku xebatên ziman û alfabeyê belav kir
+  C) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+  D) akademîsyenê ku li ser ziman û wêjeya kurdî dixebite
+
+[offline_9778]
+S: Di zanîna Edebiyatê de derbarê "Nalî" de ya rast kîjan e?
+  A) damezrînerê ekola wêjeyî ya kovara Hawarê
+  B) nivîskarê yekem romana kurdî ya nûjen
+  C) yek ji helbestvanên sereke yên dibistana klasîk a Babanê
+  D) zimannasê ku rêzimana kurmancî nivîsî
+
+[offline_9918]
+S: Kîjan têgeha "Evdirehîm Rehmî Hekarî" di nav wêjeyê de rast bi cih dike?
+  A) nîşandana nirxa ziman û yekîtiya kurdî
+  B) damezrînerê ekola wêjeyî ya ku kovara Hawarê derxist
+  C) helbestvana jin a navdar a ku li mîrektiya Erdelanê jiya
+  D) yek ji şanonivîsên damezrîner ên şanoya kurdî
+
+[offline_9936]
+S: Ji bo Edebiyatê derbarê "Qedrîcan" de vebijêrka rast kîjan e?
+  A) nivîskarê ku di helbest û pexşana kurdî ya nûjen de şop hiştiye
+  B) yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî
+  C) ji ber ku xebatên ziman û alfabeyê belav kir
+  D) ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir
+
+[offline_9942]
+S: "Pertew Begê Hkarî" bi kîjan aliyê xwe ve tê nasîn?
+  A) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+  B) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
+  C) helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû
+  D) ji ber ku gelek nivîskar li derveyî welêt berhem didin
+
+[offline_9950]
+S: Di dîrokê de "Melayê Bateyî" kî ye?
+  A) nivîskarê yekem romana kurdî ya bi navê Şivanê Kurmanca
+  B) helbestvan û alimê dîn ê ku yekem mewlûda kirmanckî nivîsî
+  C) helbestvanê klasîk ê ku Mewlûda Şerîf bi kurdî nivîsî
+  D) belavbûna alfabeya kurdî ya bi bingehê latînî
+
+[offline_9953]
+S: Harisê Bidlîsî kî ye?
+  A) çîrok, destan û vegotinên dengbêjan
+  B) nivîskar û ramanwerê navdar ê berhema Mem û Zîn
+  C) yek ji şanonivîsên damezrîner ên şanoya kurdî
+  D) helbestvanê ku di serdema klasîk de berhemên kurdî nivîsîn
+
+[offline_10002]
+S: "Kamuran Bedirxan" tê çi wateyê?
+  A) zimannas û nivîskarê ku pirtûkên rêzimana kurdî nivîsî
+  B) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî
+  C) akademîsyenê ku li ser ziman û wêjeya kurdî dixebite
+  D) helbestvanê ku di wêjeya klasîk a kurdî de cihekî girîng digire
+
+[offline_10045]
+S: Der barê "Melayê Cizîrî" de ji bo wêjeyê bijardeya rast kîjan e?
+  A) vegotina devkî û veguhastina çîroka bi avaz
+  B) helbestvanê dîwana klasîk ê helbesta tesewufî ya kurdî
+  C) belavbûna alfabeya kurdî ya bi bingehê latînî
+  D) nivîskar û ramanwerê navdar ê berhema Mem û Zîn
+
+[offline_10071]
+S: Ji aliyê Edebiyatê ve ji bo "Elî Herîrî" îfadeya rast kîjan e?
+  A) yek ji helbestvanên klasîk ên herî kevn ên wêjeya kurdî
+  B) helbestvanê dîwanê yê herî mezin ê dibistana helbesta klasîk a soranî
+  C) ekola wêjeyî û ramanî ya ku Ehmedê Xanî dest pê kir
+  D) nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî
+
+[offline_10074]
+S: Ji aliyê wêjeyê ve ji bo "Dîwana Melayê Cizîrî" gotina rast kîjan e?
+  A) dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne
+  B) mesnewiya evînê ya ku Ehmedê Xanî nivîsandiye
+  C) berhevoka çîrokên gelêrî yên herêma Botanê
+  D) ferhenga helbestî ya kurdî-erebî ya ji bo zarokan
+
+[offline_10104]
+S: "Yaşar Kemal" çi îfade dike?
+  A) romannivîsê hoste yê bi eslê xwe kurd ê ku li cîhanê tê naskirin
+  B) helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû
+  C) ji ber ku gelek nivîskar li derveyî welêt berhem didin
+  D) damezrîner û pêşengê romana kurdî ya nûjen
+
+[offline_10228]
+S: "destan" çawa divê bê fêmkirin?
+  A) helbesta klasîk a kurdî
+  B) xwendekarê medreseyê / feqî
+  C) helbesta tesewufî (dîwan)
+  D) vegotina lehengiyê
+
+[offline_10237]
+S: Peyva "helbest" bi Tirkî çi tê gotin?
+  A) şiir
+  B) roman
+  C) deneme
+  D) oyun
+
+[offline_10314]
+S: Bi "awazên Serhedê" çi tê xwestin?
+  A) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+  B) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+  C) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+  D) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
+
+[offline_10320]
+S: Li jêr ji bo "dibistana dengbêjiyê" kîjan rast e?
+  A) veguhastina muzîkal a bi têkiliya hoste-şagird
+  B) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
+  C) erbaneya bi zil a ku di muzîka gelêrî de pir tê lêxistin
+  D) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+
+[offline_10333]
+S: Kîjan vebijêrk tê wateya "zurna"?
+  A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+  B) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
+  C) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
+  D) stranbêjî an lêxistina bi tenê ya hunermendekî
+
+[offline_10344]
+S: Koma Kardeş Türküler çi ye?
+  A) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
+  B) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+  C) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
+  D) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+
+[offline_10372]
+S: Derbarê "melodî" de vebijêrka rast kîjan e?
+  A) awayê stranbêjiya bi kom
+  B) avaza ku ji rêzbûna dengan pêk tê
+  C) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
+  D) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+
+[offline_10379]
+S: Bi "makam" çi tê xwestin?
+  A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
+  B) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
+  C) hunermendê ku bayê rock û caz anî muzîka kurdî
+  D) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
+
+[offline_10423]
+S: Derbarê "tembûr" de vebijêrka rast kîjan e?
+  A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+  B) sazê têlî yê ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin
+  C) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
+  D) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
+
+[offline_10427]
+S: Bi "hîran" çi tê xwestin?
+  A) lêdanên birêkûpêk ên ku bingeha muzîkê ne
+  B) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
+  C) şêwazeke din a avazê di muzîka gelêrî ya kurdî de
+  D) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+
+[offline_10433]
+S: Li jêr ji bo "Aram Tigran" kîjan rast e?
+  A) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
+  B) amûra bayî ya kevneşopî ya ku şivan jî lê dixin
+  C) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
+  D) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+
+[offline_10463]
+S: Kîjan vebijêrk tê wateya "lawik"?
+  A) cureya kilamê ya lîrîk ku bêtir li ser evîn û hesretê tê gotin
+  B) hunermendê ku bayê rock û caz anî muzîka kurdî
+  C) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
+  D) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
+
+[offline_10480]
+S: Dema "awazên Botanê" tê gotin, çi tê xwestin?
+  A) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
+  B) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
+  C) hunermendê ku bayê rock û caz anî muzîka kurdî
+  D) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+
+[offline_10498]
+S: Kîjan di Muzîkê de têgiha "Koma Amed" rast bi cih dike?
+  A) muzîkjenê hoste yê ermenî yê ku ji salên 60î ve stranên kurdî digot
+  B) cihê çandî yê ku ji salên 80î ve li Amedê dengbêj lê tên guhdarîkirin
+  C) koma muzîkê ya alternatîf a ku di salên 90î de di muzîka kurdî de guhertin çêkir
+  D) cureya muzîkê ya ku ji salên 70î ve li ser evînê tê gotin
+
+[offline_10537]
+S: Kîjan kesê/a "Aynur Dogan" rast dide nasîn?
+  A) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
+  B) hunermendê ku bayê rock û caz anî muzîka kurdî
+  C) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
+  D) amûra bayî ya kevneşopî ya ku şivan jî lê dixin
+
+[offline_10547]
+S: Derbarê "Erdewan Zaxoyî" de ya rast kîjan e?
+  A) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+  B) veguhastina muzîkal a bi têkiliya hoste-şagird
+  C) muzîkjenê şoreşger ê hezkirî yê herêma Behdînan
+  D) sazê têlî yê ku di muzîka gelêrî ya kurdî de herî pîroz tê hesibandin
+
+[offline_10566]
+S: Derbarê "nota" de agahiya herî rast kîjan e?
+  A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
+  B) nîşanên gerdûnî yên ku ji bo nivîsandina muzîkê tên bikaranîn
+  C) strana destanî an evînî ya ku dengbêj dibêjin
+  D) yekem hunermenda kurd a jin a ku plak dagirt
+
+[offline_10572]
+S: Li jêr ji bo "Hasan Cizrawî" kîjan rast e?
+  A) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+  B) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+  C) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
+  D) stranbêjî an lêxistina bi tenê ya hunermendekî
+
+[offline_10606]
+S: Berambera rast a biwêja "muzîka şevbêrkê" kîjan e?
+  A) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+  B) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
+  C) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+  D) veguhastina muzîkal a bi têkiliya hoste-şagird
+
+[offline_10615]
+S: Derbarê "Meryem Xan" de ya rast kîjan e?
+  A) muzîka kurdî ya ku li herêma Dêrsim û Çewlîgê tê gotin
+  B) amûra bayî ya kevneşopî ya ku şivan jî lê dixin
+  C) yekem hunermenda kurd a jin a ku plak dagirt
+  D) strana destanî an evînî ya ku dengbêj dibêjin
+
+[offline_10715]
+S: "Mihemed Taha Akreyî" bi kîjan aliyê xwe ve tê nasîn?
+  A) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
+  B) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
+  C) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+  D) yekem hunermenda kurd a jin a ku plak dagirt
+
+[offline_10813]
+S: "kevneşopiya şabaşê" tê çi wateyê?
+  A) edeta ku ji muzîkjenan re pere tê avêtin
+  B) veguhastina muzîkal a bi têkiliya hoste-şagird
+  C) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+  D) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
+
+[offline_10827]
+S: "Karapetê Xaço" wek kî tê naskirin?
+  A) strana destanî an evînî ya ku dengbêj dibêjin
+  B) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
+  C) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+  D) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+
+[offline_10878]
+S: "Kardeş Türküler" tê çi wateyê?
+  A) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
+  B) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+  C) stranbêjî an lêxistina bi tenê ya hunermendekî
+  D) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+
+[offline_10882]
+S: "strana Zembîlfiroş" çi îfade dike?
+  A) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
+  B) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
+  C) hunermendê ku bayê rock û caz anî muzîka kurdî
+  D) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
+
+[offline_10926]
+S: Ji aliyê Muzîkê ve ji bo "Mihemed Şêxo" îfadeya rast kîjan e?
+  A) dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin
+  B) koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike
+  C) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+  D) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
+
+[offline_10930]
+S: Têgiha "Mala Dengbêjan" çi pêk tîne?
+  A) yek ji nûnerên herî naskirî yên kevneşopiya dengbêjiya jinan
+  B) cihê çandî yê ku li Wan û Amedê dengbêj lê tên guhdarîkirin
+  C) strana destanî an evînî ya ku dengbêj dibêjin
+  D) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
+
+[offline_10939]
+S: Kîjan li gorî pênaseya "koro" ye?
+  A) awayê stranbêjiya bi kom
+  B) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
+  C) hunermendê naskirî yê muzîka kurdî
+  D) navê yekem koma rocka kurdî di dîrokê de
+
+[offline_10962]
+S: "stranên Şakiro" tê çi wateyê?
+  A) hunermendê ku vegotina devkî ya bi avaz dike
+  B) kilamên destanî yên dirêj ên ku Şakiro digot
+  C) yekem hunermenda kurd a jin a ku plak dagirt
+  D) strana destanî an evînî ya ku dengbêj dibêjin
+
+[offline_10963]
+S: "Ciwan Haco" çawa divê bê fêmkirin?
+  A) muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê
+  B) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+  C) hunermendê ku bayê rock û caz anî muzîka kurdî
+  D) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
+
+[offline_11013]
+S: Bi "stran" çi tê xwestin?
+  A) fîqa şivanan (kaval)
+  B) defa bi zengil (tef)
+  C) cureyên kilamên gelêrî
+  D) stran an awaza kurdî
+
+[offline_11068]
+S: Li jêr ji bo "awazên Behdînî" ya rast kîjan e?
+  A) hunermendê dengî yê herî navdar ê ku muzîka kurdî da nasîn cîhanê
+  B) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
+  C) pergala ku di muzîka tirkî û kurdî de avahiya avazê diyar dike
+  D) hunermendê ku bayê rock û caz anî muzîka kurdî
+
+[offline_11107]
+S: Di zanîna Muzîkê de derbarê "kemençe" de ya rast kîjan e?
+  A) dengê efsanewî yê muzîka klasîk a Behdînan
+  B) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
+  C) lêdanên birêkûpêk ên ku bingeha muzîkê ne
+  D) kesa ku bi giştî stranan dibêje
+
+[offline_11123]
+S: Derbarê "Şakiro" de ravekirina rast kîjan e?
+  A) şêwazeke din a avazê di muzîka gelêrî ya kurdî de
+  B) stranbêjî an lêxistina bi tenê ya hunermendekî
+  C) avaza ku ji rêzbûna dengan pêk tê
+  D) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+
+[offline_11125]
+S: Di dîrokê de "Şivan Perwer" kî ye?
+  A) yekem hunermenda kurd a jin a ku plak dagirt
+  B) kilamên destanî yên dirêj ên ku Şakiro digot
+  C) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+  D) hunermendê ku muzîka kurdî gihande dîwanên navneteweyî
+
+[offline_11127]
+S: Ji bo Muzîkê derbarê "Koma Wetan" de vebijêrka rast kîjan e?
+  A) amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin
+  B) navê yekem koma rocka kurdî di dîrokê de
+  C) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
+  D) sazê rîtmê yê ku bi zirneyê re tê lêxistin
+
+[offline_11136]
+S: Derbarê "ritim" de vebijêrka rast kîjan e?
+  A) avaza ku ji rêzbûna dengan pêk tê
+  B) amûra pifê ya bidengê bilind a ku li derve tê lêxistin
+  C) lêdanên birêkûpêk ên ku bingeha muzîkê ne
+  D) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
+
+[offline_11143]
+S: Berambera rast a biwêja "stranbêj" kîjan e?
+  A) dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"
+  B) avaza ku ji rêzbûna dengan pêk tê
+  C) kesa ku bi giştî stranan dibêje
+  D) kilama kevneşopî ya navdar a ku efsaneyekê vedibêje
+
+[offline_11154]
+S: Derbarê "kilam" de vebijêrka rast kîjan e?
+  A) strana destanî an evînî ya ku dengbêj dibêjin
+  B) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
+  C) hunermendê ku bayê rock û caz anî muzîka kurdî
+  D) yekem hunermenda kurd a jin a ku plak dagirt
+
+[offline_11180]
+S: Têgiha "makama dengbêjan" çi pêk tîne?
+  A) şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin
+  B) muzîkjenê şoreşger ê hezkirî yê herêma Behdînan
+  C) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+  D) stranbêjî an lêxistina bi tenê ya hunermendekî
+
+[offline_11200]
+S: Derbarê "dahol" de ravekirina rast kîjan e?
+  A) dengê efsanewî yê muzîka klasîk a Behdînan
+  B) bêyî amûr û bi avaza xweberî
+  C) sazê rîtmê yê ku bi zirneyê re tê lêxistin
+  D) avaza ku ji rêzbûna dengan pêk tê
+
+[offline_11227]
+S: Bi "defbaz" çi tê xwestin?
+  A) hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide
+  B) şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê
+  C) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+  D) dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman
+
+[offline_11294]
+S: Ji aliyê Muzîkê ve ji bo "erbane" îfadeya rast kîjan e?
+  A) veguhastina muzîkal a bi têkiliya hoste-şagird
+  B) erbaneya bi zil a ku di muzîka gelêrî de pir tê lêxistin
+  C) muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin
+  D) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
+
+[offline_11326]
+S: Kîjan pênase bi "muzîka kirmanckî" re li hev tê?
+  A) dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir
+  B) hunermendê ku di serdema nûjen de muzîka gelêrî ya kurdî pêşkêş dike
+  C) muzîka kurdî ya ku li herêma Dêrsim û Çewlîgê tê gotin
+  D) hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan
+
+[offline_11366]
+S: "solo" di mijara muzîkê de çi vedibêje?
+  A) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
+  B) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
+  C) amûra arpî ya ku li Mezopotamyaya kevnar û di muzîka kurdî de hat bikaranîn
+  D) stranbêjî an lêxistina bi tenê ya hunermendekî
+
+[offline_11383]
+S: Derbarê "heyran" de agahiya herî rast kîjan e?
+  A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
+  B) amûra lêdanê ya ku di muzîka tesewufî û gelêrî ya kurdî de tê bikaranîn
+  C) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+  D) cureyekî avaza gelêrî ya kurdî ku li herêma Serhedê belav e
+
+[offline_11420]
+S: Ji aliyê Muzîkê ve ji bo "muzîka govendê" îfadeya rast kîjan e?
+  A) stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin
+  B) muzîkjenê hoste yê bi eslê xwe ermenî yê ku bi stranên kurdî tê naskirin
+  C) amûra bayî ya kevneşopî ya ku şivan jî lê dixin
+  D) cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin
+
+[offline_11431]
+S: Kîjan vebijêrk tê wateya "dengbêj"?
+  A) hunermendê ku vegotina devkî ya bi avaz dike
+  B) şêwaza muzîkê ya taybetî ya herêma Dihok û Zaxoyê
+  C) sazê rîtmê yê ku bi zirneyê re tê lêxistin
+  D) bêyî amûr û bi avaza xweberî
+
+[offline_11493]
+S: Kîjan vebijêrk tê wateya "hevgirtina demokratîk"?
+  A) awayê xwerêveberî û rêxistinbûna gel
+  B) yekîtiya wekhev a beşên cuda yên bindest
+  C) beşdariya civaka herêmî di pêvajoyên biryarê de
+  D) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
+
+[offline_11511]
+S: "hiyerarşî" bi awayekî rast çawa tê ravekirin?
+  A) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
+  B) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
+  C) ne tenê sembolîk, lê di asta rêxistinî û saziyî de
+  D) beşdariya civaka herêmî di pêvajoyên biryarê de
+
+[offline_11517]
+S: Der barê "pîşesaziya ekolojîk" de ji bo paradîgmayê bijardeya rast kîjan e?
+  A) yek pirrengî-dilxwazî ye, ya din yekreng-mecbûrî ye
+  B) qadên xwerêxistina civakî yên derveyî dewletê
+  C) hevpariya nasnameyan bêyî zora dewletê
+  D) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
+
+[offline_11538]
+S: Dema "pîvana azadiyê" tê gotin, çi tê xwestin?
+  A) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan
+  B) organeke hevrêzî û biryarê ya li ser komînan
+  C) reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye
+  D) belgeya destûrî ya ku prensîbên damezrîner û bingehên rêveberiyê diyar dike
+
+[offline_11543]
+S: "jiyana hevpar a azad" çawa tê pênasekirin?
+  A) dibistanên ku hişmendiya jinê û jineolojiyê pêş dixin
+  B) jiyaneke hevbeş a wekhev ku li ser tepser û xwedîtiyê ava nabe
+  C) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+  D) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+
+[offline_11556]
+S: "peymana civakî" tê çi wateyê?
+  A) pergaleke li ser bingeha jiyana komînal û hevgirtinê
+  B) mafê civakê yê xwe parastin û xwerêxistinê
+  C) metna damezrîner a hevbeş a kanton û komînan
+  D) yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî
+
+[offline_11584]
+S: Têgiha "komîn" çi pêk tîne?
+  A) organeke hevrêzî û biryarê ya li ser komînan
+  B) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
+  C) xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar
+  D) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
+
+[offline_11587]
+S: Derbarê "azadîxwaziya zayendî" de agahiya herî rast kîjan e?
+  A) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
+  B) modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike
+  C) beşdariya civaka herêmî di pêvajoyên biryarê de
+  D) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+
+[offline_11588]
+S: "hêza exlaqî" çi îfade dike?
+  A) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
+  B) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
+  C) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
+  D) pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de
+
+[offline_11597]
+S: Bi "rexneya patriyarkayê" çi tê xwestin?
+  A) federasyoneke ne-dewletgir a li ser bingeha binî
+  B) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye
+  C) eşkerekirina avahiya pergala serdestiya zilaman
+  D) yek pirrengî-dilxwazî ye, ya din yekreng-mecbûrî ye
+
+[offline_11599]
+S: Têgiha "aboriya komûnal" çi pêk tîne?
+  A) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+  B) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
+  C) biryargirtina rasterast a gel bêyî nûneran
+  D) ne tenê sembolîk, lê di asta rêxistinî û saziyî de
+
+[offline_11605]
+S: Der barê "konfederalîzma demokratîk" de bijardeya rast kîjan e?
+  A) pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê
+  B) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
+  C) modeleke rêveberiya civakî ya derveyî dewletê
+  D) têkiliyeke li hev û berdewam a di navbera civakê û xwezayê de
+
+[offline_11624]
+S: "azadiya jinê" çi îfade dike?
+  A) krîzên ekolojî, jin û demokrasiyê
+  B) pîvana herî bingehîn a azadbûna civakî
+  C) azadiya jinê, ekolojî û demokrasî
+  D) dibistana lêgerîna zanist û jiyaneke alternatîf
+
+[offline_11649]
+S: Ji bo "meclis" pênaseya derbasdar kîjan e?
+  A) organeke hevrêzî û biryarê ya li ser komînan
+  B) avahiyeke dewletê ya yekreng û sînoran pîroz dike
+  C) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
+  D) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
+
+[offline_11713]
+S: "civaka exlaqî-polîtîk" bi awayekî rast çawa tê ravekirin?
+  A) xeteke pêşketina komînal a gelan a ne-dewletgir
+  B) civakeke xwedî nirxên exlaqî ku biryarên xwe bi xwe digire
+  C) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
+  D) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
+
+[offline_11728]
+S: Li jêr ji bo "dewleta netewe" ya rast kîjan e?
+  A) avahiyeke dewletê ya yekreng û sînoran pîroz dike
+  B) organeke hevrêzî û biryarê ya li ser komînan
+  C) reflêksa civakê ya xweparastin û xwe-cîbicîkirinê ye
+  D) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
+
+[offline_11779]
+S: Der barê "modernîteya kapîtalîst" de ji bo paradîgmayê bijardeya rast kîjan e?
+  A) komîteya ku gel li taxan û gundan biryaran dide
+  B) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
+  C) civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî
+  D) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
+
+[offline_11782]
+S: Kîjan têgeha "tekelparêzî" di nav paradîgmayê de rast bi cih dike?
+  A) federasyoneke ne-dewletgir a li ser bingeha binî
+  B) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye
+  C) krîza navendîbûna aborî û siyasî ya destekî yekane
+  D) dibistana lêgerîna zanist û jiyaneke alternatîf
+
+[offline_11789]
+S: Derbarê "Akademiya Modernîteya Demokratîk" de kîjan rast e?
+  A) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan
+  B) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
+  C) avahiyeke dewletê ya yekreng û sînoran pîroz dike
+  D) dibistana lêgerîna zanist û jiyaneke alternatîf
+
+[offline_11792]
+S: Derbarê "zanistiya demokratîk" de kîjan rast e?
+  A) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+  B) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
+  C) ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne
+  D) rêxistineke tepserker a ku têkiliya jêr-jor di civakê de ava dike
+
+[offline_11813]
+S: Ji bo "netewa demokratîk" pênaseya derbasdar kîjan e?
+  A) ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne
+  B) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
+  C) belgeya ku prensîbên hevjiyana civakê diyar dike
+  D) têgihiştineke zanistî ya ne-tekelîst ku xizmetê civakê dike
+
+[offline_11820]
+S: "civaka sivîl" di mijara paradîgmayê de çi vedibêje?
+  A) milkiyeta axê û amûran a gişî civakê
+  B) yekîneya bingehîn a hevgirtinê ya aboriya komînal
+  C) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
+  D) qadên xwerêxistina civakî yên derveyî dewletê
+
+[offline_11838]
+S: Derbarê "şaristaniya demokratîk" de ravekirina rast kîjan e?
+  A) pîvana azadiya giştî ya civakê bi azadiya jinê tê pîvan
+  B) xeteke pêşketina komînal a gelan a ne-dewletgir
+  C) ji ber ku têkiliya civak-xweza bi rexneya desthilatdarî û aboriyê ve tevî hev vedihewîne
+  D) ji ber ku ji bo pratîka perwerdehiyê fêrbûneke ewle, analîtîk û demokratîk armanc kirî ye
+
+[offline_11846]
+S: Têgiha "kantona demokratîk" çi pêk tîne?
+  A) li seranserê cîhanê bûye sembola azadiya jinê
+  B) yekîneyeke îdarî û civakî ya xwedî xweseriya herêmî
+  C) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
+  D) metna damezrîner a hevbeş a kanton û komînan
+
+[offline_11864]
+S: Kîjan li gorî pênaseya "konfederalîzma demokratîk" ye?
+  A) mafê civakê yê xweparastin û xwerêxistinê
+  B) pîvana herî bingehîn a azadbûna civakî
+  C) federasyoneke ne-dewletgir a li ser bingeha binî
+  D) eşkerekirina avahiya pergala serdestiya zilaman
+
+[offline_11870]
+S: Kîjan têgeha "ekolojiya civakî" di nav paradîgmayê de rast bi cih dike?
+  A) zanisteke ku têkiliya di navbera xerakirina xwezayê û hiyerarşiyê de ava dike
+  B) avahiyeke dewletê ya yekreng û sînoran pîroz dike
+  C) ne tenê sembolîk, lê di asta rêxistinî û saziyî de
+  D) yekîneya herî biçûk û a rasterast beşdar a rêveberiya civakê
+
+[offline_11886]
+S: Derbarê "peymana civakî" de vebijêrka rast kîjan e?
+  A) belgeya ku prensîbên hevjiyana civakê diyar dike
+  B) avahiyeke dewletê ya yekreng û sînoran pîroz dike
+  C) dîtina azadiya jinê wek bingeha azadiya civakî
+  D) şiyana civakê ya xweseriyê bêyî pêwîstiya qanûnan
+
+[offline_11893]
+S: Li jêr kîjan têgiha "civaka ekolojîk" rave dike?
+  A) civakeke ku xwezayê nametirîne, li gel wê bi lihevhatî dijî
+  B) hevpariya nasnameyan bêyî zora dewletê
+  C) yekîtiya wekhev a beşên cuda yên bindest
+  D) li seranserê cîhanê bûye sembola azadiya jinê
+
+[offline_11917]
+S: Li jêr kîjan têgiha "eşseroktî" rave dike?
+  A) hevpariyeke pirkulturî û wekhev di welatekî hevbeş de
+  B) pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de
+  C) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
+  D) têgihiştina mirov a ku ew parçeyekî xwezayê ye
+
+[offline_11957]
+S: Dema "zayenda civakî" tê gotin, çi tê xwestin?
+  A) krîza navendîbûna aborî û siyasî ya destekî yekane
+  B) kapitalist moderniteye alternatif yaşam sistemi
+  C) rolên çêkirî yên ku civakê ji jin û mêr re diyar kiriye
+  D) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
+
+[offline_11996]
+S: "antîkapîtalîzm" çi îfade dike?
+  A) ku rêxistinbûna demokratîk tenê bi dewleta navendî re sînordar nîne
+  B) beşdariya gel a rasterast di rêveberî û pêvajoyên biryarê de
+  C) nêrîna ku li dora zanista jinê û rexneya baviksalariyê pêş dikeve
+  D) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+
+[offline_12036]
+S: Ji aliyê paradîgmayê ve ji bo "pîşesazîparêzî" gotina rast kîjan e?
+  A) têkiliya di navbera serdestiyê û xerakirina xwezayê de
+  B) modeleke pîşesaziyê ya ji bo qezencê xwezayê xera dike
+  C) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+  D) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
+
+[offline_12069]
+S: Dema "milkiyeta komûnal" tê gotin, çi tê xwestin?
+  A) pîvana herî bingehîn a azadbûna civakî
+  B) milkiyeta axê û amûran a gişî civakê
+  C) azadiya jinê, ekolojî û demokrasî
+  D) eşkerekirina avahiya pergala serdestiya zilaman
+
+[offline_12073]
+S: Derbarê "akademiyên jinan" de kîjan rast e?
+  A) dibistanên ku hişmendiya jinê û jineolojiyê pêş dixin
+  B) têgihiştina mirov a ku ew parçeyekî xwezayê ye
+  C) helwesteke li dijî mantiqê qezenc û mêtinkirinê yê kapîtalîzmê
+  D) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+
+[offline_12122]
+S: Derbarê "patriyarka" de vebijêrka rast kîjan e?
+  A) pergaleke civakî ku zilamî serdest dike û jinê tepser dike
+  B) nîzameke wekhev a bêyî serdestî û mêtinkirinê
+  C) li seranserê cîhanê bûye sembola azadiya jinê
+  D) prensîbeke wekhevîxwaz a li dijî tepser û cudakariya zayendî
+
+[offline_12261]
+S: "civaka bêhiyerarşî" tê çi wateyê?
+  A) têkiliya di navbera serdestiyê û xerakirina xwezayê de
+  B) nîzameke wekhev a bêyî serdestî û mêtinkirinê
+  C) biryargirtina rasterast a gel bêyî nûneran
+  D) yekîtiya wekhev a beşên cuda yên bindest
+
+[offline_12291]
+S: "politîkbûn" bi awayekî rast çawa tê ravekirin?
+  A) organeke hevrêzî û biryarê ya li ser komînan
+  B) xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar
+  C) pîşesazîparêziya xwezayê xerakirî û mezinbûna li ser bingeha qezencê
+  D) belgeya ku prensîbên hevjiyana civakê diyar dike
+
+[offline_12331]
+S: Derbarê "demokrasiya rasterast" de agahiya herî rast kîjan e?
+  A) têkiliya di navbera serdestiyê û xerakirina xwezayê de
+  B) beşdariya civaka herêmî di pêvajoyên biryarê de
+  C) biryargirtina rasterast a gel bêyî nûneran
+  D) sêalîtiya pîşesazîparêziyê, netew-dewlet û kapîtalîzmê
+
+[offline_12344]
+S: "kooperatîfvanî" çawa divê bê fêmkirin?
+  A) federasyoneke ne-dewletgir a li ser bingeha binî
+  B) pergaleke li ser bingeha jiyana komînal û hevgirtinê
+  C) krîza navendîbûna aborî û siyasî ya destekî yekane
+  D) yekîneya bingehîn a hevgirtinê ya aboriya komînal
+
+[offline_12366]
+S: Derbarê "parastina rewa" de ravekirina rast kîjan e?
+  A) mafê civakê yê xwe parastin û xwerêxistinê
+  B) pergaleke li ser bingeha jiyana komînal û hevgirtinê
+  C) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
+  D) milkiyeta axê û amûran a gişî civakê
+
+[offline_12391]
+S: "şaristaniya dewletparêz" tê çi wateyê?
+  A) xeteke pêşketina komînal a gelan a ne-dewletgir
+  B) beşdariya civaka herêmî di pêvajoyên biryarê de
+  C) xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e
+  D) aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire
+
+[offline_12401]
+S: Li jêr ji bo "komunalîzma demokratîk" kîjan rast e?
+  A) awayekî hilberînê yê li gel xwezayê li hev û bi vegerandinê
+  B) krîza navendîbûna aborî û siyasî ya destekî yekane
+  C) dibistana lêgerîna zanist û jiyaneke alternatîf
+  D) pergaleke li ser bingeha jiyana komînal û hevgirtinê
+
+[offline_12660]
+S: "aştiya civakî" çawa tê pênasekirin?
+  A) Ji ber ku wek şerta azadbûna civakê bi tevahî tê hesibandin
+  B) Rêzikên qanûnî û gavên entegrasyona demokratîk
+  C) Nîqaşa konfederalîzma demokratîk û netewa demokratîk
+  D) Hevjiyana aram a komên etnîkî û baweriyê yên cuda
+
+[offline_12703]
+S: "komîsyona rastiyê" bi awayekî rast çawa tê ravekirin?
+  A) danûstandin, reforma demokratîk û misogerkirina mafan
+  B) hêza rêveberê herêmî yê hilbijartî li şûna qeyûmê ji navendê tayînkirî
+  C) komîteyek ku êşên borî lêkolîn dike û aştiya civakî ava dike
+  D) statûya xweseriyê û biryargirtinê li herêmê
+
+[offline_12742]
+S: Kîjan têgiha "demokrasiya temsîlî" rast şirove dike?
+  A) tevlêbûna hemwelatiyan di pêvajoyên biryargirtinê de
+  B) diyarkirina lêçûnên bûçeyê ji aliyê gel ve bi meclîsan
+  C) pergaleke ku gel nûnerên xwe hildibijêre û nûner li ser navê wan biryaran didin
+  D) mafê civakê yê xwerêveberiyê bêyî tepsera derveyî
+
+[offline_12743]
+S: "demokrasiya herêmî" çi îfade dike?
+  A) girtina biryaran li yekîneyên herî nêzî gel
+  B) platforma hevbeş a aştiyê ya komên muxalif ên cuda
+  C) beşdariya rasterast û berdewam a ji binî pêş dixe
+  D) parastina komên ku ji piraniyê cuda ne
+
+[offline_12745]
+S: "demokrasiya pirreng" tê çi wateyê?
+  A) qebûlkirina wekhev a nasname û baweriyên cuda
+  B) hevgirtina wekhev û piştgir a gelên cuda
+  C) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike
+  D) avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin
+
+[offline_12758]
+S: Kîjan pênase bi "siyaseta demokratîk" re li hev tê?
+  A) awayekî siyasetê yê ku li şûna tepser û tesfiyeyê, diyalogê hildibijêre
+  B) rêveberiya ku ji şaredarî û komîteyên herêmî pêk tê
+  C) hevgirtina wekhev û piştgir a gelên cuda
+  D) desthilata parlamentoya herêmî ya ku dikare qanûnên xwe çêbike

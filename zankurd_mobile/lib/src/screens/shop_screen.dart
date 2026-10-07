@@ -1,6 +1,10 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import '../data/durable_write.dart';
+import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
 import '../l10n/lang.dart';
@@ -12,10 +16,13 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../widgets/app_state.dart';
-import '../widgets/roj_mascot.dart';
-import '../widgets/screen_identity_header.dart';
+import '../widgets/branded_loader.dart';
+import '../widgets/player_avatar.dart';
+import '../widgets/sahne/sahne.dart';
+import '../widgets/zk_back_button.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../widgets/dialog_action_pair.dart';
 
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
 /// Statik yedek listedeki (`ShopItem.catalog`) her ikon burada da
@@ -140,11 +147,18 @@ class ShopItem {
   //      gelir kaybı değil, erişilebilirlik kazancıdır.
   //
   // Yeni tempo: ilk satın alma 3,0 gün; katalog 17,7 gün.
+  //
+  // 2026-09-29 doğallık: ürün adları cümle düzeninde ("Altın çerçeve",
+  // "Altın Çerçeve" değil). Her sözcüğü büyük harfle başlatmak Türkçe ve
+  // Kurmancîde doğal değil; İngilizce arayüz kalıbıydı. DİKKAT: uzak
+  // `shop_items` tablosunun `title_ku/title_tr` sütunları hâlâ eski
+  // yazımı taşıyor (`supabase/2026-07-23_shop_items_sync.sql`); canlı
+  // katalog okunduğunda o adlar görünür — veri göçü ayrıca gerekir.
   static const List<ShopItem> catalog = [
     ShopItem(
       id: 'spin_wheel_extra',
-      titleKu: 'Zivirîna Zêde',
-      titleTr: 'Ekstra Çevirme',
+      titleKu: 'Zivirîna zêde',
+      titleTr: 'Ekstra çevirme',
       descKu: 'Ji bo çerxa rojane mafekî zivirînê yê nû dide.',
       descTr: 'Bugün çarkı tekrar çevirmek için ekstra hak verir.',
       cost: 120,
@@ -153,8 +167,8 @@ class ShopItem {
     ),
     ShopItem(
       id: 'avatar_frame_gold',
-      titleKu: 'Çarçoveya Zêrîn',
-      titleTr: 'Altın Çerçeve',
+      titleKu: 'Çarçoveya zêrîn',
+      titleTr: 'Altın çerçeve',
       descKu: 'Ji bo avatarê te çarçoveyeke zêrîn a taybet.',
       descTr: 'Avatarın için özel altın çerçeve.',
       cost: 480,
@@ -163,8 +177,8 @@ class ShopItem {
     ),
     ShopItem(
       id: 'avatar_frame_neon',
-      titleKu: 'Çarçoveya Neon',
-      titleTr: 'Neon Çerçeve',
+      titleKu: 'Çarçoveya neon',
+      titleTr: 'Neon çerçeve',
       descKu: 'Avatarê te bi rengên neon ên geş dibiriqe.',
       descTr: 'Avatarın neon renklerle parıldasın.',
       cost: 350,
@@ -174,7 +188,7 @@ class ShopItem {
     ShopItem(
       id: 'profile_badge_vip',
       titleKu: 'Rozeta VIP',
-      titleTr: 'VIP Rozeti',
+      titleTr: 'VIP rozeti',
       descKu: 'Profîla te de rozeteke taybet a VIP xuya dibe.',
       descTr: 'Profilinde özel VIP rozeti görünsün.',
       cost: 720,
@@ -209,8 +223,15 @@ class _ShopScreenState extends State<ShopScreen> {
   String? _purchaseErrorMessage;
   bool _purchaseOffline = false;
   ShopItem? _retryPurchaseItem;
+  ShopItem? _retryPurchaseEffectItem;
   final Set<String> _purchasedItemIds = {};
   List<ShopItem> _dynamicItems = const [];
+
+  /// Çerçeve ürünlerinin önizlemesi için oyuncunun kendi avatarı ve adı.
+  /// Yüklenemezse `null` kalır ve karo ürün ikonuna düşer; mağaza bu
+  /// yüzden hata durumuna geçmez.
+  AvatarIdentity? _avatar;
+  String? _profileName;
 
   // Sunucuda ürün kaydı bulunması tek başına yayına hazır olduğu anlamına
   // gelmez. Coin düşürüp etkisi olmayan taslak ürünler burada görünmez.
@@ -243,6 +264,33 @@ class _ShopScreenState extends State<ShopScreen> {
     'profile_badge_vip',
   };
   static const Set<String> _repeatableItemIds = {'spin_wheel_extra'};
+
+  static bool _isFrameItem(String id) => id.startsWith('avatar_frame_');
+
+  /// Ürün önizleme karosu. Çerçeve ürünlerinde karoda boş bir yıldız ya da
+  /// sihirli değnek değil, oyuncunun KENDİ avatarı o çerçeveyle durur:
+  /// satın alınan şeyin neye benzeyeceğini gösterir (2026-09-29 doğallık,
+  /// GORSEL_KARARLAR K10). Avatar yüklenemediyse ürün ikonuna düşer.
+  Widget _preview(ShopItem item, {required double size, bool dim = false}) {
+    final avatar = _avatar;
+    if (avatar == null || !_isFrameItem(item.id)) {
+      return _PreviewTile(icon: item.icon, size: size, dim: dim);
+    }
+    final framed = applyShopPurchaseEffect(item.id, avatar);
+    return _PreviewTile(
+      icon: item.icon,
+      size: size,
+      dim: dim,
+      child: PlayerAvatar(
+        radius: (size * 0.34).roundToDouble(),
+        photoUrl: framed.photoUrl,
+        iconId: framed.iconId,
+        colorHex: framed.colorHex,
+        frameId: framed.frameId,
+        displayName: _profileName,
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -323,8 +371,25 @@ class _ShopScreenState extends State<ShopScreen> {
         }
       }
 
+      AvatarIdentity? avatar;
+      String? profileName;
+      if (dynamicItems.any((item) => _isFrameItem(item.id))) {
+        try {
+          avatar = await widget.repository.loadAvatarIdentity();
+          profileName = await widget.repository.getProfileName();
+        } catch (error, stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'shop frame preview avatar load failed',
+          );
+        }
+      }
+
       if (mounted) {
         setState(() {
+          _avatar = avatar;
+          _profileName = profileName;
           _coinBalance = balance;
           _dynamicItems = dynamicItems;
           _purchasedItemIds.clear();
@@ -345,6 +410,24 @@ class _ShopScreenState extends State<ShopScreen> {
     }
   }
 
+  Future<void> _openSpinWheel() async {
+    await Navigator.of(context).push(
+      AppRoute<void>(page: SpinWheelScreen(repository: widget.repository)),
+    );
+    if (!mounted) return;
+    await _refreshCoinBalance();
+  }
+
+  Future<void> _refreshCoinBalance() async {
+    try {
+      final balance = await widget.repository.loadCoinBalance();
+      if (!mounted) return;
+      setState(() => _coinBalance = balance);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'shop balance refresh failed');
+    }
+  }
+
   // ── Purchase confirmation dialog ──
   Future<void> _confirmPurchase(ShopItem item) async {
     final ku = context.isKu;
@@ -354,153 +437,111 @@ class _ShopScreenState extends State<ShopScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) {
-        final isDark = Theme.of(ctx).brightness == Brightness.dark;
+        final t = SahneTokens.of(ctx);
+        final short = _coinBalance < item.cost;
         return AlertDialog(
-          backgroundColor: AppTheme.surfaceColor(ctx),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.lg),
-            side: BorderSide(color: AppTheme.borderColor(ctx)),
-          ),
           title: Row(
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: item.themeColor.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                ),
-                child: Icon(
-                  item.icon,
-                  color: AppColors.onAccentTint(context, item.themeColor),
-                  size: 22,
-                ),
-              ),
-              const SizedBox(width: 12),
+              _preview(item, size: 44),
+              const SizedBox(width: SahneSpace.x3),
               Expanded(
                 child: Text(
                   title,
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(ctx),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 17,
-                  ),
+                  style: SahneType.headline.copyWith(color: t.tx),
                 ),
               ),
             ],
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                desc,
-                style: TextStyle(
-                  color: AppTheme.textSubColor(ctx),
-                  fontSize: 14,
-                  height: 1.45,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: isDark
-                      ? AppTheme.surfaceHi.withValues(alpha: 0.5)
-                      : AppTheme.lightSurfaceHi,
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                  border: Border.all(
-                    color: AppTheme.borderColor(ctx).withValues(alpha: 0.4),
+              Text(desc, style: SahneType.body.copyWith(color: t.tx2)),
+              const SizedBox(height: SahneSpace.x4),
+              DecoratedBox(
+                decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
+                child: Padding(
+                  padding: const EdgeInsets.all(SahneSpace.x3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SahneGlyph(SahneGlyphKind.coin),
+                      const SizedBox(width: SahneSpace.x2),
+                      Flexible(
+                        child: Text(
+                          // Para birimi adı defterden gelir: Kurmancî
+                          // ekranda "zêr", Türkçede "coin". Sabit yazıldığında
+                          // aynı ekranda iki ad birden görünüyordu — başlık
+                          // "Zêrên xwe bi aqilmendî bixercîne" derken sayaç
+                          // "0 coin" diyordu (2026-08-01, canlı Kurmancî
+                          // mağaza ekranı).
+                          '${item.cost} ${ctx.t(K.coinWord).toLowerCase()}',
+                          style: SahneType.bodyStrong.copyWith(
+                            color: t.tx,
+                            fontFeatures: const [FontFeature.tabularFigures()],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(AppIcons.coins, color: AppTheme.gold, size: 22),
-                    const SizedBox(width: 8),
-                    Text(
-                      // Para birimi adı defterden gelir: Kurmancî
-                      // ekranda "zêr", Türkçede "coin". Sabit yazıldığında
-                      // aynı ekranda iki ad birden görünüyordu — başlık
-                      // "Zêrên xwe bi aqilmendî bixercîne" derken sayaç
-                      // "0 coin" diyordu (2026-08-01, canlı Kurmancî
-                      // mağaza ekranı).
-                      '${item.cost} ${ctx.t(K.coinWord).toLowerCase()}',
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryColor(ctx),
-                        fontWeight: FontWeight.w800,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ],
-                ),
               ),
-              const SizedBox(height: 12),
+              // Yetersiz bakiye bir durumdur: Şaş metni + ikon + söz; yalnız
+              // renkle verilmez. Eksik miktar yazılır; bakiye satırı hep
+              // görünür.
+              const SizedBox(height: SahneSpace.x3),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    AppIcons.wallet,
-                    size: 16,
-                    color: AppTheme.textMutedColor(ctx),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    context.t(K.yourBalance, {'coins': '$_coinBalance'}),
-                    style: AppTypography.caption.copyWith(
-                      color: (_coinBalance < item.cost)
-                          ? AppTheme.wrong
-                          : AppTheme.textSubColor(ctx),
+                  Icon(AppIcons.wallet, size: 16, color: t.tx2),
+                  const SizedBox(width: SahneSpace.x2),
+                  Flexible(
+                    child: Text(
+                      context.t(K.yourBalance, {'coins': '$_coinBalance'}),
+                      style: SahneType.caption.copyWith(color: t.tx2),
                     ),
                   ),
                 ],
               ),
-              // Yetersiz bakiye: coin kazanma yoluna yönlendiren ikincil
-              // eylem. Daha önce actions listesindeydi; üç eylem tek satıra
-              // sığmayınca OverflowBar bunları merdiven gibi üç ayrı hizaya
-              // dağıtıyordu (2026-07-22 canlı UX denetimi). İçeriğe alınınca
-              // actions'ta iki eylem kalıyor ve düzgün hizalanıyor.
-              if (_coinBalance < item.cost) ...[
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  child: TextButton.icon(
-                    onPressed: () {
-                      Navigator.of(ctx).pop(false);
-                      Navigator.of(context).push(
-                        AppRoute<void>(
-                          page: SpinWheelScreen(repository: widget.repository),
-                        ),
-                      );
-                    },
-                    icon: const Icon(AppIcons.dice, size: 18),
-                    label: Text(context.t(K.earnCoins)),
+              if (short) ...[
+                const SizedBox(height: SahneSpace.x2),
+                SahneShortfallNote(
+                  key: const ValueKey('shop-dialog-shortfall'),
+                  missing: coinShortfall(
+                    cost: item.cost,
+                    balance: _coinBalance,
                   ),
+                  alert: true,
+                  center: true,
                 ),
               ],
             ],
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(false),
-              child: Text(
-                context.t(K.cancelShort),
-                style: TextStyle(color: AppTheme.textMutedColor(ctx)),
+            DialogActionPair(
+              cancel: SahneButton.text(
+                label: context.t(K.cancelShort),
+                arrow: false,
+                onPressed: () => Navigator.of(ctx).pop(false),
               ),
-            ),
-            FilledButton(
-              // Bakiye yetersizse 'Bikire' gri disabled kalır; kullanıcı
-              // 'Coin qezenc bike' ile çarka yönlendirilir.
-              onPressed: (_coinBalance < item.cost)
-                  ? null
-                  : () => Navigator.of(ctx).pop(true),
-              style: FilledButton.styleFrom(
-                backgroundColor: AppTheme.primaryCtaColor(ctx),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                ),
-              ),
-              child: Text(context.t(K.buyAction)),
+              // Diyaloğun tek birincil eylemi. Bakiye yetmiyorsa "Satın al"
+              // pasif bırakılmaz, YERİNE gerçek bir sonraki adım gelir:
+              // günlük çark (jeton kazanılan, kodda var olan yol).
+              confirm: short
+                  ? SahneButton.primary(
+                      key: const ValueKey('shop-dialog-earn-coins'),
+                      label: context.t(K.earnCoins),
+                      arrow: false,
+                      onPressed: () async {
+                        Navigator.of(ctx).pop(false);
+                        await _openSpinWheel();
+                      },
+                    )
+                  : SahneButton.primary(
+                      label: context.t(K.buyAction),
+                      arrow: false,
+                      onPressed: () => Navigator.of(ctx).pop(true),
+                    ),
             ),
           ],
         );
@@ -515,12 +556,9 @@ class _ShopScreenState extends State<ShopScreen> {
   Future<void> _purchase(ShopItem item) async {
     if (_coinBalance < item.cost) {
       HapticFeedback.vibrate();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(context.t(K.insufficientBalance)),
-          backgroundColor: AppTheme.wrong,
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.insufficientBalance))));
       return;
     }
 
@@ -528,21 +566,50 @@ class _ShopScreenState extends State<ShopScreen> {
     setState(() {
       _purchaseErrorMessage = null;
       _retryPurchaseItem = item;
+      _retryPurchaseEffectItem = null;
       _purchaseOffline = false;
     });
 
+    final purchaseKey =
+        'purchase_${item.id}_${DateTime.now().microsecondsSinceEpoch}';
     try {
-      final success = await widget.repository.spendCoins(
+      final result = await widget.repository.spendCoinsDurable(
         item.cost,
         'purchase_${item.id}',
+        purchaseKey,
       );
+      if (!result.success && result.retryable) {
+        await SyncManager.maybeInstance?.queueCoinSpend(
+          amount: item.cost,
+          reason: 'purchase_${item.id}',
+          idempotencyKey: purchaseKey,
+        );
+        if (!mounted) return;
+        setState(() {
+          _purchaseErrorMessage = context.t(K.errorOccurred);
+          _retryPurchaseItem = null;
+        });
+        return;
+      }
+      final success = result.success;
 
       if (!mounted) return;
 
       if (success) {
         _purchaseErrorMessage = null;
-        await _applyPurchaseEffect(item.id);
+        final effectApplied = await _applyPurchaseEffect(item.id);
         if (!mounted) return;
+        if (!effectApplied) {
+          final title = context.isKu ? item.titleKu : item.titleTr;
+          setState(() {
+            _purchaseErrorMessage = context.t(K.purchasedItem, {'item': title});
+            _retryPurchaseItem = null;
+            _retryPurchaseEffectItem = item;
+            _purchaseOffline = false;
+          });
+          return;
+        }
+        _retryPurchaseEffectItem = null;
         HapticFeedback.lightImpact();
         try {
           context.read<SoundProvider>().playCorrect();
@@ -558,6 +625,19 @@ class _ShopScreenState extends State<ShopScreen> {
         HapticFeedback.vibrate();
         setState(() => _purchaseErrorMessage = context.t(K.purchaseFailed));
       }
+    } on RetryableWriteException catch (error, stack) {
+      ErrorReporter.record(error.cause, stack, reason: 'shop_purchase');
+      await SyncManager.maybeInstance?.queueCoinSpend(
+        amount: item.cost,
+        reason: 'purchase_${item.id}',
+        idempotencyKey: purchaseKey,
+      );
+      if (!mounted) return;
+      setState(() {
+        _purchaseErrorMessage = context.t(K.errorOccurred);
+        _retryPurchaseItem = null;
+        _purchaseOffline = isLikelyOfflineError(error.cause);
+      });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'shop_purchase');
       if (!mounted) return;
@@ -573,7 +653,7 @@ class _ShopScreenState extends State<ShopScreen> {
     }
   }
 
-  Future<void> _applyPurchaseEffect(String itemId) async {
+  Future<bool> _applyPurchaseEffect(String itemId) async {
     // Bu koruma `applyShopPurchaseEffect`in gerçekten bir şey yaptığı
     // ürünlerle senkron kalmalı — 'avatar_frame_neon' burada yoktu ve dal
     // hiç açılmıyordu, yani neon satın alan oyuncu için
@@ -582,20 +662,53 @@ class _ShopScreenState extends State<ShopScreen> {
     if (itemId != 'avatar_frame_gold' &&
         itemId != 'avatar_frame_neon' &&
         itemId != 'profile_badge_vip') {
-      return;
+      return true;
     }
     try {
       final identity = await widget.repository.loadAvatarIdentity();
       await widget.repository.updateAvatarIdentity(
         applyShopPurchaseEffect(itemId, identity),
       );
+      return true;
     } catch (error, stack) {
       ErrorReporter.record(
         error,
         stack,
         reason: 'shop purchase effect failed: $itemId',
       );
+      return false;
     }
+  }
+
+  Future<void> _retryPurchaseEffect(ShopItem item) async {
+    if (_loading) return;
+    setState(() {
+      _loading = true;
+      _purchaseErrorMessage = null;
+      _purchaseOffline = false;
+    });
+
+    final applied = await _applyPurchaseEffect(item.id);
+    if (!mounted) return;
+
+    if (!applied) {
+      final title = context.isKu ? item.titleKu : item.titleTr;
+      setState(() {
+        _loading = false;
+        _purchaseErrorMessage = context.t(K.purchasedItem, {'item': title});
+        _retryPurchaseEffectItem = item;
+      });
+      return;
+    }
+
+    setState(() {
+      _loading = false;
+      _purchaseErrorMessage = null;
+      _retryPurchaseEffectItem = null;
+      _retryPurchaseItem = null;
+    });
+    HapticFeedback.lightImpact();
+    _showPurchaseCelebrationDialog(item);
   }
 
   void _showPurchaseCelebrationDialog(ShopItem item) {
@@ -603,537 +716,370 @@ class _ShopScreenState extends State<ShopScreen> {
     final title = ku ? item.titleKu : item.titleTr;
     showDialog<void>(
       context: context,
-      builder: (dialogContext) => Dialog(
-        backgroundColor: Colors.transparent,
-        child: Container(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          decoration: BoxDecoration(
-            color: AppTheme.surfaceOf(dialogContext),
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: AppTheme.gold, width: 2),
-            boxShadow: AppTheme.elevatedShadow(AppTheme.gold),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const RojMascot(mood: RojMood.celebrate, size: 72),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: AppTheme.gold.withValues(alpha: 0.15),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  item.icon,
-                  color: AppColors.onAccentTint(context, AppTheme.gold),
-                  size: 36,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                context.t(K.congrats),
-                style: AppTypography.heading2.copyWith(
-                  color: AppColors.onAccentTint(context, AppTheme.gold),
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                context.t(K.purchasedItem, {'item': title}),
-                textAlign: TextAlign.center,
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppTheme.textPrimaryColor(dialogContext),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 18),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: () => Navigator.pop(dialogContext),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppTheme.gold,
-                    foregroundColor: AppTheme.lightTextPrimary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+      builder: (dialogContext) {
+        final t = SahneTokens.of(dialogContext);
+        // 2026-09-29 Şahnê: altın kenarlı + bulanık gölgeli kutlama kutusu
+        // ve maskot kalktı. Yüzey kartı; ürün Zêr tonlu elmasın içinde
+        // (ödül Zêr'in işidir), tek birincil eylem "Anladım".
+        return Dialog(
+          backgroundColor: t.s1,
+          shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
+          child: Padding(
+            padding: const EdgeInsets.all(SahneSpace.x6),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ExcludeSemantics(
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: t.goldTint,
+                      shape: SahneShape.diamond(
+                        88,
+                        side: BorderSide(
+                          color: t.gold,
+                          width: SahneRing.r2,
+                          strokeAlign: BorderSide.strokeAlignInside,
+                        ),
+                      ),
+                    ),
+                    child: SizedBox.square(
+                      dimension: 88,
+                      child: Icon(item.icon, size: 36, color: t.goldTx),
                     ),
                   ),
+                ),
+                const SizedBox(height: SahneSpace.x4),
+                Semantics(
+                  header: true,
                   child: Text(
-                    context.t(K.gotIt),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    context.t(K.congrats),
+                    textAlign: TextAlign.center,
+                    style: SahneType.headline.copyWith(color: t.tx),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: SahneSpace.x2),
+                Text(
+                  context.t(K.purchasedItem, {'item': title}),
+                  textAlign: TextAlign.center,
+                  style: SahneType.body.copyWith(color: t.tx2),
+                ),
+                const SizedBox(height: SahneSpace.x6),
+                SahneButton.primary(
+                  label: context.t(K.gotIt),
+                  arrow: false,
+                  expand: true,
+                  onPressed: () => Navigator.pop(dialogContext),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final t = SahneTokens.of(context);
+    final coinLabel = '$_coinBalance ${context.t(K.coinWord).toLowerCase()}';
+    // 2026-09-29 Şahnê: B iskeleti. Sayfa adı çubukta, bakiye çubuğun
+    // sağında jeton glifli stat çipi. Eski kimlik kartı ("Mağaza /
+    // Jetonlarını akıllıca harca") kalktı: sayfa adı iki kez yazılmıyor.
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(color: AppTheme.textPrimaryColor(context)),
-
+      backgroundColor: t.bg,
+      appBar: zkAppBar(
+        context,
+        title: Text(context.t(K.shop)),
         actions: [
-          // Günlük çarka giden TEK kalıcı yol. Öncesinde çarka erişim
-          // yalnız bakiye TAM 0 iken görünen `_buildEarnCoinCta` ve
-          // yetersiz-bakiye dialog'undaki "coin kazan" düğmesiyle sınırlıydı
-          // — bakiyesi 0'dan farklı bir oyuncu çarkı bir daha hiç
-          // bulamıyordu. Bu düğme bakiyeden bağımsız her zaman görünür
-          // (2026-08-14 denetimi).
-          Padding(
-            padding: const EdgeInsets.only(right: 4),
-            child: IconButton(
-              key: const ValueKey('shop-spin-wheel-entry'),
-              icon: Icon(
-                AppIcons.dice,
-                color: AppTheme.textPrimaryColor(context),
-              ),
-              tooltip: context.t(K.wheelTitle),
-              onPressed: () {
-                Navigator.of(context).push(
-                  AppRoute<void>(
-                    page: SpinWheelScreen(repository: widget.repository),
-                  ),
-                );
-              },
-            ),
-          ),
-          // Dalga 5: devasa bakiye kartı yerine kompakt coin chip'i.
-          Padding(
-            padding: const EdgeInsets.only(right: 12),
-            child: Center(
-              child: Container(
-                key: const ValueKey('shop-coin-chip'),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: AppTheme.gold.withValues(alpha: 0.14),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                    color: AppTheme.gold.withValues(alpha: 0.38),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppTheme.gold.withValues(alpha: 0.14),
-                      blurRadius: 14,
-                      offset: const Offset(0, 6),
-                      spreadRadius: -8,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      AppIcons.coins,
-                      color: AppColors.onAccentTint(context, AppTheme.gold),
-                      size: 18,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      '$_coinBalance ${context.t(K.coinWord).toLowerCase()}',
-                      maxLines: 1,
-                      style: AppTypography.caption.copyWith(
-                        color: AppTheme.textPrimaryColor(context),
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          // Dalga 5: devasa bakiye kartı yerine kompakt jeton çipi.
+          SahneStatChip(
+            key: const ValueKey('shop-coin-chip'),
+            leading: const SahneGlyph(SahneGlyphKind.coin),
+            label: coinLabel,
           ),
         ],
       ),
-      body: Container(
-        color: AppTheme.bgOf(context),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // ── Items ──
-              Expanded(
-                child: _loading && _dynamicItems.isEmpty
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                          color: AppTheme.primaryGradientStart,
-                        ),
-                      )
-                    : _loadError
-                    ? _loadOffline
-                          ? AppOfflineState(
-                              title: context.t(K.shopOfflineTitle),
-                              message: context.t(K.shopOfflineBody),
-                              retryLabel: context.t(K.retryShort),
-                              onRetry: _loadBalance,
-                            )
-                          : AppErrorState(
-                              title: context.t(K.loadFailedShort),
-                              message: context.t(K.genericErrorBody),
-                              retryLabel: context.t(K.retryShort),
-                              onRetry: _loadBalance,
-                            )
-                    : _purchaseErrorMessage != null
-                    ? _purchaseOffline
-                          ? AppOfflineState(
-                              title: context.t(K.shopOfflineTitle),
-                              message: context.t(K.shopOfflineBody),
-                              retryLabel: context.t(K.retryShort),
-                              onRetry: _retryPurchaseItem == null
-                                  ? _loadBalance
-                                  : () => _purchase(_retryPurchaseItem!),
-                            )
-                          : AppErrorState(
-                              title: context.t(K.purchaseErrorTitle),
-                              message: _purchaseErrorMessage!,
-                              retryLabel: context.t(K.retryShort),
-                              onRetry: _retryPurchaseItem == null
-                                  ? _loadBalance
-                                  : () => _purchase(_retryPurchaseItem!),
-                            )
-                    : _dynamicItems.isEmpty
-                    ? AppEmptyState(
-                        icon: AppIcons.bagShopping,
-                        title: context.t(K.shopEmpty),
-                        message: context.t(K.shopSubtitle),
-                        actionLabel: context.t(K.retryShort),
-                        onAction: _loadBalance,
-                      )
-                    : _buildItemsList(context, ku, isDark),
-              ),
-            ],
-          ),
-        ),
+      body: SafeArea(
+        top: false,
+        child: _loading && _dynamicItems.isEmpty
+            ? const BrandedLoaderCenter()
+            : _loadError
+            ? _loadOffline
+                  ? AppOfflineState(
+                      title: context.t(K.shopOfflineTitle),
+                      message: context.t(K.shopOfflineBody),
+                      retryLabel: context.t(K.retryShort),
+                      onRetry: _loadBalance,
+                    )
+                  : AppErrorState(
+                      title: context.t(K.loadFailedShort),
+                      message: context.t(K.genericErrorBody),
+                      retryLabel: context.t(K.retryShort),
+                      onRetry: _loadBalance,
+                    )
+            : _purchaseErrorMessage != null
+            ? _purchaseOffline
+                  ? AppOfflineState(
+                      title: context.t(K.shopOfflineTitle),
+                      message: context.t(K.shopOfflineBody),
+                      retryLabel: context.t(K.retryShort),
+                      onRetry: _retryPurchaseItem == null
+                          ? _loadBalance
+                          : () => _purchase(_retryPurchaseItem!),
+                    )
+                  : AppErrorState(
+                      title: _retryPurchaseEffectItem == null
+                          ? context.t(K.purchaseErrorTitle)
+                          : context.t(K.saveFailed),
+                      message: _purchaseErrorMessage!,
+                      retryLabel: context.t(K.retryShort),
+                      onRetry: _retryPurchaseEffectItem != null
+                          ? () =>
+                                _retryPurchaseEffect(_retryPurchaseEffectItem!)
+                          : _retryPurchaseItem == null
+                          ? _loadBalance
+                          : () => _purchase(_retryPurchaseItem!),
+                    )
+            : _dynamicItems.isEmpty
+            ? AppEmptyState(
+                icon: AppIcons.bagShopping,
+                title: context.t(K.shopEmpty),
+                message: context.t(K.checkConnection),
+                actionLabel: context.t(K.retryShort),
+                onAction: _loadBalance,
+              )
+            : _buildItemsList(context, ku),
       ),
     );
   }
 
   // ────────────────────────────────────────────
-  //  Bakiye 0 iken üstte görünen coin kazanma mini-CTA'sı
+  //  Günlük çark kısayolu
   // ────────────────────────────────────────────
-  Widget _buildEarnCoinCta(BuildContext context, bool ku) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        child: InkWell(
-          key: const ValueKey('shop-earn-coin-cta'),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          onTap: () {
-            Navigator.of(context).push(
-              AppRoute<void>(
-                page: SpinWheelScreen(repository: widget.repository),
-              ),
-            );
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppTheme.gold.withValues(alpha: 0.16),
-                  AppTheme.gold.withValues(alpha: 0.07),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              border: Border.all(color: AppTheme.gold.withValues(alpha: 0.35)),
-            ),
-            child: Row(
-              children: [
-                const Icon(AppIcons.dice, color: AppTheme.gold, size: 22),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    context.t(K.zeroBalanceHint),
-                    maxLines: 2,
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textPrimaryColor(context),
-                    ),
-                  ),
-                ),
-                Icon(
-                  AppIcons.chevronRight,
-                  color: AppTheme.textMutedColor(context),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+  //
+  // Günlük çarka giden TEK kalıcı yol. Öncesinde çarka erişim yalnız
+  // bakiye TAM 0 iken görünen "jeton kazan" şeridiyle ve yetersiz-bakiye
+  // dialog'undaki düğmeyle sınırlıydı — bakiyesi 0'dan farklı bir oyuncu
+  // çarkı bir daha hiç bulamıyordu (2026-08-14 denetimi). Satır bakiyeden
+  // bağımsız her zaman görünür.
+  //
+  // 2026-09-29 Şahnê: çubuktaki zar ikonu ve bakiye 0 iken üstte duran
+  // altın şerit tek bir liste satırında birleşti. Bakiye 0 iken satırın
+  // alt yazısı "Bakiyen 0 — günlük çarkı çevir" olur ve satır aynı zamanda
+  // eski `shop-earn-coin-cta` giriş noktasıdır; iki ayrı yüzey aynı yere
+  // götürmüyor.
+  Widget _buildWheelShortcut(BuildContext context) {
+    final zero = !_loading && _coinBalance == 0;
+    final row = SahneListRow.icon(
+      key: const ValueKey('shop-spin-wheel-entry'),
+      icon: AppIcons.dice,
+      role: SahneRole.gold,
+      title: context.t(K.wheelTitle),
+      subtitle: zero ? context.t(K.zeroBalanceHint) : null,
+      chevron: true,
+      onTap: _openSpinWheel,
+    );
+    return SahneListGroup(
+      children: [
+        zero
+            ? KeyedSubtree(
+                key: const ValueKey('shop-earn-coin-cta'),
+                child: row,
+              )
+            : row,
+      ],
     );
   }
 
   // ────────────────────────────────────────────
-  //  Items list: mockup-11 style "en popüler" hero + grid
+  //  Ürünler: öne çıkan ürün + yüzey kartı ızgarası
   // ────────────────────────────────────────────
-  Widget _buildItemsList(BuildContext context, bool ku, bool isDark) {
-    if (_dynamicItems.isEmpty) {
-      return Center(
-        child: Text(
-          context.t(K.shopEmpty),
-          style: TextStyle(color: AppTheme.textMutedColor(context)),
-        ),
-      );
-    }
-
+  Widget _buildItemsList(BuildContext context, bool ku) {
     final heroItem = _dynamicItems.reduce((a, b) => b.cost > a.cost ? b : a);
     final restItems = _dynamicItems.where((i) => i.id != heroItem.id).toList();
 
-    // Adaptive breakpoint for mobile, tablet, and desktop
-    final width = MediaQuery.of(context).size.width;
-    final int crossAxisCount;
-    final double childAspectRatio;
-    if (width >= 1024) {
-      crossAxisCount = 4;
-      childAspectRatio = 0.95;
-    } else if (width >= 720) {
-      crossAxisCount = 3;
-      childAspectRatio = 0.90;
-    } else if (width >= 360) {
-      // Eşik 420pt idi; iPhone'ların neredeyse tamamı (SE 375, standart
-      // 390, Pro 402) bunun altında kalıp tek sütuna düşüyordu ve ekranda
-      // aynı anda ancak iki ürün görünüyordu (2026-07-25 canlı denetimi).
-      // 360pt, modern iPhone'ların tamamını iki sütuna alır; kart genişliği
-      // en dar cihazda bile ~166pt kalır.
-      crossAxisCount = 2;
-      childAspectRatio = 0.90;
-    } else {
-      crossAxisCount = 1;
-      childAspectRatio = 1.95;
-    }
-
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      padding: const EdgeInsets.fromLTRB(
+        SahneSpace.page,
+        SahneSpace.x2,
+        SahneSpace.page,
+        SahneSpace.x8,
+      ),
       children: [
-        ScreenIdentityHeader(
-          title: context.t(K.shop),
-          subtitle: context.t(K.shopSubtitle),
-          accent: AppTheme.gold,
-          icon: AppIcons.bagShopping,
-          compact: true,
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        // Maskotlu karşılama şeridi kaldırıldı: AppBar başlığı, kimlik
-        // kartı ve bu satır üst üste aynı şeyi söylüyordu ("Mağaza" /
-        // "Coinlerini harca" / "Kazandığın coinlerle al") ve ilk ürün
-        // ancak ekranın yarısından sonra başlıyordu (2026-07-25 canlı
-        // denetimi). Karşılama görevini kimlik kartının alt başlığı taşır.
-        if (!_loading && _coinBalance == 0) _buildEarnCoinCta(context, ku),
-        _buildHeroCard(heroItem, ku, isDark),
+        _buildWheelShortcut(context),
+        const SizedBox(height: SahneSpace.x6),
+        _buildHeroCard(heroItem, ku),
         if (restItems.isNotEmpty) ...[
-          const SizedBox(height: 16),
-          GridView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxisCount,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-              // Dar (2 sütun) ve geniş (3 sütun) ekranda kart genişliği çok
-              // farklı; tek sabit oran genişte gereksiz boşluk, darda taşma
-              // yaratıyordu. Sütun sayısına göre ayrı oran kullanılır.
-              // Açıklamalar 2 satıra sığmayıp "…paletl…" diye kesiliyordu
-              // (2026-07-22 canlı UX denetimi); maxLines 3'e çıkarıldı ve
-              // kartlar buna göre biraz uzatıldı.
-              childAspectRatio: childAspectRatio,
-            ),
-            itemCount: restItems.length,
-            itemBuilder: (context, index) =>
-                _buildShopCard(restItems[index], ku, isDark),
+          const SizedBox(height: SahneSpace.cardGap),
+          // Sütun sayısı genişlikten; hücre yüksekliği içerikten. Sabit bir
+          // en-boy oranı büyük yazıda ve Kurmancî adlarda kartı taşırıyordu
+          // (kart dar, ad iki-üç satıra iner). Hücre boyu artık en uzun ürün
+          // adının ve düğme etiketinin o genişlikte, o yazı ölçeğinde
+          // ölçülen yüksekliğinden hesaplanır: satırdaki kartlar eşit boy
+          // kalır, hiçbiri taşmaz ya da kesilmez.
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final width = constraints.maxWidth;
+              // 2026-09-30 simülatör: büyük yazıda (Ekstra Büyük 2.35x)
+              // iki sütun kalıyordu; ~165 px'lik kartta "Zivirîna zêde"
+              // gibi adlar kelime ortasından kırılıyordu. Yazı 1.5x'i
+              // geçince tek sütun: ad ve düğme tam genişlikte okunur.
+              final largeText =
+                  MediaQuery.textScalerOf(context).scale(1) >= 1.5;
+              final columns = largeText
+                  ? 1
+                  : (width >= 680 ? 3 : (width >= 300 ? 2 : 1));
+              return GridView(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: columns,
+                  mainAxisSpacing: SahneSpace.cardGap,
+                  crossAxisSpacing: SahneSpace.cardGap,
+                  mainAxisExtent: _gridCellExtent(
+                    context,
+                    restItems,
+                    ku,
+                    (width - SahneSpace.cardGap * (columns - 1)) / columns,
+                  ),
+                ),
+                children: [
+                  for (final item in restItems) _buildShopCard(item, ku),
+                ],
+              );
+            },
           ),
         ],
       ],
     );
   }
 
-  // ── Hero: öne çıkan ürün — grid kartıyla aynı dilin 2 kat büyük hücresi ──
-  Widget _buildHeroCard(ShopItem item, bool ku, bool isDark) {
+  /// Izgara hücresinin yüksekliği: kartın dikey dolgusu + önizleme
+  /// karosu + en uzun ad + düğme. Ad ve düğme etiketi o sütun genişliğinde
+  /// ve etkin yazı ölçeğinde gerçekten ölçülür.
+  double _gridCellExtent(
+    BuildContext context,
+    List<ShopItem> items,
+    bool ku,
+    double cellWidth,
+  ) {
+    const pad = SahneSpace.x3;
+    const tile = 72.0;
+    final scaler = MediaQuery.textScalerOf(context);
+    final direction = Directionality.of(context);
+    // Metin, kartın `Material`inin verdiği varsayılan biçemle (temanın
+    // `bodyMedium`i) birleştirilerek ölçülür: miras harf aralığı satır
+    // kırılımını değiştirir. 1 px pay, kenarda duran bir sözün ölçümde
+    // sığıp çizimde alt satıra inmesini önler.
+    final inherited =
+        Theme.of(context).textTheme.bodyMedium ??
+        DefaultTextStyle.of(context).style;
+    double measure(String text, TextStyle style, double maxWidth) {
+      final painter = TextPainter(
+        // Aile açıkça ölçülen biçemden gelir (Onest / Bricolage);
+        // miras biçemin ailesi ölçümü sistem yazı tipine düşürmesin.
+        text: TextSpan(
+          text: text,
+          style: inherited.merge(style).copyWith(fontFamily: style.fontFamily),
+        ),
+        textDirection: direction,
+        textScaler: scaler,
+      )..layout(maxWidth: (maxWidth - 1).clamp(1.0, double.infinity));
+      final height = painter.height;
+      painter.dispose();
+      return height;
+    }
+
+    final inner = cellWidth - pad * 2;
+    var title = 0.0;
+    var button = 52.0;
+    for (final item in items) {
+      final name = ku ? item.titleKu : item.titleTr;
+      title = math.max(title, measure(name, SahneType.bodyStrong, inner));
+      final label = _purchasedItemIds.contains(item.id)
+          ? context.t(K.ownedLabel)
+          : '${item.cost}';
+      // Düğme: 12 + ikon (20) + 8 yan boşlukla etiket; dikeyde 12 + 12.
+      final labelHeight = measure(
+        label,
+        SahneType.button,
+        inner - SahneSpace.x3 * 2 - 20 - SahneSpace.x2,
+      );
+      button = math.max(button, labelHeight + SahneSpace.x3 * 2);
+      // Jeton yetmeyen ürünün durum çipi fiyat satırı + eksik sözü taşır;
+      // düğmeden uzundur, hücre onu da sığdırmalı.
+      final missing = coinShortfall(cost: item.cost, balance: _coinBalance);
+      if (missing > 0 &&
+          SahnePriceChip.noteShownFor(price: item.cost, missing: missing) &&
+          !_purchasedItemIds.contains(item.id)) {
+        final noteHeight = measure(
+          context.t(K.coinsShort, {'coins': '$missing'}),
+          SahneType.captionStrong,
+          inner - SahneSpace.x3 * 2,
+        );
+        button = math.max(
+          button,
+          SahnePriceChip.verticalPad * 2 + labelHeight + noteHeight,
+        );
+      }
+    }
+    // +2: basınca 2 px çöken düğmenin payı ve yuvarlama.
+    return pad +
+        tile +
+        SahneSpace.x3 +
+        title +
+        SahneSpace.x3 +
+        button +
+        pad +
+        2;
+  }
+
+  // ── Öne çıkan ürün: aynı yüzey kartının tam genişlik hâli ──
+  //
+  // 2026-09-29 doğallık: kartın üstündeki "En çok alınan" rozeti kalktı
+  // (K10). Satış verisi yok; rozet her kurulumda en pahalı ürüne yapışan
+  // uydurma bir iddiaydı. Kart yalnız katalogun en pahalı ürününü geniş
+  // gösterir.
+  Widget _buildHeroCard(ShopItem item, bool ku) {
+    final t = SahneTokens.of(context);
     final title = ku ? item.titleKu : item.titleTr;
     final desc = ku ? item.descKu : item.descTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
-    final canAfford = _coinBalance >= item.cost;
-    final tint = item.themeColor;
 
-    return Material(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(AppRadius.card),
-      child: InkWell(
-        onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        splashColor: tint.withValues(alpha: 0.15),
-        highlightColor: tint.withValues(alpha: 0.07),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                AppTheme.surfaceColor(context),
-                tint.withValues(alpha: isPurchased ? 0.05 : 0.10),
-              ],
-            ),
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(
-              color: tint.withValues(alpha: isPurchased ? 0.18 : 0.28),
-              width: 1.1,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: tint.withValues(alpha: isPurchased ? 0.04 : 0.10),
-                blurRadius: 18,
-                offset: const Offset(0, 8),
-                spreadRadius: -8,
+    return SahneSurfaceCard(
+      key: const ValueKey('shop-hero-surface'),
+      onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              _preview(item, size: 72, dim: isPurchased),
+              const SizedBox(width: SahneSpace.x4),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: SahneType.headline.copyWith(
+                        color: isPurchased ? t.tx2 : t.tx,
+                      ),
+                    ),
+                    const SizedBox(height: SahneSpace.x1),
+                    Text(desc, style: SahneType.caption.copyWith(color: t.tx2)),
+                  ],
+                ),
               ),
             ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(14),
-            child: Stack(
-              children: [
-                Positioned(
-                  right: -16,
-                  top: -16,
-                  child: Container(
-                    width: 104,
-                    height: 104,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: tint.withValues(alpha: 0.08),
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          gradient: AppTheme.accentGradient,
-                          borderRadius: BorderRadius.circular(AppRadius.pill),
-                        ),
-                        child: Text(
-                          context.t(K.mostWanted),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 0.3,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        // Grid kartındaki ikon bloğunun büyük hâli.
-                        Container(
-                          width: 72,
-                          height: 72,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: isPurchased
-                                  ? [
-                                      tint.withValues(alpha: 0.10),
-                                      tint.withValues(alpha: 0.04),
-                                    ]
-                                  : [
-                                      tint.withValues(alpha: 0.24),
-                                      tint.withValues(alpha: 0.10),
-                                    ],
-                            ),
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                            boxShadow: [
-                              BoxShadow(
-                                color: tint.withValues(alpha: 0.14),
-                                blurRadius: 16,
-                                offset: const Offset(0, 8),
-                                spreadRadius: -10,
-                              ),
-                            ],
-                          ),
-                          alignment: Alignment.center,
-                          child: Icon(
-                            item.icon,
-                            // Ürün ikonu kendi renginin tonundan yapılmış
-                            // karonun içinde duruyor; ham renk orada
-                            // altında 2.0:1'e kadar iniyordu — VIP elması
-                            // altın karoda eriyip gidiyordu (2026-07-27).
-                            color: isPurchased
-                                ? tint.withValues(alpha: 0.5)
-                                : AppColors.onAccentTint(context, tint),
-                            size: 36,
-                          ),
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                title,
-                                maxLines: 2,
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(
-                                  color: isPurchased
-                                      ? AppTheme.textMutedColor(context)
-                                      : AppTheme.textPrimaryColor(context),
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 17,
-                                  height: 1.2,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                desc,
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: AppTheme.textMutedColor(context),
-                                  fontSize: 12.5,
-                                  height: 1.25,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 14),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 44,
-                      child: isPurchased
-                          ? _buildOwnedChip(ku)
-                          : _buildBuyButton(item, ku, canAfford),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
+          const SizedBox(height: SahneSpace.x4),
+          isPurchased
+              ? _buildOwnedChip()
+              : _buildBuyButton(item, ku, primary: true),
+        ],
       ),
     );
   }
@@ -1141,221 +1087,139 @@ class _ShopScreenState extends State<ShopScreen> {
   // ────────────────────────────────────────────
   //  Single shop card
   // ────────────────────────────────────────────
-  Widget _buildShopCard(ShopItem item, bool ku, bool isDark) {
+  Widget _buildShopCard(ShopItem item, bool ku) {
+    final t = SahneTokens.of(context);
     final title = ku ? item.titleKu : item.titleTr;
     final isPurchased = _purchasedItemIds.contains(item.id);
-    final canAfford = _coinBalance >= item.cost;
-    final tint = item.themeColor;
 
-    return Material(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(AppRadius.card),
-      child: InkWell(
-        onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        splashColor: tint.withValues(alpha: 0.15),
-        highlightColor: tint.withValues(alpha: 0.07),
-        child: ClipRRect(
-          // Pirs hizası: kart kenarlığı/gölgesi yok — kimlik yalnız ikon
-          // renginde ve alttaki tam-genişlik renkli çizgide.
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Container(
-            // 2026-07-24 canlı denetim: dokuz ürün kartı dokuz ayrı pastel
-            // zemin taşıyordu (krem, lavanta, nane, şeftali…) — ızgara
-            // birbiriyle yarışan renk lekelerine dönüşüyordu. Zemin tek tip
-            // yüzey oldu; ürün kimliği yalnız ikon karosunda yaşar.
-            decoration: BoxDecoration(
-              color: AppTheme.surfaceColor(context),
-              border: Border.all(color: AppTheme.borderColor(context)),
-            ),
-            child: Stack(
-              children: [
-                // Card content
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Icon area — sabit yükseklik yerine esnek: dar/kısa
-                      // tile'larda (ör. 390dp genişlikte 2 sütun) taşma
-                      // yaratmadan kalan alanı doldurur.
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: tint.withValues(
-                              alpha: isPurchased ? 0.08 : 0.16,
-                            ),
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                          ),
-                          alignment: Alignment.center,
-                          child: Icon(
-                            item.icon,
-                            // Ürün ikonu kendi renginin tonundan yapılmış
-                            // karonun içinde duruyor; ham renk orada
-                            // altında 2.0:1'e kadar iniyordu — VIP elması
-                            // altın karoda eriyip gidiyordu (2026-07-27).
-                            color: isPurchased
-                                ? tint.withValues(alpha: 0.5)
-                                : AppColors.onAccentTint(context, tint),
-                            size: 32,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      // Title — uzun adlar kesilmesin: 2 satır, ellipsis yok.
-                      Text(
-                        title,
-                        maxLines: 2,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          color: isPurchased
-                              ? AppTheme.textMutedColor(context)
-                              : AppTheme.textPrimaryColor(context),
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          height: 1.2,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      // Price + Action
-                      SizedBox(
-                        height: 38,
-                        child: isPurchased
-                            ? _buildOwnedChip(ku)
-                            : _buildBuyButton(item, ku, canAfford),
-                      ),
-                    ],
-                  ),
-                ),
-                // Owned overlay indicator
-                if (isPurchased)
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(
-                        color: AppTheme.correct,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0x44000000),
-                            blurRadius: 6,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: const Icon(
-                        AppIcons.check,
-                        size: 14,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                // Pirs imzası: tam-genişlik, kenardan kenara renkli çizgi.
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    height: 4,
-                    color: tint.withValues(alpha: isPurchased ? 0.25 : 0.7),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ── "Owned" chip ──
-  Widget _buildOwnedChip(bool ku) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppTheme.correct.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(color: AppTheme.correct.withValues(alpha: 0.3)),
-      ),
-      alignment: Alignment.center,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+    // Ürün kimliği yalnız önizleme karosunda yaşar; kart yüzeyi bütün
+    // katalogda aynı sakin dili korur (2026-07-24: dokuz pastel zemin
+    // birbiriyle yarışan renk lekelerine dönüşüyordu). Açıklama kartta
+    // yazmaz; dokununca onay diyaloğunda okunur.
+    return SahneSurfaceCard(
+      key: ValueKey('shop-item-surface-${item.id}'),
+      padding: const EdgeInsets.all(SahneSpace.x3),
+      onTap: (_loading || isPurchased) ? null : () => _confirmPurchase(item),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Icon(AppIcons.check, size: 14, color: AppTheme.correct),
-          const SizedBox(width: 4),
+          _preview(item, size: 72, dim: isPurchased),
+          const SizedBox(height: SahneSpace.x3),
           Text(
-            context.t(K.ownedLabel),
-            style: TextStyle(
-              color: AppColors.onAccentTint(context, AppTheme.correct),
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
+            title,
+            style: SahneType.bodyStrong.copyWith(
+              color: isPurchased ? t.tx2 : t.tx,
             ),
           ),
+          const Spacer(),
+          const SizedBox(height: SahneSpace.x3),
+          isPurchased ? _buildOwnedChip() : _buildBuyButton(item, ku),
         ],
       ),
     );
   }
 
-  // ── Buy button ──
-  Widget _buildBuyButton(ShopItem item, bool ku, bool canAfford) {
-    return SizedBox(
-      width: double.infinity,
-      child: FilledButton.icon(
-        onPressed: _loading ? null : () => _confirmPurchase(item),
-        style: FilledButton.styleFrom(
-          backgroundColor: canAfford
-              ? AppTheme.primaryCtaColor(context)
-              : AppTheme.surfaceHiColor(context),
-          disabledBackgroundColor: AppTheme.surfaceHiColor(context),
-          // Yetersiz bakiyede fiyat "muted" griyle yazılıyordu: açık
-          // yüzeyde 3,7:1 kontrast — yani **fiyat okunmuyordu**. Hiç coini
-          // olmayan yeni kullanıcı mağazadaki bütün fiyatları bu hâlde
-          // görür; ekran baştan sona soluk ve okunmaz duruyordu
-          // (2026-07-27, canlı gezinti). Düğme yine pasif görünür ama
-          // fiyat okunur (5,6:1).
-          foregroundColor: canAfford
-              ? Colors.white
-              : AppTheme.textSubColor(context),
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-          ),
-          elevation: 0,
-          shadowColor: Colors.transparent,
-          // Aile açıkça yazılmalı: `styleFrom(textStyle:)` temadan gelen
-          // biçimi birleştirmez, **değiştirir**. Ailesiz bir biçim verince
-          // düğmenin yazısı sistem yazı tipine düşüyordu — fiyat etiketleri
-          // uygulamanın geri kalanından başka bir tiple çiziliyordu
-          // (2026-07-26).
-          textStyle: const TextStyle(
-            fontFamily: AppTypography.fontFamily,
-            fontWeight: FontWeight.w700,
-            fontSize: 12,
-          ),
+  // ── "Sende": pasif ikincil düğme + ✓ (satın alınmış, tekrar alınamaz) ──
+  Widget _buildOwnedChip() {
+    return SahneButton.secondary(
+      label: context.t(K.ownedLabel),
+      icon: AppIcons.check,
+      expand: true,
+      onPressed: null,
+    );
+  }
+
+  // ── Satın al ──
+  //
+  // Öne çıkan ürünün düğmesi ekranın TEK birincil eylemidir (Agir); ızgara
+  // kartlarınınki ikincil (Kulis). Fiyatın solunda Şahnê jeton glifi
+  // durur — Lucide ikonu değil (ödül glifleri `SahneGlyph`).
+  Widget _buildBuyButton(ShopItem item, bool ku, {bool primary = false}) {
+    // Görünen etiket yalnız sayı; birimi soldaki jeton glifi söyler.
+    // 2026-09-29 doğallık: "720j" kısaltması kalktı (K10) — glifin
+    // yanında "j" ikinci kez aynı şeyi söylüyordu ve Kurmancîde "720z"
+    // okunmuyordu. Ekran okuyucuya söylenen ad tam cümle (bkz.
+    // `test/button_semantics_test.dart`): düğme yalnız "düğme" diye
+    // okunursa neyi satın alacağı söylenmez.
+    final label = '${item.cost}';
+    final semanticLabel = context.t(K.buyItemForCoins, {
+      'item': ku ? item.titleKu : item.titleTr,
+      'coins': '${item.cost}',
+    });
+    // Jeton yetmiyorsa düğme YOKTUR: etkin görünüp dokunulunca pasif bir
+    // "Satın al" gösteren pencere açan düğme, sonuç vermeyen bir eylemdi
+    // (2026-10-01 tasarım denetimi, A5). Yerine durum çipi gelir; kartın
+    // kendisi dokunulabilir kalır ve pencere jeton kazanma yolunu sunar.
+    final missing = coinShortfall(cost: item.cost, balance: _coinBalance);
+    if (missing > 0) {
+      return SahnePriceChip(
+        key: ValueKey('shop-short-${item.id}'),
+        price: item.cost,
+        missing: missing,
+        semanticLabel:
+            '$semanticLabel. ${context.t(K.coinsShort, {'coins': '$missing'})}',
+      );
+    }
+    final onPressed = _loading ? null : () => _confirmPurchase(item);
+    const glyph = SahneGlyph(SahneGlyphKind.coin, size: 20);
+    if (primary) {
+      return SahneButton.primary(
+        label: label,
+        leading: glyph,
+        arrow: false,
+        expand: true,
+        semanticLabel: semanticLabel,
+        onPressed: onPressed,
+      );
+    }
+    return SahneButton.secondary(
+      label: label,
+      leading: glyph,
+      expand: true,
+      semanticLabel: semanticLabel,
+      onPressed: onPressed,
+    );
+  }
+}
+
+/// Ürün önizleme karosu: Zêr tonu zemin, M pah, ortada Zêr metni ikon.
+///
+/// Mağazadaki her ürün jetonla alınan bir ödüldür; Şahnê'de ödülün rengi
+/// Zêr'dir. Ürünün eski "tema rengi" (yeşil, altın, turuncu) karoya
+/// boyanmaz — ızgara tek tonda sakin kalır. İlk turda karo Kulis (`s2`)
+/// idi ve aynı karttaki ikincil satın alma düğmesiyle (o da Kulis) ayırt
+/// edilemiyordu. Alınmış ürün nötr Kulis + üçüncül ikon.
+class _PreviewTile extends StatelessWidget {
+  const _PreviewTile({
+    required this.icon,
+    required this.size,
+    this.dim = false,
+    this.child,
+  });
+
+  final IconData icon;
+  final double size;
+  final bool dim;
+
+  /// Verilirse ikon yerine karonun ortasında durur (çerçeve ürününde
+  /// oyuncunun avatarı).
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return ExcludeSemantics(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: dim ? t.s2 : t.goldTint,
+          shape: SahneShape.m,
         ),
-        icon: Icon(
-          AppIcons.cartShopping,
-          size: 15,
-          color: canAfford ? Colors.white : AppTheme.textSubColor(context),
-        ),
-        // Görünen etiket kısa ("10c"), ekran okuyucuya söylenen ad tam
-        // cümle. `ExcludeSemantics` tek başına kullanıldığında düğmenin
-        // *tek* ad kaynağını gizliyor ve düğme adsız kalıyordu — okuyucu
-        // yalnız "düğme" diyor, neyi satın alacağını söylemiyordu
-        // (2026-07-26 ölçümü; bkz. `test/button_semantics_test.dart`).
-        // Düğme alt ağacındaki anlamları birleştirdiği için buradaki
-        // `Semantics` etiketi adı sağlar, `ExcludeSemantics` da görünen
-        // metnin ikinci kez okunmasını önler.
-        label: Semantics(
-          label: context.t(K.buyItemForCoins, {
-            'item': ku ? item.titleKu : item.titleTr,
-            'coins': '${item.cost}',
-          }),
-          child: ExcludeSemantics(
-            child: Text('${item.cost}${context.t(K.coinAbbrev)}'),
-          ),
+        child: SizedBox(
+          width: size,
+          height: size,
+          child: child != null
+              ? Center(child: child)
+              : Icon(icon, size: size * 0.45, color: dim ? t.tx3 : t.goldTx),
         ),
       ),
     );

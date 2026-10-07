@@ -32,8 +32,8 @@ class MiniGuide {
 
 /// Çayxane hikâyesine eşlik eden örnek mini rehber.
 const MiniGuide cayxaneGuide = MiniGuide(
-  titleKu: 'Li Çayxanê',
-  titleTr: 'Çay Evinde',
+  titleKu: 'Li çayxanê',
+  titleTr: 'Çay evinde',
   newWords: [
     GuidePair('çay', 'çay'),
     GuidePair('şekir', 'şeker'),
@@ -50,3 +50,66 @@ const MiniGuide cayxaneGuide = MiniGuide(
   cultureKu: 'Li gelek deveran, çayxane cihê hevaltî û sohbetê ye.',
   cultureTr: 'Birçok yerde çay evi, dostluğun ve sohbetin buluşma yeridir.',
 );
+
+const MiniGuide introducingYourselfGuide = MiniGuide(
+  titleKu: 'Xwe nasandin',
+  titleTr: 'Kendini tanıtma',
+  newWords: [
+    GuidePair('nav', 'ad'),
+    GuidePair('xwendekar', 'öğrenci'),
+    GuidePair('kêfxweş', 'memnun'),
+  ],
+  grammarKu: 'Ji bo xwe nasandinê tu dikarî bibêjî: "Navê min ... ye."',
+  grammarTr: 'Kendini tanıtırken “Navê min ... ye” kalıbını kullanabilirsin.',
+  examples: [
+    GuidePair('Navê min Rojda ye.', 'Benim adım Rojda.'),
+    GuidePair('Tu ji ku derê yî?', 'Nerelisin?'),
+  ],
+  cultureKu: 'Di nasînên nû de silav û pirsên kurt sohbetê hêsan dikin.',
+  cultureTr: 'Yeni tanışmalarda selam ve kısa sorular sohbeti kolaylaştırır.',
+);
+
+const MiniGuide shoppingGuide = MiniGuide(
+  titleKu: 'Li dikanê',
+  titleTr: 'Alışverişte',
+  newWords: [
+    GuidePair('dikan', 'dükkân'),
+    GuidePair('bihâ', 'fiyat'),
+    GuidePair('çend', 'ne kadar'),
+    GuidePair('kîlo', 'kilo'),
+  ],
+  grammarKu: 'Ji bo bihayê pirsînê tu dikarî "Ev çend e?" bibêjî.',
+  grammarTr: 'Fiyat sormak için “Ev çend e?” kalıbını kullanabilirsin.',
+  examples: [
+    GuidePair('Ev sêv çend in?', 'Bu elmalar ne kadar?'),
+    GuidePair('Kîloyekê bidin min.', 'Bana bir kilo verin.'),
+  ],
+  cultureKu: 'Silav û spas danûstandinê germtir dikin.',
+  cultureTr: 'Selam ve teşekkür alışveriş konuşmasını daha sıcak kılar.',
+);
+
+const MiniGuide askingDirectionsGuide = MiniGuide(
+  titleKu: 'Rê pirsîn',
+  titleTr: 'Yol sorma',
+  newWords: [
+    GuidePair('rê', 'yol'),
+    GuidePair('rast', 'düz'),
+    GuidePair('çep', 'sol'),
+    GuidePair('li kêleka', 'yanında'),
+  ],
+  grammarKu: 'Ji bo cih pirsînê tu dikarî "... li ku ye?" bibêjî.',
+  grammarTr: 'Bir yerin konumunu “... li ku ye?” diye sorabilirsin.',
+  examples: [
+    GuidePair('Pirtûkxane li ku ye?', 'Kütüphane nerede?'),
+    GuidePair('Li çepê bizivire.', 'Sola dön.'),
+  ],
+  cultureKu: 'Destpêka bi "bibore" pirsê nermtir dike.',
+  cultureTr: '“Bibore” ile başlamak yol sorusunu daha nazik kılar.',
+);
+
+const Map<String, MiniGuide> everydayGuides = {
+  'cayxane': cayxaneGuide,
+  'xwe-nasandin': introducingYourselfGuide,
+  'kirin': shoppingGuide,
+  'rê-pirsîn': askingDirectionsGuide,
+};

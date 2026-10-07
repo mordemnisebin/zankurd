@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/screens/splash_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_logo.dart';
@@ -69,7 +71,46 @@ void main() {
     expect(scaffold.backgroundColor, AppTheme.bg);
   });
 
-  testWidgets('logoyu büyük gösterir', (tester) async {
+  // 2026-09-30 logo (L4 soru balonu): eski logonun dağları koyu zeminde
+  // kaybolduğu için işaret bir plakada (gecede Kulis, gündüzde Perde)
+  // duruyordu ve bu test `onBrandSurface`i sabitliyordu. Yeni işaret tek
+  // renkli ve doygun; plaka kutu içinde kutu yaratıyor ve kuyruğu
+  // sıkıştırıyordu, kalktı. Korunan şey artık tersi: işaret koyu zeminde
+  // plakasız, şeffaf `zankurd_icon.webp` olarak doğrudan durur ve adı
+  // Flutter yazısı taşır.
+  testWidgets('koyu temada logo işareti plakasız, doğrudan çizilir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.dark(),
+        home: const SplashScreen(
+          next: SizedBox.shrink(),
+          duration: Duration(hours: 1),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    final logo = find.byType(AppLogo);
+    expect(logo, findsOneWidget);
+    expect(
+      find.descendant(of: logo, matching: find.byType(DecoratedBox)),
+      findsNothing,
+      reason: 'Logo plakasız durur; plaka geri gelirse kutu içinde kutu olur.',
+    );
+    final image = tester.widget<Image>(
+      find.descendant(of: logo, matching: find.byType(Image)),
+    );
+    final provider = image.image;
+    final assetName = provider is ResizeImage
+        ? (provider.imageProvider as AssetImage).assetName
+        : (provider as AssetImage).assetName;
+    expect(assetName, 'assets/zankurd_icon.webp');
+    expect(find.text('ZanKurd'), findsOneWidget);
+  });
+
+  testWidgets('logoyu ölçülü gösterir', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: SplashScreen(
@@ -80,12 +121,43 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 50));
 
-    // Logo mümkün olan en büyük boyutu alır ama ekrana sığar (2026-07-24:
-    // sabit 280px dar/alçak ekranda 17px taşırıyordu).
+    // Logo ekrana sığar (2026-07-24: sabit 280px dar/alçak ekranda 17px
+    // taşırıyordu).
+    //
+    // 2026-09-29 doğallık: bu bekçi eskiden logonun 96'dan BÜYÜK olmasını
+    // bekliyordu. K3: açılışta logo ~%40 küçüldü (128 → 76); ekranı
+    // dolduran logo marka anını değil logoyu öne çıkarıyordu. Alt sınır
+    // (58) logonun simge olarak okunur kalmasını korur.
     final logo = tester.widget<AppLogo>(find.byType(AppLogo));
-    expect(logo.width, lessThanOrEqualTo(280));
-    expect(logo.width, greaterThan(96));
+    expect(logo.width, lessThanOrEqualTo(76));
+    expect(logo.width, greaterThanOrEqualTo(58));
     expect(find.text('SONRAKI'), findsNothing);
+  });
+
+  testWidgets('hareketi azalt açıkken marka zıplamaz', (tester) async {
+    // easeOutBack 0.82→1 ölçek süsüdür. Tercih açıkken onboarding'deki
+    // gibi ilk karede bitmiş değerde durmalı; yoksa ayar, kullanıcının
+    // gördüğü ilk ekranda yok sayılmış olur.
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => ReducedMotionProvider(initialUserReduce: true),
+        child: const MaterialApp(
+          home: SplashScreen(
+            next: SizedBox.shrink(),
+            duration: Duration(hours: 1),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    final scale = tester.widget<ScaleTransition>(
+      find.ancestor(
+        of: find.byType(AppLogo),
+        matching: find.byType(ScaleTransition),
+      ),
+    );
+    expect(scale.scale.value, 1.0);
   });
 
   testWidgets('süre dolunca sonraki ekrana geçer', (tester) async {

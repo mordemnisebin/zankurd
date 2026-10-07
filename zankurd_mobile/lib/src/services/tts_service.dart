@@ -6,8 +6,8 @@ import '../utils/error_reporter.dart';
 
 /// Kürtçe (Kurmancî) soru ve şiroveleri seslendirmek için TTS servisi.
 ///
-/// Android'de Google TTS motoru bazı Kürtçe locale'lerini (ku, ckb)
-/// destekleyebilir; iOS yüzeyinde destek sınırlıdır. Destek yoksa
+/// Yalnız kurulu Kurmancî (ku) sesi kullanılır; Soranî veya Türkçe
+/// sesi Kurmancî telaffuz yerine geçirilmez. Destek yoksa
 /// [isKurdishAvailable] false döner ve UI butonu gizlenir.
 ///
 /// Singleton; [load] ile başlatılır, [instance] üzerinden çağrılır.
@@ -24,9 +24,6 @@ class TtsService {
 
   static const _defaultRate = 0.5;
   static const _defaultVolume = 1.0;
-  // Kürtçe kadar ckb (Soranî) ve ku (Kurmancî) ve Kürdistan Türkçe'sinden
-  // önce TR de denenebilir; ama öncelikli olarak Kürtçe yazışım kullanılır.
-  static const _candidateLocales = ['ku', 'ckb', 'ku-IQ', 'ku-TR', 'tr-TR'];
 
   final FlutterTts _tts;
   final SharedPreferences? _prefs;
@@ -35,7 +32,7 @@ class TtsService {
   bool _enabled = true;
   double _rate = _defaultRate;
   double _volume = _defaultVolume;
-  String _activeLanguage = 'tr-TR';
+  String _activeLanguage = '';
 
   /// Dinleme durumunu UI'a yaymak için ValueNotifier. true iken TTS
   /// aktif olarak konuşuyor; UI buton durumunu bu değere bağlar.
@@ -113,40 +110,25 @@ class TtsService {
     }
     try {
       final languages = await _tts.getLanguages ?? <Object>[];
-      final langStrs = languages.map((e) => '$e'.toLowerCase()).toList();
-      _kurdishAvailable = langStrs.any(
-        (l) =>
-            l == 'ku' ||
-            l.startsWith('ku_') ||
-            l.startsWith('ku-') ||
-            l == 'ckb' ||
-            l.startsWith('ckb_') ||
-            l.startsWith('ckb-'),
-      );
-      // Kürtçe varsa onu, yoksa TR'yi (son çare) seç.
-      if (_kurdishAvailable) {
-        _activeLanguage =
-            _prefs?.getString(_languageKey) ?? _matchLocale(langStrs);
-      } else {
-        _activeLanguage = _prefs?.getString(_languageKey) ?? 'tr-TR';
-      }
+      final installed = languages.map((e) => '$e').where((locale) {
+        final normalized = locale.toLowerCase().replaceAll('_', '-');
+        return normalized == 'ku' || normalized.startsWith('ku-');
+      }).toList();
+      final saved = _prefs?.getString(_languageKey);
+      _activeLanguage = installed.contains(saved)
+          ? saved!
+          : installed.isEmpty
+          ? ''
+          : installed.first;
+      _kurdishAvailable = _activeLanguage.isNotEmpty;
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tts language detect');
       _kurdishAvailable = false;
     }
   }
 
-  String _matchLocale(List<String> available) {
-    for (final candidate in _candidateLocales) {
-      final lower = candidate.toLowerCase();
-      if (available.contains(lower)) return candidate;
-      final underscore = lower.replaceAll('-', '_');
-      if (available.contains(underscore)) return candidate;
-    }
-    return 'tr-TR';
-  }
-
   Future<void> _applySettings() async {
+    if (!_kurdishAvailable) return;
     try {
       await _tts.setLanguage(_activeLanguage);
       await _tts.setSpeechRate(_rate);
@@ -160,7 +142,7 @@ class TtsService {
   /// [text]'i seslendirir. Zaten konuşuyorsa kesip yeniden başlar.
   /// Servis kapalıysa veya dil desteklenmiyorsa hiçbir şey yapmaz.
   Future<void> speak(String text) async {
-    if (!_enabled || text.trim().isEmpty) return;
+    if (!_enabled || !_kurdishAvailable || text.trim().isEmpty) return;
     try {
       if (speakingNotifier.value) {
         await _tts.stop();

@@ -161,16 +161,25 @@
 				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
 			</array>
 		</dict>
-		<!-- Uygulama kurulum tanımlayıcısı: Firebase Analytics. -->
+		<!-- Cihaz kimliği: (1) push bildirim jetonu (FCM) — oturum açmış
+		     kullanıcının `profiles.fcm_token` alanında HESABA BAĞLI tutulur ve
+		     arkadaş isteği / düello sonucu bildirimini göndermek için
+		     kullanılır (uygulama işlevi); (2) Firebase Analytics uygulama
+		     kurulum kimliği (analitik). Bir veri türü manifestte tek kez
+		     bildirilebildiği için ikisi birleşik: jeton hesaba bağlı olduğundan
+		     Linked=true; izleme (tracking) yok, reklam kimliği (IDFA)
+		     toplanmıyor. 2026-10-02: önceden Linked=false/yalnız Analytics idi;
+		     bu, hesaba bağlı FCM jetonunu eksik beyan ediyordu. -->
 		<dict>
 			<key>NSPrivacyCollectedDataType</key>
 			<string>NSPrivacyCollectedDataTypeDeviceID</string>
 			<key>NSPrivacyCollectedDataTypeLinked</key>
-			<false/>
+			<true/>
 			<key>NSPrivacyCollectedDataTypeTracking</key>
 			<false/>
 			<key>NSPrivacyCollectedDataTypePurposes</key>
 			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
 				<string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
 			</array>
 		</dict>

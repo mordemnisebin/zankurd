@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 /// 2026-07-22 canlı UX denetimi (P1-B): kategori renkleri **sıraya** göre
 /// veriliyordu. Kategori listesi `widget.index`, alt kategori ve quiz
@@ -63,5 +64,36 @@ void main() {
         reason: '$category gradyanının ikinci rengi daha koyu olmalı',
       );
     }
+  });
+
+  // 2026-09-29 doğallık (K1): kategori renkleri Şahnê'den bağımsız bir
+  // tabloda ("Rengîn Editorial") duruyordu; artık tek kaynak
+  // `SahneCategoryTone`. Zemin, çizimsiz karoda adın okunduğu yüzeydir:
+  // gece birincil metni üstünde AA (4.5) geçmeli.
+  test('kategori renkleri yalnız Şahnê tonundan gelir, ad okunur', () {
+    for (final category in CategoryVisuals.colorDefinedCategories) {
+      final tone = CategoryVisuals.tone(category);
+      expect(tone, SahneCategoryTone.of(category), reason: category);
+      expect(CategoryVisuals.color(category), tone.ground, reason: category);
+      final a = tone.ground.computeLuminance();
+      final b = SahneTokens.night.tx.computeLuminance();
+      expect((b + 0.05) / (a + 0.05), greaterThanOrEqualTo(4.5));
+    }
+    expect(CategoryVisuals.tone('Tarih'), SahneCategoryTone.dirok);
+  });
+
+  // K1: üç üretilmiş-görünüşlü çizim (cat_ziman, cat_siyaset,
+  // cat_paradigma) hiçbir yerde kullanılmaz; o kategoriler çizimsiz karoya
+  // düşer.
+  test('Ziman, Siyaset ve Paradigma kendi çizimini kullanmaz', () {
+    for (final category in ['Ziman', 'Dil', 'Siyaset', 'Paradigma']) {
+      expect(CategoryVisuals.hasOwnImage(category), isFalse, reason: category);
+    }
+    for (final category in ['Çand', 'Dîrok', 'Edebiyat', 'Cografya', 'Muzîk']) {
+      expect(CategoryVisuals.hasOwnImage(category), isTrue, reason: category);
+      expect(CategoryVisuals.ownImagePath(category), isNotNull);
+    }
+    expect(CategoryVisuals.ownImagePath('Ziman'), isNull);
+    expect(CategoryVisuals.ownImagePath('Sînema'), isNull);
   });
 }

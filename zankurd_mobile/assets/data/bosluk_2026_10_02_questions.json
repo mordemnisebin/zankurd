@@ -1,0 +1,4057 @@
+[
+  {
+    "id": "bosluk_0001",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Gola herî kûr a parzemîna Afrîkayê kîjan e?",
+    "promptTr": "Afrika kıtasında en derin göl hangisidir?",
+    "answers": [
+      "Gola Victoriayê",
+      "Gola Tanganyikayê",
+      "Gola Baykalê",
+      "Gola Malawiyê"
+    ],
+    "answersTr": [
+      "Victoria Gölü",
+      "Tanganyika Gölü",
+      "Baykal Gölü",
+      "Malavi Gölü"
+    ],
+    "correctAnswer": "Gola Tanganyikayê",
+    "correctAnswerTr": "Tanganyika Gölü",
+    "explanation": "Tanganyika Gölü, 1.470 metre derinliğiyle Afrika kıtasının en derin gölüdür; göl Tanzanya, Kongo Demokratik Cumhuriyeti, Burundi ve Zambiya arasında paylaşılmaktadır.",
+    "explanationKu": "Gola Tanganyikayê bi kûrahiya 1.470 metreyî gola herî kûr a Afrîkayê ye; ev gol di navbera Tanzanya, Komara Demokratîk a Kongoyê, Burundî û Zambiyayê de parvekirî ye.",
+    "explanationTr": "Tanganyika Gölü, 1.470 metre derinliğiyle Afrika kıtasının en derin gölüdür; göl Tanzanya, Kongo Demokratik Cumhuriyeti, Burundi ve Zambiya arasında paylaşılmaktadır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Lake_Tanganyika",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0002",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Çemê Dunayê di nav sînorên çend welatan re derbas dibe an jî sînorên wan diyar dike?",
+    "promptTr": "Tuna nehri kaç ülkeden geçer ya da bu ülkelerin sınırını oluşturur?",
+    "answers": [
+      "6 welat",
+      "10 welat",
+      "8 welat",
+      "12 welat"
+    ],
+    "answersTr": [
+      "6 ülke",
+      "10 ülke",
+      "8 ülke",
+      "12 ülke"
+    ],
+    "correctAnswer": "10 welat",
+    "correctAnswerTr": "10 ülke",
+    "explanation": "Tuna nehri Almanya'da başlayıp Romanya'da denize dökülür; yol boyunca Almanya, Avusturya, Slovakya, Macaristan, Hırvatistan, Sırbistan, Romanya, Bulgaristan, Moldova ve Ukrayna'nın topraklarından geçer ya da sınırını oluşturur, yani 10 ülke.",
+    "explanationKu": "Çemê Dunayê li Almanyayê dest pê dike û li Romanyayê diherike nav deryayê; di riya xwe de di nav sînorên Almanya, Awistirya, Slovakya, Mecaristan, Xirvatistan, Sirbîstan, Romanya, Bulgaristan, Moldova û Ukraynayê re derbas dibe an jî sînorên wan diyar dike, ango 10 welat.",
+    "explanationTr": "Tuna nehri Almanya'da başlayıp Romanya'da denize dökülür; yol boyunca Almanya, Avusturya, Slovakya, Macaristan, Hırvatistan, Sırbistan, Romanya, Bulgaristan, Moldova ve Ukrayna'nın topraklarından geçer ya da sınırını oluşturur, yani 10 ülke.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Danube",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0003",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Kîjan dahênerê skotlendî di sala 1769an de kondensera veqetandî patent kir?",
+    "promptTr": "Ayrı kondenseri 1769'da patentleyen İskoç mucit kimdir?",
+    "answers": [
+      "Thomas Newcomen",
+      "James Watt",
+      "Matthew Boulton",
+      "Richard Trevithick"
+    ],
+    "answersTr": [
+      "Thomas Newcomen",
+      "James Watt",
+      "Matthew Boulton",
+      "Richard Trevithick"
+    ],
+    "correctAnswer": "James Watt",
+    "correctAnswerTr": "James Watt",
+    "explanation": "James Watt 1769'da ayrı kondenserin patentini aldı. Bu buluş, silindirin sürekli ısıtılıp soğutulması nedeniyle boşa giden enerjiyi önledi ve buhar makinesinin verimini büyük ölçüde artırdı. Sanayi devriminin temel itici güçlerinden biridir.",
+    "explanationKu": "James Watt di sala 1769an de kondensera veqetandî patent kir. Vê dahênanê pêşî li windabûna enerjiya ku ji ber germbûn û sarkirina berdewam a sîlînderê çêdibû girt, û wisa berhemdariya makîneya hilmê pir zêde kir. Ev yek ji hêzên bingehîn ên şoreşa pîşesaziyê ye.",
+    "explanationTr": "James Watt 1769'da ayrı kondenserin patentini aldı. Bu buluş, silindirin sürekli ısıtılıp soğutulması nedeniyle boşa giden enerjiyi önledi ve buhar makinesinin verimini büyük ölçüde artırdı. Sanayi devriminin temel itici güçlerinden biridir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/James_Watt",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0004",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Xelata Nobelê ya Wêjeyê ya yekem di sala 1901an de hat dayîn. Helbestvanê fransî yê ku ev xelat wergirt kî bû?",
+    "promptTr": "İlk Nobel Edebiyat Ödülü 1901'de verildi; ödülü kazanan Fransız şair kimdi?",
+    "answers": [
+      "José Echegaray",
+      "Rudyard Kipling",
+      "Giosuè Carducci",
+      "Sully Prudhomme"
+    ],
+    "answersTr": [
+      "José Echegaray",
+      "Rudyard Kipling",
+      "Giosuè Carducci",
+      "Sully Prudhomme"
+    ],
+    "correctAnswer": "Sully Prudhomme",
+    "correctAnswerTr": "Sully Prudhomme",
+    "explanation": "İlk Nobel Edebiyat Ödülü 1901'de Fransız şair Sully Prudhomme'a (1839–1907) verildi. Ödül, şiirlerindeki yüce idealizm, sanatsal kusursuzluk ve yürek ile aklın nadir dengesi için takdim edildi.",
+    "explanationKu": "Xelata Nobelê ya Wêjeyê ya yekem di sala 1901an de dan helbestvanê fransî Sully Prudhomme (1839–1907). Ev xelat ji bo îdealîzma bilind, bêkêmasiya hunerî û hevsengiya kêmpeyda ya dil û hişê di helbestên wî de, pêşkêşî wî hat kirin.",
+    "explanationTr": "İlk Nobel Edebiyat Ödülü 1901'de Fransız şair Sully Prudhomme'a (1839–1907) verildi. Ödül, şiirlerindeki yüce idealizm, sanatsal kusursuzluk ve yürek ile aklın nadir dengesi için takdim edildi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Nobel_Prize_in_Literature",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0005",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Oratoryoya Handel a bi navê \"Mesîh\" (Messiah) cara yekem li kîjan bajarî hat pêşkêşkirin?",
+    "promptTr": "Handel'in \"Mesih\" adlı oratoryosu ilk kez hangi şehirde seslendirildi?",
+    "answers": [
+      "Dublîn",
+      "Londra",
+      "Viyana",
+      "Hamburg"
+    ],
+    "answersTr": [
+      "Dublin",
+      "Londra",
+      "Viyana",
+      "Hamburg"
+    ],
+    "correctAnswer": "Dublîn",
+    "correctAnswerTr": "Dublin",
+    "explanation": "Handel'in \"Mesih\" oratoryosu 1741'de bestelendi. Eser ilk kez 13 Nisan 1742'de Dublin'de seslendirildi, Londra prömiyeri ise 1743'te yapıldı.",
+    "explanationKu": "Handel oratoryoya xwe ya bi navê \"Mesîh\" di sala 1741an de çêkir. Ev berhem cara yekem di 13ê Nîsana 1742an de li Dublînê hat pêşkêşkirin; pêşandana wê ya yekem a li Londrayê jî di sala 1743an de pêk hat.",
+    "explanationTr": "Handel'in \"Mesih\" oratoryosu 1741'de bestelendi. Eser ilk kez 13 Nisan 1742'de Dublin'de seslendirildi, Londra prömiyeri ise 1743'te yapıldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Messiah_(Handel)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0006",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Aştiya Westfalyayê ya ku dawî li Şerê Sî Salan anî, di kîjan salê de hat îmzekirin?",
+    "promptTr": "Otuz Yıl Savaşı'nı sonlandıran Westphalia Barışı hangi yıl imzalandı?",
+    "answers": [
+      "1618",
+      "1635",
+      "1713",
+      "1648"
+    ],
+    "answersTr": [
+      "1618",
+      "1635",
+      "1713",
+      "1648"
+    ],
+    "correctAnswer": "1648",
+    "correctAnswerTr": "1648",
+    "explanation": "Westphalia Barışı'nı oluşturan antlaşmalar Ekim 1648'de Westphalia'daki Münster ve Osnabrück şehirlerinde imzalandı ve Otuz Yıl Savaşı'nı sonlandırdı.",
+    "explanationKu": "Peymanên ku Aştiya Westfalyayê pêk tînin, di Cotmeha 1648an de li bajarên Münster û Osnabrückê yên Westfalyayê hatin îmzekirin û dawî li Şerê Sî Salan anîn.",
+    "explanationTr": "Westphalia Barışı'nı oluşturan antlaşmalar Ekim 1648'de Westphalia'daki Münster ve Osnabrück şehirlerinde imzalandı ve Otuz Yıl Savaşı'nı sonlandırdı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Peace_of_Westphalia",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0007",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Heykela \"Dawid\" a Michelangelo di kîjan salan de hat temamkirin?",
+    "promptTr": "Michelangelo'nun \"Davut\" heykeli hangi yıllarda tamamlandı?",
+    "answers": [
+      "1492–1495",
+      "1512–1515",
+      "1501–1504",
+      "1527–1530"
+    ],
+    "answersTr": [
+      "1492–1495",
+      "1512–1515",
+      "1501–1504",
+      "1527–1530"
+    ],
+    "correctAnswer": "1501–1504",
+    "correctAnswerTr": "1501–1504",
+    "explanation": "\"Davut\" heykeli 1501–1504 yılları arasında Michelangelo tarafından yapıldı. Eser aslında Floransa Katedrali'nin çatısına yerleştirilmek üzere sipariş edilmişti, ancak daha sonra karar değişince Piazza della Signoria meydanına konuldu.",
+    "explanationKu": "Heykela \"Dawid\" di navbera salên 1501 û 1504an de ji aliyê Michelangelo ve hat çêkirin. Di eslê xwe de ev berhem ji bo ser banê Katedrala Floransayê hatibû xwestin; lê dema ku biryar hat guhertin, ew li meydana Piazza della Signoriayê hat bicihkirin.",
+    "explanationTr": "\"Davut\" heykeli 1501–1504 yılları arasında Michelangelo tarafından yapıldı. Eser aslında Floransa Katedrali'nin çatısına yerleştirilmek üzere sipariş edilmişti, ancak daha sonra karar değişince Piazza della Signoria meydanına konuldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/David_(Michelangelo)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0008",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Tabloya \"Las Meninas\" di sala 1656an de ji aliyê kê ve hatiye çêkirin?",
+    "promptTr": "\"Las Meninas\" tablosu 1656 yılında kim tarafından yapılmıştır?",
+    "answers": [
+      "El Greco",
+      "Bartolomé Esteban Murillo",
+      "Diego Velázquez",
+      "Francisco Goya"
+    ],
+    "answersTr": [
+      "El Greco",
+      "Bartolomé Esteban Murillo",
+      "Diego Velázquez",
+      "Francisco Goya"
+    ],
+    "correctAnswer": "Diego Velázquez",
+    "correctAnswerTr": "Diego Velázquez",
+    "explanation": "\"Las Meninas\" tablosu 1656 yılında Diego Velázquez tarafından yapılmıştır; eser Madrid'deki IV. Felipe'nin sarayını resmeder ve günümüzde Prado Müzesi'nde sergilenmektedir.",
+    "explanationKu": "Tabloya \"Las Meninas\" di sala 1656an de ji aliyê Diego Velázquez ve hatiye çêkirin; berhem qesra Fîlîpê IV li Madrîdê nîşan dide û îro li Muzexaneya Prado tê pêşandan.",
+    "explanationTr": "\"Las Meninas\" tablosu 1656 yılında Diego Velázquez tarafından yapılmıştır; eser Madrid'deki IV. Felipe'nin sarayını resmeder ve günümüzde Prado Müzesi'nde sergilenmektedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Las_Meninas",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0009",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Senfoniya \"From the New World\" di sala 1893yan de ji aliyê kîjan bestekarî ve hatiye bestekirin?",
+    "promptTr": "\"Yeni Dünyadan\" (From the New World) senfonisi 1893 yılında hangi besteci tarafından bestelenmiştir?",
+    "answers": [
+      "Gustav Mahler",
+      "Antonín Dvořák",
+      "Johannes Brahms",
+      "Pyotr Ilyich Tchaikovsky"
+    ],
+    "answersTr": [
+      "Gustav Mahler",
+      "Antonín Dvořák",
+      "Johannes Brahms",
+      "Pyotr İlyiç Çaykovski"
+    ],
+    "correctAnswer": "Antonín Dvořák",
+    "correctAnswerTr": "Antonín Dvořák",
+    "explanation": "Bu senfoniyi Antonín Dvořák bestelemiştir; 1893'te New York'ta yazılan eser, ilk kez 16 Aralık 1893'te New York'taki Carnegie Hall'da seslendirilmiştir.",
+    "explanationKu": "Ev senfonî ji aliyê Antonín Dvořák ve hatiye bestekirin; di sala 1893yan de li New Yorkê hatiye nivîsîn û cara yekem di 16ê kanûna pêşîn a 1893yan de li Carnegie Halla New Yorkê hatiye lîstin.",
+    "explanationTr": "Bu senfoniyi Antonín Dvořák bestelemiştir; 1893'te New York'ta yazılan eser, ilk kez 16 Aralık 1893'te New York'taki Carnegie Hall'da seslendirilmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Symphony_No._9_(Dvo%C5%99%C3%A1k)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0010",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Freskê navdar ê bi navê \"Dibistana Atînayê\" ku li odeya Stanza della Segnatura ya Vatîkanê ye, di navbera salên 1509-1511an de ji aliyê kê ve hatiye çêkirin?",
+    "promptTr": "Vatikan'daki Stanza della Segnatura odasında bulunan ünlü \"Atina Okulu\" freskini 1509-1511 yılları arasında kim yapmıştır?",
+    "answers": [
+      "Raphael Sanzio",
+      "Michelangelo Buonarroti",
+      "Sandro Botticelli",
+      "Pietro Perugino"
+    ],
+    "answersTr": [
+      "Raphael Sanzio",
+      "Michelangelo Buonarroti",
+      "Sandro Botticelli",
+      "Pietro Perugino"
+    ],
+    "correctAnswer": "Raphael Sanzio",
+    "correctAnswerTr": "Raphael Sanzio",
+    "explanation": "Bu fresk, 1509-1511 yılları arasında Vatikan'daki Apostolik Saray'ın Stanza della Segnatura odasında ünlü Rönesans ressamı Raphael (Raffaello Sanzio) tarafından yapılmıştır.",
+    "explanationKu": "Ev fresk di navbera salên 1509 û 1511an de li Qesra Apostolîk a Vatîkanê, li odeya Stanza della Segnatura, ji aliyê wênesazê navdar ê Ronesansê Raphael Sanzio ve hatiye çêkirin.",
+    "explanationTr": "Bu fresk, 1509-1511 yılları arasında Vatikan'daki Apostolik Saray'ın Stanza della Segnatura odasında ünlü Rönesans ressamı Raphael (Raffaello Sanzio) tarafından yapılmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/The_School_of_Athens",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0011",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Peykerê bi navê \"Wecda Ezîze Teresa\" (Ecstasy of Saint Teresa) di navbera salên 1647 û 1652yan de ji aliyê kê ve hatiye çêkirin?",
+    "promptTr": "\"Azize Teresa'nın Vecdi\" (Ecstasy of Saint Teresa) heykelini 1647-1652 yılları arasında kim yapmıştır?",
+    "answers": [
+      "Francesco Borromini",
+      "Gian Lorenzo Bernini",
+      "Pietro da Cortona",
+      "Carlo Maderno"
+    ],
+    "answersTr": [
+      "Francesco Borromini",
+      "Gian Lorenzo Bernini",
+      "Pietro da Cortona",
+      "Carlo Maderno"
+    ],
+    "correctAnswer": "Gian Lorenzo Bernini",
+    "correctAnswerTr": "Gian Lorenzo Bernini",
+    "explanation": "Heykel, 1647-1652 yılları arasında İtalyan heykeltıraş Gian Lorenzo Bernini tarafından yapılmıştır; Bernini aynı zamanda Barok üslubunun da öncüsüdür.",
+    "explanationKu": "Ev peyker di navbera salên 1647 û 1652yan de ji aliyê peykersazê îtalî Gian Lorenzo Bernini ve hatiye çêkirin; Bernini her wiha pêşengê şêwaza Barokê ye.",
+    "explanationTr": "Heykel, 1647-1652 yılları arasında İtalyan heykeltıraş Gian Lorenzo Bernini tarafından yapılmıştır; Bernini aynı zamanda Barok üslubunun da öncüsüdür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Gian_Lorenzo_Bernini",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0012",
+    "category": "Cîhan",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Tengava ku Deryaya Sor û Kendava Adenê bi hev ve girê dide, navê wê çi ye?",
+    "promptTr": "Kızıldeniz'i Aden Körfezi'ne bağlayan boğazın adı nedir?",
+    "answers": [
+      "Tengava Hurmuzê",
+      "Tengava Bab el-Mendebê",
+      "Tengava Melakayê",
+      "Tengava Bosforê"
+    ],
+    "answersTr": [
+      "Hürmüz Boğazı",
+      "Bab El Mandeb Boğazı",
+      "Malakka Boğazı",
+      "İstanbul Boğazı"
+    ],
+    "correctAnswer": "Tengava Bab el-Mendebê",
+    "correctAnswerTr": "Bab El Mandeb Boğazı",
+    "explanation": "Bab El Mandeb Boğazı'nın doğusunda Yemen, batısında ise Afrika ülkeleri Cibuti ve Eritre bulunur; bu boğaz Kızıldeniz'i Aden Körfezi'ne ve Hint Okyanusu'na bağlar.",
+    "explanationKu": "Tengava Bab el-Mendebê, li rojhilatê wê Yemen û li rojavayê wê Cîbûtî û Erîtrea hene; ev tengav Deryaya Sor bi Kendava Adenê û Okyanûsa Hindî ve girê dide.",
+    "explanationTr": "Bab El Mandeb Boğazı'nın doğusunda Yemen, batısında ise Afrika ülkeleri Cibuti ve Eritre bulunur; bu boğaz Kızıldeniz'i Aden Körfezi'ne ve Hint Okyanusu'na bağlar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Bab_al-Mandab_Strait",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0013",
+    "category": "Cîhan",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Roj stêrkeke ji kîjan çîna tayfê ye?",
+    "promptTr": "Güneş hangi tayf sınıfındaki yıldızdır?",
+    "answers": [
+      "K5V",
+      "F8V",
+      "M2V",
+      "G2V"
+    ],
+    "answersTr": [
+      "K5V",
+      "F8V",
+      "M2V",
+      "G2V"
+    ],
+    "correctAnswer": "G2V",
+    "correctAnswerTr": "G2V",
+    "explanation": "Güneş, G tayf sınıfındaki (G2V) bir ana dizi yıldızıdır; bu sınıflandırma astronomide Güneş benzeri yıldızlar için kullanılır.",
+    "explanationKu": "Roj, stêrkeke rêza sereke ya ji çîna tayfî ya G (G2V) ye; ev çînkirin di astronomiyê de ji bo stêrkên mîna Rojê tê bikaranîn.",
+    "explanationTr": "Güneş, G tayf sınıfındaki (G2V) bir ana dizi yıldızıdır; bu sınıflandırma astronomide Güneş benzeri yıldızlar için kullanılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Sun",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0014",
+    "category": "Cîhan",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Îro di koma monotreman (guhandarên ku hêk dikin) de çend cure dijîn?",
+    "promptTr": "Monotreme (yumurtlayan memeliler) takımında bugün kaç tür yaşar?",
+    "answers": [
+      "5 cure",
+      "3 cure",
+      "7 cure",
+      "2 cure"
+    ],
+    "answersTr": [
+      "5 tür",
+      "3 tür",
+      "7 tür",
+      "2 tür"
+    ],
+    "correctAnswer": "5 cure",
+    "correctAnswerTr": "5 tür",
+    "explanation": "Monotremler, yalnızca Avustralya ve Yeni Gine'de bulunan yumurtlayan memelilerdir; bugünkü yaşayan beş tür, bir ornitorenk ve dört ekidna türünden oluşur.",
+    "explanationKu": "Monotrem, guhandarên ku hêk dikin in û tenê li Avustralya û Gîneya Nû dijîn; ev her pênc cureyên îro yên zindî, ji ornîtorenkek û çar cureyên ekîdnayê pêk tên.",
+    "explanationTr": "Monotremler, yalnızca Avustralya ve Yeni Gine'de bulunan yumurtlayan memelilerdir; bugünkü yaşayan beş tür, bir ornitorenk ve dört ekidna türünden oluşur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Monotreme",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0015",
+    "category": "Cîhan",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Wesyetnameya dawî ya Alfred Nobel ku pênc xelatên Nobelê diyar dikir, li kîjan bajarî hat îmzekirin?",
+    "promptTr": "Alfred Nobel'in beş Nobel ödülünün verilmesini öngören son vasiyetnamesi hangi şehirde imzalandı?",
+    "answers": [
+      "Stockholm",
+      "Parîs",
+      "Kopenhag",
+      "Oslo"
+    ],
+    "answersTr": [
+      "Stockholm",
+      "Paris",
+      "Kopenhag",
+      "Oslo"
+    ],
+    "correctAnswer": "Parîs",
+    "correctAnswerTr": "Paris",
+    "explanation": "Alfred Nobel'in son vasiyetnamesi 27 Kasım 1895'te Paris'teki İsveç-Norveç Kulübü'nde imzalandı ve bu belgeyle beş Nobel ödülünün kurulmasını öngördü.",
+    "explanationKu": "Wesyetnameya dawî ya Alfred Nobel di 27ê Mijdara 1895an de li Klûba Swêdî-Norwêcî ya li Parîsê hat îmzekirin û pêkanîna pênc xelatên Nobelê tê de hatibû diyarkirin.",
+    "explanationTr": "Alfred Nobel'in son vasiyetnamesi 27 Kasım 1895'te Paris'teki İsveç-Norveç Kulübü'nde imzalandı ve bu belgeyle beş Nobel ödülünün kurulmasını öngördü.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Alfred_Nobel",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0016",
+    "category": "Cîhan",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Johann Sebastian Bach, di sala 1721an de Şeş Konsertoyên Brandenburgê diyarî kê kir?",
+    "promptTr": "Johann Sebastian Bach 1721'de Altı Brandenburg Konsertosu'nu kime ithaf etti?",
+    "answers": [
+      "Leopold, Mîrê Anhalt-Köthenê",
+      "Christian Ludwig, Margrafê Brandenburg-Schwedtê",
+      "Wilhelm Ernst, Dukê Saxe-Weimarê",
+      "Friedrich Wilhelm I, Qralê Prusyayê"
+    ],
+    "answersTr": [
+      "Anhalt-Köthen Prensi Leopold",
+      "Brandenburg-Schwedt Margravı Christian Ludwig",
+      "Saxe-Weimar Dükü Wilhelm Ernst",
+      "Prusya Kralı I. Friedrich Wilhelm"
+    ],
+    "correctAnswer": "Christian Ludwig, Margrafê Brandenburg-Schwedtê",
+    "correctAnswerTr": "Brandenburg-Schwedt Margravı Christian Ludwig",
+    "explanation": "Bach 1721'de altı konçertoyu, 24 Mart 1721 tarihli ithaf yazısıyla Brandenburg-Schwedt Margravı Christian Ludwig'e sundu. Eserin asıl Fransızca adı \"Çeşitli Çalgılarla Altı Konser\"dir.",
+    "explanationKu": "Bach, di 24ê Adara 1721an de bi nivîseke diyarîkirinê, şeş konsertoyên xwe pêşkêşî Margrafê Brandenburg-Schwedtê, Christian Ludwig kirin. Navê eslî yê berhemê bi fransî ye û wateya wê \"Bi Amûrên Cihêreng Şeş Konser\" e.",
+    "explanationTr": "Bach 1721'de altı konçertoyu, 24 Mart 1721 tarihli ithaf yazısıyla Brandenburg-Schwedt Margravı Christian Ludwig'e sundu. Eserin asıl Fransızca adı \"Çeşitli Çalgılarla Altı Konser\"dir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Brandenburg_Concertos",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0017",
+    "category": "Cîhan",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Her du peymanên ku Aştiya Westfalyayê pêk tînin li kîjan du bajaran hatin îmzekirin?",
+    "promptTr": "Westphalia Barışı'nı oluşturan iki antlaşma hangi iki şehirde imzalandı?",
+    "answers": [
+      "Münster û Köln",
+      "Osnabrück û Hamburg",
+      "Nürnberg û Würzburg",
+      "Münster û Osnabrück"
+    ],
+    "answersTr": [
+      "Münster ve Köln",
+      "Osnabrück ve Hamburg",
+      "Nürnberg ve Würzburg",
+      "Münster ve Osnabrück"
+    ],
+    "correctAnswer": "Münster û Osnabrück",
+    "correctAnswerTr": "Münster ve Osnabrück",
+    "explanation": "İki antlaşmadan biri Münster'de (Kutsal Roma İmparatoru ile Fransa), diğeri Osnabrück'te (İmparator ile İsveç) imzalandı.",
+    "explanationKu": "Ji du peymanan yek li Münsterê (di navbera Împaratorê Romaya Pîroz û Fransayê de), ya din jî li Osnabrückê (di navbera Împarator û Swêdê de) hat îmzekirin.",
+    "explanationTr": "İki antlaşmadan biri Münster'de (Kutsal Roma İmparatoru ile Fransa), diğeri Osnabrück'te (İmparator ile İsveç) imzalandı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Peace_of_Westphalia",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0018",
+    "category": "Cîhan",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Kê di sala 1934an de ji ber keşfkirina hîdrojena giran Xelata Nobelê ya Kîmyayê wergirtiye?",
+    "promptTr": "Ağır hidrojenin keşfi nedeniyle 1934 Nobel Kimya Ödülü'nü kim almıştır?",
+    "answers": [
+      "Harold Urey",
+      "Gilbert N. Lewis",
+      "Irving Langmuir",
+      "Francis William Aston"
+    ],
+    "answersTr": [
+      "Harold Urey",
+      "Gilbert N. Lewis",
+      "Irving Langmuir",
+      "Francis William Aston"
+    ],
+    "correctAnswer": "Harold Urey",
+    "correctAnswerTr": "Harold Urey",
+    "explanation": "Harold Urey, ağır hidrojenin (döteryum) keşfi nedeniyle 1934 Nobel Kimya Ödülü'nü almıştır; bu izotop 1932'de yayımlanan bir çalışmayla tanıtılmıştı.",
+    "explanationKu": "Harold Urey, ji ber keşfkirina hîdrojena giran (deuterium) di sala 1934an de Xelata Nobelê ya Kîmyayê wergirtiye; ev îzotop di sala 1932yan de bi xebatekê hatibû naskirin.",
+    "explanationTr": "Harold Urey, ağır hidrojenin (döteryum) keşfi nedeniyle 1934 Nobel Kimya Ödülü'nü almıştır; bu izotop 1932'de yayımlanan bir çalışmayla tanıtılmıştı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Harold_Urey",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0019",
+    "category": "Cîhan",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Di sala 1783yan de kîjan du birayan ji mînerala wolframîtê bi bikaranîna karbonê elementa wolframê wekî metalekî îzole kir?",
+    "promptTr": "1783'te wolframiti karbonla indirgeyerek elementi ilk kez metal olarak izole eden iki kardeş kimdir?",
+    "answers": [
+      "Joseph Louis Proust û Louis Gay-Lussac",
+      "Juan José û Fausto Elhuyar",
+      "Humphry Davy û Michael Faraday",
+      "Antoine Lavoisier û Joseph Priestley"
+    ],
+    "answersTr": [
+      "Joseph Louis Proust ve Louis Gay-Lussac",
+      "Juan José ve Fausto Elhuyar",
+      "Humphry Davy ve Michael Faraday",
+      "Antoine Lavoisier ve Joseph Priestley"
+    ],
+    "correctAnswer": "Juan José û Fausto Elhuyar",
+    "correctAnswerTr": "Juan José ve Fausto Elhuyar",
+    "explanation": "İspanyol kimyagerler Juan José ve Fausto Elhuyar, 1783'te wolframiti karbonla indirgeyerek wolframı ilk kez izole edip metal olarak elde eden kişiler olmuştur.",
+    "explanationKu": "Kîmyagerên spanî Juan José û Fausto Elhuyar, di sala 1783yan de ji mînerala wolframîtê bi alîkariya karbonê wolfram îzole kirin û bûn kesên pêşîn ên ku ev element wekî metal bi dest xistin.",
+    "explanationTr": "İspanyol kimyagerler Juan José ve Fausto Elhuyar, 1783'te wolframiti karbonla indirgeyerek wolframı ilk kez izole edip metal olarak elde eden kişiler olmuştur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Tungsten",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0020",
+    "category": "Cîhan",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Di sala 1847an de li Nexweşxaneya Giştî ya Viyanayê, kîjan bijîşkî ji bo kêmkirina rêjeya mirina dayikan destşûştina bi kilsê klorî ferz kir?",
+    "promptTr": "1847'de Viyana Genel Hastanesi'nde, lohusalık hummasına bağlı anne ölümlerini azaltmak için hekimlerin ellerini klorlu kireçle yıkamasını kim zorunlu kılmıştır?",
+    "answers": [
+      "Ferdinand von Hebra",
+      "Carl von Rokitansky",
+      "Ignaz Semmelweis",
+      "Theodor Billroth"
+    ],
+    "answersTr": [
+      "Ferdinand von Hebra",
+      "Carl von Rokitansky",
+      "Ignaz Semmelweis",
+      "Theodor Billroth"
+    ],
+    "correctAnswer": "Ignaz Semmelweis",
+    "correctAnswerTr": "Ignaz Semmelweis",
+    "explanation": "Macar hekim Ignaz Semmelweis, 1847'de Viyana Genel Hastanesi'nde ellerin klorlu kireç çözeltisiyle yıkanmasını zorunlu kılarak lohusalık hummasından kaynaklı anne ölüm oranını büyük ölçüde düşürmüştür.",
+    "explanationKu": "Bijîşkê macar Ignaz Semmelweis, di sala 1847an de li Nexweşxaneya Giştî ya Viyanayê destşûştina bi kilsê klorî mecbûrî kir; bi vê yekê rêjeya mirina zikmakî ya dayikan ji %18an daxist binê %2yan.",
+    "explanationTr": "Macar hekim Ignaz Semmelweis, 1847'de Viyana Genel Hastanesi'nde ellerin klorlu kireç çözeltisiyle yıkanmasını zorunlu kılarak lohusalık hummasından kaynaklı anne ölüm oranını büyük ölçüde düşürmüştür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Ignaz_Semmelweis",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0021",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Nêtron di sala 1932yan de ji aliyê kê ve hatiye keşfkirin?",
+    "promptTr": "Nötron 1932 yılında kim tarafından keşfedildi?",
+    "answers": [
+      "Ernest Rutherford",
+      "James Chadwick",
+      "Niels Bohr",
+      "John Dalton"
+    ],
+    "answersTr": [
+      "Ernest Rutherford",
+      "James Chadwick",
+      "Niels Bohr",
+      "John Dalton"
+    ],
+    "correctAnswer": "James Chadwick",
+    "correctAnswerTr": "James Chadwick",
+    "explanation": "James Chadwick, nötronu 1932 yılında Cambridge'deki Cavendish Laboratuvarı'nda keşfetti. Bu keşfinden dolayı 1935 yılında Nobel Fizik Ödülü'nü kazandı.",
+    "explanationKu": "James Chadwick di sala 1932yan de li Laboratuwara Cavendish a Cambridgeê nêtron keşf kir. Ji ber vê keşfa xwe di sala 1935an de Xelata Nobelê ya Fîzîkê wergirt.",
+    "explanationTr": "James Chadwick, nötronu 1932 yılında Cambridge'deki Cavendish Laboratuvarı'nda keşfetti. Bu keşfinden dolayı 1935 yılında Nobel Fizik Ödülü'nü kazandı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Discovery_of_the_neutron",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0022",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Albert A. Michelson û Edward W. Morley ezmûna eterê di kîjan salê de pêk anîn?",
+    "promptTr": "Albert A. Michelson ve Edward W. Morley, eter hipotezini sınamak için yaptıkları ünlü deneyi hangi yıl gerçekleştirdi?",
+    "answers": [
+      "1879",
+      "1887",
+      "1895",
+      "1905"
+    ],
+    "answersTr": [
+      "1879",
+      "1887",
+      "1895",
+      "1905"
+    ],
+    "correctAnswer": "1887",
+    "correctAnswerTr": "1887",
+    "explanation": "Albert A. Michelson ve Edward W. Morley, deneyi 1887 yılında ABD'nin Ohio eyaletindeki Cleveland şehrinde gerçekleştirdi. Sonuç negatifti ve eterin varlığı doğrulanamadı.",
+    "explanationKu": "Albert A. Michelson û Edward W. Morley ezmûna xwe di sala 1887an de li Clevelandê, li eyaleta Ohio ya DYAyê pêk anîn. Encam negatîf bû û hebûna eterê nehate piştrastkirin.",
+    "explanationTr": "Albert A. Michelson ve Edward W. Morley, deneyi 1887 yılında ABD'nin Ohio eyaletindeki Cleveland şehrinde gerçekleştirdi. Sonuç negatifti ve eterin varlığı doğrulanamadı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Michelson%E2%80%93Morley_experiment",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0023",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Elementa galyum (Ga) di kîjan salê de li Parîsê hatiye keşfkirin?",
+    "promptTr": "Galyum (Ga) elementi hangi yıl Paris'te keşfedildi?",
+    "answers": [
+      "1869",
+      "1886",
+      "1875",
+      "1898"
+    ],
+    "answersTr": [
+      "1869",
+      "1886",
+      "1875",
+      "1898"
+    ],
+    "correctAnswer": "1875",
+    "correctAnswerTr": "1875",
+    "explanation": "Fransız kimyager Paul-Émile Lecoq de Boisbaudran, galyumu 1875 yılında Paris'te keşfetti. Mendeleyev'in periyodik tablosu 1869'da, germanyum 1886'da, polonyum ise 1898'de bulunmuştur.",
+    "explanationKu": "Kîmyagerê fransî Paul-Émile Lecoq de Boisbaudran elementa galyumê di sala 1875an de li Parîsê keşf kir. Tabloya Mendeleev di 1869an de, germanyum di 1886an de û polonyum jî di 1898an de hatine dîtin.",
+    "explanationTr": "Fransız kimyager Paul-Émile Lecoq de Boisbaudran, galyumu 1875 yılında Paris'te keşfetti. Mendeleyev'in periyodik tablosu 1869'da, germanyum 1886'da, polonyum ise 1898'de bulunmuştur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Gallium",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0024",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Barbara McClintock di sala 1983yan de Xelata Nobelê ya Tibê ji bo kîjan keşfa xwe wergirt?",
+    "promptTr": "Barbara McClintock 1983 Nobel Tıp Ödülü'nü hangi keşfinden dolayı aldı?",
+    "answers": [
+      "Elementên radyoaktîf",
+      "Genên gerok",
+      "Sîstema grûpa xwînê",
+      "Vîrusa felca zarokan"
+    ],
+    "answersTr": [
+      "Radyoaktif elementler",
+      "Hareketli genler",
+      "ABO kan grubu sistemi",
+      "Çocuk felci virüsü"
+    ],
+    "correctAnswer": "Genên gerok",
+    "correctAnswerTr": "Hareketli genler",
+    "explanation": "Barbara McClintock, mısır bitkisi üzerindeki çalışmalarıyla 1940'lı ve 1950'li yıllarda hareketli genleri (transpozonları) keşfetti. Bu başarısı ona 1983 Nobel Tıp Ödülü'nü kazandırdı.",
+    "explanationKu": "Barbara McClintock di salên 1940an û 1950yan de li ser lazûtê (garis) xebitî û genên gerok (transpozon) keşf kir; ji ber vê yekê di sala 1983yan de Xelata Nobelê ya Tibê wergirt.",
+    "explanationTr": "Barbara McClintock, mısır bitkisi üzerindeki çalışmalarıyla 1940'lı ve 1950'li yıllarda hareketli genleri (transpozonları) keşfetti. Bu başarısı ona 1983 Nobel Tıp Ödülü'nü kazandırdı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Barbara_McClintock",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0025",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Teoremên netemamiyê yên Kurt Godel di kîjan salê de hatine weşandin?",
+    "promptTr": "Kurt Gödel'in matematikteki eksiklik (tamamlanmazlık) teoremleri hangi yıl yayımlandı?",
+    "answers": [
+      "1936",
+      "1931",
+      "1927",
+      "1953"
+    ],
+    "answersTr": [
+      "1936",
+      "1931",
+      "1927",
+      "1953"
+    ],
+    "correctAnswer": "1931",
+    "correctAnswerTr": "1931",
+    "explanation": "Kurt Gödel, matematikteki eksiklik teoremlerini 1931'de yayımladı. Bu teoremler, matematiğin tümünü kendi içinde tutarlı ve tam bir aksiyom setiyle kanıtlamanın imkansız olduğunu gösterdi.",
+    "explanationKu": "Kurt Godel teoremên netemamiyê di sala 1931ê de weşand; ev teorem nîşan didin ku pergaleke aksiyomatîk a têra xwe xurt nabe ku hem temam hem jî lihevhatî be.",
+    "explanationTr": "Kurt Gödel, matematikteki eksiklik teoremlerini 1931'de yayımladı. Bu teoremler, matematiğin tümünü kendi içinde tutarlı ve tam bir aksiyom setiyle kanıtlamanın imkansız olduğunu gösterdi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/G%C3%B6del's_incompleteness_theorems",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0026",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Barry Marshall û Robin Warren di sala 2005an de Xelata Nobelê ya Tibê ji bo keşfa kîjan bakteriyê wergirtin?",
+    "promptTr": "Barry Marshall ve Robin Warren, hangi bakteriyi keşfettikleri için 2005 Nobel Tıp Ödülü'nü aldı?",
+    "answers": [
+      "Helicobacter pylori",
+      "Mycobacterium tuberculosis",
+      "Salmonella typhi",
+      "Streptococcus pneumoniae"
+    ],
+    "answersTr": [
+      "Helicobacter pylori",
+      "Mycobacterium tuberculosis",
+      "Salmonella typhi",
+      "Streptococcus pneumoniae"
+    ],
+    "correctAnswer": "Helicobacter pylori",
+    "correctAnswerTr": "Helicobacter pylori",
+    "explanation": "Barry Marshall ve Robin Warren, 1983'te Helicobacter pylori bakterisini gastrit ve mide ülserinin temel nedeni olarak tanımladılar. Bu devrim niteliğindeki keşif onlara 2005 Nobel Tıp Ödülü'nü getirdi.",
+    "explanationKu": "Barry Marshall û Robin Warren di sala 1983yan de destnîşan kirin ku bakteriya Helicobacter pylori sedema nexweşiyên wekî gastrît û ulsera mîdeyê ye. Ji ber vê keşfê wan di 2005an de Xelata Nobelê ya Tibê wergirt.",
+    "explanationTr": "Barry Marshall ve Robin Warren, 1983'te Helicobacter pylori bakterisini gastrit ve mide ülserinin temel nedeni olarak tanımladılar. Bu devrim niteliğindeki keşif onlara 2005 Nobel Tıp Ödülü'nü getirdi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Helicobacter_pylori",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0027",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Di sala 1854an de, têgeha \"epîstemolojî\" ji bo şaxa felsefeyê ya zanînê yekem car ji aliyê kê ve hate bikaranîn?",
+    "promptTr": "1854 yılında felsefenin bilgi dalı için \"epistemoloji\" terimini ilk kez kim kullanmıştır?",
+    "answers": [
+      "James Frederick Ferrier, di pirtûka xwe ya \"Institutes of Metaphysic\" de",
+      "John Locke, di pirtûka xwe ya \"An Essay Concerning Human Understanding\" de",
+      "David Hume, di pirtûka xwe ya \"A Treatise of Human Nature\" de",
+      "Immanuel Kant, di pirtûka xwe ya \"Critique of Pure Reason\" de"
+    ],
+    "answersTr": [
+      "James Frederick Ferrier, \"Institutes of Metaphysic\" adlı eserinde",
+      "John Locke, \"An Essay Concerning Human Understanding\" adlı eserinde",
+      "David Hume, \"A Treatise of Human Nature\" adlı eserinde",
+      "Immanuel Kant, \"Critique of Pure Reason\" adlı eserinde"
+    ],
+    "correctAnswer": "James Frederick Ferrier, di pirtûka xwe ya \"Institutes of Metaphysic\" de",
+    "correctAnswerTr": "James Frederick Ferrier, \"Institutes of Metaphysic\" adlı eserinde",
+    "explanation": "\"Epistemoloji\" terimi felsefenin bilgi dalı için ilk kez 1854 yılında İskoç filozof James Frederick Ferrier tarafından \"Institutes of Metaphysic\" adlı eserinde kullanılmıştır.",
+    "explanationKu": "Fîlozofê Skotlandî James Frederick Ferrier, di sala 1854an de têgeha \"epîstemolojî\" ji bo şaxa felsefeyê ya zanînê yekem car bikar anî. Ev têgeh di pirtûka wî ya \"Institutes of Metaphysic\" de derbas dibe.",
+    "explanationTr": "\"Epistemoloji\" terimi felsefenin bilgi dalı için ilk kez 1854 yılında İskoç filozof James Frederick Ferrier tarafından \"Institutes of Metaphysic\" adlı eserinde kullanılmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Epistemology",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0028",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Karl Popper di sala 1934an de, pirtûka xwe ya ku tê de felsefeya zanistê ya li ser bingeha \"şaşderxistinê\" (falsifiability) pêşkêş dike, bi kîjan navî weşand?",
+    "promptTr": "Karl Popper, 1934'te yanlışlanabilirlik (falsifiability) temelli bilim felsefesini sunduğu eserini hangi adla yayımlamıştır?",
+    "answers": [
+      "The Poverty of Historicism",
+      "Logik der Forschung",
+      "Conjectures and Refutations",
+      "The Open Society and Its Enemies"
+    ],
+    "answersTr": [
+      "The Poverty of Historicism",
+      "Logik der Forschung",
+      "Conjectures and Refutations",
+      "The Open Society and Its Enemies"
+    ],
+    "correctAnswer": "Logik der Forschung",
+    "correctAnswerTr": "Logik der Forschung",
+    "explanation": "\"Logik der Forschung\" 1934'te Almanca yayımlandı. Eserde yanlışlanabilirlik ilkesi temelinde bilim felsefesi sunulmuş olup kitap, 1959'da \"The Logic of Scientific Discovery\" adıyla İngilizceye çevrilmiştir.",
+    "explanationKu": "Pirtûka \"Logik der Forschung\" di sala 1934an de bi zimanê Almanî hate weşandin. Di pirtûkê de prensîba şaşderxistinê (falsifiability) hate pêşkêşkirin û ev berhem di sala 1959an de bi navê \"The Logic of Scientific Discovery\" bo îngilîzî hate wergerandin.",
+    "explanationTr": "\"Logik der Forschung\" 1934'te Almanca yayımlandı. Eserde yanlışlanabilirlik ilkesi temelinde bilim felsefesi sunulmuş olup kitap, 1959'da \"The Logic of Scientific Discovery\" adıyla İngilizceye çevrilmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Logic_of_Scientific_Discovery",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0029",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Çapa yekem a berhema Immanuel Kant a bi navê \"Critique of Pure Reason\" (Rexneya Aqilê Xwerû) di kîjan salê de hate weşandin?",
+    "promptTr": "Immanuel Kant'ın \"Saf Aklın Eleştirisi\" (Kritik der reinen Vernunft) adlı eserinin ilk baskısı hangi yıl yayımlanmıştır?",
+    "answers": [
+      "Di sala 1787an de",
+      "Di sala 1790an de",
+      "Di sala 1788an de",
+      "Di sala 1781an de"
+    ],
+    "answersTr": [
+      "1787 yılında",
+      "1790 yılında",
+      "1788 yılında",
+      "1781 yılında"
+    ],
+    "correctAnswer": "Di sala 1781an de",
+    "correctAnswerTr": "1781 yılında",
+    "explanation": "\"Saf Aklın Eleştirisi\" eserinin ilk baskısı 1781'de, ikinci baskısı ise 1787'de yayımlanmıştır. Kant'ın \"Pratik Aklın Eleştirisi\" adlı eseri 1788'de, \"Yargı Gücünün Eleştirisi\" adlı eseri ise 1790'da yayımlanmıştır.",
+    "explanationKu": "Çapa yekem a \"Critique of Pure Reason\" di sala 1781an de, çapa duyem jî di sala 1787an de hate weşandin. Herwiha Kant di sala 1788an de \"Critique of Practical Reason\" û di sala 1790an de jî \"Critique of Judgment\" weşandiye.",
+    "explanationTr": "\"Saf Aklın Eleştirisi\" eserinin ilk baskısı 1781'de, ikinci baskısı ise 1787'de yayımlanmıştır. Kant'ın \"Pratik Aklın Eleştirisi\" adlı eseri 1788'de, \"Yargı Gücünün Eleştirisi\" adlı eseri ise 1790'da yayımlanmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Critique_of_Pure_Reason",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0030",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Di Magna Cartaya ku di sala 1215an de ji aliyê Qral John ve li Runnymedeyê hat morkirin de, hat diyarkirin ku tu mirovê azad bêyî pêvajoyeke qanûnî nayê girtin û bêyî biryara dadgehê jî dest nayê danîn ser mal û milkê wî. Ev prensîb di kîjan xala belgeyê de cih digire?",
+    "promptTr": "1215 yılında Kral John'un Runnymede'de mühürlediği Magna Carta'da, hiçbir özgür insanın yasal bir süreç işletilmeden hapsedilemeyeceği ya da mülkünden yoksun bırakılamayacağı belirtildi. Bu ilke belgenin hangi maddesinde yer alır?",
+    "answers": [
+      "Xala 61ê",
+      "Xala 39an",
+      "Xala 40î",
+      "Xala 12an"
+    ],
+    "answersTr": [
+      "61. madde",
+      "39. madde",
+      "40. madde",
+      "12. madde"
+    ],
+    "correctAnswer": "Xala 39an",
+    "correctAnswerTr": "39. madde",
+    "explanation": "1215 tarihli Magna Carta'nın 39. maddesi, hiçbir özgür insanın yasal süreç işletilmeden hapsedilemeyeceğini ya da mülkünden yoksun bırakılamayacağını öngörür; bu madde 1297'de yeniden yayımlanan metinde 29. madde olarak İngiltere ve Galler hukukunda hâlâ yürürlüktedir.",
+    "explanationKu": "Di xala 39an a Magna Cartaya 1215an de hat diyarkirin ku bêyî pêvajoyeke qanûnî tu mirovê azad nayê girtin. Ev xal, di metna ku di sala 1297an de ji nû ve hatiye weşandin de wekî xala 29an di hiqûqa Îngilistan û Walesê de hîn jî di meriyetê de ye.",
+    "explanationTr": "1215 tarihli Magna Carta'nın 39. maddesi, hiçbir özgür insanın yasal süreç işletilmeden hapsedilemeyeceğini ya da mülkünden yoksun bırakılamayacağını öngörür; bu madde 1297'de yeniden yayımlanan metinde 29. madde olarak İngiltere ve Galler hukukunda hâlâ yürürlüktedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Magna_Carta",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0031",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Ramangerê fransî Montesquieu, berhema xwe ya bi navê \"Ruhê Qanûnan\" (De l'esprit des lois) ku tê de prensîba cudabûna hêzan bi awayekî sîstematîk rave kiriye, di kîjan salê de weşandiye?",
+    "promptTr": "Fransız düşünür Montesquieu, kuvvetler ayrılığını sistemli biçimde işlediği \"Kanunların Ruhu Üzerine\" (De l'esprit des lois) adlı eserini hangi yılda yayımladı?",
+    "answers": [
+      "1721",
+      "1748",
+      "1755",
+      "1762"
+    ],
+    "answersTr": [
+      "1721",
+      "1748",
+      "1755",
+      "1762"
+    ],
+    "correctAnswer": "1748",
+    "correctAnswerTr": "1748",
+    "explanation": "Montesquieu, \"De l'esprit des lois\" (Kanunların Ruhu Üzerine) adlı eserini 1748 yılında anonim olarak yayımladı; eserde yasama, yürütme ve yargı erklerinin farklı organlara dağıtılması savunulur.",
+    "explanationKu": "Montesquieu, berhema xwe ya \"De l'esprit des lois\" (Ruhê Qanûnan) di sala 1748an de bêyî ku navê xwe lê binivîse weşand; di vê berhemê de tê parastin ku divê hêzên zagonçêker, cîbicîkar û dadwerî li saziyên cuda bên dabeşkirin.",
+    "explanationTr": "Montesquieu, \"De l'esprit des lois\" (Kanunların Ruhu Üzerine) adlı eserini 1748 yılında anonim olarak yayımladı; eserde yasama, yürütme ve yargı erklerinin farklı organlara dağıtılması savunulur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/The_Spirit_of_the_Laws",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0032",
+    "category": "Paradigma",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Peymana Neteweyên Yekbûyî, di 26ê hezîrana 1945an de li San Franciscoyê ji aliyê nûnerên çend welatan ve hat îmzekirin?",
+    "promptTr": "Birleşmiş Milletler Şartı, 26 Haziran 1945'te San Francisco'da kaç ülkenin temsilcisi tarafından imzalandı?",
+    "answers": [
+      "26",
+      "42",
+      "50",
+      "51"
+    ],
+    "answersTr": [
+      "26",
+      "42",
+      "50",
+      "51"
+    ],
+    "correctAnswer": "50",
+    "correctAnswerTr": "50",
+    "explanation": "BM Şartı, 26 Haziran 1945'te 50 ülkenin temsilcisi tarafından San Francisco'da imzalandı; örgüt, Şart'ın beş daimî üye ve diğer üyelerin çoğunluğu tarafından onaylanmasının ardından 24 Ekim 1945'te resmen kuruldu.",
+    "explanationKu": "Peymana NYyê, di 26ê hezîrana 1945an de ji aliyê nûnerên 50 welatan ve li San Franciscoyê hat îmzekirin; piştî pejirandina pênc endamên daîmî û piraniya endamên din, rêxistin di 24ê cotmeha 1945an de bi fermî hat avakirin.",
+    "explanationTr": "BM Şartı, 26 Haziran 1945'te 50 ülkenin temsilcisi tarafından San Francisco'da imzalandı; örgüt, Şart'ın beş daimî üye ve diğer üyelerin çoğunluğu tarafından onaylanmasının ardından 24 Ekim 1945'te resmen kuruldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/United_Nations",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0033",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Fransayê de, di dema Şoreşa Fransayê de Kela Bastille di kîjan salê de hat girtin?",
+    "promptTr": "Fransız siyasi tarihinde, Fransız Devrimi sırasında Bastille Kalesi hangi yıl ele geçirildi?",
+    "answers": [
+      "1789",
+      "1776",
+      "1792",
+      "1804"
+    ],
+    "answersTr": [
+      "1789",
+      "1776",
+      "1792",
+      "1804"
+    ],
+    "correctAnswer": "1789",
+    "correctAnswerTr": "1789",
+    "explanation": "1789'da Paris'teki Bastille Kalesi isyancılar tarafından ele geçirildi; bu olay Fransız Devrimi'nin başlangıcı olarak kabul edilir.",
+    "explanationKu": "Di sala 1789an de Kela Bastille li Parîsê ji aliyê gel ve hat girtin; ev bûyer wekî destpêka Şoreşa Fransayê tê qebûlkirin.",
+    "explanationTr": "1789'da Paris'teki Bastille Kalesi isyancılar tarafından ele geçirildi; bu olay Fransız Devrimi'nin başlangıcı olarak kabul edilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Storming_of_the_Bastille",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0034",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Amerîkayê de, nivîskarê sereke yê Danezana Serxwebûnê ya 1776an kî ye?",
+    "promptTr": "Amerikan siyasi tarihinde, 1776 tarihli Amerikan Bağımsızlık Bildirgesi'nin baş yazarı kimdir?",
+    "answers": [
+      "James Madison",
+      "Benjamin Franklin",
+      "Thomas Jefferson",
+      "John Adams"
+    ],
+    "answersTr": [
+      "James Madison",
+      "Benjamin Franklin",
+      "Thomas Jefferson",
+      "John Adams"
+    ],
+    "correctAnswer": "Thomas Jefferson",
+    "correctAnswerTr": "Thomas Jefferson",
+    "explanation": "Thomas Jefferson, 1776 tarihli Amerikan Bağımsızlık Bildirgesi'nin baş yazarıdır; belge aynı yıl resmen kabul edildi.",
+    "explanationKu": "Thomas Jefferson di sala 1776an de nivîskarê sereke yê Danezana Serxwebûnê ya Amerîkayê bû; ev belge di heman salê de hat pejirandin.",
+    "explanationTr": "Thomas Jefferson, 1776 tarihli Amerikan Bağımsızlık Bildirgesi'nin baş yazarıdır; belge aynı yıl resmen kabul edildi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Thomas_Jefferson",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0035",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Rûsyayê de, Şoreşa Bolşevîkan di kîjan salê de pêk hat?",
+    "promptTr": "Rusya'nın siyasi tarihinde, Bolşevik Devrimi hangi yıl gerçekleşti?",
+    "answers": [
+      "1917",
+      "1905",
+      "1918",
+      "1922"
+    ],
+    "answersTr": [
+      "1917",
+      "1905",
+      "1918",
+      "1922"
+    ],
+    "correctAnswer": "1917",
+    "correctAnswerTr": "1917",
+    "explanation": "Bolşevik Devrimi 1917 yılında Petrograd'da Lenin'in önderliğinde gerçekleşti ve iktidar ele geçirildi.",
+    "explanationKu": "Şoreşa Bolşevîkan di sala 1917an de li Petrogradê di bin serokatiya Lenîn de pêk hat û desthilatdarî bi dest xist.",
+    "explanationTr": "Bolşevik Devrimi 1917 yılında Petrograd'da Lenin'in önderliğinde gerçekleşti ve iktidar ele geçirildi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/October_Revolution",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0036",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Hindistanê de, Hindistanê di kîjan salê de serxwebûna xwe ji Brîtanyayê bi dest xist?",
+    "promptTr": "Hindistan siyasi tarihinde, Hindistan'ın İngiltere'den bağımsızlığını kazandığı yıl hangisidir?",
+    "answers": [
+      "1947",
+      "1950",
+      "1935",
+      "1942"
+    ],
+    "answersTr": [
+      "1947",
+      "1950",
+      "1935",
+      "1942"
+    ],
+    "correctAnswer": "1947",
+    "correctAnswerTr": "1947",
+    "explanation": "Hindistan 1947'de İngiltere'den bağımsızlığına kavuştu; aynı süreçte Pakistan devleti de kuruldu.",
+    "explanationKu": "Hindistanê di sala 1947an de serxwebûna xwe ji Brîtanyayê wergirt; di heman pêvajoyê de dewleta Pakistanê jî hat avakirin.",
+    "explanationTr": "Hindistan 1947'de İngiltere'den bağımsızlığına kavuştu; aynı süreçte Pakistan devleti de kuruldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Partition_of_India",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0037",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Almanyayê de, Dîwarê Berlînê di kîjan salê de hilweşiya?",
+    "promptTr": "Almanya siyasi tarihinde, Berlin Duvarı hangi yıl yıkıldı?",
+    "answers": [
+      "1989",
+      "1961",
+      "1990",
+      "1955"
+    ],
+    "answersTr": [
+      "1989",
+      "1961",
+      "1990",
+      "1955"
+    ],
+    "correctAnswer": "1989",
+    "correctAnswerTr": "1989",
+    "explanation": "1989'da Berlin Duvarı yıkıldı; bu olay Soğuk Savaş'ın sona ermesinin başlıca işaretlerinden biri oldu ve Almanya 1990'da yeniden birleşti.",
+    "explanationKu": "Di sala 1989an de Dîwarê Berlînê hilweşiya; ev bûyer yek ji nîşanên sereke yên dawiya Şerê Sar bû û Almanya di sala 1990î de ji nû ve yekgirtî bû.",
+    "explanationTr": "1989'da Berlin Duvarı yıkıldı; bu olay Soğuk Savaş'ın sona ermesinin başlıca işaretlerinden biri oldu ve Almanya 1990'da yeniden birleşti.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Berlin_Wall",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0038",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Japonyayê de Restorasyona Meijiyê di kîjan salê de pêk hatiye?",
+    "promptTr": "Japonya siyasi tarihinde Meiji Restorasyonu hangi yıl gerçekleşmiştir?",
+    "answers": [
+      "1853",
+      "1868",
+      "1877",
+      "1889"
+    ],
+    "answersTr": [
+      "1853",
+      "1868",
+      "1877",
+      "1889"
+    ],
+    "correctAnswer": "1868",
+    "correctAnswerTr": "1868",
+    "explanation": "1868'de gerçekleşen Meiji Restorasyonu siyasi gücü Tokugawa şogunluğundan İmparator Meiji'ye devretmiş ve Tokugawa dönemini sona erdirmiştir.",
+    "explanationKu": "Di sala 1868an de bi Restorasyona Meijiyê hêza siyasî ji şogunê Tokugawa derbasî Împerator Meiji bûye; vê bûyerê dawî li serdema Tokugawayê aniye.",
+    "explanationTr": "1868'de gerçekleşen Meiji Restorasyonu siyasi gücü Tokugawa şogunluğundan İmparator Meiji'ye devretmiş ve Tokugawa dönemini sona erdirmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Meiji_Restoration",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0039",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Macaristanê de, serhildana sala 1956an ji aliyê kîjan dewletê ve hat tepeserkirin?",
+    "promptTr": "Macaristan siyasi tarihinde, 1956 ayaklanması hangi devlet tarafından bastırıldı?",
+    "answers": [
+      "Yugoslavya",
+      "Çekoslovakya",
+      "Polonya",
+      "Yekîtiya Sovyetê"
+    ],
+    "answersTr": [
+      "Yugoslavya",
+      "Çekoslovakya",
+      "Polonya",
+      "Sovyetler Birliği"
+    ],
+    "correctAnswer": "Yekîtiya Sovyetê",
+    "correctAnswerTr": "Sovyetler Birliği",
+    "explanation": "1956 yılında Sovyet askerleri ve tankları Macar ayaklanmasını şiddetle bastırdı; binlerce Macar yurt dışına kaçmak zorunda kaldı.",
+    "explanationKu": "Di sala 1956an de leşker û tankên Yekîtiya Sovyetê serhildana Macaristanê tepeser kirin û bi hezaran Macar neçar man birevin derveyî welêt.",
+    "explanationTr": "1956 yılında Sovyet askerleri ve tankları Macar ayaklanmasını şiddetle bastırdı; binlerce Macar yurt dışına kaçmak zorunda kaldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Hungarian_Revolution_of_1956",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0040",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Fransayê de, di dema serhildana 1848an de kîjan qiralê Fransayê dest ji text berda û welat terikand?",
+    "promptTr": "Fransız siyasi tarihinde, 1848 devrimleri sırasında tahttan feragat edip ülkeyi terk eden Fransa kralı kimdir?",
+    "answers": [
+      "Charles X",
+      "Napoléon III",
+      "Louis Philippe I",
+      "Louis XVI"
+    ],
+    "answersTr": [
+      "Charles X",
+      "Napoléon III",
+      "Louis Philippe I",
+      "Louis XVI"
+    ],
+    "correctAnswer": "Louis Philippe I",
+    "correctAnswerTr": "Louis Philippe I",
+    "explanation": "Louis Philippe I, 1848 devrimleri sırasında tahttan inerek Fransa'dan kaçtı ve ardından İkinci Fransa Cumhuriyeti kuruldu.",
+    "explanationKu": "Louis Philippe I di dema serhildana 1848an de dest ji text berda û ji Fransayê reviya; piştî vê yekê Komara Duyem a Fransayê hat avakirin.",
+    "explanationTr": "Louis Philippe I, 1848 devrimleri sırasında tahttan inerek Fransa'dan kaçtı ve ardından İkinci Fransa Cumhuriyeti kuruldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Revolutions_of_1848",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0041",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Çekoslovakyayê de, serokê Partiya Komûnîst ê ku di Bihara Pragê ya 1968an de dest bi reforman kir kî bû?",
+    "promptTr": "Çekoslovakya siyasi tarihinde, 1968 Prag Baharı sırasında reformları başlatan Komünist Parti lideri kimdir?",
+    "answers": [
+      "Gustáv Husák",
+      "Alexander Dubček",
+      "Antonín Novotný",
+      "Ludvík Svoboda"
+    ],
+    "answersTr": [
+      "Gustáv Husák",
+      "Alexander Dubček",
+      "Antonín Novotný",
+      "Ludvík Svoboda"
+    ],
+    "correctAnswer": "Alexander Dubček",
+    "correctAnswerTr": "Alexander Dubček",
+    "explanation": "Alexander Dubček, 1968'de Çekoslovakya'daki reform sürecini yöneten liderdi; Prag Baharı Varşova Paktı'nın işgaliyle bastırıldı.",
+    "explanationKu": "Alexander Dubček di sala 1968an de serokê Partiya Komûnîst a Çekoslovakyayê bû; ev pêvajoya reforman a Bihara Pragê bi dagirkirina Pakta Warşovayê bi dawî bû.",
+    "explanationTr": "Alexander Dubček, 1968'de Çekoslovakya'daki reform sürecini yöneten liderdi; Prag Baharı Varşova Paktı'nın işgaliyle bastırıldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Prague_Spring",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0042",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Amerîkayê de kîjan partî di sala 1854an de hatiye avakirin?",
+    "promptTr": "ABD siyasi tarihinde 1854 yılında kurulan parti hangisidir?",
+    "answers": [
+      "Partiya Demokrat",
+      "Partiya Whig",
+      "Partiya Komarparêz",
+      "Partiya Federalîst"
+    ],
+    "answersTr": [
+      "Demokrat Parti",
+      "Whig Partisi",
+      "Cumhuriyetçi Parti",
+      "Federalist Parti"
+    ],
+    "correctAnswer": "Partiya Komarparêz",
+    "correctAnswerTr": "Cumhuriyetçi Parti",
+    "explanation": "Cumhuriyetçi Parti 1854 yılında kurulmuş ve 1850'lerde Demokrat Parti'nin başlıca rakibi hâline gelmiştir.",
+    "explanationKu": "Partiya Komarparêz di sala 1854an de hatiye avakirin; ev partî di salên 1850yî de bûye hevrikê sereke yê Partiya Demokrat.",
+    "explanationTr": "Cumhuriyetçi Parti 1854 yılında kurulmuş ve 1850'lerde Demokrat Parti'nin başlıca rakibi hâline gelmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Republican_Party_(United_States)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0043",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Çînê de serhildana sala 1911an dawî li kîjan împeratoriyê aniye?",
+    "promptTr": "Çin siyasi tarihinde 1911 ayaklanması hangi imparatorluğu sona erdirmiştir?",
+    "answers": [
+      "Împeratoriya Qing",
+      "Împeratoriya Ming",
+      "Împeratoriya Yuan",
+      "Împeratoriya Han"
+    ],
+    "answersTr": [
+      "Qing İmparatorluğu",
+      "Ming İmparatorluğu",
+      "Yuan İmparatorluğu",
+      "Han İmparatorluğu"
+    ],
+    "correctAnswer": "Împeratoriya Qing",
+    "correctAnswerTr": "Qing İmparatorluğu",
+    "explanation": "1911'de Hubey'de başlayan Wuchang Ayaklanması 1911 Devrimi'ni tetiklemiş; yaklaşık üç yüzyıl hüküm süren Qing Hanedanı bu devrimle sona ermiştir.",
+    "explanationKu": "Di sala 1911an de li Hubeiyê Serhildana Wuchangê dest pê kir û bû sedema Şoreşa 1911an; ev şoreş dawî li Împeratoriya Qingê ya ku nêzî sê sedsalan desthilatdar bû anî.",
+    "explanationTr": "1911'de Hubey'de başlayan Wuchang Ayaklanması 1911 Devrimi'ni tetiklemiş; yaklaşık üç yüzyıl hüküm süren Qing Hanedanı bu devrimle sona ermiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Wuchang_Uprising",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0044",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan partî di sala 1921ê de li Şanghayê hate damezrandin û di sala 1949an de li Çînê desthilatdarî girt?",
+    "promptTr": "Hangi parti 1921'de Şanghay'da kuruldu ve 1949'da Çin'de iktidara geldi?",
+    "answers": [
+      "Partiya Kuomîntang",
+      "Partiya Karkerên Çînê",
+      "Partiya Komunîst a Çînê",
+      "Partiya Demokratîk a Çînê"
+    ],
+    "answersTr": [
+      "Kuomintang",
+      "Çin İşçi Partisi",
+      "Çin Komünist Partisi",
+      "Çin Demokratik Partisi"
+    ],
+    "correctAnswer": "Partiya Komunîst a Çînê",
+    "correctAnswerTr": "Çin Komünist Partisi",
+    "explanation": "Çin Komünist Partisi, Temmuz 1921'de Şanghay'da kuruldu; parti 1949'da iktidarı ele geçirdi.",
+    "explanationKu": "Partiya Komunîst a Çînê di tîrmeha 1921ê de li Şanghayê hate damezrandin; vê partiyê di sala 1949an de desthilatdarî girt destê xwe.",
+    "explanationTr": "Çin Komünist Partisi, Temmuz 1921'de Şanghay'da kuruldu; parti 1949'da iktidarı ele geçirdi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Chinese_Communist_Party",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0045",
+    "category": "Siyaset",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Avusturyayê de, di dema serhildana 1848an de kîjan şansolyerê împaratoriyê neçar ma ku îstifa bike?",
+    "promptTr": "Avusturya siyasi tarihinde, 1848 devrimleri sırasında istifa etmek zorunda kalan imparatorluk şansölyesi kimdir?",
+    "answers": [
+      "Otto von Bismarck",
+      "Klemens von Metternich",
+      "Camillo Benso di Cavour",
+      "Giuseppe Mazzini"
+    ],
+    "answersTr": [
+      "Otto von Bismarck",
+      "Klemens von Metternich",
+      "Camillo Benso di Cavour",
+      "Giuseppe Mazzini"
+    ],
+    "correctAnswer": "Klemens von Metternich",
+    "correctAnswerTr": "Klemens von Metternich",
+    "explanation": "Avusturya imparatorluk şansölyesi Klemens von Metternich, 1848 Viyana ayaklanmasının ardından istifa etti; bu durum Metternich Çağı'nın sonu olarak kabul edilir.",
+    "explanationKu": "Şansolyerê Împaratoriya Avusturyayê Klemens von Metternich di serhildana 1848an a Viyanayê de îstifa kir; ev yek wekî dawiya Serdema Metternich tê zanîn.",
+    "explanationTr": "Avusturya imparatorluk şansölyesi Klemens von Metternich, 1848 Viyana ayaklanmasının ardından istifa etti; bu durum Metternich Çağı'nın sonu olarak kabul edilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Revolutions_of_1848",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0046",
+    "category": "Siyaset",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Amerîkaya Latînî de Şerê Caraboboyê di bin serkêşiya kîjan fermandarî de pêk hatiye?",
+    "promptTr": "Latin Amerika siyasi tarihinde Carabobo Muharebesi hangi komutanın önderliğinde gerçekleşmiştir?",
+    "answers": [
+      "José de San Martín",
+      "Bernardo O'Higgins",
+      "Simón Bolívar",
+      "Antonio José de Sucre"
+    ],
+    "answersTr": [
+      "José de San Martín",
+      "Bernardo O'Higgins",
+      "Simón Bolívar",
+      "Antonio José de Sucre"
+    ],
+    "correctAnswer": "Simón Bolívar",
+    "correctAnswerTr": "Simón Bolívar",
+    "explanation": "1821'de Simón Bolívar komutasındaki Carabobo Muharebesi kazanılmış; bu zafer Venezuela'nın bağımsızlığını güvence altına almıştır.",
+    "explanationKu": "Di sala 1821ê de Şerê Caraboboyê di bin fermandariya Simón Bolívar de hat qezenckirin; vê serkeftinê serxwebûna Venezuelayê misoger kir.",
+    "explanationTr": "1821'de Simón Bolívar komutasındaki Carabobo Muharebesi kazanılmış; bu zafer Venezuela'nın bağımsızlığını güvence altına almıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Battle_of_Carabobo",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0047",
+    "category": "Siyaset",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Îtalyayê de, di pêvajoya Risorgimentoyê de Roma di kîjan salê de hatiye bidestxistin?",
+    "promptTr": "İtalya siyasi tarihinde Risorgimento sürecinde Roma hangi yıl ele geçirilmiştir?",
+    "answers": [
+      "1861",
+      "1871",
+      "1870",
+      "1848"
+    ],
+    "answersTr": [
+      "1861",
+      "1871",
+      "1870",
+      "1848"
+    ],
+    "correctAnswer": "1870",
+    "correctAnswerTr": "1870",
+    "explanation": "1870'te Roma ele geçirilmiş; 1871'de ise resmen İtalya'nın başkenti ilan edilerek ülkenin birleşmesi tamamlanmıştır.",
+    "explanationKu": "Di sala 1870yî de Roma hatiye bidestxistin; di sala 1871ê de ew bi awayekî fermî wekî paytexta Îtalyayê hatiye ragihandin û bi vî rengî Îtalya bi temamî bûye yek.",
+    "explanationTr": "1870'te Roma ele geçirilmiş; 1871'de ise resmen İtalya'nın başkenti ilan edilerek ülkenin birleşmesi tamamlanmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Unification_of_Italy",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0048",
+    "category": "Siyaset",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Afrîkayê de, Gana di sala 1957an de serxwebûna xwe bi dest xist; serokwezîrê wê yê yekem kî bû?",
+    "promptTr": "Afrika siyasi tarihinde, 1957'de bağımsızlığına kavuşan Gana'nın ilk başbakanı kim olmuştur?",
+    "answers": [
+      "Jomo Kenyatta",
+      "Leopold Sedar Senghor",
+      "Kwame Nkrumah",
+      "Nnamdi Azikiwe"
+    ],
+    "answersTr": [
+      "Jomo Kenyatta",
+      "Léopold Sédar Senghor",
+      "Kwame Nkrumah",
+      "Nnamdi Azikiwe"
+    ],
+    "correctAnswer": "Kwame Nkrumah",
+    "correctAnswerTr": "Kwame Nkrumah",
+    "explanation": "Gana, 6 Mart 1957'de Birleşik Krallık'tan bağımsızlığını kazandı ve Kwame Nkrumah ilk başbakan oldu; 1960'ta ise cumhurbaşkanlığı görevini üstlendi.",
+    "explanationKu": "Gana di 6ê adara 1957an de ji Brîtanyayê serxwebûna xwe girt û Kwame Nkrumah bû serokwezîrê yekem; wî piştre di sala 1960an de serokomariya welêt jî kir.",
+    "explanationTr": "Gana, 6 Mart 1957'de Birleşik Krallık'tan bağımsızlığını kazandı ve Kwame Nkrumah ilk başbakan oldu; 1960'ta ise cumhurbaşkanlığı görevini üstlendi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kwame_Nkrumah",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0049",
+    "category": "Siyaset",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Hindistanê de, sînorê di navbera Hindistan û Pakistanê de yê ku di sala 1947an de hat kişandin, di bin serokatiya kê de hat diyarkirin?",
+    "promptTr": "Hindistan siyasi tarihinde, 1947'de çizilen Hindistan-Pakistan sınırı kimin başkanlığında belirlendi?",
+    "answers": [
+      "Cyril Radcliffe",
+      "Louis Mountbatten",
+      "Jawaharlal Nehru",
+      "Muhammad Ali Jinnah"
+    ],
+    "answersTr": [
+      "Cyril Radcliffe",
+      "Louis Mountbatten",
+      "Jawaharlal Nehru",
+      "Muhammad Ali Jinnah"
+    ],
+    "correctAnswer": "Cyril Radcliffe",
+    "correctAnswerTr": "Cyril Radcliffe",
+    "explanation": "Sir Cyril Radcliffe, 1947'de Hindistan ve Pakistan arasındaki sınırı belirleyen komisyonun başkanıydı ve bu sınır Radcliffe Hattı olarak bilinir.",
+    "explanationKu": "Sir Cyril Radcliffe di sala 1947an de serokatiya komîsyona sînor a Hindistan û Pakistanê dikir û xeta sînor a bi navê Xeta Radcliffe diyar kir.",
+    "explanationTr": "Sir Cyril Radcliffe, 1947'de Hindistan ve Pakistan arasındaki sınırı belirleyen komisyonun başkanıydı ve bu sınır Radcliffe Hattı olarak bilinir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Partition_of_India",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0050",
+    "category": "Siyaset",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Brîtanyayê de, partiya Tory di dema kîjan krîza siyasî de derketiye holê?",
+    "promptTr": "İngiltere siyasi tarihinde Tory Partisi hangi siyasi olay sırasında ortaya çıkmıştır?",
+    "answers": [
+      "Vegera Charles II, 1660",
+      "Krîza Derxistinê, 1679",
+      "Şoreşa Rûmetê, 1688",
+      "Yekbûna Îngilistan û Skotlendayê, 1707"
+    ],
+    "answersTr": [
+      "II. Charles'in Dönüşü, 1660",
+      "Dışlama Krizi, 1679",
+      "Şanlı Devrim, 1688",
+      "İngiltere-İskoçya Birliği, 1707"
+    ],
+    "correctAnswer": "Krîza Derxistinê, 1679",
+    "correctAnswerTr": "Dışlama Krizi, 1679",
+    "explanation": "Tory Partisi 1679'daki Dışlama Krizi (Exclusion Crisis) sırasında ortaya çıkmış; bu krizde York Dükü James'in taht varisliğinden dışlanmasına karşı çıkmışlardır.",
+    "explanationKu": "Partiya Tory di sala 1679an de, di dema Krîza Derxistinê de derketiye holê; wan di vê krîzê de li dijî derxistina Jamesê Dukê Yorkê ji textê derketine.",
+    "explanationTr": "Tory Partisi 1679'daki Dışlama Krizi (Exclusion Crisis) sırasında ortaya çıkmış; bu krizde York Dükü James'in taht varisliğinden dışlanmasına karşı çıkmışlardır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Tories_(British_political_party)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0051",
+    "category": "Siyaset",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Rûsyayê de, piştî dabeşbûna partiyê ya di sala 1903yan de, kî bû pêşengê Menşevîkan?",
+    "promptTr": "Rusya siyasi tarihinde, partinin 1903'teki bölünmesinden sonra Menşeviklerin lideri kim olmuştur?",
+    "answers": [
+      "Vladîmîr Lenîn",
+      "Leon Troçkî",
+      "Julius Martov",
+      "Georgî Plexanov"
+    ],
+    "answersTr": [
+      "Vladimir Lenin",
+      "Leon Troçki",
+      "Julius Martov",
+      "Georgi Plehanov"
+    ],
+    "correctAnswer": "Julius Martov",
+    "correctAnswerTr": "Julius Martov",
+    "explanation": "Julius Martov, 1903'te Rus Sosyal Demokrat İşçi Partisi'nin bölünmesinden sonra Menşeviklerin lideri oldu; Bolşeviklere ise Lenin öncülük ediyordu.",
+    "explanationKu": "Piştî dabeşbûna Partiya Karkerên Sosyaldemokrat a Rûsyayê di sala 1903yan de, Julius Martov bû pêşengê Menşevîkan; di heman demê de Lenîn jî serkêşiya Bolşevîkan dikir.",
+    "explanationTr": "Julius Martov, 1903'te Rus Sosyal Demokrat İşçi Partisi'nin bölünmesinden sonra Menşeviklerin lideri oldu; Bolşeviklere ise Lenin öncülük ediyordu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Julius_Martov",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0052",
+    "category": "Siyaset",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Almanyayê de, li gorî Destûra Bingehîn a Komara Weimarê ya sala 1919an, serokomar bi kîjan madeyê dikaribû desthilatên rewşa awarte bi kar bîne?",
+    "promptTr": "Almanya siyasi tarihinde, 1919 Weimar Anayasası'na göre cumhurbaşkanı hangi maddeyle olağanüstü hâl yetkilerini kullanabilirdi?",
+    "answers": [
+      "Madeya 48",
+      "Madeya 21",
+      "Madeya 76",
+      "Madeya 17"
+    ],
+    "answersTr": [
+      "Madde 48",
+      "Madde 21",
+      "Madde 76",
+      "Madde 17"
+    ],
+    "correctAnswer": "Madeya 48",
+    "correctAnswerTr": "Madde 48",
+    "explanation": "1919 Weimar Anayasası'nın 48. maddesi, cumhurbaşkanına olağanüstü durumlarda kararname çıkarma yetkisi veriyordu; bu madde Hitler başa gelmeden önce sıkça kullanılmıştır.",
+    "explanationKu": "Madeya 48 a Destûra Bingehîn a Weimarê, di rewşên awarte de desthilata girtina biryaran dida serokomar; berî ku Hîtler bibe serokwezîr, ev made gelek caran hatibû bikaranîn.",
+    "explanationTr": "1919 Weimar Anayasası'nın 48. maddesi, cumhurbaşkanına olağanüstü durumlarda kararname çıkarma yetkisi veriyordu; bu madde Hitler başa gelmeden önce sıkça kullanılmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Weimar_Constitution",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0053",
+    "category": "Siyaset",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Brîtanyayê de, partiya Whig a ku paşê veguherî Partiya Lîberal, bi kîjan koman re bûye yek?",
+    "promptTr": "İngiltere siyasi tarihinde, sonradan Liberal Parti'ye dönüşen Whig Partisi hangi gruplarla birleşmiştir?",
+    "answers": [
+      "Tory û Mihafezekar",
+      "Radîkal û Karker",
+      "Peelît û Radîkal",
+      "Peelît û Tory"
+    ],
+    "answersTr": [
+      "Tory'ler ve Muhafazakârlar",
+      "Radikaller ve İşçiler",
+      "Peel'ciler ve Radikaller",
+      "Peel'ciler ve Tory'ler"
+    ],
+    "correctAnswer": "Peelît û Radîkal",
+    "correctAnswerTr": "Peel'ciler ve Radikaller",
+    "explanation": "1850'lerde Whig Partisi, Peel'ciler (Peelites) ve Radikaller ile birleşerek Liberal Parti'yi kurmuştur.",
+    "explanationKu": "Di salên 1850yî de partiya Whig, bi komên Peelît û Radîkal re bûye yek û bi vî rengî Partiya Lîberal hatiye avakirin.",
+    "explanationTr": "1850'lerde Whig Partisi, Peel'ciler (Peelites) ve Radikaller ile birleşerek Liberal Parti'yi kurmuştur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Whigs_(British_political_party)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0054",
+    "category": "Siyaset",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Di dîroka siyasî ya Ewropayê de, di sala 1215an de kîjan papayî Magna Carta betal kiriye?",
+    "promptTr": "Avrupa siyasi tarihinde, 1215 yılında Magna Carta'yı hangi papa iptal etmiştir?",
+    "answers": [
+      "Papa Honorius III",
+      "Papa Innocentius III",
+      "Papa Gregorius IX",
+      "Papa Alexander III"
+    ],
+    "answersTr": [
+      "Papa III. Honorius",
+      "Papa III. Innocentius",
+      "Papa IX. Gregorius",
+      "Papa III. Alexander"
+    ],
+    "correctAnswer": "Papa Innocentius III",
+    "correctAnswerTr": "Papa III. Innocentius",
+    "explanation": "Papa III. Innocentius, Ağustos 1215'te belgenin kraldan zorla alındığını öne sürerek Magna Carta'yı iptal etmiş ve geçersiz ilan etmiştir.",
+    "explanationKu": "Papa Innocentius III, di tebaxa sala 1215an de bi hinceta ku ev belge bi zorê ji padîşahî hatiye stendin, Magna Carta betal kir û diyar kir ku ew ne derbasdar e.",
+    "explanationTr": "Papa III. Innocentius, Ağustos 1215'te belgenin kraldan zorla alındığını öne sürerek Magna Carta'yı iptal etmiş ve geçersiz ilan etmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Magna_Carta",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0055",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di dîrokê de welatê yekem ê ku di hilbijartinan de mafê dengdanê daye jinan kîjan e?",
+    "promptTr": "Tarihte seçimlerde kadınlara oy hakkını tanıyan ilk ülke hangisidir?",
+    "answers": [
+      "Fransa",
+      "Norwêc",
+      "Zelanda Nû",
+      "Brîtanya"
+    ],
+    "answersTr": [
+      "Fransa",
+      "Norveç",
+      "Yeni Zelanda",
+      "Birleşik Krallık"
+    ],
+    "correctAnswer": "Zelanda Nû",
+    "correctAnswerTr": "Yeni Zelanda",
+    "explanation": "Yeni Zelanda, 1893 yılında çıkardığı yasayla kadınlara seçme hakkı tanıyan ilk ülke olmuştur.",
+    "explanationKu": "Di sala 1893an de Zelanda Nû bû welatê yekem ê ku mafê dengdanê yê jinan bi qanûnî qebûl kir.",
+    "explanationTr": "Yeni Zelanda, 1893 yılında çıkardığı yasayla kadınlara seçme hakkı tanıyan ilk ülke olmuştur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Women%27s_suffrage",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0056",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di siyaseta nûjen a Brîtanyayê de, avahiya parlamentoyê li kû derê ye?",
+    "promptTr": "Modern Birleşik Krallık siyasetinde parlamento binası nerededir?",
+    "answers": [
+      "Qesra Westminsterê, Londra",
+      "Qesra Buckinghamê, Londra",
+      "Whitehall, Londra",
+      "Kela Windsorê, Berkshire"
+    ],
+    "answersTr": [
+      "Westminster Sarayı, Londra",
+      "Buckingham Sarayı, Londra",
+      "Whitehall, Londra",
+      "Windsor Kalesi, Berkshire"
+    ],
+    "correctAnswer": "Qesra Westminsterê, Londra",
+    "correctAnswerTr": "Westminster Sarayı, Londra",
+    "explanation": "Birleşik Krallık Parlamentosu Londra'daki Westminster Sarayı'ndadır; Avam Kamarası ve Lordlar Kamarası burada toplanır.",
+    "explanationKu": "Parlamentoya Brîtanyayê li Qesra Westminsterê ya Londrayê ye; Kamaraya Avaman û Kamaraya Lordan li vir dicivin.",
+    "explanationTr": "Birleşik Krallık Parlamentosu Londra'daki Westminster Sarayı'ndadır; Avam Kamarası ve Lordlar Kamarası burada toplanır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/House_of_Commons",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0057",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di siyaseta nûjen de, referanduma li ser endamtiya Brîtanyayê ya Yekîtiya Ewropayê (Brexit) di kîjan salê de pêk hat?",
+    "promptTr": "Modern siyasette Birleşik Krallık'ın Avrupa Birliği üyeliği üzerine yapılan referandum hangi yılda gerçekleşti?",
+    "answers": [
+      "2016",
+      "2015",
+      "2017",
+      "2014"
+    ],
+    "answersTr": [
+      "2016",
+      "2015",
+      "2017",
+      "2014"
+    ],
+    "correctAnswer": "2016",
+    "correctAnswerTr": "2016",
+    "explanation": "Referandum 23 Haziran 2016'da yapılmış ve Birleşik Krallık'ın AB'den ayrılmasını destekleyenler %51,89 oyla kazanmıştır.",
+    "explanationKu": "Referandum di 23ê Hezîrana 2016an de hat kirin; dengên ji bo veqetîna ji Yekîtiya Ewropayê bi rêjeya ji sedî 51,89an bi ser ketin.",
+    "explanationTr": "Referandum 23 Haziran 2016'da yapılmış ve Birleşik Krallık'ın AB'den ayrılmasını destekleyenler %51,89 oyla kazanmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/2016_United_Kingdom_European_Union_membership_referendum",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0058",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Li Afrîkaya Başûr, hilbijartina yekem a ku her kes dikaribû beşdar bibe di kîjan salê de pêk hat?",
+    "promptTr": "Güney Afrika'da herkesin katılabildiği ilk seçim hangi yıl yapıldı?",
+    "answers": [
+      "1990",
+      "1994",
+      "1964",
+      "1948"
+    ],
+    "answersTr": [
+      "1990",
+      "1994",
+      "1964",
+      "1948"
+    ],
+    "correctAnswer": "1994",
+    "correctAnswerTr": "1994",
+    "explanation": "Güney Afrika'da tüm ırklardan vatandaşların katılabildiği ilk demokratik seçimler 26-29 Nisan 1994'te yapıldı ve apartheid düzeni sona erdi. 27 Nisan günümüzde de Özgürlük Günü olarak kutlanmaktadır.",
+    "explanationKu": "Li Afrîkaya Başûr hilbijartina yekem a ku her kes dikaribû beşdar bibe di 26-29ê Nîsana 1994an de pêk hat û bi vê yekê sîstema apartheidê bi dawî bû. Roja 27ê Nîsanê heta îro wekî Roja Azadiyê tê pîrozkirin.",
+    "explanationTr": "Güney Afrika'da tüm ırklardan vatandaşların katılabildiği ilk demokratik seçimler 26-29 Nisan 1994'te yapıldı ve apartheid düzeni sona erdi. 27 Nisan günümüzde de Özgürlük Günü olarak kutlanmaktadır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/1994_South_African_general_election",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0059",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di siyaseta nûjen de, Parlamentoya Herêma Kurdistanê li kîjan bajarî ye?",
+    "promptTr": "Modern siyasette Kürdistan Bölgesi Parlamentosu hangi şehirde bulunmaktadır?",
+    "answers": [
+      "Hewlêr",
+      "Silêmanî",
+      "Dihok",
+      "Kerkûk"
+    ],
+    "answersTr": [
+      "Erbil",
+      "Süleymaniye",
+      "Duhok",
+      "Kerkük"
+    ],
+    "correctAnswer": "Hewlêr",
+    "correctAnswerTr": "Erbil",
+    "explanation": "Kürdistan Bölgesi Parlamentosu'nun binası, Bölgenin başkenti olan Erbil'de bulunmaktadır.",
+    "explanationKu": "Avahiya Parlamentoya Herêma Kurdistanê li Hewlêrê ye ku paytexta herêmê ye.",
+    "explanationTr": "Kürdistan Bölgesi Parlamentosu'nun binası, Bölgenin başkenti olan Erbil'de bulunmaktadır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurdistan_Region_Parliament",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0060",
+    "category": "Siyaset",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di siyaseta nûjen a Almanyayê de, parlamento (Bundestag) li kîjan bajarî kom dibe?",
+    "promptTr": "Almanya'nın modern siyasetinde, parlamento (Bundestag) hangi şehirde toplanır?",
+    "answers": [
+      "Bonn",
+      "Berlin",
+      "Hamburg",
+      "Frankfurt"
+    ],
+    "answersTr": [
+      "Bonn",
+      "Berlin",
+      "Hamburg",
+      "Frankfurt"
+    ],
+    "correctAnswer": "Berlin",
+    "correctAnswerTr": "Berlin",
+    "explanation": "Almanya parlamentosu Bundestag, 1999 yılından beri Berlin'deki Reichstag binasında toplanmaktadır.",
+    "explanationKu": "Parlamentoya Almanyayê ya ku wekî Bundestag tê zanîn, ji sala 1999an ve li bajarê Berlinê di avahiya Reichstagê de kom dibe.",
+    "explanationTr": "Almanya parlamentosu Bundestag, 1999 yılından beri Berlin'deki Reichstag binasında toplanmaktadır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Bundestag",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0061",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Yekemîn hilbijartina rasterast a Parlamentoya Ewropayê di kîjan salê de pêk hat?",
+    "promptTr": "Avrupa Parlamentosu'nun ilk doğrudan seçimi hangi yılda yapılmıştır?",
+    "answers": [
+      "1975",
+      "1979",
+      "1985",
+      "1992"
+    ],
+    "answersTr": [
+      "1975",
+      "1979",
+      "1985",
+      "1992"
+    ],
+    "correctAnswer": "1979",
+    "correctAnswerTr": "1979",
+    "explanation": "Avrupa Parlamentosu'nun ilk doğrudan seçimi Haziran 1979'da gerçekleşmiş olup, bu uluslarüstü düzeyde tarihi bir seçimdi.",
+    "explanationKu": "Yekemîn hilbijartina rasterast a Parlamentoya Ewropayê di hezîrana 1979an de pêk hat û ev di asta navneteweyî de hilbijartineke dîrokî bû.",
+    "explanationTr": "Avrupa Parlamentosu'nun ilk doğrudan seçimi Haziran 1979'da gerçekleşmiş olup, bu uluslarüstü düzeyde tarihi bir seçimdi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/European_Parliament",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0062",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di siyaseta nûjen a Almanyayê de, di hilbijartinên Bundestagê de her hilbijêrek çend dengan dide?",
+    "promptTr": "Almanya modern siyasetinde, Bundestag seçimlerinde her seçmen kaç oy kullanır?",
+    "answers": [
+      "Du",
+      "Yek",
+      "Sê",
+      "Çar"
+    ],
+    "answersTr": [
+      "İki",
+      "Bir",
+      "Üç",
+      "Dört"
+    ],
+    "correctAnswer": "Du",
+    "correctAnswerTr": "İki",
+    "explanation": "Bundestag seçimlerinde her seçmen iki oy kullanır: birincisi kendi seçim bölgesindeki aday için, ikincisi ise eyalet düzeyindeki parti listesi içindir.",
+    "explanationKu": "Di hilbijartinên Bundestagê de her hilbijêrek du dengan dide: yek ji bo namzetê herêma xwe, yê din jî ji bo lîsteya partiyê ya eyaletê.",
+    "explanationTr": "Bundestag seçimlerinde her seçmen iki oy kullanır: birincisi kendi seçim bölgesindeki aday için, ikincisi ise eyalet düzeyindeki parti listesi içindir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Electoral_system_of_Germany",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0063",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di baskê jêrîn ê Parlamentoya Brîtanyayê (House of Commons) de çend kursî hene?",
+    "promptTr": "Birleşik Krallık Parlamentosu'nun alt kanadı olan Avam Kamarası'nda (House of Commons) kaç sandalye vardır?",
+    "answers": [
+      "543",
+      "650",
+      "720",
+      "600"
+    ],
+    "answersTr": [
+      "543",
+      "650",
+      "720",
+      "600"
+    ],
+    "correctAnswer": "650",
+    "correctAnswerTr": "650",
+    "explanation": "Avam Kamarası, Birleşik Krallık Parlamentosu'nun alt kanadıdır ve 650 üyeden oluşur; 2024 yılı itibarıyla da ülkedeki seçim bölgesi sayısı 650'dir.",
+    "explanationKu": "House of Commons (Odeya Gelan) baskê jêrîn ê Parlamentoya Brîtanyayê ye û ji 650 endaman pêk tê; ji sala 2024an pê ve hejmara herêmên hilbijartinê 650 ye.",
+    "explanationTr": "Avam Kamarası, Birleşik Krallık Parlamentosu'nun alt kanadıdır ve 650 üyeden oluşur; 2024 yılı itibarıyla da ülkedeki seçim bölgesi sayısı 650'dir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/House_of_Commons_of_the_United_Kingdom",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0064",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Navenda fermî ya Parlamentoya Ewropayê li kîjan bajarî ye?",
+    "promptTr": "Avrupa Parlamentosu'nun resmî merkezi hangi şehirdir?",
+    "answers": [
+      "Brûksel",
+      "Strasbourg",
+      "Bajarê Luksemburgê",
+      "Cenêv"
+    ],
+    "answersTr": [
+      "Brüksel",
+      "Strazburg",
+      "Lüksemburg Şehri",
+      "Cenevre"
+    ],
+    "correctAnswer": "Strasbourg",
+    "correctAnswerTr": "Strazburg",
+    "explanation": "Avrupa Parlamentosu'nun resmî merkezi Fransa'nın Strazburg şehrindedir; idari ofisleri Lüksemburg'da, komite toplantıları ise Brüksel'de yapılır.",
+    "explanationKu": "Navenda fermî ya Parlamentoya Ewropayê li Strasbourga Fransayê ye; ofîsên wê yên îdarî li Luksemburgê ne û civînên komîteyan jî li Brûkselê têne kirin.",
+    "explanationTr": "Avrupa Parlamentosu'nun resmî merkezi Fransa'nın Strazburg şehrindedir; idari ofisleri Lüksemburg'da, komite toplantıları ise Brüksel'de yapılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/European_Parliament",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0065",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di siyaseta nûjen a Kanadayê de, senato ji çend endaman pêk tê?",
+    "promptTr": "Kanada'nın modern siyasetinde, senato kaç üyeden oluşmaktadır?",
+    "answers": [
+      "76",
+      "100",
+      "105",
+      "150"
+    ],
+    "answersTr": [
+      "76",
+      "100",
+      "105",
+      "150"
+    ],
+    "correctAnswer": "105",
+    "correctAnswerTr": "105",
+    "explanation": "Kanada senatosu 105 üyeden oluşur ve bu sayı 1999 yılından bu yana değişmemiştir.",
+    "explanationKu": "Di senatoya Kanadayê de 105 endam hene û ev hejmar ji sala 1999an ve neguheriye.",
+    "explanationTr": "Kanada senatosu 105 üyeden oluşur ve bu sayı 1999 yılından bu yana değişmemiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Senate_of_Canada",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0066",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di siyaseta nûjen a Fransayê de, baskê jêrîn ê parlamentoyê (Assemblée nationale) xwedî çend kursiyan e?",
+    "promptTr": "Fransa'nın modern siyasetinde, parlamentonun alt kanadı olan Ulusal Meclis'te (Assemblée nationale) kaç sandalye vardır?",
+    "answers": [
+      "500",
+      "577",
+      "620",
+      "348"
+    ],
+    "answersTr": [
+      "500",
+      "577",
+      "620",
+      "348"
+    ],
+    "correctAnswer": "577",
+    "correctAnswerTr": "577",
+    "explanation": "Fransa parlamentosunun alt kanadı olan Ulusal Meclis (Assemblée nationale), 577 üyeden oluşur ve Palais Bourbon'da toplanır.",
+    "explanationKu": "Baskê jêrîn ê parlamentoya Fransayê, yanî Assemblée nationale, ji 577 kursiyan pêk tê û endamên wê li Palais Bourbonê kom dibin.",
+    "explanationTr": "Fransa parlamentosunun alt kanadı olan Ulusal Meclis (Assemblée nationale), 577 üyeden oluşur ve Palais Bourbon'da toplanır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/National_Assembly_(France)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0067",
+    "category": "Siyaset",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Li Swîsreyê di asta federal de mafê jinan ê beşdariya hilbijartinan di kîjan salê de hat naskirin?",
+    "promptTr": "İsviçre'de federal düzeyde kadınların seçimlere katılma hakkı hangi yılda tanınmıştır?",
+    "answers": [
+      "1959",
+      "1965",
+      "1971",
+      "1975"
+    ],
+    "answersTr": [
+      "1959",
+      "1965",
+      "1971",
+      "1975"
+    ],
+    "correctAnswer": "1971",
+    "correctAnswerTr": "1971",
+    "explanation": "İsviçre'de kadınların federal oy hakkı 1971'de kabul edilmiştir; bazı kantonlar bu hakkı 1990 yılına kadar tanımamıştır.",
+    "explanationKu": "Mafê dengdanê yê jinan li Swîsreyê di asta federal de di sala 1971ê de hat qebûlkirin; hin kantonan ev maf heta sala 1990î nedan jinan.",
+    "explanationTr": "İsviçre'de kadınların federal oy hakkı 1971'de kabul edilmiştir; bazı kantonlar bu hakkı 1990 yılına kadar tanımamıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Women%27s_suffrage",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0068",
+    "category": "Siyaset",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Piştî hilbijartinên 2024an, hejmara endamên Parlamentoya Ewropayê bûye çend?",
+    "promptTr": "2024 Avrupa Parlamentosu seçimlerinin ardından parlamentonun üye sayısı kaç olmuştur?",
+    "answers": [
+      "705",
+      "720",
+      "751",
+      "620"
+    ],
+    "answersTr": [
+      "705",
+      "720",
+      "751",
+      "620"
+    ],
+    "correctAnswer": "720",
+    "correctAnswerTr": "720",
+    "explanation": "2024 Avrupa Parlamentosu seçimleriyle birlikte üye sayısı 705'ten 720'ye çıkarılmıştır; Lizbon Antlaşması'na göre parlamentonun ulaşabileceği azami üye sayısı 751'dir.",
+    "explanationKu": "Piştî hilbijartinên 2024an, hejmara endamên Parlamentoya Ewropayê bû 720; ev hejmar berê 705 bû û li gorî Peymana Lîzbonê herî zêde dikare bibe 751.",
+    "explanationTr": "2024 Avrupa Parlamentosu seçimleriyle birlikte üye sayısı 705'ten 720'ye çıkarılmıştır; Lizbon Antlaşması'na göre parlamentonun ulaşabileceği azami üye sayısı 751'dir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/European_Parliament",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0069",
+    "category": "Siyaset",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Herêma Kurdistanê yekem hilbijartina parlamentoyê di kîjan salê de lidar xist?",
+    "promptTr": "Kürdistan Bölgesi ilk parlamento seçimini hangi yılda yapmıştır?",
+    "answers": [
+      "1992",
+      "1991",
+      "1994",
+      "1996"
+    ],
+    "answersTr": [
+      "1992",
+      "1991",
+      "1994",
+      "1996"
+    ],
+    "correctAnswer": "1992",
+    "correctAnswerTr": "1992",
+    "explanation": "Kürdistan Bölgesi Parlamentosu ilk seçimini 19 Mayıs 1992'de yaptı.",
+    "explanationKu": "Yekem hilbijartina Parlamentoya Herêma Kurdistanê di 19ê Gulana 1992yan de hat lidarxistin.",
+    "explanationTr": "Kürdistan Bölgesi Parlamentosu ilk seçimini 19 Mayıs 1992'de yaptı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurdistan_Region_Parliament",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0070",
+    "category": "Siyaset",
+    "difficulty": 3,
+    "type": "multipleChoice",
+    "prompt": "Di siyaseta nûjen de, li Almanyayê baraja hilbijartinê ji sedî çend e?",
+    "promptTr": "Modern siyasette Almanya'nın uyguladığı seçim barajı yüzde kaçtır?",
+    "answers": [
+      "%3",
+      "%5",
+      "%7",
+      "%10"
+    ],
+    "answersTr": [
+      "%3",
+      "%5",
+      "%7",
+      "%10"
+    ],
+    "correctAnswer": "%5",
+    "correctAnswerTr": "%5",
+    "explanation": "Almanya'da federal seçimlerde nispi temsil için seçim listelerinde yüzde 5 barajı uygulanır.",
+    "explanationKu": "Li Almanyayê di hilbijartinên federal de ji bo nûnertiya nîsbî di lîsteyên hilbijartinê de baraja %5 tê pêkanîn.",
+    "explanationTr": "Almanya'da federal seçimlerde nispi temsil için seçim listelerinde yüzde 5 barajı uygulanır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Election_threshold",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0071",
+    "category": "Siyaset",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Parlamentoya Estonyayê (Riigikogu) ji çend endaman pêk tê û her çend salan carekê tê hilbijartin?",
+    "promptTr": "Estonya Parlamentosu (Riigikogu) kaç üyeden oluşur ve seçimleri kaç yılda bir yapılır?",
+    "answers": [
+      "101 endam, 5 sal",
+      "100 endam, 4 sal",
+      "151 endam, 5 sal",
+      "101 endam, 4 sal"
+    ],
+    "answersTr": [
+      "101 üye, 5 yıl",
+      "100 üye, 4 yıl",
+      "151 üye, 5 yıl",
+      "101 üye, 4 yıl"
+    ],
+    "correctAnswer": "101 endam, 4 sal",
+    "correctAnswerTr": "101 üye, 4 yıl",
+    "explanation": "Estonya Parlamentosu (Riigikogu) 101 üyeden oluşmaktadır ve milletvekilleri yüzde 5 barajlı nisbi temsil sistemiyle dört yılda bir seçilir.",
+    "explanationKu": "Parlamentoya Estonyayê (Riigikogu) ji 101 endaman pêk tê û bi pergala nûneriya rêjeyî ya bi benda ji sedî 5, her çar salan carekê tê hilbijartin.",
+    "explanationTr": "Estonya Parlamentosu (Riigikogu) 101 üyeden oluşmaktadır ve milletvekilleri yüzde 5 barajlı nisbi temsil sistemiyle dört yılda bir seçilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Elections_in_Estonia",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0072",
+    "category": "Siyaset",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Di baskê jêrîn ê Parlamentoya Hindistanê (Lok Sabha) de çend endam hene?",
+    "promptTr": "Hindistan Parlamentosu'nun alt kanadı olan Lok Sabha'da kaç üye görev yapmaktadır?",
+    "answers": [
+      "650",
+      "550",
+      "400",
+      "543"
+    ],
+    "answersTr": [
+      "650",
+      "550",
+      "400",
+      "543"
+    ],
+    "correctAnswer": "543",
+    "correctAnswerTr": "543",
+    "explanation": "Lok Sabha, Hindistan Parlamentosu'nun alt kanadıdır ve aktif olarak 543 üyeden oluşmaktadır; anayasaya göre ulaşılabilecek azami üye sınırı ise 550'dir.",
+    "explanationKu": "Lok Sabha baskê jêrîn ê Parlamentoya Hindistanê ye û ji 543 endaman pêk tê; li gorî destûra bingehîn, sînorê herî zêde yê endaman 550 ye.",
+    "explanationTr": "Lok Sabha, Hindistan Parlamentosu'nun alt kanadıdır ve aktif olarak 543 üyeden oluşmaktadır; anayasaya göre ulaşılabilecek azami üye sınırı ise 550'dir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Lok_Sabha",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0073",
+    "category": "Siyaset",
+    "difficulty": 4,
+    "type": "multipleChoice",
+    "prompt": "Di siyaseta nûjen a Swîsreyê de, Konseya Kantonan (Conseil des États) ji çend endaman pêk tê?",
+    "promptTr": "İsviçre'nin modern siyasetinde, Kantonlar Konseyi (Conseil des États) kaç üyeden oluşmaktadır?",
+    "answers": [
+      "44",
+      "46",
+      "48",
+      "52"
+    ],
+    "answersTr": [
+      "44",
+      "46",
+      "48",
+      "52"
+    ],
+    "correctAnswer": "46",
+    "correctAnswerTr": "46",
+    "explanation": "İsviçre Kantonlar Konseyi 46 üyeden oluşur; 20 tam kantonun her biri 2, 6 yarım kantonun her biri ise 1 üye gönderir.",
+    "explanationKu": "Konseya Kantonan a Swîsreyê ji 46 endaman pêk tê; 20 kantonên tam her yek 2 endaman, 6 nîv-kanton jî her yek endamekî dişînin.",
+    "explanationTr": "İsviçre Kantonlar Konseyi 46 üyeden oluşur; 20 tam kantonun her biri 2, 6 yarım kantonun her biri ise 1 üye gönderir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Council_of_States_(Switzerland)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0074",
+    "category": "Siyaset",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Yekem serokê (Speaker) Lok Sabhayê (meclisa jêrîn a Parlamentoya Hindistanê) di navbera salên 1952-1956an de kî bû?",
+    "promptTr": "Hindistan Parlamentosu'nun alt kanadı Lok Sabha'nın 1952-1956 yılları arasında görev yapan ilk Başkanı (Speaker) kimdir?",
+    "answers": [
+      "Jawaharlal Nehru",
+      "Rajendra Prasad",
+      "G. V. Mavalankar",
+      "B. R. Ambedkar"
+    ],
+    "answersTr": [
+      "Jawaharlal Nehru",
+      "Rajendra Prasad",
+      "G. V. Mavalankar",
+      "B. R. Ambedkar"
+    ],
+    "correctAnswer": "G. V. Mavalankar",
+    "correctAnswerTr": "G. V. Mavalankar",
+    "explanation": "G. V. Mavalankar, 1952 yılında Hindistan meclisinin alt kanadı Lok Sabha'nın ilk başkanı seçilmiş ve 1956 yılındaki ölümüne kadar bu görevi sürdürmüştür.",
+    "explanationKu": "G. V. Mavalankar, di sala 1952an de wekî yekem serokê (Speaker) Lok Sabhayê hat hilbijartin û heta sala 1956an li ser vê wezîfeyê ma.",
+    "explanationTr": "G. V. Mavalankar, 1952 yılında Hindistan meclisinin alt kanadı Lok Sabha'nın ilk başkanı seçilmiş ve 1956 yılındaki ölümüne kadar bu görevi sürdürmüştür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Lok_Sabha",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0075",
+    "category": "Siyaset",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Di sala 1992yan de li Herêma Kurdistanê ji bo têketina parlamento baraj ji sedî çend bû?",
+    "promptTr": "1992 yılında Kürdistan Bölgesi'nde parlamentoya girmek için uygulanan seçim barajı yüzde kaçtı?",
+    "answers": [
+      "%5",
+      "%10",
+      "%7",
+      "%3"
+    ],
+    "answersTr": [
+      "%5",
+      "%10",
+      "%7",
+      "%3"
+    ],
+    "correctAnswer": "%7",
+    "correctAnswerTr": "%7",
+    "explanation": "1992 seçimlerinde baraj %7 idi; bu yüksek baraj nedeniyle sadece KDP ve YNK parlamentoya girebildi.",
+    "explanationKu": "Di hilbijartina 1992yan de baraj %7 bû; ji ber vê baraja bilind tenê PDK û YNK karîbûn derbasî nav parlamentoyê bibin.",
+    "explanationTr": "1992 seçimlerinde baraj %7 idi; bu yüksek baraj nedeniyle sadece KDP ve YNK parlamentoya girebildi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurdistan_Region_Parliament",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0076",
+    "category": "Siyaset",
+    "difficulty": 5,
+    "type": "multipleChoice",
+    "prompt": "Di siyaseta nûjen de, li Awistralyayê dengdana mecbûrî ya federal di kîjan salê de dest pê kir?",
+    "promptTr": "Modern siyasette, Avustralya'da federal oy verme zorunluluğu hangi yılda başlamıştır?",
+    "answers": [
+      "1901",
+      "1918",
+      "1924",
+      "1974"
+    ],
+    "answersTr": [
+      "1901",
+      "1918",
+      "1924",
+      "1974"
+    ],
+    "correctAnswer": "1924",
+    "correctAnswerTr": "1924",
+    "explanation": "Avustralya'da federal düzeyde oy verme zorunluluğu 1924'te yasalaşmış ve ardından yapılan 1925 seçimlerinde katılım %91'e ulaşmıştır.",
+    "explanationKu": "Li Awistralyayê beşdariya mecbûrî ya ji bo hilbijartinên federal di sala 1924an de bû zagon û di hilbijartina yekem a 1925an de rêjeya beşdariyê gihîşt %91.",
+    "explanationTr": "Avustralya'da federal düzeyde oy verme zorunluluğu 1924'te yasalaşmış ve ardından yapılan 1925 seçimlerinde katılım %91'e ulaşmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Compulsory_voting",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0077",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Newroz li 21ê Kanûna Pêşîn, bi şeva herî dirêj a zivistanê re, tê pîrozkirin.",
+    "promptTr": "Doğru mu yanlış mı: Newroz, kışın en uzun gecesiyle birlikte 21 Aralık'ta kutlanır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Newroz baharın gelişiyle birlikte 21 Mart'ta kutlanır; 20 Mart akşamı karşılama amacıyla ateşler yakılır ve üzerinden atlanır.",
+    "explanationKu": "Na, Newroz bi hatina biharê, di 21ê Adarê de tê pîrozkirin; êvara 20ê Adarê ji bo pêşwazîkirinê agir tê dadan û di ser re baz didin.",
+    "explanationTr": "Hayır, Newroz baharın gelişiyle birlikte 21 Mart'ta kutlanır; 20 Mart akşamı karşılama amacıyla ateşler yakılır ve üzerinden atlanır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Newroz_as_celebrated_by_Kurds",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0078",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Govendên kurdî bi şêweyê xelekê nayên gerandin, her lîstikvanek bi tenê dileyîze.",
+    "promptTr": "Doğru mu yanlış mı: Kürt halk oyunları daire biçiminde oynanmaz, her oyuncu tek başına oynar.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Govend ve Dîlan gibi Kürt halk oyunları çoğunlukla daire şeklinde oynanır; oyuncular el ele tutuşur, bazen bir veya iki kişi dairenin ortasına geçerek oynar.",
+    "explanationKu": "Na, govend û dîlanên kurdî bi piranî bi şêweyê xelekê tên gerandin; lîstikvan destên hev digirin û carinan yek an du kes jî derbasî navenda xelekê dibin.",
+    "explanationTr": "Hayır, Govend ve Dîlan gibi Kürt halk oyunları çoğunlukla daire şeklinde oynanır; oyuncular el ele tutuşur, bazen bir veya iki kişi dairenin ortasına geçerek oynar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurdish_dance",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0079",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Şahmaran mexlûqeke efsanewî ya nîvjin û nîvçûk e.",
+    "promptTr": "Doğru mu yanlış mı: Şahmaran, yarı kadın yarı kuş biçiminde efsanevi bir varlıktır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Şahmaran yarı kadın yarı yılan biçiminde bir varlıktır; adı Farsçada \"yılanların şahı\" anlamına gelir. Kürt ve Türk halk anlatılarında bu şekilde betimlenir.",
+    "explanationKu": "Na, Şahmaran mexlûqeke nîvjin û nîvmar e; di zimanê farisî de wateya navê wê \"şahê maran\" e. Di vegotinên gelêrî yên kurdan û tirkan de ew wekî nîvjin û nîvmar tê teswîrkirin.",
+    "explanationTr": "Hayır, Şahmaran yarı kadın yarı yılan biçiminde bir varlıktır; adı Farsçada \"yılanların şahı\" anlamına gelir. Kürt ve Türk halk anlatılarında bu şekilde betimlenir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Shahmaran",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0080",
+    "category": "Çand",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Tirbeyên Mem û Zînê li bajarê Amedê ne.",
+    "promptTr": "Doğru mu yanlış mı: Mem ile Zîn'in türbeleri Diyarbakır'dadır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Mem ve Zîn destanının kahramanlarının türbeleri Şırnak'ın Cizre ilçesindedir; türbeler Cizre'de yan yanadır ve günümüzde bir ziyaret yeri hâline gelmiştir.",
+    "explanationKu": "Na, tirbeyên lehengên destana Mem û Zînê li navçeya Cizîrê ne; ev her du tirbe li Cizîrê li cem hev in û îro bûne cihê ziyaretê.",
+    "explanationTr": "Hayır, Mem ve Zîn destanının kahramanlarının türbeleri Şırnak'ın Cizre ilçesindedir; türbeler Cizre'de yan yanadır ve günümüzde bir ziyaret yeri hâline gelmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Mem_and_Zin",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0081",
+    "category": "Çand",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Cejna Diwali tenê rojekê didome.",
+    "promptTr": "Doğru mu yanlış mı: Diwali festivali yalnızca bir gün sürer.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Diwali beş gün süren bir festivaldir; Dhanteras'tan başlayıp Bhai Dooj'a kadar devam eder.",
+    "explanationKu": "Na, Diwali cejneke pênc rojî ye; ew ji Dhanterasê dest pê dike û heta Bhai Doojê berdewam dike.",
+    "explanationTr": "Hayır, Diwali beş gün süren bir festivaldir; Dhanteras'tan başlayıp Bhai Dooj'a kadar devam eder.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Diwali",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0082",
+    "category": "Çand",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Dansa tangoyê di sedsala 19an de li Spanyayê derketiye holê.",
+    "promptTr": "Doğru mu yanlış mı: Tango dansı 19. yüzyılda İspanya'da ortaya çıkmıştır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, tango 1880'lerde Río de la Plata bölgesinde, Buenos Aires ve Montevideo'nun liman mahallelerinde ortaya çıkmıştır.",
+    "explanationKu": "Na, tango di salên 1880yî de li herêma Río de la Platayê, li taxên xizan ên Buenos Aires û Montevideoyê derketiye holê.",
+    "explanationTr": "Hayır, tango 1880'lerde Río de la Plata bölgesinde, Buenos Aires ve Montevideo'nun liman mahallelerinde ortaya çıkmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Tango",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0083",
+    "category": "Çand",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Pîzaya Margherita pîzayeke Romayê ye.",
+    "promptTr": "Doğru mu yanlış mı: Pizza Margherita, bir Roma pizzasıdır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Pizza Margherita tipik bir Napoli pizzasıdır; ezilmiş domates, mozzarella, taze fesleğen ve sızma zeytinyağı ile hazırlanır.",
+    "explanationKu": "Na, Pîzaya Margherita pîzayeke taybet a Napoliyê ye; ew bi firingî, penêrê mozarelayê, rihan û rûnê zeytûnê tê amadekirin.",
+    "explanationTr": "Hayır, Pizza Margherita tipik bir Napoli pizzasıdır; ezilmiş domates, mozzarella, taze fesleğen ve sızma zeytinyağı ile hazırlanır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Pizza_Margherita",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0084",
+    "category": "Çand",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Dengbêjên kurd hunera xwe her tim bi amûrên muzîkê îcra dikin.",
+    "promptTr": "Doğru mu yanlış mı: Kürt dengbêjler sanatlarını her zaman müzik aletleri eşliğinde icra ederler.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, dengbêjler kilamlarını çoğunlukla herhangi bir müzik aleti kullanmadan, yalnızca çıplak sesleriyle söylerler; bu gelenek Şakiro ve Karapetê Xaço gibi ünlü dengbêjlerle tanınır.",
+    "explanationKu": "Na, dengbêj piranî bêyî amûrên muzîkê, tenê bi dengê xwe kilaman dibêjin; ev kevneşopî bi dengbêjên navdar ên wekî Şakiro û Karapetê Xaço tê naskirin.",
+    "explanationTr": "Hayır, dengbêjler kilamlarını çoğunlukla herhangi bir müzik aleti kullanmadan, yalnızca çıplak sesleriyle söylerler; bu gelenek Şakiro ve Karapetê Xaço gibi ünlü dengbêjlerle tanınır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Dengb%C3%AAj",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0085",
+    "category": "Çand",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Kovara kurdî \"Hawar\", di sala 1930î de li Şamê ji aliyê Celadet Alî Bedirxan ve hatiye derxistin.",
+    "promptTr": "Doğru mu yanlış mı: Kürtçe edebiyat dergisi \"Hawar\", 1930 yılında Şam'da Celadet Alî Bedirxan tarafından çıkarılmıştır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, \"Hawar\" dergisi 15 Mayıs 1932'de Şam'da Celadet Alî Bedirxan tarafından çıkarılmış ve Hawar alfabesi bu dergide kullanılmıştır; 2006'dan bu yana 15 Mayıs Kürt Dil Bayramı olarak kutlanmaktadır.",
+    "explanationKu": "Na, kovara Hawarê di 15ê Gulana 1932yan de li Şamê ji aliyê Celadet Alî Bedirxan ve hatiye derxistin û alfabeya Hawarê jî tê de hatiye bikaranîn; ji sala 2006an ve 15ê Gulanê wekî Cejna Zimanê Kurdî tê pîrozkirin.",
+    "explanationTr": "Hayır, \"Hawar\" dergisi 15 Mayıs 1932'de Şam'da Celadet Alî Bedirxan tarafından çıkarılmış ve Hawar alfabesi bu dergide kullanılmıştır; 2006'dan bu yana 15 Mayıs Kürt Dil Bayramı olarak kutlanmaktadır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Hawar_(magazine)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0086",
+    "category": "Çand",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Oktoberfest di sala 1710an de bi boneya daweta Prens Ludwig û Prenses Therese dest pê kiriye.",
+    "promptTr": "Doğru mu yanlış mı: Oktoberfest 1710 yılında, Veliaht Prens Ludwig ile Prenses Therese'nin düğünü şerefine başlamıştır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Oktoberfest 1810 yılında başlamıştır; ilk kez 12 Ekim 1810'da Bavyera Veliaht Prensi Ludwig ile Prenses Therese'nin düğünü şerefine kutlanmıştır.",
+    "explanationKu": "Na, Oktoberfest di sala 1810an de dest pê kiriye; ew yekem car di 12ê cotmeha 1810an de bi boneya daweta Prensê Bavyerayê Ludwig û Prenses Therese hatiye pîrozkirin.",
+    "explanationTr": "Hayır, Oktoberfest 1810 yılında başlamıştır; ilk kez 12 Ekim 1810'da Bavyera Veliaht Prensi Ludwig ile Prenses Therese'nin düğünü şerefine kutlanmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Oktoberfest",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0087",
+    "category": "Çand",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Diwali, cejna ronahiyê, bi tenê di nav hindûyan de tê pîrozkirin.",
+    "promptTr": "Doğru mu yanlış mı: Işık bayramı Diwali yalnızca Hindular arasında kutlanır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Diwali yalnızca Hindulara özgü değildir; Caynlar, Sihler ve bazı Budistler tarafından da kutlanır.",
+    "explanationKu": "Na, Diwali ne tenê ji aliyê hindûyan ve tê pîrozkirin; ew ji aliyê cayn, sîkh û hin budîstan ve jî tê pîrozkirin.",
+    "explanationTr": "Hayır, Diwali yalnızca Hindulara özgü değildir; Caynlar, Sihler ve bazı Budistler tarafından da kutlanır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Diwali",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0088",
+    "category": "Çand",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Şamîsen amûreke çar têlî ye.",
+    "promptTr": "Doğru mu yanlış mı: Şamisen dört telli bir çalgıdır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, şamisen geleneksel bir Japon çalgısıdır ve üç tellidir; Çin'deki sanxian çalgısından türemiştir.",
+    "explanationKu": "Na, şamîsen amûreke kevneşopî ya japonan e û sê têlên wê hene; ew ji amûra sanxian a çînî derketiye.",
+    "explanationTr": "Hayır, şamisen geleneksel bir Japon çalgısıdır ve üç tellidir; Çin'deki sanxian çalgısından türemiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Shamisen",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0089",
+    "category": "Çand",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Girê Mirazan (Göbekli Tepe) di sala 2015an de ketiye Lîsteya Mîrateyên Cîhanê ya UNESCOyê.",
+    "promptTr": "Doğru mu yanlış mı: Göbeklitepe, 2015 yılında UNESCO Dünya Mirası Listesi'ne dâhil edilmiştir.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Göbeklitepe UNESCO Dünya Mirası Listesi'ne 2015 yılında değil, 2018 yılında dâhil edilmiştir.",
+    "explanationKu": "Na, Girê Mirazan di sala 2018an de ketiye Lîsteya Mîrateyên Cîhanê ya UNESCOyê, ne di 2015an de.",
+    "explanationTr": "Hayır, Göbeklitepe UNESCO Dünya Mirası Listesi'ne 2015 yılında değil, 2018 yılında dâhil edilmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/G%C3%B6bekli_Tepe",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0090",
+    "category": "Çand",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Cejna Hanukayê têkoşîna Makabiyan a li dijî Împaratoriya Romayê bibîr tîne.",
+    "promptTr": "Doğru mu yanlış mı: Hanuka, Makabilerin Roma İmparatorluğu'na karşı verdiği mücadeleyi anar.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Hanuka, Makabilerin Selevkos İmparatorluğu'na karşı ayaklanmasını anar; bu ayaklanmada Makabiler Kudüs'ü ve İkinci Tapınak'ı geri almışlardır.",
+    "explanationKu": "Na, Hanuka serhildana Makabiyan a li dijî Împaratoriya Seleukî bibîr tîne; di vê serhildanê de Makabiyan Orşelîm û Perestgeha Duyem bi dest xistine.",
+    "explanationTr": "Hayır, Hanuka, Makabilerin Selevkos İmparatorluğu'na karşı ayaklanmasını anar; bu ayaklanmada Makabiler Kudüs'ü ve İkinci Tapınak'ı geri almışlardır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Hanukkah",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0091",
+    "category": "Çand",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Girê Mirazan (Göbekli Tepe) li parêzgeha Mêrdînê ye.",
+    "promptTr": "Doğru mu yanlış mı: Göbeklitepe, Mardin ilinde bulunmaktadır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Göbeklitepe Mardin'de değil, Şanlıurfa ilinde, Örencik köyü yakınlarındadır. MÖ 9500-8000 yılları arasında inşa edildiği düşünülmektedir.",
+    "explanationKu": "Na, Girê Mirazan ne li Mêrdînê ye, ew li parêzgeha Rihayê (Şanlıurfa) nêzîkî gundê Xirabreşkê (Örencik) ye. Dîroka wî vedigere 9500-8000 sal berî zayînê.",
+    "explanationTr": "Hayır, Göbeklitepe Mardin'de değil, Şanlıurfa ilinde, Örencik köyü yakınlarındadır. MÖ 9500-8000 yılları arasında inşa edildiği düşünülmektedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/G%C3%B6bekli_Tepe",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0092",
+    "category": "Dîrok",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Selaheddînê Eyûbî Quds di sala 1199an de feth kir.",
+    "promptTr": "Doğru mu yanlış mı: Selahaddin Eyyubi, Kudüs'ü 1199 yılında ele geçirmiştir.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Selahaddin Eyyubi, Kudüs'ü Hıttin Muharebesi'nin ardından 1187'de ele geçirmiştir.",
+    "explanationKu": "Na, Selaheddînê Eyûbî Quds di sala 1187an de, piştî Şerê Hettînê feth kir.",
+    "explanationTr": "Hayır, Selahaddin Eyyubi, Kudüs'ü Hıttin Muharebesi'nin ardından 1187'de ele geçirmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Saladin",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0093",
+    "category": "Dîrok",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Şerê Hastingsê, ku Normanan Îngilistan pê dagir kirin, di sala 1068an de pêk hat.",
+    "promptTr": "Doğru mu yanlış mı: Normanların İngiltere'yi fethettiği Hastings Muharebesi 1068 yılında gerçekleşti.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hastings Muharebesi 1068'de değil, 1066 yılında gerçekleşmiş ve bu muharebede Normandiya Dükü I. William zafer kazanmıştır.",
+    "explanationKu": "Şerê Hastingsê ne di 1068an de, di sala 1066an de pêk hatiye û di vê cengê de Dûkê Normandiyayê William I bi ser ketiye.",
+    "explanationTr": "Hastings Muharebesi 1068'de değil, 1066 yılında gerçekleşmiş ve bu muharebede Normandiya Dükü I. William zafer kazanmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Battle_of_Hastings",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0094",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Xanedaniya Eyûbiyan di sala 1171ê de ji aliyê Nûredîn Zengî ve hatiye damezrandin.",
+    "promptTr": "Doğru mu yanlış mı: Eyyubiler Hanedanı 1171 yılında Nureddin Zengi tarafından kurulmuştur.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Eyyubiler Hanedanı 1171'de Selahaddin Eyyubi tarafından kurulmuştur; Nureddin Zengi o dönemde yalnızca onun bağlı olduğu hükümdardı.",
+    "explanationKu": "Na, Xanedaniya Eyûbiyan di sala 1171ê de ji aliyê Selaheddînê Eyûbî ve hatiye damezrandin; wê demê Nûredîn Zengî serwerê wî bû.",
+    "explanationTr": "Hayır, Eyyubiler Hanedanı 1171'de Selahaddin Eyyubi tarafından kurulmuştur; Nureddin Zengi o dönemde yalnızca onun bağlı olduğu hükümdardı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Ayyubid_dynasty",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0095",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Paytexta Împaratoriya Medan Nînewa bû.",
+    "promptTr": "Doğru mu yanlış mı: Med İmparatorluğu'nun başkenti Ninova idi.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Med İmparatorluğu'nun başkenti Ekbatana (bugünkü Hemedan) idi; Dicle Nehri kıyısındaki Ninova ise Asurluların başkentiydi.",
+    "explanationKu": "Na, paytexta Împaratoriya Medan Ekbatana (Hemedana îro) bû; Nînewaya ku li qeraxa Çemê Dîcleyê ye, paytexta Aşûriyan bû.",
+    "explanationTr": "Hayır, Med İmparatorluğu'nun başkenti Ekbatana (bugünkü Hemedan) idi; Dicle Nehri kıyısındaki Ninova ise Asurluların başkentiydi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Median_Empire",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0096",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Qral John Magna Carta li Runnymedeyê di sala 1315an de mor kir.",
+    "promptTr": "Doğru mu yanlış mı: Kral John, Magna Carta'yı 1315'te Runnymede'de mühürledi.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Magna Carta 1315'te değil, 1215 yılında İngiltere Kralı John tarafından Runnymede'de imzalanmıştır.",
+    "explanationKu": "Magna Carta ne di sala 1315an de, di sala 1215an de li Runnymedeyê ji aliyê Qralê Îngilistanê John ve hatiye îmzekirin.",
+    "explanationTr": "Magna Carta 1315'te değil, 1215 yılında İngiltere Kralı John tarafından Runnymede'de imzalanmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Magna_Carta",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0097",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Şerê Cîhanê yê Yekem, piştî kuştina Arşîdûk Franz Ferdinand, di sala 1915an de derket holê.",
+    "promptTr": "Doğru mu yanlış mı: Birinci Dünya Savaşı, Arşidük Franz Ferdinand'ın öldürülmesinin ardından 1915'te patlak verdi.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "I. Dünya Savaşı 1915'te değil, 1914'te başlamış ve 1918'de sona ermiştir.",
+    "explanationKu": "Şerê Cîhanê yê Yekem ne di 1915an de, di sala 1914an de dest pê kiriye û di sala 1918an de bi dawî bûye.",
+    "explanationTr": "I. Dünya Savaşı 1915'te değil, 1914'te başlamış ve 1918'de sona ermiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/World_War_I",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0098",
+    "category": "Dîrok",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Şerefname di sala 1597an de ji aliyê Ehmedê Xanî ve hatiye nivîsandin.",
+    "promptTr": "Doğru mu yanlış mı: Şerefname, 1597 yılında Ehmedê Xanî tarafından yazılmıştır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Şerefname 1597'de Şerefhan Bitlisi tarafından Farsça olarak yazılmıştır; Kürt tarihinin en eski ve temel kaynaklarından biridir.",
+    "explanationKu": "Na, Şerefname di sala 1597an de ji aliyê Şerefxanê Bedlîsî ve bi zimanê farisî hatiye nivîsandin; ew yek ji çavkaniyên herî kevn ên dîroka kurdan e.",
+    "explanationTr": "Hayır, Şerefname 1597'de Şerefhan Bitlisi tarafından Farsça olarak yazılmıştır; Kürt tarihinin en eski ve temel kaynaklarından biridir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Sharafnama",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0099",
+    "category": "Dîrok",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Selaheddînê Eyûbî li Qahîreyê, di sala 1193yan de, mir.",
+    "promptTr": "Doğru mu yanlış mı: Selahaddin Eyyubi 1193'te Kahire'de öldü.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Selahaddin Eyyubi 1193'te Şam'da vefat etmiş ve Emevi Camii'nin yanındaki türbesine defnedilmiştir.",
+    "explanationKu": "Na, Selaheddînê Eyûbî di sala 1193yan de li Şamê koça dawî kir û li kêleka Mizgefta Emewiyan hate definkirin.",
+    "explanationTr": "Hayır, Selahaddin Eyyubi 1193'te Şam'da vefat etmiş ve Emevi Camii'nin yanındaki türbesine defnedilmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Saladin",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0100",
+    "category": "Dîrok",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Nînewa, paytexta Împaratoriya Aşûriya Nû, li qeraxa Çemê Firatê ye.",
+    "promptTr": "Doğru mu yanlış mı: Yeni Asur İmparatorluğu'nun başkenti Ninova, Fırat Nehri kıyısında yer almaktadır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Yeni Asur İmparatorluğu'nun başkenti olan Ninova, bugünkü Musul yakınlarında Dicle Nehri'nin kıyısında yer almaktadır.",
+    "explanationKu": "Na, Nînewa li qeraxa Çemê Dîcleyê ye, ku dikeve nêzîkî Mûsila îroyîn; ew paytexta Împaratoriya Aşûriya Nû bû.",
+    "explanationTr": "Hayır, Yeni Asur İmparatorluğu'nun başkenti olan Ninova, bugünkü Musul yakınlarında Dicle Nehri'nin kıyısında yer almaktadır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Nineveh",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0101",
+    "category": "Dîrok",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Konstantînopolîs di sala 1204an de ketiye destê Osmaniyan.",
+    "promptTr": "Doğru mu yanlış mı: Konstantinopolis 1204 yılında Osmanlılar tarafından ele geçirilmiştir.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Konstantinopolis 1204 yılında Osmanlılar tarafından değil, Latin Haçlılar tarafından ele geçirilmiştir; şehrin Osmanlılar tarafından fethi 1453 yılında gerçekleşmiştir.",
+    "explanationKu": "Di sala 1204an de Konstantînopolîs neketiye destê Osmaniyan, ketiye destê xaçparêzên Latîn; bajar di sala 1453an de ji aliyê Osmaniyan ve hatiye fethkirin.",
+    "explanationTr": "Konstantinopolis 1204 yılında Osmanlılar tarafından değil, Latin Haçlılar tarafından ele geçirilmiştir; şehrin Osmanlılar tarafından fethi 1453 yılında gerçekleşmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Constantinople",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0102",
+    "category": "Dîrok",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Peymana Versayê di sala 1918an de hatiye îmzekirin.",
+    "promptTr": "Doğru mu yanlış mı: Versay Antlaşması 1918 yılında imzalanmıştır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Versay Antlaşması 1918'de değil, 1919 yılında Versay Sarayı'nda imzalanmıştır.",
+    "explanationKu": "Peymana Versayê ne di sala 1918an de, di sala 1919an de li Qesra Versayê hatiye îmzekirin.",
+    "explanationTr": "Versay Antlaşması 1918'de değil, 1919 yılında Versay Sarayı'nda imzalanmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Treaty_of_Versailles",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0103",
+    "category": "Dîrok",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Şoreşa Fransayê di sala 1776an de dest pê kiriye.",
+    "promptTr": "Doğru mu yanlış mı: Fransız Devrimi 1776 yılında başlamıştır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Fransız Devrimi 1776'da değil, 1789 yılında başlamıştır; aynı yıl Bastille Hapishanesi baskını gerçekleşmiştir.",
+    "explanationKu": "Şoreşa Fransayê ne di 1776an de, di sala 1789an de dest pê kiriye; di heman salê de Zindana Bastîlê ketiye destê gel.",
+    "explanationTr": "Fransız Devrimi 1776'da değil, 1789 yılında başlamıştır; aynı yıl Bastille Hapishanesi baskını gerçekleşmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/French_Revolution",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0104",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Celadet Alî Bedirxan di sala 1903yan de li Stenbolê ji dayik bûye.",
+    "promptTr": "Doğru mu yanlış mı: Celadet Alî Bedirxan, 1903 yılında İstanbul'da doğmuştur.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Latin harfli Kürtçe alfabenin (Hawar alfabesi) mimarı olan Celadet Alî Bedirxan, 26 Nisan 1893'te İstanbul'da doğmuştur.",
+    "explanationKu": "Na, Celadet Alî Bedirxan di 26ê Nîsana 1893yan de li Stenbolê ji dayik bûye û pêşengê alfabeya kurdî ya latînî (alfabeya Hawarê) ye.",
+    "explanationTr": "Hayır, Latin harfli Kürtçe alfabenin (Hawar alfabesi) mimarı olan Celadet Alî Bedirxan, 26 Nisan 1893'te İstanbul'da doğmuştur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Celadet_Al%C3%AE_Bedirxan",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0105",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Di Şerê Toursê yê sala 732an de fermandarê Frankan Charlemagne bû.",
+    "promptTr": "Doğru mu yanlış mı: 732 yılındaki Tours Muharebesi'nde Frankların komutanı Şarlman idi.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Tours Muharebesi'nde Frank kuvvetlerinin komutanı Şarlman değil, Charles Martel idi; Şarlman o tarihte henüz doğmamıştı.",
+    "explanationKu": "Di Şerê Toursê de fermandarê Frankan ne Charlemagne, Charles Martel bû; Charlemagne di wê demê de hê ji dayik nebûbû.",
+    "explanationTr": "Tours Muharebesi'nde Frank kuvvetlerinin komutanı Şarlman değil, Charles Martel idi; Şarlman o tarihte henüz doğmamıştı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Battle_of_Tours",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0106",
+    "category": "Dîrok",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Ayasofya di sala 437an de hatiye temamkirin.",
+    "promptTr": "Doğru mu yanlış mı: Ayasofya 437 yılında tamamlanmıştır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Ayasofya 437'de değil, 537 yılında tamamlanmıştır; yapı, Bizans İmparatoru I. Justinianus döneminde inşa edilmiştir.",
+    "explanationKu": "Ayasofya ne di 437an de, di sala 537an de hatiye temamkirin; ev avahî di serdema Împaratorê Bîzansê Justinianus I (Yustînyanusê Yekem) de hatiye çêkirin.",
+    "explanationTr": "Ayasofya 437'de değil, 537 yılında tamamlanmıştır; yapı, Bizans İmparatoru I. Justinianus döneminde inşa edilmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Constantinople",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0107",
+    "category": "Cografya",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Çiyayê Agirî li Îranê ye.",
+    "promptTr": "Doğru mu yanlış mı: Ağrı Dağı İran'dadır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Ağrı Dağı İran'da değil; Türkiye'nin doğusunda yer alır ve 5.137 metrelik rakımıyla Türkiye'nin en yüksek dağıdır.",
+    "explanationKu": "Na, Çiyayê Agirî ne li Îranê ye; li herêma Rojhilatê Anadoluyê ya Tirkiyeyê ye û bi 5.137 metreyan xala herî bilind a Tirkiyeyê ye.",
+    "explanationTr": "Hayır, Ağrı Dağı İran'da değil; Türkiye'nin doğusunda yer alır ve 5.137 metrelik rakımıyla Türkiye'nin en yüksek dağıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Mount_Ararat",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0108",
+    "category": "Cografya",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Çemê Seine di nav Viyanayê, paytexta Awistriyayê, re derbas dibe.",
+    "promptTr": "Doğru mu yanlış mı: Seine Nehri Avusturya'nın başkenti Viyana'nın içinden geçer.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Viyana'nın içinden geçen nehir Tuna'dır; Tuna on ülke boyunca ilerler ve Karadeniz'e dökülür.",
+    "explanationKu": "Na, çemê ku di nav Viyanayê re derbas dibe Çemê Dunayê ye; ev çem di deh welatan re derbas dibe û dirije Deryaya Reş.",
+    "explanationTr": "Hayır, Viyana'nın içinden geçen nehir Tuna'dır; Tuna on ülke boyunca ilerler ve Karadeniz'e dökülür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Danube",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0109",
+    "category": "Cografya",
+    "difficulty": 1,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Sydney paytexta Awistralyayê ye.",
+    "promptTr": "Doğru mu yanlış mı: Sidney, Avustralya'nın başkentidir.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Avustralya'nın başkenti Canberra'dır; Canberra 1913'te başkent ilan edilmiştir, Sidney ise ülkenin en büyük kenti olmakla birlikte başkent değildir.",
+    "explanationKu": "Na, paytexta Awistralyayê Kanbera ye; Kanbera di sala 1913an de wekî paytext hatiye ragihandin, Sydney tevî ku bajarê herî mezin ê welêt e jî ne paytext e.",
+    "explanationTr": "Hayır, Avustralya'nın başkenti Canberra'dır; Canberra 1913'te başkent ilan edilmiştir, Sidney ise ülkenin en büyük kenti olmakla birlikte başkent değildir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Canberra",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0110",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Çemê Dîcleyê ji çiyayên Iraqê dizê.",
+    "promptTr": "Doğru mu yanlış mı: Dicle Nehri, Irak'taki dağlardan doğar.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Dicle Nehri Irak'ta değil, Türkiye'nin doğusundaki Toros Dağları'ndan doğar; güneye inerek Suriye ve Irak'tan geçer, Irak'ta Fırat'la birleşir.",
+    "explanationKu": "Na, Dîcle ne li Iraqê, ji çiyayên Torosê yên li Tirkiyeyê dizê; ber bi başûr ve diherike, di nav Sûriyê û Iraqê re derbas dibe û bi Firatê re dibe yek.",
+    "explanationTr": "Hayır, Dicle Nehri Irak'ta değil, Türkiye'nin doğusundaki Toros Dağları'ndan doğar; güneye inerek Suriye ve Irak'tan geçer, Irak'ta Fırat'la birleşir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Tigris",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0111",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Çemê Firatê dirêje Deryaya Navîn.",
+    "promptTr": "Doğru mu yanlış mı: Fırat Nehri, Akdeniz'e dökülür.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Fırat Nehri Akdeniz'e dökülmez; Türkiye'den doğup Suriye ve Irak'tan geçer, Irak'ta Dicle'yle birleşerek Şattülarap üzerinden Basra Körfezi'ne dökülür.",
+    "explanationKu": "Na, Firat narêje Deryaya Navîn; ji Tirkiyeyê dizê, di nav Sûriyê û Iraqê re derbas dibe û li Iraqê bi Dîcleyê re dibe yek û di ser Şet el-Ereb re dirêje Kendava Basrayê.",
+    "explanationTr": "Hayır, Fırat Nehri Akdeniz'e dökülmez; Türkiye'den doğup Suriye ve Irak'tan geçer, Irak'ta Dicle'yle birleşerek Şattülarap üzerinden Basra Körfezi'ne dökülür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Euphrates",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0112",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Gola Wanê li Ermenistanê ye.",
+    "promptTr": "Doğru mu yanlış mı: Van Gölü Ermenistan'dadır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Van Gölü Ermenistan'da değil; Türkiye'nin doğusunda, Van ve Bitlis illeri sınırları içindedir ve Türkiye'nin en büyük gölüdür.",
+    "explanationKu": "Na, Gola Wanê ne li Ermenistanê ye; li rojhilatê Tirkiyeyê, di nav sînorên parêzgehên Wan û Bedlîsê de ye û gola herî mezin a Tirkiyeyê ye.",
+    "explanationTr": "Hayır, Van Gölü Ermenistan'da değil; Türkiye'nin doğusunda, Van ve Bitlis illeri sınırları içindedir ve Türkiye'nin en büyük gölüdür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Lake_Van",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0113",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Kanala Suweyşê Deryaya Navîn û Deryaya Reş bi hev ve girêdide.",
+    "promptTr": "Doğru mu yanlış mı: Süveyş Kanalı Akdeniz'i Karadeniz'e bağlar.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Süveyş Kanalı Akdeniz'i Karadeniz'e değil, Kızıldeniz'e bağlar; Mısır'daki 193 kilometrelik bu kanal 1869'da açılmıştır.",
+    "explanationKu": "Na, Kanala Suweyşê Deryaya Navîn û Deryaya Sor bi hev ve girêdide; ev kanala 193 kîlometreyî ya li Misirê di sala 1869an de hatiye vekirin.",
+    "explanationTr": "Hayır, Süveyş Kanalı Akdeniz'i Karadeniz'e değil, Kızıldeniz'e bağlar; Mısır'daki 193 kilometrelik bu kanal 1869'da açılmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Suez_Canal",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0114",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Çiyayên Pîreneyê sînorê di navbera Ewropa û Asyayê de pêk tînin.",
+    "promptTr": "Doğru mu yanlış mı: Pireneler, Avrupa ile Asya arasındaki sınırı oluşturur.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Avrupa ile Asya arasındaki geleneksel sınır Ural Dağları'dır; Pireneler ise İspanya ile Fransa arasında yer alır.",
+    "explanationKu": "Na, sînorê kevneşopî yê di navbera Ewropa û Asyayê de Çiyayên Ûralê ne; Çiyayên Pîreneyê li ser sînorê Îspanya û Fransayê cih digirin.",
+    "explanationTr": "Hayır, Avrupa ile Asya arasındaki geleneksel sınır Ural Dağları'dır; Pireneler ise İspanya ile Fransa arasında yer alır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Ural_Mountains",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0115",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Çemê Dunayê dirije Deryaya Baltikê.",
+    "promptTr": "Doğru mu yanlış mı: Tuna Nehri Baltık Denizi'ne dökülür.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Tuna Nehri Baltık Denizi'ne değil, Karadeniz'e dökülür; Romanya ile Ukrayna arasında bulunan büyük Tuna Deltası aracılığıyla denize kavuşur.",
+    "explanationKu": "Na, Çemê Dunayê ne li Deryaya Baltikê, li Deryaya Reş dirije; ew bi rêya Deltaya Dunayê ya mezin ku di navbera Romanya û Ûkraynayê de ye, digihîje deryayê.",
+    "explanationTr": "Hayır, Tuna Nehri Baltık Denizi'ne değil, Karadeniz'e dökülür; Romanya ile Ukrayna arasında bulunan büyük Tuna Deltası aracılığıyla denize kavuşur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Danube",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0116",
+    "category": "Cografya",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Gola Wanê bi riya rûbarekê dirêje deryayê.",
+    "promptTr": "Doğru mu yanlış mı: Van Gölü, bir akarsu vasıtasıyla denize dökülür.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Van Gölü'nün denize açılan bir çıkışı yoktur; eski bir volkanik patlama doğal çıkışını tıkadığı için kapalı havza (endorheik) bir göldür.",
+    "explanationKu": "Na, tu derketineke Gola Wanê ya ber bi deryayê ve tune ye; ji ber ku di demên berê de teqîneke volkanî riya wê girtiye, ew gol hewzeyeke girtî ye.",
+    "explanationTr": "Hayır, Van Gölü'nün denize açılan bir çıkışı yoktur; eski bir volkanik patlama doğal çıkışını tıkadığı için kapalı havza (endorheik) bir göldür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Lake_Van",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0117",
+    "category": "Cografya",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Çiyayê Cûdî, ku nêzî Cizîrê ye, li Sûriyeyê cih digire.",
+    "promptTr": "Doğru mu yanlış mı: Cizre yakınlarındaki Cûdî Dağı Suriye'de yer alır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Cudi Dağı Suriye'de değil; Türkiye'nin güneydoğusunda, Şırnak ilindedir ve rakımı 2.089 metredir.",
+    "explanationKu": "Na, Çiyayê Cûdî ne li Sûriyeyê ye; li başûrê rojhilatê Tirkiyeyê, li parêzgeha Şirnexê ye û bilindahiya wî 2.089 metre ye.",
+    "explanationTr": "Hayır, Cudi Dağı Suriye'de değil; Türkiye'nin güneydoğusunda, Şırnak ilindedir ve rakımı 2.089 metredir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Mount_Judi",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0118",
+    "category": "Cografya",
+    "difficulty": 3,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Gola Tîtîkakayê gola herî kûr a cîhanê ye.",
+    "promptTr": "Doğru mu yanlış mı: Titicaca Gölü dünyanın en derin gölüdür.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, dünyanın en derin gölü Titicaca değil, Rusya'nın Sibirya bölgesindeki Baykal Gölü'dür; derinliği 1.642 metredir ve bu da onu dünyanın en derin gölü yapar.",
+    "explanationKu": "Na, gola herî kûr a cîhanê ne Tîtîkaka ye, Gola Baykalê ya li Sîbîryaya Rûsyayê ye; kûrahiya wê 1.642 metre ye û ev yek wê dike gola herî kûr a cîhanê.",
+    "explanationTr": "Hayır, dünyanın en derin gölü Titicaca değil, Rusya'nın Sibirya bölgesindeki Baykal Gölü'dür; derinliği 1.642 metredir ve bu da onu dünyanın en derin gölü yapar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Lake_Baikal",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0119",
+    "category": "Cografya",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Çiyayên Zagrosê tenê li Îranê ne.",
+    "promptTr": "Doğru mu yanlış mı: Zagros Dağları sadece İran'dadır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Zagros Dağları sadece İran'da değil; İran, kuzey Irak ve Türkiye'nin güneydoğusuna yayılan 1.600 km uzunluğunda devasa bir dağ silsilesidir.",
+    "explanationKu": "Na, Çiyayên Zagrosê ne tenê li Îranê ne; rêzeçiyayek e ku bi dirêjahiya 1.600 kîlometreyan li Îranê, bakurê Iraqê û başûrê rojhilatê Tirkiyeyê belav dibe.",
+    "explanationTr": "Hayır, Zagros Dağları sadece İran'da değil; İran, kuzey Irak ve Türkiye'nin güneydoğusuna yayılan 1.600 km uzunluğunda devasa bir dağ silsilesidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Zagros_Mountains",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0120",
+    "category": "Cografya",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Kela Hewlêrê di sala 2020an de ketiye Lîsteya Mîrateya Cîhanê ya UNESCOyê.",
+    "promptTr": "Doğru mu yanlış mı: Erbil Kalesi, 2020 yılında UNESCO Dünya Mirası Listesi'ne alınmıştır.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Erbil Kalesi 2020'de değil; 21 Haziran 2014 tarihinde UNESCO Dünya Mirası Listesi'ne dâhil edilmiştir.",
+    "explanationKu": "Na, Kela Hewlêrê ne di 2020an de; di 21ê Hezîrana 2014an de li Lîsteya Mîrateya Cîhanê ya UNESCOyê hatiye zêdekirin.",
+    "explanationTr": "Hayır, Erbil Kalesi 2020'de değil; 21 Haziran 2014 tarihinde UNESCO Dünya Mirası Listesi'ne dâhil edilmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Erbil_Citadel",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "bosluk_0121",
+    "category": "Cografya",
+    "difficulty": 4,
+    "type": "trueFalse",
+    "prompt": "Rast e an şaş e: Şelaleya Vîktoryayê li ser Çemê Kongoyê ye.",
+    "promptTr": "Doğru mu yanlış mı: Victoria Şelalesi Kongo Nehri üzerinde bulunur.",
+    "answers": [
+      "Rast",
+      "Şaş"
+    ],
+    "answersTr": [
+      "Doğru",
+      "Yanlış"
+    ],
+    "correctAnswer": "Şaş",
+    "correctAnswerTr": "Yanlış",
+    "explanation": "Hayır, Victoria Şelalesi Kongo Nehri üzerinde değil, Zambiya ile Zimbabve sınırındaki Zambezi Nehri üzerindedir; şelale 1855'te David Livingstone tarafından Kraliçe Victoria'nın onuruna adlandırılmıştır.",
+    "explanationKu": "Na, Şelaleya Vîktoryayê ne li ser Çemê Kongoyê ye, li ser Çemê Zambeziyê yê di navbera Zambiya û Zîmbabweyê de ye; ev şelale di sala 1855an de ji aliyê David Livingstone ve bi navê Qiralîçe Vîktoryayê hatiye binavkirin.",
+    "explanationTr": "Hayır, Victoria Şelalesi Kongo Nehri üzerinde değil, Zambiya ile Zimbabve sınırındaki Zambezi Nehri üzerindedir; şelale 1855'te David Livingstone tarafından Kraliçe Victoria'nın onuruna adlandırılmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Victoria_Falls",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: MiMo-V2.6-Flash (web kaynaklarıyla); Kurmancî çeviri ve düzeltme: Gemini 3.1 Pro; bağımsız olgu ve dil incelemesi: Grok 4.7; uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus",
+      "reviewedAt": "2026-10-02",
+      "lastContentCheckAt": "2026-10-02",
+      "qualityVersion": 2
+    }
+  }
+]

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// ## Kusur
 ///
 /// Oda maçında 1. sorudan sonraki hiçbir cevap sunucuya kaydedilmiyordu.
-/// Her cevapta "Cevap gönderilemedi. Lütfen tekrar dene." çıkıyor, tekrar
+/// Her cevapta "Cevap gönderilemedi. Tekrar dene." çıkıyor, tekrar
 /// denemek de işe yaramıyordu; on soruluk maçın dokuzu boşa gidiyordu.
 ///
 /// Sebep üç dosyanın kesişimindeydi ve hiçbiri tek başına yanlış değildi:

@@ -16,22 +16,20 @@ import 'package:zankurd_mobile/src/models/quiz_question.dart';
 /// yanlış yaptığı soru listede hiç görünmüyor ve niçin yanlış olduğunu
 /// öğrenemiyor.
 ///
-/// Ölçüm (2026-08-01): 1787 sorunun 15'inde hiçbir dilde açıklama yok ve
-/// **hepsi `community_questions.json` içinde** — topluluk katkısı sorular
-/// açıklama alanı boş gönderilebiliyor.
+/// İlk ölçümde (2026-08-01) 15 soru açıklamasızdı. Kalite çalışmalarıyla
+/// sayı 12'ye indi; kalan kayıtlar için olgu doğrulaması yapılmadan metin
+/// uydurulmamalı.
 ///
 /// ## Niçin sıfır değil
 ///
-/// Onbeşi de belirli kişiler ve olaylar hakkında (şehitler, sanatçılar,
-/// siyasetçiler). Açıklama yazmak olgu bilgisi ister; uydurulmuş bir
-/// açıklama, açıklamasızlıktan çok daha kötüdür. Bunlar editör
-/// masasında.
+/// Kalan sorular için açıklama yazmak olgu bilgisi ister; uydurulmuş bir
+/// açıklama, açıklamasızlıktan çok daha kötüdür. Bunlar editör masasında.
 ///
 /// Tavan bu yüzden var: sayı artamaz. Açıklama yazıldıkça bu sabit
 /// düşürülür.
 void main() {
   /// Bugünkü sayı. **YALNIZ AZALTILABİLİR.**
-  const ceiling = 15;
+  const ceiling = 12;
 
   test('açıklamasız soru sayısı tavanı aşmıyor', () {
     final missing = <String>[];

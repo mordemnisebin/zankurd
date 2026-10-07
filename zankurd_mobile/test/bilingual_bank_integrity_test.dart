@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/question_bank_assets.dart';
 
@@ -158,6 +159,38 @@ void main() {
         if ((q['prompt'] as String).trim() ==
             (q['promptTr'] as String).trim()) {
           offenders.add('${q['id']} ($asset)');
+        }
+      }
+    });
+    expect(offenders, isEmpty, reason: offenders.take(10).join('\n'));
+  });
+
+  test('yön terimi içeren şıklar Türkçe karşılık taşır', () {
+    // 2026-09: `comm_cog_0001` ve `offline_sin_2003` şıklarında
+    // Rojhilat/Bakur/Rojava/Başûr terimleri duruyordu ama `answersTr`
+    // listesi Ku ile birebir aynıydı — Türkçe oynayan kullanıcı "Doğu/
+    // Kuzey" değil yine Kurmancî görüyordu. Yer ve kişi adları iki dilde
+    // meşru aynı kalabilir (blanket answers==answersTr yasağı bu yüzden
+    // YANLIŞ alarmlar verir); bu ratchet yalnız çevrilebilir yön
+    // terimi sınıfını yakalar. Doğru desen: "Bakur (Kuzey)" — bkz.
+    // comm_sin_0112.
+    final direction = RegExp(
+      r'(Rojhilat|Bakur|Bakûr|Rojava|Başûr)[êe]?\s*(?:y[êe])?\s*Kurdistan',
+    );
+    final offenders = <String>[];
+    banks.forEach((asset, rows) {
+      for (final q in rows) {
+        if (!has(q, 'answersTr')) continue;
+        final ku = (q['answers'] as List).cast<String>();
+        final hasDirectionTerm = ku.any(direction.hasMatch);
+        if (!hasDirectionTerm) continue;
+        final tr = (q['answersTr'] as List).cast<String>();
+        final trSameAsKu = listEquals(ku, tr);
+        if (trSameAsKu) {
+          offenders.add(
+            '${q['id']} ($asset): yön terimi çevrilmemiş — '
+            '"Bakur (Kuzey)" deseni bekleniyor',
+          );
         }
       }
     });

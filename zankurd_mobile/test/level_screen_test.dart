@@ -1,3 +1,6 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +12,7 @@ import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/screens/level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -30,6 +34,7 @@ class _RetryableLevelRepository extends MockZanKurdRepository {
     required int difficultyMin,
     required int difficultyMax,
     String? subCategory,
+    int? levelNumber,
     int limit = 10,
   }) async {
     loadCalls += 1;
@@ -40,6 +45,7 @@ class _RetryableLevelRepository extends MockZanKurdRepository {
       difficultyMin: difficultyMin,
       difficultyMax: difficultyMax,
       subCategory: subCategory,
+      levelNumber: levelNumber,
       limit: limit,
     );
   }
@@ -77,6 +83,23 @@ void main() {
     // Beş satır da çizilir — kilitli olmak görünmez olmak değildir.
     expect(find.text('Başlangıç'), findsOneWidget);
     expect(find.text('Usta'), findsOneWidget);
+
+    final firstLevelSemantics = tester
+        .getSemantics(find.text('Başlangıç'))
+        .getSemanticsData();
+    expect(firstLevelSemantics.label, 'Sıradaki: Başlangıç');
+    expect(firstLevelSemantics.hasAction(ui.SemanticsAction.tap), isTrue);
+
+    // Soru birimi satır içi ku/tr değil; defterdeki K.soru (2026-09-07).
+    expect(find.text('10 soru'), findsWidgets);
+    // Hero ilerleme cümlesi de defterde; KU/TR sözcük sırası farklı.
+    // bySemanticsLabel üst düğüm birleştirmesi yüzünden bu etiketi yutuyor.
+    final progressLabels = tester
+        .widgetList<Semantics>(find.byType(Semantics))
+        .map((w) => w.properties.label)
+        .whereType<String>()
+        .where((l) => l.contains('seviyeden') && l.contains('tamamlandı'));
+    expect(progressLabels, ['5 seviyeden 0 tanesi tamamlandı']);
   });
 
   testWidgets('kilitli düğüme dokunmak nedenini söyler', (tester) async {
@@ -88,10 +111,18 @@ void main() {
     // Sessizce hiçbir şey yapmayan düğüm "bozuk" hissi verir.
     await tester.tap(find.byIcon(AppIcons.lock).first);
     await tester.pump();
-    expect(find.textContaining('seviyeyi tamamla'), findsOneWidget);
+    // Kilitli satırlar koşulu kendi satırında da yazar; nedeni söyleyen
+    // bildirim ayrıca çıkar.
+    expect(
+      find.descendant(
+        of: find.byType(SnackBar),
+        matching: find.textContaining('seviyeyi tamamla'),
+      ),
+      findsOneWidget,
+    );
   });
 
-  testWidgets('düğüm numarası heading1 ağırlığı ve yumuşak gölge taşır', (
+  testWidgets('seviye numarası sakin ama belirgin ağırlık taşır', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -99,26 +130,54 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    // 2026-09-29 doğallık (K8): Manşet artık 700; 800 yalnız sekme başlığı,
+    // soru metni ve skorda. Bu bekçi eskiden 800 bekliyordu; korunan şey
+    // (sakin ama belirgin: ince değil) 700 ile de sağlanır.
     final numberText = tester.widget<Text>(find.text('1'));
-    // Rubik ailesinde w800 yüzü yok; heading1 bilinçli olarak w900'e
-    // sabitlendi (bkz. app_theme.dart yorum satırı).
-    expect(numberText.style?.fontWeight, FontWeight.w900);
+    expect(numberText.style?.fontWeight, FontWeight.w700);
   });
 
-  testWidgets('etiket chip yüzey renginde kalır', (tester) async {
-    await tester.pumpWidget(
-      wrap(LevelScreen(repository: MockZanKurdRepository(), category: 'Ziman')),
-    );
-    await tester.pumpAndSettle();
+  // 2026-09-27: bu bekçi eskiden "kart HER ZAMAN nötr" bekliyordu; sonra
+  // sıradaki basamak kategori renginin harmanını taşıdı. 2026-09-29 Şahnê:
+  // kategori renkleri palet dışıdır; sıradaki seviye artık sahne kartıdır
+  // (gece, öğrenme rolü, TEK birincil düğme), ötekiler yüzey kartı. Bekçi
+  // kart türünü ve ekranda elle yazılmış degrade kalmadığını ölçer.
+  testWidgets(
+    'sıradaki seviye sahne kartı, ötekiler yüzey kartı; degrade yok',
+    (tester) async {
+      await tester.pumpWidget(
+        wrap(
+          LevelScreen(repository: MockZanKurdRepository(), category: 'Ziman'),
+        ),
+      );
+      await tester.pumpAndSettle();
 
-    final label = find.ancestor(
-      of: find.text('Başlangıç'),
-      matching: find.byType(Container),
-    );
-    final decoration =
-        tester.widget<Container>(label.first).decoration as BoxDecoration;
-    expect(decoration.color, AppTheme.lightSurface);
-  });
+      expect(
+        tester.widget(find.byKey(const ValueKey('level-card-1'))),
+        isA<SahneStageCard>(),
+      );
+      for (final n in [2, 3, 4, 5]) {
+        expect(
+          tester.widget(find.byKey(ValueKey('level-card-$n'))),
+          isA<SahneSurfaceCard>(),
+          reason: 'seviye $n',
+        );
+      }
+      final gradients = find.byWidgetPredicate((widget) {
+        if (widget is! Container) return false;
+        final decoration = widget.decoration;
+        return decoration is BoxDecoration && decoration.gradient != null;
+      });
+      expect(gradients, findsNothing);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('level-card-1')),
+          matching: find.byType(FilledButton),
+        ),
+        findsOneWidget,
+      );
+    },
+  );
 
   testWidgets('360 px genişlikte overflow oluşmaz', (tester) async {
     await tester.binding.setSurfaceSize(const Size(360, 740));
@@ -138,6 +197,9 @@ void main() {
   // Semantics'i (level başlığı) alt node'ları tek bir okunan metinde
   // birleştiriyor — asıl doğrulanması gereken _DifficultyStars'ın kendi
   // label'ı verip vermediği.
+  // 2026-09-29 doğallık (K5): kilitli seviyede zorluk çubuğu çizilmez (tek
+  // işaret: kilit). Yeni oyuncuda yalnız 1. seviye açık; bekçi açık
+  // satırlardaki çubuğun etiketini ölçer, sayı 5'ten 1'e iner.
   testWidgets('zorluk yıldızları "Zorluk" tooltip ve semantics etiketi taşır', (
     tester,
   ) async {
@@ -147,14 +209,14 @@ void main() {
     await tester.pumpAndSettle();
 
     final tooltips = tester.widgetList<Tooltip>(find.byType(Tooltip));
-    expect(tooltips.where((t) => t.message == 'Zorluk').length, 5);
+    expect(tooltips.where((t) => t.message == 'Zorluk').length, 1);
 
     final difficultyLabels = tester
         .widgetList<Semantics>(find.byType(Semantics))
         .map((w) => w.properties.label)
         .whereType<String>()
         .where((l) => RegExp(r'^Zorluk: 5 üzerinden \d yıldız$').hasMatch(l));
-    expect(difficultyLabels.length, 5);
+    expect(difficultyLabels.length, 1);
   });
 
   testWidgets('seviye sorusu hatası görünür ve aynı seviye tekrar denenir', (
@@ -170,10 +232,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
-    expect(find.text('Tekrar'), findsOneWidget);
+    expect(find.text('Tekrar dene'), findsOneWidget);
 
     repository.fail = false;
-    await tester.tap(find.text('Tekrar'));
+    await tester.tap(find.text('Tekrar dene'));
     await tester.pump();
 
     expect(repository.loadCalls, 2);
@@ -194,7 +256,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
-    expect(find.text('Bu kategori için soru bulunamadı'), findsOneWidget);
+    expect(find.text('Bu konu için soru bulunamadı'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

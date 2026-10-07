@@ -145,55 +145,78 @@ extension LangContext on BuildContext {
       case 'Giriş bağlantısı doğrulanamadı. Uygulama yönlendirme ayarlarını kontrol et.':
         return 'Girêdana têketinê nehate piştrastkirin. Saziyên arastekirina sepanê kontrol bike.';
       case 'E-posta veya parola hatalı.':
-        return 'E-peyam an şîfre şaş e.';
+        return 'E-name an şîfre şaş e.';
       case 'Bu e-posta zaten kullanılıyor.':
-        return 'Ev e-peyam jixwe tê bikaranîn.';
+        return 'Ev e-name jixwe tê bikaranîn.';
       case 'Parola çok zayıf (en az 6 karakter).':
-        return 'Şîfre pir qels e (herî kêm 6 karakter).';
+        return 'Şîfre pir qels e (herî kêm 6 tîp).';
       case 'Geçersiz e-posta adresi.':
-        return 'Navnîşana e-peyamê ya nederbasdar.';
+        return 'Navnîşana e-nameyê ya nederbasdar.';
       case 'E-posta adresin henüz doğrulanmamış. Gelen kutunu kontrol et.':
-        return 'Navnîşana e-peyama te hîna nehatiye piştrastkirin. Sindoqa xwe ya nameyan kontrol bike.';
+        return 'Navnîşana e-nameya te hîna nehatiye piştrastkirin. Sindoqa xwe ya nameyan kontrol bike.';
       case 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.':
         return 'Pir ceribandin hatin kirin. Hinekî bisekine û dîsa biceribîne.';
       case 'Misafir girişi şu anda kapalı.':
         return 'Têketina mêvanan niha girtî ye.';
       case 'Bir hata oluştu. Lütfen tekrar deneyin.':
         return 'Çewtiyek rû da. Ji kerema xwe dîsa biceribîne.';
+      // 2026-09-25 denetimi: bilinmeyen hata mesajı olduğu gibi Türkçe
+      // geri veriliyordu, yani Kurmancî modda Türkçe sızıntısı
+      // garantîydi. Supabase yeni bir mesaj eklediğinde Kurmancî kullanıcı
+      // İngilizce/Türkçe ham metni görüyordu. Artık hiçbir eşleşme
+      // bulunamazsa genel bir Kurmancî cümle dönüyor; ayrıntı gerekirse
+      // çağıran ayrıca loglar.
       default:
-        return turkishMessage;
+        return 'Çewtiyek nediyar çêbû. Ji kerema xwe dîsa biceribîne.';
     }
   }
 }
 
-/// Category names in both languages.
+/// Category names in both languages. Görünen ad [Tr] tablosundadır.
 class CategoryNames {
   /// Stable category IDs (also used as keys in stores / SQL).
-  static const Map<String, String> _kuToTr = {
-    'Ziman': 'Dil',
-    'Çand': 'Kültür',
-    'Dîrok': 'Tarih',
-    'Edebiyat': 'Edebiyat',
-    'Cografya': 'Coğrafya',
-    'Muzîk': 'Müzik',
-    'Siyaset': 'Siyaset',
-    'Paradigma': 'Paradigma',
-    'Teknolojî': 'Teknoloji',
-    'Sînema': 'Sinema',
-    'Tevlihev': 'Karışık',
+  static const Map<String, String> _keys = {
+    'Ziman': K.catZiman,
+    'Çand': K.catCand,
+    'Dîrok': K.catDirok,
+    'Edebiyat': K.catEdebiyat,
+    'Cografya': K.catCografya,
+    'Muzîk': K.catMuzik,
+    'Siyaset': K.catSiyaset,
+    'Paradigma': K.catParadigma,
+    'Teknolojî': K.catTeknoloji,
+    'Sînema': K.catSinema,
+    'Cîhan': K.catCihan,
+    'Tevlihev': K.catTevlihev,
   };
 
-  /// Optional Kurmanci display labels (ID stays the map key).
-  static const Map<String, String> _kuDisplay = {
-    'Edebiyat': 'Wêje',
-    'Cografya': 'Erdnîgarî',
-    'Paradigma': 'Paradîgma',
+  static String tr(String kuName) {
+    final key = _keys[kuName];
+    if (key == null) return kuName;
+    return Tr.of(key, AppLanguage.tr);
+  }
+
+  static String localized(String kuName, bool isKu) {
+    final key = _keys[kuName];
+    if (key == null) return kuName;
+    return Tr.forKu(key, isKu);
+  }
+
+  /// Ana ekran konu karosunun dar yazı sütununa sığan KISA adlar. Karo adı
+  /// tek satırdır ve sarmaz; "Bilim ve Düşünce / Zanist û Raman" dört satıra
+  /// sarıp ızgaranın satır boylarını bozuyordu (2026-09-30 simülatör).
+  /// Burada olmayan konunun tam adı zaten kısadır.
+  static const Map<String, String> _tileKeys = {
+    'Paradigma': K.catParadigmaTile,
   };
 
-  static String tr(String kuName) => _kuToTr[kuName] ?? kuName;
-
-  static String localized(String kuName, bool isKu) =>
-      isKu ? (_kuDisplay[kuName] ?? kuName) : tr(kuName);
+  /// Karoda yazılan ad: kısa adı varsa o, yoksa [localized]. Tam ad başka
+  /// her yerde ([localized]) olduğu gibi kalır.
+  static String tile(String kuName, bool isKu) {
+    final key = _tileKeys[kuName];
+    if (key == null) return localized(kuName, isKu);
+    return Tr.forKu(key, isKu);
+  }
 }
 
 /// Seviye adları veri katmanında Kurmancî sabit olarak tutulur (kimlik
@@ -204,18 +227,25 @@ class CategoryNames {
 class LevelNames {
   const LevelNames._();
 
-  static const Map<String, String> _kuToTr = {
-    'Destpêk': 'Başlangıç',
-    'Bingeh': 'Temel',
-    'Navîn': 'Orta',
-    'Pêşketî': 'İleri',
-    'Mamoste': 'Usta',
+  static const Map<String, String> _keys = {
+    'Destpêk': K.levelDestpek,
+    'Bingeh': K.levelBingeh,
+    'Navîn': K.levelNavin,
+    'Pêşketî': K.levelPesketi,
+    'Mamoste': K.levelMamoste,
   };
 
-  static String tr(String kuName) => _kuToTr[kuName] ?? kuName;
+  static String tr(String kuName) {
+    final key = _keys[kuName];
+    if (key == null) return kuName;
+    return Tr.of(key, AppLanguage.tr);
+  }
 
-  static String localized(String kuName, bool isKu) =>
-      isKu ? kuName : tr(kuName);
+  static String localized(String kuName, bool isKu) {
+    final key = _keys[kuName];
+    if (key == null) return kuName;
+    return Tr.forKu(key, isKu);
+  }
 }
 
 // `QuizStrings` ve `CommonStrings` burada duruyordu: `Tr`/`K` kayıt

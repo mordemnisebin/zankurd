@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -38,22 +39,39 @@ void main() {
     expect(sql, isNot(contains('set xp =')));
   });
 
-  test('kullanıcıya XP ve öğrenme ilerlemesinin cihazda kaldığı söylenir', () {
+  test('kullanıcıya sıralama puanının hesaba yazıldığı söylenir', () {
     final listing = File('docs/store_listing.md').readAsStringSync();
     final privacy = File('web/privacy.html').readAsStringSync();
     final signOutTr = Tr.of(K.signOutConfirm, AppLanguage.tr);
     final signOutKu = Tr.of(K.signOutConfirm, AppLanguage.ku);
 
-    expect(listing, contains('XP ve öğrenme'));
-    expect(listing, contains('ilerlemen cihazda saklanır'));
-    expect(listing, isNot(contains('puanların eşitlenir')));
-    expect(listing, contains('XP û'));
+    expect(listing, contains('öğrenme ilerlemen cihazda saklanır'));
+    expect(listing, contains('Sıralama puanın hesabına yazılır'));
+    expect(
+      listing,
+      isNot(contains('XP ve öğrenme ilerlemen cihazda saklanır')),
+    );
     expect(listing, contains('pêşketina hînbûnê li ser amûrê tên parastin'));
+    expect(listing, contains('Xala rêzkirinê li ser'));
     expect(listing, isNot(contains('xalên te tên hevkirin')));
     expect(privacy, contains('Cihazda tutulan öğrenme verileri'));
-    expect(signOutTr, contains('Bu cihazdaki XP'));
-    expect(signOutTr, contains('çevrimiçi hesap verilerin silinmez'));
-    expect(signOutKu, contains('XP'));
+    expect(privacy, contains('Sıralama için kullanılan XP hesabına yazılır'));
+    expect(
+      privacy,
+      isNot(contains('XP ve öğrenme ilerlemen yalnızca cihazında tutulur')),
+    );
+    expect(signOutTr, contains('seviye çubuğu'));
+    expect(signOutTr, contains('sıralama puanı dahil'));
+    expect(signOutKu, contains('pûana rêzbendiyê'));
     expect(signOutKu, contains('amûr'));
+  });
+
+  test('README çevrimdışı XP eşitlemesi vaat etmez', () {
+    // Ürün maddesi "Offline XP senkronizasyonu" diyordu. SyncManager
+    // yalnız quiz coin ödülünü kuyruklar; `queueXP` yüzeyi yok. Mağaza
+    // ve gizlilik metinleri zaten doğruyken README eski yalanı tutuyordu.
+    final readme = File('README.md').readAsStringSync();
+    expect(readme, isNot(contains('Offline XP senkronizasyonu')));
+    expect(readme, contains('XP sahte eşitlemesi yok'));
   });
 }

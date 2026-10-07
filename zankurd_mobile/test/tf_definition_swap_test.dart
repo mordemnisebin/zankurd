@@ -1,0 +1,129 @@
+/// `offline_tf_` tanım-takası kalıbının Rast/Şaş oranının bekçisi.
+///
+/// ## Kusur
+///
+/// `tool/author_replacement_questions.py` ve
+/// `tool/author_replacements_wave2.py` (2026-07-26) her terimden iki soru
+/// üretti: biri kendi tanımıyla ("Rast"), biri BAŞKA bir terimin gerçek
+/// tanımıyla ("Şaş") — bkz. `retired_question_ids.dart`'ın "İkinci dalga"
+/// belgesi. Üretim 133/133 dengeliydi, ama 2026-09-27 denetiminde oynanan
+/// kümede 80 Rast / 152 Şaş çıktı: hep "Şaş" diyen bir strateji %66
+/// kazanıyordu. Oran sorunun İÇERİĞİNDEN değil, hangi terimlerin hangi
+/// kategoriye/kalıba düştüğünden kaynaklanıyordu — kimse bunu ölçmüyordu.
+///
+/// 152 Şaş'ın 87'si (sorulan terimden farklı TÜRDEN bir tanım taşıyanlar:
+/// göl↔dağ, kişi↔çalgı, dergi↔kişi…) ve Ziman'daki 10'u (orada kalıbın hiç
+/// "Rast" örneği yoktu) emekliye ayrıldı; yeni oran 80/55.
+///
+/// ## Niçin sessiz kalırdı
+///
+/// `retired_question_ids_test.dart` yalnız "emekli id bankada var mı" ve
+/// "emekli id oynanmıyor mu" diye bakar — RAKAMIN NE OLDUĞUNU değil, id
+/// listesinin kendi içindeki tutarlılığını denetler. Biri ileride bu
+/// kalıba yeni terimler eklerken (ör. üçüncü bir dalga) hepsini "Rast"
+/// (ya da hepsini "Şaş") yazsa, ya da emekliye ayırma sırasında yalnızca
+/// bir taraftan (yalnız Şaş'lardan) id çıkarmaya devam etse, iki bekçi de
+/// yeşil kalır: id'ler bankada duruyor, emekliler oynanmıyor — ama kalan
+/// kalıbın cevap dağılımı tekrar tek yöne kayar ve "önce şıklara bak,
+/// hangi kalıp Şaş baskınsa onu seç" stratejisi sessizce geri döner. Bu
+/// bekçi kalan (oynanabilir, emekli olmayan) kalıbın toplam Rast/Şaş
+/// oranını doğrudan ölçer.
+library;
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
+import 'package:zankurd_mobile/src/services/question_content_policy.dart';
+
+void main() {
+  const policy = QuestionContentPolicy();
+
+  test('kalan tanım-takası kalıbında Rast/Şaş oranı 1:1e yakın', () {
+    final playableTf = QuestionBankLoader.instance.allQuestions
+        .where((q) => q.id.startsWith('offline_tf_'))
+        .where(policy.isPlayable)
+        .toList();
+
+    // Kapsamın gerçekten "Rast e an şaş e" tipi bir doğru/yanlış sorusu
+    // olduğunu doğrula — id öneki tek başına yeterli bir süzgeç değil.
+    // Dört gövde kalıbı da (bkz. `author_replacement_questions.py`
+    // TEMPLATES) bu alt dizeyi büyük/küçük harf farkıyla taşır; tekil
+    // "tê vê wateyê" dizesi yalnız İLK kalıpta var, dördünde değil — bu
+    // yüzden ortak payda kullanılır. Bu, ileride `offline_tf_` altına
+    // farklı türden bir soru eklenirse bekçinin sessizce yanlış kümeyi
+    // ölçmesini engeller.
+    // 2026-09-29 doğallık: dört kılıftan ikisi ("Binirxîne: …", "Ev
+    // ravekirin ji bo …") bankada zaten var olan "Rast e an şaş e: Têgeha
+    // "X" tê vê wateyê: …" biçimine indirildi; "… wiha tê ravekirin … Ev
+    // rast e an şaş e?" şablon çeşitlilik bekçisi (önek payı ≤ %20) yüzünden
+    // kaldı. Ortak payda hâlâ geçerli, süzgeç bilerek aynı bırakıldı.
+    final offPattern = playableTf
+        .where((q) => !q.prompt.toLowerCase().contains('rast e an şaş e'))
+        .map((q) => q.id)
+        .toList();
+    expect(
+      offPattern,
+      isEmpty,
+      reason:
+          '`offline_tf_` önekli ama tanım-takası kalıbında olmayan sorular '
+          'bulundu; bu bekçinin kapsamı daralmalı: $offPattern',
+    );
+
+    final rast = playableTf.where((q) => q.correctAnswer == 'Rast').length;
+    final sas = playableTf.where((q) => q.correctAnswer == 'Şaş').length;
+    final total = rast + sas;
+
+    expect(
+      total,
+      playableTf.length,
+      reason:
+          'Rast/Şaş dışında bir correctAnswer değeri var; oran hesabı '
+          'geçersiz.',
+    );
+
+    final rastShare = rast / total;
+    final sasShare = sas / total;
+    final majorityShare = rastShare > sasShare ? rastShare : sasShare;
+
+    expect(
+      majorityShare,
+      lessThanOrEqualTo(0.60),
+      reason:
+          'Kalan kalıpta tek bir cevap ($rast Rast / $sas Şaş, toplam '
+          '$total) %${(majorityShare * 100).toStringAsFixed(1)} '
+          'oranında baskın — "hep aynı cevabı ver" stratejisi yeniden '
+          'kazanmaya başladı. Ya yeni sorular dengesiz eklendi ya da '
+          'emekliye ayırma yalnızca bir taraftan yapıldı.',
+    );
+
+    // 2026-09-27 (ikinci dalga sonrası): 80 Rast / 55 Şaş, toplam 135.
+    // Bu iki sayı BİRLİKTE değişmeli: biri değişip diğeri aynı kalırsa
+    // ya yeni bir tanım-takası sorusu tek taraflı eklenmiş ya da
+    // emekliye ayırma yalnızca Rast/Şaş'ın birinden yapılmıştır.
+    // 2026-09-30: Paradigma, Siyaset ve Teknolojî yeniden açıldı; bu
+    // kalıptaki kayıtlar geri döndü (Rast 80 -> 114, Şaş 55 -> 114).
+    // 2026-09-30 (aynı gün, ikinci adım): tek bir siyasi hareketin öğretisini
+    // doğru cevap diye sunan 159 Paradigma/Siyaset sorusu tek tek emekliye
+    // ayrıldı (`retired_question_ids.dart`, "Dördüncü dalga"); bunların 51'i
+    // bu kalıptaydı: 18 Rast + 33 Şaş. Yeni sayılar Rast 114 -> 96, Şaş
+    // 114 -> 81 (toplam 177, Rast payı %54,2 — %60 tavanının altında).
+    // Birlikte değiştiler, yani emekliye ayırma iki taraftan da yapıldı.
+    // 2026-09-30 beşinci dalga (bağımsız model ailesinin ikinci geçişi,
+    // `retired_question_ids.dart`): tartışmalı kavrama tek "doğru tanım"
+    // dayatan ya da normatif tanım veren 17 Siyaset sorusundan 9'u bu
+    // kalıptaydı: 2 Rast + 7 Şaş. Yeni sayılar Rast 96 -> 94, Şaş 81 -> 74
+    // (toplam 168, Rast payı %56,0 — %60 tavanının altında). Yine iki taraf
+    // birlikte değişti.
+    // 2026-10-01: offline_tf_cog_0003 (Rast) bilgi yanlışı olduğu için
+    // emekliye ayrıldı: Rast 94 -> 93 (toplam 167, Rast payı %55,7).
+    expect(
+      rast,
+      93,
+      reason: 'Oynanabilir Rast sayısı değişti (bkz. yukarıdaki yorum).',
+    );
+    expect(
+      sas,
+      74,
+      reason: 'Oynanabilir Şaş sayısı değişti (bkz. yukarıdaki yorum).',
+    );
+  });
+}

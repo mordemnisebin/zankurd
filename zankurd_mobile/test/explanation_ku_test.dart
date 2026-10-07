@@ -25,10 +25,10 @@ void main() {
     );
   });
 
-  test('eşleşmeyen serbest metin ham Türkçe kalmaz, çerçevelenir', () {
-    expect(
-      explanationToKu('Tamamen bilinmeyen bir cümle burada.'),
-      'Şirove: Tamamen bilinmeyen bir cümle burada.',
-    );
+  test('eşleşmeyen serbest metin sahte çeviri üretmez, boş döner', () {
+    // 2026-09: fallback bir zamanlar `Şirove: <metin>` saralıyordu —
+    // sarmak çevirmek değildi ve önek ayna bekçiyi maskeliyordu.
+    // Boş dönüş, UI'daki "boş açıklama gösterilmez" kuralına uyar.
+    expect(explanationToKu('Tamamen bilinmeyen bir cümle burada.'), '');
   });
 }

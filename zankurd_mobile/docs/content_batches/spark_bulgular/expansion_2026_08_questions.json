@@ -1,0 +1,27 @@
+[
+  {
+    "id": "tech_core_0039",
+    "kusur": [
+      "celdirici_sacma",
+      "cevap_sizdiran"
+    ],
+    "not": "Çeldiriciler ('sunucuların elektriğini keserek', 'işlemci sıcaklığını artırarak') ciddiyetsizdir ve doğru şık tek başına uzun/ayrıntılı olarak kendini ele vermektedir.",
+    "oneri": "Çeldiriciler diğer siber saldırı yöntemleriyle (ör. brute-force, DDoS, SQL injection) eşit uzunlukta dengelenmelidir."
+  },
+  {
+    "id": "tech_core_0047",
+    "kusur": [
+      "celdirici_sacma"
+    ],
+    "not": "Ransomware sorusunda çeldiriciler ('ekran renklerini değiştirir', 'programları otomatik günceller') alakasız ve ciddiyetsizdir.",
+    "oneri": "Çeldiriciler adware, spyware, trojan gibi gerçek zararlı yazılım işlevleriyle değiştirilmelidir."
+  },
+  {
+    "id": "ziman_x_0011",
+    "kusur": [
+      "dil_hatasi"
+    ],
+    "not": "Kurmancî soru kökünde ('Di hefteyekê de çend roj hene?') şıklar Kürtçe ('Heft', 'Pênc', 'Şeş', 'Heşt') yerine Türkçe rakam adları ('Yedi', 'Beş', 'Altı', 'Sekiz') olarak verilmiştir.",
+    "oneri": "Kurmancî şıklar 'Heft', 'Pênc', 'Şeş', 'Heşt' olarak güncellenmelidir."
+  }
+]

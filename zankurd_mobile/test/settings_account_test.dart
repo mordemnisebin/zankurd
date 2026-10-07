@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,9 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
+import 'package:zankurd_mobile/src/widgets/roj_mascot.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
+import 'package:zankurd_mobile/src/widgets/zk_back_button.dart';
 import 'support/widget_test_helpers.dart';
 
 class _SignOutTrackingAuthProvider extends AuthProvider {
@@ -95,6 +99,68 @@ void main() {
   late MockZanKurdRepository repository;
   setUp(() => repository = freshMockRepository());
 
+  // 2026-09-29 Şahnê: bu iki bekçi eski görünüşü (Forest degrade + gölge)
+  // sabitliyordu. Dil seçici artık ortak `LanguageToggle`dır (seçim rayının
+  // sığan çeşidi); "ZK" degrade karosu logo işareti plakasına döndü.
+  // Korunan şey: etkin dil görünür biçimde VE ekran okuyucuda seçili;
+  // hakkında kartı marka işaretini ve sürümü birlikte taşır.
+  testWidgets('ayarlar dil seçimi etkin dili seçili çiple gösterir', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('TR'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+
+    SahneRailChip chip(String key) => tester.widget<SahneRailChip>(
+      find.descendant(
+        of: find.byKey(ValueKey(key)),
+        matching: find.byType(SahneRailChip),
+      ),
+    );
+    expect(chip('settings-language-tr').selected, isTrue);
+    expect(chip('settings-language-ku').selected, isFalse);
+  });
+
+  testWidgets('ayarlar hakkında kartı marka işaretini ve sürümü taşır', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.byType(BrandMarkPlate),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(BrandMarkPlate), findsOneWidget);
+    expect(find.text('ZK'), findsNothing);
+    final plate = tester.getRect(find.byType(BrandMarkPlate));
+    final brand = tester.getRect(find.text('ZanKurd'));
+    expect(
+      (plate.center.dy - brand.center.dy).abs(),
+      lessThan(plate.height),
+      reason: 'marka adı plakanın yanında durmalı',
+    );
+  });
+
   testWidgets('settings does not delete account before final confirmation', (
     tester,
   ) async {
@@ -120,6 +186,66 @@ void main() {
     expect(repository.deleteCalls, 0);
   });
 
+  // 2026-10-02 uçtan uca QA: hesap silme onayının yıkıcı düğmesi "Devam et"
+  // adıyla turuncu birincil (Agir) dolguydu. Silmeyi söylemiyordu ve göz
+  // güvenli eylemi değil onu varsayılan sanıyordu. Niçin sessiz kalıyordu:
+  // testler düğmeyi METNİYLE ("Devam et") tıklıyordu; renk ve ad hiçbir
+  // yerde sabitlenmemişti. İki adımlı akış korunur.
+  testWidgets('hesap silme onayı: yıkıcı eylem hata tonunda ve adı silmeyi '
+      'söyler, güvenli eylem varsayılandır', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final repository = _DeleteTrackingRepository();
+
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(await _scrollToDeleteAction(tester));
+    await tester.pumpAndSettle();
+
+    final scheme = Theme.of(
+      tester.element(find.byType(AlertDialog)),
+    ).colorScheme;
+    expect(find.text('Devam et'), findsNothing);
+    final destructive = tester.widget<TextButton>(
+      find.byKey(const ValueKey('delete-continue')),
+    );
+    expect(
+      destructive.style!.foregroundColor!.resolve({}),
+      scheme.error,
+      reason: 'yıkıcı eylem hata tonunda olmalı',
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('delete-continue')),
+        matching: find.text('Hesabımı sil'),
+      ),
+      findsOneWidget,
+    );
+    // Güvenli eylem dolgulu varsayılan düğme.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('delete-keep')),
+        matching: find.text('Vazgeç'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      tester.widget(find.byKey(const ValueKey('delete-keep'))),
+      isA<FilledButton>(),
+    );
+
+    // İkinci adım: kalıcı silme de hata tonunda.
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
+    await tester.pumpAndSettle();
+    final forever = tester.widget<FilledButton>(
+      find.byKey(const ValueKey('delete-forever')),
+    );
+    expect(forever.style!.backgroundColor!.resolve({}), scheme.error);
+    expect(repository.deleteCalls, 0);
+  });
+
   testWidgets('settings separates dangerous account actions', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 1200));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -130,9 +256,9 @@ void main() {
     await tester.pumpAndSettle();
 
     await _scrollToDeleteAction(tester);
-    expect(find.text('Hesap İşlemleri'), findsOneWidget);
+    expect(find.text('Hesap işlemleri'), findsOneWidget);
     expect(find.text('Bu alandaki işlemler geri alınamaz.'), findsOneWidget);
-    expect(find.text('Hesabımı Sil'), findsOneWidget);
+    expect(find.text('Hesabımı sil'), findsOneWidget);
   });
 
   testWidgets('settings shows the package version in light and dark themes', (
@@ -219,14 +345,14 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam Et'));
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
       'SIL',
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.tap(find.text('Kalıcı olarak sil'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
@@ -255,14 +381,14 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam Et'));
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
       'SIL',
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.tap(find.text('Kalıcı olarak sil'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
@@ -291,14 +417,14 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam Et'));
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
       'SIL',
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.tap(find.text('Kalıcı olarak sil'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
@@ -310,7 +436,7 @@ void main() {
     // başlık düzeltmesi) metin, listeyle birlikte kaydırılıp ağaçtan
     // düşebiliyor. Asıl iddia gezinme: ekran hâlâ yerinde mi?
     expect(find.byType(SettingsScreen), findsOneWidget);
-    expect(find.text('Hesap silinemedi. Lütfen tekrar dene.'), findsOneWidget);
+    expect(find.text('Hesap silinemedi. Tekrar dene.'), findsOneWidget);
   });
 
   testWidgets('account cleanup continues if settings unmounts after deletion', (
@@ -344,18 +470,18 @@ void main() {
     final deleteAction = await _scrollToDeleteAction(tester);
     await tester.tap(deleteAction);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Devam Et'));
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('delete-confirm-field')),
       'SIL',
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Kalıcı Olarak Sil'));
+    await tester.tap(find.text('Kalıcı olarak sil'));
     await tester.pump();
     await repository.deleteStarted.future;
 
-    await tester.pageBack();
+    await tester.tap(find.byType(ZkBackButton));
     await tester.pumpAndSettle();
     repository.allowDelete.complete();
     await tester.pump();
@@ -366,12 +492,27 @@ void main() {
     expect(authProvider.discardedRewardsOwnerId, 'user');
   });
 
-  testWidgets('Kurmancî arayüzde oyuncu adı yer tutucusu çevrilir', (
+  // 2026-09-29 doğallık: bu iki bekçi çevrilmiş yer tutucuyu ("Lîstikvan",
+  // "Oyuncu") kutunun DEĞERİ olarak sabitliyordu. Adını hiç seçmemiş oyuncu
+  // "Oyuncu" adlı biri gibi görünüyordu ve yazmadan önce kutuyu silmesi
+  // gerekiyordu. Şimdi kutu boştur, dile göre ipucu (`K.playerNameHint`)
+  // görünür. Asıl kusur (Kurmancî arayüzde Türkçe ham yer tutucu) hâlâ
+  // bekçide: `ZanKurd Oyuncusu` hiçbir biçimde görünmez.
+  String fieldText(WidgetTester tester) => tester
+      .widget<TextField>(
+        find.descendant(
+          of: find.byKey(const ValueKey('settings-player-name-field')),
+          matching: find.byType(TextField),
+        ),
+      )
+      .controller!
+      .text;
+
+  testWidgets('Kurmancî arayüzde yer tutucu ad kutuya yazılmaz', (
     tester,
   ) async {
     // Depo, gerçek bir seçim olmayan `ZanKurd Oyuncusu` yer tutucusunu
-    // döndürür. Diğer ekranlar bunu `PlayerIdentity` üzerinden dile
-    // çevirir; ayarlar ekranı ham değeri kutuya yazıyor ve Kurmancî
+    // döndürür. Ayarlar ekranı ham değeri kutuya yazıyor ve Kurmancî
     // arayüzde oyuncu kendi adını Türkçe görüyordu (2026-07-26).
     await tester.pumpWidget(
       testShell(
@@ -383,18 +524,49 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('ZanKurd Oyuncusu'), findsNothing);
-    expect(find.text('Lîstikvan'), findsOneWidget);
+    expect(fieldText(tester), isEmpty);
+    expect(find.text('Navê xwe binivîse…'), findsOneWidget);
   });
 
-  testWidgets('Türkçe arayüzde yer tutucu Türkçe karşılığını alır', (
-    tester,
-  ) async {
+  testWidgets('Türkçe arayüzde kutu boş, ipucu Türkçe', (tester) async {
     await tester.pumpWidget(
       testShell(child: SettingsScreen(repository: MockZanKurdRepository())),
     );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('Oyuncu'), findsOneWidget);
+    expect(find.text('ZanKurd Oyuncusu'), findsNothing);
+    expect(fieldText(tester), isEmpty);
+    expect(find.text('Oyundaki adını gir…'), findsOneWidget);
+  });
+
+  testWidgets('Kaydet ad değişmeden kapalı, değişince birincil ve açık', (
+    tester,
+  ) async {
+    // 2026-09-30 denetimi: ikincil çerçeveli "Kaydet" ad değişse de
+    // değişmese de aynı görünüyordu; yazan kişi kaydedilecek bir şey olduğunu
+    // fark etmiyordu. Şimdi değişmemişken kapalı, değişince Agir.
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    final saveFinder = find.widgetWithText(SahneButton, 'Kaydet');
+    expect(saveFinder, findsOneWidget);
+    FilledButton button() => tester.widget<FilledButton>(
+      find.descendant(of: saveFinder, matching: find.byType(FilledButton)),
+    );
+    expect(button().onPressed, isNull);
+
+    await tester.enterText(
+      find.descendant(
+        of: find.byKey(const ValueKey('settings-player-name-field')),
+        matching: find.byType(TextField),
+      ),
+      'Rojda',
+    );
+    await tester.pump();
+    expect(button().onPressed, isNotNull);
   });
 }

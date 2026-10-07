@@ -61,25 +61,23 @@ StreakPanel _panel({
 );
 
 void main() {
-  testWidgets(
-    'gün durumu anonsu ham enum adını değil çevrilmiş etiketi okur '
-    '(2026-08-14)',
-    (tester) async {
-      // `Semantics.label` eskiden '$label: ${state.name}' üretiyordu — yani
-      // TalkBack/VoiceOver "Pt: completed" gibi ham İngilizce enum adını
-      // okuyordu. Görsel ikon/renk dilden bağımsız kalabilir ama anons
-      // kalamaz.
-      await tester.pumpWidget(
-        _wrap(_panel(days: const [StreakDayState.completed])),
-      );
-      final dayMarkFinder = find.byWidgetPredicate(
-        (widget) => widget is Semantics && (widget.properties.label ?? '').contains('Pt'),
-      );
-      final semantics = tester.getSemantics(dayMarkFinder);
-      expect(semantics.label, isNot(contains('completed')));
-      expect(semantics.label, contains('Tamamlandı'));
-    },
-  );
+  testWidgets('gün durumu anonsu ham enum adını değil çevrilmiş etiketi okur '
+      '(2026-08-14)', (tester) async {
+    // `Semantics.label` eskiden '$label: ${state.name}' üretiyordu — yani
+    // TalkBack/VoiceOver "Pt: completed" gibi ham İngilizce enum adını
+    // okuyordu. Görsel ikon/renk dilden bağımsız kalabilir ama anons
+    // kalamaz.
+    await tester.pumpWidget(
+      _wrap(_panel(days: const [StreakDayState.completed])),
+    );
+    final dayMarkFinder = find.byWidgetPredicate(
+      (widget) =>
+          widget is Semantics && (widget.properties.label ?? '').contains('Pt'),
+    );
+    final semantics = tester.getSemantics(dayMarkFinder);
+    expect(semantics.label, isNot(contains('completed')));
+    expect(semantics.label, contains('Tamamlandı'));
+  });
 
   testWidgets('her gün durumu ayrı ikon taşır', (tester) async {
     // Renk tek kanal olamaz: "kaçırdım" ile "henüz gelmedi" arasındaki fark
@@ -186,7 +184,7 @@ void main() {
                   current: 12,
                   freezeState: StreakFreezeState.available,
                   freezeLabel: 'Amade ye ji bo parastinê',
-                  freezeActionLabel: 'Rêzê biparêze',
+                  freezeActionLabel: 'Zincîrê biparêze',
                   nextMilestone: 30,
                   freezeCost: 50,
                   onFreeze: () {},
@@ -224,6 +222,7 @@ void main() {
       'K.streakFreezeNoCoins',
       'K.streakWeekdays',
       'K.streakDayUnit',
+      'K.streakProtectAction',
     ]) {
       expect(home, contains(key), reason: '$key kullanilmiyor');
     }

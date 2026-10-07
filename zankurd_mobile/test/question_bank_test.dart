@@ -61,6 +61,11 @@ void main() {
   // topluluk sorularında A hiçbir zaman doğru değildi. Koruma vardı,
   // kapsamı eksikti. Ölçüm artık `questionBankAssets`teki her bankayı
   // kapsıyor — araç da öyle.
+  // 2026-10-02: bu bekçi YALNIZ küresel yayılıma bakar; kategori başına denge
+  // (oynanabilir sorularda her konum %25 ± 5) ve doğru/yanlış şık sırası
+  // `answer_position_category_balance_test.dart`ta. Araç artık
+  // `--playable .tmp/parity/local_bank.json` ile oynanabilir kümeyi de
+  // kategori başına dengeler (bkz. `tool/rebalance_answer_positions.py`).
   test('displayed correct-answer positions are balanced', () {
     final counts = List<int>.filled(4, 0);
     final all = [

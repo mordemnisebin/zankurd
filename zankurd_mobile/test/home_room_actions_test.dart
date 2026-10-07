@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -8,6 +9,7 @@ import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 import 'package:zankurd_mobile/main.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'support/widget_test_helpers.dart';
 
 class _CapturingJoinRepository extends MockZanKurdRepository {
@@ -51,16 +53,21 @@ void main() {
     await tester.pumpAndSettle();
 
     // Oda kurucusu artık soru başına süreyi seçtiği bir sheet görür.
-    expect(find.text('Odayı Aç'), findsOneWidget);
-    await tester.tap(find.text('Odayı Aç'));
+    // Sheet kaydırılabilir; onay düğmesi görünür alanın altında kalıyor.
+    // `ensureVisible` olmadan `tap` sessizce boşa düşer.
+    final openButton = find.text('Odayı aç');
+    expect(openButton, findsOneWidget);
+    await tester.ensureVisible(openButton);
+    await tester.pump();
+    await tester.tap(openButton);
     await tester.pumpAndSettle();
 
     expect(find.text('Hevalên Zanînê'), findsOneWidget);
-    expect(find.text('Yarışı Başlat'), findsOneWidget);
+    expect(find.text('Yarışı başlat'), findsOneWidget);
 
-    await tester.ensureVisible(find.text('Yarışı Başlat'));
+    await tester.ensureVisible(find.text('Yarışı başlat'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Yarışı Başlat'));
+    await tester.tap(find.text('Yarışı başlat'));
     await tester.pumpAndSettle();
 
     expect(find.byType(QuizScreen), findsOneWidget);
@@ -83,16 +90,16 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Günün Etkinliği'));
+    await tester.ensureVisible(find.text('Günün soruları'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Günün Etkinliği'));
+    await tester.tap(find.text('Günün soruları'));
     await tester.pumpAndSettle();
 
     // Mock her gün etkinlik döner → etkinlik lobisi; oradan quiz başlar.
     expect(find.byType(ContestScreen), findsOneWidget);
-    expect(find.text('Etkinliğe başla'), findsOneWidget);
+    expect(find.text('Başla'), findsOneWidget);
 
-    await tester.tap(find.text('Etkinliğe başla'));
+    await tester.tap(find.text('Başla'));
     await tester.pumpAndSettle();
 
     expect(find.byType(QuizScreen), findsOneWidget);
@@ -142,7 +149,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Bi kodê tevlî bibe'), findsOneWidget);
+    expect(find.text('Bi kodê têkeve'), findsOneWidget);
     expect(find.text('Bi Kodê Tevlî Bibe'), findsNothing);
     expect(find.text('Bi Kodê Bikeve'), findsNothing);
   });
@@ -172,7 +179,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('play-hub-join-room')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Odaya Katıl'), findsOneWidget);
+    expect(find.text('Odaya katıl'), findsOneWidget);
     expect(find.text('Oda kodu'), findsOneWidget);
     expect(find.text('Katıl'), findsOneWidget);
     expect(
@@ -240,15 +247,12 @@ void main() {
 
     final field = find.byKey(const ValueKey('play-hub-join-room-code-field'));
     for (final rune in 'ZK-ABCDEF0123'.runes) {
-      final current = tester.widget<TextFormField>(field).controller!.text;
+      final current = tester.widget<SahneField>(field).controller!.text;
       await tester.enterText(field, '$current${String.fromCharCode(rune)}');
       await tester.pump();
     }
 
-    expect(
-      tester.widget<TextFormField>(field).controller!.text,
-      'ZK-ABCDEF0123',
-    );
+    expect(tester.widget<SahneField>(field).controller!.text, 'ZK-ABCDEF0123');
     await tester.tap(find.text('Katıl'));
     await tester.pumpAndSettle();
     expect(repository.joinedCode, 'ZK-ABCDEF0123');
@@ -280,7 +284,7 @@ void main() {
 
     final field = find.byKey(const ValueKey('play-hub-join-room-code-field'));
     for (final rune in 'ZKAB'.runes) {
-      final current = tester.widget<TextFormField>(field).controller!.text;
+      final current = tester.widget<SahneField>(field).controller!.text;
       await tester.enterText(field, '$current${String.fromCharCode(rune)}');
       await tester.pump();
     }

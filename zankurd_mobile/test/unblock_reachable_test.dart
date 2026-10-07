@@ -92,9 +92,10 @@ void main() {
       // (2026-07-31_chat_moderation.sql); `profiles`e FK yok, yani PostgREST
       // bunu bir tabloya gömme (embed) olarak asla çözemez — her çağrı
       // şema hatasıyla düşüyordu.
-      final brokenEmbed = ['profiles!blocked_users_blocked_id', 'fkey'].join(
-        '_',
-      );
+      final brokenEmbed = [
+        'profiles!blocked_users_blocked_id',
+        'fkey',
+      ].join('_');
       expect(
         executableSrc,
         isNot(contains(brokenEmbed)),

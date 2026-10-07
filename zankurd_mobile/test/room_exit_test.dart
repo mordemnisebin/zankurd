@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -211,10 +212,7 @@ void main() {
 
     expect(repository.leaveCalls, 1);
     expect(find.byType(RoomScreen), findsOneWidget);
-    expect(
-      find.text('Odadan ayrılamadın. Lütfen tekrar dene.'),
-      findsOneWidget,
-    );
+    expect(find.text('Odadan ayrılamadın. Tekrar dene.'), findsOneWidget);
     expect(repository.playerSubscriptionCount, 2);
     expect(repository.statusSubscriptionCount, 2);
     expect(find.byTooltip('Odadan ayrıl'), findsOneWidget);
@@ -264,10 +262,7 @@ void main() {
       reason: 'Asılı çağrı ekranı süresiz spinner hâlinde bırakmamalı',
     );
     expect(find.byType(RoomScreen), findsOneWidget);
-    expect(
-      find.text('Odadan ayrılamadın. Lütfen tekrar dene.'),
-      findsOneWidget,
-    );
+    expect(find.text('Odadan ayrılamadın. Tekrar dene.'), findsOneWidget);
     // Oyuncu yeniden deneyebilmeli: lobi izleme de geri gelmiş olmalı.
     expect(find.byTooltip('Odadan ayrıl'), findsOneWidget);
   });
@@ -451,10 +446,7 @@ void main() {
       // geçici SnackBar'ın hangi anda göründüğü animasyona bağlıdır ve bu
       // testin konusu değil; kalıcı gösterge aşağıda doğrulanıyor.
       expect(repository.questionLoadCalls, 3);
-      expect(
-        find.textContaining('Sorular yüklenemedi'),
-        findsOneWidget,
-      );
+      expect(find.textContaining('Sorular yüklenemedi'), findsOneWidget);
 
       // Sınıra ulaşınca da "Odadan ayrıl" hâlâ çalışır — kullanıcı kilitli
       // kalmaz.

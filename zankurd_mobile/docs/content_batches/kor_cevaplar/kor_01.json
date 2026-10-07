@@ -1,0 +1,982 @@
+[
+  {
+    "id": "comm_cog_0001",
+    "cevap": "Bakûrê Kurdistan"
+  },
+  {
+    "id": "comm_cog_0002",
+    "cevap": "Artuklu"
+  },
+  {
+    "id": "comm_cog_0003",
+    "cevap": "Mêrdîn"
+  },
+  {
+    "id": "comm_cog_0004",
+    "cevap": "Wan û Bidlîs"
+  },
+  {
+    "id": "comm_cog_0005",
+    "cevap": "Dêrsim"
+  },
+  {
+    "id": "comm_muz_0001",
+    "cevap": "Koma Amed"
+  },
+  {
+    "id": "comm_muz_0002",
+    "cevap": "Qamişlo"
+  },
+  {
+    "id": "comm_muz_0003",
+    "cevap": "Ahmet Kaya"
+  },
+  {
+    "id": "comm_muz_0004",
+    "cevap": "Serhado"
+  },
+  {
+    "id": "comm_muz_0005",
+    "cevap": "Şerifê Omerî"
+  },
+  {
+    "id": "comm_ede_0001",
+    "cevap": "11"
+  },
+  {
+    "id": "comm_ede_0002",
+    "cevap": "Şivanê Kurd"
+  },
+  {
+    "id": "comm_ede_0003",
+    "cevap": "Gotineke pêşiyan"
+  },
+  {
+    "id": "comm_ede_0004",
+    "cevap": "Mehmed Uzun"
+  },
+  {
+    "id": "comm_sin_0001",
+    "cevap": "?"
+  },
+  {
+    "id": "comm_sin_0003",
+    "cevap": "Kesên ku bi xwe beşdarî berxwedanê bûne"
+  },
+  {
+    "id": "comm_sin_0004",
+    "cevap": "?"
+  },
+  {
+    "id": "comm_sin_0005",
+    "cevap": "?"
+  },
+  {
+    "id": "comm_sin_0006",
+    "cevap": "2016"
+  },
+  {
+    "id": "comm_sin_0007",
+    "cevap": "Amed (Sûr)"
+  },
+  {
+    "id": "comm_sin_0008",
+    "cevap": "Ersin Çelik"
+  },
+  {
+    "id": "comm_sin_0009",
+    "cevap": "?"
+  },
+  {
+    "id": "comm_dir_0001",
+    "cevap": "?"
+  },
+  {
+    "id": "comm_dir_0002",
+    "cevap": "?"
+  },
+  {
+    "id": "comm_dir_0003",
+    "cevap": "Arîn Mirkan"
+  },
+  {
+    "id": "comm_dir_0004",
+    "cevap": "Viyan Peyman"
+  },
+  {
+    "id": "comm_dir_0006",
+    "cevap": "Gümüşhane"
+  },
+  {
+    "id": "comm_dir_0007",
+    "cevap": "Ordu"
+  },
+  {
+    "id": "comm_dir_0008",
+    "cevap": "Hakî Karer"
+  },
+  {
+    "id": "comm_dir_0009",
+    "cevap": "?"
+  },
+  {
+    "id": "comm_siy_0001",
+    "cevap": "?"
+  },
+  {
+    "id": "comm_siy_0002",
+    "cevap": "YPJ"
+  },
+  {
+    "id": "comm_sin_0101",
+    "cevap": "Palmeya Zêrîn"
+  },
+  {
+    "id": "comm_sin_0102",
+    "cevap": "Şerif Gören"
+  },
+  {
+    "id": "comm_sin_0103",
+    "cevap": "Yılmaz Güney"
+  },
+  {
+    "id": "comm_sin_0104",
+    "cevap": "Bahman Ghobadi"
+  },
+  {
+    "id": "comm_sin_0105",
+    "cevap": "Bahman Ghobadi"
+  },
+  {
+    "id": "comm_sin_0106",
+    "cevap": "Hiner Saleem"
+  },
+  {
+    "id": "comm_sin_0107",
+    "cevap": "Kazım Öz"
+  },
+  {
+    "id": "comm_sin_0108",
+    "cevap": "1984"
+  },
+  {
+    "id": "comm_sin_0109",
+    "cevap": "Duvar"
+  },
+  {
+    "id": "comm_sin_0110",
+    "cevap": "Erol Mintaş"
+  },
+  {
+    "id": "comm_sin_0111",
+    "cevap": "Yılmaz Güney"
+  },
+  {
+    "id": "comm_sin_0112",
+    "cevap": "Rojhilatê Kurdistanê"
+  },
+  {
+    "id": "edit_ziman_0001",
+    "cevap": "31"
+  },
+  {
+    "id": "edit_ziman_0002",
+    "cevap": "Celadet Alî Bedirxan"
+  },
+  {
+    "id": "edit_ziman_0003",
+    "cevap": "8"
+  },
+  {
+    "id": "edit_ziman_0004",
+    "cevap": "Veqetandek (izafe)"
+  },
+  {
+    "id": "edit_ziman_0005",
+    "cevap": "Mê"
+  },
+  {
+    "id": "edit_ziman_0006",
+    "cevap": "-an"
+  },
+  {
+    "id": "edit_ziman_0007",
+    "cevap": "Ew dike"
+  },
+  {
+    "id": "edit_ziman_0008",
+    "cevap": "Di dema borî ya lêkerên gerguhêz de bikerê tewandî"
+  },
+  {
+    "id": "edit_ziman_0009",
+    "cevap": "Roj + name"
+  },
+  {
+    "id": "edit_ziman_0011",
+    "cevap": "at"
+  },
+  {
+    "id": "edit_ziman_0013",
+    "cevap": "Şa"
+  },
+  {
+    "id": "edit_ziman_0014",
+    "cevap": "Sar"
+  },
+  {
+    "id": "edit_ziman_0015",
+    "cevap": "Peyvên wek \"di, bi, ji, li\" yên ku têkiliya navdêran diyar dikin"
+  },
+  {
+    "id": "edit_ziman_0016",
+    "cevap": "Were"
+  },
+  {
+    "id": "edit_ziman_0017",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_ziman_0019",
+    "cevap": "Belavkirina alfabeya latînî ya kurdî"
+  },
+  {
+    "id": "edit_ziman_0020",
+    "cevap": "\"Ez\" rewşa xwerû, \"min\" rewşa tewandî ye"
+  },
+  {
+    "id": "edit_cand_0002",
+    "cevap": "Hesinker"
+  },
+  {
+    "id": "edit_cand_0003",
+    "cevap": "Govend"
+  },
+  {
+    "id": "edit_cand_0004",
+    "cevap": "Mamik / bilmece"
+  },
+  {
+    "id": "edit_cand_0005",
+    "cevap": "Klîtik / kofî"
+  },
+  {
+    "id": "edit_cand_0006",
+    "cevap": "civîna şevê ya çîrok û stranan"
+  },
+  {
+    "id": "edit_cand_0007",
+    "cevap": "Kutilk"
+  },
+  {
+    "id": "edit_cand_0008",
+    "cevap": "Hogir / dost"
+  },
+  {
+    "id": "edit_cand_0009",
+    "cevap": "Evîna Mem û Zînê ya ku nagihîje hev"
+  },
+  {
+    "id": "edit_cand_0010",
+    "cevap": "Şaş"
+  },
+  {
+    "id": "edit_cand_0011",
+    "cevap": "Kesên ku bûkê ji mala wê tînin"
+  },
+  {
+    "id": "edit_cand_0012",
+    "cevap": "Girêdana malbatan bi rêya sinetê"
+  },
+  {
+    "id": "edit_cand_0013",
+    "cevap": "Sor, spî, kesk û zer"
+  },
+  {
+    "id": "edit_cand_0014",
+    "cevap": "gotinên kurt ên ku ezmûna nifşan digihînin hev"
+  },
+  {
+    "id": "edit_cand_0015",
+    "cevap": "Mast û av"
+  },
+  {
+    "id": "edit_cand_0016",
+    "cevap": "Kesê pîr ê bi rûmet ê ku pirsgirêkan çareser dike"
+  },
+  {
+    "id": "edit_dirok_0001",
+    "cevap": "1932"
+  },
+  {
+    "id": "edit_dirok_0002",
+    "cevap": "1898, Qahîre"
+  },
+  {
+    "id": "edit_dirok_0003",
+    "cevap": "Vegirtina Qudsê di 1187an de"
+  },
+  {
+    "id": "edit_dirok_0004",
+    "cevap": "1923"
+  },
+  {
+    "id": "edit_dirok_0005",
+    "cevap": "Ji bo herêmeke kurdî ya xweser madde dihewand"
+  },
+  {
+    "id": "edit_dirok_0006",
+    "cevap": "Sedsala 7em a berî zayînê"
+  },
+  {
+    "id": "edit_dirok_0007",
+    "cevap": "1692"
+  },
+  {
+    "id": "edit_dirok_0008",
+    "cevap": "Cizîr"
+  },
+  {
+    "id": "edit_dirok_0009",
+    "cevap": "Dîroknameya mîrektiyên kurdan"
+  },
+  {
+    "id": "edit_dirok_0010",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_dirok_0012",
+    "cevap": "Serokê Komara Mehabadê"
+  },
+  {
+    "id": "edit_dirok_0013",
+    "cevap": "Amida"
+  },
+  {
+    "id": "edit_dirok_0014",
+    "cevap": "Koçberiya bi darê zorê"
+  },
+  {
+    "id": "edit_dirok_0015",
+    "cevap": "Mezopotamyaya jorîn"
+  },
+  {
+    "id": "edit_edebiyat_0001",
+    "cevap": "Ehmedê Xanî"
+  },
+  {
+    "id": "edit_edebiyat_0002",
+    "cevap": "Dîwana xwe ya helbestên sofîyane"
+  },
+  {
+    "id": "edit_edebiyat_0003",
+    "cevap": "helbestên xwe yên li ser xweza û teyran"
+  },
+  {
+    "id": "edit_edebiyat_0004",
+    "cevap": "Roman"
+  },
+  {
+    "id": "edit_edebiyat_0005",
+    "cevap": "Soranî"
+  },
+  {
+    "id": "edit_edebiyat_0006",
+    "cevap": "Berhevoka helbestên helbestvanekî"
+  },
+  {
+    "id": "edit_edebiyat_0007",
+    "cevap": "Helbestvan"
+  },
+  {
+    "id": "edit_edebiyat_0008",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_edebiyat_0009",
+    "cevap": "Farisî û erebî"
+  },
+  {
+    "id": "edit_edebiyat_0010",
+    "cevap": "ferhengeke helbestî ya kurdî-erebî ji bo zarokan"
+  },
+  {
+    "id": "edit_edebiyat_0012",
+    "cevap": "Erebê Şemo"
+  },
+  {
+    "id": "edit_cografya_0001",
+    "cevap": "Zagros"
+  },
+  {
+    "id": "edit_cografya_0003",
+    "cevap": "Gola Wanê"
+  },
+  {
+    "id": "edit_cografya_0004",
+    "cevap": "Dîcle û Firat"
+  },
+  {
+    "id": "edit_cografya_0005",
+    "cevap": "Herêma Kurdistanê ya Iraqê"
+  },
+  {
+    "id": "edit_cografya_0006",
+    "cevap": "Amed"
+  },
+  {
+    "id": "edit_cografya_0007",
+    "cevap": "Riha"
+  },
+  {
+    "id": "edit_cografya_0008",
+    "cevap": "Dîcle"
+  },
+  {
+    "id": "edit_cografya_0009",
+    "cevap": "Dîcle"
+  },
+  {
+    "id": "edit_cografya_0010",
+    "cevap": "Dîcle"
+  },
+  {
+    "id": "edit_cografya_0011",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_cografya_0012",
+    "cevap": "Başûr"
+  },
+  {
+    "id": "edit_cografya_0013",
+    "cevap": "Rojava"
+  },
+  {
+    "id": "edit_cografya_0014",
+    "cevap": "Rojhilatê Kurdistanê"
+  },
+  {
+    "id": "edit_muzik_0001",
+    "cevap": "Stranbêjê devkî yê ku çîrokan bi kilaman dibêje"
+  },
+  {
+    "id": "edit_muzik_0002",
+    "cevap": "Tembûr"
+  },
+  {
+    "id": "edit_muzik_0003",
+    "cevap": "Amûra pifê"
+  },
+  {
+    "id": "edit_muzik_0004",
+    "cevap": "Dawet û govendê"
+  },
+  {
+    "id": "edit_muzik_0005",
+    "cevap": "Stranbêjiya kurdî ya nûjen û siyasî"
+  },
+  {
+    "id": "edit_muzik_0006",
+    "cevap": "Stranên dirêj ên çîrokî"
+  },
+  {
+    "id": "edit_muzik_0007",
+    "cevap": "yek ji dengên jin ên pêşeng ê muzîka kurdî ye"
+  },
+  {
+    "id": "edit_muzik_0008",
+    "cevap": "Cureyekî kilamê yê bi gelemperî evîndar"
+  },
+  {
+    "id": "edit_muzik_0009",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_muzik_0011",
+    "cevap": "Komên muzîka kurdî ya nûjen"
+  },
+  {
+    "id": "edit_muzik_0012",
+    "cevap": "şarkı"
+  },
+  {
+    "id": "edit_muzik_0013",
+    "cevap": "Amûra lêdanê ya wek def"
+  },
+  {
+    "id": "edit_siyaset_0001",
+    "cevap": "Çar"
+  },
+  {
+    "id": "edit_siyaset_0003",
+    "cevap": "Rêveberiya bi jin û mêrekî bi hev re"
+  },
+  {
+    "id": "edit_siyaset_0005",
+    "cevap": "Rêxistinbûna jinan li Rojava"
+  },
+  {
+    "id": "edit_siyaset_0006",
+    "cevap": "Komelgeha Jinên Azad a Rojhilatê Kurdistanê"
+  },
+  {
+    "id": "edit_siyaset_0007",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_siyaset_0008",
+    "cevap": "2017"
+  },
+  {
+    "id": "edit_siyaset_0010",
+    "cevap": "nasnameyên cuda di nav yek civakê de tên parastin, dewlet ne pêwîst e"
+  },
+  {
+    "id": "edit_siyaset_0011",
+    "cevap": "özgürlük"
+  },
+  {
+    "id": "edit_siyaset_0012",
+    "cevap": "yekeya biryardayînê ya herî biçûk a taxê an gund"
+  },
+  {
+    "id": "edit_paradigma_0001",
+    "cevap": "Zanista jinê û jiyanê"
+  },
+  {
+    "id": "edit_paradigma_0002",
+    "cevap": "Lihevhatina civak û xwezayê"
+  },
+  {
+    "id": "edit_paradigma_0003",
+    "cevap": "Parastina civakê bi rêxistinbûna wê ya xwe"
+  },
+  {
+    "id": "edit_paradigma_0004",
+    "cevap": "Modernîteya kapîtalîst"
+  },
+  {
+    "id": "edit_paradigma_0005",
+    "cevap": "Civaka ku bi nirx û biryardayîna hevpar tê birêvebirin"
+  },
+  {
+    "id": "edit_paradigma_0006",
+    "cevap": "Şaş"
+  },
+  {
+    "id": "edit_paradigma_0007",
+    "cevap": "hilberîn li gorî pêdiviya civakê, ne li gorî qezencê"
+  },
+  {
+    "id": "edit_paradigma_0008",
+    "cevap": "Wek pêvajoyên dîrokî yên ku dikarin bên guhertin"
+  },
+  {
+    "id": "edit_paradigma_0009",
+    "cevap": "yaşam"
+  },
+  {
+    "id": "edit_paradigma_0010",
+    "cevap": "ji ber ku koletiya yekem li ser jinê hatiye avakirin"
+  },
+  {
+    "id": "edit_ziman_0021",
+    "cevap": "ağaç"
+  },
+  {
+    "id": "edit_ziman_0024",
+    "cevap": "10"
+  },
+  {
+    "id": "edit_ziman_0025",
+    "cevap": "nebinavkirîbûn (yek/bir)"
+  },
+  {
+    "id": "edit_ziman_0027",
+    "cevap": "Li gorî bireserê (ew)"
+  },
+  {
+    "id": "edit_ziman_0028",
+    "cevap": "Xwendin"
+  },
+  {
+    "id": "edit_ziman_0029",
+    "cevap": "Cih / war"
+  },
+  {
+    "id": "edit_ziman_0030",
+    "cevap": "\"Tu\" yekjimar, \"hûn\" pirjimar/rêzdarî ye"
+  },
+  {
+    "id": "edit_ziman_0031",
+    "cevap": "bi-"
+  },
+  {
+    "id": "edit_ziman_0032",
+    "cevap": "na-"
+  },
+  {
+    "id": "edit_ziman_0033",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_cand_0017",
+    "cevap": "Li ber xwe dan / direniş"
+  },
+  {
+    "id": "edit_cand_0018",
+    "cevap": "Belg û sebzeyên dagirtî"
+  },
+  {
+    "id": "edit_cand_0019",
+    "cevap": "Agir"
+  },
+  {
+    "id": "edit_cand_0020",
+    "cevap": "Yê ku li pêşiya mirinê ye"
+  },
+  {
+    "id": "edit_cand_0021",
+    "cevap": "Komeke malbatên bi xizmî girêdayî"
+  },
+  {
+    "id": "edit_cand_0022",
+    "cevap": "Şeva herî dirêj a salê"
+  },
+  {
+    "id": "edit_cand_0023",
+    "cevap": "diyariya ku ji bo bûkê tê dayîn"
+  },
+  {
+    "id": "edit_cand_0024",
+    "cevap": "Odeya mêvanan û civînê"
+  },
+  {
+    "id": "edit_dirok_0016",
+    "cevap": "1597"
+  },
+  {
+    "id": "edit_dirok_0017",
+    "cevap": "Botan"
+  },
+  {
+    "id": "edit_dirok_0018",
+    "cevap": "Silêmanî"
+  },
+  {
+    "id": "edit_dirok_0019",
+    "cevap": "Herêma kurdî di navbera Osmanî û Sefewiyan de hat parvekirin"
+  },
+  {
+    "id": "edit_dirok_0020",
+    "cevap": "Salên 1918-1919an"
+  },
+  {
+    "id": "edit_dirok_0021",
+    "cevap": "Rêxistineke siyasî ya kurdan a salên 1920î"
+  },
+  {
+    "id": "edit_dirok_0022",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_dirok_0023",
+    "cevap": "Bêwelatiya kurdên Sûriyeyê piştî serjimara 1962an"
+  },
+  {
+    "id": "edit_dirok_0024",
+    "cevap": "Yek ji kevintirîn cihên bi domdarî lêniştî yên cîhanê"
+  },
+  {
+    "id": "edit_edebiyat_0013",
+    "cevap": "Helbestvanekî klasîk ê pêşîn"
+  },
+  {
+    "id": "edit_edebiyat_0014",
+    "cevap": "Pêşxistina zimanê nivîskî yê kurdî"
+  },
+  {
+    "id": "edit_edebiyat_0016",
+    "cevap": "Bekir"
+  },
+  {
+    "id": "edit_edebiyat_0017",
+    "cevap": "Welatparêzî, azadî û jiyana gel"
+  },
+  {
+    "id": "edit_edebiyat_0018",
+    "cevap": "Piştî salên 1980î"
+  },
+  {
+    "id": "edit_edebiyat_0019",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_cografya_0016",
+    "cevap": "Çiyayên rojhilatê Anatolyayê"
+  },
+  {
+    "id": "edit_cografya_0017",
+    "cevap": "Başûrê Kurdistanê"
+  },
+  {
+    "id": "edit_cografya_0018",
+    "cevap": "Avahiyên kevirî yên li ser çiyê"
+  },
+  {
+    "id": "edit_cografya_0019",
+    "cevap": "Şirnex"
+  },
+  {
+    "id": "edit_cografya_0020",
+    "cevap": "köy"
+  },
+  {
+    "id": "edit_cografya_0021",
+    "cevap": "Herêma bilind a Agirî-Wan-Mûşê"
+  },
+  {
+    "id": "edit_cografya_0022",
+    "cevap": "Di navbera Dîcle û Firatê de, bakurê rojhilatê Sûriyeyê"
+  },
+  {
+    "id": "edit_cografya_0023",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_muzik_0014",
+    "cevap": "Amûra pifê"
+  },
+  {
+    "id": "edit_muzik_0015",
+    "cevap": "stranên kurt ên bi gelemperî evîndar"
+  },
+  {
+    "id": "edit_muzik_0016",
+    "cevap": "Dengbêjeke jin a navdar a sedsala 20em"
+  },
+  {
+    "id": "edit_muzik_0017",
+    "cevap": "bi salan stranên kurdî li seranserê herêmê belav kir"
+  },
+  {
+    "id": "edit_muzik_0018",
+    "cevap": "ses"
+  },
+  {
+    "id": "edit_muzik_0019",
+    "cevap": "Bûyerên şer û berxwedanê"
+  },
+  {
+    "id": "edit_muzik_0020",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_siyaset_0013",
+    "cevap": "Bi nîqaş û lihevkirina beşdaran"
+  },
+  {
+    "id": "edit_siyaset_0014",
+    "cevap": "Bexda, Îlam û sînorê Iraq-Îranê"
+  },
+  {
+    "id": "edit_siyaset_0015",
+    "cevap": "halk"
+  },
+  {
+    "id": "edit_siyaset_0016",
+    "cevap": "Maddeya 140î"
+  },
+  {
+    "id": "edit_siyaset_0017",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_siyaset_0018",
+    "cevap": "Ewropaya Rojava"
+  },
+  {
+    "id": "edit_paradigma_0011",
+    "cevap": "Hilberîna hevpar li şûna kara kesane"
+  },
+  {
+    "id": "edit_paradigma_0012",
+    "cevap": "Perwerdehiya civakî û ramanî"
+  },
+  {
+    "id": "edit_paradigma_0013",
+    "cevap": "zanist ji civak û exlaqê nayê veqetandin"
+  },
+  {
+    "id": "edit_paradigma_0014",
+    "cevap": "doğa"
+  },
+  {
+    "id": "edit_paradigma_0015",
+    "cevap": "Şaş"
+  },
+  {
+    "id": "edit_ziman_0036",
+    "cevap": "el"
+  },
+  {
+    "id": "edit_ziman_0038",
+    "cevap": "teşekkür"
+  },
+  {
+    "id": "edit_ziman_0039",
+    "cevap": "Kurt"
+  },
+  {
+    "id": "edit_ziman_0040",
+    "cevap": "Dema niha"
+  },
+  {
+    "id": "edit_ziman_0041",
+    "cevap": "Kesê ku karekî dike"
+  },
+  {
+    "id": "edit_ziman_0042",
+    "cevap": "Raweya fermanî"
+  },
+  {
+    "id": "edit_ziman_0043",
+    "cevap": "\"Min got\" rast e"
+  },
+  {
+    "id": "edit_ziman_0044",
+    "cevap": "Zayend: \"-ê\" nêr, \"-a\" mê"
+  },
+  {
+    "id": "edit_ziman_0045",
+    "cevap": "hamur"
+  },
+  {
+    "id": "edit_ziman_0046",
+    "cevap": "Betilî"
+  },
+  {
+    "id": "edit_ziman_0047",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_ziman_0049",
+    "cevap": "Zanîn + geh (cih)"
+  },
+  {
+    "id": "edit_cand_0026",
+    "cevap": "Genim"
+  },
+  {
+    "id": "edit_cand_0028",
+    "cevap": "mûyê bizinê"
+  },
+  {
+    "id": "edit_cand_0029",
+    "cevap": "Jiyana bi ajalan re ya guhêrbar"
+  },
+  {
+    "id": "edit_cand_0030",
+    "cevap": "çîmena çiyayî ya havînê"
+  },
+  {
+    "id": "edit_cand_0031",
+    "cevap": "kesa ku bi dengekî bilind lorî û şîn dibêje"
+  },
+  {
+    "id": "edit_cand_0032",
+    "cevap": "serê sibê / şafak"
+  },
+  {
+    "id": "edit_cand_0033",
+    "cevap": "Evîna trajîk a li çiyê"
+  },
+  {
+    "id": "edit_cand_0034",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_cand_0035",
+    "cevap": "Ji ber ku civak û malbatê tînin cem hev"
+  },
+  {
+    "id": "edit_cand_0036",
+    "cevap": "hevrîşim (ipek) — ji bo tevn û xemlê"
+  },
+  {
+    "id": "edit_cand_0037",
+    "cevap": "amûra hûnandina xalîçe û bêrîkan"
+  },
+  {
+    "id": "edit_cand_0038",
+    "cevap": "Motîfên hêjmarî û sembolîk"
+  },
+  {
+    "id": "edit_cand_0039",
+    "cevap": "danûstandina civakî û biryardayîn"
+  },
+  {
+    "id": "edit_dirok_0025",
+    "cevap": "Bajarekî sînor ê stratejîk"
+  },
+  {
+    "id": "edit_dirok_0026",
+    "cevap": "Amed û derdora wê"
+  },
+  {
+    "id": "edit_dirok_0027",
+    "cevap": "Kafkasya (Gence-Anî)"
+  },
+  {
+    "id": "edit_dirok_0028",
+    "cevap": "Tikrît"
+  },
+  {
+    "id": "edit_dirok_0029",
+    "cevap": "Osmanî û Sefewî"
+  },
+  {
+    "id": "edit_dirok_0030",
+    "cevap": "Navbeynkariya di navbera Osmanî û mîrên kurd de"
+  },
+  {
+    "id": "edit_dirok_0031",
+    "cevap": "Sine (Sanandaj)"
+  },
+  {
+    "id": "edit_dirok_0032",
+    "cevap": "Rast"
+  },
+  {
+    "id": "edit_dirok_0033",
+    "cevap": "Celadet Alî Bedirxan"
+  },
+  {
+    "id": "edit_dirok_0034",
+    "cevap": "Sedsalên 19-20em"
+  },
+  {
+    "id": "edit_dirok_0035",
+    "cevap": "Salên 1950î"
+  },
+  {
+    "id": "edit_dirok_0036",
+    "cevap": "Farisî"
+  },
+  {
+    "id": "edit_dirok_0037",
+    "cevap": "Berxwedana li dijî hêzeke mezin"
+  },
+  {
+    "id": "edit_dirok_0038",
+    "cevap": "tarih"
+  },
+  {
+    "id": "edit_dirok_0039",
+    "cevap": "Sedsala 19em"
+  },
+  {
+    "id": "edit_edebiyat_0020",
+    "cevap": "Cizîr"
+  }
+]

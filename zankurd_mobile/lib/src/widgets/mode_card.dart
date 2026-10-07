@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_icons.dart';
 import '../theme/app_theme.dart';
 import '../theme/kilim_motifs.dart';
+import 'sahne/sahne.dart';
 
-/// Ana sayfadaki büyük oyun/öğrenme modu kartı.
+/// Visual priority for a mode entry.
 ///
-/// Ana sayfa üç modu (ders yolu, konu seçimi, hızlı düello) birbirinin
-/// aynı `AppRowCard` satırlarıyla gösteriyordu: aynı beyaz zemin, aynı
-/// ikon karesi, aynı chevron. Üç farklı iş yapan üç yüzey, ekranda tek bir
-/// tekrar eden desen olarak okunuyordu ve hiçbiri "buraya bas" demiyordu.
+/// A mode keeps its identity in the emblem, while the card surface follows the
+/// shared ZanKurd hierarchy. This prevents every mode from looking like a
+/// separate campaign tile.
+enum ModeCardEmphasis { primary, secondary, event }
+
+/// Ana sayfa ve Oyna merkezindeki ortak mod kartı.
 ///
-/// Mod kartı bunun tersini yapar: her mod kendi rengini, kendi amblemini
-/// ve kendi ağırlığını taşır. Renk burada süs değil, ayırt edici bilgidir
-/// — kullanıcı ekrana baktığında üç ayrı şey görmelidir.
-///
-/// [accent] üzerinde beyaz metin kullanıldığı için çağıranın AA'yı geçen
-/// bir ton vermesi gerekir; kart bunu kendi başına düzeltemez.
+/// Birincil mod yalnız marka yeşiliyle öne çıkar; kategori rengi kartın
+/// tamamını boyamaz. Ama 2026-09-27'ye kadar ikincil ve etkinlik modları
+/// TEK bir soluk amblemin dışında hiç renk taşımıyordu — sahip oyun
+/// merkezini bu yüzden "renksiz" buldu. İki değişiklik bunu düzeltir, ikisi
+/// de `home_play_hierarchy_test.dart`daki "düz yüzey: gradyan/gölge yok"
+/// bekçisini bozmadan:
+///  - İkincil ve etkinlik amblemleri artık DOLU aksan rengi taşır (önce
+///    soluk bir tondu), ikon üstünde `AppColors.onSolid` ile okunur kalır.
+///  - Etkinlik kartının YÜZEYİ aksanın hafif bir tonuyla karışır
+///    (`Color.alphaBlend`) — gradyan değil, düz bir renk karışımı; kart hâlâ
+///    listenin geri kalanıyla aynı düz geometriyi paylaşır ama "ödül
+///    bileti" gibi hafifçe ısınır.
+/// Kategori kimliği yine kartı ayrı bir kampanya afişine çevirmez: ikon +
+/// başlık + bu iki rol (ikincil/etkinlik) üzerinden anlatılır.
 class ModeCard extends StatelessWidget {
   const ModeCard({
     required this.icon,
@@ -26,6 +38,7 @@ class ModeCard extends StatelessWidget {
     this.motif = KilimMotif.step,
     this.compact = false,
     this.busy = false,
+    this.emphasis = ModeCardEmphasis.primary,
     super.key,
   });
 
@@ -42,124 +55,112 @@ class ModeCard extends StatelessWidget {
 
   /// Dar düzende yüksekliği kısar; iki satır metin yerine bir satır.
   final bool compact;
+  final ModeCardEmphasis emphasis;
 
   @override
   Widget build(BuildContext context) {
-    final deep = Color.lerp(accent, Colors.black, 0.22)!;
+    final isPrimary = emphasis == ModeCardEmphasis.primary;
+    if (isPrimary) {
+      // Birincil mod bir sahne kartıdır: iki temada da gece. İçindeki her
+      // renk gece belirteçlerinden gelir.
+      return SahneStage(
+        stage: AppTheme.stage,
+        child: Builder(builder: (context) => _card(context, stage: true)),
+      );
+    }
+    return _card(context, stage: false);
+  }
+
+  Widget _card(BuildContext context, {required bool stage}) {
+    final t = SahneTokens.of(context);
+    final isEvent = emphasis == ModeCardEmphasis.event;
+    final role = sahneRoleFor(accent);
+    // 2026-09-29 Şahnê:
+    //  - birincil: gece sahne zemini (L pah) — yüzeylerden ayrılır ama
+    //    Agir'i taşımaz; Agir ekranın birincil düğmesidir.
+    //  - ikincil: yüzey kartı (Perde, gündüzde 1 px kenar), amblem rolün
+    //    ton karosu + rol metni ikon.
+    //  - etkinlik: rolün ton zemini (ör. Zêr — "ödül bileti" gibi ısınır),
+    //    amblem dolu rol rengi + koyu ikon.
+    // Gradyan ve bulanık gölge yok (`home_play_hierarchy_test.dart`).
+    final surface = stage
+        ? SahneStageColors.top
+        : isEvent
+        ? t.roleTint(role)
+        : t.s1;
+    final shape = SahneShape.withSide(
+      SahneShape.l,
+      stage ? SahneStageColors.top : t.edge,
+      width: 1,
+    );
+    final (tileBg, tileFg) = isEvent
+        ? (
+            role == SahneRole.gold ? t.gold : t.roleText(role),
+            role == SahneRole.gold ? t.onGold : t.bg,
+          )
+        : (t.roleTint(role), t.roleText(role));
+    final enabled = !busy && onTap != null;
+    final tile = compact ? 40.0 : 44.0;
     return Semantics(
       button: true,
+      enabled: enabled,
       label: '$title. $subtitle',
+      onTap: enabled ? onTap : null,
       child: ExcludeSemantics(
         child: Material(
-          color: Colors.transparent,
+          type: MaterialType.transparency,
           child: InkWell(
-            onTap: busy ? null : onTap,
-            borderRadius: BorderRadius.circular(18),
+            onTap: enabled ? onTap : null,
+            customBorder: shape,
             child: Ink(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [accent, deep],
+              decoration: ShapeDecoration(color: surface, shape: shape),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  SahneSpace.x4,
+                  compact ? SahneSpace.x3 : SahneSpace.x4,
+                  SahneSpace.x4,
+                  compact ? SahneSpace.x3 : SahneSpace.x4,
                 ),
-                borderRadius: BorderRadius.circular(18),
-                boxShadow: [
-                  BoxShadow(
-                    color: accent.withValues(alpha: 0.30),
-                    blurRadius: 14,
-                    offset: const Offset(0, 6),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(18),
-                child: Stack(
+                child: Row(
                   children: [
-                    // Tek motif, tabana yaslı. Kartın etrafını desenle
-                    // çevirmek kimliği dekora çevirir.
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      child: SizedBox(
-                        height: compact ? 26 : 34,
-                        child: CustomPaint(
-                          painter: KilimPainter(
-                            motif: motif,
-                            color: Colors.white,
-                            opacity: 0.10,
-                            count: 9,
-                          ),
-                        ),
+                    Container(
+                      width: tile,
+                      height: tile,
+                      alignment: Alignment.center,
+                      decoration: ShapeDecoration(
+                        color: tileBg,
+                        shape: SahneShape.m,
                       ),
+                      child: Icon(icon, color: tileFg, size: compact ? 20 : 24),
                     ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        AppSpacing.md,
-                        compact ? AppSpacing.sm : AppSpacing.md,
-                        AppSpacing.md,
-                        compact ? AppSpacing.sm : AppSpacing.md,
-                      ),
-                      child: Row(
+                    const SizedBox(width: SahneSpace.x3),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          CategoryEmblem(
-                            icon: icon,
-                            color: Colors.white,
-                            size: compact ? 40 : 48,
+                          Text(
+                            title,
+                            style: SahneType.bodyStrong.copyWith(color: t.tx),
                           ),
-                          const SizedBox(width: AppSpacing.sm),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  title,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTypography.subtitle.copyWith(
-                                    fontSize: compact ? 16 : 18,
-                                    fontWeight: FontWeight.w900,
-                                    letterSpacing: -0.3,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  subtitle,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  // Ölçekten okunur: elle fontSize yazmak
-                                  // `typography_scale_test` oranını
-                                  // yükseltiyor ve ölçek dışına kaçışı
-                                  // normalleştiriyor.
-                                  style: AppTypography.caption.copyWith(
-                                    color: Colors.white.withValues(alpha: 0.88),
-                                  ),
-                                ),
-                              ],
-                            ),
+                          Text(
+                            subtitle,
+                            style: SahneType.caption.copyWith(color: t.tx2),
                           ),
-                          const SizedBox(width: AppSpacing.xs),
-                          if (busy)
-                            const SizedBox(
-                              width: 18,
-                              height: 18,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.white,
-                                ),
-                              ),
-                            )
-                          else
-                            Icon(
-                              Icons.chevron_right_rounded,
-                              color: Colors.white.withValues(alpha: 0.9),
-                            ),
                         ],
                       ),
                     ),
+                    const SizedBox(width: SahneSpace.x2),
+                    if (busy)
+                      SizedBox.square(
+                        dimension: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(t.goldTx),
+                        ),
+                      )
+                    else
+                      Icon(AppIcons.chevronRight, size: 20, color: t.tx3),
                   ],
                 ),
               ),

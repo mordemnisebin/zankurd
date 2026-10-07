@@ -8,6 +8,46 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('Story dallanma', () {
+    test('günlük yaşam kataloğu sabit ve benzersiz dört hikâye taşır', () {
+      expect(everydayStories.map((story) => story.id), [
+        'cayxane',
+        'xwe-nasandin',
+        'kirin',
+        'rê-pirsîn',
+      ]);
+      expect(everydayStories.map((story) => story.id).toSet().length, 4);
+    });
+
+    test('her günlük hikâyede bağlama özgü dallanma ve bitiş vardır', () {
+      for (final story in everydayStories.skip(1)) {
+        expect(story.start.choices.length, greaterThanOrEqualTo(2));
+        expect(
+          story.nodes.where((node) => node.isEnding).length,
+          greaterThanOrEqualTo(2),
+          reason: story.id,
+        );
+        expect(
+          story.start.choices.map((choice) => choice.feedbackTr).toSet().length,
+          story.start.choices.length,
+          reason: '${story.id} başlangıç geri bildirimleri yinelenmemeli',
+        );
+        for (final node in story.nodes.where((node) => !node.isEnding)) {
+          for (final choice in node.choices) {
+            expect(
+              choice.feedbackKu,
+              isNotEmpty,
+              reason: '${story.id}/${node.id}',
+            );
+            expect(
+              choice.feedbackTr,
+              isNotEmpty,
+              reason: '${story.id}/${node.id}',
+            );
+          }
+        }
+      }
+    });
+
     test('başlangıç düğümü ve seçimler doğru', () {
       final story = cayxaneStory;
       expect(story.start.id, 'start');
@@ -87,6 +127,21 @@ void main() {
   });
 
   group('MiniGuide içeriği', () {
+    test('her günlük hikâyenin dolu ve eşleşen mini rehberi vardır', () {
+      expect(everydayGuides.keys, {
+        'cayxane',
+        'xwe-nasandin',
+        'kirin',
+        'rê-pirsîn',
+      });
+      for (final story in everydayStories) {
+        final guide = everydayGuides[story.id];
+        expect(guide, isNotNull, reason: story.id);
+        expect(guide!.newWords.length, greaterThanOrEqualTo(3));
+        expect(guide.examples.length, 2);
+      }
+    });
+
     test('rehber tüm bölümleri taşır', () {
       const g = cayxaneGuide;
       expect(g.newWords, isNotEmpty);

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -10,10 +12,13 @@ import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
-// Pirs-tarzı: menü satırlarındaki ikonlar renkli, yuvarlak rozet arka
-// planı taşır (Ayarlar ve Mağaza'daki desenle tutarlı) — önceden çıplak
-// Icon() idi.
+// Profil menüsü renkleri ekran kimliğiyle yarışmamalı. İkon karoları yalnız
+// üç semantik role bağlı kalır.
+// 2026-09-29 Şahnê: roller öğrenme (Zimrût), ödül/mağaza (Zêr) ve nötr
+// (ayarlar, çıkış); eski "yıkıcı eylem=kırmızı" kalktı — Şaş bir durum
+// rengidir ve çıkışın geri dönüşsüzlüğünü onay diyaloğu söyler.
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
@@ -31,20 +36,42 @@ void main() {
     ),
   );
 
-  testWidgets('menü satırı ikonu renkli daire rozet arka planı taşır', (
-    tester,
-  ) async {
+  test('profil menüsü rol dışı gökkuşağı aksanları kullanmaz', () {
+    final source = File(
+      'lib/src/screens/profile_screen.dart',
+    ).readAsStringSync();
+    // 2026-09-29 Şahnê: satırlar `SahneListRow.icon`dur ve renk yalnız
+    // ROL taşır (öğrenme Zimrût, mağaza Zêr, ayarlar/çıkış nötr). Ham
+    // tema aksanı hiç yazılmaz; çıkış kırmızıya boyanmaz (kırmızı durum
+    // rengidir, eylem rengi değil).
+    expect(source, isNot(contains('iconColor: AppTheme')));
+    expect(source, isNot(contains('AppTheme.')));
+    expect(
+      RegExp(r'role: SahneRole\.learn').allMatches(source).length,
+      greaterThanOrEqualTo(4),
+    );
+    expect(source, contains('role: SahneRole.gold'));
+    expect(source, isNot(contains('role: SahneRole.race')));
+  });
+
+  testWidgets('profil menü satırları üç rolle sınırlıdır', (tester) async {
     await tester.pumpWidget(
       wrap(ProfileScreen(repository: MockZanKurdRepository())),
     );
     await tester.pumpAndSettle();
 
-    final badge = tester.widget<Container>(
-      find.byKey(const ValueKey('profile-menu-icon-Dukan')),
+    final shop = find.byKey(const ValueKey('profile-menu-icon-Dukan'));
+    expect(shop, findsOneWidget);
+    final row = tester.widget<SahneListRow>(shop);
+    expect(row.role, SahneRole.gold);
+
+    final roles = tester
+        .widgetList<SahneListRow>(find.byType(SahneListRow))
+        .map((r) => r.role)
+        .toSet();
+    expect(
+      roles.difference({SahneRole.learn, SahneRole.gold, SahneRole.neutral}),
+      isEmpty,
     );
-    final decoration = badge.decoration as BoxDecoration;
-    expect(decoration.shape, BoxShape.circle);
-    expect(decoration.color, isNotNull);
-    expect(decoration.color, isNot(Colors.transparent));
   });
 }

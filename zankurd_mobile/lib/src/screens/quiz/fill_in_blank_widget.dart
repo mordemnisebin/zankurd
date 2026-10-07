@@ -3,10 +3,17 @@ import 'package:flutter/material.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../models/quiz_question.dart';
-import '../../theme/app_theme.dart';
+import '../../theme/app_icons.dart';
 import '../../utils/free_text_answer_matcher.dart';
+import '../../widgets/sahne/sahne.dart';
 
 /// Boşluk doldurma soruları için erişilebilir serbest metin alanı.
+///
+/// Şahnê: giriş alanı temanın Kulis alanıdır (M pah); diyakritik tuşları
+/// Kulis tonlu 48'lik M pahlı karolar; "Kontrol et" cevaptan önce ekranın
+/// TEK birincil eylemidir (Agir, temanın `FilledButton`ı — anahtarı
+/// düğmenin kendisinde durur, testler onu `FilledButton` olarak okur).
+/// Sonuç satırı durum notudur: Rast/Şaş ton zemini + ✓/ℹ ikonu + söz.
 class FillInBlankWidget extends StatefulWidget {
   const FillInBlankWidget({
     super.key,
@@ -116,7 +123,7 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
     final usesCanonicalWriting =
         normalizeFreeTextAnswer(submittedAnswer) ==
         normalizeFreeTextAnswer(widget.question.correctAnswer);
-    final resultColor = isCorrect ? AppTheme.correct : AppTheme.wrong;
+    final t = SahneTokens.of(context);
     final resultText = isCorrect
         ? usesCanonicalWriting
               ? Tr.forKu(K.correct, isKu)
@@ -129,7 +136,7 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextField(
+        SahneField(
           key: const ValueKey('fill-in-blank-input'),
           controller: _controller,
           enabled: !widget.disabled,
@@ -137,71 +144,63 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
           autocorrect: false,
           enableSuggestions: false,
           onSubmitted: (_) => _submit(),
-          decoration: InputDecoration(
-            labelText: label,
-            hintText: label,
-            prefixIcon: const Icon(Icons.edit_rounded),
-          ),
+          inputTextStyle: SahneType.bodyStrong,
+          hintText: label,
+          semanticLabel: label,
+          prefixIcon: AppIcons.pen,
         ),
         if (!widget.disabled) ...[
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: SahneSpace.x3),
           _DiacriticRow(onInsert: _insert),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SahneSpace.x4),
           FilledButton(
             key: const ValueKey('fill-in-blank-submit'),
             onPressed: canSubmit ? _submit : null,
             style: FilledButton.styleFrom(
-              backgroundColor: AppTheme.primaryCtaColor(context),
-              foregroundColor: Colors.white,
-              disabledBackgroundColor: AppColors.disabledSurface(context),
-              disabledForegroundColor: AppTheme.textMutedColor(context),
-              minimumSize: const Size.fromHeight(48),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadius.md),
-              ),
+              minimumSize: const Size.fromHeight(52),
             ),
-            child: Text(
-              Tr.forKu(K.kontrolEt, isKu),
-              style: AppTypography.bodyLarge.copyWith(
-                fontWeight: FontWeight.w800,
-              ),
-            ),
+            child: Text(Tr.forKu(K.kontrolEt, isKu)),
           ),
         ],
-        if (widget.showResult) ...[
-          const SizedBox(height: AppSpacing.sm),
+        // Süre dolunca doğru cevabı zaten `QuizTimeoutNotice` yazıyor
+        // ("Dem qediya. Bersiv: X"); buradaki kutu da aynı cevabı yazınca
+        // iki bant üst üste aynı sözü söylüyordu (2026-09-30 canlı).
+        if (widget.showResult && widget.selectedAnswer != 'TIMEOUT') ...[
+          const SizedBox(height: SahneSpace.x3),
           Semantics(
             liveRegion: true,
             label: resultText,
             excludeSemantics: true,
-            child: Container(
+            child: DecoratedBox(
               key: const ValueKey('fill-in-blank-result'),
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.md,
-                vertical: AppSpacing.sm,
+              decoration: ShapeDecoration(
+                color: isCorrect ? t.okTint : t.errTint,
+                shape: SahneShape.l,
               ),
-              decoration: BoxDecoration(
-                color: resultColor.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(AppRadius.md),
-                border: Border.all(color: resultColor.withValues(alpha: 0.55)),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    isCorrect ? Icons.check_circle_rounded : Icons.info_rounded,
-                    color: resultColor,
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: Text(
-                      resultText,
-                      style: AppTypography.bodyLarge.copyWith(
-                        color: resultColor,
-                        fontWeight: FontWeight.w800,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  SahneSpace.x3,
+                  SahneSpace.x3,
+                  SahneSpace.x4,
+                  SahneSpace.x3,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      isCorrect ? AppIcons.check : AppIcons.circleInfo,
+                      color: isCorrect ? t.okTx : t.errTx,
+                      size: 24,
+                    ),
+                    const SizedBox(width: SahneSpace.x3),
+                    Expanded(
+                      child: Text(
+                        resultText,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -211,46 +210,55 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
   }
 }
 
-/// Türkçe klavyede bulunmayan üç Kurmancî sesliyi girişe ekleyen sıra.
+/// Kurmancî'ye özgü harfleri girişe ekleyen sıra: ç ş ê î û.
 ///
 /// Kabul listesi (`acceptedAnswers`) `miroveki` yazanı doğru sayar ama
 /// oyuncuya doğru YAZIMI hiç göstermez. Bu sıra tersini yapar: harf bir
 /// dokunuş uzağa gelir, oyuncu `mirovekî` yazar ve kanonik biçimi bir kez
 /// daha görür. İkisi birlikte çalışır — biri hakkı teslim eder, öteki öğretir.
 ///
-/// `ş` ve `ç` bilerek yok: Türkçe klavyede ikisi de var, sıraya eklemek
-/// gerçekten eksik olan üçünü seyreltirdi.
+/// `ç` ve `ş` 2026-10-07'de eklendi: telefondaki klavye Türkçe değilse
+/// (ya da İngilizce/Kürtçe düzenli ise) ikisi de bir uzun basışın arkasında;
+/// QA'da yalnız î ê û görünce `ç`/`ş` içeren cevaplar (ör. `çiya`, `şev`)
+/// yazılamaz sanıldı. Bu satır artık Kurmancî alfabesinin klavyede zor
+/// ulaşılan beş harfini birden verir.
 class _DiacriticRow extends StatelessWidget {
   const _DiacriticRow({required this.onInsert});
 
-  static const letters = ['î', 'ê', 'û'];
+  static const letters = ['ç', 'ş', 'ê', 'î', 'û'];
 
   final ValueChanged<String> onInsert;
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     return Row(
       children: [
         for (final letter in letters)
           Padding(
-            padding: const EdgeInsets.only(right: AppSpacing.xs),
-            child: OutlinedButton(
-              key: ValueKey('fill-in-blank-diacritic-$letter'),
-              onPressed: () => onInsert(letter),
-              style: OutlinedButton.styleFrom(
-                // 44pt, dokunma hedefi için en küçük saygılı ölçü.
-                minimumSize: const Size(44, 44),
-                padding: EdgeInsets.zero,
-                foregroundColor: AppTheme.textPrimaryColor(context),
-                side: BorderSide(color: AppTheme.borderColor(context)),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                ),
-              ),
-              child: Text(
-                letter,
-                style: AppTypography.bodyLarge.copyWith(
-                  fontWeight: FontWeight.w800,
+            padding: const EdgeInsetsDirectional.only(end: SahneSpace.x2),
+            child: Semantics(
+              button: true,
+              label: letter,
+              onTap: () => onInsert(letter),
+              excludeSemantics: true,
+              child: SahnePressSink(
+                enabled: true,
+                child: SahneTappable(
+                  key: ValueKey('fill-in-blank-diacritic-$letter'),
+                  shape: SahneShape.m,
+                  color: t.s2,
+                  onTap: () => onInsert(letter),
+                  // Android dokunma hedefi alt sınırı: en az 48×48 dp.
+                  child: SizedBox.square(
+                    dimension: 48,
+                    child: Center(
+                      child: Text(
+                        letter,
+                        style: SahneType.button.copyWith(color: t.tx),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),

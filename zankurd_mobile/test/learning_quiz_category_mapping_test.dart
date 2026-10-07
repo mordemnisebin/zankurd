@@ -54,7 +54,14 @@ void main() {
   });
 
   test('sözcük dağarcığı konuları dil kategorisine gider', () {
-    for (final vocab in ['everyday', 'grammar', 'food', 'animals', 'emotions', 'time']) {
+    for (final vocab in [
+      'everyday',
+      'grammar',
+      'food',
+      'animals',
+      'emotions',
+      'time',
+    ]) {
       expect(quizCategoryForLesson(vocab), 'Ziman', reason: vocab);
     }
   });

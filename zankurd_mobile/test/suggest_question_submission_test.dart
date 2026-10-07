@@ -1,7 +1,9 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/suggest_question_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -25,11 +27,11 @@ class _SuggestionRepository extends MockZanKurdRepository {
 }
 
 Future<void> _completeSuggestionForm(WidgetTester tester) async {
-  await tester.tap(find.byType(DropdownButtonFormField<String>));
+  await tester.tap(find.byType(SahneDropdownField<String>));
   await tester.pumpAndSettle();
   await tester.tap(find.text('Dil').last);
 
-  final fields = find.byType(TextFormField);
+  final fields = find.byType(TextField);
   await tester.enterText(fields.at(0), 'Pirtûk çi ye?');
   await tester.enterText(fields.at(1), 'Kitap');
   await tester.enterText(fields.at(2), 'Masa');
@@ -55,24 +57,24 @@ void main() {
   ) async {
     await pumpScreen(tester, false);
 
-    await tester.ensureVisible(find.text('Soruyu Gönder'));
-    await tester.tap(find.text('Soruyu Gönder'));
+    await tester.ensureVisible(find.text('Soruyu gönder'));
+    await tester.tap(find.text('Soruyu gönder'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Bir hata oluştu. Lütfen tekrar dene.'), findsOneWidget);
+    expect(find.text('Bir şey ters gitti. Tekrar dene.'), findsOneWidget);
     expect(find.byType(Form), findsOneWidget);
-    expect(find.text('Önerin için teşekkürler!'), findsNothing);
+    expect(find.text('Önerin için teşekkürler.'), findsNothing);
     expect(find.text('Pirtûk çi ye?'), findsOneWidget);
   });
 
   testWidgets('true dönen soru önerisi başarı görünümünü açar', (tester) async {
     await pumpScreen(tester, true);
 
-    await tester.ensureVisible(find.text('Soruyu Gönder'));
-    await tester.tap(find.text('Soruyu Gönder'));
+    await tester.ensureVisible(find.text('Soruyu gönder'));
+    await tester.tap(find.text('Soruyu gönder'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Önerin için teşekkürler!'), findsOneWidget);
+    expect(find.text('Önerin için teşekkürler.'), findsOneWidget);
     expect(find.byType(Form), findsNothing);
   });
 }

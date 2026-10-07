@@ -2,7 +2,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
-/// 218 sorunun GERÇEKTEN oyuncuya ulaştığının bekçisi.
+/// 211 sorunun GERÇEKTEN oyuncuya ulaştığının bekçisi.
+///
+/// (2026-08-18: dış inceleme `tech_invent_0053`ü belirsiz bulup çıkardı;
+/// aileron ile flap ayrımı yapılmıyordu; sonra Ziman incelemesi üç zayıf
+/// çeldiricili kaydı daha aldı. Sayı 218 → 214; 2026-08-19 tekrar ayıklaması üç kayıt daha aldı, 211.)
+///
+///
+/// **2026-08-19 güncellemesi.** Dış bir kalite denetimi bankalar arası
+/// 199 tekrar kümesi buldu (aynı olguyu soran ayrı kayıtlar; "agir"ın
+/// anlamı üç ayrı soruda, Gola Wanê'nin tanımı iki ayrı soruda). Her
+/// kümeden biri bırakılıp 294 kayıt elendi — silinenlerin tamamı
+/// `docs/content_batches/ayiklanan_tekrarlar.json` içinde. Aşağıdaki
+/// sayılar o ayıklamayla güncellendi; bekçinin işi DEĞİŞMEDİ, ölçtüğü
+/// bankanın boyutu değişti.
 ///
 /// ## Kusur
 ///
@@ -48,7 +61,29 @@ void main() {
     final uniqueIds = loaded.map((q) => q.id).toSet();
     expect(
       loaded.length,
-      2173,
+
+      // 2026-08-24: expansion_2026_08_19 bankası eklendi (77 soru).
+      // 2026-08-26 A17: künye aldı, `approved`, oynanabilir.
+      // 2026-09-02: DeepSeek runtime karantinası, 3042 → 1932.
+      // 2026-09-21: offline_2556, approved editorial Behdînan kaydının
+      // semantik tekrarı olduğu için kaldırıldı.
+      // 2026-09-28: expansion_2026_09_28 (144 kaynaklı soru) eklendi;
+      // gizlenen yedi alt kategoriyi açmak için. 1931 → 2075.
+      // 2075 -> 2937: 2026-09-30 son birleştirme (+822 doğrulanmış DeepSeek,
+      // +40 bilim; bkz. `playable_inventory_test.dart`).
+      // 2937 -> 2954: +31 üçüncü dalga, -44 karantinaya dönen, +30 bilim.
+      // 2954 -> 2971 (+17): 2026-10-01 `altkonu_2026_10_01` — üç gizli alt
+      // konuyu açan kaynaklı sorular. 2971 -> 3045 (+74): 2026-10-01
+      // `ders_2026_10_01`, derse etiketli alıştırma soruları (bkz.
+      // `lesson_practice_depth_test.dart`). 3045 -> 3048 (+3): aynı gün
+      // yeniden yazılan üç ders sorusu. 3048 -> 3169 (+121): 2026-10-02
+      // `bosluk_2026_10_02`, denge denetiminin bulduğu boşlukları dolduran
+      // kaynaklı sorular (bkz. `bosluk_balance_test.dart`).
+      // 3169 -> 3201 (+32): 2026-10-02 `ders_2026_10_02`, son dört sunucu
+      // dersinin (hejmar, lekera-bun, dengbeji, demsal) etiketli soruları.
+      // 3201 -> 3353 (+152): 2026-10-06 `baslangic_2026_10_06`, başlangıç
+      // yolu (32 çoktan seçmeli, 69 boşluk doldurma, 51 cümle kurma).
+      3353,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '
@@ -64,7 +99,7 @@ void main() {
     );
   });
 
-  test('218 genişletme sorusunun tamamı yükleyiciden erişilebilir', () {
+  test('211 genişletme sorusunun tamamı yükleyiciden erişilebilir', () {
     // Gölgelenme kontrolü: id'nin var olması yetmez, KAZANAN kaydın
     // genişletme bankasından gelmesi gerekir. Genişletme en son yüklenir,
     // dolayısıyla çakışma olsaydı o kazanırdı — ama o zaman da ESKİ soru
@@ -75,14 +110,14 @@ void main() {
         .toList();
     expect(
       expansion.length,
-      218,
+      211,
       reason:
-          'Genişletme bankasından yükleyiciye ulaşan soru sayısı 218 değil. '
+          'Genişletme bankasından yükleyiciye ulaşan soru sayısı 211 değil. '
           'Asset listede olsa bile parse hatası tek bankayı sessizce boş '
           'bırakır (`_loadBank` catch bloğu).',
     );
     final ids = expansion.map((q) => q.id).toSet();
-    expect(ids.length, 218, reason: 'Genişletme içinde id tekrarı var.');
+    expect(ids.length, 211, reason: 'Genişletme içinde id tekrarı var.');
   });
 
   test('genişletme soruları her iki dilde de tam oynanabilir', () {

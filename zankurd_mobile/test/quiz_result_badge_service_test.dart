@@ -44,69 +44,68 @@ void main() {
     XPStore.resetInstance();
   });
 
-  testWidgets(
-    'mükemmel bir tur sonunda perfect_game rozeti gerçekten açılır',
-    (tester) async {
-      await tester.pumpWidget(
-        testShell(
-          child: QuizResultScreen(
-            repository: MockZanKurdRepository(),
-            room: _room,
-            score: 100,
-            correctCount: 3,
-            wrongCount: 0,
-            totalQuestions: 3,
-            bestStreak: 1,
-            answerRecords: const [
-              AnswerRecord(
-                id: 'q1',
-                category: 'Ziman',
-                prompt: 'p1',
-                answers: ['A', 'B'],
-                correctAnswer: 'A',
-                selectedAnswer: 'A',
-                explanation: '',
-                responseMs: 4000,
-              ),
-              AnswerRecord(
-                id: 'q2',
-                category: 'Ziman',
-                prompt: 'p2',
-                answers: ['A', 'B'],
-                correctAnswer: 'A',
-                selectedAnswer: 'A',
-                explanation: '',
-                responseMs: 4000,
-              ),
-              AnswerRecord(
-                id: 'q3',
-                category: 'Ziman',
-                prompt: 'p3',
-                answers: ['A', 'B'],
-                correctAnswer: 'A',
-                selectedAnswer: 'A',
-                explanation: '',
-                responseMs: 4000,
-              ),
-            ],
-            coinsAwarded: 30,
-          ),
+  testWidgets('mükemmel bir tur sonunda perfect_game rozeti gerçekten açılır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      testShell(
+        child: QuizResultScreen(
+          repository: MockZanKurdRepository(),
+          room: _room,
+          score: 100,
+          correctCount: 3,
+          wrongCount: 0,
+          totalQuestions: 3,
+          bestStreak: 1,
+          answerRecords: const [
+            AnswerRecord(
+              id: 'q1',
+              category: 'Ziman',
+              prompt: 'p1',
+              answers: ['A', 'B'],
+              correctAnswer: 'A',
+              selectedAnswer: 'A',
+              explanation: '',
+              responseMs: 4000,
+            ),
+            AnswerRecord(
+              id: 'q2',
+              category: 'Ziman',
+              prompt: 'p2',
+              answers: ['A', 'B'],
+              correctAnswer: 'A',
+              selectedAnswer: 'A',
+              explanation: '',
+              responseMs: 4000,
+            ),
+            AnswerRecord(
+              id: 'q3',
+              category: 'Ziman',
+              prompt: 'p3',
+              answers: ['A', 'B'],
+              correctAnswer: 'A',
+              selectedAnswer: 'A',
+              explanation: '',
+              responseMs: 4000,
+            ),
+          ],
+          coinsAwarded: 30,
         ),
-      );
-      await tester.pumpAndSettle();
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      final badgeService = await BadgeService.load();
-      expect(
-        badgeService.isUnlocked('perfect_game'),
-        isTrue,
-        reason:
-            '3/3 doğru cevaplı bir tur bitti ama perfect_game rozeti hâlâ '
-            'kapalıysa BadgeService hiç çağrılmıyor demektir',
-      );
-      // Toplam yanıt süresi 12sn (< 60sn) — hız canavarı da açılmalı.
-      expect(badgeService.isUnlocked('speed_demon'), isTrue);
-    },
-  );
+    final badgeService = await BadgeService.load();
+    expect(
+      badgeService.isUnlocked('perfect_game'),
+      isTrue,
+      reason:
+          '3/3 doğru cevaplı bir tur bitti ama perfect_game rozeti hâlâ '
+          'kapalıysa BadgeService hiç çağrılmıyor demektir',
+    );
+    // Toplam yanıt süresi 12sn (< 60sn) — hız canavarı da açılmalı.
+    expect(badgeService.isUnlocked('speed_demon'), isTrue);
+  });
 
   testWidgets(
     'yavaş biten tur speed_demon açmaz ama perfect_game yine açılır',

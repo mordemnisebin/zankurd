@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -8,6 +9,7 @@ import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_wildcard_bar.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -48,6 +50,11 @@ class _RejectingSubmitRepository extends MockZanKurdRepository {
     return {'is_correct': false, 'points': 0, 'new_score': 0, 'new_streak': 0};
   }
 }
+
+/// 2026-09-29 Şahnê: joker düğmesi adını ekranda yazmaz (ikon + jeton +
+/// fiyat); ad ekran okuyucu sözünde ve uzun basış ipucundadır. Joker bu
+/// yüzden metinle değil ipucuyla bulunur; davranış aynı.
+final _doubleAnswerJoker = find.byTooltip('Çift cevap');
 
 void main() {
   testWidgets('yazılı soruda yalnız işe yarayan jokerler gösterilir', (
@@ -230,7 +237,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.textContaining('Çift Cevap'));
+    await tester.tap(_doubleAnswerJoker);
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('fill-in-blank-input')),
@@ -267,7 +274,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.textContaining('Çift Cevap'));
+    await tester.tap(_doubleAnswerJoker);
     await tester.pumpAndSettle();
     await tester.enterText(
       find.byKey(const ValueKey('fill-in-blank-input')),
@@ -277,13 +284,13 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('fill-in-blank-submit')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Çift cevap: bir cevap daha ver'), findsOneWidget);
+    expect(find.text('Bir cevap daha ver'), findsOneWidget);
     final liveRegion = tester.widget<Semantics>(
       find.byWidgetPredicate(
         (widget) =>
             widget is Semantics &&
             widget.properties.liveRegion == true &&
-            widget.properties.label == 'Çift cevap: bir cevap daha ver',
+            widget.properties.label == 'Bir cevap daha ver',
       ),
     );
     expect(liveRegion.excludeSemantics, isTrue);
@@ -312,7 +319,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.textContaining('Çift Cevap'));
+    await tester.tap(_doubleAnswerJoker);
     await tester.pumpAndSettle();
     final input = find.byKey(const ValueKey('fill-in-blank-input'));
     await tester.enterText(input, 'yanlış');
@@ -320,7 +327,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('fill-in-blank-submit')));
     await tester.pumpAndSettle();
 
-    expect(tester.widget<TextField>(input).controller?.text, isEmpty);
+    expect(tester.widget<SahneField>(input).controller?.text, isEmpty);
     await tester.enterText(input, 'yanlış');
     await tester.pump();
     final submit = tester.widget<FilledButton>(
