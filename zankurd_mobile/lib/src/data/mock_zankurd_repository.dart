@@ -527,9 +527,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // 2026-09-30: etiketli soru varken dolgu yapılmıyordu; bir etiketli
     // sorusu olan ders (grammar_1, animals_2) tek soruluk bir quiz
     // açıyordu, yani bir derse soru etiketlemek o dersi KISALTIYORDU.
-    final tagged = exact.isEmpty
+    var tagged = exact.isEmpty
         ? const <QuizQuestion>[]
         : await _selectLessonMix(exact, limit);
+    // Aynı cümle/terimi sordurmayan tur: tekrar eden soru, aynı türden (yoksa
+    // herhangi) tekrarsız bir etiketli soruyla yerinde değiştirilir.
+    tagged = await _replaceSameTarget(tagged, exact);
     if (tagged.length >= limit) return tagged;
     final taggedIds = tagged.map((q) => q.id).toSet();
     // Birden çok bankalı ders (Selamlaşma ve Tanışma) için dolgu sırayla
@@ -547,7 +550,64 @@ class MockZanKurdRepository implements ZanKurdRepository {
         for (final bank in perBank)
           if (i < bank.length) bank[i],
     ].where((q) => !taggedIds.contains(q.id));
-    return [...tagged, ...fillers].take(limit).toList(growable: false);
+    return _dropSameTarget([...tagged, ...fillers], limit);
+  }
+
+  /// [chosen] içinde aynı cümle/terimi sordurandan yalnız ilkini tutar; atılan
+  /// her soru [pool]'dan, kalanlarla hedefi çakışmayan ve seçilmemiş bir
+  /// soruyla (önce aynı tür) AYNI SIRAYA konur. Çakışmayan aday yoksa soru
+  /// yerinde kalır: kural tercihtir, turu kısaltmaz.
+  Future<List<QuizQuestion>> _replaceSameTarget(
+    List<QuizQuestion> chosen,
+    List<QuizQuestion> pool,
+  ) async {
+    final result = [...chosen];
+    for (var i = 0; i < result.length; i++) {
+      final others = [
+        for (var j = 0; j < result.length; j++)
+          if (j != i) result[j],
+      ];
+      // Yalnız ÖNCEKİ sorularla çakışan atılır (ilki kalır).
+      final earlier = others.take(i).toList(growable: false);
+      if (!earlier.any(
+        (q) => QuestionSetPolicy.sharesTargetText(q, result[i]),
+      )) {
+        continue;
+      }
+      final used = result.map((q) => q.id).toSet();
+      final candidates = pool
+          .where(
+            (c) =>
+                !used.contains(c.id) &&
+                !result.any((q) => QuestionSetPolicy.sharesTargetText(q, c)),
+          )
+          .toList(growable: false);
+      if (candidates.isEmpty) continue;
+      final sameType = candidates
+          .where((c) => c.type == result[i].type)
+          .toList(growable: false);
+      final pick = await _selectFresh(
+        sameType.isEmpty ? candidates : sameType,
+        1,
+      );
+      if (pick.isNotEmpty) result[i] = pick.first;
+    }
+    return result;
+  }
+
+  /// Aynı cümle/terimi sordurandan yalnız ilkini tutar; tur eksik kalırsa
+  /// atılanlar sırayla geri eklenir (kural tercihtir, turu kısaltmaz).
+  List<QuizQuestion> _dropSameTarget(List<QuizQuestion> ordered, int limit) {
+    final kept = <QuizQuestion>[];
+    final dropped = <QuizQuestion>[];
+    for (final q in ordered) {
+      if (kept.any((k) => QuestionSetPolicy.sharesTargetText(k, q))) {
+        dropped.add(q);
+      } else {
+        kept.add(q);
+      }
+    }
+    return [...kept, ...dropped].take(limit).toList(growable: false);
   }
 
   @override
@@ -891,9 +951,18 @@ class MockZanKurdRepository implements ZanKurdRepository {
     final fill = production
         .where((q) => q.type == QuestionType.fillInBlank)
         .toList(growable: false);
+    final orderingPick = await _selectFresh(ordering, 1);
+    // Cümle kurma ile boşluk doldurma da aynı cümleyi sordurmasın.
+    final fillSafe = fill
+        .where(
+          (q) => !orderingPick.any(
+            (o) => QuestionSetPolicy.sharesTargetText(o, q),
+          ),
+        )
+        .toList(growable: false);
     final picks = <QuizQuestion>[
-      ...await _selectFresh(ordering, 1),
-      ...await _selectFresh(fill, 1),
+      ...orderingPick,
+      ...await _selectFresh(fillSafe.isEmpty ? fill : fillSafe, 1),
     ];
     if (picks.length < wanted) {
       final chosen = picks.map((q) => q.id).toSet();
@@ -903,7 +972,21 @@ class MockZanKurdRepository implements ZanKurdRepository {
       picks.addAll(more);
     }
     final production2 = picks.take(wanted).toList();
-    final warmup = await _selectFresh(recognition, limit - production2.length);
+    // Isınma soruları üretim sorusuyla aynı cümleyi/terimi sormasın (ayrı
+    // havuzlardan seçildikleri için birbirlerini görmezlerdi). Süzgeç turu
+    // doldurmaya yetmiyorsa eski havuza dönülür: kural tercihtir.
+    final freshRecognition = recognition
+        .where(
+          (q) =>
+              !production2.any((p) => QuestionSetPolicy.sharesTargetText(p, q)),
+        )
+        .toList(growable: false);
+    final warmup = await _selectFresh(
+      freshRecognition.length >= limit - production2.length
+          ? freshRecognition
+          : recognition,
+      limit - production2.length,
+    );
     final mixed = [...warmup];
     for (final (index, pick) in production2.indexed) {
       mixed.insert((2 + index * 2).clamp(0, mixed.length), pick);
@@ -2011,7 +2094,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Welat û bajar:\n\n• Ez ji Wanê me: Vanlıyım.\n• Ji: -den / -dan\n• Ku: Nerede / Nere\n• Der: Yer (ku derê = nere)\n• Wan: Van\n• Mêrdîn: Mardin\n• Stenbol: İstanbul\n• Kurd: Kürt',
         contentTr:
-            'Nerelisin? sorusu ve cevabı. "ji" ile dişil şehir adlarının sonuna -ê eklenir: Wan → Wanê, Mêrdîn → Mêrdînê, Stenbol → Stenbolê..',
+            'Nerelisin? sorusu ve cevabı. "ji" ile dişil şehir adlarının sonuna -ê eklenir: Wan → Wanê, Mêrdîn → Mêrdînê, Stenbol → Stenbolê.',
         exampleKu: 'Tu ji ku derê yî? Ez ji Mêrdînê me.',
       ),
       LessonSlide(

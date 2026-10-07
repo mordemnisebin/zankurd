@@ -49,13 +49,13 @@
       "Êvarbaş"
     ],
     "answersTr": [
-      "Günaydın",
-      "İyi geceler",
-      "Merhaba",
-      "İyi akşamlar"
+      "Rojbaş",
+      "Şevbaş",
+      "Silav",
+      "Êvarbaş"
     ],
     "correctAnswer": "Êvarbaş",
-    "correctAnswerTr": "İyi akşamlar",
+    "correctAnswerTr": "Êvarbaş",
     "explanation": "\"Êvarbaş\" akşam söylenir.",
     "explanationKu": "\"Êvarbaş\" êvarê tê gotin.",
     "explanationTr": "\"Êvarbaş\" akşam söylenir.",
@@ -229,13 +229,13 @@
       "Navê min Azad e."
     ],
     "answersTr": [
-      "Adın ne?",
-      "Nerelisin?",
-      "Amedliyim.",
-      "Benim adım Azad."
+      "Navê te çi ye?",
+      "Tu ji ku derê yî?",
+      "Ez ji Amedê me.",
+      "Navê min Azad e."
     ],
     "correctAnswer": "Navê min Azad e.",
-    "correctAnswerTr": "Benim adım Azad.",
+    "correctAnswerTr": "Navê min Azad e.",
     "explanation": "Kendimizi tanıtırken \"Navê min Azad e\" deriz.",
     "explanationKu": "Dema em xwe didin nasîn, em dibêjin \"Navê min Azad e\".",
     "explanationTr": "Kendimizi tanıtırken \"Navê min Azad e\" deriz.",
@@ -301,13 +301,13 @@
       "Ez ji Amedê me."
     ],
     "answersTr": [
-      "Benim adım Azad.",
-      "Nerelisin?",
-      "Adın ne?",
-      "Amedliyim."
+      "Navê min Azad e.",
+      "Tu ji ku derê yî?",
+      "Navê te çi ye?",
+      "Ez ji Amedê me."
     ],
     "correctAnswer": "Ez ji Amedê me.",
-    "correctAnswerTr": "Amedliyim.",
+    "correctAnswerTr": "Ez ji Amedê me.",
     "explanation": "Şehrimizden bahsederken \"Ez ji Amedê me\" deriz.",
     "explanationKu": "Dema em qala bajarê xwe dikin, em dibêjin \"Ez ji Amedê me\".",
     "explanationTr": "Şehrimizden bahsederken \"Ez ji Amedê me\" deriz.",
@@ -517,13 +517,13 @@
       "Bibexşîne"
     ],
     "answersTr": [
-      "Buyurun",
-      "Lütfen",
-      "Teşekkürler",
-      "Özür dilerim"
+      "Fermo",
+      "Ji kerema xwe",
+      "Spas",
+      "Bibexşîne"
     ],
     "correctAnswer": "Ji kerema xwe",
-    "correctAnswerTr": "Lütfen",
+    "correctAnswerTr": "Ji kerema xwe",
     "explanation": "\"Ji kerema xwe\" rica için söylenir.",
     "explanationKu": "\"Ji kerema xwe\" ji bo daxwazê tê gotin.",
     "explanationTr": "\"Ji kerema xwe\" rica için söylenir.",
@@ -625,13 +625,13 @@
       "Em"
     ],
     "answersTr": [
-      "Ben",
-      "Sen",
-      "Siz",
-      "Biz"
+      "Ez",
+      "Tu",
+      "Hûn",
+      "Em"
     ],
     "correctAnswer": "Hûn",
-    "correctAnswerTr": "Siz",
+    "correctAnswerTr": "Hûn",
     "explanation": "\"Siz\" için \"Hûn\" denir.",
     "explanationKu": "\"Hûn\" ji bo \"siz\" tê gotin.",
     "explanationTr": "\"Siz\" için \"Hûn\" denir.",
@@ -949,13 +949,13 @@
       "Cejna Qurbanê"
     ],
     "answersTr": [
-      "Ramazan Bayramı",
-      "Nevruz Bayramı",
-      "Cuma günü",
-      "Kurban Bayramı"
+      "Cejna Remezanê",
+      "Cejna Newrozê",
+      "Roja Înê",
+      "Cejna Qurbanê"
     ],
     "correctAnswer": "Cejna Qurbanê",
-    "correctAnswerTr": "Kurban Bayramı",
+    "correctAnswerTr": "Cejna Qurbanê",
     "explanation": "\"Cejna Qurbanê\" kurban kesme bayramıdır.",
     "explanationKu": "\"Cejna Qurbanê\" cejna serjêkirina qurbanê ye.",
     "explanationTr": "\"Cejna Qurbanê\" kurban kesme bayramıdır.",
@@ -1165,13 +1165,13 @@
       "Taştê"
     ],
     "answersTr": [
-      "Öğle yemeği",
-      "Akşam yemeği",
-      "Yoğurt",
-      "Kahvaltı"
+      "Firavîn",
+      "Şîv",
+      "Mast",
+      "Taştê"
     ],
     "correctAnswer": "Taştê",
-    "correctAnswerTr": "Kahvaltı",
+    "correctAnswerTr": "Taştê",
     "explanation": "\"Taştê\" sabah yemeğidir.",
     "explanationKu": "\"Taştê\" xwarina sibehê ye.",
     "explanationTr": "\"Taştê\" sabah yemeğidir.",
@@ -1309,13 +1309,13 @@
       "Hinar"
     ],
     "answersTr": [
-      "Elma",
-      "Üzüm",
-      "İncir",
-      "Nar"
+      "Sêv",
+      "Tirî",
+      "Hejîr",
+      "Hinar"
     ],
     "correctAnswer": "Hinar",
-    "correctAnswerTr": "Nar",
+    "correctAnswerTr": "Hinar",
     "explanation": "\"Hinar\" kırmızı, çekirdekli bir meyvedir.",
     "explanationKu": "\"Hinar\" fêkiyekî sor û bi dendik e.",
     "explanationTr": "\"Hinar\" kırmızı, çekirdekli bir meyvedir.",
@@ -1345,13 +1345,13 @@
       "Pîvaz"
     ],
     "answersTr": [
-      "Üzüm",
-      "İncir",
-      "Elma",
-      "Soğan"
+      "Tirî",
+      "Hejîr",
+      "Sêv",
+      "Pîvaz"
     ],
     "correctAnswer": "Tirî",
-    "correctAnswerTr": "Üzüm",
+    "correctAnswerTr": "Tirî",
     "explanation": "\"Tirî\" küçük ve tatlı bir meyvedir.",
     "explanationKu": "\"Tirî\" fêkiyekî biçûk û şirîn e.",
     "explanationTr": "\"Tirî\" küçük ve tatlı bir meyvedir.",
@@ -1381,13 +1381,13 @@
       "Tirî"
     ],
     "answersTr": [
-      "Sarımsak",
-      "Patlıcan",
-      "Soğan",
-      "Üzüm"
+      "Sîr",
+      "Bacan",
+      "Pîvaz",
+      "Tirî"
     ],
     "correctAnswer": "Pîvaz",
-    "correctAnswerTr": "Soğan",
+    "correctAnswerTr": "Pîvaz",
     "explanation": "\"Pîvaz\" göz yakan bir sebzedir.",
     "explanationKu": "\"Pîvaz\" keskahî ye û çavan dişewitîne.",
     "explanationTr": "\"Pîvaz\" göz yakan bir sebzedir.",
@@ -1417,13 +1417,13 @@
       "Sîr"
     ],
     "answersTr": [
-      "Soğan",
-      "Patlıcan",
-      "Elma",
-      "Sarımsak"
+      "Pîvaz",
+      "Bacan",
+      "Sêv",
+      "Sîr"
     ],
     "correctAnswer": "Sîr",
-    "correctAnswerTr": "Sarımsak",
+    "correctAnswerTr": "Sîr",
     "explanation": "\"Sîr\" kokulu bir sebzedir.",
     "explanationKu": "\"Sîr\" keskahî ye û bi bêhn e.",
     "explanationTr": "\"Sîr\" kokulu bir sebzedir.",
@@ -1489,13 +1489,13 @@
       "Nan û Av"
     ],
     "answersTr": [
-      "Soğan ve Sarımsak",
-      "Elma ve Nar",
-      "Üzüm ve İncir",
-      "Ekmek ve Su"
+      "Pîvaz û Sîr",
+      "Sêv û Hinar",
+      "Tirî û Hejîr",
+      "Nan û Av"
     ],
     "correctAnswer": "Pîvaz û Sîr",
-    "correctAnswerTr": "Soğan ve Sarımsak",
+    "correctAnswerTr": "Pîvaz û Sîr",
     "explanation": "\"Pîvaz\" soğandır, \"Sîr\" sarımsaktır.",
     "explanationKu": "\"Pîvaz\" bi tirkî \"soğan\" e, \"sîr\" jî \"sarımsak\" e.",
     "explanationTr": "\"Pîvaz\" soğandır, \"Sîr\" sarımsaktır.",
@@ -1597,13 +1597,13 @@
       "Mîh"
     ],
     "answersTr": [
-      "Kedi",
-      "Köpek",
-      "At",
-      "Koyun"
+      "Pisîk",
+      "Kûçik",
+      "Hesp",
+      "Mîh"
     ],
     "correctAnswer": "Kûçik",
-    "correctAnswerTr": "Köpek",
+    "correctAnswerTr": "Kûçik",
     "explanation": "\"Kûçik\" bekçi ev hayvanıdır.",
     "explanationKu": "\"Kûçik\" heywanekî malê yê parêzvan e.",
     "explanationTr": "\"Kûçik\" bekçi ev hayvanıdır.",
@@ -1741,13 +1741,13 @@
       "Hirç"
     ],
     "answersTr": [
-      "Aslan",
-      "Kurt",
-      "Tilki",
-      "Ayı"
+      "Şêr",
+      "Gur",
+      "Rûvî",
+      "Hirç"
     ],
     "correctAnswer": "Gur",
-    "correctAnswerTr": "Kurt",
+    "correctAnswerTr": "Gur",
     "explanation": "\"Gur\" dağda yaşayan yabani hayvandır.",
     "explanationKu": "\"Gur\" heywanekî kovî yê çiyê ye.",
     "explanationTr": "\"Gur\" dağda yaşayan yabani hayvandır.",
@@ -1777,13 +1777,13 @@
       "Eylo"
     ],
     "answersTr": [
-      "Güvercin",
-      "Karga",
-      "Tilki",
-      "Kartal"
+      "Kevok",
+      "Qijik",
+      "Rûvî",
+      "Eylo"
     ],
     "correctAnswer": "Rûvî",
-    "correctAnswerTr": "Tilki",
+    "correctAnswerTr": "Rûvî",
     "explanation": "\"Rûvî\" kurnaz bir yabani hayvandır.",
     "explanationKu": "\"Rûvî\" heywanekî kovî yê fêlbaz e.",
     "explanationTr": "\"Rûvî\" kurnaz bir yabani hayvandır.",
@@ -1885,13 +1885,13 @@
       "Rûvî"
     ],
     "answersTr": [
-      "Karga",
-      "Kartal",
-      "Güvercin",
-      "Tilki"
+      "Qijik",
+      "Eylo",
+      "Kevok",
+      "Rûvî"
     ],
     "correctAnswer": "Qijik",
-    "correctAnswerTr": "Karga",
+    "correctAnswerTr": "Qijik",
     "explanation": "\"Qijik\" siyah bir kuştur.",
     "explanationKu": "\"Qijik\" çûkeke reş e.",
     "explanationTr": "\"Qijik\" siyah bir kuştur.",
@@ -1957,13 +1957,13 @@
       "Bêhêvî"
     ],
     "answersTr": [
-      "Üzgün",
-      "Sevinçli",
-      "Öfkeli",
-      "Umutsuz"
+      "Xemgîn",
+      "Dilşad",
+      "Hêrsbûyî",
+      "Bêhêvî"
     ],
     "correctAnswer": "Dilşad",
-    "correctAnswerTr": "Sevinçli",
+    "correctAnswerTr": "Dilşad",
     "explanation": "\"Dilşad\" sevinç ve neşedir.",
     "explanationKu": "Wateya \"dilşad\"ê, dilxweşî û şadî ye.",
     "explanationTr": "\"Dilşad\" sevinç ve neşedir.",
@@ -1993,13 +1993,13 @@
       "Bêhêvî"
     ],
     "answersTr": [
-      "Kalbi kırık",
-      "Korkmuş",
-      "Aşık",
-      "Umutsuz"
+      "Dilşikestî",
+      "Tirsiyayî",
+      "Evîndar",
+      "Bêhêvî"
     ],
     "correctAnswer": "Evîndar",
-    "correctAnswerTr": "Aşık",
+    "correctAnswerTr": "Evîndar",
     "explanation": "\"Evîndar\" aşık olan kişi için söylenir.",
     "explanationKu": "\"Evîndar\" ji bo kesê ku evînê dike tê gotin.",
     "explanationTr": "\"Evîndar\" aşık olan kişi için söylenir.",
@@ -2029,13 +2029,13 @@
       "Evîn"
     ],
     "answersTr": [
-      "Barış",
-      "Umut",
-      "İnanç",
-      "Aşk"
+      "Aştî",
+      "Hêvî",
+      "Bawerî",
+      "Evîn"
     ],
     "correctAnswer": "Aştî",
-    "correctAnswerTr": "Barış",
+    "correctAnswerTr": "Aştî",
     "explanation": "\"Aştî\" savaşın karşıtıdır.",
     "explanationKu": "\"Aştî\" dijberê şer e.",
     "explanationTr": "\"Aştî\" savaşın karşıtıdır.",
@@ -2065,13 +2065,13 @@
       "Dilşad"
     ],
     "answersTr": [
-      "İnanç",
-      "Barış",
-      "Umut",
-      "Sevinçli"
+      "Bawerî",
+      "Aştî",
+      "Hêvî",
+      "Dilşad"
     ],
     "correctAnswer": "Hêvî",
-    "correctAnswerTr": "Umut",
+    "correctAnswerTr": "Hêvî",
     "explanation": "\"Hêvî\" iyi günleri beklemektir.",
     "explanationKu": "\"Hêvî\" çaverêkirina rojên baş e.",
     "explanationTr": "\"Hêvî\" iyi günleri beklemektir.",
@@ -2209,13 +2209,13 @@
       "Dilşad"
     ],
     "answersTr": [
-      "Mutlu",
-      "Öfkeli",
-      "Üzgün",
-      "Sevinçli"
+      "Kêfxweş",
+      "Hêrsbûyî",
+      "Xemgîn",
+      "Dilşad"
     ],
     "correctAnswer": "Hêrsbûyî",
-    "correctAnswerTr": "Öfkeli",
+    "correctAnswerTr": "Hêrsbûyî",
     "explanation": "\"Hêrsbûyî\" öfke duygusudur.",
     "explanationKu": "\"Hêrsbûyî\" hesta hêrsê ye.",
     "explanationTr": "\"Hêrsbûyî\" öfke duygusudur.",
@@ -2245,13 +2245,13 @@
       "Tirsiyayî"
     ],
     "answersTr": [
-      "Umutsuz",
-      "Aşık",
-      "Barış",
-      "Korkmuş"
+      "Bêhêvî",
+      "Evîndar",
+      "Aştî",
+      "Tirsiyayî"
     ],
     "correctAnswer": "Tirsiyayî",
-    "correctAnswerTr": "Korkmuş",
+    "correctAnswerTr": "Tirsiyayî",
     "explanation": "\"Tirsiyayî\" korku duygusudur.",
     "explanationKu": "\"Tirsiyayî\" hesta tirsê ye.",
     "explanationTr": "\"Tirsiyayî\" korku duygusudur.",
@@ -2281,13 +2281,13 @@
       "Dilşad"
     ],
     "answersTr": [
-      "Umut",
-      "İnanç",
-      "Umutsuz",
-      "Sevinçli"
+      "Hêvî",
+      "Bawerî",
+      "Bêhêvî",
+      "Dilşad"
     ],
     "correctAnswer": "Bêhêvî",
-    "correctAnswerTr": "Umutsuz",
+    "correctAnswerTr": "Bêhêvî",
     "explanation": "\"Bêhêvî\" \"hêvî\"nin karşıtıdır.",
     "explanationKu": "\"Bêhêvî\" dijberê \"hêvî\"yê ye.",
     "explanationTr": "\"Bêhêvî\" \"hêvî\"nin karşıtıdır.",
@@ -2317,13 +2317,13 @@
       "Dilşikestî"
     ],
     "answersTr": [
-      "Üzgün",
-      "Öfkeli",
-      "Aşık",
-      "Kalbi kırık"
+      "Xemgîn",
+      "Hêrsbûyî",
+      "Evîndar",
+      "Dilşikestî"
     ],
     "correctAnswer": "Dilşikestî",
-    "correctAnswerTr": "Kalbi kırık",
+    "correctAnswerTr": "Dilşikestî",
     "explanation": "\"Dilşikestî\" kalp acısıdır.",
     "explanationKu": "\"Dilşikestî\" êşa dil e.",
     "explanationTr": "\"Dilşikestî\" kalp acısıdır.",
@@ -2497,13 +2497,13 @@
       "Nîsan"
     ],
     "answersTr": [
-      "Şubat",
-      "Ocak",
-      "Mart",
-      "Nisan"
+      "Reşemeh",
+      "Rêbendan",
+      "Adar",
+      "Nîsan"
     ],
     "correctAnswer": "Reşemeh",
-    "correctAnswerTr": "Şubat",
+    "correctAnswerTr": "Reşemeh",
     "explanation": "\"Reşemeh\" ikinci aydır.",
     "explanationKu": "\"Reşemeh\" meha duyem e.",
     "explanationTr": "\"Reşemeh\" ikinci aydır.",
@@ -2533,13 +2533,13 @@
       "Rêbendan"
     ],
     "answersTr": [
-      "Mayıs",
-      "Haziran",
-      "Mart",
-      "Ocak"
+      "Gulan",
+      "Hezîran",
+      "Adar",
+      "Rêbendan"
     ],
     "correctAnswer": "Adar",
-    "correctAnswerTr": "Mart",
+    "correctAnswerTr": "Adar",
     "explanation": "\"Adar\" üçüncü aydır.",
     "explanationKu": "\"Adar\" meha sêyem e.",
     "explanationTr": "\"Adar\" üçüncü aydır.",
@@ -2569,13 +2569,13 @@
       "Reşemeh"
     ],
     "answersTr": [
-      "Nisan",
-      "Mayıs",
-      "Mart",
-      "Şubat"
+      "Nîsan",
+      "Gulan",
+      "Adar",
+      "Reşemeh"
     ],
     "correctAnswer": "Nîsan",
-    "correctAnswerTr": "Nisan",
+    "correctAnswerTr": "Nîsan",
     "explanation": "\"Nîsan\" dördüncü aydır.",
     "explanationKu": "\"Nîsan\" meha çarem e.",
     "explanationTr": "\"Nîsan\" dördüncü aydır.",
@@ -2605,13 +2605,13 @@
       "Gulan"
     ],
     "answersTr": [
-      "Haziran",
-      "Nisan",
-      "Ocak",
-      "Mayıs"
+      "Hezîran",
+      "Nîsan",
+      "Rêbendan",
+      "Gulan"
     ],
     "correctAnswer": "Gulan",
-    "correctAnswerTr": "Mayıs",
+    "correctAnswerTr": "Gulan",
     "explanation": "\"Gulan\" beşinci aydır.",
     "explanationKu": "\"Gulan\" meha pêncem e.",
     "explanationTr": "\"Gulan\" beşinci aydır.",
@@ -2641,13 +2641,13 @@
       "Nîsan"
     ],
     "answersTr": [
-      "Haziran",
-      "Mart",
-      "Mayıs",
-      "Nisan"
+      "Hezîran",
+      "Adar",
+      "Gulan",
+      "Nîsan"
     ],
     "correctAnswer": "Hezîran",
-    "correctAnswerTr": "Haziran",
+    "correctAnswerTr": "Hezîran",
     "explanation": "\"Hezîran\" altıncı aydır.",
     "explanationKu": "\"Hezîran\" meha şeşem e.",
     "explanationTr": "\"Hezîran\" altıncı aydır.",
@@ -2713,13 +2713,13 @@
       "Nîvro"
     ],
     "answersTr": [
-      "Sabah",
-      "Akşam",
-      "Gece",
-      "Öğle"
+      "Sibeh",
+      "Êvar",
+      "Şev",
+      "Nîvro"
     ],
     "correctAnswer": "Sibeh",
-    "correctAnswerTr": "Sabah",
+    "correctAnswerTr": "Sibeh",
     "explanation": "\"Sibeh\" günün başlangıcıdır.",
     "explanationKu": "\"Sibeh\" destpêka rojê ye.",
     "explanationTr": "\"Sibeh\" günün başlangıcıdır.",

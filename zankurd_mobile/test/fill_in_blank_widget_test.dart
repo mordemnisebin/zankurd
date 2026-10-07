@@ -145,4 +145,28 @@ void main() {
 
     expect(find.text('Doğru: pirtûk'), findsOneWidget);
   });
+
+  /// ## Kusur
+  ///
+  /// Harf sırası yalnız `î ê û` taşıyordu; `ç` ve `ş` "Türkçe klavyede zaten
+  /// var" diye bilerek dışarıda bırakılmıştı. 2026-10-07 simülatör QA'sında
+  /// klavye Türkçe olmayınca `çiya`, `şev` gibi cevaplar yazılamadı.
+  ///
+  /// Sessizdi çünkü hiçbir test sırayı bütün olarak sabitlemiyordu;
+  /// geometri bekçisi yalnız üç harfin ekrana sığdığına bakıyordu.
+  testWidgets('özel harf sırası ç ş ê î û düğmelerini verir ve ekler', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_host(onSubmit: (_) {}));
+    for (final letter in ['ç', 'ş', 'ê', 'î', 'û']) {
+      final chip = find.byKey(ValueKey('fill-in-blank-diacritic-$letter'));
+      expect(chip, findsOneWidget, reason: '$letter düğmesi yok');
+      await tester.tap(chip);
+      await tester.pump();
+    }
+    final input = tester.widget<SahneField>(
+      find.byKey(const ValueKey('fill-in-blank-input')),
+    );
+    expect(input.controller!.text, 'çşêîû');
+  });
 }

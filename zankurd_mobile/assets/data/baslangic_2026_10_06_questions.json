@@ -409,13 +409,13 @@
       "Oxir be"
     ],
     "answersTr": [
-      "Özür dilerim",
-      "Hoşça kal",
-      "Çok teşekkürler",
-      "Güle güle"
+      "Bibore",
+      "Bi xatirê te",
+      "Gelek spas",
+      "Oxir be"
     ],
     "correctAnswer": "Gelek spas",
-    "correctAnswerTr": "Çok teşekkürler",
+    "correctAnswerTr": "Gelek spas",
     "explanation": "\"Gelek spas\", çok teşekkürler demektir.",
     "explanationKu": "\"Gelek spas\" tê wateya \"çok teşekkürler\".",
     "explanationTr": "\"Gelek spas\", çok teşekkürler demektir.",
@@ -445,13 +445,13 @@
       "Şeva te bi xêr"
     ],
     "answersTr": [
-      "Günaydın",
-      "İyi akşamlar",
-      "Hoş geldin",
-      "İyi geceler"
+      "Sibeha te bi xêr",
+      "Êvara te bi xêr",
+      "Bi xêr hatî",
+      "Şeva te bi xêr"
     ],
     "correctAnswer": "Şeva te bi xêr",
-    "correctAnswerTr": "İyi geceler",
+    "correctAnswerTr": "Şeva te bi xêr",
     "explanation": "\"Şeva te bi xêr\" geceleyin söylenir: iyi geceler.",
     "explanationKu": "\"Şeva te bi xêr\" şevê tê gotin.",
     "explanationTr": "\"Şeva te bi xêr\" geceleyin söylenir: iyi geceler.",
@@ -661,13 +661,13 @@
       "Ez karker im"
     ],
     "answersTr": [
-      "Ben öğretmenim",
-      "Ben öğrenciyim",
-      "Ben doktorum",
-      "Ben işçiyim"
+      "Ez mamoste me",
+      "Ez xwendekar im",
+      "Ez doktor im",
+      "Ez karker im"
     ],
     "correctAnswer": "Ez xwendekar im",
-    "correctAnswerTr": "Ben öğrenciyim",
+    "correctAnswerTr": "Ez xwendekar im",
     "explanation": "\"Xwendekar\" öğrenci demektir: \"Ez xwendekar im.\"",
     "explanationKu": "\"Xwendekar\" tê wateya \"öğrenci\": \"Ez xwendekar im.\"",
     "explanationTr": "\"Xwendekar\" öğrenci demektir: \"Ez xwendekar im.\"",
@@ -841,13 +841,13 @@
       "Ez bîst salî me"
     ],
     "answersTr": [
-      "Ben on yaşındayım",
-      "Ben otuz yaşındayım",
-      "Ben kırk yaşındayım",
-      "Ben yirmi yaşındayım"
+      "Ez deh salî me",
+      "Ez sî salî me",
+      "Ez çil salî me",
+      "Ez bîst salî me"
     ],
     "correctAnswer": "Ez bîst salî me",
-    "correctAnswerTr": "Ben yirmi yaşındayım",
+    "correctAnswerTr": "Ez bîst salî me",
     "explanation": "\"Bîst\" yirmi demektir: \"Ez bîst salî me.\"",
     "explanationKu": "\"Bîst\" tê wateya \"yirmi\": \"Ez bîst salî me.\"",
     "explanationTr": "\"Bîst\" yirmi demektir: \"Ez bîst salî me.\"",
@@ -949,13 +949,13 @@
       "Bira"
     ],
     "answersTr": [
-      "Kız kardeş",
-      "Amca",
-      "Oğul",
-      "Erkek kardeş"
+      "Xwişk",
+      "Mam",
+      "Kur",
+      "Bira"
     ],
     "correctAnswer": "Bira",
-    "correctAnswerTr": "Erkek kardeş",
+    "correctAnswerTr": "Bira",
     "explanation": "\"Bira\" erkek kardeş demektir.",
     "explanationKu": "\"Bira\" tê wateya \"erkek kardeş\".",
     "explanationTr": "\"Bira\" erkek kardeş demektir.",
@@ -985,13 +985,13 @@
       "Bira"
     ],
     "answersTr": [
-      "Kız kardeş",
-      "Kız çocuğu",
-      "Büyükanne",
-      "Erkek kardeş"
+      "Xwişk",
+      "Keç",
+      "Dapîr",
+      "Bira"
     ],
     "correctAnswer": "Xwişk",
-    "correctAnswerTr": "Kız kardeş",
+    "correctAnswerTr": "Xwişk",
     "explanation": "\"Xwişk\" kız kardeş demektir.",
     "explanationKu": "\"Xwişk\" tê wateya \"kız kardeş\".",
     "explanationTr": "\"Xwişk\" kız kardeş demektir.",
@@ -1057,13 +1057,13 @@
       "Jin"
     ],
     "answersTr": [
-      "Teyze",
-      "Büyükanne",
-      "Hala",
-      "Kadın"
+      "Xaltî",
+      "Dapîr",
+      "Met",
+      "Jin"
     ],
     "correctAnswer": "Xaltî",
-    "correctAnswerTr": "Teyze",
+    "correctAnswerTr": "Xaltî",
     "explanation": "\"Xaltî\" teyze (annenin kız kardeşi) demektir.",
     "explanationKu": "\"Xaltî\" xwişka dê ye.",
     "explanationTr": "\"Xaltî\" teyze (annenin kız kardeşi) demektir.",

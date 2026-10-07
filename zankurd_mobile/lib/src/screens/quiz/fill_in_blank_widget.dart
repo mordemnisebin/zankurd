@@ -210,19 +210,22 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
   }
 }
 
-/// Türkçe klavyede bulunmayan üç Kurmancî sesliyi girişe ekleyen sıra.
+/// Kurmancî'ye özgü harfleri girişe ekleyen sıra: ç ş ê î û.
 ///
 /// Kabul listesi (`acceptedAnswers`) `miroveki` yazanı doğru sayar ama
 /// oyuncuya doğru YAZIMI hiç göstermez. Bu sıra tersini yapar: harf bir
 /// dokunuş uzağa gelir, oyuncu `mirovekî` yazar ve kanonik biçimi bir kez
 /// daha görür. İkisi birlikte çalışır — biri hakkı teslim eder, öteki öğretir.
 ///
-/// `ş` ve `ç` bilerek yok: Türkçe klavyede ikisi de var, sıraya eklemek
-/// gerçekten eksik olan üçünü seyreltirdi.
+/// `ç` ve `ş` 2026-10-07'de eklendi: telefondaki klavye Türkçe değilse
+/// (ya da İngilizce/Kürtçe düzenli ise) ikisi de bir uzun basışın arkasında;
+/// QA'da yalnız î ê û görünce `ç`/`ş` içeren cevaplar (ör. `çiya`, `şev`)
+/// yazılamaz sanıldı. Bu satır artık Kurmancî alfabesinin klavyede zor
+/// ulaşılan beş harfini birden verir.
 class _DiacriticRow extends StatelessWidget {
   const _DiacriticRow({required this.onInsert});
 
-  static const letters = ['î', 'ê', 'û'];
+  static const letters = ['ç', 'ş', 'ê', 'î', 'û'];
 
   final ValueChanged<String> onInsert;
 

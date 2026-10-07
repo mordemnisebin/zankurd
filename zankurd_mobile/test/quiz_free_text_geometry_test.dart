@@ -133,7 +133,7 @@ void main() {
 
       // Türkçe klavyede bulunmayan üç sesliyi ekleyen satır görünürde ve
       // erişilebilirde olmalı: gizli kaldıysa doğru cevap yazılamaz.
-      for (final letter in ['î', 'ê', 'û']) {
+      for (final letter in ['ç', 'ş', 'ê', 'î', 'û']) {
         final chip = find.byKey(ValueKey('fill-in-blank-diacritic-$letter'));
         await tester.ensureVisible(chip);
         expectOnScreen(tester, chip, 'Diyakritik düğmesi $letter');

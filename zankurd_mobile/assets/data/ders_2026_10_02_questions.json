@@ -49,13 +49,13 @@
             "Yek"
         ],
         "answersTr": [
-            "Üç",
-            "İki",
-            "Dört",
-            "Bir"
+            "Sê",
+            "Du",
+            "Çar",
+            "Yek"
         ],
         "correctAnswer": "Sê",
-        "correctAnswerTr": "Üç",
+        "correctAnswerTr": "Sê",
         "explanation": "\"Sê\" üç sayısı için söylenir.",
         "explanationKu": "\"Sê\" ji bo hejmara 3 tê gotin.",
         "explanationTr": "\"Sê\" üç sayısı için söylenir.",
@@ -193,13 +193,13 @@
             "Şeş"
         ],
         "answersTr": [
-            "Yirmi",
-            "On",
-            "Yüz",
-            "Altı"
+            "Bîst",
+            "Deh",
+            "Sed",
+            "Şeş"
         ],
         "correctAnswer": "Bîst",
-        "correctAnswerTr": "Yirmi",
+        "correctAnswerTr": "Bîst",
         "explanation": "\"Bîst\" yirmi sayısıdır.",
         "explanationKu": "\"Bîst\" hejmara 20 e.",
         "explanationTr": "\"Bîst\" yirmi sayısıdır.",
@@ -913,13 +913,13 @@
             "Zivistan"
         ],
         "answersTr": [
-            "Yaz",
-            "İlkbahar",
-            "Sonbahar",
-            "Kış"
+            "Havîn",
+            "Bihar",
+            "Payîz",
+            "Zivistan"
         ],
         "correctAnswer": "Havîn",
-        "correctAnswerTr": "Yaz",
+        "correctAnswerTr": "Havîn",
         "explanation": "\"Havîn\" en sıcak mevsimdir.",
         "explanationKu": "\"Havîn\" demsala herî germ e.",
         "explanationTr": "\"Havîn\" en sıcak mevsimdir.",
@@ -985,13 +985,13 @@
             "Payîz"
         ],
         "answersTr": [
-            "İlkbahar",
-            "Kış",
-            "Yaz",
-            "Sonbahar"
+            "Bihar",
+            "Zivistan",
+            "Havîn",
+            "Payîz"
         ],
         "correctAnswer": "Zivistan",
-        "correctAnswerTr": "Kış",
+        "correctAnswerTr": "Zivistan",
         "explanation": "\"Zivistan\" karlı ve soğuk mevsimdir.",
         "explanationKu": "\"Zivistan\" demsala berf û sermayê ye.",
         "explanationTr": "\"Zivistan\" karlı ve soğuk mevsimdir.",
