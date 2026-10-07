@@ -42,6 +42,23 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
   late List<_Token> _availableWords;
   final List<_Token> _selectedWords = [];
 
+  /// Havuzun şimdiye dek ölçülen EN BÜYÜK yüksekliği.
+  ///
+  /// Havuz boşaldıkça `Wrap` küçülür ve altındaki "Kontrol et" düğmesi
+  /// yukarı zıplardı: oyuncu son kelimeye dokunur dokunmaz hedef parmağının
+  /// altından kayardı (2026-10-07 simülatör QA'sı). Havuz alanı ilk
+  /// yüksekliğinde tutulur; yeni soruda sıfırlanır.
+  double _poolMinHeight = 0;
+  final GlobalKey _poolKey = GlobalKey();
+
+  void _measurePool() {
+    final box = _poolKey.currentContext?.findRenderObject();
+    if (box is! RenderBox || !box.hasSize) return;
+    if (box.size.height > _poolMinHeight + 0.5 && mounted) {
+      setState(() => _poolMinHeight = box.size.height);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +72,7 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
     // kullanır. Bu sıfırlama olmadan önceki sorunun kelimeleri ekranda kalır.
     if (oldWidget.question.id != widget.question.id) {
       _selectedWords.clear();
+      _poolMinHeight = 0;
       _initWords();
     }
   }
@@ -121,14 +139,19 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
     // Cevap verildikten sonra kullanıcının gönderdiği cümle gösterilir;
     // yeniden düzenlemeye çalışmasın diye havuz ve buton kaldırılır.
     final submitted = answered ? widget.selectedAnswer : null;
+    if (!answered) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _measurePool());
+    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // ============ SEÇİLEN KELİMELERİN CÜMLE ALANI ============
+        // 88: tek satır çip (50) + dolgu (32) = 82; eskiden 80'di ve ilk
+        // kelime seçilince alan 2 dp uzayıp düğmeyi kaydırıyordu.
         Container(
-          constraints: const BoxConstraints(minHeight: 80),
+          constraints: const BoxConstraints(minHeight: 88),
           padding: const EdgeInsets.all(SahneSpace.x4),
           decoration: ShapeDecoration(
             color: t.s1,
@@ -172,19 +195,23 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
           const SizedBox(height: SahneSpace.x4),
 
           // ============ KELİME HAVUZU (AVAILABLE WORDS) ============
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: SahneSpace.x2,
-            runSpacing: SahneSpace.x2,
-            children: [
-              for (final token in _availableWords)
-                _WordChip(
-                  word: token.word,
-                  selected: false,
-                  semanticHint: Tr.forKu(K.cumleyeEkle, isKu),
-                  onPressed: () => _selectWord(token),
-                ),
-            ],
+          ConstrainedBox(
+            constraints: BoxConstraints(minHeight: _poolMinHeight),
+            child: Wrap(
+              key: _poolKey,
+              alignment: WrapAlignment.center,
+              spacing: SahneSpace.x2,
+              runSpacing: SahneSpace.x2,
+              children: [
+                for (final token in _availableWords)
+                  _WordChip(
+                    word: token.word,
+                    selected: false,
+                    semanticHint: Tr.forKu(K.cumleyeEkle, isKu),
+                    onPressed: () => _selectWord(token),
+                  ),
+              ],
+            ),
           ),
 
           const SizedBox(height: SahneSpace.x4),
