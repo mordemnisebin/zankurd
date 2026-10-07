@@ -21,12 +21,12 @@
 begin;
 
 update lesson_slides ls
-set content_tr = regexp_replace(ls.content_tr, 'Stenbolê\.\.$', 'Stenbolê.')
+set content_tr = regexp_replace(ls.content_tr, '([^.])\.\.$', '\1.')
 from lessons l
 where l.id = ls.lesson_id
   and l.slug = 'xwe-nasandin'
   and ls.order_in_lesson = 3
-  and ls.content_tr like '%Stenbolê..';
+  and ls.content_tr like '%..' and ls.content_tr not like '%...';
 
 do $$
 declare
@@ -35,7 +35,8 @@ declare
 begin
   select count(*) into v_bad
     from lesson_slides ls join lessons l on l.id = ls.lesson_id
-   where l.slug = 'xwe-nasandin' and ls.content_tr like '%..';
+   where l.slug = 'xwe-nasandin' and ls.content_tr like '%..'
+     and ls.content_tr not like '%...';  -- üç nokta ("adım ...") meşru
   if v_bad <> 0 then
     raise exception 'xwe-nasandin: cift nokta ile biten % slayt kaldi', v_bad;
   end if;
@@ -43,7 +44,7 @@ begin
   select count(*) into v_ok
     from lesson_slides ls join lessons l on l.id = ls.lesson_id
    where l.slug = 'xwe-nasandin' and ls.order_in_lesson = 3
-     and ls.content_tr like '%Stenbolê.';
+     and ls.content_tr like '%.' and ls.content_tr not like '%..';
   if v_ok <> 1 then
     raise exception 'xwe-nasandin 3. slayt beklenen hâlde degil (%)', v_ok;
   end if;
