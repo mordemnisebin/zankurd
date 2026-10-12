@@ -85,7 +85,8 @@ void main() {
       // yolu (32 çoktan seçmeli + 69 boşluk doldurma + 51 cümle kurma).
       // 3353 -> 3613 (+260): 2026-10-08 `dersler2_2026_10_08` (132) ve
       // `hat_2026_10_07` (128).
-      3613,
+      // 3613 -> 3734 (+121): 2026-10-08 `dersler3_2026_10_08`.
+      3734,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -169,7 +170,8 @@ void main() {
       // 2884 -> 3143 (+259): 2026-10-08 +260 yeni soru (`dersler2_2026_10_08`
       // 132, `hat_2026_10_07` 128), hepsi `approved`; -1: `ds_cand_0285`
       // emekliye ayrıldı.
-      3143,
+      // 3143 -> 3264 (+121): 2026-10-08 `dersler3_2026_10_08`, hepsi `approved`.
+      3264,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

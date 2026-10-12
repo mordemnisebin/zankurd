@@ -101,7 +101,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla yirmi kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla yirmi bir kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -145,6 +145,8 @@ void main() {
         // 2026-10-08: başlangıç yolu II (132) ve alt konu hattı (128).
         ...fromJson('assets/data/dersler2_2026_10_08_questions.json'),
         ...fromJson('assets/data/hat_2026_10_07_questions.json'),
+        // 2026-10-08: başlangıç yolu III (124).
+        ...fromJson('assets/data/dersler3_2026_10_08_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;

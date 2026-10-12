@@ -73,6 +73,14 @@ class LearningLessonAliases {
     'hewa': ['weather_1'],
     'pirs': ['questions_1'],
     'leker': ['verbs_1'],
+    // 2026-10-08: başlangıç yolu III (`supabase/2026-10-08_dersler3_lessons.sql`).
+    'pise': ['jobs_1'],
+    'bajar': ['city_1'],
+    'kirin': ['shopping_1'],
+    'tenduristi': ['health_1'],
+    'dibistan': ['school_1'],
+    'veguhestin': ['transport_1'],
+    'dema-bori': ['past_1'],
   };
 
   /// Yerel bankada konusunu ölçen soru bulunmayan sunucu dersleri.

@@ -103,9 +103,9 @@ void main() {
     expect(LearnerLexicon.entriesForSource('time_1'), hasLength(6));
 
     final covered = LearnerLexicon.sources.keys.toSet();
-    // 25 ders kaynağı + 7 (2026-10-08 başlangıç yolu II) + 'questions'
+    // 25 ders kaynağı + 7 (2026-10-08 başlangıç yolu II) + 7 (yolu III) + 'questions'
     // (Sorulardan, 2026-10-07).
-    expect(covered, hasLength(33));
+    expect(covered, hasLength(40));
     expect(covered.contains('time_1'), isTrue);
   });
 }

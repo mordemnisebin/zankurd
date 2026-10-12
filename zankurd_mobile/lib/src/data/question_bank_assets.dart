@@ -156,4 +156,8 @@ const questionBankAssets = <String>[
   // incelemesi, uyuşmazlıkta Gemini 3.8 Flash. Sunucu eşi:
   // `supabase/2026-10-08_hat_sync.sql`.
   'assets/data/hat_2026_10_07_questions.json',
+  // 2026-10-08: BAŞLANGIÇ YOLU III. Yedi yeni ders (meslek, şehir, alışveriş,
+  // sağlık, okul, ulaşım, geçmiş zaman) için derse etiketli 121 soru
+  // (`learningLessonId`). Kurmancî Gemini 3.1 Pro + Grok 4.7 okumasından geçti.
+  'assets/data/dersler3_2026_10_08_questions.json',
 ];

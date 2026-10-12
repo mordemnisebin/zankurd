@@ -802,6 +802,13 @@ const Map<String, IconData> _lessonIconNameMap = {
   'cloud': AppIcons.cloud,
   'help': AppIcons.question,
   'directions_run': AppIcons.bolt,
+  // 2026-10-08 başlangıç yolu III: meslek, şehir, alışveriş, okul, ulaşım, geçmiş.
+  'work': AppIcons.briefcase,
+  'location_city': AppIcons.buildingColumns,
+  'shopping_cart': AppIcons.cartShopping,
+  'school': AppIcons.graduationCap,
+  'directions_bus': AppIcons.paperPlane,
+  'history': AppIcons.clock,
 };
 
 /// Ders KONUSUNDAN (`Lesson.category`) ikon — sunucu/mock her ikisinde de
