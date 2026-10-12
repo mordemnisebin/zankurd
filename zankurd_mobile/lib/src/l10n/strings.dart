@@ -1101,6 +1101,14 @@ class Tr {
       'ku': 'Tu jî bilîze, li Play Store\'ê "ZanKurd"',
       'tr': 'Sen de oyna, Play Store\'da "ZanKurd"',
     },
+    K.shareStoryLine: {
+      'ku': 'Min {score} girt — tu jî biceribîne',
+      'tr': '{score} yaptım — sen de dene',
+    },
+    K.shareStoryDuelWin: {
+      'ku': 'Ez di pêşbirkê de bi ser ketim — tu jî dikarî?',
+      'tr': 'Düelloyu kazandım — sen de yapabilir misin?',
+    },
     K.tekraraBasla: {'ku': 'Dest bi dubarekirinê bike', 'tr': 'Tekrara başla'},
 
     // ── Soru tipi rozetleri ──────────────────────────────────────────
@@ -3251,6 +3259,8 @@ class K {
   static const isabet = 'screen.isabet';
   static const seri2 = 'screen.seri2';
   static const senDeOynaPlay = 'screen.senDeOynaPlay';
+  static const shareStoryLine = 'share.storyLine';
+  static const shareStoryDuelWin = 'share.storyDuelWin';
   static const tekraraBasla = 'screen.tekraraBasla';
 
   // ── Soru tipi rozetleri ────────────────────────────────────────────

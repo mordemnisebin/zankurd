@@ -7,7 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../l10n/strings.dart';
-import '../widgets/share_result_card.dart';
+import '../widgets/share_story_card.dart';
 import 'error_reporter.dart';
 import 'percent_format.dart';
 
@@ -49,6 +49,7 @@ class ResultSharer {
     required int bestStreak,
     required String category,
     List<bool> results = const [],
+    bool duelWin = false,
   }) async {
     final accuracy = totalQuestions == 0
         ? 0
@@ -61,30 +62,38 @@ class ResultSharer {
     });
 
     final overlay = Overlay.maybeOf(context);
-    Uint8List? bytes;
+    final stars = accuracy >= 80
+        ? 3
+        : accuracy >= 50
+        ? 2
+        : 1;
+    // Hikâye (1080×1920) ve kare (1080×1080) görsel; ikisi de paylaşılır.
+    final images = <Uint8List>[];
     if (overlay != null) {
-      bytes = await _captureCard(
-        overlay,
-        ShareResultCard(
-          isKu: isKu,
-          score: score,
-          correctCount: correctCount,
-          totalQuestions: totalQuestions,
-          bestStreak: bestStreak,
-          category: category,
-          results: results,
-        ),
-      );
+      for (final format in ShareCardFormat.values) {
+        final bytes = await _captureCard(
+          overlay,
+          ShareStoryCard(
+            isKu: isKu,
+            format: format,
+            scoreText: '$correctCount/$totalQuestions',
+            category: category,
+            stars: stars,
+            duelWin: duelWin,
+          ),
+        );
+        if (bytes != null) images.add(bytes);
+      }
     }
 
     try {
-      if (bytes != null) {
-        final file = XFile.fromData(
-          bytes,
-          mimeType: 'image/png',
-          name: 'zankurd_result.png',
-        );
-        await SharePlus.instance.share(ShareParams(text: text, files: [file]));
+      if (images.isNotEmpty) {
+        final names = ['zankurd_story.png', 'zankurd_square.png'];
+        final files = [
+          for (var i = 0; i < images.length; i++)
+            XFile.fromData(images[i], mimeType: 'image/png', name: names[i]),
+        ];
+        await SharePlus.instance.share(ShareParams(text: text, files: files));
         return;
       }
     } catch (error, stack) {
@@ -121,7 +130,7 @@ class ResultSharer {
       final renderObject = boundaryKey.currentContext?.findRenderObject();
       if (renderObject is! RenderRepaintBoundary) return null;
 
-      final image = await renderObject.toImage(pixelRatio: 3);
+      final image = await renderObject.toImage(pixelRatio: 1);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       return byteData?.buffer.asUint8List();
     } catch (error, stack) {
