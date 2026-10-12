@@ -1,0 +1,4482 @@
+[
+  {
+    "id": "hat_0001",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan nivîskarî romana Şivanê Kurmanca nivîsandiye?",
+    "promptTr": "Şivanê Kurmanca romanını kim yazmıştır?",
+    "answers": [
+      "Mehmed Uzun",
+      "Erebê Şemo",
+      "Musa Anter",
+      "Yaşar Kemal"
+    ],
+    "answersTr": [
+      "Mehmed Uzun",
+      "Erebê Şemo",
+      "Musa Anter",
+      "Yaşar Kemal"
+    ],
+    "correctAnswer": "Erebê Şemo",
+    "correctAnswerTr": "Erebê Şemo",
+    "explanation": "Bu roman 1935'te Ermenistan'da Kurmancî olarak yayımlanmış ve ilk modern Kürt romanı olarak kabul edilir.",
+    "explanationKu": "Ev roman di 1935an de li Ermenistanê bi Kurmancî hatiye weşandin û wekî yekem romana Kurdî ya modern tê qebûlkirin.",
+    "explanationTr": "Bu roman 1935'te Ermenistan'da Kurmancî olarak yayımlanmış ve ilk modern Kürt romanı olarak kabul edilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Ereb_Shamilov",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0002",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan nivîskarî romana Tu nivîsandiye?",
+    "promptTr": "Tu romanını kim yazmıştır?",
+    "answers": [
+      "Mehmed Uzun",
+      "Erebê Şemo",
+      "Bextiyar Elî",
+      "Jan Dost"
+    ],
+    "answersTr": [
+      "Mehmed Uzun",
+      "Erebê Şemo",
+      "Bextiyar Elî",
+      "Jan Dost"
+    ],
+    "correctAnswer": "Mehmed Uzun",
+    "correctAnswerTr": "Mehmed Uzun",
+    "explanation": "Bu roman 1985'te İsveç'te yayımlanmış ve Mehmed Uzun'un ilk romanıdır.",
+    "explanationKu": "Ev roman di 1985an de li Swêdê hatiye weşandin û yekem romana Mehmed Uzun e.",
+    "explanationTr": "Bu roman 1985'te İsveç'te yayımlanmış ve Mehmed Uzun'un ilk romanıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Mehmed_Uzun",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0003",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan nivîskarî romana Siya Evînê nivîsandiye?",
+    "promptTr": "Siya Evînê romanını kim yazmıştır?",
+    "answers": [
+      "Mehmed Uzun",
+      "Musa Anter",
+      "Helîm Yûsiv",
+      "Firat Cewerî"
+    ],
+    "answersTr": [
+      "Mehmed Uzun",
+      "Musa Anter",
+      "Helîm Yûsiv",
+      "Firat Cewerî"
+    ],
+    "correctAnswer": "Mehmed Uzun",
+    "correctAnswerTr": "Mehmed Uzun",
+    "explanation": "Bu roman 1989'da yayımlanmış olup Kürt aydını Memduh Selim Bey'in hayatını konu alır.",
+    "explanationKu": "Ev roman di 1989an de hatiye weşandin û li ser jiyana rewşenbîrê Kurd Memdûh Selîm Beg e.",
+    "explanationTr": "Bu roman 1989'da yayımlanmış olup Kürt aydını Memduh Selim Bey'in hayatını konu alır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Mehmed_Uzun",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0004",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan nivîskarî romana Hawara Dîcleyê nivîsandiye?",
+    "promptTr": "Hawara Dîcleyê romanını kim yazmıştır?",
+    "answers": [
+      "Mehmed Uzun",
+      "Îbrahîm Ehmed",
+      "Mahmut Baksî",
+      "Burhan Sonmez"
+    ],
+    "answersTr": [
+      "Mehmed Uzun",
+      "Îbrahîm Ehmed",
+      "Mahmut Baksî",
+      "Burhan Sönmez"
+    ],
+    "correctAnswer": "Mehmed Uzun",
+    "correctAnswerTr": "Mehmed Uzun",
+    "explanation": "Bu iki ciltlik roman, Cizreli Bedirhan Bey ve ailesinin hayatını anlatır.",
+    "explanationKu": "Ev roman du cild e û jiyana Mîr Bedirxanê Cizîrî û malbata wî vedibêje.",
+    "explanationTr": "Bu iki ciltlik roman, Cizreli Bedirhan Bey ve ailesinin hayatını anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Hawara_Dicley%C3%AA",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0005",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan nivîskarî romana Janî Gel nivîsandiye?",
+    "promptTr": "Janî Gel romanını kim yazmıştır?",
+    "answers": [
+      "Erebê Şemo",
+      "Îbrahîm Ehmed",
+      "Jan Dost",
+      "Musa Anter"
+    ],
+    "answersTr": [
+      "Erebê Şemo",
+      "Îbrahîm Ehmed",
+      "Jan Dost",
+      "Musa Anter"
+    ],
+    "correctAnswer": "Îbrahîm Ehmed",
+    "correctAnswerTr": "Îbrahîm Ehmed",
+    "explanation": "Bu roman 1972'de Soranice yayımlanmış ve ilk modern Sorani romanı olarak kabul edilir.",
+    "explanationKu": "Ev roman bi Soranî di 1972yan de hatiye weşandin û wekî yekem romana Soranî ya modern tê dîtin.",
+    "explanationTr": "Bu roman 1972'de Soranice yayımlanmış ve ilk modern Sorani romanı olarak kabul edilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Ibrahim_Ahmad_(novelist)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0006",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan nivîskarî romana Şarî Mûsîqare Spîyekan nivîsandiye?",
+    "promptTr": "Şarî Mûsîqare Spîyekan romanını kim yazmıştır?",
+    "answers": [
+      "Bextiyar Elî",
+      "Mehmed Uzun",
+      "Helîm Yûsiv",
+      "Firat Cewerî"
+    ],
+    "answersTr": [
+      "Bextiyar Elî",
+      "Mehmed Uzun",
+      "Helîm Yûsiv",
+      "Firat Cewerî"
+    ],
+    "correctAnswer": "Bextiyar Elî",
+    "correctAnswerTr": "Bextiyar Elî",
+    "explanation": "Yazar 2017 Nelly Sachs Ödülü'nü almıştır ve bu onun en tanınmış romanıdır.",
+    "explanationKu": "Nivîskar Xelata Nelly Sachsê ya 2017an wergirtiye û ev romana wî ya herî navdar e.",
+    "explanationTr": "Yazar 2017 Nelly Sachs Ödülü'nü almıştır ve bu onun en tanınmış romanıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Bachtyar_Ali",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0007",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan nivîskarî romana Mîrname nivîsandiye?",
+    "promptTr": "Mîrname romanını kim yazmıştır?",
+    "answers": [
+      "Jan Dost",
+      "Mehmed Uzun",
+      "Musa Anter",
+      "Yaşar Kemal"
+    ],
+    "answersTr": [
+      "Jan Dost",
+      "Mehmed Uzun",
+      "Musa Anter",
+      "Yaşar Kemal"
+    ],
+    "correctAnswer": "Jan Dost",
+    "correctAnswerTr": "Jan Dost",
+    "explanation": "Jan Dost Kürtçe ve Arapça yazar",
+    "explanationKu": "Jan Dost bi Kurmancî û Erebî dinivîse û ev romana wî li ser jiyana Ehmedê Xanî ye.",
+    "explanationTr": "Jan Dost Kürtçe ve Arapça yazar",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Jan_Dost",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0008",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan nivîskarî romana Payîza Dereng nivîsandiye?",
+    "promptTr": "Payîza Dereng romanını kim yazmıştır?",
+    "answers": [
+      "Bextiyar Elî",
+      "Firat Cewerî",
+      "Jan Dost",
+      "Helîm Yûsiv"
+    ],
+    "answersTr": [
+      "Bextiyar Elî",
+      "Firat Cewerî",
+      "Jan Dost",
+      "Helîm Yûsiv"
+    ],
+    "correctAnswer": "Firat Cewerî",
+    "correctAnswerTr": "Firat Cewerî",
+    "explanation": "Bu roman 2005'te yayımlanmış olup Firat Cewerî'nin tanınmış romanlarından biridir.",
+    "explanationKu": "Ev roman di 2005an de hatiye weşandin û yek ji berhemên naskirî yên Firat Cewerî ye.",
+    "explanationTr": "Bu roman 2005'te yayımlanmış olup Firat Cewerî'nin tanınmış romanlarından biridir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Firat_Cewer%C3%AE",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0009",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan nivîskarê kurd romana bi navê \"Şivanê Kurmancan\" nivîsiye, ku wek yekem romana kurmancî tê qebûlkirin?",
+    "promptTr": "Kurmancî'nin ilk romanı kabul edilen \"Şivanê Kurmancan\" adlı eseri hangi Kürt yazar yazmıştır?",
+    "answers": [
+      "Mehmed Uzun",
+      "Erebê Şemo",
+      "Jan Dost",
+      "Hesenê Metê"
+    ],
+    "answersTr": [
+      "Mehmed Uzun",
+      "Erebê Şemo",
+      "Jan Dost",
+      "Hesenê Metê"
+    ],
+    "correctAnswer": "Erebê Şemo",
+    "correctAnswerTr": "Erebê Şemo",
+    "explanation": "Bu roman 1935 yılında Ermenistan'da yayımlanmıştır ve Sovyet Yezidilerinin yaşamını anlatır.",
+    "explanationKu": "Ev roman di sala 1935an de li Ermenistanê hatiye weşandin û jiyana êzîdiyên Sovyetê vedibêje.",
+    "explanationTr": "Bu roman 1935 yılında Ermenistan'da yayımlanmıştır ve Sovyet Yezidilerinin yaşamını anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Arab_Shamilov",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0010",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Romana bi navê \"Janî Gel\" ku wek yekem romana soranî tê qebûlkirin, kî nivîsiye?",
+    "promptTr": "Soranî'nin ilk romanı kabul edilen \"Janî Gel\" adlı eseri kim yazmıştır?",
+    "answers": [
+      "Îbrahîm Ehmed",
+      "Bextiyar Elî",
+      "Ata Nahayî",
+      "Şêrzad Hesen"
+    ],
+    "answersTr": [
+      "İbrahim Ahmed",
+      "Bextiyar Elî",
+      "Ata Nahayî",
+      "Şêrzad Hasan"
+    ],
+    "correctAnswer": "Îbrahîm Ehmed",
+    "correctAnswerTr": "İbrahim Ahmed",
+    "explanation": "Bu roman 1972 yılında yayımlanmıştır ve 1960'larda Kürtlerin siyasi mücadelesini anlatır.",
+    "explanationKu": "Ev roman di sala 1972yan de hatiye weşandin û têkoşîna siyasî ya kurdan di salên 1960an de vedibêje.",
+    "explanationTr": "Bu roman 1972 yılında yayımlanmıştır ve 1960'larda Kürtlerin siyasi mücadelesini anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Jani_Gel",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0011",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Berhema klasîk a bi navê \"Mem û Zîn\" ku bingeha romana kurdî tê dîtin, kî nivîsiye?",
+    "promptTr": "Kürt romanının temeli sayılan \"Mem û Zîn\" adlı klasik eseri kim yazmıştır?",
+    "answers": [
+      "Ehmedê Xanî",
+      "Feqiyê Teyran",
+      "Melayê Cizîrî",
+      "Elîyê Herîrî"
+    ],
+    "answersTr": [
+      "Ehmedê Xanî",
+      "Feqiyê Teyran",
+      "Melayê Cizîrî",
+      "Elîyê Herîrî"
+    ],
+    "correctAnswer": "Ehmedê Xanî",
+    "correctAnswerTr": "Ehmedê Xanî",
+    "explanation": "Bu eser 1692 yılında mesnevi biçiminde yazılmıştır ve 2655 beyitten oluşur.",
+    "explanationKu": "Ev berhem di sala 1692yan de bi mesnewî hatiye nivîsîn û ji 2655 malikan pêk tê.",
+    "explanationTr": "Bu eser 1692 yılında mesnevi biçiminde yazılmıştır ve 2655 beyitten oluşur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Mem_and_Zin",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0012",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Romana bi navê \"Tu\" ku di sala 1985an de li Swêdê hatiye weşandin, kî nivîsiye?",
+    "promptTr": "1985 yılında İsveç'te yayımlanan \"Tu\" adlı romanı kim yazmıştır?",
+    "answers": [
+      "Mehmed Uzun",
+      "Jan Dost",
+      "Hesenê Metê",
+      "Helîm Yûsiv"
+    ],
+    "answersTr": [
+      "Mehmed Uzun",
+      "Jan Dost",
+      "Hesenê Metê",
+      "Helîm Yûsiv"
+    ],
+    "correctAnswer": "Mehmed Uzun",
+    "correctAnswerTr": "Mehmed Uzun",
+    "explanation": "Mehmed Uzun 1977 yılında İsveç'e gitti ve bu romanı 1985'te orada Kurmancî yayımladı.",
+    "explanationKu": "Mehmed Uzun di sala 1977an de çû Swêdê û ev roman di sala 1985an de li wir bi kurmancî weşand.",
+    "explanationTr": "Mehmed Uzun 1977 yılında İsveç'e gitti ve bu romanı 1985'te orada Kurmancî yayımladı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Mehmed_Uzun",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0013",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Mehmed Uzun li kîjan navçeya Rihayê ji dayik bûye?",
+    "promptTr": "Mehmed Uzun, Şanlıurfa'nın hangi ilçesinde doğmuştur?",
+    "answers": [
+      "Sêwreg",
+      "Wêranşar",
+      "Serê Kaniyê",
+      "Pirsûs"
+    ],
+    "answersTr": [
+      "Siverek",
+      "Viranşehir",
+      "Ceylanpınar",
+      "Suruç"
+    ],
+    "correctAnswer": "Sêwreg",
+    "correctAnswerTr": "Siverek",
+    "explanation": "1953 yılında Siverek'te doğmuş ve 2007 yılında Diyarbakır'da vefat etmiştir.",
+    "explanationKu": "Ew di sala 1953yan de li Sêwregê hatiye dinyayê û di sala 2007an de li Amedê miriye.",
+    "explanationTr": "1953 yılında Siverek'te doğmuş ve 2007 yılında Diyarbakır'da vefat etmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Mehmed_Uzun",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0014",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Nivîskarê navdar Bextiyar Elî romanên xwe bi kîjan zaravayê kurdî dinivîse?",
+    "promptTr": "Ünlü yazar Bextiyar Elî romanlarını Kürtçenin hangi lehçesinde yazar?",
+    "answers": [
+      "Soranî",
+      "Kurmancî",
+      "Zazakî",
+      "Hewramî"
+    ],
+    "answersTr": [
+      "Soranî",
+      "Kurmancî",
+      "Zazaca",
+      "Hevramî"
+    ],
+    "correctAnswer": "Soranî",
+    "correctAnswerTr": "Soranî",
+    "explanation": "Süleymaniye doğumludur ve eserleri birçok dile çevrilmiştir.",
+    "explanationKu": "Ew li Silêmaniyê ji dayik bûye û berhemên wî bo gelek zimanan hatine wergerandin.",
+    "explanationTr": "Süleymaniye doğumludur ve eserleri birçok dile çevrilmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Bakhtyar_Ali",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0015",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Romana bi navê \"Şarî Mûsîqare Spîyekan\" ku di sala 2006an de hatiye weşandin, kî nivîsiye?",
+    "promptTr": "2006 yılında yayımlanan \"Şarî Mûsîqare Spîyekan\" adlı romanı kim yazmıştır?",
+    "answers": [
+      "Bextiyar Elî",
+      "Ata Nahayî",
+      "Şêrzad Hesen",
+      "Jan Dost"
+    ],
+    "answersTr": [
+      "Bextiyar Elî",
+      "Ata Nahayî",
+      "Şêrzad Hasan",
+      "Jan Dost"
+    ],
+    "correctAnswer": "Bextiyar Elî",
+    "correctAnswerTr": "Bextiyar Elî",
+    "explanation": "Bu roman alegoriktir ve Soranî adı beyaz müzisyenler kenti anlamına gelir.",
+    "explanationKu": "Ev roman alegorîk e û navê wê yê soranî tê wateya bajarê muzîkjenên spî.",
+    "explanationTr": "Bu roman alegoriktir ve Soranî adı beyaz müzisyenler kenti anlamına gelir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Bextiyar_El%C3%AE",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0016",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Romana bi navê \"Mijabad\" ku behsa dîroka Komara Mahabadê dike, kî nivîsiye?",
+    "promptTr": "Mahabad Kürt Cumhuriyeti tarihini anlatan \"Mijabad\" adlı romanı kim yazmıştır?",
+    "answers": [
+      "Jan Dost",
+      "Hesenê Metê",
+      "Helîm Yûsiv",
+      "Fawaz Husên"
+    ],
+    "answersTr": [
+      "Jan Dost",
+      "Hesenê Metê",
+      "Helîm Yûsiv",
+      "Fawaz Husên"
+    ],
+    "correctAnswer": "Jan Dost",
+    "correctAnswerTr": "Jan Dost",
+    "explanation": "Yazar Kobani doğumludur, Almanya'da yaşar ve bu roman 2004 yılında yayımlanmıştır.",
+    "explanationKu": "Nivîskar li Kobaniyê ji dayik bûye, li Almanyayê dijî û ev roman di sala 2004an de hatiye weşandin.",
+    "explanationTr": "Yazar Kobani doğumludur, Almanya'da yaşar ve bu roman 2004 yılında yayımlanmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Jan_Dost",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0017",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Nivîskarê romana \"Sobarto\"yê Helîm Yûsiv xelkê kîjan bajarê Rojavayê ye?",
+    "promptTr": "\"Sobarto\" romanının yazarı Helîm Yûsiv, Suriye Kürt bölgesinin hangi şehrindendir?",
+    "answers": [
+      "Amûdê",
+      "Qamişlo",
+      "Kobanî",
+      "Efrîn"
+    ],
+    "answersTr": [
+      "Amûdê",
+      "Kamışlı",
+      "Kobani",
+      "Afrin"
+    ],
+    "correctAnswer": "Amûdê",
+    "correctAnswerTr": "Amûdê",
+    "explanation": "1967 yılında Amûdê'de doğmuştur ve şu anda Almanya'da yaşamaktadır.",
+    "explanationKu": "Ew di sala 1967an de li Amûdê hatiye dinyayê û niha li Almanyayê dijî.",
+    "explanationTr": "1967 yılında Amûdê'de doğmuştur ve şu anda Almanya'da yaşamaktadır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Helim_Yusiv",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0018",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Berhema navdar a bi navê Mem û Zîn ji aliyê kê ve hatiye nivîsandin?",
+    "promptTr": "Mem û Zîn adlı ünlü eser kimin tarafından yazılmıştır?",
+    "answers": [
+      "Ehmedê Xanî",
+      "Melayê Cizîrî",
+      "Feqiyê Teyran",
+      "Elî Herîrî"
+    ],
+    "answersTr": [
+      "Ahmed-i Hani",
+      "Melayê Cizîrî",
+      "Feqiyê Teyran",
+      "Ali Hariri"
+    ],
+    "correctAnswer": "Ehmedê Xanî",
+    "correctAnswerTr": "Ahmed-i Hani",
+    "explanation": "Bu eser hicri 1105 yılında (1694) tamamlanmıştır ve yaklaşık 2650 beyitten oluşur.",
+    "explanationKu": "Ev berhem di sala 1105an a hicrî de (1694) hatiye temamkirin û nêzî 2650 malikan e.",
+    "explanationTr": "Bu eser hicri 1105 yılında (1694) tamamlanmıştır ve yaklaşık 2650 beyitten oluşur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Mem_%C3%BB_Z%C3%AEn",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0019",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan berhem ji aliyê Melayê Cizîrî ve hatiye nivîsandin?",
+    "promptTr": "Melayê Cizîrî tarafından yazılan eser hangisidir?",
+    "answers": [
+      "Dîwan",
+      "Mem û Zîn",
+      "Zembîlfiroş",
+      "Nûbihara Biçûkan"
+    ],
+    "answersTr": [
+      "Divan",
+      "Mem û Zîn",
+      "Zembîlfiroş",
+      "Nûbihara Biçûkan"
+    ],
+    "correctAnswer": "Dîwan",
+    "correctAnswerTr": "Divan",
+    "explanation": "Divanda ağırlıklı olarak gazeller vardır ve orada ilahi aşk anlatılır.",
+    "explanationKu": "Di dîwanê de bi giranî gazel hene û tê de evîna xwedayî tê vegotin.",
+    "explanationTr": "Divanda ağırlıklı olarak gazeller vardır ve orada ilahi aşk anlatılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Melay%C3%AA_Ciz%C3%AEr%C3%AE",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0020",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan berhem ji aliyê Feqiyê Teyran ve hatiye nivîsandin?",
+    "promptTr": "Feqiyê Teyran tarafından yazılan eser hangisidir?",
+    "answers": [
+      "Zembîlfiroş",
+      "Mem û Zîn",
+      "Dîwan",
+      "Gul û Newroz"
+    ],
+    "answersTr": [
+      "Zembîlfiroş",
+      "Mem û Zîn",
+      "Divan",
+      "Gul û Newroz"
+    ],
+    "correctAnswer": "Zembîlfiroş",
+    "correctAnswerTr": "Zembîlfiroş",
+    "explanation": "Bu mesnevi, tahtı bırakıp zembil satan bir beyin hikâyesini anlatır.",
+    "explanationKu": "Ev mesnewî çîroka mîrekî vedibêje ku dev ji textê berdide û zembîlan difiroşe.",
+    "explanationTr": "Bu mesnevi, tahtı bırakıp zembil satan bir beyin hikâyesini anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Feqiy%C3%AA_Teyran",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0021",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan berhem ferhenga manzum a zarokan e û ji aliyê Ehmedê Xanî ve hatiye amadekirin?",
+    "promptTr": "Çocuklar için manzum sözlük olan eser hangisidir ve Ahmed-i Hani tarafından hazırlanmıştır?",
+    "answers": [
+      "Nûbihara Biçûkan",
+      "Zembîlfiroş",
+      "Dîwan",
+      "Leyl û Mecnûn"
+    ],
+    "answersTr": [
+      "Nûbihara Biçûkan",
+      "Zembilfroş",
+      "Divan",
+      "Leyla ile Mecnun"
+    ],
+    "correctAnswer": "Nûbihara Biçûkan",
+    "correctAnswerTr": "Nûbihara Biçûkan",
+    "explanation": "Bu eser, çocuklar kelime öğrensin diye Arapça ve Kurmançça yazılmıştır.",
+    "explanationKu": "Ev berhem bi erebî û kurmancî hatiye nivîsandin da ku zarok peyvan hîn bibin.",
+    "explanationTr": "Bu eser, çocuklar kelime öğrensin diye Arapça ve Kurmançça yazılmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ehmed%C3%AA_Xan%C3%AE",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0022",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Melayê Cizîrî li kîjan herêmê ji dayik bûye û jiyaye?",
+    "promptTr": "Melayê Cizîrî hangi bölgede doğup yaşamıştır?",
+    "answers": [
+      "Cizîra Botan",
+      "Mukriyan",
+      "Soran",
+      "Gurgum"
+    ],
+    "answersTr": [
+      "Cizîra Botan",
+      "Mukriyan",
+      "Soran",
+      "Gurgum"
+    ],
+    "correctAnswer": "Cizîra Botan",
+    "correctAnswerTr": "Cizîra Botan",
+    "explanation": "Gerçek adı Ahmed'dir ve yaşadığı yerden dolayı bu lakapla tanınır.",
+    "explanationKu": "Navê wî yê rast Ehmed e û ji ber cihê jiyana xwe bi vî nasnavî tê naskirin.",
+    "explanationTr": "Gerçek adı Ahmed'dir ve yaşadığı yerden dolayı bu lakapla tanınır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Melay%C3%AA_Ciz%C3%AEr%C3%AE",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0023",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Berhema Mem û Zîn bi kîjan zaravayê kurdî hatiye nivîsandin?",
+    "promptTr": "Mem û Zîn eseri Kürtçenin hangi lehçesiyle yazılmıştır?",
+    "answers": [
+      "Kurmancî",
+      "Soranî",
+      "Hewramî",
+      "Zazakî"
+    ],
+    "answersTr": [
+      "Kurmançça",
+      "Soranice",
+      "Hevramice",
+      "Zazaca"
+    ],
+    "correctAnswer": "Kurmancî",
+    "correctAnswerTr": "Kurmançça",
+    "explanation": "Yazar, bu sözlü hikâyeyi mesnevi sanatıyla yazılı bir esere dönüştürdüğünü söyler.",
+    "explanationKu": "Nivîskar dibêje wî ev çîroka devkî bi hunera mesnewiyê kiriye berhemeke nivîskî.",
+    "explanationTr": "Yazar, bu sözlü hikâyeyi mesnevi sanatıyla yazılı bir esere dönüştürdüğünü söyler.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Mem_%C3%BB_Z%C3%AEn",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0024",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Ehmedê Xanî di pêşgotina Mem û Zînê de gazinan ji çi dike?",
+    "promptTr": "Ahmed-i Hani, Mem û Zîn'in önsözünde neyden yakınır?",
+    "answers": [
+      "Yeknegirtina mîrên Kurd",
+      "Kêmbûna bazaran",
+      "Ziwabûna çeman",
+      "Kêmbûna zozanan"
+    ],
+    "answersTr": [
+      "Kürt beylerinin birleşmemesi",
+      "Çarşıların azlığı",
+      "Derelerin kuruması",
+      "Yaylaların azlığı"
+    ],
+    "correctAnswer": "Yeknegirtina mîrên Kurd",
+    "correctAnswerTr": "Kürt beylerinin birleşmemesi",
+    "explanation": "Eğer beyler birleşseydi bağımsız bir devletleri olurdu, der.",
+    "explanationKu": "Ew dibêje eger mîr yek bigirtana dê dewleteke wan a serbixwe hebûya.",
+    "explanationTr": "Eğer beyler birleşseydi bağımsız bir devletleri olurdu, der.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Ahmed-i_Hani",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0025",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Nivîskarê berhema navdar \"Mem û Zîn\" kî ye?",
+    "promptTr": "Ünlü \"Mem û Zîn\" eserinin yazarı kimdir?",
+    "answers": [
+      "Ehmedê Xanî",
+      "Melayê Cizîrî",
+      "Feqiyê Teyran",
+      "Elî Herîrî"
+    ],
+    "answersTr": [
+      "Ehmedê Xanî",
+      "Melayê Cizîrî",
+      "Feqiyê Teyran",
+      "Elî Herîrî"
+    ],
+    "correctAnswer": "Ehmedê Xanî",
+    "correctAnswerTr": "Ehmedê Xanî",
+    "explanation": "Bu eser 1692 yılında uzun bir mesnevi olarak yazılmış ve Kurmanci edebiyatının simgesi olmuştur.",
+    "explanationKu": "Ev berhem di sala 1692an de wekî mesnewiyeke dirêj hatiye nivîsîn û bûye sembola edebiyata Kurmancî.",
+    "explanationTr": "Bu eser 1692 yılında uzun bir mesnevi olarak yazılmış ve Kurmanci edebiyatının simgesi olmuştur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Mem_%C3%BB_Z%C3%AEn",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0026",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Nivîskarê \"Dîwan\"a tesewufî ya sedsala 17an kî ye?",
+    "promptTr": "17. yüzyılın ünlü tasavvufi \"Dîwan\"ının yazarı kimdir?",
+    "answers": [
+      "Feqiyê Teyran",
+      "Melayê Cizîrî",
+      "Ehmedê Xanî",
+      "Elî Herîrî"
+    ],
+    "answersTr": [
+      "Feqiyê Teyran",
+      "Melayê Cizîrî",
+      "Ehmedê Xanî",
+      "Elî Herîrî"
+    ],
+    "correctAnswer": "Melayê Cizîrî",
+    "correctAnswerTr": "Melayê Cizîrî",
+    "explanation": "Onun şiirlerinde ilahi aşk sanatsal ve zengin bir dille anlatılır.",
+    "explanationKu": "Di helbestên wî de evîna xwedayî bi zimanekî hunerî û dewlemend tê vegotin.",
+    "explanationTr": "Onun şiirlerinde ilahi aşk sanatsal ve zengin bir dille anlatılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Melay%C3%AA_Ciz%C3%AEr%C3%AE",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0027",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Nivîskarê çîroka bi helbest a \"Zembîlfiroş\" kî ye?",
+    "promptTr": "Manzum \"Zembîlfiroş\" hikâyesinin yazarı kimdir?",
+    "answers": [
+      "Ehmedê Xanî",
+      "Melayê Cizîrî",
+      "Feqiyê Teyran",
+      "Elî Herîrî"
+    ],
+    "answersTr": [
+      "Ehmedê Xanî",
+      "Melayê Cizîrî",
+      "Feqiyê Teyran",
+      "Elî Herîrî"
+    ],
+    "correctAnswer": "Feqiyê Teyran",
+    "correctAnswerTr": "Feqiyê Teyran",
+    "explanation": "Zembîlfiroş, mirliği bırakıp sepet satarak sade bir yaşamı seçen bir mirin hikâyesidir.",
+    "explanationKu": "Zembîlfiroş çîroka mîrekî ye ku dev ji mîrîtiyê berdide û bi firotina zembîlan jiyana sade hildibijêre.",
+    "explanationTr": "Zembîlfiroş, mirliği bırakıp sepet satarak sade bir yaşamı seçen bir mirin hikâyesidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Feqiy%C3%AA_Teyran",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0028",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan berhem ferhengeke bi helbest e û ji bo zarokan hatiye amadekirin?",
+    "promptTr": "Hangisi manzume biçiminde hazırlanmış çocuklara yönelik bir sözlüktür?",
+    "answers": [
+      "Dîwan",
+      "Zembîlfiroş",
+      "Şêxê Senan",
+      "Nûbihara Biçûkan"
+    ],
+    "answersTr": [
+      "Dîwan",
+      "Zembîlfiroş",
+      "Şêxê Senan",
+      "Nûbihara Biçûkan"
+    ],
+    "correctAnswer": "Nûbihara Biçûkan",
+    "correctAnswerTr": "Nûbihara Biçûkan",
+    "explanation": "Bu eser Arapça-Kurmanci bir sözlüktür ve \"Mem û Zîn\"in yazarı tarafından kaleme alınmıştır.",
+    "explanationKu": "Ev berhem ferhengeke Erebî-Kurmancî ye û ji aliyê xwediyê \"Mem û Zîn\"ê ve hatiye nivîsîn.",
+    "explanationTr": "Bu eser Arapça-Kurmanci bir sözlüktür ve \"Mem û Zîn\"in yazarı tarafından kaleme alınmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ehmed%C3%AA_Xan%C3%AE",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0029",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan helbestvan wekî yekemîn helbestvanê edebiyata klasîk a Kurmancî tê qebûlkirin?",
+    "promptTr": "Hangi şair Kurmanci klasik edebiyatının ilk şairi olarak kabul edilir?",
+    "answers": [
+      "Melayê Cizîrî",
+      "Elî Herîrî",
+      "Feqiyê Teyran",
+      "Ehmedê Xanî"
+    ],
+    "answersTr": [
+      "Melayê Cizîrî",
+      "Elî Herîrî",
+      "Feqiyê Teyran",
+      "Ehmedê Xanî"
+    ],
+    "correctAnswer": "Elî Herîrî",
+    "correctAnswerTr": "Elî Herîrî",
+    "explanation": "O, 15. yüzyılda yaşamıştır ve şiirleri ağırlıklı olarak aşk ve doğa üzerinedir.",
+    "explanationKu": "Ew di sedsala 15an de jiyaye û helbestên wî bi giranî li ser evîn û xwezayê ne.",
+    "explanationTr": "O, 15. yüzyılda yaşamıştır ve şiirleri ağırlıklı olarak aşk ve doğa üzerinedir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/El%C3%AE_Her%C3%AEr%C3%AE",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0030",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Nivîskarê berhema \"Eqîdeya Îmanê\" kî ye?",
+    "promptTr": "\"Eqîdeya Îmanê\" eserinin yazarı kimdir?",
+    "answers": [
+      "Melayê Cizîrî",
+      "Feqiyê Teyran",
+      "Elî Herîrî",
+      "Ehmedê Xanî"
+    ],
+    "answersTr": [
+      "Melayê Cizîrî",
+      "Feqiyê Teyran",
+      "Elî Herîrî",
+      "Ehmedê Xanî"
+    ],
+    "correctAnswer": "Ehmedê Xanî",
+    "correctAnswerTr": "Ehmedê Xanî",
+    "explanation": "Bu eser inanç esaslarını şiirle açıklar ve çocuklara öğretmek için yazılmıştır.",
+    "explanationKu": "Ev berhem bingehên baweriyê bi helbest şîrove dike û ji bo hînkirina zarokan hatiye nivîsîn.",
+    "explanationTr": "Bu eser inanç esaslarını şiirle açıklar ve çocuklara öğretmek için yazılmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ehmed%C3%AA_Xan%C3%AE",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0031",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Nivîskarê berhema \"Şêxê Senan\" kî ye?",
+    "promptTr": "Şêxê Senan' eserinin yazarı kimdir?",
+    "answers": [
+      "Elî Herîrî",
+      "Ehmedê Xanî",
+      "Feqiyê Teyran",
+      "Melayê Cizîrî"
+    ],
+    "answersTr": [
+      "Elî Herîrî",
+      "Ehmedê Xanî",
+      "Feqiyê Teyran",
+      "Melayê Cizîrî"
+    ],
+    "correctAnswer": "Feqiyê Teyran",
+    "correctAnswerTr": "Feqiyê Teyran",
+    "explanation": "Bu eser, tasavvuf yolundan uzaklaşan ve sonra geri dönen bir şeyhin hikâyesidir.",
+    "explanationKu": "Ev berhem çîroka şêxekî ye ku ji rêya tesewufê dûr dikeve û paşê vedigere.",
+    "explanationTr": "Bu eser, tasavvuf yolundan uzaklaşan ve sonra geri dönen bir şeyhin hikâyesidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Feqiy%C3%AA_Teyran",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0032",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "\"Mem û Zîn\" bi kîjan zaravayê hatiye nivîsîn?",
+    "promptTr": "\"Mem û Zîn\" hangi lehçede yazılmıştır?",
+    "answers": [
+      "Soranî",
+      "Kurmancî",
+      "Zazakî",
+      "Hewramî"
+    ],
+    "answersTr": [
+      "Sorani",
+      "Kurmanci",
+      "Zazaca",
+      "Hevrami"
+    ],
+    "correctAnswer": "Kurmancî",
+    "correctAnswerTr": "Kurmanci",
+    "explanation": "Yazarı, Kürtlerin kendi dilleriyle okuyup yazması için bilinçli olarak bu lehçeyi seçmiştir.",
+    "explanationKu": "Nivîskarê wê bi zanebûn ev zarava hilbijartiye da ku kurd bi zimanê xwe bixwînin û binivîsin.",
+    "explanationTr": "Yazarı, Kürtlerin kendi dilleriyle okuyup yazması için bilinçli olarak bu lehçeyi seçmiştir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Mem_%C3%BB_Z%C3%AEn",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0033",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "\"Mem û Zîn\" ji aliyê cureya edebî ve kîjan şêwe ye?",
+    "promptTr": "Edebi tür bakımından \"Mem û Zîn\" hangi biçimdedir?",
+    "answers": [
+      "Ferheng",
+      "Rêziman",
+      "Mesnewî",
+      "Bîranîn"
+    ],
+    "answersTr": [
+      "Sözlük",
+      "Gramer",
+      "Mesnevi",
+      "Hatıra"
+    ],
+    "correctAnswer": "Mesnewî",
+    "correctAnswerTr": "Mesnevi",
+    "explanation": "Bu biçim uzun aşk hikâyeleri için kullanılır ve bu eser 2600 beyitten uzundur.",
+    "explanationKu": "Ev şêwe ji bo çîrokên dirêj ên evînî tê bikaranîn û ev berhem ji 2600 malikan zêdetir e.",
+    "explanationTr": "Bu biçim uzun aşk hikâyeleri için kullanılır ve bu eser 2600 beyitten uzundur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Mem_%C3%BB_Z%C3%AEn",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0034",
+    "category": "Edebiyat",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan helbestvanê klasîk di sedsala 15an de jiyaye?",
+    "promptTr": "Klasik şairlerden hangisi 15. yüzyılda yaşamıştır?",
+    "answers": [
+      "Melayê Cizîrî",
+      "Feqiyê Teyran",
+      "Ehmedê Xanî",
+      "Elî Herîrî"
+    ],
+    "answersTr": [
+      "Melayê Cizîrî",
+      "Feqiyê Teyran",
+      "Ehmedê Xanî",
+      "Elî Herîrî"
+    ],
+    "correctAnswer": "Elî Herîrî",
+    "correctAnswerTr": "Elî Herîrî",
+    "explanation": "O, 1426 ile 1495 yılları arasında yaşamıştır; diğerleri ağırlıklı olarak 16. ve 17. yüzyıllarda yaşamıştır.",
+    "explanationKu": "Ew di navbera salên 1426 û 1495an de jiyaye, yên din bi giranî di sedsalên 16 û 17an de jiyane.",
+    "explanationTr": "O, 1426 ile 1495 yılları arasında yaşamıştır; diğerleri ağırlıklı olarak 16. ve 17. yüzyıllarda yaşamıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/El%C3%AE_Her%C3%AEr%C3%AE",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0035",
+    "category": "Sînema",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Yilmaz Guney li kîjan bajarî ji dayik bûye?",
+    "promptTr": "Yılmaz Güney hangi şehirde doğmuştur?",
+    "answers": [
+      "Stenbol",
+      "Edene",
+      "Enqere",
+      "Îzmîr"
+    ],
+    "answersTr": [
+      "İstanbul",
+      "Adana",
+      "Ankara",
+      "İzmir"
+    ],
+    "correctAnswer": "Edene",
+    "correctAnswerTr": "Adana",
+    "explanation": "1937 yılında Adana'da yoksul bir ailede doğdu, gençliğinde çalışarak okudu ve daha sonra İstanbul'a gitti.",
+    "explanationKu": "Ew di sala 1937an de li gundekî Edeneyê di malbateke feqîr de ji dayik bû û paşê ji bo xwendinê çû Stenbolê.",
+    "explanationTr": "1937 yılında Adana'da yoksul bir ailede doğdu, gençliğinde çalışarak okudu ve daha sonra İstanbul'a gitti.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Y%C4%B1lmaz_G%C3%BCney",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0036",
+    "category": "Sînema",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Bernavê Yilmaz Guney ê herî naskirî kîjan e?",
+    "promptTr": "Yılmaz Güney'in en bilinen lakabı hangisidir?",
+    "answers": [
+      "Qralê Çirkin",
+      "Qralê Mezin",
+      "Qralê Spî",
+      "Qralê Ciwan"
+    ],
+    "answersTr": [
+      "Çirkin Kral",
+      "Büyük Kral",
+      "Beyaz Kral",
+      "Genç Kral"
+    ],
+    "correctAnswer": "Qralê Çirkin",
+    "correctAnswerTr": "Çirkin Kral",
+    "explanation": "Bu lakap, halktan yana sert rolleri nedeniyle verilmiştir ve bu dönemde çok sayıda macera filminde oynamıştır.",
+    "explanationKu": "Ev bernav ji ber rolên wî yên dijwar û ji xelkê asayî hatiye dayîn û wî bi dehan fîlmên macerayê kişandine.",
+    "explanationTr": "Bu lakap, halktan yana sert rolleri nedeniyle verilmiştir ve bu dönemde çok sayıda macera filminde oynamıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Y%C4%B1lmaz_G%C3%BCney",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0037",
+    "category": "Sînema",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Fîlmê Yol li Festîvala Cannesê di kîjan salê de Xelata Palmiyeya Zêrîn wergirt?",
+    "promptTr": "Yol filmi Cannes Film Festivali'nde hangi yıl Altın Palmiye ödülünü kazandı?",
+    "answers": [
+      "1978",
+      "1982",
+      "1986",
+      "1990"
+    ],
+    "answersTr": [
+      "1978",
+      "1982",
+      "1986",
+      "1990"
+    ],
+    "correctAnswer": "1982",
+    "correctAnswerTr": "1982",
+    "explanation": "Ödül, Missing filmiyle paylaşılmıştır ve bu başarı filme uluslararası büyük bir ün kazandırmıştır.",
+    "explanationKu": "Ev xelat bi fîlmê Missing re hate parvekirin û serkeftineke navneteweyî ya mezin bi dest xist.",
+    "explanationTr": "Ödül, Missing filmiyle paylaşılmıştır ve bu başarı filme uluslararası büyük bir ün kazandırmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.festival-cannes.com",
+      "sourceReference": "https://www.festival-cannes.com/en/f/yol/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0038",
+    "category": "Sînema",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Dema Yilmaz Guney girtî bû, kêşan û derhêneriya fîlmê Yol kî kir?",
+    "promptTr": "Yılmaz Güney cezaevindeyken Yol filminin çekimini ve yönetmenliğini kim üstlendi?",
+    "answers": [
+      "Zeki Okten",
+      "Atif Yilmaz",
+      "Halit Refig",
+      "Şerif Goren"
+    ],
+    "answersTr": [
+      "Zeki Ökten",
+      "Atıf Yılmaz",
+      "Halit Refiğ",
+      "Şerif Gören"
+    ],
+    "correctAnswer": "Şerif Goren",
+    "correctAnswerTr": "Şerif Gören",
+    "explanation": "Senaryo ve taslak Güney tarafından hazırlanmıştı, Gören filmi onun yönlendirmesine göre çekti.",
+    "explanationKu": "Senaryo û pêşnûma ji aliyê Guney ve hatibû amadekirin, Goren li gorî rêberiya wî fîlm kişand.",
+    "explanationTr": "Senaryo ve taslak Güney tarafından hazırlanmıştı, Gören filmi onun yönlendirmesine göre çekti.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Yol",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0039",
+    "category": "Sînema",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan fîlm ji senaryoya Yilmaz Guney hatiye kişandin û derhênerê wê Zeki Okten e?",
+    "promptTr": "Senaryosunu Yılmaz Güney'in yazdığı ve Zeki Ökten'in yönettiği film hangisidir?",
+    "answers": [
+      "Umut",
+      "Suru",
+      "Duvar",
+      "Arkadaş"
+    ],
+    "answersTr": [
+      "Umut",
+      "Sürü",
+      "Duvar",
+      "Arkadaş"
+    ],
+    "correctAnswer": "Suru",
+    "correctAnswerTr": "Sürü",
+    "explanation": "Anadolu'da göçerlerin yaşamını anlatan film birçok festivalde ödül kazanmıştır.",
+    "explanationKu": "Ev fîlm jiyana koçerên li Anatolyayê vedibêje û di gelek festîvalan de xelat wergirt.",
+    "explanationTr": "Anadolu'da göçerlerin yaşamını anlatan film birçok festivalde ödül kazanmıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/The_Herd_(1978_film)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0040",
+    "category": "Sînema",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan berhem fîlmê dawî yê Yilmaz Guney e û li Fransayê hatiye kişandin?",
+    "promptTr": "Fransa'da çekilen ve Yılmaz Güney'in son filmi olan eser hangisidir?",
+    "answers": [
+      "Duvar",
+      "Yol",
+      "Suru",
+      "Umut"
+    ],
+    "answersTr": [
+      "Duvar",
+      "Yol",
+      "Sürü",
+      "Umut"
+    ],
+    "correctAnswer": "Duvar",
+    "correctAnswerTr": "Duvar",
+    "explanation": "1983 yılında gösterime giren film, cezaevindeki çocukların yaşamını konu alır.",
+    "explanationKu": "Ev fîlm di sala 1983an de derket û jiyana zarokên di girtîgehê de vedibêje.",
+    "explanationTr": "1983 yılında gösterime giren film, cezaevindeki çocukların yaşamını konu alır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/The_Wall_(1983_film)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0041",
+    "category": "Sînema",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Yilmaz Guney li Parîsê di kîjan salê de koça dawî kir?",
+    "promptTr": "Yılmaz Güney Paris'te hangi yıl hayatını kaybetti?",
+    "answers": [
+      "1979",
+      "1984",
+      "1989",
+      "1994"
+    ],
+    "answersTr": [
+      "1979",
+      "1984",
+      "1989",
+      "1994"
+    ],
+    "correctAnswer": "1984",
+    "correctAnswerTr": "1984",
+    "explanation": "Mezarı Paris'teki Père Lachaise Mezarlığı'ndadır ve her yıl anılmaktadır.",
+    "explanationKu": "Gora wî li goristana Père Lachaise ya Parîsê ye û her sal tê bibîranîn.",
+    "explanationTr": "Mezarı Paris'teki Père Lachaise Mezarlığı'ndadır ve her yıl anılmaktadır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Y%C4%B1lmaz_G%C3%BCney",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0042",
+    "category": "Sînema",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Fîlmê Mem û Zîn ê sala 1991ê ji aliyê kîjan derhênerî ve hatiye kişandin?",
+    "promptTr": "1991 yapımı Mem û Zin filmini kim yönetmiştir?",
+    "answers": [
+      "Umit Elçi",
+      "Yilmaz Erdogan",
+      "Fatih Akin",
+      "Nuri Bilge Ceylan"
+    ],
+    "answersTr": [
+      "Ümit Elçi",
+      "Yılmaz Erdoğan",
+      "Fatih Akın",
+      "Nuri Bilge Ceylan"
+    ],
+    "correctAnswer": "Umit Elçi",
+    "correctAnswerTr": "Ümit Elçi",
+    "explanation": "Film, Ahmed-i Hani'nin klasik destanından uyarlanmıştır ve Kürt sinemasının erken örneklerinden sayılır.",
+    "explanationKu": "Ev fîlm ji destana klasîk a Ehmedê Xanî hatiye girtin û yek ji mînakên destpêkê yên sînemaya kurdî tê dîtin.",
+    "explanationTr": "Film, Ahmed-i Hani'nin klasik destanından uyarlanmıştır ve Kürt sinemasının erken örneklerinden sayılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Mem_u_Zin_(film)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0043",
+    "category": "Sînema",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Yilmaz Guney di kîjan salê de ji dayik bûye?",
+    "promptTr": "Yılmaz Güney hangi yılda doğmuştur?",
+    "answers": [
+      "1930",
+      "1937",
+      "1945",
+      "1950"
+    ],
+    "answersTr": [
+      "1930",
+      "1937",
+      "1945",
+      "1950"
+    ],
+    "correctAnswer": "1937",
+    "correctAnswerTr": "1937",
+    "explanation": "Gerçek adı Yılmaz Pütün'dür ve gençliğinde öykü ve senaryo yazarak sanata başlamıştır.",
+    "explanationKu": "Navê wî yê rastî Yilmaz Putun e û di ciwantiya xwe de bi nivîsên çîrok û senaryoyan dest bi hunerê kir.",
+    "explanationTr": "Gerçek adı Yılmaz Pütün'dür ve gençliğinde öykü ve senaryo yazarak sanata başlamıştır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Y%C4%B1lmaz_G%C3%BCney",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0044",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Fîlma bi navê Zare ku wekî yekem fîlma kurdî tê naskirin di kîjan salê de hatiye kişandin?",
+    "promptTr": "İlk Kürt filmi olarak bilinen Zare adlı film hangi yılda çekilmiştir?",
+    "answers": [
+      "1926",
+      "1938",
+      "1947",
+      "1955"
+    ],
+    "answersTr": [
+      "1926",
+      "1938",
+      "1947",
+      "1955"
+    ],
+    "correctAnswer": "1926",
+    "correctAnswerTr": "1926",
+    "explanation": "Zare, Sovyet Ermenistanı'nda Hamo Beknazaryan tarafından çekildi ve Ezîdî Kürtlerin yaşamını anlatır.",
+    "explanationKu": "Zare li Ermenistana Sovyetê ji aliyê Hamo Beknazaryan ve hatiye kişandin û jiyana kurdên êzîdî vedibêje.",
+    "explanationTr": "Zare, Sovyet Ermenistanı'nda Hamo Beknazaryan tarafından çekildi ve Ezîdî Kürtlerin yaşamını anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Zare",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0045",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Fîlma Yilmaz Guney û Şerîf Goren a bi navê Yol di kîjan salê de li Cannesê xelata sereke wergirt?",
+    "promptTr": "Yılmaz Güney ve Şerif Gören'in Yol filmi Cannes'da ana ödülü hangi yılda kazandı?",
+    "answers": [
+      "1982",
+      "1979",
+      "1985",
+      "1988"
+    ],
+    "answersTr": [
+      "1982",
+      "1979",
+      "1985",
+      "1988"
+    ],
+    "correctAnswer": "1982",
+    "correctAnswerTr": "1982",
+    "explanation": "Yol, Cannes'da Altın Palmiye'yi Costa-Gavras'ın Missing filmiyle paylaştı.",
+    "explanationKu": "Yol li Cannesê Palmiyeya Zêrîn bi fîlma Missing a Costa-Gavras re parve kir.",
+    "explanationTr": "Yol, Cannes'da Altın Palmiye'yi Costa-Gavras'ın Missing filmiyle paylaştı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.festival-cannes.com",
+      "sourceReference": "https://www.festival-cannes.com/en/f/yol/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0046",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan derhêner fîlma bi navê Dema Hespên Serxweş kişandiye?",
+    "promptTr": "Sarhoş Atlar Zamanı adlı filmi hangi yönetmen çekmiştir?",
+    "answers": [
+      "Behmen Qubadî",
+      "Abbas Kiarostami",
+      "Mohsen Makhmalbaf",
+      "Cafer Penahî"
+    ],
+    "answersTr": [
+      "Bahman Ghobadi",
+      "Abbas Kiarostami",
+      "Mohsen Makhmalbaf",
+      "Cafer Panahi"
+    ],
+    "correctAnswer": "Behmen Qubadî",
+    "correctAnswerTr": "Bahman Ghobadi",
+    "explanation": "Bu film 2000'de Cannes'da Caméra d'Or ödülünü kazandı ve sınırda kaçakçılık yapan çocukları anlatır.",
+    "explanationKu": "Ev fîlm di sala 2000î de li Cannesê xelata Caméra d'Or wergirt û li ser zarokên kolber ên li ser sînor e.",
+    "explanationTr": "Bu film 2000'de Cannes'da Caméra d'Or ödülünü kazandı ve sınırda kaçakçılık yapan çocukları anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/A_Time_for_Drunken_Horses",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0047",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Fîlma Behmen Qubadî ya bi navê Kûsî Jî Dikarin Bifirin di kîjan festîvalê de xelata sereke wergirt?",
+    "promptTr": "Bahman Ghobadi'nin Kaplumbağalar da Uçar filmi hangi festivalde büyük ödülü kazandı?",
+    "answers": [
+      "San Sebastián",
+      "Berlîn",
+      "Venedîk",
+      "Locarno"
+    ],
+    "answersTr": [
+      "San Sebastian",
+      "Berlin",
+      "Venedik",
+      "Locarno"
+    ],
+    "correctAnswer": "San Sebastián",
+    "correctAnswerTr": "San Sebastian",
+    "explanation": "Film 2004'te San Sebastian'da Altın Deniz Kabuğu ödülünü kazandı ve Irak-Türkiye sınırındaki çocukları anlatır.",
+    "explanationKu": "Fîlm di sala 2004an de li San Sebastiánê xelata Zêrîn a Festîvalê wergirt û behsa zarokên li ser sînorê Iraq û Tirkiyeyê dike.",
+    "explanationTr": "Film 2004'te San Sebastian'da Altın Deniz Kabuğu ödülünü kazandı ve Irak-Türkiye sınırındaki çocukları anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Turtles_Can_Fly",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0048",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan fîlm di sala 2005an de wekî yekem fîlma Iraqê beşdarî pêşbaziya sereke ya Cannesê bû?",
+    "promptTr": "2005 yılında Cannes ana yarışmasına katılan ilk Irak filmi hangisidir?",
+    "answers": [
+      "Kûsî Jî Dikarin Bifirin",
+      "Kilometre Zero",
+      "Ax û Av",
+      "Dema Hespên Serxweş"
+    ],
+    "answersTr": [
+      "Kaplumbağalar da Uçar",
+      "Kilometre Zero",
+      "Toprak ve Su",
+      "Sarhoş Atlar Zamanı"
+    ],
+    "correctAnswer": "Kilometre Zero",
+    "correctAnswerTr": "Kilometre Zero",
+    "explanation": "Kilometre Zero, Hiner Saleem tarafından çekildi ve İran-Irak savaşını konu alır.",
+    "explanationKu": "Kilometre Zero ji aliyê Hiner Saleem ve hatiye kişandin û behsa şerê Îran û Iraqê dike.",
+    "explanationTr": "Kilometre Zero, Hiner Saleem tarafından çekildi ve İran-Irak savaşını konu alır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.festival-cannes.com",
+      "sourceReference": "https://www.festival-cannes.com/en/f/kilometre-zero/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0049",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan derhêner fîlma bi navê Min Dît a sala 2009an kişandiye?",
+    "promptTr": "2009 yapımı Min Dît / Gördüm adlı filmi hangi yönetmen çekmiştir?",
+    "answers": [
+      "Miraz Bezar",
+      "Kazim Oz",
+      "Hiner Saleem",
+      "Yuksel Yavuz"
+    ],
+    "answersTr": [
+      "Miraz Bezar",
+      "Kazım Öz",
+      "Hiner Saleem",
+      "Yüksel Yavuz"
+    ],
+    "correctAnswer": "Miraz Bezar",
+    "correctAnswerTr": "Miraz Bezar",
+    "explanation": "Min Dît, Diyarbakır'da yaşayan iki çocuğu anlatır ve birçok festivalde ödül aldı.",
+    "explanationKu": "Min Dît behsa du zarokên li Diyarbekirê dike û li gelek festîvalan xelat wergirt.",
+    "explanationTr": "Min Dît, Diyarbakır'da yaşayan iki çocuğu anlatır ve birçok festivalde ödül aldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Min_D%C3%AEt",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0050",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Fîlma Kazim Oz a bi navê Zer di kîjan salê de derket?",
+    "promptTr": "Kazım Öz'ün Zer filmi hangi yılda vizyona girdi?",
+    "answers": [
+      "2017",
+      "2013",
+      "2010",
+      "2020"
+    ],
+    "answersTr": [
+      "2017",
+      "2013",
+      "2010",
+      "2020"
+    ],
+    "correctAnswer": "2017",
+    "correctAnswerTr": "2017",
+    "explanation": "Zer, eski bir türkünün izinde Dersim'e giden bir genci anlatır ve Toronto ile Berlin'de gösterildi.",
+    "explanationKu": "Zer behsa xortekî dike ku li pey straneke kevnar diçe Dêrsimê û li Toronto û Berlînê hat nîşandan.",
+    "explanationTr": "Zer, eski bir türkünün izinde Dersim'e giden bir genci anlatır ve Toronto ile Berlin'de gösterildi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Zer_(film)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0051",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Belgesela bi navê Bakur a sala 2015an kîjan derhêneran kişandiye?",
+    "promptTr": "2015 yapımı Bakur / Kuzey belgeselini hangi yönetmenler çekmiştir?",
+    "answers": [
+      "Çayan Demirel û Ertugrul Mavioglu",
+      "Miraz Bezar û Kazim Oz",
+      "Hiner Saleem û Mano Xelîl",
+      "Yilmaz Guney û Şerîf Goren"
+    ],
+    "answersTr": [
+      "Çayan Demirel ve Ertuğrul Mavioğlu",
+      "Miraz Bezar ve Kazım Öz",
+      "Hiner Saleem ve Mano Khalil",
+      "Yılmaz Güney ve Şerif Gören"
+    ],
+    "correctAnswer": "Çayan Demirel û Ertugrul Mavioglu",
+    "correctAnswerTr": "Çayan Demirel ve Ertuğrul Mavioğlu",
+    "explanation": "Bakur, dağlardaki günlük yaşamı anlatır ve çeşitli festivallerde gösterilmesine rağmen Türkiye'de yasaklamalara maruz kaldı.",
+    "explanationKu": "Bakur jiyana rojane ya li çiyayan vedibêje û li festîvalên cuda hat nîşandan, lê li Tirkiyeyê rastî qedexeyan hat.",
+    "explanationTr": "Bakur, dağlardaki günlük yaşamı anlatır ve çeşitli festivallerde gösterilmesine rağmen Türkiye'de yasaklamalara maruz kaldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.imdb.com",
+      "sourceReference": "https://www.imdb.com/title/tt4747998/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0052",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Festîvala Fîlman a Kurdî ya Londonê li kîjan welatî tê lidarxistin?",
+    "promptTr": "Londra Kürt Film Festivali hangi ülkede düzenlenmektedir?",
+    "answers": [
+      "Brîtanya",
+      "Fransa",
+      "Almanya",
+      "Swêd"
+    ],
+    "answersTr": [
+      "İngiltere",
+      "Fransa",
+      "Almanya",
+      "İsveç"
+    ],
+    "correctAnswer": "Brîtanya",
+    "correctAnswerTr": "İngiltere",
+    "explanation": "Bu festival Kürt yönetmenlerin filmlerini ve Kürt konulu filmleri gösterir ve önemli bir kültür etkinliğidir.",
+    "explanationKu": "Ev festîval fîlmên derhênerên kurd û yên li ser mijarên kurdî nîşan dide û çalakiyeke çandî ya girîng e.",
+    "explanationTr": "Bu festival Kürt yönetmenlerin filmlerini ve Kürt konulu filmleri gösterir ve önemli bir kültür etkinliğidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "lkff.co.uk",
+      "sourceReference": "https://lkff.co.uk",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0053",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan fîlmê ku senaryoya wî Yilmaz Guney nivîsî, di sala 1982an de li Cannesê Xelata Palmiyeya Zêrîn wergirt?",
+    "promptTr": "Senaryosunu Yılmaz Güney'in yazdığı hangi film 1982'de Cannes'da Altın Palmiye kazandı?",
+    "answers": [
+      "Yol",
+      "Suru",
+      "Umut",
+      "Duvar"
+    ],
+    "answersTr": [
+      "Yol",
+      "Sürü",
+      "Umut",
+      "Duvar"
+    ],
+    "correctAnswer": "Yol",
+    "correctAnswerTr": "Yol",
+    "explanation": "Film Güney hapisteyken yazıldı, Şerif Gören tarafından yönetildi ve ödülü Missing filmiyle paylaştı.",
+    "explanationKu": "Fîlm di girtîgehê de ji aliyê Guney ve hat nivîsîn, ji aliyê Şerîf Goren ve hat kişandin û xelat bi fîlmê Missing re hat parvekirin.",
+    "explanationTr": "Film Güney hapisteyken yazıldı, Şerif Gören tarafından yönetildi ve ödülü Missing filmiyle paylaştı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.festival-cannes.com",
+      "sourceReference": "https://www.festival-cannes.com/en/f/yol/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0054",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan fîlmê yekem ê derhênerê kurd Bahman Ghobadi di sala 2000î de li Cannesê Xelata Caméra d'Or wergirt?",
+    "promptTr": "Kürt yönetmen Bahman Ghobadi'nin 2000'de Cannes'da Caméra d'Or ödülünü kazanan ilk filmi hangisidir?",
+    "answers": [
+      "A Time for Drunken Horses",
+      "Turtles Can Fly",
+      "Half Moon",
+      "No One Knows About Persian Cats"
+    ],
+    "answersTr": [
+      "A Time for Drunken Horses",
+      "Turtles Can Fly",
+      "Half Moon",
+      "No One Knows About Persian Cats"
+    ],
+    "correctAnswer": "A Time for Drunken Horses",
+    "correctAnswerTr": "A Time for Drunken Horses",
+    "explanation": "Film, İran-Irak sınırında Kürt çocuklarının yaşamını anlatır ve oyuncularının çoğu profesyonel değildir.",
+    "explanationKu": "Fîlm li ser sînorê Îran û Iraqê jiyana zarokên kurd vedibêje û piraniya lîstikvanên wî ne profesyonel in.",
+    "explanationTr": "Film, İran-Irak sınırında Kürt çocuklarının yaşamını anlatır ve oyuncularının çoğu profesyonel değildir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.festival-cannes.com",
+      "sourceReference": "https://www.festival-cannes.com/en/f/a-time-for-drunken-horses/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0055",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan fîlmê Bahman Ghobadi di sala 2004an de li Festîvala San Sebastianê Xelata Golden Shell wergirt?",
+    "promptTr": "Bahman Ghobadi'nin hangi filmi 2004'te San Sebastian Festivali'nde Altın İstiridye ödülünü kazandı?",
+    "answers": [
+      "Half Moon",
+      "Rhino Season",
+      "Turtles Can Fly",
+      "Marooned in Iraq"
+    ],
+    "answersTr": [
+      "Half Moon",
+      "Rhino Season",
+      "Turtles Can Fly",
+      "Marooned in Iraq"
+    ],
+    "correctAnswer": "Turtles Can Fly",
+    "correctAnswerTr": "Turtles Can Fly",
+    "explanation": "Film, Irak Kürdistanı'nda savaş öncesi ve sonrasında çekildi ve rejimin yıkılmasından sonra Irak'ta çekilen ilk filmlerden sayılır.",
+    "explanationKu": "Fîlm li Başûrê Kurdistanê berî û piştî şer hat kişandin û yekem fîlmê piştî hilweşîna rejîmê li Iraqê tê hesibandin.",
+    "explanationTr": "Film, Irak Kürdistanı'nda savaş öncesi ve sonrasında çekildi ve rejimin yıkılmasından sonra Irak'ta çekilen ilk filmlerden sayılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.sansebastianfestival.com",
+      "sourceReference": "https://www.sansebastianfestival.com/2004/awards/1/293/en",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0056",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kê fîlmê Min Dît ê sala 2009an derhênerî kir?",
+    "promptTr": "2009 yapımı Min Dît filmini kim yönetti?",
+    "answers": [
+      "Miraz Bezar",
+      "Kazim Oz",
+      "Hiner Saleem",
+      "Bahman Ghobadi"
+    ],
+    "answersTr": [
+      "Miraz Bezar",
+      "Kazım Öz",
+      "Hiner Saleem",
+      "Bahman Ghobadi"
+    ],
+    "correctAnswer": "Miraz Bezar",
+    "correctAnswerTr": "Miraz Bezar",
+    "explanation": "Film, Diyarbakır'da anne ve babasını kaybettikten sonra sokakta kalan iki çocuğun hikayesini anlatır.",
+    "explanationKu": "Fîlm çîroka du zarokên li Diyarbekirê vedibêje ku piştî windakirina dê û bavê xwe li kolanan dimînin.",
+    "explanationTr": "Film, Diyarbakır'da anne ve babasını kaybettikten sonra sokakta kalan iki çocuğun hikayesini anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.imdb.com",
+      "sourceReference": "https://www.imdb.com/title/tt1368439/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0057",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kê fîlmê Kilometre Zero yê sala 2005an derhênerî kir?",
+    "promptTr": "2005 yapımı Kilometre Zero filmini kim yönetti?",
+    "answers": [
+      "Hiner Saleem",
+      "Bahman Ghobadi",
+      "Kazim Oz",
+      "Miraz Bezar"
+    ],
+    "answersTr": [
+      "Hiner Saleem",
+      "Bahman Ghobadi",
+      "Kazım Öz",
+      "Miraz Bezar"
+    ],
+    "correctAnswer": "Hiner Saleem",
+    "correctAnswerTr": "Hiner Saleem",
+    "explanation": "Film, Cannes ana yarışmasına seçilen ilk Irak filmi oldu ve İran-Irak savaşını anlatır.",
+    "explanationKu": "Fîlm yekem fîlmê Iraqê ye ku di pêşbirka fermî ya Cannesê de hat nîşandan û şerê Îran û Iraqê vedibêje.",
+    "explanationTr": "Film, Cannes ana yarışmasına seçilen ilk Irak filmi oldu ve İran-Irak savaşını anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.festival-cannes.com",
+      "sourceReference": "https://www.festival-cannes.com/en/f/kilometre-zero/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0058",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kê belgefîlmê The Legend of the Ugly King ê sala 2017an ê li ser Yilmaz Guney derhênerî kir?",
+    "promptTr": "Yılmaz Güney hakkında 2017 yapımı The Legend of the Ugly King belgeselini kim yönetti?",
+    "answers": [
+      "Huseyin Tabak",
+      "Fatih Akin",
+      "Nuri Bilge Ceylan",
+      "Semih Kaplanoglu"
+    ],
+    "answersTr": [
+      "Hüseyin Tabak",
+      "Fatih Akın",
+      "Nuri Bilge Ceylan",
+      "Semih Kaplanoğlu"
+    ],
+    "correctAnswer": "Huseyin Tabak",
+    "correctAnswerTr": "Hüseyin Tabak",
+    "explanation": "Belgesel için Güney'in ailesi ve çalışma arkadaşlarıyla röportajlar yapıldı ve ilk gösterimi Münih'te oldu.",
+    "explanationKu": "Ji bo belgefîlmî bi malbat û hevkarên Guney re hevpeyvîn hatin kirin û cara yekem li Munîhê hat nîşandan.",
+    "explanationTr": "Belgesel için Güney'in ailesi ve çalışma arkadaşlarıyla röportajlar yapıldı ve ilk gösterimi Münih'te oldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/The_Legend_of_the_Ugly_King",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0059",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Fîlmê My Sweet Pepper Land ê Hiner Saleem di kîjan beşê Festîvala Cannesê ya 2013an de hat nîşandan?",
+    "promptTr": "Hiner Saleem'in My Sweet Pepper Land filmi 2013 Cannes Festivali'nin hangi bölümünde gösterildi?",
+    "answers": [
+      "Un Certain Regard",
+      "Quinzaine des Réalisateurs",
+      "Semaine de la Critique",
+      "Hors Compétition"
+    ],
+    "answersTr": [
+      "Un Certain Regard",
+      "Quinzaine des Réalisateurs",
+      "Semaine de la Critique",
+      "Hors Compétition"
+    ],
+    "correctAnswer": "Un Certain Regard",
+    "correctAnswerTr": "Un Certain Regard",
+    "explanation": "Film Irak Kürdistanı'ndaki bir köyde geçer ve başrolünde Golshifteh Farahani oynar.",
+    "explanationKu": "Fîlm li gundekî Başûrê Kurdistanê derbas dibe û lîstikvana sereke Golshifteh Farahani ye.",
+    "explanationTr": "Film Irak Kürdistanı'ndaki bir köyde geçer ve başrolünde Golshifteh Farahani oynar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.festival-cannes.com",
+      "sourceReference": "https://www.festival-cannes.com/en/f/my-sweet-pepper-land/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0060",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan derhêneran fîlmê Dengê Bavê Min ê sala 2012an derhênerî kirin?",
+    "promptTr": "2012 yapımı Babamın Sesi filmini kimler yönetti?",
+    "answers": [
+      "Bahman Ghobadi û Abbas Kiarostami",
+      "Hiner Saleem û Miraz Bezar",
+      "Orhan Eskikoy û Zeynel Dogan",
+      "Fatih Akin û Huseyin Tabak"
+    ],
+    "answersTr": [
+      "Bahman Ghobadi ve Abbas Kiarostami",
+      "Hiner Saleem ve Miraz Bezar",
+      "Orhan Eskiköy ve Zeynel Doğan",
+      "Fatih Akın ve Hüseyin Tabak"
+    ],
+    "correctAnswer": "Orhan Eskikoy û Zeynel Dogan",
+    "correctAnswerTr": "Orhan Eskiköy ve Zeynel Doğan",
+    "explanation": "Film, bir ailenin yaşamını ve Kürt bir anne ile oğlu arasındaki ilişkiyi anlatır. Hikaye, babanın gönderdiği gerçek ses kasetlerine dayanır.",
+    "explanationKu": "Fîlm jiyana malbatekê û têkiliya dayikeke kurd û kurê wê nîşan dide û li ser kasetên dengî yên rastîn ava bûye.",
+    "explanationTr": "Film, bir ailenin yaşamını ve Kürt bir anne ile oğlu arasındaki ilişkiyi anlatır. Hikaye, babanın gönderdiği gerçek ses kasetlerine dayanır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.berlinale.de",
+      "sourceReference": "https://www.berlinale.de/en/archive/2012/programme/detail/20124068.html",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0061",
+    "category": "Sînema",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Festîvala Fîlman a Navneteweyî ya Silêmaniyê di kîjan salê de hatiye damezrandin?",
+    "promptTr": "Süleymaniye Uluslararası Film Festivali hangi yılda kuruldu?",
+    "answers": [
+      "2016",
+      "2010",
+      "2006",
+      "2021"
+    ],
+    "answersTr": [
+      "2016",
+      "2010",
+      "2006",
+      "2021"
+    ],
+    "correctAnswer": "2016",
+    "correctAnswerTr": "2016",
+    "explanation": "Festival her yıl Süleymaniye'de düzenlenir ve Kürt sineması ile dünya sinemasından filmleri bir arada gösterir.",
+    "explanationKu": "Festîval her sal li Silêmaniyê tê lidarxistin û fîlmên kurdî û cîhanî bi hev re nîşan dide.",
+    "explanationTr": "Festival her yıl Süleymaniye'de düzenlenir ve Kürt sineması ile dünya sinemasından filmleri bir arada gösterir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "filmfreeway.com",
+      "sourceReference": "https://filmfreeway.com/SulaymaniyahInternationalFilmFestival",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0062",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan çem di bajarê Amedê re derbas dibe?",
+    "promptTr": "Diyarbakır şehrinden hangi nehir geçer?",
+    "answers": [
+      "Dîcle",
+      "Firat",
+      "Zapê Mezin",
+      "Munzur"
+    ],
+    "answersTr": [
+      "Dicle",
+      "Fırat",
+      "Büyük Zap",
+      "Munzur"
+    ],
+    "correctAnswer": "Dîcle",
+    "correctAnswerTr": "Dicle",
+    "explanation": "Dicle Toroslar'dan doğar, güneyde Fırat ile birleşir ve Basra Körfezi'ne dökülür.",
+    "explanationKu": "Dîcle ji çiyayên Torosan dertê û li başûr bi Firatê re dibe yek û dirije Kendava Basrayê.",
+    "explanationTr": "Dicle Toroslar'dan doğar, güneyde Fırat ile birleşir ve Basra Körfezi'ne dökülür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Dicle",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0063",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan gol li Bakurê Kurdistanê gola sodalî ya herî mezin e?",
+    "promptTr": "Kuzey Kürdistan'da bulunan en büyük sodalı göl hangisidir?",
+    "answers": [
+      "Gola Urmiyeyê",
+      "Gola Wanê",
+      "Gola Sewanê",
+      "Gola Dukanê"
+    ],
+    "answersTr": [
+      "Urmiye Gölü",
+      "Van Gölü",
+      "Sevan Gölü",
+      "Dukan Gölü"
+    ],
+    "correctAnswer": "Gola Wanê",
+    "correctAnswerTr": "Van Gölü",
+    "explanation": "Van Gölü'nün suyu sodalıdır, gölde tek bir balık türü yaşar ve içinde Akdamar Adası bulunur.",
+    "explanationKu": "Ava Gola Wanê sodalî ye, tenê cureyek masî tê de dijî û girava Axtamarê di nav de ye.",
+    "explanationTr": "Van Gölü'nün suyu sodalıdır, gölde tek bir balık türü yaşar ve içinde Akdamar Adası bulunur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Van_G%C3%B6l%C3%BC",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0064",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan gola xwê li Rojhilatê Kurdistanê di salên dawî de pir biçûk bûye?",
+    "promptTr": "Doğu Kürdistan'da son yıllarda alanı büyük ölçüde küçülen tuz gölü hangisidir?",
+    "answers": [
+      "Gola Urmiyeyê",
+      "Gola Wanê",
+      "Gola Tuzê",
+      "Gola Sewanê"
+    ],
+    "answersTr": [
+      "Urmiye Gölü",
+      "Van Gölü",
+      "Tuz Gölü",
+      "Sevan Gölü"
+    ],
+    "correctAnswer": "Gola Urmiyeyê",
+    "correctAnswerTr": "Urmiye Gölü",
+    "explanation": "Urmiye Gölü Orta Doğu'nun en büyük tuz göllerindendi, su azalması ve barajlar yüzünden alanı daraldı.",
+    "explanationKu": "Gola Urmiyeyê gola xwê ya herî mezin a Rojhilata Navîn bû, kêmbûna avê û çêkirina bendavan ew biçûk kir.",
+    "explanationTr": "Urmiye Gölü Orta Doğu'nun en büyük tuz göllerindendi, su azalması ve barajlar yüzünden alanı daraldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Urmiye_G%C3%B6l%C3%BC",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0065",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan çiya bi bilindahiya 5.137 metreyan çiyayê herî bilind ê herêmê ye?",
+    "promptTr": "5.137 metre yüksekliğiyle bölgenin en yüksek dağı hangisidir?",
+    "answers": [
+      "Çiyayê Agiriyê",
+      "Çiyayê Cûdiyê",
+      "Çiyayên Munzurê",
+      "Çiyayê Qendîlê"
+    ],
+    "answersTr": [
+      "Ağrı Dağı",
+      "Cudi Dağı",
+      "Munzur Dağları",
+      "Kandil Dağı"
+    ],
+    "correctAnswer": "Çiyayê Agiriyê",
+    "correctAnswerTr": "Ağrı Dağı",
+    "explanation": "Ağrı Dağı volkanik bir dağdır ve Doğubayazıt yakınında Türkiye, Ermenistan ve İran sınırlarının kesişimine yakındır.",
+    "explanationKu": "Çiyayê Agiriyê volkanîk e û li nêzîkî Bazîdê, li xala hevgihîştina sînorên Tirkiye, Ermenistan û Îranê ye.",
+    "explanationTr": "Ağrı Dağı volkanik bir dağdır ve Doğubayazıt yakınında Türkiye, Ermenistan ve İran sınırlarının kesişimine yakındır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/A%C4%9Fr%C4%B1_Da%C4%9F%C4%B1",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0066",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan çem li nêzî Mûsilê bi çemê Dîcleyê re dibe yek?",
+    "promptTr": "Musul yakınlarında Dicle Nehri ile birleşen akarsu hangisidir?",
+    "answers": [
+      "Zapê Mezin",
+      "Firat",
+      "Xabûr",
+      "Munzur"
+    ],
+    "answersTr": [
+      "Büyük Zap",
+      "Fırat",
+      "Habur",
+      "Munzur"
+    ],
+    "correctAnswer": "Zapê Mezin",
+    "correctAnswerTr": "Büyük Zap",
+    "explanation": "Büyük Zap Hakkari'den doğar, Güney Kürdistan'dan geçer ve Dicle'nin ana kollarından biridir.",
+    "explanationKu": "Zapê Mezin ji Colemêrgê dertê, Başûrê Kurdistanê derbas dike û yek ji şaxên sereke yên Dîcleyê ye.",
+    "explanationTr": "Büyük Zap Hakkari'den doğar, Güney Kürdistan'dan geçer ve Dicle'nin ana kollarından biridir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Zap_Suyu",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0067",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan çem li nêzî Zaxoyê diherike û li Başûr dirije çemê Dîcleyê?",
+    "promptTr": "Zaho yakınından geçip güneyde Dicle'ye dökülen akarsu hangisidir?",
+    "answers": [
+      "Zapê Biçûk",
+      "Firat",
+      "Munzur",
+      "Xabûr"
+    ],
+    "answersTr": [
+      "Küçük Zap",
+      "Fırat",
+      "Munzur",
+      "Habur"
+    ],
+    "correctAnswer": "Xabûr",
+    "correctAnswerTr": "Habur",
+    "explanation": "Habur Şırnak'tan doğar, güney sınırını geçerek Dicle'ye katılır ve suyu tarım ile içmede kullanılır.",
+    "explanationKu": "Xabûr ji Şirnexê dertê, sînorê Başûr derbas dike û ava wê ji bo çandinî û vexwarinê tê bikaranîn.",
+    "explanationTr": "Habur Şırnak'tan doğar, güney sınırını geçerek Dicle'ye katılır ve suyu tarım ile içmede kullanılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Habur_%C3%87ay%C4%B1",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0068",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan gol bi bendava li ser Zapê Biçûk çêbûye û li Silêmaniyê ye?",
+    "promptTr": "Küçük Zap üzerindeki barajla oluşmuş ve Süleymaniye'de bulunan göl hangisidir?",
+    "answers": [
+      "Gola Dukanê",
+      "Gola Wanê",
+      "Gola Urmiyeyê",
+      "Gola Derbendîxanê"
+    ],
+    "answersTr": [
+      "Dukan Gölü",
+      "Van Gölü",
+      "Urmiye Gölü",
+      "Derbendihan Gölü"
+    ],
+    "correctAnswer": "Gola Dukanê",
+    "correctAnswerTr": "Dukan Gölü",
+    "explanation": "Dukan Gölü 1950'lerde Dukan Barajı ile oluşmuştur ve balıkçılık ile turizm için kullanılır.",
+    "explanationKu": "Gola Dukanê di salên 1950yan de bi bendava Dukanê çêbûye û cihê masîgirî û geştiyariyê ye.",
+    "explanationTr": "Dukan Gölü 1950'lerde Dukan Barajı ile oluşmuştur ve balıkçılık ile turizm için kullanılır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Lake_Dukan",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0069",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan deriyê sînor Silopiyê bi Zaxoyê ve girêdide?",
+    "promptTr": "Silopi'yi Zaho'ya bağlayan sınır kapısı hangisidir?",
+    "answers": [
+      "Deriyê Xabûrê",
+      "Deriyê Nusaybînê",
+      "Deriyê Alicanê",
+      "Deriyê Esendereyê"
+    ],
+    "answersTr": [
+      "Habur Sınır Kapısı",
+      "Nusaybin Sınır Kapısı",
+      "Alican Sınır Kapısı",
+      "Esendere Sınır Kapısı"
+    ],
+    "correctAnswer": "Deriyê Xabûrê",
+    "correctAnswerTr": "Habur Sınır Kapısı",
+    "explanation": "Habur Sınır Kapısı Türkiye-Irak sınırındadır ve ticaretin en yoğun yapıldığı kapılardan biridir.",
+    "explanationKu": "Deriyê Xabûrê li ser sînorê Tirkiye û Iraqê ye û yek ji deriyên herî qerebalix ên bazirganiyê ye.",
+    "explanationTr": "Habur Sınır Kapısı Türkiye-Irak sınırındadır ve ticaretin en yoğun yapıldığı kapılardan biridir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Habur_S%C4%B1n%C4%B1r_Kap%C4%B1s%C4%B1",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0070",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan çem ji herêma Gurgumê dertê û dirije Deryaya Spî?",
+    "promptTr": "Kahramanmaraş bölgesinden doğup Akdeniz'e dökülen nehir hangisidir?",
+    "answers": [
+      "Dîcle",
+      "Firat",
+      "Xabûr",
+      "Ceyhan"
+    ],
+    "answersTr": [
+      "Dicle",
+      "Fırat",
+      "Habur",
+      "Ceyhan"
+    ],
+    "correctAnswer": "Ceyhan",
+    "correctAnswerTr": "Ceyhan",
+    "explanation": "Ceyhan Elbistan Ovası'ndan doğar, Çukurova'dan geçer ve İskenderun Körfezi'nde denize dökülür.",
+    "explanationKu": "Ceyhan ji Deşta Elbistanê dertê, di Çukurovayê re derbas dibe û li Kendava Îskenderûnê dirije deryayê.",
+    "explanationTr": "Ceyhan Elbistan Ovası'ndan doğar, Çukurova'dan geçer ve İskenderun Körfezi'nde denize dökülür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Ceyhan_Nehri",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0071",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan çem di nav bajarê Diyarbekirê re derbas dibe?",
+    "promptTr": "Diyarbakır şehrinin içinden geçen nehir hangisidir?",
+    "answers": [
+      "Firat",
+      "Dîcle",
+      "Zapê Mezin",
+      "Xabûr"
+    ],
+    "answersTr": [
+      "Fırat",
+      "Dicle",
+      "Büyük Zap",
+      "Habur"
+    ],
+    "correctAnswer": "Dîcle",
+    "correctAnswerTr": "Dicle",
+    "explanation": "Dicle Toroslar'dan doğar, Irak'tan geçerek Kurna'da Fırat ile birleşip Şattülarap'ı oluşturur.",
+    "explanationKu": "Dîcle ji Çiyayên Torosê dertê, di Başûrê Kurdistanê re derbas dibe û li Qurnayê bi Firatê re dibe Şetulereb.",
+    "explanationTr": "Dicle Toroslar'dan doğar, Irak'tan geçerek Kurna'da Fırat ile birleşip Şattülarap'ı oluşturur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Dicle",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0072",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Gola herî mezin a Bakurê Kurdistanê û Tirkiyeyê kîjan e?",
+    "promptTr": "Türkiye ve Bakur Kürdistanı'nın en büyük gölü hangisidir?",
+    "answers": [
+      "Gola Wanê",
+      "Gola Hazarê",
+      "Gola Çildirê",
+      "Gola Nazikê"
+    ],
+    "answersTr": [
+      "Van Gölü",
+      "Hazar Gölü",
+      "Çıldır Gölü",
+      "Nazik Gölü"
+    ],
+    "correctAnswer": "Gola Wanê",
+    "correctAnswerTr": "Van Gölü",
+    "explanation": "Van Gölü'nün suyu sodalıdır, içinde Akdamar Adası bulunur ve denizden yüksekliği yaklaşık 1640 metredir.",
+    "explanationKu": "Ava Gola Wanê sodalî ye, Girava Axtamarê tê de ye û bilindahiya wê ji behrê nêzî 1640 metre ye.",
+    "explanationTr": "Van Gölü'nün suyu sodalıdır, içinde Akdamar Adası bulunur ve denizden yüksekliği yaklaşık 1640 metredir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Van_Gölü",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0073",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Zapê Mezin li Başûrê Kurdistanê diherike nava kîjan çemê mezin?",
+    "promptTr": "Büyük Zap, Başur Kürdistanı'nda hangi büyük nehre dökülür?",
+    "answers": [
+      "Dîcle",
+      "Firat",
+      "Aras",
+      "Kura"
+    ],
+    "answersTr": [
+      "Dicle",
+      "Fırat",
+      "Aras",
+      "Kura"
+    ],
+    "correctAnswer": "Dîcle",
+    "correctAnswerTr": "Dicle",
+    "explanation": "Büyük Zap Hakkâri'den doğar, Musul yakınlarında Dicle'ye katılır ve onun önemli bir su kaynağıdır.",
+    "explanationKu": "Zapê Mezin ji Colemêrgê dertê, li nêzî Mûsilê digihîje Dîcleyê û çavkaniyeke girîng a ava wê ye.",
+    "explanationTr": "Büyük Zap Hakkâri'den doğar, Musul yakınlarında Dicle'ye katılır ve onun önemli bir su kaynağıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Great_Zab",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0074",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan çiya bi bilindahiya xwe ya nêzî 5137 metreyan çiyayê herî bilind ê herêmê tê naskirin?",
+    "promptTr": "Yaklaşık 5137 metre yüksekliğiyle bölgenin en yüksek dağı olarak bilinen dağ hangisidir?",
+    "answers": [
+      "Sîpan",
+      "Cûdî",
+      "Nemrûd",
+      "Agirî"
+    ],
+    "answersTr": [
+      "Süphan",
+      "Cudi",
+      "Nemrut",
+      "Ağrı"
+    ],
+    "correctAnswer": "Agirî",
+    "correctAnswerTr": "Ağrı",
+    "explanation": "Ağrı Dağı Türkiye, Ermenistan ve İran sınırları yakınındadır ve zirvesi yıl boyu karla kaplıdır.",
+    "explanationKu": "Agirî li Tirkiyeyê ye, nêzî sînorên Ermenistan û Îranê ye û lûtkeya wî her tim bi berfê girtî ye.",
+    "explanationTr": "Ağrı Dağı Türkiye, Ermenistan ve İran sınırları yakınındadır ve zirvesi yıl boyu karla kaplıdır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Ağrı_Dağı",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0075",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Ava kîjan golê şor e û dikeve Rojhilatê Kurdistanê û Îranê?",
+    "promptTr": "Suyu tuzlu olan ve İran ile Rojhilat Kürdistanı'nda yer alan göl hangisidir?",
+    "answers": [
+      "Wan",
+      "Ûrmiye",
+      "Sewan",
+      "Dukan"
+    ],
+    "answersTr": [
+      "Van",
+      "Urmiye",
+      "Sevan",
+      "Dukan"
+    ],
+    "correctAnswer": "Ûrmiye",
+    "correctAnswerTr": "Urmiye",
+    "explanation": "Urmiye Gölü dünyanın en büyük tuzlu göllerinden biriydi, son yıllarda su seviyesi büyük ölçüde düşmüştür.",
+    "explanationKu": "Gola Ûrmiyeyê yek ji golên şor ên herî mezin ên cîhanê bû, di salên dawî de asta ava wê pir kêm bûye.",
+    "explanationTr": "Urmiye Gölü dünyanın en büyük tuzlu göllerinden biriydi, son yıllarda su seviyesi büyük ölçüde düşmüştür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Lake_Urmia",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0076",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan gol û bendav li parêzgeha Silêmaniyê ye û li ser Zapê Biçûk hatiye çêkirin?",
+    "promptTr": "Süleymaniye ilinde bulunan ve Küçük Zap üzerinde kurulmuş olan göl ve baraj hangisidir?",
+    "answers": [
+      "Dukan",
+      "Wan",
+      "Hazar",
+      "Çildir"
+    ],
+    "answersTr": [
+      "Dukan",
+      "Van",
+      "Hazar",
+      "Çıldır"
+    ],
+    "correctAnswer": "Dukan",
+    "correctAnswerTr": "Dukan",
+    "explanation": "Dukan Barajı 1950'lerde yapılmıştır, elektrik ve sulama için kullanılır ve turistik bir yerdir.",
+    "explanationKu": "Bendava Dukanê di salên 1950yan de hatiye çêkirin, ji bo elektrîk û avdaniyê tê bikaranîn û cihekî geştyarî ye.",
+    "explanationTr": "Dukan Barajı 1950'lerde yapılmıştır, elektrik ve sulama için kullanılır ve turistik bir yerdir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Dukan_Lake",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0077",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan av li nêzî Zaxo û Silopiyayê derbas dibe û beşek ji sînorê di navbera Iraq û Tirkiyeyê de pêk tîne?",
+    "promptTr": "Zaho ve Silopi yakınlarından geçen ve Irak ile Türkiye arasındaki sınırın bir bölümünü oluşturan akarsu hangisidir?",
+    "answers": [
+      "Xabûr",
+      "Firat",
+      "Mirad",
+      "Aras"
+    ],
+    "answersTr": [
+      "Habur",
+      "Fırat",
+      "Murat",
+      "Aras"
+    ],
+    "correctAnswer": "Xabûr",
+    "correctAnswerTr": "Habur",
+    "explanation": "Habur Çayı Şırnak'tan doğar, Zaho'da Irak tarafına geçer ve Peşhabur yakınlarında Dicle'ye dökülür.",
+    "explanationKu": "Xabûr ji Şirnexê dertê, li Zaxoyê derbasî Başûrê Kurdistanê dibe û li nêzî Pêşxabûrê digihîje Dîcleyê.",
+    "explanationTr": "Habur Çayı Şırnak'tan doğar, Zaho'da Irak tarafına geçer ve Peşhabur yakınlarında Dicle'ye dökülür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Habur_Çayı",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0078",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan rêzeçiya dirêj ji Rojhilatê Kurdistanê heta Başûr û Loristanê dirêj dibe?",
+    "promptTr": "Rojhilat Kürdistanı'ndan Başur'a ve Luristan'a kadar uzanan uzun sıradağ hangisidir?",
+    "answers": [
+      "Zagros",
+      "Toros",
+      "Pontos",
+      "Elburz"
+    ],
+    "answersTr": [
+      "Zagros",
+      "Toros",
+      "Pontus",
+      "Elburz"
+    ],
+    "correctAnswer": "Zagros",
+    "correctAnswerTr": "Zagros",
+    "explanation": "Zagros, İran'ın kuzeybatısından Basra Körfezi'ne kadar uzanır ve birçok zirvesi 4000 metreden yüksektir.",
+    "explanationKu": "Zagros ji bakurê rojavayê Îranê heta Kendava Farsê dirêj dibe û gelek lûtkeyên wê ji 4000 metreyan bilindtir in.",
+    "explanationTr": "Zagros, İran'ın kuzeybatısından Basra Körfezi'ne kadar uzanır ve birçok zirvesi 4000 metreden yüksektir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Zagros_Dağları",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0079",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan ji van bajaran li nêzî Firatê ye û li Rojavayê Kurdistanê cih digire?",
+    "promptTr": "Bu şehirlerden hangisi Fırat'a yakın olup Rojava Kürdistanı'nda yer alır?",
+    "answers": [
+      "Zaxo",
+      "Kobanî",
+      "Mehabad",
+      "Ûrmiye"
+    ],
+    "answersTr": [
+      "Zaho",
+      "Kobani",
+      "Mahabad",
+      "Urmiye"
+    ],
+    "correctAnswer": "Kobanî",
+    "correctAnswerTr": "Kobani",
+    "explanation": "Fırat, Karasu ve Murat'ın birleşmesiyle oluşur ve Cerablus yakınında Suriye'ye girer. Kobani, Fırat'ın doğusunda, Rojava'da yer alır.",
+    "explanationKu": "Firat ji Qeresû û Miradê pêk tê û li nêzî Cerablusê derbasî Sûriyeyê dibe. Kobanî li rojhilatê vî çemî, li Rojavayê Kurdistanê ye.",
+    "explanationTr": "Fırat, Karasu ve Murat'ın birleşmesiyle oluşur ve Cerablus yakınında Suriye'ye girer. Kobani, Fırat'ın doğusunda, Rojava'da yer alır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Fırat",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0080",
+    "category": "Cografya",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan ji van çeman bi Qeresûyê re dibe yek û Firatê çêdike?",
+    "promptTr": "Bu akarsulardan hangisi Karasu ile birleşerek Fırat'ı oluşturur?",
+    "answers": [
+      "Zapê Mezin",
+      "Mirad",
+      "Dîcle",
+      "Aras"
+    ],
+    "answersTr": [
+      "Büyük Zap",
+      "Murat",
+      "Dicle",
+      "Aras"
+    ],
+    "correctAnswer": "Mirad",
+    "correctAnswerTr": "Murat",
+    "explanation": "Murat, Ağrı ve Van çevresinden doğar, Keban'da Karasu ile birleşir ve üzerinde Keban Barajı kurulmuştur.",
+    "explanationKu": "Mirad ji Agirî û Wanê dertê, li Kebanê bi Qeresûyê re dibe yek û Bendava Kebanê li ser wê hatiye avakirin.",
+    "explanationTr": "Murat, Ağrı ve Van çevresinden doğar, Keban'da Karasu ile birleşir ve üzerinde Keban Barajı kurulmuştur.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Murat_Nehri",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0081",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Paytexta dewleta Medan kîjan bajar bû?",
+    "promptTr": "Med devletinin başkenti hangi şehirdi?",
+    "answers": [
+      "Ekbatana",
+      "Persepolîs",
+      "Babîl",
+      "Nînova"
+    ],
+    "answersTr": [
+      "Ekbatan",
+      "Persepolis",
+      "Babil",
+      "Ninova"
+    ],
+    "correctAnswer": "Ekbatana",
+    "correctAnswerTr": "Ekbatan",
+    "explanation": "Ekbatan bugünkü Hemedan kentinin yerindeydi ve daha sonra Ahamenişlerin yaz başkenti oldu.",
+    "explanationKu": "Ekbatana li cihê Hemedana îroyîn bû û paşê bû paytexta havînê ya Hexamenişiyan.",
+    "explanationTr": "Ekbatan bugünkü Hemedan kentinin yerindeydi ve daha sonra Ahamenişlerin yaz başkenti oldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.britannica.com",
+      "sourceReference": "https://www.britannica.com/place/Ecbatana",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0082",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kî wekî damezrînerê yekem ê dewleta Medan tê naskirin?",
+    "promptTr": "Med devletinin ilk kurucusu olarak kim tanınır?",
+    "answers": [
+      "Diyako",
+      "Kûruşê Mezin",
+      "Daryûsê Yekem",
+      "Kserksesê Yekem"
+    ],
+    "answersTr": [
+      "Deiokes",
+      "Büyük Kiros",
+      "I. Darius",
+      "I. Serhas"
+    ],
+    "correctAnswer": "Diyako",
+    "correctAnswerTr": "Deiokes",
+    "explanation": "Herodotos, Deiokes'in Med boylarını birleştirip MÖ 700 civarında yönetimi kurduğunu anlatır.",
+    "explanationKu": "Herodotos dinivîse ku Diyako eşîrên medî kirin yek û dora 700ê b.z. desthilatdarî ava kir.",
+    "explanationTr": "Herodotos, Deiokes'in Med boylarını birleştirip MÖ 700 civarında yönetimi kurduğunu anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Deioces",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0083",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Zimanê hurriyan bi kîjan zimanê kevnar ve girêdayî tê dîtin?",
+    "promptTr": "Hurrice hangi antik dille akraba kabul edilir?",
+    "answers": [
+      "Urartûyî",
+      "Akadî",
+      "Sumerî",
+      "Aramî"
+    ],
+    "answersTr": [
+      "Urartuca",
+      "Akadca",
+      "Sümerce",
+      "Aramice"
+    ],
+    "correctAnswer": "Urartûyî",
+    "correctAnswerTr": "Urartuca",
+    "explanation": "Hurrice ve Urartuca Hurri-Urartu dil ailesini oluşturur ve Sami ya da Hint-Avrupa dillerine bağlı değildir.",
+    "explanationKu": "Hurrî û urartûyî malbata Hurrî-Urartûyî pêk tînin û bi zimanên samî an hind-ewropî ve ne girêdayî ne.",
+    "explanationTr": "Hurrice ve Urartuca Hurri-Urartu dil ailesini oluşturur ve Sami ya da Hint-Avrupa dillerine bağlı değildir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.britannica.com",
+      "sourceReference": "https://www.britannica.com/topic/Hurrian-language",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0084",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Paytexta dewleta Mîtanniyê kîjan bû?",
+    "promptTr": "Mitanni devletinin başkenti hangisiydi?",
+    "answers": [
+      "Hattûşa",
+      "Waşûkanî",
+      "Aşûr",
+      "Ûr"
+    ],
+    "answersTr": [
+      "Hattuşa",
+      "Vaşukanni",
+      "Asur",
+      "Ur"
+    ],
+    "correctAnswer": "Waşûkanî",
+    "correctAnswerTr": "Vaşukanni",
+    "explanation": "Kentin yeri kesin olarak belirlenmemiştir ama Habur bölgesinde, bugünkü Resulayn yakınında olduğu tahmin edilir.",
+    "explanationKu": "Cihê wê bi teqezî nehatiye diyarkirin, lê tê texmînkirin ku li herêma Xabûrê, nêzî Serêkaniyê bûye.",
+    "explanationTr": "Kentin yeri kesin olarak belirlenmemiştir ama Habur bölgesinde, bugünkü Resulayn yakınında olduğu tahmin edilir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Washukanni",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0085",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Mîtannî di Rojhilata Nêzîk a kevnar de bi kîjan pisporiyê navdar bûn?",
+    "promptTr": "Mitanniler eski Yakın Doğu'da hangi uzmanlıklarıyla ünlüydü?",
+    "answers": [
+      "Perwerdeya hespan",
+      "Çêkirina keştiyan",
+      "Derxistina pereyan",
+      "Avakirina pîramîdan"
+    ],
+    "answersTr": [
+      "At eğitimi",
+      "Gemi yapımı",
+      "Para basımı",
+      "Piramit inşası"
+    ],
+    "correctAnswer": "Perwerdeya hespan",
+    "correctAnswerTr": "At eğitimi",
+    "explanation": "Hitit arşivindeki Kikkuli metni, Mitannilere ait at eğitim kılavuzunu korumaktadır.",
+    "explanationKu": "Nivîsa Kîkkulî ya di arşîva hîtîtan de rêbernameya perwerdeya hespan a mîtanniyan diparêze.",
+    "explanationTr": "Hitit arşivindeki Kikkuli metni, Mitannilere ait at eğitim kılavuzunu korumaktadır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.worldhistory.org",
+      "sourceReference": "https://www.worldhistory.org/Mitanni/",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0086",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Gûtî piştî hilweşîna kîjan dewletê li Mezopotamyayê bûn desthilatdar?",
+    "promptTr": "Gutiler hangi devletin yıkılmasından sonra Mezopotamya'da egemen oldular?",
+    "answers": [
+      "Akad",
+      "Ûrartû",
+      "Hexameniş",
+      "Selevkî"
+    ],
+    "answersTr": [
+      "Akad",
+      "Urartu",
+      "Ahameniş",
+      "Selevkos"
+    ],
+    "correctAnswer": "Akad",
+    "correctAnswerTr": "Akad",
+    "explanation": "Gutiler MÖ 22. yüzyıl civarında yaklaşık yüz yıl hüküm sürdü ve Sümer Kral Listesi onları dağlı olarak anar.",
+    "explanationKu": "Gûtiyan dora sedsala 22yan a b.z. nêzî sed salî hukum kirin û Lîsteya Keyaniyên Sumerî wan wekî çiyayî bi nav dike.",
+    "explanationTr": "Gutiler MÖ 22. yüzyıl civarında yaklaşık yüz yıl hüküm sürdü ve Sümer Kral Listesi onları dağlı olarak anar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Gutian_dynasty_of_Sumer",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0087",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Navê Kardûxiyan di kîjan berhema nivîskarekî yewnanî yê kevnar de derbas dibe?",
+    "promptTr": "Kardukların adı hangi antik Yunan yazarının eserinde geçer?",
+    "answers": [
+      "Anabasîs",
+      "Îlyada",
+      "Odîseya",
+      "Dîrok"
+    ],
+    "answersTr": [
+      "Anabasis",
+      "İlyada",
+      "Odysseia",
+      "Tarihler"
+    ],
+    "correctAnswer": "Anabasîs",
+    "correctAnswerTr": "Anabasis",
+    "explanation": "Ksenophon, Kardukların MÖ 401'de dağlarda On Binler'e karşı direndiğini anlatır.",
+    "explanationKu": "Ksenofon dinivîse ku Kardûxiyan di sala 401ê b.z. de li çiyayan li hemberî Deh Hezaran li ber xwe dan.",
+    "explanationTr": "Ksenophon, Kardukların MÖ 401'de dağlarda On Binler'e karşı direndiğini anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Carduchii",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0088",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan keyê medî bi hevkariya babîliyan paytexta aşûriyan hilweşand?",
+    "promptTr": "Asur başkentini Babillilerle iş birliği yaparak yıkan Med kralı hangisidir?",
+    "answers": [
+      "Diyako",
+      "Keyaksar",
+      "Frawertîş",
+      "Astiyag"
+    ],
+    "answersTr": [
+      "Deiokes",
+      "Kyaksares",
+      "Fraortes",
+      "Astyages"
+    ],
+    "correctAnswer": "Keyaksar",
+    "correctAnswerTr": "Kyaksares",
+    "explanation": "MÖ 612'de Ninova'nın düşmesi Asur İmparatorluğu'nun sonunu getirdi.",
+    "explanationKu": "Di sala 612ê b.z. de Nînova hate girtin û ev yek dawiya Împeratoriya Aşûrî anî.",
+    "explanationTr": "MÖ 612'de Ninova'nın düşmesi Asur İmparatorluğu'nun sonunu getirdi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.britannica.com",
+      "sourceReference": "https://www.britannica.com/biography/Cyaxares",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0089",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Zimanê medan ê kevnar di kîjan malbata zimanan de cih digire?",
+    "promptTr": "Antik Med dili hangi dil ailesine girer?",
+    "answers": [
+      "Îranî",
+      "Samî",
+      "Hurrî-Urartûyî",
+      "Sumerî"
+    ],
+    "answersTr": [
+      "İrani",
+      "Sami",
+      "Hurr-Urartu",
+      "Sümer"
+    ],
+    "correctAnswer": "Îranî",
+    "correctAnswerTr": "İrani",
+    "explanation": "Medce bir Batı İran dilidir, Avestaca ve Eski Farsçaya yakındır ve daha çok özel adlardan bilinir.",
+    "explanationKu": "Medî zimanekî îranî yê rojavayî bû, nêzî avestayî û farisiya kevnar, û bi navên taybet tê naskirin.",
+    "explanationTr": "Medce bir Batı İran dilidir, Avestaca ve Eski Farsçaya yakındır ve daha çok özel adlardan bilinir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Median_language",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0090",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Xwedayê sereke yê bahozê di ola hurriyan de kî bû?",
+    "promptTr": "Hurri dininde baş fırtına tanrısı kimdi?",
+    "answers": [
+      "Teşûb",
+      "Merdûk",
+      "Aşûr",
+      "Zeus"
+    ],
+    "answersTr": [
+      "Teşup",
+      "Marduk",
+      "Asur",
+      "Zeus"
+    ],
+    "correctAnswer": "Teşûb",
+    "correctAnswerTr": "Teşup",
+    "explanation": "Teşup'a eşi Hepat ile birlikte tapınılırdı ve sonraları Babil tanrısı Adad ile özdeşleştirildi.",
+    "explanationKu": "Ji Teşûb û hevjîna wî Hebatê re dihat perizîn û paşê bi Adadê babîlî ve hate wekhevkirin.",
+    "explanationTr": "Teşup'a eşi Hepat ile birlikte tapınılırdı ve sonraları Babil tanrısı Adad ile özdeşleştirildi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Teshub",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0091",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di sala 612 b.z. de Medan û Babîliyan paytexta Asûriyan hilweşand, ew paytext kîjan bû?",
+    "promptTr": "MÖ 612'de Medler ve Babilliler Asur başkentini yıktılar, bu başkent hangisiydi?",
+    "answers": [
+      "Nîneva",
+      "Ûr",
+      "Ûrûk",
+      "Ebla"
+    ],
+    "answersTr": [
+      "Ninova",
+      "Ur",
+      "Uruk",
+      "Ebla"
+    ],
+    "correctAnswer": "Nîneva",
+    "correctAnswerTr": "Ninova",
+    "explanation": "Ninova'nın düşüşü Asur İmparatorluğu'nu sona erdirdi ve Medler Yakın Doğu'nun başlıca gücü oldu.",
+    "explanationKu": "Hilweşîna Nînevayê dawî li împeratoriya Asûr anî û Med bûn hêzeke sereke ya Rojhilata Nêzîk.",
+    "explanationTr": "Ninova'nın düşüşü Asur İmparatorluğu'nu sona erdirdi ve Medler Yakın Doğu'nun başlıca gücü oldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Battle_of_Nineveh_(612_BC)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0092",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Keyê dawî yê Medan kî bû ku Kyrosê Mezin ew têk bir?",
+    "promptTr": "Büyük Kyros tarafından yenilgiye uğratılan son Med kralı kimdir?",
+    "answers": [
+      "Astyages",
+      "Kyaxares",
+      "Deiokes",
+      "Fravartîş"
+    ],
+    "answersTr": [
+      "Astyages",
+      "Kyaksares",
+      "Deiokes",
+      "Fraortes"
+    ],
+    "correctAnswer": "Astyages",
+    "correctAnswerTr": "Astyages",
+    "explanation": "Astyages'in MÖ 550'de yenilmesi Ahameniş İmparatorluğu'nun kurulmasının yolunu açtı.",
+    "explanationKu": "Têkbirina Astyages di 550 b.z. de rê li ber damezrandina împeratoriya Hexamenişî vekir.",
+    "explanationTr": "Astyages'in MÖ 550'de yenilmesi Ahameniş İmparatorluğu'nun kurulmasının yolunu açtı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.britannica.com",
+      "sourceReference": "https://www.britannica.com/topic/Mede-people",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0093",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Yek ji navendên herî girîng ên Hûrriyan li Mezopotamyaya Jorîn kîjan bû?",
+    "promptTr": "Yukarı Mezopotamya'da Hurrilerin en önemli merkezlerinden biri hangisiydi?",
+    "answers": [
+      "Ûr",
+      "Urkêş",
+      "Lagaş",
+      "Erîdû"
+    ],
+    "answersTr": [
+      "Ur",
+      "Urkeş",
+      "Lagaş",
+      "Eridu"
+    ],
+    "correctAnswer": "Urkêş",
+    "correctAnswerTr": "Urkeş",
+    "explanation": "Urkeş yaklaşık MÖ 3000'de kuruldu ve Kumarbi tapınağına ev sahipliği yaptı.",
+    "explanationKu": "Urkêş bi qasî 3000 sal b.z. hatiye avakirin û perestgeha Kumarbi lê bû.",
+    "explanationTr": "Urkeş yaklaşık MÖ 3000'de kuruldu ve Kumarbi tapınağına ev sahipliği yaptı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Urkesh",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0094",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Paytexta dewleta Mîtanniyan kîjan bajar bû?",
+    "promptTr": "Mitanni devletinin başkenti hangisiydi?",
+    "answers": [
+      "Waşûkanî",
+      "Hattûşa",
+      "Aşûr",
+      "Marî"
+    ],
+    "answersTr": [
+      "Vaşukanni",
+      "Hattuşa",
+      "Asur",
+      "Mari"
+    ],
+    "correctAnswer": "Waşûkanî",
+    "correctAnswerTr": "Vaşukanni",
+    "explanation": "Vaşukanni Habur Nehri kıyısındaydı ve tam yeri hâlâ kesin olarak bilinmiyor.",
+    "explanationKu": "Waşûkanî li ser çemê Xabûrê bû û cihê wê yê rastîn hê jî bi teqez nayê zanîn.",
+    "explanationTr": "Vaşukanni Habur Nehri kıyısındaydı ve tam yeri hâlâ kesin olarak bilinmiyor.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Washukanni",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0095",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan kes bi metnê navdar ê perwerdehiya hespan ê Mîtanniyê tê naskirin?",
+    "promptTr": "Mitanni'ye ait ünlü at eğitimi metniyle tanınan kişi kimdir?",
+    "answers": [
+      "Kikkuli",
+      "Tuşratta",
+      "Şuppiluliuma",
+      "Aşûr-ûballît"
+    ],
+    "answersTr": [
+      "Kikkuli",
+      "Tuşratta",
+      "Şuppiluliuma",
+      "Aşur-uballit"
+    ],
+    "correctAnswer": "Kikkuli",
+    "correctAnswerTr": "Kikkuli",
+    "explanation": "Kikkuli metni Hattuşa'da bulundu ve 184 günlük at eğitimi yöntemlerini anlatır.",
+    "explanationKu": "Metnê Kikkuli li Hattûşayê hatiye dîtin û rêbazên 184 rojan ên perwerdekirina hespan vedibêje.",
+    "explanationTr": "Kikkuli metni Hattuşa'da bulundu ve 184 günlük at eğitimi yöntemlerini anlatır.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kikkuli",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0096",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Gutiyan piştî hilweşîna kîjan împeratoriyê li Sumerê desthilatdarî kir?",
+    "promptTr": "Gutiler Sümer'de hangi imparatorluğun yıkılmasından sonra iktidara geldiler?",
+    "answers": [
+      "Akad",
+      "Ebla",
+      "Elam",
+      "Hatî"
+    ],
+    "answersTr": [
+      "Akad",
+      "Ebla",
+      "Elam",
+      "Hatti"
+    ],
+    "correctAnswer": "Akad",
+    "correctAnswerTr": "Akad",
+    "explanation": "Guti dönemi yaklaşık yüz yıl sürdü ve Uruk tarafından yenilgiye uğratılmalarıyla sona erdi.",
+    "explanationKu": "Serdema Gutiyan nêzî sed salî dom kir û bi têkbirina wan ji aliyê Ûrûkê ve bi dawî bû.",
+    "explanationTr": "Guti dönemi yaklaşık yüz yıl sürdü ve Uruk tarafından yenilgiye uğratılmalarıyla sona erdi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Gutian_dynasty_of_Sumer",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0097",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Keyê dawî yê Gutiyan kî bû ku Ûtu-hengal ew têk bir?",
+    "promptTr": "Utu-hengal tarafından yenilgiye uğratılan son Guti kralı kimdir?",
+    "answers": [
+      "Gudea",
+      "Tirigan",
+      "Naram-Sîn",
+      "Ûr-Nammu"
+    ],
+    "answersTr": [
+      "Gudea",
+      "Tirigan",
+      "Naram-Sin",
+      "Ur-Nammu"
+    ],
+    "correctAnswer": "Tirigan",
+    "correctAnswerTr": "Tirigan",
+    "explanation": "Tirigan'dan sonra Ur-Nammu III. Ur Hanedanı'nı kurdu ve Sümer birliğini yeniden sağladı.",
+    "explanationKu": "Piştî Tirigan, Ûr-Nammu xanedana Sêyemîn a Ûrê damezrand û yekîtiya Sumerê nû kir.",
+    "explanationTr": "Tirigan'dan sonra Ur-Nammu III. Ur Hanedanı'nı kurdu ve Sümer birliğini yeniden sağladı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Tirigan",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0098",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Li gorî Anabasîsa Ksenofon, kîjan gelê çiyayî li hemberî Deh Hezaran li ber xwe da?",
+    "promptTr": "Ksenofon'un Anabasis'ine göre On Binlere karşı direnen dağlı halk hangisidir?",
+    "answers": [
+      "Pisîdî",
+      "Kardûxî",
+      "Lîkî",
+      "Kapadokî"
+    ],
+    "answersTr": [
+      "Pisidyalılar",
+      "Karduklar",
+      "Likyalılar",
+      "Kapadokyalılar"
+    ],
+    "correctAnswer": "Kardûxî",
+    "correctAnswerTr": "Karduklar",
+    "explanation": "Ksenofon, Kardukların dağlarda yaşadığını ve Pers kralına vergi vermediklerini yazar.",
+    "explanationKu": "Ksenofon dinivîse ku Kardûxî li çiyayan dijiyan û bac nedidan keyê Faris.",
+    "explanationTr": "Ksenofon, Kardukların dağlarda yaşadığını ve Pers kralına vergi vermediklerini yazar.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Carduchi",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0099",
+    "category": "Dîrok",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan keyê Hîtîtan Mîtannî lawaz kir û Waşûkanî dagir kir?",
+    "promptTr": "Mitanni'yi zayıflatıp başkentini ele geçiren Hitit kralı hangisidir?",
+    "answers": [
+      "Şuppiluliuma I",
+      "Hattuşîlî III",
+      "Mûrşîlî II",
+      "Tudhaliya IV"
+    ],
+    "answersTr": [
+      "I. Şuppiluliuma",
+      "III. Hattuşili",
+      "II. Murşili",
+      "IV. Tudhaliya"
+    ],
+    "correctAnswer": "Şuppiluliuma I",
+    "correctAnswerTr": "I. Şuppiluliuma",
+    "explanation": "Onun seferleri Mitanni'yi ikiye böldü ve Asur'un yükselmesine yol açtı.",
+    "explanationKu": "Seferên wî Mîtannî kirin du beş û rê li ber mezinbûna Asûrê vekir.",
+    "explanationTr": "Onun seferleri Mitanni'yi ikiye böldü ve Asur'un yükselmesine yol açtı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "www.britannica.com",
+      "sourceReference": "https://www.britannica.com/biography/Suppiluliumas-I",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0100",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Partiya Demokrat a Kurdistanê (PDK) ya Iraqê di kîjan salê de hate damezrandin?",
+    "promptTr": "Irak Kürdistan Demokrat Partisi (KDP) hangi yılda kuruldu?",
+    "answers": [
+      "1932",
+      "1946",
+      "1958",
+      "1968"
+    ],
+    "answersTr": [
+      "1932",
+      "1946",
+      "1958",
+      "1968"
+    ],
+    "correctAnswer": "1946",
+    "correctAnswerTr": "1946",
+    "explanation": "KDP, Ağustos 1946'da Bağdat'ta kuruluş kongresini yaptı ve Molla Mustafa Barzani başkan oldu.",
+    "explanationKu": "PDK di Tebaxa 1946an de li Bexdayê kongreya xwe ya damezrandinê li dar xist û Mela Mistefa Barzanî bû serokê wê.",
+    "explanationTr": "KDP, Ağustos 1946'da Bağdat'ta kuruluş kongresini yaptı ve Molla Mustafa Barzani başkan oldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurdistan_Democratic_Party",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0101",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Di Çileya 1946an de li Îranê komara kurdî li kîjan bajarî hate îlankirin?",
+    "promptTr": "Ocak 1946'da İran'da Kürt cumhuriyeti hangi şehirde ilan edildi?",
+    "answers": [
+      "Sine",
+      "Mehabad",
+      "Kirmaşan",
+      "Hewlêr"
+    ],
+    "answersTr": [
+      "Sine",
+      "Mahabad",
+      "Kirmanşah",
+      "Erbil"
+    ],
+    "correctAnswer": "Mehabad",
+    "correctAnswerTr": "Mahabad",
+    "explanation": "Cumhuriyetin başkanı Kadı Muhammed idi ve aynı yıl Sovyet güçlerinin çekilmesinin ardından yıkıldı.",
+    "explanationKu": "Serokê komarê Qazî Mihemed bû û komar di heman salê de piştî vekişîna hêzên Sovyetê hilweşiya.",
+    "explanationTr": "Cumhuriyetin başkanı Kadı Muhammed idi ve aynı yıl Sovyet güçlerinin çekilmesinin ardından yıkıldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Republic_of_Mahabad",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0102",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "PKK di 27ê Mijdara 1978an de li kîjan gundî kongreya xwe ya damezrandinê li dar xist?",
+    "promptTr": "PKK, 27 Kasım 1978'de hangi köyde kuruluş kongresini yaptı?",
+    "answers": [
+      "Palû",
+      "Gever",
+      "Fîs",
+      "Cizîr"
+    ],
+    "answersTr": [
+      "Palu",
+      "Yüksekova",
+      "Fis",
+      "Cizre"
+    ],
+    "correctAnswer": "Fîs",
+    "correctAnswerTr": "Fis",
+    "explanation": "Bu köy Diyarbakır'ın Lice ilçesine bağlıdır ve toplantı 22 kişinin katılımıyla yapıldı.",
+    "explanationKu": "Ev gund girêdayî navçeya Licê ya Diyarbekirê ye û civîn bi beşdariya 22 kesan pêk hat.",
+    "explanationTr": "Bu köy Diyarbakır'ın Lice ilçesine bağlıdır ve toplantı 22 kişinin katılımıyla yapıldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurdistan_Workers_Party",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0103",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Yekîtiya Niştimanî ya Kurdistanê (YNK) di 1975an de bi pêşengiya kîjan siyasetmedarî hate damezrandin?",
+    "promptTr": "Kürdistan Yurtseverler Birliği (KYB) 1975'te hangi siyasetçinin öncülüğünde kuruldu?",
+    "answers": [
+      "Celal Talebanî",
+      "Mesûd Barzanî",
+      "Qazî Mihemed",
+      "Şêx Mehmûd Berzencî"
+    ],
+    "answersTr": [
+      "Celal Talabani",
+      "Mesut Barzani",
+      "Kadı Muhammed",
+      "Şeyh Mahmut Berzenci"
+    ],
+    "correctAnswer": "Celal Talebanî",
+    "correctAnswerTr": "Celal Talabani",
+    "explanation": "KYB, 1975 Cezayir Anlaşması sonrasında KDP'den ayrıldı ve bağımsız bir siyasi parti oldu.",
+    "explanationKu": "YNK piştî peymana Cezayîrê ya 1975an ji PDKê veqetiya û bû partiyeke siyasî ya serbixwe.",
+    "explanationTr": "KYB, 1975 Cezayir Anlaşması sonrasında KDP'den ayrıldı ve bağımsız bir siyasi parti oldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Patriotic_Union_of_Kurdistan",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0104",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Rêxistina Xoybûnê di kîjan salê de hate damezrandin?",
+    "promptTr": "Hoybun örgütü hangi yılda kuruldu?",
+    "answers": [
+      "1923",
+      "1927",
+      "1930",
+      "1937"
+    ],
+    "answersTr": [
+      "1923",
+      "1927",
+      "1930",
+      "1937"
+    ],
+    "correctAnswer": "1927",
+    "correctAnswerTr": "1927",
+    "explanation": "Hoybun'un merkezi Lübnan'daydı ve 1927-1930 Ağrı ayaklanmasını organize etti.",
+    "explanationKu": "Navenda Xoybûnê li Libnanê bû û wê serhildana Agiriyê ya 1927-1930an organîze kir.",
+    "explanationTr": "Hoybun'un merkezi Lübnan'daydı ve 1927-1930 Ağrı ayaklanmasını organize etti.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Xoybun",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0105",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Serhildana Şêx Seîd di kîjan salê de dest pê kir?",
+    "promptTr": "Şeyh Said İsyanı hangi yılda başladı?",
+    "answers": [
+      "1923",
+      "1925",
+      "1930",
+      "1937"
+    ],
+    "answersTr": [
+      "1923",
+      "1925",
+      "1930",
+      "1937"
+    ],
+    "correctAnswer": "1925",
+    "correctAnswerTr": "1925",
+    "explanation": "İsyan o yılın şubat ayında Piran'da başladı ve aynı yılın haziran ayında Şeyh Said idam edildi.",
+    "explanationKu": "Serhildan di Sibata wê salê de li Pîranê dest pê kir û di Hezîrana heman salê de Şêx Seîd hate darvekirin.",
+    "explanationTr": "İsyan o yılın şubat ayında Piran'da başladı ve aynı yılın haziran ayında Şeyh Said idam edildi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Sheikh_Said_rebellion",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0106",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Partiya Keda Gel (HEP) di 1990î de bi serokatiya kîjan siyasetmedarî hate damezrandin?",
+    "promptTr": "Halkın Emek Partisi (HEP) 1990'da hangi siyasetçinin başkanlığında kuruldu?",
+    "answers": [
+      "Ahmet Turk",
+      "Vedat Aydin",
+      "Leyla Zana",
+      "Fehmî Işiklar"
+    ],
+    "answersTr": [
+      "Ahmet Türk",
+      "Vedat Aydın",
+      "Leyla Zana",
+      "Fehmi Işıklar"
+    ],
+    "correctAnswer": "Fehmî Işiklar",
+    "correctAnswerTr": "Fehmi Işıklar",
+    "explanation": "HEP 1993'te Anayasa Mahkemesi tarafından kapatıldı ve birçok milletvekili DEP'e geçti.",
+    "explanationKu": "HEP di 1993yan de ji aliyê Dadgeha Destûrê ve hate girtin û gelek parlementerên wê derbasî DEPê bûn.",
+    "explanationTr": "HEP 1993'te Anayasa Mahkemesi tarafından kapatıldı ve birçok milletvekili DEP'e geçti.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Halk%C4%B1n_Emek_Partisi",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0107",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Partiya Demokratîk a Gelan (HDP) di kîjan salê de hate damezrandin?",
+    "promptTr": "Halkların Demokratik Partisi (HDP) hangi yılda kuruldu?",
+    "answers": [
+      "2010",
+      "2011",
+      "2012",
+      "2015"
+    ],
+    "answersTr": [
+      "2010",
+      "2011",
+      "2012",
+      "2015"
+    ],
+    "correctAnswer": "2012",
+    "correctAnswerTr": "2012",
+    "explanation": "HDP başlangıçta Halkların Demokratik Kongresi'nin siyasi kanadı olarak kuruldu ve ilk eş başkanları Fatma Gök ile Yavuz Önen oldu.",
+    "explanationKu": "HDP di destpêkê de wek baskê siyasî yê Kongreya Demokratîk a Gelan ava bû û hevserokên wê yên ewil Fatma Gok û Yavuz Onen bûn.",
+    "explanationTr": "HDP başlangıçta Halkların Demokratik Kongresi'nin siyasi kanadı olarak kuruldu ve ilk eş başkanları Fatma Gök ile Yavuz Önen oldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Peoples_Democratic_Party_(Turkey)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0108",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Partiya Demokrasiyê (DEP) di kîjan salê de hate damezrandin?",
+    "promptTr": "Demokrasi Partisi (DEP) hangi yılda kuruldu?",
+    "answers": [
+      "1991",
+      "1993",
+      "1995",
+      "1997"
+    ],
+    "answersTr": [
+      "1991",
+      "1993",
+      "1995",
+      "1997"
+    ],
+    "correctAnswer": "1993",
+    "correctAnswerTr": "1993",
+    "explanation": "DEP, HEP'in kapatılma davası sürerken 7 Mayıs 1993'te kuruldu ve 16 Haziran 1994'te Anayasa Mahkemesi tarafından kapatıldı.",
+    "explanationKu": "DEP di 7ê Gulana 1993an de, dema doza girtina HEPê berdewam bû, hate avakirin û di 16ê Hezîrana 1994an de ji aliyê Dadgeha Destûrê ve hate girtin.",
+    "explanationTr": "DEP, HEP'in kapatılma davası sürerken 7 Mayıs 1993'te kuruldu ve 16 Haziran 1994'te Anayasa Mahkemesi tarafından kapatıldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Democracy_Party_(Turkey)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0109",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Rêxistina Xoybûnê di kîjan salê de hatiye damezrandin?",
+    "promptTr": "Hoybûn örgütü hangi yılda kurulmuştur?",
+    "answers": [
+      "1927",
+      "1923",
+      "1931",
+      "1919"
+    ],
+    "answersTr": [
+      "1927",
+      "1923",
+      "1931",
+      "1919"
+    ],
+    "correctAnswer": "1927",
+    "correctAnswerTr": "1927",
+    "explanation": "Hoybûn, Bhamdoun'da Kürt ve Ermeni örgütlerinin katılımıyla kuruldu ve ardından Ağrı İsyanı'nın örgütlenmesinde rol oynadı.",
+    "explanationKu": "Xoybûn li Bihamdûnê bi beşdariya çend rêxistinên kurd û ermenî hat avakirin û piştî wê Serhildana Agiriyê organîze kir.",
+    "explanationTr": "Hoybûn, Bhamdoun'da Kürt ve Ermeni örgütlerinin katılımıyla kuruldu ve ardından Ağrı İsyanı'nın örgütlenmesinde rol oynadı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Xoybun",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0110",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Komara Mehabadê di kîjan salê de hatiye ragihandin?",
+    "promptTr": "Mahabad Cumhuriyeti hangi yılda ilan edilmiştir?",
+    "answers": [
+      "1946",
+      "1932",
+      "1925",
+      "1958"
+    ],
+    "answersTr": [
+      "1946",
+      "1932",
+      "1925",
+      "1958"
+    ],
+    "correctAnswer": "1946",
+    "correctAnswerTr": "1946",
+    "explanation": "Cumhuriyetin merkezi Mahabad kentiydi ve yaklaşık bir yıl sonra sona erdi.",
+    "explanationKu": "Navenda komarê bajarê Mehabadê bû û piştî nêzî salekê bi dawî bû.",
+    "explanationTr": "Cumhuriyetin merkezi Mahabad kentiydi ve yaklaşık bir yıl sonra sona erdi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Republic_of_Mahabad",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0111",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan kes di avakirina Partiya Demokrat a Kurdistana Iraqê de cihê sereke girtiye?",
+    "promptTr": "Irak Kürdistan Demokrat Partisinin kuruluşunda başlıca rolü oynayan kişi kimdir?",
+    "answers": [
+      "Celal Talebanî",
+      "Îhsan Nûrî Paşa",
+      "Seyîd Riza",
+      "Mistefa Barzanî"
+    ],
+    "answersTr": [
+      "Celal Talabani",
+      "İhsan Nuri Paşa",
+      "Seyit Rıza",
+      "Mustafa Barzani"
+    ],
+    "correctAnswer": "Mistefa Barzanî",
+    "correctAnswerTr": "Mustafa Barzani",
+    "explanation": "Bu parti 1946'da Bağdat'ta kuruldu ve Kürdistan Bölgesi'nin başlıca siyasi partilerinden biri oldu.",
+    "explanationKu": "Ev partî di sala 1946an de li Bexdayê hat damezrandin û bû yek ji partiyên siyasî yên sereke yên Herêma Kurdistanê.",
+    "explanationTr": "Bu parti 1946'da Bağdat'ta kuruldu ve Kürdistan Bölgesi'nin başlıca siyasi partilerinden biri oldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurdistan_Democratic_Party",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0112",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Serhildana Şêx Seîd di kîjan salê de dest pê kiriye?",
+    "promptTr": "Şeyh Said İsyanı hangi yılda başlamıştır?",
+    "answers": [
+      "1925",
+      "1921",
+      "1930",
+      "1937"
+    ],
+    "answersTr": [
+      "1925",
+      "1921",
+      "1930",
+      "1937"
+    ],
+    "correctAnswer": "1925",
+    "correctAnswerTr": "1925",
+    "explanation": "İsyan Diyarbakır ve Bingöl çevresinde yayıldı ve aynı yıl içinde bastırıldı.",
+    "explanationKu": "Serhildan li herêma Diyarbekir û Çewlîgê belav bû û di heman salê de hate têkbirin.",
+    "explanationTr": "İsyan Diyarbakır ve Bingöl çevresinde yayıldı ve aynı yıl içinde bastırıldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Sheikh_Said_rebellion",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0113",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "PKK di kîjan salê de hatiye damezrandin?",
+    "promptTr": "PKK hangi yılda kurulmuştur?",
+    "answers": [
+      "1978",
+      "1974",
+      "1984",
+      "1990"
+    ],
+    "answersTr": [
+      "1978",
+      "1974",
+      "1984",
+      "1990"
+    ],
+    "correctAnswer": "1978",
+    "correctAnswerTr": "1978",
+    "explanation": "Kuruluş kongresi Fis köyünde yapıldı ve silahlı eylemler bundan altı yıl sonra başladı.",
+    "explanationKu": "Kongreya damezrandinê li gundê Fîsê pêk hat û çalakiyên çekdarî şeş sal piştî wê dest pê kirin.",
+    "explanationTr": "Kuruluş kongresi Fis köyünde yapıldı ve silahlı eylemler bundan altı yıl sonra başladı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Kurdistan_Workers_Party",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0114",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan kes di nav damezrînerên Yekîtiya Niştimanî ya Kurdistanê de bû?",
+    "promptTr": "Kürdistan Yurtseverler Birliğinin kurucuları arasında kim yer almıştır?",
+    "answers": [
+      "Celal Talebanî",
+      "Mesûd Barzanî",
+      "Qazî Mihemed",
+      "Şêx Seîd"
+    ],
+    "answersTr": [
+      "Celal Talabani",
+      "Mesut Barzani",
+      "Kadı Muhammed",
+      "Şeyh Said"
+    ],
+    "correctAnswer": "Celal Talebanî",
+    "correctAnswerTr": "Celal Talabani",
+    "explanation": "Bu parti 1975'te Şam'da kuruldu ve Kürdistan Demokrat Partisinin başlıca rakibi oldu.",
+    "explanationKu": "Ev partî di sala 1975an de li Şamê hat damezrandin û bû reqîbê sereke yê Partiya Demokrat a Kurdistanê.",
+    "explanationTr": "Bu parti 1975'te Şam'da kuruldu ve Kürdistan Demokrat Partisinin başlıca rakibi oldu.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Patriotic_Union_of_Kurdistan",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0115",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Kîjan kes di Serhildana Agiriyê de fermandarê giştî bû?",
+    "promptTr": "Ağrı İsyanı sırasında genel komutanlık görevini üstlenen kişi kimdir?",
+    "answers": [
+      "Seyîd Riza",
+      "Îhsan Nûrî Paşa",
+      "Simko Şikak",
+      "Şêx Seîd"
+    ],
+    "answersTr": [
+      "Seyit Rıza",
+      "İhsan Nuri Paşa",
+      "Simko Şikaki",
+      "Şeyh Said"
+    ],
+    "correctAnswer": "Îhsan Nûrî Paşa",
+    "correctAnswerTr": "İhsan Nuri Paşa",
+    "explanation": "Eski bir Osmanlı subayı olarak Ağrı Dağı bölgesindeki isyan güçlerini örgütledi.",
+    "explanationKu": "Wî wek efserê berê yê osmanî hêzên serhildanê li herêma Çiyayê Agirî bi rêxistin kir.",
+    "explanationTr": "Eski bir Osmanlı subayı olarak Ağrı Dağı bölgesindeki isyan güçlerini örgütledi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Ararat_rebellion",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0116",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Partiya Keda Gel (HEP) di kîjan salê de hatiye damezrandin?",
+    "promptTr": "Halkın Emek Partisi (HEP) hangi yılda kurulmuştur?",
+    "answers": [
+      "1990",
+      "1987",
+      "1994",
+      "2002"
+    ],
+    "answersTr": [
+      "1990",
+      "1987",
+      "1994",
+      "2002"
+    ],
+    "correctAnswer": "1990",
+    "correctAnswerTr": "1990",
+    "explanation": "HEP, 1991 genel seçimlerinden sonra milletvekilleriyle Türkiye Büyük Millet Meclisine girdi ve 1993'te kapatıldı.",
+    "explanationKu": "HEP piştî hilbijartinên giştî yên sala 1991ê bi parlamenteran ket Meclisa Tirkiyeyê û di sala 1993yan de hat girtin.",
+    "explanationTr": "HEP, 1991 genel seçimlerinden sonra milletvekilleriyle Türkiye Büyük Millet Meclisine girdi ve 1993'te kapatıldı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "tr.wikipedia.org",
+      "sourceReference": "https://tr.wikipedia.org/wiki/Halk%C4%B1n_Emek_Partisi",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0117",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Bûyerên Dêrsimê di kîjan salê de dest pê kirine?",
+    "promptTr": "Dersim olayları hangi yılda başlamıştır?",
+    "answers": [
+      "1937",
+      "1925",
+      "1930",
+      "1946"
+    ],
+    "answersTr": [
+      "1937",
+      "1925",
+      "1930",
+      "1946"
+    ],
+    "correctAnswer": "1937",
+    "correctAnswerTr": "1937",
+    "explanation": "Askerî harekâtlar iki yıl sürdü ve sonucunda binlerce sivil hayatını kaybetti.",
+    "explanationKu": "Operasyonên leşkerî du salan dom kirin û di encamê de bi hezaran sivîl jiyana xwe ji dest dan.",
+    "explanationTr": "Askerî harekâtlar iki yıl sürdü ve sonucunda binlerce sivil hayatını kaybetti.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Dersim_rebellion",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0118",
+    "category": "Siyaset",
+    "difficulty": 2,
+    "type": "multipleChoice",
+    "prompt": "Partiya Demokratîk a Gelan (HDP) di kîjan salê de hatiye damezrandin?",
+    "promptTr": "Halkların Demokratik Partisi (HDP) hangi yılda kurulmuştur?",
+    "answers": [
+      "2012",
+      "2008",
+      "2015",
+      "2005"
+    ],
+    "answersTr": [
+      "2012",
+      "2008",
+      "2015",
+      "2005"
+    ],
+    "correctAnswer": "2012",
+    "correctAnswerTr": "2012",
+    "explanation": "Parti, Halkların Demokratik Kongresinin parti kanadı olarak kuruldu ve ilk kez 2015 genel seçimlerinde meclise girdi.",
+    "explanationKu": "Partî wek baskê partiyê yê Kongreya Demokratîk a Gelan hat avakirin û yekem car di hilbijartinên giştî yên 2015an de ket parlamentê.",
+    "explanationTr": "Parti, Halkların Demokratik Kongresinin parti kanadı olarak kuruldu ve ilk kez 2015 genel seçimlerinde meclise girdi.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "en.wikipedia.org",
+      "sourceReference": "https://en.wikipedia.org/wiki/Peoples\"_Democratic_Party_(Turkey)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0119",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Di avê de dijî, lê qet avê venaxwe; ew çi ye?",
+    "promptTr": "Suda yaşar ama hiç su içmez; bu nedir?",
+    "answers": [
+      "Mirov",
+      "Mişk",
+      "Kîvroşk",
+      "Masî"
+    ],
+    "answersTr": [
+      "İnsan",
+      "Fare",
+      "Tavşan",
+      "Balık"
+    ],
+    "correctAnswer": "Masî",
+    "correctAnswerTr": "Balık",
+    "explanation": "Balık solungaçlarıyla nefes alır ve suyu içecek gibi içmez; bilmecelerde su yaşamının simgesidir.",
+    "explanationKu": "Masî bi gilgilên xwe bêhnê distîne û avê wek vexwarinê venaxwe; di tiştonekan de sembola jiyana avê ye.",
+    "explanationTr": "Balık solungaçlarıyla nefes alır ve suyu içecek gibi içmez; bilmecelerde su yaşamının simgesidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ti%C5%9Ftonek",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0120",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Bi şev li ezman ya herî mezin û geş xuya dike; ew çi ye?",
+    "promptTr": "Gece gökyüzünde en büyük ve parlak görünen nedir?",
+    "answers": [
+      "Heyv",
+      "Stêrk",
+      "Ewr",
+      "Baran"
+    ],
+    "answersTr": [
+      "Ay",
+      "Yıldız",
+      "Bulut",
+      "Yağmur"
+    ],
+    "correctAnswer": "Heyv",
+    "correctAnswerTr": "Ay",
+    "explanation": "Ay parlaklığını güneşten alır ve ayda bir hilal ile dolunay olur; geleneksel takvim ona göre hesaplanırdı.",
+    "explanationKu": "Heyv bi ronahiya rojê geş dibe û mehê carekê nû û tije dibe; salnameya kevneşopî li gor wê dihat hejmartin.",
+    "explanationTr": "Ay parlaklığını güneşten alır ve ayda bir hilal ile dolunay olur; geleneksel takvim ona göre hesaplanırdı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ti%C5%9Ftonek",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0121",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Sed kiras li xwe dike, dema tu jê dikî tu digirî; ew çi ye?",
+    "promptTr": "Yüz kat giyinir, onu soyarken ağlarsın; bu nedir?",
+    "answers": [
+      "Sêv",
+      "Kartol",
+      "Bacan",
+      "Pîvaz"
+    ],
+    "answersTr": [
+      "Elma",
+      "Patates",
+      "Patlıcan",
+      "Soğan"
+    ],
+    "correctAnswer": "Pîvaz",
+    "correctAnswerTr": "Soğan",
+    "explanation": "Soğan gözleri yakan keskin bir gaz salar; Kürt mutfağında çoğu yemeğin temelidir.",
+    "explanationKu": "Pîvaz gazek tûj berdide ku çavan dişewitîne; di xwarina kurdî de bingeha piraniya xwarinan e.",
+    "explanationTr": "Soğan gözleri yakan keskin bir gaz salar; Kürt mutfağında çoğu yemeğin temelidir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ti%C5%9Ftonek",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0122",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Du bira ne, her tim bi hev re ne, lê qet hev nabînin; ew çi ne?",
+    "promptTr": "İki kardeştir, hep birliktedir ama hiç birbirini görmez; bunlar nedir?",
+    "answers": [
+      "Çav",
+      "Guh",
+      "Dest",
+      "Ling"
+    ],
+    "answersTr": [
+      "Göz",
+      "Kulak",
+      "El",
+      "Ayak"
+    ],
+    "correctAnswer": "Çav",
+    "correctAnswerTr": "Göz",
+    "explanation": "İnsan gözleri birlikte çalışarak derinlik algısı oluşturur; atasözlerinde ışığı ve gerçeği simgeler.",
+    "explanationKu": "Çavên mirov bi hev re dixebitin û dîtina kûr çêdikin; di pêşgotinan de ronahî û rastiyê temsîl dikin.",
+    "explanationTr": "İnsan gözleri birlikte çalışarak derinlik algısı oluşturur; atasözlerinde ışığı ve gerçeği simgeler.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ti%C5%9Ftonek",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0123",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Xaniyek tijî zêr e, ne deriyê wê heye ne paceya wê; ew çi ye?",
+    "promptTr": "Altınla dolu bir evdir, ne kapısı var ne penceresi; bu nedir?",
+    "answers": [
+      "Hêk",
+      "Nan",
+      "Penîr",
+      "Şîr"
+    ],
+    "answersTr": [
+      "Yumurta",
+      "Ekmek",
+      "Peynir",
+      "Süt"
+    ],
+    "correctAnswer": "Hêk",
+    "correctAnswerTr": "Yumurta",
+    "explanation": "Yumurta kireçli bir kabukla dış dünyayı korur; sarısı protein ve demir bakımından zengindir.",
+    "explanationKu": "Hêk bi qalikek kelisî cîhana derve diparêze; zerika wê bi proteîn û hesin dewlemend e.",
+    "explanationTr": "Yumurta kireçli bir kabukla dış dünyayı korur; sarısı protein ve demir bakımından zengindir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ti%C5%9Ftonek",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0124",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Zivistanê ji ezman tê xwarê, spî ye û sar e, biharê dihele; ew çi ye?",
+    "promptTr": "Kışın gökten düşer, beyaz ve soğuktur, baharda erir; bu nedir?",
+    "answers": [
+      "Berf",
+      "Baran",
+      "Ba",
+      "Ewr"
+    ],
+    "answersTr": [
+      "Kar",
+      "Yağmur",
+      "Rüzgâr",
+      "Bulut"
+    ],
+    "correctAnswer": "Berf",
+    "correctAnswerTr": "Kar",
+    "explanation": "Kar altıgen buz kristallerinden oluşur; dağlarda bahar suları onun erimesiyle beslenir.",
+    "explanationKu": "Berf ji krîstalên qeşayê yên şeşgoşeyî pêk tê; li çiyayan ava biharê ji helîna wê çêdibe.",
+    "explanationTr": "Kar altıgen buz kristallerinden oluşur; dağlarda bahar suları onun erimesiyle beslenir.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ti%C5%9Ftonek",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0125",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Nayê dîtin, lê dengê wê tê bihîstin û pelan dilivîne; ew çi ye?",
+    "promptTr": "Görünmez ama sesi duyulur ve yaprakları oynatır; bu nedir?",
+    "answers": [
+      "Ba",
+      "Av",
+      "Ax",
+      "Agir"
+    ],
+    "answersTr": [
+      "Rüzgâr",
+      "Su",
+      "Toprak",
+      "Ateş"
+    ],
+    "correctAnswer": "Ba",
+    "correctAnswerTr": "Rüzgâr",
+    "explanation": "Rüzgâr sıcaklık ve basınç farkından oluşur; eskiden yel değirmenleri un ve su için kullanılırdı.",
+    "explanationKu": "Ba ji cudahiya germahî û zexta hewayê çêdibe; berê aşên ba ji bo ard û avê dihatin bikaranîn.",
+    "explanationTr": "Rüzgâr sıcaklık ve basınç farkından oluşur; eskiden yel değirmenleri un ve su için kullanılırdı.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ti%C5%9Ftonek",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0126",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Bê bask li ezman difire û baranê tîne; ew çi ye?",
+    "promptTr": "Kanatsız gökte uçar ve yağmur getirir; bu nedir?",
+    "answers": [
+      "Ewr",
+      "Balafir",
+      "Çûk",
+      "Helîkopter"
+    ],
+    "answersTr": [
+      "Bulut",
+      "Uçak",
+      "Kuş",
+      "Helikopter"
+    ],
+    "correctAnswer": "Ewr",
+    "correctAnswerTr": "Bulut",
+    "explanation": "Bulut çok küçük su damlacıklarından oluşur; üç ana türü sirüs, stratüs ve kümülüstür.",
+    "explanationKu": "Ewr ji dilopên avê yên pir biçûk pêk tê; sê cureyên sereke cirrus, stratus û cumulus in.",
+    "explanationTr": "Bulut çok küçük su damlacıklarından oluşur; üç ana türü sirüs, stratüs ve kümülüstür.",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ti%C5%9Ftonek",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0127",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Sor e û şîrîn e, li ser darê daleqandî ye; ew çi ye?",
+    "promptTr": "Kırmızı ve tatlıdır, ağaçta asılı durur; bu nedir?",
+    "answers": [
+      "Sêv",
+      "Tirî",
+      "Hirmî",
+      "Zerdalî"
+    ],
+    "answersTr": [
+      "Elma",
+      "Üzüm",
+      "Armut",
+      "Kayısı"
+    ],
+    "correctAnswer": "Sêv",
+    "correctAnswerTr": "Elma",
+    "explanation": "Elma Orta Asya kökenli olup vitamin ve lif bakımından zengindir",
+    "explanationKu": "Sêv ji Asyaya Navîn belav bûye û bi vîtamîn û fîber dewlemend e; li Kurdistanê baxên wê navdar in.",
+    "explanationTr": "Elma Orta Asya kökenli olup vitamin ve lif bakımından zengindir",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ti%C5%9Ftonek",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  },
+  {
+    "id": "hat_0128",
+    "category": "Çand",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Dilê wê her tim lêdide, lê zindî nîne û demê nîşan dide; ew çi ye?",
+    "promptTr": "Kalbi hep atar ama canlı değildir ve zamanı gösterir; bu nedir?",
+    "answers": [
+      "Saet",
+      "Kursî",
+      "Mase",
+      "Derî"
+    ],
+    "answersTr": [
+      "Saat",
+      "Sandalye",
+      "Masa",
+      "Kapı"
+    ],
+    "correctAnswer": "Saet",
+    "correctAnswerTr": "Saat",
+    "explanation": "İlk saatler su ve güneşle çalışırdı",
+    "explanationKu": "Saetên pêşîn bi av û rojê dixebitîn; saeta mekanîkî di sedsala çardehan de li Ewropayê belav bû.",
+    "explanationTr": "İlk saatler su ve güneşle çalışırdı",
+    "metadata": {
+      "dialect": "kurmanci",
+      "sourceTitle": "ku.wikipedia.org",
+      "sourceReference": "https://ku.wikipedia.org/wiki/Ti%C5%9Ftonek",
+      "reviewStatus": "approved",
+      "reviewedBy": "Taslak: Muse Spark 1.3 (OpenCode, web kaynaklı); bağımsız olgu ve Kurmancî incelemesi: Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent); uyuşmazlıkta hakem: Gemini 3.8 Flash; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-07",
+      "lastContentCheckAt": "2026-10-07",
+      "qualityVersion": 2
+    }
+  }
+]
