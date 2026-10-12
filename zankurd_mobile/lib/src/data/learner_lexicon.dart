@@ -6816,7 +6816,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'nivistin',
       termKu: 'nivistin',
-      meaningTr: 'Yatmak',
+      meaningTr: 'uyumak',
       sourceId: 'questions',
       forms: ['nivistinê'],
     ),
@@ -6830,7 +6830,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'nine',
       termKu: 'nîne',
-      meaningTr: 'Yok / değil',
+      meaningTr: 'yok (yoktur)',
       sourceId: 'questions',
     ),
     LearnerLexiconEntry(

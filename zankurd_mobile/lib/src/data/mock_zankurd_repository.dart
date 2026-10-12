@@ -541,16 +541,20 @@ class MockZanKurdRepository implements ZanKurdRepository {
     final taggedIds = tagged.map((q) => q.id).toSet();
     // Birden çok bankalı ders (Selamlaşma ve Tanışma) için dolgu sırayla
     // karıştırılır; yoksa ilk bankanın beş sorusu ikincisini hiç göstermezdi.
+    // Dolgu havuzu turdan geniş tutulur: çakışan soru turdan çıkınca
+    // (`_replaceSameTarget`) yalnız [limit] dolgu aday olursa ilk dolgu da
+    // aynı selamı sorabiliyor ve `_dropSameTarget` onu geri ekliyordu.
+    final fillerLimit = limit * 4;
     final perBank = [
       for (final bankId in bankIds)
         LearningAssessmentBank.questionsFor(
           lessonId: bankId,
           category: category,
-          limit: limit,
+          limit: fillerLimit,
         ),
     ];
     final fillers = <QuizQuestion>[
-      for (var i = 0; i < limit; i++)
+      for (var i = 0; i < fillerLimit; i++)
         for (final bank in perBank)
           if (i < bank.length) bank[i],
     ].where((q) => !taggedIds.contains(q.id));
@@ -560,12 +564,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
   /// [chosen] içinde aynı cümle/terimi sordurandan yalnız ilkini tutar; atılan
   /// her soru [pool]'dan, kalanlarla hedefi çakışmayan ve seçilmemiş bir
   /// soruyla (önce aynı tür) AYNI SIRAYA konur. Çakışmayan aday yoksa soru
-  /// yerinde kalır: kural tercihtir, turu kısaltmaz.
+  /// turdan çıkar; çağıran eksiği dersin sözlük sorularıyla doldurur
+  /// (`_dropSameTarget` gerekirse geri ekler, tur kısalmaz).
   Future<List<QuizQuestion>> _replaceSameTarget(
     List<QuizQuestion> chosen,
     List<QuizQuestion> pool,
   ) async {
     final result = [...chosen];
+    final dropped = <int>{};
     for (var i = 0; i < result.length; i++) {
       final others = [
         for (var j = 0; j < result.length; j++)
@@ -586,26 +592,40 @@ class MockZanKurdRepository implements ZanKurdRepository {
                 !result.any((q) => QuestionSetPolicy.sharesTargetText(q, c)),
           )
           .toList(growable: false);
-      if (candidates.isEmpty) continue;
+      if (candidates.isEmpty) {
+        dropped.add(i);
+        continue;
+      }
       final sameType = candidates
           .where((c) => c.type == result[i].type)
           .toList(growable: false);
-      // Aynı türde aday yoksa yine aynı SINIFTAN (tanıma / üretim) seçilir:
-      // tanıma sorusunun yerine cümle kurma konunca tur tek tanıma sorusuyla
-      // açılıyordu (everyday_1, CI 2026-10-12). O sınıfta da aday yoksa
-      // soru yerinde kalır.
-      final production = QuestionSetPolicy.isProductionTask(result[i]);
-      final sameClass = candidates
-          .where((c) => QuestionSetPolicy.isProductionTask(c) == production)
+      // İlk iki sıra ısınmadır: oraya aynı türde aday yoksa yine bir TANIMA
+      // sorusu konur. Eskiden herhangi bir aday seçiliyordu; tanıma
+      // sorusunun yerine cümle kurma gelince tur tek tanıma sorusuyla
+      // açılıyordu (everyday_1, CI 2026-10-12). Isınmada tanıma adayı
+      // yoksa soru turdan çıkar; çağıran eksiği dersin sözlük tanıma
+      // sorularıyla doldurur. Sonraki sıralarda her aday olur.
+      final warmupSlot =
+          i < 2 && !QuestionSetPolicy.isProductionTask(result[i]);
+      final recognition = candidates
+          .where((c) => !QuestionSetPolicy.isProductionTask(c))
           .toList(growable: false);
-      if (sameType.isEmpty && sameClass.isEmpty) continue;
+      if (sameType.isEmpty && warmupSlot && recognition.isEmpty) {
+        dropped.add(i);
+        continue;
+      }
       final pick = await _selectFresh(
-        sameType.isEmpty ? sameClass : sameType,
+        sameType.isNotEmpty
+            ? sameType
+            : (warmupSlot ? recognition : candidates),
         1,
       );
       if (pick.isNotEmpty) result[i] = pick.first;
     }
-    return result;
+    return [
+      for (final (index, question) in result.indexed)
+        if (!dropped.contains(index)) question,
+    ];
   }
 
   /// Aynı cümle/terimi sordurandan yalnız ilkini tutar; tur eksik kalırsa
