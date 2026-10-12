@@ -1096,8 +1096,8 @@ class Tr {
       'tr': 'Sen de oyna, Play Store\'da "ZanKurd"',
     },
     K.shareStoryLine: {
-      'ku': 'Min di Kurmancîyê de {score} girt — tu jî biceribîne',
-      'tr': 'Kurmancî\'de {score} yaptım — sen de dene',
+      'ku': 'Min {score} girt — tu jî biceribîne',
+      'tr': '{score} yaptım — sen de dene',
     },
     K.shareStoryDuelWin: {
       'ku': 'Ez di pêşbirkê de bi ser ketim — tu jî dikarî?',
