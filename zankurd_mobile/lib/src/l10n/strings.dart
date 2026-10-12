@@ -1096,11 +1096,11 @@ class Tr {
       'tr': 'Sen de oyna, Play Store\'da "ZanKurd"',
     },
     K.shareStoryLine: {
-      'ku': 'Min bi Kurmancî {score} kir — tu jî biceribîne',
+      'ku': 'Min di Kurmancîyê de {score} girt — tu jî biceribîne',
       'tr': 'Kurmancî\'de {score} yaptım — sen de dene',
     },
     K.shareStoryDuelWin: {
-      'ku': 'Min dueloyê bi ser xist — tu jî dikarî?',
+      'ku': 'Ez di pêşbirkê de bi ser ketim — tu jî dikarî?',
       'tr': 'Düelloyu kazandım — sen de yapabilir misin?',
     },
     K.tekraraBasla: {'ku': 'Dest bi dubarekirinê bike', 'tr': 'Tekrara başla'},
