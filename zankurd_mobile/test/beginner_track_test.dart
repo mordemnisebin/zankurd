@@ -106,36 +106,42 @@ void main() {
     expect(orders.toSet().length, orders.length);
   });
 
+  // Seçim rastgele: tek tur, %1'lik bir sıra kusurunu (aynı hedefi soran
+  // tanıma sorusunun yerine cümle kurma konması) CI'da ara sıra kırmızı
+  // yapıyordu (2026-10-12). Her ders 25 taze depoda denenir.
   test('dersin kısa testi cümle kurma ve boşluk doldurma içerir', () async {
-    for (final id in [..._newLessons, 'everyday_1', 'food_1', 'grammar_1']) {
-      final questions = await repository.loadLearningQuizQuestions(
-        category: 'Ziman',
-        learningLessonId: id,
-        limit: 5,
-      );
-      expect(questions, hasLength(5), reason: id);
-      expect(
-        questions.any((q) => q.type == QuestionType.wordOrdering),
-        isTrue,
-        reason: '$id kısa testinde cümle kurma yok',
-      );
-      expect(
-        questions.any((q) => q.type == QuestionType.fillInBlank),
-        isTrue,
-        reason: '$id kısa testinde boşluk doldurma yok',
-      );
-      // Isınma: ilk iki soru tanıma sorusu.
-      expect(
-        questions
-            .take(2)
-            .every(
-              (q) =>
-                  q.type != QuestionType.fillInBlank &&
-                  q.type != QuestionType.wordOrdering,
-            ),
-        isTrue,
-        reason: id,
-      );
+    for (var round = 0; round < 25; round++) {
+      final repository = freshMockRepository();
+      for (final id in [..._newLessons, 'everyday_1', 'food_1', 'grammar_1']) {
+        final questions = await repository.loadLearningQuizQuestions(
+          category: 'Ziman',
+          learningLessonId: id,
+          limit: 5,
+        );
+        expect(questions, hasLength(5), reason: id);
+        expect(
+          questions.any((q) => q.type == QuestionType.wordOrdering),
+          isTrue,
+          reason: '$id kısa testinde cümle kurma yok',
+        );
+        expect(
+          questions.any((q) => q.type == QuestionType.fillInBlank),
+          isTrue,
+          reason: '$id kısa testinde boşluk doldurma yok',
+        );
+        // Isınma: ilk iki soru tanıma sorusu.
+        expect(
+          questions
+              .take(2)
+              .every(
+                (q) =>
+                    q.type != QuestionType.fillInBlank &&
+                    q.type != QuestionType.wordOrdering,
+              ),
+          isTrue,
+          reason: id,
+        );
+      }
     }
   });
 

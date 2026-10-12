@@ -533,7 +533,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Aynı cümle/terimi sordurmayan tur: tekrar eden soru, aynı türden (yoksa
     // herhangi) tekrarsız bir etiketli soruyla yerinde değiştirilir.
     tagged = await _replaceSameTarget(tagged, exact);
-    if (tagged.length >= limit) return tagged;
+    // Yerine konan soru (aynı türde aday yoksa) ya da eksik kalan ısınma
+    // havuzu üretim sorusunu ilk iki sıraya düşürebiliyordu; CI'da
+    // everyday_1 için ara sıra kırmızıydı (2026-10-12). Isınma kuralı en
+    // sonda bir kez daha uygulanır.
+    if (tagged.length >= limit) return _recognitionFirst(tagged);
     final taggedIds = tagged.map((q) => q.id).toSet();
     // Birden çok bankalı ders (Selamlaşma ve Tanışma) için dolgu sırayla
     // karıştırılır; yoksa ilk bankanın beş sorusu ikincisini hiç göstermezdi.
@@ -550,7 +554,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         for (final bank in perBank)
           if (i < bank.length) bank[i],
     ].where((q) => !taggedIds.contains(q.id));
-    return _dropSameTarget([...tagged, ...fillers], limit);
+    return _recognitionFirst(_dropSameTarget([...tagged, ...fillers], limit));
   }
 
   /// [chosen] içinde aynı cümle/terimi sordurandan yalnız ilkini tutar; atılan
@@ -586,8 +590,17 @@ class MockZanKurdRepository implements ZanKurdRepository {
       final sameType = candidates
           .where((c) => c.type == result[i].type)
           .toList(growable: false);
+      // Aynı türde aday yoksa yine aynı SINIFTAN (tanıma / üretim) seçilir:
+      // tanıma sorusunun yerine cümle kurma konunca tur tek tanıma sorusuyla
+      // açılıyordu (everyday_1, CI 2026-10-12). O sınıfta da aday yoksa
+      // soru yerinde kalır.
+      final production = QuestionSetPolicy.isProductionTask(result[i]);
+      final sameClass = candidates
+          .where((c) => QuestionSetPolicy.isProductionTask(c) == production)
+          .toList(growable: false);
+      if (sameType.isEmpty && sameClass.isEmpty) continue;
       final pick = await _selectFresh(
-        sameType.isEmpty ? candidates : sameType,
+        sameType.isEmpty ? sameClass : sameType,
         1,
       );
       if (pick.isNotEmpty) result[i] = pick.first;
