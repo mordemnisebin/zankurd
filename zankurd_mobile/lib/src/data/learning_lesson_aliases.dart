@@ -35,7 +35,7 @@ class LearningLessonAliases {
 
   /// Sunucu slug'ı -> yerel ölçme bankası ders kimlikleri.
   ///
-  /// Kaynak: üretim `lessons` tablosu (2026-10-02, 15 satır; 2026-10-06'dan sonra +4 başlangıç dersi).
+  /// Kaynak: üretim `lessons` tablosu (2026-10-02, 15 satır; 2026-10-06'dan sonra +4 başlangıç dersi; 2026-10-08'den sonra +7 daha).
   static const Map<String, List<String>> bySlug = {
     'silav-u-nasin': ['everyday_1', 'everyday_2'],
     'cinavk': ['grammar_1'],
@@ -63,6 +63,16 @@ class LearningLessonAliases {
     'silav-u-rezdari': ['greetings_2'],
     'xwe-nasandin': ['intro_1'],
     'malbat': ['family_1'],
+    // 2026-10-08: başlangıç yolu II. Sunucu dersleri
+    // `supabase/2026-10-08_dersler2_lessons.sql` ile açılır; yerel katalogda
+    // aynı dersler `id == slug` olarak durur (`colors_1`...).
+    'reng': ['colors_1'],
+    'las': ['body_1'],
+    'mal': ['home_1'],
+    'cil': ['clothes_1'],
+    'hewa': ['weather_1'],
+    'pirs': ['questions_1'],
+    'leker': ['verbs_1'],
   };
 
   /// Yerel bankada konusunu ölçen soru bulunmayan sunucu dersleri.

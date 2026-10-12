@@ -83,7 +83,9 @@ void main() {
       // hejmar/lekera-bun/dengbeji/demsal için etiketli sorular.
       // 3201 -> 3353 (+152): 2026-10-06 `baslangic_2026_10_06`, başlangıç
       // yolu (32 çoktan seçmeli + 69 boşluk doldurma + 51 cümle kurma).
-      3353,
+      // 3353 -> 3613 (+260): 2026-10-08 `dersler2_2026_10_08` (132) ve
+      // `hat_2026_10_07` (128).
+      3613,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -164,7 +166,10 @@ void main() {
       // ve oynanabilir (dört sunucu dersinin kısa testi).
       // 2732 -> 2884 (+152): 2026-10-06 `baslangic_2026_10_06`, hepsi
       // `approved` ve oynanabilir (bkz. `beginner_track_test.dart`).
-      2884,
+      // 2884 -> 3143 (+259): 2026-10-08 +260 yeni soru (`dersler2_2026_10_08`
+      // 132, `hat_2026_10_07` 128), hepsi `approved`; -1: `ds_cand_0285`
+      // emekliye ayrıldı.
+      3143,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -239,7 +244,8 @@ void main() {
       'retired=Muzîk': 27,
       // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
       'retired=Ziman': 37,
-      'retired=Çand': 41,
+      // 41 -> 42: 2026-10-08 `ds_cand_0285` (cevap soru metninde) emekliye ayrıldı.
+      'retired=Çand': 42,
       // 2026-09-30 altıncı dalga: Teknolojî'den iki modelce onaylanan 3 soru.
       'retired=Teknolojî': 3,
       // 2026-09-30 dördüncü dalga: tartışmalı siyasi görüşü doğru cevap diye

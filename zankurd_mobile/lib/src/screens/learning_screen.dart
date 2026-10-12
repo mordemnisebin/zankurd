@@ -794,6 +794,14 @@ const Map<String, IconData> _lessonIconNameMap = {
   'family_restroom': AppIcons.peopleRoof,
   'badge': AppIcons.user,
   'forum': AppIcons.comment,
+  // 2026-10-08 başlangıç yolu II: renkler, vücut, ev, giysiler, hava, soru, fiil.
+  'palette': AppIcons.palette,
+  'accessibility_new': AppIcons.personCircleCheck,
+  'home': AppIcons.house,
+  'checkroom': AppIcons.shirt,
+  'cloud': AppIcons.cloud,
+  'help': AppIcons.question,
+  'directions_run': AppIcons.bolt,
 };
 
 /// Ders KONUSUNDAN (`Lesson.category`) ikon — sunucu/mock her ikisinde de

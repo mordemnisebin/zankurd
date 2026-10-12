@@ -141,4 +141,19 @@ const questionBankAssets = <String>[
   // Kurmancî Gemini 3.1 Pro ve Grok 4.7 okumasından geçti. Bekçi:
   // `test/beginner_track_test.dart`.
   'assets/data/baslangic_2026_10_06_questions.json',
+  // 2026-10-08: BAŞLANGIÇ YOLU II. Yedi yeni ders (renkler, vücut, ev,
+  // giysiler, hava durumu, soru sözcükleri, temel fiiller) için derse etiketli
+  // 55 çoktan seçmeli, 42 boşluk doldurma ve 35 cümle kurma sorusu
+  // (`learningLessonId`). Sözcükler dersin kendi slaytlarından; Kurmancî
+  // Gemini 3.1 Pro ve Grok 4.7 okumasından geçti. Bekçi:
+  // `test/beginner_track_2_test.dart`.
+  'assets/data/dersler2_2026_10_08_questions.json',
+  // 2026-10-07: HAT — alt konu doldurma hattı. Gizli ya da zayıf kalan sekiz
+  // alt konuya (Edebiyat › Roman, Klasîk; Sînema › Yılmaz Güney, Belgefîlm û
+  // Festîval; Cografya › Sînor û Awa; Dîrok › Dîroka Kevn; Siyaset ›
+  // Tevgerên Civakî; Çand › Tiştonek) 128 kaynaklı soru. Her soru açılmış bir
+  // web kaynağından; Muse Spark 1.3 taslağı, Gemini 3.1 Pro ve Grok 4.7
+  // incelemesi, uyuşmazlıkta Gemini 3.8 Flash. Sunucu eşi:
+  // `supabase/2026-10-08_hat_sync.sql`.
+  'assets/data/hat_2026_10_07_questions.json',
 ];

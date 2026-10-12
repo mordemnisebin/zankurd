@@ -52,6 +52,14 @@ const _productionLessons = <String, String>{
   'silav-u-rezdari': 'everyday',
   'xwe-nasandin': 'everyday',
   'malbat': 'everyday',
+  // 2026-10-08: başlangıç yolu II (supabase/2026-10-08_dersler2_lessons.sql).
+  'reng': 'everyday',
+  'las': 'everyday',
+  'mal': 'everyday',
+  'cil': 'everyday',
+  'hewa': 'everyday',
+  'pirs': 'everyday',
+  'leker': 'everyday',
 };
 
 void main() {

@@ -78,6 +78,8 @@ void main() {
       'bosluk': fromJson('assets/data/bosluk_2026_10_02_questions.json'),
       // 2026-10-02: son dört sunucu dersinin etiketli soruları (32).
       'ders2': fromJson('assets/data/ders_2026_10_02_questions.json'),
+      // 2026-10-08: alt konu hattı (128 kaynaklı soru) kalite bekçilerine bağlı.
+      'hat': fromJson('assets/data/hat_2026_10_07_questions.json'),
       'curated (Dart)': curatedQuestionBank,
     };
     optionBanks = {
@@ -99,7 +101,7 @@ void main() {
   });
 
   test(
-    'runtime yükleyici aynı sıra ve kapsamla on sekiz kaynağı birleştiriyor',
+    'runtime yükleyici aynı sıra ve kapsamla yirmi kaynağı birleştiriyor',
     () {
       final expected = [
         ...curatedQuestionBank,
@@ -140,6 +142,9 @@ void main() {
         ...fromJson('assets/data/ders_2026_10_02_questions.json'),
         // 2026-10-06: başlangıç yolu (152).
         ...fromJson('assets/data/baslangic_2026_10_06_questions.json'),
+        // 2026-10-08: başlangıç yolu II (132) ve alt konu hattı (128).
+        ...fromJson('assets/data/dersler2_2026_10_08_questions.json'),
+        ...fromJson('assets/data/hat_2026_10_07_questions.json'),
       ];
 
       final runtime = QuestionBankLoader.instance.allQuestions;

@@ -83,7 +83,9 @@ void main() {
       // dersinin (hejmar, lekera-bun, dengbeji, demsal) etiketli soruları.
       // 3201 -> 3353 (+152): 2026-10-06 `baslangic_2026_10_06`, başlangıç
       // yolu (32 çoktan seçmeli, 69 boşluk doldurma, 51 cümle kurma).
-      3353,
+      // 3353 -> 3613 (+260): 2026-10-08 `dersler2_2026_10_08` (132: başlangıç
+      // yolu II) ve `hat_2026_10_07` (128: alt konu hattı).
+      3613,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

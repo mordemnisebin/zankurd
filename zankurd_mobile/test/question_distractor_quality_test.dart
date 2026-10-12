@@ -198,6 +198,9 @@ void main() {
     final offenders = <String>[];
     for (final q in everyBank) {
       if (q.type == QuestionType.trueFalse || q.answers.length < 4) continue;
+      // Cümle kurmada `answers` çeldirici değil, cümlenin sözcükleridir
+      // (`salî` ↔ `tu çend salî yî`; 2026-10-08).
+      if (q.type == QuestionType.wordOrdering) continue;
       final correctIsYear = _isDateExpression(q.correctAnswer);
       for (final answer in q.answers) {
         if (answer == q.correctAnswer) continue;

@@ -1,0 +1,4454 @@
+[
+  {
+    "id": "dersler2_2026_10_08_0001",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kirasê min wek berfê ye. Ew çi reng e?",
+    "promptTr": "Gömleğim kar gibidir. O ne renktir?",
+    "answers": [
+      "sor",
+      "spî",
+      "kesk",
+      "zer"
+    ],
+    "answersTr": [
+      "kırmızı",
+      "beyaz",
+      "yeşil",
+      "sarı"
+    ],
+    "correctAnswer": "spî",
+    "correctAnswerTr": "beyaz",
+    "explanation": "Kar beyazdır. Bu yüzden gömlek beyazdır.",
+    "explanationKu": "Berf spî ye. Lewma kiras spî ye.",
+    "explanationTr": "Kar beyazdır. Bu yüzden gömlek beyazdır.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0002",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Giya di biharê de çawa ye?",
+    "promptTr": "İlkbaharda ot nasıldır?",
+    "answers": [
+      "reş",
+      "gewr",
+      "kesk",
+      "mor"
+    ],
+    "answersTr": [
+      "siyah",
+      "gri",
+      "yeşil",
+      "mor"
+    ],
+    "correctAnswer": "kesk",
+    "correctAnswerTr": "yeşil",
+    "explanation": "İlkbaharda ot yeşildir.",
+    "explanationKu": "Giya di biharê de kesk e.",
+    "explanationTr": "İlkbaharda ot yeşildir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0003",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Av û asîman bi gelemperî çawa ne?",
+    "promptTr": "Su ve gökyüzü genelde nasıldır?",
+    "answers": [
+      "sor",
+      "şîn",
+      "zer",
+      "pembe"
+    ],
+    "answersTr": [
+      "kırmızı",
+      "mavi",
+      "sarı",
+      "pembe"
+    ],
+    "correctAnswer": "şîn",
+    "correctAnswerTr": "mavi",
+    "explanation": "Su ve gökyüzü mavidir.",
+    "explanationKu": "Av û asîman şîn in.",
+    "explanationTr": "Su ve gökyüzü mavidir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0004",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Xwîn çi reng e?",
+    "promptTr": "Kan ne renktir?",
+    "answers": [
+      "sor",
+      "spî",
+      "gewr",
+      "şîn"
+    ],
+    "answersTr": [
+      "kırmızı",
+      "beyaz",
+      "gri",
+      "mavi"
+    ],
+    "correctAnswer": "sor",
+    "correctAnswerTr": "kırmızı",
+    "explanation": "Kan kırmızıdır.",
+    "explanationKu": "Xwîn sor e.",
+    "explanationTr": "Kan kırmızıdır.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0005",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Lîmon bi gelemperî çi reng e?",
+    "promptTr": "Limon genelde ne renktir?",
+    "answers": [
+      "zer",
+      "reş",
+      "mor",
+      "gewr"
+    ],
+    "answersTr": [
+      "sarı",
+      "siyah",
+      "mor",
+      "gri"
+    ],
+    "correctAnswer": "zer",
+    "correctAnswerTr": "sarı",
+    "explanation": "Limon sarıdır.",
+    "explanationKu": "Lîmon zer e.",
+    "explanationTr": "Limon sarıdır.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0006",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Şeva bê heyv çi reng e?",
+    "promptTr": "Aysız gece ne renktir?",
+    "answers": [
+      "reş",
+      "spî",
+      "pembe",
+      "zer"
+    ],
+    "answersTr": [
+      "siyah",
+      "beyaz",
+      "pembe",
+      "sarı"
+    ],
+    "correctAnswer": "reş",
+    "correctAnswerTr": "siyah",
+    "explanation": "Gece karanlık ve siyahtır.",
+    "explanationKu": "Şev tarî û reş e.",
+    "explanationTr": "Gece karanlık ve siyahtır.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0007",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Gulên keçikên biçûk gelek caran çi reng in?",
+    "promptTr": "Küçük kızların gülleri çoğu zaman ne renktir?",
+    "answers": [
+      "pembe",
+      "kesk",
+      "gewr",
+      "qehweyî"
+    ],
+    "answersTr": [
+      "pembe",
+      "yeşil",
+      "gri",
+      "kahverengi"
+    ],
+    "correctAnswer": "pembe",
+    "correctAnswerTr": "pembe",
+    "explanation": "O güller pembedir.",
+    "explanationKu": "Ew gul pembe ne.",
+    "explanationTr": "O güller pembedir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0008",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ax û qehwe çi reng in?",
+    "promptTr": "Toprak ve kahve ne renktir?",
+    "answers": [
+      "qehweyî",
+      "şîn",
+      "sor",
+      "zer"
+    ],
+    "answersTr": [
+      "kahverengi",
+      "mavi",
+      "kırmızı",
+      "sarı"
+    ],
+    "correctAnswer": "qehweyî",
+    "correctAnswerTr": "kahverengi",
+    "explanation": "Toprak ve kahve kahverengidir.",
+    "explanationKu": "Ax û qehwe qehweyî ne.",
+    "explanationTr": "Toprak ve kahve kahverengidir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0009",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Sêv ___ e.\" (\"Elma kırmızıdır.\")",
+    "promptTr": "Cümleyi tamamla: \"Sêv ___ e.\" (\"Elma kırmızıdır.\")",
+    "answers": [
+      "sor"
+    ],
+    "answersTr": [
+      "sor"
+    ],
+    "correctAnswer": "sor",
+    "correctAnswerTr": "sor",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Sêv sor e.\" (Elma kırmızıdır.)",
+    "explanationKu": "Hevoka rast ev e: \"Sêv sor e.\"",
+    "explanationTr": "Doğru cümle: \"Sêv sor e.\" (Elma kırmızıdır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0010",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Av ___ e.\" (\"Su mavidir.\")",
+    "promptTr": "Cümleyi tamamla: \"Av ___ e.\" (\"Su mavidir.\")",
+    "answers": [
+      "şîn"
+    ],
+    "answersTr": [
+      "şîn"
+    ],
+    "correctAnswer": "şîn",
+    "correctAnswerTr": "şîn",
+    "acceptedAnswers": [
+      "şin"
+    ],
+    "acceptedAnswersTr": [
+      "şin"
+    ],
+    "explanation": "Doğru cümle: \"Av şîn e.\" (Su mavidir.)",
+    "explanationKu": "Hevoka rast ev e: \"Av şîn e.\"",
+    "explanationTr": "Doğru cümle: \"Av şîn e.\" (Su mavidir.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0011",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Giya ___ e.\" (\"Ot yeşildir.\")",
+    "promptTr": "Cümleyi tamamla: \"Giya ___ e.\" (\"Ot yeşildir.\")",
+    "answers": [
+      "kesk"
+    ],
+    "answersTr": [
+      "kesk"
+    ],
+    "correctAnswer": "kesk",
+    "correctAnswerTr": "kesk",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Giya kesk e.\" (Ot yeşildir.)",
+    "explanationKu": "Hevoka rast ev e: \"Giya kesk e.\"",
+    "explanationTr": "Doğru cümle: \"Giya kesk e.\" (Ot yeşildir.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0012",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Nan ___ ye.\" (\"Ekmek beyazdır.\")",
+    "promptTr": "Cümleyi tamamla: \"Nan ___ ye.\" (\"Ekmek beyazdır.\")",
+    "answers": [
+      "spî"
+    ],
+    "answersTr": [
+      "spî"
+    ],
+    "correctAnswer": "spî",
+    "correctAnswerTr": "spî",
+    "acceptedAnswers": [
+      "spi"
+    ],
+    "acceptedAnswersTr": [
+      "spi"
+    ],
+    "explanation": "Doğru cümle: \"Nan spî ye.\" (Ekmek beyazdır.)",
+    "explanationKu": "Hevoka rast ev e: \"Nan spî ye.\"",
+    "explanationTr": "Doğru cümle: \"Nan spî ye.\" (Ekmek beyazdır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0013",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Pisîk ___ e.\" (\"Kedi siyahtır.\")",
+    "promptTr": "Cümleyi tamamla: \"Pisîk ___ e.\" (\"Kedi siyahtır.\")",
+    "answers": [
+      "reş"
+    ],
+    "answersTr": [
+      "reş"
+    ],
+    "correctAnswer": "reş",
+    "correctAnswerTr": "reş",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Pisîk reş e.\" (Kedi siyahtır.)",
+    "explanationKu": "Hevoka rast ev e: \"Pisîk reş e.\"",
+    "explanationTr": "Doğru cümle: \"Pisîk reş e.\" (Kedi siyahtır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0014",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Lîmon ___ e.\" (\"Limon sarıdır.\")",
+    "promptTr": "Cümleyi tamamla: \"Lîmon ___ e.\" (\"Limon sarıdır.\")",
+    "answers": [
+      "zer"
+    ],
+    "answersTr": [
+      "zer"
+    ],
+    "correctAnswer": "zer",
+    "correctAnswerTr": "zer",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Lîmon zer e.\" (Limon sarıdır.)",
+    "explanationKu": "Hevoka rast ev e: \"Lîmon zer e.\"",
+    "explanationTr": "Doğru cümle: \"Lîmon zer e.\" (Limon sarıdır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0015",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Elma kırmızıdır.\"",
+    "promptTr": "Cümleyi sırala: \"Elma kırmızıdır.\"",
+    "answers": [
+      "sêv",
+      "sor",
+      "e"
+    ],
+    "correctAnswer": "sêv sor e",
+    "explanation": "Doğru sıra: \"Sêv sor e.\" (Elma kırmızıdır.)",
+    "explanationKu": "Rêza rast: \"Sêv sor e.\"",
+    "explanationTr": "Doğru sıra: \"Sêv sor e.\" (Elma kırmızıdır.)",
+    "hintKu": "Bi peyva \"sêv\" dest pê bike.",
+    "hintTr": "\"sêv\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0016",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Su mavidir.\"",
+    "promptTr": "Cümleyi sırala: \"Su mavidir.\"",
+    "answers": [
+      "av",
+      "şîn",
+      "e"
+    ],
+    "correctAnswer": "av şîn e",
+    "explanation": "Doğru sıra: \"Av şîn e.\" (Su mavidir.)",
+    "explanationKu": "Rêza rast: \"Av şîn e.\"",
+    "explanationTr": "Doğru sıra: \"Av şîn e.\" (Su mavidir.)",
+    "hintKu": "Bi peyva \"av\" dest pê bike.",
+    "hintTr": "\"av\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0017",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Ot yeşildir.\"",
+    "promptTr": "Cümleyi sırala: \"Ot yeşildir.\"",
+    "answers": [
+      "giya",
+      "kesk",
+      "e"
+    ],
+    "correctAnswer": "giya kesk e",
+    "explanation": "Doğru sıra: \"Giya kesk e.\" (Ot yeşildir.)",
+    "explanationKu": "Rêza rast: \"Giya kesk e.\"",
+    "explanationTr": "Doğru sıra: \"Giya kesk e.\" (Ot yeşildir.)",
+    "hintKu": "Bi peyva \"giya\" dest pê bike.",
+    "hintTr": "\"giya\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0018",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Ekmeğim beyazdır.\"",
+    "promptTr": "Cümleyi sırala: \"Ekmeğim beyazdır.\"",
+    "answers": [
+      "nanê",
+      "min",
+      "spî",
+      "ye"
+    ],
+    "correctAnswer": "nanê min spî ye",
+    "explanation": "Doğru sıra: \"Nanê min spî ye.\" (Ekmeğim beyazdır.)",
+    "explanationKu": "Rêza rast: \"Nanê min spî ye.\"",
+    "explanationTr": "Doğru sıra: \"Nanê min spî ye.\" (Ekmeğim beyazdır.)",
+    "hintKu": "Bi peyva \"nanê\" dest pê bike.",
+    "hintTr": "\"nanê\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0019",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Çiçek sarıdır.\"",
+    "promptTr": "Cümleyi sırala: \"Çiçek sarıdır.\"",
+    "answers": [
+      "kulîlk",
+      "zer",
+      "e"
+    ],
+    "correctAnswer": "kulîlk zer e",
+    "explanation": "Doğru sıra: \"Kulîlk zer e.\" (Çiçek sarıdır.)",
+    "explanationKu": "Rêza rast: \"Kulîlk zer e.\"",
+    "explanationTr": "Doğru sıra: \"Kulîlk zer e.\" (Çiçek sarıdır.)",
+    "hintKu": "Bi peyva \"kulîlk\" dest pê bike.",
+    "hintTr": "\"kulîlk\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: colors_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi colors_1 (yerel slaytlar; sunucu dersi reng, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "colors_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0020",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Mirov pê dibîne. Ew kîjan e?",
+    "promptTr": "İnsan onunla görür. O hangisidir?",
+    "answers": [
+      "çav",
+      "guh",
+      "poz",
+      "dest"
+    ],
+    "answersTr": [
+      "göz",
+      "kulak",
+      "burun",
+      "el"
+    ],
+    "correctAnswer": "çav",
+    "correctAnswerTr": "göz",
+    "explanation": "İnsan gözleriyle görür.",
+    "explanationKu": "Mirov bi çavan dibîne.",
+    "explanationTr": "İnsan gözleriyle görür.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0021",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Mirov pê dibihîze. Ew kîjan e?",
+    "promptTr": "İnsan onunla işitir. O hangisidir?",
+    "answers": [
+      "poz",
+      "guh",
+      "dev",
+      "ling"
+    ],
+    "answersTr": [
+      "burun",
+      "kulak",
+      "ağız",
+      "bacak"
+    ],
+    "correctAnswer": "guh",
+    "correctAnswerTr": "kulak",
+    "explanation": "İnsan kulaklarıyla işitir.",
+    "explanationKu": "Mirov bi guhan dibihîze.",
+    "explanationTr": "İnsan kulaklarıyla işitir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0022",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Mirov pê bêhnê distîne. Ew kîjan e?",
+    "promptTr": "İnsan onunla koku alır. O hangisidir?",
+    "answers": [
+      "çav",
+      "dest",
+      "poz",
+      "tilî"
+    ],
+    "answersTr": [
+      "göz",
+      "el",
+      "burun",
+      "parmak"
+    ],
+    "correctAnswer": "poz",
+    "correctAnswerTr": "burun",
+    "explanation": "İnsan burnuyla koku alır.",
+    "explanationKu": "Mirov bi poz bêhnê distîne.",
+    "explanationTr": "İnsan burnuyla koku alır.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0023",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Mirov pê dixwe û vedixwe. Ew kîjan e?",
+    "promptTr": "İnsan onunla yer ve içer. O hangisidir?",
+    "answers": [
+      "dev",
+      "guh",
+      "mil",
+      "ling"
+    ],
+    "answersTr": [
+      "ağız",
+      "kulak",
+      "omuz",
+      "bacak"
+    ],
+    "correctAnswer": "dev",
+    "correctAnswerTr": "ağız",
+    "explanation": "İnsan ağzıyla yer ve içer.",
+    "explanationKu": "Mirov bi dev dixwe û vedixwe.",
+    "explanationTr": "İnsan ağzıyla yer ve içer.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0024",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Mirov pê digire û dinivîse. Ew kîjan e?",
+    "promptTr": "İnsan onunla tutar ve yazar. O hangisidir?",
+    "answers": [
+      "ling",
+      "çav",
+      "dest",
+      "poz"
+    ],
+    "answersTr": [
+      "bacak",
+      "göz",
+      "el",
+      "burun"
+    ],
+    "correctAnswer": "dest",
+    "correctAnswerTr": "el",
+    "explanation": "İnsan elleriyle tutar ve yazar.",
+    "explanationKu": "Mirov bi destan digire û dinivîse.",
+    "explanationTr": "İnsan elleriyle tutar ve yazar.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0025",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Mirov pê dimeşe û direve. Ew kîjan e?",
+    "promptTr": "İnsan onunla yürür ve koşar. O hangisidir?",
+    "answers": [
+      "dev",
+      "dest",
+      "guh",
+      "ling"
+    ],
+    "answersTr": [
+      "ağız",
+      "el",
+      "kulak",
+      "bacak"
+    ],
+    "correctAnswer": "ling",
+    "correctAnswerTr": "bacak",
+    "explanation": "İnsan bacaklarıyla yürür ve koşar.",
+    "explanationKu": "Mirov bi lingan dimeşe û direve.",
+    "explanationTr": "İnsan bacaklarıyla yürür ve koşar.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0026",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ew li ser serê mirov e. Berber wî kurt dike. Ew çi ye?",
+    "promptTr": "O insanın başının üstündedir. Berber onu kısaltır. O nedir?",
+    "answers": [
+      "diran",
+      "tilî",
+      "por",
+      "mil"
+    ],
+    "answersTr": [
+      "diş",
+      "parmak",
+      "saç",
+      "omuz"
+    ],
+    "correctAnswer": "por",
+    "correctAnswerTr": "saç",
+    "explanation": "Saç insanın başının üstündedir.",
+    "explanationKu": "Por li ser serê mirov e.",
+    "explanationTr": "Saç insanın başının üstündedir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0027",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ew di dev de ye. Mirov pê nan diqetîne. Ew çi ye?",
+    "promptTr": "O ağzın içindedir. İnsan onunla ekmeği koparır (ısırır). O nedir?",
+    "answers": [
+      "çav",
+      "guh",
+      "dest",
+      "diran"
+    ],
+    "answersTr": [
+      "göz",
+      "kulak",
+      "el",
+      "diş"
+    ],
+    "correctAnswer": "diran",
+    "correctAnswerTr": "diş",
+    "explanation": "Diş ağzın içindedir.",
+    "explanationKu": "Diran di dev de ye.",
+    "explanationTr": "Diş ağzın içindedir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0028",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"___ê min diêşe.\" (\"Başım ağrıyor.\")",
+    "promptTr": "Cümleyi tamamla: \"___ê min diêşe.\" (\"Başım ağrıyor.\")",
+    "answers": [
+      "Ser"
+    ],
+    "answersTr": [
+      "Ser"
+    ],
+    "correctAnswer": "Ser",
+    "correctAnswerTr": "Ser",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Serê min diêşe.\" (Başım ağrıyor.)",
+    "explanationKu": "Hevoka rast ev e: \"Serê min diêşe.\"",
+    "explanationTr": "Doğru cümle: \"Serê min diêşe.\" (Başım ağrıyor.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0029",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"___ min reş in.\" (\"Gözlerim siyahtır.\")",
+    "promptTr": "Cümleyi tamamla: \"___ min reş in.\" (\"Gözlerim siyahtır.\")",
+    "answers": [
+      "Çavên"
+    ],
+    "answersTr": [
+      "Çavên"
+    ],
+    "correctAnswer": "Çavên",
+    "correctAnswerTr": "Çavên",
+    "acceptedAnswers": [
+      "Çaven"
+    ],
+    "acceptedAnswersTr": [
+      "Çaven"
+    ],
+    "explanation": "Doğru cümle: \"Çavên min reş in.\" (Gözlerim siyahtır.)",
+    "explanationKu": "Hevoka rast ev e: \"Çavên min reş in.\"",
+    "explanationTr": "Doğru cümle: \"Çavên min reş in.\" (Gözlerim siyahtır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0030",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"___ min paqij e.\" (\"Elim temizdir.\")",
+    "promptTr": "Cümleyi tamamla: \"___ min paqij e.\" (\"Elim temizdir.\")",
+    "answers": [
+      "Destê"
+    ],
+    "answersTr": [
+      "Destê"
+    ],
+    "correctAnswer": "Destê",
+    "correctAnswerTr": "Destê",
+    "acceptedAnswers": [
+      "Deste"
+    ],
+    "acceptedAnswersTr": [
+      "Deste"
+    ],
+    "explanation": "Doğru cümle: \"Destê min paqij e.\" (Elim temizdir.)",
+    "explanationKu": "Hevoka rast ev e: \"Destê min paqij e.\"",
+    "explanationTr": "Doğru cümle: \"Destê min paqij e.\" (Elim temizdir.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0031",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"___ min spî ne.\" (\"Dişlerim beyazdır.\")",
+    "promptTr": "Cümleyi tamamla: \"___ min spî ne.\" (\"Dişlerim beyazdır.\")",
+    "answers": [
+      "Diranên"
+    ],
+    "answersTr": [
+      "Diranên"
+    ],
+    "correctAnswer": "Diranên",
+    "correctAnswerTr": "Diranên",
+    "acceptedAnswers": [
+      "Diranen"
+    ],
+    "acceptedAnswersTr": [
+      "Diranen"
+    ],
+    "explanation": "Doğru cümle: \"Diranên min spî ne.\" (Dişlerim beyazdır.)",
+    "explanationKu": "Hevoka rast ev e: \"Diranên min spî ne.\"",
+    "explanationTr": "Doğru cümle: \"Diranên min spî ne.\" (Dişlerim beyazdır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0032",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"___ min diêşe.\" (\"Bacağım, ayağım ağrıyor.\")",
+    "promptTr": "Cümleyi tamamla: \"___ min diêşe.\" (\"Bacağım, ayağım ağrıyor.\")",
+    "answers": [
+      "Lingê"
+    ],
+    "answersTr": [
+      "Lingê"
+    ],
+    "correctAnswer": "Lingê",
+    "correctAnswerTr": "Lingê",
+    "acceptedAnswers": [
+      "Linge"
+    ],
+    "acceptedAnswersTr": [
+      "Linge"
+    ],
+    "explanation": "Doğru cümle: \"Lingê min diêşe.\" (Bacağım, ayağım ağrıyor.)",
+    "explanationKu": "Hevoka rast ev e: \"Lingê min diêşe.\"",
+    "explanationTr": "Doğru cümle: \"Lingê min diêşe.\" (Bacağım, ayağım ağrıyor.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0033",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ez ___ dişom.\" (\"Ellerimi yıkıyorum.\")",
+    "promptTr": "Cümleyi tamamla: \"Ez ___ dişom.\" (\"Ellerimi yıkıyorum.\")",
+    "answers": [
+      "destên xwe"
+    ],
+    "answersTr": [
+      "destên xwe"
+    ],
+    "correctAnswer": "destên xwe",
+    "correctAnswerTr": "destên xwe",
+    "acceptedAnswers": [
+      "desten xwe"
+    ],
+    "acceptedAnswersTr": [
+      "desten xwe"
+    ],
+    "explanation": "Doğru cümle: \"Ez destên xwe dişom.\" (Ellerimi yıkıyorum.)",
+    "explanationKu": "Hevoka rast ev e: \"Ez destên xwe dişom.\"",
+    "explanationTr": "Doğru cümle: \"Ez destên xwe dişom.\" (Ellerimi yıkıyorum.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0034",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Ellerimi yıkıyorum.\"",
+    "promptTr": "Cümleyi sırala: \"Ellerimi yıkıyorum.\"",
+    "answers": [
+      "ez",
+      "destên",
+      "xwe",
+      "dişom"
+    ],
+    "correctAnswer": "ez destên xwe dişom",
+    "explanation": "Doğru sıra: \"Ez destên xwe dişom.\" (Ellerimi yıkıyorum.)",
+    "explanationKu": "Rêza rast: \"Ez destên xwe dişom.\"",
+    "explanationTr": "Doğru sıra: \"Ez destên xwe dişom.\" (Ellerimi yıkıyorum.)",
+    "hintKu": "Bi peyva \"ez\" dest pê bike.",
+    "hintTr": "\"ez\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0035",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Gözlerim siyahtır.\"",
+    "promptTr": "Cümleyi sırala: \"Gözlerim siyahtır.\"",
+    "answers": [
+      "çavên",
+      "min",
+      "reş",
+      "in"
+    ],
+    "correctAnswer": "çavên min reş in",
+    "explanation": "Doğru sıra: \"Çavên min reş in.\" (Gözlerim siyahtır.)",
+    "explanationKu": "Rêza rast: \"Çavên min reş in.\"",
+    "explanationTr": "Doğru sıra: \"Çavên min reş in.\" (Gözlerim siyahtır.)",
+    "hintKu": "Bi peyva \"çavên\" dest pê bike.",
+    "hintTr": "\"çavên\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0036",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Başım ağrıyor.\"",
+    "promptTr": "Cümleyi sırala: \"Başım ağrıyor.\"",
+    "answers": [
+      "serê",
+      "min",
+      "diêşe"
+    ],
+    "correctAnswer": "serê min diêşe",
+    "explanation": "Doğru sıra: \"Serê min diêşe.\" (Başım ağrıyor.)",
+    "explanationKu": "Rêza rast: \"Serê min diêşe.\"",
+    "explanationTr": "Doğru sıra: \"Serê min diêşe.\" (Başım ağrıyor.)",
+    "hintKu": "Bi peyva \"serê\" dest pê bike.",
+    "hintTr": "\"serê\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0037",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"O bacaklarını, ayaklarını yıkıyor.\"",
+    "promptTr": "Cümleyi sırala: \"O bacaklarını, ayaklarını yıkıyor.\"",
+    "answers": [
+      "ew",
+      "lingên",
+      "xwe",
+      "dişo"
+    ],
+    "correctAnswer": "ew lingên xwe dişo",
+    "explanation": "Doğru sıra: \"Ew lingên xwe dişo.\" (O bacaklarını, ayaklarını yıkıyor.)",
+    "explanationKu": "Rêza rast: \"Ew lingên xwe dişo.\"",
+    "explanationTr": "Doğru sıra: \"Ew lingên xwe dişo.\" (O bacaklarını, ayaklarını yıkıyor.)",
+    "hintKu": "Bi peyva \"ew\" dest pê bike.",
+    "hintTr": "\"ew\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0038",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Dişlerim beyazdır.\"",
+    "promptTr": "Cümleyi sırala: \"Dişlerim beyazdır.\"",
+    "answers": [
+      "diranên",
+      "min",
+      "spî",
+      "ne"
+    ],
+    "correctAnswer": "diranên min spî ne",
+    "explanation": "Doğru sıra: \"Diranên min spî ne.\" (Dişlerim beyazdır.)",
+    "explanationKu": "Rêza rast: \"Diranên min spî ne.\"",
+    "explanationTr": "Doğru sıra: \"Diranên min spî ne.\" (Dişlerim beyazdır.)",
+    "hintKu": "Bi peyva \"diranên\" dest pê bike.",
+    "hintTr": "\"diranên\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: body_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi body_1 (yerel slaytlar; sunucu dersi las, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "body_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0039",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Bi kurdî \"gömlek\" çi ye?",
+    "promptTr": "Gömlek Kürtçede nedir?",
+    "answers": [
+      "kiras",
+      "pantor",
+      "pêlav",
+      "şapke"
+    ],
+    "answersTr": [
+      "kiras",
+      "pantor",
+      "pêlav",
+      "şapke"
+    ],
+    "correctAnswer": "kiras",
+    "correctAnswerTr": "kiras",
+    "explanation": "kiras gömlek demektir.",
+    "explanationKu": "kiras tê wateya gömlekê.",
+    "explanationTr": "kiras gömlek demektir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0040",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Bi kurdî \"ayakkabı\" çi ye?",
+    "promptTr": "Ayakkabı Kürtçede nedir?",
+    "answers": [
+      "gore",
+      "pêlav",
+      "şal",
+      "dawên"
+    ],
+    "answersTr": [
+      "gore",
+      "pêlav",
+      "şal",
+      "dawên"
+    ],
+    "correctAnswer": "pêlav",
+    "correctAnswerTr": "pêlav",
+    "explanation": "pêlav ayakkabı demektir.",
+    "explanationKu": "pêlav tê wateya ayakkabiyê.",
+    "explanationTr": "pêlav ayakkabı demektir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0041",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Bi kurdî \"çorap\" çi ye?",
+    "promptTr": "Çorap Kürtçede nedir?",
+    "answers": [
+      "saet",
+      "berçavk",
+      "gore",
+      "mont"
+    ],
+    "answersTr": [
+      "saet",
+      "berçavk",
+      "gore",
+      "mont"
+    ],
+    "correctAnswer": "gore",
+    "correctAnswerTr": "gore",
+    "explanation": "gore çorap demektir.",
+    "explanationKu": "gore tê wateya çorapê.",
+    "explanationTr": "gore çorap demektir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0042",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Bi kurdî \"etek\" çi ye?",
+    "promptTr": "Etek Kürtçede nedir?",
+    "answers": [
+      "kiras",
+      "dawên",
+      "çakêt",
+      "cil"
+    ],
+    "answersTr": [
+      "kiras",
+      "dawên",
+      "çakêt",
+      "cil"
+    ],
+    "correctAnswer": "dawên",
+    "correctAnswerTr": "dawên",
+    "explanation": "dawên etek demektir.",
+    "explanationKu": "dawên tê wateya etekê.",
+    "explanationTr": "dawên etek demektir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0043",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Bi kurdî \"gözlük\" çi ye?",
+    "promptTr": "Gözlük Kürtçede nedir?",
+    "answers": [
+      "şapke",
+      "şal",
+      "saet",
+      "berçavk"
+    ],
+    "answersTr": [
+      "şapke",
+      "şal",
+      "saet",
+      "berçavk"
+    ],
+    "correctAnswer": "berçavk",
+    "correctAnswerTr": "berçavk",
+    "explanation": "berçavk gözlük demektir.",
+    "explanationKu": "berçavk tê wateya gözlükê.",
+    "explanationTr": "berçavk gözlük demektir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0044",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan bi wateya \"kırmızı gömlek\" e?",
+    "promptTr": "Kırmızı gömlek hangisidir?",
+    "answers": [
+      "kirasê sor",
+      "pantorê reş",
+      "şapkeya spî",
+      "çakêtê şîn"
+    ],
+    "answersTr": [
+      "kirasê sor",
+      "pantorê reş",
+      "şapkeya spî",
+      "çakêtê şîn"
+    ],
+    "correctAnswer": "kirasê sor",
+    "correctAnswerTr": "kirasê sor",
+    "explanation": "kirasê sor izafe ile kurulur.",
+    "explanationKu": "kirasê sor bi izafeyê çêdibe.",
+    "explanationTr": "kirasê sor izafe ile kurulur.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0045",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan hevok rast e?",
+    "promptTr": "Hangi cümle doğrudur?",
+    "answers": [
+      "Ev kiras e.",
+      "Kiras ev e sor.",
+      "Sor kiras ev.",
+      "Ev e kiras."
+    ],
+    "answersTr": [
+      "Bu gömlektir.",
+      "Gömlek bu kırmızıdır (yanlış sıra).",
+      "Kırmızı gömlek bu (yanlış sıra).",
+      "Bu gömlektir (yanlış sıra)."
+    ],
+    "correctAnswer": "Ev kiras e.",
+    "correctAnswerTr": "Bu gömlektir.",
+    "explanation": "Doğru sıra Ev + ad + e biçimindedir.",
+    "explanationKu": "Rêza rast Ev + navdêr + e ye.",
+    "explanationTr": "Doğru sıra Ev + ad + e biçimindedir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0046",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan ji bo lingan e?",
+    "promptTr": "Ayaklara giyilen eşya hangisidir?",
+    "answers": [
+      "kiras",
+      "pêlav",
+      "dawên",
+      "şal"
+    ],
+    "answersTr": [
+      "gömlek",
+      "ayakkabı",
+      "etek",
+      "şal"
+    ],
+    "correctAnswer": "pêlav",
+    "correctAnswerTr": "ayakkabı",
+    "explanation": "pêlav ayaklara giyilir.",
+    "explanationKu": "pêlav li lingan tê kirin.",
+    "explanationTr": "pêlav ayaklara giyilir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0047",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ev ___ e.\" (\"Bu bir gömlektir.\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ e.\" (\"Bu bir gömlektir.\")",
+    "answers": [
+      "kiras"
+    ],
+    "answersTr": [
+      "kiras"
+    ],
+    "correctAnswer": "kiras",
+    "correctAnswerTr": "kiras",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ev kiras e.\" (Bu bir gömlektir.)",
+    "explanationKu": "Hevoka rast ev e: \"Ev kiras e.\"",
+    "explanationTr": "Doğru cümle: \"Ev kiras e.\" (Bu bir gömlektir.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0048",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ev ___ sor e.\" (\"Bu kırmızı gömlektir.\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ sor e.\" (\"Bu kırmızı gömlektir.\")",
+    "answers": [
+      "kirasê"
+    ],
+    "answersTr": [
+      "kirasê"
+    ],
+    "correctAnswer": "kirasê",
+    "correctAnswerTr": "kirasê",
+    "acceptedAnswers": [
+      "kirase"
+    ],
+    "acceptedAnswersTr": [
+      "kirase"
+    ],
+    "explanation": "Doğru cümle: \"Ev kirasê sor e.\" (Bu kırmızı gömlektir.)",
+    "explanationKu": "Hevoka rast ev e: \"Ev kirasê sor e.\"",
+    "explanationTr": "Doğru cümle: \"Ev kirasê sor e.\" (Bu kırmızı gömlektir.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0049",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ez ___ li xwe dikim.\" (\"Pantolon giyiyorum.\")",
+    "promptTr": "Cümleyi tamamla: \"Ez ___ li xwe dikim.\" (\"Pantolon giyiyorum.\")",
+    "answers": [
+      "pantor"
+    ],
+    "answersTr": [
+      "pantor"
+    ],
+    "correctAnswer": "pantor",
+    "correctAnswerTr": "pantor",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ez pantor li xwe dikim.\" (Pantolon giyiyorum.)",
+    "explanationKu": "Hevoka rast ev e: \"Ez pantor li xwe dikim.\"",
+    "explanationTr": "Doğru cümle: \"Ez pantor li xwe dikim.\" (Pantolon giyiyorum.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0050",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Pêlavên min ___ ne.\" (\"Ayakkabılarım yenidir.\")",
+    "promptTr": "Cümleyi tamamla: \"Pêlavên min ___ ne.\" (\"Ayakkabılarım yenidir.\")",
+    "answers": [
+      "nû"
+    ],
+    "answersTr": [
+      "nû"
+    ],
+    "correctAnswer": "nû",
+    "correctAnswerTr": "nû",
+    "acceptedAnswers": [
+      "nu"
+    ],
+    "acceptedAnswersTr": [
+      "nu"
+    ],
+    "explanation": "Doğru cümle: \"Pêlavên min nû ne.\" (Ayakkabılarım yenidir.)",
+    "explanationKu": "Hevoka rast ev e: \"Pêlavên min nû ne.\"",
+    "explanationTr": "Doğru cümle: \"Pêlavên min nû ne.\" (Ayakkabılarım yenidir.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0051",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Goreyên min ___ ne.\" (\"Çoraplarım beyazdır.\")",
+    "promptTr": "Cümleyi tamamla: \"Goreyên min ___ ne.\" (\"Çoraplarım beyazdır.\")",
+    "answers": [
+      "spî"
+    ],
+    "answersTr": [
+      "spî"
+    ],
+    "correctAnswer": "spî",
+    "correctAnswerTr": "spî",
+    "acceptedAnswers": [
+      "spi"
+    ],
+    "acceptedAnswersTr": [
+      "spi"
+    ],
+    "explanation": "Doğru cümle: \"Goreyên min spî ne.\" (Çoraplarım beyazdır.)",
+    "explanationKu": "Hevoka rast ev e: \"Goreyên min spî ne.\"",
+    "explanationTr": "Doğru cümle: \"Goreyên min spî ne.\" (Çoraplarım beyazdır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0052",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ev ___ e, ez li serê xwe dikim.\" (\"Bu bir şapkadır, başıma takıyorum.\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ e, ez li serê xwe dikim.\" (\"Bu bir şapkadır, başıma takıyorum.\")",
+    "answers": [
+      "şapke"
+    ],
+    "answersTr": [
+      "şapke"
+    ],
+    "correctAnswer": "şapke",
+    "correctAnswerTr": "şapke",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ev şapke e, ez li serê xwe dikim.\" (Bu bir şapkadır, başıma takıyorum.)",
+    "explanationKu": "Hevoka rast ev e: \"Ev şapke e, ez li serê xwe dikim.\"",
+    "explanationTr": "Doğru cümle: \"Ev şapke e, ez li serê xwe dikim.\" (Bu bir şapkadır, başıma takıyorum.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0053",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Bu bir gömlektir.\"",
+    "promptTr": "Cümleyi sırala: \"Bu bir gömlektir.\"",
+    "answers": [
+      "ev",
+      "kiras",
+      "e"
+    ],
+    "correctAnswer": "ev kiras e",
+    "explanation": "Doğru sıra: \"Ev kiras e.\" (Bu bir gömlektir.)",
+    "explanationKu": "Rêza rast: \"Ev kiras e.\"",
+    "explanationTr": "Doğru sıra: \"Ev kiras e.\" (Bu bir gömlektir.)",
+    "hintKu": "Bi peyva \"ev\" dest pê bike.",
+    "hintTr": "\"ev\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0054",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Gömleğim kırmızıdır.\"",
+    "promptTr": "Cümleyi sırala: \"Gömleğim kırmızıdır.\"",
+    "answers": [
+      "kirasê",
+      "min",
+      "sor",
+      "e"
+    ],
+    "correctAnswer": "kirasê min sor e",
+    "explanation": "Doğru sıra: \"Kirasê min sor e.\" (Gömleğim kırmızıdır.)",
+    "explanationKu": "Rêza rast: \"Kirasê min sor e.\"",
+    "explanationTr": "Doğru sıra: \"Kirasê min sor e.\" (Gömleğim kırmızıdır.)",
+    "hintKu": "Bi peyva \"kirasê\" dest pê bike.",
+    "hintTr": "\"kirasê\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0055",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Ayakkabıların yenidir.\"",
+    "promptTr": "Cümleyi sırala: \"Ayakkabıların yenidir.\"",
+    "answers": [
+      "pêlavên",
+      "te",
+      "nû",
+      "ne"
+    ],
+    "correctAnswer": "pêlavên te nû ne",
+    "explanation": "Doğru sıra: \"Pêlavên te nû ne.\" (Ayakkabıların yenidir.)",
+    "explanationKu": "Rêza rast: \"Pêlavên te nû ne.\"",
+    "explanationTr": "Doğru sıra: \"Pêlavên te nû ne.\" (Ayakkabıların yenidir.)",
+    "hintKu": "Bi peyva \"pêlavên\" dest pê bike.",
+    "hintTr": "\"pêlavên\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0056",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Çorap giyiyorum.\"",
+    "promptTr": "Cümleyi sırala: \"Çorap giyiyorum.\"",
+    "answers": [
+      "ez",
+      "gore",
+      "li",
+      "xwe",
+      "dikim"
+    ],
+    "correctAnswer": "ez gore li xwe dikim",
+    "explanation": "Doğru sıra: \"Ez gore li xwe dikim.\" (Çorap giyiyorum.)",
+    "explanationKu": "Rêza rast: \"Ez gore li xwe dikim.\"",
+    "explanationTr": "Doğru sıra: \"Ez gore li xwe dikim.\" (Çorap giyiyorum.)",
+    "hintKu": "Bi peyva \"ez\" dest pê bike.",
+    "hintTr": "\"ez\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0057",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Bu bir etektir.\"",
+    "promptTr": "Cümleyi sırala: \"Bu bir etektir.\"",
+    "answers": [
+      "ev",
+      "dawên",
+      "e"
+    ],
+    "correctAnswer": "ev dawên e",
+    "explanation": "Doğru sıra: \"Ev dawên e.\" (Bu bir etektir.)",
+    "explanationKu": "Rêza rast: \"Ev dawên e.\"",
+    "explanationTr": "Doğru sıra: \"Ev dawên e.\" (Bu bir etektir.)",
+    "hintKu": "Bi peyva \"ev\" dest pê bike.",
+    "hintTr": "\"ev\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi clothes_1 (yerel slaytlar; sunucu dersi cil, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "clothes_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0058",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Mirov li ser çi radize û dinive?",
+    "promptTr": "İnsan neyin üzerinde uzanıp uyur?",
+    "answers": [
+      "nivîn",
+      "mase",
+      "kursî",
+      "dolab"
+    ],
+    "answersTr": [
+      "yatak",
+      "masa",
+      "sandalye",
+      "dolap"
+    ],
+    "correctAnswer": "nivîn",
+    "correctAnswerTr": "yatak",
+    "explanation": "Nivîn uyumak içindir. Masa yemek içindir.",
+    "explanationKu": "Nivîn ji bo nivistinê ye. Mase ji bo xwarinê ye.",
+    "explanationTr": "Nivîn uyumak içindir. Masa yemek içindir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0059",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan tişt ji bo rûniştinê ye?",
+    "promptTr": "Hangi eşya oturmak içindir?",
+    "answers": [
+      "mase",
+      "kursî",
+      "nivîn",
+      "dolab"
+    ],
+    "answersTr": [
+      "masa",
+      "sandalye",
+      "yatak",
+      "dolap"
+    ],
+    "correctAnswer": "kursî",
+    "correctAnswerTr": "sandalye",
+    "explanation": "Kursî oturmak içindir. Ev kursî ye. (Bu sandalyedir.)",
+    "explanationKu": "Kursî ji bo rûniştinê ye. Ev kursî ye.",
+    "explanationTr": "Kursî oturmak içindir. Ev kursî ye. (Bu sandalyedir.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0060",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Mirov xwarinê li ser çi dixwe?",
+    "promptTr": "İnsan yemeği neyin üzerinde yer?",
+    "answers": [
+      "nivîn",
+      "dolab",
+      "mase",
+      "derî"
+    ],
+    "answersTr": [
+      "yatak",
+      "dolap",
+      "masa",
+      "kapı"
+    ],
+    "correctAnswer": "mase",
+    "correctAnswerTr": "masa",
+    "explanation": "Mase yemek içindir. Ev mase ye. (Bu masadır.)",
+    "explanationKu": "Mase ji bo xwarinê ye. Ev mase ye.",
+    "explanationTr": "Mase yemek içindir. Ev mase ye. (Bu masadır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0061",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan tişt ji bo vekirin û girtinê ye?",
+    "promptTr": "Hangi eşya açmak ve kapatmak içindir?",
+    "answers": [
+      "mase",
+      "kursî",
+      "derî",
+      "nivîn"
+    ],
+    "answersTr": [
+      "masa",
+      "sandalye",
+      "kapı",
+      "yatak"
+    ],
+    "correctAnswer": "derî",
+    "correctAnswerTr": "kapı",
+    "explanation": "Derî açılır ve kapatılır. Ev derî ye. (Bu kapıdır.)",
+    "explanationKu": "Derî tê vekirin û girtin. Ev derî ye.",
+    "explanationTr": "Derî açılır ve kapatılır. Ev derî ye. (Bu kapıdır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0062",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Mirov ji ku derê li derve dinêre?",
+    "promptTr": "İnsan nereden dışarıya bakar?",
+    "answers": [
+      "mase",
+      "dîwar",
+      "pencere",
+      "erd"
+    ],
+    "answersTr": [
+      "masa",
+      "duvar",
+      "pencere",
+      "zemin"
+    ],
+    "correctAnswer": "pencere",
+    "correctAnswerTr": "pencere",
+    "explanation": "Pencere dışarıyı görmek içindir. Ev pencere ye. (Bu penceredir.)",
+    "explanationKu": "Pencere ji bo dîtina derve ye. Ev pencere ye.",
+    "explanationTr": "Pencere dışarıyı görmek içindir. Ev pencere ye. (Bu penceredir.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0063",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan cih ji bo xwarinçêkirinê ye?",
+    "promptTr": "Hangi yer yemek pişirmek içindir?",
+    "answers": [
+      "serşok",
+      "ode",
+      "metbex",
+      "mal"
+    ],
+    "answersTr": [
+      "banyo",
+      "oda",
+      "mutfak",
+      "ev"
+    ],
+    "correctAnswer": "metbex",
+    "correctAnswerTr": "mutfak",
+    "explanation": "Metbex yemek pişirmek içindir. Ev metbex e. (Bu mutfaktır.)",
+    "explanationKu": "Metbex ji bo xwarinçêkirinê ye. Ev metbex e.",
+    "explanationTr": "Metbex yemek pişirmek içindir. Ev metbex e. (Bu mutfaktır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0064",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan cih ji bo şuştinê ye?",
+    "promptTr": "Hangi yer yıkanmak içindir?",
+    "answers": [
+      "metbex",
+      "serşok",
+      "ode",
+      "mal"
+    ],
+    "answersTr": [
+      "mutfak",
+      "banyo",
+      "oda",
+      "ev"
+    ],
+    "correctAnswer": "serşok",
+    "correctAnswerTr": "banyo",
+    "explanation": "Serşok yıkanmak içindir. Ev serşok e. (Burası banyodur.)",
+    "explanationKu": "Serşok ji bo şuştinê ye. Ev serşok e.",
+    "explanationTr": "Serşok yıkanmak içindir. Ev serşok e. (Burası banyodur.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0065",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Cil û kinc li ku derê ne?",
+    "promptTr": "Giysiler nerededir?",
+    "answers": [
+      "mase",
+      "kursî",
+      "nivîn",
+      "dolab"
+    ],
+    "answersTr": [
+      "masa",
+      "sandalye",
+      "yatak",
+      "dolap"
+    ],
+    "correctAnswer": "dolab",
+    "correctAnswerTr": "dolap",
+    "explanation": "Dolab giysiler içindir. Giysiler dolaptadır.",
+    "explanationKu": "Dolab ji bo cilan e. Cil di dolabê de ne.",
+    "explanationTr": "Dolab giysiler içindir. Giysiler dolaptadır.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0066",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ev ___ e. (cihê jiyanê)\" (\"Bu evdir.\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ e. (cihê jiyanê)\" (\"Bu evdir.\")",
+    "answers": [
+      "mal"
+    ],
+    "answersTr": [
+      "mal"
+    ],
+    "correctAnswer": "mal",
+    "correctAnswerTr": "mal",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ev mal e. (cihê jiyanê)\" (Bu evdir.)",
+    "explanationKu": "Hevoka rast ev e: \"Ev mal e. (cihê jiyanê)\"",
+    "explanationTr": "Doğru cümle: \"Ev mal e. (cihê jiyanê)\" (Bu evdir.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0067",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ev ___ ye. (ji bo ketinê û derketinê)\" (\"Bu kapıdır.\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ ye. (ji bo ketinê û derketinê)\" (\"Bu kapıdır.\")",
+    "answers": [
+      "derî"
+    ],
+    "answersTr": [
+      "derî"
+    ],
+    "correctAnswer": "derî",
+    "correctAnswerTr": "derî",
+    "acceptedAnswers": [
+      "deri"
+    ],
+    "acceptedAnswersTr": [
+      "deri"
+    ],
+    "explanation": "Doğru cümle: \"Ev derî ye. (ji bo ketinê û derketinê)\" (Bu kapıdır.)",
+    "explanationKu": "Hevoka rast ev e: \"Ev derî ye. (ji bo ketinê û derketinê)\"",
+    "explanationTr": "Doğru cümle: \"Ev derî ye. (ji bo ketinê û derketinê)\" (Bu kapıdır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0068",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ev ___ ye. (ji bo xwarinê)\" (\"Bu masadır.\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ ye. (ji bo xwarinê)\" (\"Bu masadır.\")",
+    "answers": [
+      "mase"
+    ],
+    "answersTr": [
+      "mase"
+    ],
+    "correctAnswer": "mase",
+    "correctAnswerTr": "mase",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ev mase ye. (ji bo xwarinê)\" (Bu masadır.)",
+    "explanationKu": "Hevoka rast ev e: \"Ev mase ye. (ji bo xwarinê)\"",
+    "explanationTr": "Doğru cümle: \"Ev mase ye. (ji bo xwarinê)\" (Bu masadır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0069",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ev ___ e. (ji bo nivistinê)\" (\"Bu yataktır.\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ e. (ji bo nivistinê)\" (\"Bu yataktır.\")",
+    "answers": [
+      "nivîn"
+    ],
+    "answersTr": [
+      "nivîn"
+    ],
+    "correctAnswer": "nivîn",
+    "correctAnswerTr": "nivîn",
+    "acceptedAnswers": [
+      "nivin"
+    ],
+    "acceptedAnswersTr": [
+      "nivin"
+    ],
+    "explanation": "Doğru cümle: \"Ev nivîn e. (ji bo nivistinê)\" (Bu yataktır.)",
+    "explanationKu": "Hevoka rast ev e: \"Ev nivîn e. (ji bo nivistinê)\"",
+    "explanationTr": "Doğru cümle: \"Ev nivîn e. (ji bo nivistinê)\" (Bu yataktır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0070",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ev ___ e. (cihê xwarinçêkirinê)\" (\"Bu mutfaktır.\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ e. (cihê xwarinçêkirinê)\" (\"Bu mutfaktır.\")",
+    "answers": [
+      "metbex"
+    ],
+    "answersTr": [
+      "metbex"
+    ],
+    "correctAnswer": "metbex",
+    "correctAnswerTr": "metbex",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ev metbex e. (cihê xwarinçêkirinê)\" (Bu mutfaktır.)",
+    "explanationKu": "Hevoka rast ev e: \"Ev metbex e. (cihê xwarinçêkirinê)\"",
+    "explanationTr": "Doğru cümle: \"Ev metbex e. (cihê xwarinçêkirinê)\" (Bu mutfaktır.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0071",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ode ___ e. (biçûk nîne)\" (\"Oda büyüktür.\")",
+    "promptTr": "Cümleyi tamamla: \"Ode ___ e. (biçûk nîne)\" (\"Oda büyüktür.\")",
+    "answers": [
+      "mezin"
+    ],
+    "answersTr": [
+      "mezin"
+    ],
+    "correctAnswer": "mezin",
+    "correctAnswerTr": "mezin",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ode mezin e. (biçûk nîne)\" (Oda büyüktür.)",
+    "explanationKu": "Hevoka rast ev e: \"Ode mezin e. (biçûk nîne)\"",
+    "explanationTr": "Doğru cümle: \"Ode mezin e. (biçûk nîne)\" (Oda büyüktür.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0072",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Bu evdir.\"",
+    "promptTr": "Cümleyi sırala: \"Bu evdir.\"",
+    "answers": [
+      "ev",
+      "mal",
+      "e"
+    ],
+    "correctAnswer": "ev mal e",
+    "explanation": "Doğru sıra: \"Ev mal e.\" (Bu evdir.)",
+    "explanationKu": "Rêza rast: \"Ev mal e.\"",
+    "explanationTr": "Doğru sıra: \"Ev mal e.\" (Bu evdir.)",
+    "hintKu": "Bi peyva \"ev\" dest pê bike.",
+    "hintTr": "\"ev\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0073",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Bu kapıdır.\"",
+    "promptTr": "Cümleyi sırala: \"Bu kapıdır.\"",
+    "answers": [
+      "ev",
+      "derî",
+      "ye"
+    ],
+    "correctAnswer": "ev derî ye",
+    "explanation": "Doğru sıra: \"Ev derî ye.\" (Bu kapıdır.)",
+    "explanationKu": "Rêza rast: \"Ev derî ye.\"",
+    "explanationTr": "Doğru sıra: \"Ev derî ye.\" (Bu kapıdır.)",
+    "hintKu": "Bi peyva \"ev\" dest pê bike.",
+    "hintTr": "\"ev\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0074",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Bu masadır.\"",
+    "promptTr": "Cümleyi sırala: \"Bu masadır.\"",
+    "answers": [
+      "ev",
+      "mase",
+      "ye"
+    ],
+    "correctAnswer": "ev mase ye",
+    "explanation": "Doğru sıra: \"Ev mase ye.\" (Bu masadır.)",
+    "explanationKu": "Rêza rast: \"Ev mase ye.\"",
+    "explanationTr": "Doğru sıra: \"Ev mase ye.\" (Bu masadır.)",
+    "hintKu": "Bi peyva \"ev\" dest pê bike.",
+    "hintTr": "\"ev\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0075",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Oda büyüktür.\"",
+    "promptTr": "Cümleyi sırala: \"Oda büyüktür.\"",
+    "answers": [
+      "ode",
+      "mezin",
+      "e"
+    ],
+    "correctAnswer": "ode mezin e",
+    "explanation": "Doğru sıra: \"Ode mezin e.\" (Oda büyüktür.)",
+    "explanationKu": "Rêza rast: \"Ode mezin e.\"",
+    "explanationTr": "Doğru sıra: \"Ode mezin e.\" (Oda büyüktür.)",
+    "hintKu": "Bi peyva \"ode\" dest pê bike.",
+    "hintTr": "\"ode\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0076",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Mutfak temizdir.\"",
+    "promptTr": "Cümleyi sırala: \"Mutfak temizdir.\"",
+    "answers": [
+      "metbex",
+      "paqij",
+      "e"
+    ],
+    "correctAnswer": "metbex paqij e",
+    "explanation": "Doğru sıra: \"Metbex paqij e.\" (Mutfak temizdir.)",
+    "explanationKu": "Rêza rast: \"Metbex paqij e.\"",
+    "explanationTr": "Doğru sıra: \"Metbex paqij e.\" (Mutfak temizdir.)",
+    "hintKu": "Bi peyva \"metbex\" dest pê bike.",
+    "hintTr": "\"metbex\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: home_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi home_1 (yerel slaytlar; sunucu dersi mal, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "home_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0077",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan peyv ava ku ji ezmanî tê nîşan dide?",
+    "promptTr": "Gökten su olarak düşeni hangi sözcük anlatır?",
+    "answers": [
+      "ba",
+      "baran",
+      "roj",
+      "mij"
+    ],
+    "answersTr": [
+      "rüzgar",
+      "yağmur",
+      "güneş",
+      "sis"
+    ],
+    "correctAnswer": "baran",
+    "correctAnswerTr": "yağmur",
+    "explanation": "Baran yağmur demektir. Baran dibare yağmur yağıyor demektir.",
+    "explanationKu": "Baran ji ezmanî wekî av tê. Em dibêjin Baran dibare.",
+    "explanationTr": "Baran yağmur demektir. Baran dibare yağmur yağıyor demektir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0078",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan peyv spî ye û di zivistanê de dibare?",
+    "promptTr": "Beyaz olan ve kışın yağan hangisidir?",
+    "answers": [
+      "berf",
+      "baran",
+      "ba",
+      "tav"
+    ],
+    "answersTr": [
+      "kar",
+      "yağmur",
+      "rüzgar",
+      "güneş ışığı"
+    ],
+    "correctAnswer": "berf",
+    "correctAnswerTr": "kar",
+    "explanation": "Berf kar demektir, beyazdır ve kışın yağar.",
+    "explanationKu": "Berf spî ye. Em dibêjin Berf dibare.",
+    "explanationTr": "Berf kar demektir, beyazdır ve kışın yağar.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0079",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan hevok hewayê dipirse?",
+    "promptTr": "Havayı hangi cümle sorar?",
+    "answers": [
+      "Hewa çawa ye?",
+      "Hewa germ e.",
+      "Baran dibare.",
+      "Ez li mal im."
+    ],
+    "answersTr": [
+      "Hava nasıl?",
+      "Hava sıcak.",
+      "Yağmur yağıyor.",
+      "Ben evdeyim."
+    ],
+    "correctAnswer": "Hewa çawa ye?",
+    "correctAnswerTr": "Hava nasıl?",
+    "explanation": "Çawa nasıl demektir, bu cümle hava sorusudur.",
+    "explanationKu": "Hewa çawa ye pirseke hewayê ye.",
+    "explanationTr": "Çawa nasıl demektir, bu cümle hava sorusudur.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0080",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan hevok hewaya havînê nîşan dide?",
+    "promptTr": "Yaz havasını hangi cümle gösterir?",
+    "answers": [
+      "Hewa germ e.",
+      "Hewa sar e.",
+      "Berf dibare.",
+      "Mij e."
+    ],
+    "answersTr": [
+      "Hava sıcak.",
+      "Hava soğuk.",
+      "Kar yağıyor.",
+      "Sis."
+    ],
+    "correctAnswer": "Hewa germ e.",
+    "correctAnswerTr": "Hava sıcak.",
+    "explanation": "Yazın hava sıcaktır; germ sıcak demektir.",
+    "explanationKu": "Di havînê de hewa germ e.",
+    "explanationTr": "Yazın hava sıcaktır; germ sıcak demektir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0081",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan peyv tevgera hewayê nîşan dide?",
+    "promptTr": "Havanın hareketini hangi sözcük anlatır?",
+    "answers": [
+      "ba",
+      "berf",
+      "baran",
+      "mij"
+    ],
+    "answersTr": [
+      "rüzgar",
+      "kar",
+      "yağmur",
+      "sis"
+    ],
+    "correctAnswer": "ba",
+    "correctAnswerTr": "rüzgar",
+    "explanation": "Ba rüzgar demektir, havanın hareketidir.",
+    "explanationKu": "Em ji bo tevgera hewayê dibêjin: Ba tê.",
+    "explanationTr": "Ba rüzgar demektir, havanın hareketidir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0082",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan demsal piştî payîzê tê û tê de berf dibare?",
+    "promptTr": "Sonbahardan sonra gelen ve kar yağan mevsim hangisidir?",
+    "answers": [
+      "zivistan",
+      "bihar",
+      "havîn",
+      "payîz"
+    ],
+    "answersTr": [
+      "kış",
+      "ilkbahar",
+      "yaz",
+      "sonbahar"
+    ],
+    "correctAnswer": "zivistan",
+    "correctAnswerTr": "kış",
+    "explanation": "Kışın hava soğuk olur ve kar yağar.",
+    "explanationKu": "Di zivistanê de hewa sar e û berf dibare.",
+    "explanationTr": "Kışın hava soğuk olur ve kar yağar.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0083",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kîjan hevok kesekî sar nîşan dide?",
+    "promptTr": "Bir kişinin üşüdüğünü hangi cümle anlatır?",
+    "answers": [
+      "Ez sar im.",
+      "Hewa germ e.",
+      "Roj derdikeve.",
+      "Ba tê."
+    ],
+    "answersTr": [
+      "Üşüyorum.",
+      "Hava sıcak.",
+      "Güneş çıkıyor.",
+      "Rüzgar esiyor."
+    ],
+    "correctAnswer": "Ez sar im.",
+    "correctAnswerTr": "Üşüyorum.",
+    "explanation": "Ez sar im kişi için, Hewa sar e hava içindir.",
+    "explanationKu": "Ez sar im ji bo mirovî ye, Hewa sar e ji bo hewayê ye.",
+    "explanationTr": "Ez sar im kişi için, Hewa sar e hava içindir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0084",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Dema tav tune ye, li ezmanî kîjan tiştê gewr heye?",
+    "promptTr": "Güneş yokken gökteki gri şey nedir?",
+    "answers": [
+      "roj",
+      "tav",
+      "ewr",
+      "germahî"
+    ],
+    "answersTr": [
+      "güneş",
+      "güneş ışığı",
+      "bulut",
+      "sıcaklık"
+    ],
+    "correctAnswer": "ewr",
+    "correctAnswerTr": "bulut",
+    "explanation": "Ewr bulut demektir, hava bulutluysa güneş görünmez.",
+    "explanationKu": "Ewr gewr e. Hewa ewrî ye, ango li ezmanî ewr heye.",
+    "explanationTr": "Ewr bulut demektir, hava bulutluysa güneş görünmez.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0085",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Hewa îro ___ e.\" (\"Hava bugün güzel.\")",
+    "promptTr": "Cümleyi tamamla: \"Hewa îro ___ e.\" (\"Hava bugün güzel.\")",
+    "answers": [
+      "xweş"
+    ],
+    "answersTr": [
+      "xweş"
+    ],
+    "correctAnswer": "xweş",
+    "correctAnswerTr": "xweş",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Hewa îro xweş e.\" (Hava bugün güzel.)",
+    "explanationKu": "Hevoka rast ev e: \"Hewa îro xweş e.\"",
+    "explanationTr": "Doğru cümle: \"Hewa îro xweş e.\" (Hava bugün güzel.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0086",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"___ dibare.\" (\"Yağmur yağıyor.\")",
+    "promptTr": "Cümleyi tamamla: \"___ dibare.\" (\"Yağmur yağıyor.\")",
+    "answers": [
+      "Baran"
+    ],
+    "answersTr": [
+      "Baran"
+    ],
+    "correctAnswer": "Baran",
+    "correctAnswerTr": "Baran",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Baran dibare.\" (Yağmur yağıyor.)",
+    "explanationKu": "Hevoka rast ev e: \"Baran dibare.\"",
+    "explanationTr": "Doğru cümle: \"Baran dibare.\" (Yağmur yağıyor.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0087",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Hewa ___ e.\" (\"Hava soğuk.\")",
+    "promptTr": "Cümleyi tamamla: \"Hewa ___ e.\" (\"Hava soğuk.\")",
+    "answers": [
+      "sar"
+    ],
+    "answersTr": [
+      "sar"
+    ],
+    "correctAnswer": "sar",
+    "correctAnswerTr": "sar",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Hewa sar e.\" (Hava soğuk.)",
+    "explanationKu": "Hevoka rast ev e: \"Hewa sar e.\"",
+    "explanationTr": "Doğru cümle: \"Hewa sar e.\" (Hava soğuk.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0088",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"___ tê.\" (\"Rüzgar esiyor.\")",
+    "promptTr": "Cümleyi tamamla: \"___ tê.\" (\"Rüzgar esiyor.\")",
+    "answers": [
+      "Ba"
+    ],
+    "answersTr": [
+      "Ba"
+    ],
+    "correctAnswer": "Ba",
+    "correctAnswerTr": "Ba",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ba tê.\" (Rüzgar esiyor.)",
+    "explanationKu": "Hevoka rast ev e: \"Ba tê.\"",
+    "explanationTr": "Doğru cümle: \"Ba tê.\" (Rüzgar esiyor.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0089",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Berf ___.\" (\"Kar yağıyor.\")",
+    "promptTr": "Cümleyi tamamla: \"Berf ___.\" (\"Kar yağıyor.\")",
+    "answers": [
+      "dibare"
+    ],
+    "answersTr": [
+      "dibare"
+    ],
+    "correctAnswer": "dibare",
+    "correctAnswerTr": "dibare",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Berf dibare.\" (Kar yağıyor.)",
+    "explanationKu": "Hevoka rast ev e: \"Berf dibare.\"",
+    "explanationTr": "Doğru cümle: \"Berf dibare.\" (Kar yağıyor.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0090",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ez ___ im.\" (\"Üşüyorum. (Ben soğuğum.)\")",
+    "promptTr": "Cümleyi tamamla: \"Ez ___ im.\" (\"Üşüyorum. (Ben soğuğum.)\")",
+    "answers": [
+      "sar"
+    ],
+    "answersTr": [
+      "sar"
+    ],
+    "correctAnswer": "sar",
+    "correctAnswerTr": "sar",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ez sar im.\" (Üşüyorum. (Ben soğuğum.))",
+    "explanationKu": "Hevoka rast ev e: \"Ez sar im.\"",
+    "explanationTr": "Doğru cümle: \"Ez sar im.\" (Üşüyorum. (Ben soğuğum.))",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0091",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Hava bugün güzel.\"",
+    "promptTr": "Cümleyi sırala: \"Hava bugün güzel.\"",
+    "answers": [
+      "hewa",
+      "îro",
+      "xweş",
+      "e"
+    ],
+    "correctAnswer": "hewa îro xweş e",
+    "explanation": "Doğru sıra: \"Hewa îro xweş e.\" (Hava bugün güzel.)",
+    "explanationKu": "Rêza rast: \"Hewa îro xweş e.\"",
+    "explanationTr": "Doğru sıra: \"Hewa îro xweş e.\" (Hava bugün güzel.)",
+    "hintKu": "Bi peyva \"hewa\" dest pê bike.",
+    "hintTr": "\"hewa\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0092",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Yağmur yağıyor.\"",
+    "promptTr": "Cümleyi sırala: \"Yağmur yağıyor.\"",
+    "answers": [
+      "baran",
+      "dibare"
+    ],
+    "correctAnswer": "baran dibare",
+    "explanation": "Doğru sıra: \"Baran dibare.\" (Yağmur yağıyor.)",
+    "explanationKu": "Rêza rast: \"Baran dibare.\"",
+    "explanationTr": "Doğru sıra: \"Baran dibare.\" (Yağmur yağıyor.)",
+    "hintKu": "Bi peyva \"baran\" dest pê bike.",
+    "hintTr": "\"baran\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0093",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Hava soğuk.\"",
+    "promptTr": "Cümleyi sırala: \"Hava soğuk.\"",
+    "answers": [
+      "hewa",
+      "sar",
+      "e"
+    ],
+    "correctAnswer": "hewa sar e",
+    "explanation": "Doğru sıra: \"Hewa sar e.\" (Hava soğuk.)",
+    "explanationKu": "Rêza rast: \"Hewa sar e.\"",
+    "explanationTr": "Doğru sıra: \"Hewa sar e.\" (Hava soğuk.)",
+    "hintKu": "Bi peyva \"hewa\" dest pê bike.",
+    "hintTr": "\"hewa\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0094",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Rüzgar esiyor.\"",
+    "promptTr": "Cümleyi sırala: \"Rüzgar esiyor.\"",
+    "answers": [
+      "ba",
+      "tê"
+    ],
+    "correctAnswer": "ba tê",
+    "explanation": "Doğru sıra: \"Ba tê.\" (Rüzgar esiyor.)",
+    "explanationKu": "Rêza rast: \"Ba tê.\"",
+    "explanationTr": "Doğru sıra: \"Ba tê.\" (Rüzgar esiyor.)",
+    "hintKu": "Bi peyva \"ba\" dest pê bike.",
+    "hintTr": "\"ba\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0095",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Üşüyorum.\"",
+    "promptTr": "Cümleyi sırala: \"Üşüyorum.\"",
+    "answers": [
+      "ez",
+      "sar",
+      "im"
+    ],
+    "correctAnswer": "ez sar im",
+    "explanation": "Doğru sıra: \"Ez sar im.\" (Üşüyorum.)",
+    "explanationKu": "Rêza rast: \"Ez sar im.\"",
+    "explanationTr": "Doğru sıra: \"Ez sar im.\" (Üşüyorum.)",
+    "hintKu": "Bi peyva \"ez\" dest pê bike.",
+    "hintTr": "\"ez\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: weather_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi weather_1 (yerel slaytlar; sunucu dersi hewa, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "weather_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0096",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Tu ji mamosteyî dipirsî: navê te çi ye? Bersiva rast kîjan e?",
+    "promptTr": "Öğretmene adını soruyorsun: doğru cevap hangisi?",
+    "answers": [
+      "Navê min Azad e",
+      "Ez li Stenbolê me",
+      "Ez sê salî me",
+      "Ez baş im"
+    ],
+    "answersTr": [
+      "Adım Azad",
+      "İstanbul'dayım",
+      "Üç yaşındayım",
+      "İyiyim"
+    ],
+    "correctAnswer": "Navê min Azad e",
+    "correctAnswerTr": "Adım Azad",
+    "explanation": "İsim sorusuna isimle cevap verilir: Navê min...",
+    "explanationKu": "Nav tê pirsîn. Bersiv bi navê min dest pê dike.",
+    "explanationTr": "İsim sorusuna isimle cevap verilir: Navê min...",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0097",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Hevalê te dibêje: ez li Enqereyê me. Pirs kîjan bû?",
+    "promptTr": "Arkadaşın \"Ankara'dayım\" diyor. Soru neydi?",
+    "answers": [
+      "Tu li ku yî?",
+      "Tu çend salî yî?",
+      "Tu çima hatî?",
+      "Tu çawa dixwînî?"
+    ],
+    "answersTr": [
+      "Neredesin?",
+      "Kaç yaşındasın?",
+      "Neden geldin?",
+      "Nasıl okuyorsun?"
+    ],
+    "correctAnswer": "Tu li ku yî?",
+    "correctAnswerTr": "Neredesin?",
+    "explanation": "Ankara'dayım bir yer cevabıdır, yer sorusu ku ile sorulur.",
+    "explanationKu": "Li Enqereyê bersiva cih e. Pirs bi ku tê pirsîn.",
+    "explanationTr": "Ankara'dayım bir yer cevabıdır, yer sorusu ku ile sorulur.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0098",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Zarok dibêje: ez pênc salî me. Pirs kîjan bû?",
+    "promptTr": "Çocuk \"beş yaşındayım\" diyor. Soru neydi?",
+    "answers": [
+      "Tu çend salî yî?",
+      "Navê te çi ye?",
+      "Tu li ku yî?",
+      "Tu kengî têyî?"
+    ],
+    "answersTr": [
+      "Kaç yaşındasın?",
+      "Adın nedir?",
+      "Neredesin?",
+      "Ne zaman geliyorsun?"
+    ],
+    "correctAnswer": "Tu çend salî yî?",
+    "correctAnswerTr": "Kaç yaşındasın?",
+    "explanation": "Beş yaşındayım yaş bildirir, çend salî ile sorulur.",
+    "explanationKu": "Pênc salî bersiva temen e. Pirs bi çend salî tê pirsîn.",
+    "explanationTr": "Beş yaşındayım yaş bildirir, çend salî ile sorulur.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0099",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Tu dixwazî sedemî bizanibî. Kîjan pirs rast e?",
+    "promptTr": "Sebebini öğrenmek istiyorsun. Hangi soru doğrudur?",
+    "answers": [
+      "Tu li ku yî?",
+      "Tu çima nagirî?",
+      "Tu kengî têyî?",
+      "Kîjan baş e?"
+    ],
+    "answersTr": [
+      "Neredesin?",
+      "Neden ağlamıyorsun?",
+      "Ne zaman geliyorsun?",
+      "Hangisi iyi?"
+    ],
+    "correctAnswer": "Tu çima nagirî?",
+    "correctAnswerTr": "Neden ağlamıyorsun?",
+    "explanation": "Sebep çima ile sorulur. Cevap: ji ber ku... (çünkü...).",
+    "explanationKu": "Sedem bi çima tê pirsîn. Bersiv: ji ber ku...",
+    "explanationTr": "Sebep çima ile sorulur. Cevap: ji ber ku... (çünkü...).",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0100",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Tu rewşa hevalê xwe dipirsî. Kîjan pirs rast e?",
+    "promptTr": "Arkadaşının durumunu soruyorsun. Hangi soru doğrudur?",
+    "answers": [
+      "Tu çawa yî?",
+      "Tu kî yî?",
+      "Ev çi ye?",
+      "Çend in?"
+    ],
+    "answersTr": [
+      "Nasılsın?",
+      "Kimsin?",
+      "Bu nedir?",
+      "Kaç taneler?"
+    ],
+    "correctAnswer": "Tu çawa yî?",
+    "correctAnswerTr": "Nasılsın?",
+    "explanation": "Durum çawa ile sorulur. Cevap: ez baş im (iyiyim).",
+    "explanationKu": "Rewş bi çawa tê pirsîn. Bersiv: ez baş im.",
+    "explanationTr": "Durum çawa ile sorulur. Cevap: ez baş im (iyiyim).",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0101",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Li ser maseyê du pirtûk hene. Tu yekê dixwazî. Tu çi dipirsî?",
+    "promptTr": "Masada iki kitap var. Birini istiyorsun. Ne sorarsın?",
+    "answers": [
+      "Kîjan pirtûk baş e?",
+      "Tu çend salî yî?",
+      "Tu kengî dixwînî?",
+      "Tu çima dimeşî?"
+    ],
+    "answersTr": [
+      "Hangi kitap iyi?",
+      "Kaç yaşındasın?",
+      "Ne zaman okuyorsun?",
+      "Neden yürüyorsun?"
+    ],
+    "correctAnswer": "Kîjan pirtûk baş e?",
+    "correctAnswerTr": "Hangi kitap iyi?",
+    "explanation": "Seçim kîjan ile sorulur. Kîjan isimden önce gelir.",
+    "explanationKu": "Hilbijartin bi kîjan tê pirsîn. Kîjan li pêşiya navdêrê tê.",
+    "explanationTr": "Seçim kîjan ile sorulur. Kîjan isimden önce gelir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0102",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ders sibê di saet nehê de dest pê dike. Pirs kîjan bû?",
+    "promptTr": "Ders yarın saat dokuzda başlıyor. Soru neydi?",
+    "answers": [
+      "Ders kengî dest pê dike?",
+      "Mamoste kî ye?",
+      "Dibistan li ku ye?",
+      "Ev çi ye?"
+    ],
+    "answersTr": [
+      "Ders ne zaman başlıyor?",
+      "Öğretmen kim?",
+      "Okul nerede?",
+      "Bu nedir?"
+    ],
+    "correctAnswer": "Ders kengî dest pê dike?",
+    "correctAnswerTr": "Ders ne zaman başlıyor?",
+    "explanation": "Yarın saat dokuz zaman cevabıdır, zaman kengî ile sorulur.",
+    "explanationKu": "\"Sibê di saet nehê de\" bersiva demê ye. Dem bi kengî tê pirsîn.",
+    "explanationTr": "Yarın saat dokuz zaman cevabıdır, zaman kengî ile sorulur.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0103",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Kesek li ber derî ye, tu nas nakî. Tu çi dipirsî?",
+    "promptTr": "Kapıda biri var, tanımıyorsun. Ne sorarsın?",
+    "answers": [
+      "Tu çawa dixwînî?",
+      "Çend pirtûk hene?",
+      "Tu kî yî?",
+      "Biha çiqas e?"
+    ],
+    "answersTr": [
+      "Nasıl okuyorsun?",
+      "Kaç kitap var?",
+      "Sen kimsin?",
+      "Fiyat ne kadar?"
+    ],
+    "correctAnswer": "Tu kî yî?",
+    "correctAnswerTr": "Sen kimsin?",
+    "explanation": "Tanınmayan kişi kî ile sorulur. Kî sadece insanlar içindir.",
+    "explanationKu": "Mirovên nenas bi kî tê pirsîn. Kî tenê ji bo mirovan e.",
+    "explanationTr": "Tanınmayan kişi kî ile sorulur. Kî sadece insanlar içindir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0104",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Tu ___ yî? (Ez Azad im.)\" (\"Sen ___sin? (Ben Azad'ım.)\")",
+    "promptTr": "Cümleyi tamamla: \"Tu ___ yî? (Ez Azad im.)\" (\"Sen ___sin? (Ben Azad'ım.)\")",
+    "answers": [
+      "kî"
+    ],
+    "answersTr": [
+      "kî"
+    ],
+    "correctAnswer": "kî",
+    "correctAnswerTr": "kî",
+    "acceptedAnswers": [
+      "ki"
+    ],
+    "acceptedAnswersTr": [
+      "ki"
+    ],
+    "explanation": "Doğru cümle: \"Tu kî yî? (Ez Azad im.)\" (Sen ___sin? (Ben Azad'ım.))",
+    "explanationKu": "Hevoka rast ev e: \"Tu kî yî? (Ez Azad im.)\"",
+    "explanationTr": "Doğru cümle: \"Tu kî yî? (Ez Azad im.)\" (Sen ___sin? (Ben Azad'ım.))",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0105",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ev ___ ye? (Ev pirtûk e.)\" (\"Bu ___dir? (Bu kitaptır.)\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ ye? (Ev pirtûk e.)\" (\"Bu ___dir? (Bu kitaptır.)\")",
+    "answers": [
+      "çi"
+    ],
+    "answersTr": [
+      "çi"
+    ],
+    "correctAnswer": "çi",
+    "correctAnswerTr": "çi",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ev çi ye? (Ev pirtûk e.)\" (Bu ___dir? (Bu kitaptır.))",
+    "explanationKu": "Hevoka rast ev e: \"Ev çi ye? (Ev pirtûk e.)\"",
+    "explanationTr": "Doğru cümle: \"Ev çi ye? (Ev pirtûk e.)\" (Bu ___dir? (Bu kitaptır.))",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0106",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Tu li ___ yî? (Ez li malê me.)\" (\"Sen ___sin? (Ben evdeyim.)\")",
+    "promptTr": "Cümleyi tamamla: \"Tu li ___ yî? (Ez li malê me.)\" (\"Sen ___sin? (Ben evdeyim.)\")",
+    "answers": [
+      "ku"
+    ],
+    "answersTr": [
+      "ku"
+    ],
+    "correctAnswer": "ku",
+    "correctAnswerTr": "ku",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Tu li ku yî? (Ez li malê me.)\" (Sen ___sin? (Ben evdeyim.))",
+    "explanationKu": "Hevoka rast ev e: \"Tu li ku yî? (Ez li malê me.)\"",
+    "explanationTr": "Doğru cümle: \"Tu li ku yî? (Ez li malê me.)\" (Sen ___sin? (Ben evdeyim.))",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0107",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Tu ___ têyî? (Ez sibê têm.)\" (\"Sen ___ geliyorsun? (Ben yarın geliyorum.)\")",
+    "promptTr": "Cümleyi tamamla: \"Tu ___ têyî? (Ez sibê têm.)\" (\"Sen ___ geliyorsun? (Ben yarın geliyorum.)\")",
+    "answers": [
+      "kengî"
+    ],
+    "answersTr": [
+      "kengî"
+    ],
+    "correctAnswer": "kengî",
+    "correctAnswerTr": "kengî",
+    "acceptedAnswers": [
+      "kengi"
+    ],
+    "acceptedAnswersTr": [
+      "kengi"
+    ],
+    "explanation": "Doğru cümle: \"Tu kengî têyî? (Ez sibê têm.)\" (Sen ___ geliyorsun? (Ben yarın geliyorum.))",
+    "explanationKu": "Hevoka rast ev e: \"Tu kengî têyî? (Ez sibê têm.)\"",
+    "explanationTr": "Doğru cümle: \"Tu kengî têyî? (Ez sibê têm.)\" (Sen ___ geliyorsun? (Ben yarın geliyorum.))",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0108",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Tu ___ salî yî? (Ez pênc salî me.)\" (\"Sen ___ yaşındasın? (Ben beş yaşındayım.)\")",
+    "promptTr": "Cümleyi tamamla: \"Tu ___ salî yî? (Ez pênc salî me.)\" (\"Sen ___ yaşındasın? (Ben beş yaşındayım.)\")",
+    "answers": [
+      "çend"
+    ],
+    "answersTr": [
+      "çend"
+    ],
+    "correctAnswer": "çend",
+    "correctAnswerTr": "çend",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Tu çend salî yî? (Ez pênc salî me.)\" (Sen ___ yaşındasın? (Ben beş yaşındayım.))",
+    "explanationKu": "Hevoka rast ev e: \"Tu çend salî yî? (Ez pênc salî me.)\"",
+    "explanationTr": "Doğru cümle: \"Tu çend salî yî? (Ez pênc salî me.)\" (Sen ___ yaşındasın? (Ben beş yaşındayım.))",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0109",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Tu ___ yî? (Ez baş im.)\" (\"Sen ___sın? (Ben iyiyim.)\")",
+    "promptTr": "Cümleyi tamamla: \"Tu ___ yî? (Ez baş im.)\" (\"Sen ___sın? (Ben iyiyim.)\")",
+    "answers": [
+      "çawa"
+    ],
+    "answersTr": [
+      "çawa"
+    ],
+    "correctAnswer": "çawa",
+    "correctAnswerTr": "çawa",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Tu çawa yî? (Ez baş im.)\" (Sen ___sın? (Ben iyiyim.))",
+    "explanationKu": "Hevoka rast ev e: \"Tu çawa yî? (Ez baş im.)\"",
+    "explanationTr": "Doğru cümle: \"Tu çawa yî? (Ez baş im.)\" (Sen ___sın? (Ben iyiyim.))",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0110",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Sen kimsin?\"",
+    "promptTr": "Cümleyi sırala: \"Sen kimsin?\"",
+    "answers": [
+      "tu",
+      "kî",
+      "yî"
+    ],
+    "correctAnswer": "tu kî yî",
+    "explanation": "Doğru sıra: \"Tu kî yî?\" (Sen kimsin?)",
+    "explanationKu": "Rêza rast: \"Tu kî yî?\"",
+    "explanationTr": "Doğru sıra: \"Tu kî yî?\" (Sen kimsin?)",
+    "hintKu": "Bi peyva \"tu\" dest pê bike.",
+    "hintTr": "\"tu\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0111",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Bu nedir?\"",
+    "promptTr": "Cümleyi sırala: \"Bu nedir?\"",
+    "answers": [
+      "ev",
+      "çi",
+      "ye"
+    ],
+    "correctAnswer": "ev çi ye",
+    "explanation": "Doğru sıra: \"Ev çi ye?\" (Bu nedir?)",
+    "explanationKu": "Rêza rast: \"Ev çi ye?\"",
+    "explanationTr": "Doğru sıra: \"Ev çi ye?\" (Bu nedir?)",
+    "hintKu": "Bi peyva \"ev\" dest pê bike.",
+    "hintTr": "\"ev\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0112",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Sen neredesin?\"",
+    "promptTr": "Cümleyi sırala: \"Sen neredesin?\"",
+    "answers": [
+      "tu",
+      "li",
+      "ku",
+      "yî"
+    ],
+    "correctAnswer": "tu li ku yî",
+    "explanation": "Doğru sıra: \"Tu li ku yî?\" (Sen neredesin?)",
+    "explanationKu": "Rêza rast: \"Tu li ku yî?\"",
+    "explanationTr": "Doğru sıra: \"Tu li ku yî?\" (Sen neredesin?)",
+    "hintKu": "Bi peyva \"tu\" dest pê bike.",
+    "hintTr": "\"tu\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0113",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Sen kaç yaşındasın?\"",
+    "promptTr": "Cümleyi sırala: \"Sen kaç yaşındasın?\"",
+    "answers": [
+      "tu",
+      "çend",
+      "salî",
+      "yî"
+    ],
+    "correctAnswer": "tu çend salî yî",
+    "explanation": "Doğru sıra: \"Tu çend salî yî?\" (Sen kaç yaşındasın?)",
+    "explanationKu": "Rêza rast: \"Tu çend salî yî?\"",
+    "explanationTr": "Doğru sıra: \"Tu çend salî yî?\" (Sen kaç yaşındasın?)",
+    "hintKu": "Bi peyva \"tu\" dest pê bike.",
+    "hintTr": "\"tu\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0114",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Sen nasılsın?\"",
+    "promptTr": "Cümleyi sırala: \"Sen nasılsın?\"",
+    "answers": [
+      "tu",
+      "çawa",
+      "yî"
+    ],
+    "correctAnswer": "tu çawa yî",
+    "explanation": "Doğru sıra: \"Tu çawa yî?\" (Sen nasılsın?)",
+    "explanationKu": "Rêza rast: \"Tu çawa yî?\"",
+    "explanationTr": "Doğru sıra: \"Tu çawa yî?\" (Sen nasılsın?)",
+    "hintKu": "Bi peyva \"tu\" dest pê bike.",
+    "hintTr": "\"tu\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: questions_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi questions_1 (yerel slaytlar; sunucu dersi pirs, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "questions_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0115",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ez îro ___ dibistanê. Kîjan lêker rast e?",
+    "promptTr": "Ben bugün okula ... Hangi fiil doğrudur?",
+    "answers": [
+      "diçim",
+      "dixwim",
+      "vedixwim",
+      "dibînim"
+    ],
+    "answersTr": [
+      "gidiyorum",
+      "yiyorum",
+      "içiyorum",
+      "görüyorum"
+    ],
+    "correctAnswer": "diçim",
+    "correctAnswerTr": "gidiyorum",
+    "explanation": "Okul bir yerdir, gitmek fiili gerekir. Bu yüzden gidiyorum doğrudur.",
+    "explanationKu": "Çûn ji bo tevgerê ye. Dibistan cih e, lewma diçim rast e.",
+    "explanationTr": "Okul bir yerdir, gitmek fiili gerekir. Bu yüzden gidiyorum doğrudur.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0116",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ew îro ___ malê. Kîjan lêker rast e?",
+    "promptTr": "O bugün eve ... Hangi fiil doğrudur?",
+    "answers": [
+      "tê",
+      "dixwe",
+      "vedixwe",
+      "dike"
+    ],
+    "answersTr": [
+      "geliyor",
+      "yiyor",
+      "içiyor",
+      "yapıyor"
+    ],
+    "correctAnswer": "tê",
+    "correctAnswerTr": "geliyor",
+    "explanation": "Eve yönelme gelmek fiili ister. Bu yüzden geliyor doğrudur.",
+    "explanationKu": "Mal cih e, lewma ew tê rast e.",
+    "explanationTr": "Eve yönelme gelmek fiili ister. Bu yüzden geliyor doğrudur.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0117",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ez her roj nan ___. Kîjan lêker rast e?",
+    "promptTr": "Ben her gün ekmek ... Hangi fiil doğrudur?",
+    "answers": [
+      "dixwim",
+      "diçim",
+      "têm",
+      "dibînim"
+    ],
+    "answersTr": [
+      "yiyorum",
+      "gidiyorum",
+      "geliyorum",
+      "görüyorum"
+    ],
+    "correctAnswer": "dixwim",
+    "correctAnswerTr": "yiyorum",
+    "explanation": "Ekmek yenir. Bu yüzden yiyorum doğrudur.",
+    "explanationKu": "Nan xwarin e. Lewma dixwim rast e.",
+    "explanationTr": "Ekmek yenir. Bu yüzden yiyorum doğrudur.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0118",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Tu her sibê çay ___. Kîjan lêker rast e?",
+    "promptTr": "Sen her sabah çay ... Hangi fiil doğrudur?",
+    "answers": [
+      "vedixwî",
+      "dixwî",
+      "diçî",
+      "dikî"
+    ],
+    "answersTr": [
+      "içiyorsun",
+      "yiyorsun",
+      "gidiyorsun",
+      "yapıyorsun"
+    ],
+    "correctAnswer": "vedixwî",
+    "correctAnswerTr": "içiyorsun",
+    "explanation": "Çay içilir, yenmez. Bu yüzden içiyorsun doğrudur.",
+    "explanationKu": "Çay vedixwin, naxwin. Lewma vedixwî rast e.",
+    "explanationTr": "Çay içilir, yenmez. Bu yüzden içiyorsun doğrudur.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0119",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Em her roj kar ___. Kîjan lêker rast e?",
+    "promptTr": "Biz her gün iş ... Hangi fiil doğrudur?",
+    "answers": [
+      "dikin",
+      "diçin",
+      "tên",
+      "dixwin"
+    ],
+    "answersTr": [
+      "yapıyoruz",
+      "gidiyoruz",
+      "geliyoruz",
+      "yiyoruz"
+    ],
+    "correctAnswer": "dikin",
+    "correctAnswerTr": "yapıyoruz",
+    "explanation": "İş yapılır. Bu yüzden yapıyoruz doğrudur.",
+    "explanationKu": "Kar tê kirin. Lewma dikin rast e.",
+    "explanationTr": "İş yapılır. Bu yüzden yapıyoruz doğrudur.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0120",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ez li parkê te ___. Kîjan lêker rast e?",
+    "promptTr": "Ben parkta seni ... Hangi fiil doğrudur?",
+    "answers": [
+      "dibînim",
+      "dixwim",
+      "vedixwim",
+      "dikim"
+    ],
+    "answersTr": [
+      "görüyorum",
+      "yiyorum",
+      "içiyorum",
+      "yapıyorum"
+    ],
+    "correctAnswer": "dibînim",
+    "correctAnswerTr": "görüyorum",
+    "explanation": "Görmek gözle ilgilidir. Bu yüzden görüyorum doğrudur.",
+    "explanationKu": "Dîtin ji bo çavan e. Lewma dibînim rast e.",
+    "explanationTr": "Görmek gözle ilgilidir. Bu yüzden görüyorum doğrudur.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0121",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Tu îro dibistanê. Kîjan bersiv neyînî ye?",
+    "promptTr": "Sen bugün okula ... Hangi cevap olumsuzdur?",
+    "answers": [
+      "naçî",
+      "diçî",
+      "têyî",
+      "dikî"
+    ],
+    "answersTr": [
+      "gitmiyorsun",
+      "gidiyorsun",
+      "geliyorsun",
+      "yapıyorsun"
+    ],
+    "correctAnswer": "naçî",
+    "correctAnswerTr": "gitmiyorsun",
+    "explanation": "Na- olumsuzu yapar. Naçî gitmiyorsun demektir.",
+    "explanationKu": "Pêşgira na- neyînî çêdike. Naçî forma neyînî ya çûnê ye.",
+    "explanationTr": "Na- olumsuzu yapar. Naçî gitmiyorsun demektir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0122",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ez ___ dibistanê.\" (\"Ben okula gidiyorum.\")",
+    "promptTr": "Cümleyi tamamla: \"Ez ___ dibistanê.\" (\"Ben okula gidiyorum.\")",
+    "answers": [
+      "diçim"
+    ],
+    "answersTr": [
+      "diçim"
+    ],
+    "correctAnswer": "diçim",
+    "correctAnswerTr": "diçim",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Ez diçim dibistanê.\" (Ben okula gidiyorum.)",
+    "explanationKu": "Hevoka rast ev e: \"Ez diçim dibistanê.\"",
+    "explanationTr": "Doğru cümle: \"Ez diçim dibistanê.\" (Ben okula gidiyorum.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0123",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ew ___ malê.\" (\"O eve geliyor.\")",
+    "promptTr": "Cümleyi tamamla: \"Ew ___ malê.\" (\"O eve geliyor.\")",
+    "answers": [
+      "tê"
+    ],
+    "answersTr": [
+      "tê"
+    ],
+    "correctAnswer": "tê",
+    "correctAnswerTr": "tê",
+    "acceptedAnswers": [
+      "te"
+    ],
+    "acceptedAnswersTr": [
+      "te"
+    ],
+    "explanation": "Doğru cümle: \"Ew tê malê.\" (O eve geliyor.)",
+    "explanationKu": "Hevoka rast ev e: \"Ew tê malê.\"",
+    "explanationTr": "Doğru cümle: \"Ew tê malê.\" (O eve geliyor.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0124",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Em nan ___.\" (\"Biz ekmek yiyoruz.\")",
+    "promptTr": "Cümleyi tamamla: \"Em nan ___.\" (\"Biz ekmek yiyoruz.\")",
+    "answers": [
+      "dixwin"
+    ],
+    "answersTr": [
+      "dixwin"
+    ],
+    "correctAnswer": "dixwin",
+    "correctAnswerTr": "dixwin",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Em nan dixwin.\" (Biz ekmek yiyoruz.)",
+    "explanationKu": "Hevoka rast ev e: \"Em nan dixwin.\"",
+    "explanationTr": "Doğru cümle: \"Em nan dixwin.\" (Biz ekmek yiyoruz.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0125",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Tu çay ___.\" (\"Sen çay içiyorsun.\")",
+    "promptTr": "Cümleyi tamamla: \"Tu çay ___.\" (\"Sen çay içiyorsun.\")",
+    "answers": [
+      "vedixwî"
+    ],
+    "answersTr": [
+      "vedixwî"
+    ],
+    "correctAnswer": "vedixwî",
+    "correctAnswerTr": "vedixwî",
+    "acceptedAnswers": [
+      "vedixwi"
+    ],
+    "acceptedAnswersTr": [
+      "vedixwi"
+    ],
+    "explanation": "Doğru cümle: \"Tu çay vedixwî.\" (Sen çay içiyorsun.)",
+    "explanationKu": "Hevoka rast ev e: \"Tu çay vedixwî.\"",
+    "explanationTr": "Doğru cümle: \"Tu çay vedixwî.\" (Sen çay içiyorsun.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0126",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Hûn kar ___.\" (\"Siz iş yapıyorsunuz.\")",
+    "promptTr": "Cümleyi tamamla: \"Hûn kar ___.\" (\"Siz iş yapıyorsunuz.\")",
+    "answers": [
+      "dikin"
+    ],
+    "answersTr": [
+      "dikin"
+    ],
+    "correctAnswer": "dikin",
+    "correctAnswerTr": "dikin",
+    "acceptedAnswers": [],
+    "acceptedAnswersTr": [],
+    "explanation": "Doğru cümle: \"Hûn kar dikin.\" (Siz iş yapıyorsunuz.)",
+    "explanationKu": "Hevoka rast ev e: \"Hûn kar dikin.\"",
+    "explanationTr": "Doğru cümle: \"Hûn kar dikin.\" (Siz iş yapıyorsunuz.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0127",
+    "category": "Ziman",
+    "type": "fillInBlank",
+    "difficulty": 1,
+    "prompt": "Hevokê temam bike: \"Ez te ___.\" (\"Ben seni görüyorum.\")",
+    "promptTr": "Cümleyi tamamla: \"Ez te ___.\" (\"Ben seni görüyorum.\")",
+    "answers": [
+      "dibînim"
+    ],
+    "answersTr": [
+      "dibînim"
+    ],
+    "correctAnswer": "dibînim",
+    "correctAnswerTr": "dibînim",
+    "acceptedAnswers": [
+      "dibinim"
+    ],
+    "acceptedAnswersTr": [
+      "dibinim"
+    ],
+    "explanation": "Doğru cümle: \"Ez te dibînim.\" (Ben seni görüyorum.)",
+    "explanationKu": "Hevoka rast ev e: \"Ez te dibînim.\"",
+    "explanationTr": "Doğru cümle: \"Ez te dibînim.\" (Ben seni görüyorum.)",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0128",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Ben eve gidiyorum.\"",
+    "promptTr": "Cümleyi sırala: \"Ben eve gidiyorum.\"",
+    "answers": [
+      "ez",
+      "diçim",
+      "malê"
+    ],
+    "correctAnswer": "ez diçim malê",
+    "explanation": "Doğru sıra: \"Ez diçim malê.\" (Ben eve gidiyorum.)",
+    "explanationKu": "Rêza rast: \"Ez diçim malê.\"",
+    "explanationTr": "Doğru sıra: \"Ez diçim malê.\" (Ben eve gidiyorum.)",
+    "hintKu": "Bi peyva \"ez\" dest pê bike.",
+    "hintTr": "\"ez\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0129",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"O okula geliyor.\"",
+    "promptTr": "Cümleyi sırala: \"O okula geliyor.\"",
+    "answers": [
+      "ew",
+      "tê",
+      "dibistanê"
+    ],
+    "correctAnswer": "ew tê dibistanê",
+    "explanation": "Doğru sıra: \"Ew tê dibistanê.\" (O okula geliyor.)",
+    "explanationKu": "Rêza rast: \"Ew tê dibistanê.\"",
+    "explanationTr": "Doğru sıra: \"Ew tê dibistanê.\" (O okula geliyor.)",
+    "hintKu": "Bi peyva \"ew\" dest pê bike.",
+    "hintTr": "\"ew\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0130",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Ben ekmek yiyorum.\"",
+    "promptTr": "Cümleyi sırala: \"Ben ekmek yiyorum.\"",
+    "answers": [
+      "ez",
+      "nan",
+      "dixwim"
+    ],
+    "correctAnswer": "ez nan dixwim",
+    "explanation": "Doğru sıra: \"Ez nan dixwim.\" (Ben ekmek yiyorum.)",
+    "explanationKu": "Rêza rast: \"Ez nan dixwim.\"",
+    "explanationTr": "Doğru sıra: \"Ez nan dixwim.\" (Ben ekmek yiyorum.)",
+    "hintKu": "Bi peyva \"ez\" dest pê bike.",
+    "hintTr": "\"ez\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0131",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Biz çay içiyoruz.\"",
+    "promptTr": "Cümleyi sırala: \"Biz çay içiyoruz.\"",
+    "answers": [
+      "em",
+      "çay",
+      "vedixwin"
+    ],
+    "correctAnswer": "em çay vedixwin",
+    "explanation": "Doğru sıra: \"Em çay vedixwin.\" (Biz çay içiyoruz.)",
+    "explanationKu": "Rêza rast: \"Em çay vedixwin.\"",
+    "explanationTr": "Doğru sıra: \"Em çay vedixwin.\" (Biz çay içiyoruz.)",
+    "hintKu": "Bi peyva \"em\" dest pê bike.",
+    "hintTr": "\"em\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0132",
+    "category": "Ziman",
+    "type": "wordOrdering",
+    "difficulty": 1,
+    "prompt": "Hevokê rêz bike: \"Sen iş yapıyorsun.\"",
+    "promptTr": "Cümleyi sırala: \"Sen iş yapıyorsun.\"",
+    "answers": [
+      "tu",
+      "kar",
+      "dikî"
+    ],
+    "correctAnswer": "tu kar dikî",
+    "explanation": "Doğru sıra: \"Tu kar dikî.\" (Sen iş yapıyorsun.)",
+    "explanationKu": "Rêza rast: \"Tu kar dikî.\"",
+    "explanationTr": "Doğru sıra: \"Tu kar dikî.\" (Sen iş yapıyorsun.)",
+    "hintKu": "Bi peyva \"tu\" dest pê bike.",
+    "hintTr": "\"tu\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  }
+]

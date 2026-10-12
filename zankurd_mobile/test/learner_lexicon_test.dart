@@ -97,14 +97,15 @@ void main() {
   test('güvenli kaynak genişlemesi 25 dersin tamamını + Sorulardan kapsar', () {
     expect(LearnerLexicon.entriesForSource('everyday_2'), hasLength(4));
     // 2026-10-06: başlangıç yolu dört yerel ders + dört sunucu-yalnız kaynak
-    // ekledi (17 -> 25).
+    // ekledi (17 -> 25); 2026-10-08'de yedi yerel ders daha (25 -> 32).
     expect(LearnerLexicon.entriesForSource('culture_2'), hasLength(2));
     expect(LearnerLexicon.entriesForSource('geography_1'), hasLength(2));
     expect(LearnerLexicon.entriesForSource('time_1'), hasLength(6));
 
     final covered = LearnerLexicon.sources.keys.toSet();
-    // 25 ders kaynağı + 'questions' (Sorulardan, 2026-10-07).
-    expect(covered, hasLength(26));
+    // 25 ders kaynağı + 7 (2026-10-08 başlangıç yolu II) + 'questions'
+    // (Sorulardan, 2026-10-07).
+    expect(covered, hasLength(33));
     expect(covered.contains('time_1'), isTrue);
   });
 }
