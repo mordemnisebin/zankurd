@@ -35,26 +35,23 @@ bool _contains(String answer, String prompt) {
   return a.isNotEmpty && p.contains(' $a ');
 }
 
-/// Eski, KASITLI olarak bırakılmış ihlaller: cevap tek ortak sözcük ve soru
-/// metni bilgiyi zaten yarı açıkça veriyor (Roma/İpek). Bunlar çeviri
-/// tersliği değil, içerik zayıflığı: banka yeniden yazılırken düzeltilecek.
-/// Liste ELLE büyütülemez; yeni ihlal doğrudan başarısızlıktır.
+/// Eski, KASITLI olarak bırakılmış ihlaller. Liste ELLE büyütülemez; yeni
+/// ihlal doğrudan başarısızlıktır.
 ///
-/// Üç grup daha KASITLI ve haksız sızıntı değil: `ds_cand_0285` (cevap
-/// "Mem" eser adının parçası), `ex28_rastnivisin_006` (cevap tek harf "ı"
+/// 2026-10-08: `ds_dirok_0175/0277/0291` (Roma/İpek) Türkçe istemleri cevabı
+/// veriyordu; istem yeniden ifade edildi (anlam aynı) ve listeden çıktılar.
+/// `ds_cand_0285` (cevap "Mem" eser adının parçası, iki dilde) düzeltilemediği
+/// için `retired_question_ids.dart` ile emekliye ayrıldı.
+///
+/// Kalan iki grup KASITLI ve haksız sızıntı değil: `ex28_rastnivisin_006` (cevap tek harf "ı"
 /// ve soru o harfi tarif ediyor), `edit_ziman_0031` (cevap "bi-" ön eki,
 /// soruda "bi kîjan" olarak ortak sözcük). Boşluk doldurma soruları hiç
 /// denetlenmez: parantez içi Türkçe karşılığı verilen cümlede boşluğun
 /// karşılığı çeviri olarak soru metninde görünür; bu, tasarımın kendisi.
 const _legacy = <String>{
-  'ds_cand_0285|ku',
-  'ds_cand_0285|tr',
   'ex28_rastnivisin_006|ku',
   'ex28_rastnivisin_006|tr',
   'edit_ziman_0031|ku',
-  'ds_dirok_0175|tr',
-  'ds_dirok_0277|tr',
-  'ds_dirok_0291|tr',
 };
 
 void main() {
