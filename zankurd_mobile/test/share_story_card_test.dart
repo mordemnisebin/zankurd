@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/share_story_card.dart';
 
@@ -30,6 +31,14 @@ void main() {
         );
         expect(tester.takeException(), isNull);
         expect(find.text('zankurd.com'), findsOneWidget);
+        // Kategori kimliği ("Ziman") paylaşılan görselde oyuncunun dilinde
+        // yazılır; eski kart Türkçe modda "Ziman" basıyordu (2026-08-14).
+        // Bekçi eski `share_result_card_category_test`ten taşındı.
+        expect(
+          find.text(CategoryNames.localized('Ziman', isKu)),
+          findsOneWidget,
+        );
+        if (!isKu) expect(find.text('Ziman'), findsNothing);
       });
     }
   }

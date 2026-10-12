@@ -19,7 +19,7 @@ enum ShareCardFormat {
 
 /// Sosyal ağda paylaşılan sonuç görseli (büyüme yüzeyi).
 ///
-/// [ShareResultCard] uygulama içi küçük karttı (360 geniş); bu kart hikâye
+/// Eski uygulama içi küçük kartın (360 geniş, 2026-10-12 silindi) yerine; hikâye
 /// ve kare ölçüsünde, uzaktan okunur boyutta çizilir: logo, konunun kilim
 /// bandı, büyük skor, yıldız, tek cümle ve site adresi. Mantıksal boyut
 /// piksel boyuttur (pixelRatio 1). İki temada da gece sahnesidir.

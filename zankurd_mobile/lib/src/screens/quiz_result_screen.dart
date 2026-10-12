@@ -1163,6 +1163,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         // turu yanlış anlatırdı.
         category: isMixedCategoryRound ? room.name : room.category,
         results: [for (final record in answerRecords) record.isCorrect],
+        // 1v1 galibiyetinde kart "pêşbirkê bi ser ketim" satırını yazar.
+        duelWin: opponents.length == 1 && score > opponents.first.score,
       );
       final earned = await ResultSharer.claimDailyShareReward();
       if (earned && context.mounted) {

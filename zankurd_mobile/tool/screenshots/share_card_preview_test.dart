@@ -1,7 +1,7 @@
+// ignore_for_file: avoid_print
 // Paylaşım görseli maketi: dört örnek kartı PNG'ye basar.
 // Çalıştır: ZANKURD_SHARE_OUT_DIR=<klasör> flutter test tool/screenshots/share_card_preview_test.dart
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
