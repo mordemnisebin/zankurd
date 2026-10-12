@@ -1713,9 +1713,15 @@ void main() {
   testWidgets('96 ders hızlı hatırlama', (t) async {
     final lesson = (await repository.loadLessonsByCategory('everyday')).first;
     await _pump(t, LessonDetailScreen(lesson: lesson, repository: repository));
-    await t.tap(find.text('İleri'));
-    await t.pumpAndSettle();
+    // Hatırlama kartı son slayttadır. Yolun ilk dersi değişince (2026-10:
+    // alfabe dersi başa geçti) slayt sayısı da değişti; tek "İleri" son
+    // slayda varmıyordu. Kart görünene dek ilerlenir.
     final reveal = find.byKey(const ValueKey('lesson-recall-reveal'));
+    for (var i = 0; i < 12 && reveal.evaluate().isEmpty; i++) {
+      if (find.text('İleri').evaluate().isEmpty) break;
+      await t.tap(find.text('İleri'));
+      await t.pumpAndSettle();
+    }
     await t.ensureVisible(reveal);
     await t.tap(reveal);
     await t.pump();

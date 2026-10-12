@@ -37,6 +37,12 @@ adim "dokunma hedefi taraması"
 python3 tool/a11y/tap_target_taramasi.py
 
 if [[ "${1:-}" == "--tam" ]]; then
+  # CI'nin "Render screen tour" adımı: yalnız flutter test'e bakılıp push
+  # edilince bu adım CI'yı kırdı (2026-10-12, 96. kare yol değişince son
+  # slayda varmıyordu). Kareler geçici klasöre basılır, repoyu kirletmez.
+  adim "ekran turu"
+  ZANKURD_SCREEN_TOUR_OUT_DIR="$(mktemp -d)" \
+    flutter test --no-pub -r failures-only tool/screenshots/screen_tour_test.dart
   adim "flutter test"
   flutter test --no-pub -r failures-only
   adim "cihazsız uygulama akışları"
