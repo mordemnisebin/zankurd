@@ -133,7 +133,11 @@ void main() {
               !q.id.startsWith('ders_2026_10_01_') &&
               !q.id.startsWith('ders_2026_10_02_') &&
               // 2026-10-06: başlangıç yolu (152) da tohumun dışındadır.
-              !q.id.startsWith('baslangic_2026_10_06_'),
+              !q.id.startsWith('baslangic_2026_10_06_') &&
+              // 2026-10-08: başlangıç yolu II (132) da tohumun dışındadır.
+              !q.id.startsWith('dersler2_2026_10_08_') &&
+              // 2026-10-08: başlangıç yolu III (121) da tohumun dışındadır.
+              !q.id.startsWith('dersler3_2026_10_08_'),
         )
         .map((q) => q.id)
         .toSet();
@@ -302,7 +306,8 @@ void main() {
       }
 
       // 2026-10-06: +4 başlangıç dersi (alphabet_1, greetings_2, intro_1, family_1).
-      expect(lessonCount, 21);
+      // 2026-10-08: +7 başlangıç II dersi (colors_1 ... verbs_1), +7 başlangıç III (jobs_1 ... past_1).
+      expect(lessonCount, 35);
     },
   );
 }

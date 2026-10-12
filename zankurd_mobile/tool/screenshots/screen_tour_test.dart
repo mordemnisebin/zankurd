@@ -2280,6 +2280,105 @@ void main() {
     await _shoot(t, '238_lexicon_search_question_word');
   }, tags: ['preview']);
 
+  // ── Başlangıç yolu II (2026-10-08) ──────────────────────────────────
+  Future<void> beginner2Lesson(
+    WidgetTester t,
+    String id,
+    int taps,
+    String name,
+  ) async {
+    final lesson = (await repository.loadLessonsByCategory(
+      'everyday',
+    )).firstWhere((l) => l.id == id);
+    await _pump(t, LessonDetailScreen(lesson: lesson, repository: repository));
+    await t.pumpAndSettle();
+    for (var i = 0; i < taps; i++) {
+      await t.tap(find.text('İleri'));
+      await t.pumpAndSettle();
+    }
+    await _shoot(t, name);
+  }
+
+  testWidgets('239 başlangıç II dersi — Renkler (slayt 1)', (t) async {
+    await beginner2Lesson(t, 'colors_1', 0, '239_beginner2_colors_s1');
+  }, tags: ['preview']);
+
+  testWidgets('240 başlangıç II dersi — Giysiler (slayt 3)', (t) async {
+    await beginner2Lesson(t, 'clothes_1', 2, '240_beginner2_clothes_s3');
+  }, tags: ['preview']);
+
+  Future<void> beginner2Question(
+    WidgetTester t,
+    String id,
+    QuestionType type,
+    String name,
+  ) async {
+    final questions = await repository.loadLearningQuizQuestions(
+      category: 'Ziman',
+      learningLessonId: id,
+      limit: 10,
+    );
+    final q = questions.firstWhere((q) => q.type == type);
+    await _pump(
+      t,
+      QuizScreen(
+        repository: repository,
+        room: repository.createRoom(),
+        questions: [q],
+        experience: QuizExperience.learning,
+        enableTimer: false,
+      ),
+    );
+    await _shoot(t, name);
+  }
+
+  testWidgets('242 başlangıç II — hava durumu çoktan seçmeli', (t) async {
+    await beginner2Question(
+      t,
+      'weather_1',
+      QuestionType.multipleChoice,
+      '242_beginner2_weather_mc',
+    );
+  }, tags: ['preview']);
+
+  testWidgets('243 başlangıç II — fiil boşluk doldurma', (t) async {
+    await beginner2Question(
+      t,
+      'verbs_1',
+      QuestionType.fillInBlank,
+      '243_beginner2_verbs_fill',
+    );
+  }, tags: ['preview']);
+
+  testWidgets('244 başlangıç II — soru sözcükleri cümle kurma', (t) async {
+    await beginner2Question(
+      t,
+      'questions_1',
+      QuestionType.wordOrdering,
+      '244_beginner2_questions_order',
+    );
+  }, tags: ['preview']);
+
+  testWidgets('245 sözlük — yeni ders sözcüğü (berçavk)', (t) async {
+    await _pump(t, const LearnerLexiconScreen());
+    await t.enterText(
+      find.byKey(const ValueKey('lexicon-search-field')),
+      'bercavk',
+    );
+    await t.pumpAndSettle();
+    await _shoot(t, '245_lexicon_new_word_bercavk');
+  }, tags: ['preview']);
+
+  testWidgets('246 sözlük — yeni ders sözcüğü (qehweyî)', (t) async {
+    await _pump(t, const LearnerLexiconScreen());
+    await t.enterText(
+      find.byKey(const ValueKey('lexicon-search-field')),
+      'qehweyi',
+    );
+    await t.pumpAndSettle();
+    await _shoot(t, '246_lexicon_new_word_qehweyi');
+  }, tags: ['preview']);
+
   testWidgets('230 sözlük — aksansız arama (cay)', (t) async {
     await _pump(t, const LearnerLexiconScreen());
     await t.enterText(

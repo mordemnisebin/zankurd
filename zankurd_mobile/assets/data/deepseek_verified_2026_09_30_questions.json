@@ -2878,7 +2878,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "İpek Yolu'nda hangi ürün Çin'den geliyordu?",
+    "promptTr": "Çin ile Batı'yı bağlayan tarihî ticaret yolunda hangi ürün Çin'den geliyordu?",
     "answersTr": [
       "İpek",
       "Altın",
@@ -17336,7 +17336,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "Roma geleneğine göre MÖ 753 yılında hangi şehir kuruldu?",
+    "promptTr": "Romalıların geleneğine göre MÖ 753 yılında hangi şehir kuruldu?",
     "answersTr": [
       "Atina",
       "Sparta",
@@ -18356,7 +18356,7 @@
       "reviewedAt": "2026-09-30",
       "lastContentCheckAt": "2026-09-30"
     },
-    "promptTr": "İpek Yolu adını hangi üründen alır?",
+    "promptTr": "Çin ile Batı'yı bağlayan tarihî ticaret yolu adını hangi üründen alır?",
     "answersTr": [
       "Altın",
       "İpek",

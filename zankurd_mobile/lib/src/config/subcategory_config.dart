@@ -367,7 +367,9 @@ class SubcategoryConfig {
       'leheng',
       'efsane',
     ],
-    'tistonek': ['tiştonek', 'mamik', 'bilmece', 'zekaya'],
+    // 2026-10-08: bilmece sorularının çoğu «Tiştonek» sözcüğünü taşımaz; kalıp
+    // «…; ew çi ye?» ile biter. Kalıp yalnız Çand içinde aranır.
+    'tistonek': ['tiştonek', 'mamik', 'bilmece', 'zekaya', '; ew çi'],
     'folklor': [
       'folklor',
       'çîrok',
@@ -383,6 +385,13 @@ class SubcategoryConfig {
       'hûrî',
       'kardûx',
       'gutî',
+      // 2026-10-08: Gutiyan ve Hurriler soruları bu halk adlarını çekimli
+      // (Gûtî, Gutiyan, Hurriyan, Hûrriyan) ve û/u değişkeleriyle yazıyordu;
+      // yalnız «gutî» ve «hûrî» tanındığı için eşleşmiyorlardı.
+      'gûtî',
+      'gutiyan',
+      'hurriyan',
+      'hûrriyan',
       'kevnar',
       'berî zayînê',
       'antîk',
@@ -419,8 +428,23 @@ class SubcategoryConfig {
       'mem û zîn',
       'nûbihar',
       'melayê bateyî',
+      // 2026-10-08: «helbest» sözcüğü hem klasik hem şiir sorularında geçer
+      // ve eşit puanda ilk konu (helbest) kazanır; klasik eser ve dönem adları
+      // açıkça klasîk'e puan verir.
+      'edebiyata klasîk',
+      'helbestvanê klasîk',
+      'zembîlfiroş',
+      'nûbihara biçûkan',
     ],
-    'roman': ['roman', 'çîroknivîs', 'nivîskar', 'pirtûk', 'kovar', 'weşan'],
+    'roman': [
+      'roman',
+      'çîroknivîs',
+      'nivîskar',
+      'pirtûk',
+      'kovar',
+      'weşan',
+      'mehmed uzun',
+    ],
     // Cografya
     'ciya_cem': [
       'çiya',
@@ -467,7 +491,22 @@ class SubcategoryConfig {
     // Siyaset
     'diroka_siyasi': ['dîroka siyasî', 'partî', 'tevgera netewî', 'serhildana'],
     'siyaseta_nujen': ['hilbijartin', 'parlamento', 'meclis', 'siyaseta nûjen'],
-    'tevger': ['tevger', 'rêxistin', 'kongra', 'kjar', 'jineolojî', 'yekîtî'],
+    // 2026-10-08: Kürt siyasi hareketleri/partileri soruları (PDK, YNK, PKK,
+    // HEP, DEP, HDP, Mahabad Cumhuriyeti) hiçbir anahtar sözcüğe uymadığı için
+    // konusuzdu ve «Tevgerên Civakî» 7 soruyla gizliydi.
+    'tevger': [
+      'tevger',
+      'rêxistin',
+      'kongra',
+      'kjar',
+      'jineolojî',
+      'yekîtî',
+      'yekîtiya',
+      'partiya',
+      'komara mehabadê',
+      'pkk',
+      'ynk',
+    ],
     // Paradigma (Bilim ve Düşünce). Eşleşme yalnız soru metni + doğru
     // cevap üzerinde, Kurmancî yazımla yapılır; eşit puanda listedeki ilk
     // konu kazanır (civak_maf > raman_felsefe > zanist_jiyan).
@@ -685,11 +724,24 @@ class SubcategoryConfig {
       'klasîk',
       'umut',
       'sürü',
+      'zeki okten',
+      'umit elçi',
+      'fîlmê yol',
       'endişe',
       'düşman',
       'duvar',
     ],
-    'festival_belgefilm': ['belgefîlm', 'festîval', 'xelat', 'sînematografî'],
+    'festival_belgefilm': [
+      'belgefîlm',
+      'festîval',
+      'xelat',
+      'sînematografî',
+      // 2026-10-08: Cannes/Berlin ödül ve bölüm soruları.
+      'cannes',
+      'berlin',
+      'un certain regard',
+      "caméra d'or",
+    ],
   };
 
   /// Soruyu konusuna göre bir alt kategoriye eşler.

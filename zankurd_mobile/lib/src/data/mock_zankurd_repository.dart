@@ -1835,6 +1835,146 @@ class MockZanKurdRepository implements ZanKurdRepository {
         iconName: 'forum',
         order: 7,
       ),
+      Lesson(
+        id: 'colors_1',
+        slug: 'colors_1',
+        titleKu: 'Reng',
+        titleTr: 'Renkler',
+        descriptionKu: 'Rengên bingehîn û rengên din',
+        category: 'everyday',
+        iconName: 'palette',
+        order: 8,
+      ),
+      Lesson(
+        id: 'body_1',
+        slug: 'body_1',
+        titleKu: 'Laşê mirov',
+        titleTr: 'Vücut',
+        descriptionKu: 'Beşên laş',
+        category: 'everyday',
+        iconName: 'accessibility_new',
+        order: 9,
+      ),
+      Lesson(
+        id: 'clothes_1',
+        slug: 'clothes_1',
+        titleKu: 'Cil û berg',
+        titleTr: 'Giysiler',
+        descriptionKu: 'Cil û bergên rojane',
+        category: 'everyday',
+        iconName: 'checkroom',
+        order: 10,
+      ),
+      Lesson(
+        id: 'home_1',
+        slug: 'home_1',
+        titleKu: 'Mal',
+        titleTr: 'Ev',
+        descriptionKu: 'Mal û tiştên malê',
+        category: 'everyday',
+        iconName: 'home',
+        order: 11,
+      ),
+      Lesson(
+        id: 'weather_1',
+        slug: 'weather_1',
+        titleKu: 'Hewa',
+        titleTr: 'Hava durumu',
+        descriptionKu: 'Hewa çawa ye?',
+        category: 'everyday',
+        iconName: 'cloud',
+        order: 12,
+      ),
+      Lesson(
+        id: 'questions_1',
+        slug: 'questions_1',
+        titleKu: 'Pirs',
+        titleTr: 'Soru kelimeleri',
+        descriptionKu: 'Kî? Çi? Ku? Kengî?',
+        category: 'everyday',
+        iconName: 'help',
+        order: 13,
+      ),
+      Lesson(
+        id: 'verbs_1',
+        slug: 'verbs_1',
+        titleKu: 'Lêker',
+        titleTr: 'Temel fiiller',
+        descriptionKu: 'Lêkerên bingehîn',
+        category: 'everyday',
+        iconName: 'directions_run',
+        order: 14,
+      ),
+      Lesson(
+        id: 'jobs_1',
+        slug: 'jobs_1',
+        titleKu: 'Pîşe',
+        titleTr: 'Meslekler',
+        descriptionKu: 'Pîşe çi ye?',
+        category: 'everyday',
+        iconName: 'work',
+        order: 15,
+      ),
+      Lesson(
+        id: 'city_1',
+        slug: 'city_1',
+        titleKu: 'Bajar',
+        titleTr: 'Şehir',
+        descriptionKu: 'Cihên girîng ên bajêr',
+        category: 'everyday',
+        iconName: 'location_city',
+        order: 16,
+      ),
+      Lesson(
+        id: 'shopping_1',
+        slug: 'shopping_1',
+        titleKu: 'Li dikanê',
+        titleTr: 'Alışveriş',
+        descriptionKu: 'Silav li dikanê',
+        category: 'everyday',
+        iconName: 'shopping_cart',
+        order: 17,
+      ),
+      Lesson(
+        id: 'health_1',
+        slug: 'health_1',
+        titleKu: 'Tenduristî',
+        titleTr: 'Sağlık',
+        descriptionKu: 'Doktor û nexweşxane',
+        category: 'everyday',
+        iconName: 'favorite',
+        order: 18,
+      ),
+      Lesson(
+        id: 'school_1',
+        slug: 'school_1',
+        titleKu: 'Dibistan',
+        titleTr: 'Okul',
+        descriptionKu: 'Cihê xwendinê',
+        category: 'everyday',
+        iconName: 'school',
+        order: 19,
+      ),
+      Lesson(
+        id: 'transport_1',
+        slug: 'transport_1',
+        titleKu: 'Veguhestin',
+        titleTr: 'Ulaşım',
+        descriptionKu: 'Wesayît û bilêt',
+        category: 'everyday',
+        iconName: 'directions_bus',
+        order: 20,
+      ),
+      Lesson(
+        id: 'past_1',
+        slug: 'past_1',
+        titleKu: 'Dema borî',
+        titleTr: 'Geçmiş zaman',
+        descriptionKu: 'Lêkerên dema borî',
+        category: 'everyday',
+        iconName: 'history',
+        order: 21,
+      ),
     ],
     'grammar': [
       Lesson(
@@ -2168,6 +2308,663 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentTr:
             'Basit aile cümleleri. "ye" ünlüyle biten sözcükten sonra, "e" ünsüzle bitenden sonra gelir.',
         exampleKu: 'Bira û xwişk li malê ne.',
+      ),
+    ],
+    'colors_1': [
+      LessonSlide(
+        id: 'colors_1_s1',
+        lessonId: 'colors_1',
+        order: 1,
+        contentKu:
+            'Rengên Bingehîn:\n\nEm îro rengan hîn dibin. Ev şeş rengên bingehîn in:\n\n• spî: beyaz\n• reş: siyah\n• sor: kırmızı\n• kesk: yeşil\n• şîn: mavi\n• zer: sarı',
+        contentTr:
+            'Bugün renkleri öğreniyoruz. Bunlar altı temel renktir: beyaz, siyah, kırmızı, yeşil, mavi, sarı.',
+      ),
+      LessonSlide(
+        id: 'colors_1_s2',
+        lessonId: 'colors_1',
+        order: 2,
+        contentKu:
+            'Rengên Din:\n\nEv jî rengên din in. Em hîn bibin:\n\n• porteqalî: turuncu\n• mor: mor\n• qehweyî: kahverengi\n• gewr: gri\n• pembe: pembe\n• reng: renk',
+        contentTr:
+            'Bunlar da diğer renkler. Öğrenelim: turuncu, mor, kahverengi, gri, pembe ve renk kelimesi.',
+      ),
+      LessonSlide(
+        id: 'colors_1_s3',
+        lessonId: 'colors_1',
+        order: 3,
+        contentKu:
+            'Ev Çi Reng e?\n\nEm bi lêkera \'bûn\'ê rengan dibêjin. Mînak:\n\n• Sêv sor e: Elma kırmızıdır\n• Av şîn e: Su mavidir\n• Nan spî ye: Ekmek beyazdır\n• Kulîlk zer e: Çiçek sarıdır\n• Giya kesk e: Ot yeşildir\n• Pisîk reş e: Kedi siyahtır',
+        contentTr:
+            'Rengi bûn fiiliyle söyleriz. Örnekler: Elma kırmızıdır, Su mavidir, Ekmek beyazdır, Çiçek sarıdır, Ot yeşildir, Kedi siyahtır.',
+      ),
+      LessonSlide(
+        id: 'colors_1_s4',
+        lessonId: 'colors_1',
+        order: 4,
+        contentKu:
+            'Reng û Îzafe:\n\nReng piştî navan tên û bi îzafeyê tên girêdan. Mînak:\n\n• sêva sor: kırmızı elma\n• nanê spî: beyaz ekmek\n• kitêba kesk: yeşil kitap\n• kirasê reş: siyah gömlek\n• mala spî: beyaz ev\n• ava şîn: mavi su',
+        contentTr:
+            'Renk isimden sonra gelir ve izafe ile bağlanır. Örnekler: kırmızı elma, beyaz ekmek, yeşil kitap, siyah gömlek, beyaz ev, mavi su.',
+      ),
+      LessonSlide(
+        id: 'colors_1_s5',
+        lessonId: 'colors_1',
+        order: 5,
+        contentKu:
+            'Pirs û Bersiv:\n\nBi rengan pirsan bike û bersiv bide. Mînak:\n\n• Ev çi reng e?: Bu ne renk?\n• Ew sor e.: O kırmızıdır.\n• Kîjan reng xweş e?: Hangi renk güzel?\n• Zer xweş e.: Sarı güzel.\n• Sêva sor li ku ye?: Kırmızı elma nerede?',
+        contentTr:
+            'Renklerle soru sor ve cevap ver. Örnekler: Bu ne renk?, O kırmızıdır., Hangi renk güzel?, Sarı güzel., Kırmızı elma nerede?',
+      ),
+    ],
+    'body_1': [
+      LessonSlide(
+        id: 'body_1_s1',
+        lessonId: 'body_1',
+        order: 1,
+        contentKu:
+            'Laşê Mirov:\n\nÎro em beşên laş hîn dibin. Ev peyv pir girîng in:\n\n• ser: baş\n• rû: yüz\n• stû: boyun\n• mil: omuz, kol\n• dest: el\n• ling: bacak, ayak',
+        contentTr:
+            'Bugün vücudun bölümlerini öğreniyoruz. Bu kelimeler çok önemlidir: baş, yüz, boyun, omuz/kol, el, bacak/ayak.',
+      ),
+      LessonSlide(
+        id: 'body_1_s2',
+        lessonId: 'body_1',
+        order: 2,
+        contentKu:
+            'Ser û Rû:\n\nEm li ser û rû dinêrin. Van peyvan bînin bîra xwe:\n\n• ser: baş\n• por: saç\n• rû: yüz\n• çav: göz\n• guh: kulak\n• poz: burun\n• dev: ağız\n• diran: diş',
+        contentTr:
+            'Başa ve yüze bakıyoruz. Bu kelimeleri aklınızda tutun: baş, saç, yüz, göz, kulak, burun, ağız, diş.',
+      ),
+      LessonSlide(
+        id: 'body_1_s3',
+        lessonId: 'body_1',
+        order: 3,
+        contentKu:
+            'Dest û Ling:\n\nEm li dest û ling dinêrin. Van peyvan dubare bike:\n\n• mil: omuz, kol\n• dest: el\n• tilî: parmak\n• ling: bacak, ayak\n• pê: ayak\n• çok: diz',
+        contentTr:
+            'Ele ve bacağa bakıyoruz. Bu kelimeleri tekrar et: omuz/kol, el, parmak, bacak/ayak, ayak, diz.',
+      ),
+      LessonSlide(
+        id: 'body_1_s4',
+        lessonId: 'body_1',
+        order: 4,
+        contentKu:
+            'Hevokên Hêsan bi Laş:\n\nNiha em peyvan di hevokan de dibînin:\n\n• Çavên min reş in: Gözlerim siyahtır\n• Serê min diêşe: Başım ağrıyor\n• Ez destên xwe dişom: Ellerimi yıkıyorum\n• Diranên min spî ne: Dişlerim beyazdır\n• Lingê min diêşe: Bacağım, ayağım ağrıyor',
+        contentTr:
+            'Şimdi kelimeleri cümleler içinde görüyoruz:\n- Gözlerim siyahtır\n- Başım ağrıyor\n- Ellerimi yıkıyorum\n- Dişlerim beyazdır\n- Bacağım (ayağım) ağrıyor',
+      ),
+      LessonSlide(
+        id: 'body_1_s5',
+        lessonId: 'body_1',
+        order: 5,
+        contentKu:
+            'Laşê Min:\n\nNiha em bi lêkera bûn-ê diaxivin. Dubare bike:\n\n• Ez sax im: Ben sağlıklıyım\n• Çavên min reş in: Gözlerim siyahtır\n• Destê min paqij e: Elim temizdir\n• Em amade ne: Biz hazırız\n• Laşê min sax e: Vücudum sağlıklıdır',
+        contentTr:
+            'Şimdi \'olmak\' (bûn) fiiliyle konuşuyoruz. Tekrar et:\n- Ben sağlıklıyım\n- Gözlerim siyahtır\n- Elim temizdir\n- Biz hazırız\n- Vücudum sağlıklıdır',
+      ),
+    ],
+    'clothes_1': [
+      LessonSlide(
+        id: 'clothes_1_s1',
+        lessonId: 'clothes_1',
+        order: 1,
+        contentKu:
+            'Cil û bergên rojane:\n\nEm îro 6 cilên bingehîn hîn dibin:\n\n• kiras: gömlek\n• pantor: pantolon\n• çakêt: ceket\n• pêlav: ayakkabı\n• şapke: şapka\n• gore: çorap',
+        contentTr:
+            'Bugün 6 temel giysiyi öğreniyoruz: gömlek, pantolon, ceket, ayakkabı, şapka ve çorap. Her Kurmancî sözcüğü Türkçe karşılığıyla ezberle.',
+      ),
+      LessonSlide(
+        id: 'clothes_1_s2',
+        lessonId: 'clothes_1',
+        order: 2,
+        contentKu:
+            'Rengê cilan:\n\nReng bi izafeyê tê ser navdêrê:\n\n• kirasê sor: kırmızı gömlek\n• pantorê reş: siyah pantolon\n• çakêtê şîn: mavi ceket\n• şapkeya spî: beyaz şapka\n• goreyên kesk: yeşil çoraplar\n• pêlavên zer: sarı ayakkabılar',
+        contentTr:
+            'Renk, izafe ekiyle giysi adından sonra gelir: kirasê sor (kırmızı gömlek) gibi. Tekil izafe ê/ya, çoğul izafe ên biçimindedir.',
+      ),
+      LessonSlide(
+        id: 'clothes_1_s3',
+        lessonId: 'clothes_1',
+        order: 3,
+        contentKu:
+            'Ez li xwe dikim:\n\nLêkera li xwe kirinê di dema niha de:\n\n• Ez kiras li xwe dikim: gömlek giyiyorum\n• Tu pantor li xwe dikî: pantolon giyiyorsun\n• Ew şapke li xwe dike: şapka takıyor\n• Em pêlav li xwe dikin: ayakkabı giyiyoruz\n• Hûn mont li xwe dikin: mont giyiyorsunuz\n• Ew gore li xwe dikin: çorap giyiyorlar',
+        contentTr:
+            'Giyinmek fiili li xwe kirin, şimdiki zamanla çekilir: dikim, dikî, dike, dikin. Nesne yalın durumda kalır, ergatiflik yoktur.',
+      ),
+      LessonSlide(
+        id: 'clothes_1_s4',
+        lessonId: 'clothes_1',
+        order: 4,
+        contentKu:
+            'Mezin, biçûk, nû:\n\nCilan bi van rengdêran binas bike:\n\n• montê mezin: büyük mont\n• dawêna biçûk: küçük etek\n• kirasê nû: yeni gömlek\n• çakêtê kevn: eski ceket\n• pêlavên paqij: temiz ayakkabılar\n• goreyên pîs: kirli çoraplar',
+        contentTr:
+            'Sıfatlar izafeyle giysiyi niteler: mezin (büyük), biçûk (küçük), nû (yeni), kevn (eski), paqij (temiz), pîs (kirli).',
+      ),
+      LessonSlide(
+        id: 'clothes_1_s5',
+        lessonId: 'clothes_1',
+        order: 5,
+        contentKu:
+            'Li dikanê:\n\nHevokên kurt ji bo dikanê:\n\n• Ev çi ye: bu nedir\n• Ev kiras e: bu gömlektir\n• Ev çend e: bu kaç lira, fiyatı nedir\n• Ev mezin e: bu büyüktür\n• Ev biçûk e: bu küçüktür\n• Ev sor e: bu kırmızıdır',
+        contentTr:
+            'Mağazada lazım olan kalıplar: Ev çi ye (bu nedir), Ev kiras e (bu gömlektir), Ev çend e (fiyatı nedir). Hepsi e/ye ile biter.',
+      ),
+    ],
+    'home_1': [
+      LessonSlide(
+        id: 'home_1_s1',
+        lessonId: 'home_1',
+        order: 1,
+        contentKu:
+            'Mal çi ye?\n\nMal cihê jiyanê ye. Van peyvan bixwîne:\n\n• mal: ev\n• ode: oda\n• derî: kapı\n• pencere: pencere\n• dîwar: duvar\n• erd: zemin',
+        contentTr:
+            'Ev, yaşadığımız yerdir. Bu sözcükleri oku: ev, oda, kapı, pencere, duvar, zemin.',
+      ),
+      LessonSlide(
+        id: 'home_1_s2',
+        lessonId: 'home_1',
+        order: 2,
+        contentKu:
+            'Odeyên malê:\n\nHer odeyek ji bo karekî ye:\n\n• ode: oda\n• metbex: mutfak\n• serşok: banyo\n• odeya nivînê: yatak odası\n• odeya rûniştinê: salon\n• korîdor: koridor',
+        contentTr:
+            'Her oda bir iş içindir: oda, mutfak, banyo, yatak odası, salon, koridor.',
+      ),
+      LessonSlide(
+        id: 'home_1_s3',
+        lessonId: 'home_1',
+        order: 3,
+        contentKu:
+            'Tiştên malê 1:\n\nTiştên ku em her roj bi kar tînin:\n\n• mase: masa\n• kursî: sandalye\n• nivîn: yatak\n• dolab: dolap\n• derî: kapı\n• pencere: pencere',
+        contentTr:
+            'Her gün kullandığımız eşyalar: masa, sandalye, yatak, dolap, kapı, pencere.',
+      ),
+      LessonSlide(
+        id: 'home_1_s4',
+        lessonId: 'home_1',
+        order: 4,
+        contentKu:
+            'Tiştên malê 2:\n\nTiştên din ên malê:\n\n• ronahî: ışık\n• dîwar: duvar\n• ban: tavan\n• erd: zemin\n• mift: anahtar\n• perde: perde',
+        contentTr:
+            'Evin diğer eşyaları: ışık, duvar, tavan, zemin, anahtar, perde.',
+      ),
+      LessonSlide(
+        id: 'home_1_s5',
+        lessonId: 'home_1',
+        order: 5,
+        contentKu:
+            'Bi Kurmancî biaxive: Ev ... e / ye:\n\nQalibek sade bi kar bîne:\n\n• Ev mal e: Bu evdir\n• Ev derî ye: Bu kapıdır\n• Ev mase ye: Bu masadır\n• Ode mezin e: Oda büyüktür\n• Metbex paqij e: Mutfak temizdir',
+        contentTr:
+            'Basit bir kalıp kullan: Ev mal e: Bu evdir, Ev derî ye: Bu kapıdır, Ev mase ye: Bu masadır, Ode mezin e: Oda büyüktür, Metbex paqij e: Mutfak temizdir. Sessiz harften sonra e, sesli harften sonra ye gelir.',
+      ),
+    ],
+    'weather_1': [
+      LessonSlide(
+        id: 'weather_1_s1',
+        lessonId: 'weather_1',
+        order: 1,
+        contentKu:
+            'Hewa çawa ye?\n\nEm li ser hewayê diaxivin.\n\n• Hewa çawa ye?: Hava nasıl?\n• hewa: hava\n• îro: bugün\n• çawa: nasıl\n• xweş: güzel, iyi\n• xirab: kötü\n• Hewa xweş e: Hava güzel',
+        contentTr:
+            'Bu derste hava durumunu soruyoruz. Temel soru: Hewa çawa ye? (Hava nasıl?). Cevap: Hewa xweş e. / Hewa xirab e.',
+      ),
+      LessonSlide(
+        id: 'weather_1_s2',
+        lessonId: 'weather_1',
+        order: 2,
+        contentKu:
+            'Roj û germahî:\n\nÎro roj heye û hewa germ e.\n\n• roj: güneş, gün\n• tav: güneş ışığı\n• germ: sıcak\n• pir germ: çok sıcak\n• hinekî germ: biraz sıcak\n• Roj derdikeve: Güneş doğuyor, çıkıyor\n• Hewa germ e: Hava sıcak',
+        contentTr:
+            'Güneşli ve sıcak havayı anlatıyoruz. Roj güneş demektir. Germ sıcak demektir. Örnek: Hewa îro germ e. (Hava bugün sıcak.)',
+      ),
+      LessonSlide(
+        id: 'weather_1_s3',
+        lessonId: 'weather_1',
+        order: 3,
+        contentKu:
+            'Baran û ba:\n\nCarinan baran dibare û ba tê.\n\n• baran: yağmur\n• ba: rüzgar\n• ewr: bulut\n• ewrî: bulutlu\n• dibare: yağıyor\n• ba tê: rüzgar esiyor\n• Baran dibare: Yağmur yağıyor',
+        contentTr:
+            'Yağmurlu ve rüzgarlı hava. Baran yağmur, ba rüzgar, ewr bulut demektir. Fiil: dibare (yağıyor), tê (geliyor, esiyor).',
+      ),
+      LessonSlide(
+        id: 'weather_1_s4',
+        lessonId: 'weather_1',
+        order: 4,
+        contentKu:
+            'Berf û serma:\n\nDi zivistanê de berf dibare û hewa sar e.\n\n• berf: kar\n• sar: soğuk\n• serma: soğukluk, soğuk hava\n• mij: sis\n• cemed: buz\n• Berf dibare: Kar yağıyor\n• Hewa sar e: Hava soğuk',
+        contentTr:
+            'Kışın hava: kar ve soğuk. Berf kar, sar soğuk demektir. Örnek: Berf dibare. (Kar yağıyor.) Hewa sar e. (Hava soğuk.)',
+      ),
+      LessonSlide(
+        id: 'weather_1_s5',
+        lessonId: 'weather_1',
+        order: 5,
+        contentKu:
+            'Demsal û ez:\n\nEm dibêjin ez germ im an ez sar im.\n\n• bihar: ilkbahar\n• havîn: yaz\n• payîz: sonbahar\n• zivistan: kış\n• ez germ im: sıcağım, bana sıcak geliyor\n• ez sar im: üşüyorum, bana soğuk geliyor\n• Ez li malê me: Ben evdeyim',
+        contentTr:
+            'Dört mevsim ve bûn fiili (olmak). Ez im (benim), tu yî (sensin), ew e (odur). Hava için e, kişi için im kullanırız: Hewa sar e. Ez sar im.',
+      ),
+    ],
+    'questions_1': [
+      LessonSlide(
+        id: 'questions_1_s1',
+        lessonId: 'questions_1',
+        order: 1,
+        contentKu:
+            'Kî? Çi?\n\nPirsên li ser mirovan û tiştan. Kî ji bo mirovan, çi ji bo tiştan tê bikaranîn.\n\n• Kî ye?: kimdir?\n• Kî ne?: kimler?\n• Tu kî yî?: sen kimsin?\n• Ev çi ye?: bu nedir?\n• Tu çi dixwazî?: ne istiyorsun?\n• Navê te çi ye?: adın nedir?',
+        contentTr:
+            'İnsanlar ve eşyalar hakkında sorular. Kî (kim) insanlar için, çi (ne) eşyalar için kullanılır. Fiil cümlenin sonunda çekimlenir.',
+      ),
+      LessonSlide(
+        id: 'questions_1_s2',
+        lessonId: 'questions_1',
+        order: 2,
+        contentKu:
+            'Ku? Kengî?\n\nPirsên li ser cihî û demê. Ku = li kîjan derê, kengî = di kîjan demê de.\n\n• Tu li ku yî?: neredesin?\n• Dibistan li ku ye?: okul nerede?\n• Tu kengî têyî?: ne zaman geliyorsun?\n• Ders kengî dest pê dike?: ders ne zaman başlıyor?\n• Tu îro kengî têyî?: bugün ne zaman geliyorsun?\n• Tu sibê li ku yî?: yarın neredesin?',
+        contentTr:
+            'Yer ve zaman soruları. Ku (nerede/nereye) ve kengî (ne zaman) sorulan öğenin yerinde durur; fiil sonda kalır. Cevap yer veya zaman bildirir.',
+      ),
+      LessonSlide(
+        id: 'questions_1_s3',
+        lessonId: 'questions_1',
+        order: 3,
+        contentKu:
+            'Çima? Çawa?\n\nPirsên li ser sedemî û awayî. Çima = ji bo çi, çawa = bi çi awayî.\n\n• Tu çima hatî?: neden geldin?\n• Ew çima naxwaze?: o neden istemiyor?\n• Tu çawa yî?: nasılsın?\n• Tu çawa dixwînî?: nasıl okuyorsun?\n• Çawa çêdibe?: nasıl oluyor?\n• Bi çi awayî?: ne şekilde?',
+        contentTr:
+            'Sebep ve yöntem soruları. Çima (neden), çawa (nasıl) ile sorulur. Tu çawa yî? sorusunun cevabı Ez baş im (iyiyim) olur.',
+      ),
+      LessonSlide(
+        id: 'questions_1_s4',
+        lessonId: 'questions_1',
+        order: 4,
+        contentKu:
+            'Çend? Kîjan? Çiqas?\n\nPirsên li ser hejmar û hilbijartinê. Çend ji bo hejmaran, kîjan ji bo hilbijartinê.\n\n• Tu çend salî yî?: kaç yaşındasın?\n• Çend pirtûk?: kaç kitap?\n• Kîjan pirtûk?: hangi kitap?\n• Kîjan dibistan?: hangi okul?\n• Çiqas nan?: ne kadar ekmek?\n• Biha çiqas e?: fiyat ne kadar?',
+        contentTr:
+            'Sayı ve seçim soruları. Çend (kaç tane), kîjan (hangisi), çiqas (ne kadar) isimden önce gelir. Yaş sorusu çend salî ile sorulur.',
+      ),
+      LessonSlide(
+        id: 'questions_1_s5',
+        lessonId: 'questions_1',
+        order: 5,
+        contentKu:
+            'Pirsan çêke!\n\nRêza pirsê: peyva pirsê li cihê bersivê dimîne, lêker li dawiyê ye.\n\n• Tu kî yî?: sen kimsin?\n• Ew li ku ye?: o nerededir?\n• Ew kengî dixwîne?: o ne zaman okuyor?\n• Tu çima dikî?: neden yapıyorsun?\n• Ev çend in?: bunlar kaç tanedir?\n• Kîjan baş e?: hangisi iyidir?',
+        contentTr:
+            'Kurmancî soru dizilişi: soru kelimesi sorulan öğenin yerinde kalır, çekimli fiil sonda olur. Evet/hayır sorusunda ayrı soru kelimesi gerekmez.',
+      ),
+    ],
+    'verbs_1': [
+      LessonSlide(
+        id: 'verbs_1_s1',
+        lessonId: 'verbs_1',
+        order: 1,
+        contentKu:
+            'Lêker çi ye?\n\nDi kurmancî de lêker di dawiya hevokê de ye. Dema niha bi pêşgira di- çêdibe:\n\n• ez nan dixwim: ben ekmek yiyorum\n• tu çay vedixwî: sen çay içiyorsun\n• ew diçe: o gidiyor\n• em dikin: biz yapıyoruz\n• hûn dibînin: siz görüyorsunuz\n\nHatin cuda ye, di- naxe:\n\n• ew tên: onlar geliyorlar\n\nForma neyînî bi na- ye:\n\n• ez naçim: ben gitmiyorum',
+        contentTr:
+            'Kurmancîde fiil cümlenin sonunda yer alır. Şimdiki/geniş zaman çoğu fiilde di- önekiyle yapılır. Özne + nesne + fiil sırası vardır. Hatin (gelmek) di- almaz: ew tên onlar geliyorlar. Olumsuzluk na- ile yapılır: ez naçim ben gitmiyorum.',
+      ),
+      LessonSlide(
+        id: 'verbs_1_s2',
+        lessonId: 'verbs_1',
+        order: 2,
+        contentKu:
+            'Çûn û hatin:\n\nÇûn û hatin lêkerên tevgerê ne:\n\n• ez diçim: ben gidiyorum\n• tu diçî: sen gidiyorsun\n• ew diçe: o gidiyor\n• ez têm: ben geliyorum\n• tu têyî: sen geliyorsun\n• ew tê: o geliyor\n• em tên: biz geliyoruz\n• em diçin dibistanê: biz okula gidiyoruz',
+        contentTr:
+            'Çûn gitmek, hatin gelmektir. Her ikisi de şimdiki zamanda çekimlenir. Sen geliyorsun: tu têyî (ew tê ise o geliyor). Yer, çekimli hâlde fiilden sonra gelir: em diçin dibistanê. Em diçin, biz gidiyoruz demektir.',
+      ),
+      LessonSlide(
+        id: 'verbs_1_s3',
+        lessonId: 'verbs_1',
+        order: 3,
+        contentKu:
+            'Xwarin û vexwarin:\n\nJi bo xwarin û vexwarinê:\n\n• ez nan dixwim: ben ekmek yiyorum\n• tu nan dixwî: sen ekmek yiyorsun\n• ew nan dixwe: o ekmek yiyor\n• ez av vedixwim: ben su içiyorum\n• tu çay vedixwî: sen çay içiyorsun\n• ew çay vedixwe: o çay içiyor\n• em nan dixwin: biz ekmek yiyoruz',
+        contentTr:
+            'Xwarin yemek yemek, vexwarin içmektir. Nesne fiilden önce gelir: nan dixwim ekmek yiyorum. Dixwim ve vedixwim arasındaki ve- farkına dikkat edin.',
+      ),
+      LessonSlide(
+        id: 'verbs_1_s4',
+        lessonId: 'verbs_1',
+        order: 4,
+        contentKu:
+            'Kirin û dîtin:\n\nKirin û dîtin pir tên bikaranîn:\n\n• ez dikim: ben yapıyorum\n• tu dikî: sen yapıyorsun\n• ew dike: o yapıyor\n• ez dibînim: ben görüyorum\n• tu dibînî: sen görüyorsun\n• ew dibîne: o görüyor\n• em dibînin: biz görüyoruz\n• tu kar dikî: sen iş yapıyorsun',
+        contentTr:
+            'Kirin yapmak etmektir, dîtin görmektir. Kar dikim çalışıyorum anlamına gelir. Çekimde kişi eki değişir: dikim, dikî, dike. Soru ve olumsuz daha sonra gelecek.',
+      ),
+      LessonSlide(
+        id: 'verbs_1_s5',
+        lessonId: 'verbs_1',
+        order: 5,
+        contentKu:
+            'Hevokên hêsan:\n\nBi van lêkeran hevokên hêsan:\n\n• ez diçim malê: ben eve gidiyorum\n• tu têyî dibistanê: sen okula geliyorsun\n• ew nan dixwe: o ekmek yiyor\n• em çay vedixwin: biz çay içiyoruz\n• hûn kar dikin: siz iş yapıyorsunuz\n• ez te dibînim: ben seni görüyorum\n• ez naçim: ben gitmiyorum',
+        contentTr:
+            'Özne baştadır. Nesne fiilden önce gelir; yer çoğu zaman fiilden sonra gelir: diçim malê, têyî dibistanê. Naçim gitmiyorum demektir. Önce olumlu basit cümle kurun.',
+      ),
+    ],
+    'jobs_1': [
+      LessonSlide(
+        id: 'jobs_1_s1',
+        lessonId: 'jobs_1',
+        order: 1,
+        contentKu:
+            'Pîşe çi ye?\n\nPîşe karê mirovan e. Piştî dengdêrî: Ez mamoste me. Piştî dengdarî: Ez doktor im.\n\n• pîşe: meslek\n• kar: iş\n• ez: ben\n• tu: sen\n• ew: o\n• im/me: -ım, -im\n• e/ye: -dır, -dir',
+        contentTr:
+            'Meslek insanların işidir. Sesliden sonra Ez mamoste me, sessizden sonra Ez doktor im deriz. Bu derste 12 meslek öğreneceğiz.',
+      ),
+      LessonSlide(
+        id: 'jobs_1_s2',
+        lessonId: 'jobs_1',
+        order: 2,
+        contentKu:
+            'Pîşeyên hevpar:\n\nEv pîşe pir hevpar in.\n\n• mamoste: öğretmen\n• doktor: doktor\n• hemşîre: hemşire\n• xwendekar: öğrenci\n• karker: işçi\n• cotkar: çiftçi\n• polîs: polis',
+        contentTr:
+            'Bu meslekler çok yaygındır. Her satırı yüksek sesle oku ve Türkçesini söyle.',
+      ),
+      LessonSlide(
+        id: 'jobs_1_s3',
+        lessonId: 'jobs_1',
+        order: 3,
+        contentKu:
+            'Lêkera bûnê:\n\nEm pîşeyê bi lêkera bûnê dibêjin.\n\n• ez mamoste me: ben öğretmenim\n• tu doktor î: sen doktorsun\n• ew hemşîre ye: o hemşiredir\n• em karker in: biz işçiyiz\n• hûn polîs in: siz polissiniz\n• ew cotkar in: onlar çiftçidir',
+        contentTr:
+            'Mesleği söylemek için bûn fiilini kullanırız. Yüklem sesliyle bitiyorsa ez-me, tu-yî, ew-ye, em/hûn/ew-ne; sessizle bitiyorsa ez-im, tu-î, ew-e, em/hûn/ew-in.',
+      ),
+      LessonSlide(
+        id: 'jobs_1_s4',
+        lessonId: 'jobs_1',
+        order: 4,
+        contentKu:
+            'Li ku dixebite?\n\nMamoste li dibistanê dixebite.\n\n• dibistan: okul\n• nexweşxane: hastane\n• zevî: tarla\n• dadgeh: mahkeme\n• fabrîka: fabrika\n• qereqol: karakol\n• Doktor li nexweşxaneyê dixebite: Doktor hastanede çalışır',
+        contentTr:
+            'Çalışma yerini li ile söyleriz. Örnek: Mamoste li dibistanê dixebite. Doktor li nexweşxaneyê dixebite.',
+      ),
+      LessonSlide(
+        id: 'jobs_1_s5',
+        lessonId: 'jobs_1',
+        order: 5,
+        contentKu:
+            'Diyalog û rêziman:\n\nDiyalogek kurt.\n\n• Silav, tu kî yî?: Merhaba, sen kimsin\n• Ez Hêlîn im, ez hemşîre me.: Ben Helinim, ben hemşireyim\n• Tu li ku dixebitî?: Sen nerede çalışıyorsun\n• Ez li nexweşxaneyê dixebitim.: Ben hastanede çalışıyorum\n• ev dema niha ye: bu şimdiki zamandır\n• ergatîf tune ye: ergatif yok',
+        contentTr:
+            'Bu derste yalnız şimdiki zaman ve bûn var. Geçmiş zamanın ergatif yapısı yok. Diyaloğu iki kişiyle oku.',
+      ),
+    ],
+    'city_1': [
+      LessonSlide(
+        id: 'city_1_s1',
+        lessonId: 'city_1',
+        order: 1,
+        contentKu:
+            'Bajar: Cihên Girîng:\n\nDi bajêr de gelek cih hene. Ev peyvên bingehîn in:\n\n• bajar: şehir\n• kolan: sokak\n• nexweşxane: hastane\n• dibistan: okul\n• bazar: çarşı\n• xwaringeh: lokanta\n• otêl: otel',
+        contentTr:
+            'Şehirde birçok yer vardır. Temel kelimeler:\n- bajar: şehir\n- kolan: sokak\n- nexweşxane: hastane\n- dibistan: okul\n- bazar: çarşı\n- xwaringeh: lokanta\n- otêl: otel',
+      ),
+      LessonSlide(
+        id: 'city_1_s2',
+        lessonId: 'city_1',
+        order: 2,
+        contentKu:
+            'Alî: Rast, Çep, Rasterast:\n\nJi bo nîşandana rê van peyvan bi kar bîne:\n\n• rast: sağ\n• çep: sol\n• rasterast: düz, dosdoğru\n• nêzîk: yakın\n• dûr: uzak\n• li vir: burada\n• li wir: orada',
+        contentTr:
+            'Yön tarif ederken bu kelimeleri kullan:\n- rast: sağ\n- çep: sol\n- rasterast: düz, dosdoğru\n- nêzîk: yakın\n- dûr: uzak\n- li vir: burada\n- li wir: orada',
+      ),
+      LessonSlide(
+        id: 'city_1_s3',
+        lessonId: 'city_1',
+        order: 3,
+        contentKu:
+            'Rê Pirsîn:\n\nDema tu rê dipirsî, van qaliban bi kar bîne:\n\n• Ji kerema xwe: lütfen\n• ... li ku ye?: ... nerededir?\n• Ez çawa biçim ...?: ... nasıl giderim?\n• li ku derê ye?: nerededir?\n• dûr e?: uzak mıdır?\n• nêzîk e?: yakın mıdır?',
+        contentTr:
+            'Yol sorarken bu kalıpları kullan:\n- Ji kerema xwe: lütfen\n- ... li ku ye?: ... nerededir?\n- Ez çawa biçim ...?: ... nasıl giderim?\n- li ku derê ye?: nerededir?\n- dûr e?: uzak mıdır?\n- nêzîk e?: yakın mıdır?',
+      ),
+      LessonSlide(
+        id: 'city_1_s4',
+        lessonId: 'city_1',
+        order: 4,
+        contentKu:
+            'Rê Nîşandan:\n\nRê nîşandan. Hevokên fermanî bingehîn in:\n\n• Rasterast biçe: Düz git\n• Li rastê bizivire: Sağa dön\n• Li çepê bizivire: Sola dön\n• Bisekine: Dur\n• li pêş: önde\n• li paş: arkada',
+        contentTr:
+            'Yol tarif etme. Emir cümleleri temeldir:\n- Rasterast biçe: Düz git\n- Li rastê bizivire: Sağa dön\n- Li çepê bizivire: Sola dön\n- Bisekine: Dur\n- li pêş: önde\n- li paş: arkada',
+      ),
+      LessonSlide(
+        id: 'city_1_s5',
+        lessonId: 'city_1',
+        order: 5,
+        contentKu:
+            'Di Bajêr De: Diyalog:\n\nAxaftineke kurt û hêsan. Peyvên nezaketê:\n\n• Rojbaş: Merhaba, iyi günler\n• Ji kerema xwe: lütfen\n• Spas: Teşekkürler\n• Erê: Evet\n• Na: Hayır\n• Baş e: Tamam, iyidir',
+        contentTr:
+            'Kısa ve kolay bir konuşma. Kibarlık kelimeleri:\n- Rojbaş: Merhaba, iyi günler\n- Ji kerema xwe: lütfen\n- Spas: Teşekkürler\n- Erê: Evet\n- Na: Hayır\n- Baş e: Tamam, iyidir',
+      ),
+    ],
+    'shopping_1': [
+      LessonSlide(
+        id: 'shopping_1_s1',
+        lessonId: 'shopping_1',
+        order: 1,
+        contentKu:
+            'Silav li dikanê:\n\nLi dikanê em pêşî silav dikin.\n\n• merheba: merhaba\n• rojbaş: iyi günler\n• tu çawa yî?: nasılsın\n• ez baş im: iyiyim\n• bi xêr hatî: hoş geldin\n• bi xatirê te: hoşça kal',
+        contentTr:
+            'Dükkânda önce selamlaşırız. Merhaba, iyi günler, nasılsın, iyiyim, hoş geldin ve hoşça kal kalıplarını öğreniyoruz.',
+      ),
+      LessonSlide(
+        id: 'shopping_1_s2',
+        lessonId: 'shopping_1',
+        order: 2,
+        contentKu:
+            'Tiştên kirînê:\n\nLi dikanê gelek tişt hene.\n\n• nan: ekmek\n• av: su\n• şîr: süt\n• hêk: yumurta\n• sêv: elma\n• dikan: dükkân\n• sûk: pazar',
+        contentTr:
+            'Dükkânda birçok ürün vardır. Ekmek, su, süt, yumurta, elma, dükkân ve pazar kelimelerini öğreniyoruz.',
+      ),
+      LessonSlide(
+        id: 'shopping_1_s3',
+        lessonId: 'shopping_1',
+        order: 3,
+        contentKu:
+            'Pirsîna bihayê:\n\nJi bo pirsîna bihayê em dibêjin.\n\n• Ev çend e?: bu kaçtır\n• Biha çend e?: fiyat nedir\n• erzan: ucuz\n• giran: pahalı\n• ez dixwazim: istiyorum\n• tu çi dixwazî?: ne istiyorsun',
+        contentTr:
+            'Fiyatı sormak için Ev çend e ve Biha çend e deriz. Ucuz, pahalı ve istiyorum kalıplarını öğreniyoruz.',
+      ),
+      LessonSlide(
+        id: 'shopping_1_s4',
+        lessonId: 'shopping_1',
+        order: 4,
+        contentKu:
+            'Pere û hejmar:\n\nJi bo kirînê pere lazim e.\n\n• pere: para\n• biha: fiyat\n• yek: bir\n• du: iki\n• sê: üç\n• çar: dört\n• pênc: beş',
+        contentTr:
+            'Alışveriş için para gerekir. Para, fiyat ve 1\'den 5\'e kadar sayıları öğreniyoruz.',
+      ),
+      LessonSlide(
+        id: 'shopping_1_s5',
+        lessonId: 'shopping_1',
+        order: 5,
+        contentKu:
+            'Diyaloga kirînê:\n\nKiriyar û firoşkar diaxivin.\n\n• Ez sêv dixwazim: elma istiyorum\n• Şîr li dikanê ye: süt dükkândadır\n• Sêv erzan in: elmalar ucuzdur\n• Nan giran e: ekmek pahalıdır\n• Pere li ku ye?: para nerede',
+        contentTr:
+            'Müşteri ve satıcı konuşur. İstiyorum, dükkândadır, ucuzdur, pahalıdır kalıplarıyla kısa bir diyalog kuruyoruz.',
+      ),
+    ],
+    'health_1': [
+      LessonSlide(
+        id: 'health_1_s1',
+        lessonId: 'health_1',
+        order: 1,
+        contentKu:
+            'Tenduristî çi ye?\n\nTenduristî ji bo jiyanê pir girîng e. Em xwe nas dikin.\n\n• tenduristî: sağlık\n• baş: iyi\n• nexweş: hasta\n• ez: ben\n• tu: sen\n• ew: o',
+        contentTr:
+            'Sağlık yaşam için çok önemlidir. Kendimizi tanıyoruz.\n- tenduristî: sağlık\n- baş: iyi\n- nexweş: hasta\n- ez: ben\n- tu: sen\n- ew: o',
+      ),
+      LessonSlide(
+        id: 'health_1_s2',
+        lessonId: 'health_1',
+        order: 2,
+        contentKu:
+            'Doktor û Nexweşxane:\n\nEm diçin ba doktor. Doktor alîkarî dide.\n\n• doktor: doktor\n• nexweşxane: hastane\n• derman: ilaç\n• bijîşk: hekim, doktor\n• alîkarî: yardım\n• nexweş: hasta',
+        contentTr:
+            'Doktora gidiyoruz. Doktor yardım eder.\n- doktor: doktor\n- nexweşxane: hastane\n- derman: ilaç\n- bijîşk: hekim, doktor\n- alîkarî: yardım\n- nexweş: hasta',
+      ),
+      LessonSlide(
+        id: 'health_1_s3',
+        lessonId: 'health_1',
+        order: 3,
+        contentKu:
+            'Laşê Me:\n\nLaşê me ji beşan pêk tê. Em navên beşan hîn dibin.\n\n• ser: baş\n• çav: göz\n• diran: diş\n• dil: kalp\n• zik: karın\n• laş: vücut, beden',
+        contentTr:
+            'Vücudumuz parçalardan oluşur. Parça adlarını öğreniyoruz.\n- ser: baş\n- çav: göz\n- diran: diş\n- dil: kalp\n- zik: karın\n- laş: vücut, beden',
+      ),
+      LessonSlide(
+        id: 'health_1_s4',
+        lessonId: 'health_1',
+        order: 4,
+        contentKu:
+            'Nîşanên Nexweşiyê:\n\nDema em nexweş in, laşê me nîşan dide. Ev peyv girîng in.\n\n• êş: ağrı\n• ta: ateş\n• kuxik: öksürük\n• grîp: grip\n• serma: üşütme, soğuk algınlığı\n• diêşe: ağrıyor',
+        contentTr:
+            'Hasta olunca vücudumuz belirti gösterir. Bu sözler önemlidir.\n- êş: ağrı\n- ta: ateş\n- kuxik: öksürük\n- grîp: grip\n- serma: üşütme, soğuk algınlığı\n- diêşe: ağrıyor',
+      ),
+      LessonSlide(
+        id: 'health_1_s5',
+        lessonId: 'health_1',
+        order: 5,
+        contentKu:
+            'Ez bi Doktor re Dipeyivim:\n\nEm hevokên hêsan dibêjin. Em dema niha bi kar tînin.\n\n• Serê min diêşe: Başım ağrıyor\n• Ez nexweş im: Ben hastayım\n• Taya min heye: Ateşim var\n• Ez dikuxim: Öksürüyorum\n• Derman bide min: Bana ilaç ver',
+        contentTr:
+            'Basit cümleler söylüyoruz. Şimdiki zamanı kullanıyoruz.\n- Serê min diêşe: Başım ağrıyor\n- Ez nexweş im: Ben hastayım\n- Taya min heye: Ateşim var\n- Ez dikuxim: Öksürüyorum\n- Derman bide min: Bana ilaç ver',
+      ),
+    ],
+    'school_1': [
+      LessonSlide(
+        id: 'school_1_s1',
+        lessonId: 'school_1',
+        order: 1,
+        contentKu:
+            'Dibistan:\n\nDibistan cihê xwendinê ye. Em di dibistanê de hîn dibin.\n\n• dibistan: okul\n• pol: sınıf\n• ders: ders\n• mamoste: öğretmen\n• xwendekar: öğrenci\n• mezin: büyük',
+        contentTr: 'Okul, öğrenim yeridir. Okulda öğreniriz.',
+      ),
+      LessonSlide(
+        id: 'school_1_s2',
+        lessonId: 'school_1',
+        order: 2,
+        contentKu:
+            'Mamoste û Xwendekar:\n\nLi dibistanê mamoste dersê dide, xwendekar hîn dibe.\n\n• mamoste: öğretmen\n• xwendekar: öğrenci\n• heval: arkadaş\n• ders: ders\n• dibistan: okul\n• hîn dibe: öğreniyor',
+        contentTr:
+            'Okulda öğretmen ders verir, öğrenci öğrenir. Kişileri tanıtan basit cümleler kuruyoruz.',
+      ),
+      LessonSlide(
+        id: 'school_1_s3',
+        lessonId: 'school_1',
+        order: 3,
+        contentKu:
+            'Pirtûk, Defter û Pênûs:\n\nEm bi van tiştan dixwînin û dinivîsin.\n\n• pirtûk: kitap\n• defter: defter\n• pênûs: kalem\n• çente: çanta\n• dixwîne: okuyor\n• dinivîse: yazıyor',
+        contentTr:
+            'Bu eşyalarla okur ve yazarız. Okumak ve yazmak fiillerini şimdiki zamanda görüyoruz.',
+      ),
+      LessonSlide(
+        id: 'school_1_s4',
+        lessonId: 'school_1',
+        order: 4,
+        contentKu:
+            'Tiştên Polê:\n\nDi polê de ev tişt hene.\n\n• pol: sınıf\n• mase: masa\n• kursî: sandalye\n• text: kara tahta\n• çente: çanta\n• polê: sınıf (oblik; di polê de: sınıfta)',
+        contentTr:
+            'Sınıfta bu şeyler vardır. Yer için di/li + oblik gelir; pol dişil olduğu için hali polê.',
+      ),
+      LessonSlide(
+        id: 'school_1_s5',
+        lessonId: 'school_1',
+        order: 5,
+        contentKu:
+            'Di Polê de:\n\nEm di polê de çi dikin? Em hîn dibin.\n\n• ez dixwînim: okuyorum\n• ez dinivîsim: yazıyorum\n• guhdar dike: dinliyor\n• dibêje: söylüyor\n• mezin: büyük\n• biçûk: küçük',
+        contentTr:
+            'Sınıfta ne yaparız? Öğreniriz. Şimdiki zamanla çok basit cümleler kuruyoruz.',
+      ),
+    ],
+    'transport_1': [
+      LessonSlide(
+        id: 'transport_1_s1',
+        lessonId: 'transport_1',
+        order: 1,
+        contentKu:
+            'Wesayîtên veguhestinê:\n\nEm bi wesayîtan diçin. Li jêr wesayîtên bingehîn hene:\n\n• otobus: otobüs\n• erebe: araba\n• trên: tren\n• balafir: uçak\n• taksî: taksi',
+        contentTr:
+            'Taşıtlarla gidiyoruz. Aşağıda temel taşıtlar var: otobüs, araba, tren, uçak ve taksi.',
+      ),
+      LessonSlide(
+        id: 'transport_1_s2',
+        lessonId: 'transport_1',
+        order: 2,
+        contentKu:
+            'Tu diçî ku derê?\n\nBi lêkera çûn em dibêjin em diçin ku derê:\n\n• ez diçim: gidiyorum\n• tu diçî: gidiyorsun\n• ew diçe: gidiyor\n• em diçin: gidiyoruz\n• hûn diçin: gidiyorsunuz\n• ew diçin: gidiyorlar',
+        contentTr:
+            'Çûn fiiliyle nereye gittiğimizi söylüyoruz: ez diçim gidiyorum, tu diçî gidiyorsun, ew diçe gidiyor, em diçin gidiyoruz, hûn diçin gidiyorsunuz, ew diçin gidiyorlar demektir.',
+      ),
+      LessonSlide(
+        id: 'transport_1_s3',
+        lessonId: 'transport_1',
+        order: 3,
+        contentKu:
+            'Bi çi diçî?\n\nBi + wesayît em dibêjin em bi çi diçin:\n\n• bi otobusê: otobüsle\n• bi erebeyê: arabayla\n• bi trênê: trenle\n• bi balafirê: uçakla\n• bi taksiyê: taksiyle',
+        contentTr:
+            'Bi + taşıt ile neyle gittiğimizi söylüyoruz: otobüsle, arabayla, trenle, uçakla, taksiyle.',
+      ),
+      LessonSlide(
+        id: 'transport_1_s4',
+        lessonId: 'transport_1',
+        order: 4,
+        contentKu:
+            'Bilêt û Rawestgeh:\n\nJi bo veguhestinê ev peyv girîng in:\n\n• bilêt: bilet\n• rawestgeh: durak\n• balafirgeh: havaalanı\n• rê: yol\n• rêwî: yolcu\n• ajokar: şoför',
+        contentTr:
+            'Ulaşım için bu sözcükler önemlidir: bilet, durak, havaalanı, yol, yolcu ve şoför.',
+      ),
+      LessonSlide(
+        id: 'transport_1_s5',
+        lessonId: 'transport_1',
+        order: 5,
+        contentKu:
+            'Diyaloga Hêsan:\n\nLi rawestgehê du kes diaxivin:\n\n• Silav!: Merhaba!\n• Tu diçî ku derê?: Nereye gidiyorsun?\n• Ez diçim Enqereyê.: Ankara’ya gidiyorum.\n• Bi çi diçî?: Neyle gidiyorsun?\n• Bi otobusê diçim.: Otobüsle gidiyorum.',
+        contentTr:
+            'Durakta iki kişi konuşuyor: selamlaşma, nereye gidiyorsun, Ankara’ya gidiyorum, neyle gidiyorsun, otobüsle gidiyorum.',
+      ),
+    ],
+    'past_1': [
+      LessonSlide(
+        id: 'past_1_s1',
+        lessonId: 'past_1',
+        order: 1,
+        contentKu:
+            'Dema Borî Çi Ye?\n\nDema borî ji bo karên qediyayî ye. Em behsa duh û berê dikin. Mînak:\n\n• duh: dün\n• berê: önce\n• qediya: bitti\n• Ez çûm: Gittim\n• Min xwar: Yedim\n• Me ew dît: Onu gördük',
+        contentTr:
+            'Geçmiş zaman bitmiş işler içindir. Dünü ve öncesini anlatırız. Örnek: duh: dün / berê: önce / qediya: bitti / Ez çûm: Gittim / Min xwar: Yedim / Me ew dît: Onu gördük',
+      ),
+      LessonSlide(
+        id: 'past_1_s2',
+        lessonId: 'past_1',
+        order: 2,
+        contentKu:
+            'Çûn û Hatin:\n\nÇûn û hatin negerguhêz in, bi ez-tu-ew tên. Mînak:\n\n• ez çûm: gittim\n• tu çûyî: gittin\n• ew çû: gitti\n• ez hatim: geldim\n• tu hatî: geldin\n• ew hat: geldi\n• em çûn: gittik',
+        contentTr:
+            'çûn ve hatin geçişsizdir, ez-tu-ew zamirleriyle çekilir. Özne şimdiki zamandaki gibi yalın hâldedir. Örnek: ez çûm: gittim / tu çûyî: gittin / ew çû: gitti / ez hatim: geldim / tu hatî: geldin / ew hat: geldi / em çûn: gittik',
+      ),
+      LessonSlide(
+        id: 'past_1_s3',
+        lessonId: 'past_1',
+        order: 3,
+        contentKu:
+            'Xwarin û Dîtin - Ergativ:\n\nDi dema borî de lêkerên gerguhêz bi min, te, wî, wê û me tên. Mînak:\n\n• min xwar: yedim\n• te xwar: yedin\n• wî xwar: o yedi (erkek)\n• wê xwar: o yedi (kadın)\n• me xwar: yedik\n• min dît: gördüm\n• te dît: gördün',
+        contentTr:
+            'Geçmiş zamanda geçişli fiiller min, te, wî, wê ve me ile çekilir. ez yerine min, tu yerine te gelir. Nesne tekilse fiil xwar ve dît olarak kalır. Bu kurala ergatif denir. Örnek: min xwar: yedim / te xwar: yedin / wî xwar: o yedi (erkek) / wê xwar: o yedi (kadın) / me xwar: yedik / min dît: gördüm / te dît: gördün',
+      ),
+      LessonSlide(
+        id: 'past_1_s4',
+        lessonId: 'past_1',
+        order: 4,
+        contentKu:
+            'Bûn û Neyînî:\n\nBûn negerguhêz e, bi ez, tu û ew tê. Neyînî bi ne- ye. Mînak:\n\n• ez bûm: oldum\n• tu bûyî: oldun\n• ew bû: oldu\n• ez neçûm: gitmedim\n• tu nehatî: gelmedin\n• min nexwar: yemedim\n• min nedît: görmedim',
+        contentTr:
+            'bûn geçişsizdir ve ez, tu, ew ile çekilir. Olumsuzluk fiilin başına ne- getirerek yapılır. Geçişlide min nexwar, geçişsizde ez neçûm olur.',
+      ),
+      LessonSlide(
+        id: 'past_1_s5',
+        lessonId: 'past_1',
+        order: 5,
+        contentKu:
+            'Di Jiyana Rojane de:\n\nEm bi hevokên kurt dipeyivin. Mînak:\n\n• Duh ez çûm dibistanê: Dün okula gittim\n• Tu hatî malê: Eve geldin\n• Min nan xwar: Ekmek yedim\n• Te çay vexwar: Çay içtin\n• Ew mamoste bû: O öğretmendi',
+        contentTr:
+            'Kısa cümlelerle konuşuruz. Örnek: Duh ez çûm dibistanê: Dün okula gittim / Tu hatî malê: Eve geldin / Min nan xwar: Ekmek yedim / Te çay vexwar: Çay içtin / Ew mamoste bû: O öğretmendi',
       ),
     ],
     'everyday_1': [

@@ -706,6 +706,17 @@ const Set<String> retiredQuestionIds = <String>{
   // çevrelemez. Açıklama yeniden yazılırken Gemini 3.1 Pro yakaladı.
   // ---------------------------------------------------------------------
   'offline_tf_cog_0003',
+  // ---------------------------------------------------------------------
+  // 2026-10-08: cevap soru metninde yazıyor ve düzeltilemiyor.
+  // `ds_cand_0285` ('Di "Mem û Zîn" de Zîn ji kê hez dike?', doğru "Mem"):
+  // cevap eserin ADININ parçası; iki dilde de soru metni cevabı veriyordu ve
+  // küresel bekçinin (`answer_not_in_prompt_test`) kasıtlı izin listesinde
+  // duruyordu. Eser adı çıkarılırsa soru anlamsızlaşır, adı kalırsa cevap
+  // sızar; Kurmancî metni yeniden yazmak yerine emekliye ayrıldı. Dîrok
+  // sorularında (`ds_dirok_0175/0277/0291`) yalnız Türkçe istem cevabı
+  // veriyordu; onlar yeniden ifade edildi, emekli DEĞİL.
+  // ---------------------------------------------------------------------
+  'ds_cand_0285',
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?

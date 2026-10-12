@@ -6653,7 +6653,7 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Rome",
       "qualityVersion": 1
     },
-    "promptTr": "Roma geleneğine göre MÖ 753 yılında hangi şehir kuruldu?",
+    "promptTr": "Romalıların geleneğine göre MÖ 753 yılında hangi şehir kuruldu?",
     "answersTr": [
       "Atina",
       "Sparta",
@@ -8668,7 +8668,7 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Silk_Road",
       "qualityVersion": 1
     },
-    "promptTr": "İpek Yolu adını hangi üründen alır?",
+    "promptTr": "Çin ile Batı'yı bağlayan tarihî ticaret yolu adını hangi üründen alır?",
     "answersTr": [
       "Altın",
       "İpek",
@@ -8761,7 +8761,7 @@
       "sourceReference": "https://en.wikipedia.org/wiki/Silk_Road",
       "qualityVersion": 1
     },
-    "promptTr": "İpek Yolu'nda hangi ürün Çin'den geliyordu?",
+    "promptTr": "Çin ile Batı'yı bağlayan tarihî ticaret yolunda hangi ürün Çin'den geliyordu?",
     "answersTr": [
       "İpek",
       "Altın",
