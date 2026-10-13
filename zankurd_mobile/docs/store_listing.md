@@ -352,7 +352,7 @@ ZanKurd sepaneke zanînê ye ku hînbûna kurmancî dike pêşbirk. Ziman, çand
 dîrok, wêje, erdnîgarî, muzîk, sînema, siyaset, zanist û raman, teknolojî
 û cîhan — zêdetir ji 2.400 pirs, yanzdeh kategorî.
 
-Piraniya pirsan li ser zimân, dîrok û çanda kurdî ne. Pirsên Cîhan,
+Piraniya pirsan li ser ziman, dîrok û çanda kurdî ne. Pirsên Cîhan,
 Teknolojî û Zanist û Raman zanîna giştî ne û ji kategoriyên kurdî cuda ne.
 
 ÇAWA DIXEBITE

@@ -896,7 +896,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  /// "Dersê rojane" kartı: hedefe göre önceliklendirilmiş günlük solo quiz.
+  /// "Dersa rojê" kartı: hedefe göre önceliklendirilmiş günlük solo quiz.
   /// (Kart 10 soru vaat eder; ders ağacına değil gerçek quize gider.)
   Future<void> _startDailyQuiz() async {
     if (_roomActionLoading) return;

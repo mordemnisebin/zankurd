@@ -27,7 +27,7 @@ class DailyMissionStore {
   ///
   /// ## Kusur
   ///
-  /// Ana ekranın birincil kartı ("Erkê Îro / Dersê rojane") ilerlemesini
+  /// Ana ekranın birincil kartı ("Erkê Îro / Dersa rojê") ilerlemesini
   /// `MissionType.answerCorrect` görevinden ödünç alıyordu. Ama günün üç
   /// görevi on altı tanelik havuzdan gün tohumuyla çekiliyor ve havuzda o
   /// türden yalnız üç tanım var; çoğu gün seçilmiyor. O günlerde kart
