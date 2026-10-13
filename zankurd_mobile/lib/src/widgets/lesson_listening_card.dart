@@ -30,15 +30,23 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
   String? _selectedMeaning;
   bool _hasPlayed = false;
 
-  LearnerLexiconEntry get _entry => widget.entries[_index];
+  /// Ses kaydı ya da TTS'i olan öğeler. Kayıt ifade başınadır; kısmi kayıtta
+  /// yalnız seslendirilebilenler sorulur (TTS varken hepsi).
+  List<LearnerLexiconEntry> get _playable => [
+    for (final entry in widget.entries)
+      if (widget.speaker.availableFor(entry.termKu)) entry,
+  ];
+
+  LearnerLexiconEntry get _entry => _playable[_index % _playable.length];
   bool get _answered => _selectedMeaning != null;
   bool get _correct => _selectedMeaning == _entry.meaningTr;
 
   List<LearnerLexiconEntry> get _options {
-    final count = math.min(3, widget.entries.length);
+    final playable = _playable;
+    final count = math.min(3, playable.length);
     final candidates = List<LearnerLexiconEntry>.generate(
       count,
-      (offset) => widget.entries[(_index + offset) % widget.entries.length],
+      (offset) => playable[(_index + offset) % playable.length],
     );
     if (candidates.length < 2) return candidates;
 
@@ -62,11 +70,12 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
   }
 
   Future<void> _next() async {
-    if (widget.entries.length < 2) return;
+    final count = _playable.length;
+    if (count < 2) return;
     await widget.speaker.stop();
     if (!mounted) return;
     setState(() {
-      _index = (_index + 1) % widget.entries.length;
+      _index = (_index + 1) % count;
       _selectedMeaning = null;
       _hasPlayed = false;
     });
@@ -80,7 +89,8 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.speaker.available || widget.entries.length < 2) {
+    final playable = _playable;
+    if (!widget.speaker.available || playable.length < 2) {
       return const SizedBox.shrink();
     }
 
@@ -105,7 +115,7 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
                 ),
               ),
               Text(
-                '${_index + 1}/${widget.entries.length}',
+                '${_index % playable.length + 1}/${playable.length}',
                 style: SahneType.captionStrong.copyWith(
                   color: t.tx3,
                   fontFeatures: const [FontFeature.tabularFigures()],
@@ -173,7 +183,7 @@ class _LessonListeningCardState extends State<LessonListeningCard> {
               style: SahneType.bodyStrong.copyWith(color: t.tx2),
             ),
             const SizedBox(height: SahneSpace.x3),
-            if (widget.entries.length > 1)
+            if (playable.length > 1)
               SahneButton.secondary(
                 key: const ValueKey('lesson-listening-next'),
                 onPressed: _next,

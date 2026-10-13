@@ -139,6 +139,9 @@ flutter:
     - assets/zankurd.webp
     - assets/zankurd_icon.webp
     - assets/sounds/
+    # Ana dili Kurmancî olanların kayıtları (lib/src/services/recorded_clip_catalog.dart);
+    # liste: tool/ses/kayit_listesi.py. Dizin boşken yalnız index.json girer.
+    - assets/audio/ku/
     # İkon yazı tipi lisansları lisans sayfasına koddan kaydedilir
     # (lib/src/utils/bundled_font_licenses.dart).
     - assets/fonts/LICENSE-FontAwesome.txt

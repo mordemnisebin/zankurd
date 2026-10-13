@@ -5,6 +5,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../theme/app_icons.dart';
 import '../widgets/app_state.dart';
+import '../widgets/lexicon_speak_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
 
@@ -113,65 +114,75 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
                             : '${context.t(K.lexiconForms)}: '
                                   '${entry.forms.join(', ')}';
 
-                        return Semantics(
-                          container: true,
-                          label:
-                              '${entry.termKu}. ${entry.meaningTr}. '
-                              '${formsText == null ? '' : '$formsText. '}'
-                              '$sourceText. $categoryText.',
-                          child: ExcludeSemantics(
-                            child: SahneSurfaceCard(
-                              key: ValueKey('lexicon-entry-${entry.id}'),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    entry.termKu,
-                                    style: SahneType.headline.copyWith(
-                                      color: t.tx,
-                                    ),
-                                  ),
-                                  const SizedBox(height: SahneSpace.x1),
-                                  Text(
-                                    entry.meaningTr,
-                                    style: SahneType.body.copyWith(
-                                      color: t.tx2,
-                                    ),
-                                  ),
-                                  if (formsText != null) ...[
-                                    const SizedBox(height: SahneSpace.x1),
-                                    Text(
-                                      formsText,
-                                      key: ValueKey(
-                                        'lexicon-forms-${entry.id}',
-                                      ),
-                                      style: SahneType.caption.copyWith(
-                                        color: t.tx3,
-                                      ),
-                                    ),
-                                  ],
-                                  const SizedBox(height: SahneSpace.x2),
-                                  Wrap(
-                                    spacing: SahneSpace.x3,
-                                    runSpacing: SahneSpace.x1,
-                                    children: [
-                                      Text(
-                                        sourceText,
-                                        style: SahneType.captionStrong.copyWith(
-                                          color: t.learnTx,
+                        // Ses düğmesi okuyucuya açık kalsın diye
+                        // `ExcludeSemantics` yalnız metin sütununu sarar.
+                        return SahneSurfaceCard(
+                          key: ValueKey('lexicon-entry-${entry.id}'),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Semantics(
+                                  container: true,
+                                  label:
+                                      '${entry.termKu}. ${entry.meaningTr}. '
+                                      '${formsText == null ? '' : '$formsText. '}'
+                                      '$sourceText. $categoryText.',
+                                  child: ExcludeSemantics(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          entry.termKu,
+                                          style: SahneType.headline.copyWith(
+                                            color: t.tx,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        categoryText,
-                                        style: SahneType.caption.copyWith(
-                                          color: t.tx3,
+                                        const SizedBox(height: SahneSpace.x1),
+                                        Text(
+                                          entry.meaningTr,
+                                          style: SahneType.body.copyWith(
+                                            color: t.tx2,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                        if (formsText != null) ...[
+                                          const SizedBox(height: SahneSpace.x1),
+                                          Text(
+                                            formsText,
+                                            key: ValueKey(
+                                              'lexicon-forms-${entry.id}',
+                                            ),
+                                            style: SahneType.caption.copyWith(
+                                              color: t.tx3,
+                                            ),
+                                          ),
+                                        ],
+                                        const SizedBox(height: SahneSpace.x2),
+                                        Wrap(
+                                          spacing: SahneSpace.x3,
+                                          runSpacing: SahneSpace.x1,
+                                          children: [
+                                            Text(
+                                              sourceText,
+                                              style: SahneType.captionStrong
+                                                  .copyWith(color: t.learnTx),
+                                            ),
+                                            Text(
+                                              categoryText,
+                                              style: SahneType.caption.copyWith(
+                                                color: t.tx3,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
+                              LexiconSpeakButton(text: entry.termKu),
+                            ],
                           ),
                         );
                       },

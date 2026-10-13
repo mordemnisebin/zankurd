@@ -931,7 +931,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
 
   Future<void> _loadListeningSpeaker() async {
     try {
-      final speaker = await TtsLessonListeningSpeaker.load();
+      final speaker = await LessonAudio.shared();
       if (!mounted) return;
       setState(() => _listeningSpeaker = speaker);
     } catch (error, stack) {
