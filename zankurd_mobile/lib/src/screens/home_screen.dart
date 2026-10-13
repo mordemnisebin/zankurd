@@ -34,6 +34,7 @@ import '../services/daily_question_selector.dart';
 import 'paywall_screen.dart';
 import 'quiz_screen.dart';
 import 'home/today_task_card.dart';
+import 'home/home_duel_card.dart';
 import 'home/home_rows.dart';
 import 'home/home_sections.dart';
 import 'home/daily_missions_card.dart';
@@ -468,6 +469,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             firstSession: _firstSession,
             onStart: _startDailyQuiz,
           ),
+          // Düello kartı: sırayla düello vaadi ya da "Sonuç hazır · N"
+          // dönüş kancası. Bayrak kapalı/çevrimdışıyken kendini çizmez
+          // (üstündeki aralık da kartın içindedir, boşluk kalmaz).
+          HomeDuelCard(repository: repo, refreshToken: _refreshCounter),
           // İlk oturumda seviye çubuğu ("Seviye 1 · 0/1000") yeni gelen için
           // anlamsız bir sayıdır; yerine bir şey konmaz. 2026-09-30 doğallık:
           // buraya konan "3 adımda ZanKurd" kartı hemen üstteki Günün dersini
