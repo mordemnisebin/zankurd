@@ -29,6 +29,17 @@
 -keepattributes InnerClasses
 -keepattributes EnclosingMethod
 
+# ── Credential Manager / Google ile giriş (google_sign_in 7) ──
+# google_sign_in 7 Android'de androidx.credentials üzerinden çalışır;
+# oynatma servisi sağlayıcıları reflection ile yüklenir, R8 bunları
+# "kullanılmıyor" sanıp silerse release derlemesinde giriş sessizce
+# çalışmaz (debug'da çalışır). Android belgelerinin önerdiği kural.
+-if class androidx.credentials.CredentialManager
+-keep class androidx.credentials.playservices.** { *; }
+-keep class com.google.android.libraries.identity.googleid.** { *; }
+# Flutter'ın Play Core (deferred components) başvuruları; kullanmıyoruz.
+-dontwarn com.google.android.play.core.**
+
 # ── Supabase / OkHttp / Ktor (ağ katmanı) ──
 -dontwarn okhttp3.**
 -dontwarn okio.**
