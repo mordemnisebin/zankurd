@@ -234,7 +234,7 @@ class LearnerLexicon {
     ),
     'questions_1': LearnerLexiconSource(
       id: 'questions_1',
-      titleKu: 'Pirs',
+      titleKu: 'Peyvên pirsê',
       titleTr: 'Soru kelimeleri',
       categoryKu: 'Rojane',
       categoryTr: 'Günlük',
