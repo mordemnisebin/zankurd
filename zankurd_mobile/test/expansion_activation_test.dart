@@ -86,7 +86,8 @@ void main() {
       // 3353 -> 3613 (+260): 2026-10-08 `dersler2_2026_10_08` (132: başlangıç
       // yolu II) ve `hat_2026_10_07` (128: alt konu hattı).
       // 3613 -> 3734 (+121): 2026-10-08 `dersler3_2026_10_08` (başlangıç yolu III).
-      3734,
+      // 3734 -> 3759 (+25): 2026-10-13 ders çoktan seçmelileri (dersler3 +21, dersler2 +4).
+      3759,
       reason:
           'Fiziksel kayıt sayısı değişti. Banka eklendi/çıkarıldıysa bu sayı '
           'bilerek güncellenmeli; kendiliğinden kaymışsa bir asset '

@@ -707,15 +707,15 @@
     "prompt": "Kîjan berhem ferhenga manzum a zarokan e û ji aliyê Ehmedê Xanî ve hatiye amadekirin?",
     "promptTr": "Çocuklar için manzum sözlük olan eser hangisidir ve Ahmed-i Hani tarafından hazırlanmıştır?",
     "answers": [
-      "Nûbihara Biçûkan",
       "Zembîlfiroş",
       "Dîwan",
+      "Nûbihara Biçûkan",
       "Leyl û Mecnûn"
     ],
     "answersTr": [
-      "Nûbihara Biçûkan",
       "Zembilfroş",
       "Divan",
+      "Nûbihara Biçûkan",
       "Leyla ile Mecnun"
     ],
     "correctAnswer": "Nûbihara Biçûkan",
@@ -2422,16 +2422,16 @@
     "prompt": "Kîjan çem ji herêma Gurgumê dertê û dirije Deryaya Spî?",
     "promptTr": "Kahramanmaraş bölgesinden doğup Akdeniz'e dökülen nehir hangisidir?",
     "answers": [
+      "Ceyhan",
       "Dîcle",
       "Firat",
-      "Xabûr",
-      "Ceyhan"
+      "Xabûr"
     ],
     "answersTr": [
+      "Ceyhan",
       "Dicle",
       "Fırat",
-      "Habur",
-      "Ceyhan"
+      "Habur"
     ],
     "correctAnswer": "Ceyhan",
     "correctAnswerTr": "Ceyhan",

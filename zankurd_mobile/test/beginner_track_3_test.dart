@@ -28,7 +28,7 @@ import 'support/widget_test_helpers.dart';
 /// ## Bekçi
 ///
 /// Yedi yeni ders derse bağlı derse bağlı çoktan seçmeli/boşluk doldurma/cümle kurma (sayılar `_mc`,
-/// `_fib`, `_wo`) taşır; bankada tam 121 kayıt vardır; her dersin
+/// `_fib`, `_wo`) taşır; bankada tam 142 kayıt vardır; her dersin
 /// slaytları, sözlük kaynağı ve kısa testi vardır; boşluk doldurma/cümle kurma
 /// sorularındaki her Kurmancî sözcük sözlüktedir; öğrenme yolunda yeni
 /// dersler önceki başlangıç derslerinden SONRA gelir.
@@ -45,14 +45,17 @@ const _lessons = [
 /// Derse bağlı çoktan seçmeli/boşluk doldurma/cümle kurma sayısı. «Kîjan hevok
 /// rast e?» gibi genel istemler bankada zaten varsa kalite kapısı tam yineleme
 /// (kritik) sayar; o kopyalar alınmadı (past_1 yalnız 4 çoktan seçmeliyle kaldı).
+// 2026-10-13: jobs_1 5->11, city_1 7->10, school_1 7->11, past_1 4->12.
+// Kısa test 5 soru çeker; 8 altı derste yedek yoktu, tekrar oynamada aynı
+// sorular dönüyordu. Yeni sorular slayttaki somut sözcüklere bağlıdır.
 const _mc = {
-  'jobs_1': 5,
-  'city_1': 7,
+  'jobs_1': 11,
+  'city_1': 10,
   'shopping_1': 8,
   'health_1': 8,
-  'school_1': 7,
+  'school_1': 11,
   'transport_1': 8,
-  'past_1': 4,
+  'past_1': 12,
 };
 const _fib = {
   'jobs_1': 6,
@@ -110,7 +113,7 @@ void main() {
     }
     expect(
       playable.where((q) => q.id.startsWith('dersler3_2026_10_08_')).length,
-      121,
+      142, // 121 + 21 çoktan seçmeli (2026-10-13)
     );
   });
 

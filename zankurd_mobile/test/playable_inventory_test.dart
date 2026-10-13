@@ -86,7 +86,8 @@ void main() {
       // 3353 -> 3613 (+260): 2026-10-08 `dersler2_2026_10_08` (132) ve
       // `hat_2026_10_07` (128).
       // 3613 -> 3734 (+121): 2026-10-08 `dersler3_2026_10_08`.
-      3734,
+      // 3734 -> 3759 (+25): 2026-10-13 derse bağlı 25 çoktan seçmeli (dersler3 +21, dersler2 +4).
+      3759,
       reason:
           'Yüklenen kayıt sayısı değişti; `expansion_activation_test` ile '
           'birlikte güncellenmeli.',
@@ -171,7 +172,8 @@ void main() {
       // 132, `hat_2026_10_07` 128), hepsi `approved`; -1: `ds_cand_0285`
       // emekliye ayrıldı.
       // 3143 -> 3264 (+121): 2026-10-08 `dersler3_2026_10_08`, hepsi `approved`.
-      3264,
+      // 3264 -> 3289 (+25): 2026-10-13 ders çoktan seçmelileri, hepsi `approved`.
+      3289,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '

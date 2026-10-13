@@ -3465,15 +3465,15 @@
     "prompt": "Kesek li ber derî ye, tu nas nakî. Tu çi dipirsî?",
     "promptTr": "Kapıda biri var, tanımıyorsun. Ne sorarsın?",
     "answers": [
+      "Tu kî yî?",
       "Tu çawa dixwînî?",
       "Çend pirtûk hene?",
-      "Tu kî yî?",
       "Biha çiqas e?"
     ],
     "answersTr": [
+      "Sen kimsin?",
       "Nasıl okuyorsun?",
       "Kaç kitap var?",
-      "Sen kimsin?",
       "Fiyat ne kadar?"
     ],
     "correctAnswer": "Tu kî yî?",
@@ -4439,6 +4439,150 @@
     "explanationTr": "Doğru sıra: \"Tu kar dikî.\" (Sen iş yapıyorsun.)",
     "hintKu": "Bi peyva \"tu\" dest pê bike.",
     "hintTr": "\"tu\" sözcüğüyle başla.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0133",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Hevokê \"tu ___ dibistanê\" bi lêkera çûnê temam bike.",
+    "promptTr": "\"tu ___ dibistanê\" cümlesini çûn (gitmek) fiiliyle tamamla.",
+    "answers": [
+      "diçî",
+      "diçim",
+      "dixwî",
+      "dibînî"
+    ],
+    "answersTr": [
+      "sen gidiyorsun",
+      "ben gidiyorum",
+      "sen yiyorsun",
+      "sen görüyorsun"
+    ],
+    "correctAnswer": "diçî",
+    "correctAnswerTr": "sen gidiyorsun",
+    "explanation": "Tu öznesiyle diçî kullanılır; diçim ben içindir.",
+    "explanationKu": "Tu diçî dibistanê, diçim ji bo ez e.",
+    "explanationTr": "Tu öznesiyle diçî kullanılır; diçim ben içindir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0134",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Ji bo \"ew\" bi lêkera xwarinê kîjan lêker rast e?",
+    "promptTr": "\"ew\" öznesi ile xwarin (yemek) fiilinde hangi çekim doğrudur?",
+    "answers": [
+      "dixwim",
+      "dixwî",
+      "dixwe",
+      "dixwin"
+    ],
+    "answersTr": [
+      "ben yiyorum",
+      "sen yiyorsun",
+      "o yiyor",
+      "biz yiyoruz"
+    ],
+    "correctAnswer": "dixwe",
+    "correctAnswerTr": "o yiyor",
+    "explanation": "Ew öznesiyle dixwe kullanılır; dixwim ben içindir.",
+    "explanationKu": "Ew nan dixwe; dixwim ji bo ez e.",
+    "explanationTr": "Ew öznesiyle dixwe kullanılır; dixwim ben içindir.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0135",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Forma neyînî ya \"ez diçim\" kîjan e?",
+    "promptTr": "\"ez diçim\" cümlesinin na- ile olumsuz biçimi hangisidir?",
+    "answers": [
+      "diçim",
+      "naçî",
+      "naçin",
+      "naçim"
+    ],
+    "answersTr": [
+      "ben gidiyorum",
+      "sen gitmiyorsun",
+      "biz gitmiyoruz",
+      "ben gitmiyorum"
+    ],
+    "correctAnswer": "naçim",
+    "correctAnswerTr": "ben gitmiyorum",
+    "explanation": "Naçim ben gitmiyorum demektir; na- olumsuzluk yapar.",
+    "explanationKu": "Naçim ji bo ez e, na- neyînî çêdike.",
+    "explanationTr": "Naçim ben gitmiyorum demektir; na- olumsuzluk yapar.",
+    "metadata": {
+      "dialect": "Kurmancî",
+      "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",
+      "sourceReference": "ZanKurd Kurmancî öğrenme dersi verbs_1 (yerel slaytlar; sunucu dersi leker, supabase/2026-10-08_dersler2_lessons.sql)",
+      "reviewStatus": "approved",
+      "reviewedBy": "Kurmancî metni Gemini 3.1 Pro (agy) ve Grok 4.7 (cursor-agent) tarafından okundu, uyuşmazlıkta hakem Gemini 3.8 Flash (agy); taslak: Muse Spark 1.3 / MiMo-V2.6-Flash (OpenCode) ve Claude; derleme ve denetim: Claude Opus 5.5",
+      "reviewedAt": "2026-10-08",
+      "lastContentCheckAt": "2026-10-08",
+      "qualityVersion": 2,
+      "learningLessonId": "verbs_1"
+    }
+  },
+  {
+    "id": "dersler2_2026_10_08_0136",
+    "category": "Ziman",
+    "difficulty": 1,
+    "type": "multipleChoice",
+    "prompt": "Bi lêkera \"hatin\" re ji bo \"tu\" kîjan lêker rast e?",
+    "promptTr": "\"hatin\" (gelmek) fiili ile \"tu\" (sen) için hangi çekim doğrudur?",
+    "answers": [
+      "diçî",
+      "têyî",
+      "dixwî",
+      "dibînî"
+    ],
+    "answersTr": [
+      "sen gidiyorsun",
+      "sen geliyorsun",
+      "sen yiyorsun",
+      "sen görüyorsun"
+    ],
+    "correctAnswer": "têyî",
+    "correctAnswerTr": "sen geliyorsun",
+    "explanation": "Tu öznesiyle hatin têyî olur; hatin di- almaz.",
+    "explanationKu": "Tu têyî, hatin di- naxe.",
+    "explanationTr": "Tu öznesiyle hatin têyî olur; hatin di- almaz.",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: verbs_1",

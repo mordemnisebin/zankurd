@@ -1758,14 +1758,14 @@
     "promptTr": "Rusya siyasi tarihinde, partinin 1903'teki bölünmesinden sonra Menşeviklerin lideri kim olmuştur?",
     "answers": [
       "Vladîmîr Lenîn",
-      "Leon Troçkî",
       "Julius Martov",
+      "Leon Troçkî",
       "Georgî Plexanov"
     ],
     "answersTr": [
       "Vladimir Lenin",
-      "Leon Troçki",
       "Julius Martov",
+      "Leon Troçki",
       "Georgi Plehanov"
     ],
     "correctAnswer": "Julius Martov",
@@ -1898,14 +1898,14 @@
     "promptTr": "Tarihte seçimlerde kadınlara oy hakkını tanıyan ilk ülke hangisidir?",
     "answers": [
       "Fransa",
-      "Norwêc",
       "Zelanda Nû",
+      "Norwêc",
       "Brîtanya"
     ],
     "answersTr": [
       "Fransa",
-      "Norveç",
       "Yeni Zelanda",
+      "Norveç",
       "Birleşik Krallık"
     ],
     "correctAnswer": "Zelanda Nû",
