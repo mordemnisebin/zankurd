@@ -54,3 +54,8 @@ ile üretilir. Betik `.env.mobile.release.json`'u doğrular, `--dart-define-from
 ile derler ve ikilide anahtar yoksa durur. Bayraksız derleme imzalanır ve
 yüklenir ama uygulama "yapılandırma eksik" ekranında açılmaz (TestFlight
 build 23, 2026-10-13).
+
+Mağazaya yükleme de elle yapılmaz: `zankurd_mobile/tool/yayinla.sh ios|android [--kuru]`
+önce bu betiği çalıştırır, sonra IPA'yı App Store Connect'e, AAB'yi Play'e
+(taslak olarak) yükler. Gerekli ortam değişkenleri ve Play servis hesabı kurulumu
+`zankurd_mobile/docs/YAYIN_ADIMLARI.md` başında.
