@@ -3220,8 +3220,8 @@
     "category": "Çand",
     "prompt": "Kevneşopiya dengbêjiyê berê bi giranî li kîjan cihan zindî dihat hiştin?",
     "answers": [
-      "jiyana herêmî û parvekirin",
       "odeyên gund û dîwanxane",
+      "jiyana herêmî û parvekirin",
       "sor, kesk û zer",
       "bi kevneşopiyê re girêdayî ye"
     ],
@@ -3233,8 +3233,8 @@
     "explanationTr": "Dengbêjler, geleneksel olarak köy odaları ve dîwanlarda toplanıp icra yaparlardı.",
     "promptTr": "Dengbêjlik geleneği eskiden ağırlıklı olarak hangi mekânlarda yaşatılırdı?",
     "answersTr": [
-      "yerel yaşam ve paylaşım",
       "köy odaları ve dîwanxane",
+      "yerel yaşam ve paylaşım",
       "kırmızı, yeşil ve sarı",
       "gelenekle bağlantılıdır"
     ],
@@ -3922,9 +3922,9 @@
     "category": "Dîrok",
     "prompt": "Selahaddînê Eyûbî piştî kîjan şerî Qudsê vegerand?",
     "answers": [
-      "Şerê Hittînê (1187)",
       "mîrê kurd ê ku di sedsala 19em de têkoşîna xweseriyê da",
       "1960",
+      "Şerê Hittînê (1187)",
       "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike"
     ],
     "correctAnswer": "Şerê Hittînê (1187)",
@@ -3935,9 +3935,9 @@
     "explanationTr": "Selahaddin Eyyubi, 1187 Hıttin Savaşı'nın ardından Kudüs'ü geri almıştır.",
     "promptTr": "Selahaddînê Eyûbî hangi savaştan sonra Kudüs'ü geri almıştır?",
     "answersTr": [
-      "Hıttin Savaşı (1187)",
       "19. yüzyılda özerklik mücadelesi veren Kürt beyi",
       "1960",
+      "Hıttin Savaşı (1187)",
       "19. yüzyılda Kürt birliğini kurmaya çalışan ünlü Soran beyi"
     ],
     "correctAnswerTr": "Hıttin Savaşı (1187)"
@@ -9706,9 +9706,9 @@
     "category": "Edebiyat",
     "prompt": "\"Şivanê Kurd\" çi ye?",
     "answers": [
+      "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
       "destana evînê ya ku di 1692an de hat nivîsandin",
       "kovara wêjeyî ya ku di 1932an de li Şamê derket",
-      "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
       "rojnameya kurdî ya ku di 1898an de derket"
     ],
     "correctAnswer": "yekem romana kurdî ya nûjen a ku di 1935an de hat çapkirin",
@@ -9719,9 +9719,9 @@
     "explanationTr": "\"Şivanê Kurd\": 1935 yılında basılan ilk modern Kürtçe roman.",
     "promptTr": "\"Şivanê Kurd\" nedir?",
     "answersTr": [
+      "1935 yılında basılan ilk modern Kürtçe roman",
       "1692'de yazılan aşk destanı",
       "1932'de Şam'da çıkan edebiyat dergisi",
-      "1935 yılında basılan ilk modern Kürtçe roman",
       "1898'de çıkan Kürtçe gazete"
     ],
     "correctAnswerTr": "1935 yılında basılan ilk modern Kürtçe roman"
@@ -9882,9 +9882,9 @@
     "prompt": "\"Destana Dewrêşê Evdî\" çi ye?",
     "answers": [
       "yek ji weşanên wêjeyî û siyasî yên destpêkê yên kurdî",
+      "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
       "çîroka evînê ya klasîk a ku di kevneşopiya devkî ya kurdî de jî tê gotin",
-      "nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî",
-      "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî"
+      "nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî"
     ],
     "correctAnswer": "yek ji destanên herî xemgîn ên wêjeya devkî ya kurdî",
     "explanation": "Dewrêşê Evdî Destanı Kürt sözlü edebiyatına ait bir destandır ve hüzünlü sonuyla bilinir.",
@@ -9895,9 +9895,9 @@
     "promptTr": "\"Dewrêşê Evdî Destanı\" nedir?",
     "answersTr": [
       "ilk Kürt edebi ve siyasi yayınlarından biri",
+      "Kürt sözlü edebiyatının en hüzünlü destanlarından biri",
       "Kürt sözlü geleneğinde de anlatılan klasik aşk hikâyesi",
-      "Şerefname ve Mem û Zîn'i Soranîye çeviren yazar",
-      "Kürt sözlü edebiyatının en hüzünlü destanlarından biri"
+      "Şerefname ve Mem û Zîn'i Soranîye çeviren yazar"
     ],
     "correctAnswerTr": "Kürt sözlü edebiyatının en hüzünlü destanlarından biri"
   },
@@ -11087,9 +11087,9 @@
     "category": "Muzîk",
     "prompt": "Di zanîna Muzîkê de derbarê \"kemençe\" de ya rast kîjan e?",
     "answers": [
+      "amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin",
       "dengê efsanewî yê muzîka klasîk a Behdînan",
       "lêdanên birêkûpêk ên ku bingeha muzîkê ne",
-      "amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin",
       "kesa ku bi giştî stranan dibêje"
     ],
     "correctAnswer": "amûra kevanî ya ku li erdnîgariya kurdî jî tê lêxistin",
@@ -11100,9 +11100,9 @@
     "explanationTr": "Kemençe yayla çalınır; Karadeniz'de de yaygındır ve sesi tiz ve incedir.",
     "promptTr": "Müzik bilgisinde \"kemençe\" hakkında doğru olan hangisidir?",
     "answersTr": [
+      "Kürt coğrafyasında da çalınan yaylı çalgı",
       "Behdînan klasik müziğinin efsanevi sesi",
       "müziğin temelini oluşturan düzenli vuruşlar",
-      "Kürt coğrafyasında da çalınan yaylı çalgı",
       "genel olarak şarkı söyleyen kişi"
     ],
     "correctAnswerTr": "Kürt coğrafyasında da çalınan yaylı çalgı"
@@ -12191,9 +12191,9 @@
     "prompt": "Li jêr kîjan têgeha \"hevserokatî\" rave dike?",
     "answers": [
       "hevpariyeke pirkulturî û wekhev di welatekî hevbeş de",
+      "pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de",
       "aboriyeke ku li şûna qezencê, pêdivî û parvekirinê bingeh digire",
-      "têgihiştina mirov a ku ew parçeyekî xwezayê ye",
-      "pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de"
+      "têgihiştina mirov a ku ew parçeyekî xwezayê ye"
     ],
     "correctAnswer": "pergala nûnertiya wekhev a jin-mêr di organên rêveberiyê de",
     "explanation": "Eş başkanlık yalnızca aynı unvanlı iki kişi demek değildir; iki tarafın onayı olmadan kararların geçerli olmadığı ortak bir karar mekanizmasıdır.",
@@ -12204,9 +12204,9 @@
     "promptTr": "Aşağıdakilerden hangisi \"eş başkanlık\" kavramını açıklar?",
     "answersTr": [
       "ortak bir ülkede çok kültürlü ve eşit birliktelik",
+      "yönetim organlarında kadın-erkek eşit temsil sistemi",
       "kâr yerine ihtiyacı ve paylaşımı esas alan ekonomi",
-      "insanın doğanın bir parçası olduğunu kavraması",
-      "yönetim organlarında kadın-erkek eşit temsil sistemi"
+      "insanın doğanın bir parçası olduğunu kavraması"
     ],
     "correctAnswerTr": "yönetim organlarında kadın-erkek eşit temsil sistemi"
   },
@@ -12815,9 +12815,9 @@
     "category": "Siyaset",
     "prompt": "Derbarê \"muxalefeta civakî\" de vebijêrka rast kîjan e?",
     "answers": [
+      "rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî",
       "demokrasiya herêmî, azadiya jinê, ekolojî û pirrengî",
       "mafê gelan ê nasîn û rêveberiyê bi nasnameya xwe",
-      "rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî",
       "rexneya modernîteya kapîtalîst û dewleta neteweyî ya navendî"
     ],
     "correctAnswer": "rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî",
@@ -12828,9 +12828,9 @@
     "explanationKu": "Muxalefeta civakî ne tenê nerazîbûna takekesî ye; rêxistin, xwepêşandan, daxuyanî û çalakiyên aştiyane yên ku daxwazên civakê digihînin rêveberiyê digire nav xwe. Ji ber vê yekê vebijêrka rast, rêxistina bertekên aştiyane yên gel li dijî rêveberiya fermî ye.",
     "promptTr": "\"toplumsal muhalefet\" hakkında doğru seçenek hangisidir?",
     "answersTr": [
+      "halkın resmî yönetime karşı barışçıl tepkilerinin örgütlenmesi",
       "yerel demokrasi, kadın özgürlüğü, ekoloji ve çoğulculuk",
       "halkların kendi kimliğiyle tanınma ve yönetilme hakkı",
-      "halkın resmî yönetime karşı barışçıl tepkilerinin örgütlenmesi",
       "kapitalist modernite ve merkezî ulus-devlet eleştirisi"
     ],
     "correctAnswerTr": "halkın resmî yönetime karşı barışçıl tepkilerinin örgütlenmesi"

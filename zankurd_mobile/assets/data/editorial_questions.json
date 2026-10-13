@@ -6868,10 +6868,10 @@
     "category": "Cografya",
     "prompt": "Gola Urmiyê li kîjan perçeyê Kurdistanê ye?",
     "answers": [
+      "Rojhilatê Kurdistanê",
       "Bakurê Kurdistanê",
       "Rojavayê Kurdistanê",
-      "Başûrê Kurdistanê",
-      "Rojhilatê Kurdistanê"
+      "Başûrê Kurdistanê"
     ],
     "correctAnswer": "Rojhilatê Kurdistanê",
     "explanation": "Urmiye Gölü bölgenin en büyük gölüdür, suyu tuzludur ve Rojhilat'ta kalır; su seviyesi son on yılda büyük ölçüde düşmüştür.",
@@ -6886,10 +6886,10 @@
     },
     "promptTr": "Urmiye Gölü Kürdistan'ın hangi parçasındadır?",
     "answersTr": [
+      "Rojhilat (Doğu)",
       "Bakur (Kuzey)",
       "Rojava (Batı)",
-      "Başûr (Güney)",
-      "Rojhilat (Doğu)"
+      "Başûr (Güney)"
     ],
     "correctAnswerTr": "Rojhilat (Doğu)"
   },
@@ -7535,8 +7535,8 @@
     "answers": [
       "Referandûma serxwebûnê",
       "Peymana Lozanê",
-      "Serjimara Cizîrê",
-      "Êrîşa Şengalê"
+      "Êrîşa Şengalê",
+      "Serjimara Cizîrê"
     ],
     "correctAnswer": "Êrîşa Şengalê",
     "explanation": "Ağustos 2014'te Şengal saldırıya uğradı; binlerce Ezidi katledildi veya kaçırıldı.",
@@ -7553,8 +7553,8 @@
     "answersTr": [
       "Bağımsızlık referandumu",
       "Lozan Antlaşması",
-      "Cizîr sayımı",
-      "Şengal saldırısı"
+      "Şengal saldırısı",
+      "Cizîr sayımı"
     ],
     "correctAnswerTr": "Şengal saldırısı"
   },

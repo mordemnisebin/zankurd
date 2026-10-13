@@ -27,8 +27,8 @@ import 'support/widget_test_helpers.dart';
 ///
 /// ## Bekçi
 ///
-/// Yedi yeni ders derse bağlı >= 7 (verbs_1) ya da 8 çoktan seçmeli, 6 boşluk doldurma ve
-/// 5 cümle kurma taşır; bankada tam 132 kayıt vardır; her dersin
+/// Yedi yeni ders derse bağlı 11 (verbs_1) ya da 8 çoktan seçmeli, 6 boşluk doldurma ve
+/// 5 cümle kurma taşır; bankada tam 136 kayıt vardır; her dersin
 /// slaytları, sözlük kaynağı ve kısa testi vardır; boşluk doldurma/cümle kurma
 /// sorularındaki her Kurmancî sözcük sözlüktedir; öğrenme yolunda yeni
 /// dersler önceki başlangıç derslerinden SONRA gelir.
@@ -66,10 +66,12 @@ void main() {
       );
       // verbs_1: «Kîjan hevok rast e?» istemi clothes_1'de zaten var; ikinci
       // kopya kalite kapısında tam yineleme (kritik) sayıldığı için bankaya
-      // alınmadı, bu yüzden 8 değil 7 çoktan seçmeli.
+      // alınmadı, bu yüzden 7 kalmıştı. 2026-10-13: slayttaki çekimlerden
+      // dört somut soru eklendi (27-30), kısa testte yedekle 9+ olsun diye;
+      // 7 soruluk ders 5 soruluk testi tekrarsız doldursa da yedeği yoktu.
       expect(
         of(QuestionType.multipleChoice).length,
-        id == 'verbs_1' ? 7 : 8,
+        id == 'verbs_1' ? 11 : 8,
         reason: '$id MC',
       );
       expect(of(QuestionType.fillInBlank).length, 6, reason: '$id boşluk');
@@ -77,7 +79,7 @@ void main() {
     }
     expect(
       playable.where((q) => q.id.startsWith('dersler2_2026_10_08_')).length,
-      132,
+      136, // 132 + 4 verbs_1 sorusu (2026-10-13)
     );
   });
 

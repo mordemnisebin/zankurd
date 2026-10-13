@@ -254,7 +254,21 @@ void main() {
       // Sözlükten üretilenler `lesson_` önekli; etiketli banka soruları
       // hepsi ve önde.
       final tagged = questions.takeWhile((q) => !q.id.startsWith('lesson_'));
-      expect(tagged, hasLength(entry.value), reason: entry.key);
+      // 2026-10-13: aynı cümleyi/selamı soran ikinci etiketli soru, yerine
+      // çakışmayan aday yoksa turdan çıkar ve yerine sözlük sorusu girer
+      // (`_replaceSameTarget`); tekrar soru, tam etiketli turdan kötüdür.
+      // Bu seyrek olur (everyday_1'de ~%3); en fazla bir dolgu kabul edilir
+      // ve dolgu her zaman sondadır.
+      expect(
+        tagged.length,
+        inInclusiveRange(entry.value - 1, entry.value),
+        reason: entry.key,
+      );
+      expect(
+        questions.skip(tagged.length).every((q) => q.id.startsWith('lesson_')),
+        isTrue,
+        reason: '${entry.key}: dolgu etiketli soruların arasına girmemeli',
+      );
       expect(
         questions.every((q) => q.metadata?.learningLessonId == entry.key),
         isTrue,
