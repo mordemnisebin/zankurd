@@ -258,6 +258,26 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// idempotenttir — ikinci çağrı yeniden XP eklemez.
   Future<int> claimAsyncDuelXp(String duelId);
 
+  /// Arkadaşa meydan okuma (2026-10-13): bekleyen rastgele düelloya ASLA
+  /// eşleşmeden taze bir düello açar ve paylaşılabilir bir `D…` kodu
+  /// ([AsyncDuelStart.challengeCode]) döndürür. [friendId] verilirse kabul
+  /// edilmiş bir arkadaşa gider (ona bildirim düşer), verilmezse kodu
+  /// bağlantıyı tutan herkes kabul edebilir. Sunucu hataları:
+  /// [classifyAsyncDuelChallengeError].
+  Future<AsyncDuelStart> createAsyncDuelChallenge({
+    String? category,
+    String? friendId,
+  });
+
+  /// `/join/D…` bağlantısındaki ya da gelen kutusundaki [code] ile meydan
+  /// okumayı kabul eder (misafir hesap dahil). Aynı kişi için idempotenttir.
+  Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code);
+
+  /// Sunucuda meydan okuma RPC'leri var mı? Yoksa (göç henüz uygulanmamış)
+  /// giriş noktaları gizlenir. Belirsizlikte (ağ hatası, oturum yok) `true`
+  /// döner: yalnız KESİN "fonksiyon yok" yanıtı gizler.
+  Future<bool> supportsAsyncDuelChallenge();
+
   /// Sunucudaki odanın tek ve yetkili snapshot'ını oyuncularıyla yükler.
   ///
   /// Hızlı eşleştirme yalnız `room_id` döndürür; istemci bu kimliği

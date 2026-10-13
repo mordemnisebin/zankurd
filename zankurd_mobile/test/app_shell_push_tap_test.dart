@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_inbox.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/services/push_tap_router.dart';
@@ -75,6 +76,28 @@ void main() {
     expect(find.byType(PlayHubScreen), findsOneWidget);
     expect(find.byType(FriendsScreen), findsNothing);
     // Hedef tüketildi; ikinci bir tazelemede tekrar uygulanmaz.
+    expect(PushTapRouter.pending.value, isNull);
+  });
+
+  testWidgets('bekleyen async_duel_invite hedefi Yarış sekmesini seçer ve '
+      'Düellolarım listesini üstüne açar', (tester) async {
+    final repository = freshMockRepository()..addIncomingChallengeForTesting();
+    expect(PushTapRouter.offer({'kind': 'async_duel_invite'}), isTrue);
+
+    await tester.pumpWidget(
+      testShell(
+        child: AppShell(
+          repository: repository,
+          connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(visibleTabIndex(tester), 1);
+    expect(find.byType(AsyncDuelListScreen), findsOneWidget);
+    // Gelen meydan okuma listenin başında "Sıra sende".
+    expect(find.text('Sıra sende'), findsOneWidget);
     expect(PushTapRouter.pending.value, isNull);
   });
 

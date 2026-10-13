@@ -1754,6 +1754,114 @@ void main() {
     await _shoot(t, '248_home_duel_ready_dark_ku');
   }, tags: ['preview']);
 
+  // ── Arkadaşa meydan okuma (2026-10-13) ───────────────────────────────
+  Future<void> openChallengeSheet(WidgetTester t) async {
+    final row = find.byKey(const ValueKey('play-hub-async-duel-challenge'));
+    await t.scrollUntilVisible(
+      row,
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.tap(row);
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    expect(find.byKey(const ValueKey('challenge-sheet')), findsOneWidget);
+  }
+
+  testWidgets('249 meydan okuma seçim sayfası', (t) async {
+    final repo = _TourRepository();
+    await _pump(t, PlayHubScreen(repository: repo, asyncDuelEnabled: true));
+    await openChallengeSheet(t);
+    await _shoot(t, '249_challenge_sheet');
+  }, tags: ['preview']);
+
+  testWidgets('250 meydan okuma seçim sayfası (karanlık, Kurmancî, '
+      'arkadaşsız)', (t) async {
+    final repo = _TourRepository();
+    await _pump(
+      t,
+      PlayHubScreen(repository: repo, asyncDuelEnabled: true),
+      dark: true,
+      ku: true,
+    );
+    await openChallengeSheet(t);
+    await t.tap(find.byKey(const ValueKey('challenge-sheet-friend')));
+    await t.pump(const Duration(milliseconds: 600));
+    await _shoot(t, '250_challenge_sheet_no_friends_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('251 Düellolarım — gelen meydan okuma (Sıra sende)', (t) async {
+    final repo = _TourRepository();
+    await t.runAsync(() async {
+      await _playAsyncDuel(repo, correctCount: 5);
+      await _seedRojdaDuel(repo);
+      repo.addIncomingChallengeForTesting(creatorName: 'Rojda');
+    });
+    await _pump(t, PlayHubScreen(repository: repo, asyncDuelEnabled: true));
+    await t.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-async-duel-inbox')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.pump(const Duration(milliseconds: 300));
+    await _shoot(t, '251_inbox_incoming_challenge');
+  }, tags: ['preview']);
+
+  testWidgets('252 Düellolarım — gelen meydan okuma (karanlık, Kurmancî)', (
+    t,
+  ) async {
+    final repo = _TourRepository();
+    await t.runAsync(() async {
+      await _seedRojdaDuel(repo);
+      repo.addIncomingChallengeForTesting(creatorName: 'Rojda');
+    });
+    await _pump(
+      t,
+      PlayHubScreen(repository: repo, asyncDuelEnabled: true),
+      dark: true,
+      ku: true,
+    );
+    await t.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-async-duel-inbox')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.pump(const Duration(milliseconds: 300));
+    await _shoot(t, '252_inbox_incoming_challenge_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('253 ana ekran (Sıra sende)', (t) async {
+    final repo = _TourRepository();
+    await t.runAsync(
+      () async => repo.addIncomingChallengeForTesting(creatorName: 'Rojda'),
+    );
+    await _pump(t, Scaffold(body: HomeScreen(repository: repo)));
+    await _shoot(t, '253_home_duel_your_turn');
+  }, tags: ['preview']);
+
+  testWidgets('254 meydan okuma sonucu — Paylaş (karanlık, Kurmancî)', (
+    t,
+  ) async {
+    final repo = _TourRepository();
+    late AsyncDuelStart start;
+    await t.runAsync(() async {
+      start = await repo.createAsyncDuelChallenge();
+    });
+    await _pump(
+      t,
+      AsyncDuelResultScreen(
+        repository: repo,
+        view: AsyncDuelResultView.fromAnswer(
+          start,
+          const AsyncDuelResult(waiting: true, myCorrect: 5, myMs: 60000),
+        ),
+      ),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '254_challenge_result_share_dark_ku');
+  }, tags: ['preview']);
+
   // ── Sırayla düello ekranları ────────────────────────────────────────
   testWidgets('97 oyun merkezi — sırayla düello', (t) async {
     final repo = MockZanKurdRepository();

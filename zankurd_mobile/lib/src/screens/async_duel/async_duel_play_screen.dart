@@ -14,6 +14,7 @@ import '../../utils/error_reporter.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../quiz/quiz_option_tile.dart';
 import '../quiz/quiz_timer_controller.dart';
+import 'async_duel_inbox.dart';
 import 'async_duel_result_screen.dart';
 import '../../widgets/dialog_action_pair.dart';
 
@@ -33,11 +34,16 @@ class AsyncDuelPlayScreen extends StatefulWidget {
   const AsyncDuelPlayScreen({
     required this.repository,
     this.category,
+    this.entry,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final String? category;
+
+  /// Düelloyu nasıl başlatacağı. `null` → rastgele ([category] ile).
+  /// Meydan okuma oluşturma/kabul etme için [AsyncDuelEntry].
+  final AsyncDuelEntry? entry;
 
   @override
   State<AsyncDuelPlayScreen> createState() => _AsyncDuelPlayScreenState();
@@ -130,10 +136,33 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       _startError = null;
     });
     try {
-      final start = await widget.repository.startAsyncDuel(
-        category: widget.category,
-      );
+      final entry =
+          widget.entry ?? AsyncDuelEntry.random(category: widget.category);
+      final start = switch (entry.kind) {
+        AsyncDuelEntryKind.random => await widget.repository.startAsyncDuel(
+          category: entry.category,
+        ),
+        AsyncDuelEntryKind.createChallenge =>
+          await widget.repository.createAsyncDuelChallenge(
+            category: entry.category,
+            friendId: entry.friendId,
+          ),
+        AsyncDuelEntryKind.acceptChallenge =>
+          await widget.repository.acceptAsyncDuelChallenge(entry.code!),
+      };
       if (!mounted) return;
+      // Yeniden açılan kabul edilmiş meydan okumada 7 sorum zaten bitmiş:
+      // oynanacak bir şey yok, sonuç listesine geç (hata/boş ekran yok).
+      if (start.alreadyFinished ||
+          start.answeredCount >= start.questions.length) {
+        unawaited(
+          Navigator.of(context).pushReplacement(
+            AppRoute.to(AsyncDuelListScreen(repository: widget.repository)),
+          ),
+        );
+        return;
+      }
+      final resumeAt = start.answeredCount;
       setState(() {
         _duel = start;
         _results = List<SahneDiamondState?>.filled(
@@ -141,7 +170,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           null,
         );
         _loading = false;
-        _index = 0;
+        _index = resumeAt;
         _phase = _Phase.idle;
         _selectedAnswer = null;
         _revealedAnswerText = null;
@@ -411,9 +440,13 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
       );
     }
     if (_startError != null) {
+      final challengeError = classifyAsyncDuelChallengeError(_startError!);
       return _StartErrorView(
-        tooMany: _startError.toString().contains('Too many open duels'),
-        onRetry: _loadDuel,
+        tooMany: challengeError == AsyncDuelChallengeError.tooMany,
+        message: asyncDuelStartErrorMessage(context, _startError!),
+        onRetry: asyncDuelChallengeErrorIsTerminal(challengeError)
+            ? null
+            : _loadDuel,
       );
     }
     return _buildPlayScaffold(context);
@@ -617,11 +650,37 @@ class _QuestionText extends StatelessWidget {
   }
 }
 
+/// Başlatma hatasının oyuncuya gösterilen DÜRÜST metni. Meydan okuma
+/// hatalarının her biri ayrı bir cümledir (süresi dolmuş, başkası almış,
+/// kendi bağlantım…); bilinmeyen hata genel "başlatılamadı"dır.
+String asyncDuelStartErrorMessage(BuildContext context, Object error) {
+  final key = switch (classifyAsyncDuelChallengeError(error)) {
+    AsyncDuelChallengeError.notFound => K.challengeErrNotFound,
+    AsyncDuelChallengeError.own => K.challengeErrOwn,
+    AsyncDuelChallengeError.taken => K.challengeErrTaken,
+    AsyncDuelChallengeError.expired => K.challengeErrExpired,
+    AsyncDuelChallengeError.notForYou => K.challengeErrNotForYou,
+    AsyncDuelChallengeError.notReady => K.challengeErrNotReady,
+    AsyncDuelChallengeError.notAFriend => K.challengeErrNotAFriend,
+    AsyncDuelChallengeError.tooMany => K.asyncDuelTooMany,
+    AsyncDuelChallengeError.noQuestions ||
+    AsyncDuelChallengeError.other => K.asyncDuelStartFailed,
+  };
+  return context.t(key);
+}
+
 class _StartErrorView extends StatelessWidget {
-  const _StartErrorView({required this.tooMany, required this.onRetry});
+  const _StartErrorView({
+    required this.tooMany,
+    required this.message,
+    required this.onRetry,
+  });
 
   final bool tooMany;
-  final VoidCallback onRetry;
+  final String message;
+
+  /// `null` → yeniden denemek anlamsız (bağlantı geçersiz); yalnız Kapat.
+  final VoidCallback? onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -634,23 +693,33 @@ class _StartErrorView extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: SahneButton.secondary(
-              label: context.t(K.close),
-              onPressed: () => Navigator.of(context).pop(),
-              expand: true,
-            ),
+            child: onRetry == null
+                ? SahneButton.primary(
+                    key: const ValueKey('async-duel-start-error-close'),
+                    label: context.t(K.close),
+                    arrow: false,
+                    onPressed: () => Navigator.of(context).pop(),
+                    expand: true,
+                  )
+                : SahneButton.secondary(
+                    label: context.t(K.close),
+                    onPressed: () => Navigator.of(context).pop(),
+                    expand: true,
+                  ),
           ),
-          const SizedBox(width: SahneSpace.x3),
-          Expanded(
-            flex: 3,
-            child: SahneButton.primary(
-              label: context.t(K.retry),
-              icon: AppIcons.arrowsRotate,
-              arrow: false,
-              onPressed: onRetry,
-              expand: true,
+          if (onRetry != null) ...[
+            const SizedBox(width: SahneSpace.x3),
+            Expanded(
+              flex: 3,
+              child: SahneButton.primary(
+                label: context.t(K.retry),
+                icon: AppIcons.arrowsRotate,
+                arrow: false,
+                onPressed: onRetry,
+                expand: true,
+              ),
             ),
-          ),
+          ],
         ],
       ),
       body: Builder(
@@ -670,9 +739,8 @@ class _StartErrorView extends StatelessWidget {
                   ),
                   const SizedBox(height: SahneSpace.x4),
                   Text(
-                    context.t(
-                      tooMany ? K.asyncDuelTooMany : K.asyncDuelStartFailed,
-                    ),
+                    message,
+                    key: const ValueKey('async-duel-start-error'),
                     textAlign: TextAlign.center,
                     style: SahneType.headline.copyWith(color: t.tx),
                   ),

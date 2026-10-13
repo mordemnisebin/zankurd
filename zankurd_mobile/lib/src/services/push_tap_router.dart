@@ -7,11 +7,12 @@ import '../utils/error_reporter.dart';
 /// Bildirime dokununca oynanacak hedef ekran.
 ///
 /// `async_duel_result` → [playTab] (Yarış sekmesi, "Düellolarım" sonucu
-/// orada görünür). `async_duel_invite` / `async_duel_turn` ("sıra sende")
-/// de aynı yere düşer: bekleyen düello Düellolarım kutusunda durur.
-/// `friend_request` → [friends] (Liderlik sekmesi + üstüne açılan
-/// Arkadaşlar ekranı).
-enum PushTapTarget { playTab, friends }
+/// orada görünür). `async_duel_invite` / `async_duel_turn` ("sıra sende":
+/// bir arkadaş meydan okudu) → [duelInbox]: Yarış sekmesi + üstüne açılan
+/// tam "Düellolarım" listesi; gelen meydan okuma listenin başında "Sıra
+/// sende" satırıdır. `friend_request` → [friends] (Liderlik sekmesi +
+/// üstüne açılan Arkadaşlar ekranı).
+enum PushTapTarget { playTab, duelInbox, friends }
 
 /// Bildirime dokunan oyuncuyu doğru ekrana yönlendirir.
 ///
@@ -30,9 +31,8 @@ class PushTapRouter {
   /// (bilinmeyen ya da `null`/boş) `null`.
   static PushTapTarget? targetForKind(String? kind) {
     return switch (kind) {
-      'async_duel_result' ||
-      'async_duel_invite' ||
-      'async_duel_turn' => PushTapTarget.playTab,
+      'async_duel_result' => PushTapTarget.playTab,
+      'async_duel_invite' || 'async_duel_turn' => PushTapTarget.duelInbox,
       'friend_request' => PushTapTarget.friends,
       _ => null,
     };

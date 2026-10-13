@@ -75,6 +75,10 @@ class _MockAsyncDuel {
     required this.expiresAt,
     this.otherCorrect,
     this.otherMs,
+    this.challengeCode,
+    this.invitedName,
+    this.incoming = false,
+    this.unclaimed = false,
   });
 
   final String id;
@@ -84,6 +88,20 @@ class _MockAsyncDuel {
   final String? opponentName;
   final DateTime createdAt;
   final DateTime expiresAt;
+
+  /// Meydan okuma bağlantı kodu (`D…`); rastgele düellolarda null.
+  final String? challengeCode;
+
+  /// Davet ettiğim arkadaşın adı (yalnız arkadaşa meydan okumada).
+  final String? invitedName;
+
+  /// Bana gelen, henüz kabul etmediğim meydan okuma.
+  bool incoming;
+
+  /// Henüz kimsenin kabul etmediği, başkasından gelen meydan okuma:
+  /// [incoming] değilse (bağlantı meydan okuması) kabul edilene dek
+  /// "Düellolarım"da görünmez.
+  bool unclaimed;
 
   final Set<int> answeredIndices = {};
   int myCorrect = 0;
@@ -826,8 +844,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<List<AsyncDuelSummary>> loadMyAsyncDuels() async {
-    final entries = _asyncDuels.values.toList()
-      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    final entries =
+        _asyncDuels.values
+            .where((duel) => !duel.unclaimed || duel.incoming)
+            .toList()
+          ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
     return [
       for (final duel in entries)
         AsyncDuelSummary(
@@ -849,6 +870,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
           createdAt: duel.createdAt,
           completedAt: duel.completedAt,
           seen: duel.seen,
+          challengeCode: duel.role == AsyncDuelRole.creator || duel.incoming
+              ? duel.challengeCode
+              : null,
+          incomingChallenge: duel.incoming,
+          invitedName: duel.role == AsyncDuelRole.creator
+              ? duel.invitedName
+              : null,
         ),
     ];
   }
@@ -856,6 +884,125 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<void> markAsyncDuelSeen(String duelId) async {
     _asyncDuels[duelId]?.seen = true;
+  }
+
+  // ─── Arkadaşa meydan okuma ───────────────────────────────────────────
+
+  /// Testin sunucuda meydan okuma RPC'lerinin olmadığı (göç uygulanmamış)
+  /// durumu denemesi için.
+  @visibleForTesting
+  bool challengeSupportedForTesting = true;
+
+  @override
+  Future<bool> supportsAsyncDuelChallenge() async =>
+      challengeSupportedForTesting;
+
+  static const _challengeAlphabet = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
+
+  String _nextChallengeCode() {
+    final rng = Random.secure();
+    return 'D${List.generate(8, (_) => _challengeAlphabet[rng.nextInt(_challengeAlphabet.length)]).join()}';
+  }
+
+  @override
+  Future<AsyncDuelStart> createAsyncDuelChallenge({
+    String? category,
+    String? friendId,
+  }) async {
+    String? invitedName;
+    if (friendId != null) {
+      final friends = await loadFriends();
+      final match = friends.where((f) => f.friendId == friendId);
+      if (match.isEmpty) throw StateError('Not a friend');
+      invitedName = match.first.friendName;
+    }
+    final openCount = _asyncDuels.values
+        .where((d) => d.role == AsyncDuelRole.creator && !d.myFinished)
+        .length;
+    if (openCount >= 5) throw StateError('Too many open duels');
+
+    final normalizedCategory = _normalizedAsyncDuelCategory(category);
+    final questions = _pickAsyncDuelQuestions(normalizedCategory);
+    final now = DateTime.now().toUtc();
+    final id = 'mock_async_duel_${++_asyncDuelSeq}';
+    final code = _nextChallengeCode();
+    final duel = _MockAsyncDuel(
+      id: id,
+      role: AsyncDuelRole.creator,
+      category: normalizedCategory,
+      questions: questions,
+      opponentName: null,
+      createdAt: now,
+      expiresAt: now.add(_asyncDuelDuration),
+      challengeCode: code,
+      invitedName: invitedName,
+    );
+    _asyncDuels[id] = duel;
+    return AsyncDuelStart(
+      duelId: id,
+      role: AsyncDuelRole.creator,
+      expiresAt: duel.expiresAt,
+      questions: duel.hiddenQuestions,
+      challengeCode: code,
+      invitedName: invitedName,
+    );
+  }
+
+  @override
+  Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code) async {
+    final normalized = code.trim().toUpperCase();
+    final matches = _asyncDuels.values.where(
+      (d) => d.challengeCode == normalized,
+    );
+    if (matches.isEmpty) throw StateError('Challenge not found');
+    final duel = matches.first;
+    if (duel.role == AsyncDuelRole.creator) throw StateError('Own challenge');
+    if (DateTime.now().toUtc().isAfter(duel.expiresAt)) {
+      throw StateError('Challenge expired');
+    }
+    // Kabul edilmiş (incoming=false) bir düelloyu aynı kişi yeniden açabilir.
+    duel.incoming = false;
+    duel.unclaimed = false;
+    return AsyncDuelStart(
+      duelId: duel.id,
+      role: AsyncDuelRole.opponent,
+      opponentName: duel.opponentName,
+      expiresAt: duel.expiresAt,
+      questions: duel.hiddenQuestions,
+      answeredCount: duel.answeredIndices.length,
+      alreadyFinished: duel.myFinished,
+    );
+  }
+
+  /// Testin sanki bir arkadaş (ya da bağlantı sahibi) turunu bitirip bana
+  /// meydan okumuş gibi bir GELEN meydan okuma kurmasını sağlar. Kabul
+  /// edilene dek "Düellolarım"da `incomingChallenge` olarak görünür;
+  /// [acceptAsyncDuelChallenge] [code] ile onu kabul eder.
+  @visibleForTesting
+  void addIncomingChallengeForTesting({
+    String code = 'DK7M2Q9XA',
+    String creatorName = 'Rojda',
+    int creatorCorrect = 5,
+    int creatorMs = 40000,
+    bool friendChallenge = true,
+    Duration expiresIn = const Duration(hours: 48),
+  }) {
+    final now = DateTime.now().toUtc();
+    final id = 'mock_async_duel_${++_asyncDuelSeq}';
+    _asyncDuels[id] = _MockAsyncDuel(
+      id: id,
+      role: AsyncDuelRole.opponent,
+      category: null,
+      questions: _pickAsyncDuelQuestions(null),
+      opponentName: creatorName,
+      createdAt: now,
+      expiresAt: now.add(expiresIn),
+      otherCorrect: creatorCorrect,
+      otherMs: creatorMs,
+      challengeCode: code,
+      incoming: friendChallenge,
+      unclaimed: true,
+    );
   }
 
   @override

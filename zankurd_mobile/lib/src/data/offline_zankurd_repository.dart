@@ -101,6 +101,22 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<AsyncDuelStart> createAsyncDuelChallenge({
+    String? category,
+    String? friendId,
+  }) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<bool> supportsAsyncDuelChallenge() async => false;
+
+  @override
   Future<GameRoom> loadRoomSnapshot(String roomId) async {
     throw StateError('Remote service unavailable.');
   }

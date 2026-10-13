@@ -13,6 +13,7 @@ import '../../utils/app_route.dart';
 import '../../utils/error_reporter.dart';
 import '../../utils/player_identity.dart';
 import '../../widgets/sahne/sahne.dart';
+import '../async_duel/async_duel_challenge_sheet.dart';
 import '../async_duel/async_duel_inbox.dart';
 import '../async_duel/async_duel_play_screen.dart';
 import '../async_duel/async_duel_result_screen.dart';
@@ -40,9 +41,18 @@ import '../matchmaking_screen.dart';
 ///   rozetiyle aynı kural). Kart sayıyla açılır; tek düelloysa doğrudan
 ///   sonucu, birden çoksa tam listeyi açar.
 ///
-/// Sunucu modelinde "sıra sende" diye bir durum YOKTUR: oyuncu 7 soruyu
-/// hemen oynar, bekleyen taraf rakiptir (bkz. `AsyncDuelStatus`). Dönüş
-/// kancası bu yüzden "Sıra sende" değil "Sonuç hazır"dır.
+/// ## Üçüncü durum: "Sıra sende" (2026-10-13)
+///
+/// Rastgele düelloda "sıra sende" diye bir durum yoktur (oyuncu 7 soruyu
+/// hemen oynar, bekleyen rakiptir). Arkadaşa meydan okuma bunu GERÇEK
+/// yapar: bir arkadaş turunu bitirip beni davet ettiyse (`incomingChallenge`)
+/// kart "Sıra sende" ile açılır ve "Oyna" hemen kabul edip oyuna sokar.
+/// "Sıra sende" "Sonuç hazır"dan önce gelir (bekleyen hamle, bitmiş
+/// sonuçtan önemli); ikisi birlikteyse ikincisi alt satırda sayıyla anılır.
+///
+/// Kartta ayrıca sakin bir "Arkadaşına meydan oku" metin düğmesi vardır
+/// (seçim sayfası: bağlantı / arkadaş). Sunucuda meydan okuma RPC'leri
+/// yoksa düğme çizilmez ([asyncDuelChallengeAvailable]).
 ///
 /// ## Ucuzluk
 ///
@@ -84,6 +94,12 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
   /// ya da hatada boş: kart varsayılan durumda kalır.
   List<AsyncDuelSummary> _ready = const [];
 
+  /// Bana gelen, kabul etmediğim arkadaş meydan okumaları ("Sıra sende").
+  List<AsyncDuelSummary> _incoming = const [];
+
+  /// Meydan okuma RPC'leri sunucuda var mı; belli olana dek gizli.
+  bool _challengeAvailable = false;
+
   /// Üst üste gelen çekimlerde yalnız en son yanıt yazılır.
   int _epoch = 0;
 
@@ -91,6 +107,13 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
   void initState() {
     super.initState();
     unawaited(_load());
+    if (widget.asyncDuelEnabled) {
+      unawaited(
+        asyncDuelChallengeAvailable(widget.repository).then((available) {
+          if (mounted && available) setState(() => _challengeAvailable = true);
+        }),
+      );
+    }
   }
 
   @override
@@ -108,6 +131,10 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
       final all = await widget.repository.loadMyAsyncDuels();
       if (!mounted || epoch != _epoch) return;
       setState(() {
+        _incoming = [
+          for (final s in all)
+            if (s.incomingChallenge && s.challengeCode != null) s,
+        ];
         _ready = [
           for (final s in all)
             if (s.outcome != null && !s.seen) s,
@@ -116,7 +143,10 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'home_duel_card_load');
       if (!mounted || epoch != _epoch) return;
-      setState(() => _ready = const []);
+      setState(() {
+        _ready = const [];
+        _incoming = const [];
+      });
     }
   }
 
@@ -130,6 +160,30 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
 
   void _openQuickDuel() =>
       unawaited(_push(MatchmakingScreen(repository: widget.repository)));
+
+  void _openChallengeSheet() => unawaited(
+    showAsyncDuelChallengeSheet(
+      context,
+      widget.repository,
+    ).then((_) => mounted ? _load() : null),
+  );
+
+  void _openIncoming() {
+    if (_incoming.length == 1) {
+      unawaited(
+        _push(
+          AsyncDuelPlayScreen(
+            repository: widget.repository,
+            entry: AsyncDuelEntry.acceptChallenge(
+              _incoming.single.challengeCode!,
+            ),
+          ),
+        ),
+      );
+    } else {
+      unawaited(_push(AsyncDuelListScreen(repository: widget.repository)));
+    }
+  }
 
   void _openReady() {
     if (_ready.length == 1) {
@@ -153,12 +207,29 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
       return const SizedBox.shrink();
     }
     final readyCount = _ready.length;
-    final pending = readyCount > 0;
+    final incomingCount = _incoming.length;
+    final hasIncoming = incomingCount > 0;
+    final pending = readyCount > 0 || hasIncoming;
 
     final String eyebrow;
     final String headline;
     final String? meta;
-    if (pending) {
+    if (hasIncoming) {
+      eyebrow = context.t(K.asyncDuelInbox);
+      headline = incomingCount == 1
+          ? context.t(K.challengeYourTurn)
+          : '${context.t(K.challengeYourTurn)} · $incomingCount';
+      final inviter = _incoming.first.opponentName;
+      if (incomingCount == 1 && inviter != null) {
+        meta = context.t(K.challengeIncomingBy, {
+          'name': context.playerDisplayName(inviter),
+        });
+      } else if (readyCount > 0) {
+        meta = '${context.t(K.asyncDuelReady)} · $readyCount';
+      } else {
+        meta = null;
+      }
+    } else if (pending) {
       eyebrow = context.t(K.asyncDuelInbox);
       headline = readyCount == 1
           ? context.t(K.asyncDuelReady)
@@ -174,7 +245,13 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
     }
 
     return Padding(
-      key: ValueKey(pending ? 'home-duel-card-ready' : 'home-duel-card'),
+      key: ValueKey(
+        hasIncoming
+            ? 'home-duel-card-your-turn'
+            : pending
+            ? 'home-duel-card-ready'
+            : 'home-duel-card',
+      ),
       padding: const EdgeInsets.only(top: SahneSpace.cardGap),
       child: Semantics(
         container: true,
@@ -212,7 +289,17 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
                     ),
                   ],
                   const SizedBox(height: SahneSpace.x4),
-                  if (pending)
+                  if (hasIncoming)
+                    SahneButton.secondary(
+                      key: const ValueKey('home-duel-primary'),
+                      icon: AppIcons.hourglass,
+                      label: incomingCount == 1
+                          ? context.t(K.challengePlay)
+                          : context.t(K.asyncDuelInbox),
+                      expand: true,
+                      onPressed: _openIncoming,
+                    )
+                  else if (pending)
                     SahneButton.secondary(
                       key: const ValueKey('home-duel-primary'),
                       icon: AppIcons.trophy,
@@ -230,19 +317,35 @@ class _HomeDuelCardState extends State<HomeDuelCard> {
                       expand: true,
                       onPressed: _openNewDuel,
                     ),
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: pending
-                        ? SahneButton.text(
-                            key: const ValueKey('home-duel-secondary'),
-                            label: context.t(K.asyncDuelNew),
-                            onPressed: _openNewDuel,
-                          )
-                        : SahneButton.text(
-                            key: const ValueKey('home-duel-secondary'),
-                            label: context.t(K.quickDuel),
-                            onPressed: _openQuickDuel,
-                          ),
+                  // İkincil eylemler sakin metin düğmeleri (Agir dolgu
+                  // yalnız "Günün dersi"nde). Dar ekranda ve büyük yazıda
+                  // alt satıra sarar.
+                  Wrap(
+                    alignment: _challengeAvailable
+                        ? WrapAlignment.spaceBetween
+                        : WrapAlignment.end,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      if (_challengeAvailable)
+                        SahneButton.text(
+                          key: const ValueKey('home-duel-challenge'),
+                          label: context.t(K.challengeEntry),
+                          arrow: false,
+                          onPressed: _openChallengeSheet,
+                        ),
+                      if (pending)
+                        SahneButton.text(
+                          key: const ValueKey('home-duel-secondary'),
+                          label: context.t(K.asyncDuelNew),
+                          onPressed: _openNewDuel,
+                        )
+                      else
+                        SahneButton.text(
+                          key: const ValueKey('home-duel-secondary'),
+                          label: context.t(K.quickDuel),
+                          onPressed: _openQuickDuel,
+                        ),
+                    ],
                   ),
                 ],
               );

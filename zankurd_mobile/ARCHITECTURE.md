@@ -145,6 +145,13 @@ graph TB
   `ZanKurdRepository.startAsyncDuel/answerAsyncDuel/loadMyAsyncDuels/markAsyncDuelSeen/claimAsyncDuelXp`.
   Kazanan, XP ve 48 saat kuralı sunucuda (`supabase/2026-09-28_async_duels.sql`,
   henüz UYGULANMADI; bkz. `supabase/applied.md`)
+- **Arkadaşa meydan okuma** — `screens/async_duel/async_duel_challenge_sheet.dart`
+  (seçim sayfası), `ZanKurdRepository.createAsyncDuelChallenge/
+  acceptAsyncDuelChallenge/supportsAsyncDuelChallenge`; sunucu
+  `supabase/2026-10-13_friend_challenge.sql` (UYGULANMADI). Kod `D`+8
+  karakter (`JoinDeepLink.isChallengeCode`), oda kodları `ZK-` ile
+  başladığı için `/join/` yolunu paylaşırlar ama çakışmazlar. RPC yoksa
+  giriş noktaları gizlenir.
 - **Davet bağlantısı** — `utils/join_deep_link.dart`: `zankurd.com/join/KOD`;
   soğuk açılış `onGenerateInitialRoutes`, sıcak açılış `JoinDeepLinkScope`
   (`didPushRouteInformation`). iOS associated domains + Android App Links;

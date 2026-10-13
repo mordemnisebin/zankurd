@@ -27,8 +27,11 @@ Future<void> _openSheet(WidgetTester tester) async {
     testShell(child: PlayHubScreen(repository: MockZanKurdRepository())),
   );
   await tester.pumpAndSettle();
-  await tester.ensureVisible(
+  // Sırayla düello grubuna "Arkadaşına meydan oku" satırı eklenince oda
+  // eylemleri tembel listenin kurulu bölgesinden çıktı (2026-10-13).
+  await tester.scrollUntilVisible(
     find.byKey(const ValueKey('play-hub-create-room')),
+    200,
   );
   await tester.pump();
   await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));

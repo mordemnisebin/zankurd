@@ -14,6 +14,7 @@ import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import '../services/analytics_service.dart';
 import '../widgets/app_panel.dart';
+import 'async_duel/async_duel_challenge_sheet.dart';
 import 'async_duel/async_duel_inbox.dart';
 import 'async_duel/async_duel_play_screen.dart';
 import 'contest_screen.dart';
@@ -59,6 +60,22 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
     widget.refreshSignal,
     _asyncDuelInboxRefresh,
   ]);
+
+  /// Sunucuda meydan okuma RPC'leri var mı (sonuç gelene dek `false`:
+  /// giriş noktası çizilip sonra kaybolmasın).
+  bool _challengeAvailable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.asyncDuelEnabled) {
+      unawaited(
+        asyncDuelChallengeAvailable(widget.repository).then((available) {
+          if (mounted && available) setState(() => _challengeAvailable = true);
+        }),
+      );
+    }
+  }
 
   /// Oda kodu alanının denetleyicisi. Ömrü sayfaya değil EKRANA bağlıdır.
   ///
@@ -454,6 +471,30 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
                         },
                 ),
               ),
+              if (_challengeAvailable)
+                _lockedTap(
+                  locked,
+                  SahneListRow.icon(
+                    key: const ValueKey('play-hub-async-duel-challenge'),
+                    icon: AppIcons.peopleGroup,
+                    role: SahneRole.race,
+                    title: context.t(K.challengeEntry),
+                    subtitle: context.t(K.challengeEntrySub),
+                    chevron: !locked,
+                    enabled: !locked,
+                    semanticLabel:
+                        '${context.t(K.challengeEntry)}. ${context.t(K.challengeEntrySub)}',
+                    onTap: locked
+                        ? null
+                        : () async {
+                            await showAsyncDuelChallengeSheet(
+                              context,
+                              widget.repository,
+                            );
+                            if (mounted) _asyncDuelInboxRefresh.value++;
+                          },
+                  ),
+                ),
             ],
           ),
           if (!locked) ...[

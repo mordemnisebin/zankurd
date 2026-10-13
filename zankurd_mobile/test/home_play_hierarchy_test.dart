@@ -197,6 +197,9 @@ void main() {
           }
           for (final key in ['play-hub-daily-contest']) {
             final finder = find.byKey(ValueKey(key));
+            // Meydan okuma satırı (2026-10-13) günün etkinliğini tembel
+            // listenin kurulu bölgesinden çıkardı.
+            await tester.scrollUntilVisible(finder, 200);
             expect(finder, findsOneWidget);
             expect(tester.widget(finder), isA<SahneListRow>(), reason: key);
             expect(

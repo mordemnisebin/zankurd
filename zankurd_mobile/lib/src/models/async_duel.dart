@@ -74,6 +74,10 @@ class AsyncDuelStart {
     this.opponentName,
     required this.expiresAt,
     required List<QuizQuestion> questions,
+    this.challengeCode,
+    this.invitedName,
+    this.answeredCount = 0,
+    this.alreadyFinished = false,
   }) : questions = List.unmodifiable(questions);
 
   final String duelId;
@@ -83,6 +87,22 @@ class AsyncDuelStart {
   final String? opponentName;
   final DateTime expiresAt;
   final List<QuizQuestion> questions;
+
+  /// Yalnız `create_async_duel_challenge` yanıtında dolu: paylaşılacak
+  /// `D…` bağlantı kodu ([JoinDeepLink.isChallengeCode]).
+  final String? challengeCode;
+
+  /// Yalnız arkadaşa meydan okumada dolu: davet edilen arkadaşın adı.
+  final String? invitedName;
+
+  /// Yalnız `accept_async_duel_challenge` yeniden açılışında anlamlı:
+  /// benim bu düelloda sunucunun onayladığı cevap sayım. Oyun ekranı kaldığı
+  /// sorudan sürer (baştan sorup 'Already answered' almaz).
+  final int answeredCount;
+
+  /// Yeniden açılan düelloda 7 sorumu zaten bitirmişim: oyun ekranı
+  /// açılmaz, sonuç listesine gidilir.
+  final bool alreadyFinished;
 
   factory AsyncDuelStart.fromJson(Map<String, dynamic> json) {
     final rawQuestions = json['questions'] as List;
@@ -98,8 +118,114 @@ class AsyncDuelStart {
             ),
           )
           .toList(growable: false),
+      challengeCode: json['challenge_code'] as String?,
+      invitedName: json['invited_name'] as String?,
+      answeredCount: (json['answered'] as num?)?.toInt() ?? 0,
+      alreadyFinished: json['finished'] as bool? ?? false,
     );
   }
+}
+
+/// Oyun ekranının düelloyu NASIL başlattığı.
+///
+/// * [random]: `start_async_duel` — bekleyen açık düelloya katıl ya da yeni
+///   rastgele düello aç (eski davranış).
+/// * [createChallenge]: `create_async_duel_challenge` — bağlantı (arkadaş
+///   verilmediyse) ya da seçilen arkadaş için taze bir meydan okuma.
+/// * [acceptChallenge]: `accept_async_duel_challenge` — `/join/D…`
+///   bağlantısındaki ya da gelen kutusundaki kodla meydan okumayı kabul et.
+enum AsyncDuelEntryKind { random, createChallenge, acceptChallenge }
+
+class AsyncDuelEntry {
+  const AsyncDuelEntry.random({this.category})
+    : kind = AsyncDuelEntryKind.random,
+      friendId = null,
+      code = null;
+
+  const AsyncDuelEntry.createChallenge({this.category, this.friendId})
+    : kind = AsyncDuelEntryKind.createChallenge,
+      code = null;
+
+  const AsyncDuelEntry.acceptChallenge(String this.code)
+    : kind = AsyncDuelEntryKind.acceptChallenge,
+      category = null,
+      friendId = null;
+
+  final AsyncDuelEntryKind kind;
+  final String? category;
+  final String? friendId;
+  final String? code;
+}
+
+/// Meydan okuma RPC'lerinin sunucu hata metinlerinin istemci sınıflaması
+/// (`supabase/2026-10-13_friend_challenge.sql` başlığındaki HATA SÖZLEŞMESİ).
+///
+/// Oyuncuya her biri için dürüst ve ayrı bir metin gösterilir
+/// ([asyncDuelChallengeErrorKey]); [other] bağlantı/sunucu gibi geçici
+/// hatalardır ve yeniden denenebilir.
+enum AsyncDuelChallengeError {
+  notFound,
+  own,
+  taken,
+  expired,
+  notForYou,
+  notReady,
+  notAFriend,
+  tooMany,
+  noQuestions,
+  other,
+}
+
+/// [error] içindeki sunucu hata metnine göre sınıf. Metin, PostgREST'in
+/// `message` alanında olduğu gibi gelir (`toString()` onu taşır).
+AsyncDuelChallengeError classifyAsyncDuelChallengeError(Object error) {
+  final text = error.toString();
+  if (text.contains('Challenge not found')) {
+    return AsyncDuelChallengeError.notFound;
+  }
+  if (text.contains('Own challenge')) return AsyncDuelChallengeError.own;
+  if (text.contains('Challenge already taken')) {
+    return AsyncDuelChallengeError.taken;
+  }
+  if (text.contains('Challenge expired') || text.contains('Duel expired')) {
+    return AsyncDuelChallengeError.expired;
+  }
+  if (text.contains('Challenge not for you')) {
+    return AsyncDuelChallengeError.notForYou;
+  }
+  if (text.contains('Challenge not ready')) {
+    return AsyncDuelChallengeError.notReady;
+  }
+  if (text.contains('Not a friend')) return AsyncDuelChallengeError.notAFriend;
+  if (text.contains('Too many open duels')) {
+    return AsyncDuelChallengeError.tooMany;
+  }
+  if (text.contains('No questions')) return AsyncDuelChallengeError.noQuestions;
+  return AsyncDuelChallengeError.other;
+}
+
+/// Bu hata yeniden denemekle düzelmez (bağlantı artık geçersiz/başkasının):
+/// ekran "Yeniden dene" yerine yalnız "Kapat" gösterir.
+bool asyncDuelChallengeErrorIsTerminal(AsyncDuelChallengeError error) {
+  return switch (error) {
+    AsyncDuelChallengeError.notFound ||
+    AsyncDuelChallengeError.own ||
+    AsyncDuelChallengeError.taken ||
+    AsyncDuelChallengeError.expired ||
+    AsyncDuelChallengeError.notForYou ||
+    AsyncDuelChallengeError.notAFriend => true,
+    _ => false,
+  };
+}
+
+/// PostgREST bir RPC'yi bulamadığında (`PGRST202`, HTTP 404) ya da
+/// Postgres fonksiyonu tanımadığında (`42883`) true. Meydan okuma
+/// göçü uygulanmamış sunucuda giriş noktaları bu sinyalle gizlenir.
+bool isMissingRpcError(Object error) {
+  final text = error.toString();
+  return text.contains('PGRST202') ||
+      text.contains('42883') ||
+      text.contains('Could not find the function');
 }
 
 /// `answer_async_duel` RPC'sinin tek bir cevap için döndürdüğü sonuç.
@@ -199,6 +325,9 @@ class AsyncDuelSummary {
     required this.createdAt,
     this.completedAt,
     required this.seen,
+    this.challengeCode,
+    this.incomingChallenge = false,
+    this.invitedName,
   });
 
   final String duelId;
@@ -215,6 +344,27 @@ class AsyncDuelSummary {
   /// Bu satırın "sonuç hazır" rozeti için görülüp görülmediği
   /// (`mark_async_duel_seen`).
   final bool seen;
+
+  /// Meydan okuma bağlantı kodu: benim açtığım meydan okumada (yeniden
+  /// paylaşmak için) ya da bana gelen kabul edilmemiş meydan okumada (kabul
+  /// etmek için) dolu; başkasının kodu sunucudan hiç dönmez.
+  final String? challengeCode;
+
+  /// Bana gelen, henüz kabul etmediğim arkadaş meydan okuması ("Sıra sende").
+  final bool incomingChallenge;
+
+  /// Yalnız ben yaratıcıysam: davet ettiğim arkadaşın adı (bağlantı
+  /// meydan okumasında null).
+  final String? invitedName;
+
+  /// Benim açtığım, henüz kimsenin almadığı bağlantı meydan okuması (yeniden
+  /// paylaşılabilir).
+  bool get isWaitingLinkChallenge =>
+      role == AsyncDuelRole.creator &&
+      challengeCode != null &&
+      invitedName == null &&
+      opponentName == null &&
+      status == AsyncDuelStatus.open;
 
   factory AsyncDuelSummary.fromJson(Map<String, dynamic> json) {
     final rawOutcome = json['outcome'];
@@ -235,6 +385,9 @@ class AsyncDuelSummary {
           ? null
           : DateTime.parse(rawCompletedAt as String),
       seen: json['seen'] as bool,
+      challengeCode: json['challenge_code'] as String?,
+      incomingChallenge: json['incoming_challenge'] as bool? ?? false,
+      invitedName: json['invited_name'] as String?,
     );
   }
 }

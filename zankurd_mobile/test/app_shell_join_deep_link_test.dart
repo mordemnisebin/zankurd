@@ -39,6 +39,7 @@ import 'package:zankurd_mobile/main.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
+import 'package:zankurd_mobile/src/screens/async_duel/async_duel_play_screen.dart';
 import 'package:zankurd_mobile/src/providers/remote_availability.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
@@ -289,6 +290,110 @@ void main() {
       expect(tester.takeException(), isNull);
       expect(repository.joinCalls, isEmpty);
       expect(find.byType(RoomScreen), findsNothing);
+    });
+  });
+
+  group('meydan okuma bağlantısı (/join/D…)', () {
+    // Oyun ekranının 20 sn'lik sayacı `pumpAndSettle`ı bitirmez; ekran
+    // görünene dek kısa adımlarla pompalanır.
+    Future<void> pumpUntilPlay(WidgetTester tester) async {
+      for (var i = 0; i < 40; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+        if (find.byType(AsyncDuelPlayScreen).evaluate().isNotEmpty) return;
+      }
+    }
+
+    // Oda kodu ile meydan okuma kodu AYNI /join/ yolunu paylaşır; yanlış
+    // ayrım bağlantıyı yanlış RPC'ye (oda katılımı) götürürdü.
+    testWidgets('sıcak açılış: kabul edilir, oda katılımına GİTMEZ', (
+      tester,
+    ) async {
+      freshMockRepository();
+      final repository = _JoinRepository()
+        ..addIncomingChallengeForTesting(friendChallenge: false);
+      await tester.pumpWidget(
+        JoinDeepLinkScope(
+          child: testShell(
+            authProvider: FakeAuthProvider(),
+            child: AppShell(
+              repository: repository,
+              connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final handled = await tester.binding.handlePushRoute('/join/dk7m2q9xa');
+      await pumpUntilPlay(tester);
+
+      expect(tester.takeException(), isNull);
+      expect(handled, isTrue);
+      expect(repository.joinCalls, isEmpty);
+      expect(find.byType(RoomScreen), findsNothing);
+      expect(find.byType(AsyncDuelPlayScreen), findsOneWidget);
+      final screen = tester.widget<AsyncDuelPlayScreen>(
+        find.byType(AsyncDuelPlayScreen),
+      );
+      expect(screen.entry?.code, 'DK7M2Q9XA');
+    });
+
+    testWidgets('soğuk açılış: kabul edilir, oda katılımına GİTMEZ', (
+      tester,
+    ) async {
+      freshMockRepository();
+      final repository = _JoinRepository()
+        ..addIncomingChallengeForTesting(friendChallenge: false);
+      tester.binding.platformDispatcher.defaultRouteNameTestValue =
+          '/join/DK7M2Q9XA';
+      addTearDown(() {
+        tester.binding.platformDispatcher.defaultRouteNameTestValue = '/';
+      });
+
+      await tester.pumpWidget(
+        ZanKurdApp(
+          repository: repository,
+          authProvider: FakeAuthProvider(),
+          languageProvider: turkishLang(),
+        ),
+      );
+      await pumpUntilPlay(tester);
+
+      expect(tester.takeException(), isNull);
+      expect(repository.joinCalls, isEmpty);
+      expect(find.byType(AsyncDuelPlayScreen), findsOneWidget);
+    });
+
+    testWidgets('henüz oturum yokken gelen bağlantı girişten sonra açılır', (
+      tester,
+    ) async {
+      freshMockRepository();
+      final repository = _JoinRepository()
+        ..addIncomingChallengeForTesting(friendChallenge: false);
+      final auth = GateAuthProvider();
+      tester.binding.platformDispatcher.defaultRouteNameTestValue =
+          '/join/DK7M2Q9XA';
+      addTearDown(() {
+        tester.binding.platformDispatcher.defaultRouteNameTestValue = '/';
+      });
+
+      await tester.pumpWidget(
+        ZanKurdApp(
+          repository: repository,
+          authProvider: auth,
+          languageProvider: turkishLang(),
+        ),
+      );
+      await tester.pumpAndSettle();
+      // Giriş kapısındayız: oyun ekranı da hata da yok, kod bekliyor.
+      expect(find.byType(AsyncDuelPlayScreen), findsNothing);
+      expect(tester.takeException(), isNull);
+
+      await auth.signInAsGuest();
+      await pumpUntilPlay(tester);
+
+      expect(find.byType(AsyncDuelPlayScreen), findsOneWidget);
+      expect(repository.joinCalls, isEmpty);
     });
   });
 }

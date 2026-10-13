@@ -3376,4 +3376,87 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       rethrow;
     }
   }
+
+  // ─── Arkadaşa meydan okuma (supabase/2026-10-13_friend_challenge.sql) ─
+
+  /// `null`: henüz bilinmiyor; `false`: sunucu RPC'yi tanımıyor (göç
+  /// uygulanmamış). Yalnız KESİN yanıtlar saklanır.
+  bool? _challengeRpcSupported;
+
+  @override
+  Future<bool> supportsAsyncDuelChallenge() async {
+    final known = _challengeRpcSupported;
+    if (known != null) return known;
+    // Oturum yokken (misafir henüz hesap açmadı) sormak hesap yaratırdı;
+    // belirsiz = göster.
+    if (client.auth.currentUser == null) return true;
+    try {
+      // Yan etkisiz sonda: bilinmeyen kod yeni sunucuda 'Challenge not
+      // found' fırlatır (RPC var), eskisinde PGRST202/42883 (RPC yok).
+      await client.rpc(
+        'accept_async_duel_challenge',
+        params: {'p_code': 'D00000000'},
+      );
+      return _challengeRpcSupported = true;
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) return _challengeRpcSupported = false;
+      if (error.toString().contains('Challenge')) {
+        return _challengeRpcSupported = true;
+      }
+      // Ağ hatası gibi belirsiz durum: giriş noktaları görünür kalır, ilk
+      // gerçek çağrı kendi hatasını gösterir.
+      _recordError(error, stack, reason: 'supportsAsyncDuelChallenge failed');
+      return true;
+    }
+  }
+
+  @override
+  Future<AsyncDuelStart> createAsyncDuelChallenge({
+    String? category,
+    String? friendId,
+  }) async {
+    try {
+      if (client.auth.currentUser == null) {
+        await signInAnonymously();
+      }
+      await ensureProfile();
+      final response = await client.rpc(
+        'create_async_duel_challenge',
+        params: {'p_category': category, 'p_friend_id': friendId},
+      );
+      return AsyncDuelStart.fromJson(
+        _requiredJsonObject(response, 'create_async_duel_challenge'),
+      );
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) _challengeRpcSupported = false;
+      _recordError(error, stack, reason: 'createAsyncDuelChallenge failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code) async {
+    try {
+      if (client.auth.currentUser == null) {
+        await signInAnonymously();
+      }
+      await ensureProfile();
+      final response = await client.rpc(
+        'accept_async_duel_challenge',
+        params: {'p_code': code},
+      );
+      return AsyncDuelStart.fromJson(
+        _requiredJsonObject(response, 'accept_async_duel_challenge'),
+      );
+    } catch (error, stack) {
+      if (isMissingRpcError(error)) _challengeRpcSupported = false;
+      // Beklenen iş hataları (süresi dolmuş, başkası almış…) çökme kaydı
+      // değildir; yalnız beklenmeyenler kaydedilir.
+      if (classifyAsyncDuelChallengeError(error) ==
+          AsyncDuelChallengeError.other) {
+        _recordError(error, stack, reason: 'acceptAsyncDuelChallenge failed');
+      }
+      rethrow;
+    }
+  }
 }

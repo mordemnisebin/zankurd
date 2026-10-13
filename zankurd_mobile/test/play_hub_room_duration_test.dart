@@ -43,6 +43,12 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('play-hub-create-room')),
+
+        200,
+      );
+
       await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
       await tester.pumpAndSettle();
 
@@ -74,6 +80,8 @@ void main() {
         testShell(child: PlayHubScreen(repository: repository)),
       );
       await tester.pumpAndSettle();
+
+      await tester.scrollUntilVisible(find.text('Oda kur'), 200);
 
       await tester.tap(find.text('Oda kur'));
       await tester.pumpAndSettle();
@@ -117,6 +125,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.scrollUntilVisible(find.text('Oda kur'), 200);
+
     await tester.tap(find.text('Oda kur'));
     await tester.pumpAndSettle();
 
@@ -139,6 +149,12 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-create-room')),
+
+      200,
+    );
 
     await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
     await tester.pumpAndSettle();

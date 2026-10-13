@@ -74,6 +74,12 @@ abstract interface class LivePlayPort {
   Future<List<AsyncDuelSummary>> loadMyAsyncDuels();
   Future<void> markAsyncDuelSeen(String duelId);
   Future<int> claimAsyncDuelXp(String duelId);
+  Future<AsyncDuelStart> createAsyncDuelChallenge({
+    String? category,
+    String? friendId,
+  });
+  Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code);
+  Future<bool> supportsAsyncDuelChallenge();
 
   Future<GameRoom> loadRoomSnapshot(String roomId);
   Future<RoomResumeSnapshot?> loadMyResumableRoom();

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../data/xp_store.dart';
 import '../../data/zankurd_repository.dart';
@@ -9,6 +11,7 @@ import '../../l10n/strings.dart';
 import '../../models/async_duel.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
+import '../../utils/join_deep_link.dart';
 import '../../utils/player_identity.dart';
 import '../../utils/error_reporter.dart';
 import '../../widgets/sahne/sahne.dart';
@@ -37,6 +40,8 @@ class AsyncDuelResultView {
     this.opponentCorrect,
     this.outcome,
     this.opponentName,
+    this.challengeCode,
+    this.invitedName,
   });
 
   final String duelId;
@@ -45,6 +50,22 @@ class AsyncDuelResultView {
   final int? opponentCorrect;
   final AsyncDuelOutcome? outcome;
   final String? opponentName;
+
+  /// Benim açtığım meydan okumanın `D…` kodu (paylaşım için); rastgele
+  /// düellolarda ve rakibin açtığı düellolarda null.
+  final String? challengeCode;
+
+  /// Arkadaşa meydan okumada davet ettiğim arkadaşın adı; bağlantı
+  /// meydan okumasında null.
+  final String? invitedName;
+
+  /// Bağlantı meydan okumasını (kimse almadan) paylaşabilirim: turum bitti,
+  /// skorum belli, kod elimde, belirli bir arkadaşa gitmedi.
+  bool get canShareLink =>
+      kind == AsyncDuelResultKind.waiting &&
+      challengeCode != null &&
+      invitedName == null &&
+      myCorrect != null;
 
   /// Sırayla düellonun soru sayısı — sözleşmede sabit 7 (bkz.
   /// `lib/src/models/async_duel.dart`); hiçbir çağıranın özelleştirmesi
@@ -65,6 +86,10 @@ class AsyncDuelResultView {
         kind: AsyncDuelResultKind.waiting,
         myCorrect: result.myCorrect,
         opponentName: start.opponentName,
+        challengeCode: start.role == AsyncDuelRole.creator
+            ? start.challengeCode
+            : null,
+        invitedName: start.invitedName,
       );
     }
     return AsyncDuelResultView._(
@@ -117,6 +142,13 @@ class AsyncDuelResultView {
       kind: AsyncDuelResultKind.waiting,
       myCorrect: myCorrect,
       opponentName: summary.opponentName,
+      // Yalnız hâlâ kimsenin almadığı meydan okuma yeniden paylaşılır.
+      challengeCode:
+          summary.role == AsyncDuelRole.creator &&
+              summary.status == AsyncDuelStatus.open
+          ? summary.challengeCode
+          : null,
+      invitedName: summary.invitedName,
     );
   }
 
@@ -305,7 +337,13 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
           value: view.myCorrect,
           suffix: '/${view.total}',
           valueKey: const ValueKey('async-duel-result-score'),
-          body: context.t(K.asyncDuelWaitingBody),
+          body: view.challengeCode == null
+              ? context.t(K.asyncDuelWaitingBody)
+              : view.invitedName != null
+              ? context.t(K.challengeFriendWaitBody, {
+                  'name': context.playerDisplayName(view.invitedName!),
+                })
+              : context.t(K.challengeLinkWaitBody),
           tone: SahneResultTone.race,
         );
       case AsyncDuelResultKind.expired:
@@ -340,7 +378,14 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
               xpLabel: context.t(K.asyncDuelXp, {'xp': '$xp'}),
             )
           : null,
-      primary: canStartNew
+      primary: view.canShareLink
+          ? SahneResultAction(
+              key: const ValueKey('async-duel-result-share'),
+              label: context.t(K.share),
+              icon: AppIcons.shareNodes,
+              onPressed: () => unawaited(_shareChallenge(view)),
+            )
+          : canStartNew
           ? SahneResultAction(
               key: const ValueKey('async-duel-result-new'),
               label: context.t(K.asyncDuelNew),
@@ -355,5 +400,37 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
           : close,
       secondary: canStartNew ? close : null,
     );
+  }
+
+  /// Meydan okuma bağlantısını sistem paylaşım sayfasıyla gönderir (odalar
+  /// aynı mekanizmayı kullanır: `RoomScreen._shareRoomInvite`). Sayfa
+  /// açılamazsa metin panoya gider ki davet boşa gitmesin.
+  Future<void> _shareChallenge(AsyncDuelResultView view) async {
+    final code = view.challengeCode;
+    final correct = view.myCorrect;
+    if (code == null || correct == null) return;
+    final text = context.t(K.challengeShareText, {
+      'n': '$correct',
+      'link': JoinDeepLink.shareUrl(code),
+    });
+    final size = MediaQuery.sizeOf(context);
+    // iPad paylaşım sayfası bir çıkış noktası ister: alt perdenin ortası.
+    final origin = Rect.fromCenter(
+      center: Offset(size.width / 2, size.height - 48),
+      width: 1,
+      height: 1,
+    );
+    try {
+      await SharePlus.instance.share(
+        ShareParams(text: text, sharePositionOrigin: origin),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'async duel share failed');
+      await Clipboard.setData(ClipboardData(text: text));
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.challengeLinkCopied))));
+    }
   }
 }

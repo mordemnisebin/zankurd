@@ -2739,6 +2739,96 @@ class Tr {
       'ku': 'Bersivên rast wekhev in; yê zûtir bersivand bi ser ket.',
       'tr': 'Doğru sayısı eşit; daha hızlı cevaplayan kazandı.',
     },
+
+    // ── Arkadaşa meydan okuma (bağlantı / arkadaş seç) ────────────────
+    // "Meydan oku" için yerleşik bir Kurmancî karşılık yoktu; dosyada
+    // yerleşik `vexwendin` (davet) köküyle kuruldu. Yerli göz incelemesi
+    // bekliyor (2026-10-13).
+    K.challengeEntry: {
+      'ku': 'Hevalê xwe vexwîne pêşbirkê',
+      'tr': 'Arkadaşına meydan oku',
+    },
+    K.challengeEntrySub: {
+      'ku': 'Girêdanekê bişîne, hevalê te paşê bilîze',
+      'tr': 'Bağlantı gönder, arkadaşın sonra oynasın',
+    },
+    K.challengeViaLink: {
+      'ku': 'Bi girêdanê vexwîne',
+      'tr': 'Bağlantıyla meydan oku',
+    },
+    K.challengeViaLinkSub: {
+      'ku': 'Ji her kesî re bişîne, hesab ne pêwîst e',
+      'tr': 'Herkese gönderebilirsin, hesap gerekmez',
+    },
+    K.challengePickFriend: {'ku': 'Hevalekî hilbijêre', 'tr': 'Arkadaş seç'},
+    K.challengeFriendsEmptyBody: {
+      'ku':
+          'Hîn hevalê te tune. Pêşî di beşa Heval de hevalan zêde bike, an jî niha girêdanekê bişîne.',
+      'tr':
+          'Henüz arkadaşın yok. Önce Arkadaşlar bölümünden arkadaş ekle ya da şimdi bir bağlantı gönder.',
+    },
+    K.challengeFriendsFailed: {
+      'ku': 'Heval nehatin barkirin.',
+      'tr': 'Arkadaşlar yüklenemedi.',
+    },
+    K.challengeShareText: {
+      'ku':
+          'Li ZanKurdê ez te vedixwînim pêşbirkê: ji 7 pirsan {n} rast. Tu dikarî min derbas bikî? {link}',
+      'tr':
+          "ZanKurd'da sana meydan okudum: 7 soruda {n} doğru. Beni geçebilir misin? {link}",
+    },
+    K.challengeLinkCopied: {
+      'ku': 'Girêdan hat kopîkirin',
+      'tr': 'Bağlantı kopyalandı',
+    },
+    K.challengeLinkWaitBody: {
+      'ku':
+          'Girêdanê ji hevalê xwe re bişîne. Dema ew bilîze, encam li vir xuya dibe.',
+      'tr': 'Bağlantıyı arkadaşına gönder. O oynayınca sonuç burada görünecek.',
+    },
+    K.challengeFriendWaitBody: {
+      'ku': 'Dema dora {name} were, ew ê agahdarî bistîne.',
+      'tr': '{name} sırası gelince bildirim alacak.',
+    },
+    K.challengeYourTurn: {'ku': 'Dora te ye', 'tr': 'Sıra sende'},
+    K.challengeIncomingBy: {
+      'ku': '{name} te vexwend pêşbirkê',
+      'tr': '{name} seni düelloya çağırdı',
+    },
+    K.challengePlay: {'ku': 'Bilîze', 'tr': 'Oyna'},
+    K.challengeLinkRow: {
+      'ku': 'Girêdana pêşbirkê',
+      'tr': 'Meydan okuma bağlantısı',
+    },
+    K.challengeErrNotFound: {
+      'ku': 'Ev pêşbirk nehat dîtin an jî êdî derbasdar nîne.',
+      'tr': 'Bu meydan okuma bulunamadı ya da artık geçerli değil.',
+    },
+    K.challengeErrOwn: {
+      'ku': 'Ev pêşbirka te ye. Girêdanê ji hevalê xwe re bişîne.',
+      'tr': 'Bu senin kendi meydan okuman. Bağlantıyı arkadaşına gönder.',
+    },
+    K.challengeErrTaken: {
+      'ku': 'Kesekî din berê ev pêşbirk qebûl kiriye.',
+      'tr': 'Bu meydan okumayı başka biri çoktan kabul etti.',
+    },
+    K.challengeErrExpired: {
+      'ku': 'Dema vê pêşbirkê qediya.',
+      'tr': 'Bu meydan okumanın süresi doldu.',
+    },
+    K.challengeErrNotForYou: {
+      'ku': 'Ev pêşbirk ji bo kesekî din hatiye şandin.',
+      'tr': 'Bu meydan okuma başka biri için gönderilmiş.',
+    },
+    K.challengeErrNotReady: {
+      'ku':
+          'Kesê te vexwendiye hîn dora xwe neqedandiye. Piştre dîsa biceribîne.',
+      'tr': 'Seni çağıran henüz turunu bitirmedi. Biraz sonra tekrar dene.',
+    },
+    K.challengeErrNotAFriend: {
+      'ku': 'Ev kes ne hevalê te ye.',
+      'tr': 'Bu kişi arkadaşın değil.',
+    },
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -3959,4 +4049,40 @@ class K {
 
   /// Eşit doğruda süreyle belirlenen sonucun açıklaması.
   static const asyncDuelTieBreak = 'duel.async.tieBreak';
+
+  /// Oyun sekmesi satırı, ana ekran düğmesi ve seçim sayfasının başlığı.
+  static const challengeEntry = 'duel.challenge.entry';
+  static const challengeEntrySub = 'duel.challenge.entry.sub';
+
+  /// Seçim sayfasının birincil seçeneği.
+  static const challengeViaLink = 'duel.challenge.viaLink';
+  static const challengeViaLinkSub = 'duel.challenge.viaLink.sub';
+  static const challengePickFriend = 'duel.challenge.pickFriend';
+  static const challengeFriendsEmptyBody = 'duel.challenge.friendsEmpty';
+  static const challengeFriendsFailed = 'duel.challenge.friendsFailed';
+
+  /// Sonuç ekranında paylaşılan metin ({n} doğru sayısı, {link} /join/D… bağlantısı).
+  static const challengeShareText = 'duel.challenge.shareText';
+
+  /// Paylaşım sayfası açılamazsa metin panoya gider.
+  static const challengeLinkCopied = 'duel.challenge.linkCopied';
+  static const challengeLinkWaitBody = 'duel.challenge.linkWait';
+  static const challengeFriendWaitBody = 'duel.challenge.friendWait';
+
+  /// Ana ekran kartı ve gelen kutusu: bana gelen meydan okuma.
+  static const challengeYourTurn = 'duel.challenge.yourTurn';
+  static const challengeIncomingBy = 'duel.challenge.incomingBy';
+
+  /// Gelen meydan okuma satırının eylem rozeti.
+  static const challengePlay = 'duel.challenge.play';
+
+  /// Henüz kimsenin almadığı, yeniden paylaşılabilir bağlantı satırı.
+  static const challengeLinkRow = 'duel.challenge.linkRow';
+  static const challengeErrNotFound = 'duel.challenge.err.notFound';
+  static const challengeErrOwn = 'duel.challenge.err.own';
+  static const challengeErrTaken = 'duel.challenge.err.taken';
+  static const challengeErrExpired = 'duel.challenge.err.expired';
+  static const challengeErrNotForYou = 'duel.challenge.err.notForYou';
+  static const challengeErrNotReady = 'duel.challenge.err.notReady';
+  static const challengeErrNotAFriend = 'duel.challenge.err.notAFriend';
 }

@@ -90,7 +90,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('nav-play')));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Günün soruları'));
+    await tester.scrollUntilVisible(find.text('Günün soruları'), 200);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Günün soruları'));
     await tester.pumpAndSettle();

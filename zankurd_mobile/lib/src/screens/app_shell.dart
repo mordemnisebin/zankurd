@@ -10,6 +10,7 @@ import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/async_duel.dart';
 import '../models/room.dart';
 import '../providers/auth_provider.dart';
 import '../providers/remote_availability.dart';
@@ -28,6 +29,8 @@ import 'onboarding_screen.dart';
 import '../services/analytics_service.dart';
 import '../services/push_tap_router.dart';
 import '../services/push_token_sync.dart';
+import 'async_duel/async_duel_inbox.dart';
+import 'async_duel/async_duel_play_screen.dart';
 import 'friends_screen.dart';
 import 'password_recovery_screen.dart';
 import 'profile_name_gate_screen.dart';
@@ -646,7 +649,7 @@ class _AppShellState extends State<AppShell>
     final code =
         JoinDeepLink.consumeInitialRoute() ?? JoinDeepLink.takeIncoming();
     if (code == null) return;
-    await _joinOnlineRoomAndOpen(code);
+    await _openJoinCode(code);
   }
 
   /// Uygulama açıkken gelen davet (sıcak açılış). Bağlantıyı
@@ -666,7 +669,38 @@ class _AppShellState extends State<AppShell>
     }
     final code = JoinDeepLink.takeIncoming();
     if (code == null) return;
-    unawaited(_joinOnlineRoomAndOpen(code));
+    unawaited(_openJoinCode(code));
+  }
+
+  /// `/join/<kod>` bağlantısının iki türü: `D…` meydan okuma kodu ya da
+  /// `ZK-…` oda kodu ([JoinDeepLink.isChallengeCode] ikisini kesin ayırır).
+  Future<void> _openJoinCode(String code) {
+    if (JoinDeepLink.isChallengeCode(code)) {
+      return _acceptChallengeAndOpen(code);
+    }
+    return _joinOnlineRoomAndOpen(code);
+  }
+
+  /// Meydan okumayı kabul edip 7 soruluk oyun ekranını açar. Kabul
+  /// (`accept_async_duel_challenge`), hesabı olmayan misafir için oturumu da
+  /// kendisi açar; hatalar (süresi dolmuş, başkası almış, kendi bağlantım…)
+  /// oyun ekranında dürüst, yerelleştirilmiş bir metinle ve "Kapat" ile
+  /// gösterilir — çıkmaz sokak yok.
+  Future<void> _acceptChallengeAndOpen(String code) async {
+    try {
+      _selectTab(1);
+      if (!mounted) return;
+      await Navigator.of(context).push(
+        AppRoute.to(
+          AsyncDuelPlayScreen(
+            repository: _repository,
+            entry: AsyncDuelEntry.acceptChallenge(code),
+          ),
+        ),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'challenge deep link failed');
+    }
   }
 
   /// [code] ile oda katılımını dener, başarılıysa [RoomScreen] açar.
@@ -731,6 +765,13 @@ class _AppShellState extends State<AppShell>
     switch (target) {
       case PushTapTarget.playTab:
         _selectTab(1);
+      case PushTapTarget.duelInbox:
+        _selectTab(1);
+        unawaited(
+          Navigator.of(
+            context,
+          ).push(AppRoute.to(AsyncDuelListScreen(repository: _repository))),
+        );
       case PushTapTarget.friends:
         _selectTab(2);
         unawaited(

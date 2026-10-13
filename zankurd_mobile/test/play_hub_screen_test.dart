@@ -143,6 +143,12 @@ void main() {
     expect(find.byKey(const ValueKey('play-hub-quick-duel')), findsOneWidget);
     expect(find.byKey(const ValueKey('play-hub-create-room')), findsOneWidget);
     expect(find.byKey(const ValueKey('play-hub-join-room')), findsOneWidget);
+    // Sırayla düello grubuna "Arkadaşına meydan oku" satırı eklendi
+    // (2026-10-13); günlük yarışma 844 px'te kaydırma gerektirebilir.
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-daily-contest')),
+      200,
+    );
     expect(
       find.byKey(const ValueKey('play-hub-daily-contest')),
       findsOneWidget,

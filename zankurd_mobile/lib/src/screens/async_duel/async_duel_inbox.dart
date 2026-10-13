@@ -12,7 +12,41 @@ import '../../utils/player_identity.dart';
 import '../../widgets/app_state.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../../widgets/zk_back_button.dart';
+import 'async_duel_play_screen.dart';
 import 'async_duel_result_screen.dart';
+
+/// Bana gelen (kabul edilmemiş) meydan okumalar listenin BAŞINDA: bekleyen
+/// bir hamle, bitmiş sonuçlardan önce görülmeli. Kalan sıra sunucunun
+/// (yeniden eskiye) sırasıdır.
+List<AsyncDuelSummary> asyncDuelInboxOrder(List<AsyncDuelSummary> items) {
+  return [
+    ...items.where((s) => s.incomingChallenge),
+    ...items.where((s) => !s.incomingChallenge),
+  ];
+}
+
+/// Bir gelen kutusu satırına dokunma: gelen meydan okumayı kabul edip oyna,
+/// diğerlerinde sonucu aç. Dönüşte çağıran listeyi tazeler.
+Future<void> openAsyncDuelSummary(
+  BuildContext context,
+  ZanKurdRepository repository,
+  AsyncDuelSummary summary,
+) async {
+  final code = summary.challengeCode;
+  final Widget page;
+  if (summary.incomingChallenge && code != null) {
+    page = AsyncDuelPlayScreen(
+      repository: repository,
+      entry: AsyncDuelEntry.acceptChallenge(code),
+    );
+  } else {
+    page = AsyncDuelResultScreen(
+      repository: repository,
+      view: AsyncDuelResultView.fromSummary(summary),
+    );
+  }
+  await Navigator.of(context).push(AppRoute.to(page));
+}
 
 /// Play Hub'daki "Düellolarım" kutusu — en çok [maxRows] satır, daha
 /// fazlası varsa tam listeye giden bir "Hemû" düğmesi.
@@ -90,15 +124,8 @@ class _AsyncDuelInboxSectionState extends State<AsyncDuelInboxSection> {
   }
 
   Future<void> _openResult(AsyncDuelSummary summary) async {
-    await Navigator.of(context).push(
-      AppRoute.to(
-        AsyncDuelResultScreen(
-          repository: widget.repository,
-          view: AsyncDuelResultView.fromSummary(summary),
-        ),
-      ),
-    );
-    _reload();
+    await openAsyncDuelSummary(context, widget.repository, summary);
+    if (mounted) _reload();
   }
 
   Future<void> _openSeeAll() async {
@@ -111,8 +138,12 @@ class _AsyncDuelInboxSectionState extends State<AsyncDuelInboxSection> {
   @override
   Widget build(BuildContext context) {
     final items = _items;
-    final all = items ?? const <AsyncDuelSummary>[];
-    final unreadCount = all.where((s) => s.outcome != null && !s.seen).length;
+    final all = asyncDuelInboxOrder(items ?? const <AsyncDuelSummary>[]);
+    // Okunmamış = sonucu hazır ve görülmemiş VEYA sırası bende olan
+    // meydan okuma.
+    final unreadCount = all
+        .where((s) => s.incomingChallenge || (s.outcome != null && !s.seen))
+        .length;
 
     // 2026-09-29 Şahnê: tek bölüm başlığı (`SahneSectionHeader`), satırlar
     // liste grubunda (`SahneListRow`, Boyax yarış karosu). Okunmamış sayı
@@ -257,19 +288,47 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
         ? null
         : context.playerDisplayName(rawOpponent);
     final myCorrect = view.myCorrect;
-    final title = knownOpponent ?? statusLabel;
-    final subtitle = knownOpponent != null
-        ? statusLabel
-        : (myCorrect != null
-              ? '${context.t(K.you)} $myCorrect/${view.total}'
-              : null);
+    final invited = summary.invitedName;
+    final incoming = summary.incomingChallenge;
+    final linkChallenge = summary.isWaitingLinkChallenge;
+    final String title;
+    final String? subtitle;
+    if (incoming) {
+      // "Sıra sende": gelen meydan okuma. Başlık eylemin kendisi, alt satır
+      // kimin çağırdığı.
+      title = context.t(K.challengeYourTurn);
+      subtitle = knownOpponent == null
+          ? null
+          : context.t(K.challengeIncomingBy, {'name': knownOpponent});
+    } else if (linkChallenge) {
+      // Kimsenin almadığı bağlantı: satıra dokunmak sonuç ekranını
+      // (Paylaş'lı) açar.
+      title = context.t(K.challengeLinkRow);
+      subtitle = myCorrect != null
+          ? '${context.t(K.you)} $myCorrect/${view.total}'
+          : null;
+    } else if (invited != null && knownOpponent == null) {
+      title = context.playerDisplayName(invited);
+      subtitle = statusLabel;
+    } else {
+      title = knownOpponent ?? statusLabel;
+      subtitle = knownOpponent != null
+          ? statusLabel
+          : (myCorrect != null
+                ? '${context.t(K.you)} $myCorrect/${view.total}'
+                : null);
+    }
     // Rozet yalnız TAMAMLANMIŞ ve henüz görülmemiş satırda anlamlıdır —
     // "bekleniyor/süresi doldu/yarım kaldı" satırında oyuncunun görmesi
-    // gereken yeni bir sonuç yok.
+    // gereken yeni bir sonuç yok. Gelen meydan okumada rozet "Oyna".
     final showReadyChip =
-        view.kind == AsyncDuelResultKind.completed && !summary.seen;
-    final readyLabel = context.t(K.asyncDuelReady);
+        incoming ||
+        (view.kind == AsyncDuelResultKind.completed && !summary.seen);
+    final readyLabel = incoming
+        ? context.t(K.challengePlay)
+        : context.t(K.asyncDuelReady);
     final icon = switch (view.kind) {
+      _ when incoming => AppIcons.peopleGroup,
       AsyncDuelResultKind.completed => AppIcons.trophy,
       AsyncDuelResultKind.waiting => AppIcons.hourglass,
       AsyncDuelResultKind.expired ||
@@ -325,14 +384,7 @@ class _AsyncDuelListScreenState extends State<AsyncDuelListScreen> {
   }
 
   Future<void> _openResult(AsyncDuelSummary summary) async {
-    await Navigator.of(context).push(
-      AppRoute.to(
-        AsyncDuelResultScreen(
-          repository: widget.repository,
-          view: AsyncDuelResultView.fromSummary(summary),
-        ),
-      ),
-    );
+    await openAsyncDuelSummary(context, widget.repository, summary);
     if (mounted) _reload();
   }
 
@@ -359,7 +411,9 @@ class _AsyncDuelListScreenState extends State<AsyncDuelListScreen> {
                 onRetry: _reload,
               );
             }
-            final all = snapshot.data ?? const <AsyncDuelSummary>[];
+            final all = asyncDuelInboxOrder(
+              snapshot.data ?? const <AsyncDuelSummary>[],
+            );
             if (all.isEmpty) {
               return AppEmptyState(
                 icon: AppIcons.hourglass,
