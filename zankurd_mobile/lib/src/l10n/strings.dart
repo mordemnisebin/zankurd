@@ -2749,7 +2749,7 @@ class Tr {
       'tr': 'Arkadaşına meydan oku',
     },
     K.challengeEntrySub: {
-      'ku': 'Girêdanekê bişîne, hevalê te paşê bilîze',
+      'ku': 'Girêdanekê bişîne, hevalê te dê paşê bilîze',
       'tr': 'Bağlantı gönder, arkadaşın sonra oynasın',
     },
     K.challengeViaLink: {
@@ -2792,7 +2792,7 @@ class Tr {
     },
     K.challengeYourTurn: {'ku': 'Dora te ye', 'tr': 'Sıra sende'},
     K.challengeIncomingBy: {
-      'ku': '{name} te vexwend pêşbirkê',
+      'ku': '{name} tu vexwendî pêşbirkê',
       'tr': '{name} seni düelloya çağırdı',
     },
     K.challengePlay: {'ku': 'Bilîze', 'tr': 'Oyna'},
@@ -2822,7 +2822,7 @@ class Tr {
     },
     K.challengeErrNotReady: {
       'ku':
-          'Kesê te vexwendiye hîn dora xwe neqedandiye. Piştre dîsa biceribîne.',
+          'Kesê ku tu vexwendî hîn dora xwe neqedandiye. Piştre dîsa biceribîne.',
       'tr': 'Seni çağıran henüz turunu bitirmedi. Biraz sonra tekrar dene.',
     },
     K.challengeErrNotAFriend: {
