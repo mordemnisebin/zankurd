@@ -757,8 +757,13 @@ class _FriendRow extends StatelessWidget {
                 onPressed: busy ? null : onPlay,
               ),
             )
-          : Row(
-              mainAxisSize: MainAxisSize.min,
+          // Wrap: büyük yazıda iki eylem sığmazsa simge düğmesi alta geçer
+          // (Row taşıyordu; 360 genişlik, 2x yazı).
+          : Wrap(
+              alignment: WrapAlignment.end,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: SahneSpace.x1,
+              runSpacing: SahneSpace.x1,
               children: [
                 SahneButton.secondary(
                   key: ValueKey('friend-action-${friend.friendName}'),
@@ -769,7 +774,6 @@ class _FriendRow extends StatelessWidget {
                   icon: AppIcons.swords,
                   onPressed: busy ? null : onChallenge,
                 ),
-                const SizedBox(width: SahneSpace.x1),
                 SahneIconButton(
                   key: ValueKey('friend-room-${friend.friendName}'),
                   icon: busy ? AppIcons.hourglass : AppIcons.doorOpen,
