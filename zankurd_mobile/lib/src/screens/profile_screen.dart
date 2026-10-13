@@ -753,148 +753,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   // 2026-07-22 canlı UX denetimi: misafir hesap yükseltme dialog'u
   Future<void> _showGuestUpgradeDialog() async {
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-    final formKey = GlobalKey<FormState>();
-    bool submitting = false;
-
+    // Alan denetleyicilerini diyalogun kendi State'i yönetir (bkz.
+    // [_GuestUpgradeDialog]); burada atmak kapanış animasyonunda çöküş
+    // riskiydi.
     final result = await showDialog<_GuestUpgradeAction>(
       context: context,
       barrierDismissible: false,
-      builder: (dialogContext) => StatefulBuilder(
-        builder: (ctx, setDialogState) => AlertDialog(
-          title: Text(
-            context.t(K.saveAccount),
-            style: SahneType.headline.copyWith(color: SahneTokens.of(ctx).tx),
-          ),
-          content: Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.t(K.saveAccountBody),
-                  style: SahneType.caption.copyWith(
-                    color: SahneTokens.of(ctx).tx2,
-                  ),
-                ),
-                const SizedBox(height: SahneSpace.x4),
-                SahneField(
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  label: context.t(K.email),
-                  validator: (v) {
-                    if (v == null || v.isEmpty || !v.contains('@')) {
-                      return context.t(K.emailInvalid);
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 12),
-                SahneField(
-                  controller: passwordController,
-                  obscureText: true,
-                  label: context.t(K.password),
-                  validator: (v) {
-                    if (v == null || v.length < 6) {
-                      return context.t(K.passwordTooShort);
-                    }
-                    return null;
-                  },
-                ),
-                if (_supportsGoogleAccountLinking) ...[
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(child: Divider(color: SahneTokens.of(ctx).line)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          context.t(K.orSeparator),
-                          style: SahneType.caption.copyWith(
-                            color: SahneTokens.of(ctx).tx2,
-                          ),
-                        ),
-                      ),
-                      Expanded(child: Divider(color: SahneTokens.of(ctx).line)),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton.icon(
-                      onPressed: submitting
-                          ? null
-                          : () => Navigator.pop(
-                              dialogContext,
-                              _GuestUpgradeAction.googleRequested,
-                            ),
-                      icon: const BrandIcon(
-                        BrandIcons.google,
-                        size: 18,
-                        color: Color(0xFF4285F4),
-                      ),
-                      label: Text(context.t(K.linkGoogle)),
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-          actions: [
-            DialogActionPair(
-              cancel: OutlinedButton(
-                onPressed: submitting
-                    ? null
-                    : () => Navigator.pop(dialogContext, null),
-                child: Text(context.t(K.cancel)),
-              ),
-              confirm: FilledButton(
-                onPressed: submitting
-                    ? null
-                    : () async {
-                        if (!(formKey.currentState?.validate() ?? false)) {
-                          return;
-                        }
-                        setDialogState(() => submitting = true);
-                        final auth = context.read<AuthProvider>();
-                        final success = await auth.upgradeGuestAccount(
-                          email: emailController.text.trim(),
-                          password: passwordController.text,
-                        );
-                        if (!ctx.mounted) return;
-                        Navigator.pop(
-                          dialogContext,
-                          !success
-                              ? _GuestUpgradeAction.emailFailure
-                              : auth.needsEmailConfirmation
-                              ? _GuestUpgradeAction.emailPendingConfirmation
-                              : _GuestUpgradeAction.emailSuccess,
-                        );
-                      },
-                child: submitting
-                    ? SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: SahneTokens.of(ctx).tx3,
-                        ),
-                      )
-                    : Text(context.t(K.save)),
-              ),
-            ),
-          ],
-        ),
+      builder: (_) => _GuestUpgradeDialog(
+        supportsGoogleLinking: _supportsGoogleAccountLinking,
       ),
     );
-
-    // Controller'ları bir sonraki frame'den sonra imha et; dialog widget
-    // ağacı henüz deaktive edilmemiş olabilir.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      emailController.dispose();
-      passwordController.dispose();
-    });
 
     if (!mounted) return;
     switch (result) {

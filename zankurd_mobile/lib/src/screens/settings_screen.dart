@@ -788,73 +788,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  Future<bool?> _showFinalDeleteConfirmation() async {
-    final controller = TextEditingController();
+  Future<bool?> _showFinalDeleteConfirmation() {
     final confirmWord = context.t(K.deleteWord);
-    final result = await showDialog<bool>(
+    // Yazı denetleyicisini diyalogun kendi State'i yönetir. Eskiden burada
+    // yaratılıp `await showDialog` sonrası bir kare sonra atılıyordu; oysa
+    // kapanış animasyonu onlarca kare sürer ve alan atılmış denetleyiciyi
+    // dinlerdi ("used after being disposed").
+    return showDialog<bool>(
       context: context,
-      builder: (dialogContext) {
-        var canDelete = false;
-        return StatefulBuilder(
-          builder: (context, setDialogState) {
-            return AlertDialog(
-              title: Text(context.t(K.finalConfirm)),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(context.t(K.deleteTypeWord, {'word': confirmWord})),
-                  const SizedBox(height: 12),
-                  SahneField(
-                    key: const ValueKey('delete-confirm-field'),
-                    controller: controller,
-                    textCapitalization: TextCapitalization.characters,
-                    hintText: confirmWord,
-                    semanticLabel: confirmWord,
-                    onChanged: (value) {
-                      setDialogState(
-                        () => canDelete = value.trim() == confirmWord,
-                      );
-                    },
-                  ),
-                ],
-              ),
-              actions: [
-                DialogActionPair(
-                  cancel: OutlinedButton(
-                    onPressed: () => Navigator.pop(dialogContext, false),
-                    child: Text(context.t(K.cancel)),
-                  ),
-                  confirm: FilledButton(
-                    key: const ValueKey('delete-forever'),
-                    onPressed: canDelete
-                        ? () => Navigator.pop(dialogContext, true)
-                        : null,
-                    // Geri alınamaz eylem: turuncu birincil değil hata tonu.
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Theme.of(
-                        dialogContext,
-                      ).colorScheme.error,
-                      foregroundColor: Theme.of(
-                        dialogContext,
-                      ).colorScheme.onError,
-                      disabledBackgroundColor: SahneTokens.of(dialogContext).s1,
-                      disabledForegroundColor: SahneTokens.of(
-                        dialogContext,
-                      ).tx3,
-                    ),
-                    child: Text(context.t(K.deleteForever)),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
-      },
+      builder: (_) => _FinalDeleteDialog(confirmWord: confirmWord),
     );
-    // StatefulBuilder rebuild akışının tamamlanması için bir sonraki frame'de dispose.
-    WidgetsBinding.instance.addPostFrameCallback((_) => controller.dispose());
-    return result;
   }
 
   Future<void> _deleteAccount() async {
@@ -888,6 +831,75 @@ class _SettingsScreenState extends State<SettingsScreen> {
         context,
       ).showSnackBar(SnackBar(content: Text(context.t(K.accountDeleteFailed))));
     }
+  }
+}
+
+/// Hesap silmenin son onayı: kullanıcı onay sözcüğünü yazmadan "Sil" açılmaz.
+///
+/// Denetleyici bu State'e aittir (bkz. [_SettingsScreenState._showFinalDeleteConfirmation]).
+class _FinalDeleteDialog extends StatefulWidget {
+  const _FinalDeleteDialog({required this.confirmWord});
+
+  final String confirmWord;
+
+  @override
+  State<_FinalDeleteDialog> createState() => _FinalDeleteDialogState();
+}
+
+class _FinalDeleteDialogState extends State<_FinalDeleteDialog> {
+  final TextEditingController _controller = TextEditingController();
+  bool _canDelete = false;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final confirmWord = widget.confirmWord;
+    return AlertDialog(
+      title: Text(context.t(K.finalConfirm)),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(context.t(K.deleteTypeWord, {'word': confirmWord})),
+          const SizedBox(height: 12),
+          SahneField(
+            key: const ValueKey('delete-confirm-field'),
+            controller: _controller,
+            textCapitalization: TextCapitalization.characters,
+            hintText: confirmWord,
+            semanticLabel: confirmWord,
+            onChanged: (value) {
+              setState(() => _canDelete = value.trim() == confirmWord);
+            },
+          ),
+        ],
+      ),
+      actions: [
+        DialogActionPair(
+          cancel: OutlinedButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.t(K.cancel)),
+          ),
+          confirm: FilledButton(
+            key: const ValueKey('delete-forever'),
+            onPressed: _canDelete ? () => Navigator.pop(context, true) : null,
+            // Geri alınamaz eylem: turuncu birincil değil hata tonu.
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(context).colorScheme.onError,
+              disabledBackgroundColor: SahneTokens.of(context).s1,
+              disabledForegroundColor: SahneTokens.of(context).tx3,
+            ),
+            child: Text(context.t(K.deleteForever)),
+          ),
+        ),
+      ],
+    );
   }
 }
 

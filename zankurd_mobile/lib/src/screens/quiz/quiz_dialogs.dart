@@ -75,17 +75,39 @@ class _QuizForfeitDialog extends StatelessWidget {
   }
 }
 
-class _QuizReportDialog extends StatelessWidget {
-  const _QuizReportDialog({required this.controller});
+/// Soru bildirme diyaloğu. Denetleyiciyi KENDİ State'i yaratır ve atar.
+///
+/// Eskiden denetleyiciyi `_reportQuestion` yaratıp `await showDialog`
+/// döner dönmez atıyordu; ama diyalogun kapanış animasyonu onlarca kare
+/// sürer ve bu sürede `SahneField` hâlâ atılmış denetleyiciyi dinlerdi
+/// ("used after being disposed"). State'in ömrü route'un ömrüne bağlıdır:
+/// route tamamen sökülünce `dispose` çalışır.
+class _QuizReportDialog extends StatefulWidget {
+  const _QuizReportDialog({required this.initialText});
 
-  final TextEditingController controller;
+  final String initialText;
+
+  @override
+  State<_QuizReportDialog> createState() => _QuizReportDialogState();
+}
+
+class _QuizReportDialogState extends State<_QuizReportDialog> {
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.initialText,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(context.t(K.reportQuestion)),
       content: SahneField(
-        controller: controller,
+        controller: _controller,
         minLines: 2,
         maxLines: 4,
         keyboardType: TextInputType.multiline,
@@ -98,7 +120,7 @@ class _QuizReportDialog extends StatelessWidget {
             child: Text(context.t(K.cancel)),
           ),
           confirm: FilledButton(
-            onPressed: () => Navigator.of(context).pop(controller.text),
+            onPressed: () => Navigator.of(context).pop(_controller.text),
             child: Text(context.t(K.sendAction)),
           ),
         ),

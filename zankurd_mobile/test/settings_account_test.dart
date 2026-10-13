@@ -326,6 +326,45 @@ void main() {
     expect(find.textContaining('1.8.0+10'), findsNothing);
   });
 
+  /// Son silme onayının yazı denetleyicisi diyalogun kendi State'ine aittir.
+  ///
+  /// ## Kusur
+  ///
+  /// `_showFinalDeleteConfirmation` denetleyiciyi yaratıp diyalog kapandıktan
+  /// BİR kare sonra atıyordu; oysa kapanış animasyonu onlarca kare sürer ve
+  /// `SahneField` bu sürede atılmış denetleyiciyi dinlerdi ("used after being
+  /// disposed"). Sessizdi: başarılı silme testleri `pump(300ms)` ile
+  /// yetiniyor, istisna hiçbir yerde sorgulanmıyordu.
+  testWidgets('son silme onayı Vazgeç ile kapanırken çökmez', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+
+    final deleteAction = await _scrollToDeleteAction(tester);
+    await tester.tap(deleteAction);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('delete-confirm-field')), findsOneWidget);
+    await tester.enterText(
+      find.byKey(const ValueKey('delete-confirm-field')),
+      'SI',
+    );
+    // Odaklanmış alan: çökme yalnız odağı/imleci olan alanda görülür.
+    await tester.tap(find.byKey(const ValueKey('delete-confirm-field')));
+    await tester.pump();
+
+    await tester.tap(find.text('Vazgeç'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('delete-confirm-field')), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('successful account deletion signs out to the auth gate', (
     tester,
   ) async {

@@ -1094,3 +1094,160 @@ class _LegendDot extends StatelessWidget {
     );
   }
 }
+
+/// Misafir hesap yükseltme diyaloğu (e-posta + şifre ya da Google).
+///
+/// Form anahtarı ve iki alan denetleyicisi bu State'e aittir. Eskiden
+/// `_showGuestUpgradeDialog` onları yaratıp `await showDialog` sonrası bir
+/// kare beklemeyip atıyordu; kapanış animasyonu onlarca kare sürdüğünden
+/// alanlar atılmış denetleyiciyi dinlemeye devam ederdi ("used after being
+/// disposed"). Sessizdi: test ortamında route animasyonu çoğu zaman
+/// `pumpAndSettle` ile bitmeden kare okunmuyordu.
+class _GuestUpgradeDialog extends StatefulWidget {
+  const _GuestUpgradeDialog({required this.supportsGoogleLinking});
+
+  final bool supportsGoogleLinking;
+
+  @override
+  State<_GuestUpgradeDialog> createState() => _GuestUpgradeDialogState();
+}
+
+class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _submitting = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        context.t(K.saveAccount),
+        style: SahneType.headline.copyWith(color: SahneTokens.of(context).tx),
+      ),
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              context.t(K.saveAccountBody),
+              style: SahneType.caption.copyWith(
+                color: SahneTokens.of(context).tx2,
+              ),
+            ),
+            const SizedBox(height: SahneSpace.x4),
+            SahneField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              label: context.t(K.email),
+              validator: (v) {
+                if (v == null || v.isEmpty || !v.contains('@')) {
+                  return context.t(K.emailInvalid);
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 12),
+            SahneField(
+              controller: _passwordController,
+              obscureText: true,
+              label: context.t(K.password),
+              validator: (v) {
+                if (v == null || v.length < 6) {
+                  return context.t(K.passwordTooShort);
+                }
+                return null;
+              },
+            ),
+            if (widget.supportsGoogleLinking) ...[
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(child: Divider(color: SahneTokens.of(context).line)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      context.t(K.orSeparator),
+                      style: SahneType.caption.copyWith(
+                        color: SahneTokens.of(context).tx2,
+                      ),
+                    ),
+                  ),
+                  Expanded(child: Divider(color: SahneTokens.of(context).line)),
+                ],
+              ),
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: _submitting
+                      ? null
+                      : () => Navigator.pop(
+                          context,
+                          _GuestUpgradeAction.googleRequested,
+                        ),
+                  icon: const BrandIcon(
+                    BrandIcons.google,
+                    size: 18,
+                    color: Color(0xFF4285F4),
+                  ),
+                  label: Text(context.t(K.linkGoogle)),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+      actions: [
+        DialogActionPair(
+          cancel: OutlinedButton(
+            onPressed: _submitting ? null : () => Navigator.pop(context, null),
+            child: Text(context.t(K.cancel)),
+          ),
+          confirm: FilledButton(
+            onPressed: _submitting
+                ? null
+                : () async {
+                    if (!(_formKey.currentState?.validate() ?? false)) {
+                      return;
+                    }
+                    setState(() => _submitting = true);
+                    final auth = context.read<AuthProvider>();
+                    final navigator = Navigator.of(context);
+                    final success = await auth.upgradeGuestAccount(
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text,
+                    );
+                    if (!mounted) return;
+                    navigator.pop(
+                      !success
+                          ? _GuestUpgradeAction.emailFailure
+                          : auth.needsEmailConfirmation
+                          ? _GuestUpgradeAction.emailPendingConfirmation
+                          : _GuestUpgradeAction.emailSuccess,
+                    );
+                  },
+            child: _submitting
+                ? SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: SahneTokens.of(context).tx3,
+                    ),
+                  )
+                : Text(context.t(K.save)),
+          ),
+        ),
+      ],
+    );
+  }
+}

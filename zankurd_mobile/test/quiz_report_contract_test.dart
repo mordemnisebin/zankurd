@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -92,6 +94,67 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(find.textContaining('gönderilemedi'), findsOneWidget);
+  });
+
+  /// Bildirme diyaloğunun yazı denetleyicisi diyalogun kendi State'ine aittir.
+  ///
+  /// ## Kusur
+  ///
+  /// `_reportQuestion` denetleyiciyi yaratıp `await showDialog` döner dönmez
+  /// atıyordu. Diyalogun kapanış animasyonu onlarca kare sürer ve bu sürede
+  /// `SahneField` atılmış denetleyiciyi dinlemeye devam ederdi ("A
+  /// TextEditingController was used after being disposed").
+  ///
+  /// ## Niçin sessizdi
+  ///
+  /// Üstteki testler "Gönder"e basıp yalnız 400 ms ilerletiyordu; animasyon
+  /// bitmeden bakılıyor, atılmış denetleyiciye ilk dokunuşta oluşan istisna
+  /// ise hiçbir yerde sorgulanmıyordu. Burada kapanış `pumpAndSettle` ile
+  /// sonuna kadar oynatılır ve çerçeve istisnası açıkça sorgulanır.
+  for (final action in ['Vazgeç', 'Gönder']) {
+    testWidgets('bildirme diyaloğu "$action" ile kapanırken çökmez', (
+      tester,
+    ) async {
+      await pumpQuiz(tester, _RecordingReportRepository());
+
+      await tester.tap(find.byTooltip('Bildir'));
+      await tester.pumpAndSettle();
+      expect(find.byType(AlertDialog), findsOneWidget);
+
+      // Odaklanmış alan: çökme yalnız odağı/imleci olan alanda görülür.
+      await tester.tap(find.byType(TextField));
+      await tester.pump();
+
+      await tester.tap(find.text(action));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(AlertDialog), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+  }
+
+  /// `QuizScreen` kendi yarattığı `FloatingReactionController`ı atmalı.
+  ///
+  /// ## Kusur
+  ///
+  /// `_reactionController` (bir `ChangeNotifier`) `dispose()`ta hiç
+  /// atılmıyordu; her quiz oturumu bir sızıntı bırakıyordu. Kaplama
+  /// (`FloatingReactionOverlay`) dışarıdan verilen denetleyiciyi sahiplenmez,
+  /// yani atma işi yalnız bu ekrandadır (`RoomScreen` atıyordu, bu ekran
+  /// atmıyordu).
+  ///
+  /// ## Niçin sessizdi
+  ///
+  /// Sızıntı hiçbir davranış değiştirmez: ekran, testler ve kullanıcı için
+  /// her şey çalışır. Denetleyici özeldir, dışarıdan gözlemlenemez; tek
+  /// bekçi kaynak düzeyindedir.
+  test('QuizScreen dispose() tepki denetleyicisini atar', () {
+    final source = File('lib/src/screens/quiz_screen.dart').readAsStringSync();
+    final disposeBody = RegExp(
+      r'void dispose\(\) \{(.*?)\n  \}',
+      dotAll: true,
+    ).firstMatch(source)!.group(1)!;
+    expect(disposeBody, contains('_reactionController.dispose();'));
   });
 
   test('mock reportQuestion çağrıyı kaydeder', () async {

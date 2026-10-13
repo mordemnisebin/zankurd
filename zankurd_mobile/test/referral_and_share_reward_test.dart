@@ -93,5 +93,37 @@ void main() {
       );
       expect(find.textContaining('100'), findsWidgets);
     });
+
+    /// Davet kodu diyaloğunun denetleyicisi diyalogun kendi State'ine aittir.
+    ///
+    /// ## Kusur
+    ///
+    /// `_showReferralDialog` denetleyiciyi yaratıyor ve HİÇ atmıyordu
+    /// (sızıntı); atılacak olsa da çağıran yerde, kapanış animasyonu
+    /// bitmeden atmak "used after being disposed" çöküşüne yol açacaktı.
+    /// Sessizdi: sızıntı hiçbir testte görünmez, kapanışta istisna
+    /// sorgulanmıyordu.
+    testWidgets('davet kodu diyaloğu kod uygulanıp kapanırken çökmez', (
+      tester,
+    ) async {
+      final repository = MockZanKurdRepository();
+      await tester.pumpWidget(createWidget(repository));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const ValueKey('friends-enter-code-button')));
+      await tester.pumpAndSettle();
+      // Odaklanmış alan: çökme yalnız odağı/imleci olan alanda görülür.
+      await tester.tap(find.byKey(const ValueKey('referral-code-input')));
+      await tester.pump();
+      await tester.enterText(
+        find.byKey(const ValueKey('referral-code-input')),
+        'ZK-HEVAL',
+      );
+      await tester.tap(find.byKey(const ValueKey('referral-code-submit')));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('referral-code-input')), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
   });
 }

@@ -1397,6 +1397,9 @@ class _QuizScreenState extends State<QuizScreen>
     _visualReadyFallbackTimer?.cancel();
     _timerController.dispose();
     _explanationController.dispose();
+    // Kaplama (FloatingReactionOverlay) dışarıdan verilen denetleyiciyi
+    // sahiplenmez; atmak bu ekranın işi. Atılmayan ChangeNotifier sızıntıdır.
+    _reactionController.dispose();
     _questionAudioService?.dispose();
     super.dispose();
   }
@@ -3623,14 +3626,13 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _reportQuestion() async {
-    final controller = TextEditingController(
-      text: context.t(K.reportReasonDefault),
-    );
+    // Denetleyiciyi diyalogun kendi State'i yönetir (kapanış animasyonu
+    // sürerken dışarıdan atmak çöküş riskiydi).
     final reason = await showDialog<String>(
       context: context,
-      builder: (_) => _QuizReportDialog(controller: controller),
+      builder: (_) =>
+          _QuizReportDialog(initialText: context.t(K.reportReasonDefault)),
     );
-    controller.dispose();
     if (reason == null) return;
 
     try {

@@ -314,100 +314,28 @@ class _FriendsScreenState extends State<FriendsScreen> {
     );
   }
 
-  void _showReferralDialog(bool ku) {
-    final controller = TextEditingController();
-    bool submitting = false;
-    showDialog<void>(
+  Future<void> _showReferralDialog(bool ku) async {
+    // Kod alanının denetleyicisini diyalogun kendi State'i yönetir (bkz.
+    // [_ReferralDialog]). Eskiden burada yaratılıp HİÇ atılmıyordu; atılsaydı
+    // da kapanış animasyonunda çöküş riski vardı.
+    final result = await showDialog<ReferralResult>(
       context: context,
-      builder: (dialogContext) {
-        return StatefulBuilder(
-          builder: (dialogContext, setDialogState) {
-            return AlertDialog(
-              // 2026-09-25: zemin ve yarıçap `AppTheme._dialogTheme`ten
-              // geliyor. Buradaki `AppRadius.card` (14) temanın `md` (16)
-              // değerinden farklıydı; uygulamada 14/16/20 karışık yarıçaplı
-              // üç ayrı diyalog dili oluşmuştu.
-              title: Text(
-                context.t(K.enterReferralCode),
-                style: SahneType.headline.copyWith(
-                  color: SahneTokens.of(dialogContext).tx,
-                ),
-              ),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.t(K.enterReferralCodeHint),
-                    style: SahneType.caption.copyWith(
-                      color: SahneTokens.of(dialogContext).tx2,
-                    ),
-                  ),
-                  const SizedBox(height: SahneSpace.x3),
-                  SahneField(
-                    key: const ValueKey('referral-code-input'),
-                    controller: controller,
-                    textCapitalization: TextCapitalization.characters,
-                    hintText: context.t(K.referralCodeHint),
-                    semanticLabel: context.t(K.referralCodeHint),
-                  ),
-                ],
-              ),
-              actions: [
-                DialogActionPair(
-                  cancel: TextButton(
-                    onPressed: submitting
-                        ? null
-                        : () => Navigator.of(dialogContext).pop(),
-                    child: Text(context.t(K.cancel)),
-                  ),
-                  // Diyaloğun tek birincil eylemi: Agir, koyu metin. Eski
-                  // düğme turuncu üstüne beyaz yazıyordu (2,35:1).
-                  confirm: SahneButton.primary(
-                    key: const ValueKey('referral-code-submit'),
-                    label: context.t(K.referralApplyAction),
-                    arrow: false,
-                    onPressed: submitting
-                        ? null
-                        : () async {
-                            final code = controller.text.trim();
-                            if (code.isEmpty) return;
-                            setDialogState(() => submitting = true);
-                            final result = await widget.repository
-                                .redeemReferralCode(code);
-                            if (!dialogContext.mounted) return;
-                            Navigator.of(dialogContext).pop();
-                            if (!mounted) return;
-                            if (result.isSuccess) {
-                              HapticFeedback.mediumImpact();
-                              _showMessage(context.t(K.referralCodeApplied));
-                            } else {
-                              final msg = switch (result.status) {
-                                ReferralStatus.ownCode => context.t(
-                                  K.cannotUseOwnCode,
-                                ),
-                                ReferralStatus.alreadyRedeemed => context.t(
-                                  K.referralAlreadyUsed,
-                                ),
-                                ReferralStatus.notFound => context.t(
-                                  K.invalidReferralCode,
-                                ),
-                                ReferralStatus.notVerified => context.t(
-                                  K.referralGuestBlocked,
-                                ),
-                                _ => context.t(K.searchFailed),
-                              };
-                              _showMessage(msg);
-                            }
-                          },
-                  ),
-                ),
-              ],
-            );
-          },
-        );
-      },
+      builder: (_) => _ReferralDialog(repository: widget.repository),
     );
+    if (result == null || !mounted) return;
+    if (result.isSuccess) {
+      HapticFeedback.mediumImpact();
+      _showMessage(context.t(K.referralCodeApplied));
+    } else {
+      final msg = switch (result.status) {
+        ReferralStatus.ownCode => context.t(K.cannotUseOwnCode),
+        ReferralStatus.alreadyRedeemed => context.t(K.referralAlreadyUsed),
+        ReferralStatus.notFound => context.t(K.invalidReferralCode),
+        ReferralStatus.notVerified => context.t(K.referralGuestBlocked),
+        _ => context.t(K.searchFailed),
+      };
+      _showMessage(msg);
+    }
   }
 
   Widget _buildSearchSection(bool ku) {
@@ -838,6 +766,89 @@ class _FriendRequestRow extends StatelessWidget {
           stackTrailing: stackActions,
         );
       },
+    );
+  }
+}
+
+/// Davet kodu girme diyaloğu. Denetleyiciyi kendi State'i yaratır ve atar;
+/// kodu sunucuda kullanır ve sonucu `Navigator.pop` ile çağırana verir
+/// (mesaj/haptik çağıranın işi).
+class _ReferralDialog extends StatefulWidget {
+  const _ReferralDialog({required this.repository});
+
+  final ZanKurdRepository repository;
+
+  @override
+  State<_ReferralDialog> createState() => _ReferralDialogState();
+}
+
+class _ReferralDialogState extends State<_ReferralDialog> {
+  final TextEditingController _controller = TextEditingController();
+  bool _submitting = false;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    final code = _controller.text.trim();
+    if (code.isEmpty) return;
+    setState(() => _submitting = true);
+    final navigator = Navigator.of(context);
+    final result = await widget.repository.redeemReferralCode(code);
+    if (!mounted) return;
+    navigator.pop(result);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      // 2026-09-25: zemin ve yarıçap `AppTheme._dialogTheme`ten
+      // geliyor. Buradaki `AppRadius.card` (14) temanın `md` (16)
+      // değerinden farklıydı; uygulamada 14/16/20 karışık yarıçaplı
+      // üç ayrı diyalog dili oluşmuştu.
+      title: Text(
+        context.t(K.enterReferralCode),
+        style: SahneType.headline.copyWith(color: SahneTokens.of(context).tx),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.t(K.enterReferralCodeHint),
+            style: SahneType.caption.copyWith(
+              color: SahneTokens.of(context).tx2,
+            ),
+          ),
+          const SizedBox(height: SahneSpace.x3),
+          SahneField(
+            key: const ValueKey('referral-code-input'),
+            controller: _controller,
+            textCapitalization: TextCapitalization.characters,
+            hintText: context.t(K.referralCodeHint),
+            semanticLabel: context.t(K.referralCodeHint),
+          ),
+        ],
+      ),
+      actions: [
+        DialogActionPair(
+          cancel: TextButton(
+            onPressed: _submitting ? null : () => Navigator.of(context).pop(),
+            child: Text(context.t(K.cancel)),
+          ),
+          // Diyaloğun tek birincil eylemi: Agir, koyu metin. Eski
+          // düğme turuncu üstüne beyaz yazıyordu (2,35:1).
+          confirm: SahneButton.primary(
+            key: const ValueKey('referral-code-submit'),
+            label: context.t(K.referralApplyAction),
+            arrow: false,
+            onPressed: _submitting ? null : _submit,
+          ),
+        ),
+      ],
     );
   }
 }
