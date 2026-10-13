@@ -67,13 +67,15 @@ void main() {
     // yüklenen kümede GERÇEKTEN bulunduğunu doğrular; bulunmazsa üstteki
     // test boş bir kümede koşup sessizce geçerdi.
     final curated = playable.where((q) => q.id.startsWith('curated_')).toList();
-    // 45 kaydın 38'i oynanabilir. Kalan 7'si `needsReview` ve öyle kalması
-    // DOĞRU: Kurmancî metinleri bozuk ("Fakltîzm", "Kîmoka zîvkirî",
-    // "Bakurê Kûrdistanê"). Proje onları bilerek yayından tutuyor; sayı
-    // burada sabitlenerek o kararın sessizce gevşemesi engelleniyor.
+    // 45 kaydın tamamı oynanabilirdi: 2026-09-02'de kuyruktaki 7 bozuk
+    // Kurmancî kayıt yeniden yazıldı. 45 -> 12: 2026-09-27 Paradigma ve
+    // Siyaset gizlendi; curated kayıtların 33'ü bu iki kategorideydi.
+    // 12 -> 45: 2026-09-30 Paradigma ve Siyaset yeniden açıldı; 33 curated
+    // kayıt geri geldi. Sayı düşerse banka yüklenen kümede görünmüyor
+    // demektir; artarsa sessizce yeni curated id girmiştir.
     expect(
       curated.length,
-      38,
+      45,
       reason:
           'Curated bankadan oynanabilir soru sayısı değişti. Düştüyse banka '
           'yüklenen kümede görünmüyor ve kapsam ölçümü onu atlıyor demektir; '
@@ -94,6 +96,11 @@ void main() {
         .map((e) => '${e.key}: ${e.value}')
         .toList();
     expect(thin, isEmpty, reason: 'Türkçe turu dolmayan kategori: $thin');
-    expect(byCategory.length, 10);
+    // 10 -> 8: 2026-09-27 Paradigma ve Siyaset gizlendi; 8 -> 7: aynı gün
+    // Teknolojî (bkz. `category_visibility.dart`).
+    // 7 -> 10: 2026-09-30 üçü de yeniden açıldı.
+    // 10 -> 11: 2026-09-30 `Cîhan` (Dünya) eklendi; 399 sorusunun hepsi
+    // iki dilli, yani Türkçe turu rahatça doluyor.
+    expect(byCategory.length, 11);
   });
 }

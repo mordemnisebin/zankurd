@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../l10n/lang.dart';
-import '../theme/app_theme.dart';
+import 'sahne/sahne.dart';
 
-/// İkincil ekranların ortak kimlik kartı — soft accent gradyan + ikon.
+/// İkincil ekranların kimlik başlığı.
+///
+/// 2026-09-29 Şahnê: sayfa adı bir başlık kartında tekrarlanmaz (B
+/// iskeleti). Bu bileşen artık kart çizmez: 44'lük rol ikon karosu (rol
+/// tonu zemin + rol metni ikon, M pah) + Manşet 22 başlık + Açıklama alt
+/// satırı, zemin yok. Ekrana özgü [accent] yalnız karonun rolünü seçer
+/// ([sahneRoleFor]); ham renk boyanmaz. Başlık ekran okuyucuya başlık
+/// olarak duyurulur.
 class ScreenIdentityHeader extends StatelessWidget {
   const ScreenIdentityHeader({
     required this.title,
@@ -19,88 +25,153 @@ class ScreenIdentityHeader extends StatelessWidget {
   final Color accent;
   final IconData icon;
 
-  /// Daha alçak kart (liste üstü şerit).
+  /// Daha alçak blok (liste üstü şerit): 36'lık karo, Gövde 700 başlık.
   final bool compact;
 
   @override
   Widget build(BuildContext context) {
-    // 2026-07-24 canlı denetim: 34 ekran başlığı 8 farklı renkte zemin
-    // taşıyordu (mor ayarlar, altın mağaza, camgöbeği turnuva…) — her ekran
-    // başka bir uygulamadan gelmiş gibi görünüyordu. Zemin artık her yerde
-    // marka kimliğidir (Kesk); ekrana özgü [accent] yalnız ikon çemberini
-    // tonlar. Böylece hem tutarlılık hem ekran kimliği korunur.
+    final t = SahneTokens.of(context);
+    final role = sahneRoleFor(accent);
+    final tile = compact ? 36.0 : 44.0;
     return Semantics(
       header: true,
       container: true,
-      child: DecoratedBox(
-        decoration: AppTheme.identityHeaderDecoration(
-          context,
-          radius: AppTheme.panelRadius,
-        ),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            AppSpacing.md,
-            compact ? AppSpacing.sm : AppSpacing.md,
-            AppSpacing.md,
-            compact ? AppSpacing.sm : AppSpacing.md,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: compact ? 44 : 52,
-                height: compact ? 44 : 52,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.alphaBlend(
-                    accent.withValues(alpha: 0.55),
-                    Colors.white.withValues(alpha: 0.16),
-                  ),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.28),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: SahneSpace.x1),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ExcludeSemantics(
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: t.roleTint(role),
+                  shape: SahneShape.m,
+                ),
+                child: SizedBox.square(
+                  dimension: tile,
+                  child: Icon(
+                    icon,
+                    size: compact ? 20 : 24,
+                    color: t.roleText(role),
                   ),
                 ),
-                child: Icon(icon, color: Colors.white, size: compact ? 22 : 26),
               ),
-              const SizedBox(width: AppSpacing.sm + 2),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.heading2.copyWith(
-                        color: Colors.white,
-                        fontSize: compact ? 17 : 18,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
+            ),
+            const SizedBox(width: SahneSpace.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    title,
+                    style: (compact ? SahneType.bodyStrong : SahneType.headline)
+                        .copyWith(color: t.tx),
+                  ),
+                  if (subtitle.isNotEmpty)
                     Text(
                       subtitle,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13,
-                      ),
+                      style: SahneType.caption.copyWith(color: t.tx2),
                     ),
-                  ],
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-/// Bölüm başlığı — sol accent çizgisi + uppercase etiket.
+/// Ana içerik içinde tekrar eden bölüm başlığı.
+///
+/// Play ve Learning ekranlarının ayrı ayrı tanımladığı başlıklar aynı
+/// tipografiyi taşıdığı hâlde küçük spacing/fallback farklarıyla ayrışıyordu.
+/// Bu bileşen kart çizmez; yalnız başlık, açıklama ve gerekirse sağ eylemi
+/// aynı sakin ritimde hizalar. Böylece sayfanın gerçek CTA'sıyla yarışmaz.
+///
+/// 2026-09-29 Şahnê: [SahneSectionHeader] ile aynı yazı — Manşet 22/28,
+/// alt satır Açıklama (ikincil metin).
+class ScreenSectionHeading extends StatelessWidget {
+  const ScreenSectionHeading({
+    required this.title,
+    this.subtitle,
+    this.trailing,
+    this.semanticHeader = true,
+    super.key,
+  });
+
+  final String title;
+  final String? subtitle;
+  final Widget? trailing;
+
+  /// Normal bölüm başlıkları ekran okuyucuda heading olarak duyurulur.
+  /// Başlığın kendisi daha büyük bir düğmenin etiketi olduğunda (ör. Play
+  /// "Daha fazla") iç içe button+heading rolü oluşmaması için kapatılabilir.
+  final bool semanticHeader;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    Widget copy() => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(title, style: SahneType.headline.copyWith(color: t.tx)),
+        if (subtitle case final subtitle? when subtitle.isNotEmpty) ...[
+          const SizedBox(height: SahneSpace.x1),
+          Text(subtitle, style: SahneType.caption.copyWith(color: t.tx2)),
+        ],
+      ],
+    );
+
+    return Semantics(
+      header: semanticHeader,
+      container: true,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final textScale = MediaQuery.textScalerOf(context).scale(1);
+          // Eşik 360'tı: sayfa boşlukları düşülünce 390'lık telefonda bile
+          // başlığa 354 kalıyordu ve sıralama ekranının iki eylemi (arkadaş
+          // ekle, yenile) başlığın altında tek başına bir satıra iniyordu
+          // (2026-09-27 tur görüntüsü). 320'nin üstünde başlık metnine iki
+          // düğmeden sonra da ~200 nokta kalır; büyük yazıda yine alt alta.
+          final stackTrailing =
+              trailing != null &&
+              (constraints.maxWidth < 320 || textScale >= 1.5);
+
+          if (stackTrailing) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                copy(),
+                const SizedBox(height: SahneSpace.x2),
+                Align(alignment: Alignment.centerRight, child: trailing!),
+              ],
+            );
+          }
+
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: copy()),
+              if (trailing != null) ...[
+                const SizedBox(width: SahneSpace.x3),
+                trailing!,
+              ],
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// Bölüm etiketi — üst etiket biçemi (başlık ailesi, cümle düzeni).
+///
+/// 2026-09-29 Şahnê: sol aksan çubuğu kaldırıldı (Şahnê'de sol çubuk yok);
+/// renk ham aksan değil, aksanın rolünün metin rengidir.
 class ScreenSectionLabel extends StatelessWidget {
   const ScreenSectionLabel({
     required this.label,
@@ -113,27 +184,15 @@ class ScreenSectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final role = sahneRoleFor(accent);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(2, AppSpacing.xs, 2, AppSpacing.xs),
-      child: Row(
-        children: [
-          Container(
-            width: 3,
-            height: 14,
-            decoration: AppTheme.sectionAccent(accent),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              context.upper(label),
-              style: AppTypography.caption.copyWith(
-                color: AppColors.readableAccent(context, accent),
-                letterSpacing: 1.05,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-          ),
-        ],
+      padding: const EdgeInsets.symmetric(vertical: SahneSpace.x2),
+      child: Text(
+        label,
+        style: SahneType.eyebrow.copyWith(
+          color: role == SahneRole.neutral ? t.tx2 : t.roleText(role),
+        ),
       ),
     );
   }

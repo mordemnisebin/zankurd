@@ -5,13 +5,12 @@ import '../data/level_progress_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../models/quiz_level.dart';
-import '../theme/app_theme.dart';
 import '../widgets/app_state.dart';
-import '../widgets/kilim_progress_bar.dart';
+import '../widgets/sahne/sahne.dart';
+import '../widgets/category_band.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
 import 'quiz_screen.dart';
-import '../config/category_visuals.dart';
 import '../config/subcategory_config.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -57,75 +56,65 @@ class _LevelScreenState extends State<LevelScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final levels = widget.repository.levelsForCategory(widget.category);
-    final gradient = CategoryVisuals.gradient(widget.category);
+    // Alt konu yolunda kart gerçek boyutu gösterir: havuzu küçük bir alt konu
+    // "10 soru" vaat edip ilgisiz dolguyla tamamlamaz (bkz.
+    // [SubcategoryLevelPlan]).
+    final levels = widget.repository.levelsForCategory(
+      widget.category,
+      subCategory: widget.subCategory,
+    );
+    final heading = _LevelHeading.of(widget.category, widget.subCategory, ku);
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 4,
-        iconTheme: const IconThemeData(color: Colors.white),
-        // 2026-07-22 canlı UX denetimi: geri butonu görünürlük düzeltmesi
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DecoratedBox(
-            decoration: const BoxDecoration(
-              color: Colors.black26,
-              shape: BoxShape.circle,
-            ),
-            child: BackButton(
-              color: Colors.white,
-              onPressed: () => Navigator.of(context).maybePop(),
-            ),
-          ),
+    // 2026-09-30 izgara: başlık alt kategori ekranıyla AYNI bantlı bileşendir
+    // ([CategoryBandScaffold]; kategori tonu + kilim deseni). Eskiden bu
+    // ekran düz gündüz çubuğu ve başka bir geri düğmesi taşıyordu; konu
+    // akışında bir adım ilerleyince başlık değişiyordu. İçerik: ilerleme
+    // kartı → seviye yolu (sıradaki seviye sahne kartında, ekranın TEK
+    // birincil eylemiyle).
+    return CategoryBandScaffold(
+      category: widget.category,
+      title: heading.title,
+      subtitle: heading.subtitle,
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(
+          SahneSpace.page,
+          SahneSpace.x4,
+          SahneSpace.page,
+          SahneSpace.x6,
         ),
-      ),
-      body: Container(
-        color: AppTheme.bgOf(context),
-        child: SafeArea(
-          top: false,
-          child: ListView(
-            // Üstte status bar payı bırakılmaz; hero en üste kadar uzanır.
-            padding: EdgeInsets.zero,
-            children: [
-              _CategoryHero(
-                category: widget.category,
-                subCategory: widget.subCategory,
-                gradient: gradient,
-                isKu: ku,
-                completedLevels: _playedLevels.length,
-                totalLevels: levels.length,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
-                child: switch (_loadState) {
-                  _LevelLoadState.error => AppErrorState(
-                    title: context.t(K.loadFailedShort),
-                    message: context.t(K.buSeviyeninSorulariYuklenemedi),
-                    retryLabel: context.t(K.retryShort),
-                    onRetry: _retrySelectedLevel,
-                  ),
-                  _LevelLoadState.empty => AppEmptyState(
-                    icon: AppIcons.bookOpen,
-                    title: context.t(K.noQuestionsForCategory),
-                    message: context.t(K.buSeviyeninSorulariYuklenemedi),
-                    actionLabel: context.t(K.retryShort),
-                    onAction: _retrySelectedLevel,
-                  ),
-                  _LevelLoadState.ready => _LevelPath(
-                    levels: levels,
-                    disabled: _loading,
-                    isKu: ku,
-                    playedLevels: _playedLevels,
-                    onOpen: _openLevel,
-                  ),
-                },
-              ),
-            ],
-          ),
-        ),
+        children: [
+          if (levels.isNotEmpty) ...[
+            _LevelProgressCard(
+              description: heading.description,
+              completed: _playedLevels.length,
+              total: levels.length,
+              isKu: ku,
+            ),
+            const SizedBox(height: SahneSpace.x4),
+          ],
+          switch (_loadState) {
+            _LevelLoadState.error => AppErrorState(
+              title: context.t(K.loadFailedShort),
+              message: context.t(K.buSeviyeninSorulariYuklenemedi),
+              retryLabel: context.t(K.retryShort),
+              onRetry: _retrySelectedLevel,
+            ),
+            _LevelLoadState.empty => AppEmptyState(
+              icon: AppIcons.bookOpen,
+              title: context.t(K.noQuestionsForCategory),
+              message: context.t(K.buSeviyeninSorulariYuklenemedi),
+              actionLabel: context.t(K.retryShort),
+              onAction: _retrySelectedLevel,
+            ),
+            _LevelLoadState.ready => _LevelPath(
+              levels: levels,
+              disabled: _loading,
+              isKu: ku,
+              playedLevels: _playedLevels,
+              onOpen: _openLevel,
+            ),
+          },
+        ],
       ),
     );
   }
@@ -143,6 +132,7 @@ class _LevelScreenState extends State<LevelScreen> {
         difficultyMin: level.difficultyMin,
         difficultyMax: level.difficultyMax,
         subCategory: widget.subCategory,
+        levelNumber: level.number,
         limit: level.questionCount,
       );
       if (!mounted) return;
@@ -153,8 +143,16 @@ class _LevelScreenState extends State<LevelScreen> {
       final room = widget.repository
           .createRoom(category: level.category)
           .copyWith(
+            // Kategori KİMLİĞİ değil, kullanıcının dilindeki ADI.
+            //
+            // Burada `level.category` doğrudan yazılıyordu: kimlikler
+            // Kurmancî kökenli olduğu için Türkçe arayüzde soru ekranının
+            // başlığı "Ziman 1. Seviye" çıkıyor, aynı ekranın kategori çipi
+            // ise "Dil" diyordu. Aynı kategori iki adla, tek ekranda
+            // (2026-08-16 simülatör taraması).
             name:
-                '${level.category} ${level.number}. ${context.isKu ? "Ast" : "Seviye"}',
+                '${CategoryNames.localized(level.category, context.isKu)} '
+                '${level.number}. ${context.t(K.progressLevelLabel)}',
             questionCount: questions.length,
           );
       final result = await Navigator.of(context).push(
@@ -203,274 +201,95 @@ class _LevelScreenState extends State<LevelScreen> {
 
 enum _LevelLoadState { ready, empty, error }
 
-class _CategoryHero extends StatelessWidget {
-  const _CategoryHero({
-    required this.completedLevels,
-    required this.totalLevels,
-    required this.category,
-    this.subCategory,
-    required this.gradient,
-    required this.isKu,
-  });
+/// Çubuğun adı ve alt satırı, ilerleme kartının açıklaması.
+///
+/// Alt kategoriyle açılınca ad alt kategorinin adıdır, alt satır kategori
+/// adı ve açıklama alt kategorinin açıklamasıdır; yalnız kategoriyle
+/// açılınca ad kategori adı, alt satır "Kolaydan zora doğru ilerle".
+/// Kategori KİMLİĞİ hiçbir zaman gösterilmez (`CategoryNames.localized`).
+class _LevelHeading {
+  const _LevelHeading(this.title, this.subtitle, this.description);
 
-  final String category;
-  final String? subCategory;
-  final LinearGradient gradient;
-  final bool isKu;
+  final String title;
+  final String subtitle;
+  final String? description;
 
-  /// Bu alt kategoride tamamlanan / toplam seviye sayısı.
-  final int completedLevels;
-  final int totalLevels;
-
-  @override
-  Widget build(BuildContext context) {
-    final topInset = MediaQuery.of(context).padding.top;
-    final color1 = Colors.white.withValues(alpha: 0.08);
-    final color2 = Colors.white.withValues(alpha: 0.03);
-
-    String title = CategoryNames.localized(category, isKu);
-    String subtitle = Tr.forKu(K.kolaydanZoraDogruIlerle, isKu);
-
+  factory _LevelHeading.of(String category, String? subCategory, bool isKu) {
+    final categoryName = CategoryNames.localized(category, isKu);
     if (subCategory != null) {
-      final list = SubcategoryConfig.subcategories[category] ?? const [];
-      final sub = list.firstWhere(
-        (element) => element.id == subCategory,
-        orElse: () => const SubcategoryInfo(
-          id: '',
-          nameKu: '',
-          nameTr: '',
-          descriptionKu: '',
-          descriptionTr: '',
-        ),
-      );
-      if (sub.id.isNotEmpty) {
-        title = isKu
-            ? '${CategoryNames.localized(category, isKu)} · ${sub.nameKu}'
-            : '${CategoryNames.localized(category, isKu)} · ${sub.nameTr}';
-        subtitle = isKu ? sub.descriptionKu : sub.descriptionTr;
+      final list = SubcategoryConfig.forCategory(category);
+      for (final sub in list) {
+        if (sub.id == subCategory) {
+          return _LevelHeading(
+            isKu ? sub.nameKu : sub.nameTr,
+            categoryName,
+            isKu ? sub.descriptionKu : sub.descriptionTr,
+          );
+        }
       }
     }
-
-    return Hero(
-      tag: 'category_hero_${category}_$subCategory',
-      child: Material(
-        type: MaterialType.transparency,
-        child: Container(
-          // 200pt'lik hero'nun üst ~%60'ı tamamen boştu: içerik `Spacer`
-          // ile en alta itiliyordu ve telefonun üçte biri hiçbir şey
-          // söylemiyordu (2026-07-25 canlı denetimi). Yükseklik başlığın
-          // gerçekten ihtiyaç duyduğu ölçüye çekildi; kalan yer ilerleme
-          // bilgisiyle dolduruldu.
-          height: 168 + topInset,
-          decoration: BoxDecoration(
-            gradient: gradient,
-            boxShadow: [
-              BoxShadow(
-                color: gradient.colors.first.withValues(alpha: 0.16),
-                blurRadius: 20,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              // Kategori görseli — en alt katman.
-              //
-              // `assets/question_images/cat_*.webp` sekiz görsel pakete
-              // giriyor ama `CategoryVisuals.imagePath()` hiçbir yerden
-              // çağrılmıyordu: ~600K ölü yük (2026-07-25 görsel denetimi).
-              //
-              // Görseller kategori *listesine* konmadı: 2026-07-24 kararı
-              // poster kartları bilinçli olarak kaldırmıştı, çünkü sekiz
-              // görsel yan yana gözü yoruyor. Burada aynı sorun yok —
-              // ekranda tek kategori var. Görsel, gradyanın altında düşük
-              // opaklıkta bir doku olarak durur; başlığın beyaz metni
-              // üstteki gradyan perdesiyle okunur kalır.
-              Opacity(
-                opacity: 0.28,
-                child: Image.asset(
-                  CategoryVisuals.imagePath(category),
-                  fit: BoxFit.cover,
-                  // Görsel bulunamazsa hero yine çizilir; gradyan tek
-                  // başına yeterli bir zemindir.
-                  errorBuilder: (_, _, _) => const SizedBox.shrink(),
-                ),
-              ),
-              // Görselin üstüne gradyan perdesi: metin kontrastı görselin
-              // parlaklığından bağımsız kalsın.
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      gradient.colors.first.withValues(alpha: 0.55),
-                      gradient.colors.last.withValues(alpha: 0.88),
-                    ],
-                  ),
-                ),
-              ),
-              // Soft Glow 1
-              Positioned(
-                right: -40,
-                top: -40,
-                child: Container(
-                  width: 220,
-                  height: 220,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [color1, color1.withValues(alpha: 0)],
-                    ),
-                  ),
-                ),
-              ),
-              // Soft Glow 2
-              Positioned(
-                left: -50,
-                bottom: -50,
-                child: Container(
-                  width: 160,
-                  height: 160,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [color2, color2.withValues(alpha: 0)],
-                    ),
-                  ),
-                ),
-              ),
-              // Dekoratif daire
-              Positioned(
-                right: 20,
-                bottom: -30,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.04),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Spacer(),
-                    Text(
-                      title,
-                      style: AppTypography.heading1.copyWith(
-                        color: Colors.white,
-                        fontSize: 28,
-                        height: 1.05,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      subtitle,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: Colors.white.withValues(alpha: 0.8),
-                      ),
-                    ),
-                    if (totalLevels > 0) ...[
-                      const SizedBox(height: 10),
-                      _HeroProgress(
-                        completed: completedLevels,
-                        total: totalLevels,
-                        isKu: isKu,
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return _LevelHeading(
+      categoryName,
+      Tr.forKu(K.kolaydanZoraDogruIlerle, isKu),
+      null,
     );
   }
 }
 
-/// Hero içindeki ince ilerleme şeridi: "2/5 seviye tamam".
-///
-/// Başlık şeridinin boş kalan alanı süs yerine gerçek bir durum bilgisiyle
-/// doldurulur; kullanıcı bu alt kategoride nerede olduğunu haritaya
-/// bakmadan görür.
-class _HeroProgress extends StatelessWidget {
-  const _HeroProgress({
+/// İlerleme kartı (yüzey kartı): varsa alt kategorinin açıklaması, altında
+/// öğrenme tonlu ilerleme çubuğu ve "2/5 seviye". Ekran okuyucu tek bir
+/// cümle duyar: "5 seviyeden 2 tanesi tamamlandı".
+class _LevelProgressCard extends StatelessWidget {
+  const _LevelProgressCard({
+    required this.description,
     required this.completed,
     required this.total,
     required this.isKu,
   });
 
+  final String? description;
   final int completed;
   final int total;
   final bool isKu;
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final ratio = total <= 0 ? 0.0 : (completed / total).clamp(0.0, 1.0);
-    return Semantics(
-      label: isKu
-          ? '$completed ji $total astan temam bûn'
-          : '$total seviyeden $completed tanesi tamamlandı',
-      child: ExcludeSemantics(
-        child: Row(
-          children: [
-            // Kilim çubuğu yalnız 15'ten fazla soruluk quizlerde çiziliyordu
-            // ve hiçbir seviyede o kadar soru yok — uygulamanın kültürel
-            // görsel imzası pratikte hiç görünmüyordu (2026-07-25 görsel
-            // denetimi). Burası kullanıcının ilerlemeye gerçekten baktığı
-            // yer; motif buraya taşındı.
-            Expanded(
-              child: KilimProgressBar(
-                value: ratio,
-                height: 8,
-                color: Colors.white,
-                // Yeşil hero üzerinde iz, tema yüzeyiyle (açık) çizilirse
-                // dolgudan ayırt edilemez ve %0 ilerleme "dolu" görünür.
-                trackColor: Colors.white.withValues(alpha: 0.22),
-                borderColor: Colors.white.withValues(alpha: 0.30),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              Tr.forKu(K.pPSeviye, isKu, {'p0': '$completed', 'p1': '$total'}),
-              style: AppTypography.caption.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+    final text = description?.trim();
+    return SahneSurfaceCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (text != null && text.isNotEmpty) ...[
+            Text(text, style: SahneType.body.copyWith(color: t.tx2)),
+            const SizedBox(height: SahneSpace.x3),
           ],
-        ),
+          SahneProgressBar(
+            value: ratio,
+            trailing: Tr.forKu(K.pPSeviye, isKu, {
+              'p0': '$completed',
+              'p1': '$total',
+            }),
+            semanticLabel: Tr.forKu(K.progressLevelsCompleted, isKu, {
+              'completed': '$completed',
+              'total': '$total',
+            }),
+          ),
+        ],
       ),
     );
   }
 }
 
-/// Kademe rengi: her seviyenin yol üzerindeki kimliği.
-/// Seviye numarasından zorluk merdiveninin rengi: kolaydan zora doğru
-/// yeşil → camgöbeği → altın → turuncu → mor. Kesikli patika da aynı
-/// diziyi kullanır, böylece renk bir ilerleme ölçeği olarak okunur.
+/// Seviye yolu: seviyeler sırayla alt alta kart. Sıradaki seviye sahne
+/// kartıdır (tek birincil düğme); ötekiler yüzey kartı.
 ///
-/// 2. kademe lacivert (0xFF2B5C8F) idi: marka paletinde yer almayan bu
-/// ton, yeşille altın arasında merdivenin dışından gelmiş gibi duruyor ve
-/// dizinin ölçek olduğunu gizliyordu (2026-07-25 canlı denetimi).
-Color _levelColor(int n) => switch (n) {
-  1 => AppTheme.correct,
-  2 => AppTheme.playCyan,
-  3 => AppTheme.gold,
-  4 => AppTheme.primaryGradientStart,
-  _ => AppTheme.violet,
-};
-
-/// Seviyeleri düz liste yerine serpantin bir öğrenme yolunda gösterir:
-/// düğümler sağa-sola salınır, aralarını kademe-renkli kesikli patika bağlar.
+/// 2026-09-29 doğallık (K5): solda her kartın yanında bir yol elması
+/// (bitti / sıradaki / kilitli) ve onları bağlayan yol çizgisi vardı. Kartın
+/// rozeti aynı durumu zaten söylüyordu (yıldız / numara / kilit); elmas
+/// ikinci bir işaretti ve elmas yalnız soru ilerlemesi ile ders sayacında
+/// kalır. Sıra, kartların sırasıyla okunur.
 class _LevelPath extends StatelessWidget {
   const _LevelPath({
     required this.levels,
@@ -486,19 +305,11 @@ class _LevelPath extends StatelessWidget {
   final Set<int> playedLevels;
   final ValueChanged<QuizLevel> onOpen;
 
-  /// Bir seviye açık mı? İlk basamak daima açıktır; sonrakiler ancak bir
-  /// önceki oynandıysa açılır.
-  ///
-  /// Kilit yokken 5. seviye ("Mamoste", zorluk 4-5) ilk günden erişilebilir
-  /// oluyordu: yol bir merdiven gibi çizilmiş ama merdiven işlevi görmüyor,
-  /// yeni kullanıcı doğrudan en zora girip başarısız oluyordu (2026-07-25
-  /// canlı denetimi). Kilit, haritanın vaat ettiği ilerlemeyi gerçek kılar.
   bool _isUnlocked(int number) {
     if (number <= 1) return true;
     return playedLevels.contains(number - 1);
   }
 
-  /// Yoldaki "sıradaki" düğüm: oynanmamış ilk seviye.
   int? get _nextNumber {
     for (final level in levels) {
       if (!playedLevels.contains(level.number)) return level.number;
@@ -506,65 +317,36 @@ class _LevelPath extends StatelessWidget {
     return null;
   }
 
-  static const _rowHeight = 150.0;
-  static const _nodeSize = 76.0;
-  static const _xFractions = [0.26, 0.74, 0.30, 0.70, 0.34];
-
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final width = constraints.maxWidth;
-        final centers = [
-          for (var i = 0; i < levels.length; i++)
-            Offset(
-              width * _xFractions[i % _xFractions.length],
-              i * _rowHeight + _nodeSize / 2,
+    final next = _nextNumber;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (var i = 0; i < levels.length; i++)
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: i == levels.length - 1 ? 0 : SahneSpace.cardGap,
             ),
-        ];
-        return SizedBox(
-          height: levels.length * _rowHeight,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: CustomPaint(
-                    painter: _PathPainter(
-                      centers: centers,
-                      colors: [
-                        for (final level in levels) _levelColor(level.number),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              for (var i = 0; i < levels.length; i++)
-                Positioned(
-                  left: (centers[i].dx - 90).clamp(0.0, width - 180),
-                  top: i * _rowHeight,
-                  width: 180,
-                  child: _LevelNode(
-                    level: levels[i],
-                    disabled: disabled,
-                    isKu: isKu,
-                    played: playedLevels.contains(levels[i].number),
-                    isNext: levels[i].number == _nextNumber,
-                    locked: !_isUnlocked(levels[i].number),
-                    onTap: () => onOpen(levels[i]),
-                  ),
-                ),
-            ],
+            child: _LevelNode(
+              key: ValueKey('level-node-${levels[i].number}'),
+              level: levels[i],
+              disabled: disabled,
+              isKu: isKu,
+              played: playedLevels.contains(levels[i].number),
+              isNext: levels[i].number == next,
+              locked: !_isUnlocked(levels[i].number),
+              onTap: () => onOpen(levels[i]),
+            ),
           ),
-        );
-      },
+      ],
     );
   }
 }
 
-/// Yol üzerindeki tek seviye düğümü: gradyan daire + başlık/yıldız etiketi.
-class _LevelNode extends StatefulWidget {
+class _LevelNode extends StatelessWidget {
   const _LevelNode({
+    super.key,
     required this.level,
     required this.disabled,
     required this.isKu,
@@ -577,29 +359,13 @@ class _LevelNode extends StatefulWidget {
   final QuizLevel level;
   final bool disabled;
   final bool isKu;
-
-  /// Bu seviye daha önce oynandı (altın halka + tik rozeti).
   final bool played;
-
-  /// Yolda sıradaki seviye (güçlü parıltı — "buradan devam et").
   final bool isNext;
-
-  /// Bir önceki seviye henüz oynanmadı: düğüm soluk çizilir ve dokunma
-  /// quiz açmak yerine neden kilitli olduğunu anlatır.
   final bool locked;
   final VoidCallback onTap;
 
-  @override
-  State<_LevelNode> createState() => _LevelNodeState();
-}
-
-class _LevelNodeState extends State<_LevelNode> {
-  bool _pressed = false;
-
-  /// Kilitli düğüme dokunulduğunda nedenini söyler. Sessizce hiçbir şey
-  /// yapmayan bir düğüm, kullanıcıya "bozuk" hissi verir.
   void _explainLock(BuildContext context) {
-    final previous = widget.level.number - 1;
+    final previous = level.number - 1;
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
@@ -613,281 +379,227 @@ class _LevelNodeState extends State<_LevelNode> {
 
   @override
   Widget build(BuildContext context) {
-    final color = _levelColor(widget.level.number);
-    final isFinal = widget.level.number >= 5;
+    final blocked = disabled || locked;
+    final name = LevelNames.localized(level.title, isKu);
+    final label = locked
+        ? context.t(K.pKilitliOncekiSeviyeyi, {'p0': name})
+        : isNext
+        ? context.t(K.homePathNext, {'name': name})
+        : name;
+    final VoidCallback? tap = disabled
+        ? null
+        : locked
+        ? () => _explainLock(context)
+        : onTap;
 
-    final blocked = widget.disabled || widget.locked;
-    final name = LevelNames.localized(widget.level.title, context.isKu);
-
-    return Semantics(
-      button: true,
-      enabled: !blocked,
-      label: widget.locked
-          ? (context.t(K.pKilitliOncekiSeviyeyi, {'p0': name}))
-          : name,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        clipBehavior: Clip.none,
-        children: [
-          // Saydamlığın altına opak bir daire konur.
-          //
-          // Kilitli düğüm %45 saydam çiziliyordu ve altındaki kesikli yol
-          // dairenin içinden geçip kilit ikonunun ortasından görünüyordu —
-          // düğüm çizgiyle çizilmiş gibi duruyordu (2026-07-27). Saydamlık
-          // kararı doğru (kilitli olan sönük okunmalı); eksik olan, sönmeyi
-          // sayfa zemininin üstünde yapmaktı.
-          if (widget.locked)
-            Container(
-              width: 76,
-              height: 76,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppTheme.bgOf(context),
-              ),
-            ),
-          GestureDetector(
-            onTapDown: blocked ? null : (_) => setState(() => _pressed = true),
-            onTapUp: blocked
-                ? null
-                : (_) {
-                    setState(() => _pressed = false);
-                    widget.onTap();
-                  },
-            onTapCancel: blocked
-                ? null
-                : () => setState(() => _pressed = false),
-            // Kilitli düğüme dokunmak sessiz kalmaz: nedenini söyler.
-            onTap: widget.locked ? () => _explainLock(context) : null,
-            child: AnimatedScale(
-              scale: _pressed ? 0.93 : 1.0,
-              duration: const Duration(milliseconds: 100),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+    if (isNext && !locked) {
+      // Sıradaki seviye: sahne kartı (gece, öğrenme rolü) + TEK birincil
+      // düğme. Kartın her yeri dokunulabilir; düğme aynı işi yapar.
+      return Semantics(
+        container: true,
+        button: true,
+        enabled: !blocked,
+        onTap: blocked ? null : onTap,
+        label: label,
+        excludeSemantics: true,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: tap,
+          child: SahneStageCard(
+            key: ValueKey('level-card-${level.number}'),
+            child: Builder(
+              builder: (context) => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Opacity(
-                    // Saydamlık YALNIZ düğüm dairesine uygulanır.
-                    //
-                    // Önce bütün alt ağacı sarıyordu ve altındaki
-                    // etiket kartı da %45 saydam çiziliyordu: koyu
-                    // temada "Temel · 10 soru" okunabilirlik eşiğinin
-                    // altında kalıyordu (2026-07-30 ekran turu, 38/53).
-                    // Kilitli olduğu zaten dairenin sönük rengi ve
-                    // asma kilit ikonundan belli; oyuncunun hangi
-                    // seviyede kaç soru olduğunu okuyamaması ise
-                    // planlamasını engelliyordu.
-                    opacity: widget.locked ? 0.45 : 1.0,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          width: 76,
-                          height: 76,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                color,
-                                Color.alphaBlend(
-                                  Colors.black.withValues(alpha: 0.24),
-                                  color,
-                                ),
-                              ],
-                            ),
-                            border: Border.all(
-                              color: widget.played
-                                  ? AppTheme.gold
-                                  : Colors.white.withValues(
-                                      alpha: widget.isNext ? 0.9 : 0.55,
-                                    ),
-                              width: 3,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: color.withValues(
-                                  alpha: widget.isNext ? 0.32 : 0.20,
-                                ),
-                                blurRadius: widget.isNext ? 16 : 10,
-                                offset: const Offset(0, 5),
-                                spreadRadius: -2,
-                              ),
-                            ],
-                          ),
-                          child: widget.locked
-                              ? const Icon(
-                                  AppIcons.lock,
-                                  color: Colors.white,
-                                  size: 30,
-                                )
-                              : isFinal
-                              ? const Icon(
-                                  AppIcons.trophy,
-                                  color: Colors.white,
-                                  size: 34,
-                                )
-                              : Text(
-                                  '${widget.level.number}',
-                                  style: AppTypography.heading1.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                        ),
-                        if (widget.played)
-                          Positioned(
-                            right: -2,
-                            top: -2,
-                            child: Container(
-                              width: 24,
-                              height: 24,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                gradient: AppTheme.goldGradient,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 1.5,
-                                ),
-                              ),
-                              child: const Icon(
-                                AppIcons.check,
-                                color: Colors.white,
-                                size: 14,
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
+                  _LevelRowContent(
+                    level: level,
+                    name: name,
+                    badge: _LevelBadge.next,
+                    headline: true,
                   ),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppTheme.surfaceColor(context),
-                      borderRadius: BorderRadius.circular(AppRadius.sm),
-                      border: Border.all(color: color.withValues(alpha: 0.30)),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          LevelNames.localized(
-                            widget.level.title,
-                            context.isKu,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: AppTypography.bodyMedium.copyWith(
-                            color: AppTheme.textPrimaryColor(context),
-                            fontWeight: FontWeight.w800,
-                            fontSize: 13.5,
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            _DifficultyStars(
-                              filled: widget.level.difficultyMax.clamp(1, 5),
-                              color: color,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              '${widget.level.questionCount} ${widget.isKu ? "pirs" : "soru"}',
-                              style: AppTypography.caption.copyWith(
-                                color: AppTheme.textMutedColor(context),
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                  const SizedBox(height: SahneSpace.x4),
+                  SahneButton.primary(
+                    label: context.t(K.start),
+                    onPressed: disabled ? null : onTap,
+                    expand: true,
                   ),
                 ],
               ),
             ),
           ),
-        ],
+        ),
+      );
+    }
+
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: !blocked,
+      onTap: blocked ? null : onTap,
+      label: label,
+      excludeSemantics: true,
+      child: SahneSurfaceCard(
+        key: ValueKey('level-card-${level.number}'),
+        onTap: tap,
+        padding: const EdgeInsetsDirectional.fromSTEB(
+          SahneSpace.x3,
+          SahneSpace.x3,
+          SahneSpace.x4,
+          SahneSpace.x3,
+        ),
+        child: _LevelRowContent(
+          level: level,
+          name: name,
+          badge: locked
+              ? _LevelBadge.locked
+              : played
+              ? _LevelBadge.played
+              : _LevelBadge.open,
+          trailing: locked ? null : AppIcons.chevronRight,
+        ),
       ),
     );
   }
 }
 
-/// Düğüm merkezlerini kademe-renkli, kesikli S-kavisleriyle bağlar.
-class _PathPainter extends CustomPainter {
-  _PathPainter({required this.centers, required this.colors});
+/// Seviye rozeti (44'lük M karo) dört dil konuşur: kilitli (Kulis + kilit;
+/// ikon ikincil metinde — üçüncül metin Kulis üstünde 4.49:1 kalıyor),
+/// oynanmış (Zêr tonu + yıldız glifi — altın bu uygulamada yalnız
+/// KAZANILMIŞ ödül demektir), sıradaki (Zimrût tonu + numara) ve nadiren
+/// "açık ama sırada değil" (Kulis + numara; düz ilerlemede hemen hiç
+/// oluşmaz).
+enum _LevelBadge { locked, played, next, open }
 
-  final List<Offset> centers;
-  final List<Color> colors;
+class _LevelRowContent extends StatelessWidget {
+  const _LevelRowContent({
+    required this.level,
+    required this.name,
+    required this.badge,
+    this.headline = false,
+    this.trailing,
+  });
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    for (var i = 0; i < centers.length - 1; i++) {
-      final a = centers[i];
-      final b = centers[i + 1];
-      final midY = (a.dy + b.dy) / 2;
-      final path = Path()
-        ..moveTo(a.dx, a.dy)
-        ..cubicTo(a.dx, midY, b.dx, midY, b.dx, b.dy);
-      final paint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 5
-        ..strokeCap = StrokeCap.round
-        ..color = Color.lerp(
-          colors[i],
-          colors[i + 1],
-          0.5,
-        )!.withValues(alpha: 0.55);
-      _drawDashed(canvas, path, paint);
-    }
-  }
+  final QuizLevel level;
+  final String name;
+  final _LevelBadge badge;
 
-  void _drawDashed(Canvas canvas, Path path, Paint paint) {
-    const dash = 12.0;
-    const gap = 9.0;
-    for (final metric in path.computeMetrics()) {
-      var distance = 0.0;
-      while (distance < metric.length) {
-        canvas.drawPath(
-          metric.extractPath(
-            distance,
-            (distance + dash).clamp(0.0, metric.length),
-          ),
-          paint,
-        );
-        distance += dash + gap;
-      }
-    }
-  }
+  /// Sahne kartında ad Manşet 22; satırda Gövde 700.
+  final bool headline;
+  final IconData? trailing;
 
   @override
-  bool shouldRepaint(covariant _PathPainter oldDelegate) =>
-      oldDelegate.centers != centers || oldDelegate.colors != colors;
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final locked = badge == _LevelBadge.locked;
+    final number = Text(
+      '${level.number}',
+      style: SahneType.headline.copyWith(
+        color: badge == _LevelBadge.next ? t.learnTx : t.tx,
+        fontFeatures: const [FontFeature.tabularFigures()],
+      ),
+    );
+    final (Color tile, Widget mark) = switch (badge) {
+      _LevelBadge.locked => (t.s2, Icon(AppIcons.lock, color: t.tx2, size: 20)),
+      _LevelBadge.played => (
+        t.goldTint,
+        const SahneGlyph(SahneGlyphKind.star, size: 24),
+      ),
+      _LevelBadge.next => (t.learnTint, number),
+      _LevelBadge.open => (t.s2, number),
+    };
+    final badgeTile = DecoratedBox(
+      decoration: ShapeDecoration(color: tile, shape: SahneShape.m),
+      child: SizedBox.square(dimension: 44, child: Center(child: mark)),
+    );
+    final texts = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          name,
+          style: (headline ? SahneType.headline : SahneType.bodyStrong)
+              .copyWith(color: locked ? t.tx2 : t.tx),
+        ),
+        const SizedBox(height: SahneSpace.x1),
+        Row(
+          children: [
+            // 2026-09-29 doğallık (K5): kilitli seviye tek işaretle (kilit)
+            // söylenir; sönük zorluk çubukları ikinci bir "kapalı" işareti
+            // ve her satırda tekrar eden bir sinyal simgesiydi.
+            if (!locked) ...[
+              _DifficultyBars(
+                filled: level.difficultyMax.clamp(1, 5),
+                color: t.learnTx,
+              ),
+              const SizedBox(width: SahneSpace.x2),
+            ],
+            // Kilitli seviye NEDEN kilitli olduğunu söyler (2026-09-30
+            // izgara): yalnız soru sayısı yazıyordu, kilit ikonuna dokunmak
+            // dışında açılma koşulu görünmüyordu. Koşul tek satırdır
+            // ("Önce 1. seviyeyi tamamla."); soru sayısı açılınca görünür.
+            Flexible(
+              child: Text(
+                locked
+                    ? context.t(K.oncePSeviyeyiTamamla, {
+                        'p0': '${level.number - 1}.',
+                      })
+                    : '${level.questionCount} ${context.t(K.soru)}',
+                key: locked
+                    ? ValueKey('level-lock-hint-${level.number}')
+                    : null,
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+    // Büyük yazı ölçeğinde (≥ 1.5) rozet metnin üstüne çıkar: ad dar bir
+    // sütunda harf harf bölünmesin ("Destpê / k").
+    final large = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    return Row(
+      children: [
+        if (large)
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                badgeTile,
+                const SizedBox(height: SahneSpace.x2),
+                texts,
+              ],
+            ),
+          )
+        else ...[
+          badgeTile,
+          const SizedBox(width: SahneSpace.x3),
+          Expanded(child: texts),
+        ],
+        if (trailing != null) ...[
+          const SizedBox(width: SahneSpace.x2),
+          Icon(trailing, size: 20, color: t.tx3),
+        ],
+      ],
+    );
+  }
 }
 
-/// Zorluğu metin yerine 5'li yıldız dizisiyle gösterir.
+/// Zorluğu yükselen 5 çubukla gösterir.
 ///
-/// 2026-07-23 canlı UX denetimi M16: yıldızlar "ilerleme" ile
-/// karıştırılabiliyordu (asıl ilerleme rozeti ayrı bir tik işaretiyle
-/// gösteriliyor). Tooltip + Semantics ile "zorluk" anlamı netleştirildi.
-class _DifficultyStars extends StatelessWidget {
-  const _DifficultyStars({required this.filled, required this.color});
+/// Zorluk eskiden yıldızla gösteriliyordu. Yıldız, quiz uygulamalarında
+/// neredeyse her yerde *kazanılmış başarıyı* anlatır; hiç oynamamış oyuncu
+/// seviye kartında "2/5 dolu yıldız" görünce bunu kendi skoru sanıyordu
+/// (2026-07-25 canlı denetimi). Şahnê'de de yıldız glifi ödüldür (oynanmış
+/// seviyenin rozeti); zorluk yıldız olmaz. Tooltip + Semantics "zorluk"
+/// anlamını taşır (2026-07-23 M16).
+class _DifficultyBars extends StatelessWidget {
+  const _DifficultyBars({required this.filled, required this.color});
 
   final int filled;
   final Color color;
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final isKu = context.isKu;
     final label = Tr.forKu(K.zorlukUzerindenPYildiz, isKu, {'p0': '$filled'});
     return Tooltip(
@@ -895,29 +607,17 @@ class _DifficultyStars extends StatelessWidget {
       child: Semantics(
         label: label,
         child: ExcludeSemantics(
-          // Zorluk yıldızla gösteriliyordu. Yıldız, quiz uygulamalarında
-          // neredeyse her yerde *kazanılmış başarıyı* anlatır; hiç
-          // oynamamış oyuncu seviye kartında "2/5 dolu yıldız" görünce
-          // bunu kendi skoru sanıyordu (2026-07-25 canlı denetimi).
-          // Yükselen çubuklar zorluğu tek anlama gelecek biçimde anlatır.
           child: Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               for (var i = 1; i <= 5; i++)
                 Padding(
-                  padding: const EdgeInsets.only(right: 2),
-                  child: Container(
+                  padding: const EdgeInsetsDirectional.only(end: 2),
+                  child: SizedBox(
                     width: 3,
                     height: 4.0 + i * 2,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(1.5),
-                      color: i <= filled
-                          ? color
-                          : AppTheme.textMutedColor(
-                              context,
-                            ).withValues(alpha: 0.35),
-                    ),
+                    child: ColoredBox(color: i <= filled ? color : t.s3),
                   ),
                 ),
             ],

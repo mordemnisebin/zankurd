@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../providers/reduced_motion_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
 import '../widgets/app_logo.dart';
+import '../widgets/branded_loader.dart';
+import '../widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Uygulama açılışında gösterilen, büyük ve belirgin ZanKurd logolu ekran.
@@ -121,12 +124,18 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _goNext() {
     if (!mounted) return;
+    // Marka ölçeği easeOutBack ile zıplar; geçiş de 450 ms solar. Tercih
+    // açıkken ikisi de atlanır — aksi hâlde kullanıcının gördüğü ilk
+    // ekran ayarı yok saymış olur.
+    final reduce = ReducedMotionProvider.isReducedIn(context);
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 450),
+        transitionDuration: reduce
+            ? Duration.zero
+            : const Duration(milliseconds: 450),
         pageBuilder: (_, _, _) => widget.next,
         transitionsBuilder: (_, animation, _, child) =>
-            FadeTransition(opacity: animation, child: child),
+            reduce ? child : FadeTransition(opacity: animation, child: child),
       ),
     );
   }
@@ -140,6 +149,10 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    if (ReducedMotionProvider.isReducedIn(context)) {
+      _controller.value = 1;
+    }
+    final t = SahneTokens.of(context);
     return Scaffold(
       // Gradient katmanı üstte; zemin yine de tema rengi olsun ki
       // geçiş anında beyaz flaş olmasın.
@@ -149,45 +162,14 @@ class _SplashScreenState extends State<SplashScreen>
           // Zemin uygulamanın kendi zemini.
           //
           // Eskiden sabit koyu yeşil bir gradyandı ve açılışta üç renk arka
-          // arkaya geliyordu: sistem açılış ekranı krem (#F7F4EE) →
-          // bu ekran koyu yeşil → uygulama yine krem. İki saniyede iki kez
-          // renk atlıyordu (2026-07-28).
-          //
-          // Masaüstünde ayrıca kötü duruyordu: geniş ekranda içerik 540 pt'ye
-          // sınırlanıyor ve dışı yüzey rengiyle doluyor, yani koyu yeşil panel
-          // krem bir zeminin ortasında yüzen bir dikdörtgen gibi görünüyordu.
-          // Zemin uygulamanınkiyle aynı olunca çerçeve tamamen kayboluyor.
+          // arkaya geliyordu: sistem açılış ekranı → bu ekran koyu yeşil →
+          // uygulama. İki saniyede iki kez renk atlıyordu (2026-07-28).
+          // Varsayılan tema gece olduğu için açılış da gece zemini üstünde
+          // durur; gündüz temasını seçmiş kullanıcıda zemin gündüzdür.
           Positioned.fill(
             child: DecoratedBox(
               decoration: BoxDecoration(
                 gradient: AppTheme.backgroundGradient(context),
-              ),
-            ),
-          ),
-          Positioned(
-            right: -60,
-            top: -40,
-            child: Container(
-              width: 220,
-              height: 220,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                // Süs halkaları: koyu zemine göre beyaz alfaydı, açık
-                // temada görünmez oluyordu. Marka yeşilinin tonu her iki
-                // temada da hafif bir derinlik verir.
-                color: AppTheme.culturalBrandBg.withValues(alpha: 0.06),
-              ),
-            ),
-          ),
-          Positioned(
-            left: -50,
-            bottom: 80,
-            child: Container(
-              width: 180,
-              height: 180,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppTheme.brand.withValues(alpha: 0.07),
               ),
             ),
           ),
@@ -199,18 +181,24 @@ class _SplashScreenState extends State<SplashScreen>
               child: Row(
                 children: [
                   for (final icon in _precacheIcons)
-                    Icon(
-                      icon,
-                      size: 24,
-                      color: AppTheme.textMutedColor(context),
-                    ),
+                    Icon(icon, size: 24, color: t.tx3),
                 ],
               ),
             ),
           ),
-          // Logo sabit 280px idi; dar/alçak ekranlarda (ör. 375x812 web,
-          // yatay mod) sütun 17px taşıyordu. Artık kullanılabilir alana
-          // göre küçülür ve taşma imkânsız hâle gelir.
+          // 2026-09-29 Şahnê: marka anı — logo işareti plakada (gecede
+          // Kulis, gündüzde Perde + kenar; dağlar koyu zeminde kaybolmaz),
+          // altında "ZanKurd" ve Zêr yükleyici. Süs daireleri ve koyu temada
+          // tam logoyu açan renk süzgeci kalktı: plaka kontrastı kendisi
+          // taşır.
+          //
+          // Logo kullanılabilir alana göre küçülür; dar/alçak ekranda
+          // (ör. 375x812 web, yatay mod) sütun taşmaz (2026-07-24).
+          //
+          // 2026-09-29 doğallık (K3): logo ~%40 küçüldü (128 → 76). Ekranı
+          // dolduran logo plakası marka anını değil logoyu öne çıkarıyordu;
+          // büyük boyda kenar kırıntısı da seçiliyordu. Adı "ZanKurd"
+          // yazısı taşır.
           Center(
             child: FadeTransition(
               opacity: _fade,
@@ -218,28 +206,22 @@ class _SplashScreenState extends State<SplashScreen>
                 scale: _scale,
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    final maxLogo = constraints.maxWidth * 0.72;
-                    final byHeight = constraints.maxHeight - 90;
                     final width = [
-                      280.0,
-                      maxLogo,
-                      byHeight,
-                    ].reduce((a, b) => a < b ? a : b).clamp(96.0, 280.0);
+                      76.0,
+                      constraints.maxWidth * 0.24,
+                      (constraints.maxHeight - 160) / 1.3 * 0.6,
+                    ].reduce((a, b) => a < b ? a : b).clamp(58.0, 76.0);
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         AppLogo(width: width),
-                        const SizedBox(height: 28),
-                        const SizedBox(
-                          width: 26,
-                          height: 26,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.4,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              AppTheme.brand,
-                            ),
-                          ),
+                        const SizedBox(height: SahneSpace.x5),
+                        Text(
+                          'ZanKurd',
+                          style: SahneType.title.copyWith(color: t.tx),
                         ),
+                        const SizedBox(height: SahneSpace.x6),
+                        const BrandedLoader(size: 24, strokeWidth: 2.5),
                       ],
                     );
                   },

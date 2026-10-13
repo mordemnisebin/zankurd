@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne_progress.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/progress_summary.dart';
 
@@ -32,6 +33,13 @@ void main() {
     );
     expect(find.text('120/400'), findsOneWidget);
     expect(find.text('4'), findsOneWidget);
+    final strip = find.byKey(const ValueKey('home-progress-strip'));
+    expect(strip, findsOneWidget);
+    expect(
+      tester.widget(strip),
+      isA<Padding>(),
+      reason: 'XP özeti ikinci bir kart kabuğu oluşturmamalı.',
+    );
   });
 
   testWidgets('hedef bilinmiyorsa oran uydurulmaz', (tester) async {
@@ -50,9 +58,9 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.text('12'), findsOneWidget);
     expect(find.text('12/0'), findsNothing);
-    final bar = tester.widget<LinearProgressIndicator>(
-      find.byType(LinearProgressIndicator),
-    );
+    // 2026-09-29 Şahnê: çubuk `SahneProgressBar` (eskiden
+    // `LinearProgressIndicator`); korunan şey oranın kendisi.
+    final bar = tester.widget<SahneProgressBar>(find.byType(SahneProgressBar));
     expect(bar.value, 0.0);
   });
 
@@ -67,9 +75,9 @@ void main() {
         ),
       ),
     );
-    final bar = tester.widget<LinearProgressIndicator>(
-      find.byType(LinearProgressIndicator),
-    );
+    // 2026-09-29 Şahnê: çubuk `SahneProgressBar` (eskiden
+    // `LinearProgressIndicator`); korunan şey oranın kendisi.
+    final bar = tester.widget<SahneProgressBar>(find.byType(SahneProgressBar));
     expect(bar.value, 1.0);
   });
 

@@ -63,6 +63,31 @@ MIME düzelmezse Hostinger hPanel → MIME Types’tan elle ekle, veya Wasm’si
 flutter build web --release --no-web-resources-cdn
 ```
 
+### Uygulama bağlantıları (2026-09-27)
+
+Oda davet bağlantısı (`https://www.zankurd.com/join/KOD`) uygulama yüklüyse
+uygulamayı açar, değilse web'de odaya katar. Bunun için iki dosya sunucuda
+JSON olarak durmalı; `deploy_sftp.sh` ikisi derlemede yoksa aktarımı durdurur.
+
+```bash
+curl -sI https://www.zankurd.com/.well-known/apple-app-site-association | grep -i '^content-type'
+# beklenen: application/json — text/html ise SPA yönlendirmesi dosyayı yutuyor
+curl -s https://www.zankurd.com/.well-known/assetlinks.json | head -c 120
+# beklenen: [ { "relation": ["delegate_permission/common.handle_all_urls"] …
+```
+
+Mağaza tarafı (bir kez):
+
+- iOS: Apple Developer → Identifiers → `com.zankurd.app` → **Associated
+  Domains** açık olmalı; profil yenilenip uygulama yeniden derlenir. Apple
+  dosyayı kendi CDN'inden okur ve bir güne kadar eski kopyayı tutabilir:
+  `https://app-site-association.cdn-apple.com/a/v1/www.zankurd.com`
+- Android: `assetlinks.json` yalnız yükleme anahtarının SHA-256'sını taşır.
+  Play App Signing açıksa Play Console → Uygulama bütünlüğü → uygulama
+  imzalama anahtarının SHA-256'sı da listeye eklenir; yoksa Play'den inen
+  uygulama bağlantıyı sahiplenemez. Google'ın doğrulaması:
+  `https://digitalassetlinks.googleapis.com/v1/statements:list?source.web.site=https://www.zankurd.com&relation=delegate_permission/common.handle_all_urls`
+
 ## 3) 10 dakikalık smoke (yayın sonrası)
 
 Telefon + bilgisayar tarayıcı:
@@ -75,13 +100,15 @@ Telefon + bilgisayar tarayıcı:
 6. 1vs1 eşleşme dene (queue açık mı)  
 7. Profil, mağaza, liderlik, ayarlar  
 8. Dil Ku/Tr, tema light/dark  
+9. Oda lobisinde "Arkadaşlarını davet et" → bağlantıyı telefonda aç:
+   uygulama yüklüyse uygulama açılır ve odaya katılır  
 
 ## 4) Bilinen dürüst sınırlar
 
 | Özellik | Durum |
 |---------|--------|
 | Günlük etkinlik | **Aktif** — 10 soruluk ilerleme etkinliği; özel ödül ve sıralama yok |
-| Turnuva | **Gerçek oyuncu kupası** |
+| Turnuva | **Kapalı** — `kTournamentEnabled`; kitle büyüyünce açılır |
 | Canlı multiplayer | Supabase + RPC canlıda doğru olmalı |
 
 ## 5) “Tamamdır” kriteri

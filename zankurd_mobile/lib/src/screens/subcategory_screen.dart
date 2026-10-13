@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/strings.dart';
-import '../config/category_visuals.dart';
 import '../config/subcategory_config.dart';
+import '../data/level_progress_store.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
-import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
-import '../widgets/app_panel.dart';
+import '../widgets/category_band.dart';
+import '../widgets/sahne/sahne.dart';
 import 'level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
-class SubcategoryScreen extends StatelessWidget {
+class SubcategoryScreen extends StatefulWidget {
   const SubcategoryScreen({
     required this.repository,
     required this.category,
@@ -22,578 +22,200 @@ class SubcategoryScreen extends StatelessWidget {
   final String category;
 
   @override
+  State<SubcategoryScreen> createState() => _SubcategoryScreenState();
+}
+
+class _SubcategoryScreenState extends State<SubcategoryScreen> {
+  ZanKurdRepository get repository => widget.repository;
+  String get category => widget.category;
+
+  /// Alt kategori kimliği → oynanmış seviye sayısı (seviye yolunun kendi
+  /// deposundan, [LevelScreen] ile aynı kaynak).
+  Map<String, int> _played = const {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProgress();
+  }
+
+  Future<void> _loadProgress() async {
+    final store = await LevelProgressStore.load();
+    if (!mounted) return;
+    final total = repository.levelsForCategory(category).length;
+    final ids = [
+      ...?SubcategoryConfig.subcategories[category]?.map((s) => s.id),
+      'gisti',
+    ];
+    setState(() {
+      _played = {
+        for (final id in ids)
+          id: [
+            for (var n = 1; n <= total; n++)
+              if (store.isPlayed(category, id, n)) n,
+          ].length,
+      };
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final canonicalCat = CategoryVisuals.canonicalName(category);
-    final rawList =
-        SubcategoryConfig.subcategories[category] ??
-        SubcategoryConfig.subcategories[canonicalCat];
-    final list = (rawList != null && rawList.isNotEmpty)
+    // Ekranın gördüğü havuz, seviye yükleyicisinin (`loadLevelQuestions`)
+    // kullandığı AYNI havuz olmalı — yoksa ekran bir kart gösterir, seviye
+    // yükleyici o alt kategoride hiç eşleşen soru bulamaz. `playableQuestions`
+    // zaten bu ortak nokta: `MockZanKurdRepository.loadLevelQuestions` da
+    // `SupabaseZanKurdRepository` da (kendi `_offline`ı üzerinden) seviye
+    // sorularını hep bu getter'dan süzer (2026-09-28).
+    final rawList = SubcategoryConfig.visibleFor(
+      category,
+      repository.playableQuestions,
+    );
+    final list = rawList.isNotEmpty
         ? rawList
         : [
             SubcategoryInfo(
               id: 'gisti',
-              nameKu: 'Hemû Pirs',
-              nameTr: 'Tüm Sorular',
-              descriptionKu: 'Têkelpêkel pirsên $category',
-              descriptionTr: '$category kategorisindeki tüm sorular',
+              nameKu: Tr.of(K.allQuestionsSubcategory, AppLanguage.ku),
+              nameTr: Tr.of(K.allQuestionsSubcategory, AppLanguage.tr),
+              // Kimlik ('Paradigma') değil görünen ad yazılır: 2026-09-30'da
+              // kategori "Bilim ve Düşünce" oldu, bu satır hâlâ eski adı
+              // gösteriyordu.
+              descriptionKu:
+                  'Têkelpêkel pirsên ${CategoryNames.localized(category, true)}',
+              descriptionTr:
+                  '${CategoryNames.localized(category, false)} kategorisindeki tüm sorular',
             ),
           ];
-    // Renk kategorinin adından gelir; liste sırasına bağlı değildir.
-    final gradient = CategoryVisuals.gradient(category);
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        // Geri oku her zaman renkli banner'ın üzerinde durur.
-        iconTheme: const IconThemeData(color: Colors.white),
-        // Başlık banner'da büyük yazılıyor; app bar'da tekrar etmiyoruz.
-      ),
-      body: Container(
-        color: AppTheme.bgOf(context),
-        child: SafeArea(
-          top: false,
-          child: Column(
+    // Konu akışının ortak bantlı başlığı ([CategoryBandScaffold]): kategori
+    // tonu + kilim deseni, seviye ekranıyla AYNI bileşen.
+    return CategoryBandScaffold(
+      category: category,
+      title: CategoryNames.localized(category, ku),
+      subtitle: Tr.forKu(K.birAltAlanSecerek, ku),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(
+          SahneSpace.page,
+          SahneSpace.x4,
+          SahneSpace.page,
+          SahneSpace.x6,
+        ),
+        children: [
+          SahneListGroup(
             children: [
-              // Geometric category banner
-              _CategoryBanner(category: category, gradient: gradient, isKu: ku),
-              Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 32),
-                  itemCount: list.length + 1,
-                  separatorBuilder: (_, _) => const SizedBox(height: 12),
-                  itemBuilder: (context, index) {
-                    if (index == list.length) {
-                      return _SubcategoryProgressHint(
-                        isKu: ku,
-                        gradient: gradient,
-                      );
-                    }
-                    final sub = list[index];
-                    return _SubcategoryCard(
-                      info: sub,
-                      isKu: ku,
-                      gradient: gradient,
-                      onTap: () {
-                        Navigator.of(context).push(
-                          AppRoute.to(
-                            LevelScreen(
-                              repository: repository,
-                              category: category,
-                              subCategory: sub.id,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
+              for (final sub in list) _subcategoryRow(context, sub, ku),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SubcategoryProgressHint extends StatelessWidget {
-  const _SubcategoryProgressHint({required this.isKu, required this.gradient});
-
-  final bool isKu;
-  final LinearGradient gradient;
-
-  @override
-  Widget build(BuildContext context) {
-    final tint = gradient.colors.first;
-    // Bu kart yalnız BİLGİLENDİRİR: hangi alt kategoriye ait olduğu
-    // belirsiz olduğu için tıklanınca gidebileceği anlamlı tek bir hedef
-    // yok (seviye seçimi her zaman bir alt kategoriye bağlı —
-    // `_SubcategoryCard.onTap` bunu zaten yapıyor). Eskiden sağ ucunda
-    // `chevronRight` ikonu vardı; listedeki her tıklanabilir alt kategori
-    // satırı aynı ikonla bitiyor, o yüzden bu kart da dokunulabilir
-    // görünüyordu ama `onTap` yoktu — dokunan kullanıcı hiçbir tepki
-    // almıyordu (2026-08-14 denetimi). Düzeltme: sahte "buraya dokun"
-    // ipucunu kaldır, kartı InkWell'siz bırak.
-    return AppPanel(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      child: Row(
-        children: [
-          Container(
-            width: 42,
-            height: 42,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: tint.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-            ),
-            child: Icon(AppIcons.stairs, color: tint, size: 21),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  Tr.forKu(K.kolaydanZoraDogruIlerle, isKu),
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Wrap(
-                  spacing: 4,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    for (var step = 1; step <= 5; step++) ...[
-                      Text(
-                        '$step',
-                        style: AppTypography.caption.copyWith(
-                          color: AppColors.readableAccent(context, tint),
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      if (step < 5)
-                        Icon(
-                          AppIcons.arrowRight,
-                          size: 12,
-                          color: AppTheme.textMutedColor(context),
-                        ),
-                    ],
-                  ],
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
   }
-}
 
-class _CategoryBanner extends StatelessWidget {
-  const _CategoryBanner({
-    required this.category,
-    required this.gradient,
-    required this.isKu,
-  });
-
-  final String category;
-  final LinearGradient gradient;
-  final bool isKu;
-
-  static IconData _bannerIcon(String category) {
-    return switch (category) {
-      'Ziman' => AppIcons.language,
-      'Çand' => AppIcons.peopleGroup,
-      'Dîrok' => AppIcons.buildingColumns,
-      'Edebiyat' => AppIcons.bookOpenReader,
-      'Cografya' => AppIcons.mountain,
-      'Muzîk' => AppIcons.music,
-      'Siyaset' => AppIcons.gavel,
-      'Paradigma' => AppIcons.brain,
-      'Teknolojî' => AppIcons.mobileScreen,
-      _ => AppIcons.graduationCap,
-    };
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final topInset = MediaQuery.of(context).padding.top;
-    final color1 = Colors.white.withValues(alpha: 0.10);
-    final color2 = Colors.white.withValues(alpha: 0.04);
-
-    return Container(
-      height: 160 + topInset,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: gradient,
-        boxShadow: [
-          BoxShadow(
-            color: gradient.colors.first.withValues(alpha: 0.22),
-            blurRadius: 24,
-            offset: const Offset(0, 6),
-            spreadRadius: -2,
-          ),
-        ],
+  /// Alt kategori satırı: Zimrût tonlu ikon karosu + ad + açıklama; sağda
+  /// ilerleme ("2/5", yalnız oynanmış seviye varsa) ve chevron.
+  ///
+  /// 2026-09-29 doğallık (K7): sağda her satırda aynı "5 seviye" rozeti
+  /// vardı. Aynı sayı her satırda tekrarlanınca bilgi değil şablon oluyordu
+  /// (listenin altındaki "1 → 5" kartı bunu zaten söyler). Rozet kalktı;
+  /// yerine yalnız o alt kategorideki gerçek ilerleme durur. Hiç
+  /// oynanmamışsa sıfır sayaç gösterilmez (K6).
+  Widget _subcategoryRow(BuildContext context, SubcategoryInfo sub, bool ku) {
+    final played = _played[sub.id] ?? 0;
+    final total = repository.levelsForCategory(category).length;
+    // Satır ikonu konunun KENDİ renginde (bkz. [CategoryIconTile]): eskiden
+    // her konuda aynı Zimrût karo vardı, başlık bandı mor iken satırlar
+    // yeşildi.
+    return SahneListRow.leading(
+      key: ValueKey('subcategory-card-${sub.id}'),
+      leading: CategoryIconTile(
+        category: category,
+        icon: _iconForSubcategory(sub.id),
       ),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          // Kategori görseli — en alt katman. Seviye haritasının hero'suyla
-          // aynı dil: ekranda tek kategori olduğu için görsel yorucu değil,
-          // kimlik taşır. (Kategori *listesine* konmadı; 2026-07-24 kararı
-          // sekiz posteri bilinçli olarak kaldırmıştı.)
-          Opacity(
-            opacity: 0.28,
-            child: Image.asset(
-              CategoryVisuals.imagePath(category),
-              fit: BoxFit.cover,
-              errorBuilder: (_, _, _) => const SizedBox.shrink(),
-            ),
-          ),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  gradient.colors.first.withValues(alpha: 0.55),
-                  gradient.colors.last.withValues(alpha: 0.88),
-                ],
-              ),
-            ),
-          ),
-          // Soft Glow 1 — larger, warmer
-          Positioned(
-            right: -50,
-            top: -50,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [color1, color1.withValues(alpha: 0)],
+      title: ku ? sub.nameKu : sub.nameTr,
+      subtitle: ku ? sub.descriptionKu : sub.descriptionTr,
+      trailing: played > 0 && total > 0
+          ? SahneRowValue.meta('$played/$total')
+          : null,
+      chevron: true,
+      onTap: () {
+        Navigator.of(context)
+            .push(
+              AppRoute.to(
+                LevelScreen(
+                  repository: repository,
+                  category: category,
+                  subCategory: sub.id,
                 ),
               ),
-            ),
-          ),
-          // Soft Glow 2
-          Positioned(
-            left: -50,
-            bottom: -60,
-            child: Container(
-              width: 160,
-              height: 160,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [color2, color2.withValues(alpha: 0)],
-                ),
-              ),
-            ),
-          ),
-          // 160px'lik filigran ikon kaldırıldı. Üstündeki yorum "kilim
-          // deseni" diyordu ama çizilen şey büyütülmüş bir ikondu; kartın
-          // kenarından taşıp başlığın arkasına giriyor ve zemini
-          // kirletiyordu (2026-07-25 görsel denetimi). Görsel imzayı artık
-          // gerçek kategori fotoğrafı taşıyor.
-          //
-          // "Decorative dots" adlı tek bir 6px beyaz nokta da kaldırıldı:
-          // hiçbir şey anlatmıyor, ekranda açıklanamayan bir leke olarak
-          // duruyordu.
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 20, 24, 18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Spacer(),
-                // Category icon in small circle
-                Container(
-                  width: 42,
-                  height: 42,
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(bottom: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.28),
-                      width: 1.1,
-                    ),
-                  ),
-                  child: Icon(
-                    _bannerIcon(category),
-                    color: Colors.white,
-                    size: 22,
-                  ),
-                ),
-                Text(
-                  CategoryNames.localized(category, isKu),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 26,
-                    height: 1.15,
-                    shadows: [
-                      Shadow(
-                        color: Color(0x55000000),
-                        blurRadius: 10,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  Tr.forKu(K.birAltAlanSecerek, isKu),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.85),
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+            )
+            // Seviye yolundan dönünce ilerleme sayısı tazelenir.
+            .then((_) => _loadProgress());
+      },
     );
   }
 }
 
-class _SubcategoryCard extends StatelessWidget {
-  const _SubcategoryCard({
-    required this.info,
-    required this.isKu,
-    required this.gradient,
-    required this.onTap,
-  });
-
-  final SubcategoryInfo info;
-  final bool isKu;
-  final LinearGradient gradient;
-  final VoidCallback onTap;
-
-  // 2026-07-22 canlı UX denetimi: alt kategori ikon eşleştirmesi
-  IconData _iconForId(String id) {
-    return switch (id) {
-      // ── Ziman ──
-      'reziman' ||
-      'diroka_kevn' ||
-      'helbest' ||
-      'dastangotin' ||
-      'diroka_siyasi' ||
-      'demokratik' => AppIcons.book,
-      // ── Çand & Edebiyat ──
-      'peyvnasi' ||
-      'folklor' ||
-      'diroka_nujen' ||
-      'klasik' ||
-      'bajar_ci' ||
-      'nujen' ||
-      'siyaseta_nujen' ||
-      'ekoloji' => AppIcons.bookOpen,
-      // ── Yazım & Sanat ──
-      'rastnivisin' || 'sexsiyet' || 'roman' => AppIcons.pen,
-      // ── Sınırlar & Coğrafi Yapı ──
-      'sinor_duma' => AppIcons.locationDot,
-      // ── Müzik Aletleri ──
-      'amur' => AppIcons.music,
-      // ── Hareket & Mücadele ──
-      'tevger' => AppIcons.flag,
-      // ── Jineolojî ──
-      'jineoloji' => AppIcons.venus,
-      // ── Kutlama & Gelenek ──
-      'cejn' => AppIcons.champagneGlasses,
-      // ── Bilmece & Zekâ ──
-      'tistonek' => AppIcons.lightbulb,
-      // ── Coğrafya ──
-      'ciya_cem' => AppIcons.mountain,
-      // ── Müzik ──
-      'dengbeji' => AppIcons.microphone,
-      // ── Teknoloji ──
-      'bingehên_teknolojiyê' => AppIcons.gear,
-      'programkirin' => AppIcons.robot,
-      'dijital_internet' => AppIcons.globe,
-      _ => AppIcons.bookmark,
-    };
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final title = isKu ? info.nameKu : info.nameTr;
-    final desc = isKu ? info.descriptionKu : info.descriptionTr;
-    final icon = _iconForId(info.id);
-    final tint = gradient.colors.first;
-
-    return ClipRRect(
-      key: ValueKey('subcategory-card-${info.id}'),
-      borderRadius: BorderRadius.circular(AppRadius.card),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.surfaceColor(context),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(color: tint.withValues(alpha: 0.22), width: 1.1),
-          boxShadow: [
-            BoxShadow(
-              color: tint.withValues(alpha: 0.12),
-              blurRadius: 16,
-              offset: const Offset(0, 6),
-              spreadRadius: -6,
-            ),
-          ],
-        ),
-        // Filigran ikon kartın dışına taşıyordu: köşeler yuvarlak ama
-        // Stack kırpmıyordu, dolayısıyla dev ikonun bir parçası kartın
-        // kenarından dışarı çıkıp ekranda kopuk soluk lekeler bırakıyordu
-        // — çizim hatası gibi duruyordu (2026-07-27).
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Stack(
-            children: [
-              Positioned(
-                right: -14,
-                bottom: -18,
-                child: Icon(
-                  icon,
-                  size: 92,
-                  color: tint.withValues(alpha: 0.10),
-                ),
-              ),
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: onTap,
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  splashColor: tint.withValues(alpha: 0.12),
-                  highlightColor: tint.withValues(alpha: 0.06),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 52,
-                          height: 52,
-                          decoration: BoxDecoration(
-                            gradient: gradient,
-                            borderRadius: BorderRadius.circular(AppRadius.md),
-                            border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.22),
-                              width: 1.1,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: tint.withValues(alpha: 0.36),
-                                blurRadius: 12,
-                                offset: const Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: Icon(icon, color: Colors.white, size: 24),
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                title,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: AppTheme.textPrimaryColor(context),
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 16,
-                                  height: 1.2,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                desc,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: AppTheme.textMutedColor(context),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Wrap(
-                                spacing: 6,
-                                runSpacing: 4,
-                                children: [
-                                  _LevelChip(
-                                    icon: AppIcons.stairs,
-                                    label: Tr.forKu(K.seviye, isKu),
-                                    tint: tint,
-                                  ),
-                                  _LevelChip(
-                                    icon: AppIcons.bolt,
-                                    label: Tr.forKu(K.yaris, isKu),
-                                    tint: tint,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Container(
-                          width: 34,
-                          height: 34,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: tint.withValues(alpha: 0.14),
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: tint.withValues(alpha: 0.24),
-                              width: 1,
-                            ),
-                          ),
-                          child: Icon(
-                            AppIcons.arrowRight,
-                            color: AppColors.onAccentTint(context, tint),
-                            size: 17,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+// 2026-07-22 canlı UX denetimi: alt kategori ikon eşleştirmesi
+//
+// 2026-09-30 simülatör: Sînema'da "Fîlm û Derhêner" ile "Belgefîlm û
+// Festîval" (ve "Yılmaz Güney") eşlemesiz kalıp ikisi de yer imi ikonunu
+// alıyordu; tanımsız her alt konu sessizce yer imine düşüyordu. Artık her
+// alt konu kimliğinin kendi ikonu var ve aynı kategori altında hiçbir ikon
+// iki kez kullanılmaz. Yeni bir alt konu eklenirse buraya da eklenmeli
+// (bekçi: subcategory_icons_test.dart); yer imi yalnız 'gisti' gibi
+// tanımsız kimliklerin yedeğidir.
+IconData _iconForSubcategory(String id) {
+  return switch (id) {
+    // ── Ziman ──
+    'reziman' => AppIcons.language,
+    'peyvnasi' => AppIcons.font,
+    'rastnivisin' => AppIcons.pen,
+    // ── Çand ──
+    'folklor' => AppIcons.masksTheater,
+    'cejn' => AppIcons.champagneGlasses,
+    'dastangotin' => AppIcons.bookOpenReader,
+    'tistonek' => AppIcons.lightbulb,
+    // ── Dîrok ──
+    'diroka_kevn' => AppIcons.hourglass,
+    'diroka_nujen' => AppIcons.calendarDays,
+    'sexsiyet' => AppIcons.idBadge,
+    // ── Edebiyat ──
+    'helbest' => AppIcons.quoteLeft,
+    'klasik' => AppIcons.book,
+    'roman' => AppIcons.bookOpen,
+    // ── Coğrafya ──
+    'ciya_cem' => AppIcons.mountain,
+    'bajar_ci' => AppIcons.house,
+    'sinor_duma' => AppIcons.locationDot,
+    // ── Muzîk ──
+    'dengbeji' => AppIcons.microphone,
+    'nujen' => AppIcons.circlePlay,
+    'amur' => AppIcons.music,
+    // ── Siyaset ──
+    'diroka_siyasi' => AppIcons.buildingColumns,
+    'siyaseta_nujen' => AppIcons.squareCheck,
+    'tevger' => AppIcons.flag,
+    // ── Paradigma (Bilim ve Düşünce) ──
+    'civak_maf' => AppIcons.scaleBalanced,
+    'raman_felsefe' => AppIcons.lightbulb,
+    'zanist_jiyan' => AppIcons.leaf,
+    // ── Teknolojî ──
+    'bingehên_teknolojiyê' => AppIcons.gear,
+    'programkirin' => AppIcons.robot,
+    'dijital_internet' => AppIcons.globe,
+    // ── Sînema ──
+    'filmen_kurdi' => AppIcons.clapperboard,
+    'yilmaz_guney' => AppIcons.star,
+    'festival_belgefilm' => AppIcons.camera,
+    // ── Cîhan ──
+    'sinema_cihan' => AppIcons.clapperboard,
+    'erdnigari_cihan' => AppIcons.globe,
+    'dirok_gisti' => AppIcons.graduationCap,
+    _ => AppIcons.bookmark,
+  };
 }
 
-class _LevelChip extends StatelessWidget {
-  const _LevelChip({
-    required this.icon,
-    required this.label,
-    required this.tint,
-  });
-
-  final IconData icon;
-  final String label;
-  final Color tint;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(
-        color: tint.withValues(alpha: 0.13),
-        borderRadius: BorderRadius.circular(AppRadius.xs),
-        border: Border.all(color: tint.withValues(alpha: 0.22)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 12, color: tint),
-          const SizedBox(width: 4),
-          Text(
-            label,
-            style: TextStyle(
-              color: AppTheme.textPrimaryColor(context),
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+/// Yalnız bekçi testi için: eşleme özel kalır, test ona buradan bakar.
+@visibleForTesting
+IconData subcategoryIconForTest(String id) => _iconForSubcategory(id);

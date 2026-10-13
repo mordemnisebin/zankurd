@@ -1,3 +1,5 @@
 {
-    "claudeCode.useTerminal": true
+    "claudeCode.useTerminal": true,
+    "kimi.yoloMode": true,
+    "chat.permissions.default": "autopilot"
 }

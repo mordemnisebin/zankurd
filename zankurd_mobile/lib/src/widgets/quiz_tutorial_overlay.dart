@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../l10n/lang.dart';
+import '../l10n/strings.dart';
 import 'coach_mark.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
@@ -14,7 +16,6 @@ class QuizTutorialOverlay extends StatefulWidget {
     required this.child,
     required this.isKu,
     required this.timerKey,
-    required this.answerAreaKey,
     required this.comboKey,
     required this.wildcardKey,
     required this.nextButtonKey,
@@ -30,11 +31,8 @@ class QuizTutorialOverlay extends StatefulWidget {
   /// Dil seçimi: Kürtçe (true) / Türkçe (false).
   final bool isKu;
 
-  /// Dairesel sayaç hedef anahtarı.
+  /// Dairesel sayaç hedef anahtarı. Süresiz derste Zana üst şeridindedir.
   final GlobalKey timerKey;
-
-  /// Cevap şıklarının bulunduğu alan hedef anahtarı.
-  final GlobalKey answerAreaKey;
 
   /// Seri/kombo rozeti hedef anahtarı.
   final GlobalKey comboKey;
@@ -135,39 +133,23 @@ class _QuizTutorialOverlayState extends State<QuizTutorialOverlay> {
                 CoachMarkStep(
                   targetKey: widget.timerKey,
                   icon: AppIcons.stopwatch,
-                  titleKu: 'Demjimêr + Bersiv',
-                  titleTr: 'Süre + Cevap',
-                  descriptionKu:
-                      '${widget.timerSeconds} saniyeyê de bersiva rast hilbijêre; her bersiva rast pûanan qezenc dike.',
-                  descriptionTr:
-                      '${widget.timerSeconds} saniyede doğru şıkkı seç; her doğru cevap puan kazandırır.',
+                  title: context.t(K.quizTutorialTimerTitle),
+                  description: context.t(K.quizTutorialTimerBody, {
+                    'seconds': '${widget.timerSeconds}',
+                  }),
                 )
               else
                 CoachMarkStep(
-                  targetKey: widget.answerAreaKey,
+                  targetKey: widget.timerKey,
                   icon: AppIcons.bullseye,
-                  titleKu: 'Bersivê hilbijêre',
-                  titleTr: 'Cevabı seç',
-                  // 2026-08-10: metin tutmayan bir söz veriyordu — "her
-                  // cevaptan sonra açıklama gösterilir". Açıklamalar
-                  // `de45f05`te tur SONUNA alınmıştı; cevaptan sonra yalnız
-                  // doğru cevap açılıyor (bkz. `_ExplanationBox`). Simülatörde
-                  // gezilirken görüldü: balon açıklama vaat ediyor, kart
-                  // yalnız «Bersiva rast» diyor.
-                  descriptionKu:
-                      'Li vir demjimêr tune — bi rehetî bifikire û bersiva rast hilbijêre. Piştî bersivê bersiva rast tê nîşandan; ravekirin li dawiya tûrê ne.',
-                  descriptionTr:
-                      'Burada süre yok — acele etmeden düşün ve doğru şıkkı seç. Cevaptan sonra doğru cevap gösterilir; açıklamalar turun sonunda.',
+                  title: context.t(K.quizTutorialUntimedTitle),
+                  description: context.t(K.quizTutorialUntimedBody),
                 ),
               CoachMarkStep(
                 targetKey: widget.nextButtonKey,
                 icon: AppIcons.arrowRight,
-                titleKu: 'Rêz + Pirsa Din',
-                titleTr: 'Seri + Sonraki Soru',
-                descriptionKu:
-                    'Bersivên rast ên li pey hev rêzê mezin dikin û bonûs tînin. Piştî bersivê vir bitikîne û derbasî pirsa din bibe.',
-                descriptionTr:
-                    'Peş peşe doğru cevaplar serini büyütür, bonus kazandırır. Cevapladıktan sonra buradan sonraki soruya geç.',
+                title: context.t(K.quizTutorialNextTitle),
+                description: context.t(K.quizTutorialNextBody),
               ),
             ],
           ),

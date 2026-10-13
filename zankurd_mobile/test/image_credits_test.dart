@@ -110,6 +110,23 @@ void main() {
     );
   });
 
+  test('her künyenin Kurmancî ve Türkçe alt yazısı var', () {
+    // Başlık satırı Wikimedia dosya adıydı ve İngilizce kalıyordu; ekran
+    // artık oyuncunun dilindeki alt yazıyı başlık yapar (2026-09-30). Yeni
+    // bir görsel alt yazısız eklenirse satır sessizce İngilizceye döner.
+    final missing = <String>[];
+    loadCredits().forEach((slug, value) {
+      final entry = value as Map<String, dynamic>;
+      for (final key in ['caption_ku', 'caption_tr']) {
+        if (((entry[key] as String?) ?? '').trim().isEmpty) {
+          missing.add('$slug.$key');
+        }
+      }
+    });
+
+    expect(missing, isEmpty, reason: 'Alt yazı eksik: ${missing.join(", ")}');
+  });
+
   test('künyedeki her dosya diskte duruyor', () {
     final missing = loadCredits().keys
         .where((slug) => !File('$imageDir/$slug.webp').existsSync())

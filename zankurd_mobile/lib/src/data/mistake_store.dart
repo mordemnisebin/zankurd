@@ -4,6 +4,8 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'local_data_storage.dart';
+import 'local_progress_scope.dart';
 import 'question_bank_loader.dart';
 import '../utils/error_reporter.dart';
 
@@ -15,13 +17,16 @@ import '../utils/error_reporter.dart';
 /// Yanlış cevaplandığında aralık 1 güne sıfırlanır, easeFactor azaltılır.
 /// Doğru cevaplandığında kullanıcının zorluk derecelendirmesine (Zor, Orta, Kolay)
 /// göre aralık ve easeFactor formülle güncellenir.
-/// SharedPreferences yoksa bellek-içi çalışır.
+/// LocalDataStorage yoksa bellek-içi çalışır.
 class MistakeStore {
-  MistakeStore._(this._preferences, this._ids, this._metadata, this._history);
+  MistakeStore._(this._storage, this._ids, this._metadata, this._history);
 
-  static const _storageKey = 'zankurd.mistakeQuestionIds';
-  static const _metadataKey = 'zankurd.mistakeMetadata';
-  static const _historyKey = 'zankurd.dailyPerformance';
+  static String get _storageKey =>
+      LocalProgressScope.physical('zankurd.mistakeQuestionIds');
+  static String get _metadataKey =>
+      LocalProgressScope.physical('zankurd.mistakeMetadata');
+  static String get _historyKey =>
+      LocalProgressScope.physical('zankurd.dailyPerformance');
 
   /// Tekrar aralığının üst sınırı (gün). Bir yıl, dil öğreniminde makul bir
   /// "uzun vadeli hatırlama" ufkudur.
@@ -33,21 +38,45 @@ class MistakeStore {
   static const _graduationIntervalDays = 180;
 
   static MistakeStore? _instance;
+  static Future<MistakeStore>? _loading;
+  static int _loadGeneration = 0;
 
-  static Future<MistakeStore> load() async {
+  static Future<MistakeStore> load({LocalDataStorage? storage}) async {
     final cached = _instance;
     if (cached != null) return cached;
-    SharedPreferences? preferences;
+    final inFlight = _loading;
+    if (inFlight != null) return inFlight;
+
+    final generation = _loadGeneration;
+    final loading = _loadFresh(storage).then((store) {
+      if (_loadGeneration == generation) {
+        return _instance ??= store;
+      }
+      return store;
+    });
+    _loading = loading;
     try {
-      preferences = await SharedPreferences.getInstance();
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'mistake_store_preferences');
-      preferences = null;
+      return await loading;
+    } finally {
+      if (identical(_loading, loading)) _loading = null;
+    }
+  }
+
+  static Future<MistakeStore> _loadFresh(LocalDataStorage? storage) async {
+    LocalDataStorage? effectiveStorage = storage;
+    if (effectiveStorage == null) {
+      try {
+        final preferences = await SharedPreferences.getInstance();
+        effectiveStorage = SharedPrefsDataStorage(preferences);
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'mistake_store_preferences');
+      }
     }
 
-    final ids = preferences?.getStringList(_storageKey)?.toSet() ?? <String>{};
+    final ids =
+        effectiveStorage?.getStringList(_storageKey)?.toSet() ?? <String>{};
 
-    final metadataString = preferences?.getString(_metadataKey);
+    final metadataString = effectiveStorage?.getString(_metadataKey);
     final Map<String, Map<String, dynamic>> metadata = {};
     if (metadataString != null) {
       try {
@@ -62,7 +91,7 @@ class MistakeStore {
       }
     }
 
-    final historyString = preferences?.getString(_historyKey);
+    final historyString = effectiveStorage?.getString(_historyKey);
     final Map<String, Map<String, int>> history = {};
     if (historyString != null) {
       try {
@@ -80,13 +109,17 @@ class MistakeStore {
       }
     }
 
-    return _instance = MistakeStore._(preferences, ids, metadata, history);
+    return MistakeStore._(effectiveStorage, ids, metadata, history);
   }
 
   /// Testlerde tekil örneği sıfırlamak için.
-  static void resetInstance() => _instance = null;
+  static void resetInstance() {
+    _loadGeneration++;
+    _instance = null;
+    _loading = null;
+  }
 
-  final SharedPreferences? _preferences;
+  final LocalDataStorage? _storage;
   final Set<String> _ids;
   final Map<String, Map<String, dynamic>> _metadata;
   final Map<String, Map<String, int>> _history;
@@ -112,7 +145,7 @@ class MistakeStore {
   int get readyCount => _ids.where((id) => isReadyForReview(id)).length;
   Set<String> get readyIds => _ids.where((id) => isReadyForReview(id)).toSet();
 
-  Future<void> markMistake(String id, {String? category}) async {
+  Future<bool> markMistake(String id, {String? category}) async {
     await _recordAnswer(false);
     _ids.add(id);
 
@@ -134,12 +167,12 @@ class MistakeStore {
       // ignore: use_null_aware_elements
       if (resolvedCategory != null) 'category': resolvedCategory,
     };
-    await _persist();
+    return _persist();
   }
 
   /// Normal quizler veya varsayılan çözümler için (Orta zorluk - q = 4).
-  Future<void> markResolved(String id) async {
-    await markResolvedSM2(id, 4);
+  Future<bool> markResolved(String id) async {
+    return markResolvedSM2(id, 4);
   }
 
   /// SM-2 formülüne göre dereceli çözüm.
@@ -147,7 +180,7 @@ class MistakeStore {
   /// 3 = Zor (Kürtçe: Zor, Türkçe: Zor)
   /// 4 = Orta (Kürtçe: Navîn, Türkçe: Orta)
   /// 5 = Kolay (Kürtçe: Hêsan, Türkçe: Kolay)
-  Future<void> markResolvedSM2(String id, int score) async {
+  Future<bool> markResolvedSM2(String id, int score) async {
     await _recordAnswer(true);
     if (!_ids.contains(id)) {
       // Erken çıkış BURADA diske yazmadan yapılıyordu. `_recordAnswer`
@@ -161,8 +194,7 @@ class MistakeStore {
       // karoları ile haftalık performans grafiği yalnız YANLIŞLARI
       // hatırlıyordu. Hiç yanlış yapmamış oyuncu "0 soru" görüyor, yanlış
       // yapan ise doğruluğunu olduğundan düşük görüyordu (2026-07-31).
-      await _persist();
-      return;
+      return _persist();
     }
 
     final meta = _metadata[id];
@@ -234,20 +266,13 @@ class MistakeStore {
     } else {
       _metadata[id] = nextMeta;
     }
-    await _persist();
+    return _persist();
   }
 
   Map<String, int> getMistakesCountByCategory() {
     final Map<String, int> counts = {};
     for (final id in _ids) {
-      final meta = _metadata[id];
-      String? category = meta?['category'] as String?;
-      if (category == null) {
-        final match = QuestionBankLoader.instance.findById(id);
-        if (match != null) {
-          category = match.category;
-        }
-      }
+      final category = _categoryForId(id);
       if (category != null) {
         counts[category] = (counts[category] ?? 0) + 1;
       }
@@ -255,11 +280,34 @@ class MistakeStore {
     return counts;
   }
 
-  Future<void> clear() async {
+  Map<String, int> getReadyReviewCountByCategory({
+    Set<String>? allowedQuestionIds,
+  }) {
+    final Map<String, int> counts = {};
+    for (final id in _ids) {
+      if (allowedQuestionIds != null && !allowedQuestionIds.contains(id)) {
+        continue;
+      }
+      if (!isReadyForReview(id)) continue;
+      final category = _categoryForId(id);
+      if (category != null) {
+        counts[category] = (counts[category] ?? 0) + 1;
+      }
+    }
+    return counts;
+  }
+
+  String? _categoryForId(String id) {
+    final stored = _metadata[id]?['category'] as String?;
+    if (stored != null) return stored;
+    return QuestionBankLoader.instance.findById(id)?.category;
+  }
+
+  Future<bool> clear() async {
     _ids.clear();
     _metadata.clear();
     _history.clear();
-    await _persist();
+    return _persist();
   }
 
   Future<void> _recordAnswer(bool correct) async {
@@ -315,11 +363,34 @@ class MistakeStore {
       '${day.month.toString().padLeft(2, '0')}-'
       '${day.day.toString().padLeft(2, '0')}';
 
-  Future<void> _persist() async {
-    final prefs = _preferences;
-    if (prefs == null) return;
-    await prefs.setStringList(_storageKey, _ids.toList());
-    await prefs.setString(_metadataKey, jsonEncode(_metadata));
-    await prefs.setString(_historyKey, jsonEncode(_history));
+  Future<bool> _persist() async {
+    final storage = _storage;
+    if (storage == null) return false;
+    try {
+      if (!await storage.setStringList(_storageKey, _ids.toList())) {
+        _recordWriteFailure(_storageKey);
+        return false;
+      }
+      if (!await storage.setString(_metadataKey, jsonEncode(_metadata))) {
+        _recordWriteFailure(_metadataKey);
+        return false;
+      }
+      if (!await storage.setString(_historyKey, jsonEncode(_history))) {
+        _recordWriteFailure(_historyKey);
+        return false;
+      }
+      return true;
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'mistake_store_persist');
+      return false;
+    }
+  }
+
+  void _recordWriteFailure(String key) {
+    ErrorReporter.record(
+      StateError('Local progress key was not persisted: $key'),
+      StackTrace.current,
+      reason: 'mistake_store_persist',
+    );
   }
 }

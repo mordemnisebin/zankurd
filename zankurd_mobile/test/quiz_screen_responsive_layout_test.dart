@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'package:zankurd_mobile/src/models/wildcard.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
+import 'package:zankurd_mobile/src/screens/quiz/quiz_wildcard_bar.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
 /// QuizScreen responsive yerleşim bekçisi — ZKR-P1-001.
+///
+/// 2026-09-29 Şahnê: soru ekranı C iskeletine (`SahneStageScaffold`)
+/// taşındı. Yerleşim dalı artık sahnenin tamamından seçilir; yarışmada
+/// cevaptan önce alt perdede jokerler, sonra "Sonraki" durur; joker adları
+/// ekranda değil Semantics'tedir. H3, H4 ve 700-sınır bekçileri bu üç
+/// değişikliğe göre güncellendi; korudukları kurallar (şık ve eylem
+/// ekranda ulaşılabilir, adlar kırpılmaz, dal ile panel tek ölçü) aynı.
 ///
 /// Niçin var: `quiz_screen.dart` yerleşim dalını `constraints.maxWidth >= 700`
 /// ile seçiyordu. Değişkenin adı `landscape` idi ama gerçek yönelim hiç
@@ -51,6 +61,7 @@ void main() {
     WidgetTester tester,
     Size size, {
     double textScale = 1.0,
+    bool kurmanci = false,
   }) async {
     await tester.binding.setSurfaceSize(size);
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -58,6 +69,7 @@ void main() {
     final repository = freshMockRepository();
     await tester.pumpWidget(
       testShell(
+        languageProvider: kurmanci ? kurmanciLang() : null,
         child: Builder(
           builder: (context) => MediaQuery(
             data: MediaQuery.of(
@@ -299,9 +311,11 @@ void main() {
       );
     }
 
-    // Dokunma alanı en az 44×44 logical pixel.
-    expect(ctaRect.height, greaterThanOrEqualTo(44.0));
-    expect(ctaRect.width, greaterThanOrEqualTo(44.0));
+    // Android dokunma alanı en az 48×48 logical pixel.
+    // Dönüşüm matrisleri nominal 48.0 değeri 47.99999999999997 gibi
+    // temsil edebilir; 1e-9 yalnız kayan nokta gürültüsünü tolere eder.
+    expect(ctaRect.height, greaterThanOrEqualTo(48.0 - 1e-9));
+    expect(ctaRect.width, greaterThanOrEqualTo(48.0 - 1e-9));
 
     expectNoLayoutException(tester, '844×390');
   });
@@ -348,20 +362,25 @@ void main() {
     expectNoLayoutException(tester, '667×375');
   });
 
-  testWidgets('700×656 sınırında panel gövde ölçümüyle aynı dalı kullanır', (
+  // 2026-09-29 Şahnê: dal artık SAHNENİN TAMAMINDAN seçilir (üst satır,
+  // elmas dizisi ve alt perde sahnenin parçası; gövdeyi ölçüp perdeyi ona
+  // göre kurmak döngüsel olurdu). Korunan kural aynı: dal seçimi ile soru
+  // panelinin kararı TEK ölçüden gelir. 700×656'da pencere 600'den uzun →
+  // dikey; 700×600'de kısa-yatay → iki sütun ve panel de yatay kararını
+  // verir (soru Manşet 22).
+  testWidgets('700 genişlik sınırında dal ve panel aynı ölçüyü kullanır', (
     tester,
   ) async {
-    // AppBar sonrası gövde yaklaşık 600px'e iner. Dış LayoutBuilder compact
-    // seçtiğinde soru paneli de aynı ölçümü kullanmalı; aksi hâlde panel,
-    // tam pencere yüksekliği 656px olduğu için stacked görsel kararına döner.
     await pumpQuizAt(tester, const Size(700, 656));
-
-    expect(find.byKey(compactLandscapeKey), findsOneWidget);
-    final ghostIcon = tester.widget<Icon>(
-      find.byKey(const ValueKey('quiz-question-ghost-icon')),
-    );
-    expect(ghostIcon.size, 88.0);
+    expect(find.byKey(stackedScrollKey), findsOneWidget);
+    expect(find.byKey(compactLandscapeKey), findsNothing);
     expectNoLayoutException(tester, '700×656');
+
+    await pumpQuizAt(tester, const Size(700, 600));
+    expect(find.byKey(compactLandscapeKey), findsOneWidget);
+    final prompt = tester.widget<Text>(find.text(question.prompt));
+    expect(prompt.style?.fontSize, SahneType.headline.fontSize);
+    expectNoLayoutException(tester, '700×600');
   });
 
   // ── 1366×768 masaüstü ──────────────────────────────────────────────────
@@ -386,5 +405,90 @@ void main() {
       '768×1024 @1.6x',
       textScale: 1.6,
     );
+  });
+
+  testWidgets('H3 · 390×844 @2.0 answer reachability korunur', (tester) async {
+    await pumpQuizAt(tester, const Size(390, 844), textScale: 2.0);
+
+    final options = find.byType(QuizOptionTile);
+    expect(options, findsNWidgets(4));
+    final last = options.last;
+    // 2026-09-29 Şahnê: yarışmada cevaptan önce alt perdede jokerler
+    // durur, "Sonraki" cevaptan sonra aynı yere gelir.
+    expect(find.byKey(const ValueKey('quiz-wildcard-row')), findsOneWidget);
+
+    await tester.ensureVisible(last);
+    await tester.pumpAndSettle();
+
+    final viewport = tester.getRect(find.byType(Scaffold));
+    final lastRect = tester.getRect(last);
+    expect(lastRect.bottom, lessThanOrEqualTo(viewport.bottom));
+
+    final semantics = tester.getSemantics(last);
+    expect(semantics.flagsCollection.isButton, isTrue);
+    await tester.tap(last, warnIfMissed: false);
+    await tester.pump();
+
+    final cta = find.byKey(primaryCtaKey);
+    expect(cta, findsOneWidget);
+    expect(tester.getRect(cta).bottom, lessThanOrEqualTo(viewport.bottom));
+    expect(tester.takeException(), isNull);
+  });
+
+  // 2026-09-29 Şahnê: joker adı ekranda yazmaz (ikon + jeton + fiyat), ad
+  // Semantics'te ve uzun basış ipucunda bütündür. Bekçi aynı sonucu bağlar:
+  // en dar ekranda ve %200 yazıda Kurmancî adların hiçbiri kırpılmadan
+  // ekran okuyucuya gider, joker dizisi ekranın içinde kalır ve taşmaz.
+  testWidgets('H4 · 320×568 @2.0 Kurmancî joker adları bütün kalır', (
+    tester,
+  ) async {
+    final handle = tester.ensureSemantics();
+    await pumpQuizAt(
+      tester,
+      const Size(320, 568),
+      textScale: 2.0,
+      kurmanci: true,
+    );
+
+    final row = find.byKey(const ValueKey('quiz-wildcard-row'));
+    expect(row, findsOneWidget);
+    final rowRect = tester.getRect(row);
+    expect(rowRect.bottom, lessThanOrEqualTo(568.0));
+    expect(rowRect.left, greaterThanOrEqualTo(0.0));
+    expect(rowRect.right, lessThanOrEqualTo(320.0));
+
+    for (final type in WildcardType.values) {
+      final label = type.label(true);
+      final button = find.byWidgetPredicate(
+        (w) => w is WildcardButton && w.type == type,
+      );
+      expect(button, findsOneWidget, reason: '$label jokeri görünür olmalı');
+      expect(
+        tester.getSemantics(button).getSemanticsData().label,
+        contains(label),
+        reason: '$label ekran okuyucuya bütün olarak gitmeli',
+      );
+    }
+
+    expect(tester.takeException(), isNull);
+    handle.dispose();
+  });
+
+  testWidgets('H5 · 844×390 @2.0 compact landscape kullanılabilir kalır', (
+    tester,
+  ) async {
+    await pumpQuizAt(tester, const Size(844, 390), textScale: 2.0);
+
+    expect(find.byKey(compactLandscapeKey), findsOneWidget);
+    expect(find.byType(QuizOptionTile), findsNWidgets(4));
+    await answerFirstQuestion(tester);
+
+    final viewport = tester.getRect(find.byType(Scaffold));
+    final ctaRect = tester.getRect(cta());
+    expect(ctaRect.left, greaterThanOrEqualTo(viewport.left));
+    expect(ctaRect.right, lessThanOrEqualTo(viewport.right));
+    expect(ctaRect.top, greaterThanOrEqualTo(viewport.top));
+    expect(ctaRect.bottom, lessThanOrEqualTo(viewport.bottom));
+    expectNoLayoutException(tester, '844×390 @2.0');
   });
 }

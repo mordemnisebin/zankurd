@@ -2,15 +2,26 @@
 
 ## Genel Bakış
 
-ZanKurd, Kurmancî (Kürtçe) bilgi yarışması uygulamasıdır. Flutter ile geliştirilmiş olup,
-Supabase backend ve Firebase entegrasyonu ile çalışır.
+ZanKurd, Kurmancî öncelikli bilgi yarışması ve öğrenme uygulamasıdır.
+Flutter, Supabase, Firebase ve RevenueCat ile çalışır.
+
+**Altın yol:** Öğren sekmesi (günün dersi) → solo quiz. Ana ekrandaki iki
+kapı öğrenme alanına (Kurmancî öğren) ve Yarış'a (hızlı düello, davet
+bağlantılı arkadaş odası) açılır. Hikâye, arkadaşlar, günlük çark ve
+yerleştirme ikinci katmandadır (Kurmancî öğren ekranı, Liderlik, Mağaza,
+Ayarlar). Turnuva ve haftalık lig `lib/src/config/feature_flags.dart` ile
+kapalıdır; kitle büyüyünce açılır.
+
+Kabuk sekmeleri: Öğren, Yarış, Liderlik, Profil.
 
 ## Mimari Diyagram
 
 ```mermaid
 graph TB
-    subgraph UI["Kullanıcı Arayüzü (Screens)"]
-        HS[HomeScreen]
+    subgraph UI["Kullanıcı Arayüzü"]
+        AS[AppShell]
+        LH[LearnHome wraps HomeScreen]
+        PH[PlayHubScreen]
         QS[QuizScreen]
         PS[ProfileScreen]
         LS[LeaderboardScreen]
@@ -20,30 +31,36 @@ graph TB
     subgraph Providers["State Management (Provider)"]
         AP[AuthProvider]
         TP[ThemeProvider]
-        LP[LanguageProvider]
+        LP[LanguageProvider in l10n/lang.dart]
         SP[SoundProvider]
+        RM[ReducedMotionProvider]
+        AC[AnalyticsConsentProvider]
+        UM[UntimedModeProvider]
+        RA[RemoteAvailability]
     end
 
     subgraph Services["Servisler"]
         ANS[AnalyticsService]
         NS[NotificationService]
-        BS[BadgeService]
+        PRE[PremiumService]
     end
 
     subgraph Data["Veri Katmanı"]
         REPO[ZanKurdRepository]
         SUPA[SupabaseZanKurdRepository]
         MOCK[MockZanKurdRepository]
+        OFFLINE[OfflineZanKurdRepository]
         SM[SyncManager]
     end
 
     subgraph Stores["Yerel Depolar (SharedPreferences)"]
-        AS[AchievementStore]
+        AS2[AchievementStore]
         MS[MistakeStore]
         SS2[StreakStore]
         XS[XpStore]
         MAS[MasteryStore]
         DMS[DailyMissionStore]
+        BD[BadgeService]
     end
 
     subgraph Backend["Backend"]
@@ -51,6 +68,10 @@ graph TB
         FB[(Firebase)]
     end
 
+    AS --> LH
+    AS --> PH
+    AS --> LS
+    AS --> PS
     UI --> Providers
     UI --> Data
     UI --> Services
@@ -58,11 +79,13 @@ graph TB
 
     REPO --> SUPA
     REPO --> MOCK
+    REPO --> OFFLINE
+    OFFLINE --> MOCK
     SUPA --> SB
     SM --> SUPA
 
     ANS --> FB
-    BS --> Stores
+    BD --> Stores
     NS --> FB
 
     Data --> Stores
@@ -71,30 +94,61 @@ graph TB
 ## Katmanlar
 
 ### 1. UI Katmanı (`lib/src/screens/`)
-- **HomeScreen** — Ana sayfa, kategori seçimi, hızlı yarış
-- **QuizScreen** — Soru-cevap ekranı, zamanlayıcı, joker
-- **ProfileScreen** — Kullanıcı profili, istatistikler, rozetler, XP
+- **LearnHomeScreen** — Öğren sekmesi kökü; `HomeScreen`i sarmalar (kategori
+  gezinmesi). İçerik `HomeScreen`dedir: günün dersi (tek birincil eylem),
+  ilk oturumda "3 adımda ZanKurd", iki kapı (Kurmancî öğren / Arkadaşınla
+  yarış) ve konu ızgarası (`screens/home/home_sections.dart`)
+- **PlayHubScreen** — hızlı düello (birincil), arkadaş odası (davet
+  bağlantısı), günlük etkinlik; turnuva bayrakla kapalı (`kTournamentEnabled`);
+  sırayla düello kartı ve "Düellolarım" kutusu bayrakla kapalı (`kAsyncDuelEnabled`)
+- **Sırayla düello** — `screens/async_duel/`: `AsyncDuelPlayScreen` (7 soru,
+  20 sn, joker yok; çıkışta onaylanmamış sorular gönderilir),
+  `AsyncDuelResultScreen` (tamamlandı/bekleniyor/süresi doldu/yarım kaldı;
+  görüldü + XP talebi), `AsyncDuelInboxSection`/`AsyncDuelListScreen` (kabuğun
+  Yarış tazelemesiyle yenilenir)
+- **QuizScreen** — Soru-cevap, zamanlayıcı, joker
+- **ProfileScreen** — İstatistik, rozet, XP, hesap
 - **LeaderboardScreen** — Anonim lider tablosu
-- **SettingsScreen** — Dil seçimi (KU/TR), tema geçişi, ses, oyuncu adı
+- **SettingsScreen** — Dil (KU/TR), tema, ses, oyuncu adı, güvenlik
 
 ### 2. State Management (`lib/src/providers/`)
 - **AuthProvider** — Supabase kimlik doğrulama
 - **ThemeProvider** — Aydınlık/Karanlık tema yönetimi
-- **LanguageProvider** — Kurmancî/Türkçe dil yönetimi
+- **LanguageProvider** — `lib/src/l10n/lang.dart` içinde; Kurmancî/Türkçe
 - **SoundProvider** — Ses efektleri açma/kapama (web'de sessizdir)
 - **ReducedMotionProvider** — Hareketi azalt (kullanıcı + sistem tercihi)
-- **PremiumService** — RevenueCat aboneliği (`ChangeNotifier`)
+- **AnalyticsConsentProvider** — Analitik ve Crashlytics rızası
+- **UntimedModeProvider** — Süresiz quiz
+- **RemoteAvailability** — Sunucu erişilebilirliği; sosyal yüzey kilidi
 
 ### 3. Servisler (`lib/src/services/`)
 - **AnalyticsService** — Anonim kullanım istatistikleri (Firebase Analytics)
 - **NotificationService** — Günlük hatırlatıcı bildirimleri
-- **BadgeService** — Genişletilmiş rozet/streak değerlendirmesi
+- **PremiumService** — `lib/src/services/premium_service.dart`; RevenueCat
+  aboneliği (`ChangeNotifier`)
 
 ### 4. Veri Katmanı (`lib/src/data/`)
+- **BadgeService** — `lib/src/data/badge_service.dart`; rozet tanımları `K.*`
 - **ZanKurdRepository** — Soyut repository arayüzü
 - **SupabaseZanKurdRepository** — Supabase bağlantılı gerçek uygulama
-- **MockZanKurdRepository** — Test ve offline ortam için mock
-- **SyncManager** — Offline XP senkronizasyonu
+- **MockZanKurdRepository** — Test/demolar ve paylaşılan yerel içerik davranışı
+- **OfflineZanKurdRepository** — Uzak servis başlatılamadığında üretim deposu.
+  Mock deposunun yerel içeriğini kullanır; uzak kimlik ve sunucu yazımlarında
+  sahte başarı döndürmez. Ders tamamlama, favoriler ve yerel profil adı
+  cihazda saklanır; oda, eşleşme, ekonomi ve sosyal yazımlar kapalıdır.
+- **SyncManager** — Çevrimdışı kuyruk (XP sahte eşitlemesi yok)
+- **XP yazımı** — Cihaz `XPStore` seviye çubuğunu besler; sıralama
+  puanı `award_xp_delta` ile `profiles.xp`e yazılır
+  (`supabase/2026-09-02_award_xp_delta_write_restore.sql`). 2026-07-29
+  göçü tarihsel no-op olarak durur; yeniden çalıştırılmaz.
+- **Sırayla düello verisi** — `models/async_duel.dart`;
+  `ZanKurdRepository.startAsyncDuel/answerAsyncDuel/loadMyAsyncDuels/markAsyncDuelSeen/claimAsyncDuelXp`.
+  Kazanan, XP ve 48 saat kuralı sunucuda (`supabase/2026-09-28_async_duels.sql`,
+  henüz UYGULANMADI; bkz. `supabase/applied.md`)
+- **Davet bağlantısı** — `utils/join_deep_link.dart`: `zankurd.com/join/KOD`;
+  soğuk açılış `onGenerateInitialRoutes`, sıcak açılış `JoinDeepLinkScope`
+  (`didPushRouteInformation`). iOS associated domains + Android App Links;
+  web tarafı `web/.well-known/` (bkz. `docs/HOSTINGER_DEPLOY_CHECKLIST.md`)
 
 ### 5. Yerel Depolar (`lib/src/data/`)
 - **AchievementStore** — Rozet ilerlemesi ve kilit açma durumu
@@ -135,7 +189,9 @@ Uygulama Kurmancî (KU) ve Türkçe (TR) dillerini destekler:
 
 ## Tema Sistemi
 
-- `lib/src/theme/app_theme.dart` — Light ve Dark tema tanımları
-- `lib/src/providers/theme_provider.dart` — Tema durumunu yönetir
-- Glassmorphism: `lib/src/widgets/glass_panel.dart`
-- Renkler: Coral/Orange gradient, Indigo secondary, Gold accent
+- `lib/src/theme/app_theme.dart` — Light ve Dark
+- `lib/src/providers/theme_provider.dart`
+- Palet: koyu antrasit, derin yeşil, krem. Mercan yalnız birincil eylemde.
+  Altın yalnız ödül/premium. Cam paneli yok: `glass_panel.dart`,
+  `CardType.glass`, `glassDecoration` ve `AppPanel` BackdropFilter
+  kaldırıldı. Yeni ekranlar `primary` / `secondary` / `info` kullanır.

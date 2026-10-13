@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
+import '../theme/app_icons.dart';
 import '../theme/kilim_motifs.dart';
+import 'sahne/sahne.dart';
 
 /// Rengîn Editorial Arena'nın oyunlaştırma bileşenleri.
 ///
@@ -13,40 +14,52 @@ import '../theme/kilim_motifs.dart';
 /// Buradaki bileşenler o dili tek yerde toplar. Ama tek bir kartı sekiz
 /// ekrana kopyalamazlar: her biri bağlamına uyarlanabilir parametreler
 /// alır, çünkü liderlik ile mağaza aynı şeyi anlatmıyor.
+///
+/// 2026-09-29 Şahnê: hepsi Şahnê bileşenlerinin dilinde — ödül jetonu stat
+/// çipi, durum çipi rol rozeti, arena başlığı sahne kartı, görev kartı
+/// yüzey kartı + ilerleme çubuğu, madalya karosu. Renk rol taşır; ödül
+/// her zaman Zêr'dir ve türler GLİF ŞEKLİYLE ayrışır (jeton, şimşek,
+/// alev, yıldız, taç), renkle değil.
 
 /// Ödül türü — hepsi ayrı görsel kimlik taşır.
 ///
-/// Coin, XP ve streak aynı renkte ve aynı ikon anatomisinde görünüyordu;
-/// oyuncu üç farklı ekonomiyi tek bir sarı sayı olarak okuyordu.
+/// Coin, XP ve streak aynı ikon anatomisinde görünüyordu; oyuncu üç farklı
+/// ekonomiyi tek bir sarı sayı olarak okuyordu. Şahnê'de hepsi ödüldür
+/// (Zêr) ve ayrım ŞEKİLDEDİR: her türün kendi dolu glifi ([glyph]) ve
+/// kendi çizgi ikonu ([icon]) vardır.
 enum RewardKind { xp, coin, streak, level, rank }
 
 extension RewardKindVisuals on RewardKind {
-  Color get color => switch (this) {
-    // XP ilerlemedir: safir.
-    RewardKind.xp => const Color(0xFF1E4FA6),
-    // Coin ekonomidir: altın — ödül/para için ayrılmış tek ton.
-    RewardKind.coin => AppTheme.gold,
-    // Streak süreklilikdir: madder/ateş.
-    RewardKind.streak => const Color(0xFFBC4318),
-    // Level ustalıktır: ametist.
-    RewardKind.level => const Color(0xFF6A38BE),
-    // Rank rekabettir: zümrüt.
-    RewardKind.rank => const Color(0xFF0E7A57),
+  /// Türün rengi. 2026-09-29 Şahnê: ödülün tek rengi Zêr'dir (jeton, XP,
+  /// seri, seviye, sıra); türler glifle ayrışır. Belirteç iki temada
+  /// aynıdır.
+  Color get color => SahneTokens.night.gold;
+
+  /// Türün dolu ödül glifi — türü ayıran asıl kanal.
+  SahneGlyphKind get glyph => switch (this) {
+    RewardKind.xp => SahneGlyphKind.bolt,
+    RewardKind.coin => SahneGlyphKind.coin,
+    RewardKind.streak => SahneGlyphKind.flame,
+    RewardKind.level => SahneGlyphKind.star,
+    RewardKind.rank => SahneGlyphKind.crown,
   };
 
   IconData get icon => switch (this) {
-    RewardKind.xp => Icons.bolt_rounded,
-    RewardKind.coin => Icons.monetization_on_rounded,
-    RewardKind.streak => Icons.local_fire_department_rounded,
-    RewardKind.level => Icons.workspace_premium_rounded,
-    RewardKind.rank => Icons.leaderboard_rounded,
+    RewardKind.xp => AppIcons.bolt,
+    RewardKind.coin => AppIcons.coins,
+    RewardKind.streak => AppIcons.fire,
+    RewardKind.level => AppIcons.medal,
+    RewardKind.rank => AppIcons.trophy,
   };
 }
 
 /// Ödül jetonu: değer + tür, tek satırda okunur.
 ///
-/// Renk tek kanal değildir — her türün kendi ikonu da vardır, böylece
-/// renk körü kullanıcı XP ile coin'i ayırt edebilir.
+/// 2026-09-29 Şahnê: stat çipi görünüşü ([SahneStatChip]) — M pah, Kulis
+/// tonu, solda türün Zêr glifi, değer kalın açıklama + tablo rakamı,
+/// etiket açıklama (ikincil metin). [compact]: 28 yükseklik, 16'lık glif.
+/// [onSolid]: çip kendi zeminini taşıdığı için renkli yüzeyde de aynı
+/// çizilir (geriye uyum).
 class RewardToken extends StatelessWidget {
   const RewardToken({
     required this.kind,
@@ -62,65 +75,61 @@ class RewardToken extends StatelessWidget {
   final String? label;
   final bool compact;
 
-  /// Dolu renkli bir yüzeyin üstünde mi duruyor.
+  /// Dolu renkli bir yüzeyin üstünde mi duruyor (geriye uyum).
   final bool onSolid;
 
   @override
   Widget build(BuildContext context) {
-    final tone = kind.color;
-    final fg = onSolid ? Colors.white : AppColors.readableAccent(context, tone);
-    final bg = onSolid
-        ? Colors.white.withValues(alpha: 0.18)
-        : tone.withValues(alpha: AppTheme.isLight(context) ? 0.12 : 0.22);
-
+    final t = SahneTokens.of(context);
     return Semantics(
       label: label == null ? value : '$value $label',
       child: ExcludeSemantics(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: compact ? 8 : 11,
-            vertical: compact ? 4 : 6,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: t.s2,
+            shape: compact ? SahneShape.s : SahneShape.m,
           ),
-          decoration: BoxDecoration(
-            color: bg,
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            border: Border.all(color: fg.withValues(alpha: 0.35)),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(kind.icon, size: compact ? 13 : 15, color: fg),
-              const SizedBox(width: 5),
-              // Esnek olmalı: `987654/1000000` gibi bir değer %200 yazıda
-              // dar telefonda hiçbir biçimde sığmıyor ve jeton satırı
-              // taşırıyordu. Kısaltma son çare — ama taşma şeridi hiçbir
-              // şey göstermez, kısaltma en azından öneki gösterir ve
-              // düzen ayakta kalır.
-              Flexible(
-                child: Text(
-                  value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.caption.copyWith(
-                    color: fg,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: compact ? 28 : 36),
+            child: Padding(
+              padding: EdgeInsetsDirectional.only(
+                start: compact ? SahneSpace.x1 : SahneSpace.x2,
+                end: compact ? SahneSpace.x2 : SahneSpace.x3,
               ),
-              if (label != null) ...[
-                const SizedBox(width: 4),
-                Flexible(
-                  child: Text(
-                    label!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTypography.caption.copyWith(
-                      color: fg.withValues(alpha: 0.75),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SahneGlyph(kind.glyph, size: compact ? 16 : 20),
+                  const SizedBox(width: SahneSpace.x1),
+                  // Esnek olmalı: `987654/1000000` gibi bir değer %200
+                  // yazıda dar telefonda hiçbir biçimde sığmıyor ve jeton
+                  // satırı taşırıyordu. Kısaltma son çare — ama taşma şeridi
+                  // hiçbir şey göstermez, kısaltma en azından öneki gösterir.
+                  Flexible(
+                    child: Text(
+                      value,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SahneType.captionStrong.copyWith(
+                        color: t.tx,
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ],
+                  if (label != null) ...[
+                    const SizedBox(width: SahneSpace.x1),
+                    Flexible(
+                      child: Text(
+                        label!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: SahneType.caption.copyWith(color: t.tx2),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -131,11 +140,16 @@ class RewardToken extends StatelessWidget {
 /// Durum çipi — renk TEK kanal değil; her durumun ikonu da vardır.
 enum ArenaStatus { upcoming, live, joined, completed, locked, offline, loading }
 
+/// 2026-09-29 Şahnê: rol rozeti dili — 28, S pah, ton zemin + ton metni,
+/// ikon + kalın açıklama. Canlı Zimrût, katıldın Zêr, bitti Rast, çevrimdışı
+/// Zêr (dikkat, hata değil), öteki durumlar nötr Kulis. Ton zemini opaktır:
+/// renkli yüzeyde ([onSolid]) de aynı okunur.
 class ArenaStatusChip extends StatelessWidget {
   const ArenaStatusChip({
     required this.status,
     required this.label,
     this.onSolid = false,
+    this.role,
     super.key,
   });
 
@@ -143,48 +157,60 @@ class ArenaStatusChip extends StatelessWidget {
   final String label;
   final bool onSolid;
 
-  (Color, IconData) get _visual => switch (status) {
-    ArenaStatus.upcoming => (const Color(0xFF2A5A8C), Icons.schedule_rounded),
-    ArenaStatus.live => (const Color(0xFF0E7A57), Icons.circle),
-    ArenaStatus.joined => (const Color(0xFF6A38BE), Icons.check_circle_rounded),
-    ArenaStatus.completed => (const Color(0xFF0E7A57), Icons.flag_rounded),
-    ArenaStatus.locked => (const Color(0xFF3A4557), Icons.lock_rounded),
-    ArenaStatus.offline => (const Color(0xFF9C6300), Icons.cloud_off_rounded),
-    ArenaStatus.loading => (
-      const Color(0xFF3A4557),
-      Icons.hourglass_top_rounded,
-    ),
+  /// Kartın rolü. Yarış kartında ([SahneRole.race]) "canlı/bugün" durumu
+  /// Boyax tonunu alır: lal sahnede yeşil bir rozet rol dilini bozuyordu
+  /// (yarışma "Bugün", 2026-09-29).
+  final SahneRole? role;
+
+  IconData get _icon => switch (status) {
+    ArenaStatus.upcoming => AppIcons.clock,
+    ArenaStatus.live => AppIcons.circle,
+    ArenaStatus.joined => AppIcons.circleCheck,
+    ArenaStatus.completed => AppIcons.flag,
+    ArenaStatus.locked => AppIcons.lock,
+    ArenaStatus.offline => AppIcons.cloud,
+    ArenaStatus.loading => AppIcons.hourglass,
   };
 
   @override
   Widget build(BuildContext context) {
-    final (tone, icon) = _visual;
-    final fg = onSolid ? Colors.white : AppColors.readableAccent(context, tone);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
-      decoration: BoxDecoration(
-        color: onSolid
-            ? Colors.white.withValues(alpha: 0.18)
-            : tone.withValues(alpha: AppTheme.isLight(context) ? 0.12 : 0.22),
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 12, color: fg),
-          const SizedBox(width: 5),
-          Flexible(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTypography.caption.copyWith(
-                color: fg,
-                fontWeight: FontWeight.w800,
+    final t = SahneTokens.of(context);
+    final (bg, fg) = switch (status) {
+      ArenaStatus.live =>
+        role == SahneRole.race
+            ? (t.raceTint, t.raceTx)
+            : (t.learnTint, t.learnTx),
+      ArenaStatus.joined => (t.goldTint, t.goldTx),
+      ArenaStatus.completed => (t.okTint, t.okTx),
+      ArenaStatus.offline => (t.goldTint, t.goldTx),
+      ArenaStatus.upcoming ||
+      ArenaStatus.locked ||
+      ArenaStatus.loading => (t.s2, t.tx2),
+    };
+    return DecoratedBox(
+      decoration: ShapeDecoration(color: bg, shape: SahneShape.s),
+      child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — durum çipi (etiket); salt
+        // görsel, dokunma hedefi değil.
+        constraints: const BoxConstraints(minHeight: 28),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(_icon, size: 14, color: fg),
+              const SizedBox(width: SahneSpace.x1),
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: SahneType.captionStrong.copyWith(color: fg),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -193,8 +219,14 @@ class ArenaStatusChip extends StatelessWidget {
 /// Arena başlığı — play hub, turnuva, yarışma ve liderlik paylaşır.
 ///
 /// Ortak anatomi: amblem + başlık + durum + isteğe bağlı jetonlar + CTA.
-/// Her ekran aynı hero'yu yalnız rengini değiştirerek kullanmaz; hangi
-/// parçaların görüneceğini bağlam belirler.
+///
+/// 2026-09-29 Şahnê: sahne kartı ([SahneStageCard]) — iki temada da gece
+/// degradesi + rol radyali, üst kenarda rol renkli kilim şeridi, L pah.
+/// [accent] ham renk olarak boyanmaz, rolüne çevrilir ([sahneRoleFor];
+/// lal → yarış sahnesi). Eski beyaz-üstüne-altın başlık 2,56:1 kalıyordu
+/// (erişilebilirlik kılavuzu testi, "ZanKurd Kupası"); gece sahnesinde
+/// başlık birincil metindir. [motif] geriye uyum için kalır; desen artık
+/// yalnız üst şerittir.
 class ArenaHero extends StatelessWidget {
   const ArenaHero({
     required this.title,
@@ -219,95 +251,89 @@ class ArenaHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deep = Color.lerp(accent, const Color(0xFF17233B), 0.55)!;
-    return Container(
+    final role = sahneRoleFor(accent);
+    return SizedBox(
       width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [accent, deep],
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Stack(
-        children: [
-          // Tek baskın motif alanı — tabanda, ölçülü.
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: SizedBox(
-              height: 30,
-              child: CustomPaint(
-                painter: KilimPainter(
-                  motif: motif,
-                  color: Colors.white,
-                  opacity: 0.12,
-                  count: 10,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: Column(
+      child: SahneStageCard(
+        role: role,
+        child: Builder(
+          builder: (context) {
+            // Sahne kartının içi gece belirteçleridir.
+            final t = SahneTokens.of(context);
+            final race = role == SahneRole.race;
+            return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   children: [
-                    CategoryEmblem(icon: icon, color: Colors.white, size: 46),
-                    const SizedBox(width: AppSpacing.sm),
+                    ExcludeSemantics(
+                      child: DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: t.roleTint(role),
+                          shape: SahneShape.m,
+                        ),
+                        child: SizedBox.square(
+                          dimension: 44,
+                          child: Icon(
+                            icon,
+                            size: 24,
+                            color: race
+                                ? SahneStageColors.raceSoft
+                                : t.roleText(role),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x3),
                     Expanded(
-                      flex: 3,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            title,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.heading2.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
+                          // Başlık kesilmez: uzun Kurmancî kupa adı iki
+                          // satırda "…" ile bitiyordu. Sarar; tek uzun söz
+                          // harf harf bölünmez.
+                          Semantics(
+                            header: true,
+                            child: SahneUnbrokenText(
+                              title,
+                              style: SahneType.headline.copyWith(color: t.tx),
                             ),
                           ),
                           if (subtitle != null)
                             Text(
                               subtitle!,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTypography.caption.copyWith(
-                                color: Colors.white.withValues(alpha: 0.86),
+                              style: SahneType.caption.copyWith(
+                                color: race ? SahneStageColors.raceSoft : t.tx2,
                               ),
                             ),
                         ],
                       ),
                     ),
-                    // Durum çipi ESNEK olmalı. `ArenaStatusChip`in kendi
-                    // etiketi zaten kısalabiliyordu, ama hero onu esnemeyen
-                    // bir çocuk olarak veriyordu: çip sınırsız genişlik
-                    // alıyor, kısaltma hiç devreye girmiyor ve satır
-                    // taşıyordu. Turnuva hero'sunda uzun bir durum
-                    // etiketiyle 46 piksel taştı (2026-08-04).
-                    if (status != null) Flexible(flex: 2, child: status!),
                   ],
                 ),
-                if (tokens.isNotEmpty) ...[
-                  const SizedBox(height: AppSpacing.sm),
-                  Wrap(spacing: 8, runSpacing: 8, children: tokens),
+                // Durum çipi başlığın yanında değil, ödül jetonlarıyla aynı
+                // satırda ve ORTA hizada durur: başlığın yanında başlığı
+                // daraltıp kesiyordu, jetonlarla (36) ayrı satırda 28'lik
+                // çip hizasız kalıyordu. Wrap sarar, satır taşmaz.
+                if (status != null || tokens.isNotEmpty) ...[
+                  const SizedBox(height: SahneSpace.x3),
+                  Wrap(
+                    spacing: SahneSpace.x2,
+                    runSpacing: SahneSpace.x2,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [?status, ...tokens],
+                  ),
                 ],
                 if (action != null) ...[
-                  const SizedBox(height: AppSpacing.sm),
+                  const SizedBox(height: SahneSpace.x4),
                   SizedBox(width: double.infinity, child: action!),
                 ],
               ],
-            ),
-          ),
-        ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -317,7 +343,13 @@ class ArenaHero extends StatelessWidget {
 ///
 /// Görevler "metin + ince çizgi" olarak çiziliyordu; ödül ve tamamlanma
 /// durumu görsel olarak yoktu. Burada ilerleme, ödül ve durum aynı kartta
-/// okunur — ama her göreve rastgele dolu renk verilmez, aksan kontrollüdür.
+/// okunur.
+///
+/// 2026-09-29 Şahnê: yüzey kartı (Perde, L pah; gündüzde 1 px kenar,
+/// tamamlanınca Halka 1 Zêr kaş), ikon rolün metin renginde, başlık Gövde
+/// 700, ilerleme [SahneProgressBar] (sağda "2/3", tablo rakamı). Ödül alma
+/// düğmesi Kulis tonlu ikincil düğmedir: bir listede birden çok görev
+/// alınabilir olabilir, ekranın tek birincil eylemi değildir.
 class MissionProgressCard extends StatelessWidget {
   const MissionProgressCard({
     required this.title,
@@ -344,175 +376,141 @@ class MissionProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final ratio = target > 0 ? (current / target).clamp(0.0, 1.0) : 0.0;
     final done = ratio >= 1.0;
-    final tone = AppColors.readableAccent(context, accent);
+    final role = sahneRoleFor(accent);
 
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: done
-              ? accent.withValues(alpha: 0.55)
-              : AppTheme.borderColor(context),
-          width: done ? 1.6 : 1,
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: t.s1,
+        shape: SahneShape.withSide(
+          SahneShape.l,
+          done ? t.gold : t.edge,
+          width: done ? SahneRing.r1 : 1,
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              Icon(icon, size: 18, color: tone),
-              const SizedBox(width: AppSpacing.xs),
-              Expanded(
-                child: Text(
-                  title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.bodyMedium.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: AppTheme.textPrimaryColor(context),
+      child: Padding(
+        padding: const EdgeInsets.all(SahneSpace.x3),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Icon(icon, size: 20, color: t.roleText(role)),
+                const SizedBox(width: SahneSpace.x2),
+                Expanded(
+                  child: Text(
+                    title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.bodyStrong.copyWith(color: t.tx),
                   ),
                 ),
-              ),
-              ?reward,
-            ],
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Row(
-            children: [
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  child: LinearProgressIndicator(
-                    value: ratio,
-                    minHeight: 8,
-                    backgroundColor: AppTheme.borderColor(context),
-                    valueColor: AlwaysStoppedAnimation<Color>(accent),
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.xs),
-              // Sayı, ilerlemeyi rengin yanında ikinci kanal olarak verir.
-              Text(
-                '$current/$target',
-                style: AppTypography.caption.copyWith(
-                  fontWeight: FontWeight.w900,
-                  color: AppTheme.textSubColor(context),
-                ),
-              ),
-            ],
-          ),
-          if (done && onClaim != null) ...[
-            const SizedBox(height: AppSpacing.xs),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                // Sunucudan sonuç gelmeden başarı gösterilmez: düğme
-                // yükleniyorken kilitlenir.
-                onPressed: claimed || claiming ? null : onClaim,
-                child: claiming
-                    ? const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    // Karakter değil ikon: `✓` (U+2713) Rubik'te yok ve
-                    // sistem yazı tipine düşüyordu (ui_glyph_coverage_test).
-                    : Icon(
-                        claimed
-                            ? Icons.check_rounded
-                            : Icons.card_giftcard_rounded,
-                        size: 18,
-                      ),
-              ),
+                ?reward,
+              ],
             ),
+            const SizedBox(height: SahneSpace.x2),
+            // Sayı, ilerlemeyi rengin yanında ikinci kanal olarak verir.
+            SahneProgressBar(
+              value: ratio,
+              tone: role == SahneRole.learn
+                  ? SahneProgressTone.learn
+                  : SahneProgressTone.gold,
+              trailing: '$current/$target',
+              semanticLabel: title,
+            ),
+            if (done && onClaim != null) ...[
+              const SizedBox(height: SahneSpace.x2),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  // Sunucudan sonuç gelmeden başarı gösterilmez: düğme
+                  // yükleniyorken kilitlenir.
+                  onPressed: claimed || claiming ? null : onClaim,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: t.s2,
+                    foregroundColor: t.tx,
+                    disabledBackgroundColor: t.s1,
+                    disabledForegroundColor: t.tx3,
+                    minimumSize: const Size(48, 48),
+                    shape: SahneShape.m,
+                  ),
+                  child: claiming
+                      ? SizedBox.square(
+                          dimension: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: t.tx3,
+                          ),
+                        )
+                      // Karakter değil ikon: `✓` (U+2713) yazı tipinde yok
+                      // ve sistem yazı tipine düşüyordu.
+                      : claimed
+                      ? Icon(AppIcons.check, size: 20, color: t.okTx)
+                      : const SahneGlyph(SahneGlyphKind.coin, size: 20),
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
 }
 
-/// Sıralama madalyası — ilk üç için elmas, gerisi için sade numara.
+/// Sıralama madalyası — ilk üç için madalya karosu, gerisi için sade numara.
+///
+/// 2026-09-29 Şahnê: madalya rengi dolgu (altın, gümüş, bronz) içinde koyu
+/// tablo rakamı; dördüncüden sonra yalnız ikincil metin rengi rakam. Sıra
+/// hiçbir zaman yalnız renkle anlatılmaz: rakam her zaman yazılıdır.
+///
+/// 2026-09-29 doğallık (K5): madalya elmastı; elmas yalnız soru ilerlemesi
+/// ve ders sayacında kalır. Madalya boyuna uygun pahlı kare
+/// ([SahneShape.forSize]); rakam için iç alan da genişledi.
 class RankMedal extends StatelessWidget {
   const RankMedal({required this.rank, this.size = 40, super.key});
 
   final int rank;
   final double size;
 
-  Color get _tone => switch (rank) {
-    1 => AppTheme.gold,
-    2 => const Color(0xFF8A93A6),
-    3 => const Color(0xFFA9622E),
-    _ => const Color(0xFF3A4557),
-  };
-
   @override
   Widget build(BuildContext context) {
-    final podium = rank <= 3;
-    final tone = _tone;
-    return SizedBox(
-      width: size,
-      height: size,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          if (podium)
-            CustomPaint(
-              size: Size.square(size),
-              painter: KilimPainter(
-                motif: KilimMotif.diamond,
-                color: tone,
-                opacity: 0.85,
-              ),
-            )
-          else
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: tone.withValues(alpha: 0.14),
-              ),
-            ),
-          // İlk üçte rakam DOLU bir disk üstünde durur.
-          //
-          // Beyaz rakam doğrudan kilim elmasının üstüne çiziliyordu; elmas
-          // dolu değil desenli olduğu için rakam açık zeminde kayboluyordu
-          // ve madalya boş bir şekle dönüşüyordu. Sıralamada bu hiç
-          // görülmedi çünkü liste yalnız 4 ve sonrasını çiziyor; yarışma
-          // ödül basamaklarında ilk üç kullanılınca ortaya çıktı
-          // (2026-08-04). Sıra yalnız renkle anlatılamaz — rakam
-          // okunabilir kalmalı.
-          if (podium)
-            Container(
-              width: size * 0.52,
-              height: size * 0.52,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: tone),
-              alignment: Alignment.center,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  '$rank',
-                  maxLines: 1,
-                  style: AppTypography.caption.copyWith(
-                    fontWeight: FontWeight.w900,
-                    color: AppColors.onSolid(tone),
-                  ),
-                ),
-              ),
-            )
-          else
-            Text(
-              '$rank',
-              style: AppTypography.caption.copyWith(
-                fontWeight: FontWeight.w900,
-                color: AppColors.readableAccent(context, tone),
-              ),
-            ),
-        ],
+    final t = SahneTokens.of(context);
+    final number = Text(
+      '$rank',
+      maxLines: 1,
+      style: SahneType.bodyStrong.copyWith(
+        color: rank <= 3 ? t.onGold : t.tx2,
+        fontFeatures: const [FontFeature.tabularFigures()],
+      ),
+    );
+    if (rank > 3) {
+      return SizedBox.square(
+        dimension: size,
+        child: Center(
+          child: FittedBox(fit: BoxFit.scaleDown, child: number),
+        ),
+      );
+    }
+    final fill = switch (rank) {
+      1 => t.gold,
+      2 => SahneStageColors.silver,
+      _ => SahneStageColors.bronze,
+    };
+    return SizedBox.square(
+      dimension: size,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: fill,
+          shape: SahneShape.forSize(size),
+        ),
+        child: Center(
+          child: SizedBox.square(
+            dimension: size * 0.6,
+            child: FittedBox(fit: BoxFit.scaleDown, child: number),
+          ),
+        ),
       ),
     );
   }

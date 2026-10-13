@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 // 2026-07-22 canlı UX denetimi: misafir hesap yükseltme
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,6 +12,7 @@ import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 /// Misafir (isGuest = true) durumunu taklit eden sahte AuthProvider.
 class _GuestAuthProvider extends AuthProvider {
@@ -102,7 +104,7 @@ Widget _wrapWithProviders(Widget child, AuthProvider authProvider) {
 /// CTA görünür olana kadar aşağı kaydırır.
 Future<void> _scrollToCta(WidgetTester tester) async {
   final scrollFinder = find.byType(Scrollable).first;
-  final ctaFinder = find.text('Hesabını Kaydet');
+  final ctaFinder = find.text('Hesabını kaydet');
   await tester.scrollUntilVisible(ctaFinder, 200, scrollable: scrollFinder);
   await tester.pumpAndSettle();
 }
@@ -126,7 +128,7 @@ void main() {
   });
 
   group('GuestUpgrade — profil ekranı CTA görünürlüğü', () {
-    testWidgets('misafir kullanıcıya "Hesabını Kaydet" CTA gösterilir', (
+    testWidgets('misafir kullanıcıya "Hesabını kaydet" CTA gösterilir', (
       tester,
     ) async {
       final guestAuth = _GuestAuthProvider();
@@ -139,13 +141,13 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Hesabını Kaydet'),
+        find.text('Hesabını kaydet'),
         findsOneWidget,
-        reason: 'Misafir kullanıcıda "Hesabını Kaydet" menü satırı görünmeli',
+        reason: 'Misafir kullanıcıda "Hesabını kaydet" menü satırı görünmeli',
       );
     });
 
-    testWidgets('kalıcı kullanıcıda "Hesabını Kaydet" CTA gösterilmez', (
+    testWidgets('kalıcı kullanıcıda "Hesabını kaydet" CTA gösterilmez', (
       tester,
     ) async {
       final permanentAuth = _PermanentAuthProvider();
@@ -158,9 +160,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Hesabını Kaydet'),
+        find.text('Hesabını kaydet'),
         findsNothing,
-        reason: 'Kalıcı kullanıcıda "Hesabını Kaydet" menü satırı görünmemeli',
+        reason: 'Kalıcı kullanıcıda "Hesabını kaydet" menü satırı görünmemeli',
       );
     });
   });
@@ -178,12 +180,12 @@ void main() {
 
       // CTA'yı görünür yap ve tıkla
       await _scrollToCta(tester);
-      await tester.tap(find.text('Hesabını Kaydet'));
+      await tester.tap(find.text('Hesabını kaydet'));
       await tester.pumpAndSettle();
 
       // Dialog açıldı — başlık ve iki form alanı
       expect(
-        find.byType(TextFormField),
+        find.byType(SahneField),
         findsNWidgets(2),
         reason: 'E-posta ve şifre için iki form alanı olmalı',
       );
@@ -206,7 +208,7 @@ void main() {
 
       // CTA'yı görünür yap ve tıkla
       await _scrollToCta(tester);
-      await tester.tap(find.text('Hesabını Kaydet'));
+      await tester.tap(find.text('Hesabını kaydet'));
       await tester.pumpAndSettle();
 
       // Kaydet butonuna dokun (form boş)
@@ -242,16 +244,16 @@ void main() {
 
       // CTA'yı görünür yap ve tıkla
       await _scrollToCta(tester);
-      await tester.tap(find.text('Hesabını Kaydet'));
+      await tester.tap(find.text('Hesabını kaydet'));
       await tester.pumpAndSettle();
 
       // E-posta alanını doldur
-      final emailField = find.byType(TextFormField).first;
+      final emailField = find.byType(SahneField).first;
       await tester.enterText(emailField, 'test@zankurd.com');
       await tester.pumpAndSettle();
 
       // Şifre alanını doldur
-      final passwordField = find.byType(TextFormField).last;
+      final passwordField = find.byType(SahneField).last;
       await tester.enterText(passwordField, 'gizli123');
       await tester.pumpAndSettle();
 
@@ -265,7 +267,7 @@ void main() {
 
       // Başarı snackbar'ı görünmeli
       expect(
-        find.text('Hesabın başarıyla kaydedildi!'),
+        find.text('Hesabın kaydedildi.'),
         findsOneWidget,
         reason: 'Başarılı yükseltme sonrası başarı mesajı gösterilmeli',
       );
@@ -285,27 +287,27 @@ void main() {
       );
       await tester.pumpAndSettle();
       await _scrollToCta(tester);
-      await tester.tap(find.text('Hesabını Kaydet'));
+      await tester.tap(find.text('Hesabını kaydet'));
       await tester.pumpAndSettle();
 
       await tester.enterText(
-        find.byType(TextFormField).first,
+        find.byType(SahneField).first,
         'bekleyen@zankurd.com',
       );
-      await tester.enterText(find.byType(TextFormField).last, 'gizli123');
+      await tester.enterText(find.byType(SahneField).last, 'gizli123');
       await tester.pumpAndSettle();
       await tester.tap(find.text('Kaydet'));
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Hesabın başarıyla kaydedildi!'),
+        find.text('Hesabın kaydedildi.'),
         findsNothing,
         reason:
             'Kullanıcı hâlâ anonim ve adres yalnız onay bekliyor; '
             '"kaydedildi" demek ilerlemesinin kalıcı olduğu yalanıdır',
       );
       expect(
-        find.text('Hesap oluşturuldu! Doğrulamak için e-postanı kontrol et.'),
+        find.text('Hesabın hazır. E-postana gelen bağlantıyla onayla.'),
         findsOneWidget,
       );
     });

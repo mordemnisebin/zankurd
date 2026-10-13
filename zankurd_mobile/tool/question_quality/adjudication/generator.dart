@@ -398,7 +398,10 @@ void writeAdjudication(AdjudicationRun run, Directory output) {
 }
 
 List<_IssueInput> _readIssues(File file) {
-  if (!file.existsSync()) throw StateError('Missing issue file: ${file.path}');
+  if (!file.existsSync()) {
+    // 2026-07-15 CSV ve audit klasörü silindi; yoksa boş liste.
+    return const [];
+  }
   final rows = parseAdjudicationCsv(file.readAsStringSync());
   if (rows.isEmpty) return const [];
   final index = <String, int>{

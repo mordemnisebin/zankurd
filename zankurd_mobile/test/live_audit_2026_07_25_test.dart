@@ -1,3 +1,5 @@
+// 2026-09-29 Şahnê: görev kartının renkleri Şahnê belirteçlerinden
+// (Zimrût rol metni, ikincil metin) ölçülür; davranış bekçileri aynı.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +7,11 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/daily_mission.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
 import 'package:zankurd_mobile/src/screens/home/home_rows.dart';
+import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/widgets/app_panel.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/config/category_visibility.dart';
 import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/utils/app_route.dart';
@@ -91,74 +97,217 @@ void main() {
       expect(find.text('0/3 tamamlandı'), findsOneWidget);
       // Görünmeyen üçüncü görev artık açıkça sayılır.
       expect(find.textContaining('1 görev daha'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(DailyMissionsCard),
+          matching: find.byType(AppPanel),
+        ),
+        findsNothing,
+        reason: 'Home compact görev özeti dış kart kabuğu taşımamalı.',
+      );
+      expect(
+        find.byKey(const ValueKey('home-missions-compact-section')),
+        findsOneWidget,
+      );
+      final firstFlatMission = find.byKey(
+        const ValueKey('home-mission-row-answerCorrect'),
+      );
+      expect(firstFlatMission, findsOneWidget);
+      expect(
+        tester.widget(firstFlatMission),
+        isA<Padding>(),
+        reason: 'Kompakt görev satırları mini kart kabuğu taşımamalı.',
+      );
+    });
+
+    testWidgets(
+      'görev özeti halka ve altın hero yerine sakin ilerleme kullanır',
+      (tester) async {
+        final missions = <DailyMission>[
+          DailyMission(
+            type: MissionType.answerCorrect,
+            target: 10,
+            coinReward: 50,
+            progress: 4,
+          ),
+          DailyMission(
+            type: MissionType.completeQuiz,
+            target: 3,
+            coinReward: 60,
+          ),
+        ];
+
+        await tester.pumpWidget(
+          _shell(
+            Scaffold(
+              body: DailyMissionsCard(
+                isKu: false,
+                missions: missions,
+                compact: false,
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(
+          find.byKey(const ValueKey('daily-missions-overall-progress')),
+          findsOneWidget,
+        );
+        expect(
+          find.descendant(
+            of: find.byType(DailyMissionsCard),
+            matching: find.byType(AppPanel),
+          ),
+          findsOneWidget,
+          reason: 'Tam görev görünümü diğer ekranlarda panel olarak kalmalı.',
+        );
+
+        // 2026-09-29 Şahnê: başlık ikonu Zimrût (öğrenme) rol metni.
+        final headerIcon = tester.widget<Icon>(
+          find.byIcon(AppIcons.circleCheck).first,
+        );
+        expect(
+          headerIcon.color,
+          SahneTokens.of(
+            tester.element(find.byIcon(AppIcons.circleCheck).first),
+          ).learnTx,
+        );
+      },
+    );
+
+    testWidgets('tamamlanan görev nötr yüzeyi ve marka durumunu korur', (
+      tester,
+    ) async {
+      final mission = DailyMission(
+        type: MissionType.answerCorrect,
+        target: 10,
+        coinReward: 50,
+        progress: 10,
+        completed: true,
+      );
+
+      await tester.pumpWidget(
+        _shell(
+          Scaffold(
+            body: DailyMissionsCard(
+              isKu: false,
+              missions: [mission],
+              compact: false,
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // 2026-09-29 Şahnê: tamamlanan görevin adı ikincil metin (üstü
+      // çizili), başlık ve ✓ ikonu Zimrût rol metni.
+      final labelFinder = find.text('10 doğru cevap ver');
+      final label = tester.widget<Text>(labelFinder);
+      final t = SahneTokens.of(tester.element(labelFinder));
+      expect(label.style?.color, t.tx2);
+      expect(label.style?.decoration, TextDecoration.lineThrough);
+
+      final headerIcon = tester.widget<Icon>(
+        find.byIcon(AppIcons.circleCheck).first,
+      );
+      expect(headerIcon.color, t.learnTx);
+
+      final doneIcon = tester.widget<Icon>(find.byIcon(AppIcons.check));
+      expect(doneIcon.color, t.learnTx);
     });
   });
 
-  group('Ana ekran "kaldığın yer" bölümü', () {
-    testWidgets('hiç ilerleme yokken kategori keşif satırı gösterilir', (
-      tester,
-    ) async {
-      // Belirti: hiç oynamamış kullanıcıya "Kaldığın yer" başlığı altında
-      // üç kategori "%0 · Henüz başlamadın" diye listeleniyordu. Kullanıcı
-      // hiçbir yerde kalmamıştı ve kategori listesine görünür bir giriş
-      // de yoktu.
-      var browsed = false;
+  group('Ana ekran konu ızgarası', () {
+    // "Kaldığın yer" listesi 2026-09-27'de konu ızgarasına katıldı: aynı
+    // konu ana ekranda hem yolda hem listede görünebiliyordu. Bekçinin
+    // korduğu iki davranış ızgaraya taşındı — sahte ilerleme çizilmez ve
+    // ilerleme yalnız gerçekten başlanmış konuda görünür.
+    testWidgets(
+      'başlanmamış konu sahte ilerleme çizmez, soru sayısını gösterir',
+      (tester) async {
+        await tester.pumpWidget(
+          _shell(
+            const Scaffold(
+              body: SizedBox(
+                width: 390,
+                child: HomeTopicGrid(
+                  isKu: false,
+                  categories: ['Dîrok', 'Cografya'],
+                  progress: {
+                    'Dîrok': CategoryProgress(
+                      category: 'Dîrok',
+                      correct: 4,
+                      threshold: 10,
+                    ),
+                    'Cografya': CategoryProgress(
+                      category: 'Cografya',
+                      correct: 0,
+                      threshold: 10,
+                    ),
+                  },
+                  questionCounts: {'Dîrok': 174, 'Cografya': 245},
+                  onOpen: null,
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        final started = find.byKey(const ValueKey('home-topic-Dîrok'));
+        final fresh = find.byKey(const ValueKey('home-topic-Cografya'));
+        expect(
+          find.descendant(
+            of: started,
+            matching: find.byType(LinearProgressIndicator),
+          ),
+          findsOneWidget,
+        );
+        // 2026-09-30 izgara: her karoda ilerleme çizgisi durur ki satır
+        // boyları eşit kalsın; başlanmamış konunun çizgisi BOŞ izdir (%0),
+        // sahte dolgu çizmez.
+        final freshBar = tester.widget<LinearProgressIndicator>(
+          find.descendant(
+            of: fresh,
+            matching: find.byType(LinearProgressIndicator),
+          ),
+        );
+        expect(
+          freshBar.value,
+          0,
+          reason: 'Başlanmamış konuda dolgu (sahte ilerleme) çizilmemeli.',
+        );
+        expect(
+          find.descendant(of: fresh, matching: find.text('245 soru')),
+          findsOneWidget,
+        );
+      },
+    );
+
+    testWidgets('karoya dokunmak o konuyu açar', (tester) async {
+      String? opened;
       await tester.pumpWidget(
         _shell(
           Scaffold(
-            body: ContinueSection(
-              isKu: false,
-              entries: const [
-                CategoryProgress(category: 'Tarih', correct: 0, threshold: 10),
-                CategoryProgress(
-                  category: 'Coğrafya',
-                  correct: 0,
-                  threshold: 10,
-                ),
-              ],
-              onBrowseCategories: () => browsed = true,
+            body: SizedBox(
+              width: 390,
+              child: HomeTopicGrid(
+                isKu: false,
+                categories: const ['Ziman', 'Muzîk'],
+                progress: const {},
+                questionCounts: const {},
+                onOpen: (category) => opened = category,
+              ),
             ),
           ),
         ),
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Kaldığın yer'), findsNothing);
-      expect(find.text('Tüm kategoriler'), findsOneWidget);
-
-      await tester.tap(
-        find.byKey(const ValueKey('home-browse-categories-row')),
-      );
-      expect(browsed, isTrue);
-    });
-
-    testWidgets('ilerleme varsa yalnız başlanmış kategoriler listelenir', (
-      tester,
-    ) async {
-      await tester.pumpWidget(
-        _shell(
-          Scaffold(
-            body: ContinueSection(
-              isKu: false,
-              entries: const [
-                CategoryProgress(category: 'Tarih', correct: 4, threshold: 10),
-                CategoryProgress(
-                  category: 'Coğrafya',
-                  correct: 0,
-                  threshold: 10,
-                ),
-              ],
-              onBrowseCategories: () {},
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      expect(find.text('Kaldığın yer'), findsOneWidget);
-      expect(find.text('Tarih'), findsOneWidget);
-      // Başlanmamış kategori "kaldığın yer" listesine girmez.
-      expect(find.text('Coğrafya'), findsNothing);
+      await tester.tap(find.byKey(const ValueKey('home-topic-Muzîk')));
+      expect(opened, 'Muzîk');
     });
   });
 
@@ -179,7 +328,9 @@ void main() {
         all.where((c) => !hiddenCategoryIds.contains(c)).length,
         reason: 'Görünür sayı, gizleme listesiyle tutarlı olmalı',
       );
-      expect(visible.length, greaterThanOrEqualTo(9));
+      // 2026-09-27: Paradigma, Siyaset ve Teknolojî gizlendi (10 -> 7).
+      // 2026-09-30: üçü yeniden açıldı (7 -> 10).
+      expect(visible.length, greaterThanOrEqualTo(10));
     });
   });
 }

@@ -1,3 +1,5 @@
+// 2026-09-29 doğallık (K9): podyum basamakları yerine sıra satırları.
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +10,6 @@ import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
@@ -22,6 +23,7 @@ import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 class _EmptyFavoritesRepository extends MockZanKurdRepository {
   @override
@@ -91,13 +93,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Liderlik Tablosu'), findsOneWidget);
+    expect(find.text('Sıralama'), findsOneWidget);
     expect(find.byIcon(AppIcons.arrowsRotate), findsOneWidget);
   });
 
-  testWidgets('leaderboard podium renders polished ranked slots', (
-    tester,
-  ) async {
+  testWidgets('leaderboard lists the top three as ranked rows', (tester) async {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -106,12 +106,20 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const ValueKey('podium-slot-1')), findsOneWidget);
-    expect(find.byKey(const ValueKey('podium-slot-2')), findsOneWidget);
-    expect(find.byKey(const ValueKey('podium-slot-3')), findsOneWidget);
-    expect(find.text('#1'), findsOneWidget);
-    expect(find.text('#2'), findsOneWidget);
-    expect(find.text('#3'), findsOneWidget);
+    // 2026-09-29 doğallık (K9) podyumu kaldırmıştı; 2026-10-01 (A8) ilk üç
+    // süssüz bir podyumla geri geldi. İlk üçün her biri hâlâ `leaderboard-
+    // rank-row-N` anahtarını ve sırasını rakamla yazar (kaidede).
+    for (final rank in [1, 2, 3]) {
+      expect(
+        find.descendant(
+          of: find.byKey(ValueKey('leaderboard-rank-row-$rank')),
+          matching: find.text('$rank'),
+        ),
+        findsOneWidget,
+        reason: 'leaderboard-rank-row-$rank',
+      );
+    }
+    expect(find.byKey(const ValueKey('leaderboard-podium')), findsOneWidget);
   });
 
   testWidgets('leaderboard podium text stays readable on dark panel', (
@@ -132,7 +140,24 @@ void main() {
 
     final nameText = tester.widget<Text>(find.text('Bawer'));
 
-    expect(nameText.style?.color, equals(AppTheme.textPrimary));
+    // 2026-09-27: podyum artık HER temada aynı koyu sahne zemininde durur
+    // (`AppTheme.culturalBrandBg` → `AppTheme.surface`, bkz.
+    // `leaderboard_screen.dart` `_Podium`); isim rengi de artık uygulama
+    // temasından değil o sahneden gelir ve düz `Colors.white`tır —
+    // `AppTheme.textPrimary` (Cream 50, hafif kırık beyaz) eskiden koyu
+    // temanın birincil metin rengiydi, şimdi isim onunla değil sahnenin
+    // rengiyle eşleşmeli. Sahne kontrastını (≥4.5:1, her iki sahne ucunda)
+    // `test/leaderboard_stage_test.dart` ayrıca WCAG ile doğrular.
+    //
+    // 2026-09-29 Şahnê: sahnenin birincil metni gece belirtecidir
+    // (`SahneTokens.night.tx`, kırık beyaz); düz `Colors.white` palet dışı.
+    // Koyu temada podyum gece zemininde durur; kontrast ≥ 4.5.
+    // 2026-09-29 doğallık (K9): podyum kalktı; ad artık sıra satırında,
+    // yine birincil metin.
+    expect(nameText.style?.color, equals(SahneTokens.night.tx));
+    final l1 = SahneTokens.night.tx.computeLuminance();
+    final l2 = SahneTokens.night.bg.computeLuminance();
+    expect((l1 + 0.05) / (l2 + 0.05), greaterThanOrEqualTo(4.5));
   });
 
   testWidgets('leaderboard single winner does not stretch across landscape', (
@@ -148,10 +173,13 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    final slotRect = tester.getRect(
-      find.byKey(const ValueKey('podium-slot-1')),
+    // 2026-09-29 doğallık (K9): podyum basamağı yerine sıra satırı; yatay
+    // telefonda (844 < 720 eşiği değil, ama ekran eni 844) liste okunur
+    // genişlikte kalır — tek satır ekran boyu gerilmez.
+    final rowRect = tester.getRect(
+      find.byKey(const ValueKey('leaderboard-rank-row-1')),
     );
-    expect(slotRect.width, lessThan(260));
+    expect(rowRect.width, lessThanOrEqualTo(640));
   });
 
   testWidgets('profile screen remains usable in landscape', (tester) async {
@@ -183,11 +211,13 @@ void main() {
 
     // Profil > 'Topluluk ve Ligler' kaldırıldı (Rêz sekmesiyle mükerrerdi,
     // 2026-07-18 Faz 9). Ana yol artık doğrudan alt nav'daki Liderlik sekmesi
-    // (KU'da 'Rêz', TR'de 'Liderlik').
-    await tester.tap(find.text('Liderlik'));
+    // (KU'da 'Rêz', TR'de 'Sıralama').
+    await tester.tap(find.text('Sıralama'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Liderlik Tablosu'), findsOneWidget);
+    // 2026-09-29 doğallık: sekme etiketi ve sayfa başlığı aynı sözcük
+    // (sözlük: Sıralama); biri alt çubukta, biri sayfa başında.
+    expect(find.text('Sıralama'), findsNWidgets(2));
     expect(find.text('Rojda'), findsWidgets);
   });
 
@@ -207,9 +237,6 @@ void main() {
           ),
           ChangeNotifierProvider<PremiumService>(
             create: (_) => PremiumService.fallback(),
-          ),
-          ChangeNotifierProvider<ChildSafetyProvider>(
-            create: (_) => ChildSafetyProvider(),
           ),
         ],
         child: MaterialApp(
@@ -255,8 +282,11 @@ void main() {
     await answerQuestion(questions[1], last: false);
     await answerQuestion(questions[2], last: true);
 
-    expect(find.text('Sonuç'), findsOneWidget);
-    expect(find.text('YARIŞ TAMAMLANDI'), findsOneWidget);
+    // 2026-09-29 Şahnê: sonuç ekranı kendi adını ("Sonuç") tekrarlamaz;
+    // başlık "Yarış tamamlandı" Manşet biçemindedir (büyük harf etiketi
+    // değil).
+    expect(find.text('Sonuç'), findsNothing);
+    expect(find.text('Yarış tamamlandı'), findsOneWidget);
     expect(find.text('Doğru'), findsOneWidget);
     expect(find.text('Yanlış'), findsOneWidget);
 
@@ -267,7 +297,17 @@ void main() {
       await tester.pumpAndSettle();
     }
     expect(replay, findsOneWidget);
-    expect(find.byKey(const ValueKey('result-more-options')), findsOneWidget);
+
+    // Sonuç ana eylemi öğrenme özetinin üstüne taşındığı için kapalı
+    // yardımcı yollar artık ListView'un daha aşağısında kalabilir. Test
+    // eski piksel sırasını değil, kullanıcı tarafından erişilebilirliği
+    // doğrulasın.
+    final moreOptions = find.byKey(const ValueKey('result-more-options'));
+    for (var i = 0; i < 8 && moreOptions.evaluate().isEmpty; i++) {
+      await tester.drag(find.byType(ListView).first, const Offset(0, -500));
+      await tester.pumpAndSettle();
+    }
+    expect(moreOptions, findsOneWidget);
     expect(find.byKey(const ValueKey('result-home-button')), findsNothing);
   });
 
@@ -296,13 +336,13 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(
-      find.text('Rakiplerle Karşılaştırma'),
+      find.text('Rakiplerle karşılaştır'),
       120,
       scrollable: find.byType(Scrollable).last,
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Rakiplerle Karşılaştırma'), findsOneWidget);
+    expect(find.text('Rakiplerle karşılaştır'), findsOneWidget);
     expect(find.text('Sen'), findsOneWidget);
     expect(find.text('Rojda'), findsOneWidget);
     expect(find.text('Baran'), findsOneWidget);
@@ -329,15 +369,15 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(
-      find.text('Yeni Rozet'),
+      find.text('Yeni rozet'),
       120,
       scrollable: find.byType(Scrollable).last,
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Yeni Rozet'), findsOneWidget);
-    expect(find.text('İlk Oyun'), findsOneWidget);
-    expect(find.text('10 Doğru Üst Üste'), findsOneWidget);
+    expect(find.text('Yeni rozet'), findsOneWidget);
+    expect(find.text('İlk oyun'), findsOneWidget);
+    expect(find.text('10 doğru üst üste'), findsOneWidget);
   });
 
   testWidgets('quiz answer feedback labels the correct answer', (tester) async {
@@ -353,9 +393,6 @@ void main() {
           ChangeNotifierProvider<SoundProvider>(create: (_) => SoundProvider()),
           ChangeNotifierProvider<ReducedMotionProvider>(
             create: (_) => ReducedMotionProvider(),
-          ),
-          ChangeNotifierProvider<ChildSafetyProvider>(
-            create: (_) => ChildSafetyProvider(),
           ),
         ],
         child: MaterialApp(
@@ -380,7 +417,14 @@ void main() {
     await tester.tap(option.first);
     await tester.pumpAndSettle();
 
-    expect(find.text('Doğru cevap'), findsOneWidget);
+    // 2026-08-19: "Doğru cevap" kutusu çoktan seçmeli sorulardan
+    // kaldırıldı — doğru şık zaten yeşile dönüp tik alıyordu, kutu aynı
+    // bilgiyi ikinci kez söyleyip kıt olan dikey alanı kaplıyordu
+    // (uygulama sahibinin bildirimi). Kutu yalnız kelime sıralamada
+    // kalır; orada doğru dizilimi açan başka hiçbir şey yok
+    // (bkz. `needsAnswerRevealFallback`, `lesson_explanation_test`).
+    // Korunan asıl kural DEĞİŞMEDİ: açıklama METNİ tur içinde açılmaz.
+    expect(find.text('Doğru cevap'), findsNothing);
     // 2026-07-26: açıklama metni tur içinde gösterilmez; sonuç ekranında
     // hepsi bir arada gelir.
     expect(
@@ -421,10 +465,12 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     }
 
-    expect(find.text('Kaydedilen Sorular'), findsOneWidget);
+    expect(find.text('Kaydedilen sorular'), findsOneWidget);
     expect(find.text('Yanlışlarım'), findsOneWidget);
-    expect(find.text('ÖĞRENME'), findsOneWidget);
-    expect(find.text('HESAP'), findsOneWidget);
+    // 2026-09-29 Şahnê: bölüm başlığı tek biçemdir (`SahneSectionHeader`,
+    // Manşet 22) — büyük harf etiketi değil.
+    expect(find.text('Öğrenme'), findsOneWidget);
+    expect(find.text('Hesap'), findsOneWidget);
 
     await tester.scrollUntilVisible(
       find.text('Mağaza'),
@@ -435,11 +481,11 @@ void main() {
     // Arkadaşlar ekranı donduruldu; menüde görünmez.
     expect(find.text('Arkadaşlarım'), findsNothing);
     await tester.scrollUntilVisible(
-      find.text('Çıkış Yap'),
+      find.text('Çıkış yap'),
       200,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('Çıkış Yap'), findsOneWidget);
+    expect(find.text('Çıkış yap'), findsOneWidget);
     expect(find.text('Ayarlar'), findsOneWidget);
   });
 
@@ -474,7 +520,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Başarılar'), findsOneWidget);
-    expect(find.text('İlk Oyun'), findsOneWidget);
+    expect(find.text('İlk oyun'), findsOneWidget);
   });
 
   testWidgets('profile reloads achievements when refresh signal fires', (
@@ -493,7 +539,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Profil açıldığında henüz rozet yok.
-    expect(find.text('İlk Oyun'), findsNothing);
+    expect(find.text('İlk oyun'), findsNothing);
 
     // Profil tabı dışındayken bir quiz tamamlanıp rozet açılmış gibi yap.
     final store = await AchievementStore.load();
@@ -511,11 +557,11 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.scrollUntilVisible(
-      find.text('İlk Oyun'),
+      find.text('İlk oyun'),
       120,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('İlk Oyun'), findsOneWidget);
+    expect(find.text('İlk oyun'), findsOneWidget);
   });
 
   testWidgets('leaderboard error state exposes retry', (tester) async {
@@ -547,11 +593,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
-    expect(find.text('Yarışa Başla'), findsOneWidget);
+    expect(find.text('Yarışa başla'), findsOneWidget);
 
-    await tester.ensureVisible(find.text('Yarışa Başla'));
+    await tester.ensureVisible(find.text('Yarışa başla'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Yarışa Başla'));
+    await tester.tap(find.text('Yarışa başla'));
     await tester.pumpAndSettle();
 
     expect(find.byType(QuizScreen), findsOneWidget);

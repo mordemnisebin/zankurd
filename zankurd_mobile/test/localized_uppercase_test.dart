@@ -34,8 +34,10 @@ void main() {
     expect(upperForLanguage('Hesabi', ku: true), 'HESABI');
   });
 
-  testWidgets('bölüm başlığı ekranda doğru büyütülür', (tester) async {
-    for (final (lang, expected) in [('tr', 'GÜVENLİK'), ('ku', 'EWLEKARÎ')]) {
+  testWidgets('bölüm başlığı büyütülmeden, cümle düzeniyle çizilir', (
+    tester,
+  ) async {
+    for (final (lang, expected) in [('tr', 'Güvenlik'), ('ku', 'Ewlekarî')]) {
       await tester.pumpWidget(
         ChangeNotifierProvider<LanguageProvider>(
           // Anahtar şart: anahtarsız ikinci `pumpWidget` aynı sağlayıcı

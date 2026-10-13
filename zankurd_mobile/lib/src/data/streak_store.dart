@@ -1,4 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'checked_preferences_removal.dart';
+import 'local_progress_scope.dart';
 
 import '../utils/error_reporter.dart';
 
@@ -16,10 +18,14 @@ class StreakStore {
     this._freeze,
   );
 
-  static const _currentKey = 'zankurd.streak.current';
-  static const _bestKey = 'zankurd.streak.best';
-  static const _lastDayKey = 'zankurd.streak.lastDay';
-  static const _freezeKey = 'zankurd.streak.freeze';
+  static String get _currentKey =>
+      LocalProgressScope.physical('zankurd.streak.current');
+  static String get _bestKey =>
+      LocalProgressScope.physical('zankurd.streak.best');
+  static String get _lastDayKey =>
+      LocalProgressScope.physical('zankurd.streak.lastDay');
+  static String get _freezeKey =>
+      LocalProgressScope.physical('zankurd.streak.freeze');
 
   /// Aynı anda tutulabilecek en fazla dondurma jetonu.
   static const maxFreeze = 2;
@@ -149,15 +155,15 @@ class StreakStore {
   }
 
   Future<void> clear() async {
+    await removePersistedPreferenceKeys(_preferences, [
+      _currentKey,
+      _bestKey,
+      _lastDayKey,
+      _freezeKey,
+    ]);
     _current = 0;
     _best = 0;
     _lastDay = null;
     _freeze = 0;
-    final preferences = _preferences;
-    if (preferences == null) return;
-    await preferences.remove(_currentKey);
-    await preferences.remove(_bestKey);
-    await preferences.remove(_lastDayKey);
-    await preferences.remove(_freezeKey);
   }
 }

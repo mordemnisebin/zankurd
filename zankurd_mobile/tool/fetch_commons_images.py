@@ -29,7 +29,7 @@ import urllib.request
 API = 'https://commons.wikimedia.org/w/api.php'
 OUT_DIR = 'assets/question_images'
 CREDITS = 'assets/data/image_credits.json'
-UA = 'ZanKurd/1.0 (educational quiz app; contact nisebinbawer47@gmail.com)'
+UA = 'ZanKurd/1.0 (educational quiz app; contact iletisim@zankurd.com)'
 
 # Yükümlülük doğurmayan ya da yalnız atıf isteyen lisanslar.
 ALLOWED = re.compile(

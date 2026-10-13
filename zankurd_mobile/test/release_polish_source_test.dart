@@ -173,6 +173,16 @@ void main() {
         isNot(contains('#F5931E')),
         reason: '$path emekli marka turuncusunu kullanıyor',
       );
+      // 2026-09-30 logo: Şahnê'ye geçişte Tîrêj (#C2560E) ve krem zemin
+      // (#F7F4EE) da emekli oldu; tarayıcı çubuğu ve PWA açılışı artık
+      // uygulamanın gece zemini (#0A0F2E), simgeyle aynı.
+      for (final retired in const ['#C2560E', '#F7F4EE']) {
+        expect(
+          withoutComments,
+          isNot(contains(retired)),
+          reason: '$path emekli $retired rengini kullanıyor',
+        );
+      }
     }
   });
 

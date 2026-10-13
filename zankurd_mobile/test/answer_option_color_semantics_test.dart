@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 /// 2026-07-22 canlı UX denetimi (P1-C): A/B/C/D şık harfleri sırasıyla
 /// kırmızı, mavi, yeşil, kehribar renkteydi. Quiz bağlamında kırmızı
@@ -45,10 +46,23 @@ void main() {
     );
   });
 
-  test('nötr ton düşük doygunluktadır (aksanlarla yarışmaz)', () {
+  test('nötr ton aksanlarla yarışmaz', () {
+    // Şahnê (2026-09-29): harf karosu Ray (s3) tonudur, gecenin kendi
+    // ailesinden. Ölçü "aksanlarla yarışmamak"tır: bütün rol renklerinden
+    // belirgin biçimde daha az doygun ve daha koyu olmalı. Eski sabit eşik
+    // (0.35) sıcak antrasit palete göre seçilmişti.
+    const t = SahneTokens.night;
     for (final color in AppTheme.answerOptionColors) {
-      final saturation = HSLColor.fromColor(color).saturation;
-      expect(saturation, lessThan(0.35), reason: '$color çok doygun');
+      final hsl = HSLColor.fromColor(color);
+      for (final accent in [t.act, t.race, t.learn, t.gold]) {
+        final a = HSLColor.fromColor(accent);
+        expect(
+          hsl.saturation,
+          lessThan(a.saturation - 0.15),
+          reason: '$color, $accent kadar doygun',
+        );
+        expect(hsl.lightness, lessThan(a.lightness), reason: '$color');
+      }
     }
   });
 

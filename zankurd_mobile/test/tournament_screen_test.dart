@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -6,9 +7,17 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/sound_provider.dart';
 import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
+/// Turnuva lobisi ve şema geçişi.
+///
+/// 2026-09-29 Şahnê: ana eylem artık ortak birincil düğmedir
+/// ([SahneButton.primary]: Agir dolgu, koyu metin, rengi temadan). Bekçi
+/// eskiden düğmenin `style.backgroundColor`ında `AppTheme.brand`
+/// arıyordu — bu, turuncu üstüne beyaz yazan eski elle boyanmış düğmenin
+/// görünüşüydü. Şimdi düğmenin birincil bileşen olduğu ve etkin olduğu
+/// sınanır; rengin kendisi bileşenin ve temanın işidir.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -64,16 +73,17 @@ void main() {
       // "4 soru/maç · gerçek oyuncular" satırı vardı; kartta beş meta
       // satırı üst üste yığılıyordu ve "gerçek oyuncular" üç kez
       // geçiyordu.
-      expect(find.textContaining('Eleme kupası'), findsOneWidget);
+      expect(find.textContaining('Eleme turnuvası'), findsOneWidget);
       expect(find.textContaining('4 soru/maç'), findsOneWidget);
       expect(find.textContaining('bot'), findsNothing);
       expect(find.textContaining('Cumartesi'), findsNothing);
       expect(find.text('Kontenjan dolunca başlar'), findsOneWidget);
-      expect(find.text('Turnuvaya Katıl'), findsOneWidget);
-      final startButton = tester.widget<FilledButton>(
+      expect(find.text('Turnuvaya katıl'), findsOneWidget);
+      final startButton = tester.widget(
         find.byKey(const ValueKey('tournament-primary-cta')),
       );
-      expect(startButton.style?.backgroundColor?.resolve({}), AppTheme.brand);
+      expect(startButton, isA<SahneButton>());
+      expect((startButton as SahneButton).onPressed, isNotNull);
       expect(find.byIcon(AppIcons.trophy), findsAtLeast(1));
     });
 
@@ -92,9 +102,9 @@ void main() {
 
       // 16 oyunculu kupada ilk tur "Son 16"dır.
       expect(find.text('Son 16'), findsAtLeast(1));
-      expect(find.text('Maçı Başlat'), findsOneWidget);
+      expect(find.text('Maçı başlat'), findsOneWidget);
       // Bölüm başlığı standart stilde (all-caps patlaması kaldırıldı).
-      expect(find.text('Turnuva Şeması'), findsOneWidget);
+      expect(find.text('Turnuva şeması'), findsOneWidget);
     });
   });
 }

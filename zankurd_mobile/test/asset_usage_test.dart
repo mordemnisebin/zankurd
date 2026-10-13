@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/data/question_bank_assets.dart';
 
 /// Pakete giren ama hiç kullanılmayan varlıkların bekçisi.
 ///
@@ -58,11 +60,13 @@ void main() {
       final name = file.uri.pathSegments.last;
       // Belgeler pakete girse de ölü varlık değildir.
       if (name == 'README.md' || name.startsWith('.')) continue;
-      // Lisans metni koddan çağrılmaz ama kaldırılamaz: Rubik SIL Open
-      // Font License altında dağıtılır ve lisans, yazı tipiyle birlikte
-      // bulundurulmayı şart koşar. "Kullanılmıyor" değil, "yasal olarak
-      // orada durmak zorunda".
-      if (name == 'OFL.txt') continue;
+      // Lisans metni koddan çağrılmaz ama kaldırılamaz: Onest ve Bricolage
+      // Grotesque SIL Open Font License altında dağıtılır ve lisans, yazı
+      // tipiyle birlikte bulundurulmayı şart koşar. "Kullanılmıyor" değil,
+      // "yasal olarak orada durmak zorunda".
+      if (name.startsWith('OFL') && name.endsWith('.txt')) continue;
+      // Aynı gerekçe: `LICENSE-Lucide.txt` (MIT) ikon yazı tipinin lisansıdır.
+      if (name.startsWith('LICENSE') && name.endsWith('.txt')) continue;
       // Soru bankalarının kendisi `assets/data/` altında; onlara atıf
       // yükleyici üzerinden dolaylıdır.
       if (file.path.contains('assets/data/')) continue;
@@ -137,5 +141,118 @@ void main() {
           'Koddan/bankadan çağrılan ama pakete girmeyen varlık:\n'
           '${missing.join("\n")}',
     );
+  });
+
+  // ---------------------------------------------------------------------
+  // Paket boyutu bekçileri (2026-10-02 ölçümü, `flutter build ios --release
+  // --analyze-size`: flutter_assets 15,4 MB).
+  //
+  // Birinci kusur: `assets/data/` klasörü bildirilince karantinadaki
+  // `deepseek_2026_08_18_questions.json` (1,5 MB) da pakete giriyordu —
+  // çalışma zamanında hiç okunmaz (`question_bank_assets.dart` yorumuna
+  // bkz.), yalnız testler dosyayı diskten tarar. Sessizdi: karantina
+  // testleri "oyuncuya açık değil" diyordu ve doğruydu; ama dosya yine de
+  // her cihaza iniyordu.
+  //
+  // İkinci kusur: kullanılmayan yazı tipleri release derlemede BUDANMAZ
+  // (budama yalnız kodda geçen glifler için çalışır; hiç geçmeyen yazı
+  // tipi olduğu gibi pakete girer). `cupertino_icons` (258 KB) hiçbir
+  // yerde kullanılmıyordu; `lucide_icons_flutter` paketi ise kullandığımız
+  // statik `Lucide` ailesinin yanında 6 değişken ağırlıklı yazı tipini
+  // (2,86 MB) de bildiriyordu.
+  group('paket boyutu', () {
+    String pubspec() => File('pubspec.yaml').readAsStringSync();
+
+    List<String> declared() => RegExp(
+      r'^\s+- (assets/[^\s]*)$',
+      multiLine: true,
+    ).allMatches(pubspec()).map((m) => m[1]!).toList();
+
+    test('assets/data klasörü bildirilmez; her banka tek tek sayılır', () {
+      final dataDeclared = declared()
+          .where((d) => d.startsWith('assets/data/'))
+          .toSet();
+      expect(
+        dataDeclared.contains('assets/data/'),
+        isFalse,
+        reason:
+            'Klasör bildirimi karantinadaki 1,5 MB DeepSeek dosyasını '
+            'da pakete sokar. Bankaları tek tek yaz.',
+      );
+      // Pakete giren veri = çalışma zamanı bankaları + kaynak künyesi.
+      final expected = {
+        ...questionBankAssets,
+        'assets/data/image_credits.json',
+      };
+      expect(
+        dataDeclared,
+        expected,
+        reason:
+            'pubspec.yaml ile question_bank_assets.dart ayrıştı. Yeni banka '
+            'iki yere de eklenmeli; eksik kalan banka uygulamada sessizce '
+            'boş kategori olur (failedAssets).',
+      );
+    });
+
+    test('diskteki her veri dosyası ya pakette ya bilinçli karantinada', () {
+      const quarantined = {'deepseek_2026_08_18_questions.json'};
+      final shipped = {...questionBankAssets, 'assets/data/image_credits.json'};
+      final stray = <String>[
+        for (final f in Directory('assets/data').listSync().whereType<File>())
+          if (f.path.endsWith('.json') &&
+              !shipped.contains(f.path) &&
+              !quarantined.contains(f.uri.pathSegments.last))
+            f.path,
+      ];
+      expect(
+        stray,
+        isEmpty,
+        reason:
+            'Bu dosyalar ne çalışma zamanı listesinde ne karantina '
+            'listesinde: yeni bankayı question_bank_assets.dart + pubspec.yaml\'a '
+            'ekle ya da buradaki karantina kümesine bilinçle yaz.\n'
+            '${stray.join("\n")}',
+      );
+    });
+
+    // Regex değil GERÇEK paket: `flutter test` pubspec'ten varlık paketini
+    // kurar; `rootBundle` uygulamanın göreceği şeyi görür.
+    test(
+      'rootBundle: her banka okunur, karantina dosyası pakette yok',
+      () async {
+        TestWidgetsFlutterBinding.ensureInitialized();
+        for (final asset in [
+          ...questionBankAssets,
+          'assets/data/image_credits.json',
+        ]) {
+          final raw = await rootBundle.loadString(asset);
+          expect(raw, isNotEmpty, reason: asset);
+        }
+        await expectLater(
+          rootBundle.loadString(
+            'assets/data/deepseek_2026_08_18_questions.json',
+          ),
+          throwsA(anything),
+          reason: 'Karantina dosyası pakete girmemeli (1,5 MB ölü yük).',
+        );
+      },
+    );
+
+    test('kullanılmayan ikon yazı tipi paketleri bağımlılık değil', () {
+      final text = pubspec();
+      expect(
+        text,
+        isNot(contains(RegExp(r'^\s+cupertino_icons:', multiLine: true))),
+        reason:
+            'Cupertino ikonu kullanılmıyor; 258 KB budanmadan pakete girer.',
+      );
+      expect(
+        text,
+        isNot(contains(RegExp(r'^\s+lucide_icons_flutter:', multiLine: true))),
+        reason:
+            'Paket 6 değişken ağırlıklı yazı tipini (2,86 MB) de pakete '
+            'sokuyor. Lucide `assets/fonts/Lucide.ttf` olarak taşınır.',
+      );
+    });
   });
 }

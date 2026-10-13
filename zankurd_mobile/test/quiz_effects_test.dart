@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +89,7 @@ void main() {
         const MaterialApp(home: ComboBadge(streak: 3, isKu: false)),
       );
       await tester.pumpAndSettle();
-      expect(find.text('×3 Seri!'), findsOneWidget);
+      expect(find.text('×3 Üst üste'), findsOneWidget);
     });
 
     testWidgets('KU modunda Rêz metni kullanılır', (tester) async {
@@ -96,7 +97,7 @@ void main() {
         const MaterialApp(home: ComboBadge(streak: 5, isKu: true)),
       );
       await tester.pumpAndSettle();
-      expect(find.text('×5 Rêz!'), findsOneWidget);
+      expect(find.text('×5 Li pey hev'), findsOneWidget);
     });
   });
 
@@ -194,7 +195,7 @@ void main() {
       expect(notice, findsOneWidget);
       // Dalga 5: timeout bandı artık süre + doğru cevabı birlikte bildirir.
       final expected =
-          'Süre doldu! Doğru cevap: ${repo.questions.first.correctAnswer}';
+          'Süre doldu. Doğru cevap: ${repo.questions.first.correctAnswer}';
       expect(find.text(expected), findsOneWidget);
       final semantics = tester.widget<Semantics>(notice);
       expect(semantics.properties.liveRegion, isTrue);

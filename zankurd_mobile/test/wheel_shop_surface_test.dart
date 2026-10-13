@@ -71,7 +71,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 800));
     // Bakiye rozeti: oyuncu neyi karşılayabildiğini vitrinden ayrılmadan
     // görmeli.
-    expect(find.textContaining('coin'), findsWidgets);
+    expect(find.textContaining('jeton'), findsWidgets);
   });
 
   testWidgets('mağaza karanlık temada çizim hatasız', (tester) async {

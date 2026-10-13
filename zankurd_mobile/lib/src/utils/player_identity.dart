@@ -42,6 +42,12 @@ class PlayerIdentity {
     return first.isEmpty ? resolved : first;
   }
 
+  /// Gösterilen ad yer tutucu mu? Avatar harfi O/L 0 gibi okunmasın.
+  static bool isPlaceholderDisplayName(String? name) {
+    final trimmed = name?.trim() ?? '';
+    return trimmed.isEmpty || _placeholderNames.contains(trimmed);
+  }
+
   /// Avatar baş harfi — daima [resolveName] sonucundan türetilir.
   static String resolveInitial(String? rawName, {required bool isKu}) {
     final resolved = resolveName(rawName, isKu: isKu);

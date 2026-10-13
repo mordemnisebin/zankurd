@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -187,6 +188,16 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(find.byKey(const ValueKey('tournament-waiting')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('tournament-primary-cta')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(
+      find.text('Yerel turnuva'),
+      findsOneWidget,
+      reason:
+          'Bot benzetimi gerçek oyuncu turnuvası gibi görünmemeli; yerel '
+          'olduğu şema ekranında açıkça yazılmalı.',
+    );
   });
 
   testWidgets('ikinci turdaki oyuncunun maçı doğru turda aranır', (
@@ -295,14 +306,14 @@ void main() {
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(repository.championClaims, 1);
-    expect(find.textContaining('200 coin'), findsOneWidget);
+    expect(find.textContaining('200 jeton'), findsOneWidget);
     // `TournamentBracket.totalScore` hiçbir yolda doldurulmuyordu —
     // "Final skoru" her zaman 0 gösteriyordu. Skor zaten maçta duruyor
     // (playerOneScore: 900); ekran onu toplayıp göstermeli
     // (2026-08-14 denetimi).
     // Geniş ekranda iki sütunlu düzen aynı metni iki kez çizebilir
     // (bkz. bu dosyadaki diğer testlerdeki `findsWidgets` deseni).
-    expect(find.textContaining('Final skoru: 900'), findsWidgets);
+    expect(find.textContaining('Final puanı: 900'), findsWidgets);
   });
 
   testWidgets(
@@ -334,9 +345,7 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
 
-      final joinAgain = find.byKey(
-        const ValueKey('tournament-join-new-cta'),
-      );
+      final joinAgain = find.byKey(const ValueKey('tournament-join-new-cta'));
       expect(joinAgain, findsOneWidget);
 
       await tester.tap(joinAgain);

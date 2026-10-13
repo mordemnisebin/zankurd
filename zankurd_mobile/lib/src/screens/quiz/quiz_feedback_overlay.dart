@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/strings.dart';
-import '../../theme/app_theme.dart';
 import '../../theme/app_icons.dart';
+import '../../widgets/sahne/sahne.dart';
 
-/// Süre dolduğunda gösterilen geri bildirim bandı.
+/// Süre dolduğunda gösterilen geri bildirim notu.
 ///
-/// Şıklar zaten kilitlenir (answered=true); bu bant geri bildirimi
+/// Şıklar zaten kilitlenir (answered=true); bu not geri bildirimi
 /// netleştirir: süre bitti + doğru cevap görünür.
+///
+/// Şahnê: Şaş ton zemini (durum ailesi) üstünde kum saati ikonu + söz;
+/// L pahlı not kartı (öğrenme notuyla aynı kalıp). Durum yalnız renkle
+/// verilmez: ikon ve cümle birlikte.
 class QuizTimeoutNotice extends StatelessWidget {
   const QuizTimeoutNotice({
     required this.isKu,
@@ -20,44 +24,38 @@ class QuizTimeoutNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final label = Tr.forKu(K.sureDolduDogruCevap, isKu, {'p0': correctAnswer});
     return Semantics(
       key: const ValueKey('quiz-timeout-notice'),
       liveRegion: true,
       label: label,
       excludeSemantics: true,
-      child: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.only(top: AppSpacing.xs),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm,
-          vertical: AppSpacing.xs,
-        ),
-        decoration: BoxDecoration(
-          color: AppTheme.wrong.withValues(alpha: 0.10),
-          borderRadius: BorderRadius.circular(AppRadius.sm),
-          border: Border.all(color: AppTheme.wrong.withValues(alpha: 0.32)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const ExcludeSemantics(
-              child: Icon(AppIcons.stopwatch, color: AppTheme.wrong, size: 18),
+      child: Padding(
+        padding: const EdgeInsets.only(top: SahneSpace.x3),
+        child: DecoratedBox(
+          decoration: ShapeDecoration(color: t.errTint, shape: SahneShape.l),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(
+              SahneSpace.x3,
+              SahneSpace.x3,
+              SahneSpace.x4,
+              SahneSpace.x3,
             ),
-            const SizedBox(width: AppSpacing.xs),
-            Flexible(
-              child: Text(
-                label,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: AppTypography.caption.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w800,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(AppIcons.stopwatch, color: t.errTx, size: 24),
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(
+                  child: Text(
+                    label,
+                    style: SahneType.bodyStrong.copyWith(color: t.tx),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

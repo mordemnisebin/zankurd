@@ -4,18 +4,24 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../data/local_progress_scope.dart';
 import '../data/xp_store.dart';
 import '../data/streak_store.dart';
 import '../data/mistake_store.dart';
 import '../data/seen_question_store.dart';
 import '../data/achievement_store.dart';
+import '../data/badge_service.dart';
 import '../data/mastery_store.dart';
 import '../data/daily_mission_store.dart';
 import '../data/level_progress_store.dart';
+import '../data/learning_goal_store.dart';
 import '../data/placement_store.dart';
+import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/story_progress_store.dart';
 import '../data/sync_manager.dart';
 import '../services/premium_service.dart';
+import '../services/apple_revocation.dart';
+import '../services/native_auth_service.dart';
 import '../utils/error_reporter.dart';
 
 class AccountLocalCleanupException implements Exception {
@@ -37,11 +43,17 @@ class AuthProvider extends ChangeNotifier {
 
   /// Cihazın son sahibi olarak kaydedilen kullanıcı kimliği — bkz.
   /// [_resetLocalProgressIfForeignUser].
-  static const _deviceOwnerUserIdKey =
-      'zankurd.localProgress.deviceOwnerUserId';
+  static const _deviceOwnerUserIdKey = LocalProgressScope.ownerKey;
 
-  final SupabaseClient? _client;
+  // `final` değiller: boot'da çevrimdışı açılan sağlayıcı, sonradan
+  // açılan Supabase'e [attachSupabase] ile bağlanır (bkz. servisler
+  // altındaki `remote_upgrade.dart`).
+  SupabaseClient? _client;
+  NativeAuthService _nativeAuth;
+  bool _offlineMode;
   StreamSubscription<AuthState>? _authSub;
+  Future<void> _authTransition = Future<void>.value();
+  int _authGeneration = 0;
 
   User? _currentUser;
   bool _isLoading = false;
@@ -70,44 +82,149 @@ class AuthProvider extends ChangeNotifier {
   bool get isAuthenticated =>
       _client == null ? _mockAuthenticated : _currentUser != null;
 
-  bool get isGuest => _currentUser?.isAnonymous ?? false;
+  bool get isGuest =>
+      (_currentUser?.isAnonymous ?? false) ||
+      (_offlineMode && _mockAuthenticated);
 
-  AuthProvider(SupabaseClient client) : _client = client {
+  /// Uzak kimlik servisi başlatılamadığı için yerel misafir modunda mı?
+  bool get isOfflineMode => _offlineMode;
+
+  /// Sunucuda kalıcı yazım gerektiren eylemler bu oturumda kullanılabilir mi?
+  bool get canUseRemoteActions => !_offlineMode;
+
+  AuthProvider(SupabaseClient client, {NativeAuthService? nativeAuth})
+    : _client = client,
+      _offlineMode = false,
+      _nativeAuth =
+          nativeAuth ?? PlatformNativeAuthService(supabaseClient: client) {
+    _wireAuth(client);
+  }
+
+  /// Boot'da çevrimdışı açılmış sağlayıcıyı sonradan açılan Supabase'e
+  /// bağlar.
+  ///
+  /// ## Niçin ayrı bir kapı
+  ///
+  /// Kurtarma daha önce `AuthProvider(Supabase.instance.client)` ile
+  /// SIFIRDAN bir sağlayıcı kuruyordu. Bu iki sonuç doğuruyordu:
+  ///
+  /// 1. Çevrimdışı misafir (`_mockAuthenticated`) külüne düşüyor ve
+  ///    arayüz oturumu kaybediliyordu.
+  /// 2. Supabase deposu ilk kullanımda `signInAnonymously` ile YENİ bir
+  ///    anonim oturum açabiliyordu — misafirin yerel ilerlemesi başka
+  ///    bir kimliğe taşınıyordu.
+  ///
+  /// Burada yalnız cihazda ZATEN kayıtlı bir oturum varsa bağlanır.
+  /// Oturum yoksa hiçbir şey değişmez ve `false` döner: kurtarma
+  /// vazgeçer, çevrimdışı oturum aynen sürer, `SharedPreferences`
+  /// dokunulmaz.
+  ///
+  /// Bağlama [AuthProvider] kurucusuyla AYNI işi yapar: mevcut kullanıcı
+  /// okunur, premium kimliği eşlenir ve auth olayları dinlenmeye başlar.
+  Future<bool> attachSupabase(SupabaseClient client) async {
+    final existing = _client;
+    if (existing != null) return identical(existing, client);
+    if (client.auth.currentSession == null) return false;
+    _client = client;
+    _offlineMode = false;
+    _nativeAuth = PlatformNativeAuthService(supabaseClient: client);
+    _wireAuth(client);
+    notifyListeners();
+    return true;
+  }
+
+  /// Mevcut oturumu okur ve auth olaylarını dinlemeye başlar.
+  void _wireAuth(SupabaseClient client) {
     _currentUser = client.auth.currentUser;
-    _syncPremiumIdentity(_currentUser);
+    unawaited(_syncPremiumIdentity(_currentUser));
+    _authSub?.cancel();
     _authSub = client.auth.onAuthStateChange.listen((state) {
       final next = state.session?.user;
       final changed = next?.id != _currentUser?.id;
       _currentUser = next;
       applyAuthEvent(state.event, hasSession: next != null);
-      // RevenueCat müşterisi Supabase kullanıcısına bağlanır: aboneliğin
-      // cihaza değil hesaba ait olmasını ve cihaz paylaşımında entitlement
-      // sızmamasını sağlar.
-      if (changed) _syncPremiumIdentity(next);
-      if (next != null) {
-        // Sırayla: önce yabancı kullanıcı denetimi (yerel ilerleme yeni
-        // sahibe devrolmasın), sonra SyncManager restart — aksi hâlde
-        // eski kullanıcının kuyruğu yeni kullanıcı adına senkron olabilir.
-        unawaited(_handleSessionUser(next, restartSync: changed));
-      }
-      notifyListeners();
+      unawaited(
+        _queueSessionPreparation(
+          next,
+          restartSync: changed,
+          syncPremiumIdentity: changed,
+          notifyWhenReady: true,
+        ),
+      );
     });
+  }
+
+  bool _isCurrentAuthGeneration(int generation, String? userId) =>
+      generation == _authGeneration && _currentUser?.id == userId;
+
+  Future<void> _queueSessionPreparation(
+    User? user, {
+    required bool restartSync,
+    required bool syncPremiumIdentity,
+    bool notifyWhenReady = false,
+  }) {
+    final generation = ++_authGeneration;
+    final userId = user?.id;
+    final transition = _authTransition.then((_) async {
+      if (!_isCurrentAuthGeneration(generation, userId)) return;
+      if (user == null) {
+        try {
+          final prefs = await SharedPreferences.getInstance();
+          if (!_isCurrentAuthGeneration(generation, null)) return;
+          await LocalProgressScope.activateOffline(prefs);
+          if (!_isCurrentAuthGeneration(generation, null)) return;
+          _dropProgressMemory();
+        } catch (error, stack) {
+          ErrorReporter.record(
+            error,
+            stack,
+            reason: 'signed-out local progress scope',
+          );
+        }
+      } else {
+        await _handleSessionUser(
+          user,
+          restartSync: restartSync,
+          generation: generation,
+        );
+      }
+      if (syncPremiumIdentity && _isCurrentAuthGeneration(generation, userId)) {
+        await _syncPremiumIdentity(user);
+      }
+    });
+    _authTransition = transition.catchError((Object error, StackTrace stack) {
+      ErrorReporter.record(error, stack, reason: 'auth session transition');
+    });
+    final settled = _authTransition;
+    if (notifyWhenReady) {
+      unawaited(
+        settled.then((_) {
+          if (_isCurrentAuthGeneration(generation, userId)) notifyListeners();
+        }),
+      );
+    }
+    return settled;
   }
 
   Future<void> _handleSessionUser(
     User user, {
     required bool restartSync,
+    required int generation,
   }) async {
+    if (!_isCurrentAuthGeneration(generation, user.id)) return;
+    var localProgressReady = true;
     try {
-      await _resetLocalProgressIfForeignUser(user);
+      localProgressReady = await _resetLocalProgressIfForeignUser(user);
     } catch (e, s) {
+      localProgressReady = false;
       ErrorReporter.record(e, s, reason: 'foreign user progress guard');
     }
+    if (!_isCurrentAuthGeneration(generation, user.id)) return;
     // `signOut()` SyncManager'ı kapatıyor; yeni bir oturum açıldığında onu
     // geri kuran hiçbir yer yoktu. Aynı oturumda çıkıp tekrar giren
     // kullanıcıda çevrimdışı ödül kuyruğu ölü kalıyor ve `instance` getter'ı
     // `StateError` fırlatıyordu (2026-07-31 denetimi).
-    if (restartSync) {
+    if (restartSync && localProgressReady) {
       try {
         await SyncManager.restart();
       } catch (e, s) {
@@ -116,52 +233,102 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  /// Aynı cihazda önceki oturumdan FARKLI bir kullanıcı geldiğinde yerel
-  /// ilerlemeyi (XP/streak/mistake/rozet/...) temizler.
+  /// Aynı cihazda önceki oturumdan FARKLI bir kullanıcı geldiğinde onun
+  /// yerel ilerlemesini göstermez. Eski hesabın anahtarları diskte kalır;
+  /// silme yalnız [signOut] ile aktif kullanıcı için yapılır.
   ///
-  /// `XPStore`, `StreakStore`, `MistakeStore` vb. SharedPreferences'ta
-  /// GLOBAL anahtarlarla tutulur — kullanıcıya özel değil. `signOut()`
-  /// bunları temizler, ama sunucu tarafında bir oturumun yerini BAŞKA bir
-  /// oturum aldığında (ör. aktif bir anonim/hesap oturumu üzerinden
-  /// `signInWithPassword` ile farklı bir hesaba giriş — ara bir
-  /// `signedOut` olayı hiç gelmez, GoTrue oturumu doğrudan değiştirir)
-  /// `signOut()` hiç çağrılmaz. Önceki kullanıcının XP/streak/rozetleri
-  /// sessizce yeni kullanıcıya devrolurdu (2026-08-14 denetimi).
-  ///
-  /// Cihazın son sahibi bu yüzden ayrıca saklanır. İlk okuma (henüz hiç
-  /// kayıt yoksa) sıfırlamaz: bu alan uygulamaya sonradan eklendiği için,
-  /// hâlihazırda oturum açmış bir kullanıcının kendi ilerlemesini ilk
-  /// açılışta yanlışlıkla silmemek gerekir — misafirden hesaba yükseltme
-  /// de kimliği koruduğu için (`upgradeGuestAccount`/`linkIdentity`) etkilenmez.
-  Future<void> _resetLocalProgressIfForeignUser(User user) async {
+  /// Genel anahtarlı eski kurulum, kayıtlı insan sahibe ya da sahip yoksa
+  /// ilk gerçek kullanıcıya bir kez taşınır. Taşıma silmeyi başaramazsa
+  /// sahip kaydı güncellenmez.
+  Future<bool> _resetLocalProgressIfForeignUser(User user) async {
     final prefs = await SharedPreferences.getInstance();
-    final previousOwner = prefs.getString(_deviceOwnerUserIdKey);
-    if (previousOwner != null && previousOwner != user.id) {
-      await _clearLocalProgressStores();
+    // Başarısız platform yazımı bellekte başarılı görünmüş olabilir.
+    // Hesap sınırını ve yeniden denemeyi daima kalıcı durumdan başlat.
+    await prefs.reload();
+    final previousScope = LocalProgressScope.activeUserId;
+    final migrated = await LocalProgressScope.migrateLegacy(
+      prefs,
+      incomingUserId: user.id,
+    );
+    if (!migrated) return false;
+    final saved = await prefs.setString(_deviceOwnerUserIdKey, user.id);
+    if (!saved) return false;
+    LocalProgressScope.bind(user.id);
+    if (previousScope != user.id) _dropProgressMemory();
+    await SyncManager.maybeInstance?.reconcileXpCache();
+    await SyncManager.maybeInstance?.queueScopedOfflineLessons();
+    return true;
+  }
+
+  /// Açılışta kapsamı bağlar. Ağ yokken insan sahip varsa onun alanı açılır;
+  /// yoksa genel anahtarlar ilk gerçek girişe kadar görünür kalır.
+  Future<void> bindLocalProgressScope() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (_offlineMode || _currentUser == null) {
+      await LocalProgressScope.activateOffline(prefs);
+      return;
     }
-    await prefs.setString(_deviceOwnerUserIdKey, user.id);
+    await _resetLocalProgressIfForeignUser(_currentUser!);
+  }
+
+  void _dropProgressMemory() {
+    XPStore.resetInstance();
+    StreakStore.resetInstance();
+    MistakeStore.resetInstance();
+    SeenQuestionStore.resetInstance();
+    AchievementStore.resetInstance();
+    BadgeService.resetInstance();
+    MasteryStore.resetInstance();
+    DailyMissionStore.resetInstance();
+    PlacementStore.resetInstance();
+    StoryProgressStore.resetInstance();
+    LevelProgressStore.resetInstance();
+    LearningGoalStore.resetInstance();
   }
 
   @visibleForTesting
-  Future<void> debugResetLocalProgressIfForeignUser(User user) =>
+  Future<bool> debugResetLocalProgressIfForeignUser(User user) =>
       _resetLocalProgressIfForeignUser(user);
 
+  @visibleForTesting
+  Future<void> debugPrepareSessionUser(User? user, {bool restartSync = true}) {
+    _currentUser = user;
+    return _queueSessionPreparation(
+      user,
+      restartSync: restartSync,
+      syncPremiumIdentity: false,
+    );
+  }
+
   /// Test/mock constructor — Supabase başlatılmadan kullanım için.
-  AuthProvider.test({bool authenticated = false})
+  AuthProvider.test({bool authenticated = false, NativeAuthService? nativeAuth})
     : _client = null,
+      _offlineMode = false,
+      _nativeAuth = nativeAuth ?? PlatformNativeAuthService(),
       _mockAuthenticated = authenticated;
 
-  void _syncPremiumIdentity(User? user) {
+  /// Üretimde uzak kimlik servisi başlatılamadığında kullanılan mod.
+  ///
+  /// Test kurucusundan farklı olarak hesap tabanlı auth çağrılarını sahte
+  /// başarıya çevirmiyor. Cihaz içi misafir akışı yine çalışabilir; bağlantı
+  /// geri geldiğinde gerçek Supabase oturumu yeni açılışta devreye girer.
+  AuthProvider.offline({NativeAuthService? nativeAuth})
+    : _client = null,
+      _offlineMode = true,
+      _nativeAuth = nativeAuth ?? PlatformNativeAuthService();
+
+  Future<void> _syncPremiumIdentity(User? user) async {
     final premium = PremiumService.instance;
     if (premium == null) return;
-    final future = user == null
-        ? premium.logOutUser()
-        : premium.logInUser(user.id);
-    unawaited(
-      future.catchError((Object error, StackTrace stack) {
-        ErrorReporter.record(error, stack, reason: 'premium identity sync');
-      }),
-    );
+    try {
+      if (user == null) {
+        await premium.logOutUser();
+      } else {
+        await premium.logInUser(user.id);
+      }
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'premium identity sync');
+    }
   }
 
   @override
@@ -172,7 +339,14 @@ class AuthProvider extends ChangeNotifier {
 
   Future<bool> _run(Future<void> Function(SupabaseClient auth) body) async {
     final client = _client;
-    if (client == null) return true;
+    if (client == null) {
+      if (!_offlineMode) return true;
+      _isLoading = false;
+      _needsEmailConfirmation = false;
+      _errorMessage = 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.';
+      notifyListeners();
+      return false;
+    }
 
     _isLoading = true;
     _errorMessage = null;
@@ -185,6 +359,10 @@ class AuthProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
       return true;
+    } on NativeAuthCancelled {
+      _isLoading = false;
+      notifyListeners();
+      return false;
     } on AuthException catch (e) {
       _errorMessage = _translateError(e);
       _isLoading = false;
@@ -245,10 +423,73 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
-  /// Google ile giriş, Supabase OAuth üzerinden tarayıcı açar.
-  /// Çalışması için Supabase Dashboard'da Google sağlayıcısının
-  /// yapılandırılmış olması gerekir.
+  bool get _useNativeAppleAndGoogle =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+
+  Future<void> _signInWithNativeCredential(
+    SupabaseClient client,
+    NativeAuthCredential credential,
+  ) async {
+    switch (credential.provider) {
+      case NativeAuthProvider.google:
+        await client.auth.signInWithIdToken(
+          provider: OAuthProvider.google,
+          idToken: credential.idToken,
+          accessToken: credential.accessToken,
+        );
+      case NativeAuthProvider.apple:
+        await client.auth.signInWithIdToken(
+          provider: OAuthProvider.apple,
+          idToken: credential.idToken,
+          nonce: credential.nonce,
+        );
+        _registerAppleAuthorization(client, credential);
+    }
+  }
+
+  Future<void> _linkNativeCredential(
+    SupabaseClient client,
+    NativeAuthCredential credential,
+  ) async {
+    switch (credential.provider) {
+      case NativeAuthProvider.google:
+        await client.auth.linkIdentityWithIdToken(
+          provider: OAuthProvider.google,
+          idToken: credential.idToken,
+          accessToken: credential.accessToken,
+        );
+      case NativeAuthProvider.apple:
+        await client.auth.linkIdentityWithIdToken(
+          provider: OAuthProvider.apple,
+          idToken: credential.idToken,
+          nonce: credential.nonce,
+        );
+        _registerAppleAuthorization(client, credential);
+    }
+  }
+
+  /// Apple'ın tek kullanımlık kodunu sunucuya iletir (hesap silinirken Apple
+  /// bağlantısı iptal edilebilsin diye). Giriş akışını BEKLETMEZ ve hata
+  /// vermez: bkz. `apple_revocation.dart`.
+  void _registerAppleAuthorization(
+    SupabaseClient client,
+    NativeAuthCredential credential,
+  ) {
+    final code = credential.authorizationCode;
+    if (code == null || code.isEmpty) return;
+    unawaited(registerAppleAuthorization(client, code));
+  }
+
+  /// iOS'ta Google hesabını uygulama içindeki native SDK ile alır.
+  /// Web ve diğer platformlarda mevcut Supabase OAuth akışı korunur.
   Future<bool> signInWithGoogle() {
+    if (_useNativeAppleAndGoogle) {
+      return _run((client) async {
+        final credential = await _nativeAuth.signInWithGoogle();
+        if (credential == null) throw const NativeAuthCancelled();
+        await _signInWithNativeCredential(client, credential);
+      });
+    }
     return _run((client) async {
       final launched = await client.auth.signInWithOAuth(
         OAuthProvider.google,
@@ -261,7 +502,8 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
-  /// Apple ile giriş, Supabase OAuth üzerinden.
+  /// iOS'ta Apple hesabını uygulama içindeki native SDK ile alır.
+  /// Web ve diğer platformlarda mevcut Supabase OAuth akışı korunur.
   ///
   /// App Store İnceleme Kılavuzu 4.8: üçüncü taraf bir sosyal giriş
   /// (burada Google) sunan uygulama, Apple platformlarında eşdeğer bir
@@ -272,6 +514,13 @@ class AuthProvider extends ChangeNotifier {
   /// Developer tarafında bir Services ID + Sign in with Apple yetkisinin
   /// tanımlı olması gerekir; bunlar uygulama kodunun dışındadır.
   Future<bool> signInWithApple() {
+    if (_useNativeAppleAndGoogle) {
+      return _run((client) async {
+        final credential = await _nativeAuth.signInWithApple();
+        if (credential == null) throw const NativeAuthCancelled();
+        await _signInWithNativeCredential(client, credential);
+      });
+    }
     return _run((client) async {
       final launched = await client.auth.signInWithOAuth(
         OAuthProvider.apple,
@@ -287,6 +536,13 @@ class AuthProvider extends ChangeNotifier {
   /// Misafir (anonim) hesabı Apple ile bağlar — mevcut oturumu korur.
   /// [linkGoogleAccount] ile aynı gerekçe: misafir ilerlemesi kaybolmasın.
   Future<bool> linkAppleAccount() {
+    if (_useNativeAppleAndGoogle) {
+      return _run((client) async {
+        final credential = await _nativeAuth.signInWithApple();
+        if (credential == null) throw const NativeAuthCancelled();
+        await _linkNativeCredential(client, credential);
+      });
+    }
     return _run((client) async {
       final launched = await client.auth.linkIdentity(
         OAuthProvider.apple,
@@ -345,6 +601,13 @@ class AuthProvider extends ChangeNotifier {
   // Google'a bağlar; local store'lara dokunmaz.
   /// Misafir (anonim) hesabı Google ile bağlar — mevcut oturumu korur.
   Future<bool> linkGoogleAccount() {
+    if (_useNativeAppleAndGoogle) {
+      return _run((client) async {
+        final credential = await _nativeAuth.signInWithGoogle();
+        if (credential == null) throw const NativeAuthCancelled();
+        await _linkNativeCredential(client, credential);
+      });
+    }
     return _run((client) async {
       final launched = await client.auth.linkIdentity(
         OAuthProvider.google,
@@ -415,12 +678,15 @@ class AuthProvider extends ChangeNotifier {
   /// [signOut] ve [_resetLocalProgressIfForeignUser] arasında paylaşılır:
   /// her ikisi de aynı "bu cihaz artık başka birine ait" durumunu ele alır,
   /// yalnız tetikleyicileri farklıdır (açık çıkış / sessiz hesap değişimi).
-  Future<void> _clearLocalProgressStores() async {
+  Future<bool> _clearLocalProgressStores() async {
+    var requiredStoresCleared = true;
+
     try {
       final xpStore = await XPStore.load();
       await xpStore.clear();
       XPStore.resetInstance();
     } catch (e, s) {
+      requiredStoresCleared = false;
       ErrorReporter.record(e, s, reason: 'XPStore clear failed');
     }
 
@@ -429,22 +695,31 @@ class AuthProvider extends ChangeNotifier {
       await streakStore.clear();
       StreakStore.resetInstance();
     } catch (e, s) {
+      requiredStoresCleared = false;
       ErrorReporter.record(e, s, reason: 'StreakStore clear failed');
     }
 
     try {
       final mistakeStore = await MistakeStore.load();
-      await mistakeStore.clear();
-      MistakeStore.resetInstance();
+      if (await mistakeStore.clear()) {
+        MistakeStore.resetInstance();
+      } else {
+        requiredStoresCleared = false;
+      }
     } catch (e, s) {
+      requiredStoresCleared = false;
       ErrorReporter.record(e, s, reason: 'MistakeStore clear failed');
     }
 
     try {
       final seenStore = await SeenQuestionStore.load();
-      await seenStore.clear();
-      SeenQuestionStore.resetInstance();
+      if (await seenStore.clear()) {
+        SeenQuestionStore.resetInstance();
+      } else {
+        requiredStoresCleared = false;
+      }
     } catch (e, s) {
+      requiredStoresCleared = false;
       ErrorReporter.record(e, s, reason: 'SeenQuestionStore clear failed');
     }
 
@@ -453,7 +728,17 @@ class AuthProvider extends ChangeNotifier {
       await achievementStore.clear();
       AchievementStore.resetInstance();
     } catch (e, s) {
+      requiredStoresCleared = false;
       ErrorReporter.record(e, s, reason: 'AchievementStore clear failed');
+    }
+
+    try {
+      final badgeService = await BadgeService.load();
+      await badgeService.clear();
+      BadgeService.resetInstance();
+    } catch (e, s) {
+      requiredStoresCleared = false;
+      ErrorReporter.record(e, s, reason: 'BadgeService clear failed');
     }
 
     try {
@@ -461,6 +746,7 @@ class AuthProvider extends ChangeNotifier {
       await masteryStore.clear();
       MasteryStore.resetInstance();
     } catch (e, s) {
+      requiredStoresCleared = false;
       ErrorReporter.record(e, s, reason: 'MasteryStore clear failed');
     }
 
@@ -469,6 +755,7 @@ class AuthProvider extends ChangeNotifier {
       await missionStore.clear();
       DailyMissionStore.resetInstance();
     } catch (e, s) {
+      requiredStoresCleared = false;
       ErrorReporter.record(e, s, reason: 'DailyMissionStore clear failed');
     }
 
@@ -477,6 +764,7 @@ class AuthProvider extends ChangeNotifier {
       await placementStore.clear();
       PlacementStore.resetInstance();
     } catch (e, s) {
+      requiredStoresCleared = false;
       ErrorReporter.record(e, s, reason: 'PlacementStore clear failed');
     }
 
@@ -485,6 +773,7 @@ class AuthProvider extends ChangeNotifier {
       await storyStore.clear();
       StoryProgressStore.resetInstance();
     } catch (e, s) {
+      requiredStoresCleared = false;
       ErrorReporter.record(e, s, reason: 'StoryProgressStore clear failed');
     }
 
@@ -493,8 +782,32 @@ class AuthProvider extends ChangeNotifier {
       await levelStore.clear();
       LevelProgressStore.resetInstance();
     } catch (e, s) {
+      requiredStoresCleared = false;
       ErrorReporter.record(e, s, reason: 'LevelProgressStore clear failed');
     }
+
+    try {
+      final goalStore = await LearningGoalStore.load();
+      await goalStore.clear();
+      LearningGoalStore.resetInstance();
+    } catch (e, s) {
+      requiredStoresCleared = false;
+      ErrorReporter.record(e, s, reason: 'LearningGoalStore clear failed');
+    }
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await QuizResultProgressReceiptStore.clearForActiveUser(prefs);
+    } catch (e, s) {
+      requiredStoresCleared = false;
+      ErrorReporter.record(
+        e,
+        s,
+        reason: 'QuizResultProgressReceiptStore clear failed',
+      );
+    }
+
+    return requiredStoresCleared;
   }
 
   Future<void> signOut({
@@ -502,6 +815,11 @@ class AuthProvider extends ChangeNotifier {
     String? pendingRewardsOwnerId,
   }) async {
     var accountCleanupFailed = false;
+    // Devam eden eski oturum hazırlığını geçersiz kıl ve tamamlanmasını bekle.
+    // Böylece gecikmiş A kullanıcısı, logout temizliğinden sonra kapsamı veya
+    // SyncManager'ı yeniden A adına kuramaz.
+    _authGeneration += 1;
+    await _authTransition;
     // Yerel store'lar temizlenmeden önce bekleyen, sunucuda doğrulanabilen
     // çevrimdışı ödüller son kez gönderilir. XP cihazda tutulur ve aşağıda
     // diğer yerel ilerleme verileriyle birlikte temizlenir. `shutdown` ayrıca
@@ -530,7 +848,23 @@ class AuthProvider extends ChangeNotifier {
       ErrorReporter.record(e, s, reason: 'PremiumService logout on signOut');
     }
 
-    await _clearLocalProgressStores();
+    final localProgressCleared = await _clearLocalProgressStores();
+    if (discardPendingRewards && !localProgressCleared) {
+      accountCleanupFailed = true;
+    }
+
+    // Hesap silmede cihaz sahipliği de düşer; normal çıkışta anahtar
+    // kalır ve yabancı-kullanıcı denetimi bir sonraki girişte çalışır. Temizlik
+    // başarısızsa anahtarı koru ki sonraki kullanıcı girişinde yeniden denensin.
+    if (discardPendingRewards && localProgressCleared) {
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.remove(_deviceOwnerUserIdKey);
+      } catch (e, s) {
+        ErrorReporter.record(e, s, reason: 'deviceOwner key removal failed');
+        accountCleanupFailed = true;
+      }
+    }
 
     final client = _client;
     if (client == null) {

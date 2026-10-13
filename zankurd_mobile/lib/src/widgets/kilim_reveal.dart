@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
+import '../providers/reduced_motion_provider.dart';
+import 'sahne/sahne.dart';
 
 /// Kutlama anlarında sonuç başlığının arkasında açılan kilim dokusu.
 ///
@@ -14,13 +15,15 @@ import '../theme/app_theme.dart';
 /// gizlenir ve dokunuşları geçirir; sonucun kendisi metinle okunur.
 ///
 /// Hareket azaltma tercihi açıksa desen animasyonsuz, sabit ve daha soluk
-/// çizilir: kutlama kimliği korunur ama hareket üretilmez.
+/// çizilir: kutlama kimliği korunur ama hareket üretilmez. Tercih hem
+/// [reducedMotion] ile hem sağlayıcıdan okunur — çağıran unutsa da
+/// (onboarding kart dokusu) ayar yok sayılmaz.
 class KilimReveal extends StatefulWidget {
   const KilimReveal({
     required this.child,
     this.active = true,
     this.reducedMotion = false,
-    this.color = Colors.white,
+    this.color,
     super.key,
   });
 
@@ -33,8 +36,9 @@ class KilimReveal extends StatefulWidget {
   /// Erişilebilirlik tercihi: hareket azaltılsın mı?
   final bool reducedMotion;
 
-  /// Desen rengi — renkli hero üzerinde beyaz, açık zeminde marka tonu.
-  final Color color;
+  /// Desen rengi. Verilmezse gecenin birincil metni (krem): sonuç ve
+  /// sahne yüzeyleri her iki temada gecedir. Bkz. [kilimRevealColorFor].
+  final Color? color;
 
   @override
   State<KilimReveal> createState() => _KilimRevealState();
@@ -63,10 +67,17 @@ class _KilimRevealState extends State<KilimReveal>
   @override
   void didUpdateWidget(KilimReveal oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.active && !oldWidget.active && !widget.reducedMotion) {
+    if (widget.active && !oldWidget.active && !_isReduced(context)) {
       _controller.forward(from: 0);
     }
   }
+
+  /// Çağıranın bayrağı veya ağaçtaki tercih. Sağlayıcı yoksa
+  /// [ReducedMotionProvider.isReducedIn] sessizce `false` döner.
+  bool _isReduced(BuildContext context) =>
+      widget.reducedMotion ||
+      ReducedMotionProvider.isReducedIn(context) ||
+      sahneMotionReduced(context);
 
   @override
   void dispose() {
@@ -77,6 +88,11 @@ class _KilimRevealState extends State<KilimReveal>
   @override
   Widget build(BuildContext context) {
     if (!widget.active) return widget.child;
+
+    final reduced = _isReduced(context);
+    if (reduced && _controller.value != 1) {
+      _controller.value = 1;
+    }
 
     return Stack(
       fit: StackFit.passthrough,
@@ -96,10 +112,10 @@ class _KilimRevealState extends State<KilimReveal>
                   key: const ValueKey('kilim-reveal-motif'),
                   painter: _KilimRevealPainter(
                     progress: Curves.easeOutCubic.transform(_controller.value),
-                    color: widget.color,
+                    color: widget.color ?? SahneTokens.night.tx,
                     // Hareketsiz kipte desen daha soluk: sabit bir doku
                     // olarak kalır, dikkat çekmeye çalışmaz.
-                    maxOpacity: widget.reducedMotion ? 0.04 : 0.055,
+                    maxOpacity: reduced ? 0.04 : 0.055,
                   ),
                 ),
               ),
@@ -178,8 +194,11 @@ class _KilimRevealPainter extends CustomPainter {
       oldDelegate.maxOpacity != maxOpacity;
 }
 
-/// Kutlama katmanının varsayılan rengi — marka yeşili zeminler için beyaz,
-/// açık yüzeyler için marka tonu.
+/// Kutlama katmanının varsayılan rengi.
+///
+/// 2026-09-29 Şahnê: koyu (sahne) zeminde gecenin birincil metni (krem),
+/// düz yüzeyde Zêr metni (`goldTx`) — kutlama ışığın, yani Zêr'in anıdır.
+/// Agir yalnız birincil eylemin dolgusudur; desende kullanılmaz.
 Color kilimRevealColorFor(BuildContext context, {required bool onBrand}) {
-  return onBrand ? Colors.white : AppTheme.brand;
+  return onBrand ? SahneTokens.night.tx : SahneTokens.of(context).goldTx;
 }

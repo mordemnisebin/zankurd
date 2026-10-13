@@ -1,5 +1,7 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/local_data_storage.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 
 void main() {
@@ -17,6 +19,16 @@ void main() {
     await store.markMistake('q2');
     expect(store.count, 2);
     expect(store.contains('q1'), isTrue);
+  });
+
+  test('eşzamanlı load çağrıları aynı singleton örneğini paylaşır', () async {
+    final firstLoad = MistakeStore.load();
+    final secondLoad = MistakeStore.load();
+    final thirdLoad = MistakeStore.load();
+
+    final stores = await Future.wait([firstLoad, secondLoad, thirdLoad]);
+    expect(identical(stores[0], stores[1]), isTrue);
+    expect(identical(stores[0], stores[2]), isTrue);
   });
 
   // 2026-07-25 denetim bulgusu: eski mezuniyet eşiği (5 tekrar / 30 gün)
@@ -126,13 +138,41 @@ void main() {
     expect(counts['Dîrok'], 1);
   });
 
+  test(
+    'hazır tekrarları kategori bazında yalnız zamanı gelenlerden sayar',
+    () async {
+      final now = DateTime.now().millisecondsSinceEpoch;
+      SharedPreferences.setMockInitialValues({
+        'zankurd.mistakeQuestionIds': [
+          'ready-ziman',
+          'later-ziman',
+          'ready-dirok',
+        ],
+        'zankurd.mistakeMetadata':
+            '{"ready-ziman":{"nextReview":${now - 1000},"category":"Ziman"},'
+            '"later-ziman":{"nextReview":${now + 86400000},"category":"Ziman"},'
+            '"ready-dirok":{"nextReview":${now - 1000},"category":"Dîrok"}}',
+      });
+      MistakeStore.resetInstance();
+
+      final store = await MistakeStore.load();
+      final counts = store.getReadyReviewCountByCategory();
+      final playableCounts = store.getReadyReviewCountByCategory(
+        allowedQuestionIds: {'ready-ziman'},
+      );
+
+      expect(counts, {'Ziman': 1, 'Dîrok': 1});
+      expect(playableCounts, {'Ziman': 1});
+    },
+  );
+
   // 2026-07-31 denetim bulgusu: `markResolvedSM2` önce `_recordAnswer(true)`
   // ile bugünün doğru sayacını BELLEKTE artırıyor, hemen ardından madde
   // yanlışlar defterinde değilse `_persist()` çağırmadan çıkıyordu.
   //
   // Normal quizde doğru cevaplanan soruların neredeyse tamamı o dala
   // düşer, yani doğru cevap sayacı diske hiç yazılmıyordu. Profildeki
-  // "Cevaplanan Soru", "Doğruluk" ve haftalık grafik uygulama yeniden
+  // "Cevaplanan soru", "Doğruluk" ve haftalık grafik uygulama yeniden
   // açıldığında yalnız yanlışları hatırlıyordu.
   //
   // Kusur sessizdi çünkü aynı oturumda her şey doğru görünüyor; yalnız
@@ -176,7 +216,7 @@ void main() {
   // `totalWrong`/`accuracyPercent` bu map'in TAMAMI üzerinden toplandığı
   // ve profilde "tüm zamanların toplamı" olarak gösterildiği için, eski
   // günler her hafta sessizce düşüyor ve kullanıcı aylarca oynasa bile
-  // "Cevaplanan Soru" karosu yalnız son 7 günü gösteriyordu. Bekçi, 7
+  // "Cevaplanan soru" karosu yalnız son 7 günü gösteriyordu. Bekçi, 7
   // günden eski bir günün diskten yüklendikten sonra bile toplamlara
   // dahil kaldığını doğrular.
   test('7 günden eski günler tüm-zamanlar toplamından silinmez', () async {
@@ -238,5 +278,24 @@ void main() {
     expect(restored.totalCorrect, 3);
     expect(restored.totalWrong, 1);
     expect(restored.accuracyPercent, 75);
+  });
+
+  test('works with injected LocalDataStorage implementation', () async {
+    final storage = InMemoryDataStorage();
+    final store = await MistakeStore.load(storage: storage);
+
+    await store.markMistake('m1');
+    await store.markResolved('d1');
+
+    expect(store.count, 1);
+    expect(store.contains('m1'), isTrue);
+    expect(storage.getStringList('zankurd.mistakeQuestionIds'), ['m1']);
+
+    MistakeStore.resetInstance();
+    final restored = await MistakeStore.load(storage: storage);
+    expect(restored.count, 1);
+    expect(restored.contains('m1'), isTrue);
+    expect(restored.totalCorrect, 1);
+    expect(restored.totalWrong, 1);
   });
 }

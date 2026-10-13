@@ -27,14 +27,17 @@ void main() {
       );
     });
 
-    test('zaten başka odada olma mesajını alreadyInAnotherRoom olarak tanır', () {
-      expect(
-        roomJoinFailureReasonForMessage(
-          'Player is already in another live room',
-        ),
-        RoomJoinFailureReason.alreadyInAnotherRoom,
-      );
-    });
+    test(
+      'zaten başka odada olma mesajını alreadyInAnotherRoom olarak tanır',
+      () {
+        expect(
+          roomJoinFailureReasonForMessage(
+            'Player is already in another live room',
+          ),
+          RoomJoinFailureReason.alreadyInAnotherRoom,
+        );
+      },
+    );
 
     test('bulunamadı/başlamış mesajını notFound olarak tanır', () {
       expect(
@@ -88,25 +91,28 @@ void main() {
       );
     });
 
-    test('RoomJoinException(unknown) → K.roomJoinFailed (yanlış kesinlik YOK)', () {
-      expect(
-        joinRoomErrorKey(
-          const RoomJoinException(RoomJoinFailureReason.unknown, 'huh?'),
-        ),
-        K.roomJoinFailed,
-      );
-    });
-
     test(
-      'RoomJoinException OLMAYAN bir hata (ör. ağ) → K.roomJoinFailed, '
-      'ASLA K.roomNotFound değil',
+      'RoomJoinException(unknown) → K.roomJoinFailed (yanlış kesinlik YOK)',
       () {
-        expect(joinRoomErrorKey(StateError('network unreachable')), K.roomJoinFailed);
         expect(
-          joinRoomErrorKey(StateError('network unreachable')),
-          isNot(K.roomNotFound),
+          joinRoomErrorKey(
+            const RoomJoinException(RoomJoinFailureReason.unknown, 'huh?'),
+          ),
+          K.roomJoinFailed,
         );
       },
     );
+
+    test('RoomJoinException OLMAYAN bir hata (ör. ağ) → K.roomJoinFailed, '
+        'ASLA K.roomNotFound değil', () {
+      expect(
+        joinRoomErrorKey(StateError('network unreachable')),
+        K.roomJoinFailed,
+      );
+      expect(
+        joinRoomErrorKey(StateError('network unreachable')),
+        isNot(K.roomNotFound),
+      );
+    });
   });
 }

@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'checked_preferences_removal.dart';
+import 'local_progress_scope.dart';
 
 /// Sonuç teslimatının kalıcı aşamaları.
 ///
@@ -150,6 +152,38 @@ class QuizResultProgressReceiptStore {
   /// Test yalıtımı: süreç ölümünü taklit eden testler, bir önceki koşumun
   /// bellek içi izini görmemeli.
   static void debugResetInFlight() {
+    _inFlight.clear();
+    _cacheUncertain.clear();
+  }
+
+  /// Çıkış, yalnız bağlı kullanıcının makbuzunu siler. Kapsam yoksa eski
+  /// davranış kalır: makbuzlar kullanıcıya yazıldığı için toplu silme, kapsam
+  /// açılmadan çağrılan çıkışı yabancı makbuza karşı kapalı tutar.
+  static Future<void> clearForActiveUser(SharedPreferences preferences) async {
+    final userId = LocalProgressScope.activeUserId;
+    if (userId == null ||
+        userId.isEmpty ||
+        userId == LocalProgressScope.offlineUserId) {
+      await clearAll(preferences);
+      return;
+    }
+    final prefix = '$_keyPrefix$userId:';
+    final keys = preferences
+        .getKeys()
+        .where((key) => key.startsWith(prefix))
+        .toList();
+    await removePersistedPreferenceKeys(preferences, keys);
+    _inFlight.removeWhere((key, _) => key.startsWith(prefix));
+    _cacheUncertain.removeWhere((key) => key.startsWith(prefix));
+  }
+
+  /// Bütün kullanıcıların makbuzlarını siler.
+  static Future<void> clearAll(SharedPreferences preferences) async {
+    final keys = preferences
+        .getKeys()
+        .where((key) => key.startsWith(_keyPrefix))
+        .toList();
+    await removePersistedPreferenceKeys(preferences, keys);
     _inFlight.clear();
     _cacheUncertain.clear();
   }

@@ -7,18 +7,27 @@ import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/mini_guide.dart';
 import 'package:zankurd_mobile/src/models/story.dart';
+import 'package:zankurd_mobile/src/data/sync_manager.dart';
+import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
-import 'package:zankurd_mobile/src/screens/categories_tab.dart';
+import 'package:zankurd_mobile/src/screens/contest_screen.dart';
+import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
+import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
+import 'package:zankurd_mobile/src/screens/matchmaking_screen.dart';
+import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/screens/paywall_screen.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
+import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/settings_screen.dart';
 import 'package:zankurd_mobile/src/screens/shop_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
 import 'package:zankurd_mobile/src/screens/story_screen.dart';
+import 'package:zankurd_mobile/src/screens/tournament_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -43,6 +52,26 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     PlacementStore.resetInstance();
   });
+
+  Future<void> expectCoreA11yGuidelines(
+    WidgetTester tester,
+    Widget child,
+  ) async {
+    final handle = tester.ensureSemantics();
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(390, 844);
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(testShell(child: child));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 700));
+
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+    handle.dispose();
+  }
 
   testWidgets('seviye sınavı a11y kılavuzlarını karşılar', (tester) async {
     final handle = tester.ensureSemantics();
@@ -132,7 +161,6 @@ void main() {
       'giriş': const SignInScreen(),
       'ana sayfa': Scaffold(body: HomeScreen(repository: repository)),
       'oyun merkezi': PlayHubScreen(repository: repository),
-      'kategoriler': Scaffold(body: CategoriesTab(repository: repository)),
       'öğrenme': LearningScreen(repository: repository),
       'profil': Scaffold(body: ProfileScreen(repository: repository)),
       'ayarlar': SettingsScreen(repository: repository),
@@ -160,4 +188,125 @@ void main() {
       await tester.pump();
     }
   });
+
+  testWidgets('AppShell a11y kılavuzlarını karşılar', (tester) async {
+    final handle = tester.ensureSemantics();
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(390, 844);
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      testShell(
+        child: AppShell(
+          repository: freshMockRepository(),
+          connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 700));
+
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+    handle.dispose();
+  });
+
+  testWidgets('onboarding a11y kılavuzlarını karşılar', (tester) async {
+    final handle = tester.ensureSemantics();
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(390, 844);
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      testShell(child: OnboardingScreen(onComplete: () {})),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    handle.dispose();
+  });
+
+  testWidgets('quiz a11y kılavuzlarını karşılar', (tester) async {
+    final handle = tester.ensureSemantics();
+    final repository = freshMockRepository();
+    await tester.pumpWidget(
+      testShell(
+        child: QuizScreen(
+          repository: repository,
+          room: repository.createRoom().copyWith(questionCount: 1),
+          questions: repository.questions.take(1).toList(),
+          enableTimer: false,
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    handle.dispose();
+  });
+
+  testWidgets('ayarlar a11y kılavuzlarını karşılar', (tester) async {
+    final handle = tester.ensureSemantics();
+    await tester.pumpWidget(
+      testShell(child: SettingsScreen(repository: freshMockRepository())),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    handle.dispose();
+  });
+
+  testWidgets('mağaza a11y kılavuzlarını karşılar', (tester) async {
+    final handle = tester.ensureSemantics();
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(390, 844);
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      testShell(child: ShopScreen(repository: freshMockRepository())),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 700));
+
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+    handle.dispose();
+  });
+
+  final auditedScreens = <String, Widget Function(MockZanKurdRepository)>{
+    'ana ekran': (repository) =>
+        Scaffold(body: HomeScreen(repository: repository)),
+    'oyun merkezi': (repository) => PlayHubScreen(repository: repository),
+    'sıralama': (repository) => LeaderboardScreen(repository: repository),
+    'arkadaşlar': (repository) => FriendsScreen(repository: repository),
+    'yarışma': (repository) => ContestScreen(repository: repository),
+    'turnuva': (repository) => TournamentScreen(repository: repository),
+    'oda': (repository) => RoomScreen(
+      repository: repository,
+      initialRoom: repository.createRoom(),
+    ),
+    'eşleştirme': (repository) => MatchmakingScreen(repository: repository),
+    'premium': (repository) => PaywallScreen(repository: repository),
+  };
+
+  for (final entry in auditedScreens.entries) {
+    testWidgets('${entry.key} çekirdek a11y kılavuzlarını karşılar', (
+      tester,
+    ) async {
+      final repository = freshMockRepository();
+      await expectCoreA11yGuidelines(tester, entry.value(repository));
+    });
+  }
 }

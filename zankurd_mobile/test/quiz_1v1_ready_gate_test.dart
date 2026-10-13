@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -97,7 +98,7 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
 
-      expect(find.text('Rakip bekleniyor...'), findsOneWidget);
+      expect(find.text('Rakip bekleniyor…'), findsOneWidget);
       // Kendi hazır sinyalimiz karşı tarafa gönderilmiş olmalı.
       expect(repository.sent.any((p) => p['ready'] == true), isTrue);
 
@@ -105,7 +106,7 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
 
-      expect(find.text('Rakip bekleniyor...'), findsNothing);
+      expect(find.text('Rakip bekleniyor…'), findsNothing);
     },
   );
 
@@ -124,10 +125,10 @@ void main() {
         ),
       );
       await tester.pump();
-      expect(find.text('Rakip bekleniyor...'), findsOneWidget);
+      expect(find.text('Rakip bekleniyor…'), findsOneWidget);
 
       await tester.pump(const Duration(seconds: 7));
-      expect(find.text('Rakip bekleniyor...'), findsNothing);
+      expect(find.text('Rakip bekleniyor…'), findsNothing);
     },
   );
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/question_quality/src/baseline.dart';
@@ -71,5 +73,16 @@ void main() {
     );
     expect(result.passes, isFalse);
     expect(result.reasons, contains('Unclassified question source detected.'));
+  });
+
+  test('fromSnapshot carries the injected created date', () {
+    final baseline = AuditBaseline.fromSnapshot(
+      snapshot: AuditSnapshot.synthetic(issueFingerprints: const {'a'}),
+      manifestVersion: 1,
+      metrics: const {},
+      createdDate: '2026-08-20',
+    );
+    expect(baseline.createdDate, '2026-08-20');
+    expect(jsonDecode(baseline.toJsonString())['createdDate'], '2026-08-20');
   });
 }

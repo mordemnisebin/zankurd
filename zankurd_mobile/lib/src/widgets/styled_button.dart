@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../theme/app_theme.dart';
 
-class GeometricGradientButton extends StatefulWidget {
+import 'sahne/sahne.dart';
+
+/// Ekranın birincil eylemi.
+///
+/// 2026-09-29 Şahnê: görünüş [SahneButton.primary] — Agir dolgu, KOYU
+/// metin (`onAct`), 52 boy, M pah, ekrandaki tek bulanık gölge. Eski düğme
+/// Agir üstüne beyaz yazıyordu: 2,35:1 (erişilebilirlik kılavuzu testinde
+/// "Başla", "Yarışı Başlat", "Davet Kodu Gir" bu yüzden kırmızıydı).
+/// Pasif: Perde + üçüncül metin (opaklık değil). Yüklenirken Agir plaka
+/// içinde koyu bir ilerleme halkası döner; düğme o sırada basılamaz.
+class GeometricGradientButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
   final IconData? icon;
@@ -17,125 +25,45 @@ class GeometricGradientButton extends StatefulWidget {
   });
 
   @override
-  State<GeometricGradientButton> createState() =>
-      _GeometricGradientButtonState();
-}
-
-class _GeometricGradientButtonState extends State<GeometricGradientButton> {
-  bool _isPressed = false;
-  bool _isHovered = false;
-
-  @override
   Widget build(BuildContext context) {
-    final isEnabled = widget.onPressed != null && !widget.isLoading;
-    final isPressed = isEnabled && _isPressed;
-    final isHovered = isEnabled && _isHovered;
-    final disabledColor = AppColors.disabledSurface(context);
+    final t = SahneTokens.of(context);
+    final isEnabled = onPressed != null && !isLoading;
 
-    final shadowColor = isEnabled
-        ? AppTheme.primaryGradientStart.withValues(alpha: 0.55)
-        : disabledColor.withValues(alpha: 0.6);
-
-    const double shadowHeight = 4.0;
-
-    return Semantics(
-      button: true,
-      label: widget.label,
-      enabled: isEnabled,
-      onTap: isEnabled ? widget.onPressed : null,
-      child: MouseRegion(
-        cursor: isEnabled ? SystemMouseCursors.click : SystemMouseCursors.basic,
-        onEnter: isEnabled ? (_) => setState(() => _isHovered = true) : null,
-        onExit: isEnabled ? (_) => setState(() => _isHovered = false) : null,
-        child: GestureDetector(
-          onTapDown: isEnabled
-              ? (_) {
-                  // Dokunma geri bildirimi quiz, mağaza ve çarkta vardı
-                  // ama uygulamanın BİRİNCİL düğmesi sessizdi: yedi CTA
-                  // (giriş, kayıt, oda kur, katıl, başla…) hepsi bunu
-                  // kullanıyor (2026-07-31 denetimi).
-                  //
-                  // `selectionClick` basmada, `lightImpact` bırakmada:
-                  // ikisi birlikte düğmenin altına giren fiziksel bir his
-                  // verir. Masaüstü ve web'de platform kanalı sessizce
-                  // yoksayar, ayrıca bir koşul gerekmez.
-                  HapticFeedback.selectionClick();
-                  setState(() => _isPressed = true);
-                }
-              : null,
-          onTapUp: isEnabled
-              ? (_) {
-                  HapticFeedback.lightImpact();
-                  setState(() => _isPressed = false);
-                  widget.onPressed?.call();
-                }
-              : null,
-          onTapCancel: isEnabled
-              ? () => setState(() => _isPressed = false)
-              : null,
-          child: AnimatedScale(
-            scale: isHovered ? 1.01 : 1.0,
-            duration: const Duration(milliseconds: 110),
-            curve: Curves.easeOutCubic,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 110),
-              curve: Curves.easeOutCubic,
-              height: 48,
-              margin: EdgeInsets.only(
-                top: isPressed ? shadowHeight : 0,
-                bottom: isPressed ? 0 : shadowHeight,
-              ),
-              decoration: BoxDecoration(
-                gradient: isEnabled
-                    ? AppTheme.accentGradient
-                    : LinearGradient(colors: [disabledColor, disabledColor]),
-                borderRadius: BorderRadius.circular(AppRadius.lg),
-                boxShadow: AppShadows.button(shadowColor, pressed: isPressed),
-              ),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    if (widget.isLoading)
-                      const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white,
-                          ),
-                        ),
-                      )
-                    else ...[
-                      if (widget.icon != null) ...[
-                        Icon(widget.icon, color: Colors.white, size: 20),
-                        const SizedBox(width: 8),
-                      ],
-                      Flexible(
-                        // 2026-07-22 canlı UX denetimi: CTA çift okuma düzeltmesi
-                        child: ExcludeSemantics(
-                          child: Text(
-                            widget.label,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.bodyLarge.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 0,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
+    final Widget body;
+    if (isLoading) {
+      body = SizedBox(
+        width: double.infinity,
+        height: 52,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(color: t.act, shape: SahneShape.m),
+          child: Center(
+            child: SizedBox.square(
+              dimension: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(t.onAct),
               ),
             ),
           ),
         ),
-      ),
+      );
+    } else {
+      body = SahneButton.primary(
+        label: label,
+        icon: icon,
+        arrow: icon == null,
+        expand: true,
+        onPressed: isEnabled ? onPressed : null,
+      );
+    }
+
+    return Semantics(
+      button: true,
+      label: label,
+      enabled: isEnabled,
+      excludeSemantics: true,
+      onTap: isEnabled ? onPressed : null,
+      child: body,
     );
   }
 }

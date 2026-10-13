@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.apple.developer.applesignin</key>
+	<array>
+		<string>Default</string>
+	</array>
+	<!-- Store/TestFlight: development entitlement App Store push'unu düşürür. -->
+	<key>aps-environment</key>
+	<string>production</string>
+	<!-- Oda daveti evrensel bağlantısı: apple-app-site-association iki
+	     domain için de web/.well-known altında sunuluyor. -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:www.zankurd.com</string>
+		<string>applinks:zankurd.com</string>
+	</array>
+</dict>
+</plist>

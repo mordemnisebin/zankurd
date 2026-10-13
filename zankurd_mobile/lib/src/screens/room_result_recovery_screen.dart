@@ -6,13 +6,15 @@ import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
+import '../models/quiz_question.dart';
 import '../models/room.dart';
 import '../services/quiz_reward_settlement_service.dart';
 import '../services/room_result_presentation.dart';
 import '../theme/app_icons.dart';
-import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../widgets/roj_mascot.dart';
+import '../widgets/sahne/sahne.dart';
 import 'quiz_result_screen.dart';
 
 const Duration _roomResultRecoveryTimeout = Duration(seconds: 15);
@@ -41,6 +43,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
   bool _ownerMismatch = false;
   int _attempt = 0;
   RoomResultPresentation? _cachedPresentation;
+  List<QuizQuestion>? _cachedQuestions;
   QuizRewardSettlement? _cachedSettlement;
   Future<QuizRewardSettlement>? _settlementInFlight;
 
@@ -79,17 +82,20 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
 
     try {
       var presentation = _cachedPresentation;
-      if (presentation == null) {
-        final questions = await widget.repository
+      var questions = _cachedQuestions;
+      if (presentation == null || questions == null) {
+        final loadedQuestions = await widget.repository
             .loadRoomQuestions(widget.snapshot.room)
             .timeout(_roomResultRecoveryTimeout);
         if (!mounted || !_canContinue(attempt)) return;
 
+        questions = List<QuizQuestion>.unmodifiable(loadedQuestions);
         presentation = buildRoomResultPresentation(
           widget.snapshot,
           questions,
           isKu: context.isKu,
         );
+        _cachedQuestions = questions;
         _cachedPresentation = presentation;
         if (!_canContinue(attempt)) return;
       }
@@ -133,7 +139,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
         }
       }
       if (!_canContinue(attempt)) return;
-      _openResult(presentation, settlement);
+      _openResult(presentation, settlement, questions);
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'room result recovery');
       _showFailure(attempt);
@@ -143,6 +149,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
   void _openResult(
     RoomResultPresentation presentation,
     QuizRewardSettlement settlement,
+    List<QuizQuestion> questions,
   ) {
     unawaited(
       Navigator.of(context).pushReplacement(
@@ -157,6 +164,7 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
             bestStreak: presentation.bestStreak,
             answerRecords: presentation.answerRecords,
             coinsAwarded: settlement.coinsAwarded,
+            sourceQuestions: questions,
             opponents: presentation.opponents,
             rewardQueued: settlement.state == QuizRewardSettlementState.queued,
             resultOwnerUserId: _expectedUserId,
@@ -225,66 +233,117 @@ class _RoomResultRecoveryScreenState extends State<RoomResultRecoveryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // 2026-09-29 Şahnê: B iskeleti (açılan sayfa). Geri düğmesi bu ekranda
+    // "yığını boşalt" demektir (`_leaveRecovery`); başlık çubukta, içerik
+    // yalnız durumu anlatır. Yükleme ve hata aynı ortalı düzende durur:
+    // logo işareti plakası + köşede durum karosu (şekil de ayrıştırır) +
+    // tek cümle + tek birincil eylem.
+    final t = SahneTokens.of(context);
+    final Widget body;
+    if (_loading) {
+      body = Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox.square(
+            dimension: 44,
+            child: CircularProgressIndicator(strokeWidth: 3, color: t.raceTx),
+          ),
+          const SizedBox(height: SahneSpace.x4),
+          Text(
+            context.t(K.resultRecoveryLoading),
+            textAlign: TextAlign.center,
+            style: SahneType.body.copyWith(color: t.tx2),
+          ),
+        ],
+      );
+    } else {
+      body = Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _RecoveryPlate(
+            icon: _ownerMismatch ? AppIcons.shield : AppIcons.cloud,
+          ),
+          const SizedBox(height: SahneSpace.x4),
+          Text(
+            context.t(
+              _ownerMismatch
+                  ? K.resultRecoveryOwnerChanged
+                  : K.resultRecoveryFailed,
+            ),
+            textAlign: TextAlign.center,
+            style: SahneType.bodyStrong.copyWith(color: t.tx),
+          ),
+          const SizedBox(height: SahneSpace.x6),
+          SahneButton.primary(
+            label: context.t(K.retry),
+            icon: AppIcons.arrowsRotate,
+            arrow: false,
+            onPressed: _retry,
+          ),
+        ],
+      );
+    }
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _leaveRecovery();
       },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-            onPressed: _leaveRecovery,
-            tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-            icon: const Icon(AppIcons.arrowLeft),
-          ),
-          title: Text(context.t(K.resultTitle)),
-        ),
-        body: SafeArea(
-          child: Center(
+      child: SahnePushedPage(
+        title: context.t(K.resultTitle),
+        backLabel: context.t(K.back),
+        onBack: _leaveRecovery,
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              child: _loading
-                  ? Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const CircularProgressIndicator(),
-                        const SizedBox(height: AppSpacing.md),
-                        Text(
-                          context.t(K.resultRecoveryLoading),
-                          textAlign: TextAlign.center,
-                          style: AppTypography.bodyMedium,
-                        ),
-                      ],
-                    )
-                  : Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          _ownerMismatch ? AppIcons.shield : AppIcons.cloud,
-                          size: 42,
-                          color: AppTheme.gold,
-                        ),
-                        const SizedBox(height: AppSpacing.md),
-                        Text(
-                          context.t(
-                            _ownerMismatch
-                                ? K.resultRecoveryOwnerChanged
-                                : K.resultRecoveryFailed,
-                          ),
-                          textAlign: TextAlign.center,
-                          style: AppTypography.bodyLarge,
-                        ),
-                        const SizedBox(height: AppSpacing.md),
-                        FilledButton.icon(
-                          onPressed: _retry,
-                          icon: const Icon(AppIcons.arrowsRotate),
-                          label: Text(context.t(K.retry)),
-                        ),
-                      ],
-                    ),
+              padding: const EdgeInsets.all(SahneSpace.x6),
+              child: Align(alignment: const Alignment(0, -0.3), child: body),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Logo işareti plakası + köşede durum karosu (dekoratif).
+///
+/// Ortak boş/hata durumunun (`AppErrorState`) görsel dili; burada başlık
+/// yok çünkü sayfa adı çubukta, durumu tek cümle anlatır.
+class _RecoveryPlate extends StatelessWidget {
+  const _RecoveryPlate({required this.icon});
+
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return ExcludeSemantics(
+      child: SizedBox.square(
+        dimension: 76,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            const Positioned(left: 0, top: 0, child: BrandMarkPlate()),
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: t.goldTint,
+                  shape: SahneShape.withSide(
+                    SahneShape.s,
+                    t.bg,
+                    width: SahneRing.r2,
+                  ),
+                ),
+                child: SizedBox.square(
+                  dimension: 28,
+                  child: Icon(icon, size: 16, color: t.goldTx),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -10,6 +10,16 @@ import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/services/placement_scoring.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
+// 2026-09-29 Şahnê: sınav soru ekranıyla aynı C iskeletine taşındı. Soru
+// sırası artık üst etikette ("Kültür · Soru 1/12", Etiket biçemi, cümle
+// düzeni); bekçiler "Soru n/m" arar. Davranış (baskısızlık,
+// çift dokunuş kilidi, kayıt) değişmedi.
+//
+// 2026-09-29 doğallık (K2): görselli soru artık görselini quiz'deki resim
+// kartıyla gösterir. Test yüzeyi 800×600; görsel şıkları katın altına
+// iter. Kullanıcı kaydırır; bekçiler de dokunmadan önce şıkkı görünür
+// kılar (`ensureVisible`). Davranış aynı.
+
 Widget wrap(Widget child, {Size size = const Size(390, 844)}) => MultiProvider(
   providers: [
     ChangeNotifierProvider(create: (_) => LanguageProvider()..setLang('tr')),
@@ -108,9 +118,10 @@ void main() {
         // soru `correctAnswerTr`yi çiziyor, ham `correctAnswer` (Kurmancî)
         // değil (content genişlemesinin getirdiği kapsama, 2026-08-15
         // birleştirmesi).
-        await tester.tap(
-          find.text(current.correctAnswerFor(isKu: false)).last,
-        );
+        final option = find.text(current.correctAnswerFor(isKu: false)).last;
+        await tester.ensureVisible(option);
+        await tester.pumpAndSettle();
+        await tester.tap(option);
       }
       await tester.pumpAndSettle();
     }
@@ -123,6 +134,38 @@ void main() {
     final store = await PlacementStore.load();
     expect(store.completed, isTrue);
     expect(store.level, PlacementLevel.pesketi);
+  });
+
+  testWidgets('aynı şık hızlı çift dokunulunca yalnız bir cevap işlenir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(
+        LevelPlacementScreen(
+          repository: MockZanKurdRepository(),
+          questionCount: 3,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final state = tester.state(find.byType(LevelPlacementScreen)) as dynamic;
+    // ignore: avoid_dynamic_calls
+    final QuizQuestion current = state.currentQuestionForTest;
+    final answer = current.answersFor(isKu: false).first;
+    final target = find.text(answer).last;
+    await tester.ensureVisible(target);
+    await tester.pumpAndSettle();
+
+    await tester.tap(target);
+    await tester.tap(target);
+    await tester.pump();
+
+    expect(
+      find.textContaining('Soru 2/3'),
+      findsOneWidget,
+      reason: 'İkinci tap aynı soruyu tekrar kaydedip bir soruyu atlamamalı.',
+    );
   });
 
   testWidgets('360px dar ekranda overflow oluşmaz', (tester) async {

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -16,6 +17,8 @@ class _FailingRoomRepository extends MockZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   }) {
     return Future<GameRoom>.error(StateError('online room unavailable'));
   }
@@ -63,7 +66,11 @@ void main() {
       await tester.pumpAndSettle();
 
       // Oda kurucusu artık soru başına süreyi seçtiği bir sheet görür.
-      await tester.tap(find.text('Odayı Aç'));
+      // Sayfa %90 yükseklikle sınırlı ve içi kayar (kapatılabilsin diye):
+      // düğme görünür alanın dışında kalabilir.
+      await tester.ensureVisible(find.text('Odayı aç'));
+      await tester.pump();
+      await tester.tap(find.text('Odayı aç'));
       await tester.pumpAndSettle();
 
       expect(find.byType(RoomScreen), findsNothing);
@@ -113,7 +120,7 @@ void main() {
     // yalnız `RoomJoinException(notFound)` bu metni üretir; tanınmayan
     // hatalar jenerik "katılamadın" metnine düşer (2026-08-14 denetimi,
     // bkz. `joinRoomErrorKey` ve `test/room_join_error_mapping_test.dart`).
-    expect(find.text('Odaya katılamadın. Lütfen tekrar dene.'), findsOneWidget);
+    expect(find.text('Odaya katılamadın. Tekrar dene.'), findsOneWidget);
   });
 
   testWidgets('empty room code is validated locally before online join', (
@@ -173,12 +180,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.joinCalls, 0);
-    expect(
-      find.text(
-        'Kod ZK- ile başlamalı ve ardından tam 10 adet 0–9/A–F karakteri bulunmalı.',
-      ),
-      findsOneWidget,
-    );
+    expect(find.text('Kodu kontrol et. Örnek: ZK-ABCDEF0123'), findsOneWidget);
     expect(find.byType(RoomScreen), findsNothing);
   });
 
@@ -225,9 +227,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(repository.joinCalls, 0);
-    const fullError =
-        'Kod divê bi ZK- dest pê bike û dû re tam 10 karakter '
-        'ji 0–9/A–F hebin.';
+    const fullError = 'Kodê kontrol bike. Mînak: ZK-ABCDEF0123';
     final error = find.text(fullError);
     expect(error, findsOneWidget);
     await tester.ensureVisible(error);
@@ -235,8 +235,15 @@ void main() {
     final errorText = tester.widget<Text>(error);
     expect(errorText.maxLines, isNull);
     expect(errorText.overflow, TextOverflow.visible);
+    // 2026-09-29: `FakeViewPadding` FİZİKSEL piksellerdir; klavyenin
+    // mantıksal yüksekliği 220 / devicePixelRatio'dur (test görünümünde 3 →
+    // ~73). Eskiden 220 doğrudan mantıksal sayılıyordu; hata metni gerçek
+    // klavye çizgisinin üstündeyken "altında" sayılıyordu. Korunan kural
+    // aynı: mesajın tamamı klavyenin ÜSTÜNDE görünür. Sayfanın kaydırma alanı
+    // artık klavyenin üstünde biter (klavye payı kaydırmanın dışında).
+    final keyboardTop = 568 - 220 / tester.view.devicePixelRatio;
     expect(tester.getRect(error).top, greaterThanOrEqualTo(0));
-    expect(tester.getRect(error).bottom, lessThanOrEqualTo(568 - 220));
+    expect(tester.getRect(error).bottom, lessThanOrEqualTo(keyboardTop));
     final sheetScrollable = find.descendant(
       of: find.byType(SingleChildScrollView),
       matching: find.byWidgetPredicate(

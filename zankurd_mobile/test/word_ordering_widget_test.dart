@@ -148,4 +148,30 @@ void main() {
       expect(chips.join(' '), isNot(long.correctAnswer));
     }
   });
+
+  /// ## Kusur
+  ///
+  /// Havuz boşaldıkça `Wrap` küçülüyor, altındaki "Kontrol et" düğmesi
+  /// yukarı zıplıyordu (2026-10-07 simülatör QA'sı): oyuncu son kelimeye
+  /// dokunur, düğme parmağın altından kayar.
+  ///
+  /// Sessizdi çünkü mevcut testler düğmeyi METİNLE bulup dokunuyor; düğmenin
+  /// nerede durduğunu hiçbiri ölçmüyordu ve `tester.tap` düğme kaysa da
+  /// yeni konuma dokunduğu için hep geçiyordu.
+  testWidgets('havuz boşalınca "Kontrol et" düğmesi yerinde kalır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_host(question: _q1, onSubmit: (_) {}));
+    await tester.pumpAndSettle();
+    final before = tester.getTopLeft(find.byType(FilledButton)).dy;
+
+    for (final word in ['Ez', 'diçim', 'malê']) {
+      await _tapWord(tester, word);
+      expect(
+        tester.getTopLeft(find.byType(FilledButton)).dy,
+        before,
+        reason: '"$word" taşınınca düğme kaydı',
+      );
+    }
+  });
 }

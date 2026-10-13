@@ -4,11 +4,16 @@ import 'package:flutter/services.dart';
 import '../../l10n/strings.dart';
 import '../../l10n/lang.dart';
 import '../../models/quiz_question.dart';
-import '../../theme/app_theme.dart';
-import '../../widgets/bouncing_button.dart';
+import '../../widgets/sahne/sahne.dart';
 
 /// Etkileşimli Cümle Kurma (Word Ordering / Rêzkirina Hevokan) bileşeni.
 /// Kullanıcının kelime parçalarını seçerek doğru cümle dizilimini oluşturmasını sağlar.
+///
+/// Şahnê: cümle alanı Perde (`s1`) üstünde L pahlı yüzeydir; havuzdaki
+/// kelimeler Kulis (`s2`), cümleye alınanlar Ray (`s3`) tonunda M pahlı
+/// 48'lik karolardır — seçim renkle değil tonla ve yerle söylenir.
+/// "Kontrol et" cevaptan önce ekranın tek birincil eylemidir (temanın
+/// Agir `FilledButton`ı).
 class WordOrderingWidget extends StatefulWidget {
   const WordOrderingWidget({
     super.key,
@@ -37,6 +42,23 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
   late List<_Token> _availableWords;
   final List<_Token> _selectedWords = [];
 
+  /// Havuzun şimdiye dek ölçülen EN BÜYÜK yüksekliği.
+  ///
+  /// Havuz boşaldıkça `Wrap` küçülür ve altındaki "Kontrol et" düğmesi
+  /// yukarı zıplardı: oyuncu son kelimeye dokunur dokunmaz hedef parmağının
+  /// altından kayardı (2026-10-07 simülatör QA'sı). Havuz alanı ilk
+  /// yüksekliğinde tutulur; yeni soruda sıfırlanır.
+  double _poolMinHeight = 0;
+  final GlobalKey _poolKey = GlobalKey();
+
+  void _measurePool() {
+    final box = _poolKey.currentContext?.findRenderObject();
+    if (box is! RenderBox || !box.hasSize) return;
+    if (box.size.height > _poolMinHeight + 0.5 && mounted) {
+      setState(() => _poolMinHeight = box.size.height);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -50,6 +72,7 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
     // kullanır. Bu sıfırlama olmadan önceki sorunun kelimeleri ekranda kalır.
     if (oldWidget.question.id != widget.question.id) {
       _selectedWords.clear();
+      _poolMinHeight = 0;
       _initWords();
     }
   }
@@ -110,51 +133,49 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
   @override
   Widget build(BuildContext context) {
     final isKu = LangContext(context).isKu;
-    final surface = AppTheme.surfaceColor(context);
+    final t = SahneTokens.of(context);
     final answered = widget.disabled;
 
     // Cevap verildikten sonra kullanıcının gönderdiği cümle gösterilir;
     // yeniden düzenlemeye çalışmasın diye havuz ve buton kaldırılır.
     final submitted = answered ? widget.selectedAnswer : null;
+    if (!answered) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _measurePool());
+    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // ============ SEÇİLEN KELİMELERİN CÜMLE ALANI ============
+        // 88: tek satır çip (50) + dolgu (32) = 82; eskiden 80'di ve ilk
+        // kelime seçilince alan 2 dp uzayıp düğmeyi kaydırıyordu.
         Container(
-          constraints: const BoxConstraints(minHeight: 80),
-          padding: const EdgeInsets.all(AppSpacing.md),
-          decoration: BoxDecoration(
-            color: surface,
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(
-              color: AppTheme.borderColor(context).withValues(alpha: 0.5),
-            ),
+          constraints: const BoxConstraints(minHeight: 88),
+          padding: const EdgeInsets.all(SahneSpace.x4),
+          decoration: ShapeDecoration(
+            color: t.s1,
+            shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
           ),
           child: submitted != null
               ? Text(
                   submitted,
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: SahneType.bodyStrong.copyWith(color: t.tx),
                 )
               : _selectedWords.isEmpty
               ? Center(
                   child: Text(
                     Tr.forKu(K.cumleyiOlusturmakIcinKelimeleri, isKu),
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textMutedColor(context),
-                    ),
+                    textAlign: TextAlign.center,
+                    style: SahneType.caption.copyWith(color: t.tx2),
                   ),
                 )
               : Semantics(
                   label: Tr.forKu(K.kurdugunCumle, isKu),
                   value: _selectedWords.map((t) => t.word).join(' '),
                   child: Wrap(
-                    spacing: AppSpacing.xs,
-                    runSpacing: AppSpacing.xs,
+                    spacing: SahneSpace.x2,
+                    runSpacing: SahneSpace.x2,
                     children: [
                       for (final token in _selectedWords)
                         _WordChip(
@@ -171,47 +192,39 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
         ),
 
         if (!answered) ...[
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SahneSpace.x4),
 
           // ============ KELİME HAVUZU (AVAILABLE WORDS) ============
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: AppSpacing.xs,
-            runSpacing: AppSpacing.xs,
-            children: [
-              for (final token in _availableWords)
-                _WordChip(
-                  word: token.word,
-                  selected: false,
-                  semanticHint: Tr.forKu(K.cumleyeEkle, isKu),
-                  onPressed: () => _selectWord(token),
-                ),
-            ],
+          ConstrainedBox(
+            constraints: BoxConstraints(minHeight: _poolMinHeight),
+            child: Wrap(
+              key: _poolKey,
+              alignment: WrapAlignment.center,
+              spacing: SahneSpace.x2,
+              runSpacing: SahneSpace.x2,
+              children: [
+                for (final token in _availableWords)
+                  _WordChip(
+                    word: token.word,
+                    selected: false,
+                    semanticHint: Tr.forKu(K.cumleyeEkle, isKu),
+                    onPressed: () => _selectWord(token),
+                  ),
+              ],
+            ),
           ),
 
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: SahneSpace.x4),
 
           // ============ KONTROL ET / GÖNDER BUTONU ============
-          BouncingButton(
-            onPressed: _selectedWords.isNotEmpty ? _submit : null,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: _selectedWords.isNotEmpty
-                    ? AppTheme.primaryCtaColor(context)
-                    : AppColors.disabledSurface(context),
-                borderRadius: BorderRadius.circular(AppRadius.md),
+          SahnePressSink(
+            enabled: _selectedWords.isNotEmpty,
+            child: FilledButton(
+              onPressed: _selectedWords.isNotEmpty ? _submit : null,
+              style: FilledButton.styleFrom(
+                minimumSize: const Size.fromHeight(52),
               ),
-              child: Text(
-                Tr.forKu(K.kontrolEt, isKu),
-                style: AppTypography.bodyLarge.copyWith(
-                  color: _selectedWords.isNotEmpty
-                      ? Colors.white
-                      : AppTheme.textMutedColor(context),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Text(Tr.forKu(K.kontrolEt, isKu)),
             ),
           ),
         ],
@@ -250,48 +263,37 @@ class _WordChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Açık temada `surfaceHi` (#FBF8F3) kart yüzeyiyle (#FFFFFF) neredeyse
-    // aynıydı: dokunulabilir kelimeler arka plandan ayırt edilemiyordu.
-    // Havuz chip'i artık marka renginin düşük yoğunluklu bir tonunu ve tam
-    // opak bir kenarlık kullanır.
-    final background = selected
-        ? AppTheme.brand.withValues(alpha: 0.22)
-        : AppTheme.surfaceHiColor(context);
-    final border = selected
-        ? AppTheme.brand.withValues(alpha: 0.65)
-        : AppTheme.borderColor(context);
-
+    // Havuz kelimesi Kulis (`s2`), cümledeki kelime Ray (`s3`): seçim tonla
+    // ve yerle söylenir. Gündüzde 1 px kenar, gecede kenarsız (katman tonla
+    // ayrılır). Eski turuncu yarı saydam seçim tonu palet dışıydı.
+    final t = SahneTokens.of(context);
+    final enabled = onPressed != null;
     return Semantics(
       button: true,
-      enabled: onPressed != null,
+      enabled: enabled,
       hint: semanticHint,
-      child: Material(
-        color: background,
-        borderRadius: BorderRadius.circular(AppRadius.badge),
-        child: InkWell(
+      child: SahnePressSink(
+        enabled: enabled,
+        child: SahneTappable(
+          shape: SahneShape.withSide(SahneShape.m, t.edge, width: 1),
+          color: selected ? t.s3 : t.s2,
           onTap: onPressed,
-          borderRadius: BorderRadius.circular(AppRadius.badge),
-          // `alignment` VERİLMEZ: Container'a hizalama verildiğinde gevşek
-          // kısıt altında mevcut genişliğin tamamına yayılır ve her kelime
-          // tek başına bir satır kaplar (Wrap işlevsiz kalır).
-          child: Container(
-            constraints: const BoxConstraints(minHeight: 44),
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md,
-              vertical: AppSpacing.xs,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppRadius.badge),
-              border: Border.all(color: border, width: selected ? 1.5 : 1.0),
-            ),
-            child: Center(
-              widthFactor: 1,
-              heightFactor: 1,
-              child: Text(
-                word,
-                style: AppTypography.bodyLarge.copyWith(
-                  color: AppTheme.textPrimaryColor(context),
-                  fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+          // `alignment` VERİLMEZ: gevşek kısıtta hizalama verilen kutu
+          // satırın tamamına yayılır ve her kelime tek başına bir satır
+          // kaplar (Wrap işlevsiz kalır).
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SahneSpace.x4,
+                vertical: SahneSpace.x2,
+              ),
+              child: Center(
+                widthFactor: 1,
+                heightFactor: 1,
+                child: Text(
+                  word,
+                  style: SahneType.bodyStrong.copyWith(color: t.tx),
                 ),
               ),
             ),

@@ -1,6 +1,7 @@
 /// Offline soru bankasındaki açıklamalar tek dilli Türkçedir ve büyük
 /// bölümü şablondan üretilmiştir. KU modunda bilinen şablonlar burada
-/// Kurmancî'ye çevrilir; eşleşmeyen serbest metin Türkçe olarak kalır.
+/// Kurmancî'ye çevrilir; eşleşmeyen serbest metin için boş döner —
+/// sararak sahte çeviri üretmez.
 library;
 
 class _Rule {
@@ -288,5 +289,13 @@ String explanationToKu(String explanation) {
       if (match != null) return _productQuotes(rule.build(match));
     }
   }
-  return _productQuotes('Şirove: $text');
+  // Eşleşmeyen serbest metin artık `Şirove: <Türkçe>` diye SARILMAZ.
+  // Sarmak çevirmek değildi: önek Kurmancî sayılıyor, geri kalanı Türkçe
+  // kalıyordu — hem oyuncuya Türkçe cümle gösteriliyordu hem de ayna
+  // bekçi `all_banks_quality_test` bu önekle kandırılıyordu (2026-09).
+  // Boş dönüş mevcut kurala uyar: "boş dönüş açıklama gösterme demektir"
+  // (`QuizQuestion.getLocalizedExplanation`). Çevrilmemiş açıklamayı
+  // dürüstçe gizlemek, yanlış etiketle göstermekten iyidir; kalan borç
+  // banka tarafında doldurulmayı bekler.
+  return '';
 }

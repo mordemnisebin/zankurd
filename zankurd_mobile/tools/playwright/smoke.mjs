@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { chromium } from 'playwright';
 
 const targetUrl = process.env.ZANKURD_URL ?? 'http://127.0.0.1:8093';
+const expectSocialBackend = process.env.ZANKURD_EXPECT_SOCIAL === '1';
 const screenshotDir =
   process.env.ZANKURD_SCREENSHOT_DIR ?? '/private/tmp/zankurd-playwright';
 
@@ -55,16 +56,28 @@ await page.waitForFunction(
   () => document.querySelectorAll('flutter-view').length > 0,
   { timeout: 30_000 },
 );
-await expectText('Kurmancî hîn bibe, pêş bikeve.');
+// Slogan (onbTagline) kalktı; ilk sayfanın gövde cümlesi (onbLearnBody).
+await expectText('Bi pirsên kurt peyvan hîn bibe, çandê nas bike.');
 await screenshot('01-onboarding');
 
+const ageGateLabel = 'Ez ji 13 salî mezintir im';
+const ageGate = page.getByRole('checkbox', { name: ageGateLabel });
+await ageGate.waitFor({ state: 'visible', timeout: 15_000 });
+await ageGate.click();
+await page.waitForFunction(
+  (label) =>
+    [...document.querySelectorAll('[role="checkbox"]')].some(
+      (node) =>
+        node.getAttribute('aria-label') === label &&
+        node.getAttribute('aria-checked') === 'true',
+    ),
+  ageGateLabel,
+  { timeout: 15_000 },
+);
 await clickText('Bidomîne');
-await expectText('Pêşbirkê bike û bi ser keve');
-await screenshot('02-onboarding-play');
-
 await clickText('Dest pê bike');
 await expectText('Bi xêr hatî ZanKurdê');
-await screenshot('03-sign-in');
+await screenshot('02-sign-in');
 
 await clickText('Wek mêvan bidomîne');
 await expectText('Navê te di lîstikê de çi be?');
@@ -73,20 +86,35 @@ if ((await nameInput.count()) !== 1) {
   throw new Error('Oyuncu adı alanı tek ve erişilebilir değil.');
 }
 await nameInput.fill('Rojda');
-await clickText('Dest Pê Bike');
-await expectText('Rojbaş, Rojda!');
-await screenshot('04-home');
+await clickText('Dest pê bike');
+await expectText('Dersa yekem');
+await screenshot('03-first-session-home');
 
-// Kategori kartı gerçek rotayı açmalı ve yayın dışı kategori sızmamalı.
-await clickText('Mijar hilbijêre. Kategoriyekê hilbijêre û dest pê bike');
-await expectText('Kategorî');
-if ((await bodyText()).includes('Sînema')) {
-  throw new Error('Yayın dışı Sînema kategorisi kategori ekranına sızdı.');
+// Yeni kullanıcıda önce kısa 5 soruluk başlangıç tamamlanır. Destek kartları
+// ancak bundan sonra geri gelir; smoke eski tam ana sayfayı beklememeli.
+await clickText('Dest pê bike');
+await page.getByRole('button', { name: /^A: / }).waitFor({ timeout: 15_000 });
+const tutorialSkip = page.getByRole('button', { name: 'Derbas bike', exact: true });
+if (await tutorialSkip.count()) {
+  await tutorialSkip.click();
 }
-await screenshot('05-categories');
-await page.mouse.click(52, 72);
-await page.waitForTimeout(900);
-await expectText('Rojbaş, Rojda!');
+for (let i = 0; i < 5; i++) {
+  await page.getByRole('button', { name: /^A: / }).click();
+  await page.waitForTimeout(400);
+  await clickText(i === 4 ? 'Biqedîne' : 'Bidomîne');
+  await page.waitForTimeout(700);
+}
+await expectText('Hînbûn temam bû');
+await screenshot('04-first-result');
+await clickText('Vegere');
+await expectText('Erkê îro');
+await screenshot('05-home');
+
+// Konular ana sayfadaki "Mijar" ızgarasındadır (ayrı "Hemû mijar" /
+// "Kategorî" ekranı kalktı); yayın dışı konu sızmamalı.
+await expectText('Mijar');
+await expectContains('Sînema');
+await screenshot('06-topics');
 
 // Flutter web NavigationBar hedefleri canvas/semantik birleşiminde metin
 // seçicisi sunmuyor. Sabit mobil viewport'ta hedefe dokunup açılan ekranın
@@ -95,20 +123,29 @@ await expectText('Rojbaş, Rojda!');
 await page.mouse.click(145, 808);
 await page.waitForTimeout(1_200);
 await expectContains('Pêşbirka bilez');
-await page.getByText('Pêşbirka bilez', { exact: false }).first().click();
-await page.waitForTimeout(900);
-await expectContains('Şerê 1vs1');
-if ((await bodyText()).includes('Sînema')) {
-  throw new Error('Yayın dışı Sînema kategorisi eşleşme girişine sızdı.');
+if (expectSocialBackend) {
+  const quickDuel = page.getByRole('button', { name: /Pêşbirka bilez/ });
+  await quickDuel.waitFor({ state: 'visible', timeout: 15_000 });
+  await quickDuel.click();
+  await page.waitForTimeout(900);
+  await expectContains('Hevrikiya rasthatî');
+  await screenshot('07-matchmaking');
+  await page.mouse.click(20, 28);
+  await page.waitForTimeout(900);
+  await expectContains('Pêşbirka bilez');
+} else {
+  await expectContains('Pêşkêşkar negihîştbar e');
+  const quickDuel = page.getByRole('button', { name: /Pêşbirka bilez/ });
+  await quickDuel.waitFor({ state: 'visible', timeout: 15_000 });
+  if (await quickDuel.isEnabled()) {
+    throw new Error('Çevrimdışı smoke turunda hızlı düello etkin olmamalı.');
+  }
+  await screenshot('07-play-hub-offline');
 }
-await screenshot('06-matchmaking');
-await page.mouse.click(20, 28);
-await page.waitForTimeout(900);
-await expectContains('Pêşbirka bilez');
 
 await page.mouse.click(245, 808);
 await page.waitForTimeout(900);
-await expectContains('Tabloya Pêşderiyan');
+await expectContains('Rêzbendî');
 await screenshot('07-leaderboard');
 
 await page.mouse.click(340, 808);

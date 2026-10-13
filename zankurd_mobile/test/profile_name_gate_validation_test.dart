@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
 /// 2026-07-22 canlı UX denetimi (P1-C): boş adla "Oyuna Başla"ya basınca
 /// çıkan "Ad en az 2 karakter olmalı" uyarısı, geçerli bir ad yazıldıktan
-/// sonra da ekranda kalıyordu — TextFormField varsayılan olarak yalnız
+/// sonra da ekranda kalıyordu — SahneField varsayılan olarak yalnız
 /// Form.validate() ile güncelleniyor.
 void main() {
   testWidgets('geçerli ad yazılınca hata durumu temizlenir', (tester) async {
@@ -143,13 +144,13 @@ void main() {
 
       final field = find.byKey(const ValueKey('player-name-field'));
       expect(field, findsOneWidget);
-      expect(tester.widget<TextFormField>(field).controller!.text, isEmpty);
-      expect(tester.widget<TextFormField>(field).enabled, isTrue);
+      expect(tester.widget<SahneField>(field).controller!.text, isEmpty);
+      expect(tester.widget<SahneField>(field).enabled, isTrue);
 
       repository.profileName.complete('Rojhat');
       await tester.pump();
 
-      expect(tester.widget<TextFormField>(field).controller!.text, 'Rojhat');
+      expect(tester.widget<SahneField>(field).controller!.text, 'Rojhat');
     },
   );
 
@@ -172,7 +173,7 @@ void main() {
     repository.profileName.complete('Rojhat');
     await tester.pump();
 
-    expect(tester.widget<TextFormField>(field).controller!.text, 'Dilan');
+    expect(tester.widget<SahneField>(field).controller!.text, 'Dilan');
   });
 }
 

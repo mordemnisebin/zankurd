@@ -3,9 +3,11 @@ import 'dart:ui' show SemanticsAction;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
 import 'package:zankurd_mobile/src/widgets/app_row_card.dart';
+import 'package:zankurd_mobile/src/widgets/mode_card.dart';
 import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 
 double _contrast(Color first, Color second) {
@@ -19,7 +21,9 @@ double _contrast(Color first, Color second) {
 void main() {
   test('light and dark themes keep one card geometry language', () {
     for (final theme in [AppTheme.light(), AppTheme.dark()]) {
-      final shape = theme.cardTheme.shape! as RoundedRectangleBorder;
+      // Şahnê (2026-09-29): köşe yuvarlak değil kesik (45° pah); kartlar
+      // iki temada da aynı L pahını taşır.
+      final shape = theme.cardTheme.shape! as BeveledRectangleBorder;
 
       expect(shape.borderRadius, BorderRadius.circular(AppRadius.card));
       expect(theme.cardTheme.elevation, 0);
@@ -105,11 +109,134 @@ void main() {
     semanticsHandle.dispose();
   });
 
-  test('identity header keeps its white hierarchy readable', () {
-    for (final color in AppTheme.identityHeaderGradient.colors) {
-      expect(_contrast(Colors.white, color), greaterThanOrEqualTo(4.5));
-    }
-  });
+  testWidgets(
+    // 2026-09-29 Şahnê: sayfa adı bir başlık kartında tekrarlanmaz — başlık
+    // bloğunun kart zemini yok. Bekçi eskiden "sakin ton yüzey + kenar"
+    // istiyordu; şimdi korunan şey: gradyan/gölge yok, zemin yok, yalnız
+    // küçük ikon karosu rolün tonunu taşır, metinler belirteç renklerinde.
+    'identity header is a plain title block: no card, no gradient',
+    (tester) async {
+      for (final theme in [AppTheme.light(), AppTheme.dark()]) {
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: theme,
+            home: const Scaffold(
+              body: ScreenIdentityHeader(
+                title: 'Kurmancî hîn bibe',
+                subtitle: 'Riya xwe bi aramî û bi gavên zelal bidomîne.',
+                accent: AppTheme.playGreen,
+                icon: Icons.school_outlined,
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        final header = find.byType(ScreenIdentityHeader);
+        final context = tester.element(header);
+        final t = SahneTokens.of(context);
+        final boxes = tester
+            .widgetList<DecoratedBox>(
+              find.descendant(of: header, matching: find.byType(DecoratedBox)),
+            )
+            .toList();
+        // Tek süs: 44'lük ikon karosu (Zimrût tonu, M pah). Başlık kartı yok.
+        expect(boxes, hasLength(1));
+        final tile = boxes.single.decoration as ShapeDecoration;
+        expect(tile.gradient, isNull);
+        expect(tile.shadows ?? const <BoxShadow>[], isEmpty);
+        expect(tile.color, t.learnTint);
+        expect(
+          tester.getSize(find.byWidget(boxes.single)).height,
+          lessThan(tester.getSize(header).height + 1),
+        );
+
+        final title = tester.widget<Text>(find.text('Kurmancî hîn bibe'));
+        final subtitle = tester.widget<Text>(
+          find.text('Riya xwe bi aramî û bi gavên zelal bidomîne.'),
+        );
+        expect(title.style?.color, t.tx);
+        expect(subtitle.style?.color, t.tx2);
+      }
+    },
+  );
+
+  testWidgets(
+    'identity header lets long Kurmancî copy wrap instead of truncating it',
+    (tester) async {
+      const longTitle = 'Rêwitiya hînbûna Kurmancî ya rojane û pêşketina te';
+      const longSubtitle =
+          'Bi dersên kurt, dubarekirina jîr û gavên zelal her roj pêş bikeve.';
+
+      await tester.binding.setSurfaceSize(const Size(320, 520));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.light(),
+          home: const Scaffold(
+            body: Padding(
+              padding: EdgeInsets.all(12),
+              child: ScreenIdentityHeader(
+                title: longTitle,
+                subtitle: longSubtitle,
+                accent: AppTheme.playGreen,
+                icon: Icons.school_outlined,
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final title = tester.widget<Text>(find.text(longTitle));
+      final subtitle = tester.widget<Text>(find.text(longSubtitle));
+      expect(title.maxLines, isNull);
+      expect(title.overflow, isNull);
+      expect(subtitle.maxLines, isNull);
+      expect(subtitle.overflow, isNull);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'shared section heading keeps one quiet hierarchy and trailing action',
+    (tester) async {
+      final semanticsHandle = tester.ensureSemantics();
+
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.light(),
+          home: Scaffold(
+            body: ScreenSectionHeading(
+              title: 'Riyên hînbûnê',
+              subtitle: 'Rêya ku ji bo te baştir e hilbijêre û bidomîne.',
+              trailing: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.tune_rounded),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final heading = find.byType(ScreenSectionHeading);
+      final semantics = tester.getSemantics(heading).getSemanticsData();
+      expect(semantics.flagsCollection.isHeader, isTrue);
+      expect(find.byIcon(Icons.tune_rounded), findsOneWidget);
+
+      final title = tester.widget<Text>(find.text('Riyên hînbûnê'));
+      final subtitle = tester.widget<Text>(
+        find.text('Rêya ku ji bo te baştir e hilbijêre û bidomîne.'),
+      );
+      expect(title.maxLines, isNull);
+      expect(title.overflow, isNull);
+      expect(subtitle.maxLines, isNull);
+      expect(subtitle.overflow, isNull);
+
+      semanticsHandle.dispose();
+    },
+  );
 
   testWidgets('row cards preserve a comfortable tap target and action', (
     tester,
@@ -151,6 +278,65 @@ void main() {
 
     semanticsHandle.dispose();
   });
+
+  testWidgets(
+    'navigation cards let long Kurmancî copy breathe on narrow screens',
+    (tester) async {
+      const modeTitle = 'Bi hevalên xwe re pêşbaziya taybet saz bike';
+      const rowTitle = 'Dersên ku ji bo pêşketina te tên pêşniyarkirin';
+      const rowSubtitle =
+          'Ji cihê ku rawestiyayî bidomîne û mijarên xwe dubare bike.';
+
+      await tester.binding.setSurfaceSize(const Size(320, 900));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: AppTheme.light(),
+          home: MediaQuery(
+            data: const MediaQueryData(textScaler: TextScaler.linear(1.2)),
+            child: Scaffold(
+              body: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ModeCard(
+                      icon: Icons.people_outline,
+                      accent: AppTheme.playGreen,
+                      title: modeTitle,
+                      subtitle: 'Odeyek ava bike û bi hev re bilîze.',
+                      onTap: () {},
+                      emphasis: ModeCardEmphasis.secondary,
+                    ),
+                    const SizedBox(height: 12),
+                    AppRowCard(
+                      icon: Icons.menu_book_outlined,
+                      accent: AppTheme.playGreen,
+                      title: rowTitle,
+                      subtitle: rowSubtitle,
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final mode = tester.widget<Text>(find.text(modeTitle));
+      final row = tester.widget<Text>(find.text(rowTitle));
+      final supporting = tester.widget<Text>(find.text(rowSubtitle));
+      expect(mode.maxLines, isNull);
+      expect(mode.overflow, isNull);
+      expect(row.maxLines, isNull);
+      expect(row.overflow, isNull);
+      expect(supporting.maxLines, isNull);
+      expect(supporting.overflow, isNull);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   testWidgets('theme text keeps AA contrast on its primary surface', (
     tester,

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
-import '../theme/app_theme.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../theme/app_icons.dart';
+import '../theme/sahne.dart';
 
 /// Yabancı bir oyuncunun avatarı/adı gösterilen yerlerde bildir/engelle.
 ///
@@ -81,10 +81,11 @@ class _PlayerModerationButtonState extends State<PlayerModerationButton> {
 
     final action = await showModalBottomSheet<String>(
       context: context,
-      backgroundColor: AppTheme.surfaceColor(context),
-      shape: const RoundedRectangleBorder(
+      // 2026-09-29 Şahnê: alt perde Perde (`s1`), üst köşeler L pah.
+      backgroundColor: SahneTokens.of(context).s1,
+      shape: const BeveledRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(AppRadius.card),
+          top: Radius.circular(SahneShape.lValue),
         ),
       ),
       builder: (sheetContext) => SafeArea(
@@ -145,7 +146,7 @@ class _PlayerModerationButtonState extends State<PlayerModerationButton> {
       key: const ValueKey('player-moderation-button'),
       onPressed: _busy ? null : _openSheet,
       // Dokunma hedefi erişilebilirlik alt sınırının altına düşmemeli.
-      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+      constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
       padding: EdgeInsets.zero,
       iconSize: widget.compact ? 18 : 20,
       tooltip: context.t(K.reportProfileTitle),
@@ -153,7 +154,7 @@ class _PlayerModerationButtonState extends State<PlayerModerationButton> {
       // okuyucu için de amacı açık.
       icon: Icon(
         AppIcons.flag,
-        color: AppTheme.textMutedColor(context),
+        color: SahneTokens.of(context).tx2,
         semanticLabel: context.t(K.reportProfileTitle),
       ),
     );

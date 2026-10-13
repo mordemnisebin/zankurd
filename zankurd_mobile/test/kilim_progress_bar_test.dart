@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/widgets/kilim_progress_bar.dart';
 
 /// Kilim ilerleme çubuğunun görsel sözleşmesi.
@@ -23,26 +24,56 @@ void main() {
     );
   }
 
-  testWidgets('dolu kısımda kilim motifi çizilir', (tester) async {
+  // 2026-09-29 Şahnê: kilim deseni çubuktan kaldırıldı — Şahnê'de tek
+  // sahiplenilmiş motif göz şerididir ve yalnız sahne kartının üst
+  // kenarında ve sonuç puanının altında durur. Motif bekçileri yerine
+  // çubuğun Şahnê sözleşmesi sabitlenir: S pah, iz Ray, dolgu rol rengi.
+  testWidgets('Şahnê ilerleme çubuğu: S pah, Ray iz, öğrenme dolgusu', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       wrap(const KilimProgressBar(value: 0.6, height: 10)),
     );
 
     expect(find.byKey(const ValueKey('kilim-progress-track')), findsOneWidget);
     expect(find.byKey(const ValueKey('kilim-progress-fill')), findsOneWidget);
-    // Asıl iddia: desen gerçekten var.
-    expect(find.byKey(const ValueKey('kilim-progress-motif')), findsOneWidget);
+    expect(find.byKey(const ValueKey('kilim-progress-motif')), findsNothing);
+
+    final context = tester.element(
+      find.byKey(const ValueKey('kilim-progress-track')),
+    );
+    final t = SahneTokens.of(context);
+    final track = tester.widget<Container>(
+      find.byKey(const ValueKey('kilim-progress-track')),
+    );
+    final decoration = track.decoration! as ShapeDecoration;
+    expect(decoration.color, t.s3);
+    expect(decoration.shape, SahneShape.s);
+    final fill = tester.widget<DecoratedBox>(
+      find.descendant(
+        of: find.byKey(const ValueKey('kilim-progress-fill')),
+        matching: find.byType(DecoratedBox),
+      ),
+    );
+    expect((fill.decoration as ShapeDecoration).color, t.learnBar);
   });
 
-  testWidgets('ince çubukta motif çizilmez', (tester) async {
-    // 6pt altında baklavalar birbirine girip dolguyu gri bir bulanıklığa
-    // çeviriyor; o durumda düz dolgu daha okunur.
+  testWidgets('Agir verilse de dolgu Agir olmaz (rolüne çevrilir)', (
+    tester,
+  ) async {
     await tester.pumpWidget(
-      wrap(const KilimProgressBar(value: 0.6, height: 4)),
+      wrap(const KilimProgressBar(value: 0.6, color: AppTheme.brand)),
     );
-
-    expect(find.byKey(const ValueKey('kilim-progress-fill')), findsOneWidget);
-    expect(find.byKey(const ValueKey('kilim-progress-motif')), findsNothing);
+    final fill = tester.widget<DecoratedBox>(
+      find.descendant(
+        of: find.byKey(const ValueKey('kilim-progress-fill')),
+        matching: find.byType(DecoratedBox),
+      ),
+    );
+    final t = SahneTokens.of(
+      tester.element(find.byKey(const ValueKey('kilim-progress-fill'))),
+    );
+    expect((fill.decoration as ShapeDecoration).color, t.gold);
   });
 
   testWidgets('renkli zeminde iz rengi dışarıdan verilebilir', (tester) async {
@@ -63,7 +94,7 @@ void main() {
     final track = tester.widget<Container>(
       find.byKey(const ValueKey('kilim-progress-track')),
     );
-    final decoration = track.decoration! as BoxDecoration;
+    final decoration = track.decoration! as ShapeDecoration;
     expect(decoration.color, Colors.white.withValues(alpha: 0.22));
   });
 

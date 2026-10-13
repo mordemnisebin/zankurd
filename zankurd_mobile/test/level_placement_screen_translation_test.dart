@@ -45,23 +45,22 @@ void main() {
     PlacementStore.resetInstance();
   });
 
-  testWidgets(
-    'Türkçe modda çevirisi olan soru Türkçe metinle gösterilir',
-    (tester) async {
-      await tester.pumpWidget(
-        _wrap(
-          LevelPlacementScreen(
-            repository: _TranslatedQuestionRepository(),
-            questionCount: 1,
-          ),
+  testWidgets('Türkçe modda çevirisi olan soru Türkçe metinle gösterilir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        LevelPlacementScreen(
+          repository: _TranslatedQuestionRepository(),
+          questionCount: 1,
         ),
-      );
-      await tester.pumpAndSettle();
+      ),
+    );
+    await tester.pumpAndSettle();
 
-      expect(find.text('Hangi kelime doğru?'), findsOneWidget);
-      expect(find.text('Doğru'), findsOneWidget);
-      expect(find.text('Kîjan peyv rast e?'), findsNothing);
-      expect(find.text('Rast'), findsNothing);
-    },
-  );
+    expect(find.text('Hangi kelime doğru?'), findsOneWidget);
+    expect(find.text('Doğru'), findsOneWidget);
+    expect(find.text('Kîjan peyv rast e?'), findsNothing);
+    expect(find.text('Rast'), findsNothing);
+  });
 }

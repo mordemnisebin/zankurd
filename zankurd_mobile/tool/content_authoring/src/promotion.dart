@@ -253,8 +253,7 @@ List<String> _rejectionReasons(
   } else if (candidate.confidence! < 0.9) {
     reasons.add('low_confidence');
   }
-  if (!_verified(candidate.sourceVerified)) reasons.add('unverified_source');
-  if (!_httpsUrl(candidate.sourceUrl)) reasons.add('missing_source_url');
+  // Kaynak künyesi giriş şartı değil. Varsa saklanır; yoksa aday elenmez.
   if (!_publishableStatus(candidate.publicationStatus)) {
     reasons.add('unpublishable_status');
   }
@@ -346,18 +345,6 @@ bool _wholeWord(String text, String word) => RegExp(
   r'(^|[^\p{L}\p{N}_])' + RegExp.escape(word) + r'($|[^\p{L}\p{N}_])',
   unicode: true,
 ).hasMatch(text);
-
-bool _verified(String value) => const {
-  'verified',
-  'doğrulandı',
-  'dogrulandi',
-  'evet',
-  'yes',
-  'true',
-}.contains(normalizeText(value));
-
-bool _httpsUrl(String value) =>
-    RegExp(r'^https://[^\s]+$').hasMatch(value.trim());
 
 bool _publishableStatus(String value) =>
     const {'reviewed', 'approved', 'published'}.contains(normalizeText(value));

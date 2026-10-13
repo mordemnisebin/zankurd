@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/providers/analytics_consent_provider.dart';
+import 'package:zankurd_mobile/src/utils/error_reporter.dart';
 
 /// Çağrılırsa testi düşürür — "kullanım analizi" anahtarı kapalıyken bu
 /// uca hiç istek gitmemeli.
@@ -75,9 +77,7 @@ void main() {
 
       final result = await repo.logAnalyticsEvent('quiz_complete', null);
       expect(result, isTrue);
-      expect(httpClient.requestedPaths, [
-        '/rest/v1/rpc/log_analytics_event',
-      ]);
+      expect(httpClient.requestedPaths, ['/rest/v1/rpc/log_analytics_event']);
     });
 
     test('setEnabled(false) statik bayrağı da kapatır', () async {
@@ -101,6 +101,35 @@ void main() {
     expect(reloaded.enabled, isTrue);
   });
 
+  test(
+    'consent sonradan açılınca fatal hata yakalayıcıları da bağlanır',
+    () async {
+      SharedPreferences.setMockInitialValues({});
+      final originalFlutterHandler = FlutterError.onError;
+      final originalPlatformHandler = PlatformDispatcher.instance.onError;
+      void sentinelFlutterHandler(FlutterErrorDetails details) {}
+      bool sentinelPlatformHandler(Object error, StackTrace stack) => false;
+      FlutterError.onError = sentinelFlutterHandler;
+      PlatformDispatcher.instance.onError = sentinelPlatformHandler;
+      addTearDown(() {
+        ErrorReporter.resetFatalHandlersForTesting();
+        FlutterError.onError = originalFlutterHandler;
+        PlatformDispatcher.instance.onError = originalPlatformHandler;
+        ErrorReporter.crashlyticsEnabled = false;
+      });
+
+      final provider = await AnalyticsConsentProvider.load();
+      await provider.setEnabled(true);
+
+      expect(ErrorReporter.crashlyticsEnabled, isTrue);
+      expect(FlutterError.onError, isNot(same(sentinelFlutterHandler)));
+      expect(
+        PlatformDispatcher.instance.onError,
+        isNot(same(sentinelPlatformHandler)),
+      );
+    },
+  );
+
   test('analytics consent defaults to off and persists a user choice', () {
     final provider = File(
       'lib/src/providers/analytics_consent_provider.dart',
@@ -118,6 +147,13 @@ void main() {
 
     expect(main, contains('if (analyticsConsentProvider.enabled)'));
     expect(settings, contains('analytics-consent-switch'));
-    expect(settings, contains('AnalyticsService.instance.initialize()'));
+    expect(
+      settings,
+      contains('AnalyticsService.instance.initialize(enabled: true)'),
+    );
+    expect(
+      main,
+      contains('AnalyticsService.instance.initialize(enabled: true)'),
+    );
   });
 }

@@ -59,8 +59,8 @@ void main() {
       );
       expect(
         src,
-        contains('minWidth: 44'),
-        reason: 'bildir düğmesi 44pt dokunma hedefini karşılamıyor',
+        contains('minWidth: 48'),
+        reason: 'bildir düğmesi 48dp dokunma hedefini karşılamıyor',
       );
     });
   });

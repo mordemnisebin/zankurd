@@ -36,6 +36,8 @@ class QuestionMetadata {
     this.reviewedBy,
     this.reviewedAt,
     this.lastContentCheckAt,
+    this.learningLessonId,
+    this.productiveRecallEligible = false,
     this.qualityVersion = 0,
     this.reportCount = 0,
   });
@@ -50,6 +52,19 @@ class QuestionMetadata {
   final String? reviewedBy;
   final String? reviewedAt;
   final String? lastContentCheckAt;
+
+  /// Öğrenme modundaki belirli bir dersle açık editöryal eşleşme.
+  ///
+  /// `null` olduğunda soru için ders ilişkisi *çıkarılmaz*. Bu alan yalnız
+  /// içerik gerçekten o derse bağlandığında doldurulur; Mini Quiz böylece
+  /// geniş kategori havuzundan rastgele bir soruyu "ders sorusu" diye
+  /// sunmaz.
+  final String? learningLessonId;
+
+  /// Öğrenme modunda seçenekleri kaldırıp yazmalı hatırlamaya çevirmeye
+  /// editörün açıkça izin verdiği soru. Varsayılan `false`: MC içeriği
+  /// prompt anlamı denetlenmeden otomatik olarak dönüştürülmez.
+  final bool productiveRecallEligible;
   final int qualityVersion;
   final int reportCount;
 
@@ -61,8 +76,20 @@ class QuestionMetadata {
       reviewedBy == null &&
       reviewedAt == null &&
       lastContentCheckAt == null &&
+      learningLessonId == null &&
+      !productiveRecallEligible &&
       qualityVersion == 0 &&
       reportCount == 0;
+
+  /// Oyuncuya künye göstermek için en az bir dolu alan gerekir.
+  ///
+  /// İkisi de boşken "kaynak" satırı çizilmez: boş künye, kaynaklı
+  /// görünmekten beterdir (A17).
+  bool get hasCitableSource {
+    final title = sourceTitle?.trim() ?? '';
+    final ref = sourceReference?.trim() ?? '';
+    return title.isNotEmpty || ref.isNotEmpty;
+  }
 
   static int _asInt(Object? v, int fallback) {
     if (v is int) return v;
@@ -87,6 +114,8 @@ class QuestionMetadata {
       reviewedBy: _asString(json['reviewedBy']),
       reviewedAt: _asString(json['reviewedAt']),
       lastContentCheckAt: _asString(json['lastContentCheckAt']),
+      learningLessonId: _asString(json['learningLessonId']),
+      productiveRecallEligible: json['productiveRecallEligible'] == true,
       qualityVersion: _asInt(json['qualityVersion'], 0),
       reportCount: _asInt(json['reportCount'], 0),
     );
@@ -100,11 +129,19 @@ class QuestionMetadata {
     if (reviewedBy != null) 'reviewedBy': reviewedBy,
     if (reviewedAt != null) 'reviewedAt': reviewedAt,
     if (lastContentCheckAt != null) 'lastContentCheckAt': lastContentCheckAt,
+    if (learningLessonId != null) 'learningLessonId': learningLessonId,
+    if (productiveRecallEligible)
+      'productiveRecallEligible': productiveRecallEligible,
     if (qualityVersion != 0) 'qualityVersion': qualityVersion,
     if (reportCount != 0) 'reportCount': reportCount,
   };
 
-  QuestionMetadata copyWith({ReviewStatus? reviewStatus, int? reportCount}) {
+  QuestionMetadata copyWith({
+    ReviewStatus? reviewStatus,
+    String? learningLessonId,
+    bool? productiveRecallEligible,
+    int? reportCount,
+  }) {
     return QuestionMetadata(
       reviewStatus: reviewStatus ?? this.reviewStatus,
       dialect: dialect,
@@ -113,6 +150,9 @@ class QuestionMetadata {
       reviewedBy: reviewedBy,
       reviewedAt: reviewedAt,
       lastContentCheckAt: lastContentCheckAt,
+      learningLessonId: learningLessonId ?? this.learningLessonId,
+      productiveRecallEligible:
+          productiveRecallEligible ?? this.productiveRecallEligible,
       qualityVersion: qualityVersion,
       reportCount: reportCount ?? this.reportCount,
     );

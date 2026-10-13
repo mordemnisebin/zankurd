@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/async_duel.dart';
 import '../models/avatar_identity.dart';
 import '../models/contest.dart';
 import '../models/friend.dart';
@@ -19,23 +20,222 @@ import '../game/speed_score.dart';
 import '../models/room_message.dart';
 import '../utils/error_reporter.dart';
 import '../models/tournament.dart';
+import '../models/referral_result.dart';
 import '../utils/coin_calculator.dart';
 import 'curated_question_bank.dart';
+import 'learning_assessment_bank.dart';
+import 'learning_lesson_aliases.dart';
 import 'question_bank_loader.dart';
 import 'seen_question_store.dart';
+import 'subcategory_level_plan.dart';
+import 'durable_write.dart';
 import 'zankurd_repository.dart';
-import '../config/subcategory_config.dart';
 import '../config/category_visibility.dart';
 import '../services/question_set_policy.dart';
 import '../services/question_content_policy.dart';
 
+/// [MockZanKurdRepository.addPendingAsyncDuelForTesting] ile kurulan, henüz
+/// kimse tarafından alınmamış "açık" düello.
+///
+/// Gerçek üründe bekleyen taraf başka bir kullanıcının cihazıdır. Tek
+/// kullanıcılı sahte depoda gerçek bir ikinci oyuncu yok; bu kayıt testin
+/// önceden "oynanmış" saydığı rakip tarafı temsil eder — sonraki
+/// `startAsyncDuel` çağrısı bunu tüketir ve çağıranı `opponent` yapar.
+class _MockPendingAsyncDuel {
+  _MockPendingAsyncDuel({
+    required this.category,
+    required this.opponentName,
+    required this.questions,
+    required this.opponentCorrect,
+    required this.opponentMs,
+  });
+
+  final String? category;
+  final String opponentName;
+  final List<QuizQuestion> questions;
+  final int opponentCorrect;
+  final int opponentMs;
+}
+
+/// Tek bir sırayla düellonun bellek içi durumu.
+///
+/// Sahte depo tek bir yerel oyuncuyu temsil eder; sunucudaki simetrik
+/// creator/opponent satırları yerine yalnız "ben" (bu düelloda benim
+/// oynadığım taraf, [myCorrect]/[myMs]) ve "öteki" (rakip, [otherCorrect]/
+/// [otherMs]) tutulur. [questions] GERÇEK doğru cevaplarla tutulur ve asla
+/// dışarı verilmez — [hiddenQuestions] her zaman gizli kopyayı döner.
+class _MockAsyncDuel {
+  _MockAsyncDuel({
+    required this.id,
+    required this.role,
+    required this.category,
+    required this.questions,
+    required this.opponentName,
+    required this.createdAt,
+    required this.expiresAt,
+    this.otherCorrect,
+    this.otherMs,
+  });
+
+  final String id;
+  final AsyncDuelRole role;
+  final String? category;
+  final List<QuizQuestion> questions;
+  final String? opponentName;
+  final DateTime createdAt;
+  final DateTime expiresAt;
+
+  final Set<int> answeredIndices = {};
+  int myCorrect = 0;
+  int myMs = 0;
+
+  /// Rakip bitirmeden `null`dır. `role == opponent` olan düellolarda testin
+  /// önceden kurduğu (`addPendingAsyncDuelForTesting`) değerle, oluşumda
+  /// hemen dolu gelir — bu yüzden opponent akışı ilk sorudan itibaren
+  /// "eşleşmiş", son cevapta "tamamlanmış" görünür.
+  int? otherCorrect;
+  int? otherMs;
+
+  DateTime? completedAt;
+  bool seen = false;
+  bool xpAwarded = false;
+
+  bool get myFinished => answeredIndices.length >= questions.length;
+  bool get otherFinished => otherCorrect != null && otherMs != null;
+
+  AsyncDuelStatus get status {
+    if (myFinished && otherFinished) return AsyncDuelStatus.completed;
+    if (DateTime.now().toUtc().isAfter(expiresAt)) {
+      return AsyncDuelStatus.expired;
+    }
+    if (otherFinished) return AsyncDuelStatus.matched;
+    return AsyncDuelStatus.open;
+  }
+
+  List<QuizQuestion> get hiddenQuestions =>
+      questions.map((q) => q.copyWith(correctAnswer: '')).toList();
+
+  /// Son soru cevaplandığında `answerAsyncDuel`ın gömdüğü karşılaştırma.
+  AsyncDuelResult buildResult() {
+    final correctOther = otherCorrect;
+    final msOther = otherMs;
+    if (correctOther == null || msOther == null) {
+      return AsyncDuelResult(waiting: true, myCorrect: myCorrect, myMs: myMs);
+    }
+    return AsyncDuelResult(
+      waiting: false,
+      myCorrect: myCorrect,
+      myMs: myMs,
+      opponentCorrect: correctOther,
+      opponentMs: msOther,
+      outcome: _asyncDuelOutcome(
+        myCorrect: myCorrect,
+        myMs: myMs,
+        otherCorrect: correctOther,
+        otherMs: msOther,
+      ),
+    );
+  }
+}
+
+/// Sırayla düello kazananı: sunucu kuralıyla birebir aynı (bkz.
+/// `sirayla_duello_tasarim.md` § KESİN SÖZLEŞME) — çok doğru kazanır,
+/// eşitlikte toplam süresi kısa olan, o da eşitse berabere.
+AsyncDuelOutcome _asyncDuelOutcome({
+  required int myCorrect,
+  required int myMs,
+  required int otherCorrect,
+  required int otherMs,
+}) {
+  if (myCorrect != otherCorrect) {
+    return myCorrect > otherCorrect
+        ? AsyncDuelOutcome.win
+        : AsyncDuelOutcome.loss;
+  }
+  if (myMs != otherMs) {
+    return myMs < otherMs ? AsyncDuelOutcome.win : AsyncDuelOutcome.loss;
+  }
+  return AsyncDuelOutcome.draw;
+}
+
 class MockZanKurdRepository implements ZanKurdRepository {
-  MockZanKurdRepository();
+  /// [levelSeed] alt konu seviyelerinin dolgu karıştırma tohumudur; verilmezse
+  /// her depo (= her oturum) kendi rastgele tohumunu alır: dolgu oturum
+  /// içinde kararlı, oturumlar arasında farklıdır. Testler sabit verir.
+  MockZanKurdRepository({int? levelSeed})
+    : _levelSeed = levelSeed ?? Random().nextInt(0x7fffffff);
+
+  final int _levelSeed;
+
+  /// Alt konu planları (kategori|alt konu → plan). Plan, soru listesi
+  /// değişmedikçe aynıdır; `build` her çizimde çağrıldığı için ağır planı
+  /// yeniden kurmamak gerekir. Kaynak liste özdeş değilse (testler her
+  /// çağrıda yeni liste döndürür) önbellek atılır.
+  Object? _plansSource;
+  final Map<String, SubcategoryLevelPlan> _plans = {};
+
+  SubcategoryLevelPlan _subcategoryPlan(String category, String subCategory) {
+    final source = questions;
+    if (!identical(source, _plansSource)) {
+      _plans.clear();
+      _plansSource = source;
+    }
+    return _plans.putIfAbsent(
+      '$category|$subCategory',
+      () => SubcategoryLevelPlan.build(
+        standardLevels: levelsForCategory(category),
+        categoryPool: [
+          for (final q in _playableQuestions)
+            if (q.category == category) q,
+        ],
+        subCategory: subCategory,
+        seed: _levelSeed,
+      ),
+    );
+  }
+
+  /// "Bu kategorinin tamamı" satırı ([SubcategoryScreen] alt konusu
+  /// kalmayan kategoriler için gösterir); gerçek bir alt konu değildir,
+  /// kategori yolunu kullanır.
+  static const _wholeCategoryId = 'gisti';
+
+  static bool _isRealSubcategory(String? subCategory) =>
+      subCategory != null &&
+      subCategory.isNotEmpty &&
+      subCategory != _wholeCategoryId;
 
   static const _contentPolicy = QuestionContentPolicy();
 
-  List<QuizQuestion> get _playableQuestions =>
-      questions.where(_contentPolicy.isPlayable).toList(growable: false);
+  /// Oynanabilir havuz, kaynak liste DEĞİŞMEDİKÇE bir kez hesaplanır.
+  ///
+  /// Eskiden getter her çağrıda ~3.000 soruyu `isPlayable`den geçirip yeni
+  /// bir liste kuruyordu (ölçüm: JIT'te ~2 ms/çağrı). Çağıranlar yalnız
+  /// olay işleyicileri değil: `SubcategoryScreen.build` her yeniden çizimde
+  /// çağırıyordu. Kusur sessizdi — sonuç doğruydu, yalnız her çağrı aynı işi
+  /// baştan yapıyordu.
+  ///
+  /// Anahtar kaynak listenin KİMLİĞİDİR (`identical`): yükleyici
+  /// `_questions`ı yeni bir liste ile değiştirdiğinde (`load`,
+  /// `setQuestionsForTest`) ya da bir test `questions`ı geçersiz kıldığında
+  /// kimlik değişir ve önbellek kendiliğinden düşer. `isPlayable` saftır
+  /// (sabit gizli-kategori kümesi, sabit emekli kimlik kümesi, değişmez
+  /// soru) — aynı liste aynı sonucu verir.
+  List<QuizQuestion>? _playableCache;
+  List<QuizQuestion>? _playableCacheSource;
+
+  List<QuizQuestion> get _playableQuestions {
+    final source = questions;
+    final cached = _playableCache;
+    if (cached != null && identical(_playableCacheSource, source)) {
+      return cached;
+    }
+    final playable = List<QuizQuestion>.unmodifiable(
+      source.where(_contentPolicy.isPlayable),
+    );
+    _playableCache = playable;
+    _playableCacheSource = source;
+    return playable;
+  }
 
   static const _allCategories = <String>[
     'Ziman',
@@ -53,6 +253,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // kapatılmak yerine dolduruldu; sorular kavramla birlikte kavramın
     // Kurmancî karşılığını da öğretiyor.
     'Teknolojî',
+    // 2026-09-30: Kürt kategorilerinden SONRA gelir. Kürtlerle bağı olmayan
+    // nötr genel bilgi (dünya sineması/coğrafyası/tarih) kendi adıyla ayrı
+    // durur; ürünün ~%70'i Kürt içeriği, ~%30'u bu tür genel bilgidir.
+    'Cîhan',
   ];
 
   @override
@@ -99,10 +303,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
 
   @override
   Future<String?> getPlayerTag() async {
-    // Çevrimdışı depoda sabit bir kod: ekranın kodu nasıl gösterdiği
-    // testlerde ve turda görünür olsun, ama gerçek bir kodmuş gibi
-    // davranmasın.
-    return 'DEMO';
+    // 2026-09-29 doğallık (K10): burada sabit 'DEMO' dönüyordu ve arkadaş
+    // ekranı onu paylaşılabilir bir davet kodu düğmesi olarak ("DEMO")
+    // çiziyordu; profil de "ZK-DEMO" yazıyordu. Kimsenin kullanamayacağı
+    // bir kod, gerçek bir kod gibi sunuluyordu. Sunucu kimliği olmayan
+    // depo kod üretmez (`OfflineZanKurdRepository` gibi): düğme görünmez,
+    // "Davet kodu gir" kalır. Kodun nasıl göründüğünü ekran turu kendi
+    // hikâyesiyle gösterir (`tool/screenshots/screen_tour_test.dart`).
+    return null;
   }
 
   @override
@@ -131,6 +339,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // (`_hasServerScore`) örtmüştü; sıralamada öyle bir kapı yoktu ve yalan
     // olduğu gibi göründü. Kaynağı düzeltmek iki ekranı da düzeltir: hiç
     // oynamamış oyuncunun sunucu satırı yoktur.
+    return null;
+  }
+
+  @override
+  Future<LeaderboardEntry?> getMyLeaderboardRank(
+    LeaderboardPeriod period,
+  ) async {
+    // Sahte depoda biten çevrimiçi oda yok; `loadLeaderboard` de boş
+    // liste verdiği için dönemin sıralamasında satır yoktur. Sabit satır
+    // ancak gerçekten dönem puanı geldiğinde çizilir (2026-09-30).
     return null;
   }
 
@@ -164,7 +382,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  List<QuizLevel> levelsForCategory(String category) {
+  List<QuizLevel> levelsForCategory(String category, {String? subCategory}) {
+    if (_isRealSubcategory(subCategory)) {
+      // Alt konu yolu: kart GERÇEK boyutu ve zorluk aralığını gösterir
+      // (bkz. [SubcategoryLevelPlan]).
+      return [
+        for (final level in _subcategoryPlan(category, subCategory!).levels)
+          level.toQuizLevel(),
+      ];
+    }
     return [
       QuizLevel(
         number: 1,
@@ -222,10 +448,33 @@ class MockZanKurdRepository implements ZanKurdRepository {
     required int difficultyMin,
     required int difficultyMax,
     String? subCategory,
+    int? levelNumber,
     int limit = 10,
   }) async {
+    if (_isRealSubcategory(subCategory)) {
+      // Alt konu yolu zorluk BANDIYLA değil, havuzun zorluğa göre
+      // bölünmüş çakışmasız DİLİMİYLE çalışır (bkz. [SubcategoryLevelPlan]);
+      // bu yüzden hangi seviye olduğu bilinmelidir. Seviye numarası
+      // verilmeyen eski çağrılar bandından çıkarılır.
+      final plan = _subcategoryPlan(category, subCategory!);
+      final planned = plan.level(
+        levelNumber ?? plan.numberFor(difficultyMin, difficultyMax),
+      );
+      // Plan bu alt konu için en az bir soru kuruyorsa SON SÖZÜ o söyler:
+      // boş kalan bir seviye kategori havuzuna düşmez (eskiden `pool.isEmpty
+      // ? playable` her şeyi geri getiriyor, seviyeler arası tekrarı ve
+      // konu dışı soruyu sessizce geri sokuyordu). Alt konunun hiç sorusu
+      // yoksa (bilinmeyen kimlik) kategori yoluna düşülür.
+      final hasQuestions = plan.levels.any(
+        (level) => level.candidates.isNotEmpty,
+      );
+      if (hasQuestions) {
+        return _selectFresh(planned?.candidates ?? const [], limit);
+      }
+    }
+
     final playable = _playableQuestions;
-    final byCategoryAndDifficulty = playable
+    final pool = playable
         .where(
           (question) =>
               question.category == category &&
@@ -233,26 +482,6 @@ class MockZanKurdRepository implements ZanKurdRepository {
               question.difficulty <= difficultyMax,
         )
         .toList();
-
-    var pool = byCategoryAndDifficulty;
-    if (subCategory != null) {
-      final matched = byCategoryAndDifficulty
-          .where((q) => SubcategoryConfig.getSubcategoryId(q) == subCategory)
-          .toList();
-      // Alt kategori etiketi gerçek bir alan değil, id hash'inden türetilir;
-      // eşleşen sayı limit'in altında kalırsa aynı kategori+zorluktaki diğer
-      // sorularla tamamla, seviyeyi eksik soruyla bitirme.
-      if (matched.length < limit) {
-        final matchedIds = matched.map((q) => q.id).toSet();
-        final need = limit - matched.length;
-        final fillers = byCategoryAndDifficulty
-            .where((q) => !matchedIds.contains(q.id))
-            .take(need * 3);
-        pool = [...matched, ...fillers];
-      } else {
-        pool = matched;
-      }
-    }
 
     // İlk iki basamak (Destpêk / Bingeh) bir öğrenme yolunun girişidir:
     // bankadaki `difficulty` etiketi konu zorluğunu anlatır ama okuma
@@ -262,7 +491,156 @@ class MockZanKurdRepository implements ZanKurdRepository {
     final ordered = difficultyMax <= 2
         ? QuestionSetPolicy.byReadingLoad(pool.isEmpty ? playable : pool)
         : (pool.isEmpty ? playable : pool);
-    return _selectFresh(ordered, limit);
+    final selected = await _selectFresh(ordered, limit);
+    // `byReadingLoad` üretim sorularını (boşluk doldurma, cümle kurma) bilerek
+    // sona iter; tanıma sorusu havuzu turu doldurduğu için yeni başlayan hiç
+    // yazmalı/sıralamalı soru GÖRMÜYORDU (2026-10-06, başlangıç yolu geri
+    // bildirimi). İlk iki basamakta derse bağlı bir cümle kurma (ve 10
+    // soruluk turda bir boşluk doldurma) üçüncü sıradan sonra eklenir.
+    return difficultyMax <= 2
+        ? _withBeginnerProduction(selected, pool, limit, Random())
+        : selected;
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadLearningQuizQuestions({
+    required String category,
+    required String learningLessonId,
+    int limit = 5,
+  }) async {
+    // Sunucu dersi slug'ı (`silav-u-nasin`) bir ya da birkaç yerel ders
+    // kimliğine açılır; yerel kimlik kendisidir (bkz. LearningLessonAliases).
+    final bankIds = LearningLessonAliases.bankIdsFor(learningLessonId);
+    final exact = _playableQuestions
+        .where(
+          (question) =>
+              question.category == category &&
+              bankIds.contains(question.metadata?.learningLessonId),
+        )
+        .toList(growable: false);
+
+    // Açık ders etiketli sorular önce gelir; eksik kalan yer yalnız aynı
+    // dersin yerel, editoryal sözlük çiftlerinden üretilen ölçme sorularıyla
+    // doldurulur. Geniş kategori havuzu fallback değildir: mini-quiz dersle
+    // ilgisiz genel kategori sorularını "ders sorusu" gibi gösterebiliyordu.
+    //
+    // 2026-09-30: etiketli soru varken dolgu yapılmıyordu; bir etiketli
+    // sorusu olan ders (grammar_1, animals_2) tek soruluk bir quiz
+    // açıyordu, yani bir derse soru etiketlemek o dersi KISALTIYORDU.
+    var tagged = exact.isEmpty
+        ? const <QuizQuestion>[]
+        : await _selectLessonMix(exact, limit);
+    // Aynı cümle/terimi sordurmayan tur: tekrar eden soru, aynı türden (yoksa
+    // herhangi) tekrarsız bir etiketli soruyla yerinde değiştirilir.
+    tagged = await _replaceSameTarget(tagged, exact);
+    // Yerine konan soru (aynı türde aday yoksa) ya da eksik kalan ısınma
+    // havuzu üretim sorusunu ilk iki sıraya düşürebiliyordu; CI'da
+    // everyday_1 için ara sıra kırmızıydı (2026-10-12). Isınma kuralı en
+    // sonda bir kez daha uygulanır.
+    if (tagged.length >= limit) return _recognitionFirst(tagged);
+    final taggedIds = tagged.map((q) => q.id).toSet();
+    // Birden çok bankalı ders (Selamlaşma ve Tanışma) için dolgu sırayla
+    // karıştırılır; yoksa ilk bankanın beş sorusu ikincisini hiç göstermezdi.
+    // Dolgu havuzu turdan geniş tutulur: çakışan soru turdan çıkınca
+    // (`_replaceSameTarget`) yalnız [limit] dolgu aday olursa ilk dolgu da
+    // aynı selamı sorabiliyor ve `_dropSameTarget` onu geri ekliyordu.
+    final fillerLimit = limit * 4;
+    final perBank = [
+      for (final bankId in bankIds)
+        LearningAssessmentBank.questionsFor(
+          lessonId: bankId,
+          category: category,
+          limit: fillerLimit,
+        ),
+    ];
+    final fillers = <QuizQuestion>[
+      for (var i = 0; i < fillerLimit; i++)
+        for (final bank in perBank)
+          if (i < bank.length) bank[i],
+    ].where((q) => !taggedIds.contains(q.id));
+    return _recognitionFirst(_dropSameTarget([...tagged, ...fillers], limit));
+  }
+
+  /// [chosen] içinde aynı cümle/terimi sordurandan yalnız ilkini tutar; atılan
+  /// her soru [pool]'dan, kalanlarla hedefi çakışmayan ve seçilmemiş bir
+  /// soruyla (önce aynı tür) AYNI SIRAYA konur. Çakışmayan aday yoksa soru
+  /// turdan çıkar; çağıran eksiği dersin sözlük sorularıyla doldurur
+  /// (`_dropSameTarget` gerekirse geri ekler, tur kısalmaz).
+  Future<List<QuizQuestion>> _replaceSameTarget(
+    List<QuizQuestion> chosen,
+    List<QuizQuestion> pool,
+  ) async {
+    final result = [...chosen];
+    final dropped = <int>{};
+    for (var i = 0; i < result.length; i++) {
+      final others = [
+        for (var j = 0; j < result.length; j++)
+          if (j != i) result[j],
+      ];
+      // Yalnız ÖNCEKİ sorularla çakışan atılır (ilki kalır).
+      final earlier = others.take(i).toList(growable: false);
+      if (!earlier.any(
+        (q) => QuestionSetPolicy.sharesTargetText(q, result[i]),
+      )) {
+        continue;
+      }
+      final used = result.map((q) => q.id).toSet();
+      final candidates = pool
+          .where(
+            (c) =>
+                !used.contains(c.id) &&
+                !result.any((q) => QuestionSetPolicy.sharesTargetText(q, c)),
+          )
+          .toList(growable: false);
+      if (candidates.isEmpty) {
+        dropped.add(i);
+        continue;
+      }
+      final sameType = candidates
+          .where((c) => c.type == result[i].type)
+          .toList(growable: false);
+      // İlk iki sıra ısınmadır: oraya aynı türde aday yoksa yine bir TANIMA
+      // sorusu konur. Eskiden herhangi bir aday seçiliyordu; tanıma
+      // sorusunun yerine cümle kurma gelince tur tek tanıma sorusuyla
+      // açılıyordu (everyday_1, CI 2026-10-12). Isınmada tanıma adayı
+      // yoksa soru turdan çıkar; çağıran eksiği dersin sözlük tanıma
+      // sorularıyla doldurur. Sonraki sıralarda her aday olur.
+      final warmupSlot =
+          i < 2 && !QuestionSetPolicy.isProductionTask(result[i]);
+      final recognition = candidates
+          .where((c) => !QuestionSetPolicy.isProductionTask(c))
+          .toList(growable: false);
+      if (sameType.isEmpty && warmupSlot && recognition.isEmpty) {
+        dropped.add(i);
+        continue;
+      }
+      final pick = await _selectFresh(
+        sameType.isNotEmpty
+            ? sameType
+            : (warmupSlot ? recognition : candidates),
+        1,
+      );
+      if (pick.isNotEmpty) result[i] = pick.first;
+    }
+    return [
+      for (final (index, question) in result.indexed)
+        if (!dropped.contains(index)) question,
+    ];
+  }
+
+  /// Aynı cümle/terimi sordurandan yalnız ilkini tutar; tur eksik kalırsa
+  /// atılanlar sırayla geri eklenir (kural tercihtir, turu kısaltmaz).
+  List<QuizQuestion> _dropSameTarget(List<QuizQuestion> ordered, int limit) {
+    final kept = <QuizQuestion>[];
+    final dropped = <QuizQuestion>[];
+    for (final q in ordered) {
+      if (kept.any((k) => QuestionSetPolicy.sharesTargetText(k, q))) {
+        dropped.add(q);
+      } else {
+        kept.add(q);
+      }
+    }
+    return [...kept, ...dropped].take(limit).toList(growable: false);
   }
 
   @override
@@ -272,6 +650,269 @@ class MockZanKurdRepository implements ZanKurdRepository {
         .where((question) => question.category == room.category)
         .toList(growable: false);
     return _selectFresh(pool.isEmpty ? playable : pool, room.questionCount);
+  }
+
+  // ─── Sırayla düello (async 1v1) ──────────────────────────────────────
+  //
+  // Bellek içi tam bir uygulama: gerçek bir ikinci oyuncu yok, ama sözleşme
+  // (bkz. `lib/src/models/async_duel.dart`) sunucudakiyle aynı davranır.
+  // Normal akışta her `startAsyncDuel` çağrısı yeni bir düello açar (creator)
+  // — sahte depo kendi kendini rakip yapmaz. Bir "opponent" akışını
+  // sınamak için test önce [addPendingAsyncDuelForTesting] ile bekleyen bir
+  // düello kurar; bir SONRAKİ `startAsyncDuel` bunu tüketir.
+
+  static const _asyncDuelQuestionCount = 7;
+  static const _asyncDuelDuration = Duration(hours: 48);
+
+  int _asyncDuelSeq = 0;
+  final Map<String, _MockAsyncDuel> _asyncDuels = {};
+  final List<_MockPendingAsyncDuel> _pendingAsyncDuels = [];
+
+  String? _normalizedAsyncDuelCategory(String? category) {
+    final trimmed = category?.trim();
+    return (trimmed == null || trimmed.isEmpty) ? null : trimmed;
+  }
+
+  /// 7 oynanabilir soru seçer: `option_a`..`d` şık anahtarına dökülemeyen
+  /// türler (cümle kurma, boşluk doldurma) elenir — `QuestionContentPolicy`
+  /// hileyi gizli-cevap yoluna aynı gerekçeyle kapatır (bkz.
+  /// `isPlayableWithHiddenAnswer`, oda RPC'sinin uyguladığı süzgeç).
+  List<QuizQuestion> _pickAsyncDuelQuestions(String? category) {
+    final playable = _playableQuestions;
+    final byCategory = category == null
+        ? playable
+        : playable
+              .where((question) => question.category == category)
+              .toList(growable: false);
+    final pool = byCategory.isEmpty ? playable : byCategory;
+    final shuffled = [...pool]..shuffle(Random());
+
+    final picked = <QuizQuestion>[];
+    final chosenIds = <String>{};
+    for (final question in shuffled) {
+      if (picked.length >= _asyncDuelQuestionCount) break;
+      if (!chosenIds.add(question.id)) continue;
+      final hiddenPreview = question.copyWith(correctAnswer: '');
+      if (_contentPolicy.isPlayableWithHiddenAnswer(hiddenPreview)) {
+        picked.add(question);
+      }
+    }
+    // Sunucu tarafı `No questions` diye fırlatır (bkz. sözleşme); yerel
+    // banka yeterli soru sunmuyorsa aynı hatayla düşer — sahte bir kısa
+    // tur uydurmak (7 yerine 3 soru) sonucu sessizce bozardı.
+    if (picked.length < _asyncDuelQuestionCount) {
+      throw StateError('No questions');
+    }
+    return picked;
+  }
+
+  int _clampAsyncDuelResponseMs(int responseMs) {
+    if (responseMs < 0) return 0;
+    if (responseMs > 120000) return 120000;
+    return responseMs;
+  }
+
+  @override
+  Future<AsyncDuelStart> startAsyncDuel({String? category}) async {
+    final normalizedCategory = _normalizedAsyncDuelCategory(category);
+    final pendingIndex = _pendingAsyncDuels.indexWhere(
+      (pending) =>
+          normalizedCategory == null ||
+          pending.category == null ||
+          pending.category == normalizedCategory,
+    );
+
+    final now = DateTime.now().toUtc();
+    final id = 'mock_async_duel_${++_asyncDuelSeq}';
+
+    if (pendingIndex != -1) {
+      final pending = _pendingAsyncDuels.removeAt(pendingIndex);
+      final duel = _MockAsyncDuel(
+        id: id,
+        role: AsyncDuelRole.opponent,
+        category: pending.category,
+        questions: pending.questions,
+        opponentName: pending.opponentName,
+        createdAt: now,
+        expiresAt: now.add(_asyncDuelDuration),
+        otherCorrect: pending.opponentCorrect,
+        otherMs: pending.opponentMs,
+      );
+      _asyncDuels[id] = duel;
+      return AsyncDuelStart(
+        duelId: id,
+        role: AsyncDuelRole.opponent,
+        opponentName: pending.opponentName,
+        expiresAt: duel.expiresAt,
+        questions: duel.hiddenQuestions,
+      );
+    }
+
+    final questions = _pickAsyncDuelQuestions(normalizedCategory);
+    final duel = _MockAsyncDuel(
+      id: id,
+      role: AsyncDuelRole.creator,
+      category: normalizedCategory,
+      questions: questions,
+      opponentName: null,
+      createdAt: now,
+      expiresAt: now.add(_asyncDuelDuration),
+    );
+    _asyncDuels[id] = duel;
+    return AsyncDuelStart(
+      duelId: id,
+      role: AsyncDuelRole.creator,
+      expiresAt: duel.expiresAt,
+      questions: duel.hiddenQuestions,
+    );
+  }
+
+  @override
+  Future<AsyncDuelAnswer> answerAsyncDuel({
+    required String duelId,
+    required int questionIndex,
+    required String choice,
+    required int responseMs,
+  }) async {
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw StateError('Duel not found');
+    if (DateTime.now().toUtc().isAfter(duel.expiresAt)) {
+      throw StateError('Duel expired');
+    }
+    if (questionIndex < 0 || questionIndex >= duel.questions.length) {
+      throw StateError('Invalid index');
+    }
+    // 'TIMEOUT': süre dolunca istemcinin gönderdiği anahtar. Sunucu onu
+    // geçerli ama YANLIŞ bir cevap sayar — soru kilitlenir, süre toplama
+    // eklenir. Reddedilseydi süresi dolan oyuncu o soruda takılı kalırdı.
+    const validChoices = {'A', 'B', 'C', 'D', 'TIMEOUT'};
+    if (!validChoices.contains(choice)) {
+      throw StateError('Invalid choice');
+    }
+    // İlk cevap kilitlenir — sunucudaki `(duel_id, player_id, question_index)`
+    // birincil anahtarıyla aynı davranış: aynı soru ikinci kez oynanamaz.
+    if (duel.answeredIndices.contains(questionIndex)) {
+      throw StateError('Already answered');
+    }
+
+    final question = duel.questions[questionIndex];
+    const letters = ['A', 'B', 'C', 'D'];
+    final correctIndex = question.answers.indexOf(question.correctAnswer);
+    final correctOption = (correctIndex >= 0 && correctIndex < letters.length)
+        ? letters[correctIndex]
+        : 'A';
+    final isCorrect = choice == correctOption;
+
+    duel.answeredIndices.add(questionIndex);
+    if (isCorrect) duel.myCorrect++;
+    duel.myMs += _clampAsyncDuelResponseMs(responseMs);
+
+    final answered = duel.answeredIndices.length;
+    final total = duel.questions.length;
+    final finished = answered == total;
+    if (finished && duel.otherFinished) {
+      duel.completedAt = DateTime.now().toUtc();
+    }
+
+    return AsyncDuelAnswer(
+      correct: isCorrect,
+      correctOption: correctOption,
+      answered: answered,
+      total: total,
+      finished: finished,
+      result: finished ? duel.buildResult() : null,
+    );
+  }
+
+  @override
+  Future<List<AsyncDuelSummary>> loadMyAsyncDuels() async {
+    final entries = _asyncDuels.values.toList()
+      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return [
+      for (final duel in entries)
+        AsyncDuelSummary(
+          duelId: duel.id,
+          status: duel.status,
+          role: duel.role,
+          opponentName: duel.opponentName,
+          categoryName: duel.category,
+          myCorrect: duel.myFinished ? duel.myCorrect : null,
+          opponentCorrect: duel.otherCorrect,
+          outcome: (duel.myFinished && duel.otherFinished)
+              ? _asyncDuelOutcome(
+                  myCorrect: duel.myCorrect,
+                  myMs: duel.myMs,
+                  otherCorrect: duel.otherCorrect!,
+                  otherMs: duel.otherMs!,
+                )
+              : null,
+          createdAt: duel.createdAt,
+          completedAt: duel.completedAt,
+          seen: duel.seen,
+        ),
+    ];
+  }
+
+  @override
+  Future<void> markAsyncDuelSeen(String duelId) async {
+    _asyncDuels[duelId]?.seen = true;
+  }
+
+  @override
+  Future<int> claimAsyncDuelXp(String duelId) async {
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw StateError('Duel not found');
+    // Sunucuda sonuç satırı yalnız 7 soruyu bitirene yazılır; süresi dolmuş
+    // bir düelloda bile turunu bitirmeyen oyuncuya XP yazılmaz.
+    if (!duel.myFinished) throw StateError('Duel not finished');
+    final status = duel.status;
+    if (status != AsyncDuelStatus.completed &&
+        status != AsyncDuelStatus.expired) {
+      throw StateError('Duel not finished');
+    }
+    if (duel.xpAwarded) return awardedXpTotal;
+
+    final otherCorrect = duel.otherCorrect;
+    final otherMs = duel.otherMs;
+    final outcome = (otherCorrect != null && otherMs != null)
+        ? _asyncDuelOutcome(
+            myCorrect: duel.myCorrect,
+            myMs: duel.myMs,
+            otherCorrect: otherCorrect,
+            otherMs: otherMs,
+          )
+        : null;
+    // Doğru başına 20 XP + galibiyet 30 XP (bkz. sözleşme). Rakip hiç
+    // çıkmadan süresi dolan düelloda `outcome` `null` kalır — galibiyet
+    // bonusu YOKTUR, yalnız kendi doğruların sayılır.
+    final amount =
+        duel.myCorrect * 20 + (outcome == AsyncDuelOutcome.win ? 30 : 0);
+    duel.xpAwarded = true;
+    return awardXp(amount);
+  }
+
+  /// Testin, sanki başka biri düello açıp yedi soruyu bitirmiş gibi bir
+  /// "açık düello" kurmasını sağlar. Bunu tüketen sonraki `startAsyncDuel`
+  /// çağrısı `opponent` rolüyle döner ve anında karşılaştırma yapılabilir
+  /// hâle gelir — gerçek üründe bu, başka bir kullanıcının cihazında daha
+  /// önce oynanmış bir düellodur.
+  @visibleForTesting
+  void addPendingAsyncDuelForTesting({
+    String? category,
+    String opponentName = 'Heval',
+    required int opponentCorrect,
+    required int opponentMs,
+  }) {
+    final normalizedCategory = _normalizedAsyncDuelCategory(category);
+    _pendingAsyncDuels.add(
+      _MockPendingAsyncDuel(
+        category: normalizedCategory,
+        opponentName: opponentName,
+        questions: _pickAsyncDuelQuestions(normalizedCategory),
+        opponentCorrect: opponentCorrect,
+        opponentMs: opponentMs,
+      ),
+    );
   }
 
   /// Gün bazlı sabit tohum: aynı gün herkes aynı sırayı görür.
@@ -298,8 +939,157 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
     final playable = _playableQuestions;
-    final pool = [...playable]..shuffle(Random(dailySeedFor(currentUserId)));
-    return _withVisualBlend(pool.take(limit).toList(), playable, limit);
+    final seed = dailySeedFor(currentUserId);
+    final pool = [...playable]..shuffle(Random(seed));
+    final daily = _withVisualBlend(pool.take(limit).toList(), playable, limit);
+    // Günlük ders rastgele havuzdan çekilir; üretim soruları bankanın ~%3'ü
+    // olduğundan yeni başlayan günlük derste hiç cümle kurma görmeyebilirdi.
+    return _withBeginnerProduction(daily, playable, limit, Random(seed));
+  }
+
+  /// Dersin kısa testi: etiketli tanıma sorularının arasına, dersin etiketli
+  /// cümle kurma ve boşluk doldurma soruları da girer.
+  ///
+  /// ## Kusur
+  ///
+  /// `_selectFresh(exact, limit)` türden habersizdi ve etiketli havuz çoğunlukla
+  /// çoktan seçmeliydi; bir derse bağlanmış cümle kurma/boşluk doldurma
+  /// sorusu sıfır ya da yok denecek kadar az şansla çıkıyordu. "Kelimeleri
+  /// sürükleyip basit cümle kur" isteyen yeni başlayan, dersin sonunda yine
+  /// yalnız şık işaretliyordu.
+  ///
+  /// ## Kural
+  ///
+  /// [limit] 3 ve üstündeyse ve derste üretim sorusu varsa turun 1 (limit 5 ve
+  /// üstünde 2) sorusu üretim sorusudur: önce cümle kurma (dokunmayla, daha
+  /// kolay), sonra boşluk doldurma. Tanıma soruları turu açar; üretim soruları
+  /// 3. ve 5. sıraya girer. Havuzda tanıma sorusu yoksa eski davranış.
+  Future<List<QuizQuestion>> _selectLessonMix(
+    List<QuizQuestion> exact,
+    int limit,
+  ) async {
+    final production = exact
+        .where(QuestionSetPolicy.isProductionTask)
+        .toList(growable: false);
+    final recognition = exact
+        .where((question) => !QuestionSetPolicy.isProductionTask(question))
+        .toList(growable: false);
+    if (production.isEmpty || recognition.isEmpty || limit < 3) {
+      return _selectFresh(exact, limit);
+    }
+    final wanted = limit >= 5 ? 2 : 1;
+    final ordering = production
+        .where((q) => q.type == QuestionType.wordOrdering)
+        .toList(growable: false);
+    final fill = production
+        .where((q) => q.type == QuestionType.fillInBlank)
+        .toList(growable: false);
+    final orderingPick = await _selectFresh(ordering, 1);
+    // Cümle kurma ile boşluk doldurma da aynı cümleyi sordurmasın.
+    final fillSafe = fill
+        .where(
+          (q) => !orderingPick.any(
+            (o) => QuestionSetPolicy.sharesTargetText(o, q),
+          ),
+        )
+        .toList(growable: false);
+    final picks = <QuizQuestion>[
+      ...orderingPick,
+      ...await _selectFresh(fillSafe.isEmpty ? fill : fillSafe, 1),
+    ];
+    if (picks.length < wanted) {
+      final chosen = picks.map((q) => q.id).toSet();
+      final more = (ordering.length >= fill.length ? ordering : fill)
+          .where((q) => !chosen.contains(q.id))
+          .take(wanted - picks.length);
+      picks.addAll(more);
+    }
+    final production2 = picks.take(wanted).toList();
+    // Isınma soruları üretim sorusuyla aynı cümleyi/terimi sormasın (ayrı
+    // havuzlardan seçildikleri için birbirlerini görmezlerdi). Süzgeç turu
+    // doldurmaya yetmiyorsa eski havuza dönülür: kural tercihtir.
+    final freshRecognition = recognition
+        .where(
+          (q) =>
+              !production2.any((p) => QuestionSetPolicy.sharesTargetText(p, q)),
+        )
+        .toList(growable: false);
+    final warmup = await _selectFresh(
+      freshRecognition.length >= limit - production2.length
+          ? freshRecognition
+          : recognition,
+      limit - production2.length,
+    );
+    final mixed = [...warmup];
+    for (final (index, pick) in production2.indexed) {
+      mixed.insert((2 + index * 2).clamp(0, mixed.length), pick);
+    }
+    return mixed.take(limit).toList(growable: false);
+  }
+
+  /// Turda hiç cümle kurma / boşluk doldurma yoksa, derse bağlı kolay (zorluk
+  /// <= 2) bir tanesini ÜÇÜNCÜ sıradan sonraya koyar. [limit] 5'ten azsa
+  /// dokunmaz; 10 ve üstünde ayrıca bir boşluk doldurma da ekler.
+  List<QuizQuestion> _withBeginnerProduction(
+    List<QuizQuestion> selected,
+    List<QuizQuestion> pool,
+    int limit,
+    Random random,
+  ) {
+    if (limit < 5 || selected.isEmpty) return selected;
+    final result = [...selected];
+    final used = result.map((q) => q.id).toSet();
+
+    bool has(QuestionType type) => result.any((q) => q.type == type);
+    void insertOne(QuestionType type) {
+      if (has(type)) return;
+      final candidates = pool
+          .where(
+            (q) =>
+                q.type == type &&
+                q.difficulty <= 2 &&
+                q.metadata?.learningLessonId != null &&
+                !used.contains(q.id),
+          )
+          .toList(growable: false);
+      if (candidates.isEmpty) return;
+      final pick = candidates[random.nextInt(candidates.length)];
+      // İlk iki soru ısınmadır; değiştirilecek soru üretim sorusu ve görselli
+      // olmayan, en sondaki tanıma sorusudur.
+      final replaceAt = result.lastIndexWhere(
+        (q) => !QuestionSetPolicy.isProductionTask(q) && !q.hasImage,
+      );
+      if (replaceAt < 2) {
+        if (result.length < limit) result.add(pick);
+        used.add(pick.id);
+        return;
+      }
+      result[replaceAt] = pick;
+      used.add(pick.id);
+    }
+
+    insertOne(QuestionType.wordOrdering);
+    if (limit >= 10) insertOne(QuestionType.fillInBlank);
+    return _recognitionFirst(result);
+  }
+
+  /// İlk iki soru tanıma sorusudur: yeni öğrenenin ilk teması yazmak ya da
+  /// sıralamak olmamalı (bkz. `QuestionSetPolicy.byReadingLoad`). Havuzdaki
+  /// üretim sorusu seçimde baştan gelmişse sonraki tanıma sorularıyla yer
+  /// değiştirir; geri kalan sıra korunur.
+  List<QuizQuestion> _recognitionFirst(List<QuizQuestion> questions) {
+    final result = [...questions];
+    for (var slot = 0; slot < 2 && slot < result.length; slot++) {
+      if (!QuestionSetPolicy.isProductionTask(result[slot])) continue;
+      final swapWith = result.indexWhere(
+        (q) => !QuestionSetPolicy.isProductionTask(q),
+        slot + 1,
+      );
+      if (swapWith == -1) break;
+      final moved = result.removeAt(swapWith);
+      result.insert(slot, moved);
+    }
+    return result;
   }
 
   /// Görülmemiş soruları öne alan tekrar-önleyici seçim.
@@ -312,11 +1102,43 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Havuzdan limitten fazlası istenir: sızıntı süzgeci bir kısmını
     // eleyeceği için tam limitte istemek turu eksik bırakırdı.
     final candidates = store.preferUnseen(pool, limit * 3);
-    final clean = QuestionSetPolicy.withoutLeaks(candidates, limit: limit);
-    // Süzgeç limiti dolduramazsa (küçük havuz) elde kalanla devam edilir;
-    // eksik bir tur, kendi cevabını ele veren bir turdan iyidir ama boş
-    // bir tur ikisinden de kötüdür.
-    final selected = clean.isEmpty ? candidates.take(limit).toList() : clean;
+    final clean = QuestionSetPolicy.diverseWithoutLeaks(
+      candidates,
+      limit: limit,
+    );
+
+    // Süzgeç limiti dolduramazsa elde kalanla devam edilir: eksik bir tur,
+    // kendi cevabını ele veren bir turdan iyidir. Ama "eksik"in de bir
+    // tabanı olmalı.
+    //
+    // ## Kusur
+    //
+    // Eskiden yalnız `clean` BOŞSA yedeğe düşülüyordu. `clean` bir tek soru
+    // döndürdüğünde o tek soru turun tamamı oluyordu: "Dil › Kelime Bilgisi ›
+    // 1. Seviye" kartı "10 soru" yazıyor, oyuncu tek soru cevaplıyor ve
+    // ekranda "Yarış tamamlandı" çıkıyordu (2026-08-16 simülatör taraması).
+    //
+    // Sebep havuzun küçüklüğü değil, süzgeçlerin üst üste binmesi: bir
+    // kelime bilgisi havuzunda soruların neredeyse hepsi çeviri sorusudur,
+    // `_dedupeByTranslationPair` aynı kelime çiftini toplar, ardından
+    // sızıntı süzgeci kalanların birbirini ele verenlerini atar. Otuz
+    // adaydan geriye bir tane kalabiliyor.
+    //
+    // ## Kural
+    //
+    // Sızıntısız sorular her zaman önce gelir; tur onlarla dolmuyorsa
+    // elenmiş adaylarla, o da yetmezse havuzun geri kalanıyla tamamlanır.
+    // Tekrar eden bir soru, tek soruluk bir turdan iyidir.
+    final selected = <QuizQuestion>[...clean];
+    if (selected.length < limit) {
+      final chosen = selected.map((q) => q.id).toSet();
+      for (final source in [candidates, pool]) {
+        for (final question in source) {
+          if (selected.length >= limit) break;
+          if (chosen.add(question.id)) selected.add(question);
+        }
+      }
+    }
     return _withVisualBlend(selected, pool, limit);
   }
 
@@ -375,10 +1197,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<GameRoom> createOnlineRoom({
     String category = 'Ziman',
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
+    int questionCount = 10,
+    int entryFee = 0,
   }) async {
-    return createRoom(
-      category: category,
-    ).copyWith(secondsPerQuestion: secondsPerQuestion);
+    return createRoom(category: category).copyWith(
+      secondsPerQuestion: secondsPerQuestion,
+      questionCount: questionCount,
+      entryFee: entryFee,
+    );
   }
 
   @override
@@ -607,7 +1433,11 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<void> reportQuestion(QuizQuestion question, String reason) async {}
+  Future<void> reportQuestion(QuizQuestion question, String reason) async {
+    reportedQuestions.add((id: question.id, reason: reason));
+  }
+
+  final reportedQuestions = <({String id, String reason})>[];
 
   @override
   Future<List<QuizQuestion>> loadFavoriteQuestions() async {
@@ -637,11 +1467,32 @@ class MockZanKurdRepository implements ZanKurdRepository {
   int awardedXpTotal = 0;
 
   @override
+  bool get xpAwardIsServerTotal => false;
+
+  @override
+  Future<int?> loadServerXp() async => null;
+
+  @override
   Future<int> awardXp(int delta) async {
     if (delta <= 0) return awardedXpTotal;
     awardedXpTotal += delta;
     return awardedXpTotal;
   }
+
+  @override
+  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey) async {
+    final total = await awardXp(delta);
+    return ServerXpWrite(total: total, retryable: false);
+  }
+
+  @override
+  Future<int> awardRoomXp(String roomId) async {
+    if (roomId.trim().isEmpty) return awardedXpTotal;
+    awardedRoomXpCalls.add(roomId);
+    return awardedXpTotal;
+  }
+
+  final awardedRoomXpCalls = <String>[];
 
   @override
   Future<int> awardSpinCoins() async {
@@ -691,6 +1542,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
       outcome: StreakFreezeChargeOutcome.charged,
       idempotent: true,
     );
+  }
+
+  @override
+  Future<DurableCoinSpend> spendCoinsDurable(
+    int amount,
+    String reason,
+    String idempotencyKey,
+  ) async {
+    final success = await spendCoins(amount, reason);
+    return DurableCoinSpend(success: success, retryable: false);
   }
 
   @override
@@ -928,13 +1789,33 @@ class MockZanKurdRepository implements ZanKurdRepository {
   static const Map<String, List<Lesson>> _lessonsData = {
     'everyday': [
       Lesson(
+        id: 'alphabet_1',
+        slug: 'alphabet_1',
+        titleKu: 'Alfabe',
+        titleTr: 'Alfabe',
+        descriptionKu: 'Tîpên Kurmancî û dengên wan',
+        category: 'everyday',
+        iconName: 'sort_by_alpha',
+        order: 1,
+      ),
+      Lesson(
         id: 'everyday_1',
         slug: 'everyday_1',
         titleKu: 'Silavkirin',
         titleTr: 'Selamlaşma',
         category: 'everyday',
         iconName: 'waving_hand',
-        order: 1,
+        order: 2,
+      ),
+      Lesson(
+        id: 'greetings_2',
+        slug: 'greetings_2',
+        titleKu: 'Silav û rêzdarî 2',
+        titleTr: 'Selamlaşma ve nezaket 2',
+        descriptionKu: 'Silav, spas û xatirxwestin',
+        category: 'everyday',
+        iconName: 'forum',
+        order: 3,
       ),
       Lesson(
         id: 'everyday_2',
@@ -943,24 +1824,184 @@ class MockZanKurdRepository implements ZanKurdRepository {
         titleTr: 'Tanışma',
         category: 'everyday',
         iconName: 'handshake',
-        order: 2,
+        order: 4,
+      ),
+      Lesson(
+        id: 'intro_1',
+        slug: 'intro_1',
+        titleKu: 'Xwe nasandin',
+        titleTr: 'Kendini tanıtma',
+        descriptionKu: 'Nav, temen, welat û pîşe',
+        category: 'everyday',
+        iconName: 'badge',
+        order: 5,
+      ),
+      Lesson(
+        id: 'family_1',
+        slug: 'family_1',
+        titleKu: 'Malbat',
+        titleTr: 'Aile',
+        descriptionKu: 'Endamên malbatê',
+        category: 'everyday',
+        iconName: 'family_restroom',
+        order: 6,
       ),
       Lesson(
         id: 'everyday_3',
         slug: 'everyday_3',
-        titleKu: 'Pratikên Rojane',
-        titleTr: 'Günlük Pratik İfadeler',
+        titleKu: 'Pratikên rojane',
+        titleTr: 'Günlük pratik ifadeler',
         category: 'everyday',
         iconName: 'forum',
-        order: 3,
+        order: 7,
+      ),
+      Lesson(
+        id: 'colors_1',
+        slug: 'colors_1',
+        titleKu: 'Reng',
+        titleTr: 'Renkler',
+        descriptionKu: 'Rengên bingehîn û rengên din',
+        category: 'everyday',
+        iconName: 'palette',
+        order: 8,
+      ),
+      Lesson(
+        id: 'body_1',
+        slug: 'body_1',
+        titleKu: 'Laşê mirov',
+        titleTr: 'Vücut',
+        descriptionKu: 'Beşên laş',
+        category: 'everyday',
+        iconName: 'accessibility_new',
+        order: 9,
+      ),
+      Lesson(
+        id: 'clothes_1',
+        slug: 'clothes_1',
+        titleKu: 'Cil û berg',
+        titleTr: 'Giysiler',
+        descriptionKu: 'Cil û bergên rojane',
+        category: 'everyday',
+        iconName: 'checkroom',
+        order: 10,
+      ),
+      Lesson(
+        id: 'home_1',
+        slug: 'home_1',
+        titleKu: 'Mal',
+        titleTr: 'Ev',
+        descriptionKu: 'Mal û tiştên malê',
+        category: 'everyday',
+        iconName: 'home',
+        order: 11,
+      ),
+      Lesson(
+        id: 'weather_1',
+        slug: 'weather_1',
+        titleKu: 'Hewa',
+        titleTr: 'Hava durumu',
+        descriptionKu: 'Hewa çawa ye?',
+        category: 'everyday',
+        iconName: 'cloud',
+        order: 12,
+      ),
+      Lesson(
+        id: 'questions_1',
+        slug: 'questions_1',
+        titleKu: 'Pirs',
+        titleTr: 'Soru kelimeleri',
+        descriptionKu: 'Kî? Çi? Ku? Kengî?',
+        category: 'everyday',
+        iconName: 'help',
+        order: 13,
+      ),
+      Lesson(
+        id: 'verbs_1',
+        slug: 'verbs_1',
+        titleKu: 'Lêker',
+        titleTr: 'Temel fiiller',
+        descriptionKu: 'Lêkerên bingehîn',
+        category: 'everyday',
+        iconName: 'directions_run',
+        order: 14,
+      ),
+      Lesson(
+        id: 'jobs_1',
+        slug: 'jobs_1',
+        titleKu: 'Pîşe',
+        titleTr: 'Meslekler',
+        descriptionKu: 'Pîşe çi ye?',
+        category: 'everyday',
+        iconName: 'work',
+        order: 15,
+      ),
+      Lesson(
+        id: 'city_1',
+        slug: 'city_1',
+        titleKu: 'Bajar',
+        titleTr: 'Şehir',
+        descriptionKu: 'Cihên girîng ên bajêr',
+        category: 'everyday',
+        iconName: 'location_city',
+        order: 16,
+      ),
+      Lesson(
+        id: 'shopping_1',
+        slug: 'shopping_1',
+        titleKu: 'Li dikanê',
+        titleTr: 'Alışveriş',
+        descriptionKu: 'Silav li dikanê',
+        category: 'everyday',
+        iconName: 'shopping_cart',
+        order: 17,
+      ),
+      Lesson(
+        id: 'health_1',
+        slug: 'health_1',
+        titleKu: 'Tenduristî',
+        titleTr: 'Sağlık',
+        descriptionKu: 'Doktor û nexweşxane',
+        category: 'everyday',
+        iconName: 'favorite',
+        order: 18,
+      ),
+      Lesson(
+        id: 'school_1',
+        slug: 'school_1',
+        titleKu: 'Dibistan',
+        titleTr: 'Okul',
+        descriptionKu: 'Cihê xwendinê',
+        category: 'everyday',
+        iconName: 'school',
+        order: 19,
+      ),
+      Lesson(
+        id: 'transport_1',
+        slug: 'transport_1',
+        titleKu: 'Veguhestin',
+        titleTr: 'Ulaşım',
+        descriptionKu: 'Wesayît û bilêt',
+        category: 'everyday',
+        iconName: 'directions_bus',
+        order: 20,
+      ),
+      Lesson(
+        id: 'past_1',
+        slug: 'past_1',
+        titleKu: 'Dema borî',
+        titleTr: 'Geçmiş zaman',
+        descriptionKu: 'Lêkerên dema borî',
+        category: 'everyday',
+        iconName: 'history',
+        order: 21,
       ),
     ],
     'grammar': [
       Lesson(
         id: 'grammar_1',
         slug: 'grammar_1',
-        titleKu: 'Cînavkên Kesane',
-        titleTr: 'Şahıs Zamirleri',
+        titleKu: 'Cînavkên kesane',
+        titleTr: 'Şahıs zamirleri',
         category: 'grammar',
         iconName: 'g_translate',
         order: 1,
@@ -969,7 +2010,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         id: 'grammar_2',
         slug: 'grammar_2',
         titleKu: 'Tewandin',
-        titleTr: 'Büküm (Hal Çekimi)',
+        titleTr: 'Büküm (hal çekimi)',
         category: 'grammar',
         iconName: 'sort_by_alpha',
         order: 2,
@@ -979,8 +2020,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'culture_1',
         slug: 'culture_1',
-        titleKu: 'Folklor û Govend',
-        titleTr: 'Folklor & Halay',
+        titleKu: 'Folklor û govend',
+        titleTr: 'Folklor & halay',
         category: 'culture',
         iconName: 'music_note',
         order: 1,
@@ -988,7 +2029,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'culture_2',
         slug: 'culture_2',
-        titleKu: 'Cejn û Cejndarî',
+        titleKu: 'Cejn û cejndarî',
         titleTr: 'Bayramlar',
         category: 'culture',
         iconName: 'celebration',
@@ -999,8 +2040,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'food_1',
         slug: 'food_1',
-        titleKu: 'Xwarinên Bingehîn',
-        titleTr: 'Temel Yemekler',
+        titleKu: 'Xwarinên bingehîn',
+        titleTr: 'Temel yemekler',
         category: 'food',
         iconName: 'restaurant',
         order: 1,
@@ -1008,8 +2049,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'food_2',
         slug: 'food_2',
-        titleKu: 'Fêkî û Keskahî',
-        titleTr: 'Meyve & Sebzeler',
+        titleKu: 'Fêkî û keskahî',
+        titleTr: 'Meyve & sebzeler',
         category: 'food',
         iconName: 'local_grocery_store',
         order: 2,
@@ -1019,8 +2060,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'animals_1',
         slug: 'animals_1',
-        titleKu: 'Heywanên Malê',
-        titleTr: 'Evcil Hayvanlar',
+        titleKu: 'Heywanên malê',
+        titleTr: 'Evcil hayvanlar',
         category: 'animals',
         iconName: 'pets',
         order: 1,
@@ -1028,8 +2069,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'animals_2',
         slug: 'animals_2',
-        titleKu: 'Heywanên Kovî',
-        titleTr: 'Yabani Hayvanlar',
+        titleKu: 'Heywanên kovî',
+        titleTr: 'Yabani hayvanlar',
         category: 'animals',
         iconName: 'forest',
         order: 2,
@@ -1048,7 +2089,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'geography_2',
         slug: 'geography_2',
-        titleKu: 'Aliyên Erdnîgarî',
+        titleKu: 'Aliyên erdnîgarî',
         titleTr: 'Yönler',
         category: 'geography',
         iconName: 'explore',
@@ -1059,8 +2100,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'emotions_1',
         slug: 'emotions_1',
-        titleKu: 'Hestên Erênî',
-        titleTr: 'Olumlu Duygular',
+        titleKu: 'Hestên erênî',
+        titleTr: 'Olumlu duygular',
         category: 'emotions',
         iconName: 'sentiment_very_satisfied',
         order: 1,
@@ -1068,8 +2109,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'emotions_2',
         slug: 'emotions_2',
-        titleKu: 'Hestên Neyînî',
-        titleTr: 'Olumsuz Duygular',
+        titleKu: 'Hestên neyînî',
+        titleTr: 'Olumsuz duygular',
         category: 'emotions',
         iconName: 'sentiment_very_dissatisfied',
         order: 2,
@@ -1079,8 +2120,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'time_1',
         slug: 'time_1',
-        titleKu: 'Roj û Meh',
-        titleTr: 'Günler & Aylar',
+        titleKu: 'Roj û meh',
+        titleTr: 'Günler & aylar',
         category: 'time',
         iconName: 'calendar_month',
         order: 1,
@@ -1088,8 +2129,8 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'time_2',
         slug: 'time_2',
-        titleKu: 'Serdem û Demjimêr',
-        titleTr: 'Zaman Dilimleri',
+        titleKu: 'Serdem û demjimêr',
+        titleTr: 'Zaman dilimleri',
         category: 'time',
         iconName: 'schedule',
         order: 2,
@@ -1098,6 +2139,854 @@ class MockZanKurdRepository implements ZanKurdRepository {
   };
 
   static const Map<String, List<LessonSlide>> _slidesData = {
+    'alphabet_1': [
+      LessonSlide(
+        id: 'alphabet_1_s1',
+        lessonId: 'alphabet_1',
+        order: 1,
+        contentKu:
+            'Alfabeya Kurmancî (Hawar) 31 tîp e:\n\nA B C Ç D E Ê F G H I Î J K L M N O P Q R S Ş T U Û V W X Y Z\n\nHeşt tîp dengdêr in, bîst û sê tîp dengdar in.\n\n• Alfabe: Alfabe\n• Tîp: Harf\n• Dengdêr: Ünlü harf\n• Dengdar: Ünsüz harf',
+        contentTr:
+            'Kurmancî (Hawar) alfabesi 31 harftir: 8 ünlü ve 23 ünsüz harf. Hawar alfabesi Latin harflerini kullanır.',
+        exampleKu: 'A, B, C, Ç, D...',
+      ),
+      LessonSlide(
+        id: 'alphabet_1_s2',
+        lessonId: 'alphabet_1',
+        order: 2,
+        contentKu:
+            'Dengdêr (ünlü) tîp:\n\na — av\ne — ez\nê — êvar\ni — dil\nî — îro\no — ode\nu — kur\nû — dûr',
+        contentTr:
+            'Sekiz ünlü: a, e, ê, i, î, o, u, û. Kısa ve uzun ünlüler ayrı harflerdir: i kısa ve gevşek bir i\'dir (Türkçedeki ı değildir), î uzun i\'dir; u kısa, û uzun u\'dur; e açık ve kısa, ê kapalı ve uzun bir e\'dir.',
+        exampleKu: 'Av, ez, êvar, dil, îro, ode, kur, dûr.',
+      ),
+      LessonSlide(
+        id: 'alphabet_1_s3',
+        lessonId: 'alphabet_1',
+        order: 3,
+        contentKu:
+            'Tîpên taybet 1:\n\nç — wekî di tirkî de: çay\nş — wekî di tirkî de: şev\nc — wekî di tirkî de: cil\nj — wekî di tirkî de: jin\nw — wekî "w" a îngilîzî (water): welat',
+        contentTr:
+            'Özel harfler 1: ç ve ş Türkçedeki gibi okunur. w, İngilizce water kelimesindeki w gibidir (Türkçede yoktur). c ve j de Türkçedeki gibidir.',
+        exampleKu: 'Çay, şev, welat, cil, jin.',
+      ),
+      LessonSlide(
+        id: 'alphabet_1_s4',
+        lessonId: 'alphabet_1',
+        order: 4,
+        contentKu:
+            'Tîpên taybet 2:\n\nx — dengê qirikê (mîna "خ" ya erebî), di tirkî de tune ye: xal\nq — dengekî "k" yê kûr ji qirikê: qelem\nê — dengê "e" yê dirêj: êvar\nî — dengê "i" yê dirêj: îro\nû — dengê "u" yê dirêj: dûr',
+        contentTr:
+            'Özel harfler 2: x boğazdan çıkan, Türkçede olmayan bir sestir (Arapça خ ya da Almanca Bach\'taki ch gibi; Türkçe ğ ile aynı değildir). q boğazdan çıkan derin bir k\'dır (Arapça ق gibi). ê, î, û uzun ünlülerdir.',
+        exampleKu: 'Xal, qelem, êvar, îro, dûr.',
+      ),
+      LessonSlide(
+        id: 'alphabet_1_s5',
+        lessonId: 'alphabet_1',
+        order: 5,
+        contentKu:
+            'Peyv û tîp (C–H):\n\n• Cil: Giysi\n• Çay: Çay\n• Dar: Ağaç\n• Fêkî: Meyve\n• Gul: Gül\n• Heval: Arkadaş',
+        contentTr: 'Harflerle örnek kelimeler: c, ç, d, f, g, h.',
+        exampleKu: 'Ev gul e. Ew heval e.',
+      ),
+      LessonSlide(
+        id: 'alphabet_1_s6',
+        lessonId: 'alphabet_1',
+        order: 6,
+        contentKu:
+            'Peyv û tîp (K–W) û çend peyvên din:\n\n• Ker: Eşek\n• Lêv: Dudak\n• Mal: Ev\n• Ode: Oda\n• Qelem: Kalem\n• Roj: Gün / Güneş\n• Welat: Ülke\n• Dil: Kalp\n• Dûr: Uzak\n• Ev: Bu',
+        contentTr:
+            'Harflerle örnek kelimeler: k, l, m, o, q, r, w. "Mal" ev (bina), "ev" ise "bu" demektir; ikisini karıştırma.',
+        exampleKu: 'Ev qelem e. Ev ode ye.',
+      ),
+    ],
+    'greetings_2': [
+      LessonSlide(
+        id: 'greetings_2_s1',
+        lessonId: 'greetings_2',
+        order: 1,
+        contentKu:
+            'Silav û bi xêr hatin:\n\n• Silav: Selam\n• Bi xêr hatî: Hoş geldin\n• Sibeha te bi xêr: Günaydın\n• Êvara te bi xêr: İyi akşamlar\n• Şeva te bi xêr: İyi geceler',
+        contentTr:
+            'Selamlaşma kalıpları. "Xêr" hayır/iyilik demektir; "Sibeha te bi xêr" sabahın hayırlı olsun anlamındadır.',
+        exampleKu: 'Silav heval! Bi xêr hatî!',
+      ),
+      LessonSlide(
+        id: 'greetings_2_s2',
+        lessonId: 'greetings_2',
+        order: 2,
+        contentKu:
+            'Hal pirsîn:\n\n• Hûn çawa ne?: Nasılsınız?\n• Ez baş im: İyiyim\n• Ez gelek baş im: Çok iyiyim\n• Çawa: Nasıl\n• Baş: İyi\n• Gelek: Çok',
+        contentTr:
+            'Hal hatır sorma. "Tu çawa yî?" tek kişiye, "Hûn çawa ne?" birden çok kişiye ya da saygıyla sorulur.',
+        exampleKu: 'Tu çawa yî? Ez gelek baş im, spas.',
+      ),
+      LessonSlide(
+        id: 'greetings_2_s3',
+        lessonId: 'greetings_2',
+        order: 3,
+        contentKu:
+            'Spas, lêborîn û gotin:\n\n• Gelek spas: Çok teşekkürler\n• Bibore: Özür dilerim / Pardon\n• Gotin: Söylemek',
+        contentTr: 'Teşekkür ve özür. "Spas" tek başına da kullanılır.',
+        exampleKu: 'Gelek spas, heval!',
+      ),
+      LessonSlide(
+        id: 'greetings_2_s4',
+        lessonId: 'greetings_2',
+        order: 4,
+        contentKu:
+            'Xatirxwestin:\n\n• Bi xatirê te: Hoşça kal\n• Bi xatirê we: Hoşça kalın\n• Oxir be: Güle güle\n• Xêr: Hayır / İyilik\n• We: Size / Sizin (tewandî hal)',
+        contentTr:
+            'Vedalaşma. "Te" tek kişiye, "we" birden çok kişiye ya da saygıyla söylenir.',
+        exampleKu: 'Bi xatirê te, heval. — Oxir be!',
+      ),
+    ],
+    'intro_1': [
+      LessonSlide(
+        id: 'intro_1_s1',
+        lessonId: 'intro_1',
+        order: 1,
+        contentKu:
+            'Nav:\n\n• Nav: Ad / İsim\n• Navê min Rojîn e: Benim adım Rojîn.\n• Rojîn: Kız ismi\n• Çi: Ne\n• Navê te çi ye?: Adın ne?',
+        contentTr: 'Adını söyleme. "Navê min ... e" = benim adım ...',
+        exampleKu: 'Navê min Rojîn e. Navê te çi ye?',
+      ),
+      LessonSlide(
+        id: 'intro_1_s2',
+        lessonId: 'intro_1',
+        order: 2,
+        contentKu:
+            'Temen:\n\n• Tu çend salî yî?: Kaç yaşındasın?\n• Ez bîst salî me: Yirmi yaşındayım.\n• Sal: Yıl\n• Çend: Kaç',
+        contentTr: 'Yaşı söyleme: "Ez ... salî me." (sal + î = yaşında).',
+        exampleKu: 'Ez deh salî me. Tu çend salî yî?',
+      ),
+      LessonSlide(
+        id: 'intro_1_s3',
+        lessonId: 'intro_1',
+        order: 3,
+        contentKu:
+            'Welat û bajar:\n\n• Ez ji Wanê me: Vanlıyım.\n• Ji: -den / -dan\n• Ku: Nerede / Nere\n• Der: Yer (ku derê = nere)\n• Wan: Van\n• Mêrdîn: Mardin\n• Stenbol: İstanbul\n• Kurd: Kürt',
+        contentTr:
+            'Nerelisin? sorusu ve cevabı. "ji" ile dişil şehir adlarının sonuna -ê eklenir: Wan → Wanê, Mêrdîn → Mêrdînê, Stenbol → Stenbolê.',
+        exampleKu: 'Tu ji ku derê yî? Ez ji Mêrdînê me.',
+      ),
+      LessonSlide(
+        id: 'intro_1_s4',
+        lessonId: 'intro_1',
+        order: 4,
+        contentKu:
+            'Pîşe:\n\n• Pîşe: Meslek\n• Xwendekar: Öğrenci\n• Mamoste: Öğretmen\n• Doktor: Doktor\n• Karker: İşçi',
+        contentTr:
+            'Meslek söyleme: "Ez ... im" (ünsüzden sonra) ya da "Ez ... me" (ünlüden sonra).',
+        exampleKu: 'Ez xwendekar im. Ez mamoste me.',
+      ),
+      LessonSlide(
+        id: 'intro_1_s5',
+        lessonId: 'intro_1',
+        order: 5,
+        contentKu:
+            'Ziman:\n\n• Kurdî: Kürtçe\n• Kurmancî: Kurmancî (Kürtçenin bir lehçesi)\n• Tirkî: Türkçe\n• Zanîn: Bilmek\n• Bi: İle / -le / -ce (dil)',
+        contentTr: 'Dil bilme: "Ez bi Kurmancî dizanim" = Kurmancî biliyorum.',
+        exampleKu: 'Ez bi Kurmancî dizanim. Tu bi Tirkî dizanî?',
+      ),
+    ],
+    'family_1': [
+      LessonSlide(
+        id: 'family_1_s1',
+        lessonId: 'family_1',
+        order: 1,
+        contentKu:
+            'Malbata nêzîk:\n\n• Malbat: Aile\n• Dê: Anne\n• Bav: Baba\n• Bira: Erkek kardeş\n• Xwişk: Kız kardeş\n• Kur: Oğul / Erkek çocuk\n• Keç: Kız (çocuk)',
+        contentTr: 'Yakın aile üyeleri. "Bavê min" = benim babam (bav + -ê).',
+        exampleKu: 'Ev dê ye. Ev bavê min e.',
+      ),
+      LessonSlide(
+        id: 'family_1_s2',
+        lessonId: 'family_1',
+        order: 2,
+        contentKu:
+            'Malbata mezin:\n\n• Dapîr: Büyükanne\n• Bapîr: Büyükbaba\n• Mam: Amca\n• Met: Hala\n• Xal: Dayı\n• Xaltî: Teyze',
+        contentTr:
+            'Geniş aile. Amca (mam) ve hala (met) baba tarafı, dayı (xal) ve teyze (xaltî) anne tarafıdır.',
+        exampleKu: 'Dapîra min li malê ye.',
+      ),
+      LessonSlide(
+        id: 'family_1_s3',
+        lessonId: 'family_1',
+        order: 3,
+        contentKu:
+            'Kes û zarok:\n\n• Jin: Kadın / Eş\n• Mêr: Erkek / Koca\n• Zarok: Çocuk',
+        contentTr: 'İnsan ve çocuk sözcükleri.',
+        exampleKu: 'Bapîr mêr e. Dapîr jin e.',
+      ),
+      LessonSlide(
+        id: 'family_1_s4',
+        lessonId: 'family_1',
+        order: 4,
+        contentKu:
+            'Hevok:\n\n• Ev dê ye: Bu anne.\n• Ev bavê min e: Bu benim babam.\n• Dê û bav li malê ne: Anne ve baba evde.\n• Û: Ve\n• Li: -de / -da (yer)',
+        contentTr:
+            'Basit aile cümleleri. "ye" ünlüyle biten sözcükten sonra, "e" ünsüzle bitenden sonra gelir.',
+        exampleKu: 'Bira û xwişk li malê ne.',
+      ),
+    ],
+    'colors_1': [
+      LessonSlide(
+        id: 'colors_1_s1',
+        lessonId: 'colors_1',
+        order: 1,
+        contentKu:
+            'Rengên Bingehîn:\n\nEm îro rengan hîn dibin. Ev şeş rengên bingehîn in:\n\n• spî: beyaz\n• reş: siyah\n• sor: kırmızı\n• kesk: yeşil\n• şîn: mavi\n• zer: sarı',
+        contentTr:
+            'Bugün renkleri öğreniyoruz. Bunlar altı temel renktir: beyaz, siyah, kırmızı, yeşil, mavi, sarı.',
+      ),
+      LessonSlide(
+        id: 'colors_1_s2',
+        lessonId: 'colors_1',
+        order: 2,
+        contentKu:
+            'Rengên Din:\n\nEv jî rengên din in. Em hîn bibin:\n\n• porteqalî: turuncu\n• mor: mor\n• qehweyî: kahverengi\n• gewr: gri\n• pembe: pembe\n• reng: renk',
+        contentTr:
+            'Bunlar da diğer renkler. Öğrenelim: turuncu, mor, kahverengi, gri, pembe ve renk kelimesi.',
+      ),
+      LessonSlide(
+        id: 'colors_1_s3',
+        lessonId: 'colors_1',
+        order: 3,
+        contentKu:
+            'Ev Çi Reng e?\n\nEm bi lêkera \'bûn\'ê rengan dibêjin. Mînak:\n\n• Sêv sor e: Elma kırmızıdır\n• Av şîn e: Su mavidir\n• Nan spî ye: Ekmek beyazdır\n• Kulîlk zer e: Çiçek sarıdır\n• Giya kesk e: Ot yeşildir\n• Pisîk reş e: Kedi siyahtır',
+        contentTr:
+            'Rengi bûn fiiliyle söyleriz. Örnekler: Elma kırmızıdır, Su mavidir, Ekmek beyazdır, Çiçek sarıdır, Ot yeşildir, Kedi siyahtır.',
+      ),
+      LessonSlide(
+        id: 'colors_1_s4',
+        lessonId: 'colors_1',
+        order: 4,
+        contentKu:
+            'Reng û Îzafe:\n\nReng piştî navan tên û bi îzafeyê tên girêdan. Mînak:\n\n• sêva sor: kırmızı elma\n• nanê spî: beyaz ekmek\n• kitêba kesk: yeşil kitap\n• kirasê reş: siyah gömlek\n• mala spî: beyaz ev\n• ava şîn: mavi su',
+        contentTr:
+            'Renk isimden sonra gelir ve izafe ile bağlanır. Örnekler: kırmızı elma, beyaz ekmek, yeşil kitap, siyah gömlek, beyaz ev, mavi su.',
+      ),
+      LessonSlide(
+        id: 'colors_1_s5',
+        lessonId: 'colors_1',
+        order: 5,
+        contentKu:
+            'Pirs û Bersiv:\n\nBi rengan pirsan bike û bersiv bide. Mînak:\n\n• Ev çi reng e?: Bu ne renk?\n• Ew sor e.: O kırmızıdır.\n• Kîjan reng xweş e?: Hangi renk güzel?\n• Zer xweş e.: Sarı güzel.\n• Sêva sor li ku ye?: Kırmızı elma nerede?',
+        contentTr:
+            'Renklerle soru sor ve cevap ver. Örnekler: Bu ne renk?, O kırmızıdır., Hangi renk güzel?, Sarı güzel., Kırmızı elma nerede?',
+      ),
+    ],
+    'body_1': [
+      LessonSlide(
+        id: 'body_1_s1',
+        lessonId: 'body_1',
+        order: 1,
+        contentKu:
+            'Laşê Mirov:\n\nÎro em beşên laş hîn dibin. Ev peyv pir girîng in:\n\n• ser: baş\n• rû: yüz\n• stû: boyun\n• mil: omuz, kol\n• dest: el\n• ling: bacak, ayak',
+        contentTr:
+            'Bugün vücudun bölümlerini öğreniyoruz. Bu kelimeler çok önemlidir: baş, yüz, boyun, omuz/kol, el, bacak/ayak.',
+      ),
+      LessonSlide(
+        id: 'body_1_s2',
+        lessonId: 'body_1',
+        order: 2,
+        contentKu:
+            'Ser û Rû:\n\nEm li ser û rû dinêrin. Van peyvan bînin bîra xwe:\n\n• ser: baş\n• por: saç\n• rû: yüz\n• çav: göz\n• guh: kulak\n• poz: burun\n• dev: ağız\n• diran: diş',
+        contentTr:
+            'Başa ve yüze bakıyoruz. Bu kelimeleri aklınızda tutun: baş, saç, yüz, göz, kulak, burun, ağız, diş.',
+      ),
+      LessonSlide(
+        id: 'body_1_s3',
+        lessonId: 'body_1',
+        order: 3,
+        contentKu:
+            'Dest û Ling:\n\nEm li dest û ling dinêrin. Van peyvan dubare bike:\n\n• mil: omuz, kol\n• dest: el\n• tilî: parmak\n• ling: bacak, ayak\n• pê: ayak\n• çok: diz',
+        contentTr:
+            'Ele ve bacağa bakıyoruz. Bu kelimeleri tekrar et: omuz/kol, el, parmak, bacak/ayak, ayak, diz.',
+      ),
+      LessonSlide(
+        id: 'body_1_s4',
+        lessonId: 'body_1',
+        order: 4,
+        contentKu:
+            'Hevokên Hêsan bi Laş:\n\nNiha em peyvan di hevokan de dibînin:\n\n• Çavên min reş in: Gözlerim siyahtır\n• Serê min diêşe: Başım ağrıyor\n• Ez destên xwe dişom: Ellerimi yıkıyorum\n• Diranên min spî ne: Dişlerim beyazdır\n• Lingê min diêşe: Bacağım, ayağım ağrıyor',
+        contentTr:
+            'Şimdi kelimeleri cümleler içinde görüyoruz:\n- Gözlerim siyahtır\n- Başım ağrıyor\n- Ellerimi yıkıyorum\n- Dişlerim beyazdır\n- Bacağım (ayağım) ağrıyor',
+      ),
+      LessonSlide(
+        id: 'body_1_s5',
+        lessonId: 'body_1',
+        order: 5,
+        contentKu:
+            'Laşê Min:\n\nNiha em bi lêkera bûn-ê diaxivin. Dubare bike:\n\n• Ez sax im: Ben sağlıklıyım\n• Çavên min reş in: Gözlerim siyahtır\n• Destê min paqij e: Elim temizdir\n• Em amade ne: Biz hazırız\n• Laşê min sax e: Vücudum sağlıklıdır',
+        contentTr:
+            'Şimdi \'olmak\' (bûn) fiiliyle konuşuyoruz. Tekrar et:\n- Ben sağlıklıyım\n- Gözlerim siyahtır\n- Elim temizdir\n- Biz hazırız\n- Vücudum sağlıklıdır',
+      ),
+    ],
+    'clothes_1': [
+      LessonSlide(
+        id: 'clothes_1_s1',
+        lessonId: 'clothes_1',
+        order: 1,
+        contentKu:
+            'Cil û bergên rojane:\n\nEm îro 6 cilên bingehîn hîn dibin:\n\n• kiras: gömlek\n• pantor: pantolon\n• çakêt: ceket\n• pêlav: ayakkabı\n• şapke: şapka\n• gore: çorap',
+        contentTr:
+            'Bugün 6 temel giysiyi öğreniyoruz: gömlek, pantolon, ceket, ayakkabı, şapka ve çorap. Her Kurmancî sözcüğü Türkçe karşılığıyla ezberle.',
+      ),
+      LessonSlide(
+        id: 'clothes_1_s2',
+        lessonId: 'clothes_1',
+        order: 2,
+        contentKu:
+            'Rengê cilan:\n\nReng bi izafeyê tê ser navdêrê:\n\n• kirasê sor: kırmızı gömlek\n• pantorê reş: siyah pantolon\n• çakêtê şîn: mavi ceket\n• şapkeya spî: beyaz şapka\n• goreyên kesk: yeşil çoraplar\n• pêlavên zer: sarı ayakkabılar',
+        contentTr:
+            'Renk, izafe ekiyle giysi adından sonra gelir: kirasê sor (kırmızı gömlek) gibi. Tekil izafe ê/ya, çoğul izafe ên biçimindedir.',
+      ),
+      LessonSlide(
+        id: 'clothes_1_s3',
+        lessonId: 'clothes_1',
+        order: 3,
+        contentKu:
+            'Ez li xwe dikim:\n\nLêkera li xwe kirinê di dema niha de:\n\n• Ez kiras li xwe dikim: gömlek giyiyorum\n• Tu pantor li xwe dikî: pantolon giyiyorsun\n• Ew şapke li xwe dike: şapka takıyor\n• Em pêlav li xwe dikin: ayakkabı giyiyoruz\n• Hûn mont li xwe dikin: mont giyiyorsunuz\n• Ew gore li xwe dikin: çorap giyiyorlar',
+        contentTr:
+            'Giyinmek fiili li xwe kirin, şimdiki zamanla çekilir: dikim, dikî, dike, dikin. Nesne yalın durumda kalır, ergatiflik yoktur.',
+      ),
+      LessonSlide(
+        id: 'clothes_1_s4',
+        lessonId: 'clothes_1',
+        order: 4,
+        contentKu:
+            'Mezin, biçûk, nû:\n\nCilan bi van rengdêran binas bike:\n\n• montê mezin: büyük mont\n• dawêna biçûk: küçük etek\n• kirasê nû: yeni gömlek\n• çakêtê kevn: eski ceket\n• pêlavên paqij: temiz ayakkabılar\n• goreyên pîs: kirli çoraplar',
+        contentTr:
+            'Sıfatlar izafeyle giysiyi niteler: mezin (büyük), biçûk (küçük), nû (yeni), kevn (eski), paqij (temiz), pîs (kirli).',
+      ),
+      LessonSlide(
+        id: 'clothes_1_s5',
+        lessonId: 'clothes_1',
+        order: 5,
+        contentKu:
+            'Li dikanê:\n\nHevokên kurt ji bo dikanê:\n\n• Ev çi ye: bu nedir\n• Ev kiras e: bu gömlektir\n• Ev çend e: bu kaç lira, fiyatı nedir\n• Ev mezin e: bu büyüktür\n• Ev biçûk e: bu küçüktür\n• Ev sor e: bu kırmızıdır',
+        contentTr:
+            'Mağazada lazım olan kalıplar: Ev çi ye (bu nedir), Ev kiras e (bu gömlektir), Ev çend e (fiyatı nedir). Hepsi e/ye ile biter.',
+      ),
+    ],
+    'home_1': [
+      LessonSlide(
+        id: 'home_1_s1',
+        lessonId: 'home_1',
+        order: 1,
+        contentKu:
+            'Mal çi ye?\n\nMal cihê jiyanê ye. Van peyvan bixwîne:\n\n• mal: ev\n• ode: oda\n• derî: kapı\n• pencere: pencere\n• dîwar: duvar\n• erd: zemin',
+        contentTr:
+            'Ev, yaşadığımız yerdir. Bu sözcükleri oku: ev, oda, kapı, pencere, duvar, zemin.',
+      ),
+      LessonSlide(
+        id: 'home_1_s2',
+        lessonId: 'home_1',
+        order: 2,
+        contentKu:
+            'Odeyên malê:\n\nHer odeyek ji bo karekî ye:\n\n• ode: oda\n• metbex: mutfak\n• serşok: banyo\n• odeya nivînê: yatak odası\n• odeya rûniştinê: salon\n• korîdor: koridor',
+        contentTr:
+            'Her oda bir iş içindir: oda, mutfak, banyo, yatak odası, salon, koridor.',
+      ),
+      LessonSlide(
+        id: 'home_1_s3',
+        lessonId: 'home_1',
+        order: 3,
+        contentKu:
+            'Tiştên malê 1:\n\nTiştên ku em her roj bi kar tînin:\n\n• mase: masa\n• kursî: sandalye\n• nivîn: yatak\n• dolab: dolap\n• derî: kapı\n• pencere: pencere',
+        contentTr:
+            'Her gün kullandığımız eşyalar: masa, sandalye, yatak, dolap, kapı, pencere.',
+      ),
+      LessonSlide(
+        id: 'home_1_s4',
+        lessonId: 'home_1',
+        order: 4,
+        contentKu:
+            'Tiştên malê 2:\n\nTiştên din ên malê:\n\n• ronahî: ışık\n• dîwar: duvar\n• ban: tavan\n• erd: zemin\n• mift: anahtar\n• perde: perde',
+        contentTr:
+            'Evin diğer eşyaları: ışık, duvar, tavan, zemin, anahtar, perde.',
+      ),
+      LessonSlide(
+        id: 'home_1_s5',
+        lessonId: 'home_1',
+        order: 5,
+        contentKu:
+            'Bi Kurmancî biaxive: Ev ... e / ye:\n\nQalibek sade bi kar bîne:\n\n• Ev mal e: Bu evdir\n• Ev derî ye: Bu kapıdır\n• Ev mase ye: Bu masadır\n• Ode mezin e: Oda büyüktür\n• Metbex paqij e: Mutfak temizdir',
+        contentTr:
+            'Basit bir kalıp kullan: Ev mal e: Bu evdir, Ev derî ye: Bu kapıdır, Ev mase ye: Bu masadır, Ode mezin e: Oda büyüktür, Metbex paqij e: Mutfak temizdir. Sessiz harften sonra e, sesli harften sonra ye gelir.',
+      ),
+    ],
+    'weather_1': [
+      LessonSlide(
+        id: 'weather_1_s1',
+        lessonId: 'weather_1',
+        order: 1,
+        contentKu:
+            'Hewa çawa ye?\n\nEm li ser hewayê diaxivin.\n\n• Hewa çawa ye?: Hava nasıl?\n• hewa: hava\n• îro: bugün\n• çawa: nasıl\n• xweş: güzel, iyi\n• xirab: kötü\n• Hewa xweş e: Hava güzel',
+        contentTr:
+            'Bu derste hava durumunu soruyoruz. Temel soru: Hewa çawa ye? (Hava nasıl?). Cevap: Hewa xweş e. / Hewa xirab e.',
+      ),
+      LessonSlide(
+        id: 'weather_1_s2',
+        lessonId: 'weather_1',
+        order: 2,
+        contentKu:
+            'Roj û germahî:\n\nÎro roj heye û hewa germ e.\n\n• roj: güneş, gün\n• tav: güneş ışığı\n• germ: sıcak\n• pir germ: çok sıcak\n• hinekî germ: biraz sıcak\n• Roj derdikeve: Güneş doğuyor, çıkıyor\n• Hewa germ e: Hava sıcak',
+        contentTr:
+            'Güneşli ve sıcak havayı anlatıyoruz. Roj güneş demektir. Germ sıcak demektir. Örnek: Hewa îro germ e. (Hava bugün sıcak.)',
+      ),
+      LessonSlide(
+        id: 'weather_1_s3',
+        lessonId: 'weather_1',
+        order: 3,
+        contentKu:
+            'Baran û ba:\n\nCarinan baran dibare û ba tê.\n\n• baran: yağmur\n• ba: rüzgar\n• ewr: bulut\n• ewrî: bulutlu\n• dibare: yağıyor\n• ba tê: rüzgar esiyor\n• Baran dibare: Yağmur yağıyor',
+        contentTr:
+            'Yağmurlu ve rüzgarlı hava. Baran yağmur, ba rüzgar, ewr bulut demektir. Fiil: dibare (yağıyor), tê (geliyor, esiyor).',
+      ),
+      LessonSlide(
+        id: 'weather_1_s4',
+        lessonId: 'weather_1',
+        order: 4,
+        contentKu:
+            'Berf û serma:\n\nDi zivistanê de berf dibare û hewa sar e.\n\n• berf: kar\n• sar: soğuk\n• serma: soğukluk, soğuk hava\n• mij: sis\n• cemed: buz\n• Berf dibare: Kar yağıyor\n• Hewa sar e: Hava soğuk',
+        contentTr:
+            'Kışın hava: kar ve soğuk. Berf kar, sar soğuk demektir. Örnek: Berf dibare. (Kar yağıyor.) Hewa sar e. (Hava soğuk.)',
+      ),
+      LessonSlide(
+        id: 'weather_1_s5',
+        lessonId: 'weather_1',
+        order: 5,
+        contentKu:
+            'Demsal û ez:\n\nEm dibêjin ez germ im an ez sar im.\n\n• bihar: ilkbahar\n• havîn: yaz\n• payîz: sonbahar\n• zivistan: kış\n• ez germ im: sıcağım, bana sıcak geliyor\n• ez sar im: üşüyorum, bana soğuk geliyor\n• Ez li malê me: Ben evdeyim',
+        contentTr:
+            'Dört mevsim ve bûn fiili (olmak). Ez im (benim), tu yî (sensin), ew e (odur). Hava için e, kişi için im kullanırız: Hewa sar e. Ez sar im.',
+      ),
+    ],
+    'questions_1': [
+      LessonSlide(
+        id: 'questions_1_s1',
+        lessonId: 'questions_1',
+        order: 1,
+        contentKu:
+            'Kî? Çi?\n\nPirsên li ser mirovan û tiştan. Kî ji bo mirovan, çi ji bo tiştan tê bikaranîn.\n\n• Kî ye?: kimdir?\n• Kî ne?: kimler?\n• Tu kî yî?: sen kimsin?\n• Ev çi ye?: bu nedir?\n• Tu çi dixwazî?: ne istiyorsun?\n• Navê te çi ye?: adın nedir?',
+        contentTr:
+            'İnsanlar ve eşyalar hakkında sorular. Kî (kim) insanlar için, çi (ne) eşyalar için kullanılır. Fiil cümlenin sonunda çekimlenir.',
+      ),
+      LessonSlide(
+        id: 'questions_1_s2',
+        lessonId: 'questions_1',
+        order: 2,
+        contentKu:
+            'Ku? Kengî?\n\nPirsên li ser cihî û demê. Ku = li kîjan derê, kengî = di kîjan demê de.\n\n• Tu li ku yî?: neredesin?\n• Dibistan li ku ye?: okul nerede?\n• Tu kengî têyî?: ne zaman geliyorsun?\n• Ders kengî dest pê dike?: ders ne zaman başlıyor?\n• Tu îro kengî têyî?: bugün ne zaman geliyorsun?\n• Tu sibê li ku yî?: yarın neredesin?',
+        contentTr:
+            'Yer ve zaman soruları. Ku (nerede/nereye) ve kengî (ne zaman) sorulan öğenin yerinde durur; fiil sonda kalır. Cevap yer veya zaman bildirir.',
+      ),
+      LessonSlide(
+        id: 'questions_1_s3',
+        lessonId: 'questions_1',
+        order: 3,
+        contentKu:
+            'Çima? Çawa?\n\nPirsên li ser sedemî û awayî. Çima = ji bo çi, çawa = bi çi awayî.\n\n• Tu çima hatî?: neden geldin?\n• Ew çima naxwaze?: o neden istemiyor?\n• Tu çawa yî?: nasılsın?\n• Tu çawa dixwînî?: nasıl okuyorsun?\n• Çawa çêdibe?: nasıl oluyor?\n• Bi çi awayî?: ne şekilde?',
+        contentTr:
+            'Sebep ve yöntem soruları. Çima (neden), çawa (nasıl) ile sorulur. Tu çawa yî? sorusunun cevabı Ez baş im (iyiyim) olur.',
+      ),
+      LessonSlide(
+        id: 'questions_1_s4',
+        lessonId: 'questions_1',
+        order: 4,
+        contentKu:
+            'Çend? Kîjan? Çiqas?\n\nPirsên li ser hejmar û hilbijartinê. Çend ji bo hejmaran, kîjan ji bo hilbijartinê.\n\n• Tu çend salî yî?: kaç yaşındasın?\n• Çend pirtûk?: kaç kitap?\n• Kîjan pirtûk?: hangi kitap?\n• Kîjan dibistan?: hangi okul?\n• Çiqas nan?: ne kadar ekmek?\n• Biha çiqas e?: fiyat ne kadar?',
+        contentTr:
+            'Sayı ve seçim soruları. Çend (kaç tane), kîjan (hangisi), çiqas (ne kadar) isimden önce gelir. Yaş sorusu çend salî ile sorulur.',
+      ),
+      LessonSlide(
+        id: 'questions_1_s5',
+        lessonId: 'questions_1',
+        order: 5,
+        contentKu:
+            'Pirsan çêke!\n\nRêza pirsê: peyva pirsê li cihê bersivê dimîne, lêker li dawiyê ye.\n\n• Tu kî yî?: sen kimsin?\n• Ew li ku ye?: o nerededir?\n• Ew kengî dixwîne?: o ne zaman okuyor?\n• Tu çima dikî?: neden yapıyorsun?\n• Ev çend in?: bunlar kaç tanedir?\n• Kîjan baş e?: hangisi iyidir?',
+        contentTr:
+            'Kurmancî soru dizilişi: soru kelimesi sorulan öğenin yerinde kalır, çekimli fiil sonda olur. Evet/hayır sorusunda ayrı soru kelimesi gerekmez.',
+      ),
+    ],
+    'verbs_1': [
+      LessonSlide(
+        id: 'verbs_1_s1',
+        lessonId: 'verbs_1',
+        order: 1,
+        contentKu:
+            'Lêker çi ye?\n\nDi kurmancî de lêker di dawiya hevokê de ye. Dema niha bi pêşgira di- çêdibe:\n\n• ez nan dixwim: ben ekmek yiyorum\n• tu çay vedixwî: sen çay içiyorsun\n• ew diçe: o gidiyor\n• em dikin: biz yapıyoruz\n• hûn dibînin: siz görüyorsunuz\n\nHatin cuda ye, di- naxe:\n\n• ew tên: onlar geliyorlar\n\nForma neyînî bi na- ye:\n\n• ez naçim: ben gitmiyorum',
+        contentTr:
+            'Kurmancîde fiil cümlenin sonunda yer alır. Şimdiki/geniş zaman çoğu fiilde di- önekiyle yapılır. Özne + nesne + fiil sırası vardır. Hatin (gelmek) di- almaz: ew tên onlar geliyorlar. Olumsuzluk na- ile yapılır: ez naçim ben gitmiyorum.',
+      ),
+      LessonSlide(
+        id: 'verbs_1_s2',
+        lessonId: 'verbs_1',
+        order: 2,
+        contentKu:
+            'Çûn û hatin:\n\nÇûn û hatin lêkerên tevgerê ne:\n\n• ez diçim: ben gidiyorum\n• tu diçî: sen gidiyorsun\n• ew diçe: o gidiyor\n• ez têm: ben geliyorum\n• tu têyî: sen geliyorsun\n• ew tê: o geliyor\n• em tên: biz geliyoruz\n• em diçin dibistanê: biz okula gidiyoruz',
+        contentTr:
+            'Çûn gitmek, hatin gelmektir. Her ikisi de şimdiki zamanda çekimlenir. Sen geliyorsun: tu têyî (ew tê ise o geliyor). Yer, çekimli hâlde fiilden sonra gelir: em diçin dibistanê. Em diçin, biz gidiyoruz demektir.',
+      ),
+      LessonSlide(
+        id: 'verbs_1_s3',
+        lessonId: 'verbs_1',
+        order: 3,
+        contentKu:
+            'Xwarin û vexwarin:\n\nJi bo xwarin û vexwarinê:\n\n• ez nan dixwim: ben ekmek yiyorum\n• tu nan dixwî: sen ekmek yiyorsun\n• ew nan dixwe: o ekmek yiyor\n• ez av vedixwim: ben su içiyorum\n• tu çay vedixwî: sen çay içiyorsun\n• ew çay vedixwe: o çay içiyor\n• em nan dixwin: biz ekmek yiyoruz',
+        contentTr:
+            'Xwarin yemek yemek, vexwarin içmektir. Nesne fiilden önce gelir: nan dixwim ekmek yiyorum. Dixwim ve vedixwim arasındaki ve- farkına dikkat edin.',
+      ),
+      LessonSlide(
+        id: 'verbs_1_s4',
+        lessonId: 'verbs_1',
+        order: 4,
+        contentKu:
+            'Kirin û dîtin:\n\nKirin û dîtin pir tên bikaranîn:\n\n• ez dikim: ben yapıyorum\n• tu dikî: sen yapıyorsun\n• ew dike: o yapıyor\n• ez dibînim: ben görüyorum\n• tu dibînî: sen görüyorsun\n• ew dibîne: o görüyor\n• em dibînin: biz görüyoruz\n• tu kar dikî: sen iş yapıyorsun',
+        contentTr:
+            'Kirin yapmak etmektir, dîtin görmektir. Kar dikim çalışıyorum anlamına gelir. Çekimde kişi eki değişir: dikim, dikî, dike. Soru ve olumsuz daha sonra gelecek.',
+      ),
+      LessonSlide(
+        id: 'verbs_1_s5',
+        lessonId: 'verbs_1',
+        order: 5,
+        contentKu:
+            'Hevokên hêsan:\n\nBi van lêkeran hevokên hêsan:\n\n• ez diçim malê: ben eve gidiyorum\n• tu têyî dibistanê: sen okula geliyorsun\n• ew nan dixwe: o ekmek yiyor\n• em çay vedixwin: biz çay içiyoruz\n• hûn kar dikin: siz iş yapıyorsunuz\n• ez te dibînim: ben seni görüyorum\n• ez naçim: ben gitmiyorum',
+        contentTr:
+            'Özne baştadır. Nesne fiilden önce gelir; yer çoğu zaman fiilden sonra gelir: diçim malê, têyî dibistanê. Naçim gitmiyorum demektir. Önce olumlu basit cümle kurun.',
+      ),
+    ],
+    'jobs_1': [
+      LessonSlide(
+        id: 'jobs_1_s1',
+        lessonId: 'jobs_1',
+        order: 1,
+        contentKu:
+            'Pîşe çi ye?\n\nPîşe karê mirovan e. Piştî dengdêrî: Ez mamoste me. Piştî dengdarî: Ez doktor im.\n\n• pîşe: meslek\n• kar: iş\n• ez: ben\n• tu: sen\n• ew: o\n• im/me: -ım, -im\n• e/ye: -dır, -dir',
+        contentTr:
+            'Meslek insanların işidir. Sesliden sonra Ez mamoste me, sessizden sonra Ez doktor im deriz. Bu derste 12 meslek öğreneceğiz.',
+      ),
+      LessonSlide(
+        id: 'jobs_1_s2',
+        lessonId: 'jobs_1',
+        order: 2,
+        contentKu:
+            'Pîşeyên hevpar:\n\nEv pîşe pir hevpar in.\n\n• mamoste: öğretmen\n• doktor: doktor\n• hemşîre: hemşire\n• xwendekar: öğrenci\n• karker: işçi\n• cotkar: çiftçi\n• polîs: polis',
+        contentTr:
+            'Bu meslekler çok yaygındır. Her satırı yüksek sesle oku ve Türkçesini söyle.',
+      ),
+      LessonSlide(
+        id: 'jobs_1_s3',
+        lessonId: 'jobs_1',
+        order: 3,
+        contentKu:
+            'Lêkera bûnê:\n\nEm pîşeyê bi lêkera bûnê dibêjin.\n\n• ez mamoste me: ben öğretmenim\n• tu doktor î: sen doktorsun\n• ew hemşîre ye: o hemşiredir\n• em karker in: biz işçiyiz\n• hûn polîs in: siz polissiniz\n• ew cotkar in: onlar çiftçidir',
+        contentTr:
+            'Mesleği söylemek için bûn fiilini kullanırız. Yüklem sesliyle bitiyorsa ez-me, tu-yî, ew-ye, em/hûn/ew-ne; sessizle bitiyorsa ez-im, tu-î, ew-e, em/hûn/ew-in.',
+      ),
+      LessonSlide(
+        id: 'jobs_1_s4',
+        lessonId: 'jobs_1',
+        order: 4,
+        contentKu:
+            'Li ku dixebite?\n\nMamoste li dibistanê dixebite.\n\n• dibistan: okul\n• nexweşxane: hastane\n• zevî: tarla\n• dadgeh: mahkeme\n• fabrîka: fabrika\n• qereqol: karakol\n• Doktor li nexweşxaneyê dixebite: Doktor hastanede çalışır',
+        contentTr:
+            'Çalışma yerini li ile söyleriz. Örnek: Mamoste li dibistanê dixebite. Doktor li nexweşxaneyê dixebite.',
+      ),
+      LessonSlide(
+        id: 'jobs_1_s5',
+        lessonId: 'jobs_1',
+        order: 5,
+        contentKu:
+            'Diyalog û rêziman:\n\nDiyalogek kurt.\n\n• Silav, tu kî yî?: Merhaba, sen kimsin\n• Ez Hêlîn im, ez hemşîre me.: Ben Helinim, ben hemşireyim\n• Tu li ku dixebitî?: Sen nerede çalışıyorsun\n• Ez li nexweşxaneyê dixebitim.: Ben hastanede çalışıyorum\n• ev dema niha ye: bu şimdiki zamandır\n• ergatîf tune ye: ergatif yok',
+        contentTr:
+            'Bu derste yalnız şimdiki zaman ve bûn var. Geçmiş zamanın ergatif yapısı yok. Diyaloğu iki kişiyle oku.',
+      ),
+    ],
+    'city_1': [
+      LessonSlide(
+        id: 'city_1_s1',
+        lessonId: 'city_1',
+        order: 1,
+        contentKu:
+            'Bajar: Cihên Girîng:\n\nDi bajêr de gelek cih hene. Ev peyvên bingehîn in:\n\n• bajar: şehir\n• kolan: sokak\n• nexweşxane: hastane\n• dibistan: okul\n• bazar: çarşı\n• xwaringeh: lokanta\n• otêl: otel',
+        contentTr:
+            'Şehirde birçok yer vardır. Temel kelimeler:\n- bajar: şehir\n- kolan: sokak\n- nexweşxane: hastane\n- dibistan: okul\n- bazar: çarşı\n- xwaringeh: lokanta\n- otêl: otel',
+      ),
+      LessonSlide(
+        id: 'city_1_s2',
+        lessonId: 'city_1',
+        order: 2,
+        contentKu:
+            'Alî: Rast, Çep, Rasterast:\n\nJi bo nîşandana rê van peyvan bi kar bîne:\n\n• rast: sağ\n• çep: sol\n• rasterast: düz, dosdoğru\n• nêzîk: yakın\n• dûr: uzak\n• li vir: burada\n• li wir: orada',
+        contentTr:
+            'Yön tarif ederken bu kelimeleri kullan:\n- rast: sağ\n- çep: sol\n- rasterast: düz, dosdoğru\n- nêzîk: yakın\n- dûr: uzak\n- li vir: burada\n- li wir: orada',
+      ),
+      LessonSlide(
+        id: 'city_1_s3',
+        lessonId: 'city_1',
+        order: 3,
+        contentKu:
+            'Rê Pirsîn:\n\nDema tu rê dipirsî, van qaliban bi kar bîne:\n\n• Ji kerema xwe: lütfen\n• ... li ku ye?: ... nerededir?\n• Ez çawa biçim ...?: ... nasıl giderim?\n• li ku derê ye?: nerededir?\n• dûr e?: uzak mıdır?\n• nêzîk e?: yakın mıdır?',
+        contentTr:
+            'Yol sorarken bu kalıpları kullan:\n- Ji kerema xwe: lütfen\n- ... li ku ye?: ... nerededir?\n- Ez çawa biçim ...?: ... nasıl giderim?\n- li ku derê ye?: nerededir?\n- dûr e?: uzak mıdır?\n- nêzîk e?: yakın mıdır?',
+      ),
+      LessonSlide(
+        id: 'city_1_s4',
+        lessonId: 'city_1',
+        order: 4,
+        contentKu:
+            'Rê Nîşandan:\n\nRê nîşandan. Hevokên fermanî bingehîn in:\n\n• Rasterast biçe: Düz git\n• Li rastê bizivire: Sağa dön\n• Li çepê bizivire: Sola dön\n• Bisekine: Dur\n• li pêş: önde\n• li paş: arkada',
+        contentTr:
+            'Yol tarif etme. Emir cümleleri temeldir:\n- Rasterast biçe: Düz git\n- Li rastê bizivire: Sağa dön\n- Li çepê bizivire: Sola dön\n- Bisekine: Dur\n- li pêş: önde\n- li paş: arkada',
+      ),
+      LessonSlide(
+        id: 'city_1_s5',
+        lessonId: 'city_1',
+        order: 5,
+        contentKu:
+            'Di Bajêr De: Diyalog:\n\nAxaftineke kurt û hêsan. Peyvên nezaketê:\n\n• Rojbaş: Merhaba, iyi günler\n• Ji kerema xwe: lütfen\n• Spas: Teşekkürler\n• Erê: Evet\n• Na: Hayır\n• Baş e: Tamam, iyidir',
+        contentTr:
+            'Kısa ve kolay bir konuşma. Kibarlık kelimeleri:\n- Rojbaş: Merhaba, iyi günler\n- Ji kerema xwe: lütfen\n- Spas: Teşekkürler\n- Erê: Evet\n- Na: Hayır\n- Baş e: Tamam, iyidir',
+      ),
+    ],
+    'shopping_1': [
+      LessonSlide(
+        id: 'shopping_1_s1',
+        lessonId: 'shopping_1',
+        order: 1,
+        contentKu:
+            'Silav li dikanê:\n\nLi dikanê em pêşî silav dikin.\n\n• merheba: merhaba\n• rojbaş: iyi günler\n• tu çawa yî?: nasılsın\n• ez baş im: iyiyim\n• bi xêr hatî: hoş geldin\n• bi xatirê te: hoşça kal',
+        contentTr:
+            'Dükkânda önce selamlaşırız. Merhaba, iyi günler, nasılsın, iyiyim, hoş geldin ve hoşça kal kalıplarını öğreniyoruz.',
+      ),
+      LessonSlide(
+        id: 'shopping_1_s2',
+        lessonId: 'shopping_1',
+        order: 2,
+        contentKu:
+            'Tiştên kirînê:\n\nLi dikanê gelek tişt hene.\n\n• nan: ekmek\n• av: su\n• şîr: süt\n• hêk: yumurta\n• sêv: elma\n• dikan: dükkân\n• sûk: pazar',
+        contentTr:
+            'Dükkânda birçok ürün vardır. Ekmek, su, süt, yumurta, elma, dükkân ve pazar kelimelerini öğreniyoruz.',
+      ),
+      LessonSlide(
+        id: 'shopping_1_s3',
+        lessonId: 'shopping_1',
+        order: 3,
+        contentKu:
+            'Pirsîna bihayê:\n\nJi bo pirsîna bihayê em dibêjin.\n\n• Ev çend e?: bu kaçtır\n• Biha çend e?: fiyat nedir\n• erzan: ucuz\n• giran: pahalı\n• ez dixwazim: istiyorum\n• tu çi dixwazî?: ne istiyorsun',
+        contentTr:
+            'Fiyatı sormak için Ev çend e ve Biha çend e deriz. Ucuz, pahalı ve istiyorum kalıplarını öğreniyoruz.',
+      ),
+      LessonSlide(
+        id: 'shopping_1_s4',
+        lessonId: 'shopping_1',
+        order: 4,
+        contentKu:
+            'Pere û hejmar:\n\nJi bo kirînê pere lazim e.\n\n• pere: para\n• biha: fiyat\n• yek: bir\n• du: iki\n• sê: üç\n• çar: dört\n• pênc: beş',
+        contentTr:
+            'Alışveriş için para gerekir. Para, fiyat ve 1\'den 5\'e kadar sayıları öğreniyoruz.',
+      ),
+      LessonSlide(
+        id: 'shopping_1_s5',
+        lessonId: 'shopping_1',
+        order: 5,
+        contentKu:
+            'Diyaloga kirînê:\n\nKiriyar û firoşkar diaxivin.\n\n• Ez sêv dixwazim: elma istiyorum\n• Şîr li dikanê ye: süt dükkândadır\n• Sêv erzan in: elmalar ucuzdur\n• Nan giran e: ekmek pahalıdır\n• Pere li ku ye?: para nerede',
+        contentTr:
+            'Müşteri ve satıcı konuşur. İstiyorum, dükkândadır, ucuzdur, pahalıdır kalıplarıyla kısa bir diyalog kuruyoruz.',
+      ),
+    ],
+    'health_1': [
+      LessonSlide(
+        id: 'health_1_s1',
+        lessonId: 'health_1',
+        order: 1,
+        contentKu:
+            'Tenduristî çi ye?\n\nTenduristî ji bo jiyanê pir girîng e. Em xwe nas dikin.\n\n• tenduristî: sağlık\n• baş: iyi\n• nexweş: hasta\n• ez: ben\n• tu: sen\n• ew: o',
+        contentTr:
+            'Sağlık yaşam için çok önemlidir. Kendimizi tanıyoruz.\n- tenduristî: sağlık\n- baş: iyi\n- nexweş: hasta\n- ez: ben\n- tu: sen\n- ew: o',
+      ),
+      LessonSlide(
+        id: 'health_1_s2',
+        lessonId: 'health_1',
+        order: 2,
+        contentKu:
+            'Doktor û Nexweşxane:\n\nEm diçin ba doktor. Doktor alîkarî dide.\n\n• doktor: doktor\n• nexweşxane: hastane\n• derman: ilaç\n• bijîşk: hekim, doktor\n• alîkarî: yardım\n• nexweş: hasta',
+        contentTr:
+            'Doktora gidiyoruz. Doktor yardım eder.\n- doktor: doktor\n- nexweşxane: hastane\n- derman: ilaç\n- bijîşk: hekim, doktor\n- alîkarî: yardım\n- nexweş: hasta',
+      ),
+      LessonSlide(
+        id: 'health_1_s3',
+        lessonId: 'health_1',
+        order: 3,
+        contentKu:
+            'Laşê Me:\n\nLaşê me ji beşan pêk tê. Em navên beşan hîn dibin.\n\n• ser: baş\n• çav: göz\n• diran: diş\n• dil: kalp\n• zik: karın\n• laş: vücut, beden',
+        contentTr:
+            'Vücudumuz parçalardan oluşur. Parça adlarını öğreniyoruz.\n- ser: baş\n- çav: göz\n- diran: diş\n- dil: kalp\n- zik: karın\n- laş: vücut, beden',
+      ),
+      LessonSlide(
+        id: 'health_1_s4',
+        lessonId: 'health_1',
+        order: 4,
+        contentKu:
+            'Nîşanên Nexweşiyê:\n\nDema em nexweş in, laşê me nîşan dide. Ev peyv girîng in.\n\n• êş: ağrı\n• ta: ateş\n• kuxik: öksürük\n• grîp: grip\n• serma: üşütme, soğuk algınlığı\n• diêşe: ağrıyor',
+        contentTr:
+            'Hasta olunca vücudumuz belirti gösterir. Bu sözler önemlidir.\n- êş: ağrı\n- ta: ateş\n- kuxik: öksürük\n- grîp: grip\n- serma: üşütme, soğuk algınlığı\n- diêşe: ağrıyor',
+      ),
+      LessonSlide(
+        id: 'health_1_s5',
+        lessonId: 'health_1',
+        order: 5,
+        contentKu:
+            'Ez bi Doktor re Dipeyivim:\n\nEm hevokên hêsan dibêjin. Em dema niha bi kar tînin.\n\n• Serê min diêşe: Başım ağrıyor\n• Ez nexweş im: Ben hastayım\n• Taya min heye: Ateşim var\n• Ez dikuxim: Öksürüyorum\n• Derman bide min: Bana ilaç ver',
+        contentTr:
+            'Basit cümleler söylüyoruz. Şimdiki zamanı kullanıyoruz.\n- Serê min diêşe: Başım ağrıyor\n- Ez nexweş im: Ben hastayım\n- Taya min heye: Ateşim var\n- Ez dikuxim: Öksürüyorum\n- Derman bide min: Bana ilaç ver',
+      ),
+    ],
+    'school_1': [
+      LessonSlide(
+        id: 'school_1_s1',
+        lessonId: 'school_1',
+        order: 1,
+        contentKu:
+            'Dibistan:\n\nDibistan cihê xwendinê ye. Em di dibistanê de hîn dibin.\n\n• dibistan: okul\n• pol: sınıf\n• ders: ders\n• mamoste: öğretmen\n• xwendekar: öğrenci\n• mezin: büyük',
+        contentTr: 'Okul, öğrenim yeridir. Okulda öğreniriz.',
+      ),
+      LessonSlide(
+        id: 'school_1_s2',
+        lessonId: 'school_1',
+        order: 2,
+        contentKu:
+            'Mamoste û Xwendekar:\n\nLi dibistanê mamoste dersê dide, xwendekar hîn dibe.\n\n• mamoste: öğretmen\n• xwendekar: öğrenci\n• heval: arkadaş\n• ders: ders\n• dibistan: okul\n• hîn dibe: öğreniyor',
+        contentTr:
+            'Okulda öğretmen ders verir, öğrenci öğrenir. Kişileri tanıtan basit cümleler kuruyoruz.',
+      ),
+      LessonSlide(
+        id: 'school_1_s3',
+        lessonId: 'school_1',
+        order: 3,
+        contentKu:
+            'Pirtûk, Defter û Pênûs:\n\nEm bi van tiştan dixwînin û dinivîsin.\n\n• pirtûk: kitap\n• defter: defter\n• pênûs: kalem\n• çente: çanta\n• dixwîne: okuyor\n• dinivîse: yazıyor',
+        contentTr:
+            'Bu eşyalarla okur ve yazarız. Okumak ve yazmak fiillerini şimdiki zamanda görüyoruz.',
+      ),
+      LessonSlide(
+        id: 'school_1_s4',
+        lessonId: 'school_1',
+        order: 4,
+        contentKu:
+            'Tiştên Polê:\n\nDi polê de ev tişt hene.\n\n• pol: sınıf\n• mase: masa\n• kursî: sandalye\n• text: kara tahta\n• çente: çanta\n• polê: sınıf (oblik; di polê de: sınıfta)',
+        contentTr:
+            'Sınıfta bu şeyler vardır. Yer için di/li + oblik gelir; pol dişil olduğu için hali polê.',
+      ),
+      LessonSlide(
+        id: 'school_1_s5',
+        lessonId: 'school_1',
+        order: 5,
+        contentKu:
+            'Di Polê de:\n\nEm di polê de çi dikin? Em hîn dibin.\n\n• ez dixwînim: okuyorum\n• ez dinivîsim: yazıyorum\n• guhdar dike: dinliyor\n• dibêje: söylüyor\n• mezin: büyük\n• biçûk: küçük',
+        contentTr:
+            'Sınıfta ne yaparız? Öğreniriz. Şimdiki zamanla çok basit cümleler kuruyoruz.',
+      ),
+    ],
+    'transport_1': [
+      LessonSlide(
+        id: 'transport_1_s1',
+        lessonId: 'transport_1',
+        order: 1,
+        contentKu:
+            'Wesayîtên veguhestinê:\n\nEm bi wesayîtan diçin. Li jêr wesayîtên bingehîn hene:\n\n• otobus: otobüs\n• erebe: araba\n• trên: tren\n• balafir: uçak\n• taksî: taksi',
+        contentTr:
+            'Taşıtlarla gidiyoruz. Aşağıda temel taşıtlar var: otobüs, araba, tren, uçak ve taksi.',
+      ),
+      LessonSlide(
+        id: 'transport_1_s2',
+        lessonId: 'transport_1',
+        order: 2,
+        contentKu:
+            'Tu diçî ku derê?\n\nBi lêkera çûn em dibêjin em diçin ku derê:\n\n• ez diçim: gidiyorum\n• tu diçî: gidiyorsun\n• ew diçe: gidiyor\n• em diçin: gidiyoruz\n• hûn diçin: gidiyorsunuz\n• ew diçin: gidiyorlar',
+        contentTr:
+            'Çûn fiiliyle nereye gittiğimizi söylüyoruz: ez diçim gidiyorum, tu diçî gidiyorsun, ew diçe gidiyor, em diçin gidiyoruz, hûn diçin gidiyorsunuz, ew diçin gidiyorlar demektir.',
+      ),
+      LessonSlide(
+        id: 'transport_1_s3',
+        lessonId: 'transport_1',
+        order: 3,
+        contentKu:
+            'Bi çi diçî?\n\nBi + wesayît em dibêjin em bi çi diçin:\n\n• bi otobusê: otobüsle\n• bi erebeyê: arabayla\n• bi trênê: trenle\n• bi balafirê: uçakla\n• bi taksiyê: taksiyle',
+        contentTr:
+            'Bi + taşıt ile neyle gittiğimizi söylüyoruz: otobüsle, arabayla, trenle, uçakla, taksiyle.',
+      ),
+      LessonSlide(
+        id: 'transport_1_s4',
+        lessonId: 'transport_1',
+        order: 4,
+        contentKu:
+            'Bilêt û Rawestgeh:\n\nJi bo veguhestinê ev peyv girîng in:\n\n• bilêt: bilet\n• rawestgeh: durak\n• balafirgeh: havaalanı\n• rê: yol\n• rêwî: yolcu\n• ajokar: şoför',
+        contentTr:
+            'Ulaşım için bu sözcükler önemlidir: bilet, durak, havaalanı, yol, yolcu ve şoför.',
+      ),
+      LessonSlide(
+        id: 'transport_1_s5',
+        lessonId: 'transport_1',
+        order: 5,
+        contentKu:
+            'Diyaloga Hêsan:\n\nLi rawestgehê du kes diaxivin:\n\n• Silav!: Merhaba!\n• Tu diçî ku derê?: Nereye gidiyorsun?\n• Ez diçim Enqereyê.: Ankara’ya gidiyorum.\n• Bi çi diçî?: Neyle gidiyorsun?\n• Bi otobusê diçim.: Otobüsle gidiyorum.',
+        contentTr:
+            'Durakta iki kişi konuşuyor: selamlaşma, nereye gidiyorsun, Ankara’ya gidiyorum, neyle gidiyorsun, otobüsle gidiyorum.',
+      ),
+    ],
+    'past_1': [
+      LessonSlide(
+        id: 'past_1_s1',
+        lessonId: 'past_1',
+        order: 1,
+        contentKu:
+            'Dema Borî Çi Ye?\n\nDema borî ji bo karên qediyayî ye. Em behsa duh û berê dikin. Mînak:\n\n• duh: dün\n• berê: önce\n• qediya: bitti\n• Ez çûm: Gittim\n• Min xwar: Yedim\n• Me ew dît: Onu gördük',
+        contentTr:
+            'Geçmiş zaman bitmiş işler içindir. Dünü ve öncesini anlatırız. Örnek: duh: dün / berê: önce / qediya: bitti / Ez çûm: Gittim / Min xwar: Yedim / Me ew dît: Onu gördük',
+      ),
+      LessonSlide(
+        id: 'past_1_s2',
+        lessonId: 'past_1',
+        order: 2,
+        contentKu:
+            'Çûn û Hatin:\n\nÇûn û hatin negerguhêz in, bi ez-tu-ew tên. Mînak:\n\n• ez çûm: gittim\n• tu çûyî: gittin\n• ew çû: gitti\n• ez hatim: geldim\n• tu hatî: geldin\n• ew hat: geldi\n• em çûn: gittik',
+        contentTr:
+            'çûn ve hatin geçişsizdir, ez-tu-ew zamirleriyle çekilir. Özne şimdiki zamandaki gibi yalın hâldedir. Örnek: ez çûm: gittim / tu çûyî: gittin / ew çû: gitti / ez hatim: geldim / tu hatî: geldin / ew hat: geldi / em çûn: gittik',
+      ),
+      LessonSlide(
+        id: 'past_1_s3',
+        lessonId: 'past_1',
+        order: 3,
+        contentKu:
+            'Xwarin û Dîtin - Ergativ:\n\nDi dema borî de lêkerên gerguhêz bi min, te, wî, wê û me tên. Mînak:\n\n• min xwar: yedim\n• te xwar: yedin\n• wî xwar: o yedi (erkek)\n• wê xwar: o yedi (kadın)\n• me xwar: yedik\n• min dît: gördüm\n• te dît: gördün',
+        contentTr:
+            'Geçmiş zamanda geçişli fiiller min, te, wî, wê ve me ile çekilir. ez yerine min, tu yerine te gelir. Nesne tekilse fiil xwar ve dît olarak kalır. Bu kurala ergatif denir. Örnek: min xwar: yedim / te xwar: yedin / wî xwar: o yedi (erkek) / wê xwar: o yedi (kadın) / me xwar: yedik / min dît: gördüm / te dît: gördün',
+      ),
+      LessonSlide(
+        id: 'past_1_s4',
+        lessonId: 'past_1',
+        order: 4,
+        contentKu:
+            'Bûn û Neyînî:\n\nBûn negerguhêz e, bi ez, tu û ew tê. Neyînî bi ne- ye. Mînak:\n\n• ez bûm: oldum\n• tu bûyî: oldun\n• ew bû: oldu\n• ez neçûm: gitmedim\n• tu nehatî: gelmedin\n• min nexwar: yemedim\n• min nedît: görmedim',
+        contentTr:
+            'bûn geçişsizdir ve ez, tu, ew ile çekilir. Olumsuzluk fiilin başına ne- getirerek yapılır. Geçişlide min nexwar, geçişsizde ez neçûm olur.',
+      ),
+      LessonSlide(
+        id: 'past_1_s5',
+        lessonId: 'past_1',
+        order: 5,
+        contentKu:
+            'Di Jiyana Rojane de:\n\nEm bi hevokên kurt dipeyivin. Mînak:\n\n• Duh ez çûm dibistanê: Dün okula gittim\n• Tu hatî malê: Eve geldin\n• Min nan xwar: Ekmek yedim\n• Te çay vexwar: Çay içtin\n• Ew mamoste bû: O öğretmendi',
+        contentTr:
+            'Kısa cümlelerle konuşuruz. Örnek: Duh ez çûm dibistanê: Dün okula gittim / Tu hatî malê: Eve geldin / Min nan xwar: Ekmek yedim / Te çay vexwar: Çay içtin / Ew mamoste bû: O öğretmendi',
+      ),
+    ],
     'everyday_1': [
       LessonSlide(
         id: 'everyday_1_s1',
@@ -1205,6 +3094,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
             'Dengbêjî:\n\nDengbêjî, parastin û ragihandina dîrok û çanda kurdî ya bi riya stran û kilaman e.',
         contentTr: 'Dengbêjlik kültürü hakkında bilgi.',
       ),
+      LessonSlide(
+        id: 'culture_1_s3',
+        lessonId: 'culture_1',
+        order: 3,
+        contentKu: 'Dawet:\n\n• Dawet: Düğün',
+        contentTr: 'Düğün ziyafeti anlamında bir sözcük.',
+        exampleKu: 'Dawet li malê ye.',
+      ),
     ],
     'culture_2': [
       LessonSlide(
@@ -1240,6 +3137,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
         contentKu:
             'Danên xwarinê:\n\n• Taştê: Kahvaltı\n• Firavîn: Öğle yemeği\n• Şîv: Akşam yemeği',
         contentTr: 'Öğün isimleri.',
+      ),
+      LessonSlide(
+        id: 'food_1_s3',
+        lessonId: 'food_1',
+        order: 3,
+        contentKu:
+            'Xwarin û vexwarin:\n\n• Xwarin: Yemek yemek\n• Vexwarin: İçmek',
+        contentTr:
+            'Yemek yemek (xwarin) ve içmek (vexwarin) fiilleri. "Ez nan dixwim" = ekmek yiyorum, "Ez av vedixwim" = su içiyorum.',
+        exampleKu: 'Ez nan dixwim. Ez av vedixwim.',
       ),
     ],
     'food_2': [
@@ -1382,7 +3289,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'time_1',
         order: 2,
         contentKu:
-            'Mehên serê salê:\n\n• Rêbendan (Ocak), Reşemeh (Şubat), Adar (Mart)\n• Nîsan (Nisan), Gulan (Mayıs), Hezîran (Haziran)',
+            'Mehên serê salê:\n\n• Rêbendan: Ocak, Reşemeh: Şubat, Adar: Mart\n• Nîsan: Nisan, Gulan: Mayıs, Hezîran: Haziran',
         contentTr: 'Yılın ilk 6 ayı.',
       ),
     ],
@@ -1401,6 +3308,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
         order: 2,
         contentKu: 'Demên nêzîk:\n\n• Duh: Dün\n• Îro: Bugün\n• Sibe: Yarın',
         contentTr: 'Zaman belirteçleri.',
+      ),
+      LessonSlide(
+        id: 'time_2_s3',
+        lessonId: 'time_2',
+        order: 3,
+        contentKu: 'Çûn:\n\n• Çûn: Gitmek',
+        contentTr: '"Ez diçim malê" = eve gidiyorum.',
+        exampleKu: 'Îro ez diçim malê.',
       ),
     ],
   };
@@ -1442,6 +3357,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<bool> addFriend(String friendId, String friendName) async {
     return true;
+  }
+
+  String? lastFcmToken;
+
+  @override
+  Future<void> setFcmToken(String token) async {
+    lastFcmToken = token;
   }
 
   @override
@@ -1615,5 +3537,37 @@ class MockZanKurdRepository implements ZanKurdRepository {
     // Mock: her zaman başarılı olarak dön.
     // Canlı ortamda Supabase 'suggested_questions' tablosuna yazılır.
     return true;
+  }
+
+  bool _mockReferralUsed = false;
+
+  @override
+  Future<ReferralResult> redeemReferralCode(String code) async {
+    final clean = code.trim().toUpperCase();
+    if (clean.isEmpty) {
+      return const ReferralResult(
+        status: ReferralStatus.notFound,
+        message: 'Invalid code',
+      );
+    }
+    if (_mockReferralUsed) {
+      return const ReferralResult(
+        status: ReferralStatus.alreadyRedeemed,
+        message: 'Already redeemed',
+      );
+    }
+    if (clean == 'ZK-TEST' || clean == 'ZK-ME') {
+      return const ReferralResult(
+        status: ReferralStatus.ownCode,
+        message: 'Cannot use own code',
+      );
+    }
+    _mockReferralUsed = true;
+    _mockCoins += 100;
+    return const ReferralResult(
+      status: ReferralStatus.success,
+      coinsAwarded: 100,
+      referrerName: 'ZanKurd Heval',
+    );
   }
 }

@@ -12,11 +12,13 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/avatar_identity.dart';
 import '../models/mastery_level.dart';
-import '../theme/app_theme.dart';
 import '../utils/error_reporter.dart';
-import '../widgets/app_panel.dart';
+import '../utils/player_identity.dart';
+import '../widgets/app_state.dart';
+import '../widgets/branded_loader.dart';
 import '../widgets/player_avatar.dart';
-import '../widgets/screen_identity_header.dart';
+import '../widgets/sahne/sahne.dart';
+import '../widgets/zk_back_button.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 /// Avatar/çerçeve/unvan düzenleyici. Kaydet ile repository'ye yazar ve
@@ -45,6 +47,7 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   List<String> _earnedTitles = const [];
   String _displayName = '';
   bool _loading = true;
+  bool _loadFailed = false;
   bool _saving = false;
   bool _uploadingPhoto = false;
 
@@ -111,24 +114,24 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   }
 
   Future<void> _load() async {
+    if (mounted) {
+      setState(() {
+        _loading = true;
+        _loadFailed = false;
+      });
+    }
     try {
       final identity = await widget.repository.loadAvatarIdentity();
       _hadPhotoOnOpen = identity.photoUrl != null;
       final name = await widget.repository.getProfileName();
       final masteryStore = await MasteryStore.load();
       final achievementStore = await AchievementStore.load();
-      final hasGoldFrame = await _safeHasPurchased(
-        'avatar_frame_gold',
-      );
+      final hasGoldFrame = await _safeHasPurchased('avatar_frame_gold');
       // Neon çerçeve 2026-07-31'e kadar mağaza kataloğunda tanımlıydı ama
       // hiçbir yerde açılmıyordu: 600 coin ödeyen oyuncu karşılığında
       // hiçbir şey görmüyordu. Altın çerçevenin birebir aynı deseni.
-      final hasNeonFrame = await _safeHasPurchased(
-        'avatar_frame_neon',
-      );
-      final hasVipBadge = await _safeHasPurchased(
-        'profile_badge_vip',
-      );
+      final hasNeonFrame = await _safeHasPurchased('avatar_frame_neon');
+      final hasVipBadge = await _safeHasPurchased('profile_badge_vip');
 
       final masteryByCategory = {
         for (final cat in widget.repository.categories)
@@ -161,10 +164,16 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
         _unlocked = frames;
         _earnedTitles = titles;
         _loading = false;
+        _loadFailed = false;
       });
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'avatar editor load failed');
-      if (mounted) setState(() => _loading = false);
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _loadFailed = true;
+        });
+      }
     }
   }
 
@@ -260,329 +269,253 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
+    final t = SahneTokens.of(context);
+    // 2026-09-29 Şahnê: B iskeleti — "Avatarım / Simge, renk ve çerçeve
+    // seç" çubukta; eski mor kimlik kartı kalktı. Bölümler tek biçimli
+    // bölüm başlığıyla; seçimler yüzey kartı ve liste grubunda. Tek
+    // birincil eylem: Kaydet.
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: AppTheme.backgroundGradient(context),
-        ),
-        child: SafeArea(
-          child: _loading
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: AppTheme.primaryGradientStart,
-                  ),
-                )
-              : ListView(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.page,
-                    AppSpacing.xs,
-                    AppSpacing.page,
-                    AppSpacing.lg,
-                  ),
-                  children: [
-                    // Profil ailesi — mor kimlik.
-                    ScreenIdentityHeader(
-                      title: context.t(K.myAvatar),
-                      subtitle: context.t(K.myAvatarSub),
-                      accent: AppTheme.violet,
-                      icon: AppIcons.faceSmile,
-                      compact: true,
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    Center(
-                      child: PlayerAvatar(
-                        key: const ValueKey('avatar-preview'),
-                        radius: 52,
-                        photoUrl: _identity.photoUrl,
-                        iconId: _identity.iconId,
-                        colorHex: _identity.colorHex,
-                        frameId: _identity.frameId,
-                        displayName: _displayName,
+      backgroundColor: t.bg,
+      appBar: zkAppBar(context, title: Text(context.t(K.myAvatar))),
+      body: SafeArea(
+        top: false,
+        child: _loading
+            ? const BrandedLoaderCenter()
+            : _loadFailed
+            ? AppErrorState(
+                title: context.t(K.loadFailedShort),
+                message: context.t(K.checkConnection),
+                retryLabel: context.t(K.retry),
+                onRetry: _load,
+              )
+            : ListView(
+                padding: const EdgeInsets.fromLTRB(
+                  SahneSpace.page,
+                  SahneSpace.x2,
+                  SahneSpace.page,
+                  SahneSpace.x8,
+                ),
+                children: [
+                  Center(
+                    child: PlayerAvatar(
+                      key: const ValueKey('avatar-preview'),
+                      radius: 52,
+                      photoUrl: _identity.photoUrl,
+                      iconId: _identity.iconId,
+                      colorHex: _identity.colorHex,
+                      frameId: _identity.frameId,
+                      // Profil ekranıyla aynı iki girdi: çözülmüş ad ve
+                      // dilden bağımsız renk tohumu. 2026-09-30 simülatör:
+                      // düzenleyici ham adı, profil tohumu kullandığı için
+                      // renk seçilmemişken önizleme turuncu, profil mor
+                      // çiziyordu.
+                      displayName: PlayerIdentity.resolveName(
+                        _displayName,
+                        isKu: ku,
                       ),
+                      colorSeed: PlayerIdentity.resolveColorSeed(_displayName),
                     ),
-                    const SizedBox(height: 14),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        OutlinedButton.icon(
-                          key: const ValueKey('avatar-pick-photo'),
-                          onPressed: _uploadingPhoto ? null : _pickPhoto,
-                          icon: _uploadingPhoto
-                              ? const SizedBox(
-                                  width: 14,
-                                  height: 14,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                  ),
-                                )
-                              : const Icon(AppIcons.images),
-                          label: Text(context.t(K.uploadPhoto)),
+                  ),
+                  const SizedBox(height: SahneSpace.x4),
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: SahneSpace.x2,
+                    runSpacing: SahneSpace.x2,
+                    children: [
+                      SahneButton.secondary(
+                        key: const ValueKey('avatar-pick-photo'),
+                        label: context.t(K.uploadPhoto),
+                        icon: AppIcons.images,
+                        onPressed: _uploadingPhoto ? null : _pickPhoto,
+                      ),
+                      if (_identity.photoUrl != null)
+                        SahneButton.secondary(
+                          key: const ValueKey('avatar-remove-photo'),
+                          label: context.t(K.removeAction),
+                          icon: AppIcons.xmark,
+                          onPressed: () => setState(
+                            () => _identity = _identity.copyWith(
+                              clearPhoto: true,
+                            ),
+                          ),
                         ),
-                        if (_identity.photoUrl != null) ...[
-                          const SizedBox(width: 10),
-                          TextButton.icon(
-                            key: const ValueKey('avatar-remove-photo'),
-                            onPressed: () => setState(
+                    ],
+                  ),
+                  SahneSectionHeader(title: context.t(K.symbol)),
+                  SahneSurfaceCard(
+                    padding: const EdgeInsets.all(SahneSpace.x3),
+                    child: GridView.count(
+                      crossAxisCount: 4,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      mainAxisSpacing: SahneSpace.x2,
+                      crossAxisSpacing: SahneSpace.x2,
+                      children: [
+                        // Ekran okuyucu 2026-07-31'e kadar bu ızgarada
+                        // 16 kez yalnız "button" diyordu: hücrenin tek
+                        // çocuğu etiketsiz bir Icon'du. Görme engelli
+                        // oyuncu hangi sembolü seçtiğini anlayamıyordu.
+                        // Adlar `avatarIcons` anahtarlarında zaten
+                        // vardı, yalnız kullanılmıyordu.
+                        for (final entry in avatarIcons.entries)
+                          _IconCell(
+                            key: ValueKey('avatar-icon-${entry.key}'),
+                            icon: entry.value,
+                            semanticLabel: context.t(
+                              avatarIconLabelKeys[entry.key] ?? K.avatarIconRoj,
+                            ),
+                            selected: _identity.iconId == entry.key,
+                            onTap: () => setState(
                               () => _identity = _identity.copyWith(
+                                iconId: entry.key,
                                 clearPhoto: true,
                               ),
                             ),
-                            icon: const Icon(AppIcons.xmark),
-                            label: Text(context.t(K.removeAction)),
                           ),
-                        ],
                       ],
                     ),
-                    const SizedBox(height: 18),
-                    _SectionTitle(context.t(K.symbol)),
-                    AppPanel(
-                      child: GridView.count(
-                        crossAxisCount: 4,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        children: [
-                          // Ekran okuyucu 2026-07-31'e kadar bu ızgarada
-                          // 16 kez yalnız "button" diyordu: hücrenin tek
-                          // çocuğu etiketsiz bir Icon'du. Görme engelli
-                          // oyuncu hangi sembolü seçtiğini anlayamıyordu.
-                          // Adlar `avatarIcons` anahtarlarında zaten
-                          // vardı, yalnız kullanılmıyordu.
-                          for (final entry in avatarIcons.entries)
-                            _IconCell(
-                              key: ValueKey('avatar-icon-${entry.key}'),
-                              icon: entry.value,
-                              semanticLabel: context.t(
-                                avatarIconLabelKeys[entry.key] ??
-                                    K.avatarIconRoj,
-                              ),
-                              selected: _identity.iconId == entry.key,
-                              color: colorFrom(
-                                _identity.colorHex,
-                                fallback: AppTheme.accent,
-                              ),
-                              onTap: () => setState(
-                                () => _identity = _identity.copyWith(
-                                  iconId: entry.key,
-                                  clearPhoto: true,
-                                ),
-                              ),
+                  ),
+                  SahneSectionHeader(title: context.t(K.colorWord)),
+                  SahneSurfaceCard(
+                    padding: const EdgeInsets.all(SahneSpace.x2),
+                    child: Wrap(
+                      children: [
+                        // Aynı kusur renklerde de vardı: InkWell'in tek
+                        // çocuğu renkli bir Container, hiç metin yok.
+                        // Renk adları `avatarColors` listesinin yorum
+                        // satırlarında yazılıydı.
+                        for (final hex in avatarColors)
+                          _ColorSwatch(
+                            key: ValueKey('avatar-color-$hex'),
+                            color: colorFrom(hex, fallback: t.s3),
+                            label: context.t(
+                              avatarColorLabelKeys[hex] ?? K.colorWord,
                             ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    _SectionTitle(context.t(K.colorWord)),
-                    AppPanel(
-                      child: Wrap(
-                        spacing: 6,
-                        runSpacing: 6,
-                        children: [
-                          // Aynı kusur renklerde de vardı: InkWell'in tek
-                          // çocuğu renkli bir Container, hiç metin yok.
-                          // Renk adları `avatarColors` listesinin yorum
-                          // satırlarında yazılıydı.
-                          for (final hex in avatarColors)
-                            Semantics(
-                              button: true,
-                              selected: _identity.colorHex == hex,
-                              label: context.t(
-                                avatarColorLabelKeys[hex] ?? K.colorWord,
-                              ),
-                              excludeSemantics: true,
-                              child: ClipOval(
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    key: ValueKey('avatar-color-$hex'),
-                                    onTap: () => setState(
-                                      () => _identity = _identity.copyWith(
-                                        colorHex: hex,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Container(
-                                        width: 36,
-                                        height: 36,
-                                        decoration: BoxDecoration(
-                                          color: colorFrom(
-                                            hex,
-                                            fallback: AppTheme.accent,
-                                          ),
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: _identity.colorHex == hex
-                                                ? Colors.white
-                                                : Colors.transparent,
-                                            width: 3,
-                                          ),
-                                          boxShadow: _identity.colorHex == hex
-                                              ? [
-                                                  BoxShadow(
-                                                    color: Colors.black
-                                                        .withValues(
-                                                          alpha: 0.25,
-                                                        ),
-                                                    blurRadius: 4,
-                                                    offset: const Offset(0, 2),
-                                                  ),
-                                                ]
-                                              : null,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    _SectionTitle(context.t(K.frame)),
-                    AppPanel(
-                      child: Column(
-                        children: [
-                          _FrameRow(
-                            key: const ValueKey('avatar-frame-none'),
-                            label: context.t(K.noFrame),
-                            color: AppTheme.textMuted,
-                            locked: false,
-                            selected: _identity.frameId == null,
-                            requirement: null,
+                            selected: _identity.colorHex == hex,
                             onTap: () => setState(
-                              () => _identity = _identity.copyWith(
-                                clearFrame: true,
-                              ),
+                              () =>
+                                  _identity = _identity.copyWith(colorHex: hex),
                             ),
                           ),
-                          for (final frame in AvatarFrame.values)
-                            _FrameRow(
-                              key: ValueKey('avatar-frame-${frame.name}'),
-                              label: switch (frame) {
-                                AvatarFrame.bronze => context.t(K.bronze),
-                                AvatarFrame.silver => context.t(K.silver),
-                                AvatarFrame.gold => context.t(K.gold),
-                                AvatarFrame.mamoste => 'Mamoste',
-                                AvatarFrame.neon => context.t(K.frameNeon),
-                              },
-                              color: frameColor(frame),
-                              locked: !_unlocked.contains(frame),
-                              selected: _identity.frameId == frame.name,
-                              requirement: frameRequirementLabel(frame, ku),
-                              onTap: () {
-                                if (!_unlocked.contains(frame)) {
-                                  _showSnack(
-                                    '${context.t(K.locked)} — '
-                                    '${frameRequirementLabel(frame, ku)}',
-                                  );
-                                  return;
-                                }
-                                setState(
-                                  () => _identity = _identity.copyWith(
-                                    frameId: frame.name,
-                                  ),
-                                );
-                              },
-                            ),
-                        ],
-                      ),
+                      ],
                     ),
-                    const SizedBox(height: 14),
-                    _SectionTitle(context.t(K.titleWord)),
-                    AppPanel(
-                      child: Column(
-                        children: [
-                          _TitleRow(
-                            key: const ValueKey('avatar-title-none'),
-                            label: context.t(K.hideAction),
-                            selected: _identity.showcaseTitle == null,
-                            onTap: () => setState(
+                  ),
+                  SahneSectionHeader(title: context.t(K.frame)),
+                  SahneListGroup(
+                    dividerIndent: _choiceTextInset,
+                    children: [
+                      _ChoiceRow(
+                        key: const ValueKey('avatar-frame-none'),
+                        leading: _FrameSwatch(color: t.tx3, locked: false),
+                        label: context.t(K.noFrame),
+                        selected: _identity.frameId == null,
+                        onTap: () => setState(
+                          () =>
+                              _identity = _identity.copyWith(clearFrame: true),
+                        ),
+                      ),
+                      for (final frame in AvatarFrame.values)
+                        _ChoiceRow(
+                          key: ValueKey('avatar-frame-${frame.name}'),
+                          leading: _FrameSwatch(
+                            color: frameColor(frame),
+                            locked: !_unlocked.contains(frame),
+                          ),
+                          label: switch (frame) {
+                            AvatarFrame.bronze => context.t(K.bronze),
+                            AvatarFrame.silver => context.t(K.silver),
+                            AvatarFrame.gold => context.t(K.gold),
+                            AvatarFrame.mamoste => 'Mamoste',
+                            AvatarFrame.neon => context.t(K.frameNeon),
+                          },
+                          locked: !_unlocked.contains(frame),
+                          selected: _identity.frameId == frame.name,
+                          subtitle: _unlocked.contains(frame)
+                              ? null
+                              : frameRequirementLabel(frame, ku),
+                          onTap: () {
+                            if (!_unlocked.contains(frame)) {
+                              _showSnack(
+                                '${context.t(K.locked)} — '
+                                '${frameRequirementLabel(frame, ku)}',
+                              );
+                              return;
+                            }
+                            setState(
                               () => _identity = _identity.copyWith(
-                                clearTitle: true,
+                                frameId: frame.name,
                               ),
+                            );
+                          },
+                        ),
+                    ],
+                  ),
+                  SahneSectionHeader(title: context.t(K.titleWord)),
+                  SahneListGroup(
+                    dividerIndent: _choiceTextInset,
+                    children: [
+                      _ChoiceRow(
+                        key: const ValueKey('avatar-title-none'),
+                        leading: const _MedalTile(selected: false),
+                        label: context.t(K.hideAction),
+                        selected: _identity.showcaseTitle == null,
+                        onTap: () => setState(
+                          () =>
+                              _identity = _identity.copyWith(clearTitle: true),
+                        ),
+                      ),
+                      if (_earnedTitles.isEmpty)
+                        Padding(
+                          padding: const EdgeInsets.all(SahneSpace.x4),
+                          child: Text(
+                            context.t(K.noTitlesYet),
+                            style: SahneType.caption.copyWith(color: t.tx2),
+                          ),
+                        ),
+                      for (final title in _earnedTitles)
+                        _ChoiceRow(
+                          key: ValueKey('avatar-title-$title'),
+                          leading: _MedalTile(
+                            selected: _identity.showcaseTitle == title,
+                          ),
+                          label: title,
+                          selected: _identity.showcaseTitle == title,
+                          onTap: () => setState(
+                            () => _identity = _identity.copyWith(
+                              showcaseTitle: title,
                             ),
                           ),
-                          if (_earnedTitles.isEmpty)
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Text(
-                                context.t(K.noTitlesYet),
-                                style: TextStyle(
-                                  color: AppTheme.textMutedColor(context),
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          for (final title in _earnedTitles)
-                            _TitleRow(
-                              key: ValueKey('avatar-title-$title'),
-                              label: title,
-                              selected: _identity.showcaseTitle == title,
-                              onTap: () => setState(
-                                () => _identity = _identity.copyWith(
-                                  showcaseTitle: title,
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    FilledButton.icon(
-                      key: const ValueKey('avatar-save'),
-                      onPressed: _saving ? null : _save,
-                      icon: _saving
-                          ? const SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.white,
-                              ),
-                            )
-                          : const Icon(AppIcons.floppyDisk),
-                      label: Text(context.t(K.save)),
-                    ),
-                  ],
-                ),
-        ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: SahneSpace.x6),
+                  SahneButton.primary(
+                    key: const ValueKey('avatar-save'),
+                    label: context.t(K.save),
+                    icon: AppIcons.floppyDisk,
+                    arrow: false,
+                    expand: true,
+                    onPressed: _saving ? null : _save,
+                  ),
+                ],
+              ),
       ),
     );
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.text);
+/// Seçim satırında metnin başladığı hiza: 12 + 44'lük öncül + 12.
+const double _choiceTextInset = SahneSpace.x3 + 44 + SahneSpace.x3;
 
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8, left: 4),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: AppTheme.textPrimaryColor(context),
-          fontWeight: FontWeight.w800,
-          fontSize: 15,
-        ),
-      ),
-    );
-  }
-}
-
+/// Simge hücresi — seçim rayı çipinin karo çeşidi: M pah; seçili Kulis +
+/// Halka 2 birincil metin, ikon birincil metin; seçili değil Perde +
+/// kenar, ikon ikincil metin.
 class _IconCell extends StatelessWidget {
   const _IconCell({
     required this.icon,
     required this.semanticLabel,
     required this.selected,
-    required this.color,
     required this.onTap,
     super.key,
   });
@@ -593,139 +526,239 @@ class _IconCell extends StatelessWidget {
   /// olmadan hücre yalnız "button" diye duyulur.
   final String semanticLabel;
   final bool selected;
-  final Color color;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     return Semantics(
       button: true,
       selected: selected,
       label: semanticLabel,
       excludeSemantics: true,
-      child: _buildCell(context),
-    );
-  }
-
-  Widget _buildCell(BuildContext context) {
-    return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        decoration: BoxDecoration(
-          color: selected
-              ? color
-              : AppTheme.surfaceColor(context).withValues(alpha: 0.6),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: selected ? Colors.white : AppTheme.borderColor(context),
-            width: selected ? 2 : 1,
-          ),
-        ),
-        child: Icon(
-          icon,
-          color: selected ? Colors.white : AppTheme.textMutedColor(context),
+      child: SahneTappable(
+        shape: selected
+            ? SahneShape.withSide(SahneShape.m, t.tx, width: SahneRing.r2)
+            : SahneShape.withSide(SahneShape.m, t.edge, width: 1),
+        color: selected ? t.s3 : t.s2,
+        onTap: onTap,
+        child: Center(
+          child: Icon(icon, size: 24, color: selected ? t.tx : t.tx2),
         ),
       ),
     );
   }
 }
 
-class _FrameRow extends StatelessWidget {
-  const _FrameRow({
-    required this.label,
+/// Renk örneği — avatarla aynı biçim, küçük pahlı kare; seçili olan
+/// Halka 2 + ✓ ile (seçim yalnız renkle verilmez). Kullanıcının seçtiği
+/// renk bir belirteç değil, veridir; ✓ rengi dolguya göre okunur tondan
+/// seçilir.
+///
+/// 2026-09-29 doğallık (K5): örnekler elmastı. Avatar pahlı kareye döndü;
+/// elmas yalnız soru ilerlemesi ve ders sayacı anlamını taşır.
+class _ColorSwatch extends StatelessWidget {
+  const _ColorSwatch({
     required this.color,
-    required this.locked,
+    required this.label,
     required this.selected,
-    required this.requirement,
     required this.onTap,
     super.key,
   });
 
+  final Color color;
   final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: label,
+      excludeSemantics: true,
+      onTap: onTap,
+      child: SizedBox.square(
+        // 48: dokunma kılavuzu; örnek 36.
+        dimension: 52,
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            customBorder: SahneShape.forSize(52),
+            onTap: onTap,
+            excludeFromSemantics: true,
+            child: Center(
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color,
+                  shape: SahneShape.withSide(
+                    SahneShape.forSize(36),
+                    selected ? t.tx : Colors.transparent,
+                    width: SahneRing.r2,
+                  ),
+                ),
+                child: SizedBox.square(
+                  dimension: 36,
+                  child: selected
+                      ? Icon(
+                          AppIcons.check,
+                          size: 18,
+                          color: sahneOnFill(color),
+                        )
+                      : null,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Çerçeve önizlemesi: 44'lük Kulis karonun içinde çerçeve renginde
+/// halkalı pahlı kare (avatar biçimi; 2026-09-29 doğallık: elmas değil,
+/// K5). Kilitliyse ortasında kilit.
+class _FrameSwatch extends StatelessWidget {
+  const _FrameSwatch({required this.color, required this.locked});
+
   final Color color;
   final bool locked;
-  final bool selected;
-  final String? requirement;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        dense: true,
-        leading: Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: color, width: 3),
-          ),
-          child: locked
-              ? Icon(
-                  AppIcons.lock,
-                  size: 14,
-                  color: AppTheme.textMutedColor(context),
-                )
-              : null,
-        ),
-        title: Text(
-          label,
-          style: TextStyle(
-            color: locked
-                ? AppTheme.textMutedColor(context)
-                : AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.w700,
+    final t = SahneTokens.of(context);
+    return DecoratedBox(
+      decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
+      child: SizedBox.square(
+        dimension: 44,
+        child: Center(
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              shape: SahneShape.withSide(
+                SahneShape.forSize(28),
+                color,
+                width: SahneRing.r3,
+              ),
+            ),
+            child: SizedBox.square(
+              dimension: 28,
+              child: locked
+                  ? Icon(AppIcons.lock, size: 12, color: t.tx2)
+                  : null,
+            ),
           ),
         ),
-        subtitle: locked && requirement != null
-            ? Text(requirement!, style: const TextStyle(fontSize: 11))
-            : null,
-        trailing: selected
-            ? const Icon(AppIcons.circleCheck, color: AppTheme.correct)
-            : null,
-        onTap: onTap,
       ),
     );
   }
 }
 
-class _TitleRow extends StatelessWidget {
-  const _TitleRow({
+/// Unvan satırının öncülü: 44'lük karo içinde madalya; seçili unvan Zêr
+/// (vitrine çıkan bir ödül), ötekiler nötr.
+class _MedalTile extends StatelessWidget {
+  const _MedalTile({required this.selected});
+
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: selected ? t.goldTint : t.s2,
+        shape: SahneShape.m,
+      ),
+      child: SizedBox.square(
+        dimension: 44,
+        child: Icon(
+          AppIcons.medal,
+          size: 24,
+          color: selected ? t.goldTx : t.tx2,
+        ),
+      ),
+    );
+  }
+}
+
+/// Tek seçimli liste satırı — [SahneListRow] geometrisi (≥ 64, 44'lük
+/// öncül, 12 aralık, Gövde 700 başlık + Açıklama alt satır), öncülü
+/// özel: çerçeve ya da madalya önizlemesi. Seçili satır sağda ✓ taşır
+/// ve ekran okuyucuda "seçili"dir; kilitli satırın başlığı ikincil metin.
+class _ChoiceRow extends StatelessWidget {
+  const _ChoiceRow({
+    required this.leading,
     required this.label,
     required this.selected,
     required this.onTap,
+    this.subtitle,
+    this.locked = false,
     super.key,
   });
 
+  final Widget leading;
   final String label;
+  final String? subtitle;
   final bool selected;
+  final bool locked;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        dense: true,
-        leading: Icon(
-          AppIcons.medal,
-          color: selected ? AppTheme.gold : AppTheme.textMutedColor(context),
-        ),
-        title: Text(
-          label,
-          style: TextStyle(
-            color: AppTheme.textPrimaryColor(context),
-            fontWeight: FontWeight.w700,
+    final t = SahneTokens.of(context);
+    return Semantics(
+      container: true,
+      button: true,
+      selected: selected,
+      label: [label, ?subtitle].join(', '),
+      excludeSemantics: true,
+      onTap: onTap,
+      child: InkWell(
+        onTap: onTap,
+        excludeFromSemantics: true,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 64),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(
+              SahneSpace.x3,
+              SahneSpace.x2,
+              SahneSpace.x4,
+              SahneSpace.x2,
+            ),
+            child: Row(
+              children: [
+                leading,
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        label,
+                        style: SahneType.bodyStrong.copyWith(
+                          color: locked ? t.tx2 : t.tx,
+                        ),
+                      ),
+                      if (subtitle != null)
+                        Text(
+                          subtitle!,
+                          style: SahneType.caption.copyWith(color: t.tx2),
+                        ),
+                    ],
+                  ),
+                ),
+                if (selected) ...[
+                  const SizedBox(width: SahneSpace.x2),
+                  Icon(AppIcons.circleCheck, size: 24, color: t.tx),
+                ],
+              ],
+            ),
           ),
         ),
-        trailing: selected
-            ? const Icon(AppIcons.circleCheck, color: AppTheme.correct)
-            : null,
-        onTap: onTap,
       ),
     );
   }

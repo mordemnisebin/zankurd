@@ -21,7 +21,7 @@ void main() {
   );
 
   test('Türkçe etikette kategori Türkçe ve doğru yazımla görünür', () {
-    expect(mission.labelTr, 'Coğrafya kategorisinde oyna');
+    expect(mission.labelTr, 'Coğrafya konusunda oyna');
   });
 
   test('Kurmancî etikette kategori Kurmancî görünür', () {

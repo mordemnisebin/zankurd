@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -95,26 +96,25 @@ void main() {
       return testShell(child: FavoriteQuestionsScreen(repository: repository));
     }
 
-    testWidgets(
-      'cevabı gizli favori dokununca oynatmıyor, ipucu gösteriyor',
-      (tester) async {
-        await tester.pumpWidget(pumpWith([hiddenQuestion]));
-        await tester.pumpAndSettle();
+    testWidgets('cevabı gizli favori dokununca oynatmıyor, ipucu gösteriyor', (
+      tester,
+    ) async {
+      await tester.pumpWidget(pumpWith([hiddenQuestion]));
+      await tester.pumpAndSettle();
 
-        expect(
-          find.byKey(const ValueKey('favorite-answer-hidden-hint')),
-          findsOneWidget,
-        );
-        // Tek favori de oynatılamaz olduğu için "Tümünü Oyna" hiç çizilmez.
-        expect(find.text('Kaydedilen Soruları Oyna'), findsNothing);
+      expect(
+        find.byKey(const ValueKey('favorite-answer-hidden-hint')),
+        findsOneWidget,
+      );
+      // Tek favori de oynatılamaz olduğu için "Tümünü Oyna" hiç çizilmez.
+      expect(find.text('Kaydedilen soruları oyna'), findsNothing);
 
-        await tester.tap(find.text('Sunucu sorusu?'));
-        await tester.pumpAndSettle();
+      await tester.tap(find.text('Sunucu sorusu?'));
+      await tester.pumpAndSettle();
 
-        // Dokunma hiçbir yere gitmedi: hâlâ favoriler ekranındayız.
-        expect(find.byType(FavoriteQuestionsScreen), findsOneWidget);
-      },
-    );
+      // Dokunma hiçbir yere gitmedi: hâlâ favoriler ekranındayız.
+      expect(find.byType(FavoriteQuestionsScreen), findsOneWidget);
+    });
 
     testWidgets(
       'oynatılabilir favori varken "Tümünü Oyna" yalnız onları kullanır',
@@ -122,7 +122,7 @@ void main() {
         await tester.pumpWidget(pumpWith([hiddenQuestion, playableQuestion]));
         await tester.pumpAndSettle();
 
-        expect(find.text('Kaydedilen Soruları Oyna'), findsOneWidget);
+        expect(find.text('Kaydedilen soruları oyna'), findsOneWidget);
         expect(
           find.byKey(const ValueKey('favorite-answer-hidden-hint')),
           findsOneWidget,

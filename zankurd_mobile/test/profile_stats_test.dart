@@ -1,10 +1,14 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/config/feature_flags.dart';
+import 'package:zankurd_mobile/src/data/mastery_store.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/screens/profile_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -13,6 +17,32 @@ import 'support/widget_test_helpers.dart';
 /// çevrimiçi oda sayısıdır ve solo quiz onu artırmaz. Karo artık tüm
 /// modlarda cevaplanan soru sayısını gösterir.
 void main() {
+  testWidgets('profil ortak sakin sayfa başlığı gramerini kullanır', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    await tester.pumpWidget(
+      testShell(
+        child: Scaffold(
+          body: ProfileScreen(repository: MockZanKurdRepository()),
+        ),
+      ),
+    );
+    for (
+      var i = 0;
+      i < 40 && find.byType(SahneTabPage).evaluate().isEmpty;
+      i++
+    ) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+
+    // 2026-09-29 Şahnê: sekme sayfası A iskeletidir (`SahneTabPage`).
+    expect(find.byType(SahneTabPage), findsOneWidget);
+    final page = tester.widget<SahneTabPage>(find.byType(SahneTabPage));
+    expect(page.title, 'Profil');
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('cevaplanan soru karosu solo oyunda da artar', (tester) async {
     SharedPreferences.setMockInitialValues({});
     final store = await MistakeStore.load();
@@ -30,19 +60,24 @@ void main() {
     await tester.pump();
     for (
       var i = 0;
-      i < 40 && find.text('Cevaplanan Soru').evaluate().isEmpty;
+      i < 40 && find.text('Cevaplanan soru').evaluate().isEmpty;
       i++
     ) {
       await tester.pump(const Duration(milliseconds: 50));
     }
 
-    expect(find.text('Cevaplanan Soru'), findsOneWidget);
+    // Cevaplanan soru sayısı artık `RollingCount` ile sayarak çıkıyor; sayım
+    // hedefe ulaşsın diye etiket bulunduktan sonra bir tur daha pompalanır
+    // (2026-08-19).
+    await tester.pump(const Duration(milliseconds: 1200));
+
+    expect(find.text('Cevaplanan soru'), findsOneWidget);
     expect(find.text('2'), findsWidgets);
     expect(find.text('Oyun'), findsNothing);
   });
 
   testWidgets('hiç oynamamış oyuncuya lig rozeti şişirilmez', (tester) async {
-    // 2026-07-26 denetimi: profilde rozet "Altın Lig" derken hemen altındaki
+    // 2026-07-26 denetimi: profilde rozet "Altın lig" derken hemen altındaki
     // karo "Sıralama —" diyordu. İki gösterge aynı ekranda birbirini
     // yalanlıyordu; sebep farklı kapılardı — rozet sunucudan gelen
     // `roomsPlayed`e, karo yerel cevaplanan soru sayısına bakıyordu.
@@ -68,8 +103,13 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     }
 
-    expect(find.text('Bronz Lig'), findsOneWidget);
-    expect(find.text('Altın Lig'), findsNothing);
+    // Lig rozeti 2026-09-27'den beri bayrakla kapalı; kapalıyken hiçbir
+    // basamak yazılmaz — şişirilmiş bir rozet de yazılamaz.
+    expect(
+      find.text('Bronz lig'),
+      kWeeklyLeagueEnabled ? findsOneWidget : findsNothing,
+    );
+    expect(find.text('Altın lig'), findsNothing);
     // Rozet ile karo aynı kapıdan geçer: ikisi de boş kalmalı.
     expect(find.text('#1'), findsNothing);
   });
@@ -102,8 +142,57 @@ void main() {
     }
 
     expect(find.text('#85'), findsNothing);
-    expect(find.text('Altın Lig'), findsNothing);
+    expect(find.text('Altın lig'), findsNothing);
   });
+
+  testWidgets(
+    'Türkçe detaylı istatistikte güçlü ve zayıf kategori rozetleri yerelleştirilir',
+    (tester) async {
+      MasteryStore.resetInstance();
+      MistakeStore.resetInstance();
+      SharedPreferences.setMockInitialValues({
+        'zankurd.mastery.Ziman': 120,
+        'zankurd.mastery.Çand': 20,
+      });
+
+      final mistakeStore = await MistakeStore.load();
+      await mistakeStore.markMistake(
+        'profile-category-c1',
+        category: 'Cografya',
+      );
+      await mistakeStore.markMistake(
+        'profile-category-c2',
+        category: 'Cografya',
+      );
+      await mistakeStore.markMistake('profile-category-d1', category: 'Dîrok');
+
+      await tester.pumpWidget(
+        testShell(
+          child: Scaffold(
+            body: ProfileScreen(repository: MockZanKurdRepository()),
+          ),
+        ),
+      );
+      for (
+        var i = 0;
+        i < 40 && find.text('Ayrıntılı istatistik').evaluate().isEmpty;
+        i++
+      ) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+
+      final detailed = find.text('Ayrıntılı istatistik');
+      await tester.ensureVisible(detailed);
+      await tester.pumpAndSettle();
+      await tester.tap(detailed);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Dil'), findsWidgets);
+      expect(find.text('Coğrafya'), findsWidgets);
+      expect(find.text('Ziman'), findsNothing);
+      expect(find.text('Cografya'), findsNothing);
+    },
+  );
 }
 
 /// Sunucuda kaydı olan ama puanı sıfır olan oyuncu.

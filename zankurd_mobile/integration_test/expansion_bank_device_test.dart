@@ -31,7 +31,8 @@ void main() {
 
     expect(
       questions.length,
-      2050,
+      // 2026-09-02: DeepSeek runtime karantinası 3042 → 1932.
+      1932,
       reason:
           'Cihazda yüklenen kayıt sayısı beklenenden farklı. Bir asset '
           'pubspec üzerinden paketlenmemişse `_loadJson` hatayı yutar ve '
@@ -44,7 +45,8 @@ void main() {
         .toList();
     expect(
       expansion.length,
-      218,
+      // 2026-08-19 tekrar ayıklamasıyla genişletme ailesi 218 → 211.
+      211,
       reason: 'expansion_2026_08 bankası cihazda çözülemedi ya da eksik geldi.',
     );
 

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ds_muzik_0218",
+    "kusur": [
+      "tekrar"
+    ],
+    "not": "ds_muzik_0109 numaralı soruyla ('Di muzîkê de, kîjan têgîn ji bo nîşankirina leza muzîkê tê bikaranîn?') birebir aynı soru kökünü ve 'Tempo' cevabını sormaktadır.",
+    "oneri": "Sorulardan biri müzikte nüans veya dinamikler (forte/piano) gibi farklı bir müzik teorisi kavramıyla değiştirilmelidir."
+  },
+  {
+    "id": "ds_cand_0015",
+    "kusur": [
+      "tekrar"
+    ],
+    "not": "ds_cand_0009 numaralı soruyla ('Kîjan efsane bi Newrozê ve girêdayî ye?') birebir aynı soru kökünü ve 'Kawayê Hesinkar' cevabını taşımaktadır.",
+    "oneri": "Sorulardan biri Şahmaran veya Rüstemo Zal gibi farklı bir mitolojik anlatıyla değiştirilmelidir."
+  },
+  {
+    "id": "ds_edebiyat_0076",
+    "kusur": [
+      "cevap_sizdiran"
+    ],
+    "not": "Doğru cevap ('Ji ber ku piştî mirina Enkîdu ji mirina xwe tirsiya') 51 karakter uzunluğunda olup diğer seçeneklerin (ortalama 22 karakter) iki katından uzundur ve olay örgüsünü detaylandırarak kendini ele vermektedir.",
+    "oneri": "Tüm şıklar 'Enkîdu mir û ji mirinê tirsî', 'Xwest bibe padîşahê cîhanê', 'Li pey zêr û dewlemendiyê bû', 'Xwest hêza xwe bide nîşandan' şeklinde eşit uzunlukta dengelenmelidir."
+  }
+]

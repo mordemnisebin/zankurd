@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +11,7 @@ class AnalyticsConsentProvider extends ChangeNotifier {
   AnalyticsConsentProvider({bool initialEnabled = false})
     : _enabled = initialEnabled {
     isEnabled = initialEnabled;
+    ErrorReporter.crashlyticsEnabled = initialEnabled;
   }
 
   static const _storageKey = 'zankurd.analyticsConsent';
@@ -25,6 +28,8 @@ class AnalyticsConsentProvider extends ChangeNotifier {
   static bool isEnabled = false;
 
   bool _enabled;
+  Future<void> _writeTail = Future<void>.value();
+  int _writeGeneration = 0;
 
   bool get enabled => _enabled;
 
@@ -40,16 +45,42 @@ class AnalyticsConsentProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> setEnabled(bool value) async {
-    if (_enabled == value) return;
-    _enabled = value;
-    isEnabled = value;
-    notifyListeners();
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(_storageKey, value);
-    } catch (error, stack) {
-      ErrorReporter.record(error, stack, reason: 'analytics_consent_persist');
-    }
+  Future<bool> setEnabled(bool value) {
+    final generation = ++_writeGeneration;
+    final result = Completer<bool>();
+    _writeTail = _writeTail.then((_) async {
+      if (generation != _writeGeneration) {
+        result.complete(false);
+        return;
+      }
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        final saved = await prefs.setBool(_storageKey, value);
+        if (!saved) {
+          await prefs.reload();
+          result.complete(false);
+          return;
+        }
+        // Bu yazım sürerken daha yeni bir seçim geldiyse diskteki ara değer
+        // UI/ölçüm durumuna uygulanmaz. Kuyruktaki yeni seçim son değeri yazar.
+        if (generation != _writeGeneration) {
+          result.complete(false);
+          return;
+        }
+        _enabled = value;
+        isEnabled = value;
+        notifyListeners();
+        await ErrorReporter.setCollectionEnabled(value);
+        result.complete(true);
+      } catch (error, stack) {
+        try {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.reload();
+        } catch (_) {}
+        ErrorReporter.record(error, stack, reason: 'analytics_consent_persist');
+        result.complete(false);
+      }
+    });
+    return result.future;
   }
 }

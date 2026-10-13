@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/widgets/player_avatar.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 
 // 1x1 şeffaf PNG — ağ olmadan Image testi için.
 final _tinyPng = Uint8List.fromList([
@@ -80,4 +81,49 @@ void main() {
     );
     expect(find.byKey(const ValueKey('avatar-frame-ring')), findsNothing);
   });
+
+  testWidgets('yer tutucu ad O harfi değil kişi ikonu gösterir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      shell(const PlayerAvatar(radius: 30, displayName: 'Oyuncu')),
+    );
+    expect(find.text('O'), findsNothing);
+    expect(find.byIcon(AppIcons.user), findsOneWidget);
+  });
+
+  // 2026-09-29 doğallık (K5): avatar elmas değil, boyuna uygun pahlı kare.
+  // Elmas yalnız soru ilerlemesi ve ders sayacında kalır; avatar da elmas
+  // olunca şekil hiçbir şey anlatmıyordu ve fotoğrafın yarısı kesiliyordu.
+  for (final (radius, shape) in [
+    (12.0, SahneShape.s),
+    (20.0, SahneShape.m),
+    (48.0, SahneShape.l),
+  ]) {
+    testWidgets('avatar ${radius * 2} px: pahlı kare, elmas değil', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        shell(
+          Center(
+            child: PlayerAvatar(radius: radius, displayName: 'Ali'),
+          ),
+        ),
+      );
+      final clip = tester.widget<ClipPath>(
+        find.descendant(
+          of: find.byType(PlayerAvatar),
+          matching: find.byType(ClipPath),
+        ),
+      );
+      final border =
+          (clip.clipper! as ShapeBorderClipper).shape as BeveledRectangleBorder;
+      expect(border.borderRadius, shape.borderRadius);
+      expect(
+        border.borderRadius,
+        isNot(BorderRadius.all(Radius.circular(radius))),
+        reason: 'yarı kenar pahı elmastır',
+      );
+    });
+  }
 }

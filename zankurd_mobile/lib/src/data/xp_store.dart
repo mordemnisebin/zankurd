@@ -2,13 +2,16 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'checked_preferences_removal.dart';
+import 'local_progress_scope.dart';
 
 import '../utils/error_reporter.dart';
 
 class XPStore {
   XPStore._(this._preferences, this._totalXP);
 
-  static const _totalXPKey = 'zankurd.xp.total';
+  static String get _totalXPKey =>
+      LocalProgressScope.physical('zankurd.xp.total');
   static XPStore? _instance;
 
   final SharedPreferences? _preferences;
@@ -87,6 +90,14 @@ class XPStore {
     return level;
   }
 
+  /// Sunucu toplamını önbelleğe yazar. Yerel eklemenin üstüne binmez.
+  Future<bool> applyServerTotal(int total) async {
+    final levelBefore = currentLevel;
+    _totalXP = math.max(0, total);
+    await _preferences?.setInt(_totalXPKey, _totalXP);
+    return currentLevel > levelBefore;
+  }
+
   /// Kullanıcıya XP ekler. Seviye atlama gerçekleştiyse true döner.
   Future<bool> addXP(int amount) async {
     if (amount <= 0) return false;
@@ -98,7 +109,7 @@ class XPStore {
   }
 
   Future<void> clear() async {
+    await removePersistedPreferenceKeys(_preferences, [_totalXPKey]);
     _totalXP = 0;
-    await _preferences?.remove(_totalXPKey);
   }
 }

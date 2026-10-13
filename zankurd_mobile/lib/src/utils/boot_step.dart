@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'boot_diagnostics.dart';
 import 'error_reporter.dart';
 
 /// `runApp`'tan önce beklenen bir başlatma adımını SINIRLI süreyle bekler.
@@ -42,9 +43,11 @@ Future<T> bootStep<T>(
     return await future.timeout(timeout);
   } on TimeoutException catch (error, stack) {
     ErrorReporter.record(error, stack, reason: 'boot timeout: $reason');
+    BootDiagnostics.instance.recordFailure(reason);
     return fallback();
   } catch (error, stack) {
     ErrorReporter.record(error, stack, reason: 'boot failed: $reason');
+    BootDiagnostics.instance.recordFailure(reason);
     return fallback();
   }
 }

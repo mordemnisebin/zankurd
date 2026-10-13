@@ -12,9 +12,13 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/room.dart';
 import '../providers/auth_provider.dart';
-import '../theme/app_theme.dart';
+import '../providers/remote_availability.dart';
+import '../providers/repository_holder.dart';
+import '../data/offline_zankurd_repository.dart';
+import '../widgets/sahne/sahne.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
+import '../utils/join_deep_link.dart';
 import '../widgets/branded_loader.dart';
 import '../widgets/offline_banner.dart';
 import 'learn_home_screen.dart';
@@ -22,6 +26,9 @@ import 'leaderboard_screen.dart';
 import 'learning_screen.dart';
 import 'onboarding_screen.dart';
 import '../services/analytics_service.dart';
+import '../services/push_tap_router.dart';
+import '../services/push_token_sync.dart';
+import 'friends_screen.dart';
 import 'password_recovery_screen.dart';
 import 'profile_name_gate_screen.dart';
 import 'profile_screen.dart';
@@ -48,11 +55,13 @@ class AppShell extends StatefulWidget {
     required this.repository,
     this.connectivityMonitor,
     this.errorRecorder,
+    this.pushTokenSync,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final ConnectivityMonitor? connectivityMonitor;
+  final PushTokenSync? pushTokenSync;
 
   /// Üretimde [ErrorReporter.record] kullanılır. Testlerde yalnız hata
   /// kaydının gerçekleştiğini gözlemlemek için değiştirilebilir.
@@ -108,6 +117,10 @@ class _AppShellState extends State<AppShell>
   );
   final ValueNotifier<int> _leaderboardRefresh = ValueNotifier<int>(0);
   final ValueNotifier<int> _profileRefresh = ValueNotifier<int>(0);
+
+  /// Yarış sekmesinin tazelemesi: "Düellolarım" listesi, sonuç ekranından
+  /// ya da yeni bir düellodan dönünce görülme/rakip durumunu yeniden çeker.
+  final ValueNotifier<int> _playRefresh = ValueNotifier<int>(0);
   bool _checkingOnboarding = true;
   bool _showOnboarding = false;
   bool _checkingProfileName = false;
@@ -125,6 +138,10 @@ class _AppShellState extends State<AppShell>
   final Map<String, int> _roomResumeScheduledEpochs = {};
   final Map<String, int> _roomResumeInFlightEpochs = {};
   final Map<String, int> _roomResumeRouteScheduledEpochs = {};
+
+  /// Geç kurtarmada depo bu nesne üzerinden değişir ([_repository]).
+  /// Sağlayıcı yoksa null kalır — izole widget testleri aynı ağırlıkta.
+  RepositoryHolder? _repositoryHolder;
   ModalRoute<dynamic>? _shellRoute;
   String? _roomResumeAccountUserId;
   int _roomResumeEpoch = 0;
@@ -142,15 +159,21 @@ class _AppShellState extends State<AppShell>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    JoinDeepLink.incoming.addListener(_onIncomingJoinLink);
+    PushTapRouter.pending.addListener(_onPushTapTarget);
     _homeScrollController = ScrollController();
     _profileScrollController = ScrollController();
     _loadOnboardingState();
     _initConnectivity();
+    unawaited(widget.pushTokenSync?.sync());
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    // Rota kontrolünden ÖNCE okunmalı: rota aynıysa erken dönüldüğünde
+    // depo takası hiç izlenmezdi.
+    _repositoryHolder = RepositoryHolder.read(context);
     final route = ModalRoute.of<dynamic>(context);
     if (identical(route, _shellRoute)) return;
     final previous = _shellRoute;
@@ -204,7 +227,6 @@ class _AppShellState extends State<AppShell>
   ConnectivityMonitor get _connectivityMonitor {
     final monitor = widget.connectivityMonitor;
     if (monitor != null) return monitor;
-    if (kIsWeb) return const AlwaysOnlineConnectivityMonitor();
     return PluginConnectivityMonitor();
   }
 
@@ -230,20 +252,63 @@ class _AppShellState extends State<AppShell>
   void _applyConnectivityResults(List<ConnectivityResult> results) {
     if (!mounted) return;
     final nextOffline = results.contains(ConnectivityResult.none);
+    // Boot okuması anlık görüntüyü EZMEZ: ilk okuma snapshot'tır —
+    // sunucusuz açılışın kilidi (`reachable: false`) ve çevrimiçi
+    // açılışın kilitsizliği ilk bağlantı raporuyla değişmemeli.
+    // Yalnız sonraki GEÇİŞLER canlı yayılır.
+    final isFirstRead = !_connectivityKnown;
+    final transitioned = !isFirstRead && _isOffline != nextOffline;
     final reconnected = _connectivityKnown && _isOffline && !nextOffline;
     setState(() {
       _isOffline = nextOffline;
       _connectivityKnown = true;
     });
-    if (reconnected) _wakeRoomResumeForCurrentUser();
+    if (reconnected) {
+      _wakeRoomResumeForCurrentUser();
+      // Yerel ağ geri geldiyse uzak başlatma da artık tamamlanmış
+      // olabilir: arkadaki geri çekilmeyi (2 sn ve sonrası) beklemeden
+      // hemen yokla. Başarısızsa takvim kendi yolunda sürer.
+      _retryRemoteAvailability();
+    }
+    if (!transitioned) return;
+    // Bağlantı koptuğunda sosyal kilit dürüstçe kapanır; bağlantı
+    // dönünce kilit yalnız depo ölü değilse açılır. Ölü depo =
+    // çevrimdışı açılışın `Offline` deposu — Mock testlerde canlı
+    // backend yerine geçtiği için kilit sayılmaz.
+    try {
+      context.read<RemoteAvailability>().update(
+        !nextOffline && _repository is! OfflineZanKurdRepository,
+      );
+    } on ProviderNotFoundException {
+      // Yalıtık widget testleri — sağlayıcı yok, kilit main() değerinde kalır.
+    }
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _wakeRoomResumeForCurrentUser();
+      unawaited(widget.pushTokenSync?.sync());
+      // Arkaya atılmış bir deneme ön plana dönüşle tazelenir: kullanıcı
+      // uygulamayı açtığında "sunucuya ulaşılamadı" bandı, bir sonraki
+      // geriçekilmeyi (60 sn'ye kadar) beklemeden kalkabilir.
+      _retryRemoteAvailability();
+      _considerRemoteUpgrade();
     }
   }
+
+  /// Uzak ulaşılabiliğer yoklaması — sağlayıcı yoksa sessizce yok sayılır
+  /// (izole widget testleri).
+  void _retryRemoteAvailability() {
+    final availability = RemoteAvailability.read(context);
+    if (availability == null) return;
+    unawaited(availability.retryNow());
+  }
+
+  /// Boot'da çevrimdışı kalan oturumun uzak oturumla yeniden kurulması
+  /// için kalan tek koşul: üstünde açık rota kalmamış olması (kökteyiz).
+  void _considerRemoteUpgrade() =>
+      RemoteAvailability.read(context)?.considerUpgradeNow();
 
   @override
   void didPushNext() {
@@ -262,6 +327,16 @@ class _AppShellState extends State<AppShell>
 
   @override
   void didPopNext() {
+    // Kabuk yeniden en üstte: arkada (ör. bir maç sürerken) gelen bildirim
+    // hedefi uygulanır. Bir sonraki kareye ertelenir: bu geri çağrı gezgin
+    // geri gitmeyi işlerken (kilitliyken) gelir ve oradan sayfa itmek
+    // onay hatasıyla düşer. Aşağıdaki oda devamı dalı erken dönebildiği
+    // için en başta planlanır.
+    if (_pushTapScheduled) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _consumePushTapTarget(),
+      );
+    }
     // Kabuğun üstüne itilmiş HERHANGİ bir rotadan dönüldü — diyalog ve alt
     // sayfa dâhil. Burada yalnız oda devamı uyandırılır.
     //
@@ -294,6 +369,9 @@ class _AppShellState extends State<AppShell>
       }
     }
     _retryRoomResumeWhenVisible();
+    // Kabuk yeniden kök: üstteki ekran kapandı, yani ertelenmiş uzak
+    // oturum yeniden kurulumu artık güvenlidir.
+    _considerRemoteUpgrade();
   }
 
   @override
@@ -301,11 +379,14 @@ class _AppShellState extends State<AppShell>
     appRouteObserver.unsubscribe(this);
     appPageRouteObserver.unsubscribe(_tabRefreshAware);
     WidgetsBinding.instance.removeObserver(this);
+    JoinDeepLink.incoming.removeListener(_onIncomingJoinLink);
+    PushTapRouter.pending.removeListener(_onPushTapTarget);
     _connectivitySub?.cancel();
     _homeScrollController.dispose();
     _profileScrollController.dispose();
     _homeRefresh.dispose();
     _leaderboardRefresh.dispose();
+    _playRefresh.dispose();
     _profileRefresh.dispose();
     super.dispose();
   }
@@ -327,13 +408,23 @@ class _AppShellState extends State<AppShell>
     setState(() => _showOnboarding = false);
   }
 
+  /// Etkin depo.
+  ///
+  /// Geç kurtarmada [RepositoryHolder] değişir; sağlayıcı yoksa (izole
+  /// widget testleri) kurucuda verilen [AppShell.repository] kalır.
+  ZanKurdRepository get _repository =>
+      _repositoryHolder?.repository ?? widget.repository;
+
   @override
   Widget build(BuildContext context) {
+    // Depo takasını izle: geç kurtarmada holder değişince kabuk yeniden
+    // çizilir ve [_repository] yeni depoyu okur. Rota yığını bozulmaz.
+    _repositoryHolder = RepositoryHolder.watch(context);
     final authProvider = context.watch<AuthProvider>();
     final ku = context.isKu;
     _syncRoomResumeAccount(
       authProvider.isAuthenticated
-          ? _normalizedUserId(widget.repository.currentUserId)
+          ? _normalizedUserId(_repository.currentUserId)
           : null,
     );
 
@@ -348,7 +439,24 @@ class _AppShellState extends State<AppShell>
     if (!authProvider.isAuthenticated) {
       _profileCheckStarted = false;
       _profileCheckedUserId = null;
-      return const SignInScreen();
+      return Scaffold(
+        body: Column(
+          children: [
+            _statusBanner(context),
+            // Kabuktaki düzeltmenin aynısı: bant görünürken üst güvenli
+            // alanı o karşılar; giriş ekranı onu ikinci kez eklemesin.
+            Expanded(
+              child: _statusBannerVisible(context)
+                  ? MediaQuery.removePadding(
+                      context: context,
+                      removeTop: true,
+                      child: const SignInScreen(),
+                    )
+                  : const SignInScreen(),
+            ),
+          ],
+        ),
+      );
     }
 
     // Kurtarma bağlantısı da normal bir oturum açar. Bu kapı olmadan
@@ -362,7 +470,7 @@ class _AppShellState extends State<AppShell>
       return const PasswordRecoveryScreen();
     }
 
-    final activeUserId = widget.repository.currentUserId;
+    final activeUserId = _repository.currentUserId;
     if (_profileCheckedUserId != activeUserId) {
       _profileCheckedUserId = activeUserId;
       _profileCheckStarted = false;
@@ -383,7 +491,7 @@ class _AppShellState extends State<AppShell>
 
     if (!_profileNameComplete) {
       return ProfileNameGateScreen(
-        repository: widget.repository,
+        repository: _repository,
         onCompleted: _completeProfileName,
       );
     }
@@ -392,6 +500,8 @@ class _AppShellState extends State<AppShell>
     if (resumableUserId != null) {
       _scheduleRoomResumeCheck(resumableUserId);
     }
+    _scheduleJoinDeepLink();
+    _schedulePushTapTarget();
 
     // Web'de tarayıcı Geri kök rotayı (AppShell, splash sonrası tek rota)
     // pop edince beyaz boş sayfa oluşuyordu (2026-07-19 canlı denetim P1).
@@ -419,27 +529,65 @@ class _AppShellState extends State<AppShell>
       children: List.generate(4, (index) => _buildTab(context, index)),
     );
 
-    final content = Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: width >= 1200
-              ? 1140
-              : (width >= AppShell.desktopNavBreakpoint ? 920 : 800),
+    // Sekme içeriği durum çubuğunun ALTINA girmez.
+    //
+    // Kusur: sekmeler `SafeArea` olmadan çiziliyordu. Ekranlar kendi üst
+    // dolgularını verdiği için ilk kare doğru görünüyor, ama liste
+    // kaydırıldığında kartlar durum çubuğunun ve Dynamic Island'ın altından
+    // geçiyordu: ana ekranda "Ders yolu" başlığı saatin ve adacığın arkasında
+    // kayboluyordu (2026-08-16 simülatör taraması, iPhone 17).
+    //
+    // `SafeArea` iç içe geçtiğinde katlanmaz — dıştaki dolguyu tüketir ve
+    // içeridekiler sıfır görür; bu yüzden ekranların kendi dolguları iki
+    // katına çıkmaz. Alt taraf `bottomNavigationBar`ın işi olduğu için
+    // dışarıda bırakıldı.
+    final rawContent = SafeArea(
+      bottom: false,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: width >= 1200
+                ? 1140
+                : (width >= AppShell.desktopNavBreakpoint ? 920 : 800),
+          ),
+          child: body,
         ),
-        child: body,
       ),
     );
+
+    // Kusur: bant (`OfflineBanner`) görünürken üst güvenli alanı KENDİSİ
+    // karşılıyor — dekorasyonu (renk/kenarlık) `SafeArea`SINI dıştan sarar,
+    // yani durum çubuğunun ardına kadar uzanır ve okunaklı satırı onun
+    // altına iter (bkz. `offline_banner.dart`). Yukarıdaki `rawContent`
+    // bunu BİLMEDEN aynı boşluğu ikinci kez ekliyordu: bant + durum çubuğu
+    // yüksekliği kadar boş, dokunulmamış bir şerit oluşuyor; `Expanded`
+    // sabit yükseklik verdiği için kaydırılan içerik de altta o kadarlık
+    // kısmı kırpılıyordu (2026-09-27 simülatör turu). `MediaQuery.
+    // removePadding` ile üst boşluğu bu alt ağaçta sıfırlıyoruz; bant
+    // görünmüyorken DOKUNMUYORUZ çünkü o zaman tek karşılayıcı budur.
+    final statusBannerVisible = _statusBannerVisible(context);
+    final content = statusBannerVisible
+        ? MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: rawContent,
+          )
+        : rawContent;
 
     if (isDesktop) {
       return Scaffold(
         body: Column(
           children: [
-            OfflineBanner(isOffline: _isOffline, onRetry: _refreshConnectivity),
+            _statusBanner(context),
             Expanded(
               child: Row(
                 children: [
                   _buildNavRail(context, ku),
-                  const VerticalDivider(thickness: 1, width: 1),
+                  VerticalDivider(
+                    thickness: 1,
+                    width: 1,
+                    color: SahneTokens.of(context).line,
+                  ),
                   Expanded(child: content),
                 ],
               ),
@@ -452,7 +600,7 @@ class _AppShellState extends State<AppShell>
     return Scaffold(
       body: Column(
         children: [
-          OfflineBanner(isOffline: _isOffline, onRetry: _refreshConnectivity),
+          _statusBanner(context),
           Expanded(child: content),
         ],
       ),
@@ -460,27 +608,161 @@ class _AppShellState extends State<AppShell>
     );
   }
 
+  Widget _statusBanner(BuildContext context) {
+    // `watch`: uzak kurtarma (arka plan geriçekilmesi) başardığında bant
+    // kendiliğinden kalkar; `socialLockedIn` (dinlemeyen) yalnız bir
+    // sonraki tesadüfi çizimde kalkardı.
+    final remoteLocked = RemoteAvailability.socialLockedWatch(context);
+    if (remoteLocked) {
+      return OfflineBanner(
+        isOffline: true,
+        label: context.t(K.serverUnreachableTitle),
+        onRetry: null,
+      );
+    }
+    return OfflineBanner(isOffline: _isOffline, onRetry: _refreshConnectivity);
+  }
+
+  /// `_statusBanner` ile AYNI koşul: kilit modu (sunucuya hiç ulaşılamıyor)
+  /// ya da yerel ağ kaybı. İkisi ayrışırsa bant görünürlüğüyle üst boşluk
+  /// düzeltmesi de ayrışır — bkz. `_buildScaffold`teki `rawContent` yorumu.
+  bool _statusBannerVisible(BuildContext context) {
+    return RemoteAvailability.socialLockedWatch(context) || _isOffline;
+  }
+
+  bool _joinDeepLinkScheduled = false;
+
+  void _scheduleJoinDeepLink() {
+    if (_joinDeepLinkScheduled) return;
+    _joinDeepLinkScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(_consumeJoinDeepLink());
+    });
+  }
+
+  Future<void> _consumeJoinDeepLink() async {
+    if (!mounted) return;
+    if (RemoteAvailability.socialLockedIn(context)) return;
+    final code =
+        JoinDeepLink.consumeInitialRoute() ?? JoinDeepLink.takeIncoming();
+    if (code == null) return;
+    await _joinOnlineRoomAndOpen(code);
+  }
+
+  /// Uygulama açıkken gelen davet (sıcak açılış). Bağlantıyı
+  /// `MaterialApp`in üstündeki [JoinDeepLinkScope] yakalar ve
+  /// [JoinDeepLink.incoming] kanalına koyar; kabuk buradan tüketir.
+  ///
+  /// Kabuk henüz ana arayüze ulaşmadıysa (açılış, giriş, isim kapısı) kod
+  /// kanalda bekler; ana arayüz kurulunca [_consumeJoinDeepLink] alır.
+  /// Sosyal yüzeyler kilitliyken (sunucuya erişilemiyor) davet yok sayılır —
+  /// soğuk açılıştaki sözleşmeyle aynı.
+  void _onIncomingJoinLink() {
+    if (!mounted || !_joinDeepLinkScheduled) return;
+    if (JoinDeepLink.incoming.value == null) return;
+    if (RemoteAvailability.socialLockedIn(context)) {
+      JoinDeepLink.takeIncoming();
+      return;
+    }
+    final code = JoinDeepLink.takeIncoming();
+    if (code == null) return;
+    unawaited(_joinOnlineRoomAndOpen(code));
+  }
+
+  /// [code] ile oda katılımını dener, başarılıysa [RoomScreen] açar.
+  ///
+  /// Soğuk açılış (`_consumeJoinDeepLink`) ve sıcak açılış
+  /// (`didPushRouteInformation`) aynı katılma gövdesini paylaşır; ikisinin
+  /// farkı yalnız KODUN NEREDEN geldiğidir.
+  Future<void> _joinOnlineRoomAndOpen(String code) async {
+    try {
+      final room = await _repository.joinOnlineRoom(code);
+      if (!mounted) return;
+      await Navigator.of(context).push(
+        AppRoute.to(RoomScreen(repository: _repository, initialRoom: room)),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'join deep link failed');
+    }
+  }
+
+  bool _pushTapScheduled = false;
+
+  /// [JoinDeepLink] ile AYNI desen: kabuk kapıları (onboarding/giriş/isim)
+  /// geçilip bu noktaya ulaşıldığında bir kez planlanır ve bekleyen bildirim
+  /// hedefini bir sonraki karede tüketir.
+  void _schedulePushTapTarget() {
+    if (_pushTapScheduled) return;
+    _pushTapScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _consumePushTapTarget(),
+    );
+  }
+
+  /// Soğuk açılışta (`getInitialMessage`) ya da kabuk henüz hazır değilken
+  /// gelmiş bir dokunuşu tüketir — hedef [PushTapRouter.pending]de bekliyor
+  /// olabilir, dinleyici onu kabuk hazır olmadan önce görüp yok saymış olsa
+  /// bile burada `take()` ile yakalanır.
+  void _consumePushTapTarget() {
+    if (!mounted || !_shellIsTopRoute) return;
+    final target = PushTapRouter.take();
+    if (target == null) return;
+    _applyPushTapTarget(target);
+  }
+
+  /// Uygulama açıkken gelen bildirim dokunuşu (sıcak açılış). Kabuk henüz
+  /// [_schedulePushTapTarget]e ulaşmadıysa hedef kanalda bekler; sonradan
+  /// [_consumePushTapTarget] alır.
+  void _onPushTapTarget() {
+    if (!mounted || !_pushTapScheduled || !_shellIsTopRoute) return;
+    if (PushTapRouter.pending.value == null) return;
+    final target = PushTapRouter.take();
+    if (target == null) return;
+    _applyPushTapTarget(target);
+  }
+
+  /// Kabuğun üstünde bir sayfa ya da diyalog (ör. canlı bir oda maçı) açık
+  /// mı? Açıksa bildirim hedefi BEKLER: arkadaşlar ekranını bir maçın üstüne
+  /// itmek, arkada sayacı işleyen oyunu oyuncunun elinden alırdı. Hedef
+  /// kabuğa dönülünce ([didPopNext]) uygulanır.
+  bool get _shellIsTopRoute => ModalRoute.of(context)?.isCurrent ?? true;
+
+  void _applyPushTapTarget(PushTapTarget target) {
+    switch (target) {
+      case PushTapTarget.playTab:
+        _selectTab(1);
+      case PushTapTarget.friends:
+        _selectTab(2);
+        unawaited(
+          Navigator.of(
+            context,
+          ).push(AppRoute.to(FriendsScreen(repository: _repository))),
+        );
+    }
+  }
+
   Widget _buildTab(BuildContext context, int index) {
     if (!_visitedTabs.contains(index)) return const SizedBox.shrink();
     return switch (index) {
       0 => LearnHomeScreen(
-        repository: widget.repository,
+        repository: _repository,
         scrollController: _homeScrollController,
         refreshSignal: _homeRefresh,
         onOpenLearning: () async {
           await Navigator.of(
             context,
-          ).push(AppRoute.to(LearningScreen(repository: widget.repository)));
+          ).push(AppRoute.to(LearningScreen(repository: _repository)));
         },
         onOpenPlay: () => _selectTab(1),
       ),
-      1 => PlayHubScreen(repository: widget.repository),
+      1 => PlayHubScreen(repository: _repository, refreshSignal: _playRefresh),
       2 => LeaderboardScreen(
-        repository: widget.repository,
+        repository: _repository,
         refreshSignal: _leaderboardRefresh,
+        isVisible: () => _tab == 2,
       ),
       3 => ProfileScreen(
-        repository: widget.repository,
+        repository: _repository,
         refreshSignal: _profileRefresh,
         scrollController: _profileScrollController,
       ),
@@ -516,159 +798,132 @@ class _AppShellState extends State<AppShell>
   void _refreshVisibleTab([int? tab]) {
     final i = tab ?? _tab;
     if (i == 0) _homeRefresh.value++;
+    if (i == 1) _playRefresh.value++;
     if (i == 2) _leaderboardRefresh.value++;
     if (i == 3) _profileRefresh.value++;
   }
 
+  /// Sekme simgeleri (Lucide). Öğren kitap, Sıralama kupa (maket).
+  ///
+  /// 2026-09-29 Şahnê: Öğren sekmesi ev yerine açık kitap taşır — sekmenin
+  /// işi "ana sayfa" değil öğrenmedir. Yarış sekmesi maketteki gibi
+  /// çapraz kılıç (Lucide `swords`): sekme oyun değil karşılaşmadır.
+  static const _learnIcon = AppIcons.bookOpen;
+  static const _playIcon = AppIcons.swords;
+  static const _leaderboardIcon = AppIcons.trophy;
+  static const _profileIcon = AppIcons.user;
+
+  /// Geniş ekran rayı: alt gezinmeyle aynı Şahnê dili — seçili sekme Ray
+  /// (`s3`) plaketi + birincil metin; seçili olmayan üçüncül metin. Turuncu
+  /// yok: turuncu ekranın tek birincil eylemidir, gezinme değil.
   Widget _buildNavRail(BuildContext context, bool ku) {
+    final t = SahneTokens.of(context);
     return NavigationRail(
       selectedIndex: _tab,
       onDestinationSelected: _selectTab,
       labelType: NavigationRailLabelType.all,
-      selectedLabelTextStyle: const TextStyle(
-        fontSize: 12,
+      backgroundColor: t.nav,
+      selectedLabelTextStyle: SahneType.caption.copyWith(
+        color: t.tx,
         fontWeight: FontWeight.w700,
-        color: AppTheme.brand,
       ),
-      unselectedLabelTextStyle: TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        color: AppTheme.textMutedColor(context),
-      ),
-      selectedIconTheme: const IconThemeData(color: AppTheme.brand, size: 28),
-      unselectedIconTheme: IconThemeData(
-        color: AppTheme.textMutedColor(context),
-        size: 24,
-      ),
-      indicatorColor: AppTheme.brand.withValues(alpha: 0.15),
+      unselectedLabelTextStyle: SahneType.caption.copyWith(color: t.tx3),
+      selectedIconTheme: IconThemeData(color: t.tx, size: 24),
+      unselectedIconTheme: IconThemeData(color: t.tx3, size: 24),
+      indicatorColor: t.s3,
+      indicatorShape: SahneShape.m,
       destinations: [
         NavigationRailDestination(
-          icon: const Icon(AppIcons.house),
+          icon: const Icon(_learnIcon),
           selectedIcon: KeyedSubtree(
             key: _homeNavKey,
-            child: const Icon(AppIcons.house),
+            child: const Icon(_learnIcon),
           ),
           label: Text(context.t(K.navLearn)),
         ),
         NavigationRailDestination(
-          icon: KeyedSubtree(
-            key: _playNavKey,
-            child: const Icon(AppIcons.gamepad),
-          ),
-          selectedIcon: const Icon(AppIcons.gamepad),
+          icon: KeyedSubtree(key: _playNavKey, child: const Icon(_playIcon)),
+          selectedIcon: const Icon(_playIcon),
           label: Text(context.t(K.navPlay)),
         ),
         NavigationRailDestination(
-          icon: const Icon(AppIcons.trophy),
-          selectedIcon: const Icon(AppIcons.trophy),
+          icon: const Icon(_leaderboardIcon),
+          selectedIcon: const Icon(_leaderboardIcon),
           label: Text(context.t(K.navLeaderboard)),
         ),
         NavigationRailDestination(
           icon: KeyedSubtree(
             key: _profileNavKey,
-            child: const Icon(AppIcons.user),
+            child: const Icon(_profileIcon),
           ),
-          selectedIcon: const Icon(AppIcons.user),
+          selectedIcon: const Icon(_profileIcon),
           label: Text(context.t(K.navProfile)),
         ),
       ],
     );
   }
 
+  /// Alt gezinme (A iskeletinin tabanı: 64 + güvenli alan).
+  ///
+  /// 2026-09-29 Şahnê: görünüş tümüyle temadan gelir
+  /// (`navigationBarTheme`: Şev zemini, seçili sekme Ray plaketi M pah +
+  /// birincil metin, seçili olmayan üçüncül metin). Eskiden burada ikinci
+  /// bir tema kuruluyordu — terrakota gösterge, stadyum biçimi, bulanık
+  /// gölge — ve seçili sekme açık/koyu temada iki ayrı görünüşe
+  /// bürünüyordu. Artık her yerde TEK görünüş; üstte yalnız 1 px çizgi.
   Widget _buildBottomNav(BuildContext context, bool ku) {
-    final surface = AppTheme.surfaceColor(context);
-    final cta = AppTheme.primaryCtaColor(context);
-    return NavigationBarTheme(
-      data: NavigationBarThemeData(
-        height: 70,
-        backgroundColor: surface,
-        surfaceTintColor: Colors.transparent,
-        shadowColor: Colors.black.withValues(alpha: 0.10),
-        elevation: 0,
-        labelTextStyle: WidgetStateProperty.resolveWith((states) {
-          final selected = states.contains(WidgetState.selected);
-          final color = selected ? cta : AppTheme.textMutedColor(context);
-          return TextStyle(
-            fontSize: 11,
-            fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
-            letterSpacing: 0.15,
-            color: color,
-          );
-        }),
-        iconTheme: WidgetStateProperty.resolveWith((states) {
-          final selected = states.contains(WidgetState.selected);
-          final color = selected ? cta : AppTheme.textMutedColor(context);
-          return IconThemeData(size: selected ? 26 : 23, color: color);
-        }),
-        indicatorColor: cta.withValues(alpha: 0.18),
-        indicatorShape: const StadiumBorder(),
-        overlayColor: WidgetStateProperty.all(cta.withValues(alpha: 0.08)),
+    final t = SahneTokens.of(context);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: t.nav,
+        border: Border(top: BorderSide(color: t.line)),
       ),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: surface,
-          border: Border(
-            top: BorderSide(
-              color: AppTheme.borderColor(context).withValues(alpha: 0.55),
+      child: NavigationBar(
+        selectedIndex: _tab,
+        onDestinationSelected: _selectTab,
+        // Sekme hedefleri dile bağımlı metinle değil, sabit anahtarla
+        // bulunur — etiketler ("Yarış") ekran içeriğinde de geçebiliyor.
+        destinations: [
+          NavigationDestination(
+            key: const ValueKey('nav-learn'),
+            icon: const Icon(_learnIcon),
+            selectedIcon: KeyedSubtree(
+              key: _homeNavKey,
+              child: const Icon(_learnIcon),
             ),
+            label: context.t(K.navLearn),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
-              offset: const Offset(0, -6),
-              blurRadius: 18,
+          NavigationDestination(
+            key: const ValueKey('nav-play'),
+            icon: KeyedSubtree(key: _playNavKey, child: const Icon(_playIcon)),
+            selectedIcon: const Icon(_playIcon),
+            label: context.t(K.navPlay),
+          ),
+          NavigationDestination(
+            key: const ValueKey('nav-leaderboard'),
+            icon: const Icon(_leaderboardIcon),
+            selectedIcon: const Icon(_leaderboardIcon),
+            label: context.t(K.navLeaderboard),
+          ),
+          NavigationDestination(
+            key: const ValueKey('nav-profile'),
+            icon: KeyedSubtree(
+              key: _profileNavKey,
+              child: const Icon(_profileIcon),
             ),
-          ],
-        ),
-        child: NavigationBar(
-          selectedIndex: _tab,
-          onDestinationSelected: _selectTab,
-          // Sekme hedefleri dile bağımlı metinle değil, sabit anahtarla
-          // bulunur — etiketler ("Yarış") ekran içeriğinde de geçebiliyor.
-          destinations: [
-            NavigationDestination(
-              key: const ValueKey('nav-learn'),
-              icon: const Icon(AppIcons.house),
-              selectedIcon: KeyedSubtree(
-                key: _homeNavKey,
-                child: const Icon(AppIcons.house),
-              ),
-              label: context.t(K.navLearn),
-            ),
-            NavigationDestination(
-              key: const ValueKey('nav-play'),
-              icon: KeyedSubtree(
-                key: _playNavKey,
-                child: const Icon(AppIcons.gamepad),
-              ),
-              selectedIcon: const Icon(AppIcons.gamepad),
-              label: context.t(K.navPlay),
-            ),
-            NavigationDestination(
-              key: const ValueKey('nav-leaderboard'),
-              icon: const Icon(AppIcons.trophy),
-              selectedIcon: const Icon(AppIcons.trophy),
-              label: context.t(K.navLeaderboard),
-            ),
-            NavigationDestination(
-              key: const ValueKey('nav-profile'),
-              icon: KeyedSubtree(
-                key: _profileNavKey,
-                child: const Icon(AppIcons.user),
-              ),
-              selectedIcon: const Icon(AppIcons.user),
-              label: context.t(K.navProfile),
-            ),
-          ],
-        ),
+            selectedIcon: const Icon(_profileIcon),
+            label: context.t(K.navProfile),
+          ),
+        ],
       ),
     );
   }
 
   Future<void> _loadProfileNameState(String? userId) async {
     setState(() => _checkingProfileName = true);
+    final offlineMode = context.read<AuthProvider>().isOfflineMode;
     final preferences = await SharedPreferences.getInstance();
-    final key = _profileNameCompletionKey(userId);
+    final key = _profileNameCompletionKey(userId, offlineMode: offlineMode);
     final completed = key != null && preferences.getBool(key) == true;
 
     // Bu kapı yalnız oyuncunun adı başarıyla kaydettiğini belirten yerel
@@ -676,7 +931,7 @@ class _AppShellState extends State<AppShell>
     // yeni oyuncunun kapısını atlatır ve aynı varsayılan adı 1v1 kimliğine
     // taşır. İsim, HomeScreen'in arka plan akışında zenginleşir; ağdaki
     // yeniden denemeler başlangıç rotasını veya tam ekranı bekletemez.
-    if (!mounted || widget.repository.currentUserId != userId) return;
+    if (!mounted || _repository.currentUserId != userId) return;
     setState(() {
       _profileNameComplete = completed;
       _checkingProfileName = false;
@@ -684,8 +939,12 @@ class _AppShellState extends State<AppShell>
   }
 
   Future<void> _completeProfileName() async {
+    final offlineMode = context.read<AuthProvider>().isOfflineMode;
     final preferences = await SharedPreferences.getInstance();
-    final key = _profileNameCompletionKey(widget.repository.currentUserId);
+    final key = _profileNameCompletionKey(
+      _repository.currentUserId,
+      offlineMode: offlineMode,
+    );
     if (key != null) await preferences.setBool(key, true);
     if (!mounted) return;
     setState(() {
@@ -694,10 +953,18 @@ class _AppShellState extends State<AppShell>
     });
   }
 
-  String? _profileNameCompletionKey(String? userId) {
+  String? _profileNameCompletionKey(
+    String? userId, {
+    required bool offlineMode,
+  }) {
     final normalized = userId?.trim();
-    if (normalized == null || normalized.isEmpty) return null;
-    return '$_profileNameCompletedKeyPrefix$normalized';
+    if (normalized != null && normalized.isNotEmpty) {
+      return '$_profileNameCompletedKeyPrefix$normalized';
+    }
+    if (offlineMode) {
+      return '${_profileNameCompletedKeyPrefix}offline-local';
+    }
+    return null;
   }
 
   void _scheduleRoomResumeCheck(String userId) {
@@ -733,7 +1000,7 @@ class _AppShellState extends State<AppShell>
   Future<void> _loadRoomResume(String userId, int epoch) async {
     var errorReason = 'app_shell_room_resume';
     try {
-      final snapshot = await widget.repository.loadMyResumableRoom();
+      final snapshot = await _repository.loadMyResumableRoom();
       if (!_continueRoomResumeOrDefer(userId, epoch)) return;
 
       if (snapshot != null && snapshot.room.status != RoomStatus.finished) {
@@ -741,11 +1008,11 @@ class _AppShellState extends State<AppShell>
         switch (snapshot.room.status) {
           case RoomStatus.lobby:
             destination = RoomScreen(
-              repository: widget.repository,
+              repository: _repository,
               initialRoom: snapshot.room,
             );
           case RoomStatus.active:
-            final questions = await widget.repository.loadRoomQuestions(
+            final questions = await _repository.loadRoomQuestions(
               snapshot.room,
             );
             if (questions.isEmpty) {
@@ -753,7 +1020,7 @@ class _AppShellState extends State<AppShell>
             }
             if (!_continueRoomResumeOrDefer(userId, epoch)) return;
             destination = QuizScreen(
-              repository: widget.repository,
+              repository: _repository,
               room: snapshot.room,
               questions: questions,
               is1v1: true,
@@ -767,7 +1034,7 @@ class _AppShellState extends State<AppShell>
       }
 
       errorReason = 'app_shell_pending_room_result';
-      final pending = await widget.repository.loadMyPendingRoomResult();
+      final pending = await _repository.loadMyPendingRoomResult();
       if (!_continueRoomResumeOrDefer(userId, epoch)) return;
       if (pending == null) {
         _roomResumeCheckedUsers.add(userId);
@@ -783,7 +1050,7 @@ class _AppShellState extends State<AppShell>
         epoch,
         pending.room,
         RoomResultRecoveryScreen(
-          repository: widget.repository,
+          repository: _repository,
           snapshot: pending,
           expectedUserId: userId,
         ),
@@ -856,14 +1123,14 @@ class _AppShellState extends State<AppShell>
       return false;
     }
     return context.read<AuthProvider>().isAuthenticated &&
-        _normalizedUserId(widget.repository.currentUserId) == userId;
+        _normalizedUserId(_repository.currentUserId) == userId;
   }
 
   bool _isCurrentRoomResumeIdentity(String userId, int epoch) {
     return mounted &&
         _roomResumeEpoch == epoch &&
         _roomResumeAccountUserId == userId &&
-        _normalizedUserId(widget.repository.currentUserId) == userId;
+        _normalizedUserId(_repository.currentUserId) == userId;
   }
 
   bool _isValidPendingRoomResult(RoomResultSnapshot snapshot, String userId) {

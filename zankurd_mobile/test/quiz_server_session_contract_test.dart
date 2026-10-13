@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -299,6 +300,18 @@ QuizTimerWidget _timer(WidgetTester tester) => tester.widget<QuizTimerWidget>(
   find.byKey(const ValueKey('quiz-circular-timer')),
 );
 
+/// 2026-09-29 doğallık: "Rakip bekleniyor..." (üç nokta, örtü) ile
+/// "Rakip bekleniyor…" (tek karakter, sonraki düğmesinin etiketi) iki ayrı
+/// metindi; "..." kalktığında ikisi aynı metin oldu. Örtü artık metinden
+/// değil biçiminden ayrılır: örtünün metni hizasız (`textAlign == null`),
+/// düğme etiketininki ortalıdır.
+Finder _opponentWaitingOverlay() => find.byWidgetPredicate(
+  (widget) =>
+      widget is Text &&
+      widget.data == 'Rakip bekleniyor…' &&
+      widget.textAlign == null,
+);
+
 void main() {
   setUp(() {
     SharedPreferences.setMockInitialValues({
@@ -317,7 +330,7 @@ void main() {
     await _mount(tester, repository);
 
     expect(repository.markCalls, 1);
-    expect(find.text('Rakip bekleniyor...'), findsOneWidget);
+    expect(_opponentWaitingOverlay(), findsOneWidget);
     expect(_timer(tester).animation.isAnimating, isFalse);
     expect(repository.submitCalls, 0);
     expect(
@@ -329,7 +342,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 700));
     await _pumpFrames(tester);
 
-    expect(find.text('Rakip bekleniyor...'), findsNothing);
+    expect(_opponentWaitingOverlay(), findsNothing);
     expect(_timer(tester).animation.isAnimating, isTrue);
     expect(_timer(tester).animation.value, closeTo(0.4, 0.05));
   });
@@ -347,7 +360,7 @@ void main() {
 
     expect(repository.submitCalls, 0);
     expect(_timer(tester).animation.isAnimating, isFalse);
-    expect(find.text('Rakip bekleniyor...'), findsOneWidget);
+    expect(_opponentWaitingOverlay(), findsOneWidget);
     expect(repository.markCalls, greaterThanOrEqualTo(1));
   });
 
@@ -387,7 +400,7 @@ void main() {
 
     await _mount(tester, repository, resumeSnapshot: started);
 
-    expect(find.text('Rakip bekleniyor...'), findsNothing);
+    expect(_opponentWaitingOverlay(), findsNothing);
     expect(_timer(tester).animation.isAnimating, isTrue);
     expect(_timer(tester).animation.value, closeTo(0.3, 0.05));
   });
@@ -410,7 +423,7 @@ void main() {
     expect(options.singleWhere((tile) => tile.answer == 'B1').selected, isTrue);
     expect(options.singleWhere((tile) => tile.answer == 'B1').disabled, isTrue);
     expect(options.any((tile) => tile.correct), isFalse);
-    expect(find.text('Rakip bekleniyor...'), findsNothing);
+    expect(_opponentWaitingOverlay(), findsNothing);
     expect(
       repository.sentBroadcasts.any(
         (payload) => payload.containsKey('selected_answer'),

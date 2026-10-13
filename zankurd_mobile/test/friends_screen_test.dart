@@ -1,15 +1,20 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/friend.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/screens/friends_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 class _TestFriendsRepository extends MockZanKurdRepository {
+  _TestFriendsRepository({this.requesterName = 'Diyar'});
+
+  final String requesterName;
+
   @override
   Future<List<Friend>> loadFriends() async {
     return [
@@ -48,7 +53,7 @@ class _TestFriendsRepository extends MockZanKurdRepository {
       FriendRequest(
         id: 'req1',
         fromUserId: 'friend-user-3',
-        fromUserName: 'Diyar',
+        fromUserName: requesterName,
         toUserId: 'user1',
         createdAt: DateTime.now(),
         status: 'pending',
@@ -122,15 +127,41 @@ void main() {
         ChangeNotifierProvider<LanguageProvider>(
           create: (_) => LanguageProvider(initialLang: 'tr'),
         ),
-        ChangeNotifierProvider<ChildSafetyProvider>(
-          create: (_) => ChildSafetyProvider(),
-        ),
       ],
       child: MaterialApp(home: FriendsScreen(repository: repository)),
     );
   }
 
   group('FriendsScreen', () {
+    // 2026-09-30 simülatör: kod GİRME diyaloğu "Kodunu paylaş, iki taraf da
+    // 100 jeton kazansın" diyordu: paylaşma cümlesi, girişle ilgisiz. Kusur
+    // sessizdi çünkü aynı dizge davet kartında doğru yerdeydi.
+    testWidgets('kod girme diyaloğu paylaşma cümlesini tekrarlamaz', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('friends-enter-code-button')));
+      await tester.pumpAndSettle();
+
+      final dialog = find.byType(AlertDialog);
+      expect(dialog, findsOneWidget);
+      expect(
+        find.descendant(
+          of: dialog,
+          matching: find.text('Arkadaşının verdiği kodu gir'),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: dialog,
+          matching: find.textContaining('Kodunu paylaş'),
+        ),
+        findsNothing,
+      );
+    });
+
     testWidgets('arkadaslar ve bekleyen istekler listelenir', (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
@@ -159,6 +190,68 @@ void main() {
       expect(find.text('Odaya çağır'), findsNWidgets(2));
       expect(find.text('Oyna'), findsNothing);
     });
+
+    // 2026-09-29 doğallık (K10): sunucu kimliği olmayan depo sabit "DEMO"
+    // kodunu döndürüyordu ve ekran onu paylaşılabilir bir davet kodu
+    // düğmesi olarak çiziyordu — kimsenin kullanamayacağı bir kod.
+    testWidgets('sunucu kodu yokken sahte davet kodu paylaşılmaz', (
+      tester,
+    ) async {
+      expect(await repository.getPlayerTag(), isNull);
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      expect(find.text('DEMO'), findsNothing);
+      expect(
+        find.byKey(const ValueKey('friends-share-code-button')),
+        findsNothing,
+      );
+    });
+
+    testWidgets(
+      'bekleyen istek karti buyuk metinde kimlik ve eylemleri korur',
+      (tester) async {
+        const requesterName = 'Berîvanê Zimanê Kurdî';
+        tester.view.physicalSize = const Size(360, 800);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+
+        await tester.pumpWidget(
+          MediaQuery(
+            data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+            child: MultiProvider(
+              providers: [
+                ChangeNotifierProvider<LanguageProvider>(
+                  create: (_) => LanguageProvider(initialLang: 'tr'),
+                ),
+              ],
+              child: MaterialApp(
+                home: FriendsScreen(
+                  repository: _TestFriendsRepository(
+                    requesterName: requesterName,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        final requesterText = tester.renderObject<RenderParagraph>(
+          find.text(requesterName),
+        );
+        expect(
+          requesterText.didExceedMaxLines,
+          isFalse,
+          reason:
+              'Büyük metinde istek sahibinin kimliği ellipsis ile '
+              'kaybolmamalı; normal test boyutu bu kusuru sessiz bırakıyor.',
+        );
+        expect(find.text('Kabul'), findsOneWidget);
+        expect(find.byIcon(AppIcons.xmark), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
 
     testWidgets('oyuncu arama sonuclari ve ekleme akisi calisir', (
       tester,
@@ -213,9 +306,6 @@ void main() {
               ChangeNotifierProvider<LanguageProvider>(
                 create: (_) => LanguageProvider(initialLang: 'tr'),
               ),
-              ChangeNotifierProvider<ChildSafetyProvider>(
-                create: (_) => ChildSafetyProvider(),
-              ),
             ],
             child: MaterialApp(
               home: FriendsScreen(repository: _SearchFailsRepository()),
@@ -228,7 +318,7 @@ void main() {
         await tester.tap(find.text('Ara'));
         await tester.pumpAndSettle();
 
-        expect(find.text('Arama başarısız oldu.'), findsOneWidget);
+        expect(find.text('Arayamadık, tekrar dene.'), findsOneWidget);
         expect(find.text('Oyuncu bulunamadı'), findsNothing);
       },
     );

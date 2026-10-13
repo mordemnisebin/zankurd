@@ -56,6 +56,13 @@ void main() {
     expect(result.rewardSettlementState, QuizRewardSettlementState.claimed);
     expect(result.resultOwnerUserId, 'user-1');
     expect(result.rewardQueued, isFalse);
+    expect(
+      result.sourceQuestions.map((question) => question.id),
+      ['q1', 'q2'],
+      reason:
+          'Recovery’nin yüklediği sunucu soruları Review → Practice için '
+          'Result ekranına taşınmalı; yerel bankada UUID eşleşmesi beklenmemeli.',
+    );
     expect(repository.awardCalls, 1);
   });
 

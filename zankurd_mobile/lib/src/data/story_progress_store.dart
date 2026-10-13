@@ -1,4 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'checked_preferences_removal.dart';
+import 'local_progress_scope.dart';
 
 import '../utils/error_reporter.dart';
 
@@ -7,7 +9,7 @@ import '../utils/error_reporter.dart';
 class StoryProgressStore {
   StoryProgressStore._(this._preferences, this._nodes);
 
-  static const _prefix = 'zankurd.story.';
+  static String get _prefix => LocalProgressScope.physical('zankurd.story.');
   static StoryProgressStore? _instance;
 
   final SharedPreferences? _preferences;
@@ -54,9 +56,10 @@ class StoryProgressStore {
   /// Hesap değişiminde önceki kullanıcının hikâye ilerlemesini cihazda bırakmaz.
   Future<void> clear() async {
     final storyIds = _nodes.keys.toList(growable: false);
+    await removePersistedPreferenceKeys(
+      _preferences,
+      storyIds.map((storyId) => '$_prefix$storyId'),
+    );
     _nodes.clear();
-    for (final storyId in storyIds) {
-      await _preferences?.remove('$_prefix$storyId');
-    }
   }
 }

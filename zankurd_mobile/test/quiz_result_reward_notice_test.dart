@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -20,6 +21,7 @@ void main() {
     WidgetTester tester, {
     required int coinsAwarded,
     required bool rewardQueued,
+    bool dailyCapReached = false,
   }) async {
     final repository = MockZanKurdRepository();
     await tester.pumpWidget(
@@ -34,6 +36,7 @@ void main() {
           bestStreak: 4,
           coinsAwarded: coinsAwarded,
           rewardQueued: rewardQueued,
+          dailyCapReached: dailyCapReached,
           answerRecords: const [],
         ),
       ),
@@ -46,7 +49,7 @@ void main() {
     await pumpResult(tester, coinsAwarded: 0, rewardQueued: true);
 
     expect(
-      find.text('Bağlantı yok — ödülün kaydedildi, bağlanınca verilecek.'),
+      find.text('Bağlantı yok. Ödülün kaydedildi, bağlanınca verilecek.'),
       findsOneWidget,
     );
   });
@@ -56,8 +59,52 @@ void main() {
     await pumpResult(tester, coinsAwarded: 40, rewardQueued: false);
 
     expect(
-      find.text('Bağlantı yok — ödülün kaydedildi, bağlanınca verilecek.'),
+      find.text('Bağlantı yok. Ödülün kaydedildi, bağlanınca verilecek.'),
       findsNothing,
     );
+  });
+
+  // 2026-10-02 QA: tavana kalan 1 jetonken 17'lik bir tur "+1" verdi ve
+  // ekran hiçbir şey söylemedi; tavan bildirimi yalnız `coinsAwarded <= 0`
+  // iken çiziliyordu. Sunucu `cap_reached`i kısık ödülde de yolluyor.
+  const capText = 'Bugünün jeton sınırına ulaştın. Yarın sıfırlanır.';
+
+  testWidgets('tavan ödülü kıstıysa (+1) sebep söylenir', (tester) async {
+    await pumpResult(
+      tester,
+      coinsAwarded: 1,
+      rewardQueued: false,
+      dailyCapReached: true,
+    );
+    expect(find.text(capText), findsOneWidget);
+    expect(find.text('+1'), findsWidgets);
+  });
+
+  testWidgets('tavan ödülü sıfırladıysa sebep söylenir', (tester) async {
+    await pumpResult(
+      tester,
+      coinsAwarded: 0,
+      rewardQueued: false,
+      dailyCapReached: true,
+    );
+    expect(find.text(capText), findsOneWidget);
+  });
+
+  testWidgets('tavana varılmadıysa tavan iletisi çıkmaz', (tester) async {
+    await pumpResult(tester, coinsAwarded: 17, rewardQueued: false);
+    expect(find.text(capText), findsNothing);
+  });
+
+  testWidgets('tavan tam ödemeyle dolduysa (istenen = verilen) ileti çıkmaz', (
+    tester,
+  ) async {
+    // pumpResult: 7 doğru, seri 4 -> istenen 4 + 7 + 4 = 15.
+    await pumpResult(
+      tester,
+      coinsAwarded: 15,
+      rewardQueued: false,
+      dailyCapReached: true,
+    );
+    expect(find.text(capText), findsNothing);
   });
 }

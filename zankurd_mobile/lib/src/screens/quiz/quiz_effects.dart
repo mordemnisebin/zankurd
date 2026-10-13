@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import '../../l10n/strings.dart';
 import '../../providers/reduced_motion_provider.dart';
 
-import '../../theme/app_theme.dart';
 import '../../utils/test_environment.dart';
-import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../../widgets/sahne/sahne.dart';
 
 /// Üst üste doğru cevap serisinin görsel kademesi.
-/// Eşikler spec'ten: ×3 bronz (turuncu), ×5 gümüş (mor), ×10 altın.
+/// Eşikler spec'ten: ×3 bronz, ×5 gümüş, ×10 altın. Kademe Şahnê'de
+/// renkle değil glifle ayrışır (bkz. [ComboBadge]).
 enum ComboTier { bronze, silver, gold }
 
 ComboTier? comboTierFor(int streak) {
@@ -111,72 +111,75 @@ class _ShakeWrapperState extends State<ShakeWrapper>
 }
 
 /// "×N Seri!" rozeti. [comboTierFor] null dönerse hiçbir şey çizmez.
+///
+/// Şahnê: seri bir ÖDÜLdür, rengi Zêr (altın ton zemin + koyu altın
+/// metin), M pahlı çip. Kademe renkle değil GLİFLE ayrışır: ×3 alev,
+/// ×5 şimşek, ×10 taç. Eski turuncu/mor/altın dolgular palet dışıydı ve
+/// bulanık gölge taşıyordu; ikisi de kalktı.
 class ComboBadge extends StatelessWidget {
   const ComboBadge({required this.streak, required this.isKu, super.key});
 
   final int streak;
   final bool isKu;
 
-  static const _tierColors = {
-    ComboTier.bronze: Color(0xFFFF8F00),
-    ComboTier.silver: Color(0xFF7C3AED),
-    ComboTier.gold: Color(0xFFFFC107),
+  static SahneGlyphKind glyphFor(ComboTier tier) => switch (tier) {
+    ComboTier.bronze => SahneGlyphKind.flame,
+    ComboTier.silver => SahneGlyphKind.bolt,
+    ComboTier.gold => SahneGlyphKind.crown,
   };
 
   @override
   Widget build(BuildContext context) {
     final tier = comboTierFor(streak);
+    final t = SahneTokens.of(context);
     return AnimatedSwitcher(
-      duration: _motionOff(context)
-          ? Duration.zero
-          : const Duration(milliseconds: 250),
+      duration: _motionOff(context) ? Duration.zero : SahneMotion.diamondPop,
       transitionBuilder: (child, animation) => ScaleTransition(
-        scale: CurvedAnimation(parent: animation, curve: Curves.elasticOut),
+        scale: CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
         child: FadeTransition(opacity: animation, child: child),
       ),
       child: tier == null
           ? const SizedBox.shrink()
-          : Container(
+          : DecoratedBox(
               key: ValueKey('combo-$streak'),
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    _tierColors[tier]!,
-                    _tierColors[tier]!.withValues(alpha: 0.75),
+              decoration: ShapeDecoration(
+                color: t.goldTint,
+                shape: SahneShape.m,
+              ),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(
+                  start: SahneSpace.x2,
+                  end: SahneSpace.x3,
+                  top: SahneSpace.x1,
+                  bottom: SahneSpace.x1,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SahneGlyph(glyphFor(tier), size: 20),
+                    const SizedBox(width: SahneSpace.x2),
+                    Flexible(
+                      child: Text(
+                        '×$streak ${Tr.forKu(K.seri, isKu)}',
+                        style: SahneType.captionStrong.copyWith(
+                          color: t.goldTx,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-                borderRadius: BorderRadius.circular(999),
-                boxShadow: [
-                  BoxShadow(
-                    color: _tierColors[tier]!.withValues(alpha: 0.45),
-                    blurRadius: 12,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(AppIcons.fire, color: Colors.white, size: 16),
-                  const SizedBox(width: 6),
-                  Text(
-                    '×$streak ${Tr.forKu(K.seri, isKu)}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
               ),
             ),
     );
   }
 }
 
-/// Son saniyelerde ekran kenarlarında beliren kırmızı vinyet.
+/// Son saniyelerde ekran kenarlarında beliren gerilim vinyeti.
 /// [animation]: quiz'in geri sayan timer controller'ı (1.0→0.0).
+///
+/// Şahnê: gerilimin rengi Boyax'tır (sayaç halesiyle aynı aile, bkz.
+/// `SahneStageColors.haloRace`); durum kırmızısı (Şaş) değil — süre
+/// azalıyor diye cevap "yanlış" değildir. Radyal gradyan, bulanıklık yok.
 class CriticalVignette extends StatelessWidget {
   const CriticalVignette({required this.animation, super.key});
 
@@ -211,8 +214,10 @@ class _VignettePainter extends CustomPainter {
       ..shader = RadialGradient(
         radius: 1.1,
         colors: [
-          Colors.transparent,
-          AppTheme.wrong.withValues(alpha: 0.22 * strength),
+          SahneStageColors.haloRace.withValues(alpha: 0),
+          SahneStageColors.haloRace.withValues(
+            alpha: SahneStageColors.haloRace.a * strength,
+          ),
         ],
         stops: const [0.72, 1.0],
       ).createShader(rect);
@@ -224,8 +229,9 @@ class _VignettePainter extends CustomPainter {
       oldDelegate.strength != strength;
 }
 
-/// Yanlış cevapta tam ekran çok kısa kırmızı flaş.
-/// [trigger] her arttığında bir kez oynar.
+/// Yanlış cevapta tam ekran çok kısa Şaş flaşı.
+/// [trigger] her arttığında bir kez oynar. Şahnê'de flaş hafiftir (tepe
+/// %16): asıl söz şıkkın Şaş dolgusu, çapraz taraması ve ✗'idir.
 class WrongFlash extends StatefulWidget {
   const WrongFlash({required this.trigger, super.key});
 
@@ -267,10 +273,12 @@ class _WrongFlashState extends State<WrongFlash>
         if (!_controller.isAnimating) return const SizedBox.shrink();
         // 0→tepe→0 üçgen opaklık eğrisi
         final t = _controller.value;
-        final opacity = (t < 0.5 ? t : 1 - t) * 0.30;
+        final opacity = (t < 0.5 ? t : 1 - t) * 0.32;
         return Positioned.fill(
           child: IgnorePointer(
-            child: ColoredBox(color: AppTheme.wrong.withValues(alpha: opacity)),
+            child: ColoredBox(
+              color: SahneTokens.of(context).errFill.withValues(alpha: opacity),
+            ),
           ),
         );
       },
@@ -279,7 +287,8 @@ class _WrongFlashState extends State<WrongFlash>
 }
 
 /// Doğru cevapta kazanılan puanın yukarı süzülen "+N" göstergesi.
-/// [trigger] her arttığında [points] değeriyle bir kez oynar.
+/// [trigger] her arttığında [points] değeriyle bir kez oynar. Zêr, Manşet
+/// 22, tablo rakamı; gölgesiz (bulanık metin gölgesi kalktı).
 class ScoreFlyup extends StatefulWidget {
   const ScoreFlyup({required this.trigger, required this.points, super.key});
 
@@ -328,11 +337,9 @@ class _ScoreFlyupState extends State<ScoreFlyup>
               offset: Offset(0, -40 * t),
               child: Text(
                 '+${widget.points}',
-                style: const TextStyle(
-                  color: AppTheme.gold,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 22,
-                  shadows: [Shadow(blurRadius: 8, color: Colors.black38)],
+                style: SahneType.headline.copyWith(
+                  color: SahneTokens.of(context).goldTx,
+                  fontFeatures: const [FontFeature.tabularFigures()],
                 ),
               ),
             ),

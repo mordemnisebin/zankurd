@@ -102,8 +102,18 @@ void main() {
     await pump(tester, repository);
     await tester.pumpAndSettle();
 
+    // Teklif yok (koruma satın alınamaz) ama sessizlik de yok: seri bu
+    // turda kırılıyor ve oyuncuya eksik miktar söylenir (bkz.
+    // `streak_shortfall_notice_test`). Yalnız bilgidir: harcama olmaz,
+    // kapatılınca akış sürer.
+    expect(find.text('Koru (50)'), findsNothing);
+    expect(find.byKey(const ValueKey('result-streak-shortfall')), findsOne);
+    expect(repository.spendCalls, 0);
+    await tester.tap(find.text('Anladım'));
+    await tester.pumpAndSettle();
     expect(find.byType(AlertDialog), findsNothing);
     expect(repository.spendCalls, 0);
+    expect(find.byType(QuizResultScreen), findsOneWidget);
   });
 
   // ── 9. Coin harcama hatası ─────────────────────────────────────────

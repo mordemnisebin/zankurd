@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -7,9 +8,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:zankurd_mobile/src/data/durable_write.dart';
+import 'package:zankurd_mobile/src/data/local_progress_scope.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
+import 'package:zankurd_mobile/src/data/tournament_progress_publisher.dart';
+import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 
@@ -126,6 +132,165 @@ class _OwnedSupabaseRepository extends SupabaseZanKurdRepository {
 
 /// `awardQuizCoins` her seferinde başarısız olur — retry tükenmesini
 /// gerçek bir HTTP çağrısına ihtiyaç duymadan tetikler.
+class _ServerXpRepository extends SupabaseZanKurdRepository {
+  _ServerXpRepository({required this.userId, required this.total})
+    : super(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _AlwaysFailingHttpClient(),
+        ),
+      );
+
+  String? userId;
+  int total;
+  int xpCalls = 0;
+  int roomXpCalls = 0;
+
+  @override
+  String? get currentUserId => userId;
+
+  @override
+  Future<int> awardXp(int delta) async {
+    xpCalls += 1;
+    return total;
+  }
+
+  @override
+  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey) async {
+    final awarded = await awardXp(delta);
+    return ServerXpWrite(total: awarded, retryable: true);
+  }
+
+  @override
+  Future<int> awardRoomXp(String roomId) async {
+    roomXpCalls += 1;
+    return total;
+  }
+}
+
+class _ReconcileXpRepository extends SupabaseZanKurdRepository {
+  _ReconcileXpRepository({
+    required this.userId,
+    required this.serverXp,
+    this.failAward = false,
+  }) : super(
+         SupabaseClient(
+           'https://example.supabase.co',
+           'sb_publishable_test_key',
+           httpClient: _AlwaysFailingHttpClient(),
+         ),
+       );
+
+  String? userId;
+  int serverXp;
+  bool failAward;
+  int xpCalls = 0;
+  int lastDelta = 0;
+
+  @override
+  String? get currentUserId => userId;
+
+  @override
+  Future<int?> loadServerXp() async => serverXp;
+
+  @override
+  Future<int> awardXp(int delta) async {
+    xpCalls += 1;
+    lastDelta = delta;
+    if (failAward) throw StateError('xp award failed');
+    serverXp += delta;
+    return serverXp;
+  }
+
+  @override
+  Future<ServerXpWrite> awardXpDurable(int delta, String idempotencyKey) async {
+    final awarded = await awardXp(delta);
+    return ServerXpWrite(total: awarded, retryable: true);
+  }
+}
+
+class _FavoriteSyncRepository extends SupabaseZanKurdRepository {
+  _FavoriteSyncRepository({required this.userId, required this.fail})
+    : super(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _AlwaysFailingHttpClient(),
+        ),
+      );
+
+  String? userId;
+  bool fail;
+  final calls = <(String, bool)>[];
+
+  @override
+  String? get currentUserId => userId;
+
+  @override
+  Future<bool> toggleFavoriteQuestion(
+    QuizQuestion question,
+    bool favorite,
+  ) async {
+    calls.add((question.id, favorite));
+    if (fail) throw StateError('favorite failed');
+    return favorite;
+  }
+}
+
+class _TournamentSyncRepository extends SupabaseZanKurdRepository {
+  _TournamentSyncRepository({required this.userId, required this.acknowledged})
+    : super(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _AlwaysFailingHttpClient(),
+        ),
+      );
+
+  String? userId;
+  bool acknowledged;
+  final stages = <String>[];
+
+  @override
+  String? get currentUserId => userId;
+
+  @override
+  Future<bool> saveTournamentProgress(
+    String stage,
+    int userScore,
+    int opponentScore,
+    List<String> botWinners,
+  ) async {
+    stages.add(stage);
+    return acknowledged;
+  }
+}
+
+class _LessonSyncRepository extends SupabaseZanKurdRepository {
+  _LessonSyncRepository({required this.userId, required this.acknowledged})
+    : super(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _AlwaysFailingHttpClient(),
+        ),
+      );
+
+  String? userId;
+  bool acknowledged;
+  final lessonIds = <String>[];
+
+  @override
+  String? get currentUserId => userId;
+
+  @override
+  Future<bool> markLessonCompleted(String lessonId) async {
+    lessonIds.add(lessonId);
+    return acknowledged;
+  }
+}
+
 class _AlwaysFailingRewardRepository extends SupabaseZanKurdRepository {
   _AlwaysFailingRewardRepository({required this.userId})
     : super(
@@ -185,6 +350,396 @@ void main() {
       );
     },
   );
+
+  test('eski solo sync_xp sunucuya gitmeden kuyruktan düşer', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.syncQueue.v2.user-a': jsonEncode([
+        {
+          'type': 'sync_xp',
+          'delta': 25,
+          'idempotencyKey': 'cache-25',
+          'playerId': 'user-a',
+          'retries': 0,
+        },
+      ]),
+      LocalProgressScope.physicalFor('user-a', 'zankurd.xp.total'): 10,
+    });
+    LocalProgressScope.bind('user-a');
+    XPStore.resetInstance();
+    addTearDown(() {
+      LocalProgressScope.debugReset();
+      XPStore.resetInstance();
+    });
+    final repository = _ServerXpRepository(userId: 'user-a', total: 125);
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    await manager.sync();
+
+    XPStore.resetInstance();
+    expect(repository.xpCalls, 0);
+    expect(repository.roomXpCalls, 0);
+    expect((await XPStore.load()).totalXP, 10);
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('zankurd.syncQueue.v2.user-a'), anyOf(isNull, '[]'));
+  });
+
+  test('oda sync_xp yalnız doğrulanmış oda RPC yolunu kullanır', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.syncQueue.v2.user-a': jsonEncode([
+        {
+          'type': 'sync_xp',
+          'roomId': 'room-verified',
+          'playerId': 'user-a',
+          'retries': 0,
+        },
+      ]),
+      LocalProgressScope.physicalFor('user-a', 'zankurd.xp.total'): 10,
+    });
+    LocalProgressScope.bind('user-a');
+    XPStore.resetInstance();
+    addTearDown(() {
+      LocalProgressScope.debugReset();
+      XPStore.resetInstance();
+    });
+    final repository = _ServerXpRepository(userId: 'user-a', total: 125);
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    await manager.sync();
+
+    XPStore.resetInstance();
+    expect(repository.xpCalls, 0);
+    expect(repository.roomXpCalls, 1);
+    expect((await XPStore.load()).totalXP, 125);
+  });
+
+  test('sunucu XP daha yüksekse çubuk onu alır', () async {
+    SharedPreferences.setMockInitialValues({
+      LocalProgressScope.physicalFor('user-a', 'zankurd.xp.total'): 80,
+    });
+    LocalProgressScope.bind('user-a');
+    XPStore.resetInstance();
+    addTearDown(() {
+      LocalProgressScope.debugReset();
+      XPStore.resetInstance();
+    });
+    final repository = _ReconcileXpRepository(userId: 'user-a', serverXp: 100);
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    await manager.reconcileXpCache();
+
+    XPStore.resetInstance();
+    expect(repository.xpCalls, 0);
+    expect((await XPStore.load()).totalXP, 100);
+  });
+
+  test('yerel XP yüksekse rekabetçi sunucu XP değiştirilmez', () async {
+    SharedPreferences.setMockInitialValues({
+      LocalProgressScope.physicalFor('user-a', 'zankurd.xp.total'): 80,
+    });
+    LocalProgressScope.bind('user-a');
+    XPStore.resetInstance();
+    addTearDown(() {
+      LocalProgressScope.debugReset();
+      XPStore.resetInstance();
+    });
+    final repository = _ReconcileXpRepository(userId: 'user-a', serverXp: 20);
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    await manager.reconcileXpCache();
+    await manager.reconcileXpCache();
+
+    XPStore.resetInstance();
+    expect(repository.xpCalls, 0);
+    expect(repository.lastDelta, 0);
+    expect((await XPStore.load()).totalXP, 80);
+  });
+
+  test('eski bekleyen solo XP düşürülür ve yeni fark yazılmaz', () async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.syncQueue.v2.user-a': jsonEncode([
+        {
+          'type': 'sync_xp',
+          'delta': 5,
+          'idempotencyKey': 'pending-5',
+          'playerId': 'user-a',
+          'retries': 0,
+        },
+      ]),
+      LocalProgressScope.physicalFor('user-a', 'zankurd.xp.total'): 80,
+    });
+    LocalProgressScope.bind('user-a');
+    XPStore.resetInstance();
+    addTearDown(() {
+      LocalProgressScope.debugReset();
+      XPStore.resetInstance();
+    });
+    final repository = _ReconcileXpRepository(
+      userId: 'user-a',
+      serverXp: 20,
+      failAward: true,
+    );
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+    await manager.sync();
+    final callsAfterQueue = repository.xpCalls;
+
+    await manager.reconcileXpCache();
+
+    expect(repository.xpCalls, callsAfterQueue);
+    expect(repository.xpCalls, 0);
+    expect(repository.lastDelta, 0);
+    XPStore.resetInstance();
+    expect((await XPStore.load()).totalXP, 80);
+  });
+
+  test('favori kuyruğu aynı soruda son isteği tutar', () async {
+    final repository = _FavoriteSyncRepository(userId: 'user-a', fail: true);
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OfflineConnectivityMonitor(),
+    );
+
+    await manager.retainFavorite(questionId: 'q1', favorite: true);
+    await manager.retainFavorite(questionId: 'q1', favorite: false);
+
+    expect(manager.queuedFavorite('q1'), isFalse);
+    expect(repository.calls, isEmpty);
+  });
+
+  test('favori yazımı onaylanınca kuyruktan düşer', () async {
+    final repository = _FavoriteSyncRepository(userId: 'user-a', fail: false);
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    await manager.retainFavorite(questionId: 'q1', favorite: false);
+    await manager.sync();
+
+    expect(repository.calls, contains(('q1', false)));
+    expect(manager.queuedFavorite('q1'), isNull);
+  });
+
+  test('turnuva kuyruğu yalnız son aşamayı tutar', () async {
+    final repository = _TournamentSyncRepository(
+      userId: 'user-a',
+      acknowledged: false,
+    );
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OfflineConnectivityMonitor(),
+    );
+
+    await manager.retainLatestTournamentProgress(
+      acknowledged: false,
+      stage: 'quarter',
+      userScore: 1,
+      opponentScore: 0,
+      botWinners: const ['a'],
+    );
+    await manager.retainLatestTournamentProgress(
+      acknowledged: false,
+      stage: 'semi',
+      userScore: 2,
+      opponentScore: 1,
+      botWinners: const ['b'],
+    );
+
+    expect(manager.queuedTournamentStage, 'semi');
+    expect(repository.stages, isEmpty);
+
+    await manager.retainLatestTournamentProgress(
+      acknowledged: true,
+      stage: 'final',
+      userScore: 3,
+      opponentScore: 1,
+      botWinners: const [],
+    );
+
+    expect(manager.queuedTournamentStage, isNull);
+  });
+
+  test('yayıncı onay gelmeyince son aşamayı bırakır', () async {
+    final repository = _TournamentSyncRepository(
+      userId: 'user-a',
+      acknowledged: false,
+    );
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OfflineConnectivityMonitor(),
+    );
+
+    await TournamentProgressPublisher.publish(
+      repository: repository,
+      stage: 'quarter',
+      userScore: 1,
+      opponentScore: 0,
+      botWinners: const ['a'],
+    );
+    await TournamentProgressPublisher.publish(
+      repository: repository,
+      stage: 'semi',
+      userScore: 2,
+      opponentScore: 0,
+      botWinners: const ['b'],
+    );
+
+    expect(manager.queuedTournamentStage, 'semi');
+    expect(repository.stages, ['quarter', 'semi']);
+
+    repository.acknowledged = true;
+    await TournamentProgressPublisher.publish(
+      repository: repository,
+      stage: 'final',
+      userScore: 3,
+      opponentScore: 1,
+      botWinners: const [],
+    );
+
+    expect(manager.queuedTournamentStage, isNull);
+    expect(repository.stages, ['quarter', 'semi', 'final']);
+  });
+
+  test('onaylanmayan turnuva aşaması yeniden denenir', () async {
+    final repository = _TournamentSyncRepository(
+      userId: 'user-a',
+      acknowledged: false,
+    );
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    await manager.retainLatestTournamentProgress(
+      acknowledged: false,
+      stage: 'quarter',
+      userScore: 4,
+      opponentScore: 2,
+      botWinners: const ['bot'],
+    );
+    await manager.sync();
+
+    expect(repository.stages, contains('quarter'));
+    expect(manager.queuedTournamentStage, 'quarter');
+  });
+
+  test('aynı kullanıcının çevrimdışı ders slugları kuyruğa girer', () async {
+    SharedPreferences.setMockInitialValues({
+      LocalProgressScope.physicalFor(
+        'user-a',
+        'zankurd.offline.completedLessonIds',
+      ): [
+        'everyday_1',
+      ],
+    });
+    LocalProgressScope.bind('user-a');
+    addTearDown(LocalProgressScope.debugReset);
+    final repository = _LessonSyncRepository(
+      userId: 'user-a',
+      acknowledged: false,
+    );
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OfflineConnectivityMonitor(),
+    );
+
+    await manager.queueScopedOfflineLessons();
+
+    expect(manager.pendingLessonCompletionCount, 1);
+    expect(repository.lessonIds, isEmpty);
+  });
+
+  test('onaylanmayan ders tamamlama kuyrukta kalır', () async {
+    final repository = _LessonSyncRepository(
+      userId: 'user-a',
+      acknowledged: false,
+    );
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    await manager.queueLessonCompletion('lesson-1');
+    await manager.sync();
+
+    expect(repository.lessonIds, contains('lesson-1'));
+    expect(manager.hasPendingLessonCompletion, isTrue);
+  });
+
+  test('onaylanan ders çevrimdışı listeden de düşer', () async {
+    final lessonKey = LocalProgressScope.physicalFor(
+      'user-a',
+      'zankurd.offline.completedLessonIds',
+    );
+    SharedPreferences.setMockInitialValues({
+      lessonKey: ['everyday_1'],
+    });
+    LocalProgressScope.bind('user-a');
+    addTearDown(LocalProgressScope.debugReset);
+    final repository = _LessonSyncRepository(
+      userId: 'user-a',
+      acknowledged: true,
+    );
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    await manager.queueLessonCompletion('everyday_1');
+    await manager.sync();
+
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getStringList(lessonKey), isEmpty);
+    expect(manager.hasPendingLessonCompletion, isFalse);
+  });
+
+  test('onaylanan ders tamamlama kuyruktan düşer', () async {
+    final repository = _LessonSyncRepository(
+      userId: 'user-a',
+      acknowledged: true,
+    );
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OnlineConnectivityMonitor(),
+    );
+
+    await manager.queueLessonCompletion('lesson-1');
+    await manager.sync();
+
+    expect(repository.lessonIds, ['lesson-1']);
+    expect(manager.hasPendingLessonCompletion, isFalse);
+  });
+
+  test('aynı ders tamamlama kuyrukta bir kez durur', () async {
+    final repository = _LessonSyncRepository(
+      userId: 'user-a',
+      acknowledged: false,
+    );
+    final manager = await SyncManager.initialize(
+      repository,
+      connectivityMonitor: _OfflineConnectivityMonitor(),
+    );
+
+    await manager.queueLessonCompletion('lesson-1');
+    await manager.queueLessonCompletion('lesson-1');
+
+    expect(repository.lessonIds, isEmpty);
+    expect(manager.pendingLessonCompletionCount, 1);
+  });
 
   test(
     'SyncManager sahibi doğrulanan eski kuyruğu kaybetmeden taşır',
@@ -315,6 +870,25 @@ void main() {
       (key) => key.startsWith('zankurd.syncQueue.v2.'),
     );
     expect(prefs.getString(scopedKey), '[]');
+  });
+
+  test('Supabase dışı depoda kuyruk sessizce silinmez', () async {
+    // 2026-09: `_syncOnce` Supabase dışı depoda kuyruğu `clear()` ile
+    // boşaltıyordu — çevrimdışı kazanılmış ödül kurtarılamaz biçimde
+    // yok oluyordu. Kuyruk sahibinindir; depo Supabase'e dönünce aynı
+    // kuyruk senkronize olur.
+    final repository = MockZanKurdRepository();
+    final manager = await SyncManager.initialize(repository);
+
+    await manager.queueQuizReward(
+      score: 100,
+      correctCount: 1,
+      bestStreak: 1,
+      totalQuestions: 1,
+    );
+    await manager.sync();
+
+    expect(manager.pendingCount, 1, reason: 'ödül kuyruktan düştü');
   });
 
   // 2026-07-25 denetim bulgusu: çıkışta yalnız dispose() çağrılıyor,
@@ -594,7 +1168,9 @@ void main() {
     await Future.wait([firstQueued, secondQueued, thirdQueued, syncing]);
     await manager.sync();
 
-    expect(manager.pendingCount, 0);
+    // 2026-09 sözleşmesi: Supabase dışı depoda `sync()` kuyruğu silmez —
+    // üç kayıt da korunur; ölçülen şey çöküşsüzlük, boşalma değil.
+    expect(manager.pendingCount, 3);
   });
 
   test('eşzamanlı sync çağrıları tek tur olarak çalışır', () async {
@@ -609,14 +1185,17 @@ void main() {
     );
     await Future.wait([manager.sync(), manager.sync(), manager.sync()]);
 
-    expect(manager.pendingCount, 0);
+    // 2026-09 sözleşmesi: Supabase dışı depoda `sync()` kuyruğu silmez.
+    expect(manager.pendingCount, 1);
   });
 
-  test('istemci artık XP senkronizasyon API yüzeyi sunmaz', () {
+  test('XP kuyruğu yalnız doğrulanmış oda kimliğini sunucuya taşır', () {
     final source = File('lib/src/data/sync_manager.dart').readAsStringSync();
     expect(source, isNot(contains('void queueXP(')));
     expect(source, isNot(contains('awardProfileXPDelta(')));
-    expect(source, contains('Dropping unsupported legacy XP item'));
+    expect(source, contains('queueXpAward'));
+    expect(source, contains('Dropping unverified solo XP item'));
+    expect(source, contains('final total = await repo.awardRoomXp(roomId)'));
   });
 
   test('çevrimdışı bitirilen turun ödülü kuyrukta kalır', () async {
@@ -668,7 +1247,7 @@ void main() {
   /// `catch` dalında da yalnız `ErrorReporter.record` ile loglanıp
   /// `_queue`ya geri eklenmeden düşüyordu. `_queue` boşaldığı için
   /// `pendingCountNotifier` hemen 0'a iniyor, profil ekranındaki
-  /// `_SyncStatusChip` de "Bulutla senkronize" yazıyordu — oysa
+  /// `_SyncStatusChip` de "İlerlemen kayıtlı" yazıyordu — oysa
   /// `awardQuizCoins` RPC'si sunucuda HİÇ çalışmamıştı. Kullanıcı tur
   /// sonunda "kazandığı" coin'in aslında hiç hesabına geçmediğini asla
   /// öğrenemiyordu (2026-08-14 denetimi).

@@ -1,0 +1,4619 @@
+[
+ {
+  "id": "comm_cog_0003",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kurmancî coğrafya sorusunun seçenekleri “Mardin, Diyarbakır, Şırnak, Batman” biçiminde Türkçe adlarla yazılmış; bankanın Kurmancî adlandırmasıyla (Mêrdîn, Amed, Şirnex, Êlih) tutarsız.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "comm_sin_0101",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Ödül seçeneklerinin tamamı “Jüri Özel Ödülü, En İyi Yönetmen, Altın Palmiye, Altın Ayı” biçiminde Türkçe; soru Kurmancî.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "edit_ziman_0008",
+  "kusur": [
+   "celdirici_sacma"
+  ],
+  "not": "“Ergatîf” sorusundaki yanlış şıklar okul, tu/hûn kullanımı ve alfabe yayımı gibi birbirinden tamamen ilgisiz başlıklardır; yalnız C gramer yapısı tanımıdır.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir."
+ },
+ {
+  "id": "edit_ziman_0010",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0005, offline_8783.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_ziman_0011",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5067.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_ziman_0012",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0025, offline_5381.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_cand_0001",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_1015.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_dirok_0005",
+  "kusur": [
+   "celdirici_sacma"
+  ],
+  "not": "Sevr’in Kürtler açısından önemini sorarken üç yanlış şık kültürel etkileşim, Soran Emirliği ve 1962 Suriye vatandaşlıksızlığı gibi alakasız olaylardır.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir."
+ },
+ {
+  "id": "edit_dirok_0011",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_2430.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_cografya_0002",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_2141.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_cografya_0015",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_2538, ziman_x_0042.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_ziman_0022",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0055, offline_2273, offline_5427, ziman_x_0002.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_ziman_0034",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0110.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_cand_0025",
+  "kusur": [
+   "kategori_yanlis",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0015. Soru yalnız “mal = ev” temel sözcük çevirisini ölçüyor; kültürel bilgi değil Ziman bilgisidir.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Soruyu Ziman kategorisine taşı."
+ },
+ {
+  "id": "edit_dirok_0019",
+  "kusur": [
+   "celdirici_sacma"
+  ],
+  "not": "Zuhab Antlaşması sorusunda üç yanlış şık Mezopotamya tanımı, Cizîr merkezli emirlik ve Amed’in tarihî adı gibi aynı türden tarihsel antlaşma seçenekleri değildir.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir."
+ },
+ {
+  "id": "edit_dirok_0021",
+  "kusur": [
+   "celdirici_sacma"
+  ],
+  "not": "“Xoybûn nedir?” sorusunda üç yanlış şık merkezileşme, Amida tanımı ve arkeoloji tanımıdır; yalnız B bir siyasal örgüt tanımıdır.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir."
+ },
+ {
+  "id": "edit_dirok_0023",
+  "kusur": [
+   "celdirici_sacma"
+  ],
+  "not": "“Kurdên Sor” sorusunda üç yanlış şık Soran emiri, Zuhab Antlaşması ve Sevr maddeleri gibi konu/tür bakımından doğrudan elenir.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir."
+ },
+ {
+  "id": "edit_dirok_0024",
+  "kusur": [
+   "celdirici_sacma"
+  ],
+  "not": "Erbil Kalesi’nin özelliğini sorarken üç yanlış şık bir yayıncı/aydın, Eyyubi devleti ve bir antlaşma tanımıdır.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir."
+ },
+ {
+  "id": "edit_edebiyat_0015",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0016, offline_0020.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_cografya_0016",
+  "kusur": [
+   "celdirici_sacma"
+  ],
+  "not": "Fırat’ın kaynak bölgesini sorarken üç yanlış şık göl, bitki örtüsü ve dağ kütlesi tanımıdır; yalnız A bir kaynak bölgesi cevabıdır.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir."
+ },
+ {
+  "id": "edit_muzik_0018",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5394.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_siyaset_0014",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Feylî Kürtlerinin yerini sorarken doğru seçenek “Sînorê Iraq-Îranê, herêma Bexda û Îlamê” tek çok-bölgeli ayrıntılı coğrafi tarif; diğerleri kısa tek bölgelerdir.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "edit_ziman_0035",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5225.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_ziman_0037",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0105.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_ziman_0038",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0062, offline_0065.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_ziman_0048",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5685.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_cand_0027",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_6642.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_edebiyat_0020",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "“Melayê Cizîrî” adı kökte “Cizîr” yer adını zaten içeriyor; doğru seçenek Cizîr aynı ipucunu doğrudan tekrar ediyor.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "edit_edebiyat_0022",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0652.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_edebiyat_0025",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_9612.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_cografya_0030",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_2705.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_sinema_0016",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: cinema_0041.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "edit_sinema_0018",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: cinema_0002.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0005",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0010, offline_8783. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0010",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0015",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_cand_0025. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0016",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_edebiyat_0015, offline_0020.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0020",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_edebiyat_0015, offline_0016. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0025",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0012, offline_5381. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0030",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5305. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0040",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5531. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0045",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5106.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0050",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5638, offline_5876. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0055",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0022, offline_2273, offline_5427, ziman_x_0002. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0062",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0038, offline_0065.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0065",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0038, offline_0062. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0067",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0070.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0070",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0067. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0075",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0076",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0080.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0080",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0076. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0081",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0083, offline_0085.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0083",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0081, offline_0085.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0085",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0081, offline_0083. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0090",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0095",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0105",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0037.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0110",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0034. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0111",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0115, offline_5391.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0115",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0111, offline_5391.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0116",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0120.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0120",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0116. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_0543",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0546.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0546",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0543.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_0652",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_edebiyat_0022.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_2053",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0240.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_2066",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Kökte sorulan “Xelat” sözcüğü doğru şıkta “Diyarî/xelat” biçiminde aynen tekrar ediyor; cevap sözcük biçiminden ele veriliyor.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "offline_2092",
+  "kusur": [
+   "celdirici_sacma",
+   "dil_hatasi"
+  ],
+  "not": "Şehir sorusunda “Tarihî surlarıyla”, “avahiyên kevirîn” ve “II. Abdülhamid” şehir adı değildir; doğru şık biçimsel olarak tek kalıyor. Seçeneklerde “Tarihî surlarıyla” ve “II. Abdülhamid” gibi Türkçe/Türkçe karakterli ifadeler Kurmancî seçeneklerle karışıyor.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir. Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2102",
+  "kusur": [
+   "celdirici_sacma",
+   "dil_hatasi"
+  ],
+  "not": "Urartu başkentini sorarken “Dewleta Merwaniyan”, “Cizre-Bohtan” ve “Sünni İslam” başkent adayı değildir. Seçeneklerde “Cizre-Bohtan” ve “Sünni İslam” Türkçe biçimde verilmiş; Kurmancî soru/şık diliyle tutarsız.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir. Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2141",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_cografya_0002.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_2231",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kurmancî köke karşı seçenekler “Rusça, Arapça, Kürtçe, Yunanca” Türkçe dil adlarıyla yazılmış.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2232",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kurmancî köke karşı seçenekler “Latin kökenli Hawar alfabesi”, “Arap temelli Kürt alfabesi”, “Çivi yazısı” gibi Türkçe cümleciklerdir.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2233",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kurmancî köke karşı seçenekler “Latin kökenli…”, “Runik yazı”, “Gürcü alfabesi”, “Arap temelli…” biçiminde Türkçe yazılmış.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2237",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş. Kök “heval”ın anlamını soruyor ama hedef dil belirtilmeden “Arkadaş/yoldaş, Teşekkürler, Erkek kardeş, Gelecek zaman” Türkçe seçenekleri kullanılıyor.",
+  "oneri": "Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz. Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2241",
+  "kusur": [
+   "celdirici_sacma",
+   "cevap_sizdiran"
+  ],
+  "not": "Konuşma tanıma projesini sorarken ilk üç şık çekim eki, yer adları ve geçmiş zaman yapısıdır; yalnız D konuşma teknolojisi/korpus alanındadır. Doğru seçenek “korpusa axaftinê û pergala naskirina dengî…” kökteki “naskirina axaftina” ifadesini neredeyse aynen tekrar ediyor; diğerlerinde bu alan sözcükleri yok.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir. Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "offline_2273",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0022, offline_0055, ziman_x_0002.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_2328",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "“Jin, jiyan, azadî” sorusunun seçenekleri “Özgürlük, Kadın, Yaşam, Onur” Türkçe; kök Türkçe karşılık istediğini söylemiyor.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2417",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5063, offline_5465. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_2430",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_dirok_0011.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_2436",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kurmancî “Dîcle” sorusunda seçenekler “Fırat, Dicle” gibi Türkçe nehir adlarıyla verilmiş.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2451",
+  "kusur": [
+   "celdirici_sacma",
+   "cevap_sizdiran",
+   "dil_hatasi"
+  ],
+  "not": "Newroz’un hangi iki sözcükten oluştuğunu sorarken yalnız C “X + Y” biçiminde iki sözcük veriyor; diğerleri tanım cümleleridir. Kök “kîjan du peyvan” derken yalnız doğru şık iki sözcüğü açıkça “Nû + roj” biçiminde veriyor. Şıklarda “yeni”, “gün” ve “Manevi akrabalık (sünnet)” gibi Türkçe açıklamalar Kurmancî seçeneklerle karışıyor.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir. Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz. Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2455",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istediğini söylemeden bütün seçenekleri “Newroz bayramı, Yas günü, Kurban bayramı, Hasat günü” Türkçe veriyor.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2538",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_cografya_0015, ziman_x_0042. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_2578",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kurmancî tarih sorusunda “Mayalar, Medler, Romalılar, Vikingler” seçenekleri Türkçe çoğul biçimleriyle verilmiş.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2596",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ziman_x_0050. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_2599",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_2625",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5920. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_2628",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5790. Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_2629",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_2666",
+  "kusur": [
+   "kategori_yanlis",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5604. Soru yalnız “bav = baba” temel sözcük anlamını ölçüyor; Çand değil Ziman kategorisine aittir.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Soruyu Ziman kategorisine taşı."
+ },
+ {
+  "id": "offline_2696",
+  "kusur": [
+   "celdirici_sacma",
+   "cevap_sizdiran"
+  ],
+  "not": "Sevr’in yerini alan antlaşmayı sorarken yalnız C bir antlaşma adı içeriyor; diğerleri yalnız yıl/yüzyıl ifadeleridir. Kök bir antlaşma soruyor; yalnız doğru şıkta antlaşma adı “lozan” var, diğer üçü yalnız tarih/yüzyıl.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir. Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "offline_2705",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_cografya_0030.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_2749",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_2780",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_2790",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kurmancî coğrafya sorusunda “Fırat, Dicle” Türkçe adları kullanılıyor; Kurmancî nehir adlarıyla tutarsız.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_2803",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_2804",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Türkçe karşılık istendiğini açıkça belirtmiyor; buna rağmen seçenekler Türkçe ya da Türkçe-Kurmancî karışık verilmiş.",
+  "oneri": "Köke açıkça “bi Tirkî” ekle veya seçenekleri bütünüyle Kurmancî yaz."
+ },
+ {
+  "id": "offline_5016",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5301.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5019",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ziman_x_0018.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5063",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_2417, offline_5465.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5067",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0011.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5094",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5796.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5106",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0045.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5202",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5900.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5221",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5713.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5225",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0035.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5260",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5926.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5301",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5016.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5305",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0030.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5381",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0012, offline_0025.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5391",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0111, offline_0115.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5394",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_muzik_0018.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5427",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0022, offline_0055, ziman_x_0002.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5465",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_2417, offline_5063.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5514",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5565.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5524",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5832.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5531",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0040.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5565",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5514.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5599",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5748.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5604",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_2666, offline_5622.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5622",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5604.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5638",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0050, offline_5876.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5685",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0048.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5699",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5912.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5707",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8715.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5713",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5221.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5748",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5599.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5790",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_2628.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5796",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5094.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5832",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5524.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5876",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_0050, offline_5638.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5900",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5202.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5912",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5699.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5920",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_2625.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_5926",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5260.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_6042",
+  "kusur": [
+   "kategori_yanlis"
+  ],
+  "not": "Soru yalnız “pêncşem = Perşembe” sözcük çevirisini ölçüyor; Çand bilgisinden çok Ziman bilgisidir.",
+  "oneri": "Soruyu Ziman kategorisine taşı."
+ },
+ {
+  "id": "offline_6136",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_6509.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_6406",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Kurmancî olduğu hâlde dört seçenek de “yöresel kıyafet, kültürel ritüel, baharatlı pirinç, toplu halk oyunu” Türkçe.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_6509",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_6136.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_6642",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_cand_0027.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_7011",
+  "kusur": [
+   "birden_fazla_dogru",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_7680. B ve D seçenekleri aynı bilgiyi, yani Jiyan’ın Silêmanî’de basılan erken dönem bir Kürt gazetesi olduğunu söylüyor; ikisi de savunulabilir biçimde doğru.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Aynı anlamdaki iki seçeneği teke indir; diğerini gerçekten farklı ve yanlış bir çeldiriciyle değiştir."
+ },
+ {
+  "id": "offline_7293",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_dir_0006.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_7383",
+  "kusur": [
+   "celdirici_sacma",
+   "dil_hatasi"
+  ],
+  "not": "Mahabad Cumhuriyeti tanımında seçenekler bölge adı, “Kerkûk”, devlet tanımı ve slogan gibi farklı türlerdedir; yalnız C bir devlet tanımıdır. Kurmancî soru kökünde terim “Mahabad Cumhuriyeti” Türkçe yazılmış; bankadaki Kurmancî kullanım “Komara Mehabadê”dir.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir. Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_7483",
+  "kusur": [
+   "celdirici_sacma"
+  ],
+  "not": "“Qadî Mihemed kî ye?” sorusunda imparatorluk, mevsim ve şehir çiftleri kişi/rol cevabı değildir; yalnız C kişiyi tanımlar.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir."
+ },
+ {
+  "id": "offline_7680",
+  "kusur": [
+   "birden_fazla_dogru",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_7011. A ve C seçenekleri aynı bilgiyi, yani Jiyan’ın Silêmanî’de basılan erken dönem bir Kürt gazetesi olduğunu söylüyor; ikisi de savunulabilir biçimde doğru.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Aynı anlamdaki iki seçeneği teke indir; diğerini gerçekten farklı ve yanlış bir çeldiriciyle değiştir."
+ },
+ {
+  "id": "offline_7717",
+  "kusur": [
+   "celdirici_sacma"
+  ],
+  "not": "“Cemiyeta Tealiya Kurdan” sorusunda 1991, Hittin Savaşı ve 1847 Osmanlı eyaleti örgüt tanımı değildir; yalnız D aynı türdedir.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir."
+ },
+ {
+  "id": "offline_8108",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8830.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8141",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_cog_0065.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8155",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8247.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8200",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_cog_0047.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8212",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8686, offline_tf_cog_0053.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8242",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8726, offline_8757.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8247",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8155.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8331",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8823.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8356",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_cog_0059.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8361",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_cog_0051.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8367",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kurmancî coğrafya sorusunda doğru seçenek “göl” Türkçe; diğer seçenekler Kurmancî, dolayısıyla dil karışıyor.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_8384",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_cog_0045.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8406",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kurmancî coğrafya sorusunda bütün seçenekler “gökyüzü, yer/toprak, deniz, bulut” Türkçe.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_8480",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_cog_0049.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8532",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8950, offline_tf_cog_0063.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8539",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_cog_0013.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8603",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8803.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8678",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_cog_0031.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8686",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8212, offline_tf_cog_0053.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8715",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5707.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8726",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8242, offline_8757.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8757",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8242, offline_8726.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8783",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0010, offline_0005.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8803",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8603.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8823",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8331.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8828",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_9096.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8830",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8108.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_8902",
+  "kusur": [
+   "dil_hatasi",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_cog_0007. Kurmancî coğrafya sorusunda bütün seçenekler “tepe, vadi, ada, kıyı” Türkçe.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "offline_8950",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8532, offline_tf_cog_0063.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_9036",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_cog_0057.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_9096",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8828.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_9132",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_tf_cog_0039.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_9529",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_9754.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_9612",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_edebiyat_0025.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_9754",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_9529.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_10344",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_10878.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_10433",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_10656.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_10498",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_11371.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_10656",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_10433.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_10878",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_10344.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_11371",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_10498.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20001",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20004, offline_tf_0092.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20004",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20001, offline_tf_0092.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20026",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20029, offline_tf_0134.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20029",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20026, offline_tf_0134.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20051",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20054, offline_tf_0094.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20054",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20051, offline_tf_0094.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20076",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20079, offline_tf_0082.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20079",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20076, offline_tf_0082.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20100",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20101, offline_tf_0084.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20101",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20100, offline_tf_0084.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20126",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20129, offline_tf_0114.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20129",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20126, offline_tf_0114.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20151",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20154, offline_tf_0130.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20154",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20151, offline_tf_0130.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20176",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20179, offline_tf_0080.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20179",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20176, offline_tf_0080.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20201",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20204, offline_tf_0086.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20204",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20201, offline_tf_0086.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20226",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20229, offline_tf_0122.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20229",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20226, offline_tf_0122.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20251",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20254, offline_tf_0042.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20254",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20251, offline_tf_0042.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20276",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20279, offline_tf_0012.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20279",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20276, offline_tf_0012.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20326",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20329, offline_tf_0040.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20329",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20326, offline_tf_0040.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20351",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20354, offline_tf_0110.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20354",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20351, offline_tf_0110.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20375",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20376, offline_tf_0002.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20376",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20375, offline_tf_0002.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20401",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20404, offline_tf_0000.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20404",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20401, offline_tf_0000.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20426",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20429, offline_tf_0038.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20429",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20426, offline_tf_0038.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20451",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20454, offline_tf_0158.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20454",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20451, offline_tf_0158.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20476",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20479, offline_tf_0024.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20479",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20476, offline_tf_0024.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20526",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20529, offline_tf_0006.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20529",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20526, offline_tf_0006.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20551",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20554, offline_tf_0048.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20554",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20551, offline_tf_0048.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20576",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20579, offline_tf_0154.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20579",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20576, offline_tf_0154.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20601",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20604, offline_tf_0036.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20604",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20601, offline_tf_0036.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20625",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20626, offline_tf_0068.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20626",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20625, offline_tf_0068.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20650",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20651, offline_tf_0052.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20651",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20650, offline_tf_0052.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20701",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20704, offline_tf_0050.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20704",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20701, offline_tf_0050.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20726",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20729, offline_tf_0058.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20729",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20726, offline_tf_0058.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20750",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20751, offline_tf_0150, offline_tf_cog_0061.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20751",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20750, offline_tf_0150, offline_tf_cog_0061.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20776",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20779, offline_tf_0054.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20779",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20776, offline_tf_0054.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20801",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20804, offline_tf_0140.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20804",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20801, offline_tf_0140.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20826",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20829, offline_tf_0142.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20829",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20826, offline_tf_0142.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20851",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20854, offline_tf_0016.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20854",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20851, offline_tf_0016.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20876",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20879, offline_tf_0018.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20879",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20876, offline_tf_0018.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20901",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20904, offline_tf_0144.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20904",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20901, offline_tf_0144.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20926",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20929, offline_tf_0014.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20929",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20926, offline_tf_0014.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20951",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20954, offline_tf_0026.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20954",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20951, offline_tf_0026.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20976",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20979, offline_tf_0060.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_20979",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20976, offline_tf_0060.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21000",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21001, offline_tf_0066.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21001",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21000, offline_tf_0066.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21026",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21029, offline_tf_0056.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21029",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21026, offline_tf_0056.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21051",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21054, offline_tf_0030.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21054",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21051, offline_tf_0030.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21076",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21079, offline_tf_0020.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21079",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21076, offline_tf_0020.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21101",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21104, offline_tf_0148.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21104",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21101, offline_tf_0148.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21126",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21129, offline_tf_0118.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21129",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21126, offline_tf_0118.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21151",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21154, offline_tf_0106.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21154",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21151, offline_tf_0106.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21176",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21179, offline_tf_0004.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21179",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21176, offline_tf_0004.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21200",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21201, offline_tf_0100.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21201",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21200, offline_tf_0100.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21226",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21229, offline_tf_0156.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21229",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21226, offline_tf_0156.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21251",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21254, offline_tf_0132.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21254",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21251, offline_tf_0132.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21276",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21279, offline_tf_0090.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21279",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21276, offline_tf_0090.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21301",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21304, offline_tf_0076.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21304",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21301, offline_tf_0076.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21326",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21329, offline_tf_0116.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21329",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21326, offline_tf_0116.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21351",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21354, offline_tf_0152.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21354",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21351, offline_tf_0152.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21376",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21379, offline_tf_0022.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21379",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21376, offline_tf_0022.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21401",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21404, offline_tf_0044.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21404",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21401, offline_tf_0044.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21426",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21429, offline_curated_21446, offline_tf_0032.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21429",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21426, offline_tf_0032.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21446",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21426, offline_tf_0032.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21451",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21454, offline_tf_0112.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21454",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21451, offline_tf_0112.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21475",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21476, offline_tf_0102.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21476",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21475, offline_tf_0102.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21500",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21501, offline_tf_0062.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21501",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21500, offline_tf_0062.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21526",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21529, offline_tf_0096.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21529",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21526, offline_tf_0096.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21551",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21554, offline_tf_0108.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21554",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21551, offline_tf_0108.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21575",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21576, offline_tf_0124.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21576",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21575, offline_tf_0124.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21601",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21604, offline_tf_0072.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21604",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21601, offline_tf_0072.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21626",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21629, offline_tf_0120.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21629",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21626, offline_tf_0120.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21651",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21654, offline_tf_0126.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21654",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21651, offline_tf_0126.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21676",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21679, offline_tf_0088.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21679",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21676, offline_tf_0088.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21701",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21704, offline_tf_0136.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21704",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21701, offline_tf_0136.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21726",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21729, offline_tf_0098.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21729",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21726, offline_tf_0098.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21751",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21754, offline_tf_0034.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21754",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21751, offline_tf_0034.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21776",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21779, offline_tf_0046.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21779",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21776, offline_tf_0046.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21800",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21801, offline_tf_0028.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21801",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21800, offline_tf_0028.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21826",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21829, offline_tf_0010.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21829",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21826, offline_tf_0010.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21851",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21854, offline_tf_0070.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21854",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21851, offline_tf_0070.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21876",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21879, offline_tf_0078.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21879",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21876, offline_tf_0078.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21901",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21904, offline_tf_0128.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21904",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21901, offline_tf_0128.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21926",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21929, offline_tf_0104.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21929",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21926, offline_tf_0104.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21951",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21954, offline_tf_0138.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21954",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21951, offline_tf_0138.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21975",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21976, offline_tf_0074.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_curated_21976",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21975, offline_tf_0074.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0000",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20401, offline_curated_20404.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0002",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20375, offline_curated_20376.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0004",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21176, offline_curated_21179.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0006",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20526, offline_curated_20529.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0010",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21826, offline_curated_21829.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0012",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20276, offline_curated_20279.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0014",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20926, offline_curated_20929.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0016",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20851, offline_curated_20854.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0018",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20876, offline_curated_20879.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0020",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21076, offline_curated_21079.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0022",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21376, offline_curated_21379.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0024",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20476, offline_curated_20479.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0026",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20951, offline_curated_20954.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0028",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21800, offline_curated_21801.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0030",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21051, offline_curated_21054.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0032",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21426, offline_curated_21429, offline_curated_21446.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0034",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21751, offline_curated_21754.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0036",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20601, offline_curated_20604.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0038",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20426, offline_curated_20429.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0040",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20326, offline_curated_20329.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0042",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20251, offline_curated_20254.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0044",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21401, offline_curated_21404.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0046",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21776, offline_curated_21779.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0048",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20551, offline_curated_20554.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0050",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20701, offline_curated_20704.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0052",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20650, offline_curated_20651.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0054",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20776, offline_curated_20779.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0056",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21026, offline_curated_21029.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0058",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20726, offline_curated_20729.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0060",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20976, offline_curated_20979.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0062",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21500, offline_curated_21501.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0066",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21000, offline_curated_21001.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0068",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20625, offline_curated_20626.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0070",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21851, offline_curated_21854.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0072",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21601, offline_curated_21604.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0074",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21975, offline_curated_21976.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0076",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21301, offline_curated_21304.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0078",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21876, offline_curated_21879.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0080",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20176, offline_curated_20179.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0082",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20076, offline_curated_20079.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0084",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20100, offline_curated_20101.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0086",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20201, offline_curated_20204.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0088",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21676, offline_curated_21679.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0090",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21276, offline_curated_21279.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0092",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20001, offline_curated_20004.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0094",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20051, offline_curated_20054.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0096",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21526, offline_curated_21529.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0098",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21726, offline_curated_21729.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0100",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21200, offline_curated_21201.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0102",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21475, offline_curated_21476.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0104",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21926, offline_curated_21929.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0106",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21151, offline_curated_21154.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0108",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21551, offline_curated_21554.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0110",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20351, offline_curated_20354.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0112",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21451, offline_curated_21454.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0114",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20126, offline_curated_20129.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0116",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21326, offline_curated_21329.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0118",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21126, offline_curated_21129.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0120",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21626, offline_curated_21629.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0122",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20226, offline_curated_20229.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0124",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21575, offline_curated_21576.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0126",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21651, offline_curated_21654.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0128",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21901, offline_curated_21904.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0130",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20151, offline_curated_20154.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0132",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21251, offline_curated_21254.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0134",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20026, offline_curated_20029.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0136",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21701, offline_curated_21704.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0138",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21951, offline_curated_21954.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0140",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20801, offline_curated_20804.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0142",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20826, offline_curated_20829.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0144",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20901, offline_curated_20904.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0148",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21101, offline_curated_21104.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0150",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20750, offline_curated_20751.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0152",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21351, offline_curated_21354.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0154",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20576, offline_curated_20579.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0156",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_21226, offline_curated_21229.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_0158",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20451, offline_curated_20454.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0007",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8902.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0013",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8539.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0031",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8678.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0039",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_9132.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0045",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8384.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0047",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8200.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0049",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8480.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0051",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8361.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0053",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8212, offline_8686.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0057",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_9036.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0059",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8356.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0061",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_curated_20750, offline_curated_20751.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0063",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8532, offline_8950.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_cog_0065",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_8141.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_tf_dir_0006",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_7293.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "offline_sin_2012",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_cin_0024.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "cinema_0002",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_sinema_0018.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "cinema_0003",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_cin_0030, ds_sinema_0086.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "cinema_0015",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_cin_0023.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "cinema_0024",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_cin_0039.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "cinema_0035",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_cin_0027.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "cinema_0041",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_sinema_0016.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "tech_core_0039",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Phishing sorusunda doğru seçenek, güvenilir kaynak gibi görünen sahte mesaj mekanizmasını açıklayan tek ayrıntılı şık; diğerleri kısa ve ilgisiz.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "tech_core_0047",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Ransomware sorusunda doğru seçenek dosyaları şifreleyip para istemeyi anlatan tek ayrıntılı davranış tanımı; diğer seçenekler çok daha kısa.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ziman_x_0001",
+  "kusur": [
+   "mugla"
+  ],
+  "not": "Türkçedeki “kar” sözcüğü bağlama göre “kar (snow)” veya “kâr (profit)” olabilir; kök hangi anlamın istendiğini belirtmeden ✓ Berf’i tek cevap kabul ediyor.",
+  "oneri": "Türkçe sözcüğü “kar (yağan kar)” diye bağlamlandır veya doğrudan “snow” anlamını belirt."
+ },
+ {
+  "id": "ziman_x_0002",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_ziman_0022, offline_0055, offline_2273, offline_5427.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ziman_x_0009",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Kurmancî, seçeneklerin tamamı “Abla, Anne, Teyze, Nine” Türkçe; Türkçe hedef belirtimi yok.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "ziman_x_0011",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Kurmancî, seçeneklerin tamamı “Yedi, Beş, Altı, Sekiz” Türkçe; sayıların Kurmancî biçimleri kullanılmıyor.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "ziman_x_0018",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_5019.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ziman_x_0029",
+  "kusur": [
+   "dil_hatasi"
+  ],
+  "not": "Kök Kurmancî, seçeneklerin tamamı “Bal, Yoğurt, Süt, Yağ” Türkçe; Türkçe hedef belirtimi yok.",
+  "oneri": "Türkçe hedefleniyorsa kökte bunu açıkça belirt; değilse seçenekleri Hawar/Kurmancî biçiminde yaz."
+ },
+ {
+  "id": "ziman_x_0042",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_cografya_0015, offline_2538.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ziman_x_0050",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_2596.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_cin_0023",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: cinema_0015.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_cin_0024",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_sin_2012.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_cin_0025",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0127.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_cin_0027",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: cinema_0035.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_cin_0030",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: cinema_0003, ds_sinema_0086.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_cin_0031",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0210.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_cin_0039",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: cinema_0024.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_cin_0041",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0151.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_cin_0042",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0089, ds_sinema_0202.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_cin_0046",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0084.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_nat_0001",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_nat_0015.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_nat_0015",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_nat_0001.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "sf_tech_0013",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Passphrase sorusunda doğru seçenek “Çend peyvên rastîn ên li hev hatî” tek ayrıntılı tanım; diğer üç seçenek tek kelime/kısa unsur.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "sf_tech_0014",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Doğru şık tek başına bir hesabın ele geçirilmesinin diğer hesapları tehlikeye atma mekanizmasını ayrıntılı açıklıyor; diğerleri kısa ve yüzeysel.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ds_cografya_0013",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0240.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0240",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0013.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0052",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0063.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0063",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0052.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0076",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0091.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0087",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0097.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0097",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0087.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0091",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0076.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0127",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0131.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0131",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0127, ds_cografya_0135.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0135",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0131.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0130",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0134.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0134",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cografya_0130.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cografya_0204",
+  "kusur": [
+   "mugla"
+  ],
+  "not": "“En büyük il nüfusu” zamana bağlı bir ölçüt; soru yıl veya nüfus sayımı kaynağı vermeden Amed’i kalıcı tek cevap yapıyor.",
+  "oneri": "Belirli bir yıl ve kaynak/sayım vererek soruyu tarihlendir."
+ },
+ {
+  "id": "ds_dirok_0069",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_dirok_0096.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_dirok_0096",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_dirok_0069.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_dirok_0109",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Kök “Mîrgeha Hakkariyê” derken doğru seçenek “Mîrên Hakkariyê” aynı özel adı tekrar ediyor; diğer seçeneklerde Hakkari yok.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ds_dirok_0124",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Kök Hakkari bölgesini sorarken doğru seçenek “Mîrektiya Hakkariyê” aynı yer adını aynen tekrar ediyor.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ds_dirok_0241",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Kök hasadı hızlandıran tarım makinesini soruyor; doğru seçenek “Makîneya hesadê” doğrudan “hasat makinesi” diyerek sorunun eylemini tekrar ediyor.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ds_dirok_0272",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Kök bir hikâyenin değiştirilmesi sürecinin terimini soruyor; doğru seçenek “Veguherîna çîrokê” soru kökündeki “hikâyeyi değiştirme” ifadesinin doğrudan adlaştırılmış hâli.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ds_edebiyat_0076",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Doğru seçenek, Enkîdu’nun ölümü ve Gilgameş’in kendi ölüm korkusunu anlatan tek uzun/ayrıntılı nedensel cümle; diğer üçü çok kısa ve genel.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ds_edebiyat_0078",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_edebiyat_0088.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_edebiyat_0088",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_edebiyat_0078.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_edebiyat_0107",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Kökte eser adı “Notre-Dame” olarak verilmiş; doğru seçenek de ikamet yerini “katedrala Notre-Dame” diye aynı özel adla tekrar ediyor.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ds_edebiyat_0122",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_edebiyat_0182.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_edebiyat_0182",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_edebiyat_0122.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_edebiyat_0129",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Kök “Romeo” karakterinin bulunduğu Shakespeare eserini soruyor; doğru seçenek “Romeo û Juliet” karakter adını aynen içeriyor, diğerleri içermiyor.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ds_edebiyat_0227",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Kök La Fontaine’in eserini soruyor; doğru seçenek “Fablên La Fontaine” yazarın adını aynen tekrar eden tek şık.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ds_muzik_0003",
+  "kusur": [
+   "mugla"
+  ],
+  "not": "“Dengbêjlik geleneğinin merkezi” için tarihsel dönem, bölge veya kaynak ölçütü verilmemiş; “Amed”i tek merkez saymayı soru kökü temellendirmiyor.",
+  "oneri": "“Mala Dengbêjan” gibi somut bir kurum/şehir ilişkisini sor veya dönem ve ölçüt ekle."
+ },
+ {
+  "id": "ds_muzik_0042",
+  "kusur": [
+   "mugla"
+  ],
+  "not": "Kök kutsallığı “Kürt kültürü” geneline yayıyor; bankanın başka sorularında bu özellik Yarsan/Ehlê Heq tembûr geleneğiyle sınırlandırılıyor.",
+  "oneri": "“Di kevneşopiya Yarsan/Ehlê Heq de…” diye kapsamı daralt."
+ },
+ {
+  "id": "ds_muzik_0027",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0081.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0081",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0027.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0030",
+  "kusur": [
+   "mugla"
+  ],
+  "not": "“Tembûr” farklı bölgesel çalgıları kapsayabildiği için tel sayısı model ve geleneğe göre değişebilir; soru hangi tembûru kastettiğini belirtmiyor.",
+  "oneri": "Yarsan tembûru gibi belirli bir çalgı geleneğini/modeli adlandırıp tel sayısını ona göre sor."
+ },
+ {
+  "id": "ds_muzik_0033",
+  "kusur": [
+   "yanlis_anahtar"
+  ],
+  "not": "✓ Def işaretli; ancak bankadaki edit_muzik_0004, edit_muzik_0024 ve offline_2178 soruları zirnenin tipik eşini “dahol” olarak veriyor. Bu soruda “Dahol” şıklarda bile yok.",
+  "oneri": "D seçeneğini “Dahol” yap ve doğru anahtarı “Dahol” olarak değiştir."
+ },
+ {
+  "id": "ds_muzik_0052",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0079.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0056",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0064.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0064",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0056.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0079",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0052.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0066",
+  "kusur": [
+   "cevap_sizdiran"
+  ],
+  "not": "Kök dîlan için söylenen şarkı türünü soruyor; doğru seçenek “Strana dîlanê” kökteki dîlan sözcüğünü aynen tekrar ediyor.",
+  "oneri": "Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ds_muzik_0103",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0202.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0202",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0103.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0106",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0205.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0109",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0218, ds_muzik_0211.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0110",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0219.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0218",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0109, ds_muzik_0211.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0220",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0213.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0222",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0203.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0129",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0179.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0133",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0183.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0144",
+  "kusur": [
+   "mugla"
+  ],
+  "not": "“Bavê Muzîka Klasîk” standartlaştırılmış ve soruda tanımlanmış bir unvan değil; hangi tarihsel lakabın kastedildiği belirsiz.",
+  "oneri": "Belirsiz “Bavê Muzîka Klasîk” yerine açık ve kaynaklanabilir bir unvan/eser sor."
+ },
+ {
+  "id": "ds_muzik_0142",
+  "kusur": [
+   "birden_fazla_dogru",
+   "mugla",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0149. “di serî de / başlıca” için bir ölçüt verilmediği için “Senfonî” ile “Opera” arasında tek zorunlu cevap soru kökünden çıkmıyor.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Tek bir eser/form sor veya ölçütü açıkça tanımla; örneğin belirli bir opera ya da senfoniyi sor."
+ },
+ {
+  "id": "ds_muzik_0149",
+  "kusur": [
+   "birden_fazla_dogru",
+   "mugla",
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0142. “di serî de / başlıca” için bir ölçüt verilmediği için “Senfonî” ile “Opera” arasında tek zorunlu cevap soru kökünden çıkmıyor.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir. Tek bir eser/form sor veya ölçütü açıkça tanımla; örneğin belirli bir opera ya da senfoniyi sor."
+ },
+ {
+  "id": "ds_muzik_0179",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0129.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0183",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0133.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0203",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0222.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0205",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0106.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0211",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0109, ds_muzik_0218.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0213",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0220.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_muzik_0219",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_muzik_0110.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0112",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0077.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0087",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0099, ds_sinema_0156.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0099",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0087, ds_sinema_0156.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0085",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0216.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0089",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_cin_0042, ds_sinema_0202.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0077",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0112.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0084",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_cin_0046.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0086",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: cinema_0003, sf_cin_0030.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0127",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_cin_0025.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0132",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0172.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0172",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0132.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0156",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0087, ds_sinema_0099.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0151",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_cin_0041.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0202",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_cin_0042, ds_sinema_0089.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0210",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: sf_cin_0031.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0216",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_sinema_0085.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0024",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0047.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0047",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0024.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0008",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0164.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0164",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0008.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0012",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0038, ds_teknoloji_0169.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0038",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0012, ds_teknoloji_0169.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0084",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0096.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0086",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0094.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0094",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0086.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0096",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0084.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0169",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0012, ds_teknoloji_0038.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0236",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0248.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_teknoloji_0248",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_teknoloji_0236.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0009",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0015.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0015",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0009.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0178",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0053, ds_cand_0071.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0005",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0020, ds_cand_0228.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0020",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0005, ds_cand_0228.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_1015",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: edit_cand_0001.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0053",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0178, ds_cand_0071.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0071",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0178, ds_cand_0053.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0235",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0243.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0228",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0005, ds_cand_0020.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0229",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0245, ds_cand_0231, ds_cand_0247.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0245",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0229, ds_cand_0231, ds_cand_0247.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0231",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0229, ds_cand_0245, ds_cand_0247.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0243",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0235.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0247",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: ds_cand_0229, ds_cand_0245, ds_cand_0231.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_cand_0240",
+  "kusur": [
+   "tekrar"
+  ],
+  "not": "Aynı olgu şu sorularda da soruluyor: offline_2053.",
+  "oneri": "Aynı olguyu soran tek bir sürüm bırak; diğerlerini farklı bir olguya çevir."
+ },
+ {
+  "id": "ds_sinema_0290",
+  "kusur": [
+   "celdirici_sacma",
+   "cevap_sizdiran"
+  ],
+  "not": "Doğru şık göç, metropol yaşamı ve kimlik arayışıyla soruyu açıklarken diğer üç şık “bütün dünyada tarım yasağı”, “bütün köylülerin hızlı tren kullanması” ve “bütün kameraların alışveriş merkezlerinde olması” gibi açıkça absürt ifadelerdir. Doğru şık hem tek ciddi sosyolojik açıklama hem de açık ara en ayrıntılı seçenek; üç yanlış şık absürt yapısıyla cevabı biçimsel olarak da ele veriyor.",
+  "oneri": "Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir. Doğru şıktaki ayırt edici tekrar/uzunluk ipucunu kaldır; tüm seçenekleri benzer biçim ve ayrıntı düzeyinde yaz."
+ },
+ {
+  "id": "ds_dirok_0334",
+  "kusur": [
+   "uydurma_olgu",
+   "celdirici_sacma"
+  ],
+  "not": "Soru kökü “Siyasetname”yi Evliya Çelebi’ye aitmiş gibi “Seyahatname” ile birlikte anıyor. Seyahatname Evliya Çelebi’nin eseridir; Siyasetname ise Nizâmülmülk’ün eseridir. Yanlış şıklar “hiç yönetimsiz yoksul köyler”, “yalnız Batılı memurların yönettiği eyaletler” ve “hiç insan yaşamayan bölgeler” gibi aşırı ve kolay elenen mutlak iddialardır.",
+  "oneri": "“Siyasetname”yi kökten çıkar; yalnız Evliya Çelebi’nin “Seyahatname”sindeki tasvirleri sor. Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir."
+ },
+ {
+  "id": "ds_dirok_0338",
+  "kusur": [
+   "mugla",
+   "celdirici_sacma"
+  ],
+  "not": "Kök, BM Güvenlik Konseyi’nin 688 sayılı kararını daha sonra koalisyon güçlerince oluşturulan uçuşa yasak bölgeyle tek bir doğrudan işlem gibi birleştiriyor; 688’in metni baskının sona erdirilmesi ve insani erişim taleplerini içeriyor, uçuşa yasak bölge kurma hükmünü değil. Yanlış şıklar Irak’ın tamamen komşular arasında bölünmesi, mültecilerin dönüşünün yasaklanması ve bütün petrolün Avrupa bankalarına bağlanması gibi açıkça alakasız/aşırı iddialardır.",
+  "oneri": "688 sayılı kararın doğrudan hükümlerini sor; uçuşa yasak bölgeyi ayrı bir sonraki gelişme olarak sor. Yanlış şıkları doğru cevapla aynı türde, tarihsel olarak makul ama yanlış seçeneklerle değiştir."
+ },
+ {
+  "_okunan": 3214
+ }
+]

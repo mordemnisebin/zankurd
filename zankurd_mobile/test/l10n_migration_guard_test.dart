@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
+
+String _libRelative(String path) {
+  final normalized = path.replaceAll(r'\', '/');
+  const marker = '/lib/';
+  final at = normalized.indexOf(marker);
+  if (at >= 0) {
+    return 'lib/${normalized.substring(at + marker.length)}';
+  }
+  return normalized;
+}
 
 /// Çok dillilik göçünün bekçisi.
 ///
@@ -39,6 +50,48 @@ void main() {
     );
   });
 
+  test('metinlerde sızan ters bölü + kesme yok', () {
+    // 2026-09: `K.senDeOynaPlay` "Play Store\\'ê" yazılmıştı — Dart'ta
+    // `\\` + `\'` ekranda ham `\` + `'` basar. Doğrusu yalnız `\'`.
+    // `\\n` taraması bu sınıfı görmez; bu test `\\'` desenini yakalar.
+    final source = File('lib/src/l10n/strings.dart').readAsStringSync();
+    final offenders = <String>[];
+    for (final line in source.split('\n')) {
+      if (line.trimLeft().startsWith('//')) continue;
+      if (line.contains(r"\\'")) offenders.add(line.trim());
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'sızan kaçış: ${offenders.take(3).join(" | ")}',
+    );
+  });
+
+  test('eski E-peyam formu kalmadı (E-name birliği)', () {
+    // Standart `E-name` (çoğunluk + izafe `e-nameyê/e-nameya`).
+    // `lang.dart` 4 hata mesajında eski `E-peyam` duruyordu.
+    // Not: `peyam` (mesaj) doğru sözcüktür; yasaklı olan yalnız
+    // `e-peyam`/`E-peyam` (e-posta) formudur. Yorum satırları tarama dışıdır.
+    final offenders = <String>[];
+    final pattern = RegExp('[Ee]-peyam');
+    for (final entity in Directory('lib').listSync(recursive: true)) {
+      if (entity is! File || !entity.path.endsWith('.dart')) continue;
+      final lines = entity.readAsLinesSync();
+      for (var i = 0; i < lines.length; i++) {
+        final line = lines[i];
+        if (line.trimLeft().startsWith('//')) continue;
+        if (pattern.hasMatch(line)) {
+          offenders.add('${entity.path}:${i + 1}: ${line.trim()}');
+        }
+      }
+    }
+    expect(
+      offenders,
+      isEmpty,
+      reason: 'eski form: ${offenders.take(3).join(" | ")}',
+    );
+  });
+
   group('l10n göç bekçisi', () {
     /// Satır içi kullanım sayısı (`ku ? '...'`, `isKu ? '...'`,
     /// `_isKu ? '...'` ve `context.s('...', '...')` toplamı, `lib/`
@@ -67,20 +120,31 @@ void main() {
     /// → 145 (paywall ekranı tamamen deftere taşındı)
     /// → 141 (avatar çerçeve kazanım etiketleri)
     /// → 13 (32 dosyada toplu göç; 109 yeni anahtar, 20 kullanım defterde
-    ///   zaten var olan anahtarla eşleşti ve yenisi açılmadı).
+    ///   zaten var olan anahtarla eşleşti ve yenisi açılmadı)
+    /// → 12 (arkadaş davet paylaşım metni `{tag}` ile deftere taşındı)
+    /// → 11 (quiz sonuç paylaşım metni `{score}/{correct}/{total}/{percent}`
+    ///   ile deftere taşındı)
+    /// → 9 (seviye yolundaki `Ast`/`Seviye` ve `pirs`/`soru` birimleri
+    ///   defterdeki `progressLevelLabel` ve `soru` anahtarlarına bağlandı)
+    /// → 7 (seviye hero'sundaki ekran okuyucu cümlesi yer tutuculu
+    ///   `progressLevelsCompleted` oldu; alt kategori başlığı da alana
+    ///   seçimine indi — satır içi ku/tr dize kalmadı)
+    /// → 4 (sıralama satırındaki `zincîr`/`seri` ve `ode`/`oda` birimleri
+    ///   defterdeki `streakUnit` ve `roomUnit` anahtarlarına bağlandı).
     ///
-    /// ## Kalan 13 bilinçli
+    /// ## Kalan 4 bilinçli
     ///
     /// - `strings.dart` (2): göç yolunu anlatan belge yorumunun kendisi.
     /// - `percent_format.dart` (1): yüzde biçiminin TEK kaynağı burasıdır
     ///   ve `percent_and_identity_test` başka hiçbir yerde elle biçim
     ///   yazılmadığını doğrular. Metni deftere taşımak o bekçiyi kör eder.
-    /// - `level_screen` (4), `leaderboard_screen` (3), `room_screen` (1),
-    ///   `quiz_result_screen` (1), `result_sharer` (1): iki dalı da düz
-    ///   dize OLMAYAN kullanımlar — dallar farklı veri alanları okuyor ya
-    ///   da içlerinde `CategoryNames.localized(...)` gibi çağrılar var.
-    ///   Bunlar çeviri değil, veri seçimidir; deftere taşınacak metin yok.
-    const inlineCeiling = 13;
+    /// - `quiz_result_screen` (1): dile göre alan seçer (unvan Ku/Tr),
+    ///   metin çifti değil. Harita sapınca tavan yine yalan söylerdi.
+    const remainingByFile = {
+      'lib/src/l10n/strings.dart': 2,
+      'lib/src/utils/percent_format.dart': 1,
+      'lib/src/screens/quiz_result_screen.dart': 1,
+    };
 
     test('satır içi iki-dil kullanımı tavanı aşmıyor', () {
       final libDir = Directory('lib');
@@ -88,6 +152,7 @@ void main() {
       // hepsini yakalar. Kelime sınırı BİLEREK yok: kusur tam orada
       // saklanıyordu.
       final pattern = RegExp(r"""([Kk]u\s*\?\s*['"])|(\.s\(\s*['"])""");
+      final inlineCeiling = remainingByFile.values.reduce((a, b) => a + b);
 
       var count = 0;
       final perFile = <String, int>{};
@@ -95,7 +160,7 @@ void main() {
         if (entity is! File || !entity.path.endsWith('.dart')) continue;
         final hits = pattern.allMatches(entity.readAsStringSync()).length;
         if (hits > 0) {
-          perFile[entity.path] = hits;
+          perFile[_libRelative(entity.path)] = hits;
           count += hits;
         }
       }
@@ -112,6 +177,13 @@ void main() {
             '(bkz. lib/src/l10n/strings.dart).\n'
             'En yoğun dosyalar: '
             '${worst.take(5).map((e) => "${e.key}: ${e.value}").join(", ")}',
+      );
+      expect(
+        perFile,
+        remainingByFile,
+        reason:
+            'Kalan dosya haritası sapması. Göç ettiysen haritayı düşür; '
+            'yeni dosyaya satır içi metin ekleme.',
       );
     });
 
@@ -136,8 +208,16 @@ void main() {
       // kökle yazılıyordu: gezinme etiketi `fêr`, geri kalan her yer
       // `hîn` (uygulamanın sloganı da 'Kurmancî hîn bibe'). İkisi de
       // doğru sözcük, ama oyuncu aynı şeyi iki adla görmemeli.
-      expect(Tr.of(K.navLearn, AppLanguage.ku), 'Hîn Bibe');
+      expect(Tr.of(K.navLearn, AppLanguage.ku), 'Hîn bibe');
       expect(Tr.of(K.navLearn, AppLanguage.tr), 'Öğren');
+      expect(Tr.of(K.progressLevelLabel, AppLanguage.ku), 'Ast');
+      expect(Tr.of(K.progressLevelLabel, AppLanguage.tr), 'Seviye');
+      expect(Tr.of(K.soru, AppLanguage.ku), 'pirs');
+      expect(Tr.of(K.soru, AppLanguage.tr), 'soru');
+      expect(Tr.of(K.streakUnit, AppLanguage.ku), 'zincîr');
+      expect(Tr.of(K.streakUnit, AppLanguage.tr), 'seri');
+      expect(Tr.of(K.roomUnit, AppLanguage.ku), 'ode');
+      expect(Tr.of(K.roomUnit, AppLanguage.tr), 'oda');
     });
 
     test('yer tutucular doldurulur', () {
@@ -156,6 +236,46 @@ void main() {
         Tr.of(K.dailyReminderAt, AppLanguage.tr, {'time': '19:00'}),
         'Her gün saat 19:00',
       );
+      expect(
+        Tr.of(K.inviteShareText, AppLanguage.ku, {'tag': 'ZK-TEST'}),
+        'Ez li ZanKurdê bi Kurmancî hîn dibim! Koda min a vexwendinê: ZK-TEST. Tu jî were: https://zankurd.com',
+      );
+      expect(
+        Tr.of(K.inviteShareText, AppLanguage.tr, {'tag': 'ZK-TEST'}),
+        'ZanKurd ile Kürtçe öğreniyor ve yarışıyorum! Davet kodum: ZK-TEST. Sen de katıl: https://zankurd.com',
+      );
+      expect(
+        Tr.of(K.resultShareText, AppLanguage.ku, {
+          'score': '120',
+          'correct': '8',
+          'total': '10',
+          'percent': '80%',
+        }),
+        'Min di ZanKurd de 120 pûan girt! Rast: 8/10 (80%). Tu jî bilîze, li Play Store\'ê "ZanKurd".',
+      );
+      expect(
+        Tr.of(K.resultShareText, AppLanguage.tr, {
+          'score': '120',
+          'correct': '8',
+          'total': '10',
+          'percent': '%80',
+        }),
+        'ZanKurd\'te 120 puan aldım! Doğru: 8/10 (%80). Sen de oyna, Play Store\'da "ZanKurd".',
+      );
+      expect(
+        Tr.of(K.progressLevelsCompleted, AppLanguage.ku, {
+          'completed': '2',
+          'total': '5',
+        }),
+        '2 ji 5 astan temam bûn',
+      );
+      expect(
+        Tr.of(K.progressLevelsCompleted, AppLanguage.tr, {
+          'completed': '2',
+          'total': '5',
+        }),
+        '5 seviyeden 2 tanesi tamamlandı',
+      );
     });
 
     test('yer tutucusuz metin parametreden etkilenmez', () {
@@ -169,6 +289,17 @@ void main() {
       expect(Tr.placeholdersOf(K.currentLevel), {'name'});
       expect(Tr.placeholdersOf(K.dailyReminderAt), {'time'});
       expect(Tr.placeholdersOf(K.deleteTypeWord), {'word'});
+      expect(Tr.placeholdersOf(K.inviteShareText), {'tag'});
+      expect(Tr.placeholdersOf(K.resultShareText), {
+        'score',
+        'correct',
+        'total',
+        'percent',
+      });
+      expect(Tr.placeholdersOf(K.progressLevelsCompleted), {
+        'completed',
+        'total',
+      });
       expect(Tr.placeholdersOf(K.settings), isEmpty);
     });
 

@@ -5,6 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/sync_manager.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/offline_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/screens/app_shell.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/screens/learn_home_screen.dart';
@@ -243,6 +245,52 @@ void main() {
 
       expect(find.byType(ProfileNameGateScreen), findsOneWidget);
       expect(find.byType(HomeScreen), findsNothing);
+    },
+  );
+
+  testWidgets(
+    'offline misafir ad kapısını tamamlayınca yeniden açılışta tekrar görmez',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({'zankurd.onboarding.seen': true});
+
+      final firstAuth = AuthProvider.offline();
+      expect(await firstAuth.signInAsGuest(), isTrue);
+      await tester.pumpWidget(
+        testShell(
+          authProvider: firstAuth,
+          child: AppShell(
+            repository: OfflineZanKurdRepository(),
+            connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(ProfileNameGateScreen), findsOneWidget);
+      final skipButton = find.byType(TextButton);
+      await tester.ensureVisible(skipButton);
+      await tester.tap(skipButton);
+      await tester.pumpAndSettle();
+      expect(find.byType(HomeScreen), findsOneWidget);
+
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pumpAndSettle();
+
+      final secondAuth = AuthProvider.offline();
+      expect(await secondAuth.signInAsGuest(), isTrue);
+      await tester.pumpWidget(
+        testShell(
+          authProvider: secondAuth,
+          child: AppShell(
+            repository: OfflineZanKurdRepository(),
+            connectivityMonitor: const AlwaysOnlineConnectivityMonitor(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(ProfileNameGateScreen), findsNothing);
+      expect(find.byType(HomeScreen), findsOneWidget);
     },
   );
 }

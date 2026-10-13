@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
+import 'sahne/sahne.dart';
 
-/// Marka rengi (coral primary) ile tutarlı yükleme göstergesi.
+/// Tutarlı yükleme göstergesi.
+///
+/// 2026-09-29 Şahnê: halka Agir değil Zêr metni (`goldTx`) — Agir yalnız
+/// birincil eylemin dolgusudur; ışık/ilerleme Zêr'in işidir. İz Ray (`s3`).
+/// Gündüzde `goldTx` koyu altındır, açık zeminde okunur.
 class BrandedLoader extends StatelessWidget {
   const BrandedLoader({
     super.key,
@@ -17,12 +21,14 @@ class BrandedLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     return SizedBox(
       width: size,
       height: size,
       child: CircularProgressIndicator(
         strokeWidth: strokeWidth,
-        color: color ?? AppTheme.primaryGradientStart,
+        color: color ?? t.goldTx,
+        backgroundColor: t.s3,
       ),
     );
   }

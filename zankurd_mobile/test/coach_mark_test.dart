@@ -1,5 +1,7 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:zankurd_mobile/src/widgets/coach_mark.dart';
 
 void main() {
@@ -25,6 +27,49 @@ void main() {
     );
   }
 
+  // 2026-09-29 Şahnê: rozet eskiden Forest kimlik gradyanını taşıyordu;
+  // Şahnê'de gradyanlı karo yok. Rozet Zêr rolünün ton karosudur (M pah),
+  // ikon rolün metin rengi — bekçi artık bunu sabitler.
+  testWidgets('tutorial bilgi rozeti Zêr rolünün ton karosunu kullanır', (
+    tester,
+  ) async {
+    final key = GlobalKey();
+
+    await tester.pumpWidget(
+      wrapTarget(
+        key,
+        overlayChild: CoachMarkOverlay(
+          steps: [
+            CoachMarkStep(
+              targetKey: key,
+              icon: Icons.home_rounded,
+              title: 'Ana sayfa',
+              description: 'Açıklama tr',
+            ),
+          ],
+          onFinished: () {},
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final badge = tester.widget<DecoratedBox>(
+      find
+          .ancestor(
+            of: find.byIcon(Icons.home_rounded),
+            matching: find.byType(DecoratedBox),
+          )
+          .first,
+    );
+    final t = SahneTokens.of(tester.element(find.byIcon(Icons.home_rounded)));
+    final decoration = badge.decoration as ShapeDecoration;
+    expect(decoration.gradient, isNull);
+    expect(decoration.color, t.goldTint);
+    expect(decoration.shape, SahneShape.m);
+    final icon = tester.widget<Icon>(find.byIcon(Icons.home_rounded));
+    expect(icon.color, t.goldTx);
+  });
+
   testWidgets('ilk adim baslik ve aciklamayi gosterir', (tester) async {
     final key = GlobalKey();
     var finished = false;
@@ -37,10 +82,8 @@ void main() {
             CoachMarkStep(
               targetKey: key,
               icon: Icons.home_rounded,
-              titleKu: 'Sereke',
-              titleTr: 'Ana Sayfa',
-              descriptionKu: 'Açıklama ku',
-              descriptionTr: 'Açıklama tr',
+              title: 'Ana sayfa',
+              description: 'Açıklama tr',
             ),
           ],
           onFinished: () => finished = true,
@@ -49,7 +92,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Ana Sayfa'), findsOneWidget);
+    expect(find.text('Ana sayfa'), findsOneWidget);
     expect(find.text('Açıklama tr'), findsOneWidget);
     expect(find.text('1/1'), findsOneWidget);
     expect(finished, isFalse);
@@ -67,10 +110,8 @@ void main() {
             CoachMarkStep(
               targetKey: key,
               icon: Icons.home_rounded,
-              titleKu: 'Sereke',
-              titleTr: 'Ana Sayfa',
-              descriptionKu: 'a',
-              descriptionTr: 'b',
+              title: 'Rûpela sereke',
+              description: 'a',
             ),
           ],
           onFinished: () => finished = true,
@@ -97,18 +138,14 @@ void main() {
             CoachMarkStep(
               targetKey: key,
               icon: Icons.home_rounded,
-              titleKu: 'a',
-              titleTr: 'b',
-              descriptionKu: 'c',
-              descriptionTr: 'd',
+              title: 'a',
+              description: 'c',
             ),
             CoachMarkStep(
               targetKey: key,
               icon: Icons.star,
-              titleKu: 'e',
-              titleTr: 'f',
-              descriptionKu: 'g',
-              descriptionTr: 'h',
+              title: 'e',
+              description: 'g',
             ),
           ],
           onFinished: () => finished = true,
@@ -134,18 +171,14 @@ void main() {
             CoachMarkStep(
               targetKey: key,
               icon: Icons.home_rounded,
-              titleKu: 'a',
-              titleTr: 'Birinci',
-              descriptionKu: 'c',
-              descriptionTr: 'd',
+              title: 'Birinci',
+              description: 'c',
             ),
             CoachMarkStep(
               targetKey: key,
               icon: Icons.star,
-              titleKu: 'e',
-              titleTr: 'İkinci',
-              descriptionKu: 'g',
-              descriptionTr: 'h',
+              title: 'İkinci',
+              description: 'g',
             ),
           ],
           onFinished: () {},

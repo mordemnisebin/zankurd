@@ -1,16 +1,28 @@
+// 2026-09-30 canlı: sabit kendi-sıran satırı, oyuncu bu dönemde 0 puanla
+// süzüldüyse çizilmez (bkz. `canli_veri_2026_09_30_test.dart`).
+// 2026-09-29 doğallık (K9): podyumun üçlü kalıbı kalktı; tek liste.
+// 2026-10-01 (A8): ilk üç için süssüz `LeaderboardPodium` geri geldi
+// (slotsuz: yalnız var olan oyuncular, üç ve daha çoğunda); kalan liste
+// 4. sıradan başlar. Sabit satır artık `_MyRankLookup` ile dürüst boş durumu
+// da taşır.
+// 2026-09-29 Şahnê: kendi sıran artık `_page(pinned: …)` ile sayfanın
+// altına sabitlenir; kaynak bekçisi o satırı arar.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
 /// Liderlik tablosunun kullanıcı sayısına göre davranışı.
 ///
-/// Podyum üç kişilik bir kalıptır ve az veriyle en kolay bozulan yer
-/// orasıdır: eksik yerleri doldurmak için sahte kullanıcı ya da boş
-/// siluet çizmek, oyuncuya var olmayan bir rekabet göstermek olur.
+/// Az veriyle en kolay bozulan yer eksik yerleri doldurmaktır: sahte
+/// kullanıcı ya da boş siluet çizmek, oyuncuya var olmayan bir rekabet
+/// göstermek olur.
 ///
-/// Bu bekçiler kaynak sözleşmesine bakar: slotlar null-güvenli kurulmalı,
-/// tek kişi ortalanmalı ve kullanıcı listede yokken kendi sırası ayrı bir
-/// yüzeyle sabitlenmeli.
+/// Bu bekçiler kaynak sözleşmesine bakar: yalnız var olan oyuncular
+/// çizilir ve kullanıcı listede yokken kendi sırası ayrı bir yüzeyle
+/// sabitlenir.
+///
+/// 2026-09-29 doğallık (K9): podyumun üçlü kalıbı (slotlar, tek kişinin
+/// ortalanması) kalktı; bekçi artık tek listeyi sorar.
 void main() {
   late String source;
 
@@ -18,21 +30,13 @@ void main() {
     source = File('lib/src/screens/leaderboard_screen.dart').readAsStringSync();
   });
 
-  test('podyum slotları yalnız var olan kullanıcılar için kurulur', () {
-    // `entries[1]`/`entries[2]`e koşulsuz erişim 1-2 kişilik tabloda
-    // çökerdi; koşullu kurulum boş siluet de çizmez.
-    expect(source, contains('entries.isNotEmpty ? entries[0] : null'));
-    expect(source, contains('entries.length > 1 ? entries[1] : null'));
-    expect(source, contains('entries.length > 2 ? entries[2] : null'));
-    for (final slot in const ['if (second != null)', 'if (first != null)']) {
-      expect(source, contains(slot));
-    }
-  });
-
-  test('tek kullanıcı üçlü kalıba sıkıştırılmaz', () {
-    // Tek lider ortalanır; iki boş sütunun arasına yerleştirilmez.
-    expect(source, contains('slots.length == 1'));
-    expect(source, contains('Center(child: slots.first)'));
+  test('bütün sıralama tek listede; üçlü kalıp yok', () {
+    // 2026-09-29 doğallık (K9): podyum kalktı. Liste yalnız var olan
+    // oyuncuları çizer; eksik yer için boş siluet ya da sahte oyuncu yok.
+    expect(source, contains('for (final e in rows)'));
+    expect(source, contains('entries.length >= 3'));
+    expect(source, isNot(contains('class _Podium')));
+    expect(source, isNot(contains('podium-slot')));
   });
 
   test('sahte sıralama veya yer tutucu kullanıcı yok', () {
@@ -54,7 +58,14 @@ void main() {
     // Liderlik yalnız ilk 10'u getiriyor; oyuncu listede yoksa kendi
     // sırasını hiç göremiyordu.
     expect(source, contains('_PinnedMyRank'));
-    expect(source, contains('if (_myRank(entries) == null) _buildMyRankRow'));
+    expect(
+      source,
+      contains('!_listsMe(entries) ? _buildMyRankRow(ku)'),
+      reason:
+          'sabit satır yalnız oyuncu GÖRÜNEN listede (podyum dahil) yoksa '
+          'çizilir',
+    );
+    expect(source, contains('_buildMyRankRow(ku)'));
   });
 
   test('boş, hata ve yükleniyor durumları ayrı ayrı ele alınır', () {

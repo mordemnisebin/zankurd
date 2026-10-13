@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/kilim_reveal.dart';
 
@@ -12,7 +14,8 @@ import 'package:zankurd_mobile/src/widgets/kilim_reveal.dart';
 ///
 /// Testler üç şeyi sabitler: desen yalnız kutlanacak sonuçta çizilir,
 /// dekoratif olduğu için ekran okuyucudan gizlenir, hareket azaltma
-/// tercihinde animasyon üretmez.
+/// tercihinde animasyon üretmez. Tercih hem kurucu bayrağından hem
+/// sağlayıcıdan okunur: onboarding kart dokusu bayrağı geçirmiyordu.
 void main() {
   Widget wrap(Widget child) => MaterialApp(
     theme: AppTheme.light(),
@@ -63,6 +66,24 @@ void main() {
     );
     // pumpAndSettle sürmekte olan bir animasyon varsa zaman aşımına
     // uğrardı; hareketsiz kipte desen ilk karede tam açık durur.
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('kilim-reveal-motif')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('sağlayıcı açıkken çağıran unutsa da animasyon çalışmaz', (
+    tester,
+  ) async {
+    // Onboarding `reducedMotion` geçirmiyordu; tercih yalnız kurucudan
+    // okunursa o yüzey ayarı yok sayar. Widget sağlayıcıyı kendisi
+    // okumalı.
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (_) => ReducedMotionProvider(initialUserReduce: true),
+        child: wrap(const KilimReveal(active: true, child: Text('Tebrikler'))),
+      ),
+    );
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('kilim-reveal-motif')), findsOneWidget);

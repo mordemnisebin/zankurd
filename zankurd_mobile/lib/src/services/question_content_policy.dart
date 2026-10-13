@@ -1,4 +1,5 @@
 import '../config/category_visibility.dart';
+import '../config/retired_question_ids.dart';
 import '../models/quiz_question.dart';
 import 'content_quality_policy.dart';
 
@@ -14,6 +15,9 @@ class QuestionContentPolicy {
     // oynanabilir değildir; quiz seçimi, günlük soru ve offline banka
     // sızıntıları bu tek noktadan kapanır.
     if (!isCategoryVisible(question.category)) return false;
+    // Kürt içeriğiyle bağı olmayan genel kültür soruları (2026-09-27
+    // denetimi). Bankada durur, oyuncuya çıkmaz; bkz. retired_question_ids.
+    if (isQuestionRetired(question.id)) return false;
     if (!_qualityPolicy.isEligible(question.metadata)) return false;
     return validate(question).isEmpty;
   }

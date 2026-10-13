@@ -5,11 +5,15 @@ import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 import 'package:zankurd_mobile/src/models/room.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:zankurd_mobile/src/data/zankurd_repository.dart';
 
 import 'support/widget_test_helpers.dart';
 
 /// Solo turun ödül talebinin SUNUCUYA gittiğinin bekçisi.
+///
+/// 2026-09-29 Şahnê: ana eylem `SahneButton.primary` oldu; bekçi
+/// düğmeyi o türle okur. Korunan kural değişmedi.
 ///
 /// ## Kusur
 ///
@@ -85,7 +89,8 @@ void main() {
     // Pasif bir düğmeye dokunmak sessizce hiçbir şey yapmaz ve test
     // "ödül istenmedi" der. Önce eylemin GERÇEKTEN etkin olduğunu
     // doğrula, sonra dokun.
-    final button = tester.widget<FilledButton>(
+    // 2026-09-29 Şahnê: ana eylem `SahneButton.primary`.
+    final button = tester.widget<SahneButton>(
       find.byKey(const ValueKey('quiz-next-button')),
     );
     expect(

@@ -7,12 +7,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/answer_record.dart';
-import 'package:zankurd_mobile/src/providers/child_safety_provider.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
-/// Kazanılan XP'nin SUNUCUYA da bildirildiğinin bekçisi.
+/// Rekabetçi XP'nin yalnız sunucuda doğrulanmış oda sonucundan yazıldığının
+/// bekçisi. Solo/öğrenme XP'si cihazdaki kişisel ilerlemedir.
 ///
 /// ## Kusur
 ///
@@ -42,14 +42,13 @@ void main() {
       ChangeNotifierProvider<PremiumService>(
         create: (_) => PremiumService.fallback(),
       ),
-      ChangeNotifierProvider<ChildSafetyProvider>(
-        create: (_) => ChildSafetyProvider(),
-      ),
     ],
     child: MaterialApp(theme: AppTheme.light(), home: child),
   );
 
-  testWidgets('tur bitince sunucuya XP bildiriliyor', (tester) async {
+  testWidgets('solo tur istemci deltasını sunucu XP olarak bildirmez', (
+    tester,
+  ) async {
     final repository = MockZanKurdRepository();
     await tester.pumpWidget(
       wrap(
@@ -79,14 +78,33 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.pumpAndSettle();
 
-    expect(
-      repository.awardedXpTotal,
-      greaterThan(0),
-      reason:
-          'Tur bitti ve sunucuya hiç XP bildirilmedi. `profiles.xp` boş '
-          'kalırsa sıralama, toplam puan ve lig rozeti hiçbir oyuncuda '
-          'çalışmaz.',
+    expect(repository.awardedXpTotal, 0);
+    expect(repository.awardedRoomXpCalls, isEmpty);
+  });
+
+  testWidgets('oda turu yalnız awardRoomXp yolunu kullanır', (tester) async {
+    final repository = MockZanKurdRepository();
+    final room = repository.createRoom().copyWith(id: 'room-verified');
+    await tester.pumpWidget(
+      wrap(
+        QuizResultScreen(
+          repository: repository,
+          room: room,
+          score: 800,
+          correctCount: 8,
+          wrongCount: 2,
+          totalQuestions: 10,
+          bestStreak: 5,
+          coinsAwarded: 0,
+          answerRecords: const [],
+        ),
+      ),
     );
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
+
+    expect(repository.awardedXpTotal, 0);
+    expect(repository.awardedRoomXpCalls, ['room-verified']);
   });
 
   test('sunucu tarafı XP kapısı hâlâ tek yazım yolu', () {

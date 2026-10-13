@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -43,36 +44,38 @@ void main() {
       ChangeNotifierProvider(create: (_) => AnalyticsConsentProvider()),
       ChangeNotifierProvider(create: (_) => PremiumService.fallback()),
     ],
-    child: MaterialApp(theme: AppTheme.light(), home: Scaffold(body: child)),
+    child: MaterialApp(
+      theme: AppTheme.light(),
+      home: Scaffold(body: child),
+    ),
   );
 
-  testWidgets(
-    'çözülemeyen UUID kayıtları "Yanlışlarım" toplamını şişirmez',
-    (tester) async {
-      SharedPreferences.setMockInitialValues({
-        'zankurd.mistakeQuestionIds': [
-          'offline_0005',
-          // Çevrimiçi maçtan gelen, paketli bankada karşılığı olmayan id.
-          '9f1b6d2e-4c77-4a51-9a2f-1d0e3b8c5a44',
-          'c3a0f5b1-2d64-4e89-b7f3-6a8e2c9d1077',
-        ],
-      });
+  testWidgets('çözülemeyen UUID kayıtları "Yanlışlarım" toplamını şişirmez', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      'zankurd.mistakeQuestionIds': [
+        'offline_0005',
+        // Çevrimiçi maçtan gelen, paketli bankada karşılığı olmayan id.
+        '9f1b6d2e-4c77-4a51-9a2f-1d0e3b8c5a44',
+        'c3a0f5b1-2d64-4e89-b7f3-6a8e2c9d1077',
+      ],
+    });
 
-      await tester.pumpWidget(
-        wrap(ProfileScreen(repository: MockZanKurdRepository())),
-      );
-      await tester.pumpAndSettle();
+    await tester.pumpWidget(
+      wrap(ProfileScreen(repository: MockZanKurdRepository())),
+    );
+    await tester.pumpAndSettle();
 
-      expect(
-        find.textContaining('Toplam: 3'),
-        findsNothing,
-        reason:
-            'Satır açılamayacak soruları sayarsa kullanıcıya olmayan bir '
-            'iş vaat eder',
-      );
-      expect(find.textContaining('Toplam: 1'), findsOneWidget);
-    },
-  );
+    expect(
+      find.textContaining('Toplam: 3'),
+      findsNothing,
+      reason:
+          'Satır açılamayacak soruları sayarsa kullanıcıya olmayan bir '
+          'iş vaat eder',
+    );
+    expect(find.textContaining('Toplam: 1'), findsOneWidget);
+  });
 
   testWidgets(
     'yalnız çözülemeyen UUID varsa satır "hiç yanlışın yok" gösterir ve '
@@ -90,10 +93,7 @@ void main() {
       // Açılamayan tek kayıt sayılmadığı için satır 0'a düşer ve "hiç
       // yanlışın yok" durumunu gösterir — "Tekrar Edilecek/Toplam"
       // biçimi yalnız gerçekten launchable bir kayıt varken görünür.
-      expect(
-        find.text('Hiç yanlışın yok — aferin!'),
-        findsOneWidget,
-      );
+      expect(find.text('Hiç yanlışın yok, aferin!'), findsOneWidget);
 
       await tester.ensureVisible(find.text('Yanlışlarım'));
       await tester.pumpAndSettle();
@@ -103,7 +103,7 @@ void main() {
       // Toplam zaten 0 göründüğü için doğru mesaj "önce oyna"dır, yanlış
       // olan "hepsi bekliyor" değil.
       expect(
-        find.text('Tekrar edilecek yanlış yok. Önce bir yarış oyna!'),
+        find.text('Tekrar edilecek yanlış yok. Önce bir yarış oyna.'),
         findsOneWidget,
       );
     },

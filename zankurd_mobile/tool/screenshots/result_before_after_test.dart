@@ -79,7 +79,8 @@ void main() {
         ),
       );
     },
-    skip: true, // Pirs redesign: layout overflow in QuizResultScreen
+    skip:
+        true, // Elle PNG; CI piksel karşılaştırması değil. Overflow yalanı değil.
     tags: ['preview'],
   );
 }

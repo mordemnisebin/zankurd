@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,10 @@ void main() {
       ChangeNotifierProvider(create: (_) => AnalyticsConsentProvider()),
       ChangeNotifierProvider(create: (_) => PremiumService.fallback()),
     ],
-    child: MaterialApp(theme: AppTheme.light(), home: Scaffold(body: child)),
+    child: MaterialApp(
+      theme: AppTheme.light(),
+      home: Scaffold(body: child),
+    ),
   );
 
   testWidgets(
@@ -49,9 +53,8 @@ void main() {
       // sırada. Eski (pozisyonel) kod her zaman ilk sıradaki tanımı
       // gösterirdi — bu senaryo tam da o karışıklığı ortaya çıkarır.
       await SharedPreferences.getInstance().then(
-        (prefs) => prefs.setStringList('zankurd.badges.unlocked', [
-          'speed_demon',
-        ]),
+        (prefs) =>
+            prefs.setStringList('zankurd.badges.unlocked', ['speed_demon']),
       );
       BadgeService.resetInstance();
 
@@ -61,12 +64,12 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Hız Canavarı'),
+        find.text('Hız canavarı'),
         findsOneWidget,
         reason: 'açılan rozet (speed_demon) şeritte görünmüyor',
       );
       expect(
-        find.text('30 Gün Streak'),
+        find.text('30 günlük seri'),
         findsNothing,
         reason:
             'kullanıcı streak_30\'u hiç açmadı ama şerit onu gösteriyor — '

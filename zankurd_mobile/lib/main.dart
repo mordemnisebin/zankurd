@@ -6,25 +6,32 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'firebase_options.dart';
+import 'src/utils/join_deep_link.dart';
+import 'src/utils/bundled_font_licenses.dart';
 import 'src/config/app_config.dart';
-import 'src/data/mock_zankurd_repository.dart';
+import 'src/data/offline_zankurd_repository.dart';
 import 'src/data/question_bank_loader.dart';
 import 'src/data/supabase_zankurd_repository.dart';
 import 'src/data/sync_manager.dart';
 import 'src/data/zankurd_repository.dart';
 import 'src/l10n/lang.dart';
+import 'src/l10n/material_locales.dart';
 import 'src/l10n/strings.dart';
 import 'src/providers/auth_provider.dart';
 import 'src/providers/analytics_consent_provider.dart';
-import 'src/providers/child_safety_provider.dart';
 import 'src/providers/reduced_motion_provider.dart';
+import 'src/providers/remote_availability.dart';
+import 'src/providers/repository_holder.dart';
 import 'src/providers/untimed_mode_provider.dart';
 import 'src/utils/boot_step.dart';
+import 'src/utils/firebase_bootstrap.dart';
+import 'src/utils/supabase_boot.dart';
 import 'src/providers/sound_provider.dart';
 import 'src/providers/theme_provider.dart';
 import 'src/screens/app_shell.dart';
@@ -32,6 +39,10 @@ import 'src/screens/splash_screen.dart';
 import 'src/services/analytics_service.dart';
 import 'src/services/notification_service.dart';
 import 'src/services/premium_service.dart';
+import 'src/services/push_tap_router.dart';
+import 'src/services/push_token_sync.dart';
+import 'src/services/remote_upgrade.dart';
+import 'src/services/firebase_push_token_source.dart';
 import 'src/theme/app_theme.dart';
 import 'src/utils/app_route.dart';
 import 'src/utils/error_reporter.dart';
@@ -55,6 +66,7 @@ Future<void> main() async {
   runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+      registerBundledFontLicenses();
 
       // Widget rendering hataları için şık global kurtarma UI'ı
       ErrorWidget.builder = (FlutterErrorDetails details) {
@@ -116,82 +128,152 @@ Future<void> main() async {
         return;
       }
 
-      // Crash raporlama (web'de Crashlytics desteklenmez).
-      // Zaman sınırlı: Firebase'in yanıt vermemesi uygulamanın açılmasını
-      // engellememeli. `catch` yalnız fırlatmayı yakalar, asılı kalmayı
-      // yakalamaz — bkz. `bootStep`.
-      var firebaseReady = true;
-      await bootStepVoid(
-        Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ).catchError((Object _, StackTrace _) {
-          // Firebase yapılandırması olmayan platformlarda sessizce devam et.
-          firebaseReady = false;
-          return Firebase.app();
-        }),
-        reason: 'firebase init',
+      // Birbirinden bağımsız açılış işleri ilk uzak beklemeden önce başlar.
+      // Her future kendi zaman aşımı/fallback sınırına burada bağlanır; böylece
+      // erken tamamlanan bir hata event loop'ta sahipsiz kalmaz ve başlangıç
+      // süresi bu işlerin toplamına değil en yavaş zorunlu işe yaklaşır.
+      final languageFuture = bootStep(
+        LanguageProvider.load(),
+        reason: 'LanguageProvider load',
+        fallback: LanguageProvider.new,
       );
-      try {
-        if (firebaseReady && !kIsWeb) {
-          FlutterError.onError =
-              FirebaseCrashlytics.instance.recordFlutterFatalError;
-          PlatformDispatcher.instance.onError = (error, stack) {
-            FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-            return true;
-          };
-        }
-      } catch (_) {
-        // Firebase yapılandırması olmayan platformlarda sessizce devam et.
-      }
-
-      // Abonelik kimliği, AuthProvider mevcut oturumu eşlemeden önce hazır
-      // olmalı; aksi halde ilk açılıştaki kullanıcı eşleşmesi kaçabilir.
-      final premiumService = await bootStep(
+      final themeFuture = bootStep(
+        ThemeProvider.load(),
+        reason: 'ThemeProvider load',
+        fallback: ThemeProvider.new,
+      );
+      final soundFuture = bootStep(
+        SoundProvider.load(),
+        reason: 'SoundProvider load',
+        fallback: SoundProvider.new,
+      );
+      final reducedMotionFuture = bootStep(
+        ReducedMotionProvider.load(),
+        reason: 'ReducedMotionProvider load',
+        fallback: ReducedMotionProvider.new,
+      );
+      final untimedModeFuture = bootStep(
+        UntimedModeProvider.load(),
+        reason: 'UntimedModeProvider load',
+        fallback: UntimedModeProvider.new,
+      );
+      final analyticsConsentFuture = bootStep(
+        AnalyticsConsentProvider.load(),
+        reason: 'AnalyticsConsentProvider load',
+        fallback: AnalyticsConsentProvider.new,
+      );
+      final questionBankFuture = bootStepVoid(
+        QuestionBankLoader.instance.load(),
+        reason: 'question bank load',
+        timeout: const Duration(seconds: 8),
+      );
+      final premiumFuture = bootStep(
         PremiumService.load(),
         reason: 'premium load',
         fallback: PremiumService.fallback,
       );
+      // Ham başlatma AYRI tutulur: `bootStep` 4 sn'lik sınırda düşerse
+      // bile `Supabase.initialize` arka planda kendi yoluna sürer ve bu
+      // future, sonradan yapılan ulaşılabiliğer yoklamasının (probe)
+      // kaynağıdır. `bootStep` yalnız İLK KARE kararını verir — kararın
+      // ömrü oturum boyunca değildir (bkz. [RemoteAvailability]).
+      //
+      // Başlatma ÖMÜR BOYU tek future'da tutulur ([SupabaseBoot]): probe
+      // başarısız olunca `Supabase.initialize` BİR DAHA çağrılmaz. Eski
+      // düzende ikinci bir başlatma "already initialized" hatasıyla
+      // `Supabase.instance`'ı hiç kurdurmadan uygulamayı kalıcı çevrimdışı
+      // bırakabiliyordu.
+      final SupabaseBoot? supabaseBoot = AppConfig.hasSupabaseConfig
+          ? SupabaseBoot(
+              start: () => Supabase.initialize(
+                url: AppConfig.supabaseUrl,
+                publishableKey: AppConfig.supabaseAnonKey,
+              ),
+              ping: _pingSupabase,
+            )
+          : null;
+      final Future<Supabase>? supabaseInit = supabaseBoot?.boot;
+      final remoteReadyFuture = supabaseInit != null
+          ? bootStep(
+              supabaseInit.then((_) => true),
+              reason: 'supabase init',
+              fallback: () => false,
+            )
+          : Future<bool>.value(false);
+
+      // Crash raporlama (web'de Crashlytics desteklenmez).
+      // Zaman sınırlı: Firebase'in yanıt vermemesi uygulamanın açılmasını
+      // engellememeli. `catch` yalnız fırlatmayı yakalar, asılı kalmayı
+      // yakalamaz — bkz. `bootStep`.
+      final firebaseReady = await initializeFirebaseForBoot(
+        initialize: () async {
+          await Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform,
+          );
+        },
+        disableCrashlytics: () async {
+          if (!kIsWeb) {
+            await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+              false,
+            );
+          }
+        },
+      );
+      // Bildirime dokununca doğru ekrana yönlendirme yalnız Firebase gerçekten
+      // kurulduysa anlamlıdır (`onMessageOpenedApp`/`getInitialMessage`
+      // Firebase App'e ihtiyaç duyar). Başlatma başarısız olduysa
+      // (`firebaseReady == false`) çağrılmaz; mevcut çevrimdışı/hatasız
+      // açılış akışı bundan etkilenmemeli.
+      if (firebaseReady) {
+        unawaited(PushTapRouter.wireFirebase());
+      }
+
+      // Abonelik kimliği, AuthProvider mevcut oturumu eşlemeden önce hazır
+      // olmalı; aksi halde ilk açılıştaki kullanıcı eşleşmesi kaçabilir.
+      final premiumService = await premiumFuture;
 
       final ZanKurdRepository repository;
       final AuthProvider authProvider;
       // Supabase açılamazsa uygulama ÇEVRİMDIŞI açılır. Banka cihazda
       // olduğu için bu tam bir deneyim sunar; alternatif olan "hiç açılmama"
       // ise hiçbir şey sunmaz.
-      var remoteReady = false;
-      if (AppConfig.hasSupabaseConfig) {
-        remoteReady = await bootStep(
-          Supabase.initialize(
-            url: AppConfig.supabaseUrl,
-            publishableKey: AppConfig.supabaseAnonKey,
-          ).then((_) => true),
-          reason: 'supabase init',
-          fallback: () => false,
-        );
-      }
+      final remoteReady = await remoteReadyFuture;
       if (remoteReady) {
         repository = SupabaseZanKurdRepository(Supabase.instance.client);
         authProvider = AuthProvider(Supabase.instance.client);
       } else {
-        repository = MockZanKurdRepository();
-        authProvider = AuthProvider.test(authenticated: true);
+        repository = OfflineZanKurdRepository();
+        authProvider = AuthProvider.offline();
       }
+      // Depo kaynağı ağaç boyunca TEK nesne olur. Sonradan gelen uzak
+      // başlatmada ağaç TAZELENMEZ; yalnız bu nesne değişir ve kabuk
+      // bir sonraki çizimde okur (bkz. [RepositoryHolder]).
+      final repositoryHolder = RepositoryHolder(repository);
+
+      // Zaman aşımı KALICI ÇEVRİMDIŞI karar değildir: `reachable: false`
+      // yalnız açılış anlıktır, arka plan geriçekilmesiyle yeniden
+      // denenir. `probe` (bkz. [SupabaseBoot.probe]) başlatmayı bitirir ve
+      // ardından sunucuya gerçek bir ağ turu atar — ikisinden biri
+      // başarısızsa kilit yerinde kalır, yani gerçek çevrimdışı
+      // davranış korunur. Başlatma tek future'da paylaşıldığı için
+      // eşzamanlı denemeler tek uçuşta birleşir.
+      final remoteAvailability = RemoteAvailability(
+        reachable: remoteReady,
+        probe: supabaseBoot?.probe,
+        // Init bekleme + ping aynı pencereye sığsın: boot'ta zaten 4 sn
+        // harcanmış olan bir başlatma, 6 sn daha sürebilir.
+        probeTimeout: const Duration(seconds: 8),
+      );
+      if (!remoteReady) remoteAvailability.startRetries();
 
       await bootStepVoid(
         SyncManager.initialize(repository),
         reason: 'sync init',
       );
-
-      // Bağımsız servis ve provider'ları paralel yükle. Sonuçlar indeksle
-      // değil kendi future'larıyla okunur: `results[3] as ThemeProvider`
-      // biçimi listeye bir eleman eklendiğinde sessizce kayar ve runtime'da
-      // cast hatasına dönerdi.
-      final languageFuture = LanguageProvider.load();
-      final themeFuture = ThemeProvider.load();
-      final soundFuture = SoundProvider.load();
-      final reducedMotionFuture = ReducedMotionProvider.load();
-      final untimedModeFuture = UntimedModeProvider.load();
-      final analyticsConsentFuture = AnalyticsConsentProvider.load();
-      final childSafetyFuture = ChildSafetyProvider.load();
+      await bootStepVoid(
+        authProvider.bindLocalProgressScope(),
+        reason: 'local progress scope',
+      );
 
       // İlk kare için gerçekten gereken iş: soru bankası ve dil/tema/ses
       // tercihleri. `AnalyticsService.initialize()` ve
@@ -206,63 +288,18 @@ Future<void> main() async {
       // ağdan bağımsızdır ve içeriğin gelmemesi boş kategori demektir.
       // Yine de sınırsız değil — hiç açılmayan bir uygulama, eksik içerikli
       // bir uygulamadan kötüdür.
-      await bootStepVoid(
-        QuestionBankLoader.instance.load(),
-        reason: 'question bank load',
-        timeout: const Duration(seconds: 8),
-      );
-      await bootStepVoid(
-        Future.wait<void>([
-          languageFuture,
-          themeFuture,
-          soundFuture,
-          reducedMotionFuture,
-          untimedModeFuture,
-          analyticsConsentFuture,
-          childSafetyFuture,
-        ]),
-        reason: 'preferences load',
-      );
+      await questionBankFuture;
 
-      final languageProvider = await bootStep(
-        languageFuture,
-        reason: 'LanguageProvider load',
-        fallback: LanguageProvider.new,
-      );
+      final languageProvider = await languageFuture;
       errorScreenIsKu = languageProvider.isKu;
       languageProvider.addListener(() {
         errorScreenIsKu = languageProvider.isKu;
       });
-      final themeProvider = await bootStep(
-        themeFuture,
-        reason: 'ThemeProvider load',
-        fallback: ThemeProvider.new,
-      );
-      final soundProvider = await bootStep(
-        soundFuture,
-        reason: 'SoundProvider load',
-        fallback: SoundProvider.new,
-      );
-      final reducedMotionProvider = await bootStep(
-        reducedMotionFuture,
-        reason: 'ReducedMotionProvider load',
-        fallback: ReducedMotionProvider.new,
-      );
-      final untimedModeProvider = await bootStep(
-        untimedModeFuture,
-        reason: 'UntimedModeProvider load',
-        fallback: UntimedModeProvider.new,
-      );
-      final analyticsConsentProvider = await bootStep(
-        analyticsConsentFuture,
-        reason: 'AnalyticsConsentProvider load',
-        fallback: AnalyticsConsentProvider.new,
-      );
-      final childSafetyProvider = await bootStep(
-        childSafetyFuture,
-        reason: 'ChildSafetyProvider load',
-        fallback: ChildSafetyProvider.new,
-      );
+      final themeProvider = await themeFuture;
+      final soundProvider = await soundFuture;
+      final reducedMotionProvider = await reducedMotionFuture;
+      final untimedModeProvider = await untimedModeFuture;
+      final analyticsConsentProvider = await analyticsConsentFuture;
 
       // İlk kareyi bekletmeyen işler. Hatalar yutulmaz, bildirilir; ama
       // hiçbiri uygulamanın açılmasını engellemez.
@@ -277,15 +314,52 @@ Future<void> main() async {
       startInBackground(premiumService.warmUp(), 'premium warmUp');
       if (analyticsConsentProvider.enabled) {
         startInBackground(
-          AnalyticsService.instance.initialize(),
+          AnalyticsService.instance.initialize(enabled: true),
           'analytics init',
         );
+        if (firebaseReady && !kIsWeb) {
+          startInBackground(
+            ErrorReporter.setCollectionEnabled(true),
+            'crashlytics enable',
+          );
+        }
       }
       startInBackground(NotificationService.load(), 'notifications load');
+
+      // Açılış çevrimdışı kararına rağmen Supabase sonradan açıldıysa,
+      // ÇEVRİMDIŞI depoyla kurulan oturum uzak oturumla yeniden kurulur.
+      // Kancalar yalnız bu durumda bağlanır: zaten uzak açılan bir
+      // oturumda yeniden kurulum gereksizdir ve ara sıra tetiklenen
+      // bir kök ağaç tazelemesi olurdu.
+      //
+      // `isUpgradeSafe`: kullanıcı üstünde bir ekran (oda, quiz, alt sayfa)
+      // açıkkken kök değişmez; kurtarma, kabuğa dönüldüğünde ya da
+      // uygulama ön plana çıktığında uygulanır (bkz. AppShell).
+      if (!remoteReady && supabaseInit != null) {
+        remoteAvailability.onUpgradeRequest = () {
+          unawaited(
+            _upgradeToRemote(
+              authProvider: authProvider,
+              repositoryHolder: repositoryHolder,
+            ).then((applied) {
+              if (applied) {
+                remoteAvailability.completeUpgrade();
+              } else {
+                // Uzak oturum yoksa kurtarma VAZGEÇER: karar geri alınır,
+                // bant yerinde kalır ve geri çekilmeli deneme sürer.
+                remoteAvailability.upgradeDeclined();
+              }
+            }),
+          );
+        };
+        remoteAvailability.isUpgradeSafe = () =>
+            !(_navigatorKey.currentState?.canPop() ?? false);
+      }
 
       runApp(
         ZanKurdApp(
           repository: repository,
+          repositoryHolder: repositoryHolder,
           authProvider: authProvider,
           languageProvider: languageProvider,
           themeProvider: themeProvider,
@@ -293,7 +367,7 @@ Future<void> main() async {
           reducedMotionProvider: reducedMotionProvider,
           untimedModeProvider: untimedModeProvider,
           analyticsConsentProvider: analyticsConsentProvider,
-          childSafetyProvider: childSafetyProvider,
+          remoteAvailability: remoteAvailability,
           premiumService: premiumService,
         ),
       );
@@ -306,6 +380,88 @@ Future<void> main() async {
       );
     },
   );
+}
+
+/// Uygulama kökü navigatorunun anahtarı.
+///
+/// Yalnız geç kurtarmada kullanılır: [RemoteAvailability.isUpgradeSafe]
+/// üstünde açık rota var mı diye buradan bakar, böylece kullanıcı oda ya
+/// da quiz ortasındayken kök ağaç tazelenmez.
+final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+/// Boot'da çevrimdışı kalan uygulamayı, sonradan açılan Supabase ile
+/// UZAK oturuma geçirir — AĞAÇ TAZELENMEDEN.
+///
+/// ## Niçin yeniden kurulum yok?
+///
+/// Eski yol kök widget'ı yeni bir `key` ile yeniden `runApp` ediyordu.
+/// Oysa `GlobalKey` (`_navigatorKey`) durumunda Flutter eski
+/// `MaterialApp` elementini ağaç sökmeden geri alır
+/// (`FrameworkElement._retakeInactiveElement`, `_globalKeyRegistry`
+/// unmount'a kadar temizlenmediği için) — yani rota yığını DEĞİŞMEZ,
+/// navigator geçmişi korunur ve açık rotalar ESKİ çevrimdışı depo
+/// örneğiyle kalırdı. Yeni bir `AuthProvider` kurmak ayrıca sıfırdan
+/// anonim oturum açma riski taşıyordu (misafirin yerel ilerlemesi
+/// başka kimliğe taşınabilir).
+///
+/// Artık yalnız depo takas edilir:
+///
+/// * `AuthProvider` AYNI nesne olarak kalır ve [attachSupabase] ile
+///   cihazda ZATEN kayıtlı oturuma bağlanır — oturum yoksa hiçbir
+///   şey yapılmaz, `SharedPreferences` dokunulmaz.
+/// * Depo [RepositoryHolder] üzerinden değişir; kabuk bir sonraki
+///   çizimde okur, açık ekranlar ve rota yığını bozulmaz.
+/// * `SyncManager` yeni depoyla yeniden kurulur, yerel ilerleme
+///   kapsamı yeni oturuma bağlanır.
+///
+/// Sonuç `true` ise [RemoteAvailability.completeUpgrade] çağrılır
+/// (karar kesinleşir); `false` ise [RemoteAvailability.upgradeDeclined]
+/// (karar geri alınır, bant yerinde kalır, deneme sürer).
+Future<bool> _upgradeToRemote({
+  required AuthProvider authProvider,
+  required RepositoryHolder repositoryHolder,
+}) async {
+  final SupabaseClient client;
+  try {
+    // Başlatma hâlâ sürüyor ya da hata fırlattıysa `Supabase.instance`
+    // geçersizdir; bu bir "kurtarma olamaz" durumudur, çökme değil.
+    client = Supabase.instance.client;
+  } catch (error, stack) {
+    ErrorReporter.record(error, stack, reason: 'remote upgrade client');
+    return false;
+  }
+  return upgradeOfflineBootToRemote(
+    client: client,
+    authProvider: authProvider,
+    repositoryHolder: repositoryHolder,
+    createRepository: SupabaseZanKurdRepository.new,
+    onRepositoryReady: SyncManager.initialize,
+  );
+}
+
+/// Sunucuya giden tek bir hafif istek — [SupabaseBoot.probe]'in ikinci
+/// aşaması. Herhangi bir HTTP cevabı (200, 401, 404…) "sunucu orada"
+/// demektir; yanıtın hiç gelmemesi (DNS, soket, zaman aşımı)
+/// "ulaşılamadı" demektir — PostgREST'in izin hatası bile sunucuya
+/// ulaşıldığının kanıtıdır.
+///
+/// ## Niçin bu aşama ATLANAMAZ
+///
+/// Oturum cihazda geçerliyken başlatma ağ olmadan da tamamlanabilir
+/// (yalnız yerel depo okunur). Ping atılmazsa bant "sunucuya
+/// ulaşılabiliyor" der ve yalan olurdu.
+Future<bool> _pingSupabase() async {
+  try {
+    await http
+        .get(
+          Uri.parse('${AppConfig.supabaseUrl}/rest/v1/'),
+          headers: {'apikey': AppConfig.supabaseAnonKey},
+        )
+        .timeout(const Duration(seconds: 4));
+    return true;
+  } catch (_) {
+    return false;
+  }
 }
 
 class _ConfigurationErrorApp extends StatelessWidget {
@@ -359,6 +515,8 @@ class ZanKurdApp extends StatelessWidget {
   /// eski dinleyiciler sessizce kopar.
   ZanKurdApp({
     required this.repository,
+    RepositoryHolder? repositoryHolder,
+    this.home,
     AuthProvider? authProvider,
     LanguageProvider? languageProvider,
     ThemeProvider? themeProvider,
@@ -366,10 +524,11 @@ class ZanKurdApp extends StatelessWidget {
     ReducedMotionProvider? reducedMotionProvider,
     UntimedModeProvider? untimedModeProvider,
     AnalyticsConsentProvider? analyticsConsentProvider,
-    ChildSafetyProvider? childSafetyProvider,
+    RemoteAvailability? remoteAvailability,
     PremiumService? premiumService,
     super.key,
-  }) : authProvider = authProvider ?? AuthProvider.test(),
+  }) : repositoryHolder = repositoryHolder ?? RepositoryHolder(repository),
+       authProvider = authProvider ?? AuthProvider.test(),
        languageProvider = languageProvider ?? LanguageProvider(),
        themeProvider = themeProvider ?? ThemeProvider(),
        soundProvider = soundProvider ?? SoundProvider(),
@@ -377,10 +536,15 @@ class ZanKurdApp extends StatelessWidget {
        untimedModeProvider = untimedModeProvider ?? UntimedModeProvider(),
        analyticsConsentProvider =
            analyticsConsentProvider ?? AnalyticsConsentProvider(),
-       childSafetyProvider = childSafetyProvider ?? ChildSafetyProvider(),
+       remoteAvailability =
+           remoteAvailability ?? RemoteAvailability(reachable: true),
        premiumService = premiumService ?? PremiumService.fallback();
 
   final ZanKurdRepository repository;
+
+  /// Depo kaynağı — kurtarmada değişen tek nesne (bkz. [RepositoryHolder]).
+  final RepositoryHolder repositoryHolder;
+  final Widget? home;
   final AuthProvider authProvider;
   final LanguageProvider languageProvider;
   final ThemeProvider themeProvider;
@@ -388,16 +552,21 @@ class ZanKurdApp extends StatelessWidget {
   final ReducedMotionProvider reducedMotionProvider;
   final UntimedModeProvider untimedModeProvider;
   final AnalyticsConsentProvider analyticsConsentProvider;
-  final ChildSafetyProvider childSafetyProvider;
+  final RemoteAvailability remoteAvailability;
   final PremiumService premiumService;
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Repository tek bir immutable instance olarak paylaşılıyor —
-        // ekranların constructor'ından geçirmek yerine context üzerinden okunur.
-        Provider<ZanKurdRepository>.value(value: repository),
+        // Depo kaynağı: AYNI nesne açılışta bir kez kurulur, geç kurtarmada
+        // yalnız bu nesne değişir. `ZanKurdRepository` okuyan herkes bunu
+        // alttaki ProxyProvider üzerinden görür; ekranların constructor'ından
+        // geçirmek yerine context üzerinden okunur.
+        ChangeNotifierProvider<RepositoryHolder>.value(value: repositoryHolder),
+        ProxyProvider<RepositoryHolder, ZanKurdRepository>(
+          update: (_, holder, _) => holder.repository,
+        ),
         // Dışarıdan verilen instance'lar `.value` ile paylaşılır. `create:`
         // ile verilirse Provider bunların sahipliğini üstlenir ve ağaç
         // söküldüğünde dispose eder; oysa bu nesneler main() içinde
@@ -415,63 +584,135 @@ class ZanKurdApp extends StatelessWidget {
         ChangeNotifierProvider<AnalyticsConsentProvider>.value(
           value: analyticsConsentProvider,
         ),
-        ChangeNotifierProvider<ChildSafetyProvider>.value(
-          value: childSafetyProvider,
+        ChangeNotifierProvider<RemoteAvailability>.value(
+          value: remoteAvailability,
         ),
         ChangeNotifierProvider<PremiumService>.value(value: premiumService),
       ],
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, _) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'ZanKurd',
-          theme: AppTheme.light(),
-          darkTheme: AppTheme.dark(),
-          themeMode: themeProvider.mode,
-          themeAnimationDuration: const Duration(milliseconds: 600),
-          themeAnimationCurve: Curves.easeInOutCubic,
-          navigatorObservers: [appRouteObserver, appPageRouteObserver],
-          home: SplashScreen(
-            // Marka penceresi AppShell'in yerel kapı bayraklarını okumadan
-            // önce tercih deposunu ısıtır. Profil adı ağdan arka planda
-            // yüklendiği için splash hazır oluşunu asla geciktirmez.
-            readiness: _warmUpShell(),
-            next: AppShell(repository: repository),
-          ),
-          builder: (context, child) {
-            // Sistemin "Hareketi Azalt" tercihi 2026-07-31'e kadar HİÇ
-            // okunmuyordu. `ReducedMotionProvider`ın sınıf belgesi
-            // "kullanıcı tercihi VEYA sistem tercihi" diyor ve
-            // `reduceMotion` getter'ı `_userReduce || _systemReduce`
-            // döndürüyordu — ama `setSystemReduce`i çağıran tek satır
-            // yoktu, yani ikinci koşul hep false kalıyordu. iOS/Android
-            // erişilebilirlik ayarından hareketi kapatan kullanıcı,
-            // uygulamada ayrıca aynı anahtarı bulup açmak zorundaydı.
-            //
-            // `build` içinde okunuyor: sistem tercihi çalışırken
-            // değişebilir ve MediaQuery zaten yeniden çizim tetikler.
-            final disableAnimations = MediaQuery.disableAnimationsOf(context);
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              reducedMotionProvider.setSystemReduce(disableAnimations);
-            });
-            return MediaQuery.withClampedTextScaling(
-              minScaleFactor: 0.85,
-              maxScaleFactor: 2.0,
-              // Durum çubuğu ikonları hiçbir yerde ayarlanmamıştı; açık
-              // temada beyaz saat/pil krem zemin üzerine düşüyor ve
-              // okunmuyordu (2026-07-25 canlı denetimi, iOS). Ekranların
-              // çoğu AppBar kullanmadığı için stil uygulama kökünde,
-              // etkin parlaklığa göre verilir.
-              child: AnnotatedRegion<SystemUiOverlayStyle>(
-                value: _overlayStyleFor(context),
-                child: ResponsiveWrapper(
-                  child: child ?? const SizedBox.shrink(),
+      child: Consumer2<ThemeProvider, ReducedMotionProvider>(
+        // Davet bağlantısını `WidgetsApp`in kendi rota gözlemcisinden ÖNCE
+        // yakalar (bkz. JoinDeepLinkScope): kapsam MaterialApp'in üstünde
+        // olmalı ki gözlemcisi daha önce kaydolsun.
+        builder: (context, themeProvider, reducedMotion, _) => JoinDeepLinkScope(
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'ZanKurd',
+            theme: AppTheme.light(),
+            darkTheme: AppTheme.dark(),
+            themeMode: themeProvider.mode,
+            themeAnimationDuration: reducedMotion.reduceMotion
+                ? Duration.zero
+                : const Duration(milliseconds: 600),
+            themeAnimationCurve: Curves.easeInOutCubic,
+            // Geç kurtarmada kökün üstünde açık rota var mı diye bakılır
+            // (bkz. `_navigatorKey`).
+            navigatorKey: _navigatorKey,
+            locale: const Locale('tr'),
+            supportedLocales: AppMaterialLocales.supported,
+            localizationsDelegates: AppMaterialLocales.delegates,
+            navigatorObservers: [appRouteObserver, appPageRouteObserver],
+            // `home:` yerine `routes` + `onGenerateInitialRoutes` — bkz.
+            // `_buildInitialRoutes` üstündeki belge. `routes` yalnız "/" için
+            // tek satırlık bir tablo: `home` alanının Flutter içindeki ikinci
+            // görevini (Navigator'ın "bir rota kaynağım var" saymasını, bkz.
+            // `WidgetsApp._usesNavigator`) devralır; asıl gösterimi hâlâ
+            // `_home()` üretir.
+            routes: {Navigator.defaultRouteName: (context) => _home()},
+            onGenerateInitialRoutes: _buildInitialRoutes,
+            builder: (context, child) {
+              // Sistemin "Hareketi Azalt" tercihi 2026-07-31'e kadar HİÇ
+              // okunmuyordu. `ReducedMotionProvider`ın sınıf belgesi
+              // "kullanıcı tercihi VEYA sistem tercihi" diyor ve
+              // `reduceMotion` getter'ı `_userReduce || _systemReduce`
+              // döndürüyordu — ama `setSystemReduce`i çağıran tek satır
+              // yoktu, yani ikinci koşul hep false kalıyordu. iOS/Android
+              // erişilebilirlik ayarından hareketi kapatan kullanıcı,
+              // uygulamada ayrıca aynı anahtarı bulup açmak zorundaydı.
+              //
+              // `build` içinde okunuyor: sistem tercihi çalışırken
+              // değişebilir ve MediaQuery zaten yeniden çizim tetikler.
+              final disableAnimations = MediaQuery.disableAnimationsOf(context);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                reducedMotionProvider.setSystemReduce(disableAnimations);
+              });
+              return MediaQuery.withClampedTextScaling(
+                minScaleFactor: 0.85,
+                maxScaleFactor: 2.0,
+                // Durum çubuğu ikonları hiçbir yerde ayarlanmamıştı; açık
+                // temada beyaz saat/pil krem zemin üzerine düşüyor ve
+                // okunmuyordu (2026-07-25 canlı denetimi, iOS). Ekranların
+                // çoğu AppBar kullanmadığı için stil uygulama kökünde,
+                // etkin parlaklığa göre verilir.
+                child: AnnotatedRegion<SystemUiOverlayStyle>(
+                  value: _overlayStyleFor(context),
+                  child: ResponsiveWrapper(
+                    child: child ?? const SizedBox.shrink(),
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
+  }
+
+  /// Açılış ekranı: `home` verilmemişse marka penceresi + [AppShell].
+  Widget _home() {
+    return home ??
+        SplashScreen(
+          // Marka penceresi AppShell'in yerel kapı bayraklarını okumadan
+          // önce tercih deposunu ısıtır. Profil adı ağdan arka planda
+          // yüklendiği için splash hazır oluşunu asla geciktirmez.
+          readiness: _warmUpShell(),
+          next: AppShell(
+            repository: repository,
+            pushTokenSync: PushTokenSync(
+              source: kIsWeb
+                  ? const NoopPushTokenSource()
+                  : const FirebasePushTokenSource(),
+              repository: repository,
+              repositoryHolder: repositoryHolder,
+            ),
+          ),
+        );
+  }
+
+  /// İlk rotayı `initialRouteName`i YOK SAYARAK her zaman [_home] ile üretir.
+  ///
+  /// ## Kusur
+  ///
+  /// Flutter 3.8+'ta mobil deep linking varsayılan AÇIK: soğuk açılışta
+  /// `defaultRouteName` platformdan `/join/KOD` gibi evrensel bir bağlantı
+  /// yolu taşıyabilir. `MaterialApp` bu callback verilmediğinde
+  /// `Navigator.defaultGenerateInitialRoutes`u kullanır — o da yolu `/`,
+  /// `/join`, `/join/KOD` parçalarına bölüp HER biri için `onGenerateRoute`
+  /// çağırır. Bu uygulamanın `/join` ve `/join/KOD` için bir rota üreticisi
+  /// olmadığından ("routes" tablosu yalnız "/" içerir, bkz. `build()`),
+  /// parçalama son parçada başarısız olur ve Flutter bunu
+  /// `FlutterError.reportError` ile bildirip sessizce `/`e düşer.
+  ///
+  /// ## Niçin sessiz kalırdı
+  ///
+  /// Düşüş her zaman doğru ekrana (ana sayfa) vardığı için kullanıcı hiçbir
+  /// şey fark etmiyordu; hata yalnız konsolu izleyen ya da
+  /// `tester.takeException()` çağıran biri tarafından görülürdü. Soğuk
+  /// açılış deep link'i bu değişiklikten önce hiç test edilmiyordu — bkz.
+  /// `test/app_shell_join_deep_link_test.dart` ("soğuk açılış" grubu).
+  ///
+  /// Bu metot yol parçalama/onGenerateRoute deneme mekanizmasını hiç
+  /// çalıştırmaz: yol ne olursa olsun (bilinen, bilinmeyen, `/join/...`)
+  /// uygulama her zaman `home` ile ve hatasız açılır.
+  /// `JoinDeepLink.consumeInitialRoute()` `defaultRouteName`'i PLATFORMDAN
+  /// doğrudan okur — bu metottan bağımsız çalışmaya devam eder, yani deep
+  /// link kodu burada kaybolmaz (bkz. `AppShell._consumeJoinDeepLink`).
+  List<Route<dynamic>> _buildInitialRoutes(String initialRouteName) {
+    return [
+      MaterialPageRoute<void>(
+        settings: const RouteSettings(name: Navigator.defaultRouteName),
+        builder: (context) => _home(),
+      ),
+    ];
   }
 
   /// Etkin temanın parlaklığına göre durum çubuğu stili. Açık temada koyu

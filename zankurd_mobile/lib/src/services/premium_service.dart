@@ -23,6 +23,32 @@ enum PurchaseOutcome {
 
 enum RestoreOutcome { restored, nothingFound, failed }
 
+/// `refreshEntitlement` sonucunun üç ayrı hâli.
+///
+/// `bool` yetmiyordu: "abone değil" ile "doğrulama yapılamadı" aynı `false`
+/// dönüyordu. Çağıran (sonuç ekranı) bunu "abone değil" okuyup ücretli yola
+/// düşüyor, yani çevrimdışı bir abonenin serisi bedava korunmuyordu
+/// (2026-09-25 denetimi). Bilinmeyen ayrı bir hâl olarak modellendi.
+sealed class EntitlementRefreshResult {
+  const EntitlementRefreshResult();
+}
+
+/// Sunucudan taze cevap geldi ve abonelik durumu kesin.
+final class EntitlementRefreshKnown extends EntitlementRefreshResult {
+  const EntitlementRefreshKnown(this.isPremium);
+
+  final bool isPremium;
+}
+
+/// Doğrulama yapılamadı (ağ yok, RevenueCat hata verdi, yapılandırma eksik).
+///
+/// Bu hâlde bellekteki son bilinen durum geçerlidir; çağıran avantajı ne
+/// reddetmeli ne de ücretli yola düşürmeli, kullanıcıya da "abonelik
+/// kalktı" dememeli.
+final class EntitlementRefreshUnknown extends EntitlementRefreshResult {
+  const EntitlementRefreshUnknown();
+}
+
 /// Teklif isteğinin sonucunu, başarılı boş liste ile yükleme hatasını
 /// birbirine karıştırmadan Paywall'a iletir.
 sealed class OfferingsFetchResult {
@@ -54,10 +80,10 @@ class PremiumIdentityQueue {
   }
 }
 
-/// Aylık abonelik altyapısı. Kullanıcının aktif `premium` entitlement'ı
-/// varsa reklamsız, detaylı istatistik, sınırsız joker gibi özellikler
-/// açılır. API anahtarı yoksa tüm premium özellikler kapalı kalır ve
-/// uygulama normal akışına devam eder.
+/// Aylık abonelik altyapısı. Aktif `premium` entitlement seri korumasını
+/// ve paywall'da vaat edilen destek/kozmetikleri açar. Reklam SDK'sı
+/// yoktur; joker hakkı bu bayrağa bağlı değildir. API anahtarı yoksa
+/// abonelik kapalı kalır ve uygulama normal akışına devam eder.
 ///
 /// Singleton; [load] çağrısı main() içinde yapılmalıdır.
 class PremiumService extends ChangeNotifier {
@@ -65,10 +91,12 @@ class PremiumService extends ChangeNotifier {
     Future<bool> Function()? isAnonymous,
     Future<CustomerInfo> Function()? logOut,
     Future<Offerings> Function()? getOfferings,
+    Future<CustomerInfo> Function()? getCustomerInfo,
     void Function(Object, StackTrace, {String? reason})? recordError,
   }) : _isAnonymous = isAnonymous ?? (() => Purchases.isAnonymous),
        _logOut = logOut ?? Purchases.logOut,
        _getOfferings = getOfferings ?? Purchases.getOfferings,
+       _getCustomerInfo = getCustomerInfo ?? Purchases.getCustomerInfo,
        _recordError = recordError ?? ErrorReporter.record;
 
   static const _entitlementId = 'premium';
@@ -87,6 +115,7 @@ class PremiumService extends ChangeNotifier {
   final Future<bool> Function() _isAnonymous;
   final Future<CustomerInfo> Function() _logOut;
   final Future<Offerings> Function() _getOfferings;
+  final Future<CustomerInfo> Function() _getCustomerInfo;
   final void Function(Object, StackTrace, {String? reason}) _recordError;
 
   static PremiumService? get instance => _instance;
@@ -122,11 +151,26 @@ class PremiumService extends ChangeNotifier {
     return fb;
   }
 
+  /// Abonesi olan bir oturumu taklit eder.
+  ///
+  /// Üretimde `_isPremium` yalnız RevenueCat'in müşteri bilgisinden gelir ve
+  /// dışarıdan yazılamaz — doğru olan da budur. Ama "abone olana satış
+  /// yüzeyi gösterilmez" kuralını ölçmenin başka yolu yok: o dalı sürmek
+  /// için abonelik durumu true olan bir servis gerekiyor.
+  @visibleForTesting
+  static PremiumService premiumForTesting() {
+    final fb = PremiumService._();
+    fb._initialized = true;
+    fb._isPremium = true;
+    return fb;
+  }
+
   @visibleForTesting
   factory PremiumService.forTesting({
     required Future<bool> Function() isAnonymous,
     required Future<CustomerInfo> Function() logOut,
     Future<Offerings> Function()? fetchOfferings,
+    Future<CustomerInfo> Function()? fetchCustomerInfo,
     void Function(Object, StackTrace, {String? reason})? recordError,
     bool configured = true,
     bool configurationFailed = false,
@@ -135,6 +179,7 @@ class PremiumService extends ChangeNotifier {
       isAnonymous: isAnonymous,
       logOut: logOut,
       getOfferings: fetchOfferings,
+      getCustomerInfo: fetchCustomerInfo,
       recordError: recordError,
     );
     service
@@ -209,11 +254,32 @@ class PremiumService extends ChangeNotifier {
   Future<void> warmUp() async {
     if (!_configured) return;
     try {
-      final info = await Purchases.getCustomerInfo();
+      final info = await _getCustomerInfo();
       _isPremium = _hasEntitlement(info.entitlements.all);
       notifyListeners();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'premium_service warmUp');
+    }
+  }
+
+  /// Entitlement'ı tazeler ve güncel sonucu döndürür. Ücretsiz avantaj
+  /// kapıları (seri dondurma) bellektekine değil BUNA bakar: bayat `true`
+  /// ile bedava avantaj verilmez.
+  ///
+  /// Doğrulama başarısız olursa [EntitlementRefreshUnknown] döner. Bu
+  /// hâlde "abone değil" denmez: son bilinen durum geçerlidir ve çağıran
+  /// ücretli yola düşmemelidir. 2026-09-25 öncesi bu yol `false` dönüyor ve
+  /// çevrimdışı aboneyi ücretli karara sürüklüyordu.
+  Future<EntitlementRefreshResult> refreshEntitlement() async {
+    if (!_configured) return const EntitlementRefreshUnknown();
+    try {
+      final info = await _getCustomerInfo();
+      final fresh = _hasEntitlement(info.entitlements.all);
+      _applyEntitlement(fresh);
+      return EntitlementRefreshKnown(fresh);
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'premium refresh');
+      return const EntitlementRefreshUnknown();
     }
   }
 

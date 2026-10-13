@@ -2,18 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../theme/app_theme.dart';
 import '../providers/reduced_motion_provider.dart';
+import 'sahne/sahne.dart';
 
+/// 2026-09-29 Şahnê: iskelet Kulis (`s2`) zeminde Ray (`s3`) parıltısıyla
+/// çizilir; şekil pahlıdır — kart iskeleti L, satır iskeleti S (≤ 28) ya
+/// da M. Eski `borderRadius` parametreleri geriye uyum için kalır ve pah
+/// boyunu seçer: 12 ve üstü L, 8 ve üstü M, altı S.
 ({Color base, Color highlight}) _shimmerColors(BuildContext context) {
-  final isDark = Theme.of(context).brightness == Brightness.dark;
-  return (
-    base: isDark ? AppTheme.shimmerBaseDark : AppTheme.shimmerBaseLight,
-    highlight: isDark
-        ? AppTheme.shimmerHighlightDark
-        : AppTheme.shimmerHighlightLight,
-  );
+  final t = SahneTokens.of(context);
+  return (base: t.s2, highlight: t.s3);
 }
+
+BeveledRectangleBorder _shapeFor(double radius) => radius >= SahneShape.lValue
+    ? SahneShape.l
+    : radius >= SahneShape.mValue
+    ? SahneShape.m
+    : SahneShape.s;
 
 /// Tam genişlikte yükleniyor kartları için shimmer liste.
 class SkeletonLoader extends StatelessWidget {
@@ -32,31 +37,27 @@ class SkeletonLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     final reduceMotion = context.watch<ReducedMotionProvider>().reduceMotion;
     final colors = _shimmerColors(context);
+    final shape = _shapeFor(borderRadius);
+
+    Widget block(Color color) => SizedBox(
+      height: height,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(color: color, shape: shape),
+      ),
+    );
 
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: count,
       itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.only(bottom: SahneSpace.cardGap),
         child: reduceMotion
-            ? Container(
-                height: height,
-                decoration: BoxDecoration(
-                  color: colors.base,
-                  borderRadius: BorderRadius.circular(borderRadius),
-                ),
-              )
+            ? block(colors.base)
             : Shimmer.fromColors(
                 baseColor: colors.base,
                 highlightColor: colors.highlight,
-                child: Container(
-                  height: height,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(borderRadius),
-                  ),
-                ),
+                child: block(colors.base),
               ),
       ),
     );
@@ -80,27 +81,24 @@ class SkeletonLine extends StatelessWidget {
   Widget build(BuildContext context) {
     final reduceMotion = context.watch<ReducedMotionProvider>().reduceMotion;
     final colors = _shimmerColors(context);
+    // Metin satırı ≤ 28 yüksekliktedir: S pah (M pah ince satırı elmasa
+    // çevirir).
+    final shape = height <= 28 ? SahneShape.s : _shapeFor(borderRadius);
+
+    Widget block(Color color) => SizedBox(
+      width: width,
+      height: height,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(color: color, shape: shape),
+      ),
+    );
 
     return reduceMotion
-        ? Container(
-            width: width,
-            height: height,
-            decoration: BoxDecoration(
-              color: colors.base,
-              borderRadius: BorderRadius.circular(borderRadius),
-            ),
-          )
+        ? block(colors.base)
         : Shimmer.fromColors(
             baseColor: colors.base,
             highlightColor: colors.highlight,
-            child: Container(
-              width: width,
-              height: height,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(borderRadius),
-              ),
-            ),
+            child: block(colors.base),
           );
   }
 }

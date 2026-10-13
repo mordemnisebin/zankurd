@@ -1,21 +1,18 @@
 import 'dart:async';
 
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
+import '../data/tournament_progress_publisher.dart';
 import '../data/zankurd_repository.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../models/quiz_question.dart';
 import '../models/tournament.dart';
-import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
 import '../utils/error_reporter.dart';
-import '../widgets/app_panel.dart';
 import '../widgets/arena_kit.dart';
 import '../widgets/app_state.dart';
-import '../widgets/screen_identity_header.dart';
+import '../widgets/sahne/sahne.dart';
 import '../widgets/tournament_bracket_widget.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -337,17 +334,15 @@ class _TournamentScreenState extends State<TournamentScreen> {
     // kaydın işi zaten yerel oyunu etkilemediği için kimse fark etmiyordu
     // (2026-08-14 denetimi). Hiçbir eleme turu henüz tamamlanmadığı için
     // doğru karşılık 'lobby'dir.
-    widget.repository.saveTournamentProgress('lobby', 0, 0, const []).catchError((
-      error,
-      stack,
-    ) {
-      ErrorReporter.record(
-        error,
-        stack,
-        reason: 'tournament_save_initial_progress',
-      );
-      return false;
-    });
+    unawaited(
+      TournamentProgressPublisher.publish(
+        repository: widget.repository,
+        stage: 'lobby',
+        userScore: 0,
+        opponentScore: 0,
+        botWinners: const [],
+      ),
+    );
     widget.repository.logAnalyticsEvent('tournament_started', null).catchError((
       error,
       stack,
@@ -471,8 +466,10 @@ class _TournamentScreenState extends State<TournamentScreen> {
         final opponentName = match.playerOneId == _userId
             ? match.playerTwoName
             : match.playerOneName;
-        final roundName =
-            _roundNames(ku, bracket.rounds.length)[bracket.currentRound];
+        final roundName = _roundNames(
+          ku,
+          bracket.rounds.length,
+        )[bracket.currentRound];
         versusBanner = context.t(K.yourMatchVs, {
           'round': roundName,
           'opponent': opponentName,
@@ -518,9 +515,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
             // (2026-08-14 denetimi). RPC skoru tek sefer kabul ettiği
             // için "tekrar oyna" güvenlidir.
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(context.t(K.tournamentMatchSubmitFailed)),
-              ),
+              SnackBar(content: Text(context.t(K.tournamentMatchSubmitFailed))),
             );
           } else {
             // Skor 0 olsa bile (bütün sorular yanlış/süre doldu)
@@ -653,21 +648,17 @@ class _TournamentScreenState extends State<TournamentScreen> {
     }
 
     final stages = ['quarter', 'semi', 'final', 'won'];
-    widget.repository
-        .saveTournamentProgress(
-          userLost ? 'lost' : stages[roundIndex.clamp(0, stages.length - 1)],
-          userScore,
-          opponentScore,
-          winners.map((w) => w.name).toList(),
-        )
-        .catchError((error, stack) {
-          ErrorReporter.record(
-            error,
-            stack,
-            reason: 'tournament_save_match_progress',
-          );
-          return false;
-        });
+    unawaited(
+      TournamentProgressPublisher.publish(
+        repository: widget.repository,
+        stage: userLost
+            ? 'lost'
+            : stages[roundIndex.clamp(0, stages.length - 1)],
+        userScore: userScore,
+        opponentScore: opponentScore,
+        botWinners: winners.map((winner) => winner.name).toList(),
+      ),
+    );
   }
 
   /// Tur adları SONDAN sayılır: son tur her zaman Final'dir.
@@ -695,47 +686,61 @@ class _TournamentScreenState extends State<TournamentScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(),
-      body: Container(
-        color: AppTheme.bgOf(context),
-        child: SafeArea(
-          child: _loading
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: AppTheme.primaryGradientStart,
-                  ),
-                )
-              : _hasError
-              ? Center(
-                  child: AppErrorState(
-                    title: context.t(K.loadFailedShort),
-                    message: context.t(K.tournamentLoadFail),
-                    retryLabel: context.t(K.retry),
-                    onRetry: _load,
-                  ),
-                )
-              : _waitingForPlayers
-              // Gerçek oyunculu turnuvanın kaçınılmaz hâli: kontenjan
-              // dolana dek beklenir. Burada bot uydurmak "gerçek insanlar"
-              // sözünü bozardı (2026-07-26).
-              ? Center(
-                  child: AppEmptyState(
-                    key: const ValueKey('tournament-waiting'),
-                    icon: AppIcons.hourglass,
-                    title: context.t(K.tournamentWaitingTitle),
-                    message: context.t(K.tournamentWaitingBody),
-                    actionLabel: context.t(K.retry),
-                    actionIcon: AppIcons.arrowsRotate,
-                    onAction: _load,
-                  ),
-                )
-              : _bracket == null
+    final t = SahneTokens.of(context);
+    final bracket = _bracket;
+    final inBracket =
+        !_loading && !_hasError && !_waitingForPlayers && bracket != null;
+
+    // 2026-09-29 Şahnê: B iskeleti. Lobide çubuk "Turnuva" der; kupanın
+    // adı ("ZanKurd Kupası") kahraman kartındadır — iki kez yazılmaz.
+    // Şemada kahraman yok: çubuk kupanın adını ve türünü taşır.
+    final Widget body;
+    if (_loading) {
+      body = SliverFillRemaining(
+        child: Center(child: CircularProgressIndicator(color: t.goldTx)),
+      );
+    } else if (_hasError) {
+      body = SliverFillRemaining(
+        child: AppErrorState(
+          title: context.t(K.loadFailedShort),
+          message: context.t(K.tournamentLoadFail),
+          retryLabel: context.t(K.retry),
+          onRetry: _load,
+        ),
+      );
+    } else if (_waitingForPlayers) {
+      // Gerçek oyunculu turnuvanın kaçınılmaz hâli: kontenjan dolana dek
+      // beklenir. Burada bot uydurmak "gerçek insanlar" sözünü bozardı
+      // (2026-07-26).
+      body = SliverFillRemaining(
+        child: AppEmptyState(
+          key: const ValueKey('tournament-waiting'),
+          icon: AppIcons.hourglass,
+          title: context.t(K.tournamentWaitingTitle),
+          message: context.t(K.tournamentWaitingBody),
+          actionLabel: context.t(K.retry),
+          actionIcon: AppIcons.arrowsRotate,
+          onAction: _load,
+        ),
+      );
+    } else {
+      body = SliverPadding(
+        padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+        sliver: SliverToBoxAdapter(
+          child: bracket == null
               ? _LobbyView(ku: ku, onStart: _startTournament)
               : _buildBracket(context, ku),
         ),
-      ),
+      );
+    }
+
+    return SahnePushedPage(
+      title: context.t(inBracket ? K.tournamentTitle : K.tournament),
+      // Tur bilgisi yalnızca maç kartında gösterilir; burada tekrar
+      // edilmez.
+      subtitle: inBracket ? context.t(K.botTournament) : null,
+      backLabel: context.t(K.back),
+      slivers: [body],
     );
   }
 
@@ -743,202 +748,129 @@ class _TournamentScreenState extends State<TournamentScreen> {
     final bracket = _bracket!;
     final userMatch = _userMatch;
     final roundNames = _roundNames(ku, bracket.rounds.length);
+    final t = SahneTokens.of(context);
 
-    // 2026-07-22 canlı UX denetimi: dikey ortalama
-    // IntrinsicHeight KULLANILMADI: LayoutBuilder içinde IntrinsicHeight
-    // "LayoutBuilder does not support returning intrinsic dimensions"
-    // hatası veriyor. ConstrainedBox(minHeight) tek başına yeterli;
-    // Column varsayılan mainAxisSize.max ile viewport'tan uzun olduğunda
-    // scroll çalışır, kısa olduğunda mainAxisAlignment.center etkili olur.
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final minH = math.max(
-          0.0,
-          constraints.maxHeight - (AppSpacing.sm + AppSpacing.lg),
-        );
-        return SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.page,
-            AppSpacing.sm,
-            AppSpacing.page,
-            AppSpacing.lg,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Durum kartı yalnızca turnuva aktif değilken (elendi/kazandı)
+        // anlam taşır; aktif oyunda maç kartı zaten bağlamı verir.
+        if (bracket.status != 'active')
+          _StatusCard(bracket: bracket, ku: ku, roundNames: roundNames),
+        if (bracket.status == 'won') ...[
+          const SizedBox(height: SahneSpace.cardGap),
+          _ChampionBanner(
+            ku: ku,
+            finalScore: bracket.totalScore,
+            // Ödül yalnız SUNUCU şemasında talep edilir; yerel
+            // benzetimde hiç istenmez ve bu açıkça yazılır.
+            rewardState: _serverBracket
+                ? _rewardState
+                : _CupRewardState.localOnly,
+            rewardAmount: _rewardAmount,
           ),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: minH),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              // Dikey ortalama, kimlik başlığını ekranın üçte birine
-              // itiyordu: turnuva, başlığı yukarıda duran diğer bütün
-              // ekranlardan farklı görünüyor ve yarım yüklenmiş gibi
-              // duruyordu (2026-07-26).
+        ],
+        if (bracket.status != 'active') ...[
+          // Turnuva bittikten sonra `get_tournament_bracket` kullanıcının
+          // EN SON kaydını döndürmeye devam eder — biten turnuva sonsuza
+          // kadar "en son" kalır. `_bracket` bu yüzden bir daha hiç null
+          // olmuyor ve lobideki "Katıl" düğmesi kalıcı olarak
+          // kayboluyordu; oyuncu bir daha hiç turnuvaya giremiyordu
+          // (2026-08-14 denetimi). Sunucu tarafı zaten doğru:
+          // `join_tournament` yalnız `open`/`running` turnuvalara bakar.
+          //
+          // Biten turnuvada ekranın TEK birincil eylemi budur (maç kartı
+          // yalnız aktif turnuvada çizilir; ikisi hiç birlikte olmaz).
+          const SizedBox(height: SahneSpace.x4),
+          SahneButton.primary(
+            key: const ValueKey('tournament-join-new-cta'),
+            label: context.t(K.joinTournament),
+            expand: true,
+            onPressed: _startingNewTournament
+                ? null
+                : _startNewTournamentAfterFinish,
+          ),
+        ],
+        // Skorumuzu bildirdik ama maç kapanmadı: rakip henüz oynamamış.
+        // Gerçek oyunculu turnuvada bu normal bir durumdur ve söylenmezse
+        // oyuncu bir şeyin bozulduğunu sanır (2026-07-26).
+        if (_serverBracket && _awaitingOpponent) ...[
+          const SizedBox(height: SahneSpace.cardGap),
+          SahneSurfaceCard(
+            key: const ValueKey('tournament-awaiting-opponent'),
+            child: Row(
               children: [
-                ScreenIdentityHeader(
-                  title: context.t(K.tournamentTitle),
-                  // Tur bilgisi yalnızca maç kartında gösterilir; burada tekrar
-                  // edilmez (üst üste 3 kartta aynı bilgi vardı).
-                  subtitle: context.t(K.botTournament),
-                  accent: AppTheme.gold,
-                  icon: AppIcons.trophy,
-                  compact: true,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                // Durum kartı yalnızca turnuva aktif değilken (elendi/kazandı)
-                // anlam taşır; aktif oyunda maç kartı zaten bağlamı verir.
-                if (bracket.status != 'active')
-                  _StatusCard(bracket: bracket, ku: ku, roundNames: roundNames),
-                if (bracket.status == 'won') ...[
-                  const SizedBox(height: AppSpacing.md),
-                  _ChampionBanner(
-                    ku: ku,
-                    finalScore: bracket.totalScore,
-                    // Ödül yalnız SUNUCU şemasında talep edilir; yerel
-                    // benzetimde hiç istenmez ve bu açıkça yazılır.
-                    rewardState: _serverBracket
-                        ? _rewardState
-                        : _CupRewardState.localOnly,
-                    rewardAmount: _rewardAmount,
-                  ),
-                ],
-                if (bracket.status != 'active') ...[
-                  // Turnuva bittikten sonra `get_tournament_bracket`
-                  // kullanıcının EN SON kaydını döndürmeye devam eder —
-                  // biten turnuva sonsuza kadar "en son" kalır. `_bracket`
-                  // bu yüzden bir daha hiç null olmuyor ve lobideki "Katıl"
-                  // düğmesi kalıcı olarak kayboluyordu; oyuncu bir daha hiç
-                  // turnuvaya giremiyordu (2026-08-14 denetimi). Sunucu
-                  // tarafı zaten doğru: `join_tournament` yalnız `open`/
-                  // `running` turnuvalara bakar, bitmiş olanı yok sayar.
-                  const SizedBox(height: AppSpacing.md),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton.icon(
-                      key: const ValueKey('tournament-join-new-cta'),
-                      onPressed: _startingNewTournament
-                          ? null
-                          : _startNewTournamentAfterFinish,
-                      icon: const Icon(AppIcons.trophy, size: 20),
-                      style: FilledButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: AppSpacing.md,
-                        ),
-                        backgroundColor: AppTheme.brand,
-                        foregroundColor: Colors.white,
-                      ),
-                      label: Text(
-                        context.t(K.joinTournament),
-                        style: AppTypography.bodyLarge.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-                // Skorumuzu bildirdik ama maç kapanmadı: rakip henüz
-                // oynamamış. Gerçek oyunculu turnuvada bu normal bir
-                // durumdur ve söylenmezse oyuncu bir şeyin bozulduğunu
-                // sanır (2026-07-26).
-                if (_serverBracket && _awaitingOpponent) ...[
-                  const SizedBox(height: AppSpacing.md),
-                  Container(
-                    key: const ValueKey('tournament-awaiting-opponent'),
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    decoration: AppTheme.cardDecoration(context),
-                    child: Row(
-                      children: [
-                        Icon(
-                          AppIcons.hourglass,
-                          size: 16,
-                          color: AppColors.readableAccent(
-                            context,
-                            AppTheme.gold,
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.sm),
-                        Expanded(
-                          child: Text(
-                            context.t(K.tournamentWaitingOpponent),
-                            style: AppTypography.bodyMedium.copyWith(
-                              color: AppTheme.textSubColor(context),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-                if (userMatch != null && !_awaitingOpponent) ...[
-                  const SizedBox(height: AppSpacing.md),
-                  _UserMatchCard(
-                    match: userMatch,
-                    roundName: roundNames[bracket.currentRound],
-                    loading: _matchLoading,
-                    ku: ku,
-                    onStart: _startMatch,
-                  ),
-                ],
-                const SizedBox(height: AppSpacing.lg),
-                // -- Bracket visualization --
-                _TournamentSectionTitle(
-                  label: context.t(K.bracket),
-                  accent: AppTheme.gold,
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    decoration: AppTheme.cardDecoration(context),
-                    child: TournamentBracketWidget(
-                      bracket: bracket,
-                      userId: _userId,
-                      ku: ku,
-                      onTapMatch: (match, roundIndex) {
-                        // Only the user's active match in the current round is tappable
-                        if (roundIndex == bracket.currentRound &&
-                            (match.playerOneId == _userId ||
-                                match.playerTwoId == _userId) &&
-                            match.status != 'completed') {
-                          _startMatch();
-                        }
-                      },
-                    ),
+                Icon(AppIcons.hourglass, size: 20, color: t.goldTx),
+                const SizedBox(width: SahneSpace.x3),
+                Expanded(
+                  child: Text(
+                    context.t(K.tournamentWaitingOpponent),
+                    style: SahneType.body.copyWith(color: t.tx2),
                   ),
                 ),
-                // Şemanın ALTINDAKİ düz tur listesi kaldırıldı.
-                //
-                // Aynı eşleşmeleri ikinci kez, üstelik DAHA AZ bilgiyle
-                // gösteriyordu: şemada kupa/çarpı işareti, üstü çizili
-                // kaybeden adı, kullanıcının vurgulu maçı ve (bu turdan
-                // itibaren) skor var; düz listede yalnız iki ad ve bir
-                // onay simgesi vardı. Kod içinde de "legacy" diye
-                // işaretliydi. İki kez anlatılan bir yapı, bir kez
-                // anlatılandan daha anlaşılır olmuyor (2026-08-04).
-                //
-                // Yerine turun NEREDE olduğunu söyleyen ilerleme şeridi
-                // konur — lobideki kupa merdiveni diliyle aynı aile.
-                const SizedBox(height: AppSpacing.md),
-                _RoundProgressStrip(
-                  roundNames: roundNames,
-                  rounds: bracket.rounds,
-                  currentRound: bracket.currentRound,
-                  bracketStatus: bracket.status,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                if (_standings.isNotEmpty) ...[
-                  _TournamentSectionTitle(
-                    label: context.t(K.standings),
-                    accent: AppTheme.gold,
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  ..._standings.map((s) => _StandingRow(s: s)),
-                ],
               ],
             ),
           ),
-        );
-      },
+        ],
+        // Maç kartı yalnız aktif turnuvada ve bekleme kartı yokken çizilir;
+        // üstünde başka kart olmadığı için ayrı aralık gerekmez.
+        if (userMatch != null && !_awaitingOpponent) ...[
+          _UserMatchCard(
+            match: userMatch,
+            userId: _userId,
+            roundName: roundNames[bracket.currentRound],
+            loading: _matchLoading,
+            ku: ku,
+            onStart: _startMatch,
+          ),
+        ],
+        SahneSectionHeader(title: context.t(K.bracket)),
+        SahneSurfaceCard(
+          padding: const EdgeInsets.all(SahneSpace.x3),
+          child: TournamentBracketWidget(
+            bracket: bracket,
+            userId: _userId,
+            ku: ku,
+            onTapMatch: (match, roundIndex) {
+              // Yalnız kullanıcının bu turdaki açık maçı dokunulabilir.
+              if (roundIndex == bracket.currentRound &&
+                  (match.playerOneId == _userId ||
+                      match.playerTwoId == _userId) &&
+                  match.status != 'completed') {
+                _startMatch();
+              }
+            },
+          ),
+        ),
+        // Şemanın ALTINDAKİ düz tur listesi kaldırıldı (2026-08-04): aynı
+        // eşleşmeleri ikinci kez, daha az bilgiyle gösteriyordu. Yerine
+        // turun NEREDE olduğunu söyleyen ilerleme şeridi durur — lobideki
+        // kupa yolu diliyle aynı aile.
+        const SizedBox(height: SahneSpace.x3),
+        _RoundProgressStrip(
+          roundNames: roundNames,
+          rounds: bracket.rounds,
+          currentRound: bracket.currentRound,
+          bracketStatus: bracket.status,
+        ),
+        if (_standings.isNotEmpty) ...[
+          SahneSectionHeader(title: context.t(K.standings)),
+          SahneListGroup(
+            children: [
+              for (final s in _standings)
+                SahneListRow.rank(
+                  rank: s.rank,
+                  title: s.playerName,
+                  initial: s.playerName.trim().isEmpty
+                      ? null
+                      : SahneType.upperFor(s.playerName.trim()[0], isKu: ku),
+                  icon: AppIcons.user,
+                  trailing: SahneRowValue('${s.totalScore}'),
+                ),
+            ],
+          ),
+        ],
+      ],
     );
   }
 }
@@ -951,37 +883,24 @@ class _LobbyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Kupanın ne zaman başlayacağı.
-    //
-    // Burada "Her Cumartesi 20:00" ve ona giden bir geri sayım yazıyordu.
-    // Kupa gerçek oyunculara çevrildiğinde (2026-07-26) kural değişti:
-    // kontenjan dolunca başlar, dolmazsa 24 saat sonunda eldeki oyuncularla.
-    // Cumartesi metni o günden beri yalandı — üstelik daha öncesinde de
-    // yanıltıcıydı: bot benzetiminde "Katıl"a basınca tur **hemen**
-    // başlıyordu, geri sayımın işaret ettiği bekleme hiç yaşanmıyordu
-    // (2026-07-27 Kurmancî taraması).
+    // Kupanın ne zaman başlayacağı: kontenjan dolunca, dolmazsa 24 saat
+    // sonunda eldeki oyuncularla. Eski "Her Cumartesi 20:00" metni bu
+    // kuraldan önce yazılmıştı ve gerçeği anlatmıyordu (2026-07-27).
     final scheduleText = context.t(K.cupStartsWhenFull);
 
-    // Kupa hero'su: durum, ödül ve ana eylem TEK yüzeyde.
+    // Kupa kahramanı: durum, ödül ve ana eylem TEK yüzeyde (2026-08-04).
     //
-    // Eskiden burada ikon + çip + paragraf + hap + paragraf + düğme alt
-    // alta diziliydi ve ekranın yarısından fazlası boştu. Daha kötüsü,
-    // kupanın ödülü (`coinRewardPerMatch`, `coinBonusChampion`) ve yapısı
-    // (16 oyuncu, 4 tur) `TournamentConfig`te sabit dururken ekranda HİÇ
-    // görünmüyordu: oyuncu neye katıldığını okumadan karar veriyordu
-    // (2026-08-04 görsel denetimi).
+    // 2026-09-29 Şahnê: sahne kartı Zêr (ödül) rolünde — altın kilim
+    // şeridi, altın köşe ışıması; "Turnuvaya Katıl" ekranın tek birincil
+    // eylemidir (Agir, koyu metin). Eski düğme turuncu üstüne beyaz
+    // yazıyordu.
     final hero = ArenaHero(
       title: context.t(K.tournamentTitle),
       // Kural alt başlıkta, DURUM çipte. Çip bir etikettir; "Kontenjan
-      // dolunca başlar" gibi bir cümleyi taşıyamaz ve taşımaya
-      // çalışınca "Kontenj..." diye kırpılıyordu (2026-08-04).
+      // dolunca başlar" gibi bir cümleyi taşıyamaz (2026-08-04).
       subtitle: scheduleText,
-      accent: AppTheme.gold,
+      accent: SahneTokens.of(context).gold,
       icon: AppIcons.trophy,
-      // Durum çipi başlığın YANINDA değil, jeton satırında. Başlıkla aynı
-      // satırda genişlik yarıştırınca ikisi de kırpılıyordu ("ZanKurd
-      // Kupası" iki satıra, "Başlamadı" → "Başlama..."). Jeton satırı
-      // sarmalı bir `Wrap`; orada hiçbir şey kısalmaz (2026-08-04).
       tokens: [
         ArenaStatusChip(
           // Kupa henüz başlamadı: kontenjan dolunca başlar.
@@ -991,8 +910,7 @@ class _LobbyView extends StatelessWidget {
         ),
         // Ödül GERÇEK sabitlerden gelir; uydurulmaz. Maç başı jeton
         // kasıtlı olarak yok: sunucu maç başına hiçbir coin ödemiyor
-        // (2026-08-14 denetimi) — "0 coin" göstermek de bir ödül vaadi
-        // gibi okunurdu.
+        // (2026-08-14 denetimi).
         RewardToken(
           kind: RewardKind.coin,
           value: '${TournamentConfig.coinBonusChampion}',
@@ -1000,24 +918,11 @@ class _LobbyView extends StatelessWidget {
           onSolid: true,
         ),
       ],
-      action: SizedBox(
-        width: double.infinity,
-        child: FilledButton.icon(
-          key: const ValueKey('tournament-primary-cta'),
-          onPressed: onStart,
-          icon: const Icon(AppIcons.trophy, size: 20),
-          style: FilledButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-            backgroundColor: AppTheme.brand,
-            foregroundColor: Colors.white,
-          ),
-          label: Text(
-            context.t(K.joinTournament),
-            style: AppTypography.bodyLarge.copyWith(
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-        ),
+      action: SahneButton.primary(
+        key: const ValueKey('tournament-primary-cta'),
+        label: context.t(K.joinTournament),
+        expand: true,
+        onPressed: onStart,
       ),
     );
 
@@ -1026,86 +931,48 @@ class _LobbyView extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        // `ScreenIdentityHeader` BİLEREK yok: `ArenaHero` aynı başlığı,
-        // aynı amblemi ve fazlasını (durum, ödül, eylem) taşıyor. İkisi
-        // birlikte çizilince "ZanKurd Kupası" ilk 300 pikselde iki kez
-        // yazıyordu — 2026-07-30 ekran turunda kapatılmış bir kusur; hero'ya
-        // geçerken farkında olmadan geri geldi ve görüntüde yakalandı
-        // (2026-08-04).
+        // `ScreenIdentityHeader` BİLEREK yok: kahraman kupanın adını,
+        // amblemini ve fazlasını (durum, ödül, eylem) taşıyor (2026-08-04).
 
         // Geniş ekranda gerçek iki sütun: solda kupanın ne olduğu ve
-        // katılma eylemi, sağda biçim ve kupa yolu. Telefon düzeni
-        // 720'nin altında hiç değişmez.
+        // katılma eylemi, sağda biçim ve kupa yolu.
         if (constraints.maxWidth >= 720) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(flex: 6, child: hero),
-                    const SizedBox(width: AppSpacing.cardGap),
-                    Expanded(
-                      flex: 5,
-                      child: Column(
-                        key: const ValueKey('tournament-wide-column'),
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          format,
-                          const SizedBox(height: AppSpacing.cardGap),
-                          ladder,
-                        ],
-                      ),
-                    ),
-                  ],
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(flex: 6, child: hero),
+              const SizedBox(width: SahneSpace.cardGap),
+              Expanded(
+                flex: 5,
+                child: Transform.translate(
+                  // Bölüm başlığının 24'lük üst boşluğu geri alınır: sağ
+                  // sütunun başlığı kahramanın üst kenarıyla hizalanır.
+                  offset: const Offset(0, -SahneSpace.sectionTop),
+                  child: Column(
+                    key: const ValueKey('tournament-wide-column'),
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [format, ladder],
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         }
-
-        // 2026-07-22 canlı UX denetimi: dikey ortalama — hero kart viewport
-        // kısa kaldığında alt boşluk yerine dikeyde ortalanır; içerik
-        // uzunsa scroll. IntrinsicHeight KULLANILMADI: LayoutBuilder içinde
-        // "LayoutBuilder does not support returning intrinsic dimensions"
-        // hatası veriyor.
-        //
-        // 2026-08-14 denetimi: yorum "ConstrainedBox(minHeight) tek başına
-        // yeterli" diyordu ama YETERLİ DEĞİLDİ — `Column`un varsayılan
-        // `mainAxisAlignment.start`ı, minHeight'in eklediği fazla boşluğu
-        // en ALTA bırakıyordu (ortalamıyordu). Kısa viewport'ta (ör. lobi
-        // kartı tek başına) ekranın alt yarısı boş kalıyordu — ekran turu
-        // görsel denetiminde yakalandı. `mainAxisAlignment.center` eksikti.
-        final minH = math.max(0.0, constraints.maxHeight - AppSpacing.lg * 2);
-        return SingleChildScrollView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: minH),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                hero,
-                const SizedBox(height: AppSpacing.cardGap),
-                format,
-                const SizedBox(height: AppSpacing.cardGap),
-                ladder,
-              ],
-            ),
-          ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [hero, format, ladder],
         );
       },
     );
   }
 }
 
-/// Kupanın biçimi: kaç oyuncu, kaç tur, maç başına kaç soru, hangi beş.
+/// Kupanın biçimi: kaç oyuncu, kaç tur, maç başına kaç soru.
 ///
-/// Dört değer de `TournamentConfig`te sabittir ve uydurulmaz. Bunlar
-/// eskiden yalnız tek bir çipte "Eleme kupası · 4 soru/maç" diye
-/// özetleniyordu; oyuncu kaç kişilik bir kupaya girdiğini göremiyordu.
+/// Değerler `TournamentConfig`te sabittir ve uydurulmaz.
+///
+/// 2026-09-29 Şahnê: bölüm başlığı + yüzey kartı; sayılar istatistik
+/// karolarında (Kulis tonu, M pah, Zêr ikon, Manşet 22 tablo rakamı).
 class _CupFormatPanel extends StatelessWidget {
   const _CupFormatPanel({required this.ku});
 
@@ -1113,6 +980,7 @@ class _CupFormatPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final items = <(IconData, String, String)>[
       (
         AppIcons.peopleGroup,
@@ -1126,71 +994,54 @@ class _CupFormatPanel extends StatelessWidget {
       ),
     ];
 
-    // Kupanın türü ve maç uzunluğu TEK cümlede durur.
-    //
-    // Sayıya bölünmüş bir blok ("4" + "soru/maç") görsel olarak daha
-    // düzenli görünüyordu ama cümleyi parçalıyordu: kupanın eleme usulü
-    // olduğu bilgisi hiçbir yerde kalmıyordu ve bu, 2026-07-30'da bilerek
-    // konmuş dürüstlük ifadesiydi. Sunum değişti diye kaybolmamalı.
+    // Kupanın türü ve maç uzunluğu TEK cümlede durur: eleme usulü olduğu
+    // bilgisi 2026-07-30'da bilerek konmuş bir dürüstlük ifadesidir.
     final formatLine =
         '${Tr.forKu(K.botDailyCup, ku)} · '
         '${Tr.forKu(K.formatSummary, ku, {'perMatch': '${TournamentConfig.questionsPerMatch}'})}';
 
-    return _CupPanel(
-      title: Tr.forKu(K.cupFormatTitle, ku),
-      icon: AppIcons.trophy,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            formatLine,
-            style: AppTypography.bodyMedium.copyWith(
-              fontWeight: FontWeight.w800,
-              color: AppTheme.textPrimaryColor(context),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SahneSectionHeader(title: Tr.forKu(K.cupFormatTitle, ku)),
+        SahneSurfaceCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                formatLine,
+                style: SahneType.bodyStrong.copyWith(color: t.tx),
+              ),
+              const SizedBox(height: SahneSpace.x3),
+              // Karolar sarar: %200 yazıda dar telefonda alt satıra iner.
+              Wrap(
+                spacing: SahneSpace.x2,
+                runSpacing: SahneSpace.x2,
+                children: [
+                  for (final item in items)
+                    _CupStat(icon: item.$1, value: item.$2, label: item.$3),
+                ],
+              ),
+              const SizedBox(height: SahneSpace.x3),
+              // Kupanın iki kuralı da burada durur.
+              Text(
+                '${Tr.forKu(K.botRaceHint, ku)}\n${Tr.forKu(K.cupStartsLatest, ku)}',
+                style: SahneType.caption.copyWith(color: t.tx2),
+              ),
+            ],
           ),
-          const SizedBox(height: AppSpacing.sm),
-          // Yatay kaydırma: bloklar %200 yazıda dar telefona sığmıyor ve
-          // sayıları küçültmek biçim bilgisini okunmaz kılardı.
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                for (var i = 0; i < items.length; i++)
-                  Padding(
-                    padding: EdgeInsets.only(
-                      right: i == items.length - 1 ? 0 : AppSpacing.sm,
-                    ),
-                    child: _CupStat(
-                      icon: items[i].$1,
-                      value: items[i].$2,
-                      label: items[i].$3,
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          // Kupanın iki kuralı da burada durur: kontenjan dolmazsa ne
-          // olacağı hero'nun alt başlığına sığmıyordu.
-          Text(
-            '${Tr.forKu(K.botRaceHint, ku)}\n${Tr.forKu(K.cupStartsLatest, ku)}',
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textMutedColor(context),
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
 
 /// Kupa yolu: 16 → 8 → 4 → 2 → 1.
 ///
-/// Turnuvayı yarışmadan ayıran şey tam da bu: aşamalı ve uzun soluklu bir
-/// etkinlik. Merdiven o kimliği tek bakışta anlatır — "Eleme kupası"
-/// yazan bir çipin anlatamadığı şey.
+/// Turnuvayı yarışmadan ayıran şey: aşamalı ve uzun soluklu bir etkinlik.
+/// 2026-09-29 Şahnê: ara basamaklar yarış tonu (Boyax), varış basamağı
+/// ödül tonu (Zêr) + taç glifi — renk tek kanal değil.
 class _CupLadder extends StatelessWidget {
   const _CupLadder({required this.ku});
 
@@ -1198,35 +1049,38 @@ class _CupLadder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 16 → 8 → 4 → 2 → 1: `TournamentConfig.generateBracket` ile aynı
-    // bölme mantığı; sabit dizi yazılmaz ki ikisi ayrışmasın.
+    final t = SahneTokens.of(context);
+    // `TournamentConfig.generateBracket` ile aynı bölme mantığı; sabit dizi
+    // yazılmaz ki ikisi ayrışmasın.
     final steps = <int>[TournamentConfig.totalPlayers];
     while (steps.last > 1) {
       steps.add(steps.last ~/ 2);
     }
 
-    return _CupPanel(
-      title: Tr.forKu(K.cupLadder, ku),
-      icon: AppIcons.chartLine,
-      // `Wrap`, yatay kaydırma DEĞİL: kaydırmada merdivenin son basamağı
-      // — yani şampiyonluk — ekranın sağında kesik duruyordu ve kupanın
-      // varış noktası tam da o basamak (2026-08-04).
-      child: Wrap(
-        spacing: 4,
-        runSpacing: 6,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          for (var i = 0; i < steps.length; i++) ...[
-            if (i > 0)
-              Icon(
-                Icons.chevron_right_rounded,
-                size: 16,
-                color: AppTheme.textMutedColor(context),
-              ),
-            _LadderStep(count: steps[i], isFinal: steps[i] == 1),
-          ],
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SahneSectionHeader(title: Tr.forKu(K.cupLadder, ku)),
+        SahneSurfaceCard(
+          // `Wrap`, yatay kaydırma DEĞİL: kaydırmada merdivenin son
+          // basamağı — şampiyonluk — sağda kesik duruyordu (2026-08-04).
+          child: Wrap(
+            spacing: SahneSpace.x1,
+            runSpacing: SahneSpace.x2,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              for (var i = 0; i < steps.length; i++) ...[
+                if (i > 0)
+                  ExcludeSemantics(
+                    child: Icon(AppIcons.chevronRight, size: 16, color: t.tx3),
+                  ),
+                _LadderStep(count: steps[i], isFinal: steps[i] == 1),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -1239,55 +1093,48 @@ class _LadderStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Son basamak şampiyonluk: altın dolu, diğerleri sakin tonal.
-    final tone = isFinal ? AppTheme.gold : const Color(0xFF6A38BE);
-    return Container(
-      constraints: const BoxConstraints(minWidth: 34),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
-      decoration: BoxDecoration(
-        color: tone.withValues(
-          alpha: isFinal
-              ? (AppTheme.isLight(context) ? 0.22 : 0.34)
-              : (AppTheme.isLight(context) ? 0.10 : 0.22),
-        ),
-        borderRadius: BorderRadius.circular(AppRadius.badge),
-        border: isFinal
-            ? Border.all(color: tone.withValues(alpha: 0.55))
-            : null,
+    final t = SahneTokens.of(context);
+    final fg = isFinal ? t.goldTx : t.raceTx;
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: isFinal ? t.goldTint : t.raceTint,
+        shape: isFinal
+            ? SahneShape.withSide(SahneShape.s, t.gold, width: SahneRing.r1)
+            : SahneShape.s,
       ),
-      // `alignment` YOK: alignment verilen bir `Container` gevşek
-      // kısıtlar altında var olan bütün genişliği doldurur. Yatay
-      // kaydırmada (sınırsız genişlik) sorun çıkmıyordu, `Wrap`a
-      // geçince her basamak tam satır oldu ve merdiven dikey bir
-      // yığına dönüştü (2026-08-04).
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Şampiyonluk basamağı ayrıca bir kupa taşır: renk tek kanal
-          // olamaz, son basamağın farkı yalnız tonla anlatılmamalı.
-          if (isFinal) ...[
-            Icon(
-              AppIcons.trophy,
-              size: 13,
-              color: AppColors.readableAccent(context, tone),
-            ),
-            const SizedBox(width: 4),
-          ],
-          Text(
-            '$count',
-            maxLines: 1,
-            style: AppTypography.caption.copyWith(
-              fontWeight: FontWeight.w900,
-              color: AppColors.readableAccent(context, tone),
-            ),
+      child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — turnuva merdiveni ilerleme
+        // rozeti; salt görsel, dokunma hedefi değil.
+        constraints: const BoxConstraints(minWidth: 40, minHeight: 32),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Şampiyonluk basamağı ayrıca taç taşır: son basamağın farkı
+              // yalnız tonla anlatılmaz.
+              if (isFinal) ...[
+                const SahneGlyph(SahneGlyphKind.crown, size: 16),
+                const SizedBox(width: SahneSpace.x1),
+              ],
+              Text(
+                '$count',
+                maxLines: 1,
+                style: SahneType.captionStrong.copyWith(
+                  color: fg,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 }
 
-/// Sayı + etiketten oluşan küçük biçim bloğu.
+/// İstatistik karosu: ikon + değer + etiket (Kulis tonu, M pah).
 class _CupStat extends StatelessWidget {
   const _CupStat({
     required this.icon,
@@ -1301,90 +1148,35 @@ class _CupStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minWidth: 74),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceHiColor(context),
-        borderRadius: BorderRadius.circular(AppRadius.badge),
-        border: Border.all(color: AppTheme.borderColor(context)),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 14, color: AppTheme.textSubColor(context)),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            maxLines: 1,
-            style: AppTypography.subtitle.copyWith(
-              fontWeight: FontWeight.w900,
-              color: AppTheme.textPrimaryColor(context),
-            ),
-          ),
-          Text(
-            label,
-            maxLines: 1,
-            style: AppTypography.caption.copyWith(
-              color: AppTheme.textMutedColor(context),
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Başlıklı sakin panel — arena ailesinin nötr yüzeyi.
-///
-/// Her bilgiyi ayrı renkli karta koymak yeni bir kart yığını üretirdi;
-/// panel yalnız iki tane ve ikisi de mürekkep nötrü.
-class _CupPanel extends StatelessWidget {
-  const _CupPanel({
-    required this.title,
-    required this.icon,
-    required this.child,
-  });
-
-  final String title;
-  final IconData icon;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceColor(context),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppTheme.borderColor(context)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
+    final t = SahneTokens.of(context);
+    return DecoratedBox(
+      decoration: ShapeDecoration(color: t.s2, shape: SahneShape.m),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minWidth: 96),
+        child: Padding(
+          padding: const EdgeInsets.all(SahneSpace.x3),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, size: 15, color: AppTheme.textSubColor(context)),
-              const SizedBox(width: 6),
-              Flexible(
-                child: Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.caption.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: AppTheme.textSubColor(context),
-                  ),
+              Icon(icon, size: 20, color: t.goldTx),
+              const SizedBox(height: SahneSpace.x1),
+              Text(
+                value,
+                maxLines: 1,
+                style: SahneType.headline.copyWith(
+                  color: t.tx,
+                  fontFeatures: const [FontFeature.tabularFigures()],
                 ),
+              ),
+              Text(
+                label,
+                maxLines: 1,
+                style: SahneType.caption.copyWith(color: t.tx2),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.sm),
-          child,
-        ],
+        ),
       ),
     );
   }
@@ -1393,11 +1185,8 @@ class _CupPanel extends StatelessWidget {
 /// Turun nerede olduğunu söyleyen ilerleme şeridi.
 ///
 /// Şema yatay kaydırılabilir ve dar telefonda yalnız ilk iki tur görünür;
-/// oyuncu kupanın kaç turdan oluştuğunu ve hangi turda olduğunu şemayı
-/// kaydırmadan göremiyordu. Şerit bunu tek bakışta verir ve aynı zamanda
-/// şemada sağa doğru daha fazla içerik olduğunun işaretidir.
-///
-/// Lobideki kupa merdiveniyle aynı görsel aile — ikinci bir dil kurulmaz.
+/// şerit kupanın kaç turdan oluştuğunu ve hangi turda olunduğunu tek
+/// bakışta verir. Kupa yolu ile aynı görsel aile.
 class _RoundProgressStrip extends StatelessWidget {
   const _RoundProgressStrip({
     required this.roundNames,
@@ -1413,23 +1202,22 @@ class _RoundProgressStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     return Wrap(
-      spacing: 4,
-      runSpacing: 6,
+      spacing: SahneSpace.x1,
+      runSpacing: SahneSpace.x2,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         for (var i = 0; i < rounds.length && i < roundNames.length; i++) ...[
           if (i > 0)
-            Icon(
-              Icons.chevron_right_rounded,
-              size: 15,
-              color: AppTheme.textMutedColor(context),
+            ExcludeSemantics(
+              child: Icon(AppIcons.chevronRight, size: 16, color: t.tx3),
             ),
           _RoundPill(
             label: roundNames[i],
-            // Durum GERÇEK tur verisinden gelir; sıra numarasından
-            // tahmin edilmez. Turnuva bittiyse (kazandı/elendi) hiçbir
-            // tur "şu an oynanıyor" diye işaretlenmez.
+            // Durum GERÇEK tur verisinden gelir; sıra numarasından tahmin
+            // edilmez. Turnuva bittiyse hiçbir tur "şu an oynanıyor" diye
+            // işaretlenmez.
             state: rounds[i].status == 'completed'
                 ? _RoundState.done
                 : (bracketStatus == 'active' && i == currentRound)
@@ -1452,85 +1240,45 @@ class _RoundPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final light = AppTheme.isLight(context);
-    // Renk tek kanal değil: her durumun kendi ikonu var.
-    final (tone, icon) = switch (state) {
-      _RoundState.done => (const Color(0xFF0E7A57), Icons.check_rounded),
-      _RoundState.active => (AppTheme.gold, Icons.play_arrow_rounded),
-      _RoundState.upcoming => (const Color(0xFF3A4557), Icons.remove_rounded),
+    final t = SahneTokens.of(context);
+    // Renk tek kanal değil: her durumun kendi ikonu var. Biten tur Rast
+    // (✓), oynanan tur yarış tonu + Halka 1, gelecek tur nötr.
+    final (bg, fg, icon) = switch (state) {
+      _RoundState.done => (t.okTint, t.okTx, AppIcons.check),
+      _RoundState.active => (t.raceTint, t.raceTx, AppIcons.play),
+      _RoundState.upcoming => (t.s2, t.tx2, AppIcons.clock),
     };
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
-      decoration: BoxDecoration(
-        color: tone.withValues(
-          alpha: state == _RoundState.upcoming
-              ? (light ? 0.07 : 0.16)
-              : (light ? 0.14 : 0.26),
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: bg,
+        shape: state == _RoundState.active
+            ? SahneShape.withSide(SahneShape.s, fg, width: SahneRing.r1)
+            : SahneShape.s,
+      ),
+      child: ConstrainedBox(
+        // a11y-tap-target: noninteractive — tur durumu çipi; salt görsel,
+        // dokunma hedefi değil.
+        constraints: const BoxConstraints(minHeight: 28),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: SahneSpace.x2),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 14, color: fg),
+              const SizedBox(width: SahneSpace.x1),
+              // Esnek olmalı: "Çeyrek Final" %200 yazıda dar telefonda
+              // çipi taşırıyordu.
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: SahneType.captionStrong.copyWith(color: fg),
+                ),
+              ),
+            ],
+          ),
         ),
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: state == _RoundState.active
-            ? Border.all(color: tone.withValues(alpha: 0.55))
-            : null,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 12, color: AppColors.readableAccent(context, tone)),
-          const SizedBox(width: 5),
-          // Esnek olmalı: "Çeyrek Final" %200 yazıda dar telefonda çipi
-          // 47 piksel taşırıyordu. `Wrap` satırı sarabilir ama tek bir
-          // çipin kendi içeriğini sığdırması gerekir.
-          Flexible(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTypography.caption.copyWith(
-                fontWeight: state == _RoundState.active
-                    ? FontWeight.w900
-                    : FontWeight.w700,
-                color: AppColors.readableAccent(context, tone),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Bölüm başlığı — all-caps etiket patlaması yerine standart gövde başlığı:
-/// sol accent çizgisi + normal büyük/küçük harf, okunabilir ağırlık.
-class _TournamentSectionTitle extends StatelessWidget {
-  const _TournamentSectionTitle({required this.label, required this.accent});
-
-  final String label;
-  final Color accent;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(2, AppSpacing.xs, 2, AppSpacing.xs),
-      child: Row(
-        children: [
-          Container(
-            width: 3,
-            height: 16,
-            decoration: AppTheme.sectionAccent(accent),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppTheme.textPrimaryColor(context),
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -1539,8 +1287,7 @@ class _TournamentSectionTitle extends StatelessWidget {
 /// Turnuva bittiğinde (elendi/kazandı) görünen özet.
 ///
 /// "Elendi" tek başına hangi turda elenildiğini ve kaç puan alındığını
-/// söylemiyordu; oyuncunun turnuvadan aldığı tek somut bilgi kayıptı.
-/// İkisi de şemada gerçekten duruyor (2026-08-04).
+/// söylemiyordu; ikisi de şemada gerçekten duruyor (2026-08-04).
 class _StatusCard extends StatelessWidget {
   const _StatusCard({
     required this.bracket,
@@ -1554,91 +1301,59 @@ class _StatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
     final statusLabel = switch (bracket.status) {
       'won' => context.t(K.champion),
       'eliminated' => context.t(K.eliminated),
       _ => context.t(K.ongoing),
     };
-    return AppPanel(
-      color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
+    return SahneSurfaceCard(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Esnek olmalı: "Elendi"/"Şampiyon" %200 yazıda tur rozetiyle
-          // aynı satıra sığmıyordu ve durum kartı taşıyordu. Bu kart tam
-          // da elenme ve şampiyonluk anında görünen kart — taşma şeridi
-          // sonucun kendisini örtüyordu (2026-08-04).
+          // aynı satıra sığmıyordu (2026-08-04).
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   context.t(K.status),
-                  style: AppTypography.caption.copyWith(
-                    color: AppTheme.textMutedColor(context),
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: SahneType.caption.copyWith(color: t.tx2),
                 ),
                 Text(
                   statusLabel,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.heading2.copyWith(
-                    color: AppTheme.textPrimaryColor(context),
-                  ),
+                  style: SahneType.headline.copyWith(color: t.tx),
                 ),
                 // Elenen oyuncuya HANGİ turda elendiği ve kaç puan aldığı
-                // söylenir. "Elendi" tek başına turnuvadan alınan tek
-                // somut bilgiyi (skor) ve bağlamı (tur) gizliyordu.
-                // İkisi de şemada gerçekten duruyor; uydurulmaz.
+                // söylenir; ikisi de şemada gerçekten duruyor.
                 if (bracket.status == 'eliminated' &&
-                    bracket.currentRound < roundNames.length) ...[
-                  const SizedBox(height: 2),
+                    bracket.currentRound < roundNames.length)
                   Text(
                     Tr.forKu(K.cupEliminatedRound, ku, {
                       'round': roundNames[bracket.currentRound],
                     }),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textSubColor(context),
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: SahneType.caption.copyWith(color: t.tx2),
                   ),
-                ],
-                if (bracket.totalScore > 0) ...[
-                  const SizedBox(height: 2),
+                if (bracket.totalScore > 0)
                   Text(
                     '${Tr.forKu(K.cupFinalScore, ku)}: ${bracket.totalScore}',
                     maxLines: 1,
-                    style: AppTypography.caption.copyWith(
-                      color: AppTheme.textSubColor(context),
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: SahneType.captionStrong.copyWith(color: t.tx),
                   ),
-                ],
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.sm),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.sm,
-              vertical: AppSpacing.xxs,
-            ),
-            decoration: BoxDecoration(
-              color: AppTheme.gold.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(AppRadius.pill),
-              border: Border.all(color: AppTheme.gold.withValues(alpha: 0.22)),
-            ),
-            child: Text(
-              '${(bracket.currentRound + 1).clamp(1, bracket.rounds.length)}'
-              '/${bracket.rounds.length}',
-              maxLines: 1,
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppColors.onAccentTint(context, AppTheme.gold),
-              ),
-            ),
+          const SizedBox(width: SahneSpace.x2),
+          SahneBadge(
+            label:
+                '${(bracket.currentRound + 1).clamp(1, bracket.rounds.length)}'
+                '/${bracket.rounds.length}',
+            tone: SahneBadgeTone.gold,
           ),
         ],
       ),
@@ -1715,7 +1430,7 @@ class _ChampionBanner extends StatelessWidget {
       title: context.t(K.championCongrats),
       // Final skoru GERÇEK şemadan gelir.
       subtitle: '${context.t(K.cupFinalScore)}: $finalScore',
-      accent: AppTheme.gold,
+      accent: SahneTokens.of(context).gold,
       icon: AppIcons.trophy,
       tokens: [
         ArenaStatusChip(status: status, label: label, onSolid: true),
@@ -1733,9 +1448,16 @@ class _ChampionBanner extends StatelessWidget {
   }
 }
 
+/// Kullanıcının bu turdaki maçı — ekranın aktif turnuvadaki TEK birincil
+/// eylemi burada.
+///
+/// 2026-09-29 Şahnê: yarış rolünde sahne kartı (Boyax sahne degradesi,
+/// lal kilim şeridi). İki oyuncu elmas avatarla yüz yüze: kullanıcı Halka
+/// 3 altın, rakip yumuşak lal; arada "VS". Altında tarih ve "Maçı Başlat".
 class _UserMatchCard extends StatelessWidget {
   const _UserMatchCard({
     required this.match,
+    required this.userId,
     required this.roundName,
     required this.loading,
     required this.ku,
@@ -1743,6 +1465,7 @@ class _UserMatchCard extends StatelessWidget {
   });
 
   final TournamentMatch match;
+  final String userId;
   final String roundName;
   final bool loading;
   final bool ku;
@@ -1750,142 +1473,109 @@ class _UserMatchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppPanel(
-      color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            context.t(K.yourMatchRound, {'round': roundName}),
-            style: TextStyle(
-              color: AppTheme.textMutedColor(context),
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
+    return SahneStageCard(
+      role: SahneRole.race,
+      child: Builder(
+        builder: (context) {
+          // Sahne kartının içi gece belirteçleridir.
+          final t = SahneTokens.of(context);
+          Widget side(String name, {required bool me}) {
+            final trimmed = name.trim();
+            return Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SahneDiamondAvatar(
+                    size: 56,
+                    initial: trimmed.isEmpty
+                        ? null
+                        : SahneType.upperFor(trimmed[0], isKu: ku),
+                    icon: trimmed.isEmpty ? AppIcons.user : null,
+                    color: me ? t.tx : SahneStageColors.race3,
+                    foreground: me
+                        ? SahneStageColors.race2
+                        : SahneStageColors.raceSoft,
+                    ring: me ? t.gold : SahneStageColors.raceSoft,
+                    ringWidth: me ? SahneRing.r3 : SahneRing.r2,
+                  ),
+                  const SizedBox(height: SahneSpace.x2),
+                  Text(
+                    name,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.bodyStrong.copyWith(color: t.tx),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: Text(
-                  match.playerOneName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
-                    fontSize: 15,
-                  ),
+              Text(
+                context.t(K.yourMatchRound, {'round': roundName}),
+                style: SahneType.captionStrong.copyWith(
+                  color: SahneStageColors.raceSoft,
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: AppTheme.gold.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(AppRadius.badge),
-                  border: Border.all(
-                    color: AppTheme.gold.withValues(alpha: 0.18),
+              const SizedBox(height: SahneSpace.x3),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  side(match.playerOneName, me: match.playerOneId == userId),
+                  Padding(
+                    padding: const EdgeInsets.only(top: SahneSpace.x4),
+                    child: Text(
+                      'VS',
+                      style: SahneType.eyebrow.copyWith(color: t.tx),
+                    ),
                   ),
-                ),
-                child: Text(
-                  'VS',
-                  style: TextStyle(
-                    color: AppColors.onAccentTint(context, AppTheme.gold),
-                    fontWeight: FontWeight.w900,
-                    fontSize: 12,
-                  ),
-                ),
+                  side(match.playerTwoName, me: match.playerTwoId == userId),
+                ],
               ),
-              Expanded(
-                child: Text(
-                  match.playerTwoName,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppTheme.textPrimaryColor(context),
-                    fontWeight: FontWeight.w800,
-                    fontSize: 15,
-                  ),
+              if (match.deadline != null) ...[
+                const SizedBox(height: SahneSpace.x3),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 2),
+                      child: Icon(
+                        AppIcons.clock,
+                        size: 16,
+                        color: SahneStageColors.raceSoft,
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x1),
+                    Expanded(
+                      child: Text(
+                        key: const ValueKey('tournament-match-deadline'),
+                        match.deadline!.isBefore(DateTime.now())
+                            ? context.t(K.tournamentMatchDeadlinePassed)
+                            : Tr.forKu(K.tournamentMatchDeadline, ku, {
+                                'time': formatMatchDeadline(match.deadline!),
+                              }),
+                        style: SahneType.caption.copyWith(
+                          color: SahneStageColors.raceSoft,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
+              ],
+              const SizedBox(height: SahneSpace.x4),
+              SahneButton.primary(
+                label: context.t(K.startMatch),
+                icon: AppIcons.play,
+                arrow: false,
+                expand: true,
+                onPressed: loading ? null : onStart,
               ),
             ],
-          ),
-          if (match.deadline != null) ...[
-            const SizedBox(height: 10),
-            Text(
-              key: const ValueKey('tournament-match-deadline'),
-              match.deadline!.isBefore(DateTime.now())
-                  ? context.t(K.tournamentMatchDeadlinePassed)
-                  : Tr.forKu(K.tournamentMatchDeadline, ku, {
-                      'time': formatMatchDeadline(match.deadline!),
-                    }),
-              style: TextStyle(
-                color: AppTheme.textMutedColor(context),
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-          const SizedBox(height: 14),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton.icon(
-              onPressed: loading ? null : onStart,
-              icon: loading
-                  ? const SizedBox(
-                      width: 16,
-                      height: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(AppIcons.play),
-              label: Text(context.t(K.startMatch)),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StandingRow extends StatelessWidget {
-  const _StandingRow({required this.s});
-
-  final TournamentStandings s;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: AppPanel(
-        color: AppTheme.surfaceOf(context).withValues(alpha: 0.96),
-        child: Row(
-          children: [
-            Text(
-              '${s.rank}.',
-              style: TextStyle(color: AppTheme.textSubColor(context)),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Text(
-                s.playerName,
-                style: TextStyle(
-                  color: AppTheme.textPrimaryColor(context),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Text(
-              '${s.totalScore}',
-              style: TextStyle(
-                color: AppColors.readableAccent(context, AppTheme.accent),
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// `shop_screen.dart`taki M24 notuyla "marka dışı" ilan edildi: ZanKurd'ün
 /// kimliği turuncu · altın · koyu yeşil. Mağaza o gün düzeltildi, eşleşme
 /// ekranının hero'su 2026-07-31'de düzeltildi — ama kararın yazıldığı
-/// ekranların *kendisi* atlandı. Oyun merkezinde "Oda Kur" moru, "Turnuva
+/// ekranların *kendisi* atlandı. Oyun merkezinde "Oda kur" moru, "Turnuva
 /// Modu" pembeyi taşımaya devam etti; ana ekranda tekrar satırı, ayarlar
 /// başlığı ve soru öneri ekranı da öyle.
 ///
@@ -59,33 +60,46 @@ void main() {
     });
   }
 
-  test('oyun merkezinin dört satırı birbirinden ayrılıyor', () {
-    // Paletin içinde kalmak, hepsini aynı yeşile boyamak demek değil:
-    // dört satır yan yana duruyor ve ayırt edilebilir kalmalı.
+  test('oyun merkezi aksanları kart değil işlev rolü anlatır', () {
+    // 2026-09-10 tasarım grameri: her kartı ayrı renge boyamak ekranı
+    // gökkuşağına çeviriyordu. Ayrım artık renk + ikon + başlık birlikte
+    // yapılır; renk ise semantik rolü taşır.
+    //
+    // 2026-09-29 Şahnê: roller ham renkle (`accent: AppTheme.*`) değil
+    // `SahneRole` ile verilir. Kural aynı kalır, yeni diliyle: turuncu
+    // (Agir) yalnız ekranın TEK birincil düğmesi (hızlı düello), oda ve
+    // düello yolları Boyax (yarış), turnuva Zêr (prestij). Ekranda ham
+    // aksan rengi kalmaz.
     final source = File(
       'lib/src/screens/play_hub_screen.dart',
     ).readAsStringSync();
-    // 2026-08-04: aksanlar `AppTheme.*` sabitlerinden Rengîn palet
-    // literallerine geçti (safir/turkuaz/safran/ametist). Bekçinin
-    // koruduğu kural değişmedi — dört satır ayırt edilebilir kalmalı —
-    // ama yalnız sabit adlarına bakan regex kör kalıyordu: dört satır
-    // ayrıyken bile "1 aksan buldum" diyordu. Artık her iki yazımı da
-    // görür, yani kural gevşemedi, kapsamı düzeldi.
-    final accents = RegExp(
-      r'accent: (?:const )?(AppTheme\.[a-zA-Z]+|Color\(0x[0-9A-Fa-f]{8}\))',
-    ).allMatches(source).map((m) => m.group(1)!).toList();
+    final code = source
+        .split('\n')
+        .where((line) => !line.trimLeft().startsWith('//'))
+        .join('\n');
 
     expect(
-      accents.length,
-      greaterThanOrEqualTo(4),
-      reason: 'Bekçi kör kalmasın: satırlar bulunamadıysa kural boşa döner.',
+      RegExp(r'accent: AppTheme\.').allMatches(code),
+      isEmpty,
+      reason: 'Rol ham renkle değil SahneRole ile verilir.',
     );
     expect(
-      accents.toSet().length,
-      accents.length,
-      reason:
-          'İki satır aynı aksanı taşıyor; kullanıcı hangisinin ne olduğunu '
-          'renkten ayırt edemez: $accents',
+      'SahneButton.primary('.allMatches(code).length,
+      1,
+      reason: 'Agir/turuncu yalnız ekranın tek birincil eyleminde kalmalı.',
+    );
+    final roles = RegExp(
+      r'role: SahneRole\.([a-z]+)',
+    ).allMatches(code).map((m) => m.group(1)!).toList();
+    expect(
+      roles.where((r) => r == 'race').length,
+      greaterThanOrEqualTo(3),
+      reason: 'Oda kurma, kodla katılma ve düello aynı yarış rolüdür.',
+    );
+    expect(roles, contains('gold'), reason: 'Turnuva prestij (Zêr) rolüdür.');
+    expect(
+      roles.toSet().difference({'race', 'gold', 'learn', 'neutral'}),
+      isEmpty,
     );
   });
 }

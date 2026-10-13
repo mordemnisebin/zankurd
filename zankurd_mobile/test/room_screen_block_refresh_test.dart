@@ -1,3 +1,4 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -43,9 +44,16 @@ void main() {
 
     expect(find.text('Berfin'), findsOneWidget);
 
-    await tester.tap(
+    // 2026-09-29 Şahnê: lobi uzadı (sahne kartı kahraman + alt perdede
+    // sabit "Yarışı başlat"); varsayılan 800×600 test yüzeyinde ikinci
+    // oyuncunun satırı katlamanın altında kalıyor. Kullanıcı gibi önce
+    // kaydırılır — bekçinin konusu (engellenen satırın anında kaybolması)
+    // değişmedi.
+    await tester.ensureVisible(
       find.byKey(const ValueKey('player-moderation-button')),
     );
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('player-moderation-button')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('player-block-action')));
     await tester.pumpAndSettle();

@@ -62,7 +62,9 @@ void main() {
     test('loadLessonsByCategory returns lessons', () async {
       final lessons = await repo.loadLessonsByCategory('everyday');
       expect(lessons, isNotEmpty);
-      expect(lessons.first.slug, 'everyday_1');
+      // 2026-10-06: başlangıç yolu Alfabe ile açılır (alphabet_1 -> everyday_1).
+      expect(lessons.first.slug, 'alphabet_1');
+      expect(lessons.map((l) => l.slug).toList().indexOf('everyday_1'), 1);
     });
 
     test('loadLesson returns lesson data', () async {

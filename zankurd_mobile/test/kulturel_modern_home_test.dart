@@ -1,19 +1,24 @@
+// 2026-09-29 Şahnê: başlık A iskeletinin marka satırıdır (`SahneTabPage`),
+// günün görevi gece sahne kartı; kapılar konu ızgarasının altında tek liste
+// grubunda (dokunmadan önce görünür olana dek kaydırılır).
 import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/achievement_store.dart';
+import 'support/widget_test_helpers.dart' show freshMockRepository;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
+import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/screens/home/daily_missions_card.dart';
-import 'package:zankurd_mobile/src/widgets/mode_card.dart';
 import 'package:zankurd_mobile/src/screens/home/today_task_card.dart';
 import 'package:zankurd_mobile/src/screens/home_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/colorful_action_card.dart';
-import 'package:zankurd_mobile/src/widgets/zana_daily_card.dart';
 
 // Ana sayfa (2026-07-24 yenilemesi): ekran tek bir soruyu yanıtlar — "şimdi
 // ne yapmalıyım?". Karo ızgarası kaldırıldı; sıra bugünün görevi → öğrenme
@@ -23,6 +28,12 @@ Widget _wrap(Widget child) => MultiProvider(
     ChangeNotifierProvider(create: (_) => LanguageProvider()),
     ChangeNotifierProvider(create: (_) => AuthProvider.test()),
     ChangeNotifierProvider(create: (_) => ThemeProvider()),
+    // Ana ekran abonelik satırını `Consumer<PremiumService>` ile çiziyor;
+    // uygulamada bu sağlayıcı her zaman var (bkz. `main.dart`), testin
+    // kendi kapsamında da olmalı.
+    ChangeNotifierProvider<PremiumService>(
+      create: (_) => PremiumService.fallback(),
+    ),
   ],
   child: MaterialApp(
     theme: AppTheme.light(),
@@ -32,6 +43,62 @@ Widget _wrap(Widget child) => MultiProvider(
 );
 
 void main() {
+  setUp(() {
+    freshMockRepository();
+    SharedPreferences.setMockInitialValues({
+      'zankurd.achievements.unlocked': ['first_game'],
+    });
+  });
+
+  testWidgets(
+    'ilk oturumda ana görev önde kalır, tamamlanınca destek kartları açılır',
+    (tester) async {
+      final repo = freshMockRepository();
+      final refresh = ValueNotifier(0);
+      addTearDown(refresh.dispose);
+      await tester.binding.setSurfaceSize(const Size(390, 1400));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        _wrap(HomeScreen(repository: repo, refreshSignal: refresh)),
+      );
+      await tester.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('home-daily-task-start')),
+        findsOneWidget,
+      );
+      // İlk oturum: görev/ilerleme kalabalığı yok.
+      // Yarış kapısı ise baştan görünür — uygulamanın ikinci yüzü.
+      //
+      // 2026-09-30 doğallık: "3 adımda ZanKurd" yol göstericisi kalktı. 1.
+      // adımı hemen üstteki Günün dersini kelimesi kelimesine tekrarlıyor,
+      // 2.-3. adım sekme çubuğunun zaten gösterdiğini anlatıyordu; kullanım
+      // kılavuzu gibi duran kart "şablondan üretilmiş" izlenimi veriyordu.
+      // Bekçi: ilk oturumda da, sonrasında da geri gelmez.
+      expect(find.byKey(const ValueKey('home-first-steps')), findsNothing);
+      expect(find.text('3 adımda ZanKurd'), findsNothing);
+      expect(find.byKey(const ValueKey('home-door-play')), findsOneWidget);
+      expect(find.byKey(const ValueKey('home-progress-summary')), findsNothing);
+      expect(find.byType(DailyMissionsCard), findsNothing);
+      expect(
+        find.byKey(const ValueKey('home-learning-goal-chooser')),
+        findsNothing,
+      );
+      final preferences = await SharedPreferences.getInstance();
+      await preferences.setStringList('zankurd.achievements.unlocked', [
+        'first_game',
+      ]);
+      AchievementStore.resetInstance();
+      refresh.value++;
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('home-first-steps')), findsNothing);
+      expect(
+        find.byKey(const ValueKey('home-progress-summary')),
+        findsOneWidget,
+      );
+      expect(find.byType(DailyMissionsCard), findsOneWidget);
+    },
+  );
+
   testWidgets('Ana sayfa tek birincil görev ve destek satırlarını gösterir', (
     tester,
   ) async {
@@ -47,47 +114,66 @@ void main() {
           displayName: 'Zelal',
           scrollController: ScrollController(),
           onOpenPlay: () {},
-          onOpenCategories: () async {},
         ),
       ),
     );
     await tester.pump(const Duration(seconds: 1));
+
+    // Üst kimlik alanı kart değildir: 2026-09-29 Şahnê'den beri A iskeletinin
+    // marka satırıdır (`SahneTabPage`); seri, jeton ve dil onun sağında.
+    expect(find.byType(SahneTabPage), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(SahneTabPage),
+        matching: find.byKey(const ValueKey('home-profile-header')),
+      ),
+      findsOneWidget,
+    );
 
     // Tek birincil eylem.
     expect(find.byType(TodayTaskCard), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task')), findsOneWidget);
     expect(find.byKey(const ValueKey('home-daily-task-start')), findsOneWidget);
 
-    // Destek satırları tek tip kart bileşenini kullanır.
-    //
-    // Bileşen 2026-08-03'te `AppRowCard`tan `ModeCard`a geçti: üç mod
-    // birbirinin aynı beyaz satırı olmaktan çıkıp kendi rengini ve
-    // amblemini taşıyan kartlara dönüştü. Testin koruduğu şey bileşenin
-    // ADI değil, sözleşmesi — modların TEK ve tutarlı bir bileşenle
-    // gösterilmesi ve eski kalabalık blokların geri gelmemesi. Sözleşme
-    // aynen duruyor, yalnız bileşen değişti.
-    expect(find.byKey(const ValueKey('home-duel-row')), findsOneWidget);
-    expect(find.byKey(const ValueKey('home-topic-picker')), findsOneWidget);
-    expect(find.byType(ModeCard), findsWidgets);
+    // Hero'nun altında iki kapı (öğren / yarış) ve bütün konuların ızgarası.
+    // Eski dört kapılı "Öğrenme yolları" düzeni geri gelmemeli.
+    expect(find.byKey(const ValueKey('home-door-learn')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-door-play')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-topic-grid')), findsOneWidget);
+    expect(find.byKey(const ValueKey('home-topic-picker')), findsNothing);
+    expect(find.byKey(const ValueKey('home-lessons-row')), findsNothing);
+    expect(find.byKey(const ValueKey('home-duel-row')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('home-browse-categories-row')),
+      findsNothing,
+    );
     expect(find.byType(DailyMissionsCard), findsOneWidget);
 
     // Kalabalık eski bloklar yok: karo ızgarası, teaser kartları, kopya
     // "Yarış"/"Kategoriler" girişleri.
-    expect(find.byType(ColorfulActionCard), findsNothing);
-    expect(find.byType(ZanaDailyCard), findsNothing);
-    expect(find.bySemanticsLabel('Moda tarî/ronahî'), findsOneWidget);
+    //
+    // `ColorfulActionCard` iddiası KALDIRILDI: sınıfın kendisi
+    // 2026-08-24'te silindi (ürün kodunda hiç kullanılmıyordu, yalnız
+    // kendi testlerinde yaşıyordu). Var olmayan bir sınıfın ekranda
+    // bulunmadığını iddia etmek gereksiz; silinmiş olması daha güçlü
+    // bir garanti ve `dead_widget_guard_test` onu koruyor.
+    // `ZanaDailyCard` 2026-09-02'de aynı gerekçeyle silindi.
+    // Tema düğmesi başlıktan kalktı (güneş simgesi ayar çarkıyla
+    // karışıyordu); tema Ayarlar'da. Dil düğmesi yerinde.
+    expect(find.bySemanticsLabel('Moda tarî/ronahî'), findsNothing);
+    expect(find.byKey(const ValueKey('home-language-toggle')), findsOneWidget);
   });
 
-  testWidgets('öğrenme yolları ve yarış geçişi farklı hedeflere gider', (
+  testWidgets('öğren, yarış ve konu kapıları ayrı hedeflere gider', (
     tester,
   ) async {
-    tester.view.physicalSize = const Size(390, 844);
+    tester.view.physicalSize = const Size(390, 1400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    var lessons = 0;
-    var categories = 0;
+    var learn = 0;
     var play = 0;
+    String? topic;
 
     await tester.pumpWidget(
       _wrap(
@@ -96,10 +182,10 @@ void main() {
           displayName: 'Zelal',
           scrollController: ScrollController(),
           onOpenLearning: () async {
-            lessons++;
+            learn++;
           },
-          onOpenCategories: () async {
-            categories++;
+          onOpenCategory: (category) async {
+            topic = category;
           },
           onOpenPlay: () => play++,
         ),
@@ -107,16 +193,24 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
 
-    await tester.tap(find.byKey(const ValueKey('home-learning-path')));
-    await tester.tap(find.byKey(const ValueKey('home-topic-picker')));
-    await tester.tap(find.byKey(const ValueKey('home-play-handoff')));
+    // 2026-09-29 Şahnê: kapılar konu ızgarasının ALTINDA bir liste grubu;
+    // uzun ilk oturum ekranında görünür olana dek kaydırılır.
+    for (final door in ['home-door-learn', 'home-door-play']) {
+      await tester.ensureVisible(find.byKey(ValueKey(door)));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(ValueKey(door)));
+      await tester.pumpAndSettle();
+    }
+    final ziman = find.byKey(const ValueKey('home-topic-Ziman'));
+    await tester.ensureVisible(ziman);
+    await tester.pumpAndSettle();
+    await tester.tap(ziman);
+    await tester.pumpAndSettle();
 
-    expect((lessons, categories, play), (1, 1, 1));
+    expect((learn, play, topic), (1, 1, 'Ziman'));
   });
 
-  testWidgets('ekranda yalnız bir gradyanlı birincil buton var', (
-    tester,
-  ) async {
+  testWidgets('günün görevi ana sahne hero tasarımını korur', (tester) async {
     tester.view.physicalSize = const Size(390, 844);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
@@ -129,21 +223,29 @@ void main() {
           displayName: 'Zelal',
           scrollController: ScrollController(),
           onOpenPlay: () {},
-          onOpenCategories: () async {},
         ),
       ),
     );
     await tester.pump(const Duration(seconds: 1));
 
-    // Gradyan "buraya bas" demektir; ekran başına bir tane.
-    final gradientBoxes = tester
-        .widgetList<DecoratedBox>(find.byType(DecoratedBox))
-        .where((box) {
-          final decoration = box.decoration;
-          return decoration is BoxDecoration && decoration.gradient != null;
-        })
-        .length;
-    expect(gradientBoxes, lessThanOrEqualTo(1));
+    // 2026-09-29 Şahnê: günün görevi ekranın tek baskın sahnesidir — gece
+    // sahne kartı (degrade ve kilim şeridi bileşende); turuncu yalnız ana
+    // düğmede ve o düğme ekrandaki TEK Agir dolgudur.
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('home-daily-task')),
+        matching: find.byType(SahneStageCard),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('home-daily-task-start')),
+        matching: find.byType(SahneButton),
+      ),
+      findsOneWidget,
+    );
+    expect(find.byType(FilledButton), findsOneWidget);
   });
 
   for (final size in <Size>[
@@ -167,7 +269,6 @@ void main() {
               displayName: 'Zelal',
               scrollController: ScrollController(),
               onOpenPlay: () {},
-              onOpenCategories: () async {},
             ),
           ),
         );

@@ -38,6 +38,20 @@ class _OutsideTopTenRepository extends MockZanKurdRepository {
     roomsPlayed: 0,
     rank: 47,
   );
+
+  /// 2026-09-30: sabit satır artık `getMyLeaderboardRank` ile SEÇİLİ
+  /// DÖNEMİN puanını çizer; `getPlayerStats` (toplam XP) satırı beslemiyor.
+  @override
+  Future<LeaderboardEntry?> getMyLeaderboardRank(
+    LeaderboardPeriod period,
+  ) async => const LeaderboardEntry(
+    playerId: 'me',
+    displayName: 'Rojhat',
+    totalScore: 210,
+    bestStreak: 1,
+    roomsPlayed: 0,
+    rank: 47,
+  );
 }
 
 void main() {

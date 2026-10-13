@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/screens/quiz_screen.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -49,10 +50,20 @@ void main() {
   });
 
   testWidgets('adsız turda kategoriye düşülür', (tester) async {
-    // Karşı taraf: kategori başlığı tümüyle kaldırılmamalı. Tek bir
-    // kategoriden oynanan turda başlık o kategoriyi söylemeye devam eder.
+    // Karşı taraf: kategori başlığı tümüyle kaldırılmamalı. Adsız turda
+    // başlık bir kategoriyi söylemeye devam eder.
+    //
+    // 2026-09-29 doğallık (K2): o kategori ODANIN değil ŞU ANKİ SORUNUN
+    // kategorisidir. Oda "Ziman" (Dil) iken ilk soru Siyaset olunca başlık
+    // "Dil", gövde künyesi "Siyaset · Soru 1/2" diyordu; bu bekçi eskiden
+    // "Dil"i, yani tam o çelişkiyi sabitliyordu. Başlık ile künye artık
+    // aynı adı taşır.
     await pump(tester, roomName: 'Hevalên Zanînê');
 
-    expect(find.text('Dil'), findsOneWidget);
+    final first = repository.questions.first;
+    final name = CategoryNames.localized(first.category, false);
+    expect(find.text(name), findsOneWidget);
+    // Gövde künyesi aynı adı cümle düzeniyle taşır ("Siyaset · Soru 1/2").
+    expect(find.textContaining('$name · Soru 1/'), findsOneWidget);
   });
 }

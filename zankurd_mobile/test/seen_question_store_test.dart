@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/local_data_storage.dart';
 import 'package:zankurd_mobile/src/data/seen_question_store.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
@@ -114,4 +115,21 @@ void main() {
       expect(selected.length, 2); // 'roj nedir?' ve 'av nedir?'
     },
   );
+
+  test('works with injected LocalDataStorage implementation', () async {
+    final storage = InMemoryDataStorage();
+    final store = await SeenQuestionStore.load(storage: storage);
+    await store.markSeen(['custom1', 'custom2']);
+
+    expect(store.isSeen('custom1'), isTrue);
+    expect(storage.getStringList('zankurd.seenQuestionIds'), [
+      'custom1',
+      'custom2',
+    ]);
+
+    SeenQuestionStore.resetInstance();
+    final restored = await SeenQuestionStore.load(storage: storage);
+    expect(restored.isSeen('custom1'), isTrue);
+    expect(restored.isSeen('custom2'), isTrue);
+  });
 }

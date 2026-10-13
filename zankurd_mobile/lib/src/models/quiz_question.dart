@@ -29,6 +29,31 @@ QuestionType questionTypeFromStorage(Object? raw) {
   };
 }
 
+/// [QuizQuestion.fromServerRow]da bilinmeyen bir `question_type` gelirse
+/// (şema kayması, eksik alan) turu tamamen düşürmek yerine en yaygın türe
+/// geriler — oda akışındaki `_questionTypeFromRow` ile aynı tolerans.
+QuestionType _questionTypeFromServerRow(Map<String, dynamic> row) {
+  try {
+    return questionTypeFromStorage(row['question_type']);
+  } on ArgumentError {
+    return QuestionType.multipleChoice;
+  }
+}
+
+/// Sunucu satırındaki `correct_option` ('A'..'D') şık metnine çevrilir.
+/// Alan yoksa ya da boşsa (cevap henüz gizliyse) boş döner —
+/// [QuizQuestion.hasHiddenAnswer] bunu okur.
+String _revealedServerCorrectAnswer(
+  Map<String, dynamic> row,
+  List<String> answers,
+) {
+  final opt = (row['correct_option'] as String?)?.trim().toUpperCase();
+  if (opt == null || opt.isEmpty) return '';
+  const letters = ['A', 'B', 'C', 'D'];
+  final index = letters.indexOf(opt);
+  return index >= 0 && index < answers.length ? answers[index] : '';
+}
+
 class QuizQuestion {
   const QuizQuestion({
     required this.id,
@@ -218,6 +243,7 @@ class QuizQuestion {
     List<String>? acceptedAnswers,
     List<String>? acceptedAnswersTr,
     AnswerLanguage? answerLanguage,
+    QuestionType? type,
   }) {
     return QuizQuestion(
       id: id,
@@ -237,7 +263,7 @@ class QuizQuestion {
       hintKu: hintKu,
       hintTr: hintTr,
       audioUrl: audioUrl,
-      type: type,
+      type: type ?? this.type,
       imageUrl: imageUrl,
       imageAltKu: imageAltKu,
       imageAltTr: imageAltTr,
@@ -299,12 +325,57 @@ class QuizQuestion {
       return List.unmodifiable(answers);
     }
 
+    // Şıkların tamamı SAYIYSA döndürme değil SIRALAMA uygulanır.
+    //
+    // Döndürme göreli sırayı korur, o yüzden bankada karışık duran
+    // sayılar ekranda da karışık kalıyordu: "Evdalê Zeynikê hangi
+    // yüzyılda yaşadı?" sorusu oyuncuya `20. / 19. / 15. / 17.` diye
+    // geliyordu (2026-08-24, simülatörden görüldü). Bankadaki 85 tam
+    // sayısal soruda 69'u böyleydi.
+    //
+    // Karışık sayı, soruyu zorlaştırmaz — okumayı zorlaştırır. Oyuncu
+    // olguyu düşünmek yerine dört sayıyı sıraya koymakla uğraşır. Bu,
+    // ölçmek istediğimiz şeye gürültü ekler.
+    //
+    // Konum dengesi KORUNUR: yön (artan/azalan) aynı kararlı tohumdan
+    // seçilir, dolayısıyla doğru cevap sorular arasında yine dört konuma
+    // dağılır. Denge tek soruda karıştırarak değil, sorular ARASINDA
+    // yön değiştirerek sağlanır — `question_bank_test` bunu ölçer.
+    final numeric = _numericValues(answers);
+    if (numeric != null) {
+      final pairs = [
+        for (var i = 0; i < answers.length; i++) (numeric[i], answers[i]),
+      ]..sort((a, b) => a.$1.compareTo(b.$1));
+      final descending = _stableAnswerOffset(answers.length).isEven;
+      final ordered = [for (final pair in pairs) pair.$2];
+      return List.unmodifiable(descending ? ordered.reversed : ordered);
+    }
+
     final rotated = List<String>.of(answers);
     final offset = _stableAnswerOffset(rotated.length);
     return List.unmodifiable([
       ...rotated.skip(offset),
       ...rotated.take(offset),
     ]);
+  }
+
+  /// Şıkların tamamı sayıysa sayısal değerleri, değilse `null`.
+  ///
+  /// "1932", "29", "20." gibi biçimler kabul edilir; sondaki nokta
+  /// sıra belirtir ("20." = yirminci) ve değeri değiştirmez. İçinde
+  /// harf ya da birim geçen ("29 tîp", "1932'de") şık sayısal SAYILMAZ:
+  /// orada sıralama anlamı bozabilir, çünkü metin sayıdan fazlasını
+  /// söylüyordur.
+  static List<num>? _numericValues(List<String> options) {
+    final values = <num>[];
+    for (final option in options) {
+      final trimmed = option.trim().replaceAll('.', '');
+      if (trimmed.isEmpty) return null;
+      final parsed = num.tryParse(trimmed);
+      if (parsed == null) return null;
+      values.add(parsed);
+    }
+    return values;
   }
 
   String optionKeyForAnswer(String answer) {
@@ -449,6 +520,42 @@ class QuizQuestion {
       metadata: json['metadata'] == null
           ? null
           : QuestionMetadata.fromJson(json['metadata'] as Map<String, dynamic>),
+    );
+  }
+
+  /// Sunucudan gelen oda/düello soru satırını `QuizQuestion`'a çevirir.
+  ///
+  /// Oda maçı (`get_room_questions`) ve sırayla düello (`start_async_duel`)
+  /// istemciye AYNI satır biçimini gönderir: `option_a`..`option_d`,
+  /// `question_type`, `image_url`, `difficulty`, `category_name` ve —
+  /// yalnız daha önce cevaplanmış bir soruda — `correct_option`. Doğru
+  /// cevap satırda yoksa (ya da boşsa) [correctAnswer] boş kalır
+  /// ([hasHiddenAnswer]); hile önlemi sunucuda kalır, istemci yalnız bu
+  /// gizliliği taşır.
+  ///
+  /// 2026-09 (sırayla düello): dönüşüm eskiden yalnız
+  /// `SupabaseZanKurdRepository._roomQuestionFromRow` içindeydi. Düello
+  /// modeli aynı satır biçimini okuduğu için mantık BURAYA taşındı ki iki
+  /// yer birbirinden sessizce sapmasın; oda kodu artık bu factory'ye
+  /// devrediyor.
+  factory QuizQuestion.fromServerRow(Map<String, dynamic> row) {
+    final answers = <String>[
+      row['option_a'] as String? ?? '',
+      row['option_b'] as String? ?? '',
+      row['option_c'] as String? ?? '',
+      row['option_d'] as String? ?? '',
+    ].where((answer) => answer.trim().isNotEmpty && answer != '-').toList();
+
+    return QuizQuestion(
+      id: row['id'] as String,
+      category: row['category_name'] as String? ?? 'Ziman',
+      prompt: row['prompt'] as String,
+      answers: answers,
+      correctAnswer: _revealedServerCorrectAnswer(row, answers),
+      explanation: '',
+      type: _questionTypeFromServerRow(row),
+      imageUrl: row['image_url'] as String?,
+      difficulty: row['difficulty'] as int? ?? 2,
     );
   }
 

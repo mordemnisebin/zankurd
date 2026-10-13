@@ -45,9 +45,10 @@ class AuditBaseline {
     required AuditSnapshot snapshot,
     required int manifestVersion,
     required Map<String, Object?> metrics,
+    required String createdDate,
   }) => AuditBaseline(
     manifestVersion: manifestVersion,
-    createdDate: '2026-07-15',
+    createdDate: createdDate,
     issueFingerprints: snapshot.issueFingerprints,
     blockerCount: snapshot.blockerCount,
     criticalCount: snapshot.criticalCount,

@@ -190,7 +190,13 @@ void main() {
 
     expect(
       compared,
-      greaterThanOrEqualTo(35),
+      // Eşik 2026-08-19'da 35'ten 28'e indirildi: tekrar ayıklaması
+      // `source_first` bankasından 11 kayıt aldı (96 -> 85) ve
+      // karşılaştırılabilir olgu sayısı 30'a düştü. Eşiğin işi hâlâ
+      // aynı — bekçinin KÖRELMESİNİ yakalamak; ölçtüğü havuz küçüldü.
+      // 28, bugünkü 30'un iki altında: küçük dalgalanmaya izin verir,
+      // havuzun yarıya düşmesini yakalar.
+      greaterThanOrEqualTo(28),
       reason:
           'Karşılaştırılan kayıt sayısı $compared — beklenmedik biçimde '
           'düştü. Bekçi körelmiş olabilir: provenance yolu ya da olgu '

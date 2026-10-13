@@ -1,11 +1,13 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'checked_preferences_removal.dart';
+import 'local_progress_scope.dart';
 
 /// Seviye yolunda hangi düğümlerin oynandığını yerelde tutar.
 /// Diğer store'larla aynı kalıp: tekil örnek + resetInstance (test izolasyonu).
 class LevelProgressStore {
   LevelProgressStore._(this._prefs);
 
-  static const _key = 'zankurd.level.played';
+  static String get _key => LocalProgressScope.physical('zankurd.level.played');
   static LevelProgressStore? _instance;
 
   final SharedPreferences _prefs;
@@ -36,5 +38,5 @@ class LevelProgressStore {
   }
 
   /// Hesap değişiminde önceki kullanıcının seviye geçmişini temizler.
-  Future<void> clear() => _prefs.remove(_key);
+  Future<void> clear() => removePersistedPreferenceKeys(_prefs, [_key]);
 }

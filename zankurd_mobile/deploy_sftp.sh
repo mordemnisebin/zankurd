@@ -134,7 +134,9 @@ command -v rsync >/dev/null || {
   exit 1
 }
 
-for output in index.html main.dart.js flutter_bootstrap.js .htaccess privacy.html terms.html delete-account.html; do
+# `.well-known` ikilisi olmadan davet bağlantısı (zankurd.com/join/KOD) yüklü
+# uygulamayı açmaz: site yine açılır, hata görünmez, bağlantı tarayıcıda kalır.
+for output in index.html main.dart.js flutter_bootstrap.js .htaccess privacy.html terms.html delete-account.html .well-known/apple-app-site-association .well-known/assetlinks.json; do
   [[ -f "$LOCAL_DIR/$output" ]] || {
     echo "HATA: Eksik web çıktısı: $LOCAL_DIR/$output" >&2
     exit 1

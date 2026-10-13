@@ -25,7 +25,7 @@ import urllib.request
 OUT_DIR = 'assets/question_images'
 CREDITS = 'assets/data/image_credits.json'
 MANIFEST = '/tmp/zk_commons/manifest.json'
-UA = 'ZanKurd/1.0 (educational quiz app; contact nisebinbawer47@gmail.com)'
+UA = 'ZanKurd/1.0 (educational quiz app; contact iletisim@zankurd.com)'
 
 # slug: aday dizini (manifest sırası)
 SELECTED = {

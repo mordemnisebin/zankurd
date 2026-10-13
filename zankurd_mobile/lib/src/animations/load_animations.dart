@@ -44,7 +44,7 @@ class LoadAnimationSequence {
 
   // 2026-07-25 canlı denetimi: kademeli aralıklar içeriği kontrolörün
   // ikinci yarısına itiyordu. Sonuç, giriş ekranının ilk anlamlı
-  // boyamasının yarısı boş olması ("An jî bi e-peyamê" ayracı görünür,
+  // boyamasının yarısı boş olması ("An jî bi e-nameyê" ayracı görünür,
   // altındaki form görünmez) idi. Aralıklar öne çekildi: kademe hissi
   // korunur ama içerik ilk karelerden itibaren belirmeye başlar.
 

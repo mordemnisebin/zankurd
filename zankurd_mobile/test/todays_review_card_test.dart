@@ -1,5 +1,11 @@
+// 2026-09-29 doğallık: arayüz metni sabitleyen beklentiler yeni metne göre güncellendi.
+// 2026-09-29 doğallık (K7): sayıyı ikinci kez yazan rozet kalktı; sayı
+// bekçileri artık sayıyı taşıyan tek yere, cümleye bakar.
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/theme/sahne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mistake_store.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -47,7 +53,23 @@ void main() {
     });
     await pump(tester);
     expect(find.byKey(const ValueKey('todays-review-card')), findsOneWidget);
-    expect(find.text('3'), findsOneWidget);
+    expect(find.text('3 soru tekrara hazır'), findsOneWidget);
+    final statusRow = find.byKey(const ValueKey('todays-review-status-row'));
+    expect(statusRow, findsOneWidget);
+    expect(
+      tester.widget(statusRow),
+      isA<Padding>(),
+      reason: 'Günlük tekrar durumu ayrı bir kart kabuğu oluşturmamalı.',
+    );
+    final titleFinder = find.text('Bugünkü tekrarlar');
+    final title = tester.widget<Text>(titleFinder);
+    // 2026-09-29 Şahnê: öğrenme rolünün okunur metni belirteçten gelir
+    // (`learnTx`, AA ölçülmüş); eski `readableAccent(playGreen)` hesabı
+    // yerine.
+    expect(
+      title.style?.color,
+      SahneTokens.of(tester.element(titleFinder)).learnTx,
+    );
     expect(tester.takeException(), isNull);
   });
 
@@ -59,6 +81,9 @@ void main() {
     await pump(tester);
     expect(find.byKey(const ValueKey('todays-review-empty')), findsOneWidget);
     expect(find.byKey(const ValueKey('todays-review-card')), findsNothing);
+    final statusRow = find.byKey(const ValueKey('todays-review-status-row'));
+    expect(statusRow, findsOneWidget);
+    expect(tester.widget(statusRow), isA<Padding>());
     expect(find.text('Tekrarlar tamam'), findsOneWidget);
     expect(find.text('Bugün tekrar edilecek soru yok'), findsNothing);
     expect(
@@ -100,6 +125,62 @@ void main() {
     });
   });
 
+  testWidgets('hazır tekrar kartı tek birleşik button semantics taşır', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    SharedPreferences.setMockInitialValues({
+      'zankurd.mistakeQuestionIds': ['offline_0005', 'offline_0010'],
+    });
+    await pump(tester);
+
+    final data = tester
+        .getSemantics(find.byKey(const ValueKey('todays-review-card')))
+        .getSemanticsData();
+    expect(data.flagsCollection.isButton, isTrue);
+    expect(data.flagsCollection.isEnabled, ui.Tristate.isTrue);
+    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    expect(data.label, contains('Bugünkü tekrarlar'));
+    expect(data.label, contains('2 soru tekrara hazır'));
+    expect(data.label, contains('Hafızanı pekiştir'));
+    semantics.dispose();
+  });
+
+  testWidgets('hazır tekrar kartı Kurmancî birleşik semantics taşır', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    SharedPreferences.setMockInitialValues({
+      'zankurd.mistakeQuestionIds': ['offline_0005'],
+    });
+
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.dark(),
+        home: Scaffold(
+          body: TodaysReviewCard(
+            repository: MockZanKurdRepository(),
+            isKu: true,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final data = tester
+        .getSemantics(find.byKey(const ValueKey('todays-review-card')))
+        .getSemanticsData();
+    expect(data.flagsCollection.isButton, isTrue);
+    expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+    expect(data.label, contains('Dubarekirinên îro'));
+    expect(data.label, contains('1 pirs ji bo dubarekirinê amade ne'));
+    expect(data.label, contains('Bîra xwe xurt bike'));
+    semantics.dispose();
+  });
+
   testWidgets('tablet boyutunda overflow oluşmaz', (tester) async {
     SharedPreferences.setMockInitialValues({
       'zankurd.mistakeQuestionIds': ['offline_0005', 'offline_0010'],
@@ -131,13 +212,13 @@ void main() {
       });
       await pump(tester);
       expect(
-        find.text('3'),
+        find.text('3 soru tekrara hazır'),
         findsNothing,
         reason:
             'Rozet açılamayacak soruları sayarsa kullanıcıya olmayan bir iş '
             'vaat eder',
       );
-      expect(find.text('1'), findsOneWidget);
+      expect(find.text('1 soru tekrara hazır'), findsOneWidget);
     });
 
     testWidgets('yalnız UUID varsa kart sahte rozet göstermez', (tester) async {
@@ -165,7 +246,7 @@ void main() {
       List<QuizQuestion>? started;
       await pump(tester, onStart: (q) => started = q);
 
-      expect(find.text('2'), findsOneWidget);
+      expect(find.text('2 soru tekrara hazır'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('todays-review-card')));
       await tester.pumpAndSettle();
 

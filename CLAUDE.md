@@ -32,5 +32,17 @@ gövdesine niçinini koy.
 
 `flutter test tool/screenshots/screen_tour_test.dart` bütün ana ekranları
 `docs/screenshots/tour/` altına basar — açık/karanlık tema, Türkçe/Kurmancî
-ve boş durumlar dahil. Emoji ve `CustomPainter` metni test koşucusunda kutu
+ve boş durumlar dahil. `ZANKURD_SCREEN_TOUR_OUT_DIR` çıktıyı başka klasöre
+yönlendirir; `ZANKURD_SCREEN_TOUR_HEIGHT=1800` kaydırılan bir ekranın
+tamamını tek karede basar; `ZANKURD_SCREEN_TOUR_THEME=light|dark` bütün
+kareleri tek temada `<çıktı>/<tema>/` altına basar (yoksa `_dark` kareleri
+gece, ötekiler gündüz). `ZANKURD_SCREEN_TOUR_WIDTH=320` en dar
+telefonu, `ZANKURD_SCREEN_TOUR_TEXT_SCALE=2` büyük yazıyı bütün karelere uygular. Emoji ve `CustomPainter` metni test koşucusunda kutu
 çıkar; o ikisi simülatörden doğrulanır.
+
+## Push'tan önce
+
+`zankurd_mobile/tool/ci_yerel.sh` CI'nin analyze-and-test adımlarını
+(format, analiz, soru kalitesi, şık taraması, dokunma hedefi) yerelde
+koşturur; `--tam` tam testi de ekler. Yalnız `flutter test`'e bakıp push
+etmek CI'yı iki kez kırdı (2026-09-30).
