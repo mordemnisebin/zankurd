@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
@@ -13,15 +15,24 @@ import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
 import '../widgets/player_avatar.dart';
 import '../widgets/sahne/sahne.dart';
+import 'async_duel/async_duel_challenge_sheet.dart';
 import 'room_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
 
 /// Arkadaş listesi, oyuncu arama ve istek yönetimi ekranı.
 class FriendsScreen extends StatefulWidget {
-  const FriendsScreen({required this.repository, super.key});
+  const FriendsScreen({
+    required this.repository,
+    this.asyncDuelEnabled = kAsyncDuelEnabled,
+    super.key,
+  });
 
   final ZanKurdRepository repository;
+
+  /// Sırayla düello bayrağı; kapalıyken satırın birincil eylemi canlı oda
+  /// daveti olarak kalır. Varsayılanı [kAsyncDuelEnabled].
+  final bool asyncDuelEnabled;
 
   @override
   State<FriendsScreen> createState() => _FriendsScreenState();
@@ -42,6 +53,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
   /// kodu oturum boyunca değişmez; sonuç doğruydu, yalnız her yeniden
   /// çizimde ağ gidiş-dönüşü ödeniyordu.
   late final Future<String?> _playerTagFuture;
+
+  /// Sunucuda meydan okuma RPC'leri var mı; arkadaş satırının birincil
+  /// eyleminin ne olacağını belirler. Satırlar sonuç gelene dek çizilmez
+  /// (önce "Odaya çağır", sonra "Meydan oku"ya dönen düğme zıplatırdı);
+  /// hata `false` sayılır ve sonuç depoda önbelleğe alınır.
+  late final Future<bool> _challengeFuture;
   List<PlayerSearchResult> _searchResults = const [];
   bool _searching = false;
   bool _roomLoading = false;
@@ -51,6 +68,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
   void initState() {
     super.initState();
     _playerTagFuture = widget.repository.getPlayerTag();
+    _challengeFuture = widget.asyncDuelEnabled
+        ? asyncDuelChallengeAvailable(widget.repository)
+        : Future<bool>.value(false);
     _loadFriends();
   }
 
@@ -489,16 +509,41 @@ class _FriendsScreenState extends State<FriendsScreen> {
             message: context.t(K.noFriendsHint),
           );
         }
-        return SahneListGroup(
-          dividerIndent: _PersonRow.dividerIndent,
-          children: [
-            for (final friend in friends)
-              _FriendRow(
-                friend: friend,
-                onPlay: () => _playWithFriend(friend),
-                busy: _roomLoading,
-              ),
-          ],
+        return FutureBuilder<bool>(
+          future: _challengeFuture,
+          builder: (ctx, challengeSnap) {
+            if (challengeSnap.connectionState != ConnectionState.done) {
+              return Padding(
+                padding: const EdgeInsets.all(SahneSpace.x6),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: SahneTokens.of(context).raceTx,
+                  ),
+                ),
+              );
+            }
+            final canChallenge = challengeSnap.data ?? false;
+            return SahneListGroup(
+              dividerIndent: _PersonRow.dividerIndent,
+              children: [
+                for (final friend in friends)
+                  _FriendRow(
+                    friend: friend,
+                    onPlay: () => _playWithFriend(friend),
+                    onChallenge: canChallenge
+                        ? () => unawaited(
+                            startFriendChallenge(
+                              context,
+                              widget.repository,
+                              friend.friendId,
+                            ),
+                          )
+                        : null,
+                    busy: _roomLoading,
+                  ),
+              ],
+            );
+          },
         );
       },
     );
@@ -627,15 +672,29 @@ class _SentMark extends StatelessWidget {
   }
 }
 
+/// İki eylemli satır telefon genişliğinde (390 dahil) ya da büyük yazıda adın
+/// altına iner; yan yana sığdırınca "Çevrimdışı" ve düğme etiketi ikişer
+/// satıra bölünüyordu (ekran turu, 2026-10-14).
+bool _stackActions(BuildContext context) =>
+    MediaQuery.sizeOf(context).width < 430 ||
+    MediaQuery.textScalerOf(context).scale(1) > 1.3;
+
 class _FriendRow extends StatelessWidget {
   const _FriendRow({
     required this.friend,
     required this.onPlay,
     required this.busy,
+    this.onChallenge,
   });
 
   final Friend friend;
+
+  /// Canlı oda daveti. [onChallenge] varken sakin ikincil eylemdir; yokken
+  /// satırın tek (yazılı) eylemi.
   final VoidCallback onPlay;
+
+  /// Sırayla meydan okuma; `null` → sunucu/bayrak desteklemiyor.
+  final VoidCallback? onChallenge;
   final bool busy;
 
   @override
@@ -680,19 +739,46 @@ class _FriendRow extends StatelessWidget {
       subtitle: online ? context.t(K.online) : context.t(K.offline),
       subtitleColor: online ? t.okTx : t.tx2,
       subtitleStrong: online,
-      // Düğme "Oyna" diyordu ama oyun başlatmıyor: bir oda kurup kodunu
-      // arkadaşla paylaşmanı istiyor. Ad, yapılan işi anlatır — yeni
-      // kullanıcının şaşırmaması ilk ölçüt (2026-07-26). Oda kurulurken
-      // düğme pasifleşir (eskiden ikinci dokunuş sessizce yutuluyordu).
-      trailing: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 180),
-        child: SahneButton.secondary(
-          key: ValueKey('friend-action-${friend.friendName}'),
-          label: context.t(K.inviteToRoom),
-          icon: busy ? AppIcons.hourglass : null,
-          onPressed: busy ? null : onPlay,
-        ),
-      ),
+      // 2026-10-14: ürünün günlük aktif oyuncusu 3-25; iki arkadaşın aynı
+      // anda çevrimiçi olması neredeyse hiç yok. Canlı oda daveti oyuncuyu
+      // boş bir lobide bekletiyordu. Birincil eylem artık sırayla meydan
+      // okumadır (arkadaş sonra oynar, bildirim alır); canlı oda daveti
+      // sakin bir simge düğmesine indi. Meydan okuma yoksa (RPC'ler
+      // sunucuda yok ya da bayrak kapalı) eski yazılı "Odaya çağır" kalır.
+      // Oda kurulurken iki düğme de pasifleşir (eskiden ikinci dokunuş
+      // sessizce yutuluyordu).
+      trailing: onChallenge == null
+          ? ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 180),
+              child: SahneButton.secondary(
+                key: ValueKey('friend-action-${friend.friendName}'),
+                label: context.t(K.inviteToRoom),
+                icon: busy ? AppIcons.hourglass : null,
+                onPressed: busy ? null : onPlay,
+              ),
+            )
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SahneButton.secondary(
+                  key: ValueKey('friend-action-${friend.friendName}'),
+                  label: context.t(K.challengeFriendAction),
+                  semanticLabel: context.t(K.challengeFriendActionA11y, {
+                    'name': friend.friendName,
+                  }),
+                  icon: AppIcons.swords,
+                  onPressed: busy ? null : onChallenge,
+                ),
+                const SizedBox(width: SahneSpace.x1),
+                SahneIconButton(
+                  key: ValueKey('friend-room-${friend.friendName}'),
+                  icon: busy ? AppIcons.hourglass : AppIcons.doorOpen,
+                  semanticLabel: context.t(K.inviteToRoom),
+                  onPressed: busy ? null : onPlay,
+                ),
+              ],
+            ),
+      stackTrailing: onChallenge == null ? null : _stackActions(context),
     );
   }
 }

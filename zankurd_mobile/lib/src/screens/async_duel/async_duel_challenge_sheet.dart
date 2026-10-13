@@ -40,10 +40,32 @@ Future<void> showAsyncDuelChallengeSheet(
     builder: (sheetContext) => _ChallengeSheet(repository: repository),
   );
   if (entry == null || !context.mounted) return;
-  await Navigator.of(context).push(
-    AppRoute.to(AsyncDuelPlayScreen(repository: repository, entry: entry)),
-  );
+  await _playEntry(context, repository, entry);
 }
+
+/// Seçilen girişle oyun ekranını açar; sayfa seçimi ve arkadaş satırı aynı
+/// yolu kullanır (oluştur → 7 soru → Paylaş mantığı tek yerde).
+Future<void> _playEntry(
+  BuildContext context,
+  ZanKurdRepository repository,
+  AsyncDuelEntry entry,
+) => Navigator.of(
+  context,
+).push(AppRoute.to(AsyncDuelPlayScreen(repository: repository, entry: entry)));
+
+/// Seçim sayfasını atlayıp doğrudan [friendId]'ye meydan okur: oyun ekranı
+/// [AsyncDuelEntry.createChallenge] ile açılır, 7 sorudan sonra sonuç
+/// ekranında seçilen arkadaşa bildirim düştüğü söylenir. Arkadaş listesinin
+/// satır eylemi budur; sayfadaki "Arkadaş seç" yolunun aynısıdır.
+Future<void> startFriendChallenge(
+  BuildContext context,
+  ZanKurdRepository repository,
+  String friendId,
+) => _playEntry(
+  context,
+  repository,
+  AsyncDuelEntry.createChallenge(friendId: friendId),
+);
 
 class _ChallengeSheet extends StatefulWidget {
   const _ChallengeSheet({required this.repository});

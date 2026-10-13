@@ -185,9 +185,10 @@ void main() {
         find.byKey(const ValueKey('friend-action-KurdBot')),
         findsOneWidget,
       );
-      // Düğmenin sözü ile işi aynı olmalı: oyun başlatmıyor, oda kurup
-      // kodu paylaştırıyor.
-      expect(find.text('Odaya çağır'), findsNWidgets(2));
+      // Düğmenin sözü ile işi aynı olmalı: oyun başlatmıyor. Birincil eylem
+      // sırayla meydan okuma (2026-10-14, bkz. friends_challenge_primary_
+      // test.dart); canlı oda daveti simge düğmesinde.
+      expect(find.text('Meydan oku'), findsNWidgets(2));
       expect(find.text('Oyna'), findsNothing);
     });
 

@@ -2829,6 +2829,13 @@ class Tr {
       'ku': 'Ev kes ne hevalê te ye.',
       'tr': 'Bu kişi arkadaşın değil.',
     },
+    // Arkadaş satırının birincil eylemi (2026-10-14). KU, yukarıdaki
+    // yerleşik `vexwîne pêşbirkê` köküyle; yerli göz incelemesi bekliyor.
+    K.challengeFriendAction: {'ku': 'Vexwîne pêşbirkê', 'tr': 'Meydan oku'},
+    K.challengeFriendActionA11y: {
+      'ku': '{name} vexwîne pêşbirkê',
+      'tr': '{name} adlı arkadaşa meydan oku',
+    },
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -4085,4 +4092,8 @@ class K {
   static const challengeErrNotForYou = 'duel.challenge.err.notForYou';
   static const challengeErrNotReady = 'duel.challenge.err.notReady';
   static const challengeErrNotAFriend = 'duel.challenge.err.notAFriend';
+
+  /// Arkadaş satırının birincil eylemi ve ekran okuyucu sözü ({name}).
+  static const challengeFriendAction = 'duel.challenge.friendAction';
+  static const challengeFriendActionA11y = 'duel.challenge.friendAction.a11y';
 }
