@@ -232,6 +232,45 @@ void main() {
     });
   });
 
+  group('kod ve alan adı süzgeci (JoinDeepLink.parse)', () {
+    // Eskiden her `/join/<metin>` büyük harfe çevrilip doğrudan
+    // `join_room_by_code` RPC'sine gidiyordu; bozuk ya da yabancı alan adlı
+    // bir bağlantı sunucuya boşuna istek ve oyuncuya anlamsız "oda
+    // bulunamadı" hatası üretiyordu. Hiçbir test bunu yakalamıyordu çünkü
+    // bütün testler geçerli kodla çalışıyordu.
+    test('geçerli oda ve meydan okuma kodları kabul edilir', () {
+      expect(
+        JoinDeepLink.parse('https://www.zankurd.com/join/zk-abcdef0123'),
+        'ZK-ABCDEF0123',
+      );
+      expect(
+        JoinDeepLink.parse('https://zankurd.com/join/DK7M2Q9XA'),
+        'DK7M2Q9XA',
+      );
+      expect(JoinDeepLink.parse('/join/ZK-ABCDEF0123'), 'ZK-ABCDEF0123');
+    });
+
+    test('biçimi tutmayan kod reddedilir', () {
+      expect(JoinDeepLink.parse('/join/MERHABA'), isNull);
+      expect(JoinDeepLink.parse('/join/ZK-'), isNull);
+      expect(JoinDeepLink.parse('/join/D'), isNull);
+      expect(JoinDeepLink.parse("/join/ZK-1';drop"), isNull);
+    });
+
+    test('yabancı alan adı reddedilir, web kendi adresine güvenir', () {
+      const foreign = 'https://evil.example/join/ZK-ABCDEF0123';
+      expect(JoinDeepLink.parse(foreign), isNull);
+      expect(JoinDeepLink.parse(foreign, anyHost: true), 'ZK-ABCDEF0123');
+    });
+
+    test('geçersiz kodlu /join/ yolu yutulur ama davet üretmez', () {
+      // `false` dönseydi WidgetsApp yolu pushNamed ile dener ve
+      // Crashlytics'e sahte "route bulunamadı" hatası düşerdi.
+      expect(JoinDeepLink.offer('/join/MERHABA'), isTrue);
+      expect(JoinDeepLink.takeIncoming(), isNull);
+    });
+  });
+
   group('soğuk açılış (defaultRouteName)', () {
     testWidgets(
       'ilk rota /join/ZK-... iken uygulama hatasız açılır ve odaya katılır',
