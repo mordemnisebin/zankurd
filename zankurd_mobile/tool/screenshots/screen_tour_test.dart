@@ -1728,6 +1728,32 @@ void main() {
     await _shoot(t, '96_lesson_recall');
   }, tags: ['preview']);
 
+  // ── Ana ekran: düello kartı, "Sonuç hazır" durumu ──
+  //
+  // Kart varsayılan durumda `01`/`20`/`26` karelerinde görünür; dönüş
+  // kancası olan durum için rakibi bitirmiş, oyuncunun görmediği bir düello
+  // kurulur (Rojda'ya karşı 5–3, `101`/`103` karelerindeki düello).
+  testWidgets('247 ana ekran (düello sonucu hazır)', (t) async {
+    final repo = _TourRepository();
+    await t.runAsync(() => _seedRojdaDuel(repo));
+    await _pump(t, Scaffold(body: HomeScreen(repository: repo)));
+    await _shoot(t, '247_home_duel_ready');
+  }, tags: ['preview']);
+
+  testWidgets('248 ana ekran (düello sonucu hazır, karanlık, Kurmancî)', (
+    t,
+  ) async {
+    final repo = _TourRepository();
+    await t.runAsync(() => _seedRojdaDuel(repo));
+    await _pump(
+      t,
+      Scaffold(body: HomeScreen(repository: repo)),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '248_home_duel_ready_dark_ku');
+  }, tags: ['preview']);
+
   // ── Sırayla düello ekranları ────────────────────────────────────────
   testWidgets('97 oyun merkezi — sırayla düello', (t) async {
     final repo = MockZanKurdRepository();
