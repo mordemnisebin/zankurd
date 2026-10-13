@@ -197,11 +197,11 @@ def drop_shadow(canvas: Image.Image, device: Image.Image, pos, blur=60, dy=40, a
     canvas.paste(Image.new("RGB", canvas.size, (2, 4, 18)), (0, 0), shadow)
 
 
-def compose_screenshot(raw_name: str, headline: str) -> Image.Image:
+def compose_screenshot(raw_name: str, headline: str, ch: int = H) -> Image.Image:
     raw = Image.open(RAW / raw_name)
     assert raw.size == (W, H), f"{raw_name}: {raw.size} (1320x2868 bekleniyor)"
     shot = fix_status_clock(raw)
-    canvas = background((W, H))
+    canvas = background((W, ch))
     d = ImageDraw.Draw(canvas)
     font, lines = fit_headline(headline, 1100)
     line_h = round(font.size * 1.08)
@@ -218,7 +218,7 @@ def compose_screenshot(raw_name: str, headline: str) -> Image.Image:
     dx = (W - device.width) // 2
     dy = max(y + 40, 560)
     # Alt kenarı taşırmak yerine sığdır: yüksekliği tuvale uydur.
-    avail = H - dy - 90
+    avail = ch - dy - 90
     if device.height > avail:
         dev_w = round((avail - 20) * shot.width / shot.height)
         device = device_frame(shot, dev_w)
@@ -268,6 +268,12 @@ def main() -> None:
     for out_name, raw, headline in SHOTS:
         assert len(headline) <= 32, f"başlık {len(headline)} karakter: {headline}"
         save(compose_screenshot(raw, headline).convert("RGB"), OUT / "tr" / f"{out_name}.png")
+    # Play telefon görüntüsü 9:16 ister ve uzun kenar kısa kenarın iki katını
+    # geçemez; 1320x2868 (oran 2,17) reddedilir. Aynı yerleşim 9:16 tuvalde
+    # kurulup 1080x1920'ye indirilir.
+    for out_name, raw, headline in SHOTS:
+        img = compose_screenshot(raw, headline, ch=round(W * 16 / 9))
+        save(img.resize((1080, 1920), Image.LANCZOS).convert("RGB"), OUT / "play_tr" / f"{out_name}.png")
     save(feature_graphic(), OUT / "play_feature_graphic.png")
     save(play_icon(), OUT / "play_icon_512.png")
 
