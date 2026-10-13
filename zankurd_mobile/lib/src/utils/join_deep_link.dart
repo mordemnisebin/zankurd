@@ -1,10 +1,32 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 /// Web ve paylaşım `https://www.zankurd.com/join/{code}` yolunu açar.
+///
+/// ## İki kod biçimi, çakışmaz
+///
+/// * Oda kodu: `ZK-` + 10 onaltılık karakter (eski odalarda 4 karakter).
+///   Her zaman `ZK` ile başlar.
+/// * Meydan okuma kodu (arkadaşa sırayla düello): `D` + 8 karakter,
+///   alfabe `23456789ABCDEFGHJKMNPQRSTUVWXYZ` ([isChallengeCode]).
+///
+/// Ayrım üç bağımsız yoldan garantidir: önek (`ZK` ≠ `D`), uzunluk (9 ≠ 13/7)
+/// ve alfabe (meydan okumada `0 1 O I L` yok; onaltılık oda sonekinde `0`/`1`
+/// sık geçer). Sunucudaki CHECK aynı regex'i taşır
+/// (`supabase/2026-10-13_friend_challenge.sql`).
 class JoinDeepLink {
   JoinDeepLink._();
 
   static String? pendingCode;
+
+  static final RegExp _challengePattern = RegExp(r'^D[2-9A-HJKMNP-Z]{8}$');
+
+  /// [code] bir meydan okuma kodu mu (büyük/küçük harf ve çevre boşluğu
+  /// önemsiz)? Oda kodları ASLA `true` döndürmez.
+  static bool isChallengeCode(String? code) {
+    if (code == null) return false;
+    return _challengePattern.hasMatch(code.trim().toUpperCase());
+  }
 
   static String shareUrl(String code) =>
       'https://www.zankurd.com/join/${code.trim().toUpperCase()}';
@@ -21,10 +43,21 @@ class JoinDeepLink {
     return null;
   }
 
+  static bool _webUriConsumed = false;
+
   static String? consumeInitialRoute() {
     pendingCode ??= parse(
       WidgetsBinding.instance.platformDispatcher.defaultRouteName,
     );
+    // Web: Flutter varsayılan olarak hash URL stratejisi kullanır; tarayıcıda
+    // `/join/KOD` yolu `defaultRouteName`e DÜŞMEZ (her zaman `/`). Bağlantıyı
+    // tarayıcının gerçek adresinden bir kez okuruz; böylece uygulaması
+    // olmayan arkadaş bağlantıyı tarayıcıdan açıp meydan okumayı (ya da
+    // odayı) kabul edebilir.
+    if (pendingCode == null && kIsWeb && !_webUriConsumed) {
+      _webUriConsumed = true;
+      pendingCode = parse(Uri.base.toString());
+    }
     final code = pendingCode;
     pendingCode = null;
     return code;
@@ -79,6 +112,7 @@ class JoinDeepLink {
   static void resetForTest() {
     pendingCode = null;
     incoming.value = null;
+    _webUriConsumed = false;
     _lastOfferedCode = null;
     _lastOfferedAt = null;
   }
