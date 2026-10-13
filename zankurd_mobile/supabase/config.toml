@@ -6,3 +6,9 @@ sql_paths = ["./seed.sql"]
 
 [auth]
 enable_anonymous_sign_ins = true
+
+# send-push JWT değil paylaşılan sırla (`x-cron-secret` = CRON_SECRET) korunur:
+# çağıran pg_cron/pg_net, kullanıcı oturumu taşımaz. Bu satır olmadan
+# `supabase functions deploy send-push` platform kapısında 401 verir.
+[functions.send-push]
+verify_jwt = false

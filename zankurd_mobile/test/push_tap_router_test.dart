@@ -44,6 +44,20 @@ void main() {
       );
     });
 
+    test('düello daveti ve sıra bildirimleri Yarış sekmesine çözülür', () {
+      // Sunucu (2026-10-13_push_delivery.sql) `async_duel_invite` kuyruklar;
+      // `async_duel_turn` sıra bildirimi için ayrılmış tür. Eski bir
+      // istemci bu türü tanımayıp ana ekrana düşerdi.
+      expect(
+        PushTapRouter.targetForKind('async_duel_invite'),
+        PushTapTarget.playTab,
+      );
+      expect(
+        PushTapRouter.targetForKind('async_duel_turn'),
+        PushTapTarget.playTab,
+      );
+    });
+
     test('friend_request Arkadaşlara (friends) çözülür', () {
       expect(
         PushTapRouter.targetForKind('friend_request'),
@@ -72,6 +86,11 @@ void main() {
     test('bilinen tür true döner ve pending e yazılır', () {
       expect(PushTapRouter.offer({'kind': 'friend_request'}), isTrue);
       expect(PushTapRouter.pending.value, PushTapTarget.friends);
+    });
+
+    test('async_duel_invite offer edilince Yarış sekmesi bekler', () {
+      expect(PushTapRouter.offer({'kind': 'async_duel_invite'}), isTrue);
+      expect(PushTapRouter.pending.value, PushTapTarget.playTab);
     });
 
     test('pending zaten aynı hedefi tutarken tekrar offer edilirse '
