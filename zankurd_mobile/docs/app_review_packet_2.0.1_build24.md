@@ -1,6 +1,6 @@
-# ZanKurd iOS 2.0.1 (23) — App Review Packet
+# ZanKurd iOS 2.0.1 (24) — App Review Packet
 
-Bu paket, mevcut kaynak koddan üretilen 2.0.1 (23) release adayı içindir.
+Bu paket, mevcut kaynak koddan üretilen 2.0.1 (24) release adayı içindir.
 2.0.0 (21) paketinden (`app_review_packet_2.0.0_build21.md`) türetildi;
 "2.0.0 (21)'den beri değişenler" bölümü yeni olanı toplar, aşağıdaki
 "1.9.2 (20)'den beri değişenler" bölümü tarihsel olarak korunur. Metin App Store Connect'e yapıştırılmadan önce sahibi
@@ -102,6 +102,14 @@ correct answer were removed from the playable set before this build
 (individually, not by hiding categories). The Kurdish history questions state
 events, people and dates; the general-knowledge categories are neutral facts.
 
+
+## Build 23 yerine build 24
+
+Build 23 üretim yapılandırması (`--dart-define-from-file`) olmadan derlendiği için
+TestFlight'ta "yapılandırma eksik" ekranında açılıyordu; incelemeden çekildi ve
+TestFlight'ta süresi bitirildi. Build 24 aynı kaynaktan `tool/surum_paketi.sh ios`
+ile derlendi; betik ikilide anahtarın varlığını doğrular. İçerik ve inceleme
+notları build 23 ile aynıdır.
 
 ## 2.0.0 (21)'den beri değişenler
 
@@ -207,7 +215,7 @@ the abuse-report route: iletisim@zankurd.com.
 
 ## Tested devices and release evidence
 
-- Candidate build: 2.0.1 (23). App Store Connect upload and Binary State are
+- Candidate build: 2.0.1 (24). App Store Connect upload and Binary State are
   intentionally left blank until this exact candidate is uploaded.
 - Build device family: iPhone and iPad; minimum iOS: 15.0.
 - Local production-config validation and local iOS release build results are
@@ -220,7 +228,7 @@ the abuse-report route: iletisim@zankurd.com.
 ## Privacy and App Store metadata gate
 
 The checked-in privacy manifest declares the data categories currently used by
-the app and declares no location collection. Before uploading build 23, the
+the app and declares no location collection. Before uploading build 24, the
 App Store Connect App Privacy answers must be compared with
 `docs/app_privacy_reconciliation_1.9.2_build15.md` and with the push token
 flow above (the device push token stored on the profile is an identifier; the
@@ -245,7 +253,7 @@ open/licensed imagery. It does not claim ownership of third-party imagery.
 - Enter the current owner phone number and the confirmed support email in App
   Store Connect App Review Information; do not store private contact details
   in source control.
-- Upload the exact build 23 and reconcile App Privacy answers (including the
+- Upload the exact build 24 and reconcile App Privacy answers (including the
   push token) before sending it to review.
 - Retake the store screenshots with the new design (the current set predates
   it; see `docs/store_listing.md`).
