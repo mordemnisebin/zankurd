@@ -18,6 +18,6 @@
     <!-- Uyarlanabilir simgenin zemini: gece lacivert (iOS simgesiyle aynı). -->
     <color name="zk_icon_bg">#0A0F2E</color>
     <!-- Bildirim küçük simgesinin rengi (FCM `default_notification_color`):
-         Şahnê gündüz Agir'i (`SahneTokens.day.act`). -->
-    <color name="zk_notification_color">#FF8A3D</color>
+         yerel bildirimlerdeki `NotificationService._accent` (Tîrêj) ile aynı. -->
+    <color name="zk_notification_color">#C2560E</color>
 </resources>
