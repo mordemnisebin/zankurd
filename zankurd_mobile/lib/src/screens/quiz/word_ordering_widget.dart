@@ -138,7 +138,16 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
 
     // Cevap verildikten sonra kullanıcının gönderdiği cümle gösterilir;
     // yeniden düzenlemeye çalışmasın diye havuz ve buton kaldırılır.
-    final submitted = answered ? widget.selectedAnswer : null;
+    //
+    // Süre dolunca `selectedAnswer` bir cümle değil 'TIMEOUT' işaretçisidir;
+    // ham haliyle kutuya yazılıyordu. Oyuncunun süre dolmadan kurduğu parça
+    // cümle varsa o gösterilir, yoksa yerelleştirilmiş "süre doldu" durumu.
+    final timedOut = answered && widget.selectedAnswer == 'TIMEOUT';
+    final submitted = !answered
+        ? null
+        : timedOut
+        ? _selectedWords.map((w) => w.word).join(' ')
+        : widget.selectedAnswer;
     if (!answered) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _measurePool());
     }
@@ -157,7 +166,12 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
             color: t.s1,
             shape: SahneShape.withSide(SahneShape.l, t.edge, width: 1),
           ),
-          child: submitted != null
+          child: timedOut && submitted!.isEmpty
+              ? Text(
+                  Tr.forKu(K.sureDoldu, isKu),
+                  style: SahneType.bodyStrong.copyWith(color: t.tx2),
+                )
+              : submitted != null
               ? Text(
                   submitted,
                   style: SahneType.bodyStrong.copyWith(color: t.tx),

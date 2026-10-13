@@ -12,6 +12,7 @@ import '../utils/error_reporter.dart';
 import '../widgets/app_state.dart';
 import '../widgets/arena_kit.dart';
 import '../widgets/sahne/sahne.dart';
+import '../widgets/skeleton_loader.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
@@ -155,7 +156,6 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
     // satırı artık çubukta; içerikte kimlik başlığı tekrar edilmez. Eski
     // alt kenardaki üçgen kilim deseni kalktı (desen yalnız sahne kartının
     // üst şeridi). Sayfa adı oyun merkezindeki girişle aynı kalır.
-    final t = SahneTokens.of(context);
     return SahnePushedPage(
       title: context.t(K.dailyEvent),
       backLabel: context.t(K.back),
@@ -165,11 +165,11 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
           builder: (ctx, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 !snapshot.hasData) {
-              return SliverFillRemaining(
-                child: Center(
-                  child: CircularProgressIndicator(color: t.raceTx),
-                ),
-              );
+              // Yükleniyor: yüklenmiş içerikle AYNI sarmalayıcıda ve aynı
+              // ölçüde iskelet. Ortada dönen bir gösterge kartı ekranın
+              // ortasına, yüklenmiş kartı üst üçte bire koyuyordu: kart
+              // geldiğinde sayfa zıplıyor, üstte geniş bir boşluk kalıyordu.
+              return _alignedContent(const _ContestSkeleton());
             }
             if (snapshot.hasError) {
               return SliverFillRemaining(
@@ -207,28 +207,12 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
             // `SliverFillRemaining(hasScrollBody: false)` kullanılamaz:
             // içerik bir `LayoutBuilder` taşıyor (geniş ekran düzeni) ve
             // o iç boyut hesabını desteklemiyor.
-            return SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
-              sliver: SliverLayoutBuilder(
-                builder: (context, sliver) => SliverToBoxAdapter(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: sliver.remainingPaintExtent,
-                    ),
-                    child: Align(
-                      alignment: const Alignment(0, -0.6),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: _ContestContent(
-                          contest: contest,
-                          doneToday: _doneToday,
-                          starting: _starting,
-                          onStart: () => _startQuiz(contest),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+            return _alignedContent(
+              _ContestContent(
+                contest: contest,
+                doneToday: _doneToday,
+                starting: _starting,
+                onStart: () => _startQuiz(contest),
               ),
             );
           },
@@ -236,7 +220,67 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
       ],
     );
   }
+
+  /// İçeriği (ya da onun iskeletini) kalan alanın üst üçte birine koyar.
+  /// Yükleniyor ve yüklendi aynı yerleşimi paylaşır; yoksa kart gelince
+  /// sayfa zıplar.
+  Widget _alignedContent(Widget child) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: SahneSpace.page),
+      sliver: SliverLayoutBuilder(
+        builder: (context, sliver) => SliverToBoxAdapter(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: sliver.remainingPaintExtent),
+            child: Align(
+              alignment: const Alignment(0, -0.6),
+              child: SizedBox(width: double.infinity, child: child),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
+
+/// Günün soruları kartı yüklenirken gösterilen iskelet: kahraman kart,
+/// "Kısa bilgi" başlığı ve iki çip — gerçek düzenin yerleri ve boyları.
+class _ContestSkeleton extends StatelessWidget {
+  const _ContestSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      key: const ValueKey('contest-skeleton'),
+      label: context.t(K.preparingShort),
+      liveRegion: true,
+      excludeSemantics: true,
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SkeletonLine(height: _kHeroSkeletonHeight, borderRadius: 16),
+          SizedBox(height: SahneSpace.sectionTop),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: SkeletonLine(width: 120, height: 20),
+          ),
+          SizedBox(height: SahneSpace.x2),
+          Wrap(
+            spacing: SahneSpace.x2,
+            runSpacing: SahneSpace.x2,
+            children: [
+              SkeletonLine(width: 112, height: 44),
+              SkeletonLine(width: 112, height: 44),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Kahraman kartın yüklenmiş hâldeki yüksekliği (iskelet bununla aynı yeri
+/// tutsun; `contest_skeleton_test` ölçüp kilitler).
+const double _kHeroSkeletonHeight = 260;
 
 class _ContestContent extends StatelessWidget {
   const _ContestContent({

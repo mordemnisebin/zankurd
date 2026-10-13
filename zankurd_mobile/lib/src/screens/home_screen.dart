@@ -43,6 +43,7 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/player_identity.dart';
 import '../services/analytics_service.dart';
 import '../widgets/learning_goal_chooser.dart';
+import '../utils/number_format.dart';
 
 /// [MistakeStore.readyIds] içindeki kimlikleri gerçekten açılabilir
 /// (`playableQuestions`) sorularla kesiştirir.
@@ -687,9 +688,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         if (_coinBalance > 0)
           SahneStatChip(
             leading: const SahneGlyph(SahneGlyphKind.coin),
-            label: '$_coinBalance',
+            label: groupThousands(_coinBalance),
             semanticLabel:
-                '${context.t(K.shop)}. $_coinBalance ${context.t(K.coinWord)}',
+                '${context.t(K.shop)}. ${groupThousands(_coinBalance)} '
+                '${context.t(K.coinWord)}',
             onTap: () async {
               await Navigator.of(
                 context,

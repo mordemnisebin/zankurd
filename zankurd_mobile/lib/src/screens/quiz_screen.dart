@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show RenderAbstractViewport;
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,6 +60,7 @@ import 'quiz/quiz_wildcard_bar.dart';
 import 'quiz_result_screen.dart';
 import 'room_result_recovery_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../utils/number_format.dart';
 import '../widgets/dialog_action_pair.dart';
 
 part 'quiz/quiz_layout_rules.dart';
@@ -313,21 +315,20 @@ class _QuizScreenState extends State<QuizScreen>
   /// doğrusunu göremediği için tur öğretici olmaktan çıkıyordu
   /// (2026-07-25 canlı denetimi).
   void _revealCorrectAnswer() {
-    if (isFlutterTestEnvironment) return;
+    if (isFlutterTestEnvironment && !revealCorrectAnswerInTests) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final target = _correctAnswerKey.currentContext;
       if (target == null) return;
-      Scrollable.ensureVisible(
+      _revealKeepingPhoto(
         target,
+        photoKey: _photoKeyFor(index),
         duration: const Duration(milliseconds: 320),
-        curve: Curves.easeOutCubic,
         // Öğrenme akışında doğru şıkkın hemen altında açıklama kutusu
         // belirir ve asıl öğretici içerik odur; karo yukarı alınarak
         // açıklama da aynı ekranda kalır. Yarışma akışında açıklama yok,
         // bu yüzden karo daha rahat bir konumda ortalanır.
         alignment: _isLearningExperience ? 0.12 : 0.35,
-        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
       );
     });
   }
@@ -362,24 +363,30 @@ class _QuizScreenState extends State<QuizScreen>
           _explanationActionKey.currentContext ??
           _explanationKey.currentContext;
       if (target == null) return;
-      Scrollable.ensureVisible(
+      _revealKeepingPhoto(
         target,
+        photoKey: _photoKeyFor(index),
         duration: sahneMotionReduced(context)
             ? Duration.zero
             : const Duration(milliseconds: 320),
-        curve: Curves.easeOutCubic,
         // 1.0: hedefin ALT kenarı görünür alanın altına yaslanır. Kayan
         // alan alt perdenin üstünde biter (`extendBody` payı), yani satır
         // perdenin üstünde TAMAMEN görünür kalır. Kutu zaten içeriğin en
         // altındadır; hizayı yukarı çekmek soruyu gereksizce ekran dışına
         // itiyordu.
         alignment: 1.0,
-        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
       );
     });
   }
 
   final GlobalKey _explanationKey = GlobalKey();
+
+  /// Soru fotoğrafının anahtarı, soru sırasına göre. `AnimatedSwitcher`
+  /// geçişte eski ve yeni paneli birlikte yaşattığı için tek anahtar
+  /// paylaşılamaz (duplicate-GlobalKey); her soruya kendi anahtarı düşer.
+  final Map<int, GlobalKey> _photoKeys = {};
+  GlobalKey _photoKeyFor(int questionIndex) =>
+      _photoKeys.putIfAbsent(questionIndex, GlobalKey.new);
 
   /// Şıklı sorularda görünen "Açıklamayı gör" satırı ([_revealExplanation]).
   final GlobalKey _explanationActionKey = GlobalKey();

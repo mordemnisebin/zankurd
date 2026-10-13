@@ -8,6 +8,7 @@ import '../../l10n/strings.dart';
 import '../../utils/percent_format.dart';
 import '../../widgets/sahne/sahne.dart';
 import 'home_rows.dart' show CategoryProgress;
+import '../../utils/number_format.dart';
 
 /// Ana ekranın iki kapısı: öğrenme alanı ve yarış.
 ///
@@ -161,7 +162,10 @@ class HomeTopicGrid extends StatelessWidget {
       if (count != null) {
         widest = math.max(
           widest,
-          word('$count ${Tr.forKu(K.soru, isKu)}', SahneType.caption),
+          word(
+            '${groupThousands(count)} ${Tr.forKu(K.soru, isKu)}',
+            SahneType.caption,
+          ),
         );
       }
     }
@@ -246,7 +250,9 @@ class _HomeTopicTile extends StatelessWidget {
     final started = ratio > 0;
     final count = questionCount;
     final percent = started ? context.percentRatio(ratio) : null;
-    final countText = count == null ? null : '$count ${Tr.forKu(K.soru, isKu)}';
+    final countText = count == null
+        ? null
+        : '${groupThousands(count)} ${Tr.forKu(K.soru, isKu)}';
     final t = SahneTokens.of(context);
     // 2026-09-30 izgara: yazı bloğu her karoda AYNI satırlardan kurulur —
     // ad, öteki ad (iki dil aynıysa boş satır), soru sayısı, ilerleme çizgisi.

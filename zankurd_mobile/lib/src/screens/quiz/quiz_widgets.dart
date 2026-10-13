@@ -121,7 +121,7 @@ class _LiveScoreRow extends StatelessWidget {
           ),
           const SizedBox(width: SahneSpace.x2),
           Text(
-            '${player.score}',
+            groupThousands(player.score),
             style: SahneType.captionStrong.copyWith(
               color: t.goldTx,
               fontFeatures: const [FontFeature.tabularFigures()],
@@ -155,6 +155,7 @@ class QuizQuestionImage extends StatelessWidget {
 
 class _QuestionImage extends StatelessWidget {
   const _QuestionImage({
+    super.key,
     required this.url,
     this.alt,
     this.isCompact = false,
@@ -798,7 +799,7 @@ class _DuelScoreHeader extends StatelessWidget {
             Text(
               // 2026-09-30 canlı: "pts" İngilizce kısaltmaydı; terim sözlüğü
               // puan/pûan der, kelime `K.scoreWord`tan gelir.
-              '${p.score} ${context.t(K.scoreWord).toLowerCase()}',
+              '${groupThousands(p.score)} ${context.t(K.scoreWord).toLowerCase()}',
               style: SahneType.captionStrong.copyWith(
                 color: t.goldTx,
                 fontFeatures: const [FontFeature.tabularFigures()],
@@ -1323,7 +1324,7 @@ class _CoinBalanceLine extends StatelessWidget {
           const SahneGlyph(SahneGlyphKind.coin, size: 16),
           const SizedBox(width: SahneSpace.x1),
           Text(
-            '$balance',
+            groupThousands(balance),
             style: SahneType.captionStrong.copyWith(
               color: t.goldTx,
               fontFeatures: const [FontFeature.tabularFigures()],

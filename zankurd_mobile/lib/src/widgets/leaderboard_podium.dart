@@ -6,6 +6,7 @@ import '../theme/app_icons.dart';
 import '../utils/player_identity.dart';
 import 'player_avatar.dart';
 import 'sahne/sahne.dart';
+import '../utils/number_format.dart';
 
 /// Sıralamanın ilk üçü: ortada birinci (en uzun kaide), solda ikinci,
 /// sağda üçüncü.
@@ -134,7 +135,7 @@ class _PodiumColumn extends StatelessWidget {
     final label = Tr.forKu(isSelf ? K.seninSiranPP : K.pPPPuan, isKu, {
       'p0': '${entry.rank}',
       'p1': _name,
-      'p2': '${entry.totalScore}',
+      'p2': groupThousands(entry.totalScore),
     });
     final first = place == 0;
     final pedestalShape = first
@@ -227,7 +228,7 @@ class _PodiumColumn extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      '${entry.totalScore}',
+                      groupThousands(entry.totalScore),
                       maxLines: 1,
                       style: SahneType.bodyStrong.copyWith(
                         color: isSelf ? t.goldTx : t.tx,

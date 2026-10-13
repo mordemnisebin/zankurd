@@ -13,6 +13,7 @@ import '../utils/error_reporter.dart';
 import 'quiz_screen.dart';
 import '../config/subcategory_config.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../utils/number_format.dart';
 
 class LevelScreen extends StatefulWidget {
   const LevelScreen({
@@ -542,7 +543,7 @@ class _LevelRowContent extends StatelessWidget {
                     ? context.t(K.oncePSeviyeyiTamamla, {
                         'p0': '${level.number - 1}.',
                       })
-                    : '${level.questionCount} ${context.t(K.soru)}',
+                    : '${groupThousands(level.questionCount)} ${context.t(K.soru)}',
                 key: locked
                     ? ValueKey('level-lock-hint-${level.number}')
                     : null,

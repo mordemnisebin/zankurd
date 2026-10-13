@@ -17,6 +17,7 @@ import '../widgets/tournament_bracket_widget.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../config/bot_names.dart';
+import '../utils/number_format.dart';
 
 bool tournamentMatchCompleted(Object? result) =>
     result is Map && result['completed'] == true;
@@ -865,7 +866,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
                       ? null
                       : SahneType.upperFor(s.playerName.trim()[0], isKu: ku),
                   icon: AppIcons.user,
-                  trailing: SahneRowValue('${s.totalScore}'),
+                  trailing: SahneRowValue(groupThousands(s.totalScore)),
                 ),
             ],
           ),

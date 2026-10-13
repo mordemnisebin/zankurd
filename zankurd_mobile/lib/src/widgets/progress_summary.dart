@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'arena_kit.dart';
 import 'sahne/sahne.dart';
+import '../utils/number_format.dart';
 
 /// Level ve XP özetini tek yüzeyde toplar.
 ///
@@ -58,7 +59,9 @@ class ProgressSummary extends StatelessWidget {
 
     final numberToken = RewardToken(
       kind: RewardKind.xp,
-      value: hasTarget ? '$xpInLevel/$xpNeeded' : '$xpInLevel',
+      value: hasTarget
+          ? '${groupThousands(xpInLevel)}/${groupThousands(xpNeeded)}'
+          : groupThousands(xpInLevel),
       compact: true,
     );
 

@@ -49,6 +49,7 @@ import 'room_screen.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
+import '../utils/number_format.dart';
 
 /// Seri kararının sonucu.
 ///
@@ -1808,7 +1809,7 @@ class _RaceStandings extends StatelessWidget {
             title: player.name,
             avatar: userIdentity == null ? null : _avatarOf(player),
             subtitle: streakLine,
-            trailing: SahneRowValue('${player.score}'),
+            trailing: SahneRowValue(groupThousands(player.score)),
           ),
         );
       } else {
@@ -1823,7 +1824,7 @@ class _RaceStandings extends StatelessWidget {
             // satırın 36'lık avatar yuvasında.
             avatar: _avatarOf(player),
             subtitle: streakLine,
-            trailing: SahneRowValue('${player.score}'),
+            trailing: SahneRowValue(groupThousands(player.score)),
           ),
         );
       }
