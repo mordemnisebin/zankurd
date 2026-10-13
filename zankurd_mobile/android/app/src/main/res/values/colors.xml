@@ -17,4 +17,7 @@
     <color name="zk_splash_bg_dark">#0A0F2E</color>
     <!-- Uyarlanabilir simgenin zemini: gece lacivert (iOS simgesiyle aynı). -->
     <color name="zk_icon_bg">#0A0F2E</color>
+    <!-- Bildirim küçük simgesinin rengi (FCM `default_notification_color`):
+         Şahnê gündüz Agir'i (`SahneTokens.day.act`). -->
+    <color name="zk_notification_color">#FF8A3D</color>
 </resources>

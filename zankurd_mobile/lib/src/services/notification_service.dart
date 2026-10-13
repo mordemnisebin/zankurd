@@ -29,6 +29,16 @@ class NotificationService {
   /// Bildirim siluetinin marka rengi (Tîrêj).
   static const _accent = Color(0xFFC2560E);
 
+  /// Arka planda gelen FCM iletilerinin düştüğü Android kanalı.
+  ///
+  /// `AndroidManifest.xml`deki `default_notification_channel_id` ile AYNI
+  /// olmalı (bekçi: `fcm_manifest_defaults_test.dart`). Sunucu Android
+  /// `channel_id` göndermediği için push'ları sistem bu kanala koyar.
+  /// Kanal başlangıçta [init]te oluşturulur; yalnız ilk yerel bildirimde
+  /// oluşsaydı hiç yerel bildirim göstermemiş bir cihazda push yedek
+  /// "Miscellaneous" kanalına düşerdi.
+  static const pushChannelId = 'zankurd_friend_requests';
+
   NotificationService._(
     this._preferences,
     this._enabled,
@@ -171,6 +181,18 @@ class NotificationService {
       await _localNotificationsPlugin.initialize(
         settings: initializationSettings,
       );
+      await _localNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >()
+          ?.createNotificationChannel(
+            const AndroidNotificationChannel(
+              pushChannelId,
+              'ZanKurd Daxwazên Hevaltiyê',
+              description: 'Daxwazên hevaltiyê yên nû',
+              importance: Importance.high,
+            ),
+          );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService init');
     }

@@ -112,6 +112,27 @@
             android:name="google_analytics_adid_collection_enabled"
             android:value="false" />
 
+        <!-- FCM varsayılanları (arka planda gelen push).
+             Uygulama arka plandayken `notification` yüklü FCM iletisini
+             Dart değil sistem çizer ve küçük simge/renk/kanalı BURADAN
+             okur. Bu üçü olmadan (a) simge başlatıcı simgesine düşer ve
+             bildirimde düz beyaz kare çıkar (`ic_stat_zankurd` saydam
+             siluettir), (b) renk atanmaz, (c) kanal "Miscellaneous"
+             yedeğine düşer ve kullanıcı ZanKurd bildirimlerini
+             ayrı yönetemez. Sunucu (`send-push`) Android `channel_id`
+             göndermiyor; kanal yalnız burada seçilir.
+             Kanal kimliği `NotificationService.pushChannelId` ile aynı olmalı
+             (uygulama açılışında oluşturulur). -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_zankurd" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/zk_notification_color" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="zankurd_friend_requests" />
+
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
