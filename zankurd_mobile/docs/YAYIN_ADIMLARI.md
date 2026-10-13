@@ -14,6 +14,56 @@ inceleme bekleyişi (Apple 1-3 gün, Google 1-7 gün).
 
 ---
 
+## Tek komutla yükleme
+
+Paket üretimi ve mağazaya yükleme `tool/yayinla.sh` ile tek komuttur. Betik
+önce `tool/surum_paketi.sh`'i (üretim yapılandırması + ikilide anahtar denetimi)
+çalıştırır; `lib/` ya da `pubspec.yaml` işlenmemişse durur, commit ve sürümü
+yazar.
+
+```bash
+cd /Users/kocer/Projects/zankurd/zankurd_mobile
+tool/yayinla.sh ios --kuru      # her şeyi yapar, yüklemez; komutu maskeli yazar
+tool/yayinla.sh ios             # IPA'yı dışa aktarır, App Store Connect'e yükler
+tool/yayinla.sh android         # AAB'yi Play "Kapalı test - Alpha"ya TASLAK yükler
+```
+
+Ortam değişkenleri (hiçbiri depoda tutulmaz; `~/.zshrc`'ye yazılabilir):
+
+| Değişken | Ne | Hedef |
+| --- | --- | --- |
+| `ASC_KEY_ID` | App Store Connect API anahtar kimliği (`.p8` dosyası `~/.appstoreconnect/private_keys/AuthKey_<kimlik>.p8` altında durmalı) | ios |
+| `ASC_ISSUER_ID` | App Store Connect issuer kimliği | ios |
+| `PLAY_JSON_KEY` | Play servis hesabı JSON anahtarının yolu, ör. `~/.zankurd/play-service-account.json` | android |
+
+Android taslak olarak yüklenir; Play Console'da gözden geçirip gönderme kararı
+sende kalır. iOS derlemesi App Store Connect'te işlendikten sonra TestFlight'ta
+görünür.
+
+### Play servis hesabını bir kez oluşturma
+
+1. [Google Cloud Console](https://console.cloud.google.com/)'da bir proje seç
+   ya da yeni oluştur.
+2. *APIs & Services › Library*'den **Google Play Android Developer API**'yi
+   etkinleştir.
+3. *IAM & Admin › Service Accounts › Create service account* ile bir servis
+   hesabı oluştur (ör. `zankurd-yayin`). Proje rolü gerekmez.
+4. Hesabın *Keys › Add key › Create new key › JSON* ile anahtarını indir.
+5. Dosyayı depo DIŞINA taşı ve koru:
+   `mkdir -p ~/.zankurd && mv ~/Downloads/<dosya>.json ~/.zankurd/play-service-account.json && chmod 600 ~/.zankurd/play-service-account.json`
+6. [Play Console](https://play.google.com/console) › *Users and permissions ›
+   Invite new users*: servis hesabının e-posta adresini (`...@....iam.gserviceaccount.com`)
+   gir; ZanKurd uygulaması için sürüm yayınlama (release) izinlerini ver
+   (en azından *Release apps to testing tracks*). İzinlerin etkinleşmesi birkaç
+   saat sürebilir.
+7. `export PLAY_JSON_KEY=~/.zankurd/play-service-account.json` ve
+   `tool/yayinla.sh android --kuru` ile dene.
+
+JSON anahtarı bir paroladır: depoya, sohbete ya da yapay zekâ araçlarına
+verme. Sızarsa Cloud Console'dan anahtarı sil, yenisini üret.
+
+---
+
 ## 0. Önce şunu bir kez çalıştır
 
 Terminalde proje klasöründe:
