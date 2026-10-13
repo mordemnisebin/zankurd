@@ -174,6 +174,9 @@ class _FakeLessonListeningSpeaker implements LessonListeningSpeaker {
   final bool available;
 
   @override
+  bool availableFor(String text) => available;
+
+  @override
   final ValueNotifier<bool> speakingListenable = ValueNotifier(false);
 
   final List<String> spoken = [];

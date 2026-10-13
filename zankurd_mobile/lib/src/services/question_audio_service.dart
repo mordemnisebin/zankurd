@@ -173,7 +173,7 @@ class AudioplayersVerifiedQuestionAudioPlayer
   }
 }
 
-class _NoopVerifiedQuestionAudioPlayer implements VerifiedQuestionAudioPlayer {
+class NoopVerifiedQuestionAudioPlayer implements VerifiedQuestionAudioPlayer {
   final ValueNotifier<bool> _playing = ValueNotifier(false);
 
   @override
@@ -236,7 +236,7 @@ class QuestionAudioService {
       resolver: QuestionAudioResolver(catalog: resolvedCatalog),
       tts: TtsQuestionAudioAdapter(tts),
       verifiedPlayer: resolvedCatalog.isEmpty
-          ? _NoopVerifiedQuestionAudioPlayer()
+          ? NoopVerifiedQuestionAudioPlayer()
           : AudioplayersVerifiedQuestionAudioPlayer(),
     );
   }

@@ -5,6 +5,7 @@ import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../screens/learner_lexicon_screen.dart';
 import '../utils/app_route.dart';
+import 'lexicon_speak_button.dart';
 import 'sahne/sahne.dart';
 
 /// Hangi sözcükler sözlük için dokunulabilir?
@@ -257,12 +258,19 @@ Future<void> showLexiconEntrySheet(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Semantics(
-            header: true,
-            child: Text(
-              entry.termKu,
-              style: SahneType.headline.copyWith(color: t.tx),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Semantics(
+                  header: true,
+                  child: Text(
+                    entry.termKu,
+                    style: SahneType.headline.copyWith(color: t.tx),
+                  ),
+                ),
+              ),
+              LexiconSpeakButton(text: entry.termKu),
+            ],
           ),
           const SizedBox(height: SahneSpace.x1),
           Text(entry.meaningTr, style: SahneType.body.copyWith(color: t.tx2)),

@@ -1,0 +1,793 @@
+oncelik,key,metin,kaynak,adet
+1,alfabe_69bbecbc,Alfabe,ders:alphabet_1,7
+1,tip_56d1648e,Tîp,ders:alphabet_1,16
+1,dengder_90213140,Dengdêr,ders:alphabet_1,23
+1,dengdar_99203640,Dengdar,ders:alphabet_1,13
+1,cil_ee87bdf7,Cil,ders:alphabet_1,9
+1,cay_9077ece9,Çay,ders:alphabet_1,35
+1,dar_d94f10ac,Dar,ders:alphabet_1,33
+1,feki_94ca44b4,Fêkî,ders:alphabet_1,12
+1,gul_3c3523ff,Gul,ders:alphabet_1,15
+1,heval_62b2a24d,Heval,ders:alphabet_1,30
+1,ker_7315d9bd,Ker,ders:alphabet_1,10
+1,lev_5c13ee00,Lêv,ders:alphabet_1,4
+1,mal_eba30295,Mal,ders:alphabet_1,32
+1,ode_ae409ef1,Ode,ders:alphabet_1,17
+1,qelem_7a2a0467,Qelem,ders:alphabet_1,20
+1,roj_2f0dfc6c,Roj,ders:alphabet_1,69
+1,welat_b8d0656a,Welat,ders:alphabet_1,35
+1,dil_cf6288a6,Dil,ders:alphabet_1,18
+1,dur_17d60979,Dûr,ders:alphabet_1,57
+1,ev_491a7222,Ev,ders:alphabet_1,1044
+1,ev-gul-e_808961b1,Ev gul e.,slayt:alphabet_1,3
+1,ew-heval-e_c5a5a8a8,Ew heval e.,slayt:alphabet_1,3
+1,ev-qelem-e_fca850e1,Ev qelem e.,slayt:alphabet_1,3
+1,ev-ode-ye_a78ebfa2,Ev ode ye.,slayt:alphabet_1,3
+1,rojbas_726dc9f9,Rojbaş,ders:everyday_1,19
+1,evarbas_64d227f0,Êvarbaş,ders:everyday_1,14
+1,sevbas_72279a7f,Şevbaş,ders:everyday_1,14
+1,tu-cawa-yi_f4d43309,Tu çawa yî?,ders:everyday_1|slayt:greetings_2,13
+1,ez-bas-im-spas-dikim_99e89efa,"Ez baş im, spas dikim",ders:everyday_1,2
+1,silav_d903940c,Silav,ders:greetings_2|ders:transport_1,7
+1,bi-xer-hati_4150a1cd,Bi xêr hatî,ders:greetings_2|slayt:greetings_2,10
+1,sibeha-te-bi-xer_ebee2db0,Sibeha te bi xêr,ders:greetings_2,7
+1,evara-te-bi-xer_9b09af51,Êvara te bi xêr,ders:greetings_2,4
+1,seva-te-bi-xer_e7e4d906,Şeva te bi xêr,ders:greetings_2,6
+1,hun-cawa-ne_3fb872bd,Hûn çawa ne?,ders:greetings_2,3
+1,ez-bas-im_0d2a4553,Ez baş im,ders:greetings_2,20
+1,ez-gelek-bas-im_f0e696f3,Ez gelek baş im,ders:greetings_2,3
+1,cawa_f0e2ebb2,Çawa,ders:greetings_2,126
+1,bas_a61a3b5c,Baş,ders:greetings_2,104
+1,gelek_c8d98bcf,Gelek,ders:greetings_2,116
+1,gelek-spas_51a55a0a,Gelek spas,ders:greetings_2,7
+1,bibore_b9d59a1e,Bibore,ders:greetings_2,1
+1,bi-xatire-te_86c22efa,Bi xatirê te,ders:greetings_2,12
+1,bi-xatire-we_66c43b31,Bi xatirê we,ders:greetings_2,1
+1,oxir-be_970b888a,Oxir be,ders:greetings_2|slayt:greetings_2,3
+1,xer_ff506460,Xêr,ders:greetings_2,41
+1,we_5c47afa9,We,ders:greetings_2,12
+1,gotin_37b78346,Gotin,ders:greetings_2,199
+1,silav-heval_e3dff842,Silav heval!,slayt:greetings_2,0
+1,ez-gelek-bas-im-spas_21f19894,"Ez gelek baş im, spas.",slayt:greetings_2,0
+1,gelek-spas-heval_85343a44,"Gelek spas, heval!",slayt:greetings_2,0
+1,bi-xatire-te-heval_330526f4,"Bi xatirê te, heval.",slayt:greetings_2,0
+1,nave-te-ci-ye_1e8c9fd3,Navê te çi ye?,ders:everyday_2|slayt:intro_1,12
+1,nave-min-azad-e_c47b87dc,Navê min Azad e,ders:everyday_2,17
+1,tu-ji-ku-dere-yi_a897fe1d,Tu ji ku derê yî?,ders:everyday_2|slayt:intro_1,10
+1,ez-ji-amede-me_110bf66f,Ez ji Amedê me,ders:everyday_2,12
+1,nav_178eedf2,Nav,ders:intro_1,216
+1,nave-min-rojin-e_6e97f82a,Navê min Rojîn e,ders:intro_1|slayt:intro_1,5
+1,rojin_dad6b2c5,Rojîn,ders:intro_1,15
+1,ci_e68648d2,Çi,ders:intro_1,912
+1,tu-cend-sali-yi_c4b850aa,Tu çend salî yî?,ders:intro_1|slayt:intro_1,9
+1,ez-bist-sali-me_2219bbcf,Ez bîst salî me,ders:intro_1,4
+1,sal_de1c9f6f,Sal,ders:intro_1,18
+1,cend_55d1c8dc,Çend,ders:intro_1,119
+1,ez-ji-wane-me_42f9cebe,Ez ji Wanê me,ders:intro_1,5
+1,ji_643f6d7c,Ji,ders:intro_1,3371
+1,ku_5c3d224d,Ku,ders:intro_1,3147
+1,der_d1599170,Der,ders:intro_1,25
+1,wan_2be2e301,Wan,ders:intro_1,216
+1,merdin_27d40d38,Mêrdîn,ders:intro_1,13
+1,stenbol_438bca1a,Stenbol,ders:intro_1,16
+1,kurd_b1e33deb,Kurd,ders:intro_1,213
+1,pise_56db490d,Pîşe,ders:intro_1,4
+1,xwendekar_f34abb36,Xwendekar,ders:intro_1,25
+1,mamoste_587c83d7,Mamoste,ders:intro_1,53
+1,doktor_e6f1de6a,Doktor,ders:intro_1,35
+1,karker_10f5cd81,Karker,ders:intro_1,14
+1,kurdi_09a82662,Kurdî,ders:intro_1,936
+1,kurmanci_77f8cf89,Kurmancî,ders:intro_1,429
+1,tirki_f551543c,Tirkî,ders:intro_1,201
+1,zanin_ea247f7f,Zanîn,ders:intro_1,67
+1,bi_442bb364,Bi,ders:intro_1,3986
+1,ez-deh-sali-me_19501498,Ez deh salî me.,slayt:intro_1,1
+1,ez-ji-merdine-me_538bb901,Ez ji Mêrdînê me.,slayt:intro_1,0
+1,ez-xwendekar-im_af96e523,Ez xwendekar im.,slayt:intro_1,8
+1,ez-mamoste-me_3a00192c,Ez mamoste me.,slayt:intro_1|ders:jobs_1,7
+1,ez-bi-kurmanci-dizanim_10fbc59f,Ez bi Kurmancî dizanim.,slayt:intro_1,4
+1,tu-bi-tirki-dizani_3942f585,Tu bi Tirkî dizanî?,slayt:intro_1,0
+1,malbat_656c79f8,Malbat,ders:family_1,15
+1,de_2ad7f7ce,Dê,ders:family_1,31
+1,bav_72b776ce,Bav,ders:family_1,26
+1,bira_947123f9,Bira,ders:family_1,22
+1,xwisk_82b4651c,Xwişk,ders:family_1,21
+1,kur_733ce92d,Kur,ders:family_1,11
+1,kec_c67973e7,Keç,ders:family_1,9
+1,dapir_52f0d47f,Dapîr,ders:family_1,15
+1,bapir_0a0c7469,Bapîr,ders:family_1,9
+1,mam_eaa30102,Mam,ders:family_1,7
+1,met_d3ad6a29,Met,ders:family_1,3
+1,xal_da67745a,Xal,ders:family_1,9
+1,xalti_cc7c45bf,Xaltî,ders:family_1,4
+1,jin_e1d8b356,Jin,ders:family_1,94
+1,mer_bbfaed59,Mêr,ders:family_1,32
+1,zarok_6ebc9514,Zarok,ders:family_1,26
+1,ev-de-ye_77620b8b,Ev dê ye,ders:family_1|slayt:family_1,4
+1,ev-bave-min-e_4d882cad,Ev bavê min e,ders:family_1|slayt:family_1,2
+1,de-u-bav-li-male-ne_f2a8b0ec,Dê û bav li malê ne,ders:family_1,1
+1,u_0c9dcc6b,Û,ders:family_1,4889
+1,li_4031bd46,Li,ders:family_1,3146
+1,dapira-min-li-male-ye_a0773e84,Dapîra min li malê ye.,slayt:family_1,2
+1,bapir-mer-e_9499634c,Bapîr mêr e.,slayt:family_1,1
+1,dapir-jin-e_592cd04d,Dapîr jin e.,slayt:family_1,1
+1,bira-u-xwisk-li-male-ne_46463037,Bira û xwişk li malê ne.,slayt:family_1,2
+1,fermo_209e5146,Fermo,ders:everyday_3,4
+1,kerem-bike_b0acde30,Kerem bike,ders:everyday_3,3
+1,spas_140161b2,Spas,ders:everyday_3,42
+1,ji-kerema-xwe_10fb17b7,Ji kerema xwe,ders:everyday_3,10
+1,bibexsine_c171e333,Bibexşîne,ders:everyday_3,4
+1,spi_c80eebd3,spî,ders:colors_1,77
+1,res_04d67430,reş,ders:colors_1,56
+1,kesk_d9636e53,kesk,ders:colors_1,32
+1,sin_6868a566,şîn,ders:colors_1,28
+1,zer_a58b649e,zer,ders:colors_1,41
+1,porteqali_ae5de884,porteqalî,ders:colors_1,0
+1,mor_d59e62c5,mor,ders:colors_1,8
+1,qehweyi_6b5890d9,qehweyî,ders:colors_1,5
+1,gewr_7aed6748,gewr,ders:colors_1,7
+1,pembe_9e69051c,pembe,ders:colors_1,6
+1,sev-sor-e_0a1fda08,Sêv sor e,ders:colors_1,3
+1,av-sin-e_bc84b990,Av şîn e,ders:colors_1,3
+1,nan-spi-ye_a8c927de,Nan spî ye,ders:colors_1,1
+1,kulilk-zer-e_dc0a0341,Kulîlk zer e,ders:colors_1,2
+1,giya-kesk-e_79e3b074,Giya kesk e,ders:colors_1,3
+1,pisik-res-e_366f3853,Pisîk reş e,ders:colors_1,1
+1,seva-sor_1b4eadd6,sêva sor,ders:colors_1,2
+1,nane-spi_361e463f,nanê spî,ders:colors_1,0
+1,kiteba-kesk_70479a6f,kitêba kesk,ders:colors_1,0
+1,kirase-res_b9f082ed,kirasê reş,ders:colors_1,0
+1,mala-spi_913fac1e,mala spî,ders:colors_1,0
+1,ava-sin_5b8844d4,ava şîn,ders:colors_1,0
+1,ev-ci-reng-e_76f0a084,Ev çi reng e?,ders:colors_1,0
+1,ew-sor-e_2460a9ea,Ew sor e.,ders:colors_1,0
+1,kijan-reng-xwes-e_8e435179,Kîjan reng xweş e?,ders:colors_1,0
+1,zer-xwes-e_60a56f4d,Zer xweş e.,ders:colors_1,0
+1,seva-sor-li-ku-ye_386615fb,Sêva sor li ku ye?,ders:colors_1,0
+1,stu_09248b78,stû,ders:body_1,0
+1,mil_cb8f487d,mil,ders:body_1,4
+1,ling_19db194d,ling,ders:body_1,7
+1,por_533362f6,por,ders:body_1,6
+1,cav_9977fb14,çav,ders:body_1,29
+1,guh_38351db3,guh,ders:body_1,18
+1,poz_5b336f8e,poz,ders:body_1,13
+1,diran_9633dbd3,diran,ders:body_1,12
+1,tili_248bc973,tilî,ders:body_1,11
+1,pe_126390aa,pê,ders:body_1,131
+1,cok_7e553e51,çok,ders:body_1,10
+1,caven-min-res-in_3b05f1e1,Çavên min reş in,ders:body_1,3
+1,sere-min-diese_dac88fcd,Serê min diêşe,ders:body_1,5
+1,ez-desten-xwe-disom_75582afe,Ez destên xwe dişom,ders:body_1,3
+1,diranen-min-spi-ne_2c89c1db,Diranên min spî ne,ders:body_1,3
+1,linge-min-diese_fe47bdd5,Lingê min diêşe,ders:body_1,1
+1,ez-sax-im_c4de8fd0,Ez sax im,ders:body_1,0
+1,deste-min-paqij-e_a890821a,Destê min paqij e,ders:body_1,1
+1,em-amade-ne_a8e5ee1e,Em amade ne,ders:body_1,0
+1,lase-min-sax-e_c3b1a958,Laşê min sax e,ders:body_1,0
+1,kiras_d15fbf19,kiras,ders:clothes_1,24
+1,pantor_4c3eec35,pantor,ders:clothes_1,4
+1,caket_422e832e,çakêt,ders:clothes_1,1
+1,pelav_239bf88d,pêlav,ders:clothes_1,11
+1,sapke_cbbacf50,şapke,ders:clothes_1,5
+1,gore_1f94477a,gore,ders:clothes_1,11
+1,kirase-sor_42b873f4,kirasê sor,ders:clothes_1,4
+1,pantore-res_2e4c7a39,pantorê reş,ders:clothes_1,1
+1,cakete-sin_7093de46,çakêtê şîn,ders:clothes_1,1
+1,sapkeya-spi_ee5ceab8,şapkeya spî,ders:clothes_1,1
+1,goreyen-kesk_acde1a20,goreyên kesk,ders:clothes_1,0
+1,pelaven-zer_390f545b,pêlavên zer,ders:clothes_1,0
+1,ez-kiras-li-xwe-dikim_8fa21729,Ez kiras li xwe dikim,ders:clothes_1,0
+1,tu-pantor-li-xwe-diki_1e85bf04,Tu pantor li xwe dikî,ders:clothes_1,0
+1,ew-sapke-li-xwe-dike_b6d39dc8,Ew şapke li xwe dike,ders:clothes_1,0
+1,em-pelav-li-xwe-dikin_32ce1fa3,Em pêlav li xwe dikin,ders:clothes_1,0
+1,hun-mont-li-xwe-dikin_dee7cb9b,Hûn mont li xwe dikin,ders:clothes_1,0
+1,ew-gore-li-xwe-dikin_9297acfc,Ew gore li xwe dikin,ders:clothes_1,0
+1,monte-mezin_8cd70e85,montê mezin,ders:clothes_1,0
+1,dawena-bicuk_9a3b53a9,dawêna biçûk,ders:clothes_1,0
+1,kirase-nu_f4e13694,kirasê nû,ders:clothes_1,0
+1,cakete-kevn_157bf5ed,çakêtê kevn,ders:clothes_1,0
+1,pelaven-paqij_1432de53,pêlavên paqij,ders:clothes_1,0
+1,goreyen-pis_a93cd010,goreyên pîs,ders:clothes_1,0
+1,ev-ci-ye_358ba4cf,Ev çi ye,ders:clothes_1|ders:questions_1,6
+1,ev-kiras-e_21864eb7,Ev kiras e,ders:clothes_1,5
+1,ev-cend-e_0063e6f6,Ev çend e,ders:clothes_1|ders:shopping_1,6
+1,ev-mezin-e_8652ac86,Ev mezin e,ders:clothes_1,0
+1,ev-bicuk-e_10ca47a3,Ev biçûk e,ders:clothes_1,0
+1,ev-sor-e_2cfdec65,Ev sor e,ders:clothes_1,1
+1,pencere_0109c5c5,pencere,ders:home_1,14
+1,metbex_e9785cec,metbex,ders:home_1,21
+1,sersok_843876a7,serşok,ders:home_1,13
+1,odeya-nivine_f80533ba,odeya nivînê,ders:home_1,0
+1,odeya-runistine_994e0378,odeya rûniştinê,ders:home_1,3
+1,koridor_011cf60b,korîdor,ders:home_1,0
+1,nivin_1a2decd3,nivîn,ders:home_1,28
+1,dolab_78b4156b,dolab,ders:home_1,12
+1,ban_5ab75106,ban,ders:home_1,0
+1,mift_7f766791,mift,ders:home_1,0
+1,perde_840a793f,perde,ders:home_1,8
+1,ev-mal-e_daa6771b,Ev mal e,ders:home_1,6
+1,ev-deri-ye_34974162,Ev derî ye,ders:home_1,4
+1,ev-mase-ye_466e21ce,Ev mase ye,ders:home_1,4
+1,ode-mezin-e_647a908d,Ode mezin e,ders:home_1,3
+1,metbex-paqij-e_89b60142,Metbex paqij e,ders:home_1,2
+1,hewa-cawa-ye_34d9e7df,Hewa çawa ye?,ders:weather_1,3
+1,hewa_31333036,hewa,ders:weather_1,44
+1,xwes_3fbff013,xweş,ders:weather_1,22
+1,xirab_b108558b,xirab,ders:weather_1,4
+1,hewa-xwes-e_23ad2ca5,Hewa xweş e,ders:weather_1,0
+1,tav_a4f74130,tav,ders:weather_1,7
+1,pir-germ_13853e21,pir germ,ders:weather_1,1
+1,hineki-germ_8db7eb36,hinekî germ,ders:weather_1,0
+1,roj-derdikeve_0ca59301,Roj derdikeve,ders:weather_1,1
+1,hewa-germ-e_9ca734cc,Hewa germ e,ders:weather_1,6
+1,ewr_6ea44245,ewr,ders:weather_1,19
+1,ewri_7c1e38d4,ewrî,ders:weather_1,2
+1,dibare_d92fe5b6,dibare,ders:weather_1,21
+1,ba-te_01086879,ba tê,ders:weather_1,5
+1,baran-dibare_094b4620,Baran dibare,ders:weather_1,5
+1,berf_9c7bb6b0,berf,ders:weather_1,32
+1,serma_eae0d90b,serma,ders:weather_1,3
+1,mij_c58f3f0b,mij,ders:weather_1,5
+1,cemed_7b79ade9,cemed,ders:weather_1,0
+1,berf-dibare_9b9791ef,Berf dibare,ders:weather_1,5
+1,hewa-sar-e_07b57303,Hewa sar e,ders:weather_1,6
+1,ez-germ-im_bd80ff17,ez germ im,ders:weather_1,0
+1,ez-sar-im_4148a066,ez sar im,ders:weather_1,6
+1,ez-li-male-me_76b833fc,Ez li malê me,ders:weather_1,2
+1,ki-ye_e7eb70bb,Kî ye?,ders:questions_1,73
+1,ki-ne_e7c222b4,Kî ne?,ders:questions_1,2
+1,tu-ki-yi_323164d8,Tu kî yî?,ders:questions_1,6
+1,tu-ci-dixwazi_fbe39ee1,Tu çi dixwazî?,ders:questions_1,0
+1,tu-li-ku-yi_9c9886ed,Tu li ku yî?,ders:questions_1,7
+1,dibistan-li-ku-ye_b4b60ca8,Dibistan li ku ye?,ders:questions_1,1
+1,tu-kengi-teyi_35313385,Tu kengî têyî?,ders:questions_1,3
+1,ders-kengi-dest-pe-dike_7b5bdb75,Ders kengî dest pê dike?,ders:questions_1,2
+1,tu-iro-kengi-teyi_9da4dc63,Tu îro kengî têyî?,ders:questions_1,0
+1,tu-sibe-li-ku-yi_160aaa92,Tu sibê li ku yî?,ders:questions_1,0
+1,tu-cima-hati_5d34dd39,Tu çima hatî?,ders:questions_1,1
+1,ew-cima-naxwaze_fc0e524c,Ew çima naxwaze?,ders:questions_1,0
+1,tu-cawa-dixwini_f0ec21dd,Tu çawa dixwînî?,ders:questions_1,2
+1,cawa-cedibe_28cf1a0f,Çawa çêdibe?,ders:questions_1,2
+1,bi-ci-awayi_2f8f9ef8,Bi çi awayî?,ders:questions_1,4
+1,cend-pirtuk_b7a1fbcc,Çend pirtûk?,ders:questions_1,1
+1,kijan-pirtuk_fa3557bc,Kîjan pirtûk?,ders:questions_1,2
+1,kijan-dibistan_54b29dea,Kîjan dibistan?,ders:questions_1,0
+1,ciqas-nan_8dcdf754,Çiqas nan?,ders:questions_1,0
+1,biha-ciqas-e_ae0bae3a,Biha çiqas e?,ders:questions_1,1
+1,ew-li-ku-ye_e77c0b76,Ew li ku ye?,ders:questions_1,0
+1,ew-kengi-dixwine_3beebe19,Ew kengî dixwîne?,ders:questions_1,0
+1,tu-cima-diki_67cf2e8c,Tu çima dikî?,ders:questions_1,0
+1,ev-cend-in_3562165c,Ev çend in?,ders:questions_1,0
+1,kijan-bas-e_d3c10d02,Kîjan baş e?,ders:questions_1,1
+1,ez-nan-dixwim_7adb27e1,ez nan dixwim,ders:verbs_1|slayt:food_1,5
+1,tu-cay-vedixwi_28f598c8,tu çay vedixwî,ders:verbs_1,1
+1,ew-dice_02f34ae5,ew diçe,ders:verbs_1,4
+1,em-dikin_21588c54,em dikin,ders:verbs_1,0
+1,hun-dibinin_22d8bf08,hûn dibînin,ders:verbs_1,0
+1,ew-ten_3420bbde,ew tên,ders:verbs_1,0
+1,ez-nacim_f4fb5caf,ez naçim,ders:verbs_1,4
+1,ez-dicim_4f8f3c31,ez diçim,ders:verbs_1,21
+1,tu-dici_2940f066,tu diçî,ders:verbs_1,7
+1,ez-tem_7b6fa9ca,ez têm,ders:verbs_1,1
+1,tu-teyi_21bcd3b7,tu têyî,ders:verbs_1,2
+1,ew-te_b300b704,ew tê,ders:verbs_1,10
+1,em-ten_132a9040,em tên,ders:verbs_1,0
+1,em-dicin-dibistane_d97747c2,em diçin dibistanê,ders:verbs_1,0
+1,tu-nan-dixwi_61cb4a86,tu nan dixwî,ders:verbs_1,0
+1,ew-nan-dixwe_40bafdf1,ew nan dixwe,ders:verbs_1,2
+1,ez-av-vedixwim_550ac476,ez av vedixwim,ders:verbs_1|slayt:food_1,3
+1,ew-cay-vedixwe_c74b57e1,ew çay vedixwe,ders:verbs_1,0
+1,em-nan-dixwin_39f5c3ef,em nan dixwin,ders:verbs_1,1
+1,ez-dikim_952a1880,ez dikim,ders:verbs_1,2
+1,tu-diki_e0fa17c7,tu dikî,ders:verbs_1,0
+1,ew-dike_c2be9d34,ew dike,ders:verbs_1,2
+1,ez-dibinim_7b5e3654,ez dibînim,ders:verbs_1,3
+1,tu-dibini_4eb48223,tu dibînî,ders:verbs_1,0
+1,ew-dibine_cc95624e,ew dibîne,ders:verbs_1,0
+1,em-dibinin_b47afb36,em dibînin,ders:verbs_1,1
+1,tu-kar-diki_aacc7ba9,tu kar dikî,ders:verbs_1,2
+1,ez-dicim-male_741b7052,ez diçim malê,ders:verbs_1,6
+1,tu-teyi-dibistane_22ee124a,tu têyî dibistanê,ders:verbs_1,0
+1,em-cay-vedixwin_8eddb247,em çay vedixwin,ders:verbs_1,2
+1,hun-kar-dikin_e17bf268,hûn kar dikin,ders:verbs_1,1
+1,ez-te-dibinim_e1088a35,ez te dibînim,ders:verbs_1,1
+1,im-me_dccb8682,im/me,ders:jobs_1,0
+1,e-ye_2e51dbeb,e/ye,ders:jobs_1,3
+1,hemsire_8b9240d9,hemşîre,ders:jobs_1,6
+1,cotkar_ede74035,cotkar,ders:jobs_1,9
+1,polis_21621526,polîs,ders:jobs_1,6
+1,tu-doktor-i_d243317a,tu doktor î,ders:jobs_1,2
+1,ew-hemsire-ye_8e6303cb,ew hemşîre ye,ders:jobs_1,2
+1,em-karker-in_e067b450,em karker in,ders:jobs_1,2
+1,hun-polis-in_1e783293,hûn polîs in,ders:jobs_1,0
+1,ew-cotkar-in_f16e0ef6,ew cotkar in,ders:jobs_1,0
+1,nexwesxane_407e281a,nexweşxane,ders:jobs_1,12
+1,zevi_7f17743f,zevî,ders:jobs_1,1
+1,dadgeh_b5107c8e,dadgeh,ders:jobs_1,2
+1,fabrika_87e82dfd,fabrîka,ders:jobs_1,2
+1,qereqol_5815dbd2,qereqol,ders:jobs_1,4
+1,doktor-li-nexwesxaneye-d_d62f77d0,Doktor li nexweşxaneyê dixebite,ders:jobs_1,3
+1,silav-tu-ki-yi_7e7b6ecd,"Silav, tu kî yî?",ders:jobs_1,0
+1,ez-helin-im-ez-hemsire-m_da29e3c1,"Ez Hêlîn im, ez hemşîre me.",ders:jobs_1,0
+1,tu-li-ku-dixebiti_e3321799,Tu li ku dixebitî?,ders:jobs_1,0
+1,ez-li-nexwesxaneye-dixeb_14127257,Ez li nexweşxaneyê dixebitim.,ders:jobs_1,0
+1,ev-dema-niha-ye_3a9d54ef,ev dema niha ye,ders:jobs_1,0
+1,ergatif-tune-ye_6ec7fd17,ergatîf tune ye,ders:jobs_1,0
+1,kolan_ff9b4922,kolan,ders:city_1,4
+1,bazar_3acf32b1,bazar,ders:city_1,18
+1,xwaringeh_4a7d6b68,xwaringeh,ders:city_1,4
+1,otel_af514c01,otêl,ders:city_1,11
+1,cep_9f6f0a2a,çep,ders:city_1,3
+1,li-vir_97578cd7,li vir,ders:city_1,8
+1,li-wir_ea39e270,li wir,ders:city_1,36
+1,li-ku-ye_d1ff2340,... li ku ye?,ders:city_1,10
+1,ez-cawa-bicim_8627613c,Ez çawa biçim ...?,ders:city_1,0
+1,li-ku-dere-ye_e4fc4f66,li ku derê ye?,ders:city_1,4
+1,dur-e_72f0db5a,dûr e?,ders:city_1,10
+1,nezik-e_6dada2e3,nêzîk e?,ders:city_1,8
+1,rasterast-bice_cf3ba1ba,Rasterast biçe,ders:city_1,7
+1,li-raste-bizivire_b74f49c7,Li rastê bizivire,ders:city_1,2
+1,li-cepe-bizivire_611cfc44,Li çepê bizivire,ders:city_1,3
+1,bisekine_cffeef85,Bisekine,ders:city_1,4
+1,li-pes_77314cd3,li pêş,ders:city_1,1
+1,li-pas_f1f1556d,li paş,ders:city_1,1
+1,ere_7908d9bf,Erê,ders:city_1,20
+1,na_543659f0,Na,ders:city_1,267
+1,bas-e_9d13ab83,Baş e,ders:city_1,7
+1,merheba_6e02c765,merheba,ders:shopping_1,0
+1,hek_c5ccd82b,hêk,ders:shopping_1,9
+1,dikan_ea38081c,dikan,ders:shopping_1,1
+1,suk_dadc26a9,sûk,ders:shopping_1,0
+1,biha-cend-e_77b215cb,Biha çend e?,ders:shopping_1,0
+1,erzan_94421903,erzan,ders:shopping_1,15
+1,giran_773e246e,giran,ders:shopping_1,36
+1,ez-dixwazim_b82d0835,ez dixwazim,ders:shopping_1,6
+1,pere_a8f026d3,pere,ders:shopping_1,12
+1,biha_9857925f,biha,ders:shopping_1,4
+1,ez-sev-dixwazim_c1124653,Ez sêv dixwazim,ders:shopping_1,4
+1,sir-li-dikane-ye_ddc3778f,Şîr li dikanê ye,ders:shopping_1,5
+1,sev-erzan-in_906ba84a,Sêv erzan in,ders:shopping_1,3
+1,nan-giran-e_3a72001c,Nan giran e,ders:shopping_1,3
+1,pere-li-ku-ye_bf8a119c,Pere li ku ye?,ders:shopping_1,1
+1,tenduristi_c5b0b5ac,tenduristî,ders:health_1,2
+1,nexwes_9d8d469c,nexweş,ders:health_1,15
+1,derman_200fdf54,derman,ders:health_1,18
+1,bijisk_251036d8,bijîşk,ders:health_1,4
+1,alikari_05aba5f0,alîkarî,ders:health_1,0
+1,zik_968252a5,zik,ders:health_1,0
+1,es_3b65a8f8,êş,ders:health_1,7
+1,ta_38453866,ta,ders:health_1,9
+1,kuxik_666d535b,kuxik,ders:health_1,4
+1,grip_72362f4b,grîp,ders:health_1,1
+1,diese_4b7f75fa,diêşe,ders:health_1,15
+1,ez-nexwes-im_0b84bf5d,Ez nexweş im,ders:health_1,4
+1,taya-min-heye_ebdd310d,Taya min heye,ders:health_1,4
+1,ez-dikuxim_0e000e39,Ez dikuxim,ders:health_1,2
+1,derman-bide-min_e298a236,Derman bide min,ders:health_1,0
+1,pol_4d335984,pol,ders:school_1,4
+1,ders_92ff47b9,ders,ders:school_1,6
+1,hin-dibe_97a45f8e,hîn dibe,ders:school_1,2
+1,defter_92ed63df,defter,ders:school_1,3
+1,penus_84481eb3,pênûs,ders:school_1,4
+1,cente_b217b96b,çente,ders:school_1,4
+1,dixwine_85bc87cf,dixwîne,ders:school_1,11
+1,dinivise_3eeaec7e,dinivîse,ders:school_1,26
+1,text_bde64e3e,text,ders:school_1,12
+1,pole_0928ecbd,polê,ders:school_1,3
+1,ez-dixwinim_cac787cb,ez dixwînim,ders:school_1,2
+1,ez-dinivisim_19d88742,ez dinivîsim,ders:school_1,0
+1,guhdar-dike_9b83417d,guhdar dike,ders:school_1,0
+1,dibeje_fb4691d0,dibêje,ders:school_1,55
+1,otobus_43e1c973,otobus,ders:transport_1,5
+1,erebe_8393953c,erebe,ders:transport_1,2
+1,tren_74e9e990,trên,ders:transport_1,7
+1,balafir_2ef49cc0,balafir,ders:transport_1,11
+1,taksi_bea456c9,taksî,ders:transport_1,3
+1,em-dicin_22f9287f,em diçin,ders:transport_1,2
+1,hun-dicin_bd201609,hûn diçin,ders:transport_1,0
+1,ew-dicin_5009188d,ew diçin,ders:transport_1,0
+1,bi-otobuse_9b6b086f,bi otobusê,ders:transport_1,4
+1,bi-erebeye_c6244b73,bi erebeyê,ders:transport_1,0
+1,bi-trene_7beb77f6,bi trênê,ders:transport_1,3
+1,bi-balafire_ed36b232,bi balafirê,ders:transport_1,0
+1,bi-taksiye_2089c6c6,bi taksiyê,ders:transport_1,0
+1,bilet_6201c25f,bilêt,ders:transport_1,9
+1,rawestgeh_a8cc0c01,rawestgeh,ders:transport_1,2
+1,balafirgeh_64430238,balafirgeh,ders:transport_1,1
+1,rewi_e77675dc,rêwî,ders:transport_1,9
+1,tu-dici-ku-dere_0ca6430c,Tu diçî ku derê?,ders:transport_1,3
+1,ez-dicim-enqereye_03c60367,Ez diçim Enqereyê.,ders:transport_1,0
+1,bi-ci-dici_e9e7d057,Bi çi diçî?,ders:transport_1,0
+1,bi-otobuse-dicim_fb49932a,Bi otobusê diçim.,ders:transport_1,3
+1,bere_d9df9b1f,berê,ders:past_1,41
+1,qediya_2fac092a,qediya,ders:past_1,4
+1,ez-cum_6770d4b5,Ez çûm,ders:past_1,10
+1,min-xwar_47a198b3,Min xwar,ders:past_1,0
+1,me-ew-dit_d7f766b4,Me ew dît,ders:past_1,2
+1,tu-cuyi_1df3bdb4,tu çûyî,ders:past_1,1
+1,ew-cu_ae2100ef,ew çû,ders:past_1,0
+1,ez-hatim_88fec249,ez hatim,ders:past_1,2
+1,tu-hati_7295e7ce,tu hatî,ders:past_1,5
+1,ew-hat_816a7668,ew hat,ders:past_1,2
+1,em-cun_b182dc89,em çûn,ders:past_1,0
+1,te-xwar_105647c0,te xwar,ders:past_1,0
+1,wi-xwar_2625dc8f,wî xwar,ders:past_1,0
+1,we-xwar_4da8c59b,wê xwar,ders:past_1,0
+1,me-xwar_d3fa2ac3,me xwar,ders:past_1,0
+1,min-dit_0fb7515a,min dît,ders:past_1,7
+1,te-dit_008f5ea5,te dît,ders:past_1,0
+1,ez-bum_be15ce79,ez bûm,ders:past_1,2
+1,tu-buyi_7dbc8808,tu bûyî,ders:past_1,1
+1,ew-bu_4f587005,ew bû,ders:past_1,2
+1,ez-necum_bd2d2f8a,ez neçûm,ders:past_1,5
+1,tu-nehati_dd08d455,tu nehatî,ders:past_1,0
+1,min-nexwar_ab708926,min nexwar,ders:past_1,0
+1,min-nedit_5eaaf40b,min nedît,ders:past_1,0
+1,duh-ez-cum-dibistane_e0658b9d,Duh ez çûm dibistanê,ders:past_1,2
+1,tu-hati-male_4286d169,Tu hatî malê,ders:past_1,2
+1,min-nan-xwar_04c84578,Min nan xwar,ders:past_1,6
+1,te-cay-vexwar_4b376dc9,Te çay vexwar,ders:past_1,3
+1,ew-mamoste-bu_82fbd325,Ew mamoste bû,ders:past_1,3
+2,di_601cd4ee,Di,sozluk:questions,3564
+2,ya_5c5fb48f,Ya,sozluk:questions,2352
+2,rast_9f94cdeb,Rast,sozluk:questions,1663
+2,kijan_b98105cc,Kîjan,sozluk:questions,1571
+2,an_4124f2e6,An,sozluk:questions,1450
+2,bo_422bb03e,Bo,sozluk:questions,1256
+2,sas_eaac8f64,Şaş,sozluk:questions,1216
+2,xwe_cf7f67ef,Xwe,sozluk:questions,750
+2,re_58547550,Re,sozluk:questions,587
+2,ew_4a1a73b5,Ew,sozluk:grammar_1|ders:grammar_1,556
+2,tene_318a5bcd,Tenê,sozluk:questions,423
+2,en_df8e8c92,Ên,sozluk:questions,413
+2,ez_4d1a786e,Ez,sozluk:grammar_1|ders:grammar_1,379
+2,heri_d4048789,Herî,sozluk:questions,378
+2,yekem_92dcb17e,Yekem,sozluk:questions,373
+2,yek_469f28f8,Yek,sozluk:numbers_1|ders:numbers_1,318
+2,mezin_f93114ec,Mezin,sozluk:questions,296
+2,le_13491a76,Lê,sozluk:questions,293
+2,her_f4b48d8c,Her,sozluk:questions,269
+2,min_c98f4557,Min,sozluk:grammar_2|ders:grammar_2,254
+2,gori_696ec032,Gorî,sozluk:questions,243
+2,du_4c1cb572,Du,sozluk:numbers_1|ders:numbers_1,235
+2,hev_f0b48740,Hev,sozluk:questions,225
+2,wek_06d9ae66,Wek,sozluk:questions,219
+2,tu_4c4557e2,Tu,sozluk:grammar_1|ders:grammar_1,210
+2,din_cd628580,Din,sozluk:questions,205
+2,cuda_8b82f8f6,Cuda,sozluk:questions,181
+2,civaki_80114d44,Civakî,sozluk:questions,175
+2,em_401a63f7,Em,sozluk:grammar_1|ders:grammar_1,166
+2,ki_9617f23f,Kî,sozluk:questions,164
+2,sereke_b37746ac,Sereke,sozluk:questions,160
+2,kirin_cc733ef2,Kirin,sozluk:questions,158
+2,nu_e6200137,Nû,sozluk:questions,158
+2,navdar_18149751,Navdar,sozluk:questions,153
+2,pisti_4a4d6b0b,Piştî,sozluk:questions,151
+2,bilind_42b473e9,Bilind,sozluk:questions,149
+2,rasterast_fcd3c0b4,Rasterast,sozluk:questions,149
+2,dest_9a032455,Dest,sozluk:questions,147
+2,naskirin_a3853c66,Naskirin,sozluk:questions,144
+2,rez_4199b586,Rêz,sozluk:questions,143
+2,klasik_3f586630,Klasîk,sozluk:questions,140
+2,gel_5c0cb3ef,Gel,sozluk:questions,140
+2,be_35ce12e8,Bê,sozluk:questions,139
+2,zede_46b90cab,Zêde,sozluk:questions,138
+2,diroki_06baa4cf,Dîrokî,sozluk:questions,136
+2,direj_dca09da5,Dirêj,sozluk:questions,133
+2,geleri_b9ca842d,Gelêrî,sozluk:questions,133
+2,nasin_0f03400a,Nasîn,sozluk:questions,132
+2,devki_f4355e44,Devkî,sozluk:questions,130
+2,cekirin_2727580b,Çêkirin,sozluk:questions,129
+2,heman_bb02998a,Heman,sozluk:questions,129
+2,demokratik_1e50bb6c,Demokratîk,sozluk:questions,127
+2,te_3c453eb2,Te,sozluk:grammar_2|ders:grammar_2,121
+2,heremi_bb26af0d,Herêmî,sozluk:questions,121
+2,bori_12c33fd1,Borî,sozluk:questions,119
+2,kevnesopi_f2c1dbbe,Kevneşopî,sozluk:questions,118
+2,diji_bdcd8849,Dijî,sozluk:questions,116
+2,siyasi_785b913d,Siyasî,sozluk:questions,113
+2,nivisandin_faface6e,Nivîsandin,sozluk:questions,109
+2,gisti_2263229a,Giştî,sozluk:questions,109
+2,film_a234294b,Fîlm,sozluk:questions,107
+2,gelemperi_80ea81dd,Gelemperî,sozluk:questions,107
+2,minak_3d5980e9,Mînak,sozluk:questions,107
+2,diyar_8f0ecc4a,Diyar,sozluk:questions,106
+2,nujen_aee85758,Nûjen,sozluk:questions,106
+2,xwedi_d6c33168,Xwedî,sozluk:questions,103
+2,beri_d5df94d3,Berî,sozluk:questions,102
+2,pir_5340da80,Pir,sozluk:questions,101
+2,cih_ea87b7ab,Cih,sozluk:questions,100
+2,giring_ff9597a3,Girîng,sozluk:questions,95
+2,mirov_a77d9716,Mirov,sozluk:questions,95
+2,av_592518ae,Av,sozluk:food_1|ders:food_1,93
+2,basur_19dc5790,Başûr,sozluk:geography_2|ders:geography_2,90
+2,avakirin_b0813dba,Avakirin,sozluk:questions,90
+2,pirani_224904a6,Piranî,sozluk:questions,88
+2,dawi_761ff59a,Dawî,sozluk:questions,88
+2,bun_3b425b3f,Bûn,sozluk:grammar_bun|ders:grammar_bun,84
+2,ziman_7d05c0e8,Ziman,sozluk:questions,83
+2,kem_99a7e9ba,Kêm,sozluk:questions,83
+2,latini_f21b6fce,Latînî,sozluk:questions,81
+2,nan_2f8f13ba,Nan,sozluk:food_1|ders:food_1,80
+2,neteweyi_6ddc91a7,Neteweyî,sozluk:questions,80
+2,ditin_4f3fce35,Dîtin,sozluk:questions,79
+2,deng_86f63a79,Deng,sozluk:questions,79
+2,bin_5acad8be,Bin,sozluk:questions,79
+2,giredayi_1f6deb4f,Girêdayî,sozluk:questions,78
+2,yan_4ba9be33,Yan,sozluk:questions,78
+2,cima_963d0d24,Çima,sozluk:questions,77
+2,bingehin_f0cb6847,Bingehîn,sozluk:questions,75
+2,tegeh_aa947db6,Têgeh,sozluk:questions,74
+2,kevnar_098ba982,Kevnar,sozluk:questions,74
+2,niha_ee1725d3,Niha,sozluk:questions,73
+2,sor_cc361aff,Sor,sozluk:questions,73
+2,kar_5b0b2699,Kar,sozluk:questions,72
+2,taybeti_650fdfe1,Taybetî,sozluk:questions,72
+2,pes_fd882f86,Pêş,sozluk:questions,72
+2,lexistin_d9096d21,Lêxistin,sozluk:questions,71
+2,wekhev_08082991,Wekhev,sozluk:questions,71
+2,hem_0bb4b1c1,Hem,sozluk:questions,70
+2,fermi_424687ec,Fermî,sozluk:questions,66
+2,je_1f7f9010,Jê,sozluk:questions,65
+2,kurt_c1e3571b,Kurt,sozluk:questions,65
+2,belav_a344d12b,Belav,sozluk:questions,65
+2,se_9a8c66fb,Sê,sozluk:numbers_1|ders:numbers_1,64
+2,girtin_a36a7df8,Girtin,sozluk:questions,64
+2,ner_8786cd52,Nêr,sozluk:questions,64
+2,tembur_6a206553,Tembûr,sozluk:questions,63
+2,piroz_00107391,Pîroz,sozluk:questions,63
+2,kilam_0f253685,Kilam,sozluk:culture_dengbeji|ders:culture_dengbeji,62
+2,ravekirin_8ba64b5e,Ravekirin,sozluk:questions,62
+2,ali_2e127735,Alî,sozluk:questions,61
+2,kevn_fe5b59cd,Kevn,sozluk:questions,60
+2,heta_19354905,Heta,sozluk:questions,59
+2,dengbej_cd07004a,Dengbêj,sozluk:culture_dengbeji|ders:culture_dengbeji,58
+2,kom_77fc49b6,Kom,sozluk:questions,58
+2,navin_2dc4dbdb,Navîn,sozluk:geography_2|ders:geography_2,57
+2,car_9577f4c8,Çar,sozluk:numbers_1|ders:numbers_1,56
+2,dayik_309caeb5,Dayik,sozluk:questions,56
+2,kisandin_17b9de05,Kişandin,sozluk:questions,56
+2,germ_85e6bcd4,Germ,sozluk:questions,56
+2,hesibandin_dcfee41a,Hesibandin,sozluk:questions,56
+2,bicuk_899f99e5,Biçûk,sozluk:questions,56
+2,tewandi_0acdb10d,Tewandî,sozluk:questions,55
+2,hatin_60fe7b8d,Hatin,sozluk:questions,54
+2,iro_9ca70487,Îro,sozluk:time_2|ders:time_2,53
+2,damezrandin_f8c677ea,Damezrandin,sozluk:questions,53
+2,pirjimar_61523c1b,Pirjimar,sozluk:questions,52
+2,nivisin_232c883d,Nivîsîn,sozluk:questions,50
+2,sar_d41c8fb1,Sar,sozluk:questions,50
+2,wesandin_d4b15bf5,Weşandin,sozluk:questions,50
+2,hevpar_e97a0bc3,Hevpar,sozluk:questions,50
+2,girani_1f527bfb,Giranî,sozluk:questions,49
+2,govend_7bb2c094,Govend,sozluk:culture_1|ders:culture_1,48
+2,bakur_c5880f66,Bakur,sozluk:geography_2|ders:geography_2,48
+2,derve_37e4c835,Derve,sozluk:questions,48
+2,ba_3c2ba6cc,Ba,sozluk:questions,48
+2,stran_e7076e77,Stran,sozluk:culture_dengbeji|ders:culture_dengbeji,47
+2,kes_7215d82a,Kes,sozluk:questions,47
+2,taybet_b0b8f9f4,Taybet,sozluk:questions,47
+2,bilur_762845b4,Bilûr,sozluk:questions,47
+2,yekjimar_bd928313,Yekjimar,sozluk:questions,46
+2,ciyayi_d1e03ea2,Çiyayî,sozluk:questions,46
+2,pesin_82e0c137,Pêşîn,sozluk:questions,46
+2,wene_2e04b2b2,Wêne,sozluk:questions,45
+2,xwendin_bdfa25ee,Xwendin,sozluk:questions,45
+2,navneteweyi_b0aeead2,Navneteweyî,sozluk:questions,45
+2,volkanik_1d919ea2,Volkanîk,sozluk:questions,45
+2,cirok_469db24e,Çîrok,sozluk:questions,44
+2,gerguhez_fd27c118,Gerguhêz,sozluk:questions,44
+2,rojava_03e017f6,Rojava,sozluk:geography_2|ders:geography_2,43
+2,sev_d8056ff7,Sêv,sozluk:food_2|ders:food_2,42
+2,peyv_bbe378c9,Peyv,sozluk:questions,42
+2,pirtuk_c77e99cb,Pirtûk,sozluk:questions,42
+2,tune_68410493,Tune,sozluk:questions,42
+2,evin_7c3fdfeb,Evîn,sozluk:questions,42
+2,mase_f1775527,Mase,sozluk:questions,42
+2,buyer_b030ba41,Bûyer,sozluk:questions,41
+2,sev_c276708a,Şev,sozluk:time_2|ders:time_2,40
+2,derhener_ed0f03ae,Derhêner,sozluk:questions,40
+2,sedi_eb1188ba,Sedî,sozluk:questions,40
+2,deri_e0917625,Derî,sozluk:questions,40
+2,dice_713c356f,diçe,sozluk:questions,40
+2,penc_9a5c643d,Pênc,sozluk:numbers_1|ders:numbers_1,39
+2,amur_d9814719,Amûr,sozluk:questions,39
+2,pase_fc231f0f,Paşê,sozluk:questions,39
+2,heke_157828a6,Heke,sozluk:questions,39
+2,xwarin_4c7bc310,Xwarin,sozluk:food_1|ders:food_1,38
+2,derxistin_57662c43,Derxistin,sozluk:questions,38
+2,agir_90d04f6e,Agir,sozluk:questions,38
+2,berhem_f327d020,Berhem,sozluk:questions,37
+2,nezik_4f32a53c,Nêzîk,sozluk:questions,37
+2,pirozkirin_f85db10e,Pîrozkirin,sozluk:questions,36
+2,ritm_0085e8a7,Rîtm,sozluk:questions,36
+2,baran_8e055ddd,Baran,sozluk:questions,36
+2,herdu_0a7ee537,Herdu,sozluk:questions,36
+2,peskes_2f233dce,Pêşkêş,sozluk:questions,36
+2,hun_caa80f31,Hûn,sozluk:grammar_1|ders:grammar_1,35
+2,leker_effd557c,Lêker,sozluk:questions,35
+2,derbare_99209c28,Derbarê,sozluk:questions,35
+2,bikarhener_b1178048,Bikarhêner,sozluk:questions,35
+2,sifre_c7a4ee93,Şîfre,sozluk:questions,35
+2,komi_b4666413,Komî,sozluk:questions,35
+2,biryar_bcccf7d6,Biryar,sozluk:questions,35
+2,rojhilat_58bd06c4,Rojhilat,sozluk:geography_2|ders:geography_2,34
+2,heft_2057e64c,Heft,sozluk:numbers_1|ders:numbers_1,34
+2,bajar_6b26fbe1,Bajar,sozluk:questions,34
+2,xelat_8e453e5b,Xelat,sozluk:questions,34
+2,xwezayi_c13686d0,Xwezayî,sozluk:questions,34
+2,tomar_227ceca4,Tomar,sozluk:questions,34
+2,dahol_7307a6f9,Dahol,sozluk:questions,33
+2,qebulkirin_6a32908c,Qebûlkirin,sozluk:questions,33
+2,nisandan_e174f0da,Nîşandan,sozluk:questions,33
+2,roman_f0a7b4b2,Roman,sozluk:questions,32
+2,niviski_f539204c,Nivîskî,sozluk:questions,32
+2,erbane_ac356b6a,Erbane,sozluk:questions,32
+2,parastin_77058aab,Parastin,sozluk:questions,31
+2,tevahi_93a7208c,Tevahî,sozluk:questions,31
+2,pivan_5fc7c8ef,Pîvan,sozluk:questions,30
+2,cem_a46f1209,Çem,sozluk:questions,30
+2,model_b08b665a,Model,sozluk:questions,30
+2,mamik_795e09ee,Mamik,sozluk:questions,30
+2,giredan_a57111ab,Girêdan,sozluk:questions,30
+2,wejeyi_339e0e54,Wêjeyî,sozluk:questions,30
+2,parvekirin_a66b2eea,Parvekirin,sozluk:questions,30
+2,dewlet_40babfc0,Dewlet,sozluk:questions,29
+2,lez_426aedf0,Lez,sozluk:questions,29
+2,deryayi_eb4da114,Deryayî,sozluk:questions,28
+2,wiha_1b19793a,Wiha,sozluk:questions,28
+2,tist_fb0ca26a,Tişt,sozluk:questions,27
+2,zirne_d97c40bb,Zirne,sozluk:questions,27
+2,gund_2eaccb53,Gund,sozluk:questions,27
+2,kursi_7a99ca0f,Kursî,sozluk:questions,27
+2,deh_cb5987fe,Deh,sozluk:numbers_1|ders:numbers_1,26
+2,dev_d55997bc,Dev,sozluk:questions,26
+2,demki_de9d5347,Demkî,sozluk:questions,26
+2,hember_9d8c76b2,Hember,sozluk:questions,26
+2,duh_eb3117ee,Duh,sozluk:time_2|ders:time_2,25
+2,cure_8bb912f0,Cure,sozluk:questions,25
+2,vekiri_0346f21f,Vekirî,sozluk:questions,25
+2,navder_53d9ed0b,Navdêr,sozluk:questions,25
+2,zozan_4806f853,Zozan,sozluk:questions,25
+2,sinor_8d29b9ba,Sînor,sozluk:questions,25
+2,winda_02f80392,Winda,sozluk:questions,25
+2,veguhastin_40c432af,Veguhastin,sozluk:questions,25
+2,bazalti_09962658,Bazaltî,sozluk:questions,25
+2,dawet_211d8e62,Dawet,sozluk:culture_1|ders:culture_1,24
+2,vegotin_5922d0cd,Vegotin,sozluk:questions,24
+2,sifir_4faeced2,Sifir,sozluk:questions,24
+2,ferman_815359de,Ferman,sozluk:questions,24
+2,diwan_c1070b44,Dîwan,sozluk:questions,24
+2,dirok_c4e68a3a,Dîrok,sozluk:questions,23
+2,herem_c72b18a8,Herêm,sozluk:questions,23
+2,helbest_7c15ddfc,Helbest,sozluk:questions,23
+2,xwestin_0da779df,Xwestin,sozluk:questions,23
+2,lidarxistin_5dd18b66,Lidarxistin,sozluk:questions,23
+2,azadi_09f5dc26,Azadî,sozluk:questions,23
+2,pey_664b85c5,Pey,sozluk:questions,23
+2,lawik_e444b1d7,Lawik,sozluk:questions,23
+2,nine_ddf5fb55,nîne,sozluk:questions,23
+2,dem_d0598fdd,Dem,sozluk:questions,22
+2,jiyan_53fc359c,Jiyan,sozluk:questions,22
+2,binavkirin_50c5f01e,Binavkirin,sozluk:questions,22
+2,bes_b3cea400,Beş,sozluk:questions,22
+2,berevaji_8bf7ae3f,Berevajî,sozluk:questions,22
+2,ronahi_4f38a1f8,Ronahî,sozluk:questions,22
+2,hukum_2fc4dcb1,Hukum,sozluk:questions,22
+2,dibistan_3f2b3d5f,dibistan,sozluk:questions,22
+2,ciya_9e0b7cf0,Çiya,sozluk:questions,21
+2,nasname_fe6aa0d2,Nasname,sozluk:questions,21
+2,candini_8ff9f696,Çandinî,sozluk:questions,21
+2,danin_6b205d59,Danîn,sozluk:questions,21
+2,nerm_49ce74e5,Nerm,sozluk:questions,21
+2,mast_e0773a64,Mast,sozluk:food_1|ders:food_1,20
+2,xemgin_529b80ab,Xemgîn,sozluk:emotions_2|ders:emotions_2,20
+2,sed_b626edd3,Sed,sozluk:numbers_1|ders:numbers_1,20
+2,ledan_57850721,Lêdan,sozluk:questions,20
+2,bingeh_5af85a36,Bingeh,sozluk:questions,20
+2,gol_401b9265,Gol,sozluk:questions,20
+2,nizm_1e42fe01,Nizm,sozluk:questions,20
+2,mir_d4040d7d,Mîr,sozluk:questions,20
+2,neyini_3122e6d5,Neyînî,sozluk:questions,20
+2,helbestvan_569db459,Helbestvan,sozluk:questions,20
+2,rock_3a1b4ab4,Rock,sozluk:questions,20
+2,stranbej_2a8b0fa0,Stranbêj,sozluk:questions,20
+2,saet_ac1f9e00,saet,sozluk:questions,20
+2,gost_ed8e08a1,Goşt,sozluk:food_1|ders:food_1,19
+2,ses_34ab5248,Şeş,sozluk:numbers_1|ders:numbers_1,19
+2,hevok_63d53622,Hevok,sozluk:questions,19
+2,niviskar_bfa8fde2,Nivîskar,sozluk:questions,19
+2,vekirin_62496915,Vekirin,sozluk:questions,19
+2,qafiye_a598d7b0,Qafiye,sozluk:questions,19
+2,ergatif_b9d1778f,Ergatîf,sozluk:questions,19
+2,server_40ac3dd2,Server,sozluk:questions,19
+2,asti_70c8bd7d,Aştî,sozluk:emotions_1|ders:emotions_1,18
+2,hest_88f9c962,Heşt,sozluk:numbers_1|ders:numbers_1,18
+2,bist_962214a3,Bîst,sozluk:numbers_1|ders:numbers_1,18
+2,cand_f7a48df8,Çand,sozluk:questions,18
+2,tekildar_2b5da0e9,Têkildar,sozluk:questions,18
+2,belgefilm_fb9c4d60,Belgefîlm,sozluk:questions,18
+2,sepan_0ea7b34c,Sepan,sozluk:questions,18
+2,daristan_79b97437,Daristan,sozluk:questions,18
+2,hevedudani_9cca1bce,Hevedudanî,sozluk:questions,18
+2,ax_53250f3c,Ax,sozluk:questions,18
+2,avhewa_53d27fc5,Avhewa,sozluk:questions,18
+2,guhertin_8b0bc3c3,Guhertin,sozluk:questions,18
+2,hez_d4ccefc8,Hêz,sozluk:questions,18
+2,pez_634b810c,Pez,sozluk:questions,18
+2,listin_6f53380e,Lîstin,sozluk:questions,18
+2,hesp_3a3dcbbd,Hesp,sozluk:animals_1|ders:animals_1,17
+2,bersiv_58df329c,Bersiv,sozluk:questions,17
+2,mevan_aba1eac6,Mêvan,sozluk:questions,17
+2,kamera_27a5b1e6,Kamera,sozluk:questions,17
+2,hinar_101b3aef,Hinar,sozluk:food_2|ders:food_2,16
+2,pisik_b85614c3,Pisîk,sozluk:animals_1|ders:animals_1,16
+2,bihar_fedb1cd7,Bihar,sozluk:time_seasons|ders:time_seasons,16
+2,hejmar_adc477d4,Hejmar,sozluk:questions,16
+2,erd_7a978936,Erd,sozluk:questions,16
+2,tistonek_3c74bf9b,Tiştonek,sozluk:questions,16
+2,reng_fc003e47,Reng,sozluk:questions,16
+2,cavkani_747d344b,Çavkanî,sozluk:questions,16
+3,wi-ner-we-me_cf5fadcc,Wî (nêr) / Wê (mê),ders:grammar_2,1
+3,dilan_8626c6b1,Dilan,ders:culture_1,0
+3,sahi_9085d2b1,Şahî,ders:culture_1,11
+3,dawet-li-male-ye_ee4de10c,Dawet li malê ye.,slayt:culture_1,0
+3,cejna-remezane_df4d3499,Cejna Remezanê,ders:culture_2,19
+3,cejna-qurbane_c603349c,Cejna Qurbanê,ders:culture_2,28
+3,taste_c1a3ac2b,Taştê,ders:food_1,4
+3,firavin_f2018a9a,Firavîn,ders:food_1,2
+3,siv_8068cb2e,Şîv,ders:food_1,4
+3,vexwarin_1fcb1091,Vexwarin,ders:food_1,8
+3,tiri_19a61011,Tirî,ders:food_2,13
+3,hejir_92b04289,Hejîr,ders:food_2,5
+3,pivaz_4bc7a973,Pîvaz,ders:food_2,15
+3,sir_cc0fea6f,Sîr,ders:food_2,8
+3,bacan_48a0710e,Bacan,ders:food_2,7
+3,kucik-seg_9ff99f16,Kûçik / Seg,ders:animals_1,0
+3,celek_6633be5a,Çêlek,ders:animals_1,0
+3,mih_da0416ef,Mîh,ders:animals_1,1
+3,bizin_8c3d9745,Bizin,ders:animals_1,9
+3,ser_6c5e1e56,Şêr,ders:animals_2,12
+3,gur_523546a1,Gur,ders:animals_2,15
+3,ruvi_98733dd6,Rûvî,ders:animals_2,9
+3,hirc_213e6af2,Hirç,ders:animals_2,11
+3,eylo_4fdc860e,Eylo,ders:animals_2,5
+3,kevok_27cc0783,Kevok,ders:animals_2,4
+3,qijak_8f5ff4e3,Qijak,ders:animals_2,0
+3,ceme-dicle_94ccf0ed,Çemê Dîcle,ders:geography_1,2
+3,ceme-firat_a777d8f0,Çemê Firat,ders:geography_1,3
+3,jor-jorin_40ef8a93,Jor / Jorîn,ders:geography_2,0
+3,jer-jerin_3b1b2b97,Jêr / Jêrîn,ders:geography_2,0
+3,kefxwes_0e29fbd1,Kêfxweş,ders:emotions_1,11
+3,dilsad_51f877b7,Dilşad,ders:emotions_1,8
+3,evindar_b96d0532,Evîndar,ders:emotions_1,11
+3,hevi_ceedd9b9,Hêvî,ders:emotions_1,13
+3,baweri_392a03ef,Bawerî,ders:emotions_1,8
+3,hersbuyi_53739ecf,Hêrsbûyî,ders:emotions_2,6
+3,tirsiyayi_6f152738,Tirsiyayî,ders:emotions_2,7
+3,behevi_2b88a26c,Bêhêvî,ders:emotions_2,10
+3,dilsikesti_908e1ae3,Dilşikestî,ders:emotions_2,4
+3,rebendan_15925c50,Rêbendan,ders:time_1,6
+3,resemeh_3fd359a3,Reşemeh,ders:time_1,5
+3,adar_4ad0b36b,Adar,ders:time_1,11
+3,nisan_7179c6ea,Nîsan,ders:time_1,10
+3,gulan_da0110bc,Gulan,ders:time_1,12
+3,heziran_fc11b9f2,Hezîran,ders:time_1,7
+3,sibeh_90cca164,Sibeh,ders:time_2,3
+3,nivro_d864a935,Nîvro,ders:time_2,4
+3,evar_62ecbd69,Êvar,ders:time_2,7
+3,sibe_13b447e4,Sibe,ders:time_2,6
+3,cun_f288b9d9,Çûn,ders:time_2,11
+3,iro-ez-dicim-male_333358f2,Îro ez diçim malê.,slayt:time_2,1
+3,neh_3199a43c,Neh,ders:numbers_1,7
+3,si_9e8c6d47,Sî,ders:numbers_1,4
+3,cil_a364831a,Çil,ders:numbers_1,2
+3,penci_7001d79c,Pêncî,ders:numbers_1,2
+3,sest_c82bc427,Şêst,ders:numbers_1,0
+3,hefte_c90ca915,Heftê,ders:numbers_1,0
+3,heste_17cd0d9b,Heştê,ders:numbers_1,1
+3,nod_39b1b5ba,Nod,ders:numbers_1,1
+3,hezar_7822a317,Hezar,ders:numbers_1,7
+3,havin_138d4955,Havîn,ders:time_seasons,15
+3,payiz_22e02abe,Payîz,ders:time_seasons,10
+3,zivistan_4ca91635,Zivistan,ders:time_seasons,12
