@@ -7,8 +7,10 @@ import '../utils/error_reporter.dart';
 /// Bildirime dokununca oynanacak hedef ekran.
 ///
 /// `async_duel_result` → [playTab] (Yarış sekmesi, "Düellolarım" sonucu
-/// orada görünür). `friend_request` → [friends] (Liderlik sekmesi +
-/// üstüne açılan Arkadaşlar ekranı).
+/// orada görünür). `async_duel_invite` / `async_duel_turn` ("sıra sende")
+/// de aynı yere düşer: bekleyen düello Düellolarım kutusunda durur.
+/// `friend_request` → [friends] (Liderlik sekmesi + üstüne açılan
+/// Arkadaşlar ekranı).
 enum PushTapTarget { playTab, friends }
 
 /// Bildirime dokunan oyuncuyu doğru ekrana yönlendirir.
@@ -28,7 +30,9 @@ class PushTapRouter {
   /// (bilinmeyen ya da `null`/boş) `null`.
   static PushTapTarget? targetForKind(String? kind) {
     return switch (kind) {
-      'async_duel_result' => PushTapTarget.playTab,
+      'async_duel_result' ||
+      'async_duel_invite' ||
+      'async_duel_turn' => PushTapTarget.playTab,
       'friend_request' => PushTapTarget.friends,
       _ => null,
     };

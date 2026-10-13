@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""push_outbox kuyruğunu FCM HTTP v1 ile gönderir.
+"""push_outbox kuyruğunu FCM HTTP v1 ile ELLE gönderir (yedek yol).
+
+ASIL TESLİMAT artık sunucuda: `supabase/functions/send-push` Edge Function'ı
+pg_cron ile her dakika çalışır (bkz. supabase/2026-10-13_push_delivery.sql).
+Bu betik yalnız o hat kurulana dek ya da Edge Function bozulduğunda kuyruğu
+elle boşaltmak içindir; ikisi birlikte çalışsa da zararsızdır
+(`claim_push_outbox` her satırı yalnız bir kez verir).
 
 Bu betik SIRRSIZ çalışmaz. Gerekli ortam:
   SUPABASE_URL
