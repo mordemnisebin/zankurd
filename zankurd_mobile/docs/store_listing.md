@@ -36,40 +36,65 @@ ve mağaza metni onu aşmamalı.
 
 ## Mağaza ekran görüntüleri
 
+Mağaza önce **Kürtçe bilgi yarışması** olarak okunur (düello, oda, rastgele
+rakip); öğrenme (ders, sözlük) ikinci sıradadır. Sıra buna göre.
+
 App Store en az bir 6,9" (1320×2868) ekran görüntüsü ister; Play için
-telefon görüntüsü 1080 px genişlikten büyük olmalı — aynı dosyalar ikisine
-de yeter.
+telefon görüntüsü 1080 px genişlikten büyük olmalı ve en çok 8 tane
+yüklenir — aynı sekiz dosya ikisine de yeter. 2026-10-13'te Şahnê
+tasarımıyla (2.0.x) yeniden alındı; eski altı görüntü (Şahnê öncesi) atıldı.
 
-Altı yayın görüntüsü iPhone 17 Pro Max simülatöründen, Türkçe arayüzle alındı ve
-`docs/screenshots/store/tr/` altında duruyor:
+Dosyalar `docs/screenshots/store/tr/` altında, hepsi 1320×2868:
 
-| Dosya | Ekran |
-|---|---|
-| `01_home.png` | Ana ekran: günlük ders, dersler, hızlı düello, görevler |
-| `02_categories.png` | Kategoriler ve soru sayıları |
-| `03_subcategories.png` | Alt alanlar (illüstrasyonlu başlık) |
-| `04_levels.png` | Seviye yolu |
-| `06_quiz.png` | Dört şıklı soru |
-| `07_photo_question.png` | Fotoğraflı soru |
+| Dosya | Başlık | Ekran |
+|---|---|---|
+| `01_yaris.png` | Arkadaşına meydan oku | Yarış sekmesi: hızlı düello, sırayla düello, oda kur / kodla katıl |
+| `02_fotografli_soru.png` | Kürt kültürünü sınayan sorular | Fotoğraflı soru (Newroz), süre ve ilerleme |
+| `03_duello_puan.png` | Canlı puanla düello | Düello ortası: Sen / rakip puanı, dört şık, jokerler |
+| `04_sonuc.png` | Sonucunu paylaş | Sonuç: yıldız, puan, doğru/yanlış, XP, Paylaş |
+| `05_oda.png` | Oda kur, kodla davet et | Özel oda lobisi (oda kodu, hazırım) |
+| `06_ana_ekran.png` | Günlük hedef, seri ve seviye | Öğren sekmesi: günlük hedef, seviye, konular |
+| `07_ders_yolu.png` | Alfabeden başla | Kurmancî öğren: sıradaki ders ve ders listesi |
+| `08_sozluk.png` | 1.119 kelime ve ifade | Sözlük (uygulama "1119 kelime ve ifade" yazar) |
 
-Bu altı görüntü Şahnê tasarımından (2.0.0) ÖNCE alındı; yeni görünümü
-göstermiyor. 2.0.0 için mağazaya yüklemeden önce aşağıdaki tarifle yeniden
-alınmalı (görüntü seçimi ve sırası aynı kalabilir).
+Ayrıca `docs/screenshots/store/` altında:
 
-`05_word_order.png` yalnız taslak arşividir ve güncel mağaza setinde
-kullanılmıyor. Yeniden kullanılacaksa mevcut derlemeyle yeniden çekilip
-görsel kalite kontrolünden geçirilmelidir.
+- `play_feature_graphic.png` — Play öne çıkan görsel, 1024×500 (logo,
+  "ZanKurd", "Kürtçe bilgi yarışması", iki ekran).
+- `play_icon_512.png` — Play yüksek çözünürlüklü simge, 512×512, 32 bit PNG;
+  `tool/generate_app_icons.py`'deki aynı çizimden (uygulama simgesiyle birebir).
 
 `docs/screenshots/` sürüm denetiminde tutulmuyor (kökteki `.gitignore`);
 üretilmiş görsellerin kaynak gibi davranmaması için konmuş bir kural.
-Yükleme öncesi yeniden almak gerekirse tarif şu:
+Kaynak, ham görüntülerden bu görselleri üreten betiktir (zankurd_mobile/ içinde):
 
-1. `xcrun simctl boot "iPhone 17 Pro Max"` — 1320×2868 tam bu cihazdan
-   çıkar, başka bir cihaz yanlış boyut verir.
-2. `flutter run -d <udid>` (hata ayıklama derlemesi yeterlidir; uygulama
-   `debugShowCheckedModeBanner: false` kullanıyor, köşede şerit çıkmaz).
-3. Misafir girişi → dili TR yap → ekranları gez.
-4. `xcrun simctl io <udid> screenshot <dosya>.png`
+```
+python3 tool/magaza_gorselleri.py   # Pillow gerekir
+```
+
+Betik zemini ve renkleri `lib/src/theme/sahne.dart` gece belirteçlerinden okur,
+başlıkta Bricolage Grotesque ExtraBold kullanır, durum çubuğu saatini 9:41'e
+sabitler (ham görüntüler farklı saatlerde alındı) ve her çıktının boyutunu
+8 MB sınırına karşı denetler. Başlıklar en çok 32 karakterdir ve yalnız
+ekranın gösterdiğini söyler; ham görüntü değişirse başlığı da gözle kontrol et.
+
+Ham görüntüleri yeniden almak için (`docs/screenshots/store/tr/raw/`, yukarıdaki
+ad eşlemesi betikteki `SHOTS` listesindedir):
+
+1. Yalnız "Claude Store" (iPhone 17 Pro Max, 1320×2868) benzeri bir 6,9"
+   cihaz: `xcrun simctl boot <udid>` — başka cihaz yanlış boyut verir.
+2. `flutter run -d <udid> --dart-define-from-file=.env.mobile.release.json`
+   (hata ayıklama derlemesi yeterli; köşede şerit çıkmaz). Yapılandırmasız
+   derleme çevrimiçi ekranları (düello, oda) açmaz.
+3. Misafir girişi → dil TR → görünen ad "Zana" gibi nötr bir ad.
+4. Düelloda "Rakip bul" → 20 sn sonra "Botla oyna" (ikinci kişi gerekmez).
+   Soru süresi 20 sn: ekranı süre dolmadan almak için `xcrun simctl io`
+   ile her saniye kare alıp sonradan seç.
+5. `xcrun simctl io <udid> screenshot <dosya>.png`
+
+Sıralama ekranı bilerek setten çıkarıldı: başka kullanıcıların görünen adlarını
+gösteriyor ve az kişiyle seyrek duruyor. Kelime dokununca çıkan anlam kartı
+(`lesson3`) ham olarak çekildi ama sekizinci sıra için sözlük seçildi.
 
 Kurmancî liste eklenirse aynı yol dil KU'yken tekrarlanır ve görüntüler
 `docs/screenshots/store/ku/` altına konur.
