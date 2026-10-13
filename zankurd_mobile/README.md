@@ -206,7 +206,7 @@ $env:TEMP='C:\src\tmp'
 
 ## Play Store Build
 
-> **Bayraksız `flutter build appbundle --release` KULLANMAYIN.** O komut imzalı
+> **Paketi `tool/surum_paketi.sh android` ile üretin. Bayraksız `flutter build appbundle --release` KULLANMAYIN.** O komut imzalı
 > bir AAB üretir, ama üretim yapılandırması ikiliye girmediği için uygulama
 > açılışta `AppConfig.validateForRelease` kapısına takılır ve **"Uygulama
 > yapılandırması eksik"** hata ekranında kalır. 2026-08-02 denetiminde bu
