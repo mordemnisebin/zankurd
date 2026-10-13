@@ -13,9 +13,12 @@ void main() {
   });
 
   test('misafir hesap bağlama da uydurma G harfi kullanmaz', () {
-    final source = File(
-      'lib/src/screens/profile_screen.dart',
-    ).readAsStringSync();
+    // Yükseltme diyaloğu `profile/profile_widgets.dart` (part) dosyasına
+    // taşındı (denetleyici ömrü düzeltmesi); ekran dosyasıyla birlikte taranır.
+    final source = [
+      File('lib/src/screens/profile_screen.dart').readAsStringSync(),
+      File('lib/src/screens/profile/profile_widgets.dart').readAsStringSync(),
+    ].join('\n');
 
     expect(source, contains('BrandIcons.google'));
     expect(
