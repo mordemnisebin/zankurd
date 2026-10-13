@@ -2718,7 +2718,7 @@
    "gateIncluded": true,
    "productionLike": true,
    "precedence": 997,
-   "expectedRecordCount": 132,
+   "expectedRecordCount": 136,
    "notes": "Sözcükler dersin kendi slaytlarından (yerel katalog ve supabase/2026-10-08_dersler2_lessons.sql). Taslak Muse Spark 1.3 / MiMo (OpenCode), Kurmancî inceleme Gemini 3.1 Pro ve Grok 4.7, uyuşmazlıkta Gemini 3.8 Flash.",
    "columns": {
     "id": "id",
@@ -2776,7 +2776,7 @@
    "gateIncluded": true,
    "productionLike": true,
    "precedence": 995,
-   "expectedRecordCount": 121,
+   "expectedRecordCount": 142,
    "notes": "Sözcükler dersin kendi slaytlarından. Kurmancî inceleme Gemini 3.1 Pro ve Grok 4.7, uyuşmazlıkta Gemini 3.8 Flash.",
    "columns": {
     "id": "id",
