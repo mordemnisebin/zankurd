@@ -81,37 +81,35 @@ Kurmancî liste eklenirse aynı yol dil KU'yken tekrarlanır ve görüntüler
 ### Uygulama adı (en fazla 30 karakter)
 
 ```
-ZanKurd — Kurmancî öğren
+ZanKurd Kürtçe Bilgi Yarışması
 ```
 
-(24 karakter)
+(30 karakter. 2026-10-13: ad yarışmayı öne alır; Kürtçe öğrenme araması
+Bimus gibi büyük uygulamalarla dolu, Kürtçe bilgi yarışması ise boş.
+Pirs 2022'den beri güncellenmiyor.)
 
 ### Kısa açıklama (en fazla 80 karakter)
 
 ```
-Kurmancî öğren, sorularla yarış. 2.400'den fazla soru, 11 kategori.
+Kürtçe bilgi yarışması: arkadaşınla düello, oda kur, oynarken Kurmancî öğren.
 ```
 
-(67 karakter)
+(77 karakter)
 
 ### Tam açıklama (en fazla 4000 karakter)
 
 ```
-ZanKurd, Kurmancî öğrenmeyi bir yarışmaya çeviren bir bilgi
-uygulamasıdır. Dil, kültür, tarih, edebiyat, coğrafya, müzik, sinema,
-siyaset, bilim ve düşünce, teknoloji ve dünya — 2.400'den fazla soru,
-on bir kategori.
+ZanKurd, Kürtçe bilgi yarışmasıdır. Arkadaşına meydan oku, oda kur ya da
+rastgele bir rakiple düello yap; Kürt dili, tarihi, edebiyatı, müziği ve
+sineması üzerine 2.400'den fazla soruyla kimin daha çok bildiğini gör.
+Oynarken Kurmancî de öğrenirsin.
+
+Dil, kültür, tarih, edebiyat, coğrafya, müzik, sinema, siyaset, bilim ve
+düşünce, teknoloji ve dünya: on bir kategori.
 
 Soruların çoğu Kürt dili, tarihi ve kültürü üzerinedir. Dünya, Teknoloji
 ve Bilim ve Düşünce kategorileri genel bilgi sorularıdır; Kürt
 kategorilerinden ayrı durur.
-
-NASIL İŞLER
-
-• Günün dersi: her gün on soru, yaklaşık beş dakika.
-• Kategori ve seviye: her kategoride beş seviye, kolaydan zora.
-• Açıklamalar: tur bitince her sorunun niçin öyle olduğunu okursun.
-• Yanlışların takibi: yanlış yaptığın sorular geri gelir, öğrenene kadar.
 
 YARIŞ
 
@@ -121,12 +119,21 @@ YARIŞ
 • Oda kur: davet bağlantısını paylaş, arkadaşların tek dokunuşla katılsın.
 • Liderlik tablosu: gün, hafta, ay ve arkadaşlar arası sıralama.
 
+NASIL İŞLER
+
+• Günün dersi: her gün on soru, yaklaşık beş dakika.
+• Kategori ve seviye: her kategoride beş seviye, kolaydan zora.
+• Açıklamalar: tur bitince her sorunun niçin öyle olduğunu okursun.
+• Yanlışların takibi: yanlış yaptığın sorular geri gelir, öğrenene kadar.
+
 ÖĞREN
 
-• Ders yolları: konu konu ilerleyen kısa dersler.
+• Başlangıç yolu: alfabeden geçmiş zamana kısa dersler; ders sonunda
+  boşluk doldurma, cümle kurma ve çoktan seçmeli alıştırmalar.
 • Hikâye: Kurmancî bir sahnede seçim yaparak ilerlersin.
 • Kelime kartları: kelime ezberi için.
-• Sözlük (Ferheng): Kurmancî ya da Türkçe ara.
+• Sözlük (Ferheng): 1.100'den fazla kelime, Kurmancî ya da Türkçe ara.
+  Derste ya da soruda Kurmancî bir kelimeye dokununca anlamı açılır.
 
 İKİ DİL
 
@@ -176,18 +183,18 @@ ZanKurd
 ### Alt başlık (en fazla 30 karakter)
 
 ```
-Kurmancî öğren, yarış, ilerle
+Kürtçe bilgi yarışması, düello
 ```
 
-(29 karakter)
+(30 karakter; alt başlık yalnız yeni sürümle değişir, 2.0.2 ile gönderilir)
 
 ### Tanıtım metni (en fazla 170 karakter — güncellemesi incelemesizdir)
 
 ```
-Yeni: baştan tasarlandı. 2.400'den fazla soru, on bir kategori ve rakibin çevrimiçi olmasını beklemeden oynadığın sırayla düello.
+Arkadaşına meydan oku: Kürt dili, tarihi ve kültürü üzerine 2.400'den fazla soruyla düello. Yeni: alfabeden başlayan 18 ders ve 1.119 kelimelik sözlük.
 ```
 
-(129 karakter)
+(151 karakter)
 
 ### Açıklama (en fazla 4000 karakter)
 
@@ -198,21 +205,17 @@ bağlantısı App Description'da bulunmalı (1.9.2 öncesi 3.1.2(c) reddi,
 bkz. `docs/app_review_packet_1.9.2_build20.md`).
 
 ```
-ZanKurd, Kurmancî öğrenmeyi bir yarışmaya çeviren bir bilgi
-uygulamasıdır. Dil, kültür, tarih, edebiyat, coğrafya, müzik, sinema,
-siyaset, bilim ve düşünce, teknoloji ve dünya — 2.400'den fazla soru,
-on bir kategori.
+ZanKurd, Kürtçe bilgi yarışmasıdır. Arkadaşına meydan oku, oda kur ya da
+rastgele bir rakiple düello yap; Kürt dili, tarihi, edebiyatı, müziği ve
+sineması üzerine 2.400'den fazla soruyla kimin daha çok bildiğini gör.
+Oynarken Kurmancî de öğrenirsin.
+
+Dil, kültür, tarih, edebiyat, coğrafya, müzik, sinema, siyaset, bilim ve
+düşünce, teknoloji ve dünya: on bir kategori.
 
 Soruların çoğu Kürt dili, tarihi ve kültürü üzerinedir. Dünya, Teknoloji
 ve Bilim ve Düşünce kategorileri genel bilgi sorularıdır; Kürt
 kategorilerinden ayrı durur.
-
-Nasıl işler
-
-• Günün dersi: her gün on soru, yaklaşık beş dakika.
-• Kategori ve seviye: her kategoride beş seviye, kolaydan zora.
-• Açıklamalar: tur bitince her sorunun niçin öyle olduğunu okursun.
-• Yanlışların takibi: yanlış yaptığın sorular geri gelir, öğrenene kadar.
 
 Yarış
 
@@ -222,12 +225,21 @@ Yarış
 • Oda kur: davet bağlantısını paylaş, arkadaşların tek dokunuşla katılsın.
 • Liderlik tablosu: gün, hafta, ay ve arkadaşlar arası sıralama.
 
+Nasıl işler
+
+• Günün dersi: her gün on soru, yaklaşık beş dakika.
+• Kategori ve seviye: her kategoride beş seviye, kolaydan zora.
+• Açıklamalar: tur bitince her sorunun niçin öyle olduğunu okursun.
+• Yanlışların takibi: yanlış yaptığın sorular geri gelir, öğrenene kadar.
+
 Öğren
 
-• Ders yolları: konu konu ilerleyen kısa dersler.
+• Başlangıç yolu: alfabeden geçmiş zamana kısa dersler; ders sonunda
+  boşluk doldurma, cümle kurma ve çoktan seçmeli alıştırmalar.
 • Hikâye: Kurmancî bir sahnede seçim yaparak ilerlersin.
 • Kelime kartları: kelime ezberi için.
-• Sözlük (Ferheng): Kurmancî ya da Türkçe ara.
+• Sözlük (Ferheng): 1.100'den fazla kelime, Kurmancî ya da Türkçe ara.
+  Derste ya da soruda Kurmancî bir kelimeye dokununca anlamı açılır.
 
 İki dil
 
