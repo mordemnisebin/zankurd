@@ -10,6 +10,7 @@ import '../widgets/category_band.dart';
 import '../widgets/sahne/sahne.dart';
 import 'level_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../utils/number_format.dart';
 
 class SubcategoryScreen extends StatefulWidget {
   const SubcategoryScreen({
@@ -135,7 +136,9 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
       title: ku ? sub.nameKu : sub.nameTr,
       subtitle: ku ? sub.descriptionKu : sub.descriptionTr,
       trailing: played > 0 && total > 0
-          ? SahneRowValue.meta('$played/$total')
+          ? SahneRowValue.meta(
+              '${groupThousands(played)}/${groupThousands(total)}',
+            )
           : null,
       chevron: true,
       onTap: () {

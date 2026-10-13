@@ -41,10 +41,17 @@ class FillInBlankWidget extends StatefulWidget {
 class _FillInBlankWidgetState extends State<FillInBlankWidget> {
   late final TextEditingController _controller;
 
+  /// Alana yazılacak metin. Süre dolmuşsa 'TIMEOUT' işaretçisi bir cevap
+  /// değildir; alana yazılmaz (devam edilen turda "TIMEOUT" görünüyordu).
+  static String _shownAnswer(FillInBlankWidget w) {
+    final a = w.selectedAnswer;
+    return a == null || a == 'TIMEOUT' ? '' : a;
+  }
+
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.selectedAnswer ?? '')
+    _controller = TextEditingController(text: _shownAnswer(widget))
       ..addListener(_onTextChanged);
   }
 
@@ -52,7 +59,7 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
   void didUpdateWidget(covariant FillInBlankWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.question.id != widget.question.id) {
-      _controller.text = widget.selectedAnswer ?? '';
+      _controller.text = _shownAnswer(widget);
     } else if (oldWidget.excludedAnswer != widget.excludedAnswer &&
         widget.excludedAnswer?.isNotEmpty == true) {
       _controller.clear();

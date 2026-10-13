@@ -7,6 +7,7 @@ import '../../data/zankurd_repository.dart';
 import '../../l10n/lang.dart';
 import '../../l10n/strings.dart';
 import '../../widgets/sahne/sahne.dart';
+import '../../utils/number_format.dart';
 
 /// Home üzerindeki ikincil eylemler için düz satır.
 ///
@@ -182,8 +183,9 @@ Widget coinStatChip(
 }) {
   return SahneStatChip(
     leading: const SahneGlyph(SahneGlyphKind.coin),
-    label: '$coins',
-    semanticLabel: semanticLabel ?? '$coins ${context.t(K.coinWord)}',
+    label: groupThousands(coins),
+    semanticLabel:
+        semanticLabel ?? '${groupThousands(coins)} ${context.t(K.coinWord)}',
     onTap: onTap,
   );
 }

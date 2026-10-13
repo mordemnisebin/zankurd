@@ -23,6 +23,7 @@ import '../widgets/zk_back_button.dart';
 import 'spin_wheel_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
+import '../utils/number_format.dart';
 
 /// `shop_items` tablosundaki `icon_name` sütununu [IconData]'ya çevirir.
 /// Statik yedek listedeki (`ShopItem.catalog`) her ikon burada da
@@ -497,7 +498,9 @@ class _ShopScreenState extends State<ShopScreen> {
                   const SizedBox(width: SahneSpace.x2),
                   Flexible(
                     child: Text(
-                      context.t(K.yourBalance, {'coins': '$_coinBalance'}),
+                      context.t(K.yourBalance, {
+                        'coins': groupThousands(_coinBalance),
+                      }),
                       style: SahneType.caption.copyWith(color: t.tx2),
                     ),
                   ),
@@ -782,7 +785,9 @@ class _ShopScreenState extends State<ShopScreen> {
   Widget build(BuildContext context) {
     final ku = context.isKu;
     final t = SahneTokens.of(context);
-    final coinLabel = '$_coinBalance ${context.t(K.coinWord).toLowerCase()}';
+    final coinLabel =
+        '${groupThousands(_coinBalance)} '
+        '${context.t(K.coinWord).toLowerCase()}';
     // 2026-09-29 Şahnê: B iskeleti. Sayfa adı çubukta, bakiye çubuğun
     // sağında jeton glifli stat çipi. Eski kimlik kartı ("Mağaza /
     // Jetonlarını akıllıca harca") kalktı: sayfa adı iki kez yazılmıyor.

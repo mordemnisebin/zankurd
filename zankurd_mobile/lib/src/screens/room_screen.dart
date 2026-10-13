@@ -22,6 +22,7 @@ import '../widgets/sahne/sahne.dart';
 import '../widgets/styled_button.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
+import '../utils/number_format.dart';
 
 /// Aynı kimlikli oyuncuyu TEK satıra indirir.
 ///
@@ -1722,7 +1723,7 @@ class _RoomPlayerRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          '${player.score}',
+          groupThousands(player.score),
           style: SahneType.bodyStrong.copyWith(
             color: t.tx,
             fontFeatures: const [FontFeature.tabularFigures()],

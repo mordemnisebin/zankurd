@@ -46,6 +46,7 @@ import 'shop_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../utils/percent_format.dart';
 import '../utils/player_identity.dart';
+import '../utils/number_format.dart';
 
 part 'profile/profile_widgets.dart';
 
@@ -443,7 +444,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
               _StatTile(
                 label: context.t(K.statAnswered),
-                value: '$_answeredTotal',
+                value: groupThousands(_answeredTotal),
                 count: _answeredTotal,
                 role: SahneRole.learn,
                 icon: AppIcons.gamepad,

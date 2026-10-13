@@ -231,8 +231,8 @@ extension _QuizScreenUI on _QuizScreenState {
     if (score <= 0) return null;
     return SahneStatChip(
       leading: const SahneGlyph(SahneGlyphKind.star),
-      label: '$score',
-      semanticLabel: '$score ${context.t(K.scoreWord)}',
+      label: groupThousands(score),
+      semanticLabel: '${groupThousands(score)} ${context.t(K.scoreWord)}',
     );
   }
 
@@ -1058,6 +1058,7 @@ extension _QuizScreenUI on _QuizScreenState {
       children: [
         if (question.hasImage) ...[
           _QuestionImage(
+            key: _photoKeyFor(index),
             url: question.imageUrl!,
             alt: question.imageAltFor(isKu: context.isKu),
             isCompact: imageCompact,

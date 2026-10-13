@@ -8,6 +8,7 @@ import '../widgets/app_state.dart';
 import '../widgets/lexicon_speak_button.dart';
 import '../widgets/sahne/sahne.dart';
 import '../widgets/zk_back_button.dart';
+import '../utils/number_format.dart';
 
 class LearnerLexiconScreen extends StatefulWidget {
   const LearnerLexiconScreen({this.initialQuery = '', super.key});
@@ -67,7 +68,9 @@ class _LearnerLexiconScreenState extends State<LearnerLexiconScreen> {
                   ),
                   const SizedBox(height: SahneSpace.x3),
                   Text(
-                    context.t(K.lexiconCount, {'count': '${results.length}'}),
+                    context.t(K.lexiconCount, {
+                      'count': groupThousands(results.length),
+                    }),
                     key: const ValueKey('lexicon-result-count'),
                     style: SahneType.captionStrong.copyWith(color: t.tx2),
                   ),

@@ -1004,6 +1004,9 @@ class Tr {
       'ku': 'Dem qediya. Bersiva rast: {p0}',
       'tr': 'Süre doldu. Doğru cevap: {p0}',
     },
+    // Süre dolunca cevap kutusunda 'TIMEOUT' işaretçisi yerine görünen kısa
+    // durum. Kurmancî "Dem qediya" ifadesi yukarıdaki satırdan alındı.
+    K.sureDoldu: {'ku': 'Dem qediya', 'tr': 'Süre doldu'},
     K.tebriklerSeviyeAtladinYeni: {
       'ku': 'Asta te bilind bû! Niha asta {p0}.',
       'tr': 'Seviye atladın! Artık seviye {p0}.',
@@ -3223,6 +3226,7 @@ class K {
   static const allQuestionsSubcategory = 'screen.allQuestionsSubcategory';
   static const seri = 'screen.seri';
   static const sureDolduDogruCevap = 'screen.sureDolduDogruCevap';
+  static const sureDoldu = 'screen.sureDoldu';
   static const tebriklerSeviyeAtladinYeni = 'screen.tebriklerSeviyeAtladinYeni';
   static const cevabinKaydedildi = 'screen.cevabinKaydedildi';
   static const digerOyuncuBekleniyor = 'screen.digerOyuncuBekleniyor';

@@ -22,6 +22,7 @@ import 'friends_screen.dart';
 import 'quiz_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import '../widgets/dialog_action_pair.dart';
+import '../utils/number_format.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({
@@ -1105,12 +1106,12 @@ class _RankRow extends StatelessWidget {
         ? (Tr.forKu(K.seninSiranPP, isKu, {
             'p0': '${entry.rank}',
             'p1': _name,
-            'p2': '${entry.totalScore}',
+            'p2': groupThousands(entry.totalScore),
           }))
         : (Tr.forKu(K.pPPPuan, isKu, {
             'p0': '${entry.rank}',
             'p1': _name,
-            'p2': '${entry.totalScore}',
+            'p2': groupThousands(entry.totalScore),
           }));
 
     if (highlight && !grouped) {
@@ -1144,7 +1145,7 @@ class _RankRow extends StatelessWidget {
     constraints: const BoxConstraints(maxWidth: 72),
     child: FittedBox(
       fit: BoxFit.scaleDown,
-      child: SahneRowValue('${entry.totalScore}'),
+      child: SahneRowValue(groupThousands(entry.totalScore)),
     ),
   );
 
@@ -1379,7 +1380,7 @@ class _FriendRankRow extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  '${friend.totalScore}',
+                  groupThousands(friend.totalScore),
                   style: SahneType.bodyStrong.copyWith(
                     color: t.tx,
                     fontFeatures: const [FontFeature.tabularFigures()],

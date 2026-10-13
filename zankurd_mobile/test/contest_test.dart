@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/contest.dart';
+import 'package:zankurd_mobile/src/providers/reduced_motion_provider.dart';
 import 'package:zankurd_mobile/src/screens/contest_screen.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 
@@ -216,6 +217,8 @@ void main() {
             ChangeNotifierProvider(
               create: (_) => LanguageProvider()..setLang('tr'),
             ),
+            // Yükleniyor iskeleti (`SkeletonLine`) hareket tercihini okur.
+            ChangeNotifierProvider(create: (_) => ReducedMotionProvider()),
           ],
           child: MaterialApp(
             theme: AppTheme.dark(),
