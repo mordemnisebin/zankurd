@@ -378,7 +378,7 @@
     "category": "Çand",
     "difficulty": 5,
     "type": "multipleChoice",
-    "prompt": "Di destana Mem û Zînê de, dema Zîn xwe di bin ebayê Mem de vedişêre, Tacdîn çi dike da ku Mîr ji baxçe dûr bixe?",
+    "prompt": "Di destana Mem û Zînê de, dema Zîn xwe di bin ebaya Mem de vedişêre, Tacdîn çi dike da ku Mîr ji baxçe dûr bixe?",
     "promptTr": "\"Mem û Zîn\" destanında Zîn, Mem'in abasının altına saklandığında Tacdîn, Mîr'i bahçeden uzaklaştırmak için ne yapar?",
     "answers": [
       "Zengilê bajêr lê dide",
@@ -1268,7 +1268,7 @@
       "Xelata Montaja Herî Baş",
       "Xelata Lîstikvanê Zarok ê Herî Baş",
       "Xelata Senaryoya Herî Baş",
-      "Xelata Fîlma Yekem a Herî Baş"
+      "Xelata Fîlmê Yekem ê Herî Baş"
     ],
     "answersTr": [
       "En İyi Kurgu Ödülü",
@@ -1276,7 +1276,7 @@
       "En İyi Senaryo Ödülü",
       "En İyi İlk Film Ödülü"
     ],
-    "correctAnswer": "Xelata Fîlma Yekem a Herî Baş",
+    "correctAnswer": "Xelata Fîlmê Yekem ê Herî Baş",
     "correctAnswerTr": "En İyi İlk Film Ödülü",
     "explanation": "Bu belgesel Antalya'da En İyi İlk Film Ödülü'nü kazandı; yönetmenleri Özgür Doğan ile Orhan Eskiköy'dür.",
     "explanationKu": "Ev belgefîlm li Antalyayê Xelata Fîlmê Yekem ê Herî Baş wergirt; derhênerên wê Özgür Doğan û Orhan Eskiköy in.",
@@ -2050,7 +2050,7 @@
       "Zanîngeha Boğaziçiyê",
       "Zanîngeha Enqereyê",
       "Zanîngeha Dîcleyê",
-      "Zanîngeha Teknîk a Stenbolê"
+      "Zanîngeha Teknîkî ya Stenbolê"
     ],
     "answersTr": [
       "Boğaziçi Üniversitesi",
@@ -3203,7 +3203,7 @@
     "category": "Çand",
     "difficulty": 3,
     "type": "multipleChoice",
-    "prompt": "Mamikeke kurdî (tiştonek) wiha dibêje: \"Ji hire heta Mûsil hemî morîyên sinsil.\" Bersiv çi ye?",
+    "prompt": "Mamikeke kurdî (tiştonek) wiha dibêje: \"Ji hire heta Mûsil hemî moriyên sinsil.\" Bersiv çi ye?",
     "promptTr": "Bir Kürt bilmecesi şöyle der: \"Buradan Musul'a kadar hep dizi dizi boncuklar.\" Cevabı nedir?",
     "answers": [
       "Berf",
@@ -3923,7 +3923,7 @@
       "Carekê ji caran hebû",
       "Guh bidin gotina min",
       "Hebû tunebû, li welatekî",
-      "Mamikê min ê mamanî"
+      "Mamika min a mamanî"
     ],
     "answersTr": [
       "\"Carekê ji caran hebû\" (Evvel zaman içinde)",
@@ -3931,7 +3931,7 @@
       "\"Hebû tunebû, li welatekî\" (Bir varmış bir yokmuş, bir ülkede)",
       "\"Mamikê min ê mamanî\" (Bilmecem bilmece)"
     ],
-    "correctAnswer": "Mamikê min ê mamanî",
+    "correctAnswer": "Mamika min a mamanî",
     "correctAnswerTr": "\"Mamikê min ê mamanî\" (Bilmecem bilmece)",
     "explanation": "Vikisözlük'e göre ona mamik diyenler \"Mamikê min ê mamanî… çi ye?\" diye sorar; tiştonek diyenler ise \"Tişteka min heye… çi ye?\" diye başlar.",
     "explanationKu": "Li gor Wîkîferhengê, yên ku jê re dibêjin mamik bi \"Mamikê min ê mamanî… çi ye?\" dipirsin; yên ku jê re dibêjin tiştonek jî bi \"Tişteka min heye… çi ye?\" dest pê dikin.",

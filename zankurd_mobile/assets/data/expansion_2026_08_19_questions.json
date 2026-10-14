@@ -40,7 +40,7 @@
     "promptTr": "Hazar Gölü ile Nemrut Krater Gölü arasındaki temel jeomorfolojik köken farkı nedir?",
     "answers": [
       "Hêzar gola tektonîk e, Nemrûd gola kalderayê ya volkanîk e",
-      "Hêzar gola buzulî ye, Nemrûd gola kembera karstîk e",
+      "Hêzar gola cemedî ye, Nemrûd gola kembera karstîk e",
       "Hêzar gola setê ya çem e, Nemrûd gola tektonîk a kûr e",
       "Hêzar gola çêkirî ye, Nemrûd gola sirûştî ya aluvyal e"
     ],
@@ -366,7 +366,7 @@
     "id": "ds_cografya_0258",
     "category": "Cografya",
     "difficulty": 4,
-    "prompt": "Xeta Şikesteka Rojhilatê Anatolyayê (EAF) li kîjan herêmê bi Xeta Şikesteka Bakurê Anatolyayê (NAF) re digihîje hev?",
+    "prompt": "Xeta Şikestekê ya Rojhilatê Anatolyayê (EAF) li kîjan herêmê bi Xeta Şikestekê ya Bakurê Anatolyayê (NAF) re digihîje hev?",
     "promptTr": "Doğu Anadolu Fay Hattı (DAF) ile Kuzey Anadolu Fay Hattı (KAF) hangi tektonik kavşak noktasında birleşir?",
     "answers": [
       "Li Deşta Herranê li başûr",
@@ -799,9 +799,9 @@
     "promptTr": "Murat Nehri, Karasu ile kıyaslandığında Fırat Nehri'ni oluşturan kollar arasında hangi temel özelliğe sahiptir?",
     "answers": [
       "Tenê di nav golên volkanîk de bêyî derketinê diherike",
-      "Çemekî gelekî kurt e ku tenê di havînê de ava wê heye",
+      "Çemekî gelekî kurt e ku tenê di havînê de ava wî heye",
       "Ava xwe rasterast bêyî Firatê dirijîne Deryaya Qezwînê",
-      "Mila herî dirêj e û xwedî qada hewzeya herî berfireh e"
+      "Milê herî dirêj e û xwedî qada hewzeya herî berfireh e"
     ],
     "answersTr": [
       "Yalnızca volkanik krater gölleri içinde kapalı akar",
@@ -809,7 +809,7 @@
       "Sularını Fırat'a katmadan doğrudan Hazar Denizi'ne ulaştırır",
       "En uzun koludur ve en geniş su toplama havzasına sahiptir"
     ],
-    "correctAnswer": "Mila herî dirêj e û xwedî qada hewzeya herî berfireh e",
+    "correctAnswer": "Milê herî dirêj e û xwedî qada hewzeya herî berfireh e",
     "correctAnswerTr": "En uzun koludur ve en geniş su toplama havzasına sahiptir",
     "explanation": "Murat Nehri, Ağrı Diyadin'den doğup Keban'a kadar uzanarak Fırat Nehri'nin en uzun ve en çok su taşıyan ana kolunu oluşturur.",
     "explanationTr": "Murat Nehri, Ağrı Diyadin'den doğup Keban'a kadar uzanarak Fırat Nehri'nin en uzun ve en çok su taşıyan ana kolunu oluşturur.",
@@ -1227,7 +1227,7 @@
     "prompt": "Axa bazaltî ya derdora Qerecdaxê li gorî axên din ên herêmê xwedî kîjan taybetmendiya mîneralî ye?",
     "promptTr": "Karacadağ platosundaki bazaltik toprakların diğer kireçli topraklara kıyasla tarımsal verimlilik ve mineral farkı nedir?",
     "answers": [
-      "Ji hesin, magnezyum û mîneralên volkanîk gelekî dewlemend e",
+      "Ji hesin, magnezyûm û mîneralên volkanîk gelekî dewlemend e",
       "Tenê ji xwêya spî û kilsa heliyayî pêk tê",
       "Ti mîneralan di nav xwe de nagire û zû hişk dibe",
       "Tenê ji kilsên asîdî yên avnegir ava bûye"
@@ -1238,7 +1238,7 @@
       "Hiçbir besin minerali barındırmayan çorak kumul yapıda olması",
       "Tamamen su geçirmeyen asidik bataklık killerinden ibaret olması"
     ],
-    "correctAnswer": "Ji hesin, magnezyum û mîneralên volkanîk gelekî dewlemend e",
+    "correctAnswer": "Ji hesin, magnezyûm û mîneralên volkanîk gelekî dewlemend e",
     "correctAnswerTr": "Demir, magnezyum ve volkanik mineraller açısından son derece zengin olması",
     "explanation": "Karacadağ'ın bazaltik lavlarından ayrışan topraklar demir, fosfor ve potasyum yönünden zengin olup taş temizliği sonrası çok verimlidir.",
     "explanationTr": "Karacadağ'ın bazaltik lavlarından ayrışan topraklar demir, fosfor ve potasyum yönünden zengin olup taş temizliği sonrası çok verimlidir.",
@@ -1261,7 +1261,7 @@
     "promptTr": "Zagros Sıradağları'nın kuzeybatı-güneydoğu doğrultusunda uzanmasının temel levha tektoniği nedeni nedir?",
     "answers": [
       "Herikîna avên okyanûsan ji rojava ber bi rojhilat",
-      "Kêmbûna zexta atmosferê ya li ser Çolê Erebistanê",
+      "Kêmbûna zexta atmosferê ya li ser Çola Erebistanê",
       "Teqîna volkanên binê deryayê li Kendava Farsê",
       "Zexta Plakaya Erebistanê ya li ser Plakaya Ewrasyayê"
     ],
@@ -1659,7 +1659,7 @@
       "Giranî tenê bi rûniştî tê lîstin, Şêxanî tenê li ser hespan e",
       "Giranî tenê bi jinan e, Şêxanî tenê lîstika zarokan e",
       "Giranî ti caran bê def nabe, Şêxanî qet muzîkê naxwaze",
-      "Giranî bi gavên giran û seknekê ye, Şêxanî bileztir û bi livdar e"
+      "Giranî bi gavên giran û seknekê ye, Şêxanî bileztir û livdar e"
     ],
     "answersTr": [
       "Giranî oturarak icra edilir; Şêxanî ise at üstünde oynanan bir oyundur",
@@ -1667,7 +1667,7 @@
       "Giranî asla davulsuz oynanmaz; Şêxanî hiçbir enstrüman kullanılmadan söylenir",
       "Giranî ağır adımlı ve vakur sekanslıdır; Şêxanî daha hızlı ve omuz hareketlidir"
     ],
-    "correctAnswer": "Giranî bi gavên giran û seknekê ye, Şêxanî bileztir û bi livdar e",
+    "correctAnswer": "Giranî bi gavên giran û seknekê ye, Şêxanî bileztir û livdar e",
     "correctAnswerTr": "Giranî ağır adımlı ve vakur sekanslıdır; Şêxanî daha hızlı ve omuz hareketlidir",
     "explanation": "Giranî halayı ağır tempolu ve diz kırmalı vakur adımlarla başlar; Şêxanî ise omuz silkme ve hızlı ayak geçişleriyle daha dinamiktir.",
     "explanationTr": "Giranî halayı ağır tempolu ve diz kırmalı vakur adımlarla başlar; Şêxanî ise omuz silkme ve hızlı ayak geçişleriyle daha dinamiktir.",
@@ -1884,10 +1884,10 @@
     "id": "ds_cand_1195",
     "category": "Çand",
     "difficulty": 4,
-    "prompt": "Penêrê Sîrikî (otlu peynir) ê Wanê çima piştî çêkirinê çend mehan di bin erdê de tê veşartin?",
+    "prompt": "Penêrê Sîrikî (otlu peynir) yê Wanê çima piştî çêkirinê çend mehan di bin erdê de tê veşartin?",
     "promptTr": "Geleneksel Van otlu peynirinin küpler içinde toprağa gömülerek aylarca bekletilmesinin (olgunlaştırılmasının) amacı nedir?",
     "answers": [
-      "Ji bo havênbûna hênik, hevgirtina bîhnê û negirtina hewayê",
+      "Ji bo havênbûna hênik, hevgirtina bêhnê û negirtina hewayê",
       "Ji bo ku agirê binê erdê penêr zû biqelîne",
       "Ji bo ku keda mirovan ji çavên dizan veşartî bimîne",
       "Tenê ji bo ku rengê penêr ji spî veguhere reş"
@@ -1898,7 +1898,7 @@
       "Üretilen peyniri hırsızlardan korumak amacıyla mahzende gizlemek",
       "Peynirin rengini tamamen siyaha dönüştürmek amacıyla bekletmek"
     ],
-    "correctAnswer": "Ji bo havênbûna hênik, hevgirtina bîhnê û negirtina hewayê",
+    "correctAnswer": "Ji bo havênbûna hênik, hevgirtina bêhnê û negirtina hewayê",
     "correctAnswerTr": "Hava temasını keserek serin ortamda fermente olmasını ve aromasını kazanmasını sağlamak",
     "explanation": "Otlu peynir küplere basılıp ters çevrilerek toprağa gömülür; hava almayan serin toprakta sîrîk otunun aromasıyla olgunlaşır.",
     "explanationTr": "Otlu peynir küplere basılıp ters çevrilerek toprağa gömülür; hava almayan serin toprakta sîrîk otunun aromasıyla olgunlaşır.",
@@ -2082,7 +2082,7 @@
     "id": "ds_cand_1201",
     "category": "Çand",
     "difficulty": 4,
-    "prompt": "Di pizîşkiya gelêrî (dermanên kevnar) de ji bo birîn û êşan gihayê \"Kewkurt\" (çayê çiyê) û \"Hingivê zozanan\" çawa dihatin bikaranîn?",
+    "prompt": "Di pizîşkiya gelêrî (dermanên kevnar) de ji bo birîn û êşan gihayê \"Kewkurt\" (çaya çiyê) û \"Hingivê zozanan\" çawa dihatin bikaranîn?",
     "promptTr": "Geleneksel halk hekimliğinde yayla kekiği, dağ çayları ve bal karışımları öncelikle hangi amaçla kullanılırdı?",
     "answers": [
       "Tenê ji bo boyaxkirina dîwarên xaniyên nû",
@@ -2317,7 +2317,7 @@
     "promptTr": "Sözlü halk destanı \"Memê Alan\" ile Ehmedê Xanî'nin kaleme aldığı \"Mem û Zîn\" (1692) mesnevisi arasındaki temel yapısal ve felsefi fark nedir?",
     "answers": [
       "Xanî çîroka gelêrî veguherandiye mesnewiyeke felsefî, tesewufî û nasnameyî",
-      "Xanî hemû lehengên destanê ji holê rakiriye û tenê behsa şerê dîrokî kiriye",
+      "Xanî hemû lehengên destanê ji holê rakirine û tenê behsa şerê dîrokî kiriye",
       "Memê Alan bi alfabeya latînî hatiye nivîsandin lê Mem û Zîn tenê bi devkî ye",
       "Mem û Zîn tenê lîstikeke şanoyê ya nûjen e ku di sedsala bîstan de hatiye nivîsandin"
     ],
@@ -2385,7 +2385,7 @@
       "Hawar tenê bi zimanê fransî derket, Rêya Teze tenê bi zimanê ermenî bû",
       "Her du jî bi alfabeya latînî derketin, lê Rêya Teze guhertoyeke cuda ya Sovyetî bi kar anî",
       "Hawar tenê kovareke wêneyî bû, Rêya Teze qet tiştek çap nedikir",
-      "Her du weşanan jî tenê alfabeya erebî ya kevn a osmanî bi kar dianîn"
+      "Her du weşanan jî tenê alfabeya erebî ya kevn a osmanî bi kar dianî"
     ],
     "answersTr": [
       "Hawar yalnızca Fransızca yayımlandı; Rêya Teze ise tamamen Ermenice olarak basıldı",
@@ -2449,7 +2449,7 @@
     "promptTr": "Cegerxwîn klasik divan şiiri formundan modern toplumcu gerçekçi Kürt şiirine geçişte hangi temel dönüşümü sağlamıştır?",
     "answers": [
       "Zimanê helbestê ji qalibên giran ên erûzê ber bi zimanê gel û têkoşîna civakî ve bir",
-      "Hemû cureyên helbestê qedexe kir û tenê çîrokên zarokan nivîsand",
+      "Hemû cureyên helbestê qedexe kirin û tenê çîrokên zarokan nivîsandin",
       "Helbest tenê bi zimanê latînî yê kevnar di nav dêran de xwend",
       "Tenê behsa xwezaya Ewropayê kir û ji jiyana welat bi temamî dûr ket"
     ],
@@ -2481,7 +2481,7 @@
     "prompt": "Di sedsala 19an de xebatên zimannasî yên Peter Lerch û wergerên pirtûkên pîroz (mîna yên Samuel Rhea) ji aliyê belgekirina zaravayan ve xwedî kîjan girîngiyê bûn?",
     "promptTr": "19. yüzyılda Peter Lerch'in dilbilimsel derlemeleri ve Samuel Rhea gibi misyonerlerin Kürtçe çevirileri lehçe araştırmaları açısından neden önemlidir?",
     "answers": [
-      "Hemû zaravayên herêmê ji holê rakirin û tenê zimanekî nû çêkirin",
+      "Hemû zaravayên herêmê ji holê rakirin û tenê zimanekî nû çêkir",
       "Tenê ji bo bazirganiya deryayî rêzikên bacê yên nivîskî amade kirin",
       "Metnên devkî yên Kurmancî, Zazakî û Soranî yên wê serdemê bi awayekî nivîskî tomar kirin",
       "Nivîsandin û belavkirina pirtûkan di nav gel de bi temamî qedexe kirin"
@@ -2515,7 +2515,7 @@
     "promptTr": "Mehmed Uzun'un \"Siya Evînê\" ve \"Rojek ji Rojên Evdalê Zeynikê\" gibi tarihi romanlarıyla Kürt edebiyatına yaptığı en büyük katkı nedir?",
     "answers": [
       "Tenê pirtûkên felsefeya rojavayî bê guhertin wergerandin ser zimanê kurdî",
-      "Hemû çîrokên dengbêjan red kir û tenê behsa teknolojiya fezayê kir",
+      "Hemû çîrokên dengbêjan red kirin û tenê behsa teknolojiya fezayê kir",
       "Tenê helbestên kurt ên bê wate ji bo zarokên biçûk amade kirin",
       "Bîra dîrokî û çanda devkî bi zimanekî nûjen û estetîk kire bingeha romana kurdî"
     ],
