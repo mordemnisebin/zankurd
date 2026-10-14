@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import '../utils/kurmanci_text_key.dart';
+
 @immutable
 class LearnerLexiconSource {
   const LearnerLexiconSource({
@@ -5539,13 +5541,18 @@ class LearnerLexicon {
       forms: [
         'hat',
         'hate',
+        'tê',
         'tên',
         'têt',
         'têm',
+        'têne',
         'nayê',
         'nayên',
         'were',
         'werin',
+        'hatî',
+        'hatiye',
+        'dihat',
       ],
     ),
     LearnerLexiconEntry(
@@ -7738,6 +7745,92 @@ class LearnerLexicon {
       sourceId: 'questions',
       forms: ['diajo', 'naajo', 'ajo'],
     ),
+    LearnerLexiconEntry(
+      id: 'q-de',
+      termKu: 'De',
+      meaningTr: '-de, -da (di ... de: içinde)',
+      sourceId: 'questions',
+    ),
+    LearnerLexiconEntry(
+      id: 'q-ser-bas',
+      termKu: 'Ser',
+      meaningTr: 'baş; üst (li ser: üzerinde)',
+      sourceId: 'questions',
+      forms: ['serê'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-re-yol',
+      termKu: 'Rê',
+      meaningTr: 'yol',
+      sourceId: 'questions',
+      forms: ['rêya', 'rêyê', 'rêyan'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-ser-savas',
+      termKu: 'Şer',
+      meaningTr: 'savaş',
+      sourceId: 'questions',
+      forms: ['şerê', 'şerên'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-cihan',
+      termKu: 'Cîhan',
+      meaningTr: 'dünya',
+      sourceId: 'questions',
+      forms: ['cîhanê', 'cîhana'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-car-kez',
+      termKu: 'Car',
+      meaningTr: 'kez, defa',
+      sourceId: 'questions',
+      forms: ['cara', 'carê', 'caran'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-din-inanc',
+      termKu: 'Dîn',
+      meaningTr: 'din, inanç',
+      sourceId: 'questions',
+      forms: ['dînê', 'dînî'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-heman-unsur',
+      termKu: 'Hêman',
+      meaningTr: 'unsur, element',
+      sourceId: 'questions',
+      forms: ['hêmanê', 'hêmanên', 'hêmanan'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-nisan-isaret',
+      termKu: 'Nîşan',
+      meaningTr: 'işaret, belirti',
+      sourceId: 'questions',
+      forms: ['nîşana', 'nîşanê', 'nîşaneya'],
+    ),
+    LearnerLexiconEntry(
+      id: 'q-we-disil',
+      termKu: 'Wê',
+      meaningTr: 'o (dişil, eğik hâl)',
+      sourceId: 'questions',
+    ),
+    LearnerLexiconEntry(
+      id: 'q-ji-de',
+      termKu: 'Jî',
+      meaningTr: 'de, da, dahi',
+      sourceId: 'questions',
+    ),
+    LearnerLexiconEntry(
+      id: 'q-bikaranin',
+      termKu: 'Bikaranîn',
+      meaningTr: 'kullanma, kullanım',
+      sourceId: 'questions',
+    ),
+    LearnerLexiconEntry(
+      id: 'q-ber-on',
+      termKu: 'Ber',
+      meaningTr: 'ön, yan (ji ber: yüzünden)',
+      sourceId: 'questions',
+    ),
   ];
 
   static LearnerLexiconSource sourceFor(LearnerLexiconEntry entry) {
@@ -7792,19 +7885,45 @@ class LearnerLexicon {
     'ğ': 'g',
   };
 
+  /// Dokunarak sözcük eşlemede KULLANILAN anahtar: küçük harf, birleştirici
+  /// işaretler tek harfe birleşir (`e` + U+0302 -> `ê`, `s` + U+0327 -> `ş`),
+  /// harf olmayanlar atılır, Kurmancî aksanları KORUNUR. Türkçe klavyenin
+  /// noktasız `ı`'sı yine `i`'nin gölgesi sayılır (Kurmancîde `ı` yoktur).
+  ///
+  /// ## Kusur (2026-10-14)
+  ///
+  /// Dokunma eşlemesi de [foldForSearch] ile anahtarlanıyordu: `ê/e`, `î/i`,
+  /// `û/u`, `ş/s`, `ç/c` aynı anahtara düşüyor, `putIfAbsent` sözlükte ilk
+  /// geleni tutuyordu. Oysa bunlar Kurmancîde AYRI harflerdir ve ayrı sözcük
+  /// kurar: `şêr` (aslan) / `şer` (savaş) / `ser` (baş), `çar` (dört) / `car`
+  /// (kez), `dîn` (din) / `din` (öteki), `rê` (yol) / `re`, `cîhan` (dünya) /
+  /// `cih` (yer). Cümlede `ser`e ya da `caran`a dokunan öğrenen "Aslan" ya da
+  /// "Dört" görüyordu.
+  ///
+  /// ## Niçin sessizdi
+  ///
+  /// Balon HER ZAMAN bir anlam gösteriyordu; yanlış sözcüğün anlamı da düzgün
+  /// görünür. Boş balon ya da hata yoktu, öğrenenin ne beklediğini de kimse
+  /// ölçmüyordu. Arama kutusunda katlama doğru (kullanıcı aksansız yazar), ama
+  /// metindeki sözcük zaten doğru yazılmıştır: orada katlama yalnız çarpışma
+  /// üretir. Ses anahtarı (`kurmanciTextKey`) bu harfleri baştan ayrı tutuyordu.
+  static String strictWordKey(String word) {
+    return normalizeKurmanciText(
+      word,
+    ).replaceAll('ı', 'i').replaceAll(RegExp(r'[^\p{L}]', unicode: true), '');
+  }
+
   /// Metindeki TEK bir sözcükten sözlük maddesine: dokununca anlam balonu.
   ///
-  /// Sıra: (1) katlanmış tam eşleşme (terim ya da biçim; `Kûçik / Seg`
-  /// terimi iki ayrı sözcük sayılır), (2) tam eşleşme yoksa sözcüğün BAŞINI
+  /// Sıra: (1) AKSANLARI KORUYAN ([strictWordKey]) tam eşleşme (terim ya da
+  /// biçim; `Kûçik / Seg` terimi iki ayrı sözcük sayılır), (2) tam eşleşme yoksa sözcüğün BAŞINI
   /// oluşturan en uzun sözlük sözcüğü (>= 4 harf, geriye en çok 3 harflik ek
   /// kalmalı; `welatê` → `Welat`: kök + ek. Ek sınırı 2026-10-07'de geldi:
   /// `Dest` (el) sözcüğü `destpêk`, `destûr` gibi başka sözcükleri yanlış
   /// anlamla açıyordu). Tek harfli ya da kısa sözcükler yalnız tam eşleşir (`ez`, `tu`).
   /// Eşleşmezse `null`: sözcük dokunulabilir görünmez.
   static LearnerLexiconEntry? lookup(String token) {
-    final key = foldForSearch(
-      token,
-    ).replaceAll(RegExp(r"[^\p{L}]", unicode: true), '');
+    final key = strictWordKey(token);
     if (key.isEmpty) return null;
     final index = _wordIndex ??= _buildWordIndex();
     final exact = index[key];
@@ -7829,9 +7948,7 @@ class LearnerLexicon {
   static Map<String, LearnerLexiconEntry> _buildWordIndex() {
     final index = <String, LearnerLexiconEntry>{};
     void add(String word, LearnerLexiconEntry entry) {
-      final key = foldForSearch(
-        word,
-      ).replaceAll(RegExp(r"[^\p{L}]", unicode: true), '');
+      final key = strictWordKey(word);
       if (key.isNotEmpty) index.putIfAbsent(key, () => entry);
     }
 
