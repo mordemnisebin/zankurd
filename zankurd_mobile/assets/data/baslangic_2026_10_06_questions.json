@@ -1223,12 +1223,12 @@
     "prompt": "Hevokê temam bike: \"Ez ___ vedixwim.\" (\"Çay içiyorum.\")",
     "promptTr": "Cümleyi tamamla: \"Ez ___ vedixwim.\" (\"Çay içiyorum.\")",
     "answers": [
-      "çayê"
+      "çay"
     ],
     "answersTr": [
       "çay"
     ],
-    "correctAnswer": "çayê",
+    "correctAnswer": "çay",
     "correctAnswerTr": "çay",
     "acceptedAnswers": [],
     "acceptedAnswersTr": [],
@@ -3323,22 +3323,22 @@
     "prompt": "Hevokê temam bike: \"Ev ___ ye.\" (\"Bu tilki.\")",
     "promptTr": "Cümleyi tamamla: \"Ev ___ ye.\" (\"Bu tilki.\")",
     "answers": [
-      "rovî"
+      "rûvî"
     ],
     "answersTr": [
-      "rovî"
+      "rûvî"
     ],
-    "correctAnswer": "rovî",
-    "correctAnswerTr": "rovî",
+    "correctAnswer": "rûvî",
+    "correctAnswerTr": "rûvî",
     "acceptedAnswers": [
       "ruvi"
     ],
     "acceptedAnswersTr": [
       "ruvi"
     ],
-    "explanation": "Doğru cümle: \"Ev rovî ye.\" (Bu tilki.) \"Rovî\" ünlüyle bittiği için \"ye\" gelir.",
-    "explanationKu": "Hevoka rast ev e: \"Ev rovî ye.\" Peyva \"rovî\" bi dengdêrekê diqede, ji ber vê yekê \"ye\" tê.",
-    "explanationTr": "Doğru cümle: \"Ev rovî ye.\" (Bu tilki.) \"Rovî\" ünlüyle bittiği için \"ye\" gelir.",
+    "explanation": "Doğru cümle: \"Ev rûvî ye.\" (Bu tilki.) \"Rûvî\" ünlüyle bittiği için \"ye\" gelir.",
+    "explanationKu": "Hevoka rast ev e: \"Ev rûvî ye.\" Peyva \"rûvî\" bi dengdêrekê diqede, ji ber vê yekê \"ye\" tê.",
+    "explanationTr": "Doğru cümle: \"Ev rûvî ye.\" (Bu tilki.) \"Rûvî\" ünlüyle bittiği için \"ye\" gelir.",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: animals_2",
