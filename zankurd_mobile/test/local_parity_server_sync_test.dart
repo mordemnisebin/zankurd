@@ -66,7 +66,7 @@ const _promptFixSql = 'supabase/2026-10-14_banka_ku_duzeltme.sql';
 
 // update questions set\n  prompt = '…', … where id = 'uuid';
 final _promptFixRe = RegExp(
-  r"^update questions set\n  prompt = '((?:[^']|'')*)',[^;]*?where id = '([0-9a-f-]{36})';",
+  r"^update questions set\n  prompt = '((?:[^']|'')*)',[\s\S]*?\nwhere id = '([0-9a-f-]{36})';",
   multiLine: true,
 );
 

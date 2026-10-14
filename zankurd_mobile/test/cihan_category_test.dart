@@ -201,9 +201,12 @@ void main() {
           // Grok/Flash onayı) değişebilir; dalga-1 kayıtları birebir aynı.
           final meta = c['metadata'] as Map<String, dynamic>;
           final reviewedBy = meta['reviewedBy'] as String;
+          // 2026-10-15: dördüncü dalga, bütün bankaların Kurmancî denetimi
+          // (Gemini 3.8 Flash + Grok 4.7, ana ajan vetosu); künyesi kayıtta.
           final corrected =
               reviewedBy.contains('ikinci dalga') ||
-              reviewedBy.contains('üçüncü dalga');
+              reviewedBy.contains('üçüncü dalga') ||
+              reviewedBy.contains('dördüncü dalga');
           if (!corrected) {
             for (final key in [
               'prompt',
