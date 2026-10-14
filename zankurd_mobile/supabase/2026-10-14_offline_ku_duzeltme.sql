@@ -1,8 +1,8 @@
 -- 2026-10-14: offline_questions Kurmancî düzeltmelerinin canlı kopyası.
 --
--- NİÇİN: offline bankasının ilk 400 sorusu çok modelli denetimden geçti
+-- NİÇİN: offline bankasının ilk 600 sorusu çok modelli denetimden geçti
 -- (Gemini 3.8 Flash önerdi, Grok 4.7 oyladı, ana ajan bağlam ve tutarlılık
--- vetosu uyguladı). Yerelde düzelen 25 soru 2026-10-01 parity göçüyle
+-- vetosu uyguladı). Yerelde düzelen 39 soru 2026-10-01 parity göçüyle
 -- sunucuya da eklenmişti; oda ve düello sorularını sunucudan çektiği için
 -- canlı kopya eski yazımda kalıyordu. Örnekler: "têgiha"→"têgeha",
 -- "Kamûran"→"Kamiran", "hukim"→"hikim", "distirên"→"distirin",
@@ -140,13 +140,83 @@ update questions set
   prompt = 'Têgeha "vebêj" çi pêk tîne?',
   option_a = 'kesayeta sereke ya çîrokê', option_b = 'cihê ku bûyer tê de diqewime', option_c = 'ramana sereke ya berhemê', option_d = 'dengê ku çîrokê vedibêje'
 where id = '593fbd25-9e49-5731-a04e-0358f7087ddf';
+-- offline_10314
+update questions set
+  prompt = '"awazên Serhedê" çi ne?',
+  option_a = 'muzîka rîtmîk û meqamî ya herêma Şirnex û Cizîrê', option_b = 'şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê', option_c = 'dengbêjê bi eslê xwe ermenî yê ku muzîka devkî ya kurdî berhev kir', option_d = 'hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide'
+where id = 'b6180e9e-1460-56fd-b07f-409fcd93dc3c';
+-- offline_10423
+update questions set
+  prompt = '"tembûr" çi ye?',
+  option_a = 'şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê', option_b = 'sazê têlî yê ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin', option_c = 'amûra pifê ya bi dengê bilind a ku li derve tê lêxistin', option_d = 'hunermendê rîtmê yê ku erbane an defê bi hostatî lê dide'
+where id = 'e7333f15-0ae5-594e-b3be-366230238b4b';
+-- offline_10813
+update questions set
+  prompt = '"kevneşopiya şabaşê" çi ye?',
+  option_a = 'edeta ku ji muzîkjenan re pere tên avêtin', option_b = 'veguhastina muzîkal a bi têkiliya hoste-şagirt', option_c = 'dengê bihêz ê ku kurd jê re dibêjin "şahê dengbêjan"', option_d = 'kilama kevneşopî ya navdar a ku efsaneyekê vedibêje'
+where id = '1d460377-37ec-5152-baa9-9436757d7e35';
+-- offline_10878
+update questions set
+  prompt = '"Kardeş Türküler" çi ye?',
+  option_a = 'muzîka devkî ya ku di şevbihêrkên zivistanê de tê gotin', option_b = 'koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike', option_c = 'stranbêjî an lêxistina bi tenê ya hunermendekî', option_d = 'muzîka rîtmîk û meqamî ya herêma Şirnex û Cizîrê'
+where id = '050cca2a-e567-568d-8846-d8f01ad565d4';
+-- offline_10926
+update questions set
+  prompt = '"Mihemed Şêxo" kî bû?',
+  option_a = 'dengbêjê ku tomarên destpêkê yên muzîka kurdî kirin', option_b = 'koma ku muzîka kurdî di hawîrdoreke pirçandî de pêşkêş dike', option_c = 'dengbêjê ku hestên neteweyî yên gelê kurd dianî ziman', option_d = 'amûra pifê ya bi dengê bilind a ku li derve tê lêxistin'
+where id = '59bfeddd-0c33-5014-9534-3dfbbe134c72';
+-- offline_11180
+update questions set
+  prompt = 'Têgeha "meqamê dengbêjan" tê çi wateyê?',
+  option_a = 'şêwaza dengî ya bi rîtma azad a ku kilam pê tên gotin', option_b = 'muzîkjenê şoreşger ê hezkirî yê herêma Behdînan', option_c = 'şêwaza muzîka lîrîk a taybetî ya herêma Qersê, Agirî û Wanê', option_d = 'stranbêjî an lêxistina bi tenê ya hunermendekî'
+where id = '83665086-049e-51aa-ae63-163adde0d5bb';
+-- offline_11597
+update questions set
+  prompt = 'Bi "rexneya patriyarkayê" çi tê xwestin?',
+  option_a = 'federasyoneke ne-dewletgir a li ser bingeha binî', option_b = 'rolên çêkirî yên ku civakê ji jin û mêr re diyar kirine', option_c = 'eşkerekirina avahiya pergala serdestiya zilaman', option_d = 'yek pirrengî-dilxwazî ye, ya din yekreng-mecbûrî ye'
+where id = '7b26ded7-27b6-5ce7-817d-e027b96677b5';
+-- offline_11957
+update questions set
+  prompt = 'Dema "zayenda civakî" tê gotin, çi tê xwestin?',
+  option_a = 'krîza navendîbûna aborî û siyasî ya destekî yekane', option_b = 'sîstema jiyanê ya alternatîf a modernîteya kapîtalîst', option_c = 'rolên çêkirî yên ku civakê ji jin û mêr re diyar kirine', option_d = 'pergaleke civakî ku zilamî serdest dike û jinê tepeser dike'
+where id = 'd7d0cb69-399a-55ac-b1f1-316565247d35';
+-- offline_12122
+update questions set
+  prompt = 'Derbarê "patriyarka" de vebijêrka rast kîjan e?',
+  option_a = 'pergaleke civakî ku zilamî serdest dike û jinê tepeser dike', option_b = 'nîzameke wekhev a bêyî serdestî û mêtinkirinê', option_c = 'li seranserê cîhanê bûye sembola azadiya jinê', option_d = 'prensîbeke wekhevîxwaz a li dijî tepeserî û cudakariya zayendî'
+where id = '070752cc-ae4d-565c-a6b2-af697ee89cad';
+-- offline_12882
+update questions set
+  prompt = 'Derbarê "pêvajoya aştiyê" de vebijêrka rast kîjan e?',
+  option_a = 'qonaxa bidawîkirina rewşa pevçûnê bi diyalogê', option_b = 'mafê parastinê li dadgehên serbixwe û bêalî', option_c = 'hêzê ji navendekê bo yekîneyên herêmî belavkirin', option_d = 'pergaleke ku jin di partiyan de wekhev xwedî deng in'
+where id = '8f1c2fe4-68b1-5aae-b8fd-0ef7a54c20ea';
+-- offline_13040
+update questions set
+  prompt = 'Ji bo "mafên hindikahiyan" ravekirina herî dirust kîjan e?',
+  option_a = 'parastina komên ku ji piraniyê cuda ne', option_b = 'platforma hevbeş a aştiyê ya komên muxalif ên cuda', option_c = 'îradeya çareserkirina pevçûnan bi diyalogê li şûna çekan', option_d = 'hêzê ji navendekê bo yekîneyên herêmî belavkirin'
+where id = 'e953efd8-6f54-5ea2-a72d-d61c0ece7c4a';
+-- offline_13390
+update questions set
+  prompt = 'Derbarê "meşrûiyet" de ya rast a zanîn çi ye?',
+  option_a = 'guncaniya rêveberiyê bi razîbûna gel û hiqûqê re', option_b = 'banga danîna çekan û hilweşandina avahiya rêxistinî', option_c = 'prensîba parvekirina wekhev a çavkanî û mafan', option_d = 'parastina komên ku ji piraniyê cuda ne'
+where id = 'f521a0f8-18f7-56dc-9575-05b08d2fa9e5';
+-- offline_curated_20375
+update questions set
+  prompt = 'Cegerxwîn di helbesta kurdî de bi çi tê naskirin?',
+  option_a = 'helbestvanê ku Mewlûda Kurdî ya yekem bi zaravayê kurmancî nivîsiye', option_b = 'rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dibe', option_c = 'helbestvanê mezin ê klasîk ku bi dîwana xwe ya felsefî û tesewifî tê naskirin', option_d = 'helbestvanê şoreşger û civakî yê ku helbesta kurdî ya modern biriye qonaxeke nû'
+where id = '86d45d6f-a690-58df-93ed-b0557ab297a5';
+-- offline_curated_20504
+update questions set
+  prompt = '"Împaratoriya Medî" çi bû?',
+  option_a = 'hikûmdariya kurd a ku di serdema Osmanî de xweser mabû', option_b = 'mîrektiya bi navenda Rewandizê ya ku hêza leşkerî berhev kir', option_c = 'mîrnişîneke kevnar a kurdî ya li rojhilat ku navenda wê Sine bû', option_d = 'hêza mezin a kevnar a li çiyayên Zagrosê ku kurd xwe wekî neviyên wan dibînin'
+where id = 'd236250d-67f0-5452-bb15-7f0f588c96fa';
 
 do $$
 declare v_count integer;
 begin
-  select count(*) into v_count from questions where id in ('8b21a6ab-bae2-5681-bb3d-8841c21e35e9', 'a2abe123-b771-5b5e-bd5f-0140185b0175', '544927f6-f987-589c-a5bd-66bb385ce2ef', 'f24a54ca-36fd-5d91-8eec-bdbf9dd44950', 'fcb965f9-eb86-5f64-b593-f492adf19ffe', 'e99a7e8a-0beb-5ee5-9706-b2800af5d083', 'd7d3e1f4-562b-5e0a-a1b2-5b9ebda8ec4c', '17c96fd1-0fcf-5cf9-ad0b-71ce9ea801fa', 'c19c0e55-1ef6-50da-b2fc-08a07ad0c0f4', 'b838b9c3-9ee2-5011-bc1e-ca3007a78b74', 'd98d7c23-daca-5618-a097-8b06bbf11463', 'dbe62c63-14c1-584f-a2be-e1bfd3472fc9', '871f9df8-c339-5057-b456-f239051b6cb1', 'be738fd5-2c16-5ced-815d-9c1418bdb063', 'c7684a0d-e15b-5bf1-b8cd-560d4dcfbc76', '3cb2d81a-4ee7-5d81-8c5b-c7e2d434f547', 'e7b43ce4-77a0-5298-bac1-19a00d158652', '70e8412a-6f18-566a-8f75-1f5b7e29877a', 'b0a0fca8-aa88-5f74-a85a-16119b8655eb', 'c1900627-a209-52f4-a198-d4b85eb58581', '6e9f8007-63ad-5c56-b456-42cb3b7a3d93', 'c86835eb-006b-553e-92b5-33c55cc68d16', '585d04d5-4fd7-51f0-a83d-1f1d057f3904', '9230f7f0-1707-50d5-a194-242c170d559b', '593fbd25-9e49-5731-a04e-0358f7087ddf');
-  if v_count <> 25 then
-    raise exception 'beklenen 25 soru, bulunan %', v_count;
+  select count(*) into v_count from questions where id in ('8b21a6ab-bae2-5681-bb3d-8841c21e35e9', 'a2abe123-b771-5b5e-bd5f-0140185b0175', '544927f6-f987-589c-a5bd-66bb385ce2ef', 'f24a54ca-36fd-5d91-8eec-bdbf9dd44950', 'fcb965f9-eb86-5f64-b593-f492adf19ffe', 'e99a7e8a-0beb-5ee5-9706-b2800af5d083', 'd7d3e1f4-562b-5e0a-a1b2-5b9ebda8ec4c', '17c96fd1-0fcf-5cf9-ad0b-71ce9ea801fa', 'c19c0e55-1ef6-50da-b2fc-08a07ad0c0f4', 'b838b9c3-9ee2-5011-bc1e-ca3007a78b74', 'd98d7c23-daca-5618-a097-8b06bbf11463', 'dbe62c63-14c1-584f-a2be-e1bfd3472fc9', '871f9df8-c339-5057-b456-f239051b6cb1', 'be738fd5-2c16-5ced-815d-9c1418bdb063', 'c7684a0d-e15b-5bf1-b8cd-560d4dcfbc76', '3cb2d81a-4ee7-5d81-8c5b-c7e2d434f547', 'e7b43ce4-77a0-5298-bac1-19a00d158652', '70e8412a-6f18-566a-8f75-1f5b7e29877a', 'b0a0fca8-aa88-5f74-a85a-16119b8655eb', 'c1900627-a209-52f4-a198-d4b85eb58581', '6e9f8007-63ad-5c56-b456-42cb3b7a3d93', 'c86835eb-006b-553e-92b5-33c55cc68d16', '585d04d5-4fd7-51f0-a83d-1f1d057f3904', '9230f7f0-1707-50d5-a194-242c170d559b', '593fbd25-9e49-5731-a04e-0358f7087ddf', 'b6180e9e-1460-56fd-b07f-409fcd93dc3c', 'e7333f15-0ae5-594e-b3be-366230238b4b', '1d460377-37ec-5152-baa9-9436757d7e35', '050cca2a-e567-568d-8846-d8f01ad565d4', '59bfeddd-0c33-5014-9534-3dfbbe134c72', '83665086-049e-51aa-ae63-163adde0d5bb', '7b26ded7-27b6-5ce7-817d-e027b96677b5', 'd7d0cb69-399a-55ac-b1f1-316565247d35', '070752cc-ae4d-565c-a6b2-af697ee89cad', '8f1c2fe4-68b1-5aae-b8fd-0ef7a54c20ea', 'e953efd8-6f54-5ea2-a72d-d61c0ece7c4a', 'f521a0f8-18f7-56dc-9575-05b08d2fa9e5', '86d45d6f-a690-58df-93ed-b0557ab297a5', 'd236250d-67f0-5452-bb15-7f0f588c96fa');
+  if v_count <> 39 then
+    raise exception 'beklenen 39 soru, bulunan %', v_count;
   end if;
 end
 $$;
