@@ -93,11 +93,16 @@ class QuizResultScreen extends StatefulWidget {
     this.rewardSettlementState,
     this.receiptRunner,
     this.receiptStages,
+    this.notificationPrompt,
     super.key,
   });
 
   final ZanKurdRepository repository;
   final GameRoom room;
+
+  /// Bağlamsal bildirim izni kartı ([NotificationPromptCard]); `null` →
+  /// çizilmez.
+  final Widget? notificationPrompt;
   final int score;
   final int correctCount;
   final int wrongCount;
@@ -1364,6 +1369,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       if (secondaryResultActions.isNotEmpty) ...[
         const SizedBox(height: SahneSpace.cardGap),
         _SecondaryActions(actions: secondaryResultActions),
+      ],
+      if (widget.notificationPrompt != null) ...[
+        const SizedBox(height: SahneSpace.cardGap),
+        widget.notificationPrompt!,
       ],
       if (hasGains)
         _RoundGains(

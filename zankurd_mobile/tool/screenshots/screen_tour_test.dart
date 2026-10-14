@@ -40,6 +40,7 @@ import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
+import 'package:zankurd_mobile/src/widgets/notification_prompt_card.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
 import 'package:zankurd_mobile/src/screens/splash_screen.dart';
@@ -251,10 +252,11 @@ Widget _result1v1VictoryScreen() {
   );
 }
 
-Widget _resultScreen() {
+Widget _resultScreen({Widget? notificationPrompt}) {
   final repository = _TourRepository();
   final room = repository.createRoom();
   return QuizResultScreen(
+    notificationPrompt: notificationPrompt,
     repository: repository,
     room: room,
     score: 240,
@@ -1059,6 +1061,25 @@ void main() {
   testWidgets('70 tur sonucu (Kurmancî)', (t) async {
     await _pump(t, _resultScreen(), ku: true);
     await _shoot(t, '70_result_ku');
+  }, tags: ['preview']);
+
+  // Bağlamsal bildirim izni kartı: sonuç ekranında, öğrenme kartının altında.
+  Widget withPrompt() => _resultScreen(
+    notificationPrompt: NotificationPromptCard(onEnable: () {}, onLater: () {}),
+  );
+  testWidgets('70a tur sonucu + bildirim kartı', (t) async {
+    await _pump(t, withPrompt());
+    await _shoot(t, '70a_result_notif');
+  }, tags: ['preview']);
+
+  testWidgets('70b tur sonucu + bildirim kartı (karanlık)', (t) async {
+    await _pump(t, withPrompt(), dark: true);
+    await _shoot(t, '70b_result_notif_dark');
+  }, tags: ['preview']);
+
+  testWidgets('70c tur sonucu + bildirim kartı (Kurmancî)', (t) async {
+    await _pump(t, withPrompt(), ku: true);
+    await _shoot(t, '70c_result_notif_ku');
   }, tags: ['preview']);
 
   // Bu iki ekran da tura hiç girmemişti: ikisi de menüden açılıyor ve
