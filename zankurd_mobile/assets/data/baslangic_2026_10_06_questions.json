@@ -112,7 +112,7 @@
     "category": "Ziman",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Kîjan tîp di alfabeya Kurmancî ya Hawar de tune ye?",
+    "prompt": "Kîjan tîp di alfabeya Kurmancî ya Hawarê de tune ye?",
     "promptTr": "Hangi harf Hawar Kurmancî alfabesinde yoktur?",
     "answers": [
       "ğ",
@@ -1223,12 +1223,12 @@
     "prompt": "Hevokê temam bike: \"Ez ___ vedixwim.\" (\"Çay içiyorum.\")",
     "promptTr": "Cümleyi tamamla: \"Ez ___ vedixwim.\" (\"Çay içiyorum.\")",
     "answers": [
-      "çay"
+      "çayê"
     ],
     "answersTr": [
       "çay"
     ],
-    "correctAnswer": "çay",
+    "correctAnswer": "çayê",
     "correctAnswerTr": "çay",
     "acceptedAnswers": [],
     "acceptedAnswersTr": [],
@@ -3323,22 +3323,22 @@
     "prompt": "Hevokê temam bike: \"Ev ___ ye.\" (\"Bu tilki.\")",
     "promptTr": "Cümleyi tamamla: \"Ev ___ ye.\" (\"Bu tilki.\")",
     "answers": [
-      "rûvî"
+      "rovî"
     ],
     "answersTr": [
-      "rûvî"
+      "rovî"
     ],
-    "correctAnswer": "rûvî",
-    "correctAnswerTr": "rûvî",
+    "correctAnswer": "rovî",
+    "correctAnswerTr": "rovî",
     "acceptedAnswers": [
       "ruvi"
     ],
     "acceptedAnswersTr": [
       "ruvi"
     ],
-    "explanation": "Doğru cümle: \"Ev rûvî ye.\" (Bu tilki.) \"Rûvî\" ünlüyle bittiği için \"ye\" gelir.",
-    "explanationKu": "Hevoka rast ev e: \"Ev rûvî ye.\" Peyva \"rûvî\" bi dengdêrekê diqede, ji ber vê yekê \"ye\" tê.",
-    "explanationTr": "Doğru cümle: \"Ev rûvî ye.\" (Bu tilki.) \"Rûvî\" ünlüyle bittiği için \"ye\" gelir.",
+    "explanation": "Doğru cümle: \"Ev rovî ye.\" (Bu tilki.) \"Rovî\" ünlüyle bittiği için \"ye\" gelir.",
+    "explanationKu": "Hevoka rast ev e: \"Ev rovî ye.\" Peyva \"rovî\" bi dengdêrekê diqede, ji ber vê yekê \"ye\" tê.",
+    "explanationTr": "Doğru cümle: \"Ev rovî ye.\" (Bu tilki.) \"Rovî\" ünlüyle bittiği için \"ye\" gelir.",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: animals_2",

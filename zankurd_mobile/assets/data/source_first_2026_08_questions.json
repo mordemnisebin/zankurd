@@ -73,9 +73,9 @@
       "fade out (vedimirîn)",
       "dissolve (tevlîhevî)",
       "pan (gerandina panoramîk)",
-      "jump cut (qutbûna ji nişkê)"
+      "jump cut (qutbûna ji nişkê ve)"
     ],
-    "correctAnswer": "jump cut (qutbûna ji nişkê)",
+    "correctAnswer": "jump cut (qutbûna ji nişkê ve)",
     "promptTr": "Bir sahnenin içinde zamanı aniden ileri veya geri atlatan kesme tekniği hangisidir?",
     "answersTr": [
       "karartma (fade out)",
@@ -101,7 +101,7 @@
   {
     "id": "ds26_cinema_0035",
     "category": "Sînema",
-    "prompt": "Têgiha ku hemû hêmanên dîtbarî yên li ber kamerayê (dekor, ronahî, lîstik) di çarçoveyekê de berhev dike çi ye?",
+    "prompt": "Têgeha ku hemû hêmanên dîtbarî yên li ber kamerayê (dekor, ronahî, lîstik) di çarçoveyekê de berhev dike çi ye?",
     "answers": [
       "sînematografî",
       "montaj",
@@ -167,7 +167,7 @@
   {
     "id": "ds26_cinema_0089",
     "category": "Cîhan",
-    "prompt": "Palmiya Zêrîn xelata herî bilind a kîjan festîvalê ye?",
+    "prompt": "Palmiyeya Zêrîn xelata herî bilind a kîjan festîvalê ye?",
     "answers": [
       "Festîvala Venedîkê",
       "Festîvala Cannesê",
@@ -200,7 +200,7 @@
   {
     "id": "ds26_cinema_0090",
     "category": "Cîhan",
-    "prompt": "Kîjan festîvala fîlman a herî kevn a cîhanê ye?",
+    "prompt": "Festîvala fîlman a herî kevn a cîhanê kîjan e?",
     "answers": [
       "Festîvala Cannesê",
       "Festîvala Berlînê",
@@ -1850,7 +1850,7 @@
   {
     "id": "sf_geo_0001",
     "category": "Cîhan",
-    "prompt": "Di dîrokê de çend okyanûsên bi nav hebûn?",
+    "prompt": "Di dîrokê de çend okyanûsên binavkirî hebûn?",
     "answers": [
       "Çar",
       "Sê",
@@ -2478,7 +2478,7 @@
   {
     "id": "sf_nat_0017",
     "category": "Cîhan",
-    "prompt": "Dûrahiya navînî ya di navbera Cîhan û Heyvê de çend kîlometre ye?",
+    "prompt": "Dûrahiya navîn a di navbera Cîhan û Heyvê de çend kîlometre ye?",
     "answers": [
       "150.000 km",
       "384.400 km",
@@ -2511,7 +2511,7 @@
   {
     "id": "sf_nat_0018",
     "category": "Cografya",
-    "prompt": "Heyv di çend rojan de li dora Cîhanê yek car digere?",
+    "prompt": "Heyv di çend rojan de li dora Cîhanê carekê digere?",
     "answers": [
       "7 roj",
       "14 roj",
@@ -2711,12 +2711,12 @@
     "category": "Teknolojî",
     "prompt": "Li gorî rêbernameya nû ya NISTê, tîpên taybet mecbûr in?",
     "answers": [
-      "Na, êdî mecbûr nayên pêşniyarkirin",
+      "Na, êdî mecbûrî nayên pêşniyarkirin",
       "Erê, her dem mecbûr in",
       "Tenê ji bo bankan mecbûr in",
       "Tenê ji bo e-nameyê mecbûr in"
     ],
-    "correctAnswer": "Na, êdî mecbûr nayên pêşniyarkirin",
+    "correctAnswer": "Na, êdî mecbûrî nayên pêşniyarkirin",
     "promptTr": "NIST'in yeni rehberine göre özel karakterler zorunlu mudur?",
     "answersTr": [
       "Hayır, artık zorunlu önerilmiyor",
@@ -2779,7 +2779,7 @@
     "answers": [
       "Ji ber ku malper dikarin bi heman şîfreyê hêdîtir bibin",
       "Ji ber ku şikandina yek hesabî dikare hesabên din jî bixe xetereyê",
-      "Ji ber ku şîfreyek li gelek cihan bîranîna wê dijwartir dike",
+      "Ji ber ku bikaranîna şîfreyekê li gelek cihan bîranîna wê dijwartir dike",
       "Ji ber ku bikaranîna heman şîfreyê trafîka înternetê zêde dike"
     ],
     "correctAnswer": "Ji ber ku şikandina yek hesabî dikare hesabên din jî bixe xetereyê",

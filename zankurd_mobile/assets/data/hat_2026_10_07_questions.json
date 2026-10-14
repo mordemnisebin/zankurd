@@ -319,7 +319,7 @@
     "category": "Edebiyat",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Romana bi navê \"Janî Gel\" ku wek yekem romana soranî tê qebûlkirin, kî nivîsiye?",
+    "prompt": "Romana bi navê \"Janî Gel\" ku wek yekem romana soranî tê qebûlkirin, kê nivîsiye?",
     "promptTr": "Soranî'nin ilk romanı kabul edilen \"Janî Gel\" adlı eseri kim yazmıştır?",
     "answers": [
       "Îbrahîm Ehmed",
@@ -354,7 +354,7 @@
     "category": "Edebiyat",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Berhema klasîk a bi navê \"Mem û Zîn\" ku bingeha romana kurdî tê dîtin, kî nivîsiye?",
+    "prompt": "Berhema klasîk a bi navê \"Mem û Zîn\" ku bingeha romana kurdî tê dîtin, kê nivîsiye?",
     "promptTr": "Kürt romanının temeli sayılan \"Mem û Zîn\" adlı klasik eseri kim yazmıştır?",
     "answers": [
       "Ehmedê Xanî",
@@ -389,7 +389,7 @@
     "category": "Edebiyat",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Romana bi navê \"Tu\" ku di sala 1985an de li Swêdê hatiye weşandin, kî nivîsiye?",
+    "prompt": "Romana bi navê \"Tu\" ku di sala 1985an de li Swêdê hatiye weşandin, kê nivîsiye?",
     "promptTr": "1985 yılında İsveç'te yayımlanan \"Tu\" adlı romanı kim yazmıştır?",
     "answers": [
       "Mehmed Uzun",
@@ -494,7 +494,7 @@
     "category": "Edebiyat",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Romana bi navê \"Şarî Mûsîqare Spîyekan\" ku di sala 2006an de hatiye weşandin, kî nivîsiye?",
+    "prompt": "Romana bi navê \"Şarî Mûsîqare Spîyekan\" ku di sala 2006an de hatiye weşandin, kê nivîsiye?",
     "promptTr": "2006 yılında yayımlanan \"Şarî Mûsîqare Spîyekan\" adlı romanı kim yazmıştır?",
     "answers": [
       "Bextiyar Elî",
@@ -529,7 +529,7 @@
     "category": "Edebiyat",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Romana bi navê \"Mijabad\" ku behsa dîroka Komara Mahabadê dike, kî nivîsiye?",
+    "prompt": "Romana bi navê \"Mijabad\" ku behsa dîroka Komara Mahabadê dike, kê nivîsiye?",
     "promptTr": "Mahabad Kürt Cumhuriyeti tarihini anlatan \"Mijabad\" adlı romanı kim yazmıştır?",
     "answers": [
       "Jan Dost",
@@ -704,7 +704,7 @@
     "category": "Edebiyat",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Kîjan berhem ferhenga manzum a zarokan e û ji aliyê Ehmedê Xanî ve hatiye amadekirin?",
+    "prompt": "Kîjan berhem ferhenga menzûm a zarokan e û ji aliyê Ehmedê Xanî ve hatiye amadekirin?",
     "promptTr": "Çocuklar için manzum sözlük olan eser hangisidir ve Ahmed-i Hani tarafından hazırlanmıştır?",
     "answers": [
       "Zembîlfiroş",
@@ -1124,7 +1124,7 @@
     "category": "Edebiyat",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "\"Mem û Zîn\" ji aliyê cureya edebî ve kîjan şêwe ye?",
+    "prompt": "\"Mem û Zîn\" ji aliyê cureyê edebî ve kîjan şêwe ye?",
     "promptTr": "Edebi tür bakımından \"Mem û Zîn\" hangi biçimdedir?",
     "answers": [
       "Ferheng",
@@ -1232,7 +1232,7 @@
     "prompt": "Bernavê Yilmaz Guney ê herî naskirî kîjan e?",
     "promptTr": "Yılmaz Güney'in en bilinen lakabı hangisidir?",
     "answers": [
-      "Qralê Çirkin",
+      "Qralê Kirêt",
       "Qralê Mezin",
       "Qralê Spî",
       "Qralê Ciwan"
@@ -1243,7 +1243,7 @@
       "Beyaz Kral",
       "Genç Kral"
     ],
-    "correctAnswer": "Qralê Çirkin",
+    "correctAnswer": "Qralê Kirêt",
     "correctAnswerTr": "Çirkin Kral",
     "explanation": "Bu lakap, halktan yana sert rolleri nedeniyle verilmiştir ve bu dönemde çok sayıda macera filminde oynamıştır.",
     "explanationKu": "Ev bernav ji ber rolên wî yên dijwar û ji xelkê asayî hatiye dayîn û wî bi dehan fîlmên macerayê kişandine.",
@@ -1299,7 +1299,7 @@
     "category": "Sînema",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Dema Yilmaz Guney girtî bû, kêşan û derhêneriya fîlmê Yol kî kir?",
+    "prompt": "Dema Yilmaz Guney girtî bû, kişandin û derhêneriya fîlmê Yol kê kir?",
     "promptTr": "Yılmaz Güney cezaevindeyken Yol filminin çekimini ve yönetmenliğini kim üstlendi?",
     "answers": [
       "Zeki Okten",
@@ -2174,7 +2174,7 @@
     "category": "Cografya",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Kîjan gol li Bakurê Kurdistanê gola sodalî ya herî mezin e?",
+    "prompt": "Kîjan gol li Bakurê Kurdistanê gola sodayî ya herî mezin e?",
     "promptTr": "Kuzey Kürdistan'da bulunan en büyük sodalı göl hangisidir?",
     "answers": [
       "Gola Urmiyeyê",
@@ -2664,7 +2664,7 @@
     "category": "Cografya",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Kîjan av li nêzî Zaxo û Silopiyayê derbas dibe û beşek ji sînorê di navbera Iraq û Tirkiyeyê de pêk tîne?",
+    "prompt": "Kîjan av li nêzî Zaxo û Silopiyê derbas dibe û beşek ji sînorê di navbera Iraq û Tirkiyeyê de pêk tîne?",
     "promptTr": "Zaho ve Silopi yakınlarından geçen ve Irak ile Türkiye arasındaki sınırın bir bölümünü oluşturan akarsu hangisidir?",
     "answers": [
       "Xabûr",
@@ -2699,7 +2699,7 @@
     "category": "Cografya",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Kîjan rêzeçiya dirêj ji Rojhilatê Kurdistanê heta Başûr û Loristanê dirêj dibe?",
+    "prompt": "Kîjan rêzeçiyayê dirêj ji Rojhilatê Kurdistanê heta Başûr û Loristanê dirêj dibe?",
     "promptTr": "Rojhilat Kürdistanı'ndan Başur'a ve Luristan'a kadar uzanan uzun sıradağ hangisidir?",
     "answers": [
       "Zagros",
@@ -3679,7 +3679,7 @@
     "category": "Siyaset",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Partiya Keda Gel (HEP) di 1990î de bi serokatiya kîjan siyasetmedarî hate damezrandin?",
+    "prompt": "Partiya Keda Gel (HEP) di 1990an de bi serokatiya kîjan siyasetmedarî hate damezrandin?",
     "promptTr": "Halkın Emek Partisi (HEP) 1990'da hangi siyasetçinin başkanlığında kuruldu?",
     "answers": [
       "Ahmet Turk",
@@ -4449,7 +4449,7 @@
     "category": "Çand",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Dilê wê her tim lêdide, lê zindî nîne û demê nîşan dide; ew çi ye?",
+    "prompt": "Dilê wê her tim lê dide, lê zindî nîne û demê nîşan dide; ew çi ye?",
     "promptTr": "Kalbi hep atar ama canlı değildir ve zamanı gösterir; bu nedir?",
     "answers": [
       "Saet",

@@ -4,11 +4,11 @@
   "manifestVersion": 1,
   "sourceFingerprints": {
     "assets/data/altkonu_2026_10_01_questions.json": "8d0f3c2b52bd1018829e0608598aa3d77a93e070f2f51174639edc9fb369f3df",
-    "assets/data/baslangic_2026_10_06_questions.json": "3f2275cbc32f142efe6798685e1bc5f4a689162d06a785584cb6e57e6c8ac25f",
-    "assets/data/bilim_2026_09_30_questions.json": "6462491afc3f79deb0ae0d91ad2c9996ddc64120de4a0f5ab9c62ac0e0c6b43d",
-    "assets/data/bosluk_2026_10_02_questions.json": "ac49f65c1f52a149f4b2a900228a3208be6e99c382cb6edc7bf865639593fbf1",
-    "assets/data/community_questions.json": "f8cfef30bb584d5a48aba166bf7eb759f98b90c68ca62a5ff417d7972d560f6d",
-    "assets/data/deepseek_verified_2026_09_30_questions.json": "25778fa0acb4dd36450733c7c6737d6c21bc5ddef9acfb326d410c63635ad06d",
+    "assets/data/baslangic_2026_10_06_questions.json": "2e9a5cebf5443919f68bf8338a414ed8ce548c16d8b140707a5bb01da254b142",
+    "assets/data/bilim_2026_09_30_questions.json": "bbf44eba49e72c8bc1cb28044ce92a1c8b3af88ec038868604aabdb41822f6d1",
+    "assets/data/bosluk_2026_10_02_questions.json": "cd153c3b28c4abd0b48d4e98cf85077edd03540f96312258e890bbbe50dece18",
+    "assets/data/community_questions.json": "5b0cb9cc723b8ad1e57d5d9f108885963e2b74c14ee02d1798b17ef7466edeb7",
+    "assets/data/deepseek_verified_2026_09_30_questions.json": "1e68dae76b378bff52705f82ff30612f0fd510fc18d26b3c0bf7961c202dd887",
     "assets/data/ders_2026_10_01_questions.json": "50141fca9d652145c3de275866ef4e4a0598a775b176b3b48ccda6c067882ae9",
     "assets/data/ders_2026_10_02_questions.json": "b8daf6a2d132fce96ff980a9b2c85df6e71a467e09a842bac1bd226b219c36c8",
     "assets/data/dersler2_2026_10_08_questions.json": "f12bcc022fd2d66ec45aa5611a376107f031c75eea0ec0c6547fe357e49f629c",
@@ -18,11 +18,11 @@
     "assets/data/expansion_2026_08_questions.json": "0254bdd3316eecab3f29e393a37907d5ca1be610bb85e299ebd2a0a422e5c67d",
     "assets/data/expansion_2026_09_28_questions.json": "4eec0f0e705f72d91f84b3b0e104df3e01fe341146933c4d34ce73a0ca89e2c3",
     "assets/data/fill_in_blank_2026_08_questions.json": "0550c5b7ee584a2c3d83b750e861f793faf3cd6bea384c5288d56478e4f9d252",
-    "assets/data/hat_2026_10_07_questions.json": "f4c10194a0cfdcb9688b9e1a6890aac3a8b40005ad02bf5bf4539a806850d18f",
+    "assets/data/hat_2026_10_07_questions.json": "92ff342d85900de1af2030a5f399c7f21657b6ccdb219e7a3b95968588d2e4c4",
     "assets/data/offline_questions.json": "bc4cb1311d2ca7d6bc666a825ee8c7393669670e0efa456887f4401a80e95eea",
     "assets/data/restore_2026_08_07_questions.json": "3dc606f7980449dd6ecae58027313e5e168b5ca34ece0e2d8bef770f4d60aa60",
     "assets/data/sentence_building_questions.json": "a9073e14be478d195524b6da32a5f506abdbae3e7fad40838c06e4849b3233f9",
-    "assets/data/source_first_2026_08_questions.json": "392e76c4f303e63c7312e90dd50756e0d05fb6506341fab7b53edd1a885e5a9d",
+    "assets/data/source_first_2026_08_questions.json": "03ae17f4187f33362f33dbcfeca9cca3a2b727efd2cd59ff8dbaf8946bae08b9",
     "assets/data/visual_2026_08_07_questions.json": "16e73f7c75a78f3b1f0bf088469d3be13708f9bd52a42d27ade03d344caee2f5",
     "lib/src/data/curated_question_bank.dart": "1eb15d5b7ec24d1360a467b60573ff229209af43441bf421c390f236f5517903"
   },
@@ -35,6 +35,7 @@
     "03d46220a1bd7805748492ea45702c48",
     "0408ea18e9d279eec3135bf57005dcb8",
     "051d84e974cafb30e590b9053d128804",
+    "06787e1e2852a34ad712c06d5401ab11",
     "06ef99d0ba824aee8eafc1ed770b7247",
     "08933284f4cb234bc37cdd19961b194a",
     "0b341f84a4622ef6b1819af2f270f7d7",
@@ -234,7 +235,7 @@
     "gateSeverity": {
       "blocker": 0,
       "critical": 0,
-      "warning": 182,
+      "warning": 183,
       "info": 0
     },
     "checks": {}
