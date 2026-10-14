@@ -84,7 +84,13 @@ void main() {
   group('sözcük eşleme', () {
     test('tam eşleşme, biçim ve kök+ek (>= 4 harf)', () {
       expect(LearnerLexicon.lookup('Dûr')?.termKu, 'Dûr');
-      expect(LearnerLexicon.lookup('dur')?.termKu, 'Dûr', reason: 'aksansız');
+      // Metindeki sözcük aksanıyla eşlenir: `dur` ile `dûr` ayrı sözcüktür
+      // (bkz. lexicon_strict_lookup_test.dart). Aksansız arama `search` işi.
+      expect(
+        LearnerLexicon.lookup('dur')?.termKu,
+        isNot('Dûr'),
+        reason: 'aksanlı harf ayrı harf',
+      );
       expect(LearnerLexicon.lookup('malê')?.termKu, 'Mal', reason: 'biçim');
       expect(LearnerLexicon.lookup('welatên')?.termKu, 'Welat', reason: 'kök');
       expect(LearnerLexicon.lookup('qqqq'), isNull);

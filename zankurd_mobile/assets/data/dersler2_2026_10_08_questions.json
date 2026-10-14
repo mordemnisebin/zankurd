@@ -1314,7 +1314,7 @@
     "correctAnswer": "kiras",
     "correctAnswerTr": "kiras",
     "explanation": "kiras gömlek demektir.",
-    "explanationKu": "kiras tê wateya gömlekê.",
+    "explanationKu": "\"Kiras\" tê wateya \"gömlek\".",
     "explanationTr": "kiras gömlek demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -1350,7 +1350,7 @@
     "correctAnswer": "pêlav",
     "correctAnswerTr": "pêlav",
     "explanation": "pêlav ayakkabı demektir.",
-    "explanationKu": "pêlav tê wateya ayakkabiyê.",
+    "explanationKu": "\"Pêlav\" tê wateya \"ayakkabı\".",
     "explanationTr": "pêlav ayakkabı demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -1386,7 +1386,7 @@
     "correctAnswer": "gore",
     "correctAnswerTr": "gore",
     "explanation": "gore çorap demektir.",
-    "explanationKu": "gore tê wateya çorapê.",
+    "explanationKu": "\"Gore\" tê wateya \"çorap\".",
     "explanationTr": "gore çorap demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -1422,7 +1422,7 @@
     "correctAnswer": "dawên",
     "correctAnswerTr": "dawên",
     "explanation": "dawên etek demektir.",
-    "explanationKu": "dawên tê wateya etekê.",
+    "explanationKu": "\"Dawên\" tê wateya \"etek\".",
     "explanationTr": "dawên etek demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -1458,7 +1458,7 @@
     "correctAnswer": "berçavk",
     "correctAnswerTr": "berçavk",
     "explanation": "berçavk gözlük demektir.",
-    "explanationKu": "berçavk tê wateya gözlükê.",
+    "explanationKu": "\"Berçavk\" tê wateya \"gözlük\".",
     "explanationTr": "berçavk gözlük demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -1757,8 +1757,8 @@
     "category": "Ziman",
     "type": "fillInBlank",
     "difficulty": 1,
-    "prompt": "Hevokê temam bike: \"Ev ___ e, ez li serê xwe dikim.\" (\"Bu bir şapkadır, başıma takıyorum.\")",
-    "promptTr": "Cümleyi tamamla: \"Ev ___ e, ez li serê xwe dikim.\" (\"Bu bir şapkadır, başıma takıyorum.\")",
+    "prompt": "Hevokê temam bike: \"Ev ___ ye, ez li serê xwe dikim.\" (\"Bu bir şapkadır, başıma takıyorum.\")",
+    "promptTr": "Cümleyi tamamla: \"Ev ___ ye, ez li serê xwe dikim.\" (\"Bu bir şapkadır, başıma takıyorum.\")",
     "answers": [
       "şapke"
     ],
@@ -1769,9 +1769,9 @@
     "correctAnswerTr": "şapke",
     "acceptedAnswers": [],
     "acceptedAnswersTr": [],
-    "explanation": "Doğru cümle: \"Ev şapke e, ez li serê xwe dikim.\" (Bu bir şapkadır, başıma takıyorum.)",
-    "explanationKu": "Hevoka rast ev e: \"Ev şapke e, ez li serê xwe dikim.\"",
-    "explanationTr": "Doğru cümle: \"Ev şapke e, ez li serê xwe dikim.\" (Bu bir şapkadır, başıma takıyorum.)",
+    "explanation": "Doğru cümle: \"Ev şapke ye, ez li serê xwe dikim.\" (Bu bir şapkadır, başıma takıyorum.)",
+    "explanationKu": "Hevoka rast ev e: \"Ev şapke ye, ez li serê xwe dikim.\"",
+    "explanationTr": "Doğru cümle: \"Ev şapke ye, ez li serê xwe dikim.\" (Bu bir şapkadır, başıma takıyorum.)",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: clothes_1",
@@ -2198,19 +2198,19 @@
     "prompt": "Cil û kinc li ku derê ne?",
     "promptTr": "Giysiler nerededir?",
     "answers": [
-      "mase",
-      "kursî",
-      "nivîn",
-      "dolab"
+      "li ser maseyê",
+      "li ser kursiyê",
+      "li ser nivînê",
+      "di dolabê de"
     ],
     "answersTr": [
-      "masa",
-      "sandalye",
-      "yatak",
-      "dolap"
+      "masanın üstünde",
+      "sandalyenin üstünde",
+      "yatağın üstünde",
+      "dolapta"
     ],
-    "correctAnswer": "dolab",
-    "correctAnswerTr": "dolap",
+    "correctAnswer": "di dolabê de",
+    "correctAnswerTr": "dolapta",
     "explanation": "Dolab giysiler içindir. Giysiler dolaptadır.",
     "explanationKu": "Dolab ji bo cilan e. Cil di dolabê de ne.",
     "explanationTr": "Dolab giysiler içindir. Giysiler dolaptadır.",
@@ -3318,7 +3318,7 @@
     "category": "Ziman",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Tu dixwazî sedemî bizanibî. Kîjan pirs rast e?",
+    "prompt": "Tu dixwazî sedemê bizanibî. Kîjan pirs rast e?",
     "promptTr": "Sebebini öğrenmek istiyorsun. Hangi soru doğrudur?",
     "answers": [
       "Tu li ku yî?",
@@ -4066,7 +4066,7 @@
     "category": "Ziman",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Tu îro dibistanê. Kîjan bersiv neyînî ye?",
+    "prompt": "Tu îro ___ dibistanê. Kîjan bersiv neyînî ye?",
     "promptTr": "Sen bugün okula ... Hangi cevap olumsuzdur?",
     "answers": [
       "naçî",

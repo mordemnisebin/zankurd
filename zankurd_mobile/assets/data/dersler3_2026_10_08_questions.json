@@ -664,7 +664,7 @@
     "correctAnswer": "dûr",
     "correctAnswerTr": "uzak",
     "explanation": "Nêzîk yakın demektir, zıddı dûr yani uzaktır.",
-    "explanationKu": "Nêzîk tê wateya yakın, dûr tê wateya uzak.",
+    "explanationKu": "\"Nêzîk\" tê wateya \"yakın\", \"dûr\" tê wateya \"uzak\".",
     "explanationTr": "Nêzîk yakın demektir, zıddı dûr yani uzaktır.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -1941,7 +1941,7 @@
     "correctAnswer": "çav",
     "correctAnswerTr": "göz",
     "explanation": "Göz ile görürüz. Çavê min diêşe gözüm ağrıyor demektir.",
-    "explanationKu": "Em bi çav dibînin. Çavê min diêşe tê wateya gözüm ağrıyor.",
+    "explanationKu": "Em bi çavan dibînin. \"Çavê min diêşe\" tê wateya \"gözüm ağrıyor\".",
     "explanationTr": "Göz ile görürüz. Çavê min diêşe gözüm ağrıyor demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -2013,7 +2013,7 @@
     "correctAnswer": "dil",
     "correctAnswerTr": "kalp",
     "explanation": "Kalp kan pompalar. Dilê min lê dide kalbim atıyor demektir.",
-    "explanationKu": "Dil xwînê dişîne. Dilê min lê dide tê wateya kalbim atıyor.",
+    "explanationKu": "Dil xwînê dişîne. \"Dilê min lê dide\" tê wateya \"kalbim atıyor\".",
     "explanationTr": "Kalp kan pompalar. Dilê min lê dide kalbim atıyor demektir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -3701,7 +3701,7 @@
     "category": "Ziman",
     "difficulty": 1,
     "type": "multipleChoice",
-    "prompt": "Kîjan peyv tê wateya \"dün\"ê?",
+    "prompt": "Kîjan peyv tê wateya \"dün\"?",
     "promptTr": "Hangi kelime \"dün\" anlamına gelir?",
     "answers": [
       "sibe",
@@ -3753,9 +3753,9 @@
     "acceptedAnswersTr": [
       "çum"
     ],
-    "explanation": "Doğru cümle: \"Duh ez çûm .\" (Dün gittim.)",
-    "explanationKu": "Hevoka rast ev e: \"Duh ez çûm .\"",
-    "explanationTr": "Doğru cümle: \"Duh ez çûm .\" (Dün gittim.)",
+    "explanation": "Doğru cümle: \"Duh ez çûm.\" (Dün gittim.)",
+    "explanationKu": "Hevoka rast ev e: \"Duh ez çûm.\"",
+    "explanationTr": "Doğru cümle: \"Duh ez çûm.\" (Dün gittim.)",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: past_1",
@@ -3789,9 +3789,9 @@
     "acceptedAnswersTr": [
       "male"
     ],
-    "explanation": "Doğru cümle: \"Tu hatî malê .\" (Eve geldin.)",
-    "explanationKu": "Hevoka rast ev e: \"Tu hatî malê .\"",
-    "explanationTr": "Doğru cümle: \"Tu hatî malê .\" (Eve geldin.)",
+    "explanation": "Doğru cümle: \"Tu hatî malê.\" (Eve geldin.)",
+    "explanationKu": "Hevoka rast ev e: \"Tu hatî malê.\"",
+    "explanationTr": "Doğru cümle: \"Tu hatî malê.\" (Eve geldin.)",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: past_1",
@@ -3821,9 +3821,9 @@
     "correctAnswerTr": "xwar",
     "acceptedAnswers": [],
     "acceptedAnswersTr": [],
-    "explanation": "Doğru cümle: \"Min nan xwar .\" (Ekmek yedim.)",
-    "explanationKu": "Hevoka rast ev e: \"Min nan xwar .\"",
-    "explanationTr": "Doğru cümle: \"Min nan xwar .\" (Ekmek yedim.)",
+    "explanation": "Doğru cümle: \"Min nan xwar.\" (Ekmek yedim.)",
+    "explanationKu": "Hevoka rast ev e: \"Min nan xwar.\"",
+    "explanationTr": "Doğru cümle: \"Min nan xwar.\" (Ekmek yedim.)",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: past_1",
@@ -3857,9 +3857,9 @@
     "acceptedAnswersTr": [
       "dit"
     ],
-    "explanation": "Doğru cümle: \"Te ew dît .\" (Onu gördün.)",
-    "explanationKu": "Hevoka rast ev e: \"Te ew dît .\"",
-    "explanationTr": "Doğru cümle: \"Te ew dît .\" (Onu gördün.)",
+    "explanation": "Doğru cümle: \"Te ew dît.\" (Onu gördün.)",
+    "explanationKu": "Hevoka rast ev e: \"Te ew dît.\"",
+    "explanationTr": "Doğru cümle: \"Te ew dît.\" (Onu gördün.)",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: past_1",
@@ -3893,9 +3893,9 @@
     "acceptedAnswersTr": [
       "bu"
     ],
-    "explanation": "Doğru cümle: \"Ew mamoste bû .\" (O öğretmendi.)",
-    "explanationKu": "Hevoka rast ev e: \"Ew mamoste bû .\"",
-    "explanationTr": "Doğru cümle: \"Ew mamoste bû .\" (O öğretmendi.)",
+    "explanation": "Doğru cümle: \"Ew mamoste bû.\" (O öğretmendi.)",
+    "explanationKu": "Hevoka rast ev e: \"Ew mamoste bû.\"",
+    "explanationTr": "Doğru cümle: \"Ew mamoste bû.\" (O öğretmendi.)",
     "metadata": {
       "dialect": "Kurmancî",
       "sourceTitle": "ZanKurd başlangıç dersi: past_1",
@@ -4113,7 +4113,7 @@
     "correctAnswer": "im",
     "correctAnswerTr": "ben (ünsüzden sonra)",
     "explanation": "Sessizden sonra ez ile \"im\" gelir.",
-    "explanationKu": "Piştî dengdarî em dibêjin \"Ez doktor im\".",
+    "explanationKu": "Piştî dengdarê em dibêjin \"Ez doktor im\".",
     "explanationTr": "Sessizden sonra ez ile \"im\" gelir.",
     "metadata": {
       "dialect": "Kurmancî",
@@ -4149,7 +4149,7 @@
     "correctAnswer": "î",
     "correctAnswerTr": "î (sen)",
     "explanation": "Sessizden sonra tu ile \"î\" gelir.",
-    "explanationKu": "Piştî dengdarî em dibêjin \"Tu karker î\".",
+    "explanationKu": "Piştî dengdarê em dibêjin \"Tu karker î\".",
     "explanationTr": "Sessizden sonra tu ile \"î\" gelir.",
     "metadata": {
       "dialect": "Kurmancî",

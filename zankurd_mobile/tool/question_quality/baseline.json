@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "createdDate": "2026-10-13",
+  "createdDate": "2026-10-14",
   "manifestVersion": 1,
   "sourceFingerprints": {
     "assets/data/altkonu_2026_10_01_questions.json": "8d0f3c2b52bd1018829e0608598aa3d77a93e070f2f51174639edc9fb369f3df",
@@ -9,10 +9,10 @@
     "assets/data/bosluk_2026_10_02_questions.json": "782a4d2d0d0ad0ee265b58727200da628883ff9e4c6e321152f11bf90ad8823f",
     "assets/data/community_questions.json": "ecc90d65390af50d240a8dcbcd41f4c1f6ee301331c92d2c9740b639c6f7dde9",
     "assets/data/deepseek_verified_2026_09_30_questions.json": "c646fd8dfc3d2bf3c134156c24207768b5688ca4c6c88627aea831cb8234668c",
-    "assets/data/ders_2026_10_01_questions.json": "bd82d2093ffb00b226cfef8f9c53dfa784224372d28b45a895f54bc86531961a",
-    "assets/data/ders_2026_10_02_questions.json": "86d3a03a16090f76a747fd47d35229dc236861aacdbf18dbbee0788857b8f8e2",
-    "assets/data/dersler2_2026_10_08_questions.json": "cfb35657acd992e209ae8efcbc7817f456253ef5d640e9b2ee9cce9c1427775a",
-    "assets/data/dersler3_2026_10_08_questions.json": "26b7d7827b1606df80bbf2d1146f9ca1c452db6c10b9dbac04bf7c7376f3ba66",
+    "assets/data/ders_2026_10_01_questions.json": "50141fca9d652145c3de275866ef4e4a0598a775b176b3b48ccda6c067882ae9",
+    "assets/data/ders_2026_10_02_questions.json": "b8daf6a2d132fce96ff980a9b2c85df6e71a467e09a842bac1bd226b219c36c8",
+    "assets/data/dersler2_2026_10_08_questions.json": "f12bcc022fd2d66ec45aa5611a376107f031c75eea0ec0c6547fe357e49f629c",
+    "assets/data/dersler3_2026_10_08_questions.json": "19c75c826e47519bdee293e01c92274a23971e1a9e0f43d6f103435f95d6cc12",
     "assets/data/editorial_questions.json": "b976f4e3afb05a8b4bfc2fcc77be6e5561f9075490930f490a9ab092f42405ee",
     "assets/data/expansion_2026_08_19_questions.json": "faa71294fc714fa8d28caa64a63de0a02acd77e7442c0ee654e8cb1cd91ff32a",
     "assets/data/expansion_2026_08_questions.json": "b3879373d7b41dc5b6464185144c8aee544fe92237f2f4befbad4df4de8d9aeb",
