@@ -2,7 +2,7 @@
   {
     "id": "offline_0005",
     "category": "Ziman",
-    "prompt": "Di wêneya ku têgiha \"av\" nîşan dide de, wateya rast kîjan e?",
+    "prompt": "Di wêneyê ku têgeha \"av\" nîşan dide de, wateya rast kîjan e?",
     "answers": [
       "ateş",
       "su",
@@ -292,7 +292,7 @@
     "explanation": "\"nan\" \"ekmek\" demektir.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/nan.webp",
-    "imageAltKu": "Ji nêzîk ve: hevîrên gilover ên bi neqşên kulîlkan bi dîwarê germ ê tenûrê ve zeliqîne, li jêr agir dişewite.",
+    "imageAltKu": "Ji nêzîk ve: hevîrên gilover ên bi neqşên kulîlkan bi dîwarê germ ê tenûrê ve zeliqî ne, li jêr agir dişewite.",
     "imageAltTr": "Yakın çekim: çiçek desenli yuvarlak hamurlar tandırın sıcak duvarına yapışmış, altta alevler yanıyor.",
     "difficulty": 1,
     "promptTr": "Görsel \"nan\" diyor — doğru anlam hangisi?",
@@ -321,7 +321,7 @@
     "explanation": "\"rê\" \"yol\" demektir.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/re.webp",
-    "imageAltKu": "Rêçeke axê di navbera zeviyan re ber bi çiyayên berfî ve diçe; li kêleka wê dareke bi pelên sor heye.",
+    "imageAltKu": "Rêçeke axê di nav zeviyan re ber bi çiyayên berfî ve diçe; li kêleka wê dareke bi pelên sor heye.",
     "imageAltTr": "Tarlalar arasından geçen toprak bir patika, karlı dağlara doğru uzanıyor; kenarında kızıl yapraklı ağaç var.",
     "difficulty": 2,
     "promptTr": "Bu görsel \"rê\" için: doğru karşılık hangisi?",
@@ -373,7 +373,7 @@
     "explanation": "\"spas\" \"teşekkür\" demektir.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/spas.webp",
-    "imageAltKu": "Du kes dest didin hev; destekî din qedeheke spî ya kaxezî digire, li paş dîwarekî ji kerpîçan heye.",
+    "imageAltKu": "Du kes dest didin hev; destekî din qedeheke spî ya kaxezî digire, li paş dîwarek ji kerpîçan heye.",
     "imageAltTr": "İki kişi tokalaşıyor; bir elde beyaz kağıt bardak var, arkada tuğla duvar görünüyor.",
     "difficulty": 3,
     "promptTr": "\"spas\" görseli ne anlama gelir?",
@@ -479,7 +479,7 @@
     "explanation": "\"biçûk\" \"küçük\" demektir.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/bicuk.webp",
-    "imageAltKu": "Ji nêzîk ve: perçeyekî metalî yê gilover li ser zemînekî gewr; qeraxên wî xêzkirî ne, di navîn de qulek heye.",
+    "imageAltKu": "Ji nêzîk ve: perçeyekî metalî yê gilover li ser zemînekî gewr; qeraxên wî xêzkirî ne, di navê de qulek heye.",
     "imageAltTr": "Gri fonda, kenarları tırtıklı, ortasında bir delik bulunan silindirik bir metal parçanın makro çekimi.",
     "difficulty": 1,
     "promptTr": "Görsel \"biçûk\" diyor — doğru anlam hangisi?",
@@ -494,7 +494,7 @@
   {
     "id": "offline_0085",
     "category": "Ziman",
-    "prompt": "Di wêneya ku têgiha \"kevin\" nîşan dide de, wateya rast kîjan e?",
+    "prompt": "Di wêneyê ku têgeha \"kevin\" nîşan dide de, wateya rast kîjan e?",
     "answers": [
       "rast",
       "elma",
@@ -520,7 +520,7 @@
   {
     "id": "offline_0090",
     "category": "Ziman",
-    "prompt": "Di wêneya ku têgiha \"îro\" nîşan dide de, wateya rast kîjan e?",
+    "prompt": "Di wêneyê ku têgeha \"îro\" nîşan dide de, wateya rast kîjan e?",
     "answers": [
       "Roja niha",
       "Tiştekî biçûk",
@@ -658,7 +658,7 @@
   {
     "id": "offline_0120",
     "category": "Ziman",
-    "prompt": "Di wêneya ku têgiha \"pir\" nîşan dide de, wateya rast kîjan e?",
+    "prompt": "Di wêneyê ku têgeha \"pir\" nîşan dide de, wateya rast kîjan e?",
     "answers": [
       "beş",
       "dün",
@@ -771,7 +771,7 @@
     "explanation": "\"çîrok\" Kurmancîde hikâye/anlatı anlamına gelir.",
     "type": "visual",
     "imageUrl": "asset://assets/question_images/cirok.webp",
-    "imageAltKu": "Pîrejineke bi laçik ji zarokan re tiştekî vedibêje; li jor di xeyalê de xalîçeyeke difire û ejdehayek hene.",
+    "imageAltKu": "Pîrejineke bi laçik ji zarokan re tiştekî vedibêje; li jor di xeyalê de xalîçeyeke ku difire û ejdehayek hene.",
     "imageAltTr": "Başörtülü yaşlı kadın çocuklara bir şeyler anlatıyor; üstünde uçan halı ve ejderha görünen hayal balonu var.",
     "difficulty": 1,
     "explanationTr": "\"çîrok\" Kurmancîde hikâye/anlatı anlamına gelir.",
@@ -820,7 +820,7 @@
     "answers": [
       "dubarekirina dengên destpêkê di rêzê de",
       "rêza peyvan a ku kêş û qafiyeyê datîne",
-      "vegotina bûyerekê bi rêza dem a berevajî",
+      "vegotina bûyerekê bi rêza demê ya berevajî",
       "bikaranîna peyvê li derveyî wateya wê ya rasterast"
     ],
     "correctAnswer": "bikaranîna peyvê li derveyî wateya wê ya rasterast",
@@ -848,7 +848,7 @@
     "answers": [
       "axaftina hevbeş",
       "vegotina bi tenê deng",
-      "danasîna cîh û demê",
+      "danasîna cih û demê",
       "dubarekirina dengan di dawiya rêzan de"
     ],
     "correctAnswer": "axaftina hevbeş",
@@ -884,7 +884,7 @@
     "type": "visual",
     "difficulty": 1,
     "imageUrl": "asset://assets/question_images/ciyayen_zagros.webp",
-    "imageAltKu": "Ji jor ve: bilindahiyên qehweyî-boz ên pêl bi pêl, li vir û wir berf, di navîn de goleke biçûk û tarî.",
+    "imageAltKu": "Ji jor ve: bilindahiyên qehweyî-boz ên pêl bi pêl, li vir û wir berf, di navê de goleke biçûk û tarî.",
     "imageAltTr": "Havadan görüntü: kahverengi-gri kıvrımlı yükseltiler, dağınık kar lekeleri ve ortada küçük koyu bir göl.",
     "promptTr": "Kurmancîde \"çiya\" sözcüğü aşağıdakilerden hangisine karşılık gelir?",
     "answersTr": [
@@ -996,7 +996,7 @@
     "category": "Cografya",
     "prompt": "Ev wêne kîjan hebûna avê vedibêje?",
     "answers": [
-      "şkeft",
+      "şikeft",
       "çem",
       "çol",
       "gir"
@@ -1403,7 +1403,7 @@
   {
     "id": "offline_2106",
     "category": "Dîrok",
-    "prompt": "Mîrgeha Baban navenda xwe li kîjan bajarî bû?",
+    "prompt": "Navenda Mîrgeha Babanê li kîjan bajarî bû?",
     "answers": [
       "Kerkûk",
       "Hewlêr",
@@ -1502,7 +1502,7 @@
     "category": "Edebiyat",
     "prompt": "Kovara \"Hawar\"ê kê derxist?",
     "answers": [
-      "Kamûran Alî Bedirxan",
+      "Kamiran Alî Bedirxan",
       "Celadet Alî Bedirxan",
       "Mela Ehmedê Xasî",
       "Osman Sebrî"
@@ -1551,7 +1551,7 @@
     "category": "Edebiyat",
     "prompt": "Alfabeya Kurmancî ya Latînî kê amade kir?",
     "answers": [
-      "Kamûran Alî Bedirxan",
+      "Kamiran Alî Bedirxan",
       "Celadet Alî Bedirxan",
       "Mela Ehmedê Xasî",
       "Qedrîcan"
@@ -1583,11 +1583,8 @@
     "correctAnswer": "vegotineke dirêj a lehengiyê",
     "explanation": "Destan, kahramanlık konulu uzun halk anlatısıdır.",
     "explanationKu": "Destan, vegotineke dirêj a gelêrî ya li ser lehengiyê ye.",
-    "type": "visual",
+    "type": "multipleChoice",
     "difficulty": 2,
-    "imageUrl": "asset://assets/question_images/dest.webp",
-    "imageAltKu": "Ji nêzîk ve: du destên bi herî di nav axeke şil û bi qûm de ne; tilî vekirî ne.",
-    "imageAltTr": "Islak, kumlu toprağa bastırılmış çamurlu iki elin yakın çekimi; parmaklar açık.",
     "promptTr": "\"Destan\" nedir?",
     "answersTr": [
       "medrese öğrencisi / feqî",
@@ -1944,7 +1941,7 @@
   {
     "id": "offline_2227",
     "category": "Dîrok",
-    "prompt": "Di vegotina Newrozê de sembola berxwedana li dijî zalim kî ye?",
+    "prompt": "Di vegotina Newrozê de sembola berxwedana li dijî zalimî kî ye?",
     "answers": [
       "Kawayê Hesinkar",
       "Şerefxanê Bidlîsî",
@@ -2071,7 +2068,7 @@
     "category": "Ziman",
     "prompt": "Di xebatên naskirina axaftina kurdî de projeya Jira di kîjan qadê de wek mînak tê nîşandan?",
     "answers": [
-      "Korpusa dengî û pergala tîpguhêzî ya Kurmancî",
+      "Korpusa dengî û pergala tîpguhêziyê ya Kurmancî",
       "Korpusa dengî û pergala naskirinê ya Kurdiya Navîn",
       "Korpusa nivîskî û pergala wergerê ya Zazakî",
       "Korpusa dengî û pergala sentezê ya Hewramî"
@@ -2124,7 +2121,7 @@
       "ji ber ku gelek nivîskar li derveyî welat berhem didin",
       "pêşketina cureyên wek roman û rojnameyê di serdema nûjen de",
       "belavbûna alfabeya kurdî ya bi bingehê latînî",
-      "vegotina devkî û veguhastina çîroka bi avaz"
+      "vegotina devkî û veguhastina çîrokan a bi awaz"
     ],
     "correctAnswer": "belavbûna alfabeya kurdî ya bi bingehê latînî",
     "explanation": "Hawar çevresi, Latin temelli Kürt alfabesinin standartlaşması ve modern Kurmancî yazısı açısından önemlidir.",
@@ -2171,12 +2168,12 @@
     "category": "Çand",
     "prompt": "Di pêjgeha Kurdî de dolma/yaprax bi awayekî giştî çi ye?",
     "answers": [
-      "xwarina sebze an pelan a ku bi dagirtinê tê tijîkirin",
+      "xwarina sebzeyan an pelan a ku bi dagirtinê tê tijîkirin",
       "civaka olî-çandî ya taybet û trawmayên dîrokî",
       "veguhastina êş, windahî û bîra civakî",
       "aîdiyeta çandî û bîra erdnîgarî"
     ],
-    "correctAnswer": "xwarina sebze an pelan a ku bi dagirtinê tê tijîkirin",
+    "correctAnswer": "xwarina sebzeyan an pelan a ku bi dagirtinê tê tijîkirin",
     "explanation": "Kürt mutfağında dolma veya yaprax, yaprak ve sebzelerin pirinçli/etli harçla doldurulmasıyla yapılır.",
     "type": "visual",
     "difficulty": 2,
@@ -2227,7 +2224,7 @@
       "lîkora qehweyê",
       "tenê qalikê lîmonê",
       "mast/dew",
-      "arê garisê"
+      "arê garisî"
     ],
     "correctAnswer": "mast/dew",
     "explanation": "Dew/doogh, yoğurt temelli ferahlatıcı bir içecek geleneğiyle ilişkilidir.",
@@ -2275,7 +2272,7 @@
   {
     "id": "offline_2276",
     "category": "Çand",
-    "prompt": "Cihêrengiya xwarinên herêmî yên kurdî çima nikare bibe yek rêçeteyeke standard?",
+    "prompt": "Cihêrengiya xwarinên herêmî yên kurdî çima nikare bibe rêçeteyeke standard a tenê?",
     "answers": [
       "tora rêxistinbûna civakî, ewlehî, hilberîn û têkiliya siyasî",
       "ji ber ku herêm, zarava, avhewa, çandinî û danûstandina bi mitbaxên cîran re cuda ne",
@@ -2303,7 +2300,7 @@
     "prompt": "Jineolojî çawa dikare bi awayekî herî kurt were ravekirin?",
     "answers": [
       "nêrîna ku li dora zanista jinê û rexneya baviksalariyê pêş dikeve",
-      "ji ber ku ji bo pratîka perwerdehiyê fêrbûneke ewle, analîtîk û demokratîk armanc kirî ye",
+      "ji ber ku ji bo pratîka perwerdehiyê fêrbûneke ewle, analîtîk û demokratîk armanc kiriye",
       "dîtina azadiya jinê wek bingeha azadiya civakî",
       "ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne"
     ],
@@ -2351,7 +2348,7 @@
     "prompt": "Di nasnameya kurdî de ziman çima xwedî girîngiyeke navendî ye?",
     "answers": [
       "jiyana hevpar a gelên cuda di nav wekhevî û aştiyê de",
-      "xwarina sebze an pelan a ku bi dagirtinê tê tijîkirin",
+      "xwarina sebzeyan an pelan a ku bi dagirtinê tê tijîkirin",
       "ji ber ku bîra çandî, wêje, vegotina devkî û aîdiyetê hildigire",
       "ji ber ku herêm, zarava, avhewa, çandinî û danûstandina bi mitbaxên cîran re cuda ne"
     ],
@@ -2378,7 +2375,7 @@
       "tora rêxistinbûna civakî, ewlehî, hilberîn û têkiliya siyasî",
       "xwarina kevneşopî ya ku bi mirîşk û birincê tê çêkirin",
       "ziman, çand, weşangerî, hevgirtin û veguhastina nasnameyê",
-      "xwarina sebze an pelan a ku bi dagirtinê tê tijîkirin"
+      "xwarina sebzeyan an pelan a ku bi dagirtinê tê tijîkirin"
     ],
     "correctAnswer": "tora rêxistinbûna civakî, ewlehî, hilberîn û têkiliya siyasî",
     "explanation": "Aşiret yapıları tarihsel olarak sosyal dayanışma ve siyasal otorite ağlarının bir parçası olmuştur.",
@@ -2473,7 +2470,7 @@
   {
     "id": "offline_2349",
     "category": "Muzîk",
-    "prompt": "Ji cihê ku dengbêj lê dicivin û distirên re çi tê gotin?",
+    "prompt": "Ji cihê ku dengbêj lê dicivin û distirin re çi tê gotin?",
     "answers": [
       "Sûriye",
       "Tembûr",
@@ -2761,7 +2758,7 @@
     "category": "Siyaset",
     "prompt": "Di modela xweseriya demokratîk de biryar bi giranî li ku têne girtin?",
     "answers": [
-      "tenê di hukûmeta navendî de",
+      "tenê di hikûmeta navendî de",
       "li dadgeha navneteweyî",
       "di destê serokekî tenê de",
       "di meclîs û komûnên herêmî de"
@@ -2815,11 +2812,11 @@
     "prompt": "Di çanda herêmê de heyîna efsaneyî ya bi motîfa mar a berbelav kîjan e?",
     "answers": [
       "efsaneya hespê bibask",
-      "şahmaran",
+      "Şahmaran",
       "efsaneya keça deryayê",
       "efsaneya teyrê dêw"
     ],
-    "correctAnswer": "şahmaran",
+    "correctAnswer": "Şahmaran",
     "explanation": "Şahmaran, yarı insan yarı yılan biçiminde tasvir edilen, bölgede yaygın efsanevi bir varlıktır.",
     "type": "multipleChoice",
     "difficulty": 3,
@@ -2862,11 +2859,11 @@
   {
     "id": "offline_2458",
     "category": "Dîrok",
-    "prompt": "Merwaniyan di kîjan serdemê de li derdora Amedê hukum kiriye?",
+    "prompt": "Merwaniyan di kîjan serdemê de li derdora Amedê hikim kiriye?",
     "answers": [
       "1946",
       "Serdema Navîn (sedsalên 10-11em)",
-      "êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin",
+      "êrîşa kîmyayî ya ku di sala 1988an de li dijî Kurdan hat kirin",
       "helbestvanê ku di sedsala 17em de ramana ronakbîriya kurdî nivîsî"
     ],
     "correctAnswer": "Serdema Navîn (sedsalên 10-11em)",
@@ -2890,7 +2887,7 @@
     "prompt": "\"Şerefname\" çi ye?",
     "answers": [
       "têkoşîna li dijî seferên xaçparêzan",
-      "Împeratoriya Medan (berî Faris)",
+      "Împeratoriya Medan (berî Farisan)",
       "yekîneyên siwar ên ku ji eşîretan hatibûn pêkanîn",
       "dîroka xanedan û mîrektiyên kurdan"
     ],
@@ -2916,7 +2913,7 @@
     "answers": [
       "Adıyaman",
       "Antep",
-      "Maraş",
+      "Mereş",
       "Malatya"
     ],
     "correctAnswer": "Adıyaman",
@@ -3019,7 +3016,7 @@
     "answers": [
       "Ferman",
       "Mahabad",
-      "Farsça",
+      "Farisî",
       "Hawar"
     ],
     "correctAnswer": "Ferman",
@@ -3090,7 +3087,7 @@
   {
     "id": "offline_2502",
     "category": "Siyaset",
-    "prompt": "Di têgihiştina \"Netewa demokratîk\" de gelên cuda çawa bi hev re dijîn?",
+    "prompt": "Di têgihiştina \"Neteweya demokratîk\" de gelên cuda çawa bi hev re dijîn?",
     "answers": [
       "bi yekbûna wekhev û bi dilxwazî",
       "bi veqetîneke tam",
@@ -3165,7 +3162,7 @@
   {
     "id": "offline_2520",
     "category": "Edebiyat",
-    "prompt": "Di Zazakî (Kirmanckî) de yek ji mewlûdên nivîskî yên pêşîn kî nivîsiye?",
+    "prompt": "Di Zazakî (Kirmanckî) de yek ji mewlûdên nivîskî yên pêşîn kê nivîsiye?",
     "answers": [
       "Melayê Cizîrî",
       "Ehmedê Xanî",
@@ -3248,7 +3245,7 @@
       "Bey/yönetici",
       "Mast/dew",
       "Şîn (ağıt)",
-      "Özgür eş yaşam"
+      "Hevjiyana azad"
     ],
     "correctAnswer": "Bey/yönetici",
     "explanation": "\"Mîr\", bey ya da yönetici anlamına gelir; beyliklerin başındaki kişiyi belirtir.",
@@ -3321,11 +3318,11 @@
     "prompt": "Li şûna \"peymana civakî\" paradîgma çi pêşniyar dike?",
     "answers": [
       "azadiya jinê, ekolojî û demokrasî",
-      "beşdariya rasterast û xwerêxistin ya civakê",
+      "beşdariya rasterast û xwerêxistina civakê",
       "ji jêr ber bi jor ve, bi awayekî beşdar",
       "demokrasî, azadiya jinê û ekolojî"
     ],
-    "correctAnswer": "beşdariya rasterast û xwerêxistin ya civakê",
+    "correctAnswer": "beşdariya rasterast û xwerêxistina civakê",
     "explanation": "Paradîgma, beşdariya rasterast û xwerêxistî (komîn-meclîs) ya civakê bingeh digire.",
     "type": "multipleChoice",
     "difficulty": 3,
@@ -3345,7 +3342,7 @@
     "category": "Ziman",
     "prompt": "Di Kurmancî de peyva \"mast\" kîjan xwarinê nîşan dide?",
     "answers": [
-      "Madeya şîrîn a ku hingiv çêdikin",
+      "Madeya şîrîn a ku mêşhingiv çêdikin",
       "Xwarina hişk a ku ji şîr tê çêkirin",
       "Rûnê ku ji şîr tê derxistin",
       "Xwarina şîrî ya bi tirşandinê tê çêkirin"
@@ -3497,9 +3494,9 @@
   {
     "id": "offline_2638",
     "category": "Dîrok",
-    "prompt": "Xanedana kurd a Hesenweyhî li kîjan herêmê hukim kiriye?",
+    "prompt": "Xanedana kurdî ya Hesenweyhî li kîjan herêmê hikim kiriye?",
     "answers": [
-      "Kafkasya (derdora Gence-Aniyê)",
+      "Qefqasya (derdora Gence-Aniyê)",
       "Şerefxan (mîrê Bidlîsê)",
       "tevgera neteweyî ya kurdên Iraqê",
       "rojavayê Îranê / derdora Zagrosê"
@@ -3645,7 +3642,7 @@
   {
     "id": "offline_2668",
     "category": "Dîrok",
-    "prompt": "Selahaddînê Eyûbî li kîjan bajarî ji dayik bûye?",
+    "prompt": "Selahedînê Eyûbî li kîjan bajarî ji dayik bûye?",
     "answers": [
       "Bağdat",
       "Tikrit",
@@ -3720,14 +3717,14 @@
   {
     "id": "offline_2682",
     "category": "Paradigma",
-    "prompt": "\"Civaka Ekolojîk\" ji civaka pîşesaziyê bi kîjan aliyê ve cuda dibe?",
+    "prompt": "\"Civaka Ekolojîk\" ji civaka pîşesaziyê bi kîjan aliyî ve cuda dibe?",
     "answers": [
-      "Ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne",
+      "Ji ber ku xwezayê tenê wek tiştekî mêtinkirinê nabîne",
       "Geşkirina hişmendiya civakî û ramana azad",
       "Li seranserê cîhanê bûye sembola azadiya jinê",
       "Mafê civakê yê xweparastin û xwerêxistinê"
     ],
-    "correctAnswer": "Ji ber ku xwezayê tenê wek tiştê mêtinkirinê nabîne",
+    "correctAnswer": "Ji ber ku xwezayê tenê wek tiştekî mêtinkirinê nabîne",
     "explanation": "Civaka ekolojîk, ji civaka pîşesaziyê bi wê cudahiyê vediqete ku xwezayê wek tiştekî ji bo mêtinkirina bêsînor nabîne.",
     "type": "multipleChoice",
     "difficulty": 4,
@@ -3747,7 +3744,7 @@
     "category": "Çand",
     "prompt": "Serokatiya olî ya civaka Êzidî bi kevneşopî ji aliyê kê ve tê meşandin?",
     "answers": [
-      "Mifta / Kilît",
+      "Mifte / Kilît",
       "Mîr û Bavê Şêx",
       "çîrokan vedibêje",
       "birinca bi baharat"
@@ -3820,7 +3817,7 @@
   {
     "id": "offline_2705",
     "category": "Cografya",
-    "prompt": "\"Çiyayê Sîpan\" nêzîkî kîjan golê ye?",
+    "prompt": "\"Çiyayê Sîpanê\" nêzîkî kîjan golê ye?",
     "answers": [
       "Gola Wanê",
       "Gola Egîrdîrê",
@@ -3845,7 +3842,7 @@
   {
     "id": "offline_2710",
     "category": "Siyaset",
-    "prompt": "Di paradîgmayê de mafê \"Zimanê zikmakî\" herî zêde bi çi re tê têkildarkirin?",
+    "prompt": "Di paradîgmayê de mafê \"zimanê zikmakî\" herî zêde bi çi re tê têkildarkirin?",
     "answers": [
       "Li asta herêmî/deverî",
       "Hebûna çandî û nasnameyê",
@@ -3920,14 +3917,14 @@
   {
     "id": "offline_2727",
     "category": "Dîrok",
-    "prompt": "Selahaddînê Eyûbî piştî kîjan şerî Qudsê vegerand?",
+    "prompt": "Selahedînê Eyûbî piştî kîjan şerî Qudsê vegerand?",
     "answers": [
       "mîrê kurd ê ku di sedsala 19em de têkoşîna xweseriyê da",
       "1960",
-      "Şerê Hittînê (1187)",
+      "Şerê Hîtînê (1187)",
       "mîrê navdar ê Soran ku di sedsala 19an de hewl da yekîtiya kurdî ava bike"
     ],
-    "correctAnswer": "Şerê Hittînê (1187)",
+    "correctAnswer": "Şerê Hîtînê (1187)",
     "explanation": "Selahaddin Eyyubi, 1187 Hıttin Savaşı'nın ardından Kudüs'ü geri almıştır.",
     "type": "multipleChoice",
     "difficulty": 5,
@@ -3949,7 +3946,7 @@
     "answers": [
       "kota jinan",
       "tundî û ferzkirin",
-      "di meclîs û komûnên herêmî de",
+      "di meclîs û komînên herêmî de",
       "hevgirtin û azadiya jinan"
     ],
     "correctAnswer": "tundî û ferzkirin",
@@ -4021,7 +4018,7 @@
   {
     "id": "offline_2782",
     "category": "Çand",
-    "prompt": "Di Êzidîtiyê de kevneşopiya duakirina ber bi rojê ve çi nîşan dide?",
+    "prompt": "Di Êzidîtiyê de kevneşopiya duakirinê ya ber bi rojê ve çi nîşan dide?",
     "answers": [
       "pîroziya ku ji ronahiyê/rojê re tê dayîn",
       "Melek Tawis û motîfa ronahiyê/rojê",
@@ -4046,14 +4043,14 @@
   {
     "id": "offline_2787",
     "category": "Edebiyat",
-    "prompt": "Wêjeya devkî ya kurdî ji nifşî bo nifşî kê hilgirtiye?",
+    "prompt": "Wêjeya devkî ya kurdî ji nifşekî bo nifşekî din kê veguhastiye?",
     "answers": [
       "Askerler",
       "Denizciler",
-      "Dengbêjler",
+      "Dengbêjan",
       "Ehmedê Xanî"
     ],
-    "correctAnswer": "Dengbêjler",
+    "correctAnswer": "Dengbêjan",
     "explanation": "Kürt sözlü edebiyatının en önemli taşıyıcıları dengbêjlerdir.",
     "type": "multipleChoice",
     "difficulty": 3,
@@ -4083,7 +4080,7 @@
     "type": "visual",
     "difficulty": 3,
     "imageUrl": "asset://assets/question_images/ava_zape.webp",
-    "imageAltKu": "Zinarên qat-qat ên kesk-boz li dora geliyekî kûr in; li binî avek zirav û fîroze xuya dibe.",
+    "imageAltKu": "Zinarên qat-qat ên kesk-boz li dora geliyekî kûr in; li binî aveke zirav û fîroze xuya dibe.",
     "imageAltTr": "Katmanlı yeşil-gri kayalıklar derin bir kanyonu çevreliyor; dipte ince turkuaz bir su çizgisi görünüyor.",
     "explanationKu": "\"Euphrates\" navê navneteweyî yê çemê Firatê ye.",
     "explanationTr": "\"Euphrates\", Fırat Nehri'nin (uluslararası) adıdır.",
@@ -4104,9 +4101,9 @@
       "Kevneşopiya cazê ya Amerîkaya Bakur",
       "Muzîka klasîk a rojava",
       "Pîşesaziya popa nûjen",
-      "Mîrateya muzîk-çanda kurdî"
+      "Mîrateya muzîk û çanda kurdî"
     ],
-    "correctAnswer": "Mîrateya muzîk-çanda kurdî",
+    "correctAnswer": "Mîrateya muzîk û çanda kurdî",
     "explanation": "Govend, dengbêjî û kilam bi hev re mîrateyeke dewlemend a muzîk-çanda kurdî pêk tînin.",
     "type": "visual",
     "difficulty": 3,
@@ -4177,7 +4174,7 @@
   {
     "id": "offline_2811",
     "category": "Dîrok",
-    "prompt": "Di dîroka kurdî de piştî \"serdema mîrektiyan\" kîjan pêvajo hatiye jiyîn?",
+    "prompt": "Di dîroka kurdî de piştî \"serdema mîrektiyan\" kîjan pêvajo derketiye holê?",
     "answers": [
       "dewleta mezin a ku Selahedînê Eyûbî damezrand",
       "mîrektiya kurd a bihêz a bi navenda Silêmaniyê",
@@ -4229,7 +4226,7 @@
     "category": "Paradigma",
     "prompt": "\"Modernîteya Demokratîk\" derbaskirina kîjan sê krîzan armanc dike?",
     "answers": [
-      "pirsgirêkên borsa, dewîz û faîzê",
+      "pirsgirêkên borsa, diravê biyanî û faîzê",
       "krîzên ekolojiyê, jinê û demokrasiyê",
       "pirsgirêkên werzîş, huner û turîzmê",
       "krîzên trafîk, enflasyon û bêkariyê"
@@ -4254,7 +4251,7 @@
     "category": "Siyaset",
     "prompt": "\"Çareseriya demokratîk\" kîjan nirxan derdixe pêş?",
     "answers": [
-      "sînor, ordû û ala",
+      "sînor, artêş û al",
       "wekhevî, azadî û aştî",
       "hiyerarşî, dewlemendî û hêz",
       "pêşbazî, qezenc û xwedîtî"
@@ -4307,9 +4304,9 @@
       "serokê Komara Mehabadê",
       "Mesûd Barzanî",
       "YNK (Yekîtiya Nîştimanî ya Kurdistanê)",
-      "Şerefxan (mîrê Bidlîsê)"
+      "Şerefxan (mîrê Bedlîsê)"
     ],
-    "correctAnswer": "Şerefxan (mîrê Bidlîsê)",
+    "correctAnswer": "Şerefxan (mîrê Bedlîsê)",
     "explanation": "Şerefname, Bitlis beyi Şeref Han tarafından 1597'de yazılmıştır.",
     "type": "multipleChoice",
     "difficulty": 3,
@@ -4602,7 +4599,7 @@
   {
     "id": "offline_5168",
     "category": "Ziman",
-    "prompt": "Wateya Tirkî ya \"kûçik\" \"kedi\" e?",
+    "prompt": "Wateya Tirkî ya \"kûçik\" \"kedi\" ye?",
     "answers": [
       "Rast",
       "Şaş"
@@ -4640,7 +4637,7 @@
   {
     "id": "offline_5188",
     "category": "Ziman",
-    "prompt": "Wateya peyva \"kaxiz\" bi tirkî çi ye?",
+    "prompt": "Wateya peyva \"kaxez\" bi tirkî çi ye?",
     "answers": [
       "kağıt",
       "here!",
@@ -4871,7 +4868,7 @@
     "answers": [
       "xwarin",
       "bihîstin",
-      "rêvekirin",
+      "rêvebirin",
       "hezkirin"
     ],
     "correctAnswer": "hezkirin",
@@ -5978,7 +5975,7 @@
       "îlahiyên olî/nivîsarên pîroz ên devkî",
       "modela kevneşopî ya rêsê porê kurdî",
       "sembola çandî û bîranîna rengan",
-      "tûrikê hunandî yê ji bo hilgirtina xwarinê"
+      "tûrikê hûnandî yê ji bo hilgirtina xwarinê"
     ],
     "correctAnswer": "modela kevneşopî ya rêsê porê kurdî",
     "explanation": "\"çilkez\": geleneksel Kürt saç örgüsü modeli.",
@@ -6028,9 +6025,9 @@
       "şivantiya kevneşopî û zanîna xwezayê",
       "cejna berdana beran û ajaldariyê",
       "çîrok û kilam/stran",
-      "tûra hûnandî ya ku xwarin tê de tê hilgirtin"
+      "tûrê hûnandî yê ku xwarin tê de tê hilgirtin"
     ],
-    "correctAnswer": "tûra hûnandî ya ku xwarin tê de tê hilgirtin",
+    "correctAnswer": "tûrê hûnandî yê ku xwarin tê de tê hilgirtin",
     "explanation": "\"tûrik\": yiyecek taşımak için dokunan torba.",
     "type": "multipleChoice",
     "difficulty": 5,
@@ -6184,7 +6181,7 @@
       "\"Nû\" (nû) + \"roj\" (roj)",
       "hatina biharê û nûbûn",
       "Melek Tavus (Tawûsî Melek)",
-      "keça û kurê apê (pismam)"
+      "keç û kurên apê (pismam)"
     ],
     "correctAnswer": "hatina biharê û nûbûn",
     "explanation": "\"Newroz\": baharın gelişi ve yenilenme.",
@@ -6450,7 +6447,7 @@
     "prompt": "\"şevbêrk\" çi ye?",
     "answers": [
       "bi jiyana di erdnîgariya çiyayî de di dirêjahiya dîrokê de",
-      "kincên rengîn, gelek-tebeqe û dirêj (kras)",
+      "kincên rengîn, gelek-tebeqe û dirêj (kiras)",
       "lîstik an reqsên kevneşopî yên jinan",
       "civînên axaftinê yên şevên zivistanê"
     ],
@@ -6579,10 +6576,10 @@
     "answers": [
       "pêlava kurdî ya kevneşopî ya destçêkirî",
       "kewa bi hene û sembola hezkirina xwezayê",
-      "avaza şînî ya di muzîka gelêrî ya kurdî de",
+      "avaza şînê ya di muzîka gelêrî ya kurdî de",
       "berxwedana gel û hêviya azadiyê"
     ],
-    "correctAnswer": "avaza şînî ya di muzîka gelêrî ya kurdî de",
+    "correctAnswer": "avaza şînê ya di muzîka gelêrî ya kurdî de",
     "explanation": "\"lûr\": Kürt halk müziğinde ağıt benzeri ezgi.",
     "type": "multipleChoice",
     "difficulty": 3,
@@ -6703,7 +6700,7 @@
     "prompt": "\"serpêhatî\" çi ye?",
     "answers": [
       "zêrên ku di dawetan de li bûkê tên kirin",
-      "cejna kevneşopî ya rakirin û berekatê",
+      "cejna kevneşopî ya rakirin û bereketê",
       "vegotina bûyerên balkêş ên rastî",
       "rolên kevneşopî yên civakî-olî"
     ],
@@ -6807,7 +6804,7 @@
     "answers": [
       "Jiyana herêmî û parvekirin",
       "Sor, kesk û zer",
-      "Mafên ziman û çandî",
+      "Mafên zimanî û çandî",
       "Heval-hevaltî û hevgirtin"
     ],
     "correctAnswer": "Jiyana herêmî û parvekirin",
@@ -7211,7 +7208,7 @@
     "type": "visual",
     "difficulty": 2,
     "imageUrl": "asset://assets/question_images/ciyaye_agiri.webp",
-    "imageAltKu": "Wêneyê satelîtê: çiyayekî mezin ê berfî û li kêleka wî lûtkeyeke duyem a biçûktir; li dora wan erdê qehweyî.",
+    "imageAltKu": "Wêneyê satelîtê: çiyayekî mezin ê berfî û li kêleka wî lûtkeyeke duyem a biçûktir; li dora wan erda qehweyî.",
     "imageAltTr": "Büyük, kar kaplı bir dağ kütlesi ve yanındaki küçük ikinci zirvenin uydu görüntüsü; çevresi kahverengi arazi.",
     "explanationKu": "Serhildanên Agirî berxwedana kurdan e ku di navbera salên 1927-1930an de li derdora Çiyayê Agirî pêk hatiye.",
     "explanationTr": "Ağrı İsyanları, 1927-1930 yılları arasında Ağrı Dağı çevresinde gerçekleşen Kürt direnişidir.",
@@ -7704,9 +7701,9 @@
       "Tevgera netewî ya ku bi salan li Kurdistana Başûr berdewam kir",
       "Dewleta mezin a ku ji aliyê Selahedînê Eyûbî ve hatiye avakirin",
       "Rêberê efsaneyî yê leşkerî û siyasî yê tevgera kurd",
-      "navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de"
+      "navê dîrokî yê kevnar û keleha Amedê di serdema kevn de"
     ],
-    "correctAnswer": "navê dîrokî yê kevnar û kelehê Amedê di serdema kevn de",
+    "correctAnswer": "navê dîrokî yê kevnar û keleha Amedê di serdema kevn de",
     "explanation": "\"Amida\": Diyarbakır'ın antik çağdaki tarihi ismi ve kalesi.",
     "type": "multipleChoice",
     "difficulty": 2,
@@ -8105,11 +8102,11 @@
     "prompt": "\"Geliyê Munzurê\" çi ye?",
     "answers": [
       "deşta keviran a ku ji lavên Karacadaxê pêk hatiye",
-      "geliyê bi statuya parka neteweyî ya li Dêrsimê",
+      "geliyê bi statûya parka neteweyî ya li Dêrsimê",
       "deşta çandiniyê ya mezin a ku bi çemikên Firatê tê avdan",
       "çiyayê ku gola kraterê ya duyemîn a herî mezin a cîhanê lê ye"
     ],
-    "correctAnswer": "geliyê bi statuya parka neteweyî ya li Dêrsimê",
+    "correctAnswer": "geliyê bi statûya parka neteweyî ya li Dêrsimê",
     "explanation": "Munzur Vadisi Dersim'dedir ve doğal yapısı nedeniyle millî park statüsüyle korunur.",
     "explanationKu": "Geliyê Munzurê li Dêrsimê ye û ji ber xwezaya xwe bi statuya parka neteweyî tê parastin.",
     "type": "multipleChoice",
@@ -8185,7 +8182,7 @@
       "deşta keviran a ku ji lavên Karacadaxê pêk hatiye",
       "deşta çandiniyê ya mezin a ku bi çemikên Firatê tê avdan",
       "çiyayê stratejîk ê ku li navenda deşta Mûsilê bilind dibe",
-      "çemê ku ji herêma Sêrtê derbas dibe û dirijê Dîcleyê"
+      "çemê ku ji herêma Sêrtê derbas dibe û dirije Dîcleyê"
     ],
     "correctAnswer": "deşta keviran a ku ji lavên Karacadaxê pêk hatiye",
     "explanation": "\"Siverek ovası\": Karacadağ lavlarının oluşturduğu taşlık plato.",
@@ -8208,7 +8205,7 @@
   {
     "id": "offline_8220",
     "category": "Cografya",
-    "prompt": "\"Zap vadisi\" kîjan hêmana erdnîgariyê ye?",
+    "prompt": "\"Geliyê Zapê\" kîjan hêmana erdnîgariyê ye?",
     "answers": [
       "Gola bendavê ya çêkirî ya nêzî Silêmaniyê",
       "Çiyayê stratejîk ê ku di navenda deşta Mûsilê de bilind dibe",
@@ -8261,7 +8258,7 @@
     "prompt": "\"Rêzeçiyayên Zagrosê\" çi ye?",
     "answers": [
       "çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin",
-      "çemê ku ji herêma Sêrtê derbas dibe û dirijê Dîcleyê",
+      "çemê ku ji herêma Sêrtê derbas dibe û dirije Dîcleyê",
       "çiyayê ku gola kraterê ya duyemîn a herî mezin a cîhanê lê ye",
       "çiyayê stratejîk ê ku li navenda deşta Mûsilê bilind dibe"
     ],
@@ -8288,12 +8285,12 @@
     "category": "Cografya",
     "prompt": "Li jêr ji bo \"Çemê Botanê\" kîjan rast e?",
     "answers": [
-      "çemê ku ji herêma Sêrtê derbas dibe û dirijê Dîcleyê",
+      "çemê ku ji herêma Sêrtê derbas dibe û dirije Dîcleyê",
       "rêzeçiyayên herî asê yên erdnîgariya Dêrsimê",
       "deşta çandiniyê ya mezin a ku bi çemikên Firatê tê avdan",
       "hewza gola şor a li rojhilatê Kurdistanê"
     ],
-    "correctAnswer": "çemê ku ji herêma Sêrtê derbas dibe û dirijê Dîcleyê",
+    "correctAnswer": "çemê ku ji herêma Sêrtê derbas dibe û dirije Dîcleyê",
     "explanation": "\"Botan çayı\": Siirt yöresinden geçip Dicle'ye dökülen nehir.",
     "type": "visual",
     "difficulty": 1,
@@ -8559,7 +8556,7 @@
     "answers": [
       "geliyê bi statuya parka neteweyî ya li Dêrsimê",
       "deşta bi bereket a ku deştên Cizîr û Silopiyê digire",
-      "çemê girîng ê ku ji Êlihê derbas dibe û dirijê Dîcleyê",
+      "çemê girîng ê ku ji Êlihê derbas dibe û dirije Dîcleyê",
       "deşta tektonîk a bilind a li Colemêrgê"
     ],
     "correctAnswer": "deşta tektonîk a bilind a li Colemêrgê",
@@ -9040,11 +9037,11 @@
     "prompt": "Derbarê \"Aras nehri\" de ya rast kîjan e?",
     "answers": [
       "çiyayên ku erdnîgariya Kurdistanê ji serî heta binî parçe dikin",
-      "ava ku ji sînorên Qers û Îdirê derbas dibe û dirijê Hezarê",
+      "ava ku ji sînorên Qers û Îdirê derbas dibe û dirije Hezarê",
       "beşa bilind a bakurê rojavayê erdnîgariya Kurdistanê",
       "geliyê bi statuya parka neteweyî ya li Dêrsimê"
     ],
-    "correctAnswer": "ava ku ji sînorên Qers û Îdirê derbas dibe û dirijê Hezarê",
+    "correctAnswer": "ava ku ji sînorên Qers û Îdirê derbas dibe û dirije Hezarê",
     "explanation": "\"Aras nehri\": Kars ve Iğdır sınırlarından geçip Hazar'a dökülen su.",
     "type": "multipleChoice",
     "difficulty": 3,
@@ -9234,7 +9231,7 @@
     "type": "visual",
     "difficulty": 3,
     "imageUrl": "asset://assets/question_images/ava_zape.webp",
-    "imageAltKu": "Ji jor ve geliyekî kûr û kesk xuya dibe; di binî re avek zirav diherike, li qeraxa zinaran darek heye.",
+    "imageAltKu": "Ji jor ve geliyekî kûr û kesk xuya dibe; di binî re aveke zirav diherike, li qeraxa zinaran darek heye.",
     "imageAltTr": "Yukarıdan görünen derin yeşil bir kanyon; dipte ince bir su akıntısı var, kayalık kenarda bir ağaç duruyor.",
     "promptTr": "Coğrafya açısından \"Garzan Çayı\" için doğru ifade hangisidir?",
     "answersTr": [
@@ -9301,7 +9298,7 @@
   {
     "id": "offline_9215",
     "category": "Edebiyat",
-    "prompt": "Kîjan cureya vegotinê bi gelemperî kurt e û li ser bûyerek an çend bûyeran e?",
+    "prompt": "Kîjan cureyê vegotinê bi gelemperî kurt e û li ser bûyerekê an çend bûyeran e?",
     "answers": [
       "Çîrok",
       "Helbest",
@@ -9629,7 +9626,7 @@
   {
     "id": "offline_9459",
     "category": "Edebiyat",
-    "prompt": "Têgiha \"vebêj\" çi pêk tîne?",
+    "prompt": "Têgeha \"vebêj\" çi pêk tîne?",
     "answers": [
       "kesayeta sereke ya çîrokê",
       "cihê ku bûyer tê de diqewime",
