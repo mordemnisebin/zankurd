@@ -6808,11 +6808,11 @@
       "Heval-hevaltî û hevgirtin"
     ],
     "correctAnswer": "Jiyana herêmî û parvekirin",
-    "explanation": "\"halk mutfağı\": yerel yaşam ve paylaşım.",
+    "explanation": "Bu söz, mahalle veya köyün ortak bir yerini anlatır; komşular yemeği birlikte yapıp paylaşır.",
     "type": "multipleChoice",
     "difficulty": 2,
-    "explanationKu": "\"mitbaxa gel\": jiyana herêmî û parvekirin.",
-    "explanationTr": "\"halk mutfağı\": yerel yaşam ve paylaşım.",
+    "explanationKu": "Ev gotin cihekî hevbeş ê taxê yan ê gundî vedibêje ku tê de cîran xwarinê bi hev re çêdikin û parve dikin.",
+    "explanationTr": "Bu söz, mahalle veya köyün ortak bir yerini anlatır; komşular yemeği birlikte yapıp paylaşır.",
     "promptTr": "\"halk mutfağı\" nedir?",
     "answersTr": [
       "Yerel yaşam ve paylaşım",
@@ -10515,11 +10515,11 @@
       "dengê bihêz ê ku kurd jê re dibêjin \"şahê dengbêjan\""
     ],
     "correctAnswer": "şêwazeke din a awazê di muzîka gelêrî ya kurdî de",
-    "explanation": "\"hîran\": Kürt halk müziğinde bir başka ezgi tarzı.",
+    "explanation": "Hîran yüksek ve duygulu bir sesle söylenir, çoğunlukla aşk ve özlemi anlatır.",
     "type": "multipleChoice",
     "difficulty": 2,
-    "explanationKu": "\"hîran\": şêwazeke awazê ye di muzîka gelêrî ya kurdî de.",
-    "explanationTr": "\"hîran\": Kürt halk müziğinde bir başka ezgi tarzı.",
+    "explanationKu": "Hîran bi dengekî bilind û hestiyar tê gotin, pir caran behsa evîn û hesretê dike.",
+    "explanationTr": "Hîran yüksek ve duygulu bir sesle söylenir, çoğunlukla aşk ve özlemi anlatır.",
     "promptTr": "\"hîran\" nedir?",
     "answersTr": [
       "müziğin temelini oluşturan düzenli vuruşlar",
@@ -11215,11 +11215,11 @@
       "kilama kevneşopî ya navdar a ku efsaneyekê vedibêje"
     ],
     "correctAnswer": "kesê ku bi giştî stranan dibêje",
-    "explanation": "\"stranbêj\": genel olarak şarkı okuyan, seslendiren kişi.",
+    "explanation": "Sözcük \"stran\" (şarkı) ile \"söyleyen\" anlamındaki \"-bêj\" ekinden oluşur; \"çîrokbêj\" (masalcı) ve \"dengbêj\" de aynı yapıdadır.",
     "type": "multipleChoice",
     "difficulty": 3,
-    "explanationKu": "\"stranbêj\": kesê ku stranan dibêje.",
-    "explanationTr": "\"stranbêj\": genel olarak şarkı okuyan, seslendiren kişi.",
+    "explanationKu": "Peyv ji \"stran\" û paşgira \"-bêj\" (ji lêkera \"gotin\", \"dibêje\") pêk tê; \"çîrokbêj\" û \"dengbêj\" jî bi heman awayî hatine çêkirin.",
+    "explanationTr": "Sözcük \"stran\" (şarkı) ile \"söyleyen\" anlamındaki \"-bêj\" ekinden oluşur; \"çîrokbêj\" (masalcı) ve \"dengbêj\" de aynı yapıdadır.",
     "promptTr": "\"stranbêj\" ifadesinin doğru karşılığı hangisidir?",
     "answersTr": [
       "Kürtlerin \"şahê dengbêjan\" dediği güçlü ses",
@@ -11443,11 +11443,11 @@
       "cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin"
     ],
     "correctAnswer": "stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin",
-    "explanation": "\"govend müziği\": halaylarda çalınan hareketli ve ritmik halk şarkıları.",
+    "explanation": "Bu ezgi güçlü vuruşlarla ses verir; kişiler el ele tutuşup düğünlerde birlikte halay çeker.",
     "type": "multipleChoice",
     "difficulty": 1,
-    "explanationKu": "\"muzîka govendê\": stranên gelêrî yên bilez û rîtmîk ên ku di govendê de tên lêxistin.",
-    "explanationTr": "\"govend müziği\": halaylarda çalınan hareketli ve ritmik halk şarkıları.",
+    "explanationKu": "Ev awaz bi lêdana xurt deng vedide, mirov destê hev digirin û di dawetan de bi hev re govendê digerînin.",
+    "explanationTr": "Bu ezgi güçlü vuruşlarla ses verir; kişiler el ele tutuşup düğünlerde birlikte halay çeker.",
     "promptTr": "Müzik açısından \"govend müziği\" için doğru ifade hangisidir?",
     "answersTr": [
       "govendlerde çalınan hızlı ve ritmik halk şarkıları",
@@ -12393,11 +12393,11 @@
       "belgeya ku prensîbên hevjiyana civakê diyar dike"
     ],
     "correctAnswer": "xwedîderketina civakê li çarenûsa xwe bi deng û biryar",
-    "explanation": "\"politikleşme\": xwedîderketina civakê li ser çarenûsa xwe bi deng û biryar.",
+    "explanation": "Politikleşme, yurttaşların haklarını koruması ve seçim ile tartışmalarda yer alması demektir.",
     "type": "multipleChoice",
     "difficulty": 1,
-    "explanationTr": "\"politikleşme\": toplumun sözle ve kararla kendi kaderine sahip çıkması.",
-    "explanationKu": "\"polîtîkbûn\": xwedîderketina civakê li çarenûsa xwe bi deng û biryar.",
+    "explanationTr": "Politikleşme, yurttaşların haklarını koruması ve seçim ile tartışmalarda yer alması demektir.",
+    "explanationKu": "Polîtîkbûn tê wê wateyê ku welatî mafên xwe biparêzin û di hilbijartin û nîqaşan de cih bigirin.",
     "promptTr": "\"politikleşme\" doğru biçimde nasıl açıklanır?",
     "answersTr": [
       "komünlerin üstünde bir eşgüdüm ve karar organı",
@@ -15101,7 +15101,7 @@
   {
     "id": "offline_curated_21376",
     "category": "Muzîk",
-    "prompt": "Yek ji stûnên muzîka klasîk a ku kilamên devera Botanê tomar kirine kî bû?",
+    "prompt": "Yek ji stûnên muzîka klasîk ên ku kilamên devera Botanê tomar kirine kî bû?",
     "answers": [
       "Meryem Xan",
       "heyran",
@@ -15206,7 +15206,7 @@
       "amûra têldar a ku di kevneşopiya Yarsan/Ehlê Heq de pîroz tê hesibandin ku bi taybetî di civatên olî de tê lêdan",
       "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin",
       "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
-      "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botan tomar kirine"
+      "yek ji stûnên muzîka kurmancî ya klasîk ku kilamên devera Botanê tomar kirine"
     ],
     "correctAnswer": "klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin",
     "explanation": "\"heyran\" tê vê wateyê: klamên evînê yên devera Serhadê ku bi taybetî ji aliyê jinan ve dihatin gotin.",
@@ -16327,7 +16327,7 @@
   {
     "id": "offline_tf_0015",
     "category": "Cografya",
-    "prompt": "Rast e an şaş e: Têgeha \"Geliyê Zapê\" tê vê wateyê: çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne.",
+    "prompt": "Rast e an şaş e: Têgeha \"Geliyê Zapê\" tê vê wateyê: çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya Rihayê vediqetîne.",
     "answers": [
       "Rast",
       "Şaş"
@@ -16369,7 +16369,7 @@
   {
     "id": "offline_tf_0019",
     "category": "Cografya",
-    "prompt": "Rast e an şaş e: Têgeha \"Gola Wanê\" tê vê wateyê: çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya rihayê vediqetîne.",
+    "prompt": "Rast e an şaş e: Têgeha \"Gola Wanê\" tê vê wateyê: çiyayê volkanîk ê bazaltî ku deşta Amedê ji ya Rihayê vediqetîne.",
     "answers": [
       "Rast",
       "Şaş"
@@ -16579,7 +16579,7 @@
   {
     "id": "offline_tf_0039",
     "category": "Edebiyat",
-    "prompt": "Rast e an şaş e: Têgeha \"Mehmed Uzun\" tê vê wateyê: rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dide.",
+    "prompt": "Rast e an şaş e: Têgeha \"Mehmed Uzun\" tê vê wateyê: rêbaza helbesta nûjen a bê pîvan û bê qafiye ku bi taybetî li ser peyvan ava dibe.",
     "answers": [
       "Rast",
       "Şaş"
@@ -16957,7 +16957,7 @@
   {
     "id": "offline_tf_0073",
     "category": "Siyaset",
-    "prompt": "Rast e an şaş e: \"ademi-merkeziyet\" ew teoriya siyasî ye ku beşdariya rasterast a gel di biryaran de diparêze.",
+    "prompt": "Rast e an şaş e: \"nenavendîtî\" ew teoriya siyasî ye ku beşdariya rasterast a gel di biryaran de diparêze.",
     "answers": [
       "Rast",
       "Şaş"
@@ -17209,7 +17209,7 @@
   {
     "id": "offline_tf_0097",
     "category": "Siyaset",
-    "prompt": "Rast e an şaş e: \"eşseroktî\" ew teoriya siyasî ye ku beşdariya rasterast a gel di biryaran de diparêze.",
+    "prompt": "Rast e an şaş e: \"hevserokatî\" ew teoriya siyasî ye ku beşdariya rasterast a gel di biryaran de diparêze.",
     "answers": [
       "Rast",
       "Şaş"
@@ -17440,7 +17440,7 @@
   {
     "id": "offline_tf_0119",
     "category": "Çand",
-    "prompt": "Rast e an şaş e: \"misafirperweriya kurdî\" şêwaza jiyana kevnar a li ser zozan û germiyanan e ku çanda kurdî pir dewlemend kiriye.",
+    "prompt": "Rast e an şaş e: \"mêvanperweriya kurdî\" şêwaza jiyana kevnar a li ser zozan û germiyanan e ku çanda kurdî pir dewlemend kiriye.",
     "answers": [
       "Rast",
       "Şaş"
@@ -19207,7 +19207,7 @@
   {
     "id": "offline_tf_siy_0020",
     "category": "Siyaset",
-    "prompt": "Binirxîne: li gorî vê ravekirinê \"muxalefeta civakî\" ev e — redkirina eşkere û bêşiddet a qanûneke ku neheq tê dîtin. Rast e an şaş e?",
+    "prompt": "Binirxîne: li gorî vê ravekirinê \"muxalefeta civakî\" ev e — redkirina eşkere û bêşîdet a qanûneke ku neheq tê dîtin. Rast e an şaş e?",
     "answers": [
       "Rast",
       "Şaş"
@@ -19522,7 +19522,7 @@
   {
     "id": "offline_tf_siy_0038",
     "category": "Siyaset",
-    "prompt": "Ev ravekirin ji bo \"vîna herêmî\" rast e an şaş e: peymana bêyaz a ku komên cuda li ser jiyana hevpar digihîjin hev?",
+    "prompt": "Ev ravekirin ji bo \"vîna herêmî\" rast e an şaş e: peymana bênivîs a ku komên cuda li ser jiyana hevpar digihîjin hev?",
     "answers": [
       "Rast",
       "Şaş"
@@ -21622,7 +21622,7 @@
   {
     "id": "offline_tf_ede_0024",
     "category": "Edebiyat",
-    "prompt": "Rast e an şaş e: \"kafiye\" lihevhatina dengên dawiya rêzan e ku rîtmê dide helbestê.",
+    "prompt": "Rast e an şaş e: \"qafiye\" lihevhatina dengên dawiya rêzan e ku rîtmê dide helbestê.",
     "answers": [
       "Rast",
       "Şaş"
@@ -21643,7 +21643,7 @@
   {
     "id": "offline_tf_ede_0025",
     "category": "Edebiyat",
-    "prompt": "Rast e an şaş e: \"kafiye\" vegotina dirêj e ku lehengî û bîra komî ya gelekî hildigire.",
+    "prompt": "Rast e an şaş e: \"qafiye\" vegotina dirêj e ku lehengî û bîra komî ya gelekî hildigire.",
     "answers": [
       "Rast",
       "Şaş"
@@ -22714,7 +22714,7 @@
   {
     "id": "offline_tf_par_0017",
     "category": "Paradigma",
-    "prompt": "Rast e an şaş e: \"xwerêveberî\" ew civak e ku tê de çînên jor û jêr ên sabit tune ne.",
+    "prompt": "Rast e an şaş e: \"xwerêveberî\" ew civak e ku tê de çînên jor û jêr ên sabît tune ne.",
     "answers": [
       "Rast",
       "Şaş"
@@ -22735,7 +22735,7 @@
   {
     "id": "offline_tf_par_0018",
     "category": "Paradigma",
-    "prompt": "\"civaka bêhiyerarşî\" ew civak e ku tê de çînên jor û jêr ên sabit tune ne. Ev rast e an şaş e?",
+    "prompt": "\"civaka bêhiyerarşî\" ew civak e ku tê de çînên jor û jêr ên sabît tune ne. Ev rast e an şaş e?",
     "answers": [
       "Rast",
       "Şaş"
@@ -23162,12 +23162,12 @@
   {
     "id": "offline_tek_0009",
     "category": "Teknolojî",
-    "prompt": "Çima girêdanên bêqablo ji yên bi qablo bêtir hewceyî şîfrekirinê ne?",
+    "prompt": "Çima girêdanên bêtêl ji yên bi kablo bêtir hewceyî şîfrekirinê ne?",
     "answers": [
-      "Ji ber ku girêdanên bêqablo her tim hêdîtir dixebitin",
-      "Ji ber ku amûrên bêqablo kêmtir enerjiyê xerc dikin",
+      "Ji ber ku girêdanên bêtêl her tim hêdîtir dixebitin",
+      "Ji ber ku amûrên bêtêl kêmtir enerjiyê xerc dikin",
       "Ji ber ku sînyal li hewayê belav dibe û herkes dikare bigire",
-      "Ji ber ku qabloyên wan ji yên din kurttir tên çêkirin"
+      "Ji ber ku kabloyên wan ji yên din kurttir tên çêkirin"
     ],
     "correctAnswer": "Ji ber ku sînyal li hewayê belav dibe û herkes dikare bigire",
     "explanation": "Kablosuz sinyal havada yayılır; yakındaki her cihaz onu dinleyebilir.",
@@ -23589,7 +23589,7 @@
   {
     "id": "offline_tek_0028",
     "category": "Teknolojî",
-    "prompt": "Wêneyek bi çareseriya bilind her tim cihê kêmtir digire.",
+    "prompt": "Wêneyek bi çareseriya bilind her tim kêmtir cih digire.",
     "answers": [
       "Rast",
       "Şaş"
@@ -23638,7 +23638,7 @@
     "prompt": "Di bernamesaziyê de \"algorîtma\" bi giştî çi ye?",
     "answers": [
       "Zimanek ji bo nivîsandina bernameyan",
-      "Hêmanek dîtbarî ya li ser ekranê",
+      "Hêmaneke dîtbarî ya li ser ekranê",
       "Rêbazek bi gavên diyarkirî",
       "Pergalek ji bo hilanîna daneyan"
     ],
@@ -24640,7 +24640,7 @@
     "category": "Teknolojî",
     "prompt": "Dema tu li malperekê digerî, \"cookie\" çi dike?",
     "answers": [
-      "Girêdana înternetê bileztir û bêqablo dike",
+      "Girêdana înternetê bileztir û bêtêl dike",
       "Şîfreyên te yên hesaban diguherîne û nû dike",
       "Hemû reklaman ji rûpelên malperan radike û paqij dike",
       "Agahiyên gera te li ser amûrê tomar dike"
@@ -25515,7 +25515,7 @@
     "answers": [
       "Hêza ku amûrek xerc dike",
       "Giraniya amûrê li ser mêzînê",
-      "Dirêjahiya qabloya amûrê",
+      "Dirêjahiya kabloya amûrê",
       "Dema ku amûr dixebite"
     ],
     "correctAnswer": "Hêza ku amûrek xerc dike",
@@ -25536,7 +25536,7 @@
   {
     "id": "offline_tek_2014",
     "category": "Teknolojî",
-    "prompt": "Amûreke ku vemirandî ye lê qabloya wê hîn jî girêdayî ye bi tu awayî elektrîkê naxwe.",
+    "prompt": "Amûreke ku vemirandî ye lê kabloya wê hîn jî girêdayî ye bi tu awayî elektrîkê naxwe.",
     "answers": [
       "Rast",
       "Şaş"
@@ -26714,7 +26714,7 @@
     "imageUrl": "asset://assets/question_images/nav.webp",
     "imageAltKu": "Ji nêzîk ve: karteke spî ya vala di bergekî plastîk ê zelal de, bi klîpsekê bi qapûtekî gewr-kesk ve girêdayî.",
     "imageAltTr": "Yakın çekim: şeffaf plastik kılıf içinde boş, beyaz bir kart; klipsle gri-yeşil bir monta tutturulmuş.",
-    "prompt": "Peyva \"nav\" di rêzimanê de kîjan cureya peyvê nîşan dide?",
+    "prompt": "Peyva \"nav\" di rêzimanê de kîjan cureyê peyvê nîşan dide?",
     "answers": [
       "Lêker",
       "Rengdêr",
