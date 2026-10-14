@@ -623,7 +623,7 @@
       "Stranek dînî",
       "Cureyekî xwarinê",
       "Mamik / bilmece",
-      "Reqsek gelêrî"
+      "Reqseke gelêrî"
     ],
     "correctAnswer": "Mamik / bilmece",
     "explanation": "Tiştonek, kış sohbetlerinde sorulan zekâ bilmeceleridir.",
@@ -781,7 +781,7 @@
     "prompt": "Destana \"Mem û Zîn\" bi giştî çîroka çi ye?",
     "answers": [
       "nasname û cihêrengiya herêmî",
-      "misafirperweriya kurdî",
+      "mêvanperweriya kurdî",
       "Evîna Mem û Zînê ya ku nagihîje hev",
       "bi çanda devkî ve girêdayî ye"
     ],
@@ -1160,7 +1160,7 @@
     "category": "Dîrok",
     "prompt": "Peymana Sevrê (1920) ji bo kurdan çima tê gotin ku girîng e?",
     "answers": [
-      "Ji bo dewleteke kurdî ya serbixwe yekser sînor diyarkir",
+      "Ji bo dewleteke kurdî ya serbixwe yekser sînor diyar kir",
       "Ji bo herêmeke kurdî ya xweser madde dihewand",
       "Hemû herêmên kurdî xiste bin rêveberiya yek dewletê",
       "Mîrektiyên kurdî wek dewletên serbixwe nas kir"
@@ -2242,7 +2242,7 @@
     "answers": [
       "hunermendê gelêrî yê klasîk ê populer ê herêma Behdînan",
       "stranbêja yekem a kurd ku dengê xwe li ser plakan tomar kiriye",
-      "cureya muzîkê ya ku bêtir li ser evîn û mêrxasiyê tê gotin",
+      "cureyê muzîkê yê ku bêtir li ser evîn û mêrxasiyê tê gotin",
       "Stranbêjê devkî yê ku çîrokan bi kilaman dibêje"
     ],
     "correctAnswer": "Stranbêjê devkî yê ku çîrokan bi kilaman dibêje",
@@ -2464,7 +2464,7 @@
     "category": "Muzîk",
     "prompt": "\"Lawik\" di muzîka kurdî de bi giştî çi ye?",
     "answers": [
-      "Yek ji dengên jin ên pêşeng ê muzîka kurdî ye",
+      "Yek ji dengên jin ên pêşeng ên muzîka kurdî ye",
       "Belavbûna cîhanî ya stran û tomarkirinê",
       "Cureyekî kilamê yê bi gelemperî evîndar",
       "Bi tiliyan an bi mizrabê"
@@ -2806,7 +2806,7 @@
     "difficulty": 5,
     "id": "edit_siyaset_0010",
     "category": "Siyaset",
-    "prompt": "\"Netewa demokratîk\" bi kîjan xalê ji \"dewleta netewe\" cuda dibe?",
+    "prompt": "\"Neteweya demokratîk\" bi kîjan xalê ji \"dewleta netewe\" cuda dibe?",
     "answers": [
       "nasnameyên cuda di nav yek civakê de tên parastin, dewlet ne pêwîst e",
       "daxwaza misogeriya destûrî û naskirina mafên çandî",
@@ -2872,12 +2872,12 @@
     "category": "Siyaset",
     "prompt": "Di siyaseta herêmî de \"komûn\" bi giştî çi ye?",
     "answers": [
-      "yekeya biryardayînê ya herî biçûk a taxê an gund",
+      "yekeya biryardayînê ya herî biçûk a taxê an gundî",
       "mafê parastinê li dadgehên serbixwe û bêalî",
       "beşdariya rasterast a gel di biryarên siyasî de",
       "avahiyeke ku ne tenê piranî, belkî hindikahî jî tê guhdarîkirin"
     ],
-    "correctAnswer": "yekeya biryardayînê ya herî biçûk a taxê an gund",
+    "correctAnswer": "yekeya biryardayînê ya herî biçûk a taxê an gundî",
     "explanation": "Komün, öz yönetimin en küçük birimidir; köy ya da mahalle sakinleri doğrudan karar alır.",
     "explanationKu": "Komun asta yekem a xwerêveberiyê ye; gundî an taxî tê de rasterast biryar didin.",
     "explanationTr": "Komün, öz yönetimin en küçük birimidir; köy ya da mahalle sakinleri doğrudan karar alır.",
@@ -4111,7 +4111,7 @@
     "difficulty": 4,
     "id": "edit_edebiyat_0014",
     "category": "Edebiyat",
-    "prompt": "Berhema \"Rewşenbîr\" an kovarên edebî yên kurdî bi giştî çi rol lîstin?",
+    "prompt": "Berhema \"Rewşenbîr\" an kovarên edebî yên kurdî bi giştî çi rol lîst?",
     "answers": [
       "Berhevkirina destanên devkî yên gelêrî",
       "Wergerandina berhemên klasîk bo erebî",
@@ -5692,7 +5692,7 @@
     "difficulty": 2,
     "id": "edit_cand_0034",
     "category": "Çand",
-    "prompt": "Rast e an şaş e: Govend bi gelemperî bi destgirtin tê lîstin.",
+    "prompt": "Rast e an şaş e: Govend bi gelemperî bi destgirtinê tê lîstin.",
     "answers": [
       "Rast",
       "Şaş"
@@ -5820,11 +5820,11 @@
     "prompt": "Xalîçe û kilîmên kurdî bi giştî bi çi tên xemilandin?",
     "answers": [
       "Wêneyên fotografî",
-      "Motîfên hêjmarî û sembolîk",
+      "Motîfên hejmarî û sembolîk",
       "Nivîsên dirêj",
       "Rengên tenê reş û spî"
     ],
-    "correctAnswer": "Motîfên hêjmarî û sembolîk",
+    "correctAnswer": "Motîfên hejmarî û sembolîk",
     "explanation": "Her motifin bir anlamı vardır: bereket, koruma, aile.",
     "explanationKu": "Her motîf xwedî wateyekê ye: bereket, parastin, malbat.",
     "explanationTr": "Her motifin bir anlamı vardır: bereket, koruma, aile.",
@@ -5913,7 +5913,7 @@
     "difficulty": 4,
     "id": "edit_dirok_0026",
     "category": "Dîrok",
-    "prompt": "Xanedaniya Mervaniyan bi giştî li ku derê hukum kir?",
+    "prompt": "Xanedaniya Merwaniyan bi giştî li ku derê hukum kir?",
     "answers": [
       "Amed û derdora wê",
       "Silêmanî",
@@ -6517,7 +6517,7 @@
     "difficulty": 2,
     "id": "edit_edebiyat_0027",
     "category": "Edebiyat",
-    "prompt": "Rast e an şaş e: Cegerxwîn navekî edebî (mahlas) e.",
+    "prompt": "Rast e an şaş e: Cegerxwîn navekî edebî (nasnav) e.",
     "answers": [
       "Rast",
       "Şaş"
@@ -6962,8 +6962,8 @@
     "prompt": "\"Zozan\" û \"germiyan\" di jiyana koçeran de çi diyar dikin?",
     "answers": [
       "Riya koçberiyê û bêhnvedana rê",
-      "Çadira reş û kona biçûk",
-      "Keriyê pêz û garanê dewaran",
+      "Çadira reş û konê biçûk",
+      "Keriyê pêz û garana dewaran",
       "Warê havînê û warê zivistanê"
     ],
     "correctAnswer": "Warê havînê û warê zivistanê",
@@ -7151,7 +7151,7 @@
     "difficulty": 4,
     "id": "edit_muzik_0023",
     "category": "Muzîk",
-    "prompt": "Di muzîka kurdî de \"makam\" an \"avaz\" çi diyar dike?",
+    "prompt": "Di muzîka kurdî de \"meqam\" an \"avaz\" çi diyar dike?",
     "answers": [
       "Hejmara stranbêjan",
       "Dirêjahiya dawetê",
@@ -7220,9 +7220,9 @@
       "Tenê ahenga dengî girîng e",
       "Reqs pê re tê kirin",
       "Amûr pê re tên lêxistin",
-      "Kilam çîrokeke dîrokî diguhezîne"
+      "Kilam çîrokeke dîrokî diguhêzîne"
     ],
-    "correctAnswer": "Kilam çîrokeke dîrokî diguhezîne",
+    "correctAnswer": "Kilam çîrokeke dîrokî diguhêzîne",
     "explanation": "Dengbêjlik hem müzik hem sözlü arşivdir: olaylar kilamla korunur.",
     "explanationKu": "Dengbêjî hem muzîk hem arşîva devkî ye: bûyer bi kilamê tên parastin.",
     "explanationTr": "Dengbêjlik hem müzik hem sözlü arşivdir: olaylar kilamla korunur.",
@@ -7283,7 +7283,7 @@
     "answers": [
       "Bûyerên şer û berxwedanê",
       "Stranên kurt ên bi gelemperî evîndar",
-      "Kilam çîrokeke dîrokî diguhezîne",
+      "Kilam çîrokeke dîrokî diguhêzîne",
       "Koma stranbêj û muzîkjenan"
     ],
     "correctAnswer": "Koma stranbêj û muzîkjenan",
@@ -7408,7 +7408,7 @@
       "Komên muzîka kurdî ya nûjen",
       "veguhastina muzîkal a bi têkiliya hoste-şagird",
       "Belavbûna cîhanî ya stran û tomarkirinê",
-      "muzîka rîtmîk û makamî ya herêma Şirnex û Cizîrê"
+      "muzîka rîtmîk û meqamî ya herêma Şirnex û Cizîrê"
     ],
     "correctAnswer": "Belavbûna cîhanî ya stran û tomarkirinê",
     "explanation": "Diaspora yeni stüdyo, yayın ve festivaller getirdi; şarkılar dünyaya yayıldı.",
@@ -7719,7 +7719,7 @@
     "difficulty": 2,
     "id": "edit_paradigma_0020",
     "category": "Paradigma",
-    "prompt": "Peyva \"azadî\" û \"wekhevî\" bi hev re di vê paradîgmayê de bi çi ve girêdayî ne?",
+    "prompt": "Peyvên \"azadî\" û \"wekhevî\" bi hev re di vê paradîgmayê de bi çi ve girêdayî ne?",
     "answers": [
       "Bi aboriya bazarê ve",
       "Bi hêza leşkerî ve",
@@ -7815,7 +7815,7 @@
     "answers": [
       "xeteke dîrokî ya çînî, hiyerarşîk û navenda wê dewlet e",
       "pergaleke li ser bingeha jiyana komînal û hevgirtinê",
-      "milkiyeta axê û amûran a gişî civakê",
+      "milkiyeta axê û amûran a giştî ya civakê",
       "kapîtalîzm, pîşesazîparêzî û dewleta netewe"
     ],
     "correctAnswer": "kapîtalîzm, pîşesazîparêzî û dewleta netewe",
@@ -8579,7 +8579,7 @@
     "difficulty": 4,
     "id": "edit_sinema_0025",
     "category": "Sînema",
-    "prompt": "Fîlmê \"Sürü\" (1978) ji hêla kîjan derhêner ve hatiye kişandin?",
+    "prompt": "Fîlmê \"Sürü\" (1978) ji hêla kîjan derhênerî ve hatiye kişandin?",
     "answers": [
       "Şerîf Gören",
       "Zeki Ökten",
@@ -8707,11 +8707,11 @@
     "difficulty": 5,
     "id": "edit_sinema_0029",
     "category": "Sînema",
-    "prompt": "Fîlmê \"Yol\" ji ber çi sedemî demek dirêj li Tirkiyeyê nehat nîşandan?",
+    "prompt": "Fîlmê \"Yol\" ji ber çi sedemî demeke dirêj li Tirkiyeyê nehat nîşandan?",
     "answers": [
       "Kopyayên fîlm winda bûbûn",
       "Fîlm hate qedexekirin",
-      "Derhêner nexwest ku li Tirkiyeyê were nîşandan",
+      "Derhênerî nexwest ku li Tirkiyeyê were nîşandan",
       "Fîlm hîn nehatibû qedandin"
     ],
     "correctAnswer": "Fîlm hate qedexekirin",

@@ -62,7 +62,7 @@ const _namespace = '5a1e2b7c-3d4f-4e60-9a8b-2c1d0f9e8a77';
 const _recategorisedLocally = <String, String>{'offline_0757': 'Cografya'};
 
 /// Ekleme göçünden sonra yerelde metni düzeltilen soruların sunucu göçü.
-const _promptFixSql = 'supabase/2026-10-14_offline_ku_duzeltme.sql';
+const _promptFixSql = 'supabase/2026-10-14_banka_ku_duzeltme.sql';
 
 // update questions set\n  prompt = '…', … where id = 'uuid';
 final _promptFixRe = RegExp(

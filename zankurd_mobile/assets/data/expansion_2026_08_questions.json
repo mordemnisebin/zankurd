@@ -279,7 +279,7 @@
       "Montaja paralel",
       "Plan-sekans",
       "Fondu",
-      "Qutkirina xwêrû"
+      "Qutkirina xwerû"
     ],
     "correctAnswer": "Plan-sekans",
     "promptTr": "Kesintisiz tek bir çekimle kaydedilen sahneye ne denir?",
@@ -410,7 +410,7 @@
   {
     "id": "cinema_0014",
     "category": "Sînema",
-    "prompt": "Fîlmê 1948an \"Ladri di biciclette\" (Duzê Bîsîkletan) nimûneya kîjan tevgera sînemayê ye?",
+    "prompt": "Fîlmê 1948an \"Ladri di biciclette\" (Dizê Bîsîkletan) nimûneya kîjan tevgera sînemayê ye?",
     "answers": [
       "Ekspresyonîzma almanî",
       "Neorealîzma îtalî",
@@ -614,7 +614,7 @@
   {
     "id": "cinema_0020",
     "category": "Sînema",
-    "prompt": "Kîjan lîstikvan û derhêner bi karakterê \"Serserê Piçûk\" ê dema sînemaya bêdeng tê nasîn?",
+    "prompt": "Kîjan lîstikvan û derhêner bi karakterê \"Serseriyê Piçûk\" ê dema sînemaya bêdeng tê nasîn?",
     "answers": [
       "Charlie Chaplin",
       "Buster Keaton",
@@ -920,7 +920,7 @@
   {
     "id": "cinema_0029",
     "category": "Sînema",
-    "prompt": "Yekem fîlmê animasyonê yê dirêj ê stûdyoya Walt Disney, ku sala 1937an derket, kîjan e?",
+    "prompt": "Yekem fîlmê anîmasyonê yê dirêj ê stûdyoya Walt Disney, ku sala 1937an derket, kîjan e?",
     "answers": [
       "Pînokyo",
       "Sipîberf û Heft Cûceyan",
@@ -1192,7 +1192,7 @@
   {
     "id": "cinema_0037",
     "category": "Cîhan",
-    "prompt": "Cureyê fîlmî yê ku li rojavayê Amerîkayê ya sedsala 19an, bi kovboy û şerên sînoran derbas dibe kîjan e?",
+    "prompt": "Cureyê fîlmî yê ku li rojavayê Amerîkaya sedsala 19an, bi kovboy û şerên sînoran derbas dibe kîjan e?",
     "answers": [
       "Western",
       "Melodram",
@@ -2350,7 +2350,7 @@
     "category": "Teknolojî",
     "prompt": "Paşgira pelê (wek .txt an .jpg) bi giştî çi diyar dike?",
     "answers": [
-      "Mezinahiya pelê bi bayt, kilobayt an megabaytan",
+      "Mezinahiya pelê bi bayt, kîlobayt an megabaytan",
       "Dîroka çêkirina pelê",
       "Cureya naverokê û bernameya ku wê vedike",
       "Cihê ku pel lê hatiye hilanîn"
@@ -2688,10 +2688,10 @@
   {
     "id": "tech_core_0026",
     "category": "Teknolojî",
-    "prompt": "Çerez (cookie) di gerokê de bi giranî ji bo çi tê bikaranîn?",
+    "prompt": "\"Cookie\" di gerokê de bi giranî ji bo çi tê bikaranîn?",
     "answers": [
       "Ji bo bîranîna rewşa bikarhêner",
-      "Ji bo zêdekirina leza pêvajoker",
+      "Ji bo zêdekirina leza pêvajokerî",
       "Ji bo şîfrekirina trafîka ku di torê re derbas dibe",
       "Ji bo çapkirina rûpelan"
     ],
@@ -3300,7 +3300,7 @@
   {
     "id": "tech_core_0044",
     "category": "Teknolojî",
-    "prompt": "Risk di tora Wi-Fi ya giştî de çi ye?",
+    "prompt": "Rîsk di tora Wi-Fi ya giştî de çi ye?",
     "answers": [
       "Kesên din dikarin trafîka neşîfrekirî bibînin",
       "Bataryaya amûrê zû diqede",
@@ -3338,7 +3338,7 @@
     "answers": [
       "Bikaranîna zimanekî fermî",
       "Daxwaza lezgîn a tikandina girêdanekê",
-      "Hebûna logoya sazîyê",
+      "Hebûna logoya saziyê",
       "Şandin di roja xebatê de"
     ],
     "correctAnswer": "Daxwaza lezgîn a tikandina girêdanekê",
@@ -3572,7 +3572,7 @@
   {
     "id": "tech_core_0052",
     "category": "Teknolojî",
-    "prompt": "Çima divê kopiya ewlehiyê ji dem bi dem bi vegerandinê bê ceribandin?",
+    "prompt": "Çima divê kopiya ewlehiyê dem bi dem bi vegerandinê bê ceribandin?",
     "answers": [
       "Ji ber ku pelên di kopiyê de bi demê re mezintir dibin",
       "Ji ber ku şîfre her mehê diguhere",
@@ -3708,7 +3708,7 @@
   {
     "id": "tech_invent_0001",
     "category": "Teknolojî",
-    "prompt": "Di derdora sala 1450an de li Ewrûpayê makîneya çapê ya bi tîpên livok kî pêş xist?",
+    "prompt": "Di derdora sala 1450an de li Ewrûpayê makîneya çapê ya bi tîpên livok kê pêş xist?",
     "answers": [
       "Johannes Gutenberg",
       "Nicolaus Copernicus",
@@ -4252,7 +4252,7 @@
   {
     "id": "tech_invent_0017",
     "category": "Teknolojî",
-    "prompt": "Motora elektrîkê enerjiya elektrîkê vediguherîne kîjan cûre enerjiyê?",
+    "prompt": "Motora elektrîkê enerjiya elektrîkê vediguherîne kîjan cure enerjiyê?",
     "answers": [
       "Enerjiya kîmyewî",
       "Enerjiya ronahiyê",
@@ -4731,11 +4731,11 @@
     "prompt": "Li gorî qanûna parastina enerjiyê, di pergaleke girtî de enerjî çi dibe?",
     "answers": [
       "Bi demê re kêm dibe",
-      "Tenê şeklê xwe diguhere",
+      "Tenê şiklê xwe diguherîne",
       "Bi demê re zêde dibe",
       "Bi demê re bi tevahî ji holê radibe"
     ],
-    "correctAnswer": "Tenê şeklê xwe diguhere",
+    "correctAnswer": "Tenê şiklê xwe diguherîne",
     "promptTr": "Enerjinin korunumu yasasına göre kapalı bir sistemde enerji ne olur?",
     "answersTr": [
       "Zamanla azalır",
@@ -4900,7 +4900,7 @@
     "category": "Teknolojî",
     "prompt": "Panela rojê ronahiya rojê rasterast vediguherîne çi?",
     "answers": [
-      "Enerjiya kîmyewî ya hilanîn",
+      "Enerjiya kîmyewî ya hilanînê",
       "Enerjiya nukleerî",
       "Enerjiya dengî",
       "Enerjiya elektrîkî"
@@ -5340,7 +5340,7 @@
   {
     "id": "tech_invent_0049",
     "category": "Teknolojî",
-    "prompt": "Kîjan roket astronotên Apollo di salên 1960 û 1970yî de birin ber bi Heyvê?",
+    "prompt": "Kîjan roketê astronotên Apollo di salên 1960 û 1970yî de birin ber bi Heyvê?",
     "answers": [
       "Soyuz",
       "Atlas",
@@ -5374,7 +5374,7 @@
   {
     "id": "tech_invent_0050",
     "category": "Teknolojî",
-    "prompt": "Qereqola Fezayê ya Navneteweyî gereke li dora Erdê di çend deqîqeyan de diqedîne?",
+    "prompt": "Qereqola Fezayê ya Navneteweyî gera li dora Erdê di çend deqîqeyan de diqedîne?",
     "answers": [
       "Nêzîkî 12 saet û nîv",
       "Nêzîkî 90 deqîqe",
@@ -5479,7 +5479,7 @@
     "prompt": "Du sondeyên Voyager ku di sala 1977an de hatin şandin, wekî armanca sereke ber bi kîjan cismên ezmanî ve çûn?",
     "answers": [
       "Gerstêrkên dêw ên derve",
-      "Gerstêrkên bihişk ên hundir",
+      "Gerstêrkên hişk ên hundir",
       "Asteroîdên kembera navîn",
       "Kometên demdirêj"
     ],
@@ -5681,7 +5681,7 @@
   {
     "id": "ziman_x_0006",
     "category": "Ziman",
-    "prompt": "Du peyvên cuda yên bi heman wateyê, ji hev re çi tên gotin?",
+    "prompt": "Ji du peyvên cuda yên bi heman wateyê re çi tê gotin?",
     "answers": [
       "Dijwate",
       "Hevwate",
@@ -5749,7 +5749,7 @@
   {
     "id": "ziman_x_0008",
     "category": "Ziman",
-    "prompt": "Kîjan hevok wateya \"Ekmeği yedim\" bi rêziman rast dide?",
+    "prompt": "Kîjan hevok wateya \"Ekmeği yedim\" bi rêzimanî rast dide?",
     "answers": [
       "Ez nan xwar",
       "Min nan xwar",
