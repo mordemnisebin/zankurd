@@ -2027,11 +2027,11 @@
       "Alfabeya Gurcî"
     ],
     "correctAnswer": "Alfabeya kurdî ya bingeh-erebî",
-    "explanation": "Soranî, Irak ve İran’da Arap temelli Kürt alfabesiyle yaygın biçimde yazılır.",
+    "explanation": "Soranî, Irak ve İran'da Arap temelli Kürt alfabesiyle yaygın biçimde yazılır.",
     "type": "multipleChoice",
     "difficulty": 3,
     "explanationKu": "Soranî li Iraq û Îranê bi alfabeya kurdî ya bi bingeha erebî tê nivîsandin.",
-    "explanationTr": "Soranî, Irak ve İran’da Arap temelli Kürt alfabesiyle yaygın biçimde yazılır.",
+    "explanationTr": "Soranî, Irak ve İran'da Arap temelli Kürt alfabesiyle yaygın biçimde yazılır.",
     "promptTr": "Soranî, Irak ve İran'da çoğunlukla hangi yazı sistemiyle yazılır?",
     "answersTr": [
       "Latin kökenli Hawar alfabesi",
@@ -2121,7 +2121,7 @@
     "category": "Edebiyat",
     "prompt": "Kovara Hawar bi taybetî bi kîjan tevkariyê tê bibîranîn?",
     "answers": [
-      "ji ber ku gelek nivîskar li derveyî welêt berhem didin",
+      "ji ber ku gelek nivîskar li derveyî welat berhem didin",
       "pêşketina cureyên wek roman û rojnameyê di serdema nûjen de",
       "belavbûna alfabeya kurdî ya bi bingehê latînî",
       "vegotina devkî û veguhastina çîroka bi avaz"
@@ -5635,10 +5635,10 @@
       "nivîn"
     ],
     "correctAnswer": "welat",
-    "explanation": "\"welat\" = \"ülke/vatan\". Mînak: Ew piştî bîst salan vegeriya welêt.",
+    "explanation": "\"welat\" = \"ülke/vatan\". Mînak: Ew piştî bîst salan vegeriya welat.",
     "type": "multipleChoice",
     "difficulty": 1,
-    "explanationKu": "\"welat\" = \"ülke/vatan\". Mînak: Ew piştî bîst salan vegeriya welêt.",
+    "explanationKu": "\"welat\" = \"ülke/vatan\". Mînak: Ew piştî bîst salan vegeriya welat.",
     "explanationTr": "\"welat\" = \"ülke/vatan\". Örnek: Yirmi yıl sonra ülkesine döndü.",
     "promptTr": "\"ülke/vatan\" Kurmancîde nasıl denir?",
     "answersTr": [
@@ -6866,14 +6866,14 @@
     "difficulty": 2,
     "promptTr": "\"Jiyan\" gazetesi neydi?",
     "explanationKu": "\"Jiyan\" li Silêmaniyê derket û ji rojnameyên kurdî yên destpêkê ye; wê nivîs û helbestên kurdî belav kirin.",
-    "explanationTr": "\"Jiyan\" Süleymaniye’de çıktı ve erken dönem Kürtçe gazetelerdendir; Kürtçe yazı ve şiirleri yaydı.",
+    "explanationTr": "\"Jiyan\" Süleymaniye'de çıktı ve erken dönem Kürtçe gazetelerdendir; Kürtçe yazı ve şiirleri yaydı.",
     "answersTr": [
       "kalıcı yerleşim düzeni",
-      "Süleymaniye’de basılan erken dönem Kürtçe gazete",
+      "Süleymaniye'de basılan erken dönem Kürtçe gazete",
       "Silêmanî'de basılan erken dönem Kürtçe gazete",
       "Latin alfabesiyle basılan ilk Kürtçe dergi"
     ],
-    "correctAnswerTr": "Süleymaniye’de basılan erken dönem Kürtçe gazete"
+    "correctAnswerTr": "Süleymaniye'de basılan erken dönem Kürtçe gazete"
   },
   {
     "id": "offline_7015",
@@ -7892,7 +7892,7 @@
       "Latin alfabesiyle basılan ilk Kürtçe dergi",
       "kalıcı yerleşim düzeni",
       "Silêmanî'de basılan erken dönem Kürtçe gazete",
-      "Süleymaniye’de basılan erken dönem Kürtçe gazete"
+      "Süleymaniye'de basılan erken dönem Kürtçe gazete"
     ],
     "correctAnswerTr": "Latin alfabesiyle basılan ilk Kürtçe dergi"
   },
@@ -8016,7 +8016,7 @@
     "answersTr": [
       "Celadet Alî Bedirxan",
       "kalıcı yerleşim düzeni",
-      "Süleymaniye’de basılan erken dönem Kürtçe gazete",
+      "Süleymaniye'de basılan erken dönem Kürtçe gazete",
       "Latin alfabesiyle basılan ilk Kürtçe dergi"
     ],
     "correctAnswerTr": "kalıcı yerleşim düzeni"
@@ -10084,7 +10084,7 @@
       "nivîskarê ku Şerefname û Mem û Zîn wergerandin soranî",
       "dîwana helbestan a navdar a ku evîna mîstîk û felsefeyê dihewîne",
       "helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû",
-      "ji ber ku gelek nivîskar li derveyî welêt berhem didin"
+      "ji ber ku gelek nivîskar li derveyî welat berhem didin"
     ],
     "correctAnswer": "helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû",
     "explanation": "\"Pertew Begê Hkarî\": Hakkari emirliğinde yetişmiş klasik divan şairi.",
@@ -10257,7 +10257,7 @@
     "prompt": "\"Yaşar Kemal\" çi îfade dike?",
     "answers": [
       "helbestvanê dîwana klasîk ê ku li mîrektiya Colemêrgê perwerde bû",
-      "ji ber ku gelek nivîskar li derveyî welêt berhem didin",
+      "ji ber ku gelek nivîskar li derveyî welat berhem didin",
       "damezrîner û pêşengê romana kurdî ya nûjen",
       "romannivîsê hoste yê bi eslê xwe kurd ê ku li cîhanê tê naskirin"
     ],
@@ -18186,7 +18186,7 @@
     "correctAnswer": "Şaş",
     "explanation": "Na — ev ravekirina \"Çiya\" e; \"Herêma Serhedê\" tê vê wateyê: herêma bilind a bakur ku Agirî, Wan û Muşê digire nav xwe.",
     "explanationKu": "Na — ev ravekirina \"Çiya\" e; \"Herêma Serhedê\" tê vê wateyê: herêma bilind a bakur ku Agirî, Wan û Muşê digire nav xwe.",
-    "explanationTr": "Hayır — bu tanım \"Çiya\" kavramına ait; \"Herêma Serhedê\" şu anlama gelir: Ağrı, Van ve Muş’u içine alan yüksek kuzey bölgesi.",
+    "explanationTr": "Hayır — bu tanım \"Çiya\" kavramına ait; \"Herêma Serhedê\" şu anlama gelir: Ağrı, Van ve Muş'u içine alan yüksek kuzey bölgesi.",
     "type": "trueFalse",
     "difficulty": 4,
     "promptTr": "Değerlendir: bu açıklamaya göre \"Herêma Serhedê\" şudur — iklimi, tarımı ve ulaşım yollarını belirleyen yeryüzü yükseltisi. Doğru mu yanlış mı?",
@@ -18567,7 +18567,7 @@
     "correctAnswer": "Şaş",
     "explanation": "Na — ev ravekirina \"Deşta Amedê\" e; \"Ava Zapê\" tê vê wateyê: ava hov a ku ji Colemêrgê dadikeve û enerjiya avî ya başûr xwedî dike.",
     "explanationKu": "Na — ev ravekirina \"Deşta Amedê\" e; \"Ava Zapê\" tê vê wateyê: ava hov a ku ji Colemêrgê dadikeve û enerjiya avî ya başûr xwedî dike.",
-    "explanationTr": "Hayır — bu tanım \"Deşta Amedê\" kavramına ait; \"Ava Zapê\" şu anlama gelir: Hakkâri’den inen, güneyin su enerjisini besleyen coşkun akarsu.",
+    "explanationTr": "Hayır — bu tanım \"Deşta Amedê\" kavramına ait; \"Ava Zapê\" şu anlama gelir: Hakkâri'den inen, güneyin su enerjisini besleyen coşkun akarsu.",
     "type": "trueFalse",
     "difficulty": 4,
     "promptTr": "\"Ava Zapê\" terimi şöyle tanımlanır: Amed çevresine yayılan verimli bazalt ovası. Bu doğru mu yanlış mı?",
@@ -18714,7 +18714,7 @@
     "correctAnswer": "Şaş",
     "explanation": "Na — ev ravekirina \"Geliyê Mûnzûrê\" e; \"Çiyayên Mûnzûrê\" tê vê wateyê: rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê.",
     "explanationKu": "Na — ev ravekirina \"Geliyê Mûnzûrê\" e; \"Çiyayên Mûnzûrê\" tê vê wateyê: rêzeçiyayên Dêrsimê yên bi berf û Parka Neteweyî ya Geliyê Munzurê.",
-    "explanationTr": "Hayır — bu tanım \"Geliyê Mûnzûrê\" kavramına ait; \"Çiyayên Mûnzûrê\" şu anlama gelir: Dersim’in karlı sıradağları ve Munzur Vadisi Millî Parkı.",
+    "explanationTr": "Hayır — bu tanım \"Geliyê Mûnzûrê\" kavramına ait; \"Çiyayên Mûnzûrê\" şu anlama gelir: Dersim'in karlı sıradağları ve Munzur Vadisi Millî Parkı.",
     "type": "trueFalse",
     "difficulty": 4,
     "promptTr": "Bu açıklama \"Çiyayên Mûnzûrê\" için doğru mu yanlış mı: Mûnzûr çayının kireç kayalarında açtığı derin vadi?",
@@ -20058,7 +20058,7 @@
     "correctAnswer": "Şaş",
     "explanation": "Na — ev ravekirina \"Peymana Qesrişîrînê\" e; \"Komkujiya Helebceyê\" tê vê wateyê: êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin.",
     "explanationKu": "Na — ev ravekirina \"Peymana Qesrişîrînê\" e; \"Komkujiya Helebceyê\" tê vê wateyê: êrîşa kîmyayî ya ku di sala 1988 de li dijî kurdan hat kirin.",
-    "explanationTr": "Hayır — bu tanım \"Peymana Qesrişîrînê\" kavramına ait; \"Komkujiya Helebceyê\" şu anlama gelir: 1988’de Kürtlere karşı yapılan kimyasal saldırı.",
+    "explanationTr": "Hayır — bu tanım \"Peymana Qesrişîrînê\" kavramına ait; \"Komkujiya Helebceyê\" şu anlama gelir: 1988'de Kürtlere karşı yapılan kimyasal saldırı.",
     "type": "trueFalse",
     "difficulty": 4,
     "promptTr": "Doğru mu yanlış mı: \"Komkujiya Helebceyê\" terimi şu anlama gelir: Kürt coğrafyasını iki imparatorluk arasında bölen 1639 antlaşması.",
@@ -20142,7 +20142,7 @@
     "correctAnswer": "Şaş",
     "explanation": "Na — ev ravekirina \"Qazî Mihemed\" e; \"Komara Mehabadê\" tê vê wateyê: komara kurdî ya kurtedem a ku di sala 1946an de li rojhilat hat avakirin.",
     "explanationKu": "Na — ev ravekirina \"Qazî Mihemed\" e; \"Komara Mehabadê\" tê vê wateyê: komara kurdî ya kurtedem a ku di sala 1946an de li rojhilat hat avakirin.",
-    "explanationTr": "Hayır — bu tanım \"Qazî Mihemed\" kavramına ait; \"Komara Mehabadê\" şu anlama gelir: 1946’da doğuda kurulan kısa ömürlü Kürt cumhuriyeti.",
+    "explanationTr": "Hayır — bu tanım \"Qazî Mihemed\" kavramına ait; \"Komara Mehabadê\" şu anlama gelir: 1946'da doğuda kurulan kısa ömürlü Kürt cumhuriyeti.",
     "type": "trueFalse",
     "difficulty": 4,
     "promptTr": "Değerlendir: bu açıklamaya göre \"Komara Mehabadê\" şudur — Mehabad Cumhuriyeti'nin, yıkılışından sonra idam edilen lideri. Doğru mu yanlış mı?",
@@ -20352,7 +20352,7 @@
     "correctAnswer": "Şaş",
     "explanation": "Na — ev ravekirina \"dîroka devkî\" e; \"Mîqdat Mîdhad Bedirxan\" tê vê wateyê: kesê ku rojnameya kurdî ya yekem di sala 1898 de derxist.",
     "explanationKu": "Na — ev ravekirina \"dîroka devkî\" e; \"Mîqdat Mîdhad Bedirxan\" tê vê wateyê: kesê ku rojnameya kurdî ya yekem di sala 1898 de derxist.",
-    "explanationTr": "Hayır — bu tanım \"dîroka devkî\" kavramına ait; \"Mîqdat Mîdhad Bedirxan\" şu anlama gelir: İlk Kürt gazetesini 1898’de çıkaran kişi.",
+    "explanationTr": "Hayır — bu tanım \"dîroka devkî\" kavramına ait; \"Mîqdat Mîdhad Bedirxan\" şu anlama gelir: İlk Kürt gazetesini 1898'de çıkaran kişi.",
     "type": "trueFalse",
     "difficulty": 5,
     "promptTr": "Bu açıklama \"Mîqdat Mîdhad Bedirxan\" için doğru mu yanlış mı: geçmişin tanıklık ve sözlü anlatı yoluyla aktarılması?",
@@ -21318,7 +21318,7 @@
     "correctAnswer": "Şaş",
     "explanation": "Na — ev ravekirina \"Elî Herîrî\" e; \"Mewlûda Kurdî\" tê vê wateyê: berhema olî ya ku Melayê Bateyî bi kurmancî nivîsî.",
     "explanationKu": "Na — ev ravekirina \"Elî Herîrî\" e; \"Mewlûda Kurdî\" tê vê wateyê: berhema olî ya ku Melayê Bateyî bi kurmancî nivîsî.",
-    "explanationTr": "Hayır — bu tanım \"Elî Herîrî\" kavramına ait; \"Mewlûda Kurdî\" şu anlama gelir: Melayê Bateyî’nin Kurmancî yazdığı dinî eser.",
+    "explanationTr": "Hayır — bu tanım \"Elî Herîrî\" kavramına ait; \"Mewlûda Kurdî\" şu anlama gelir: Melayê Bateyî'nin Kurmancî yazdığı dinî eser.",
     "type": "trueFalse",
     "difficulty": 5,
     "promptTr": "Doğru mu yanlış mı: \"Mewlûda Kurdî\" terimi şu anlama gelir: Kürt edebiyatının en eski klasik şairlerinden biri.",
@@ -21738,7 +21738,7 @@
     "correctAnswer": "Şaş",
     "explanation": "Na — ev ravekirina \"Mem û Zîn\" e; \"Riya Taza\" tê vê wateyê: rojnameya kurdî ya ku li Ermenistana Sovyetê bi salan hat weşandin.",
     "explanationKu": "Na — ev ravekirina \"Mem û Zîn\" e; \"Riya Taza\" tê vê wateyê: rojnameya kurdî ya ku li Ermenistana Sovyetê bi salan hat weşandin.",
-    "explanationTr": "Hayır — bu tanım \"Mem û Zîn\" kavramına ait; \"Riya Taza\" şu anlama gelir: Sovyet Ermenistanı’nda yıllarca yayımlanan Kürtçe gazete.",
+    "explanationTr": "Hayır — bu tanım \"Mem û Zîn\" kavramına ait; \"Riya Taza\" şu anlama gelir: Sovyet Ermenistanı'nda yıllarca yayımlanan Kürtçe gazete.",
     "type": "trueFalse",
     "difficulty": 5,
     "promptTr": "Değerlendir: bu açıklamaya göre \"Riya Taza\" şudur — Ehmedê Xanî'nin aşk ile ulusal soruyu birbirine bağlayan destanı. Doğru mu yanlış mı?",
@@ -25077,7 +25077,7 @@
     "type": "trueFalse",
     "difficulty": 4,
     "explanationTr": "Bu yapıtların bazıları ülkeden gizlice çıkarıldı ve büyük festivallerde gösterildi.",
-    "explanationKu": "Hin ji wan berheman bi dizî ji welêt derketin û li festîvalên mezin hatin nîşandan.",
+    "explanationKu": "Hin ji wan berheman bi dizî ji welat derketin û li festîvalên mezin hatin nîşandan.",
     "promptTr": "Resmî film çekme yasağı Jafar Panahi'yi durduramadı; o karardan sonra da film yaptı.",
     "answersTr": [
       "Doğru",

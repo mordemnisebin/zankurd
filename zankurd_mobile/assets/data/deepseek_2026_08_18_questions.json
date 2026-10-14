@@ -28103,7 +28103,7 @@
     "prompt": "Fîlma \"Kobanî\" (2022) a Özlem Yaşar çawa hate kişandin û kîjan şêwaza xwerû pêk anî?",
     "promptTr": "Özlem Yaşar'ın yönettiği \"Kobanî\" (2022) filminin prodüksiyonunu benzersiz kılan temel özellik neydi?",
     "answers": [
-      "Li bajarê Kobanî bixwe bi şervan û şêniyên ku şer jiyane re hate çêkirin",
+      "Li bajarê Kobanî bixwe bi şervan û şêniyên ku şer jiyanê re hate çêkirin",
       "Li studyoyên Hollywoodê bi lîstikvanên profesyonel ên rojavayî hate kişandin",
       "Tenê bi dîmenên arşîvê yên ji televîzyonên nûçeyan hate berhevkirin",
       "Wekî fîlmeke anîmasyonê ya du-dîmenî ji bo televîzyona zarokan hate amadekirin"
@@ -29088,7 +29088,7 @@
     "promptTr": "1958 Irak İhtilali sonrası Abdülkerim Kasım döneminde hazırlanan geçici anayasada Kürtler için hangi hüküm yer aldı?",
     "answers": [
       "Zimanê kurdî wekî tekane zimanê fermî yê tevahiya dewletê hate ragihandin",
-      "Ereb û kurd di avakirina welêt de wekî du şirîkên sereke hatin qebûlkirin",
+      "Ereb û kurd di avakirina welat de wekî du şirîkên sereke hatin qebûlkirin",
       "Hemû partiyên siyasî yên herêmî bi temamî hatin qedexekirin",
       "Herêmên kurdan ji axa dewleta Iraqê bi temamî hatin veqetandin"
     ],
@@ -29098,7 +29098,7 @@
       "Bölgedeki tüm siyasi partilerin ve örgütlerin süresiz kapatılması",
       "Kürt bölgelerinin Irak devlet sınırlarından tamamen çıkarılması"
     ],
-    "correctAnswer": "Ereb û kurd di avakirina welêt de wekî du şirîkên sereke hatin qebûlkirin",
+    "correctAnswer": "Ereb û kurd di avakirina welat de wekî du şirîkên sereke hatin qebûlkirin",
     "correctAnswerTr": "Kürtlerin ve Arapların Irak ortak vatanında eşit ortak olduğu maddesi",
     "explanation": "1958 Geçici Anayasası'nın 3. maddesinde \"Araplar ve Kürtler bu vatanda ortaktır\" hükmü yer almış ve Barzani sürgünden dönmüştür.",
     "explanationTr": "1958 Geçici Anayasası'nın 3. maddesinde \"Araplar ve Kürtler bu vatanda ortaktır\" hükmü yer almış ve Barzani sürgünden dönmüştür.",
