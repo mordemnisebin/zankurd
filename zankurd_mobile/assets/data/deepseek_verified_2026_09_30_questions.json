@@ -546,7 +546,7 @@
   {
     "id": "ds_cografya_0109",
     "category": "Cîhan",
-    "prompt": "Paytextê Brezîlyayê kîjan bajar e?",
+    "prompt": "Paytexta Brezîlyayê kîjan bajar e?",
     "answers": [
       "Rio de Janeiro",
       "Sao Paulo",
@@ -580,7 +580,7 @@
   {
     "id": "ds_cografya_0111",
     "category": "Cîhan",
-    "prompt": "Paytextê Îtalyayê kîjan bajar e?",
+    "prompt": "Paytexta Îtalyayê kîjan bajar e?",
     "answers": [
       "Mîlano",
       "Napolî",
@@ -614,7 +614,7 @@
   {
     "id": "ds_cografya_0113",
     "category": "Cîhan",
-    "prompt": "Paytextê Spanyayê kîjan bajar e?",
+    "prompt": "Paytexta Spanyayê kîjan bajar e?",
     "answers": [
       "Barselona",
       "Madrîd",
@@ -648,7 +648,7 @@
   {
     "id": "ds_cografya_0115",
     "category": "Cîhan",
-    "prompt": "Paytextê Meksîkê kîjan bajar e?",
+    "prompt": "Paytexta Meksîkê kîjan bajar e?",
     "answers": [
       "Guadalajara",
       "Monterrey",
@@ -682,7 +682,7 @@
   {
     "id": "ds_cografya_0119",
     "category": "Cîhan",
-    "prompt": "Paytextê Arjantînê kîjan bajar e?",
+    "prompt": "Paytexta Arjantînê kîjan bajar e?",
     "answers": [
       "Córdoba",
       "Buenos Aires",
@@ -716,7 +716,7 @@
   {
     "id": "ds_cografya_0125",
     "category": "Cîhan",
-    "prompt": "Paytextê Nîjeryayê kîjan bajar e?",
+    "prompt": "Paytexta Nîjeryayê kîjan bajar e?",
     "answers": [
       "Abuja",
       "Lagos",
@@ -1056,7 +1056,7 @@
   {
     "id": "ds_cografya_0207",
     "category": "Cografya",
-    "prompt": "Kîjan bajar paytextê herêma Kurdistanê ya Iraqê ye?",
+    "prompt": "Kîjan bajar paytexta herêma Kurdistanê ya Iraqê ye?",
     "answers": [
       "Hewlêr",
       "Silêmanî",
@@ -2042,7 +2042,7 @@
   {
     "id": "ds_dirok_0065",
     "category": "Cîhan",
-    "prompt": "Kîjan padîşahê Babîlê qanûnên ku bi navê wî têne zanîn nivîsand?",
+    "prompt": "Kîjan padîşahê Babîlê qanûnên ku bi navê wî têne zanîn nivîsandin?",
     "answers": [
       "Nebukadnezar I",
       "Nabopolassar",
@@ -2521,7 +2521,7 @@
     "prompt": "Kîjan şer di sala 1066'an de li Îngilîstanê qewimî?",
     "answers": [
       "Şerê Trafalgarê",
-      "Şerê Waterlooê",
+      "Şerê Waterlooyê",
       "Şerê Azincourtê",
       "Şerê Hastingsê"
     ],
@@ -2858,7 +2858,7 @@
   {
     "id": "ds_dirok_0291",
     "category": "Cîhan",
-    "prompt": "Di Riya Îpekê de kîjan tişt ji Çînê dihat?",
+    "prompt": "Di riya bazirganiyê ya dîrokî ya ku Çîn bi Rojava ve girê dida de, kîjan berhem ji Çînê dihat?",
     "answers": [
       "Hevrîşim",
       "Zêr",
@@ -2892,7 +2892,7 @@
   {
     "id": "ds_dirok_0294",
     "category": "Cîhan",
-    "prompt": "Di Riya Îpekê de kîjan tişt ji Hindistanê dihat?",
+    "prompt": "Di Riya Hevrîşimê de kîjan tişt ji Hindistanê dihat?",
     "answers": [
       "Biharat",
       "Hevrîşim",
@@ -3028,7 +3028,7 @@
   {
     "id": "ds_edebiyat_0082",
     "category": "Cîhan",
-    "prompt": "Di destana \"Beowulf\" de, Beowulf bi kîjan dijmin re şer dike?",
+    "prompt": "Di destana \"Beowulf\" de, Beowulf bi kîjan dijminî re şer dike?",
     "answers": [
       "Aşîl",
       "Rustem",
@@ -3577,9 +3577,9 @@
       "Îmge",
       "Metn",
       "Serhatî",
-      "Rîtim"
+      "Rîtm"
     ],
-    "correctAnswer": "Rîtim",
+    "correctAnswer": "Rîtm",
     "explanation": "Ritim, şiirde seslerin dizilişidir; ahenk için kullanılır.",
     "type": "multipleChoice",
     "difficulty": 1,
@@ -5102,7 +5102,7 @@
   {
     "id": "ds_muzik_0162",
     "category": "Cîhan",
-    "prompt": "Kîjan celeb muzîkê di salên 1990yan de li Seattle derketiye?",
+    "prompt": "Kîjan celebê muzîkê di salên 1990yan de li Seattle derketiye?",
     "answers": [
       "Pop",
       "Grunge",
@@ -5272,7 +5272,7 @@
   {
     "id": "ds_muzik_0190",
     "category": "Cîhan",
-    "prompt": "Kîjan bestekar bi opera xwe ya \"Carmen\" tê naskirin?",
+    "prompt": "Kîjan bestekar bi operaya xwe ya \"Carmen\" tê naskirin?",
     "answers": [
       "Wolfgang Amadeus Mozart",
       "Ludwig van Beethoven",
@@ -5816,7 +5816,7 @@
   {
     "id": "ds_sinema_0201",
     "category": "Cîhan",
-    "prompt": "Kîjan derhênerê amerîkî fîlma \"Pulp Fiction\" di sala 1994an de derxist?",
+    "prompt": "Kîjan derhênerê amerîkî fîlmê \"Pulp Fiction\" di sala 1994an de derxist?",
     "answers": [
       "Steven Spielberg",
       "Quentin Tarantino",
@@ -5850,7 +5850,7 @@
   {
     "id": "ds_sinema_0204",
     "category": "Cîhan",
-    "prompt": "Di fîlma \"Pulp Fiction\" de, kîjan aktor rola Jules Winnfield lîstiye?",
+    "prompt": "Di fîlmê \"Pulp Fiction\" de, kîjan aktorî rola Jules Winnfield lîstiye?",
     "answers": [
       "John Travolta",
       "Bruce Willis",
@@ -6734,7 +6734,7 @@
   {
     "id": "ds_teknoloji_0194",
     "category": "Teknolojî",
-    "prompt": "Kîjan têgeh ji bo pêvajoya ku têlefon bi komputerê ve tê girêdan û daneyan vediguhezîne tê bikaranîn?",
+    "prompt": "Kîjan têgeh ji bo pêvajoya ku têlefon bi komputerê ve tê girêdan û daneyan vediguhêze tê bikaranîn?",
     "answers": [
       "HDMI",
       "Ethernet",
@@ -7113,7 +7113,7 @@
       "Enerjiya nukleer",
       "Enerjiya kîmyayî",
       "Enerjiya germî",
-      "Enerjiya mekanîk"
+      "Enerjiya mekanîkî"
     ],
     "correctAnswer": "Enerjiya nukleer",
     "explanation": "Nükleer enerji, atom çekirdeğinde depolanır ve nükleer reaksiyonlar sırasında açığa çıkar. Kimyasal enerji kimyasal bağlardadır, termal enerji sıcaklıkla ilgilidir ve mekanik enerji ise cisimlerin hareketi veya konumuyla ilgilidir.",
@@ -7142,7 +7142,7 @@
   {
     "id": "ds_teknoloji_0276",
     "category": "Teknolojî",
-    "prompt": "Hejmara ku bi tenê bi xwe û bi yekê ve tê dabeşkirin, bi kurdî çi tê gotin?",
+    "prompt": "Ji hejmara ku bi tenê bi xwe û bi yekê ve tê dabeşkirin re bi kurdî çi tê gotin?",
     "answers": [
       "Hejmara cot",
       "Hejmara seretayî",
@@ -7584,7 +7584,7 @@
   {
     "id": "ds_ziman_1176",
     "category": "Ziman",
-    "prompt": "Kîjan peyva kurmancî ji bo \"dayika bav\" tê bikaranîn?",
+    "prompt": "Kîjan peyva kurmancî ji bo \"dayika bavî\" tê bikaranîn?",
     "answers": [
       "Dapîr",
       "Xatûn",
@@ -7962,7 +7962,7 @@
     "answers": [
       "Keman",
       "Tembûr",
-      "Pîyano",
+      "Piyano",
       "Gîtar"
     ],
     "correctAnswer": "Tembûr",
@@ -8574,7 +8574,7 @@
     "answers": [
       "Kefçî",
       "Kêr",
-      "Çetel",
+      "Çengal",
       "Sênî"
     ],
     "correctAnswer": "Kêr",
@@ -8608,7 +8608,7 @@
     "answers": [
       "Serşok",
       "Odeya razanê",
-      "Bexçe",
+      "Baxçe",
       "Metbex"
     ],
     "correctAnswer": "Metbex",
@@ -8677,7 +8677,7 @@
       "Dolaba xwarinê",
       "Serşok",
       "Odeya razanê",
-      "Bexçe"
+      "Baxçe"
     ],
     "correctAnswer": "Dolaba xwarinê",
     "explanation": "Yiyecek dolabı yiyecek saklamak içindir; banyo, yatak odası ve bahçe saklamak için değildir.",
@@ -8711,7 +8711,7 @@
       "Dolaba kincan",
       "Metbex",
       "Serşok",
-      "Bexçe"
+      "Baxçe"
     ],
     "correctAnswer": "Dolaba kincan",
     "explanation": "Elbise dolabı kıyafetler içindir; mutfak, banyo ve bahçe kıyafetler için değildir.",
@@ -8774,7 +8774,7 @@
   {
     "id": "ds_ziman_0116",
     "category": "Ziman",
-    "prompt": "Ji bo danîna pirtûkan, kîjan mobîlya tê bikaranîn?",
+    "prompt": "Ji bo danîna pirtûkan, kîjan moble tê bikaranîn?",
     "answers": [
       "Kursî",
       "Dolaba pirtûkan",
@@ -9898,7 +9898,7 @@
     "category": "Çand",
     "prompt": "Kîjan xwarina kurdî bi hevîrê savarê û goştê hûrkirî tê çêkirin?",
     "answers": [
-      "Birinç",
+      "Birinc",
       "Kutilk",
       "Şorbeya nîskê",
       "Fasûlî"
@@ -10799,7 +10799,7 @@
       "Gera tûrîstên dewlemend li ser peravên deryayê",
       "Pêşketina şîrketên komputerê di qada firotina serhêl de",
       "Perwerdehiya pîlotên balafiran di akademiyên leşkerî de",
-      "Kuştinên karkeran di qada înşatê de û bêewlehiya jiyana karkerên koçber"
+      "Kuştinên karkeran di qada avakirinê de û bêewlehiya jiyana karkerên koçber"
     ],
     "answersTr": [
       "Lüks kıyı otellerinde tatil yapan yabancı turistlerin maceralarını",
@@ -10807,7 +10807,7 @@
       "Askeri havacılık akademisinde savaş pilotu yetiştirme aşamalarını",
       "İnşaat sektöründeki iş cinayetlerini ve taşradan gelen işçilerin güvencesizliğini"
     ],
-    "correctAnswer": "Kuştinên karkeran di qada înşatê de û bêewlehiya jiyana karkerên koçber",
+    "correctAnswer": "Kuştinên karkeran di qada avakirinê de û bêewlehiya jiyana karkerên koçber",
     "correctAnswerTr": "İnşaat sektöründeki iş cinayetlerini ve taşradan gelen işçilerin güvencesizliğini",
     "explanation": "Karkerê bi navê Îbrahîm bi penceşêrê ketiye û li înşata luks hewl dide ji bo malbata xwe tezmînatê bihêle.",
     "explanationKu": "Karkerê bi navê Îbrahîm bi penceşêrê ketiye û li înşata luks hewl dide ji bo malbata xwe tezmînatê bihêle.",
@@ -11566,7 +11566,7 @@
     "answers": [
       "Tenê girtina çend serokên partiyan bêyî têkdana jiyana gundiyan",
       "Pêşxistina çandiniya nûjen bi rêya belavkirina tovên berhemdar li gundan",
-      "Valkirina gundan, têkbirina berxwedana çiyayî û tunekirina komkî ya xelkê",
+      "Valakirina gundan, têkbirina berxwedana çiyayî û tunekirina komkî ya xelkê",
       "Avakirina xetên nû yên trenê di navbera Silêmanî û Helebê de"
     ],
     "answersTr": [
@@ -11575,7 +11575,7 @@
       "Kırsalı boşaltmak, peşmerge lojistiğini kesmek ve direnişi katliamla kırmak",
       "Süleymaniye ile Halep arasına yeni demiryolu bağlantısı kurmak"
     ],
-    "correctAnswer": "Valkirina gundan, têkbirina berxwedana çiyayî û tunekirina komkî ya xelkê",
+    "correctAnswer": "Valakirina gundan, têkbirina berxwedana çiyayî û tunekirina komkî ya xelkê",
     "correctAnswerTr": "Kırsalı boşaltmak, peşmerge lojistiğini kesmek ve direnişi katliamla kırmak",
     "explanation": "Ali Hasan el-Mecid komutasındaki Enfal operasyonlarında binlerce köy yok edildi, kimyasal silahlar kullanıldı ve 100 bini aşkın sivil katledildi.",
     "explanationTr": "Ali Hasan el-Mecid komutasındaki Enfal operasyonlarında binlerce köy yok edildi, kimyasal silahlar kullanıldı ve 100 bini aşkın sivil katledildi.",
@@ -11758,7 +11758,7 @@
     "answers": [
       "Sîstema girtina germiyê û daxistina leza frekansa navendên pêvajoyê",
       "Pêşbîniya çiqilan (branch prediction) û meşandina texmînî ya fermanan",
-      "Bikaranîna navnîşanên bîrgehê yên statîk di dema xebata bernamen de",
+      "Bikaranîna navnîşanên bîrgehê yên statîk di dema xebata bernameyan de",
       "Rakirina bîrgeha lezgîn a asta yekem ji bo kêmkirina lêçûna fîzîkî"
     ],
     "answersTr": [
@@ -11791,7 +11791,7 @@
       "Hemû tiştên di bîrgehê de hatine çêkirin heta dawiya bernameyê dijîn",
       "Tiştên kevn ji yên nû zûtir tên jêbirin ji ber ku bîrgehê dagir dikin",
       "Bîrgeha çalak her tim bi awayekî wekhev di navbera tiştan de tê parvekirin",
-      "Piranîya tiştên nûhatî (objects) di demeke pir kin de bêkêr dibin û dimirin"
+      "Piraniya tiştên nûhatî (objects) di demeke pir kin de bêkêr dibin û dimirin"
     ],
     "answersTr": [
       "Bellekte tahsis edilen tüm nesnelerin program sonuna kadar yaşamaya devam etmesi",
@@ -11799,7 +11799,7 @@
       "Aktif bellek alanının her zaman nesneler arasında eşit boyutta bölünmesi",
       "Yeni oluşturulan nesnelerin büyük çoğunluğunun ömrünün çok kısa olması"
     ],
-    "correctAnswer": "Piranîya tiştên nûhatî (objects) di demeke pir kin de bêkêr dibin û dimirin",
+    "correctAnswer": "Piraniya tiştên nûhatî (objects) di demeke pir kin de bêkêr dibin û dimirin",
     "correctAnswerTr": "Yeni oluşturulan nesnelerin büyük çoğunluğunun ömrünün çok kısa olması",
     "explanation": "Zayıf Kuşaksal Hipotez'e göre nesnelerin çoğu tahsis edildikten hemen sonra ölür; bu yüzden genç kuşak (Young/Eden) sık taranır.",
     "explanationKu": "Li gorî vê hîpotezê (Weak Generational Hypothesis), tiştên nû zû dimirin; ji ber vê yekê tenê kontrolkirina qada ciwan (Eden) lêçûnê kêm dike.",
@@ -11980,7 +11980,7 @@
     "prompt": "Di nivîsandina algorîtmayên krîptografîk de armanca bikaranîna rêbaza \"Constant-Time\" çi ye?",
     "promptTr": "Kriptografik yazılımlarda \"Constant-Time\" (Sabit Zamanlı) kod yazımının temel güvenlik amacı nedir?",
     "answers": [
-      "Ji bo zêdekirina leza hesabkirinê li ser her cûre pêvajoyera kevn",
+      "Ji bo zêdekirina leza hesabkirinê li ser her cure pêvajoyera kevn",
       "Ji bo rêgirtina li êrîşên kanala alî yên li ser bingeha pîvandina demê",
       "Ji bo kêmkirina enerjiya ku ji aliyê pîlê cîhazê ve tê xerckirin",
       "Ji bo hêsankirina xwendina koda çavkaniyê ji aliyê bernameçêkeran ve"
@@ -12009,7 +12009,7 @@
     "id": "ds_teknoloji_0315",
     "category": "Teknolojî",
     "difficulty": 5,
-    "prompt": "Di mekanîzmaya baldarîyê ya Transformeran de (Self-Attention), aloziya hejmartinê li gorî dirêjahiya rêzê (N) çawa zêde dibe?",
+    "prompt": "Di mekanîzmaya baldariyê ya Transformeran de (Self-Attention), aloziya hejmartinê li gorî dirêjahiya rêzê (N) çawa zêde dibe?",
     "promptTr": "Transformer mimarisindeki standart Öz-Dikkat (Self-Attention) mekanizmasının hesaplama karmaşıklığı dizi uzunluğuna (N) göre nasıl ölçeklenir?",
     "answers": [
       "Bi awayekî xêzî O(N) dimîne bêyî ku girêdayî hejmara nîşanan be",
@@ -13262,7 +13262,7 @@
     "answers": [
       "Ji ber ku di vê hevokê de wekî kirdeyê sereke hatiye destnîşankirin",
       "Ji ber ku lêkera dîtin di dema niha de her tim navdêran ditewîne",
-      "Ji ber ku ketiye navbera daçeka hevedudanî ya cîhî \"li ser ...\"",
+      "Ji ber ku ketiye navbera daçeka hevedudanî ya cihî \"li ser ...\"",
       "Ji ber ku peyva mase navdêreke nêr e û li pêşiya bireserê ye"
     ],
     "answersTr": [
@@ -13271,7 +13271,7 @@
       "\"Li ser ...\" yer bildiren bileşik edatının etkisi altında kaldığı için",
       "Mase kelimesi eril bir isim olup nesnenin önünde yer aldığı için"
     ],
-    "correctAnswer": "Ji ber ku ketiye navbera daçeka hevedudanî ya cîhî \"li ser ...\"",
+    "correctAnswer": "Ji ber ku ketiye navbera daçeka hevedudanî ya cihî \"li ser ...\"",
     "correctAnswerTr": "\"Li ser ...\" yer bildiren bileşik edatının etkisi altında kaldığı için",
     "explanation": "\"Mase\" dişil bir isimdir ve \"li ser\" edatının yönetimi altına girdiği için \"-ê\" bükün ekini almıştır.",
     "explanationTr": "\"Mase\" dişil bir isimdir ve \"li ser\" edatının yönetimi altına girdiği için \"-ê\" bükün ekini almıştır.",
@@ -13289,7 +13289,7 @@
     "id": "ds_ziman_1249",
     "category": "Ziman",
     "difficulty": 4,
-    "prompt": "Cudahiya wateyî ya di navbera daçeka \"ji ... re\" û \"ji ... ve\" de çi ye?",
+    "prompt": "Cudahiya wateyî ya di navbera daçekên \"ji ... re\" û \"ji ... ve\" de çi ye?",
     "promptTr": "\"Ji ... re\" ve \"ji ... ve\" edat kalıpları arasındaki anlamsal fark nedir?",
     "answers": [
       "\"Ji ... re\" tenê ji bo amûran e; \"ji ... ve\" tenê ji bo dema bê ye",
@@ -13321,7 +13321,7 @@
     "id": "ds_ziman_1250",
     "category": "Ziman",
     "difficulty": 4,
-    "prompt": "Di daçeka \"bi ... re\" û \"bi ... ve\" de kîjan vebijêrk cudahiya hevaltî û pêvebûnê rast nîşan dide?",
+    "prompt": "Di daçekên \"bi ... re\" û \"bi ... ve\" de kîjan vebijêrk cudahiya hevaltî û pêvebûnê rast nîşan dide?",
     "promptTr": "\"Bi ... re\" ve \"bi ... ve\" edatlarında birliktelik ve bitişiklik/araç farkı hangi seçenekte doğrudur?",
     "answers": [
       "\"Bi ... re\" hevaltî/tevgerê nîşan dide, \"bi ... ve\" pêvebûn/girêdanê nîşan dide",
@@ -13545,7 +13545,7 @@
     "id": "ds_ziman_1263",
     "category": "Ziman",
     "difficulty": 5,
-    "prompt": "Di navbera zaravayê kurmancî û soranî de cudahiya sereke ya di warê zayenda rêzimanî de çi ye?",
+    "prompt": "Di navbera zaravayên kurmancî û soranî de cudahiya sereke ya di warê zayenda rêzimanî de çi ye?",
     "promptTr": "Kurmancî ile Soranî lehçeleri arasında dilbilgisel cinsiyet (gender) konusundaki temel fark nedir?",
     "answers": [
       "Soranî sê zayendan diparêze lê di kurmancî de qet zayend nîne",
@@ -13833,11 +13833,11 @@
     "id": "ds_ziman_1283",
     "category": "Ziman",
     "difficulty": 4,
-    "prompt": "Di kurmancî de ferqa di navbera lêkera hevedudanî ya \"dest pê kirin\" û \"dest jê berdan\" de ji aliyê daçekê ve çi ye?",
+    "prompt": "Di kurmancî de ferqa di navbera lêkerên hevedudanî yên \"dest pê kirin\" û \"dest jê berdan\" de ji aliyê daçekê ve çi ye?",
     "promptTr": "Kurmancîde \"dest pê kirin\" ve \"dest jê berdan\" bileşik fiilleri arasındaki edat yapısı farkı nedir?",
     "answers": [
       "Her du lêker jî tenê bi daçeka \"tê\" (di wê de) tên avakirin",
-      "Di ya yekem de ti daçek nîne lê di ya duyem de daçeka cîhî heye",
+      "Di ya yekem de ti daçek nîne lê di ya duyem de daçeka cihî heye",
       "Di ya yekem de daçeka \"pê\" (bi wê), di ya duyem de \"jê\" (ji wê) hatiye bikaranîn",
       "Daçek tenê ji bo çêkirina neyîniyê di lêkera duyem de heye"
     ],
@@ -14057,7 +14057,7 @@
     "id": "ds_ziman_1294",
     "category": "Ziman",
     "difficulty": 5,
-    "prompt": "Di hevoka \"Min nanê xwe xwar\" û \"Wî nanê xwe xwar\" de çima cînavê vegerok ê \"xwe\" neguherî ye?",
+    "prompt": "Di hevokên \"Min nanê xwe xwar\" û \"Wî nanê xwe xwar\" de çima cînavê vegerok ê \"xwe\" neguheriye?",
     "promptTr": "\"Min nanê xwe xwar\" ve \"Wî nanê xwe xwar\" cümlelerinde \"xwe\" dönüşlü zamiri neden değişmemiştir?",
     "answers": [
       "Ji ber ku \"xwe\" ji bo hemû kesan cînavê xwedîtiyê yê gerdûnî ye",
@@ -14732,12 +14732,12 @@
   {
     "id": "ds_cografya_0106",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Parîs e?",
+    "prompt": "Paytexta kîjan welatî Parîs e?",
     "answers": [
       "Almanya",
       "Fransa",
       "Spanya",
-      "Portekîz"
+      "Portûgal"
     ],
     "correctAnswer": "Fransa",
     "explanation": "Paris, Fransa'nın başkentidir. Almanya Berlin, İspanya Madrid ve Portekiz Lizbon'u başkent olarak kullanır.",
@@ -14766,7 +14766,7 @@
   {
     "id": "ds_cografya_0107",
     "category": "Cîhan",
-    "prompt": "Paytextê Rûsyayê kîjan bajar e?",
+    "prompt": "Paytexta Rûsyayê kîjan bajar e?",
     "answers": [
       "Sankt Petersburg",
       "Novosîbîrsk",
@@ -14800,7 +14800,7 @@
   {
     "id": "ds_cografya_0108",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Londra ye?",
+    "prompt": "Paytexta kîjan welatî London e?",
     "answers": [
       "Îngilistan",
       "Skotland",
@@ -14834,7 +14834,7 @@
   {
     "id": "ds_cografya_0110",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Washington D.C. ye?",
+    "prompt": "Paytexta kîjan welatî Washington D.C. ye?",
     "answers": [
       "Kanada",
       "Meksîk",
@@ -14868,7 +14868,7 @@
   {
     "id": "ds_cografya_0112",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Berlîn e?",
+    "prompt": "Paytexta kîjan welatî Berlîn e?",
     "answers": [
       "Awistirya",
       "Swîsre",
@@ -14902,7 +14902,7 @@
   {
     "id": "ds_cografya_0114",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Pekîn e?",
+    "prompt": "Paytexta kîjan welatî Pekîn e?",
     "answers": [
       "Japonya",
       "Korêya Bakur",
@@ -14936,7 +14936,7 @@
   {
     "id": "ds_cografya_0116",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Atîna ye?",
+    "prompt": "Paytexta kîjan welatî Atîna ye?",
     "answers": [
       "Tirkiye",
       "Îtalya",
@@ -14970,7 +14970,7 @@
   {
     "id": "ds_cografya_0117",
     "category": "Cîhan",
-    "prompt": "Paytextê Hindistanê kîjan bajar e?",
+    "prompt": "Paytexta Hindistanê kîjan bajar e?",
     "answers": [
       "Mumbaî",
       "Delhiya Nû",
@@ -15004,7 +15004,7 @@
   {
     "id": "ds_cografya_0118",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Seûl e?",
+    "prompt": "Paytexta kîjan welatî Seûl e?",
     "answers": [
       "Korêya Bakur",
       "Japonya",
@@ -15038,7 +15038,7 @@
   {
     "id": "ds_cografya_0120",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Viyana ye?",
+    "prompt": "Paytexta kîjan welatî Viyana ye?",
     "answers": [
       "Almanya",
       "Swîsre",
@@ -15072,7 +15072,7 @@
   {
     "id": "ds_cografya_0121",
     "category": "Cîhan",
-    "prompt": "Paytextê îdarî yê Afrîkaya Başûr kîjan bajar e?",
+    "prompt": "Paytexta îdarî ya Afrîkaya Başûr kîjan bajar e?",
     "answers": [
       "Pretoria",
       "Johannesburg",
@@ -15106,7 +15106,7 @@
   {
     "id": "ds_cografya_0122",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Stockholm e?",
+    "prompt": "Paytexta kîjan welatî Stockholm e?",
     "answers": [
       "Norwêc",
       "Danîmarka",
@@ -15140,7 +15140,7 @@
   {
     "id": "ds_cografya_0123",
     "category": "Cîhan",
-    "prompt": "Paytextê Polonyayê kîjan bajar e?",
+    "prompt": "Paytexta Polonyayê kîjan bajar e?",
     "answers": [
       "Varşova",
       "Kraków",
@@ -15174,7 +15174,7 @@
   {
     "id": "ds_cografya_0124",
     "category": "Cîhan",
-    "prompt": "Paytextê kîjan welatî Tehran e?",
+    "prompt": "Paytexta kîjan welatî Tehran e?",
     "answers": [
       "Iraq",
       "Efxanistan",
@@ -15755,11 +15755,11 @@
     "prompt": "Kîjan têgih ji bo xeta ku hêlîpan û hêlîdirêjan li ser nexşeyê nîşan dide tê bikaranîn?",
     "answers": [
       "Xeta îzolîn",
-      "Tora koordînat",
+      "Tora koordînatan",
       "Xeta paralel",
-      "Xeta merîdyen"
+      "Xeta merîdyenê"
     ],
-    "correctAnswer": "Tora koordînat",
+    "correctAnswer": "Tora koordînatan",
     "explanation": "Koordinat ağı (graticule), haritada enlem ve boylamları gösteren çizgilerdir. İzolin çizgisi ise yüksekliği gösterir.",
     "type": "multipleChoice",
     "difficulty": 2,
@@ -15960,7 +15960,7 @@
     "answers": [
       "Mîrektiya Cizîrê",
       "Mîrektiya Botanê",
-      "Mîrektiya Hekarîyê",
+      "Mîrektiya Hekariyê",
       "Mîrektiya Bidlîsê"
     ],
     "correctAnswer": "Mîrektiya Bidlîsê",
@@ -16398,7 +16398,7 @@
   {
     "id": "ds_dirok_0124",
     "category": "Dîrok",
-    "prompt": "Kîjan mîrektiya kurdan di sedsala 16an de li herêma çiyayî ya di navbera Wan û Musilê de hukum dikir?",
+    "prompt": "Kîjan mîrektiya kurdan di sedsala 16an de li herêma çiyayî ya di navbera Wan û Mûsilê de hukum dikir?",
     "answers": [
       "Mîrektiya Botanê",
       "Mîrektiya Colemêrgê",
@@ -16777,7 +16777,7 @@
       "Malbata Babanan",
       "Malbata Soran",
       "Malbata Bedirxaniyan",
-      "Malbata Hakkariyê"
+      "Malbata Hekariyê"
     ],
     "correctAnswer": "Malbata Bedirxaniyan",
     "explanation": "Kurdistan gazetesi, ünlü bir Kürt ailesi olan Bedirhani ailesi tarafından çıkarıldı.",
@@ -17012,12 +17012,12 @@
     "category": "Cîhan",
     "prompt": "Di kîjan serdemê de Şerê Sed Salan qewimî?",
     "answers": [
-      "Sedsala 12'an û 13'an",
-      "Sedsala 13'an û 14'an",
-      "Sedsala 14'an û 15'an",
-      "Sedsala 15'an û 16'an"
+      "Sedsalên 12'an û 13'an",
+      "Sedsalên 13'an û 14'an",
+      "Sedsalên 14'an û 15'an",
+      "Sedsalên 15'an û 16'an"
     ],
-    "correctAnswer": "Sedsala 14'an û 15'an",
+    "correctAnswer": "Sedsalên 14'an û 15'an",
     "explanation": "Yüz Yıl Savaşları 1337 ile 1453 yılları arasında, yani 14. ve 15. yüzyılda gerçekleşti. Bu savaş İngiltere ve Fransa arasında yapıldı.",
     "type": "multipleChoice",
     "difficulty": 2,
@@ -17520,7 +17520,7 @@
   {
     "id": "ds_dirok_0190",
     "category": "Cîhan",
-    "prompt": "Kîjan kesayetî wek \"Bavê Tibê\" tê zanîn?",
+    "prompt": "Kîjan kesayetî wek \"Bavê Bijîşkiyê\" tê zanîn?",
     "answers": [
       "Galen",
       "Aristoteles",
@@ -17930,7 +17930,7 @@
     "category": "Cîhan",
     "prompt": "Kîjan bûyer di sala 1811'an de li Brîtanyayê qewimî û tê de karkeran makîne hilweşandin?",
     "answers": [
-      "Serhildana Chartîstan",
+      "Serhildana Çartîstan",
       "Serhildana Luddîtan",
       "Serhildana Swing",
       "Serhildana Peterloo"
@@ -18234,7 +18234,7 @@
   {
     "id": "ds_dirok_0275",
     "category": "Cîhan",
-    "prompt": "Tora bazirganiyê ya Riya Hevirmêşê bi piranî bi kîjan xanedanê ve tê girêdan?",
+    "prompt": "Tora bazirganiyê ya Riya Hevrîşimê bi piranî bi kîjan xanedanê ve tê girêdan?",
     "answers": [
       "Xanedana Ming",
       "Xanedana Han",
@@ -18268,7 +18268,7 @@
   {
     "id": "ds_dirok_0293",
     "category": "Cîhan",
-    "prompt": "Ewlehiya Riya Hevirmêşê di kîjan serdemê de bi \"Pax Mongolica\" ve zêde bû?",
+    "prompt": "Ewlehiya Riya Hevrîşimê di kîjan serdemê de bi \"Pax Mongolica\" ve zêde bû?",
     "answers": [
       "Serdema Kevir",
       "Serdema Bronz",
@@ -18302,7 +18302,7 @@
   {
     "id": "ds_dirok_0276",
     "category": "Cîhan",
-    "prompt": "Kîjan welat wekî destpêka Riya Hevirmêşê tê zanîn?",
+    "prompt": "Kîjan welat wekî destpêka Riya Hevrîşimê tê zanîn?",
     "answers": [
       "Hindistan",
       "Misir",
@@ -18336,7 +18336,7 @@
   {
     "id": "ds_dirok_0277",
     "category": "Cîhan",
-    "prompt": "Riya Hevirmêşê navê xwe ji kîjan berhemê digire?",
+    "prompt": "Riya bazirganiyê ya dîrokî ya ku Çîn bi Rojava ve girê dida, navê xwe ji kîjan berhemê digire?",
     "answers": [
       "Zêr",
       "Hevrîşim",
@@ -18404,7 +18404,7 @@
   {
     "id": "ds_dirok_0287",
     "category": "Cîhan",
-    "prompt": "Di Riya Îpekê de kîjan rêbaza veguhestinê dihat bikaranîn?",
+    "prompt": "Di Riya Hevrîşimê de kîjan rêbaza veguhestinê dihat bikaranîn?",
     "answers": [
       "Karwanên deveyan",
       "Trenên elektrîkê",
@@ -18438,7 +18438,7 @@
   {
     "id": "ds_dirok_0282",
     "category": "Cîhan",
-    "prompt": "Kîjan kesayetî bi Riya Îpekê re têkildar e?",
+    "prompt": "Kîjan kesayetî bi Riya Hevrîşimê re têkildar e?",
     "answers": [
       "Julius Caesar",
       "Napoleon",
@@ -18883,7 +18883,7 @@
     "prompt": "Di berhemên Shakespeare de, \"To be or not to be\" tê çi wateyê?",
     "answers": [
       "Evîn an nefret",
-      "Şer an aşitî",
+      "Şer an aştî",
       "Jiyan an mirin",
       "Xewn an rastî"
     ],
@@ -19597,11 +19597,11 @@
     "prompt": "Kîjan amûr di performansa dengbêjiyê de bi gelemperî tê bikaranîn?",
     "answers": [
       "Tembûr",
-      "Ti amûrek nîne",
+      "Tu amûrek nîne",
       "Keman",
       "Ney"
     ],
-    "correctAnswer": "Ti amûrek nîne",
+    "correctAnswer": "Tu amûrek nîne",
     "explanation": "Dengbêjlik performansında genellikle hiçbir enstrüman kullanılmaz; dengbêj kilamı sadece sesiyle söyler. Tembur, keman ve ney dengbêjlere özgü enstrümanlar değildir.",
     "type": "multipleChoice",
     "difficulty": 1,
@@ -20478,7 +20478,7 @@
   {
     "id": "ds_sinema_0045",
     "category": "Sînema",
-    "prompt": "Di fîlma \"Klama Dayîka Min\" (Erol Mintaş) de diya ku ji Tarlabaşiyê hatiye koçberkirin li kîjan tiştî digere?",
+    "prompt": "Di fîlma \"Klama Dayika Min\" (Erol Mintaş) de diya ku ji Tarlabaşiyê hatiye koçberkirin li kîjan tiştî digere?",
     "answers": [
       "Malbateke dewlemend ku alîkariya wan a aborî bike",
       "Klameke winda û bîra çandî ya cihê ku lê jiya ye",
@@ -21430,7 +21430,7 @@
   {
     "id": "ds_sinema_0179",
     "category": "Cîhan",
-    "prompt": "Kîjan derhênerî fîlmê belgefîlm ê \"Waltz with Bashir\" derxist?",
+    "prompt": "Kîjan derhênerî belgefîlmê \"Waltz with Bashir\" derxist?",
     "answers": [
       "Werner Herzog",
       "Errol Morris",
@@ -21702,7 +21702,7 @@
   {
     "id": "ds_sinema_0194",
     "category": "Cîhan",
-    "prompt": "Fîlmê belgefîlm ê \"Senna\" li ser jiyana kîjan ajokarê pêşbirkê ye?",
+    "prompt": "Belgefîlmê \"Senna\" li ser jiyana kîjan ajokarê pêşbirkê ye?",
     "answers": [
       "Ayrton Senna",
       "Michael Schumacher",
@@ -21838,7 +21838,7 @@
   {
     "id": "ds_teknoloji_0073",
     "category": "Teknolojî",
-    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe komek nirxan tê bikaranîn?",
+    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekî ku dikare bibe komek nirxan tê bikaranîn?",
     "answers": [
       "Guherbar",
       "Xelek",
@@ -21906,7 +21906,7 @@
   {
     "id": "ds_teknoloji_0068",
     "category": "Teknolojî",
-    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe rast an derew tê bikaranîn?",
+    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekî ku dikare bibe rast an derew tê bikaranîn?",
     "answers": [
       "Guherbar",
       "Xelek",
@@ -21940,7 +21940,7 @@
   {
     "id": "ds_teknoloji_0071",
     "category": "Teknolojî",
-    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya ku dikare bibe navnîşek tîpan tê bikaranîn?",
+    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekî ku dikare bibe navnîşek tîpan tê bikaranîn?",
     "answers": [
       "Nivîs",
       "Guherbar",
@@ -22008,7 +22008,7 @@
   {
     "id": "ds_teknoloji_0060",
     "category": "Teknolojî",
-    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekê ya rast an derew tê bikaranîn?",
+    "prompt": "Di bernamekirinê de, kîjan têgeh ji bo hilanîna nirxekî rast an derew tê bikaranîn?",
     "answers": [
       "Guherbar",
       "Xelek",
@@ -22522,8 +22522,8 @@
     "answers": [
       "Bîra xebitandinê",
       "Bîra hundirîn",
-      "Pêvajoyê",
-      "Bataryayê"
+      "Pêvajo",
+      "Batarya"
     ],
     "correctAnswer": "Bîra hundirîn",
     "explanation": "Dahili bellek (depolama), görüntülerin, dosyaların ve uygulamaların kalıcı olarak saklanması için kullanılır. RAM geçicidir, işlemci hesaplamaları yapar ve pil enerji sağlar.",
@@ -22588,12 +22588,12 @@
     "category": "Teknolojî",
     "prompt": "Di têlefoneke jîr de, kîjan beş ji bo nîşandana wêneyan tê bikaranîn?",
     "answers": [
-      "Bataryayê",
-      "Pêvajoyê",
-      "Ekranê",
+      "Batarya",
+      "Pêvajo",
+      "Ekran",
       "Bîra hundirîn"
     ],
-    "correctAnswer": "Ekranê",
+    "correctAnswer": "Ekran",
     "explanation": "Ekran, görüntülerin ve metinlerin gösterilmesi için kullanılır. Pil enerji sağlar, işlemci hesaplamaları yapar ve dahili bellek verileri saklar.",
     "type": "multipleChoice",
     "difficulty": 1,
@@ -22824,7 +22824,7 @@
   {
     "id": "ds_teknoloji_0205",
     "category": "Teknolojî",
-    "prompt": "Di sala 1945an de, kîjan kes pêşniyar kir ku bername û dane di heman bîra komputerê de bêne hilanîn?",
+    "prompt": "Di sala 1945an de, kîjan kesî pêşniyar kir ku bername û dane di heman bîra komputerê de bêne hilanîn?",
     "answers": [
       "John von Neumann",
       "Alan Turing",
@@ -23402,7 +23402,7 @@
   {
     "id": "ds_teknoloji_0281",
     "category": "Teknolojî",
-    "prompt": "Kîjan têgeh di matematîkê de ji bo rêjeya di navbera dora çemberê û çapa wê tê bikaranîn?",
+    "prompt": "Kîjan têgeh di matematîkê de ji bo rêjeya di navbera dora çemberê û çapa wê de tê bikaranîn?",
     "answers": [
       "Euler",
       "Fibonacci",
@@ -23946,11 +23946,11 @@
   {
     "id": "ds_cand_0265",
     "category": "Çand",
-    "prompt": "Di çanda kurdî de, kîjan xwarin bi gelemperî ji bo jina ku nû zayîye tê çêkirin?",
+    "prompt": "Di çanda kurdî de, kîjan xwarin bi gelemperî ji bo jina ku nû zayî ye tê çêkirin?",
     "answers": [
       "Kutilk",
       "Şorbe",
-      "Birinç",
+      "Birinc",
       "Nan"
     ],
     "correctAnswer": "Şorbe",
@@ -24830,7 +24830,7 @@
   {
     "id": "ds_cand_0227",
     "category": "Çand",
-    "prompt": "Kîjan cejn bi gelemperî di 21ê Adarê de tê pîrozkirin? /",
+    "prompt": "Kîjan cejn bi gelemperî di 21ê Adarê de tê pîrozkirin?",
     "answers": [
       "Newroz",
       "Sersal",
@@ -24864,7 +24864,7 @@
   {
     "id": "ds_cand_0235",
     "category": "Çand",
-    "prompt": "Kîjan cejn bi gelemperî di 10ê Zilhicceyê de tê pîrozkirin? /",
+    "prompt": "Kîjan cejn bi gelemperî di 10ê Zilhicceyê de tê pîrozkirin?",
     "answers": [
       "Cejna Qurbanê",
       "Cejna Remezanê",
@@ -24898,7 +24898,7 @@
   {
     "id": "ds_cand_0233",
     "category": "Çand",
-    "prompt": "Kîjan cejn bi gelemperî ji bo bîranîna Îbrahîm Pêxember tê pîrozkirin? /",
+    "prompt": "Kîjan cejn bi gelemperî ji bo bîranîna Îbrahîm Pêxember tê pîrozkirin?",
     "answers": [
       "Cejna Qurbanê",
       "Cejna Remezanê",
@@ -24966,7 +24966,7 @@
   {
     "id": "ds_cand_0239",
     "category": "Çand",
-    "prompt": "Cejna Remezanê di kîjan meha qemerî de tê pîrozkirin? /",
+    "prompt": "Cejna Remezanê di kîjan meha qemerî de tê pîrozkirin?",
     "answers": [
       "Meha Şewalê",
       "Meha Remezanê",
@@ -25004,7 +25004,7 @@
     "prompt": "Bandora sereke ya dîrokî ya beşa kurdî ya Radyoya Êrîvanê (1955) li ser bîra muzîka kurdî çi bû?",
     "promptTr": "1955'te yayına başlayan Erivan Radyosu Kürtçe Servisi'nin müzik mirası üzerindeki en büyük tarihsel etkisi neydi?",
     "answers": [
-      "Qedexekirina amûrên gelerî û tenê bikaranîna muzîka klasîk a rûsî",
+      "Qedexekirina amûrên gelêrî û tenê bikaranîna muzîka klasîk a rûsî",
       "Qeydkirina kilamên devkî bi orkestrasyonê û belavkirina wan a li seranserê herêmê",
       "Tenê çêkirina operayên bi zimanê ermenî li ser dîroka kevnar",
       "Rakirina kevneşopiya dengbêjiyê û anîna muzîka elektronîk a rojavayî"
@@ -25036,9 +25036,9 @@
     "prompt": "Di salên 1990î de bandora komên wekî \"Koma Dengê Azadî\" û \"Koma Amed\" li ser muzîka nûjen a kurdî çi bû?",
     "promptTr": "1990'lı yıllarda Koma Dengê Azadî ve Koma Amed gibi müzik gruplarının Kürt müziğindeki yapısal yeniliği neydi?",
     "answers": [
-      "Têkelkirina melodiyên gelerî bi polîfonî û amûrên nûjen ên rojavayî re",
+      "Têkelkirina melodiyên gelêrî bi polîfonî û amûrên nûjen ên rojavayî re",
       "Rakirina zimanê kurdî û tenê gotina stranên îngilîzî",
-      "Qedexekirina tembûrê û tenê bikaranîna mûzîka elektronîk a bê peyv",
+      "Qedexekirina tembûrê û tenê bikaranîna muzîka elektronîk a bê peyv",
       "Tenê xwendina metnên dînî yên serdema navîn li mizgeftan"
     ],
     "answersTr": [
@@ -25047,7 +25047,7 @@
       "Bağlamayı yasaklayıp yalnızca sözsüz elektronik tekno müzik yapmak",
       "Yalnızca camilerde ortaçağ dini ilahilerini koro halinde okumak"
     ],
-    "correctAnswer": "Têkelkirina melodiyên gelerî bi polîfonî û amûrên nûjen ên rojavayî re",
+    "correctAnswer": "Têkelkirina melodiyên gelêrî bi polîfonî û amûrên nûjen ên rojavayî re",
     "correctAnswerTr": "Geleneksel halk melodilerini çokseslilik ve modern Batı enstrümanlarıyla sentezlemek",
     "explanation": "Koman di salên 90î de mûzîka kurdî bi rêbazên nûjen û polîfonîk ji nû ve ava kirin.",
     "explanationKu": "Koman di salên 90î de mûzîka kurdî bi rêbazên nûjen û polîfonîk ji nû ve ava kirin.",
@@ -25229,7 +25229,7 @@
     "promptTr": "Çağdaş Kürt sineması senaryolarında neden sık sık dengbêj anlatılarından ve figürlerinden beslenir?",
     "answers": [
       "Ji ber ku muzîka dengbêjiyê bi hêsanî bi piyanoyê tê guhertin",
-      "Ji ber ku qanûnên sînemayê bikaranîna zimanên din qedexe dike",
+      "Ji ber ku qanûnên sînemayê bikaranîna zimanên din qedexe dikin",
       "Ji ber ku di dengbêjiyê de tenê qala çîrokên zanistî tê kirin",
       "Ji ber ku bîra dîrokî û çavkaniya herî xurt a dramatîk a devkî ye"
     ],
@@ -25260,7 +25260,7 @@
     "prompt": "Fîlma kurt a \"Ax\" (Toprak, 1999) a \"Kazım Öz\" çîroka kalekî li gundekî valakirî çawa vedibêje?",
     "promptTr": "Kazım Öz'ün \"Ax\" (Toprak, 1999) kısa filminde boşaltılmış köyde tek başına kalan yaşlı adamın dramı nasıl anlatılır?",
     "answers": [
-      "Şahiya cejnekê ya li gundekî qelebalix bi mûzîk û reqsan",
+      "Şahiya cejnekê ya li gundekî qelebalix bi muzîk û reqsan",
       "Dîroka avakirina bendaveke mezin li ser rûbarê Firatê",
       "Pêşbirkeke çandiniyê di navbera cotkarên herêmê de",
       "Tenêtiya giran a mirovekî ku xaka xwe bernade li hemberî hilweşîn û bêdengiyê"
@@ -25293,7 +25293,7 @@
     "promptTr": "Haşim Aydemir'in \"14 Tîrmeh\" (2017) filminde cezaevi sahnelerindeki sinematografik dil neye dayanır?",
     "answers": [
       "Klostrofobiya zindanê, êşa giran a laşî û biryardariya îradeya mirov",
-      "Dîmenên geş ên peravên deryayê bi mûzîka şad",
+      "Dîmenên geş ên peravên deryayê bi muzîka şad",
       "Gera li nav muzexaneyên mezin ên Ewropayê bi hevalan re",
       "Fîlmeke komedî ya li ser jiyana karsazên li otêlên luks"
     ],
@@ -25455,7 +25455,7 @@
       "Hemû firokeyên şer ên pêwîst ji aliyê eşîra Barzan ve ji derve hatin anîn",
       "Sîstema aborî ya komarê tenê bi rêya bazirganiya petrola Barzan pêk hat",
       "Mele Mistefa Barzanî û pêşmergeyên wî bûn bingeha hêza leşkerî ya komarê",
-      "Hemû qanûnên destûra komarê ji aliyê rûspiyên Barzan ve hatin nivîsandin /"
+      "Hemû qanûnên destûra komarê ji aliyê rûspiyên Barzan ve hatin nivîsandin"
     ],
     "answersTr": [
       "Gerekli tüm savaş uçaklarının Barzan aşireti tarafından yurt dışından temin edilmesi",
@@ -25487,7 +25487,7 @@
       "Sînorên navdewletî yên Iraqê ji nû ve bi fermî guhert",
       "Herêma qedexeya firînê li bakur ava kir û vegera penaberan hêsantir kir",
       "Hemû rêveberiyên herêmî bi fermî betal kir",
-      "Kontrola hemû dergehên sînorî rasterast girt destê xwe /"
+      "Kontrola hemû dergehên sînorî rasterast girt destê xwe"
     ],
     "answersTr": [
       "Irak'ın uluslararası sınırlarını resmen yeniden belirledi",
@@ -25677,7 +25677,7 @@
     "promptTr": "\"Event Sourcing\" mimarisinde bir nesnenin veya sistemin güncel durumu (state) nasıl elde edilir?",
     "answers": [
       "Bi xwendina yek qeyda herî dawî ya ku di tabloyeke statîk a SQLê de maye",
-      "Bi texmînkirina encamê bi riya modelekî fêrbûna makîneyê ya hêsan",
+      "Bi texmînkirina encamê bi riya modeleke fêrbûna makîneyê ya hêsan",
       "Bi girtina kopiyeke fîzîkî ya hemû bîrgeha RAMê li ser dîskeke derve",
       "Bi ji nû ve meşandina hemû bûyerên dîrokî yên ku heta niha li pey hev qewimîne"
     ],
@@ -26225,7 +26225,7 @@
       "Hard disk",
       "RAM",
       "CPU",
-      "Karta dengê"
+      "Karta dengî"
     ],
     "correctAnswer": "Hard disk",
     "explanation": "Sabit disk, verileri kalıcı olarak depolamak için kullanılır. RAM, bilgisayar kapatıldığında boşalan geçici bellektir, CPU işlem yapar ve ses kartı ses içindir.",
@@ -26392,7 +26392,7 @@
     "category": "Teknolojî",
     "prompt": "Kîjan cîhaz ji bo girêdana komputerê bi înternetê re tê bikaranîn?",
     "answers": [
-      "Karta dengê",
+      "Karta dengî",
       "Karta grafîkê",
       "Karta bîrê",
       "Karta torê"
@@ -26696,7 +26696,7 @@
   {
     "id": "ds_sinema_0200",
     "category": "Cîhan",
-    "prompt": "Kîjan belgeselvanê amerîkî fîlma \"The Act of Killing\" derxist?",
+    "prompt": "Kîjan belgefîlmçêkerê amerîkî fîlma \"The Act of Killing\" derxist?",
     "answers": [
       "Joshua Oppenheimer",
       "Adam Curtis",
@@ -26764,7 +26764,7 @@
   {
     "id": "ds_sinema_0208",
     "category": "Cîhan",
-    "prompt": "Di fîlma \"Schindler's List\" a Steven Spielberg de, kîjan aktor rola Oskar Schindler lîstiye?",
+    "prompt": "Di fîlma \"Schindler's List\" a Steven Spielberg de, kîjan aktorî rola Oskar Schindler lîstiye?",
     "answers": [
       "Liam Neeson",
       "Ben Kingsley",
@@ -26904,7 +26904,7 @@
     "answers": [
       "Resolver tenê navnîşanên MAC tomar dike, Authoritative daneyên HTTP dişîne",
       "Resolver tenê di komputerên kesane de heye, Authoritative routera herêmî ye",
-      "Resolver geroka înternetê bixwe ye, Authoritative kerta tora bêtêl e",
+      "Resolver geroka înternetê bixwe ye, Authoritative karta tora bêtêl e",
       "Resolver li ser navê klîentê hiyerarşiyê digere, Authoritative qeyda teqez a navê domênê digire"
     ],
     "correctAnswer": "Resolver li ser navê klîentê hiyerarşiyê digere, Authoritative qeyda teqez a navê domênê digire",
