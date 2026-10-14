@@ -2227,7 +2227,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
       Lesson(
         id: 'geography_1',
         slug: 'geography_1',
-        titleKu: 'Erdnîgarîya Kurdistanê',
+        titleKu: 'Erdnîgariya Kurdistanê',
         titleTr: 'Coğrafya',
         category: 'geography',
         iconName: 'map',
@@ -3230,7 +3230,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'culture_1',
         order: 1,
         contentKu:
-            'Kevneşopiya Govendê:\n\n• Govend: Halay\n• Dilan: Düğün / Eğlence\n• Şahî: Şenlik',
+            'Kevneşopiya Govendê:\n\n• Govend: Halay\n• Dîlan: Düğün / Eğlence\n• Şahî: Şenlik',
         contentTr: 'Kürt halk kültürü ve halay gelenekleri.',
       ),
       LessonSlide(
@@ -3346,7 +3346,7 @@ class MockZanKurdRepository implements ZanKurdRepository {
         lessonId: 'animals_2',
         order: 2,
         contentKu:
-            'Balindeyên esmanî:\n\n• Eylo: Kartal\n• Kevok: Güvercin\n• Qijak: Karga',
+            'Balindeyên esmanî:\n\n• Eylo: Kartal\n• Kevok: Güvercin\n• Qijik: Karga',
         contentTr: 'Kuş türleri.',
       ),
     ],

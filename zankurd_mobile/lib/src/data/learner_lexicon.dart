@@ -129,7 +129,7 @@ class LearnerLexicon {
     ),
     'geography_1': LearnerLexiconSource(
       id: 'geography_1',
-      titleKu: 'Erdnîgarîya Kurdistanê',
+      titleKu: 'Erdnîgariya Kurdistanê',
       titleTr: 'Coğrafya',
       categoryKu: 'Erdnîgarî',
       categoryTr: 'Coğrafya',
@@ -465,7 +465,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'dilan',
-      termKu: 'Dilan',
+      termKu: 'Dîlan',
       meaningTr: 'Düğün / Eğlence',
       sourceId: 'culture_1',
     ),
@@ -614,7 +614,7 @@ class LearnerLexicon {
       termKu: 'Şêr',
       meaningTr: 'Aslan',
       sourceId: 'animals_2',
-      forms: ['şerê', 'serî', 'seran', 'şerên', 'şerek', 'şerekî'],
+      forms: ['şêrê', 'şêrî', 'şêran', 'şêrên', 'şêrek', 'şêrekî'],
     ),
     LearnerLexiconEntry(
       id: 'gur',
@@ -648,7 +648,7 @@ class LearnerLexicon {
     ),
     LearnerLexiconEntry(
       id: 'qijak',
-      termKu: 'Qijak',
+      termKu: 'Qijik',
       meaningTr: 'Karga',
       sourceId: 'animals_2',
       forms: ['qijik'],
@@ -993,19 +993,6 @@ class LearnerLexicon {
       termKu: 'Bi xêr hatî',
       meaningTr: 'Hoş geldin',
       sourceId: 'greetings_2',
-      forms: [
-        'hatî',
-        'hatin',
-        'hat',
-        'hate',
-        'tên',
-        'têt',
-        'têm',
-        'nayê',
-        'nayên',
-        'were',
-        'werin',
-      ],
     ),
     LearnerLexiconEntry(
       id: 'sibeha-te-bi-xer',
@@ -1474,7 +1461,7 @@ class LearnerLexicon {
       termKu: 'Çar',
       meaningTr: 'Dört',
       sourceId: 'numbers_1',
-      forms: ['cara', 'carê', 'caran'],
+      forms: ['çaran', 'çarê'],
     ),
     LearnerLexiconEntry(
       id: 'penc',
@@ -1700,7 +1687,6 @@ class LearnerLexicon {
       termKu: 'Re',
       meaningTr: 'ile, -le',
       sourceId: 'questions',
-      forms: ['riya', 'rêya', 'rêyê', 'rêyan'],
     ),
     LearnerLexiconEntry(
       id: 'q-film',
@@ -2107,7 +2093,7 @@ class LearnerLexicon {
       termKu: 'Cih',
       meaningTr: 'yer, mekân',
       sourceId: 'questions',
-      forms: ['cihê', 'cihan', 'cihekî', 'cîhanê', 'cîhana'],
+      forms: ['cihê', 'cihî', 'cihan', 'cihekî'],
     ),
     LearnerLexiconEntry(
       id: 'q-diyar',
@@ -2368,7 +2354,6 @@ class LearnerLexicon {
       termKu: 'Din',
       meaningTr: 'diğer, başka',
       sourceId: 'questions',
-      forms: ['dînê', 'dînî'],
     ),
     LearnerLexiconEntry(
       id: 'q-minak',
@@ -2394,7 +2379,6 @@ class LearnerLexicon {
       termKu: 'Heman',
       meaningTr: 'aynı',
       sourceId: 'questions',
-      forms: ['hêmanê', 'hêmanên', 'hêmanan'],
     ),
     LearnerLexiconEntry(
       id: 'q-yekjimar',
@@ -2724,7 +2708,7 @@ class LearnerLexicon {
       termKu: 'Têlefon',
       meaningTr: 'telefon',
       sourceId: 'questions',
-      forms: ['têlefona', 'têlefonan', 'têlefoneke', 'telefonê'],
+      forms: ['têlefona', 'têlefonê', 'têlefonan', 'têlefoneke'],
     ),
     LearnerLexiconEntry(
       id: 'q-belgefilm',
@@ -2875,7 +2859,7 @@ class LearnerLexicon {
       termKu: 'Derbarê',
       meaningTr: 'hakkında',
       sourceId: 'questions',
-      forms: ['barê'],
+      forms: ['derbarê'],
     ),
     LearnerLexiconEntry(
       id: 'q-tegih',
@@ -3178,7 +3162,7 @@ class LearnerLexicon {
       termKu: 'Derî',
       meaningTr: 'kapı',
       sourceId: 'questions',
-      forms: ['derîyê', 'deriyan'],
+      forms: ['deriyê', 'deriyan'],
     ),
     LearnerLexiconEntry(
       id: 'q-internet',
@@ -3284,7 +3268,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-xwestin',
       termKu: 'Xwestin',
-      meaningTr: 'istiyor',
+      meaningTr: 'istemek',
       sourceId: 'questions',
       forms: [
         'dixwaze',
@@ -3312,7 +3296,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-herikin',
       termKu: 'Herikîn',
-      meaningTr: 'akışı',
+      meaningTr: 'akmak, akış',
       sourceId: 'questions',
       forms: ['herikîna', 'herikînê', 'diherike', 'herikî', 'biherike'],
     ),
@@ -3326,7 +3310,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-guherin',
       termKu: 'Guherîn',
-      meaningTr: 'değişimi',
+      meaningTr: 'değişmek, değişim',
       sourceId: 'questions',
       forms: ['guherîna', 'guherînê', 'diguhere'],
     ),
@@ -3396,7 +3380,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-bilindahi',
       termKu: 'Bilindahî',
-      meaningTr: 'yüksekliği',
+      meaningTr: 'yükseklik',
       sourceId: 'questions',
       forms: ['bilindahiya', 'bilindahiyê'],
     ),
@@ -3818,7 +3802,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-veguherandin',
       termKu: 'Veguherandin',
-      meaningTr: 'dönüştürür',
+      meaningTr: 'dönüştürmek',
       sourceId: 'questions',
       forms: ['vediguherîne', 'vediguherînin'],
     ),
@@ -3887,7 +3871,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-hilgirtin',
       termKu: 'Hilgirtin',
-      meaningTr: 'taşır, içerir',
+      meaningTr: 'taşımak, kaldırmak, içermek',
       sourceId: 'questions',
       forms: ['hildigire', 'hilgire'],
     ),
@@ -4349,7 +4333,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-gihandin',
       termKu: 'Gihandin',
-      meaningTr: 'ulaştırır, birleştirir',
+      meaningTr: 'ulaştırmak, birleştirmek',
       sourceId: 'questions',
       forms: ['digihîne'],
     ),
@@ -5402,7 +5386,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-pirsin',
       termKu: 'Pirsîn',
-      meaningTr: 'sorarsa',
+      meaningTr: 'sormak',
       sourceId: 'questions',
       forms: ['dipirse', 'bipirse'],
     ),
@@ -5550,7 +5534,7 @@ class LearnerLexicon {
     LearnerLexiconEntry(
       id: 'q-hatin',
       termKu: 'Hatin',
-      meaningTr: 'edilmek',
+      meaningTr: 'gelmek (edilgen yardımcı fiil: edilmek)',
       sourceId: 'questions',
       forms: [
         'hat',
