@@ -4,7 +4,7 @@
     "category": "Muzîk",
     "difficulty": 3,
     "type": "multipleChoice",
-    "prompt": "Albûma stûdyoyê ya yekem ya Şivan Perwer kîjan e?",
+    "prompt": "Albûma stûdyoyê ya yekem a Şivan Perwer kîjan e?",
     "promptTr": "Şivan Perwer'in ilk stüdyo albümü hangisidir?",
     "answers": [
       "Seyir",
@@ -74,7 +74,7 @@
     "category": "Muzîk",
     "difficulty": 4,
     "type": "multipleChoice",
-    "prompt": "Albûma stûdyoyê ya duyem ya Aynûr Dogan ku di sala 2004'an de derketiye kîjan e?",
+    "prompt": "Albûma stûdyoyê ya duyem a Aynûr Dogan ku di sala 2004'an de derketiye kîjan e?",
     "promptTr": "Aynur Doğan'ın 2004'te yayımlanan ikinci stüdyo albümü hangisidir?",
     "answers": [
       "Seyir",
@@ -288,7 +288,7 @@
     "promptTr": "HTTP durum kodu 404 ne anlama gelir?",
     "answers": [
       "Rûpel nehat dîtin",
-      "Çewtiya pêşkêşkar",
+      "Çewtiya pêşkêşkarî",
       "Beralîkirin",
       "Gihîştina bêdestûr"
     ],
@@ -354,7 +354,7 @@
     "category": "Teknolojî",
     "difficulty": 3,
     "type": "multipleChoice",
-    "prompt": "Di lêgerîna duduî (binary search) de, tevlîheviya demê ya rewşa herî xirab çi ye?",
+    "prompt": "Di lêgerîna duduyî (binary search) de, tevlîheviya demê ya rewşa herî xirab çi ye?",
     "promptTr": "İkili aramanın (binary search) en kötü durum zaman karmaşıklığı nedir?",
     "answers": [
       "O(1)",
@@ -459,7 +459,7 @@
     "category": "Sînema",
     "difficulty": 3,
     "type": "multipleChoice",
-    "prompt": "Fîlmê Yilmaz Guney yê ku di sala 1982'yan de li Festîvala Fîlman ya Cannesê xelata Palmiyeya Zêrîn girtiye, kîjan e?",
+    "prompt": "Fîlmê Yilmaz Guney ê ku di sala 1982'yan de li Festîvala Fîlman a Cannesê xelata Palmiyeya Zêrîn girtiye, kîjan e?",
     "promptTr": "Yılmaz Güney'in 1982 Cannes Film Festivali'nde Altın Palmiye kazanan filmi hangisidir?",
     "answers": [
       "Ağıt",
@@ -494,7 +494,7 @@
     "category": "Sînema",
     "difficulty": 4,
     "type": "multipleChoice",
-    "prompt": "Fîlmê Yilmaz Guney yê bi navê \"Umut\" di kîjan salê de hat nîşandan?",
+    "prompt": "Fîlmê Yilmaz Guney ê bi navê \"Umut\" di kîjan salê de hat nîşandan?",
     "promptTr": "Yılmaz Güney'in \"Umut\" filmi hangi yılda gösterime girdi?",
     "answers": [
       "1966",
@@ -529,7 +529,7 @@
     "category": "Sînema",
     "difficulty": 2,
     "type": "multipleChoice",
-    "prompt": "Kîjan derhêner fîlmê \"Rashomon\" derhênaye?",
+    "prompt": "Kîjan derhênerî fîlmê \"Rashomon\" derhênaye?",
     "promptTr": "\"Rashomon\" filmini hangi yönetmen çekmiştir?",
     "answers": [
       "Yasujirō Ozu",
@@ -570,7 +570,7 @@
       "Pêla Nû ya Fransî",
       "Pêla Nû ya Çekî",
       "Neo-realîzma Îtalî",
-      "Pêla Nû ya Alman"
+      "Pêla Nû ya Almanî"
     ],
     "answersTr": [
       "Fransız Yeni Dalga",

@@ -5,7 +5,7 @@
     "prompt": "Di dawet û şahiyên kurdî de diyariya pereyan a ku ji bo nûzewacan tê dayîn bi kîjan navî tê nasîn?",
     "answers": [
       "metelok",
-      "kelaş",
+      "klaş",
       "hewran",
       "şabaş"
     ],
@@ -38,11 +38,11 @@
     "prompt": "Pêlava kurdî ya kevneşopî ya ku bi tayan tê hûnandin bi kîjan navî tê nasîn?",
     "answers": [
       "şûtik",
-      "kelaş",
+      "klaş",
       "kolos",
       "elek"
     ],
-    "correctAnswer": "kelaş",
+    "correctAnswer": "klaş",
     "promptTr": "İplik örülerek yapılan geleneksel Kürt ayakkabısı hangi adla bilinir?",
     "answersTr": [
       "şûtik",
@@ -103,7 +103,7 @@
     "category": "Çand",
     "prompt": "Çadira reş a ji mûyê bizinan ya ku koçer di havînê de li zozanan datînin bi kîjan navî tê nasîn?",
     "answers": [
-      "kelaş",
+      "klaş",
       "reşmal",
       "şûtik",
       "metelok"
@@ -368,7 +368,7 @@
     "category": "Muzîk",
     "prompt": "Cudahiya sereke ya di navbera kilamê û stranên govendê de çi ye?",
     "answers": [
-      "Kilam bi zurneyê tê gotin, stranên govendê bêdeng in",
+      "Kilam bi zirneyê tê gotin, stranên govendê bêdeng in",
       "Kilam çîrokê vedibêje, stranên govendê rîtmî ne",
       "Kilam tenê ji hêla jinan ve tê gotin",
       "Kilam tenê di dawetan de tê gotin"
@@ -432,7 +432,7 @@
   {
     "id": "restore_2026_08_07_0014",
     "category": "Cografya",
-    "prompt": "Bajarê Colemêrgê li kîjan perçeyê Kurdistanê ye?",
+    "prompt": "Bajarê Colemêrgê li kîjan parçeyê Kurdistanê ye?",
     "answers": [
       "Bakurê Kurdistanê",
       "Rojavayê Kurdistanê",
@@ -466,7 +466,7 @@
   {
     "id": "restore_2026_08_07_0015",
     "category": "Cografya",
-    "prompt": "Gola Wanê li kîjan perçeyê Kurdistanê ye?",
+    "prompt": "Gola Wanê li kîjan parçeyê Kurdistanê ye?",
     "answers": [
       "Rojavayê Kurdistanê",
       "Başûrê Kurdistanê",

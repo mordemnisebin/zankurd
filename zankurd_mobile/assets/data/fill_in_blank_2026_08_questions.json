@@ -141,7 +141,7 @@
     "category": "Ziman",
     "type": "fillInBlank",
     "difficulty": 3,
-    "prompt": "Di dema borî ya lêkera derbasdar de, kirdeya kesê duyemîn a yekjimar bi forma tewandî binivîse: \"___ ew dît.\"",
+    "prompt": "Di dema borî ya lêkera derbasdar de, kirdeya kesê duyemîn ê yekjimar bi forma tewandî binivîse: \"___ ew dît.\"",
     "promptTr": "Geçmiş zamanda geçişli fiilin ikinci tekil kişi öznesini bükümlü biçimde yaz: \"___ ew dît.\"",
     "answers": [
       "Te"
@@ -542,7 +542,7 @@
     "category": "Ziman",
     "type": "fillInBlank",
     "difficulty": 1,
-    "prompt": "Peyva ku wateya \"feyde\" dide û dengdêra \"û\" di navê de heye, bi rastnivîsa Kurmancî binivîse: \"___.\"",
+    "prompt": "Peyva ku wateya \"feyde\" dide û dengdêra \"û\" tê de heye, bi rastnivîsa Kurmancî binivîse: \"___.\"",
     "promptTr": "\"Yarar\" anlamına gelen ve \"û\" ünlüsünü içeren Kurmancî sözcüğü doğru yaz: \"___.\"",
     "answers": [
       "sûd"
@@ -603,7 +603,7 @@
     "category": "Ziman",
     "type": "fillInBlank",
     "difficulty": 1,
-    "prompt": "Navê beşa laşê ku li derdora dev e û dengdêra \"ê\" di navê de heye, bi rastnivîsa Kurmancî binivîse: \"___.\"",
+    "prompt": "Navê beşa laş a ku li derdora dev e û dengdêra \"ê\" tê de heye, bi rastnivîsa Kurmancî binivîse: \"___.\"",
     "promptTr": "\"Dudak\" anlamına gelen ve \"ê\" ünlüsünü içeren Kurmancî sözcüğü doğru yaz: \"___.\"",
     "answers": [
       "lêv"
