@@ -14,6 +14,7 @@ import '../models/mastery_level.dart';
 import '../data/mistake_store.dart';
 import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/streak_store.dart';
+import '../data/progress_sync.dart';
 import '../data/xp_award_publisher.dart';
 import '../data/zankurd_repository.dart';
 import '../utils/error_reporter.dart';
@@ -680,11 +681,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // aynı anahtarı taşır ve sunucu ikinci kez çekmez.
     String idempotencyKey = '',
   }) async {
+    final premium = context.read<PremiumService>();
     final streakStore = await StreakStore.load();
     // Alıştırma (yanlış tekrarı) seriyi ne uzatır ne de dondurma teklifi
     // açar: aynı sorular tekrar çözülüyor, yeni bir oyun günü değil.
     if (practice) return _practiceStreak(streakStore);
-    final premium = context.read<PremiumService>();
     final today = DateTime.now();
     final todayKey =
         '${today.year.toString().padLeft(4, '0')}-'
@@ -1070,6 +1071,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     for (final achievement in newAchievements) {
       AnalyticsService.instance.logBadgeEarned(achievement.id);
     }
+    // Seri, rozet, ustalık ve tekrar kuyruğu bu turda değişti: kayıtlı
+    // hesapta kısa bir gecikmeyle sunucuya eşitlenir (misafirde no-op).
+    ProgressSyncService.markDirty();
 
     if (mounted) {
       setState(() {

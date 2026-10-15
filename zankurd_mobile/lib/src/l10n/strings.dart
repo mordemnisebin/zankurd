@@ -2016,14 +2016,11 @@ class Tr {
     K.signOut: {'ku': 'Derkeve', 'tr': 'Çıkış yap'},
     K.signOutConfirm: {
       'ku':
-          'Tu dixwazî ji hesabê xwe derkevî? Ast û pêşketina hînbûnê '
-          'ya li ser vê amûrê dê ji amûrê bên paqij kirin; daneyên '
-          'serhêl ên hesabê te (tevlî pûana rêzbendiyê) nayên '
-          'jêbirin.',
+          'Tu dixwazî ji hesabê xwe derkevî? Pêşketina te bi hesabê te ve '
+          'tê parastin; dema dîsa têkevî vedigere.',
       'tr':
-          'Hesabından çıkmak istiyor musun? Bu cihazdaki seviye '
-          'çubuğu ve öğrenme ilerlemen temizlenir; çevrimiçi hesap '
-          'verilerin (sıralama puanı dahil) silinmez.',
+          'Hesabından çıkmak istiyor musun? İlerlemen hesabına bağlı '
+          'saklanır; tekrar giriş yapınca geri gelir.',
     },
     K.allMistakesWaiting: {
       'ku':

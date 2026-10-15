@@ -11,6 +11,7 @@ import '../l10n/strings.dart';
 import '../data/xp_store.dart';
 import '../data/streak_store.dart';
 import '../data/mistake_store.dart';
+import '../data/progress_sync.dart';
 import '../data/seen_question_store.dart';
 import '../data/achievement_store.dart';
 import '../data/badge_service.dart';
@@ -183,6 +184,7 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
           if (!_isCurrentAuthGeneration(generation, null)) return;
           await LocalProgressScope.activateOffline(prefs);
           if (!_isCurrentAuthGeneration(generation, null)) return;
+          ProgressSyncService.unbind();
           _dropProgressMemory();
         } catch (error, stack) {
           ErrorReporter.record(
@@ -241,6 +243,26 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
         ErrorReporter.record(e, s, reason: 'SyncManager restart');
       }
     }
+    _bindProgressSync(user, localProgressReady: localProgressReady);
+  }
+
+  /// Kayıtlı (misafir olmayan) kullanıcının ilerlemesini hesapla eşitler:
+  /// oturum açılışında sunucudaki anlık görüntü yerelle birleştirilir
+  /// (bkz. [ProgressSyncService]). Misafir oturumda eşitleme kapalıdır; veri
+  /// onunla gitmez, çıkışta zaten silinir. Sunucu RPC'si yoksa ya da ağ
+  /// yoksa sessizce yerel davranış sürer.
+  void _bindProgressSync(User user, {required bool localProgressReady}) {
+    final client = _client;
+    if (client == null || !localProgressReady || user.isAnonymous) {
+      ProgressSyncService.unbind();
+      return;
+    }
+    final service = ProgressSyncService.bind(
+      remote: SupabaseProgressRemote(client),
+      userId: user.id,
+      onLocalChanged: _dropProgressMemory,
+    );
+    unawaited(service.syncNow());
   }
 
   /// Aynı cihazda önceki oturumdan FARKLI bir kullanıcı geldiğinde onun
@@ -896,11 +918,44 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
     return requiredStoresCleared;
   }
 
+  /// Kayıtlı hesabın çıkışı: son durumu hesaba göndermeyi dener (4 sn), sonra
+  /// eşitlemeyi kapatır ve cihaz sahibini "sahipsiz oturum"a çevirir. Böylece
+  /// çıkış sonrası çevrimdışı/misafir oturum, çıkan hesabın kapsamını değil
+  /// kendi ayrı kapsamını kullanır; çıkan hesabın anahtarları diskte kalır ve
+  /// aynı hesap dönünce eksiksiz görünür.
+  Future<bool> _keepLocalProgressOnSignOut() async {
+    try {
+      await ProgressSyncService.maybeInstance?.flush();
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'progress flush on signOut');
+    }
+    ProgressSyncService.unbind();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return await prefs.setString(
+        _deviceOwnerUserIdKey,
+        LocalProgressScope.offlineUserId,
+      );
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'deviceOwner reset on signOut');
+      return false;
+    }
+  }
+
   Future<void> signOut({
     bool discardPendingRewards = false,
     String? pendingRewardsOwnerId,
   }) async {
     var accountCleanupFailed = false;
+    // Kayıtlı hesabın normal çıkışında yerel ilerleme SİLİNMEZ: anahtarlar
+    // kullanıcı kimliğine kapsamlı (bkz. [LocalProgressScope]) ve ilerleme
+    // hesaba eşitleniyor; silmek seri/rozet/seviyeyi, telefon değişiminde
+    // olduğu gibi, geri alınamaz biçimde kaybettirirdi. Misafir ve hesap
+    // silme eskisi gibi siler.
+    final keepLocalProgress =
+        !discardPendingRewards &&
+        _currentUser != null &&
+        !_currentUser!.isAnonymous;
     // Devam eden eski oturum hazırlığını geçersiz kıl ve tamamlanmasını bekle.
     // Böylece gecikmiş A kullanıcısı, logout temizliğinden sonra kapsamı veya
     // SyncManager'ı yeniden A adına kuramaz.
@@ -934,7 +989,9 @@ class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
       ErrorReporter.record(e, s, reason: 'PremiumService logout on signOut');
     }
 
-    final localProgressCleared = await _clearLocalProgressStores();
+    final localProgressCleared = keepLocalProgress
+        ? await _keepLocalProgressOnSignOut()
+        : await _clearLocalProgressStores();
     if (discardPendingRewards && !localProgressCleared) {
       accountCleanupFailed = true;
     }
