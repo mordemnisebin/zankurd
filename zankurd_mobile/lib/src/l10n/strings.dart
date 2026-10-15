@@ -922,6 +922,11 @@ class Tr {
       'ku': '{completed} ji {total} astan temam bûn',
       'tr': '{total} seviyeden {completed} tanesi tamamlandı',
     },
+    K.levelNotPassed: {
+      'ku':
+          'Asta derbas nebû: herî kêm sedî {p0} rast pêwîst e. Dîsa biceribîne.',
+      'tr': 'Seviye geçilmedi: en az %{p0} doğru gerekir. Tekrar dene.',
+    },
     K.oncePSeviyeyiTamamla: {
       'ku': 'Pêşî asta {p0} temam bike.',
       'tr': 'Önce {p0} seviyeyi tamamla.',
@@ -3315,6 +3320,7 @@ class K {
   static const pPSeviye = 'screen.pPSeviye';
   static const progressLevelsCompleted = 'screen.progressLevelsCompleted';
   static const oncePSeviyeyiTamamla = 'screen.oncePSeviyeyiTamamla';
+  static const levelNotPassed = 'screen.levelNotPassed';
   static const pKilitliOncekiSeviyeyi = 'screen.pKilitliOncekiSeviyeyi';
   static const zorlukUzerindenPYildiz = 'screen.zorlukUzerindenPYildiz';
   static const zorluk = 'screen.zorluk';
