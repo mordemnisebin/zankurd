@@ -2630,6 +2630,26 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .eq('room_id', roomId)
         .order('joined_at');
 
+    // `profiles` RLS yalnız kendi satırını okutur: gömülü profil öteki
+    // oyuncular için null gelir ve lobide herkes "Oyuncu" görünüyordu.
+    // Adı bilinmeyenler herkese açık profil RPC'siyle tamamlanır.
+    final missing = [
+      for (final row in rows)
+        if (row['profiles'] == null &&
+            !_profileCache.containsKey(row['player_id'] as String))
+          row['player_id'] as String,
+    ];
+    if (missing.isNotEmpty) {
+      try {
+        for (final profile in await _fetchPublicProfiles(missing)) {
+          final id = profile['id'] as String?;
+          if (id != null) _profileCache[id] = profile;
+        }
+      } catch (error, stack) {
+        _recordError(error, stack, reason: 'room players public profiles');
+      }
+    }
+
     return rows.map((row) {
       final playerId = row['player_id'] as String;
       final rawProfile = row['profiles'] as Map<String, dynamic>?;
