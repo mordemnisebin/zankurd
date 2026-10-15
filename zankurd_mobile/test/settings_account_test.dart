@@ -401,6 +401,43 @@ void main() {
     expect(authProvider.discardedRewardsOwnerId, 'user');
   });
 
+  testWidgets('Turkish keyboard "SİL" enables delete and the dialog warns '
+      'about store subscriptions', (tester) async {
+    final repository = _DeleteTrackingRepository();
+    final authProvider = _SignOutTrackingAuthProvider();
+    await tester.binding.setSurfaceSize(const Size(390, 1400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      testShell(
+        child: SettingsScreen(repository: repository),
+        authProvider: authProvider,
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    final deleteAction = await _scrollToDeleteAction(tester);
+    await tester.tap(deleteAction);
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('delete-subscription-note')),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const ValueKey('delete-continue')));
+    await tester.pumpAndSettle();
+
+    FilledButton button() => tester.widget<FilledButton>(
+      find.byKey(const ValueKey('delete-forever')),
+    );
+    expect(button().onPressed, isNull);
+    await tester.enterText(
+      find.byKey(const ValueKey('delete-confirm-field')),
+      'SİL',
+    );
+    await tester.pump();
+    expect(button().onPressed, isNotNull);
+  });
+
   testWidgets('deleted account reports local cleanup failure accurately', (
     tester,
   ) async {

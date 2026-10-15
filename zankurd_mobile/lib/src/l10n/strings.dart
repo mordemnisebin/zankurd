@@ -177,6 +177,12 @@ class Tr {
       'tr':
           'Bu işlem geri alınamaz. Profil, jeton, kaydedilen sorular ve hesabına bağlı kişisel veriler silinir.',
     },
+    K.deleteSubscriptionNote: {
+      'ku':
+          'Abonetiya App Store an Google Play bi jêbirina hesabê nayê betalkirin; pêdivî ye tu wê bi xwe di dikanê de betal bikî.',
+      'tr':
+          'App Store veya Google Play aboneliği hesap silinince iptal olmaz; aboneliği mağazadan kendin iptal etmelisin.',
+    },
     K.continueAction: {'ku': 'Bidomîne', 'tr': 'Devam et'},
     K.deleteWord: {'ku': 'JÊ BIBE', 'tr': 'SIL'},
     K.finalConfirm: {'ku': 'Erêkirina dawî', 'tr': 'Son onay'},
@@ -3000,6 +3006,7 @@ class K {
   static const ok = 'common.ok';
   static const deleteConfirmTitle = 'settings.delete.title';
   static const deleteConfirmBody = 'settings.delete.body';
+  static const deleteSubscriptionNote = 'settings.delete.subscriptionNote';
   static const continueAction = 'common.continue';
   static const deleteWord = 'settings.delete.word';
   static const finalConfirm = 'settings.delete.finalTitle';
