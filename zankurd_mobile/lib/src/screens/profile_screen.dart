@@ -61,12 +61,22 @@ enum _GuestUpgradeAction {
   emailPendingConfirmation,
   emailFailure,
   googleRequested,
+  appleRequested,
 }
 
 bool get _supportsGoogleAccountLinking =>
     kIsWeb ||
     (defaultTargetPlatform != TargetPlatform.iOS &&
         defaultTargetPlatform != TargetPlatform.macOS);
+
+/// iOS'ta misafirin tek kalıcı yolu e-postaydı: `linkAppleAccount` yazılmış
+/// ama hiçbir çağrı yeri yoktu ve Google bağlama bu platformda kapalıdır.
+/// Apple ile devam etmek hesabı aynı kimlikte (ilerleme kaybolmadan) kalıcı
+/// yapar.
+bool get _supportsAppleAccountLinking =>
+    !kIsWeb &&
+    (defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.macOS);
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
@@ -761,6 +771,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       barrierDismissible: false,
       builder: (_) => _GuestUpgradeDialog(
         supportsGoogleLinking: _supportsGoogleAccountLinking,
+        supportsAppleLinking: _supportsAppleAccountLinking,
       ),
     );
 
@@ -788,6 +799,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
       case _GuestUpgradeAction.googleRequested:
         await _linkGoogleAccount();
+      case _GuestUpgradeAction.appleRequested:
+        await _linkAppleAccount();
       case null:
         break;
     }
@@ -806,6 +819,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // gibi burada da anahtar defterinden çevrilmesi gerekir — yoksa
       // Kurmancî kullanıcı Google bağlama hatasını Türkçe görür
       // (2026-08-14 denetimi).
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.translateAuthError(auth.errorMessage!))),
+      );
+    }
+  }
+
+  /// [_linkGoogleAccount] ile aynı akış ve aynı hata işleme: yükleme perdesi,
+  /// sonuç auth dinleyicisinden gelir, hata anahtar defterinden çevrilir.
+  Future<void> _linkAppleAccount() async {
+    LoadingOverlay.show(context, message: context.t(K.connectingApple));
+    final auth = context.read<AuthProvider>();
+    final success = await auth.linkAppleAccount();
+    if (!mounted) return;
+    LoadingOverlay.hide(context);
+    if (!success && auth.errorMessage != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.translateAuthError(auth.errorMessage!))),
       );

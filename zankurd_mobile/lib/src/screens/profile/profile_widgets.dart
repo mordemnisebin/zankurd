@@ -1104,9 +1104,13 @@ class _LegendDot extends StatelessWidget {
 /// disposed"). Sessizdi: test ortamında route animasyonu çoğu zaman
 /// `pumpAndSettle` ile bitmeden kare okunmuyordu.
 class _GuestUpgradeDialog extends StatefulWidget {
-  const _GuestUpgradeDialog({required this.supportsGoogleLinking});
+  const _GuestUpgradeDialog({
+    required this.supportsGoogleLinking,
+    this.supportsAppleLinking = false,
+  });
 
   final bool supportsGoogleLinking;
+  final bool supportsAppleLinking;
 
   @override
   State<_GuestUpgradeDialog> createState() => _GuestUpgradeDialogState();
@@ -1167,7 +1171,8 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
                 return null;
               },
             ),
-            if (widget.supportsGoogleLinking) ...[
+            if (widget.supportsGoogleLinking ||
+                widget.supportsAppleLinking) ...[
               const SizedBox(height: 16),
               Row(
                 children: [
@@ -1184,24 +1189,47 @@ class _GuestUpgradeDialogState extends State<_GuestUpgradeDialog> {
                   Expanded(child: Divider(color: SahneTokens.of(context).line)),
                 ],
               ),
-              const SizedBox(height: 12),
-              SizedBox(
-                width: double.infinity,
-                child: OutlinedButton.icon(
-                  onPressed: _submitting
-                      ? null
-                      : () => Navigator.pop(
-                          context,
-                          _GuestUpgradeAction.googleRequested,
-                        ),
-                  icon: const BrandIcon(
-                    BrandIcons.google,
-                    size: 18,
-                    color: Color(0xFF4285F4),
+              if (widget.supportsAppleLinking) ...[
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    key: const ValueKey('guest-upgrade-apple'),
+                    onPressed: _submitting
+                        ? null
+                        : () => Navigator.pop(
+                            context,
+                            _GuestUpgradeAction.appleRequested,
+                          ),
+                    icon: BrandIcon(
+                      BrandIcons.apple,
+                      size: 18,
+                      color: SahneTokens.of(context).tx,
+                    ),
+                    label: Text(context.t(K.linkApple)),
                   ),
-                  label: Text(context.t(K.linkGoogle)),
                 ),
-              ),
+              ],
+              if (widget.supportsGoogleLinking) ...[
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: _submitting
+                        ? null
+                        : () => Navigator.pop(
+                            context,
+                            _GuestUpgradeAction.googleRequested,
+                          ),
+                    icon: const BrandIcon(
+                      BrandIcons.google,
+                      size: 18,
+                      color: Color(0xFF4285F4),
+                    ),
+                    label: Text(context.t(K.linkGoogle)),
+                  ),
+                ),
+              ],
             ],
           ],
         ),

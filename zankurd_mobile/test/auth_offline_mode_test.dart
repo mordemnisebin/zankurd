@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
 
 void main() {
@@ -15,10 +16,7 @@ void main() {
 
       expect(signedIn, isFalse);
       expect(provider.isAuthenticated, isFalse);
-      expect(
-        provider.errorMessage,
-        'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.',
-      );
+      expect(provider.errorMessage, K.authErrNetwork);
 
       expect(await provider.signInAsGuest(), isTrue);
       expect(provider.isAuthenticated, isTrue);

@@ -112,6 +112,28 @@ class BadgeService {
     return newlyUnlocked;
   }
 
+  /// Bir turun beceri rozetlerine (mükemmel oyun, hız canavarı) sayılması
+  /// için asgari soru sayısı.
+  static const minSkillRoundQuestions = 5;
+
+  /// Tur beceri rozetlerine sayılır mı?
+  ///
+  /// Kusur: `perfect_game`/`speed_demon` her turda değerlendiriliyordu.
+  /// Yanlış tekrarı (alıştırma) turunda sorular zaten bilinen yanlışlardır;
+  /// tek soruluk turda "hepsi doğru" ve "60 sn'den kısa" kendiliğinden
+  /// sağlanır; süresi dolan sorular cevap süresine 0 katar, yani hiç
+  /// cevaplamamak hız canavarı yapardı. Rozet ilk turda bedavaya açılıyordu
+  /// ve sessizdi: açılması hata üretmez, yalnız rozeti değersizleştirir.
+  ///
+  /// Sayılan tur: alıştırma değil, en az [minSkillRoundQuestions] soru, hiçbir
+  /// soru süre aşımıyla boş kalmamış.
+  static bool isSkillRound({
+    required bool practice,
+    required int totalQuestions,
+    required int unanswered,
+  }) =>
+      !practice && totalQuestions >= minSkillRoundQuestions && unanswered == 0;
+
   /// Mükemmel oyun rozetini değerlendirir.
   Future<bool> evaluatePerfectGame(int correct, int total) async {
     if (correct == total &&

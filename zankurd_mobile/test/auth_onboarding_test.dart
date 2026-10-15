@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -1136,10 +1137,7 @@ void main() {
       ),
     );
 
-    expect(
-      message,
-      'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.',
-    );
+    expect(message, K.authErrProviderDisabled);
   });
 
   test('network auth error points to connection or DNS', () {
@@ -1149,7 +1147,7 @@ void main() {
       Exception('ClientException: Failed host lookup'),
     );
 
-    expect(message, 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.');
+    expect(message, K.authErrNetwork);
   });
 
   test('network auth exception points to connection or DNS', () {
@@ -1159,7 +1157,7 @@ void main() {
       const AuthException('net::ERR_NAME_NOT_RESOLVED'),
     );
 
-    expect(message, 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.');
+    expect(message, K.authErrNetwork);
   });
 
   testWidgets('landscape auth actions can be scrolled into view', (

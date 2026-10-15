@@ -21,6 +21,7 @@ import '../models/tournament.dart';
 import '../models/referral_result.dart';
 import '../providers/analytics_consent_provider.dart';
 import '../services/apple_revocation.dart';
+import '../utils/client_round_id.dart';
 import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../config/category_visibility.dart';
@@ -1901,6 +1902,33 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
   }
 
+  /// [awardSoloQuizCoins]ın bir sonraki [awardQuizCoins] çağrısına taşıdığı
+  /// tur kimliği. Senkron okunup temizlenir (ilk `await`ten önce); böylece
+  /// başka bir çağrıya sızmaz ve `awardQuizCoins`ı geçersiz kılan testler/alt
+  /// sınıflar aynı yoldan geçer.
+  String? _nextSoloRoundId;
+
+  @override
+  Future<QuizRewardClaim> awardSoloQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+    required String clientRoundId,
+  }) {
+    _nextSoloRoundId = isClientRoundId(clientRoundId) ? clientRoundId : null;
+    try {
+      return awardQuizCoins(
+        score: score,
+        correctCount: correctCount,
+        bestStreak: bestStreak,
+        totalQuestions: totalQuestions,
+      );
+    } finally {
+      _nextSoloRoundId = null;
+    }
+  }
+
   @override
   Future<QuizRewardClaim> awardQuizCoins({
     required int score,
@@ -1909,6 +1937,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     required int totalQuestions,
     GameRoom? room,
   }) async {
+    final soloRoundId = _nextSoloRoundId;
+    _nextSoloRoundId = null;
     // Ödül miktarını yalnızca sunucu belirler. İstemciden
     // coin_transactions'a yazma yolu yoktur. RPC/transport/parse hatası
     // yeniden deneme kuyruğuna alınabilmesi için çağırana taşınır;
@@ -1930,13 +1960,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         throw StateError('Quiz reward owner changed before claim RPC.');
       }
       final response = isSolo
-          ? await client.rpc(
-              'claim_solo_reward',
-              params: {
-                'p_correct_count': correctCount,
-                'p_total_questions': totalQuestions,
-                'p_best_streak': bestStreak,
-              },
+          ? await _claimSolo(
+              correctCount: correctCount,
+              totalQuestions: totalQuestions,
+              bestStreak: bestStreak,
+              clientRoundId: soloRoundId,
             )
           : await client.rpc(
               'claim_quiz_reward',
@@ -1982,6 +2010,39 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     } catch (error, stack) {
       _recordError(error, stack, reason: 'claim quiz reward failed');
       rethrow;
+    }
+  }
+
+  /// `claim_solo_reward`: tur kimliği varsa tekil (4 argümanlı) imza, yoksa
+  /// ya da sunucuda henüz yoksa (göç uygulanmamış: `PGRST202`/`42883`) eski
+  /// 3 argümanlı imza. Eski imza yayındaki sürümlerle aynı davranır.
+  Future<dynamic> _claimSolo({
+    required int correctCount,
+    required int totalQuestions,
+    required int bestStreak,
+    required String? clientRoundId,
+  }) async {
+    final legacy = {
+      'p_correct_count': correctCount,
+      'p_total_questions': totalQuestions,
+      'p_best_streak': bestStreak,
+    };
+    if (clientRoundId == null) {
+      return client.rpc('claim_solo_reward', params: legacy);
+    }
+    try {
+      return await client.rpc(
+        'claim_solo_reward',
+        params: {...legacy, 'p_client_round_id': clientRoundId},
+      );
+    } on PostgrestException catch (error, stack) {
+      if (error.code != 'PGRST202' && error.code != '42883') rethrow;
+      _recordError(
+        error,
+        stack,
+        reason: 'claim_solo_reward round-id signature missing — legacy call',
+      );
+      return client.rpc('claim_solo_reward', params: legacy);
     }
   }
 

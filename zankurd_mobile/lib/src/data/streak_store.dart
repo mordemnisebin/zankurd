@@ -70,8 +70,13 @@ class StreakStore {
       '${day.month.toString().padLeft(2, '0')}-'
       '${day.day.toString().padLeft(2, '0')}';
 
+  /// Takvim günü aritmetiği: `now.subtract(24 saat)` yaz/kış saati
+  /// geçişinde günü kaçırır (saat ileri alınan gecenin ertesi sabahı 24 saat
+  /// önce, iki gün önceye düşebilir) ve seri sessizce kırılırdı.
+  /// `DateTime(y, m, d - 1)` yerel takvimde gün sayar, saat farkından
+  /// etkilenmez.
   static bool _isYesterday(String lastDay, DateTime now) {
-    final yesterday = now.subtract(const Duration(days: 1));
+    final yesterday = DateTime(now.year, now.month, now.day - 1);
     return lastDay == _dayKey(yesterday);
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../config/app_config.dart';
+import '../l10n/strings.dart';
 import '../utils/error_reporter.dart';
 
 /// Satın alma akışının sonucu. `bool` yeterli değildi: iptal ile hata,
@@ -124,12 +125,15 @@ class PremiumService extends ChangeNotifier {
   bool get isPremium => _isPremium;
   bool get purchaseInProgress => _purchaseInProgress;
 
-  /// Kullanıcıya hata olarak gösterilecek mesaj. Satın almanın kullanıcı
+  /// Kullanıcıya hata olarak gösterilecek mesajın METİN ANAHTARI (`K.premium*`);
+  /// ekranda `context.t(...)` ile çevrilir. Eskiden sabit Türkçe metindi:
+  /// Kurmancî kullanıcıya Türkçe hata giderdi. Satın almanın kullanıcı
   /// tarafından iptal edilmesi hata DEĞİLDİR ve burada görünmez.
   String? get errorMessage => _errorMessage;
 
-  /// Hata olmayan ama kullanıcıya geri bildirim gereken durumlar:
-  /// "geri yüklenecek abonelik bulunamadı", "ödeme onay bekliyor" gibi.
+  /// Hata olmayan ama kullanıcıya geri bildirim gereken durumlar
+  /// ("geri yüklenecek abonelik bulunamadı", "ödeme onay bekliyor");
+  /// [errorMessage] gibi bir metin anahtarıdır.
   String? get infoMessage => _infoMessage;
 
   /// RevenueCat'e bağlı olan Supabase kullanıcı kimliği (varsa).
@@ -367,7 +371,7 @@ class PremiumService extends ChangeNotifier {
   Future<PurchaseOutcome> purchasePackage(Package package) async {
     if (_purchaseInProgress) return PurchaseOutcome.inProgress;
     if (!AppConfig.hasRevenuecatConfig) {
-      _errorMessage = 'Satın alma bu build\'de yapılandırılmadı.';
+      _errorMessage = K.premiumErrPurchaseNotConfigured;
       notifyListeners();
       return PurchaseOutcome.failed;
     }
@@ -395,8 +399,7 @@ class PremiumService extends ChangeNotifier {
       // "Ask to Buy" / aile onayı: satın alma askıda, başarısız değil.
       // Entitlement onay gelince listener üzerinden düşer.
       if (code == PurchasesErrorCode.paymentPendingError) {
-        _infoMessage =
-            'Ödemen onay bekliyor. Onaylandığında premium otomatik açılacak.';
+        _infoMessage = K.premiumInfoPending;
         notifyListeners();
         return PurchaseOutcome.pending;
       }
@@ -421,7 +424,7 @@ class PremiumService extends ChangeNotifier {
   /// inceleme reddi gerekçesi).
   Future<RestoreOutcome> restorePurchases() async {
     if (!AppConfig.hasRevenuecatConfig) {
-      _errorMessage = 'Geri yükleme bu build\'de yapılandırılmadı.';
+      _errorMessage = K.premiumErrRestoreNotConfigured;
       notifyListeners();
       return RestoreOutcome.failed;
     }
@@ -431,7 +434,7 @@ class PremiumService extends ChangeNotifier {
       final info = await Purchases.restorePurchases();
       _isPremium = _hasEntitlement(info.entitlements.all);
       if (!_isPremium) {
-        _infoMessage = 'Bu hesapta geri yüklenecek aktif abonelik bulunamadı.';
+        _infoMessage = K.premiumInfoNothingToRestore;
       }
       notifyListeners();
       return _isPremium ? RestoreOutcome.restored : RestoreOutcome.nothingFound;
@@ -461,18 +464,15 @@ class PremiumService extends ChangeNotifier {
   String _readableErrorMessage(PurchasesErrorCode code) {
     return switch (code) {
       PurchasesErrorCode.networkError ||
-      PurchasesErrorCode.offlineConnectionError =>
-        'Bağlantı kurulamadı. İnterneti kontrol edip tekrar dene.',
-      PurchasesErrorCode.storeProblemError =>
-        'Mağazaya ulaşılamadı. Biraz sonra tekrar dene.',
-      PurchasesErrorCode.purchaseNotAllowedError =>
-        'Bu cihazda satın alma izni kapalı görünüyor.',
+      PurchasesErrorCode.offlineConnectionError => K.premiumErrNetwork,
+      PurchasesErrorCode.storeProblemError => K.premiumErrStore,
+      PurchasesErrorCode.purchaseNotAllowedError => K.premiumErrNotAllowed,
       PurchasesErrorCode.productNotAvailableForPurchaseError =>
-        'Bu paket şu anda satışta değil.',
+        K.premiumErrUnavailable,
       PurchasesErrorCode.receiptAlreadyInUseError ||
       PurchasesErrorCode.receiptInUseByOtherSubscriberError =>
-        'Bu abonelik başka bir hesapta kullanılıyor.',
-      _ => 'Satın alma sırasında bir hata oldu.',
+        K.premiumErrOtherAccount,
+      _ => K.premiumErrGeneric,
     };
   }
 
