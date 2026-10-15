@@ -215,9 +215,14 @@ void main() {
         'matchmaking_start',
         'matchmaking_load_room_questions',
         'matchmaking_load_questions',
+        // 2026-10-15 1v1 canlılığı: bayat odadan çıkış, kalp atışı ve
+        // eşleşme sonrası yükleme yeniden denemesi de raporlar.
+        'matchmaking_leave_stranded',
+        'matchmaking_touch',
+        'matchmaking_load_retry',
       }),
     );
-    expect(matchmakingCatches, hasLength(15));
+    expect(matchmakingCatches, hasLength(18));
 
     expect(
       missionCatches.expand((block) => block.reasons).toSet(),

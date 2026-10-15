@@ -2485,11 +2485,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     try {
       final response = await client.rpc('touch_matchmaking');
       return MatchmakingTouch.fromJson(response);
-    } catch (error) {
+    } catch (error, stack) {
       if (isMissingRpcError(error)) {
         _touchMatchmakingSupported = false;
         return const MatchmakingTouch.unknown();
       }
+      _recordError(error, stack, reason: 'touchMatchmaking failed');
       rethrow;
     }
   }
