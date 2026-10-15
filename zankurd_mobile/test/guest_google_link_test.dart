@@ -304,7 +304,7 @@ void main() {
         reason: 'Kurmancî arayüzde Türkçe hata metni gösterilmemeli',
       );
       expect(
-        find.text('Ev hesab jixwe bi hesabek din ve girêdayî ye.'),
+        find.text('Ev hesab jixwe bi hesabekî din ve girêdayî ye.'),
         findsOneWidget,
       );
     });
