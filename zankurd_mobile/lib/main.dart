@@ -705,7 +705,7 @@ class ZanKurdApp extends StatelessWidget {
   /// uygulama her zaman `home` ile ve hatasız açılır.
   /// `JoinDeepLink.consumeInitialRoute()` `defaultRouteName`'i PLATFORMDAN
   /// doğrudan okur — bu metottan bağımsız çalışmaya devam eder, yani deep
-  /// link kodu burada kaybolmaz (bkz. `AppShell._consumeJoinDeepLink`).
+  /// link kodu burada kaybolmaz (bkz. `AppShell._tryOpenJoinCode`).
   List<Route<dynamic>> _buildInitialRoutes(String initialRouteName) {
     return [
       MaterialPageRoute<void>(

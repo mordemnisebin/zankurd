@@ -177,6 +177,15 @@ class _AppShellState extends State<AppShell>
     // Rota kontrolünden ÖNCE okunmalı: rota aynıysa erken dönüldüğünde
     // depo takası hiç izlenmezdi.
     _repositoryHolder = RepositoryHolder.read(context);
+    // Sosyal kilit kalkınca bekleyen davet kodu açılır. Kabuğun kendi
+    // çizimi buna güvenilir şekilde uyanmaz (bant yalnız alt ağaçta
+    // izliyor), bu yüzden doğrudan dinlenir.
+    final availability = RemoteAvailability.read(context);
+    if (!identical(availability, _availability)) {
+      _availability?.removeListener(_onAvailabilityChanged);
+      _availability = availability;
+      availability?.addListener(_onAvailabilityChanged);
+    }
     final route = ModalRoute.of<dynamic>(context);
     if (identical(route, _shellRoute)) return;
     final previous = _shellRoute;
@@ -292,6 +301,13 @@ class _AppShellState extends State<AppShell>
     if (state == AppLifecycleState.resumed) {
       _wakeRoomResumeForCurrentUser();
       unawaited(widget.pushTokenSync?.sync());
+      // Ön plana dönüşte görünen sekme tazelenir. Ana ekranın düello kartı
+      // yalnız tazeleme işareti (`_homeRefresh`) değişince yeniden okur;
+      // uygulama arka plandayken biten bir düello (rakip oynadı, bildirim
+      // geldi) kullanıcı uygulamayı açınca eski haliyle görünüyordu.
+      // Üstte bir sayfa (maç, sonuç) açıksa dokunulmaz: o sayfaya dönülünce
+      // sayfa gözlemcisi zaten tazeler.
+      if (_shellIsTopRoute) _refreshVisibleTab();
       // Arkaya atılmış bir deneme ön plana dönüşle tazelenir: kullanıcı
       // uygulamayı açtığında "sunucuya ulaşılamadı" bandı, bir sonraki
       // geriçekilmeyi (60 sn'ye kadar) beklemeden kalkabilir.
@@ -340,6 +356,11 @@ class _AppShellState extends State<AppShell>
         (_) => _consumePushTapTarget(),
       );
     }
+    // Maç sürerken gelen davet bağlantısı da burada, kabuk yeniden en
+    // üstteyken açılır.
+    if (_pendingJoinCode != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _tryOpenJoinCode());
+    }
     // Kabuğun üstüne itilmiş HERHANGİ bir rotadan dönüldü — diyalog ve alt
     // sayfa dâhil. Burada yalnız oda devamı uyandırılır.
     //
@@ -377,8 +398,16 @@ class _AppShellState extends State<AppShell>
     _considerRemoteUpgrade();
   }
 
+  RemoteAvailability? _availability;
+
+  void _onAvailabilityChanged() {
+    if (_pendingJoinCode == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _tryOpenJoinCode());
+  }
+
   @override
   void dispose() {
+    _availability?.removeListener(_onAvailabilityChanged);
     appRouteObserver.unsubscribe(this);
     appPageRouteObserver.unsubscribe(_tabRefreshAware);
     WidgetsBinding.instance.removeObserver(this);
@@ -633,23 +662,54 @@ class _AppShellState extends State<AppShell>
     return RemoteAvailability.socialLockedWatch(context) || _isOffline;
   }
 
+  /// Kabuk kapıları (onboarding, giriş, isim) geçildi ve davet bağlantıları
+  /// işlenebilir.
   bool _joinDeepLinkScheduled = false;
 
+  /// Açılmayı bekleyen davet kodu. Kod YALNIZ açılırken silinir: kabuk
+  /// sosyal kilitteyken (sunucuya erişilemiyor) ya da üstünde bir maç/lobi
+  /// açıkken kod kaybolmaz, uygun an gelince ([_scheduleJoinDeepLink] her
+  /// çizimde, [didPopNext] dönüşte) açılır.
+  String? _pendingJoinCode;
+  bool _joinConsumeQueued = false;
+
   void _scheduleJoinDeepLink() {
-    if (_joinDeepLinkScheduled) return;
-    _joinDeepLinkScheduled = true;
+    if (!_joinDeepLinkScheduled) {
+      _joinDeepLinkScheduled = true;
+      // Soğuk açılış bağlantısı bir kez okunur ve bekleyen koda alınır.
+      _pendingJoinCode ??= JoinDeepLink.consumeInitialRoute();
+    }
+    if (_pendingJoinCode == null && JoinDeepLink.incoming.value == null) {
+      return;
+    }
+    if (_joinConsumeQueued) return;
+    _joinConsumeQueued = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      unawaited(_consumeJoinDeepLink());
+      _joinConsumeQueued = false;
+      _tryOpenJoinCode();
     });
   }
 
-  Future<void> _consumeJoinDeepLink() async {
-    if (!mounted) return;
-    if (RemoteAvailability.socialLockedIn(context)) return;
-    final code =
-        JoinDeepLink.consumeInitialRoute() ?? JoinDeepLink.takeIncoming();
+  /// Bekleyen kodu, koşullar uygunsa açar; değilse bekletir.
+  ///
+  /// ## Kusur
+  ///
+  /// Soğuk açılışta sosyal yüzeyler kilitliyse (`socialLockedIn`) eski kod
+  /// erken dönüyordu ama `_joinDeepLinkScheduled` doğru kaldığı için bir daha
+  /// hiç denenmiyordu: kilit kalktığında davet sessizce kayboluyordu. Sıcak
+  /// açılışta ise kod, üstte canlı bir maç ya da lobi varken bile rotayı
+  /// üstüne itiyordu (bildirim dokunuşu bunu zaten bekliyordu). Hatalar da
+  /// yalnız ErrorReporter'a gidiyordu; oyuncu bağlantıya dokunup hiçbir şey
+  /// olmadığını görüyordu.
+  void _tryOpenJoinCode() {
+    if (!mounted || !_joinDeepLinkScheduled) return;
+    _pendingJoinCode ??= JoinDeepLink.takeIncoming();
+    final code = _pendingJoinCode;
     if (code == null) return;
-    await _openJoinCode(code);
+    if (RemoteAvailability.socialLockedIn(context)) return;
+    if (!_shellIsTopRoute) return;
+    _pendingJoinCode = null;
+    unawaited(_openJoinCode(code));
   }
 
   /// Uygulama açıkken gelen davet (sıcak açılış). Bağlantıyı
@@ -657,20 +717,8 @@ class _AppShellState extends State<AppShell>
   /// [JoinDeepLink.incoming] kanalına koyar; kabuk buradan tüketir.
   ///
   /// Kabuk henüz ana arayüze ulaşmadıysa (açılış, giriş, isim kapısı) kod
-  /// kanalda bekler; ana arayüz kurulunca [_consumeJoinDeepLink] alır.
-  /// Sosyal yüzeyler kilitliyken (sunucuya erişilemiyor) davet yok sayılır —
-  /// soğuk açılıştaki sözleşmeyle aynı.
-  void _onIncomingJoinLink() {
-    if (!mounted || !_joinDeepLinkScheduled) return;
-    if (JoinDeepLink.incoming.value == null) return;
-    if (RemoteAvailability.socialLockedIn(context)) {
-      JoinDeepLink.takeIncoming();
-      return;
-    }
-    final code = JoinDeepLink.takeIncoming();
-    if (code == null) return;
-    unawaited(_openJoinCode(code));
-  }
+  /// kanalda bekler; ana arayüz kurulunca [_scheduleJoinDeepLink] alır.
+  void _onIncomingJoinLink() => _tryOpenJoinCode();
 
   /// `/join/<kod>` bağlantısının iki türü: `D…` meydan okuma kodu ya da
   /// `ZK-…` oda kodu ([JoinDeepLink.isChallengeCode] ikisini kesin ayırır).
@@ -700,12 +748,13 @@ class _AppShellState extends State<AppShell>
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'challenge deep link failed');
+      if (mounted) _showJoinFailure(asyncDuelStartErrorMessage(context, error));
     }
   }
 
   /// [code] ile oda katılımını dener, başarılıysa [RoomScreen] açar.
   ///
-  /// Soğuk açılış (`_consumeJoinDeepLink`) ve sıcak açılış
+  /// Soğuk açılış (`_tryOpenJoinCode`) ve sıcak açılış
   /// (`didPushRouteInformation`) aynı katılma gövdesini paylaşır; ikisinin
   /// farkı yalnız KODUN NEREDEN geldiğidir.
   Future<void> _joinOnlineRoomAndOpen(String code) async {
@@ -717,7 +766,17 @@ class _AppShellState extends State<AppShell>
       );
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'join deep link failed');
+      // Oda katılma menüsüyle AYNI hata metinleri (dolu oda, başka odada,
+      // bulunamadı ...): bağlantıya dokunup hiçbir şey olmaması yerine
+      // sebep söylenir.
+      if (mounted) _showJoinFailure(context.t(joinRoomErrorKey(error)));
     }
+  }
+
+  void _showJoinFailure(String message) {
+    ScaffoldMessenger.maybeOf(
+      context,
+    )?.showSnackBar(SnackBar(content: Text(message)));
   }
 
   bool _pushTapScheduled = false;
