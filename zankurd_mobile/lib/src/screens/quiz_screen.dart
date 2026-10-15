@@ -474,6 +474,9 @@ class _QuizScreenState extends State<QuizScreen>
     _onlineResultOwnerId = widget.repository.currentUserId?.trim() ?? '';
     livePlayers = List<Player>.of(widget.room.players);
     _serverReadyWaiting = _usesServerHiddenAnswers;
+    // Online odada rehber hazır sinyalini tutmaz: yeni oyuncu rehberi
+    // kapatana kadar rakip boşa beklemesin (bkz. QuizTutorialOverlay.enabled).
+    if (_isMultiplayer) _tutorialGateReady = true;
     final initialResume = _matchingResumeSnapshot(widget.resumeSnapshot);
     if (initialResume != null && _questions.isNotEmpty) {
       _resumingOnlineSession = true;
@@ -1697,6 +1700,7 @@ class _QuizScreenState extends State<QuizScreen>
                 onReady: _handleTutorialReady,
                 timerSeconds: widget.room.secondsPerQuestion,
                 timed: _usesTimer,
+                enabled: !_isMultiplayer,
                 child: SahneStageScaffold(
                   closeKey: const ValueKey('quiz-close'),
                   closeLabel: context.t(K.close),
