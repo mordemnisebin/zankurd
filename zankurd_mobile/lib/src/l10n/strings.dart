@@ -924,7 +924,7 @@ class Tr {
     },
     K.levelNotPassed: {
       'ku':
-          'Asta derbas nebû: herî kêm sedî {p0} rast pêwîst e. Dîsa biceribîne.',
+          'Ast derbas nebû: herî kêm ji sedî {p0} rast pêwîst e. Dîsa biceribîne.',
       'tr': 'Seviye geçilmedi: en az %{p0} doğru gerekir. Tekrar dene.',
     },
     K.oncePSeviyeyiTamamla: {
@@ -2735,7 +2735,7 @@ class Tr {
       'tr': 'Düelloyu geri çek',
     },
     K.asyncDuelCancelTitle: {
-      'ku': 'Pêşbirk were vegirtin?',
+      'ku': 'Pêşbirk bê vegirtin?',
       'tr': 'Düello geri çekilsin mi?',
     },
     K.asyncDuelCancelBody: {
