@@ -20,6 +20,7 @@ import '../utils/error_reporter.dart';
 import '../l10n/lang.dart';
 import '../utils/coin_calculator.dart';
 import '../l10n/strings.dart';
+import '../services/crowd_standings.dart';
 import '../services/premium_service.dart';
 import '../services/quiz_reward_settlement_service.dart';
 import '../models/achievement.dart';
@@ -1229,7 +1230,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         category: isMixedCategoryRound ? room.name : room.category,
         results: [for (final record in answerRecords) record.isCorrect],
         // 1v1 galibiyetinde kart "pêşbirkê bi ser ketim" satırını yazar.
-        duelWin: opponents.length == 1 && score > opponents.first.score,
+        duelWin:
+            !room.isCrowd &&
+            opponents.length == 1 &&
+            score > opponents.first.score,
       );
       final earned = await ResultSharer.claimDailyShareReward();
       if (earned && context.mounted) {
@@ -1297,7 +1301,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ),
     ];
 
-    final is1v1 = opponents.length == 1;
+    // Kalabalık odada (erken bitip iki oyuncuya inmiş olsa bile) düello
+    // dili kullanılmaz: sıra, sunucunun verdiği sıralamadandır.
+    final crowdStanding = room.isCrowd
+        ? crowdStandings(
+            room.players,
+          ).where((s) => s.player.id == widget.resultOwnerUserId).firstOrNull
+        : null;
+    final crowdRank = crowdStanding?.player.rank ?? crowdStanding?.rank;
+    final is1v1 = !room.isCrowd && opponents.length == 1;
     bool isWinner = false;
     bool isDraw = false;
     if (is1v1) {
@@ -1314,7 +1326,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // beraberlik ve kaybetme nötr; yarış kimliği Boyax kilim şeridindedir.
     // Eski yeşil/kırmızı başlık gradyanları kalktı (bkz.
     // `quiz_result_header_contrast_test.dart`).
-    final duelOutcome = !is1v1
+    final duelOutcome = room.isCrowd
+        ? (crowdRank == null
+              ? null
+              : crowdRank == 1
+              ? _DuelOutcome.win
+              : crowdRank <= 3
+              ? _DuelOutcome.podium
+              : _DuelOutcome.loss)
+        : !is1v1
         ? null
         : isWinner
         ? _DuelOutcome.win
@@ -1330,6 +1350,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : isDraw
               ? context.t(K.draw)
               : context.t(K.youLost))
+        : crowdRank == 1
+        ? context.t(K.youWon)
         : context.t(K.raceFinished);
 
     // Kutlama (sonuç ışınları) yalnız kutlanacak bir sonuç varken çizilir:
@@ -1345,7 +1367,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         : accuracy >= 50
         ? 2
         : 1;
-    final celebrate = is1v1 ? isWinner : starsEarned == 3;
+    final celebrate = room.isCrowd
+        ? crowdRank == 1
+        : is1v1
+        ? isWinner
+        : starsEarned == 3;
 
     final accuracyText =
         '${context.percent(accuracy)} ${context.t(K.accuracyLower)}';
@@ -1399,7 +1425,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // ([SahneResultScaffold]) gelir; burada yalnız bu ekrana özgü bölümler
     // sıralanır. Sıra artık şablonun sırası: kahraman → sayımlar → ödül.
     final sections = <Widget>[
-      if (opponents.isNotEmpty)
+      if (room.isCrowd)
+        _CrowdStandings(players: room.players, ownId: widget.resultOwnerUserId)
+      else if (opponents.isNotEmpty)
         _RaceStandings(
           userScore: score,
           userIdentity: room.players.isNotEmpty ? room.players.first : null,
@@ -1485,6 +1513,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           _DuelOutcome.loss => const SahneResultEmblem.state(
             icon: AppIcons.flag,
           ),
+          _DuelOutcome.podium => const SahneResultEmblem.state(
+            icon: AppIcons.medal,
+          ),
         },
         title: headerTitle,
         titleRole: duelOutcome == _DuelOutcome.win ? SahneRole.gold : null,
@@ -1564,7 +1595,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   }
 }
 
-enum _DuelOutcome { win, draw, loss }
+enum _DuelOutcome { win, draw, loss, podium }
 
 /// Kahramanın üç puan yıldızı: 32 · 44 · 32, alta hizalı, 8 aralık.
 ///
@@ -1908,6 +1939,159 @@ class _RaceStandings extends StatelessWidget {
         SahneSectionHeader(title: context.t(K.compareRivals)),
         Text(summary, style: SahneType.body.copyWith(color: t.tx2)),
         const SizedBox(height: SahneSpace.x3),
+        ...blocks,
+      ],
+    );
+  }
+}
+
+/// Kalabalık oda sıralaması: sunucunun verdiği sıra (eşit skor aynı numarayı
+/// paylaşır), ilk üç madalyalı, "Sen" satırı vurgulu, ayrılanlar en sonda.
+///
+/// `_RaceStandings` bot yarışının rakiplerini listeler ve sırayı skordan
+/// yeniden üretir; burada sıra sunucudan gelir (`Player.rank`) ve 50 satıra
+/// kadar uzar. Yapı aynıdır: "Sen" satırı iki liste grubunun arasında tek
+/// başına durur, ardışık rakipler tek grupta toplanır.
+class _CrowdStandings extends StatelessWidget {
+  const _CrowdStandings({required this.players, required this.ownId});
+
+  final List<Player> players;
+  final String? ownId;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final standings = crowdStandings(players);
+    final leavers = [
+      for (final player in players)
+        if (player.left) player,
+    ];
+    final own = standings.where((s) => s.player.id == ownId).firstOrNull;
+    final summary = own == null
+        ? null
+        : context.t(K.crowdFinishedAtRank, {
+            'rank': '${own.player.rank ?? own.rank}',
+            'total': '${standings.length}',
+          });
+
+    Widget scoreOf(CrowdStanding standing) {
+      final rank = standing.player.rank ?? standing.rank;
+      final value = SahneRowValue(groupThousands(standing.player.score));
+      if (rank > 3) return value;
+      // İlk üç: madalya simgesi (renk + ŞEKİL; yalnız renkle ayrışmaz).
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ExcludeSemantics(
+            child: Icon(AppIcons.medal, size: 18, color: t.goldTx),
+          ),
+          const SizedBox(width: SahneSpace.x1),
+          value,
+        ],
+      );
+    }
+
+    final blocks = <Widget>[];
+    var pending = <Widget>[];
+    void flush() {
+      if (pending.isEmpty) return;
+      if (blocks.isNotEmpty) {
+        blocks.add(const SizedBox(height: SahneSpace.x2));
+      }
+      blocks.add(SahneListGroup(children: pending));
+      pending = <Widget>[];
+    }
+
+    for (final standing in standings) {
+      final player = standing.player;
+      final rank = player.rank ?? standing.rank;
+      final streakLine = player.streak > 0
+          ? '${context.t(K.streakLabel)} ${player.streak}'
+          : null;
+      if (player.id == ownId) {
+        flush();
+        if (blocks.isNotEmpty) {
+          blocks.add(const SizedBox(height: SahneSpace.x2));
+        }
+        blocks.add(
+          SahneListRow.me(
+            key: ValueKey('crowd-standing-me-$rank'),
+            rank: rank,
+            title: context.t(K.you),
+            avatar: _avatarOf(player),
+            subtitle: streakLine,
+            trailing: scoreOf(standing),
+          ),
+        );
+      } else {
+        final name = player.name.trim();
+        pending.add(
+          SahneListRow.rank(
+            key: ValueKey('crowd-standing-${player.id}'),
+            rank: rank,
+            title: context.playerDisplayName(player.name),
+            initial: name.isEmpty ? null : context.playerInitial(player.name),
+            icon: AppIcons.user,
+            avatar: _avatarOf(player),
+            subtitle: streakLine,
+            trailing: scoreOf(standing),
+          ),
+        );
+      }
+    }
+    flush();
+
+    if (leavers.isNotEmpty) {
+      blocks.add(const SizedBox(height: SahneSpace.x2));
+      blocks.add(
+        SahneListGroup(
+          children: [
+            for (final player in leavers)
+              SahneListRow.leading(
+                key: ValueKey('crowd-left-${player.id}'),
+                // Sıra numarası yerine tire: ayrılan oyuncu sıralamaya girmez.
+                // Genişlik 24: ayırıcı, sıra satırlarındaki gibi avatarın
+                // hizasından başlar.
+                leadingWidth: 24,
+                leading: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: 24,
+                      child: Text(
+                        '–',
+                        textAlign: TextAlign.center,
+                        style: SahneType.bodyStrong.copyWith(color: t.tx3),
+                      ),
+                    ),
+                    const SizedBox(width: SahneSpace.x3),
+                    SizedBox.square(
+                      dimension: 36,
+                      child: Center(child: _avatarOf(player)),
+                    ),
+                  ],
+                ),
+                title: context.playerDisplayName(player.name),
+                subtitle: context.t(K.crowdLeftBadge),
+                trailing: SahneRowValue.meta(groupThousands(player.score)),
+              ),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SahneSectionHeader(title: context.t(K.crowdStandingsTitle)),
+        if (summary != null) ...[
+          Text(
+            summary,
+            key: const ValueKey('crowd-standings-summary'),
+            style: SahneType.body.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x3),
+        ],
         ...blocks,
       ],
     );
