@@ -22,21 +22,31 @@ import '../models/quiz_question.dart';
 class QuestionSetPolicy {
   const QuestionSetPolicy._();
 
+  static final RegExp _notWordOrSpace = RegExp(
+    r'[^\p{L}\p{N}\s]',
+    unicode: true,
+  );
+  static final RegExp _whitespaceRun = RegExp(r'\s+');
+  static final RegExp _digitsOnly = RegExp(r'^[\d\s]+$');
+  static final RegExp _notWord = RegExp(r'[^\p{L}\p{N}]', unicode: true);
+  static final RegExp _endsWithPunct = RegExp(r'[,.;:?!]$');
+
   /// Bir metni karşılaştırma için sadeleştirir: küçük harf, kenar boşlukları
   /// ve tırnak/noktalama kırpılmış. Kurmancî özel karakterleri (î, ê, û, ş,
   /// ç) *korunur* — ASCII'ye katlamak "şer" ile "ser" gibi farklı sözcükleri
   /// eşitler.
+  ///
+  /// Eskiden her karakter için yeni bir düzenli ifade derleniyordu: konu
+  /// çeşitliliği denetimi (`repeatsSubject`) çift başına birkaç `normalize`
+  /// çağırır ve alt konu planı yüzlerce çifti dener; "Rêziman" planı
+  /// (425 soru) test koşucusunda 10 dakikayı aşıp ekran turunu kilitliyordu.
   static String normalize(String value) {
-    final lowered = value.toLowerCase().trim();
-    final buffer = StringBuffer();
-    for (final rune in lowered.runes) {
-      final char = String.fromCharCode(rune);
-      // Noktalama ve tırnak atılır; harf, rakam ve boşluk kalır.
-      if (RegExp(r'[\p{L}\p{N}\s]', unicode: true).hasMatch(char)) {
-        buffer.write(char);
-      }
-    }
-    return buffer.toString().replaceAll(RegExp(r'\s+'), ' ').trim();
+    return value
+        .toLowerCase()
+        .trim()
+        .replaceAll(_notWordOrSpace, '')
+        .replaceAll(_whitespaceRun, ' ')
+        .trim();
   }
 
   /// [a] ve [b] birbirinin cevabını sızdırıyor mu?
@@ -263,17 +273,17 @@ class QuestionSetPolicy {
     final answer = normalize(question.correctAnswer);
     if (answer.length < 3 || answer.length > 24) return null;
     if (_verdictWords.contains(answer)) return null;
-    if (RegExp(r'^[\d\s]+$').hasMatch(answer)) return null;
+    if (_digitsOnly.hasMatch(answer)) return null;
     if (answer.split(' ').length > 3) return null;
     return answer;
   }
 
   /// Metnin başındaki büyük harfli ad öbeği (en çok üç sözcük); yoksa null.
   static String? _leadingName(String prompt) {
-    final words = prompt.trim().split(RegExp(r'\s+'));
+    final words = prompt.trim().split(_whitespaceRun);
     final name = <String>[];
     for (final raw in words) {
-      final word = raw.replaceAll(RegExp(r'[^\p{L}\p{N}]', unicode: true), '');
+      final word = raw.replaceAll(_notWord, '');
       if (word.isEmpty) break;
       final first = String.fromCharCode(word.runes.first);
       // Büyük harf: küçüğü kendinden farklı olan harf (büyütme çağrısı yok).
@@ -286,7 +296,7 @@ class QuestionSetPolicy {
       }
       name.add(word);
       // Virgül ya da nokta öbeği bitirir ("Mela Ehmed, ku ...").
-      if (RegExp(r'[,.;:?!]$').hasMatch(raw)) break;
+      if (_endsWithPunct.hasMatch(raw)) break;
     }
     if (name.isEmpty) return null;
     final key = normalize(name.join(' '));
@@ -331,7 +341,7 @@ class QuestionSetPolicy {
       final key = normalize(raw ?? '');
       if (key.length < 3) return;
       if (_verdictWords.contains(key)) return;
-      if (RegExp(r'^[\d\s]+$').hasMatch(key)) return;
+      if (_digitsOnly.hasMatch(key)) return;
       keys.add(key);
     }
 
@@ -365,11 +375,34 @@ class QuestionSetPolicy {
   /// [a] ve [b] aynı turda birlikte "tekrar" sayılır mı: aynı konu ya da
   /// neredeyse aynı soru metni.
   static bool repeatsSubject(QuizQuestion a, QuizQuestion b) {
-    if (sharesTargetText(a, b)) return true;
-    final keyA = subjectKey(a);
-    if (keyA != null && keyA == subjectKey(b)) return true;
-    return promptSimilarity(a.prompt, b.prompt) >= similarPromptThreshold;
+    final left = _derivedOf(a);
+    final right = _derivedOf(b);
+    if (a.id != b.id &&
+        left.targets.isNotEmpty &&
+        right.targets.any(left.targets.contains)) {
+      return true;
+    }
+    final keyA = left.subject;
+    if (keyA != null && keyA == right.subject) return true;
+    if (left.tokens.length < 3 || right.tokens.length < 3) return false;
+    final shared = left.tokens.intersection(right.tokens).length;
+    final union = left.tokens.length + right.tokens.length - shared;
+    return union != 0 && shared / union >= similarPromptThreshold;
   }
+
+  /// Soru başına bir kez hesaplanan karşılaştırma verisi.
+  ///
+  /// [repeatsSubject] çift başına hedef metinleri, konu anahtarını ve prompt
+  /// belirteçlerini yeniden çıkarıyordu; alt konu planı (`SubcategoryLevelPlan`
+  /// takas döngüsü) yüzbinlerce çift dener — "Rêziman" planı test koşucusunda
+  /// 10 dakikayı aşıyordu. Soru değişmezdir, üç değer de saf fonksiyondur;
+  /// anahtar nesne kimliğidir (nesne gidince girdi de gider).
+  static final Expando<_SubjectData> _derived = Expando<_SubjectData>(
+    'questionSetDerived',
+  );
+
+  static _SubjectData _derivedOf(QuizQuestion q) => _derived[q] ??=
+      _SubjectData(targetTexts(q), subjectKey(q), _promptTokens(q.prompt));
 
   /// [candidate] [chosen] içindeki herhangi bir soruyu tekrar ediyor mu?
   static bool repeatsAny(
@@ -499,4 +532,12 @@ class QuestionSetPolicy {
     final shared = explanationWords.where(promptWords.contains).length;
     return shared / explanationWords.length >= 0.8;
   }
+}
+
+class _SubjectData {
+  const _SubjectData(this.targets, this.subject, this.tokens);
+
+  final Set<String> targets;
+  final String? subject;
+  final Set<String> tokens;
 }
