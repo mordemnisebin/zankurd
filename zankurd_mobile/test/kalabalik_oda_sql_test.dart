@@ -145,12 +145,12 @@ void main() {
   });
 
   test(
-    'start_room_game: kalabalıkta hazır şartı yok, 1v1 45 sn, kalabalık 20 sn',
+    'start_room_game: kalabalıkta hazır şartı yok, 1v1 45 sn, kalabalık 30 sn',
     () {
       final fn = body(main, 'start_room_game');
       expect(fn, contains('if v_unready_count > 0 and not v_crowd then'));
       expect(fn, contains("interval '45 seconds'"));
-      expect(fn, contains("interval '20 seconds'"));
+      expect(fn, contains("interval '30 seconds'"));
       expect(
         fn,
         contains("raise exception 'Exactly two players are required'"),
@@ -240,6 +240,25 @@ void main() {
       contains('crowd_room_result_complete'),
     );
   });
+
+  test(
+    'son soru açıklandıktan sonra ayrılma odayı normal completed bitirir',
+    () {
+      final fn = body(main, 'crowd_room_member_leave');
+      expect(fn, contains('v_final_revealed'));
+      expect(fn, contains('bool_and(rq.revealed_at is not null)'));
+      final start = fn.indexOf('if v_active < 2 and v_final_revealed then');
+      expect(start, greaterThan(0));
+      // Normal bitiş dalı: indeks soru sayısına çekilir, iade çağrısı YOK ve
+      // erken-bitiş dallarından ÖNCE gelir.
+      final branchEnd = fn.indexOf('end if;', start);
+      final branch = fn.substring(start, branchEnd);
+      expect(branch, contains('current_question_index = r.question_count'));
+      expect(branch, contains("ended_reason = 'completed'"));
+      expect(branch.contains('refund_room_entry_fee'), isFalse);
+      expect(start, lessThan(fn.indexOf('if v_active < 2 and not exists (')));
+    },
+  );
 
   test('iç yardımcılar istemciye açılmaz', () {
     for (final sig in [

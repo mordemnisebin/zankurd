@@ -42,7 +42,7 @@
 --   finish_room_game, award_room_xp.
 --
 -- BİLİNÇLİ KARARLAR:
---   * Kalabalık odada istemci-hazır süresi 20 sn (tasarım); 1v1 45 sn kalır.
+--   * Kalabalık odada istemci-hazır süresi 30 sn; 1v1 45 sn kalır.
 --   * Kalabalık odada oyundan ayrılan oyuncu satırı silinmez (left_at); sonuç
 --     listesinde en sonda, rank'sız ('left': true) görünür ve havuza katılmaz.
 --   * Kalan aktif < 2 olunca oda 'completed' biter (kalan kazanır); kalanların
@@ -115,6 +115,7 @@ declare
   v_left_at timestamp with time zone;
   v_new_host uuid;
   v_active integer;
+  v_final_revealed boolean;
   v_now timestamp with time zone := clock_timestamp();
 begin
   -- İÇ YARDIMCI (istemciye açık değil): leave_room ve delete_my_account
@@ -254,6 +255,38 @@ begin
   from public.room_players rp
   where rp.room_id = p_room_id
     and rp.left_at is null;
+
+  -- Son soru açıklandıktan sonra (bütün sorular bitti) biri ayrılırsa oda erken
+  -- bitmiş sayılmaz: kaybeden son anda çıkıp kazananların ödülünü engelleyemez.
+  select count(*) = v_room.question_count
+         and bool_and(rq.revealed_at is not null)
+  into v_final_revealed
+  from public.room_questions rq
+  where rq.room_id = p_room_id;
+  v_final_revealed := coalesce(v_final_revealed, false);
+
+  if v_active < 2 and v_final_revealed then
+    -- Normal 'completed': indeks soru sayısına çekilir (ödül talebi bunu ister),
+    -- skorlar son açıklamada zaten kesinleşti, İADE YOK (havuz ödül talebiyle
+    -- dağıtılır; ayrılan havuza katılmaz).
+    update public.rooms r
+    set
+      status = 'finished',
+      current_question_index = r.question_count,
+      finished_at = coalesce(r.finished_at, v_now),
+      ended_reason = 'completed',
+      forfeited_by = null
+    where r.id = p_room_id;
+
+    delete from public.matchmaking_queue mq
+    where mq.room_id = p_room_id;
+
+    return json_build_object(
+      'status', 'finished',
+      'reason', 'completed',
+      'forfeited_by', null
+    );
+  end if;
 
   if v_active < 2 and not exists (
     select 1
@@ -848,7 +881,7 @@ end;
 $function$;
 
 -- ---------------------------------------------------------------------
--- start_room_game: kalabalıkta host, >= 2 aktif, hazır şartı yok, 20 sn
+-- start_room_game: kalabalıkta host, >= 2 aktif, hazır şartı yok, 30 sn
 -- ---------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.start_room_game(p_room_id uuid)
  RETURNS json
@@ -888,7 +921,7 @@ begin
   -- 2 kişilik özel oda aşağıdaki eski yolu AYNEN izler.
   v_crowd := v_room.is_custom and v_room.max_players > 2;
   v_ready_window := case
-    when v_crowd then interval '20 seconds'
+    when v_crowd then interval '30 seconds'
     else interval '45 seconds'
   end;
 
@@ -1100,7 +1133,7 @@ begin
   if v_room.client_ready_deadline is null then
     v_room.client_ready_deadline := v_server_now + case
       when v_room.is_custom and v_room.max_players > 2
-        then interval '20 seconds'
+        then interval '30 seconds'
       else interval '45 seconds'
     end;
     update public.rooms r
