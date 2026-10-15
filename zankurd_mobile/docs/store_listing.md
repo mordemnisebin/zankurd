@@ -142,6 +142,7 @@ YARIŞ
 • Sırayla düello: rakibin aynı anda çevrimiçi olması gerekmez. Sen şimdi
   oynarsın, o sonra; sonuç Düellolarım'da görünür.
 • Oda kur: davet bağlantısını paylaş, arkadaşların tek dokunuşla katılsın.
+  Grup yarışında 50 kişiye kadar aynı anda yarışın, canlı sıralamayı izleyin.
 • Liderlik tablosu: gün, hafta, ay ve arkadaşlar arası sıralama.
 
 NASIL İŞLER
@@ -249,6 +250,7 @@ Yarış
 • Sırayla düello: rakibin aynı anda çevrimiçi olması gerekmez. Sen şimdi
   oynarsın, o sonra; sonuç Düellolarım'da görünür.
 • Oda kur: davet bağlantısını paylaş, arkadaşların tek dokunuşla katılsın.
+  Grup yarışında 50 kişiye kadar aynı anda yarışın, canlı sıralamayı izleyin.
 • Liderlik tablosu: gün, hafta, ay ve arkadaşlar arası sıralama.
 
 Nasıl işler
