@@ -39,6 +39,13 @@ Future<void> openAsyncDuelSummary(
       repository: repository,
       entry: AsyncDuelEntry.acceptChallenge(code),
     );
+  } else if (summary.canResume) {
+    // Yarım kalan tur: ölü bir "Yarım kaldı" sonucu yerine kaldığı sorudan
+    // devam edilir.
+    page = AsyncDuelPlayScreen(
+      repository: repository,
+      entry: AsyncDuelEntry.resume(summary.duelId),
+    );
   } else {
     page = AsyncDuelResultScreen(
       repository: repository,
@@ -142,7 +149,12 @@ class _AsyncDuelInboxSectionState extends State<AsyncDuelInboxSection> {
     // Okunmamış = sonucu hazır ve görülmemiş VEYA sırası bende olan
     // meydan okuma.
     final unreadCount = all
-        .where((s) => s.incomingChallenge || (s.outcome != null && !s.seen))
+        .where(
+          (s) =>
+              s.incomingChallenge ||
+              s.canResume ||
+              (s.outcome != null && !s.seen),
+        )
         .length;
 
     // 2026-09-29 Şahnê: tek bölüm başlığı (`SahneSectionHeader`), satırlar
@@ -321,11 +333,15 @@ class _AsyncDuelSummaryRow extends StatelessWidget {
     // Rozet yalnız TAMAMLANMIŞ ve henüz görülmemiş satırda anlamlıdır —
     // "bekleniyor/süresi doldu/yarım kaldı" satırında oyuncunun görmesi
     // gereken yeni bir sonuç yok. Gelen meydan okumada rozet "Oyna".
+    final resumable = summary.canResume;
     final showReadyChip =
         incoming ||
+        resumable ||
         (view.kind == AsyncDuelResultKind.completed && !summary.seen);
     final readyLabel = incoming
         ? context.t(K.challengePlay)
+        : resumable
+        ? context.t(K.asyncDuelResume)
         : context.t(K.asyncDuelReady);
     final icon = switch (view.kind) {
       _ when incoming => AppIcons.peopleGroup,

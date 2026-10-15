@@ -1862,11 +1862,14 @@ void main() {
   );
 
   test(
-    'loadFavoriteQuestions çevrimiçi oda maçında kaydedilmiş favoriyi de çözer',
+    'loadFavoriteQuestions ölü quiz_public_questions görünümüne gitmez',
     () async {
-      // Kayıt uuid ile yazılır (gerçek oda sorusu), okuma paketli banka
-      // kimlikleriyle eşleştiriyordu — sunucuda duran bir favori hiçbir
-      // zaman listede görünmüyordu (2026-08-14 denetimi).
+      // 2026-08-14'te oda maçında kaydedilmiş favoriler bu görünümden
+      // çözülüyordu. Görünüm istemciye hep "permission denied" veriyordu
+      // (altındaki `questions` tablosunda SELECT yok), hata yutuluyor ve
+      // favori yine görünmüyordu; çağrı ve görünüm 2026-10-15'te kaldırıldı.
+      // Bekçi: paketli bankadaki favori gelir, sunucuya yalnız
+      // `favorite_questions` için gidilir.
       final httpClient = _FavoriteQuestionsHttpClient();
       final repository = _SignedInRoomSessionRepository(
         SupabaseClient(
@@ -1878,21 +1881,14 @@ void main() {
 
       final questions = await repository.loadFavoriteQuestions();
 
-      expect(questions, hasLength(2));
-      // Sunucu satırının sırası korunur (created_at desc).
-      expect(questions.first.id, 'server-only-id');
-      expect(questions.first.prompt, 'Sunucu sorusu?');
-      // Cevap istemciye hiç gönderilmedi — yeniden puanlanamaz.
-      expect(questions.first.hasHiddenAnswer, isTrue);
-      expect(questions.last.id, 'curated_movement_0001');
-      expect(questions.last.hasHiddenAnswer, isFalse);
+      expect(questions.map((q) => q.id), ['curated_movement_0001']);
+      expect(questions.single.hasHiddenAnswer, isFalse);
+      expect(httpClient.requestedPaths, ['/rest/v1/favorite_questions']);
       expect(
-        httpClient.requestedPaths,
-        containsAll([
-          '/rest/v1/favorite_questions',
-          '/rest/v1/quiz_public_questions',
-          '/rest/v1/categories',
-        ]),
+        File(
+          'lib/src/data/supabase_zankurd_repository.dart',
+        ).readAsStringSync().contains("from('quiz_public_questions')"),
+        isFalse,
       );
     },
   );

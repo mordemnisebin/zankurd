@@ -273,6 +273,17 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// okumayı kabul eder (misafir hesap dahil). Aynı kişi için idempotenttir.
   Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code);
 
+  /// Yarım bırakılan düelloya (yaratıcı ya da rakip olarak) kaldığı sorudan
+  /// devam eder (`resume_my_async_duel`). Yanıt, meydan okuma yeniden
+  /// açılışıyla aynı biçimdedir: [AsyncDuelStart.answeredCount] kaldığı
+  /// soruyu söyler.
+  Future<AsyncDuelStart> resumeAsyncDuel(String duelId);
+
+  /// Kimsenin katılmadığı kendi açık düellomu geri çeker
+  /// (`cancel_my_async_duel`). Başarısızlıkta `false`; RPC yoksa
+  /// [isMissingRpcError] fırlatır.
+  Future<bool> cancelAsyncDuel(String duelId);
+
   /// Sunucuda meydan okuma RPC'leri var mı? Yoksa (göç henüz uygulanmamış)
   /// giriş noktaları gizlenir. Belirsizlikte (ağ hatası, oturum yok) `true`
   /// döner: yalnız KESİN "fonksiyon yok" yanıtı gizler.
@@ -491,6 +502,22 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   /// Bu cihazın FCM token'ını sunucuya yazar. Push kuyruğu token'ı buradan okur.
   Future<void> setFcmToken(String token);
+
+  /// Çıkışta bu hesabın FCM token'ını sunucudan siler (en iyi çaba; hata
+  /// yutulur). Silinmezse cihazı devralan hesap öncekinin bildirimlerini
+  /// alırdı.
+  Future<void> clearFcmToken();
+
+  /// Gönderdiğim, bekleyen arkadaş istekleri. Sunucuda RPC yoksa (göç
+  /// uygulanmamış) `null`: ekran "geri çek" / "arkadaşlıktan çıkar"
+  /// eylemlerini sessizce gizler. Başka bir hata boş liste döner.
+  Future<List<SentFriendRequest>?> loadSentFriendRequests();
+
+  /// Arkadaşı iki yönden siler. Başarısızlıkta `false`.
+  Future<bool> removeFriend(String friendId);
+
+  /// Kendi gönderdiğim bekleyen isteği geri çeker. Başarısızlıkta `false`.
+  Future<bool> cancelFriendRequest(String targetUserId);
 
   /// Arkadaş isteğini kabul et.
   Future<bool> acceptFriendRequest(String requestId);
