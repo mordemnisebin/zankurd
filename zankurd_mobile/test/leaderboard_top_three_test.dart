@@ -8,7 +8,6 @@ import 'package:zankurd_mobile/src/models/leaderboard_entry.dart';
 import 'package:zankurd_mobile/src/models/leaderboard_period.dart';
 import 'package:zankurd_mobile/src/providers/theme_provider.dart';
 import 'package:zankurd_mobile/src/screens/leaderboard_screen.dart';
-import 'package:zankurd_mobile/src/widgets/kilim_reveal.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 
 import 'support/widget_test_helpers.dart';
@@ -141,7 +140,6 @@ void main() {
         .widgetList<SahneGlyph>(find.byType(SahneGlyph))
         .where((g) => g.kind == SahneGlyphKind.crown);
     expect(crowns, hasLength(1), reason: 'taç yalnız birincide');
-    expect(find.byType(KilimReveal), findsNothing);
   });
 
   testWidgets('tam üç oyuncuda liste yüzeyi çizilmez', (tester) async {

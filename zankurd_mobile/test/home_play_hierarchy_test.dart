@@ -1,7 +1,7 @@
 // 2026-09-29 doğallık (K7): oda eylemleri ikincil düğme, günün etkinliğinde
 // adını tekrarlayan rozet yok.
 // 2026-09-29 Şahnê: ana ekranın kapıları ve oyun merkezinin öteki yolları
-// `ModeCard`/degrade kart değil, liste satırıdır (`SahneListRow`); bekçi
+// degrade kart değil, liste satırıdır (`SahneListRow`); bekçi
 // "tek birincil (turuncu) eylem, öteki yollar sakin ve erişilebilir"
 // kuralını bu dilde sorar.
 import 'dart:ui' as ui;
@@ -24,7 +24,6 @@ import 'package:zankurd_mobile/src/screens/home/home_sections.dart';
 import 'package:zankurd_mobile/src/screens/play_hub_screen.dart';
 import 'package:zankurd_mobile/src/services/premium_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/mode_card.dart';
 
 Widget _homeShell({required bool isKu, required bool isDark}) {
   return MultiProvider(
@@ -119,11 +118,6 @@ void main() {
               find.descendant(of: finder, matching: find.byType(FilledButton)),
               findsNothing,
               reason: 'Turuncu yalnız günün dersi düğmesine ayrılmış: $door',
-            );
-            expect(
-              find.descendant(of: finder, matching: find.byType(ModeCard)),
-              findsNothing,
-              reason: 'Kapı ikinci bir kampanya kartı olmamalı: $door',
             );
           }
 
@@ -247,32 +241,6 @@ void main() {
       }
     },
   );
-
-  testWidgets('mode card without an action is announced as disabled', (
-    tester,
-  ) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: AppTheme.light(),
-        home: const Scaffold(
-          body: ModeCard(
-            icon: Icons.lock_outline,
-            accent: AppTheme.playGreen,
-            title: 'Ode kilitli',
-            subtitle: 'Sunucuya ulaşılamıyor',
-            onTap: null,
-            emphasis: ModeCardEmphasis.secondary,
-          ),
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    final data = tester.getSemantics(find.byType(ModeCard)).getSemanticsData();
-    expect(data.flagsCollection.isButton, isTrue);
-    expect(data.flagsCollection.isEnabled, ui.Tristate.isFalse);
-    expect(data.hasAction(ui.SemanticsAction.tap), isFalse);
-  });
 
   // "Daha fazla" katmanı yalnız turnuva bayrağı açıkken çizilir.
   testWidgets(
