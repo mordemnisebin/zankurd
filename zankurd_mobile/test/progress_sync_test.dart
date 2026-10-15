@@ -11,6 +11,7 @@
 /// sabitler.
 library;
 
+import 'package:flutter/widgets.dart' show AppLifecycleState;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/achievement_store.dart';
@@ -337,10 +338,45 @@ void main() {
         ProgressSyncService.markDirty();
         ProgressSyncService.markDirty();
         expect(remote.fetches, 0, reason: 'gecikme dolmadan gitmez');
-        await Future<void>.delayed(const Duration(milliseconds: 200));
+        // Yüklü makinede zamanlayıcı geç tetiklenebilir: sabit bekleme yerine
+        // sonucu bekle.
+        for (var i = 0; i < 200 && remote.saves == 0; i++) {
+          await Future<void>.delayed(const Duration(milliseconds: 25));
+        }
 
         expect(remote.fetches, 1);
         expect(remote.saves, 1);
+      },
+    );
+
+    test(
+      'arka plana geçiş: bekleyen değişiklik hemen gider, inactive gitmez',
+      () async {
+        final remote = _FakeRemote();
+        final service = await bind(
+          remote,
+          debounce: const Duration(minutes: 5),
+        );
+        await service.syncNow();
+        expect(remote.fetches, 1);
+        await (await XPStore.load()).addXP(8);
+        ProgressSyncService.markDirty();
+
+        // Denetim merkezi/bildirim çekmecesi ağa çıkmaz.
+        service.didChangeAppLifecycleState(AppLifecycleState.inactive);
+        await pumpEventQueue();
+        expect(remote.fetches, 1);
+
+        service.didChangeAppLifecycleState(AppLifecycleState.paused);
+        await pumpEventQueue();
+        expect(remote.saves, 1);
+        expect(ProgressSnapshot.tryParse(remote.lastSaved)!.xp, 8);
+
+        // Bekleyen değişiklik yok ve yeni eşitlendi: arka plan ağa çıkmaz.
+        final fetchesBefore = remote.fetches;
+        service.didChangeAppLifecycleState(AppLifecycleState.paused);
+        await pumpEventQueue();
+        expect(remote.fetches, fetchesBefore);
       },
     );
 

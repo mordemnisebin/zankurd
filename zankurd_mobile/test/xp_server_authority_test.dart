@@ -62,7 +62,7 @@ void main() {
     );
     // Kayıtlı hesabın çıkışı ilerlemeyi silmez; metin bunu söylemeli
     // (eski metin "temizlenir" diyordu ve artık yalan olurdu).
-    expect(signOutTr, contains('ilerlemen hesabına bağlı saklanır'));
+    expect(signOutTr, contains('İlerlemen hesabına bağlı saklanır'));
     expect(signOutTr, isNot(contains('temizlenir')));
     expect(signOutKu, contains('tê parastin'));
   });

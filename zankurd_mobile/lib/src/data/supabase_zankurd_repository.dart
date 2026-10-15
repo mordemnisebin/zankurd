@@ -2079,8 +2079,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'claim_solo_reward',
         params: {...legacy, 'p_client_round_id': clientRoundId},
       );
-    } on PostgrestException catch (error) {
+    } on PostgrestException catch (error, stack) {
       if (error.code != 'PGRST202' && error.code != '42883') rethrow;
+      _recordError(
+        error,
+        stack,
+        reason: 'claim_solo_reward round-id signature missing — legacy call',
+      );
       return client.rpc('claim_solo_reward', params: legacy);
     }
   }

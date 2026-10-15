@@ -179,7 +179,7 @@ class Tr {
     },
     K.deleteSubscriptionNote: {
       'ku':
-          'Abonetiya App Store an Google Play bi jêbirina hesabê nayê betalkirin; pêdivî ye tu wê bi xwe di dikanê de betal bikî.',
+          'Abonetiya App Store an Google Play bi jêbirina hesabê nayê betalkirin; pêdivî ye tu wê bi xwe di dukanê de betal bikî.',
       'tr':
           'App Store veya Google Play aboneliği hesap silinince iptal olmaz; aboneliği mağazadan kendin iptal etmelisin.',
     },
@@ -1985,7 +1985,7 @@ class Tr {
       'tr': 'Bağlantı kurulamadı. İnterneti kontrol edip tekrar dene.',
     },
     K.premiumErrStore: {
-      'ku': 'Dikan nayê gihîştin. Piştî demekê dîsa biceribîne.',
+      'ku': 'Dukan nayê gihîştin. Piştî demekê dîsa biceribîne.',
       'tr': 'Mağazaya ulaşılamadı. Biraz sonra tekrar dene.',
     },
     K.premiumErrNotAllowed: {

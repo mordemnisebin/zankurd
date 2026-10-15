@@ -409,14 +409,26 @@ class ProgressSyncService with WidgetsBindingObserver {
     }
   }
 
+  /// Arka plana geçerken: bekleyen (seyreltilmiş) yükleme varsa hemen yapılır;
+  /// yoksa son eşitlemeden [idleResync] geçtiyse yine yapılır (ders gibi
+  /// sonuç ekranı dışı değişiklikleri yakalar). `inactive` (denetim merkezi,
+  /// bildirim çekmecesi) bilerek yok sayılır: her açılışta ağa çıkmasın.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused ||
-        state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.hidden) {
+    if (state != AppLifecycleState.paused) return;
+    final pending = _timer?.isActive ?? false;
+    final last = _lastRun;
+    final idle = last == null || DateTime.now().difference(last) > idleResync;
+    if (pending || idle) {
+      _timer?.cancel();
+      _timer = null;
       unawaited(syncNow());
     }
   }
+
+  /// Bekleyen değişiklik yokken arka plana geçişte yeniden eşitleme aralığı.
+  static const idleResync = Duration(minutes: 2);
+  DateTime? _lastRun;
 
   void scheduleUpload() {
     if (_closed || _disabled) return;
@@ -457,6 +469,7 @@ class ProgressSyncService with WidgetsBindingObserver {
 
   Future<void> _syncOnce() async {
     if (_closed || _disabled) return;
+    _lastRun = DateTime.now();
     try {
       // Kapsam başka kullanıcıya geçtiyse (hızlı hesap değişimi) dokunma.
       if (LocalProgressScope.activeUserId != userId) return;
