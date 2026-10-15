@@ -35,6 +35,7 @@ class _GuestAuthProviderWithGoogleLink extends AuthProvider {
   final String? googleErrorMessage;
 
   bool googleLinkCalled = false;
+  bool appleLinkCalled = false;
 
   @override
   bool get isAuthenticated => true;
@@ -48,6 +49,12 @@ class _GuestAuthProviderWithGoogleLink extends AuthProvider {
   @override
   Future<bool> linkGoogleAccount() async {
     googleLinkCalled = true;
+    return googleLinkSucceeds;
+  }
+
+  @override
+  Future<bool> linkAppleAccount() async {
+    appleLinkCalled = true;
     return googleLinkSucceeds;
   }
 
@@ -123,7 +130,11 @@ void main() {
       expect(find.text('Google ile bağla'), findsOneWidget);
     });
 
-    testWidgets('iOS misafir yükseltmesinde sosyal hesap seçeneği görünmez', (
+    // Kusur: iOS'ta misafirin tek kalıcı yolu e-postaydı. `linkAppleAccount`
+    // yazılmıştı ama hiçbir çağrı yeri yoktu; Google bağlama bu platformda
+    // kapalı olduğundan Apple seçeneği hiç görünmüyordu. Sessizdi çünkü
+    // eski test tam tersini ("sosyal seçenek görünmez") sabitliyordu.
+    testWidgets('iOS misafir yükseltmesinde Apple görünür, Google görünmez', (
       tester,
     ) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
@@ -140,8 +151,50 @@ void main() {
       debugDefaultTargetPlatformOverride = null;
 
       expect(find.text('Google ile bağla'), findsNothing);
+      expect(find.text('Apple ile devam et'), findsOneWidget);
       expect(find.text('E-posta'), findsWidgets);
       expect(tester.takeException(), isNull);
+
+      await tester.tap(find.byKey(const ValueKey('guest-upgrade-apple')));
+      await tester.pumpAndSettle();
+      expect(guestAuth.appleLinkCalled, isTrue);
+      expect(guestAuth.googleLinkCalled, isFalse);
+    });
+
+    testWidgets('Kurmancî iOS yükseltmesinde Apple etiketi Kurmancî', (
+      tester,
+    ) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          ProfileScreen(repository: MockZanKurdRepository()),
+          _GuestAuthProviderWithGoogleLink(),
+          isKu: true,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openGuestUpgradeDialog(tester, isKu: true);
+      debugDefaultTargetPlatformOverride = null;
+
+      expect(find.text('Bi Apple re bidomîne'), findsOneWidget);
+    });
+
+    testWidgets('Android yükseltmesinde Apple görünmez, Google görünür', (
+      tester,
+    ) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          ProfileScreen(repository: MockZanKurdRepository()),
+          _GuestAuthProviderWithGoogleLink(),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openGuestUpgradeDialog(tester);
+      debugDefaultTargetPlatformOverride = null;
+
+      expect(find.text('Apple ile devam et'), findsNothing);
+      expect(find.text('Google ile bağla'), findsOneWidget);
     });
 
     testWidgets('kalıcı kullanıcıda misafir yükseltme dialog\'u hiç açılamaz', (

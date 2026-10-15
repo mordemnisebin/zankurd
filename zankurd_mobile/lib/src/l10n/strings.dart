@@ -1904,6 +1904,7 @@ class Tr {
     },
     K.orSeparator: {'ku': 'an jî', 'tr': 'veya'},
     K.linkGoogle: {'ku': 'Bi Google girêde', 'tr': 'Google ile bağla'},
+    K.linkApple: {'ku': 'Bi Apple re bidomîne', 'tr': 'Apple ile devam et'},
     K.accountSaved: {
       'ku': 'Hesabê te hat tomarkirin.',
       'tr': 'Hesabın kaydedildi.',
@@ -3695,6 +3696,7 @@ class K {
   static const passwordTooShort = 'common.password.tooShort';
   static const orSeparator = 'common.or';
   static const linkGoogle = 'profile.linkGoogle';
+  static const linkApple = 'profile.linkApple';
   static const accountSaved = 'profile.accountSaved';
   static const connectingGoogle = 'common.connectingGoogle';
   static const signOut = 'common.signOut';
