@@ -43,6 +43,12 @@ RoomStatus _roomStatusFromValue(Object? value) {
   };
 }
 
+/// Odanın gösterim adı. 2 kişilik oda eskiden olduğu gibi '1vs1'; kalabalık
+/// odanın başlığı ekranda dile göre çizilir (`K.crowdRoomTitle`), burada
+/// yalnız ayırt edici bir ad tutulur.
+String _roomDisplayName(int maxPlayers, bool isCustom) =>
+    isCustom && maxPlayers > 2 ? 'crowd' : '1vs1';
+
 Map<String, dynamic> _requiredJsonObject(Object? value, String field) {
   if (value is! Map) {
     throw FormatException('$field must be a JSON object.');
@@ -104,6 +110,21 @@ void _requireExactKeys(
   final actual = json.keys.toSet();
   if (actual.length != expected.length || !actual.containsAll(expected)) {
     throw FormatException('$field contains missing or unexpected fields.');
+  }
+}
+
+/// Beklenen anahtarların hepsi VAR olmalı; fazlalıklar yok sayılır.
+///
+/// Sunucu cevaplarına zamanla alan eklenir (ör. kalabalık odanın `rank`,
+/// `left`, `max_players`); eski bir istemcinin "bilmediğim alan var" diye
+/// sonucu reddetmesi, oyuncuyu bitmiş maçın sonucundan yoksun bırakırdı.
+void _requireKeys(
+  Map<String, dynamic> json,
+  Set<String> required,
+  String field,
+) {
+  if (!json.keys.toSet().containsAll(required)) {
+    throw FormatException('$field is missing required fields.');
   }
 }
 
@@ -756,6 +777,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) async {
     try {
       if (client.auth.currentUser == null) {
@@ -770,6 +792,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           'p_seconds_per_question': secondsPerQuestion,
           'p_question_count': questionCount,
           'p_entry_fee': entryFee,
+          // Kapasite 2 iken istek eskisiyle birebir aynı gider (sunucuda
+          // 5. parametrenin varsayılanı 2); yalnız kalabalık oda gönderir.
+          if (maxPlayers != 2) 'p_max_players': maxPlayers,
         },
       );
       final snapshot = _requiredJsonObject(response, 'create_online_room');
@@ -788,11 +813,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final serverEntryFee = snapshot['entry_fee'] != null
           ? (snapshot['entry_fee'] as num).toInt()
           : entryFee;
+      // Eski sunucu bu iki alanı hiç döndürmez: tolere edilir, 2 kişilik.
+      final serverMaxPlayers =
+          (snapshot['max_players'] as num?)?.toInt() ?? maxPlayers;
+      final serverIsCustom = snapshot['is_custom'] as bool? ?? true;
 
       final players = await _loadRoomPlayersById(roomId);
       return GameRoom(
         id: roomId,
-        name: '1vs1',
+        name: _roomDisplayName(serverMaxPlayers, serverIsCustom),
         code: roomCode,
         category: canonicalCategory,
         players: players,
@@ -801,6 +830,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         secondsPerQuestion: serverSeconds,
         entryFee: serverEntryFee,
         hostId: hostId,
+        maxPlayers: serverMaxPlayers,
+        isCustom: serverIsCustom,
       );
     } catch (error, stack) {
       _recordError(error, stack, reason: 'createOnlineRoom failed');
@@ -848,7 +879,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       // başlıkla açılıyordu. `createOnlineRoom`/`loadRoomSnapshot`
       // (ev sahibi ve sonraki yeniden-yüklemeler) zaten '1vs1' kullanıyor
       // (2026-08-14 denetimi).
-      name: '1vs1',
+      name: _roomDisplayName(
+        (room['max_players'] as num?)?.toInt() ?? 2,
+        room['is_custom'] as bool? ?? false,
+      ),
       code: room['code'] as String,
       questionCount: room['question_count'] as int? ?? 10,
       players: players,
@@ -857,6 +891,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           (room['seconds_per_question'] as int?) ??
           GameRoom.defaultSecondsPerQuestion,
       entryFee: (room['entry_fee'] as num?)?.toInt() ?? 0,
+      // Eski sunucu bu alanları döndürmez: 2 kişilik, eşleşme dışı sayılır.
+      maxPlayers: (room['max_players'] as num?)?.toInt() ?? 2,
+      isCustom: room['is_custom'] as bool? ?? false,
     );
 
     // Katılan oyuncu `join_room_by_code`un yazdığı gibi HAZIR DEĞİL başlar.
@@ -881,16 +918,18 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         .from('rooms')
         .select(
           'id, code, host_id, question_count, seconds_per_question, entry_fee, status, '
-          'categories(name)',
+          'max_players, is_custom, categories(name)',
         )
         .eq('id', roomId)
         .single();
     final players = await _loadRoomPlayersById(roomId);
     final category = row['categories'] as Map<String, dynamic>?;
+    final rowMaxPlayers = (row['max_players'] as num?)?.toInt() ?? 2;
+    final rowIsCustom = row['is_custom'] as bool? ?? false;
 
     return GameRoom(
       id: row['id'] as String? ?? roomId,
-      name: '1vs1',
+      name: _roomDisplayName(rowMaxPlayers, rowIsCustom),
       code: row['code'] as String? ?? '',
       category: category?['name'] as String? ?? 'Ziman',
       players: players,
@@ -901,6 +940,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           GameRoom.defaultSecondsPerQuestion,
       entryFee: (row['entry_fee'] as num?)?.toInt() ?? 0,
       hostId: row['host_id'] as String?,
+      maxPlayers: rowMaxPlayers,
+      isCustom: rowIsCustom,
     );
   }
 
@@ -1024,7 +1065,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }, source);
 
     final roomJson = _requiredJsonObject(json['room'], 'room');
-    _requireExactKeys(roomJson, const {
+    _requireKeys(roomJson, const {
       'id',
       'code',
       'host_id',
@@ -1049,22 +1090,39 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       'seconds_per_question',
     ]);
     final hostId = _requiredNullableString(roomJson, 'host_id');
+    // Eski sunucu bu ikisini göndermez: 2 kişilik, eşleşme/1v1 sayılır.
+    final maxPlayers = (roomJson['max_players'] as num?)?.toInt() ?? 2;
+    final isCustom = roomJson['is_custom'] as bool? ?? false;
+    final crowd = isCustom && maxPlayers > 2;
+    // Kalabalık odada kalan aktif sayısı 2'nin altına düşünce oda erken
+    // biter: soru dizini sondan önce kalır ve oyuncunun cevapları eksik
+    // olabilir. 1v1/2 kişilik odada bitiş her zaman tam olmalıdır.
+    final terminalIndexOk = crowd
+        ? currentQuestionIndex >= 0 && currentQuestionIndex <= questionCount
+        : currentQuestionIndex == questionCount;
     if (statusValue != 'finished' ||
         questionCount < 1 ||
-        currentQuestionIndex != questionCount ||
+        !terminalIndexOk ||
         !GameRoom.allowedSecondsPerQuestion.contains(secondsPerQuestion)) {
       throw const FormatException('Room result is not terminal and complete.');
     }
 
     final ownPlayerId = _requiredString(json, const ['own_player_id']);
     final rawPlayers = json['players'];
-    if (rawPlayers is! List || rawPlayers.length != 2) {
-      throw const FormatException('players must contain exactly two players.');
+    if (rawPlayers is! List ||
+        (crowd
+            ? rawPlayers.length < 2 || rawPlayers.length > maxPlayers
+            : rawPlayers.length != 2)) {
+      throw FormatException(
+        crowd
+            ? 'players must contain 2..$maxPlayers players.'
+            : 'players must contain exactly two players.',
+      );
     }
     final players = rawPlayers
         .map((rawPlayer) {
           final player = _requiredJsonObject(rawPlayer, 'players[]');
-          _requireExactKeys(player, const {
+          _requireKeys(player, const {
             'player_id',
             'display_name',
             'final_score',
@@ -1077,19 +1135,35 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
               'Final score and streak must be non-negative.',
             );
           }
+          int? rank;
+          var left = false;
+          if (crowd) {
+            left = _requiredBool(player, 'left');
+            final rawRank = player['rank'];
+            rank = rawRank == null
+                ? null
+                : _requiredInt(player, const ['rank']);
+            // Ayrılan sıralamaya girmez; aktif oyuncunun sırası 1'den başlar.
+            if (left ? rank != null : (rank == null || rank < 1)) {
+              throw const FormatException('Player rank and left disagree.');
+            }
+          }
           return Player(
             id: _requiredString(player, const ['player_id']),
             name: _requiredString(player, const ['display_name']),
             score: score,
             state: Player.readyState,
             streak: streak,
+            rank: rank,
+            left: left,
           );
         })
         .toList(growable: false);
     final playerIds = players.map((player) => player.id!).toSet();
-    if (playerIds.length != 2 || !playerIds.contains(ownPlayerId)) {
+    if (playerIds.length != players.length ||
+        !playerIds.contains(ownPlayerId)) {
       throw const FormatException(
-        'Result players are not two distinct members.',
+        'Result players are not distinct members including the owner.',
       );
     }
     if (hostId != null && !playerIds.contains(hostId)) {
@@ -1117,7 +1191,10 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }
 
     final rawAnswers = json['answers'];
-    if (rawAnswers is! List || rawAnswers.length != questionCount) {
+    if (rawAnswers is! List ||
+        (crowd
+            ? rawAnswers.length > questionCount
+            : rawAnswers.length != questionCount)) {
       throw const FormatException('answers must contain every own answer.');
     }
     final answers = <ResumedAnswer>[];
@@ -1182,7 +1259,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (!answer.isCorrect) break;
       ownStreak++;
     }
-    if (ownPlayer.score != ownScore || ownPlayer.streak != ownStreak) {
+    // Seri sunucuda yalnız AÇIKLANMIŞ sorulardan sayılır; erken biten
+    // kalabalık odada son cevap açıklanmamış kalabilir. Skor ise sunucuda
+    // cevap puanlarının toplamıyla eşitlenmiş olmak zorundadır.
+    if (ownPlayer.score != ownScore ||
+        (!crowd && ownPlayer.streak != ownStreak)) {
       throw const FormatException('Own final score does not match answers.');
     }
 
@@ -1192,21 +1273,28 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       throw const FormatException('Room result is not a normal completion.');
     }
     final winnerId = _requiredNullableString(json, 'winner_id');
-    final sortedPlayers = [...players]
-      ..sort((a, b) {
-        final scoreOrder = b.score.compareTo(a.score);
-        return scoreOrder != 0 ? scoreOrder : a.id!.compareTo(b.id!);
-      });
-    final expectedWinner = sortedPlayers[0].score == sortedPlayers[1].score
+    // Kalabalıkta kazanan, AKTİF oyuncular içinde tek başına en yüksek
+    // skorlu kişidir (ayrılanlar hesaba girmez); tepede eşitlik varsa null.
+    final contenders = crowd
+        ? players.where((player) => !player.left).toList()
+        : [...players];
+    contenders.sort((a, b) {
+      final scoreOrder = b.score.compareTo(a.score);
+      return scoreOrder != 0 ? scoreOrder : a.id!.compareTo(b.id!);
+    });
+    final expectedWinner =
+        contenders.isEmpty ||
+            (contenders.length > 1 &&
+                contenders[0].score == contenders[1].score)
         ? null
-        : sortedPlayers[0].id;
+        : contenders.first.id;
     if (winnerId != expectedWinner) {
       throw const FormatException('winner_id does not match final scores.');
     }
 
     final room = GameRoom(
       id: roomId,
-      name: '1vs1',
+      name: _roomDisplayName(maxPlayers, isCustom),
       code: _requiredString(roomJson, const ['code']),
       category: _requiredString(roomJson, const ['category_name']),
       players: List.unmodifiable(players),
@@ -1214,6 +1302,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       questionCount: questionCount,
       secondsPerQuestion: secondsPerQuestion,
       hostId: hostId,
+      maxPlayers: maxPlayers,
+      isCustom: isCustom,
     );
     return RoomResultSnapshot(
       room: room,
@@ -1251,7 +1341,17 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final roomId = room.id;
     if (roomId == null) return null;
 
-    await client.rpc('mark_room_client_ready', params: {'p_room_id': roomId});
+    final response = await client.rpc(
+      'mark_room_client_ready',
+      params: {'p_room_id': roomId},
+    );
+    // Kalabalık odada hazır süresi dolunca hazır olmayan oyuncu oyundan
+    // düşer ve `status: 'left'` alır. Sürdürülebilir oda artık onu
+    // döndürmeyeceğinden bunu ayrıca bildirmezsek istemci sonsuza dek
+    // "hazırlanıyor" ekranında beklerdi.
+    if (response is Map && response['status'] == 'left') {
+      throw const RoomMemberLeftException();
+    }
     return _loadExpectedRoomResume(roomId);
   }
 
@@ -1288,7 +1388,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       params: {'p_room_id': roomId},
     );
     final json = _requiredJsonObject(response, 'leave_room');
-    _requireExactKeys(json, const {
+    // Kalabalık lobide host çıkınca cevap `new_host_id` da taşır; üç temel
+    // alan zorunlu, fazlalık yok sayılır.
+    _requireKeys(json, const {
       'status',
       'reason',
       'forfeited_by',
@@ -1297,6 +1399,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       status: _requiredString(json, const ['status']),
       reason: _requiredString(json, const ['reason']),
       forfeitedBy: _requiredNullableString(json, 'forfeited_by'),
+      newHostId: _optionalString(json, 'new_host_id'),
     );
   }
 
@@ -1559,6 +1662,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
                 avatarUrl: cachedProfile?['avatar_url'] as String?,
                 avatarFrame: cachedProfile?['avatar_frame'] as String?,
                 showcaseTitle: cachedProfile?['showcase_title'] as String?,
+                left: row['left_at'] != null,
               ),
             );
           }
@@ -2367,7 +2471,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final rows = await client
         .from('room_players')
         .select(
-          'player_id, score, streak, is_ready, '
+          'player_id, score, streak, is_ready, left_at, '
           'profiles(display_name, avatar_icon, avatar_color, avatar_url, '
           'avatar_frame, showcase_title)',
         )
@@ -2395,6 +2499,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         avatarUrl: profile?['avatar_url'] as String?,
         avatarFrame: profile?['avatar_frame'] as String?,
         showcaseTitle: profile?['showcase_title'] as String?,
+        left: row['left_at'] != null,
       );
     }).toList();
   }

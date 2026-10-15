@@ -27,8 +27,27 @@ class RoomResultPresentation {
   final List<Player> opponents;
 }
 
+/// Sonuçtaki oyuncu kümesi odanın türüne uygun mu?
+///
+/// 1v1/2 kişilik oda: tam iki ayrı oyuncu. Kalabalık oda: 2..kapasite ayrı
+/// oyuncu (erken biten odada ayrılanlar da listede kalır). Her iki durumda
+/// kimlikler dolu ve ayrı, çağıran tam bir kez içinde olmalı.
+bool roomResultHasValidPlayers(RoomResultSnapshot snapshot, String ownerId) {
+  final playerIds = snapshot.room.players
+      .map((player) => player.id?.trim() ?? '')
+      .toList(growable: false);
+  final countOk = snapshot.room.isCrowd
+      ? playerIds.length >= 2 && playerIds.length <= snapshot.room.maxPlayers
+      : playerIds.length == 2;
+  return countOk &&
+      playerIds.every((id) => id.isNotEmpty) &&
+      playerIds.toSet().length == playerIds.length &&
+      playerIds.where((id) => id == ownerId.trim()).length == 1;
+}
+
 /// Sonuç tesliminden önce çağıranın beklediği oda ve kullanıcıyla snapshot'ın
-/// aynı, eksiksiz ve normal biçimde tamamlanmış 1v1 maça ait olduğunu doğrular.
+/// aynı, eksiksiz ve normal biçimde tamamlanmış maça (1v1 ya da kalabalık
+/// oda) ait olduğunu doğrular.
 void validateRoomResultDeliveryContext(
   RoomResultSnapshot snapshot, {
   required String expectedUserId,
@@ -37,14 +56,7 @@ void validateRoomResultDeliveryContext(
   final ownerId = expectedUserId.trim();
   final roomId = expectedRoomId.trim();
   final snapshotRoomId = snapshot.room.id?.trim() ?? '';
-  final playerIds = snapshot.room.players
-      .map((player) => player.id?.trim() ?? '')
-      .toList(growable: false);
-  final hasValidPlayers =
-      playerIds.length == 2 &&
-      playerIds.every((id) => id.isNotEmpty) &&
-      playerIds.toSet().length == 2 &&
-      playerIds.where((id) => id == ownerId).length == 1;
+  final hasValidPlayers = roomResultHasValidPlayers(snapshot, ownerId);
 
   if (ownerId.isEmpty ||
       roomId.isEmpty ||
@@ -68,7 +80,11 @@ RoomResultPresentation buildRoomResultPresentation(
   final questionIds = snapshot.questionIds;
   if (questionIds.length != snapshot.room.questionCount ||
       questions.length != questionIds.length ||
-      snapshot.answers.length != questionIds.length ||
+      // Kalabalık oda erken bitebilir (kalan aktif < 2): oyuncunun cevapları
+      // soru sayısından az olabilir. 1v1'de her cevap şarttır.
+      (snapshot.room.isCrowd
+          ? snapshot.answers.length > questionIds.length
+          : snapshot.answers.length != questionIds.length) ||
       questionIds.any((id) => id.trim().isEmpty) ||
       questionIds.toSet().length != questionIds.length ||
       questions.map((question) => question.id).toSet().length !=

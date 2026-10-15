@@ -80,6 +80,7 @@ class _Repo extends MockZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) {
     roomsCreated++;
     return super.createOnlineRoom(
@@ -87,6 +88,7 @@ class _Repo extends MockZanKurdRepository {
       secondsPerQuestion: secondsPerQuestion,
       questionCount: questionCount,
       entryFee: entryFee,
+      maxPlayers: maxPlayers,
     );
   }
 }

@@ -1338,15 +1338,12 @@ void main() {
     }
   });
 
-  test('leave room eksik, fazla veya yanlış tipli cevabı reddeder', () async {
+  test('leave room eksik veya yanlış tipli cevabı reddeder', () async {
+    // Fazlalık alan artık reddedilmez: kalabalık lobide host devrinde sunucu
+    // `new_host_id` ekler ve gelecekte yeni alanlar eklenebilir. Zorunlu üç
+    // alanın varlığı ve tipi hâlâ denetlenir.
     final malformed = <Object?>[
       const {'status': 'finished', 'reason': 'completed'},
-      const {
-        'status': 'finished',
-        'reason': 'completed',
-        'forfeited_by': null,
-        'score': 100,
-      },
       const {'status': 'finished', 'reason': 3, 'forfeited_by': null},
     ];
     const room = GameRoom(

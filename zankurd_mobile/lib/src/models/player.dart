@@ -19,6 +19,8 @@ class Player {
     this.avatarUrl,
     this.avatarFrame,
     this.showcaseTitle,
+    this.rank,
+    this.left = false,
   });
 
   final String? id;
@@ -35,12 +37,24 @@ class Player {
   final String? avatarFrame;
   final String? showcaseTitle;
 
+  /// Kalabalık odanın sunucu sıralaması (1'den başlar; eşit skor aynı sırayı
+  /// paylaşır). Yalnız sonuç yükünde gelir; ayrılan oyuncuda ve eski
+  /// (1v1) odalarda `null`.
+  final int? rank;
+
+  /// Kalabalık odada oyun sürerken ayrılan ya da hazır olmadığı için düşen
+  /// oyuncu (`room_players.left_at` dolu). Satır silinmez: skoru kalır,
+  /// ama sıralamaya girmez ve oda onu beklemez.
+  final bool left;
+
   Player copyWith({
     String? id,
     String? name,
     int? score,
     String? state,
     int? streak,
+    int? rank,
+    bool? left,
   }) {
     return Player(
       id: id ?? this.id,
@@ -53,6 +67,8 @@ class Player {
       avatarUrl: avatarUrl,
       avatarFrame: avatarFrame,
       showcaseTitle: showcaseTitle,
+      rank: rank ?? this.rank,
+      left: left ?? this.left,
     );
   }
 }

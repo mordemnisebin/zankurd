@@ -133,13 +133,29 @@ class RoomLeaveOutcome {
     required this.status,
     required this.reason,
     required this.forfeitedBy,
+    this.newHostId,
   });
 
   final String status;
   final String reason;
   final String? forfeitedBy;
 
+  /// Kalabalık lobide host çıkınca sunucunun devrettiği yeni host
+  /// (`reason: 'host_transferred'`); başka durumda `null`.
+  final String? newHostId;
+
   bool get completed => status == 'finished' && reason == 'completed';
+  bool get hostTransferred => reason == 'host_transferred';
+}
+
+/// Oyuncu kalabalık odadan düşürüldü: `mark_room_client_ready` süre dolunca
+/// hazır olmayanı `left_at` ile oyundan çıkarır ve ona `status: 'left'` döner.
+/// Oyun diğerleriyle sürer; bu oyuncunun odada yapacağı bir şey kalmadı.
+class RoomMemberLeftException implements Exception {
+  const RoomMemberLeftException();
+
+  @override
+  String toString() => 'RoomMemberLeftException: player left the room';
 }
 
 /// `touch_matchmaking` RPC'sinin sonucu.
@@ -320,6 +336,13 @@ class GameRoom {
   static const allowedDurations = [10, 15, 20, 30];
   static const defaultSecondsPerQuestion = 20;
 
+  /// Özel odanın izinli kapasiteleri (sunucudaki `create_online_room` ile
+  /// aynı küme). 2 = bugünkü iki kişilik oda; daha fazlası kalabalık oda.
+  static const allowedMaxPlayers = [2, 4, 8, 16, 30, 50];
+
+  /// Oda kurma sayfasında önceden seçili kapasite.
+  static const defaultCrowdCapacity = 8;
+
   const GameRoom({
     this.id,
     required this.name,
@@ -331,6 +354,8 @@ class GameRoom {
     this.secondsPerQuestion = defaultSecondsPerQuestion,
     this.entryFee = 0,
     this.hostId,
+    this.maxPlayers = 2,
+    this.isCustom = false,
   });
 
   final String? id;
@@ -344,6 +369,17 @@ class GameRoom {
   final int entryFee;
   final String? hostId;
 
+  /// Odanın kapasitesi (`rooms.max_players`). Hızlı eşleşme odası hep 2.
+  final int maxPlayers;
+
+  /// Kodla katılınan özel oda mı (`rooms.is_custom`). Eşleşme odası değil.
+  final bool isCustom;
+
+  /// Kalabalık oda = özel oda VE kapasite > 2. Sunucu yalnız bunlara yeni
+  /// kuralları uygular (host başlatır, ayrılan oyunu bitirmez, sıralı
+  /// sonuç); eşleşme odası ve 2 kişilik özel oda bugünkü 1v1 yolunda kalır.
+  bool get isCrowd => isCustom && maxPlayers > 2;
+
   GameRoom copyWith({
     String? id,
     String? name,
@@ -355,6 +391,8 @@ class GameRoom {
     int? secondsPerQuestion,
     int? entryFee,
     String? hostId,
+    int? maxPlayers,
+    bool? isCustom,
   }) {
     return GameRoom(
       id: id ?? this.id,
@@ -381,6 +419,8 @@ class GameRoom {
       // birbirini host sanabilir. O gün geldiğinde çözüm null geçmek değil,
       // ayrı bir `clearHost` bayrağı ya da sentinel değerdir.
       hostId: hostId ?? this.hostId,
+      maxPlayers: maxPlayers ?? this.maxPlayers,
+      isCustom: isCustom ?? this.isCustom,
     );
   }
 }

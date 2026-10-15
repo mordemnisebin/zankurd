@@ -64,6 +64,7 @@ abstract interface class LivePlayPort {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   });
   Future<GameRoom> joinOnlineRoom(String code);
 

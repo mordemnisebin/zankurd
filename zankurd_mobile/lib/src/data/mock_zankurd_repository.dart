@@ -1450,11 +1450,18 @@ class MockZanKurdRepository implements ZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) async {
-    return createRoom(category: category).copyWith(
+    // Kalabalık odada (kapasite > 2) yerel sahte oda yalnız ev sahibini
+    // taşır: "Heval" yer tutucusu yalnız iki kişilik odanın karşı tarafıdır.
+    final room = createRoom(category: category);
+    return room.copyWith(
       secondsPerQuestion: secondsPerQuestion,
       questionCount: questionCount,
       entryFee: entryFee,
+      maxPlayers: maxPlayers,
+      isCustom: true,
+      players: maxPlayers > 2 ? room.players.take(1).toList() : null,
     );
   }
 
