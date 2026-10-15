@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:zankurd_mobile/src/utils/client_round_id.dart';
 import 'package:zankurd_mobile/src/utils/error_reporter.dart';
 import 'local_progress_scope.dart';
 import 'xp_cache_plan.dart';
@@ -735,6 +736,7 @@ class SyncManager {
     required int bestStreak,
     required int totalQuestions,
     String? roomId,
+    String? clientRoundId,
   }) async {
     final currentUserId = _normalizedUserId(_repository.currentUserId);
     if (!_acceptingItems ||
@@ -747,6 +749,10 @@ class SyncManager {
     _queue.add({
       'queueId': '${DateTime.now().microsecondsSinceEpoch}-${_queueSequence++}',
       'type': 'sync_quiz_reward',
+      // Solo turun değişmez kimliği: yeniden gönderim sunucuda aynı kimlikle
+      // gider, böylece yanıtı kaybolan ilk çağrı çift ödeme yapmaz.
+      if (clientRoundId != null && isClientRoundId(clientRoundId))
+        'clientRoundId': clientRoundId,
       'score': score,
       'correctCount': correctCount,
       'bestStreak': bestStreak,
@@ -1115,13 +1121,25 @@ class SyncManager {
             failedItems.addAll(batch.skip(index));
             break;
           }
-          final amount = (await repo.awardQuizCoins(
-            score: (item['score'] as num?)?.toInt() ?? 0,
-            correctCount: (item['correctCount'] as num?)?.toInt() ?? 0,
-            bestStreak: (item['bestStreak'] as num?)?.toInt() ?? 0,
-            totalQuestions: (item['totalQuestions'] as num?)?.toInt() ?? 0,
-            room: room,
-          )).amount;
+          final retryRoundId = item['clientRoundId'];
+          final claim = room == null && retryRoundId is String
+              ? await repo.awardSoloQuizCoins(
+                  score: (item['score'] as num?)?.toInt() ?? 0,
+                  correctCount: (item['correctCount'] as num?)?.toInt() ?? 0,
+                  bestStreak: (item['bestStreak'] as num?)?.toInt() ?? 0,
+                  totalQuestions:
+                      (item['totalQuestions'] as num?)?.toInt() ?? 0,
+                  clientRoundId: retryRoundId,
+                )
+              : await repo.awardQuizCoins(
+                  score: (item['score'] as num?)?.toInt() ?? 0,
+                  correctCount: (item['correctCount'] as num?)?.toInt() ?? 0,
+                  bestStreak: (item['bestStreak'] as num?)?.toInt() ?? 0,
+                  totalQuestions:
+                      (item['totalQuestions'] as num?)?.toInt() ?? 0,
+                  room: room,
+                );
+          final amount = claim.amount;
           if (_normalizedUserId(repo.currentUserId) != ownerUserId) {
             // RPC tamamlandıktan sonra kimlik değiştiyse sonucu güvenle
             // atfedemeyiz. Oda ödülü idempotent olduğu için kaydı korumak,
