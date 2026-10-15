@@ -1,0 +1,48 @@
+import 'dart:async';
+
+import 'package:http/http.dart' as http;
+
+/// Supabase'in REST/RPC/auth istekleri için süre sınırı koyan `http.Client`.
+///
+/// Varsayılan istemcide sınır yoktu: yarı kopuk ağda istek işletim sisteminin
+/// soket zaman aşımına (dakikalar) dek asılı kalır, "kaydediliyor" düğmeleri
+/// sonsuza dek kilitli dururdu. Sınırı aşan istek `TimeoutException` fırlatır;
+/// mevcut hata yolları (`isLikelyOfflineError`) bunu zaten ağ hatası sayar.
+/// Realtime websocket bu istemciyi kullanmaz.
+class TimeoutHttpClient extends http.BaseClient {
+  TimeoutHttpClient([http.Client? inner, this.timeoutFor = defaultTimeoutFor])
+    : _inner = inner ?? http.Client();
+
+  final http.Client _inner;
+  final Duration Function(Uri url) timeoutFor;
+
+  static const apiTimeout = Duration(seconds: 15);
+  static const functionTimeout = Duration(seconds: 30);
+  static const uploadTimeout = Duration(seconds: 60);
+
+  /// Depolama yüklemeleri (avatar fotoğrafı) uzun sürebilir; edge fonksiyonları
+  /// orta; geri kalan her şey kısa sınırda.
+  static Duration defaultTimeoutFor(Uri url) {
+    final path = url.path;
+    if (path.startsWith('/storage/v1/')) return uploadTimeout;
+    if (path.startsWith('/functions/v1/')) return functionTimeout;
+    return apiTimeout;
+  }
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) {
+    final limit = timeoutFor(request.url);
+    return _inner
+        .send(request)
+        .timeout(
+          limit,
+          onTimeout: () => throw TimeoutException(
+            'Request timed out: ${request.method} ${request.url.path}',
+            limit,
+          ),
+        );
+  }
+
+  @override
+  void close() => _inner.close();
+}
