@@ -1000,9 +1000,9 @@ void main() {
         'https://example.supabase.co',
         'sb_publishable_test_key',
         httpClient: _RoomSessionHttpClient(
-          resultResponse: const {
-            ..._completedRoomResult,
-            'opponent_answers': <Object>[],
+          resultResponse: {
+            for (final entry in _completedRoomResult.entries)
+              if (entry.key != 'winner_id') entry.key: entry.value,
           },
         ),
       ),
@@ -1041,10 +1041,8 @@ void main() {
           'question_ids': ['question-2', 'question-1'],
         },
         {
-          ..._completedRoomResult,
-          'opponent_answers': [
-            {'selected_option': 'B'},
-          ],
+          for (final entry in _completedRoomResult.entries)
+            if (entry.key != 'question_ids') entry.key: entry.value,
         },
         {
           ..._completedRoomResult,
@@ -1073,9 +1071,11 @@ void main() {
           ..._completedRoomResult,
           'answers': [
             {
-              ...(_completedRoomResult['answers']! as List<Object?>).first
-                  as Map<String, Object?>,
-              'opponent_selected_option': 'B',
+              for (final entry
+                  in ((_completedRoomResult['answers']! as List<Object?>).first
+                          as Map<String, Object?>)
+                      .entries)
+                if (entry.key != 'correct_option') entry.key: entry.value,
             },
             (_completedRoomResult['answers']! as List<Object?>).last,
           ],
@@ -1338,15 +1338,13 @@ void main() {
     }
   });
 
-  test('leave room eksik, fazla veya yanlış tipli cevabı reddeder', () async {
+  // Sunucu şemasına alan eklenince mağazadaki eski istemci "fazla anahtar"
+  // diye cevabı reddedip odaya/lobiye girememe riskine düşüyordu; eksik anahtar
+  // hâlâ reddedilir, fazlası yok sayılır. Düzeltilen RPC şeması istemciyi
+  // kilitleyene dek sessizdi: testler yalnız tam eşleşen cevabı deniyordu.
+  test('leave room eksik veya yanlış tipli cevabı reddeder', () async {
     final malformed = <Object?>[
       const {'status': 'finished', 'reason': 'completed'},
-      const {
-        'status': 'finished',
-        'reason': 'completed',
-        'forfeited_by': null,
-        'score': 100,
-      },
       const {'status': 'finished', 'reason': 3, 'forfeited_by': null},
     ];
     const room = GameRoom(
@@ -1373,6 +1371,64 @@ void main() {
       );
     }
   });
+
+  test(
+    'leave room, terminal sonuç ve resume fazla anahtarı yok sayar',
+    () async {
+      const room = GameRoom(
+        id: '00000000-0000-0000-0000-000000000099',
+        name: '1vs1',
+        code: 'ZK-RSME',
+        category: 'Ziman',
+        players: [],
+        status: RoomStatus.active,
+        questionCount: 10,
+      );
+      final leaveRepository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _RoomSessionHttpClient(
+            leaveResponse: const {
+              'status': 'finished',
+              'reason': 'completed',
+              'forfeited_by': null,
+              'yeni_alan': 100,
+            },
+          ),
+        ),
+      );
+      expect((await leaveRepository.leaveOnlineRoom(room)).status, 'finished');
+
+      final resultRepository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: _RoomSessionHttpClient(
+            resultResponse: {
+              ..._completedRoomResult,
+              'yeni_alan': true,
+              'room': {
+                ..._completedRoomResult['room']! as Map<String, Object?>,
+                'yeni_alan': 1,
+              },
+              'players': [
+                for (final player
+                    in _completedRoomResult['players']! as List<Object?>)
+                  {...player! as Map<String, Object?>, 'yeni_alan': 'x'},
+              ],
+              'answers': [
+                for (final answer
+                    in _completedRoomResult['answers']! as List<Object?>)
+                  {...answer! as Map<String, Object?>, 'yeni_alan': 'x'},
+              ],
+            },
+          ),
+        ),
+      );
+      expect(await resultRepository.loadMyPendingRoomResult(), isNotNull);
+    },
+  );
 
   test(
     'leave room ve cancel matchmaking yetkili RPC sözleşmesini kullanır',

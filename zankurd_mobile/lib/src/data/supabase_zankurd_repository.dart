@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' show min;
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -83,6 +84,8 @@ bool _requiredBool(Map<String, dynamic> json, String key) {
   throw FormatException('$key must be a boolean.');
 }
 
+const _favoriteResolveChunk = 50;
+
 DateTime _requiredDateTime(Map<String, dynamic> json, String key) {
   final value = json[key];
   if (value is! String) throw FormatException('$key must be a timestamp.');
@@ -96,14 +99,15 @@ String? _requiredNullableString(Map<String, dynamic> json, String key) {
   return _optionalString(json, key);
 }
 
-void _requireExactKeys(
+// Fazla anahtar bilerek yok sayılır: sunucu şemasına eklenen bir alan,
+// mağazadaki eski istemcileri kilitlememeli.
+void _requireKeys(
   Map<String, dynamic> json,
-  Set<String> expected,
+  Set<String> required,
   String field,
 ) {
-  final actual = json.keys.toSet();
-  if (actual.length != expected.length || !actual.containsAll(expected)) {
-    throw FormatException('$field contains missing or unexpected fields.');
+  if (!json.keys.toSet().containsAll(required)) {
+    throw FormatException('$field is missing required fields.');
   }
 }
 
@@ -1003,7 +1007,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     if (response == null) return null;
 
     final json = _requiredJsonObject(response, source);
-    _requireExactKeys(json, const {
+    _requireKeys(json, const {
       'room',
       'own_player_id',
       'players',
@@ -1016,7 +1020,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     }, source);
 
     final roomJson = _requiredJsonObject(json['room'], 'room');
-    _requireExactKeys(roomJson, const {
+    _requireKeys(roomJson, const {
       'id',
       'code',
       'host_id',
@@ -1056,7 +1060,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final players = rawPlayers
         .map((rawPlayer) {
           final player = _requiredJsonObject(rawPlayer, 'players[]');
-          _requireExactKeys(player, const {
+          _requireKeys(player, const {
             'player_id',
             'display_name',
             'final_score',
@@ -1115,7 +1119,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final answers = <ResumedAnswer>[];
     for (var index = 0; index < rawAnswers.length; index++) {
       final answer = _requiredJsonObject(rawAnswers[index], 'answers[]');
-      _requireExactKeys(answer, const {
+      _requireKeys(answer, const {
         'question_id',
         'question_index',
         'selected_option',
@@ -1280,7 +1284,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       params: {'p_room_id': roomId},
     );
     final json = _requiredJsonObject(response, 'leave_room');
-    _requireExactKeys(json, const {
+    _requireKeys(json, const {
       'status',
       'reason',
       'forfeited_by',
@@ -1735,6 +1739,9 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             stack,
             reason: 'loadFavoriteQuestions server resolve failed',
           );
+          // Taşıma hatasında yarım liste ya da boş durum yalan olur; ekran
+          // hata + yeniden dene durumunu göstersin.
+          if (isLikelyOfflineError(error)) rethrow;
         }
       }
 
@@ -1745,6 +1752,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (questions.isNotEmpty) return questions;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadFavoriteQuestions failed');
+      if (isLikelyOfflineError(error)) rethrow;
       return const [];
     }
     return const [];
@@ -1753,13 +1761,24 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<Map<String, QuizQuestion>> _resolveServerFavoriteQuestions(
     List<String> ids,
   ) async {
-    final rows = await client
-        .from('quiz_public_questions')
-        .select(
-          'id, category_id, prompt, option_a, option_b, option_c, '
-          'option_d, question_type, image_url, difficulty',
-        )
-        .inFilter('id', ids);
+    // PostgREST `in.(...)` GET URL'sinde gider; yüzlerce uuid URL sınırını
+    // aşıp isteği reddettirir.
+    final rows = <Map<String, dynamic>>[];
+    for (var start = 0; start < ids.length; start += _favoriteResolveChunk) {
+      final chunk = ids.sublist(
+        start,
+        min(start + _favoriteResolveChunk, ids.length),
+      );
+      rows.addAll(
+        await client
+            .from('quiz_public_questions')
+            .select(
+              'id, category_id, prompt, option_a, option_b, option_c, '
+              'option_d, question_type, image_url, difficulty',
+            )
+            .inFilter('id', chunk),
+      );
+    }
     if (rows.isEmpty) return const {};
 
     final categoryIds = rows
@@ -1791,6 +1810,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<int> loadCoinBalance() async {
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
+      try {
+        final response = await client.rpc('get_my_coin_balance');
+        if (response is num) return response.toInt();
+      } catch (error) {
+        // Göç (2026-10-15_jeton_bakiyesi.sql) henüz uygulanmamış olabilir.
+        if (!_isMissingFunction(error)) rethrow;
+      }
+      // Yedek yol: PostgREST 1000 satırda keser, çok işlemli hesapta eksik
+      // toplar.
       final rows = await client
           .from('coin_transactions')
           .select('amount')
