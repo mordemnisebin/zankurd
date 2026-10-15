@@ -2496,6 +2496,7 @@ class Tr {
           'Tüm açıklamalar burada bir arada. Tur sırasında yalnız '
           'doğru cevap görünür.',
     },
+    K.correctSpelling: {'ku': 'Rastnivîs', 'tr': 'Doğru yazım'},
     K.correctAnswerLabel: {'ku': 'Bersiva rast', 'tr': 'Doğru cevap'},
 
     // ── Oyunlaştırma & Özel Oda (TRT Bil Bakalım & Pirs) ─────────────
@@ -3319,8 +3320,8 @@ class K {
   static const kolaydanZoraDogruIlerle = 'screen.kolaydanZoraDogruIlerle';
   static const pPSeviye = 'screen.pPSeviye';
   static const progressLevelsCompleted = 'screen.progressLevelsCompleted';
-  static const oncePSeviyeyiTamamla = 'screen.oncePSeviyeyiTamamla';
   static const levelNotPassed = 'screen.levelNotPassed';
+  static const oncePSeviyeyiTamamla = 'screen.oncePSeviyeyiTamamla';
   static const pKilitliOncekiSeviyeyi = 'screen.pKilitliOncekiSeviyeyi';
   static const zorlukUzerindenPYildiz = 'screen.zorlukUzerindenPYildiz';
   static const zorluk = 'screen.zorluk';
@@ -3933,6 +3934,7 @@ class K {
   static const explanationTitle = 'result.explanationTitle';
   static const viewExplanation = 'result.viewExplanation';
   static const allExplanationsHint = 'result.allExplanations.hint';
+  static const correctSpelling = 'result.correctSpelling';
   static const correctAnswerLabel = 'result.correctAnswer';
 
   // ── Oyunlaştırma & Özel Oda (TRT Bil Bakalım & Pirs) ─────────────

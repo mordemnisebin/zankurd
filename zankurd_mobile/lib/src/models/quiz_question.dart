@@ -226,20 +226,43 @@ class QuizQuestion {
     return acceptedAnswersTr ?? const [];
   }
 
+  /// Serbest metin yanıtının doğru cevapla ilişkisi: birebir, yalnız
+  /// inceltmesi eksik (doğru ama yazımı gösterilmeli) ya da yanlış.
+  FreeTextMatch matchAnswer(String candidate) {
+    if (type != QuestionType.fillInBlank) {
+      return candidate == correctAnswer
+          ? FreeTextMatch.exact
+          : FreeTextMatch.none;
+    }
+    return matchFreeTextAnswer(
+      candidate,
+      <String>[correctAnswer, ...acceptedAnswers],
+      rivals: answers.where((answer) => answer != correctAnswer),
+      isTurkish: answerLanguage == AnswerLanguage.turkish,
+      allowFolding: !_asksForDiacriticSpelling,
+    );
+  }
+
+  /// Soru bir inceltmeli harfin kendisini adıyla soruyor mu («û» ünlüsünü
+  /// içeren sözcüğü doğru yaz)? Böyle bir soruda inceltmesiz yazım sorunun
+  /// iptalidir; katlama uygulanmaz.
+  bool get _asksForDiacriticSpelling {
+    final text = '$prompt ${promptTr ?? ''}';
+    return 'çşêîû'
+        .split('')
+        .where(correctAnswer.contains)
+        .any(
+          (letter) => text.contains('«$letter»') || text.contains('"$letter"'),
+        );
+  }
+
   /// Oyuncunun gönderdiği yanıt bu soru için doğru kabul ediliyor mu?
   ///
   /// Şıklı türlerin mevcut tam-eşitlik sözleşmesi korunur. Yalnız serbest
-  /// metinli boşluk doldurmada klavye toleransı uygulanır.
-  bool acceptsAnswer(String candidate) {
-    if (type != QuestionType.fillInBlank) return candidate == correctAnswer;
-    final isTurkish = answerLanguage == AnswerLanguage.turkish;
-    final normalized = normalizeFreeTextAnswer(candidate, isTurkish: isTurkish);
-    if (normalized.isEmpty) return false;
-    return <String>[correctAnswer, ...acceptedAnswers].any(
-      (accepted) =>
-          normalized == normalizeFreeTextAnswer(accepted, isTurkish: isTurkish),
-    );
-  }
+  /// metinli boşluk doldurmada klavye toleransı uygulanır: büyük/küçük harf,
+  /// Unicode biçimi ve `ç ş ê î û` inceltmeleri (bkz. [matchAnswer]).
+  bool acceptsAnswer(String candidate) =>
+      matchAnswer(candidate) != FreeTextMatch.none;
 
   /// Alanların bir bölümünü değiştirerek kopya üretir. Yalnız [localized]
   /// yansıtması için gereken alanlar parametreleşmiştir; gerisi taşınır.

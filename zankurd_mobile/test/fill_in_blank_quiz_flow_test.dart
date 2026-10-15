@@ -111,7 +111,7 @@ void main() {
         find.byKey(const ValueKey('fill-in-blank-result')),
         findsOneWidget,
       );
-      expect(find.text('Doğru: pirtûk'), findsOneWidget);
+      expect(find.text('Doğru yazım: pirtûk'), findsOneWidget);
     },
   );
 
