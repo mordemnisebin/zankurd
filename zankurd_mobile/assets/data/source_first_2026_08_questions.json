@@ -37,12 +37,12 @@
     "category": "Sînema",
     "prompt": "Kîjan plan cih û hawîrdora ku çîrok lê derbas dibe bi tevahî nîşan dide?",
     "answers": [
-      "plana damezrîner (geniş açılış çekimi)",
+      "plana damezrîner (kurucu çekim)",
       "plana nêzîk (yakın çekim)",
       "plana serpîrî (tepe çekimi)",
       "çarçoveya cemidî (dondurulmuş kare)"
     ],
-    "correctAnswer": "plana damezrîner (geniş açılış çekimi)",
+    "correctAnswer": "plana damezrîner (kurucu çekim)",
     "promptTr": "Öykünün geçtiği mekânı ve çevreyi bir bütün olarak gösteren plan hangisidir?",
     "answersTr": [
       "geniş açılış çekimi (establishing shot)",
