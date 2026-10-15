@@ -73,7 +73,8 @@ class _LiveRepository extends MockZanKurdRepository {
     this.questionsAlwaysFail = false,
   });
 
-  final Map<String, dynamic> joinResult;
+  Map<String, dynamic> joinResult;
+  int joinCalls = 0;
   final bool hidden;
   final bool questionsAlwaysFail;
   int snapshotFailures;
@@ -95,8 +96,10 @@ class _LiveRepository extends MockZanKurdRepository {
   Future<String> getProfileName() async => 'Ez';
 
   @override
-  Future<Map<String, dynamic>> joinMatchmaking(String categoryName) async =>
-      joinResult;
+  Future<Map<String, dynamic>> joinMatchmaking(String categoryName) async {
+    joinCalls++;
+    return joinResult;
+  }
 
   @override
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue() => queue.stream;
@@ -202,6 +205,47 @@ void main() {
     expect(find.byType(QuizScreen), findsOneWidget);
     expect(repository.leaveCalls, 0);
     expect(repository.cancelCalls, 0);
+    await tester.pumpWidget(const SizedBox.shrink());
+    await repository.queue.close();
+  });
+
+  // Uygulama 12 sn'den uzun arka planda kalınca bekleyen satır bayat diye
+  // silinir; yoklama "none" alır. Yeniden girmeyen istemci boş kuyrukta 20 sn
+  // bekliyordu. "unknown" (RPC yok) ise yeniden girme döngüsü başlatmamalı.
+  testWidgets('sunucu "none" derse kuyruğa yeniden girer ve eşleşir', (
+    tester,
+  ) async {
+    final repository = _LiveRepository();
+    await _startSearch(tester, repository);
+    expect(repository.joinCalls, 1);
+
+    repository
+      ..touchResult = const MatchmakingTouch.none()
+      ..joinResult = const {
+        'status': 'matched',
+        'room_id': _roomId,
+        'opponent_name': 'Rojda',
+      };
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(const Duration(milliseconds: 1600));
+    await tester.pump();
+
+    expect(repository.joinCalls, 2);
+    expect(find.byType(QuizScreen), findsOneWidget);
+    await tester.pumpWidget(const SizedBox.shrink());
+    await repository.queue.close();
+  });
+
+  testWidgets('RPC yoksa ("unknown") yeniden girme döngüsü başlamaz', (
+    tester,
+  ) async {
+    final repository = _LiveRepository()
+      ..touchResult = const MatchmakingTouch.unknown();
+    await _startSearch(tester, repository);
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(const Duration(seconds: 3));
+
+    expect(repository.joinCalls, 1);
     await tester.pumpWidget(const SizedBox.shrink());
     await repository.queue.close();
   });

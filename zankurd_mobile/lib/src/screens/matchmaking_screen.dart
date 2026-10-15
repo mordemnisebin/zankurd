@@ -1001,6 +1001,24 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
               attempt,
             ),
           );
+        } else if (result.status == MatchmakingTouchStatus.none) {
+          // Uygulama 12 sn'den uzun arka planda kaldıysa satır bayat diye
+          // silinmiştir; yeniden girmezse oyuncu boş kuyrukta bekler.
+          final rejoin = await widget.repository.joinMatchmaking(category);
+          if (!_isAttemptActive(attempt)) return;
+          final rejoinedRoomId = rejoin['room_id'] as String?;
+          if (rejoin['status'] == 'matched' && rejoinedRoomId != null) {
+            unawaited(
+              _openReceivedRoom(
+                rejoinedRoomId,
+                category,
+                ku,
+                opponentPlaceholder,
+                attempt,
+                preferredName: rejoin['opponent_name'] as String?,
+              ),
+            );
+          }
         }
       } catch (error, stack) {
         if (!_touchErrorReported) {

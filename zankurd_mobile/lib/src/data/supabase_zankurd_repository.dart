@@ -2464,14 +2464,14 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<MatchmakingTouch> touchMatchmaking() async {
     // Göç uygulanmadan yayınlanan derleme: RPC yok, eski yola (akış + 20 sn
     // zamanlayıcı) sessizce düş ve oturum boyunca bir daha sorma.
-    if (!_touchMatchmakingSupported) return const MatchmakingTouch.none();
+    if (!_touchMatchmakingSupported) return const MatchmakingTouch.unknown();
     try {
       final response = await client.rpc('touch_matchmaking');
       return MatchmakingTouch.fromJson(response);
     } catch (error) {
       if (isMissingRpcError(error)) {
         _touchMatchmakingSupported = false;
-        return const MatchmakingTouch.none();
+        return const MatchmakingTouch.unknown();
       }
       rethrow;
     }

@@ -150,8 +150,12 @@ enum MatchmakingTouchStatus {
   /// Eşleşme olmuş; [MatchmakingTouch.roomId] dolu.
   matched,
 
-  /// Ne oda ne bekleyen satır var (ya da sunucuda RPC henüz yok).
+  /// Sunucu açıkça söyledi: ne oda ne bekleyen satır var (satır bayat diye
+  /// silinmiş olabilir); bekleyen istemci kuyruğa yeniden girmeli.
   none,
+
+  /// RPC yok ya da cevap tanınmadı; istemci eski yolda kalır, yeniden girmez.
+  unknown,
 }
 
 /// Bekleyen oyuncunun kalp atışı + eşleşme yoklaması sonucu.
@@ -166,6 +170,11 @@ class MatchmakingTouch {
       roomId = null,
       opponentName = null;
 
+  const MatchmakingTouch.unknown()
+    : status = MatchmakingTouchStatus.unknown,
+      roomId = null,
+      opponentName = null;
+
   const MatchmakingTouch.matched({
     required String this.roomId,
     this.opponentName,
@@ -174,22 +183,24 @@ class MatchmakingTouch {
   /// Sunucu cevabından tipli sonuç. Tanınmayan ya da eksik cevap [none]
   /// sayılır: yoklama yalnız bir emniyet yoludur, ekranı çökertmemeli.
   factory MatchmakingTouch.fromJson(Object? json) {
-    if (json is! Map) return const MatchmakingTouch.none();
+    if (json is! Map) return const MatchmakingTouch.unknown();
     switch (json['status']) {
       case 'waiting':
         return const MatchmakingTouch.waiting();
       case 'matched':
         final roomId = json['room_id'];
         if (roomId is! String || roomId.trim().isEmpty) {
-          return const MatchmakingTouch.none();
+          return const MatchmakingTouch.unknown();
         }
         final opponent = json['opponent_name'];
         return MatchmakingTouch.matched(
           roomId: roomId,
           opponentName: opponent is String ? opponent : null,
         );
-      default:
+      case 'none':
         return const MatchmakingTouch.none();
+      default:
+        return const MatchmakingTouch.unknown();
     }
   }
 

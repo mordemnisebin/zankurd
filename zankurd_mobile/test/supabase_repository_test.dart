@@ -1463,7 +1463,7 @@ void main() {
   // bekleme ekranı bunu hata saymayıp eski yola (akış + 20 sn) düşmeli ve
   // her 3 saniyede ölü bir RPC'ye vurmamalı.
   test(
-    'touch_matchmaking RPC yoksa sessizce none döner ve bir daha sormaz',
+    'touch_matchmaking RPC yoksa sessizce unknown döner ve bir daha sormaz',
     () async {
       final httpClient = _RoomSessionHttpClient(rpcErrorCode: 'PGRST202');
       final repository = SupabaseZanKurdRepository(
@@ -1477,8 +1477,8 @@ void main() {
       final first = await repository.touchMatchmaking();
       final second = await repository.touchMatchmaking();
 
-      expect(first.status, MatchmakingTouchStatus.none);
-      expect(second.status, MatchmakingTouchStatus.none);
+      expect(first.status, MatchmakingTouchStatus.unknown);
+      expect(second.status, MatchmakingTouchStatus.unknown);
       expect(
         httpClient.requestedPaths.where((p) => p.endsWith('touch_matchmaking')),
         hasLength(1),
@@ -1506,8 +1506,12 @@ void main() {
     );
     expect(
       MatchmakingTouch.fromJson(const {'status': 'matched'}).status,
-      MatchmakingTouchStatus.none,
+      MatchmakingTouchStatus.unknown,
       reason: 'room_id eksik eşleşme cevabı odaya çevrilmemeli',
+    );
+    expect(
+      MatchmakingTouch.fromJson(const {'status': 'none'}).status,
+      MatchmakingTouchStatus.none,
     );
   });
 
