@@ -194,7 +194,7 @@ void main() {
 
       // Yol yine de bir join koduna ÇÖZÜLÜR (true) — yalnız asıl katılma
       // (sosyal kilit yüzünden) tetiklenmez. Bu, mevcut soğuk açılış
-      // davranışıyla (`_consumeJoinDeepLink`) aynı sözleşmedir.
+      // davranışıyla (`_tryOpenJoinCode`) aynı sözleşmedir.
       expect(handled, isTrue);
       expect(repository.joinCalls, isEmpty);
       expect(find.byType(RoomScreen), findsNothing);

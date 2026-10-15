@@ -19,6 +19,7 @@ import '../data/placement_store.dart';
 import '../data/quiz_result_progress_receipt_store.dart';
 import '../data/story_progress_store.dart';
 import '../data/sync_manager.dart';
+import '../models/async_duel.dart' show isMissingRpcError;
 import '../services/premium_service.dart';
 import '../services/apple_revocation.dart';
 import '../services/native_auth_service.dart';
@@ -875,6 +876,23 @@ class AuthProvider extends ChangeNotifier {
         throw const AccountLocalCleanupException();
       }
       return;
+    }
+    // Cihazın FCM token'ı bu hesaptan bırakılır. Bırakılmazsa aynı cihaza
+    // giren bir sonraki hesap token'ı alır ama bu hesabın satırı da onu
+    // tutmaya devam eder: çıkış yapmış kişi sonraki kullanıcının
+    // bildirimlerini alırdı. Oturum kapanmadan ÖNCE çağrılmalı (RPC
+    // `auth.uid()` ister); en iyi çabadır — ağ yoksa ya da göç uygulanmamışsa
+    // (PGRST202) çıkış yine sürer.
+    if (client.auth.currentUser != null) {
+      try {
+        await client
+            .rpc<void>('clear_my_fcm_token')
+            .timeout(const Duration(seconds: 3));
+      } catch (error, stack) {
+        if (!isMissingRpcError(error)) {
+          ErrorReporter.record(error, stack, reason: 'clear fcm token failed');
+        }
+      }
     }
     try {
       await client.auth.signOut();

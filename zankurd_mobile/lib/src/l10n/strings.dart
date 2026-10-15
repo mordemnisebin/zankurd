@@ -2690,6 +2690,65 @@ class Tr {
     K.asyncDuelReady: {'ku': 'Encam amade ye', 'tr': 'Sonuç hazır'},
     K.asyncDuelExpired: {'ku': 'Hevrik derneket', 'tr': 'Rakip çıkmadı'},
     K.asyncDuelUnfinished: {'ku': 'Nîvco ma', 'tr': 'Yarım kaldı'},
+    // 2026-10-15 sosyal yüzey: arkadaşlık yönetimi ve düello devam/geri çekme.
+    K.friendAlreadyMark: {'ku': 'Hevalê te ye', 'tr': 'Arkadaşın'},
+    K.removeFriendAction: {
+      'ku': 'Ji hevalan rake',
+      'tr': 'Arkadaşlıktan çıkar',
+    },
+    K.removeFriendTitle: {
+      'ku': '{name} ji hevalan bê rakirin?',
+      'tr': '{name} arkadaşlıktan çıkarılsın mı?',
+    },
+    K.removeFriendBody: {
+      'ku':
+          'Ew ê ji lîsteya te ya hevalan bê rakirin. Dikarî paşê dîsa daxwaz bişînî.',
+      'tr':
+          'Arkadaş listenden çıkarılacak. İstersen sonra yeniden istek gönderebilirsin.',
+    },
+    K.removeFriendConfirm: {'ku': 'Rake', 'tr': 'Çıkar'},
+    K.friendRemoved: {'ku': 'Heval hat rakirin', 'tr': 'Arkadaş çıkarıldı'},
+    K.friendRemoveFailed: {
+      'ku': 'Heval nehat rakirin',
+      'tr': 'Arkadaş çıkarılamadı',
+    },
+    K.sentRequestsTitle: {'ku': 'Daxwazên şandî', 'tr': 'Gönderilen istekler'},
+    K.requestAwaiting: {'ku': 'Li benda bersivê ye', 'tr': 'Yanıt bekleniyor'},
+    K.cancelRequestAction: {'ku': 'Daxwazê vegire', 'tr': 'İsteği geri çek'},
+    K.requestCancelled: {
+      'ku': 'Daxwaz hat vegirtin',
+      'tr': 'İstek geri çekildi',
+    },
+    K.requestCancelFailed: {
+      'ku': 'Daxwaz nehat vegirtin',
+      'tr': 'İstek geri çekilemedi',
+    },
+    K.asyncDuelResume: {'ku': 'Berdewam bike', 'tr': 'Devam et'},
+    K.asyncDuelCancelAction: {
+      'ku': 'Pêşbirkê vegire',
+      'tr': 'Düelloyu geri çek',
+    },
+    K.asyncDuelCancelTitle: {
+      'ku': 'Pêşbirk were vegirtin?',
+      'tr': 'Düello geri çekilsin mi?',
+    },
+    K.asyncDuelCancelBody: {
+      'ku': 'Hevrik hê tevlî nebûye. Pêşbirk dê were girtin.',
+      'tr': 'Rakip henüz katılmadı. Düello kapanacak.',
+    },
+    K.asyncDuelCancelConfirm: {'ku': 'Vegire', 'tr': 'Geri çek'},
+    K.asyncDuelCancelled: {
+      'ku': 'Pêşbirk hat vegirtin',
+      'tr': 'Düello geri çekildi',
+    },
+    K.asyncDuelCancelFailed: {
+      'ku': 'Pêşbirk nehat vegirtin',
+      'tr': 'Düello geri çekilemedi',
+    },
+    K.referralNeedsPlay: {
+      'ku': 'Pêşî dorekê bilîze, paşê kodê bi kar bîne.',
+      'tr': 'Önce bir tur oyna, sonra kodu kullan.',
+    },
     K.asyncDuelTurnDone: {'ku': 'Dora te qediya.', 'tr': 'Senin turun bitti.'},
     K.asyncDuelWaitingBody: {
       'ku': 'Dema hevrikê te bilîze, encam li vir xuya dibe.',
@@ -4029,6 +4088,26 @@ class K {
 
   /// Ben kendi 7 sorumu bitirmedim durumu (`myCorrect == null`).
   static const asyncDuelUnfinished = 'duel.async.unfinished';
+  static const friendAlreadyMark = 'friends.alreadyFriendMark';
+  static const removeFriendAction = 'friends.remove.action';
+  static const removeFriendTitle = 'friends.remove.title';
+  static const removeFriendBody = 'friends.remove.body';
+  static const removeFriendConfirm = 'friends.remove.confirm';
+  static const friendRemoved = 'friends.remove.done';
+  static const friendRemoveFailed = 'friends.remove.failed';
+  static const sentRequestsTitle = 'friends.sent.title';
+  static const requestAwaiting = 'friends.sent.awaiting';
+  static const cancelRequestAction = 'friends.sent.cancelAction';
+  static const requestCancelled = 'friends.sent.cancelled';
+  static const requestCancelFailed = 'friends.sent.cancelFailed';
+  static const asyncDuelResume = 'duel.async.resume';
+  static const asyncDuelCancelAction = 'duel.async.cancel.action';
+  static const asyncDuelCancelTitle = 'duel.async.cancel.title';
+  static const asyncDuelCancelBody = 'duel.async.cancel.body';
+  static const asyncDuelCancelConfirm = 'duel.async.cancel.confirm';
+  static const asyncDuelCancelled = 'duel.async.cancel.done';
+  static const asyncDuelCancelFailed = 'duel.async.cancel.failed';
+  static const referralNeedsPlay = 'friends.referral.needsPlay';
 
   /// Son soru cevaplandığında, rakip henüz bitirmemişse sonuç başlığı.
   static const asyncDuelTurnDone = 'duel.async.turnDone';

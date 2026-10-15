@@ -948,6 +948,41 @@ class MockZanKurdRepository implements ZanKurdRepository {
     );
   }
 
+  /// [resumeAsyncDuel]/[cancelAsyncDuel] çağrılarının kayıtları.
+  final List<String> resumedAsyncDuelIds = [];
+  final List<String> cancelledAsyncDuelIds = [];
+
+  @override
+  Future<AsyncDuelStart> resumeAsyncDuel(String duelId) async {
+    final duel = _asyncDuels[duelId];
+    if (duel == null) throw StateError('Duel not found');
+    if (duel.status == AsyncDuelStatus.expired) {
+      throw StateError('Duel expired');
+    }
+    resumedAsyncDuelIds.add(duelId);
+    return AsyncDuelStart(
+      duelId: duel.id,
+      role: duel.role,
+      opponentName: duel.opponentName,
+      expiresAt: duel.expiresAt,
+      questions: duel.hiddenQuestions,
+      challengeCode: duel.role == AsyncDuelRole.creator
+          ? duel.challengeCode
+          : null,
+      answeredCount: duel.answeredIndices.length,
+      alreadyFinished: duel.myFinished,
+    );
+  }
+
+  @override
+  Future<bool> cancelAsyncDuel(String duelId) async {
+    final duel = _asyncDuels[duelId];
+    if (duel == null || duel.role != AsyncDuelRole.creator) return false;
+    cancelledAsyncDuelIds.add(duelId);
+    _asyncDuels.remove(duelId);
+    return true;
+  }
+
   @override
   Future<AsyncDuelStart> acceptAsyncDuelChallenge(String code) async {
     final normalized = code.trim().toUpperCase();
@@ -3515,6 +3550,46 @@ class MockZanKurdRepository implements ZanKurdRepository {
   @override
   Future<void> setFcmToken(String token) async {
     lastFcmToken = token;
+  }
+
+  /// Çıkışta [clearFcmToken] çağrıldı mı (testler okur).
+  bool fcmTokenCleared = false;
+
+  @override
+  Future<void> clearFcmToken() async {
+    fcmTokenCleared = true;
+    lastFcmToken = null;
+  }
+
+  /// Gönderilmiş bekleyen istekler. `null` → sunucuda arkadaş yönetimi
+  /// RPC'leri yok (göç uygulanmamış): ekran silme/geri çekme eylemlerini
+  /// gizler. Testler listeyi doldurarak "desteklenir" duruma geçer.
+  @visibleForTesting
+  List<SentFriendRequest>? sentFriendRequestsForTesting;
+
+  /// [removeFriend]/[cancelFriendRequest] çağrılarının kayıtları.
+  final List<String> removedFriendIds = [];
+  final List<String> cancelledRequestTargets = [];
+
+  @override
+  Future<List<SentFriendRequest>?> loadSentFriendRequests() async {
+    final list = sentFriendRequestsForTesting;
+    return list == null ? null : List.of(list);
+  }
+
+  @override
+  Future<bool> removeFriend(String friendId) async {
+    removedFriendIds.add(friendId);
+    return true;
+  }
+
+  @override
+  Future<bool> cancelFriendRequest(String targetUserId) async {
+    cancelledRequestTargets.add(targetUserId);
+    sentFriendRequestsForTesting?.removeWhere(
+      (request) => request.toUserId == targetUserId,
+    );
+    return true;
   }
 
   @override

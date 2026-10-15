@@ -134,27 +134,39 @@ class AsyncDuelStart {
 ///   verilmediyse) ya da seçilen arkadaş için taze bir meydan okuma.
 /// * [acceptChallenge]: `accept_async_duel_challenge` — `/join/D…`
 ///   bağlantısındaki ya da gelen kutusundaki kodla meydan okumayı kabul et.
-enum AsyncDuelEntryKind { random, createChallenge, acceptChallenge }
+/// * [resume]: `resume_my_async_duel` — yarım bırakılan düelloya kaldığı
+///   sorudan devam (gelen kutusundaki "Berdewam bike" satırı).
+enum AsyncDuelEntryKind { random, createChallenge, acceptChallenge, resume }
 
 class AsyncDuelEntry {
   const AsyncDuelEntry.random({this.category})
     : kind = AsyncDuelEntryKind.random,
       friendId = null,
-      code = null;
+      code = null,
+      duelId = null;
 
   const AsyncDuelEntry.createChallenge({this.category, this.friendId})
     : kind = AsyncDuelEntryKind.createChallenge,
-      code = null;
+      code = null,
+      duelId = null;
 
   const AsyncDuelEntry.acceptChallenge(String this.code)
     : kind = AsyncDuelEntryKind.acceptChallenge,
       category = null,
-      friendId = null;
+      friendId = null,
+      duelId = null;
+
+  const AsyncDuelEntry.resume(String this.duelId)
+    : kind = AsyncDuelEntryKind.resume,
+      category = null,
+      friendId = null,
+      code = null;
 
   final AsyncDuelEntryKind kind;
   final String? category;
   final String? friendId;
   final String? code;
+  final String? duelId;
 }
 
 /// Meydan okuma RPC'lerinin sunucu hata metinlerinin istemci sınıflaması
@@ -356,6 +368,26 @@ class AsyncDuelSummary {
   /// Yalnız ben yaratıcıysam: davet ettiğim arkadaşın adı (bağlantı
   /// meydan okumasında null).
   final String? invitedName;
+
+  /// Turumu BİTİRMEDİM ve düello hâlâ açık/eşleşmiş: gelen kutusu satırına
+  /// dokunmak sonuç değil oyunu açar ([AsyncDuelEntry.resume]).
+  ///
+  /// Eskiden böyle bir düello ölü bir "Yarım kaldı" satırıydı: süresi dolana
+  /// dek hiçbir yerden devam edilemiyor, 5'lik açık-düello sınırında yer
+  /// tutuyordu. Süresi dolmuş (`expired`) ve bana gelen kabul edilmemiş
+  /// meydan okuma ([incomingChallenge]) kapsam dışıdır.
+  bool get canResume =>
+      myCorrect == null &&
+      !incomingChallenge &&
+      (status == AsyncDuelStatus.open || status == AsyncDuelStatus.matched);
+
+  /// Benim açtığım, kimsenin katılmadığı ve turumu bitirdiğim açık düello:
+  /// geri çekilebilir ([ZanKurdRepository.cancelAsyncDuel]).
+  bool get canCancel =>
+      role == AsyncDuelRole.creator &&
+      status == AsyncDuelStatus.open &&
+      opponentName == null &&
+      myCorrect != null;
 
   /// Benim açtığım, henüz kimsenin almadığı bağlantı meydan okuması (yeniden
   /// paylaşılabilir).

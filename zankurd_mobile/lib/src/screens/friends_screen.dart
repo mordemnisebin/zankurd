@@ -62,7 +62,33 @@ class _FriendsScreenState extends State<FriendsScreen> {
   List<PlayerSearchResult> _searchResults = const [];
   bool _searching = false;
   bool _roomLoading = false;
+
+  /// Bu ekranda şimdi gönderdiğim istekler (sunucu yanıtı gelene dek
+  /// iyimser). Asıl kaynak [_sentServer]; sunucu listesi gelince bununla
+  /// değiştirilir.
   final Set<String> _sentRequests = {};
+
+  /// Sunucudan okunan sosyal durum: arama sonuçlarının satırı ("Ekle" /
+  /// "Gönderildi" / "Kabul" / "Arkadaşın") bunlardan seçilir.
+  ///
+  /// Eskiden "gönderildi" yalnız ekranın belleğindeydi ve arkadaş/gelen istek
+  /// durumuna hiç bakılmıyordu: zaten arkadaş olunan ya da bize istek
+  /// göndermiş biri için "Ekle" görünüyor, dokunuş sunucuda sessizce
+  /// reddedilip genel "İstek gönderilemedi" çıkıyordu.
+  Set<String> _friendIds = const {};
+  Map<String, FriendRequest> _incomingByUser = const {};
+
+  /// Gönderdiğim bekleyen istekler. `null` → sunucuda arkadaş yönetimi
+  /// RPC'leri yok (ya da henüz yüklenmedi): "geri çek" ve "arkadaşlıktan
+  /// çıkar" eylemleri sessizce gizlenir.
+  List<SentFriendRequest>? _sentServer;
+  int _socialEpoch = 0;
+
+  bool get _managementSupported => _sentServer != null;
+
+  bool _isSent(String userId) =>
+      _sentRequests.contains(userId) ||
+      (_sentServer?.any((request) => request.toUserId == userId) ?? false);
 
   @override
   void initState() {
@@ -83,6 +109,34 @@ class _FriendsScreenState extends State<FriendsScreen> {
   void _loadFriends() {
     _friendsFuture = widget.repository.loadFriends();
     _requestsFuture = widget.repository.loadPendingFriendRequests();
+    unawaited(_refreshSocialState());
+  }
+
+  /// Arkadaş / gelen istek / gönderilen istek kümelerini sunucudan yeniler.
+  /// Yükleme hataları ilgili bölümün kendi hata durumunda görünür; burada
+  /// yutulur ve satırlar "Ekle"ye düşer.
+  Future<void> _refreshSocialState() async {
+    final epoch = ++_socialEpoch;
+    try {
+      final friends = await _friendsFuture;
+      final requests = await _requestsFuture;
+      final sent = await widget.repository.loadSentFriendRequests();
+      if (!mounted || epoch != _socialEpoch) return;
+      setState(() {
+        _friendIds = {for (final friend in friends) friend.friendId};
+        _incomingByUser = {
+          for (final request in requests) request.fromUserId: request,
+        };
+        _sentServer = sent;
+        if (sent != null) {
+          _sentRequests
+            ..clear()
+            ..addAll(sent.map((request) => request.toUserId));
+        }
+      });
+    } catch (_) {
+      // Bölümler kendi hatasını gösterir (FutureBuilder).
+    }
   }
 
   void _showMessage(String message) {
@@ -124,7 +178,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
     );
     if (!mounted) return;
     if (success) {
-      setState(() => _sentRequests.add(player.id));
+      setState(() {
+        _sentRequests.add(player.id);
+        // Karşı taraf bize zaten istek göndermişse sunucu isteği kabul eder
+        // (arkadaş olunur); durum sunucudan yeniden okunur.
+        _loadFriends();
+      });
       widget.repository
           .logAnalyticsEvent('friend_request_sent', null)
           .catchError((error, stack) {
@@ -160,6 +219,58 @@ class _FriendsScreenState extends State<FriendsScreen> {
       setState(_loadFriends);
     } else {
       _showMessage(context.t(K.rejectFailed));
+    }
+  }
+
+  Future<void> _cancelRequest(SentFriendRequest request) async {
+    final success = await widget.repository.cancelFriendRequest(
+      request.toUserId,
+    );
+    if (!mounted) return;
+    if (success) {
+      _showMessage(context.t(K.requestCancelled));
+      setState(() {
+        _sentRequests.remove(request.toUserId);
+        _loadFriends();
+      });
+    } else {
+      _showMessage(context.t(K.requestCancelFailed));
+    }
+  }
+
+  Future<void> _confirmRemoveFriend(Friend friend) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(
+          dialogContext.t(K.removeFriendTitle, {'name': friend.friendName}),
+        ),
+        content: Text(dialogContext.t(K.removeFriendBody)),
+        actions: [
+          DialogActionPair(
+            cancel: TextButton(
+              key: const ValueKey('friend-remove-cancel'),
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(dialogContext.t(K.cancel)),
+            ),
+            confirm: SahneButton.primary(
+              key: const ValueKey('friend-remove-confirm'),
+              label: dialogContext.t(K.removeFriendConfirm),
+              arrow: false,
+              onPressed: () => Navigator.pop(dialogContext, true),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    final success = await widget.repository.removeFriend(friend.friendId);
+    if (!mounted) return;
+    if (success) {
+      _showMessage(context.t(K.friendRemoved));
+      setState(_loadFriends);
+    } else {
+      _showMessage(context.t(K.friendRemoveFailed));
     }
   }
 
@@ -212,6 +323,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 if (kReferralRewardsEnabled) _buildInviteSection(ku),
                 _buildSearchSection(ku),
                 _buildRequestsSection(ku),
+                _buildSentSection(),
                 SahneSectionHeader(title: context.t(K.friendsScreen)),
                 _buildFriendsSection(ku),
               ],
@@ -352,6 +464,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
         ReferralStatus.alreadyRedeemed => context.t(K.referralAlreadyUsed),
         ReferralStatus.notFound => context.t(K.invalidReferralCode),
         ReferralStatus.notVerified => context.t(K.referralGuestBlocked),
+        ReferralStatus.notActive => context.t(K.referralNeedsPlay),
         _ => context.t(K.searchFailed),
       };
       _showMessage(msg);
@@ -421,16 +534,76 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   // dürüst (2026-07-28).
                   subtitle: player.formattedTag,
                   subtitleStrong: player.formattedTag != null,
-                  trailing: _sentRequests.contains(player.id)
-                      ? _SentMark(label: context.t(K.requestSent))
-                      : SahneButton.secondary(
-                          label: context.t(K.addAction),
-                          onPressed: () => _sendRequest(player),
-                        ),
+                  trailing: _searchTrailing(player),
                 ),
             ],
           ),
         ],
+      ],
+    );
+  }
+
+  /// Arama sonucu satırının sağ tarafı: durum sunucudan gelen kümelerden
+  /// seçilir (arkadaş > bana gelen istek > gönderdiğim istek > "Ekle").
+  Widget _searchTrailing(PlayerSearchResult player) {
+    if (_friendIds.contains(player.id)) {
+      return SahneBadge(
+        key: ValueKey('search-friend-${player.id}'),
+        label: context.t(K.friendAlreadyMark),
+      );
+    }
+    final incoming = _incomingByUser[player.id];
+    if (incoming != null) {
+      return SahneButton.secondary(
+        key: ValueKey('search-accept-${player.id}'),
+        label: context.t(K.acceptAction),
+        icon: AppIcons.check,
+        onPressed: () => _acceptRequest(incoming.id),
+      );
+    }
+    if (_isSent(player.id)) {
+      return _SentMark(label: context.t(K.requestSent));
+    }
+    return SahneButton.secondary(
+      key: ValueKey('search-add-${player.id}'),
+      label: context.t(K.addAction),
+      onPressed: () => _sendRequest(player),
+    );
+  }
+
+  /// Gönderdiğim, yanıtlanmamış istekler; her satırda "geri çek". Sunucuda
+  /// RPC yoksa ([_sentServer] `null`) ya da liste boşsa hiç görünmez.
+  Widget _buildSentSection() {
+    final sent = _sentServer;
+    if (sent == null || sent.isEmpty) return const SizedBox.shrink();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SahneSectionHeader(title: context.t(K.sentRequestsTitle)),
+        SahneListGroup(
+          key: const ValueKey('friends-sent-requests'),
+          dividerIndent: _PersonRow.dividerIndent,
+          children: [
+            for (final request in sent)
+              _PersonRow(
+                key: ValueKey('sent-request-${request.toUserId}'),
+                avatar: PlayerAvatar(
+                  radius: 18,
+                  displayName: request.toUserName,
+                ),
+                title: request.toUserName,
+                subtitle: context.t(K.requestAwaiting),
+                trailing: SahneButton.secondary(
+                  key: ValueKey('sent-cancel-${request.toUserId}'),
+                  label: context.t(K.cancelRequestAction),
+                  onPressed: () => unawaited(_cancelRequest(request)),
+                ),
+                // Etiket dar telefonda (390) adın yanına sığmaz: eylem
+                // adın altına iner (_FriendRequestRow ile aynı kural).
+                stackTrailing: true,
+              ),
+          ],
+        ),
       ],
     );
   }
@@ -540,6 +713,9 @@ class _FriendsScreenState extends State<FriendsScreen> {
                           )
                         : null,
                     busy: _roomLoading,
+                    onRemove: _managementSupported
+                        ? () => unawaited(_confirmRemoveFriend(friend))
+                        : null,
                   ),
               ],
             );
@@ -685,9 +861,14 @@ class _FriendRow extends StatelessWidget {
     required this.onPlay,
     required this.busy,
     this.onChallenge,
+    this.onRemove,
   });
 
   final Friend friend;
+
+  /// Arkadaşlıktan çıkar; `null` → sunucuda `remove_friend` yok, eylem
+  /// görünmez.
+  final VoidCallback? onRemove;
 
   /// Canlı oda daveti. [onChallenge] varken sakin ikincil eylemdir; yokken
   /// satırın tek (yazılı) eylemi.
@@ -747,7 +928,7 @@ class _FriendRow extends StatelessWidget {
       // sunucuda yok ya da bayrak kapalı) eski yazılı "Odaya çağır" kalır.
       // Oda kurulurken iki düğme de pasifleşir (eskiden ikinci dokunuş
       // sessizce yutuluyordu).
-      trailing: onChallenge == null
+      trailing: onChallenge == null && onRemove == null
           ? ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 180),
               child: SahneButton.secondary(
@@ -765,24 +946,41 @@ class _FriendRow extends StatelessWidget {
               spacing: SahneSpace.x1,
               runSpacing: SahneSpace.x1,
               children: [
-                SahneButton.secondary(
-                  key: ValueKey('friend-action-${friend.friendName}'),
-                  label: context.t(K.challengeFriendAction),
-                  semanticLabel: context.t(K.challengeFriendActionA11y, {
-                    'name': friend.friendName,
-                  }),
-                  icon: AppIcons.swords,
-                  onPressed: busy ? null : onChallenge,
-                ),
-                SahneIconButton(
-                  key: ValueKey('friend-room-${friend.friendName}'),
-                  icon: busy ? AppIcons.hourglass : AppIcons.doorOpen,
-                  semanticLabel: context.t(K.inviteToRoom),
-                  onPressed: busy ? null : onPlay,
-                ),
+                if (onChallenge != null) ...[
+                  SahneButton.secondary(
+                    key: ValueKey('friend-action-${friend.friendName}'),
+                    label: context.t(K.challengeFriendAction),
+                    semanticLabel: context.t(K.challengeFriendActionA11y, {
+                      'name': friend.friendName,
+                    }),
+                    icon: AppIcons.swords,
+                    onPressed: busy ? null : onChallenge,
+                  ),
+                  SahneIconButton(
+                    key: ValueKey('friend-room-${friend.friendName}'),
+                    icon: busy ? AppIcons.hourglass : AppIcons.doorOpen,
+                    semanticLabel: context.t(K.inviteToRoom),
+                    onPressed: busy ? null : onPlay,
+                  ),
+                ] else
+                  SahneButton.secondary(
+                    key: ValueKey('friend-action-${friend.friendName}'),
+                    label: context.t(K.inviteToRoom),
+                    icon: busy ? AppIcons.hourglass : null,
+                    onPressed: busy ? null : onPlay,
+                  ),
+                if (onRemove != null)
+                  SahneIconButton(
+                    key: ValueKey('friend-remove-${friend.friendName}'),
+                    icon: AppIcons.xmark,
+                    semanticLabel: context.t(K.removeFriendAction),
+                    onPressed: onRemove,
+                  ),
               ],
             ),
-      stackTrailing: onChallenge == null ? null : _stackActions(context),
+      stackTrailing: onChallenge == null && onRemove == null
+          ? null
+          : _stackActions(context),
     );
   }
 }

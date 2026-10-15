@@ -5,6 +5,9 @@ enum ReferralStatus {
   ownCode,
   notFound,
   notVerified,
+
+  /// Kodu kullanan hesap henüz hiç oynamadı (`not_active`).
+  notActive,
   networkError,
 }
 
@@ -36,8 +39,11 @@ class ReferralResult {
     final status = switch (error) {
       'already_redeemed' => ReferralStatus.alreadyRedeemed,
       'own_code' => ReferralStatus.ownCode,
-      'code_not_found' => ReferralStatus.notFound,
+      // `limit_reached`: davet edenin ömür boyu ödül sınırı doldu; kullanan
+      // için kod artık işe yaramaz — "bulunamadı" ile aynı dürüst sonuç.
+      'code_not_found' || 'limit_reached' => ReferralStatus.notFound,
       'not_verified' => ReferralStatus.notVerified,
+      'not_active' => ReferralStatus.notActive,
       _ => ReferralStatus.networkError,
     };
     return ReferralResult(status: status, message: data['message'] as String?);

@@ -14,6 +14,7 @@ import '../../utils/app_route.dart';
 import '../../utils/join_deep_link.dart';
 import '../../utils/player_identity.dart';
 import '../../utils/error_reporter.dart';
+import '../../widgets/dialog_action_pair.dart';
 import '../../widgets/sahne/sahne.dart';
 import 'async_duel_play_screen.dart';
 
@@ -42,6 +43,7 @@ class AsyncDuelResultView {
     this.opponentName,
     this.challengeCode,
     this.invitedName,
+    this.canCancel = false,
   });
 
   final String duelId;
@@ -58,6 +60,11 @@ class AsyncDuelResultView {
   /// Arkadaşa meydan okumada davet ettiğim arkadaşın adı; bağlantı
   /// meydan okumasında null.
   final String? invitedName;
+
+  /// Kimsenin katılmadığı kendi açık düellomu geri çekebilirim
+  /// ([AsyncDuelSummary.canCancel]). Yalnız gelen kutusundan açılan görünümde
+  /// dolar; turun hemen ardındaki sonuçta gösterilmez.
+  final bool canCancel;
 
   /// Bağlantı meydan okumasını (kimse almadan) paylaşabilirim: turum bitti,
   /// skorum belli, kod elimde, belirli bir arkadaşa gitmedi.
@@ -149,6 +156,7 @@ class AsyncDuelResultView {
           ? summary.challengeCode
           : null,
       invitedName: summary.invitedName,
+      canCancel: summary.canCancel,
     );
   }
 
@@ -378,6 +386,20 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
               xpLabel: context.t(K.asyncDuelXp, {'xp': '$xp'}),
             )
           : null,
+      sections: [
+        if (view.canCancel)
+          Padding(
+            padding: const EdgeInsets.only(top: SahneSpace.x3),
+            child: Center(
+              child: SahneButton.text(
+                key: const ValueKey('async-duel-result-cancel'),
+                label: context.t(K.asyncDuelCancelAction),
+                arrow: false,
+                onPressed: () => unawaited(_confirmCancel(view)),
+              ),
+            ),
+          ),
+      ],
       primary: view.canShareLink
           ? SahneResultAction(
               key: const ValueKey('async-duel-result-share'),
@@ -400,6 +422,46 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
           : close,
       secondary: canStartNew ? close : null,
     );
+  }
+
+  /// Kimsenin katılmadığı düelloyu onaydan sonra geri çeker ve ekranı
+  /// kapatır (liste dönüşte yenilenir). RPC yoksa ya da çağrı başarısızsa
+  /// ekran açık kalır ve nedeni söylenir.
+  Future<void> _confirmCancel(AsyncDuelResultView view) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(dialogContext.t(K.asyncDuelCancelTitle)),
+        content: Text(dialogContext.t(K.asyncDuelCancelBody)),
+        actions: [
+          DialogActionPair(
+            cancel: TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(dialogContext.t(K.cancel)),
+            ),
+            confirm: SahneButton.primary(
+              key: const ValueKey('async-duel-cancel-confirm'),
+              label: dialogContext.t(K.asyncDuelCancelConfirm),
+              arrow: false,
+              onPressed: () => Navigator.pop(dialogContext, true),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    final cancelled = await widget.repository.cancelAsyncDuel(view.duelId);
+    if (!mounted) return;
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(
+          context.t(cancelled ? K.asyncDuelCancelled : K.asyncDuelCancelFailed),
+        ),
+      ),
+    );
+    if (cancelled) navigator.pop();
   }
 
   /// Meydan okuma bağlantısını sistem paylaşım sayfasıyla gönderir (odalar

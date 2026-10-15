@@ -149,6 +149,9 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
           ),
         AsyncDuelEntryKind.acceptChallenge =>
           await widget.repository.acceptAsyncDuelChallenge(entry.code!),
+        AsyncDuelEntryKind.resume => await widget.repository.resumeAsyncDuel(
+          entry.duelId!,
+        ),
       };
       if (!mounted) return;
       // Yeniden açılan kabul edilmiş meydan okumada 7 sorum zaten bitmiş:

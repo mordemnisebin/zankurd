@@ -1713,30 +1713,15 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final byId = {
         for (final question in _offline.questions) question.id: question,
       };
-      final unresolvedIds = orderedIds
-          .where((id) => !byId.containsKey(id))
-          .toList();
-
-      // `unresolvedIds` çevrimiçi oda maçında kaydedilmiş favorilerdir:
-      // `toggleFavoriteQuestion` gerçek `questions.id` uuid'sini yazar,
-      // paketli bankada karşılığı yoktur. Eskiden bunlar süzülüp
-      // atılıyordu — kayıt sunucuda dururken "Kaydedilen Sorular" hep
-      // boş görünüyordu (2026-08-14 denetimi). Sunucudan çözülürler;
-      // `correct_option` taşımadıkları için `hasHiddenAnswer` ile
-      // işaretlenip yeniden oynatma bu soruları dışarıda bırakır
-      // (favorite_questions_screen.dart).
-      if (unresolvedIds.isNotEmpty) {
-        try {
-          final resolved = await _resolveServerFavoriteQuestions(unresolvedIds);
-          byId.addAll(resolved);
-        } catch (error, stack) {
-          _recordError(
-            error,
-            stack,
-            reason: 'loadFavoriteQuestions server resolve failed',
-          );
-        }
-      }
+      // Paketli bankada bulunmayan kimlikler (çevrimiçi oda maçında
+      // kaydedilmiş, gerçek `questions.id` uuid'leri) burada ÇÖZÜLMEZ.
+      //
+      // Eskiden `quiz_public_questions` görünümünden okunuyordu; görünüm
+      // `security_invoker` idi ve altındaki `questions` tablosunda istemciye
+      // SELECT verilmediği için her çağrı "permission denied" ile düşüyor,
+      // hata yutulup bu favoriler hiç görünmüyordu. Görünüm 2026-10-15
+      // göçüyle silindi (`2026-10-15_sosyal_ve_sertlestirme.sql`); cevap
+      // taşımayan bir sunucu okuması gerekirse bunun yolu bir RPC olmalı.
 
       final questions = orderedIds
           .map((id) => byId[id])
@@ -1748,43 +1733,6 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return const [];
     }
     return const [];
-  }
-
-  Future<Map<String, QuizQuestion>> _resolveServerFavoriteQuestions(
-    List<String> ids,
-  ) async {
-    final rows = await client
-        .from('quiz_public_questions')
-        .select(
-          'id, category_id, prompt, option_a, option_b, option_c, '
-          'option_d, question_type, image_url, difficulty',
-        )
-        .inFilter('id', ids);
-    if (rows.isEmpty) return const {};
-
-    final categoryIds = rows
-        .map((row) => row['category_id'] as String?)
-        .whereType<String>()
-        .toSet()
-        .toList();
-    final categoryNames = <String, String>{};
-    if (categoryIds.isNotEmpty) {
-      final categories = await client
-          .from('categories')
-          .select('id, name')
-          .inFilter('id', categoryIds);
-      for (final row in categories) {
-        categoryNames[row['id'] as String] = row['name'] as String? ?? 'Ziman';
-      }
-    }
-
-    return {
-      for (final row in rows)
-        row['id'] as String: QuizQuestion.fromServerRow({
-          ...row,
-          'category_name': categoryNames[row['category_id']] ?? 'Ziman',
-        }),
-    };
   }
 
   @override
@@ -2754,6 +2702,65 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<void> clearFcmToken() async {
+    try {
+      await client.rpc<void>('clear_my_fcm_token');
+    } catch (e, s) {
+      // Göç uygulanmamışsa (PGRST202) ya da ağ yoksa çıkış yine sürer.
+      if (!isMissingRpcError(e)) {
+        _recordError(e, s, reason: 'clearFcmToken failed');
+      }
+    }
+  }
+
+  @override
+  Future<List<SentFriendRequest>?> loadSentFriendRequests() async {
+    try {
+      final res = await client.rpc<List<dynamic>>('list_sent_friend_requests');
+      return res
+          .map(
+            (row) => SentFriendRequest.fromJson(
+              Map<String, dynamic>.from(row as Map),
+            ),
+          )
+          .toList();
+    } catch (e, s) {
+      if (isMissingRpcError(e)) return null;
+      _recordError(e, s, reason: 'loadSentFriendRequests failed');
+      return const [];
+    }
+  }
+
+  @override
+  Future<bool> removeFriend(String friendId) async {
+    try {
+      final response = await client.rpc<dynamic>(
+        'remove_friend',
+        params: {'p_friend_id': friendId},
+      );
+      return (_firstRow(response)?['success'] as bool?) ?? false;
+    } catch (e, s) {
+      _recordError(e, s, reason: 'removeFriend failed');
+      // Sunucuya yazılamadıysa başarı bildirme (addFriend ile aynı kural).
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> cancelFriendRequest(String targetUserId) async {
+    try {
+      final response = await client.rpc<dynamic>(
+        'cancel_friend_request',
+        params: {'p_target_id': targetUserId},
+      );
+      return (_firstRow(response)?['success'] as bool?) ?? false;
+    } catch (e, s) {
+      _recordError(e, s, reason: 'cancelFriendRequest failed');
+      return false;
+    }
+  }
+
+  @override
   Future<bool> acceptFriendRequest(String requestId) async {
     try {
       final response = await client.rpc<dynamic>(
@@ -3450,6 +3457,38 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (isMissingRpcError(error)) _challengeRpcSupported = false;
       _recordError(error, stack, reason: 'createAsyncDuelChallenge failed');
       rethrow;
+    }
+  }
+
+  @override
+  Future<AsyncDuelStart> resumeAsyncDuel(String duelId) async {
+    try {
+      final response = await client.rpc(
+        'resume_my_async_duel',
+        params: {'p_duel_id': duelId},
+      );
+      return AsyncDuelStart.fromJson(
+        _requiredJsonObject(response, 'resume_my_async_duel'),
+      );
+    } catch (error, stack) {
+      _recordError(error, stack, reason: 'resumeAsyncDuel failed');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> cancelAsyncDuel(String duelId) async {
+    try {
+      final response = await client.rpc(
+        'cancel_my_async_duel',
+        params: {'p_duel_id': duelId},
+      );
+      return response == true;
+    } catch (error, stack) {
+      if (!isMissingRpcError(error)) {
+        _recordError(error, stack, reason: 'cancelAsyncDuel failed');
+      }
+      return false;
     }
   }
 

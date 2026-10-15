@@ -146,6 +146,40 @@ class FriendRequest {
   String toString() => 'FriendRequest(from: $fromUserName, status: $status)';
 }
 
+/// Benim gönderdiğim, hâlâ yanıtlanmamış arkadaş isteği
+/// (`list_sent_friend_requests`).
+///
+/// "Gönderildi" durumu eskiden yalnız ekranın belleğindeydi: ekran kapanıp
+/// açılınca ya da başka cihazda aynı kişi yeniden "Ekle" gösteriyor, ikinci
+/// dokunuş sunucuda sessizce reddediliyordu. Durum artık sunucudan okunur.
+@immutable
+class SentFriendRequest {
+  final String id;
+  final String toUserId;
+  final String toUserName;
+  final DateTime createdAt;
+
+  const SentFriendRequest({
+    required this.id,
+    required this.toUserId,
+    required this.toUserName,
+    required this.createdAt,
+  });
+
+  static SentFriendRequest fromJson(Map<String, dynamic> json) =>
+      SentFriendRequest(
+        id: json['id'] as String,
+        toUserId: json['to_user_id'] as String,
+        toUserName: json['to_user_name'] as String? ?? '',
+        createdAt:
+            DateTime.tryParse(json['created_at'] as String? ?? '') ??
+            DateTime.now(),
+      );
+
+  @override
+  String toString() => 'SentFriendRequest(to: $toUserName)';
+}
+
 /// Oyuncu arama sonucu (arkadaş ekleme akışı).
 @immutable
 class PlayerSearchResult {
