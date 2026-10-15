@@ -12,7 +12,10 @@ import '../utils/error_reporter.dart';
 /// tam "Düellolarım" listesi; gelen meydan okuma listenin başında "Sıra
 /// sende" satırıdır. `friend_request` → [friends] (Liderlik sekmesi +
 /// üstüne açılan Arkadaşlar ekranı).
-enum PushTapTarget { playTab, duelInbox, friends }
+///
+/// [home] yerel bildirimlerden gelir (günlük hatırlatıcı, seri uyarısı):
+/// Öğren sekmesi, günün dersi kartı en üstte.
+enum PushTapTarget { playTab, duelInbox, friends, home }
 
 /// Bildirime dokunan oyuncuyu doğru ekrana yönlendirir.
 ///
@@ -54,12 +57,18 @@ class PushTapRouter {
     final kind = data['kind'];
     final target = targetForKind(kind is String ? kind : null);
     if (target == null) return false;
+    offerTarget(target);
+    return true;
+  }
+
+  /// Çözülmüş bir hedefi doğrudan bekleyen kanala yazar (yerel bildirim
+  /// dokunuşları da buradan geçer).
+  static void offerTarget(PushTapTarget target) {
     // Aynı hedef PENDING'DE dururken yeniden gelirse de dinleyici uyansın
     // diye önce boşaltılır (ValueNotifier aynı değerde bildirim yapmaz) —
     // bkz. `JoinDeepLink.offer`deki aynı desen.
     pending.value = null;
     pending.value = target;
-    return true;
   }
 
   /// Bekleyen hedefi alır ve kanalı boşaltır.

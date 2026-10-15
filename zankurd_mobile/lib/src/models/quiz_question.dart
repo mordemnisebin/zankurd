@@ -229,6 +229,19 @@ class QuizQuestion {
   /// Serbest metin yanıtının doğru cevapla ilişkisi: birebir, yalnız
   /// inceltmesi eksik (doğru ama yazımı gösterilmeli) ya da yanlış.
   FreeTextMatch matchAnswer(String candidate) {
+    if (type == QuestionType.wordOrdering) {
+      // Cümle kurmada tek dizilim doğru sayılıyordu: `acceptedAnswers`
+      // yalnız boşluk doldurmada okunuyordu, yani Kurmancîde serbest sıralı
+      // bir cümlenin ("ez duh hatim" / "duh ez hatim") ikinci geçerli
+      // dizilimi yazarı ekleyse bile YANLIŞ sayılırdı. Kelimeler havuzdan
+      // seçildiği için yalnız boşluk farkı yok sayılır; büyük harf ve
+      // inceltme katlaması YAPILMAZ (kelime kimliği zaten havuzdan gelir).
+      final given = _squashSpaces(candidate);
+      final accepted = <String>[correctAnswer, ...acceptedAnswers];
+      return accepted.any((answer) => _squashSpaces(answer) == given)
+          ? FreeTextMatch.exact
+          : FreeTextMatch.none;
+    }
     if (type != QuestionType.fillInBlank) {
       return candidate == correctAnswer
           ? FreeTextMatch.exact
@@ -242,6 +255,9 @@ class QuizQuestion {
       allowFolding: !_asksForDiacriticSpelling,
     );
   }
+
+  static String _squashSpaces(String value) =>
+      value.trim().split(RegExp(r'\s+')).join(' ');
 
   /// Soru bir inceltmeli harfin kendisini adıyla soruyor mu («û» ünlüsünü
   /// içeren sözcüğü doğru yaz)? Böyle bir soruda inceltmesiz yazım sorunun

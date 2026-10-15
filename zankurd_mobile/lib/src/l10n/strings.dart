@@ -910,6 +910,10 @@ class Tr {
     // 2026-08-14: sunucuya yazılamayan tamamlama yine de "Ders tamamlandı"
     // deyip ekranı kapatıyordu; ders listede tamamlanmamış görünmeye devam
     // ediyor, kullanıcı niçin olduğunu hiç göremiyordu.
+    K.lessonSavedOffline: {
+      'ku': 'Ders qediya. Gava girêdan hebe dê were tomarkirin.',
+      'tr': 'Ders tamamlandı. Bağlantı gelince kaydedilecek.',
+    },
     K.lessonCompleteFailed: {
       'ku':
           'Ders nehat tomarkirin. Girêdana xwe kontrol bike û dîsa biceribîne.',
@@ -3537,6 +3541,7 @@ class K {
   static const ceviriIcinDokun = 'screen.ceviriIcinDokun';
   static const dersTamamlandi = 'screen.dersTamamlandi';
   static const lessonCompleteFailed = 'screen.lessonCompleteFailed';
+  static const lessonSavedOffline = 'screen.lessonSavedOffline';
   static const buSeviyeninSorulariYuklenemedi =
       'screen.buSeviyeninSorulariYuklenemedi';
   static const kolaydanZoraDogruIlerle = 'screen.kolaydanZoraDogruIlerle';

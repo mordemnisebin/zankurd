@@ -327,6 +327,17 @@ Future<void> main() async {
         }
       }
       startInBackground(NotificationService.load(), 'notifications load');
+      // Zamanlanmış bildirim metinleri zamanlama anındaki dilde donar; dil
+      // değişince yeniden kurulur (soğuk açılış beklenmez).
+      languageProvider.addListener(() {
+        final isKu = languageProvider.isKu;
+        startInBackground(
+          NotificationService.load().then(
+            (service) => service.applyLanguage(isKu: isKu),
+          ),
+          'notifications language',
+        );
+      });
 
       // Açılış çevrimdışı kararına rağmen Supabase sonradan açıldıysa,
       // ÇEVRİMDIŞI depoyla kurulan oturum uzak oturumla yeniden kurulur.

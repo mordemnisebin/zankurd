@@ -10,6 +10,7 @@ import '../../models/quiz_question.dart';
 import '../../theme/app_icons.dart';
 import '../../utils/app_route.dart';
 import '../../utils/player_identity.dart';
+import '../../data/streak_store.dart';
 import '../../utils/error_reporter.dart';
 import '../../widgets/sahne/sahne.dart';
 import '../quiz/quiz_option_tile.dart';
@@ -324,6 +325,7 @@ class _AsyncDuelPlayScreenState extends State<AsyncDuelPlayScreen>
   }
 
   void _goToResult(AsyncDuelResult? result) {
+    unawaited(StreakStore.recordActivity());
     final duel = _duel!;
     final view = result == null
         ? AsyncDuelResultView.unknownAfterFinish(duel.duelId)

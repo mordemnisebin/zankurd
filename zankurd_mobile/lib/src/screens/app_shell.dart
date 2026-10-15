@@ -823,6 +823,8 @@ class _AppShellState extends State<AppShell>
 
   void _applyPushTapTarget(PushTapTarget target) {
     switch (target) {
+      case PushTapTarget.home:
+        _selectTab(0);
       case PushTapTarget.playTab:
         _selectTab(1);
       case PushTapTarget.duelInbox:

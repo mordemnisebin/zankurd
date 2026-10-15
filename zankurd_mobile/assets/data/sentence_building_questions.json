@@ -228,6 +228,9 @@
       "reviewedAt": "2026-08-07",
       "learningLessonId": "time_2"
     },
-    "promptTr": "Cümleyi sırala: \"Bugün hava sıcak.\""
+    "promptTr": "Cümleyi sırala: \"Bugün hava sıcak.\"",
+    "acceptedAnswers": [
+      "hewa îro germ e"
+    ]
   }
 ]

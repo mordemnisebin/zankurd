@@ -26,6 +26,7 @@ import '../utils/client_round_id.dart';
 import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../config/category_visibility.dart';
+import 'lesson_completion_store.dart';
 import 'mock_zankurd_repository.dart';
 import 'xp_store.dart';
 import 'zankurd_repository.dart';
@@ -2900,31 +2901,32 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       _recordError(e, s, reason: 'markLessonCompleted failed');
       // SUNUCUYA YAZILAMADIYSA BAŞARI BİLDİRME (addFriend'deki aynı kural).
       //
-      // `_offline.markLessonCompleted` yalnız BELLEK İÇİ bir kümeye ekliyor
-      // — SharedPreferences'a bile yazmıyor. Kullanıcı "Ders tamamlandı"
-      // görüp ekrandan çıkıyor, ama `loadCompletedLessonIds` sunucudan
-      // okuduğu için ders "tamamlanmadı" görünmeye devam ediyordu; ne bir
-      // kuyruğa alınıyordu (SyncManager yalnız quiz ödülünü kuyruklar) ne
-      // de kullanıcıya bir hata gösteriliyordu — uygulama kapanınca işaret
-      // de kayboluyordu (2026-08-14 denetimi).
+      // `false` "sunucu onaylamadı" demektir. Çağıran (ders ekranı)
+      // `SyncManager.queueLessonCompletion` ile dersi önce yerele yazar,
+      // sonra sunucu kuyruğuna alır; kilit durumu yerel ∪ sunucu okunur.
       return false;
     }
   }
 
   @override
   Future<Set<String>> loadCompletedLessonIds() async {
+    // Yerel (bekleyen ∪ eşitlenmiş) kümeyi hep ekle: çevrimdışı tamamlanan
+    // ders sunucuya ulaşana kadar sonraki dersleri açık tutar.
+    final local = await LessonCompletionStore.loadLocal();
     try {
       final rows = await client
           .from('user_lesson_progress')
           .select('lesson_id')
           .eq('completed', true);
-      return rows
+      final server = rows
           .map((row) => row['lesson_id'] as String?)
           .whereType<String>()
           .toSet();
+      await LessonCompletionStore.cacheServer(server);
+      return {...server, ...(await LessonCompletionStore.loadLocal())};
     } catch (e, s) {
       _recordError(e, s, reason: 'loadCompletedLessonIds failed');
-      return _offline.loadCompletedLessonIds();
+      return local;
     }
   }
 

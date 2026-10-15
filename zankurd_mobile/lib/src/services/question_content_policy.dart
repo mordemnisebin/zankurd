@@ -89,6 +89,25 @@ class QuestionContentPolicy {
         // çözülemez: ya artık kelime kalır ya eksik kelime istenir.
         issues.add('word_ordering_pool_mismatch');
       }
+      // Kabul edilen alternatif dizilimler aynı kelimelerin yer değiştirmiş
+      // hâli olmalı; aksi halde havuzdan kurulması imkânsız bir cevap
+      // "kabul" listesinde dururdu.
+      for (final alternative in question.acceptedAnswers) {
+        final words =
+            alternative
+                .split(RegExp(r'\s+'))
+                .where((token) => token.isNotEmpty)
+                .toList()
+              ..sort();
+        var same = words.length == pool.length;
+        for (var index = 0; same && index < words.length; index++) {
+          same = words[index] == pool[index];
+        }
+        if (!same) {
+          issues.add('word_ordering_accepted_not_permutation');
+          break;
+        }
+      }
       return List.unmodifiable(issues);
     }
 
