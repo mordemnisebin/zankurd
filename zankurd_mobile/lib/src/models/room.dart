@@ -142,6 +142,73 @@ class RoomLeaveOutcome {
   bool get completed => status == 'finished' && reason == 'completed';
 }
 
+/// `touch_matchmaking` RPC'sinin sonucu.
+enum MatchmakingTouchStatus {
+  /// Kuyruk satırı yenilendi, hâlâ rakip bekleniyor.
+  waiting,
+
+  /// Eşleşme olmuş; [MatchmakingTouch.roomId] dolu.
+  matched,
+
+  /// Sunucu açıkça söyledi: ne oda ne bekleyen satır var (satır bayat diye
+  /// silinmiş olabilir); bekleyen istemci kuyruğa yeniden girmeli.
+  none,
+
+  /// RPC yok ya da cevap tanınmadı; istemci eski yolda kalır, yeniden girmez.
+  unknown,
+}
+
+/// Bekleyen oyuncunun kalp atışı + eşleşme yoklaması sonucu.
+class MatchmakingTouch {
+  const MatchmakingTouch.waiting()
+    : status = MatchmakingTouchStatus.waiting,
+      roomId = null,
+      opponentName = null;
+
+  const MatchmakingTouch.none()
+    : status = MatchmakingTouchStatus.none,
+      roomId = null,
+      opponentName = null;
+
+  const MatchmakingTouch.unknown()
+    : status = MatchmakingTouchStatus.unknown,
+      roomId = null,
+      opponentName = null;
+
+  const MatchmakingTouch.matched({
+    required String this.roomId,
+    this.opponentName,
+  }) : status = MatchmakingTouchStatus.matched;
+
+  /// Sunucu cevabından tipli sonuç. Tanınmayan ya da eksik cevap [none]
+  /// sayılır: yoklama yalnız bir emniyet yoludur, ekranı çökertmemeli.
+  factory MatchmakingTouch.fromJson(Object? json) {
+    if (json is! Map) return const MatchmakingTouch.unknown();
+    switch (json['status']) {
+      case 'waiting':
+        return const MatchmakingTouch.waiting();
+      case 'matched':
+        final roomId = json['room_id'];
+        if (roomId is! String || roomId.trim().isEmpty) {
+          return const MatchmakingTouch.unknown();
+        }
+        final opponent = json['opponent_name'];
+        return MatchmakingTouch.matched(
+          roomId: roomId,
+          opponentName: opponent is String ? opponent : null,
+        );
+      case 'none':
+        return const MatchmakingTouch.none();
+      default:
+        return const MatchmakingTouch.unknown();
+    }
+  }
+
+  final MatchmakingTouchStatus status;
+  final String? roomId;
+  final String? opponentName;
+}
+
 const roomCodePrefix = 'ZK-';
 const roomCodeSuffixLength = 10;
 const roomCodeLength = 13;

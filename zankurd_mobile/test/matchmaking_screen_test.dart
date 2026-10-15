@@ -321,9 +321,14 @@ class _MatchmakingRouteHost extends StatelessWidget {
       body: Center(
         child: FilledButton(
           key: const ValueKey('open-matchmaking'),
-          onPressed: () => Navigator.of(
-            context,
-          ).push(AppRoute.to(MatchmakingScreen(repository: repository))),
+          onPressed: () => Navigator.of(context).push(
+            AppRoute.to(
+              MatchmakingScreen(
+                loadRetryDelays: const [],
+                repository: repository,
+              ),
+            ),
+          ),
           child: const Text('Eşleştirmeyi aç'),
         ),
       ),
@@ -338,7 +343,11 @@ Future<void> _startImmediateMatch(
   tester.view.physicalSize = const Size(480, 1600);
   tester.view.devicePixelRatio = 1.0;
 
-  await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+  await tester.pumpWidget(
+    _shell(
+      MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+    ),
+  );
   await tester.pumpAndSettle();
   await tester.tap(find.text('Rastgele eşleşme'));
   await tester.pump();
@@ -353,7 +362,11 @@ Future<void> _startSnapshotMatch(
   tester.view.physicalSize = const Size(480, 1600);
   tester.view.devicePixelRatio = 1.0;
 
-  await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+  await tester.pumpWidget(
+    _shell(
+      MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+    ),
+  );
   await tester.pumpAndSettle();
   await tester.tap(find.text('Rastgele eşleşme'));
   await tester.pump();
@@ -403,7 +416,13 @@ void main() {
     addTearDown(tester.view.reset);
 
     await tester.pumpWidget(
-      _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+      _shell(
+        MatchmakingScreen(
+          loadRetryDelays: const [],
+          repository: repository,
+          metrics: metrics,
+        ),
+      ),
     );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Rastgele eşleşme'));
@@ -515,7 +534,13 @@ void main() {
       addTearDown(tester.view.reset);
 
       await tester.pumpWidget(
-        _shell(MatchmakingScreen(repository: repository, metrics: metrics)),
+        _shell(
+          MatchmakingScreen(
+            loadRetryDelays: const [],
+            repository: repository,
+            metrics: metrics,
+          ),
+        ),
       );
       await tester.pumpAndSettle();
       await tester.tap(find.text('Rastgele eşleşme'));
@@ -578,7 +603,11 @@ void main() {
     tester.view.physicalSize = const Size(480, 1600);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpWidget(
+      _shell(
+        MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+      ),
+    );
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Rastgele eşleşme'));
@@ -648,7 +677,11 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
 
-    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpWidget(
+      _shell(
+        MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+      ),
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Rastgele eşleşme'));
     await tester.pump();
@@ -722,7 +755,11 @@ void main() {
     tester.view.physicalSize = const Size(480, 1600);
     tester.view.devicePixelRatio = 1.0;
 
-    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpWidget(
+      _shell(
+        MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+      ),
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Rastgele eşleşme'));
     // 1500 ms'lik "zafer geçişi" gecikmesinin İÇİNDE, "eşleşti" durumu
@@ -751,7 +788,12 @@ void main() {
       await tester.pumpWidget(
         MediaQuery(
           data: const MediaQueryData(textScaler: TextScaler.linear(2)),
-          child: _shell(MatchmakingScreen(repository: repository)),
+          child: _shell(
+            MatchmakingScreen(
+              loadRetryDelays: const [],
+              repository: repository,
+            ),
+          ),
         ),
       );
       await tester.pumpAndSettle();
@@ -846,7 +888,11 @@ void main() {
 
     tester.view.physicalSize = const Size(480, 1600);
     tester.view.devicePixelRatio = 1.0;
-    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpWidget(
+      _shell(
+        MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+      ),
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Rastgele eşleşme'));
     await tester.pump(const Duration(seconds: 20));
@@ -874,7 +920,11 @@ void main() {
 
     tester.view.physicalSize = const Size(480, 1600);
     tester.view.devicePixelRatio = 1.0;
-    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpWidget(
+      _shell(
+        MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+      ),
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Rastgele eşleşme'));
     await tester.pump();
@@ -908,7 +958,11 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
     final repository = _RetryableMatchCategoriesRepository();
-    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpWidget(
+      _shell(
+        MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+      ),
+    );
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-error-state')), findsOneWidget);
@@ -929,7 +983,11 @@ void main() {
   ) async {
     final repository = _ServerOnlyMatchCategoriesRepository();
 
-    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpWidget(
+      _shell(
+        MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+      ),
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Dil'), findsOneWidget);
@@ -945,7 +1003,11 @@ void main() {
     final repository = _RetryableMatchCategoriesRepository()
       ..fail = false
       ..returnEmpty = true;
-    await tester.pumpWidget(_shell(MatchmakingScreen(repository: repository)));
+    await tester.pumpWidget(
+      _shell(
+        MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+      ),
+    );
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('app-empty-state')), findsOneWidget);
@@ -1014,7 +1076,9 @@ void main() {
       addTearDown(tester.view.reset);
 
       await tester.pumpWidget(
-        _shell(MatchmakingScreen(repository: repository)),
+        _shell(
+          MatchmakingScreen(loadRetryDelays: const [], repository: repository),
+        ),
       );
       await tester.pumpAndSettle();
 

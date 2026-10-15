@@ -147,6 +147,11 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<MatchmakingTouch> touchMatchmaking() async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
   Future<void> acknowledgeRoomResult(GameRoom room) async {
     throw StateError('Remote service unavailable.');
   }

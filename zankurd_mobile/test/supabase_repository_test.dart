@@ -292,6 +292,12 @@ class _RoomSessionHttpClient extends http.BaseClient {
         return _jsonResponse(request, null);
       case '/rest/v1/rpc/leave_room':
         return _jsonResponse(request, leaveResponse);
+      case '/rest/v1/rpc/touch_matchmaking':
+        return _jsonResponse(request, const {
+          'status': 'matched',
+          'room_id': '00000000-0000-0000-0000-000000000099',
+          'opponent_name': 'Rojda',
+        });
       case '/rest/v1/rpc/cancel_matchmaking':
         return _jsonResponse(request, const {
           'status': 'matched',
@@ -1450,6 +1456,62 @@ void main() {
           'PGRST202',
         ),
       ),
+    );
+  });
+
+  // touch_matchmaking göçten ÖNCE yayınlanan derlemede 404/PGRST202 verir;
+  // bekleme ekranı bunu hata saymayıp eski yola (akış + 20 sn) düşmeli ve
+  // her 3 saniyede ölü bir RPC'ye vurmamalı.
+  test(
+    'touch_matchmaking RPC yoksa sessizce unknown döner ve bir daha sormaz',
+    () async {
+      final httpClient = _RoomSessionHttpClient(rpcErrorCode: 'PGRST202');
+      final repository = SupabaseZanKurdRepository(
+        SupabaseClient(
+          'https://example.supabase.co',
+          'sb_publishable_test_key',
+          httpClient: httpClient,
+        ),
+      );
+
+      final first = await repository.touchMatchmaking();
+      final second = await repository.touchMatchmaking();
+
+      expect(first.status, MatchmakingTouchStatus.unknown);
+      expect(second.status, MatchmakingTouchStatus.unknown);
+      expect(
+        httpClient.requestedPaths.where((p) => p.endsWith('touch_matchmaking')),
+        hasLength(1),
+      );
+    },
+  );
+
+  test('touch_matchmaking eşleşme özetini tipli sonuca çevirir', () async {
+    final repository = SupabaseZanKurdRepository(
+      SupabaseClient(
+        'https://example.supabase.co',
+        'sb_publishable_test_key',
+        httpClient: _RoomSessionHttpClient(),
+      ),
+    );
+
+    final touch = await repository.touchMatchmaking();
+
+    expect(touch.status, MatchmakingTouchStatus.matched);
+    expect(touch.roomId, '00000000-0000-0000-0000-000000000099');
+    expect(touch.opponentName, 'Rojda');
+    expect(
+      MatchmakingTouch.fromJson(const {'status': 'waiting'}).status,
+      MatchmakingTouchStatus.waiting,
+    );
+    expect(
+      MatchmakingTouch.fromJson(const {'status': 'matched'}).status,
+      MatchmakingTouchStatus.unknown,
+      reason: 'room_id eksik eşleşme cevabı odaya çevrilmemeli',
+    );
+    expect(
+      MatchmakingTouch.fromJson(const {'status': 'none'}).status,
+      MatchmakingTouchStatus.none,
     );
   });
 
