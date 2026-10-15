@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/utils/client_round_id.dart';
 import 'package:zankurd_mobile/src/utils/error_reporter.dart';
+import 'lesson_completion_store.dart';
 import 'local_progress_scope.dart';
 import 'xp_cache_plan.dart';
 import 'xp_store.dart';
@@ -798,10 +799,13 @@ class SyncManager {
     unawaited(sync());
   }
 
-  /// Onaylanmayan ders tamamlamayı yeniden dener.
+  /// Ders tamamlamayı ÖNCE yerele yazar, sonra sunucu kuyruğuna alır.
   ///
-  /// `mark_lesson_completed` aynı ders için idempotenttir. Başarı ekrana
-  /// burada bildirilmez; çağıran sunucu false dediği için hatayı gösterir.
+  /// `mark_lesson_completed` aynı ders için idempotenttir. Yerel yazım
+  /// (bekleyen küme) çevrimdışı tamamlanan dersin sonraki dersleri hemen
+  /// açmasını sağlar; sunucu onayı gelince [_forgetOfflineLesson] bekleyen
+  /// kümeden düşer. Yerel yazım kabul edilmezse fırlatır: çağıran "kaydedildi"
+  /// demez.
   Future<void> queueLessonCompletion(String lessonId) async {
     final currentUserId = _normalizedUserId(_repository.currentUserId);
     if (!_acceptingItems ||
@@ -813,6 +817,15 @@ class SyncManager {
     }
     final id = lessonId.trim();
     if (id.isEmpty) return;
+    if (LocalProgressScope.isHumanOwner(_ownerUserId)) {
+      final saved = await LessonCompletionStore.addPending(
+        id,
+        owner: _ownerUserId,
+      );
+      if (!saved) {
+        throw StateError('Lesson completion could not be stored locally.');
+      }
+    }
     final alreadyQueued = _queue.any(
       (item) => item['type'] == 'sync_lesson' && item['lessonId'] == id,
     );
@@ -960,7 +973,7 @@ class SyncManager {
         preferences.getStringList(
           LocalProgressScope.physicalFor(
             owner,
-            'zankurd.offline.completedLessonIds',
+            LessonCompletionStore.pendingKey,
           ),
         ) ??
         const <String>[];
@@ -971,15 +984,7 @@ class SyncManager {
 
   Future<void> _forgetOfflineLesson(String? userId, String lessonId) async {
     if (userId == null || !LocalProgressScope.isHumanOwner(userId)) return;
-    final preferences = await SharedPreferences.getInstance();
-    final key = LocalProgressScope.physicalFor(
-      userId,
-      'zankurd.offline.completedLessonIds',
-    );
-    final ids = preferences.getStringList(key);
-    if (ids == null || !ids.contains(lessonId)) return;
-    final next = [...ids]..remove(lessonId);
-    await preferences.setStringList(key, next);
+    await LessonCompletionStore.markSynced(lessonId, owner: userId);
   }
 
   /// Kuyruk boşken çubuğu sunucu toplamıyla barıştırır.

@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../data/learner_lexicon.dart';
+import '../data/lesson_completion_store.dart';
 import '../data/learning_lesson_aliases.dart';
 import '../data/sync_manager.dart';
 import '../data/placement_store.dart';
@@ -15,6 +16,7 @@ import '../models/lesson.dart';
 import '../services/lesson_listening_speaker.dart';
 import '../services/placement_scoring.dart';
 import '../utils/app_route.dart';
+import '../data/streak_store.dart';
 import '../utils/error_reporter.dart';
 import 'story_screen.dart';
 import '../widgets/app_state.dart';
@@ -1196,10 +1198,15 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   }
 
   void _markCompleted() async {
-    final success = await widget.repository.markLessonCompleted(
-      widget.lesson.id,
-    );
-    if (success && mounted) {
+    final lessonId = widget.lesson.id;
+    var success = await widget.repository.markLessonCompleted(lessonId);
+    // Sunucu onaylamadıysa dersi yine de bitmiş say: önce yerele yazılır,
+    // sonra eşitleme kuyruğuna girer; bağlantı gelince kendiliğinden gider.
+    // Yerel yazım da olmazsa (kuyruk yok / disk yazmadı) dürüstçe hata göster.
+    var savedOffline = false;
+    if (!success) savedOffline = await _queueLessonCompletion(lessonId);
+    if (success || savedOffline) unawaited(StreakStore.recordActivity());
+    if ((success || savedOffline) && mounted) {
       widget.repository
           .logAnalyticsEvent('lesson_completed', {
             'lesson_id': widget.lesson.id,
@@ -1212,29 +1219,42 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
           });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(context.t(K.dersTamamlandi)),
+          content: Text(
+            context.t(success ? K.dersTamamlandi : K.lessonSavedOffline),
+          ),
           duration: const Duration(seconds: 2),
         ),
       );
       Navigator.pop(context);
-    } else if (!success && mounted) {
-      // Sunucuya yazılamadı: "tamamlandı" demeden, ekranı kapatmadan
-      // kullanıcının tekrar deneyebilmesi için son slaytta bırak
-      // (2026-08-14 denetimi). Aynı ders idempotent kuyruğa girer.
-      unawaited(_queueLessonCompletion(widget.lesson.id));
+    } else if (mounted) {
+      // Ne sunucuya ne yerele yazılabildi: "tamamlandı" demeden, ekranı
+      // kapatmadan kullanıcının tekrar deneyebilmesi için son slaytta bırak.
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.t(K.lessonCompleteFailed))),
       );
     }
   }
 
-  Future<void> _queueLessonCompletion(String lessonId) async {
-    final manager = SyncManager.maybeInstance;
-    if (manager == null) return;
+  /// Dersi yerele yazıp eşitleme kuyruğuna alır; yerel yazım olduysa `true`.
+  ///
+  /// Kuyruk sahibi yoksa (oturum açık değil / kuyruk kurulmadı) yine de
+  /// bekleyen kümeye yazılır; ilk gerçek girişte `queueScopedOfflineLessons`
+  /// onu sunucuya taşır.
+  Future<bool> _queueLessonCompletion(String lessonId) async {
     try {
-      await manager.queueLessonCompletion(lessonId);
+      final manager = SyncManager.maybeInstance;
+      if (manager != null) {
+        await manager.queueLessonCompletion(lessonId);
+        return true;
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'lesson completion queue');
+    }
+    try {
+      return await LessonCompletionStore.addPending(lessonId);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'lesson completion local');
+      return false;
     }
   }
 
@@ -1357,8 +1377,14 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 _buildKuContentRow(slide, context),
+                                // Türkçe açıklama yalnız Türkçe arayüzde: Kurmancî
+                                // arayüzde Kurmancî metnin altında Türkçe düz
+                                // yazı çıkıyordu. Alan bir "öğrenci ipucu" diye
+                                // işaretli değil (sunucuda `content_tr` serbest
+                                // metin); dokunarak çevrilen kart arkası ise
+                                // kullanıcının isteğidir ve dilden bağımsız kalır.
                                 if (slide.contentTr case final contentTr?
-                                    when contentTr.isNotEmpty) ...[
+                                    when !ku && contentTr.isNotEmpty) ...[
                                   const SizedBox(height: SahneSpace.x2),
                                   Text(
                                     contentTr,

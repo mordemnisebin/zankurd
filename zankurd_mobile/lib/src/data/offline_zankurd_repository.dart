@@ -9,6 +9,7 @@ import '../models/quiz_question.dart';
 import '../models/referral_result.dart';
 import '../models/room.dart';
 import '../models/tournament.dart';
+import 'lesson_completion_store.dart';
 import 'local_progress_scope.dart';
 import 'mock_zankurd_repository.dart';
 import 'zankurd_repository.dart';
@@ -19,8 +20,6 @@ import 'zankurd_repository.dart';
 /// olgunlaştırdığı için onları yeniden kullanır; fakat test/demoya özgü uzak
 /// kimlikleri ve sunucu yazımlarındaki sahte başarıları özellikle kapatır.
 class OfflineZanKurdRepository extends MockZanKurdRepository {
-  static String get _completedLessonIdsKey =>
-      LocalProgressScope.physical('zankurd.offline.completedLessonIds');
   static String get _favoriteQuestionIdsKey =>
       LocalProgressScope.physical('zankurd.offline.favoriteQuestionIds');
   static String get _profileNameKey =>
@@ -444,21 +443,10 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<bool> markLessonCompleted(String lessonId) async {
-    final preferences = await SharedPreferences.getInstance();
-    final ids =
-        preferences.getStringList(_completedLessonIdsKey)?.toSet() ??
-        <String>{};
-    ids.add(lessonId);
-    final sortedIds = ids.toList()..sort();
-    return preferences.setStringList(_completedLessonIdsKey, sortedIds);
-  }
+  Future<bool> markLessonCompleted(String lessonId) =>
+      LessonCompletionStore.addPending(lessonId);
 
   @override
-  Future<Set<String>> loadCompletedLessonIds() async {
-    final preferences = await SharedPreferences.getInstance();
-    return (preferences.getStringList(_completedLessonIdsKey) ??
-            const <String>[])
-        .toSet();
-  }
+  Future<Set<String>> loadCompletedLessonIds() =>
+      LessonCompletionStore.loadLocal();
 }
