@@ -1084,11 +1084,51 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
+  Future<List<QuizQuestion>> loadDailyQuestions({
+    int limit = 10,
+    bool replay = false,
+  }) async {
     final playable = _playableQuestions;
-    final seed = dailySeedFor(currentUserId);
+    // Tekrar turu (kart "Devam et"/"Tekrar oyna" diyorsa): günün sabit seti
+    // zaten oynandı; görülmemişler öne alınır.
+    if (replay) {
+      final fresh = await _selectFresh(playable, limit);
+      return _withBeginnerProduction(fresh, playable, limit, Random());
+    }
+    return _dailyBase(playable, limit, _dailyLessonSalt);
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadDailyEventQuestions({int limit = 10}) async {
+    final playable = _playableQuestions;
+    // Günün dersinin ilk-oyun setini dışarıda bırak: iki giriş aynı 10 soruyu
+    // vermesin. Havuz bunu kaldıramayacak kadar darsa dışlama düşer.
+    final lessonIds = _dailyBase(
+      playable,
+      limit,
+      _dailyLessonSalt,
+    ).map((q) => q.id).toSet();
+    final rest = playable.where((q) => !lessonIds.contains(q.id)).toList();
+    final pool = rest.length >= limit ? rest : playable;
+    return _dailyBase(pool, limit, _dailyEventSalt);
+  }
+
+  static const _dailyLessonSalt = 0;
+  static const _dailyEventSalt = 0x5e11;
+
+  List<QuizQuestion> _dailyBase(
+    List<QuizQuestion> playable,
+    int limit,
+    int salt,
+  ) {
+    final seed = dailySeedFor(currentUserId) ^ salt;
     final pool = [...playable]..shuffle(Random(seed));
-    final daily = _withVisualBlend(pool.take(limit).toList(), playable, limit);
+    final daily = _withVisualBlend(
+      pool.take(limit).toList(),
+      playable,
+      limit,
+      Random(seed),
+    );
     // Günlük ders rastgele havuzdan çekilir; üretim soruları bankanın ~%3'ü
     // olduğundan yeni başlayan günlük derste hiç cümle kurma görmeyebilirdi.
     return _withBeginnerProduction(daily, playable, limit, Random(seed));
@@ -1286,24 +1326,53 @@ class MockZanKurdRepository implements ZanKurdRepository {
         }
       }
     }
-    return _withVisualBlend(selected, pool, limit);
+    return _withVisualBlend(selected, pool, limit, Random(), store);
   }
+
+  /// Turda en az iki görselli soru olsun diye havuzdan görselli soru ekler.
+  ///
+  /// ## Kusur
+  ///
+  /// Adaylar banka sırasıyla geziliyordu: görselli soru gerektiren her tur
+  /// havuzun aynı ilk iki fotoğraflı sorusunu getiriyordu; oyuncu her turda
+  /// aynı resimleri görüyordu. Testler yalnız "en az iki görselli" sayısına
+  /// baktığı için sessiz kaldı.
+  ///
+  /// ## Kural
+  ///
+  /// Adaylar turun [random]'ı ile karıştırılır, [seen] varsa görülmemişler
+  /// öne alınır; turda zaten olan soru bir daha eklenmez.
+  @visibleForTesting
+  List<QuizQuestion> withVisualBlendForTesting(
+    List<QuizQuestion> selected,
+    List<QuizQuestion> pool,
+    int limit,
+    Random random, [
+    SeenQuestionStore? seen,
+  ]) => _withVisualBlend(selected, pool, limit, random, seen);
 
   List<QuizQuestion> _withVisualBlend(
     List<QuizQuestion> selected,
     List<QuizQuestion> pool,
     int limit,
-  ) {
+    Random random, [
+    SeenQuestionStore? seen,
+  ]) {
     if (selected.length >= limit &&
         selected.where((q) => q.hasImage).length >= 2) {
       return selected;
     }
     final ids = selected.map((question) => question.id).toSet();
-    final visualCandidates = pool.where(
-      (question) => question.hasImage && !ids.contains(question.id),
-    );
+    final fresh = <QuizQuestion>[];
+    final stale = <QuizQuestion>[];
+    for (final question in pool) {
+      if (!question.hasImage || !ids.add(question.id)) continue;
+      (seen != null && seen.isSeen(question.id) ? stale : fresh).add(question);
+    }
+    fresh.shuffle(random);
+    stale.shuffle(random);
     final blended = [...selected];
-    for (final question in visualCandidates) {
+    for (final question in [...fresh, ...stale]) {
       if (blended.where((q) => q.hasImage).length >= 2) break;
       if (blended.length >= limit) {
         final replaceAt = blended.lastIndexWhere((q) => !q.hasImage);

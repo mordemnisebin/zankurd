@@ -212,8 +212,15 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   });
   Future<List<QuizQuestion>> loadRoomQuestions(GameRoom room);
 
-  /// Aynı gün içinde herkese aynı soru setini verir (tarih tohumlu seçim).
-  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10});
+  /// "Günün dersi": aynı gün ilk oyunda hep aynı set (tarih tohumlu seçim).
+  /// [replay] doğruysa görülmemiş sorular öne alınır.
+  Future<List<QuizQuestion>> loadDailyQuestions({
+    int limit = 10,
+    bool replay = false,
+  });
+
+  /// "Günün etkinliği": günün dersinden ayrı tohum, onun setini dışlar.
+  Future<List<QuizQuestion>> loadDailyEventQuestions({int limit = 10});
 
   GameRoom createRoom({String category = 'Ziman'});
   GameRoom joinRoom(String code);
