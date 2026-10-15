@@ -62,7 +62,9 @@ void main() {
     await tester.tap(openButton);
     await tester.pumpAndSettle();
 
-    expect(find.text('Hevalên Zanînê'), findsOneWidget);
+    // Kur sayfasında varsayılan kapasite 8: lobi kalabalık odanın başlığını
+    // taşır (oda adı "Hevalên Zanînê" yalnız 1v1/yerel oda başlığıdır).
+    expect(find.text('Grup yarışı'), findsOneWidget);
     expect(find.text('Yarışı başlat'), findsOneWidget);
 
     await tester.ensureVisible(find.text('Yarışı başlat'));

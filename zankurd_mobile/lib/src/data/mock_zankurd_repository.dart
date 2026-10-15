@@ -1452,16 +1452,14 @@ class MockZanKurdRepository implements ZanKurdRepository {
     int entryFee = 0,
     int maxPlayers = 2,
   }) async {
-    // Kalabalık odada (kapasite > 2) yerel sahte oda yalnız ev sahibini
-    // taşır: "Heval" yer tutucusu yalnız iki kişilik odanın karşı tarafıdır.
-    final room = createRoom(category: category);
-    return room.copyWith(
+    // Yerel sahte oda "Tu" ve "Heval" yer tutucularıyla gelir; kapasite
+    // yalnız kalabalık ayrımını (başlık, hazır anahtarı yok) etkiler.
+    return createRoom(category: category).copyWith(
       secondsPerQuestion: secondsPerQuestion,
       questionCount: questionCount,
       entryFee: entryFee,
       maxPlayers: maxPlayers,
       isCustom: true,
-      players: maxPlayers > 2 ? room.players.take(1).toList() : null,
     );
   }
 
