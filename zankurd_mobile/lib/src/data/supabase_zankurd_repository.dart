@@ -2184,7 +2184,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       }
       return (
         amount: _verifiedQuizRewardAmount(response, userId: user.id),
-        dailyCapReached: false,
+        dailyCapReached: response is Map && response['cap_reached'] == true,
       );
     } on PostgrestException catch (error, stack) {
       // Göç henüz üretime uygulanmadıysa `claim_solo_reward` yoktur
@@ -2458,8 +2458,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       json = null;
     }
 
+    // Zorunlu iki alan yeter; fazlası yok sayılır. 2026-10-02'de sunucu
+    // `daily_cap`/`cap_reached` ekleyince "tam iki alan" kuralı her oda
+    // turunun ilk talebini reddediyordu: jeton sunucuda ödeniyor, istemci
+    // "bağlantı yok" deyip kuyruğa alıyor, sonuç onayı hiç gitmiyor ve biten
+    // oda her soğuk açılışta geri geliyordu (simülatör denemesi 2026-10-16).
     if (json == null ||
-        json.length != 2 ||
         !json.containsKey('amount') ||
         json['already_claimed'] is! bool) {
       throw StateError(
