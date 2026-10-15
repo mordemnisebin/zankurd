@@ -77,14 +77,14 @@ class LearnerLexicon {
       id: 'grammar_1',
       titleKu: 'Cînavkên kesane',
       titleTr: 'Şahıs zamirleri',
-      categoryKu: 'Gramer',
+      categoryKu: 'Rêziman',
       categoryTr: 'Dilbilgisi',
     ),
     'grammar_2': LearnerLexiconSource(
       id: 'grammar_2',
       titleKu: 'Tewandin',
       titleTr: 'Büküm (hal çekimi)',
-      categoryKu: 'Gramer',
+      categoryKu: 'Rêziman',
       categoryTr: 'Dilbilgisi',
     ),
     'culture_1': LearnerLexiconSource(
@@ -161,14 +161,14 @@ class LearnerLexicon {
       id: 'time_1',
       titleKu: 'Roj û meh',
       titleTr: 'Günler & aylar',
-      categoryKu: 'Demjimêr',
+      categoryKu: 'Dem',
       categoryTr: 'Zaman',
     ),
     'time_2': LearnerLexiconSource(
       id: 'time_2',
       titleKu: 'Serdem û demjimêr',
       titleTr: 'Zaman dilimleri',
-      categoryKu: 'Demjimêr',
+      categoryKu: 'Dem',
       categoryTr: 'Zaman',
     ),
     'alphabet_1': LearnerLexiconSource(
@@ -311,7 +311,7 @@ class LearnerLexicon {
       id: 'grammar_bun',
       titleKu: 'Lêkera "bûn"',
       titleTr: 'Olmak fiili',
-      categoryKu: 'Gramer',
+      categoryKu: 'Rêziman',
       categoryTr: 'Dilbilgisi',
     ),
     'culture_dengbeji': LearnerLexiconSource(
@@ -325,7 +325,7 @@ class LearnerLexicon {
       id: 'time_seasons',
       titleKu: 'Demsal',
       titleTr: 'Mevsimler',
-      categoryKu: 'Demjimêr',
+      categoryKu: 'Dem',
       categoryTr: 'Zaman',
     ),
     'questions': LearnerLexiconSource(
