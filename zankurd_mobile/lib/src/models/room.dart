@@ -142,6 +142,62 @@ class RoomLeaveOutcome {
   bool get completed => status == 'finished' && reason == 'completed';
 }
 
+/// `touch_matchmaking` RPC'sinin sonucu.
+enum MatchmakingTouchStatus {
+  /// Kuyruk satırı yenilendi, hâlâ rakip bekleniyor.
+  waiting,
+
+  /// Eşleşme olmuş; [MatchmakingTouch.roomId] dolu.
+  matched,
+
+  /// Ne oda ne bekleyen satır var (ya da sunucuda RPC henüz yok).
+  none,
+}
+
+/// Bekleyen oyuncunun kalp atışı + eşleşme yoklaması sonucu.
+class MatchmakingTouch {
+  const MatchmakingTouch.waiting()
+    : status = MatchmakingTouchStatus.waiting,
+      roomId = null,
+      opponentName = null;
+
+  const MatchmakingTouch.none()
+    : status = MatchmakingTouchStatus.none,
+      roomId = null,
+      opponentName = null;
+
+  const MatchmakingTouch.matched({
+    required String this.roomId,
+    this.opponentName,
+  }) : status = MatchmakingTouchStatus.matched;
+
+  /// Sunucu cevabından tipli sonuç. Tanınmayan ya da eksik cevap [none]
+  /// sayılır: yoklama yalnız bir emniyet yoludur, ekranı çökertmemeli.
+  factory MatchmakingTouch.fromJson(Object? json) {
+    if (json is! Map) return const MatchmakingTouch.none();
+    switch (json['status']) {
+      case 'waiting':
+        return const MatchmakingTouch.waiting();
+      case 'matched':
+        final roomId = json['room_id'];
+        if (roomId is! String || roomId.trim().isEmpty) {
+          return const MatchmakingTouch.none();
+        }
+        final opponent = json['opponent_name'];
+        return MatchmakingTouch.matched(
+          roomId: roomId,
+          opponentName: opponent is String ? opponent : null,
+        );
+      default:
+        return const MatchmakingTouch.none();
+    }
+  }
+
+  final MatchmakingTouchStatus status;
+  final String? roomId;
+  final String? opponentName;
+}
+
 const roomCodePrefix = 'ZK-';
 const roomCodeSuffixLength = 10;
 const roomCodeLength = 13;

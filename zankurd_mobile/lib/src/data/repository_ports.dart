@@ -108,6 +108,10 @@ abstract interface class LivePlayPort {
   });
   Future<Map<String, dynamic>> joinMatchmaking(String categoryName);
   Future<Map<String, dynamic>> cancelMatchmaking();
+
+  /// Bekleyen oyuncunun kalp atışı; eşleşme olmuşsa onu da döndürür.
+  Future<MatchmakingTouch> touchMatchmaking();
+
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue();
   Stream<Map<String, dynamic>> subscribeRoomBroadcast(String roomId);
   Future<void> sendRoomBroadcast(String roomId, Map<String, dynamic> payload);

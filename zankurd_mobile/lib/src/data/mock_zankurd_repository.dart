@@ -1855,6 +1855,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<MatchmakingTouch> touchMatchmaking() async =>
+      const MatchmakingTouch.none();
+
+  @override
   Stream<Map<String, dynamic>?> subscribeMatchmakingQueue() {
     return const Stream.empty();
   }
