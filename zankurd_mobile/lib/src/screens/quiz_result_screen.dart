@@ -1323,6 +1323,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           ).where((s) => s.player.id == widget.resultOwnerUserId).firstOrNull
         : null;
     final crowdRank = crowdStanding?.player.rank ?? crowdStanding?.rank;
+    // Herkes birinciyse (ör. hepsi 0 puan) "Kazandın!" yanlış olur; simülatör
+    // denemesinde 0/5 bitiren ev sahibine kazanma başlığı ve kutlama çıkıyordu.
+    final crowdActive = room.isCrowd
+        ? crowdStandings(room.players).where((s) => !s.player.left).toList()
+        : const [];
+    final crowdAllTied =
+        room.isCrowd &&
+        crowdActive.length > 1 &&
+        crowdActive.every((s) => (s.player.rank ?? s.rank) == 1);
+    final crowdWin = crowdRank == 1 && !crowdAllTied && score > 0;
     final is1v1 = !room.isCrowd && opponents.length == 1;
     bool isWinner = false;
     bool isDraw = false;
@@ -1343,7 +1353,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final duelOutcome = room.isCrowd
         ? (crowdRank == null
               ? null
-              : crowdRank == 1
+              : crowdAllTied
+              ? _DuelOutcome.draw
+              : crowdWin
               ? _DuelOutcome.win
               : crowdRank <= 3
               ? _DuelOutcome.podium
@@ -1364,7 +1376,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
               : isDraw
               ? context.t(K.draw)
               : context.t(K.youLost))
-        : crowdRank == 1
+        : crowdAllTied
+        ? context.t(K.draw)
+        : crowdWin
         ? context.t(K.youWon)
         : context.t(K.raceFinished);
 
@@ -1382,7 +1396,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ? 2
         : 1;
     final celebrate = room.isCrowd
-        ? crowdRank == 1
+        ? crowdWin
         : is1v1
         ? isWinner
         : starsEarned == 3;

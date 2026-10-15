@@ -900,6 +900,24 @@ void main() {
       expect(find.text('Berabere!'), findsNothing);
     });
 
+    // Simülatör denemesi (2026-10-16): herkes 0 puanla berabere bitince ev
+    // sahibi "Kazandın!" görüyordu. Tam beraberlik beraberliktir.
+    testWidgets('herkes birinciyse "Kazandın" değil "Berabere" yazar', (
+      tester,
+    ) async {
+      await mountResult(
+        tester,
+        players: [
+          _p('me', 'Ez', score: 0, rank: 1),
+          _p('a', 'Rojda', score: 0, rank: 1),
+          _p('b', 'Azad', score: 0, rank: 1),
+        ],
+      );
+
+      expect(find.text('Kazandın!'), findsNothing);
+      expect(find.text('Berabere!'), findsOneWidget);
+    });
+
     testWidgets('birinci olmayan oyuncu "Kazandın" görmez, sırasını okur', (
       tester,
     ) async {
