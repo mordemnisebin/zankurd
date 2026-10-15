@@ -10,6 +10,9 @@ import '../utils/error_reporter.dart';
 import '../theme/app_icons.dart';
 import 'sahne/sahne.dart';
 
+/// Bir tekrar oturumunun en çok soru sayısı.
+const int kReviewSessionCap = 12;
+
 /// "Bugünkü Tekrarlar" kartı — SM-2 aralıklı tekrar sisteminin ürün yüzü.
 ///
 /// Yalnızca [MistakeStore.readyIds] içindeki (tekrar zamanı gelmiş) soruları
@@ -81,16 +84,28 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   ///
   /// Artık ikisi de aynı listeden besleniyor: sayı neyi vaat ediyorsa
   /// dokunuş onu açar.
-  List<QuizQuestion> _launchable(Set<String> readyIds) => widget
-      .repository
-      .questions
-      .where((q) => readyIds.contains(q.id))
-      .toList();
+  ///
+  /// ## Kusur (2026-10-15)
+  ///
+  /// Kaynak `repository.questions` idi; ana ekran ise `playableQuestions`
+  /// ile sayıyordu. Karantinadaki bir soru kartta sayılmasa da oturuma
+  /// girebiliyordu; ayrıca hazır ne kadar soru varsa hepsi tek oturumda
+  /// açılıyordu (birikmiş yüzlerce tekrar bir "bugünkü" oturum olmuyordu).
+  ///
+  /// Kural: yalnız `playableQuestions`, en çok gecikenden başlayıp
+  /// [kReviewSessionCap] soru.
+  List<QuizQuestion> _launchable(List<String> readyIdsByOverdue) {
+    final byId = {for (final q in widget.repository.playableQuestions) q.id: q};
+    return [
+      for (final id in readyIdsByOverdue)
+        if (byId[id] != null) byId[id]!,
+    ].take(kReviewSessionCap).toList();
+  }
 
   Future<void> _refresh() async {
     try {
       final store = await MistakeStore.load();
-      final launchable = _launchable(store.readyIds).length;
+      final launchable = _launchable(store.readyIdsMostOverdueFirst).length;
       if (mounted) {
         setState(() {
           _readyCount = launchable;
@@ -105,7 +120,7 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
 
   Future<void> _startReview() async {
     final store = await MistakeStore.load();
-    final questions = _launchable(store.readyIds);
+    final questions = _launchable(store.readyIdsMostOverdueFirst);
     if (questions.isEmpty) return;
 
     final onStart = widget.onStartReview;

@@ -48,7 +48,8 @@ void main() {
       'zankurd.mistakeQuestionIds': [
         'offline_0005',
         'offline_0010',
-        'offline_0014',
+        // 0014 oynanabilir değil; kart onu artık saymaz (2026-10-15).
+        'offline_0015',
       ],
     });
     await pump(tester);

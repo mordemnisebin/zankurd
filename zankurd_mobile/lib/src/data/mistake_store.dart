@@ -142,6 +142,19 @@ class MistakeStore {
   double? easeFactorForTest(String id) =>
       (_metadata[id]?['easeFactor'] as num?)?.toDouble();
 
+  /// Tekrar zamanı gelmiş kimlikler, en çok gecikenden başlayarak.
+  /// Üst verisi olmayan eski kayıtlar en eski sayılır (hemen tekrar).
+  List<String> get readyIdsMostOverdueFirst {
+    final ready = _ids.where(isReadyForReview).toList();
+    int due(String id) => (_metadata[id]?['nextReview'] as int?) ?? 0;
+    final order = {for (var i = 0; i < ready.length; i++) ready[i]: i};
+    ready.sort((a, b) {
+      final byDue = due(a).compareTo(due(b));
+      return byDue != 0 ? byDue : order[a]!.compareTo(order[b]!);
+    });
+    return ready;
+  }
+
   int get readyCount => _ids.where((id) => isReadyForReview(id)).length;
   Set<String> get readyIds => _ids.where((id) => isReadyForReview(id)).toSet();
 
