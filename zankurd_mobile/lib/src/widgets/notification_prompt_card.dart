@@ -29,6 +29,7 @@ class NotificationPromptCard extends StatelessWidget {
     final t = SahneTokens.of(context);
     return SahneSurfaceCard(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(

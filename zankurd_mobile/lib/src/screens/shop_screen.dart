@@ -441,6 +441,9 @@ class _ShopScreenState extends State<ShopScreen> {
         final t = SahneTokens.of(ctx);
         final short = _coinBalance < item.cost;
         return AlertDialog(
+          // Dar telefonda büyük yazıyla eksik-bakiye notu pencereyi 32 px
+          // taşırıyordu; kaydırılabilir pencerede düğmeler hep görünür.
+          scrollable: true,
           title: Row(
             children: [
               _preview(item, size: 44),

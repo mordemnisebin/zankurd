@@ -165,6 +165,19 @@ void _applyViewport(WidgetTester tester, Size size, {double dpr = 3.0}) {
   }
 }
 
+// Dar ekranda (320) ve büyük yazıda düğme ekranın altında kalır; görünür
+// kılmadan basılan dokunuş boşa düşer ve kare yanlış ekranı basar.
+Future<void> _tapShown(WidgetTester tester, Finder finder) async {
+  await tester.scrollUntilVisible(
+    finder,
+    200,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.ensureVisible(finder);
+  await tester.pump();
+  await tester.tap(finder);
+}
+
 Future<void> _shoot(WidgetTester tester, String name) async {
   // Yakalama VE dosya yazımı `runAsync` içinde kalmalı: test bağlayıcısının
   // sahte zaman dilimi içinde gerçek bir I/O Future'ı asla tamamlanmaz ve
@@ -1065,7 +1078,7 @@ void main() {
   }, tags: ['preview']);
 
   // Bağlamsal bildirim izni kartı: bağımsız kart görseli.
-  Widget notifCard() => const Padding(
+  Widget notifCard() => const SingleChildScrollView(
     padding: EdgeInsets.all(16),
     child: NotificationPromptCard(onEnable: _noop, onLater: _noop),
   );
@@ -1641,7 +1654,7 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).first,
     );
-    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     await _shoot(t, '90_custom_room_sheet');
@@ -1656,7 +1669,7 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).first,
     );
-    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     await _shoot(t, '91_custom_room_sheet_dark');
@@ -1671,7 +1684,7 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).first,
     );
-    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     await _shoot(t, '92_custom_room_sheet_ku');
@@ -1779,13 +1792,10 @@ void main() {
 
   // ── Arkadaşa meydan okuma (2026-10-13) ───────────────────────────────
   Future<void> openChallengeSheet(WidgetTester t) async {
-    final row = find.byKey(const ValueKey('play-hub-async-duel-challenge'));
-    await t.scrollUntilVisible(
-      row,
-      200,
-      scrollable: find.byType(Scrollable).first,
+    await _tapShown(
+      t,
+      find.byKey(const ValueKey('play-hub-async-duel-challenge')),
     );
-    await t.tap(row);
     await t.pump();
     await t.pump(const Duration(milliseconds: 600));
     expect(find.byKey(const ValueKey('challenge-sheet')), findsOneWidget);
@@ -2070,7 +2080,7 @@ void main() {
 
   testWidgets('109 oda kurma — ücrete yetmiyor', (t) async {
     await _pump(t, PlayHubScreen(repository: _BalanceTourRepository(10)));
-    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     final fee = find.byKey(const ValueKey('custom-room-fee-50'));
@@ -2089,7 +2099,7 @@ void main() {
       dark: true,
       ku: true,
     );
-    await t.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     final fee = find.byKey(const ValueKey('custom-room-fee-50'));
