@@ -54,6 +54,9 @@ extension _QuizScreenUI on _QuizScreenState {
                   if (widget.is1v1) ...[
                     _buildDuelHeader(),
                     const SizedBox(height: SahneSpace.x4),
+                  ] else if (_isCrowd) ...[
+                    _buildCrowdHeader(),
+                    const SizedBox(height: SahneSpace.x4),
                   ],
                   _buildQuestionEyebrow(context),
                   const SizedBox(height: SahneSpace.x2),
@@ -158,6 +161,9 @@ extension _QuizScreenUI on _QuizScreenState {
                           if (widget.is1v1) ...[
                             _buildDuelHeader(),
                             const SizedBox(height: SahneSpace.x3),
+                          ] else if (_isCrowd) ...[
+                            _buildCrowdHeader(),
+                            const SizedBox(height: SahneSpace.x3),
                           ],
                           _buildDock(context),
                           if (widget.is1v1) ...[
@@ -184,7 +190,7 @@ extension _QuizScreenUI on _QuizScreenState {
     if (selectedAnswer == 'TIMEOUT' && !_suspense)
       QuizTimeoutNotice(isKu: _isKu, correctAnswer: question.correctAnswer),
     if (_isMultiplayer && answered && _mpPhase == _MultiplayerPhase.waiting)
-      _MultiplayerWaitingOverlay(isKu: _isKu),
+      _MultiplayerWaitingOverlay(isKu: _isKu, crowd: _isCrowd),
     if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
       _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
   ];
@@ -226,7 +232,7 @@ extension _QuizScreenUI on _QuizScreenState {
   /// Öğrenmede skor yok (rekabet baskısı gösterilmez); düelloda iki skor
   /// gövdedeki düello kartında yan yana durur.
   Widget? _buildScoreChip(BuildContext context) {
-    if (_isLearningExperience || widget.is1v1) return null;
+    if (_isLearningExperience || widget.is1v1 || _isCrowd) return null;
     // Tur başında "★ 0" bilgi vermez, yalnız baskı kurar; ilk puanda belirir.
     if (score <= 0) return null;
     return SahneStatChip(
@@ -312,6 +318,31 @@ extension _QuizScreenUI on _QuizScreenState {
       player: player,
       opponent: opponent,
       progress: '${index + 1}/${widget.questions.length}',
+    );
+  }
+
+  /// Kalabalık oda kartı: kendi puanın, sıran ve ilk üç.
+  ///
+  /// Sıra canlı hesaplanır (`crowdStandings`): sunucu yalnız sonuç yükünde
+  /// verir, oyun sürerken `room_players` skorları her açıklamada güncellenir.
+  Widget _buildCrowdHeader() {
+    final standings = crowdStandings(livePlayers);
+    final player = livePlayers.firstWhere(
+      _isMe,
+      orElse: () => Player(
+        id: _myId,
+        name: _myName,
+        score: score,
+        state: '',
+        streak: streak,
+      ),
+    );
+    final mine = standings.where((s) => _isMe(s.player)).firstOrNull;
+    return _CrowdScoreHeader(
+      player: player,
+      rank: mine?.rank,
+      total: standings.length,
+      top: standings.take(3).toList(growable: false),
     );
   }
 
@@ -991,7 +1022,7 @@ extension _QuizScreenUI on _QuizScreenState {
       lexiconEnabled: _lexiconTapAllowed,
       forceHeadline: headline,
       // Düello kartı ~120 pt yer tutar: uzun soru bir kademe erken küçülür.
-      titleLineBudget: widget.is1v1
+      titleLineBudget: (widget.is1v1 || _isCrowd)
           ? QuizQuestionPrompt.maxTitleLines - 1
           : QuizQuestionPrompt.maxTitleLines,
       question: question,

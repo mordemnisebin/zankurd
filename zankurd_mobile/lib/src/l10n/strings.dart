@@ -1154,6 +1154,12 @@ class Tr {
       'ku': 'Heke tu ji pêşbirkê derkevî, tu yê wek têkçûyî bêyî hesibandin.',
       'tr': 'Maçtan ayrılırsan hükmen yenilmiş sayılırsın.',
     },
+    K.leaveCrowdMatchBody: {
+      'ku':
+          'Heke tu derkevî, pêşbirk bi lîstikvanên din berdewam dike; tu nikarî vegerî û nakevî rêzkirinê.',
+      'tr':
+          'Ayrılırsan yarış diğer oyuncularla devam eder; geri dönemezsin ve sıralamaya girmezsin.',
+    },
     K.matchForfeitedTitle: {
       'ku': 'Pêşbirk bi derketinê qediya',
       'tr': 'Maç hükmen sona erdi',
@@ -3513,6 +3519,7 @@ class K {
   static const leaveLessonBody = 'quiz.leaveLesson.body';
   static const leaveRaceBody = 'quiz.leaveRace.body';
   static const leaveOnlineMatchBody = 'quiz.leaveOnlineMatch.body';
+  static const leaveCrowdMatchBody = 'quiz.leaveCrowdMatch.body';
   static const matchForfeitedTitle = 'quiz.matchForfeited.title';
   static const opponentForfeitedMatch = 'quiz.matchForfeited.opponent';
   static const youForfeitedMatch = 'quiz.matchForfeited.you';
