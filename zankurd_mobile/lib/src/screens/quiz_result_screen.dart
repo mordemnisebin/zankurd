@@ -2096,7 +2096,12 @@ class _CrowdStandings extends StatelessWidget {
                     ),
                   ],
                 ),
-                title: context.playerDisplayName(player.name),
+                // Odadan ayrılan ben isem (sonuç ana ekranda ya da sonradan
+                // açıldı) satır "Sen" der: sıralamaya girmedim ama kendi
+                // puanımı ve son durumu görürüm.
+                title: player.id == ownId
+                    ? context.t(K.you)
+                    : context.playerDisplayName(player.name),
                 subtitle: context.t(K.crowdLeftBadge),
                 trailing: SahneRowValue.meta(groupThousands(player.score)),
               ),
