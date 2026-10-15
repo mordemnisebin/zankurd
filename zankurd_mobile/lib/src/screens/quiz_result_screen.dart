@@ -369,12 +369,38 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     unawaited(_grantNotifPermission());
   }
 
+  // iOS izni bir kez reddedilince istemi bir daha göstermez; düğme sessiz
+  // kalırdı ve politika izni "verildi" sayıp kartı bir daha göstermezdi.
+  // Artık izin gerçekten verildiyse kaydedilir; verilmediyse Ayarlar'daki
+  // açıklama penceresi gösterilir ve bu sorma hakkından düşer.
   Future<void> _grantNotifPermission() async {
     final policy = _notifPolicy;
     if (policy == null) return;
-    await policy.recordGranted();
-    final ns = NotificationService.instance;
-    if (ns != null) await ns.setEnabled(true);
+    try {
+      final ns = await NotificationService.load();
+      await ns.setEnabled(true);
+      if (await ns.hasSystemPermission()) {
+        await policy.recordGranted();
+        return;
+      }
+      await policy.recordLater();
+      if (!mounted) return;
+      await showDialog<void>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: Text(context.t(K.notifPermDenied)),
+          content: Text(context.t(K.notifPermDeniedBody)),
+          actions: [
+            FilledButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: Text(context.t(K.ok)),
+            ),
+          ],
+        ),
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'notif prompt enable');
+    }
   }
 
   void _onNotifLater() {
