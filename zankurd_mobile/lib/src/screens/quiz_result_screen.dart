@@ -925,9 +925,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   }
 
   Future<void> _recordProgress(_StreakOutcome streakOutcome) async {
-    // Dil, await'lerden önce okunur: bildirim metni async boşluğun
-    // ötesinde `context`e dokunmadan seçilsin.
-    final isKuNow = context.isKu;
     // Seri kararı bu adımdan ÖNCE, kritik bölümün dışında verildi ve
     // uygulandı. Buradan sonrası yalnız otomatik yerel yazımlardır.
     final streak = streakOutcome.streak;
@@ -1046,14 +1043,6 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         : ((correctCount / totalQuestions) * 100).round();
     final reviewService = await ReviewService.load();
     await reviewService.recordQuizCompletion(accuracyPercent: accuracyPercent);
-
-    // Bugün oynandı: akşamki "hiç oynamadın" uyarısı susar, yarınki kurulur.
-    // Uyarı `DateTimeComponents.time` ile her gün tekrarladığı ve gövdesi
-    // koşulsuz olduğu için, iptal edilmezse oynanan günlerde de yalan
-    // söylerdi (2026-07-31 denetimi).
-    await NotificationService.instance?.refreshStreakWarningAfterPlay(
-      isKu: isKuNow,
-    );
 
     AnalyticsService.instance.logQuizComplete(
       category: room.category,

@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'checked_preferences_removal.dart';
 import 'local_progress_scope.dart';
 
+import '../services/notification_service.dart';
 import '../utils/error_reporter.dart';
 
 /// Günlük oyun serisini (streak) yerelde izler.
@@ -124,7 +125,23 @@ class StreakStore {
     if (_current > _best) _best = _current;
     _lastDay = _dayKey(today);
     await _persist();
+    await NotificationService.noteStreakActivity();
     return _current;
+  }
+
+  /// Quiz sonucu dışındaki oyun anları (ders bitirme, sırayla düello turu)
+  /// için seriyi işler; hata oyunu bozmaz, yalnız raporlanır.
+  ///
+  /// Seri eskiden yalnız quiz sonuç ekranından yazılıyordu: her gün yalnız
+  /// ders bitiren ya da düello oynayan oyuncunun serisi sıfırlanıyor, akşam
+  /// "Bugün hiç oynamadın" uyarısı da yanlış yere gidiyordu (2026-10-16).
+  static Future<void> recordActivity() async {
+    try {
+      final store = await StreakStore.load();
+      await store.recordPlay();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak_record_activity');
+    }
   }
 
   /// Tamamlanan bir oyunu işler ve güncel seriyi döner.
@@ -134,6 +151,10 @@ class StreakStore {
     final lastDay = _lastDay;
 
     if (lastDay == todayKey) {
+      // Bugün zaten işlenmişti; uyarı o zaman susturuldu. Yine de ucuzdur ve
+      // uyarının sonradan (bildirim açılınca) bugüne kurulmuş olmasına karşı
+      // güvenceyi korur.
+      await NotificationService.noteStreakActivity();
       return _current;
     }
     if (lastDay != null && _isYesterday(lastDay, today)) {
@@ -144,6 +165,7 @@ class StreakStore {
     if (_current > _best) _best = _current;
     _lastDay = todayKey;
     await _persist();
+    await NotificationService.noteStreakActivity();
     return _current;
   }
 

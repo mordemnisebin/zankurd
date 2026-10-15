@@ -10,6 +10,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../l10n/strings.dart';
 import '../utils/error_reporter.dart';
+import 'local_notification_tap.dart';
 
 abstract class TimeZoneResolver {
   Future<String?> resolve();
@@ -21,6 +22,83 @@ class DeviceTimeZoneResolver implements TimeZoneResolver {
   @override
   Future<String?> resolve() async =>
       (await FlutterTimezone.getLocalTimezone()).identifier;
+}
+
+/// Yerel bildirim eklentisine tek ince geçit.
+///
+/// Zamanlama, iptal ve dokunuş kayıtları buradan geçer; böylece günlük
+/// hatırlatıcı / seri uyarısı mantığı (dil, payload, iptal-yeniden kurma)
+/// eklenti olmadan birim testte doğrulanabilir.
+abstract class LocalNotificationGateway {
+  /// Eklentiyi başlatır; bildirime dokunulunca [onTap] payload ile çağrılır.
+  Future<void> initialize(
+    InitializationSettings settings,
+    void Function(String? payload) onTap,
+  );
+
+  /// Uygulama bir bildirime dokunularak (soğuk) açıldıysa o bildirimin
+  /// payload'u, değilse `null`.
+  Future<String?> launchPayload();
+
+  Future<void> zonedSchedule({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime at,
+    required NotificationDetails details,
+    String? payload,
+  });
+
+  Future<void> cancel(int id);
+
+  Future<void> cancelAll();
+}
+
+class PluginLocalNotificationGateway implements LocalNotificationGateway {
+  const PluginLocalNotificationGateway(this._plugin);
+
+  final FlutterLocalNotificationsPlugin _plugin;
+
+  @override
+  Future<void> initialize(
+    InitializationSettings settings,
+    void Function(String? payload) onTap,
+  ) => _plugin.initialize(
+    settings: settings,
+    onDidReceiveNotificationResponse: (response) => onTap(response.payload),
+  );
+
+  @override
+  Future<String?> launchPayload() async {
+    final details = await _plugin.getNotificationAppLaunchDetails();
+    if (details == null || !details.didNotificationLaunchApp) return null;
+    return details.notificationResponse?.payload;
+  }
+
+  @override
+  Future<void> zonedSchedule({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime at,
+    required NotificationDetails details,
+    String? payload,
+  }) => _plugin.zonedSchedule(
+    id: id,
+    title: title,
+    body: body,
+    scheduledDate: tz.TZDateTime.from(at, tz.local),
+    notificationDetails: details,
+    androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+    matchDateTimeComponents: DateTimeComponents.time,
+    payload: payload,
+  );
+
+  @override
+  Future<void> cancel(int id) => _plugin.cancel(id: id);
+
+  @override
+  Future<void> cancelAll() => _plugin.cancelAll();
 }
 
 /// Bildirim ayarlarını yöneten servis.
@@ -45,12 +123,14 @@ class NotificationService {
     this._hour,
     this._minute,
     this._timeZoneResolver,
+    this._gateway,
   );
 
   static const _enabledKey = 'zankurd.notifications.enabled';
   static const _hourKey = 'zankurd.notifications.hour';
   static const _minuteKey = 'zankurd.notifications.minute';
   static const _nextFireKey = 'zankurd.notifications.nextFireAt';
+  static const _streakNextFireKey = 'zankurd.notifications.streakNextFireAt';
 
   static NotificationService? _instance;
   static Future<NotificationService>? _loading;
@@ -65,13 +145,17 @@ class NotificationService {
 
   static Future<NotificationService> load({
     TimeZoneResolver timeZoneResolver = const DeviceTimeZoneResolver(),
+    LocalNotificationGateway? gateway,
   }) async {
     final cached = _instance;
     if (cached != null) return cached;
     final inFlight = _loading;
     if (inFlight != null) return inFlight;
 
-    final loading = _loadFresh(timeZoneResolver);
+    final loading = _loadFresh(
+      timeZoneResolver,
+      gateway ?? PluginLocalNotificationGateway(_localNotificationsPlugin),
+    );
     _loading = loading;
     try {
       final service = await loading;
@@ -83,6 +167,7 @@ class NotificationService {
 
   static Future<NotificationService> _loadFresh(
     TimeZoneResolver timeZoneResolver,
+    LocalNotificationGateway gateway,
   ) async {
     SharedPreferences? preferences;
     try {
@@ -97,6 +182,7 @@ class NotificationService {
       preferences?.getInt(_hourKey) ?? 19,
       preferences?.getInt(_minuteKey) ?? 0,
       timeZoneResolver,
+      gateway,
     );
     await service._initNotifications();
     if (service.enabled) {
@@ -116,6 +202,16 @@ class NotificationService {
   int _hour;
   int _minute;
   final TimeZoneResolver _timeZoneResolver;
+  final LocalNotificationGateway _gateway;
+
+  /// Arayüz dili değişince [applyLanguage] ile bildirilen dil. Boşken kayıtlı
+  /// dil okunur. Kayıt, dil sağlayıcısının eşzamansız yazımına bağlı olmasın
+  /// diye bellekteki değer önceliklidir.
+  bool? _languageIsKu;
+
+  bool get _isKu =>
+      _languageIsKu ??
+      (_preferences?.getString('zankurd.language') ?? 'ku') != 'tr';
 
   bool get enabled => _enabled;
   int get hour => _hour;
@@ -178,9 +274,17 @@ class NotificationService {
             ),
           );
 
-      await _localNotificationsPlugin.initialize(
-        settings: initializationSettings,
+      await _gateway.initialize(
+        initializationSettings,
+        LocalNotificationTapRouter.offer,
       );
+      // Bildirime dokunularak soğuk açılan uygulama: dokunuş
+      // `onDidReceiveNotificationResponse`a ulaşmaz, burada okunur.
+      try {
+        LocalNotificationTapRouter.offer(await _gateway.launchPayload());
+      } catch (error, stack) {
+        ErrorReporter.record(error, stack, reason: 'notification_launch');
+      }
       await _localNotificationsPlugin
           .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin
@@ -272,7 +376,7 @@ class NotificationService {
 
     if (kIsWeb) return;
     try {
-      await _localNotificationsPlugin.cancel(id: 0);
+      await _gateway.cancel(0);
 
       const AndroidNotificationDetails androidDetails =
           AndroidNotificationDetails(
@@ -291,22 +395,18 @@ class NotificationService {
         iOS: iosDetails,
       );
 
-      final scheduledTime = tz.TZDateTime.from(next, tz.local);
-      // Bildirim, zamanlama anında kayıtlı uygulama diliyle tek dilde kurulur
-      // (anahtar LanguageProvider._storageKey ile aynı olmalı).
-      final isKu =
-          (_preferences?.getString('zankurd.language') ?? 'ku') != 'tr';
-      await _localNotificationsPlugin.zonedSchedule(
+      // Bildirim, zamanlama anındaki uygulama diliyle tek dilde kurulur;
+      // dil değişince [applyLanguage] yeniden kurar.
+      await _gateway.zonedSchedule(
         id: 0,
         title: 'ZanKurd',
         // Altın yol öğrenmedir; yarış/etkinlik metni kullanıcıyı yanlış
         // sekmeye çağırırdı. Gövde [K.huhuGununSorulukEtkinligi] ile
         // ana sayfadaki günün dersine hizalıdır.
-        body: Tr.forKu(K.huhuGununSorulukEtkinligi, isKu),
-        scheduledDate: scheduledTime,
-        notificationDetails: details,
-        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-        matchDateTimeComponents: DateTimeComponents.time,
+        body: Tr.forKu(K.huhuGununSorulukEtkinligi, _isKu),
+        at: next,
+        details: details,
+        payload: LocalNotificationPayload.dailyReminder,
       );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService schedule');
@@ -315,9 +415,10 @@ class NotificationService {
 
   Future<void> _cancelAll() async {
     await _preferences?.remove(_nextFireKey);
+    await _preferences?.remove(_streakNextFireKey);
     if (kIsWeb) return;
     try {
-      await _localNotificationsPlugin.cancelAll();
+      await _gateway.cancelAll();
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService cancel');
     }
@@ -381,27 +482,35 @@ class NotificationService {
   Future<void> cancelStreakWarning() async {
     if (kIsWeb) return;
     try {
-      await _localNotificationsPlugin.cancel(id: _streakWarningId);
+      await _gateway.cancel(_streakWarningId);
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService streak cancel');
     }
   }
 
-  /// Tur bitiminde çağrılır: bugünün uyarısı susar, yarınki kurulur.
-  Future<void> refreshStreakWarningAfterPlay({bool isKu = true}) async {
+  /// Seri etkinliği kaydedilince çağrılır: bugünün uyarısı susar, yarınki
+  /// kurulur. Seriyi yazan HER yol bunu çağırır ([noteStreakActivity]).
+  Future<void> refreshStreakWarningAfterPlay() async {
     if (kIsWeb || !_enabled) return;
     await cancelStreakWarning();
-    await scheduleStreakWarning(isKu: isKu, startTomorrow: true);
+    await scheduleStreakWarning(startTomorrow: true);
+  }
+
+  /// Seriyi kaydeden her yolun çağıracağı TEK giriş. Servis kurulu değilse
+  /// (web, test, yapılandırmasız derleme) sessizce hiçbir şey yapmaz.
+  static Future<void> noteStreakActivity() async {
+    try {
+      await _instance?.refreshStreakWarningAfterPlay();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak_warning_refresh');
+    }
   }
 
   static const int _streakWarningId = 2;
 
   /// [startTomorrow] true ise ilk çalma bugüne değil yarına kurulur —
   /// oyuncu bugün zaten oynadıysa akşam uyarı almamalı.
-  Future<void> scheduleStreakWarning({
-    bool isKu = true,
-    bool startTomorrow = false,
-  }) async {
+  Future<void> scheduleStreakWarning({bool startTomorrow = false}) async {
     if (kIsWeb || !_enabled) return;
     try {
       // Schedule for 21:00 (9 PM) - a gentle reminder
@@ -410,34 +519,63 @@ class NotificationService {
       if (startTomorrow || !scheduledTime.isAfter(now)) {
         scheduledTime = scheduledTime.add(const Duration(days: 1));
       }
-
-      // Günlük seri zincîr'dir; `Rêz` tur içi doğru cevap dizisidir.
-      // Kanal adı Android ayarlarında görünür; gövde zincîr derken
-      // kanal "Bîranîna Rêzê" deyince oyuncu iki kavramı karıştırır.
-      const androidDetails = AndroidNotificationDetails(
-        'zankurd_streak_warning',
-        'ZanKurd Bîranîna Zincîrê',
-        channelDescription: 'Bîranîna parastina zincîra rojane',
-        importance: Importance.defaultImportance,
-        priority: Priority.defaultPriority,
-      );
-      const details = NotificationDetails(
-        android: androidDetails,
-        iOS: DarwinNotificationDetails(),
-      );
-
-      final tzTime = tz.TZDateTime.from(scheduledTime, tz.local);
-      await _localNotificationsPlugin.zonedSchedule(
-        id: _streakWarningId,
-        title: Tr.forKu(K.zanaUzgun, isKu),
-        body: Tr.forKu(K.huhuBugunHicOynamadin, isKu),
-        scheduledDate: tzTime,
-        notificationDetails: details,
-        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-        matchDateTimeComponents: DateTimeComponents.time,
-      );
+      await _scheduleStreakWarningAt(scheduledTime);
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService streak');
+    }
+  }
+
+  Future<void> _scheduleStreakWarningAt(DateTime scheduledTime) async {
+    // Günlük seri zincîr'dir; `Rêz` tur içi doğru cevap dizisidir.
+    // Kanal adı Android ayarlarında görünür; gövde zincîr derken
+    // kanal "Bîranîna Rêzê" deyince oyuncu iki kavramı karıştırır.
+    const androidDetails = AndroidNotificationDetails(
+      'zankurd_streak_warning',
+      'ZanKurd Bîranîna Zincîrê',
+      channelDescription: 'Bîranîna parastina zincîra rojane',
+      importance: Importance.defaultImportance,
+      priority: Priority.defaultPriority,
+    );
+    const details = NotificationDetails(
+      android: androidDetails,
+      iOS: DarwinNotificationDetails(),
+    );
+    await _preferences?.setString(
+      _streakNextFireKey,
+      scheduledTime.toIso8601String(),
+    );
+    await _gateway.zonedSchedule(
+      id: _streakWarningId,
+      title: Tr.forKu(K.zanaUzgun, _isKu),
+      body: Tr.forKu(K.huhuBugunHicOynamadin, _isKu),
+      at: scheduledTime,
+      details: details,
+      payload: LocalNotificationPayload.streakWarning,
+    );
+  }
+
+  /// Arayüz dili değişti: zamanlanmış metinler zamanlama anındaki dilde
+  /// donmuştu; yeni dille yeniden kurulur (soğuk açılış beklenmez).
+  ///
+  /// Seri uyarısı yalnız KURULUYSA yeniden kurulur ve zamanını korur (bugün
+  /// oynandıysa yarına kurulu kalır); kurulu değilse yeni uyarı doğmaz.
+  Future<void> applyLanguage({required bool isKu}) async {
+    if (_languageIsKu == isKu) return;
+    _languageIsKu = isKu;
+    if (kIsWeb || !_enabled) return;
+    await _scheduleDaily();
+    final raw = _preferences?.getString(_streakNextFireKey);
+    final armed = raw == null ? null : DateTime.tryParse(raw);
+    if (armed == null) return;
+    try {
+      final now = DateTime.now();
+      var at = armed;
+      while (!at.isAfter(now)) {
+        at = at.add(const Duration(days: 1));
+      }
+      await _scheduleStreakWarningAt(at);
+    } catch (e, s) {
+      ErrorReporter.record(e, s, reason: 'NotificationService streak lang');
     }
   }
 
