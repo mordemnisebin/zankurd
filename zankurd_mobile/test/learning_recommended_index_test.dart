@@ -23,8 +23,15 @@ import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 ///
 /// `learningRecommendedIndex` artık: (a) hiçbir ders tamamlanmamışken
 /// yerleştirmenin önerdiği noktayı GERÇEKTEN kullanır, (b) bir ders
-/// tamamlanır tamamlanmaz doğal ilerlemeye geçer ve onunla birlikte
-/// ilerlemeye devam eder.
+/// tamamlanınca yerleştirme noktasından ileriye doğru ilk açık dersi
+/// önerir, (c) önerilene kadar her ders açıktır (`learningLessonLocked`).
+///
+/// ## Kusur 2 (2026-10-15)
+///
+/// Yerleştirmenin 2'yi önerdiği biri 2. dersi bitirince öneri 0'a dönüyor,
+/// 3 ve sonrası kilitleniyordu; 0 ve 1 önerinin önünde oldukları için
+/// kilitli kalmıştı. Testler yalnız tek tamamlanan ders senaryosuna
+/// bakıyor, "kilit kimde" sorusunu sormuyordu.
 void main() {
   const lessons = [
     Lesson(id: 'l0', slug: 'l0', titleKu: 'Yek', category: 'everyday'),
@@ -49,18 +56,66 @@ void main() {
     },
   );
 
-  test('ilk ders tamamlanınca öneri SIKIŞMAZ, doğal ilerlemeye geçer', () {
-    // Yerleştirme 2'yi önerdi ama kullanıcı 0'ı tamamladı (elle gidip
-    // baştan başladı ya da yerleştirmeden önce zaten oradaydı). Öneri
-    // artık gerçek ilerlemeyi (1) izlemeli — 2'de sıkışıp kalmamalı.
+  test('ders tamamlanınca öneri yerleştirme noktasının gerisine düşmez', () {
+    // 2026-10-15: bu test eskiden 1 bekliyordu ve kusuru kodluyordu —
+    // yerleştirmenin 2'yi önerdiği biri 0'ı bitirince öneri 1'e geri
+    // çekiliyordu. Öneri ileriye doğru aranır: 2'de kalır.
     expect(
       learningRecommendedIndex(
         lessons: lessons,
         completedLessonIds: const {'l0'},
         placementIndex: 2,
       ),
-      1,
+      2,
     );
+  });
+
+  test('önerilen dersten sonra bitirilen ders öneriyi 0\'a döndürmez', () {
+    // Kusurun kalbi: yerleştirme 2'yi önerdi, kullanıcı 2'yi bitirdi.
+    expect(
+      learningRecommendedIndex(
+        lessons: lessons,
+        completedLessonIds: const {'l2'},
+        placementIndex: 2,
+      ),
+      3,
+    );
+  });
+
+  test('yerleştirmeden sonra açık ders kalmadıysa baştaki ilk açığa düşer', () {
+    expect(
+      learningRecommendedIndex(
+        lessons: lessons,
+        completedLessonIds: const {'l2', 'l3'},
+        placementIndex: 2,
+      ),
+      0,
+    );
+  });
+
+  group('kilit', () {
+    test('önerilene kadar (kendisi dahil) her ders açık, sonrası kilitli', () {
+      bool locked(int i, {bool done = false}) =>
+          learningLessonLocked(index: i, completed: done, recommendedIndex: 2);
+      expect(locked(0), isFalse);
+      expect(locked(1), isFalse);
+      expect(locked(2), isFalse);
+      expect(locked(3), isTrue);
+    });
+
+    test('tamamlanan ders önerinin ilerisinde de açık kalır', () {
+      expect(
+        learningLessonLocked(index: 3, completed: true, recommendedIndex: 1),
+        isFalse,
+      );
+    });
+
+    test('hepsi tamamlanınca (-1) hiçbir ders kilitli değildir', () {
+      expect(
+        learningLessonLocked(index: 3, completed: false, recommendedIndex: -1),
+        isFalse,
+      );
+    });
   });
 
   test(
