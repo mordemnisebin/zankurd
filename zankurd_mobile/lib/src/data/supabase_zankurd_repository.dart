@@ -1813,9 +1813,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       try {
         final response = await client.rpc('get_my_coin_balance');
         if (response is num) return response.toInt();
-      } catch (error) {
+      } catch (error, stack) {
         // Göç (2026-10-15_jeton_bakiyesi.sql) henüz uygulanmamış olabilir.
-        if (!_isMissingFunction(error)) rethrow;
+        if (!_isMissingFunction(error)) {
+          _recordError(error, stack, reason: 'get_my_coin_balance failed');
+          Error.throwWithStackTrace(error, stack);
+        }
       }
       // Yedek yol: PostgREST 1000 satırda keser, çok işlemli hesapta eksik
       // toplar.
@@ -2496,11 +2499,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     try {
       final response = await client.rpc('touch_matchmaking');
       return MatchmakingTouch.fromJson(response);
-    } catch (error) {
+    } catch (error, stack) {
       if (isMissingRpcError(error)) {
         _touchMatchmakingSupported = false;
         return const MatchmakingTouch.unknown();
       }
+      _recordError(error, stack, reason: 'touch_matchmaking failed');
       rethrow;
     }
   }

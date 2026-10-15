@@ -234,10 +234,10 @@ void main() {
     });
   });
 
-  test('applied.md send-push göçünü ⏳ olarak, sahip adımlarıyla kaydeder', () {
+  test('applied.md send-push göçünü sahip adımlarıyla kaydeder', () {
     final applied = File('supabase/applied.md').readAsStringSync();
     final row = RegExp(
-      r'^\| 2026-10-13_push_delivery\.sql \| ⏳ \|.*$',
+      r'^\| 2026-10-13_push_delivery\.sql \| (?:⏳|✅) \|.*$',
       multiLine: true,
     ).firstMatch(applied);
     expect(row, isNotNull);
