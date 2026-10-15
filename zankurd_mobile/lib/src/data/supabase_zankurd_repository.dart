@@ -1418,11 +1418,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         params: {'p_room_id': roomId},
       );
       return RoomAnswerProgress.tryParse(response);
-    } catch (error) {
+    } catch (error, stack) {
       if (isMissingRpcError(error)) {
         _answerProgressSupported = false;
         return null;
       }
+      _recordError(error, stack, reason: 'loadRoomAnswerProgress failed');
       rethrow;
     }
   }
