@@ -90,8 +90,6 @@ void main() {
       final a = SahneCategoryTone.cihan.ground.computeLuminance();
       final b = SahneTokens.night.tx.computeLuminance();
       expect((b + 0.05) / (a + 0.05), greaterThanOrEqualTo(4.5));
-      // Ödünç görsel yanlış konuyu anlatır: kendi fotoğrafı yok.
-      expect(CategoryVisuals.ownImagePath('Cîhan'), isNull);
     });
   });
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/config/category_visuals.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
@@ -82,18 +84,26 @@ void main() {
     expect(CategoryVisuals.tone('Tarih'), SahneCategoryTone.dirok);
   });
 
-  // K1: üç üretilmiş-görünüşlü çizim (cat_ziman, cat_siyaset,
-  // cat_paradigma) hiçbir yerde kullanılmaz; o kategoriler çizimsiz karoya
-  // düşer.
-  test('Ziman, Siyaset ve Paradigma kendi çizimini kullanmaz', () {
-    for (final category in ['Ziman', 'Dil', 'Siyaset', 'Paradigma']) {
-      expect(CategoryVisuals.hasOwnImage(category), isFalse, reason: category);
-    }
-    for (final category in ['Çand', 'Dîrok', 'Edebiyat', 'Cografya', 'Muzîk']) {
-      expect(CategoryVisuals.hasOwnImage(category), isTrue, reason: category);
-      expect(CategoryVisuals.ownImagePath(category), isNotNull);
-    }
-    expect(CategoryVisuals.ownImagePath('Ziman'), isNull);
-    expect(CategoryVisuals.ownImagePath('Sînema'), isNull);
+  // Kategori fotoğrafları (K1'de üretilmiş görünüşlüler, sonra Şahnê'nin
+  // silüet karosuyla geri kalanı) ekrandan kalktı ama sekizi pakette
+  // ~580 KB olarak taşınmaya devam etti. Yalnız cat_siyaset bir sorunun
+  // görseli olarak yaşar; yeni bir kategori fotoğrafı ancak bilinçli
+  // kararla geri gelir.
+  test('pakette soru görseli dışında kategori fotoğrafı yok', () {
+    final cats = Directory('assets/question_images')
+        .listSync()
+        .map((f) => f.uri.pathSegments.last)
+        .where((n) => n.startsWith('cat_'))
+        .toList();
+    expect(cats, ['cat_siyaset.webp']);
+
+    final users = Directory('lib')
+        .listSync(recursive: true)
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.dart'))
+        .where((f) => f.readAsStringSync().contains('question_images/cat_'))
+        .map((f) => f.path)
+        .toList();
+    expect(users, ['lib/src/data/curated_question_bank.dart']);
   });
 }

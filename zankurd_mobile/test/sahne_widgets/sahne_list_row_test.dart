@@ -21,7 +21,7 @@ import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import '../support/realistic_device.dart';
 import 'sahne_harness.dart';
 
-const _thumb = AssetImage('assets/question_images/cat_cand.webp');
+const _thumb = AssetImage('assets/question_images/cilubergen_kurdi.webp');
 
 void main() {
   setUpAll(loadAppFonts);

@@ -136,7 +136,7 @@ void main() {
         const SahneStageScaffold(
           onClose: noop,
           closeLabel: 'Bigire',
-          backdrop: AssetImage('assets/question_images/cat_ziman.webp'),
+          backdrop: AssetImage('assets/question_images/cirok.webp'),
           center: SahneTimerDiamond(
             key: Key('timer'),
             secondsLeft: 4,

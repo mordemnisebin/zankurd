@@ -62,14 +62,12 @@ def kategorileri_oku():
 
     Elle kopyalanmış bir liste kaymaya mahkûmdur: 2026-07-30'da Sînema
     açılınca `question_bank_test`in elle yazılmış kategori listesi bankayı
-    "bilinmeyen kategori" diye suçladı. Ölçüt renk tanımıdır — rengi,
-    ikonu ve görseli olmayan bir kategoriye soru yazmak onu kategori
+    "bilinmeyen kategori" diye suçladı. Ölçüt konu işaretidir — silüeti
+    ve ikonu olmayan bir kategoriye soru yazmak onu kategori
     listesinde görünmez yapar, yani soru hiç oynanmaz.
     """
     kaynak = VISUALS.read_text(encoding='utf-8')
-    blok = re.search(r'_gradients\s*=\s*\{(.*?)\n  \};', kaynak, re.S)
-    if not blok:
-        blok = re.search(r'_imagePaths\s*=\s*\{(.*?)\n  \};', kaynak, re.S)
+    blok = re.search(r'_marks\s*=\s*\{(.*?)\n  \};', kaynak, re.S)
     if not blok:
         raise SystemExit(f'{VISUALS} içinde kategori tablosu bulunamadı')
     return [m for m in re.findall(r"^\s*'([^']+)':", blok.group(1), re.M)]

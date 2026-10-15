@@ -7,20 +7,22 @@ import 'package:zankurd_mobile/src/l10n/lang.dart';
 
 void main() {
   test('all supported categories retain explicit visual mappings', () {
-    const expectedImagePaths = {
-      'Ziman': 'assets/question_images/cat_ziman.webp',
-      'Çand': 'assets/question_images/cat_cand.webp',
-      'Dîrok': 'assets/question_images/cat_dirok.webp',
-      'Edebiyat': 'assets/question_images/cat_edebiyat.webp',
-      'Cografya': 'assets/question_images/cat_cografya.webp',
-      'Muzîk': 'assets/question_images/cat_muzik.webp',
-      'Siyaset': 'assets/question_images/cat_siyaset.webp',
-      'Paradigma': 'assets/question_images/cat_paradigma.webp',
-      'Teknolojî': 'assets/question_images/cat_paradigma.webp',
-    };
-    for (final category in expectedImagePaths.keys) {
+    const categories = [
+      'Ziman',
+      'Çand',
+      'Dîrok',
+      'Edebiyat',
+      'Cografya',
+      'Muzîk',
+      'Siyaset',
+      'Paradigma',
+      'Teknolojî',
+      'Sînema',
+      'Cîhan',
+    ];
+    for (final category in categories) {
       expect(CategoryVisuals.icon(category), isNot(Icons.category_outlined));
-      expect(CategoryVisuals.imagePath(category), expectedImagePaths[category]);
+      expect(CategoryVisuals.mark(category), isNotNull, reason: category);
     }
   });
 
