@@ -2567,6 +2567,303 @@ void main() {
     await t.pumpAndSettle();
     await _shoot(t, '232_lexicon_search_forms');
   }, tags: ['preview']);
+
+  // ── Kalabalık oda (2026-10-16): kur sayfası, lobi, oyun içi, sonuç ──────
+  //
+  // Hepsi aynı hikâyeyi anlatır: 16 kişilik "Hevalên Zanînê" odası, oyuncu
+  // üçüncü sırada. Lobi 7 kişi (kapasite 16), oyun başlığı 12 aktif oyuncu +
+  // 1 ayrılan, sonuç aynı 12 oyuncu (eşit birincilik, ayrılan sonda).
+  testWidgets('255 oda kurma — oyuncu sayısı', (t) async {
+    await _pump(t, PlayHubScreen(repository: _BalanceTourRepository(500)));
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    final chip = find.byKey(const ValueKey('custom-room-capacity-16'));
+    await t.ensureVisible(chip);
+    await t.tap(chip);
+    await t.pump(const Duration(milliseconds: 400));
+    await _shoot(t, '255_custom_room_capacity');
+  }, tags: ['preview']);
+
+  testWidgets('256 oda kurma — oyuncu sayısı (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      PlayHubScreen(repository: _BalanceTourRepository(500)),
+      dark: true,
+      ku: true,
+    );
+    await _tapShown(t, find.byKey(const ValueKey('play-hub-create-room')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    final chip = find.byKey(const ValueKey('custom-room-capacity-16'));
+    await t.ensureVisible(chip);
+    await t.tap(chip);
+    await t.pump(const Duration(milliseconds: 400));
+    await _shoot(t, '256_custom_room_capacity_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('257 kalabalık lobi — ev sahibi', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _CrowdLobbyTourRepository(host: true),
+        initialRoom: _CrowdLobbyTourRepository.room(host: true),
+      ),
+      size: Size(_size.width, 1500),
+    );
+    await _shoot(t, '257_crowd_lobby_host');
+  }, tags: ['preview']);
+
+  testWidgets('258 kalabalık lobi — ev sahibi (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _CrowdLobbyTourRepository(host: true),
+        initialRoom: _CrowdLobbyTourRepository.room(host: true),
+      ),
+      dark: true,
+      ku: true,
+      size: Size(_size.width, 1500),
+    );
+    await _shoot(t, '258_crowd_lobby_host_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('259 kalabalık lobi — konuk', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _CrowdLobbyTourRepository(host: false),
+        initialRoom: _CrowdLobbyTourRepository.room(host: false),
+      ),
+      size: Size(_size.width, 1500),
+    );
+    await _shoot(t, '259_crowd_lobby_guest');
+  }, tags: ['preview']);
+
+  testWidgets('260 kalabalık lobi — konuk (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      RoomScreen(
+        repository: _CrowdLobbyTourRepository(host: false),
+        initialRoom: _CrowdLobbyTourRepository.room(host: false),
+      ),
+      dark: true,
+      ku: true,
+      size: Size(_size.width, 1500),
+    );
+    await _shoot(t, '260_crowd_lobby_guest_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('261 kalabalık oyun — başlık (sıra ve ilk üç)', (t) async {
+    final crowd = _CrowdGameTourRepository();
+    await _pump(
+      t,
+      QuizScreen(
+        repository: crowd,
+        room: _CrowdGameTourRepository.room(),
+        questions: crowd.questions.take(5).toList(),
+      ),
+    );
+    await _shoot(t, '261_crowd_game_header');
+  }, tags: ['preview']);
+
+  testWidgets('262 kalabalık oyun — başlık (karanlık, Kurmancî)', (t) async {
+    final crowd = _CrowdGameTourRepository();
+    await _pump(
+      t,
+      QuizScreen(
+        repository: crowd,
+        room: _CrowdGameTourRepository.room(),
+        questions: crowd.questions.take(5).toList(),
+      ),
+      dark: true,
+      ku: true,
+    );
+    await _shoot(t, '262_crowd_game_header_dark_ku');
+  }, tags: ['preview']);
+
+  testWidgets('263 kalabalık sonuç — sıralama', (t) async {
+    await _pump(t, _resultCrowdScreen(), size: Size(_size.width, 2400));
+    await _shoot(t, '263_crowd_result');
+  }, tags: ['preview']);
+
+  testWidgets('264 kalabalık sonuç — sıralama (karanlık, Kurmancî)', (t) async {
+    await _pump(
+      t,
+      _resultCrowdScreen(),
+      dark: true,
+      ku: true,
+      size: Size(_size.width, 2400),
+    );
+    await _shoot(t, '264_crowd_result_dark_ku');
+  }, tags: ['preview']);
+}
+
+/// Kalabalık odanın tur oyuncuları: oyuncu (`user`) üçüncü, 2. sırada eşitlik.
+const _crowdTourNames = [
+  ('tour-rojda', 'Rojda', 520),
+  ('tour-baran', 'Baran', 470),
+  ('user', 'Sen', 470),
+  ('tour-dilan', 'Dilan', 430),
+  ('tour-diyar', 'Diyar', 380),
+  ('tour-evin', 'Evîn', 340),
+  ('tour-welat', 'Welat', 300),
+  ('tour-zozan', 'Zozan', 260),
+  ('tour-azad', 'Azad', 190),
+  ('tour-mazlum', 'Mazlum', 120),
+  ('tour-berfin', 'Berfîn', 70),
+  ('tour-rojin', 'Rojîn', 20),
+];
+
+/// Kalabalık lobi: 16 kişilik oda, 7 oyuncu; ev sahibi `user` ya da Rojda.
+class _CrowdLobbyTourRepository extends _TourRepository {
+  _CrowdLobbyTourRepository({required this.host});
+
+  final bool host;
+
+  static GameRoom room({required bool host}) {
+    final players = <Player>[
+      for (final (id, name, _) in _crowdTourNames.take(7))
+        Player(id: id, name: name, score: 0, state: Player.readyState),
+    ];
+    return GameRoom(
+      id: 'tour-crowd-lobby',
+      name: 'crowd',
+      code: _tourRoomCode,
+      category: 'Ziman',
+      players: host
+          ? [players[2], ...players.where((p) => p.id != 'user')]
+          : players,
+      status: RoomStatus.lobby,
+      questionCount: 10,
+      secondsPerQuestion: 20,
+      hostId: host ? 'user' : 'tour-rojda',
+      maxPlayers: 16,
+      isCustom: true,
+    );
+  }
+
+  @override
+  Future<List<Player>> loadRoomPlayers(GameRoom room) async => room.players;
+
+  @override
+  Stream<List<Player>> subscribeRoomPlayers(GameRoom room) =>
+      Stream.value(room.players);
+}
+
+/// Kalabalık oyun: 12 aktif oyuncu + 1 ayrılan; başlıkta sıra "#2/12".
+class _CrowdGameTourRepository extends _TourRepository {
+  static GameRoom room() => GameRoom(
+    id: 'tour-crowd-game',
+    name: 'crowd',
+    code: _tourRoomCode,
+    category: 'Ziman',
+    players: [
+      for (final (id, name, score) in _crowdTourNames)
+        Player(
+          id: id,
+          name: name,
+          score: score,
+          state: Player.readyState,
+          streak: id == 'user' ? 2 : 0,
+        ),
+      const Player(
+        id: 'tour-gone',
+        name: 'Şêro',
+        score: 640,
+        state: Player.readyState,
+        left: true,
+      ),
+    ],
+    status: RoomStatus.active,
+    questionCount: 5,
+    secondsPerQuestion: 20,
+    hostId: 'tour-rojda',
+    maxPlayers: 16,
+    isCustom: true,
+  );
+
+  @override
+  Future<List<Player>> loadRoomPlayers(GameRoom room) async => room.players;
+
+  @override
+  Stream<List<Player>> subscribeRoomPlayers(GameRoom room) =>
+      Stream.value(room.players);
+}
+
+/// Kalabalık odanın sonuç ekranı: oyuncu Rojda ile EŞİT BİRİNCİ (tur
+/// "Kazandın!" ve ortak 1. sırayı göstersin); Şêro ayrıldığı için sonda.
+Widget _resultCrowdScreen() {
+  final repository = _TourRepository();
+  final scores = [
+    ('user', 'Sen', 520, 1),
+    ('tour-rojda', 'Rojda', 520, 1),
+    ('tour-baran', 'Baran', 470, 3),
+    ('tour-dilan', 'Dilan', 430, 4),
+    ('tour-diyar', 'Diyar', 380, 5),
+    ('tour-evin', 'Evîn', 340, 6),
+    ('tour-welat', 'Welat', 300, 7),
+    ('tour-zozan', 'Zozan', 260, 8),
+    ('tour-azad', 'Azad', 190, 9),
+    ('tour-mazlum', 'Mazlum', 120, 10),
+    ('tour-berfin', 'Berfîn', 70, 11),
+    ('tour-rojin', 'Rojîn', 20, 12),
+  ];
+  final players = [
+    for (final (id, name, score, rank) in scores)
+      Player(
+        id: id,
+        name: name,
+        score: score,
+        state: Player.readyState,
+        streak: id == 'user' ? 3 : 0,
+        rank: rank,
+      ),
+    const Player(
+      id: 'tour-gone',
+      name: 'Şêro',
+      score: 640,
+      state: Player.readyState,
+      left: true,
+    ),
+  ];
+  return QuizResultScreen(
+    repository: repository,
+    room: GameRoom(
+      id: 'tour-crowd-result',
+      name: 'crowd',
+      code: _tourRoomCode,
+      category: 'Ziman',
+      players: players,
+      status: RoomStatus.finished,
+      questionCount: 5,
+      secondsPerQuestion: 20,
+      hostId: 'tour-rojda',
+      maxPlayers: 16,
+      isCustom: true,
+    ),
+    score: 520,
+    correctCount: 4,
+    wrongCount: 1,
+    totalQuestions: 5,
+    bestStreak: 3,
+    coinsAwarded: 40,
+    opponents: players.where((p) => p.id != 'user').toList(),
+    resultOwnerUserId: 'user',
+    answerRecords: const [
+      AnswerRecord(
+        id: 'r1',
+        category: 'Ziman',
+        prompt: 'Peyva «av» bi Tirkî çi tê gotin?',
+        answers: ['su', 'ekmek', 'yol', 'dağ'],
+        correctAnswer: 'su',
+        selectedAnswer: 'su',
+        explanation: '«av» Türkçede «su» demektir.',
+        explanationKu: '«av» bi Tirkî dibe «su».',
+        explanationTr: '«av» Türkçede «su» demektir.',
+      ),
+    ],
+  );
 }
 
 /// Sonuç ekranı çeşitleri (A6 kareleri): aynı üç soruluk tur, ödül/mod
