@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../data/durable_write.dart';
 import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
@@ -67,6 +68,40 @@ AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
     return identity.copyWith(showcaseTitle: 'VIP');
   }
   return identity;
+}
+
+const _pendingEffectsKey = 'shop_pending_purchase_effects';
+
+bool _hasPurchaseEffect(String itemId) =>
+    itemId == 'avatar_frame_gold' ||
+    itemId == 'avatar_frame_neon' ||
+    itemId == 'profile_badge_vip';
+
+/// Sunucuya henüz ulaşmamış (kuyruğa alınmış) satın almaların kimlikleri. Kuyruk sonradan boşalınca etki mağaza
+/// açılışında uygulanır; kayıt yoksa oyuncu parasını verip çerçevesini
+/// hiç göremezdi.
+Future<Set<String>> _readPendingEffects() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    return (prefs.getStringList(_pendingEffectsKey) ?? const []).toSet();
+  } catch (_) {
+    return <String>{};
+  }
+}
+
+Future<void> _writePendingEffects(Set<String> ids) async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_pendingEffectsKey, ids.toList()..sort());
+  } catch (error, stack) {
+    ErrorReporter.record(error, stack, reason: 'shop pending effects write');
+  }
+}
+
+Future<void> _markEffectPending(String itemId) async {
+  if (!_hasPurchaseEffect(itemId)) return;
+  final ids = await _readPendingEffects();
+  if (ids.add(itemId)) await _writePendingEffects(ids);
 }
 
 /// `shop_items` tablosundaki `theme_color` (ör. "FF3B81") sütununu
@@ -371,6 +406,7 @@ class _ShopScreenState extends State<ShopScreen> {
           purchasedIds.add(item.id);
         }
       }
+      await _applyPendingEffects(purchasedIds);
 
       AvatarIdentity? avatar;
       String? profileName;
@@ -409,6 +445,24 @@ class _ShopScreenState extends State<ShopScreen> {
         });
       }
     }
+  }
+
+  /// Kuyruğa alınan ya da etkisi yarım kalan satın almaların etkisini,
+  /// sunucu satın almayı onayladığında (hasPurchased) uygular. Yalnız
+  /// işaretli ürünler uygulanır: oyuncunun sonradan seçtiği çerçeve her
+  /// açılışta ezilmez.
+  Future<void> _applyPendingEffects(Set<String> purchasedIds) async {
+    final pending = await _readPendingEffects();
+    if (pending.isEmpty) return;
+    var changed = false;
+    for (final itemId in pending.toList()) {
+      if (!purchasedIds.contains(itemId)) continue;
+      if (await _applyPurchaseEffect(itemId)) {
+        pending.remove(itemId);
+        changed = true;
+      }
+    }
+    if (changed) await _writePendingEffects(pending);
   }
 
   Future<void> _openSpinWheel() async {
@@ -590,6 +644,7 @@ class _ShopScreenState extends State<ShopScreen> {
           reason: 'purchase_${item.id}',
           idempotencyKey: purchaseKey,
         );
+        await _markEffectPending(item.id);
         if (!mounted) return;
         setState(() {
           _purchaseErrorMessage = context.t(K.errorOccurred);
@@ -638,6 +693,7 @@ class _ShopScreenState extends State<ShopScreen> {
         reason: 'purchase_${item.id}',
         idempotencyKey: purchaseKey,
       );
+      await _markEffectPending(item.id);
       if (!mounted) return;
       setState(() {
         _purchaseErrorMessage = context.t(K.errorOccurred);
@@ -665,11 +721,7 @@ class _ShopScreenState extends State<ShopScreen> {
     // hiç açılmıyordu, yani neon satın alan oyuncu için
     // `loadAvatarIdentity`/`updateAvatarIdentity` hiç çağrılmıyordu
     // (2026-08-14 denetimi).
-    if (itemId != 'avatar_frame_gold' &&
-        itemId != 'avatar_frame_neon' &&
-        itemId != 'profile_badge_vip') {
-      return true;
-    }
+    if (!_hasPurchaseEffect(itemId)) return true;
     try {
       final identity = await widget.repository.loadAvatarIdentity();
       await widget.repository.updateAvatarIdentity(

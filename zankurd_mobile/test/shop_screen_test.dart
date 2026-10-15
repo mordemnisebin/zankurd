@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zankurd_mobile/src/data/durable_write.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/models/avatar_identity.dart';
@@ -74,6 +75,17 @@ class _FailingEffectShopRepository extends _ShopRepository {
     if (failEffect) throw StateError('avatar identity persist failed');
     identity = next;
   }
+}
+
+class _OfflineSpendShopRepository extends _ShopRepository {
+  _OfflineSpendShopRepository() : super(coins: 1000);
+
+  @override
+  Future<DurableCoinSpend> spendCoinsDurable(
+    int amount,
+    String reason,
+    String idempotencyKey,
+  ) async => throw const RetryableWriteException('network down');
 }
 
 class _SpinWheelShopRepository extends _ShopRepository {
@@ -211,6 +223,61 @@ void main() {
       expect(find.text('Tebrikler!'), findsOneWidget);
     },
   );
+
+  // Bekçi (2026-10-15): bağlantı koptuğunda satın alma kuyruğa alınıyor
+  // (`queueCoinSpend`), ama çerçeve/VIP etkisi yalnız anlık yoldan uygulanıyordu;
+  // kuyruk boşalınca oyuncu parasını verip çerçevesini hiç göremiyordu. Testler
+  // hep anlık başarıyı denediği için sessizdi. Şimdi kuyruğa alınan ürün
+  // işaretlenir ve sunucu satın almayı onaylayınca mağaza açılışında uygulanır;
+  // işaretsiz ürün (oyuncunun sonradan seçtiği çerçeve) ezilmez.
+  testWidgets(
+    'kuyruktan sonra onaylanan satın almanın etkisi açılışta uygulanır',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({
+        'shop_pending_purchase_effects': ['avatar_frame_neon'],
+      });
+      final repository = _FailingEffectShopRepository()
+        ..failEffect = false
+        ..purchased.addAll({'avatar_frame_neon', 'avatar_frame_gold'});
+      await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+      await tester.pumpAndSettle();
+
+      expect(repository.identity.frameId, 'neon');
+      expect(repository.effectWriteCalls, 1);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getStringList('shop_pending_purchase_effects'), isEmpty);
+    },
+  );
+
+  testWidgets('kuyruğa alınan çerçeve satın alması etkisi için işaretlenir', (
+    tester,
+  ) async {
+    final repository = _OfflineSpendShopRepository();
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Neon çerçeve'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Satın al'));
+    await tester.pumpAndSettle();
+
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getStringList('shop_pending_purchase_effects'), [
+      'avatar_frame_neon',
+    ]);
+  });
+
+  testWidgets('işaretsiz satın alınmış ürün açılışta kimliği ezmez', (
+    tester,
+  ) async {
+    final repository = _FailingEffectShopRepository()
+      ..failEffect = false
+      ..purchased.addAll({'avatar_frame_neon', 'avatar_frame_gold'});
+    await tester.pumpWidget(_shell(ShopScreen(repository: repository)));
+    await tester.pumpAndSettle();
+
+    expect(repository.effectWriteCalls, 0);
+  });
 
   // 2026-07-31: katalog 13 ürün tanımlıyordu ama yalnız 3'ü yayınlanıyordu;
   // kalan 10'u ölü veriydi ve `_supportedItemIds`e yanlışlıkla eklenirlerse
