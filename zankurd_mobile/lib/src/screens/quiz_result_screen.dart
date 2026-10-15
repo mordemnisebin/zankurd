@@ -252,6 +252,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         secondsPerQuestion: widget.room.secondsPerQuestion,
         questionCount: widget.room.questionCount,
         entryFee: widget.room.entryFee,
+        // Aynı kapasiteyle yeniden kur: kalabalık oda 2 kişiye düşmesin.
+        maxPlayers: widget.room.maxPlayers,
       );
       if (!mounted) return;
       Navigator.of(context).pushReplacement(

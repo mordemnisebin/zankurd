@@ -11,6 +11,7 @@ class _CapturingRepository extends MockZanKurdRepository {
   int? capturedSeconds;
   int? capturedQuestionCount;
   int? capturedEntryFee;
+  int? capturedMaxPlayers;
   String? capturedCategory;
 
   @override
@@ -19,16 +20,19 @@ class _CapturingRepository extends MockZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) async {
     capturedCategory = category;
     capturedSeconds = secondsPerQuestion;
     capturedQuestionCount = questionCount;
     capturedEntryFee = entryFee;
+    capturedMaxPlayers = maxPlayers;
     return super.createOnlineRoom(
       category: category,
       secondsPerQuestion: secondsPerQuestion,
       questionCount: questionCount,
       entryFee: entryFee,
+      maxPlayers: maxPlayers,
     );
   }
 }

@@ -164,6 +164,7 @@ class _PlayHubScreenState extends State<PlayHubScreen> {
         secondsPerQuestion: config.duration,
         questionCount: config.questionCount,
         entryFee: config.entryFee,
+        maxPlayers: config.maxPlayers,
       );
       if (!mounted) return;
       AnalyticsService.instance.logActivationStep('room_created');
@@ -801,12 +802,16 @@ class _CustomRoomConfig {
     required this.duration,
     required this.questionCount,
     required this.entryFee,
+    required this.maxPlayers,
   });
 
   final String category;
   final int duration;
   final int questionCount;
   final int entryFee;
+
+  /// Oda kapasitesi (2 = bugünkü iki kişilik oda; > 2 = kalabalık oda).
+  final int maxPlayers;
 }
 
 class _CustomRoomBottomSheet extends StatefulWidget {
@@ -827,6 +832,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
   int _selectedDuration = GameRoom.defaultSecondsPerQuestion;
   int _selectedQuestionCount = 10;
   int _selectedEntryFee = 0;
+  int _selectedMaxPlayers = GameRoom.defaultCrowdCapacity;
 
   @override
   void initState() {
@@ -990,6 +996,47 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                       ),
                       const SizedBox(height: SahneSpace.x4),
 
+                      // Oyuncu sayısı (kapasite). 2 = bugünkü iki kişilik oda;
+                      // daha fazlası kalabalık oda: ev sahibi >= 2 kişiyle
+                      // başlatır, sonuç sıralı gelir.
+                      Text(
+                        context.t(K.roomCapacityLabel),
+                        style: SahneType.bodyStrong.copyWith(
+                          color: SahneTokens.of(context).tx,
+                        ),
+                      ),
+                      const SizedBox(height: SahneSpace.x2),
+                      Wrap(
+                        spacing: SahneSpace.x2,
+                        runSpacing: SahneSpace.x2,
+                        children: [
+                          for (final capacity in GameRoom.allowedMaxPlayers)
+                            ChoiceChip(
+                              key: ValueKey('custom-room-capacity-$capacity'),
+                              label: Text(
+                                context.t(K.roomCapacityOption, {
+                                  'n': '$capacity',
+                                }),
+                              ),
+                              selected: _selectedMaxPlayers == capacity,
+                              onSelected: (_) => setState(
+                                () => _selectedMaxPlayers = capacity,
+                              ),
+                            ),
+                        ],
+                      ),
+                      if (_selectedMaxPlayers > 2) ...[
+                        const SizedBox(height: SahneSpace.x2),
+                        Text(
+                          context.t(K.roomCapacityHint),
+                          key: const ValueKey('custom-room-capacity-hint'),
+                          style: SahneType.caption.copyWith(
+                            color: SahneTokens.of(context).tx2,
+                          ),
+                        ),
+                      ],
+                      const SizedBox(height: SahneSpace.x4),
+
                       // Bahis / Giriş Ücreti
                       // İki metin de esnek: dar ekranda ve Kurmancî'de etiketler
                       // uzuyor ve sabit genişlikli `Row` sağdan 192 piksel taşıyordu
@@ -1079,6 +1126,7 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                                       duration: _selectedDuration,
                                       questionCount: _selectedQuestionCount,
                                       entryFee: _selectedEntryFee,
+                                      maxPlayers: _selectedMaxPlayers,
                                     ),
                                   );
                                 },
