@@ -1503,6 +1503,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
     );
   }
 
+  /// Testler kalabalık oda ilerlemesini buradan verir; varsayılan "yok".
+  RoomAnswerProgress? answerProgress;
+
+  @override
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room) async =>
+      answerProgress;
+
   @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {
     return room.players;

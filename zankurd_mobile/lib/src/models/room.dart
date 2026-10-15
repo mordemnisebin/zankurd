@@ -158,6 +158,39 @@ class RoomMemberLeftException implements Exception {
   String toString() => 'RoomMemberLeftException: player left the room';
 }
 
+/// `get_room_answer_progress` sonucu: mevcut soruyu kaç aktif oyuncunun
+/// cevapladığı (yalnız sayılar; kim olduğu ya da seçtiği şık sızmaz).
+///
+/// [questionIndex] cevabın geldiği soruyu söyler: istemci başka bir sorudaysa
+/// (cevap yolda geç kaldı) sayıyı göstermez.
+class RoomAnswerProgress {
+  const RoomAnswerProgress({
+    required this.questionIndex,
+    required this.answered,
+    required this.active,
+  });
+
+  final int questionIndex;
+  final int answered;
+  final int active;
+
+  /// Sunucu cevabından; eksik ya da tipi bozuk alan `null` (sayaç gizlenir,
+  /// oyun etkilenmez).
+  static RoomAnswerProgress? tryParse(Object? json) {
+    if (json is! Map) return null;
+    final index = json['question_index'];
+    final answered = json['answered'];
+    final active = json['active'];
+    if (index is! num || answered is! num || active is! num) return null;
+    if (active < 1 || answered < 0) return null;
+    return RoomAnswerProgress(
+      questionIndex: index.toInt(),
+      answered: answered.toInt().clamp(0, active.toInt()),
+      active: active.toInt(),
+    );
+  }
+}
+
 /// `touch_matchmaking` RPC'sinin sonucu.
 enum MatchmakingTouchStatus {
   /// Kuyruk satırı yenilendi, hâlâ rakip bekleniyor.

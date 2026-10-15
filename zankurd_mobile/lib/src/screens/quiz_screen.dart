@@ -2160,7 +2160,42 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _pollRoomIndex() async {
+    if (_isCrowd) unawaited(_refreshCrowdProgress());
     await _reconcileOnlineRoom();
+  }
+
+  /// Mevcut sorunun "x/N cevapladı" ilerlemesi (kalabalık oda). Sunucu
+  /// yalnız sayı verir; `null` ise (RPC yok) başlık eski bekleme metninde
+  /// kalır.
+  RoomAnswerProgress? _crowdProgress;
+  bool _crowdProgressInFlight = false;
+
+  /// Yalnız GÜNCEL soruya ait sayı gösterilir: cevap yolda gecikip başka
+  /// soruya geçilmişse eski sayı yanlış sorunun "kaç kişi cevapladı"sı olur.
+  RoomAnswerProgress? get _currentCrowdProgress {
+    final progress = _crowdProgress;
+    return progress != null && progress.questionIndex == index
+        ? progress
+        : null;
+  }
+
+  Future<void> _refreshCrowdProgress() async {
+    if (!_isCrowd || _crowdProgressInFlight || !mounted) return;
+    _crowdProgressInFlight = true;
+    try {
+      final progress = await widget.repository.loadRoomAnswerProgress(
+        widget.room,
+      );
+      if (!mounted || progress == null) return;
+      // Soru, istek uçarken değiştiyse sayı geçersizdir (render'da da
+      // kontrol edilir; burada yalnız gereksiz yeniden çizimi önler).
+      if (progress.questionIndex != index) return;
+      setState(() => _crowdProgress = progress);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'crowd answer progress');
+    } finally {
+      _crowdProgressInFlight = false;
+    }
   }
 
   /// Kalabalık odada yedek yoklama aralığı (1v1'de 4 sn).
@@ -3437,7 +3472,11 @@ class _QuizScreenState extends State<QuizScreen>
         // Kalabalıkta herkesin cevap anında 3 sorgu atması N×3 yük demek;
         // açıklama `room_players` akışı, seyrek yoklama ve sunucu süresi
         // (`_startOpponentWaitTimer`) ile yakalanır.
-        if (!_isCrowd) unawaited(_reconcileOnlineRoom());
+        if (_isCrowd) {
+          unawaited(_refreshCrowdProgress());
+        } else {
+          unawaited(_reconcileOnlineRoom());
+        }
         return;
       }
 

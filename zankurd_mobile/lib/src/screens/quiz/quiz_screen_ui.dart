@@ -190,7 +190,11 @@ extension _QuizScreenUI on _QuizScreenState {
     if (selectedAnswer == 'TIMEOUT' && !_suspense)
       QuizTimeoutNotice(isKu: _isKu, correctAnswer: question.correctAnswer),
     if (_isMultiplayer && answered && _mpPhase == _MultiplayerPhase.waiting)
-      _MultiplayerWaitingOverlay(isKu: _isKu, crowd: _isCrowd),
+      _MultiplayerWaitingOverlay(
+        isKu: _isKu,
+        crowd: _isCrowd,
+        progress: _currentCrowdProgress,
+      ),
     if (_isMultiplayer && _mpPhase == _MultiplayerPhase.reveal)
       _RevealCountdown(seconds: _revealCountdown, isKu: _isKu),
   ];
@@ -343,6 +347,7 @@ extension _QuizScreenUI on _QuizScreenState {
       rank: mine?.rank,
       total: standings.length,
       top: standings.take(3).toList(growable: false),
+      progress: _currentCrowdProgress,
     );
   }
 

@@ -1404,6 +1404,29 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     );
   }
 
+  bool _answerProgressSupported = true;
+
+  @override
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room) async {
+    final roomId = room.id;
+    // Göç uygulanmamış sunucuda RPC yok: oturum boyunca bir daha sorma,
+    // başlık "Diğer oyuncular bekleniyor" metninde kalır.
+    if (roomId == null || !_answerProgressSupported) return null;
+    try {
+      final response = await client.rpc(
+        'get_room_answer_progress',
+        params: {'p_room_id': roomId},
+      );
+      return RoomAnswerProgress.tryParse(response);
+    } catch (error) {
+      if (isMissingRpcError(error)) {
+        _answerProgressSupported = false;
+        return null;
+      }
+      rethrow;
+    }
+  }
+
   @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {
     final id = room.id;

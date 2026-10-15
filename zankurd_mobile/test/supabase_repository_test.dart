@@ -213,6 +213,11 @@ class _RoomSessionHttpClient extends http.BaseClient {
     this.rpcErrorCode,
     this.joinRoomErrorMessage,
     this.markReadyResponse = const {'status': 'waiting'},
+    this.answerProgressResponse = const {
+      'question_index': 0,
+      'answered': 3,
+      'active': 8,
+    },
     this.roomSnapshot = _roomRpcSnapshot,
     this.roomPlayersResponse = const [
       {
@@ -239,6 +244,9 @@ class _RoomSessionHttpClient extends http.BaseClient {
 
   /// `mark_room_client_ready` cevabı (kalabalıkta düşenler 'left' alır).
   final Object? markReadyResponse;
+
+  /// `get_room_answer_progress` cevabı.
+  final Object? answerProgressResponse;
 
   /// `create_online_room` / `join_room_by_code` cevabı.
   final Object? roomSnapshot;
@@ -294,6 +302,8 @@ class _RoomSessionHttpClient extends http.BaseClient {
         return _jsonResponse(request, const {'acknowledged': true});
       case '/rest/v1/rpc/mark_room_client_ready':
         return _jsonResponse(request, markReadyResponse);
+      case '/rest/v1/rpc/get_room_answer_progress':
+        return _jsonResponse(request, answerProgressResponse);
       case '/rest/v1/rpc/advance_room_question':
         return _jsonResponse(request, 1);
       case '/rest/v1/rpc/set_room_ready':
@@ -690,6 +700,69 @@ void main() {
       expect(outcome.newHostId, 'guest-id');
       expect(outcome.completed, isFalse);
     });
+
+    const crowdRoom = GameRoom(
+      id: '00000000-0000-0000-0000-000000000099',
+      name: 'crowd',
+      code: 'ZK-ABCDEF0123',
+      category: 'Ziman',
+      players: [],
+      status: RoomStatus.active,
+      maxPlayers: 8,
+      isCustom: true,
+    );
+
+    test(
+      'cevap ilerlemesi yalnız oda kimliğiyle sorulur ve parse edilir',
+      () async {
+        final httpClient = _RoomSessionHttpClient();
+        final repository = repoFor(httpClient);
+
+        final progress = await repository.loadRoomAnswerProgress(crowdRoom);
+
+        expect(progress!.questionIndex, 0);
+        expect(progress.answered, 3);
+        expect(progress.active, 8);
+        expect(httpClient.requestedPaths, [
+          '/rest/v1/rpc/get_room_answer_progress',
+        ]);
+        expect(httpClient.requestBodies, [
+          {'p_room_id': crowdRoom.id},
+        ]);
+      },
+    );
+
+    test('bozuk ilerleme cevabı sayaçsız bırakır, hata fırlatmaz', () async {
+      for (final bad in <Object?>[
+        null,
+        'x',
+        const {'question_index': 0, 'answered': 3},
+        const {'question_index': 0, 'answered': 3, 'active': 0},
+      ]) {
+        final repository = repoFor(
+          _RoomSessionHttpClient(answerProgressResponse: bad),
+        );
+        expect(await repository.loadRoomAnswerProgress(crowdRoom), isNull);
+      }
+    });
+
+    test(
+      'RPC yoksa (PGRST202) null döner ve oturumda bir daha sorulmaz',
+      () async {
+        final httpClient = _RoomSessionHttpClient(rpcErrorCode: 'PGRST202');
+        final repository = repoFor(httpClient);
+
+        expect(await repository.loadRoomAnswerProgress(crowdRoom), isNull);
+        expect(await repository.loadRoomAnswerProgress(crowdRoom), isNull);
+
+        expect(
+          httpClient.requestedPaths
+              .where((p) => p.endsWith('get_room_answer_progress'))
+              .length,
+          1,
+        );
+      },
+    );
 
     test('mark_room_client_ready left dönerse oyuncu düşmüştür', () async {
       final repository = repoFor(

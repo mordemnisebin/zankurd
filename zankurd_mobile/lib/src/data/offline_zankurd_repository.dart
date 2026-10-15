@@ -176,6 +176,10 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room) async =>
+      null;
+
+  @override
   Future<void> updateReady(GameRoom room, bool isReady) async {
     throw StateError('Remote service unavailable.');
   }

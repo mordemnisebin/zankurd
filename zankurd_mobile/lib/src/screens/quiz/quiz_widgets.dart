@@ -742,6 +742,7 @@ class _CrowdScoreHeader extends StatelessWidget {
     required this.rank,
     required this.total,
     required this.top,
+    this.progress,
   });
 
   final Player player;
@@ -755,6 +756,10 @@ class _CrowdScoreHeader extends StatelessWidget {
   /// İlk üç satır (eşitlikte aynı numara görünür).
   final List<CrowdStanding> top;
 
+  /// Mevcut sorunun "x/N cevapladı" sayısı; sunucu vermiyorsa null.
+  final RoomAnswerProgress? progress;
+
+  static const progressKey = ValueKey('quiz-crowd-progress');
   static const rankKey = ValueKey('quiz-crowd-rank');
   static const topKey = ValueKey('quiz-crowd-top3');
 
@@ -924,6 +929,20 @@ class _CrowdScoreHeader extends StatelessWidget {
                   rankBlock,
                 ],
               ),
+            if (progress != null) ...[
+              const SizedBox(height: SahneSpace.x2),
+              Text(
+                context.t(K.crowdAnsweredCount, {
+                  'answered': '${progress!.answered}',
+                  'active': '${progress!.active}',
+                }),
+                key: progressKey,
+                style: SahneType.captionStrong.copyWith(
+                  color: t.tx2,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+            ],
             if (top.isNotEmpty) ...[
               const SizedBox(height: SahneSpace.x3),
               Padding(
@@ -1223,12 +1242,19 @@ class _AnswerRevealFallback extends StatelessWidget {
 
 /// Çok oyunculuda cevap kaydedildi, öteki oyuncu bekleniyor.
 class _MultiplayerWaitingOverlay extends StatelessWidget {
-  const _MultiplayerWaitingOverlay({required this.isKu, this.crowd = false});
+  const _MultiplayerWaitingOverlay({
+    required this.isKu,
+    this.crowd = false,
+    this.progress,
+  });
 
   final bool isKu;
 
   /// Kalabalık odada bekleyen tek bir rakip değil, "diğerleri"dir.
   final bool crowd;
+
+  /// Kalabalıkta biliniyorsa "x/N cevapladı"; yoksa genel bekleme metni.
+  final RoomAnswerProgress? progress;
 
   @override
   Widget build(BuildContext context) {
@@ -1253,10 +1279,17 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
                     style: SahneType.bodyStrong.copyWith(color: t.tx),
                   ),
                   Text(
-                    Tr.forKu(
-                      crowd ? K.crowdWaitingOthers : K.digerOyuncuBekleniyor,
-                      isKu,
-                    ),
+                    progress != null
+                        ? Tr.forKu(K.crowdAnsweredCount, isKu, {
+                            'answered': '${progress!.answered}',
+                            'active': '${progress!.active}',
+                          })
+                        : Tr.forKu(
+                            crowd
+                                ? K.crowdWaitingOthers
+                                : K.digerOyuncuBekleniyor,
+                            isKu,
+                          ),
                     style: SahneType.caption.copyWith(color: t.tx2),
                   ),
                 ],

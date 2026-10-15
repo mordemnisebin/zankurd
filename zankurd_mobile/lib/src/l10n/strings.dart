@@ -1533,6 +1533,10 @@ class Tr {
     K.crowdRankLabel: {'ku': 'Rêza te', 'tr': 'Sıran'},
     K.crowdTopThree: {'ku': 'Sê yekemîn', 'tr': 'İlk 3'},
     K.crowdPlayersCount: {'ku': '{n} lîstikvan', 'tr': '{n} oyuncu'},
+    K.crowdAnsweredCount: {
+      'ku': '{answered}/{active} bersiv dan',
+      'tr': '{answered}/{active} cevapladı',
+    },
     K.crowdWaitingOthers: {
       'ku': 'Li benda lîstikvanên din…',
       'tr': 'Diğer oyuncular bekleniyor…',
@@ -3779,6 +3783,7 @@ class K {
   static const crowdRankLabel = 'quiz.crowd.rankLabel';
   static const crowdTopThree = 'quiz.crowd.topThree';
   static const crowdPlayersCount = 'quiz.crowd.playersCount';
+  static const crowdAnsweredCount = 'quiz.crowd.answeredCount';
   static const crowdWaitingOthers = 'quiz.crowd.waitingOthers';
   static const crowdDroppedBody = 'quiz.crowd.droppedBody';
   static const crowdStandingsTitle = 'result.crowd.standingsTitle';

@@ -652,6 +652,82 @@ void main() {
       expect(repository.resumeCalls, greaterThan(before));
     });
 
+    testWidgets('cevap sayısı "x/N cevapladı" olarak başlıkta ve beklemede', (
+      tester,
+    ) async {
+      final repository = await mount(tester);
+      repository.answerProgress = const RoomAnswerProgress(
+        questionIndex: 0,
+        answered: 3,
+        active: 4,
+      );
+
+      await tester.tap(find.text('B1').first);
+      await pumpFrames(tester);
+
+      // Cevaptan hemen sonra sorulur (6 sn yoklamayı beklemeden).
+      expect(
+        tester
+            .widget<Text>(find.byKey(const ValueKey('quiz-crowd-progress')))
+            .data,
+        '3/4 cevapladı',
+      );
+      // Bekleme kartı da aynı sayıyı söyler; genel metin kalkar.
+      expect(find.text('3/4 cevapladı'), findsNWidgets(2));
+      expect(find.text('Diğer oyuncular bekleniyor…'), findsNothing);
+    });
+
+    testWidgets('sayı yoklamayla güncellenir (6 sn)', (tester) async {
+      final repository = await mount(tester);
+      repository.answerProgress = const RoomAnswerProgress(
+        questionIndex: 0,
+        answered: 1,
+        active: 4,
+      );
+      await tester.pump(const Duration(milliseconds: 6500));
+      await pumpFrames(tester);
+      expect(find.text('1/4 cevapladı'), findsOneWidget);
+
+      repository.answerProgress = const RoomAnswerProgress(
+        questionIndex: 0,
+        answered: 2,
+        active: 4,
+      );
+      await tester.pump(const Duration(milliseconds: 6500));
+      await pumpFrames(tester);
+      expect(find.text('2/4 cevapladı'), findsOneWidget);
+    });
+
+    testWidgets('başka soruya ait sayı yok sayılır, bekleme metni kalır', (
+      tester,
+    ) async {
+      final repository = await mount(tester);
+      repository.answerProgress = const RoomAnswerProgress(
+        questionIndex: 5,
+        answered: 3,
+        active: 4,
+      );
+
+      await tester.tap(find.text('B1').first);
+      await pumpFrames(tester);
+
+      expect(find.byKey(const ValueKey('quiz-crowd-progress')), findsNothing);
+      expect(find.text('Diğer oyuncular bekleniyor…'), findsOneWidget);
+    });
+
+    testWidgets('sunucuda RPC yoksa bugünkü bekleme metni gösterilir', (
+      tester,
+    ) async {
+      final repository = await mount(tester);
+      expect(repository.answerProgress, isNull);
+
+      await tester.tap(find.text('B1').first);
+      await pumpFrames(tester);
+
+      expect(find.byKey(const ValueKey('quiz-crowd-progress')), findsNothing);
+      expect(find.text('Diğer oyuncular bekleniyor…'), findsOneWidget);
+    });
+
     testWidgets('hazır süresi dolup düşen oyuncu bilgilendirilir', (
       tester,
     ) async {
