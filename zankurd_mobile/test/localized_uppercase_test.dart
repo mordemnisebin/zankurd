@@ -1,10 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:provider/provider.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
-import 'package:zankurd_mobile/src/l10n/strings.dart';
-import 'package:zankurd_mobile/src/theme/app_theme.dart';
-import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 
 /// Büyük harfe çevirme dile bağlıdır.
 ///
@@ -32,34 +27,5 @@ void main() {
     expect(upperForLanguage('Deng û Agahdarî', ku: true), 'DENG Û AGAHDARÎ');
     expect(upperForLanguage('Hînbûn', ku: true), 'HÎNBÛN');
     expect(upperForLanguage('Hesabi', ku: true), 'HESABI');
-  });
-
-  testWidgets('bölüm başlığı büyütülmeden, cümle düzeniyle çizilir', (
-    tester,
-  ) async {
-    for (final (lang, expected) in [('tr', 'Güvenlik'), ('ku', 'Ewlekarî')]) {
-      await tester.pumpWidget(
-        ChangeNotifierProvider<LanguageProvider>(
-          // Anahtar şart: anahtarsız ikinci `pumpWidget` aynı sağlayıcı
-          // öğesini yeniden kullanır, `create` bir daha koşmaz ve
-          // Kurmancî turu sessizce Türkçeyi ölçer.
-          key: ValueKey(lang),
-          create: (_) => LanguageProvider()..setLang(lang),
-          child: MaterialApp(
-            theme: AppTheme.light(),
-            home: Scaffold(
-              body: Builder(
-                builder: (context) => ScreenSectionLabel(
-                  label: context.t(K.secSafety),
-                  accent: AppTheme.brand,
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-      expect(find.text(expected), findsOneWidget, reason: '$lang başlığı');
-    }
   });
 }

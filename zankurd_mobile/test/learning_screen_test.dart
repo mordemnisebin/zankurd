@@ -17,7 +17,6 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
 import 'package:zankurd_mobile/src/widgets/sahne/sahne.dart';
-import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 
 Widget wrap(Widget child) => MultiProvider(
   providers: [
@@ -321,7 +320,6 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.byType(ScreenIdentityHeader), findsNothing);
       expect(find.byKey(const ValueKey('learning-scene-header')), findsNothing);
       expect(find.text('Kurmancî öğren'), findsOneWidget);
       expect(

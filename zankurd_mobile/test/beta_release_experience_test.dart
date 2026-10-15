@@ -12,7 +12,6 @@ import 'package:zankurd_mobile/src/services/analytics_service.dart';
 import 'package:zankurd_mobile/src/theme/app_theme.dart';
 import 'package:zankurd_mobile/src/theme/kilim_motifs.dart';
 import 'package:zankurd_mobile/src/widgets/app_panel.dart';
-import 'package:zankurd_mobile/src/widgets/screen_identity_header.dart';
 import 'package:zankurd_mobile/main.dart';
 import 'support/widget_test_helpers.dart';
 
@@ -200,11 +199,9 @@ void main() {
       isTrue,
     );
     expect(find.byType(KilimDivider), findsNothing);
-    expect(find.byType(ScreenIdentityHeader), findsNothing);
 
     await tester.pumpWidget(testShell(child: StoryScreen(story: cayxaneStory)));
     await tester.pumpAndSettle();
-    expect(find.byType(ScreenIdentityHeader), findsNothing);
     expect(find.text(cayxaneStory.titleTr), findsOneWidget);
     expect(find.byKey(const ValueKey('story-text-ku')), findsOneWidget);
     expect(tester.takeException(), isNull);
