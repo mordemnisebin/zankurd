@@ -28,6 +28,7 @@ import 'learning_screen.dart';
 import 'onboarding_screen.dart';
 import '../services/analytics_service.dart';
 import '../services/push_tap_router.dart';
+import '../services/room_result_presentation.dart';
 import '../services/push_token_sync.dart';
 import 'async_duel/async_duel_inbox.dart';
 import 'async_duel/async_duel_play_screen.dart';
@@ -1123,7 +1124,9 @@ class _AppShellState extends State<AppShell>
               repository: _repository,
               room: snapshot.room,
               questions: questions,
-              is1v1: true,
+              // Kalabalık oda 1v1 düello yolunu kullanmaz (oda türü
+              // `snapshot.room`dan okunur).
+              is1v1: !snapshot.room.isCrowd,
               resumeSnapshot: snapshot,
             );
           case RoomStatus.finished:
@@ -1235,19 +1238,13 @@ class _AppShellState extends State<AppShell>
 
   bool _isValidPendingRoomResult(RoomResultSnapshot snapshot, String userId) {
     final roomId = snapshot.room.id?.trim();
-    final playerIds = snapshot.room.players
-        .map((player) => player.id?.trim() ?? '')
-        .toList(growable: false);
     return roomId != null &&
         roomId.isNotEmpty &&
         snapshot.ownPlayerId.trim() == userId &&
         snapshot.room.status == RoomStatus.finished &&
         snapshot.endedReason.trim().toLowerCase() == 'completed' &&
         snapshot.forfeitedBy == null &&
-        playerIds.length == 2 &&
-        playerIds.every((id) => id.isNotEmpty) &&
-        playerIds.toSet().length == 2 &&
-        playerIds.where((id) => id == userId).length == 1;
+        roomResultHasValidPlayers(snapshot, userId);
   }
 
   void _syncRoomResumeAccount(String? userId) {

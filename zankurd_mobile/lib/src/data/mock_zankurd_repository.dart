@@ -1450,11 +1450,16 @@ class MockZanKurdRepository implements ZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) async {
+    // Yerel sahte oda "Tu" ve "Heval" yer tutucularıyla gelir; kapasite
+    // yalnız kalabalık ayrımını (başlık, hazır anahtarı yok) etkiler.
     return createRoom(category: category).copyWith(
       secondsPerQuestion: secondsPerQuestion,
       questionCount: questionCount,
       entryFee: entryFee,
+      maxPlayers: maxPlayers,
+      isCustom: true,
     );
   }
 
@@ -1497,6 +1502,13 @@ class MockZanKurdRepository implements ZanKurdRepository {
       forfeitedBy: null,
     );
   }
+
+  /// Testler kalabalık oda ilerlemesini buradan verir; varsayılan "yok".
+  RoomAnswerProgress? answerProgress;
+
+  @override
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room) async =>
+      answerProgress;
 
   @override
   Future<List<Player>> loadRoomPlayers(GameRoom room) async {

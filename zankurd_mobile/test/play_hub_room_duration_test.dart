@@ -11,6 +11,7 @@ class _CapturingRepository extends MockZanKurdRepository {
   int? capturedSeconds;
   int? capturedQuestionCount;
   int? capturedEntryFee;
+  int? capturedMaxPlayers;
   String? capturedCategory;
 
   @override
@@ -19,16 +20,19 @@ class _CapturingRepository extends MockZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) async {
     capturedCategory = category;
     capturedSeconds = secondsPerQuestion;
     capturedQuestionCount = questionCount;
     capturedEntryFee = entryFee;
+    capturedMaxPlayers = maxPlayers;
     return super.createOnlineRoom(
       category: category,
       secondsPerQuestion: secondsPerQuestion,
       questionCount: questionCount,
       entryFee: entryFee,
+      maxPlayers: maxPlayers,
     );
   }
 }
@@ -163,5 +167,92 @@ void main() {
       expect(find.text('$seconds çirke'), findsOneWidget);
       expect(find.text('$seconds sn'), findsNothing);
     }
+  });
+
+  Future<void> openCreateSheet(
+    WidgetTester tester,
+    _CapturingRepository repository,
+  ) async {
+    await tester.pumpWidget(
+      testShell(child: PlayHubScreen(repository: repository)),
+    );
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('play-hub-create-room')),
+      200,
+    );
+    await tester.tap(find.byKey(const ValueKey('play-hub-create-room')));
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets(
+    'oyuncu sayısı çipleri izinli kümeyle aynı, varsayılan 8 seçili',
+    (tester) async {
+      await openCreateSheet(tester, _CapturingRepository());
+
+      for (final capacity in GameRoom.allowedMaxPlayers) {
+        expect(
+          find.byKey(ValueKey('custom-room-capacity-$capacity')),
+          findsOneWidget,
+          reason: '$capacity kişilik seçenek eksik',
+        );
+      }
+      final eight = tester.widget<ChoiceChip>(
+        find.byKey(const ValueKey('custom-room-capacity-8')),
+      );
+      expect(eight.selected, isTrue);
+      expect(find.text('Oyuncu sayısı'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('custom-room-capacity-hint')),
+        findsOneWidget,
+      );
+    },
+  );
+
+  testWidgets(
+    'seçilen oyuncu sayısı createOnlineRoom\'a maxPlayers olarak gider',
+    (tester) async {
+      final repository = _CapturingRepository();
+      await openCreateSheet(tester, repository);
+
+      final chip = find.byKey(const ValueKey('custom-room-capacity-30'));
+      await tester.ensureVisible(chip);
+      await tester.pump();
+      await tester.tap(chip);
+      await tester.pumpAndSettle();
+
+      final openButton = find.text('Odayı aç');
+      await tester.ensureVisible(openButton);
+      await tester.pump();
+      await tester.tap(openButton);
+      await tester.pumpAndSettle();
+
+      expect(repository.capturedMaxPlayers, 30);
+    },
+  );
+
+  testWidgets('2 kişi seçilince kalabalık ipucu kalkar ve kapasite 2 gider', (
+    tester,
+  ) async {
+    final repository = _CapturingRepository();
+    await openCreateSheet(tester, repository);
+
+    final chip = find.byKey(const ValueKey('custom-room-capacity-2'));
+    await tester.ensureVisible(chip);
+    await tester.pump();
+    await tester.tap(chip);
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('custom-room-capacity-hint')),
+      findsNothing,
+    );
+
+    final openButton = find.text('Odayı aç');
+    await tester.ensureVisible(openButton);
+    await tester.pump();
+    await tester.tap(openButton);
+    await tester.pumpAndSettle();
+
+    expect(repository.capturedMaxPlayers, 2);
   });
 }

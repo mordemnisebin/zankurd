@@ -61,6 +61,7 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   }) async {
     throw StateError('Remote service unavailable.');
   }
@@ -173,6 +174,10 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room) async {
     throw StateError('Remote service unavailable.');
   }
+
+  @override
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room) async =>
+      null;
 
   @override
   Future<void> updateReady(GameRoom room, bool isReady) async {

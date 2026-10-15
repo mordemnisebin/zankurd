@@ -229,6 +229,7 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   });
   Future<GameRoom> joinOnlineRoom(String code);
 
@@ -328,6 +329,10 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
 
   /// Çevrimiçi odadan sunucunun yetkili çıkış sözleşmesiyle ayrılır.
   Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room);
+
+  /// Kalabalık odada mevcut sorunun cevap ilerlemesi ("x/N cevapladı").
+  /// Sunucuda RPC yoksa ya da cevap okunamazsa `null`.
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room);
 
   Future<List<Player>> loadRoomPlayers(GameRoom room);
   Future<RoomStatus> loadRoomStatus(GameRoom room);

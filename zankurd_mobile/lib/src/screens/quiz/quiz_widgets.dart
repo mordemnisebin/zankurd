@@ -727,6 +727,240 @@ class _LearningExplanationAction extends StatelessWidget {
   }
 }
 
+// ─── Kalabalık oda kartı ─────────────────────────────────────────────────────
+
+/// Kalabalık odada (3+ kişi) soru ekranının başlık kartı: sol üstte kendi
+/// avatarın ve puanın, sağ üstte sıran ("#3/12"), altta ilk üç şeridi.
+///
+/// Düello kartı (`_DuelScoreHeader`) iki kişiyi yan yana koyar; 50 kişiyi
+/// yan yana koymak olmaz. Burada herkesin puanı değil, oyuncunun bilmek
+/// istediği iki şey vardır: nerede olduğu ve önünde kimlerin olduğu.
+/// Sıra, eşit puanda aynı numarayı paylaşır (bkz. `crowdStandings`).
+class _CrowdScoreHeader extends StatelessWidget {
+  const _CrowdScoreHeader({
+    required this.player,
+    required this.rank,
+    required this.total,
+    required this.top,
+    this.progress,
+  });
+
+  final Player player;
+
+  /// Oyuncunun sırası; sıralamaya henüz girmediyse (liste yüklenmedi) null.
+  final int? rank;
+
+  /// Sıralamadaki (ayrılmayan) oyuncu sayısı.
+  final int total;
+
+  /// İlk üç satır (eşitlikte aynı numara görünür).
+  final List<CrowdStanding> top;
+
+  /// Mevcut sorunun "x/N cevapladı" sayısı; sunucu vermiyorsa null.
+  final RoomAnswerProgress? progress;
+
+  static const progressKey = ValueKey('quiz-crowd-progress');
+  static const rankKey = ValueKey('quiz-crowd-rank');
+  static const topKey = ValueKey('quiz-crowd-top3');
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    final stacked = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    final colorOverrides = resolveAvatarColors([
+      for (final p in {player, ...top.map((s) => s.player)})
+        (id: p.id ?? p.name, displayName: p.name, colorHex: p.avatarColor),
+    ]);
+    final rankText = rank == null ? '—' : '#$rank/$total';
+    final scoreText =
+        '${groupThousands(player.score)} ${context.t(K.scoreWord).toLowerCase()}';
+
+    final me = Row(
+      children: [
+        PlayerAvatar(
+          radius: 16,
+          photoUrl: player.avatarUrl,
+          iconId: player.avatarIcon,
+          colorHex: player.avatarColor,
+          frameId: player.avatarFrame,
+          displayName: player.name,
+          colorOverride: colorOverrides[player.id ?? player.name],
+        ),
+        const SizedBox(width: SahneSpace.x2),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.playerDisplayName(player.name),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.captionStrong.copyWith(color: t.tx),
+              ),
+              Text(
+                scoreText,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: SahneType.captionStrong.copyWith(
+                  color: t.goldTx,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+
+    final rankBlock = Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          context.t(K.crowdRankLabel),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: SahneType.eyebrow.copyWith(color: t.tx2),
+        ),
+        Text(
+          rankText,
+          key: rankKey,
+          maxLines: 1,
+          style: SahneType.headline.copyWith(
+            color: t.raceTx,
+            fontFeatures: const [FontFeature.tabularFigures()],
+          ),
+        ),
+      ],
+    );
+
+    Widget cell(CrowdStanding standing) {
+      final isMe = playersShareIdentity(standing.player, player);
+      return DecoratedBox(
+        decoration: ShapeDecoration(
+          color: isMe ? t.goldTint : t.s2,
+          shape: SahneShape.s,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: SahneSpace.x2,
+            vertical: SahneSpace.x1 + 2,
+          ),
+          child: Row(
+            children: [
+              Text(
+                '${standing.rank}',
+                style: SahneType.captionStrong.copyWith(
+                  color: isMe ? t.goldTx : t.tx2,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+              const SizedBox(width: SahneSpace.x2),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.playerDisplayName(standing.player.name),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SahneType.caption.copyWith(color: t.tx),
+                    ),
+                    Text(
+                      groupThousands(standing.player.score),
+                      maxLines: 1,
+                      style: SahneType.captionStrong.copyWith(
+                        color: t.goldTx,
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final strip = stacked
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var i = 0; i < top.length; i++) ...[
+                if (i > 0) const SizedBox(height: SahneSpace.x1),
+                cell(top[i]),
+              ],
+            ],
+          )
+        : Row(
+            children: [
+              for (var i = 0; i < top.length; i++) ...[
+                if (i > 0) const SizedBox(width: SahneSpace.x1),
+                Expanded(child: cell(top[i])),
+              ],
+            ],
+          );
+
+    return Semantics(
+      container: true,
+      label:
+          '${context.t(K.crowdRankLabel)}: $rankText, '
+          '${player.score} ${context.t(K.scoreWord).toLowerCase()}',
+      child: SahneSurfaceCard(
+        key: const ValueKey('quiz-crowd-header'),
+        padding: const EdgeInsets.all(SahneSpace.x3),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (stacked) ...[
+              me,
+              const SizedBox(height: SahneSpace.x2),
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: rankBlock,
+              ),
+            ] else
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: me),
+                  const SizedBox(width: SahneSpace.x3),
+                  rankBlock,
+                ],
+              ),
+            if (progress != null) ...[
+              const SizedBox(height: SahneSpace.x2),
+              Text(
+                context.t(K.crowdAnsweredCount, {
+                  'answered': '${progress!.answered}',
+                  'active': '${progress!.active}',
+                }),
+                key: progressKey,
+                style: SahneType.captionStrong.copyWith(
+                  color: t.tx2,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+            ],
+            if (top.isNotEmpty) ...[
+              const SizedBox(height: SahneSpace.x3),
+              Padding(
+                padding: const EdgeInsets.only(bottom: SahneSpace.x1),
+                child: Text(
+                  context.t(K.crowdTopThree),
+                  style: SahneType.eyebrow.copyWith(color: t.tx2),
+                ),
+              ),
+              KeyedSubtree(key: topKey, child: strip),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 // ─── Düello kartı ────────────────────────────────────────────────────────────
 
 /// İki oyuncu yan yana: avatar + ad + puan, ortada tur ve "VS", altında
@@ -1008,9 +1242,19 @@ class _AnswerRevealFallback extends StatelessWidget {
 
 /// Çok oyunculuda cevap kaydedildi, öteki oyuncu bekleniyor.
 class _MultiplayerWaitingOverlay extends StatelessWidget {
-  const _MultiplayerWaitingOverlay({required this.isKu});
+  const _MultiplayerWaitingOverlay({
+    required this.isKu,
+    this.crowd = false,
+    this.progress,
+  });
 
   final bool isKu;
+
+  /// Kalabalık odada bekleyen tek bir rakip değil, "diğerleri"dir.
+  final bool crowd;
+
+  /// Kalabalıkta biliniyorsa "x/N cevapladı"; yoksa genel bekleme metni.
+  final RoomAnswerProgress? progress;
 
   @override
   Widget build(BuildContext context) {
@@ -1035,7 +1279,17 @@ class _MultiplayerWaitingOverlay extends StatelessWidget {
                     style: SahneType.bodyStrong.copyWith(color: t.tx),
                   ),
                   Text(
-                    Tr.forKu(K.digerOyuncuBekleniyor, isKu),
+                    progress != null
+                        ? Tr.forKu(K.crowdAnsweredCount, isKu, {
+                            'answered': '${progress!.answered}',
+                            'active': '${progress!.active}',
+                          })
+                        : Tr.forKu(
+                            crowd
+                                ? K.crowdWaitingOthers
+                                : K.digerOyuncuBekleniyor,
+                            isKu,
+                          ),
                     style: SahneType.caption.copyWith(color: t.tx2),
                   ),
                 ],

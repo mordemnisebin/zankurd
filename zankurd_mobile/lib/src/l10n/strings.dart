@@ -1160,6 +1160,12 @@ class Tr {
       'ku': 'Heke tu ji pêşbirkê derkevî, tu yê wek têkçûyî bêyî hesibandin.',
       'tr': 'Maçtan ayrılırsan hükmen yenilmiş sayılırsın.',
     },
+    K.leaveCrowdMatchBody: {
+      'ku':
+          'Heke tu derkevî, pêşbirk bi lîstikvanên din berdewam dike; tu nikarî vegerî û nakevî rêzkirinê.',
+      'tr':
+          'Ayrılırsan yarış diğer oyuncularla devam eder; geri dönemezsin ve sıralamaya girmezsin.',
+    },
     K.matchForfeitedTitle: {
       'ku': 'Pêşbirk bi derketinê qediya',
       'tr': 'Maç hükmen sona erdi',
@@ -1503,6 +1509,53 @@ class Tr {
     K.roomJoinFailed: {
       'ku': 'Tevlîbûn têk çû. Dîsa biceribîne.',
       'tr': 'Odaya katılamadın. Tekrar dene.',
+    },
+    // ── Kalabalık oda (2–50 kişi, 2026-10-16) ───────────────────────
+    K.roomCapacityLabel: {'ku': 'Hejmara lîstikvanan', 'tr': 'Oyuncu sayısı'},
+    K.roomCapacityOption: {'ku': '{n} kes', 'tr': '{n} kişi'},
+    K.roomCapacityHint: {
+      'ku': 'Mêvandar bi herî kêm 2 lîstikvanan dikare dest pê bike.',
+      'tr': 'Oda sahibi en az 2 oyuncuyla başlatabilir.',
+    },
+    K.crowdRoomTitle: {'ku': 'Pêşbirka komê', 'tr': 'Grup yarışı'},
+    K.crowdStartsWhenHostStarts: {
+      'ku': 'Gava mêvandar dest pê bike, pêşbirk dest pê dike.',
+      'tr': 'Oda sahibi başlatınca yarış başlar.',
+    },
+    K.crowdHostStartHint: {
+      'ku': 'Gava amade bî dest pê bike. Piştî destpêkê kes nikare tevlî bibe.',
+      'tr': 'Hazır olunca başlat. Yarış başlayınca kimse katılamaz.',
+    },
+    K.hostTransferredToYou: {
+      'ku': 'Mêvandar derket; niha tu mêvandar î.',
+      'tr': 'Oda sahibi ayrıldı; artık oda sahibi sensin.',
+    },
+    K.crowdRankLabel: {'ku': 'Rêza te', 'tr': 'Sıran'},
+    K.crowdTopThree: {'ku': 'Sê yekemîn', 'tr': 'İlk 3'},
+    K.crowdPlayersCount: {'ku': '{n} lîstikvan', 'tr': '{n} oyuncu'},
+    K.crowdAnsweredCount: {
+      'ku': '{answered}/{active} bersiv dan',
+      'tr': '{answered}/{active} cevapladı',
+    },
+    K.crowdWaitingOthers: {
+      'ku': 'Li benda lîstikvanên din…',
+      'tr': 'Diğer oyuncular bekleniyor…',
+    },
+    K.crowdDroppedBody: {
+      'ku':
+          'Ji ber ku di wextê xwe de amade nebûyî, ji pêşbirkê hatî derxistin. Pêşbirk bi lîstikvanên din ve berdewam dike.',
+      'tr':
+          'Zamanında hazır olmadığın için yarıştan çıkarıldın. Yarış diğer oyuncularla devam ediyor.',
+    },
+    K.crowdStandingsTitle: {
+      'ku': 'Rêzkirina pêşbirkê',
+      'tr': 'Yarış sıralaması',
+    },
+    K.crowdLeftBadge: {'ku': 'Derket', 'tr': 'Ayrıldı'},
+    K.crowdFinishedAtRank: {
+      'ku':
+          'Di nav {total} lîstikvanan de te pêşbirk di rêza {rank}. de qedand.',
+      'tr': '{total} oyuncu arasında yarışı {rank}. sırada tamamladın.',
     },
     K.yourBalance: {
       'ku': 'Hejmara zêrên te: {coins}',
@@ -3580,6 +3633,7 @@ class K {
   static const leaveLessonBody = 'quiz.leaveLesson.body';
   static const leaveRaceBody = 'quiz.leaveRace.body';
   static const leaveOnlineMatchBody = 'quiz.leaveOnlineMatch.body';
+  static const leaveCrowdMatchBody = 'quiz.leaveCrowdMatch.body';
   static const matchForfeitedTitle = 'quiz.matchForfeited.title';
   static const opponentForfeitedMatch = 'quiz.matchForfeited.opponent';
   static const youForfeitedMatch = 'quiz.matchForfeited.you';
@@ -3719,6 +3773,22 @@ class K {
   static const roomFull = 'room.full';
   static const roomAlreadyInAnotherRoom = 'room.alreadyInAnotherRoom';
   static const roomJoinFailed = 'room.joinFailed';
+  static const roomCapacityLabel = 'room.capacity.label';
+  static const roomCapacityOption = 'room.capacity.option';
+  static const roomCapacityHint = 'room.capacity.hint';
+  static const crowdRoomTitle = 'room.crowd.title';
+  static const crowdStartsWhenHostStarts = 'room.crowd.startsWhenHostStarts';
+  static const crowdHostStartHint = 'room.crowd.hostStartHint';
+  static const hostTransferredToYou = 'room.crowd.hostTransferredToYou';
+  static const crowdRankLabel = 'quiz.crowd.rankLabel';
+  static const crowdTopThree = 'quiz.crowd.topThree';
+  static const crowdPlayersCount = 'quiz.crowd.playersCount';
+  static const crowdAnsweredCount = 'quiz.crowd.answeredCount';
+  static const crowdWaitingOthers = 'quiz.crowd.waitingOthers';
+  static const crowdDroppedBody = 'quiz.crowd.droppedBody';
+  static const crowdStandingsTitle = 'result.crowd.standingsTitle';
+  static const crowdLeftBadge = 'result.crowd.leftBadge';
+  static const crowdFinishedAtRank = 'result.crowd.finishedAtRank';
   static const yourBalance = 'shop.yourBalance';
   static const earnCoins = 'shop.earnCoins';
   static const coinsShort = 'shop.coinsShort';

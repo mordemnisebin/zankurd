@@ -207,7 +207,14 @@ class _RoomScreenState extends State<RoomScreen> {
   bool _playersRefreshing = false;
 
   static const _pollInterval = Duration(seconds: 3);
+
+  /// Kalabalık lobide her istemci aynı tabloları yokladığı için (50 kişi =
+  /// saniyede ~8 sorgu) yedek yoklama seyrelir; asıl kaynak realtime'dır.
+  static const _crowdPollInterval = Duration(seconds: 6);
   static const _maxPollsBeforePause = 20; // ~60s, yalnızca >=2 oyuncu varken
+
+  Duration get _currentPollInterval =>
+      room.isCrowd ? _crowdPollInterval : _pollInterval;
 
   @override
   void initState() {
@@ -346,6 +353,49 @@ class _RoomScreenState extends State<RoomScreen> {
       _playersRefreshing = false;
     });
     _syncPollingForLobby(unique.length);
+    _refreshHostIfMissing(unique);
+  }
+
+  bool _hostRefreshInFlight = false;
+
+  /// Kalabalık lobide host çıkınca sunucu odayı kapatmaz, host'u en erken
+  /// katılan aktif oyuncuya devreder. Oyuncu listesi yeni host'u söylemez
+  /// (yalnız host'un satırının kaybolduğunu gösterir); bu yüzden host satırı
+  /// listeden düştüğünde oda satırı bir kez yeniden okunur. Olay güdümlüdür:
+  /// 50 istemcinin hepsi saniyede bir `rooms` sorgulamaz.
+  void _refreshHostIfMissing(List<Player> players) {
+    final hostId = room.hostId;
+    final roomId = room.id;
+    if (!room.isCrowd ||
+        roomId == null ||
+        hostId == null ||
+        players.isEmpty ||
+        _hostRefreshInFlight ||
+        players.any((player) => player.id == hostId)) {
+      return;
+    }
+    _hostRefreshInFlight = true;
+    widget.repository
+        .loadRoomSnapshot(roomId)
+        .then((fresh) {
+          if (!mounted || _leaving || _terminalHandled || quizOpened) return;
+          final newHostId = fresh.hostId;
+          if (newHostId == null || newHostId == room.hostId) return;
+          final becameHost =
+              newHostId == _currentUserId && room.hostId != _currentUserId;
+          setState(() => room = room.copyWith(hostId: newHostId));
+          if (becameHost) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(content: Text(context.t(K.hostTransferredToYou))),
+              );
+          }
+        })
+        .catchError((Object error, StackTrace stack) {
+          ErrorReporter.record(error, stack, reason: 'room_host_refresh');
+        })
+        .whenComplete(() => _hostRefreshInFlight = false);
   }
 
   /// Lobide yedek yoklama AÇIK kalır; yalnız yarış başlayınca durur.
@@ -383,14 +433,17 @@ class _RoomScreenState extends State<RoomScreen> {
   void _startPolling() {
     if (_leaving || _terminalHandled || quizOpened) return;
     _pollTimer?.cancel();
-    _pollTimer = Timer.periodic(_pollInterval, (_) => _pollPlayersOnce());
+    _pollTimer = Timer.periodic(
+      _currentPollInterval,
+      (_) => _pollPlayersOnce(),
+    );
   }
 
   void _startStatusPolling() {
     if (_leaving || _terminalHandled || quizOpened) return;
     _statusPollTimer?.cancel();
     _statusPollTimer = Timer.periodic(
-      _pollInterval,
+      _currentPollInterval,
       (_) => _pollRoomStatusOnce(),
     );
   }
@@ -696,8 +749,13 @@ class _RoomScreenState extends State<RoomScreen> {
   @override
   Widget build(BuildContext context) {
     final ku = context.isKu;
-    final sorted = [...room.players]
-      ..sort((a, b) => b.score.compareTo(a.score));
+    final crowd = room.isCrowd;
+    // Kalabalık lobide herkes 0 puandadır: sıralamak katılış sırasını
+    // karıştırır (Dart'ın sort'u kararlı değil) ve satırlar yerinden oynar.
+    final sorted = [...room.players];
+    if (!crowd || room.status != RoomStatus.lobby) {
+      sorted.sort((a, b) => b.score.compareTo(a.score));
+    }
     // `room.players` (yukarıdaki `sorted`) kasten süzülmez: oda üyeliği,
     // `canStart`/`allPlayersReady` gibi oyun mantığı hâlâ GERÇEK listeye
     // bakmalı. Yalnız EKRANDA çizilen satırlar süzülür.
@@ -712,13 +770,18 @@ class _RoomScreenState extends State<RoomScreen> {
     // SEBEBİ yazılır. Tek satırlık uyarı şeridi eskiden yalnız "2 oyuncu
     // gerekli" diyordu; katılan hazır olmadan başlanamadığı hâlde ev
     // sahibi kapalı düğmeye bakıp niçinini bilemiyordu.
-    final waitingForReady = room.players.length >= 2 && !allPlayersReady;
-    final canStart =
-        isHost &&
-        ready &&
-        !starting &&
-        room.players.length >= 2 &&
-        allPlayersReady;
+    final waitingForReady =
+        !crowd && room.players.length >= 2 && !allPlayersReady;
+    // Kalabalık oda: "herkes hazır" şartı yok, host en az 2 aktif oyuncuyla
+    // başlatır (sunucu kuralı `start_room_game`).
+    final activePlayerCount = room.players.where((p) => !p.left).length;
+    final canStart = crowd
+        ? isHost && !starting && activePlayerCount >= 2
+        : isHost &&
+              ready &&
+              !starting &&
+              room.players.length >= 2 &&
+              allPlayersReady;
     final t = SahneTokens.of(context);
     if (_leaving) {
       return Scaffold(
@@ -813,7 +876,10 @@ class _RoomScreenState extends State<RoomScreen> {
                 const SizedBox(width: SahneSpace.x3),
                 Expanded(
                   child: Text(
-                    context.t(K.waitingHost),
+                    context.t(
+                      crowd ? K.crowdStartsWhenHostStarts : K.waitingHost,
+                    ),
+                    key: const ValueKey('room-waiting-host'),
                     style: SahneType.captionStrong.copyWith(color: t.tx2),
                   ),
                 ),
@@ -833,6 +899,12 @@ class _RoomScreenState extends State<RoomScreen> {
           key: const ValueKey('room-ready-hint'),
           icon: AppIcons.circleCheck,
           text: context.t(ready ? K.waitingOpponentReady : K.tapReadyToStart),
+        ),
+      if (crowd && isHost && activePlayerCount >= 2)
+        _RoomNotice(
+          key: const ValueKey('room-crowd-start-hint'),
+          icon: AppIcons.circleCheck,
+          text: context.t(K.crowdHostStartHint),
         ),
       if (room.players.length < 2)
         // Tek uyarı şeridi: "2 oyuncu gerekli" yalnız burada görünür.
@@ -978,6 +1050,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                               showScore:
                                                   room.status !=
                                                   RoomStatus.lobby,
+                                              showReadyState: !crowd,
                                               repository: widget.repository,
                                               isSelf:
                                                   visiblePlayers[i].id ==
@@ -1004,38 +1077,43 @@ class _RoomScreenState extends State<RoomScreen> {
                                         ],
                                       ),
                               ),
-                              const SizedBox(height: SahneSpace.cardGap),
-                              padded(
-                                SahneSurfaceCard(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    SahneSpace.x4,
-                                    SahneSpace.x1,
-                                    SahneSpace.x2,
-                                    SahneSpace.x1,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      SwitchListTile(
-                                        value: ready,
-                                        onChanged: _toggleReady,
-                                        title: Text(
-                                          context.t(K.imReady),
-                                          style: SahneType.bodyStrong.copyWith(
-                                            color: t.tx,
+                              // Hazır anahtarı yalnız 1v1/2 kişilik odada: kalabalık
+                              // odada başlatmak için "herkes hazır" aranmaz, kart
+                              // yalnız bilgi şeritlerini taşır (yoksa hiç çizilmez).
+                              if (!crowd || notices.isNotEmpty) ...[
+                                const SizedBox(height: SahneSpace.cardGap),
+                                padded(
+                                  SahneSurfaceCard(
+                                    padding: EdgeInsets.fromLTRB(
+                                      SahneSpace.x4,
+                                      crowd ? SahneSpace.x3 : SahneSpace.x1,
+                                      SahneSpace.x2,
+                                      crowd ? 0 : SahneSpace.x1,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        if (!crowd)
+                                          SwitchListTile(
+                                            value: ready,
+                                            onChanged: _toggleReady,
+                                            title: Text(
+                                              context.t(K.imReady),
+                                              style: SahneType.bodyStrong
+                                                  .copyWith(color: t.tx),
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
                                           ),
-                                        ),
-                                        contentPadding: EdgeInsets.zero,
-                                      ),
-                                      for (final notice in notices) ...[
-                                        notice,
-                                        const SizedBox(height: SahneSpace.x3),
+                                        for (final notice in notices) ...[
+                                          notice,
+                                          const SizedBox(height: SahneSpace.x3),
+                                        ],
                                       ],
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                               // Tepkiler yalnız karşıda biri varken anlamlı;
                               // tek başına bekleyen ev sahibine ikinci bir
                               // eylem yığını göstermenin yararı yok.
@@ -1168,7 +1246,9 @@ class _RoomScreenState extends State<RoomScreen> {
           questions: questions.isEmpty
               ? widget.repository.playableQuestions
               : questions,
-          is1v1: room.id != null && room.players.length == 2,
+          // Kalabalık oda 1v1 düello yoluna girmez: o yolun başlığı, hazır
+          // el sıkışması ve cevap yayını iki kişiye göre yazılmıştır.
+          is1v1: room.id != null && room.players.length == 2 && !room.isCrowd,
         ),
       ),
     );
@@ -1340,14 +1420,17 @@ class _RoomHero extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: SahneSpace.x3),
-                  _PlayerCount(count: room.players.length),
+                  _PlayerCount(
+                    count: room.players.length,
+                    max: room.isCrowd ? room.maxPlayers : null,
+                  ),
                 ],
               ),
               const SizedBox(height: SahneSpace.x2),
               Semantics(
                 header: true,
                 child: Text(
-                  room.name,
+                  room.isCrowd ? context.t(K.crowdRoomTitle) : room.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: SahneType.title.copyWith(color: t.tx),
@@ -1455,18 +1538,22 @@ class _RoomHero extends StatelessWidget {
 /// Oyuncu sayısı: kart başlığının sağında "kişi simgesi + sayı". Yalnız
 /// simge ve rakamdır; ekran okuyucu "Oyuncular: 2" duyar.
 class _PlayerCount extends StatelessWidget {
-  const _PlayerCount({required this.count});
+  const _PlayerCount({required this.count, this.max});
 
   static const anchorKey = ValueKey('room-player-count');
 
   final int count;
 
+  /// Kalabalık odanın kapasitesi: doluysa "3/8", değilse yalnız "3".
+  final int? max;
+
   @override
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
+    final text = max == null ? '$count' : '$count/$max';
     return Semantics(
       key: anchorKey,
-      label: '${context.t(K.playersWord)}: $count',
+      label: '${context.t(K.playersWord)}: $text',
       excludeSemantics: true,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -1478,7 +1565,8 @@ class _PlayerCount extends StatelessWidget {
           ),
           const SizedBox(width: SahneSpace.x1),
           Text(
-            '$count',
+            text,
+            key: const ValueKey('room-player-count-text'),
             style: SahneType.bodyStrong.copyWith(
               color: t.tx,
               fontFeatures: const [FontFeature.tabularFigures()],
@@ -1623,6 +1711,7 @@ class _RoomPlayerRow extends StatelessWidget {
     required this.isSelf,
     this.isHost = false,
     this.showScore = true,
+    this.showReadyState = true,
     this.onBlocked,
   });
 
@@ -1637,6 +1726,10 @@ class _RoomPlayerRow extends StatelessWidget {
   /// Puan ve seri sütunu. Salon (lobby) aşamasında herkes 0'dadır; sıfırlar
   /// bilgi vermez, yalnız gürültü ekler — oyun başlayınca görünür.
   final bool showScore;
+
+  /// "✓ Hazır" / "Bekliyor" satırı. Kalabalık odada hazır olma şartı yok,
+  /// durum bilgi vermez; satır yalnız ad ve (varsa) ev sahibi rozetini taşır.
+  final bool showReadyState;
 
   /// Bildir/engelle için; yeni bir backend yok, mevcut RPC'ler kullanılır.
   final ZanKurdRepository repository;
@@ -1691,26 +1784,27 @@ class _RoomPlayerRow extends StatelessWidget {
       runSpacing: SahneSpace.x1,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              isReady ? AppIcons.check : AppIcons.hourglass,
-              size: 14,
-              color: isReady ? t.okTx : t.tx2,
-            ),
-            const SizedBox(width: SahneSpace.x1),
-            Flexible(
-              child: Text(
-                _localizedState(player.state),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: (isReady ? SahneType.captionStrong : SahneType.caption)
-                    .copyWith(color: isReady ? t.okTx : t.tx2),
+        if (showReadyState)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                isReady ? AppIcons.check : AppIcons.hourglass,
+                size: 14,
+                color: isReady ? t.okTx : t.tx2,
               ),
-            ),
-          ],
-        ),
+              const SizedBox(width: SahneSpace.x1),
+              Flexible(
+                child: Text(
+                  _localizedState(player.state),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: (isReady ? SahneType.captionStrong : SahneType.caption)
+                      .copyWith(color: isReady ? t.okTx : t.tx2),
+                ),
+              ),
+            ],
+          ),
         if (isHost)
           SahneBadge(label: Tr.forKu(K.host, isKu), tone: SahneBadgeTone.gold),
       ],
@@ -1777,8 +1871,10 @@ class _RoomPlayerRow extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   nameText,
-                  const SizedBox(height: 2),
-                  state,
+                  if (showReadyState || isHost) ...[
+                    const SizedBox(height: 2),
+                    state,
+                  ],
                   if (stacked && showScore) ...[
                     const SizedBox(height: SahneSpace.x1),
                     score,

@@ -64,6 +64,7 @@ abstract interface class LivePlayPort {
     int secondsPerQuestion = GameRoom.defaultSecondsPerQuestion,
     int questionCount = 10,
     int entryFee = 0,
+    int maxPlayers = 2,
   });
   Future<GameRoom> joinOnlineRoom(String code);
 
@@ -96,6 +97,10 @@ abstract interface class LivePlayPort {
     required int expectedQuestionIndex,
   });
   Future<RoomLeaveOutcome> leaveOnlineRoom(GameRoom room);
+
+  /// Kalabalık odada mevcut sorunun cevap ilerlemesi ("x/N cevapladı").
+  /// Sunucuda RPC yoksa ya da cevap okunamazsa `null`.
+  Future<RoomAnswerProgress?> loadRoomAnswerProgress(GameRoom room);
   Future<List<Player>> loadRoomPlayers(GameRoom room);
   Future<RoomStatus> loadRoomStatus(GameRoom room);
   Future<RoomEndState> loadRoomEndState(GameRoom room);

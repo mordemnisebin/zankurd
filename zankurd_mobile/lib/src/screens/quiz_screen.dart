@@ -32,6 +32,7 @@ import '../models/wildcard.dart';
 import '../l10n/lang.dart';
 import '../l10n/strings.dart';
 import '../services/analytics_service.dart';
+import '../services/crowd_standings.dart';
 import '../services/favorite_mutation_service.dart';
 import '../services/learning_productive_recall.dart';
 import '../services/question_audio_service.dart';
@@ -179,6 +180,7 @@ class _QuizScreenState extends State<QuizScreen>
   String get _quizModeLabel {
     if (_isLearningExperience) return 'learning';
     if (widget.practice) return 'practice';
+    if (_isCrowd) return 'crowd';
     if (widget.is1v1) return '1v1';
     if (widget.dailyQuiz) return 'daily';
     if (widget.botRace) return 'bot_race';
@@ -410,6 +412,17 @@ class _QuizScreenState extends State<QuizScreen>
 
   /// Gerçek online multiplayer: 1v1 veya takım oyunu (bot değil).
   bool get _isMultiplayer => widget.room.id != null;
+
+  /// Kalabalık oda (özel oda, kapasite > 2). 1v1 düello yolundan şu farklarla
+  /// ayrılır: cevap başına yayın YOK (N oyuncuda N² mesaj olurdu), rakibin
+  /// seçtiği şık gösterilmez, başlık sıra + ilk üç şeridi taşır, sonuç
+  /// sunucunun sıralı yükünden gelir ve yoklama seyrektir.
+  bool get _isCrowd => _isMultiplayer && widget.room.isCrowd;
+
+  /// Sonucu sunucudan tek kesin kayıt olarak okuyan yol (1v1 ve kalabalık);
+  /// öteki çok oyunculu odalar eski "takım" sonuç yolunda kalır.
+  bool get _usesExactResult => widget.is1v1 || _isCrowd;
+
   bool get _usesServerHiddenAnswers =>
       _isMultiplayer && widget.repository.usesServerHiddenAnswers;
 
@@ -591,6 +604,9 @@ class _QuizScreenState extends State<QuizScreen>
                 }
                 return;
               }
+              // Kalabalık odada cevap/hazır yayını yoktur; tepki dışında
+              // gelen her şey (eski istemci, yabancı yayın) yok sayılır.
+              if (_isCrowd) return;
               if (!_usesServerHiddenAnswers &&
                   senderName != null &&
                   !isSelf &&
@@ -702,6 +718,7 @@ class _QuizScreenState extends State<QuizScreen>
                       livePlayers[idx] = livePlayers[idx].copyWith(
                         score: p.score,
                         streak: p.streak,
+                        left: p.left,
                         state: _answeredPlayerKeys.contains(key)
                             ? Tr.forKu(K.answeredState, _isKu)
                             : Tr.forKu(K.waitingAnswerState, _isKu),
@@ -718,6 +735,7 @@ class _QuizScreenState extends State<QuizScreen>
                   }
                   livePlayers.sort((a, b) => b.score.compareTo(a.score));
                 });
+                if (_isCrowd) _onCrowdPlayersChanged();
                 _checkMultiplayerSync();
               });
         }
@@ -1182,6 +1200,10 @@ class _QuizScreenState extends State<QuizScreen>
       } else {
         _startQuestionFlowOnce();
       }
+    } on RoomMemberLeftException {
+      // Hazır süresi dolunca kalabalık odadan düşürüldük: yeniden denemenin
+      // anlamı yok, oyun bizsiz sürüyor.
+      if (mounted) unawaited(_handleDroppedFromCrowd());
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'quiz client ready failed');
       if (mounted) _scheduleServerReadyRetry(retryReadyMark: true);
@@ -1397,6 +1419,7 @@ class _QuizScreenState extends State<QuizScreen>
     _serverReadyRetryTimer?.cancel();
     _roomSub?.cancel();
     _pollTimer?.cancel();
+    _crowdRevealProbeTimer?.cancel();
     _readyPingTimer?.cancel();
     _readyTimeoutTimer?.cancel();
     _visualReadyFallbackTimer?.cancel();
@@ -1521,6 +1544,7 @@ class _QuizScreenState extends State<QuizScreen>
         builder: (_) => _QuizExitDialog(
           isLearning: _isLearningExperience,
           isMultiplayer: _isMultiplayer,
+          isCrowd: _isCrowd,
         ),
       );
       if (leave != true ||
@@ -1543,7 +1567,9 @@ class _QuizScreenState extends State<QuizScreen>
         }
         if (!mounted) return;
         outcome = leaveOutcome;
-        if (!outcome.completed) {
+        // Kalabalıkta ayrılan oyuncuya sonuç sunulmaz (sunucu yalnız
+        // aktif üyelere verir); oda kalanlarla bitmiş olsa da ana ekrana.
+        if (!outcome.completed || _isCrowd) {
           Navigator.of(context).popUntil((route) => route.isFirst);
         }
       } else {
@@ -1564,7 +1590,7 @@ class _QuizScreenState extends State<QuizScreen>
           _canContinueExit(generation, expectedOwnerId, expectedRoute)) {
         final deferred = _deferredEndState;
         _deferredEndState = null;
-        if (outcome?.completed == true) {
+        if (outcome?.completed == true && !_isCrowd) {
           _scheduleTerminalAction(
             () => _completeMultiplayerResult(requestFinish: false),
           );
@@ -1802,6 +1828,9 @@ class _QuizScreenState extends State<QuizScreen>
             : Tr.forKu(K.waitingAnswerState, _isKu),
       );
     }
+    // Kalabalık odada cevap yayını yok: N oyuncu N² mesaj üretir. Skor ve
+    // sıra `room_players` akışından, "kimler cevapladı" sunucudan okunur.
+    if (_isCrowd) return;
     widget.repository
         .sendRoomBroadcast(widget.room.id!, {
           'sender': _myName,
@@ -1887,18 +1916,30 @@ class _QuizScreenState extends State<QuizScreen>
     // Server-hidden odada her iki üye de aynı expected-index CAS'ini
     // güvenle deneyebilir. Eski broadcast tabanlı odalarda mevcut host
     // koordinasyonu korunur.
-    _revealTimer = Timer(const Duration(seconds: revealDuration), () {
-      _revealTickTimer?.cancel();
-      if (mounted) {
-        if (_usesServerHiddenAnswers) {
-          unawaited(_advanceAuthoritativeIndex());
-        } else if (_isHost) {
-          unawaited(_next());
-        } else {
-          _requestAuthoritativeAdvance();
+    // Kalabalıkta herkes geri sayımı aynı saniyede bitirir ve aynı anda
+    // `advance_room_question` + `get_my_resumable_room` çağırırdı (50 kişide
+    // 100 eşzamanlı RPC). Ev sahibi hemen ilerletir; ötekiler 0,3–1,5 sn
+    // sonra dener — sunucu zaten tek bir ilerletmeyi kabul eder, gecikme
+    // yalnız gereksiz çağrıları `rooms` akışının getirdiği yeni indekse
+    // bırakır.
+    final advanceJitter = _isCrowd && !_isHost
+        ? Duration(milliseconds: 300 + Random().nextInt(1200))
+        : Duration.zero;
+    _revealTimer = Timer(
+      const Duration(seconds: revealDuration) + advanceJitter,
+      () {
+        _revealTickTimer?.cancel();
+        if (mounted) {
+          if (_usesServerHiddenAnswers) {
+            unawaited(_advanceAuthoritativeIndex());
+          } else if (_isHost) {
+            unawaited(_next());
+          } else {
+            _requestAuthoritativeAdvance();
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   Future<void> _sendLiveReaction(String text) async {
@@ -2119,14 +2160,109 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _pollRoomIndex() async {
+    if (_isCrowd) unawaited(_refreshCrowdProgress());
     await _reconcileOnlineRoom();
+  }
+
+  /// Mevcut sorunun "x/N cevapladı" ilerlemesi (kalabalık oda). Sunucu
+  /// yalnız sayı verir; `null` ise (RPC yok) başlık eski bekleme metninde
+  /// kalır.
+  RoomAnswerProgress? _crowdProgress;
+  bool _crowdProgressInFlight = false;
+
+  /// Yalnız GÜNCEL soruya ait sayı gösterilir: cevap yolda gecikip başka
+  /// soruya geçilmişse eski sayı yanlış sorunun "kaç kişi cevapladı"sı olur.
+  RoomAnswerProgress? get _currentCrowdProgress {
+    final progress = _crowdProgress;
+    return progress != null && progress.questionIndex == index
+        ? progress
+        : null;
+  }
+
+  Future<void> _refreshCrowdProgress() async {
+    if (!_isCrowd || _crowdProgressInFlight || !mounted) return;
+    _crowdProgressInFlight = true;
+    try {
+      final progress = await widget.repository.loadRoomAnswerProgress(
+        widget.room,
+      );
+      if (!mounted || progress == null) return;
+      // Soru, istek uçarken değiştiyse sayı geçersizdir (render'da da
+      // kontrol edilir; burada yalnız gereksiz yeniden çizimi önler).
+      if (progress.questionIndex != index) return;
+      setState(() => _crowdProgress = progress);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'crowd answer progress');
+    } finally {
+      _crowdProgressInFlight = false;
+    }
+  }
+
+  /// Kalabalık odada yedek yoklama aralığı (1v1'de 4 sn).
+  static const _crowdPollInterval = Duration(seconds: 6);
+
+  bool _crowdDropHandled = false;
+  Timer? _crowdRevealProbeTimer;
+
+  /// `room_players` satırları değişti (kalabalık oda).
+  ///
+  /// İki anlam taşır: (1) skorlar yalnız bir soru AÇIKLANINCA yazılır — bu
+  /// yüzden cevabını vermiş ve beklemekte olan oyuncu için değişiklik
+  /// "açıklandı" işaretidir; cevap yayını olmadığından başka işaret yok.
+  /// (2) `left_at` dolduysa oyuncu düşmüştür (ayrıldı ya da zamanında hazır
+  /// olmadı).
+  ///
+  /// Açıklama yoklaması 0,1–0,7 sn rastgele geciktirilir: 50 istemcinin aynı
+  /// anda üçer sorgu atması (aynı olay hepsine aynı anda düşer) sunucuyu
+  /// gereksiz yere dalgalandırırdı.
+  void _onCrowdPlayersChanged() {
+    if (!mounted || !_isCrowd) return;
+    final me = livePlayers.where(_isMe).firstOrNull;
+    if (me != null && me.left) {
+      unawaited(_handleDroppedFromCrowd());
+      return;
+    }
+    if (answered &&
+        _mpPhase == _MultiplayerPhase.waiting &&
+        _crowdRevealProbeTimer == null) {
+      _crowdRevealProbeTimer = Timer(
+        Duration(milliseconds: 100 + Random().nextInt(600)),
+        () {
+          _crowdRevealProbeTimer = null;
+          if (mounted) unawaited(_reconcileOnlineRoom());
+        },
+      );
+    }
+  }
+
+  /// Bu oyuncu kalabalık odadan düşürüldü (hazır süresi doldu ya da başka
+  /// cihazdan ayrıldı). Oyun diğerleriyle sürer; burada yapılacak iş kalmadı:
+  /// durumu söyle ve ana ekrana dön.
+  Future<void> _handleDroppedFromCrowd() async {
+    // Kullanıcı kendisi çıkıyorsa (`_confirmExit`) o akış kendi yönlendirir.
+    if (_crowdDropHandled || _exitInFlight || completing) return;
+    _crowdDropHandled = true;
+    _terminalHandling = true;
+    _stopTerminalActivity();
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const _QuizForfeitDialog(bodyKey: K.crowdDroppedBody),
+    );
+    if (!mounted) return;
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   void _ensureRoomPolling() {
     if (!_isMultiplayer || _pollTimer?.isActive == true) return;
-    _pollTimer = Timer.periodic(const Duration(seconds: 4), (_) {
-      _pollRoomIndex();
-    });
+    // Kalabalık odada her istemci her turda üç sorgu atar; 50 kişide 4 sn
+    // yoklama saniyede ~35 sorgu demek. Asıl uyarı `room_players` akışıdır.
+    _pollTimer = Timer.periodic(
+      _isCrowd ? _crowdPollInterval : const Duration(seconds: 4),
+      (_) {
+        _pollRoomIndex();
+      },
+    );
   }
 
   Future<void> _reconcileOnlineRoom() async {
@@ -2222,6 +2358,10 @@ class _QuizScreenState extends State<QuizScreen>
             _applyOwnAuthoritativePlayerState();
           }
         });
+        if (_isCrowd && livePlayers.any((p) => _isMe(p) && p.left)) {
+          unawaited(_handleDroppedFromCrowd());
+          return;
+        }
       }
 
       final state = endState;
@@ -2671,7 +2811,7 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _completeMultiplayerResult({required bool requestFinish}) {
-    if (widget.is1v1) {
+    if (_usesExactResult) {
       return _reconcileCompletedRoomResult(requestFinish: requestFinish);
     }
     return _finishLegacyMultiplayerResult(requestFinish: requestFinish);
@@ -2956,7 +3096,7 @@ class _QuizScreenState extends State<QuizScreen>
   Future<void> _reconcileCompletedRoomResult({
     bool requestFinish = false,
   }) async {
-    if (!_isMultiplayer || !widget.is1v1 || _onlineResultInFlight) return;
+    if (!_isMultiplayer || !_usesExactResult || _onlineResultInFlight) return;
     if (requestFinish) _onlineResultFinishRequired = true;
     final roomId = widget.room.id?.trim() ?? '';
     final expectedOwnerId = _onlineResultOwnerId;
@@ -3081,7 +3221,7 @@ class _QuizScreenState extends State<QuizScreen>
     }
     _onlineResultGeneration++;
     _onlineResultInFlight = false;
-    if (!widget.is1v1) _legacyResultGeneration++;
+    if (!_usesExactResult) _legacyResultGeneration++;
     _terminalHandling = true;
     completing = true;
     _stopTerminalActivity();
@@ -3106,7 +3246,7 @@ class _QuizScreenState extends State<QuizScreen>
       _enterOwnerChangedResultGate();
       return;
     }
-    if (!widget.is1v1) {
+    if (!_usesExactResult) {
       if (_legacyResultInFlight) {
         _legacyRetryRequested = true;
         return;
@@ -3124,7 +3264,7 @@ class _QuizScreenState extends State<QuizScreen>
   }
 
   Future<void> _retryTeamOnlineResultGate() async {
-    if (!mounted || widget.is1v1 || _onlineResultInFlight) return;
+    if (!mounted || _usesExactResult || _onlineResultInFlight) return;
     if (!_hasExpectedOnlineOwner) {
       _enterOwnerChangedResultGate();
       return;
@@ -3207,6 +3347,8 @@ class _QuizScreenState extends State<QuizScreen>
     _advanceRetryTimer?.cancel();
     _serverReadyRetryTimer?.cancel();
     _pollTimer?.cancel();
+    _crowdRevealProbeTimer?.cancel();
+    _crowdRevealProbeTimer = null;
   }
 
   Map<String, dynamic> _completionResultFromPresentation(
@@ -3327,7 +3469,14 @@ class _QuizScreenState extends State<QuizScreen>
         });
         _syncMyDuelState(answeredNow: true);
         _startOpponentWaitTimer();
-        unawaited(_reconcileOnlineRoom());
+        // Kalabalıkta herkesin cevap anında 3 sorgu atması N×3 yük demek;
+        // açıklama `room_players` akışı, seyrek yoklama ve sunucu süresi
+        // (`_startOpponentWaitTimer`) ile yakalanır.
+        if (_isCrowd) {
+          unawaited(_refreshCrowdProgress());
+        } else {
+          unawaited(_reconcileOnlineRoom());
+        }
         return;
       }
 

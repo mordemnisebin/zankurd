@@ -12,10 +12,14 @@ class _QuizExitDialog extends StatelessWidget {
   const _QuizExitDialog({
     required this.isLearning,
     required this.isMultiplayer,
+    this.isCrowd = false,
   });
 
   final bool isLearning;
   final bool isMultiplayer;
+
+  /// Kalabalık odada ayrılmak "hükmen yenilgi" değil: oyun diğerleriyle sürer.
+  final bool isCrowd;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,9 @@ class _QuizExitDialog extends StatelessWidget {
         isLearning ? context.t(K.leaveLessonQ) : context.t(K.leaveRaceQ),
       ),
       content: Text(
-        isMultiplayer
+        isCrowd
+            ? context.t(K.leaveCrowdMatchBody)
+            : isMultiplayer
             ? context.t(K.leaveOnlineMatchBody)
             : isLearning
             ? context.t(K.leaveLessonBody)
