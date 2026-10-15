@@ -1162,7 +1162,7 @@ class Tr {
     },
     K.leaveCrowdMatchBody: {
       'ku':
-          'Heke tu derkevî, pêşbirk bi lîstikvanên din berdewam dike; tu nikarî vegerî û nakevî rêzkirinê.',
+          'Heke tu derkevî, pêşbirk bi lîstikvanên din re berdewam dike; tu nikarî vegerî û nakevî rêzkirinê.',
       'tr':
           'Ayrılırsan yarış diğer oyuncularla devam eder; geri dönemezsin ve sıralamaya girmezsin.',
     },
@@ -1531,10 +1531,10 @@ class Tr {
       'tr': 'Oda sahibi ayrıldı; artık oda sahibi sensin.',
     },
     K.crowdRankLabel: {'ku': 'Rêza te', 'tr': 'Sıran'},
-    K.crowdTopThree: {'ku': 'Sê yekemîn', 'tr': 'İlk 3'},
+    K.crowdTopThree: {'ku': 'Sêyên yekem', 'tr': 'İlk 3'},
     K.crowdPlayersCount: {'ku': '{n} lîstikvan', 'tr': '{n} oyuncu'},
     K.crowdAnsweredCount: {
-      'ku': '{answered}/{active} bersiv dan',
+      'ku': '{answered}/{active} bersiv da',
       'tr': '{answered}/{active} cevapladı',
     },
     K.crowdWaitingOthers: {
@@ -1543,7 +1543,7 @@ class Tr {
     },
     K.crowdDroppedBody: {
       'ku':
-          'Ji ber ku di wextê xwe de amade nebûyî, ji pêşbirkê hatî derxistin. Pêşbirk bi lîstikvanên din ve berdewam dike.',
+          'Ji ber ku di wextê xwe de amade nebûyî, ji pêşbirkê hatî derxistin. Pêşbirk bi lîstikvanên din re berdewam dike.',
       'tr':
           'Zamanında hazır olmadığın için yarıştan çıkarıldın. Yarış diğer oyuncularla devam ediyor.',
     },
