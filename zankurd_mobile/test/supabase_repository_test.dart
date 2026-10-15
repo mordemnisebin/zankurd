@@ -81,42 +81,62 @@ class _FriendsScoreHttpClient extends http.BaseClient {
   }
 }
 
-/// `favorite_questions` + `quiz_public_questions` + `categories` uçlarını
-/// taklit eder. Bir favori paketli bankada (`local-bank-id`), diğeri
-/// yalnız sunucuda (`server-only-id`, gerçek oda maçında kaydedilmiş)
-/// çözülür — 2026-08-14 denetimindeki "favoriler ekranı sunucu kaydını
-/// asla çözmüyor" kusurunu taklit eder.
+/// `favorite_questions` + `get_my_favorite_questions` RPC uçlarını taklit
+/// eder. Bir favori paketli bankada (`curated_movement_0001`), diğerleri
+/// yalnız sunucuda (gerçek `questions.id` uuid'leri, oda maçında kaydedilmiş)
+/// çözülür — 2026-08-14 denetimindeki "favoriler ekranı sunucu kaydını asla
+/// çözmüyor" kusurunu taklit eder.
 class _FavoriteQuestionsHttpClient extends http.BaseClient {
+  _FavoriteQuestionsHttpClient({
+    this.serverIds = const [serverOnlyId],
+    this.rpcStatus = 200,
+    this.rpcBody,
+    this.rpcThrows,
+  });
+
+  static const serverOnlyId = '11111111-1111-4111-8111-111111111111';
+
+  final List<String> serverIds;
+  final int rpcStatus;
+  final Object? rpcBody;
+  final Object? rpcThrows;
   final requestedPaths = <String>[];
+  final rpcBodies = <Map<String, dynamic>>[];
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     requestedPaths.add(request.url.path);
     if (request.url.path == '/rest/v1/favorite_questions') {
       return _jsonResponse(request, [
-        {'question_id': 'server-only-id'},
+        for (final id in serverIds) {'question_id': id},
         {'question_id': 'curated_movement_0001'},
       ]);
     }
-    if (request.url.path == '/rest/v1/quiz_public_questions') {
+    if (request.url.path == '/rest/v1/rpc/get_my_favorite_questions') {
+      final body = jsonDecode(
+        await (request as http.Request).finalize().bytesToString(),
+      );
+      rpcBodies.add(Map<String, dynamic>.from(body as Map));
+      if (rpcThrows != null) throw rpcThrows!;
+      if (rpcStatus != 200) {
+        return _jsonResponse(request, rpcBody, statusCode: rpcStatus);
+      }
+      final asked = (body['p_ids'] as List).cast<String>();
       return _jsonResponse(request, [
-        {
-          'id': 'server-only-id',
-          'category_id': 'cat-1',
-          'prompt': 'Sunucu sorusu?',
-          'option_a': 'A',
-          'option_b': 'B',
-          'option_c': 'C',
-          'option_d': 'D',
-          'question_type': 'multiple_choice',
-          'image_url': null,
-          'difficulty': 2,
-        },
-      ]);
-    }
-    if (request.url.path == '/rest/v1/categories') {
-      return _jsonResponse(request, [
-        {'id': 'cat-1', 'name': 'Ziman'},
+        for (final id in asked)
+          {
+            'id': id,
+            'category_name': 'Ziman',
+            'prompt': 'Sunucu sorusu $id?',
+            'option_a': 'A',
+            'option_b': 'B',
+            'option_c': 'C',
+            'option_d': 'D',
+            'question_type': 'multiple_choice',
+            'image_url': null,
+            'difficulty': 2,
+            'language_code': 'ku',
+          },
       ]);
     }
     return _jsonResponse(request, [], statusCode: 404);
@@ -638,6 +658,57 @@ void main() {
 
       expect(result!.answers, hasLength(1));
       expect(result.winnerId, 'host-id');
+    });
+
+    test('sonuç: odadan ayrılan çağıran (sıra yok, cevap yok) ayrıştırılır, '
+        'sunucu answers yerine boş liste verir', () async {
+      // 2026-10-16: ayrılan oyuncu da biten odanın sonucunu okuyabilir
+      // (get_room_result_payload `left_at is null` şartını bıraktı). Çağıran
+      // `left: true`, sırasız ve hiç cevapsız gelir; ekran bunu "Ayrıldı"
+      // satırı ve son sıralamayla gösterir.
+      final repository = repoFor(
+        _RoomSessionHttpClient(
+          resultResponse: {
+            ..._crowdRoomResult(answers: const []),
+            'players': [
+              {
+                'player_id': 'host-id',
+                'display_name': 'Berfin',
+                'final_score': 0,
+                'final_streak': 0,
+                'rank': null,
+                'left': true,
+              },
+              {
+                'player_id': 'guest-id',
+                'display_name': 'Rojda',
+                'final_score': 250,
+                'final_streak': 1,
+                'rank': 1,
+                'left': false,
+              },
+              {
+                'player_id': 'third-id',
+                'display_name': 'Azad',
+                'final_score': 100,
+                'final_streak': 0,
+                'rank': 2,
+                'left': false,
+              },
+            ],
+            'winner_id': 'guest-id',
+          },
+        ),
+      );
+
+      final result = await repository.loadMyPendingRoomResult();
+
+      expect(result, isNotNull);
+      final me = result!.room.players.singleWhere((p) => p.id == 'host-id');
+      expect(me.left, isTrue);
+      expect(me.rank, isNull);
+      expect(result.answers, isEmpty);
+      expect(result.winnerId, 'guest-id');
     });
 
     test('1v1 sonucu eksik cevabı hâlâ reddeder', () async {
@@ -2335,35 +2406,115 @@ void main() {
     },
   );
 
-  test(
-    'loadFavoriteQuestions ölü quiz_public_questions görünümüne gitmez',
-    () async {
-      // 2026-08-14'te oda maçında kaydedilmiş favoriler bu görünümden
-      // çözülüyordu. Görünüm istemciye hep "permission denied" veriyordu
-      // (altındaki `questions` tablosunda SELECT yok), hata yutuluyor ve
-      // favori yine görünmüyordu; çağrı ve görünüm 2026-10-15'te kaldırıldı.
-      // Bekçi: paketli bankadaki favori gelir, sunucuya yalnız
-      // `favorite_questions` için gidilir.
+  group('loadFavoriteQuestions', () {
+    _SignedInRoomSessionRepository repositoryFor(http.BaseClient httpClient) =>
+        _SignedInRoomSessionRepository(
+          SupabaseClient(
+            'https://example.supabase.co',
+            'sb_publishable_test_key',
+            httpClient: httpClient,
+          ),
+        );
+
+    test('oda maçı favorisi RPC ile çözülür, cevapsız işaretlenir ve ölü '
+        'quiz_public_questions görünümüne gidilmez', () async {
+      // 2026-08-14'te oda maçında kaydedilmiş favoriler `quiz_public_questions`
+      // görünümünden çözülüyordu. Görünüm istemciye hep "permission denied"
+      // veriyordu (altındaki `questions` tablosunda SELECT yok), hata
+      // yutuluyor ve favori yine görünmüyordu; çağrı ve görünüm 2026-10-15'te
+      // kaldırıldı. Çözüm `get_my_favorite_questions` RPC'sidir (cevap
+      // taşımaz). Bekçi: paketli favori yerelden, oda favorisi RPC'den gelir;
+      // sunucuya `favorite_questions` ve RPC dışında gidilmez.
       final httpClient = _FavoriteQuestionsHttpClient();
-      final repository = _SignedInRoomSessionRepository(
-        SupabaseClient(
-          'https://example.supabase.co',
-          'sb_publishable_test_key',
-          httpClient: httpClient,
-        ),
-      );
 
-      final questions = await repository.loadFavoriteQuestions();
+      final questions = await repositoryFor(httpClient).loadFavoriteQuestions();
 
-      expect(questions.map((q) => q.id), ['curated_movement_0001']);
-      expect(questions.single.hasHiddenAnswer, isFalse);
-      expect(httpClient.requestedPaths, ['/rest/v1/favorite_questions']);
+      expect(questions.map((q) => q.id), [
+        _FavoriteQuestionsHttpClient.serverOnlyId,
+        'curated_movement_0001',
+      ]);
+      expect(questions.first.hasHiddenAnswer, isTrue);
+      expect(questions.first.category, 'Ziman');
+      expect(questions.first.answers, ['A', 'B', 'C', 'D']);
+      expect(questions.last.hasHiddenAnswer, isFalse);
+      expect(httpClient.requestedPaths, [
+        '/rest/v1/favorite_questions',
+        '/rest/v1/rpc/get_my_favorite_questions',
+      ]);
+      expect(httpClient.rpcBodies.single, {
+        'p_ids': [_FavoriteQuestionsHttpClient.serverOnlyId],
+      });
       expect(
         File(
           'lib/src/data/supabase_zankurd_repository.dart',
         ).readAsStringSync().contains("from('quiz_public_questions')"),
         isFalse,
       );
-    },
-  );
+    });
+
+    test(
+      'paketli bankadaki ve uuid olmayan kimlikler RPC\'ye gönderilmez',
+      () async {
+        final httpClient = _FavoriteQuestionsHttpClient(serverIds: const []);
+
+        final questions = await repositoryFor(
+          httpClient,
+        ).loadFavoriteQuestions();
+
+        expect(questions.map((q) => q.id), ['curated_movement_0001']);
+        expect(httpClient.requestedPaths, ['/rest/v1/favorite_questions']);
+      },
+    );
+
+    test('çözülemeyen kimlikler 50\'lik parçalarla sorulur', () async {
+      final ids = [
+        for (var i = 0; i < 120; i++)
+          '00000000-0000-4000-8000-${i.toString().padLeft(12, '0')}',
+      ];
+      final httpClient = _FavoriteQuestionsHttpClient(serverIds: ids);
+
+      final questions = await repositoryFor(httpClient).loadFavoriteQuestions();
+
+      expect(httpClient.rpcBodies.map((b) => (b['p_ids'] as List).length), [
+        50,
+        50,
+        20,
+      ]);
+      expect(questions, hasLength(121));
+      expect(questions.take(120).map((q) => q.id), ids);
+    });
+
+    test(
+      'RPC henüz yoksa (PGRST202) sessizce atlanır, yerel favori gelir',
+      () async {
+        final httpClient = _FavoriteQuestionsHttpClient(
+          rpcStatus: 404,
+          rpcBody: const {
+            'code': 'PGRST202',
+            'message': 'Could not find the function',
+          },
+        );
+
+        final questions = await repositoryFor(
+          httpClient,
+        ).loadFavoriteQuestions();
+
+        expect(questions.map((q) => q.id), ['curated_movement_0001']);
+      },
+    );
+
+    test(
+      'taşıma hatası yukarı çıkar: ekran hata + yeniden dene gösterir',
+      () async {
+        final httpClient = _FavoriteQuestionsHttpClient(
+          rpcThrows: const SocketException('Network is unreachable'),
+        );
+
+        await expectLater(
+          repositoryFor(httpClient).loadFavoriteQuestions(),
+          throwsA(anything),
+        );
+      },
+    );
+  });
 }

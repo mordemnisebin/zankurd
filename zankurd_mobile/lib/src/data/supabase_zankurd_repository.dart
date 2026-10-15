@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' show min;
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -83,6 +84,14 @@ int _requiredInt(Map<String, dynamic> json, List<String> keys) {
   }
   throw FormatException('${keys.join('/')} must be an integer.');
 }
+
+/// `get_my_favorite_questions` tek çağrıda en çok 200 kimlik alır; parça
+/// boyutu bunun çok altında tutulur.
+const _favoriteResolveChunk = 50;
+
+final _uuidPattern = RegExp(
+  r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$',
+);
 
 bool _requiredBool(Map<String, dynamic> json, String key) {
   final value = json[key];
@@ -1839,15 +1848,25 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       final byId = {
         for (final question in _offline.questions) question.id: question,
       };
-      // Paketli bankada bulunmayan kimlikler (çevrimiçi oda maçında
-      // kaydedilmiş, gerçek `questions.id` uuid'leri) burada ÇÖZÜLMEZ.
+      // Paketli bankada bulunmayan kimlikler çevrimiçi oda maçında
+      // kaydedilmiş gerçek `questions.id` uuid'leridir.
       //
       // Eskiden `quiz_public_questions` görünümünden okunuyordu; görünüm
       // `security_invoker` idi ve altındaki `questions` tablosunda istemciye
       // SELECT verilmediği için her çağrı "permission denied" ile düşüyor,
       // hata yutulup bu favoriler hiç görünmüyordu. Görünüm 2026-10-15
-      // göçüyle silindi (`2026-10-15_sosyal_ve_sertlestirme.sql`); cevap
-      // taşımayan bir sunucu okuması gerekirse bunun yolu bir RPC olmalı.
+      // göçüyle silindi; çözüm artık `get_my_favorite_questions` RPC'sidir
+      // (`2026-10-16_son_bosluklar.sql`): yalnız çağıranın favorilerindeki
+      // onaylı soruların gösterim verisini döndürür, doğru şıkkı ASLA.
+      // Çözülen soru `hasHiddenAnswer` taşır; yeniden oynatma onları dışarıda
+      // bırakır (favorite_questions_screen.dart).
+      final unresolvedIds = <String>{
+        for (final id in orderedIds)
+          if (!byId.containsKey(id) && _uuidPattern.hasMatch(id)) id,
+      }.toList();
+      if (unresolvedIds.isNotEmpty) {
+        byId.addAll(await _resolveServerFavoriteQuestions(unresolvedIds));
+      }
 
       final questions = orderedIds
           .map((id) => byId[id])
@@ -1860,6 +1879,51 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       return const [];
     }
     return const [];
+  }
+
+  /// Paketli bankada olmayan favori kimliklerini sunucudan çözer.
+  ///
+  /// RPC çağrısı başına en çok 200 kimlik kabul eder; 50'lik parçalar hem
+  /// bunun altında kalır hem de tek isteği küçük tutar. Göç henüz uygulanmamışsa
+  /// (`PGRST202`) sessizce atlanır: o favoriler eskiden de görünmüyordu.
+  /// Taşıma hatası ise YUKARI çıkar: ekran yarım liste ya da yalan bir boş
+  /// durum yerine hata + yeniden dene gösterir. Başka sunucu hataları
+  /// kaydedilir, çözülemeyen favoriler atlanır.
+  Future<Map<String, QuizQuestion>> _resolveServerFavoriteQuestions(
+    List<String> ids,
+  ) async {
+    final resolved = <String, QuizQuestion>{};
+    for (var start = 0; start < ids.length; start += _favoriteResolveChunk) {
+      final chunk = ids.sublist(
+        start,
+        min(start + _favoriteResolveChunk, ids.length),
+      );
+      try {
+        final response = await client.rpc(
+          'get_my_favorite_questions',
+          params: {'p_ids': chunk},
+        );
+        if (response is! List) continue;
+        for (final row in response.whereType<Map>()) {
+          final question = QuizQuestion.fromServerRow(
+            Map<String, dynamic>.from(row),
+          );
+          resolved[question.id] = question;
+        }
+      } catch (error, stack) {
+        if (error is PostgrestException && error.code == 'PGRST202') {
+          // Göç henüz uygulanmadı: kalan parçalar da aynı yanıtı verir.
+          return resolved;
+        }
+        _recordError(
+          error,
+          stack,
+          reason: 'loadFavoriteQuestions server resolve failed',
+        );
+        if (isLikelyOfflineError(error)) rethrow;
+      }
+    }
+    return resolved;
   }
 
   @override
