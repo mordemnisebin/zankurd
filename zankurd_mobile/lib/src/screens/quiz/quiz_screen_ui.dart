@@ -896,8 +896,6 @@ extension _QuizScreenUI on _QuizScreenState {
       return;
     }
 
-    final category = question.category;
-    final difficulty = question.difficulty;
     final usedIds = _questions.map((q) => q.id).toSet();
 
     // Türkçe oynanıyorsa çevirisi olmayan soru aday olamaz: aksi hâlde
@@ -905,26 +903,12 @@ extension _QuizScreenUI on _QuizScreenState {
     // sorunun metni zaten anadilindedir, o yüzden koşul yalnız TR'de.
     bool usable(QuizQuestion q) => _isKu || q.hasTurkishTranslation;
 
-    // Önce aynı kategori + zorlukta aday ara
-    var candidates = widget.repository.playableQuestions
-        .where(
-          (q) =>
-              q.category == category &&
-              q.difficulty == difficulty &&
-              !usedIds.contains(q.id) &&
-              usable(q),
-        )
-        .toList();
-
-    // Yeterli yoksa aynı kategoride herhangi bir zorluk
-    if (candidates.isEmpty) {
-      candidates = widget.repository.playableQuestions
-          .where(
-            (q) =>
-                q.category == category && !usedIds.contains(q.id) && usable(q),
-          )
-          .toList();
-    }
+    final candidates = wildcardReplacementCandidates(
+      current: question,
+      pool: widget.repository.playableQuestions,
+      usedIds: usedIds,
+      usable: usable,
+    );
 
     if (candidates.isEmpty) return; // değiştirilecek soru bulunamadı
 

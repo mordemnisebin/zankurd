@@ -134,7 +134,7 @@ class _FillInBlankWidgetState extends State<FillInBlankWidget> {
     final resultText = isCorrect
         ? usesCanonicalWriting
               ? Tr.forKu(K.correct, isKu)
-              : '${Tr.forKu(K.correct, isKu)}: '
+              : '${Tr.forKu(K.correctSpelling, isKu)}: '
                     '${widget.question.correctAnswer}'
         : '${Tr.forKu(K.correctAnswerLabel, isKu)}: '
               '${widget.question.correctAnswer}';

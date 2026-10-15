@@ -922,6 +922,11 @@ class Tr {
       'ku': '{completed} ji {total} astan temam bûn',
       'tr': '{total} seviyeden {completed} tanesi tamamlandı',
     },
+    K.levelNotPassed: {
+      'ku':
+          'Asta derbas nebû: herî kêm sedî {p0} rast pêwîst e. Dîsa biceribîne.',
+      'tr': 'Seviye geçilmedi: en az %{p0} doğru gerekir. Tekrar dene.',
+    },
     K.oncePSeviyeyiTamamla: {
       'ku': 'Pêşî asta {p0} temam bike.',
       'tr': 'Önce {p0} seviyeyi tamamla.',
@@ -2491,6 +2496,7 @@ class Tr {
           'Tüm açıklamalar burada bir arada. Tur sırasında yalnız '
           'doğru cevap görünür.',
     },
+    K.correctSpelling: {'ku': 'Rastnivîs', 'tr': 'Doğru yazım'},
     K.correctAnswerLabel: {'ku': 'Bersiva rast', 'tr': 'Doğru cevap'},
 
     // ── Oyunlaştırma & Özel Oda (TRT Bil Bakalım & Pirs) ─────────────
@@ -3373,6 +3379,7 @@ class K {
   static const kolaydanZoraDogruIlerle = 'screen.kolaydanZoraDogruIlerle';
   static const pPSeviye = 'screen.pPSeviye';
   static const progressLevelsCompleted = 'screen.progressLevelsCompleted';
+  static const levelNotPassed = 'screen.levelNotPassed';
   static const oncePSeviyeyiTamamla = 'screen.oncePSeviyeyiTamamla';
   static const pKilitliOncekiSeviyeyi = 'screen.pKilitliOncekiSeviyeyi';
   static const zorlukUzerindenPYildiz = 'screen.zorlukUzerindenPYildiz';
@@ -3986,6 +3993,7 @@ class K {
   static const explanationTitle = 'result.explanationTitle';
   static const viewExplanation = 'result.viewExplanation';
   static const allExplanationsHint = 'result.allExplanations.hint';
+  static const correctSpelling = 'result.correctSpelling';
   static const correctAnswerLabel = 'result.correctAnswer';
 
   // ── Oyunlaştırma & Özel Oda (TRT Bil Bakalım & Pirs) ─────────────

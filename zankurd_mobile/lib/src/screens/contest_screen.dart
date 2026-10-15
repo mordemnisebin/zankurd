@@ -99,10 +99,9 @@ class _ContestScreenState extends State<ContestScreen> with RouteAware {
     if (_starting) return;
     setState(() => _starting = true);
     try {
-      // Günlük etkinlik, tema/kategori etiketinden bağımsız olarak ortak
-      // günlük havuzdan beslenir. Repository bu havuzu UTC gün seed'i ile
-      // seçtiği için aynı gün tüm oyuncular aynı soruları görür.
-      var questions = await widget.repository.loadDailyQuestions(
+      // Etkinlik, tema/kategori etiketinden bağımsız günlük havuzdan beslenir;
+      // "Günün dersi"nden ayrı tohumla, onun setini dışlayarak seçilir.
+      var questions = await widget.repository.loadDailyEventQuestions(
         limit: contest.questionCount,
       );
       if (questions.isEmpty) {

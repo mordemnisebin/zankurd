@@ -725,8 +725,16 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
-  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
-    return _offline.loadDailyQuestions(limit: limit);
+  Future<List<QuizQuestion>> loadDailyQuestions({
+    int limit = 10,
+    bool replay = false,
+  }) async {
+    return _offline.loadDailyQuestions(limit: limit, replay: replay);
+  }
+
+  @override
+  Future<List<QuizQuestion>> loadDailyEventQuestions({int limit = 10}) async {
+    return _offline.loadDailyEventQuestions(limit: limit);
   }
 
   @override

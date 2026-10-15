@@ -19,9 +19,12 @@ class _TrackingRepository extends MockZanKurdRepository {
   int? dailyQuestionLimit;
 
   @override
-  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10}) async {
+  Future<List<QuizQuestion>> loadDailyQuestions({
+    int limit = 10,
+    bool replay = false,
+  }) async {
     dailyQuestionLimit = limit;
-    return super.loadDailyQuestions(limit: limit);
+    return super.loadDailyQuestions(limit: limit, replay: replay);
   }
 }
 

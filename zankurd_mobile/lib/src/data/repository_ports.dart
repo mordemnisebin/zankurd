@@ -26,7 +26,11 @@ abstract interface class SoloQuizPort {
     required String learningLessonId,
     int limit = 5,
   });
-  Future<List<QuizQuestion>> loadDailyQuestions({int limit = 10});
+  Future<List<QuizQuestion>> loadDailyQuestions({
+    int limit = 10,
+    bool replay = false,
+  });
+  Future<List<QuizQuestion>> loadDailyEventQuestions({int limit = 10});
   Future<bool> toggleFavoriteQuestion(QuizQuestion question, bool favorite);
   Future<bool> isFavoriteQuestion(QuizQuestion question);
   Future<void> reportQuestion(QuizQuestion question, String reason);

@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'package:zankurd_mobile/src/utils/free_text_answer_matcher.dart';
 
 /// Boşluk doldurma cevabının Türkçe klavyeyle YAZILABİLİR olduğunun bekçisi.
 ///
@@ -102,6 +103,9 @@ void main() {
       if (asksForTheVowelItself(q)) continue;
       final typed = toTurkishKeyboard(q.correctAnswer);
       if (typed == q.correctAnswer) continue;
+      // 2026-10-15: yazılabilir hâl başka bir gerçek sözcükse (`şêr` →
+      // `şer`) bilerek REDDEDİLİR; bkz. fill_in_blank_fold_test.dart.
+      if (kFoldDistinctWords.contains(typed)) continue;
       if (!q.acceptsAnswer(typed)) {
         offenders.add(
           '${q.id}: «${q.correctAnswer}» yazılabilir hâli «$typed» '
@@ -127,6 +131,7 @@ void main() {
       if (asksForTheVowelItself(q)) continue;
       final typed = toTurkishKeyboard(q.correctAnswer);
       if (typed == q.correctAnswer) continue;
+      if (kFoldDistinctWords.contains(typed)) continue;
       if (!q.localized(isKu: false).acceptsAnswer(typed)) {
         offenders.add('${q.id}: TR turda «$typed» reddediliyor');
       }

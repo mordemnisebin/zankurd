@@ -152,10 +152,22 @@ class _WordOrderingWidgetState extends State<WordOrderingWidget> {
       WidgetsBinding.instance.addPostFrameCallback((_) => _measurePool());
     }
 
+    // İpucu (ör. «"ez" sözcüğüyle başla.») bankada 126 soruda vardı ama hiçbir
+    // ekran göstermiyordu; cevap verilince anlamsız olduğundan yalnız öncesinde.
+    final hint = answered ? null : widget.question.hintFor(isKu: isKu);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (hint != null) ...[
+          Text(
+            hint,
+            key: const ValueKey('word-ordering-hint'),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x2),
+        ],
         // ============ SEÇİLEN KELİMELERİN CÜMLE ALANI ============
         // 88: tek satır çip (50) + dolgu (32) = 82; eskiden 80'di ve ilk
         // kelime seçilince alan 2 dp uzayıp düğmeyi kaydırıyordu.

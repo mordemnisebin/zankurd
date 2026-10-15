@@ -176,13 +176,32 @@ class _LevelScreenState extends State<LevelScreen> {
       );
       // Yoldaki düğümü yalnız quiz gerçekten bitince işaretle: sonuç ekranı
       // skor haritasıyla döner; yarıda bırakma null döner ve tik almamalı.
+      // Geçmek için doğruların %60'ı gerekir; 0/10 bitiren de yıldız alıp
+      // bir sonraki seviyeyi açıyordu.
+      var notPassed = false;
       if (result is Map) {
         final store = await LevelProgressStore.load();
-        await store.markPlayed(
+        final passed = await store.recordResult(
           widget.category,
           widget.subCategory,
           level.number,
+          correct: (result['correct'] as num?)?.toInt() ?? questions.length,
+          total: questions.length,
         );
+        notPassed = !passed;
+      }
+      if (notPassed && mounted) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(
+                context.t(K.levelNotPassed, {
+                  'p0': '${(LevelProgressStore.passRatio * 100).round()}',
+                }),
+              ),
+            ),
+          );
       }
       await _loadProgress();
     } catch (error, stack) {

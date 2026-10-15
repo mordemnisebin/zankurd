@@ -36,6 +36,7 @@ import '../services/favorite_mutation_service.dart';
 import '../services/learning_productive_recall.dart';
 import '../services/question_audio_service.dart';
 import '../services/room_result_presentation.dart';
+import '../services/wildcard_replacement.dart';
 import 'quiz/fill_in_blank_widget.dart';
 import 'quiz/word_ordering_widget.dart';
 import '../theme/app_theme.dart';

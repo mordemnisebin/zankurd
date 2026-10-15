@@ -39,8 +39,8 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 /// uydurulmaz.
 ///
 /// Bir kez gerçek ilerleme kaydedildiyse (herhangi bir ders tamamlandıysa)
-/// doğal sıralı ilerleme placement'ın önüne geçer ve bir daha geri
-/// dönülmez.
+/// öneri yerleştirme noktasından ileriye doğru ilk tamamlanmamış dersi
+/// izler; yerleştirme noktasının gerisine bir daha düşmez.
 ///
 /// ESKİ KUSUR (2026-08-14 denetimi): öneri kilitli bir düğüme düşerse HER
 /// ZAMAN ilk açık derse geriliyordu — bu, ileri seviyeli hiçbir kullanıcıda
@@ -48,16 +48,36 @@ import 'package:zankurd_mobile/src/theme/app_icons.dart';
 /// sonucu yolu değiştirmiyordu). İlk ders tamamlanır tamamlanmaz da aynı
 /// geri dönüş öneriyi o tamamlanan derste sonsuza dek KİLİTLİYORDU —
 /// "Sana önerilen" rozeti bir daha hiçbir karta düşmüyordu.
+///
+/// ESKİ KUSUR 2 (2026-10-15): bir ders tamamlanınca `indexWhere` her zaman
+/// BAŞTAN aranıyordu. Yerleştirmenin 2'yi önerdiği biri 2. dersi bitirince
+/// öneri 0'a geri dönüyor, 3 ve sonrası kilitli kalıyordu; 0 ve 1 ise
+/// yerleştirme önerisinin ÖNÜNDE oldukları için hiç açılmamıştı. Artık
+/// öneri yerleştirme noktasından ileriye doğru aranır, hiç geriye gitmez;
+/// yalnız o noktadan sonra açık ders kalmadıysa baştaki ilk açığa düşer.
 int learningRecommendedIndex({
   required List<Lesson> lessons,
   required Set<String> completedLessonIds,
   required int placementIndex,
 }) {
   if (completedLessonIds.isEmpty) return placementIndex;
+  final start = placementIndex.clamp(0, lessons.length);
+  for (var i = start; i < lessons.length; i++) {
+    if (!completedLessonIds.contains(lessons[i].id)) return i;
+  }
   return lessons.indexWhere(
     (lesson) => !completedLessonIds.contains(lesson.id),
   );
 }
+
+/// Ders kilitli mi: tamamlanmamış ve önerilen dersin ARKASINDA olan kilitlidir.
+/// Önerilene kadar (kendisi dahil) her ders açıktır; tamamlananlar açık kalır.
+/// [recommendedIndex] -1 ise hepsi tamamlanmıştır, hiçbiri kilitli değildir.
+bool learningLessonLocked({
+  required int index,
+  required bool completed,
+  required int recommendedIndex,
+}) => !completed && recommendedIndex >= 0 && index > recommendedIndex;
 
 /// Öğrenme konusunu (`Lesson.category`) soru bankası kategorisine çevirir.
 ///
@@ -420,7 +440,11 @@ class _LearningScreenState extends State<LearningScreen> {
     final completed = _completedIds.contains(lesson.id);
     final current =
         index == (firstOpenIndex < 0 ? lessons.length : firstOpenIndex);
-    final locked = !completed && !current;
+    final locked = learningLessonLocked(
+      index: index,
+      completed: completed,
+      recommendedIndex: firstOpenIndex,
+    );
     final semanticLabel = _lessonStateSemanticLabel(
       context,
       lesson,
