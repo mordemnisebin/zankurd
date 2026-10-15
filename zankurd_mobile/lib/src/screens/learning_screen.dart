@@ -458,7 +458,7 @@ class _LearningScreenState extends State<LearningScreen> {
       card = _CurrentLessonCard(
         lesson: lesson,
         title: _lessonTitle(lesson, ku),
-        meta: _placementContextLabel(context, ku) ?? lesson.descriptionKu,
+        meta: _placementContextLabel(context, ku) ?? lesson.description(ku),
         done: completedCount,
         total: lessons.length,
         semanticLabel: semanticLabel,
@@ -777,7 +777,7 @@ class _LessonRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = SahneTokens.of(context);
     final locked = onTap == null;
-    final description = lesson.descriptionKu?.trim();
+    final description = lesson.description(context.isKu)?.trim();
     return SahneListRow.plain(
       title: title,
       subtitle: description == null || description.isEmpty ? null : description,
