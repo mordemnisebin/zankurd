@@ -246,6 +246,7 @@ class _QuizScreenState extends State<QuizScreen>
   double? _initialTimerFraction;
   bool _resumingOnlineSession = false;
   bool _exitInFlight = false;
+  bool _onlineLeaveFailed = false;
   bool _reconcileInFlight = false;
   int _reconcileGeneration = 0;
   bool _terminalHandling = false;
@@ -1509,6 +1510,28 @@ class _QuizScreenState extends State<QuizScreen>
     final expectedOwnerId = _onlineResultOwnerId;
     final expectedRoute = ModalRoute.of(context);
     if (!_canContinueExit(generation, expectedOwnerId, expectedRoute)) return;
+    if (_isMultiplayer && _onlineLeaveFailed) {
+      // Sunucu çıkışı bir kez başarısız oldu: onay penceresini ve yeniden
+      // denemeyi döngüye sokma, ağsız oyuncuyu yerelde çıkar. Terk, sunucu
+      // temizliği ve `get_my_resumable_room` ile kapanır.
+      unawaited(
+        widget.repository
+            .leaveOnlineRoom(widget.room)
+            .timeout(_onlineResultRequestTimeout)
+            .then<void>(
+              (_) {},
+              onError: (Object error, StackTrace stack) {
+                ErrorReporter.record(
+                  error,
+                  stack,
+                  reason: 'quiz online leave best effort',
+                );
+              },
+            ),
+      );
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      return;
+    }
     _exitInFlight = true;
     var leaveConfirmed = false;
     var leaveFailed = false;
@@ -1549,6 +1572,7 @@ class _QuizScreenState extends State<QuizScreen>
       }
     } catch (error, stack) {
       leaveFailed = true;
+      if (leaveConfirmed && _isMultiplayer) _onlineLeaveFailed = true;
       ErrorReporter.record(error, stack, reason: 'quiz online leave failed');
       if (!mounted) return;
       if (_canContinueExit(generation, expectedOwnerId, expectedRoute)) {

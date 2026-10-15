@@ -629,10 +629,12 @@ void main() {
     expect(find.byType(QuizScreen), findsOneWidget);
     expect(find.text('Odadan ayrılamadın. Tekrar dene.'), findsOneWidget);
 
+    // Bekçi (2026-10-15): ağsız oyuncunun tek çıkışı uygulamayı öldürmekti;
+    // PopScope(canPop: false) + hata → snackbar + yine onay döngüsü. Başarısız
+    // bir çıkıştan sonra ikinci geri dokunuşu pencere açmadan yerelde çıkarır.
     await tester.binding.handlePopRoute();
-    await tester.pump();
-    await tester.tap(find.text('Çık'));
     await _pumpFrames(tester, 8);
+    expect(find.text('Yarıştan çıkılsın mı?'), findsNothing);
 
     expect(repository.leaveCalls, 2);
     expect(find.byType(QuizScreen), findsNothing);
