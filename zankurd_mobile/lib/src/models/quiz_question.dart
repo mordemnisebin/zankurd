@@ -173,6 +173,13 @@ class QuizQuestion {
       (hintKu != null && hintKu!.trim().isNotEmpty) ||
       (hintTr != null && hintTr!.trim().isNotEmpty);
 
+  /// Seçili dile göre ipucu; o dilde yoksa `null` (öteki dile düşülmez:
+  /// Türkçe ekranda Kurmancî yönerge okunmaz bir ipucudur).
+  String? hintFor({required bool isKu}) {
+    final text = (isKu ? hintKu : hintTr)?.trim();
+    return (text == null || text.isEmpty) ? null : text;
+  }
+
   String get promptText => prompt;
 
   /// Seçili dile göre soru metni. Çeviri yoksa Kurmancî'ye düşer.
