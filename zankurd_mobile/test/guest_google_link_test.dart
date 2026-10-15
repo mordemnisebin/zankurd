@@ -14,6 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
@@ -249,7 +250,7 @@ void main() {
     ) async {
       final guestAuth = _GuestAuthProviderWithGoogleLink(
         googleLinkSucceeds: false,
-        googleErrorMessage: 'Bu Google hesabı zaten başka bir hesaba bağlı.',
+        googleErrorMessage: K.authErrIdentityLinked,
       );
       await tester.pumpWidget(
         _wrapWithProviders(
@@ -265,7 +266,7 @@ void main() {
 
       expect(guestAuth.googleLinkCalled, isTrue);
       expect(
-        find.text('Bu Google hesabı zaten başka bir hesaba bağlı.'),
+        find.text('Bu hesap zaten başka bir hesaba bağlı.'),
         findsOneWidget,
       );
     });
@@ -281,7 +282,7 @@ void main() {
       // döndürür, bu yüzden o test bu düzeltmeyle bozulmadı.
       final guestAuth = _GuestAuthProviderWithGoogleLink(
         googleLinkSucceeds: false,
-        googleErrorMessage: 'Bu Google hesabı zaten başka bir hesaba bağlı.',
+        googleErrorMessage: K.authErrIdentityLinked,
       );
       await tester.pumpWidget(
         _wrapWithProviders(
@@ -298,12 +299,12 @@ void main() {
 
       expect(guestAuth.googleLinkCalled, isTrue);
       expect(
-        find.text('Bu Google hesabı zaten başka bir hesaba bağlı.'),
+        find.text('Bu hesap zaten başka bir hesaba bağlı.'),
         findsNothing,
         reason: 'Kurmancî arayüzde Türkçe hata metni gösterilmemeli',
       );
       expect(
-        find.text('Ev hesabê Google jixwe bi hesabek din ve girêdayî ye.'),
+        find.text('Ev hesab jixwe bi hesabek din ve girêdayî ye.'),
         findsOneWidget,
       );
     });
@@ -318,7 +319,7 @@ void main() {
           code: 'identity_already_exists',
         ),
       );
-      expect(message, 'Bu Google hesabı zaten başka bir hesaba bağlı.');
+      expect(message, K.authErrIdentityLinked);
     });
 
     test('manual_linking_disabled kodu anlamlı Türkçe mesaja çevrilir', () {
@@ -329,10 +330,7 @@ void main() {
           code: 'manual_linking_disabled',
         ),
       );
-      expect(
-        message,
-        'Hesap bağlama şu anda kapalı. Supabase panelinde manuel bağlamayı aç.',
-      );
+      expect(message, K.authErrLinkingDisabled);
     });
   });
 }

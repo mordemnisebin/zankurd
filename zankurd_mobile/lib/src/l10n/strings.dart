@@ -1904,6 +1904,106 @@ class Tr {
     },
     K.orSeparator: {'ku': 'an jî', 'tr': 'veya'},
     K.linkGoogle: {'ku': 'Bi Google girêde', 'tr': 'Google ile bağla'},
+    K.authErrNetwork: {
+      'ku': 'Girêdan çênebû. Înternet an DNS kontrol bike.',
+      'tr': 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.',
+    },
+    K.authErrUnexpected: {
+      'ku': 'Şaşiyeke nediyar çêbû.',
+      'tr': 'Beklenmeyen bir hata oluştu.',
+    },
+    K.authErrIdentityLinked: {
+      'ku': 'Ev hesab jixwe bi hesabek din ve girêdayî ye.',
+      'tr': 'Bu hesap zaten başka bir hesaba bağlı.',
+    },
+    K.authErrLinkingDisabled: {
+      'ku': 'Girêdana hesaban niha nayê bikaranîn.',
+      'tr': 'Hesap bağlama şu anda kullanılamıyor.',
+    },
+    K.authErrProviderDisabled: {
+      'ku': 'Ev rêbaza têketinê niha nayê bikaranîn.',
+      'tr': 'Bu giriş yöntemi şu anda kullanılamıyor.',
+    },
+    K.authErrRedirect: {
+      'ku':
+          'Girêdana têketinê nehate piştrastkirin. Piştî demekê dîsa biceribîne.',
+      'tr': 'Giriş bağlantısı doğrulanamadı. Biraz sonra tekrar dene.',
+    },
+    K.authErrInvalidCredentials: {
+      'ku': 'E-name an şîfre şaş e.',
+      'tr': 'E-posta veya parola hatalı.',
+    },
+    K.authErrEmailTaken: {
+      'ku': 'Ev e-name jixwe tê bikaranîn.',
+      'tr': 'Bu e-posta zaten kullanılıyor.',
+    },
+    K.authErrWeakPassword: {
+      'ku': 'Şîfre pir qels e (herî kêm 6 tîp).',
+      'tr': 'Parola çok zayıf (en az 6 karakter).',
+    },
+    K.authErrInvalidEmail: {
+      'ku': 'Navnîşana e-nameyê ya nederbasdar.',
+      'tr': 'Geçersiz e-posta adresi.',
+    },
+    K.authErrEmailNotConfirmed: {
+      'ku':
+          'Navnîşana e-nameya te hîna nehatiye piştrastkirin. Sindoqa xwe ya nameyan kontrol bike.',
+      'tr': 'E-posta adresin henüz doğrulanmamış. Gelen kutunu kontrol et.',
+    },
+    K.authErrRateLimit: {
+      'ku': 'Pir ceribandin hatin kirin. Hinekî bisekine û dîsa biceribîne.',
+      'tr': 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.',
+    },
+    K.authErrGuestDisabled: {
+      'ku': 'Têketina mêvanan niha girtî ye.',
+      'tr': 'Misafir girişi şu anda kapalı.',
+    },
+    K.authErrGeneric: {
+      'ku': 'Çewtiyek rû da. Ji kerema xwe dîsa biceribîne.',
+      'tr': 'Bir hata oluştu. Lütfen tekrar deneyin.',
+    },
+    K.premiumErrPurchaseNotConfigured: {
+      'ku': 'Kirîn di vê guhertoyê de nehatiye sazkirin.',
+      'tr': 'Satın alma bu sürümde yapılandırılmadı.',
+    },
+    K.premiumErrRestoreNotConfigured: {
+      'ku': 'Vegerandin di vê guhertoyê de nehatiye sazkirin.',
+      'tr': 'Geri yükleme bu sürümde yapılandırılmadı.',
+    },
+    K.premiumInfoPending: {
+      'ku':
+          'Pêdiviya dayîna te bi erêkirinê heye. Dema were erêkirin premium bi xwe vedibe.',
+      'tr': 'Ödemen onay bekliyor. Onaylandığında premium otomatik açılacak.',
+    },
+    K.premiumInfoNothingToRestore: {
+      'ku':
+          'Di vê hesabê de abonetiyeke çalak a ku were vegerandin nehat dîtin.',
+      'tr': 'Bu hesapta geri yüklenecek aktif abonelik bulunamadı.',
+    },
+    K.premiumErrNetwork: {
+      'ku': 'Girêdan çênebû. Înternetê kontrol bike û dîsa biceribîne.',
+      'tr': 'Bağlantı kurulamadı. İnterneti kontrol edip tekrar dene.',
+    },
+    K.premiumErrStore: {
+      'ku': 'Dikan nayê gihîştin. Piştî demekê dîsa biceribîne.',
+      'tr': 'Mağazaya ulaşılamadı. Biraz sonra tekrar dene.',
+    },
+    K.premiumErrNotAllowed: {
+      'ku': 'Li ser vê amûrê destûra kirînê girtî xuya dike.',
+      'tr': 'Bu cihazda satın alma izni kapalı görünüyor.',
+    },
+    K.premiumErrUnavailable: {
+      'ku': 'Ev pakêt niha ne li firotanê ye.',
+      'tr': 'Bu paket şu anda satışta değil.',
+    },
+    K.premiumErrOtherAccount: {
+      'ku': 'Ev abonetî di hesabeke din de tê bikaranîn.',
+      'tr': 'Bu abonelik başka bir hesapta kullanılıyor.',
+    },
+    K.premiumErrGeneric: {
+      'ku': 'Di kirînê de çewtiyek çêbû.',
+      'tr': 'Satın alma sırasında bir hata oldu.',
+    },
     K.linkApple: {'ku': 'Bi Apple re bidomîne', 'tr': 'Apple ile devam et'},
     K.accountSaved: {
       'ku': 'Hesabê te hat tomarkirin.',
@@ -2918,6 +3018,11 @@ class Tr {
     };
   }
 
+  /// [key] kayıtlı bir metin anahtarı mı. `of` bilinmeyen anahtarda
+  /// fırlatır; sağlayıcıların döndürdüğü hata dizgisi anahtar mı yoksa ham
+  /// metin mi diye bakmak için bu kullanılır.
+  static bool hasKey(String key) => _table.containsKey(key);
+
   /// Kayıtlı tüm anahtarlar — kapsam testleri için.
   static Iterable<String> get keys => _table.keys;
 
@@ -3697,6 +3802,32 @@ class K {
   static const orSeparator = 'common.or';
   static const linkGoogle = 'profile.linkGoogle';
   static const linkApple = 'profile.linkApple';
+  static const authErrNetwork = 'auth.err.network';
+  static const authErrUnexpected = 'auth.err.unexpected';
+  static const authErrIdentityLinked = 'auth.err.identityLinked';
+  static const authErrLinkingDisabled = 'auth.err.linkingDisabled';
+  static const authErrProviderDisabled = 'auth.err.providerDisabled';
+  static const authErrRedirect = 'auth.err.redirect';
+  static const authErrInvalidCredentials = 'auth.err.invalidCredentials';
+  static const authErrEmailTaken = 'auth.err.emailTaken';
+  static const authErrWeakPassword = 'auth.err.weakPassword';
+  static const authErrInvalidEmail = 'auth.err.invalidEmail';
+  static const authErrEmailNotConfirmed = 'auth.err.emailNotConfirmed';
+  static const authErrRateLimit = 'auth.err.rateLimit';
+  static const authErrGuestDisabled = 'auth.err.guestDisabled';
+  static const authErrGeneric = 'auth.err.generic';
+  static const premiumErrPurchaseNotConfigured =
+      'premium.err.purchaseNotConfigured';
+  static const premiumErrRestoreNotConfigured =
+      'premium.err.restoreNotConfigured';
+  static const premiumInfoPending = 'premium.info.pending';
+  static const premiumInfoNothingToRestore = 'premium.info.nothingToRestore';
+  static const premiumErrNetwork = 'premium.err.network';
+  static const premiumErrStore = 'premium.err.store';
+  static const premiumErrNotAllowed = 'premium.err.notAllowed';
+  static const premiumErrUnavailable = 'premium.err.unavailable';
+  static const premiumErrOtherAccount = 'premium.err.otherAccount';
+  static const premiumErrGeneric = 'premium.err.generic';
   static const accountSaved = 'profile.accountSaved';
   static const connectingGoogle = 'common.connectingGoogle';
   static const signOut = 'common.signOut';

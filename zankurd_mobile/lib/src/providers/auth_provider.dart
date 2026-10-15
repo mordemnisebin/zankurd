@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart'
+    show AppLifecycleState, WidgetsBinding, WidgetsBindingObserver;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../data/local_progress_scope.dart';
+import '../l10n/strings.dart';
 import '../data/xp_store.dart';
 import '../data/streak_store.dart';
 import '../data/mistake_store.dart';
@@ -37,7 +40,7 @@ class AccountLocalCleanupException implements Exception {
 /// kimliği aynıdır; böylece liderlik/coin ilerlemesi hesaba bağlanır.
 /// Misafir modu Supabase anonim oturumu kullanır ve daha sonra e-posta
 /// ile kalıcı hesaba yükseltilebilir.
-class AuthProvider extends ChangeNotifier {
+class AuthProvider extends ChangeNotifier with WidgetsBindingObserver {
   static String get authRedirectUri =>
       kIsWeb ? 'https://www.zankurd.com/' : 'com.zankurd.app://login-callback/';
 
@@ -64,6 +67,9 @@ class AuthProvider extends ChangeNotifier {
 
   User? get currentUser => _currentUser;
   bool get isLoading => _isLoading;
+
+  /// Son hatanın METİN ANAHTARI (`K.authErr*`); ekranda
+  /// `context.translateAuthError(...)` ile çevrilir.
   String? get errorMessage => _errorMessage;
   bool get needsEmailConfirmation => _needsEmailConfirmation;
 
@@ -136,12 +142,16 @@ class AuthProvider extends ChangeNotifier {
   /// Mevcut oturumu okur ve auth olaylarını dinlemeye başlar.
   void _wireAuth(SupabaseClient client) {
     _currentUser = client.auth.currentUser;
+    _observeLifecycle();
     unawaited(_syncPremiumIdentity(_currentUser));
     _authSub?.cancel();
     _authSub = client.auth.onAuthStateChange.listen((state) {
       final next = state.session?.user;
       final changed = next?.id != _currentUser?.id;
       _currentUser = next;
+      // Onay bağlantısı oturumu kalıcı kullanıcıya çevirdiyse "onay
+      // bekleniyor" durumu asılı kalmamalı.
+      if (next != null && !next.isAnonymous) _needsEmailConfirmation = false;
       applyAuthEvent(state.event, hasSession: next != null);
       unawaited(
         _queueSessionPreparation(
@@ -334,7 +344,79 @@ class AuthProvider extends ChangeNotifier {
   @override
   void dispose() {
     _authSub?.cancel();
+    if (_observingLifecycle) {
+      try {
+        WidgetsBinding.instance.removeObserver(this);
+      } catch (_) {}
+      _observingLifecycle = false;
+    }
     super.dispose();
+  }
+
+  bool _observingLifecycle = false;
+
+  /// Uygulama ön plana dönünce, e-posta onayı bekleyen misafir oturumunu
+  /// tazeler. Onay bağlantısı çoğu zaman başka bir uygulamada (posta
+  /// istemcisi, tarayıcı) açılır; uygulamaya dönüldüğünde JWT hâlâ
+  /// `is_anonymous` taşır ve `isGuest` yeniden başlatmaya kadar `true`
+  /// kalırdı.
+  void _observeLifecycle() {
+    if (_observingLifecycle) return;
+    try {
+      WidgetsBinding.instance.addObserver(this);
+      _observingLifecycle = true;
+    } catch (_) {
+      // Binding yok (saf Dart testi): yaşam döngüsü izlenmez.
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      unawaited(refreshGuestUpgrade());
+    }
+  }
+
+  /// Onay bekleyen bir yükseltme var mı: hâlâ anonim ama adres `new_email`de.
+  @visibleForTesting
+  static bool hasPendingUpgrade(User? user) =>
+      user != null && user.isAnonymous && (user.newEmail?.isNotEmpty ?? false);
+
+  DateTime? _lastUpgradeRefresh;
+
+  /// Bekleyen e-posta yükseltmesi varsa oturumu sunucudan yeniler; onay
+  /// gelmişse `isGuest` yeniden başlatmadan `false` olur.
+  ///
+  /// Ağ çağrısı yalnız [hasPendingUpgrade] iken yapılır ve 10 sn'de bir ile
+  /// sınırlıdır; sıradan misafir/kalıcı oturumlar her ön plana dönüşte ağ
+  /// yemez. Dönen değer: oturum bu çağrıyla kalıcıya döndü mü.
+  Future<bool> refreshGuestUpgrade({
+    @visibleForTesting Future<User?> Function(SupabaseClient client)? refresh,
+    @visibleForTesting DateTime? now,
+  }) async {
+    final client = _client;
+    if (client == null || !hasPendingUpgrade(_currentUser)) return false;
+    final at = now ?? DateTime.now();
+    final last = _lastUpgradeRefresh;
+    if (last != null && at.difference(last) < const Duration(seconds: 10)) {
+      return false;
+    }
+    _lastUpgradeRefresh = at;
+    try {
+      final user = refresh != null
+          ? await refresh(client)
+          : (await client.auth.refreshSession()).user ??
+                client.auth.currentUser;
+      if (user == null) return false;
+      final wasGuest = _currentUser?.isAnonymous ?? true;
+      _currentUser = user;
+      if (!user.isAnonymous) _needsEmailConfirmation = false;
+      notifyListeners();
+      return wasGuest && !user.isAnonymous;
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'guest upgrade refresh');
+      return false;
+    }
   }
 
   Future<bool> _run(Future<void> Function(SupabaseClient auth) body) async {
@@ -343,7 +425,7 @@ class AuthProvider extends ChangeNotifier {
       if (!_offlineMode) return true;
       _isLoading = false;
       _needsEmailConfirmation = false;
-      _errorMessage = 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.';
+      _errorMessage = K.authErrNetwork;
       notifyListeners();
       return false;
     }
@@ -583,8 +665,12 @@ class AuthProvider extends ChangeNotifier {
     required String password,
   }) {
     return _run((client) async {
+      // Onay e-postasındaki bağlantı uygulamaya dönmeli: yönlendirme
+      // verilmezse GoTrue site adresine (web) gider ve uygulama onaydan
+      // habersiz kalır.
       final response = await client.auth.updateUser(
         UserAttributes(email: email, password: password),
+        emailRedirectTo: authRedirectUri,
       );
       final user = response.user;
       final pendingEmail = user?.newEmail;
@@ -896,63 +982,66 @@ class AuthProvider extends ChangeNotifier {
   String debugTranslateUnexpectedAuthError(Object error) =>
       _translateUnexpectedError(error);
 
+  /// Dönen dizgi bir METİN ANAHTARIDIR (`K.authErr*`), ekranda
+  /// `context.translateAuthError` ile çevrilir. Eskiden sabit Türkçe metin
+  /// dönüyordu ve Kurmancî karşılığı ayrı bir sözlükte elle eşleniyordu.
   String _translateUnexpectedError(Object error) {
     final message = error.toString().toLowerCase();
     if (_isNetworkErrorMessage(message)) {
-      return 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.';
+      return K.authErrNetwork;
     }
-    return 'Beklenmeyen bir hata oluştu.';
+    return K.authErrUnexpected;
   }
 
   String _translateError(AuthException e) {
     final message = e.message.toLowerCase();
     if (_isNetworkErrorMessage(message)) {
-      return 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.';
+      return K.authErrNetwork;
     }
-    // 2026-07-23 M18: Google hesap bağlama hataları — kod bazlı eşleşme
+    // 2026-07-23 M18: hesap bağlama hataları — kod bazlı eşleşme
     // mesaj metninden daha güvenilir (bkz. gotrue error_code.dart).
     if (e.code == 'identity_already_exists' ||
         message.contains('identity is already linked') ||
         message.contains('already been linked')) {
-      return 'Bu Google hesabı zaten başka bir hesaba bağlı.';
+      return K.authErrIdentityLinked;
     }
     if (e.code == 'manual_linking_disabled' ||
         message.contains('manual linking')) {
-      return 'Hesap bağlama şu anda kapalı. Supabase panelinde manuel bağlamayı aç.';
+      return K.authErrLinkingDisabled;
     }
     if (message.contains('unsupported provider') ||
         message.contains('provider is not enabled')) {
-      return 'Google girişi şu anda etkin değil. Supabase panelinde Google sağlayıcısını aç.';
+      return K.authErrProviderDisabled;
     }
     if (message.contains('validation_failed') ||
         message.contains('redirect') ||
         message.contains('uri')) {
-      return 'Giriş bağlantısı doğrulanamadı. Uygulama yönlendirme ayarlarını kontrol et.';
+      return K.authErrRedirect;
     }
     if (message.contains('invalid login credentials')) {
-      return 'E-posta veya parola hatalı.';
+      return K.authErrInvalidCredentials;
     }
     if (message.contains('already registered') ||
         message.contains('already been registered')) {
-      return 'Bu e-posta zaten kullanılıyor.';
+      return K.authErrEmailTaken;
     }
     if (message.contains('password should be')) {
-      return 'Parola çok zayıf (en az 6 karakter).';
+      return K.authErrWeakPassword;
     }
     if (message.contains('invalid email') ||
         message.contains('unable to validate email')) {
-      return 'Geçersiz e-posta adresi.';
+      return K.authErrInvalidEmail;
     }
     if (message.contains('email not confirmed')) {
-      return 'E-posta adresin henüz doğrulanmamış. Gelen kutunu kontrol et.';
+      return K.authErrEmailNotConfirmed;
     }
     if (message.contains('rate limit')) {
-      return 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.';
+      return K.authErrRateLimit;
     }
     if (message.contains('anonymous')) {
-      return 'Misafir girişi şu anda kapalı.';
+      return K.authErrGuestDisabled;
     }
-    return 'Bir hata oluştu. Lütfen tekrar deneyin.';
+    return K.authErrGeneric;
   }
 
   bool _isNetworkErrorMessage(String message) {
