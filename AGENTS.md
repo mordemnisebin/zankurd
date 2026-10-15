@@ -4,7 +4,7 @@ Bu proje Kürtçe soru çözme ve dahası için Flutter/Dart uygulamasıdır.
 - Türkçe cevap ver.
 - Gereksiz uzun açıklama yapma.
 - Git ve GitHub MCP kullanma.
-- Dosya değiştirmeden önce kısa plan çıkar ve onay iste.
+- Onay beklemeden çalış; yalnız geri alınamaz ya da dışa dönük adımlarda (canlı veritabanı, mağaza yüklemesi, silme) önce sor.
 - Büyük refactor yapma; küçük, güvenli ve test edilebilir adımlarla ilerle.
 - Token tasarruflu çalış: sadece ilgili dosyaları incele, tüm projeyi gereksiz tarama.
 - Kurmancî metinlerde yazım, karakter ve anlam doğruluğuna dikkat et.
