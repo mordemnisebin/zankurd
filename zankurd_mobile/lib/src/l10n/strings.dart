@@ -1910,7 +1910,7 @@ class Tr {
     K.orSeparator: {'ku': 'an jî', 'tr': 'veya'},
     K.linkGoogle: {'ku': 'Bi Google girêde', 'tr': 'Google ile bağla'},
     K.authErrNetwork: {
-      'ku': 'Girêdan çênebû. Înternetê an DNS'ê kontrol bike.',
+      'ku': 'Girêdan çênebû. Înternetê an DNS\'ê kontrol bike.',
       'tr': 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.',
     },
     K.authErrUnexpected: {
