@@ -922,6 +922,47 @@ void main() {
       expect(find.byKey(const ValueKey('crowd-standing-me-2')), findsOneWidget);
     });
 
+    testWidgets('ayrılan çağıran: "Sen" satırı Ayrıldı rozetiyle, son sıralama '
+        'görünür, kazandı/sıra metni yok', (tester) async {
+      // Sonuç, oyundan ayrılan oyuncuya da sunulur (sunucu 2026-10-16).
+      await mountResult(
+        tester,
+        ownId: 'me',
+        players: [
+          _p('top', 'Rojda', score: 250, rank: 1),
+          _p('third', 'Azad', score: 100, rank: 2),
+          _p('me', 'Ez', score: 60, left: true),
+        ],
+      );
+
+      expect(find.text('Kazandın!'), findsNothing);
+      expect(find.text('Yarış tamamlandı'), findsOneWidget);
+      // Sıralamada olmadığım için "x. sırada tamamladın" cümlesi yok.
+      expect(
+        find.byKey(const ValueKey('crowd-standings-summary')),
+        findsNothing,
+      );
+      // Kendi satırım ayrılanlar grubunda, "Sen" ve "Ayrıldı" ile.
+      final mine = find.byKey(const ValueKey('crowd-left-me'));
+      expect(mine, findsOneWidget);
+      expect(
+        find.descendant(of: mine, matching: find.text('Sen')),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(of: mine, matching: find.text('Ayrıldı')),
+        findsOneWidget,
+      );
+      // Son sıralama: aktif oyuncular sıralı ve madalyalı.
+      expect(find.byKey(const ValueKey('crowd-standing-top')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('crowd-standing-third')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('crowd-standing-me-1')), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('Kurmancî sonuç başlığı ve ayrılan etiketi', (tester) async {
       await mountResult(tester, players: players, ku: true);
 
