@@ -140,6 +140,7 @@ class _RoomScreenState extends State<RoomScreen> {
   bool starting = false;
   bool quizOpened = false;
   bool _leaving = false;
+  bool _leaveFailed = false;
   bool _terminalHandled = false;
   StreamSubscription? _playersSub;
   StreamSubscription? _statusSub;
@@ -537,6 +538,18 @@ class _RoomScreenState extends State<RoomScreen> {
 
   Future<void> _leaveRoom() async {
     if (_leaving || _terminalHandled) return;
+    if (_leaveFailed && room.id != null) {
+      // Bir çıkış zaten başarısız oldu: ağsız oyuncunun tek çıkışı uygulamayı
+      // öldürmek olmasın. Yerelde çık; sunucu tarafı en iyi çabayla ve
+      // `get_my_resumable_room` / sunucu temizliğiyle kapanır.
+      _terminalHandled = true;
+      _cancelSubscriptionsBestEffort('room_leave_subscription_cancel_failed');
+      _pausePolling();
+      _pauseStatusPolling();
+      unawaited(_bestEffortLeave());
+      _returnToPreviousRoute();
+      return;
+    }
     setState(() {
       _leaving = true;
     });
@@ -552,6 +565,7 @@ class _RoomScreenState extends State<RoomScreen> {
             .timeout(_roomLeaveTimeout);
       } catch (error, stack) {
         ErrorReporter.record(error, stack, reason: 'room_leave_failed');
+        _leaveFailed = true;
         if (!mounted) return;
         setState(() => _leaving = false);
         _resumeLobbyMonitoring();
@@ -577,6 +591,14 @@ class _RoomScreenState extends State<RoomScreen> {
 
     if (!mounted) return;
     _returnToPreviousRoute();
+  }
+
+  Future<void> _bestEffortLeave() async {
+    try {
+      await widget.repository.leaveOnlineRoom(room).timeout(_roomLeaveTimeout);
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'room_leave_best_effort');
+    }
   }
 
   /// "Hazırım" anahtarına dokunuşu sunucuya yazar.

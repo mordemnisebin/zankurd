@@ -19,6 +19,7 @@ import 'src/data/offline_zankurd_repository.dart';
 import 'src/data/question_bank_loader.dart';
 import 'src/data/supabase_zankurd_repository.dart';
 import 'src/data/sync_manager.dart';
+import 'src/data/timeout_http_client.dart';
 import 'src/data/zankurd_repository.dart';
 import 'src/l10n/lang.dart';
 import 'src/l10n/material_locales.dart';
@@ -188,6 +189,7 @@ Future<void> main() async {
               start: () => Supabase.initialize(
                 url: AppConfig.supabaseUrl,
                 publishableKey: AppConfig.supabaseAnonKey,
+                httpClient: TimeoutHttpClient(),
               ),
               ping: _pingSupabase,
             )

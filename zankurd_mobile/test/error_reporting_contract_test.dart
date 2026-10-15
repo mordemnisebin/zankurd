@@ -210,16 +210,14 @@ void main() {
         'matchmaking_late_join_cleanup',
         'matchmaking_load_categories',
         'matchmaking_load_room_snapshot',
+        'matchmaking_load_retry',
+        'matchmaking_leave_stranded',
+        'matchmaking_touch',
         'matchmaking_timeout_cancel',
         'matchmaking_timeout_matched_room',
         'matchmaking_start',
         'matchmaking_load_room_questions',
         'matchmaking_load_questions',
-        // 2026-10-15 1v1 canlılığı: bayat odadan çıkış, kalp atışı ve
-        // eşleşme sonrası yükleme yeniden denemesi de raporlar.
-        'matchmaking_leave_stranded',
-        'matchmaking_touch',
-        'matchmaking_load_retry',
       }),
     );
     expect(matchmakingCatches, hasLength(18));

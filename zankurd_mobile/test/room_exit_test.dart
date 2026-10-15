@@ -23,6 +23,7 @@ class _RoomExitRepository extends MockZanKurdRepository {
   int statusSubscriptionCount = 0;
   int statusPollCount = 0;
   bool failNextLeave = false;
+  bool failEveryLeave = false;
   bool failReadyUpdate = false;
   bool failQuestionLoad = false;
   int questionLoadCalls = 0;
@@ -87,7 +88,7 @@ class _RoomExitRepository extends MockZanKurdRepository {
     if (pending != null) {
       await pending.future;
     }
-    if (failNextLeave) {
+    if (failNextLeave || failEveryLeave) {
       failNextLeave = false;
       throw StateError('network details must not reach the player');
     }
@@ -222,6 +223,29 @@ void main() {
 
     expect(repository.leaveCalls, 2);
     expect(find.byType(RoomScreen), findsNothing);
+  });
+
+  // Bekçi (2026-10-15): çıkış RPC'si hata verince lobi `PopScope(canPop:
+  // false)` ile kilitli kalıyor, snackbar "tekrar dene" diyordu; ağ hiç
+  // gelmezse oyuncunun tek çıkışı uygulamayı öldürmekti. Test repoları hep
+  // ikinci denemede başarılı olduğundan kilit görülmedi. Artık ikinci çıkış
+  // yerelde bırakır; sunucu tarafı en iyi çabayla ve resume ile kapanır.
+  testWidgets('çıkış iki kez başarısız olsa da oyuncu lobiden yerelde çıkar', (
+    tester,
+  ) async {
+    final repository = _RoomExitRepository()..failEveryLeave = true;
+    addTearDown(repository.close);
+    await _openRoom(tester, repository, repository.onlineLobby());
+
+    await tester.tap(find.byTooltip('Odadan ayrıl'));
+    await _pumpRouteTransition(tester);
+    expect(find.byType(RoomScreen), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await _pumpRouteTransition(tester);
+
+    expect(find.byType(RoomScreen), findsNothing);
+    expect(repository.leaveCalls, 2);
   });
 
   // Askıda kalan bir `leave_room`, BAŞARISIZ olan bir `leave_room` gibi

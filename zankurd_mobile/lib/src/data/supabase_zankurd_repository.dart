@@ -103,17 +103,6 @@ String? _requiredNullableString(Map<String, dynamic> json, String key) {
   return _optionalString(json, key);
 }
 
-void _requireExactKeys(
-  Map<String, dynamic> json,
-  Set<String> expected,
-  String field,
-) {
-  final actual = json.keys.toSet();
-  if (actual.length != expected.length || !actual.containsAll(expected)) {
-    throw FormatException('$field contains missing or unexpected fields.');
-  }
-}
-
 /// Beklenen anahtarların hepsi VAR olmalı; fazlalıklar yok sayılır.
 ///
 /// Sunucu cevaplarına zamanla alan eklenir (ör. kalabalık odanın `rank`,
@@ -1053,7 +1042,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     if (response == null) return null;
 
     final json = _requiredJsonObject(response, source);
-    _requireExactKeys(json, const {
+    _requireKeys(json, const {
       'room',
       'own_player_id',
       'players',
@@ -1201,7 +1190,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final answers = <ResumedAnswer>[];
     for (var index = 0; index < rawAnswers.length; index++) {
       final answer = _requiredJsonObject(rawAnswers[index], 'answers[]');
-      _requireExactKeys(answer, const {
+      _requireKeys(answer, const {
         'question_id',
         'question_index',
         'selected_option',
@@ -1867,6 +1856,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (questions.isNotEmpty) return questions;
     } catch (error, stack) {
       _recordError(error, stack, reason: 'loadFavoriteQuestions failed');
+      if (isLikelyOfflineError(error)) rethrow;
       return const [];
     }
     return const [];
@@ -1876,6 +1866,18 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<int> loadCoinBalance() async {
     try {
       final user = client.auth.currentUser ?? await signInAnonymously();
+      try {
+        final response = await client.rpc('get_my_coin_balance');
+        if (response is num) return response.toInt();
+      } catch (error, stack) {
+        // Göç (2026-10-15_jeton_bakiyesi.sql) henüz uygulanmamış olabilir.
+        if (!_isMissingFunction(error)) {
+          _recordError(error, stack, reason: 'get_my_coin_balance failed');
+          Error.throwWithStackTrace(error, stack);
+        }
+      }
+      // Yedek yol: PostgREST 1000 satırda keser, çok işlemli hesapta eksik
+      // toplar.
       final rows = await client
           .from('coin_transactions')
           .select('amount')
