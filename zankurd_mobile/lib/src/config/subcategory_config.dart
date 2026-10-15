@@ -881,6 +881,8 @@ class SubcategoryConfig {
     return best;
   }
 
+  static final Map<String, List<String>?> _compiledKeywords = {};
+
   static final RegExp _wordPattern = RegExp(r'[\p{L}\p{N}]+', unicode: true);
 
   static final RegExp _punctuation = RegExp(
@@ -933,9 +935,13 @@ class SubcategoryConfig {
     List<String> lowered,
     List<List<String>> tokens,
   ) {
-    final raw = _punctuation.hasMatch(keyword);
-    if (raw) return lowered.any((text) => text.contains(keyword));
-    final parts = _tokenize(keyword);
+    // Anahtar sözcüklerin ayrıştırması soru başına değil bir kez yapılır
+    // (`null`: noktalama taşıyan, ham alt dize aranan anahtar).
+    final parts = _compiledKeywords.putIfAbsent(
+      keyword,
+      () => _punctuation.hasMatch(keyword) ? null : _tokenize(keyword),
+    );
+    if (parts == null) return lowered.any((text) => text.contains(keyword));
     if (parts.isEmpty) return false;
     for (final text in tokens) {
       for (var i = 0; i + parts.length <= text.length; i++) {
