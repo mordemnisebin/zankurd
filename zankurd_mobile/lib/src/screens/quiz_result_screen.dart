@@ -38,7 +38,9 @@ import '../utils/player_identity.dart';
 import '../data/daily_mission_store.dart';
 import '../data/xp_store.dart';
 import '../services/analytics_service.dart';
+import '../services/notification_prompt_policy.dart';
 import '../services/notification_service.dart';
+import '../widgets/notification_prompt_card.dart';
 import '../services/review_service.dart';
 import '../utils/result_sharer.dart';
 import '../widgets/confetti_overlay.dart';
@@ -192,6 +194,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   bool _showConfetti = false;
   bool _ackAttempted = false;
   bool _newRoomLoading = false;
+  bool _showNotifPrompt = false;
+  NotificationPromptPolicy? _notifPolicy;
 
   Future<void> _openNewRoom() async {
     if (_newRoomLoading) return;
@@ -345,6 +349,38 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     if (widget.contestId != null) {
       _claimContestReward();
     }
+    unawaited(_checkNotifPrompt());
+  }
+
+  Future<void> _checkNotifPrompt() async {
+    try {
+      final policy = await NotificationPromptPolicy.load();
+      await policy.recordRoundCompleted();
+      _notifPolicy = policy;
+      if (!mounted) return;
+      if (await policy.shouldShow()) {
+        setState(() => _showNotifPrompt = true);
+      }
+    } catch (_) {}
+  }
+
+  void _onNotifEnable() {
+    setState(() => _showNotifPrompt = false);
+    unawaited(_grantNotifPermission());
+  }
+
+  Future<void> _grantNotifPermission() async {
+    final policy = _notifPolicy;
+    if (policy == null) return;
+    await policy.recordGranted();
+    final ns = NotificationService.instance;
+    if (ns != null) await ns.setEnabled(true);
+  }
+
+  void _onNotifLater() {
+    setState(() => _showNotifPrompt = false);
+    final policy = _notifPolicy;
+    if (policy != null) unawaited(policy.recordLater());
   }
 
   Future<void> _deliverResult() async {
@@ -1364,6 +1400,13 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       if (secondaryResultActions.isNotEmpty) ...[
         const SizedBox(height: SahneSpace.cardGap),
         _SecondaryActions(actions: secondaryResultActions),
+      ],
+      if (_showNotifPrompt) ...[
+        const SizedBox(height: SahneSpace.cardGap),
+        NotificationPromptCard(
+          onEnable: _onNotifEnable,
+          onLater: _onNotifLater,
+        ),
       ],
       if (hasGains)
         _RoundGains(

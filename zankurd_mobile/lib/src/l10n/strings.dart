@@ -2836,6 +2836,24 @@ class Tr {
       'ku': '{name} vexwîne pêşbirkê',
       'tr': '{name} adlı arkadaşa meydan oku',
     },
+    // Bağlamsal bildirim izni kartı (2026-10-15). KU: Gemini 3.8 Flash +
+    // Grok 4.7 onayı; "dora te be" oyunlardaki yerleşik "sıra sende".
+    K.notifPromptTitle: {
+      'ku': 'Dema dora te be, em te agahdar bikin?',
+      'tr': 'Sıra sende olunca haber verelim mi?',
+    },
+    K.notifPromptBody: {
+      'ku':
+          'Dema hevalekî te te vexwîne pêşbirkê an jî di pêşbirka bi dorê de '
+          'dora te be, em ji te re agahdariyekê bişînin. Tu dikarî her dem ji '
+          'Mîhengan bigirî.',
+      'tr':
+          'Bir arkadaşın sana meydan okuduğunda ya da sırayla düelloda sıra '
+          "sana geldiğinde bildirim gönderelim. İstediğin zaman Ayarlar'dan "
+          'kapatabilirsin.',
+    },
+    K.notifPromptEnable: {'ku': 'Agahdariyan veke', 'tr': 'Bildirimleri aç'},
+    K.notifPromptLater: {'ku': 'Niha na', 'tr': 'Şimdi değil'},
   };
 
   /// [key] için [language] karşılığı; yoksa Kurmancî'ye düşer.
@@ -4096,4 +4114,8 @@ class K {
   /// Arkadaş satırının birincil eylemi ve ekran okuyucu sözü ({name}).
   static const challengeFriendAction = 'duel.challenge.friendAction';
   static const challengeFriendActionA11y = 'duel.challenge.friendAction.a11y';
+  static const notifPromptTitle = 'notif.prompt.title';
+  static const notifPromptBody = 'notif.prompt.body';
+  static const notifPromptEnable = 'notif.prompt.enable';
+  static const notifPromptLater = 'notif.prompt.later';
 }

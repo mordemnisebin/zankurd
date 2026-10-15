@@ -40,6 +40,7 @@ import 'package:zankurd_mobile/src/screens/onboarding_screen.dart';
 import 'package:zankurd_mobile/src/screens/profile_name_gate_screen.dart';
 import 'package:zankurd_mobile/src/screens/quiz/quiz_option_tile.dart';
 import 'package:zankurd_mobile/src/screens/quiz_result_screen.dart';
+import 'package:zankurd_mobile/src/widgets/notification_prompt_card.dart';
 import 'package:zankurd_mobile/src/screens/review_screen.dart';
 import 'package:zankurd_mobile/src/screens/sign_in_screen.dart';
 import 'package:zankurd_mobile/src/screens/splash_screen.dart';
@@ -147,6 +148,8 @@ final GlobalKey _boundaryKey = GlobalKey();
 /// dallanan ekranlar (ör. profil `width > 720` ile iki sütuna geçer) test
 /// görüntülerinde yanlış düzeni çizip taşma şeridi gösteriyordu. Doğrusu
 /// `tester.view` üzerinden fiziksel boyutu vermek.
+void _noop() {}
+
 void _applyViewport(WidgetTester tester, Size size, {double dpr = 3.0}) {
   tester.view.devicePixelRatio = dpr;
   tester.view.physicalSize = size * dpr;
@@ -1059,6 +1062,26 @@ void main() {
   testWidgets('70 tur sonucu (Kurmancî)', (t) async {
     await _pump(t, _resultScreen(), ku: true);
     await _shoot(t, '70_result_ku');
+  }, tags: ['preview']);
+
+  // Bağlamsal bildirim izni kartı: bağımsız kart görseli.
+  Widget notifCard() => const Padding(
+    padding: EdgeInsets.all(16),
+    child: NotificationPromptCard(onEnable: _noop, onLater: _noop),
+  );
+  testWidgets('70a bildirim kartı', (t) async {
+    await _pump(t, notifCard());
+    await _shoot(t, '70a_notif_card');
+  }, tags: ['preview']);
+
+  testWidgets('70b bildirim kartı (karanlık)', (t) async {
+    await _pump(t, notifCard(), dark: true);
+    await _shoot(t, '70b_notif_card_dark');
+  }, tags: ['preview']);
+
+  testWidgets('70c bildirim kartı (Kurmancî)', (t) async {
+    await _pump(t, notifCard(), ku: true);
+    await _shoot(t, '70c_notif_card_ku');
   }, tags: ['preview']);
 
   // Bu iki ekran da tura hiç girmemişti: ikisi de menüden açılıyor ve
