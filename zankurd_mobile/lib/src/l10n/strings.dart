@@ -179,7 +179,7 @@ class Tr {
     },
     K.deleteSubscriptionNote: {
       'ku':
-          'Abonetiya App Store an Google Play bi jêbirina hesabê nayê betalkirin; pêdivî ye tu wê bi xwe di dukanê de betal bikî.',
+          'Abonetiya App Store an Google Play bi jêbirina hesabî nayê betalkirin; pêdivî ye tu wê bi xwe di dukanê de betal bikî.',
       'tr':
           'App Store veya Google Play aboneliği hesap silinince iptal olmaz; aboneliği mağazadan kendin iptal etmelisin.',
     },
@@ -1910,7 +1910,7 @@ class Tr {
     K.orSeparator: {'ku': 'an jî', 'tr': 'veya'},
     K.linkGoogle: {'ku': 'Bi Google girêde', 'tr': 'Google ile bağla'},
     K.authErrNetwork: {
-      'ku': 'Girêdan çênebû. Înternet an DNS kontrol bike.',
+      'ku': 'Girêdan çênebû. Înternetê an DNS'ê kontrol bike.',
       'tr': 'Bağlantı kurulamadı. İnternet/DNS erişimini kontrol et.',
     },
     K.authErrUnexpected: {
@@ -1918,7 +1918,7 @@ class Tr {
       'tr': 'Beklenmeyen bir hata oluştu.',
     },
     K.authErrIdentityLinked: {
-      'ku': 'Ev hesab jixwe bi hesabek din ve girêdayî ye.',
+      'ku': 'Ev hesab jixwe bi hesabekî din ve girêdayî ye.',
       'tr': 'Bu hesap zaten başka bir hesaba bağlı.',
     },
     K.authErrLinkingDisabled: {
@@ -1982,7 +1982,7 @@ class Tr {
     },
     K.premiumInfoNothingToRestore: {
       'ku':
-          'Di vê hesabê de abonetiyeke çalak a ku were vegerandin nehat dîtin.',
+          'Di vî hesabî de abonetiyeke çalak a ku were vegerandin nehat dîtin.',
       'tr': 'Bu hesapta geri yüklenecek aktif abonelik bulunamadı.',
     },
     K.premiumErrNetwork: {
@@ -1990,7 +1990,7 @@ class Tr {
       'tr': 'Bağlantı kurulamadı. İnterneti kontrol edip tekrar dene.',
     },
     K.premiumErrStore: {
-      'ku': 'Dukan nayê gihîştin. Piştî demekê dîsa biceribîne.',
+      'ku': 'Gihîştina dukanê çênebû. Piştî demekê dîsa biceribîne.',
       'tr': 'Mağazaya ulaşılamadı. Biraz sonra tekrar dene.',
     },
     K.premiumErrNotAllowed: {
@@ -2002,7 +2002,7 @@ class Tr {
       'tr': 'Bu paket şu anda satışta değil.',
     },
     K.premiumErrOtherAccount: {
-      'ku': 'Ev abonetî di hesabeke din de tê bikaranîn.',
+      'ku': 'Ev abonetî di hesabekî din de tê bikaranîn.',
       'tr': 'Bu abonelik başka bir hesapta kullanılıyor.',
     },
     K.premiumErrGeneric: {
