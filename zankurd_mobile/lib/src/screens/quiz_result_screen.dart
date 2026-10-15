@@ -629,6 +629,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   // Sunucu RPC'siyle eşitliği bekçili tek kaynak; üç ayrı kopya vardı.
   static const _streakFreezeCost = CoinPrices.streakFreeze;
 
+  /// Alıştırma turunun seri sonucu: kayıt yok, yalnız görünen seri.
+  ///
+  /// Kusur: yanlış tekrarı turu da `recordPlay` çağırıyordu; bir kullanıcı
+  /// günde yalnız kendi yanlışlarını gözden geçirerek (ödül, cevap baskısı ve
+  /// yeni soru olmadan) seri biriktirebiliyor, hatta kırılacak seri için
+  /// jeton dondurma teklifi alıyordu. Sessizdi: seri zaten "oynadı" diye
+  /// artıyordu, hata üretmiyordu.
+  _StreakOutcome _practiceStreak(StreakStore store) =>
+      _StreakOutcome(streak: store.effectiveStreak(), isNewDay: false);
+
   /// Karar adımı hata verdiyse seri yine de kaydedilmeli.
   ///
   /// Aksi hâlde ilerlemeye `streak: 0` giderdi ve rozet/görev hesabı, hiç
@@ -637,6 +647,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
   /// yoldaki davranışın aynısı uygulanır.
   Future<_StreakOutcome> _fallbackStreak() async {
     final store = await StreakStore.load();
+    if (practice) return _practiceStreak(store);
     final today = DateTime.now();
     final todayKey =
         '${today.year.toString().padLeft(4, '0')}-'
@@ -669,8 +680,11 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     // aynı anahtarı taşır ve sunucu ikinci kez çekmez.
     String idempotencyKey = '',
   }) async {
-    final premium = context.read<PremiumService>();
     final streakStore = await StreakStore.load();
+    // Alıştırma (yanlış tekrarı) seriyi ne uzatır ne de dondurma teklifi
+    // açar: aynı sorular tekrar çözülüyor, yeni bir oyun günü değil.
+    if (practice) return _practiceStreak(streakStore);
+    final premium = context.read<PremiumService>();
     final today = DateTime.now();
     final todayKey =
         '${today.year.toString().padLeft(4, '0')}-'
@@ -941,8 +955,15 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     await badgeService.evaluateQuestionBadges(
       achievementStore.answeredQuestions,
     );
-    await badgeService.evaluatePerfectGame(correctCount, totalQuestions);
-    if (totalQuestions > 0) {
+    // Beceri rozetleri yalnız gerçek turlara: alıştırma, çok kısa tur ve
+    // süre aşımı olan tur sayılmaz (bkz. [BadgeService.isSkillRound]).
+    final skillRound = BadgeService.isSkillRound(
+      practice: practice,
+      totalQuestions: totalQuestions,
+      unanswered: answerRecords.where((r) => r.isUnanswered).length,
+    );
+    if (skillRound) {
+      await badgeService.evaluatePerfectGame(correctCount, totalQuestions);
       final totalResponseMs = answerRecords.fold<int>(
         0,
         (sum, record) => sum + (record.responseMs ?? 0),
