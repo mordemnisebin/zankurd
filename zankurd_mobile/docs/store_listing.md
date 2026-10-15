@@ -168,7 +168,8 @@ değiştirirsin; sorular, açıklamalar ve dersler iki dilde de yazılıdır.
 ÇEVRİMDIŞI
 
 Tek kişilik soruların tamamı cihazda. İnternet olmadan da oynarsın.
-Seviye çubuğun ve öğrenme ilerlemen cihazda saklanır.
+Seviye çubuğun ve öğrenme ilerlemen cihazda saklanır; hesabınla girdiysen
+hesabına da eşitlenir, telefon değişse de kaybolmaz.
 Sıralama puanın hesabına yazılır; çevrimiçi yarışlar, coin işlemleri ve
 hesap özellikleri internet gerektirir.
 
@@ -274,7 +275,8 @@ değiştirirsin; sorular, açıklamalar ve dersler iki dilde de yazılıdır.
 Çevrimdışı
 
 Tek kişilik soruların tamamı cihazda. İnternet olmadan da oynarsın.
-Seviye çubuğun ve öğrenme ilerlemen cihazda saklanır.
+Seviye çubuğun ve öğrenme ilerlemen cihazda saklanır; hesabınla girdiysen
+hesabına da eşitlenir, telefon değişse de kaybolmaz.
 Sıralama puanın hesabına yazılır; çevrimiçi yarışlar, coin işlemleri ve
 hesap özellikleri internet gerektirir.
 
