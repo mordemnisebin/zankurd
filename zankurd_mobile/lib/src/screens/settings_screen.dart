@@ -10,6 +10,7 @@ import '../l10n/lang.dart';
 import '../utils/player_identity.dart';
 import '../l10n/strings.dart';
 import '../utils/app_route.dart';
+import '../utils/confirm_word.dart';
 import 'level_placement_screen.dart';
 import '../providers/auth_provider.dart';
 import '../providers/analytics_consent_provider.dart';
@@ -712,7 +713,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(context.t(K.deleteConfirmTitle)),
-        content: Text(context.t(K.deleteConfirmBody)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(context.t(K.deleteConfirmBody)),
+            // Mağaza aboneliği hesapla birlikte iptal olmaz; söylenmezse
+            // kullanıcı hesabı silip faturalanmaya devam eder.
+            const SizedBox(height: 12),
+            Text(
+              context.t(K.deleteSubscriptionNote),
+              key: const ValueKey('delete-subscription-note'),
+            ),
+          ],
+        ),
         // 2026-10-02 uçtan uca QA: yıkıcı eylem "Devam et" adıyla turuncu
         // birincil düğmeydi; göz oraya gidiyor, "Devam et" silmeyi
         // söylemiyordu. Şimdi güvenli eylem ("Vazgeç") varsayılan dolgulu
@@ -874,7 +888,9 @@ class _FinalDeleteDialogState extends State<_FinalDeleteDialog> {
             hintText: confirmWord,
             semanticLabel: confirmWord,
             onChanged: (value) {
-              setState(() => _canDelete = value.trim() == confirmWord);
+              setState(
+                () => _canDelete = ConfirmWord.matches(value, confirmWord),
+              );
             },
           ),
         ],

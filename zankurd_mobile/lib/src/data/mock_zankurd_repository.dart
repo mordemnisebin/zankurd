@@ -1844,6 +1844,20 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<QuizRewardClaim> awardSoloQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+    required String clientRoundId,
+  }) => awardQuizCoins(
+    score: score,
+    correctCount: correctCount,
+    bestStreak: bestStreak,
+    totalQuestions: totalQuestions,
+  );
+
+  @override
   Future<QuizRewardClaim> awardQuizCoins({
     required int score,
     required int correctCount,

@@ -411,6 +411,20 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
     GameRoom? room,
   });
 
+  /// Solo tur ödülü, turun değişmez [clientRoundId]'siyle.
+  ///
+  /// Aynı kimlikle ikinci çağrı sunucuda İLK sonucu döndürür ve ÖDEMEZ
+  /// (`claim_solo_reward(int,int,int,uuid)`). Çağıran kimliği turun ilk
+  /// denemesinde üretir ve kuyruğa yazar; böylece yanıtı kaybolan bir çağrının
+  /// yeniden gönderimi çift ödeme yapmaz.
+  Future<QuizRewardClaim> awardSoloQuizCoins({
+    required int score,
+    required int correctCount,
+    required int bestStreak,
+    required int totalQuestions,
+    required String clientRoundId,
+  });
+
   /// Kazanılan XP'yi SUNUCUYA bildirir ve sunucudaki güncel toplamı döner.
   ///
   /// ## Niçin var

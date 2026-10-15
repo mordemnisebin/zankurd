@@ -42,6 +42,7 @@ import 'quiz/fill_in_blank_widget.dart';
 import 'quiz/word_ordering_widget.dart';
 import '../theme/app_theme.dart';
 import '../utils/app_route.dart';
+import '../utils/client_round_id.dart';
 import '../utils/error_reporter.dart';
 import '../utils/player_identity.dart';
 import '../utils/question_timer_resume.dart';
@@ -2595,6 +2596,11 @@ class _QuizScreenState extends State<QuizScreen>
   /// Son turda ödül kuyruğa alındı mı? Sonuç ekranı bunu oyuncuya söyler.
   bool _rewardQueued = false;
 
+  /// Solo turun değişmez ödül kimliği: ilk denemede, kuyruğa alınan yeniden
+  /// gönderimde ve `_settleCoins`in tekrar çağrılarında AYNI kimlik gider;
+  /// sunucu (`claim_solo_reward`) ikinci talepte ödemez.
+  final String _soloRoundId = newClientRoundId();
+
   /// Son turun sıfır jetonu, günlük tavana varıldığı İÇİN müydü?
   ///
   /// Sonuç ekranı bunu bilmezse "+0 jeton" gösterip sebebini söylemez.
@@ -2646,13 +2652,21 @@ class _QuizScreenState extends State<QuizScreen>
     // ekranında görüldü.
     var awardFailed = false;
     try {
-      final claim = await widget.repository.awardQuizCoins(
-        score: score,
-        correctCount: correctCount,
-        bestStreak: bestStreak,
-        totalQuestions: totalQuestions,
-        room: widget.room,
-      );
+      final claim = widget.room.id == null
+          ? await widget.repository.awardSoloQuizCoins(
+              score: score,
+              correctCount: correctCount,
+              bestStreak: bestStreak,
+              totalQuestions: totalQuestions,
+              clientRoundId: _soloRoundId,
+            )
+          : await widget.repository.awardQuizCoins(
+              score: score,
+              correctCount: correctCount,
+              bestStreak: bestStreak,
+              totalQuestions: totalQuestions,
+              room: widget.room,
+            );
       amount = claim.amount;
       dailyCapReached = claim.dailyCapReached;
       durable = true;
@@ -2690,6 +2704,7 @@ class _QuizScreenState extends State<QuizScreen>
             bestStreak: bestStreak,
             totalQuestions: totalQuestions,
             roomId: widget.room.id,
+            clientRoundId: widget.room.id == null ? _soloRoundId : null,
           );
           rewardQueued = true;
           durable = true;

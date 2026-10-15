@@ -60,10 +60,11 @@ void main() {
       privacy,
       isNot(contains('XP ve öğrenme ilerlemen yalnızca cihazında tutulur')),
     );
-    expect(signOutTr, contains('seviye çubuğu'));
-    expect(signOutTr, contains('sıralama puanı dahil'));
-    expect(signOutKu, contains('pûana rêzbendiyê'));
-    expect(signOutKu, contains('amûr'));
+    // Kayıtlı hesabın çıkışı ilerlemeyi silmez; metin bunu söylemeli
+    // (eski metin "temizlenir" diyordu ve artık yalan olurdu).
+    expect(signOutTr, contains('İlerlemen hesabına bağlı saklanır'));
+    expect(signOutTr, isNot(contains('temizlenir')));
+    expect(signOutKu, contains('tê parastin'));
   });
 
   test('README çevrimdışı XP eşitlemesi vaat etmez', () {

@@ -349,7 +349,9 @@ class MistakeStore {
   Map<String, Map<String, int>> getLast7DaysHistory() {
     final Map<String, Map<String, int>> result = {};
     for (int i = 6; i >= 0; i--) {
-      final day = DateTime.now().subtract(Duration(days: i));
+      // Takvim günü aritmetiği (24 saatlik çıkarma saat geçişinde günü kaçırır).
+      final now = DateTime.now();
+      final day = DateTime(now.year, now.month, now.day - i);
       final key = _dayKey(day);
       result[key] = _history[key] ?? {'correct': 0, 'wrong': 0};
     }

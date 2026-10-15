@@ -467,10 +467,11 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
     for (var i = 0; ; i++) {
       try {
         return await load();
-      } catch (_) {
+      } catch (error, stack) {
         if (i >= widget.loadRetryDelays.length || !_isAttemptActive(attempt)) {
           rethrow;
         }
+        ErrorReporter.record(error, stack, reason: 'matchmaking_load_retry');
         await Future<void>.delayed(widget.loadRetryDelays[i]);
         if (!_isAttemptActive(attempt)) rethrow;
       }

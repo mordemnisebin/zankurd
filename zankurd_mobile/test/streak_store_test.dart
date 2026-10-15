@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/streak_store.dart';
@@ -132,5 +134,52 @@ void main() {
     StreakStore.resetInstance();
     final restored = await StreakStore.load();
     expect(restored.freezeCount, 1);
+  });
+
+  // Kusur: `_isYesterday` dünü `now.subtract(24 saat)` ile buluyordu. Saat
+  // ileri alınan gecenin ertesi sabahı (00:xx) 24 saat önce İKİ gün öncesine
+  // düşebilir; seri sessizce 1'e dönerdi. Takvim günü aritmetiği (DateTime(y,
+  // m, d - 1)) saatten bağımsızdır. Hata yalnız yaz/kış saati geçiş
+  // gecelerinde ve yalnız o saat dilimindeki cihazlarda görünür; bu yüzden
+  // test makinesinin dilimi ne olursa olsun geçiş günlerini tarar.
+  group('gün sınırı takvim aritmetiğidir', () {
+    final crossings = <(DateTime, DateTime)>[
+      // AB: 29 Mart 2026 ileri, 25 Ekim 2026 geri. ABD: 8 Mart, 1 Kasım.
+      (DateTime(2026, 3, 28, 23, 30), DateTime(2026, 3, 29, 0, 30)),
+      (DateTime(2026, 3, 29, 23, 30), DateTime(2026, 3, 30, 0, 30)),
+      (DateTime(2026, 10, 24, 23, 30), DateTime(2026, 10, 25, 0, 30)),
+      (DateTime(2026, 10, 25, 23, 30), DateTime(2026, 10, 26, 0, 30)),
+      (DateTime(2026, 3, 7, 23, 30), DateTime(2026, 3, 8, 0, 30)),
+      (DateTime(2026, 3, 8, 23, 30), DateTime(2026, 3, 9, 0, 30)),
+      (DateTime(2026, 10, 31, 23, 30), DateTime(2026, 11, 1, 0, 30)),
+      (DateTime(2026, 11, 1, 23, 30), DateTime(2026, 11, 2, 0, 30)),
+      // Ay, yıl ve artık yıl sınırları.
+      (DateTime(2026, 2, 28, 23, 59), DateTime(2026, 3, 1, 0, 1)),
+      (DateTime(2028, 2, 28, 12), DateTime(2028, 2, 29, 12)),
+      (DateTime(2028, 2, 29, 23, 59), DateTime(2028, 3, 1, 0, 1)),
+      (DateTime(2026, 12, 31, 23, 59), DateTime(2027, 1, 1, 0, 1)),
+    ];
+    for (final (first, next) in crossings) {
+      test('$first -> $next seriyi sürdürür', () async {
+        final store = await StreakStore.load();
+        await store.recordPlay(now: first);
+        expect(store.willBreakOnPlay(now: next), isFalse);
+        expect(store.effectiveStreak(now: next), 1);
+        expect(await store.recordPlay(now: next), 2);
+      });
+    }
+
+    test('iki gün atlayınca (geçiş günü dahil) seri yine kırılır', () async {
+      final store = await StreakStore.load();
+      await store.recordPlay(now: DateTime(2026, 3, 28, 12));
+      expect(store.willBreakOnPlay(now: DateTime(2026, 3, 30, 0, 30)), isTrue);
+      expect(await store.recordPlay(now: DateTime(2026, 3, 30, 0, 30)), 1);
+    });
+
+    test('24 saatlik çıkarma kaynakta kalmadı', () {
+      final source = File('lib/src/data/streak_store.dart').readAsStringSync();
+      expect(source, isNot(contains('subtract(const Duration(days: 1))')));
+      expect(source, contains('DateTime(now.year, now.month, now.day - 1)'));
+    });
   });
 }

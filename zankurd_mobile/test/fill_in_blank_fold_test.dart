@@ -107,8 +107,9 @@ void main() {
           expect(q.acceptsAnswer(bare), isFalse, reason: q.id);
           continue;
         }
-        if (!q.acceptsAnswer(bare))
+        if (!q.acceptsAnswer(bare)) {
           offenders.add('${q.id}: «$bare» reddedildi');
+        }
       }
       expect(offenders, isEmpty, reason: offenders.join('\n'));
     });

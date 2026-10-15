@@ -687,13 +687,11 @@ void main() {
     // Auth hataları defterde değil; zayıf şifre "6 karakter" deyince
     // ipucu `tîp` ile çelişir. Yorum satırları eski yalanı belgelemek
     // için kökü anabilir.
-    final authLive = File('lib/src/l10n/lang.dart')
-        .readAsStringSync()
-        .split('\n')
-        .where((line) => !line.trimLeft().startsWith('//'))
-        .join('\n');
-    expect(authLive, contains('herî kêm 6 tîp'));
-    expect(authLive, isNot(contains('herî kêm 6 karakter')));
+    // Auth hata iletileri artık metin anahtarı (K.authErr*), `lang.dart`taki
+    // elle eşleme kalktı; zayıf şifre iletisi defterde `tîp` demeli.
+    final weak = Tr.of(K.authErrWeakPassword, AppLanguage.ku);
+    expect(weak, contains('herî kêm 6 tîp'));
+    expect(weak, isNot(contains('karakter')));
   });
 
   test('bulut senkronu Kurmancîde ewr olarak kalır', () {

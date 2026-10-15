@@ -14,6 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:zankurd_mobile/src/l10n/strings.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/providers/auth_provider.dart';
@@ -35,6 +36,7 @@ class _GuestAuthProviderWithGoogleLink extends AuthProvider {
   final String? googleErrorMessage;
 
   bool googleLinkCalled = false;
+  bool appleLinkCalled = false;
 
   @override
   bool get isAuthenticated => true;
@@ -48,6 +50,12 @@ class _GuestAuthProviderWithGoogleLink extends AuthProvider {
   @override
   Future<bool> linkGoogleAccount() async {
     googleLinkCalled = true;
+    return googleLinkSucceeds;
+  }
+
+  @override
+  Future<bool> linkAppleAccount() async {
+    appleLinkCalled = true;
     return googleLinkSucceeds;
   }
 
@@ -123,7 +131,11 @@ void main() {
       expect(find.text('Google ile bağla'), findsOneWidget);
     });
 
-    testWidgets('iOS misafir yükseltmesinde sosyal hesap seçeneği görünmez', (
+    // Kusur: iOS'ta misafirin tek kalıcı yolu e-postaydı. `linkAppleAccount`
+    // yazılmıştı ama hiçbir çağrı yeri yoktu; Google bağlama bu platformda
+    // kapalı olduğundan Apple seçeneği hiç görünmüyordu. Sessizdi çünkü
+    // eski test tam tersini ("sosyal seçenek görünmez") sabitliyordu.
+    testWidgets('iOS misafir yükseltmesinde Apple görünür, Google görünmez', (
       tester,
     ) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
@@ -140,8 +152,50 @@ void main() {
       debugDefaultTargetPlatformOverride = null;
 
       expect(find.text('Google ile bağla'), findsNothing);
+      expect(find.text('Apple ile devam et'), findsOneWidget);
       expect(find.text('E-posta'), findsWidgets);
       expect(tester.takeException(), isNull);
+
+      await tester.tap(find.byKey(const ValueKey('guest-upgrade-apple')));
+      await tester.pumpAndSettle();
+      expect(guestAuth.appleLinkCalled, isTrue);
+      expect(guestAuth.googleLinkCalled, isFalse);
+    });
+
+    testWidgets('Kurmancî iOS yükseltmesinde Apple etiketi Kurmancî', (
+      tester,
+    ) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          ProfileScreen(repository: MockZanKurdRepository()),
+          _GuestAuthProviderWithGoogleLink(),
+          isKu: true,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openGuestUpgradeDialog(tester, isKu: true);
+      debugDefaultTargetPlatformOverride = null;
+
+      expect(find.text('Bi Apple re bidomîne'), findsOneWidget);
+    });
+
+    testWidgets('Android yükseltmesinde Apple görünmez, Google görünür', (
+      tester,
+    ) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      await tester.pumpWidget(
+        _wrapWithProviders(
+          ProfileScreen(repository: MockZanKurdRepository()),
+          _GuestAuthProviderWithGoogleLink(),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await _openGuestUpgradeDialog(tester);
+      debugDefaultTargetPlatformOverride = null;
+
+      expect(find.text('Apple ile devam et'), findsNothing);
+      expect(find.text('Google ile bağla'), findsOneWidget);
     });
 
     testWidgets('kalıcı kullanıcıda misafir yükseltme dialog\'u hiç açılamaz', (
@@ -196,7 +250,7 @@ void main() {
     ) async {
       final guestAuth = _GuestAuthProviderWithGoogleLink(
         googleLinkSucceeds: false,
-        googleErrorMessage: 'Bu Google hesabı zaten başka bir hesaba bağlı.',
+        googleErrorMessage: K.authErrIdentityLinked,
       );
       await tester.pumpWidget(
         _wrapWithProviders(
@@ -212,7 +266,7 @@ void main() {
 
       expect(guestAuth.googleLinkCalled, isTrue);
       expect(
-        find.text('Bu Google hesabı zaten başka bir hesaba bağlı.'),
+        find.text('Bu hesap zaten başka bir hesaba bağlı.'),
         findsOneWidget,
       );
     });
@@ -228,7 +282,7 @@ void main() {
       // döndürür, bu yüzden o test bu düzeltmeyle bozulmadı.
       final guestAuth = _GuestAuthProviderWithGoogleLink(
         googleLinkSucceeds: false,
-        googleErrorMessage: 'Bu Google hesabı zaten başka bir hesaba bağlı.',
+        googleErrorMessage: K.authErrIdentityLinked,
       );
       await tester.pumpWidget(
         _wrapWithProviders(
@@ -245,12 +299,12 @@ void main() {
 
       expect(guestAuth.googleLinkCalled, isTrue);
       expect(
-        find.text('Bu Google hesabı zaten başka bir hesaba bağlı.'),
+        find.text('Bu hesap zaten başka bir hesaba bağlı.'),
         findsNothing,
         reason: 'Kurmancî arayüzde Türkçe hata metni gösterilmemeli',
       );
       expect(
-        find.text('Ev hesabê Google jixwe bi hesabek din ve girêdayî ye.'),
+        find.text('Ev hesab jixwe bi hesabek din ve girêdayî ye.'),
         findsOneWidget,
       );
     });
@@ -265,7 +319,7 @@ void main() {
           code: 'identity_already_exists',
         ),
       );
-      expect(message, 'Bu Google hesabı zaten başka bir hesaba bağlı.');
+      expect(message, K.authErrIdentityLinked);
     });
 
     test('manual_linking_disabled kodu anlamlı Türkçe mesaja çevrilir', () {
@@ -276,10 +330,7 @@ void main() {
           code: 'manual_linking_disabled',
         ),
       );
-      expect(
-        message,
-        'Hesap bağlama şu anda kapalı. Supabase panelinde manuel bağlamayı aç.',
-      );
+      expect(message, K.authErrLinkingDisabled);
     });
   });
 }
