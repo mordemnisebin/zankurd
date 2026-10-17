@@ -30,9 +30,14 @@ import '../services/placement_scoring.dart';
 ///   coin'le satın alınır, birleştirmede kaybolması kullanıcıya haksızlıktır).
 /// * Tekrar kuyruğu: soru kimliği **birleşimi**; aynı kimlikte **daha erken
 ///   vade** (`nextReview`) kazanır; günlük performans günü gün **en yüksek**.
-/// * Seviye sınavı: daha yüksek seviye; seviye yoksa "geçildi" bayrağı VEYA.
-/// * Hikâye düğümü ve öğrenme hedefi: yerelde varsa yerel, yoksa uzak
-///   (çatışmada yerel kazanır; tek simetrik olmayan kural).
+/// * Seviye sınavı: iki tarafta da yazım zamanı (`placementAt`) varsa **en son
+///   yazan kazanır** (düşük seviyeye yeniden sınav geri alınmasın); biri
+///   zamansızsa (eski veri) daha yüksek seviye, seviye yoksa "geçildi"
+///   bayrağı VEYA.
+/// * Hikâye düğümü: hikâye başına, iki tarafta da zaman (`storyAt`) varsa
+///   **en son yazan** (yeniden başlatma geri alınmasın); aksi hâlde yerelde
+///   varsa yerel, yoksa uzak. "Bitirildi" kümesi (`storyDone`): **birleşim**.
+/// * Öğrenme hedefi: yerelde varsa yerel, yoksa uzak.
 class ProgressSnapshot {
   const ProgressSnapshot({
     this.xp = 0,
@@ -44,7 +49,10 @@ class ProgressSnapshot {
     this.mistakes = const SnapshotMistakes(),
     this.placementLevel,
     this.placementSkipped = false,
+    this.placementUpdatedAt,
     this.story = const {},
+    this.storyUpdatedAt = const {},
+    this.storyDone = const {},
     this.learningGoal,
   });
 
@@ -67,8 +75,17 @@ class ProgressSnapshot {
   final String? placementLevel;
   final bool placementSkipped;
 
+  /// Seviye sınavının son yazım zamanı (ms); eski veride null.
+  final int? placementUpdatedAt;
+
   /// Hikâye kimliği -> düğüm kimliği.
   final Map<String, String> story;
+
+  /// Hikâye kimliği -> son yazım zamanı (ms); eski kayıtlarda yok.
+  final Map<String, int> storyUpdatedAt;
+
+  /// Sonuna ulaşılmış hikâyeler ("yeniden oyna" bunu silmez).
+  final Set<String> storyDone;
   final String? learningGoal;
 
   bool get isEmpty =>
@@ -82,6 +99,7 @@ class ProgressSnapshot {
       placementLevel == null &&
       !placementSkipped &&
       story.isEmpty &&
+      storyDone.isEmpty &&
       learningGoal == null;
 
   Map<String, dynamic> toJson() => {
@@ -98,8 +116,16 @@ class ProgressSnapshot {
     // ignore: use_null_aware_elements
     if (placementLevel != null) 'placementLevel': placementLevel,
     if (placementSkipped) 'placementSkipped': true,
+    // ignore: use_null_aware_elements
+    if (placementUpdatedAt != null) 'placementAt': placementUpdatedAt,
     if (story.isNotEmpty)
       'story': {for (final key in _sorted(story.keys)) key: story[key]},
+    if (storyUpdatedAt.isNotEmpty)
+      'storyAt': {
+        for (final key in _sorted(storyUpdatedAt.keys))
+          key: storyUpdatedAt[key],
+      },
+    if (storyDone.isNotEmpty) 'storyDone': _sorted(storyDone),
     // ignore: use_null_aware_elements
     if (learningGoal != null) 'goal': learningGoal,
   };
@@ -129,7 +155,12 @@ class ProgressSnapshot {
           raw['placementLevel'] as String?,
         )?.storageKey,
         placementSkipped: raw['placementSkipped'] == true,
+        placementUpdatedAt: raw['placementAt'] is num
+            ? (raw['placementAt'] as num).toInt()
+            : null,
         story: _stringMap(raw['story']),
+        storyUpdatedAt: _intMap(raw['storyAt']),
+        storyDone: _strings(raw['storyDone']),
         learningGoal:
             raw['goal'] is String && (raw['goal'] as String).isNotEmpty
             ? raw['goal'] as String
@@ -147,6 +178,7 @@ class ProgressSnapshot {
   ) {
     final masteryKeys = {...local.mastery.keys, ...remote.mastery.keys};
     final placement = _mergePlacement(local, remote);
+    final story = _mergeStory(local, remote);
     return ProgressSnapshot(
       xp: local.xp > remote.xp ? local.xp : remote.xp,
       streak: SnapshotStreak.merge(local.streak, remote.streak),
@@ -166,22 +198,59 @@ class ProgressSnapshot {
       mistakes: SnapshotMistakes.merge(local.mistakes, remote.mistakes),
       placementLevel: placement.$1,
       placementSkipped: placement.$2,
-      story: {...remote.story, ...local.story},
+      placementUpdatedAt: placement.$3,
+      story: story.$1,
+      storyUpdatedAt: story.$2,
+      storyDone: {...local.storyDone, ...remote.storyDone},
       learningGoal: local.learningGoal ?? remote.learningGoal,
     );
   }
 
-  static (String?, bool) _mergePlacement(
+  static (String?, bool, int?) _mergePlacement(
     ProgressSnapshot a,
     ProgressSnapshot b,
   ) {
+    final ta = a.placementUpdatedAt;
+    final tb = b.placementUpdatedAt;
+    if (ta != null && tb != null) {
+      // İkisi de zamanlı: son yazan kazanır (eşitlikte aşağıdaki kural).
+      if (ta != tb) {
+        final w = ta > tb ? a : b;
+        return (
+          PlacementLevel.fromStorageKey(w.placementLevel)?.storageKey,
+          w.placementLevel == null && w.placementSkipped,
+          w.placementUpdatedAt,
+        );
+      }
+    }
+    final stamp = ta == null ? tb : (tb == null ? ta : (ta > tb ? ta : tb));
     final la = PlacementLevel.fromStorageKey(a.placementLevel);
     final lb = PlacementLevel.fromStorageKey(b.placementLevel);
     if (la == null && lb == null) {
-      return (null, a.placementSkipped || b.placementSkipped);
+      return (null, a.placementSkipped || b.placementSkipped, stamp);
     }
     final best = (la?.index ?? -1) >= (lb?.index ?? -1) ? la : lb;
-    return (best?.storageKey, false);
+    return (best?.storageKey, false, stamp);
+  }
+
+  static (Map<String, String>, Map<String, int>) _mergeStory(
+    ProgressSnapshot local,
+    ProgressSnapshot remote,
+  ) {
+    final nodes = <String, String>{};
+    final stamps = <String, int>{};
+    for (final id in {...local.story.keys, ...remote.story.keys}) {
+      final ln = local.story[id];
+      final rn = remote.story[id];
+      final lt = local.storyUpdatedAt[id];
+      final rt = remote.storyUpdatedAt[id];
+      final remoteWins =
+          ln == null || (rn != null && lt != null && rt != null && rt > lt);
+      nodes[id] = remoteWins ? rn! : ln;
+      final t = remoteWins ? rt : lt;
+      if (t != null) stamps[id] = t;
+    }
+    return (nodes, stamps);
   }
 
   @override
@@ -492,6 +561,15 @@ Map<String, String> _stringMap(Object? value) {
     for (final entry in value.entries)
       if (entry.key is String && entry.value is String)
         entry.key as String: entry.value as String,
+  };
+}
+
+Map<String, int> _intMap(Object? value) {
+  if (value is! Map) return <String, int>{};
+  return {
+    for (final entry in value.entries)
+      if (entry.key is String && entry.value is num)
+        entry.key as String: (entry.value as num).toInt(),
   };
 }
 

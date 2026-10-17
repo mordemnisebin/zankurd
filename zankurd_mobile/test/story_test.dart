@@ -107,11 +107,11 @@ void main() {
       expect(reloaded.currentNodeId('cayxane'), 'tea');
     });
 
-    test('yeniden başlatma ilerlemeyi siler', () async {
+    test('yeniden başlatma ilerlemeyi başlangıç düğümüne döndürür', () async {
       final store = await StoryProgressStore.load();
       await store.saveNode('cayxane', 'end_warm');
-      await store.restart('cayxane');
-      expect(store.currentNodeId('cayxane'), isNull);
+      await store.restart('cayxane', 'start');
+      expect(store.currentNodeId('cayxane'), 'start');
     });
 
     test('hesap çıkışında tüm hikâye ilerlemesi temizlenir', () async {

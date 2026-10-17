@@ -28,6 +28,7 @@ class StoryCatalog extends StatefulWidget {
 
 class _StoryCatalogState extends State<StoryCatalog> {
   Map<String, String?> _progress = const {};
+  Set<String> _done = const {};
 
   @override
   void initState() {
@@ -42,6 +43,10 @@ class _StoryCatalogState extends State<StoryCatalog> {
       _progress = {
         for (final story in everydayStories)
           story.id: store.currentNodeId(story.id),
+      };
+      _done = {
+        for (final story in everydayStories)
+          if (store.isCompleted(story.id)) story.id,
       };
     });
   }
@@ -90,6 +95,7 @@ class _StoryCatalogState extends State<StoryCatalog> {
                       key: ValueKey('story-card-${story.id}'),
                       story: story,
                       nodeId: _progress[story.id],
+                      done: _done.contains(story.id),
                       isKu: widget.isKu,
                       compact: true,
                       onTap: () => _open(story),
@@ -109,6 +115,7 @@ class _StoryCatalogState extends State<StoryCatalog> {
                   key: ValueKey('story-card-${story.id}'),
                   story: story,
                   nodeId: _progress[story.id],
+                  done: _done.contains(story.id),
                   isKu: widget.isKu,
                   compact: false,
                   onTap: () => _open(story),
@@ -124,6 +131,7 @@ class _StoryCatalogCard extends StatelessWidget {
   const _StoryCatalogCard({
     required this.story,
     required this.nodeId,
+    required this.done,
     required this.isKu,
     required this.compact,
     required this.onTap,
@@ -132,16 +140,20 @@ class _StoryCatalogCard extends StatelessWidget {
 
   final Story story;
   final String? nodeId;
+  final bool done;
   final bool isKu;
   final bool compact;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final completed = story.node(nodeId)?.isEnding ?? false;
+    final completed = done || (story.node(nodeId)?.isEnding ?? false);
+    // Yeniden başlatılmış hikâye başlangıç düğümüne yazılır (silinmez):
+    // başlanmamış gibi görünmeli.
+    final fresh = nodeId == null || nodeId == story.start.id;
     final status = completed
         ? Tr.forKu(K.storyStatusDone, isKu)
-        : nodeId == null
+        : fresh
         ? Tr.forKu(K.storyStatusStart, isKu)
         : Tr.forKu(K.storyStatusContinue, isKu);
     // 2026-09-29 doğallık (K7): başlık Gövde 700, öteki dildeki ad

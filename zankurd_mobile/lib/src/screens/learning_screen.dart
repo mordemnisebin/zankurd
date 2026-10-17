@@ -16,6 +16,7 @@ import '../models/lesson.dart';
 import '../services/lesson_listening_speaker.dart';
 import '../services/placement_scoring.dart';
 import '../utils/app_route.dart';
+import 'level_placement_screen.dart';
 import '../data/streak_store.dart';
 import '../utils/error_reporter.dart';
 import 'story_screen.dart';
@@ -133,6 +134,7 @@ class _LearningScreenState extends State<LearningScreen> {
   Set<String> _completedIds = const {};
   List<Lesson> _currentLessons = const [];
   PlacementLevel? _placementLevel;
+  bool _placementPrompt = false;
   bool _lessonsLoading = false;
 
   @override
@@ -146,9 +148,31 @@ class _LearningScreenState extends State<LearningScreen> {
   Future<void> _loadPlacementLevel() async {
     try {
       final store = await PlacementStore.load();
-      if (mounted) setState(() => _placementLevel = store.level);
+      if (mounted) {
+        setState(() {
+          _placementLevel = store.level;
+          _placementPrompt = store.shouldPrompt;
+        });
+      }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'learning_load_progress');
+    }
+  }
+
+  Future<void> _openPlacement() async {
+    await Navigator.of(
+      context,
+    ).push(AppRoute.to(LevelPlacementScreen(repository: widget.repository)));
+    if (mounted) await _loadPlacementLevel();
+  }
+
+  Future<void> _dismissPlacementPrompt() async {
+    setState(() => _placementPrompt = false);
+    try {
+      final store = await PlacementStore.load();
+      await store.markSkipped();
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'learning_skip_placement');
     }
   }
 
@@ -215,6 +239,19 @@ class _LearningScreenState extends State<LearningScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Seviye belirlenmemiş ve geçilmemişse yumuşak, kapatılabilir
+              // davet. Ekranın tek birincil eylemi yoldaki etkin ders olduğu
+              // için düğme ikincildir.
+              if (_placementPrompt) ...[
+                _page(
+                  _PlacementPromptCard(
+                    isKu: ku,
+                    onStart: _openPlacement,
+                    onDismiss: _dismissPlacementPrompt,
+                  ),
+                ),
+                const SizedBox(height: SahneSpace.x3),
+              ],
               // Akıllı tekrar (SM-2) en üstte, ama yalnız gerçekten tekrar
               // bekliyorsa: vadesi gelmiş soru, yeni dersten daha acildir.
               // Hiç ders çözmemiş birine "Tekrarlar tamam" yazmak yapılmamış
@@ -611,6 +648,61 @@ class _LearningScreenState extends State<LearningScreen> {
 /// ikonlu, tam genişlik) — eskiden biri dolu yeşil, öteki altın harmanlıydı;
 /// Şahnê'de renk yalnız rol taşır ve Agir tek birincildedir. Yan yana
 /// sığmazlarsa (dar ekran, büyük yazı) alt alta sarar.
+/// "Seviyeni bul" daveti: kart + ikincil "Başla" + metin "Şimdilik geç".
+class _PlacementPromptCard extends StatelessWidget {
+  const _PlacementPromptCard({
+    required this.isKu,
+    required this.onStart,
+    required this.onDismiss,
+  });
+
+  final bool isKu;
+  final VoidCallback onStart;
+  final VoidCallback onDismiss;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return SahneSurfaceCard(
+      key: const ValueKey('learning-placement-prompt'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Semantics(
+            header: true,
+            child: Text(
+              context.t(K.placementCardTitle),
+              style: SahneType.bodyStrong.copyWith(color: t.tx),
+            ),
+          ),
+          const SizedBox(height: SahneSpace.x1),
+          Text(
+            context.t(K.placementCardBody),
+            style: SahneType.caption.copyWith(color: t.tx2),
+          ),
+          const SizedBox(height: SahneSpace.x3),
+          SahneButton.secondary(
+            buttonKey: const ValueKey('learning-placement-start'),
+            label: context.t(K.placementCardStart),
+            onPressed: onStart,
+            expand: true,
+          ),
+          const SizedBox(height: SahneSpace.x1),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: SahneButton.text(
+              buttonKey: const ValueKey('learning-placement-dismiss'),
+              label: context.t(K.placementSkip),
+              arrow: false,
+              onPressed: onDismiss,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _TopicActions extends StatelessWidget {
   const _TopicActions({
     required this.isKu,
@@ -986,6 +1078,16 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
   void _toggleFlashcard() {
     setState(() {
       _flashcardMode = !_flashcardMode;
+      _isFlipped = false;
+      _flipController.reset();
+    });
+  }
+
+  /// Slayt değişince kart ÖN yüzle (animasyonsuz) açılır; yoksa bir önceki
+  /// kartın cevap yüzü sonraki kartta kalıyordu.
+  void _goToSlide(int index) {
+    setState(() {
+      _currentSlideIndex = index;
       _isFlipped = false;
       _flipController.reset();
     });
@@ -1435,10 +1537,10 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                   child: LessonSlideNavigation(
                     showBack: _currentSlideIndex > 0,
                     isLast: isLast,
-                    onBack: () => setState(() => _currentSlideIndex--),
+                    onBack: () => _goToSlide(_currentSlideIndex - 1),
                     onNext: isLast
                         ? _markCompleted
-                        : () => setState(() => _currentSlideIndex++),
+                        : () => _goToSlide(_currentSlideIndex + 1),
                     onMiniQuiz: _miniQuizLoading ? null : _startMiniQuiz,
                   ),
                 ),
