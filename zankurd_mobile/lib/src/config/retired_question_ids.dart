@@ -717,6 +717,18 @@ const Set<String> retiredQuestionIds = <String>{
   // veriyordu; onlar yeniden ifade edildi, emekli DEĞİL.
   // ---------------------------------------------------------------------
   'ds_cand_0285',
+
+  // ---------------------------------------------------------------------
+  // 2026-10-17: yakın tekrar — kalite kapısının `near_duplicate_candidate`
+  // uyarılarından 70 oynanabilir çift Gemini 3.8 Flash + Grok 4.7 ile
+  // oylandı; yalnız ikisinin de "aynı olgu" dediği 5 çiftin daha zayıf
+  // yazılmış yarısı emekli (kalan eş parantezde).
+  // ---------------------------------------------------------------------
+  'ds_cografya_0133', // kalan: ds_cografya_0129
+  'ds_dirok_0029', // kalan: edit_dirok_0001
+  'ds_dirok_0091', // kalan: ds_dirok_0055
+  'ds_muzik_0144', // kalan: ds_muzik_0133
+  'offline_2668', // kalan: edit_dirok_0028
 };
 
 /// Soru emekliye ayrılmış bir genel kültür sorusu mu?
