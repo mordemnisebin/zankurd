@@ -49,6 +49,7 @@ import 'package:zankurd_mobile/src/screens/room_screen.dart';
 import 'package:zankurd_mobile/src/screens/avatar_editor_screen.dart';
 import 'package:zankurd_mobile/src/screens/level_placement_screen.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
+import 'package:zankurd_mobile/src/data/placement_store.dart';
 import 'package:zankurd_mobile/src/screens/learning_screen.dart';
 import 'package:zankurd_mobile/src/data/question_bank_loader.dart';
 import 'package:zankurd_mobile/src/screens/learner_lexicon_screen.dart';
@@ -1299,6 +1300,20 @@ void main() {
   testWidgets('57 öğrenme (Kurmancî)', (t) async {
     await _pump(t, LearningScreen(repository: repository), ku: true);
     await _shoot(t, '57_learning_ku');
+  }, tags: ['preview']);
+
+  // "Seviyeni bul" daveti: depo tekil örneği sıfırlanır ki sınav hiç
+  // alınmamış taze kullanıcı görünsün (öteki karelerde de görünebilir).
+  testWidgets('57b öğrenme, seviye daveti (Kurmancî)', (t) async {
+    PlacementStore.resetInstance();
+    await _pump(t, LearningScreen(repository: repository), ku: true);
+    await _shoot(t, '57b_learning_placement_prompt_ku');
+  }, tags: ['preview']);
+
+  testWidgets('57c öğrenme, seviye daveti (karanlık)', (t) async {
+    PlacementStore.resetInstance();
+    await _pump(t, LearningScreen(repository: repository), dark: true);
+    await _shoot(t, '57c_learning_placement_prompt_dark');
   }, tags: ['preview']);
 
   testWidgets('58 seviye sınavı (Kurmancî)', (t) async {

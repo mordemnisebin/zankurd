@@ -2213,6 +2213,12 @@ class Tr {
     // ── Seviye tespiti ────────────────────────────────────────────
     K.placementTitle: {'ku': 'Asta xwe diyar bike', 'tr': 'Seviyeni belirle'},
     K.placementSkip: {'ku': 'Paşê bike', 'tr': 'Şimdilik geç'},
+    K.placementCardTitle: {'ku': 'Asta xwe bibîne', 'tr': 'Seviyeni bul'},
+    K.placementCardBody: {
+      'ku': 'Bi çend pirsên kurt dersa ji te re guncaw bibîne.',
+      'tr': 'Birkaç kısa soruyla sana uygun dersi bulalım.',
+    },
+    K.placementCardStart: {'ku': 'Azmûnê bide', 'tr': 'Teste başla'},
     K.placementNoQuestions: {
       'ku': 'Ji bo naha pirs tune. Tu dikarî dûre biceribînî.',
       'tr': 'Şimdilik soru yok. Daha sonra deneyebilirsin.',
@@ -4073,6 +4079,9 @@ class K {
   // ── Seviye tespiti ────────────────────────────────────────────
   static const placementTitle = 'placement.title';
   static const placementSkip = 'placement.skip';
+  static const placementCardTitle = 'placement.card.title';
+  static const placementCardBody = 'placement.card.body';
+  static const placementCardStart = 'placement.card.start';
   static const placementNoQuestions = 'placement.noQuestions';
   static const placementProgress = 'placement.progress';
   static const placementYourLevel = 'placement.yourLevel';
