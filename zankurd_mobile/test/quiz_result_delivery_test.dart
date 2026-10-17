@@ -99,6 +99,28 @@ void main() {
 
   // Kalabalık oda sonucu "tam iki oyuncu" şartına takılıp hiç onaylanmıyor,
   // biten oda her soğuk açılışta yeniden çıkıyordu (simülatör 2026-10-17).
+  // Çevrimiçi odada sunucu XP olarak oda puanını verir (award_room_xp);
+  // istemci kendi formülüyle daha büyük bir sayı gösterip yazıyordu
+  // ("+190 XP" derken hesap 141 aldı, simülatör 2026-10-17).
+  testWidgets('çevrimiçi odada kazanılan XP oda puanına eşit', (tester) async {
+    final repository = _DeliveryRepository();
+    final before = (await XPStore.load()).totalXP;
+    await _pumpResult(
+      tester,
+      repository: repository,
+      receiptRunner:
+          ({required userId, required roomId, required action}) async {
+            await action();
+            return QuizResultProgressReceiptOutcome.executed;
+          },
+    );
+    await tester.pump();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+
+    expect((await XPStore.load()).totalXP - before, 60);
+  });
+
   testWidgets('kalabalık oda (3 oyuncu) sonucu da ACK edilir', (tester) async {
     final repository = _DeliveryRepository();
     await _pumpResult(tester, repository: repository, room: _crowdRoom);

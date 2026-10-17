@@ -1015,13 +1015,25 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       streakAlive: streak > 0,
     );
     // XP ve Seviye Hesaplaması
-    int earnedXP = (correctCount * 10) + 50;
-    if (isNewDay) earnedXP += 30;
-    earnedXP += completedMissions.fold(
-      0,
-      (sum, mission) => sum + mission.xpReward,
-    );
-    earnedXP += promotions.length * 200;
+    //
+    // Çevrimiçi odada XP'yi sunucu yazar: award_room_xp oda puanını (0..2000)
+    // verir. İstemci kendi formülüyle (+50, görev, terfi) daha büyük bir sayı
+    // gösterip cihaza yazıyordu; sonuç "+190 XP" derken hesap 141 alıyordu
+    // (simülatör denemesi 2026-10-17). Odada ekran ve cihaz sunucuyla aynı
+    // sayıyı kullanır; tek oyunculu tur bugünkü formülde kalır.
+    final isOnlineRoom = (widget.room.id?.trim() ?? '').isNotEmpty;
+    int earnedXP;
+    if (isOnlineRoom) {
+      earnedXP = score.clamp(0, 2000);
+    } else {
+      earnedXP = (correctCount * 10) + 50;
+      if (isNewDay) earnedXP += 30;
+      earnedXP += completedMissions.fold(
+        0,
+        (sum, mission) => sum + mission.xpReward,
+      );
+      earnedXP += promotions.length * 200;
+    }
 
     final xpStore = await XPStore.load();
     final leveledUp = await xpStore.addXP(earnedXP);
