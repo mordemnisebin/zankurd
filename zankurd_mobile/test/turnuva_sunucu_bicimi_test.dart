@@ -61,7 +61,7 @@ _Repo _repo(int status, Object? body) => _Repo(
 
 void main() {
   test('sunucunun "round" alanı tur numarası olarak okunur', () {
-    final bracket = TournamentBracket.fromJson({
+    final bracket = TournamentBracket.fromJson(const {
       'tournamentId': 't',
       'userId': 'u',
       'currentRound': 0,
@@ -86,7 +86,10 @@ void main() {
     expect(bracket.rounds.map((r) => r.roundNumber), [1, 2]);
     // Eski/yerel biçim de çalışmaya devam eder.
     expect(
-      TournamentRound.fromJson({'roundNumber': 3, 'matches': []}).roundNumber,
+      TournamentRound.fromJson(const {
+        'roundNumber': 3,
+        'matches': [],
+      }).roundNumber,
       3,
     );
   });
