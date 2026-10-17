@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../theme/app_icons.dart';
@@ -109,6 +111,21 @@ class SahneButton extends StatelessWidget {
     // yana durduğunda "Kelime kartları" tek satıra sığar.
     final hPad = expand ? SahneSpace.x3 : SahneSpace.x5;
 
+    // İkon ve ok ETİKETİN İLK SATIRINA hizalanır: iki satıra saran etikette
+    // ortada dikey ortalanan ikon, kısa ikinci satırın yanında sahipsiz
+    // kalıyordu (320 px / 2×, "Dest bi pêşbirkê bike").
+    final lineStyle = isText ? SahneType.captionStrong : SahneType.button;
+    final lineHeight = math.max(
+      iconSize,
+      MediaQuery.textScalerOf(
+        context,
+      ).scale((lineStyle.fontSize ?? 16) * (lineStyle.height ?? 1.5)),
+    );
+    Widget onFirstLine(Widget child) => SizedBox(
+      height: lineHeight,
+      child: Center(child: child),
+    );
+
     final lead = leading ?? (icon == null ? null : Icon(icon, size: iconSize));
     final Widget content = loading
         ? SizedBox.square(
@@ -123,14 +140,26 @@ class SahneButton extends StatelessWidget {
         : Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (lead != null) ...[lead, SizedBox(width: gap)],
-              Flexible(child: Text(label, textAlign: TextAlign.center)),
+              if (lead != null) ...[onFirstLine(lead), SizedBox(width: gap)],
+              // `longestLine`: iki satıra sarınca metin kutusu en uzun satıra
+              // daralır; yoksa kutu bütün boşluğu kaplar, ikon düğmenin
+              // soluna yapışır, ortadaki metinden kopardı (320 px / 2×).
+              Flexible(
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  textWidthBasis: TextWidthBasis.longestLine,
+                ),
+              ),
               if (arrow) ...[
                 SizedBox(width: gap),
-                Icon(
-                  isText ? AppIcons.chevronRight : AppIcons.arrowRight,
-                  size: iconSize,
+                onFirstLine(
+                  Icon(
+                    isText ? AppIcons.chevronRight : AppIcons.arrowRight,
+                    size: iconSize,
+                  ),
                 ),
               ],
             ],
