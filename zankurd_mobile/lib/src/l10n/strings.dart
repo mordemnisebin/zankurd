@@ -2215,10 +2215,10 @@ class Tr {
     K.placementSkip: {'ku': 'Paşê bike', 'tr': 'Şimdilik geç'},
     K.placementCardTitle: {'ku': 'Asta xwe bibîne', 'tr': 'Seviyeni bul'},
     K.placementCardBody: {
-      'ku': 'Bi çend pirsên kurt dersa ji te re guncaw bibîne.',
+      'ku': 'Bi çend pirsên kurt em dersa ku ji te re guncaw e bibînin.',
       'tr': 'Birkaç kısa soruyla sana uygun dersi bulalım.',
     },
-    K.placementCardStart: {'ku': 'Azmûnê bide', 'tr': 'Teste başla'},
+    K.placementCardStart: {'ku': 'Dest bi azmûnê bike', 'tr': 'Teste başla'},
     K.placementNoQuestions: {
       'ku': 'Ji bo naha pirs tune. Tu dikarî dûre biceribînî.',
       'tr': 'Şimdilik soru yok. Daha sonra deneyebilirsin.',
