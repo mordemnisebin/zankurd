@@ -96,7 +96,10 @@ void main() {
 
     expect(find.text('Asta xwe bibîne'), findsOneWidget);
     expect(
-      find.descendant(of: find.byKey(card), matching: find.text('Azmûnê bide')),
+      find.descendant(
+        of: find.byKey(card),
+        matching: find.text('Dest bi azmûnê bike'),
+      ),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);
