@@ -147,4 +147,23 @@ void main() {
     ).readAsStringSync();
     expect(src, contains(r"/avatar-${DateTime.now().millisecondsSinceEpoch}"));
   });
+  testWidgets('push kuyruğa alındıysa eski nesne silinmez', (tester) async {
+    final repo = _QueuedRepo();
+    await open(tester, repo);
+    final save = find.byKey(const ValueKey('avatar-save'));
+    await tester.scrollUntilVisible(
+      save,
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(save);
+    await tester.pumpAndSettle();
+    expect(repo.deletedAvatarUrls, isEmpty);
+  });
+}
+
+class _QueuedRepo extends _Repo {
+  @override
+  Future<bool> updateAvatarIdentityConfirmed(AvatarIdentity identity) async =>
+      false;
 }

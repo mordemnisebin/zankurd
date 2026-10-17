@@ -285,13 +285,18 @@ class _AvatarEditorScreenState extends State<AvatarEditorScreen> {
           urls: [?_originalPhotoUrl, ..._sessionUploads],
         );
       }
-      await widget.repository.updateAvatarIdentity(_identity);
+      final confirmed = await widget.repository.updateAvatarIdentityConfirmed(
+        _identity,
+      );
       _savedSuccessfully = true;
       // Kayıt GEÇTİKTEN sonra: artık profilin işaret etmediği nesneler
       // (değiştirilen eski fotoğraf, seçilip bırakılan geçici yüklemeler)
       // silinir. Başarısızlık kaydı bozmaz; en kötü yetim bir nesne kalır.
       final kept = _identity.photoUrl;
-      if (kept != null) {
+      // Eski nesne YALNIZ sunucu profil satırının yeni URL'ye geçtiğini
+      // onayladıysa silinir; push kuyruğa alındıysa profil hâlâ eskiyi
+      // gösterir ve silmek avatarı herkes için kırardı (yetim dosya daha iyi).
+      if (kept != null && confirmed) {
         final stale = <String>[
           ..._sessionUploads.where((u) => u != kept),
           if (_originalPhotoUrl != null && _originalPhotoUrl != kept)

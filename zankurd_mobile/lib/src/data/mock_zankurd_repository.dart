@@ -1954,6 +1954,12 @@ class MockZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<bool> updateAvatarIdentityConfirmed(AvatarIdentity identity) async {
+    await updateAvatarIdentity(identity);
+    return true;
+  }
+
+  @override
   Future<void> updateAvatarIdentity(AvatarIdentity identity) async {
     try {
       final prefs = await SharedPreferences.getInstance();

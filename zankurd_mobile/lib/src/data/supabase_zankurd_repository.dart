@@ -501,6 +501,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<bool> updateAvatarIdentityConfirmed(AvatarIdentity identity) async {
+    await _offline.updateAvatarIdentity(identity);
+    if (client.auth.currentUser == null) return false;
+    return _pushAvatarIdentity(identity);
+  }
+
+  @override
   Future<void> updateAvatarIdentity(AvatarIdentity identity) async {
     // Yereli her durumda güncelle: çevrimdışı görünürlük + fallback tutarlılığı.
     await _offline.updateAvatarIdentity(identity);

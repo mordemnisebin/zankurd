@@ -469,6 +469,11 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// Görsel kimliği kalıcılaştırır (kozmetik; ekonomiye dokunmaz).
   Future<void> updateAvatarIdentity(AvatarIdentity identity);
 
+  /// [updateAvatarIdentity] gibi yazar ama sunucunun profil satırını GERÇEKTEN
+  /// güncellediğini bildirir: true yalnız sunucu onayında; ağ hatasında
+  /// (kuyruğa alındı) ya da oturum yokken false. Sunucu reddederse fırlatır.
+  Future<bool> updateAvatarIdentityConfirmed(AvatarIdentity identity);
+
   /// Avatar fotoğrafını yükler ve erişilebilir URL'ini döner.
   Future<String> uploadAvatarPhoto(Uint8List bytes, String contentType);
 
