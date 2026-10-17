@@ -812,27 +812,39 @@ class _CrowdScoreHeader extends StatelessWidget {
       ],
     );
 
-    final rankBlock = Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          context.t(K.crowdRankLabel),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: SahneType.eyebrow.copyWith(color: t.tx2),
-        ),
-        Text(
-          rankText,
-          key: rankKey,
-          maxLines: 1,
-          style: SahneType.headline.copyWith(
-            color: t.raceTx,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          ),
-        ),
-      ],
+    final rankLabel = Text(
+      context.t(K.crowdRankLabel),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: SahneType.eyebrow.copyWith(color: t.tx2),
     );
+    final rankValue = Text(
+      rankText,
+      key: rankKey,
+      maxLines: 1,
+      style: SahneType.headline.copyWith(
+        color: t.raceTx,
+        fontFeatures: const [FontFeature.tabularFigures()],
+      ),
+    );
+    // Büyük yazıda etiket ve sıra TEK satıra iner: iki satırlık sütun
+    // başlığı 320 px / 2×'te soruyu aşağı itiyordu.
+    final rankBlock = stacked
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Flexible(child: rankLabel),
+              const SizedBox(width: SahneSpace.x2),
+              rankValue,
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [rankLabel, rankValue],
+          );
 
     Widget cell(CrowdStanding standing) {
       final isMe = playersShareIdentity(standing.player, player);
@@ -856,27 +868,48 @@ class _CrowdScoreHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: SahneSpace.x2),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.playerDisplayName(standing.player.name),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: SahneType.caption.copyWith(color: t.tx),
-                    ),
-                    Text(
-                      groupThousands(standing.player.score),
-                      maxLines: 1,
-                      style: SahneType.captionStrong.copyWith(
-                        color: t.goldTx,
-                        fontFeatures: const [FontFeature.tabularFigures()],
-                      ),
-                    ),
-                  ],
+              // Büyük yazıda ad ve puan aynı satırda (puan sağda): üç
+              // iki-satırlık kutu başlığı ekranın yarısını yiyordu.
+              if (stacked) ...[
+                Expanded(
+                  child: Text(
+                    context.playerDisplayName(standing.player.name),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: SahneType.caption.copyWith(color: t.tx),
+                  ),
                 ),
-              ),
+                const SizedBox(width: SahneSpace.x2),
+                Text(
+                  groupThousands(standing.player.score),
+                  maxLines: 1,
+                  style: SahneType.captionStrong.copyWith(
+                    color: t.goldTx,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
+              ] else
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.playerDisplayName(standing.player.name),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: SahneType.caption.copyWith(color: t.tx),
+                      ),
+                      Text(
+                        groupThousands(standing.player.score),
+                        maxLines: 1,
+                        style: SahneType.captionStrong.copyWith(
+                          color: t.goldTx,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
@@ -943,7 +976,13 @@ class _CrowdScoreHeader extends StatelessWidget {
                 ),
               ),
             ],
-            if (top.isNotEmpty) ...[
+            if (top.isNotEmpty && stacked) ...[
+              const SizedBox(height: SahneSpace.x2),
+              _CollapsibleTop(
+                title: context.t(K.crowdTopThree),
+                child: KeyedSubtree(key: topKey, child: strip),
+              ),
+            ] else if (top.isNotEmpty) ...[
               const SizedBox(height: SahneSpace.x3),
               Padding(
                 padding: const EdgeInsets.only(bottom: SahneSpace.x1),
@@ -957,6 +996,60 @@ class _CrowdScoreHeader extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Büyük yazıda "İlk üç" şeridi kapalı başlar: başlık satırına dokununca
+/// açılır. Kapalıyken soru ekranda kalır (320 px / 2×'te şerit tek başına
+/// ekranın üçte birini alıyordu); sıra ve puan zaten başlığın üstünde.
+class _CollapsibleTop extends StatefulWidget {
+  const _CollapsibleTop({required this.title, required this.child});
+
+  final String title;
+  final Widget child;
+
+  @override
+  State<_CollapsibleTop> createState() => _CollapsibleTopState();
+}
+
+class _CollapsibleTopState extends State<_CollapsibleTop> {
+  bool _open = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = SahneTokens.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Semantics(
+          button: true,
+          expanded: _open,
+          child: InkWell(
+            key: const ValueKey('quiz-crowd-top3-toggle'),
+            onTap: () => setState(() => _open = !_open),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: sahneTapTarget),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      widget.title,
+                      style: SahneType.eyebrow.copyWith(color: t.tx2),
+                    ),
+                  ),
+                  Icon(
+                    _open ? AppIcons.chevronUp : AppIcons.chevronDown,
+                    size: 18,
+                    color: t.tx2,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (_open) widget.child,
+      ],
     );
   }
 }

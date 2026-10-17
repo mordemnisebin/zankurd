@@ -463,7 +463,14 @@ class SahneResultStats extends StatelessWidget {
         const gap = SahneSpace.x2;
         final minTile = MediaQuery.textScalerOf(context).scale(96);
         var perRow = tiles.length;
-        while (perRow > 1 &&
+        // Büyük yazıda bile en az ikişerli: üç karo tam genişlikte üst üste
+        // binince ekranın üçte biri sayımlara gidiyordu (320 px / 2×). Yalnız
+        // gerçekten dar kutuda (< 240) tek sütuna inilir.
+        final minCols = math.min(
+          tiles.length,
+          constraints.maxWidth >= 240 ? 2 : 1,
+        );
+        while (perRow > minCols &&
             (constraints.maxWidth - gap * (perRow - 1)) / perRow < minTile) {
           perRow = perRow > 2 ? 2 : 1;
         }
@@ -574,7 +581,14 @@ class SahneResultRewards extends StatelessWidget {
     this.coinSemanticLabel,
     this.xpLabel,
     this.progress,
+    this.label,
   });
+
+  /// Ödül satırının sözü ("Kazanıldı"): çipler tek başına durunca kartta
+  /// ne olduğu belli olmuyordu (kalabalık sonuçta karta yalnız "+40"
+  /// düşüyordu). Verilirse söz solda, çipler sağda, aynı satırda; dar
+  /// ekranda ya da büyük yazıda çipler sözün altına iner.
+  final String? label;
 
   final int coins;
   final int xp;
@@ -591,6 +605,65 @@ class SahneResultRewards extends StatelessWidget {
   static bool hasAny({int coins = 0, int xp = 0, bool progress = false}) =>
       coins > 0 || xp > 0 || progress;
 
+  Widget _chipsRow(BuildContext context) {
+    final t = SahneTokens.of(context);
+    // Ödül çipleri skor SAYIMI bittikten sonra yerine oturur: ödül bir
+    // SONUÇtur, sebebinden önce gösterilmez (bkz. [SahneRewardEntrance]).
+    final chips = SahneRewardEntrance(
+      child: Wrap(
+        spacing: SahneSpace.x2,
+        runSpacing: SahneSpace.x2,
+        alignment: WrapAlignment.end,
+        children: [
+          if (coins > 0)
+            SahneStatChip(
+              gold: true,
+              leading: const SahneGlyph(SahneGlyphKind.coin),
+              label: coinLabel ?? '+$coins',
+              semanticLabel: coinSemanticLabel,
+            ),
+          if (xp > 0)
+            SahneStatChip(
+              gold: true,
+              leading: const SahneGlyph(SahneGlyphKind.bolt),
+              label: xpLabel ?? '+$xp XP',
+            ),
+        ],
+      ),
+    );
+    final text = label;
+    if (text == null) {
+      return Align(alignment: AlignmentDirectional.centerStart, child: chips);
+    }
+    final labelText = Text(
+      text,
+      style: SahneType.bodyStrong.copyWith(color: t.tx),
+    );
+    if (MediaQuery.textScalerOf(context).scale(16) >= 24) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          labelText,
+          const SizedBox(height: SahneSpace.x2),
+          Align(alignment: AlignmentDirectional.centerStart, child: chips),
+        ],
+      );
+    }
+    return Row(
+      children: [
+        Expanded(child: labelText),
+        const SizedBox(width: SahneSpace.x3),
+        // Çipler sağa yaslı; sözü ezmesin diye genişlikleri sınırlı.
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.sizeOf(context).width * 0.6,
+          ),
+          child: chips,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final hasChips = coins > 0 || xp > 0;
@@ -599,31 +672,7 @@ class SahneResultRewards extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (hasChips)
-            // Ödül çipleri skor SAYIMI bittikten sonra yerine oturur: ödül
-            // bir SONUÇtur, sebebinden önce gösterilmez (bkz.
-            // [SahneRewardEntrance]).
-            SahneRewardEntrance(
-              child: Wrap(
-                spacing: SahneSpace.x2,
-                runSpacing: SahneSpace.x2,
-                children: [
-                  if (coins > 0)
-                    SahneStatChip(
-                      gold: true,
-                      leading: const SahneGlyph(SahneGlyphKind.coin),
-                      label: coinLabel ?? '+$coins',
-                      semanticLabel: coinSemanticLabel,
-                    ),
-                  if (xp > 0)
-                    SahneStatChip(
-                      gold: true,
-                      leading: const SahneGlyph(SahneGlyphKind.bolt),
-                      label: xpLabel ?? '+$xp XP',
-                    ),
-                ],
-              ),
-            ),
+          if (hasChips) _chipsRow(context),
           if (progress != null) ...[
             if (hasChips) const SizedBox(height: SahneSpace.x3),
             progress!,

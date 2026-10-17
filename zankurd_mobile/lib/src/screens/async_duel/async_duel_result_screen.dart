@@ -382,6 +382,7 @@ class _AsyncDuelResultScreenState extends State<AsyncDuelResultScreen> {
       // doğrulu düello ödülsüz biter.
       rewards: xp > 0
           ? SahneResultRewards(
+              label: context.t(K.kazanildi),
               xp: xp,
               xpLabel: context.t(K.asyncDuelXp, {'xp': '$xp'}),
             )

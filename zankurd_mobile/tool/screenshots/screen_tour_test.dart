@@ -2581,7 +2581,7 @@ void main() {
     final chip = find.byKey(const ValueKey('custom-room-capacity-16'));
     await t.ensureVisible(chip);
     await t.tap(chip);
-    await t.pump(const Duration(milliseconds: 400));
+    await t.pumpAndSettle();
     await _shoot(t, '255_custom_room_capacity');
   }, tags: ['preview']);
 
@@ -2598,7 +2598,7 @@ void main() {
     final chip = find.byKey(const ValueKey('custom-room-capacity-16'));
     await t.ensureVisible(chip);
     await t.tap(chip);
-    await t.pump(const Duration(milliseconds: 400));
+    await t.pumpAndSettle();
     await _shoot(t, '256_custom_room_capacity_dark_ku');
   }, tags: ['preview']);
 
@@ -2619,7 +2619,7 @@ void main() {
       t,
       RoomScreen(
         repository: _CrowdLobbyTourRepository(host: true),
-        initialRoom: _CrowdLobbyTourRepository.room(host: true),
+        initialRoom: _CrowdLobbyTourRepository.room(host: true, ku: true),
       ),
       dark: true,
       ku: true,
@@ -2645,7 +2645,7 @@ void main() {
       t,
       RoomScreen(
         repository: _CrowdLobbyTourRepository(host: false),
-        initialRoom: _CrowdLobbyTourRepository.room(host: false),
+        initialRoom: _CrowdLobbyTourRepository.room(host: false, ku: true),
       ),
       dark: true,
       ku: true,
@@ -2673,7 +2673,7 @@ void main() {
       t,
       QuizScreen(
         repository: crowd,
-        room: _CrowdGameTourRepository.room(),
+        room: _CrowdGameTourRepository.room(ku: true),
         questions: crowd.questions.take(5).toList(),
       ),
       dark: true,
@@ -2690,7 +2690,7 @@ void main() {
   testWidgets('264 kalabalık sonuç — sıralama (karanlık, Kurmancî)', (t) async {
     await _pump(
       t,
-      _resultCrowdScreen(),
+      _resultCrowdScreen(ku: true),
       dark: true,
       ku: true,
       size: Size(_size.width, 2400),
@@ -2715,16 +2715,26 @@ const _crowdTourNames = [
   ('tour-rojin', 'Rojîn', 20),
 ];
 
+/// Oyuncunun kendi adı turda dile göre doğal görünsün: depo kimliği `user`
+/// olan oyuncuya gerçek uygulamada profil adı yazılır; Kurmancî karelerde
+/// Türkçe "Sen" görünmesin ("Tu").
+String _crowdName(String name, bool ku) => ku && name == 'Sen' ? 'Tu' : name;
+
 /// Kalabalık lobi: 16 kişilik oda, 7 oyuncu; ev sahibi `user` ya da Rojda.
 class _CrowdLobbyTourRepository extends _TourRepository {
   _CrowdLobbyTourRepository({required this.host});
 
   final bool host;
 
-  static GameRoom room({required bool host}) {
+  static GameRoom room({required bool host, bool ku = false}) {
     final players = <Player>[
       for (final (id, name, _) in _crowdTourNames.take(7))
-        Player(id: id, name: name, score: 0, state: Player.readyState),
+        Player(
+          id: id,
+          name: _crowdName(name, ku),
+          score: 0,
+          state: Player.readyState,
+        ),
     ];
     return GameRoom(
       id: 'tour-crowd-lobby',
@@ -2753,7 +2763,7 @@ class _CrowdLobbyTourRepository extends _TourRepository {
 
 /// Kalabalık oyun: 12 aktif oyuncu + 1 ayrılan; başlıkta sıra "#2/12".
 class _CrowdGameTourRepository extends _TourRepository {
-  static GameRoom room() => GameRoom(
+  static GameRoom room({bool ku = false}) => GameRoom(
     id: 'tour-crowd-game',
     name: 'crowd',
     code: _tourRoomCode,
@@ -2762,7 +2772,7 @@ class _CrowdGameTourRepository extends _TourRepository {
       for (final (id, name, score) in _crowdTourNames)
         Player(
           id: id,
-          name: name,
+          name: _crowdName(name, ku),
           score: score,
           state: Player.readyState,
           streak: id == 'user' ? 2 : 0,
@@ -2793,7 +2803,7 @@ class _CrowdGameTourRepository extends _TourRepository {
 
 /// Kalabalık odanın sonuç ekranı: oyuncu Rojda ile EŞİT BİRİNCİ (tur
 /// "Kazandın!" ve ortak 1. sırayı göstersin); Şêro ayrıldığı için sonda.
-Widget _resultCrowdScreen() {
+Widget _resultCrowdScreen({bool ku = false}) {
   final repository = _TourRepository();
   final scores = [
     ('user', 'Sen', 520, 1),
@@ -2813,7 +2823,7 @@ Widget _resultCrowdScreen() {
     for (final (id, name, score, rank) in scores)
       Player(
         id: id,
-        name: name,
+        name: _crowdName(name, ku),
         score: score,
         state: Player.readyState,
         streak: id == 'user' ? 3 : 0,

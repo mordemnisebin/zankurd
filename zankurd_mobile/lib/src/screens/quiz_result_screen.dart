@@ -1576,6 +1576,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       ),
       rewards: hasRewards
           ? SahneResultRewards(
+              label: context.t(K.kazanildi),
               coins: coinsAwarded,
               coinLabel: '+$coinsAwarded',
               coinSemanticLabel: '+$coinsAwarded ${context.t(K.coinWord)}',
@@ -2011,17 +2012,19 @@ class _CrowdStandings extends StatelessWidget {
     Widget scoreOf(CrowdStanding standing) {
       final rank = standing.player.rank ?? standing.rank;
       final value = SahneRowValue(groupThousands(standing.player.score));
-      if (rank > 3) return value;
+      if (rank > 3) return SahneInlineTrailing(child: value);
       // İlk üç: madalya simgesi (renk + ŞEKİL; yalnız renkle ayrışmaz).
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ExcludeSemantics(
-            child: Icon(AppIcons.medal, size: 18, color: t.goldTx),
-          ),
-          const SizedBox(width: SahneSpace.x1),
-          value,
-        ],
+      return SahneInlineTrailing(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ExcludeSemantics(
+              child: Icon(AppIcons.medal, size: 18, color: t.goldTx),
+            ),
+            const SizedBox(width: SahneSpace.x1),
+            value,
+          ],
+        ),
       );
     }
 
@@ -2112,7 +2115,9 @@ class _CrowdStandings extends StatelessWidget {
                     ? context.t(K.you)
                     : context.playerDisplayName(player.name),
                 subtitle: context.t(K.crowdLeftBadge),
-                trailing: SahneRowValue.meta(groupThousands(player.score)),
+                trailing: SahneInlineTrailing(
+                  child: SahneRowValue.meta(groupThousands(player.score)),
+                ),
               ),
           ],
         ),
