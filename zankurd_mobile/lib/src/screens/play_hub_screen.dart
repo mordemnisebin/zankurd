@@ -814,6 +814,53 @@ class _CustomRoomConfig {
   final int maxPlayers;
 }
 
+/// Sayısal seçim grupları (soru sayısı, süre, oyuncu sayısı, ücret) için
+/// sütunlu çip ızgarası: `Wrap`te Kurmancî ya da büyük yazıda tek bir çip
+/// kendi satırına düşüyor ve gruplar arasında satır boşlukları tutarsız
+/// görünüyordu. Hücre genişliği yazı ölçeğiyle büyür; sığmayınca sütun
+/// sayısı düşer (en az 1). Çip hücrede başa yaslanır, doğal boyunda kalır:
+/// hepsi aynı `ChoiceChip`, seçili görünüm değişmez (çipi hücreye germek
+/// onay işaretiyle birlikte etiketi kesiyordu; sığmayan çip küçülür).
+class _ChoiceGrid extends StatelessWidget {
+  const _ChoiceGrid({required this.columns, required this.children});
+
+  final int columns;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const gap = SahneSpace.x2;
+        final minCell = MediaQuery.textScalerOf(context).scale(88);
+        var cols = columns;
+        double cell(int c) => (constraints.maxWidth - gap * (c - 1)) / c;
+        while (cols > 1 && cell(cols) < minCell) {
+          cols--;
+        }
+        final width = cell(cols);
+        return Wrap(
+          spacing: gap,
+          runSpacing: gap,
+          children: [
+            for (final child in children)
+              SizedBox(
+                width: width,
+                // `scaleDown`: onay işaretiyle genişleyen seçili çip hücreye
+                // sığmazsa küçülür, kesilmez.
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: child,
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+}
+
 class _CustomRoomBottomSheet extends StatefulWidget {
   const _CustomRoomBottomSheet({
     required this.availableCategories,
@@ -953,9 +1000,8 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         ),
                       ),
                       const SizedBox(height: SahneSpace.x2),
-                      Wrap(
-                        spacing: SahneSpace.x2,
-                        runSpacing: SahneSpace.x2,
+                      _ChoiceGrid(
+                        columns: 3,
                         children: [
                           for (final count in GameRoom.allowedQuestionCounts)
                             ChoiceChip(
@@ -978,9 +1024,8 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         ),
                       ),
                       const SizedBox(height: SahneSpace.x2),
-                      Wrap(
-                        spacing: SahneSpace.x2,
-                        runSpacing: SahneSpace.x2,
+                      _ChoiceGrid(
+                        columns: 2,
                         children: [
                           for (final seconds in GameRoom.allowedDurations)
                             ChoiceChip(
@@ -1006,9 +1051,8 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         ),
                       ),
                       const SizedBox(height: SahneSpace.x2),
-                      Wrap(
-                        spacing: SahneSpace.x2,
-                        runSpacing: SahneSpace.x2,
+                      _ChoiceGrid(
+                        columns: 3,
                         children: [
                           for (final capacity in GameRoom.allowedMaxPlayers)
                             ChoiceChip(
@@ -1069,9 +1113,8 @@ class _CustomRoomBottomSheetState extends State<_CustomRoomBottomSheet> {
                         ],
                       ),
                       const SizedBox(height: SahneSpace.x2),
-                      Wrap(
-                        spacing: SahneSpace.x2,
-                        runSpacing: SahneSpace.x2,
+                      _ChoiceGrid(
+                        columns: 2,
                         children: [
                           for (final fee in GameRoom.allowedEntryFees)
                             ChoiceChip(
