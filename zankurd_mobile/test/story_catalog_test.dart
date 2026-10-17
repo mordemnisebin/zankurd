@@ -176,4 +176,44 @@ void main() {
       lessThanOrEqualTo(72),
     );
   });
+
+  // Yeniden oyna katalogdaki ✓'yi silmemeli (eskiden anahtar silinirdi);
+  // yeniden başlatılmış ama hiç bitirilmemiş hikâye de "Devam et" dememeli.
+  testWidgets('yeniden başlatma ✓ işaretini silmez, bitmemişte devam yazmaz', (
+    tester,
+  ) async {
+    final first = everydayStories.first;
+    final second = everydayStories[1];
+    final store = await StoryProgressStore.load();
+    await store.saveNode(first.id, 'x');
+    await store.markCompleted(first.id);
+    await store.restart(first.id, first.start.id);
+    await store.saveNode(second.id, 'x');
+    await store.restart(second.id, second.start.id);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light(),
+        home: Scaffold(
+          body: StoryCatalog(isKu: false, onOpen: (_, _) async {}),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.descendant(
+        of: find.byKey(ValueKey('story-card-${first.id}')),
+        matching: find.byIcon(AppIcons.check),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(ValueKey('story-card-${second.id}')),
+        matching: find.text('Devam et'),
+      ),
+      findsNothing,
+    );
+  });
 }

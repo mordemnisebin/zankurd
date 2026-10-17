@@ -51,6 +51,7 @@ class _StoryScreenState extends State<StoryScreen> {
     if (next == null) return; // koruma
     final store = await StoryProgressStore.load();
     await store.saveNode(widget.story.id, next.id);
+    if (next.isEnding) await store.markCompleted(widget.story.id);
     if (!mounted) return;
     setState(() {
       _node = next;
@@ -61,7 +62,7 @@ class _StoryScreenState extends State<StoryScreen> {
 
   Future<void> _restart() async {
     final store = await StoryProgressStore.load();
-    await store.restart(widget.story.id);
+    await store.restart(widget.story.id, widget.story.start.id);
     if (!mounted) return;
     setState(() {
       _node = widget.story.start;

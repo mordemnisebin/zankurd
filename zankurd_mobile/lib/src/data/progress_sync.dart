@@ -40,7 +40,9 @@ class LocalProgressSnapshot {
   static const _mistakeHistory = 'zankurd.dailyPerformance';
   static const _placementLevel = 'zankurd.placement.v1.level';
   static const _placementSkipped = 'zankurd.placement.v1.skipped';
+  static const _placementUpdatedAt = 'zankurd.placement.v1.updatedAt';
   static const _storyPrefix = 'zankurd.story.';
+  static const _storyMeta = 'zankurd.storyMeta.v1';
   static const _goal = 'zankurd.learning_goal.v1';
 
   static String _k(String logical) => LocalProgressScope.physical(logical);
@@ -78,6 +80,27 @@ class LocalProgressSnapshot {
       }
     }
 
+    final storyAt = <String, int>{};
+    final storyDone = <String>{};
+    try {
+      final raw = prefs.getString(_k(_storyMeta));
+      final decoded = raw == null ? null : jsonDecode(raw);
+      if (decoded is Map) {
+        final at = decoded['at'];
+        if (at is Map) {
+          at.forEach((k, v) {
+            if (k is String && v is num && story.containsKey(k)) {
+              storyAt[k] = v.toInt();
+            }
+          });
+        }
+        final done = decoded['done'];
+        if (done is List) storyDone.addAll(done.whereType<String>());
+      }
+    } catch (_) {
+      // Bozuk üst veri: zamansız (eski) kayıt gibi davranılır.
+    }
+
     final placement = prefs.getString(_k(_placementLevel));
     return ProgressSnapshot(
       xp: prefs.getInt(_k(_xp)) ?? 0,
@@ -105,7 +128,10 @@ class LocalProgressSnapshot {
       ),
       placementLevel: PlacementLevel.fromStorageKey(placement)?.storageKey,
       placementSkipped: prefs.getBool(_k(_placementSkipped)) ?? false,
+      placementUpdatedAt: prefs.getInt(_k(_placementUpdatedAt)),
       story: story,
+      storyUpdatedAt: storyAt,
+      storyDone: storyDone,
       learningGoal: prefs.getString(_k(_goal)),
     );
   }
@@ -199,6 +225,10 @@ class LocalProgressSnapshot {
           ok;
     }
 
+    final placementAt = snapshot.placementUpdatedAt;
+    if (placementAt != null && placementAt != current.placementUpdatedAt) {
+      ok = await prefs.setInt(_k(_placementUpdatedAt), placementAt) && ok;
+    }
     if (snapshot.placementLevel != null &&
         snapshot.placementLevel != current.placementLevel) {
       ok =
@@ -222,6 +252,21 @@ class LocalProgressSnapshot {
           await prefs.setString(
             '${_k(_storyPrefix)}${entry.key}',
             entry.value,
+          ) &&
+          ok;
+    }
+    if (!_sameJson(current.storyUpdatedAt, snapshot.storyUpdatedAt) ||
+        !_sameJson(
+          current.storyDone.toList()..sort(),
+          snapshot.storyDone.toList()..sort(),
+        )) {
+      ok =
+          await prefs.setString(
+            _k(_storyMeta),
+            jsonEncode({
+              'at': snapshot.storyUpdatedAt,
+              'done': snapshot.storyDone.toList()..sort(),
+            }),
           ) &&
           ok;
     }

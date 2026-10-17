@@ -16,6 +16,10 @@ class PlacementStore {
   static const _version = 'v1';
   static String get _levelKey =>
       LocalProgressScope.physical('zankurd.placement.$_version.level');
+
+  /// Son yazım zamanı (ms); eşitleme "en son yazan kazanır" der.
+  static String get updatedAtKey =>
+      LocalProgressScope.physical('zankurd.placement.$_version.updatedAt');
   static String get _skippedKey =>
       LocalProgressScope.physical('zankurd.placement.$_version.skipped');
 
@@ -89,17 +93,30 @@ class PlacementStore {
     _skipped = false;
     await _preferences?.setString(_levelKey, level.storageKey);
     await _preferences?.remove(_skippedKey);
+    await _stamp();
   }
+
+  Future<void> _stamp() =>
+      _preferences?.setInt(
+        updatedAtKey,
+        DateTime.now().millisecondsSinceEpoch,
+      ) ??
+      Future.value();
 
   /// "Şimdilik geç": ilk kullanımda bir daha otomatik sorulmaz.
   Future<void> markSkipped() async {
     _skipped = true;
     await _preferences?.setBool(_skippedKey, true);
+    await _stamp();
   }
 
   /// Test/temizlik: tüm seviye durumunu sıfırlar.
   Future<void> clear() async {
-    await removePersistedPreferenceKeys(_preferences, [_levelKey, _skippedKey]);
+    await removePersistedPreferenceKeys(_preferences, [
+      _levelKey,
+      _skippedKey,
+      updatedAtKey,
+    ]);
     _level = null;
     _skipped = false;
   }
