@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart' show CustomSemanticsAction;
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -1073,6 +1074,7 @@ class _RoomScreenState extends State<RoomScreen> {
                                                   room.status !=
                                                   RoomStatus.lobby,
                                               showReadyState: !crowd,
+                                              quietModeration: crowd,
                                               repository: widget.repository,
                                               isSelf:
                                                   visiblePlayers[i].id ==
@@ -1645,10 +1647,12 @@ class _RoomInviteButton extends StatelessWidget {
       alignment: AlignmentDirectional.centerStart,
       child: TextButton.icon(
         key: const ValueKey('room-invite-share'),
-        icon: Icon(AppIcons.shareNodes, size: 18, color: t.actTx),
+        // Agir yalnız ekranın birincil eyleminindir (alttaki "Yarışı başlat");
+        // davet bağlantısı nötr (`tx2`) kalır, iki turuncu yarışmasın.
+        icon: Icon(AppIcons.shareNodes, size: 18, color: t.tx2),
         label: Text(
           label,
-          style: SahneType.captionStrong.copyWith(color: t.actTx),
+          style: SahneType.captionStrong.copyWith(color: t.tx2),
         ),
         style: TextButton.styleFrom(
           minimumSize: const Size(sahneTapTarget, sahneTapTarget),
@@ -1734,6 +1738,7 @@ class _RoomPlayerRow extends StatelessWidget {
     this.isHost = false,
     this.showScore = true,
     this.showReadyState = true,
+    this.quietModeration = false,
     this.onBlocked,
   });
 
@@ -1752,6 +1757,13 @@ class _RoomPlayerRow extends StatelessWidget {
   /// "✓ Hazır" / "Bekliyor" satırı. Kalabalık odada hazır olma şartı yok,
   /// durum bilgi vermez; satır yalnız ad ve (varsa) ev sahibi rozetini taşır.
   final bool showReadyState;
+
+  /// Kalabalık odada her satırda görünür bayrak yok: 7–50 satırda aynı
+  /// simge tekrarlanınca liste gürültüye dönüyordu (2026-10-17 görsel
+  /// denetim). Bildir/engelle satıra UZUN BASIŞLA açılır (oda sohbetindeki
+  /// mesajla aynı desen) ve ekran okuyucuya özel eylem olarak sunulur; 2
+  /// kişilik odada görünür bayrak kalır.
+  final bool quietModeration;
 
   /// Bildir/engelle için; yeni bir backend yok, mevcut RPC'ler kullanılır.
   final ZanKurdRepository repository;
@@ -1797,38 +1809,40 @@ class _RoomPlayerRow extends StatelessWidget {
       style: SahneType.bodyStrong.copyWith(color: t.tx),
     );
 
-    // İkinci satır: durum ("✓ Hazır" / kum saati + söz) ve ev sahibi
-    // rozeti. `Wrap`: dar satırda ya da büyük yazıda rozet alt satıra iner;
-    // ad sütununu ezmez, harf harf bölünmez (eski satır 7 px taşıyordu,
-    // 2026-08-19).
-    final state = Wrap(
-      spacing: SahneSpace.x2,
-      runSpacing: SahneSpace.x1,
-      crossAxisAlignment: WrapCrossAlignment.center,
+    // Ev sahibi rozeti adın SAĞINDA aynı satırdadır: altına inince bu satır
+    // ötekilerden uzun oluyordu. `Wrap`: ad + rozet sığmazsa (dar ekran,
+    // büyük yazı) rozet alt satıra iner; ad harf harf bölünmez.
+    final hostBadge = isHost
+        ? SahneBadge(label: Tr.forKu(K.host, isKu), tone: SahneBadgeTone.gold)
+        : null;
+    final nameLine = hostBadge == null
+        ? nameText
+        : Wrap(
+            spacing: SahneSpace.x2,
+            runSpacing: SahneSpace.x1,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [nameText, hostBadge],
+          );
+
+    // İkinci satır yalnız hazır durumu ("✓ Hazır" / kum saati + söz) içindir.
+    final state = Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        if (showReadyState)
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                isReady ? AppIcons.check : AppIcons.hourglass,
-                size: 14,
-                color: isReady ? t.okTx : t.tx2,
-              ),
-              const SizedBox(width: SahneSpace.x1),
-              Flexible(
-                child: Text(
-                  _localizedState(player.state),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: (isReady ? SahneType.captionStrong : SahneType.caption)
-                      .copyWith(color: isReady ? t.okTx : t.tx2),
-                ),
-              ),
-            ],
+        Icon(
+          isReady ? AppIcons.check : AppIcons.hourglass,
+          size: 14,
+          color: isReady ? t.okTx : t.tx2,
+        ),
+        const SizedBox(width: SahneSpace.x1),
+        Flexible(
+          child: Text(
+            _localizedState(player.state),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: (isReady ? SahneType.captionStrong : SahneType.caption)
+                .copyWith(color: isReady ? t.okTx : t.tx2),
           ),
-        if (isHost)
-          SahneBadge(label: Tr.forKu(K.host, isKu), tone: SahneBadgeTone.gold),
+        ),
       ],
     );
 
@@ -1852,7 +1866,7 @@ class _RoomPlayerRow extends StatelessWidget {
       ],
     );
 
-    return ConstrainedBox(
+    final row = ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 64),
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(
@@ -1892,11 +1906,8 @@ class _RoomPlayerRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  nameText,
-                  if (showReadyState || isHost) ...[
-                    const SizedBox(height: 2),
-                    state,
-                  ],
+                  nameLine,
+                  if (showReadyState) ...[const SizedBox(height: 2), state],
                   if (stacked && showScore) ...[
                     const SizedBox(height: SahneSpace.x1),
                     score,
@@ -1912,18 +1923,40 @@ class _RoomPlayerRow extends StatelessWidget {
             // gösteriliyor; bildir/engelle burada (2026-08-06 denetimi).
             // Satırın SONUNDA: 48 dp'lik hedef metin sütununu uzatırsa
             // birincil eylem katlamanın altına iniyordu.
-            PlayerModerationButton(
-              repository: repository,
-              playerId: player.id,
-              playerName: _displayName(context),
-              isSelf: isSelf,
-              compact: true,
-              onBlocked: onBlocked,
-            ),
-            if (isSelf || player.id == null)
+            if (!quietModeration)
+              PlayerModerationButton(
+                repository: repository,
+                playerId: player.id,
+                playerName: _displayName(context),
+                isSelf: isSelf,
+                compact: true,
+                onBlocked: onBlocked,
+              ),
+            if (isSelf || player.id == null || quietModeration)
               const SizedBox(width: SahneSpace.x3),
           ],
         ),
+      ),
+    );
+
+    final id = player.id;
+    if (!quietModeration || isSelf || id == null) return row;
+    final name = _displayName(context);
+    void open() => showPlayerModerationSheet(
+      context: context,
+      repository: repository,
+      playerId: id,
+      playerName: name,
+      onBlocked: onBlocked,
+    );
+    return Semantics(
+      customSemanticsActions: {
+        CustomSemanticsAction(label: context.t(K.reportProfileTitle)): open,
+      },
+      child: InkWell(
+        key: ValueKey('room-player-moderation-$id'),
+        onLongPress: open,
+        child: row,
       ),
     );
   }
