@@ -326,7 +326,13 @@ Future<void> main() async {
           );
         }
       }
-      startInBackground(NotificationService.load(), 'notifications load');
+      startInBackground(
+        // Servis kurulunca seri uyarısı bir sonraki akşama kurulur (tek atış).
+        NotificationService.load().then(
+          (_) => NotificationService.syncStreakWarning(),
+        ),
+        'notifications load',
+      );
       // Zamanlanmış bildirim metinleri zamanlama anındaki dilde donar; dil
       // değişince yeniden kurulur (soğuk açılış beklenmez).
       languageProvider.addListener(() {

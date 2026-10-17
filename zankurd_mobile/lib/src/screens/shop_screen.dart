@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/durable_write.dart';
+import '../data/local_progress_scope.dart';
 import '../data/sync_manager.dart';
 import '../data/zankurd_repository.dart';
 import '../data/supabase_zankurd_repository.dart';
@@ -70,7 +71,10 @@ AvatarIdentity applyShopPurchaseEffect(String itemId, AvatarIdentity identity) {
   return identity;
 }
 
-const _pendingEffectsKey = 'shop_pending_purchase_effects';
+/// Kullanıcıya göre ayrılır: A'nın bekleyen çerçeve/rozet etkisi aynı
+/// cihazdaki B'ye uygulanmasın.
+String get _pendingEffectsKey =>
+    LocalProgressScope.physical('shop_pending_purchase_effects');
 
 bool _hasPurchaseEffect(String itemId) =>
     itemId == 'avatar_frame_gold' ||

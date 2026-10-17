@@ -27,6 +27,7 @@ import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../config/category_visibility.dart';
 import 'lesson_completion_store.dart';
+import 'local_progress_scope.dart';
 import 'mock_zankurd_repository.dart';
 import 'xp_store.dart';
 import 'zankurd_repository.dart';
@@ -197,6 +198,10 @@ ResumedPendingAnswer? _requiredPendingAnswer(Map<String, dynamic> json) {
     responseMs: responseMs,
   );
 }
+
+/// Öneri INSERT politikasının istediği katkı lisansı sürümü (canlı:
+/// `suggested_questions_insert_own`).
+const String suggestedQuestionLicenseVersion = '2026-08-11';
 
 class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
@@ -399,7 +404,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   /// açık kalır. `loadAvatarIdentity` bu bayrak açıkken sunucu satırını
   /// okumaz — yoksa bağlantı dönünce eski avatar kullanıcının yüzüne geri
   /// gelirdi (yerel kopya zaten güncel, sunucu satırı henüz değil).
-  static const _avatarIdentityDirtyKey = 'zankurd.avatarIdentity.dirtyPending';
+  ///
+  /// Kullanıcıya göre ayrılır: sabit anahtarla, A'nın bekleyen değişikliği
+  /// aynı cihazdaki B'nin profiline yazılabiliyordu.
+  static String get _avatarIdentityDirtyKey =>
+      LocalProgressScope.physical('zankurd.avatarIdentity.dirtyPending');
 
   Future<bool> _avatarIdentityDirty() async {
     final prefs = await SharedPreferences.getInstance();
@@ -492,6 +501,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   @override
+  Future<bool> updateAvatarIdentityConfirmed(AvatarIdentity identity) async {
+    await _offline.updateAvatarIdentity(identity);
+    if (client.auth.currentUser == null) return false;
+    return _pushAvatarIdentity(identity);
+  }
+
+  @override
   Future<void> updateAvatarIdentity(AvatarIdentity identity) async {
     // Yereli her durumda güncelle: çevrimdışı görünürlük + fallback tutarlılığı.
     await _offline.updateAvatarIdentity(identity);
@@ -506,7 +522,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       throw StateError('Remote service unavailable.');
     }
     final ext = contentType == 'image/png' ? 'png' : 'jpg';
-    final path = '${user.id}/avatar.$ext';
+    // Her yükleme KENDİ yoluna gider (`avatar-<ms>.ext`). Eskiden hep
+    // `avatar.ext` üstüne yazılıyordu: kullanıcı fotoğrafı değiştirip
+    // vazgeçince temizlik, profilin hâlâ işaret ettiği kayıtlı fotoğrafı da
+    // siliyordu. Sunucu regex'i bu eki `2026-10-17_profil_veri.sql` ile kabul eder.
+    final path =
+        '${user.id}/avatar-${DateTime.now().millisecondsSinceEpoch}.$ext';
     await client.storage
         .from('avatars')
         .uploadBinary(
@@ -514,24 +535,52 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           bytes,
           fileOptions: FileOptions(contentType: contentType, upsert: true),
         );
-    // Aynı yol üzerine yazıldığı için URL sabit kalır; önbellek kırıcı ekle.
-    final publicUrl = client.storage.from('avatars').getPublicUrl(path);
-    return '$publicUrl?v=${DateTime.now().millisecondsSinceEpoch}';
+    return client.storage.from('avatars').getPublicUrl(path);
+  }
+
+  /// Genel avatar URL'sinden kovadaki nesne yolunu çıkarır; yalnız çağıranın
+  /// kendi klasöründeki nesneler döner (başkasının yolu silinmeye çalışılmaz).
+  @visibleForTesting
+  static String? avatarObjectPath(String url, String userId) {
+    const marker = '/avatars/';
+    final at = url.indexOf(marker);
+    if (at < 0) return null;
+    var path = url.substring(at + marker.length);
+    final q = path.indexOf('?');
+    if (q >= 0) path = path.substring(0, q);
+    if (!path.startsWith('$userId/') || path.contains('..')) return null;
+    return path;
   }
 
   @override
-  Future<void> deleteAvatarPhoto() async {
+  Future<void> deleteAvatarPhoto({List<String> urls = const []}) async {
     final user = client.auth.currentUser;
     if (user == null) {
       throw StateError('Remote service unavailable.');
     }
     // Uzantı içerik türünden seçiliyor (`uploadAvatarPhoto`), yani aynı
     // kullanıcının geçmişte hem .png hem .jpg nesnesi olabilir. İkisini de
-    // kaldırmak gerekir; `remove` var olmayan yolu sorun etmez.
-    await client.storage.from('avatars').remove([
+    // kaldırmak gerekir; `remove` var olmayan yolu sorun etmez. Zaman
+    // damgalı yollar listelenemediği için çağıran URL'lerini verir.
+    final paths = <String>{
       '${user.id}/avatar.jpg',
       '${user.id}/avatar.png',
-    ]);
+      for (final url in urls) ?avatarObjectPath(url, user.id),
+    };
+    await client.storage.from('avatars').remove(paths.toList());
+  }
+
+  @override
+  Future<void> deleteAvatarPhotoObjects(List<String> urls) async {
+    final user = client.auth.currentUser;
+    if (user == null) {
+      throw StateError('Remote service unavailable.');
+    }
+    final paths = <String>{
+      for (final url in urls) ?avatarObjectPath(url, user.id),
+    };
+    if (paths.isEmpty) return;
+    await client.storage.from('avatars').remove(paths.toList());
   }
 
   /// Oturumdaki hesabın Apple kimliği var mı (testlerde geçersiz kılınır).
@@ -1817,11 +1866,20 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<void> reportQuestion(QuizQuestion question, String reason) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();
-    await client.from('question_reports').insert({
-      'question_id': question.id,
-      'reporter_id': user.id,
-      'reason': _clampReportReason(reason),
-    });
+    try {
+      await client.from('question_reports').insert({
+        'question_id': question.id,
+        'reporter_id': user.id,
+        'reason': _clampReportReason(reason),
+      });
+    } on PostgrestException catch (error, stack) {
+      // (reporter_id, question_id) tekil: aynı soruyu ikinci kez bildirmek
+      // zaten kayıtlı demektir. Hata göstermek kullanıcıya "bildirim
+      // başarısız" dedirtiyordu; sayaç RPC'si de ikinci kez çağrılmaz.
+      if (error.code == '23505') return;
+      _recordError(error, stack, reason: 'reportQuestion insert failed');
+      rethrow;
+    }
 
     // Editör kuyruğuna giden sayaç, eski rapor tablosuyla birlikte tutulur.
     // RPC henüz uygulanmamış eski ortamlarda bildirim yine de kaydedilmiş olur.
@@ -2521,13 +2579,24 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     return purchased > used;
   }
 
+  static String get _lastSpinKey =>
+      LocalProgressScope.physical('zankurd.last_spin_date');
+
+  /// Yerel "bugün çevirdim" işareti; hesaba bağlıdır. Oturum yoksa null.
+  String? _spinMarker(String day) {
+    final uid = currentUserId;
+    return uid == null ? null : '$uid|$day';
+  }
+
   @override
   Future<bool> canSpinToday() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final lastSpinStr = prefs.getString('zankurd.last_spin_date');
-      final todayStr = spinDayKey(DateTime.now());
-      if (lastSpinStr == todayStr) {
+      final lastSpinStr = prefs.getString(_lastSpinKey);
+      // Değer `<uid>|<gün>` biçimindedir: eski sabit anahtardan ya da başka
+      // hesaptan kalan kayıt eşleşmez, o durumda sunucuya sorulur.
+      final todayStr = _spinMarker(spinDayKey(DateTime.now()));
+      if (todayStr != null && lastSpinStr == todayStr) {
         return await _hasUnusedExtraSpin();
       }
       final freeSpinAvailable = await client.rpc<bool>('can_spin_today');
@@ -2564,10 +2633,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (amount > 0) {
         try {
           final prefs = await SharedPreferences.getInstance();
-          await prefs.setString(
-            'zankurd.last_spin_date',
-            spinDayKey(DateTime.now()),
-          );
+          final marker = _spinMarker(spinDayKey(DateTime.now()));
+          if (marker != null) await prefs.setString(_lastSpinKey, marker);
         } catch (error, stack) {
           _recordError(
             error,
@@ -3306,10 +3373,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       await client.rpc('join_tournament');
       return await loadRealTournamentBracket();
     } catch (e, s) {
-      if (!_isMissingFunction(e)) {
-        _recordError(e, s, reason: 'joinRealTournament failed');
-      }
-      return null;
+      // Yalnız "sunucu tarafı henüz yok" null döner (bot benzetimine izin
+      // verir). Geçici ağ hatası artık sahte bot şemasına düşürmez: çağıran
+      // hatayı görür ve yeniden dener.
+      if (_isMissingFunction(e)) return null;
+      _recordError(e, s, reason: 'joinRealTournament failed');
+      rethrow;
     }
   }
 
@@ -3322,10 +3391,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         Map<String, dynamic>.from(response as Map),
       );
     } catch (e, s) {
-      if (!_isMissingFunction(e)) {
-        _recordError(e, s, reason: 'loadRealTournamentBracket failed');
-      }
-      return null;
+      // `null` yalnız "turnuvada değilsin / sunucu tarafı yok" demektir.
+      // Ağ hatası eskiden de null dönüp çevrimdışı bot şemasına düşüyordu;
+      // şimdi fırlar, ekran hata + yeniden dene gösterir.
+      if (_isMissingFunction(e)) return null;
+      _recordError(e, s, reason: 'loadRealTournamentBracket failed');
+      rethrow;
     }
   }
 
@@ -3547,6 +3618,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'explanation': explanation,
         'difficulty': difficulty,
         'status': 'pending',
+        // INSERT politikası `license_version = '2026-08-11'` ister;
+        // `accepted_at`i tetikleyici sunucu saatiyle damgalar.
+        'license_version': suggestedQuestionLicenseVersion,
+        'attribution_requested': false,
+        'do_not_publish': false,
       });
       return true;
     } catch (e, stack) {

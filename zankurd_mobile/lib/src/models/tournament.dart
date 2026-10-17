@@ -123,7 +123,12 @@ class TournamentRound {
 
   factory TournamentRound.fromJson(Map<String, dynamic> json) =>
       TournamentRound(
-        roundNumber: json['roundNumber'] as int? ?? 0,
+        // Sunucu (`get_tournament_bracket`) tur numarasını 'round' adıyla
+        // gönderir; 'roundNumber' yerel/eski biçimdir. İkisi de kabul edilir.
+        roundNumber:
+            (json['round'] as num?)?.toInt() ??
+            (json['roundNumber'] as num?)?.toInt() ??
+            0,
         matches:
             (json['matches'] as List?)
                 ?.map(

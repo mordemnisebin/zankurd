@@ -9,6 +9,7 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../l10n/strings.dart';
+import '../data/streak_store.dart';
 import '../utils/error_reporter.dart';
 import 'local_notification_tap.dart';
 
@@ -47,6 +48,11 @@ abstract class LocalNotificationGateway {
     required DateTime at,
     required NotificationDetails details,
     String? payload,
+
+    /// true: her gün aynı saatte tekrarlar (günlük hatırlatıcı). false: TEK
+    /// atış. Tekrarlayan tetikleyici başlangıç tarihini yok sayıp bir
+    /// sonraki 21:00'de çalar; "yarın başla" demek için tek atış gerekir.
+    bool repeatDaily = true,
   });
 
   Future<void> cancel(int id);
@@ -83,6 +89,7 @@ class PluginLocalNotificationGateway implements LocalNotificationGateway {
     required DateTime at,
     required NotificationDetails details,
     String? payload,
+    bool repeatDaily = true,
   }) => _plugin.zonedSchedule(
     id: id,
     title: title,
@@ -90,7 +97,7 @@ class PluginLocalNotificationGateway implements LocalNotificationGateway {
     scheduledDate: tz.TZDateTime.from(at, tz.local),
     notificationDetails: details,
     androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-    matchDateTimeComponents: DateTimeComponents.time,
+    matchDateTimeComponents: repeatDaily ? DateTimeComponents.time : null,
     payload: payload,
   );
 
@@ -468,8 +475,11 @@ class NotificationService {
   /// Seri kaybetme uyarısı: kullanıcı bugün oynamazsa serisi kırılacak.
   /// Seri uyarısını bugün için kapatır.
   ///
-  /// [scheduleStreakWarning] `matchDateTimeComponents: DateTimeComponents.
-  /// time` kullanıyor, yani bildirim HER GÜN aynı saatte tekrarlar. Gövde
+  /// (2026-10-17 notu: uyarı artık TEK ATIŞTIR; aşağıdaki tekrar sorunu ve
+  /// iOS'ta başlangıç tarihinin yok sayılması bu yüzden kapandı.)
+  ///
+  /// Eski tasarımda `matchDateTimeComponents: DateTimeComponents.
+  /// time` kullanılıyordu, yani bildirim HER GÜN aynı saatte tekrarlar. Gövde
   /// metni ise koşulsuz: "Bugün hiç oynamadın! Serin kırılabilir."
   ///
   /// Yani uyarı, çağrılır çağrılmaz her akşam 21:00'de aynı cümleyi
@@ -508,21 +518,67 @@ class NotificationService {
 
   static const int _streakWarningId = 2;
 
-  /// [startTomorrow] true ise ilk çalma bugüne değil yarına kurulur —
-  /// oyuncu bugün zaten oynadıysa akşam uyarı almamalı.
-  Future<void> scheduleStreakWarning({bool startTomorrow = false}) async {
+  /// Seri uyarısının çalacağı an: bugün 21:00 (oynanmadıysa ve saat henüz
+  /// gelmediyse), değilse yarın 21:00. Saf işlev; testte saat enjekte edilir.
+  static DateTime streakWarningTime(DateTime now, {required bool playedToday}) {
+    final tonight = DateTime(now.year, now.month, now.day, 21, 0);
+    if (!playedToday && tonight.isAfter(now)) return tonight;
+    return DateTime(now.year, now.month, now.day + 1, 21, 0);
+  }
+
+  /// Seri uyarısını TEK ATIŞ olarak kurar ([startTomorrow] true: bugün
+  /// oynandı, bir sonraki akşama).
+  ///
+  /// Eskiden günlük tekrarlayan tetikleyiciydi. iOS'ta tekrarlayan
+  /// tetikleyici başlangıç tarihini yok sayar, yani `startTomorrow` bu akşamki
+  /// uyarıyı bastırmayabilirdi: bugün oynayan oyuncu "hiç oynamadın" alırdı.
+  /// Tek atış ilgili akşama kurulur; uygulama açılışında/öne gelişinde
+  /// ([syncStreakWarning]) ve her oyundan sonra yeniden kurulur.
+  Future<void> scheduleStreakWarning({
+    bool startTomorrow = false,
+    DateTime? now,
+  }) async {
     if (kIsWeb || !_enabled) return;
     try {
-      // Schedule for 21:00 (9 PM) - a gentle reminder
-      final now = DateTime.now();
-      var scheduledTime = DateTime(now.year, now.month, now.day, 21, 0);
-      if (startTomorrow || !scheduledTime.isAfter(now)) {
-        scheduledTime = scheduledTime.add(const Duration(days: 1));
-      }
-      await _scheduleStreakWarningAt(scheduledTime);
+      await _scheduleStreakWarningAt(
+        streakWarningTime(now ?? DateTime.now(), playedToday: startTomorrow),
+      );
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService streak');
     }
+  }
+
+  /// Uygulama açılışında/öne gelişinde çağrılır: seri sürüyorsa bir sonraki
+  /// uyarı akşamı kurulur (bugün oynandıysa yarın), sürmüyorsa uyarı kalkar.
+  /// Servis kurulu değilse (web, test) sessizce hiçbir şey yapmaz.
+  static Future<void> syncStreakWarning({DateTime? now}) async {
+    try {
+      final service = _instance;
+      if (service == null) return;
+      final store = await StreakStore.load();
+      await service.armStreakWarning(
+        hasLiveStreak: store.effectiveStreak(now: now) > 0,
+        playedToday: store.playedToday(now: now),
+        now: now,
+      );
+    } catch (error, stack) {
+      ErrorReporter.record(error, stack, reason: 'streak_warning_sync');
+    }
+  }
+
+  /// [syncStreakWarning]in karar kısmı (testte doğrudan çağrılır).
+  Future<void> armStreakWarning({
+    required bool hasLiveStreak,
+    required bool playedToday,
+    DateTime? now,
+  }) async {
+    if (kIsWeb || !_enabled) return;
+    if (!hasLiveStreak) {
+      await cancelStreakWarning();
+      await _preferences?.remove(_streakNextFireKey);
+      return;
+    }
+    await scheduleStreakWarning(startTomorrow: playedToday, now: now);
   }
 
   Future<void> _scheduleStreakWarningAt(DateTime scheduledTime) async {
@@ -551,6 +607,7 @@ class NotificationService {
       at: scheduledTime,
       details: details,
       payload: LocalNotificationPayload.streakWarning,
+      repeatDaily: false,
     );
   }
 
@@ -569,11 +626,10 @@ class NotificationService {
     if (armed == null) return;
     try {
       final now = DateTime.now();
-      var at = armed;
-      while (!at.isAfter(now)) {
-        at = at.add(const Duration(days: 1));
-      }
-      await _scheduleStreakWarningAt(at);
+      // Tek atış: zamanı geçmişse zaten çaldı ya da kaçtı; yeni uyarı
+      // doğurmaz ([syncStreakWarning] bir sonrakini kurar).
+      if (!armed.isAfter(now)) return;
+      await _scheduleStreakWarningAt(armed);
     } catch (e, s) {
       ErrorReporter.record(e, s, reason: 'NotificationService streak lang');
     }

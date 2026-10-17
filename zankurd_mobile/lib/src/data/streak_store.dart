@@ -106,6 +106,10 @@ class StreakStore {
     return lastDay == _dayKey(yesterday);
   }
 
+  /// Bugün (yerel takvim günü) zaten oynandı mı?
+  bool playedToday({DateTime? now}) =>
+      _lastDay == _dayKey(now ?? DateTime.now());
+
   /// Görünen seri: bugün ya da dün oynanmışsa sürer, yoksa 0'dır.
   int effectiveStreak({DateTime? now}) {
     final today = now ?? DateTime.now();

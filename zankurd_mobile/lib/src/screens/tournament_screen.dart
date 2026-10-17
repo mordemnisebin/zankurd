@@ -282,6 +282,13 @@ class _TournamentScreenState extends State<TournamentScreen> {
       }
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'tournament_join');
+      // Geçici hata sahte bot şemasına düşürmez (gerçek insan sözü); kullanıcı
+      // tekrar deneyebilsin diye lobide kalır.
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.t(K.checkConnection))));
+      return;
     }
     if (!mounted) return;
 
@@ -670,19 +677,8 @@ class _TournamentScreenState extends State<TournamentScreen> {
   /// uygulanamaz — gerçek turnuvanın final maçı "Çeyrek Final" diye
   /// etiketleniyordu (2026-08-14 denetimi). `totalRounds`, o an elde olan
   /// `bracket.rounds.length`dir.
-  List<String> _roundNames(bool ku, int totalRounds) {
-    final namesFromFinal = ku
-        ? const ['Fînal', 'Nîv-Fînal', 'Çaryeka Fînalê', 'Dawiya 16an']
-        : const ['Final', 'Yarı Final', 'Çeyrek Final', 'Son 16'];
-    return List.generate(totalRounds, (i) {
-      final distanceFromFinal = totalRounds - 1 - i;
-      if (distanceFromFinal < namesFromFinal.length) {
-        return namesFromFinal[distanceFromFinal];
-      }
-      // Bilinen 4 addan taşan (32+ oyuncu) erken turlar için genel yedek.
-      return Tr.forKu(K.tournamentRoundGeneric, ku, {'n': '${i + 1}'});
-    });
-  }
+  List<String> _roundNames(bool ku, int totalRounds) =>
+      tournamentRoundNames(ku, totalRounds);
 
   @override
   Widget build(BuildContext context) {

@@ -29,7 +29,7 @@ void main() {
     ).readAsStringSync();
     expect(
       contract,
-      contains('deleteAvatarPhoto()'),
+      contains('deleteAvatarPhoto('),
       reason:
           'ZanKurdRepository avatar fotoğrafını depodan silmenin bir yolunu '
           'sunmuyor; kaldırma yalnız profil sütununu boşaltır',
@@ -41,7 +41,7 @@ void main() {
       'lib/src/data/supabase_zankurd_repository.dart',
     ).readAsStringSync();
     final body = RegExp(
-      r'Future<void> deleteAvatarPhoto\(\) async \{(.*?)\n  \}',
+      r'Future<void> deleteAvatarPhoto\(\{[^)]*\}\) async \{(.*?)\n  \}',
       dotAll: true,
     ).firstMatch(src);
     expect(body, isNotNull, reason: 'deleteAvatarPhoto uygulanmamış');
@@ -129,7 +129,11 @@ void main() {
     final body = dispose!.group(1)!;
     expect(body, contains('_uploadedNewPhotoThisSession'));
     expect(body, contains('!_savedSuccessfully'));
-    expect(body, contains('deleteAvatarPhoto()'));
+    // Vazgeçmede YALNIZ geçici yüklemeler silinir; kayıtlı fotoğrafı da
+    // silen `deleteAvatarPhoto(` burada çağrılmamalı (2026-10-17: fotoğraf
+    // değiştirip vazgeçmek kayıtlı fotoğrafı yok ediyordu).
+    expect(body, contains('deleteAvatarPhotoObjects(_sessionUploads)'));
+    expect(body, isNot(contains('deleteAvatarPhoto(')));
   });
 
   test('mock depo silme çağrısını kaydediyor', () async {

@@ -40,13 +40,21 @@ class _Resolver implements TimeZoneResolver {
 }
 
 class _Scheduled {
-  _Scheduled(this.id, this.title, this.body, this.at, this.payload);
+  _Scheduled(
+    this.id,
+    this.title,
+    this.body,
+    this.at,
+    this.payload, [
+    this.repeatDaily = true,
+  ]);
 
   final int id;
   final String title;
   final String body;
   final DateTime at;
   final String? payload;
+  final bool repeatDaily;
 }
 
 class _FakeGateway implements LocalNotificationGateway {
@@ -76,8 +84,9 @@ class _FakeGateway implements LocalNotificationGateway {
     required DateTime at,
     required NotificationDetails details,
     String? payload,
+    bool repeatDaily = true,
   }) async {
-    scheduled.add(_Scheduled(id, title, body, at, payload));
+    scheduled.add(_Scheduled(id, title, body, at, payload, repeatDaily));
   }
 
   @override
@@ -154,6 +163,103 @@ void main() {
       await store.recordPlay();
 
       expect(gateway.scheduled, isEmpty);
+    });
+  });
+
+  // 2026-10-17: uyarı TEK ATIŞ. iOS'ta tekrarlayan tetikleyici başlangıç
+  // tarihini yok sayar; "yarın başla" bu akşamki uyarıyı bastırmayabilirdi ve
+  // bugün oynayan oyuncu "hiç oynamadın" alırdı. Sessizdi: zamanlama kararı
+  // ancak gerçek cihazda, 21:00'de görünür.
+  group('seri uyarısı tek atış ve zamanlama kararı', () {
+    final morning = DateTime(2026, 10, 17, 9, 0);
+    final lateNight = DateTime(2026, 10, 17, 22, 30);
+
+    test('oynanmadı + 21:00 öncesi: bu akşam', () {
+      expect(
+        NotificationService.streakWarningTime(morning, playedToday: false),
+        DateTime(2026, 10, 17, 21, 0),
+      );
+    });
+
+    test('bugün oynandı: yarın akşam', () {
+      expect(
+        NotificationService.streakWarningTime(morning, playedToday: true),
+        DateTime(2026, 10, 18, 21, 0),
+      );
+    });
+
+    test('21:00 geçti: yarın akşam (ay sonunu da aşar)', () {
+      expect(
+        NotificationService.streakWarningTime(
+          DateTime(2026, 10, 31, 22, 0),
+          playedToday: false,
+        ),
+        DateTime(2026, 11, 1, 21, 0),
+      );
+      expect(
+        NotificationService.streakWarningTime(lateNight, playedToday: false),
+        DateTime(2026, 10, 18, 21, 0),
+      );
+    });
+
+    test('kurulan uyarı tekrarlamaz, günlük hatırlatıcı tekrarlar', () async {
+      final (service, gateway) = await _enabledService();
+      await service.scheduleStreakWarning(now: morning);
+
+      final warning = gateway.lastFor(2)!;
+      expect(warning.repeatDaily, isFalse);
+      expect(warning.at, DateTime(2026, 10, 17, 21, 0));
+      expect(gateway.lastFor(0)!.repeatDaily, isTrue);
+    });
+
+    test('açılışta: seri sürüyor + oynanmadı → bu akşam kurulur', () async {
+      final (service, gateway) = await _enabledService();
+      await service.armStreakWarning(
+        hasLiveStreak: true,
+        playedToday: false,
+        now: morning,
+      );
+      expect(gateway.lastFor(2)!.at, DateTime(2026, 10, 17, 21, 0));
+    });
+
+    test(
+      'açılışta: bugün oynandı → bu akşamki uyarı iptal, yarına kurulur',
+      () async {
+        final (service, gateway) = await _enabledService();
+        await service.armStreakWarning(
+          hasLiveStreak: true,
+          playedToday: true,
+          now: morning,
+        );
+        expect(gateway.lastFor(2)!.at, DateTime(2026, 10, 18, 21, 0));
+        expect(
+          gateway.scheduled
+              .where((s) => s.id == 2)
+              .every((s) => !s.repeatDaily),
+          isTrue,
+        );
+      },
+    );
+
+    test('açılışta: seri yoksa uyarı kaldırılır, kurulmaz', () async {
+      final (service, gateway) = await _enabledService();
+      await service.armStreakWarning(
+        hasLiveStreak: false,
+        playedToday: false,
+        now: morning,
+      );
+      expect(gateway.cancelled, contains(2));
+      expect(gateway.lastFor(2), isNull);
+    });
+
+    test('dil değişince zamanı geçmiş tek atış yeniden doğmaz', () async {
+      final (service, gateway) = await _enabledService();
+      await service.scheduleStreakWarning(now: DateTime(2020, 1, 1, 9));
+      gateway.scheduled.clear();
+
+      await service.applyLanguage(isKu: false);
+
+      expect(gateway.lastFor(2), isNull);
     });
   });
 

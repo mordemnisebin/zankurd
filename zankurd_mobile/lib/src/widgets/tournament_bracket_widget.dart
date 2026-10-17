@@ -8,6 +8,22 @@ import '../theme/app_icons.dart';
 import 'player_avatar.dart';
 import 'sahne/sahne.dart';
 
+/// Tur adları SONDAN sayılır: son tur her zaman Final'dir. Tur sayısı
+/// şemadan türetilir; 16 oyunculuk varsayım (Son 16 ile başlama) 4 kişilik
+/// gerçek turnuvada ilk turu "Son 16" diye yazıyordu.
+List<String> tournamentRoundNames(bool ku, int totalRounds) {
+  final namesFromFinal = ku
+      ? const ['Fînal', 'Nîv-Fînal', 'Çaryeka Fînalê', 'Dawiya 16an']
+      : const ['Final', 'Yarı Final', 'Çeyrek Final', 'Son 16'];
+  return List.generate(totalRounds, (i) {
+    final distanceFromFinal = totalRounds - 1 - i;
+    if (distanceFromFinal < namesFromFinal.length) {
+      return namesFromFinal[distanceFromFinal];
+    }
+    return Tr.forKu(K.tournamentRoundGeneric, ku, {'n': '${i + 1}'});
+  });
+}
+
 /// Visual single-elimination tournament bracket with connecting lines,
 /// player avatars, scores, and winner highlighting.
 ///
@@ -26,9 +42,8 @@ class TournamentBracketWidget extends StatelessWidget {
   final bool ku;
   final void Function(TournamentMatch match, int roundIndex)? onTapMatch;
 
-  List<String> get _roundNames => ku
-      ? const ['Dawiya 16an', 'Çaryeka Fînalê', 'Nîv-Fînal', 'Fînal']
-      : const ['Son 16', 'Çeyrek Final', 'Yarı Final', 'Final'];
+  List<String> get _roundNames =>
+      tournamentRoundNames(ku, bracket.rounds.length);
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +86,8 @@ class TournamentBracketWidget extends StatelessWidget {
                         _ConnectorColumn(
                           roundIndex: i,
                           roundCount: totalRounds,
+                          prevMatchCount: bracket.rounds[i - 1].matches.length,
+                          currMatchCount: bracket.rounds[i].matches.length,
                           bracketHeight: minBracketHeight,
                         ),
                       _RoundColumn(
@@ -213,11 +230,15 @@ class _ConnectorColumn extends StatelessWidget {
   const _ConnectorColumn({
     required this.roundIndex,
     required this.roundCount,
+    required this.prevMatchCount,
+    required this.currMatchCount,
     required this.bracketHeight,
   });
 
   final int roundIndex;
   final int roundCount;
+  final int prevMatchCount;
+  final int currMatchCount;
   final double bracketHeight;
 
   @override
@@ -232,6 +253,8 @@ class _ConnectorColumn extends StatelessWidget {
         painter: _ConnectorPainter(
           roundIndex: roundIndex,
           roundCount: roundCount,
+          prevMatchCount: prevMatchCount,
+          currMatchCount: currMatchCount,
           color: SahneTokens.of(context).line,
         ),
       ),
@@ -243,11 +266,15 @@ class _ConnectorPainter extends CustomPainter {
   const _ConnectorPainter({
     required this.roundIndex,
     required this.roundCount,
+    required this.prevMatchCount,
+    required this.currMatchCount,
     required this.color,
   });
 
   final int roundIndex;
   final int roundCount;
+  final int prevMatchCount;
+  final int currMatchCount;
   final Color color;
 
   @override
@@ -257,8 +284,11 @@ class _ConnectorPainter extends CustomPainter {
       ..strokeWidth = 1.5
       ..style = PaintingStyle.stroke;
 
-    final matchCountPrev = 16 >> roundIndex; // 16, 8, 4, 2
-    final matchCountCurr = 16 >> (roundIndex + 1); // 8, 4, 2, 1
+    // Maç sayıları şemadan gelir; eskiden 16 oyunculu şema varsayılıyordu
+    // (16 >> roundIndex) ve 4 kişilik gerçek turnuvada bağlantılar yanlış
+    // çiziliyordu.
+    final matchCountPrev = prevMatchCount;
+    final matchCountCurr = currMatchCount;
 
     if (matchCountPrev <= 0 || matchCountCurr <= 0) return;
 
