@@ -29,6 +29,7 @@ import 'question_bank_loader.dart';
 import 'seen_question_store.dart';
 import 'subcategory_level_plan.dart';
 import 'durable_write.dart';
+import 'local_progress_scope.dart';
 import 'zankurd_repository.dart';
 import '../config/category_visibility.dart';
 import '../services/question_set_policy.dart';
@@ -1934,7 +1935,10 @@ class MockZanKurdRepository implements ZanKurdRepository {
     return const [];
   }
 
-  static const _avatarIdentityKey = 'zankurd.avatarIdentity';
+  /// Kullanıcıya göre ayrılır ([LocalProgressScope]): hesap B aynı cihaza
+  /// girince A'nın yerel avatar kimliğini görüp sunucuya yazmasın.
+  static String get _avatarIdentityKey =>
+      LocalProgressScope.physical('zankurd.avatarIdentity');
 
   @override
   Future<AvatarIdentity> loadAvatarIdentity() async {

@@ -27,6 +27,7 @@ import '../utils/error_reporter.dart';
 import '../utils/network_error.dart';
 import '../config/category_visibility.dart';
 import 'lesson_completion_store.dart';
+import 'local_progress_scope.dart';
 import 'mock_zankurd_repository.dart';
 import 'xp_store.dart';
 import 'zankurd_repository.dart';
@@ -403,7 +404,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   /// açık kalır. `loadAvatarIdentity` bu bayrak açıkken sunucu satırını
   /// okumaz — yoksa bağlantı dönünce eski avatar kullanıcının yüzüne geri
   /// gelirdi (yerel kopya zaten güncel, sunucu satırı henüz değil).
-  static const _avatarIdentityDirtyKey = 'zankurd.avatarIdentity.dirtyPending';
+  ///
+  /// Kullanıcıya göre ayrılır: sabit anahtarla, A'nın bekleyen değişikliği
+  /// aynı cihazdaki B'nin profiline yazılabiliyordu.
+  static String get _avatarIdentityDirtyKey =>
+      LocalProgressScope.physical('zankurd.avatarIdentity.dirtyPending');
 
   Future<bool> _avatarIdentityDirty() async {
     final prefs = await SharedPreferences.getInstance();
@@ -2566,13 +2571,24 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     return purchased > used;
   }
 
+  static String get _lastSpinKey =>
+      LocalProgressScope.physical('zankurd.last_spin_date');
+
+  /// Yerel "bugün çevirdim" işareti; hesaba bağlıdır. Oturum yoksa null.
+  String? _spinMarker(String day) {
+    final uid = currentUserId;
+    return uid == null ? null : '$uid|$day';
+  }
+
   @override
   Future<bool> canSpinToday() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final lastSpinStr = prefs.getString('zankurd.last_spin_date');
-      final todayStr = spinDayKey(DateTime.now());
-      if (lastSpinStr == todayStr) {
+      final lastSpinStr = prefs.getString(_lastSpinKey);
+      // Değer `<uid>|<gün>` biçimindedir: eski sabit anahtardan ya da başka
+      // hesaptan kalan kayıt eşleşmez, o durumda sunucuya sorulur.
+      final todayStr = _spinMarker(spinDayKey(DateTime.now()));
+      if (todayStr != null && lastSpinStr == todayStr) {
         return await _hasUnusedExtraSpin();
       }
       final freeSpinAvailable = await client.rpc<bool>('can_spin_today');
@@ -2609,10 +2625,8 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       if (amount > 0) {
         try {
           final prefs = await SharedPreferences.getInstance();
-          await prefs.setString(
-            'zankurd.last_spin_date',
-            spinDayKey(DateTime.now()),
-          );
+          final marker = _spinMarker(spinDayKey(DateTime.now()));
+          if (marker != null) await prefs.setString(_lastSpinKey, marker);
         } catch (error, stack) {
           _recordError(
             error,
