@@ -1199,6 +1199,7 @@ class _RoomScreenState extends State<RoomScreen> {
     setState(() => starting = true);
     try {
       await widget.repository.startGame(room);
+      if (!mounted) return;
       _navigateToQuiz();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'startGame failed');
@@ -1211,7 +1212,7 @@ class _RoomScreenState extends State<RoomScreen> {
   }
 
   Future<void> _navigateToQuiz() async {
-    if (quizOpened) return;
+    if (!mounted || quizOpened) return;
     _pausePolling();
     _pauseStatusPolling();
     setState(() {
