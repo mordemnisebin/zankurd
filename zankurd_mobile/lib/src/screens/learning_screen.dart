@@ -991,6 +991,16 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
     });
   }
 
+  /// Slayt değişince kart ÖN yüzle (animasyonsuz) açılır; yoksa bir önceki
+  /// kartın cevap yüzü sonraki kartta kalıyordu.
+  void _goToSlide(int index) {
+    setState(() {
+      _currentSlideIndex = index;
+      _isFlipped = false;
+      _flipController.reset();
+    });
+  }
+
   void _toggleFlip() {
     if (!_flashcardMode) return;
     // Hareketi azalt açıkken kart dönmeden yüz değiştirir.
@@ -1435,10 +1445,10 @@ class _LessonDetailScreenState extends State<LessonDetailScreen>
                   child: LessonSlideNavigation(
                     showBack: _currentSlideIndex > 0,
                     isLast: isLast,
-                    onBack: () => setState(() => _currentSlideIndex--),
+                    onBack: () => _goToSlide(_currentSlideIndex - 1),
                     onNext: isLast
                         ? _markCompleted
-                        : () => setState(() => _currentSlideIndex++),
+                        : () => _goToSlide(_currentSlideIndex + 1),
                     onMiniQuiz: _miniQuizLoading ? null : _startMiniQuiz,
                   ),
                 ),
