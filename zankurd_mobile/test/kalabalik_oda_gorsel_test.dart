@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
 import 'package:zankurd_mobile/src/models/player.dart';
 import 'package:zankurd_mobile/src/screens/room_screen.dart';
+import 'package:zankurd_mobile/src/theme/app_icons.dart';
 
 import 'support/widget_test_helpers.dart';
 
@@ -15,9 +16,9 @@ import 'support/widget_test_helpers.dart';
 ///
 /// ## Bekçi
 ///
-/// Kalabalık odada görünür bayrak YOK ama bildir/engelle satıra uzun
-/// basışla hâlâ açılır (Apple 1.2 erişimi kaybolmaz); 2 kişilik odada
-/// görünür bayrak kalır.
+/// Kalabalık odada bayrak yok; başkalarının satırında sessiz üç nokta (App
+/// Store 1.2 görünür bildir/engelle), kendi satırında hiçbiri; uzun basış da
+/// açar. 2 kişilik odada bayrak kalır.
 void main() {
   Future<void> mount(WidgetTester tester, {required int maxPlayers}) async {
     tester.view.physicalSize = const Size(800, 2400);
@@ -41,21 +42,45 @@ void main() {
     await tester.pump();
   }
 
-  testWidgets('kalabalık odada bayrak yok, uzun basış bildir/engelle açar', (
-    tester,
-  ) async {
-    await mount(tester, maxPlayers: 8);
-    expect(
-      find.byKey(const ValueKey('player-moderation-button')),
-      findsNothing,
-    );
-    await tester.longPress(
-      find.byKey(const ValueKey('room-player-moderation-other-player')),
-    );
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('player-report-action')), findsOneWidget);
-    expect(find.byKey(const ValueKey('player-block-action')), findsOneWidget);
-  });
+  testWidgets(
+    'kalabalık odada üç nokta yalnız başkalarında; uzun basış da açar',
+    (tester) async {
+      await mount(tester, maxPlayers: 8);
+      final buttons = find.byKey(const ValueKey('player-moderation-button'));
+      // 3 oyuncu: kendi satırında yok, öteki ikisinde var.
+      expect(buttons, findsNWidgets(2));
+      expect(
+        find.descendant(of: buttons, matching: find.byIcon(AppIcons.flag)),
+        findsNothing,
+      );
+      expect(
+        find.descendant(
+          of: buttons.first,
+          matching: find.byIcon(AppIcons.ellipsisVertical),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        tester.getSize(buttons.first).shortestSide,
+        greaterThanOrEqualTo(44),
+      );
+
+      await tester.tap(buttons.first);
+      await tester.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('player-report-action')),
+        findsOneWidget,
+      );
+      await tester.tapAt(const Offset(5, 5));
+      await tester.pumpAndSettle();
+
+      await tester.longPress(
+        find.byKey(const ValueKey('room-player-moderation-other-player')),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('player-block-action')), findsOneWidget);
+    },
+  );
 
   testWidgets('iki kişilik odada görünür bayrak kalır', (tester) async {
     await mount(tester, maxPlayers: 2);

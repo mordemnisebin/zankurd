@@ -1758,11 +1758,10 @@ class _RoomPlayerRow extends StatelessWidget {
   /// durum bilgi vermez; satır yalnız ad ve (varsa) ev sahibi rozetini taşır.
   final bool showReadyState;
 
-  /// Kalabalık odada her satırda görünür bayrak yok: 7–50 satırda aynı
-  /// simge tekrarlanınca liste gürültüye dönüyordu (2026-10-17 görsel
-  /// denetim). Bildir/engelle satıra UZUN BASIŞLA açılır (oda sohbetindeki
-  /// mesajla aynı desen) ve ekran okuyucuya özel eylem olarak sunulur; 2
-  /// kişilik odada görünür bayrak kalır.
+  /// Kalabalık odada bayrak yerine sessiz üç nokta (yalnız başkalarının
+  /// satırında): 7–50 satırda bayrak tekrarlanınca liste gürültüye
+  /// dönüyordu (2026-10-17). Bildir/engelle App Store 1.2 gereği görünür
+  /// kalır; ayrıca uzun basış ve ekran okuyucu özel eylemi aynı sayfayı açar.
   final bool quietModeration;
 
   /// Bildir/engelle için; yeni bir backend yok, mevcut RPC'ler kullanılır.
@@ -1923,16 +1922,16 @@ class _RoomPlayerRow extends StatelessWidget {
             // gösteriliyor; bildir/engelle burada (2026-08-06 denetimi).
             // Satırın SONUNDA: 48 dp'lik hedef metin sütununu uzatırsa
             // birincil eylem katlamanın altına iniyordu.
-            if (!quietModeration)
-              PlayerModerationButton(
-                repository: repository,
-                playerId: player.id,
-                playerName: _displayName(context),
-                isSelf: isSelf,
-                compact: true,
-                onBlocked: onBlocked,
-              ),
-            if (isSelf || player.id == null || quietModeration)
+            PlayerModerationButton(
+              repository: repository,
+              playerId: player.id,
+              playerName: _displayName(context),
+              isSelf: isSelf,
+              compact: true,
+              quiet: quietModeration,
+              onBlocked: onBlocked,
+            ),
+            if (isSelf || player.id == null)
               const SizedBox(width: SahneSpace.x3),
           ],
         ),

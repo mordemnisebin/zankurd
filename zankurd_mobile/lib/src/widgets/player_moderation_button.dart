@@ -45,6 +45,7 @@ class PlayerModerationButton extends StatefulWidget {
     required this.playerName,
     this.isSelf = false,
     this.compact = false,
+    this.quiet = false,
     this.onBlocked,
     super.key,
   });
@@ -64,6 +65,10 @@ class PlayerModerationButton extends StatefulWidget {
 
   /// Dar yerleşimlerde (oda oyuncu satırı) küçük ikon.
   final bool compact;
+
+  /// Sessiz görünüm: bayrak yerine üç nokta (kalabalık listede her satırda
+  /// bayrak gürültü yapıyordu); aynı alt sayfayı açar.
+  final bool quiet;
 
   /// Engelleme başarılıysa çağıranın listeyi tazelemesi için.
   final VoidCallback? onBlocked;
@@ -108,7 +113,7 @@ class _PlayerModerationButtonState extends State<PlayerModerationButton> {
       // Bayrak, liderlikteki bildir düğmesiyle aynı görsel dil; ekran
       // okuyucu için de amacı açık.
       icon: Icon(
-        AppIcons.flag,
+        widget.quiet ? AppIcons.ellipsisVertical : AppIcons.flag,
         color: SahneTokens.of(context).tx2,
         semanticLabel: context.t(K.reportProfileTitle),
       ),

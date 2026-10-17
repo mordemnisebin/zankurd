@@ -100,6 +100,7 @@ MAPPING = {
     "faceSmile": "smile",
     "fire": "flame",
     "flag": "flag",
+    "ellipsisVertical": "ellipsis-vertical",
     "floppyDisk": "save",
     "font": "type",
     "forward": "skip-forward",  # "soruyu atla"
