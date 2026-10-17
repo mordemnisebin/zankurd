@@ -5,15 +5,24 @@
 // öner" HER ZAMAN reddedilirdi. İstemci hatayı yutup `false` döndüğü ve
 // sınama ağı olmadan politika görünmediği için kimse fark etmedi.
 //
+// Kusur 2: avatar düzenleyici unvanı "<seviye> · <kategori>" yazar; kategori
+// "Zanist û Raman"a dönüşüp Cîhan eklenince tetikleyici regex'i bu adları
+// reddetti ve TÜM profil kaydı düştü. Kaydet hatası genel mesajla gösterildiği
+// ve yalnız o kategoride seviye kazanan oyuncuda çıktığı için sessizdi.
+//
 // Kusur 6: aynı soruyu ikinci kez bildirmek (reporter_id, question_id) tekil
 // kısıtına (23505) çarpıp "bildirim başarısız" gösteriyordu; oysa kayıt zaten
 // vardı.
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:zankurd_mobile/src/data/supabase_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/l10n/lang.dart';
+import 'package:zankurd_mobile/src/models/mastery_level.dart';
 import 'package:zankurd_mobile/src/models/quiz_question.dart';
 
 class _Repo extends SupabaseZanKurdRepository {
@@ -142,5 +151,28 @@ void main() {
       _repo(c).reportQuestion(q, 'x'),
       throwsA(isA<PostgrestException>()),
     );
+  });
+
+  test('Düzenleyicinin üretebildiği her unvan sunucu regex\'ine uyar', () {
+    final sql = File('supabase/2026-10-17_profil_veri.sql').readAsStringSync();
+    final rule = RegExp(
+      r"showcase_title !~ '(\^\(Xwendekar[^']*\$)'",
+    ).firstMatch(sql);
+    expect(rule, isNotNull, reason: 'unvan regex\'i SQL dosyasında bulunamadı');
+    final re = RegExp(rule!.group(1)!);
+    final categories = {...MockZanKurdRepository().categories, 'Cîhan'};
+    expect(categories, contains('Paradigma'));
+    for (final cat in categories) {
+      for (final level in MasteryLevel.values) {
+        if (level == MasteryLevel.none) continue;
+        final title =
+            '${level.titleKu} · ${CategoryNames.localized(cat, true)}';
+        expect(
+          re.hasMatch(title),
+          isTrue,
+          reason: '$title sunucuda reddedilir',
+        );
+      }
+    }
   });
 }
