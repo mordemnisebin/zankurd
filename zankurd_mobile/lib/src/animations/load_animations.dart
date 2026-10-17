@@ -14,32 +14,27 @@ class LoadAnimationSequence {
 
   /// Logo scale animation: 0.8 → 1.0, interval 0.2-0.35
   static Animation<double> logoScaleAnimation(AnimationController controller) {
-    return Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: const Interval(0.2, 0.35, curve: Curves.easeOut),
-      ),
-    );
+    return Tween<double>(begin: 0.8, end: 1.0)
+        .chain(
+          CurveTween(curve: const Interval(0.2, 0.35, curve: Curves.easeOut)),
+        )
+        .animate(controller);
   }
 
   /// Title slide animation: 20 → 0, interval 0.4-0.6
   static Animation<double> titleSlideAnimation(AnimationController controller) {
-    return Tween<double>(begin: 20.0, end: 0.0).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: const Interval(0.4, 0.6, curve: Curves.easeOut),
-      ),
-    );
+    return Tween<double>(begin: 20.0, end: 0.0)
+        .chain(
+          CurveTween(curve: const Interval(0.4, 0.6, curve: Curves.easeOut)),
+        )
+        .animate(controller);
   }
 
   /// Title fade animation: 0 → 1, interval 0.4-0.6
   static Animation<double> titleFadeAnimation(AnimationController controller) {
-    return Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: const Interval(0.4, 0.6, curve: Curves.easeIn),
-      ),
-    );
+    return CurveTween(
+      curve: const Interval(0.4, 0.6, curve: Curves.easeIn),
+    ).animate(controller);
   }
 
   // 2026-07-25 canlı denetimi: kademeli aralıklar içeriği kontrolörün
@@ -52,58 +47,45 @@ class LoadAnimationSequence {
   static Animation<double> formField1FadeAnimation(
     AnimationController controller,
   ) {
-    return Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: const Interval(0.10, 0.45, curve: Curves.easeIn),
-      ),
-    );
+    return CurveTween(
+      curve: const Interval(0.10, 0.45, curve: Curves.easeIn),
+    ).animate(controller);
   }
 
   /// Form field 2 fade animation: 0 → 1, interval 0.18-0.55
   static Animation<double> formField2FadeAnimation(
     AnimationController controller,
   ) {
-    return Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: const Interval(0.18, 0.55, curve: Curves.easeIn),
-      ),
-    );
+    return CurveTween(
+      curve: const Interval(0.18, 0.55, curve: Curves.easeIn),
+    ).animate(controller);
   }
 
   /// Button scale animation: 0.95 → 1.0, interval 0.25-0.7
   static Animation<double> buttonScaleAnimation(
     AnimationController controller,
   ) {
-    return Tween<double>(begin: 0.95, end: 1.0).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: const Interval(0.25, 0.7, curve: Curves.easeOut),
-      ),
-    );
+    return Tween<double>(begin: 0.95, end: 1.0)
+        .chain(
+          CurveTween(curve: const Interval(0.25, 0.7, curve: Curves.easeOut)),
+        )
+        .animate(controller);
   }
 
   /// Button fade animation: 0 → 1, interval 0.25-0.7
   static Animation<double> buttonFadeAnimation(AnimationController controller) {
-    return Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: const Interval(0.25, 0.7, curve: Curves.easeIn),
-      ),
-    );
+    return CurveTween(
+      curve: const Interval(0.25, 0.7, curve: Curves.easeIn),
+    ).animate(controller);
   }
 
   // Home screen animations
 
   /// Hero fade animation: 0 → 1, quick fade-in
   static Animation<double> heroFadeAnimation(AnimationController controller) {
-    return Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: const Interval(0.0, 0.3, curve: Curves.easeIn),
-      ),
-    );
+    return CurveTween(
+      curve: const Interval(0.0, 0.3, curve: Curves.easeIn),
+    ).animate(controller);
   }
 
   /// Card fade animation with index-dependent stagger: 0 → 1
@@ -118,12 +100,9 @@ class LoadAnimationSequence {
     final startInterval = (0.15 + (index * 0.07)).clamp(0.0, 0.7);
     final endInterval = (startInterval + 0.25).clamp(0.0, 1.0);
 
-    return Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Interval(startInterval, endInterval, curve: Curves.easeIn),
-      ),
-    );
+    return CurveTween(
+      curve: Interval(startInterval, endInterval, curve: Curves.easeIn),
+    ).animate(controller);
   }
 
   /// Category grid item fade animation with index-dependent stagger: 0 → 1
@@ -134,11 +113,8 @@ class LoadAnimationSequence {
     final startInterval = (0.25 + (index * 0.04)).clamp(0.0, 0.8);
     final endInterval = (startInterval + 0.18).clamp(0.0, 1.0);
 
-    return Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Interval(startInterval, endInterval, curve: Curves.easeIn),
-      ),
-    );
+    return CurveTween(
+      curve: Interval(startInterval, endInterval, curve: Curves.easeIn),
+    ).animate(controller);
   }
 }

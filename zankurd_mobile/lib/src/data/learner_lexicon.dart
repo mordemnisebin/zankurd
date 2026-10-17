@@ -7854,6 +7854,9 @@ class LearnerLexicon {
   /// Eskiden yalnız `toLowerCase()` vardı: Türkçe klavyeyle yazılan `cay`
   /// `Çay` maddesini bulmuyordu; öğrenen sözcüğün yazımını bilmediği için
   /// aratıyor, yazımı bilmeden doğru yazımı yazması isteniyordu.
+  static final RegExp _whitespacePattern = RegExp(r'\s+');
+  static final RegExp _nonLetterPattern = RegExp(r'[^\p{L}]', unicode: true);
+
   static String foldForSearch(String value) {
     final lowered = value
         .trim()
@@ -7868,7 +7871,7 @@ class LearnerLexicon {
       final char = String.fromCharCode(rune);
       buffer.write(_accentFold[char] ?? char);
     }
-    return buffer.toString().replaceAll(RegExp(r'\s+'), ' ');
+    return buffer.toString().replaceAll(_whitespacePattern, ' ');
   }
 
   static const Map<String, String> _accentFold = {
@@ -7910,7 +7913,7 @@ class LearnerLexicon {
   static String strictWordKey(String word) {
     return normalizeKurmanciText(
       word,
-    ).replaceAll('ı', 'i').replaceAll(RegExp(r'[^\p{L}]', unicode: true), '');
+    ).replaceAll('ı', 'i').replaceAll(_nonLetterPattern, '');
   }
 
   /// Metindeki TEK bir sözcükten sözlük maddesine: dokununca anlam balonu.
@@ -7965,6 +7968,38 @@ class LearnerLexicon {
     return index;
   }
 
+  static List<
+    ({
+      LearnerLexiconEntry entry,
+      String term,
+      List<String> forms,
+      String meaning,
+    })
+  >?
+  _searchIndex;
+
+  static List<
+    ({
+      LearnerLexiconEntry entry,
+      String term,
+      List<String> forms,
+      String meaning,
+    })
+  >
+  _buildSearchIndex() {
+    return List.unmodifiable([
+      for (final entry in entries)
+        (
+          entry: entry,
+          term: foldForSearch(entry.termKu),
+          forms: List<String>.unmodifiable([
+            for (final form in entry.forms) foldForSearch(form),
+          ]),
+          meaning: foldForSearch(entry.meaningTr),
+        ),
+    ]);
+  }
+
   /// Arama: terim, anlam ve biçimlerde aksansız eşleşme; sonuçlar önce tam
   /// eşleşen, sonra öneki eşleşen, sonra içinde geçen maddeler olarak
   /// sıralanır (eşit derecede olanlar sözlük sırasını korur).
@@ -7972,13 +8007,11 @@ class LearnerLexicon {
     final needle = foldForSearch(query);
     if (needle.isEmpty) return entries;
 
+    final searchEntries = _searchIndex ??= _buildSearchIndex();
     final ranked = <(int, int, LearnerLexiconEntry)>[];
-    for (final (index, entry) in entries.indexed) {
-      final term = foldForSearch(entry.termKu);
-      final forms = [for (final form in entry.forms) foldForSearch(form)];
-      final meaning = foldForSearch(entry.meaningTr);
-      final rank = _rank(needle, term, forms, meaning);
-      if (rank != null) ranked.add((rank, index, entry));
+    for (final (index, item) in searchEntries.indexed) {
+      final rank = _rank(needle, item.term, item.forms, item.meaning);
+      if (rank != null) ranked.add((rank, index, item.entry));
     }
     ranked.sort((a, b) {
       final byRank = a.$1.compareTo(b.$1);

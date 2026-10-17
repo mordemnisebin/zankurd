@@ -31,10 +31,31 @@ class StreakStore {
   /// Aynı anda tutulabilecek en fazla dondurma jetonu.
   static const maxFreeze = 2;
   static StreakStore? _instance;
+  static Future<StreakStore>? _loading;
+  static int _loadGeneration = 0;
 
   static Future<StreakStore> load() async {
     final cached = _instance;
     if (cached != null) return cached;
+    final inFlight = _loading;
+    if (inFlight != null) return inFlight;
+
+    final generation = _loadGeneration;
+    final loading = _loadFresh().then((store) {
+      if (_loadGeneration == generation) {
+        return _instance ??= store;
+      }
+      return store;
+    });
+    _loading = loading;
+    try {
+      return await loading;
+    } finally {
+      if (identical(_loading, loading)) _loading = null;
+    }
+  }
+
+  static Future<StreakStore> _loadFresh() async {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -42,7 +63,7 @@ class StreakStore {
       ErrorReporter.record(error, stack, reason: 'streak_store');
       preferences = null;
     }
-    return _instance = StreakStore._(
+    return StreakStore._(
       preferences,
       preferences?.getInt(_currentKey) ?? 0,
       preferences?.getInt(_bestKey) ?? 0,
@@ -52,7 +73,11 @@ class StreakStore {
   }
 
   /// Testlerde tekil örneği sıfırlamak için.
-  static void resetInstance() => _instance = null;
+  static void resetInstance() {
+    _loadGeneration++;
+    _instance = null;
+    _loading = null;
+  }
 
   final SharedPreferences? _preferences;
   int _current;

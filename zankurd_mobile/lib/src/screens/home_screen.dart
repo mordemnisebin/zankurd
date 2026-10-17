@@ -174,6 +174,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   @override
+  void didUpdateWidget(covariant HomeScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.refreshSignal != widget.refreshSignal) {
+      oldWidget.refreshSignal?.removeListener(_handleRefreshSignal);
+      widget.refreshSignal?.addListener(_handleRefreshSignal);
+    }
+  }
+
+  @override
   void dispose() {
     widget.refreshSignal?.removeListener(_handleRefreshSignal);
     _loadAnimationController.dispose();
@@ -888,12 +897,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Animation<double> _heroFadeAnimation(int index) {
     final startTime = (index * 0.1).clamp(0.0, 1.0).toDouble();
     final endTime = (startTime + 0.3).clamp(startTime, 1.0).toDouble();
-    return Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _loadAnimationController,
-        curve: Interval(startTime, endTime, curve: Curves.easeOut),
-      ),
-    );
+    return CurveTween(
+      curve: Interval(startTime, endTime, curve: Curves.easeOut),
+    ).animate(_loadAnimationController);
   }
 
   /// "Dersa rojê" kartı: hedefe göre önceliklendirilmiş günlük solo quiz.

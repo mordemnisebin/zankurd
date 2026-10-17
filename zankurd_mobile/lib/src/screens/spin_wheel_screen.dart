@@ -135,11 +135,17 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
   }
 
   void _updateCountdown() {
-    final now = DateTime.now().toUtc();
-    final nextMidnight = DateTime.utc(now.year, now.month, now.day + 1);
+    // Sunucudaki `can_spin_today` / `award_spin_coins` `public.app_today()`
+    // (`Europe/Istanbul`, kalıcı UTC+3) ile gün sınırı çizer.
+    final istanbul = DateTime.now().toUtc().add(const Duration(hours: 3));
+    final nextMidnight = DateTime.utc(
+      istanbul.year,
+      istanbul.month,
+      istanbul.day + 1,
+    );
     if (mounted) {
       setState(() {
-        _timeUntilNextSpin = nextMidnight.difference(now);
+        _timeUntilNextSpin = nextMidnight.difference(istanbul);
       });
     }
   }
@@ -227,9 +233,10 @@ class _SpinWheelScreenState extends State<SpinWheelScreen>
     final target =
         2 * math.pi * 5 - (winnerIndex * segment + segment / 2) - math.pi / 2;
 
-    _rotation = Tween<double>(begin: 0, end: target).animate(
-      CurvedAnimation(parent: _spinController, curve: Curves.easeOutQuart),
-    );
+    _rotation = Tween<double>(
+      begin: 0,
+      end: target,
+    ).chain(CurveTween(curve: Curves.easeOutQuart)).animate(_spinController);
     _spinController.reset();
     _lastPlayedSegment = -1;
     await _spinController.forward();

@@ -1574,11 +1574,15 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Stream<List<RoomMessage>> subscribeRoomMessages(String roomId) {
     final existing = _roomChatControllers[roomId];
     if (existing != null && !existing.isClosed) return existing.stream;
-    final controller = StreamController<List<RoomMessage>>.broadcast(
-      onCancel: () => _roomChatControllers.remove(roomId),
+    late final StreamController<List<RoomMessage>> controller;
+    controller = StreamController<List<RoomMessage>>.broadcast(
+      onListen: () => controller.add(List.of(_roomMessages)),
+      onCancel: () {
+        _roomChatControllers.remove(roomId);
+        unawaited(controller.close());
+      },
     );
     _roomChatControllers[roomId] = controller;
-    controller.add(List.of(_roomMessages));
     return controller.stream;
   }
 

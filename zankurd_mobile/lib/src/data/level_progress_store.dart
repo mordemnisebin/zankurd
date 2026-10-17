@@ -9,16 +9,38 @@ class LevelProgressStore {
 
   static String get _key => LocalProgressScope.physical('zankurd.level.played');
   static LevelProgressStore? _instance;
+  static Future<LevelProgressStore>? _loading;
+  static int _loadGeneration = 0;
 
   final SharedPreferences _prefs;
 
   static Future<LevelProgressStore> load() async {
-    return _instance ??= LevelProgressStore._(
-      await SharedPreferences.getInstance(),
-    );
+    final cached = _instance;
+    if (cached != null) return cached;
+    final inFlight = _loading;
+    if (inFlight != null) return inFlight;
+
+    final generation = _loadGeneration;
+    final loading = SharedPreferences.getInstance().then((prefs) {
+      final store = LevelProgressStore._(prefs);
+      if (_loadGeneration == generation) {
+        return _instance ??= store;
+      }
+      return store;
+    });
+    _loading = loading;
+    try {
+      return await loading;
+    } finally {
+      if (identical(_loading, loading)) _loading = null;
+    }
   }
 
-  static void resetInstance() => _instance = null;
+  static void resetInstance() {
+    _loadGeneration++;
+    _instance = null;
+    _loading = null;
+  }
 
   static String _entry(String category, String? subCategory, int level) =>
       '$category|${subCategory ?? '-'}|$level';

@@ -1116,7 +1116,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         if (sahneMotionReduced(context)) {
           return FadeTransition(opacity: anim1, child: dialog);
         }
-        final curve = CurvedAnimation(parent: anim1, curve: Curves.easeOutBack);
+        final curve = CurveTween(curve: Curves.easeOutBack).animate(anim1);
         return ScaleTransition(
           scale: curve,
           child: FadeTransition(opacity: anim1, child: dialog),

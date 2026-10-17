@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zankurd_mobile/src/data/mock_zankurd_repository.dart';
+import 'package:zankurd_mobile/src/data/streak_store.dart';
 import 'package:zankurd_mobile/src/data/xp_store.dart';
 import 'package:zankurd_mobile/src/l10n/lang.dart';
 import 'package:zankurd_mobile/src/l10n/strings.dart';
@@ -505,6 +506,8 @@ void main() {
   ) async {
     SharedPreferences.setMockInitialValues({});
     XPStore.resetInstance();
+    StreakStore.resetInstance();
+    addTearDown(StreakStore.resetInstance);
     await XPStore.loadForTest(0);
     addTearDown(XPStore.resetInstance);
 

@@ -55,9 +55,31 @@ class BadgeService {
     return Tr.forKu(key, isKu);
   }
 
+  static Future<BadgeService>? _loading;
+  static int _loadGeneration = 0;
+
   static Future<BadgeService> load() async {
     final cached = _instance;
     if (cached != null) return cached;
+    final inFlight = _loading;
+    if (inFlight != null) return inFlight;
+
+    final generation = _loadGeneration;
+    final loading = _loadFresh().then((store) {
+      if (_loadGeneration == generation) {
+        return _instance ??= store;
+      }
+      return store;
+    });
+    _loading = loading;
+    try {
+      return await loading;
+    } finally {
+      if (identical(_loading, loading)) _loading = null;
+    }
+  }
+
+  static Future<BadgeService> _loadFresh() async {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -67,11 +89,15 @@ class BadgeService {
     }
     final unlocked =
         preferences?.getStringList(_storageKey)?.toSet() ?? <String>{};
-    return _instance = BadgeService._(preferences, unlocked);
+    return BadgeService._(preferences, unlocked);
   }
 
   /// Testlerde tekil örneği sıfırlamak için.
-  static void resetInstance() => _instance = null;
+  static void resetInstance() {
+    _loadGeneration++;
+    _instance = null;
+    _loading = null;
+  }
 
   Future<void> clear() async {
     await removePersistedPreferenceKeys(_preferences, [_storageKey]);

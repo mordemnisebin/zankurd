@@ -35,4 +35,9 @@ const List<({String package, String asset})> bundledFontLicenses = [
     asset: 'assets/fonts/LICENSE-FontAwesome.txt',
   ),
   (package: 'Lucide', asset: 'assets/fonts/LICENSE-Lucide.txt'),
+  (
+    package: 'Bricolage Grotesque',
+    asset: 'assets/fonts/OFL-BricolageGrotesque.txt',
+  ),
+  (package: 'Onest', asset: 'assets/fonts/OFL-Onest.txt'),
 ];

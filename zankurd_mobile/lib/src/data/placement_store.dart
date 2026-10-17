@@ -20,6 +20,8 @@ class PlacementStore {
       LocalProgressScope.physical('zankurd.placement.$_version.skipped');
 
   static PlacementStore? _instance;
+  static Future<PlacementStore>? _loading;
+  static int _loadGeneration = 0;
 
   final SharedPreferences? _preferences;
   PlacementLevel? _level;
@@ -28,6 +30,25 @@ class PlacementStore {
   static Future<PlacementStore> load() async {
     final cached = _instance;
     if (cached != null) return cached;
+    final inFlight = _loading;
+    if (inFlight != null) return inFlight;
+
+    final generation = _loadGeneration;
+    final loading = _loadFresh().then((store) {
+      if (_loadGeneration == generation) {
+        return _instance ??= store;
+      }
+      return store;
+    });
+    _loading = loading;
+    try {
+      return await loading;
+    } finally {
+      if (identical(_loading, loading)) _loading = null;
+    }
+  }
+
+  static Future<PlacementStore> _loadFresh() async {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -39,11 +60,15 @@ class PlacementStore {
       preferences?.getString(_levelKey),
     );
     final skipped = preferences?.getBool(_skippedKey) ?? false;
-    return _instance = PlacementStore._(preferences, level, skipped);
+    return PlacementStore._(preferences, level, skipped);
   }
 
   /// Testlerde tekil örneği sıfırlamak için.
-  static void resetInstance() => _instance = null;
+  static void resetInstance() {
+    _loadGeneration++;
+    _instance = null;
+    _loading = null;
+  }
 
   /// Belirlenmiş seviye; henüz sınav tamamlanmadıysa null.
   PlacementLevel? get level => _level;

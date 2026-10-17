@@ -13,6 +13,8 @@ class XPStore {
   static String get _totalXPKey =>
       LocalProgressScope.physical('zankurd.xp.total');
   static XPStore? _instance;
+  static Future<XPStore>? _loading;
+  static int _loadGeneration = 0;
 
   final SharedPreferences? _preferences;
   int _totalXP;
@@ -44,6 +46,25 @@ class XPStore {
   static Future<XPStore> load() async {
     final cached = _instance;
     if (cached != null) return cached;
+    final inFlight = _loading;
+    if (inFlight != null) return inFlight;
+
+    final generation = _loadGeneration;
+    final loading = _loadFresh().then((store) {
+      if (_loadGeneration == generation) {
+        return _instance ??= store;
+      }
+      return store;
+    });
+    _loading = loading;
+    try {
+      return await loading;
+    } finally {
+      if (identical(_loading, loading)) _loading = null;
+    }
+  }
+
+  static Future<XPStore> _loadFresh() async {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -52,11 +73,13 @@ class XPStore {
       preferences = null;
     }
     final total = math.max(0, preferences?.getInt(_totalXPKey) ?? 0);
-    return _instance = XPStore._(preferences, total);
+    return XPStore._(preferences, total);
   }
 
   @visibleForTesting
   static Future<XPStore> loadForTest(int initialXP) async {
+    _loadGeneration++;
+    _loading = null;
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -67,7 +90,11 @@ class XPStore {
     return _instance = XPStore._(preferences, initialXP);
   }
 
-  static void resetInstance() => _instance = null;
+  static void resetInstance() {
+    _loadGeneration++;
+    _instance = null;
+    _loading = null;
+  }
 
   /// XP barajı hesabı. Seviye L için gereken XP: (L - 1) * (250 * L + 500)
   static int xpRequiredForLevel(int level) {

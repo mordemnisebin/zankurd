@@ -11,6 +11,8 @@ class StoryProgressStore {
 
   static String get _prefix => LocalProgressScope.physical('zankurd.story.');
   static StoryProgressStore? _instance;
+  static Future<StoryProgressStore>? _loading;
+  static int _loadGeneration = 0;
 
   final SharedPreferences? _preferences;
   final Map<String, String> _nodes;
@@ -18,6 +20,25 @@ class StoryProgressStore {
   static Future<StoryProgressStore> load() async {
     final cached = _instance;
     if (cached != null) return cached;
+    final inFlight = _loading;
+    if (inFlight != null) return inFlight;
+
+    final generation = _loadGeneration;
+    final loading = _loadFresh().then((store) {
+      if (_loadGeneration == generation) {
+        return _instance ??= store;
+      }
+      return store;
+    });
+    _loading = loading;
+    try {
+      return await loading;
+    } finally {
+      if (identical(_loading, loading)) _loading = null;
+    }
+  }
+
+  static Future<StoryProgressStore> _loadFresh() async {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -34,10 +55,14 @@ class StoryProgressStore {
         }
       }
     }
-    return _instance = StoryProgressStore._(preferences, map);
+    return StoryProgressStore._(preferences, map);
   }
 
-  static void resetInstance() => _instance = null;
+  static void resetInstance() {
+    _loadGeneration++;
+    _instance = null;
+    _loading = null;
+  }
 
   /// Kayıtlı düğüm id'si; hiç başlanmadıysa null.
   String? currentNodeId(String storyId) => _nodes[storyId];

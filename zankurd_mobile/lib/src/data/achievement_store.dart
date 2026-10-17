@@ -126,9 +126,31 @@ class AchievementStore {
     ),
   ];
 
+  static Future<AchievementStore>? _loading;
+  static int _loadGeneration = 0;
+
   static Future<AchievementStore> load() async {
     final cached = _instance;
     if (cached != null) return cached;
+    final inFlight = _loading;
+    if (inFlight != null) return inFlight;
+
+    final generation = _loadGeneration;
+    final loading = _loadFresh().then((store) {
+      if (_loadGeneration == generation) {
+        return _instance ??= store;
+      }
+      return store;
+    });
+    _loading = loading;
+    try {
+      return await loading;
+    } finally {
+      if (identical(_loading, loading)) _loading = null;
+    }
+  }
+
+  static Future<AchievementStore> _loadFresh() async {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
@@ -136,7 +158,7 @@ class AchievementStore {
       ErrorReporter.record(error, stack, reason: 'achievement_store');
       preferences = null;
     }
-    return _instance = AchievementStore._(
+    return AchievementStore._(
       preferences,
       preferences?.getStringList(_unlockedKey)?.toSet() ?? <String>{},
       preferences?.getInt(_answeredKey) ?? 0,
@@ -146,7 +168,11 @@ class AchievementStore {
     );
   }
 
-  static void resetInstance() => _instance = null;
+  static void resetInstance() {
+    _loadGeneration++;
+    _instance = null;
+    _loading = null;
+  }
 
   Future<void> clear() async {
     await removePersistedPreferenceKeys(_preferences, [

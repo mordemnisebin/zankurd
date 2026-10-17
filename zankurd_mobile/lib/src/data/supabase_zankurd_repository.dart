@@ -312,6 +312,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       'display_name': displayName,
       'avatar_color': ?avatarColor,
     });
+    _profileCache.remove(user.id);
   }
 
   /// Profil satırı yoksa oluşturur; varsa adı EZMEZ.
@@ -430,6 +431,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
             'updated_at': DateTime.now().toUtc().toIso8601String(),
           })
           .eq('id', user.id);
+      _profileCache.remove(user.id);
       await _setAvatarIdentityDirty(false);
       return true;
     } on PostgrestException catch (error, stack) {
@@ -2495,13 +2497,13 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   }
 
   /// Çark guard'ı için gün anahtarı. Sunucudaki `can_spin_today` /
-  /// `award_spin_coins` RPC'leri `CURRENT_DATE` (UTC) ile gün sınırı çizer;
-  /// yerel saat kullanılırsa yerel gece yarısı ile UTC gece yarısı arasında
-  /// buton aktif görünüp sunucunun reddettiği "çark dönmüyor" tutarsızlığı
-  /// doğar. Ekrandaki geri sayım da UTC gece yarısını hedefler.
+  /// `award_spin_coins` RPC'leri `public.app_today()` (`Europe/Istanbul`,
+  /// kalıcı UTC+3) ile gün sınırı çizer (`2026-10-15_ilerleme_esitleme.sql`).
+  /// Cihaz saat diliminden bağımsız olarak sunucuyla aynı UTC+3 gün sınırını
+  /// kullanır; ekrandaki geri sayım da aynı gece yarısını hedefler.
   static String spinDayKey(DateTime now) {
-    final utc = now.toUtc();
-    return '${utc.year}-${utc.month}-${utc.day}';
+    final istanbul = now.toUtc().add(const Duration(hours: 3));
+    return '${istanbul.year}-${istanbul.month}-${istanbul.day}';
   }
 
   Future<bool> _hasUnusedExtraSpin() async {
@@ -2514,6 +2516,7 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
     final used = await client
         .from('coin_transactions')
         .count(CountOption.exact)
+        .eq('player_id', user.id)
         .inFilter('reason', ['extra_spin:server', 'daily_spin:extra_purchase']);
     return purchased > used;
   }

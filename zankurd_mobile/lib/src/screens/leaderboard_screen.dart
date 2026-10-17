@@ -88,6 +88,15 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     widget.refreshSignal?.addListener(_loadData);
   }
 
+  @override
+  void didUpdateWidget(covariant LeaderboardScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.refreshSignal != widget.refreshSignal) {
+      oldWidget.refreshSignal?.removeListener(_loadData);
+      widget.refreshSignal?.addListener(_loadData);
+    }
+  }
+
   void _onTabChanged() {
     if (_tabController.indexIsChanging) return;
     final periods = [

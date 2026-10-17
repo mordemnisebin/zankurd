@@ -11,6 +11,8 @@ class LearningGoalStore {
   static String get _key =>
       LocalProgressScope.physical('zankurd.learning_goal.v1');
   static LearningGoalStore? _instance;
+  static Future<LearningGoalStore>? _loading;
+  static int _loadGeneration = 0;
 
   final SharedPreferences? _preferences;
   LearningGoal? _goal;
@@ -18,19 +20,42 @@ class LearningGoalStore {
   static Future<LearningGoalStore> load() async {
     final cached = _instance;
     if (cached != null) return cached;
+    final inFlight = _loading;
+    if (inFlight != null) return inFlight;
+
+    final generation = _loadGeneration;
+    final loading = _loadFresh().then((store) {
+      if (_loadGeneration == generation) {
+        return _instance ??= store;
+      }
+      return store;
+    });
+    _loading = loading;
+    try {
+      return await loading;
+    } finally {
+      if (identical(_loading, loading)) _loading = null;
+    }
+  }
+
+  static Future<LearningGoalStore> _loadFresh() async {
     SharedPreferences? preferences;
     try {
       preferences = await SharedPreferences.getInstance();
     } catch (error, stack) {
       ErrorReporter.record(error, stack, reason: 'learning_goal_store');
     }
-    return _instance = LearningGoalStore._(
+    return LearningGoalStore._(
       preferences,
       LearningGoal.fromStorageKey(preferences?.getString(_key)),
     );
   }
 
-  static void resetInstance() => _instance = null;
+  static void resetInstance() {
+    _loadGeneration++;
+    _instance = null;
+    _loading = null;
+  }
 
   LearningGoal? get goal => _goal;
 

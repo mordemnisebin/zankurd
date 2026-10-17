@@ -61,6 +61,15 @@ class _TodaysReviewCardState extends State<TodaysReviewCard> {
   }
 
   @override
+  void didUpdateWidget(covariant TodaysReviewCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.refreshSignal != widget.refreshSignal) {
+      oldWidget.refreshSignal?.removeListener(_refresh);
+      widget.refreshSignal?.addListener(_refresh);
+    }
+  }
+
+  @override
   void dispose() {
     widget.refreshSignal?.removeListener(_refresh);
     super.dispose();
