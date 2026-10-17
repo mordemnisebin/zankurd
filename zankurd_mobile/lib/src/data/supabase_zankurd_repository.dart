@@ -3365,10 +3365,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       await client.rpc('join_tournament');
       return await loadRealTournamentBracket();
     } catch (e, s) {
-      if (!_isMissingFunction(e)) {
-        _recordError(e, s, reason: 'joinRealTournament failed');
-      }
-      return null;
+      // Yalnız "sunucu tarafı henüz yok" null döner (bot benzetimine izin
+      // verir). Geçici ağ hatası artık sahte bot şemasına düşürmez: çağıran
+      // hatayı görür ve yeniden dener.
+      if (_isMissingFunction(e)) return null;
+      _recordError(e, s, reason: 'joinRealTournament failed');
+      rethrow;
     }
   }
 
@@ -3381,10 +3383,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         Map<String, dynamic>.from(response as Map),
       );
     } catch (e, s) {
-      if (!_isMissingFunction(e)) {
-        _recordError(e, s, reason: 'loadRealTournamentBracket failed');
-      }
-      return null;
+      // `null` yalnız "turnuvada değilsin / sunucu tarafı yok" demektir.
+      // Ağ hatası eskiden de null dönüp çevrimdışı bot şemasına düşüyordu;
+      // şimdi fırlar, ekran hata + yeniden dene gösterir.
+      if (_isMissingFunction(e)) return null;
+      _recordError(e, s, reason: 'loadRealTournamentBracket failed');
+      rethrow;
     }
   }
 
