@@ -97,6 +97,32 @@ void main() {
     expect(receivedRoomId, 'room-1');
   });
 
+  // Kalabalık oda sonucu "tam iki oyuncu" şartına takılıp hiç onaylanmıyor,
+  // biten oda her soğuk açılışta yeniden çıkıyordu (simülatör 2026-10-17).
+  testWidgets('kalabalık oda (3 oyuncu) sonucu da ACK edilir', (tester) async {
+    final repository = _DeliveryRepository();
+    await _pumpResult(tester, repository: repository, room: _crowdRoom);
+    await tester.pump();
+    await tester.pump();
+
+    expect(repository.ackCalls, 1);
+  });
+
+  testWidgets('2 kişilik oda üç oyuncuyla gelirse yine ACK edilmez', (
+    tester,
+  ) async {
+    final repository = _DeliveryRepository();
+    await _pumpResult(
+      tester,
+      repository: repository,
+      room: _crowdRoom.copyWith(maxPlayers: 2, isCustom: false),
+    );
+    await tester.pump();
+    await tester.pump();
+
+    expect(repository.ackCalls, 0);
+  });
+
   testWidgets('analytics tamamlanmadan receipt ve ACK tamamlanmaz', (
     tester,
   ) async {
@@ -485,4 +511,20 @@ const _room = GameRoom(
   ],
   status: RoomStatus.finished,
   questionCount: 1,
+);
+
+const _crowdRoom = GameRoom(
+  id: 'room-1',
+  name: 'grup',
+  code: 'ZK-TEST',
+  category: 'Ziman',
+  players: [
+    Player(id: 'user-1', name: 'Ez', score: 60, state: Player.readyState),
+    Player(id: 'a', name: 'Rojda', score: 40, state: Player.readyState),
+    Player(id: 'b', name: 'Azad', score: 20, state: Player.readyState),
+  ],
+  status: RoomStatus.finished,
+  questionCount: 1,
+  maxPlayers: 8,
+  isCustom: true,
 );

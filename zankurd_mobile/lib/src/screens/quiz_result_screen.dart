@@ -572,10 +572,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final playerIds = widget.room.players
         .map((player) => player.id?.trim() ?? '')
         .toList(growable: false);
+    // Kalabalık odada 2..kapasite oyuncu olur. "Tam iki oyuncu" şartı
+    // yüzünden kalabalık oda sonucu hiç onaylanmıyor, biten oda her soğuk
+    // açılışta yeniden çıkıyordu (simülatör denemesi 2026-10-17).
+    final countOk = widget.room.isCrowd
+        ? playerIds.length >= 2 && playerIds.length <= widget.room.maxPlayers
+        : playerIds.length == 2;
     final hasValidPlayers =
-        playerIds.length == 2 &&
+        countOk &&
         playerIds.every((id) => id.isNotEmpty) &&
-        playerIds.toSet().length == 2 &&
+        playerIds.toSet().length == playerIds.length &&
         playerIds.where((id) => id == ownerId).length == 1;
     if (widget.room.status == RoomStatus.finished && hasValidPlayers) {
       return true;
