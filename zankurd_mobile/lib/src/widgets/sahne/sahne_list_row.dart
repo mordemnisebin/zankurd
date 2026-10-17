@@ -120,6 +120,20 @@ class SahneRowValue extends StatelessWidget {
   }
 }
 
+/// Sağdaki değerin büyük yazıda da satırın SAĞINDA, aynı satırda kalmasını
+/// ister. Varsayılan: ≥ 1.5 ölçekte değer metnin altına iner (rozet gibi
+/// uzun öğeler başlığı ezmesin). Kısa sayısal değerde (sıralama puanı) bu
+/// kural puanı adın altına atıp sıralamayı okunmaz kılıyordu (kalabalık
+/// sonuç, 320 px / 2×); ad sarar, puan sağda kalır.
+class SahneInlineTrailing extends StatelessWidget {
+  const SahneInlineTrailing({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => child;
+}
+
 enum _RowKind { standard, info, rank, me, custom, plain }
 
 /// Liste satırı — maketteki "5 · Liste satırı" (`.sh-row`).
@@ -450,7 +464,9 @@ class SahneListRow extends StatelessWidget {
 
     // Büyük yazı ölçeğinde (≥ 1.5) sağdaki rozet/değer metnin altına
     // iner: başlık dar bir sütunda harf harf bölünmesin.
-    final stacked = MediaQuery.textScalerOf(context).scale(16) >= 24;
+    final stacked =
+        MediaQuery.textScalerOf(context).scale(16) >= 24 &&
+        trailing is! SahneInlineTrailing;
     final Widget? trail = trailing == null
         ? null
         : DefaultTextStyle.merge(
