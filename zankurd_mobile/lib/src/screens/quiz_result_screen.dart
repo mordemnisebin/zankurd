@@ -362,7 +362,9 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       await policy.recordRoundCompleted();
       _notifPolicy = policy;
       if (!mounted) return;
-      if (await policy.shouldShow()) {
+      final show = await policy.shouldShow();
+      if (!mounted) return;
+      if (show) {
         setState(() => _showNotifPrompt = true);
       }
     } catch (_) {}
