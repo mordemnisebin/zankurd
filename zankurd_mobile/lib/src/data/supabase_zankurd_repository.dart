@@ -198,6 +198,10 @@ ResumedPendingAnswer? _requiredPendingAnswer(Map<String, dynamic> json) {
   );
 }
 
+/// Öneri INSERT politikasının istediği katkı lisansı sürümü (canlı:
+/// `suggested_questions_insert_own`).
+const String suggestedQuestionLicenseVersion = '2026-08-11';
+
 class SupabaseZanKurdRepository implements ZanKurdRepository {
   SupabaseZanKurdRepository(this.client);
 
@@ -1817,11 +1821,19 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
   Future<void> reportQuestion(QuizQuestion question, String reason) async {
     final user = client.auth.currentUser ?? await signInAnonymously();
     await ensureProfile();
-    await client.from('question_reports').insert({
-      'question_id': question.id,
-      'reporter_id': user.id,
-      'reason': _clampReportReason(reason),
-    });
+    try {
+      await client.from('question_reports').insert({
+        'question_id': question.id,
+        'reporter_id': user.id,
+        'reason': _clampReportReason(reason),
+      });
+    } on PostgrestException catch (error) {
+      // (reporter_id, question_id) tekil: aynı soruyu ikinci kez bildirmek
+      // zaten kayıtlı demektir. Hata göstermek kullanıcıya "bildirim
+      // başarısız" dedirtiyordu; sayaç RPC'si de ikinci kez çağrılmaz.
+      if (error.code == '23505') return;
+      rethrow;
+    }
 
     // Editör kuyruğuna giden sayaç, eski rapor tablosuyla birlikte tutulur.
     // RPC henüz uygulanmamış eski ortamlarda bildirim yine de kaydedilmiş olur.
@@ -3547,6 +3559,11 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'explanation': explanation,
         'difficulty': difficulty,
         'status': 'pending',
+        // INSERT politikası `license_version = '2026-08-11'` ister;
+        // `accepted_at`i tetikleyici sunucu saatiyle damgalar.
+        'license_version': suggestedQuestionLicenseVersion,
+        'attribution_requested': false,
+        'do_not_publish': false,
       });
       return true;
     } catch (e, stack) {

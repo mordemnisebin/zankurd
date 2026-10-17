@@ -639,6 +639,14 @@ class Tr {
       'ku': 'Ji bo dewlemendkirina pirsan, pirsa xwe ya nû ji me re bişîne.',
       'tr': 'Soru havuzunu zenginleştirmek için yeni sorunu bizimle paylaş.',
     },
+    K.suggestLicenseNote: {
+      'ku':
+          'Bi şandinê re tu dipejirînî ku pirsa te di bin lîsansa beşdariyê '
+          'de di lîstikê de bê bikaranîn.',
+      'tr':
+          'Göndererek sorunun katkı lisansı kapsamında oyunda '
+          'kullanılmasını kabul etmiş olursun.',
+    },
     K.categoryLabel: {'ku': 'Mijar', 'tr': 'Konu'},
     K.categoryPick: {'ku': 'Mijarekê hilbijêre…', 'tr': 'Bir konu seç…'},
     K.categoryRequired: {'ku': 'Mijar pêwîst e', 'tr': 'Konu zorunlu'},
@@ -3418,6 +3426,7 @@ class K {
   // ── Soru öner ekranı ───────────────────────────────────────────────
   static const suggestTitle = 'suggest.title';
   static const suggestIntro = 'suggest.intro';
+  static const suggestLicenseNote = 'suggest.licenseNote';
   static const categoryLabel = 'suggest.category';
   static const categoryPick = 'suggest.category.pick';
   static const categoryRequired = 'suggest.category.required';
