@@ -173,7 +173,9 @@ void main() {
       // emekliye ayrıldı.
       // 3143 -> 3264 (+121): 2026-10-08 `dersler3_2026_10_08`, hepsi `approved`.
       // 3264 -> 3289 (+25): 2026-10-13 ders çoktan seçmelileri, hepsi `approved`.
-      3289,
+      // 3289 -> 3284 (-5): 2026-10-17 yakın tekrar, 5 soru emekliye ayrıldı
+      // (iki modelce "aynı olgu" bulunan çiftlerin zayıf yarısı).
+      3284,
       reason:
           'Oyuncuya ulaşan soru sayısı değişti. Fiziksel sayı sabit kalıp bu '
           'sayı düştüyse bir banka sessizce oynanamaz hâle gelmiştir: '
@@ -244,7 +246,10 @@ void main() {
       'retired=Sînema': 25,
       'retired=Cografya': 51,
       'retired=Edebiyat': 23,
-      'retired=Dîrok': 43,
+      // 43 -> 45: 2026-10-17 yakın tekrar (`ds_dirok_0029`, `offline_2668`).
+      'retired=Dîrok': 45,
+      // 2026-10-17 yakın tekrar: `ds_cografya_0133`, `ds_dirok_0091`, `ds_muzik_0144`.
+      'retired=Cîhan': 3,
       'retired=Muzîk': 27,
       // 2026-09-30: 36 -> 37 (`offline_0120`, görsel "pîr" gösteriyor).
       'retired=Ziman': 37,
