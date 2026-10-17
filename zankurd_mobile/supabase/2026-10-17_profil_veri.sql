@@ -6,6 +6,12 @@
 -- yazımıyla birlikte 'Invalid showcase title' ile düşüyordu (avatar/renk de
 -- kaydolmuyordu). Gövde CANLI tanımdan alındı; yalnız unvan regex'ine
 -- 'Zanist û Raman' ve 'Cîhan' eklendi (eski adlar eski satırlar için kalır).
+-- İkinci kusur (avatar fotoğrafı): yükleme hep `{uid}/avatar.jpg` üstüne
+-- yazdığı için fotoğraf değiştirip VAZGEÇMEK kayıtlı fotoğrafı da siliyordu.
+-- İstemci artık yeni fotoğrafı `{uid}/avatar-<ms>.jpg` yoluna yükler ve ancak
+-- kaydedilince eskiyi siler; bunun için avatar_url regex'i `avatar-<rakam>`
+-- ekini de kabul eder (eski `avatar.jpg` biçimi geçerli kalır). BU GÖÇ,
+-- istemci sürümü yayımlanmadan ÖNCE uygulanmalıdır.
 -- CREATE OR REPLACE yetkileri (authenticated/service_role execute) korur.
 begin;
 CREATE OR REPLACE FUNCTION public.protect_paid_profile_cosmetics()
@@ -58,7 +64,7 @@ begin
      and new.avatar_url !~ (
        '^https://hupivnxgjtsfafulzspo[.]supabase[.]co/storage/v1/object/public/avatars/'
        || new.id::text
-       || '/avatar[.](jpg|png)([?]v=[0-9]+)?$'
+       || '/avatar([-][0-9]+)?[.](jpg|png)([?]v=[0-9]+)?$'
      ) then
     raise exception 'Avatar URL must point to the owner storage path';
   end if;

@@ -484,8 +484,18 @@ abstract class ZanKurdRepository implements SoloQuizPort, LivePlayPort {
   /// içerik türünden seçtiği için önce PNG sonra JPG yükleyen bir kullanıcı
   /// aksi hâlde eski nesneyi yetim bırakırdı.
   ///
+  /// Yükleme zaman damgalı yola yazar (`avatar-<ms>.ext`); bu yollar
+  /// listelenemediğinden silinecek nesnelerin URL'leri [urls] ile verilir.
+  /// Çağıranın kendi klasörü dışındaki URL'ler yok sayılır.
+  ///
   /// Sessizce başarısız olmaz; çağıran hatayı görebilsin diye fırlatır.
-  Future<void> deleteAvatarPhoto();
+  Future<void> deleteAvatarPhoto({List<String> urls = const []});
+
+  /// YALNIZ verilen URL'lerin nesnelerini siler; sabit `avatar.jpg/png`
+  /// yollarına dokunmaz. Fotoğraf değiştirip vazgeçildiğinde geçici yükleme
+  /// ile, kaydedildiğinde de eski nesneyle çağrılır: kayıtlı fotoğraf bu
+  /// çağrıyla yok olmamalıdır. Çağıranın klasörü dışındaki URL'ler yok sayılır.
+  Future<void> deleteAvatarPhotoObjects(List<String> urls);
 
   /// Bugünün contest/etkinlik temesini yükler (varsa).
   Future<Contest?> loadTodayContest();

@@ -1964,15 +1964,25 @@ class MockZanKurdRepository implements ZanKurdRepository {
   Future<String> uploadAvatarPhoto(Uint8List bytes, String contentType) async {
     // Mock modda gerçek depolama yok; kalıcı olmayan yerel bir işaret döner.
     avatarPhotoDeleted = false;
-    return 'mock://avatar/${bytes.length}';
+    return 'mock://avatar/${bytes.length}/${++_avatarUploadSeq}';
   }
 
   /// Testlerin "depodan silme gerçekten çağrıldı mı" sorusunu sorabilmesi
   /// için. Kusur tam olarak bu çağrının HİÇ yapılmamasıydı (2026-08-02).
   bool avatarPhotoDeleted = false;
 
+  /// Silme çağrılarında verilen URL'ler (iptal/değiştirme bekçileri okur).
+  final List<String> deletedAvatarUrls = [];
+  int _avatarUploadSeq = 0;
+
   @override
-  Future<void> deleteAvatarPhoto() async {
+  Future<void> deleteAvatarPhotoObjects(List<String> urls) async {
+    deletedAvatarUrls.addAll(urls);
+  }
+
+  @override
+  Future<void> deleteAvatarPhoto({List<String> urls = const []}) async {
+    deletedAvatarUrls.addAll(urls);
     // Çevrimdışı/mock modda silinecek uzak nesne yok; çağrının YAPILDIĞINI
     // kaydetmek yeterlidir — bekçi test bunu doğrular.
     avatarPhotoDeleted = true;

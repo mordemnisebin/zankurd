@@ -433,7 +433,12 @@ class OfflineZanKurdRepository extends MockZanKurdRepository {
   }
 
   @override
-  Future<void> deleteAvatarPhoto() async {
+  Future<void> deleteAvatarPhoto({List<String> urls = const []}) async {
+    throw StateError('Remote service unavailable.');
+  }
+
+  @override
+  Future<void> deleteAvatarPhotoObjects(List<String> urls) async {
     throw StateError('Remote service unavailable.');
   }
 

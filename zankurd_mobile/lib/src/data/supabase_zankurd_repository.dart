@@ -510,7 +510,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
       throw StateError('Remote service unavailable.');
     }
     final ext = contentType == 'image/png' ? 'png' : 'jpg';
-    final path = '${user.id}/avatar.$ext';
+    // Her yükleme KENDİ yoluna gider (`avatar-<ms>.ext`). Eskiden hep
+    // `avatar.ext` üstüne yazılıyordu: kullanıcı fotoğrafı değiştirip
+    // vazgeçince temizlik, profilin hâlâ işaret ettiği kayıtlı fotoğrafı da
+    // siliyordu. Sunucu regex'i bu eki `2026-10-17_profil_veri.sql` ile kabul eder.
+    final path =
+        '${user.id}/avatar-${DateTime.now().millisecondsSinceEpoch}.$ext';
     await client.storage
         .from('avatars')
         .uploadBinary(
@@ -518,24 +523,52 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
           bytes,
           fileOptions: FileOptions(contentType: contentType, upsert: true),
         );
-    // Aynı yol üzerine yazıldığı için URL sabit kalır; önbellek kırıcı ekle.
-    final publicUrl = client.storage.from('avatars').getPublicUrl(path);
-    return '$publicUrl?v=${DateTime.now().millisecondsSinceEpoch}';
+    return client.storage.from('avatars').getPublicUrl(path);
+  }
+
+  /// Genel avatar URL'sinden kovadaki nesne yolunu çıkarır; yalnız çağıranın
+  /// kendi klasöründeki nesneler döner (başkasının yolu silinmeye çalışılmaz).
+  @visibleForTesting
+  static String? avatarObjectPath(String url, String userId) {
+    const marker = '/avatars/';
+    final at = url.indexOf(marker);
+    if (at < 0) return null;
+    var path = url.substring(at + marker.length);
+    final q = path.indexOf('?');
+    if (q >= 0) path = path.substring(0, q);
+    if (!path.startsWith('$userId/') || path.contains('..')) return null;
+    return path;
   }
 
   @override
-  Future<void> deleteAvatarPhoto() async {
+  Future<void> deleteAvatarPhoto({List<String> urls = const []}) async {
     final user = client.auth.currentUser;
     if (user == null) {
       throw StateError('Remote service unavailable.');
     }
     // Uzantı içerik türünden seçiliyor (`uploadAvatarPhoto`), yani aynı
     // kullanıcının geçmişte hem .png hem .jpg nesnesi olabilir. İkisini de
-    // kaldırmak gerekir; `remove` var olmayan yolu sorun etmez.
-    await client.storage.from('avatars').remove([
+    // kaldırmak gerekir; `remove` var olmayan yolu sorun etmez. Zaman
+    // damgalı yollar listelenemediği için çağıran URL'lerini verir.
+    final paths = <String>{
       '${user.id}/avatar.jpg',
       '${user.id}/avatar.png',
-    ]);
+      for (final url in urls) ?avatarObjectPath(url, user.id),
+    };
+    await client.storage.from('avatars').remove(paths.toList());
+  }
+
+  @override
+  Future<void> deleteAvatarPhotoObjects(List<String> urls) async {
+    final user = client.auth.currentUser;
+    if (user == null) {
+      throw StateError('Remote service unavailable.');
+    }
+    final paths = <String>{
+      for (final url in urls) ?avatarObjectPath(url, user.id),
+    };
+    if (paths.isEmpty) return;
+    await client.storage.from('avatars').remove(paths.toList());
   }
 
   /// Oturumdaki hesabın Apple kimliği var mı (testlerde geçersiz kılınır).
