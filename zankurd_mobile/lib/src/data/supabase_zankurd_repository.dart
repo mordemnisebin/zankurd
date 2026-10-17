@@ -1865,11 +1865,12 @@ class SupabaseZanKurdRepository implements ZanKurdRepository {
         'reporter_id': user.id,
         'reason': _clampReportReason(reason),
       });
-    } on PostgrestException catch (error) {
+    } on PostgrestException catch (error, stack) {
       // (reporter_id, question_id) tekil: aynı soruyu ikinci kez bildirmek
       // zaten kayıtlı demektir. Hata göstermek kullanıcıya "bildirim
       // başarısız" dedirtiyordu; sayaç RPC'si de ikinci kez çağrılmaz.
       if (error.code == '23505') return;
+      _recordError(error, stack, reason: 'reportQuestion insert failed');
       rethrow;
     }
 
