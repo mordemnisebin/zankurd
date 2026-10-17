@@ -641,10 +641,10 @@ class Tr {
     },
     K.suggestLicenseNote: {
       'ku':
-          'Bi şandinê re tu dipejirînî ku pirsa te di bin lîsansa beşdariyê '
-          'de di lîstikê de bê bikaranîn.',
+          'Dema tu pirsê bişînî, tu dipejirînî ku ew di bin lîsansa '
+          'beşdariyê de di lîstikê de bê bikaranîn.',
       'tr':
-          'Göndererek sorunun katkı lisansı kapsamında oyunda '
+          'Soruyu gönderdiğinde, katkı lisansı kapsamında oyunda '
           'kullanılmasını kabul etmiş olursun.',
     },
     K.categoryLabel: {'ku': 'Mijar', 'tr': 'Konu'},
