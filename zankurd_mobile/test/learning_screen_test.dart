@@ -465,7 +465,10 @@ void main() {
     final label = tester.widget<RichText>(
       find.descendant(of: primary, matching: find.byType(RichText)).first,
     );
-    expect(label.text.style?.color, SahneTokens.of(tester.element(nextStep)).onAct);
+    expect(
+      label.text.style?.color,
+      SahneTokens.of(tester.element(nextStep)).onAct,
+    );
 
     // Tek birincil: yoldaki kartın dışında Agir dolgulu düğme yok.
     final agirButtons = tester
